@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.segments.constants.SegmentsConstants;
 import com.liferay.segments.constants.SegmentsPortletKeys;
 import com.liferay.segments.criteria.Criteria;
@@ -91,7 +90,12 @@ public class UpdateSegmentsEntryMVCActionCommand extends BaseMVCActionCommand {
 		try {
 			SegmentsEntry segmentsEntry = null;
 
-			Criteria criteria = getCriteria(actionRequest, type);
+			List<SegmentsCriteriaContributor> segmentsCriteriaContributors =
+				_segmentsCriteriaContributorRegistry.
+					getSegmentsCriteriaContributors(type);
+
+			Criteria criteria = ActionUtil.getCriteria(
+				actionRequest, segmentsCriteriaContributors);
 
 			boolean dynamic = ParamUtil.getBoolean(
 				actionRequest, "dynamic", true);
@@ -143,37 +147,6 @@ public class UpdateSegmentsEntryMVCActionCommand extends BaseMVCActionCommand {
 				throw e;
 			}
 		}
-	}
-
-	protected Criteria getCriteria(ActionRequest actionRequest, String type) {
-		Criteria criteria = new Criteria();
-
-		List<SegmentsCriteriaContributor> segmentsCriteriaContributors =
-			_segmentsCriteriaContributorRegistry.
-				getSegmentsCriteriaContributors(type);
-
-		for (SegmentsCriteriaContributor segmentsCriteriaContributor :
-				segmentsCriteriaContributors) {
-
-			String filterString = ParamUtil.getString(
-				actionRequest,
-				"criterionFilter" + segmentsCriteriaContributor.getKey());
-
-			if (Validator.isNull(filterString)) {
-				continue;
-			}
-
-			String conjunctionString = ParamUtil.getString(
-				actionRequest,
-				"criterionConjunction" + segmentsCriteriaContributor.getKey(),
-				Criteria.Conjunction.AND.getValue());
-
-			segmentsCriteriaContributor.contribute(
-				criteria, filterString,
-				Criteria.Conjunction.parse(conjunctionString));
-		}
-
-		return criteria;
 	}
 
 	protected String getSaveAndContinueRedirect(

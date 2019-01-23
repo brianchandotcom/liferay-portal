@@ -19,7 +19,6 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.segments.constants.SegmentsPortletKeys;
 import com.liferay.segments.criteria.Criteria;
 import com.liferay.segments.criteria.contributor.SegmentsCriteriaContributor;
@@ -87,39 +86,6 @@ public class GetSegmentsEntryClassPKsCountMVCResourceCommand
 		}
 	}
 
-	protected Criteria getCriteria(
-		ResourceRequest resourceRequest, String type) {
-
-		Criteria criteria = new Criteria();
-
-		List<SegmentsCriteriaContributor> segmentsCriteriaContributors =
-			_segmentsCriteriaContributorRegistry.
-				getSegmentsCriteriaContributors(type, Criteria.Type.MODEL);
-
-		for (SegmentsCriteriaContributor segmentsCriteriaContributor :
-				segmentsCriteriaContributors) {
-
-			String filterString = ParamUtil.getString(
-				resourceRequest,
-				"criterionFilter" + segmentsCriteriaContributor.getKey());
-
-			if (Validator.isNull(filterString)) {
-				continue;
-			}
-
-			String conjunctionString = ParamUtil.getString(
-				resourceRequest,
-				"criterionConjunction" + segmentsCriteriaContributor.getKey(),
-				Criteria.Conjunction.AND.getValue());
-
-			segmentsCriteriaContributor.contribute(
-				criteria, filterString,
-				Criteria.Conjunction.parse(conjunctionString));
-		}
-
-		return criteria;
-	}
-
 	protected int getSegmentsEntryClassPKsCount(
 			long companyId, Criteria criteria, String type, Locale locale)
 		throws Exception {
@@ -145,7 +111,12 @@ public class GetSegmentsEntryClassPKsCountMVCResourceCommand
 
 		String type = ParamUtil.getString(resourceRequest, "type");
 
-		Criteria criteria = getCriteria(resourceRequest, type);
+		List<SegmentsCriteriaContributor> segmentsCriteriaContributors =
+			_segmentsCriteriaContributorRegistry.
+				getSegmentsCriteriaContributors(type, Criteria.Type.MODEL);
+
+		Criteria criteria = ActionUtil.getCriteria(
+			resourceRequest, segmentsCriteriaContributors);
 
 		int count = getSegmentsEntryClassPKsCount(
 			companyId, criteria, type, _portal.getLocale(resourceRequest));

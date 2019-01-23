@@ -1,0 +1,380 @@
+components:
+  schemas:
+    AggregateRating:
+      description: https://www.schema.org/AggregateRating
+      properties:
+        bestRating:
+          type: number
+        id:
+          type: integer
+        ratingCount:
+          type: number
+        ratingValue:
+          type: number
+        self:
+          type: string
+        worstRating:
+          type: number
+      type: object
+    BlogPosting:
+      description: https://www.schema.org/BlogPosting
+      properties:
+        aggregateRating:
+          $ref: "#/components/schemas/AggregateRating"
+        alternativeHeadline:
+          type: string
+        articleBody:
+          type: string
+        caption:
+          type: string
+        comment:
+          $ref: "#/components/schemas/Comment"
+        contentSpace:
+          format: uri
+          type: string
+        creator:
+          format: uri
+          type: string
+        dateCreated:
+          type: string
+        dateModified:
+          type: string
+        datePublished:
+          type: string
+        description:
+          type: string
+        encodingFormat:
+          type: string
+        friendlyUrlPath:
+          type: string
+        headline:
+          type: string
+        id:
+          type: integer
+        image:
+          $ref: "#/components/schemas/ImageObject"
+        keywords:
+          items:
+            type: string
+          type: array
+        repository:
+          $ref: "#/components/schemas/ImageObjectRepository"
+        self:
+          type: string
+      type: object
+    Comment:
+      description: https://www.schema.org/Comment
+      properties:
+        comments:
+          $ref: '#/components/schemas/Comment'
+        creator:
+          format: uri
+          type: string
+        id:
+          type: integer
+        self:
+          type: string
+        text:
+          type: string
+      type: object
+    ImageObject:
+      description: https://www.schema.org/ImageObject
+      properties:
+        contentUrl: 
+          type: string
+        encodingFormat: 
+          type: string
+        fileExtension: 
+          type: string
+        id: 
+          type: integer
+        self: 
+          type: string
+        sizeInBytes: 
+          type: number
+        title: 
+          type: string
+      type: object
+    ImageObjectRepository:
+      description: "https://www.schema.org/Folder"
+      properties: 
+        dateCreated: 
+          type: string
+        dateModified: 
+          type: string
+        id: 
+          type: integer
+        images: 
+          $ref: "#/components/schemas/ImageObject"
+        name: 
+          type: string
+        self: 
+          type: string
+      type: object
+info:
+  description: ""
+  title: ""
+  version: 1.0.0
+openapi: 3.0.1
+paths:
+  /aggregate-rating/{id}:
+    get:
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+      responses:
+        200:
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/AggregateRating'
+          description: ""
+  /blog-posting/{id}:
+    delete:
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+      responses:
+        204:
+          content:
+            '*/*': {}
+          description: ""
+    get:
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+      responses:
+        200:
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/BlogPosting'
+          description: ""
+    put:
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          '*/*':
+            schema:
+                $ref: '#/components/schemas/BlogPosting'
+      responses:
+        200:
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/BlogPosting'
+          description: ""
+  /blog-posting/{parent-id}/comment:
+    get:
+      parameters:
+      - in: query
+        name: page
+        schema:
+          type: integer
+      - in: query
+        name: per_page
+        schema:
+          type: integer
+      - in: path
+        name: parent-id
+        required: true
+        schema:
+          type: integer
+      responses:
+        200:
+          content:
+            '*/*':
+              schema:
+                items:
+                  $ref: '#/components/schemas/Comment'
+                type: array
+          description: ""
+  /comment/{id}:
+    get:
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+      responses:
+        200:
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Comment'
+          description: ""
+  /comment/{parent-id}/comment:
+    get:
+      parameters:
+      - in: query
+        name: page
+        schema:
+          type: integer
+      - in: query
+        name: per_page
+        schema:
+          type: integer
+      - in: path
+        name: parent-id
+        required: true
+        schema:
+          type: integer
+      responses:
+        200:
+          content:
+            '*/*':
+              schema:
+                items:
+                  $ref: '#/components/schemas/Comment'
+                type: array
+          description: ""
+  /content-space/{parent-id}/blog-posting:
+    get:
+      parameters:
+      - in: query
+        name: page
+        schema:
+          type: integer
+      - in: query
+        name: per_page
+        schema:
+          type: integer
+      - in: path
+        name: parent-id
+        required: true
+        schema:
+          type: integer
+      responses:
+        200:
+          content:
+            '*/*':
+              schema:
+                items:
+                  $ref: '#/components/schemas/BlogPosting'
+                type: array
+          description: ""
+    post:
+      parameters:
+      - in: path
+        name: parent-id
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: "#/components/schemas/BlogPosting"
+      responses:
+        200:
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/BlogPosting'
+          description: ""
+  /content-space/{parent-id}/blog-posting/batch-create:
+    post:
+      parameters:
+      - in: path
+        name: parent-id
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: "#/components/schemas/BlogPosting"
+      responses:
+        200:
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/BlogPosting'
+          description: ""
+  "/image-object-repository/{parent-id}/image-object": 
+    get: 
+      parameters: 
+        - in: query
+          name: page
+          schema: 
+            type: integer
+        - in: query
+          name: per_page
+          schema: 
+            type: integer
+        - in: path
+          name: parent-id
+          required: true
+          schema: 
+            type: integer
+      responses: 
+        200: 
+          content: 
+            "*/*": 
+              schema: 
+                items: 
+                  $ref: "#/components/schemas/ImageObject"
+                type: array
+          description: ""
+    post: 
+      parameters: 
+        - in: path
+          name: parent-id
+          required: true
+          schema: 
+            format: integer
+      requestBody: 
+        content: 
+          "*/*": 
+            schema: 
+              $ref: "#/components/schemas/ImageObject"
+      responses: 
+        200: 
+          content: 
+            "*/*": 
+              schema: 
+                $ref: "#/components/schemas/ImageObject"
+          description: ""
+  "/image-object/{id}": 
+    delete: 
+      parameters: 
+        - in: path
+          name: id
+          required: true
+          schema: 
+            type: integer
+      responses: 
+        204: 
+          content: 
+            "*/*": {}
+          description: ""
+    get: 
+      parameters: 
+        - in: path
+          name: id
+          required: true
+          schema: 
+            type: integer
+      responses: 
+        200: 
+          content: 
+            "*/*": 
+              schema: 
+                $ref: "#/components/schemas/ImageObject"
+          description: ""

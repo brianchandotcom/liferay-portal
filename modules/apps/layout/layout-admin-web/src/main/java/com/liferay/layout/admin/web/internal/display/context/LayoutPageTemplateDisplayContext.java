@@ -39,15 +39,20 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutPrototypeServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadServletRequestConfigurationHelperUtil;
+import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -199,23 +204,13 @@ public class LayoutPageTemplateDisplayContext {
 			return layoutPrototypeGroup.getDisplayURL(themeDisplay, true);
 		}
 
-		PortletURL editLayoutPageTemplateEntryURL =
-			_renderResponse.createRenderURL();
+		Layout layout = LayoutLocalServiceUtil.getLayout(
+			layoutPageTemplateEntry.getPlid());
 
-		editLayoutPageTemplateEntryURL.setParameter(
-			"mvcRenderCommandName", "/layout/edit_layout_page_template_entry");
-		editLayoutPageTemplateEntryURL.setParameter(
-			"redirect", themeDisplay.getURLCurrent());
-		editLayoutPageTemplateEntryURL.setParameter(
-			"layoutPageTemplateEntryId",
-			String.valueOf(
-				layoutPageTemplateEntry.getLayoutPageTemplateEntryId()));
-		editLayoutPageTemplateEntryURL.setParameter(
-			"layoutPageTemplateCollectionId",
-			String.valueOf(
-				layoutPageTemplateEntry.getLayoutPageTemplateCollectionId()));
+		String layoutFullURL = PortalUtil.getLayoutFullURL(
+			layout, themeDisplay);
 
-		return editLayoutPageTemplateEntryURL.toString();
+		return HttpUtil.setParameter(layoutFullURL, "p_l_mode", Constants.EDIT);
 	}
 
 	public List<DropdownItem> getFilterDropdownItems() {

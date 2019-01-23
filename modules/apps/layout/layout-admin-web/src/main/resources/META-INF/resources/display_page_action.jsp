@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+LayoutPageTemplateDisplayContext layoutPageTemplateDisplayContext = (LayoutPageTemplateDisplayContext)request.getAttribute(LayoutAdminWebKeys.LAYOUT_PAGE_TEMPLATE_DISPLAY_CONTEXT);
+
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 LayoutPageTemplateEntry layoutPageTemplateEntry = (LayoutPageTemplateEntry)row.getObject();
@@ -30,16 +32,9 @@ LayoutPageTemplateEntry layoutPageTemplateEntry = (LayoutPageTemplateEntry)row.g
 	showWhenSingleIcon="<%= true %>"
 >
 	<c:if test="<%= LayoutPageTemplateEntryPermission.contains(permissionChecker, layoutPageTemplateEntry, ActionKeys.UPDATE) %>">
-		<portlet:renderURL var="editDisplayPageURL">
-			<portlet:param name="mvcRenderCommandName" value="/layout/edit_layout_page_template_entry" />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="layoutPageTemplateEntryId" value="<%= String.valueOf(layoutPageTemplateEntry.getLayoutPageTemplateEntryId()) %>" />
-			<portlet:param name="layoutPageTemplateCollectionId" value="<%= String.valueOf(layoutPageTemplateEntry.getLayoutPageTemplateCollectionId()) %>" />
-		</portlet:renderURL>
-
 		<liferay-ui:icon
 			message="edit"
-			url="<%= editDisplayPageURL %>"
+			url="<%= layoutPageTemplateDisplayContext.getEditLayoutPageTemplateEntryURL(layoutPageTemplateEntry) %>"
 		/>
 	</c:if>
 

@@ -210,8 +210,8 @@
 
 		<!-- Other fields -->
 
-		<column name="samlSpSessionKey" type="String" />
 		<column name="samlIdpEntityId" type="String" />
+		<column name="samlSpSessionKey" type="String" />
 		<column name="assertionXml" type="String" />
 		<column name="jSessionId" type="String" />
 		<column name="nameIdFormat" type="String" />

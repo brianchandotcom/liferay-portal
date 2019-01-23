@@ -10,8 +10,8 @@ import {CONJUNCTIONS} from '../../utils/constants.es';
 import Conjunction from './Conjunction.es';
 
 class ContributorBuilder extends React.Component {
-	static propTypes = {
-		onQueryChange: null
+	static defaultProps = {
+		onQueryChange: () => {}
 	}
 
 	constructor(props) {

@@ -159,13 +159,9 @@ public class AopServiceManager {
 			ServiceReference<AopService> serviceReference,
 			AopServiceRegistrar aopServiceRegistrar) {
 
-			_aopDependencyResolvers.compute(
+			_aopDependencyResolvers.computeIfPresent(
 				serviceReference.getProperty(Constants.SERVICE_BUNDLEID),
 				(bundleId, aopServiceResolver) -> {
-					if (aopServiceResolver == null) {
-						return null;
-					}
-
 					aopServiceResolver.removeAopServiceRegistrar(
 						aopServiceRegistrar);
 
@@ -258,13 +254,9 @@ public class AopServiceManager {
 			ServiceReference<TransactionExecutor> serviceReference,
 			TransactionExecutorHolder transactionExecutorHolder) {
 
-			_aopDependencyResolvers.compute(
+			_aopDependencyResolvers.computeIfPresent(
 				serviceReference.getProperty(Constants.SERVICE_BUNDLEID),
 				(bundleId, aopServiceResolver) -> {
-					if (aopServiceResolver == null) {
-						return null;
-					}
-
 					aopServiceResolver.removeTransactionExecutorHolder(
 						transactionExecutorHolder);
 

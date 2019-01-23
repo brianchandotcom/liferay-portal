@@ -71,19 +71,18 @@ public class KaleoProcessLinkPersistenceImpl extends BasePersistenceImpl<KaleoPr
 		".List1";
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION = FINDER_CLASS_NAME_ENTITY +
 		".List2";
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_ALL = new FinderPath(KaleoProcessLinkModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathWithPaginationFindAll = new FinderPath(KaleoProcessLinkModelImpl.ENTITY_CACHE_ENABLED,
 			KaleoProcessLinkModelImpl.FINDER_CACHE_ENABLED,
 			KaleoProcessLinkImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 			"findAll", new String[0]);
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL = new FinderPath(KaleoProcessLinkModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathWithoutPaginationFindAll = new FinderPath(KaleoProcessLinkModelImpl.ENTITY_CACHE_ENABLED,
 			KaleoProcessLinkModelImpl.FINDER_CACHE_ENABLED,
 			KaleoProcessLinkImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0]);
-	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(KaleoProcessLinkModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathCountAll = new FinderPath(KaleoProcessLinkModelImpl.ENTITY_CACHE_ENABLED,
 			KaleoProcessLinkModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_KALEOPROCESSID =
-		new FinderPath(KaleoProcessLinkModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathWithPaginationFindByKaleoProcessId = new FinderPath(KaleoProcessLinkModelImpl.ENTITY_CACHE_ENABLED,
 			KaleoProcessLinkModelImpl.FINDER_CACHE_ENABLED,
 			KaleoProcessLinkImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 			"findByKaleoProcessId",
@@ -93,14 +92,13 @@ public class KaleoProcessLinkPersistenceImpl extends BasePersistenceImpl<KaleoPr
 			Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
 			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_KALEOPROCESSID =
-		new FinderPath(KaleoProcessLinkModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathWithoutPaginationFindByKaleoProcessId = new FinderPath(KaleoProcessLinkModelImpl.ENTITY_CACHE_ENABLED,
 			KaleoProcessLinkModelImpl.FINDER_CACHE_ENABLED,
 			KaleoProcessLinkImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByKaleoProcessId",
 			new String[] { Long.class.getName() },
 			KaleoProcessLinkModelImpl.KALEOPROCESSID_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_KALEOPROCESSID = new FinderPath(KaleoProcessLinkModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathCountByKaleoProcessId = new FinderPath(KaleoProcessLinkModelImpl.ENTITY_CACHE_ENABLED,
 			KaleoProcessLinkModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByKaleoProcessId",
 			new String[] { Long.class.getName() });
@@ -182,11 +180,11 @@ public class KaleoProcessLinkPersistenceImpl extends BasePersistenceImpl<KaleoPr
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 				(orderByComparator == null)) {
 			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_KALEOPROCESSID;
+			finderPath = _finderPathWithoutPaginationFindByKaleoProcessId;
 			finderArgs = new Object[] { kaleoProcessId };
 		}
 		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_KALEOPROCESSID;
+			finderPath = _finderPathWithPaginationFindByKaleoProcessId;
 			finderArgs = new Object[] {
 					kaleoProcessId,
 					
@@ -554,7 +552,7 @@ public class KaleoProcessLinkPersistenceImpl extends BasePersistenceImpl<KaleoPr
 	 */
 	@Override
 	public int countByKaleoProcessId(long kaleoProcessId) {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_KALEOPROCESSID;
+		FinderPath finderPath = _finderPathCountByKaleoProcessId;
 
 		Object[] finderArgs = new Object[] { kaleoProcessId };
 
@@ -598,14 +596,14 @@ public class KaleoProcessLinkPersistenceImpl extends BasePersistenceImpl<KaleoPr
 	}
 
 	private static final String _FINDER_COLUMN_KALEOPROCESSID_KALEOPROCESSID_2 = "kaleoProcessLink.kaleoProcessId = ?";
-	public static final FinderPath FINDER_PATH_FETCH_BY_KPI_WTN = new FinderPath(KaleoProcessLinkModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathFetchByKPI_WTN = new FinderPath(KaleoProcessLinkModelImpl.ENTITY_CACHE_ENABLED,
 			KaleoProcessLinkModelImpl.FINDER_CACHE_ENABLED,
 			KaleoProcessLinkImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByKPI_WTN",
 			new String[] { Long.class.getName(), String.class.getName() },
 			KaleoProcessLinkModelImpl.KALEOPROCESSID_COLUMN_BITMASK |
 			KaleoProcessLinkModelImpl.WORKFLOWTASKNAME_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_KPI_WTN = new FinderPath(KaleoProcessLinkModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathCountByKPI_WTN = new FinderPath(KaleoProcessLinkModelImpl.ENTITY_CACHE_ENABLED,
 			KaleoProcessLinkModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByKPI_WTN",
 			new String[] { Long.class.getName(), String.class.getName() });
@@ -678,7 +676,7 @@ public class KaleoProcessLinkPersistenceImpl extends BasePersistenceImpl<KaleoPr
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = finderCache.getResult(FINDER_PATH_FETCH_BY_KPI_WTN,
+			result = finderCache.getResult(_finderPathFetchByKPI_WTN,
 					finderArgs, this);
 		}
 
@@ -730,7 +728,7 @@ public class KaleoProcessLinkPersistenceImpl extends BasePersistenceImpl<KaleoPr
 				List<KaleoProcessLink> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(FINDER_PATH_FETCH_BY_KPI_WTN,
+					finderCache.putResult(_finderPathFetchByKPI_WTN,
 						finderArgs, list);
 				}
 				else {
@@ -742,8 +740,7 @@ public class KaleoProcessLinkPersistenceImpl extends BasePersistenceImpl<KaleoPr
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(FINDER_PATH_FETCH_BY_KPI_WTN,
-					finderArgs);
+				finderCache.removeResult(_finderPathFetchByKPI_WTN, finderArgs);
 
 				throw processException(e);
 			}
@@ -787,7 +784,7 @@ public class KaleoProcessLinkPersistenceImpl extends BasePersistenceImpl<KaleoPr
 	public int countByKPI_WTN(long kaleoProcessId, String workflowTaskName) {
 		workflowTaskName = Objects.toString(workflowTaskName, "");
 
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_KPI_WTN;
+		FinderPath finderPath = _finderPathCountByKPI_WTN;
 
 		Object[] finderArgs = new Object[] { kaleoProcessId, workflowTaskName };
 
@@ -868,7 +865,7 @@ public class KaleoProcessLinkPersistenceImpl extends BasePersistenceImpl<KaleoPr
 			KaleoProcessLinkImpl.class, kaleoProcessLink.getPrimaryKey(),
 			kaleoProcessLink);
 
-		finderCache.putResult(FINDER_PATH_FETCH_BY_KPI_WTN,
+		finderCache.putResult(_finderPathFetchByKPI_WTN,
 			new Object[] {
 				kaleoProcessLink.getKaleoProcessId(),
 				kaleoProcessLink.getWorkflowTaskName()
@@ -953,9 +950,9 @@ public class KaleoProcessLinkPersistenceImpl extends BasePersistenceImpl<KaleoPr
 				kaleoProcessLinkModelImpl.getWorkflowTaskName()
 			};
 
-		finderCache.putResult(FINDER_PATH_COUNT_BY_KPI_WTN, args,
-			Long.valueOf(1), false);
-		finderCache.putResult(FINDER_PATH_FETCH_BY_KPI_WTN, args,
+		finderCache.putResult(_finderPathCountByKPI_WTN, args, Long.valueOf(1),
+			false);
+		finderCache.putResult(_finderPathFetchByKPI_WTN, args,
 			kaleoProcessLinkModelImpl, false);
 	}
 
@@ -968,19 +965,19 @@ public class KaleoProcessLinkPersistenceImpl extends BasePersistenceImpl<KaleoPr
 					kaleoProcessLinkModelImpl.getWorkflowTaskName()
 				};
 
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_KPI_WTN, args);
-			finderCache.removeResult(FINDER_PATH_FETCH_BY_KPI_WTN, args);
+			finderCache.removeResult(_finderPathCountByKPI_WTN, args);
+			finderCache.removeResult(_finderPathFetchByKPI_WTN, args);
 		}
 
 		if ((kaleoProcessLinkModelImpl.getColumnBitmask() &
-				FINDER_PATH_FETCH_BY_KPI_WTN.getColumnBitmask()) != 0) {
+				_finderPathFetchByKPI_WTN.getColumnBitmask()) != 0) {
 			Object[] args = new Object[] {
 					kaleoProcessLinkModelImpl.getOriginalKaleoProcessId(),
 					kaleoProcessLinkModelImpl.getOriginalWorkflowTaskName()
 				};
 
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_KPI_WTN, args);
-			finderCache.removeResult(FINDER_PATH_FETCH_BY_KPI_WTN, args);
+			finderCache.removeResult(_finderPathCountByKPI_WTN, args);
+			finderCache.removeResult(_finderPathFetchByKPI_WTN, args);
 		}
 	}
 
@@ -1137,34 +1134,32 @@ public class KaleoProcessLinkPersistenceImpl extends BasePersistenceImpl<KaleoPr
 					kaleoProcessLinkModelImpl.getKaleoProcessId()
 				};
 
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_KALEOPROCESSID, args);
-			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_KALEOPROCESSID,
+			finderCache.removeResult(_finderPathCountByKaleoProcessId, args);
+			finderCache.removeResult(_finderPathWithoutPaginationFindByKaleoProcessId,
 				args);
 
-			finderCache.removeResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY);
-			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL,
+			finderCache.removeResult(_finderPathCountAll, FINDER_ARGS_EMPTY);
+			finderCache.removeResult(_finderPathWithoutPaginationFindAll,
 				FINDER_ARGS_EMPTY);
 		}
 
 		else {
 			if ((kaleoProcessLinkModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_KALEOPROCESSID.getColumnBitmask()) != 0) {
+					_finderPathWithoutPaginationFindByKaleoProcessId.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						kaleoProcessLinkModelImpl.getOriginalKaleoProcessId()
 					};
 
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_KALEOPROCESSID,
-					args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_KALEOPROCESSID,
+				finderCache.removeResult(_finderPathCountByKaleoProcessId, args);
+				finderCache.removeResult(_finderPathWithoutPaginationFindByKaleoProcessId,
 					args);
 
 				args = new Object[] {
 						kaleoProcessLinkModelImpl.getKaleoProcessId()
 					};
 
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_KALEOPROCESSID,
-					args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_KALEOPROCESSID,
+				finderCache.removeResult(_finderPathCountByKaleoProcessId, args);
+				finderCache.removeResult(_finderPathWithoutPaginationFindByKaleoProcessId,
 					args);
 			}
 		}
@@ -1297,11 +1292,11 @@ public class KaleoProcessLinkPersistenceImpl extends BasePersistenceImpl<KaleoPr
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 				(orderByComparator == null)) {
 			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL;
+			finderPath = _finderPathWithoutPaginationFindAll;
 			finderArgs = FINDER_ARGS_EMPTY;
 		}
 		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_ALL;
+			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] { start, end, orderByComparator };
 		}
 
@@ -1390,7 +1385,7 @@ public class KaleoProcessLinkPersistenceImpl extends BasePersistenceImpl<KaleoPr
 	 */
 	@Override
 	public int countAll() {
-		Long count = (Long)finderCache.getResult(FINDER_PATH_COUNT_ALL,
+		Long count = (Long)finderCache.getResult(_finderPathCountAll,
 				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
@@ -1403,12 +1398,11 @@ public class KaleoProcessLinkPersistenceImpl extends BasePersistenceImpl<KaleoPr
 
 				count = (Long)q.uniqueResult();
 
-				finderCache.putResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY,
+				finderCache.putResult(_finderPathCountAll, FINDER_ARGS_EMPTY,
 					count);
 			}
 			catch (Exception e) {
-				finderCache.removeResult(FINDER_PATH_COUNT_ALL,
-					FINDER_ARGS_EMPTY);
+				finderCache.removeResult(_finderPathCountAll, FINDER_ARGS_EMPTY);
 
 				throw processException(e);
 			}

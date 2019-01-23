@@ -78,19 +78,18 @@ public class SamlIdpSpConnectionPersistenceImpl extends BasePersistenceImpl<Saml
 		".List1";
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION = FINDER_CLASS_NAME_ENTITY +
 		".List2";
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_ALL = new FinderPath(SamlIdpSpConnectionModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathWithPaginationFindAll = new FinderPath(SamlIdpSpConnectionModelImpl.ENTITY_CACHE_ENABLED,
 			SamlIdpSpConnectionModelImpl.FINDER_CACHE_ENABLED,
 			SamlIdpSpConnectionImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL = new FinderPath(SamlIdpSpConnectionModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathWithoutPaginationFindAll = new FinderPath(SamlIdpSpConnectionModelImpl.ENTITY_CACHE_ENABLED,
 			SamlIdpSpConnectionModelImpl.FINDER_CACHE_ENABLED,
 			SamlIdpSpConnectionImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0]);
-	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(SamlIdpSpConnectionModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathCountAll = new FinderPath(SamlIdpSpConnectionModelImpl.ENTITY_CACHE_ENABLED,
 			SamlIdpSpConnectionModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_COMPANYID =
-		new FinderPath(SamlIdpSpConnectionModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathWithPaginationFindByCompanyId = new FinderPath(SamlIdpSpConnectionModelImpl.ENTITY_CACHE_ENABLED,
 			SamlIdpSpConnectionModelImpl.FINDER_CACHE_ENABLED,
 			SamlIdpSpConnectionImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
@@ -100,14 +99,13 @@ public class SamlIdpSpConnectionPersistenceImpl extends BasePersistenceImpl<Saml
 			Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
 			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID =
-		new FinderPath(SamlIdpSpConnectionModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathWithoutPaginationFindByCompanyId = new FinderPath(SamlIdpSpConnectionModelImpl.ENTITY_CACHE_ENABLED,
 			SamlIdpSpConnectionModelImpl.FINDER_CACHE_ENABLED,
 			SamlIdpSpConnectionImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
 			new String[] { Long.class.getName() },
 			SamlIdpSpConnectionModelImpl.COMPANYID_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_COMPANYID = new FinderPath(SamlIdpSpConnectionModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathCountByCompanyId = new FinderPath(SamlIdpSpConnectionModelImpl.ENTITY_CACHE_ENABLED,
 			SamlIdpSpConnectionModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
 			new String[] { Long.class.getName() });
@@ -186,11 +184,11 @@ public class SamlIdpSpConnectionPersistenceImpl extends BasePersistenceImpl<Saml
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 				(orderByComparator == null)) {
 			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID;
+			finderPath = _finderPathWithoutPaginationFindByCompanyId;
 			finderArgs = new Object[] { companyId };
 		}
 		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_COMPANYID;
+			finderPath = _finderPathWithPaginationFindByCompanyId;
 			finderArgs = new Object[] { companyId, start, end, orderByComparator };
 		}
 
@@ -554,7 +552,7 @@ public class SamlIdpSpConnectionPersistenceImpl extends BasePersistenceImpl<Saml
 	 */
 	@Override
 	public int countByCompanyId(long companyId) {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_COMPANYID;
+		FinderPath finderPath = _finderPathCountByCompanyId;
 
 		Object[] finderArgs = new Object[] { companyId };
 
@@ -598,14 +596,14 @@ public class SamlIdpSpConnectionPersistenceImpl extends BasePersistenceImpl<Saml
 	}
 
 	private static final String _FINDER_COLUMN_COMPANYID_COMPANYID_2 = "samlIdpSpConnection.companyId = ?";
-	public static final FinderPath FINDER_PATH_FETCH_BY_C_SSEI = new FinderPath(SamlIdpSpConnectionModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathFetchByC_SSEI = new FinderPath(SamlIdpSpConnectionModelImpl.ENTITY_CACHE_ENABLED,
 			SamlIdpSpConnectionModelImpl.FINDER_CACHE_ENABLED,
 			SamlIdpSpConnectionImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByC_SSEI",
 			new String[] { Long.class.getName(), String.class.getName() },
 			SamlIdpSpConnectionModelImpl.COMPANYID_COLUMN_BITMASK |
 			SamlIdpSpConnectionModelImpl.SAMLSPENTITYID_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_C_SSEI = new FinderPath(SamlIdpSpConnectionModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathCountByC_SSEI = new FinderPath(SamlIdpSpConnectionModelImpl.ENTITY_CACHE_ENABLED,
 			SamlIdpSpConnectionModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_SSEI",
 			new String[] { Long.class.getName(), String.class.getName() });
@@ -678,7 +676,7 @@ public class SamlIdpSpConnectionPersistenceImpl extends BasePersistenceImpl<Saml
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = finderCache.getResult(FINDER_PATH_FETCH_BY_C_SSEI,
+			result = finderCache.getResult(_finderPathFetchByC_SSEI,
 					finderArgs, this);
 		}
 
@@ -730,8 +728,8 @@ public class SamlIdpSpConnectionPersistenceImpl extends BasePersistenceImpl<Saml
 				List<SamlIdpSpConnection> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(FINDER_PATH_FETCH_BY_C_SSEI,
-						finderArgs, list);
+					finderCache.putResult(_finderPathFetchByC_SSEI, finderArgs,
+						list);
 				}
 				else {
 					if (list.size() > 1) {
@@ -753,7 +751,7 @@ public class SamlIdpSpConnectionPersistenceImpl extends BasePersistenceImpl<Saml
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(FINDER_PATH_FETCH_BY_C_SSEI, finderArgs);
+				finderCache.removeResult(_finderPathFetchByC_SSEI, finderArgs);
 
 				throw processException(e);
 			}
@@ -797,7 +795,7 @@ public class SamlIdpSpConnectionPersistenceImpl extends BasePersistenceImpl<Saml
 	public int countByC_SSEI(long companyId, String samlSpEntityId) {
 		samlSpEntityId = Objects.toString(samlSpEntityId, "");
 
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_C_SSEI;
+		FinderPath finderPath = _finderPathCountByC_SSEI;
 
 		Object[] finderArgs = new Object[] { companyId, samlSpEntityId };
 
@@ -878,7 +876,7 @@ public class SamlIdpSpConnectionPersistenceImpl extends BasePersistenceImpl<Saml
 			SamlIdpSpConnectionImpl.class, samlIdpSpConnection.getPrimaryKey(),
 			samlIdpSpConnection);
 
-		finderCache.putResult(FINDER_PATH_FETCH_BY_C_SSEI,
+		finderCache.putResult(_finderPathFetchByC_SSEI,
 			new Object[] {
 				samlIdpSpConnection.getCompanyId(),
 				samlIdpSpConnection.getSamlSpEntityId()
@@ -964,9 +962,9 @@ public class SamlIdpSpConnectionPersistenceImpl extends BasePersistenceImpl<Saml
 				samlIdpSpConnectionModelImpl.getSamlSpEntityId()
 			};
 
-		finderCache.putResult(FINDER_PATH_COUNT_BY_C_SSEI, args,
-			Long.valueOf(1), false);
-		finderCache.putResult(FINDER_PATH_FETCH_BY_C_SSEI, args,
+		finderCache.putResult(_finderPathCountByC_SSEI, args, Long.valueOf(1),
+			false);
+		finderCache.putResult(_finderPathFetchByC_SSEI, args,
 			samlIdpSpConnectionModelImpl, false);
 	}
 
@@ -979,19 +977,19 @@ public class SamlIdpSpConnectionPersistenceImpl extends BasePersistenceImpl<Saml
 					samlIdpSpConnectionModelImpl.getSamlSpEntityId()
 				};
 
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_C_SSEI, args);
-			finderCache.removeResult(FINDER_PATH_FETCH_BY_C_SSEI, args);
+			finderCache.removeResult(_finderPathCountByC_SSEI, args);
+			finderCache.removeResult(_finderPathFetchByC_SSEI, args);
 		}
 
 		if ((samlIdpSpConnectionModelImpl.getColumnBitmask() &
-				FINDER_PATH_FETCH_BY_C_SSEI.getColumnBitmask()) != 0) {
+				_finderPathFetchByC_SSEI.getColumnBitmask()) != 0) {
 			Object[] args = new Object[] {
 					samlIdpSpConnectionModelImpl.getOriginalCompanyId(),
 					samlIdpSpConnectionModelImpl.getOriginalSamlSpEntityId()
 				};
 
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_C_SSEI, args);
-			finderCache.removeResult(FINDER_PATH_FETCH_BY_C_SSEI, args);
+			finderCache.removeResult(_finderPathCountByC_SSEI, args);
+			finderCache.removeResult(_finderPathFetchByC_SSEI, args);
 		}
 	}
 
@@ -1176,30 +1174,30 @@ public class SamlIdpSpConnectionPersistenceImpl extends BasePersistenceImpl<Saml
 					samlIdpSpConnectionModelImpl.getCompanyId()
 				};
 
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_COMPANYID, args);
-			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
+			finderCache.removeResult(_finderPathCountByCompanyId, args);
+			finderCache.removeResult(_finderPathWithoutPaginationFindByCompanyId,
 				args);
 
-			finderCache.removeResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY);
-			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL,
+			finderCache.removeResult(_finderPathCountAll, FINDER_ARGS_EMPTY);
+			finderCache.removeResult(_finderPathWithoutPaginationFindAll,
 				FINDER_ARGS_EMPTY);
 		}
 
 		else {
 			if ((samlIdpSpConnectionModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID.getColumnBitmask()) != 0) {
+					_finderPathWithoutPaginationFindByCompanyId.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						samlIdpSpConnectionModelImpl.getOriginalCompanyId()
 					};
 
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_COMPANYID, args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
+				finderCache.removeResult(_finderPathCountByCompanyId, args);
+				finderCache.removeResult(_finderPathWithoutPaginationFindByCompanyId,
 					args);
 
 				args = new Object[] { samlIdpSpConnectionModelImpl.getCompanyId() };
 
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_COMPANYID, args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
+				finderCache.removeResult(_finderPathCountByCompanyId, args);
+				finderCache.removeResult(_finderPathWithoutPaginationFindByCompanyId,
 					args);
 			}
 		}
@@ -1332,11 +1330,11 @@ public class SamlIdpSpConnectionPersistenceImpl extends BasePersistenceImpl<Saml
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 				(orderByComparator == null)) {
 			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL;
+			finderPath = _finderPathWithoutPaginationFindAll;
 			finderArgs = FINDER_ARGS_EMPTY;
 		}
 		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_ALL;
+			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] { start, end, orderByComparator };
 		}
 
@@ -1425,7 +1423,7 @@ public class SamlIdpSpConnectionPersistenceImpl extends BasePersistenceImpl<Saml
 	 */
 	@Override
 	public int countAll() {
-		Long count = (Long)finderCache.getResult(FINDER_PATH_COUNT_ALL,
+		Long count = (Long)finderCache.getResult(_finderPathCountAll,
 				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
@@ -1438,12 +1436,11 @@ public class SamlIdpSpConnectionPersistenceImpl extends BasePersistenceImpl<Saml
 
 				count = (Long)q.uniqueResult();
 
-				finderCache.putResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY,
+				finderCache.putResult(_finderPathCountAll, FINDER_ARGS_EMPTY,
 					count);
 			}
 			catch (Exception e) {
-				finderCache.removeResult(FINDER_PATH_COUNT_ALL,
-					FINDER_ARGS_EMPTY);
+				finderCache.removeResult(_finderPathCountAll, FINDER_ARGS_EMPTY);
 
 				throw processException(e);
 			}

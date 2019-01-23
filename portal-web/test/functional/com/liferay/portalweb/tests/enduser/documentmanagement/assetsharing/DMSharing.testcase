@@ -74,23 +74,11 @@ definition {
 	@description = "This test ensures that users receive a notification in portal when a document is shared to them. This test also asserts that users do not lose previous notifications even after the document is no longer shared."
 	@priority = "4"
 	test AssertNotifications {
-		DMDocument.addPG(
+		DMDocumentSharing.addDocumentWithOnlyOwnerPermissions(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "DM Document Title",
-			viewableBy = "Owner"
+			dmDocumentTitle = "DM Document Title"
 		);
-
-		DMNavigator.gotoDocumentPermissionsCP(dmDocumentTitle = "DM Document Title");
-
-		Role.removePermissionPG(
-			permissionDefinitionKey = "INLINE_PERMISSIONS_ADD_DISCUSSION_CHECKBOX",
-			roleTitle = "Guest"
-		);
-
-		IFrame.closeFrame();
-
-		Pause(locator1 = "5000");
 
 		DMNavigator.gotoShare(dmDocumentTitle = "DM Document Title");
 
@@ -170,23 +158,11 @@ definition {
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		DMDocument.addPG(
+		DMDocumentSharing.addDocumentWithOnlyOwnerPermissions(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "DM Document Title",
-			viewableBy = "Owner"
+			dmDocumentTitle = "DM Document Title"
 		);
-
-		DMNavigator.gotoDocumentPermissionsCP(dmDocumentTitle = "DM Document Title");
-
-		Role.removePermissionPG(
-			permissionDefinitionKey = "INLINE_PERMISSIONS_ADD_DISCUSSION_CHECKBOX",
-			roleTitle = "Guest"
-		);
-
-		IFrame.closeFrame();
-
-		Pause(locator1 = "5000");
 
 		DMNavigator.gotoShare(dmDocumentTitle = "DM Document Title");
 
@@ -348,23 +324,11 @@ definition {
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		DMDocument.addPG(
+		DMDocumentSharing.addDocumentWithOnlyOwnerPermissions(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "DM Document Title",
-			viewableBy = "Owner"
+			dmDocumentTitle = "DM Document Title"
 		);
-
-		DMNavigator.gotoDocumentPermissionsCP(dmDocumentTitle = "DM Document Title");
-
-		Role.removePermissionPG(
-			permissionDefinitionKey = "INLINE_PERMISSIONS_ADD_DISCUSSION_CHECKBOX",
-			roleTitle = "Guest"
-		);
-
-		IFrame.closeFrame();
-
-		Pause(locator1 = "5000");
 
 		DMNavigator.gotoShare(dmDocumentTitle = "DM Document Title");
 
@@ -403,23 +367,11 @@ definition {
 	@description = "This test ensures that users receive a notification in portal when a document is shared to them, and that clicking on that notification navigates them to the Shared With Me app."
 	@priority = "4"
 	test GoToSharedWithMeViaNotifications {
-		DMDocument.addPG(
+		DMDocumentSharing.addDocumentWithOnlyOwnerPermissions(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "DM Document Title",
-			viewableBy = "Owner"
+			dmDocumentTitle = "DM Document Title"
 		);
-
-		DMNavigator.gotoDocumentPermissionsCP(dmDocumentTitle = "DM Document Title");
-
-		Role.removePermissionPG(
-			permissionDefinitionKey = "INLINE_PERMISSIONS_ADD_DISCUSSION_CHECKBOX",
-			roleTitle = "Guest"
-		);
-
-		IFrame.closeFrame();
-
-		Pause(locator1 = "5000");
 
 		DMNavigator.gotoShare(dmDocumentTitle = "DM Document Title");
 
@@ -449,23 +401,11 @@ definition {
 	@description = "This use case covers sharing a document to a user, and changing its sharing permissions via Manage Collaborators. This test also covers permissions and making sure users only have access to sharing permissions assigned to him. "
 	@priority = "5"
 	test ManageCollaborators {
-		DMDocument.addPG(
+		DMDocumentSharing.addDocumentWithOnlyOwnerPermissions(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "DM Document Title",
-			viewableBy = "Owner"
+			dmDocumentTitle = "DM Document Title"
 		);
-
-		DMNavigator.gotoDocumentPermissionsCP(dmDocumentTitle = "DM Document Title");
-
-		Role.removePermissionPG(
-			permissionDefinitionKey = "INLINE_PERMISSIONS_ADD_DISCUSSION_CHECKBOX",
-			roleTitle = "Guest"
-		);
-
-		IFrame.closeFrame();
-
-		Pause(locator1 = "5000");
 
 		DMNavigator.gotoShare(dmDocumentTitle = "DM Document Title");
 
@@ -603,23 +543,11 @@ definition {
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		DMDocument.addPG(
+		DMDocumentSharing.addDocumentWithOnlyOwnerPermissions(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "DM Document Title",
-			viewableBy = "Owner"
+			dmDocumentTitle = "DM Document Title"
 		);
-
-		DMNavigator.gotoDocumentPermissionsCP(dmDocumentTitle = "DM Document Title");
-
-		Role.removePermissionPG(
-			permissionDefinitionKey = "INLINE_PERMISSIONS_ADD_DISCUSSION_CHECKBOX",
-			roleTitle = "Guest"
-		);
-
-		IFrame.closeFrame();
-
-		Pause(locator1 = "5000");
 
 		DMNavigator.gotoShare(dmDocumentTitle = "DM Document Title");
 
@@ -683,23 +611,11 @@ definition {
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		DMDocument.addPG(
+		DMDocumentSharing.addDocumentWithOnlyOwnerPermissions(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "DM Document Title",
-			viewableBy = "Owner"
+			dmDocumentTitle = "DM Document Title"
 		);
-
-		DMNavigator.gotoDocumentPermissionsCP(dmDocumentTitle = "DM Document Title");
-
-		Role.removePermissionPG(
-			permissionDefinitionKey = "INLINE_PERMISSIONS_ADD_DISCUSSION_CHECKBOX",
-			roleTitle = "Guest"
-		);
-
-		IFrame.closeFrame();
-
-		Pause(locator1 = "5000");
 
 		DMNavigator.gotoShare(dmDocumentTitle = "DM Document Title");
 

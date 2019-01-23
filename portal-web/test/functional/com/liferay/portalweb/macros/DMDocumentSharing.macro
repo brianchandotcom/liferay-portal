@@ -7,6 +7,26 @@ definition {
 		AssertClick(locator1 = "Button#ANY", value1 = "Manage Collaborators");
 	}
 
+	macro addDocumentWithOnlyOwnerPermissions {
+		DMDocument.addPG(
+			dmDocumentDescription = "${dmDocumentDescription}",
+			dmDocumentFile = "${dmDocumentFile}",
+			dmDocumentTitle = "${dmDocumentTitle}",
+			viewableBy = "Owner"
+		);
+
+		DMNavigator.gotoDocumentPermissionsCP(dmDocumentTitle = "${dmDocumentTitle}");
+
+		Role.removePermissionPG(
+			permissionDefinitionKey = "INLINE_PERMISSIONS_ADD_DISCUSSION_CHECKBOX",
+			roleTitle = "Guest"
+		);
+
+		IFrame.closeFrame();
+
+		Pause(locator1 = "5000");
+	}
+
 	macro changePermission {
 		DMDocument.viewPG(
 			dmDocumentDescription = "${dmDocumentDescription}",

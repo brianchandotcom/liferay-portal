@@ -58,8 +58,8 @@ class ClayButton extends Component {
 		const classes = getCN(
 			'btn',
 			`${stylePrefix}${style}`,
-			size ? `btn-${size}` : null,
 			{
+				[`btn-${size}`]: size,
 				'btn-monospaced': monospaced,
 				'btn-outline-borderless': borderless
 			},

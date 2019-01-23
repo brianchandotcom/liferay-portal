@@ -10,6 +10,10 @@ import {CONJUNCTIONS} from '../../utils/constants.es';
 import Conjunction from './Conjunction.es';
 
 class ContributorBuilder extends React.Component {
+	static propTypes = {
+		onQueryChange: null
+	}
+
 	constructor(props) {
 		super(props);
 
@@ -72,7 +76,7 @@ class ContributorBuilder extends React.Component {
 
 				return diffState;
 			},
-			() => onQueryChange && onQueryChange()
+			onQueryChange
 		);
 	}
 
@@ -127,7 +131,7 @@ class ContributorBuilder extends React.Component {
 					contributors
 				};
 			},
-			() => onQueryChange && onQueryChange()
+			onQueryChange
 		);
 	}
 

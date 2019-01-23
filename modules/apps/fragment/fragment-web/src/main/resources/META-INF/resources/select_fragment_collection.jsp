@@ -41,31 +41,9 @@ SelectFragmentCollectionManagementToolbarDisplayContext selectFragmentCollection
 			%>
 
 			<liferay-ui:search-container-column-text>
-				<liferay-ui:search-container-column-text
-					colspan="<%= 2 %>"
-				>
-
-					<%
-					Map<String, Object> data = new HashMap<String, Object>();
-
-					data.put("id", fragmentCollection.getFragmentCollectionId());
-					data.put("name", fragmentCollection.getName());
-					%>
-
-					<liferay-frontend:horizontal-card
-						cssClass="selector-button"
-						data="<%= data %>"
-						resultRow="<%= row %>"
-						text="<%= HtmlUtil.escape(fragmentCollection.getName()) %>"
-						url="javascript:;"
-					>
-						<liferay-frontend:horizontal-card-col>
-							<liferay-frontend:horizontal-card-icon
-								icon="documents-and-media"
-							/>
-						</liferay-frontend:horizontal-card-col>
-					</liferay-frontend:horizontal-card>
-				</liferay-ui:search-container-column-text>
+				<clay:horizontal-card
+					horizontalCard="<%= new FragmentCollectionHorizontalCard(fragmentCollection) %>"
+				/>
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 

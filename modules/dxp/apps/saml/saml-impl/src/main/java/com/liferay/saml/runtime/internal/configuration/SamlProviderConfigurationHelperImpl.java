@@ -50,7 +50,7 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = Constants.SERVICE_PID + "=" + SamlProviderConfigurationHelperImpl.FACTORY_PID,
 	service = {
-		SamlProviderConfigurationHelper.class, ManagedServiceFactory.class
+		ManagedServiceFactory.class, SamlProviderConfigurationHelper.class
 	}
 )
 public class SamlProviderConfigurationHelperImpl

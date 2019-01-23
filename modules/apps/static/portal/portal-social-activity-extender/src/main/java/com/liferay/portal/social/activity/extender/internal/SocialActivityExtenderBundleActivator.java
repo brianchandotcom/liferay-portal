@@ -37,7 +37,7 @@ import org.osgi.util.tracker.ServiceTracker;
 /**
  * @author Shuyang Zhou
  */
-public class SocialActivityExtenderActivator implements BundleActivator {
+public class SocialActivityExtenderBundleActivator implements BundleActivator {
 
 	@Override
 	public void start(BundleContext bundleContext) {
@@ -80,7 +80,7 @@ public class SocialActivityExtenderActivator implements BundleActivator {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		SocialActivityExtender.class);
+		SocialActivityExtenderBundleActivator.class);
 
 	private ServiceTracker<SocialConfiguration, BundleTracker<Void>>
 		_serviceTracker;

@@ -37,7 +37,7 @@ import org.osgi.framework.ServiceRegistration;
 /**
  * @author Carlos Sierra Andrés
  */
-public class ConfigurationPersistenceImpBundleActivator
+public class ConfigurationPersistenceImplBundleActivator
 	implements BundleActivator {
 
 	@Override

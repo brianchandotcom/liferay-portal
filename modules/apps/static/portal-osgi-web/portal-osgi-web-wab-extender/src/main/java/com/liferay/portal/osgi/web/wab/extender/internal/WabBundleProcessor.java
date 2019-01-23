@@ -532,6 +532,8 @@ public class WabBundleProcessor {
 			ServletContext servletContext)
 		throws Exception {
 
+		boolean registeredPortletContextLoaderListener = false;
+
 		for (ListenerDefinition listenerDefinition : listenerDefinitions) {
 			Dictionary<String, Object> properties = new HashMapDictionary<>();
 
@@ -558,6 +560,32 @@ public class WabBundleProcessor {
 					listenerDefinition.getEventListener())) {
 
 				continue;
+			}
+
+			if (!registeredPortletContextLoaderListener) {
+				ServletContextListenerExceptionAdapter
+					servletContextListenerExceptionAdaptor =
+						new ServletContextListenerExceptionAdapter(
+							new PortletContextLoaderListener(_logger),
+							servletContext);
+
+				ServiceRegistration<?> serviceRegistration =
+					_bundleContext.registerService(
+						ServletContextListener.class,
+						servletContextListenerExceptionAdaptor, properties);
+
+				Exception exception =
+					servletContextListenerExceptionAdaptor.getException();
+
+				if (exception != null) {
+					serviceRegistration.unregister();
+
+					throw exception;
+				}
+
+				_listenerServiceRegistrations.add(serviceRegistration);
+
+				registeredPortletContextLoaderListener = true;
 			}
 
 			ServletContextListenerExceptionAdapter

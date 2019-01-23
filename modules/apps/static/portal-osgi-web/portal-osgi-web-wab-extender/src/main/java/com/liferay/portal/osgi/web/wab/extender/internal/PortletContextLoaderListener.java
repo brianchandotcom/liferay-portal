@@ -12,14 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.spring.context;
+package com.liferay.portal.osgi.web.wab.extender.internal;
 
 import com.liferay.portal.bean.BeanLocatorImpl;
 import com.liferay.portal.kernel.bean.BeanLocator;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
 import com.liferay.portal.kernel.servlet.ServletContextClassLoaderPool;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.MethodKey;
@@ -30,6 +29,8 @@ import java.lang.reflect.Method;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
+
+import org.apache.felix.utils.log.Logger;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.event.ContextClosedEvent;
@@ -43,6 +44,10 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
  * @see    PortletApplicationContext
  */
 public class PortletContextLoaderListener extends ContextLoaderListener {
+
+	public PortletContextLoaderListener(Logger logger) {
+		_logger = logger;
+	}
 
 	@Override
 	public void contextDestroyed(ServletContextEvent servletContextEvent) {
@@ -72,9 +77,7 @@ public class PortletContextLoaderListener extends ContextLoaderListener {
 				servletContext.getServletContextName(), null);
 		}
 		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
-			}
+			_logger.log(Logger.LOG_WARNING, e.getMessage(), e);
 		}
 
 		super.contextDestroyed(servletContextEvent);
@@ -101,7 +104,15 @@ public class PortletContextLoaderListener extends ContextLoaderListener {
 					servletContext.getServletContextName());
 		}
 
-		super.contextInitialized(servletContextEvent);
+		PortletClassLoaderUtil.setServletContextName(
+			servletContext.getServletContextName());
+
+		try {
+			super.contextInitialized(servletContextEvent);
+		}
+		finally {
+			PortletClassLoaderUtil.setServletContextName(null);
+		}
 
 		ApplicationContext applicationContext =
 			WebApplicationContextUtils.getWebApplicationContext(servletContext);
@@ -126,7 +137,7 @@ public class PortletContextLoaderListener extends ContextLoaderListener {
 				servletContext.getServletContextName(), beanLocatorImpl);
 		}
 		catch (Exception e) {
-			_log.error(e, e);
+			_logger.log(Logger.LOG_ERROR, e.getMessage(), e);
 		}
 
 		if (previousApplicationContext == null) {
@@ -138,6 +149,13 @@ public class PortletContextLoaderListener extends ContextLoaderListener {
 				WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE,
 				previousApplicationContext);
 		}
+	}
+
+	@Override
+	protected WebApplicationContext createWebApplicationContext(
+		ServletContext servletContext) {
+
+		return new PortletApplicationContext(_logger);
 	}
 
 	@Override
@@ -185,11 +203,6 @@ public class PortletContextLoaderListener extends ContextLoaderListener {
 	}
 
 	@Override
-	protected Class<?> determineContextClass(ServletContext servletContext) {
-		return PortletApplicationContext.class;
-	}
-
-	@Override
 	protected ApplicationContext loadParentContext(
 		ServletContext servletContext) {
 
@@ -199,7 +212,6 @@ public class PortletContextLoaderListener extends ContextLoaderListener {
 	private static final String _PORTAL_CONFIG_LOCATION_PARAM =
 		"portalContextConfigLocation";
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		PortletContextLoaderListener.class);
+	private final Logger _logger;
 
 }

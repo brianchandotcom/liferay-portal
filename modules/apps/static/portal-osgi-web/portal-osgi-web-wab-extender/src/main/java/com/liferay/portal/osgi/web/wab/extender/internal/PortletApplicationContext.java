@@ -12,27 +12,25 @@
  * details.
  */
 
-package com.liferay.portal.spring.context;
+package com.liferay.portal.osgi.web.wab.extender.internal;
 
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
 import com.liferay.portal.kernel.util.AggregateClassLoader;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.spring.bean.LiferayBeanFactory;
 import com.liferay.portal.spring.util.FilterClassLoader;
 
 import java.io.FileNotFoundException;
 
 import java.util.List;
 
+import org.apache.felix.utils.log.Logger;
+
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
-import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.beans.factory.support.RootBeanDefinition;
 import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
 import org.springframework.web.context.support.XmlWebApplicationContext;
@@ -50,7 +48,9 @@ import org.springframework.web.context.support.XmlWebApplicationContext;
  */
 public class PortletApplicationContext extends XmlWebApplicationContext {
 
-	public PortletApplicationContext() {
+	public PortletApplicationContext(Logger logger) {
+		_logger = logger;
+
 		ClassLoader beanClassLoader =
 			AggregateClassLoader.getAggregateClassLoader(
 				new ClassLoader[] {
@@ -59,11 +59,6 @@ public class PortletApplicationContext extends XmlWebApplicationContext {
 				});
 
 		setClassLoader(new FilterClassLoader(beanClassLoader));
-	}
-
-	@Override
-	protected DefaultListableBeanFactory createBeanFactory() {
-		return new LiferayBeanFactory(getInternalParentBeanFactory());
 	}
 
 	@Override
@@ -84,9 +79,7 @@ public class PortletApplicationContext extends XmlWebApplicationContext {
 					classLoader, "service");
 		}
 		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to read service.properties");
-			}
+			_logger.log(Logger.LOG_DEBUG, "Unable to read service.properties");
 
 			return configLocations;
 		}
@@ -145,18 +138,15 @@ public class PortletApplicationContext extends XmlWebApplicationContext {
 				Throwable cause = e.getCause();
 
 				if (cause instanceof FileNotFoundException) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(cause.getMessage());
-					}
+					_logger.log(Logger.LOG_DEBUG, cause.getMessage());
 				}
 				else {
-					_log.error(e, e);
+					_logger.log(Logger.LOG_ERROR, cause.getMessage(), cause);
 				}
 			}
 		}
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		PortletApplicationContext.class);
+	private final Logger _logger;
 
 }

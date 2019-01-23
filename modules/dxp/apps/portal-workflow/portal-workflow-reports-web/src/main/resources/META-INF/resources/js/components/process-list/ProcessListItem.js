@@ -13,7 +13,13 @@ export default class ProcessListItem extends React.Component {
 
 		return (
 			<tr>
-				<td className="text-semi-bold">{processName}</td>
+				<td className="table-cell-expand">
+					<div className="table-list-title">
+						<span className="text-truncate-inline">
+							<span title={processName}>{processName}</span>
+						</span>
+					</div>
+				</td>
 				<td>{sub(instanceMessage, [instancesCount])}</td>
 				<td>{onTime}</td>
 				<td>{overdue}</td>

@@ -1,8 +1,4 @@
 {
-	"ecmaFeatures": {
-		"jsx": true,
-		"modules": true
-	},
 	"env": {
 		"browser": true,
 		"es6": true,
@@ -29,7 +25,8 @@
 		"sourceType": "module"
 	},
 	"plugins": [
-		"react"
+		"react",
+		"wyze"
 	],
 	"rules": {
 		"comma-dangle": 0,
@@ -132,6 +129,14 @@
 			}
 		],
 		"sort-vars": 2,
-		"valid-jsdoc": 0
+		"valid-jsdoc": 0,
+		"wyze/sort-destructuring-keys": "warn"
+	},
+	"settings": {
+		"react": {
+			"createClass": "createReactClass",
+			"pragma": "React",
+			"version": "detect"
+		}
 	}
 }

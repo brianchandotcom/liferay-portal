@@ -15,7 +15,7 @@
 package com.liferay.document.library.internal.util;
 
 import com.liferay.document.library.kernel.model.DLFolderConstants;
-import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.util.DL;
 import com.liferay.document.library.kernel.util.ImageProcessorUtil;
 import com.liferay.document.library.kernel.util.PDFProcessorUtil;
@@ -29,26 +29,30 @@ import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.HttpUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.webdav.DLWebDAVUtil;
-import com.liferay.trash.kernel.util.TrashUtil;
+import com.liferay.trash.TrashHelper;
 
 import java.util.Date;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Adolfo Pérez
  */
+@Component(immediate = true, service = DLURLHelper.class)
 public class DLURLHelperImpl implements DLURLHelper {
 
 	@Override
@@ -69,7 +73,7 @@ public class DLURLHelperImpl implements DLURLHelper {
 			fileEntry, fileVersion, themeDisplay, queryString, appendVersion,
 			absoluteURL);
 
-		return HttpUtil.addParameter(previewURL, "download", true);
+		return _http.addParameter(previewURL, "download", true);
 	}
 
 	@Override
@@ -79,7 +83,7 @@ public class DLURLHelperImpl implements DLURLHelper {
 		String portletId = PortletProviderUtil.getPortletId(
 			FileEntry.class.getName(), PortletProvider.Action.MANAGE);
 
-		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
+		PortletURL portletURL = _portal.getControlPanelPortletURL(
 			portletRequest, portletId, PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter(
@@ -96,7 +100,7 @@ public class DLURLHelperImpl implements DLURLHelper {
 		String portletId = PortletProviderUtil.getPortletId(
 			Folder.class.getName(), PortletProvider.Action.MANAGE);
 
-		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
+		PortletURL portletURL = _portal.getControlPanelPortletURL(
 			portletRequest, portletId, PortletRequest.RENDER_PHASE);
 
 		if (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
@@ -180,7 +184,7 @@ public class DLURLHelperImpl implements DLURLHelper {
 			sb.append(themeDisplay.getPortalURL());
 		}
 
-		sb.append(PortalUtil.getPathContext());
+		sb.append(_portal.getPathContext());
 		sb.append("/documents/");
 		sb.append(fileEntry.getRepositoryId());
 		sb.append(StringPool.SLASH);
@@ -190,7 +194,7 @@ public class DLURLHelperImpl implements DLURLHelper {
 		String fileName = fileEntry.getFileName();
 
 		if (fileEntry.isInTrash()) {
-			fileName = TrashUtil.getOriginalTitle(fileEntry.getFileName());
+			fileName = _trashHelper.getOriginalTitle(fileEntry.getFileName());
 		}
 
 		sb.append(URLCodec.encodeURL(HtmlUtil.unescape(fileName)));
@@ -216,7 +220,7 @@ public class DLURLHelperImpl implements DLURLHelper {
 		String previewURL = sb.toString();
 
 		if ((themeDisplay != null) && themeDisplay.isAddSessionIdToURL()) {
-			return PortalUtil.getURLWithSessionId(
+			return _portal.getURLWithSessionId(
 				previewURL, themeDisplay.getSessionId());
 		}
 
@@ -290,7 +294,7 @@ public class DLURLHelperImpl implements DLURLHelper {
 			secure = true;
 		}
 
-		String portalURL = PortalUtil.getPortalURL(
+		String portalURL = _portal.getPortalURL(
 			themeDisplay.getServerName(), themeDisplay.getServerPort(), secure);
 
 		webDavURLSB.append(portalURL);
@@ -305,7 +309,7 @@ public class DLURLHelperImpl implements DLURLHelper {
 		Group group = null;
 
 		if (fileEntry != null) {
-			group = GroupLocalServiceUtil.getGroup(fileEntry.getGroupId());
+			group = _groupLocalService.getGroup(fileEntry.getGroupId());
 		}
 		else {
 			group = themeDisplay.getScopeGroup();
@@ -332,7 +336,7 @@ public class DLURLHelperImpl implements DLURLHelper {
 					break;
 				}
 
-				curFolder = DLAppLocalServiceUtil.getFolder(
+				curFolder = _dlAppLocalService.getFolder(
 					curFolder.getParentFolderId());
 			}
 		}
@@ -369,5 +373,20 @@ public class DLURLHelperImpl implements DLURLHelper {
 
 		return thumbnailSrc;
 	}
+
+	@Reference
+	private DLAppLocalService _dlAppLocalService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private Http _http;
+
+	@Reference
+	private Portal _portal;
+
+	@Reference
+	private TrashHelper _trashHelper;
 
 }

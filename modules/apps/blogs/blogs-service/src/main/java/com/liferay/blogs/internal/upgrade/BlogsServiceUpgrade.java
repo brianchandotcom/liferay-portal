@@ -61,11 +61,11 @@ public class BlogsServiceUpgrade implements UpgradeStepRegistrator {
 	@Reference
 	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
 
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
-	private ModuleServiceLifecycle _moduleServiceLifecycle;
-
 	@Reference
 	private ImageLocalService _imageLocalService;
+
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
+	private ModuleServiceLifecycle _moduleServiceLifecycle;
 
 	@Reference
 	private PortletFileRepository _portletFileRepository;

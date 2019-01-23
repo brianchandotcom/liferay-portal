@@ -14,13 +14,13 @@
 
 package com.liferay.arquillian.extension.junit.bridge.container.remote;
 
-import org.jboss.arquillian.container.osgi.jmx.JMXContainerConfiguration;
+import org.jboss.arquillian.container.spi.client.container.ContainerConfiguration;
 
 /**
  * @author Preston Crary
  */
 public class LiferayRemoteContainerConfiguration
-	extends JMXContainerConfiguration {
+	implements ContainerConfiguration {
 
 	public static final String LIFERAY_DEFAULT_HTTP_HOST = "localhost";
 
@@ -41,7 +41,18 @@ public class LiferayRemoteContainerConfiguration
 		return _httpPort;
 	}
 
-	@Override
+	public String getJmxPassword() {
+		return _jmxPassword;
+	}
+
+	public String getJmxServiceURL() {
+		return _jmxServiceURL;
+	}
+
+	public String getJmxUsername() {
+		return _jmxUsername;
+	}
+
 	public boolean isAutostartBundle() {
 		return true;
 	}
@@ -54,30 +65,45 @@ public class LiferayRemoteContainerConfiguration
 		_httpPort = httpPort;
 	}
 
+	public void setJmxPassword(String jmxPassword) {
+		_jmxPassword = jmxPassword;
+	}
+
+	public void setJmxServiceURL(String jmxServiceURL) {
+		_jmxServiceURL = jmxServiceURL;
+	}
+
+	public void setJmxUsername(String jmxUsername) {
+		_jmxUsername = jmxUsername;
+	}
+
 	@Override
 	public void validate() {
 		if (_httpHost == null) {
-			setHttpHost(LIFERAY_DEFAULT_HTTP_HOST);
+			_httpHost = LIFERAY_DEFAULT_HTTP_HOST;
 		}
 
 		if (_httpPort == null) {
-			setHttpPort(LIFERAY_DEFAULT_HTTP_PORT);
+			_httpPort = LIFERAY_DEFAULT_HTTP_PORT;
 		}
 
-		if (jmxServiceURL == null) {
-			setJmxServiceURL(LIFERAY_DEFAULT_JMX_SERVICE_URL);
+		if (_jmxServiceURL == null) {
+			_jmxServiceURL = LIFERAY_DEFAULT_JMX_SERVICE_URL;
 		}
 
-		if (jmxPassword == null) {
-			setJmxPassword(LIFERAY_DEFAULT_JMX_PASSWORD);
+		if (_jmxPassword == null) {
+			_jmxPassword = LIFERAY_DEFAULT_JMX_PASSWORD;
 		}
 
-		if (jmxUsername == null) {
-			setJmxUsername(LIFERAY_DEFAULT_JMX_USERNAME);
+		if (_jmxUsername == null) {
+			_jmxUsername = LIFERAY_DEFAULT_JMX_USERNAME;
 		}
 	}
 
 	private String _httpHost;
 	private Integer _httpPort;
+	private String _jmxPassword;
+	private String _jmxServiceURL;
+	private String _jmxUsername;
 
 }

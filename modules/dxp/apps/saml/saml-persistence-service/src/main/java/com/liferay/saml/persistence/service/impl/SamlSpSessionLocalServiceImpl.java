@@ -33,7 +33,7 @@ public class SamlSpSessionLocalServiceImpl
 
 	@Override
 	public SamlSpSession addSamlSpSession(
-			String samlSpSessionKey, String samlIdpEntityId,
+			String samlIdpEntityId, String samlSpSessionKey,
 			String assertionXml, String jSessionId, String nameIdFormat,
 			String nameIdNameQualifier, String nameIdSPNameQualifier,
 			String nameIdValue, String sessionIndex,
@@ -142,8 +142,8 @@ public class SamlSpSessionLocalServiceImpl
 
 	@Override
 	public SamlSpSession updateSamlSpSession(
-			long samlSpSessionId, String samlSpSessionKey,
-			String samlIdpEntityId, String assertionXml, String jSessionId,
+			long samlSpSessionId, String samlIdpEntityId,
+			String samlSpSessionKey, String assertionXml, String jSessionId,
 			String nameIdFormat, String nameIdNameQualifier,
 			String nameIdSPNameQualifier, String nameIdValue,
 			String sessionIndex, ServiceContext serviceContext)

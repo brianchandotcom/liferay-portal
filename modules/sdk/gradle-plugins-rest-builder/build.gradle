@@ -29,5 +29,5 @@ gradleTest {
 }
 
 pluginBundle {
-	tags = ["rest", "service"]
+	tags = ["java", "rest", "service"]
 }

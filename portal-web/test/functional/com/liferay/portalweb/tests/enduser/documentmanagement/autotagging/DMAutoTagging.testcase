@@ -211,7 +211,7 @@ definition {
 
 	@priority = "4"
 	test NoAutoTagForManuallyTaggedImage {
-		property test.name.skip.portal.instance = "DMAutoTagging#RemoveAutoTag";
+		property test.name.skip.portal.instance = "DMAutoTagging#NoAutoTagForManuallyTaggedImage";
 
 		ProductMenu.gotoPortlet(
 			category = "Build",

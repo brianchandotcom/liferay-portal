@@ -54,6 +54,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>USE_SMALL_IMAGE_CHECKBOX</td>
+	<td>//input[@type='checkbox' and contains(@id,'useSmallImage')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SMALL_IMAGE_URL</td>
+	<td>//input[@type='radio'and contains(@id,'smallImageType_1')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SMALL_IMAGE_URL_INPUT</td>
+	<td>//div[contains(@class,'input-String-wrapper')]/input[contains(@id,'URL')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>USER_SEGMENT_DETAIL_TITLE</td>
 	<td>//label[contains(.,'${key_userSegmentDetailTitle}')]</td>
 	<td></td>

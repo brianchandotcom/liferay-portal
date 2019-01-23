@@ -56,9 +56,15 @@ public class LPKGLicensedBundleTrackerCustomizer
 			return null;
 		}
 
+		File file = new File(bundle.getLocation());
+
+		if (!file.exists()) {
+			return null;
+		}
+
 		boolean hasLicense = false;
 
-		try (ZipFile zipFile = new ZipFile(new File(bundle.getLocation()))) {
+		try (ZipFile zipFile = new ZipFile(file)) {
 			Enumeration<? extends ZipEntry> zipEntries = zipFile.entries();
 
 			while (zipEntries.hasMoreElements()) {
@@ -79,10 +85,10 @@ public class LPKGLicensedBundleTrackerCustomizer
 						inputStream, tempFilePath,
 						StandardCopyOption.REPLACE_EXISTING);
 
-					File file = tempFilePath.toFile();
+					File tempFile = tempFilePath.toFile();
 
-					if (_licenseInstaller.canHandle(file)) {
-						_licenseInstaller.install(file);
+					if (_licenseInstaller.canHandle(tempFile)) {
+						_licenseInstaller.install(tempFile);
 
 						hasLicense = true;
 					}

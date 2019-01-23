@@ -16,7 +16,7 @@ package com.liferay.layout.type.controller.content.internal.controller;
 
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.layout.constants.LayoutConstants;
-import com.liferay.layout.type.controller.content.internal.constants.ContentLayoutTypeControllerWebKeys;
+import com.liferay.layout.constants.ContentLayoutTypeControllerWebKeys;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.model.Layout;

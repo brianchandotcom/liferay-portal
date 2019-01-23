@@ -14,8 +14,8 @@
 
 package com.liferay.layout.type.controller.content.internal.portlet;
 
-import com.liferay.layout.type.controller.content.internal.constants.ContentLayoutPortletKeys;
-import com.liferay.layout.type.controller.content.internal.constants.ContentLayoutTypeControllerWebKeys;
+import com.liferay.layout.constants.ContentLayoutPortletKeys;
+import com.liferay.layout.constants.ContentLayoutTypeControllerWebKeys;
 import com.liferay.layout.type.controller.content.internal.display.context.FragmentsEditorDisplayContext;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.Portal;

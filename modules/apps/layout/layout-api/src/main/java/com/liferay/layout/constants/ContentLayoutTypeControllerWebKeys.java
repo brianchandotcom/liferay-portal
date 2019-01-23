@@ -12,19 +12,18 @@
  * details.
  */
 
-package com.liferay.layout.type.controller.content.internal.constants;
+package com.liferay.layout.constants;
 
 /**
- * @author Eudaldo Alonso
+ * @author Jürgen Kappler
  */
-public class ContentLayoutPortletKeys {
+public class ContentLayoutTypeControllerWebKeys {
 
-	public static final String CONTENT_PAGE_EDITOR_PORTLET =
-		"com_liferay_layout_type_controller_content_internal_portlet_" +
-			"ContentPageEditorPortlet";
+	public static final String ITEM_SELECTOR = "ITEM_SELECTOR";
 
-	public static final String CONTENT_PAGE_TOOLBAR_PORTLET =
-		"com_liferay_layout_type_controller_content_internal_portlet_" +
-			"ContentPageToolbarPortlet";
+	public static final String LAYOUT_FRAGMENTS = "LAYOUT_FRAGMENTS";
+
+	public static final String LIFERAY_SHARED_FRAGMENTS_EDITOR_DISPLAY_CONTEXT =
+		"LIFERAY_SHARED_FRAGMENTS_EDITOR_DISPLAY_CONTEXT";
 
 }

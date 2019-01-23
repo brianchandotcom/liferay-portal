@@ -17,7 +17,7 @@ package com.liferay.layout.type.controller.content.internal.portlet.action;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.util.FragmentEntryRenderUtil;
-import com.liferay.layout.type.controller.content.internal.constants.ContentLayoutPortletKeys;
+import com.liferay.layout.constants.ContentLayoutPortletKeys;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;

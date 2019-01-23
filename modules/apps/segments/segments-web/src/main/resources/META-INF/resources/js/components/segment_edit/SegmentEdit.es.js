@@ -156,7 +156,7 @@ class SegmentEdit extends Component {
 		);
 	};
 
-	_handlePreviewClick = url => event => {
+	_handlePreviewClick = url => () => {
 		const formElement = document.getElementById(this.props.formId);
 
 		const formData = new FormData(formElement);
@@ -259,7 +259,6 @@ class SegmentEdit extends Component {
 						</div>
 
 						<div className="form-header-section-right">
-
 							<div className="btn-group mr-3">
 								<div className="btn-group-item">
 									<ClaySpinner

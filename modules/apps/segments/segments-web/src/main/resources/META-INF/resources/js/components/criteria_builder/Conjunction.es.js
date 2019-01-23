@@ -4,6 +4,14 @@ import ClayButton from '../shared/ClayButton.es';
 import getCN from 'classnames';
 
 class Conjunction extends React.Component {
+	static propTypes = {
+		className: PropTypes.string,
+		conjunctionName: PropTypes.string.isRequired,
+		editing: PropTypes.bool.isRequired,
+		onClick: PropTypes.func,
+		supportedConjunctions: PropTypes.array.isRequired
+	};
+
 	_getConjunctionLabel(conjunctionName, conjunctions) {
 		const conjunction = conjunctions.find(
 			({name}) => name === conjunctionName
@@ -48,13 +56,5 @@ class Conjunction extends React.Component {
 		);
 	}
 }
-
-Conjunction.propTypes = {
-	className: PropTypes.string,
-	conjunctionName: PropTypes.string.isRequired,
-	editing: PropTypes.bool.isRequired,
-	onClick: PropTypes.func,
-	supportedConjunctions: PropTypes.array.isRequired
-};
 
 export default Conjunction;

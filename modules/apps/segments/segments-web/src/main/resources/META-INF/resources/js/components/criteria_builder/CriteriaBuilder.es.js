@@ -21,51 +21,51 @@ const CRITERION_SHAPE = {
 	value: PropTypes.oneOfType([PropTypes.string, PropTypes.array])
 };
 
-const propTypes = {
-	criteria: PropTypes.shape(
-		{
-			conjunctionName: PropTypes.string,
-			groupId: PropTypes.string,
-			items: PropTypes.arrayOf(
-				PropTypes.oneOfType(
-					[
-						PropTypes.shape(CRITERIA_GROUP_SHAPE),
-						PropTypes.shape(CRITERION_SHAPE)
-					]
-				)
-			)
-		}
-	),
-	editing: PropTypes.bool.isRequired,
-	id: PropTypes.number.isRequired,
-	modelLabel: PropTypes.string,
-	onChange: PropTypes.func,
-	onEditToggle: PropTypes.func,
-	propertyKey: PropTypes.string.isRequired,
-	supportedConjunctions: PropTypes.arrayOf(
-		PropTypes.shape(
-			{
-				label: PropTypes.string,
-				name: PropTypes.string.isRequired
-			}
-		)
-	),
-	supportedOperators: PropTypes.array,
-	supportedProperties: PropTypes.arrayOf(
-		PropTypes.shape(
-			{
-				entityUrl: PropTypes.string,
-				label: PropTypes.string,
-				name: PropTypes.string.isRequired,
-				options: PropTypes.array,
-				type: PropTypes.string.isRequired
-			}
-		)
-	).isRequired,
-	supportedPropertyTypes: PropTypes.object
-};
-
 class CriteriaBuilder extends Component {
+	static propTypes = {
+		criteria: PropTypes.shape(
+			{
+				conjunctionName: PropTypes.string,
+				groupId: PropTypes.string,
+				items: PropTypes.arrayOf(
+					PropTypes.oneOfType(
+						[
+							PropTypes.shape(CRITERIA_GROUP_SHAPE),
+							PropTypes.shape(CRITERION_SHAPE)
+						]
+					)
+				)
+			}
+		),
+		editing: PropTypes.bool.isRequired,
+		id: PropTypes.number.isRequired,
+		modelLabel: PropTypes.string,
+		onChange: PropTypes.func,
+		onEditToggle: PropTypes.func,
+		propertyKey: PropTypes.string.isRequired,
+		supportedConjunctions: PropTypes.arrayOf(
+			PropTypes.shape(
+				{
+					label: PropTypes.string,
+					name: PropTypes.string.isRequired
+				}
+			)
+		),
+		supportedOperators: PropTypes.array,
+		supportedProperties: PropTypes.arrayOf(
+			PropTypes.shape(
+				{
+					entityUrl: PropTypes.string,
+					label: PropTypes.string,
+					name: PropTypes.string.isRequired,
+					options: PropTypes.array,
+					type: PropTypes.string.isRequired
+				}
+			)
+		).isRequired,
+		supportedPropertyTypes: PropTypes.object
+	};
+
 	static defaultProps = {
 		readOnly: false
 	};
@@ -291,7 +291,5 @@ class CriteriaBuilder extends Component {
 		);
 	}
 }
-
-CriteriaBuilder.propTypes = propTypes;
 
 export default CriteriaBuilder;

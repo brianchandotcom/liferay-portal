@@ -17,7 +17,6 @@ package com.liferay.structured.content.apio.internal.architect.resource;
 import static com.liferay.portal.apio.idempotent.Idempotent.idempotent;
 
 import com.liferay.aggregate.rating.apio.architect.identifier.AggregateRatingIdentifier;
-import com.liferay.apio.architect.functional.Try;
 import com.liferay.apio.architect.language.AcceptLanguage;
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
@@ -109,6 +108,9 @@ import com.liferay.structured.content.apio.internal.model.JournalArticleWrapper;
 import com.liferay.structured.content.apio.internal.model.RenderedJournalArticle;
 import com.liferay.structured.content.apio.internal.util.JournalArticleContentHelper;
 
+import io.vavr.control.Try;
+
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collection;
@@ -483,14 +485,17 @@ public class StructuredContentNestedCollectionResource
 	}
 
 	private Long _getDocument(StructuredContentField structuredContentField) {
-		return Try.fromFallible(
-			() -> structuredContentField.getLocalizedValue(
-				LocaleUtil.getDefault())
-		).map(
-			value -> StructuredContentUtil.getFileEntryId(value, _dlAppService)
-		).orElse(
-			null
-		);
+		String localizedValue = structuredContentField.getLocalizedValue(
+			LocaleUtil.getDefault());
+
+		Long fileEntryId = StructuredContentUtil.getFileEntryId(
+			localizedValue, _dlAppService);
+
+		if (fileEntryId > 0) {
+			return fileEntryId;
+		}
+
+		return null;
 	}
 
 	private Query _getFullQuery(
@@ -517,17 +522,17 @@ public class StructuredContentNestedCollectionResource
 	private JSONObject _getGeoJSONObject(
 		StructuredContentField structuredContentField) {
 
-		return Try.fromFallible(
+		return Try.of(
 			() -> structuredContentField.getLocalizedValue(
 				LocaleUtil.getDefault())
 		).filter(
 			StructuredContentUtil::isJSONObject
 		).filter(
 			string -> string.contains("latitude")
-		).map(
+		).mapTry(
 			JSONFactoryUtil::createJSONObject
-		).orElse(
-			null
+		).getOrElse(
+			() -> null
 		);
 	}
 
@@ -583,19 +588,19 @@ public class StructuredContentNestedCollectionResource
 	}
 
 	private String _getLink(StructuredContentField structuredContentField) {
-		return Try.fromFallible(
+		return Try.of(
 			() -> structuredContentField.getLocalizedValue(
 				LocaleUtil.getDefault())
 		).filter(
 			StructuredContentUtil::isJSONObject
 		).filter(
 			string -> string.contains("layoutId")
-		).map(
+		).mapTry(
 			JSONFactoryUtil::createJSONObject
-		).map(
+		).mapTry(
 			this::_getLayoutLink
-		).orElse(
-			null
+		).getOrElse(
+			() -> null
 		);
 	}
 
@@ -773,19 +778,19 @@ public class StructuredContentNestedCollectionResource
 	private Long _getStructuredContentId(
 		StructuredContentField structuredContentField) {
 
-		return Try.fromFallible(
+		return Try.of(
 			() -> structuredContentField.getLocalizedValue(
 				LocaleUtil.getDefault())
 		).filter(
 			StructuredContentUtil::isJSONObject
-		).map(
+		).mapTry(
 			JSONFactoryUtil::createJSONObject
-		).map(
+		).mapTry(
 			this::_getJournalArticle
 		).map(
 			JournalArticle::getResourcePrimKey
-		).orElse(
-			null
+		).getOrElse(
+			() -> null
 		);
 	}
 
@@ -994,23 +999,22 @@ public class StructuredContentNestedCollectionResource
 
 		@Override
 		public String getInputControl() {
-			return Try.fromFallible(
-				() -> _ddmStructure.getFieldType(_ddmFormFieldValue.getName())
-			).map(
-				fieldType -> _structureFieldConverter.getFieldInputControl(
-					fieldType)
-			).recover(
-				pe -> {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							"Unable to get input control for field name " +
-								_ddmFormFieldValue.getName(),
-							pe);
-					}
+			try {
+				String fieldType = _ddmStructure.getFieldType(
+					_ddmFormFieldValue.getName());
 
-					return null;
+				return _structureFieldConverter.getFieldInputControl(fieldType);
+			}
+			catch (PortalException pe) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Unable to get input control for field name " +
+							_ddmFormFieldValue.getName(),
+						pe);
 				}
-			);
+
+				return null;
+			}
 		}
 
 		@Override

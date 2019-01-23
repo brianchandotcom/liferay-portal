@@ -14,7 +14,6 @@
 
 package com.liferay.structured.content.apio.architect.util;
 
-import com.liferay.apio.architect.functional.Try;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONException;
@@ -24,6 +23,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 
+import io.vavr.control.Try;
+
 /**
  * Calculates the structured content's file entry.
  *
@@ -32,20 +33,18 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 public class StructuredContentUtil {
 
 	public static Long getFileEntryId(String value, DLAppService dlAppService) {
-		return Try.fromFallible(
-			() -> value
-		).filter(
-			StructuredContentUtil::isJSONObject
-		).filter(
-			s -> s.contains("uuid")
-		).map(
-			JSONFactoryUtil::createJSONObject
-		).map(
+		if (!isJSONObject(value) || !value.contains("uuid")) {
+			return 0L;
+		}
+
+		return Try.of(
+			() -> JSONFactoryUtil.createJSONObject(value)
+		).mapTry(
 			jsonObject -> _getFileEntry(jsonObject, dlAppService)
 		).map(
 			FileEntry::getFileEntryId
-		).orElse(
-			null
+		).getOrElse(
+			0L
 		);
 	}
 

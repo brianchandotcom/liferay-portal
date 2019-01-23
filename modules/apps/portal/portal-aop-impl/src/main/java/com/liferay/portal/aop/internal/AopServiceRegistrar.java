@@ -14,6 +14,7 @@
 
 package com.liferay.portal.aop.internal;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.monitoring.ServiceMonitoringControl;
 import com.liferay.portal.kernel.util.HashMapDictionary;
@@ -46,6 +47,22 @@ public class AopServiceRegistrar {
 		_serviceReference = serviceReference;
 		_aopService = aopService;
 		_aopServiceInterfaces = aopServiceInterfaces;
+
+		Bundle bundle = serviceReference.getBundle();
+
+		Dictionary<String, String> headers = bundle.getHeaders(
+			StringPool.BLANK);
+
+		if (headers.get("Liferay-Service") == null) {
+			_liferayService = false;
+		}
+		else {
+			_liferayService = true;
+		}
+	}
+
+	public boolean isLiferayService() {
+		return _liferayService;
 	}
 
 	public void register(
@@ -127,6 +144,7 @@ public class AopServiceRegistrar {
 	private AopInvocationHandler _aopInvocationHandler;
 	private final AopService _aopService;
 	private final Class<?>[] _aopServiceInterfaces;
+	private final boolean _liferayService;
 	private final ServiceReference<AopService> _serviceReference;
 	private ServiceRegistration<?> _serviceRegistration;
 

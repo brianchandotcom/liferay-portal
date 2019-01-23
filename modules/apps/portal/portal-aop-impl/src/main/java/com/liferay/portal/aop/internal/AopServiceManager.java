@@ -15,17 +15,14 @@
 package com.liferay.portal.aop.internal;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.monitoring.ServiceMonitoringControl;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.spring.transaction.TransactionExecutor;
 
-import java.util.Dictionary;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
 import org.osgi.framework.ServiceReference;
@@ -102,16 +99,7 @@ public class AopServiceManager {
 			AopServiceRegistrar aopServiceRegistrar = new AopServiceRegistrar(
 				serviceReference, aopService, aopInterfaces);
 
-			Bundle bundle = serviceReference.getBundle();
-
-			Dictionary<String, String> headers = bundle.getHeaders(
-				StringPool.BLANK);
-
-			if (headers.get("Liferay-Service") == null) {
-				aopServiceRegistrar.register(
-					_portalTransactionExecutor, _serviceMonitoringControl);
-			}
-			else {
+			if (aopServiceRegistrar.isLiferayService()) {
 				_aopDependencyResolvers.compute(
 					serviceReference.getProperty(Constants.SERVICE_BUNDLEID),
 					(bundleId, aopServiceResolver) -> {
@@ -126,6 +114,10 @@ public class AopServiceManager {
 						return aopServiceResolver;
 					});
 			}
+			else {
+				aopServiceRegistrar.register(
+					_portalTransactionExecutor, _serviceMonitoringControl);
+			}
 
 			return aopServiceRegistrar;
 		}
@@ -135,15 +127,7 @@ public class AopServiceManager {
 			ServiceReference<AopService> serviceReference,
 			AopServiceRegistrar aopServiceRegistrar) {
 
-			Bundle bundle = serviceReference.getBundle();
-
-			Dictionary<String, String> headers = bundle.getHeaders(
-				StringPool.BLANK);
-
-			if (headers.get("Liferay-Service") == null) {
-				aopServiceRegistrar.updateProperties();
-			}
-			else {
+			if (aopServiceRegistrar.isLiferayService()) {
 				_aopDependencyResolvers.compute(
 					serviceReference.getProperty(Constants.SERVICE_BUNDLEID),
 					(bundleId, aopServiceResolver) -> {
@@ -151,6 +135,9 @@ public class AopServiceManager {
 
 						return aopServiceResolver;
 					});
+			}
+			else {
+				aopServiceRegistrar.updateProperties();
 			}
 		}
 

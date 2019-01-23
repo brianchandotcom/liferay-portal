@@ -69,6 +69,7 @@ import org.opensaml.saml.saml2.binding.security.impl.SAML2HTTPPostSimpleSignSecu
 import org.opensaml.saml.saml2.binding.security.impl.SAML2HTTPRedirectDeflateSignatureSecurityHandler;
 import org.opensaml.saml.saml2.metadata.EntityDescriptor;
 import org.opensaml.saml.saml2.metadata.IDPSSODescriptor;
+import org.opensaml.saml.saml2.metadata.RoleDescriptor;
 import org.opensaml.saml.security.impl.MetadataCredentialResolver;
 import org.opensaml.security.credential.Credential;
 import org.opensaml.security.credential.CredentialResolver;
@@ -499,12 +500,10 @@ public class MetadataManagerImpl
 			return false;
 		}
 
-		MetadataResolver metadataResolver = getMetadataResolver();
-
 		for (SamlSpIdpConnection samlSpIdpConnection : samlSpIdpConnections) {
 			try {
-				EntityDescriptor entityDescriptor =
-					metadataResolver.resolveSingle(
+				RoleDescriptor roleDescriptor =
+					_predicateRoleDescriptorResolver.resolveSingle(
 						new CriteriaSet(
 							new EntityIdCriterion(
 								samlSpIdpConnection.getSamlIdpEntityId()),
@@ -512,7 +511,7 @@ public class MetadataManagerImpl
 								IDPSSODescriptor.DEFAULT_ELEMENT_NAME),
 							new ProtocolCriterion(SAMLConstants.SAML20P_NS)));
 
-				if (entityDescriptor == null) {
+				if (roleDescriptor == null) {
 					return false;
 				}
 			}

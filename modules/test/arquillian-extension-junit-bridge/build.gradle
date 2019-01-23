@@ -2,7 +2,6 @@ dependencies {
 	compile group: "biz.aQute.bnd", name: "bndlib", version: "2.4.0"
 	compile group: "com.liferay", name: "aQute.bnd", version: "2.3.0"
 	compile group: "junit", name: "junit", version: "4.12"
-	compile group: "org.jboss.arquillian.container", name: "arquillian-container-osgi", version: "2.1.0.Final"
 	compile group: "org.jboss.arquillian.container", name: "arquillian-container-test-impl-base", version: "1.1.10.Final"
 	compile group: "org.jboss.arquillian.container", name: "arquillian-container-test-spi", version: "1.1.10.Final"
 	compile group: "org.jboss.arquillian.junit", name: "arquillian-junit-container", version: "1.1.10.Final"

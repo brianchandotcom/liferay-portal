@@ -53,7 +53,13 @@ public abstract class RenameUpgradePortletPreferences
 
 			preferences.reset(name);
 
-			preferences.setValues(entry.getValue(), values);
+			String newName = entry.getValue();
+
+			String[] newValues = preferencesMap.get(newName);
+
+			if (newValues == null) {
+				preferences.setValues(newName, values);
+			}
 		}
 
 		return PortletPreferencesFactoryUtil.toXML(preferences);

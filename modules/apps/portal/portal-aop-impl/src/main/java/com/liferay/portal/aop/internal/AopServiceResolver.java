@@ -17,6 +17,7 @@ package com.liferay.portal.aop.internal;
 import com.liferay.portal.kernel.monitoring.ServiceMonitoringControl;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
@@ -39,11 +40,11 @@ public class AopServiceResolver {
 		_aopServiceRegistrars.add(aopServiceRegistrar);
 
 		if (!_transactionExecutorHolders.isEmpty()) {
-			TransactionExecutorHolder bestTransactionExecutorHolder =
+			TransactionExecutorHolder topRankingTransactionExecutorHolder =
 				_transactionExecutorHolders.get(0);
 
 			aopServiceRegistrar.register(
-				bestTransactionExecutorHolder.getTransactionExecutor(),
+				topRankingTransactionExecutorHolder.getTransactionExecutor(),
 				_serviceMonitoringControl);
 		}
 	}
@@ -51,18 +52,27 @@ public class AopServiceResolver {
 	public void addTransactionExecutorHolder(
 		TransactionExecutorHolder transactionExecutorHolder) {
 
-		_transactionExecutorHolders.add(transactionExecutorHolder);
+		int index = Collections.binarySearch(
+			_transactionExecutorHolders, transactionExecutorHolder,
+			Comparator.reverseOrder());
 
-		_transactionExecutorHolders.sort(Comparator.reverseOrder());
+		if (index >= 0) {
+			return;
+		}
 
-		TransactionExecutorHolder bestTransactionExecutorHolder =
-			_transactionExecutorHolders.get(0);
+		index = -index - 1;
+
+		_transactionExecutorHolders.add(index, transactionExecutorHolder);
+
+		if (index > 0) {
+			return;
+		}
 
 		for (AopServiceRegistrar aopServiceRegistrar : _aopServiceRegistrars) {
 			aopServiceRegistrar.unregister();
 
 			aopServiceRegistrar.register(
-				bestTransactionExecutorHolder.getTransactionExecutor(),
+				transactionExecutorHolder.getTransactionExecutor(),
 				_serviceMonitoringControl);
 		}
 	}
@@ -88,7 +98,18 @@ public class AopServiceResolver {
 	public void removeTransactionExecutorHolder(
 		TransactionExecutorHolder transactionExecutorHolder) {
 
-		_transactionExecutorHolders.remove(transactionExecutorHolder);
+		int index = _transactionExecutorHolders.indexOf(
+			transactionExecutorHolder);
+
+		if (index < 0) {
+			return;
+		}
+
+		_transactionExecutorHolders.remove(index);
+
+		if (index > 0) {
+			return;
+		}
 
 		for (AopServiceRegistrar aopServiceRegistrar : _aopServiceRegistrars) {
 			aopServiceRegistrar.unregister();
@@ -98,14 +119,12 @@ public class AopServiceResolver {
 			return;
 		}
 
-		TransactionExecutorHolder bestTransactionExecutorHolder =
+		TransactionExecutorHolder topRankingTransactionExecutorHolder =
 			_transactionExecutorHolders.get(0);
 
 		for (AopServiceRegistrar aopServiceRegistrar : _aopServiceRegistrars) {
-			aopServiceRegistrar.unregister();
-
 			aopServiceRegistrar.register(
-				bestTransactionExecutorHolder.getTransactionExecutor(),
+				topRankingTransactionExecutorHolder.getTransactionExecutor(),
 				_serviceMonitoringControl);
 		}
 	}

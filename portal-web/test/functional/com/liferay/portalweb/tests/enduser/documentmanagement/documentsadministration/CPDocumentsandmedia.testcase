@@ -366,6 +366,88 @@ definition {
 		);
 	}
 
+	@description = "This test ensures that only the last two versions of a file are kept when the max version limit is set."
+	@priority = "5"
+	test LimitMaxFileVersion {
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings"
+		);
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Documents and Media",
+			configurationName = "Service",
+			configurationScope = "System Scope"
+		);
+
+		Type(
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "2",
+			key_fieldLabel = "Maximum Number Of Versions"
+		);
+
+		ScrollWebElementIntoView(locator1 = "Button#SAVE");
+
+		AssertClick(locator1 = "Button#SAVE", value1 = "Save");
+
+		AssertElementPresent(locator1 = "Message#SUCCESS");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMDocument.addCP(
+			dmDocumentFile = "Document_1.doc",
+			dmDocumentTitle = "Edit this document two times"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMDocument.editCP(
+			dmDocumentTitle = "Edit this document two times",
+			dmDocumentTitleEdit = "First edit"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMDocument.editCP(
+			dmDocumentTitle = "First edit",
+			dmDocumentTitleEdit = "Second edit"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Second edit");
+
+		for (var versionNumber : list "1.2,1.1") {
+			AssertElementPresent(
+				locator1 = "DocumentsAndMedia#DOCUMENT_VERSION_ANY",
+				key_dmDocumentVersionNumber = "${versionNumber}"
+			);
+		}
+
+		AssertElementNotPresent(
+			locator1 = "DocumentsAndMedia#DOCUMENT_VERSION_ANY",
+			key_dmDocumentVersionNumber = "1.0"
+		);
+	}
+
 	@priority = "5"
 	test MoveDocumentToFolder {
 		Navigator.openURL();

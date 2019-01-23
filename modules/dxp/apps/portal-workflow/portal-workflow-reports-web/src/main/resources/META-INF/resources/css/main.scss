@@ -1,11 +1,11 @@
 @import "app";
+@import "empty-content";
 
 body {
-	font-family: sans-serif;
 	margin: 0;
 	padding: 0;
 }
 
 .text-semi-bold {
-	font-weight: 400;
+	font-weight: normal;
 }

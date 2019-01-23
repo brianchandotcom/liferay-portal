@@ -1,27 +1,37 @@
 import com.liferay.gradle.util.GradleUtil
 
-apply plugin: "com.liferay.portal.tools.rest.builder"
+subprojects {
+	apply plugin: "java"
 
-task runGradleTest
+	group = "com.example.sample"
 
-repositories {
-	if (GradleUtil.getRootDir(project.getRootProject(), ".m2-tmp") != null) {
-		maven {
-			url new File(GradleUtil.getRootDir(project.getRootProject(), ".m2-tmp"), ".m2-tmp")
+	repositories {
+		if (GradleUtil.getRootDir(project.getRootProject(), ".m2-tmp") != null) {
+			maven {
+				url new File(GradleUtil.getRootDir(project.getRootProject(), ".m2-tmp"), ".m2-tmp")
+			}
 		}
-	}
 
-	maven {
-		url "https://repository-cdn.liferay.com/nexus/content/groups/public"
+		maven {
+			url "https://repository-cdn.liferay.com/nexus/content/groups/public"
+		}
 	}
 }
 
+task runGradleTest
+
+project(":sample-rest") {
+	apply plugin: "com.liferay.portal.tools.rest.builder"
+}
+
 runGradleTest {
-	dependsOn buildRest
+	dependsOn ":sample-rest:buildRest"
 
 	doLast {
-		File restYAMLFile = file("rest.yaml")
+		Project apiProject = project(":sample-api")
 
-		assert restYAMLFile.exists()
+		File generatedFile = apiProject.file("src/main/java/com/example/sample/model/FooModel.java")
+
+		assert generatedFile.exists()
 	}
 }

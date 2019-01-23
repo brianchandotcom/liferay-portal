@@ -11100,6 +11100,30 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 		<uninstall-patches patching.tool.dir="${patching.tool.dir}" />
 	</target>
 
+	<target name="update-osgi-module-configuration">
+		<local name="osgi.configs.dir" />
+
+		<condition else="${app.server.parent.dir}-${install.patch.cluster.node.index}/osgi/configs" property="osgi.configs.dir" value="${app.server.parent.dir}/osgi/configs">
+			<or>
+				<not>
+					<isset property="install.patch.cluster.node.index" />
+				</not>
+				<equals arg1="${install.patch.cluster.node.index}" arg2="0" />
+			</or>
+		</condition>
+
+		<get-testcase-property property.name="osgi.module.configurations" />
+		<get-testcase-property property.name="osgi.module.configuration.file.names" />
+
+		<replace
+			file="${osgi.configs.dir}/${osgi.module.configuration.file.names}"
+			token="${osgi.module.configurations}"
+			value="${update.configuration}"
+		/>
+
+		<echo message="osgi.module.configurations= ${update.configuration}" />
+	</target>
+
 	<target name="upgrade-legacy-database">
 		<prepare-database-upgrade-configuration />
 

@@ -247,19 +247,19 @@ public class GitUtil {
 		Process process = null;
 
 		int retries = 0;
-		List<String> usedGitHubDevHostnames = new ArrayList<>(maxRetries);
+		List<String> usedGitHubCacheHostnames = new ArrayList<>(maxRetries);
 
 		while (retries < maxRetries) {
 			String[] modifiedCommands = Arrays.copyOf(
 				commands, commands.length);
 
-			String gitHubDevHostname =
+			String gitHubCacheHostname =
 				JenkinsResultsParserUtil.getRandomGitHubCacheHostname(
-					usedGitHubDevHostnames);
+					usedGitHubCacheHostnames);
 
 			for (int i = 0; i < modifiedCommands.length; i++) {
 				modifiedCommands[i] = modifiedCommands[i].replace(
-					_GITHUB_CACHE_PROXY_HOSTNAME, gitHubDevHostname);
+					_GITHUB_CACHE_PROXY_HOSTNAME, gitHubCacheHostname);
 			}
 
 			try {
@@ -278,7 +278,7 @@ public class GitUtil {
 						e);
 				}
 
-				usedGitHubDevHostnames.add(gitHubDevHostname);
+				usedGitHubCacheHostnames.add(gitHubCacheHostname);
 
 				System.out.println(
 					"Unable to execute bash commands retrying... ");

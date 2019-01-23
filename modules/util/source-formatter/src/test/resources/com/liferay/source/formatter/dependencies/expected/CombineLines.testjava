@@ -14,7 +14,7 @@
 
 package com.liferay.source.formatter.dependencies;
 
-import aQute.bnd.annotation.metatype.Metaa;
+import aQute.bnd.annotation.metatype.Meta;
 
 import com.liferay.dynamic.data.mapping.annotations.DDMFormField;
 import com.liferay.petra.string.StringPool;

@@ -57,6 +57,11 @@ public class SelectFragmentCollectionManagementToolbarDisplayContext
 	}
 
 	@Override
+	public Boolean isSelectable() {
+		return false;
+	}
+
+	@Override
 	protected String[] getNavigationKeys() {
 		return new String[] {"all"};
 	}

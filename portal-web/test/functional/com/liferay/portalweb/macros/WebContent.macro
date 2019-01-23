@@ -272,6 +272,18 @@ definition {
 		Type(locator1 = "WC#PRIORITY", value1 = "${priority}");
 	}
 
+	macro addSmallImageViaURL {
+		Panel.expandPanel(panel = "Small Image");
+
+		Check(locator1 = "WCEditWebContent#USE_SMALL_IMAGE_CHECKBOX");
+		Click(locator1 = "WCEditWebContent#SMALL_IMAGE_URL");
+
+		Type(
+			locator1 = "WCEditWebContent#SMALL_IMAGE_URL_INPUT",
+			value1 = "${imageSourceURL}"
+		);
+	}
+
 	macro addStructuredPGViaWCD {
 		WebContentNavigator.gotoAddPGViaWCD(structureName = "${structureName}");
 

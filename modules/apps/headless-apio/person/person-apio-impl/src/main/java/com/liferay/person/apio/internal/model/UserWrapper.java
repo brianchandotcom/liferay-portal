@@ -14,10 +14,10 @@
 
 package com.liferay.person.apio.internal.model;
 
-import com.liferay.apio.architect.functional.Try;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+
+import io.vavr.control.Try;
 
 /**
  * Provides a user wrapper that includes a {@code ThemeDisplay} object to allow
@@ -54,15 +54,13 @@ public class UserWrapper extends com.liferay.portal.kernel.model.UserWrapper {
 	 * @return the user's portrait URL
 	 */
 	public String getPortraitURL() {
-		return Try.success(
-			getPortraitId()
-		).filter(
-			portraitId -> portraitId != 0
-		).map(
-			__ -> getPortraitURL(_themeDisplay)
-		).orElse(
-			null
-		);
+		if (getPortraitId() == 0) {
+			return null;
+		}
+
+		return Try.of(
+			() -> getPortraitURL(_themeDisplay)
+		).getOrNull();
 	}
 
 	/**
@@ -75,21 +73,14 @@ public class UserWrapper extends com.liferay.portal.kernel.model.UserWrapper {
 	}
 
 	private String _getGroupURL(boolean isPrivate) {
-		return Try.fromFallible(
-			() -> {
-				if ((isPrivate && (getPrivateLayoutsPageCount() > 0)) ||
-					(!isPrivate && (getPublicLayoutsPageCount() > 0))) {
-
-					Group userGroup = getGroup();
-
-					return userGroup.getDisplayURL(_themeDisplay, isPrivate);
-				}
-
-				return null;
-			}
-		).orElse(
-			null
-		);
+		return Try.of(
+			this::getGroup
+		).filterTry(
+			__ -> (isPrivate && (getPrivateLayoutsPageCount() > 0)) ||
+			  (!isPrivate && (getPublicLayoutsPageCount() > 0))
+		).map(
+			group -> group.getDisplayURL(_themeDisplay, isPrivate)
+		).getOrNull();
 	}
 
 	private final ThemeDisplay _themeDisplay;

@@ -15,7 +15,6 @@
 package com.liferay.person.apio.internal.util;
 
 import com.liferay.address.apio.architect.identifier.AddressIdentifier;
-import com.liferay.apio.architect.functional.Try;
 import com.liferay.apio.architect.representor.Representor;
 import com.liferay.email.apio.architect.identifier.EmailIdentifier;
 import com.liferay.person.apio.internal.model.UserWrapper;
@@ -23,14 +22,14 @@ import com.liferay.phone.apio.architect.identifier.PhoneIdentifier;
 import com.liferay.portal.apio.identifier.ClassNameClassPK;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Contact;
-import com.liferay.portal.kernel.model.ContactModel;
 import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ListTypeService;
 import com.liferay.role.apio.identifier.RoleIdentifier;
 import com.liferay.web.url.apio.architect.identifier.WebUrlIdentifier;
 
-import java.util.Date;
+import io.vavr.control.Try;
+
 import java.util.Locale;
 import java.util.function.BiFunction;
 import java.util.function.Function;
@@ -56,7 +55,10 @@ public class UserAccountRepresentorBuilderHelperImpl
 		).identifier(
 			User::getUserId
 		).addDate(
-			"birthDate", UserAccountRepresentorBuilderHelperImpl::_getBirthday
+			"birthDate",
+			user -> Try.of(
+				user::getBirthday
+			).getOrNull()
 		).addLocalizedStringByLocale(
 			"honorificPrefix", _getContactField(Contact::getPrefixId)
 		).addLocalizedStringByLocale(
@@ -77,25 +79,15 @@ public class UserAccountRepresentorBuilderHelperImpl
 				"webUrl", WebUrlIdentifier.class,
 				this::_createClassNameAndClassPK
 			).addString(
-				"facebook",
-				userWrapper -> _getContactInfo(
-					userWrapper, ContactModel::getFacebookSn)
+				"facebook", _getContactInfo(Contact::getFacebookSn)
 			).addString(
-				"jabber",
-				userWrapper -> _getContactInfo(
-					userWrapper, ContactModel::getJabberSn)
+				"jabber", _getContactInfo(Contact::getJabberSn)
 			).addString(
-				"skype",
-				userWrapper -> _getContactInfo(
-					userWrapper, ContactModel::getSkypeSn)
+				"skype", _getContactInfo(Contact::getSkypeSn)
 			).addString(
-				"sms",
-				userWrapper -> _getContactInfo(
-					userWrapper, ContactModel::getSmsSn)
+				"sms", _getContactInfo(Contact::getSmsSn)
 			).addString(
-				"twitter",
-				userWrapper -> _getContactInfo(
-					userWrapper, ContactModel::getTwitterSn)
+				"twitter", _getContactInfo(Contact::getTwitterSn)
 			).build()
 		).addRelatedCollection(
 			"roles", RoleIdentifier.class
@@ -122,14 +114,6 @@ public class UserAccountRepresentorBuilderHelperImpl
 		);
 	}
 
-	private static Date _getBirthday(User user) {
-		return Try.fromFallible(
-			user::getBirthday
-		).orElse(
-			null
-		);
-	}
-
 	private ClassNameClassPK _createClassNameAndClassPK(
 		UserWrapper userWrapper) {
 
@@ -140,29 +124,27 @@ public class UserAccountRepresentorBuilderHelperImpl
 	private BiFunction<UserWrapper, Locale, String> _getContactField(
 		Function<Contact, Long> function) {
 
-		return (user, locale) -> Try.fromFallible(
+		return (user, locale) -> Try.of(
 			user::getContact
 		).map(
-			function::apply
-		).map(
+			function
+		).mapTry(
 			_listTypeService::getListType
 		).map(
 			ListType::getName
 		).map(
 			name -> LanguageUtil.get(locale, name)
-		).orElse(
-			null
-		);
+		).getOrNull();
 	}
 
-	private String _getContactInfo(
-		UserWrapper userWrapper, Function<Contact, String> function) {
+	private <T> Function<UserWrapper, T> _getContactInfo(
+		Function<Contact, T> function) {
 
-		return Try.fromFallible(
-			() -> function.apply(userWrapper.getContact())
-		).orElse(
-			null
-		);
+		return userWrapper -> Try.of(
+			userWrapper::getContact
+		).map(
+			function
+		).getOrNull();
 	}
 
 	@Reference

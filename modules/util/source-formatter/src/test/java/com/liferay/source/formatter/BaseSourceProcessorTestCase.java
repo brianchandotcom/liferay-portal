@@ -33,7 +33,6 @@ import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 
 import org.junit.AfterClass;
@@ -105,21 +104,26 @@ public abstract class BaseSourceProcessorTestCase {
 			String fileName, String[] expectedMessages, Integer[] lineNumbers)
 		throws Exception {
 
-		String additionalSubPath = FilenameUtils.getPath(fileName);
+		int pos = fileName.lastIndexOf(CharPool.PERIOD);
 
-		String originalExtension = FilenameUtils.getExtension(fileName);
+		if (pos == -1) {
+			throw new IllegalArgumentException(
+				"The file name " + fileName +
+					" does not end with a valid extension");
+		}
+
+		String originalExtension = fileName.substring(pos + 1);
 
 		String extension = originalExtension;
 
-		fileName = FilenameUtils.getBaseName(fileName);
+		fileName = fileName.substring(0, pos);
 
 		if (originalExtension.startsWith("test")) {
 			extension = extension.substring(4);
 		}
 
 		String fullFileName =
-			_DIR_NAME + StringPool.SLASH + additionalSubPath + fileName + "." +
-				originalExtension;
+			_DIR_NAME + StringPool.SLASH + fileName + "." + originalExtension;
 
 		URL url = classLoader.getResource(fullFileName);
 
@@ -127,8 +131,7 @@ public abstract class BaseSourceProcessorTestCase {
 			throw new FileNotFoundException(fullFileName);
 		}
 
-		File newFile = new File(
-			_temporaryFolder, additionalSubPath + fileName + "." + extension);
+		File newFile = new File(_temporaryFolder, fileName + "." + extension);
 
 		try (InputStream inputStream = url.openStream()) {
 			FileUtils.copyInputStreamToFile(inputStream, newFile);
@@ -191,8 +194,7 @@ public abstract class BaseSourceProcessorTestCase {
 				new File(modifiedFileNames.get(0)));
 
 			String expectedFileName =
-				_DIR_NAME + "/expected/" + additionalSubPath + fileName + "." +
-					originalExtension;
+				_DIR_NAME + "/expected/" + fileName + "." + originalExtension;
 
 			URL expectedURL = classLoader.getResource(expectedFileName);
 

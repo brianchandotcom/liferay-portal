@@ -95,7 +95,7 @@ public class LayoutPageTemplateStructureRenderUtil {
 			sb.append("<div class=\"container-fluid px-");
 
 			String horizontalPadding = GetterUtil.getString(
-				rowConfigJSONObject.getString("paddinghorizontal"));
+				rowConfigJSONObject.getString("paddingHorizontal"));
 
 			if (Validator.isNotNull(horizontalPadding)) {
 				sb.append(horizontalPadding);
@@ -107,7 +107,7 @@ public class LayoutPageTemplateStructureRenderUtil {
 			sb.append(" py-");
 
 			String verticalPadding = GetterUtil.getString(
-				rowConfigJSONObject.getString("paddingvertical"));
+				rowConfigJSONObject.getString("paddingVertical"));
 
 			if (Validator.isNotNull(verticalPadding)) {
 				sb.append(verticalPadding);

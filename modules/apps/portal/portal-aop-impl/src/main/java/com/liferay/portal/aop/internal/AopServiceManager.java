@@ -146,18 +146,23 @@ public class AopServiceManager {
 			ServiceReference<AopService> serviceReference,
 			AopServiceRegistrar aopServiceRegistrar) {
 
-			_aopDependencyResolvers.computeIfPresent(
-				serviceReference.getProperty(Constants.SERVICE_BUNDLEID),
-				(bundleId, aopServiceResolver) -> {
-					aopServiceResolver.removeAopServiceRegistrar(
-						aopServiceRegistrar);
+			if (aopServiceRegistrar.isLiferayService()) {
+				_aopDependencyResolvers.computeIfPresent(
+					serviceReference.getProperty(Constants.SERVICE_BUNDLEID),
+					(bundleId, aopServiceResolver) -> {
+						aopServiceResolver.removeAopServiceRegistrar(
+							aopServiceRegistrar);
 
-					if (aopServiceResolver.isEmpty()) {
-						return null;
-					}
+						if (aopServiceResolver.isEmpty()) {
+							return null;
+						}
 
-					return aopServiceResolver;
-				});
+						return aopServiceResolver;
+					});
+			}
+			else {
+				aopServiceRegistrar.unregister();
+			}
 
 			_bundleContext.ungetService(serviceReference);
 		}

@@ -18,7 +18,7 @@ compileInstaller {
 	dependsOn getInstallerDependencies
 	dependsOn installGox
 
-	args "-osarch=darwin/amd64 linux/amd64 windows/amd64", "-output", "${buildDir}/talend-installer/{{.Dir}}-{{.OS}}-{{.Arch}}", "talend-installer/go"
+	args "-osarch=darwin/amd64 linux/amd64 windows/amd64", "-output", "${buildDir}/talend-installer/installer-{{.OS}}-{{.Arch}}", "talend-installer/go"
 	command "gox"
 }
 

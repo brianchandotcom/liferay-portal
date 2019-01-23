@@ -624,7 +624,7 @@ public class ConfigurationPersistenceManager
 		throws IOException {
 
 		if (dictionaryString == null) {
-			return new Hashtable<>();
+			return new HashMapDictionary<>();
 		}
 
 		Dictionary<Object, Object> dictionary = ConfigurationHandler.read(

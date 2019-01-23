@@ -27,6 +27,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.Constants;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -65,7 +66,7 @@ public class AopServiceManager {
 		_transactionExecutorServiceTracker.close();
 	}
 
-	private final Map<Long, AopServiceResolver> _aopDependencyResolvers =
+	private final Map<Object, AopServiceResolver> _aopDependencyResolvers =
 		new ConcurrentHashMap<>();
 	private ServiceTracker<AopService, AopServiceRegistrar>
 		_aopServiceServiceTracker;
@@ -112,7 +113,7 @@ public class AopServiceManager {
 			}
 			else {
 				_aopDependencyResolvers.compute(
-					bundle.getBundleId(),
+					serviceReference.getProperty(Constants.SERVICE_BUNDLEID),
 					(bundleId, aopServiceResolver) -> {
 						if (aopServiceResolver == null) {
 							aopServiceResolver = new AopServiceResolver(
@@ -144,7 +145,7 @@ public class AopServiceManager {
 			}
 			else {
 				_aopDependencyResolvers.compute(
-					bundle.getBundleId(),
+					serviceReference.getProperty(Constants.SERVICE_BUNDLEID),
 					(bundleId, aopServiceResolver) -> {
 						aopServiceRegistrar.updateProperties();
 
@@ -158,26 +159,22 @@ public class AopServiceManager {
 			ServiceReference<AopService> serviceReference,
 			AopServiceRegistrar aopServiceRegistrar) {
 
-			Bundle bundle = serviceReference.getBundle();
+			_aopDependencyResolvers.compute(
+				serviceReference.getProperty(Constants.SERVICE_BUNDLEID),
+				(bundleId, aopServiceResolver) -> {
+					if (aopServiceResolver == null) {
+						return null;
+					}
 
-			if (bundle != null) {
-				_aopDependencyResolvers.compute(
-					bundle.getBundleId(),
-					(bundleId, aopServiceResolver) -> {
-						if (aopServiceResolver == null) {
-							return null;
-						}
+					aopServiceResolver.removeAopServiceRegistrar(
+						aopServiceRegistrar);
 
-						aopServiceResolver.removeAopServiceRegistrar(
-							aopServiceRegistrar);
+					if (aopServiceResolver.isEmpty()) {
+						return null;
+					}
 
-						if (aopServiceResolver.isEmpty()) {
-							return null;
-						}
-
-						return aopServiceResolver;
-					});
-			}
+					return aopServiceResolver;
+				});
 
 			_bundleContext.ungetService(serviceReference);
 		}
@@ -233,10 +230,8 @@ public class AopServiceManager {
 				new TransactionExecutorHolder(
 					serviceReference, transactionExecutor);
 
-			Bundle bundle = serviceReference.getBundle();
-
 			_aopDependencyResolvers.compute(
-				bundle.getBundleId(),
+				serviceReference.getProperty(Constants.SERVICE_BUNDLEID),
 				(bundleId, aopServiceResolver) -> {
 					if (aopServiceResolver == null) {
 						aopServiceResolver = new AopServiceResolver(
@@ -263,10 +258,8 @@ public class AopServiceManager {
 			ServiceReference<TransactionExecutor> serviceReference,
 			TransactionExecutorHolder transactionExecutorHolder) {
 
-			Bundle bundle = serviceReference.getBundle();
-
 			_aopDependencyResolvers.compute(
-				bundle.getBundleId(),
+				serviceReference.getProperty(Constants.SERVICE_BUNDLEID),
 				(bundleId, aopServiceResolver) -> {
 					if (aopServiceResolver == null) {
 						return null;

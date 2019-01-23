@@ -67,23 +67,20 @@ public class BNDBundleActivatorCheck extends BaseFileCheck {
 			return;
 		}
 
-		int startPos = bundleActivator.lastIndexOf(StringPool.PERIOD);
-		int endPos = bundleActivator.lastIndexOf("BundleActivator");
+		int x = bundleActivator.lastIndexOf(StringPool.PERIOD);
+		int y = bundleActivator.lastIndexOf("BundleActivator");
 
-		String strippedBundleActivator = bundleActivator.substring(
-			startPos + 1, endPos);
+		String strippedBundleActivator = bundleActivator.substring(x + 1, y);
 
-		String strippedBundleSymbolicName = StringUtil.replace(
-			bundleSymbolicName, CharPool.PERIOD, StringPool.BLANK);
+		String strippedBundleSymbolicName = StringUtil.removeChar(
+			bundleSymbolicName, CharPool.PERIOD);
 
-		if (strippedBundleSymbolicName.endsWith(strippedBundleActivator)) {
-			return;
+		if (!strippedBundleSymbolicName.endsWith(strippedBundleActivator)) {
+			addMessage(
+				fileName,
+				"Incorrect Bundle-Activator, it should match " +
+					"'Bundle-SymbolicName'");
 		}
-
-		addMessage(
-			fileName,
-			"Incorrect Bundle-Activator, it should match " +
-				"'Bundle-SymbolicName'");
 	}
 
 }

@@ -5,6 +5,7 @@ import Soy from 'metal-soy';
 import './FloatingToolbarBackgroundColorPanelDelegateTemplate.soy';
 import getConnectedComponent from '../../../store/ConnectedComponent.es';
 import templates from './FloatingToolbarBackgroundColorPanel.soy';
+import {UPDATE_LAST_SAVE_DATE, UPDATE_SAVING_CHANGES_STATUS, UPDATE_SECTION_CONFIG, UPDATE_TRANSLATION_STATUS} from '../../../actions/actions.es';
 
 /**
  * FloatingToolbarBackgroundColorPanel
@@ -37,6 +38,44 @@ class FloatingToolbarBackgroundColorPanel extends Component {
 			}
 		);
 	}
+
+	/**
+	 * Updates section configuration
+	 * @param {object} config Section configuration
+	 * @private
+	 * @review
+	 */
+	_updateSectionConfig(config) {
+		this.store
+			.dispatchAction(
+				UPDATE_SAVING_CHANGES_STATUS,
+				{
+					savingChanges: true
+				}
+			)
+			.dispatchAction(
+				UPDATE_SECTION_CONFIG,
+				{
+					config,
+					sectionId: this.itemId
+				}
+			)
+			.dispatchAction(
+				UPDATE_TRANSLATION_STATUS
+			)
+			.dispatchAction(
+				UPDATE_LAST_SAVE_DATE,
+				{
+					lastSaveDate: new Date()
+				}
+			)
+			.dispatchAction(
+				UPDATE_SAVING_CHANGES_STATUS,
+				{
+					savingChanges: false
+				}
+			);
+	}
 }
 
 /**
@@ -46,6 +85,16 @@ class FloatingToolbarBackgroundColorPanel extends Component {
  * @type {!Object}
  */
 FloatingToolbarBackgroundColorPanel.STATE = {
+
+	/**
+	 * @default undefined
+	 * @memberof FloatingToolbarBackgroundColorPanel
+	 * @review
+	 * @type {!string}
+	 */
+	itemId: Config
+		.string()
+		.required(),
 
 	/**
 	 * Internal Color Palette instance

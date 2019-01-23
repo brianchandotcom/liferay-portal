@@ -201,12 +201,12 @@
 			{sp}fragments-editor__topper-wrapper--hovered
 		{/if}
 
-		{if $row and $row.config and ($row.config.paddinghorizontal)}
-			{sp}fragment-entry-link-list__container--padding-horizontal-{$row.config.paddinghorizontal}
+		{if $row and $row.config}
+			{sp}px-{$row.config.paddinghorizontal ?: '3'}
 		{/if}
 
-		{if $row and $row.config and ($row.config.paddingvertical)}
-			{sp}fragment-entry-link-list__container--padding-vertical-{$row.config.paddingvertical}
+		{if $row and $row.config}
+			{sp}py-{$row.config.paddingvertical ?: '3'}
 		{/if}
 	{/let}
 
@@ -248,6 +248,8 @@
 		{/if}
 
 		{let $rowWrapperClasses kind="text"}
+			p-0
+
 			{if $row and $row.config and $row.config.containerType == 'fixed'}
 				{sp}container
 			{else}
@@ -260,7 +262,7 @@
 			{sp}row
 
 			{if $row and $row.config and ($row.config.columnSpacing == false)}
-				{sp}fragment-entry-link-list__row--no-spacing
+				{sp}no-gutters
 			{/if}
 		{/let}
 
@@ -285,7 +287,6 @@
 						{param languageId: $languageId /}
 						{param mappingFieldsURL: $mappingFieldsURL /}
 						{param portletNamespace: $portletNamespace /}
-						{param row: $row /}
 						{param selectedMappingTypes: $selectedMappingTypes /}
 						{param size: $column.size /}
 						{param spritemap: $spritemap /}
@@ -310,7 +311,6 @@
 	{@param key: string}
 	{@param languageId: string}
 	{@param portletNamespace: string}
-	{@param row: ?}
 	{@param spritemap: string}
 	{@param? _handleFragmentMove: any}
 	{@param? dropTargetItemTypes: ?}
@@ -347,10 +347,6 @@
 
 		{if $size}
 			{sp}col-{$size}
-		{/if}
-
-		{if $row and $row.config and ($row.config.columnSpacing == false)}
-			{sp}fragment-entry-link-list__col--no-spacing
 		{/if}
 	{/let}
 

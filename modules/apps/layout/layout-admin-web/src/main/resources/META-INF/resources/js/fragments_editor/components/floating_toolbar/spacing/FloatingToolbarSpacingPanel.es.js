@@ -11,12 +11,12 @@ import {UPDATE_LAST_SAVE_DATE, UPDATE_SAVING_CHANGES_STATUS, UPDATE_SECTION_CONF
 /**
  * @type {string}
  */
-const DEFAULT_PADDING_SIZE = '1';
+const DEFAULT_PADDING_SIZE = '3';
 
 /**
  * @type {number}
  */
-const PADDING_SIZES = 9;
+const PADDING_SIZES = 6;
 
 /**
  * FloatingToolbarSpacingPanel

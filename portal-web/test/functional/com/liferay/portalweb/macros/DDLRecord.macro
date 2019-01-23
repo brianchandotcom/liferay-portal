@@ -244,10 +244,20 @@ definition {
 			AssertTextEquals(locator1 = "Button#SIGN_IN", value1 = "Sign In");
 		}
 		else {
-			UploadCommonFile.uploadCommonFileHidden(
-				locator1 = "DocumentsAndMediaSelectDocument#SELECT_FILE_BUTTON",
-				value1 = "${document}"
-			);
+			var browserType = PropsUtil.get("browser.type");
+
+			if ("${browserType}" == "chrome") {
+				UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
+					locator1 = "DocumentsAndMediaSelectDocument#SELECT_FILE_BUTTON",
+					value1 = "${document}"
+				);
+			}
+			else {
+				UploadCommonFile.uploadCommonFileHidden(
+					locator1 = "DocumentsAndMediaSelectDocument#SELECT_FILE_BUTTON",
+					value1 = "${document}"
+				);
+			}
 
 			Pause(locator1 = "1000");
 

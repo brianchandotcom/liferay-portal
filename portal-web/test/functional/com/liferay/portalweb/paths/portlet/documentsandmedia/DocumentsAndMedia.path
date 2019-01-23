@@ -39,6 +39,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DOCUMENT_VERSION_ANY</td>
+	<td>//li[@class='list-group-item']/div[contains(.,'${key_dmDocumentVersionNumber}')]/div</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DOCUMENT_VERSION_VERTICAL_ELLIPSIS</td>
 	<td>//li[@class='list-group-item']/div[contains(.,'${key_dmDocumentVersionNumber}')]/..//div//a[span/*[name()='svg'][contains(@class,'icon-ellipsis')]]</td>
 	<td></td>

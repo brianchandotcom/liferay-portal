@@ -214,6 +214,7 @@
 							},
 							path: 'paragraph_field.js',
 							requires: [
+								'liferay-ddm-form-field-editor',
 								'liferay-ddm-form-renderer-field'
 							]
 						}

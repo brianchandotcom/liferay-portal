@@ -73,9 +73,7 @@ public class BNDBundleActivatorCheck extends BaseFileCheck {
 			String strippedBundleSymbolicName = StringUtil.replace(
 				bundleSymbolicName, CharPool.PERIOD, StringPool.BLANK);
 
-			if (StringUtil.endsWith(
-					strippedBundleSymbolicName, strippedBundleActivator)) {
-
+			if (strippedBundleSymbolicName.endsWith(strippedBundleActivator)) {
 				return;
 			}
 		}

@@ -14,7 +14,6 @@
 
 package com.liferay.site.navigation.menu.web.internal.upgrade.v1_0_1;
 
-import com.liferay.portal.kernel.upgrade.RenameUpgradePortletPreferences;
 import com.liferay.site.navigation.menu.web.internal.constants.SiteNavigationMenuPortletKeys;
 
 import java.util.HashMap;
@@ -23,9 +22,10 @@ import java.util.Map;
 /**
  * @author Balázs Sáfrány-Kovalik
  */
-public class UpgradePortletPreferences extends RenameUpgradePortletPreferences {
+public class RenameUpgradePortletPreferences
+	extends com.liferay.portal.kernel.upgrade.RenameUpgradePortletPreferences {
 
-	public UpgradePortletPreferences() {
+	public RenameUpgradePortletPreferences() {
 		_preferenceNamesMap.put("includedLayouts", "expandedLevels");
 		_preferenceNamesMap.put("rootLayoutLevel", "rootMenuItemLevel");
 		_preferenceNamesMap.put("rootLayoutType", "rootMenuItemType");

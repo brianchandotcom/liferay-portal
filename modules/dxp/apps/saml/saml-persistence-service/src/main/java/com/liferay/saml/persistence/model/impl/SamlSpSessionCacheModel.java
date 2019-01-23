@@ -80,10 +80,10 @@ public class SamlSpSessionCacheModel implements CacheModel<SamlSpSession>,
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
-		sb.append(", samlSpSessionKey=");
-		sb.append(samlSpSessionKey);
 		sb.append(", samlIdpEntityId=");
 		sb.append(samlIdpEntityId);
+		sb.append(", samlSpSessionKey=");
+		sb.append(samlSpSessionKey);
 		sb.append(", assertionXml=");
 		sb.append(assertionXml);
 		sb.append(", jSessionId=");
@@ -134,18 +134,18 @@ public class SamlSpSessionCacheModel implements CacheModel<SamlSpSession>,
 			samlSpSessionImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
-		if (samlSpSessionKey == null) {
-			samlSpSessionImpl.setSamlSpSessionKey("");
-		}
-		else {
-			samlSpSessionImpl.setSamlSpSessionKey(samlSpSessionKey);
-		}
-
 		if (samlIdpEntityId == null) {
 			samlSpSessionImpl.setSamlIdpEntityId("");
 		}
 		else {
 			samlSpSessionImpl.setSamlIdpEntityId(samlIdpEntityId);
+		}
+
+		if (samlSpSessionKey == null) {
+			samlSpSessionImpl.setSamlSpSessionKey("");
+		}
+		else {
+			samlSpSessionImpl.setSamlSpSessionKey(samlSpSessionKey);
 		}
 
 		if (assertionXml == null) {
@@ -214,8 +214,8 @@ public class SamlSpSessionCacheModel implements CacheModel<SamlSpSession>,
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
-		samlSpSessionKey = objectInput.readUTF();
 		samlIdpEntityId = objectInput.readUTF();
+		samlSpSessionKey = objectInput.readUTF();
 		assertionXml = objectInput.readUTF();
 		jSessionId = objectInput.readUTF();
 		nameIdFormat = objectInput.readUTF();
@@ -246,18 +246,18 @@ public class SamlSpSessionCacheModel implements CacheModel<SamlSpSession>,
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 
-		if (samlSpSessionKey == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(samlSpSessionKey);
-		}
-
 		if (samlIdpEntityId == null) {
 			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(samlIdpEntityId);
+		}
+
+		if (samlSpSessionKey == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(samlSpSessionKey);
 		}
 
 		if (assertionXml == null) {
@@ -318,8 +318,8 @@ public class SamlSpSessionCacheModel implements CacheModel<SamlSpSession>,
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
-	public String samlSpSessionKey;
 	public String samlIdpEntityId;
+	public String samlSpSessionKey;
 	public String assertionXml;
 	public String jSessionId;
 	public String nameIdFormat;

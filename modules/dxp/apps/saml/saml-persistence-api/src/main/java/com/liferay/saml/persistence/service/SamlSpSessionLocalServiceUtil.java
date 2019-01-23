@@ -55,13 +55,13 @@ public class SamlSpSessionLocalServiceUtil {
 	}
 
 	public static com.liferay.saml.persistence.model.SamlSpSession addSamlSpSession(
-		String samlSpSessionKey, String samlIdpEntityId, String assertionXml,
+		String samlIdpEntityId, String samlSpSessionKey, String assertionXml,
 		String jSessionId, String nameIdFormat, String nameIdNameQualifier,
 		String nameIdSPNameQualifier, String nameIdValue, String sessionIndex,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .addSamlSpSession(samlSpSessionKey, samlIdpEntityId,
+				   .addSamlSpSession(samlIdpEntityId, samlSpSessionKey,
 			assertionXml, jSessionId, nameIdFormat, nameIdNameQualifier,
 			nameIdSPNameQualifier, nameIdValue, sessionIndex, serviceContext);
 	}
@@ -300,15 +300,15 @@ public class SamlSpSessionLocalServiceUtil {
 	}
 
 	public static com.liferay.saml.persistence.model.SamlSpSession updateSamlSpSession(
-		long samlSpSessionId, String samlSpSessionKey, String samlIdpEntityId,
+		long samlSpSessionId, String samlIdpEntityId, String samlSpSessionKey,
 		String assertionXml, String jSessionId, String nameIdFormat,
 		String nameIdNameQualifier, String nameIdSPNameQualifier,
 		String nameIdValue, String sessionIndex,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .updateSamlSpSession(samlSpSessionId, samlSpSessionKey,
-			samlIdpEntityId, assertionXml, jSessionId, nameIdFormat,
+				   .updateSamlSpSession(samlSpSessionId, samlIdpEntityId,
+			samlSpSessionKey, assertionXml, jSessionId, nameIdFormat,
 			nameIdNameQualifier, nameIdSPNameQualifier, nameIdValue,
 			sessionIndex, serviceContext);
 	}

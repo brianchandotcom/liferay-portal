@@ -49,8 +49,8 @@ public class SamlSpSessionWrapper extends BaseModelWrapper<SamlSpSession>
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("samlSpSessionKey", getSamlSpSessionKey());
 		attributes.put("samlIdpEntityId", getSamlIdpEntityId());
+		attributes.put("samlSpSessionKey", getSamlSpSessionKey());
 		attributes.put("assertionXml", getAssertionXml());
 		attributes.put("jSessionId", getJSessionId());
 		attributes.put("nameIdFormat", getNameIdFormat());
@@ -101,16 +101,16 @@ public class SamlSpSessionWrapper extends BaseModelWrapper<SamlSpSession>
 			setModifiedDate(modifiedDate);
 		}
 
-		String samlSpSessionKey = (String)attributes.get("samlSpSessionKey");
-
-		if (samlSpSessionKey != null) {
-			setSamlSpSessionKey(samlSpSessionKey);
-		}
-
 		String samlIdpEntityId = (String)attributes.get("samlIdpEntityId");
 
 		if (samlIdpEntityId != null) {
 			setSamlIdpEntityId(samlIdpEntityId);
+		}
+
+		String samlSpSessionKey = (String)attributes.get("samlSpSessionKey");
+
+		if (samlSpSessionKey != null) {
+			setSamlSpSessionKey(samlSpSessionKey);
 		}
 
 		String assertionXml = (String)attributes.get("assertionXml");

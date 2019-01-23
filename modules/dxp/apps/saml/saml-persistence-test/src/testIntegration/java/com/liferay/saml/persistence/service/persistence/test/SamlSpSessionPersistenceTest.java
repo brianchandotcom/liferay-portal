@@ -134,9 +134,9 @@ public class SamlSpSessionPersistenceTest {
 
 		newSamlSpSession.setModifiedDate(RandomTestUtil.nextDate());
 
-		newSamlSpSession.setSamlSpSessionKey(RandomTestUtil.randomString());
-
 		newSamlSpSession.setSamlIdpEntityId(RandomTestUtil.randomString());
+
+		newSamlSpSession.setSamlSpSessionKey(RandomTestUtil.randomString());
 
 		newSamlSpSession.setAssertionXml(RandomTestUtil.randomString());
 
@@ -172,10 +172,10 @@ public class SamlSpSessionPersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingSamlSpSession.getModifiedDate()),
 			Time.getShortTimestamp(newSamlSpSession.getModifiedDate()));
-		Assert.assertEquals(existingSamlSpSession.getSamlSpSessionKey(),
-			newSamlSpSession.getSamlSpSessionKey());
 		Assert.assertEquals(existingSamlSpSession.getSamlIdpEntityId(),
 			newSamlSpSession.getSamlIdpEntityId());
+		Assert.assertEquals(existingSamlSpSession.getSamlSpSessionKey(),
+			newSamlSpSession.getSamlSpSessionKey());
 		Assert.assertEquals(existingSamlSpSession.getAssertionXml(),
 			newSamlSpSession.getAssertionXml());
 		Assert.assertEquals(existingSamlSpSession.getJSessionId(),
@@ -256,7 +256,7 @@ public class SamlSpSessionPersistenceTest {
 		return OrderByComparatorFactoryUtil.create("SamlSpSession",
 			"samlSpSessionId", true, "companyId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true,
-			"samlSpSessionKey", true, "samlIdpEntityId", true, "jSessionId",
+			"samlIdpEntityId", true, "samlSpSessionKey", true, "jSessionId",
 			true, "nameIdFormat", true, "nameIdNameQualifier", true,
 			"nameIdSPNameQualifier", true, "nameIdValue", true, "sessionIndex",
 			true, "terminated", true);
@@ -495,9 +495,9 @@ public class SamlSpSessionPersistenceTest {
 
 		samlSpSession.setModifiedDate(RandomTestUtil.nextDate());
 
-		samlSpSession.setSamlSpSessionKey(RandomTestUtil.randomString());
-
 		samlSpSession.setSamlIdpEntityId(RandomTestUtil.randomString());
+
+		samlSpSession.setSamlSpSessionKey(RandomTestUtil.randomString());
 
 		samlSpSession.setAssertionXml(RandomTestUtil.randomString());
 

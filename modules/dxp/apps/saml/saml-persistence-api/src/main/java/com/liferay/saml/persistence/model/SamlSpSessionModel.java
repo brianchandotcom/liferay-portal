@@ -171,21 +171,6 @@ public interface SamlSpSessionModel extends AuditedModel,
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
-	 * Returns the saml sp session key of this saml sp session.
-	 *
-	 * @return the saml sp session key of this saml sp session
-	 */
-	@AutoEscape
-	public String getSamlSpSessionKey();
-
-	/**
-	 * Sets the saml sp session key of this saml sp session.
-	 *
-	 * @param samlSpSessionKey the saml sp session key of this saml sp session
-	 */
-	public void setSamlSpSessionKey(String samlSpSessionKey);
-
-	/**
 	 * Returns the saml idp entity ID of this saml sp session.
 	 *
 	 * @return the saml idp entity ID of this saml sp session
@@ -199,6 +184,21 @@ public interface SamlSpSessionModel extends AuditedModel,
 	 * @param samlIdpEntityId the saml idp entity ID of this saml sp session
 	 */
 	public void setSamlIdpEntityId(String samlIdpEntityId);
+
+	/**
+	 * Returns the saml sp session key of this saml sp session.
+	 *
+	 * @return the saml sp session key of this saml sp session
+	 */
+	@AutoEscape
+	public String getSamlSpSessionKey();
+
+	/**
+	 * Sets the saml sp session key of this saml sp session.
+	 *
+	 * @param samlSpSessionKey the saml sp session key of this saml sp session
+	 */
+	public void setSamlSpSessionKey(String samlSpSessionKey);
 
 	/**
 	 * Returns the assertion xml of this saml sp session.

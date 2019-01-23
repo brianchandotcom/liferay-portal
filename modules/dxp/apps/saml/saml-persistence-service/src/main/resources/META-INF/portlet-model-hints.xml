@@ -120,10 +120,10 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field name="samlSpSessionKey" type="String" />
 		<field name="samlIdpEntityId" type="String">
 			<hint-collection name="ENTITY-ID" />
 		</field>
+		<field name="samlSpSessionKey" type="String" />
 		<field name="assertionXml" type="String">
 			<hint-collection name="CLOB" />
 		</field>

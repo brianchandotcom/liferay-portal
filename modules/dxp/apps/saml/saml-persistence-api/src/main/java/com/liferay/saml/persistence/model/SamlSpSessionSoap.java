@@ -39,8 +39,8 @@ public class SamlSpSessionSoap implements Serializable {
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
-		soapModel.setSamlSpSessionKey(model.getSamlSpSessionKey());
 		soapModel.setSamlIdpEntityId(model.getSamlIdpEntityId());
+		soapModel.setSamlSpSessionKey(model.getSamlSpSessionKey());
 		soapModel.setAssertionXml(model.getAssertionXml());
 		soapModel.setJSessionId(model.getJSessionId());
 		soapModel.setNameIdFormat(model.getNameIdFormat());
@@ -149,20 +149,20 @@ public class SamlSpSessionSoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
-	public String getSamlSpSessionKey() {
-		return _samlSpSessionKey;
-	}
-
-	public void setSamlSpSessionKey(String samlSpSessionKey) {
-		_samlSpSessionKey = samlSpSessionKey;
-	}
-
 	public String getSamlIdpEntityId() {
 		return _samlIdpEntityId;
 	}
 
 	public void setSamlIdpEntityId(String samlIdpEntityId) {
 		_samlIdpEntityId = samlIdpEntityId;
+	}
+
+	public String getSamlSpSessionKey() {
+		return _samlSpSessionKey;
+	}
+
+	public void setSamlSpSessionKey(String samlSpSessionKey) {
+		_samlSpSessionKey = samlSpSessionKey;
 	}
 
 	public String getAssertionXml() {
@@ -239,8 +239,8 @@ public class SamlSpSessionSoap implements Serializable {
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
-	private String _samlSpSessionKey;
 	private String _samlIdpEntityId;
+	private String _samlSpSessionKey;
 	private String _assertionXml;
 	private String _jSessionId;
 	private String _nameIdFormat;

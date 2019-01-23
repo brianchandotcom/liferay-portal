@@ -48,13 +48,13 @@ public class SamlSpSessionLocalServiceWrapper
 
 	@Override
 	public com.liferay.saml.persistence.model.SamlSpSession addSamlSpSession(
-		String samlSpSessionKey, String samlIdpEntityId, String assertionXml,
+		String samlIdpEntityId, String samlSpSessionKey, String assertionXml,
 		String jSessionId, String nameIdFormat, String nameIdNameQualifier,
 		String nameIdSPNameQualifier, String nameIdValue, String sessionIndex,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _samlSpSessionLocalService.addSamlSpSession(samlSpSessionKey,
-			samlIdpEntityId, assertionXml, jSessionId, nameIdFormat,
+		return _samlSpSessionLocalService.addSamlSpSession(samlIdpEntityId,
+			samlSpSessionKey, assertionXml, jSessionId, nameIdFormat,
 			nameIdNameQualifier, nameIdSPNameQualifier, nameIdValue,
 			sessionIndex, serviceContext);
 	}
@@ -321,14 +321,14 @@ public class SamlSpSessionLocalServiceWrapper
 
 	@Override
 	public com.liferay.saml.persistence.model.SamlSpSession updateSamlSpSession(
-		long samlSpSessionId, String samlSpSessionKey, String samlIdpEntityId,
+		long samlSpSessionId, String samlIdpEntityId, String samlSpSessionKey,
 		String assertionXml, String jSessionId, String nameIdFormat,
 		String nameIdNameQualifier, String nameIdSPNameQualifier,
 		String nameIdValue, String sessionIndex,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _samlSpSessionLocalService.updateSamlSpSession(samlSpSessionId,
-			samlSpSessionKey, samlIdpEntityId, assertionXml, jSessionId,
+			samlIdpEntityId, samlSpSessionKey, assertionXml, jSessionId,
 			nameIdFormat, nameIdNameQualifier, nameIdSPNameQualifier,
 			nameIdValue, sessionIndex, serviceContext);
 	}

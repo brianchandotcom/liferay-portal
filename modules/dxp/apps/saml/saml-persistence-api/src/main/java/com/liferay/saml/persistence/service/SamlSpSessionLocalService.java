@@ -71,8 +71,8 @@ public interface SamlSpSessionLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public SamlSpSession addSamlSpSession(SamlSpSession samlSpSession);
 
-	public SamlSpSession addSamlSpSession(String samlSpSessionKey,
-		String samlIdpEntityId, String assertionXml, String jSessionId,
+	public SamlSpSession addSamlSpSession(String samlIdpEntityId,
+		String samlSpSessionKey, String assertionXml, String jSessionId,
 		String nameIdFormat, String nameIdNameQualifier,
 		String nameIdSPNameQualifier, String nameIdValue, String sessionIndex,
 		ServiceContext serviceContext) throws PortalException;
@@ -261,7 +261,7 @@ public interface SamlSpSessionLocalService extends BaseLocalService,
 		String jSessionId) throws PortalException;
 
 	public SamlSpSession updateSamlSpSession(long samlSpSessionId,
-		String samlSpSessionKey, String samlIdpEntityId, String assertionXml,
+		String samlIdpEntityId, String samlSpSessionKey, String assertionXml,
 		String jSessionId, String nameIdFormat, String nameIdNameQualifier,
 		String nameIdSPNameQualifier, String nameIdValue, String sessionIndex,
 		ServiceContext serviceContext) throws PortalException;

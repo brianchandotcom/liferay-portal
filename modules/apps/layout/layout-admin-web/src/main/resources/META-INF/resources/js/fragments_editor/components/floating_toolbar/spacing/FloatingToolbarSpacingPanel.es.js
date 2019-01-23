@@ -38,8 +38,8 @@ class FloatingToolbarSpacingPanel extends Component {
 		};
 
 		if (config) {
-			selectedPaddingSizes.horizontal = config.paddinghorizontal || DEFAULT_PADDING_SIZE;
-			selectedPaddingSizes.vertical = config.paddingvertical || DEFAULT_PADDING_SIZE;
+			selectedPaddingSizes.horizontal = config.paddingHorizontal || DEFAULT_PADDING_SIZE;
+			selectedPaddingSizes.vertical = config.paddingVertical || DEFAULT_PADDING_SIZE;
 		}
 
 		nextState = setIn(

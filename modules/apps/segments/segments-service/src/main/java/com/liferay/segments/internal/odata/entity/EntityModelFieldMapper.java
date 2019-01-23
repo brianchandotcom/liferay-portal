@@ -243,11 +243,15 @@ public class EntityModelFieldMapper {
 			portletURL.setParameter("eventName", "selectEntity");
 			portletURL.setWindowState(LiferayWindowState.POP_UP);
 
-			String label = ResourceActionsUtil.getModelResource(
+			String label = LanguageUtil.get(
+				resourceBundle,
+				CamelCaseUtil.fromCamelCase(entityField.getName()));
+
+			String title = ResourceActionsUtil.getModelResource(
 				resourceBundle.getLocale(), className);
 
 			String selectEntityTitle = LanguageUtil.format(
-				resourceBundle, "select-x", label);
+				resourceBundle, "select-x", title);
 
 			Field field = new Field(
 				entityField.getName(), label, "id", Collections.emptyList(),

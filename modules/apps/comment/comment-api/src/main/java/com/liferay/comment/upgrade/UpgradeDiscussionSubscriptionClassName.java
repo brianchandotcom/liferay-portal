@@ -29,11 +29,11 @@ import java.util.List;
 public class UpgradeDiscussionSubscriptionClassName extends UpgradeProcess {
 
 	public UpgradeDiscussionSubscriptionClassName(
-		SubscriptionLocalService subscriptionLocalService, String className,
-		DeletionMode deletionMode) {
+		SubscriptionLocalService subscriptionLocalService,
+		String oldSubscriptionClassName, DeletionMode deletionMode) {
 
 		_subscriptionLocalService = subscriptionLocalService;
-		_className = className;
+		_oldSubscriptionClassName = oldSubscriptionClassName;
 		_deletionMode = deletionMode;
 	}
 
@@ -54,7 +54,8 @@ public class UpgradeDiscussionSubscriptionClassName extends UpgradeProcess {
 
 	private void _addSubscriptions() throws PortalException {
 		String newSubscriptionClassName =
-			MBDiscussion.class.getName() + StringPool.UNDERLINE + _className;
+			MBDiscussion.class.getName() + StringPool.UNDERLINE +
+				_oldSubscriptionClassName;
 
 		if (_subscriptionLocalService.getSubscriptionsCount(
 				newSubscriptionClassName) > 0) {
@@ -63,7 +64,8 @@ public class UpgradeDiscussionSubscriptionClassName extends UpgradeProcess {
 		}
 
 		List<Subscription> subscriptions =
-			_subscriptionLocalService.getSubscriptions(_className);
+			_subscriptionLocalService.getSubscriptions(
+				_oldSubscriptionClassName);
 
 		for (Subscription subscription : subscriptions) {
 			_subscriptionLocalService.addSubscription(
@@ -74,7 +76,8 @@ public class UpgradeDiscussionSubscriptionClassName extends UpgradeProcess {
 
 	private void _deleteSubscriptions() throws PortalException {
 		List<Subscription> subscriptions =
-			_subscriptionLocalService.getSubscriptions(_className);
+			_subscriptionLocalService.getSubscriptions(
+				_oldSubscriptionClassName);
 
 		for (Subscription subscription : subscriptions) {
 			_subscriptionLocalService.deleteSubscription(
@@ -82,8 +85,8 @@ public class UpgradeDiscussionSubscriptionClassName extends UpgradeProcess {
 		}
 	}
 
-	private final String _className;
 	private final DeletionMode _deletionMode;
+	private final String _oldSubscriptionClassName;
 	private final SubscriptionLocalService _subscriptionLocalService;
 
 }

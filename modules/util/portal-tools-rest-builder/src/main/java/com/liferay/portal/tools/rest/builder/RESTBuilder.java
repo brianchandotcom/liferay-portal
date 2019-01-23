@@ -22,7 +22,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 import org.yaml.snakeyaml.Yaml;
@@ -46,14 +48,14 @@ public class RESTBuilder {
 	}
 
 	public RESTBuilder(String inputFileName) {
-		Map<String, Object> restMap = _load(inputFileName);
+		List<Entity> entities = _getEntities(inputFileName);
 
-		for (Map.Entry<String, Object> entry : restMap.entrySet()) {
-			System.out.println(entry.getKey() + ": " + entry.getValue());
+		for (Entity entity : entities) {
+			System.out.println(entity);
 		}
 	}
 
-	private Map<String, Object> _load(String inputFileName) {
+	private List<Entity> _getEntities(String inputFileName) {
 		File inputFile = new File(inputFileName);
 
 		try (InputStream inputStream = new FileInputStream(inputFile)) {
@@ -61,21 +63,40 @@ public class RESTBuilder {
 
 			Map<String, Object> yamlData = yaml.load(inputStream);
 
-			if (yamlData != null) {
-				return yamlData;
+			if (yamlData == null) {
+				return Collections.emptyList();
 			}
 
-			return Collections.emptyMap();
+			String apiDir = (String)yamlData.get("api-dir");
+			String apiPackagePath = (String)yamlData.get("api-package-path");
+			String author = (String)yamlData.get("author");
+
+			List<Entity> entities = new ArrayList<>();
+
+			for (Object object : (List)yamlData.get("entities")) {
+				Map<String, Object> map = (Map)object;
+
+				Entity entity = new Entity();
+
+				entity.setApiDir(apiDir);
+				entity.setApiPackagePath(apiPackagePath);
+				entity.setAuthor(author);
+				entity.setName((String)map.get("name"));
+
+				entities.add(entity);
+			}
+
+			return entities;
 		}
 		catch (FileNotFoundException fnfe) {
 			System.out.println(fnfe.getMessage());
 
-			return Collections.emptyMap();
+			return Collections.emptyList();
 		}
 		catch (IOException ioe) {
 			ioe.printStackTrace();
 
-			return Collections.emptyMap();
+			return Collections.emptyList();
 		}
 	}
 

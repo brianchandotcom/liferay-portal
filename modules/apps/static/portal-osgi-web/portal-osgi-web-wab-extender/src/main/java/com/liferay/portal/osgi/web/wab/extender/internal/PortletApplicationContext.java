@@ -26,6 +26,8 @@ import com.liferay.portal.spring.util.FilterClassLoader;
 
 import java.io.FileNotFoundException;
 
+import java.net.URL;
+
 import java.util.List;
 
 import org.apache.felix.utils.log.Logger;
@@ -71,18 +73,14 @@ public class PortletApplicationContext extends XmlWebApplicationContext {
 
 		ClassLoader classLoader = PortletClassLoaderUtil.getClassLoader();
 
-		Configuration serviceBuilderPropertiesConfiguration = null;
+		URL url = classLoader.getResource("service.properties");
 
-		try {
-			serviceBuilderPropertiesConfiguration =
-				ConfigurationFactoryUtil.getConfiguration(
-					classLoader, "service");
-		}
-		catch (Exception e) {
-			_logger.log(Logger.LOG_DEBUG, "Unable to read service.properties");
-
+		if (url == null) {
 			return configLocations;
 		}
+
+		Configuration serviceBuilderPropertiesConfiguration =
+			ConfigurationFactoryUtil.getConfiguration(classLoader, "service");
 
 		// Remove old spring XMLs to ensure they are not read
 

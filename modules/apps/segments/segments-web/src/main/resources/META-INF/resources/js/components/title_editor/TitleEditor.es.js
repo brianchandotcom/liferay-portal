@@ -94,11 +94,12 @@ class TitleEditor extends Component {
 
 					<ClayButton
 						borderless
-						className="edit-icon"
+						className="edit-icon ml-1"
 						data-testid="edit-button"
 						iconName="pencil"
 						monospaced
 						onClick={this._handleEdit}
+						size="sm"
 					/>
 				</div>
 			</div>

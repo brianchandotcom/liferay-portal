@@ -16,14 +16,13 @@
 
 		.edit-icon {
 			color: $mainLighten52;
-			margin-left: 8px;
 		}
 
 		.form-header-container {
 			align-items: center;
 			display: flex;
 			justify-content: space-between;
-			padding: 24px;
+			padding: 16px 24px;
 		}
 
 		.form-header-section-left {
@@ -45,7 +44,7 @@
 				margin-bottom: 0;
 
 				.toggle-switch-text {
-					font-size: 16px;
+					font-size: 14px;
 				}
 			}
 
@@ -54,12 +53,9 @@
 			}
 
 			.members-count {
-				font-size: 16px;
+				color: #2E5AAC;
+				font-size: 0.875rem;
 				font-weight: 600;
-			}
-
-			.members-preview-button {
-				margin-right: 40px;
 			}
 		}
 

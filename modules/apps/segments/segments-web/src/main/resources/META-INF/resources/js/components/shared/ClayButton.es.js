@@ -11,6 +11,11 @@ class ClayButton extends Component {
 		iconName: PropTypes.string,
 		label: PropTypes.string,
 		monospaced: PropTypes.bool,
+		size: PropTypes.oneOf(
+			[
+				'sm'
+			]
+		),
 		style: PropTypes.oneOf(
 			[
 				'primary',
@@ -42,6 +47,7 @@ class ClayButton extends Component {
 			iconName,
 			label,
 			monospaced,
+			size,
 			style,
 			type,
 			...otherProps
@@ -52,6 +58,7 @@ class ClayButton extends Component {
 		const classes = getCN(
 			'btn',
 			`${stylePrefix}${style}`,
+			size ? `btn-${size}` : null,
 			{
 				'btn-monospaced': monospaced,
 				'btn-outline-borderless': borderless

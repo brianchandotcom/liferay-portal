@@ -171,14 +171,16 @@ class SegmentEdit extends Component {
 			response => response.text()
 		).then(
 			html => {
-				Liferay.Util.openWindow({
-					dialog: {
-						destroyOnHide: true,
-						bodyContent: html
-					},
-					id: 'segment-members-dialog',
-					title: `${this.props.values.name} members`
-				})
+				Liferay.Util.openWindow(
+					{
+						dialog: {
+							bodyContent: html,
+							destroyOnHide: true
+						},
+						id: 'segment-members-dialog',
+						title: `${this.props.values.name} members`
+					}
+				);
 			}
 		).catch(
 			() => {
@@ -257,40 +259,49 @@ class SegmentEdit extends Component {
 						</div>
 
 						<div className="form-header-section-right">
-							<ClaySpinner
-								loading={membersCountLoading}
-								size="sm"
-							/>
 
-							<div className="members-count">
-								{getPluralMessage(
-									Liferay.Language.get('x-member'),
-									Liferay.Language.get('x-members'),
-									membersCount
-								)}
+							<div className="btn-group mr-3">
+								<div className="btn-group-item">
+									<ClaySpinner
+										className="mr-4"
+										loading={membersCountLoading}
+										size="sm"
+									/>
+
+									<div className="members-count mr-3">
+										{getPluralMessage(
+											Liferay.Language.get('x-member'),
+											Liferay.Language.get('x-members'),
+											membersCount
+										)}
+									</div>
+
+									{previewMembersURL &&
+										<ClayButton
+											aria-label={Liferay.Language.get('preview-members')}
+											borderless
+											iconName="view"
+											onClick={this._handlePreviewClick(previewMembersURL)}
+											size="sm"
+											type="button"
+										/>
+									}
+								</div>
 							</div>
-
-							{previewMembersURL &&
-								<ClayButton
-									className="members-preview-button"
-									label={Liferay.Language.get('preview-members')}
-									onClick={this._handlePreviewClick(previewMembersURL)}
-									type="button"
-								/>
-							}
 
 							<div className="btn-group">
 								<div className="btn-group-item">
 									<ClayButton
-										borderless
 										href={redirect}
-										label={Liferay.Language.get('cancel')}
+										label={Liferay.Language.get('Cancel')}
+										size="sm"
 									/>
 								</div>
 
 								<div className="btn-group-item">
 									<ClayButton
-										label={Liferay.Language.get('save')}
+										label={Liferay.Language.get('Save')}
+										size="sm"
 										style="primary"
 										type="submit"
 									/>

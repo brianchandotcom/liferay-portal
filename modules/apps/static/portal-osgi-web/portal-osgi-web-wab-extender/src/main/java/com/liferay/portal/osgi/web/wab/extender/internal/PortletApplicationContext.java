@@ -122,13 +122,7 @@ public class PortletApplicationContext extends XmlWebApplicationContext {
 	protected void loadBeanDefinitions(
 		XmlBeanDefinitionReader xmlBeanDefinitionReader) {
 
-		String[] configLocations = getPortletConfigLocations();
-
-		if (configLocations == null) {
-			return;
-		}
-
-		for (String configLocation : configLocations) {
+		for (String configLocation : getPortletConfigLocations()) {
 			try {
 				xmlBeanDefinitionReader.loadBeanDefinitions(configLocation);
 			}

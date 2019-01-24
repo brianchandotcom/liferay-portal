@@ -82,6 +82,12 @@ public class RESTBuilder {
 				apiPackagePath, author, name, schema);
 
 			FileUtil.write(file, content);
+
+			file = _getResourceFile(apiDirName, apiPackagePath, name);
+			content = _getResourceContent(
+				apiPackagePath, author, name, configuration);
+
+			FileUtil.write(file, content);
 		}
 	}
 
@@ -146,6 +152,44 @@ public class RESTBuilder {
 		sb.append("/dto/");
 		sb.append(name);
 		sb.append(".java");
+
+		return new File(sb.toString());
+	}
+
+	private String _getResourceContent(
+			String apiPackagePath, String author, String name,
+			Configuration configuration)
+		throws Exception {
+
+		Map<String, Object> context = new HashMap<>();
+
+		context.put("apiPackagePath", apiPackagePath);
+		context.put("author", author);
+		context.put("info", configuration.getInfo());
+		context.put("name", name);
+
+		String content = _freeMarker.processTemplate(
+			FreeMarkerConstants.RESOURCE_FTL, context);
+
+		if ((_copyright != null) && !_copyright.isEmpty()) {
+			content = _copyright + "\n\n" + content;
+		}
+
+		return content;
+	}
+
+	private File _getResourceFile(
+		String apiDir, String apiPackagePath, String name) {
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(apiDir);
+		sb.append("/");
+		sb.append(apiPackagePath.replace('.', '/'));
+		sb.append("/");
+		sb.append("/resource/");
+		sb.append(name);
+		sb.append("Resource.java");
 
 		return new File(sb.toString());
 	}

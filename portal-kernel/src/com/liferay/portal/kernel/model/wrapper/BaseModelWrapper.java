@@ -68,13 +68,13 @@ public abstract class BaseModelWrapper<T extends BaseModel<T>>
 	}
 
 	@Override
-	public Map<String, Function<T, Object>> getAttributeGetters() {
-		return model.getAttributeGetters();
+	public Map<String, Function<T, Object>> getAttributeGetterFunctions() {
+		return model.getAttributeGetterFunctions();
 	}
 
 	@Override
-	public Map<String, BiConsumer<T, Object>> getAttributeSetters() {
-		return model.getAttributeSetters();
+	public Map<String, BiConsumer<T, Object>> getAttributeSetterBiConsumers() {
+		return model.getAttributeSetterBiConsumers();
 	}
 
 	@Override
@@ -86,16 +86,17 @@ public abstract class BaseModelWrapper<T extends BaseModel<T>>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<>();
 
-		Map<String, Function<T, Object>> attributeGetters =
-			getAttributeGetters();
+		Map<String, Function<T, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
 		for (Map.Entry<String, Function<T, Object>> entry :
-				attributeGetters.entrySet()) {
+				attributeGetterFunctions.entrySet()) {
 
 			String attributeName = entry.getKey();
-			Function<T, Object> attributeFunction = entry.getValue();
+			Function<T, Object> attributeGetterFunction = entry.getValue();
 
-			attributes.put(attributeName, attributeFunction.apply((T)this));
+			attributes.put(
+				attributeName, attributeGetterFunction.apply((T)this));
 		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
@@ -181,14 +182,14 @@ public abstract class BaseModelWrapper<T extends BaseModel<T>>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Map<String, BiConsumer<T, Object>> attributeSetters =
-			getAttributeSetters();
+		Map<String, BiConsumer<T, Object>> attributeSetterBiConsumers =
+			getAttributeSetterBiConsumers();
 
 		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
 			String attributeName = entry.getKey();
 
 			BiConsumer<T, Object> attributeSetterBiConsumer =
-				attributeSetters.get(attributeName);
+				attributeSetterBiConsumers.get(attributeName);
 
 			if (attributeSetterBiConsumer != null) {
 				attributeSetterBiConsumer.accept((T)this, entry.getValue());

@@ -102,6 +102,9 @@
 		<finder name="LayoutPrototype" return-type="Collection">
 			<finder-column name="layoutPrototypeId" />
 		</finder>
+		<finder name="Plid" return-type="Collection">
+			<finder-column name="plid" />
+		</finder>
 		<finder name="G_L" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="layoutPageTemplateCollectionId" />

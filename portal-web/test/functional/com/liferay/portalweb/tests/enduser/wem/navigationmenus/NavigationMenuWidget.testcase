@@ -5,11 +5,15 @@ definition {
 	property testray.main.component.name = "Navigation";
 
 	setUp {
-		TestCase.setUpPortalInstance();
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
 
-		User.firstLoginPG();
+			User.firstLoginPG();
+		}
 
-		JSONGroup.addGroup(groupName = "Test Site Name");
+		task ("Add a site via JSON") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
 	}
 
 	tearDown {
@@ -23,99 +27,135 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-75059."
+	@description = "This is a test for LPS-75059. A user can add a link to a navigation menu."
 	@priority = "4"
 	test AddURLNavigationMenu {
-		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Test Page Name"
-		);
+		task ("Add a page to the site") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name"
+			);
+		}
 
-		NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
+		task ("Add a navigation menu") {
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
 
-		NavigationMenusAdmin.addMenu(menuName = "Test Navigation Menu Name");
+			NavigationMenusAdmin.addMenu(menuName = "Test Navigation Menu Name");
+		}
 
-		NavigationMenusAdmin.addItem(
-			item = "URL",
-			url = "https://www.liferay.com/",
-			urlName = "Liferay"
-		);
+		task ("Add a URL item to the navigation menu") {
+			NavigationMenusAdmin.addItem(
+				item = "URL",
+				url = "https://www.liferay.com/",
+				urlName = "Liferay"
+			);
+		}
 
-		NavigationMenusAdmin.viewItem(itemName = "Liferay");
+		task ("Assert the URL item was added to the navigation menu") {
+			NavigationMenusAdmin.viewItem(itemName = "Liferay");
+		}
 
-		Navigator.openSiteURL(siteName = "Test Site Name");
+		task ("Navigate to the Navigation Menu widget") {
+			Navigator.openSiteURL(siteName = "Test Site Name");
+		}
 
-		NavigationMenusWidget.gotoNavigationMenuWidgetConfig();
+		task ("Configure the Navigation Menu widget to use the navigation menu") {
+			NavigationMenusWidget.gotoNavigationMenuWidgetConfig();
 
-		NavigationMenusWidget.chooseMenu(menuName = "Test Navigation Menu Name");
+			NavigationMenusWidget.chooseMenu(menuName = "Test Navigation Menu Name");
 
-		Portlet.saveAndCloseConfig();
+			Portlet.saveAndCloseConfig();
+		}
 
-		AssertClick(
-			locator1 = "Home#PAGE",
-			value1 = "Liferay",
-			key_pageName = "Liferay"
-		);
+		task ("Assert the Navigation Menu widget has the URL item and the link works properly") {
+			AssertClick(
+				locator1 = "Home#PAGE",
+				value1 = "Liferay",
+				key_pageName = "Liferay"
+			);
 
-		AssertLocation(value1 = "https://www.liferay.com/");
+			AssertLocation(value1 = "https://www.liferay.com/");
+		}
 	}
 
-	@description = "This is a test for LPS-76658"
+	@description = "This is a test for LPS-76658. A user can edit the existing page items in a navigation menu."
 	@priority = "5"
 	test EditNavigationMenuPageItemName {
 		property portal.acceptance = "true";
 
-		for (var index : list "1,2") {
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Page Name ${index}"
+		task ("Add two pages to the site") {
+			for (var index : list "1,2") {
+				JSONLayout.addPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Test Page Name ${index}"
+				);
+			}
+		}
+
+		task ("Add a navigation menu") {
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
+
+			NavigationMenusAdmin.addMenu(menuName = "Test Navigation Menu Name");
+		}
+
+		task ("Add the first page and second page to the navigation menu") {
+			NavigationMenusAdmin.addItem(
+				item = "Page",
+				pageNames = "Test Page Name 1,Test Page Name 2"
 			);
 		}
 
-		NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
+		task ("Navigate to navigation menus admin") {
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
+		}
 
-		NavigationMenusAdmin.addMenu(menuName = "Test Navigation Menu Name");
+		task ("Mark the navigation menu as Primary Navigation") {
+			NavigationMenusAdmin.configureMenuType(
+				menuType = "Primary Navigation",
+				navigationMenu = "Test Navigation Menu Name"
+			);
+		}
 
-		NavigationMenusAdmin.addItem(
-			item = "Page",
-			pageNames = "Test Page Name 1,Test Page Name 2"
-		);
+		task ("Navigate to edit the navigation menu") {
+			LexiconEntry.gotoEntry(rowEntry = "Test Navigation Menu Name");
+		}
 
-		NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
+		task ("Change the name of the second page in the navigation menu") {
+			NavigationMenusAdmin.editItem(
+				item = "Page",
+				itemName = "Test Page Name 2",
+				name = "Test Page Name 3"
+			);
+		}
 
-		NavigationMenusAdmin.configureMenuType(
-			menuType = "Primary Navigation",
-			navigationMenu = "Test Navigation Menu Name"
-		);
+		task ("Assert the name of the second page was successfully changed") {
+			NavigationMenusAdmin.viewItem(itemName = "Test Page Name 3");
+		}
 
-		LexiconEntry.gotoEntry(rowEntry = "Test Navigation Menu Name");
+		task ("Navigate to the Navigation Menu widget") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name 1",
+				siteName = "Test Site Name"
+			);
+		}
 
-		NavigationMenusAdmin.editItem(
-			item = "Page",
-			itemName = "Test Page Name 2",
-			name = "Test Page Name 3"
-		);
+		task ("Configure the Navigation Menu widget to use Primary Navigation") {
+			NavigationMenusWidget.gotoNavigationMenuWidgetConfig();
 
-		NavigationMenusAdmin.viewItem(itemName = "Test Page Name 3");
+			NavigationMenusWidget.selectNavigation(menuType = "Primary Navigation");
 
-		Navigator.gotoSitePage(
-			pageName = "Test Page Name 1",
-			siteName = "Test Site Name"
-		);
+			Portlet.saveAndCloseConfig();
+		}
 
-		NavigationMenusWidget.gotoNavigationMenuWidgetConfig();
+		task ("Assert the name of the second page was changed and clicking on the new page name navigates to the second page") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name 3",
+				siteName = "Test Site Name"
+			);
 
-		NavigationMenusWidget.selectNavigation(menuType = "Primary Navigation");
+			var portalURL = PropsUtil.get("portal.url");
 
-		Portlet.saveAndCloseConfig();
-
-		Navigator.gotoSitePage(
-			pageName = "Test Page Name 3",
-			siteName = "Test Site Name"
-		);
-
-		var portalURL = PropsUtil.get("portal.url");
-
-		AssertLocation(value1 = "${portalURL}/web/test-site-name/test-page-name-2");
+			AssertLocation(value1 = "${portalURL}/web/test-site-name/test-page-name-2");
+		}
 	}
 }

@@ -16,8 +16,6 @@ package com.liferay.arquillian.extension.junit.bridge.container.remote;
 
 import java.io.IOException;
 
-import java.net.InetAddress;
-import java.net.NetworkInterface;
 import java.net.URL;
 
 import java.util.Collection;
@@ -43,7 +41,6 @@ import javax.management.remote.JMXConnector;
 import javax.management.remote.JMXConnectorFactory;
 import javax.management.remote.JMXServiceURL;
 
-import org.jboss.arquillian.container.osgi.jmx.http.SimpleHTTPServer;
 import org.jboss.arquillian.container.spi.client.container.DeployableContainer;
 import org.jboss.arquillian.container.spi.client.container.DeploymentException;
 import org.jboss.arquillian.container.spi.client.container.LifecycleException;
@@ -355,31 +352,12 @@ public class LiferayRemoteDeployableContainer
 	private BundleHandle _installBundle(String location, URL streamURL)
 		throws BundleException, IOException {
 
-		URL serverUrl = streamURL;
+		long bundleId = _frameworkMBean.installBundleFromURL(
+			location, streamURL.toExternalForm());
 
-		SimpleHTTPServer server = null;
+		String symbolicName = _bundleStateMBean.getSymbolicName(bundleId);
 
-		if (!_isLocalHost(_liferayRemoteContainerConfiguration)) {
-			server = new SimpleHTTPServer();
-
-			serverUrl = server.serve(streamURL);
-
-			server.start();
-		}
-
-		try {
-			long bundleId = _frameworkMBean.installBundleFromURL(
-				location, serverUrl.toExternalForm());
-
-			String symbolicName = _bundleStateMBean.getSymbolicName(bundleId);
-
-			return new BundleHandle(bundleId, symbolicName);
-		}
-		finally {
-			if (server != null) {
-				server.shutdown();
-			}
-		}
+		return new BundleHandle(bundleId, symbolicName);
 	}
 
 	private BundleHandle _installBundle(
@@ -393,31 +371,6 @@ public class LiferayRemoteDeployableContainer
 		URL streamURL = root.getStreamURL();
 
 		return _installBundle(location, streamURL);
-	}
-
-	private boolean _isLocalHost(
-		LiferayRemoteContainerConfiguration
-			liferayRemoteContainerConfiguration) {
-
-		try {
-			JMXServiceURL serviceURL = new JMXServiceURL(
-				liferayRemoteContainerConfiguration.getJmxServiceURL());
-
-			InetAddress addr = InetAddress.getByName(serviceURL.getHost());
-
-			if (addr.isAnyLocalAddress() || addr.isLoopbackAddress()) {
-				return true;
-			}
-
-			if (NetworkInterface.getByInetAddress(addr) != null) {
-				return true;
-			}
-
-			return false;
-		}
-		catch (IOException ioe) {
-			return false;
-		}
 	}
 
 	private VirtualFile _toVirtualFile(Archive<?> archive) throws IOException {

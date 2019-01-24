@@ -58,7 +58,6 @@ import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.exporter.ZipExporter;
 import org.jboss.shrinkwrap.descriptor.api.Descriptor;
 
-import org.osgi.framework.BundleException;
 import org.osgi.jmx.framework.BundleStateMBean;
 import org.osgi.jmx.framework.FrameworkMBean;
 
@@ -340,30 +339,19 @@ public class LiferayRemoteDeployableContainer
 	private BundleHandle _installBundle(Archive<?> archive) throws Exception {
 		VirtualFile virtualFile = _toVirtualFile(archive);
 
+		URL url = virtualFile.getStreamURL();
+
 		try {
-			return _installBundle(archive.getName(), virtualFile);
+			long bundleId = _frameworkMBean.installBundleFromURL(
+				archive.getName(), url.toExternalForm());
+
+			String symbolicName = _bundleStateMBean.getSymbolicName(bundleId);
+
+			return new BundleHandle(bundleId, symbolicName);
 		}
 		finally {
 			VFSUtils.safeClose(virtualFile);
 		}
-	}
-
-	private BundleHandle _installBundle(String location, URL streamURL)
-		throws BundleException, IOException {
-
-		long bundleId = _frameworkMBean.installBundleFromURL(
-			location, streamURL.toExternalForm());
-
-		String symbolicName = _bundleStateMBean.getSymbolicName(bundleId);
-
-		return new BundleHandle(bundleId, symbolicName);
-	}
-
-	private BundleHandle _installBundle(
-			String location, VirtualFile virtualFile)
-		throws Exception {
-
-		return _installBundle(location, virtualFile.getStreamURL());
 	}
 
 	private VirtualFile _toVirtualFile(Archive<?> archive) throws IOException {

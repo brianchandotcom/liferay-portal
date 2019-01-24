@@ -21,4 +21,6 @@ public class FreeMarkerConstants {
 
 	public static final String DTO_FTL = "com/liferay/portal/tools/rest/builder/dependencies/dto.ftl";
 
+	public static final String RESOURCE_FTL = "com/liferay/portal/tools/rest/builder/dependencies/resource.ftl";
+
 }

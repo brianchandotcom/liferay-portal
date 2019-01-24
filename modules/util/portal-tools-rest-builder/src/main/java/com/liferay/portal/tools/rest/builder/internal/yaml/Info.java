@@ -17,25 +17,16 @@ package com.liferay.portal.tools.rest.builder.internal.yaml;
 /**
  * @author Peter Shin
  */
-public class Configuration {
+public class Info {
 
-	public Components getComponents() {
-		return _components;
+	public String getVersion() {
+		return _version;
 	}
 
-	public Info getInfo() {
-		return _info;
+	public void setVersion(String version) {
+		_version = version;
 	}
 
-	public void setComponents(Components components) {
-		_components = components;
-	}
-
-	public void setInfo(Info info) {
-		_info = info;
-	}
-
-	private Components _components;
-	private Info _info;
+	private String _version;
 
 }

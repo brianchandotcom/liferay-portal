@@ -1,0 +1,8 @@
+{
+	"cssPath": "index.css",
+	"fragmentEntryKey": "footer-navigation",
+	"htmlPath": "index.html",
+	"jsPath": "index.js",
+	"name": "Footer navigation",
+	"type": "section"
+}

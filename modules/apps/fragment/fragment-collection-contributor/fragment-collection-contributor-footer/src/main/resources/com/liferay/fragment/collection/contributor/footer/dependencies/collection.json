@@ -1,0 +1,8 @@
+{
+	"fragments": [
+		"footer-logo",
+		"footer-navigation",
+		"footer-simple"
+	],
+	"name": "Footer fragments collection"
+}

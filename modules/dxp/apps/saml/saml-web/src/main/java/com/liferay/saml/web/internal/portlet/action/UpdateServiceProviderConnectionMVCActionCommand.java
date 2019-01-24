@@ -14,18 +14,13 @@
 
 package com.liferay.saml.web.internal.portlet.action;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
-import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.saml.persistence.model.SamlIdpSpConnection;
 import com.liferay.saml.persistence.service.SamlIdpSpConnectionLocalService;
 import com.liferay.saml.web.internal.constants.SamlAdminPortletKeys;
@@ -87,21 +82,20 @@ public class UpdateServiceProviderConnectionMVCActionCommand
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			SamlIdpSpConnection.class.getName(), uploadPortletRequest);
 
-			if (samlIdpSpConnectionId <= 0) {
-					_samlIdpSpConnectionLocalService.addSamlIdpSpConnection(
-						samlSpEntityId, assertionLifetime, attributeNames,
-						attributesEnabled, attributesNamespaceEnabled, enabled,
-						metadataUrl, metadataXmlInputStream, name,
-						nameIdAttribute, nameIdFormat, serviceContext);
-			}
-			else {
-					_samlIdpSpConnectionLocalService.updateSamlIdpSpConnection(
-						samlIdpSpConnectionId, samlSpEntityId,
-						assertionLifetime, attributeNames, attributesEnabled,
-						attributesNamespaceEnabled, enabled, metadataUrl,
-						metadataXmlInputStream, name, nameIdAttribute,
-						nameIdFormat, serviceContext);
-			}
+		if (samlIdpSpConnectionId <= 0) {
+			_samlIdpSpConnectionLocalService.addSamlIdpSpConnection(
+				samlSpEntityId, assertionLifetime, attributeNames,
+				attributesEnabled, attributesNamespaceEnabled, enabled,
+				metadataUrl, metadataXmlInputStream, name, nameIdAttribute,
+				nameIdFormat, serviceContext);
+		}
+		else {
+			_samlIdpSpConnectionLocalService.updateSamlIdpSpConnection(
+				samlIdpSpConnectionId, samlSpEntityId, assertionLifetime,
+				attributeNames, attributesEnabled, attributesNamespaceEnabled,
+				enabled, metadataUrl, metadataXmlInputStream, name,
+				nameIdAttribute, nameIdFormat, serviceContext);
+		}
 	}
 
 	@Reference

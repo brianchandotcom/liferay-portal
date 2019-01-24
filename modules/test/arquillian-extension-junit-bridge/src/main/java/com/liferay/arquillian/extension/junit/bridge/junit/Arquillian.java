@@ -72,12 +72,6 @@ public class Arquillian extends BlockJUnit4ClassRunner {
 			public List<FrameworkMethod> getAnnotatedMethods(
 				Class<? extends Annotation> annotationClass) {
 
-				if ((annotationClass == AfterClass.class) ||
-					(annotationClass == BeforeClass.class)) {
-
-					return Collections.emptyList();
-				}
-
 				List<FrameworkMethod> frameworkMethods = new ArrayList<>(
 					super.getAnnotatedMethods(annotationClass));
 
@@ -206,54 +200,44 @@ public class Arquillian extends BlockJUnit4ClassRunner {
       }
    }
 
-   /*
-    * Override BeforeClass/AfterClass and Before/After handling.
-    *
-    * Let super create the Before/After chain against a EmptyStatement so our newly created Statement
-    * only contains the method that are of interest to us(@Before..etc).
-    * They can then optionally be executed if we get expected callback.
-    *
-    */
+	@Override
+	protected Statement withBeforeClasses(Statement statement) {
+		return new Statement() {
 
-   @Override
-   protected Statement withBeforeClasses(final Statement originalStatement)
-   {
-      final Statement onlyBefores = super.withBeforeClasses(new EmptyStatement());
-      return new Statement()
-      {
-         @Override
-         public void evaluate() throws Throwable
-         {
-            adaptor.beforeClass(
-                  Arquillian.this.getTestClass().getJavaClass(),
-                  new StatementLifecycleExecutor(onlyBefores));
-            originalStatement.evaluate();
-         }
-      };
-   }
+			@Override
+			public void evaluate() throws Throwable {
+				TestClass testClass = getTestClass();
 
-   @Override
-   protected Statement withAfterClasses(final Statement originalStatement)
-   {
-      final Statement onlyAfters = super.withAfterClasses(new EmptyStatement());
-      return new Statement()
-      {
-         @Override
-         public void evaluate() throws Throwable
-         {
-            multiExecute
-            (
-               originalStatement,
-               new Statement() { @Override public void evaluate() throws Throwable
-               {
-                   adaptor.afterClass(
-                        Arquillian.this.getTestClass().getJavaClass(),
-                        new StatementLifecycleExecutor(onlyAfters));
-               }}
-            );
-         }
-      };
-   }
+				adaptor.beforeClass(testClass.getJavaClass(), () -> {});
+
+				statement.evaluate();
+			}
+		};
+	}
+
+	@Override
+	protected Statement withAfterClasses(Statement statement) {
+		return new Statement() {
+
+			@Override
+			public void evaluate() throws Throwable {
+				multiExecute(
+					statement,
+					new Statement() {
+
+						@Override
+						public void evaluate() throws Throwable {
+							TestClass testClass = getTestClass();
+
+							adaptor.afterClass(
+								testClass.getJavaClass(), () -> {});
+						}
+
+					}
+				);
+			}
+		};
+	}
 
    @Override
    @SuppressWarnings("deprecation")
@@ -422,14 +406,6 @@ public class Arquillian extends BlockJUnit4ClassRunner {
       throw new MultipleFailureException(exceptions);
    }
 
-   private static class EmptyStatement extends Statement
-   {
-      @Override
-      public void evaluate() throws Throwable
-      {
-      }
-   }
-
 	private static class StateUtil {
 
 		public static void caughtInitializationException(Throwable throwable) {
@@ -574,21 +550,6 @@ public class Arquillian extends BlockJUnit4ClassRunner {
 			}
 		}
 	}
-
-   private static class StatementLifecycleExecutor implements LifecycleMethodExecutor
-   {
-      private Statement statement;
-
-      public StatementLifecycleExecutor(Statement statement)
-      {
-         this.statement = statement;
-      }
-
-      public void invoke() throws Throwable
-      {
-         statement.evaluate();
-      }
-   }
 
    private TestRunnerAdaptor adaptor;
 

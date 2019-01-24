@@ -16,4 +16,5 @@
 
 <%@ include file="/init.jsp" %>
 
-<%@ page import="com.liferay.portal.kernel.servlet.BrowserSnifferUtil" %>
+<%@ page import="com.liferay.document.library.util.DLURLHelper" %><%@
+page import="com.liferay.portal.kernel.servlet.BrowserSnifferUtil" %>

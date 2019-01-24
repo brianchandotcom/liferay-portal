@@ -104,7 +104,6 @@ public class Arquillian extends BlockJUnit4ClassRunner {
    @Override
    public void run(final RunNotifier notifier)
    {
-		StateUtil.runnerStarted();
 
       // first time we're being initialized
       if(!StateUtil.hasTestAdaptor())
@@ -146,7 +145,6 @@ public class Arquillian extends BlockJUnit4ClassRunner {
          @Override
          public void testRunFinished(Result result) throws Exception
          {
-            StateUtil.runnerFinished();
             shutdown();
          }
 
@@ -154,21 +152,19 @@ public class Arquillian extends BlockJUnit4ClassRunner {
          {
             try
             {
-               if(StateUtil.isLastRunner())
-               {
-                  try
-                  {
-                     if(adaptor != null)
-                     {
-                        adaptor.afterSuite();
-                        adaptor.shutdown();
-                     }
-                  }
-                  finally
-                  {
-                     StateUtil.clean();
-                  }
-               }
+				  try
+				  {
+					 if(adaptor != null)
+					 {
+						adaptor.afterSuite();
+						adaptor.shutdown();
+					 }
+				  }
+				  finally
+				  {
+					 StateUtil.clean();
+				  }
+
                adaptor = null;
             }
             catch (Exception e)
@@ -415,33 +411,6 @@ public class Arquillian extends BlockJUnit4ClassRunner {
 			}
 		}
 
-		public static boolean isLastRunner() {
-			try {
-				return (boolean)_isLastRunnerMethod.invoke(null);
-			}
-			catch (ReflectiveOperationException roe) {
-				throw new RuntimeException(roe);
-			}
-		}
-
-		public static void runnerFinished() {
-			try {
-				_runnerFinishedMethod.invoke(null);
-			}
-			catch (ReflectiveOperationException roe) {
-				throw new RuntimeException(roe);
-			}
-		}
-
-		public static void runnerStarted() {
-			try {
-				_runnerStartedMethod.invoke(null);
-			}
-			catch (ReflectiveOperationException roe) {
-				throw new RuntimeException(roe);
-			}
-		}
-
 		public static void testAdaptor(TestRunnerAdaptor testRunnerAdaptor) {
 			try {
 				_testAdaptorMethod.invoke(null, testRunnerAdaptor);
@@ -456,18 +425,10 @@ public class Arquillian extends BlockJUnit4ClassRunner {
 		private static final Method _getInitializationExceptionMethod;
 		private static final Method _getTestAdaptorMethod;
 		private static final Method _hasTestAdaptorMethod;
-		private static final Method _isLastRunnerMethod;
-		private static final Method _runnerFinishedMethod;
-		private static final Method _runnerStartedMethod;
 		private static final Method _testAdaptorMethod;
 
 		static {
 			try {
-				_runnerStartedMethod = State.class.getDeclaredMethod(
-					"runnerStarted");
-
-				_runnerStartedMethod.setAccessible(true);
-
 				_hasTestAdaptorMethod = State.class.getDeclaredMethod(
 					"hasTestAdaptor");
 
@@ -488,15 +449,6 @@ public class Arquillian extends BlockJUnit4ClassRunner {
 						"caughtInitializationException", Throwable.class);
 
 				_caughtInitializationExceptionMethod.setAccessible(true);
-
-				_runnerFinishedMethod = State.class.getDeclaredMethod(
-					"runnerFinished");
-
-				_runnerFinishedMethod.setAccessible(true);
-
-				_isLastRunnerMethod = State.class.getDeclaredMethod("isLastRunner");
-
-				_isLastRunnerMethod.setAccessible(true);
 
 				_cleanMethod = State.class.getDeclaredMethod("clean");
 

@@ -20,6 +20,7 @@
 String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_image_selector") + StringPool.UNDERLINE;
 
 String draggableImage = GetterUtil.getString((String)request.getAttribute("liferay-ui:image-selector:draggableImage"), "none");
+DLURLHelper dlurlHelper = (DLURLHelper)request.getAttribute("liferay-ui:image-selector:dlurlHelper");
 long fileEntryId = GetterUtil.getLong(request.getAttribute("liferay-ui:image-selector:fileEntryId"));
 String itemSelectorEventName = GetterUtil.getString((String)request.getAttribute("liferay-ui:image-selector:itemSelectorEventName"));
 String itemSelectorURL = GetterUtil.getString((String)request.getAttribute("liferay-ui:image-selector:itemSelectorURL"));
@@ -35,7 +36,7 @@ String imageURL = null;
 if (fileEntryId != 0) {
 	FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(fileEntryId);
 
-	imageURL = DLUtil.getPreviewURL(fileEntry, fileEntry.getFileVersion(), themeDisplay, StringPool.BLANK);
+	imageURL = dlurlHelper.getPreviewURL(fileEntry, fileEntry.getFileVersion(), themeDisplay, StringPool.BLANK);
 }
 %>
 

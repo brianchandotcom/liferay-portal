@@ -29,7 +29,7 @@ import org.gradle.api.tasks.TaskContainer;
  */
 public class RESTBuilderPlugin implements Plugin<Project> {
 
-	public static final String BUILD_REST_TASK_NAME = "buildRest";
+	public static final String BUILD_REST_TASK_NAME = "buildREST";
 
 	public static final String CONFIGURATION_NAME = "restBuilder";
 

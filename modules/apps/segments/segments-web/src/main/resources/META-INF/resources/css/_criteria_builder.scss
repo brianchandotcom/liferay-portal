@@ -1,11 +1,15 @@
 .criteria-builder-root {
-	display: flex;
 	height: 100%;
+	overflow: hidden;
+	position: relative;
 
 	.criteria-builder-section-main {
 		flex: 1;
+		height: 100%;
 		overflow: auto;
-		padding-right: 16px;
+		padding-right: 32px;
+
+		margin-right: $sidebarWidth;
 
 		.sheet {
 			margin-top: 24px;
@@ -14,7 +18,11 @@
 	}
 
 	.criteria-builder-section-sidebar {
-		width: 380px;
+		height: 100%;
+		position: absolute;
+		right: 0;
+		top: 0;
+		width: $sidebarWidth;
 	}
 
 	.criteria-builder-toolbar {

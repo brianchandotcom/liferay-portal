@@ -14,7 +14,7 @@
 
 package com.liferay.source.formatter.checks;
 
-import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.petra.string.StringBundler;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -46,7 +46,7 @@ public class SQLLongNamesCheck extends BaseFileCheck {
 					fileName,
 					StringBundler.concat(
 						"Column name '", columnName, "' should not exceed ",
-						String.valueOf(_MAX_NAME_LENGTH), " characters"),
+						_MAX_NAME_LENGTH, " characters"),
 					"oracle_naming_rules.markdown",
 					startLineNumber +
 						getLineNumber(tableContent, matcher.start()));
@@ -65,7 +65,7 @@ public class SQLLongNamesCheck extends BaseFileCheck {
 					fileName,
 					StringBundler.concat(
 						"Table name '", tableName, "' should not exceed ",
-						String.valueOf(_MAX_NAME_LENGTH), " characters"),
+						_MAX_NAME_LENGTH, " characters"),
 					"oracle_naming_rules.markdown",
 					getLineNumber(content, matcher.start()));
 			}

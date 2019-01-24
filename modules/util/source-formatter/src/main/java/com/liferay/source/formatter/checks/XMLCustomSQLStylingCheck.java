@@ -15,8 +15,8 @@
 package com.liferay.source.formatter.checks;
 
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.checks.util.SourceUtil;
 
@@ -206,9 +206,8 @@ public class XMLCustomSQLStylingCheck extends BaseFileCheck {
 				addMessage(
 					fileName,
 					StringBundler.concat(
-						"Line starts with '", String.valueOf(endLineTabCount),
-						"' tabs, but '", String.valueOf(startLineTabCount),
-						"' tabs are expected"),
+						"Line starts with '", endLineTabCount, "' tabs, but '",
+						startLineTabCount, "' tabs are expected"),
 					endLineNumber);
 			}
 		}

@@ -14,8 +14,8 @@
 
 package com.liferay.portal.tools.java.parser;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import java.util.List;
 

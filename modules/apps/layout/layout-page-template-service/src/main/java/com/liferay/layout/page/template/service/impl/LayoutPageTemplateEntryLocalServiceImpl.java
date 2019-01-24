@@ -153,7 +153,9 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 				LayoutConstants.LAYOUT_TYPE_CONTENT, serviceContext);
 		}
 
-		layoutPageTemplateEntry.setPlid(layout.getPlid());
+		if (layout != null) {
+			layoutPageTemplateEntry.setPlid(layout.getPlid());
+		}
 
 		layoutPageTemplateEntryPersistence.update(layoutPageTemplateEntry);
 

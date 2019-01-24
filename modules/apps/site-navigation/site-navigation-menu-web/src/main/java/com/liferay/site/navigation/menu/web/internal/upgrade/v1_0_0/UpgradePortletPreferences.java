@@ -103,6 +103,21 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 				rootLayoutLevel = displayStyleDefinition[2];
 				rootLayoutType = displayStyleDefinition[1];
 			}
+			else {
+				if (displayStyle.equals("from-level-0")) {
+					rootLayoutLevel = "0";
+				}
+				else if (displayStyle.equals("from-level-1-to-all-sublevels")) {
+					includedLayouts = "all";
+				}
+				else if (displayStyle.equals("from-level-2-with-title")) {
+					rootLayoutLevel = "2";
+				}
+				else if (displayStyle.equals("relative-with-breadcrumb")) {
+					rootLayoutLevel = "0";
+					rootLayoutType = "relative";
+				}
+			}
 		}
 
 		portletPreferences.setValue("includedLayouts", includedLayouts);

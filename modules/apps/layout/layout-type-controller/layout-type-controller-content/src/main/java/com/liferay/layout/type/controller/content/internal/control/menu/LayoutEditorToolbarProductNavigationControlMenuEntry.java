@@ -14,10 +14,9 @@
 
 package com.liferay.layout.type.controller.content.internal.control.menu;
 
-import com.liferay.layout.type.controller.content.internal.controller.ContentLayoutTypeController;
+import com.liferay.layout.constants.LayoutConstants;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.LayoutTypeController;
-import com.liferay.portal.kernel.model.LayoutTypePortlet;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -61,17 +60,13 @@ public class LayoutEditorToolbarProductNavigationControlMenuEntry
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		LayoutTypePortlet layoutTypePortlet =
-			themeDisplay.getLayoutTypePortlet();
+		Layout layout = themeDisplay.getLayout();
 
-		LayoutTypeController layoutTypeController =
-			layoutTypePortlet.getLayoutTypeController();
+		if (!Objects.equals(
+				layout.getType(), LayoutConstants.LAYOUT_TYPE_CONTENT) &&
+			!Objects.equals(
+				layout.getType(), LayoutConstants.LAYOUT_TYPE_ASSET_DISPLAY)) {
 
-		if (layoutTypeController.isFullPageDisplayable()) {
-			return false;
-		}
-
-		if (!(layoutTypeController instanceof ContentLayoutTypeController)) {
 			return false;
 		}
 

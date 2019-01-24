@@ -15,20 +15,44 @@
 package com.liferay.data.engine.service;
 
 /**
+ * This class represents a request to delete a {@link DEDataRecordCollection} from the database.
+ * @review
  * @author Leonardo Barros
  */
 public final class DEDataRecordCollectionDeleteRequest {
 
+	/**
+	 * Returns the Data Record Collection ID of the Delete request.
+	 * @return deDataRecordCollectionId
+	 * @review
+	 */
 	public long getDEDataRecordCollectionId() {
 		return _deDataRecordCollectionId;
 	}
 
+	/**
+	 * Constructs the Delete Data Record Collections request using parameters. A
+	 * Data Record Collection ID can be used as an argument.
+	 * @review
+	 */
 	public static final class Builder {
 
+		/**
+		 * Constructs the Delete Data Record Collections request.
+		 * @review
+		 * @return {@link DEDataRecordCollectionDeleteRequest }
+		 */
 		public DEDataRecordCollectionDeleteRequest build() {
 			return _deDataRecordCollectionDeleteRequest;
 		}
 
+		/**
+		 * Includes a Data Record Collection ID in the Delete request.
+		 * @param deDataRecordCollectionId ID from the Data Record
+		 * Collection to be deleted
+		 * @return {@link Builder }
+		 * @review
+		 */
 		public Builder byId(long deDataRecordCollectionId) {
 			_deDataRecordCollectionDeleteRequest._deDataRecordCollectionId =
 				deDataRecordCollectionId;

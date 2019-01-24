@@ -1,0 +1,267 @@
+components:
+  schemas:
+    WorkflowLog:
+      description: https://www.schema.org/WorkflowLog
+      properties:
+        auditPerson:
+          format: uri
+          type: string
+        commentLog:
+          type: string
+        dateCreated:
+          type: string
+        id:
+          type: integer
+        person:
+          format: uri
+          type: string
+        previousPerson:
+          format: uri
+          type: string
+        previousState:
+          type: string
+        self:
+          format: uri
+          type: string
+        state:
+          type: string
+        task:
+          $ref: "#/components/schemas/WorkflowTask"
+        type:
+          type: string
+      type: object
+    WorkflowTask:
+      description: https://www.schema.org/WorkflowTask
+      properties:
+        completed:
+          type: boolean
+        dateCompleted:
+          type: string
+        dateCreated:
+          type: string
+        definitionName:
+          type: string
+        description:
+          type: string
+        dueDate:
+          type: string
+        id:
+          type: integer
+        logs:
+          $ref: "#/components/schemas/WorkflowLog"
+        name:
+          type: string
+        object:
+          description: https://www.schema.org/Object
+          properties:
+            id:
+              type: integer
+            identifier:
+              format: uri
+              type: string
+            resourceType:
+              type: string
+            self:
+              format: uri
+              type: string
+          type: object
+        self:
+          format: uri
+          type: string
+        transitions:
+          items:
+            type: string
+          type: array
+      type: object
+info:
+  description: ""
+  title: ""
+  version: 1.0.0
+openapi: 3.0.1
+paths:
+  "/roles/{parent-id}/workflow-tasks":
+    get:
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+        - in: query
+          name: per_page
+          schema:
+            type: integer
+        - in: path
+          name: parent-id
+          required: true
+          schema:
+            format: uri
+            type: string
+      responses:
+        200:
+          content:
+            "*/*":
+              schema:
+                items:
+                  $ref: "#/components/schemas/WorkflowTask"
+                type: array
+          description: ""
+  "/workflow-logs/{id}":
+    get:
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/WorkflowLog"
+          description: ""
+  "/workflow-tasks":
+    get:
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+        - in: query
+          name: per_page
+          schema:
+            type: integer
+        - in: path
+          name: genericparentid
+          required: true
+          schema:
+            type: object
+      responses:
+        200:
+          content:
+            "*/*":
+              schema:
+                items:
+                  $ref: "#/components/schemas/WorkflowTask"
+                type: array
+          description: ""
+  "/workflow-tasks/{id}":
+    get:
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/WorkflowTask"
+          description: ""
+  "/workflow-tasks/{id}/assign-to-me":
+    post:
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          "*/*":
+            schema:
+              $ref: "#/components/schemas/WorkflowTask"
+      responses:
+        200:
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/WorkflowTask"
+          description: ""
+  "/workflow-tasks/{id}/assign-to-user":
+    post:
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          "*/*":
+            schema:
+              $ref: "#/components/schemas/WorkflowTask"
+      responses:
+        200:
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/WorkflowTask"
+          description: ""
+  "/workflow-tasks/{id}/change-transition":
+    post:
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          "*/*":
+            schema:
+              $ref: "#/components/schemas/WorkflowTask"
+      responses:
+        200:
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/WorkflowTask"
+          description: ""
+  "/workflow-tasks/{id}/update-due-date":
+    post:
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          "*/*":
+            schema:
+              $ref: "#/components/schemas/WorkflowTask"
+      responses:
+        200:
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/WorkflowTask"
+          description: ""
+  "/workflow-tasks/{parent-id}/workflow-logs":
+    get:
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+        - in: query
+          name: per_page
+          schema:
+            type: integer
+        - in: path
+          name: parent-id
+          required: true
+          schema:
+            $ref: "#/components/schemas/WorkflowTask"
+      responses:
+        200:
+          content:
+            "*/*":
+              schema:
+                items:
+                  $ref: "#/components/schemas/WorkflowLog"
+                type: array
+          description: ""

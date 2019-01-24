@@ -85,7 +85,13 @@ public class ModulesPropertiesUtil {
 						return FileVisitResult.SKIP_SUBTREE;
 					}
 
-					Path path = dirPath.resolve("bnd.bnd");
+					Path path = dirPath.resolve(".gitrepo");
+
+					if (Files.exists(path)) {
+						return FileVisitResult.SKIP_SUBTREE;
+					}
+
+					path = dirPath.resolve("bnd.bnd");
 
 					if (Files.exists(path)) {
 						files.add(path.toFile());

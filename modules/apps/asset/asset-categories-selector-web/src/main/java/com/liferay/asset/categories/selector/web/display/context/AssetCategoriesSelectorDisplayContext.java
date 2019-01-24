@@ -66,7 +66,6 @@ public class AssetCategoriesSelectorDisplayContext {
 
 		jsonObject.put("disabled", true);
 		jsonObject.put("expanded", true);
-		jsonObject.put("icon", "folder");
 		jsonObject.put("id", "0");
 
 		if (jsonArray.length() == 1) {
@@ -74,10 +73,12 @@ public class AssetCategoriesSelectorDisplayContext {
 
 			jsonObject.put(
 				"children", firstVocabularyJSONObject.getJSONArray("children"));
+			jsonObject.put("icon", "vocabulary");
 			jsonObject.put("name", firstVocabularyJSONObject.getString("name"));
 		}
 		else {
 			jsonObject.put("children", jsonArray);
+			jsonObject.put("icon", "folder");
 			jsonObject.put(
 				"name",
 				LanguageUtil.get(themeDisplay.getLocale(), "vocabularies"));
@@ -217,7 +218,7 @@ public class AssetCategoriesSelectorDisplayContext {
 			jsonObject.put(
 				"children", _getCategoriesJSONArray(vocabularyId, 0));
 			jsonObject.put("disabled", !allowedSelectVocabularies);
-			jsonObject.put("icon", "folder");
+			jsonObject.put("icon", "vocabulary");
 			jsonObject.put("id", vocabularyId);
 			jsonObject.put("name", getVocabularyTitle(vocabularyId));
 			jsonObject.put("vocabulary", true);
@@ -252,7 +253,7 @@ public class AssetCategoriesSelectorDisplayContext {
 				jsonObject.put("children", children);
 			}
 
-			jsonObject.put("icon", "page");
+			jsonObject.put("icon", "categories");
 			jsonObject.put("id", category.getCategoryId());
 			jsonObject.put("name", category.getTitle(themeDisplay.getLocale()));
 

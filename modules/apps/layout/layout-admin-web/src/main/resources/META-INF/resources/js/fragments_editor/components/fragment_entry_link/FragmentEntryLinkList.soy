@@ -229,7 +229,7 @@
 			</ul>
 		</nav>
 
-		{if $activeItemId == $rowId and $activeItemType == $dropTargetItemTypes.section}
+		{if ($activeItemId == $rowId) and ($activeItemType == $dropTargetItemTypes.section)}
 			{call com.liferay.layout.admin.web.FloatingToolbar.render}
 				{param item: $row /}
 				{param itemId: $rowId /}

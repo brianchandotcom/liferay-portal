@@ -7,33 +7,10 @@ import Soy from 'metal-soy';
 
 import '../floating_toolbar/FloatingToolbar.es';
 import './FragmentEntryLink.es';
-import {
-	CLEAR_ACTIVE_ITEM,
-	CLEAR_DROP_TARGET,
-	CLEAR_HOVERED_ITEM,
-	MOVE_FRAGMENT_ENTRY_LINK,
-	MOVE_SECTION,
-	REMOVE_SECTION,
-	UPDATE_ACTIVE_ITEM,
-	UPDATE_DROP_TARGET,
-	UPDATE_HOVERED_ITEM
-} from '../../actions/actions.es';
-import {
-	FRAGMENTS_EDITOR_ITEM_BORDERS,
-	FRAGMENTS_EDITOR_ITEM_TYPES
-} from '../../utils/constants';
-import {
-	getFragmentColumn,
-	getItemMoveDirection,
-	getSectionIndex,
-	getTargetBorder
-} from '../../utils/FragmentsEditorGetUtils.es';
-import {
-	focusItem,
-	moveItem,
-	setIn
-} from '../../utils/FragmentsEditorUpdateUtils.es';
-import {removeItem} from '../../utils/FragmentsEditorUpdateUtils.es';
+import {CLEAR_ACTIVE_ITEM, CLEAR_DROP_TARGET, CLEAR_HOVERED_ITEM, MOVE_FRAGMENT_ENTRY_LINK, MOVE_SECTION, REMOVE_SECTION, UPDATE_ACTIVE_ITEM, UPDATE_DROP_TARGET, UPDATE_HOVERED_ITEM} from '../../actions/actions.es';
+import {FRAGMENTS_EDITOR_ITEM_BORDERS, FRAGMENTS_EDITOR_ITEM_TYPES} from '../../utils/constants';
+import {getFragmentColumn, getItemMoveDirection, getSectionIndex, getTargetBorder} from '../../utils/FragmentsEditorGetUtils.es';
+import {focusItem, moveItem, removeItem, setIn} from '../../utils/FragmentsEditorUpdateUtils.es';
 import {shouldUpdatePureComponent} from '../../utils/FragmentsEditorComponentUtils.es';
 import state from '../../store/state.es';
 import templates from './FragmentEntryLinkList.soy';
@@ -187,6 +164,13 @@ class FragmentEntryLinkList extends Component {
 	 * @review
 	 */
 	rendered() {
+		if (
+			(this.activeItemType === FRAGMENTS_EDITOR_ITEM_TYPES.fragmentList) &&
+			this.element
+		) {
+			this.element.focus();
+		}
+
 		requestAnimationFrame(
 			() => {
 				focusItem(
@@ -204,24 +188,6 @@ class FragmentEntryLinkList extends Component {
 	 */
 	shouldUpdate(changes) {
 		return shouldUpdatePureComponent(changes);
-	}
-
-	/**
-	 * Gives focus to the specified fragmentEntryLinkId
-	 * @param {string} fragmentEntryLinkId
-	 * @review
-	 */
-	focusFragmentEntryLink(fragmentEntryLinkId) {
-		requestAnimationFrame(
-			() => {
-				const fragmentEntryLinkElement = this.refs[fragmentEntryLinkId];
-
-				if (fragmentEntryLinkElement) {
-					fragmentEntryLinkElement.focus();
-					fragmentEntryLinkElement.scrollIntoView();
-				}
-			}
-		);
 	}
 
 	/**
@@ -378,7 +344,8 @@ class FragmentEntryLinkList extends Component {
 					this.element &&
 					document.activeElement &&
 					(this.element !== document.activeElement) &&
-					!contains(this.element, document.activeElement)
+					!contains(this.element, document.activeElement) &&
+					(document.activeElement.parentElement !== document.body)
 				) {
 					this.store.dispatchAction(CLEAR_ACTIVE_ITEM);
 				}

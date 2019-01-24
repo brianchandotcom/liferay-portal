@@ -32,7 +32,7 @@ long assertionLifetime = GetterUtil.getLong(request.getAttribute(SamlWebKeys.SAM
 </div>
 
 <portlet:actionURL name="/admin/updateServiceProviderConnection" var="updateServiceProviderConnectionURL">
-	<portlet:param name="mvcPath" value="/admin/edit_service_provider_connection.jsp" />
+	<portlet:param name="mvcRenderCommandName" value="/admin/edit_service_provider_connection" />
 </portlet:actionURL>
 
 <aui:form action="<%= updateServiceProviderConnectionURL %>" cssClass="container-fluid-1280" enctype="multipart/form-data">

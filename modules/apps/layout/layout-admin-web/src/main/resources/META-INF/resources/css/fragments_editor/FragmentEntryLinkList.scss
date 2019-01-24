@@ -18,6 +18,8 @@
 	&__container {
 		box-shadow: inset 0 0 0 $topperBorderWidth $fragmentEntryLinkSectionBorderColor;
 		position: relative;
+		transition: background-color ease 0.2s;
+		will-change: background-color;
 	}
 
 	&__container--empty &__row {

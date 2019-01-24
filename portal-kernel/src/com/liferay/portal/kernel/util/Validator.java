@@ -693,11 +693,9 @@ public class Validator {
 		}
 
 		if (normalizedPath.contains(
-				StringPool.SLASH.concat(
-					StringPool.DOUBLE_PERIOD
-				).concat(
-					StringPool.SLASH
-				))) {
+				StringBundler.concat(
+					StringPool.SLASH, StringPool.DOUBLE_PERIOD,
+					StringPool.SLASH))) {
 
 			return false;
 		}

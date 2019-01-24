@@ -560,8 +560,12 @@ public class FileSystemStore extends BaseStore {
 					path + StringPool.SLASH + pathDirName);
 			}
 		}
-		else if (new File(path).isDirectory()) {
-			fileNames.add(dirName);
+		else {
+			File file = new File(path);
+
+			if (file.isDirectory()) {
+				fileNames.add(dirName);
+			}
 		}
 	}
 

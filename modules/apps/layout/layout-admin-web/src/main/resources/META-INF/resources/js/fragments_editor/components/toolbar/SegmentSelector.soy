@@ -1,0 +1,29 @@
+{namespace com.liferay.layout.admin.web.SegmentSelector}
+
+/**
+ * FragmentsEditorToolbar
+ */
+{template .render}
+	{@param? _handleSegmentChange: any}
+	{@param? segmentId: string}
+	{@param? segments: list<[
+		label: string,
+		id: string
+	]>}
+
+	{if $segments and length($segments) > 0}
+		<select
+			class="form-control"
+			data-onchange="{$_handleSegmentChange}"
+			id="segment-selector"
+		>
+			{foreach $segment in $segments}
+				{if $segment.id == $segmentId}
+					<option value="{$segment.id}" selected>{$segment.label}</option>
+				{else}
+					<option value="{$segment.id}">{$segment.label}</option>
+				{/if}
+			{/foreach}
+		</select>
+	{/if}
+{/template}

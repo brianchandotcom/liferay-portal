@@ -359,6 +359,33 @@ const INITIAL_STATE = {
 		.value(false),
 
 	/**
+	 * Currently selected segment id.
+	 * @default ''
+	 * @review
+	 * @type {string}
+	 */
+	segmentId: Config
+		.string()
+		.value(),
+
+	/**
+	 * List of available segments
+	 * @default []
+	 * @review
+	 * @type {object[]}
+	 */
+	segments: Config
+		.arrayOf(
+			Config.shapeOf(
+				{
+					id: Config.string().required(),
+					label: Config.string().required()
+				}
+			)
+		)
+		.value([]),
+
+	/**
 	 * Editable type of the field that is being mapped
 	 * @default ''
 	 * @review

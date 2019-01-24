@@ -2,6 +2,7 @@ import Component from 'metal-component';
 import Soy from 'metal-soy';
 
 import './TranslationStatus.es';
+import './SegmentSelector.es';
 import getConnectedComponent from '../../store/ConnectedComponent.es';
 import templates from './FragmentsEditorToolbar.soy';
 import {

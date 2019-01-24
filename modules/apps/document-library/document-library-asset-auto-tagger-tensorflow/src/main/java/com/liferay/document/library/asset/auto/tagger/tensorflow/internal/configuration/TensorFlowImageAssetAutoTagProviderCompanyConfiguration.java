@@ -26,6 +26,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 	scope = ExtendedObjectClassDefinition.Scope.COMPANY
 )
 @Meta.OCD(
+	description = "tensorflow-auto-tag-provider-configuration-description",
 	id = "com.liferay.document.library.asset.auto.tagger.tensorflow.internal.configuration.TensorFlowImageAssetAutoTagProviderCompanyConfiguration",
 	localization = "content/Language",
 	name = "tensorflow-auto-tag-provider-configuration-name"

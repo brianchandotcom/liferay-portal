@@ -36,6 +36,10 @@ $spacer: 1rem;
 			height: 2rem;
 			line-height: 2rem;
 			width: 2rem;
+
+			> .inline-item {
+				font-size: 1rem;
+			}
 		}
 	}
 

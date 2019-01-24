@@ -33,8 +33,6 @@ import org.jboss.arquillian.test.spi.TestResult;
 import org.jboss.arquillian.test.spi.TestRunnerAdaptor;
 import org.jboss.arquillian.test.spi.TestRunnerAdaptorBuilder;
 import org.jboss.arquillian.test.spi.execution.SkippedTestExecutionException;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
 import org.junit.internal.AssumptionViolatedException;
 import org.junit.internal.runners.model.MultipleFailureException;
 import org.junit.internal.runners.model.ReflectiveCallable;
@@ -221,20 +219,31 @@ public class Arquillian extends BlockJUnit4ClassRunner {
 
 			@Override
 			public void evaluate() throws Throwable {
-				multiExecute(
-					statement,
-					new Statement() {
+				Throwable throwable = null;
 
-						@Override
-						public void evaluate() throws Throwable {
-							TestClass testClass = getTestClass();
+				try {
+					statement.evaluate();
+				}
+				catch (Throwable t) {
+					throwable = t;
+				}
 
-							adaptor.afterClass(
-								testClass.getJavaClass(), () -> {});
-						}
+				TestClass testClass = getTestClass();
 
+				try {
+					adaptor.afterClass(testClass.getJavaClass(), () -> {});
+				}
+				catch (Throwable t) {
+					if (throwable != null) {
+						t.addSuppressed(throwable);
 					}
-				);
+
+					throwable = t;
+				}
+
+				if (throwable != null) {
+					throw throwable;
+				}
 			}
 		};
 	}
@@ -370,40 +379,6 @@ public class Arquillian extends BlockJUnit4ClassRunner {
             }
          }
       };
-   }
-
-   /**
-    * A helper to safely execute multiple statements in one.<br/>
-    *
-    * Will execute all statements even if they fail, all exceptions will be kept. If multiple {@link Statement}s
-    * fail, a {@link MultipleFailureException} will be thrown.
-    *
-    * @author <a href="mailto:aslak@redhat.com">Aslak Knutsen</a>
-    * @version $Revision: $
-    */
-   private void multiExecute(Statement... statements) throws Throwable
-   {
-      List<Throwable> exceptions = new ArrayList<Throwable>();
-      for(Statement command : statements)
-      {
-         try
-         {
-            command.evaluate();
-         }
-         catch (Throwable e)
-         {
-            exceptions.add(e);
-         }
-      }
-      if(exceptions.isEmpty())
-      {
-         return;
-      }
-      if(exceptions.size() == 1)
-      {
-         throw exceptions.get(0);
-      }
-      throw new MultipleFailureException(exceptions);
    }
 
 	private static class StateUtil {

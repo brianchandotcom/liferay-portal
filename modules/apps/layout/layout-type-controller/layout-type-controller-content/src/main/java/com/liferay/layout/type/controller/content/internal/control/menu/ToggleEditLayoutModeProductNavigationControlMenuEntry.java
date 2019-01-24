@@ -14,6 +14,8 @@
 
 package com.liferay.layout.type.controller.content.internal.control.menu;
 
+import com.liferay.layout.content.page.editor.constants.ContentPageEditorWebKeys;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.type.controller.content.internal.controller.ContentLayoutTypeController;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.LayoutTypeController;
@@ -27,6 +29,7 @@ import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuE
 import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
 
 import java.util.Locale;
+import java.util.Objects;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -80,6 +83,15 @@ public class ToggleEditLayoutModeProductNavigationControlMenuEntry
 		}
 
 		if (!(layoutTypeController instanceof ContentLayoutTypeController)) {
+			return false;
+		}
+
+		String className = (String)request.getAttribute(
+			ContentPageEditorWebKeys.CLASS_NAME);
+
+		if (Objects.equals(
+				className, LayoutPageTemplateEntry.class.getName())) {
+
 			return false;
 		}
 

@@ -16,6 +16,8 @@ package com.liferay.layout.admin.web.internal.control.menu;
 
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.constants.LayoutConstants;
+import com.liferay.layout.content.page.editor.constants.ContentPageEditorWebKeys;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
@@ -39,6 +41,7 @@ import java.io.Writer;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
@@ -167,6 +170,15 @@ public class ManageLayoutProductNavigationControlMenuEntry
 
 		if (!(themeDisplay.isShowLayoutTemplatesIcon() ||
 			  themeDisplay.isShowPageSettingsIcon())) {
+
+			return false;
+		}
+
+		String className = (String)request.getAttribute(
+			ContentPageEditorWebKeys.CLASS_NAME);
+
+		if (Objects.equals(
+				className, LayoutPageTemplateEntry.class.getName())) {
 
 			return false;
 		}

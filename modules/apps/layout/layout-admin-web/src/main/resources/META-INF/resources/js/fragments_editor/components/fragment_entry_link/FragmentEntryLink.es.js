@@ -20,6 +20,20 @@ class FragmentEntryLink extends Component {
 
 	/**
 	 * @inheritdoc
+	 * @review
+	 */
+	rendered() {
+		if (
+			(this.activeItemType === FRAGMENTS_EDITOR_ITEM_TYPES.fragment) &&
+			(this.activeItemId === this.fragmentEntryLinkId) &&
+			this.element
+		) {
+			this.element.focus();
+		}
+	}
+
+	/**
+	 * @inheritdoc
 	 * @return {boolean}
 	 * @review
 	 */
@@ -173,6 +187,8 @@ FragmentEntryLink.STATE = {
 const ConnectedFragmentEntryLink = getConnectedComponent(
 	FragmentEntryLink,
 	[
+		'activeItemId',
+		'activeItemType',
 		'defaultLanguageId',
 		'imageSelectorURL',
 		'languageId',

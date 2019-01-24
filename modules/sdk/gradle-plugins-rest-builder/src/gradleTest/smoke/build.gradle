@@ -25,7 +25,7 @@ project(":sample-rest") {
 }
 
 runGradleTest {
-	dependsOn ":sample-rest:buildRest"
+	dependsOn ":sample-rest:buildREST"
 
 	doLast {
 		Project apiProject = project(":sample-api")

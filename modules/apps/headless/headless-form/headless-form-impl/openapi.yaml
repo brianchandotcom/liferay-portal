@@ -1,0 +1,526 @@
+components:
+  schemas:
+    Form:
+      description: https://www.schema.org/Form
+      properties:
+        availableLanguages:
+          items:
+            type: string
+          type: array
+        contentSpace:
+          format: uri
+          type: string
+        creator:
+          format: uri
+          type: string
+        dateCreated:
+          type: string
+        dateModified:
+          type: string
+        datePublished:
+          type: string
+        defaultLanguage:
+          type: string
+        description:
+          type: string
+        formRecords:
+          $ref: "#/components/schemas/FormRecord"
+        id:
+          type: integer
+        name:
+          type: string
+        self:
+          format: uri
+          type: string
+        structure:
+          $ref: "#/components/schemas/FormStructure"
+      type: object
+    FormDocument:
+      description: https://www.schema.org/Document
+      properties:
+        contentUrl:
+          type: string
+        encodingFormat:
+          type: string
+        fileExtension:
+          type: string
+        id:
+          type: integer
+        self:
+          type: string
+        sizeInBytes:
+          type: number
+        title:
+          type: string
+      type: object
+    FormRecord:
+      description: https://www.schema.org/FormRecord
+      properties:
+        creator:
+          format: uri
+          type: string
+        dateCreated:
+          type: string
+        dateModified:
+          type: string
+        datePublished:
+          type: string
+        draft:
+          type: boolean
+        fieldValues:
+          description: https://www.schema.org/FormFieldValue
+          properties:
+            document:
+              $ref: "#/components/schemas/FormDocument"
+            id:
+              type: integer
+            name:
+              type: string
+            self:
+              format: uri
+              type: string
+            value:
+              type: string
+          type: object
+        form:
+          $ref: "#/components/schemas/Form"
+        id:
+          type: integer
+        self:
+          format: uri
+          type: string
+      type: object
+    FormStructure:
+      description: https://www.schema.org/Structure
+      properties:
+        availableLanguages:
+          items:
+            type: string
+          type: array
+        contentSpace:
+          format: uri
+          type: string
+        creator:
+          format: uri
+          type: string
+        dateCreated:
+          type: string
+        dateModified:
+          type: string
+        description:
+          type: string
+        formPages:
+          description: https://www.schema.org/FormLayoutPage
+          properties:
+            fields:
+              description: https://www.schema.org/FormField
+              properties:
+                autocomplete:
+                  type: boolean
+                dataSourceType:
+                  type: string
+                dataType:
+                  type: string
+                displayStyle:
+                  type: string
+                grid:
+                  description: https://www.schema.org/FormFieldProperties
+                  properties:
+                    columns:
+                      description: https://www.schema.org/FormFieldOptions
+                      properties:
+                        id:
+                          type: integer
+                        label:
+                          type: string
+                        self:
+                          format: uri
+                          type: string
+                        value:
+                          type: string
+                      type: object
+                    id:
+                      type: integer
+                    rows:
+                      description: https://www.schema.org/FormFieldOptions
+                      properties:
+                        id:
+                          type: integer
+                        label:
+                          type: string
+                        self:
+                          format: uri
+                          type: string
+                        value:
+                          type: string
+                      type: object
+                    self:
+                      format: uri
+                      type: string
+                  type: object
+                hasFormRules:
+                  type: boolean
+                id:
+                  type: integer
+                inline:
+                  type: boolean
+                inputControl:
+                  type: string
+                label:
+                  type: string
+                localizable:
+                  type: boolean
+                multiple:
+                  type: boolean
+                name:
+                  type: string
+                options:
+                  description: https://www.schema.org/FormFieldOptions
+                  properties:
+                    id:
+                      type: integer
+                    label:
+                      type: string
+                    self:
+                      format: uri
+                      type: string
+                    value:
+                      type: string
+                  type: object
+                placeholder:
+                  type: string
+                predefinedValue:
+                  type: string
+                readOnly:
+                  type: boolean
+                repeatable:
+                  type: boolean
+                required:
+                  type: boolean
+                self:
+                  format: uri
+                  type: string
+                showAsSwitcher:
+                  type: boolean
+                showLabel:
+                  type: boolean
+                style:
+                  type: string
+                text:
+                  type: string
+                tooltip:
+                  type: string
+                transient:
+                  type: boolean
+                validation:
+                  description: https://www.schema.org/FormFieldProperties
+                  properties:
+                    errorMessage:
+                      type: string
+                    expression:
+                      type: string
+                    id:
+                      type: integer
+                    self:
+                      format: uri
+                      type: string
+                  type: object
+              type: object
+            headline:
+              type: string
+            id:
+              type: integer
+            self:
+              format: uri
+              type: string
+            text:
+              type: string
+          type: object
+        id:
+          type: integer
+        name:
+          type: string
+        self:
+          format: uri
+          type: string
+        successPage:
+          description: https://www.schema.org/FormSuccessPageSettings
+          properties:
+            description:
+              type: string
+            headline:
+              type: string
+            id:
+              type: integer
+            self:
+              format: uri
+              type: string
+          type: object
+      type: object
+info:
+  description: ""
+  title: ""
+  version: 1.0.0
+openapi: 3.0.1
+paths:
+  "/content-space/{parent-id}/content-structures":
+    get:
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+        - in: query
+          name: per_page
+          schema:
+            type: integer
+        - in: path
+          name: parent-id
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          content:
+            "*/*":
+              schema:
+                items:
+                  $ref: "#/components/schemas/FormStructure"
+                type: array
+          description: ""
+  "/content-space/{parent-id}/form":
+    get:
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+        - in: query
+          name: per_page
+          schema:
+            type: integer
+        - in: path
+          name: parent-id
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          content:
+            "*/*":
+              schema:
+                items:
+                  $ref: "#/components/schemas/Form"
+                type: array
+          description: ""
+  "/form-document/{id}":
+    delete:
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        204:
+          content:
+            "*/*": {}
+          description: ""
+    get:
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/FormDocument"
+          description: ""
+  "/form-record/{id}":
+    get:
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/FormRecord"
+          description: ""
+    put:
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - in: query
+          name: acceptlocale
+          schema:
+            type: string
+      requestBody:
+        content:
+          "*/*":
+            schema:
+              $ref: "#/components/schemas/FormRecord"
+      responses:
+        200:
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/FormRecord"
+          description: ""
+  "/form/{id}":
+    get:
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/Form"
+          description: ""
+  "/form/{id}/evaluate-context":
+    post:
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - in: header
+          name: Accept-Language
+          schema:
+            type: string
+      requestBody:
+        content:
+          "*/*":
+            schema:
+              $ref: "#/components/schemas/Form"
+      responses:
+        200:
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/Form"
+          description: ""
+  "/form/{id}/fetch-latest-draft":
+    get:
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/Form"
+          description: ""
+  "/form/{id}/upload-file":
+    post:
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          "*/*":
+            schema:
+              $ref: "#/components/schemas/Form"
+      responses:
+        200:
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/Form"
+          description: ""
+  "/form/{parent-id}/form-record":
+    get:
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+        - in: query
+          name: per_page
+          schema:
+            type: integer
+        - in: path
+          name: parent-id
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          content:
+            "*/*":
+              schema:
+                items:
+                  $ref: "#/components/schemas/FormRecord"
+                type: array
+          description: ""
+    post:
+      parameters:
+        - in: path
+          name: parent-id
+          required: true
+          schema:
+            type: integer
+        - in: query
+          name: acceptlocale
+          schema:
+            type: string
+      requestBody:
+        content:
+          "*/*":
+            schema:
+              $ref: "#/components/schemas/FormRecord"
+      responses:
+        200:
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/FormRecord"
+          description: ""
+  "/form/{parent-id}/form-record/batch-create":
+    post:
+      parameters:
+        - in: path
+          name: parent-id
+          required: true
+          schema:
+            type: integer
+        - in: query
+          name: acceptlocale
+          schema:
+            type: string
+      requestBody:
+        content:
+          "*/*":
+            schema:
+              $ref: "#/components/schemas/FormRecord"
+      responses:
+        200:
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/FormRecord"
+          description: ""

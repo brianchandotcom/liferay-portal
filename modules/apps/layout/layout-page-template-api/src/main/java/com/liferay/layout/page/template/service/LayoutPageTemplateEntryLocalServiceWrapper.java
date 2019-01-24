@@ -276,6 +276,12 @@ public class LayoutPageTemplateEntryLocalServiceWrapper
 		return _layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(layoutPageTemplateEntryId);
 	}
 
+	@Override
+	public com.liferay.layout.page.template.model.LayoutPageTemplateEntry fetchLayoutPageTemplateEntryByPlid(
+		long plid) {
+		return _layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntryByPlid(plid);
+	}
+
 	/**
 	* Returns the layout page template entry matching the UUID and group.
 	*

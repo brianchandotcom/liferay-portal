@@ -150,9 +150,10 @@ public class LayoutPageTemplateEntryModelImpl extends BaseModelImpl<LayoutPageTe
 	public static final long LAYOUTPAGETEMPLATECOLLECTIONID_COLUMN_BITMASK = 32L;
 	public static final long LAYOUTPROTOTYPEID_COLUMN_BITMASK = 64L;
 	public static final long NAME_COLUMN_BITMASK = 128L;
-	public static final long STATUS_COLUMN_BITMASK = 256L;
-	public static final long TYPE_COLUMN_BITMASK = 512L;
-	public static final long UUID_COLUMN_BITMASK = 1024L;
+	public static final long PLID_COLUMN_BITMASK = 256L;
+	public static final long STATUS_COLUMN_BITMASK = 512L;
+	public static final long TYPE_COLUMN_BITMASK = 1024L;
+	public static final long UUID_COLUMN_BITMASK = 2048L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -798,7 +799,19 @@ public class LayoutPageTemplateEntryModelImpl extends BaseModelImpl<LayoutPageTe
 
 	@Override
 	public void setPlid(long plid) {
+		_columnBitmask |= PLID_COLUMN_BITMASK;
+
+		if (!_setOriginalPlid) {
+			_setOriginalPlid = true;
+
+			_originalPlid = _plid;
+		}
+
 		_plid = plid;
+	}
+
+	public long getOriginalPlid() {
+		return _originalPlid;
 	}
 
 	@JSON
@@ -1115,6 +1128,10 @@ public class LayoutPageTemplateEntryModelImpl extends BaseModelImpl<LayoutPageTe
 
 		layoutPageTemplateEntryModelImpl._setOriginalLayoutPrototypeId = false;
 
+		layoutPageTemplateEntryModelImpl._originalPlid = layoutPageTemplateEntryModelImpl._plid;
+
+		layoutPageTemplateEntryModelImpl._setOriginalPlid = false;
+
 		layoutPageTemplateEntryModelImpl._originalStatus = layoutPageTemplateEntryModelImpl._status;
 
 		layoutPageTemplateEntryModelImpl._setOriginalStatus = false;
@@ -1422,6 +1439,8 @@ public class LayoutPageTemplateEntryModelImpl extends BaseModelImpl<LayoutPageTe
 	private boolean _setOriginalLayoutPrototypeId;
 	private Date _lastPublishDate;
 	private long _plid;
+	private long _originalPlid;
+	private boolean _setOriginalPlid;
 	private int _status;
 	private int _originalStatus;
 	private boolean _setOriginalStatus;

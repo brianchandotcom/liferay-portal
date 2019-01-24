@@ -936,6 +936,164 @@ public class LayoutPageTemplateEntryUtil {
 	}
 
 	/**
+	* Returns all the layout page template entries where plid = &#63;.
+	*
+	* @param plid the plid
+	* @return the matching layout page template entries
+	*/
+	public static List<LayoutPageTemplateEntry> findByPlid(long plid) {
+		return getPersistence().findByPlid(plid);
+	}
+
+	/**
+	* Returns a range of all the layout page template entries where plid = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutPageTemplateEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param plid the plid
+	* @param start the lower bound of the range of layout page template entries
+	* @param end the upper bound of the range of layout page template entries (not inclusive)
+	* @return the range of matching layout page template entries
+	*/
+	public static List<LayoutPageTemplateEntry> findByPlid(long plid,
+		int start, int end) {
+		return getPersistence().findByPlid(plid, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the layout page template entries where plid = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutPageTemplateEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param plid the plid
+	* @param start the lower bound of the range of layout page template entries
+	* @param end the upper bound of the range of layout page template entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching layout page template entries
+	*/
+	public static List<LayoutPageTemplateEntry> findByPlid(long plid,
+		int start, int end,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
+		return getPersistence().findByPlid(plid, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the layout page template entries where plid = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutPageTemplateEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param plid the plid
+	* @param start the lower bound of the range of layout page template entries
+	* @param end the upper bound of the range of layout page template entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching layout page template entries
+	*/
+	public static List<LayoutPageTemplateEntry> findByPlid(long plid,
+		int start, int end,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByPlid(plid, start, end, orderByComparator,
+			retrieveFromCache);
+	}
+
+	/**
+	* Returns the first layout page template entry in the ordered set where plid = &#63;.
+	*
+	* @param plid the plid
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching layout page template entry
+	* @throws NoSuchPageTemplateEntryException if a matching layout page template entry could not be found
+	*/
+	public static LayoutPageTemplateEntry findByPlid_First(long plid,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+		throws com.liferay.layout.page.template.exception.NoSuchPageTemplateEntryException {
+		return getPersistence().findByPlid_First(plid, orderByComparator);
+	}
+
+	/**
+	* Returns the first layout page template entry in the ordered set where plid = &#63;.
+	*
+	* @param plid the plid
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching layout page template entry, or <code>null</code> if a matching layout page template entry could not be found
+	*/
+	public static LayoutPageTemplateEntry fetchByPlid_First(long plid,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
+		return getPersistence().fetchByPlid_First(plid, orderByComparator);
+	}
+
+	/**
+	* Returns the last layout page template entry in the ordered set where plid = &#63;.
+	*
+	* @param plid the plid
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching layout page template entry
+	* @throws NoSuchPageTemplateEntryException if a matching layout page template entry could not be found
+	*/
+	public static LayoutPageTemplateEntry findByPlid_Last(long plid,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+		throws com.liferay.layout.page.template.exception.NoSuchPageTemplateEntryException {
+		return getPersistence().findByPlid_Last(plid, orderByComparator);
+	}
+
+	/**
+	* Returns the last layout page template entry in the ordered set where plid = &#63;.
+	*
+	* @param plid the plid
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching layout page template entry, or <code>null</code> if a matching layout page template entry could not be found
+	*/
+	public static LayoutPageTemplateEntry fetchByPlid_Last(long plid,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
+		return getPersistence().fetchByPlid_Last(plid, orderByComparator);
+	}
+
+	/**
+	* Returns the layout page template entries before and after the current layout page template entry in the ordered set where plid = &#63;.
+	*
+	* @param layoutPageTemplateEntryId the primary key of the current layout page template entry
+	* @param plid the plid
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next layout page template entry
+	* @throws NoSuchPageTemplateEntryException if a layout page template entry with the primary key could not be found
+	*/
+	public static LayoutPageTemplateEntry[] findByPlid_PrevAndNext(
+		long layoutPageTemplateEntryId, long plid,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+		throws com.liferay.layout.page.template.exception.NoSuchPageTemplateEntryException {
+		return getPersistence()
+				   .findByPlid_PrevAndNext(layoutPageTemplateEntryId, plid,
+			orderByComparator);
+	}
+
+	/**
+	* Removes all the layout page template entries where plid = &#63; from the database.
+	*
+	* @param plid the plid
+	*/
+	public static void removeByPlid(long plid) {
+		getPersistence().removeByPlid(plid);
+	}
+
+	/**
+	* Returns the number of layout page template entries where plid = &#63;.
+	*
+	* @param plid the plid
+	* @return the number of matching layout page template entries
+	*/
+	public static int countByPlid(long plid) {
+		return getPersistence().countByPlid(plid);
+	}
+
+	/**
 	* Returns all the layout page template entries where groupId = &#63; and layoutPageTemplateCollectionId = &#63;.
 	*
 	* @param groupId the group ID

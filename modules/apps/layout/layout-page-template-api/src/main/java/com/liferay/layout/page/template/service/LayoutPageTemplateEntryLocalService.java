@@ -223,6 +223,9 @@ public interface LayoutPageTemplateEntryLocalService extends BaseLocalService,
 	public LayoutPageTemplateEntry fetchLayoutPageTemplateEntry(
 		long layoutPageTemplateEntryId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public LayoutPageTemplateEntry fetchLayoutPageTemplateEntryByPlid(long plid);
+
 	/**
 	* Returns the layout page template entry matching the UUID and group.
 	*

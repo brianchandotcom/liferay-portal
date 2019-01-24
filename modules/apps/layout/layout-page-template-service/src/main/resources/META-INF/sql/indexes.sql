@@ -14,6 +14,7 @@ create index IX_6120EE7E on LayoutPageTemplateEntry (groupId, layoutPrototypeId)
 create unique index IX_A075DAA4 on LayoutPageTemplateEntry (groupId, name[$COLUMN_LENGTH:75$]);
 create index IX_1F1BEA76 on LayoutPageTemplateEntry (groupId, type_, status);
 create index IX_A185457E on LayoutPageTemplateEntry (layoutPrototypeId);
+create index IX_84D30230 on LayoutPageTemplateEntry (plid);
 create index IX_CEC0A659 on LayoutPageTemplateEntry (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_34C0EF1B on LayoutPageTemplateEntry (uuid_[$COLUMN_LENGTH:75$], groupId);
 

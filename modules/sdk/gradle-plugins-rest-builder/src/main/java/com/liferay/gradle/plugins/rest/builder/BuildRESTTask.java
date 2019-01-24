@@ -48,13 +48,13 @@ public class BuildRESTTask extends JavaExec {
 	}
 
 	@Input
-	public String getAuthor() {
-		return GradleUtil.toString(_author);
+	public String getApiPackagePath() {
+		return GradleUtil.toString(_apiPackagePath);
 	}
 
 	@Input
-	public String getApiPackagePath() {
-		return GradleUtil.toString(_apiPackagePath);
+	public String getAuthor() {
+		return GradleUtil.toString(_author);
 	}
 
 	@InputFile

@@ -8,14 +8,16 @@ import ProcessListSearch from './ProcessListSearch';
 import ProcessListTable from './ProcessListTable';
 import React from 'react';
 
+const REQUEST_ORIGIN_TYPE_FETCH = 'REQUEST_ORIGIN_TYPE_FETCH';
+const REQUEST_ORIGIN_TYPE_SEARCH = 'REQUEST_ORIGIN_TYPE_SEARCH';
+
 export default class ProcessListCard extends React.Component {
 	constructor() {
 		super();
 
 		this.state = {
-			noDataResult: false,
-			noSearchResult: false,
 			processes: [],
+			requestOriginType: null,
 			selectedEntry: 20,
 			start: 0,
 			total: 0
@@ -30,7 +32,6 @@ export default class ProcessListCard extends React.Component {
 			this.requestData({size: selectedEntry, start}).then(
 				({processes, total}) =>
 					this.setState({
-						noDataResult: total === 0,
 						processes,
 						total
 					})
@@ -44,6 +45,11 @@ export default class ProcessListCard extends React.Component {
 
 	requestData({keyword, size, start}) {
 		const {client, companyId} = this.props;
+
+		this.state.requestOriginType =
+			typeof keyword === 'string'
+				? REQUEST_ORIGIN_TYPE_SEARCH
+				: REQUEST_ORIGIN_TYPE_FETCH;
 
 		return client
 			.query({
@@ -72,8 +78,7 @@ export default class ProcessListCard extends React.Component {
 		const start = 0;
 
 		this.requestData({keyword, size: selectedEntry, start}).then(
-			({processes, total}) =>
-				this.setState({noSearchResult: total === 0, processes, start, total})
+			({processes, total}) => this.setState({processes, start, total})
 		);
 	}
 
@@ -95,9 +100,8 @@ export default class ProcessListCard extends React.Component {
 
 	render() {
 		const {
-			noDataResult,
-			noSearchResult,
 			processes,
+			requestOriginType,
 			selectedEntry,
 			start,
 			total
@@ -136,12 +140,12 @@ export default class ProcessListCard extends React.Component {
 			<div>
 				<ProcessListSearch disabled onSearch={this.onSearch} />
 				<div className="container-fluid-1280">
-					{noSearchResult ? (
+					{requestOriginType === REQUEST_ORIGIN_TYPE_SEARCH && total === 0 ? (
 						<EmptyContent
 							message={Liferay.Language.get('no-results-were-found')}
 							type="not-found"
 						/>
-					) : noDataResult && total === 0 ? (
+					) : requestOriginType === REQUEST_ORIGIN_TYPE_FETCH && total === 0 ? (
 						<EmptyContent
 							message={Liferay.Language.get(
 								'once-there-are-active-processes-reports-will-appear-here'

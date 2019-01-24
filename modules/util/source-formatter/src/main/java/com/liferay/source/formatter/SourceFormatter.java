@@ -15,12 +15,12 @@
 package com.liferay.source.formatter;
 
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ArgumentsUtil;
 import com.liferay.portal.tools.GitException;
@@ -408,8 +408,7 @@ public class SourceFormatter {
 			}
 
 			String message = StringBundler.concat(
-				"Found ", String.valueOf(index - 1), " formatting issues:\n",
-				sb.toString());
+				"Found ", index - 1, " formatting issues:\n", sb.toString());
 
 			throw new Exception(message);
 		}

@@ -14,7 +14,7 @@
 
 package com.liferay.source.formatter.parser;
 
-import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.source.formatter.checks.util.SourceUtil;
 
 import java.util.regex.Matcher;

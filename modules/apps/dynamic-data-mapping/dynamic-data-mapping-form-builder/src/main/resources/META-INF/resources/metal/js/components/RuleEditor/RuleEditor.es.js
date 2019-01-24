@@ -607,81 +607,28 @@ class RuleEditor extends Component {
 	}
 
 	syncPages(pages) {
+		const {actions} = this;
+		let {conditions} = this;
+
 		const visitor = new PagesVisitor(pages);
-		const {actions, conditions} = this;
 
-		this.setState(
-			{
-				actions: this._syncActions(actions, visitor),
-				calculatorResultOptions: this._calculatorResultOptionsValueFn(),
-				conditions: this._syncConditions(conditions, visitor),
-				deletedFields: this._getDeletedFields(visitor),
-				fieldOptions: this._fieldOptionsValueFn()
-			}
-		);
-	}
-
-	syncVisible(visible) {
-		const addButton = document.querySelector('#addFieldButton');
-
-		super.syncVisible(visible);
-
-		if (addButton && visible) {
-			addButton.classList.add('hide');
-		}
-	}
-
-	_syncActions(actions, visitor) {
-		actions.forEach(
-			action => {
-				let targetFieldExists = false;
-				let targetType;
-
-				visitor.mapFields(
-					({fieldName, type}) => {
-						if (action.target === fieldName) {
-							targetFieldExists = true;
-							targetType = type;
-						}
-					}
-				);
-
-				if (!targetFieldExists || action.action === 'calculate' && targetType !== 'numeric') {
-					action.target = '';
-				}
-
-				action.calculatorFields = this._updateCalculatorFields(action, action.target);
-			}
-		);
-
-		return actions;
-	}
-
-	_syncConditions(conditions, visitor) {
 		conditions.forEach(
 			(condition, index) => {
-				const firstOperand = condition.operands[0];
 				let firstOperandFieldExists = false;
 				const secondOperand = condition.operands[1];
 				let secondOperandFieldExists = false;
-				let secondOperandType;
 
 				visitor.mapFields(
-					({fieldName, type}) => {
-						if (firstOperand.type == 'field' && firstOperand.value === fieldName) {
+					({fieldName}) => {
+						if (condition.operands[0].value === fieldName) {
 							firstOperandFieldExists = true;
-							secondOperandType = type;
 						}
 
-						if (secondOperand && secondOperand.type === 'field' && secondOperand.value === fieldName) {
+						if (secondOperand && secondOperand.value === fieldName) {
 							secondOperandFieldExists = true;
 						}
 					}
 				);
-
-				if (secondOperand && secondOperandType) {
-					secondOperand.type = secondOperandType;
-				}
 
 				if (condition.operands[0].value === 'user') {
 					firstOperandFieldExists = true;
@@ -697,7 +644,25 @@ class RuleEditor extends Component {
 			}
 		);
 
-		return conditions;
+		this.setState(
+			{
+				actions: this._syncActions(actions),
+				calculatorResultOptions: this._calculatorResultOptionsValueFn(),
+				conditions,
+				deletedFields: this._getDeletedFields(visitor),
+				fieldOptions: this._fieldOptionsValueFn()
+			}
+		);
+	}
+
+	syncVisible(visible) {
+		const addButton = document.querySelector('#addFieldButton');
+
+		super.syncVisible(visible);
+
+		if (addButton && visible) {
+			addButton.classList.add('hide');
+		}
 	}
 
 	_calculatorResultOptionsValueFn() {
@@ -1560,8 +1525,6 @@ class RuleEditor extends Component {
 	}
 
 	_setActions(actions) {
-		const {pages} = this;
-
 		if (actions.length == 0) {
 			actions.push(
 				{
@@ -1577,7 +1540,7 @@ class RuleEditor extends Component {
 			);
 		}
 
-		return this._syncActions(actions, new PagesVisitor(pages));
+		return actions;
 	}
 
 	_setConditions(conditions) {

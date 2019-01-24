@@ -56,7 +56,9 @@ public class FreeMarker {
 
 		StringBuffer stringBuffer = stringWriter.getBuffer();
 
-		return stringBuffer.toString();
+		String content = stringBuffer.toString();
+
+		return content.replace("\r\n", "\n");
 	}
 
 	private static final Configuration _configuration = new Configuration(

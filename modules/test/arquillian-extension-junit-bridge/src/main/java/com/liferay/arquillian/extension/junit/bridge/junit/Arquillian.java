@@ -112,9 +112,8 @@ public class Arquillian extends BlockJUnit4ClassRunner {
    @Override
    public void run(final RunNotifier notifier)
    {
-      if(State.isNotRunningInEclipse()) {
-          StateUtil.runnerStarted();
-      }
+		StateUtil.runnerStarted();
+
       // first time we're being initialized
       if(!StateUtil.hasTestAdaptor())
       {

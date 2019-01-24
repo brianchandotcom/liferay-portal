@@ -241,6 +241,38 @@ definition {
 		);
 	}
 
+	macro configureDMWorkflowViaFolderInfo {
+		Click(locator1 = "Icon#INFO");
+
+		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Edit");
+
+		Select(
+			locator1 = "AssetWorkflow#ALL_STRUCTURES_WORKFLOW_SELECT",
+			value1 = "${workflowDefinition}"
+		);
+
+		PortletEntry.save();
+	}
+
+	macro configureWCWorkflowViaFolderInfo {
+		Click(locator1 = "Icon#INFO");
+
+		Click(
+			locator1 = "Icon#VERTICAL_ELLIPSIS_BUTTON"
+		);
+
+		MenuItem.click(
+			menuItem = "${menuItem}"
+		);
+
+		Select(
+			locator1 = "AssetWorkflow#ALL_STRUCTURES_WORKFLOW_SELECT",
+			value1 = "${workflowDefinition}"
+		);
+
+		PortletEntry.save();
+	}
+
 	macro configureWorkflow {
 		AssertClick(
 			locator1 = "Button#EDIT_ROW",
@@ -266,38 +298,6 @@ definition {
 			workflowDefinition = "${workflowDefinition}",
 			workflowResourceValue = "${workflowResourceValue}"
 		);
-	}
-
-	macro configureWCWorkflowViaFolderInfo {
-		Click(locator1 = "Icon#INFO");
-
-		Click(
-			locator1 = "Icon#VERTICAL_ELLIPSIS_BUTTON"
-		);
-
-		MenuItem.click(
-			menuItem = "${menuItem}"
-		);
-
-		Select(
-			locator1 = "AssetWorkflow#ALL_STRUCTURES_WORKFLOW_SELECT",
-			value1 = "${workflowDefinition}"
-		);
-
-		PortletEntry.save();
-	}
-
-	macro configureDMWorkflowViaFolderInfo {
-		Click(locator1 = "Icon#INFO");
-
-		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Edit");
-
-		Select(
-			locator1 = "AssetWorkflow#ALL_STRUCTURES_WORKFLOW_SELECT",
-			value1 = "${workflowDefinition}"
-		);
-
-		PortletEntry.save();
 	}
 
 	macro configureWorkflowViaPortlet {

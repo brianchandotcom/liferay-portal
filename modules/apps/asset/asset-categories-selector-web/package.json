@@ -21,7 +21,7 @@
 		"checkFormat": "npm run csf",
 		"cleanSoy": "rimraf src/**/*.soy.js",
 		"compile": "cross-env NODE_ENV=production babel --source-maps -d classes/META-INF/resources src/main/resources/META-INF/resources",
-		"csf": "csf src/**/*.js",
+		"csf": "csf src/**/*.{js,soy,scss}",
 		"format": "npm run csf -- -i"
 	},
 	"version": "2.0.0"

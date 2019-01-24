@@ -94,6 +94,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONTENT_VIDEO</td>
+	<td>//div[contains(@class,'embedurl')]/div[contains(@data-cke-widget-data,'${key_service}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TAG</td>
 	<td>//div[contains(.,'${key_entryTitle}')]//span/a[contains(.,'${key_tagName}')]</td>
 	<td></td>
@@ -121,6 +126,11 @@
 <tr>
 	<td>SMALL_IMAGE</td>
 	<td>//div[@class='current-image' and contains(@src,'${key_smallImage}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIDEO_EMBED_HELP_MESSAGE</td>
+	<td>//div[@class='embed-help-message']//span]</td>
 	<td></td>
 </tr>
 </tbody>

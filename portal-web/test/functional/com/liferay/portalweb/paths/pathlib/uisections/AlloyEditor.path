@@ -45,6 +45,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONTENT_ADD_MENUBAR_VIDEO</td>
+	<td>//button[contains(@data-type,'video')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

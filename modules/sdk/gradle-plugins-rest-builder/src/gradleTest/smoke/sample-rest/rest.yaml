@@ -1,2 +1,10 @@
-entities:
-  - name: Foo
+components:
+    schemas:
+        Document:
+            description: "https://www.schema.org/Document"
+            type: object
+info:
+    description: ""
+    title: ""
+    version: "1.0.0"
+openapi: "3.0.1"

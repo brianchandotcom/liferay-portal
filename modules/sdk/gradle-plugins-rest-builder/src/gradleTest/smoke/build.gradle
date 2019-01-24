@@ -36,7 +36,7 @@ runGradleTest {
 	doLast {
 		Project apiProject = project(":sample-api")
 
-		File generatedFile = apiProject.file("src/main/java/com/example/sample/model/FooModel.java")
+		File generatedFile = apiProject.file("src/main/java/com/example/sample/dto/Document.java")
 
 		assert generatedFile.exists()
 	}

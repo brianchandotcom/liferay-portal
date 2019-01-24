@@ -45,6 +45,7 @@ import com.liferay.portal.test.rule.PermissionCheckerTestRule;
 
 import java.io.IOException;
 
+import java.util.Arrays;
 import java.util.Collections;
 
 import org.jsoup.Jsoup;
@@ -190,6 +191,30 @@ public class FragmentEntryProcessorEditableTest {
 			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
 				fragmentEntryLink, FragmentEntryLinkConstants.EDIT,
 				LocaleUtil.US));
+	}
+
+	@Test
+	public void testFragmentEntryProcessorEditableWithMatchedSegmentAndLanguage()
+		throws Exception {
+
+		FragmentEntry fragmentEntry = _createFragmentEntry(
+			"fragment_entry.html");
+
+		FragmentEntryLink fragmentEntryLink =
+			FragmentEntryLinkLocalServiceUtil.createFragmentEntryLink(0);
+
+		fragmentEntryLink.setHtml(fragmentEntry.getHtml());
+
+		fragmentEntryLink.setEditableValues(
+			_getJsonFileAsString(
+				"fragment_entry_link_editable_values_matching_segment_and_" +
+					"language.json"));
+
+		Assert.assertEquals(
+			_processedHTML,
+			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
+				fragmentEntryLink, FragmentEntryLinkConstants.EDIT,
+				LocaleUtil.US, Arrays.asList(1L, 0L)));
 	}
 
 	@Test(expected = FragmentEntryContentException.class)

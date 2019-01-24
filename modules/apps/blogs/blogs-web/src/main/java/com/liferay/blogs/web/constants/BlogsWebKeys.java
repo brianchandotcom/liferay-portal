@@ -25,4 +25,6 @@ public class BlogsWebKeys {
 	public static final String DL_MIME_TYPE_DISPLAY_CONTEXT =
 		"DL_MIME_TYPE_DISPLAY_CONTEXT";
 
+	public static final String DL_URL_HELPER = "DL_URL_HELPER";
+
 }

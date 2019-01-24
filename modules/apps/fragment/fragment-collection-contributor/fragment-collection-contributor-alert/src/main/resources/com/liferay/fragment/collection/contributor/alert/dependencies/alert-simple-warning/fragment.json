@@ -1,0 +1,8 @@
+{
+	"cssPath": "index.css",
+	"fragmentEntryKey": "alert-simple-warning",
+	"htmlPath": "index.html",
+	"jsPath": "index.js",
+	"name": "Alert simple warning",
+	"type": "section"
+}

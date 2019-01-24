@@ -485,9 +485,9 @@ public interface ${entity.name}Model extends ${entity.getModelBaseInterfaceNames
 
 		<#-- Generate these methods without override for older portal-kernel versions. -->
 
-		public Map<String, Function<${entity.name}, Object>> getAttributeGetters();
+		public Map<String, Function<${entity.name}, Object>> getAttributeGetterFunctions();
 
-		public Map<String, BiConsumer<${entity.name}, Object>> getAttributeSetters();
+		public Map<String, BiConsumer<${entity.name}, Object>> getAttributeSetterBiConsumers();
 
 		<#--
 		Copy methods from com.liferay.portal.kernel.model.BaseModel and java.lang.Object to

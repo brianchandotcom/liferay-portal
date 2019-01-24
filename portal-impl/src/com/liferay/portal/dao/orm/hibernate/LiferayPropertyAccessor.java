@@ -142,27 +142,31 @@ public class LiferayPropertyAccessor extends BasicPropertyAccessor {
 					superClass = modelClass.getSuperclass();
 				}
 
-				Map<String, Function<Object, Object>> attributeGetters = null;
-				Map<String, BiConsumer<Object, Object>> attributeSetters = null;
+				Map<String, Function<Object, Object>> attributeGetterFunctions =
+					null;
+				Map<String, BiConsumer<Object, Object>>
+					attributeSetterBiConsumers = null;
 
 				try {
-					Field gettersField = modelClass.getDeclaredField(
-						"_attributeGetters");
+					Field attributeGetterFunctionsField =
+						modelClass.getDeclaredField(
+							"_attributeGetterFunctions");
 
-					gettersField.setAccessible(true);
+					attributeGetterFunctionsField.setAccessible(true);
 
-					attributeGetters =
+					attributeGetterFunctions =
 						(Map<String, Function<Object, Object>>)
-							gettersField.get(null);
+							attributeGetterFunctionsField.get(null);
 
-					Field settersField = modelClass.getDeclaredField(
-						"_attributeSetters");
+					Field attributeSetterBiConsumersField =
+						modelClass.getDeclaredField(
+							"_attributeSetterBiConsumers");
 
-					settersField.setAccessible(true);
+					attributeSetterBiConsumersField.setAccessible(true);
 
-					attributeSetters =
+					attributeSetterBiConsumers =
 						(Map<String, BiConsumer<Object, Object>>)
-							settersField.get(null);
+							attributeSetterBiConsumersField.get(null);
 				}
 				catch (ReflectiveOperationException roe) {
 					if (_log.isDebugEnabled()) {
@@ -170,22 +174,24 @@ public class LiferayPropertyAccessor extends BasicPropertyAccessor {
 					}
 				}
 
-				return new ModelMutators(attributeGetters, attributeSetters);
+				return new ModelMutators(
+					attributeGetterFunctions, attributeSetterBiConsumers);
 			});
 
-		Map<String, Function<Object, Object>> attributeGetters =
-			modelMutators._attributeGetters;
+		Map<String, Function<Object, Object>> attributeGetterFunctions =
+			modelMutators._attributeGetterFunctions;
 
-		Map<String, BiConsumer<Object, Object>> attributeSetters =
-			modelMutators._attributeSetters;
+		Map<String, BiConsumer<Object, Object>> attributeSetterBiConsumers =
+			modelMutators._attributeSetterBiConsumers;
 
-		if (attributeSetters == null) {
+		if (attributeSetterBiConsumers == null) {
 			return null;
 		}
 
-		Function<Object, Object> getterFunction = attributeGetters.get(name);
-		BiConsumer<Object, Object> setterBiConsumer = attributeSetters.get(
+		Function<Object, Object> getterFunction = attributeGetterFunctions.get(
 			name);
+		BiConsumer<Object, Object> setterBiConsumer =
+			attributeSetterBiConsumers.get(name);
 
 		if ((getterFunction == null) || (setterBiConsumer == null)) {
 			return null;
@@ -354,15 +360,18 @@ public class LiferayPropertyAccessor extends BasicPropertyAccessor {
 	private static class ModelMutators {
 
 		private ModelMutators(
-			Map<String, Function<Object, Object>> attributeGetters,
-			Map<String, BiConsumer<Object, Object>> attributeSetters) {
+			Map<String, Function<Object, Object>> attributeGetterFunctions,
+			Map<String, BiConsumer<Object, Object>>
+				attributeSetterBiConsumers) {
 
-			_attributeGetters = attributeGetters;
-			_attributeSetters = attributeSetters;
+			_attributeGetterFunctions = attributeGetterFunctions;
+			_attributeSetterBiConsumers = attributeSetterBiConsumers;
 		}
 
-		private final Map<String, Function<Object, Object>> _attributeGetters;
-		private final Map<String, BiConsumer<Object, Object>> _attributeSetters;
+		private final Map<String, Function<Object, Object>>
+			_attributeGetterFunctions;
+		private final Map<String, BiConsumer<Object, Object>>
+			_attributeSetterBiConsumers;
 
 	}
 

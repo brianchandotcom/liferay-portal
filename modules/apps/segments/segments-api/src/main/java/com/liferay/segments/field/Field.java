@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.segments.criteria;
+package com.liferay.segments.field;
 
 import java.io.Serializable;
 

@@ -205,6 +205,8 @@ public class ViewUsersManagementToolbarDisplayContext {
 		PortletURL portletURL = (PortletURL)_request.getAttribute(
 			"view.jsp-portletURL");
 
+		portletURL.setParameter("navigation", _navigation);
+
 		UserSearch userSearch = new UserSearch(
 			_renderRequest, "cur2", portletURL);
 

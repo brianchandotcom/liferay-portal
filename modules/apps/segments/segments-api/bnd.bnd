@@ -8,6 +8,7 @@ Export-Package:\
 	com.liferay.segments.criteria.contributor,\
 	com.liferay.segments.exception,\
 	com.liferay.segments.field,\
+	com.liferay.segments.field.customizer,\
 	com.liferay.segments.model,\
 	com.liferay.segments.odata.matcher,\
 	com.liferay.segments.odata.retriever,\

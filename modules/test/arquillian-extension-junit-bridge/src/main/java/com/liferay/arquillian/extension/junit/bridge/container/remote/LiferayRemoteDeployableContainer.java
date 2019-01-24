@@ -30,12 +30,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
 
 import javax.management.MBeanServerConnection;
 import javax.management.MBeanServerInvocationHandler;
@@ -125,12 +119,10 @@ public class LiferayRemoteDeployableContainer
 			_mbeanServerConnectionInstance.set(mBeanServer);
 
 			_frameworkMBean = _getMBeanProxy(
-				mBeanServer, _frameworkObjectName, FrameworkMBean.class, 30,
-				TimeUnit.SECONDS);
+				mBeanServer, _frameworkObjectName, FrameworkMBean.class);
 
 			_bundleStateMBean = _getMBeanProxy(
-				mBeanServer, _bundleStateObjectName, BundleStateMBean.class, 30,
-				TimeUnit.SECONDS);
+				mBeanServer, _bundleStateObjectName, BundleStateMBean.class);
 		}
 		catch (Exception e) {
 			throw new LifecycleException("Unable to start", e);
@@ -226,48 +218,15 @@ public class LiferayRemoteDeployableContainer
 
 	private <T> T _getMBeanProxy(
 			MBeanServerConnection mbeanServer, ObjectName objectName,
-			Class<T> type, final long timeout, final TimeUnit unit)
-		throws TimeoutException {
+			Class<T> type)
+		throws Exception {
 
-		Callable<T> callable = new Callable<T>() {
+		Set<ObjectName> names = mbeanServer.queryNames(objectName, null);
 
-			@Override
-			public T call() throws Exception {
-				long timeoutMillis =
-					System.currentTimeMillis() + unit.toMillis(timeout);
+		Iterator<ObjectName> iterator = names.iterator();
 
-				while (System.currentTimeMillis() < timeoutMillis) {
-					Set<ObjectName> names = mbeanServer.queryNames(
-						objectName, null);
-
-					if (names.size() == 1) {
-						ObjectName instanceName = names.iterator().next();
-
-						return MBeanServerInvocationHandler.newProxyInstance(
-							mbeanServer, instanceName, type, false);
-					}
-
-					Thread.sleep(500);
-				}
-
-				throw new TimeoutException();
-			}
-
-		};
-
-		ExecutorService executor = Executors.newSingleThreadExecutor();
-
-		Future<T> future = executor.submit(callable);
-
-		try {
-			return future.get(timeout, unit);
-		}
-		catch (TimeoutException te) {
-			throw te;
-		}
-		catch (Exception e) {
-			throw new IllegalStateException(e);
-		}
+		return MBeanServerInvocationHandler.newProxyInstance(
+			mbeanServer, iterator.next(), type, false);
 	}
 
 	private MBeanServerConnection _getMBeanServerConnection()

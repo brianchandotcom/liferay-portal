@@ -24,8 +24,6 @@ import java.util.Collections;
 import java.util.List;
 
 import java.util.concurrent.atomic.AtomicInteger;
-import org.jboss.arquillian.junit.InSequence;
-import org.jboss.arquillian.junit.InSequenceSorter;
 import org.jboss.arquillian.junit.State;
 import org.jboss.arquillian.junit.event.AfterRules;
 import org.jboss.arquillian.junit.event.BeforeRules;
@@ -110,28 +108,6 @@ public class Arquillian extends BlockJUnit4ClassRunner {
 
 		return statement;
 	}
-
-	@Override
-   protected List<FrameworkMethod> getChildren()
-   {
-      List<FrameworkMethod> children = super.getChildren();
-      // Only sort if InOrder is defined, else keep them in original order returned by parent
-      boolean hasDefinedOrder = false;
-      for(FrameworkMethod method : children)
-      {
-         if(method.getAnnotation(InSequence.class) != null)
-         {
-            hasDefinedOrder = true;
-         }
-      }
-      if(hasDefinedOrder)
-      {
-         List<FrameworkMethod> sorted = new ArrayList<FrameworkMethod>(children);
-         Collections.sort(sorted, new InSequenceSorter());
-         return sorted;
-      }
-      return children;
-   }
 
    @Override
    public void run(final RunNotifier notifier)

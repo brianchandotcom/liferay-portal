@@ -33,7 +33,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.ComplexEntityField;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
-import com.liferay.segments.criteria.Field;
+import com.liferay.segments.field.Field;
 
 import java.util.ArrayList;
 import java.util.Collections;

@@ -18,8 +18,8 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.segments.criteria.Criteria;
-import com.liferay.segments.criteria.Field;
 import com.liferay.segments.criteria.contributor.SegmentsCriteriaContributor;
+import com.liferay.segments.field.Field;
 import com.liferay.segments.internal.odata.entity.ContextEntityModel;
 import com.liferay.segments.internal.odata.entity.EntityModelFieldMapper;
 

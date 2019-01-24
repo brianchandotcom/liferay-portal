@@ -50,8 +50,8 @@ import com.liferay.registry.Filter;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceTracker;
-import com.liferay.segments.criteria.Field;
 import com.liferay.segments.criteria.contributor.SegmentsCriteriaContributor;
+import com.liferay.segments.field.Field;
 
 import java.io.Serializable;
 

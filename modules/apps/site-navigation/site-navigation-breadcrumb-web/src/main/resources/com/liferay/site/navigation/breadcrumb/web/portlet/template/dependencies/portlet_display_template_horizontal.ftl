@@ -1,5 +1,5 @@
 <#if entries?has_content>
-	<ol class="breadcrumb" role="navigation">
+	<ol class="breadcrumb">
 		<#list entries as entry>
 			<li class="breadcrumb-item">
 				<#if entry?has_next>

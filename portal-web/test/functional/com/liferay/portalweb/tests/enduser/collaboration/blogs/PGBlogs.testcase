@@ -912,6 +912,32 @@ definition {
 		);
 	}
 
+	@description = "This is a usecase for LPS-75241"
+	@priority = "5"
+	test EmbedVideo {
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		Blogs.addEntry(
+			entryContent = "video",
+			embedVideo = "https://www.youtube.com/watch?v=2EPZxIC5ogU",
+			entryTitle = "Blogs Entry Title",
+			videoService = "youtube"
+		);
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsNavigator.gotoEntryPG(
+			entryContent = "video",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		BlogsEntry.viewEntry(
+			entryContent = "video",
+			embedVideo = "true",
+			entryTitle = "Blogs Entry Title"
+		);
+	}
+
 	@priority = "5"
 	test MoveToRecycleBinBlogsEntry {
 		Navigator.gotoPage(pageName = "Blogs Page");

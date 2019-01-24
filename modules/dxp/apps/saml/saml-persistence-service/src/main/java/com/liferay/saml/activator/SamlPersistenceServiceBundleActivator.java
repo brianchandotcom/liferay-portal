@@ -27,7 +27,7 @@ import org.osgi.util.tracker.ServiceTracker;
 /**
  * @author Carlos Sierra Andrés
  */
-public class SamlServicePersistenceBundleActivator implements BundleActivator {
+public class SamlPersistenceServiceBundleActivator implements BundleActivator {
 
 	@Override
 	public void start(BundleContext context) throws Exception {

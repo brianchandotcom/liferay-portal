@@ -548,8 +548,8 @@ public class FragmentsEditorDisplayContext {
 
 	private String[] _getThemeColors() {
 		return new String[] {
-			"#393a4a", "#6b6c7e", "#a7a9bc", "#cdced8", "#e7e7ed", "#f4f5f8",
-			"#435ffe", "#41a967", "#f35f60", "#f6bb54"
+			"#393A4A", "#6B6C7E", "#A7A9BC", "#CDCED8", "#E7E7ED", "#F4F5F8",
+			"#435FFE", "#41A967", "#F35F60", "#F6BB54"
 		};
 	}
 

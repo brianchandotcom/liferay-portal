@@ -68,7 +68,7 @@ import org.osgi.jmx.framework.FrameworkMBean;
  * @author Preston Crary
  */
 public class LiferayRemoteDeployableContainer
-	implements DeployableContainer<LiferayRemoteContainerConfiguration> {
+	implements DeployableContainer<DefaultContainerConfiguration> {
 
 	@Override
 	public ProtocolMetaData deploy(Archive<?> archive)
@@ -93,8 +93,7 @@ public class LiferayRemoteDeployableContainer
 
 		protocolMetaData.addContext(
 			new HTTPContext(
-				_liferayRemoteContainerConfiguration.getHttpHost(),
-				_liferayRemoteContainerConfiguration.getHttpPort()));
+				_LIFERAY_DEFAULT_HTTP_HOST, _LIFERAY_DEFAULT_HTTP_PORT));
 
 		return protocolMetaData;
 	}
@@ -104,8 +103,8 @@ public class LiferayRemoteDeployableContainer
 	}
 
 	@Override
-	public Class<LiferayRemoteContainerConfiguration> getConfigurationClass() {
-		return LiferayRemoteContainerConfiguration.class;
+	public Class<DefaultContainerConfiguration> getConfigurationClass() {
+		return DefaultContainerConfiguration.class;
 	}
 
 	@Override
@@ -114,8 +113,8 @@ public class LiferayRemoteDeployableContainer
 	}
 
 	@Override
-	public void setup(LiferayRemoteContainerConfiguration configuration) {
-		_liferayRemoteContainerConfiguration = configuration;
+	public void setup(
+		DefaultContainerConfiguration defaultContainerConfiguration) {
 	}
 
 	@Override
@@ -276,15 +275,14 @@ public class LiferayRemoteDeployableContainer
 		throws IOException {
 
 		String[] credentials = {
-			_liferayRemoteContainerConfiguration.getJmxUsername(),
-			_liferayRemoteContainerConfiguration.getJmxPassword()
+			_LIFERAY_DEFAULT_JMX_USERNAME, _LIFERAY_DEFAULT_JMX_PASSWORD
 		};
 
 		Map<String, String[]> env = Collections.singletonMap(
 			JMXConnector.CREDENTIALS, credentials);
 
 		JMXServiceURL jmxServiceURL = new JMXServiceURL(
-			_liferayRemoteContainerConfiguration.getJmxServiceURL());
+			_LIFERAY_DEFAULT_JMX_SERVICE_URL);
 
 		JMXConnector connector = JMXConnectorFactory.connect(
 			jmxServiceURL, env);
@@ -366,7 +364,16 @@ public class LiferayRemoteDeployableContainer
 		}
 	}
 
+	private static final String _LIFERAY_DEFAULT_HTTP_HOST = "localhost";
 
+	private static final int _LIFERAY_DEFAULT_HTTP_PORT = 8080;
+
+	private static final String _LIFERAY_DEFAULT_JMX_PASSWORD = "";
+
+	private static final String _LIFERAY_DEFAULT_JMX_SERVICE_URL =
+		"service:jmx:rmi:///jndi/rmi://localhost:8099/jmxrmi";
+
+	private static final String _LIFERAY_DEFAULT_JMX_USERNAME = "";
 
 	private static final ObjectName _bundleStateObjectName;
 	private static final ObjectName _frameworkObjectName;
@@ -386,8 +393,6 @@ public class LiferayRemoteDeployableContainer
 	private BundleStateMBean _bundleStateMBean;
 	private final Map<String, BundleHandle> _deployedBundles = new HashMap<>();
 	private FrameworkMBean _frameworkMBean;
-	private LiferayRemoteContainerConfiguration
-		_liferayRemoteContainerConfiguration;
 
 	@ContainerScoped
 	@Inject

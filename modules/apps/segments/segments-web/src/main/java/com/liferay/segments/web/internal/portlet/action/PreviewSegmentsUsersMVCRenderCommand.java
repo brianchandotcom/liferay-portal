@@ -18,10 +18,11 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.segments.constants.SegmentsPortletKeys;
-import com.liferay.segments.criteria.contributor.SegmentsCriteriaContributorRegistry;
 import com.liferay.segments.odata.retriever.ODataRetriever;
+import com.liferay.segments.provider.SegmentsEntryProvider;
 import com.liferay.segments.service.SegmentsEntryService;
 import com.liferay.segments.web.internal.constants.SegmentsWebKeys;
 import com.liferay.segments.web.internal.display.context.PreviewSegmentsEntryUsersDisplayContext;
@@ -77,7 +78,8 @@ public class PreviewSegmentsUsersMVCRenderCommand implements MVCRenderCommand {
 			previewSegmentsEntryUsersDisplayContext =
 				new PreviewSegmentsEntryUsersDisplayContext(
 					httpServletRequest, renderRequest, renderResponse,
-					_segmentsCriteriaContributorRegistry, userODataRetriever);
+					_segmentsEntryProvider, _segmentsEntryService,
+					userODataRetriever, _userLocalService);
 
 		renderRequest.setAttribute(
 			SegmentsWebKeys.PREVIEW_SEGMENTS_ENTRY_USERS_DISPLAY_CONTEXT,
@@ -90,12 +92,14 @@ public class PreviewSegmentsUsersMVCRenderCommand implements MVCRenderCommand {
 	private Portal _portal;
 
 	@Reference
-	private SegmentsCriteriaContributorRegistry
-		_segmentsCriteriaContributorRegistry;
+	private SegmentsEntryProvider _segmentsEntryProvider;
 
 	@Reference
 	private SegmentsEntryService _segmentsEntryService;
 
 	private ServiceTrackerMap<String, ODataRetriever> _serviceTrackerMap;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

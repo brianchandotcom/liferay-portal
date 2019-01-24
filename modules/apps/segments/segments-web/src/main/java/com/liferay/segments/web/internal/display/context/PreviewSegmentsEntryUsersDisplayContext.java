@@ -19,16 +19,22 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.criteria.Criteria;
-import com.liferay.segments.criteria.contributor.SegmentsCriteriaContributor;
-import com.liferay.segments.criteria.contributor.SegmentsCriteriaContributorRegistry;
+import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.odata.retriever.ODataRetriever;
+import com.liferay.segments.provider.SegmentsEntryProvider;
+import com.liferay.segments.service.SegmentsEntryService;
 import com.liferay.segments.web.internal.constants.SegmentsWebKeys;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.LongStream;
 
 import javax.portlet.PortletSession;
 import javax.portlet.PortletURL;
@@ -45,15 +51,18 @@ public class PreviewSegmentsEntryUsersDisplayContext {
 	public PreviewSegmentsEntryUsersDisplayContext(
 		HttpServletRequest request, RenderRequest renderRequest,
 		RenderResponse renderResponse,
-		SegmentsCriteriaContributorRegistry segmentsCriteriaContributorRegistry,
-		ODataRetriever<User> userODataRetriever) {
+		SegmentsEntryProvider segmentsEntryProvider,
+		SegmentsEntryService segmentsEntryService,
+		ODataRetriever<User> userODataRetriever,
+		UserLocalService userLocalService) {
 
 		_request = request;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
-		_segmentsCriteriaContributorRegistry =
-			segmentsCriteriaContributorRegistry;
+		_segmentsEntryProvider = segmentsEntryProvider;
+		_segmentsEntryService = segmentsEntryService;
 		_userODataRetriever = userODataRetriever;
+		_userLocalService = userLocalService;
 
 		_themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -74,35 +83,52 @@ public class PreviewSegmentsEntryUsersDisplayContext {
 			return userSearchContainer;
 		}
 
-		List<SegmentsCriteriaContributor> segmentsCriteriaContributors =
-			_segmentsCriteriaContributorRegistry.
-				getSegmentsCriteriaContributors(User.class.getName());
-
-		Criteria criteria = getCriteriaFromSession();
-
-		if ((criteria == null) ||
-			Validator.isNull(criteria.getFilterString(Criteria.Type.MODEL))) {
-
-			return userSearchContainer;
-		}
-
 		int total = 0;
 		List<User> users = null;
 
 		try {
-			total = _userODataRetriever.getResultsCount(
-				_themeDisplay.getCompanyId(),
-				criteria.getFilterString(Criteria.Type.MODEL),
-				_themeDisplay.getLocale());
+			Criteria criteria = getCriteriaFromSession();
 
-			users = _userODataRetriever.getResults(
-				_themeDisplay.getCompanyId(),
-				criteria.getFilterString(Criteria.Type.MODEL),
-				_themeDisplay.getLocale(), userSearchContainer.getStart(),
-				userSearchContainer.getEnd());
+			SegmentsEntry segmentsEntry = getSegmentsEntry();
+
+			if ((criteria != null) &&
+				Validator.isNotNull(
+					criteria.getFilterString(Criteria.Type.MODEL))) {
+
+				total = _userODataRetriever.getResultsCount(
+					_themeDisplay.getCompanyId(),
+					criteria.getFilterString(Criteria.Type.MODEL),
+					_themeDisplay.getLocale());
+
+				users = _userODataRetriever.getResults(
+					_themeDisplay.getCompanyId(),
+					criteria.getFilterString(Criteria.Type.MODEL),
+					_themeDisplay.getLocale(), userSearchContainer.getStart(),
+					userSearchContainer.getEnd());
+			}
+			else if (segmentsEntry != null) {
+				total = _segmentsEntryProvider.getSegmentsEntryClassPKsCount(
+					segmentsEntry.getSegmentsEntryId());
+
+				long[] segmentsEntryClassPKs =
+					_segmentsEntryProvider.getSegmentsEntryClassPKs(
+						segmentsEntry.getSegmentsEntryId(),
+						userSearchContainer.getStart(),
+						userSearchContainer.getEnd());
+
+				LongStream segmentsEntryClassPKsStream = Arrays.stream(
+					segmentsEntryClassPKs);
+
+				users = segmentsEntryClassPKsStream.boxed(
+				).map(
+					userId -> _userLocalService.fetchUser(userId)
+				).collect(
+					Collectors.toList()
+				);
+			}
 		}
 		catch (PortalException pe) {
-			_log.error("Unable to retrieve users for criteria " + criteria, pe);
+			_log.error("Unable to obtain a preview of the segment users", pe);
 		}
 
 		userSearchContainer.setResults(users);
@@ -126,7 +152,35 @@ public class PreviewSegmentsEntryUsersDisplayContext {
 		portletURL.setParameter(
 			"mvcRenderCommandName", "previewSegmentsEntryUsers");
 
+		SegmentsEntry segmentsEntry = getSegmentsEntry();
+
+		if (segmentsEntry != null) {
+			portletURL.setParameter(
+				"segmentsEntryId",
+				String.valueOf(segmentsEntry.getSegmentsEntryId()));
+		}
+
 		return portletURL;
+	}
+
+	protected SegmentsEntry getSegmentsEntry() {
+		if (_segmentsEntry != null) {
+			return _segmentsEntry;
+		}
+
+		long segmentsEntryId = ParamUtil.getLong(_request, "segmentsEntryId");
+
+		if (segmentsEntryId > 0) {
+			try {
+				_segmentsEntry = _segmentsEntryService.getSegmentsEntry(
+					segmentsEntryId);
+			}
+			catch (PortalException pe) {
+				return null;
+			}
+		}
+
+		return _segmentsEntry;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -135,9 +189,11 @@ public class PreviewSegmentsEntryUsersDisplayContext {
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private final HttpServletRequest _request;
-	private final SegmentsCriteriaContributorRegistry
-		_segmentsCriteriaContributorRegistry;
+	private SegmentsEntry _segmentsEntry;
+	private final SegmentsEntryProvider _segmentsEntryProvider;
+	private final SegmentsEntryService _segmentsEntryService;
 	private final ThemeDisplay _themeDisplay;
+	private final UserLocalService _userLocalService;
 	private final ODataRetriever<User> _userODataRetriever;
 	private SearchContainer _userSearchContainer;
 

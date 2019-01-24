@@ -14,8 +14,6 @@
 
 package com.liferay.portal.tools.rest.builder.internal.util;
 
-import com.liferay.portal.kernel.util.StringUtil;
-
 import java.io.File;
 import java.io.IOException;
 
@@ -32,7 +30,7 @@ public class FileUtil {
 		String s = new String(
 			Files.readAllBytes(file.toPath()), StandardCharsets.UTF_8);
 
-		return StringUtil.replace(s, "\r\n", "\n");
+		return s.replace("\r\n", "\n");
 	}
 
 	public static void write(File file, String content) throws IOException {

@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -371,6 +372,13 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 		String value = segmentJSONObject.getString(
 			LanguageUtil.getLanguageId(locale));
+
+		if (Validator.isNotNull(value)) {
+			return value;
+		}
+
+		value = segmentJSONObject.getString(
+			LanguageUtil.getLanguageId(LocaleUtil.getMostRelevantLocale()));
 
 		if (Validator.isNotNull(value)) {
 			return value;

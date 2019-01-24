@@ -17,7 +17,7 @@ package com.liferay.segments.criteria.contributor;
 import aQute.bnd.annotation.ConsumerType;
 
 import com.liferay.segments.criteria.Criteria;
-import com.liferay.segments.criteria.Field;
+import com.liferay.segments.field.Field;
 
 import java.util.List;
 import java.util.Locale;

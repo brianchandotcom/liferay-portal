@@ -211,13 +211,6 @@ public class PortletContextLoaderListener extends ContextLoaderListener {
 			configurableWebApplicationContext);
 	}
 
-	@Override
-	protected ApplicationContext loadParentContext(
-		ServletContext servletContext) {
-
-		return super.loadParentContext(servletContext);
-	}
-
 	private void _registerApplicationContext(
 		ConfigurableApplicationContext configurableApplicationContext) {
 

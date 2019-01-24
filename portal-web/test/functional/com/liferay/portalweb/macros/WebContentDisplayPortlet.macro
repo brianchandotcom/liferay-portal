@@ -314,6 +314,12 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#DIALOG");
 
+		AssertTextEquals(
+			locator1 = "Card#SPECIFIC_CARD_TITLE",
+			value1 = "${webContentTitle}",
+			key_cardName = "${webContentTitle}"
+		);
+
 		PortletEntry.save();
 
 		SelectFrame(value1 = "relative=top");

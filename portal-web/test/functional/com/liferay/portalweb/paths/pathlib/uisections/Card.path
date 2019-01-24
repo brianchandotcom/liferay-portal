@@ -29,6 +29,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SPECIFIC_CARD_TITLE</td>
+	<td>//div[contains(@class,'card-title') and contains(.,'${key_cardName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SPECIFIC_TEXT</td>
 	<td>//*[@data-qa-id='row'][div[contains(@class,'card')]//*[normalize-space()='${key_cardText}']]//span[contains(@class,'lfr-card-subtitle-text')]</td>
 	<td></td>

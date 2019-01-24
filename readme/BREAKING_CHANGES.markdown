@@ -296,6 +296,36 @@ chance of package version lock down.
 
 ---------------------------------------
 
+### Remove unsafe functional interfaces in package com.liferay.portal.kernel.util
+- **Date:** 2019-Jan-15
+- **JIRA Ticket:** [LPS-89223](https://issues.liferay.com/browse/LPS-89223)
+
+#### What changed?
+
+`com.liferay.portal.osgi.util.test.OSGiServiceUtil` was removed.
+`UnsafeConsumer`, `UnsafeFunction` and `UnsafeRunnable` in package
+`com.liferay.portal.kernel.util` were removed.
+
+#### Who is affected?
+
+This affects anyone used `com.liferay.portal.osgi.util.test.OSGiServiceUtil` and
+`UnsafeConsumer`, `UnsafeFunction`, `UnsafeRunnable` in package
+`com.liferay.portal.kernel.util`
+
+#### How should I update my code?
+
+`com.liferay.portal.osgi.util.test.OSGiServiceUtil` has been deprecated since
+7.1. If there is still any usage of the class, replace it with its direct
+replacement `com.liferay.osgi.util.service.OSGiServiceUtil`. Replace usages of
+`UnsafeConsumer`, `UnsafeFunction` and `UnsafeRunnable` with corresponding interface
+in package `com.liferay.petra.function`
+
+#### Why was this change made?
+
+It's one of several steps to clean up kernel provider interfaces to reduce the
+chance of package version lock down.
+
+---------------------------------------
 ### Switch to use JDK Predicate
 - **Date:** 2019-Jan-14
 - **JIRA Ticket:** [LPS-89139](https://issues.liferay.com/browse/LPS-89139)

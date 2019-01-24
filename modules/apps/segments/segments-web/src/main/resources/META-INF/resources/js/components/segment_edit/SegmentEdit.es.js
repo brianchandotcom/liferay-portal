@@ -157,40 +157,14 @@ class SegmentEdit extends Component {
 	};
 
 	_handlePreviewClick = url => () => {
-		const formElement = document.getElementById(this.props.formId);
-
-		const formData = new FormData(formElement);
-
-		fetch(
-			url,
+		Liferay.Util.openWindow(
 			{
-				body: formData,
-				method: 'POST'
-			}
-		).then(
-			response => response.text()
-		).then(
-			html => {
-				Liferay.Util.openWindow(
-					{
-						dialog: {
-							bodyContent: html,
-							destroyOnHide: true
-						},
-						id: 'segment-members-dialog',
-						title: sub(Liferay.Language.get('x-members'), [this.props.values.name])
-					}
-				);
-			}
-		).catch(
-			() => {
-				Liferay.Util.openToast(
-					{
-						message: Liferay.Language.get('an-unexpected-error-occurred'),
-						title: Liferay.Language.get('error'),
-						type: 'danger'
-					}
-				);
+				dialog: {
+					bodyContent: `<iframe frameborder="0" width="100%" height="100%" src="${url}"></iframe>`,
+					destroyOnHide: true
+				},
+				id: 'segment-members-dialog',
+				title: sub(Liferay.Language.get('x-members'), [this.props.values.name])
 			}
 		);
 	}

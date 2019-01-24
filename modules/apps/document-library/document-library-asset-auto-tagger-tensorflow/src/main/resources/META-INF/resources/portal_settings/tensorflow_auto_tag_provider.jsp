@@ -20,6 +20,10 @@
 TensorFlowImageAssetAutoTagProviderCompanyConfiguration tensorFlowImageAssetAutoTagProviderCompanyConfiguration = (TensorFlowImageAssetAutoTagProviderCompanyConfiguration)request.getAttribute(TensorFlowImageAssetAutoTagProviderCompanyConfiguration.class.getName());
 %>
 
+<aui:alert closeable="<%= false %>" type="info">
+	<liferay-ui:message key="tensorflow-auto-tag-provider-configuration-description" />
+</aui:alert>
+
 <aui:input name="<%= ActionRequest.ACTION_NAME %>" type="hidden" value="/portal_settings/document_library_asset_auto_tagger_tensorflow" />
 
 <aui:input label="enable-tensorflow-image-auto-tagging-on-this-instance" name='<%= PortalSettingsTensorflowAssetAutoTagProviderConstants.FORM_PARAMETER_NAMESPACE + "enabled" %>' type="checkbox" value="<%= tensorFlowImageAssetAutoTagProviderCompanyConfiguration.enabled() %>" />

@@ -1,0 +1,70 @@
+{namespace com.liferay.layout.admin.web.FloatingToolbarBackgroundImagePanel}
+
+/**
+ * FloatingToolbarBackgroundImagePanel
+ */
+{template .render}
+	{@param item: [
+		config: [
+			backgroundImage: string
+		]
+	]}
+	{@param? _handleClearButtonClick: any}
+	{@param? _handleSelectButtonClick: any}
+
+	<div class="floating-toolbar-background-image-panel">
+		<div class="form-group">
+			<label for="floatingToolbarBackgroundImagePanelOption">
+				{msg desc=""}background-image{/msg}
+			</label>
+
+			{let $inputPlaceholder kind="text"}
+				{msg desc=""}none{/msg}
+			{/let}
+
+			{let $inputValue kind="text"}
+				{if $item.config and $item.config.backgroundImage}
+					{$item.config.backgroundImage}
+				{/if}
+			{/let}
+
+			<input
+				class="form-control form-control-sm"
+				id="floatingToolbarBackgroundImagePanelOption"
+				placeholder="{$inputPlaceholder}"
+				readonly
+				title="{$inputValue}"
+				type="text"
+				value="{$inputValue}"
+			>
+		</div>
+
+		<div class="btn-group">
+			<div class="btn-group-item">
+				<button
+					class="btn btn-secondary btn-sm"
+					data-onclick="{$_handleSelectButtonClick}"
+					type="button"
+				>
+					{msg desc=""}select{/msg}
+				</button>
+			</div>
+
+			<div class="btn-group-item">
+				{let $clearButtonAttributes kind="attributes"}
+					class="btn btn-secondary btn-sm"
+					data-onclick="{$_handleClearButtonClick}"
+					type="button"
+
+					{if (not $item.config) or (not $item.config.backgroundImage)}
+						disabled
+					{/if}
+				{/let}
+
+				<button {$clearButtonAttributes}>
+					{msg desc=""}clear{/msg}
+				</button>
+			</div>
+		</div>
+	</div>
+{/template}

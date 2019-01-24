@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.lists.web.internal.template;
 
+import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.dynamic.data.lists.constants.DDLConstants;
 import com.liferay.dynamic.data.lists.constants.DDLPortletKeys;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
@@ -70,7 +71,8 @@ public class DDLDisplayTemplateHandler extends BaseDDMTemplateHandler {
 		Map<String, Object> contextObjects = new HashMap<>(1);
 
 		contextObjects.put(
-			"ddlDisplayTemplateHelper", new DDLDisplayTemplateHelper());
+			"ddlDisplayTemplateHelper",
+			new DDLDisplayTemplateHelper(_dlurlHelper));
 
 		return contextObjects;
 	}
@@ -193,6 +195,9 @@ public class DDLDisplayTemplateHandler extends BaseDDMTemplateHandler {
 	protected TemplateVariableCodeHandler getTemplateVariableCodeHandler() {
 		return _templateVariableCodeHandler;
 	}
+
+	@Reference
+	private DLURLHelper _dlurlHelper;
 
 	@Reference
 	private Portal _portal;

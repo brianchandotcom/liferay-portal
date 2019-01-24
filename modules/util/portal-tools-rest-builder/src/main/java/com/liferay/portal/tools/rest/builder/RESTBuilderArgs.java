@@ -19,16 +19,49 @@ package com.liferay.portal.tools.rest.builder;
  */
 public class RESTBuilderArgs {
 
+	public static final String API_DIR_NAME = "../rest-api/src/main/java";
+
+	public static final String API_PACKAGE_PATH = "com.example.sample";
+
+	public static final String AUTHOR = "John Doe";
+
 	public static final String INPUT_FILE_NAME = "rest.yaml";
+
+	public String getApiDirName() {
+		return _apiDirName;
+	}
+
+	public String getApiPackagePath() {
+		return _apiPackagePath;
+	}
+
+	public String getAuthor() {
+		return _author;
+	}
 
 	public String getInputFileName() {
 		return _inputFileName;
+	}
+
+	public void setApiDirName(String apiDirName) {
+		_apiDirName = apiDirName;
+	}
+
+	public void setApiPackagePath(String apiPackagePath) {
+		_apiPackagePath = apiPackagePath;
+	}
+
+	public void setAuthor(String author) {
+		_author = author;
 	}
 
 	public void setInputFileName(String inputFileName) {
 		_inputFileName = inputFileName;
 	}
 
+	private String _apiDirName = API_DIR_NAME;
+	private String _apiPackagePath = API_PACKAGE_PATH;
+	private String _author = AUTHOR;
 	private String _inputFileName = INPUT_FILE_NAME;
 
 }

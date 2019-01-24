@@ -1,5 +1,2 @@
-api-dir: ../sample-api/src/main/java
-api-package-path: com.example.sample
-author: John Doe
 entities:
   - name: Foo

@@ -38,6 +38,18 @@ public class BuildRESTTask extends Task {
 		}
 	}
 
+	public void setApiDirName(String apiDirName) {
+		_restBuilderArgs.setApiDirName(apiDirName);
+	}
+
+	public void setApiPackagePath(String apiPackagePath) {
+		_restBuilderArgs.setApiPackagePath(apiPackagePath);
+	}
+
+	public void setAuthor(String author) {
+		_restBuilderArgs.setAuthor(author);
+	}
+
 	public void setInputFileName(String inputFileName) {
 		_restBuilderArgs.setInputFileName(inputFileName);
 	}

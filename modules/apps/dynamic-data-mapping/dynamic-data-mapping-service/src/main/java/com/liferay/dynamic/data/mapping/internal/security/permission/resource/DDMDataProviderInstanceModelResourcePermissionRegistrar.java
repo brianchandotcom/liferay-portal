@@ -19,10 +19,13 @@ import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance;
 import com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceLocalService;
 import com.liferay.exportimport.kernel.staging.permission.StagingPermission;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.StagedModelPermissionLogic;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 
 import java.util.Dictionary;
@@ -56,9 +59,35 @@ public class DDMDataProviderInstanceModelResourcePermissionRegistrar {
 					getDDMDataProviderInstance,
 				_portletResourcePermission,
 				(modelResourcePermission, consumer) -> consumer.accept(
-					new StagedModelPermissionLogic<>(
+					new StagedModelPermissionLogic<DDMDataProviderInstance>(
 						_stagingPermission, DDMPortletKeys.DYNAMIC_DATA_MAPPING,
-						DDMDataProviderInstance::getDataProviderInstanceId))),
+						DDMDataProviderInstance::getDataProviderInstanceId) {
+
+						@Override
+						public Boolean contains(
+							PermissionChecker permissionChecker, String name,
+							DDMDataProviderInstance ddmDataProviderInstance,
+							String actionId) {
+
+							long groupId = ddmDataProviderInstance.getGroupId();
+
+							Group group = _groupLocalService.fetchGroup(
+								groupId);
+
+							if ((group != null) &&
+								!group.isStagedPortlet(
+									DDMPortletKeys.
+										DYNAMIC_DATA_MAPPING_FORM_ADMIN)) {
+
+								return null;
+							}
+
+							return super.contains(
+								permissionChecker, name,
+								ddmDataProviderInstance, actionId);
+						}
+
+					})),
 			properties);
 	}
 
@@ -70,6 +99,9 @@ public class DDMDataProviderInstanceModelResourcePermissionRegistrar {
 	@Reference
 	private DDMDataProviderInstanceLocalService
 		_ddmDataProviderInstanceLocalService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference(target = "(resource.name=" + DDMConstants.RESOURCE_NAME + ")")
 	private PortletResourcePermission _portletResourcePermission;

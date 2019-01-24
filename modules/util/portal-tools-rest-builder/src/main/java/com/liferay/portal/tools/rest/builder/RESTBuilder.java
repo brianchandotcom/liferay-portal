@@ -16,10 +16,12 @@ package com.liferay.portal.tools.rest.builder;
 
 import com.liferay.portal.tools.ArgumentsUtil;
 import com.liferay.portal.tools.rest.builder.internal.util.FileUtil;
+import com.liferay.portal.tools.rest.builder.internal.yaml.Components;
+import com.liferay.portal.tools.rest.builder.internal.yaml.Configuration;
+import com.liferay.portal.tools.rest.builder.internal.yaml.Schema;
 
 import freemarker.cache.ClassTemplateLoader;
 
-import freemarker.template.Configuration;
 import freemarker.template.DefaultObjectWrapperBuilder;
 import freemarker.template.Template;
 
@@ -30,13 +32,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.yaml.snakeyaml.Yaml;
+import org.yaml.snakeyaml.constructor.Constructor;
+import org.yaml.snakeyaml.introspector.PropertyUtils;
+import org.yaml.snakeyaml.representer.Representer;
 
 /**
  * @author Peter Shin
@@ -64,81 +66,83 @@ public class RESTBuilder {
 			String inputFileName)
 		throws Exception {
 
-		List<Entity> entities = _getEntities(
-			apiDirName, apiPackagePath, author, inputFileName);
+		Configuration configuration = _getConfiguration(inputFileName);
 
-		for (Entity entity : entities) {
-			FileUtil.write(_getModelFile(entity), _getModelContent(entity));
+		if (configuration == null) {
+			return;
+		}
+
+		Components components = configuration.getComponents();
+
+		Map<String, Schema> schemas = components.getSchemas();
+
+		for (Map.Entry<String, Schema> entry : schemas.entrySet()) {
+			String name = entry.getKey();
+			Schema schema = entry.getValue();
+
+			File file = _getModelFile(apiDirName, apiPackagePath, name);
+			String content = _getModelContent(
+				apiPackagePath, author, name, schema);
+
+			FileUtil.write(file, content);
 		}
 	}
 
-	private List<Entity> _getEntities(
-		String apiDirName, String apiPackagePath, String author,
-		String inputFileName) {
-
+	private Configuration _getConfiguration(String inputFileName) {
 		File inputFile = new File(inputFileName);
 
 		try (InputStream inputStream = new FileInputStream(inputFile)) {
-			Yaml yaml = new Yaml();
+			Constructor constructor = new Constructor(Configuration.class);
 
-			Map<String, Object> yamlData = yaml.load(inputStream);
+			Representer representer = new Representer();
 
-			if (yamlData == null) {
-				return Collections.emptyList();
-			}
+			PropertyUtils propertyUtils = representer.getPropertyUtils();
 
-			List<Entity> entities = new ArrayList<>();
+			propertyUtils.setSkipMissingProperties(true);
 
-			for (Object object : (List)yamlData.get("entities")) {
-				Map<String, Object> map = (Map)object;
+			Yaml yaml = new Yaml(constructor, representer);
 
-				Entity entity = new Entity();
-
-				entity.setApiDir(apiDirName);
-				entity.setApiPackagePath(apiPackagePath);
-				entity.setAuthor(author);
-				entity.setName((String)map.get("name"));
-
-				entities.add(entity);
-			}
-
-			return entities;
+			return yaml.loadAs(inputStream, Configuration.class);
 		}
 		catch (FileNotFoundException fnfe) {
 			System.out.println(fnfe.getMessage());
 
-			return Collections.emptyList();
+			return null;
 		}
 		catch (IOException ioe) {
 			ioe.printStackTrace();
 
-			return Collections.emptyList();
+			return null;
 		}
 	}
 
-	private String _getModelContent(Entity entity) throws Exception {
+	private String _getModelContent(
+			String apiPackagePath, String author, String name, Schema schema)
+		throws Exception {
+
 		Map<String, Object> context = new HashMap<>();
 
-		context.put("entity", entity);
+		context.put("apiPackagePath", apiPackagePath);
+		context.put("author", author);
+		context.put("name", name);
+		context.put("schema", schema);
 
 		return _processTemplate(
 			"com/liferay/portal/tools/rest/builder/dependencies/model.ftl",
 			context);
 	}
 
-	private File _getModelFile(Entity entity) {
+	private File _getModelFile(
+		String apiDirName, String apiPackagePath, String name) {
+
 		StringBuilder sb = new StringBuilder();
 
-		sb.append(entity.getApiDir());
+		sb.append(apiDirName);
 		sb.append("/");
-
-		String apiPackagePath = entity.getApiPackagePath();
-
 		sb.append(apiPackagePath.replace('.', '/'));
-
 		sb.append("/");
 		sb.append("/model/");
-		sb.append(entity.getName());
+		sb.append(name);
 		sb.append("Model.java");
 
 		return new File(sb.toString());
@@ -147,15 +151,17 @@ public class RESTBuilder {
 	private String _processTemplate(String name, Map<String, Object> context)
 		throws Exception {
 
-		Configuration configuration = _configuration;
+		freemarker.template.Configuration configuration = _configuration;
 
 		if (configuration == null) {
-			_configuration = new Configuration(Configuration.getVersion());
+			_configuration = new freemarker.template.Configuration(
+				freemarker.template.Configuration.getVersion());
 
 			_configuration.setNumberFormat("computer");
 
 			DefaultObjectWrapperBuilder defaultObjectWrapperBuilder =
-				new DefaultObjectWrapperBuilder(Configuration.getVersion());
+				new DefaultObjectWrapperBuilder(
+					freemarker.template.Configuration.getVersion());
 
 			_configuration.setObjectWrapper(
 				defaultObjectWrapperBuilder.build());
@@ -180,6 +186,6 @@ public class RESTBuilder {
 		return content.replace("\r", "");
 	}
 
-	private static Configuration _configuration;
+	private static freemarker.template.Configuration _configuration;
 
 }

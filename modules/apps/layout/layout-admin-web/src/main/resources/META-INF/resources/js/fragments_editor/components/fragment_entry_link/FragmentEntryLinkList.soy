@@ -200,7 +200,7 @@
 		{/if}
 	{/let}
 
-	<section
+	{let $sectionAttributes kind="attributes"}
 		class="{$sectionClasses}"
 		data-drag-source-label="{msg desc=""}section{/msg}"
 		data-layout-section-id="{$rowId}"
@@ -210,7 +210,13 @@
 		data-onmouseover="{$_handleSectionHoverStart}"
 		key="{$key}"
 		tabindex="0"
-	>
+
+		{if $row.config and $row.config.backgroundColor}
+			style="background-color: {$row.config.backgroundColor};"
+		{/if}
+	{/let}
+
+	<section {$sectionAttributes}>
 		<nav class="fragments-editor__topper tbar">
 			<ul class="tbar-nav">
 				<li class="fragments-editor__drag-handler fragments-editor__topper__item fragments-editor__topper__title tbar-item tbar-item-expand">

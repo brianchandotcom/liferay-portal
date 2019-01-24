@@ -51,7 +51,6 @@ import org.jboss.arquillian.container.spi.client.protocol.metadata.ProtocolMetaD
 import org.jboss.arquillian.container.spi.context.annotation.ContainerScoped;
 import org.jboss.arquillian.core.api.InstanceProducer;
 import org.jboss.arquillian.core.api.annotation.Inject;
-import org.jboss.osgi.spi.BundleInfo;
 import org.jboss.osgi.vfs.AbstractVFS;
 import org.jboss.osgi.vfs.VFSUtils;
 import org.jboss.osgi.vfs.VirtualFile;
@@ -364,13 +363,7 @@ public class LiferayRemoteDeployableContainer
 			String location, VirtualFile virtualFile)
 		throws Exception {
 
-		BundleInfo info = BundleInfo.createBundleInfo(virtualFile);
-
-		VirtualFile root = info.getRoot();
-
-		URL streamURL = root.getStreamURL();
-
-		return _installBundle(location, streamURL);
+		return _installBundle(location, virtualFile.getStreamURL());
 	}
 
 	private VirtualFile _toVirtualFile(Archive<?> archive) throws IOException {

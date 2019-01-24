@@ -33,7 +33,7 @@
 		margin-top: $fragmentsEditorSpacing;
 		padding: $fragmentsEditorSpacing * 2;
 
-		.form-group {
+		.form-group:last-child {
 			margin: 0;
 		}
 

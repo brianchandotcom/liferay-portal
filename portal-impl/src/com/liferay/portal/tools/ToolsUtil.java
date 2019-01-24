@@ -457,9 +457,9 @@ public class ToolsUtil {
 
 		String jalopyIgnoreStart = "/** Jalopy ignore start */";
 
-		String jalopyIgnoreEnd = "/** Jalopy ignore end */\n";
-
 		int start = content.indexOf(jalopyIgnoreStart);
+
+		String jalopyIgnoreEnd = "/** Jalopy ignore end */\n";
 
 		String jalopyIgnoreBody = null;
 

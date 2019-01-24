@@ -155,6 +155,30 @@ public class FragmentEntryProcessorEditableTest {
 	}
 
 	@Test
+	public void testFragmentEntryProcessorEditableWithMatchedDefaultSegmentAndDefaultLanguage()
+		throws Exception {
+
+		FragmentEntry fragmentEntry = _createFragmentEntry(
+			"fragment_entry.html");
+
+		FragmentEntryLink fragmentEntryLink =
+			FragmentEntryLinkLocalServiceUtil.createFragmentEntryLink(0);
+
+		fragmentEntryLink.setHtml(fragmentEntry.getHtml());
+
+		fragmentEntryLink.setEditableValues(
+			_getJsonFileAsString(
+				"fragment_entry_link_editable_values_matching_default_" +
+					"segment_and_default_language.json"));
+
+		Assert.assertEquals(
+			_processedHTML,
+			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
+				fragmentEntryLink, FragmentEntryLinkConstants.EDIT,
+				LocaleUtil.CHINESE, Arrays.asList(2L, 0L)));
+	}
+
+	@Test
 	public void testFragmentEntryProcessorEditableWithMatchedLanguage()
 		throws Exception {
 

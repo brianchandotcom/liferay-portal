@@ -15,7 +15,7 @@
 package com.liferay.dynamic.data.lists.web.internal.template;
 
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
-import com.liferay.document.library.kernel.util.DLUtil;
+import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.service.DDLRecordLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.model.Value;
@@ -43,7 +43,11 @@ import java.util.Locale;
  */
 public class DDLDisplayTemplateHelper {
 
-	public static String getDocumentLibraryPreviewURL(
+	public DDLDisplayTemplateHelper(DLURLHelper dlurlHelper) {
+		_dlurlHelper = dlurlHelper;
+	}
+
+	public String getDocumentLibraryPreviewURL(
 			DDMFormFieldValue recordFieldValue, Locale locale)
 		throws PortalException {
 
@@ -63,12 +67,12 @@ public class DDLDisplayTemplateHelper {
 		FileEntry fileEntry =
 			DLAppLocalServiceUtil.getFileEntryByUuidAndGroupId(uuid, groupId);
 
-		return DLUtil.getPreviewURL(
+		return _dlurlHelper.getPreviewURL(
 			fileEntry, fileEntry.getFileVersion(), null, StringPool.BLANK,
 			false, true);
 	}
 
-	public static String getHTMLContent(
+	public String getHTMLContent(
 		DDMFormFieldValue recordFieldValue, Locale locale) {
 
 		Value value = recordFieldValue.getValue();
@@ -82,7 +86,7 @@ public class DDLDisplayTemplateHelper {
 		return HtmlUtil.escapeJS(valueString);
 	}
 
-	public static String getLayoutFriendlyURL(
+	public String getLayoutFriendlyURL(
 			DDMFormFieldValue recordFieldValue, ThemeDisplay themeDisplay)
 		throws PortalException {
 
@@ -106,13 +110,11 @@ public class DDLDisplayTemplateHelper {
 		return PortalUtil.getLayoutFriendlyURL(layout, themeDisplay);
 	}
 
-	public static List<DDLRecord> getRecords(long recordSetId)
-		throws PortalException {
-
+	public List<DDLRecord> getRecords(long recordSetId) throws PortalException {
 		return DDLRecordLocalServiceUtil.getRecords(recordSetId);
 	}
 
-	public static List<DDLRecord> getRecords(
+	public List<DDLRecord> getRecords(
 			long recordSetId, int status, int start, int end,
 			OrderByComparator<DDLRecord> orderByComparator)
 		throws PortalException {
@@ -121,7 +123,7 @@ public class DDLDisplayTemplateHelper {
 			recordSetId, status, start, end, orderByComparator);
 	}
 
-	public static String renderRecordFieldValue(
+	public String renderRecordFieldValue(
 			DDMFormFieldValue recordFieldValue, Locale locale)
 		throws PortalException {
 
@@ -131,5 +133,7 @@ public class DDLDisplayTemplateHelper {
 
 		return ddmFormFieldValueRenderer.render(recordFieldValue, locale);
 	}
+
+	private final DLURLHelper _dlurlHelper;
 
 }

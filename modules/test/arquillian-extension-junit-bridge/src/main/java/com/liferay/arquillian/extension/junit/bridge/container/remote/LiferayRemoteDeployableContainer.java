@@ -66,9 +66,9 @@ public class LiferayRemoteDeployableContainer
 		throws DeploymentException {
 
 		try {
-			BundleHandle bundleHandle = _installBundle(archive);
+			long bundleId = _installBundle(archive);
 
-			_deployedBundles.put(archive.getName(), bundleHandle);
+			_deployedBundles.put(archive.getName(), bundleId);
 		}
 		catch (Exception e) {
 			throw new DeploymentException(
@@ -132,14 +132,14 @@ public class LiferayRemoteDeployableContainer
 	public void startBundle(String symbolicName, String version)
 		throws Exception {
 
-		BundleHandle bundleHandle = _getBundle(symbolicName, version);
+		long bundleId = _getBundle(symbolicName, version);
 
-		if (bundleHandle == null) {
+		if (bundleId == 0) {
 			throw new IllegalStateException(
 				"Bundle '" + symbolicName + ":" + version + "' was not found");
 		}
 
-		_frameworkMBean.startBundle(bundleHandle.getBundleId());
+		_frameworkMBean.startBundle(bundleId);
 	}
 
 	@Override
@@ -148,37 +148,16 @@ public class LiferayRemoteDeployableContainer
 
 	@Override
 	public void undeploy(Archive<?> archive) throws DeploymentException {
-		BundleHandle bundleHandle = _deployedBundles.remove(archive.getName());
+		long bundleId = _deployedBundles.remove(archive.getName());
 
-		if (bundleHandle == null) {
+		if (bundleId == 0) {
 			return;
 		}
-
-		String bundleState = null;
 
 		try {
-			long bundleId = bundleHandle.getBundleId();
-
-			CompositeData compositeData = _bundleStateMBean.getBundle(bundleId);
-
-			if (compositeData != null) {
-				bundleState = (String)compositeData.get(BundleStateMBean.STATE);
-			}
+			_frameworkMBean.uninstallBundle(bundleId);
 		}
 		catch (IOException ioe) {
-			return;
-		}
-
-		if ((bundleState != null) &&
-			!bundleState.equals(BundleStateMBean.UNINSTALLED)) {
-
-			try {
-				long bundleId = bundleHandle.getBundleId();
-
-				_frameworkMBean.uninstallBundle(bundleId);
-			}
-			catch (IOException ioe) {
-			}
 		}
 	}
 
@@ -186,7 +165,7 @@ public class LiferayRemoteDeployableContainer
 	public void undeploy(Descriptor desc) throws DeploymentException {
 	}
 
-	private BundleHandle _getBundle(String symbolicName, String version)
+	private long _getBundle(String symbolicName, String version)
 		throws Exception {
 
 		TabularData listBundles = _bundleStateMBean.listBundles();
@@ -207,13 +186,11 @@ public class LiferayRemoteDeployableContainer
 			if (symbolicName.equals(mBeanSymbolicName) &&
 				version.equals(mBeanVersion)) {
 
-				return new BundleHandle(
-					(Long)bundleType.get(BundleStateMBean.IDENTIFIER),
-					symbolicName);
+				return (Long)bundleType.get(BundleStateMBean.IDENTIFIER);
 			}
 		}
 
-		return null;
+		return 0;
 	}
 
 	private <T> T _getMBeanProxy(
@@ -248,7 +225,7 @@ public class LiferayRemoteDeployableContainer
 		return connector.getMBeanServerConnection();
 	}
 
-	private BundleHandle _installBundle(Archive<?> archive) throws Exception {
+	private long _installBundle(Archive<?> archive) throws Exception {
 		Path tempFilePath = Files.createTempFile(null, ".jar");
 
 		ZipExporter exporter = archive.as(ZipExporter.class);
@@ -263,12 +240,8 @@ public class LiferayRemoteDeployableContainer
 		URL url = uri.toURL();
 
 		try {
-			long bundleId = _frameworkMBean.installBundleFromURL(
+			return _frameworkMBean.installBundleFromURL(
 				archive.getName(), url.toExternalForm());
-
-			String symbolicName = _bundleStateMBean.getSymbolicName(bundleId);
-
-			return new BundleHandle(bundleId, symbolicName);
 		}
 		finally {
 			Files.delete(tempFilePath);
@@ -304,32 +277,7 @@ public class LiferayRemoteDeployableContainer
 	}
 
 	private BundleStateMBean _bundleStateMBean;
-	private final Map<String, BundleHandle> _deployedBundles = new HashMap<>();
+	private final Map<String, Long> _deployedBundles = new HashMap<>();
 	private FrameworkMBean _frameworkMBean;
-
-	private class BundleHandle {
-
-		public BundleHandle(long bundleId, String symbolicName) {
-			_bundleId = bundleId;
-			_symbolicName = symbolicName;
-		}
-
-		public long getBundleId() {
-			return _bundleId;
-		}
-
-		public String getSymbolicName() {
-			return _symbolicName;
-		}
-
-		@Override
-		public String toString() {
-			return "[" + _bundleId + "]" + _symbolicName;
-		}
-
-		private final long _bundleId;
-		private final String _symbolicName;
-
-	}
 
 }

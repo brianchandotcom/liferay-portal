@@ -937,7 +937,7 @@ definition {
 			portlet = "Web Content"
 		);
 
-		Workflow.configureWorkflowViaFolderInfo(workflowDefinition = "Single Approver");
+		Workflow.configureWCWorkflowViaFolderInfo(workflowDefinition = "Single Approver");
 
 		JSONRole.addSiteRole(roleKey = "Staging Admin", roleTitle = "Staging Admin");
 

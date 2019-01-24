@@ -268,7 +268,26 @@ definition {
 		);
 	}
 
-	macro configureWorkflowViaFolderInfo {
+	macro configureWCWorkflowViaFolderInfo {
+		Click(locator1 = "Icon#INFO");
+
+		Click(
+			locator1 = "Icon#VERTICAL_ELLIPSIS_BUTTON"
+		);
+
+		MenuItem.click(
+			menuItem = "${menuItem}"
+		);
+
+		Select(
+			locator1 = "AssetWorkflow#ALL_STRUCTURES_WORKFLOW_SELECT",
+			value1 = "${workflowDefinition}"
+		);
+
+		PortletEntry.save();
+	}
+
+	macro configureDMWorkflowViaFolderInfo {
 		Click(locator1 = "Icon#INFO");
 
 		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Edit");
@@ -598,7 +617,7 @@ definition {
 			portlet = "Web Content"
 		);
 
-		Workflow.configureWorkflowViaFolderInfo(workflowDefinition = "No Workflow");
+		Workflow.configureWCWorkflowViaFolderInfo(workflowDefinition = "No Workflow");
 	}
 
 	macro tearDownSpecificWorkflowDefinition {

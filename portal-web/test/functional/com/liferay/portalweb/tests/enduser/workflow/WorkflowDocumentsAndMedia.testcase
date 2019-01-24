@@ -309,7 +309,7 @@ definition {
 			portlet = "Documents and Media"
 		);
 
-		Workflow.configureWorkflowViaFolderInfo(workflowDefinition = "Single Approver");
+		Workflow.configureDMWorkflowViaFolderInfo(workflowDefinition = "Single Approver");
 
 		DMFolder.addCP(
 			dmFolderDescription = "DM Folder Description",

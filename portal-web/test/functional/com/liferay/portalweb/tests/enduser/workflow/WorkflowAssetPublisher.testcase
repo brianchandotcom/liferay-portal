@@ -37,7 +37,7 @@ definition {
 			portlet = "Web Content"
 		);
 
-		Workflow.configureWorkflowViaFolderInfo(workflowDefinition = "Single Approver");
+		Workflow.configureWCWorkflowViaFolderInfo(workflowDefinition = "Single Approver");
 
 		ProductMenu.gotoPortlet(
 			category = "Build",

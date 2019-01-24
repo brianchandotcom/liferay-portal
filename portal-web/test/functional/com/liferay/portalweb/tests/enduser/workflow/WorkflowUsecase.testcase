@@ -644,7 +644,7 @@ definition {
 			portlet = "Web Content"
 		);
 
-		Workflow.configureWorkflowViaFolderInfo(
+		Workflow.configureWCWorkflowViaFolderInfo(
 			workflowDefinition = "Category Specific"
 		);
 
@@ -1198,7 +1198,7 @@ definition {
 			portlet = "Web Content"
 		);
 
-		Workflow.configureWorkflowViaFolderInfo(workflowDefinition = "Single Approver");
+		Workflow.configureWCWorkflowViaFolderInfo(workflowDefinition = "Single Approver");
 
 		for (var number : list "1,2,3") {
 			Navigator.openURL();
@@ -1294,7 +1294,7 @@ definition {
 			portlet = "Web Content"
 		);
 
-		Workflow.configureWorkflowViaFolderInfo(workflowDefinition = "Single Approver");
+		Workflow.configureWCWorkflowViaFolderInfo(workflowDefinition = "Single Approver");
 
 		Navigator.openURL();
 
@@ -1622,7 +1622,7 @@ definition {
 			portlet = "Web Content"
 		);
 
-		Workflow.configureWorkflowViaFolderInfo(workflowDefinition = "Single Approver");
+		Workflow.configureWCWorkflowViaFolderInfo(workflowDefinition = "Single Approver");
 
 		Navigator.openURL();
 

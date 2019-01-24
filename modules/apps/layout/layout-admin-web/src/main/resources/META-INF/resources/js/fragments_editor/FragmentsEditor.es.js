@@ -185,17 +185,6 @@ FragmentsEditor.STATE = Object.assign(
 		getAssetDisplayContributorsURL: Config.string(),
 
 		/**
-		 * Image selector url
-		 * @default undefined
-		 * @instance
-		 * @memberOf FragmentsEditor
-		 * @review
-		 * @type {!string}
-		 */
-
-		imageSelectorURL: Config.string().required(),
-
-		/**
 		 * URL for getting the list of mapping fields
 		 * @default null
 		 * @instance

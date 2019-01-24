@@ -234,6 +234,16 @@ const INITIAL_STATE = {
 		.value(''),
 
 	/**
+	 * Image selector url
+	 * @default undefined
+	 * @review
+	 * @type {string}
+	 */
+	imageSelectorURL: Config
+		.string()
+		.value(''),
+
+	/**
 	 * Currently selected language id.
 	 * @default ''
 	 * @review

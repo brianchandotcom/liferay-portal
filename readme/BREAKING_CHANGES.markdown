@@ -240,6 +240,33 @@ chance of package version lock down.
 
 ---------------------------------------
 
+### Switch to use JDK Function and Supplier
+- **Date:** 2019-Jan-08
+- **JIRA Ticket:** [LPS-88911](https://issues.liferay.com/browse/LPS-88911)
+
+#### What changed?
+
+`Function` and `Supplier` in package `com.liferay.portal.kernel.util` were
+removed. Their usages were replaced with `java.util.function.Function` and
+`java.util.function.Supplier`.
+
+#### Who is affected?
+
+This affects anyone who used `Function` and `Supplier` in package
+`com.liferay.portal.kernel.util`. Any web page using FreeMarker with
+`com.liferay.portal.kernel.util.GetterUtil_IW` is also affected.
+
+#### How should I update my code?
+
+Use `java.util.function.Function` and `java.util.function.Supplier` directly.
+Update FreeMarker template uses `com.liferay.portal.kernel.util.GetterUtil_IW`.
+
+#### Why was this change made?
+
+It's one of several steps to clean up kernel provider interfaces to reduce the
+chance of package version lock down.
+
+---------------------------------------
 ### Remove HibernateConfigurationConverter and Converter
 - **Date:** 2019-Jan-07
 - **JIRA Ticket:** [LPS-88870](https://issues.liferay.com/browse/LPS-88870)

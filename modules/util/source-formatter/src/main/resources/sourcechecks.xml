@@ -28,7 +28,9 @@
 
 		<!-- Module checks -->
 
-		<check name="BNDBundleActivatorCheck" />
+		<check name="BNDBundleActivatorCheck">
+			<property name="enabled" value="false" />
+		</check>
 		<check name="BNDBundleInformationCheck" />
 		<check name="BNDDirectoryNameCheck" />
 		<check name="BNDExportsCheck" />

@@ -231,6 +231,7 @@ public class JournalServiceUpgrade implements UpgradeStepRegistrator {
 	private AssetDisplayPageEntryLocalService
 		_assetDisplayPageEntryLocalService;
 
+	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;
 
 	@Reference

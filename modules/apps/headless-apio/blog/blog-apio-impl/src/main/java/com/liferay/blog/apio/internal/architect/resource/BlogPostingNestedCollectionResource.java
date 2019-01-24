@@ -49,10 +49,9 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import io.vavr.control.Try;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 
-import java.util.Date;
+import java.time.LocalDateTime;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -166,8 +165,8 @@ public class BlogPostingNestedCollectionResource
 			LocalDateTime.now());
 
 		try {
-			return _blogsEntryService.addEntry(blogPosting.getHeadline(),
-				blogPosting.getAlternativeHeadline(),
+			return _blogsEntryService.addEntry(
+				blogPosting.getHeadline(), blogPosting.getAlternativeHeadline(),
 				blogPosting.getFriendlyURLPath(), blogPosting.getDescription(),
 				blogPosting.getArticleBody(), localDateTime.getMonthValue() - 1,
 				localDateTime.getDayOfMonth(), localDateTime.getYear(),
@@ -250,7 +249,7 @@ public class BlogPostingNestedCollectionResource
 		if (ListUtil.isNotEmpty(keywords)) {
 			serviceContext.setAssetTagNames(ArrayUtil.toStringArray(keywords));
 		}
-		
+
 		serviceContext.setScopeGroupId(groupId);
 
 		return serviceContext;

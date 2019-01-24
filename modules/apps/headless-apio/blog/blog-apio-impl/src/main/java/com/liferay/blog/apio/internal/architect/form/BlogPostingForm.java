@@ -18,10 +18,10 @@ import com.liferay.apio.architect.form.Form;
 import com.liferay.blog.apio.architect.model.BlogPosting;
 import com.liferay.category.apio.architect.identifier.CategoryIdentifier;
 import com.liferay.media.object.apio.architect.identifier.MediaObjectIdentifier;
-import com.liferay.person.apio.architect.identifier.PersonIdentifier;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;

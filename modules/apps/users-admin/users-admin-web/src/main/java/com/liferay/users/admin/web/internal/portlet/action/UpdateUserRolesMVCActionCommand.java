@@ -22,11 +22,16 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.membershippolicy.MembershipPolicyException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.UserService;
+import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.users.admin.constants.UsersAdminPortletKeys;
 import com.liferay.users.admin.kernel.util.UsersAdmin;
@@ -36,6 +41,9 @@ import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletConfig;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -108,6 +116,31 @@ public class UpdateUserRolesMVCActionCommand extends BaseMVCActionCommand {
 				user.getJobTitle(), user.getGroupIds(),
 				user.getOrganizationIds(), roleIds, userGroupRoles,
 				user.getUserGroupIds(), serviceContext);
+
+			PortletConfig portletConfig =
+				(PortletConfig)actionRequest.getAttribute(
+					JavaConstants.JAVAX_PORTLET_CONFIG);
+
+			String portletName = portletConfig.getPortletName();
+
+			if (portletName.equals(UsersAdminPortletKeys.USERS_ADMIN)) {
+				PermissionChecker permissionChecker =
+					PermissionCheckerFactoryUtil.create(
+						_userService.getCurrentUser());
+
+				boolean hasPermission = PortletPermissionUtil.contains(
+					permissionChecker, UsersAdminPortletKeys.USERS_ADMIN,
+					ActionKeys.ACCESS_IN_CONTROL_PANEL);
+
+				if (!hasPermission) {
+					HttpServletRequest request = _portal.getHttpServletRequest(
+						actionRequest);
+
+					sendRedirect(
+						actionRequest, actionResponse,
+						_portal.getHomeURL(request));
+				}
+			}
 		}
 		catch (Exception e) {
 			if (e instanceof NoSuchUserException ||

@@ -3,9 +3,21 @@
 exports[`Should render component 1`] = `
 <tr>
   <td
-    className="text-semi-bold"
+    className="table-cell-expand"
   >
-    Process test
+    <div
+      className="table-list-title"
+    >
+      <span
+        className="text-truncate-inline"
+      >
+        <span
+          title="Process test"
+        >
+          Process test
+        </span>
+      </span>
+    </div>
   </td>
   <td>
     10 items

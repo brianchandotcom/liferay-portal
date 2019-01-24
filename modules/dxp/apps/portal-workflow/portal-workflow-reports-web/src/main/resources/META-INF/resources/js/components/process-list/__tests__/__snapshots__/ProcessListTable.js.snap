@@ -54,9 +54,21 @@ exports[`Should render component 1`] = `
     <tbody>
       <tr>
         <td
-          className="text-semi-bold"
+          className="table-cell-expand"
         >
-          test
+          <div
+            className="table-list-title"
+          >
+            <span
+              className="text-truncate-inline"
+            >
+              <span
+                title="test"
+              >
+                test
+              </span>
+            </span>
+          </div>
         </td>
         <td>
           0 item

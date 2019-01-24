@@ -10,51 +10,61 @@ exports[`Should change page 1`] = `
     type="prev"
   />
   <ProcessListPaginationItem
+    active={false}
     key="process_list_pag_0"
     onChangePage={[Function]}
     page={0}
   />
   <ProcessListPaginationItem
+    active={false}
     key="process_list_pag_1"
     onChangePage={[Function]}
     page={1}
   />
   <ProcessListPaginationItem
+    active={true}
     key="process_list_pag_2"
     onChangePage={[Function]}
     page={2}
   />
   <ProcessListPaginationItem
+    active={false}
     key="process_list_pag_3"
     onChangePage={[Function]}
     page={3}
   />
   <ProcessListPaginationItem
+    active={false}
     key="process_list_pag_4"
     onChangePage={[Function]}
     page={4}
   />
   <ProcessListPaginationItem
+    active={false}
     key="process_list_pag_5"
     onChangePage={[Function]}
     page={5}
   />
   <ProcessListPaginationItem
+    active={false}
     key="process_list_pag_6"
     onChangePage={[Function]}
     page={6}
   />
   <ProcessListPaginationItem
+    active={false}
     key="process_list_pag_7"
     onChangePage={[Function]}
     page={7}
   />
   <ProcessListPaginationItem
+    active={false}
     key="process_list_pag_8"
     onChangePage={[Function]}
     page={8}
   />
   <ProcessListPaginationItem
+    active={false}
     key="process_list_pag_9"
     onChangePage={[Function]}
     page={9}
@@ -72,7 +82,7 @@ exports[`Should render component 1`] = `
   className="pagination pull-right"
 >
   <li
-    className="page-item"
+    className="page-item "
     onClick={[Function]}
   >
     <a
@@ -97,7 +107,7 @@ exports[`Should render component 1`] = `
     </a>
   </li>
   <li
-    className="page-item"
+    className="page-item active"
     onClick={[Function]}
   >
     <a
@@ -108,7 +118,7 @@ exports[`Should render component 1`] = `
     </a>
   </li>
   <li
-    className="page-item"
+    className="page-item "
     onClick={[Function]}
   >
     <a
@@ -119,7 +129,7 @@ exports[`Should render component 1`] = `
     </a>
   </li>
   <li
-    className="page-item"
+    className="page-item "
     onClick={[Function]}
   >
     <a
@@ -130,7 +140,7 @@ exports[`Should render component 1`] = `
     </a>
   </li>
   <li
-    className="page-item"
+    className="page-item "
     onClick={[Function]}
   >
     <a
@@ -141,7 +151,7 @@ exports[`Should render component 1`] = `
     </a>
   </li>
   <li
-    className="page-item"
+    className="page-item "
     onClick={[Function]}
   >
     <a
@@ -152,7 +162,7 @@ exports[`Should render component 1`] = `
     </a>
   </li>
   <li
-    className="page-item"
+    className="page-item "
     onClick={[Function]}
   >
     <a
@@ -163,7 +173,7 @@ exports[`Should render component 1`] = `
     </a>
   </li>
   <li
-    className="page-item"
+    className="page-item "
     onClick={[Function]}
   >
     <a
@@ -174,7 +184,7 @@ exports[`Should render component 1`] = `
     </a>
   </li>
   <li
-    className="page-item"
+    className="page-item "
     onClick={[Function]}
   >
     <a
@@ -185,7 +195,7 @@ exports[`Should render component 1`] = `
     </a>
   </li>
   <li
-    className="page-item"
+    className="page-item "
     onClick={[Function]}
   >
     <a
@@ -196,7 +206,7 @@ exports[`Should render component 1`] = `
     </a>
   </li>
   <li
-    className="page-item"
+    className="page-item "
     onClick={[Function]}
   >
     <a
@@ -207,7 +217,7 @@ exports[`Should render component 1`] = `
     </a>
   </li>
   <li
-    className="page-item"
+    className="page-item "
     onClick={[Function]}
   >
     <a

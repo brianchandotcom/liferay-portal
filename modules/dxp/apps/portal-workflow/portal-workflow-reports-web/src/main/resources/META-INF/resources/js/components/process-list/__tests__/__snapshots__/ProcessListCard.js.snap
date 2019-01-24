@@ -2,20 +2,252 @@
 
 exports[`Should render component 1`] = `
 <div>
-  <div
-    className="sheet taglib-empty-result-message"
+  <nav
+    className="management-bar management-bar-light navbar navbar-expand-md"
   >
     <div
-      className="taglib-empty-result-message-header"
-    />
-    <div
-      className="sheet-text text-center"
+      className="container-fluid container-fluid-max-xl"
     >
-       
-      There are no process.
-       
+      <div
+        className="navbar-form navbar-form-autofit"
+      >
+        <form
+          onSubmit={[Function]}
+          role="search"
+        >
+          <div
+            className="input-group"
+          >
+            <div
+              className="input-group-item"
+            >
+              <input
+                className="form-control input-group-inset input-group-inset-after"
+                disabled={true}
+                onChange={[Function]}
+                placeholder="Search for..."
+                type="text"
+                value=""
+              />
+              <span
+                className="input-group-inset-item input-group-inset-item-after"
+              >
+                <button
+                  className="btn btn-unstyled"
+                  disabled={true}
+                  type="submit"
+                >
+                  <svg
+                    className="lexicon-icon lexicon-icon-search"
+                    focusable="false"
+                    role="presentation"
+                  >
+                    <use
+                      href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#search"
+                    />
+                  </svg>
+                </button>
+              </span>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </nav>
+  <div
+    className="container-fluid-1280"
+  >
+    <div
+      className="sheet taglib-empty-result-message"
+    >
+      <div
+        className="taglib-empty-search-result-message-header"
+      />
+      <h3
+        className="text-center"
+      >
+         
+        No current reports
+         
+      </h3>
+      <div
+        className="sheet-text text-center"
+      >
+        <p>
+           
+          Once there are active processes, reports will appear here.
+           
+        </p>
+      </div>
     </div>
   </div>
-  <div />
+</div>
+`;
+
+exports[`Should render component with 4 records 1`] = `
+<div>
+  <nav
+    className="management-bar management-bar-light navbar navbar-expand-md"
+  >
+    <div
+      className="container-fluid container-fluid-max-xl"
+    >
+      <div
+        className="navbar-form navbar-form-autofit"
+      >
+        <form
+          onSubmit={[Function]}
+          role="search"
+        >
+          <div
+            className="input-group"
+          >
+            <div
+              className="input-group-item"
+            >
+              <input
+                className="form-control input-group-inset input-group-inset-after"
+                disabled={true}
+                onChange={[Function]}
+                placeholder="Search for..."
+                type="text"
+                value=""
+              />
+              <span
+                className="input-group-inset-item input-group-inset-item-after"
+              >
+                <button
+                  className="btn btn-unstyled"
+                  disabled={true}
+                  type="submit"
+                >
+                  <svg
+                    className="lexicon-icon lexicon-icon-search"
+                    focusable="false"
+                    role="presentation"
+                  >
+                    <use
+                      href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#search"
+                    />
+                  </svg>
+                </button>
+              </span>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </nav>
+  <div
+    className="container-fluid-1280"
+  >
+    <div
+      className="sheet taglib-empty-result-message"
+    >
+      <div
+        className="taglib-empty-search-result-message-header"
+      />
+      <h3
+        className="text-center"
+      >
+         
+        No current reports
+         
+      </h3>
+      <div
+        className="sheet-text text-center"
+      >
+        <p>
+           
+          Once there are active processes, reports will appear here.
+           
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Should render component with 10 records 1`] = `
+<div>
+  <nav
+    className="management-bar management-bar-light navbar navbar-expand-md"
+  >
+    <div
+      className="container-fluid container-fluid-max-xl"
+    >
+      <div
+        className="navbar-form navbar-form-autofit"
+      >
+        <form
+          onSubmit={[Function]}
+          role="search"
+        >
+          <div
+            className="input-group"
+          >
+            <div
+              className="input-group-item"
+            >
+              <input
+                className="form-control input-group-inset input-group-inset-after"
+                disabled={true}
+                onChange={[Function]}
+                placeholder="Search for..."
+                type="text"
+                value=""
+              />
+              <span
+                className="input-group-inset-item input-group-inset-item-after"
+              >
+                <button
+                  className="btn btn-unstyled"
+                  disabled={true}
+                  type="submit"
+                >
+                  <svg
+                    className="lexicon-icon lexicon-icon-search"
+                    focusable="false"
+                    role="presentation"
+                  >
+                    <use
+                      href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#search"
+                    />
+                  </svg>
+                </button>
+              </span>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </nav>
+  <div
+    className="container-fluid-1280"
+  >
+    <div
+      className="sheet taglib-empty-result-message"
+    >
+      <div
+        className="taglib-empty-search-result-message-header"
+      />
+      <h3
+        className="text-center"
+      >
+         
+        No current reports
+         
+      </h3>
+      <div
+        className="sheet-text text-center"
+      >
+        <p>
+           
+          Once there are active processes, reports will appear here.
+           
+        </p>
+      </div>
+    </div>
+  </div>
 </div>
 `;

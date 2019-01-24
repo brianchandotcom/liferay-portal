@@ -487,29 +487,29 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 		@Override
 	</#if>
 
-	public Map<String, Function<${entity.name}, Object>> getAttributeGetters() {
-		return _attributeGetters;
+	public Map<String, Function<${entity.name}, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
 	}
 
 	<#if !serviceBuilder.isVersionLTE_7_1_0()>
 		@Override
 	</#if>
 
-	public Map<String, BiConsumer<${entity.name}, Object>> getAttributeSetters() {
-		return _attributeSetters;
+	public Map<String, BiConsumer<${entity.name}, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<${entity.name}, Object>> _attributeGetters;
-	private static final Map<String, BiConsumer<${entity.name}, Object>> _attributeSetters;
+	private static final Map<String, Function<${entity.name}, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<${entity.name}, Object>> _attributeSetterBiConsumers;
 
 	static {
-		Map<String, Function<${entity.name}, Object>> attributeGetters = new LinkedHashMap<String, Function<${entity.name}, Object>>();
-		Map<String, BiConsumer<${entity.name}, ?>> attributeSetters = new LinkedHashMap<String, BiConsumer<${entity.name}, ?>>();
+		Map<String, Function<${entity.name}, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<${entity.name}, Object>>();
+		Map<String, BiConsumer<${entity.name}, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<${entity.name}, ?>>();
 
 /** Jalopy ignore start */
 <#list entity.regularEntityColumns as entityColumn>
 	<#if serviceBuilder.isVersionLTE_7_1_0()>
-		attributeGetters.put(
+		attributeGetterFunctions.put(
 			"${entityColumn.name}",
 			new Function<${entity.name}, Object>() {
 
@@ -520,7 +520,7 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 
 			});
 	<#else>
-		attributeGetters.put("${entityColumn.name}", ${entity.name}::get${entityColumn.methodName});
+		attributeGetterFunctions.put("${entityColumn.name}", ${entity.name}::get${entityColumn.methodName});
 	</#if>
 	<#if entityColumn.isPrimitiveType()>
 		<#assign entityColumnType = serviceBuilder.getPrimitiveObj(entityColumn.type) />
@@ -528,7 +528,7 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 		<#assign entityColumnType = entityColumn.genericizedType />
 	</#if>
 	<#if serviceBuilder.isVersionLTE_7_1_0()>
-		attributeSetters.put(
+		attributeSetterBiConsumers.put(
 			"${entityColumn.name}",
 			new BiConsumer<${entity.name}, Object>() {
 
@@ -539,14 +539,14 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 
 			});
 	<#else>
-		attributeSetters.put("${entityColumn.name}", (BiConsumer<${entity.name}, ${entityColumnType}>)${entity.name}::set${entityColumn.methodName});
+		attributeSetterBiConsumers.put("${entityColumn.name}", (BiConsumer<${entity.name}, ${entityColumnType}>)${entity.name}::set${entityColumn.methodName});
 	</#if>
 </#list>
 
 /** Jalopy ignore end */
 
-		_attributeGetters = Collections.unmodifiableMap(attributeGetters);
-		_attributeSetters = Collections.unmodifiableMap((Map)attributeSetters);
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	<#if entity.localizedEntity??>

@@ -43,9 +43,9 @@ public interface BaseModel<T>
 	 */
 	public Object clone();
 
-	public Map<String, Function<T, Object>> getAttributeGetters();
+	public Map<String, Function<T, Object>> getAttributeGetterFunctions();
 
-	public Map<String, BiConsumer<T, Object>> getAttributeSetters();
+	public Map<String, BiConsumer<T, Object>> getAttributeSetterBiConsumers();
 
 	/**
 	 * Returns the expando bridge for this model instance.

@@ -74,13 +74,13 @@ public class ${entity.name}Wrapper
 		public Map<String, Object> getModelAttributes() {
 			Map<String, Object> attributes = new HashMap<String, Object>();
 
-			Map<String, Function<${entity.name}, Object>> attributeGetters = getAttributeGetters();
+			Map<String, Function<${entity.name}, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-			for (Map.Entry<String, Function<${entity.name}, Object>> entry : attributeGetters.entrySet()) {
+			for (Map.Entry<String, Function<${entity.name}, Object>> entry : attributeGetterFunctions.entrySet()) {
 				String attributeName = entry.getKey();
-				Function<${entity.name}, Object> attributeFunction = entry.getValue();
+				Function<${entity.name}, Object> attributeGetterFunction = entry.getValue();
 
-				attributes.put(attributeName, attributeFunction.apply(this));
+				attributes.put(attributeName, attributeGetterFunction.apply(this));
 			}
 
 			attributes.put("entityCacheEnabled", isEntityCacheEnabled());
@@ -91,13 +91,13 @@ public class ${entity.name}Wrapper
 
 		@Override
 		public void setModelAttributes(Map<String, Object> attributes) {
-			Map<String, BiConsumer<${entity.name}, Object>> attributeSetters = getAttributeSetters();
+			Map<String, BiConsumer<${entity.name}, Object>> attributeSetterBiConsumers = getAttributeSetterBiConsumers();
 
-			for (Map.Entry<String, BiConsumer<${entity.name}, Object>> entry : attributeSetters.entrySet()) {
+			for (Map.Entry<String, BiConsumer<${entity.name}, Object>> entry : attributeSetterBiConsumers.entrySet()) {
 				String attributeName = entry.getKey();
 				BiConsumer<${entity.name}, Object> attributeBiConsumer = entry.getValue();
 
-				attributeBiConsumer.accept(this, attributeSetters.get(attributeName));
+				attributeBiConsumer.accept(this, attributeSetterBiConsumers.get(attributeName));
 			}
 		}
 	</#if>

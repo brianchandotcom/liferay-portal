@@ -45,12 +45,12 @@ public abstract class BaseModelImpl<T> implements BaseModel<T> {
 	public abstract Object clone();
 
 	@Override
-	public Map<String, Function<T, Object>> getAttributeGetters() {
+	public Map<String, Function<T, Object>> getAttributeGetterFunctions() {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public Map<String, BiConsumer<T, Object>> getAttributeSetters() {
+	public Map<String, BiConsumer<T, Object>> getAttributeSetterBiConsumers() {
 		throw new UnsupportedOperationException();
 	}
 
@@ -63,16 +63,17 @@ public abstract class BaseModelImpl<T> implements BaseModel<T> {
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<>();
 
-		Map<String, Function<T, Object>> attributeGetters =
-			getAttributeGetters();
+		Map<String, Function<T, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
 		for (Map.Entry<String, Function<T, Object>> entry :
-				attributeGetters.entrySet()) {
+				attributeGetterFunctions.entrySet()) {
 
 			String attributeName = entry.getKey();
-			Function<T, Object> attributeFunction = entry.getValue();
+			Function<T, Object> attributeGetterFunction = entry.getValue();
 
-			attributes.put(attributeName, attributeFunction.apply((T)this));
+			attributes.put(
+				attributeName, attributeGetterFunction.apply((T)this));
 		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
@@ -128,14 +129,14 @@ public abstract class BaseModelImpl<T> implements BaseModel<T> {
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Map<String, BiConsumer<T, Object>> attributeSetters =
-			getAttributeSetters();
+		Map<String, BiConsumer<T, Object>> attributeSetterBiConsumers =
+			getAttributeSetterBiConsumers();
 
 		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
 			String attributeName = entry.getKey();
 
 			BiConsumer<T, Object> attributeSetterBiConsumer =
-				attributeSetters.get(attributeName);
+				attributeSetterBiConsumers.get(attributeName);
 
 			if (attributeSetterBiConsumer != null) {
 				attributeSetterBiConsumer.accept((T)this, entry.getValue());
@@ -160,22 +161,23 @@ public abstract class BaseModelImpl<T> implements BaseModel<T> {
 
 	@Override
 	public String toString() {
-		Map<String, Function<T, Object>> attributeGetters =
-			getAttributeGetters();
+		Map<String, Function<T, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler(4 * attributeGetters.size() + 2);
+		StringBundler sb = new StringBundler(
+			4 * attributeGetterFunctions.size() + 2);
 
 		sb.append("{");
 
 		for (Map.Entry<String, Function<T, Object>> entry :
-				attributeGetters.entrySet()) {
+				attributeGetterFunctions.entrySet()) {
 
 			String attributeName = entry.getKey();
-			Function<T, Object> attributeFunction = entry.getValue();
+			Function<T, Object> attributeGetterFunction = entry.getValue();
 
 			sb.append(attributeName);
 			sb.append("=");
-			sb.append(attributeFunction.apply((T)this));
+			sb.append(attributeGetterFunction.apply((T)this));
 			sb.append(", ");
 		}
 
@@ -195,25 +197,26 @@ public abstract class BaseModelImpl<T> implements BaseModel<T> {
 
 	@Override
 	public String toXmlString() {
-		Map<String, Function<T, Object>> attributeGetters =
-			getAttributeGetters();
+		Map<String, Function<T, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler(5 * attributeGetters.size() + 4);
+		StringBundler sb = new StringBundler(
+			5 * attributeGetterFunctions.size() + 4);
 
 		sb.append("<model><model-name>");
 		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
 		for (Map.Entry<String, Function<T, Object>> entry :
-				attributeGetters.entrySet()) {
+				attributeGetterFunctions.entrySet()) {
 
 			String attributeName = entry.getKey();
-			Function<T, Object> attributeFunction = entry.getValue();
+			Function<T, Object> attributeGetterFunction = entry.getValue();
 
 			sb.append("<column><column-name>");
 			sb.append(attributeName);
 			sb.append("</column-name><column-value><![CDATA[");
-			sb.append(attributeFunction.apply((T)this));
+			sb.append(attributeGetterFunction.apply((T)this));
 			sb.append("]]></column-value></column>");
 		}
 

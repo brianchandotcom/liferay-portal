@@ -27,7 +27,7 @@ import org.osgi.util.tracker.BundleTracker;
 /**
  * @author Tina Tian
  */
-public class ClassLoaderTracker implements BundleActivator {
+public class ClassLoaderTrackerBundleActivator implements BundleActivator {
 
 	@Override
 	public void start(BundleContext bundleContext) {

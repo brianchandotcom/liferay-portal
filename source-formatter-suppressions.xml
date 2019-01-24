@@ -150,7 +150,6 @@
 
 		<!-- Temporary suppressions for private repos and subrepos -->
 
-		<suppress checks="BNDBundleActivatorCheck" files="modules/private/.*" />
 		<suppress checks="BNDBundleCheck" files="modules/private/.*" />
 		<suppress checks="BNDSuiteCheck" files="modules/private/apps/lcs/.*" />
 		<suppress checks="GradleTestDependencyVersionCheck" files="modules/apps/apio-architect/.*" />
@@ -182,16 +181,5 @@
 		<suppress checks="XMLLookAndFeelCompatibilityVersionCheck" files="modules/private/apio-architect/.*" />
 		<suppress checks="XMLLookAndFeelCompatibilityVersionCheck" files="modules/private/commerce/.*" />
 		<suppress checks="XMLServiceReferenceCheck" files="modules/private/.*" />
-
-		<!-- Temporary suppressions for test subdirectory -->
-
-		<suppress checks="BNDBundleActivatorCheck" files="modules/apps/frontend-editor/frontend-editor-taglib/bnd\.bnd" />
-		<suppress checks="BNDBundleActivatorCheck" files="modules/apps/portal-remote/portal-remote-jaxrs-whiteboard-test/bnd\.bnd" />
-		<suppress checks="BNDBundleActivatorCheck" files="modules/apps/portal-remote/portal-remote-json-web-service-extender-test/bnd\.bnd" />
-		<suppress checks="BNDBundleActivatorCheck" files="modules/apps/portal-remote/portal-remote-rest-extender-test/bnd\.bnd" />
-		<suppress checks="BNDBundleActivatorCheck" files="modules/apps/portal-template/portal-template-soy-impl/bnd\.bnd" />
-		<suppress checks="BNDBundleActivatorCheck" files="modules/apps/static/portal/portal-classloader-tracker/bnd\.bnd" />
-		<suppress checks="BNDBundleActivatorCheck" files="modules/apps/static/portal/portal-log4j-extender/bnd\.bnd" />
-		<suppress checks="BNDBundleActivatorCheck" files="modules/core/registry-impl/bnd\.bnd" />
 	</source-check>
 </suppressions>

@@ -22,7 +22,7 @@ import org.osgi.framework.BundleContext;
 /**
  * @author Iván Zaera Avellón
  */
-public class EditorRendererBundleActivator implements BundleActivator {
+public class EditorTaglibBundleActivator implements BundleActivator {
 
 	@Override
 	public void start(BundleContext bundleContext) throws Exception {

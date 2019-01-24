@@ -39,7 +39,7 @@ import org.osgi.util.tracker.BundleTracker;
 /**
  * @author Shuyang Zhou
  */
-public class Log4jExtender implements BundleActivator {
+public class Log4jExtenderBundleActivator implements BundleActivator {
 
 	@Override
 	public void start(BundleContext bundleContext) throws Exception {
@@ -108,7 +108,8 @@ public class Log4jExtender implements BundleActivator {
 			uri.toURL(), LogManager.getLoggerRepository());
 	}
 
-	private static final Logger _logger = Logger.getLogger(Log4jExtender.class);
+	private static final Logger _logger = Logger.getLogger(
+		Log4jExtenderBundleActivator.class);
 
 	private volatile BundleTracker<Void> _tracker;
 

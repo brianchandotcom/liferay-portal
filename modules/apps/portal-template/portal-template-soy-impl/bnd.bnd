@@ -1,4 +1,4 @@
-Bundle-Activator: com.liferay.portal.template.soy.internal.activator.PortalTemplateSoyBundleActivator
+Bundle-Activator: com.liferay.portal.template.soy.internal.activator.PortalTemplateSoyImplBundleActivator
 Bundle-Name: Liferay Portal Template Soy Implementation
 Bundle-SymbolicName: com.liferay.portal.template.soy.impl
 Bundle-Version: 2.0.0

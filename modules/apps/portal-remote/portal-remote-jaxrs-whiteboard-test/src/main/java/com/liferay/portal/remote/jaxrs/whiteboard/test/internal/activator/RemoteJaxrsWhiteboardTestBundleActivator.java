@@ -30,7 +30,8 @@ import org.osgi.framework.ServiceRegistration;
 /**
  * @author Carlos Sierra Andrés
  */
-public class ServiceRegistrationBundleActivator implements BundleActivator {
+public class RemoteJaxrsWhiteboardTestBundleActivator
+	implements BundleActivator {
 
 	@Override
 	public void start(BundleContext context) throws Exception {

@@ -25,7 +25,7 @@ import org.osgi.util.tracker.ServiceTracker;
 /**
  * @author Máté Thurzó
  */
-public class PortalTemplateSoyBundleActivator implements BundleActivator {
+public class PortalTemplateSoyImplBundleActivator implements BundleActivator {
 
 	@Override
 	public void start(BundleContext bundleContext) throws Exception {

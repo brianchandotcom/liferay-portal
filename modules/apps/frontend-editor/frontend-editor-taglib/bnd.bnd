@@ -1,4 +1,4 @@
-Bundle-Activator: com.liferay.frontend.editor.taglib.internal.activator.EditorRendererBundleActivator
+Bundle-Activator: com.liferay.frontend.editor.taglib.internal.activator.EditorTaglibBundleActivator
 Bundle-Name: Liferay Frontend Editor Taglib
 Bundle-SymbolicName: com.liferay.frontend.editor.taglib
 Bundle-Version: 2.0.0

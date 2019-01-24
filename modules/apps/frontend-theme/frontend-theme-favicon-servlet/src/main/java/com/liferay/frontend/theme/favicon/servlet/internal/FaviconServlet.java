@@ -14,8 +14,6 @@
 
 package com.liferay.frontend.theme.favicon.servlet.internal;
 
-import com.liferay.portal.kernel.model.LayoutSet;
-import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -51,21 +49,14 @@ public class FaviconServlet extends HttpServlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		if (themeDisplay != null) {
-			response.sendRedirect(themeDisplay.getPathImage() + "/favicon.ico");
+		String contextPath = request.getAttribute("CURRENT_URL").toString();
+
+		if (!contextPath.equals("/o/favicon.ico")) {
+			contextPath = contextPath.replace("/favicon", "");
+
+			response.sendRedirect(contextPath + "/images/favicon.ico");
 
 			return;
-		}
-
-		LayoutSet layoutSet = (LayoutSet)request.getAttribute(
-			WebKeys.VIRTUAL_HOST_LAYOUT_SET);
-
-		if (layoutSet != null) {
-			Theme theme = layoutSet.getTheme();
-
-			response.sendRedirect(
-				theme.getContextPath() + theme.getImagesPath() +
-					"/favicon.ico");
 		}
 	}
 

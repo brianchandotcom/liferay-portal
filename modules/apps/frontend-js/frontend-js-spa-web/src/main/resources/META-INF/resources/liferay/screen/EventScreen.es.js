@@ -295,28 +295,6 @@ class EventScreen extends HtmlScreen {
 		}
 	}
 
-	/**
-	 * Adds the type attribute with 'image/x-icon' when the favicon is an icon,
-	 * this ensures that it works fine in IE 11.
-	 * @param {!Array<Element>} elements
-	 * @private
-	 * @return {CancellablePromise}
-	 */
-
-	runFaviconInElement_(elements) {
-		return super.runFaviconInElement_(elements).then(
-			() => {
-				elements.forEach(
-					element => {
-						if (!element.type && element.href.indexOf('.ico') !== -1) {
-							element.type = 'image/x-icon';
-						}
-					}
-				);
-			}
-		);
-	}
-
 }
 
 export default EventScreen;

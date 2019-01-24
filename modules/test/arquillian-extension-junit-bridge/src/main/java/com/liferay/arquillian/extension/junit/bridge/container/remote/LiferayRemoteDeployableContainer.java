@@ -120,8 +120,7 @@ public class LiferayRemoteDeployableContainer
 	@Override
 	public void start() throws LifecycleException {
 		try {
-			MBeanServerConnection mBeanServer = _getMBeanServerConnection(
-				30, TimeUnit.SECONDS);
+			MBeanServerConnection mBeanServer = _getMBeanServerConnection();
 
 			_mbeanServerConnectionInstance.set(mBeanServer);
 
@@ -133,8 +132,8 @@ public class LiferayRemoteDeployableContainer
 				mBeanServer, _bundleStateObjectName, BundleStateMBean.class, 30,
 				TimeUnit.SECONDS);
 		}
-		catch (TimeoutException te) {
-			throw new LifecycleException("JMX timeout", te);
+		catch (Exception e) {
+			throw new LifecycleException("Unable to start", e);
 		}
 	}
 
@@ -288,53 +287,6 @@ public class LiferayRemoteDeployableContainer
 			jmxServiceURL, env);
 
 		return connector.getMBeanServerConnection();
-	}
-
-	private MBeanServerConnection _getMBeanServerConnection(
-			long timeout, TimeUnit unit)
-		throws TimeoutException {
-
-		Callable<MBeanServerConnection> callable =
-			new Callable<MBeanServerConnection>() {
-
-				@Override
-				public MBeanServerConnection call() throws Exception {
-					Exception lastException = null;
-					long timeoutMillis =
-						System.currentTimeMillis() + unit.toMillis(timeout);
-
-					while (System.currentTimeMillis() < timeoutMillis) {
-						try {
-							return _getMBeanServerConnection();
-						}
-						catch (Exception e) {
-							lastException = e;
-							Thread.sleep(500);
-						}
-					}
-
-					TimeoutException timeoutException = new TimeoutException();
-
-					timeoutException.initCause(lastException);
-
-					throw timeoutException;
-				}
-
-			};
-
-		ExecutorService executor = Executors.newSingleThreadExecutor();
-
-		Future<MBeanServerConnection> future = executor.submit(callable);
-
-		try {
-			return future.get(timeout, unit);
-		}
-		catch (TimeoutException te) {
-			throw te;
-		}
-		catch (Exception e) {
-			throw new IllegalStateException(e);
-		}
 	}
 
 	private BundleHandle _installBundle(Archive<?> archive) throws Exception {

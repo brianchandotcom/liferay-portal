@@ -16,16 +16,17 @@ package com.liferay.arquillian.extension.junit.bridge.observer;
 
 import com.liferay.arquillian.extension.junit.bridge.container.remote.LiferayRemoteDeployableContainer;
 
+import java.util.jar.Attributes;
 import java.util.jar.Manifest;
 
 import org.jboss.arquillian.container.spi.client.deployment.DeploymentDescription;
 import org.jboss.arquillian.container.spi.event.container.AfterDeploy;
 import org.jboss.arquillian.core.api.annotation.Observes;
-import org.jboss.osgi.metadata.OSGiMetaData;
-import org.jboss.osgi.metadata.OSGiMetaDataBuilder;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.Node;
 import org.jboss.shrinkwrap.api.asset.Asset;
+
+import org.osgi.framework.Constants;
 
 /**
  * @author Matthew Tambara
@@ -33,7 +34,7 @@ import org.jboss.shrinkwrap.api.asset.Asset;
 public class DeploymentObserver {
 
 	public void autostartBundle(@Observes AfterDeploy event) throws Exception {
-		LiferayRemoteDeployableContainer container =
+		LiferayRemoteDeployableContainer liferayRemoteDeployableContainer =
 			(LiferayRemoteDeployableContainer)event.getDeployableContainer();
 
 		DeploymentDescription deploymentDescription = event.getDeployment();
@@ -46,11 +47,11 @@ public class DeploymentObserver {
 
 		Manifest manifest = new Manifest(asset.openStream());
 
-		OSGiMetaData metadata = OSGiMetaDataBuilder.load(manifest);
+		Attributes attributes = manifest.getMainAttributes();
 
-		container.startBundle(
-			metadata.getBundleSymbolicName(),
-			metadata.getBundleVersion().toString());
+		liferayRemoteDeployableContainer.startBundle(
+			attributes.getValue(Constants.BUNDLE_SYMBOLICNAME),
+			attributes.getValue(Constants.BUNDLE_VERSION));
 	}
 
 }

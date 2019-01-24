@@ -16,6 +16,7 @@ package com.liferay.portal.tools.java.parser;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.List;
 
@@ -100,10 +101,31 @@ public class JavaForStatement extends JavaLoopStatement {
 		indent += " ";
 
 		if (_conditionJavaExpression != null) {
-			append(
-				sb, _conditionJavaExpression, indent,
-				_getConditionJavaExpressionPrefix(prefix),
-				_getConditionJavaExpressionSuffix(suffix), maxLineLength);
+			String conditionJavaExpressionSuffix =
+				_getConditionJavaExpressionSuffix(suffix);
+
+			if (_initializationJavaTerms.isEmpty()) {
+				if (!appendSingleLine(
+						sb, _conditionJavaExpression, prefix + "for (; ",
+						conditionJavaExpressionSuffix, maxLineLength)) {
+
+					sb.append(prefix);
+					sb.append("for (;\n");
+
+					appendNewLine(
+						sb, _conditionJavaExpression, indent, "",
+						StringUtil.trimTrailing(conditionJavaExpressionSuffix),
+						maxLineLength);
+
+					sb.append("\n");
+					sb.append(indent);
+				}
+			}
+			else {
+				append(
+					sb, _conditionJavaExpression, indent, "",
+					conditionJavaExpressionSuffix, maxLineLength);
+			}
 		}
 
 		if (!_iteratorJavaExpressions.isEmpty()) {
@@ -124,14 +146,6 @@ public class JavaForStatement extends JavaLoopStatement {
 		}
 
 		return sb.toString();
-	}
-
-	private String _getConditionJavaExpressionPrefix(String prefix) {
-		if (_initializationJavaTerms.isEmpty()) {
-			return prefix + "for (; ";
-		}
-
-		return StringPool.BLANK;
 	}
 
 	private String _getConditionJavaExpressionSuffix(String suffix) {

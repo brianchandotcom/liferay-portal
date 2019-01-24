@@ -35,97 +35,15 @@ FragmentManagementToolbarDisplayContext fragmentManagementToolbarDisplayContext 
 			keyProperty="fragmentEntryId"
 			modelVar="fragmentEntry"
 		>
-			<portlet:renderURL var="editFragmentEntryURL">
-				<portlet:param name="mvcRenderCommandName" value="/fragment/edit_fragment_entry" />
-				<portlet:param name="redirect" value="<%= currentURL %>" />
-				<portlet:param name="fragmentCollectionId" value="<%= String.valueOf(fragmentEntry.getFragmentCollectionId()) %>" />
-				<portlet:param name="fragmentEntryId" value="<%= String.valueOf(fragmentEntry.getFragmentEntryId()) %>" />
-			</portlet:renderURL>
 
 			<%
 			row.setCssClass("entry-card lfr-asset-item " + row.getCssClass());
-
-			String imagePreviewURL = fragmentEntry.getImagePreviewURL(themeDisplay);
 			%>
 
 			<liferay-ui:search-container-column-text>
-				<c:choose>
-					<c:when test="<%= Validator.isNotNull(imagePreviewURL) %>">
-						<liferay-frontend:vertical-card
-							actionJsp="/fragment_entry_action.jsp"
-							actionJspServletContext="<%= application %>"
-							cssClass="entry-display-style"
-							imageCSSClass="aspect-ratio-bg-contain"
-							imageUrl="<%= imagePreviewURL %>"
-							resultRow="<%= row %>"
-							rowChecker="<%= searchContainer.getRowChecker() %>"
-							title="<%= fragmentEntry.getName() %>"
-							url="<%= editFragmentEntryURL %>"
-						>
-							<liferay-frontend:vertical-card-header>
-
-								<%
-								Date statusDate = fragmentEntry.getStatusDate();
-								%>
-
-								<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - statusDate.getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
-							</liferay-frontend:vertical-card-header>
-
-							<liferay-frontend:vertical-card-footer>
-								<span class="label <%= (fragmentEntry.getStatus() == WorkflowConstants.STATUS_APPROVED) ? "label-success" : "label-secondary" %>">
-									<liferay-ui:message key="<%= WorkflowConstants.getStatusLabel(fragmentEntry.getStatus()) %>" />
-								</span>
-							</liferay-frontend:vertical-card-footer>
-
-							<liferay-frontend:vertical-card-sticker-bottom>
-								<div class="sticker sticker-bottom-left sticker-primary <%= (fragmentEntry.getType() == FragmentEntryTypeConstants.TYPE_ELEMENT) ? "file-icon-color-4" : "file-icon-color-2" %>">
-									<liferay-ui:icon
-										cssClass="inline-item"
-										icon="cards"
-										markupView="lexicon"
-									/>
-								</div>
-							</liferay-frontend:vertical-card-sticker-bottom>
-						</liferay-frontend:vertical-card>
-					</c:when>
-					<c:otherwise>
-						<liferay-frontend:icon-vertical-card
-							actionJsp="/fragment_entry_action.jsp"
-							actionJspServletContext="<%= application %>"
-							cssClass="entry-display-style"
-							icon="code"
-							resultRow="<%= row %>"
-							rowChecker="<%= searchContainer.getRowChecker() %>"
-							title="<%= fragmentEntry.getName() %>"
-							url="<%= editFragmentEntryURL %>"
-						>
-							<liferay-frontend:vertical-card-header>
-
-								<%
-								Date statusDate = fragmentEntry.getStatusDate();
-								%>
-
-								<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - statusDate.getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
-							</liferay-frontend:vertical-card-header>
-
-							<liferay-frontend:vertical-card-footer>
-								<span class="label <%= (fragmentEntry.getStatus() == WorkflowConstants.STATUS_APPROVED) ? "label-success" : "label-secondary" %>">
-									<liferay-ui:message key="<%= WorkflowConstants.getStatusLabel(fragmentEntry.getStatus()) %>" />
-								</span>
-							</liferay-frontend:vertical-card-footer>
-
-							<liferay-frontend:vertical-card-sticker-bottom>
-								<div class="sticker sticker-bottom-left sticker-primary <%= (fragmentEntry.getType() == FragmentEntryTypeConstants.TYPE_ELEMENT) ? "file-icon-color-4" : "file-icon-color-2" %>">
-									<liferay-ui:icon
-										cssClass="inline-item"
-										icon="cards"
-										markupView="lexicon"
-									/>
-								</div>
-							</liferay-frontend:vertical-card-sticker-bottom>
-						</liferay-frontend:icon-vertical-card>
-					</c:otherwise>
-				</c:choose>
+				<clay:vertical-card
+					verticalCard="<%= new FragmentEntryVerticalCard(fragmentEntry, renderRequest, renderResponse, searchContainer.getRowChecker()) %>"
+				/>
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 

@@ -43,6 +43,27 @@ public class BuildRESTMojo extends AbstractMojo {
 	/**
 	 * @parameter
 	 */
+	public void setApiDirName(String apiDirName) {
+		_restBuilderArgs.setApiDirName(apiDirName);
+	}
+
+	/**
+	 * @parameter
+	 */
+	public void setApiPackagePath(String apiPackagePath) {
+		_restBuilderArgs.setApiPackagePath(apiPackagePath);
+	}
+
+	/**
+	 * @parameter
+	 */
+	public void setAuthor(String author) {
+		_restBuilderArgs.setAuthor(author);
+	}
+
+	/**
+	 * @parameter
+	 */
 	public void setInputFileName(String inputFileName) {
 		_restBuilderArgs.setInputFileName(inputFileName);
 	}

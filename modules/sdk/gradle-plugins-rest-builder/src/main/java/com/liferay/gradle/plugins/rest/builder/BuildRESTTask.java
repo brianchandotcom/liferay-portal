@@ -22,6 +22,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputFile;
 import org.gradle.api.tasks.JavaExec;
 
@@ -41,9 +42,36 @@ public class BuildRESTTask extends JavaExec {
 		super.exec();
 	}
 
+	@Input
+	public File getApiDir() {
+		return GradleUtil.toFile(getProject(), _apiDir);
+	}
+
+	@Input
+	public String getAuthor() {
+		return GradleUtil.toString(_author);
+	}
+
+	@Input
+	public String getApiPackagePath() {
+		return GradleUtil.toString(_apiPackagePath);
+	}
+
 	@InputFile
 	public File getInputFile() {
 		return GradleUtil.toFile(getProject(), _inputFile);
+	}
+
+	public void setApiDir(Object apiDir) {
+		_apiDir = apiDir;
+	}
+
+	public void setApiPackagePath(Object apiPackagePath) {
+		_apiPackagePath = apiPackagePath;
+	}
+
+	public void setAuthor(Object author) {
+		_author = author;
 	}
 
 	public void setInputFile(Object inputFile) {
@@ -53,6 +81,9 @@ public class BuildRESTTask extends JavaExec {
 	private List<String> _getCompleteArgs() {
 		List<String> args = new ArrayList<>(getArgs());
 
+		args.add("api.dir=" + _relativize(getApiDir()));
+		args.add("api.package.path=" + getApiPackagePath());
+		args.add("author=" + getAuthor());
 		args.add("input.file=" + _relativize(getInputFile()));
 
 		return args;
@@ -64,6 +95,9 @@ public class BuildRESTTask extends JavaExec {
 		return relativePath.replace('\\', '/');
 	}
 
+	private Object _apiDir;
+	private Object _apiPackagePath;
+	private Object _author;
 	private Object _inputFile;
 
 }

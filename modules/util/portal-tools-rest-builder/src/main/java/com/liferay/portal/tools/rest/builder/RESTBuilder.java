@@ -46,25 +46,36 @@ public class RESTBuilder {
 	public static void main(String[] args) throws Exception {
 		Map<String, String> arguments = ArgumentsUtil.parseArguments(args);
 
+		String apiDirName = arguments.get("api.dir");
+		String apiPackagePath = arguments.get("api.package.path");
+		String author = arguments.get("author");
 		String inputFileName = arguments.get("input.file");
 
 		try {
-			new RESTBuilder(inputFileName);
+			new RESTBuilder(apiDirName, apiPackagePath, author, inputFileName);
 		}
 		catch (Exception e) {
 			ArgumentsUtil.processMainException(arguments, e);
 		}
 	}
 
-	public RESTBuilder(String inputFileName) throws Exception {
-		List<Entity> entities = _getEntities(inputFileName);
+	public RESTBuilder(
+			String apiDirName, String apiPackagePath, String author,
+			String inputFileName)
+		throws Exception {
+
+		List<Entity> entities = _getEntities(
+			apiDirName, apiPackagePath, author, inputFileName);
 
 		for (Entity entity : entities) {
 			FileUtil.write(_getModelFile(entity), _getModelContent(entity));
 		}
 	}
 
-	private List<Entity> _getEntities(String inputFileName) {
+	private List<Entity> _getEntities(
+		String apiDirName, String apiPackagePath, String author,
+		String inputFileName) {
+
 		File inputFile = new File(inputFileName);
 
 		try (InputStream inputStream = new FileInputStream(inputFile)) {
@@ -76,10 +87,6 @@ public class RESTBuilder {
 				return Collections.emptyList();
 			}
 
-			String apiDir = (String)yamlData.get("api-dir");
-			String apiPackagePath = (String)yamlData.get("api-package-path");
-			String author = (String)yamlData.get("author");
-
 			List<Entity> entities = new ArrayList<>();
 
 			for (Object object : (List)yamlData.get("entities")) {
@@ -87,7 +94,7 @@ public class RESTBuilder {
 
 				Entity entity = new Entity();
 
-				entity.setApiDir(apiDir);
+				entity.setApiDir(apiDirName);
 				entity.setApiPackagePath(apiPackagePath);
 				entity.setAuthor(author);
 				entity.setName((String)map.get("name"));

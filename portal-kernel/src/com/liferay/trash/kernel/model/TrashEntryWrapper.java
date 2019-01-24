@@ -147,13 +147,17 @@ public class TrashEntryWrapper implements TrashEntry, ModelWrapper<TrashEntry> {
 	}
 
 	@Override
-	public Map<String, Function<TrashEntry, Object>> getAttributeGetters() {
-		return _trashEntry.getAttributeGetters();
+	public Map<String, Function<TrashEntry, Object>>
+		getAttributeGetterFunctions() {
+
+		return _trashEntry.getAttributeGetterFunctions();
 	}
 
 	@Override
-	public Map<String, BiConsumer<TrashEntry, Object>> getAttributeSetters() {
-		return _trashEntry.getAttributeSetters();
+	public Map<String, BiConsumer<TrashEntry, Object>>
+		getAttributeSetterBiConsumers() {
+
+		return _trashEntry.getAttributeSetterBiConsumers();
 	}
 
 	@Override

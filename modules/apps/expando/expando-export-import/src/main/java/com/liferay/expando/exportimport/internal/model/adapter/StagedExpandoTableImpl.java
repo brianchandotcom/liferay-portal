@@ -56,13 +56,17 @@ public class StagedExpandoTableImpl implements StagedExpandoTable {
 	}
 
 	@Override
-	public Map<String, Function<ExpandoTable, Object>> getAttributeGetters() {
-		return _expandoTable.getAttributeGetters();
+	public Map<String, Function<ExpandoTable, Object>>
+		getAttributeGetterFunctions() {
+
+		return _expandoTable.getAttributeGetterFunctions();
 	}
 
 	@Override
-	public Map<String, BiConsumer<ExpandoTable, Object>> getAttributeSetters() {
-		return _expandoTable.getAttributeSetters();
+	public Map<String, BiConsumer<ExpandoTable, Object>>
+		getAttributeSetterBiConsumers() {
+
+		return _expandoTable.getAttributeSetterBiConsumers();
 	}
 
 	@Override

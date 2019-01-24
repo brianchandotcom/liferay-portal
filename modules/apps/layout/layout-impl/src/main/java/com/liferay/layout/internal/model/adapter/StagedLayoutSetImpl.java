@@ -121,13 +121,17 @@ public class StagedLayoutSetImpl implements StagedLayoutSet {
 	}
 
 	@Override
-	public Map<String, Function<LayoutSet, Object>> getAttributeGetters() {
-		return _layoutSet.getAttributeGetters();
+	public Map<String, Function<LayoutSet, Object>>
+		getAttributeGetterFunctions() {
+
+		return _layoutSet.getAttributeGetterFunctions();
 	}
 
 	@Override
-	public Map<String, BiConsumer<LayoutSet, Object>> getAttributeSetters() {
-		return _layoutSet.getAttributeSetters();
+	public Map<String, BiConsumer<LayoutSet, Object>>
+		getAttributeSetterBiConsumers() {
+
+		return _layoutSet.getAttributeSetterBiConsumers();
 	}
 
 	@Override

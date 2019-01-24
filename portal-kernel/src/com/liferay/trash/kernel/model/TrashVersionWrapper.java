@@ -119,13 +119,17 @@ public class TrashVersionWrapper implements TrashVersion,
 	}
 
 	@Override
-	public Map<String, Function<TrashVersion, Object>> getAttributeGetters() {
-		return _trashVersion.getAttributeGetters();
+	public Map<String, Function<TrashVersion, Object>>
+		getAttributeGetterFunctions() {
+
+		return _trashVersion.getAttributeGetterFunctions();
 	}
 
 	@Override
-	public Map<String, BiConsumer<TrashVersion, Object>> getAttributeSetters() {
-		return _trashVersion.getAttributeSetters();
+	public Map<String, BiConsumer<TrashVersion, Object>>
+		getAttributeSetterBiConsumers() {
+
+		return _trashVersion.getAttributeSetterBiConsumers();
 	}
 
 	@Override

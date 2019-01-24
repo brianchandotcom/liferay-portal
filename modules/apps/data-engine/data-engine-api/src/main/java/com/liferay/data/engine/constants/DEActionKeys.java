@@ -29,6 +29,10 @@ public class DEActionKeys {
 
 	public static final String DEFINE_PERMISSIONS_ACTION = "DEFINE_PERMISSIONS";
 
+	public static final String DELETE_DATA_RECORD = "DELETE_DATA_RECORD";
+
 	public static final String UPDATE_DATA_RECORD = "UPDATE_DATA_RECORD";
+
+	public static final String VIEW_DATA_RECORD = "VIEW_DATA_RECORD";
 
 }

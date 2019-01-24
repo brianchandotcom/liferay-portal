@@ -14,8 +14,10 @@
 
 package com.liferay.blog.apio.architect.model;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Represents a blog posting exposed through the API. See <a
@@ -143,6 +145,6 @@ public interface BlogPosting {
 	 * @return the modification date
 	 * @review
 	 */
-	public Date getPublishedDate();
+	public Optional<LocalDateTime> getPublishedDateOptional();
 
 }

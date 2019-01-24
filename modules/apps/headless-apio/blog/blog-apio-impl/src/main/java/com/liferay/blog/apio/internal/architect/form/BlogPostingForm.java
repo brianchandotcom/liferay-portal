@@ -178,9 +178,13 @@ public class BlogPostingForm implements BlogPosting {
 	 * @return the display date
 	 */
 	@Override
-	public Date getPublishedDate() {
-		return _publishedDate;
-
+	public Optional<LocalDateTime> getPublishedDateOptional() {
+		return Optional.ofNullable(
+			_publishedDate
+		).map(
+			date -> LocalDateTime.ofInstant(
+				date.toInstant(), ZoneId.systemDefault())
+		);
 	}
 
 	public void setAlternativeHeadline(String alternativeHeadline) {

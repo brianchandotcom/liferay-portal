@@ -29,7 +29,6 @@ import com.liferay.blog.apio.architect.identifier.BlogPostingIdentifier;
 import com.liferay.blog.apio.architect.model.BlogPosting;
 import com.liferay.blog.apio.internal.architect.form.BlogPostingForm;
 import com.liferay.blogs.model.BlogsEntry;
-import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.blogs.service.BlogsEntryService;
 import com.liferay.category.apio.architect.identifier.CategoryIdentifier;
 import com.liferay.comment.apio.architect.identifier.CommentIdentifier;
@@ -41,7 +40,6 @@ import com.liferay.person.apio.architect.identifier.PersonIdentifier;
 import com.liferay.portal.apio.exception.ValidationException;
 import com.liferay.portal.apio.identifier.ClassNameClassPK;
 import com.liferay.portal.apio.permission.HasPermission;
-import com.liferay.portal.apio.user.CurrentUser;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector;
@@ -53,6 +51,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import io.vavr.control.Try;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -157,15 +156,14 @@ public class BlogPostingNestedCollectionResource
 		).build();
 	}
 
-	private BlogsEntry _addBlogsEntry(
-			long groupId, BlogPosting blogPosting)
+	private BlogsEntry _addBlogsEntry(long groupId, BlogPosting blogPosting)
 		throws PortalException {
 
 		Optional<LocalDateTime> publishedDateOptional =
-			_getLocalDateTimeOptional(blogPosting.getPublishedDate());
+			blogPosting.getPublishedDateOptional();
 
-		LocalDateTime localDateTime =
-			publishedDateOptional.orElse(LocalDateTime.now());
+		LocalDateTime localDateTime = publishedDateOptional.orElse(
+			LocalDateTime.now());
 
 		try {
 			return _blogsEntryService.addEntry(blogPosting.getHeadline(),
@@ -173,8 +171,8 @@ public class BlogPostingNestedCollectionResource
 				blogPosting.getFriendlyURLPath(), blogPosting.getDescription(),
 				blogPosting.getArticleBody(), localDateTime.getMonthValue() - 1,
 				localDateTime.getDayOfMonth(), localDateTime.getYear(),
-				localDateTime.getHour(), localDateTime.getMinute(),
-				true, true, new String[0], blogPosting.getCaption(),
+				localDateTime.getHour(), localDateTime.getMinute(), true, true,
+				new String[0], blogPosting.getCaption(),
 				_getImageSelector(blogPosting), null,
 				_getServiceContext(groupId, blogPosting));
 		}
@@ -253,18 +251,6 @@ public class BlogPostingNestedCollectionResource
 			serviceContext.setAssetTagNames(ArrayUtil.toStringArray(keywords));
 		}
 
-		Date createdDate = blogPosting.getCreatedDate();
-
-		if (createdDate != null) {
-			serviceContext.setCreateDate(createdDate);
-		}
-
-		Date modifiedDate = blogPosting.getModifiedDate();
-
-		if (modifiedDate != null) {
-			serviceContext.setModifiedDate(modifiedDate);
-		}
-
 		serviceContext.setScopeGroupId(groupId);
 
 		return serviceContext;
@@ -275,10 +261,10 @@ public class BlogPostingNestedCollectionResource
 		throws PortalException {
 
 		Optional<LocalDateTime> publishedDateOptional =
-			_getLocalDateTimeOptional(blogPosting.getPublishedDate());
+			blogPosting.getPublishedDateOptional();
 
-		LocalDateTime localDateTime =
-			publishedDateOptional.orElse(LocalDateTime.now());
+		LocalDateTime localDateTime = publishedDateOptional.orElse(
+			LocalDateTime.now());
 
 		BlogsEntry blogsEntry = _blogsEntryService.getEntry(blogsEntryId);
 		ImageSelector imageSelector = _getImageSelector(blogPosting);
@@ -295,17 +281,6 @@ public class BlogPostingNestedCollectionResource
 			localDateTime.getHour(), localDateTime.getMinute(), true, true,
 			new String[0], blogPosting.getCaption(), imageSelector, null,
 			serviceContext);
-	}
-
-	private Optional<LocalDateTime> _getLocalDateTimeOptional(
-		Date dateToConvert) {
-
-		return Optional.ofNullable(
-			dateToConvert
-		).map(
-			date -> LocalDateTime.ofInstant(
-				date.toInstant(), ZoneId.systemDefault())
-		);
 	}
 
 	@Reference

@@ -1,7 +1,7 @@
 @component-name = "portal-authentication-ee"
 definition {
 	property portal.release = "true";
-	property portal.upstream = "false";
+	property portal.upstream = "true";
 	property app.server.bundles.size = "1";
 	property databases.size = "1";
 	property dummy.socket.proxy.disabled = "true";

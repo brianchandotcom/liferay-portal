@@ -18,30 +18,6 @@ import templates from './FragmentsEditor.soy';
 class FragmentsEditor extends Component {
 
 	/**
-	 * Focus a fragmentEntryLink for a given ID
-	 * @param {string} fragmentEntryLinkId
-	 * @review
-	 */
-	_focusFragmentEntryLink(fragmentEntryLinkId) {
-		this.refs.fragmentsEditorRender.focusFragmentEntryLink(
-			fragmentEntryLinkId
-		);
-	}
-
-	/**
-	 * Returns a FragmentEntryLink instance for a fragmentEntryLinkId
-	 * @param {string} fragmentEntryLinkId
-	 * @private
-	 * @return {FragmentEntryLink}
-	 * @review
-	 */
-	_getFragmentEntryLinkComponent(fragmentEntryLinkId) {
-		return this.refs.fragmentsEditorRender.refs[
-			`fragmentEntryLink_${fragmentEntryLinkId}`
-		];
-	}
-
-	/**
 	 * Callback executed when a mappeable field has been selected for the
 	 * given editable.
 	 * @param {!{

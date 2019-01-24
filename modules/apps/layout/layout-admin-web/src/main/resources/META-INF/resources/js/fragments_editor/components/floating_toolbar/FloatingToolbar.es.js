@@ -6,7 +6,6 @@ import './background_color/FloatingToolbarBackgroundColorPanel.es';
 import './background_image/FloatingToolbarBackgroundImagePanel.es';
 import './spacing/FloatingToolbarSpacingPanel.es';
 import getConnectedComponent from '../../store/ConnectedComponent.es';
-import {shouldUpdateOnChangeProperties} from '../../utils/FragmentsEditorComponentUtils.es';
 import templates from './FloatingToolbar.soy';
 
 /**
@@ -36,20 +35,6 @@ const FLOATING_TOOLBAR_PANELS = [
  * FloatingToolbar
  */
 class FloatingToolbar extends Component {
-
-	/**
-	 * @inheritdoc
-	 * @param {object} changes
-	 */
-	shouldUpdate(changes) {
-		return shouldUpdateOnChangeProperties(
-			changes,
-			[
-				'_selectedPanelId',
-				'spritemap'
-			]
-		);
-	}
 
 	/**
 	 * Handle button click

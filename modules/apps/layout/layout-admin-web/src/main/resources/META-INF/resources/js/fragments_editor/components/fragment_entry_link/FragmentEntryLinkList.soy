@@ -200,7 +200,20 @@
 		{/if}
 	{/let}
 
-	{let $sectionAttributes kind="attributes"}
+	{let $sectionStyle kind="text"}
+		{if $row.config and $row.config.backgroundColor}
+			background-color: {$row.config.backgroundColor};
+		{/if}
+
+		{if $row.config and $row.config.backgroundImage}
+			background-image: url({$row.config.backgroundImage});
+			background-position: 50% 50%;
+			background-repeat: no-repeat;
+			background-size: cover;
+		{/if}
+	{/let}
+
+	<section
 		class="{$sectionClasses}"
 		data-drag-source-label="{msg desc=""}section{/msg}"
 		data-layout-section-id="{$rowId}"
@@ -209,14 +222,9 @@
 		data-onkeyup="{$_handleSectionKeyUp}"
 		data-onmouseover="{$_handleSectionHoverStart}"
 		key="{$key}"
+		style="{$sectionStyle}"
 		tabindex="0"
-
-		{if $row.config and $row.config.backgroundColor}
-			style="background-color: {$row.config.backgroundColor};"
-		{/if}
-	{/let}
-
-	<section {$sectionAttributes}>
+	>
 		<nav class="fragments-editor__topper tbar">
 			<ul class="tbar-nav">
 				<li class="fragments-editor__drag-handler fragments-editor__topper__item fragments-editor__topper__title tbar-item tbar-item-expand">

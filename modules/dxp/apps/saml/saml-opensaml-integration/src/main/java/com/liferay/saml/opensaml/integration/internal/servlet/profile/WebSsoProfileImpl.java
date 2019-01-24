@@ -92,6 +92,7 @@ import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.joda.time.Duration;
 
+import org.opensaml.core.config.ConfigurationService;
 import org.opensaml.core.criterion.EntityIdCriterion;
 import org.opensaml.messaging.context.InOutOperationContext;
 import org.opensaml.messaging.context.MessageContext;
@@ -107,6 +108,7 @@ import org.opensaml.saml.common.messaging.context.SAMLSubjectNameIdentifierConte
 import org.opensaml.saml.common.xml.SAMLConstants;
 import org.opensaml.saml.criterion.EntityRoleCriterion;
 import org.opensaml.saml.criterion.ProtocolCriterion;
+import org.opensaml.saml.criterion.RoleDescriptorCriterion;
 import org.opensaml.saml.saml2.core.Assertion;
 import org.opensaml.saml.saml2.core.Attribute;
 import org.opensaml.saml.saml2.core.AttributeStatement;
@@ -117,6 +119,7 @@ import org.opensaml.saml.saml2.core.AuthnContextClassRef;
 import org.opensaml.saml.saml2.core.AuthnRequest;
 import org.opensaml.saml.saml2.core.AuthnStatement;
 import org.opensaml.saml.saml2.core.Conditions;
+import org.opensaml.saml.saml2.core.EncryptedAssertion;
 import org.opensaml.saml.saml2.core.Issuer;
 import org.opensaml.saml.saml2.core.NameID;
 import org.opensaml.saml.saml2.core.NameIDPolicy;
@@ -127,6 +130,7 @@ import org.opensaml.saml.saml2.core.StatusCode;
 import org.opensaml.saml.saml2.core.Subject;
 import org.opensaml.saml.saml2.core.SubjectConfirmation;
 import org.opensaml.saml.saml2.core.SubjectConfirmationData;
+import org.opensaml.saml.saml2.encryption.Encrypter;
 import org.opensaml.saml.saml2.metadata.AssertionConsumerService;
 import org.opensaml.saml.saml2.metadata.IDPSSODescriptor;
 import org.opensaml.saml.saml2.metadata.SPSSODescriptor;
@@ -137,7 +141,12 @@ import org.opensaml.security.credential.Credential;
 import org.opensaml.security.credential.UsageType;
 import org.opensaml.security.criteria.UsageCriterion;
 import org.opensaml.security.trust.TrustEngine;
+import org.opensaml.xmlsec.EncryptionConfiguration;
+import org.opensaml.xmlsec.EncryptionParameters;
 import org.opensaml.xmlsec.context.SecurityParametersContext;
+import org.opensaml.xmlsec.criterion.EncryptionConfigurationCriterion;
+import org.opensaml.xmlsec.encryption.support.DataEncryptionParameters;
+import org.opensaml.xmlsec.encryption.support.KeyEncryptionParameters;
 import org.opensaml.xmlsec.signature.Signature;
 import org.opensaml.xmlsec.signature.support.SignatureTrustEngine;
 
@@ -1086,7 +1095,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 	protected Response getSuccessResponse(
 		SamlSsoRequestContext samlSsoRequestContext,
 		AssertionConsumerService assertionConsumerService,
-		Assertion assertion) {
+		DateTime issueInstant) {
 
 		Response response = OpenSamlUtil.buildResponse();
 
@@ -1112,7 +1121,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			}
 		}
 
-		response.setIssueInstant(assertion.getIssueInstant());
+		response.setIssueInstant(issueInstant);
 
 		SAMLSelfEntityContext samlSelfEntityContext =
 			messageContext.getSubcontext(SAMLSelfEntityContext.class);
@@ -1130,10 +1139,6 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		response.setStatus(status);
 
 		response.setVersion(SAMLVersion.VERSION_20);
-
-		List<Assertion> assertions = response.getAssertions();
-
-		assertions.add(assertion);
 
 		return response;
 	}
@@ -1386,7 +1391,36 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		}
 
 		Response samlResponse = getSuccessResponse(
-			samlSsoRequestContext, assertionConsumerService, assertion);
+			samlSsoRequestContext, assertionConsumerService,
+			assertion.getIssueInstant());
+
+		EncryptionParameters encryptionParameters =
+			_samlMetadataEncryptionParametersResolver.resolveSingle(
+				new CriteriaSet(
+					new EncryptionConfigurationCriterion(
+						ConfigurationService.get(
+							EncryptionConfiguration.class)),
+					new RoleDescriptorCriterion(spSSODescriptor)));
+
+		if (encryptionParameters != null) {
+			Encrypter encrypter = new Encrypter(
+				new DataEncryptionParameters(encryptionParameters),
+				new KeyEncryptionParameters(
+					encryptionParameters, samlPeerEntityContext.getEntityId()));
+
+			EncryptedAssertion encryptedAssertion = encrypter.encrypt(
+				assertion);
+
+			List<EncryptedAssertion> encryptedAssertions =
+				samlResponse.getEncryptedAssertions();
+
+			encryptedAssertions.add(encryptedAssertion);
+		}
+		else {
+			List<Assertion> assertions = samlResponse.getAssertions();
+
+			assertions.add(assertion);
+		}
 
 		InOutOperationContext inOutOperationContext =
 			messageContext.getSubcontext(InOutOperationContext.class, false);

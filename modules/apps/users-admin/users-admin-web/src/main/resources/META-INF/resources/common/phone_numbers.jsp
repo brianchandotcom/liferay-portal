@@ -35,10 +35,10 @@ List<Phone> phones = PhoneServiceUtil.getPhones(className, classPK);
 			<%
 			PortletURL editURL = liferayPortletResponse.createRenderURL();
 
-			editURL.setParameter("className", className);
-			editURL.setParameter("classPK", String.valueOf(classPK));
 			editURL.setParameter("mvcPath", "/common/edit_phone_number.jsp");
 			editURL.setParameter("redirect", currentURL);
+			editURL.setParameter("className", className);
+			editURL.setParameter("classPK", String.valueOf(classPK));
 			%>
 
 			<liferay-ui:icon

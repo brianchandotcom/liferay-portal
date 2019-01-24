@@ -34,11 +34,11 @@ long addressId = ParamUtil.getLong(request, "addressId");
 	<%
 	PortletURL editURL = liferayPortletResponse.createRenderURL();
 
+	editURL.setParameter("mvcPath", "/common/edit_address.jsp");
+	editURL.setParameter("redirect", currentURL);
 	editURL.setParameter("className", className);
 	editURL.setParameter("classPK", String.valueOf(classPK));
-	editURL.setParameter("mvcPath", "/common/edit_address.jsp");
 	editURL.setParameter("primaryKey", String.valueOf(addressId));
-	editURL.setParameter("redirect", currentURL);
 	%>
 
 	<liferay-ui:icon
@@ -50,11 +50,11 @@ long addressId = ParamUtil.getLong(request, "addressId");
 	PortletURL portletURL = renderResponse.createActionURL();
 
 	portletURL.setParameter(ActionRequest.ACTION_NAME, "/users_admin/update_contact_information");
+	portletURL.setParameter("redirect", currentURL);
 	portletURL.setParameter("className", className);
 	portletURL.setParameter("classPK", String.valueOf(classPK));
 	portletURL.setParameter("listType", ListTypeConstants.ADDRESS);
 	portletURL.setParameter("primaryKey", String.valueOf(addressId));
-	portletURL.setParameter("redirect", currentURL);
 
 	PortletURL makePrimaryURL = PortletURLUtil.clone(portletURL, renderResponse);
 

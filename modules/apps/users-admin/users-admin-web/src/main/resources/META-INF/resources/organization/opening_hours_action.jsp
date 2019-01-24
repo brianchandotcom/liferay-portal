@@ -35,11 +35,11 @@ long orgLaborId = ParamUtil.getLong(request, "orgLaborId");
 	<%
 	PortletURL editURL = liferayPortletResponse.createRenderURL();
 
+	editURL.setParameter("mvcPath", "/organization/edit_opening_hours.jsp");
+	editURL.setParameter("redirect", currentURL);
 	editURL.setParameter("className", Organization.class.getName());
 	editURL.setParameter("classPK", String.valueOf(organizationId));
-	editURL.setParameter("mvcPath", "/organization/edit_opening_hours.jsp");
 	editURL.setParameter("primaryKey", String.valueOf(orgLaborId));
-	editURL.setParameter("redirect", currentURL);
 	%>
 
 	<liferay-ui:icon
@@ -48,12 +48,12 @@ long orgLaborId = ParamUtil.getLong(request, "orgLaborId");
 	/>
 
 	<portlet:actionURL name="/users_admin/update_contact_information" var="removeOpeningHoursUrl">
+		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
 		<portlet:param name="className" value="<%= Organization.class.getName() %>" />
 		<portlet:param name="classPK" value="<%= String.valueOf(organizationId) %>" />
 		<portlet:param name="listType" value="<%= ListTypeConstants.ORGANIZATION_SERVICE %>" />
 		<portlet:param name="primaryKey" value="<%= String.valueOf(orgLaborId) %>" />
-		<portlet:param name="redirect" value="<%= currentURL %>" />
 	</portlet:actionURL>
 
 	<liferay-ui:icon

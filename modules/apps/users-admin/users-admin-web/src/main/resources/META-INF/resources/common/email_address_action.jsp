@@ -38,11 +38,11 @@ long emailAddressId = emailAddress.getEmailAddressId();
 	<%
 	PortletURL editURL = liferayPortletResponse.createRenderURL();
 
+	editURL.setParameter("mvcPath", "/common/edit_email_address.jsp");
+	editURL.setParameter("redirect", currentURL);
 	editURL.setParameter("className", className);
 	editURL.setParameter("classPK", String.valueOf(classPK));
-	editURL.setParameter("mvcPath", "/common/edit_email_address.jsp");
 	editURL.setParameter("primaryKey", String.valueOf(emailAddressId));
-	editURL.setParameter("redirect", currentURL);
 	%>
 
 	<liferay-ui:icon
@@ -54,11 +54,11 @@ long emailAddressId = emailAddress.getEmailAddressId();
 	PortletURL portletURL = renderResponse.createActionURL();
 
 	portletURL.setParameter(ActionRequest.ACTION_NAME, "/users_admin/update_contact_information");
+	portletURL.setParameter("redirect", currentURL);
 	portletURL.setParameter("className", className);
 	portletURL.setParameter("classPK", String.valueOf(classPK));
 	portletURL.setParameter("listType", ListTypeConstants.EMAIL_ADDRESS);
 	portletURL.setParameter("primaryKey", String.valueOf(emailAddressId));
-	portletURL.setParameter("redirect", currentURL);
 
 	PortletURL makePrimaryURL = PortletURLUtil.clone(portletURL, renderResponse);
 

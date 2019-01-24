@@ -38,11 +38,11 @@ long phoneId = phone.getPhoneId();
 	<%
 	PortletURL editURL = liferayPortletResponse.createRenderURL();
 
+	editURL.setParameter("mvcPath", "/common/edit_phone_number.jsp");
+	editURL.setParameter("redirect", currentURL);
 	editURL.setParameter("className", className);
 	editURL.setParameter("classPK", String.valueOf(classPK));
-	editURL.setParameter("mvcPath", "/common/edit_phone_number.jsp");
 	editURL.setParameter("primaryKey", String.valueOf(phoneId));
-	editURL.setParameter("redirect", currentURL);
 	%>
 
 	<liferay-ui:icon
@@ -54,11 +54,11 @@ long phoneId = phone.getPhoneId();
 	PortletURL portletURL = renderResponse.createActionURL();
 
 	portletURL.setParameter(ActionRequest.ACTION_NAME, "/users_admin/update_contact_information");
+	portletURL.setParameter("redirect", currentURL);
 	portletURL.setParameter("className", className);
 	portletURL.setParameter("classPK", String.valueOf(classPK));
 	portletURL.setParameter("listType", ListTypeConstants.PHONE);
 	portletURL.setParameter("primaryKey", String.valueOf(phoneId));
-	portletURL.setParameter("redirect", currentURL);
 
 	PortletURL makePrimaryURL = PortletURLUtil.clone(portletURL, renderResponse);
 

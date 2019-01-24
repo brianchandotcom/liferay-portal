@@ -15,8 +15,14 @@
 package com.liferay.arquillian.extension.junit.bridge.container.remote;
 
 import java.io.IOException;
+import java.io.InputStream;
 
+import java.net.URI;
 import java.net.URL;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -51,9 +57,6 @@ import org.jboss.arquillian.container.spi.client.protocol.metadata.ProtocolMetaD
 import org.jboss.arquillian.container.spi.context.annotation.ContainerScoped;
 import org.jboss.arquillian.core.api.InstanceProducer;
 import org.jboss.arquillian.core.api.annotation.Inject;
-import org.jboss.osgi.vfs.AbstractVFS;
-import org.jboss.osgi.vfs.VFSUtils;
-import org.jboss.osgi.vfs.VirtualFile;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.exporter.ZipExporter;
 import org.jboss.shrinkwrap.descriptor.api.Descriptor;
@@ -337,9 +340,18 @@ public class LiferayRemoteDeployableContainer
 	}
 
 	private BundleHandle _installBundle(Archive<?> archive) throws Exception {
-		VirtualFile virtualFile = _toVirtualFile(archive);
+		Path tempFilePath = Files.createTempFile(null, ".jar");
 
-		URL url = virtualFile.getStreamURL();
+		ZipExporter exporter = archive.as(ZipExporter.class);
+
+		try (InputStream inputStream = exporter.exportAsInputStream()) {
+			Files.copy(
+				inputStream, tempFilePath, StandardCopyOption.REPLACE_EXISTING);
+		}
+
+		URI uri = tempFilePath.toUri();
+
+		URL url = uri.toURL();
 
 		try {
 			long bundleId = _frameworkMBean.installBundleFromURL(
@@ -350,16 +362,11 @@ public class LiferayRemoteDeployableContainer
 			return new BundleHandle(bundleId, symbolicName);
 		}
 		finally {
-			VFSUtils.safeClose(virtualFile);
+			Files.delete(tempFilePath);
 		}
 	}
 
-	private VirtualFile _toVirtualFile(Archive<?> archive) throws IOException {
-		ZipExporter exporter = archive.as(ZipExporter.class);
 
-		return AbstractVFS.toVirtualFile(
-			archive.getName(), exporter.exportAsInputStream());
-	}
 
 	private static final ObjectName _bundleStateObjectName;
 	private static final ObjectName _frameworkObjectName;

@@ -22,6 +22,8 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.templateparser.TemplateNode;
+import com.liferay.portal.kernel.util.AggregateClassLoader;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -121,6 +123,17 @@ public class LiferayObjectWrapper extends DefaultObjectWrapper {
 			_restrictedClasses = new ArrayList<>(restrictedClassNames.length);
 			_restrictedPackageNames = new ArrayList<>();
 
+			AggregateClassLoader aggregateClassLoader =
+				new AggregateClassLoader(
+					LiferayObjectWrapper.class.getClassLoader());
+
+			aggregateClassLoader.addClassLoader(
+				PortalClassLoaderUtil.getClassLoader());
+
+			Thread thread = Thread.currentThread();
+
+			aggregateClassLoader.addClassLoader(thread.getContextClassLoader());
+
 			for (String restrictedClassName : restrictedClassNames) {
 				restrictedClassName = StringUtil.trim(restrictedClassName);
 
@@ -129,7 +142,8 @@ public class LiferayObjectWrapper extends DefaultObjectWrapper {
 				}
 
 				try {
-					_restrictedClasses.add(Class.forName(restrictedClassName));
+					_restrictedClasses.add(
+						aggregateClassLoader.loadClass(restrictedClassName));
 				}
 				catch (ClassNotFoundException cnfe) {
 					if (_log.isInfoEnabled()) {

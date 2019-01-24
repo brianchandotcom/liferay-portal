@@ -16,6 +16,8 @@ package com.liferay.portal.template.velocity.internal;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.AggregateClassLoader;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -47,6 +49,16 @@ public class LiferaySecureUberspector extends SecureUberspector {
 
 		_restrictedClasses = new ArrayList<>(restrictedClassNames.length);
 
+		AggregateClassLoader aggregateClassLoader = new AggregateClassLoader(
+			LiferaySecureUberspector.class.getClassLoader());
+
+		aggregateClassLoader.addClassLoader(
+			PortalClassLoaderUtil.getClassLoader());
+
+		Thread thread = Thread.currentThread();
+
+		aggregateClassLoader.addClassLoader(thread.getContextClassLoader());
+
 		for (String restrictedClassName : restrictedClassNames) {
 			restrictedClassName = StringUtil.trim(restrictedClassName);
 
@@ -55,7 +67,8 @@ public class LiferaySecureUberspector extends SecureUberspector {
 			}
 
 			try {
-				_restrictedClasses.add(Class.forName(restrictedClassName));
+				_restrictedClasses.add(
+					aggregateClassLoader.loadClass(restrictedClassName));
 			}
 			catch (ClassNotFoundException cnfe) {
 				super.log.error(

@@ -156,122 +156,20 @@ FragmentManagementToolbarDisplayContext fragmentManagementToolbarDisplayContext 
 </aui:form>
 
 <c:if test="<%= FragmentPermission.contains(permissionChecker, scopeGroupId, FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES) %>">
-	<aui:script require="metal-dom/src/all/dom as dom,frontend-js-web/liferay/modal/commands/OpenSimpleInputModal.es as modalCommands">
-		var updateFragmentEntryMenuItemClickHandler = dom.delegate(
-			document.body,
-			'click',
-			'.<portlet:namespace />update-fragment-action-option > a',
-			function(event) {
-				var data = event.delegateTarget.dataset;
-
-				event.preventDefault();
-
-				modalCommands.openSimpleInputModal({
-					dialogTitle: '<liferay-ui:message key="rename-fragment" />',
-					formSubmitURL: data.formSubmitUrl,
-					idFieldName: 'id',
-					idFieldValue: data.idFieldValue,
-					mainFieldLabel: '<liferay-ui:message key="name" />',
-					mainFieldName: 'name',
-					mainFieldPlaceholder: '<liferay-ui:message key="name" />',
-					mainFieldValue: data.mainFieldValue,
+	<aui:script require='<%= npmResolvedPackageName + "/js/ElementsDefaultEventHandler.es as ElementsDefaultEventHandler" %>'>
+		Liferay.component(
+			'<%= FragmentWebKeys.FRAGMENT_ENTRY_ELEMENTS_DEFAULT_EVENT_HANDLER %>',
+			new ElementsDefaultEventHandler.default(
+				{
 					namespace: '<portlet:namespace />',
 					spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg'
-				});
-			}
-		);
-
-		var updateFragmentEntryPreviewMenuItemClickHandler = dom.delegate(
-			document.body,
-			'click',
-			'.update-fragment-preview > a',
-			function(event) {
-				var data = event.delegateTarget.dataset;
-
-				event.preventDefault();
-
-				var uri = '<%= fragmentDisplayContext.getItemSelectorURL() %>';
-
-				uri = Liferay.Util.addParams('<portlet:namespace />fragmentEntryId=' + data.fragmentEntryId, uri);
-
-				AUI().use(
-					'liferay-item-selector-dialog',
-					function(A) {
-						var itemSelectorDialog = new A.LiferayItemSelectorDialog(
-							{
-								eventName: '<portlet:namespace />changePreview',
-								on: {
-									selectedItemChange: function(event) {
-										var selectedItem = event.newVal;
-
-										if (selectedItem) {
-											var itemValue = JSON.parse(selectedItem.value);
-
-											document.<portlet:namespace />fragmentEntryPreviewFm.<portlet:namespace />fragmentEntryId.value = data.fragmentEntryId;
-											document.<portlet:namespace />fragmentEntryPreviewFm.<portlet:namespace />fileEntryId.value = itemValue.fileEntryId;
-
-											submitForm(document.<portlet:namespace />fragmentEntryPreviewFm);
-										}
-									}
-								},
-								'strings.add': '<liferay-ui:message key="ok" />',
-								title: '<liferay-ui:message key="fragment-thumbnail" />',
-								url: uri
-							}
-						);
-
-						itemSelectorDialog.open();
-					}
-				);
-			}
-		);
-
-		var moveFragmentEntryMenuItemClickHandler = dom.delegate(
-			document.body,
-			'click',
-			'.move-fragment-entry-action > a',
-			function(event) {
-				event.preventDefault();
-
-				var data = event.delegateTarget.dataset;
-
-				moveFragmentEntries(data.fragmentEntryId);
-			}
-		);
-
-		var moveFragmentEntries = function(fragmentEntryIds) {
-			Liferay.Util.selectEntity(
-				{
-					dialog: {
-						constrain: true,
-						destroyOnHide: true,
-						modal: true
-					},
-					eventName: '<portlet:namespace />selectFragmentCollection',
-					id: '<portlet:namespace />selectSiteNavigationMenu',
-					title: '<liferay-ui:message arguments="collection" key="select-x" />',
-					uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcRenderCommandName" value="/fragment/select_fragment_collection" /></portlet:renderURL>'
-				},
-				function(selectedItem) {
-					if (selectedItem) {
-						document.<portlet:namespace/>moveFragmentEntryFm.<portlet:namespace/>fragmentCollectionId.value = selectedItem.id;
-						document.<portlet:namespace/>moveFragmentEntryFm.<portlet:namespace/>fragmentEntryIds.value = fragmentEntryIds;
-
-						submitForm(document.<portlet:namespace/>moveFragmentEntryFm);
-					}
 				}
-			);
-		}
-
-		function handleDestroyPortlet () {
-			moveFragmentEntryMenuItemClickHandler.removeListener();
-			updateFragmentEntryMenuItemClickHandler.removeListener();
-			updateFragmentEntryPreviewMenuItemClickHandler.removeListener();
-
-			Liferay.detach('destroyPortlet', handleDestroyPortlet);
-		}
-
-		Liferay.on('destroyPortlet', handleDestroyPortlet);
+			),
+			{
+				destroyOnNavigate: true,
+				portletId: '<%= HtmlUtil.escapeJS(portletDisplay.getId()) %>'
+			}
+		);
 	</aui:script>
 </c:if>
 

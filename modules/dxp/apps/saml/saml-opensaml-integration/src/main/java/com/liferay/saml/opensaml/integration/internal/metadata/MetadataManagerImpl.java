@@ -128,6 +128,21 @@ public class MetadataManagerImpl
 
 		_metadataCredentialResolver.initialize();
 
+		List<SignatureTrustEngine> signatureTrustEngines = new ArrayList<>();
+
+		SignatureTrustEngine signatureTrustEngine =
+			new ExplicitKeySignatureTrustEngine(
+				_metadataCredentialResolver, keyInfoCredentialResolver);
+
+		signatureTrustEngines.add(signatureTrustEngine);
+
+		signatureTrustEngine = new ExplicitKeySignatureTrustEngine(
+			_credentialResolver, keyInfoCredentialResolver);
+
+		signatureTrustEngines.add(signatureTrustEngine);
+
+		_chainingSignatureTrustEngine = new ChainingSignatureTrustEngine(
+			signatureTrustEngines);
 
 		SignatureValidationConfiguration signatureValidationConfiguration =
 			ConfigurationService.get(SignatureValidationConfiguration.class);
@@ -141,7 +156,7 @@ public class MetadataManagerImpl
 						signatureValidationConfiguration;
 
 			basicSignatureValidationConfiguration.setSignatureTrustEngine(
-				getSignatureTrustEngine());
+				_chainingSignatureTrustEngine);
 		}
 	}
 
@@ -428,20 +443,7 @@ public class MetadataManagerImpl
 
 	@Override
 	public SignatureTrustEngine getSignatureTrustEngine() throws SamlException {
-		List<SignatureTrustEngine> signatureTrustEngines = new ArrayList<>();
-
-		SignatureTrustEngine signatureTrustEngine =
-			new ExplicitKeySignatureTrustEngine(
-				metadataCredentialResolver, keyInfoCredentialResolver);
-
-		signatureTrustEngines.add(signatureTrustEngine);
-
-		signatureTrustEngine = new ExplicitKeySignatureTrustEngine(
-			_credentialResolver, keyInfoCredentialResolver);
-
-		signatureTrustEngines.add(signatureTrustEngine);
-
-		return new ChainingSignatureTrustEngine(signatureTrustEngines);
+		return _chainingSignatureTrustEngine;
 	}
 
 	@Override
@@ -658,6 +660,7 @@ public class MetadataManagerImpl
 	private final CachingChainingMetadataResolver
 		_cachingChainingMetadataResolver =
 			new CachingChainingMetadataResolver();
+	private ChainingSignatureTrustEngine _chainingSignatureTrustEngine;
 	private CredentialResolver _credentialResolver;
 	private Http _http;
 	private MetadataCredentialResolver _metadataCredentialResolver;

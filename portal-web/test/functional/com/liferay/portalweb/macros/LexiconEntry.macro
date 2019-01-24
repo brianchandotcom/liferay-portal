@@ -1,5 +1,11 @@
 definition {
 	macro changeDisplayStyle {
+		var browserType = PropsUtil.get("browser.type");
+
+		if ("${browserType}" == "chrome") {
+			MetalComponent.waitForManagementBar();
+		}
+
 		Click(locator1 = "Icon#CURRENT_DISPLAY_STYLE");
 
 		MenuItem.click(menuItem = StringUtil.upperCaseFirstLetter("${displayStyle}"));

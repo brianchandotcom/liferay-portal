@@ -109,7 +109,7 @@ public class LiferayRemoteDeployableContainer
 
 	@Override
 	public ProtocolDescription getDefaultProtocol() {
-		return new ProtocolDescription("jmx-osgi");
+		return _protocolDescription;
 	}
 
 	@Override
@@ -329,6 +329,8 @@ public class LiferayRemoteDeployableContainer
 
 	private static final ObjectName _bundleStateObjectName;
 	private static final ObjectName _frameworkObjectName;
+	private static final ProtocolDescription _protocolDescription =
+		new ProtocolDescription("jmx-osgi");
 
 	static {
 		try {

@@ -172,9 +172,10 @@ public class PersonCollectionResource
 		}
 	}
 
+	@SuppressWarnings("Convert2MethodRef")
 	private byte[] _getImageBytes(BinaryFile binaryFile) {
 		return Try.of(
-			binaryFile::getInputStream
+			() -> binaryFile.getInputStream()
 		).mapTry(
 			inputStream -> {
 				ByteArrayOutputStream byteArrayOutputStream =

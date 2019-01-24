@@ -87,11 +87,7 @@ public class UpdateServiceProviderConnectionMVCActionCommand
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			SamlIdpSpConnection.class.getName(), uploadPortletRequest);
 
-		SamlIdpSpConnection samlIdpSpConnection = null;
-
-		try {
 			if (samlIdpSpConnectionId <= 0) {
-				samlIdpSpConnection =
 					_samlIdpSpConnectionLocalService.addSamlIdpSpConnection(
 						samlSpEntityId, assertionLifetime, attributeNames,
 						attributesEnabled, attributesNamespaceEnabled, enabled,
@@ -99,7 +95,6 @@ public class UpdateServiceProviderConnectionMVCActionCommand
 						nameIdAttribute, nameIdFormat, serviceContext);
 			}
 			else {
-				samlIdpSpConnection =
 					_samlIdpSpConnectionLocalService.updateSamlIdpSpConnection(
 						samlIdpSpConnectionId, samlSpEntityId,
 						assertionLifetime, attributeNames, attributesEnabled,
@@ -107,36 +102,7 @@ public class UpdateServiceProviderConnectionMVCActionCommand
 						metadataXmlInputStream, name, nameIdAttribute,
 						nameIdFormat, serviceContext);
 			}
-
-			actionRequest.setAttribute(
-				"samlIdpSpConnection", samlIdpSpConnection);
-
-			String redirect = ParamUtil.getString(
-				uploadPortletRequest, "redirect");
-
-			if (Validator.isNotNull(redirect)) {
-				redirect = _portal.escapeRedirect(redirect);
-
-				actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
-			}
-
-			sendRedirect(actionRequest, actionResponse);
-		}
-		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
-			}
-
-			SessionErrors.add(actionRequest, e.getClass());
-
-			actionResponse.setRenderParameter(
-				"mvcRenderCommandName",
-				"/admin/edit_service_provider_connection");
-		}
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		UpdateServiceProviderConnectionMVCActionCommand.class);
 
 	@Reference
 	private Portal _portal;

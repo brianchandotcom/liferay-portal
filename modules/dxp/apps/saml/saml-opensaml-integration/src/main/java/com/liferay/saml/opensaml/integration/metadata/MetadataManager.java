@@ -38,7 +38,7 @@ public interface MetadataManager {
 	public EntityDescriptor getEntityDescriptor(HttpServletRequest request)
 		throws SamlException;
 
-	public MetadataResolver getMetadataResolver() throws SamlException;
+	public MetadataResolver getMetadataResolver();
 
 	public String getNameIdAttribute(String entityId);
 

@@ -186,6 +186,10 @@ class CardsTreeview extends Treeview {
 
 		let node = this.getNodeObj(path);
 
+		if (node.disabled) {
+			return;
+		}
+
 		if (this.multiSelection) {
 			if (node.selected) {
 				this.deselectNode_(node);

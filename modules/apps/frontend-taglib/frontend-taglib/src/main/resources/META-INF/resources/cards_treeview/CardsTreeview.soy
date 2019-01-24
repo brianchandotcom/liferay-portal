@@ -88,7 +88,6 @@
 					{/if}
 
 					{call .card}
-						{param disabled: $node.disabled /}
 						{param icon: $node.icon /}
 						{param path: $path /}
 						{param pathThemeImages: $pathThemeImages /}
@@ -113,7 +112,6 @@
  * Renders a Lexicon Horizontal Card
  */
 {template .card}
-	{@param? disabled: bool}
 	{@param icon: string}
 	{@param path: string}
 	{@param pathThemeImages: string}
@@ -121,9 +119,7 @@
 
 	{let $nodeAttributes kind="attributes"}
 		class="card card-horizontal"
-		{if not $disabled}
-			data-onclick="handleNodeClicked_"
-		{/if}
+		data-onclick="handleNodeClicked_"
 		data-onkeyup="handleNodeKeyUp_"
 		tabindex="{$path == 0 ? '0' : '-1'}"
 	{/let}

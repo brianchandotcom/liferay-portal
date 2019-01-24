@@ -837,13 +837,15 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 		}
 
 		@Override
-		public Map<String, Function<NullModel, Object>> getAttributeGetters() {
+		public Map<String, Function<NullModel, Object>>
+			getAttributeGetterFunctions() {
+
 			throw new UnsupportedOperationException();
 		}
 
 		@Override
 		public Map<String, BiConsumer<NullModel, Object>>
-			getAttributeSetters() {
+			getAttributeSetterBiConsumers() {
 
 			throw new UnsupportedOperationException();
 		}

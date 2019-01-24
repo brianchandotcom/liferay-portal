@@ -85,13 +85,15 @@ public class StagedGroupImpl implements StagedGroup {
 	}
 
 	@Override
-	public Map<String, Function<Group, Object>> getAttributeGetters() {
-		return _group.getAttributeGetters();
+	public Map<String, Function<Group, Object>> getAttributeGetterFunctions() {
+		return _group.getAttributeGetterFunctions();
 	}
 
 	@Override
-	public Map<String, BiConsumer<Group, Object>> getAttributeSetters() {
-		return _group.getAttributeSetters();
+	public Map<String, BiConsumer<Group, Object>>
+		getAttributeSetterBiConsumers() {
+
+		return _group.getAttributeSetterBiConsumers();
 	}
 
 	@Override

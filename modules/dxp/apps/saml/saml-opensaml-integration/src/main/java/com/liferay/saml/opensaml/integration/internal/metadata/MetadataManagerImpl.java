@@ -281,6 +281,11 @@ public class MetadataManagerImpl
 	}
 
 	@Override
+	public MetadataCredentialResolver getMetadataCredentialResolver() {
+		return _metadataCredentialResolver;
+	}
+
+	@Override
 	public MetadataResolver getMetadataResolver() {
 		return _cachingChainingMetadataResolver;
 	}

@@ -63,7 +63,7 @@
 		{if $node}
 			<div class="treeview-node-wrapper{$node.expanded ? ' expanded' : ''}">
 				{let $nodeAttributes kind="attributes"}
-					class="treeview-node-main clearfix col-md-4
+					class="treeview-node-main clearfix col-lg-3 col-md-4
 					{$node.children ? ' hasChildren' : ''}
 					{$node.disabled ? ' disabled' : ''}
 					{$node.selected ? ' selected' : ''}
@@ -132,9 +132,11 @@
 			{if $icon}
 				<div class="card-col-field">
 					<div class="sticker sticker-default sticker-lg sticker-static">
-						<svg class="lexicon-icon lexicon-icon-{$icon}" role="img" title="{$title}">
-							<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#{$icon}"></use>
-						</svg>
+						<span class="inline-item">
+							<svg class="lexicon-icon lexicon-icon-{$icon}" role="img" title="{$title}">
+								<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#{$icon}"></use>
+							</svg>
+						</span>
 					</div>
 				</div>
 			{/if}

@@ -17,7 +17,7 @@ AUI.add(
 			loadModules: function(modules, callback) {
 				Liferay.Loader.require.apply(
 					Liferay.Loader,
-					modules.concat(['dynamic-data-mapping-form-renderer@4.0.0/form.es', callback])
+					modules.concat([callback])
 				);
 			}
 		};

@@ -1,5 +1,5 @@
 Liferay.DDM.SoyTemplateUtil.loadModules(
-	#javaScriptTemplateDependencies#,
+	#javaScriptTemplateDependencies#.concat(['#formRendererModuleName#/form.es']),
 	function() {
 		Liferay.DDM.Renderer.FieldTypes.register(#fieldTypes#);
 

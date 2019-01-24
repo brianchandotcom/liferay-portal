@@ -24,6 +24,7 @@ import com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesSerializerTracker;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSModule;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSPackage;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMRegistry;
+import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -59,6 +60,11 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class BaseDDMFormFieldTypesDynamicInclude
 	extends BaseDynamicInclude {
+
+	public String getFormRendererModuleName() {
+		return npmResolver.resolveModuleName(
+			"dynamic-data-mapping-form-renderer");
+	}
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
@@ -172,6 +178,8 @@ public abstract class BaseDDMFormFieldTypesDynamicInclude
 			"fieldTypes",
 			ddmFormFieldTypesSerializerSerializeResponse.getContent());
 
+		values.put("formRendererModuleName", getFormRendererModuleName());
+
 		Set<String> fieldTypesModules = getFieldTypesModules(ddmFormFieldTypes);
 
 		values.put(
@@ -204,6 +212,9 @@ public abstract class BaseDDMFormFieldTypesDynamicInclude
 
 	@Reference
 	protected NPMRegistry npmRegistry;
+
+	@Reference
+	protected NPMResolver npmResolver;
 
 	private static final String _MODULES =
 		"liferay-ddm-form-renderer-types,liferay-ddm-soy-template-util";

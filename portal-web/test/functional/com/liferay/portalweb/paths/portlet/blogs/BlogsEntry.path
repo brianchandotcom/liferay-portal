@@ -95,7 +95,7 @@
 </tr>
 <tr>
 	<td>CONTENT_VIDEO</td>
-	<td>//div[contains(@class,'embedurl')]/div[contains(@data-cke-widget-data,'${key_service}')]</td>
+	<td>//div[contains(@class,'embed')]/div[contains(@src,'${key_service}')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -250,7 +250,7 @@ public class BlogPostingNestedCollectionResource
 		if (ListUtil.isNotEmpty(keywords)) {
 			serviceContext.setAssetTagNames(ArrayUtil.toStringArray(keywords));
 		}
-
+		
 		serviceContext.setScopeGroupId(groupId);
 
 		return serviceContext;

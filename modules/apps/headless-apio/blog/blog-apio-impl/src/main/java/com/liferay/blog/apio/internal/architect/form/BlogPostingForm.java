@@ -20,6 +20,8 @@ import com.liferay.category.apio.architect.identifier.CategoryIdentifier;
 import com.liferay.media.object.apio.architect.identifier.MediaObjectIdentifier;
 import com.liferay.person.apio.architect.identifier.PersonIdentifier;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -48,13 +50,7 @@ public class BlogPostingForm implements BlogPosting {
 		).constructor(
 			BlogPostingForm::new
 		).addOptionalDate(
-			"dateCreated", BlogPostingForm::setCreateDate
-		).addOptionalDate(
-			"dateModified", BlogPostingForm::setModifiedDate
-		).addOptionalDate(
 			"datePublished", BlogPostingForm::setPublishedDate
-		).addOptionalLinkedModel(
-			"creator", PersonIdentifier.class, BlogPostingForm::setCreatorId
 		).addOptionalLinkedModel(
 			"image", MediaObjectIdentifier.class, BlogPostingForm::setImageId
 		).addOptionalLinkedModelList(
@@ -108,24 +104,6 @@ public class BlogPostingForm implements BlogPosting {
 		return _categories;
 	}
 
-	@Override
-	public Date getCreatedDate() {
-		return Optional.ofNullable(
-			_createDate
-		).orElseGet(
-			Date::new
-		);
-	}
-
-	/**
-	 * Returns the blog post's creator ID
-	 *
-	 * @return the creator ID
-	 */
-	public Long getCreatorId() {
-		return _creatorId;
-	}
-
 	/**
 	 * Returns the blog post's description
 	 *
@@ -163,15 +141,6 @@ public class BlogPostingForm implements BlogPosting {
 		return _keywords;
 	}
 
-	@Override
-	public Date getModifiedDate() {
-		return Optional.ofNullable(
-			_modifiedDate
-		).orElseGet(
-			Date::new
-		);
-	}
-
 	/**
 	 * Returns the blog post's display date.
 	 *
@@ -199,14 +168,6 @@ public class BlogPostingForm implements BlogPosting {
 		_categories = categories;
 	}
 
-	public void setCreateDate(Date createDate) {
-		_createDate = createDate;
-	}
-
-	public void setCreatorId(long creatorId) {
-		_creatorId = creatorId;
-	}
-
 	public void setDescription(String description) {
 		_description = description;
 	}
@@ -231,10 +192,6 @@ public class BlogPostingForm implements BlogPosting {
 		_keywords = keywords;
 	}
 
-	public void setModifiedDate(Date modifiedDate) {
-		_modifiedDate = modifiedDate;
-	}
-
 	public void setPublishedDate(Date publishedDate) {
 		_publishedDate = publishedDate;
 	}
@@ -242,15 +199,12 @@ public class BlogPostingForm implements BlogPosting {
 	private String _alternativeHeadline;
 	private String _articleBody;
 	private List<Long> _categories;
-	private Date _createDate;
-	private Long _creatorId;
 	private String _description;
 	private String _friendlyURLPath;
 	private String _headline;
 	private String _imageCaption;
 	private Long _imageId;
 	private List<String> _keywords;
-	private Date _modifiedDate;
 	private Date _publishedDate;
 
 }

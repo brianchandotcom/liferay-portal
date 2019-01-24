@@ -15,7 +15,6 @@
 package com.liferay.blog.apio.architect.model;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -66,25 +65,6 @@ public interface BlogPosting {
 	public List<Long> getCategories();
 
 	/**
-	 * Returns the blog posting's creation date. See <a
-	 * href="https://schema.org/dateCreated">dateCreated </a> for more
-	 * information.
-	 *
-	 * @return the creation date
-	 * @review
-	 */
-	public Date getCreatedDate();
-
-	/**
-	 * Returns the ID of the blog posting's creator. See <a
-	 * href="https://schema.org/creator">creator </a> for more information.
-	 *
-	 * @return the creator's ID
-	 * @review
-	 */
-	public Long getCreatorId();
-
-	/**
 	 * Returns the blog posting's description. See <a
 	 * href="https://schema.org/description">description </a> for more
 	 * information.
@@ -126,16 +106,6 @@ public interface BlogPosting {
 	 * @review
 	 */
 	public List<String> getKeywords();
-
-	/**
-	 * Returns the blog posting's modification date. See <a
-	 * href="https://schema.org/dateModified">dateModified </a> for more
-	 * information.
-	 *
-	 * @return the modification date
-	 * @review
-	 */
-	public Date getModifiedDate();
 
 	/**
 	 * Returns the blog posting's publication date. See <a

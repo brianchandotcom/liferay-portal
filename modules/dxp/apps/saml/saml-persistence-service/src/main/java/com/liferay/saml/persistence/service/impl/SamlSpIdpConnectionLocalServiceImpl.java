@@ -245,7 +245,7 @@ public class SamlSpIdpConnectionLocalServiceImpl
 		samlSpIdpConnection.setLdapImportEnabled(ldapImportEnabled);
 		samlSpIdpConnection.setMetadataUpdatedDate(now);
 
-		if ((metadataXmlInputStream == null) &&
+		if (enabled && (metadataXmlInputStream == null) &&
 			Validator.isNotNull(metadataUrl)) {
 
 			samlSpIdpConnection.setMetadataUrl(metadataUrl);

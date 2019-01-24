@@ -11,7 +11,6 @@ import core from 'metal';
 import dom from 'metal-dom';
 import FormBuilder from 'dynamic-data-mapping-form-builder/metal/js/components/FormBuilder/index.es';
 import LayoutProvider from 'dynamic-data-mapping-form-builder/metal/js/components/LayoutProvider/index.es';
-import loader from 'dynamic-data-mapping-form-builder/metal/js/components/FieldsLoader/index.es';
 import PreviewButton from './components/PreviewButton/PreviewButton.es';
 import PublishButton from './components/PublishButton/PublishButton.es';
 import RuleBuilder from 'dynamic-data-mapping-form-builder/metal/js/components/RuleBuilder/index.es';
@@ -854,13 +853,5 @@ class Form extends Component {
 	}
 }
 
-const DDMForm = (props, container, callback) => {
-	loader(
-		() => callback(new Form(props, container)),
-		props.modules,
-		[...props.dependencies]
-	);
-};
-
-export default DDMForm;
-export {DDMForm};
+export default Form;
+export {Form};

@@ -12,40 +12,28 @@
  * details.
  */
 
-package com.liferay.blogs.web.internal.portlet.action;
+package com.liferay.blogs.internal.util;
 
-import com.liferay.blogs.constants.BlogsPortletKeys;
-import com.liferay.blogs.web.constants.BlogsWebKeys;
 import com.liferay.document.library.util.DLURLHelper;
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Sergio González
+ * @author Adolfo Pérez
  */
-@Component(
-	immediate = true,
-	property = {
-		"javax.portlet.name=" + BlogsPortletKeys.BLOGS, "mvc.command.name=/",
-		"mvc.command.name=/blogs/view"
-	},
-	service = MVCRenderCommand.class
-)
-public class BlogsViewMVCRenderCommand implements MVCRenderCommand {
+@Component(immediate = true, service = {})
+public class DLURLHelperProvider {
 
-	@Override
-	public String render(
-		RenderRequest renderRequest, RenderResponse renderResponse) {
-
-		renderRequest.setAttribute(BlogsWebKeys.DL_URL_HELPER, _dlurlHelper);
-
-		return "/blogs/view.jsp";
+	public static DLURLHelper getDLURLHelper() {
+		return _dlurlHelperProvider._dlurlHelper;
 	}
+
+	public DLURLHelperProvider() {
+		_dlurlHelperProvider = this;
+	}
+
+	private static final DLURLHelperProvider _dlurlHelperProvider;
 
 	@Reference
 	private DLURLHelper _dlurlHelper;

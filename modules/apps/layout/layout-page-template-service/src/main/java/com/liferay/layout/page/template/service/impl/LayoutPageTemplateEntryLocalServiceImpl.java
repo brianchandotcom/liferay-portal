@@ -313,6 +313,13 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 	}
 
 	@Override
+	public LayoutPageTemplateEntry fetchLayoutPageTemplateEntryByPlid(
+		long plid) {
+
+		return layoutPageTemplateEntryPersistence.fetchByPlid_First(plid, null);
+	}
+
+	@Override
 	public List<LayoutPageTemplateEntry> getLayoutPageTemplateEntries(
 		long groupId, long layoutPageTemplateCollectionId) {
 

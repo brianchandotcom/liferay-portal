@@ -96,6 +96,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['liferay-ddm-form-field-editor', 'liferay-ddm-form-renderer-field']
+		requires: ['liferay-ddm-form-renderer-field']
 	}
 );

@@ -21,6 +21,10 @@ dependencies {
 	compileOnly group: "org.apache.maven", name: "maven-plugin-api", transitive: false, version: "3.0.4"
 }
 
+deployDependencies {
+	from (configurations.compile)
+}
+
 formatSource {
 	mustRunAfter formatXML
 }

@@ -4,14 +4,9 @@ import {contains} from 'metal-dom';
 import Soy from 'metal-soy';
 
 import './FragmentEntryLinkContent.es';
-import Store from '../../store/store.es';
-import {
-	CLEAR_ACTIVE_ITEM,
-	REMOVE_FRAGMENT_ENTRY_LINK,
-	UPDATE_ACTIVE_ITEM,
-	UPDATE_HOVERED_ITEM
-} from '../../actions/actions.es';
+import {CLEAR_ACTIVE_ITEM, REMOVE_FRAGMENT_ENTRY_LINK, UPDATE_ACTIVE_ITEM, UPDATE_HOVERED_ITEM} from '../../actions/actions.es';
 import {FRAGMENTS_EDITOR_ITEM_TYPES} from '../../utils/constants';
+import {getConnectedComponent} from '../../store/ConnectedComponent.es';
 import {getItemMoveDirection} from '../../utils/FragmentsEditorGetUtils.es';
 import {shouldUpdatePureComponent} from '../../utils/FragmentsEditorComponentUtils.es';
 import {removeItem} from '../../utils/FragmentsEditorUpdateUtils.es';
@@ -165,16 +160,6 @@ FragmentEntryLink.STATE = {
 	showControlBar: Config.bool().value(true),
 
 	/**
-	 * Store instance
-	 * @default undefined
-	 * @instance
-	 * @memberOf FragmentEntryLink
-	 * @review
-	 * @type {Store}
-	 */
-	store: Config.instanceOf(Store),
-
-	/**
 	 * CSS class to modify style
 	 * @default undefined
 	 * @instance
@@ -182,21 +167,23 @@ FragmentEntryLink.STATE = {
 	 * @review
 	 * @type {!string}
 	 */
-	styleModifier: Config.string(),
-
-	/**
-	 * Fragment spritemap
-	 * @default undefined
-	 * @instance
-	 * @memberOf FragmentEntryLink
-	 * @review
-	 * @type {!string}
-	 */
-	spritemap: Config.string().required()
+	styleModifier: Config.string()
 };
 
-Soy.register(FragmentEntryLink, templates);
+const ConnectedFragmentEntryLink = getConnectedComponent(
+	FragmentEntryLink,
+	[
+		'defaultLanguageId',
+		'imageSelectorURL',
+		'languageId',
+		'portletNamespace',
+		'selectedMappingTypes',
+		'spritemap'
+	]
+);
 
-export {FragmentEntryLink};
+Soy.register(ConnectedFragmentEntryLink, templates);
 
-export default FragmentEntryLink;
+export {ConnectedFragmentEntryLink, FragmentEntryLink};
+
+export default ConnectedFragmentEntryLink;

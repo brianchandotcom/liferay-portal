@@ -1,0 +1,8 @@
+{
+	"cssPath": "index.css",
+	"fragmentEntryKey": "jumbotron-right",
+	"htmlPath": "index.html",
+	"jsPath": "index.js",
+	"name": "Jumbotron right",
+	"type": "section"
+}

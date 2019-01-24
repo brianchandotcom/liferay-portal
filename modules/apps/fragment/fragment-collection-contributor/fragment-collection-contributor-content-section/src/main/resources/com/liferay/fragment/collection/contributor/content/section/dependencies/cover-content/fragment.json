@@ -1,0 +1,8 @@
+{
+	"cssPath": "index.css",
+	"fragmentEntryKey": "cover-content",
+	"htmlPath": "index.html",
+	"jsPath": "index.js",
+	"name": "Cover content",
+	"type": "section"
+}

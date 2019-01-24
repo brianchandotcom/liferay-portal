@@ -1,0 +1,8 @@
+{
+	"cssPath": "index.css",
+	"fragmentEntryKey": "text-left",
+	"htmlPath": "index.html",
+	"jsPath": "index.js",
+	"name": "Text left",
+	"type": "section"
+}

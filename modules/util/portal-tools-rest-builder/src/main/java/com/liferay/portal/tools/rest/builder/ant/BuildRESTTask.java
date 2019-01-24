@@ -50,6 +50,10 @@ public class BuildRESTTask extends Task {
 		_restBuilderArgs.setAuthor(author);
 	}
 
+	public void setCopyrightFileName(String copyrightFileName) {
+		_restBuilderArgs.setCopyrightFileName(copyrightFileName);
+	}
+
 	public void setInputFileName(String inputFileName) {
 		_restBuilderArgs.setInputFileName(inputFileName);
 	}

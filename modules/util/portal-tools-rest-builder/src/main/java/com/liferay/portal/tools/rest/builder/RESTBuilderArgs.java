@@ -39,6 +39,10 @@ public class RESTBuilderArgs {
 		return _author;
 	}
 
+	public String getCopyrightFileName() {
+		return _copyrightFileName;
+	}
+
 	public String getInputFileName() {
 		return _inputFileName;
 	}
@@ -55,6 +59,10 @@ public class RESTBuilderArgs {
 		_author = author;
 	}
 
+	public void setCopyrightFileName(String copyrightFileName) {
+		_copyrightFileName = copyrightFileName;
+	}
+
 	public void setInputFileName(String inputFileName) {
 		_inputFileName = inputFileName;
 	}
@@ -62,6 +70,7 @@ public class RESTBuilderArgs {
 	private String _apiDirName = API_DIR_NAME;
 	private String _apiPackagePath = API_PACKAGE_PATH;
 	private String _author = AUTHOR;
+	private String _copyrightFileName;
 	private String _inputFileName = INPUT_FILE_NAME;
 
 }

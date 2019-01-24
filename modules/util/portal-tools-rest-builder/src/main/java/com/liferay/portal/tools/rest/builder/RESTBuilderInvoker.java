@@ -28,6 +28,7 @@ public class RESTBuilderInvoker {
 		return new RESTBuilder(
 			_getAbsolutePath(baseDir, restBuilderArgs.getApiDirName()),
 			restBuilderArgs.getApiPackagePath(), restBuilderArgs.getAuthor(),
+			_getAbsolutePath(baseDir, restBuilderArgs.getCopyrightFileName()),
 			_getAbsolutePath(baseDir, restBuilderArgs.getInputFileName()));
 	}
 

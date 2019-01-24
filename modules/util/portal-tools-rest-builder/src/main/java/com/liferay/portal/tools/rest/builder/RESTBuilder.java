@@ -17,7 +17,6 @@ package com.liferay.portal.tools.rest.builder;
 import com.liferay.portal.tools.ArgumentsUtil;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.FreeMarker;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.FreeMarkerConstants;
-import com.liferay.portal.tools.rest.builder.internal.util.CopyrightUtil;
 import com.liferay.portal.tools.rest.builder.internal.util.FileUtil;
 import com.liferay.portal.tools.rest.builder.internal.yaml.Components;
 import com.liferay.portal.tools.rest.builder.internal.yaml.Configuration;
@@ -48,10 +47,13 @@ public class RESTBuilder {
 		String apiDirName = arguments.get("api.dir");
 		String apiPackagePath = arguments.get("api.package.path");
 		String author = arguments.get("author");
+		String copyrightFileName = arguments.get("copyright.file");
 		String inputFileName = arguments.get("input.file");
 
 		try {
-			new RESTBuilder(apiDirName, apiPackagePath, author, inputFileName);
+			new RESTBuilder(
+				apiDirName, apiPackagePath, author, copyrightFileName,
+				inputFileName);
 		}
 		catch (Exception e) {
 			ArgumentsUtil.processMainException(arguments, e);
@@ -60,7 +62,7 @@ public class RESTBuilder {
 
 	public RESTBuilder(
 			String apiDirName, String apiPackagePath, String author,
-			String inputFileName)
+			String copyrightFileName, String inputFileName)
 		throws Exception {
 
 		Configuration configuration = _getConfiguration(inputFileName);
@@ -79,13 +81,13 @@ public class RESTBuilder {
 
 			File file = _getDTOFile(apiDirName, apiPackagePath, name);
 			String content = _getDTOContent(
-				apiPackagePath, author, name, schema);
+				apiPackagePath, author, copyrightFileName, name, schema);
 
 			FileUtil.write(file, content);
 
 			file = _getResourceFile(apiDirName, apiPackagePath, name);
 			content = _getResourceContent(
-				apiPackagePath, author, name, configuration);
+				apiPackagePath, author, copyrightFileName, name, configuration);
 
 			FileUtil.write(file, content);
 		}
@@ -120,7 +122,8 @@ public class RESTBuilder {
 	}
 
 	private String _getDTOContent(
-			String apiPackagePath, String author, String name, Schema schema)
+			String apiPackagePath, String author, String copyrightFileName,
+			String name, Schema schema)
 		throws Exception {
 
 		Map<String, Object> context = new HashMap<>();
@@ -133,8 +136,10 @@ public class RESTBuilder {
 		String content = _freeMarker.processTemplate(
 			FreeMarkerConstants.DTO_FTL, context);
 
-		if ((_copyright != null) && !_copyright.isEmpty()) {
-			content = _copyright + "\n\n" + content;
+		if ((copyrightFileName != null) && !copyrightFileName.isEmpty()) {
+			File copyrightFile = new File(copyrightFileName);
+
+			content = FileUtil.read(copyrightFile) + "\n\n" + content;
 		}
 
 		return content;
@@ -157,8 +162,8 @@ public class RESTBuilder {
 	}
 
 	private String _getResourceContent(
-			String apiPackagePath, String author, String name,
-			Configuration configuration)
+			String apiPackagePath, String author, String copyrightFileName,
+			String name, Configuration configuration)
 		throws Exception {
 
 		Map<String, Object> context = new HashMap<>();
@@ -171,8 +176,10 @@ public class RESTBuilder {
 		String content = _freeMarker.processTemplate(
 			FreeMarkerConstants.RESOURCE_FTL, context);
 
-		if ((_copyright != null) && !_copyright.isEmpty()) {
-			content = _copyright + "\n\n" + content;
+		if ((copyrightFileName != null) && !copyrightFileName.isEmpty()) {
+			File copyrightFile = new File(copyrightFileName);
+
+			content = FileUtil.read(copyrightFile) + "\n\n" + content;
 		}
 
 		return content;
@@ -195,7 +202,5 @@ public class RESTBuilder {
 	}
 
 	private static final FreeMarker _freeMarker = new FreeMarker();
-
-	private String _copyright = CopyrightUtil.getCopyright();
 
 }

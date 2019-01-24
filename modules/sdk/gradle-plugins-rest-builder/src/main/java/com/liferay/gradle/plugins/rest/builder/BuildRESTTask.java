@@ -58,6 +58,11 @@ public class BuildRESTTask extends JavaExec {
 	}
 
 	@InputFile
+	public File getCopyrightFile() {
+		return GradleUtil.toFile(getProject(), _copyrightFile);
+	}
+
+	@InputFile
 	public File getInputFile() {
 		return GradleUtil.toFile(getProject(), _inputFile);
 	}
@@ -74,6 +79,10 @@ public class BuildRESTTask extends JavaExec {
 		_author = author;
 	}
 
+	public void setCopyrightFile(Object copyrightFile) {
+		_copyrightFile = copyrightFile;
+	}
+
 	public void setInputFile(Object inputFile) {
 		_inputFile = inputFile;
 	}
@@ -84,6 +93,7 @@ public class BuildRESTTask extends JavaExec {
 		args.add("api.dir=" + _relativize(getApiDir()));
 		args.add("api.package.path=" + getApiPackagePath());
 		args.add("author=" + getAuthor());
+		args.add("copyright.file=" + _relativize(getCopyrightFile()));
 		args.add("input.file=" + _relativize(getInputFile()));
 
 		return args;
@@ -98,6 +108,7 @@ public class BuildRESTTask extends JavaExec {
 	private Object _apiDir;
 	private Object _apiPackagePath;
 	private Object _author;
+	private Object _copyrightFile;
 	private Object _inputFile;
 
 }

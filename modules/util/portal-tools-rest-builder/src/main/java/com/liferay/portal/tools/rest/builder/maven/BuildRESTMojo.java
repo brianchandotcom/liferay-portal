@@ -64,6 +64,13 @@ public class BuildRESTMojo extends AbstractMojo {
 	/**
 	 * @parameter
 	 */
+	public void setCopyrightFileName(String copyrightFileName) {
+		_restBuilderArgs.setCopyrightFileName(copyrightFileName);
+	}
+
+	/**
+	 * @parameter
+	 */
 	public void setInputFileName(String inputFileName) {
 		_restBuilderArgs.setInputFileName(inputFileName);
 	}

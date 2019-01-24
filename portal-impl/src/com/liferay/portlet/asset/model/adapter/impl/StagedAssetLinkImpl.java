@@ -61,13 +61,17 @@ public class StagedAssetLinkImpl implements StagedAssetLink {
 	}
 
 	@Override
-	public Map<String, Function<AssetLink, Object>> getAttributeGetters() {
-		return _assetLink.getAttributeGetters();
+	public Map<String, Function<AssetLink, Object>>
+		getAttributeGetterFunctions() {
+
+		return _assetLink.getAttributeGetterFunctions();
 	}
 
 	@Override
-	public Map<String, BiConsumer<AssetLink, Object>> getAttributeSetters() {
-		return _assetLink.getAttributeSetters();
+	public Map<String, BiConsumer<AssetLink, Object>>
+		getAttributeSetterBiConsumers() {
+
+		return _assetLink.getAttributeSetterBiConsumers();
 	}
 
 	@Override

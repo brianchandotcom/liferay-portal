@@ -75,15 +75,17 @@ public class StagedExpandoColumnImpl implements StagedExpandoColumn {
 	}
 
 	@Override
-	public Map<String, Function<ExpandoColumn, Object>> getAttributeGetters() {
-		return _expandoColumn.getAttributeGetters();
+	public Map<String, Function<ExpandoColumn, Object>>
+		getAttributeGetterFunctions() {
+
+		return _expandoColumn.getAttributeGetterFunctions();
 	}
 
 	@Override
 	public Map<String, BiConsumer<ExpandoColumn, Object>>
-		getAttributeSetters() {
+		getAttributeSetterBiConsumers() {
 
-		return _expandoColumn.getAttributeSetters();
+		return _expandoColumn.getAttributeSetterBiConsumers();
 	}
 
 	@Override

@@ -68,12 +68,14 @@ public class TestGroup implements Group {
 	}
 
 	@Override
-	public Map<String, Function<Group, Object>> getAttributeGetters() {
+	public Map<String, Function<Group, Object>> getAttributeGetterFunctions() {
 		return null;
 	}
 
 	@Override
-	public Map<String, BiConsumer<Group, Object>> getAttributeSetters() {
+	public Map<String, BiConsumer<Group, Object>>
+		getAttributeSetterBiConsumers() {
+
 		return null;
 	}
 

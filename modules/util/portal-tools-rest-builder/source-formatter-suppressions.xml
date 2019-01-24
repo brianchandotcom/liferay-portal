@@ -2,6 +2,6 @@
 
 <suppressions>
 	<source-check>
-		<suppress checks="JavaLongLinesCheck" files="src/main/java/com/liferay/portal/tools/rest/builder/internal/FreeMarkerConstants\.java" />
+		<suppress checks="JavaLongLinesCheck" files="src/main/java/com/liferay/portal/tools/rest/builder/internal/freemarker/FreeMarkerConstants\.java" />
 	</source-check>
 </suppressions>

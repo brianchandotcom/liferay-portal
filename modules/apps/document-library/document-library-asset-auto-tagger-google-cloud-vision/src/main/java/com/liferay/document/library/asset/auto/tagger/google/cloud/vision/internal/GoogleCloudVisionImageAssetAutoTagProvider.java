@@ -18,6 +18,7 @@ import com.liferay.asset.auto.tagger.AssetAutoTagProvider;
 import com.liferay.document.library.asset.auto.tagger.google.cloud.vision.internal.configuration.GoogleCloudVisionAssetAutoTagProviderCompanyConfiguration;
 import com.liferay.document.library.asset.auto.tagger.google.cloud.vision.internal.constants.GoogleCloudVisionAssetAutoTagProviderConstants;
 import com.liferay.document.library.asset.auto.tagger.google.cloud.vision.internal.util.GoogleCloudVisionUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -139,8 +140,9 @@ public class GoogleCloudVisionImageAssetAutoTagProvider
 
 		if (response.getResponseCode() != HttpURLConnection.HTTP_OK) {
 			throw new PortalException(
-				"Response code " + response.getResponseCode() + ": " +
-					responseJSON);
+				StringBundler.concat(
+					"Response code ", response.getResponseCode(), ": ",
+					responseJSON));
 		}
 
 		return JSONFactoryUtil.createJSONObject(responseJSON);

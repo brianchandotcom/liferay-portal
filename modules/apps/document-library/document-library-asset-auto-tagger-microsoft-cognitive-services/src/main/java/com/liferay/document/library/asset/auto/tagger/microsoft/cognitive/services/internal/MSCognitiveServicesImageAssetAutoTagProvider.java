@@ -17,6 +17,7 @@ package com.liferay.document.library.asset.auto.tagger.microsoft.cognitive.servi
 import com.liferay.asset.auto.tagger.AssetAutoTagProvider;
 import com.liferay.document.library.asset.auto.tagger.microsoft.cognitive.services.internal.configuration.MSCognitiveServicesAssetAutoTagProviderCompanyConfiguration;
 import com.liferay.document.library.asset.auto.tagger.microsoft.cognitive.services.internal.constants.MSCognitiveServicesAssetAutoTagProviderConstants;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -146,8 +147,9 @@ public class MSCognitiveServicesImageAssetAutoTagProvider
 		catch (Exception e) {
 			try (InputStream inputStream = httpURLConnection.getErrorStream()) {
 				throw new PortalException(
-					"Response code " + httpURLConnection.getResponseCode() +
-						":" + StringUtil.read(inputStream),
+					StringBundler.concat(
+						"Response code ", httpURLConnection.getResponseCode(),
+						":", StringUtil.read(inputStream)),
 					e);
 			}
 		}

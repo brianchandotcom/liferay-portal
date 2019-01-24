@@ -408,7 +408,7 @@
 
 									if (instance._isEmptySelection(editor)) {
 										if (IE9) {
-											editor.insertHtml(' <br /> ');
+											editor.insertHtml('<br />');
 										}
 										else {
 											editor.execCommand('enter');

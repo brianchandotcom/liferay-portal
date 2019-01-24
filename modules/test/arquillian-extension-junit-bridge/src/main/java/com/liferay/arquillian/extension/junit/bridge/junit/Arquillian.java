@@ -113,13 +113,16 @@ public class Arquillian extends BlockJUnit4ClassRunner {
    public void run(final RunNotifier notifier)
    {
       if(State.isNotRunningInEclipse()) {
-          State.runnerStarted();
+          StateUtil.runnerStarted();
       }
       // first time we're being initialized
-      if(!State.hasTestAdaptor())
+      if(!StateUtil.hasTestAdaptor())
       {
          // no, initialization has been attempted before and failed, refuse to do anything else
-         if(State.hasInitializationException())
+
+		Throwable throwable = StateUtil.getInitializationException();
+
+         if(throwable != null)
          {
             // failed on suite level, ignore children
             //notifier.fireTestIgnored(getDescription());
@@ -127,7 +130,7 @@ public class Arquillian extends BlockJUnit4ClassRunner {
                   new Failure(getDescription(),
                         new RuntimeException(
                               "Arquillian has previously been attempted initialized, but failed. See cause for previous exception",
-                              State.getInitializationException())));
+                              throwable)));
          }
          else
          {
@@ -137,12 +140,12 @@ public class Arquillian extends BlockJUnit4ClassRunner {
                TestRunnerAdaptor adaptor = TestRunnerAdaptorBuilder.build();
                // don't set it if beforeSuite fails
                adaptor.beforeSuite();
-               State.testAdaptor(adaptor);
+               StateUtil.testAdaptor(adaptor);
             }
             catch (Exception e)
             {
                // caught exception during BeforeSuite, mark this as failed
-               State.caughtInitializationException(e);
+               StateUtil.caughtInitializationException(e);
                notifier.fireTestFailure(new Failure(getDescription(), e));
             }
          }
@@ -152,7 +155,7 @@ public class Arquillian extends BlockJUnit4ClassRunner {
          @Override
          public void testRunFinished(Result result) throws Exception
          {
-            State.runnerFinished();
+            StateUtil.runnerFinished();
             shutdown();
          }
 
@@ -160,7 +163,7 @@ public class Arquillian extends BlockJUnit4ClassRunner {
          {
             try
             {
-               if(State.isLastRunner())
+               if(StateUtil.isLastRunner())
                {
                   try
                   {
@@ -172,7 +175,7 @@ public class Arquillian extends BlockJUnit4ClassRunner {
                   }
                   finally
                   {
-                     State.clean();
+                     StateUtil.clean();
                   }
                }
                adaptor = null;
@@ -184,9 +187,9 @@ public class Arquillian extends BlockJUnit4ClassRunner {
          }
       });
       // initialization ok, run children
-      if(State.hasTestAdaptor())
+      if(StateUtil.hasTestAdaptor())
       {
-         adaptor = State.getTestAdaptor();
+         adaptor = StateUtil.getTestAdaptor();
          super.run(notifier);
       }
    }
@@ -427,6 +430,151 @@ public class Arquillian extends BlockJUnit4ClassRunner {
       {
       }
    }
+
+	private static class StateUtil {
+
+		public static void caughtInitializationException(Throwable throwable) {
+			try {
+				_caughtInitializationExceptionMethod.invoke(null, throwable);
+			}
+			catch (ReflectiveOperationException roe) {
+				throw new RuntimeException(roe);
+			}
+		}
+
+		public static void clean() {
+			try {
+				_cleanMethod.invoke(null);
+			}
+			catch (ReflectiveOperationException roe) {
+				throw new RuntimeException(roe);
+			}
+		}
+
+		public static Throwable getInitializationException() {
+			try {
+				return (Throwable)_getInitializationExceptionMethod.invoke(null);
+			}
+			catch (ReflectiveOperationException roe) {
+				throw new RuntimeException(roe);
+			}
+		}
+
+		public static TestRunnerAdaptor getTestAdaptor() {
+			try {
+				return (TestRunnerAdaptor)_getTestAdaptorMethod.invoke(null);
+			}
+			catch (ReflectiveOperationException roe) {
+				throw new RuntimeException(roe);
+			}
+		}
+
+		public static boolean hasTestAdaptor() {
+			try {
+				return (boolean)_hasTestAdaptorMethod.invoke(null);
+			}
+			catch (ReflectiveOperationException roe) {
+				throw new RuntimeException(roe);
+			}
+		}
+
+		public static boolean isLastRunner() {
+			try {
+				return (boolean)_isLastRunnerMethod.invoke(null);
+			}
+			catch (ReflectiveOperationException roe) {
+				throw new RuntimeException(roe);
+			}
+		}
+
+		public static void runnerFinished() {
+			try {
+				_runnerFinishedMethod.invoke(null);
+			}
+			catch (ReflectiveOperationException roe) {
+				throw new RuntimeException(roe);
+			}
+		}
+
+		public static void runnerStarted() {
+			try {
+				_runnerStartedMethod.invoke(null);
+			}
+			catch (ReflectiveOperationException roe) {
+				throw new RuntimeException(roe);
+			}
+		}
+
+		public static void testAdaptor(TestRunnerAdaptor testRunnerAdaptor) {
+			try {
+				_testAdaptorMethod.invoke(null, testRunnerAdaptor);
+			}
+			catch (ReflectiveOperationException roe) {
+				throw new RuntimeException(roe);
+			}
+		}
+
+		private static final Method _caughtInitializationExceptionMethod;
+		private static final Method _cleanMethod;
+		private static final Method _getInitializationExceptionMethod;
+		private static final Method _getTestAdaptorMethod;
+		private static final Method _hasTestAdaptorMethod;
+		private static final Method _isLastRunnerMethod;
+		private static final Method _runnerFinishedMethod;
+		private static final Method _runnerStartedMethod;
+		private static final Method _testAdaptorMethod;
+
+		static {
+			try {
+				_runnerStartedMethod = State.class.getDeclaredMethod(
+					"runnerStarted");
+
+				_runnerStartedMethod.setAccessible(true);
+
+				_hasTestAdaptorMethod = State.class.getDeclaredMethod(
+					"hasTestAdaptor");
+
+				_hasTestAdaptorMethod.setAccessible(true);
+
+				_getInitializationExceptionMethod = State.class.getDeclaredMethod(
+					"getInitializationException");
+
+				_getInitializationExceptionMethod.setAccessible(true);
+
+				_testAdaptorMethod = State.class.getDeclaredMethod(
+					"testAdaptor", TestRunnerAdaptor.class);
+
+				_testAdaptorMethod.setAccessible(true);
+
+				_caughtInitializationExceptionMethod =
+					State.class.getDeclaredMethod(
+						"caughtInitializationException", Throwable.class);
+
+				_caughtInitializationExceptionMethod.setAccessible(true);
+
+				_runnerFinishedMethod = State.class.getDeclaredMethod(
+					"runnerFinished");
+
+				_runnerFinishedMethod.setAccessible(true);
+
+				_isLastRunnerMethod = State.class.getDeclaredMethod("isLastRunner");
+
+				_isLastRunnerMethod.setAccessible(true);
+
+				_cleanMethod = State.class.getDeclaredMethod("clean");
+
+				_cleanMethod.setAccessible(true);
+
+				_getTestAdaptorMethod = State.class.getDeclaredMethod(
+					"getTestAdaptor");
+
+				_getTestAdaptorMethod.setAccessible(true);
+			}
+			catch (ReflectiveOperationException roe) {
+				throw new ExceptionInInitializerError(roe);
+			}
+		}
+	}
 
    private static class StatementLifecycleExecutor implements LifecycleMethodExecutor
    {

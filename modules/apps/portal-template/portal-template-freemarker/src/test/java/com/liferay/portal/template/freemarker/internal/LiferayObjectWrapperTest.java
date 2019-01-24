@@ -116,6 +116,26 @@ public class LiferayObjectWrapperTest {
 	}
 
 	@Test
+	public void testCheckClassIsRestrictedWithNoContextClassloader() {
+		Thread thread = Thread.currentThread();
+
+		ClassLoader contextClassLoader = thread.getContextClassLoader();
+
+		thread.setContextClassLoader(null);
+
+		try {
+			_testCheckClassIsRestricted(
+				new LiferayObjectWrapper(
+					new String[] {TestLiferayObject.class.getName()},
+					new String[] {TestLiferayObject.class.getName()}),
+				TestLiferayObject.class, null);
+		}
+		finally {
+			thread.setContextClassLoader(contextClassLoader);
+		}
+	}
+
+	@Test
 	public void testConstructor() {
 		try (CaptureHandler captureHandler =
 				JDKLoggerTestUtil.configureJDKLogger(

@@ -7,7 +7,7 @@
 	<description/>
 	<groupId>com.liferay</groupId>
 	<artifactId>com.liferay.portal.tools.rest.builder</artifactId>
-	<version>1.0.2</version>
+	<version>1.0.3</version>
 	<goalPrefix>rest-builder</goalPrefix>
 	<mojos>
 		<mojo>
@@ -41,6 +41,13 @@
 				</parameter>
 				<parameter>
 					<name>author</name>
+					<type>java.lang.String</type>
+					<required>false</required>
+					<editable>true</editable>
+					<description/>
+				</parameter>
+				<parameter>
+					<name>copyrightFileName</name>
 					<type>java.lang.String</type>
 					<required>false</required>
 					<editable>true</editable>

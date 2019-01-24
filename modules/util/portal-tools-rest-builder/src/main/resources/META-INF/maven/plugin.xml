@@ -7,7 +7,7 @@
 	<description/>
 	<groupId>com.liferay</groupId>
 	<artifactId>com.liferay.portal.tools.rest.builder</artifactId>
-	<version>1.0.1</version>
+	<version>1.0.2</version>
 	<goalPrefix>rest-builder</goalPrefix>
 	<isolatedRealm>false</isolatedRealm>
 	<inheritedByDefault>true</inheritedByDefault>
@@ -27,6 +27,27 @@
 			<executionStrategy>once-per-session</executionStrategy>
 			<threadSafe>false</threadSafe>
 			<parameters>
+				<parameter>
+					<name>apiDirName</name>
+					<type>java.lang.String</type>
+					<required>false</required>
+					<editable>true</editable>
+					<description/>
+				</parameter>
+				<parameter>
+					<name>apiPackagePath</name>
+					<type>java.lang.String</type>
+					<required>false</required>
+					<editable>true</editable>
+					<description/>
+				</parameter>
+				<parameter>
+					<name>author</name>
+					<type>java.lang.String</type>
+					<required>false</required>
+					<editable>true</editable>
+					<description/>
+				</parameter>
 				<parameter>
 					<name>baseDir</name>
 					<type>java.io.File</type>

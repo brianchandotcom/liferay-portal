@@ -8,7 +8,7 @@ import {setIn} from '../../utils/utils.es';
  * @return {object}
  * @review
  */
-function switchToSegment(state, actionType, payload) {
+function switchToSegmentReducer(state, actionType, payload) {
 	let nextState = state;
 
 	if (actionType === CHANGE_SEGMENT_ID) {
@@ -19,5 +19,5 @@ function switchToSegment(state, actionType, payload) {
 }
 
 export {
-	switchToSegment
+	switchToSegmentReducer
 };

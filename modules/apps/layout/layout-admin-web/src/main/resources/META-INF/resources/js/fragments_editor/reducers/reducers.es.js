@@ -6,7 +6,7 @@ import {hideMappingDialogReducer, hideMappingTypeDialogReducer, openAssetTypeDia
 import {languageIdReducer, translationStatusReducer} from './translations.es';
 import {saveChangesReducer} from './changes.es';
 import {updateActiveItemReducer, updateDropTargetReducer, updateHighlightMappingReducer, updateHoveredItemReducer} from './placeholders.es';
-import {switchToSegment} from './segments.es';
+import {switchToSegmentReducer} from './segments.es';
 
 /**
  * List of reducers
@@ -28,7 +28,7 @@ const reducers = [
 	removeSectionReducer,
 	saveChangesReducer,
 	selectMappeableTypeReducer,
-	switchToSegment,
+	switchToSegmentReducer,
 	toggleFragmentsEditorSidebarReducer,
 	translationStatusReducer,
 	updateActiveItemReducer,

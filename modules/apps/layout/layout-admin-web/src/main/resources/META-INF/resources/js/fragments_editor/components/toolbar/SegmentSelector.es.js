@@ -14,6 +14,7 @@ class SegmentSelector extends Component {
 	 */
 	_handleSegmentChange(event) {
 		const value = event.target.value;
+
 		this.store.dispatchAction(
 			CHANGE_SEGMENT_ID,
 			{

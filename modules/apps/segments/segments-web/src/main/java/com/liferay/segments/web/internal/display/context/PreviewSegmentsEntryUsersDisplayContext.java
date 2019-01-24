@@ -26,10 +26,11 @@ import com.liferay.segments.criteria.Criteria;
 import com.liferay.segments.criteria.contributor.SegmentsCriteriaContributor;
 import com.liferay.segments.criteria.contributor.SegmentsCriteriaContributorRegistry;
 import com.liferay.segments.odata.retriever.ODataRetriever;
-import com.liferay.segments.web.internal.portlet.action.ActionUtil;
+import com.liferay.segments.web.internal.constants.SegmentsWebKeys;
 
 import java.util.List;
 
+import javax.portlet.PortletSession;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -77,8 +78,7 @@ public class PreviewSegmentsEntryUsersDisplayContext {
 			_segmentsCriteriaContributorRegistry.
 				getSegmentsCriteriaContributors(User.class.getName());
 
-		Criteria criteria = ActionUtil.getCriteria(
-			_renderRequest, segmentsCriteriaContributors);
+		Criteria criteria = getCriteriaFromSession();
 
 		if ((criteria == null) ||
 			Validator.isNull(criteria.getFilterString(Criteria.Type.MODEL))) {
@@ -111,6 +111,13 @@ public class PreviewSegmentsEntryUsersDisplayContext {
 		_userSearchContainer = userSearchContainer;
 
 		return _userSearchContainer;
+	}
+
+	protected Criteria getCriteriaFromSession() {
+		PortletSession portletSession = _renderRequest.getPortletSession();
+
+		return (Criteria)portletSession.getAttribute(
+			SegmentsWebKeys.PREVIEW_SEGMENTS_ENTRY_CRITERIA);
 	}
 
 	protected PortletURL getPortletURL() {

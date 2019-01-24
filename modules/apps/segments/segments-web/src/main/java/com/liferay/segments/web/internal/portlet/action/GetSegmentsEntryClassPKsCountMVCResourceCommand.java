@@ -25,6 +25,7 @@ import com.liferay.segments.criteria.contributor.SegmentsCriteriaContributor;
 import com.liferay.segments.criteria.contributor.SegmentsCriteriaContributorRegistry;
 import com.liferay.segments.odata.retriever.ODataRetriever;
 import com.liferay.segments.service.SegmentsEntryService;
+import com.liferay.segments.web.internal.constants.SegmentsWebKeys;
 
 import java.io.PrintWriter;
 
@@ -32,6 +33,7 @@ import java.util.List;
 import java.util.Locale;
 
 import javax.portlet.PortletException;
+import javax.portlet.PortletSession;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
@@ -118,10 +120,21 @@ public class GetSegmentsEntryClassPKsCountMVCResourceCommand
 		Criteria criteria = ActionUtil.getCriteria(
 			resourceRequest, segmentsCriteriaContributors);
 
+		saveCriteriaInSession(resourceRequest, criteria);
+
 		int count = getSegmentsEntryClassPKsCount(
 			companyId, criteria, type, _portal.getLocale(resourceRequest));
 
 		return String.valueOf(count);
+	}
+
+	protected void saveCriteriaInSession(
+		ResourceRequest resourceRequest, Criteria criteria) {
+
+		PortletSession portletSession = resourceRequest.getPortletSession();
+
+		portletSession.setAttribute(
+			SegmentsWebKeys.PREVIEW_SEGMENTS_ENTRY_CRITERIA, criteria);
 	}
 
 	@Reference

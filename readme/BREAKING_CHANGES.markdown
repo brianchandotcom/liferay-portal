@@ -198,6 +198,47 @@ the same results.
 
 ---------------------------------------
 
+### Move TermsOfUseContentProvider out of kernel.util
+- **Date:** 2019-Jan-07
+- **JIRA Ticket:** [LPS-88869](https://issues.liferay.com/browse/LPS-88869)
+
+#### What changed?
+
+Interface `TermsOfUseContentProvider` in package `com.liferay.portal.kernel.util`
+was moved to package `com.liferay.portal.kernel.term.of.use`.
+`TermsOfUseContentProviderRegistryUtil` in `com.liferay.portal.kernel.util` was
+moved to package `com.liferay.portal.internal.terms.of.use` and renamed to
+`TermsOfUseContentProviderUtil`.
+The logic of getting `TermsOfUseContentProvider` was changed. Instead of always
+returning the first service registered, which is random and depends on the order
+of service registered, we keep track of the `TermsOfUseContentProvider` service
+and update it with `com.liferay.portal.kernel.util.ServiceProxyFactory`. As a
+result, the `TermsOfUseContentProvider` we are getting now respects service
+ranking.
+
+#### Who is affected?
+
+This affects anyone who used `TermsOfUseContentProviderRegistryUtil` in package
+`com.liferay.portal.kernel.util` to lookup `TermsOfUseContentProvider` service
+originally in package `com.liferay.portal.kernel.util`
+
+#### How should I update my code?
+
+If `com.liferay.portal.kernel.util.TermsOfUseContentProvider` is used, update
+the import package name. If there is any usage in `portal-web`, update
+`com.liferay.portal.kernel.util.TermsOfUseContentProviderRegistryUtil` to
+`com.liferay.portal.kernel.term.of.use.TermsOfUseContentProviderUtil`. Remove
+usages of `com.liferay.portal.kernel.util.TermsOfUseContentProviderRegistryUtil`
+in modules and use @Reference annotation to fetch the
+`com.liferay.portal.kernel.term.of.use.TermsOfUseContentProvider` service
+instead.
+
+#### Why was this change made?
+
+It's one of several steps to clean up kernel provider interfaces to reduce the
+chance of package version lock down.
+
+---------------------------------------
 ### Deprecated NTLM in Portal Distribution
 - **Date:** 2019-Jan-21
 - **JIRA Ticket:** LPS-88300(https://issues.liferay.com/browse/LPS-88300)

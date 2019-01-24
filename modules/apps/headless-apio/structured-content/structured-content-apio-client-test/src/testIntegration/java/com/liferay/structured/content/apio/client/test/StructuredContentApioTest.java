@@ -148,7 +148,7 @@ public class StructuredContentApioTest {
 
 	@Test
 	public void testDeleteStructuredContent() throws Exception {
-		URL structuredContentIdURL = _createStructuredContent(
+		URL structuredContentURL = _createStructuredContent(
 			LocaleUtil.US, "test-create-structured-content.json",
 			Collections.singletonList(_contentStructureURL.toExternalForm()));
 
@@ -161,7 +161,7 @@ public class StructuredContentApioTest {
 			"Content-Type", "application/json"
 		).when(
 		).delete(
-			structuredContentIdURL.toExternalForm()
+			structuredContentURL.toExternalForm()
 		).then(
 		).statusCode(
 			204
@@ -172,12 +172,12 @@ public class StructuredContentApioTest {
 	public void testGetStructuredContentWithAcceptedLanguageEqualsDefaultLocale()
 		throws Exception {
 
-		URL structuredContentIdURL = _createStructuredContent(
+		URL structuredContentURL = _createStructuredContent(
 			LocaleUtil.US, "test-get-structured-content-us.json",
 			Collections.singletonList(_contentStructureURL.toExternalForm()));
 
 		_updateStructuredContent(
-			structuredContentIdURL, LocaleUtil.SPAIN,
+			structuredContentURL, LocaleUtil.SPAIN,
 			"test-get-structured-content-es.json",
 			Collections.singletonList(_contentStructureURL.toExternalForm()));
 
@@ -231,12 +231,12 @@ public class StructuredContentApioTest {
 	public void testGetStructuredContentWithAcceptedLanguageEqualsLanguageAvailableInStructureContent()
 		throws Exception {
 
-		URL structuredContentIdURL = _createStructuredContent(
+		URL structuredContentURL = _createStructuredContent(
 			LocaleUtil.US, "test-get-structured-content-us.json",
 			Collections.singletonList(_contentStructureURL.toExternalForm()));
 
 		_updateStructuredContent(
-			structuredContentIdURL, LocaleUtil.SPAIN,
+			structuredContentURL, LocaleUtil.SPAIN,
 			"test-get-structured-content-es.json",
 			Collections.singletonList(_contentStructureURL.toExternalForm()));
 
@@ -283,7 +283,7 @@ public class StructuredContentApioTest {
 			IsEqual.equalTo("TextFieldNameLabel_es")
 		).body(
 			"_embedded.StructuredContent[0]._links.self.href",
-			IsEqual.equalTo(structuredContentIdURL.toExternalForm())
+			IsEqual.equalTo(structuredContentURL.toExternalForm())
 		).body(
 			"_links.self.href", IsNull.notNullValue()
 		);
@@ -293,12 +293,12 @@ public class StructuredContentApioTest {
 	public void testGetStructuredContentWithAcceptedLanguageEqualsLanguageNotAvailableInStructureContent()
 		throws Exception {
 
-		URL structuredContentIdURL = _createStructuredContent(
+		URL structuredContentURL = _createStructuredContent(
 			LocaleUtil.US, "test-get-structured-content-us.json",
 			Collections.singletonList(_contentStructureURL.toExternalForm()));
 
 		_updateStructuredContent(
-			structuredContentIdURL, LocaleUtil.SPAIN,
+			structuredContentURL, LocaleUtil.SPAIN,
 			"test-get-structured-content-es.json",
 			Collections.singletonList(_contentStructureURL.toExternalForm()));
 
@@ -349,6 +349,61 @@ public class StructuredContentApioTest {
 	}
 
 	@Test
+	public void testGetStructuredContentWithoutAcceptedLanguageAndDefaultLanguageDifferentThanUserLanguage()
+		throws Exception {
+
+		URL structuredContentURL = _createStructuredContent(
+			LocaleUtil.SPAIN, "test-get-structured-content-es.json",
+			Collections.singletonList(_contentStructureURL.toExternalForm()));
+
+		ApioClientBuilder.given(
+		).basicAuth(
+			"test@liferay.com", "test"
+		).header(
+			"Accept", "application/hal+json"
+		).when(
+		).get(
+			_structuredContentEndpointURL.toExternalForm() +
+				"?filter=title eq 'Example Structured Content in Spanish'"
+		).then(
+		).log(
+		).ifError(
+		).statusCode(
+			200
+		).body(
+			"_embedded.StructuredContent", Matchers.hasSize(1)
+		).body(
+			"_embedded.StructuredContent[0].title",
+			IsEqual.equalTo("Example Structured Content in Spanish")
+		).body(
+			"_embedded.StructuredContent[0]._embedded.values._embedded.find " +
+				"{it.name == 'MyBoolean'}.dataType",
+			IsEqual.equalTo("boolean")
+		).body(
+			"_embedded.StructuredContent[0]._embedded.values._embedded.find " +
+				"{it.name == 'MyBoolean'}.dataType",
+			IsEqual.equalTo("boolean")
+		).body(
+			"_embedded.StructuredContent[0]._embedded.values._embedded.find " +
+				"{it.name == 'MyBoolean'}.inputControl",
+			IsEqual.equalTo("checkbox")
+		).body(
+			"_embedded.StructuredContent[0]._embedded.values._embedded.find " +
+				"{it.name == 'MyColor'}.inputControl",
+			IsNull.nullValue()
+		).body(
+			"_embedded.StructuredContent[0]._embedded.values._embedded.find " +
+				"{it.name == 'TextFieldName'}.label",
+			IsEqual.equalTo("TextFieldNameLabel_us")
+		).body(
+			"_embedded.StructuredContent[0]._links.self.href",
+			IsEqual.equalTo(structuredContentURL.toExternalForm())
+		).body(
+			"_links.self.href", IsNull.notNullValue()
+		);
+	}
+
+	@Test
 	public void testStructuredContentsMatchesSelfLink() {
 		ApioClientBuilder.given(
 		).basicAuth(
@@ -369,7 +424,7 @@ public class StructuredContentApioTest {
 
 	@Test
 	public void testUpdateStructuredContent() throws Exception {
-		URL structuredContentIdURL = _createStructuredContent(
+		URL structuredContentURL = _createStructuredContent(
 			LocaleUtil.US, "test-create-structured-content.json",
 			Collections.singletonList(_contentStructureURL.toExternalForm()));
 
@@ -387,7 +442,7 @@ public class StructuredContentApioTest {
 					_contentStructureURL.toExternalForm()))
 		).when(
 		).put(
-			structuredContentIdURL.toExternalForm()
+			structuredContentURL.toExternalForm()
 		).then(
 		).body(
 			"title", Matchers.equalTo("Example Structured Content Modified")
@@ -423,31 +478,26 @@ public class StructuredContentApioTest {
 			));
 	}
 
-	private URL _updateStructuredContent(
-			URL structuredContentIdURL, Locale locale, String fileName,
+	private void _updateStructuredContent(
+			URL structuredContentURL, Locale locale, String fileName,
 			List<String> vars)
 		throws Exception {
 
-		return new URL(
-			ApioClientBuilder.given(
-			).basicAuth(
-				"test@liferay.com", "test"
-			).header(
-				"Accept", "application/hal+json"
-			).header(
-				"Accept-Language", LocaleUtil.toW3cLanguageId(locale)
-			).header(
-				"Content-Type", "application/json"
-			).body(
-				FileTestUtil.readFile(fileName, getClass(), vars)
-			).when(
-			).put(
-				structuredContentIdURL.toExternalForm()
-			).then(
-			).extract(
-			).path(
-				"_links.self.href"
-			));
+		ApioClientBuilder.given(
+		).basicAuth(
+			"test@liferay.com", "test"
+		).header(
+			"Accept", "application/hal+json"
+		).header(
+			"Accept-Language", LocaleUtil.toW3cLanguageId(locale)
+		).header(
+			"Content-Type", "application/json"
+		).body(
+			FileTestUtil.readFile(fileName, getClass(), vars)
+		).when(
+		).put(
+			structuredContentURL.toExternalForm()
+		);
 	}
 
 	private URL _contentSpaceURL;

@@ -350,6 +350,28 @@ public class JavaParserUtil {
 		return false;
 	}
 
+	private static boolean _isStatementCondition(DetailAST detailAST) {
+		DetailAST parentDetailAST = detailAST.getParent();
+
+		while (true) {
+			if ((parentDetailAST == null) ||
+				(parentDetailAST.getType() == TokenTypes.SLIST)) {
+
+				return false;
+			}
+
+			if ((parentDetailAST.getType() == TokenTypes.LITERAL_FOR) ||
+				(parentDetailAST.getType() == TokenTypes.LITERAL_IF) ||
+				(parentDetailAST.getType() == TokenTypes.LITERAL_TRY) ||
+				(parentDetailAST.getType() == TokenTypes.LITERAL_WHILE)) {
+
+				return true;
+			}
+
+			parentDetailAST = parentDetailAST.getParent();
+		}
+	}
+
 	private static List<JavaExpression> _parseArrayValueJavaExpressions(
 		DetailAST detailAST) {
 
@@ -794,6 +816,9 @@ public class JavaParserUtil {
 				typeArgumentDetailAST, TokenTypes.TYPE_ARGUMENT),
 			_parseParameterValueJavaExpressions(
 				literalNewDetailAST.findFirstToken(TokenTypes.ELIST)));
+
+		javaClassCall.setStatementCondition(
+			_isStatementCondition(literalNewDetailAST));
 
 		DetailAST objBlockDetailAST = literalNewDetailAST.findFirstToken(
 			TokenTypes.OBJBLOCK);
@@ -1362,6 +1387,8 @@ public class JavaParserUtil {
 		javaMethodCall.setParameterValueJavaExpressions(
 			_parseParameterValueJavaExpressions(
 				methodCallDetailAST.findFirstToken(TokenTypes.ELIST)));
+		javaMethodCall.setStatementCondition(
+			_isStatementCondition(methodCallDetailAST));
 
 		if (javaExpression == null) {
 			return javaMethodCall;

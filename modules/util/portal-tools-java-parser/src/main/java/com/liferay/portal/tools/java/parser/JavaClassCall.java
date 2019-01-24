@@ -48,6 +48,10 @@ public class JavaClassCall extends JavaExpression {
 		_hasBody = hasBody;
 	}
 
+	public void setStatementCondition(boolean statementCondition) {
+		_statementCondition = statementCondition;
+	}
+
 	public void setUseChainStyle(boolean useChainStyle) {
 		_useChainStyle = useChainStyle;
 	}
@@ -96,7 +100,7 @@ public class JavaClassCall extends JavaExpression {
 		}
 
 		if (!_parameterValueJavaExpressions.isEmpty()) {
-			if (_useChainStyle) {
+			if (!_statementCondition && _useChainStyle) {
 				appendNewLine(
 					sb, _parameterValueJavaExpressions, indent, maxLineLength);
 
@@ -143,6 +147,7 @@ public class JavaClassCall extends JavaExpression {
 	private final List<JavaType> _genericJavaTypes;
 	private boolean _hasBody;
 	private final List<JavaExpression> _parameterValueJavaExpressions;
+	private boolean _statementCondition;
 	private boolean _useChainStyle;
 
 }

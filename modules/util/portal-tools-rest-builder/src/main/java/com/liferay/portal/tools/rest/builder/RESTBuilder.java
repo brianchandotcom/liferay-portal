@@ -17,6 +17,7 @@ package com.liferay.portal.tools.rest.builder;
 import com.liferay.portal.tools.ArgumentsUtil;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.FreeMarker;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.FreeMarkerConstants;
+import com.liferay.portal.tools.rest.builder.internal.util.CopyrightUtil;
 import com.liferay.portal.tools.rest.builder.internal.util.FileUtil;
 import com.liferay.portal.tools.rest.builder.internal.yaml.Components;
 import com.liferay.portal.tools.rest.builder.internal.yaml.Configuration;
@@ -76,8 +77,8 @@ public class RESTBuilder {
 			String name = entry.getKey();
 			Schema schema = entry.getValue();
 
-			File file = _getModelFile(apiDirName, apiPackagePath, name);
-			String content = _getModelContent(
+			File file = _getDTOFile(apiDirName, apiPackagePath, name);
+			String content = _getDTOContent(
 				apiPackagePath, author, name, schema);
 
 			FileUtil.write(file, content);
@@ -112,7 +113,7 @@ public class RESTBuilder {
 		}
 	}
 
-	private String _getModelContent(
+	private String _getDTOContent(
 			String apiPackagePath, String author, String name, Schema schema)
 		throws Exception {
 
@@ -123,27 +124,34 @@ public class RESTBuilder {
 		context.put("name", name);
 		context.put("schema", schema);
 
-		return _freeMarker.processTemplate(
-			"com/liferay/portal/tools/rest/builder/dependencies/model.ftl",
-			context);
+		String content = _freeMarker.processTemplate(
+			FreeMarkerConstants.DTO_FTL, context);
+
+		if ((_copyright != null) && !_copyright.isEmpty()) {
+			content = _copyright + "\n\n" + content;
+		}
+
+		return content;
 	}
 
-	private File _getModelFile(
-		String apiDirName, String apiPackagePath, String name) {
+	private File _getDTOFile(
+		String apiDir, String apiPackagePath, String name) {
 
 		StringBuilder sb = new StringBuilder();
 
-		sb.append(apiDirName);
+		sb.append(apiDir);
 		sb.append("/");
 		sb.append(apiPackagePath.replace('.', '/'));
 		sb.append("/");
-		sb.append("/model/");
+		sb.append("/dto/");
 		sb.append(name);
-		sb.append("Model.java");
+		sb.append(".java");
 
 		return new File(sb.toString());
 	}
 
 	private static final FreeMarker _freeMarker = new FreeMarker();
+
+	private String _copyright = CopyrightUtil.getCopyright();
 
 }

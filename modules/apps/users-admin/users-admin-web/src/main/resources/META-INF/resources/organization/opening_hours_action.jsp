@@ -48,8 +48,8 @@ long orgLaborId = ParamUtil.getLong(request, "orgLaborId");
 	/>
 
 	<portlet:actionURL name="/users_admin/update_contact_information" var="removeOpeningHoursUrl">
-		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
+		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="className" value="<%= Organization.class.getName() %>" />
 		<portlet:param name="classPK" value="<%= String.valueOf(organizationId) %>" />
 		<portlet:param name="listType" value="<%= ListTypeConstants.ORGANIZATION_SERVICE %>" />

@@ -19,8 +19,8 @@
 		<liferay-portlet:renderURL varImpl="rowURL">
 			<portlet:param name="mvcRenderCommandName" value="/users_admin/view" />
 			<portlet:param name="toolbarItem" value="<%= toolbarItem %>" />
-			<portlet:param name="organizationId" value="<%= String.valueOf(curOrganization.getOrganizationId()) %>" />
 			<portlet:param name="usersListView" value="<%= UserConstants.LIST_VIEW_TREE %>" />
+			<portlet:param name="organizationId" value="<%= String.valueOf(curOrganization.getOrganizationId()) %>" />
 		</liferay-portlet:renderURL>
 
 		<%

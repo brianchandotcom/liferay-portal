@@ -35,11 +35,11 @@ PortalUtil.addPortletBreadcrumbEntry(request, editContactInformationDisplayConte
 <portlet:actionURL name="/users_admin/update_contact_information" var="actionURL" />
 
 <aui:form action="<%= actionURL %>" method="post" name="fm">
-	<aui:input name="redirect" type="hidden" value="<%= editContactInformationDisplayContext.getRedirect() %>" />
+	<aui:input name="errorMVCPath" type="hidden" value="/common/edit_phone_number.jsp" />
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.EDIT %>" />
+	<aui:input name="redirect" type="hidden" value="<%= editContactInformationDisplayContext.getRedirect() %>" />
 	<aui:input name="className" type="hidden" value="<%= editContactInformationDisplayContext.getClassName() %>" />
 	<aui:input name="classPK" type="hidden" value="<%= String.valueOf(editContactInformationDisplayContext.getClassPK()) %>" />
-	<aui:input name="errorMVCPath" type="hidden" value="/common/edit_phone_number.jsp" />
 	<aui:input name="listType" type="hidden" value="<%= ListTypeConstants.PHONE %>" />
 	<aui:input name="primaryKey" type="hidden" value="<%= String.valueOf(editContactInformationDisplayContext.getPrimaryKey()) %>" />
 

@@ -5,7 +5,6 @@ export default class ProcessListSearch extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {value: ''};
-
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 	}
@@ -19,6 +18,7 @@ export default class ProcessListSearch extends React.Component {
 		const {onSearch} = this.props;
 
 		event.preventDefault();
+
 		onSearch(value);
 	}
 
@@ -37,7 +37,7 @@ export default class ProcessListSearch extends React.Component {
 										className="form-control input-group-inset input-group-inset-after"
 										disabled={disabled}
 										onChange={this.handleChange}
-										placeholder="Search for..."
+										placeholder={Liferay.Language.get('search-for')}
 										type="text"
 										value={value}
 									/>

@@ -20,6 +20,7 @@ export default class ProcessListPagination extends React.Component {
 		const size = entry;
 
 		pageClickHandler({page, size, start});
+
 		this.setState({activePage: page});
 	}
 

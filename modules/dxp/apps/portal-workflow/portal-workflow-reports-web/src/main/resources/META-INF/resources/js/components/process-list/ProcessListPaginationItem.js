@@ -11,6 +11,11 @@ export default class ProcessListPaginationItem extends React.Component {
 
 	render() {
 		const {active, page, type} = this.props;
+		const classNames = ['page-item'];
+
+		if (active) {
+			classNames.push('active');
+		}
 
 		const renderLink = () => {
 			const isNext = type === 'next';
@@ -36,10 +41,7 @@ export default class ProcessListPaginationItem extends React.Component {
 		};
 
 		return (
-			<li
-				className={`page-item ${active ? 'active' : ''}`}
-				onClick={this.setPage}
-			>
+			<li className={classNames.join(' ')} onClick={this.setPage}>
 				{renderLink()}
 			</li>
 		);

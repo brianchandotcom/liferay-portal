@@ -4,6 +4,8 @@
  * FloatingToolbarBackgroundColorPanel
  */
 {template .render}
+	{@param? _handleClearButtonClick: any}
+
 	<div class="form-group">
 		<label for="floatingToolbarBackgroundColorPanelPalette">
 			{msg desc=""}background-color{/msg}
@@ -11,7 +13,11 @@
 
 		<div id="floatingToolbarBackgroundColorPanelPalette"></div>
 
-		<button class="btn btn-secondary btn-sm" type="button">
+		<button
+			class="btn btn-secondary btn-sm"
+			data-onclick="{$_handleClearButtonClick}"
+			type="button"
+		>
 			{msg desc=""}clear{/msg}
 		</button>
 	</div>

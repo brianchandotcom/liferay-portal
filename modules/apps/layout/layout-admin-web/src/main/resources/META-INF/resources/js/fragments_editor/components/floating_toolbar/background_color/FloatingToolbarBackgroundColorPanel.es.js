@@ -47,6 +47,19 @@ class FloatingToolbarBackgroundColorPanel extends Component {
 	}
 
 	/**
+	 * Handle Clear button click
+	 * @private
+	 * @review
+	 */
+	_handleClearButtonClick() {
+		this._updateSectionConfig(
+			{
+				[ITEM_CONFIG_KEYS.backgroundColor]: ''
+			}
+		);
+	}
+
+	/**
 	 * Handle color palette color select
 	 * @param {Event} event
 	 * @private

@@ -19,8 +19,6 @@ import com.liferay.apio.architect.pagination.Pagination;
 import com.liferay.apio.architect.resource.NestedCollectionResource;
 import com.liferay.blog.apio.architect.model.BlogPosting;
 import com.liferay.blogs.model.BlogsEntry;
-import com.liferay.portal.apio.user.CurrentUser;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 
@@ -35,8 +33,7 @@ import java.util.Iterator;
  */
 public class BaseBlogPostingNestedCollectionResourceTest {
 
-	protected BlogsEntry addBlogsEntry(
-			long groupId, BlogPosting blogPosting, User user)
+	protected BlogsEntry addBlogsEntry(long groupId, BlogPosting blogPosting)
 		throws Exception {
 
 		NestedCollectionResource nestedCollectionResource =
@@ -45,14 +42,13 @@ public class BaseBlogPostingNestedCollectionResourceTest {
 		Class<?> clazz = nestedCollectionResource.getClass();
 
 		Method method = clazz.getDeclaredMethod(
-			"_addBlogsEntry", long.class, BlogPosting.class, CurrentUser.class);
+			"_addBlogsEntry", long.class, BlogPosting.class);
 
 		method.setAccessible(true);
 
 		try {
 			return (BlogsEntry)method.invoke(
-				nestedCollectionResource, groupId, blogPosting,
-				new CurrentUser(user));
+				nestedCollectionResource, groupId, blogPosting);
 		}
 		catch (InvocationTargetException ite) {
 			throw (Exception)ite.getTargetException();
@@ -79,7 +75,7 @@ public class BaseBlogPostingNestedCollectionResourceTest {
 	}
 
 	protected BlogsEntry updateBlogsEntry(
-			long blogEntryId, BlogPosting blogPosting, User currentUser)
+			long blogEntryId, BlogPosting blogPosting)
 		throws Exception {
 
 		NestedCollectionResource nestedCollectionResource =
@@ -88,14 +84,12 @@ public class BaseBlogPostingNestedCollectionResourceTest {
 		Class<?> clazz = nestedCollectionResource.getClass();
 
 		Method method = clazz.getDeclaredMethod(
-			"_updateBlogsEntry", long.class, BlogPosting.class,
-			CurrentUser.class);
+			"_updateBlogsEntry", long.class, BlogPosting.class);
 
 		method.setAccessible(true);
 
 		return (BlogsEntry)method.invoke(
-			nestedCollectionResource, blogEntryId, blogPosting,
-			new CurrentUser(currentUser));
+			nestedCollectionResource, blogEntryId, blogPosting);
 	}
 
 	private NestedCollectionResource _getNestedCollectionResource()

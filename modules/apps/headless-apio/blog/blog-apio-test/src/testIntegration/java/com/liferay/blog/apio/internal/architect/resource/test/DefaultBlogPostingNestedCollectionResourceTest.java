@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.context.ContextUserReplace;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -41,10 +40,16 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerTestRule;
 
+import java.time.LocalDateTime;
+import java.time.Month;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.assertj.core.api.AbstractThrowableAssert;
 import org.assertj.core.api.Assertions;
@@ -77,30 +82,28 @@ public class DefaultBlogPostingNestedCollectionResourceTest
 
 	@Test
 	public void testAddBlogsEntry() throws Exception {
-		Date date = new Date();
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
-
-		User user = UserLocalServiceUtil.getUser(serviceContext.getUserId());
+		LocalDateTime localDateTime = LocalDateTime.of(
+			2015, Month.JULY, 29, 19, 0);
 
 		BlogPosting blogPosting = new BlogPostingImpl(
 			"alternativeHeadline", "articleBody", "caption",
-			Collections.emptyList(), 0L, date, date, date, "description",
+			Collections.emptyList(), localDateTime, "description",
 			"friendlyurlpath", "headline", 0L, Collections.emptyList());
 
-		BlogsEntry blogsEntry = addBlogsEntry(
-			_group.getGroupId(), blogPosting, user);
+		BlogsEntry blogsEntry = addBlogsEntry(_group.getGroupId(), blogPosting);
+
+		ZonedDateTime zonedDateTime = localDateTime.atZone(
+			ZoneId.systemDefault());
+
+		Date date = Date.from(zonedDateTime.toInstant());
 
 		Assert.assertEquals(
 			blogPosting.getArticleBody(), blogsEntry.getContent());
 		Assert.assertEquals(
 			blogPosting.getCaption(), blogsEntry.getCoverImageCaption());
-		Assert.assertEquals(date, blogsEntry.getCreateDate());
 		Assert.assertEquals(
 			blogPosting.getDescription(), blogsEntry.getDescription());
 		Assert.assertEquals(date, blogsEntry.getDisplayDate());
-		Assert.assertEquals(date, blogsEntry.getModifiedDate());
 		Assert.assertEquals(
 			blogPosting.getAlternativeHeadline(), blogsEntry.getSubtitle());
 		Assert.assertEquals(blogPosting.getHeadline(), blogsEntry.getTitle());
@@ -110,32 +113,27 @@ public class DefaultBlogPostingNestedCollectionResourceTest
 
 	@Test
 	public void testAddBlogsEntryThrowsValidationException() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
-
-		User user = _userLocalService.getUser(serviceContext.getUserId());
-
 		String friendlyURLPath = "friendlyurlpath";
 
 		BlogPosting blogPosting1 = new BlogPostingImpl(
 			RandomTestUtil.randomString(10), RandomTestUtil.randomString(10),
-			RandomTestUtil.randomString(10), Collections.emptyList(), 0L,
-			new Date(), new Date(), new Date(), RandomTestUtil.randomString(10),
+			RandomTestUtil.randomString(10), Collections.emptyList(),
+			LocalDateTime.now(), RandomTestUtil.randomString(10),
 			friendlyURLPath, RandomTestUtil.randomString(10), 0L,
 			Collections.emptyList());
 
-		addBlogsEntry(_group.getGroupId(), blogPosting1, user);
+		addBlogsEntry(_group.getGroupId(), blogPosting1);
 
 		BlogPosting blogPosting2 = new BlogPostingImpl(
 			RandomTestUtil.randomString(10), RandomTestUtil.randomString(10),
-			RandomTestUtil.randomString(10), Collections.emptyList(), 0L,
-			new Date(), new Date(), new Date(), RandomTestUtil.randomString(10),
+			RandomTestUtil.randomString(10), Collections.emptyList(),
+			LocalDateTime.now(), RandomTestUtil.randomString(10),
 			friendlyURLPath, RandomTestUtil.randomString(10), 0L,
 			Collections.emptyList());
 
 		AbstractThrowableAssert abstractThrowableAssert =
 			Assertions.assertThatThrownBy(
-				() -> addBlogsEntry(_group.getGroupId(), blogPosting2, user)
+				() -> addBlogsEntry(_group.getGroupId(), blogPosting2)
 			).isInstanceOf(
 				ValidationException.class
 			);
@@ -151,22 +149,34 @@ public class DefaultBlogPostingNestedCollectionResourceTest
 		User currentUser = _userLocalService.getUser(
 			serviceContext.getUserId());
 
-		User user = UserTestUtil.addUser();
+		User user = UserTestUtil.addGroupAdminUser(_group);
 
-		String friendlyURLPath = "friendlyurlpath";
+		PermissionChecker permissionChecker =
+			PermissionCheckerFactoryUtil.create(user);
 
-		BlogPosting blogPosting = new BlogPostingImpl(
-			RandomTestUtil.randomString(10), RandomTestUtil.randomString(10),
-			RandomTestUtil.randomString(10), Collections.emptyList(),
-			user.getUserId(), new Date(), new Date(), new Date(),
-			RandomTestUtil.randomString(10), friendlyURLPath,
-			RandomTestUtil.randomString(10), 0L, Collections.emptyList());
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				user, permissionChecker)) {
 
-		BlogsEntry blogsEntry = addBlogsEntry(
-			_group.getGroupId(), blogPosting, user);
+			String friendlyURLPath = "friendlyurlpath";
 
-		Assert.assertEquals(user.getUserId(), blogsEntry.getUserId());
-		Assert.assertNotEquals(currentUser.getUserId(), blogsEntry.getUserId());
+			BlogPosting blogPosting = new BlogPostingImpl(
+				RandomTestUtil.randomString(10),
+				RandomTestUtil.randomString(10),
+				RandomTestUtil.randomString(10), Collections.emptyList(),
+				LocalDateTime.now(), RandomTestUtil.randomString(10),
+				friendlyURLPath, RandomTestUtil.randomString(10), 0L,
+				Collections.emptyList());
+
+			BlogsEntry blogsEntry = addBlogsEntry(
+				_group.getGroupId(), blogPosting);
+
+			Assert.assertEquals(user.getUserId(), blogsEntry.getUserId());
+			Assert.assertNotEquals(
+				currentUser.getUserId(), blogsEntry.getUserId());
+		}
+		finally {
+			_userLocalService.deleteUser(user);
+		}
 	}
 
 	@Test
@@ -251,42 +261,38 @@ public class DefaultBlogPostingNestedCollectionResourceTest
 
 	@Test
 	public void testUpdateBlogsEntry() throws Exception {
-		Date date = new Date();
+		LocalDateTime localDateTime = LocalDateTime.of(
+			2015, Month.JULY, 29, 19, 0);
 
 		BlogPosting blogPosting = new BlogPostingImpl(
 			"alternativeHeadline", "articleBody", "caption",
-			Collections.emptyList(), 0L, date, date, date, "description",
+			Collections.emptyList(), localDateTime, "description",
 			"friendlyurlpath", "headline", 0L, Collections.emptyList());
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
-
-		User user = UserLocalServiceUtil.getUser(serviceContext.getUserId());
-
-		BlogsEntry blogsEntry = addBlogsEntry(
-			_group.getGroupId(), blogPosting, user);
+		BlogsEntry blogsEntry = addBlogsEntry(_group.getGroupId(), blogPosting);
 
 		String updatedHeadline = "updatedHeadline";
 
 		BlogPosting updatedBlogPosting = new BlogPostingImpl(
 			blogPosting.getAlternativeHeadline(), blogPosting.getArticleBody(),
-			blogPosting.getCaption(), Collections.emptyList(), 0L, date, date,
-			date, blogPosting.getDescription(),
-			blogPosting.getFriendlyURLPath(), updatedHeadline, 0L,
-			Collections.emptyList());
+			blogPosting.getCaption(), Collections.emptyList(), localDateTime,
+			blogPosting.getDescription(), blogPosting.getFriendlyURLPath(),
+			updatedHeadline, 0L, Collections.emptyList());
 
 		blogsEntry = updateBlogsEntry(
-			blogsEntry.getEntryId(), updatedBlogPosting, user);
+			blogsEntry.getEntryId(), updatedBlogPosting);
+
+		ZoneId zone = ZoneId.systemDefault();
+
+		Date date = Date.from(localDateTime.atZone(zone).toInstant());
 
 		Assert.assertEquals(
 			updatedBlogPosting.getArticleBody(), blogsEntry.getContent());
 		Assert.assertEquals(
 			updatedBlogPosting.getCaption(), blogsEntry.getCoverImageCaption());
-		Assert.assertEquals(date, blogsEntry.getCreateDate());
 		Assert.assertEquals(
 			updatedBlogPosting.getDescription(), blogsEntry.getDescription());
 		Assert.assertEquals(date, blogsEntry.getDisplayDate());
-		Assert.assertEquals(date, blogsEntry.getModifiedDate());
 		Assert.assertEquals(
 			updatedBlogPosting.getAlternativeHeadline(),
 			blogsEntry.getSubtitle());
@@ -320,18 +326,14 @@ public class DefaultBlogPostingNestedCollectionResourceTest
 
 		public BlogPostingImpl(
 			String alternativeHeadline, String articleBody, String caption,
-			List<Long> categories, long creatorId, Date createdDate,
-			Date modifiedDate, Date publishedDate, String description,
-			String friendlyURLPath, String headline, long imageId,
-			List<String> keywords) {
+			List<Long> categories, LocalDateTime publishedDate,
+			String description, String friendlyURLPath, String headline,
+			long imageId, List<String> keywords) {
 
 			_alternativeHeadline = alternativeHeadline;
 			_articleBody = articleBody;
 			_caption = caption;
 			_categories = categories;
-			_creatorId = creatorId;
-			_createdDate = createdDate;
-			_modifiedDate = modifiedDate;
 			_publishedDate = publishedDate;
 			_description = description;
 			_friendlyURLPath = friendlyURLPath;
@@ -361,16 +363,6 @@ public class DefaultBlogPostingNestedCollectionResourceTest
 		}
 
 		@Override
-		public Date getCreatedDate() {
-			return _createdDate;
-		}
-
-		@Override
-		public Long getCreatorId() {
-			return _creatorId;
-		}
-
-		@Override
 		public String getDescription() {
 			return _description;
 		}
@@ -396,28 +388,20 @@ public class DefaultBlogPostingNestedCollectionResourceTest
 		}
 
 		@Override
-		public Date getModifiedDate() {
-			return _modifiedDate;
-		}
-
-		@Override
-		public Date getPublishedDate() {
-			return _publishedDate;
+		public Optional<LocalDateTime> getPublishedDateOptional() {
+			return Optional.ofNullable(_publishedDate);
 		}
 
 		private final String _alternativeHeadline;
 		private final String _articleBody;
 		private final String _caption;
 		private final List<Long> _categories;
-		private final Date _createdDate;
-		private final long _creatorId;
 		private final String _description;
 		private final String _friendlyURLPath;
 		private final String _headline;
 		private final long _imageId;
 		private final List<String> _keywords;
-		private final Date _modifiedDate;
-		private final Date _publishedDate;
+		private final LocalDateTime _publishedDate;
 
 	}
 

@@ -118,10 +118,6 @@ public class UpdateUserContactInformationFormMVCActionCommand
 		}
 	}
 
-	protected void saveContactInformationForm(ActionRequest actionRequest)
-		throws Exception {
-	}
-
 	private void _saveContactInformation(
 			User user, String facebookSn, String jabberSn, String skypeSn,
 			String smsSn, String twitterSn)

@@ -35,7 +35,7 @@
 		"babel-preset-react": "^6.24.1",
 		"check-source-formatting": "^2.0.4",
 		"jest": "^22.4.2",
-		"liferay-jest-junit-reporter": "0.0.3",
+		"liferay-jest-junit-reporter": "1.0.0",
 		"webpack": "^3.10.0",
 		"webpack-dev-server": "^2.11.1",
 		"webpack-merge": "^4.1.1"

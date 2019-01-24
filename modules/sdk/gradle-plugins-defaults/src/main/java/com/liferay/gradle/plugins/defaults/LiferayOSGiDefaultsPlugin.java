@@ -30,6 +30,7 @@ import com.liferay.gradle.plugins.defaults.internal.LiferayRelengPlugin;
 import com.liferay.gradle.plugins.defaults.internal.PublishPluginDefaultsPlugin;
 import com.liferay.gradle.plugins.defaults.internal.WhipDefaultsPlugin;
 import com.liferay.gradle.plugins.defaults.internal.util.BackupFilesBuildAdapter;
+import com.liferay.gradle.plugins.defaults.internal.util.CopyrightUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.FileUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.GitRepo;
 import com.liferay.gradle.plugins.defaults.internal.util.GitUtil;
@@ -56,6 +57,7 @@ import com.liferay.gradle.plugins.jsdoc.JSDocPlugin;
 import com.liferay.gradle.plugins.jsdoc.JSDocTask;
 import com.liferay.gradle.plugins.node.tasks.PublishNodeModuleTask;
 import com.liferay.gradle.plugins.patcher.PatchTask;
+import com.liferay.gradle.plugins.rest.builder.BuildRESTTask;
 import com.liferay.gradle.plugins.rest.builder.RESTBuilderPlugin;
 import com.liferay.gradle.plugins.service.builder.BuildServiceTask;
 import com.liferay.gradle.plugins.service.builder.ServiceBuilderPlugin;
@@ -496,6 +498,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 						project, portalRootDir,
 						RESTBuilderPlugin.CONFIGURATION_NAME,
 						_REST_BUILDER_PORTAL_TOOL_NAME);
+
+					_configureTaskBuildREST(project);
 				}
 
 			});
@@ -510,6 +514,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 						project, portalRootDir,
 						ServiceBuilderPlugin.CONFIGURATION_NAME,
 						_SERVICE_BUILDER_PORTAL_TOOL_NAME);
+
 					_configureTaskBuildService(project);
 				}
 
@@ -2878,6 +2883,36 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 			verificationTask.setIgnoreFailures(true);
 		}
+	}
+
+	private void _configureTaskBuildREST(final Project project) {
+		BuildRESTTask buildRESTTask = (BuildRESTTask)GradleUtil.getTask(
+			project, RESTBuilderPlugin.BUILD_REST_TASK_NAME);
+
+		buildRESTTask.setCopyrightFile(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					File copyrightDir = new File(
+						project.getBuildDir(), "/copyright");
+
+					Files.createDirectories(copyrightDir.toPath());
+
+					File copyrightFile = new File(
+						copyrightDir, "copyright.txt");
+
+					String copyright = CopyrightUtil.getCopyright(
+						project.getProjectDir());
+
+					Files.write(
+						copyrightFile.toPath(),
+						copyright.getBytes(StandardCharsets.UTF_8));
+
+					return copyrightFile;
+				}
+
+			});
 	}
 
 	private void _configureTaskBuildService(Project project) {

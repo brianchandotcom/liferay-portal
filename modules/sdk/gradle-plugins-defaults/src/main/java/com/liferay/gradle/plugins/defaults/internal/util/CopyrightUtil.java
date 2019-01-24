@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.tools.rest.builder.internal.util;
+package com.liferay.gradle.plugins.defaults.internal.util;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -22,7 +22,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 import java.nio.file.Path;
-import java.nio.file.Paths;
 
 import java.util.Properties;
 import java.util.stream.Collectors;
@@ -33,18 +32,18 @@ import java.util.stream.Stream;
  */
 public class CopyrightUtil {
 
-	public static String getCopyright() throws IOException {
-		return _getCopyright();
+	public static String getCopyright(File projectDir) throws IOException {
+		return _getCopyright(projectDir);
 	}
 
-	public static boolean isCommercial() throws IOException {
-		Path path = Paths.get(".");
+	public static boolean isCommercial(File projectDir) throws IOException {
+		Path projectPath = projectDir.toPath();
 
-		if (path == null) {
+		if (projectPath == null) {
 			return false;
 		}
 
-		Path absolutePath = path.toAbsolutePath();
+		Path absolutePath = projectPath.toAbsolutePath();
 
 		absolutePath = absolutePath.normalize();
 
@@ -83,17 +82,17 @@ public class CopyrightUtil {
 		return false;
 	}
 
-	private static String _getCopyright() throws IOException {
+	private static String _getCopyright(File projectDir) throws IOException {
 		ClassLoader classLoader = CopyrightUtil.class.getClassLoader();
 
 		String name = "copyright.txt";
 
-		if (isCommercial()) {
+		if (isCommercial(projectDir)) {
 			name = "copyright-commercial.txt";
 		}
 
 		InputStream inputStream = classLoader.getResourceAsStream(
-			"com/liferay/portal/tools/rest/builder/dependencies/" + name);
+			"com/liferay/gradle/plugins/defaults/dependencies/" + name);
 
 		BufferedReader bufferedReader = new BufferedReader(
 			new InputStreamReader(inputStream));

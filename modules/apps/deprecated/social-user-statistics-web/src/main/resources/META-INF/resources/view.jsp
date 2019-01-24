@@ -106,24 +106,6 @@ if (!rankingNamesList.isEmpty()) {
 		</div>
 	</c:if>
 
-	<aui:script sandbox="<%= true %>">
-		var searchTopUsers = $('#<portlet:namespace />searchTopUsers');
-
-		var parentNode = searchTopUsers.parent();
-
-		searchTopUsers.on(
-			'click',
-			'a',
-			function(event) {
-				event.preventDefault();
-
-				var uri = $(event.currentTarget).attr('href').replace(/p_p_state=normal/i, 'p_p_state=exclusive');
-
-				parentNode.load(uri);
-			}
-		);
-	</aui:script>
-
 <%
 }
 else {

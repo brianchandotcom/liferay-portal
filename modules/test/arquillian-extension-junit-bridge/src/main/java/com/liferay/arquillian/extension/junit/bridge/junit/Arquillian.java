@@ -185,19 +185,6 @@ public class Arquillian extends BlockJUnit4ClassRunner {
       }
    }
 
-   /**
-    * Override to allow test methods with arguments
-    */
-   @Override
-   protected void validatePublicVoidNoArgMethods(Class<? extends Annotation> annotation, boolean isStatic, List<Throwable> errors)
-   {
-      List<FrameworkMethod> methods = getTestClass().getAnnotatedMethods(annotation);
-      for (FrameworkMethod eachTestMethod : methods)
-      {
-         eachTestMethod.validatePublicVoid(isStatic, errors);
-      }
-   }
-
 	@Override
 	protected Statement withBeforeClasses(Statement statement) {
 		return new Statement() {

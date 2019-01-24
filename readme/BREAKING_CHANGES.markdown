@@ -239,7 +239,34 @@ It's one of several steps to clean up kernel provider interfaces to reduce the
 chance of package version lock down.
 
 ---------------------------------------
-### Deprecated NTLM in Portal Distribution
+
+### Remove HibernateConfigurationConverter and Converter
+- **Date:** 2019-Jan-07
+- **JIRA Ticket:** [LPS-88870](https://issues.liferay.com/browse/LPS-88870)
+
+#### What changed?
+
+Interface `com.liferay.portal.kernel.util.Converter` and its implementation
+`com.liferay.portal.spring.hibernate.HibernateConfigurationConverter` were
+removed.
+
+#### Who is affected?
+
+This removes the support of generating customized `portlet-hbm.xml` implemented
+by `HibernateConfigurationConverter`.
+Please refer to [LPS-5363](https://issues.liferay.com/browse/LPS-5363).
+
+#### How should I update my code?
+
+Remove usages of `HibernateConfigurationConverter`. Make sure the generated
+`portlet-hbm.xml` is accurate.
+
+#### Why was this change made?
+
+It's one of several steps to clean up kernel provider interfaces to reduce the
+chance of package version lock down.
+
+---------------------------------------### Deprecated NTLM in Portal Distribution
 - **Date:** 2019-Jan-21
 - **JIRA Ticket:** LPS-88300(https://issues.liferay.com/browse/LPS-88300)
 

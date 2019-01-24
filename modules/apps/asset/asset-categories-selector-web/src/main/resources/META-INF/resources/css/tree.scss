@@ -1,7 +1,7 @@
-$background-color-default: #fff;
+$background-color-default: #FFF;
 $background-color-selected: #F0F5FF;
 $border-color-selected: #65B6F0;
-$border-color: #dee2e6;
+$border-color: #DEE2E6;
 $color-default: #6B6C7E;
 $color-disabled: #A7A9BC;
 $color-selected: #272833;
@@ -17,8 +17,8 @@ $spacer: 1rem;
 
 .category-tree {
 	.card {
-		margin-bottom: 0;
 		color: $color-default;
+		margin-bottom: 0;
 
 		&:focus {
 			box-shadow: inset 0 0 0 2px $border-color-selected;
@@ -30,8 +30,8 @@ $spacer: 1rem;
 		}
 
 		.sticker {
-			color: $color-default;
 			background-color: $background-color-default;
+			color: $color-default;
 			font-size: 0.625rem;
 			height: 2rem;
 			line-height: 2rem;
@@ -44,11 +44,12 @@ $spacer: 1rem;
 	}
 
 	.selected .card {
+		background-color: $background-color-selected;
 		color: $color-selected;
+
 		.sticker {
 			color: $color-selected;
 		}
-		background-color: $background-color-selected;
 	}
 
 	.disabled .card {

@@ -936,10 +936,6 @@
 		<priority value="INFO" />
 	</category>
 
-	<category name="com.liferay.util.Encryptor">
-		<priority value="WARN" />
-	</category>
-
 	<category name="com.liferay.util.JNDIUtil">
 		<priority value="ERROR" />
 	</category>

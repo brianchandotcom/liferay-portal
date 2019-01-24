@@ -222,24 +222,21 @@ public class PortletContextLoaderListener extends ContextLoaderListener {
 
 		iterator.forEachRemaining(
 			beanName -> {
-				Object bean = null;
-
 				try {
-					bean = configurableApplicationContext.getBean(beanName);
-				}
-				catch (BeanIsAbstractException biae) {
-				}
-				catch (Exception e) {
-					_logger.log(Logger.LOG_ERROR, e.getMessage(), e);
-				}
+					Object bean = configurableApplicationContext.getBean(
+						beanName);
 
-				if (bean != null) {
 					ServiceRegistration<?> serviceRegistration =
 						_registerService(_bundleContext, beanName, bean);
 
 					if (serviceRegistration != null) {
 						_serviceRegistrations.add(serviceRegistration);
 					}
+				}
+				catch (BeanIsAbstractException biae) {
+				}
+				catch (Exception e) {
+					_logger.log(Logger.LOG_ERROR, e.getMessage(), e);
 				}
 			});
 	}

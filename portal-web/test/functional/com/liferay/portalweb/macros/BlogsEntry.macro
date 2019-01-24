@@ -38,6 +38,28 @@ definition {
 		}
 
 		BlogsEntry.addContent(entryContent = "${entryContent}");
+
+		if (isSet(embedVideo)) {
+			AlloyEditor.clickContentField();
+
+			Click(locator1 = "AlloyEditor#CONTENT_ADD_BUTTON");
+
+			Click(locator1 = "AlloyEditor#CONTENT_ADD_MENUBAR_VIDEO");
+
+			Type(
+				locator1 = "AlloyEditor#TEXT_FORMATTING_LINK_INPUT",
+				value1 = "${embedVideo}"
+			);
+
+			Click(locator1 = "AlloyEditor#TEXT_FORMATTING_LINK_INPUT_CONFIRM");
+
+			Click(
+				locator1 = "BlogsEntry#CONTENT_VIDEO",
+				key_service = "${videoService}"
+			);
+
+			AssertTextEquals(locator1 = "BlogsEntry#VIDEO_EMBED_HELP_MESSAGE", value1 = "Video playback is disabled during edit mode.");
+		}
 	}
 
 	macro addEntryExternalLinkViaBrowseButton {
@@ -675,6 +697,13 @@ definition {
 			AssertElementPresent(
 				locator1 = "BlogsEntry#ENTRY_COVER_IMAGE",
 				key_uploadFileName = "${uploadFileName}"
+			);
+		}
+
+		if (isSet(embedVideo)) {
+			AssertElementPresent(
+				locator1 = "BlogsEntry#CONTENT_VIDEO",
+				key_service = "youtube"
 			);
 		}
 

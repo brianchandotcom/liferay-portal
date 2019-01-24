@@ -48,9 +48,6 @@ import org.jboss.arquillian.container.spi.client.protocol.ProtocolDescription;
 import org.jboss.arquillian.container.spi.client.protocol.metadata.HTTPContext;
 import org.jboss.arquillian.container.spi.client.protocol.metadata.JMXContext;
 import org.jboss.arquillian.container.spi.client.protocol.metadata.ProtocolMetaData;
-import org.jboss.arquillian.container.spi.context.annotation.ContainerScoped;
-import org.jboss.arquillian.core.api.InstanceProducer;
-import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.exporter.ZipExporter;
 import org.jboss.shrinkwrap.descriptor.api.Descriptor;
@@ -78,18 +75,23 @@ public class LiferayRemoteDeployableContainer
 				"Cannot deploy: " + archive.getName(), e);
 		}
 
-		MBeanServerConnection mBeanServerConnection =
-			_mbeanServerConnectionInstance.get();
+		try {
+			MBeanServerConnection mBeanServerConnection =
+				_getMBeanServerConnection();
 
-		ProtocolMetaData protocolMetaData = new ProtocolMetaData();
+			ProtocolMetaData protocolMetaData = new ProtocolMetaData();
 
-		protocolMetaData.addContext(new JMXContext(mBeanServerConnection));
+			protocolMetaData.addContext(new JMXContext(mBeanServerConnection));
 
-		protocolMetaData.addContext(
-			new HTTPContext(
-				_LIFERAY_DEFAULT_HTTP_HOST, _LIFERAY_DEFAULT_HTTP_PORT));
+			protocolMetaData.addContext(
+				new HTTPContext(
+					_LIFERAY_DEFAULT_HTTP_HOST, _LIFERAY_DEFAULT_HTTP_PORT));
 
-		return protocolMetaData;
+			return protocolMetaData;
+		}
+		catch (IOException ioe) {
+			throw new DeploymentException("Unable to deploy " + archive, ioe);
+		}
 	}
 
 	@Override
@@ -115,8 +117,6 @@ public class LiferayRemoteDeployableContainer
 	public void start() throws LifecycleException {
 		try {
 			MBeanServerConnection mBeanServer = _getMBeanServerConnection();
-
-			_mbeanServerConnectionInstance.set(mBeanServer);
 
 			_frameworkMBean = _getMBeanProxy(
 				mBeanServer, _frameworkObjectName, FrameworkMBean.class);
@@ -306,11 +306,6 @@ public class LiferayRemoteDeployableContainer
 	private BundleStateMBean _bundleStateMBean;
 	private final Map<String, BundleHandle> _deployedBundles = new HashMap<>();
 	private FrameworkMBean _frameworkMBean;
-
-	@ContainerScoped
-	@Inject
-	private InstanceProducer<MBeanServerConnection>
-		_mbeanServerConnectionInstance;
 
 	private class BundleHandle {
 

@@ -1,23 +1,67 @@
+$background-color-default: #fff;
+$background-color-selected: #F0F5FF;
+$border-color-selected: #65B6F0;
+$border-color: #dee2e6;
+$color-default: #6B6C7E;
+$color-disabled: #A7A9BC;
+$color-selected: #272833;
+$navigation-color: #869CAD;
+$spacer: 1rem;
+
+.select-category-filter {
+	background: $background-color-default;
+	border-bottom: 1px solid $border-color;
+	margin-bottom: $spacer * 1.5;
+	padding: $spacer * 0.75;
+}
+
 .category-tree {
 	.card {
+		margin-bottom: 0;
+		color: $color-default;
+
 		&:focus {
-			box-shadow: inset 0 0 0 2px #ABBCC3;
+			box-shadow: inset 0 0 0 2px $border-color-selected;
 			outline: none;
 		}
 
-		margin-bottom: 0;
+		&:hover {
+			background-color: #F7F8F9;
+		}
+
+		.sticker {
+			color: $color-default;
+			background-color: $background-color-default;
+			font-size: 0.625rem;
+			height: 2rem;
+			line-height: 2rem;
+			width: 2rem;
+		}
 	}
 
 	.card-row-padded {
-		padding: 5px;
+		padding: $spacer * 0.25;
 	}
 
 	.selected .card {
-		box-shadow: inset 0 0 0 2px #65B6F0;
+		color: $color-selected;
+		.sticker {
+			color: $color-selected;
+		}
+		background-color: $background-color-selected;
 	}
 
-	.disabled {
-		opacity: 0.7;
+	.disabled .card {
+		color: $color-disabled;
+		cursor: not-allowed;
+
+		&:hover {
+			background-color: $background-color-default;
+		}
+
+		.sticker {
+			color: $color-disabled;
+		}
 	}
 
 	.treeview-node {
@@ -27,8 +71,8 @@
 
 	.treeview-node-main {
 		float: none;
-		margin-bottom: 20px;
-		padding-left: 20px;
+		margin-bottom: $spacer;
+		padding-left: $spacer;
 		position: relative;
 
 		&:not(.disabled) {
@@ -37,9 +81,9 @@
 	}
 
 	.treeview-nodes {
-		border-left: 2px solid #869CAD;
+		border-left: 2px solid $navigation-color;
 		list-style: none;
-		margin-left: 40px;
+		margin-left: $spacer;
 		padding-left: 0;
 
 		.treeview-nodes {
@@ -48,13 +92,8 @@
 		}
 	}
 
-	.treeview-node-name {
-		font-size: 1.4rem;
-		margin-left: 0.8rem;
-	}
-
 	.treeview-node-toggler {
-		background-color: #869CAD;
+		background-color: $navigation-color;
 		border-radius: 3px;
 		display: inline-block;
 		height: 14px;

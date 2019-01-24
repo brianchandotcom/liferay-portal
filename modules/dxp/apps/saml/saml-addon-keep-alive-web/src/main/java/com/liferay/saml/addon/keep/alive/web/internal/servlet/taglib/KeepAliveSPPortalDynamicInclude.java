@@ -15,6 +15,7 @@
 package com.liferay.saml.addon.keep.alive.web.internal.servlet.taglib;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -102,6 +103,10 @@ public class KeepAliveSPPortalDynamicInclude extends BaseDynamicInclude {
 		try {
 			SamlSpSession samlSpSession = getSamlSpSession(
 				request, _samlSpSessionLocalService);
+
+			if (samlSpSession == null) {
+				return StringPool.BLANK;
+			}
 
 			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 				WebKeys.THEME_DISPLAY);

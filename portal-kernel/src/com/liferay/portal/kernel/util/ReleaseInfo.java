@@ -126,7 +126,7 @@ public class ReleaseInfo {
 
 	private static final String _VERSION = "7.2.0";
 
-	private static final String _VERSION_DISPLAY_NAME = "7.2.0 CE A1";
+	private static final String _VERSION_DISPLAY_NAME = "7.2.0 CE M2";
 
 	private static String _releaseInfo;
 	private static String _serverInfo;

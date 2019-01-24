@@ -1,0 +1,15 @@
+{
+	"build": {
+		"dependencies": [
+			"clay-button",
+			"clay-checkbox",
+			"clay-dropdown",
+			"clay-icon",
+			"clay-label",
+			"clay-link",
+			"clay-portal",
+			"clay-radio",
+			"clay-management-toolbar"
+		]
+	}
+}

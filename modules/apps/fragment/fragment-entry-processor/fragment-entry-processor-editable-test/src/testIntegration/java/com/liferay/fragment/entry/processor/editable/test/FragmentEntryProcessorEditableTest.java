@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -47,11 +48,13 @@ import java.io.IOException;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Locale;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -76,18 +79,23 @@ public class FragmentEntryProcessorEditableTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
-		Document document = Jsoup.parseBodyFragment(
-			_getFileAsString("processed_fragment_entry.html"));
+		_processedHTML = _getProcessedHTML();
 
-		Document.OutputSettings outputSettings = new Document.OutputSettings();
+		_originalSiteDefaultLocale = LocaleThreadLocal.getSiteDefaultLocale();
 
-		outputSettings.prettyPrint(false);
+		_originalThemeDisplayDefaultLocale =
+			LocaleThreadLocal.getThemeDisplayLocale();
 
-		document.outputSettings(outputSettings);
+		LocaleThreadLocal.setSiteDefaultLocale(LocaleUtil.US);
 
-		Element bodyElement = document.body();
+		LocaleThreadLocal.setThemeDisplayLocale(LocaleUtil.US);
+	}
 
-		_processedHTML = bodyElement.html();
+	@After
+	public void tearDown() {
+		LocaleThreadLocal.setSiteDefaultLocale(_originalSiteDefaultLocale);
+		LocaleThreadLocal.setThemeDisplayLocale(
+			_originalThemeDisplayDefaultLocale);
 	}
 
 	@Test
@@ -191,6 +199,30 @@ public class FragmentEntryProcessorEditableTest {
 			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
 				fragmentEntryLink, FragmentEntryLinkConstants.EDIT,
 				LocaleUtil.US));
+	}
+
+	@Test
+	public void testFragmentEntryProcessorEditableWithMatchedSegmentAndDefaultLanguage()
+		throws Exception {
+
+		FragmentEntry fragmentEntry = _createFragmentEntry(
+			"fragment_entry.html");
+
+		FragmentEntryLink fragmentEntryLink =
+			FragmentEntryLinkLocalServiceUtil.createFragmentEntryLink(0);
+
+		fragmentEntryLink.setHtml(fragmentEntry.getHtml());
+
+		fragmentEntryLink.setEditableValues(
+			_getJsonFileAsString(
+				"fragment_entry_link_editable_values_matching_segment_and_" +
+					"default_language.json"));
+
+		Assert.assertEquals(
+			_processedHTML,
+			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
+				fragmentEntryLink, FragmentEntryLinkConstants.EDIT,
+				LocaleUtil.CHINESE, Arrays.asList(1L, 0L)));
 	}
 
 	@Test
@@ -309,12 +341,29 @@ public class FragmentEntryProcessorEditableTest {
 		return jsonObject.toString();
 	}
 
+	private String _getProcessedHTML() throws IOException {
+		Document document = Jsoup.parseBodyFragment(
+			_getFileAsString("processed_fragment_entry.html"));
+
+		Document.OutputSettings outputSettings = new Document.OutputSettings();
+
+		outputSettings.prettyPrint(false);
+
+		document.outputSettings(outputSettings);
+
+		Element bodyElement = document.body();
+
+		return bodyElement.html();
+	}
+
 	@Inject
 	private FragmentEntryProcessorRegistry _fragmentEntryProcessorRegistry;
 
 	@DeleteAfterTestRun
 	private Group _group;
 
+	private Locale _originalSiteDefaultLocale;
+	private Locale _originalThemeDisplayDefaultLocale;
 	private String _processedHTML;
 
 }

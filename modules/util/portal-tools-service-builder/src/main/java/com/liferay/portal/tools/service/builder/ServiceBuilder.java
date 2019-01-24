@@ -891,6 +891,7 @@ public class ServiceBuilder {
 						_uadApplicationEntities.keySet()) {
 
 					_createUADBnd(uadApplicationName);
+					_createUADBuildGradle(uadApplicationName);
 					_createUADConstants(uadApplicationName);
 				}
 
@@ -3924,6 +3925,34 @@ public class ServiceBuilder {
 		ToolsUtil.writeFileRaw(file, content, _modifiedFileNames);
 	}
 
+	private void _createUADBuildGradle(String uadApplicationName)
+		throws Exception {
+
+		List<Entity> entities = _uadApplicationEntities.get(uadApplicationName);
+
+		Entity entity = entities.get(0);
+
+		String uadOutputPath = entity.getUADOutputPath();
+
+		int index = uadOutputPath.indexOf("/src/");
+
+		String uadDirName = uadOutputPath.substring(0, index);
+
+		File file = new File(uadDirName + "/build.gradle");
+
+		if (file.exists()) {
+			return;
+		}
+
+		Map<String, Object> context = _getContext();
+
+		context.put("apiGradleProjectPath", _getAPIGradleProjectPath());
+
+		String content = _processTemplate(_tplUADBuildGradle, context);
+
+		ToolsUtil.writeFileRaw(file, content, _modifiedFileNames);
+	}
+
 	private void _createUADConstants(String uadApplicationName)
 		throws Exception {
 
@@ -4137,6 +4166,25 @@ public class ServiceBuilder {
 		}
 
 		return xml;
+	}
+
+	private String _getAPIGradleProjectPath() throws IOException {
+		if (!_osgiModule) {
+			return StringPool.BLANK;
+		}
+
+		File apiDir = new File(_apiDirName);
+
+		String absolutePath = apiDir.getCanonicalPath();
+
+		String beginPattern = "/modules/";
+		String endPattern = "/src/";
+
+		String trimmed = absolutePath.substring(
+			absolutePath.indexOf(beginPattern) + beginPattern.length() - 1,
+			absolutePath.indexOf(endPattern));
+
+		return trimmed.replace(StringPool.FORWARD_SLASH, StringPool.COLON);
 	}
 
 	private List<EntityColumn> _getBlobEntityColumns(Entity entity) {
@@ -7016,6 +7064,7 @@ public class ServiceBuilder {
 	private String _tplSpringXml = _TPL_ROOT + "spring_xml.ftl";
 	private String _tplUADAnonymizer = _TPL_ROOT + "uad_anonymizer.ftl";
 	private String _tplUADBnd = _TPL_ROOT + "uad_bnd.ftl";
+	private String _tplUADBuildGradle = _TPL_ROOT + "uad_build_gradle.ftl";
 	private String _tplUADConstants = _TPL_ROOT + "uad_constants.ftl";
 	private String _tplUADDisplay = _TPL_ROOT + "uad_display.ftl";
 	private String _tplUADExporter = _TPL_ROOT + "uad_exporter.ftl";

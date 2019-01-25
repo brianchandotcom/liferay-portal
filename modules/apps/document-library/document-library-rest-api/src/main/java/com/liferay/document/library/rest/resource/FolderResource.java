@@ -17,7 +17,7 @@ package com.liferay.document.library.rest.resource;
 import javax.ws.rs.Path;
 
 /**
- * @author Javier Gamarra
+ * @author Brian Wing Shun Chan
  */
 @Path("/1.0.0/folder")
 public interface FolderResource {

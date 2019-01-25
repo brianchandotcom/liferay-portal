@@ -12,13 +12,24 @@
  * details.
  */
 
-package com.liferay.document.library.rest.dto;
+package com.liferay.document.library.rest.internal.application;
 
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.annotation.Generated;
+
+import javax.ws.rs.core.Application;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
 
 /**
  * @author Brian Wing Shun Chan
  */
-@XmlRootElement(name = "Folder")
-public class Folder {
+@Component(
+	property = {
+		JaxrsWhiteboardConstants.JAX_RS_APPLICATION_BASE + "=/document-library",
+		JaxrsWhiteboardConstants.JAX_RS_NAME + "=document-library-application"
+	},
+	service = Application.class
+)
+public class DocumentLibraryApplication extends Application {
 }

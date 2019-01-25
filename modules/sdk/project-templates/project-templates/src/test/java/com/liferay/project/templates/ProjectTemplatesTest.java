@@ -1183,9 +1183,7 @@ public class ProjectTemplatesTest {
 			"originalModule group: \"com.liferay\", ",
 			"name: \"com.liferay.login.web\", version: \"2.0.4\"");
 
-		if (Validator.isNotNull(_BUILD_PROJECTS) &&
-			_BUILD_PROJECTS.equals("true")) {
-
+		if (_isBuildProjects()) {
 			_executeGradle(gradleProjectDir, _GRADLE_TASK_PATH_BUILD);
 
 			File gradleOutputDir = new File(gradleProjectDir, "build/libs");
@@ -2628,9 +2626,7 @@ public class ProjectTemplatesTest {
 
 		_buildProjects(gradleProjectDir, mavenProjectDir);
 
-		if (Validator.isNotNull(_BUILD_PROJECTS) &&
-			_BUILD_PROJECTS.equals("true")) {
-
+		if (_isBuildProjects()) {
 			_testSoyOutputFiles(gradleProjectDir, mavenProjectDir);
 		}
 	}
@@ -2685,9 +2681,7 @@ public class ProjectTemplatesTest {
 
 		_buildProjects(gradleProjectDir, mavenProjectDir);
 
-		if (Validator.isNotNull(_BUILD_PROJECTS) &&
-			_BUILD_PROJECTS.equals("true")) {
-
+		if (_isBuildProjects()) {
 			_testSoyOutputFiles(gradleProjectDir, mavenProjectDir);
 		}
 	}
@@ -2753,9 +2747,7 @@ public class ProjectTemplatesTest {
 
 		_buildProjects(gradleProjectDir, mavenProjectDir);
 
-		if (Validator.isNotNull(_BUILD_PROJECTS) &&
-			_BUILD_PROJECTS.equals("true")) {
-
+		if (_isBuildProjects()) {
 			_testSpringMVCOutputs(gradleProjectDir);
 		}
 	}
@@ -2775,9 +2767,7 @@ public class ProjectTemplatesTest {
 
 		_buildProjects(gradleProjectDir, mavenProjectDir);
 
-		if (Validator.isNotNull(_BUILD_PROJECTS) &&
-			_BUILD_PROJECTS.equals("true")) {
-
+		if (_isBuildProjects()) {
 			_testSpringMVCOutputs(gradleProjectDir);
 		}
 	}
@@ -3736,9 +3726,7 @@ public class ProjectTemplatesTest {
 			File mavenOutputDir, String... gradleTaskPath)
 		throws Exception {
 
-		if (Validator.isNotNull(_BUILD_PROJECTS) &&
-			_BUILD_PROJECTS.equals("true")) {
-
+		if (_isBuildProjects()) {
 			_executeGradle(gradleProjectDir, gradleTaskPath);
 
 			Path gradleOutputPath = FileTestUtil.getFile(
@@ -4261,6 +4249,16 @@ public class ProjectTemplatesTest {
 		throws Exception {
 
 		return _executeMaven(projectDir, false, args);
+	}
+
+	private static boolean _isBuildProjects() {
+		if (Validator.isNotNull(_BUILD_PROJECTS) &&
+			_BUILD_PROJECTS.equals("true")) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private static List<String> _sanitizeLines(List<String> lines) {
@@ -5418,9 +5416,7 @@ public class ProjectTemplatesTest {
 		_testNotContains(
 			workspaceProjectDir, "build.gradle", true, "^repositories \\{.*");
 
-		if (Validator.isNotNull(_BUILD_PROJECTS) &&
-			_BUILD_PROJECTS.equals("true")) {
-
+		if (_isBuildProjects()) {
 			_executeGradle(gradleProjectDir, _GRADLE_TASK_PATH_BUILD);
 
 			_testExists(gradleProjectDir, jarFilePath);

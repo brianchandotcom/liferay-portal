@@ -326,6 +326,13 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 		String value = jsonObject.getString(LanguageUtil.getLanguageId(locale));
 
+		if (Validator.isNotNull(value)) {
+			return value;
+		}
+
+		value = jsonObject.getString(
+			LanguageUtil.getLanguageId(LocaleUtil.getMostRelevantLocale()));
+
 		if (Validator.isNull(value)) {
 			value = jsonObject.getString("defaultValue");
 		}

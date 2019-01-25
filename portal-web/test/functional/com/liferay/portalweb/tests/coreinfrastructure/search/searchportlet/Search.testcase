@@ -590,7 +590,7 @@ definition {
 
 	@description = "This is a use case for LPS-74299."
 	@priority = "3"
-	test SearchBySiteFacet {
+	test ViewFacetPersistence {
 		ProductMenu.gotoPortlet(
 			category = "Build",
 			panel = "Site Administration",

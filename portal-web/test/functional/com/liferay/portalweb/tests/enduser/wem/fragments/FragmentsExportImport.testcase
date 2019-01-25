@@ -149,7 +149,9 @@ definition {
 		}
 
 		task ("Assert the section fragment survived the import and the fragment preview displays the Button fragment") {
-			LexiconEntry.gotoEntryMenuItem(menuItem = "Edit", rowEntry = "Fragment Name");
+			FragmentsAdmin.gotoFragment(
+				fragmentName = "Fragment Name"
+			);
 
 			SelectFrame(locator1 = "FragmentEditor#PREVIEW_IFRAME");
 

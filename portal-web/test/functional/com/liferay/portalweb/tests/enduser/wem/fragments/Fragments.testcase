@@ -56,7 +56,9 @@ definition {
 		}
 
 		task ("Delete the section fragment") {
-			LexiconEntry.delete(rowEntry = "Fragment Name");
+			FragmentsAdmin.deleteFragment(
+				fragmentName = "Fragment Name"
+			);
 		}
 
 		task ("Navigate to fragments admin") {
@@ -98,7 +100,10 @@ definition {
 		}
 
 		task ("Rename the section fragment") {
-			LexiconEntry.gotoEntryMenuItem(menuItem = "Rename", rowEntry = "Fragment Name");
+			FragmentsAdmin.gotoFragmentEllipsisItem(
+				fragmentName = "Fragment Name",
+				item = "Rename"
+			);
 
 			PortletEntry.inputName(name = "Rename Fragment");
 
@@ -184,14 +189,16 @@ definition {
 		}
 
 		task ("Assert the second section fragment is in draft status") {
-			PortletEntry.viewWorkflowStatus(
-				rowEntry = "Fragment Name 2",
+			FragmentsAdmin.viewFragmentWorkflowStatus(
+				fragmentName = "Fragment Name 2",
 				workflowStatus = "Draft"
 			);
 		}
 
 		task ("Edit the second section fragment") {
-			LexiconEntry.gotoEntryMenuItem(menuItem = "Edit", rowEntry = "Fragment Name 2");
+			FragmentsAdmin.gotoFragment(
+				fragmentName = "Fragment Name 2"
+			);
 
 			var htmlSnippet = '''
 <html>${line.separator}

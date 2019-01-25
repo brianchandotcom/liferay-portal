@@ -33,6 +33,7 @@ long assertionLifetime = GetterUtil.getLong(request.getAttribute(SamlWebKeys.SAM
 
 <portlet:actionURL name="/admin/updateServiceProviderConnection" var="updateServiceProviderConnectionURL">
 	<portlet:param name="mvcRenderCommandName" value="/admin/edit_service_provider_connection" />
+	<portlet:param name="samlIdpSpConnectionId" value='<%= (samlIdpSpConnection != null) ? String.valueOf(samlIdpSpConnection.getSamlIdpSpConnectionId()) : "" %>' />
 </portlet:actionURL>
 
 <aui:form action="<%= updateServiceProviderConnectionURL %>" cssClass="container-fluid-1280" enctype="multipart/form-data">
@@ -45,8 +46,6 @@ long assertionLifetime = GetterUtil.getLong(request.getAttribute(SamlWebKeys.SAM
 	<liferay-ui:error exception="<%= SamlIdpSpConnectionSamlSpEntityIdException.class %>" message="please-enter-a-valid-service-provider-entity-id" />
 
 	<aui:model-context bean="<%= samlIdpSpConnection %>" model="<%= SamlIdpSpConnection.class %>" />
-
-	<aui:input name="samlIdpSpConnectionId" type="hidden" />
 
 	<liferay-util:dynamic-include key="com.liferay.saml.web#/admin/edit_service_provider_connection.jsp#pre" />
 

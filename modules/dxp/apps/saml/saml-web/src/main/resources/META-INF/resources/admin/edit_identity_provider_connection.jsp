@@ -33,6 +33,7 @@ long clockSkew = GetterUtil.getLong(request.getAttribute(SamlWebKeys.SAML_CLOCK_
 
 <portlet:actionURL name="/admin/updateIdentityProviderConnection" var="updateIdentityProviderConnectionURL">
 	<portlet:param name="mvcRenderCommandName" value="/admin/edit_identity_provider_connection" />
+	<portlet:param name="samlSpIdpConnectionId" value='<%= (samlSpIdpConnection != null) ? String.valueOf(samlSpIdpConnection.getSamlSpIdpConnectionId()) : "" %>' />
 </portlet:actionURL>
 
 <aui:form action="<%= updateIdentityProviderConnectionURL %>" cssClass="container-fluid-1280" enctype="multipart/form-data">
@@ -44,8 +45,6 @@ long clockSkew = GetterUtil.getLong(request.getAttribute(SamlWebKeys.SAML_CLOCK_
 	<liferay-ui:error exception="<%= SamlSpIdpConnectionSamlIdpEntityIdException.class %>" message="please-enter-a-valid-identity-provider-entity-id" />
 
 	<aui:model-context bean="<%= samlSpIdpConnection %>" model="<%= SamlSpIdpConnection.class %>" />
-
-	<aui:input name="samlSpIdpConnectionId" type="hidden" />
 
 	<liferay-util:dynamic-include key="com.liferay.saml.web#/admin/edit_identity_provider_connection.jsp#pre" />
 

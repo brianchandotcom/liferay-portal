@@ -102,7 +102,7 @@
 		<finder name="LayoutPrototype" return-type="Collection">
 			<finder-column name="layoutPrototypeId" />
 		</finder>
-		<finder name="Plid" return-type="Collection">
+		<finder name="Plid" return-type="LayoutPageTemplateEntry" unique="true">
 			<finder-column name="plid" />
 		</finder>
 		<finder name="G_L" return-type="Collection">

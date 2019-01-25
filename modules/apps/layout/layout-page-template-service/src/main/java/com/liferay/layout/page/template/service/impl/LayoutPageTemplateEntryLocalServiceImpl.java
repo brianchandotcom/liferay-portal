@@ -335,7 +335,7 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 	public LayoutPageTemplateEntry fetchLayoutPageTemplateEntryByPlid(
 		long plid) {
 
-		return layoutPageTemplateEntryPersistence.fetchByPlid_First(plid, null);
+		return layoutPageTemplateEntryPersistence.fetchByPlid(plid);
 	}
 
 	@Override

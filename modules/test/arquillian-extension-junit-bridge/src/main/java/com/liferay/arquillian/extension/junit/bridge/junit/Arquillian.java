@@ -88,20 +88,6 @@ public class Arquillian extends BlockJUnit4ClassRunner {
 	}
 
 	@Override
-	protected Statement withAfters(
-		FrameworkMethod method, Object target, Statement statement) {
-
-		return statement;
-	}
-
-	@Override
-	protected Statement withBefores(
-		FrameworkMethod method, Object target, Statement statement) {
-
-		return statement;
-	}
-
-	@Override
 	public void run(RunNotifier runNotifier) {
 		_testRunnerAdaptor = _testRunnerAdaptorThreadLocal.get();
 
@@ -222,10 +208,8 @@ public class Arquillian extends BlockJUnit4ClassRunner {
            statement = possiblyExpectingExceptions(method, test, statement);
            statement = withPotentialTimeout(method, test, statement);
 
-           Statement arounds = withBefores(method, test, statement);
-           arounds = withAfters(method, test, arounds);
-           final Statement stmtwithLifecycle = arounds;
-           final Statement stmtWithRules = (Statement)withRules.invoke(this, new Object[] {method, test, arounds});
+           final Statement stmtwithLifecycle = statement;
+           final Statement stmtWithRules = (Statement)withRules.invoke(this, new Object[] {method, test, statement});
            return new Statement() {
 
                @Override

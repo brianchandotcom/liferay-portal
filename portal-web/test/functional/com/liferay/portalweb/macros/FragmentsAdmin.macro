@@ -31,6 +31,12 @@ definition {
 		Button.clickSave();
 	}
 
+	macro deleteFragment {
+		LexiconCard.delete(
+			card = "${fragmentName}"
+		);
+	}
+
 	@summary = "Type HTML into the fragment HTML editor using the auto complete feature."
 	macro autocompleteFragmentHTML {
 
@@ -56,6 +62,20 @@ definition {
 		Navigator.gotoNavNested(navNested = "${collectionName}");
 
 		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Export");
+	}
+
+	macro gotoFragment {
+		Click(
+			locator1 = "LexiconCard#CARD_TITLE",
+			key_card = "${fragmentName}"
+		);
+	}
+
+	macro gotoFragmentEllipsisItem {
+		LexiconCard.gotoEllipsisItem(
+			card = "${fragmentName}",
+			item = "${item}"
+		);
 	}
 
 	macro gotoImportCollection {
@@ -103,6 +123,13 @@ definition {
 	macro openFragmentsAdmin {
 		Navigator.openWithAppendToBaseURL(
 			urlAppend = "group/${siteURLKey}/~/control_panel/manage/-/fragments"
+		);
+	}
+
+	macro viewFragmentWorkflowStatus {
+		LexiconCard.viewCardLabel(
+			card = "${fragmentName}",
+			cardLabel = "${workflowStatus}"
 		);
 	}
 }

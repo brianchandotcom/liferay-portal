@@ -1,0 +1,39 @@
+<html>
+<head>
+<title>LexiconCard</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">LexiconCard</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>CARD_TITLE</td>
+	<td>//div[@class='card'][contains(.,'${key_card}')]//a[contains(@class,'card-title')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CARD_SUBTITLE</td>
+	<td>//div[@class='card'][contains(.,'${key_card}')]//div[contains(@class,'card-subtitle')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CARD_LABEL</td>
+	<td>//div[@class='card'][contains(.,'${key_card}')]//span[contains(@class,'label-item')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CARD_CHECKBOX</td>
+	<td>//div[@class='card'][contains(.,'${key_card}')]//input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CARD_ELLIPSIS</td>
+	<td>//div[@class='card'][contains(.,'${key_card}')]//button[@title='Actions']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

@@ -1,0 +1,59 @@
+definition {
+	macro delete {
+		LexiconCard.gotoEllipsisItem(
+			card = "${card}",
+			item = "Delete"
+		);
+
+		Confirm();
+	}
+
+	macro gotoCard {
+		Click(
+			locator1 = "LexiconCard#CARD_TITLE",
+			key_card = "${card}"
+		);
+	}
+
+	macro gotoEllipsisItem {
+		Click(
+			locator1 = "LexiconCard#CARD_ELLIPSIS",
+			key_card = "${card}"
+		);
+
+		Button.click(
+			button = "${item}"
+		);
+	}
+
+	macro viewCardLabel {
+		AssertTextEquals(
+			locator1 = "LexiconCard#CARD_LABEL",
+			value1 = "${cardLabel}",
+			key_card = "${card}"
+		);
+	}
+
+	macro viewCardSubtitle {
+		AssertTextEquals(
+			locator1 = "LexiconCard#CARD_SUBTITLE",
+			value1 = "${cardSubtitle}",
+			key_card = "${card}"
+		);
+	}
+
+	macro viewCardTitle {
+		AssertTextEquals(
+			locator1 = "LexiconCard#CARD_TITLE",
+			value1 = "${card}",
+			key_card = "${card}"
+		);
+	}
+
+	macro viewCardNotPresent {
+		AssertElementNotPresent(
+			locator1 = "LexiconCard#CARD_TITLE",
+			key_card = "${card}"
+		);
+	}
+}

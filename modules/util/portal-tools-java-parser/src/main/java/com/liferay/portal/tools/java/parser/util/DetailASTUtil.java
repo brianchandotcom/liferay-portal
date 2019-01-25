@@ -150,6 +150,30 @@ public class DetailASTUtil {
 				closingDetailAST.getColumnNo() + s.length());
 		}
 
+		DetailAST rparenDetailAST = null;
+
+		if (detailAST.getType() == TokenTypes.LITERAL_ELSE) {
+			DetailAST firstChildDetailAST = detailAST.getFirstChild();
+
+			if (firstChildDetailAST.getType() != TokenTypes.LITERAL_IF) {
+				return new Position(
+					detailAST.getLineNo(), detailAST.getColumnNo() + 4);
+			}
+
+			rparenDetailAST = firstChildDetailAST.findFirstToken(
+				TokenTypes.RPAREN);
+		}
+		else if ((detailAST.getType() == TokenTypes.LITERAL_IF) ||
+			(detailAST.getType() == TokenTypes.LITERAL_WHILE)) {
+
+			rparenDetailAST = detailAST.findFirstToken(TokenTypes.RPAREN);
+		}
+
+		if (rparenDetailAST != null) {
+			return new Position(
+				rparenDetailAST.getLineNo(), rparenDetailAST.getColumnNo() + 1);
+		}
+
 		Position endPosition = null;
 
 		String s = detailAST.getText();

@@ -9,7 +9,7 @@ dependencies {
 	compileInclude group: "org.apache.lucene", name: "lucene-queryparser", version: "5.2.1"
 	compileInclude group: "org.apache.lucene", name: "lucene-suggest", version: "5.2.1"
 	compileInclude group: "org.apache.solr", name: "solr-solrj", version: "5.2.1"
-	compileInclude group: "org.apache.zookeeper", name: "zookeeper", version: "3.4.7"
+	compileInclude group: "org.apache.zookeeper", name: "zookeeper", version: "3.4.10"
 	compileInclude group: "org.codehaus.woodstox", name: "stax2-api", version: "3.1.4"
 	compileInclude group: "org.codehaus.woodstox", name: "woodstox-core-asl", version: "4.4.1"
 	compileInclude group: "org.noggit", name: "noggit", version: "0.6"

@@ -15,9 +15,9 @@
 package com.liferay.layout.internal.search.spi.model.index.contributor;
 
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
+import com.liferay.layout.internal.search.util.LayoutPageTemplateStructureRenderUtil;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
-import com.liferay.layout.page.template.util.LayoutPageTemplateStructureRenderUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.Layout;

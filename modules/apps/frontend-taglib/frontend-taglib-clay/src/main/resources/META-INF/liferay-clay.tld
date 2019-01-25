@@ -670,7 +670,7 @@
 		</attribute>
 		<attribute>
 			<description></description>
-			<name>stickerClasses</name>
+			<name>stickerCssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
@@ -1036,7 +1036,7 @@
 		</attribute>
 		<attribute>
 			<description></description>
-			<name>stickerClasses</name>
+			<name>stickerCssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
@@ -2238,7 +2238,7 @@
 		</attribute>
 		<attribute>
 			<description></description>
-			<name>stickerClasses</name>
+			<name>stickerCssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

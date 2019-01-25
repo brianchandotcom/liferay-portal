@@ -44,7 +44,7 @@ public interface ImageCard extends BaseClayCard {
 		return null;
 	}
 
-	public default String getStickerClasses() {
+	public default String getStickerCssClass() {
 		return null;
 	}
 

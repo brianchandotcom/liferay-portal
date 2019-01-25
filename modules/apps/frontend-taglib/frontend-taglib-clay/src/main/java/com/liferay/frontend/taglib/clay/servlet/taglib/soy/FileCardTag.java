@@ -54,8 +54,8 @@ public class FileCardTag extends BaseClayCardTag {
 		putValue("labelStylesMap", labelStylesMap);
 	}
 
-	public void setStickerClasses(String stickerClasses) {
-		putValue("stickerClasses", stickerClasses);
+	public void setStickerCssClass(String stickerCssClass) {
+		putValue("stickerClasses", stickerCssClass);
 	}
 
 	public void setStickerIcon(String stickerIcon) {
@@ -106,7 +106,7 @@ public class FileCardTag extends BaseClayCardTag {
 		}
 
 		if (context.get("stickerClasses") == null) {
-			setStickerImageAlt(_fileCard.getStickerClasses());
+			setStickerImageAlt(_fileCard.getStickerCssClass());
 		}
 
 		if (context.get("stickerIcon") == null) {

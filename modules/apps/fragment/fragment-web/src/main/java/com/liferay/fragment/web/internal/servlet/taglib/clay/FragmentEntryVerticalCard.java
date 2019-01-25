@@ -131,7 +131,7 @@ public class FragmentEntryVerticalCard
 	}
 
 	@Override
-	public String getStickerClasses() {
+	public String getStickerCssClass() {
 		if (_fragmentEntry.getType() ==
 				FragmentEntryTypeConstants.TYPE_ELEMENT) {
 

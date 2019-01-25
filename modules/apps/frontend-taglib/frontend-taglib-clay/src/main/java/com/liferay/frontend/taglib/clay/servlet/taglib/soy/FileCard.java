@@ -36,7 +36,7 @@ public interface FileCard extends BaseClayCard {
 		return null;
 	}
 
-	public default String getStickerClasses() {
+	public default String getStickerCssClass() {
 		return null;
 	}
 

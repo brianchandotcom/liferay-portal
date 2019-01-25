@@ -67,7 +67,7 @@ exports[`Should render component 1`] = `
         className="text-center"
       >
          
-        No current reports
+        No Current Reports
          
       </h3>
       <div
@@ -151,7 +151,7 @@ exports[`Should render component with 4 records 1`] = `
         className="text-center"
       >
          
-        No current reports
+        No Current Reports
          
       </h3>
       <div
@@ -235,7 +235,7 @@ exports[`Should render component with 10 records 1`] = `
         className="text-center"
       >
          
-        No current reports
+        No Current Reports
          
       </h3>
       <div

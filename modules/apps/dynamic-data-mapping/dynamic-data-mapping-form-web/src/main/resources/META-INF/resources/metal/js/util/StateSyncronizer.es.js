@@ -12,6 +12,7 @@ class StateSyncronizer extends Component {
 		localizedName: Config.object().value({}),
 		nameEditor: Config.any(),
 		namespace: Config.string().required(),
+		published: Config.bool(),
 		settingsDDMForm: Config.any(),
 		translationManager: Config.any()
 	};
@@ -66,12 +67,14 @@ class StateSyncronizer extends Component {
 
 		const publishedField = settingsDDMForm.getField('published');
 
-		publishedField.set('value', this.published);
+		publishedField.set('value', this.props.published);
+
+		const settings = settingsDDMForm.get('context');
 
 		document.querySelector(`#${namespace}name`).value = JSON.stringify(name);
 		document.querySelector(`#${namespace}description`).value = JSON.stringify(description);
 		document.querySelector(`#${namespace}serializedFormBuilderContext`).value = this._getSerializedFormBuilderContext();
-		document.querySelector(`#${namespace}serializedSettingsContext`).value = JSON.stringify(settingsDDMForm.toJSON());
+		document.querySelector(`#${namespace}serializedSettingsContext`).value = JSON.stringify(settings);
 	}
 
 	_getSerializedFormBuilderContext() {

@@ -5,38 +5,52 @@ definition {
 	property testray.main.component.name = "Content Pages";
 
 	setUp {
-		TestCase.setUpPortalInstance();
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
 
-		User.firstLoginPG();
+			User.firstLoginPG();
+		}
 
-		JSONGroup.addGroup(groupName = "Test Site Name");
+		task ("Add a site via JSON") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
 
-		Staging.openStagingAdmin(siteURLKey = "test-site-name");
+		task ("Activate staging with page versioning enabled") {
+			Staging.openStagingAdmin(siteURLKey = "test-site-name");
 
-		Staging.activateStagingCP(
-			pageVersioningEnabled = "true",
-			siteName = "Test Site Name"
-		);
+			Staging.activateStagingCP(
+				pageVersioningEnabled = "true",
+				siteName = "Test Site Name"
+			);
+		}
 
-		FragmentsAdmin.openFragmentsAdmin(siteURLKey = "test-site-name-staging");
+		task ("Import test fragments from dependencies folder") {
+			FragmentsAdmin.openFragmentsAdmin(siteURLKey = "test-site-name-staging");
 
-		FragmentsAdmin.importCollectionFromDependenciesFolder(
-			collectionZipFile = "fragment-collection.zip"
-		);
+			FragmentsAdmin.importCollectionFromDependenciesFolder(
+				collectionZipFile = "fragment-collection.zip"
+			);
+		}
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name-staging");
+		task ("Add a content page") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name-staging");
 
-		ContentPages.addPage(pageName = "Test Content Page Name");
+			ContentPages.addPage(pageName = "Test Content Page Name");
+		}
 
-		PageEditor.addFragment(
-			collectionName = "Collection Name",
-			fragmentName = "Title"
-		);
+		task ("Add a Title fragment to the content page") {
+			PageEditor.addFragment(
+				collectionName = "Collection Name",
+				fragmentName = "Title"
+			);
+		}
 
-		PageEditor.addFragment(
-			collectionName = "Collection Name",
-			fragmentName = "Rich Text"
-		);
+		task ("Add a Rich Text fragment to the content page") {
+			PageEditor.addFragment(
+				collectionName = "Collection Name",
+				fragmentName = "Rich Text"
+			);
+		}
 	}
 
 	tearDown {
@@ -53,56 +67,74 @@ definition {
 	@description = "With page versioning enabled, content pages only appear in live view after being published and should appear properly."
 	@priority = "5"
 	test PublishContentPage {
-		Navigator.openWithAppendToBaseURL(
-			urlAppend = "web/test-site-name-staging/test-content-page-name"
-		);
+		task ("Navigate to the content page in the staging site") {
+			Navigator.openWithAppendToBaseURL(
+				urlAppend = "web/test-site-name-staging/test-content-page-name"
+			);
+		}
 
-		AssertVisible(
-			locator1 = "Fragment#FRAGMENT",
-			key_content = "Lorem ipsum dolor sit amet",
-			key_fragmentClass = "header",
-			key_position = "1"
-		);
+		task ("Assert the Title fragment is present") {
+			AssertVisible(
+				locator1 = "Fragment#FRAGMENT",
+				key_content = "Lorem ipsum dolor sit amet",
+				key_fragmentClass = "header",
+				key_position = "1"
+			);
+		}
 
-		AssertVisible(
-			locator1 = "Fragment#FRAGMENT",
-			key_content = "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-			key_fragmentClass = "rich-text",
-			key_position = "2"
-		);
+		task ("Assert the Rich Text fragment is present") {
+			AssertVisible(
+				locator1 = "Fragment#FRAGMENT",
+				key_content = "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+				key_fragmentClass = "rich-text",
+				key_position = "2"
+			);
+		}
 
-		Navigator.openWithAppendToBaseURL(
-			urlAppend = "web/test-site-name/test-content-page-name"
-		);
+		task ("Navigate to the URL of what the content page should be in the live site") {
+			Navigator.openWithAppendToBaseURL(
+				urlAppend = "web/test-site-name/test-content-page-name"
+			);
+		}
 
-		AssertTextPresent(value1 = "The requested resource could not be found.");
+		task ("Assert the content page does not yet exist in the live site") {
+			AssertTextPresent(value1 = "The requested resource could not be found.");
+		}
 
-		Navigator.openWithAppendToBaseURL(
-			urlAppend = "web/test-site-name-staging/test-content-page-name"
-		);
+		task ("Publish the content page to live") {
+			Navigator.openWithAppendToBaseURL(
+				urlAppend = "web/test-site-name-staging/test-content-page-name"
+			);
 
-		Staging.markAsReadyForPublication();
+			Staging.markAsReadyForPublication();
 
-		Staging.gotoPublishToLive();
+			Staging.gotoPublishToLive();
 
-		Staging.publishToLive();
+			Staging.publishToLive();
+		}
 
-		Navigator.openWithAppendToBaseURL(
-			urlAppend = "web/test-site-name/test-content-page-name"
-		);
+		task ("Navigate to the content page in the live site") {
+			Navigator.openWithAppendToBaseURL(
+				urlAppend = "web/test-site-name/test-content-page-name"
+			);
+		}
 
-		AssertVisible(
-			locator1 = "Fragment#FRAGMENT",
-			key_content = "Lorem ipsum dolor sit amet",
-			key_fragmentClass = "header",
-			key_position = "1"
-		);
+		task ("Assert the Title fragment is present") {
+			AssertVisible(
+				locator1 = "Fragment#FRAGMENT",
+				key_content = "Lorem ipsum dolor sit amet",
+				key_fragmentClass = "header",
+				key_position = "1"
+			);
+		}
 
-		AssertVisible(
-			locator1 = "Fragment#FRAGMENT",
-			key_content = "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-			key_fragmentClass = "rich-text",
-			key_position = "2"
-		);
+		task ("Assert the Rich Text fragment is present") {
+			AssertVisible(
+				locator1 = "Fragment#FRAGMENT",
+				key_content = "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+				key_fragmentClass = "rich-text",
+				key_position = "2"
+			);
+		}
 	}
 }

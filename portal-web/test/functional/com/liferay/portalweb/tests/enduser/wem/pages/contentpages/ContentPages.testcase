@@ -5,17 +5,23 @@ definition {
 	property testray.main.component.name = "Content Pages";
 
 	setUp {
-		TestCase.setUpPortalInstance();
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
 
-		User.firstLoginPG();
+			User.firstLoginPG();
+		}
 
-		JSONGroup.addGroup(groupName = "Test Site Name");
+		task ("Add a site via JSON") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
 
-		FragmentsAdmin.openFragmentsAdmin(siteURLKey = "test-site-name");
+		task ("Import test fragments from dependencies folder") {
+			FragmentsAdmin.openFragmentsAdmin(siteURLKey = "test-site-name");
 
-		FragmentsAdmin.importCollectionFromDependenciesFolder(
-			collectionZipFile = "fragment-collection.zip"
-		);
+			FragmentsAdmin.importCollectionFromDependenciesFolder(
+				collectionZipFile = "fragment-collection.zip"
+			);
+		}
 	}
 
 	tearDown {
@@ -35,59 +41,77 @@ definition {
 		property portal.acceptance = "true";
 		property testray.component.names = "Training";
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+		task ("Add a content page") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
-		ContentPages.addPage(pageName = "Test Content Page Name");
+			ContentPages.addPage(pageName = "Test Content Page Name");
+		}
 
-		PageEditor.addFragment(
-			collectionName = "Collection Name",
-			fragmentName = "Title"
-		);
+		task ("Add a Title fragment to the content page") {
+			PageEditor.addFragment(
+				collectionName = "Collection Name",
+				fragmentName = "Title"
+			);
+		}
 
-		PageEditor.addFragment(
-			collectionName = "Collection Name",
-			fragmentName = "Rich Text"
-		);
+		task ("Add a Rich Text fragment to the content page") {
+			PageEditor.addFragment(
+				collectionName = "Collection Name",
+				fragmentName = "Rich Text"
+			);
+		}
 
-		PageEditor.addFragment(
-			collectionName = "Collection Name",
-			fragmentName = "Button"
-		);
+		task ("Add a Button fragment to the content page") {
+			PageEditor.addFragment(
+				collectionName = "Collection Name",
+				fragmentName = "Button"
+			);
+		}
 
-		Navigator.openWithAppendToBaseURL(
-			urlAppend = "web/test-site-name/test-content-page-name"
-		);
+		task ("Navigate to the content page") {
+			Navigator.openWithAppendToBaseURL(
+				urlAppend = "web/test-site-name/test-content-page-name"
+			);
+		}
 
-		AssertVisible(
-			locator1 = "Fragment#FRAGMENT",
-			key_content = "Lorem ipsum dolor sit amet",
-			key_fragmentClass = "header",
-			key_position = "1"
-		);
+		task ("Assert the Title fragment is present") {
+			AssertVisible(
+				locator1 = "Fragment#FRAGMENT",
+				key_content = "Lorem ipsum dolor sit amet",
+				key_fragmentClass = "header",
+				key_position = "1"
+			);
+		}
 
-		AssertVisible(
-			locator1 = "Fragment#FRAGMENT",
-			key_content = "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-			key_fragmentClass = "rich-text",
-			key_position = "2"
-		);
+		task ("Assert the Rich Text fragment is present") {
+			AssertVisible(
+				locator1 = "Fragment#FRAGMENT",
+				key_content = "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+				key_fragmentClass = "rich-text",
+				key_position = "2"
+			);
+		}
 
-		AssertVisible(
-			locator1 = "Fragment#FRAGMENT",
-			key_content = "Submit",
-			key_fragmentClass = "footer",
-			key_position = "3"
-		);
+		task ("Assert the Button fragment is present") {
+			AssertVisible(
+				locator1 = "Fragment#FRAGMENT",
+				key_content = "Submit",
+				key_fragmentClass = "footer",
+				key_position = "3"
+			);
 
-		AssertVisible(
-			locator1 = "Fragment#FRAGMENT",
-			key_content = "Cancel",
-			key_fragmentClass = "footer",
-			key_position = "3"
-		);
+			AssertVisible(
+				locator1 = "Fragment#FRAGMENT",
+				key_content = "Cancel",
+				key_fragmentClass = "footer",
+				key_position = "3"
+			);
+		}
 
-		for (var button : list "Submit,Cancel") {
-			Button.viewPresent(button = "${button}");
+		task ("Assert the Submit and Cancel buttons in the Button fragment is present") {
+			for (var button : list "Submit,Cancel") {
+				Button.viewPresent(button = "${button}");
+			}
 		}
 	}
 
@@ -96,36 +120,46 @@ definition {
 	test AddContentPageFromPageTemplate {
 		property portal.acceptance = "true";
 
-		PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+		task ("Add a page template collection") {
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
 
-		PageTemplatesAdmin.addCollection(collectionName = "Page Template Collection");
-
-		PageTemplatesAdmin.add(pageTemplateName = "Page Template Name");
-
-		PageEditor.addFragment(
-			collectionName = "Collection Name",
-			fragmentName = "Button"
-		);
-
-		Button.clickPublish();
-
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-		ContentPages.addPage(
-			collectionName = "Page Template Collection",
-			pageName = "Test Page Name",
-			pageTemplateName = "Page Template Name"
-		);
-
-		Navigator.gotoSitePage(pageName = "Test Page Name", siteName = "Test Site Name");
-
-		for (var button : list "Submit,Cancel") {
-			Button.viewPresent(button = "${button}");
+			PageTemplatesAdmin.addCollection(collectionName = "Page Template Collection");
 		}
 
-		Button.clickNoError(button = "Submit");
+		task ("Add a page template with a Button fragment") {
+			PageTemplatesAdmin.add(pageTemplateName = "Page Template Name");
 
-		AssertConfirm(value1 = "Form submitted");
+			PageEditor.addFragment(
+				collectionName = "Collection Name",
+				fragmentName = "Button"
+			);
+
+			Button.clickPublish();
+		}
+
+		task ("Add a content page") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPages.addPage(
+				collectionName = "Page Template Collection",
+				pageName = "Test Page Name",
+				pageTemplateName = "Page Template Name"
+			);
+		}
+
+		task ("Navigate to the content page") {
+			Navigator.gotoSitePage(pageName = "Test Page Name", siteName = "Test Site Name");
+		}
+
+		task ("Assert the Button fragment is present and the buttons work") {
+			for (var button : list "Submit,Cancel") {
+				Button.viewPresent(button = "${button}");
+			}
+
+			Button.clickNoError(button = "Submit");
+
+			AssertConfirm(value1 = "Form submitted");
+		}
 	}
 
 	@description = "Add a content page and edit its fragment immediately. This is a variation of the steps from LPS-85872."
@@ -133,53 +167,77 @@ definition {
 	test AddContentPageWithEditedFragmentText {
 		property testray.component.names = "Training";
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+		task ("Add a content page") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
-		ContentPages.addPage(pageName = "Test Content Page Name");
+			ContentPages.addPage(pageName = "Test Content Page Name");
+		}
 
-		PageEditor.addFragment(
-			collectionName = "Collection Name",
-			fragmentName = "Content"
-		);
+		task ("Add a Content fragment to the content page") {
+			PageEditor.addFragment(
+				collectionName = "Collection Name",
+				fragmentName = "Content"
+			);
+		}
 
-		PageEditor.editFragmentText(
-			fragmentName = "Content",
-			id = "content",
-			text = "New editable fragment text"
-		);
+		task ("Edit the Content fragment editable text") {
+			PageEditor.editFragmentText(
+				fragmentName = "Content",
+				id = "content",
+				text = "New editable fragment text"
+			);
+		}
 
-		Navigator.openWithAppendToBaseURL(
-			urlAppend = "web/test-site-name/test-content-page-name"
-		);
+		task ("Navigate to the content page") {
+			Navigator.openWithAppendToBaseURL(
+				urlAppend = "web/test-site-name/test-content-page-name"
+			);
+		}
 
-		AssertVisible(
-			locator1 = "Fragment#FRAGMENT",
-			key_content = "New editable fragment text",
-			key_fragmentClass = "body",
-			key_position = "1"
-		);
+		task ("Assert the Content fragment has the updated editable text") {
+			AssertVisible(
+				locator1 = "Fragment#FRAGMENT",
+				key_content = "New editable fragment text",
+				key_fragmentClass = "body",
+				key_position = "1"
+			);
+		}
 	}
 
 	@description = "Users can only edit content pages in edit mode."
 	@priority = "5"
 	test CannotEditInViewMode {
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+		task ("Add a content page") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
-		ContentPages.addPage(pageName = "Test Content Page Name");
+			ContentPages.addPage(pageName = "Test Content Page Name");
+		}
 
-		Navigator.openWithAppendToBaseURL(
-			urlAppend = "web/test-site-name/test-content-page-name"
-		);
+		task ("Navigate to the content page (defaults to 'View Mode')") {
+			Navigator.openWithAppendToBaseURL(
+				urlAppend = "web/test-site-name/test-content-page-name"
+			);
+		}
 
-		AssertElementNotPresent(locator1 = "PageEditor#FRAGMENT_SIDEBAR");
+		task ("Assert the page cannot be edited in 'View Mode' by asserting the fragments side bar is not present") {
+			AssertElementNotPresent(locator1 = "PageEditor#FRAGMENT_SIDEBAR");
+		}
 
-		ContentPages.gotoEditMode();
+		task ("Navigate to the content page's 'Edit Mode' using the mode toggle") {
+			ContentPages.gotoEditMode();
+		}
 
-		AssertVisible(locator1 = "PageEditor#FRAGMENT_SIDEBAR");
+		task ("Assert the content page can be edited in 'Edit Mode' by asserting the fragments side bar is present") {
+			AssertVisible(locator1 = "PageEditor#FRAGMENT_SIDEBAR");
+		}
 
-		ContentPages.gotoViewMode();
+		task ("Navigate to the content page's 'View Mode' using the mode toggle") {
+			ContentPages.gotoViewMode();
+		}
 
-		AssertElementNotPresent(locator1 = "PageEditor#FRAGMENT_SIDEBAR");
+		task ("Assert the page cannot be edited in 'View Mode' by asserting the fragments side bar is not present") {
+			AssertElementNotPresent(locator1 = "PageEditor#FRAGMENT_SIDEBAR");
+		}
 	}
 
 	@description = "Edit an existing content page that has fragments. This testcase covers the bug found in LPS-85872."
@@ -188,59 +246,81 @@ definition {
 		property portal.acceptance = "true";
 		property testray.component.names = "Training";
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+		task ("Add a content page") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
-		ContentPages.addPage(pageName = "Test Content Page Name");
+			ContentPages.addPage(pageName = "Test Content Page Name");
+		}
 
-		PageEditor.addFragment(
-			collectionName = "Collection Name",
-			fragmentName = "Title"
-		);
+		task ("Add a Title fragment to the content page") {
+			PageEditor.addFragment(
+				collectionName = "Collection Name",
+				fragmentName = "Title"
+			);
+		}
 
-		PageEditor.addFragment(
-			collectionName = "Collection Name",
-			fragmentName = "Rich Text"
-		);
+		task ("Add a Rich Text fragment to the content page") {
+			PageEditor.addFragment(
+				collectionName = "Collection Name",
+				fragmentName = "Rich Text"
+			);
+		}
 
-		Navigator.openWithAppendToBaseURL(
-			urlAppend = "web/test-site-name/test-content-page-name"
-		);
+		task ("Navigate to the content page") {
+			Navigator.openWithAppendToBaseURL(
+				urlAppend = "web/test-site-name/test-content-page-name"
+			);
+		}
 
-		ContentPages.gotoEditMode();
+		task ("Navigate to the content page's 'Edit Mode' using the mode toggle") {
+			ContentPages.gotoEditMode();
+		}
 
-		PageEditor.addFragment(
-			collectionName = "Collection Name",
-			fragmentName = "Content"
-		);
+		task ("Add a Content fragment to the content page") {
+			PageEditor.addFragment(
+				collectionName = "Collection Name",
+				fragmentName = "Content"
+			);
+		}
 
-		PageEditor.editFragmentText(
-			fragmentName = "Rich Text",
-			id = "rich-text",
-			text = "New editable fragment text"
-		);
+		task ("Edit the Rich Text fragment's editable text") {
+			PageEditor.editFragmentText(
+				fragmentName = "Rich Text",
+				id = "rich-text",
+				text = "New editable fragment text"
+			);
+		}
 
-		ContentPages.gotoViewMode();
+		task ("Navigate to the content page's 'View Mode' using the mode toggle") {
+			ContentPages.gotoViewMode();
+		}
 
-		AssertVisible(
-			locator1 = "Fragment#FRAGMENT",
-			key_content = "Lorem ipsum dolor sit amet",
-			key_fragmentClass = "header",
-			key_position = "1"
-		);
+		task ("Assert the Title Fragment is present") {
+			AssertVisible(
+				locator1 = "Fragment#FRAGMENT",
+				key_content = "Lorem ipsum dolor sit amet",
+				key_fragmentClass = "header",
+				key_position = "1"
+			);
+		}
 
-		AssertVisible(
-			locator1 = "Fragment#FRAGMENT",
-			key_content = "New editable fragment text",
-			key_fragmentClass = "rich-text",
-			key_position = "2"
-		);
+		task ("Assert the Rich Text fragment with updated editable text is present") {
+			AssertVisible(
+				locator1 = "Fragment#FRAGMENT",
+				key_content = "New editable fragment text",
+				key_fragmentClass = "rich-text",
+				key_position = "2"
+			);
+		}
 
-		AssertVisible(
-			locator1 = "Fragment#FRAGMENT",
-			key_content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean tempus eleifend lacus nec porttitor. Vestibulum pharetra ullamcorper felis volutpat commodo. Nam id ipsum placerat, hendrerit orci eu, congue nisi. Proin.",
-			key_fragmentClass = "body",
-			key_position = "3"
-		);
+		task ("Assert the Content fragment is present") {
+			AssertVisible(
+				locator1 = "Fragment#FRAGMENT",
+				key_content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean tempus eleifend lacus nec porttitor. Vestibulum pharetra ullamcorper felis volutpat commodo. Nam id ipsum placerat, hendrerit orci eu, congue nisi. Proin.",
+				key_fragmentClass = "body",
+				key_position = "3"
+			);
+		}
 	}
 
 	@description = "This is a test for LPS-81870. In edit mode the page should still show the elements of the page that are not from the page itself, like the header, footer, or elements defined by the theme."

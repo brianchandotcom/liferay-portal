@@ -93,7 +93,7 @@ public class LiferayRemoteDeployableContainer
 	}
 
 	@Override
-	public void deploy(Descriptor descriptor) throws DeploymentException {
+	public void deploy(Descriptor descriptor) {
 	}
 
 	@Override
@@ -130,11 +130,11 @@ public class LiferayRemoteDeployableContainer
 	}
 
 	@Override
-	public void stop() throws LifecycleException {
+	public void stop() {
 	}
 
 	@Override
-	public void undeploy(Archive<?> archive) throws DeploymentException {
+	public void undeploy(Archive<?> archive) {
 		long bundleId = _deployedBundles.remove(archive.getName());
 
 		if (bundleId == 0) {
@@ -149,7 +149,7 @@ public class LiferayRemoteDeployableContainer
 	}
 
 	@Override
-	public void undeploy(Descriptor desc) throws DeploymentException {
+	public void undeploy(Descriptor desc) {
 	}
 
 	private MBeanServerConnection _getMBeanServerConnection()

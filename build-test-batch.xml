@@ -2655,17 +2655,39 @@ log.sanitizer.enabled=false</echo>
 			<if>
 				<os family="windows" />
 				<then>
-					<var name="set.env.file.name" value="${app.server.tomcat.dir}/bin/setenv.bat" />
+					<var name="set.env.file.name" value="${app.server.tomcat.bin.dir}/setenv.bat" />
 				</then>
 				<else>
-					<var name="set.env.file.name" value="${app.server.tomcat.dir}/bin/setenv.sh" />
+					<var name="set.env.file.name" value="${app.server.tomcat.bin.dir}/setenv.sh" />
 				</else>
 			</if>
 
 			<if>
-				<isset property="test.batch.app.server.tomcat.setenv.gc.old[@{test.portal.bundle.version}]" />
+				<not>
+					<equals arg1="@{test.portal.bundle.version}" arg2="" />
+				</not>
 				<then>
-					<propertycopy from="test.batch.app.server.tomcat.setenv.gc.old[@{test.portal.bundle.version}]" name="test.batch.app.server.tomcat.setenv.gc.old" override="true" />
+					<copy
+						file="tools/servers/tomcat/bin/setenv.bat"
+						overwrite="true"
+						tofile="${app.server.tomcat.bin.dir}/setenv.bat"
+					/>
+
+					<copy
+						file="tools/servers/tomcat/bin/setenv.sh"
+						overwrite="true"
+						tofile="${app.server.tomcat.bin.dir}/setenv.sh"
+					/>
+
+					<chmod
+						perm="a+x"
+					>
+						<fileset
+							dir="${app.server.tomcat.bin.dir}"
+						>
+							<include name="*.sh" />
+						</fileset>
+					</chmod>
 				</then>
 			</if>
 

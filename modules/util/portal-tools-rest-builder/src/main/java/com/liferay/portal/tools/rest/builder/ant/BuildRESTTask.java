@@ -46,6 +46,18 @@ public class BuildRESTTask extends Task {
 		_restBuilderArgs.setApiPackagePath(apiPackagePath);
 	}
 
+	public void setApplicationBaseURI(String applicationBaseURI) {
+		_restBuilderArgs.setApplicationBaseURI(applicationBaseURI);
+	}
+
+	public void setApplicationClassName(String applicationClassName) {
+		_restBuilderArgs.setApplicationClassName(applicationClassName);
+	}
+
+	public void setApplicationName(String applicationName) {
+		_restBuilderArgs.setApplicationName(applicationName);
+	}
+
 	public void setAuthor(String author) {
 		_restBuilderArgs.setAuthor(author);
 	}

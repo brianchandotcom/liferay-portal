@@ -53,6 +53,21 @@ public class BuildRESTTask extends JavaExec {
 	}
 
 	@Input
+	public String getApplicationBaseURI() {
+		return GradleUtil.toString(_applicationBaseURI);
+	}
+
+	@Input
+	public String getApplicationClassName() {
+		return GradleUtil.toString(_applicationClassName);
+	}
+
+	@Input
+	public String getApplicationName() {
+		return GradleUtil.toString(_applicationName);
+	}
+
+	@Input
 	public String getAuthor() {
 		return GradleUtil.toString(_author);
 	}
@@ -75,6 +90,18 @@ public class BuildRESTTask extends JavaExec {
 		_apiPackagePath = apiPackagePath;
 	}
 
+	public void setApplicationBaseURI(Object applicationBaseURI) {
+		_applicationBaseURI = applicationBaseURI;
+	}
+
+	public void setApplicationClassName(Object applicationClassName) {
+		_applicationClassName = applicationClassName;
+	}
+
+	public void setApplicationName(Object applicationName) {
+		_applicationName = applicationName;
+	}
+
 	public void setAuthor(Object author) {
 		_author = author;
 	}
@@ -92,6 +119,9 @@ public class BuildRESTTask extends JavaExec {
 
 		args.add("api.dir=" + _relativize(getApiDir()));
 		args.add("api.package.path=" + getApiPackagePath());
+		args.add("application.base.uri=" + getApplicationBaseURI());
+		args.add("application.class.name=" + getApplicationClassName());
+		args.add("application.name=" + getApplicationName());
 		args.add("author=" + getAuthor());
 		args.add("copyright.file=" + _relativize(getCopyrightFile()));
 		args.add("input.file=" + _relativize(getInputFile()));
@@ -107,6 +137,9 @@ public class BuildRESTTask extends JavaExec {
 
 	private Object _apiDir;
 	private Object _apiPackagePath;
+	private Object _applicationBaseURI;
+	private Object _applicationClassName;
+	private Object _applicationName;
 	private Object _author;
 	private Object _copyrightFile;
 	private Object _inputFile;

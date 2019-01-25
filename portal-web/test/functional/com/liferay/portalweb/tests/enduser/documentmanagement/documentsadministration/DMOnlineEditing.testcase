@@ -24,7 +24,7 @@ definition {
 			configurationScope = "Virtual Instance Scope"
 		);
 
-		var googleClientID = PropsUtil.get("google.client.id.1");
+		var googleClientID = PropsUtil.get("google.client.id.2");
 
 		Type(
 			locator1 = "TextArea#ANY",
@@ -32,7 +32,7 @@ definition {
 			key_text = "clientId"
 		);
 
-		var googleClientSecret = PropsUtil.get("google.client.secret.1");
+		var googleClientSecret = PropsUtil.get("google.client.secret.2");
 
 		Type(
 			locator1 = "TextArea#ANY",

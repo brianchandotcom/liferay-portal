@@ -48,11 +48,27 @@ public interface DEDataRecordCollectionService {
 				deDataRecordCollectionDeletePermissionsRequest)
 		throws DEDataRecordCollectionException;
 
+	/**
+	 * Execute the Save Model Permissions Request which can grant permission
+	 * to a role to perform actions involving a Data Record Collection model
+	 *
+	 * @param deDataRecordCollectionSaveModelPermissionsRequest
+	 * @return {@link DEDataRecordCollectionSaveModelPermissionsResponse}
+	 * @review
+	 */
 	public DEDataRecordCollectionSaveModelPermissionsResponse execute(
 			DEDataRecordCollectionSaveModelPermissionsRequest
 				deDataRecordCollectionSaveModelPermissionsRequest)
 		throws DEDataRecordCollectionException;
 
+	/**
+	 * Execute the Save Permissions Request which can grant permission to a
+	 * role to perform actions involving a Data Record Collection
+	 *
+	 * @param deDataRecordCollectionSavePermissionsRequest
+	 * @return {@link DEDataRecordCollectionSavePermissionsResponse}
+	 * @review
+	 */
 	public DEDataRecordCollectionSavePermissionsResponse execute(
 			DEDataRecordCollectionSavePermissionsRequest
 				deDataRecordCollectionSavePermissionsRequest)

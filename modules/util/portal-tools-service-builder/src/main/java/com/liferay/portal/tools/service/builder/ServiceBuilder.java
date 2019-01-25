@@ -14,6 +14,8 @@
 
 package com.liferay.portal.tools.service.builder;
 
+import static com.liferay.portal.tools.ToolsUtil.getPackagePath;
+
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.xml.Dom4jUtil;
@@ -33,6 +35,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ClearThreadLocalUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -41,6 +44,8 @@ import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.Validator_IW;
 import com.liferay.portal.tools.ArgumentsUtil;
+import com.liferay.portal.tools.ImportsFormatter;
+import com.liferay.portal.tools.JavaImportsFormatter;
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.portal.xml.SAXReaderFactory;
 import com.liferay.util.xml.XMLSafeReader;
@@ -60,6 +65,12 @@ import com.thoughtworks.qdox.model.impl.AbstractBaseJavaEntity;
 import com.thoughtworks.qdox.model.impl.DefaultJavaMethod;
 import com.thoughtworks.qdox.model.impl.DefaultJavaParameterizedType;
 
+import de.hunsicker.io.FileFormat;
+import de.hunsicker.jalopy.Jalopy;
+import de.hunsicker.jalopy.storage.Convention;
+import de.hunsicker.jalopy.storage.ConventionKeys;
+import de.hunsicker.jalopy.storage.Environment;
+
 import freemarker.cache.ClassTemplateLoader;
 
 import freemarker.ext.beans.BeansWrapper;
@@ -72,6 +83,7 @@ import freemarker.template.TemplateModelException;
 
 import java.beans.Introspector;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -1992,6 +2004,19 @@ public class ServiceBuilder {
 
 		return StringUtil.replace(
 			s, StringPool.RETURN_NEW_LINE, StringPool.NEW_LINE);
+	}
+
+	private static URL _readJalopyXmlFromClassLoader() {
+		ClassLoader classLoader = ToolsUtil.class.getClassLoader();
+
+		URL url = classLoader.getResource("jalopy.xml");
+
+		if (url == null) {
+			throw new RuntimeException(
+				"Unable to load jalopy.xml from the class loader");
+		}
+
+		return url;
 	}
 
 	private static void _readResourceActionModels(
@@ -6889,9 +6914,145 @@ public class ServiceBuilder {
 			header = _getCommercialCopyright();
 		}
 
-		ToolsUtil.writeFile(
-			file, content, header, author, jalopySettings, modifiedFileNames,
-			packagePath);
+		if (!file.exists()) {
+			_write(file, StringPool.BLANK);
+		}
+
+		if (Validator.isNull(packagePath)) {
+			packagePath = ToolsUtil.getPackagePath(file);
+		}
+
+		String className = file.getName();
+
+		className = className.substring(0, className.length() - 5);
+
+		ImportsFormatter importsFormatter = new JavaImportsFormatter();
+
+		content = importsFormatter.format(content, packagePath, className);
+
+		// Beautify
+
+		String jalopyIgnoreStart = "/** Jalopy ignore start */";
+
+		String jalopyIgnoreEnd = "/** Jalopy ignore end */\n";
+
+		int start = content.indexOf(jalopyIgnoreStart);
+
+		String jalopyIgnoreBody = null;
+
+		if (start != -1) {
+			start += jalopyIgnoreStart.length();
+
+			int end = content.indexOf(jalopyIgnoreEnd);
+
+			if (end != -1) {
+				jalopyIgnoreBody = content.substring(start, end);
+
+				content = content.substring(0, start) + content.substring(end);
+			}
+		}
+
+		StringBuffer sb = new StringBuffer();
+
+		Jalopy jalopy = new Jalopy();
+
+		jalopy.setFileFormat(FileFormat.UNIX);
+		jalopy.setInput(
+			new ByteArrayInputStream(content.getBytes()), file.getPath());
+		jalopy.setOutput(sb);
+
+		File jalopyXmlFile = new File("tools/jalopy.xml");
+
+		if (!jalopyXmlFile.exists()) {
+			jalopyXmlFile = new File("../tools/jalopy.xml");
+		}
+
+		if (!jalopyXmlFile.exists()) {
+			jalopyXmlFile = new File("misc/jalopy.xml");
+		}
+
+		if (!jalopyXmlFile.exists()) {
+			jalopyXmlFile = new File("../misc/jalopy.xml");
+		}
+
+		if (!jalopyXmlFile.exists()) {
+			jalopyXmlFile = new File("../../misc/jalopy.xml");
+		}
+
+		if (jalopyXmlFile.exists()) {
+			Jalopy.setConvention(jalopyXmlFile);
+		}
+		else {
+			URL url = _readJalopyXmlFromClassLoader();
+
+			Jalopy.setConvention(url);
+		}
+
+		if (jalopySettings == null) {
+			jalopySettings = new HashMap<>();
+		}
+
+		Environment env = Environment.getInstance();
+
+		// Author
+
+		author = GetterUtil.getString(
+			(String)jalopySettings.get("author"), author);
+
+		env.set("author", author);
+
+		// Fail on format error
+
+		boolean failOnFormatError = MapUtil.getBoolean(
+			jalopySettings, "failOnFormatError");
+
+		// File name
+
+		env.set("fileName", file.getName());
+
+		Convention convention = Convention.getInstance();
+
+		if (Validator.isNotNull(header)) {
+			convention.put(ConventionKeys.HEADER_TEXT, header);
+		}
+
+		String classMask = "/**\n * @author $author$\n*/";
+
+		convention.put(
+			ConventionKeys.COMMENT_JAVADOC_TEMPLATE_CLASS,
+			env.interpolate(classMask));
+
+		convention.put(
+			ConventionKeys.COMMENT_JAVADOC_TEMPLATE_INTERFACE,
+			env.interpolate(classMask));
+
+		boolean formatSuccess = jalopy.format();
+
+		String newContent = sb.toString();
+
+		if (jalopyIgnoreBody != null) {
+			start = newContent.indexOf(jalopyIgnoreStart);
+
+			start = newContent.lastIndexOf('\n', start);
+
+			int end = newContent.indexOf(jalopyIgnoreEnd);
+
+			newContent =
+				newContent.substring(0, start) + jalopyIgnoreBody +
+					newContent.substring(end + jalopyIgnoreEnd.length());
+		}
+
+		// Remove double blank lines after the package or last import
+
+		newContent = newContent.replaceFirst(
+			"(?m)^[ \t]*((?:package|import) .*;)\\s*^[ \t]*/\\*\\*",
+			"$1\n\n/**");
+
+		ToolsUtil.writeFileRaw(file, newContent, modifiedFileNames);
+
+		if (failOnFormatError && !formatSuccess) {
+			throw new IOException("Unable to beautify " + file);
+		}
 	}
 
 	private static final int _DEFAULT_COLUMN_MAX_LENGTH = 75;

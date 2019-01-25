@@ -20,9 +20,13 @@ import ${apiPackagePath}.model.${entity.name};
 import ${apiPackagePath}.model.${entity.name}Model;
 import ${apiPackagePath}.model.${entity.name}Soap;
 
+<#assign hasLazy = false />
+
 <#list entity.blobEntityColumns as entityColumn>
 	<#if entityColumn.lazy>
 		import ${apiPackagePath}.model.${entity.name}${entityColumn.methodName}BlobModel;
+
+		<#assign hasLazy = true />
 	</#if>
 </#list>
 
@@ -87,13 +91,16 @@ import java.sql.Blob;
 import java.sql.Types;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.function.BiConsumer;
 import java.util.function.Function;
 
 /**
@@ -435,13 +442,14 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		<#list entity.regularEntityColumns as entityColumn>
-			<#if stringUtil.equals(entityColumn.type, "boolean")>
-				attributes.put("${entityColumn.name}", is${entityColumn.methodName}());
-			<#else>
-				attributes.put("${entityColumn.name}", get${entityColumn.methodName}());
-			</#if>
-		</#list>
+		Map<String, Function<${entity.name}, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+
+		for (Map.Entry<String, Function<${entity.name}, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<${entity.name}, Object> attributeGetterFunction = entry.getValue();
+
+			attributes.put(attributeName, attributeGetterFunction.apply((${entity.name})this));
+		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -451,27 +459,76 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		<#list entity.regularEntityColumns as entityColumn>
-			<#if entityColumn.isPrimitiveType()>
-				${serviceBuilder.getPrimitiveObj(entityColumn.type)}
-			<#else>
-				${entityColumn.genericizedType}
-			</#if>
+		Map<String, BiConsumer<${entity.name}, Object>> attributeSetterBiConsumers = getAttributeSetterBiConsumers();
 
-			${entityColumn.name} =
+		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
+			String attributeName = entry.getKey();
 
-			<#if entityColumn.isPrimitiveType()>
-				(${serviceBuilder.getPrimitiveObj(entityColumn.type)})
-			<#else>
-				(${entityColumn.genericizedType})
-			</#if>
+			BiConsumer<${entity.name}, Object> attributeSetterBiConsumer =
+				attributeSetterBiConsumers.get(attributeName);
 
-			attributes.get("${entityColumn.name}");
-
-			if (${entityColumn.name} != null) {
-				set${entityColumn.methodName}(${entityColumn.name});
+			if (attributeSetterBiConsumer != null) {
+				attributeSetterBiConsumer.accept((${entity.name})this, entry.getValue());
 			}
-		</#list>
+		}
+	}
+
+	public Map<String, Function<${entity.name}, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
+	}
+
+	public Map<String, BiConsumer<${entity.name}, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
+
+	private static final Map<String, Function<${entity.name}, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<${entity.name}, Object>> _attributeSetterBiConsumers;
+
+	static {
+		Map<String, Function<${entity.name}, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<${entity.name}, Object>>();
+		Map<String, BiConsumer<${entity.name}, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<${entity.name}, ?>>();
+
+/** Jalopy ignore start */
+<#list entity.regularEntityColumns as entityColumn>
+	<#if serviceBuilder.isVersionLTE_7_1_0()>
+		attributeGetterFunctions.put(
+			"${entityColumn.name}",
+			new Function<${entity.name}, Object>() {
+
+				@Override
+				public Object apply(${entity.name} ${entity.varName}) {
+					return ${entity.varName}.get${entityColumn.methodName}();
+				}
+
+			});
+	<#else>
+		attributeGetterFunctions.put("${entityColumn.name}", ${entity.name}::get${entityColumn.methodName});
+	</#if>
+	<#if entityColumn.isPrimitiveType()>
+		<#assign entityColumnType = serviceBuilder.getPrimitiveObj(entityColumn.type) />
+	<#else>
+		<#assign entityColumnType = entityColumn.genericizedType />
+	</#if>
+	<#if serviceBuilder.isVersionLTE_7_1_0()>
+		attributeSetterBiConsumers.put(
+			"${entityColumn.name}",
+			new BiConsumer<${entity.name}, Object>() {
+
+				@Override
+				public void accept(${entity.name} ${entity.varName}, Object ${entityColumn.name}) {
+					${entity.varName}.set${entityColumn.methodName}((${entityColumnType})${entityColumn.name});
+				}
+
+			});
+	<#else>
+		attributeSetterBiConsumers.put("${entityColumn.name}", (BiConsumer<${entity.name}, ${entityColumnType}>)${entity.name}::set${entityColumn.methodName});
+	</#if>
+</#list>
+
+/** Jalopy ignore end */
+
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	<#if entity.localizedEntity??>
@@ -1526,55 +1583,110 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 		return ${entity.varName}CacheModel;
 	}
 
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(${entity.regularEntityColumns?size * 2 + 1});
+	<#if hasLazy>
+		@Override
+		public String toString() {
+			StringBundler sb = new StringBundler(${entity.regularEntityColumns?size * 2 + 1});
 
-		<#list entity.regularEntityColumns as entityColumn>
-			<#if !stringUtil.equals(entityColumn.type, "Blob") || !entityColumn.lazy>
-				<#if entityColumn_index == 0>
-					sb.append("{${entityColumn.name}=");
-				<#else>
-					sb.append(", ${entityColumn.name}=");
+			<#list entity.regularEntityColumns as entityColumn>
+				<#if !stringUtil.equals(entityColumn.type, "Blob") || !entityColumn.lazy>
+					<#if entityColumn_index == 0>
+						sb.append("{${entityColumn.name}=");
+					<#else>
+						sb.append(", ${entityColumn.name}=");
+					</#if>
+					<#if stringUtil.equals(entityColumn.type, "boolean")>
+						sb.append(is${entityColumn.methodName}());
+					<#else>
+						sb.append(get${entityColumn.methodName}());
+					</#if>
+					<#if !entityColumn_has_next>
+						sb.append("}");
+					</#if>
 				</#if>
-				<#if stringUtil.equals(entityColumn.type, "boolean")>
-					sb.append(is${entityColumn.methodName}());
-				<#else>
-					sb.append(get${entityColumn.methodName}());
+			</#list>
+
+			return sb.toString();
+		}
+
+		@Override
+		public String toXmlString() {
+			StringBundler sb = new StringBundler(${entity.regularEntityColumns?size * 3 + 4});
+
+			sb.append("<model><model-name>");
+			sb.append("${apiPackagePath}.model.${entity.name}");
+			sb.append("</model-name>");
+
+			<#list entity.regularEntityColumns as entityColumn>
+				<#if !stringUtil.equals(entityColumn.type, "Blob") || !entityColumn.lazy>
+					sb.append("<column><column-name>${entityColumn.name}</column-name><column-value><![CDATA[");
+					<#if stringUtil.equals(entityColumn.type, "boolean")>
+						sb.append(is${entityColumn.methodName}());
+					<#else>
+						sb.append(get${entityColumn.methodName}());
+					</#if>
+					sb.append("]]></column-value></column>");
 				</#if>
-				<#if !entityColumn_has_next>
-					sb.append("}");
-				</#if>
-			</#if>
-		</#list>
+			</#list>
 
-		return sb.toString();
-	}
+			sb.append("</model>");
 
-	@Override
-	public String toXmlString() {
-		StringBundler sb = new StringBundler(${entity.regularEntityColumns?size * 3 + 4});
+			return sb.toString();
+		}
+	<#else>
+		@Override
+		public String toString() {
+			Map<String, Function<${entity.name}, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		sb.append("<model><model-name>");
-		sb.append("${apiPackagePath}.model.${entity.name}");
-		sb.append("</model-name>");
+			StringBundler sb = new StringBundler(4 * attributeGetterFunctions.size() + 2);
 
-		<#list entity.regularEntityColumns as entityColumn>
-			<#if !stringUtil.equals(entityColumn.type, "Blob") || !entityColumn.lazy>
-				sb.append("<column><column-name>${entityColumn.name}</column-name><column-value><![CDATA[");
-				<#if stringUtil.equals(entityColumn.type, "boolean")>
-					sb.append(is${entityColumn.methodName}());
-				<#else>
-					sb.append(get${entityColumn.methodName}());
-				</#if>
+			sb.append("{");
+
+			for (Map.Entry<String, Function<${entity.name}, Object>> entry : attributeGetterFunctions.entrySet()) {
+				String attributeName = entry.getKey();
+				Function<${entity.name}, Object> attributeGetterFunction = entry.getValue();
+
+				sb.append(attributeName);
+				sb.append("=");
+				sb.append(attributeGetterFunction.apply((${entity.name})this));
+				sb.append(", ");
+			}
+
+			if (sb.index() > 1) {
+				sb.setIndex(sb.index() - 1);
+			}
+
+			sb.append("}");
+
+			return sb.toString();
+		}
+
+		@Override
+		public String toXmlString() {
+			Map<String, Function<${entity.name}, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+
+			StringBundler sb = new StringBundler(5 * attributeGetterFunctions.size() + 4);
+
+			sb.append("<model><model-name>");
+			sb.append(getModelClassName());
+			sb.append("</model-name>");
+
+			for (Map.Entry<String, Function<${entity.name}, Object>> entry : attributeGetterFunctions.entrySet()) {
+				String attributeName = entry.getKey();
+				Function<${entity.name}, Object> attributeGetterFunction = entry.getValue();
+
+				sb.append("<column><column-name>");
+				sb.append(attributeName);
+				sb.append("</column-name><column-value><![CDATA[");
+				sb.append(attributeGetterFunction.apply((${entity.name})this));
 				sb.append("]]></column-value></column>");
-			</#if>
-		</#list>
+			}
 
-		sb.append("</model>");
+			sb.append("</model>");
 
-		return sb.toString();
-	}
+			return sb.toString();
+		}
+	</#if>
 
 	private static final ClassLoader _classLoader = ${entity.name}.class.getClassLoader();
 

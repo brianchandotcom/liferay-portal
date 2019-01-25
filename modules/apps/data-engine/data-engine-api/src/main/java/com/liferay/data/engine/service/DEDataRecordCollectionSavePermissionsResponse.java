@@ -20,33 +20,72 @@ import java.util.Collections;
 import java.util.List;
 
 /**
+ * This class represents a response of the save Data Record Collection
+ * permission request to a role
+ *
  * @author Leonardo Barros
+ * @review
  */
 public final class DEDataRecordCollectionSavePermissionsResponse {
 
+	/**
+	 * Returns the role names list of the Permission response.
+	 *
+	 * @return a list of roleNames
+	 * @review
+	 */
 	public List<String> getRoleNames() {
 		return Collections.unmodifiableList(_roleNames);
 	}
 
+	/**
+	 * Constructs the Save Data Record Collections Permissions response.
+	 * The role names must be an argument in the response builder.
+	 *
+	 * @return {@link DEDataRecordCollectionSavePermissionsResponse}
+	 * @review
+	 */
 	public static final class Builder {
 
-		public static Builder newBuilder(String... roleNames) {
+		/**
+		 * Returns the Save Data Record Collection Permissions builder
+		 *
+		 * @param roleNames the list of the roles names that have been granted
+		 * permission in the request
+		 * @return {@link Builder}
+		 * @review
+		 */
+		public static Builder newBuilder(String[] roleNames) {
 			return new Builder(roleNames);
 		}
 
+		/**
+		 * Includes a role names list in the Save Permission response.
+		 *
+		 * @param roleNames the role names that are going to receive the
+		 * permissions
+		 * @return {@link DEDataRecordCollectionSavePermissionsResponse}
+		 * @review
+		 */
 		public static DEDataRecordCollectionSavePermissionsResponse of(
-			String... roleNames) {
+			String[] roleNames) {
 
 			return newBuilder(
 				roleNames
 			).build();
 		}
 
+		/**
+		 * Constructs the Save Data Record Collections Permissions response.
+		 *
+		 * @return {@link DEDataRecordCollectionSavePermissionsResponse}
+		 * @review
+		 */
 		public DEDataRecordCollectionSavePermissionsResponse build() {
 			return _deDataRecordCollectionSavePermissionsResponse;
 		}
 
-		private Builder(String... roleNames) {
+		private Builder(String[] roleNames) {
 			_deDataRecordCollectionSavePermissionsResponse._roleNames =
 				ListUtil.fromArray(roleNames);
 		}

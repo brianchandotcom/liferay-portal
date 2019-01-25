@@ -588,46 +588,6 @@ definition {
 		SearchResultPortlet.viewNoSearchResults(searchTerm = "&quot;name1&quot;");
 	}
 
-	@description = "This is a use case for LPS-74299."
-	@priority = "3"
-	test ViewFacetPersistence {
-		ProductMenu.gotoPortlet(
-			category = "Build",
-			panel = "Site Administration",
-			portlet = "Pages"
-		);
-
-		SitePages.addPublicPage(pageName = "Search Page");
-
-		Navigator.gotoPage(pageName = "Search Page");
-
-		SearchPortlets.addWidgets(
-			searchPortletList = "Site Facet,Search Results,Search Bar"
-		);
-
-		SearchPortlets.configureWidgetScope(searchScope = "Everything");
-
-		SearchPortlets.searchWidget(searchTerm = "*");
-
-		SearchResultPortlet.viewSearchResults(
-			searchAssetTitle = "Test Test",
-			searchAssetType = "User"
-		);
-
-		var siteName = TestCase.getSiteName();
-
-		SearchFacetPortlet.checkFacet(facetValueName = "${siteName}");
-
-		SearchPortlets.searchWidget(searchTerm = "test");
-
-		SearchResultPortlet.viewSearchResults(
-			searchAssetTitle = "Test Test",
-			searchAssetType = "User"
-		);
-
-		AssertChecked(locator1 = "Checkbox#ANY_CHECKBOX", checkboxName = "${siteName}");
-	}
-
 	@priority = "4"
 	test SearchDeletedWebContent {
 		ProductMenu.gotoPortlet(
@@ -1440,6 +1400,46 @@ definition {
 		AssertHTMLSourceTextNotPresent(value1 = "${actualScript}");
 
 		AssertHTMLSourceTextPresent(value1 = "${escapedScript}");
+	}
+
+	@description = "This is a use case for LPS-74299."
+	@priority = "3"
+	test ViewFacetPersistence {
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Search Page");
+
+		Navigator.gotoPage(pageName = "Search Page");
+
+		SearchPortlets.addWidgets(
+			searchPortletList = "Site Facet,Search Results,Search Bar"
+		);
+
+		SearchPortlets.configureWidgetScope(searchScope = "Everything");
+
+		SearchPortlets.searchWidget(searchTerm = "*");
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "Test Test",
+			searchAssetType = "User"
+		);
+
+		var siteName = TestCase.getSiteName();
+
+		SearchFacetPortlet.checkFacet(facetValueName = "${siteName}");
+
+		SearchPortlets.searchWidget(searchTerm = "test");
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "Test Test",
+			searchAssetType = "User"
+		);
+
+		AssertChecked(locator1 = "Checkbox#ANY_CHECKBOX", checkboxName = "${siteName}");
 	}
 
 	@priority = "5"

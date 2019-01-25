@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Rest Booster API
+Bundle-SymbolicName: com.liferay.rest.booster.api
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.rest.booster.context

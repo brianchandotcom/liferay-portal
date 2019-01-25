@@ -30,7 +30,7 @@ public class JavaElseStatement extends BaseJavaTerm {
 		String indent, String prefix, String suffix, int maxLineLength) {
 
 		if (_javaIfStatement == null) {
-			return StringBundler.concat(indent, prefix, "else {");
+			return StringBundler.concat(indent, prefix, "else", suffix);
 		}
 
 		return _javaIfStatement.toString(

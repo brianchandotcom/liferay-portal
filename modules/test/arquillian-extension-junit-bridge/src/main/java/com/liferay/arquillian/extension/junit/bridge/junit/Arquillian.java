@@ -23,7 +23,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.jboss.arquillian.junit.State;
 import org.jboss.arquillian.junit.event.AfterRules;
@@ -162,7 +162,7 @@ public class Arquillian extends BlockJUnit4ClassRunner {
 
 				@Override
 				public void evaluate() throws Throwable {
-					final AtomicInteger counter = new AtomicInteger();
+					final AtomicBoolean flag = new AtomicBoolean();
 
 					Throwable throwable = null;
 
@@ -171,12 +171,12 @@ public class Arquillian extends BlockJUnit4ClassRunner {
 							new BeforeRules(
 								test, method.getMethod(),
 								() -> {
-									counter.incrementAndGet();
+									flag.set(true);
 
 									statementWithRules.evaluate();
 								}));
 
-						if (counter.get() == 0) {
+						if (flag.get() == false) {
 							originalStatement.evaluate();
 						}
 					}

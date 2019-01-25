@@ -531,9 +531,9 @@ describe(
 						expect(component.state.open).toBeTruthy();
 
 						const spy = jest.spyOn(component, 'close');
-						const {close} = component.refs;
+						const {closeButton} = component.refs;
 
-						close.click();
+						closeButton.click();
 
 						jest.runAllTimers();
 

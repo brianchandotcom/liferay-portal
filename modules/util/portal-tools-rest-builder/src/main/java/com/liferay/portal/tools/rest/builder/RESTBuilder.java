@@ -95,6 +95,13 @@ public class RESTBuilder {
 				apiPackagePath, author, copyrightFileName, name, configuration);
 
 			FileUtil.write(file, content);
+
+			file = _getResourceImplFile(apiDirName, apiPackagePath, name);
+			content = _getResourceImplContent(
+				apiPackagePath, applicationName, author, copyrightFileName,
+				name, configuration);
+
+			FileUtil.write(file, content);
 		}
 	}
 
@@ -202,6 +209,47 @@ public class RESTBuilder {
 		sb.append("/resource/");
 		sb.append(name);
 		sb.append("Resource.java");
+
+		return new File(sb.toString());
+	}
+
+	private String _getResourceImplContent(
+			String apiPackagePath, String applicationName, String author,
+			String copyrightFileName, String name, Configuration configuration)
+		throws Exception {
+
+		Map<String, Object> context = new HashMap<>();
+
+		context.put("apiPackagePath", apiPackagePath);
+		context.put("applicationName", applicationName);
+		context.put("author", author);
+		context.put("info", configuration.getInfo());
+		context.put("name", name);
+
+		String content = _freeMarker.processTemplate(
+			FreeMarkerConstants.RESOURCE_IMPL_FTL, context);
+
+		if ((copyrightFileName != null) && !copyrightFileName.isEmpty()) {
+			File copyrightFile = new File(copyrightFileName);
+
+			content = FileUtil.read(copyrightFile) + "\n\n" + content;
+		}
+
+		return content;
+	}
+
+	private File _getResourceImplFile(
+		String apiDir, String apiPackagePath, String name) {
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(apiDir);
+		sb.append("/");
+		sb.append(apiPackagePath.replace('.', '/'));
+		sb.append("/");
+		sb.append("/internal/resource/");
+		sb.append(name);
+		sb.append("ResourceImpl.java");
 
 		return new File(sb.toString());
 	}

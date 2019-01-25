@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 
 import java.io.Serializable;
 
@@ -73,6 +74,14 @@ public class CTProcessLocalServiceImpl extends CTProcessLocalServiceBaseImpl {
 		}
 
 		return ctProcessPersistence.remove(ctProcess);
+	}
+
+	@Override
+	public CTProcess fetchLatestCTProcess(long companyId) {
+		return ctProcessPersistence.fetchByCompanyId_First(
+			companyId,
+			OrderByComparatorFactoryUtil.create(
+				"CTProcess", "createDate", false));
 	}
 
 	@Override

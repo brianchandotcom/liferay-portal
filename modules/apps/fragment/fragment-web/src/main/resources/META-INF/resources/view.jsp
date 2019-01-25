@@ -159,7 +159,7 @@ List<FragmentCollection> fragmentCollections = (List<FragmentCollection>)request
 			let dom = metalDomSrcDom.default;
 
 			const deleteCollections = function() {
-				const fragmentCollectionsFm = document.querySelector('#<portlet:namespace />fragmentCollectionsFm');
+				const fragmentCollectionsFm = document.getElementById('<portlet:namespace />fragmentCollectionsFm');
 
 				const itemSelectorDialog = new A.LiferayItemSelectorDialog(
 					{
@@ -192,7 +192,7 @@ List<FragmentCollection> fragmentCollections = (List<FragmentCollection>)request
 			};
 
 			const exportCollections = function() {
-				const fragmentCollectionsFm = document.querySelector('#<portlet:namespace />fragmentCollectionsFm');
+				const fragmentCollectionsFm = document.getElementById('<portlet:namespace />fragmentCollectionsFm');
 
 				const itemSelectorDialog = new A.LiferayItemSelectorDialog(
 					{

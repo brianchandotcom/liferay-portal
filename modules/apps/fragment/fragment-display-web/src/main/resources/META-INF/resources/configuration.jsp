@@ -124,7 +124,7 @@ FragmentEntry fragmentEntry = fragmentEntryDisplayContext.getFragmentEntry();
 </liferay-frontend:edit-form>
 
 <aui:script use="liferay-item-selector-dialog">
-	var fragmentEntrySelector = document.querySelector('#<portlet:namespace />fragmentEntrySelector');
+	var fragmentEntrySelector = document.getElementById('<portlet:namespace />fragmentEntrySelector');
 
 	if (fragmentEntrySelector) {
 		fragmentEntrySelector.addEventListener(
@@ -155,7 +155,7 @@ FragmentEntry fragmentEntry = fragmentEntryDisplayContext.getFragmentEntry();
 		);
 	}
 
-	var removeFragmentEntry = document.querySelector('#<portlet:namespace />removeFragmentEntry');
+	var removeFragmentEntry = document.getElementById('<portlet:namespace />removeFragmentEntry');
 
 	if (removeFragmentEntry) {
 		removeFragmentEntry.addEventListener(

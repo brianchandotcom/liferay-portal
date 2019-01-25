@@ -442,36 +442,36 @@ if (comment) {
 			autocompleteDiv.hide();
 		};
 
-		var createAutocomplete = function(contentTextarea) {
-			AUI.$.ajax(
-				'<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/microblogs/autocomplete_user_mentions" />',
-				{
-					data: {
-						userId: <%= user.getUserId() %>
-					},
-					success: function(responseData) {
-						autocompleteDiv = new A.AutoComplete(
-							{
-								inputNode: contentTextarea,
-								maxResults: 5,
-								on: {
-									clear: function() {
-										var highlighterContent = A.one('#<portlet:namespace />highlighterContent<%= formId %>');
+		<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/microblogs/autocomplete_user_mentions" var="userIdURL">
+			<portlet:param name="userId" value="<%= String.valueOf(user.getUserId()) %>" />
+		</liferay-portlet:resourceURL>
 
-										highlighterContent.html('');
-									},
-									query: updateHighlightDivContent,
-									select: updateContentTextbox
-								},
-								resultFilters: 'phraseMatch',
-								resultFormatter: resultFormatter,
-								resultTextLocator: 'fullName',
-								source: responseData
-							}
-						).render();
+		var createAutocomplete = function(contentTextarea) {
+			fetch('<%= HtmlUtil.escapeJS(userIdURL.toString()) %>')
+			.then(function(response) {
+				return response.json();
+			})
+			.then(function(response) {
+				autocompleteDiv = new A.AutoComplete(
+					{
+						inputNode: contentTextarea,
+						maxResults: 5,
+							on: {
+								clear: function() {
+								var highlighterContent = A.one('#<portlet:namespace />highlighterContent<%= formId %>');
+
+								highlighterContent.html('');
+							},
+							query: updateHighlightDivContent,
+							select: updateContentTextbox
+							},
+						resultFilters: 'phraseMatch',
+						resultFormatter: resultFormatter,
+						resultTextLocator: 'fullName',
+						source: response
 					}
-				}
-			);
+				).render();
+			})
 		};
 
 		<c:choose>

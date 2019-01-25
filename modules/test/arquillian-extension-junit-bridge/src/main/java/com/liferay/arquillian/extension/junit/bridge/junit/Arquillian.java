@@ -25,6 +25,7 @@ import java.util.Collections;
 import java.util.List;
 
 import java.util.concurrent.atomic.AtomicInteger;
+
 import org.jboss.arquillian.junit.State;
 import org.jboss.arquillian.junit.event.AfterRules;
 import org.jboss.arquillian.junit.event.BeforeRules;
@@ -214,7 +215,6 @@ public class Arquillian extends BlockJUnit4ClassRunner {
 
                @Override
                public void evaluate() throws Throwable {
-                   State.caughtExceptionAfterJunit(null);
                    final AtomicInteger integer = new AtomicInteger();
                    List<Throwable> exceptions = new ArrayList<Throwable>();
 
@@ -228,22 +228,15 @@ public class Arquillian extends BlockJUnit4ClassRunner {
                        }));
                        // If AroundRules (includes lifecycles) were not executed, invoke only lifecycles+test
                        if(integer.get() == 0) {
-                           try {
-                               stmtwithLifecycle.evaluate();
-                           } catch(Throwable t) {
-                               State.caughtExceptionAfterJunit(t);
-                               throw t;
-                           }
+                            stmtwithLifecycle.evaluate();
                        }
                    } catch(Throwable t) {
-                       State.caughtExceptionAfterJunit(t);
                        exceptions.add(t);
                    }
                    finally {
                        try {
                            _testRunnerAdaptor.fireCustomLifecycle(new AfterRules(test, method.getMethod(), LifecycleMethodExecutor.NO_OP));
                        } catch(Throwable t) {
-                           State.caughtExceptionAfterJunit(t);
                            exceptions.add(t);
                        }
                    }

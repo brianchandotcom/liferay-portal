@@ -5,31 +5,41 @@ definition {
 	property testray.main.component.name = "Content Pages";
 
 	setUp {
-		TestCase.setUpPortalInstance();
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
 
-		User.firstLoginPG();
+			User.firstLoginPG();
+		}
 
-		JSONGroup.addGroup(groupName = "Test Site Name");
+		task ("Add a site via JSON") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
 
-		JSONLayout.addPublicLayout(groupName = "Test Site Name", layoutName = "Search");
+		task ("Add a destination page for the Search Bar widget") {
+			JSONLayout.addPublicLayout(groupName = "Test Site Name", layoutName = "Search");
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/search");
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/search");
 
-		Portlet.addPG(portletName = "Search Results");
+			Portlet.addPG(portletName = "Search Results");
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/search");
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/search");
 
-		Portlet.addPG(portletName = "Type Facet");
+			Portlet.addPG(portletName = "Type Facet");
+		}
 
-		FragmentsAdmin.openFragmentsAdmin(siteURLKey = "test-site-name");
+		task ("Import test fragments from dependencies folder") {
+			FragmentsAdmin.openFragmentsAdmin(siteURLKey = "test-site-name");
 
-		FragmentsAdmin.importCollectionFromDependenciesFolder(
-			collectionZipFile = "fragment-collection.zip"
-		);
+			FragmentsAdmin.importCollectionFromDependenciesFolder(
+				collectionZipFile = "fragment-collection.zip"
+			);
+		}
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+		task ("Add a content page") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
-		ContentPages.addPage(pageName = "Test Content Page Name");
+			ContentPages.addPage(pageName = "Test Content Page Name");
+		}
 	}
 
 	tearDown {
@@ -48,36 +58,52 @@ definition {
 	test FilterByPageFacet {
 		property portal.acceptance = "true";
 
-		PageEditor.addFragment(
-			collectionName = "Collection Name",
-			fragmentName = "Static Text"
-		);
+		task ("Add a Static Text fragment to the content page") {
+			PageEditor.addFragment(
+				collectionName = "Collection Name",
+				fragmentName = "Static Text"
+			);
+		}
 
-		JSONWebcontent.addWebContent(
-			content = "This is static text",
-			groupName = "Test Site Name",
-			title = "Web Content Title"
-		);
+		task ("Add a web content article with the same text as the Static Text fragment") {
+			JSONWebcontent.addWebContent(
+				content = "This is static text",
+				groupName = "Test Site Name",
+				title = "Web Content Title"
+			);
+		}
 
-		Navigator.openWithAppendToBaseURL(
-			urlAppend = "web/test-site-name/test-content-page-name"
-		);
+		task ("Navigate to the content page") {
+			Navigator.openWithAppendToBaseURL(
+				urlAppend = "web/test-site-name/test-content-page-name"
+			);
+		}
 
-		Search.searchCP(searchTerm = "static");
+		task ("Search by text that appears in both the content page and web content article") {
+			Search.searchCP(searchTerm = "static");
+		}
 
-		Search.viewResultAssetTitle(searchAssetTitle = "Test Content Page Name");
+		task ("Assert both the content page and web content article appear in the search results") {
+			Search.viewResultAssetTitle(searchAssetTitle = "Test Content Page Name");
 
-		Search.viewResultAssetTitle(searchAssetTitle = "Web Content Title");
+			Search.viewResultAssetTitle(searchAssetTitle = "Web Content Title");
+		}
 
-		Check(
-			locator1 = "SearchResults#FACET_PORTLET_CHECKBOX_SPECIFIC",
-			key_checkboxName = "Page",
-			key_facetClass = "Type"
-		);
+		task ("Flag the Page facet in the search results to filter results to only show pages") {
+			Check(
+				locator1 = "SearchResults#FACET_PORTLET_CHECKBOX_SPECIFIC",
+				key_checkboxName = "Page",
+				key_facetClass = "Type"
+			);
+		}
 
-		Search.viewResultAssetTitle(searchAssetTitle = "Test Content Page Name");
+		task ("Assert the content page appears in the search results") {
+			Search.viewResultAssetTitle(searchAssetTitle = "Test Content Page Name");
+		}
 
-		Search.viewNoResultAssetTitle(searchAssetTitle = "Web Content Title");
+		task ("Assert the web content article does not appear in the search results") {
+			Search.viewNoResultAssetTitle(searchAssetTitle = "Web Content Title");
+		}
 	}
 
 	@description = "This is a test for LPS-78928. Editable text in content pages is searchable."
@@ -85,40 +111,62 @@ definition {
 	test SearchEditableText {
 		property portal.acceptance = "true";
 
-		PageEditor.addFragment(
-			collectionName = "Collection Name",
-			fragmentName = "Rich Text"
-		);
+		task ("Add a Rich Text fragment to the content page") {
+			PageEditor.addFragment(
+				collectionName = "Collection Name",
+				fragmentName = "Rich Text"
+			);
+		}
 
-		Navigator.openWithAppendToBaseURL(
-			urlAppend = "web/test-site-name/test-content-page-name"
-		);
+		task ("Navigate to the content page") {
+			Navigator.openWithAppendToBaseURL(
+				urlAppend = "web/test-site-name/test-content-page-name"
+			);
+		}
 
-		Search.searchCP(searchTerm = "duis");
+		task ("Search by text that appears in the editable text field in the Rich Text fragment") {
+			Search.searchCP(searchTerm = "duis");
+		}
 
-		Search.viewResultAssetTitle(searchAssetTitle = "Test Content Page Name");
+		task ("Assert the content page appears in the search results") {
+			Search.viewResultAssetTitle(searchAssetTitle = "Test Content Page Name");
+		}
 
-		Navigator.openWithAppendToBaseURL(
-			urlAppend = "web/test-site-name/test-content-page-name?p_l_mode=edit"
-		);
+		task ("Navigate to the content page's 'Edit Mode'") {
+			Navigator.openWithAppendToBaseURL(
+				urlAppend = "web/test-site-name/test-content-page-name?p_l_mode=edit"
+			);
+		}
 
-		PageEditor.editFragmentText(
-			fragmentName = "Rich Text",
-			id = "rich-text",
-			text = "New editable fragment text"
-		);
+		task ("Edit the Rich Text fragment's editable text") {
+			PageEditor.editFragmentText(
+				fragmentName = "Rich Text",
+				id = "rich-text",
+				text = "New editable fragment text"
+			);
+		}
 
-		Navigator.openWithAppendToBaseURL(
-			urlAppend = "web/test-site-name/test-content-page-name"
-		);
+		task ("Navigate to the content page") {
+			Navigator.openWithAppendToBaseURL(
+				urlAppend = "web/test-site-name/test-content-page-name"
+			);
+		}
 
-		Search.searchCP(searchTerm = "editable");
+		task ("Search by the new text that appears in the editable text field in the Rich Text fragment") {
+			Search.searchCP(searchTerm = "editable");
+		}
 
-		Search.viewResultAssetTitle(searchAssetTitle = "Test Content Page Name");
+		task ("Assert the content page appears in the search results") {
+			Search.viewResultAssetTitle(searchAssetTitle = "Test Content Page Name");
+		}
 
-		Search.searchCP(searchTerm = "duis");
+		task ("Search by the old text that appeared in the editable text field in the Rich Text fragment") {
+			Search.searchCP(searchTerm = "duis");
+		}
 
-		Search.viewNoResultAssetTitle(searchAssetTitle = "Test Content Page Name");
+		task ("Assert the content page does not appear in the search results") {
+			Search.viewNoResultAssetTitle(searchAssetTitle = "Test Content Page Name");
+		}
 	}
 
 	@description = "This is a test for LPS-78928. Static text in content pages is searchable."
@@ -126,17 +174,25 @@ definition {
 	test SearchStaticText {
 		property portal.acceptance = "true";
 
-		PageEditor.addFragment(
-			collectionName = "Collection Name",
-			fragmentName = "Static Text"
-		);
+		task ("Add a Static Text fragment to the content page") {
+			PageEditor.addFragment(
+				collectionName = "Collection Name",
+				fragmentName = "Static Text"
+			);
+		}
 
-		Navigator.openWithAppendToBaseURL(
-			urlAppend = "web/test-site-name/test-content-page-name"
-		);
+		task ("Navigate to the content page") {
+			Navigator.openWithAppendToBaseURL(
+				urlAppend = "web/test-site-name/test-content-page-name"
+			);
+		}
 
-		Search.searchCP(searchTerm = "static");
+		task ("Search by the static text in the Static Text fragment") {
+			Search.searchCP(searchTerm = "static");
+		}
 
-		Search.viewResultAssetTitle(searchAssetTitle = "Test Content Page Name");
+		task ("Assert the content page appears in the search results") {
+			Search.viewResultAssetTitle(searchAssetTitle = "Test Content Page Name");
+		}
 	}
 }

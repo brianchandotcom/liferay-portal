@@ -103,6 +103,56 @@ public class RESTBuilder {
 
 			FileUtil.write(file, content);
 		}
+
+		File file = _getApplicationFile(
+			apiDirName, apiPackagePath, applicationClassName);
+		String content = _getApplicationContent(
+			apiPackagePath, applicationBaseURI, applicationClassName,
+			applicationName, author, copyrightFileName);
+
+		FileUtil.write(file, content);
+	}
+
+	private String _getApplicationContent(
+			String apiPackagePath, String applicationBaseURI,
+			String applicationClassName, String applicationName, String author,
+			String copyrightFileName)
+		throws Exception {
+
+		Map<String, Object> context = new HashMap<>();
+
+		context.put("apiPackagePath", apiPackagePath);
+		context.put("applicationBaseURI", applicationBaseURI);
+		context.put("applicationClassName", applicationClassName);
+		context.put("applicationName", applicationName);
+		context.put("author", author);
+
+		String content = _freeMarker.processTemplate(
+			FreeMarkerConstants.APPLICATION_FTL, context);
+
+		if ((copyrightFileName != null) && !copyrightFileName.isEmpty()) {
+			File copyrightFile = new File(copyrightFileName);
+
+			content = FileUtil.read(copyrightFile) + "\n\n" + content;
+		}
+
+		return content;
+	}
+
+	private File _getApplicationFile(
+		String apiDir, String apiPackagePath, String applicationClassName) {
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(apiDir);
+		sb.append("/");
+		sb.append(apiPackagePath.replace('.', '/'));
+		sb.append("/");
+		sb.append("/internal/application/");
+		sb.append(applicationClassName);
+		sb.append(".java");
+
+		return new File(sb.toString());
 	}
 
 	private Configuration _getConfiguration(String inputFileName) {

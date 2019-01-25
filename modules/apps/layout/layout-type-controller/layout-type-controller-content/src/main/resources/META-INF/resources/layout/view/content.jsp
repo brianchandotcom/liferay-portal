@@ -42,14 +42,14 @@ if ((themeDisplay.isStatePopUp() || themeDisplay.isWidget() || layoutTypePortlet
 	}
 }
 else {
-	ContentLayoutTypeControllerDisplayContext contentLayoutTypeControllerDisplayContext = new ContentLayoutTypeControllerDisplayContext(request, response);
-
 	try {
+		LayoutPageTemplateStructure layoutPageTemplateStructure = LayoutPageTemplateStructureLocalServiceUtil.fetchLayoutPageTemplateStructure(layout.getGroupId(), PortalUtil.getClassNameId(Layout.class.getName()), layout.getPlid(), true);
+
 		request.setAttribute(WebKeys.PORTLET_DECORATE, Boolean.FALSE);
 %>
 
 		<div class="layout-content" id="main-content" role="main">
-			<%= contentLayoutTypeControllerDisplayContext.getRenderedContent() %>
+			<%= LayoutPageTemplateStructureRenderUtil.renderLayoutContent(request, response, layoutPageTemplateStructure) %>
 		</div>
 
 <%

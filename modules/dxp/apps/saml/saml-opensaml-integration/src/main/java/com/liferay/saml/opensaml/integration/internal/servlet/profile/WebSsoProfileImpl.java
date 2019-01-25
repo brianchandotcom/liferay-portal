@@ -130,6 +130,7 @@ import org.opensaml.saml.saml2.core.StatusCode;
 import org.opensaml.saml.saml2.core.Subject;
 import org.opensaml.saml.saml2.core.SubjectConfirmation;
 import org.opensaml.saml.saml2.core.SubjectConfirmationData;
+import org.opensaml.saml.saml2.encryption.Decrypter;
 import org.opensaml.saml.saml2.encryption.Encrypter;
 import org.opensaml.saml.saml2.metadata.AssertionConsumerService;
 import org.opensaml.saml.saml2.metadata.IDPSSODescriptor;
@@ -146,6 +147,7 @@ import org.opensaml.xmlsec.EncryptionParameters;
 import org.opensaml.xmlsec.context.SecurityParametersContext;
 import org.opensaml.xmlsec.criterion.EncryptionConfigurationCriterion;
 import org.opensaml.xmlsec.encryption.support.DataEncryptionParameters;
+import org.opensaml.xmlsec.encryption.support.DecryptionException;
 import org.opensaml.xmlsec.encryption.support.KeyEncryptionParameters;
 import org.opensaml.xmlsec.signature.Signature;
 import org.opensaml.xmlsec.signature.support.SignatureTrustEngine;
@@ -635,7 +637,33 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 		List<Attribute> attributes = new ArrayList<>();
 
-		for (Assertion curAssertion : samlResponse.getAssertions()) {
+		List<EncryptedAssertion> encryptedAssertions =
+			samlResponse.getEncryptedAssertions();
+
+		List<Assertion> assertions = new ArrayList<>(
+			samlResponse.getAssertions());
+
+		if (_decrypter != null) {
+			for (EncryptedAssertion encryptedAssertion : encryptedAssertions) {
+				try {
+					assertions.add(_decrypter.decrypt(encryptedAssertion));
+				}
+				catch (DecryptionException de) {
+					_log.error("Assertion decryption failed", de);
+				}
+			}
+		}
+		else {
+			if (!encryptedAssertions.isEmpty()) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Message returned encrypted assertions but there is " +
+							"no decrypter available");
+				}
+			}
+		}
+
+		for (Assertion curAssertion : assertions) {
 			try {
 				verifyAssertion(
 					curAssertion, messageContext, signatureTrustEngine);
@@ -1942,6 +1970,10 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		_samlSignatureProfileValidator = new SAMLSignatureProfileValidator();
 
 	private AttributeResolverRegistry _attributeResolverRegistry;
+
+	@Reference(cardinality = ReferenceCardinality.OPTIONAL)
+	private Decrypter _decrypter;
+
 	private NameIdResolverRegistry _nameIdResolverRegistry;
 	private SamlConfiguration _samlConfiguration;
 

@@ -36,8 +36,12 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the AssetEntryAssetCategoryRel service. Represents a row in the &quot;AssetEntryAssetCategoryRel&quot; database table, with each column mapped to a property of this class.
@@ -135,11 +139,17 @@ public class AssetEntryAssetCategoryRelModelImpl extends BaseModelImpl<AssetEntr
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("assetEntryAssetCategoryRelId",
-			getAssetEntryAssetCategoryRelId());
-		attributes.put("assetEntryId", getAssetEntryId());
-		attributes.put("assetCategoryId", getAssetCategoryId());
-		attributes.put("priority", getPriority());
+		Map<String, Function<AssetEntryAssetCategoryRel, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
+
+		for (Map.Entry<String, Function<AssetEntryAssetCategoryRel, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<AssetEntryAssetCategoryRel, Object> attributeGetterFunction =
+				entry.getValue();
+
+			attributes.put(attributeName,
+				attributeGetterFunction.apply((AssetEntryAssetCategoryRel)this));
+		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -149,30 +159,50 @@ public class AssetEntryAssetCategoryRelModelImpl extends BaseModelImpl<AssetEntr
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long assetEntryAssetCategoryRelId = (Long)attributes.get(
-				"assetEntryAssetCategoryRelId");
+		Map<String, BiConsumer<AssetEntryAssetCategoryRel, Object>> attributeSetterBiConsumers =
+			getAttributeSetterBiConsumers();
 
-		if (assetEntryAssetCategoryRelId != null) {
-			setAssetEntryAssetCategoryRelId(assetEntryAssetCategoryRelId);
+		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
+			String attributeName = entry.getKey();
+
+			BiConsumer<AssetEntryAssetCategoryRel, Object> attributeSetterBiConsumer =
+				attributeSetterBiConsumers.get(attributeName);
+
+			if (attributeSetterBiConsumer != null) {
+				attributeSetterBiConsumer.accept((AssetEntryAssetCategoryRel)this,
+					entry.getValue());
+			}
 		}
+	}
 
-		Long assetEntryId = (Long)attributes.get("assetEntryId");
+	public Map<String, Function<AssetEntryAssetCategoryRel, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
+	}
 
-		if (assetEntryId != null) {
-			setAssetEntryId(assetEntryId);
-		}
+	public Map<String, BiConsumer<AssetEntryAssetCategoryRel, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		Long assetCategoryId = (Long)attributes.get("assetCategoryId");
+	private static final Map<String, Function<AssetEntryAssetCategoryRel, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<AssetEntryAssetCategoryRel, Object>> _attributeSetterBiConsumers;
 
-		if (assetCategoryId != null) {
-			setAssetCategoryId(assetCategoryId);
-		}
+	static {
+		Map<String, Function<AssetEntryAssetCategoryRel, Object>> attributeGetterFunctions =
+			new LinkedHashMap<String, Function<AssetEntryAssetCategoryRel, Object>>();
+		Map<String, BiConsumer<AssetEntryAssetCategoryRel, ?>> attributeSetterBiConsumers =
+			new LinkedHashMap<String, BiConsumer<AssetEntryAssetCategoryRel, ?>>();
 
-		Integer priority = (Integer)attributes.get("priority");
+		attributeGetterFunctions.put("assetEntryAssetCategoryRelId", AssetEntryAssetCategoryRel::getAssetEntryAssetCategoryRelId);
+		attributeSetterBiConsumers.put("assetEntryAssetCategoryRelId", (BiConsumer<AssetEntryAssetCategoryRel, Long>)AssetEntryAssetCategoryRel::setAssetEntryAssetCategoryRelId);
+		attributeGetterFunctions.put("assetEntryId", AssetEntryAssetCategoryRel::getAssetEntryId);
+		attributeSetterBiConsumers.put("assetEntryId", (BiConsumer<AssetEntryAssetCategoryRel, Long>)AssetEntryAssetCategoryRel::setAssetEntryId);
+		attributeGetterFunctions.put("assetCategoryId", AssetEntryAssetCategoryRel::getAssetCategoryId);
+		attributeSetterBiConsumers.put("assetCategoryId", (BiConsumer<AssetEntryAssetCategoryRel, Long>)AssetEntryAssetCategoryRel::setAssetCategoryId);
+		attributeGetterFunctions.put("priority", AssetEntryAssetCategoryRel::getPriority);
+		attributeSetterBiConsumers.put("priority", (BiConsumer<AssetEntryAssetCategoryRel, Integer>)AssetEntryAssetCategoryRel::setPriority);
 
-		if (priority != null) {
-			setPriority(priority);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -366,16 +396,30 @@ public class AssetEntryAssetCategoryRelModelImpl extends BaseModelImpl<AssetEntr
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(9);
+		Map<String, Function<AssetEntryAssetCategoryRel, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		sb.append("{assetEntryAssetCategoryRelId=");
-		sb.append(getAssetEntryAssetCategoryRelId());
-		sb.append(", assetEntryId=");
-		sb.append(getAssetEntryId());
-		sb.append(", assetCategoryId=");
-		sb.append(getAssetCategoryId());
-		sb.append(", priority=");
-		sb.append(getPriority());
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
+
+		sb.append("{");
+
+		for (Map.Entry<String, Function<AssetEntryAssetCategoryRel, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<AssetEntryAssetCategoryRel, Object> attributeGetterFunction =
+				entry.getValue();
+
+			sb.append(attributeName);
+			sb.append("=");
+			sb.append(attributeGetterFunction.apply(
+					(AssetEntryAssetCategoryRel)this));
+			sb.append(", ");
+		}
+
+		if (sb.index() > 1) {
+			sb.setIndex(sb.index() - 1);
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -383,29 +427,28 @@ public class AssetEntryAssetCategoryRelModelImpl extends BaseModelImpl<AssetEntr
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(16);
+		Map<String, Function<AssetEntryAssetCategoryRel, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
+
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
-		sb.append(
-			"com.liferay.asset.entry.rel.model.AssetEntryAssetCategoryRel");
+		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		sb.append(
-			"<column><column-name>assetEntryAssetCategoryRelId</column-name><column-value><![CDATA[");
-		sb.append(getAssetEntryAssetCategoryRelId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>assetEntryId</column-name><column-value><![CDATA[");
-		sb.append(getAssetEntryId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>assetCategoryId</column-name><column-value><![CDATA[");
-		sb.append(getAssetCategoryId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>priority</column-name><column-value><![CDATA[");
-		sb.append(getPriority());
-		sb.append("]]></column-value></column>");
+		for (Map.Entry<String, Function<AssetEntryAssetCategoryRel, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<AssetEntryAssetCategoryRel, Object> attributeGetterFunction =
+				entry.getValue();
+
+			sb.append("<column><column-name>");
+			sb.append(attributeName);
+			sb.append("</column-name><column-value><![CDATA[");
+			sb.append(attributeGetterFunction.apply(
+					(AssetEntryAssetCategoryRel)this));
+			sb.append("]]></column-value></column>");
+		}
 
 		sb.append("</model>");
 

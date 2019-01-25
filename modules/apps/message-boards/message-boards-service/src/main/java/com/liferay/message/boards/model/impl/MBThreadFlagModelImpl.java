@@ -42,9 +42,13 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the MBThreadFlag service. Represents a row in the &quot;MBThreadFlag&quot; database table, with each column mapped to a property of this class.
@@ -157,16 +161,15 @@ public class MBThreadFlagModelImpl extends BaseModelImpl<MBThreadFlag>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("uuid", getUuid());
-		attributes.put("threadFlagId", getThreadFlagId());
-		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("threadId", getThreadId());
-		attributes.put("lastPublishDate", getLastPublishDate());
+		Map<String, Function<MBThreadFlag, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+
+		for (Map.Entry<String, Function<MBThreadFlag, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<MBThreadFlag, Object> attributeGetterFunction = entry.getValue();
+
+			attributes.put(attributeName,
+				attributeGetterFunction.apply((MBThreadFlag)this));
+		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -176,65 +179,59 @@ public class MBThreadFlagModelImpl extends BaseModelImpl<MBThreadFlag>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		String uuid = (String)attributes.get("uuid");
+		Map<String, BiConsumer<MBThreadFlag, Object>> attributeSetterBiConsumers =
+			getAttributeSetterBiConsumers();
 
-		if (uuid != null) {
-			setUuid(uuid);
+		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
+			String attributeName = entry.getKey();
+
+			BiConsumer<MBThreadFlag, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+
+			if (attributeSetterBiConsumer != null) {
+				attributeSetterBiConsumer.accept((MBThreadFlag)this,
+					entry.getValue());
+			}
 		}
+	}
 
-		Long threadFlagId = (Long)attributes.get("threadFlagId");
+	public Map<String, Function<MBThreadFlag, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
+	}
 
-		if (threadFlagId != null) {
-			setThreadFlagId(threadFlagId);
-		}
+	public Map<String, BiConsumer<MBThreadFlag, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		Long groupId = (Long)attributes.get("groupId");
+	private static final Map<String, Function<MBThreadFlag, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<MBThreadFlag, Object>> _attributeSetterBiConsumers;
 
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
+	static {
+		Map<String, Function<MBThreadFlag, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<MBThreadFlag, Object>>();
+		Map<String, BiConsumer<MBThreadFlag, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<MBThreadFlag, ?>>();
 
-		Long companyId = (Long)attributes.get("companyId");
+		attributeGetterFunctions.put("uuid", MBThreadFlag::getUuid);
+		attributeSetterBiConsumers.put("uuid", (BiConsumer<MBThreadFlag, String>)MBThreadFlag::setUuid);
+		attributeGetterFunctions.put("threadFlagId", MBThreadFlag::getThreadFlagId);
+		attributeSetterBiConsumers.put("threadFlagId", (BiConsumer<MBThreadFlag, Long>)MBThreadFlag::setThreadFlagId);
+		attributeGetterFunctions.put("groupId", MBThreadFlag::getGroupId);
+		attributeSetterBiConsumers.put("groupId", (BiConsumer<MBThreadFlag, Long>)MBThreadFlag::setGroupId);
+		attributeGetterFunctions.put("companyId", MBThreadFlag::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<MBThreadFlag, Long>)MBThreadFlag::setCompanyId);
+		attributeGetterFunctions.put("userId", MBThreadFlag::getUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<MBThreadFlag, Long>)MBThreadFlag::setUserId);
+		attributeGetterFunctions.put("userName", MBThreadFlag::getUserName);
+		attributeSetterBiConsumers.put("userName", (BiConsumer<MBThreadFlag, String>)MBThreadFlag::setUserName);
+		attributeGetterFunctions.put("createDate", MBThreadFlag::getCreateDate);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<MBThreadFlag, Date>)MBThreadFlag::setCreateDate);
+		attributeGetterFunctions.put("modifiedDate", MBThreadFlag::getModifiedDate);
+		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<MBThreadFlag, Date>)MBThreadFlag::setModifiedDate);
+		attributeGetterFunctions.put("threadId", MBThreadFlag::getThreadId);
+		attributeSetterBiConsumers.put("threadId", (BiConsumer<MBThreadFlag, Long>)MBThreadFlag::setThreadId);
+		attributeGetterFunctions.put("lastPublishDate", MBThreadFlag::getLastPublishDate);
+		attributeSetterBiConsumers.put("lastPublishDate", (BiConsumer<MBThreadFlag, Date>)MBThreadFlag::setLastPublishDate);
 
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		Long threadId = (Long)attributes.get("threadId");
-
-		if (threadId != null) {
-			setThreadId(threadId);
-		}
-
-		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
-
-		if (lastPublishDate != null) {
-			setLastPublishDate(lastPublishDate);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -621,28 +618,27 @@ public class MBThreadFlagModelImpl extends BaseModelImpl<MBThreadFlag>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		Map<String, Function<MBThreadFlag, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		sb.append("{uuid=");
-		sb.append(getUuid());
-		sb.append(", threadFlagId=");
-		sb.append(getThreadFlagId());
-		sb.append(", groupId=");
-		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", userName=");
-		sb.append(getUserName());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", modifiedDate=");
-		sb.append(getModifiedDate());
-		sb.append(", threadId=");
-		sb.append(getThreadId());
-		sb.append(", lastPublishDate=");
-		sb.append(getLastPublishDate());
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
+
+		sb.append("{");
+
+		for (Map.Entry<String, Function<MBThreadFlag, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<MBThreadFlag, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append(attributeName);
+			sb.append("=");
+			sb.append(attributeGetterFunction.apply((MBThreadFlag)this));
+			sb.append(", ");
+		}
+
+		if (sb.index() > 1) {
+			sb.setIndex(sb.index() - 1);
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -650,52 +646,25 @@ public class MBThreadFlagModelImpl extends BaseModelImpl<MBThreadFlag>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(34);
+		Map<String, Function<MBThreadFlag, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
-		sb.append("com.liferay.message.boards.model.MBThreadFlag");
+		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		sb.append(
-			"<column><column-name>uuid</column-name><column-value><![CDATA[");
-		sb.append(getUuid());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>threadFlagId</column-name><column-value><![CDATA[");
-		sb.append(getThreadFlagId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>groupId</column-name><column-value><![CDATA[");
-		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userName</column-name><column-value><![CDATA[");
-		sb.append(getUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
-		sb.append(getModifiedDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>threadId</column-name><column-value><![CDATA[");
-		sb.append(getThreadId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
-		sb.append(getLastPublishDate());
-		sb.append("]]></column-value></column>");
+		for (Map.Entry<String, Function<MBThreadFlag, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<MBThreadFlag, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append("<column><column-name>");
+			sb.append(attributeName);
+			sb.append("</column-name><column-value><![CDATA[");
+			sb.append(attributeGetterFunction.apply((MBThreadFlag)this));
+			sb.append("]]></column-value></column>");
+		}
 
 		sb.append("</model>");
 

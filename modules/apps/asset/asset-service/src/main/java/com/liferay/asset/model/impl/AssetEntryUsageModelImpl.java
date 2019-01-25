@@ -43,9 +43,13 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the AssetEntryUsage service. Represents a row in the &quot;AssetEntryUsage&quot; database table, with each column mapped to a property of this class.
@@ -166,19 +170,15 @@ public class AssetEntryUsageModelImpl extends BaseModelImpl<AssetEntryUsage>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("uuid", getUuid());
-		attributes.put("assetEntryUsageId", getAssetEntryUsageId());
-		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("assetEntryId", getAssetEntryId());
-		attributes.put("classNameId", getClassNameId());
-		attributes.put("classPK", getClassPK());
-		attributes.put("portletId", getPortletId());
-		attributes.put("lastPublishDate", getLastPublishDate());
+		Map<String, Function<AssetEntryUsage, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+
+		for (Map.Entry<String, Function<AssetEntryUsage, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<AssetEntryUsage, Object> attributeGetterFunction = entry.getValue();
+
+			attributes.put(attributeName,
+				attributeGetterFunction.apply((AssetEntryUsage)this));
+		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -188,83 +188,65 @@ public class AssetEntryUsageModelImpl extends BaseModelImpl<AssetEntryUsage>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		String uuid = (String)attributes.get("uuid");
+		Map<String, BiConsumer<AssetEntryUsage, Object>> attributeSetterBiConsumers =
+			getAttributeSetterBiConsumers();
 
-		if (uuid != null) {
-			setUuid(uuid);
+		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
+			String attributeName = entry.getKey();
+
+			BiConsumer<AssetEntryUsage, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+
+			if (attributeSetterBiConsumer != null) {
+				attributeSetterBiConsumer.accept((AssetEntryUsage)this,
+					entry.getValue());
+			}
 		}
+	}
 
-		Long assetEntryUsageId = (Long)attributes.get("assetEntryUsageId");
+	public Map<String, Function<AssetEntryUsage, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
+	}
 
-		if (assetEntryUsageId != null) {
-			setAssetEntryUsageId(assetEntryUsageId);
-		}
+	public Map<String, BiConsumer<AssetEntryUsage, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		Long groupId = (Long)attributes.get("groupId");
+	private static final Map<String, Function<AssetEntryUsage, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<AssetEntryUsage, Object>> _attributeSetterBiConsumers;
 
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
+	static {
+		Map<String, Function<AssetEntryUsage, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<AssetEntryUsage, Object>>();
+		Map<String, BiConsumer<AssetEntryUsage, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<AssetEntryUsage, ?>>();
 
-		Long companyId = (Long)attributes.get("companyId");
+		attributeGetterFunctions.put("uuid", AssetEntryUsage::getUuid);
+		attributeSetterBiConsumers.put("uuid", (BiConsumer<AssetEntryUsage, String>)AssetEntryUsage::setUuid);
+		attributeGetterFunctions.put("assetEntryUsageId", AssetEntryUsage::getAssetEntryUsageId);
+		attributeSetterBiConsumers.put("assetEntryUsageId", (BiConsumer<AssetEntryUsage, Long>)AssetEntryUsage::setAssetEntryUsageId);
+		attributeGetterFunctions.put("groupId", AssetEntryUsage::getGroupId);
+		attributeSetterBiConsumers.put("groupId", (BiConsumer<AssetEntryUsage, Long>)AssetEntryUsage::setGroupId);
+		attributeGetterFunctions.put("companyId", AssetEntryUsage::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<AssetEntryUsage, Long>)AssetEntryUsage::setCompanyId);
+		attributeGetterFunctions.put("userId", AssetEntryUsage::getUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<AssetEntryUsage, Long>)AssetEntryUsage::setUserId);
+		attributeGetterFunctions.put("userName", AssetEntryUsage::getUserName);
+		attributeSetterBiConsumers.put("userName", (BiConsumer<AssetEntryUsage, String>)AssetEntryUsage::setUserName);
+		attributeGetterFunctions.put("createDate", AssetEntryUsage::getCreateDate);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<AssetEntryUsage, Date>)AssetEntryUsage::setCreateDate);
+		attributeGetterFunctions.put("modifiedDate", AssetEntryUsage::getModifiedDate);
+		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<AssetEntryUsage, Date>)AssetEntryUsage::setModifiedDate);
+		attributeGetterFunctions.put("assetEntryId", AssetEntryUsage::getAssetEntryId);
+		attributeSetterBiConsumers.put("assetEntryId", (BiConsumer<AssetEntryUsage, Long>)AssetEntryUsage::setAssetEntryId);
+		attributeGetterFunctions.put("classNameId", AssetEntryUsage::getClassNameId);
+		attributeSetterBiConsumers.put("classNameId", (BiConsumer<AssetEntryUsage, Long>)AssetEntryUsage::setClassNameId);
+		attributeGetterFunctions.put("classPK", AssetEntryUsage::getClassPK);
+		attributeSetterBiConsumers.put("classPK", (BiConsumer<AssetEntryUsage, Long>)AssetEntryUsage::setClassPK);
+		attributeGetterFunctions.put("portletId", AssetEntryUsage::getPortletId);
+		attributeSetterBiConsumers.put("portletId", (BiConsumer<AssetEntryUsage, String>)AssetEntryUsage::setPortletId);
+		attributeGetterFunctions.put("lastPublishDate", AssetEntryUsage::getLastPublishDate);
+		attributeSetterBiConsumers.put("lastPublishDate", (BiConsumer<AssetEntryUsage, Date>)AssetEntryUsage::setLastPublishDate);
 
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		Long assetEntryId = (Long)attributes.get("assetEntryId");
-
-		if (assetEntryId != null) {
-			setAssetEntryId(assetEntryId);
-		}
-
-		Long classNameId = (Long)attributes.get("classNameId");
-
-		if (classNameId != null) {
-			setClassNameId(classNameId);
-		}
-
-		Long classPK = (Long)attributes.get("classPK");
-
-		if (classPK != null) {
-			setClassPK(classPK);
-		}
-
-		String portletId = (String)attributes.get("portletId");
-
-		if (portletId != null) {
-			setPortletId(portletId);
-		}
-
-		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
-
-		if (lastPublishDate != null) {
-			setLastPublishDate(lastPublishDate);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -749,34 +731,27 @@ public class AssetEntryUsageModelImpl extends BaseModelImpl<AssetEntryUsage>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		Map<String, Function<AssetEntryUsage, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		sb.append("{uuid=");
-		sb.append(getUuid());
-		sb.append(", assetEntryUsageId=");
-		sb.append(getAssetEntryUsageId());
-		sb.append(", groupId=");
-		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", userName=");
-		sb.append(getUserName());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", modifiedDate=");
-		sb.append(getModifiedDate());
-		sb.append(", assetEntryId=");
-		sb.append(getAssetEntryId());
-		sb.append(", classNameId=");
-		sb.append(getClassNameId());
-		sb.append(", classPK=");
-		sb.append(getClassPK());
-		sb.append(", portletId=");
-		sb.append(getPortletId());
-		sb.append(", lastPublishDate=");
-		sb.append(getLastPublishDate());
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
+
+		sb.append("{");
+
+		for (Map.Entry<String, Function<AssetEntryUsage, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<AssetEntryUsage, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append(attributeName);
+			sb.append("=");
+			sb.append(attributeGetterFunction.apply((AssetEntryUsage)this));
+			sb.append(", ");
+		}
+
+		if (sb.index() > 1) {
+			sb.setIndex(sb.index() - 1);
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -784,64 +759,25 @@ public class AssetEntryUsageModelImpl extends BaseModelImpl<AssetEntryUsage>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(43);
+		Map<String, Function<AssetEntryUsage, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
-		sb.append("com.liferay.asset.model.AssetEntryUsage");
+		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		sb.append(
-			"<column><column-name>uuid</column-name><column-value><![CDATA[");
-		sb.append(getUuid());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>assetEntryUsageId</column-name><column-value><![CDATA[");
-		sb.append(getAssetEntryUsageId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>groupId</column-name><column-value><![CDATA[");
-		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userName</column-name><column-value><![CDATA[");
-		sb.append(getUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
-		sb.append(getModifiedDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>assetEntryId</column-name><column-value><![CDATA[");
-		sb.append(getAssetEntryId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>classNameId</column-name><column-value><![CDATA[");
-		sb.append(getClassNameId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>classPK</column-name><column-value><![CDATA[");
-		sb.append(getClassPK());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>portletId</column-name><column-value><![CDATA[");
-		sb.append(getPortletId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
-		sb.append(getLastPublishDate());
-		sb.append("]]></column-value></column>");
+		for (Map.Entry<String, Function<AssetEntryUsage, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<AssetEntryUsage, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append("<column><column-name>");
+			sb.append(attributeName);
+			sb.append("</column-name><column-value><![CDATA[");
+			sb.append(attributeGetterFunction.apply((AssetEntryUsage)this));
+			sb.append("]]></column-value></column>");
+		}
 
 		sb.append("</model>");
 

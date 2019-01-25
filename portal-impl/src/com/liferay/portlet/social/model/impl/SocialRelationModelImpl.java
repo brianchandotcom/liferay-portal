@@ -36,8 +36,12 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the SocialRelation service. Represents a row in the &quot;SocialRelation&quot; database table, with each column mapped to a property of this class.
@@ -144,13 +148,15 @@ public class SocialRelationModelImpl extends BaseModelImpl<SocialRelation>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("uuid", getUuid());
-		attributes.put("relationId", getRelationId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("userId1", getUserId1());
-		attributes.put("userId2", getUserId2());
-		attributes.put("type", getType());
+		Map<String, Function<SocialRelation, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+
+		for (Map.Entry<String, Function<SocialRelation, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<SocialRelation, Object> attributeGetterFunction = entry.getValue();
+
+			attributes.put(attributeName,
+				attributeGetterFunction.apply((SocialRelation)this));
+		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -160,47 +166,53 @@ public class SocialRelationModelImpl extends BaseModelImpl<SocialRelation>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		String uuid = (String)attributes.get("uuid");
+		Map<String, BiConsumer<SocialRelation, Object>> attributeSetterBiConsumers =
+			getAttributeSetterBiConsumers();
 
-		if (uuid != null) {
-			setUuid(uuid);
+		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
+			String attributeName = entry.getKey();
+
+			BiConsumer<SocialRelation, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+
+			if (attributeSetterBiConsumer != null) {
+				attributeSetterBiConsumer.accept((SocialRelation)this,
+					entry.getValue());
+			}
 		}
+	}
 
-		Long relationId = (Long)attributes.get("relationId");
+	public Map<String, Function<SocialRelation, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
+	}
 
-		if (relationId != null) {
-			setRelationId(relationId);
-		}
+	public Map<String, BiConsumer<SocialRelation, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		Long companyId = (Long)attributes.get("companyId");
+	private static final Map<String, Function<SocialRelation, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<SocialRelation, Object>> _attributeSetterBiConsumers;
 
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
+	static {
+		Map<String, Function<SocialRelation, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<SocialRelation, Object>>();
+		Map<String, BiConsumer<SocialRelation, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<SocialRelation, ?>>();
 
-		Long createDate = (Long)attributes.get("createDate");
+		attributeGetterFunctions.put("uuid", SocialRelation::getUuid);
+		attributeSetterBiConsumers.put("uuid", (BiConsumer<SocialRelation, String>)SocialRelation::setUuid);
+		attributeGetterFunctions.put("relationId", SocialRelation::getRelationId);
+		attributeSetterBiConsumers.put("relationId", (BiConsumer<SocialRelation, Long>)SocialRelation::setRelationId);
+		attributeGetterFunctions.put("companyId", SocialRelation::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<SocialRelation, Long>)SocialRelation::setCompanyId);
+		attributeGetterFunctions.put("createDate", SocialRelation::getCreateDate);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<SocialRelation, Long>)SocialRelation::setCreateDate);
+		attributeGetterFunctions.put("userId1", SocialRelation::getUserId1);
+		attributeSetterBiConsumers.put("userId1", (BiConsumer<SocialRelation, Long>)SocialRelation::setUserId1);
+		attributeGetterFunctions.put("userId2", SocialRelation::getUserId2);
+		attributeSetterBiConsumers.put("userId2", (BiConsumer<SocialRelation, Long>)SocialRelation::setUserId2);
+		attributeGetterFunctions.put("type", SocialRelation::getType);
+		attributeSetterBiConsumers.put("type", (BiConsumer<SocialRelation, Integer>)SocialRelation::setType);
 
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Long userId1 = (Long)attributes.get("userId1");
-
-		if (userId1 != null) {
-			setUserId1(userId1);
-		}
-
-		Long userId2 = (Long)attributes.get("userId2");
-
-		if (userId2 != null) {
-			setUserId2(userId2);
-		}
-
-		Integer type = (Integer)attributes.get("type");
-
-		if (type != null) {
-			setType(type);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -486,22 +498,27 @@ public class SocialRelationModelImpl extends BaseModelImpl<SocialRelation>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(15);
+		Map<String, Function<SocialRelation, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		sb.append("{uuid=");
-		sb.append(getUuid());
-		sb.append(", relationId=");
-		sb.append(getRelationId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", userId1=");
-		sb.append(getUserId1());
-		sb.append(", userId2=");
-		sb.append(getUserId2());
-		sb.append(", type=");
-		sb.append(getType());
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
+
+		sb.append("{");
+
+		for (Map.Entry<String, Function<SocialRelation, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<SocialRelation, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append(attributeName);
+			sb.append("=");
+			sb.append(attributeGetterFunction.apply((SocialRelation)this));
+			sb.append(", ");
+		}
+
+		if (sb.index() > 1) {
+			sb.setIndex(sb.index() - 1);
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -509,40 +526,25 @@ public class SocialRelationModelImpl extends BaseModelImpl<SocialRelation>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(25);
+		Map<String, Function<SocialRelation, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
-		sb.append("com.liferay.social.kernel.model.SocialRelation");
+		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		sb.append(
-			"<column><column-name>uuid</column-name><column-value><![CDATA[");
-		sb.append(getUuid());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>relationId</column-name><column-value><![CDATA[");
-		sb.append(getRelationId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId1</column-name><column-value><![CDATA[");
-		sb.append(getUserId1());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId2</column-name><column-value><![CDATA[");
-		sb.append(getUserId2());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>type</column-name><column-value><![CDATA[");
-		sb.append(getType());
-		sb.append("]]></column-value></column>");
+		for (Map.Entry<String, Function<SocialRelation, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<SocialRelation, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append("<column><column-name>");
+			sb.append(attributeName);
+			sb.append("</column-name><column-value><![CDATA[");
+			sb.append(attributeGetterFunction.apply((SocialRelation)this));
+			sb.append("]]></column-value></column>");
+		}
 
 		sb.append("</model>");
 

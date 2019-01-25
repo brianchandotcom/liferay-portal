@@ -46,10 +46,14 @@ import java.io.Serializable;
 import java.sql.Types;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the RatingsEntry service. Represents a row in the &quot;RatingsEntry&quot; database table, with each column mapped to a property of this class.
@@ -212,16 +216,15 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("uuid", getUuid());
-		attributes.put("entryId", getEntryId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("classNameId", getClassNameId());
-		attributes.put("classPK", getClassPK());
-		attributes.put("score", getScore());
+		Map<String, Function<RatingsEntry, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+
+		for (Map.Entry<String, Function<RatingsEntry, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<RatingsEntry, Object> attributeGetterFunction = entry.getValue();
+
+			attributes.put(attributeName,
+				attributeGetterFunction.apply((RatingsEntry)this));
+		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -231,65 +234,59 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		String uuid = (String)attributes.get("uuid");
+		Map<String, BiConsumer<RatingsEntry, Object>> attributeSetterBiConsumers =
+			getAttributeSetterBiConsumers();
 
-		if (uuid != null) {
-			setUuid(uuid);
+		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
+			String attributeName = entry.getKey();
+
+			BiConsumer<RatingsEntry, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+
+			if (attributeSetterBiConsumer != null) {
+				attributeSetterBiConsumer.accept((RatingsEntry)this,
+					entry.getValue());
+			}
 		}
+	}
 
-		Long entryId = (Long)attributes.get("entryId");
+	public Map<String, Function<RatingsEntry, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
+	}
 
-		if (entryId != null) {
-			setEntryId(entryId);
-		}
+	public Map<String, BiConsumer<RatingsEntry, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		Long companyId = (Long)attributes.get("companyId");
+	private static final Map<String, Function<RatingsEntry, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<RatingsEntry, Object>> _attributeSetterBiConsumers;
 
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
+	static {
+		Map<String, Function<RatingsEntry, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<RatingsEntry, Object>>();
+		Map<String, BiConsumer<RatingsEntry, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<RatingsEntry, ?>>();
 
-		Long userId = (Long)attributes.get("userId");
+		attributeGetterFunctions.put("uuid", RatingsEntry::getUuid);
+		attributeSetterBiConsumers.put("uuid", (BiConsumer<RatingsEntry, String>)RatingsEntry::setUuid);
+		attributeGetterFunctions.put("entryId", RatingsEntry::getEntryId);
+		attributeSetterBiConsumers.put("entryId", (BiConsumer<RatingsEntry, Long>)RatingsEntry::setEntryId);
+		attributeGetterFunctions.put("companyId", RatingsEntry::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<RatingsEntry, Long>)RatingsEntry::setCompanyId);
+		attributeGetterFunctions.put("userId", RatingsEntry::getUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<RatingsEntry, Long>)RatingsEntry::setUserId);
+		attributeGetterFunctions.put("userName", RatingsEntry::getUserName);
+		attributeSetterBiConsumers.put("userName", (BiConsumer<RatingsEntry, String>)RatingsEntry::setUserName);
+		attributeGetterFunctions.put("createDate", RatingsEntry::getCreateDate);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<RatingsEntry, Date>)RatingsEntry::setCreateDate);
+		attributeGetterFunctions.put("modifiedDate", RatingsEntry::getModifiedDate);
+		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<RatingsEntry, Date>)RatingsEntry::setModifiedDate);
+		attributeGetterFunctions.put("classNameId", RatingsEntry::getClassNameId);
+		attributeSetterBiConsumers.put("classNameId", (BiConsumer<RatingsEntry, Long>)RatingsEntry::setClassNameId);
+		attributeGetterFunctions.put("classPK", RatingsEntry::getClassPK);
+		attributeSetterBiConsumers.put("classPK", (BiConsumer<RatingsEntry, Long>)RatingsEntry::setClassPK);
+		attributeGetterFunctions.put("score", RatingsEntry::getScore);
+		attributeSetterBiConsumers.put("score", (BiConsumer<RatingsEntry, Double>)RatingsEntry::setScore);
 
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		Long classNameId = (Long)attributes.get("classNameId");
-
-		if (classNameId != null) {
-			setClassNameId(classNameId);
-		}
-
-		Long classPK = (Long)attributes.get("classPK");
-
-		if (classPK != null) {
-			setClassPK(classPK);
-		}
-
-		Double score = (Double)attributes.get("score");
-
-		if (score != null) {
-			setScore(score);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@JSON
@@ -715,28 +712,27 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		Map<String, Function<RatingsEntry, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		sb.append("{uuid=");
-		sb.append(getUuid());
-		sb.append(", entryId=");
-		sb.append(getEntryId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", userName=");
-		sb.append(getUserName());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", modifiedDate=");
-		sb.append(getModifiedDate());
-		sb.append(", classNameId=");
-		sb.append(getClassNameId());
-		sb.append(", classPK=");
-		sb.append(getClassPK());
-		sb.append(", score=");
-		sb.append(getScore());
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
+
+		sb.append("{");
+
+		for (Map.Entry<String, Function<RatingsEntry, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<RatingsEntry, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append(attributeName);
+			sb.append("=");
+			sb.append(attributeGetterFunction.apply((RatingsEntry)this));
+			sb.append(", ");
+		}
+
+		if (sb.index() > 1) {
+			sb.setIndex(sb.index() - 1);
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -744,52 +740,25 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(34);
+		Map<String, Function<RatingsEntry, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
-		sb.append("com.liferay.ratings.kernel.model.RatingsEntry");
+		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		sb.append(
-			"<column><column-name>uuid</column-name><column-value><![CDATA[");
-		sb.append(getUuid());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>entryId</column-name><column-value><![CDATA[");
-		sb.append(getEntryId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userName</column-name><column-value><![CDATA[");
-		sb.append(getUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
-		sb.append(getModifiedDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>classNameId</column-name><column-value><![CDATA[");
-		sb.append(getClassNameId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>classPK</column-name><column-value><![CDATA[");
-		sb.append(getClassPK());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>score</column-name><column-value><![CDATA[");
-		sb.append(getScore());
-		sb.append("]]></column-value></column>");
+		for (Map.Entry<String, Function<RatingsEntry, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<RatingsEntry, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append("<column><column-name>");
+			sb.append(attributeName);
+			sb.append("</column-name><column-value><![CDATA[");
+			sb.append(attributeGetterFunction.apply((RatingsEntry)this));
+			sb.append("]]></column-value></column>");
+		}
 
 		sb.append("</model>");
 

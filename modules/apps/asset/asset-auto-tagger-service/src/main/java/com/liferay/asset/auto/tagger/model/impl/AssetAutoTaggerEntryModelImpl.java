@@ -37,9 +37,13 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the AssetAutoTaggerEntry service. Represents a row in the &quot;AssetAutoTaggerEntry&quot; database table, with each column mapped to a property of this class.
@@ -143,13 +147,16 @@ public class AssetAutoTaggerEntryModelImpl extends BaseModelImpl<AssetAutoTagger
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("assetAutoTaggerEntryId", getAssetAutoTaggerEntryId());
-		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("assetEntryId", getAssetEntryId());
-		attributes.put("assetTagId", getAssetTagId());
+		Map<String, Function<AssetAutoTaggerEntry, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
+
+		for (Map.Entry<String, Function<AssetAutoTaggerEntry, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<AssetAutoTaggerEntry, Object> attributeGetterFunction = entry.getValue();
+
+			attributes.put(attributeName,
+				attributeGetterFunction.apply((AssetAutoTaggerEntry)this));
+		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -159,48 +166,55 @@ public class AssetAutoTaggerEntryModelImpl extends BaseModelImpl<AssetAutoTagger
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long assetAutoTaggerEntryId = (Long)attributes.get(
-				"assetAutoTaggerEntryId");
+		Map<String, BiConsumer<AssetAutoTaggerEntry, Object>> attributeSetterBiConsumers =
+			getAttributeSetterBiConsumers();
 
-		if (assetAutoTaggerEntryId != null) {
-			setAssetAutoTaggerEntryId(assetAutoTaggerEntryId);
+		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
+			String attributeName = entry.getKey();
+
+			BiConsumer<AssetAutoTaggerEntry, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+
+			if (attributeSetterBiConsumer != null) {
+				attributeSetterBiConsumer.accept((AssetAutoTaggerEntry)this,
+					entry.getValue());
+			}
 		}
+	}
 
-		Long groupId = (Long)attributes.get("groupId");
+	public Map<String, Function<AssetAutoTaggerEntry, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
+	}
 
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
+	public Map<String, BiConsumer<AssetAutoTaggerEntry, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		Long companyId = (Long)attributes.get("companyId");
+	private static final Map<String, Function<AssetAutoTaggerEntry, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<AssetAutoTaggerEntry, Object>> _attributeSetterBiConsumers;
 
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
+	static {
+		Map<String, Function<AssetAutoTaggerEntry, Object>> attributeGetterFunctions =
+			new LinkedHashMap<String, Function<AssetAutoTaggerEntry, Object>>();
+		Map<String, BiConsumer<AssetAutoTaggerEntry, ?>> attributeSetterBiConsumers =
+			new LinkedHashMap<String, BiConsumer<AssetAutoTaggerEntry, ?>>();
 
-		Date createDate = (Date)attributes.get("createDate");
+		attributeGetterFunctions.put("assetAutoTaggerEntryId", AssetAutoTaggerEntry::getAssetAutoTaggerEntryId);
+		attributeSetterBiConsumers.put("assetAutoTaggerEntryId", (BiConsumer<AssetAutoTaggerEntry, Long>)AssetAutoTaggerEntry::setAssetAutoTaggerEntryId);
+		attributeGetterFunctions.put("groupId", AssetAutoTaggerEntry::getGroupId);
+		attributeSetterBiConsumers.put("groupId", (BiConsumer<AssetAutoTaggerEntry, Long>)AssetAutoTaggerEntry::setGroupId);
+		attributeGetterFunctions.put("companyId", AssetAutoTaggerEntry::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<AssetAutoTaggerEntry, Long>)AssetAutoTaggerEntry::setCompanyId);
+		attributeGetterFunctions.put("createDate", AssetAutoTaggerEntry::getCreateDate);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<AssetAutoTaggerEntry, Date>)AssetAutoTaggerEntry::setCreateDate);
+		attributeGetterFunctions.put("modifiedDate", AssetAutoTaggerEntry::getModifiedDate);
+		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<AssetAutoTaggerEntry, Date>)AssetAutoTaggerEntry::setModifiedDate);
+		attributeGetterFunctions.put("assetEntryId", AssetAutoTaggerEntry::getAssetEntryId);
+		attributeSetterBiConsumers.put("assetEntryId", (BiConsumer<AssetAutoTaggerEntry, Long>)AssetAutoTaggerEntry::setAssetEntryId);
+		attributeGetterFunctions.put("assetTagId", AssetAutoTaggerEntry::getAssetTagId);
+		attributeSetterBiConsumers.put("assetTagId", (BiConsumer<AssetAutoTaggerEntry, Long>)AssetAutoTaggerEntry::setAssetTagId);
 
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		Long assetEntryId = (Long)attributes.get("assetEntryId");
-
-		if (assetEntryId != null) {
-			setAssetEntryId(assetEntryId);
-		}
-
-		Long assetTagId = (Long)attributes.get("assetTagId");
-
-		if (assetTagId != null) {
-			setAssetTagId(assetTagId);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -456,22 +470,28 @@ public class AssetAutoTaggerEntryModelImpl extends BaseModelImpl<AssetAutoTagger
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(15);
+		Map<String, Function<AssetAutoTaggerEntry, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		sb.append("{assetAutoTaggerEntryId=");
-		sb.append(getAssetAutoTaggerEntryId());
-		sb.append(", groupId=");
-		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", modifiedDate=");
-		sb.append(getModifiedDate());
-		sb.append(", assetEntryId=");
-		sb.append(getAssetEntryId());
-		sb.append(", assetTagId=");
-		sb.append(getAssetTagId());
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
+
+		sb.append("{");
+
+		for (Map.Entry<String, Function<AssetAutoTaggerEntry, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<AssetAutoTaggerEntry, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append(attributeName);
+			sb.append("=");
+			sb.append(attributeGetterFunction.apply((AssetAutoTaggerEntry)this));
+			sb.append(", ");
+		}
+
+		if (sb.index() > 1) {
+			sb.setIndex(sb.index() - 1);
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -479,40 +499,26 @@ public class AssetAutoTaggerEntryModelImpl extends BaseModelImpl<AssetAutoTagger
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(25);
+		Map<String, Function<AssetAutoTaggerEntry, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
+
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
-		sb.append("com.liferay.asset.auto.tagger.model.AssetAutoTaggerEntry");
+		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		sb.append(
-			"<column><column-name>assetAutoTaggerEntryId</column-name><column-value><![CDATA[");
-		sb.append(getAssetAutoTaggerEntryId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>groupId</column-name><column-value><![CDATA[");
-		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
-		sb.append(getModifiedDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>assetEntryId</column-name><column-value><![CDATA[");
-		sb.append(getAssetEntryId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>assetTagId</column-name><column-value><![CDATA[");
-		sb.append(getAssetTagId());
-		sb.append("]]></column-value></column>");
+		for (Map.Entry<String, Function<AssetAutoTaggerEntry, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<AssetAutoTaggerEntry, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append("<column><column-name>");
+			sb.append(attributeName);
+			sb.append("</column-name><column-value><![CDATA[");
+			sb.append(attributeGetterFunction.apply((AssetAutoTaggerEntry)this));
+			sb.append("]]></column-value></column>");
+		}
 
 		sb.append("</model>");
 

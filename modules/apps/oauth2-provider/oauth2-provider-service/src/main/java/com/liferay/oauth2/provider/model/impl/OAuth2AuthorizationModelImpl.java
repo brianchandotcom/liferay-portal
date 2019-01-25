@@ -41,10 +41,14 @@ import java.io.Serializable;
 import java.sql.Types;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the OAuth2Authorization service. Represents a row in the &quot;OAuth2Authorization&quot; database table, with each column mapped to a property of this class.
@@ -234,25 +238,16 @@ public class OAuth2AuthorizationModelImpl extends BaseModelImpl<OAuth2Authorizat
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("oAuth2AuthorizationId", getOAuth2AuthorizationId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("oAuth2ApplicationId", getOAuth2ApplicationId());
-		attributes.put("oAuth2ApplicationScopeAliasesId",
-			getOAuth2ApplicationScopeAliasesId());
-		attributes.put("accessTokenContent", getAccessTokenContent());
-		attributes.put("accessTokenContentHash", getAccessTokenContentHash());
-		attributes.put("accessTokenCreateDate", getAccessTokenCreateDate());
-		attributes.put("accessTokenExpirationDate",
-			getAccessTokenExpirationDate());
-		attributes.put("remoteIPInfo", getRemoteIPInfo());
-		attributes.put("refreshTokenContent", getRefreshTokenContent());
-		attributes.put("refreshTokenContentHash", getRefreshTokenContentHash());
-		attributes.put("refreshTokenCreateDate", getRefreshTokenCreateDate());
-		attributes.put("refreshTokenExpirationDate",
-			getRefreshTokenExpirationDate());
+		Map<String, Function<OAuth2Authorization, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
+
+		for (Map.Entry<String, Function<OAuth2Authorization, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<OAuth2Authorization, Object> attributeGetterFunction = entry.getValue();
+
+			attributes.put(attributeName,
+				attributeGetterFunction.apply((OAuth2Authorization)this));
+		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -262,110 +257,73 @@ public class OAuth2AuthorizationModelImpl extends BaseModelImpl<OAuth2Authorizat
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long oAuth2AuthorizationId = (Long)attributes.get(
-				"oAuth2AuthorizationId");
+		Map<String, BiConsumer<OAuth2Authorization, Object>> attributeSetterBiConsumers =
+			getAttributeSetterBiConsumers();
 
-		if (oAuth2AuthorizationId != null) {
-			setOAuth2AuthorizationId(oAuth2AuthorizationId);
+		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
+			String attributeName = entry.getKey();
+
+			BiConsumer<OAuth2Authorization, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+
+			if (attributeSetterBiConsumer != null) {
+				attributeSetterBiConsumer.accept((OAuth2Authorization)this,
+					entry.getValue());
+			}
 		}
+	}
 
-		Long companyId = (Long)attributes.get("companyId");
+	public Map<String, Function<OAuth2Authorization, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
+	}
 
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
+	public Map<String, BiConsumer<OAuth2Authorization, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		Long userId = (Long)attributes.get("userId");
+	private static final Map<String, Function<OAuth2Authorization, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<OAuth2Authorization, Object>> _attributeSetterBiConsumers;
 
-		if (userId != null) {
-			setUserId(userId);
-		}
+	static {
+		Map<String, Function<OAuth2Authorization, Object>> attributeGetterFunctions =
+			new LinkedHashMap<String, Function<OAuth2Authorization, Object>>();
+		Map<String, BiConsumer<OAuth2Authorization, ?>> attributeSetterBiConsumers =
+			new LinkedHashMap<String, BiConsumer<OAuth2Authorization, ?>>();
 
-		String userName = (String)attributes.get("userName");
+		attributeGetterFunctions.put("oAuth2AuthorizationId", OAuth2Authorization::getOAuth2AuthorizationId);
+		attributeSetterBiConsumers.put("oAuth2AuthorizationId", (BiConsumer<OAuth2Authorization, Long>)OAuth2Authorization::setOAuth2AuthorizationId);
+		attributeGetterFunctions.put("companyId", OAuth2Authorization::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<OAuth2Authorization, Long>)OAuth2Authorization::setCompanyId);
+		attributeGetterFunctions.put("userId", OAuth2Authorization::getUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<OAuth2Authorization, Long>)OAuth2Authorization::setUserId);
+		attributeGetterFunctions.put("userName", OAuth2Authorization::getUserName);
+		attributeSetterBiConsumers.put("userName", (BiConsumer<OAuth2Authorization, String>)OAuth2Authorization::setUserName);
+		attributeGetterFunctions.put("createDate", OAuth2Authorization::getCreateDate);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<OAuth2Authorization, Date>)OAuth2Authorization::setCreateDate);
+		attributeGetterFunctions.put("oAuth2ApplicationId", OAuth2Authorization::getOAuth2ApplicationId);
+		attributeSetterBiConsumers.put("oAuth2ApplicationId", (BiConsumer<OAuth2Authorization, Long>)OAuth2Authorization::setOAuth2ApplicationId);
+		attributeGetterFunctions.put("oAuth2ApplicationScopeAliasesId", OAuth2Authorization::getOAuth2ApplicationScopeAliasesId);
+		attributeSetterBiConsumers.put("oAuth2ApplicationScopeAliasesId", (BiConsumer<OAuth2Authorization, Long>)OAuth2Authorization::setOAuth2ApplicationScopeAliasesId);
+		attributeGetterFunctions.put("accessTokenContent", OAuth2Authorization::getAccessTokenContent);
+		attributeSetterBiConsumers.put("accessTokenContent", (BiConsumer<OAuth2Authorization, String>)OAuth2Authorization::setAccessTokenContent);
+		attributeGetterFunctions.put("accessTokenContentHash", OAuth2Authorization::getAccessTokenContentHash);
+		attributeSetterBiConsumers.put("accessTokenContentHash", (BiConsumer<OAuth2Authorization, Long>)OAuth2Authorization::setAccessTokenContentHash);
+		attributeGetterFunctions.put("accessTokenCreateDate", OAuth2Authorization::getAccessTokenCreateDate);
+		attributeSetterBiConsumers.put("accessTokenCreateDate", (BiConsumer<OAuth2Authorization, Date>)OAuth2Authorization::setAccessTokenCreateDate);
+		attributeGetterFunctions.put("accessTokenExpirationDate", OAuth2Authorization::getAccessTokenExpirationDate);
+		attributeSetterBiConsumers.put("accessTokenExpirationDate", (BiConsumer<OAuth2Authorization, Date>)OAuth2Authorization::setAccessTokenExpirationDate);
+		attributeGetterFunctions.put("remoteIPInfo", OAuth2Authorization::getRemoteIPInfo);
+		attributeSetterBiConsumers.put("remoteIPInfo", (BiConsumer<OAuth2Authorization, String>)OAuth2Authorization::setRemoteIPInfo);
+		attributeGetterFunctions.put("refreshTokenContent", OAuth2Authorization::getRefreshTokenContent);
+		attributeSetterBiConsumers.put("refreshTokenContent", (BiConsumer<OAuth2Authorization, String>)OAuth2Authorization::setRefreshTokenContent);
+		attributeGetterFunctions.put("refreshTokenContentHash", OAuth2Authorization::getRefreshTokenContentHash);
+		attributeSetterBiConsumers.put("refreshTokenContentHash", (BiConsumer<OAuth2Authorization, Long>)OAuth2Authorization::setRefreshTokenContentHash);
+		attributeGetterFunctions.put("refreshTokenCreateDate", OAuth2Authorization::getRefreshTokenCreateDate);
+		attributeSetterBiConsumers.put("refreshTokenCreateDate", (BiConsumer<OAuth2Authorization, Date>)OAuth2Authorization::setRefreshTokenCreateDate);
+		attributeGetterFunctions.put("refreshTokenExpirationDate", OAuth2Authorization::getRefreshTokenExpirationDate);
+		attributeSetterBiConsumers.put("refreshTokenExpirationDate", (BiConsumer<OAuth2Authorization, Date>)OAuth2Authorization::setRefreshTokenExpirationDate);
 
-		if (userName != null) {
-			setUserName(userName);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Long oAuth2ApplicationId = (Long)attributes.get("oAuth2ApplicationId");
-
-		if (oAuth2ApplicationId != null) {
-			setOAuth2ApplicationId(oAuth2ApplicationId);
-		}
-
-		Long oAuth2ApplicationScopeAliasesId = (Long)attributes.get(
-				"oAuth2ApplicationScopeAliasesId");
-
-		if (oAuth2ApplicationScopeAliasesId != null) {
-			setOAuth2ApplicationScopeAliasesId(oAuth2ApplicationScopeAliasesId);
-		}
-
-		String accessTokenContent = (String)attributes.get("accessTokenContent");
-
-		if (accessTokenContent != null) {
-			setAccessTokenContent(accessTokenContent);
-		}
-
-		Long accessTokenContentHash = (Long)attributes.get(
-				"accessTokenContentHash");
-
-		if (accessTokenContentHash != null) {
-			setAccessTokenContentHash(accessTokenContentHash);
-		}
-
-		Date accessTokenCreateDate = (Date)attributes.get(
-				"accessTokenCreateDate");
-
-		if (accessTokenCreateDate != null) {
-			setAccessTokenCreateDate(accessTokenCreateDate);
-		}
-
-		Date accessTokenExpirationDate = (Date)attributes.get(
-				"accessTokenExpirationDate");
-
-		if (accessTokenExpirationDate != null) {
-			setAccessTokenExpirationDate(accessTokenExpirationDate);
-		}
-
-		String remoteIPInfo = (String)attributes.get("remoteIPInfo");
-
-		if (remoteIPInfo != null) {
-			setRemoteIPInfo(remoteIPInfo);
-		}
-
-		String refreshTokenContent = (String)attributes.get(
-				"refreshTokenContent");
-
-		if (refreshTokenContent != null) {
-			setRefreshTokenContent(refreshTokenContent);
-		}
-
-		Long refreshTokenContentHash = (Long)attributes.get(
-				"refreshTokenContentHash");
-
-		if (refreshTokenContentHash != null) {
-			setRefreshTokenContentHash(refreshTokenContentHash);
-		}
-
-		Date refreshTokenCreateDate = (Date)attributes.get(
-				"refreshTokenCreateDate");
-
-		if (refreshTokenCreateDate != null) {
-			setRefreshTokenCreateDate(refreshTokenCreateDate);
-		}
-
-		Date refreshTokenExpirationDate = (Date)attributes.get(
-				"refreshTokenExpirationDate");
-
-		if (refreshTokenExpirationDate != null) {
-			setRefreshTokenExpirationDate(refreshTokenExpirationDate);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -842,40 +800,28 @@ public class OAuth2AuthorizationModelImpl extends BaseModelImpl<OAuth2Authorizat
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		Map<String, Function<OAuth2Authorization, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		sb.append("{oAuth2AuthorizationId=");
-		sb.append(getOAuth2AuthorizationId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", userName=");
-		sb.append(getUserName());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", oAuth2ApplicationId=");
-		sb.append(getOAuth2ApplicationId());
-		sb.append(", oAuth2ApplicationScopeAliasesId=");
-		sb.append(getOAuth2ApplicationScopeAliasesId());
-		sb.append(", accessTokenContent=");
-		sb.append(getAccessTokenContent());
-		sb.append(", accessTokenContentHash=");
-		sb.append(getAccessTokenContentHash());
-		sb.append(", accessTokenCreateDate=");
-		sb.append(getAccessTokenCreateDate());
-		sb.append(", accessTokenExpirationDate=");
-		sb.append(getAccessTokenExpirationDate());
-		sb.append(", remoteIPInfo=");
-		sb.append(getRemoteIPInfo());
-		sb.append(", refreshTokenContent=");
-		sb.append(getRefreshTokenContent());
-		sb.append(", refreshTokenContentHash=");
-		sb.append(getRefreshTokenContentHash());
-		sb.append(", refreshTokenCreateDate=");
-		sb.append(getRefreshTokenCreateDate());
-		sb.append(", refreshTokenExpirationDate=");
-		sb.append(getRefreshTokenExpirationDate());
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
+
+		sb.append("{");
+
+		for (Map.Entry<String, Function<OAuth2Authorization, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<OAuth2Authorization, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append(attributeName);
+			sb.append("=");
+			sb.append(attributeGetterFunction.apply((OAuth2Authorization)this));
+			sb.append(", ");
+		}
+
+		if (sb.index() > 1) {
+			sb.setIndex(sb.index() - 1);
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -883,76 +829,26 @@ public class OAuth2AuthorizationModelImpl extends BaseModelImpl<OAuth2Authorizat
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(52);
+		Map<String, Function<OAuth2Authorization, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
+
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
-		sb.append("com.liferay.oauth2.provider.model.OAuth2Authorization");
+		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		sb.append(
-			"<column><column-name>oAuth2AuthorizationId</column-name><column-value><![CDATA[");
-		sb.append(getOAuth2AuthorizationId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userName</column-name><column-value><![CDATA[");
-		sb.append(getUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>oAuth2ApplicationId</column-name><column-value><![CDATA[");
-		sb.append(getOAuth2ApplicationId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>oAuth2ApplicationScopeAliasesId</column-name><column-value><![CDATA[");
-		sb.append(getOAuth2ApplicationScopeAliasesId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>accessTokenContent</column-name><column-value><![CDATA[");
-		sb.append(getAccessTokenContent());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>accessTokenContentHash</column-name><column-value><![CDATA[");
-		sb.append(getAccessTokenContentHash());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>accessTokenCreateDate</column-name><column-value><![CDATA[");
-		sb.append(getAccessTokenCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>accessTokenExpirationDate</column-name><column-value><![CDATA[");
-		sb.append(getAccessTokenExpirationDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>remoteIPInfo</column-name><column-value><![CDATA[");
-		sb.append(getRemoteIPInfo());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>refreshTokenContent</column-name><column-value><![CDATA[");
-		sb.append(getRefreshTokenContent());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>refreshTokenContentHash</column-name><column-value><![CDATA[");
-		sb.append(getRefreshTokenContentHash());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>refreshTokenCreateDate</column-name><column-value><![CDATA[");
-		sb.append(getRefreshTokenCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>refreshTokenExpirationDate</column-name><column-value><![CDATA[");
-		sb.append(getRefreshTokenExpirationDate());
-		sb.append("]]></column-value></column>");
+		for (Map.Entry<String, Function<OAuth2Authorization, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<OAuth2Authorization, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append("<column><column-name>");
+			sb.append(attributeName);
+			sb.append("</column-name><column-value><![CDATA[");
+			sb.append(attributeGetterFunction.apply((OAuth2Authorization)this));
+			sb.append("]]></column-value></column>");
+		}
 
 		sb.append("</model>");
 

@@ -38,8 +38,12 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the UserIdMapper service. Represents a row in the &quot;UserIdMapper&quot; database table, with each column mapped to a property of this class.
@@ -144,13 +148,15 @@ public class UserIdMapperModelImpl extends BaseModelImpl<UserIdMapper>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("mvccVersion", getMvccVersion());
-		attributes.put("userIdMapperId", getUserIdMapperId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("type", getType());
-		attributes.put("description", getDescription());
-		attributes.put("externalUserId", getExternalUserId());
+		Map<String, Function<UserIdMapper, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+
+		for (Map.Entry<String, Function<UserIdMapper, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<UserIdMapper, Object> attributeGetterFunction = entry.getValue();
+
+			attributes.put(attributeName,
+				attributeGetterFunction.apply((UserIdMapper)this));
+		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -160,47 +166,53 @@ public class UserIdMapperModelImpl extends BaseModelImpl<UserIdMapper>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long mvccVersion = (Long)attributes.get("mvccVersion");
+		Map<String, BiConsumer<UserIdMapper, Object>> attributeSetterBiConsumers =
+			getAttributeSetterBiConsumers();
 
-		if (mvccVersion != null) {
-			setMvccVersion(mvccVersion);
+		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
+			String attributeName = entry.getKey();
+
+			BiConsumer<UserIdMapper, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+
+			if (attributeSetterBiConsumer != null) {
+				attributeSetterBiConsumer.accept((UserIdMapper)this,
+					entry.getValue());
+			}
 		}
+	}
 
-		Long userIdMapperId = (Long)attributes.get("userIdMapperId");
+	public Map<String, Function<UserIdMapper, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
+	}
 
-		if (userIdMapperId != null) {
-			setUserIdMapperId(userIdMapperId);
-		}
+	public Map<String, BiConsumer<UserIdMapper, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		Long companyId = (Long)attributes.get("companyId");
+	private static final Map<String, Function<UserIdMapper, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<UserIdMapper, Object>> _attributeSetterBiConsumers;
 
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
+	static {
+		Map<String, Function<UserIdMapper, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<UserIdMapper, Object>>();
+		Map<String, BiConsumer<UserIdMapper, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<UserIdMapper, ?>>();
 
-		Long userId = (Long)attributes.get("userId");
+		attributeGetterFunctions.put("mvccVersion", UserIdMapper::getMvccVersion);
+		attributeSetterBiConsumers.put("mvccVersion", (BiConsumer<UserIdMapper, Long>)UserIdMapper::setMvccVersion);
+		attributeGetterFunctions.put("userIdMapperId", UserIdMapper::getUserIdMapperId);
+		attributeSetterBiConsumers.put("userIdMapperId", (BiConsumer<UserIdMapper, Long>)UserIdMapper::setUserIdMapperId);
+		attributeGetterFunctions.put("companyId", UserIdMapper::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<UserIdMapper, Long>)UserIdMapper::setCompanyId);
+		attributeGetterFunctions.put("userId", UserIdMapper::getUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<UserIdMapper, Long>)UserIdMapper::setUserId);
+		attributeGetterFunctions.put("type", UserIdMapper::getType);
+		attributeSetterBiConsumers.put("type", (BiConsumer<UserIdMapper, String>)UserIdMapper::setType);
+		attributeGetterFunctions.put("description", UserIdMapper::getDescription);
+		attributeSetterBiConsumers.put("description", (BiConsumer<UserIdMapper, String>)UserIdMapper::setDescription);
+		attributeGetterFunctions.put("externalUserId", UserIdMapper::getExternalUserId);
+		attributeSetterBiConsumers.put("externalUserId", (BiConsumer<UserIdMapper, String>)UserIdMapper::setExternalUserId);
 
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String type = (String)attributes.get("type");
-
-		if (type != null) {
-			setType(type);
-		}
-
-		String description = (String)attributes.get("description");
-
-		if (description != null) {
-			setDescription(description);
-		}
-
-		String externalUserId = (String)attributes.get("externalUserId");
-
-		if (externalUserId != null) {
-			setExternalUserId(externalUserId);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -488,22 +500,27 @@ public class UserIdMapperModelImpl extends BaseModelImpl<UserIdMapper>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(15);
+		Map<String, Function<UserIdMapper, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		sb.append("{mvccVersion=");
-		sb.append(getMvccVersion());
-		sb.append(", userIdMapperId=");
-		sb.append(getUserIdMapperId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", type=");
-		sb.append(getType());
-		sb.append(", description=");
-		sb.append(getDescription());
-		sb.append(", externalUserId=");
-		sb.append(getExternalUserId());
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
+
+		sb.append("{");
+
+		for (Map.Entry<String, Function<UserIdMapper, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<UserIdMapper, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append(attributeName);
+			sb.append("=");
+			sb.append(attributeGetterFunction.apply((UserIdMapper)this));
+			sb.append(", ");
+		}
+
+		if (sb.index() > 1) {
+			sb.setIndex(sb.index() - 1);
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -511,40 +528,25 @@ public class UserIdMapperModelImpl extends BaseModelImpl<UserIdMapper>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(25);
+		Map<String, Function<UserIdMapper, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
-		sb.append("com.liferay.portal.kernel.model.UserIdMapper");
+		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		sb.append(
-			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
-		sb.append(getMvccVersion());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userIdMapperId</column-name><column-value><![CDATA[");
-		sb.append(getUserIdMapperId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>type</column-name><column-value><![CDATA[");
-		sb.append(getType());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>description</column-name><column-value><![CDATA[");
-		sb.append(getDescription());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>externalUserId</column-name><column-value><![CDATA[");
-		sb.append(getExternalUserId());
-		sb.append("]]></column-value></column>");
+		for (Map.Entry<String, Function<UserIdMapper, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<UserIdMapper, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append("<column><column-name>");
+			sb.append(attributeName);
+			sb.append("</column-name><column-value><![CDATA[");
+			sb.append(attributeGetterFunction.apply((UserIdMapper)this));
+			sb.append("]]></column-value></column>");
+		}
 
 		sb.append("</model>");
 

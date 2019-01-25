@@ -47,12 +47,16 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the DDMContent service. Represents a row in the &quot;DDMContent&quot; database table, with each column mapped to a property of this class.
@@ -165,17 +169,15 @@ public class DDMContentModelImpl extends BaseModelImpl<DDMContent>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("uuid", getUuid());
-		attributes.put("contentId", getContentId());
-		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("name", getName());
-		attributes.put("description", getDescription());
-		attributes.put("data", getData());
+		Map<String, Function<DDMContent, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+
+		for (Map.Entry<String, Function<DDMContent, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<DDMContent, Object> attributeGetterFunction = entry.getValue();
+
+			attributes.put(attributeName,
+				attributeGetterFunction.apply((DDMContent)this));
+		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -185,71 +187,60 @@ public class DDMContentModelImpl extends BaseModelImpl<DDMContent>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		String uuid = (String)attributes.get("uuid");
+		Map<String, BiConsumer<DDMContent, Object>> attributeSetterBiConsumers = getAttributeSetterBiConsumers();
 
-		if (uuid != null) {
-			setUuid(uuid);
+		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
+			String attributeName = entry.getKey();
+
+			BiConsumer<DDMContent, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+
+			if (attributeSetterBiConsumer != null) {
+				attributeSetterBiConsumer.accept((DDMContent)this,
+					entry.getValue());
+			}
 		}
+	}
 
-		Long contentId = (Long)attributes.get("contentId");
+	public Map<String, Function<DDMContent, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
+	}
 
-		if (contentId != null) {
-			setContentId(contentId);
-		}
+	public Map<String, BiConsumer<DDMContent, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		Long groupId = (Long)attributes.get("groupId");
+	private static final Map<String, Function<DDMContent, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<DDMContent, Object>> _attributeSetterBiConsumers;
 
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
+	static {
+		Map<String, Function<DDMContent, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<DDMContent, Object>>();
+		Map<String, BiConsumer<DDMContent, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<DDMContent, ?>>();
 
-		Long companyId = (Long)attributes.get("companyId");
+		attributeGetterFunctions.put("uuid", DDMContent::getUuid);
+		attributeSetterBiConsumers.put("uuid", (BiConsumer<DDMContent, String>)DDMContent::setUuid);
+		attributeGetterFunctions.put("contentId", DDMContent::getContentId);
+		attributeSetterBiConsumers.put("contentId", (BiConsumer<DDMContent, Long>)DDMContent::setContentId);
+		attributeGetterFunctions.put("groupId", DDMContent::getGroupId);
+		attributeSetterBiConsumers.put("groupId", (BiConsumer<DDMContent, Long>)DDMContent::setGroupId);
+		attributeGetterFunctions.put("companyId", DDMContent::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<DDMContent, Long>)DDMContent::setCompanyId);
+		attributeGetterFunctions.put("userId", DDMContent::getUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<DDMContent, Long>)DDMContent::setUserId);
+		attributeGetterFunctions.put("userName", DDMContent::getUserName);
+		attributeSetterBiConsumers.put("userName", (BiConsumer<DDMContent, String>)DDMContent::setUserName);
+		attributeGetterFunctions.put("createDate", DDMContent::getCreateDate);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<DDMContent, Date>)DDMContent::setCreateDate);
+		attributeGetterFunctions.put("modifiedDate", DDMContent::getModifiedDate);
+		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<DDMContent, Date>)DDMContent::setModifiedDate);
+		attributeGetterFunctions.put("name", DDMContent::getName);
+		attributeSetterBiConsumers.put("name", (BiConsumer<DDMContent, String>)DDMContent::setName);
+		attributeGetterFunctions.put("description", DDMContent::getDescription);
+		attributeSetterBiConsumers.put("description", (BiConsumer<DDMContent, String>)DDMContent::setDescription);
+		attributeGetterFunctions.put("data", DDMContent::getData);
+		attributeSetterBiConsumers.put("data", (BiConsumer<DDMContent, String>)DDMContent::setData);
 
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		String name = (String)attributes.get("name");
-
-		if (name != null) {
-			setName(name);
-		}
-
-		String description = (String)attributes.get("description");
-
-		if (description != null) {
-			setDescription(description);
-		}
-
-		String data = (String)attributes.get("data");
-
-		if (data != null) {
-			setData(data);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -787,30 +778,27 @@ public class DDMContentModelImpl extends BaseModelImpl<DDMContent>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		Map<String, Function<DDMContent, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		sb.append("{uuid=");
-		sb.append(getUuid());
-		sb.append(", contentId=");
-		sb.append(getContentId());
-		sb.append(", groupId=");
-		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", userName=");
-		sb.append(getUserName());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", modifiedDate=");
-		sb.append(getModifiedDate());
-		sb.append(", name=");
-		sb.append(getName());
-		sb.append(", description=");
-		sb.append(getDescription());
-		sb.append(", data=");
-		sb.append(getData());
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
+
+		sb.append("{");
+
+		for (Map.Entry<String, Function<DDMContent, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<DDMContent, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append(attributeName);
+			sb.append("=");
+			sb.append(attributeGetterFunction.apply((DDMContent)this));
+			sb.append(", ");
+		}
+
+		if (sb.index() > 1) {
+			sb.setIndex(sb.index() - 1);
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -818,56 +806,25 @@ public class DDMContentModelImpl extends BaseModelImpl<DDMContent>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(37);
+		Map<String, Function<DDMContent, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
-		sb.append("com.liferay.dynamic.data.mapping.model.DDMContent");
+		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		sb.append(
-			"<column><column-name>uuid</column-name><column-value><![CDATA[");
-		sb.append(getUuid());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>contentId</column-name><column-value><![CDATA[");
-		sb.append(getContentId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>groupId</column-name><column-value><![CDATA[");
-		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userName</column-name><column-value><![CDATA[");
-		sb.append(getUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
-		sb.append(getModifiedDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>name</column-name><column-value><![CDATA[");
-		sb.append(getName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>description</column-name><column-value><![CDATA[");
-		sb.append(getDescription());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>data</column-name><column-value><![CDATA[");
-		sb.append(getData());
-		sb.append("]]></column-value></column>");
+		for (Map.Entry<String, Function<DDMContent, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<DDMContent, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append("<column><column-name>");
+			sb.append(attributeName);
+			sb.append("</column-name><column-value><![CDATA[");
+			sb.append(attributeGetterFunction.apply((DDMContent)this));
+			sb.append("]]></column-value></column>");
+		}
 
 		sb.append("</model>");
 

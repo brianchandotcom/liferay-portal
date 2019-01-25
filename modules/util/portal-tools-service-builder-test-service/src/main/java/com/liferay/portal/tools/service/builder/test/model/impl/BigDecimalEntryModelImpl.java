@@ -36,8 +36,12 @@ import java.math.BigDecimal;
 
 import java.sql.Types;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the BigDecimalEntry service. Represents a row in the &quot;BigDecimalEntry&quot; database table, with each column mapped to a property of this class.
@@ -129,8 +133,15 @@ public class BigDecimalEntryModelImpl extends BaseModelImpl<BigDecimalEntry>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("bigDecimalEntryId", getBigDecimalEntryId());
-		attributes.put("bigDecimalValue", getBigDecimalValue());
+		Map<String, Function<BigDecimalEntry, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+
+		for (Map.Entry<String, Function<BigDecimalEntry, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<BigDecimalEntry, Object> attributeGetterFunction = entry.getValue();
+
+			attributes.put(attributeName,
+				attributeGetterFunction.apply((BigDecimalEntry)this));
+		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -140,18 +151,79 @@ public class BigDecimalEntryModelImpl extends BaseModelImpl<BigDecimalEntry>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long bigDecimalEntryId = (Long)attributes.get("bigDecimalEntryId");
+		Map<String, BiConsumer<BigDecimalEntry, Object>> attributeSetterBiConsumers =
+			getAttributeSetterBiConsumers();
 
-		if (bigDecimalEntryId != null) {
-			setBigDecimalEntryId(bigDecimalEntryId);
+		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
+			String attributeName = entry.getKey();
+
+			BiConsumer<BigDecimalEntry, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+
+			if (attributeSetterBiConsumer != null) {
+				attributeSetterBiConsumer.accept((BigDecimalEntry)this,
+					entry.getValue());
+			}
 		}
+	}
 
-		BigDecimal bigDecimalValue = (BigDecimal)attributes.get(
-				"bigDecimalValue");
+	public Map<String, Function<BigDecimalEntry, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
+	}
 
-		if (bigDecimalValue != null) {
-			setBigDecimalValue(bigDecimalValue);
-		}
+	public Map<String, BiConsumer<BigDecimalEntry, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
+
+	private static final Map<String, Function<BigDecimalEntry, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<BigDecimalEntry, Object>> _attributeSetterBiConsumers;
+
+	static {
+		Map<String, Function<BigDecimalEntry, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<BigDecimalEntry, Object>>();
+		Map<String, BiConsumer<BigDecimalEntry, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<BigDecimalEntry, ?>>();
+
+		attributeGetterFunctions.put(
+			"bigDecimalEntryId",
+			new Function<BigDecimalEntry, Object>() {
+
+				@Override
+				public Object apply(BigDecimalEntry bigDecimalEntry) {
+					return bigDecimalEntry.getBigDecimalEntryId();
+				}
+
+			});
+		attributeSetterBiConsumers.put(
+			"bigDecimalEntryId",
+			new BiConsumer<BigDecimalEntry, Object>() {
+
+				@Override
+				public void accept(BigDecimalEntry bigDecimalEntry, Object bigDecimalEntryId) {
+					bigDecimalEntry.setBigDecimalEntryId((Long)bigDecimalEntryId);
+				}
+
+			});
+		attributeGetterFunctions.put(
+			"bigDecimalValue",
+			new Function<BigDecimalEntry, Object>() {
+
+				@Override
+				public Object apply(BigDecimalEntry bigDecimalEntry) {
+					return bigDecimalEntry.getBigDecimalValue();
+				}
+
+			});
+		attributeSetterBiConsumers.put(
+			"bigDecimalValue",
+			new BiConsumer<BigDecimalEntry, Object>() {
+
+				@Override
+				public void accept(BigDecimalEntry bigDecimalEntry, Object bigDecimalValue) {
+					bigDecimalEntry.setBigDecimalValue((BigDecimal)bigDecimalValue);
+				}
+
+			});
+
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -296,12 +368,27 @@ public class BigDecimalEntryModelImpl extends BaseModelImpl<BigDecimalEntry>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(5);
+		Map<String, Function<BigDecimalEntry, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		sb.append("{bigDecimalEntryId=");
-		sb.append(getBigDecimalEntryId());
-		sb.append(", bigDecimalValue=");
-		sb.append(getBigDecimalValue());
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
+
+		sb.append("{");
+
+		for (Map.Entry<String, Function<BigDecimalEntry, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<BigDecimalEntry, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append(attributeName);
+			sb.append("=");
+			sb.append(attributeGetterFunction.apply((BigDecimalEntry)this));
+			sb.append(", ");
+		}
+
+		if (sb.index() > 1) {
+			sb.setIndex(sb.index() - 1);
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -309,21 +396,25 @@ public class BigDecimalEntryModelImpl extends BaseModelImpl<BigDecimalEntry>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(10);
+		Map<String, Function<BigDecimalEntry, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
-		sb.append(
-			"com.liferay.portal.tools.service.builder.test.model.BigDecimalEntry");
+		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		sb.append(
-			"<column><column-name>bigDecimalEntryId</column-name><column-value><![CDATA[");
-		sb.append(getBigDecimalEntryId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>bigDecimalValue</column-name><column-value><![CDATA[");
-		sb.append(getBigDecimalValue());
-		sb.append("]]></column-value></column>");
+		for (Map.Entry<String, Function<BigDecimalEntry, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<BigDecimalEntry, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append("<column><column-name>");
+			sb.append(attributeName);
+			sb.append("</column-name><column-value><![CDATA[");
+			sb.append(attributeGetterFunction.apply((BigDecimalEntry)this));
+			sb.append("]]></column-value></column>");
+		}
 
 		sb.append("</model>");
 

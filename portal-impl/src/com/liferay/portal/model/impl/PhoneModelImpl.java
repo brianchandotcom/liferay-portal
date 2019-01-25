@@ -46,10 +46,14 @@ import java.io.Serializable;
 import java.sql.Types;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the Phone service. Represents a row in the &quot;Phone&quot; database table, with each column mapped to a property of this class.
@@ -223,20 +227,15 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("mvccVersion", getMvccVersion());
-		attributes.put("uuid", getUuid());
-		attributes.put("phoneId", getPhoneId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("classNameId", getClassNameId());
-		attributes.put("classPK", getClassPK());
-		attributes.put("number", getNumber());
-		attributes.put("extension", getExtension());
-		attributes.put("typeId", getTypeId());
-		attributes.put("primary", isPrimary());
+		Map<String, Function<Phone, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+
+		for (Map.Entry<String, Function<Phone, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<Phone, Object> attributeGetterFunction = entry.getValue();
+
+			attributes.put(attributeName,
+				attributeGetterFunction.apply((Phone)this));
+		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -246,89 +245,65 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long mvccVersion = (Long)attributes.get("mvccVersion");
+		Map<String, BiConsumer<Phone, Object>> attributeSetterBiConsumers = getAttributeSetterBiConsumers();
 
-		if (mvccVersion != null) {
-			setMvccVersion(mvccVersion);
+		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
+			String attributeName = entry.getKey();
+
+			BiConsumer<Phone, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+
+			if (attributeSetterBiConsumer != null) {
+				attributeSetterBiConsumer.accept((Phone)this, entry.getValue());
+			}
 		}
+	}
 
-		String uuid = (String)attributes.get("uuid");
+	public Map<String, Function<Phone, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
+	}
 
-		if (uuid != null) {
-			setUuid(uuid);
-		}
+	public Map<String, BiConsumer<Phone, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		Long phoneId = (Long)attributes.get("phoneId");
+	private static final Map<String, Function<Phone, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<Phone, Object>> _attributeSetterBiConsumers;
 
-		if (phoneId != null) {
-			setPhoneId(phoneId);
-		}
+	static {
+		Map<String, Function<Phone, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<Phone, Object>>();
+		Map<String, BiConsumer<Phone, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<Phone, ?>>();
 
-		Long companyId = (Long)attributes.get("companyId");
+		attributeGetterFunctions.put("mvccVersion", Phone::getMvccVersion);
+		attributeSetterBiConsumers.put("mvccVersion", (BiConsumer<Phone, Long>)Phone::setMvccVersion);
+		attributeGetterFunctions.put("uuid", Phone::getUuid);
+		attributeSetterBiConsumers.put("uuid", (BiConsumer<Phone, String>)Phone::setUuid);
+		attributeGetterFunctions.put("phoneId", Phone::getPhoneId);
+		attributeSetterBiConsumers.put("phoneId", (BiConsumer<Phone, Long>)Phone::setPhoneId);
+		attributeGetterFunctions.put("companyId", Phone::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<Phone, Long>)Phone::setCompanyId);
+		attributeGetterFunctions.put("userId", Phone::getUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<Phone, Long>)Phone::setUserId);
+		attributeGetterFunctions.put("userName", Phone::getUserName);
+		attributeSetterBiConsumers.put("userName", (BiConsumer<Phone, String>)Phone::setUserName);
+		attributeGetterFunctions.put("createDate", Phone::getCreateDate);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<Phone, Date>)Phone::setCreateDate);
+		attributeGetterFunctions.put("modifiedDate", Phone::getModifiedDate);
+		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<Phone, Date>)Phone::setModifiedDate);
+		attributeGetterFunctions.put("classNameId", Phone::getClassNameId);
+		attributeSetterBiConsumers.put("classNameId", (BiConsumer<Phone, Long>)Phone::setClassNameId);
+		attributeGetterFunctions.put("classPK", Phone::getClassPK);
+		attributeSetterBiConsumers.put("classPK", (BiConsumer<Phone, Long>)Phone::setClassPK);
+		attributeGetterFunctions.put("number", Phone::getNumber);
+		attributeSetterBiConsumers.put("number", (BiConsumer<Phone, String>)Phone::setNumber);
+		attributeGetterFunctions.put("extension", Phone::getExtension);
+		attributeSetterBiConsumers.put("extension", (BiConsumer<Phone, String>)Phone::setExtension);
+		attributeGetterFunctions.put("typeId", Phone::getTypeId);
+		attributeSetterBiConsumers.put("typeId", (BiConsumer<Phone, Long>)Phone::setTypeId);
+		attributeGetterFunctions.put("primary", Phone::getPrimary);
+		attributeSetterBiConsumers.put("primary", (BiConsumer<Phone, Boolean>)Phone::setPrimary);
 
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		Long classNameId = (Long)attributes.get("classNameId");
-
-		if (classNameId != null) {
-			setClassNameId(classNameId);
-		}
-
-		Long classPK = (Long)attributes.get("classPK");
-
-		if (classPK != null) {
-			setClassPK(classPK);
-		}
-
-		String number = (String)attributes.get("number");
-
-		if (number != null) {
-			setNumber(number);
-		}
-
-		String extension = (String)attributes.get("extension");
-
-		if (extension != null) {
-			setExtension(extension);
-		}
-
-		Long typeId = (Long)attributes.get("typeId");
-
-		if (typeId != null) {
-			setTypeId(typeId);
-		}
-
-		Boolean primary = (Boolean)attributes.get("primary");
-
-		if (primary != null) {
-			setPrimary(primary);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@JSON
@@ -838,36 +813,27 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		Map<String, Function<Phone, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		sb.append("{mvccVersion=");
-		sb.append(getMvccVersion());
-		sb.append(", uuid=");
-		sb.append(getUuid());
-		sb.append(", phoneId=");
-		sb.append(getPhoneId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", userName=");
-		sb.append(getUserName());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", modifiedDate=");
-		sb.append(getModifiedDate());
-		sb.append(", classNameId=");
-		sb.append(getClassNameId());
-		sb.append(", classPK=");
-		sb.append(getClassPK());
-		sb.append(", number=");
-		sb.append(getNumber());
-		sb.append(", extension=");
-		sb.append(getExtension());
-		sb.append(", typeId=");
-		sb.append(getTypeId());
-		sb.append(", primary=");
-		sb.append(isPrimary());
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
+
+		sb.append("{");
+
+		for (Map.Entry<String, Function<Phone, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<Phone, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append(attributeName);
+			sb.append("=");
+			sb.append(attributeGetterFunction.apply((Phone)this));
+			sb.append(", ");
+		}
+
+		if (sb.index() > 1) {
+			sb.setIndex(sb.index() - 1);
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -875,68 +841,25 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(46);
+		Map<String, Function<Phone, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
-		sb.append("com.liferay.portal.kernel.model.Phone");
+		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		sb.append(
-			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
-		sb.append(getMvccVersion());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>uuid</column-name><column-value><![CDATA[");
-		sb.append(getUuid());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>phoneId</column-name><column-value><![CDATA[");
-		sb.append(getPhoneId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userName</column-name><column-value><![CDATA[");
-		sb.append(getUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
-		sb.append(getModifiedDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>classNameId</column-name><column-value><![CDATA[");
-		sb.append(getClassNameId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>classPK</column-name><column-value><![CDATA[");
-		sb.append(getClassPK());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>number</column-name><column-value><![CDATA[");
-		sb.append(getNumber());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>extension</column-name><column-value><![CDATA[");
-		sb.append(getExtension());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>typeId</column-name><column-value><![CDATA[");
-		sb.append(getTypeId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>primary</column-name><column-value><![CDATA[");
-		sb.append(isPrimary());
-		sb.append("]]></column-value></column>");
+		for (Map.Entry<String, Function<Phone, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<Phone, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append("<column><column-name>");
+			sb.append(attributeName);
+			sb.append("</column-name><column-value><![CDATA[");
+			sb.append(attributeGetterFunction.apply((Phone)this));
+			sb.append("]]></column-value></column>");
+		}
 
 		sb.append("</model>");
 

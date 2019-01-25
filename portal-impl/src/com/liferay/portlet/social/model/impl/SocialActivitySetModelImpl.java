@@ -41,8 +41,12 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the SocialActivitySet service. Represents a row in the &quot;SocialActivitySet&quot; database table, with each column mapped to a property of this class.
@@ -157,17 +161,16 @@ public class SocialActivitySetModelImpl extends BaseModelImpl<SocialActivitySet>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("activitySetId", getActivitySetId());
-		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("classNameId", getClassNameId());
-		attributes.put("classPK", getClassPK());
-		attributes.put("type", getType());
-		attributes.put("extraData", getExtraData());
-		attributes.put("activityCount", getActivityCount());
+		Map<String, Function<SocialActivitySet, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
+
+		for (Map.Entry<String, Function<SocialActivitySet, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<SocialActivitySet, Object> attributeGetterFunction = entry.getValue();
+
+			attributes.put(attributeName,
+				attributeGetterFunction.apply((SocialActivitySet)this));
+		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -177,71 +180,63 @@ public class SocialActivitySetModelImpl extends BaseModelImpl<SocialActivitySet>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long activitySetId = (Long)attributes.get("activitySetId");
+		Map<String, BiConsumer<SocialActivitySet, Object>> attributeSetterBiConsumers =
+			getAttributeSetterBiConsumers();
 
-		if (activitySetId != null) {
-			setActivitySetId(activitySetId);
+		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
+			String attributeName = entry.getKey();
+
+			BiConsumer<SocialActivitySet, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+
+			if (attributeSetterBiConsumer != null) {
+				attributeSetterBiConsumer.accept((SocialActivitySet)this,
+					entry.getValue());
+			}
 		}
+	}
 
-		Long groupId = (Long)attributes.get("groupId");
+	public Map<String, Function<SocialActivitySet, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
+	}
 
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
+	public Map<String, BiConsumer<SocialActivitySet, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		Long companyId = (Long)attributes.get("companyId");
+	private static final Map<String, Function<SocialActivitySet, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<SocialActivitySet, Object>> _attributeSetterBiConsumers;
 
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
+	static {
+		Map<String, Function<SocialActivitySet, Object>> attributeGetterFunctions =
+			new LinkedHashMap<String, Function<SocialActivitySet, Object>>();
+		Map<String, BiConsumer<SocialActivitySet, ?>> attributeSetterBiConsumers =
+			new LinkedHashMap<String, BiConsumer<SocialActivitySet, ?>>();
 
-		Long userId = (Long)attributes.get("userId");
+		attributeGetterFunctions.put("activitySetId", SocialActivitySet::getActivitySetId);
+		attributeSetterBiConsumers.put("activitySetId", (BiConsumer<SocialActivitySet, Long>)SocialActivitySet::setActivitySetId);
+		attributeGetterFunctions.put("groupId", SocialActivitySet::getGroupId);
+		attributeSetterBiConsumers.put("groupId", (BiConsumer<SocialActivitySet, Long>)SocialActivitySet::setGroupId);
+		attributeGetterFunctions.put("companyId", SocialActivitySet::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<SocialActivitySet, Long>)SocialActivitySet::setCompanyId);
+		attributeGetterFunctions.put("userId", SocialActivitySet::getUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<SocialActivitySet, Long>)SocialActivitySet::setUserId);
+		attributeGetterFunctions.put("createDate", SocialActivitySet::getCreateDate);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<SocialActivitySet, Long>)SocialActivitySet::setCreateDate);
+		attributeGetterFunctions.put("modifiedDate", SocialActivitySet::getModifiedDate);
+		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<SocialActivitySet, Long>)SocialActivitySet::setModifiedDate);
+		attributeGetterFunctions.put("classNameId", SocialActivitySet::getClassNameId);
+		attributeSetterBiConsumers.put("classNameId", (BiConsumer<SocialActivitySet, Long>)SocialActivitySet::setClassNameId);
+		attributeGetterFunctions.put("classPK", SocialActivitySet::getClassPK);
+		attributeSetterBiConsumers.put("classPK", (BiConsumer<SocialActivitySet, Long>)SocialActivitySet::setClassPK);
+		attributeGetterFunctions.put("type", SocialActivitySet::getType);
+		attributeSetterBiConsumers.put("type", (BiConsumer<SocialActivitySet, Integer>)SocialActivitySet::setType);
+		attributeGetterFunctions.put("extraData", SocialActivitySet::getExtraData);
+		attributeSetterBiConsumers.put("extraData", (BiConsumer<SocialActivitySet, String>)SocialActivitySet::setExtraData);
+		attributeGetterFunctions.put("activityCount", SocialActivitySet::getActivityCount);
+		attributeSetterBiConsumers.put("activityCount", (BiConsumer<SocialActivitySet, Integer>)SocialActivitySet::setActivityCount);
 
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		Long createDate = (Long)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Long modifiedDate = (Long)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		Long classNameId = (Long)attributes.get("classNameId");
-
-		if (classNameId != null) {
-			setClassNameId(classNameId);
-		}
-
-		Long classPK = (Long)attributes.get("classPK");
-
-		if (classPK != null) {
-			setClassPK(classPK);
-		}
-
-		Integer type = (Integer)attributes.get("type");
-
-		if (type != null) {
-			setType(type);
-		}
-
-		String extraData = (String)attributes.get("extraData");
-
-		if (extraData != null) {
-			setExtraData(extraData);
-		}
-
-		Integer activityCount = (Integer)attributes.get("activityCount");
-
-		if (activityCount != null) {
-			setActivityCount(activityCount);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -629,30 +624,28 @@ public class SocialActivitySetModelImpl extends BaseModelImpl<SocialActivitySet>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		Map<String, Function<SocialActivitySet, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		sb.append("{activitySetId=");
-		sb.append(getActivitySetId());
-		sb.append(", groupId=");
-		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", modifiedDate=");
-		sb.append(getModifiedDate());
-		sb.append(", classNameId=");
-		sb.append(getClassNameId());
-		sb.append(", classPK=");
-		sb.append(getClassPK());
-		sb.append(", type=");
-		sb.append(getType());
-		sb.append(", extraData=");
-		sb.append(getExtraData());
-		sb.append(", activityCount=");
-		sb.append(getActivityCount());
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
+
+		sb.append("{");
+
+		for (Map.Entry<String, Function<SocialActivitySet, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<SocialActivitySet, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append(attributeName);
+			sb.append("=");
+			sb.append(attributeGetterFunction.apply((SocialActivitySet)this));
+			sb.append(", ");
+		}
+
+		if (sb.index() > 1) {
+			sb.setIndex(sb.index() - 1);
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -660,56 +653,26 @@ public class SocialActivitySetModelImpl extends BaseModelImpl<SocialActivitySet>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(37);
+		Map<String, Function<SocialActivitySet, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
+
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
-		sb.append("com.liferay.social.kernel.model.SocialActivitySet");
+		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		sb.append(
-			"<column><column-name>activitySetId</column-name><column-value><![CDATA[");
-		sb.append(getActivitySetId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>groupId</column-name><column-value><![CDATA[");
-		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
-		sb.append(getModifiedDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>classNameId</column-name><column-value><![CDATA[");
-		sb.append(getClassNameId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>classPK</column-name><column-value><![CDATA[");
-		sb.append(getClassPK());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>type</column-name><column-value><![CDATA[");
-		sb.append(getType());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>extraData</column-name><column-value><![CDATA[");
-		sb.append(getExtraData());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>activityCount</column-name><column-value><![CDATA[");
-		sb.append(getActivityCount());
-		sb.append("]]></column-value></column>");
+		for (Map.Entry<String, Function<SocialActivitySet, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<SocialActivitySet, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append("<column><column-name>");
+			sb.append(attributeName);
+			sb.append("</column-name><column-value><![CDATA[");
+			sb.append(attributeGetterFunction.apply((SocialActivitySet)this));
+			sb.append("]]></column-value></column>");
+		}
 
 		sb.append("</model>");
 

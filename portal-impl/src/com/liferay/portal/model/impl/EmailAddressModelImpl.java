@@ -46,10 +46,14 @@ import java.io.Serializable;
 import java.sql.Types;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the EmailAddress service. Represents a row in the &quot;EmailAddress&quot; database table, with each column mapped to a property of this class.
@@ -221,19 +225,15 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("mvccVersion", getMvccVersion());
-		attributes.put("uuid", getUuid());
-		attributes.put("emailAddressId", getEmailAddressId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("classNameId", getClassNameId());
-		attributes.put("classPK", getClassPK());
-		attributes.put("address", getAddress());
-		attributes.put("typeId", getTypeId());
-		attributes.put("primary", isPrimary());
+		Map<String, Function<EmailAddress, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+
+		for (Map.Entry<String, Function<EmailAddress, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<EmailAddress, Object> attributeGetterFunction = entry.getValue();
+
+			attributes.put(attributeName,
+				attributeGetterFunction.apply((EmailAddress)this));
+		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -243,83 +243,65 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long mvccVersion = (Long)attributes.get("mvccVersion");
+		Map<String, BiConsumer<EmailAddress, Object>> attributeSetterBiConsumers =
+			getAttributeSetterBiConsumers();
 
-		if (mvccVersion != null) {
-			setMvccVersion(mvccVersion);
+		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
+			String attributeName = entry.getKey();
+
+			BiConsumer<EmailAddress, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+
+			if (attributeSetterBiConsumer != null) {
+				attributeSetterBiConsumer.accept((EmailAddress)this,
+					entry.getValue());
+			}
 		}
+	}
 
-		String uuid = (String)attributes.get("uuid");
+	public Map<String, Function<EmailAddress, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
+	}
 
-		if (uuid != null) {
-			setUuid(uuid);
-		}
+	public Map<String, BiConsumer<EmailAddress, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		Long emailAddressId = (Long)attributes.get("emailAddressId");
+	private static final Map<String, Function<EmailAddress, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<EmailAddress, Object>> _attributeSetterBiConsumers;
 
-		if (emailAddressId != null) {
-			setEmailAddressId(emailAddressId);
-		}
+	static {
+		Map<String, Function<EmailAddress, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<EmailAddress, Object>>();
+		Map<String, BiConsumer<EmailAddress, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<EmailAddress, ?>>();
 
-		Long companyId = (Long)attributes.get("companyId");
+		attributeGetterFunctions.put("mvccVersion", EmailAddress::getMvccVersion);
+		attributeSetterBiConsumers.put("mvccVersion", (BiConsumer<EmailAddress, Long>)EmailAddress::setMvccVersion);
+		attributeGetterFunctions.put("uuid", EmailAddress::getUuid);
+		attributeSetterBiConsumers.put("uuid", (BiConsumer<EmailAddress, String>)EmailAddress::setUuid);
+		attributeGetterFunctions.put("emailAddressId", EmailAddress::getEmailAddressId);
+		attributeSetterBiConsumers.put("emailAddressId", (BiConsumer<EmailAddress, Long>)EmailAddress::setEmailAddressId);
+		attributeGetterFunctions.put("companyId", EmailAddress::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<EmailAddress, Long>)EmailAddress::setCompanyId);
+		attributeGetterFunctions.put("userId", EmailAddress::getUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<EmailAddress, Long>)EmailAddress::setUserId);
+		attributeGetterFunctions.put("userName", EmailAddress::getUserName);
+		attributeSetterBiConsumers.put("userName", (BiConsumer<EmailAddress, String>)EmailAddress::setUserName);
+		attributeGetterFunctions.put("createDate", EmailAddress::getCreateDate);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<EmailAddress, Date>)EmailAddress::setCreateDate);
+		attributeGetterFunctions.put("modifiedDate", EmailAddress::getModifiedDate);
+		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<EmailAddress, Date>)EmailAddress::setModifiedDate);
+		attributeGetterFunctions.put("classNameId", EmailAddress::getClassNameId);
+		attributeSetterBiConsumers.put("classNameId", (BiConsumer<EmailAddress, Long>)EmailAddress::setClassNameId);
+		attributeGetterFunctions.put("classPK", EmailAddress::getClassPK);
+		attributeSetterBiConsumers.put("classPK", (BiConsumer<EmailAddress, Long>)EmailAddress::setClassPK);
+		attributeGetterFunctions.put("address", EmailAddress::getAddress);
+		attributeSetterBiConsumers.put("address", (BiConsumer<EmailAddress, String>)EmailAddress::setAddress);
+		attributeGetterFunctions.put("typeId", EmailAddress::getTypeId);
+		attributeSetterBiConsumers.put("typeId", (BiConsumer<EmailAddress, Long>)EmailAddress::setTypeId);
+		attributeGetterFunctions.put("primary", EmailAddress::getPrimary);
+		attributeSetterBiConsumers.put("primary", (BiConsumer<EmailAddress, Boolean>)EmailAddress::setPrimary);
 
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		Long classNameId = (Long)attributes.get("classNameId");
-
-		if (classNameId != null) {
-			setClassNameId(classNameId);
-		}
-
-		Long classPK = (Long)attributes.get("classPK");
-
-		if (classPK != null) {
-			setClassPK(classPK);
-		}
-
-		String address = (String)attributes.get("address");
-
-		if (address != null) {
-			setAddress(address);
-		}
-
-		Long typeId = (Long)attributes.get("typeId");
-
-		if (typeId != null) {
-			setTypeId(typeId);
-		}
-
-		Boolean primary = (Boolean)attributes.get("primary");
-
-		if (primary != null) {
-			setPrimary(primary);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@JSON
@@ -804,34 +786,27 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		Map<String, Function<EmailAddress, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		sb.append("{mvccVersion=");
-		sb.append(getMvccVersion());
-		sb.append(", uuid=");
-		sb.append(getUuid());
-		sb.append(", emailAddressId=");
-		sb.append(getEmailAddressId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", userName=");
-		sb.append(getUserName());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", modifiedDate=");
-		sb.append(getModifiedDate());
-		sb.append(", classNameId=");
-		sb.append(getClassNameId());
-		sb.append(", classPK=");
-		sb.append(getClassPK());
-		sb.append(", address=");
-		sb.append(getAddress());
-		sb.append(", typeId=");
-		sb.append(getTypeId());
-		sb.append(", primary=");
-		sb.append(isPrimary());
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
+
+		sb.append("{");
+
+		for (Map.Entry<String, Function<EmailAddress, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<EmailAddress, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append(attributeName);
+			sb.append("=");
+			sb.append(attributeGetterFunction.apply((EmailAddress)this));
+			sb.append(", ");
+		}
+
+		if (sb.index() > 1) {
+			sb.setIndex(sb.index() - 1);
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -839,64 +814,25 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(43);
+		Map<String, Function<EmailAddress, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
-		sb.append("com.liferay.portal.kernel.model.EmailAddress");
+		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		sb.append(
-			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
-		sb.append(getMvccVersion());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>uuid</column-name><column-value><![CDATA[");
-		sb.append(getUuid());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>emailAddressId</column-name><column-value><![CDATA[");
-		sb.append(getEmailAddressId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userName</column-name><column-value><![CDATA[");
-		sb.append(getUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
-		sb.append(getModifiedDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>classNameId</column-name><column-value><![CDATA[");
-		sb.append(getClassNameId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>classPK</column-name><column-value><![CDATA[");
-		sb.append(getClassPK());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>address</column-name><column-value><![CDATA[");
-		sb.append(getAddress());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>typeId</column-name><column-value><![CDATA[");
-		sb.append(getTypeId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>primary</column-name><column-value><![CDATA[");
-		sb.append(isPrimary());
-		sb.append("]]></column-value></column>");
+		for (Map.Entry<String, Function<EmailAddress, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<EmailAddress, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append("<column><column-name>");
+			sb.append(attributeName);
+			sb.append("</column-name><column-value><![CDATA[");
+			sb.append(attributeGetterFunction.apply((EmailAddress)this));
+			sb.append("]]></column-value></column>");
+		}
 
 		sb.append("</model>");
 

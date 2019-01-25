@@ -41,9 +41,13 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the LayoutFriendlyURL service. Represents a row in the &quot;LayoutFriendlyURL&quot; database table, with each column mapped to a property of this class.
@@ -166,20 +170,16 @@ public class LayoutFriendlyURLModelImpl extends BaseModelImpl<LayoutFriendlyURL>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("mvccVersion", getMvccVersion());
-		attributes.put("uuid", getUuid());
-		attributes.put("layoutFriendlyURLId", getLayoutFriendlyURLId());
-		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("plid", getPlid());
-		attributes.put("privateLayout", isPrivateLayout());
-		attributes.put("friendlyURL", getFriendlyURL());
-		attributes.put("languageId", getLanguageId());
-		attributes.put("lastPublishDate", getLastPublishDate());
+		Map<String, Function<LayoutFriendlyURL, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
+
+		for (Map.Entry<String, Function<LayoutFriendlyURL, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<LayoutFriendlyURL, Object> attributeGetterFunction = entry.getValue();
+
+			attributes.put(attributeName,
+				attributeGetterFunction.apply((LayoutFriendlyURL)this));
+		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -189,89 +189,69 @@ public class LayoutFriendlyURLModelImpl extends BaseModelImpl<LayoutFriendlyURL>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long mvccVersion = (Long)attributes.get("mvccVersion");
+		Map<String, BiConsumer<LayoutFriendlyURL, Object>> attributeSetterBiConsumers =
+			getAttributeSetterBiConsumers();
 
-		if (mvccVersion != null) {
-			setMvccVersion(mvccVersion);
+		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
+			String attributeName = entry.getKey();
+
+			BiConsumer<LayoutFriendlyURL, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+
+			if (attributeSetterBiConsumer != null) {
+				attributeSetterBiConsumer.accept((LayoutFriendlyURL)this,
+					entry.getValue());
+			}
 		}
+	}
 
-		String uuid = (String)attributes.get("uuid");
+	public Map<String, Function<LayoutFriendlyURL, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
+	}
 
-		if (uuid != null) {
-			setUuid(uuid);
-		}
+	public Map<String, BiConsumer<LayoutFriendlyURL, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		Long layoutFriendlyURLId = (Long)attributes.get("layoutFriendlyURLId");
+	private static final Map<String, Function<LayoutFriendlyURL, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<LayoutFriendlyURL, Object>> _attributeSetterBiConsumers;
 
-		if (layoutFriendlyURLId != null) {
-			setLayoutFriendlyURLId(layoutFriendlyURLId);
-		}
+	static {
+		Map<String, Function<LayoutFriendlyURL, Object>> attributeGetterFunctions =
+			new LinkedHashMap<String, Function<LayoutFriendlyURL, Object>>();
+		Map<String, BiConsumer<LayoutFriendlyURL, ?>> attributeSetterBiConsumers =
+			new LinkedHashMap<String, BiConsumer<LayoutFriendlyURL, ?>>();
 
-		Long groupId = (Long)attributes.get("groupId");
+		attributeGetterFunctions.put("mvccVersion", LayoutFriendlyURL::getMvccVersion);
+		attributeSetterBiConsumers.put("mvccVersion", (BiConsumer<LayoutFriendlyURL, Long>)LayoutFriendlyURL::setMvccVersion);
+		attributeGetterFunctions.put("uuid", LayoutFriendlyURL::getUuid);
+		attributeSetterBiConsumers.put("uuid", (BiConsumer<LayoutFriendlyURL, String>)LayoutFriendlyURL::setUuid);
+		attributeGetterFunctions.put("layoutFriendlyURLId", LayoutFriendlyURL::getLayoutFriendlyURLId);
+		attributeSetterBiConsumers.put("layoutFriendlyURLId", (BiConsumer<LayoutFriendlyURL, Long>)LayoutFriendlyURL::setLayoutFriendlyURLId);
+		attributeGetterFunctions.put("groupId", LayoutFriendlyURL::getGroupId);
+		attributeSetterBiConsumers.put("groupId", (BiConsumer<LayoutFriendlyURL, Long>)LayoutFriendlyURL::setGroupId);
+		attributeGetterFunctions.put("companyId", LayoutFriendlyURL::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<LayoutFriendlyURL, Long>)LayoutFriendlyURL::setCompanyId);
+		attributeGetterFunctions.put("userId", LayoutFriendlyURL::getUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<LayoutFriendlyURL, Long>)LayoutFriendlyURL::setUserId);
+		attributeGetterFunctions.put("userName", LayoutFriendlyURL::getUserName);
+		attributeSetterBiConsumers.put("userName", (BiConsumer<LayoutFriendlyURL, String>)LayoutFriendlyURL::setUserName);
+		attributeGetterFunctions.put("createDate", LayoutFriendlyURL::getCreateDate);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<LayoutFriendlyURL, Date>)LayoutFriendlyURL::setCreateDate);
+		attributeGetterFunctions.put("modifiedDate", LayoutFriendlyURL::getModifiedDate);
+		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<LayoutFriendlyURL, Date>)LayoutFriendlyURL::setModifiedDate);
+		attributeGetterFunctions.put("plid", LayoutFriendlyURL::getPlid);
+		attributeSetterBiConsumers.put("plid", (BiConsumer<LayoutFriendlyURL, Long>)LayoutFriendlyURL::setPlid);
+		attributeGetterFunctions.put("privateLayout", LayoutFriendlyURL::getPrivateLayout);
+		attributeSetterBiConsumers.put("privateLayout", (BiConsumer<LayoutFriendlyURL, Boolean>)LayoutFriendlyURL::setPrivateLayout);
+		attributeGetterFunctions.put("friendlyURL", LayoutFriendlyURL::getFriendlyURL);
+		attributeSetterBiConsumers.put("friendlyURL", (BiConsumer<LayoutFriendlyURL, String>)LayoutFriendlyURL::setFriendlyURL);
+		attributeGetterFunctions.put("languageId", LayoutFriendlyURL::getLanguageId);
+		attributeSetterBiConsumers.put("languageId", (BiConsumer<LayoutFriendlyURL, String>)LayoutFriendlyURL::setLanguageId);
+		attributeGetterFunctions.put("lastPublishDate", LayoutFriendlyURL::getLastPublishDate);
+		attributeSetterBiConsumers.put("lastPublishDate", (BiConsumer<LayoutFriendlyURL, Date>)LayoutFriendlyURL::setLastPublishDate);
 
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		Long plid = (Long)attributes.get("plid");
-
-		if (plid != null) {
-			setPlid(plid);
-		}
-
-		Boolean privateLayout = (Boolean)attributes.get("privateLayout");
-
-		if (privateLayout != null) {
-			setPrivateLayout(privateLayout);
-		}
-
-		String friendlyURL = (String)attributes.get("friendlyURL");
-
-		if (friendlyURL != null) {
-			setFriendlyURL(friendlyURL);
-		}
-
-		String languageId = (String)attributes.get("languageId");
-
-		if (languageId != null) {
-			setLanguageId(languageId);
-		}
-
-		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
-
-		if (lastPublishDate != null) {
-			setLastPublishDate(lastPublishDate);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -761,36 +741,28 @@ public class LayoutFriendlyURLModelImpl extends BaseModelImpl<LayoutFriendlyURL>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		Map<String, Function<LayoutFriendlyURL, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		sb.append("{mvccVersion=");
-		sb.append(getMvccVersion());
-		sb.append(", uuid=");
-		sb.append(getUuid());
-		sb.append(", layoutFriendlyURLId=");
-		sb.append(getLayoutFriendlyURLId());
-		sb.append(", groupId=");
-		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", userName=");
-		sb.append(getUserName());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", modifiedDate=");
-		sb.append(getModifiedDate());
-		sb.append(", plid=");
-		sb.append(getPlid());
-		sb.append(", privateLayout=");
-		sb.append(isPrivateLayout());
-		sb.append(", friendlyURL=");
-		sb.append(getFriendlyURL());
-		sb.append(", languageId=");
-		sb.append(getLanguageId());
-		sb.append(", lastPublishDate=");
-		sb.append(getLastPublishDate());
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
+
+		sb.append("{");
+
+		for (Map.Entry<String, Function<LayoutFriendlyURL, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<LayoutFriendlyURL, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append(attributeName);
+			sb.append("=");
+			sb.append(attributeGetterFunction.apply((LayoutFriendlyURL)this));
+			sb.append(", ");
+		}
+
+		if (sb.index() > 1) {
+			sb.setIndex(sb.index() - 1);
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -798,68 +770,26 @@ public class LayoutFriendlyURLModelImpl extends BaseModelImpl<LayoutFriendlyURL>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(46);
+		Map<String, Function<LayoutFriendlyURL, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
+
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
-		sb.append("com.liferay.portal.kernel.model.LayoutFriendlyURL");
+		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		sb.append(
-			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
-		sb.append(getMvccVersion());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>uuid</column-name><column-value><![CDATA[");
-		sb.append(getUuid());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>layoutFriendlyURLId</column-name><column-value><![CDATA[");
-		sb.append(getLayoutFriendlyURLId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>groupId</column-name><column-value><![CDATA[");
-		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userName</column-name><column-value><![CDATA[");
-		sb.append(getUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
-		sb.append(getModifiedDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>plid</column-name><column-value><![CDATA[");
-		sb.append(getPlid());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>privateLayout</column-name><column-value><![CDATA[");
-		sb.append(isPrivateLayout());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>friendlyURL</column-name><column-value><![CDATA[");
-		sb.append(getFriendlyURL());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>languageId</column-name><column-value><![CDATA[");
-		sb.append(getLanguageId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
-		sb.append(getLastPublishDate());
-		sb.append("]]></column-value></column>");
+		for (Map.Entry<String, Function<LayoutFriendlyURL, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<LayoutFriendlyURL, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append("<column><column-name>");
+			sb.append(attributeName);
+			sb.append("</column-name><column-value><![CDATA[");
+			sb.append(attributeGetterFunction.apply((LayoutFriendlyURL)this));
+			sb.append("]]></column-value></column>");
+		}
 
 		sb.append("</model>");
 

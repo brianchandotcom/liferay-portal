@@ -38,9 +38,12 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
 import java.util.function.Function;
 
 /**
@@ -141,11 +144,15 @@ public class LVEntryModelImpl extends BaseModelImpl<LVEntry>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("mvccVersion", getMvccVersion());
-		attributes.put("headId", getHeadId());
-		attributes.put("defaultLanguageId", getDefaultLanguageId());
-		attributes.put("lvEntryId", getLvEntryId());
-		attributes.put("groupId", getGroupId());
+		Map<String, Function<LVEntry, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+
+		for (Map.Entry<String, Function<LVEntry, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<LVEntry, Object> attributeGetterFunction = entry.getValue();
+
+			attributes.put(attributeName,
+				attributeGetterFunction.apply((LVEntry)this));
+		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -155,35 +162,137 @@ public class LVEntryModelImpl extends BaseModelImpl<LVEntry>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long mvccVersion = (Long)attributes.get("mvccVersion");
+		Map<String, BiConsumer<LVEntry, Object>> attributeSetterBiConsumers = getAttributeSetterBiConsumers();
 
-		if (mvccVersion != null) {
-			setMvccVersion(mvccVersion);
+		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
+			String attributeName = entry.getKey();
+
+			BiConsumer<LVEntry, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+
+			if (attributeSetterBiConsumer != null) {
+				attributeSetterBiConsumer.accept((LVEntry)this, entry.getValue());
+			}
 		}
+	}
 
-		Long headId = (Long)attributes.get("headId");
+	public Map<String, Function<LVEntry, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
+	}
 
-		if (headId != null) {
-			setHeadId(headId);
-		}
+	public Map<String, BiConsumer<LVEntry, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		String defaultLanguageId = (String)attributes.get("defaultLanguageId");
+	private static final Map<String, Function<LVEntry, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<LVEntry, Object>> _attributeSetterBiConsumers;
 
-		if (defaultLanguageId != null) {
-			setDefaultLanguageId(defaultLanguageId);
-		}
+	static {
+		Map<String, Function<LVEntry, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<LVEntry, Object>>();
+		Map<String, BiConsumer<LVEntry, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<LVEntry, ?>>();
 
-		Long lvEntryId = (Long)attributes.get("lvEntryId");
+		attributeGetterFunctions.put(
+			"mvccVersion",
+			new Function<LVEntry, Object>() {
 
-		if (lvEntryId != null) {
-			setLvEntryId(lvEntryId);
-		}
+				@Override
+				public Object apply(LVEntry lvEntry) {
+					return lvEntry.getMvccVersion();
+				}
 
-		Long groupId = (Long)attributes.get("groupId");
+			});
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			new BiConsumer<LVEntry, Object>() {
 
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
+				@Override
+				public void accept(LVEntry lvEntry, Object mvccVersion) {
+					lvEntry.setMvccVersion((Long)mvccVersion);
+				}
+
+			});
+		attributeGetterFunctions.put(
+			"headId",
+			new Function<LVEntry, Object>() {
+
+				@Override
+				public Object apply(LVEntry lvEntry) {
+					return lvEntry.getHeadId();
+				}
+
+			});
+		attributeSetterBiConsumers.put(
+			"headId",
+			new BiConsumer<LVEntry, Object>() {
+
+				@Override
+				public void accept(LVEntry lvEntry, Object headId) {
+					lvEntry.setHeadId((Long)headId);
+				}
+
+			});
+		attributeGetterFunctions.put(
+			"defaultLanguageId",
+			new Function<LVEntry, Object>() {
+
+				@Override
+				public Object apply(LVEntry lvEntry) {
+					return lvEntry.getDefaultLanguageId();
+				}
+
+			});
+		attributeSetterBiConsumers.put(
+			"defaultLanguageId",
+			new BiConsumer<LVEntry, Object>() {
+
+				@Override
+				public void accept(LVEntry lvEntry, Object defaultLanguageId) {
+					lvEntry.setDefaultLanguageId((String)defaultLanguageId);
+				}
+
+			});
+		attributeGetterFunctions.put(
+			"lvEntryId",
+			new Function<LVEntry, Object>() {
+
+				@Override
+				public Object apply(LVEntry lvEntry) {
+					return lvEntry.getLvEntryId();
+				}
+
+			});
+		attributeSetterBiConsumers.put(
+			"lvEntryId",
+			new BiConsumer<LVEntry, Object>() {
+
+				@Override
+				public void accept(LVEntry lvEntry, Object lvEntryId) {
+					lvEntry.setLvEntryId((Long)lvEntryId);
+				}
+
+			});
+		attributeGetterFunctions.put(
+			"groupId",
+			new Function<LVEntry, Object>() {
+
+				@Override
+				public Object apply(LVEntry lvEntry) {
+					return lvEntry.getGroupId();
+				}
+
+			});
+		attributeSetterBiConsumers.put(
+			"groupId",
+			new BiConsumer<LVEntry, Object>() {
+
+				@Override
+				public void accept(LVEntry lvEntry, Object groupId) {
+					lvEntry.setGroupId((Long)groupId);
+				}
+
+			});
+
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -539,18 +648,27 @@ public class LVEntryModelImpl extends BaseModelImpl<LVEntry>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		Map<String, Function<LVEntry, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		sb.append("{mvccVersion=");
-		sb.append(getMvccVersion());
-		sb.append(", headId=");
-		sb.append(getHeadId());
-		sb.append(", defaultLanguageId=");
-		sb.append(getDefaultLanguageId());
-		sb.append(", lvEntryId=");
-		sb.append(getLvEntryId());
-		sb.append(", groupId=");
-		sb.append(getGroupId());
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
+
+		sb.append("{");
+
+		for (Map.Entry<String, Function<LVEntry, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<LVEntry, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append(attributeName);
+			sb.append("=");
+			sb.append(attributeGetterFunction.apply((LVEntry)this));
+			sb.append(", ");
+		}
+
+		if (sb.index() > 1) {
+			sb.setIndex(sb.index() - 1);
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -558,32 +676,25 @@ public class LVEntryModelImpl extends BaseModelImpl<LVEntry>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(19);
+		Map<String, Function<LVEntry, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
-		sb.append("com.liferay.portal.tools.service.builder.test.model.LVEntry");
+		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		sb.append(
-			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
-		sb.append(getMvccVersion());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>headId</column-name><column-value><![CDATA[");
-		sb.append(getHeadId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>defaultLanguageId</column-name><column-value><![CDATA[");
-		sb.append(getDefaultLanguageId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>lvEntryId</column-name><column-value><![CDATA[");
-		sb.append(getLvEntryId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>groupId</column-name><column-value><![CDATA[");
-		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
+		for (Map.Entry<String, Function<LVEntry, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<LVEntry, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append("<column><column-name>");
+			sb.append(attributeName);
+			sb.append("</column-name><column-value><![CDATA[");
+			sb.append(attributeGetterFunction.apply((LVEntry)this));
+			sb.append("]]></column-value></column>");
+		}
 
 		sb.append("</model>");
 

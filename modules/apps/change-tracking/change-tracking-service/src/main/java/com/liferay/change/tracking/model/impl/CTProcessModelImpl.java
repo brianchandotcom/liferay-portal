@@ -39,9 +39,13 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the CTProcess service. Represents a row in the &quot;CTProcess&quot; database table, with each column mapped to a property of this class.
@@ -144,12 +148,15 @@ public class CTProcessModelImpl extends BaseModelImpl<CTProcess>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("ctProcessId", getCtProcessId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("ctCollectionId", getCtCollectionId());
-		attributes.put("backgroundTaskId", getBackgroundTaskId());
+		Map<String, Function<CTProcess, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+
+		for (Map.Entry<String, Function<CTProcess, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<CTProcess, Object> attributeGetterFunction = entry.getValue();
+
+			attributes.put(attributeName,
+				attributeGetterFunction.apply((CTProcess)this));
+		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -159,41 +166,50 @@ public class CTProcessModelImpl extends BaseModelImpl<CTProcess>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long ctProcessId = (Long)attributes.get("ctProcessId");
+		Map<String, BiConsumer<CTProcess, Object>> attributeSetterBiConsumers = getAttributeSetterBiConsumers();
 
-		if (ctProcessId != null) {
-			setCtProcessId(ctProcessId);
+		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
+			String attributeName = entry.getKey();
+
+			BiConsumer<CTProcess, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+
+			if (attributeSetterBiConsumer != null) {
+				attributeSetterBiConsumer.accept((CTProcess)this,
+					entry.getValue());
+			}
 		}
+	}
 
-		Long companyId = (Long)attributes.get("companyId");
+	public Map<String, Function<CTProcess, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
+	}
 
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
+	public Map<String, BiConsumer<CTProcess, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		Long userId = (Long)attributes.get("userId");
+	private static final Map<String, Function<CTProcess, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<CTProcess, Object>> _attributeSetterBiConsumers;
 
-		if (userId != null) {
-			setUserId(userId);
-		}
+	static {
+		Map<String, Function<CTProcess, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<CTProcess, Object>>();
+		Map<String, BiConsumer<CTProcess, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<CTProcess, ?>>();
 
-		Date createDate = (Date)attributes.get("createDate");
+		attributeGetterFunctions.put("ctProcessId", CTProcess::getCtProcessId);
+		attributeSetterBiConsumers.put("ctProcessId", (BiConsumer<CTProcess, Long>)CTProcess::setCtProcessId);
+		attributeGetterFunctions.put("companyId", CTProcess::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<CTProcess, Long>)CTProcess::setCompanyId);
+		attributeGetterFunctions.put("userId", CTProcess::getUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<CTProcess, Long>)CTProcess::setUserId);
+		attributeGetterFunctions.put("createDate", CTProcess::getCreateDate);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<CTProcess, Date>)CTProcess::setCreateDate);
+		attributeGetterFunctions.put("ctCollectionId", CTProcess::getCtCollectionId);
+		attributeSetterBiConsumers.put("ctCollectionId", (BiConsumer<CTProcess, Long>)CTProcess::setCtCollectionId);
+		attributeGetterFunctions.put("backgroundTaskId", CTProcess::getBackgroundTaskId);
+		attributeSetterBiConsumers.put("backgroundTaskId", (BiConsumer<CTProcess, Long>)CTProcess::setBackgroundTaskId);
 
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Long ctCollectionId = (Long)attributes.get("ctCollectionId");
-
-		if (ctCollectionId != null) {
-			setCtCollectionId(ctCollectionId);
-		}
-
-		Long backgroundTaskId = (Long)attributes.get("backgroundTaskId");
-
-		if (backgroundTaskId != null) {
-			setBackgroundTaskId(backgroundTaskId);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -450,20 +466,27 @@ public class CTProcessModelImpl extends BaseModelImpl<CTProcess>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(13);
+		Map<String, Function<CTProcess, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		sb.append("{ctProcessId=");
-		sb.append(getCtProcessId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", ctCollectionId=");
-		sb.append(getCtCollectionId());
-		sb.append(", backgroundTaskId=");
-		sb.append(getBackgroundTaskId());
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
+
+		sb.append("{");
+
+		for (Map.Entry<String, Function<CTProcess, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<CTProcess, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append(attributeName);
+			sb.append("=");
+			sb.append(attributeGetterFunction.apply((CTProcess)this));
+			sb.append(", ");
+		}
+
+		if (sb.index() > 1) {
+			sb.setIndex(sb.index() - 1);
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -471,36 +494,25 @@ public class CTProcessModelImpl extends BaseModelImpl<CTProcess>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(22);
+		Map<String, Function<CTProcess, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
-		sb.append("com.liferay.change.tracking.model.CTProcess");
+		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		sb.append(
-			"<column><column-name>ctProcessId</column-name><column-value><![CDATA[");
-		sb.append(getCtProcessId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>ctCollectionId</column-name><column-value><![CDATA[");
-		sb.append(getCtCollectionId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>backgroundTaskId</column-name><column-value><![CDATA[");
-		sb.append(getBackgroundTaskId());
-		sb.append("]]></column-value></column>");
+		for (Map.Entry<String, Function<CTProcess, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<CTProcess, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append("<column><column-name>");
+			sb.append(attributeName);
+			sb.append("</column-name><column-value><![CDATA[");
+			sb.append(attributeGetterFunction.apply((CTProcess)this));
+			sb.append("]]></column-value></column>");
+		}
 
 		sb.append("</model>");
 

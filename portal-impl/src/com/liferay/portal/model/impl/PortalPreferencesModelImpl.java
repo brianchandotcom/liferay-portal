@@ -35,8 +35,12 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the PortalPreferences service. Represents a row in the &quot;PortalPreferences&quot; database table, with each column mapped to a property of this class.
@@ -136,11 +140,16 @@ public class PortalPreferencesModelImpl extends BaseModelImpl<PortalPreferences>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("mvccVersion", getMvccVersion());
-		attributes.put("portalPreferencesId", getPortalPreferencesId());
-		attributes.put("ownerId", getOwnerId());
-		attributes.put("ownerType", getOwnerType());
-		attributes.put("preferences", getPreferences());
+		Map<String, Function<PortalPreferences, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
+
+		for (Map.Entry<String, Function<PortalPreferences, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<PortalPreferences, Object> attributeGetterFunction = entry.getValue();
+
+			attributes.put(attributeName,
+				attributeGetterFunction.apply((PortalPreferences)this));
+		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -150,35 +159,51 @@ public class PortalPreferencesModelImpl extends BaseModelImpl<PortalPreferences>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long mvccVersion = (Long)attributes.get("mvccVersion");
+		Map<String, BiConsumer<PortalPreferences, Object>> attributeSetterBiConsumers =
+			getAttributeSetterBiConsumers();
 
-		if (mvccVersion != null) {
-			setMvccVersion(mvccVersion);
+		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
+			String attributeName = entry.getKey();
+
+			BiConsumer<PortalPreferences, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+
+			if (attributeSetterBiConsumer != null) {
+				attributeSetterBiConsumer.accept((PortalPreferences)this,
+					entry.getValue());
+			}
 		}
+	}
 
-		Long portalPreferencesId = (Long)attributes.get("portalPreferencesId");
+	public Map<String, Function<PortalPreferences, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
+	}
 
-		if (portalPreferencesId != null) {
-			setPortalPreferencesId(portalPreferencesId);
-		}
+	public Map<String, BiConsumer<PortalPreferences, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		Long ownerId = (Long)attributes.get("ownerId");
+	private static final Map<String, Function<PortalPreferences, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<PortalPreferences, Object>> _attributeSetterBiConsumers;
 
-		if (ownerId != null) {
-			setOwnerId(ownerId);
-		}
+	static {
+		Map<String, Function<PortalPreferences, Object>> attributeGetterFunctions =
+			new LinkedHashMap<String, Function<PortalPreferences, Object>>();
+		Map<String, BiConsumer<PortalPreferences, ?>> attributeSetterBiConsumers =
+			new LinkedHashMap<String, BiConsumer<PortalPreferences, ?>>();
 
-		Integer ownerType = (Integer)attributes.get("ownerType");
+		attributeGetterFunctions.put("mvccVersion", PortalPreferences::getMvccVersion);
+		attributeSetterBiConsumers.put("mvccVersion", (BiConsumer<PortalPreferences, Long>)PortalPreferences::setMvccVersion);
+		attributeGetterFunctions.put("portalPreferencesId", PortalPreferences::getPortalPreferencesId);
+		attributeSetterBiConsumers.put("portalPreferencesId", (BiConsumer<PortalPreferences, Long>)PortalPreferences::setPortalPreferencesId);
+		attributeGetterFunctions.put("ownerId", PortalPreferences::getOwnerId);
+		attributeSetterBiConsumers.put("ownerId", (BiConsumer<PortalPreferences, Long>)PortalPreferences::setOwnerId);
+		attributeGetterFunctions.put("ownerType", PortalPreferences::getOwnerType);
+		attributeSetterBiConsumers.put("ownerType", (BiConsumer<PortalPreferences, Integer>)PortalPreferences::setOwnerType);
+		attributeGetterFunctions.put("preferences", PortalPreferences::getPreferences);
+		attributeSetterBiConsumers.put("preferences", (BiConsumer<PortalPreferences, String>)PortalPreferences::setPreferences);
 
-		if (ownerType != null) {
-			setOwnerType(ownerType);
-		}
-
-		String preferences = (String)attributes.get("preferences");
-
-		if (preferences != null) {
-			setPreferences(preferences);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -394,18 +419,28 @@ public class PortalPreferencesModelImpl extends BaseModelImpl<PortalPreferences>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		Map<String, Function<PortalPreferences, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		sb.append("{mvccVersion=");
-		sb.append(getMvccVersion());
-		sb.append(", portalPreferencesId=");
-		sb.append(getPortalPreferencesId());
-		sb.append(", ownerId=");
-		sb.append(getOwnerId());
-		sb.append(", ownerType=");
-		sb.append(getOwnerType());
-		sb.append(", preferences=");
-		sb.append(getPreferences());
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
+
+		sb.append("{");
+
+		for (Map.Entry<String, Function<PortalPreferences, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<PortalPreferences, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append(attributeName);
+			sb.append("=");
+			sb.append(attributeGetterFunction.apply((PortalPreferences)this));
+			sb.append(", ");
+		}
+
+		if (sb.index() > 1) {
+			sb.setIndex(sb.index() - 1);
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -413,32 +448,26 @@ public class PortalPreferencesModelImpl extends BaseModelImpl<PortalPreferences>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(19);
+		Map<String, Function<PortalPreferences, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
+
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
-		sb.append("com.liferay.portal.kernel.model.PortalPreferences");
+		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		sb.append(
-			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
-		sb.append(getMvccVersion());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>portalPreferencesId</column-name><column-value><![CDATA[");
-		sb.append(getPortalPreferencesId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>ownerId</column-name><column-value><![CDATA[");
-		sb.append(getOwnerId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>ownerType</column-name><column-value><![CDATA[");
-		sb.append(getOwnerType());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>preferences</column-name><column-value><![CDATA[");
-		sb.append(getPreferences());
-		sb.append("]]></column-value></column>");
+		for (Map.Entry<String, Function<PortalPreferences, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<PortalPreferences, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append("<column><column-name>");
+			sb.append(attributeName);
+			sb.append("</column-name><column-value><![CDATA[");
+			sb.append(attributeGetterFunction.apply((PortalPreferences)this));
+			sb.append("]]></column-value></column>");
+		}
 
 		sb.append("</model>");
 

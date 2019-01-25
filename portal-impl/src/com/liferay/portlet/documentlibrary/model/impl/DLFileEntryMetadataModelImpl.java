@@ -36,8 +36,12 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the DLFileEntryMetadata service. Represents a row in the &quot;DLFileEntryMetadata&quot; database table, with each column mapped to a property of this class.
@@ -144,13 +148,16 @@ public class DLFileEntryMetadataModelImpl extends BaseModelImpl<DLFileEntryMetad
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("uuid", getUuid());
-		attributes.put("fileEntryMetadataId", getFileEntryMetadataId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("DDMStorageId", getDDMStorageId());
-		attributes.put("DDMStructureId", getDDMStructureId());
-		attributes.put("fileEntryId", getFileEntryId());
-		attributes.put("fileVersionId", getFileVersionId());
+		Map<String, Function<DLFileEntryMetadata, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
+
+		for (Map.Entry<String, Function<DLFileEntryMetadata, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<DLFileEntryMetadata, Object> attributeGetterFunction = entry.getValue();
+
+			attributes.put(attributeName,
+				attributeGetterFunction.apply((DLFileEntryMetadata)this));
+		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -160,47 +167,55 @@ public class DLFileEntryMetadataModelImpl extends BaseModelImpl<DLFileEntryMetad
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		String uuid = (String)attributes.get("uuid");
+		Map<String, BiConsumer<DLFileEntryMetadata, Object>> attributeSetterBiConsumers =
+			getAttributeSetterBiConsumers();
 
-		if (uuid != null) {
-			setUuid(uuid);
+		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
+			String attributeName = entry.getKey();
+
+			BiConsumer<DLFileEntryMetadata, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+
+			if (attributeSetterBiConsumer != null) {
+				attributeSetterBiConsumer.accept((DLFileEntryMetadata)this,
+					entry.getValue());
+			}
 		}
+	}
 
-		Long fileEntryMetadataId = (Long)attributes.get("fileEntryMetadataId");
+	public Map<String, Function<DLFileEntryMetadata, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
+	}
 
-		if (fileEntryMetadataId != null) {
-			setFileEntryMetadataId(fileEntryMetadataId);
-		}
+	public Map<String, BiConsumer<DLFileEntryMetadata, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		Long companyId = (Long)attributes.get("companyId");
+	private static final Map<String, Function<DLFileEntryMetadata, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<DLFileEntryMetadata, Object>> _attributeSetterBiConsumers;
 
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
+	static {
+		Map<String, Function<DLFileEntryMetadata, Object>> attributeGetterFunctions =
+			new LinkedHashMap<String, Function<DLFileEntryMetadata, Object>>();
+		Map<String, BiConsumer<DLFileEntryMetadata, ?>> attributeSetterBiConsumers =
+			new LinkedHashMap<String, BiConsumer<DLFileEntryMetadata, ?>>();
 
-		Long DDMStorageId = (Long)attributes.get("DDMStorageId");
+		attributeGetterFunctions.put("uuid", DLFileEntryMetadata::getUuid);
+		attributeSetterBiConsumers.put("uuid", (BiConsumer<DLFileEntryMetadata, String>)DLFileEntryMetadata::setUuid);
+		attributeGetterFunctions.put("fileEntryMetadataId", DLFileEntryMetadata::getFileEntryMetadataId);
+		attributeSetterBiConsumers.put("fileEntryMetadataId", (BiConsumer<DLFileEntryMetadata, Long>)DLFileEntryMetadata::setFileEntryMetadataId);
+		attributeGetterFunctions.put("companyId", DLFileEntryMetadata::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<DLFileEntryMetadata, Long>)DLFileEntryMetadata::setCompanyId);
+		attributeGetterFunctions.put("DDMStorageId", DLFileEntryMetadata::getDDMStorageId);
+		attributeSetterBiConsumers.put("DDMStorageId", (BiConsumer<DLFileEntryMetadata, Long>)DLFileEntryMetadata::setDDMStorageId);
+		attributeGetterFunctions.put("DDMStructureId", DLFileEntryMetadata::getDDMStructureId);
+		attributeSetterBiConsumers.put("DDMStructureId", (BiConsumer<DLFileEntryMetadata, Long>)DLFileEntryMetadata::setDDMStructureId);
+		attributeGetterFunctions.put("fileEntryId", DLFileEntryMetadata::getFileEntryId);
+		attributeSetterBiConsumers.put("fileEntryId", (BiConsumer<DLFileEntryMetadata, Long>)DLFileEntryMetadata::setFileEntryId);
+		attributeGetterFunctions.put("fileVersionId", DLFileEntryMetadata::getFileVersionId);
+		attributeSetterBiConsumers.put("fileVersionId", (BiConsumer<DLFileEntryMetadata, Long>)DLFileEntryMetadata::setFileVersionId);
 
-		if (DDMStorageId != null) {
-			setDDMStorageId(DDMStorageId);
-		}
-
-		Long DDMStructureId = (Long)attributes.get("DDMStructureId");
-
-		if (DDMStructureId != null) {
-			setDDMStructureId(DDMStructureId);
-		}
-
-		Long fileEntryId = (Long)attributes.get("fileEntryId");
-
-		if (fileEntryId != null) {
-			setFileEntryId(fileEntryId);
-		}
-
-		Long fileVersionId = (Long)attributes.get("fileVersionId");
-
-		if (fileVersionId != null) {
-			setFileVersionId(fileVersionId);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -486,22 +501,28 @@ public class DLFileEntryMetadataModelImpl extends BaseModelImpl<DLFileEntryMetad
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(15);
+		Map<String, Function<DLFileEntryMetadata, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		sb.append("{uuid=");
-		sb.append(getUuid());
-		sb.append(", fileEntryMetadataId=");
-		sb.append(getFileEntryMetadataId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", DDMStorageId=");
-		sb.append(getDDMStorageId());
-		sb.append(", DDMStructureId=");
-		sb.append(getDDMStructureId());
-		sb.append(", fileEntryId=");
-		sb.append(getFileEntryId());
-		sb.append(", fileVersionId=");
-		sb.append(getFileVersionId());
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
+
+		sb.append("{");
+
+		for (Map.Entry<String, Function<DLFileEntryMetadata, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<DLFileEntryMetadata, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append(attributeName);
+			sb.append("=");
+			sb.append(attributeGetterFunction.apply((DLFileEntryMetadata)this));
+			sb.append(", ");
+		}
+
+		if (sb.index() > 1) {
+			sb.setIndex(sb.index() - 1);
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -509,41 +530,26 @@ public class DLFileEntryMetadataModelImpl extends BaseModelImpl<DLFileEntryMetad
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(25);
+		Map<String, Function<DLFileEntryMetadata, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
+
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
-		sb.append(
-			"com.liferay.document.library.kernel.model.DLFileEntryMetadata");
+		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		sb.append(
-			"<column><column-name>uuid</column-name><column-value><![CDATA[");
-		sb.append(getUuid());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>fileEntryMetadataId</column-name><column-value><![CDATA[");
-		sb.append(getFileEntryMetadataId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>DDMStorageId</column-name><column-value><![CDATA[");
-		sb.append(getDDMStorageId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>DDMStructureId</column-name><column-value><![CDATA[");
-		sb.append(getDDMStructureId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>fileEntryId</column-name><column-value><![CDATA[");
-		sb.append(getFileEntryId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>fileVersionId</column-name><column-value><![CDATA[");
-		sb.append(getFileVersionId());
-		sb.append("]]></column-value></column>");
+		for (Map.Entry<String, Function<DLFileEntryMetadata, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<DLFileEntryMetadata, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append("<column><column-name>");
+			sb.append(attributeName);
+			sb.append("</column-name><column-value><![CDATA[");
+			sb.append(attributeGetterFunction.apply((DLFileEntryMetadata)this));
+			sb.append("]]></column-value></column>");
+		}
 
 		sb.append("</model>");
 

@@ -32,8 +32,12 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the Counter service. Represents a row in the &quot;Counter&quot; database table, with each column mapped to a property of this class.
@@ -122,8 +126,15 @@ public class CounterModelImpl extends BaseModelImpl<Counter>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("name", getName());
-		attributes.put("currentId", getCurrentId());
+		Map<String, Function<Counter, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+
+		for (Map.Entry<String, Function<Counter, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<Counter, Object> attributeGetterFunction = entry.getValue();
+
+			attributes.put(attributeName,
+				attributeGetterFunction.apply((Counter)this));
+		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -133,17 +144,41 @@ public class CounterModelImpl extends BaseModelImpl<Counter>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		String name = (String)attributes.get("name");
+		Map<String, BiConsumer<Counter, Object>> attributeSetterBiConsumers = getAttributeSetterBiConsumers();
 
-		if (name != null) {
-			setName(name);
+		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
+			String attributeName = entry.getKey();
+
+			BiConsumer<Counter, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+
+			if (attributeSetterBiConsumer != null) {
+				attributeSetterBiConsumer.accept((Counter)this, entry.getValue());
+			}
 		}
+	}
 
-		Long currentId = (Long)attributes.get("currentId");
+	public Map<String, Function<Counter, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
+	}
 
-		if (currentId != null) {
-			setCurrentId(currentId);
-		}
+	public Map<String, BiConsumer<Counter, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
+
+	private static final Map<String, Function<Counter, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<Counter, Object>> _attributeSetterBiConsumers;
+
+	static {
+		Map<String, Function<Counter, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<Counter, Object>>();
+		Map<String, BiConsumer<Counter, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<Counter, ?>>();
+
+		attributeGetterFunctions.put("name", Counter::getName);
+		attributeSetterBiConsumers.put("name", (BiConsumer<Counter, String>)Counter::setName);
+		attributeGetterFunctions.put("currentId", Counter::getCurrentId);
+		attributeSetterBiConsumers.put("currentId", (BiConsumer<Counter, Long>)Counter::setCurrentId);
+
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -260,12 +295,27 @@ public class CounterModelImpl extends BaseModelImpl<Counter>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(5);
+		Map<String, Function<Counter, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		sb.append("{name=");
-		sb.append(getName());
-		sb.append(", currentId=");
-		sb.append(getCurrentId());
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
+
+		sb.append("{");
+
+		for (Map.Entry<String, Function<Counter, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<Counter, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append(attributeName);
+			sb.append("=");
+			sb.append(attributeGetterFunction.apply((Counter)this));
+			sb.append(", ");
+		}
+
+		if (sb.index() > 1) {
+			sb.setIndex(sb.index() - 1);
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -273,20 +323,25 @@ public class CounterModelImpl extends BaseModelImpl<Counter>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(10);
+		Map<String, Function<Counter, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
-		sb.append("com.liferay.counter.kernel.model.Counter");
+		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		sb.append(
-			"<column><column-name>name</column-name><column-value><![CDATA[");
-		sb.append(getName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>currentId</column-name><column-value><![CDATA[");
-		sb.append(getCurrentId());
-		sb.append("]]></column-value></column>");
+		for (Map.Entry<String, Function<Counter, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<Counter, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append("<column><column-name>");
+			sb.append(attributeName);
+			sb.append("</column-name><column-value><![CDATA[");
+			sb.append(attributeGetterFunction.apply((Counter)this));
+			sb.append("]]></column-value></column>");
+		}
 
 		sb.append("</model>");
 

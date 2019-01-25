@@ -36,8 +36,12 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the JournalArticleResource service. Represents a row in the &quot;JournalArticleResource&quot; database table, with each column mapped to a property of this class.
@@ -139,11 +143,16 @@ public class JournalArticleResourceModelImpl extends BaseModelImpl<JournalArticl
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("uuid", getUuid());
-		attributes.put("resourcePrimKey", getResourcePrimKey());
-		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("articleId", getArticleId());
+		Map<String, Function<JournalArticleResource, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
+
+		for (Map.Entry<String, Function<JournalArticleResource, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<JournalArticleResource, Object> attributeGetterFunction = entry.getValue();
+
+			attributes.put(attributeName,
+				attributeGetterFunction.apply((JournalArticleResource)this));
+		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -153,35 +162,52 @@ public class JournalArticleResourceModelImpl extends BaseModelImpl<JournalArticl
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		String uuid = (String)attributes.get("uuid");
+		Map<String, BiConsumer<JournalArticleResource, Object>> attributeSetterBiConsumers =
+			getAttributeSetterBiConsumers();
 
-		if (uuid != null) {
-			setUuid(uuid);
+		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
+			String attributeName = entry.getKey();
+
+			BiConsumer<JournalArticleResource, Object> attributeSetterBiConsumer =
+				attributeSetterBiConsumers.get(attributeName);
+
+			if (attributeSetterBiConsumer != null) {
+				attributeSetterBiConsumer.accept((JournalArticleResource)this,
+					entry.getValue());
+			}
 		}
+	}
 
-		Long resourcePrimKey = (Long)attributes.get("resourcePrimKey");
+	public Map<String, Function<JournalArticleResource, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
+	}
 
-		if (resourcePrimKey != null) {
-			setResourcePrimKey(resourcePrimKey);
-		}
+	public Map<String, BiConsumer<JournalArticleResource, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		Long groupId = (Long)attributes.get("groupId");
+	private static final Map<String, Function<JournalArticleResource, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<JournalArticleResource, Object>> _attributeSetterBiConsumers;
 
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
+	static {
+		Map<String, Function<JournalArticleResource, Object>> attributeGetterFunctions =
+			new LinkedHashMap<String, Function<JournalArticleResource, Object>>();
+		Map<String, BiConsumer<JournalArticleResource, ?>> attributeSetterBiConsumers =
+			new LinkedHashMap<String, BiConsumer<JournalArticleResource, ?>>();
 
-		Long companyId = (Long)attributes.get("companyId");
+		attributeGetterFunctions.put("uuid", JournalArticleResource::getUuid);
+		attributeSetterBiConsumers.put("uuid", (BiConsumer<JournalArticleResource, String>)JournalArticleResource::setUuid);
+		attributeGetterFunctions.put("resourcePrimKey", JournalArticleResource::getResourcePrimKey);
+		attributeSetterBiConsumers.put("resourcePrimKey", (BiConsumer<JournalArticleResource, Long>)JournalArticleResource::setResourcePrimKey);
+		attributeGetterFunctions.put("groupId", JournalArticleResource::getGroupId);
+		attributeSetterBiConsumers.put("groupId", (BiConsumer<JournalArticleResource, Long>)JournalArticleResource::setGroupId);
+		attributeGetterFunctions.put("companyId", JournalArticleResource::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<JournalArticleResource, Long>)JournalArticleResource::setCompanyId);
+		attributeGetterFunctions.put("articleId", JournalArticleResource::getArticleId);
+		attributeSetterBiConsumers.put("articleId", (BiConsumer<JournalArticleResource, String>)JournalArticleResource::setArticleId);
 
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		String articleId = (String)attributes.get("articleId");
-
-		if (articleId != null) {
-			setArticleId(articleId);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -432,18 +458,29 @@ public class JournalArticleResourceModelImpl extends BaseModelImpl<JournalArticl
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		Map<String, Function<JournalArticleResource, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		sb.append("{uuid=");
-		sb.append(getUuid());
-		sb.append(", resourcePrimKey=");
-		sb.append(getResourcePrimKey());
-		sb.append(", groupId=");
-		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", articleId=");
-		sb.append(getArticleId());
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
+
+		sb.append("{");
+
+		for (Map.Entry<String, Function<JournalArticleResource, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<JournalArticleResource, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append(attributeName);
+			sb.append("=");
+			sb.append(attributeGetterFunction.apply(
+					(JournalArticleResource)this));
+			sb.append(", ");
+		}
+
+		if (sb.index() > 1) {
+			sb.setIndex(sb.index() - 1);
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -451,32 +488,27 @@ public class JournalArticleResourceModelImpl extends BaseModelImpl<JournalArticl
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(19);
+		Map<String, Function<JournalArticleResource, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
+
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
-		sb.append("com.liferay.journal.model.JournalArticleResource");
+		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		sb.append(
-			"<column><column-name>uuid</column-name><column-value><![CDATA[");
-		sb.append(getUuid());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>resourcePrimKey</column-name><column-value><![CDATA[");
-		sb.append(getResourcePrimKey());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>groupId</column-name><column-value><![CDATA[");
-		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>articleId</column-name><column-value><![CDATA[");
-		sb.append(getArticleId());
-		sb.append("]]></column-value></column>");
+		for (Map.Entry<String, Function<JournalArticleResource, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<JournalArticleResource, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append("<column><column-name>");
+			sb.append(attributeName);
+			sb.append("</column-name><column-value><![CDATA[");
+			sb.append(attributeGetterFunction.apply(
+					(JournalArticleResource)this));
+			sb.append("]]></column-value></column>");
+		}
 
 		sb.append("</model>");
 

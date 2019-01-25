@@ -46,10 +46,14 @@ import java.io.Serializable;
 import java.sql.Types;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the MDRRuleGroupInstance service. Represents a row in the &quot;MDRRuleGroupInstance&quot; database table, with each column mapped to a property of this class.
@@ -223,19 +227,16 @@ public class MDRRuleGroupInstanceModelImpl extends BaseModelImpl<MDRRuleGroupIns
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("uuid", getUuid());
-		attributes.put("ruleGroupInstanceId", getRuleGroupInstanceId());
-		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("classNameId", getClassNameId());
-		attributes.put("classPK", getClassPK());
-		attributes.put("ruleGroupId", getRuleGroupId());
-		attributes.put("priority", getPriority());
-		attributes.put("lastPublishDate", getLastPublishDate());
+		Map<String, Function<MDRRuleGroupInstance, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
+
+		for (Map.Entry<String, Function<MDRRuleGroupInstance, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<MDRRuleGroupInstance, Object> attributeGetterFunction = entry.getValue();
+
+			attributes.put(attributeName,
+				attributeGetterFunction.apply((MDRRuleGroupInstance)this));
+		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -245,83 +246,67 @@ public class MDRRuleGroupInstanceModelImpl extends BaseModelImpl<MDRRuleGroupIns
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		String uuid = (String)attributes.get("uuid");
+		Map<String, BiConsumer<MDRRuleGroupInstance, Object>> attributeSetterBiConsumers =
+			getAttributeSetterBiConsumers();
 
-		if (uuid != null) {
-			setUuid(uuid);
+		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
+			String attributeName = entry.getKey();
+
+			BiConsumer<MDRRuleGroupInstance, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+
+			if (attributeSetterBiConsumer != null) {
+				attributeSetterBiConsumer.accept((MDRRuleGroupInstance)this,
+					entry.getValue());
+			}
 		}
+	}
 
-		Long ruleGroupInstanceId = (Long)attributes.get("ruleGroupInstanceId");
+	public Map<String, Function<MDRRuleGroupInstance, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
+	}
 
-		if (ruleGroupInstanceId != null) {
-			setRuleGroupInstanceId(ruleGroupInstanceId);
-		}
+	public Map<String, BiConsumer<MDRRuleGroupInstance, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		Long groupId = (Long)attributes.get("groupId");
+	private static final Map<String, Function<MDRRuleGroupInstance, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<MDRRuleGroupInstance, Object>> _attributeSetterBiConsumers;
 
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
+	static {
+		Map<String, Function<MDRRuleGroupInstance, Object>> attributeGetterFunctions =
+			new LinkedHashMap<String, Function<MDRRuleGroupInstance, Object>>();
+		Map<String, BiConsumer<MDRRuleGroupInstance, ?>> attributeSetterBiConsumers =
+			new LinkedHashMap<String, BiConsumer<MDRRuleGroupInstance, ?>>();
 
-		Long companyId = (Long)attributes.get("companyId");
+		attributeGetterFunctions.put("uuid", MDRRuleGroupInstance::getUuid);
+		attributeSetterBiConsumers.put("uuid", (BiConsumer<MDRRuleGroupInstance, String>)MDRRuleGroupInstance::setUuid);
+		attributeGetterFunctions.put("ruleGroupInstanceId", MDRRuleGroupInstance::getRuleGroupInstanceId);
+		attributeSetterBiConsumers.put("ruleGroupInstanceId", (BiConsumer<MDRRuleGroupInstance, Long>)MDRRuleGroupInstance::setRuleGroupInstanceId);
+		attributeGetterFunctions.put("groupId", MDRRuleGroupInstance::getGroupId);
+		attributeSetterBiConsumers.put("groupId", (BiConsumer<MDRRuleGroupInstance, Long>)MDRRuleGroupInstance::setGroupId);
+		attributeGetterFunctions.put("companyId", MDRRuleGroupInstance::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<MDRRuleGroupInstance, Long>)MDRRuleGroupInstance::setCompanyId);
+		attributeGetterFunctions.put("userId", MDRRuleGroupInstance::getUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<MDRRuleGroupInstance, Long>)MDRRuleGroupInstance::setUserId);
+		attributeGetterFunctions.put("userName", MDRRuleGroupInstance::getUserName);
+		attributeSetterBiConsumers.put("userName", (BiConsumer<MDRRuleGroupInstance, String>)MDRRuleGroupInstance::setUserName);
+		attributeGetterFunctions.put("createDate", MDRRuleGroupInstance::getCreateDate);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<MDRRuleGroupInstance, Date>)MDRRuleGroupInstance::setCreateDate);
+		attributeGetterFunctions.put("modifiedDate", MDRRuleGroupInstance::getModifiedDate);
+		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<MDRRuleGroupInstance, Date>)MDRRuleGroupInstance::setModifiedDate);
+		attributeGetterFunctions.put("classNameId", MDRRuleGroupInstance::getClassNameId);
+		attributeSetterBiConsumers.put("classNameId", (BiConsumer<MDRRuleGroupInstance, Long>)MDRRuleGroupInstance::setClassNameId);
+		attributeGetterFunctions.put("classPK", MDRRuleGroupInstance::getClassPK);
+		attributeSetterBiConsumers.put("classPK", (BiConsumer<MDRRuleGroupInstance, Long>)MDRRuleGroupInstance::setClassPK);
+		attributeGetterFunctions.put("ruleGroupId", MDRRuleGroupInstance::getRuleGroupId);
+		attributeSetterBiConsumers.put("ruleGroupId", (BiConsumer<MDRRuleGroupInstance, Long>)MDRRuleGroupInstance::setRuleGroupId);
+		attributeGetterFunctions.put("priority", MDRRuleGroupInstance::getPriority);
+		attributeSetterBiConsumers.put("priority", (BiConsumer<MDRRuleGroupInstance, Integer>)MDRRuleGroupInstance::setPriority);
+		attributeGetterFunctions.put("lastPublishDate", MDRRuleGroupInstance::getLastPublishDate);
+		attributeSetterBiConsumers.put("lastPublishDate", (BiConsumer<MDRRuleGroupInstance, Date>)MDRRuleGroupInstance::setLastPublishDate);
 
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		Long classNameId = (Long)attributes.get("classNameId");
-
-		if (classNameId != null) {
-			setClassNameId(classNameId);
-		}
-
-		Long classPK = (Long)attributes.get("classPK");
-
-		if (classPK != null) {
-			setClassPK(classPK);
-		}
-
-		Long ruleGroupId = (Long)attributes.get("ruleGroupId");
-
-		if (ruleGroupId != null) {
-			setRuleGroupId(ruleGroupId);
-		}
-
-		Integer priority = (Integer)attributes.get("priority");
-
-		if (priority != null) {
-			setPriority(priority);
-		}
-
-		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
-
-		if (lastPublishDate != null) {
-			setLastPublishDate(lastPublishDate);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@JSON
@@ -796,34 +781,28 @@ public class MDRRuleGroupInstanceModelImpl extends BaseModelImpl<MDRRuleGroupIns
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		Map<String, Function<MDRRuleGroupInstance, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		sb.append("{uuid=");
-		sb.append(getUuid());
-		sb.append(", ruleGroupInstanceId=");
-		sb.append(getRuleGroupInstanceId());
-		sb.append(", groupId=");
-		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", userName=");
-		sb.append(getUserName());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", modifiedDate=");
-		sb.append(getModifiedDate());
-		sb.append(", classNameId=");
-		sb.append(getClassNameId());
-		sb.append(", classPK=");
-		sb.append(getClassPK());
-		sb.append(", ruleGroupId=");
-		sb.append(getRuleGroupId());
-		sb.append(", priority=");
-		sb.append(getPriority());
-		sb.append(", lastPublishDate=");
-		sb.append(getLastPublishDate());
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
+
+		sb.append("{");
+
+		for (Map.Entry<String, Function<MDRRuleGroupInstance, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<MDRRuleGroupInstance, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append(attributeName);
+			sb.append("=");
+			sb.append(attributeGetterFunction.apply((MDRRuleGroupInstance)this));
+			sb.append(", ");
+		}
+
+		if (sb.index() > 1) {
+			sb.setIndex(sb.index() - 1);
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -831,64 +810,26 @@ public class MDRRuleGroupInstanceModelImpl extends BaseModelImpl<MDRRuleGroupIns
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(43);
+		Map<String, Function<MDRRuleGroupInstance, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
+
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
-		sb.append("com.liferay.mobile.device.rules.model.MDRRuleGroupInstance");
+		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		sb.append(
-			"<column><column-name>uuid</column-name><column-value><![CDATA[");
-		sb.append(getUuid());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>ruleGroupInstanceId</column-name><column-value><![CDATA[");
-		sb.append(getRuleGroupInstanceId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>groupId</column-name><column-value><![CDATA[");
-		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userName</column-name><column-value><![CDATA[");
-		sb.append(getUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
-		sb.append(getModifiedDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>classNameId</column-name><column-value><![CDATA[");
-		sb.append(getClassNameId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>classPK</column-name><column-value><![CDATA[");
-		sb.append(getClassPK());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>ruleGroupId</column-name><column-value><![CDATA[");
-		sb.append(getRuleGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>priority</column-name><column-value><![CDATA[");
-		sb.append(getPriority());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
-		sb.append(getLastPublishDate());
-		sb.append("]]></column-value></column>");
+		for (Map.Entry<String, Function<MDRRuleGroupInstance, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<MDRRuleGroupInstance, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append("<column><column-name>");
+			sb.append(attributeName);
+			sb.append("</column-name><column-value><![CDATA[");
+			sb.append(attributeGetterFunction.apply((MDRRuleGroupInstance)this));
+			sb.append("]]></column-value></column>");
+		}
 
 		sb.append("</model>");
 

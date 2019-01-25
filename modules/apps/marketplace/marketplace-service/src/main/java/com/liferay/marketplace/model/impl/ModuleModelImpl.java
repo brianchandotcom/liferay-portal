@@ -36,8 +36,12 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the Module service. Represents a row in the &quot;Marketplace_Module&quot; database table, with each column mapped to a property of this class.
@@ -145,13 +149,15 @@ public class ModuleModelImpl extends BaseModelImpl<Module>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("uuid", getUuid());
-		attributes.put("moduleId", getModuleId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("appId", getAppId());
-		attributes.put("bundleSymbolicName", getBundleSymbolicName());
-		attributes.put("bundleVersion", getBundleVersion());
-		attributes.put("contextName", getContextName());
+		Map<String, Function<Module, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+
+		for (Map.Entry<String, Function<Module, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<Module, Object> attributeGetterFunction = entry.getValue();
+
+			attributes.put(attributeName,
+				attributeGetterFunction.apply((Module)this));
+		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -161,47 +167,51 @@ public class ModuleModelImpl extends BaseModelImpl<Module>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		String uuid = (String)attributes.get("uuid");
+		Map<String, BiConsumer<Module, Object>> attributeSetterBiConsumers = getAttributeSetterBiConsumers();
 
-		if (uuid != null) {
-			setUuid(uuid);
+		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
+			String attributeName = entry.getKey();
+
+			BiConsumer<Module, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+
+			if (attributeSetterBiConsumer != null) {
+				attributeSetterBiConsumer.accept((Module)this, entry.getValue());
+			}
 		}
+	}
 
-		Long moduleId = (Long)attributes.get("moduleId");
+	public Map<String, Function<Module, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
+	}
 
-		if (moduleId != null) {
-			setModuleId(moduleId);
-		}
+	public Map<String, BiConsumer<Module, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		Long companyId = (Long)attributes.get("companyId");
+	private static final Map<String, Function<Module, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<Module, Object>> _attributeSetterBiConsumers;
 
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
+	static {
+		Map<String, Function<Module, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<Module, Object>>();
+		Map<String, BiConsumer<Module, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<Module, ?>>();
 
-		Long appId = (Long)attributes.get("appId");
+		attributeGetterFunctions.put("uuid", Module::getUuid);
+		attributeSetterBiConsumers.put("uuid", (BiConsumer<Module, String>)Module::setUuid);
+		attributeGetterFunctions.put("moduleId", Module::getModuleId);
+		attributeSetterBiConsumers.put("moduleId", (BiConsumer<Module, Long>)Module::setModuleId);
+		attributeGetterFunctions.put("companyId", Module::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<Module, Long>)Module::setCompanyId);
+		attributeGetterFunctions.put("appId", Module::getAppId);
+		attributeSetterBiConsumers.put("appId", (BiConsumer<Module, Long>)Module::setAppId);
+		attributeGetterFunctions.put("bundleSymbolicName", Module::getBundleSymbolicName);
+		attributeSetterBiConsumers.put("bundleSymbolicName", (BiConsumer<Module, String>)Module::setBundleSymbolicName);
+		attributeGetterFunctions.put("bundleVersion", Module::getBundleVersion);
+		attributeSetterBiConsumers.put("bundleVersion", (BiConsumer<Module, String>)Module::setBundleVersion);
+		attributeGetterFunctions.put("contextName", Module::getContextName);
+		attributeSetterBiConsumers.put("contextName", (BiConsumer<Module, String>)Module::setContextName);
 
-		if (appId != null) {
-			setAppId(appId);
-		}
-
-		String bundleSymbolicName = (String)attributes.get("bundleSymbolicName");
-
-		if (bundleSymbolicName != null) {
-			setBundleSymbolicName(bundleSymbolicName);
-		}
-
-		String bundleVersion = (String)attributes.get("bundleVersion");
-
-		if (bundleVersion != null) {
-			setBundleVersion(bundleVersion);
-		}
-
-		String contextName = (String)attributes.get("contextName");
-
-		if (contextName != null) {
-			setContextName(contextName);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -524,22 +534,27 @@ public class ModuleModelImpl extends BaseModelImpl<Module>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(15);
+		Map<String, Function<Module, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		sb.append("{uuid=");
-		sb.append(getUuid());
-		sb.append(", moduleId=");
-		sb.append(getModuleId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", appId=");
-		sb.append(getAppId());
-		sb.append(", bundleSymbolicName=");
-		sb.append(getBundleSymbolicName());
-		sb.append(", bundleVersion=");
-		sb.append(getBundleVersion());
-		sb.append(", contextName=");
-		sb.append(getContextName());
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
+
+		sb.append("{");
+
+		for (Map.Entry<String, Function<Module, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<Module, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append(attributeName);
+			sb.append("=");
+			sb.append(attributeGetterFunction.apply((Module)this));
+			sb.append(", ");
+		}
+
+		if (sb.index() > 1) {
+			sb.setIndex(sb.index() - 1);
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -547,40 +562,25 @@ public class ModuleModelImpl extends BaseModelImpl<Module>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(25);
+		Map<String, Function<Module, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
-		sb.append("com.liferay.marketplace.model.Module");
+		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		sb.append(
-			"<column><column-name>uuid</column-name><column-value><![CDATA[");
-		sb.append(getUuid());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>moduleId</column-name><column-value><![CDATA[");
-		sb.append(getModuleId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>appId</column-name><column-value><![CDATA[");
-		sb.append(getAppId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>bundleSymbolicName</column-name><column-value><![CDATA[");
-		sb.append(getBundleSymbolicName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>bundleVersion</column-name><column-value><![CDATA[");
-		sb.append(getBundleVersion());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>contextName</column-name><column-value><![CDATA[");
-		sb.append(getContextName());
-		sb.append("]]></column-value></column>");
+		for (Map.Entry<String, Function<Module, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<Module, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append("<column><column-name>");
+			sb.append(attributeName);
+			sb.append("</column-name><column-value><![CDATA[");
+			sb.append(attributeGetterFunction.apply((Module)this));
+			sb.append("]]></column-value></column>");
+		}
 
 		sb.append("</model>");
 

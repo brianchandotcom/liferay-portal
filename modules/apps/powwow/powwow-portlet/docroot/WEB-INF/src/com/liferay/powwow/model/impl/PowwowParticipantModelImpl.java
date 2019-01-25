@@ -42,10 +42,14 @@ import java.io.Serializable;
 import java.sql.Types;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the PowwowParticipant service. Represents a row in the &quot;PowwowParticipant&quot; database table, with each column mapped to a property of this class.
@@ -216,19 +220,16 @@ public class PowwowParticipantModelImpl extends BaseModelImpl<PowwowParticipant>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("powwowParticipantId", getPowwowParticipantId());
-		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("powwowMeetingId", getPowwowMeetingId());
-		attributes.put("name", getName());
-		attributes.put("participantUserId", getParticipantUserId());
-		attributes.put("emailAddress", getEmailAddress());
-		attributes.put("type", getType());
-		attributes.put("status", getStatus());
+		Map<String, Function<PowwowParticipant, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
+
+		for (Map.Entry<String, Function<PowwowParticipant, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<PowwowParticipant, Object> attributeGetterFunction = entry.getValue();
+
+			attributes.put(attributeName,
+				attributeGetterFunction.apply((PowwowParticipant)this));
+		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -238,83 +239,67 @@ public class PowwowParticipantModelImpl extends BaseModelImpl<PowwowParticipant>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long powwowParticipantId = (Long)attributes.get("powwowParticipantId");
+		Map<String, BiConsumer<PowwowParticipant, Object>> attributeSetterBiConsumers =
+			getAttributeSetterBiConsumers();
 
-		if (powwowParticipantId != null) {
-			setPowwowParticipantId(powwowParticipantId);
+		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
+			String attributeName = entry.getKey();
+
+			BiConsumer<PowwowParticipant, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+
+			if (attributeSetterBiConsumer != null) {
+				attributeSetterBiConsumer.accept((PowwowParticipant)this,
+					entry.getValue());
+			}
 		}
+	}
 
-		Long groupId = (Long)attributes.get("groupId");
+	public Map<String, Function<PowwowParticipant, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
+	}
 
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
+	public Map<String, BiConsumer<PowwowParticipant, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		Long companyId = (Long)attributes.get("companyId");
+	private static final Map<String, Function<PowwowParticipant, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<PowwowParticipant, Object>> _attributeSetterBiConsumers;
 
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
+	static {
+		Map<String, Function<PowwowParticipant, Object>> attributeGetterFunctions =
+			new LinkedHashMap<String, Function<PowwowParticipant, Object>>();
+		Map<String, BiConsumer<PowwowParticipant, ?>> attributeSetterBiConsumers =
+			new LinkedHashMap<String, BiConsumer<PowwowParticipant, ?>>();
 
-		Long userId = (Long)attributes.get("userId");
+		attributeGetterFunctions.put("powwowParticipantId", PowwowParticipant::getPowwowParticipantId);
+		attributeSetterBiConsumers.put("powwowParticipantId", (BiConsumer<PowwowParticipant, Long>)PowwowParticipant::setPowwowParticipantId);
+		attributeGetterFunctions.put("groupId", PowwowParticipant::getGroupId);
+		attributeSetterBiConsumers.put("groupId", (BiConsumer<PowwowParticipant, Long>)PowwowParticipant::setGroupId);
+		attributeGetterFunctions.put("companyId", PowwowParticipant::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<PowwowParticipant, Long>)PowwowParticipant::setCompanyId);
+		attributeGetterFunctions.put("userId", PowwowParticipant::getUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<PowwowParticipant, Long>)PowwowParticipant::setUserId);
+		attributeGetterFunctions.put("userName", PowwowParticipant::getUserName);
+		attributeSetterBiConsumers.put("userName", (BiConsumer<PowwowParticipant, String>)PowwowParticipant::setUserName);
+		attributeGetterFunctions.put("createDate", PowwowParticipant::getCreateDate);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<PowwowParticipant, Date>)PowwowParticipant::setCreateDate);
+		attributeGetterFunctions.put("modifiedDate", PowwowParticipant::getModifiedDate);
+		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<PowwowParticipant, Date>)PowwowParticipant::setModifiedDate);
+		attributeGetterFunctions.put("powwowMeetingId", PowwowParticipant::getPowwowMeetingId);
+		attributeSetterBiConsumers.put("powwowMeetingId", (BiConsumer<PowwowParticipant, Long>)PowwowParticipant::setPowwowMeetingId);
+		attributeGetterFunctions.put("name", PowwowParticipant::getName);
+		attributeSetterBiConsumers.put("name", (BiConsumer<PowwowParticipant, String>)PowwowParticipant::setName);
+		attributeGetterFunctions.put("participantUserId", PowwowParticipant::getParticipantUserId);
+		attributeSetterBiConsumers.put("participantUserId", (BiConsumer<PowwowParticipant, Long>)PowwowParticipant::setParticipantUserId);
+		attributeGetterFunctions.put("emailAddress", PowwowParticipant::getEmailAddress);
+		attributeSetterBiConsumers.put("emailAddress", (BiConsumer<PowwowParticipant, String>)PowwowParticipant::setEmailAddress);
+		attributeGetterFunctions.put("type", PowwowParticipant::getType);
+		attributeSetterBiConsumers.put("type", (BiConsumer<PowwowParticipant, Integer>)PowwowParticipant::setType);
+		attributeGetterFunctions.put("status", PowwowParticipant::getStatus);
+		attributeSetterBiConsumers.put("status", (BiConsumer<PowwowParticipant, Integer>)PowwowParticipant::setStatus);
 
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		Long powwowMeetingId = (Long)attributes.get("powwowMeetingId");
-
-		if (powwowMeetingId != null) {
-			setPowwowMeetingId(powwowMeetingId);
-		}
-
-		String name = (String)attributes.get("name");
-
-		if (name != null) {
-			setName(name);
-		}
-
-		Long participantUserId = (Long)attributes.get("participantUserId");
-
-		if (participantUserId != null) {
-			setParticipantUserId(participantUserId);
-		}
-
-		String emailAddress = (String)attributes.get("emailAddress");
-
-		if (emailAddress != null) {
-			setEmailAddress(emailAddress);
-		}
-
-		Integer type = (Integer)attributes.get("type");
-
-		if (type != null) {
-			setType(type);
-		}
-
-		Integer status = (Integer)attributes.get("status");
-
-		if (status != null) {
-			setStatus(status);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@JSON
@@ -751,34 +736,28 @@ public class PowwowParticipantModelImpl extends BaseModelImpl<PowwowParticipant>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		Map<String, Function<PowwowParticipant, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		sb.append("{powwowParticipantId=");
-		sb.append(getPowwowParticipantId());
-		sb.append(", groupId=");
-		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", userName=");
-		sb.append(getUserName());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", modifiedDate=");
-		sb.append(getModifiedDate());
-		sb.append(", powwowMeetingId=");
-		sb.append(getPowwowMeetingId());
-		sb.append(", name=");
-		sb.append(getName());
-		sb.append(", participantUserId=");
-		sb.append(getParticipantUserId());
-		sb.append(", emailAddress=");
-		sb.append(getEmailAddress());
-		sb.append(", type=");
-		sb.append(getType());
-		sb.append(", status=");
-		sb.append(getStatus());
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
+
+		sb.append("{");
+
+		for (Map.Entry<String, Function<PowwowParticipant, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<PowwowParticipant, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append(attributeName);
+			sb.append("=");
+			sb.append(attributeGetterFunction.apply((PowwowParticipant)this));
+			sb.append(", ");
+		}
+
+		if (sb.index() > 1) {
+			sb.setIndex(sb.index() - 1);
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -786,64 +765,26 @@ public class PowwowParticipantModelImpl extends BaseModelImpl<PowwowParticipant>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(43);
+		Map<String, Function<PowwowParticipant, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
+
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
-		sb.append("com.liferay.powwow.model.PowwowParticipant");
+		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		sb.append(
-			"<column><column-name>powwowParticipantId</column-name><column-value><![CDATA[");
-		sb.append(getPowwowParticipantId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>groupId</column-name><column-value><![CDATA[");
-		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userName</column-name><column-value><![CDATA[");
-		sb.append(getUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
-		sb.append(getModifiedDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>powwowMeetingId</column-name><column-value><![CDATA[");
-		sb.append(getPowwowMeetingId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>name</column-name><column-value><![CDATA[");
-		sb.append(getName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>participantUserId</column-name><column-value><![CDATA[");
-		sb.append(getParticipantUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>emailAddress</column-name><column-value><![CDATA[");
-		sb.append(getEmailAddress());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>type</column-name><column-value><![CDATA[");
-		sb.append(getType());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>status</column-name><column-value><![CDATA[");
-		sb.append(getStatus());
-		sb.append("]]></column-value></column>");
+		for (Map.Entry<String, Function<PowwowParticipant, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<PowwowParticipant, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append("<column><column-name>");
+			sb.append(attributeName);
+			sb.append("</column-name><column-value><![CDATA[");
+			sb.append(attributeGetterFunction.apply((PowwowParticipant)this));
+			sb.append("]]></column-value></column>");
+		}
 
 		sb.append("</model>");
 

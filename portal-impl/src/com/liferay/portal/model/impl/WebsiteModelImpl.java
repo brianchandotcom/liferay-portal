@@ -46,10 +46,14 @@ import java.io.Serializable;
 import java.sql.Types;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the Website service. Represents a row in the &quot;Website&quot; database table, with each column mapped to a property of this class.
@@ -224,20 +228,15 @@ public class WebsiteModelImpl extends BaseModelImpl<Website>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("mvccVersion", getMvccVersion());
-		attributes.put("uuid", getUuid());
-		attributes.put("websiteId", getWebsiteId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("classNameId", getClassNameId());
-		attributes.put("classPK", getClassPK());
-		attributes.put("url", getUrl());
-		attributes.put("typeId", getTypeId());
-		attributes.put("primary", isPrimary());
-		attributes.put("lastPublishDate", getLastPublishDate());
+		Map<String, Function<Website, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+
+		for (Map.Entry<String, Function<Website, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<Website, Object> attributeGetterFunction = entry.getValue();
+
+			attributes.put(attributeName,
+				attributeGetterFunction.apply((Website)this));
+		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -247,89 +246,65 @@ public class WebsiteModelImpl extends BaseModelImpl<Website>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long mvccVersion = (Long)attributes.get("mvccVersion");
+		Map<String, BiConsumer<Website, Object>> attributeSetterBiConsumers = getAttributeSetterBiConsumers();
 
-		if (mvccVersion != null) {
-			setMvccVersion(mvccVersion);
+		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
+			String attributeName = entry.getKey();
+
+			BiConsumer<Website, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+
+			if (attributeSetterBiConsumer != null) {
+				attributeSetterBiConsumer.accept((Website)this, entry.getValue());
+			}
 		}
+	}
 
-		String uuid = (String)attributes.get("uuid");
+	public Map<String, Function<Website, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
+	}
 
-		if (uuid != null) {
-			setUuid(uuid);
-		}
+	public Map<String, BiConsumer<Website, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		Long websiteId = (Long)attributes.get("websiteId");
+	private static final Map<String, Function<Website, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<Website, Object>> _attributeSetterBiConsumers;
 
-		if (websiteId != null) {
-			setWebsiteId(websiteId);
-		}
+	static {
+		Map<String, Function<Website, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<Website, Object>>();
+		Map<String, BiConsumer<Website, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<Website, ?>>();
 
-		Long companyId = (Long)attributes.get("companyId");
+		attributeGetterFunctions.put("mvccVersion", Website::getMvccVersion);
+		attributeSetterBiConsumers.put("mvccVersion", (BiConsumer<Website, Long>)Website::setMvccVersion);
+		attributeGetterFunctions.put("uuid", Website::getUuid);
+		attributeSetterBiConsumers.put("uuid", (BiConsumer<Website, String>)Website::setUuid);
+		attributeGetterFunctions.put("websiteId", Website::getWebsiteId);
+		attributeSetterBiConsumers.put("websiteId", (BiConsumer<Website, Long>)Website::setWebsiteId);
+		attributeGetterFunctions.put("companyId", Website::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<Website, Long>)Website::setCompanyId);
+		attributeGetterFunctions.put("userId", Website::getUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<Website, Long>)Website::setUserId);
+		attributeGetterFunctions.put("userName", Website::getUserName);
+		attributeSetterBiConsumers.put("userName", (BiConsumer<Website, String>)Website::setUserName);
+		attributeGetterFunctions.put("createDate", Website::getCreateDate);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<Website, Date>)Website::setCreateDate);
+		attributeGetterFunctions.put("modifiedDate", Website::getModifiedDate);
+		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<Website, Date>)Website::setModifiedDate);
+		attributeGetterFunctions.put("classNameId", Website::getClassNameId);
+		attributeSetterBiConsumers.put("classNameId", (BiConsumer<Website, Long>)Website::setClassNameId);
+		attributeGetterFunctions.put("classPK", Website::getClassPK);
+		attributeSetterBiConsumers.put("classPK", (BiConsumer<Website, Long>)Website::setClassPK);
+		attributeGetterFunctions.put("url", Website::getUrl);
+		attributeSetterBiConsumers.put("url", (BiConsumer<Website, String>)Website::setUrl);
+		attributeGetterFunctions.put("typeId", Website::getTypeId);
+		attributeSetterBiConsumers.put("typeId", (BiConsumer<Website, Long>)Website::setTypeId);
+		attributeGetterFunctions.put("primary", Website::getPrimary);
+		attributeSetterBiConsumers.put("primary", (BiConsumer<Website, Boolean>)Website::setPrimary);
+		attributeGetterFunctions.put("lastPublishDate", Website::getLastPublishDate);
+		attributeSetterBiConsumers.put("lastPublishDate", (BiConsumer<Website, Date>)Website::setLastPublishDate);
 
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		Long classNameId = (Long)attributes.get("classNameId");
-
-		if (classNameId != null) {
-			setClassNameId(classNameId);
-		}
-
-		Long classPK = (Long)attributes.get("classPK");
-
-		if (classPK != null) {
-			setClassPK(classPK);
-		}
-
-		String url = (String)attributes.get("url");
-
-		if (url != null) {
-			setUrl(url);
-		}
-
-		Long typeId = (Long)attributes.get("typeId");
-
-		if (typeId != null) {
-			setTypeId(typeId);
-		}
-
-		Boolean primary = (Boolean)attributes.get("primary");
-
-		if (primary != null) {
-			setPrimary(primary);
-		}
-
-		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
-
-		if (lastPublishDate != null) {
-			setLastPublishDate(lastPublishDate);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@JSON
@@ -835,36 +810,27 @@ public class WebsiteModelImpl extends BaseModelImpl<Website>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		Map<String, Function<Website, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		sb.append("{mvccVersion=");
-		sb.append(getMvccVersion());
-		sb.append(", uuid=");
-		sb.append(getUuid());
-		sb.append(", websiteId=");
-		sb.append(getWebsiteId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", userName=");
-		sb.append(getUserName());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", modifiedDate=");
-		sb.append(getModifiedDate());
-		sb.append(", classNameId=");
-		sb.append(getClassNameId());
-		sb.append(", classPK=");
-		sb.append(getClassPK());
-		sb.append(", url=");
-		sb.append(getUrl());
-		sb.append(", typeId=");
-		sb.append(getTypeId());
-		sb.append(", primary=");
-		sb.append(isPrimary());
-		sb.append(", lastPublishDate=");
-		sb.append(getLastPublishDate());
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
+
+		sb.append("{");
+
+		for (Map.Entry<String, Function<Website, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<Website, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append(attributeName);
+			sb.append("=");
+			sb.append(attributeGetterFunction.apply((Website)this));
+			sb.append(", ");
+		}
+
+		if (sb.index() > 1) {
+			sb.setIndex(sb.index() - 1);
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -872,68 +838,25 @@ public class WebsiteModelImpl extends BaseModelImpl<Website>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(46);
+		Map<String, Function<Website, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
-		sb.append("com.liferay.portal.kernel.model.Website");
+		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		sb.append(
-			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
-		sb.append(getMvccVersion());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>uuid</column-name><column-value><![CDATA[");
-		sb.append(getUuid());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>websiteId</column-name><column-value><![CDATA[");
-		sb.append(getWebsiteId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userName</column-name><column-value><![CDATA[");
-		sb.append(getUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
-		sb.append(getModifiedDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>classNameId</column-name><column-value><![CDATA[");
-		sb.append(getClassNameId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>classPK</column-name><column-value><![CDATA[");
-		sb.append(getClassPK());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>url</column-name><column-value><![CDATA[");
-		sb.append(getUrl());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>typeId</column-name><column-value><![CDATA[");
-		sb.append(getTypeId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>primary</column-name><column-value><![CDATA[");
-		sb.append(isPrimary());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
-		sb.append(getLastPublishDate());
-		sb.append("]]></column-value></column>");
+		for (Map.Entry<String, Function<Website, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<Website, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append("<column><column-name>");
+			sb.append(attributeName);
+			sb.append("</column-name><column-value><![CDATA[");
+			sb.append(attributeGetterFunction.apply((Website)this));
+			sb.append("]]></column-value></column>");
+		}
 
 		sb.append("</model>");
 

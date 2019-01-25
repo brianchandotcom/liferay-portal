@@ -39,9 +39,13 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the PasswordTracker service. Represents a row in the &quot;PasswordTracker&quot; database table, with each column mapped to a property of this class.
@@ -142,12 +146,15 @@ public class PasswordTrackerModelImpl extends BaseModelImpl<PasswordTracker>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("mvccVersion", getMvccVersion());
-		attributes.put("passwordTrackerId", getPasswordTrackerId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("password", getPassword());
+		Map<String, Function<PasswordTracker, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+
+		for (Map.Entry<String, Function<PasswordTracker, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<PasswordTracker, Object> attributeGetterFunction = entry.getValue();
+
+			attributes.put(attributeName,
+				attributeGetterFunction.apply((PasswordTracker)this));
+		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -157,41 +164,51 @@ public class PasswordTrackerModelImpl extends BaseModelImpl<PasswordTracker>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long mvccVersion = (Long)attributes.get("mvccVersion");
+		Map<String, BiConsumer<PasswordTracker, Object>> attributeSetterBiConsumers =
+			getAttributeSetterBiConsumers();
 
-		if (mvccVersion != null) {
-			setMvccVersion(mvccVersion);
+		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
+			String attributeName = entry.getKey();
+
+			BiConsumer<PasswordTracker, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+
+			if (attributeSetterBiConsumer != null) {
+				attributeSetterBiConsumer.accept((PasswordTracker)this,
+					entry.getValue());
+			}
 		}
+	}
 
-		Long passwordTrackerId = (Long)attributes.get("passwordTrackerId");
+	public Map<String, Function<PasswordTracker, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
+	}
 
-		if (passwordTrackerId != null) {
-			setPasswordTrackerId(passwordTrackerId);
-		}
+	public Map<String, BiConsumer<PasswordTracker, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		Long companyId = (Long)attributes.get("companyId");
+	private static final Map<String, Function<PasswordTracker, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<PasswordTracker, Object>> _attributeSetterBiConsumers;
 
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
+	static {
+		Map<String, Function<PasswordTracker, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<PasswordTracker, Object>>();
+		Map<String, BiConsumer<PasswordTracker, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<PasswordTracker, ?>>();
 
-		Long userId = (Long)attributes.get("userId");
+		attributeGetterFunctions.put("mvccVersion", PasswordTracker::getMvccVersion);
+		attributeSetterBiConsumers.put("mvccVersion", (BiConsumer<PasswordTracker, Long>)PasswordTracker::setMvccVersion);
+		attributeGetterFunctions.put("passwordTrackerId", PasswordTracker::getPasswordTrackerId);
+		attributeSetterBiConsumers.put("passwordTrackerId", (BiConsumer<PasswordTracker, Long>)PasswordTracker::setPasswordTrackerId);
+		attributeGetterFunctions.put("companyId", PasswordTracker::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<PasswordTracker, Long>)PasswordTracker::setCompanyId);
+		attributeGetterFunctions.put("userId", PasswordTracker::getUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<PasswordTracker, Long>)PasswordTracker::setUserId);
+		attributeGetterFunctions.put("createDate", PasswordTracker::getCreateDate);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<PasswordTracker, Date>)PasswordTracker::setCreateDate);
+		attributeGetterFunctions.put("password", PasswordTracker::getPassword);
+		attributeSetterBiConsumers.put("password", (BiConsumer<PasswordTracker, String>)PasswordTracker::setPassword);
 
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		String password = (String)attributes.get("password");
-
-		if (password != null) {
-			setPassword(password);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -446,20 +463,27 @@ public class PasswordTrackerModelImpl extends BaseModelImpl<PasswordTracker>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(13);
+		Map<String, Function<PasswordTracker, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		sb.append("{mvccVersion=");
-		sb.append(getMvccVersion());
-		sb.append(", passwordTrackerId=");
-		sb.append(getPasswordTrackerId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", password=");
-		sb.append(getPassword());
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
+
+		sb.append("{");
+
+		for (Map.Entry<String, Function<PasswordTracker, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<PasswordTracker, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append(attributeName);
+			sb.append("=");
+			sb.append(attributeGetterFunction.apply((PasswordTracker)this));
+			sb.append(", ");
+		}
+
+		if (sb.index() > 1) {
+			sb.setIndex(sb.index() - 1);
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -467,36 +491,25 @@ public class PasswordTrackerModelImpl extends BaseModelImpl<PasswordTracker>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(22);
+		Map<String, Function<PasswordTracker, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
-		sb.append("com.liferay.portal.kernel.model.PasswordTracker");
+		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		sb.append(
-			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
-		sb.append(getMvccVersion());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>passwordTrackerId</column-name><column-value><![CDATA[");
-		sb.append(getPasswordTrackerId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>password</column-name><column-value><![CDATA[");
-		sb.append(getPassword());
-		sb.append("]]></column-value></column>");
+		for (Map.Entry<String, Function<PasswordTracker, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<PasswordTracker, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append("<column><column-name>");
+			sb.append(attributeName);
+			sb.append("</column-name><column-value><![CDATA[");
+			sb.append(attributeGetterFunction.apply((PasswordTracker)this));
+			sb.append("]]></column-value></column>");
+		}
 
 		sb.append("</model>");
 

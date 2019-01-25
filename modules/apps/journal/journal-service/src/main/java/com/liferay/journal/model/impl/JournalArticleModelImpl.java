@@ -50,10 +50,14 @@ import java.io.Serializable;
 import java.sql.Types;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the JournalArticle service. Represents a row in the &quot;JournalArticle&quot; database table, with each column mapped to a property of this class.
@@ -297,39 +301,15 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("uuid", getUuid());
-		attributes.put("id", getId());
-		attributes.put("resourcePrimKey", getResourcePrimKey());
-		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("folderId", getFolderId());
-		attributes.put("classNameId", getClassNameId());
-		attributes.put("classPK", getClassPK());
-		attributes.put("treePath", getTreePath());
-		attributes.put("articleId", getArticleId());
-		attributes.put("version", getVersion());
-		attributes.put("urlTitle", getUrlTitle());
-		attributes.put("content", getContent());
-		attributes.put("DDMStructureKey", getDDMStructureKey());
-		attributes.put("DDMTemplateKey", getDDMTemplateKey());
-		attributes.put("defaultLanguageId", getDefaultLanguageId());
-		attributes.put("layoutUuid", getLayoutUuid());
-		attributes.put("displayDate", getDisplayDate());
-		attributes.put("expirationDate", getExpirationDate());
-		attributes.put("reviewDate", getReviewDate());
-		attributes.put("indexable", isIndexable());
-		attributes.put("smallImage", isSmallImage());
-		attributes.put("smallImageId", getSmallImageId());
-		attributes.put("smallImageURL", getSmallImageURL());
-		attributes.put("lastPublishDate", getLastPublishDate());
-		attributes.put("status", getStatus());
-		attributes.put("statusByUserId", getStatusByUserId());
-		attributes.put("statusByUserName", getStatusByUserName());
-		attributes.put("statusDate", getStatusDate());
+		Map<String, Function<JournalArticle, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+
+		for (Map.Entry<String, Function<JournalArticle, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<JournalArticle, Object> attributeGetterFunction = entry.getValue();
+
+			attributes.put(attributeName,
+				attributeGetterFunction.apply((JournalArticle)this));
+		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -339,203 +319,105 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		String uuid = (String)attributes.get("uuid");
+		Map<String, BiConsumer<JournalArticle, Object>> attributeSetterBiConsumers =
+			getAttributeSetterBiConsumers();
 
-		if (uuid != null) {
-			setUuid(uuid);
+		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
+			String attributeName = entry.getKey();
+
+			BiConsumer<JournalArticle, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+
+			if (attributeSetterBiConsumer != null) {
+				attributeSetterBiConsumer.accept((JournalArticle)this,
+					entry.getValue());
+			}
 		}
-
-		Long id = (Long)attributes.get("id");
-
-		if (id != null) {
-			setId(id);
-		}
-
-		Long resourcePrimKey = (Long)attributes.get("resourcePrimKey");
-
-		if (resourcePrimKey != null) {
-			setResourcePrimKey(resourcePrimKey);
-		}
-
-		Long groupId = (Long)attributes.get("groupId");
-
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		Long folderId = (Long)attributes.get("folderId");
-
-		if (folderId != null) {
-			setFolderId(folderId);
-		}
-
-		Long classNameId = (Long)attributes.get("classNameId");
-
-		if (classNameId != null) {
-			setClassNameId(classNameId);
-		}
-
-		Long classPK = (Long)attributes.get("classPK");
-
-		if (classPK != null) {
-			setClassPK(classPK);
-		}
-
-		String treePath = (String)attributes.get("treePath");
-
-		if (treePath != null) {
-			setTreePath(treePath);
-		}
-
-		String articleId = (String)attributes.get("articleId");
-
-		if (articleId != null) {
-			setArticleId(articleId);
-		}
-
-		Double version = (Double)attributes.get("version");
-
-		if (version != null) {
-			setVersion(version);
-		}
-
-		String urlTitle = (String)attributes.get("urlTitle");
-
-		if (urlTitle != null) {
-			setUrlTitle(urlTitle);
-		}
-
-		String content = (String)attributes.get("content");
-
-		if (content != null) {
-			setContent(content);
-		}
-
-		String DDMStructureKey = (String)attributes.get("DDMStructureKey");
-
-		if (DDMStructureKey != null) {
-			setDDMStructureKey(DDMStructureKey);
-		}
-
-		String DDMTemplateKey = (String)attributes.get("DDMTemplateKey");
-
-		if (DDMTemplateKey != null) {
-			setDDMTemplateKey(DDMTemplateKey);
-		}
-
-		String defaultLanguageId = (String)attributes.get("defaultLanguageId");
-
-		if (defaultLanguageId != null) {
-			setDefaultLanguageId(defaultLanguageId);
-		}
-
-		String layoutUuid = (String)attributes.get("layoutUuid");
-
-		if (layoutUuid != null) {
-			setLayoutUuid(layoutUuid);
-		}
-
-		Date displayDate = (Date)attributes.get("displayDate");
-
-		if (displayDate != null) {
-			setDisplayDate(displayDate);
-		}
-
-		Date expirationDate = (Date)attributes.get("expirationDate");
-
-		if (expirationDate != null) {
-			setExpirationDate(expirationDate);
-		}
-
-		Date reviewDate = (Date)attributes.get("reviewDate");
-
-		if (reviewDate != null) {
-			setReviewDate(reviewDate);
-		}
-
-		Boolean indexable = (Boolean)attributes.get("indexable");
-
-		if (indexable != null) {
-			setIndexable(indexable);
-		}
-
-		Boolean smallImage = (Boolean)attributes.get("smallImage");
-
-		if (smallImage != null) {
-			setSmallImage(smallImage);
-		}
-
-		Long smallImageId = (Long)attributes.get("smallImageId");
-
-		if (smallImageId != null) {
-			setSmallImageId(smallImageId);
-		}
-
-		String smallImageURL = (String)attributes.get("smallImageURL");
-
-		if (smallImageURL != null) {
-			setSmallImageURL(smallImageURL);
-		}
-
-		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
-
-		if (lastPublishDate != null) {
-			setLastPublishDate(lastPublishDate);
-		}
-
-		Integer status = (Integer)attributes.get("status");
-
-		if (status != null) {
-			setStatus(status);
-		}
-
-		Long statusByUserId = (Long)attributes.get("statusByUserId");
-
-		if (statusByUserId != null) {
-			setStatusByUserId(statusByUserId);
-		}
-
-		String statusByUserName = (String)attributes.get("statusByUserName");
-
-		if (statusByUserName != null) {
-			setStatusByUserName(statusByUserName);
-		}
-
-		Date statusDate = (Date)attributes.get("statusDate");
-
-		if (statusDate != null) {
-			setStatusDate(statusDate);
-		}
+	}
+
+	public Map<String, Function<JournalArticle, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
+	}
+
+	public Map<String, BiConsumer<JournalArticle, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
+
+	private static final Map<String, Function<JournalArticle, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<JournalArticle, Object>> _attributeSetterBiConsumers;
+
+	static {
+		Map<String, Function<JournalArticle, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<JournalArticle, Object>>();
+		Map<String, BiConsumer<JournalArticle, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<JournalArticle, ?>>();
+
+		attributeGetterFunctions.put("uuid", JournalArticle::getUuid);
+		attributeSetterBiConsumers.put("uuid", (BiConsumer<JournalArticle, String>)JournalArticle::setUuid);
+		attributeGetterFunctions.put("id", JournalArticle::getId);
+		attributeSetterBiConsumers.put("id", (BiConsumer<JournalArticle, Long>)JournalArticle::setId);
+		attributeGetterFunctions.put("resourcePrimKey", JournalArticle::getResourcePrimKey);
+		attributeSetterBiConsumers.put("resourcePrimKey", (BiConsumer<JournalArticle, Long>)JournalArticle::setResourcePrimKey);
+		attributeGetterFunctions.put("groupId", JournalArticle::getGroupId);
+		attributeSetterBiConsumers.put("groupId", (BiConsumer<JournalArticle, Long>)JournalArticle::setGroupId);
+		attributeGetterFunctions.put("companyId", JournalArticle::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<JournalArticle, Long>)JournalArticle::setCompanyId);
+		attributeGetterFunctions.put("userId", JournalArticle::getUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<JournalArticle, Long>)JournalArticle::setUserId);
+		attributeGetterFunctions.put("userName", JournalArticle::getUserName);
+		attributeSetterBiConsumers.put("userName", (BiConsumer<JournalArticle, String>)JournalArticle::setUserName);
+		attributeGetterFunctions.put("createDate", JournalArticle::getCreateDate);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<JournalArticle, Date>)JournalArticle::setCreateDate);
+		attributeGetterFunctions.put("modifiedDate", JournalArticle::getModifiedDate);
+		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<JournalArticle, Date>)JournalArticle::setModifiedDate);
+		attributeGetterFunctions.put("folderId", JournalArticle::getFolderId);
+		attributeSetterBiConsumers.put("folderId", (BiConsumer<JournalArticle, Long>)JournalArticle::setFolderId);
+		attributeGetterFunctions.put("classNameId", JournalArticle::getClassNameId);
+		attributeSetterBiConsumers.put("classNameId", (BiConsumer<JournalArticle, Long>)JournalArticle::setClassNameId);
+		attributeGetterFunctions.put("classPK", JournalArticle::getClassPK);
+		attributeSetterBiConsumers.put("classPK", (BiConsumer<JournalArticle, Long>)JournalArticle::setClassPK);
+		attributeGetterFunctions.put("treePath", JournalArticle::getTreePath);
+		attributeSetterBiConsumers.put("treePath", (BiConsumer<JournalArticle, String>)JournalArticle::setTreePath);
+		attributeGetterFunctions.put("articleId", JournalArticle::getArticleId);
+		attributeSetterBiConsumers.put("articleId", (BiConsumer<JournalArticle, String>)JournalArticle::setArticleId);
+		attributeGetterFunctions.put("version", JournalArticle::getVersion);
+		attributeSetterBiConsumers.put("version", (BiConsumer<JournalArticle, Double>)JournalArticle::setVersion);
+		attributeGetterFunctions.put("urlTitle", JournalArticle::getUrlTitle);
+		attributeSetterBiConsumers.put("urlTitle", (BiConsumer<JournalArticle, String>)JournalArticle::setUrlTitle);
+		attributeGetterFunctions.put("content", JournalArticle::getContent);
+		attributeSetterBiConsumers.put("content", (BiConsumer<JournalArticle, String>)JournalArticle::setContent);
+		attributeGetterFunctions.put("DDMStructureKey", JournalArticle::getDDMStructureKey);
+		attributeSetterBiConsumers.put("DDMStructureKey", (BiConsumer<JournalArticle, String>)JournalArticle::setDDMStructureKey);
+		attributeGetterFunctions.put("DDMTemplateKey", JournalArticle::getDDMTemplateKey);
+		attributeSetterBiConsumers.put("DDMTemplateKey", (BiConsumer<JournalArticle, String>)JournalArticle::setDDMTemplateKey);
+		attributeGetterFunctions.put("defaultLanguageId", JournalArticle::getDefaultLanguageId);
+		attributeSetterBiConsumers.put("defaultLanguageId", (BiConsumer<JournalArticle, String>)JournalArticle::setDefaultLanguageId);
+		attributeGetterFunctions.put("layoutUuid", JournalArticle::getLayoutUuid);
+		attributeSetterBiConsumers.put("layoutUuid", (BiConsumer<JournalArticle, String>)JournalArticle::setLayoutUuid);
+		attributeGetterFunctions.put("displayDate", JournalArticle::getDisplayDate);
+		attributeSetterBiConsumers.put("displayDate", (BiConsumer<JournalArticle, Date>)JournalArticle::setDisplayDate);
+		attributeGetterFunctions.put("expirationDate", JournalArticle::getExpirationDate);
+		attributeSetterBiConsumers.put("expirationDate", (BiConsumer<JournalArticle, Date>)JournalArticle::setExpirationDate);
+		attributeGetterFunctions.put("reviewDate", JournalArticle::getReviewDate);
+		attributeSetterBiConsumers.put("reviewDate", (BiConsumer<JournalArticle, Date>)JournalArticle::setReviewDate);
+		attributeGetterFunctions.put("indexable", JournalArticle::getIndexable);
+		attributeSetterBiConsumers.put("indexable", (BiConsumer<JournalArticle, Boolean>)JournalArticle::setIndexable);
+		attributeGetterFunctions.put("smallImage", JournalArticle::getSmallImage);
+		attributeSetterBiConsumers.put("smallImage", (BiConsumer<JournalArticle, Boolean>)JournalArticle::setSmallImage);
+		attributeGetterFunctions.put("smallImageId", JournalArticle::getSmallImageId);
+		attributeSetterBiConsumers.put("smallImageId", (BiConsumer<JournalArticle, Long>)JournalArticle::setSmallImageId);
+		attributeGetterFunctions.put("smallImageURL", JournalArticle::getSmallImageURL);
+		attributeSetterBiConsumers.put("smallImageURL", (BiConsumer<JournalArticle, String>)JournalArticle::setSmallImageURL);
+		attributeGetterFunctions.put("lastPublishDate", JournalArticle::getLastPublishDate);
+		attributeSetterBiConsumers.put("lastPublishDate", (BiConsumer<JournalArticle, Date>)JournalArticle::setLastPublishDate);
+		attributeGetterFunctions.put("status", JournalArticle::getStatus);
+		attributeSetterBiConsumers.put("status", (BiConsumer<JournalArticle, Integer>)JournalArticle::setStatus);
+		attributeGetterFunctions.put("statusByUserId", JournalArticle::getStatusByUserId);
+		attributeSetterBiConsumers.put("statusByUserId", (BiConsumer<JournalArticle, Long>)JournalArticle::setStatusByUserId);
+		attributeGetterFunctions.put("statusByUserName", JournalArticle::getStatusByUserName);
+		attributeSetterBiConsumers.put("statusByUserName", (BiConsumer<JournalArticle, String>)JournalArticle::setStatusByUserName);
+		attributeGetterFunctions.put("statusDate", JournalArticle::getStatusDate);
+		attributeSetterBiConsumers.put("statusDate", (BiConsumer<JournalArticle, Date>)JournalArticle::setStatusDate);
+
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@JSON
@@ -1877,74 +1759,27 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(67);
+		Map<String, Function<JournalArticle, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		sb.append("{uuid=");
-		sb.append(getUuid());
-		sb.append(", id=");
-		sb.append(getId());
-		sb.append(", resourcePrimKey=");
-		sb.append(getResourcePrimKey());
-		sb.append(", groupId=");
-		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", userName=");
-		sb.append(getUserName());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", modifiedDate=");
-		sb.append(getModifiedDate());
-		sb.append(", folderId=");
-		sb.append(getFolderId());
-		sb.append(", classNameId=");
-		sb.append(getClassNameId());
-		sb.append(", classPK=");
-		sb.append(getClassPK());
-		sb.append(", treePath=");
-		sb.append(getTreePath());
-		sb.append(", articleId=");
-		sb.append(getArticleId());
-		sb.append(", version=");
-		sb.append(getVersion());
-		sb.append(", urlTitle=");
-		sb.append(getUrlTitle());
-		sb.append(", content=");
-		sb.append(getContent());
-		sb.append(", DDMStructureKey=");
-		sb.append(getDDMStructureKey());
-		sb.append(", DDMTemplateKey=");
-		sb.append(getDDMTemplateKey());
-		sb.append(", defaultLanguageId=");
-		sb.append(getDefaultLanguageId());
-		sb.append(", layoutUuid=");
-		sb.append(getLayoutUuid());
-		sb.append(", displayDate=");
-		sb.append(getDisplayDate());
-		sb.append(", expirationDate=");
-		sb.append(getExpirationDate());
-		sb.append(", reviewDate=");
-		sb.append(getReviewDate());
-		sb.append(", indexable=");
-		sb.append(isIndexable());
-		sb.append(", smallImage=");
-		sb.append(isSmallImage());
-		sb.append(", smallImageId=");
-		sb.append(getSmallImageId());
-		sb.append(", smallImageURL=");
-		sb.append(getSmallImageURL());
-		sb.append(", lastPublishDate=");
-		sb.append(getLastPublishDate());
-		sb.append(", status=");
-		sb.append(getStatus());
-		sb.append(", statusByUserId=");
-		sb.append(getStatusByUserId());
-		sb.append(", statusByUserName=");
-		sb.append(getStatusByUserName());
-		sb.append(", statusDate=");
-		sb.append(getStatusDate());
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
+
+		sb.append("{");
+
+		for (Map.Entry<String, Function<JournalArticle, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<JournalArticle, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append(attributeName);
+			sb.append("=");
+			sb.append(attributeGetterFunction.apply((JournalArticle)this));
+			sb.append(", ");
+		}
+
+		if (sb.index() > 1) {
+			sb.setIndex(sb.index() - 1);
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -1952,144 +1787,25 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(103);
+		Map<String, Function<JournalArticle, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
-		sb.append("com.liferay.journal.model.JournalArticle");
+		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		sb.append(
-			"<column><column-name>uuid</column-name><column-value><![CDATA[");
-		sb.append(getUuid());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>id</column-name><column-value><![CDATA[");
-		sb.append(getId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>resourcePrimKey</column-name><column-value><![CDATA[");
-		sb.append(getResourcePrimKey());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>groupId</column-name><column-value><![CDATA[");
-		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userName</column-name><column-value><![CDATA[");
-		sb.append(getUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
-		sb.append(getModifiedDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>folderId</column-name><column-value><![CDATA[");
-		sb.append(getFolderId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>classNameId</column-name><column-value><![CDATA[");
-		sb.append(getClassNameId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>classPK</column-name><column-value><![CDATA[");
-		sb.append(getClassPK());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>treePath</column-name><column-value><![CDATA[");
-		sb.append(getTreePath());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>articleId</column-name><column-value><![CDATA[");
-		sb.append(getArticleId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>version</column-name><column-value><![CDATA[");
-		sb.append(getVersion());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>urlTitle</column-name><column-value><![CDATA[");
-		sb.append(getUrlTitle());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>content</column-name><column-value><![CDATA[");
-		sb.append(getContent());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>DDMStructureKey</column-name><column-value><![CDATA[");
-		sb.append(getDDMStructureKey());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>DDMTemplateKey</column-name><column-value><![CDATA[");
-		sb.append(getDDMTemplateKey());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>defaultLanguageId</column-name><column-value><![CDATA[");
-		sb.append(getDefaultLanguageId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>layoutUuid</column-name><column-value><![CDATA[");
-		sb.append(getLayoutUuid());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>displayDate</column-name><column-value><![CDATA[");
-		sb.append(getDisplayDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>expirationDate</column-name><column-value><![CDATA[");
-		sb.append(getExpirationDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>reviewDate</column-name><column-value><![CDATA[");
-		sb.append(getReviewDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>indexable</column-name><column-value><![CDATA[");
-		sb.append(isIndexable());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>smallImage</column-name><column-value><![CDATA[");
-		sb.append(isSmallImage());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>smallImageId</column-name><column-value><![CDATA[");
-		sb.append(getSmallImageId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>smallImageURL</column-name><column-value><![CDATA[");
-		sb.append(getSmallImageURL());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
-		sb.append(getLastPublishDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>status</column-name><column-value><![CDATA[");
-		sb.append(getStatus());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>statusByUserId</column-name><column-value><![CDATA[");
-		sb.append(getStatusByUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>statusByUserName</column-name><column-value><![CDATA[");
-		sb.append(getStatusByUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>statusDate</column-name><column-value><![CDATA[");
-		sb.append(getStatusDate());
-		sb.append("]]></column-value></column>");
+		for (Map.Entry<String, Function<JournalArticle, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<JournalArticle, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append("<column><column-name>");
+			sb.append(attributeName);
+			sb.append("</column-name><column-value><![CDATA[");
+			sb.append(attributeGetterFunction.apply((JournalArticle)this));
+			sb.append("]]></column-value></column>");
+		}
 
 		sb.append("</model>");
 

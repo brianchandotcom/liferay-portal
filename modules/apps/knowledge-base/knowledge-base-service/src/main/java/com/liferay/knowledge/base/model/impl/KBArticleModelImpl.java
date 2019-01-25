@@ -47,10 +47,14 @@ import java.io.Serializable;
 import java.sql.Types;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the KBArticle service. Represents a row in the &quot;KBArticle&quot; database table, with each column mapped to a property of this class.
@@ -276,36 +280,15 @@ public class KBArticleModelImpl extends BaseModelImpl<KBArticle>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("uuid", getUuid());
-		attributes.put("kbArticleId", getKbArticleId());
-		attributes.put("resourcePrimKey", getResourcePrimKey());
-		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("rootResourcePrimKey", getRootResourcePrimKey());
-		attributes.put("parentResourceClassNameId",
-			getParentResourceClassNameId());
-		attributes.put("parentResourcePrimKey", getParentResourcePrimKey());
-		attributes.put("kbFolderId", getKbFolderId());
-		attributes.put("version", getVersion());
-		attributes.put("title", getTitle());
-		attributes.put("urlTitle", getUrlTitle());
-		attributes.put("content", getContent());
-		attributes.put("description", getDescription());
-		attributes.put("priority", getPriority());
-		attributes.put("sections", getSections());
-		attributes.put("viewCount", getViewCount());
-		attributes.put("latest", isLatest());
-		attributes.put("main", isMain());
-		attributes.put("sourceURL", getSourceURL());
-		attributes.put("lastPublishDate", getLastPublishDate());
-		attributes.put("status", getStatus());
-		attributes.put("statusByUserId", getStatusByUserId());
-		attributes.put("statusByUserName", getStatusByUserName());
-		attributes.put("statusDate", getStatusDate());
+		Map<String, Function<KBArticle, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+
+		for (Map.Entry<String, Function<KBArticle, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<KBArticle, Object> attributeGetterFunction = entry.getValue();
+
+			attributes.put(attributeName,
+				attributeGetterFunction.apply((KBArticle)this));
+		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -315,181 +298,96 @@ public class KBArticleModelImpl extends BaseModelImpl<KBArticle>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		String uuid = (String)attributes.get("uuid");
+		Map<String, BiConsumer<KBArticle, Object>> attributeSetterBiConsumers = getAttributeSetterBiConsumers();
 
-		if (uuid != null) {
-			setUuid(uuid);
+		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
+			String attributeName = entry.getKey();
+
+			BiConsumer<KBArticle, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+
+			if (attributeSetterBiConsumer != null) {
+				attributeSetterBiConsumer.accept((KBArticle)this,
+					entry.getValue());
+			}
 		}
+	}
 
-		Long kbArticleId = (Long)attributes.get("kbArticleId");
+	public Map<String, Function<KBArticle, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
+	}
 
-		if (kbArticleId != null) {
-			setKbArticleId(kbArticleId);
-		}
+	public Map<String, BiConsumer<KBArticle, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		Long resourcePrimKey = (Long)attributes.get("resourcePrimKey");
+	private static final Map<String, Function<KBArticle, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<KBArticle, Object>> _attributeSetterBiConsumers;
 
-		if (resourcePrimKey != null) {
-			setResourcePrimKey(resourcePrimKey);
-		}
+	static {
+		Map<String, Function<KBArticle, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<KBArticle, Object>>();
+		Map<String, BiConsumer<KBArticle, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<KBArticle, ?>>();
 
-		Long groupId = (Long)attributes.get("groupId");
+		attributeGetterFunctions.put("uuid", KBArticle::getUuid);
+		attributeSetterBiConsumers.put("uuid", (BiConsumer<KBArticle, String>)KBArticle::setUuid);
+		attributeGetterFunctions.put("kbArticleId", KBArticle::getKbArticleId);
+		attributeSetterBiConsumers.put("kbArticleId", (BiConsumer<KBArticle, Long>)KBArticle::setKbArticleId);
+		attributeGetterFunctions.put("resourcePrimKey", KBArticle::getResourcePrimKey);
+		attributeSetterBiConsumers.put("resourcePrimKey", (BiConsumer<KBArticle, Long>)KBArticle::setResourcePrimKey);
+		attributeGetterFunctions.put("groupId", KBArticle::getGroupId);
+		attributeSetterBiConsumers.put("groupId", (BiConsumer<KBArticle, Long>)KBArticle::setGroupId);
+		attributeGetterFunctions.put("companyId", KBArticle::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<KBArticle, Long>)KBArticle::setCompanyId);
+		attributeGetterFunctions.put("userId", KBArticle::getUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<KBArticle, Long>)KBArticle::setUserId);
+		attributeGetterFunctions.put("userName", KBArticle::getUserName);
+		attributeSetterBiConsumers.put("userName", (BiConsumer<KBArticle, String>)KBArticle::setUserName);
+		attributeGetterFunctions.put("createDate", KBArticle::getCreateDate);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<KBArticle, Date>)KBArticle::setCreateDate);
+		attributeGetterFunctions.put("modifiedDate", KBArticle::getModifiedDate);
+		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<KBArticle, Date>)KBArticle::setModifiedDate);
+		attributeGetterFunctions.put("rootResourcePrimKey", KBArticle::getRootResourcePrimKey);
+		attributeSetterBiConsumers.put("rootResourcePrimKey", (BiConsumer<KBArticle, Long>)KBArticle::setRootResourcePrimKey);
+		attributeGetterFunctions.put("parentResourceClassNameId", KBArticle::getParentResourceClassNameId);
+		attributeSetterBiConsumers.put("parentResourceClassNameId", (BiConsumer<KBArticle, Long>)KBArticle::setParentResourceClassNameId);
+		attributeGetterFunctions.put("parentResourcePrimKey", KBArticle::getParentResourcePrimKey);
+		attributeSetterBiConsumers.put("parentResourcePrimKey", (BiConsumer<KBArticle, Long>)KBArticle::setParentResourcePrimKey);
+		attributeGetterFunctions.put("kbFolderId", KBArticle::getKbFolderId);
+		attributeSetterBiConsumers.put("kbFolderId", (BiConsumer<KBArticle, Long>)KBArticle::setKbFolderId);
+		attributeGetterFunctions.put("version", KBArticle::getVersion);
+		attributeSetterBiConsumers.put("version", (BiConsumer<KBArticle, Integer>)KBArticle::setVersion);
+		attributeGetterFunctions.put("title", KBArticle::getTitle);
+		attributeSetterBiConsumers.put("title", (BiConsumer<KBArticle, String>)KBArticle::setTitle);
+		attributeGetterFunctions.put("urlTitle", KBArticle::getUrlTitle);
+		attributeSetterBiConsumers.put("urlTitle", (BiConsumer<KBArticle, String>)KBArticle::setUrlTitle);
+		attributeGetterFunctions.put("content", KBArticle::getContent);
+		attributeSetterBiConsumers.put("content", (BiConsumer<KBArticle, String>)KBArticle::setContent);
+		attributeGetterFunctions.put("description", KBArticle::getDescription);
+		attributeSetterBiConsumers.put("description", (BiConsumer<KBArticle, String>)KBArticle::setDescription);
+		attributeGetterFunctions.put("priority", KBArticle::getPriority);
+		attributeSetterBiConsumers.put("priority", (BiConsumer<KBArticle, Double>)KBArticle::setPriority);
+		attributeGetterFunctions.put("sections", KBArticle::getSections);
+		attributeSetterBiConsumers.put("sections", (BiConsumer<KBArticle, String>)KBArticle::setSections);
+		attributeGetterFunctions.put("viewCount", KBArticle::getViewCount);
+		attributeSetterBiConsumers.put("viewCount", (BiConsumer<KBArticle, Integer>)KBArticle::setViewCount);
+		attributeGetterFunctions.put("latest", KBArticle::getLatest);
+		attributeSetterBiConsumers.put("latest", (BiConsumer<KBArticle, Boolean>)KBArticle::setLatest);
+		attributeGetterFunctions.put("main", KBArticle::getMain);
+		attributeSetterBiConsumers.put("main", (BiConsumer<KBArticle, Boolean>)KBArticle::setMain);
+		attributeGetterFunctions.put("sourceURL", KBArticle::getSourceURL);
+		attributeSetterBiConsumers.put("sourceURL", (BiConsumer<KBArticle, String>)KBArticle::setSourceURL);
+		attributeGetterFunctions.put("lastPublishDate", KBArticle::getLastPublishDate);
+		attributeSetterBiConsumers.put("lastPublishDate", (BiConsumer<KBArticle, Date>)KBArticle::setLastPublishDate);
+		attributeGetterFunctions.put("status", KBArticle::getStatus);
+		attributeSetterBiConsumers.put("status", (BiConsumer<KBArticle, Integer>)KBArticle::setStatus);
+		attributeGetterFunctions.put("statusByUserId", KBArticle::getStatusByUserId);
+		attributeSetterBiConsumers.put("statusByUserId", (BiConsumer<KBArticle, Long>)KBArticle::setStatusByUserId);
+		attributeGetterFunctions.put("statusByUserName", KBArticle::getStatusByUserName);
+		attributeSetterBiConsumers.put("statusByUserName", (BiConsumer<KBArticle, String>)KBArticle::setStatusByUserName);
+		attributeGetterFunctions.put("statusDate", KBArticle::getStatusDate);
+		attributeSetterBiConsumers.put("statusDate", (BiConsumer<KBArticle, Date>)KBArticle::setStatusDate);
 
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		Long rootResourcePrimKey = (Long)attributes.get("rootResourcePrimKey");
-
-		if (rootResourcePrimKey != null) {
-			setRootResourcePrimKey(rootResourcePrimKey);
-		}
-
-		Long parentResourceClassNameId = (Long)attributes.get(
-				"parentResourceClassNameId");
-
-		if (parentResourceClassNameId != null) {
-			setParentResourceClassNameId(parentResourceClassNameId);
-		}
-
-		Long parentResourcePrimKey = (Long)attributes.get(
-				"parentResourcePrimKey");
-
-		if (parentResourcePrimKey != null) {
-			setParentResourcePrimKey(parentResourcePrimKey);
-		}
-
-		Long kbFolderId = (Long)attributes.get("kbFolderId");
-
-		if (kbFolderId != null) {
-			setKbFolderId(kbFolderId);
-		}
-
-		Integer version = (Integer)attributes.get("version");
-
-		if (version != null) {
-			setVersion(version);
-		}
-
-		String title = (String)attributes.get("title");
-
-		if (title != null) {
-			setTitle(title);
-		}
-
-		String urlTitle = (String)attributes.get("urlTitle");
-
-		if (urlTitle != null) {
-			setUrlTitle(urlTitle);
-		}
-
-		String content = (String)attributes.get("content");
-
-		if (content != null) {
-			setContent(content);
-		}
-
-		String description = (String)attributes.get("description");
-
-		if (description != null) {
-			setDescription(description);
-		}
-
-		Double priority = (Double)attributes.get("priority");
-
-		if (priority != null) {
-			setPriority(priority);
-		}
-
-		String sections = (String)attributes.get("sections");
-
-		if (sections != null) {
-			setSections(sections);
-		}
-
-		Integer viewCount = (Integer)attributes.get("viewCount");
-
-		if (viewCount != null) {
-			setViewCount(viewCount);
-		}
-
-		Boolean latest = (Boolean)attributes.get("latest");
-
-		if (latest != null) {
-			setLatest(latest);
-		}
-
-		Boolean main = (Boolean)attributes.get("main");
-
-		if (main != null) {
-			setMain(main);
-		}
-
-		String sourceURL = (String)attributes.get("sourceURL");
-
-		if (sourceURL != null) {
-			setSourceURL(sourceURL);
-		}
-
-		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
-
-		if (lastPublishDate != null) {
-			setLastPublishDate(lastPublishDate);
-		}
-
-		Integer status = (Integer)attributes.get("status");
-
-		if (status != null) {
-			setStatus(status);
-		}
-
-		Long statusByUserId = (Long)attributes.get("statusByUserId");
-
-		if (statusByUserId != null) {
-			setStatusByUserId(statusByUserId);
-		}
-
-		String statusByUserName = (String)attributes.get("statusByUserName");
-
-		if (statusByUserName != null) {
-			setStatusByUserName(statusByUserName);
-		}
-
-		Date statusDate = (Date)attributes.get("statusDate");
-
-		if (statusDate != null) {
-			setStatusDate(statusDate);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@JSON
@@ -1456,66 +1354,27 @@ public class KBArticleModelImpl extends BaseModelImpl<KBArticle>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(59);
+		Map<String, Function<KBArticle, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		sb.append("{uuid=");
-		sb.append(getUuid());
-		sb.append(", kbArticleId=");
-		sb.append(getKbArticleId());
-		sb.append(", resourcePrimKey=");
-		sb.append(getResourcePrimKey());
-		sb.append(", groupId=");
-		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", userName=");
-		sb.append(getUserName());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", modifiedDate=");
-		sb.append(getModifiedDate());
-		sb.append(", rootResourcePrimKey=");
-		sb.append(getRootResourcePrimKey());
-		sb.append(", parentResourceClassNameId=");
-		sb.append(getParentResourceClassNameId());
-		sb.append(", parentResourcePrimKey=");
-		sb.append(getParentResourcePrimKey());
-		sb.append(", kbFolderId=");
-		sb.append(getKbFolderId());
-		sb.append(", version=");
-		sb.append(getVersion());
-		sb.append(", title=");
-		sb.append(getTitle());
-		sb.append(", urlTitle=");
-		sb.append(getUrlTitle());
-		sb.append(", content=");
-		sb.append(getContent());
-		sb.append(", description=");
-		sb.append(getDescription());
-		sb.append(", priority=");
-		sb.append(getPriority());
-		sb.append(", sections=");
-		sb.append(getSections());
-		sb.append(", viewCount=");
-		sb.append(getViewCount());
-		sb.append(", latest=");
-		sb.append(isLatest());
-		sb.append(", main=");
-		sb.append(isMain());
-		sb.append(", sourceURL=");
-		sb.append(getSourceURL());
-		sb.append(", lastPublishDate=");
-		sb.append(getLastPublishDate());
-		sb.append(", status=");
-		sb.append(getStatus());
-		sb.append(", statusByUserId=");
-		sb.append(getStatusByUserId());
-		sb.append(", statusByUserName=");
-		sb.append(getStatusByUserName());
-		sb.append(", statusDate=");
-		sb.append(getStatusDate());
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
+
+		sb.append("{");
+
+		for (Map.Entry<String, Function<KBArticle, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<KBArticle, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append(attributeName);
+			sb.append("=");
+			sb.append(attributeGetterFunction.apply((KBArticle)this));
+			sb.append(", ");
+		}
+
+		if (sb.index() > 1) {
+			sb.setIndex(sb.index() - 1);
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -1523,128 +1382,25 @@ public class KBArticleModelImpl extends BaseModelImpl<KBArticle>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(91);
+		Map<String, Function<KBArticle, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
-		sb.append("com.liferay.knowledge.base.model.KBArticle");
+		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		sb.append(
-			"<column><column-name>uuid</column-name><column-value><![CDATA[");
-		sb.append(getUuid());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>kbArticleId</column-name><column-value><![CDATA[");
-		sb.append(getKbArticleId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>resourcePrimKey</column-name><column-value><![CDATA[");
-		sb.append(getResourcePrimKey());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>groupId</column-name><column-value><![CDATA[");
-		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userName</column-name><column-value><![CDATA[");
-		sb.append(getUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
-		sb.append(getModifiedDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>rootResourcePrimKey</column-name><column-value><![CDATA[");
-		sb.append(getRootResourcePrimKey());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>parentResourceClassNameId</column-name><column-value><![CDATA[");
-		sb.append(getParentResourceClassNameId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>parentResourcePrimKey</column-name><column-value><![CDATA[");
-		sb.append(getParentResourcePrimKey());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>kbFolderId</column-name><column-value><![CDATA[");
-		sb.append(getKbFolderId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>version</column-name><column-value><![CDATA[");
-		sb.append(getVersion());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>title</column-name><column-value><![CDATA[");
-		sb.append(getTitle());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>urlTitle</column-name><column-value><![CDATA[");
-		sb.append(getUrlTitle());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>content</column-name><column-value><![CDATA[");
-		sb.append(getContent());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>description</column-name><column-value><![CDATA[");
-		sb.append(getDescription());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>priority</column-name><column-value><![CDATA[");
-		sb.append(getPriority());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>sections</column-name><column-value><![CDATA[");
-		sb.append(getSections());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>viewCount</column-name><column-value><![CDATA[");
-		sb.append(getViewCount());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>latest</column-name><column-value><![CDATA[");
-		sb.append(isLatest());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>main</column-name><column-value><![CDATA[");
-		sb.append(isMain());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>sourceURL</column-name><column-value><![CDATA[");
-		sb.append(getSourceURL());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
-		sb.append(getLastPublishDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>status</column-name><column-value><![CDATA[");
-		sb.append(getStatus());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>statusByUserId</column-name><column-value><![CDATA[");
-		sb.append(getStatusByUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>statusByUserName</column-name><column-value><![CDATA[");
-		sb.append(getStatusByUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>statusDate</column-name><column-value><![CDATA[");
-		sb.append(getStatusDate());
-		sb.append("]]></column-value></column>");
+		for (Map.Entry<String, Function<KBArticle, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<KBArticle, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append("<column><column-name>");
+			sb.append(attributeName);
+			sb.append("</column-name><column-value><![CDATA[");
+			sb.append(attributeGetterFunction.apply((KBArticle)this));
+			sb.append("]]></column-value></column>");
+		}
 
 		sb.append("</model>");
 

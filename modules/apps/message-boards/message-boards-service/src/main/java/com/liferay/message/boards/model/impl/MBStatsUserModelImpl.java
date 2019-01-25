@@ -39,9 +39,13 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the MBStatsUser service. Represents a row in the &quot;MBStatsUser&quot; database table, with each column mapped to a property of this class.
@@ -143,12 +147,15 @@ public class MBStatsUserModelImpl extends BaseModelImpl<MBStatsUser>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("statsUserId", getStatsUserId());
-		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("messageCount", getMessageCount());
-		attributes.put("lastPostDate", getLastPostDate());
+		Map<String, Function<MBStatsUser, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+
+		for (Map.Entry<String, Function<MBStatsUser, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<MBStatsUser, Object> attributeGetterFunction = entry.getValue();
+
+			attributes.put(attributeName,
+				attributeGetterFunction.apply((MBStatsUser)this));
+		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -158,41 +165,50 @@ public class MBStatsUserModelImpl extends BaseModelImpl<MBStatsUser>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long statsUserId = (Long)attributes.get("statsUserId");
+		Map<String, BiConsumer<MBStatsUser, Object>> attributeSetterBiConsumers = getAttributeSetterBiConsumers();
 
-		if (statsUserId != null) {
-			setStatsUserId(statsUserId);
+		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
+			String attributeName = entry.getKey();
+
+			BiConsumer<MBStatsUser, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+
+			if (attributeSetterBiConsumer != null) {
+				attributeSetterBiConsumer.accept((MBStatsUser)this,
+					entry.getValue());
+			}
 		}
+	}
 
-		Long groupId = (Long)attributes.get("groupId");
+	public Map<String, Function<MBStatsUser, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
+	}
 
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
+	public Map<String, BiConsumer<MBStatsUser, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		Long companyId = (Long)attributes.get("companyId");
+	private static final Map<String, Function<MBStatsUser, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<MBStatsUser, Object>> _attributeSetterBiConsumers;
 
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
+	static {
+		Map<String, Function<MBStatsUser, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<MBStatsUser, Object>>();
+		Map<String, BiConsumer<MBStatsUser, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<MBStatsUser, ?>>();
 
-		Long userId = (Long)attributes.get("userId");
+		attributeGetterFunctions.put("statsUserId", MBStatsUser::getStatsUserId);
+		attributeSetterBiConsumers.put("statsUserId", (BiConsumer<MBStatsUser, Long>)MBStatsUser::setStatsUserId);
+		attributeGetterFunctions.put("groupId", MBStatsUser::getGroupId);
+		attributeSetterBiConsumers.put("groupId", (BiConsumer<MBStatsUser, Long>)MBStatsUser::setGroupId);
+		attributeGetterFunctions.put("companyId", MBStatsUser::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<MBStatsUser, Long>)MBStatsUser::setCompanyId);
+		attributeGetterFunctions.put("userId", MBStatsUser::getUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<MBStatsUser, Long>)MBStatsUser::setUserId);
+		attributeGetterFunctions.put("messageCount", MBStatsUser::getMessageCount);
+		attributeSetterBiConsumers.put("messageCount", (BiConsumer<MBStatsUser, Integer>)MBStatsUser::setMessageCount);
+		attributeGetterFunctions.put("lastPostDate", MBStatsUser::getLastPostDate);
+		attributeSetterBiConsumers.put("lastPostDate", (BiConsumer<MBStatsUser, Date>)MBStatsUser::setLastPostDate);
 
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		Integer messageCount = (Integer)attributes.get("messageCount");
-
-		if (messageCount != null) {
-			setMessageCount(messageCount);
-		}
-
-		Date lastPostDate = (Date)attributes.get("lastPostDate");
-
-		if (lastPostDate != null) {
-			setLastPostDate(lastPostDate);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -473,20 +489,27 @@ public class MBStatsUserModelImpl extends BaseModelImpl<MBStatsUser>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(13);
+		Map<String, Function<MBStatsUser, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		sb.append("{statsUserId=");
-		sb.append(getStatsUserId());
-		sb.append(", groupId=");
-		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", messageCount=");
-		sb.append(getMessageCount());
-		sb.append(", lastPostDate=");
-		sb.append(getLastPostDate());
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
+
+		sb.append("{");
+
+		for (Map.Entry<String, Function<MBStatsUser, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<MBStatsUser, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append(attributeName);
+			sb.append("=");
+			sb.append(attributeGetterFunction.apply((MBStatsUser)this));
+			sb.append(", ");
+		}
+
+		if (sb.index() > 1) {
+			sb.setIndex(sb.index() - 1);
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -494,36 +517,25 @@ public class MBStatsUserModelImpl extends BaseModelImpl<MBStatsUser>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(22);
+		Map<String, Function<MBStatsUser, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
-		sb.append("com.liferay.message.boards.model.MBStatsUser");
+		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		sb.append(
-			"<column><column-name>statsUserId</column-name><column-value><![CDATA[");
-		sb.append(getStatsUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>groupId</column-name><column-value><![CDATA[");
-		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>messageCount</column-name><column-value><![CDATA[");
-		sb.append(getMessageCount());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>lastPostDate</column-name><column-value><![CDATA[");
-		sb.append(getLastPostDate());
-		sb.append("]]></column-value></column>");
+		for (Map.Entry<String, Function<MBStatsUser, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<MBStatsUser, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append("<column><column-name>");
+			sb.append(attributeName);
+			sb.append("</column-name><column-value><![CDATA[");
+			sb.append(attributeGetterFunction.apply((MBStatsUser)this));
+			sb.append("]]></column-value></column>");
+		}
 
 		sb.append("</model>");
 

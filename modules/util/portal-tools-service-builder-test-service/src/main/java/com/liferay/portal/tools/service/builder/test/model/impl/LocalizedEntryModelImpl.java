@@ -37,9 +37,12 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
 import java.util.function.Function;
 
 /**
@@ -129,8 +132,15 @@ public class LocalizedEntryModelImpl extends BaseModelImpl<LocalizedEntry>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("defaultLanguageId", getDefaultLanguageId());
-		attributes.put("localizedEntryId", getLocalizedEntryId());
+		Map<String, Function<LocalizedEntry, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+
+		for (Map.Entry<String, Function<LocalizedEntry, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<LocalizedEntry, Object> attributeGetterFunction = entry.getValue();
+
+			attributes.put(attributeName,
+				attributeGetterFunction.apply((LocalizedEntry)this));
+		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -140,17 +150,79 @@ public class LocalizedEntryModelImpl extends BaseModelImpl<LocalizedEntry>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		String defaultLanguageId = (String)attributes.get("defaultLanguageId");
+		Map<String, BiConsumer<LocalizedEntry, Object>> attributeSetterBiConsumers =
+			getAttributeSetterBiConsumers();
 
-		if (defaultLanguageId != null) {
-			setDefaultLanguageId(defaultLanguageId);
+		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
+			String attributeName = entry.getKey();
+
+			BiConsumer<LocalizedEntry, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+
+			if (attributeSetterBiConsumer != null) {
+				attributeSetterBiConsumer.accept((LocalizedEntry)this,
+					entry.getValue());
+			}
 		}
+	}
 
-		Long localizedEntryId = (Long)attributes.get("localizedEntryId");
+	public Map<String, Function<LocalizedEntry, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
+	}
 
-		if (localizedEntryId != null) {
-			setLocalizedEntryId(localizedEntryId);
-		}
+	public Map<String, BiConsumer<LocalizedEntry, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
+
+	private static final Map<String, Function<LocalizedEntry, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<LocalizedEntry, Object>> _attributeSetterBiConsumers;
+
+	static {
+		Map<String, Function<LocalizedEntry, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<LocalizedEntry, Object>>();
+		Map<String, BiConsumer<LocalizedEntry, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<LocalizedEntry, ?>>();
+
+		attributeGetterFunctions.put(
+			"defaultLanguageId",
+			new Function<LocalizedEntry, Object>() {
+
+				@Override
+				public Object apply(LocalizedEntry localizedEntry) {
+					return localizedEntry.getDefaultLanguageId();
+				}
+
+			});
+		attributeSetterBiConsumers.put(
+			"defaultLanguageId",
+			new BiConsumer<LocalizedEntry, Object>() {
+
+				@Override
+				public void accept(LocalizedEntry localizedEntry, Object defaultLanguageId) {
+					localizedEntry.setDefaultLanguageId((String)defaultLanguageId);
+				}
+
+			});
+		attributeGetterFunctions.put(
+			"localizedEntryId",
+			new Function<LocalizedEntry, Object>() {
+
+				@Override
+				public Object apply(LocalizedEntry localizedEntry) {
+					return localizedEntry.getLocalizedEntryId();
+				}
+
+			});
+		attributeSetterBiConsumers.put(
+			"localizedEntryId",
+			new BiConsumer<LocalizedEntry, Object>() {
+
+				@Override
+				public void accept(LocalizedEntry localizedEntry, Object localizedEntryId) {
+					localizedEntry.setLocalizedEntryId((Long)localizedEntryId);
+				}
+
+			});
+
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -413,12 +485,27 @@ public class LocalizedEntryModelImpl extends BaseModelImpl<LocalizedEntry>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(5);
+		Map<String, Function<LocalizedEntry, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		sb.append("{defaultLanguageId=");
-		sb.append(getDefaultLanguageId());
-		sb.append(", localizedEntryId=");
-		sb.append(getLocalizedEntryId());
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
+
+		sb.append("{");
+
+		for (Map.Entry<String, Function<LocalizedEntry, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<LocalizedEntry, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append(attributeName);
+			sb.append("=");
+			sb.append(attributeGetterFunction.apply((LocalizedEntry)this));
+			sb.append(", ");
+		}
+
+		if (sb.index() > 1) {
+			sb.setIndex(sb.index() - 1);
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -426,21 +513,25 @@ public class LocalizedEntryModelImpl extends BaseModelImpl<LocalizedEntry>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(10);
+		Map<String, Function<LocalizedEntry, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
-		sb.append(
-			"com.liferay.portal.tools.service.builder.test.model.LocalizedEntry");
+		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		sb.append(
-			"<column><column-name>defaultLanguageId</column-name><column-value><![CDATA[");
-		sb.append(getDefaultLanguageId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>localizedEntryId</column-name><column-value><![CDATA[");
-		sb.append(getLocalizedEntryId());
-		sb.append("]]></column-value></column>");
+		for (Map.Entry<String, Function<LocalizedEntry, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<LocalizedEntry, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append("<column><column-name>");
+			sb.append(attributeName);
+			sb.append("</column-name><column-value><![CDATA[");
+			sb.append(attributeGetterFunction.apply((LocalizedEntry)this));
+			sb.append("]]></column-value></column>");
+		}
 
 		sb.append("</model>");
 

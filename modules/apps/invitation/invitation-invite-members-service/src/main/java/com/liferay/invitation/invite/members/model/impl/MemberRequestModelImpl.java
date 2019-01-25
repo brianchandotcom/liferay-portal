@@ -40,9 +40,13 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the MemberRequest service. Represents a row in the &quot;IM_MemberRequest&quot; database table, with each column mapped to a property of this class.
@@ -158,18 +162,15 @@ public class MemberRequestModelImpl extends BaseModelImpl<MemberRequest>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("memberRequestId", getMemberRequestId());
-		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("key", getKey());
-		attributes.put("receiverUserId", getReceiverUserId());
-		attributes.put("invitedRoleId", getInvitedRoleId());
-		attributes.put("invitedTeamId", getInvitedTeamId());
-		attributes.put("status", getStatus());
+		Map<String, Function<MemberRequest, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+
+		for (Map.Entry<String, Function<MemberRequest, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<MemberRequest, Object> attributeGetterFunction = entry.getValue();
+
+			attributes.put(attributeName,
+				attributeGetterFunction.apply((MemberRequest)this));
+		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -179,77 +180,63 @@ public class MemberRequestModelImpl extends BaseModelImpl<MemberRequest>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long memberRequestId = (Long)attributes.get("memberRequestId");
+		Map<String, BiConsumer<MemberRequest, Object>> attributeSetterBiConsumers =
+			getAttributeSetterBiConsumers();
 
-		if (memberRequestId != null) {
-			setMemberRequestId(memberRequestId);
+		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
+			String attributeName = entry.getKey();
+
+			BiConsumer<MemberRequest, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+
+			if (attributeSetterBiConsumer != null) {
+				attributeSetterBiConsumer.accept((MemberRequest)this,
+					entry.getValue());
+			}
 		}
+	}
 
-		Long groupId = (Long)attributes.get("groupId");
+	public Map<String, Function<MemberRequest, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
+	}
 
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
+	public Map<String, BiConsumer<MemberRequest, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		Long companyId = (Long)attributes.get("companyId");
+	private static final Map<String, Function<MemberRequest, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<MemberRequest, Object>> _attributeSetterBiConsumers;
 
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
+	static {
+		Map<String, Function<MemberRequest, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<MemberRequest, Object>>();
+		Map<String, BiConsumer<MemberRequest, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<MemberRequest, ?>>();
 
-		Long userId = (Long)attributes.get("userId");
+		attributeGetterFunctions.put("memberRequestId", MemberRequest::getMemberRequestId);
+		attributeSetterBiConsumers.put("memberRequestId", (BiConsumer<MemberRequest, Long>)MemberRequest::setMemberRequestId);
+		attributeGetterFunctions.put("groupId", MemberRequest::getGroupId);
+		attributeSetterBiConsumers.put("groupId", (BiConsumer<MemberRequest, Long>)MemberRequest::setGroupId);
+		attributeGetterFunctions.put("companyId", MemberRequest::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<MemberRequest, Long>)MemberRequest::setCompanyId);
+		attributeGetterFunctions.put("userId", MemberRequest::getUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<MemberRequest, Long>)MemberRequest::setUserId);
+		attributeGetterFunctions.put("userName", MemberRequest::getUserName);
+		attributeSetterBiConsumers.put("userName", (BiConsumer<MemberRequest, String>)MemberRequest::setUserName);
+		attributeGetterFunctions.put("createDate", MemberRequest::getCreateDate);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<MemberRequest, Date>)MemberRequest::setCreateDate);
+		attributeGetterFunctions.put("modifiedDate", MemberRequest::getModifiedDate);
+		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<MemberRequest, Date>)MemberRequest::setModifiedDate);
+		attributeGetterFunctions.put("key", MemberRequest::getKey);
+		attributeSetterBiConsumers.put("key", (BiConsumer<MemberRequest, String>)MemberRequest::setKey);
+		attributeGetterFunctions.put("receiverUserId", MemberRequest::getReceiverUserId);
+		attributeSetterBiConsumers.put("receiverUserId", (BiConsumer<MemberRequest, Long>)MemberRequest::setReceiverUserId);
+		attributeGetterFunctions.put("invitedRoleId", MemberRequest::getInvitedRoleId);
+		attributeSetterBiConsumers.put("invitedRoleId", (BiConsumer<MemberRequest, Long>)MemberRequest::setInvitedRoleId);
+		attributeGetterFunctions.put("invitedTeamId", MemberRequest::getInvitedTeamId);
+		attributeSetterBiConsumers.put("invitedTeamId", (BiConsumer<MemberRequest, Long>)MemberRequest::setInvitedTeamId);
+		attributeGetterFunctions.put("status", MemberRequest::getStatus);
+		attributeSetterBiConsumers.put("status", (BiConsumer<MemberRequest, Integer>)MemberRequest::setStatus);
 
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		String key = (String)attributes.get("key");
-
-		if (key != null) {
-			setKey(key);
-		}
-
-		Long receiverUserId = (Long)attributes.get("receiverUserId");
-
-		if (receiverUserId != null) {
-			setReceiverUserId(receiverUserId);
-		}
-
-		Long invitedRoleId = (Long)attributes.get("invitedRoleId");
-
-		if (invitedRoleId != null) {
-			setInvitedRoleId(invitedRoleId);
-		}
-
-		Long invitedTeamId = (Long)attributes.get("invitedTeamId");
-
-		if (invitedTeamId != null) {
-			setInvitedTeamId(invitedTeamId);
-		}
-
-		Integer status = (Integer)attributes.get("status");
-
-		if (status != null) {
-			setStatus(status);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -652,32 +639,27 @@ public class MemberRequestModelImpl extends BaseModelImpl<MemberRequest>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		Map<String, Function<MemberRequest, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		sb.append("{memberRequestId=");
-		sb.append(getMemberRequestId());
-		sb.append(", groupId=");
-		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", userName=");
-		sb.append(getUserName());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", modifiedDate=");
-		sb.append(getModifiedDate());
-		sb.append(", key=");
-		sb.append(getKey());
-		sb.append(", receiverUserId=");
-		sb.append(getReceiverUserId());
-		sb.append(", invitedRoleId=");
-		sb.append(getInvitedRoleId());
-		sb.append(", invitedTeamId=");
-		sb.append(getInvitedTeamId());
-		sb.append(", status=");
-		sb.append(getStatus());
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
+
+		sb.append("{");
+
+		for (Map.Entry<String, Function<MemberRequest, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<MemberRequest, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append(attributeName);
+			sb.append("=");
+			sb.append(attributeGetterFunction.apply((MemberRequest)this));
+			sb.append(", ");
+		}
+
+		if (sb.index() > 1) {
+			sb.setIndex(sb.index() - 1);
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -685,60 +667,25 @@ public class MemberRequestModelImpl extends BaseModelImpl<MemberRequest>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(40);
+		Map<String, Function<MemberRequest, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
-		sb.append("com.liferay.invitation.invite.members.model.MemberRequest");
+		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		sb.append(
-			"<column><column-name>memberRequestId</column-name><column-value><![CDATA[");
-		sb.append(getMemberRequestId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>groupId</column-name><column-value><![CDATA[");
-		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userName</column-name><column-value><![CDATA[");
-		sb.append(getUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
-		sb.append(getModifiedDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>key</column-name><column-value><![CDATA[");
-		sb.append(getKey());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>receiverUserId</column-name><column-value><![CDATA[");
-		sb.append(getReceiverUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>invitedRoleId</column-name><column-value><![CDATA[");
-		sb.append(getInvitedRoleId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>invitedTeamId</column-name><column-value><![CDATA[");
-		sb.append(getInvitedTeamId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>status</column-name><column-value><![CDATA[");
-		sb.append(getStatus());
-		sb.append("]]></column-value></column>");
+		for (Map.Entry<String, Function<MemberRequest, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<MemberRequest, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append("<column><column-name>");
+			sb.append(attributeName);
+			sb.append("</column-name><column-value><![CDATA[");
+			sb.append(attributeGetterFunction.apply((MemberRequest)this));
+			sb.append("]]></column-value></column>");
+		}
 
 		sb.append("</model>");
 

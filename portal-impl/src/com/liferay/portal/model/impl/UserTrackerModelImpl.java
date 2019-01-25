@@ -38,9 +38,13 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the UserTracker service. Represents a row in the &quot;UserTracker&quot; database table, with each column mapped to a property of this class.
@@ -149,15 +153,15 @@ public class UserTrackerModelImpl extends BaseModelImpl<UserTracker>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("mvccVersion", getMvccVersion());
-		attributes.put("userTrackerId", getUserTrackerId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("sessionId", getSessionId());
-		attributes.put("remoteAddr", getRemoteAddr());
-		attributes.put("remoteHost", getRemoteHost());
-		attributes.put("userAgent", getUserAgent());
+		Map<String, Function<UserTracker, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+
+		for (Map.Entry<String, Function<UserTracker, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<UserTracker, Object> attributeGetterFunction = entry.getValue();
+
+			attributes.put(attributeName,
+				attributeGetterFunction.apply((UserTracker)this));
+		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -167,59 +171,56 @@ public class UserTrackerModelImpl extends BaseModelImpl<UserTracker>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long mvccVersion = (Long)attributes.get("mvccVersion");
+		Map<String, BiConsumer<UserTracker, Object>> attributeSetterBiConsumers = getAttributeSetterBiConsumers();
 
-		if (mvccVersion != null) {
-			setMvccVersion(mvccVersion);
+		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
+			String attributeName = entry.getKey();
+
+			BiConsumer<UserTracker, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+
+			if (attributeSetterBiConsumer != null) {
+				attributeSetterBiConsumer.accept((UserTracker)this,
+					entry.getValue());
+			}
 		}
+	}
 
-		Long userTrackerId = (Long)attributes.get("userTrackerId");
+	public Map<String, Function<UserTracker, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
+	}
 
-		if (userTrackerId != null) {
-			setUserTrackerId(userTrackerId);
-		}
+	public Map<String, BiConsumer<UserTracker, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		Long companyId = (Long)attributes.get("companyId");
+	private static final Map<String, Function<UserTracker, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<UserTracker, Object>> _attributeSetterBiConsumers;
 
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
+	static {
+		Map<String, Function<UserTracker, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<UserTracker, Object>>();
+		Map<String, BiConsumer<UserTracker, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<UserTracker, ?>>();
 
-		Long userId = (Long)attributes.get("userId");
+		attributeGetterFunctions.put("mvccVersion", UserTracker::getMvccVersion);
+		attributeSetterBiConsumers.put("mvccVersion", (BiConsumer<UserTracker, Long>)UserTracker::setMvccVersion);
+		attributeGetterFunctions.put("userTrackerId", UserTracker::getUserTrackerId);
+		attributeSetterBiConsumers.put("userTrackerId", (BiConsumer<UserTracker, Long>)UserTracker::setUserTrackerId);
+		attributeGetterFunctions.put("companyId", UserTracker::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<UserTracker, Long>)UserTracker::setCompanyId);
+		attributeGetterFunctions.put("userId", UserTracker::getUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<UserTracker, Long>)UserTracker::setUserId);
+		attributeGetterFunctions.put("modifiedDate", UserTracker::getModifiedDate);
+		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<UserTracker, Date>)UserTracker::setModifiedDate);
+		attributeGetterFunctions.put("sessionId", UserTracker::getSessionId);
+		attributeSetterBiConsumers.put("sessionId", (BiConsumer<UserTracker, String>)UserTracker::setSessionId);
+		attributeGetterFunctions.put("remoteAddr", UserTracker::getRemoteAddr);
+		attributeSetterBiConsumers.put("remoteAddr", (BiConsumer<UserTracker, String>)UserTracker::setRemoteAddr);
+		attributeGetterFunctions.put("remoteHost", UserTracker::getRemoteHost);
+		attributeSetterBiConsumers.put("remoteHost", (BiConsumer<UserTracker, String>)UserTracker::setRemoteHost);
+		attributeGetterFunctions.put("userAgent", UserTracker::getUserAgent);
+		attributeSetterBiConsumers.put("userAgent", (BiConsumer<UserTracker, String>)UserTracker::setUserAgent);
 
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		String sessionId = (String)attributes.get("sessionId");
-
-		if (sessionId != null) {
-			setSessionId(sessionId);
-		}
-
-		String remoteAddr = (String)attributes.get("remoteAddr");
-
-		if (remoteAddr != null) {
-			setRemoteAddr(remoteAddr);
-		}
-
-		String remoteHost = (String)attributes.get("remoteHost");
-
-		if (remoteHost != null) {
-			setRemoteHost(remoteHost);
-		}
-
-		String userAgent = (String)attributes.get("userAgent");
-
-		if (userAgent != null) {
-			setUserAgent(userAgent);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -555,26 +556,27 @@ public class UserTrackerModelImpl extends BaseModelImpl<UserTracker>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		Map<String, Function<UserTracker, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		sb.append("{mvccVersion=");
-		sb.append(getMvccVersion());
-		sb.append(", userTrackerId=");
-		sb.append(getUserTrackerId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", modifiedDate=");
-		sb.append(getModifiedDate());
-		sb.append(", sessionId=");
-		sb.append(getSessionId());
-		sb.append(", remoteAddr=");
-		sb.append(getRemoteAddr());
-		sb.append(", remoteHost=");
-		sb.append(getRemoteHost());
-		sb.append(", userAgent=");
-		sb.append(getUserAgent());
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
+
+		sb.append("{");
+
+		for (Map.Entry<String, Function<UserTracker, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<UserTracker, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append(attributeName);
+			sb.append("=");
+			sb.append(attributeGetterFunction.apply((UserTracker)this));
+			sb.append(", ");
+		}
+
+		if (sb.index() > 1) {
+			sb.setIndex(sb.index() - 1);
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -582,48 +584,25 @@ public class UserTrackerModelImpl extends BaseModelImpl<UserTracker>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(31);
+		Map<String, Function<UserTracker, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
-		sb.append("com.liferay.portal.kernel.model.UserTracker");
+		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		sb.append(
-			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
-		sb.append(getMvccVersion());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userTrackerId</column-name><column-value><![CDATA[");
-		sb.append(getUserTrackerId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
-		sb.append(getModifiedDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>sessionId</column-name><column-value><![CDATA[");
-		sb.append(getSessionId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>remoteAddr</column-name><column-value><![CDATA[");
-		sb.append(getRemoteAddr());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>remoteHost</column-name><column-value><![CDATA[");
-		sb.append(getRemoteHost());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userAgent</column-name><column-value><![CDATA[");
-		sb.append(getUserAgent());
-		sb.append("]]></column-value></column>");
+		for (Map.Entry<String, Function<UserTracker, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<UserTracker, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append("<column><column-name>");
+			sb.append(attributeName);
+			sb.append("</column-name><column-value><![CDATA[");
+			sb.append(attributeGetterFunction.apply((UserTracker)this));
+			sb.append("]]></column-value></column>");
+		}
 
 		sb.append("</model>");
 

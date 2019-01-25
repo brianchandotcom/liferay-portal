@@ -45,10 +45,14 @@ import java.io.Serializable;
 import java.sql.Types;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the PollsVote service. Represents a row in the &quot;PollsVote&quot; database table, with each column mapped to a property of this class.
@@ -217,18 +221,15 @@ public class PollsVoteModelImpl extends BaseModelImpl<PollsVote>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("uuid", getUuid());
-		attributes.put("voteId", getVoteId());
-		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("questionId", getQuestionId());
-		attributes.put("choiceId", getChoiceId());
-		attributes.put("lastPublishDate", getLastPublishDate());
-		attributes.put("voteDate", getVoteDate());
+		Map<String, Function<PollsVote, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+
+		for (Map.Entry<String, Function<PollsVote, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<PollsVote, Object> attributeGetterFunction = entry.getValue();
+
+			attributes.put(attributeName,
+				attributeGetterFunction.apply((PollsVote)this));
+		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -238,77 +239,62 @@ public class PollsVoteModelImpl extends BaseModelImpl<PollsVote>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		String uuid = (String)attributes.get("uuid");
+		Map<String, BiConsumer<PollsVote, Object>> attributeSetterBiConsumers = getAttributeSetterBiConsumers();
 
-		if (uuid != null) {
-			setUuid(uuid);
+		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
+			String attributeName = entry.getKey();
+
+			BiConsumer<PollsVote, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+
+			if (attributeSetterBiConsumer != null) {
+				attributeSetterBiConsumer.accept((PollsVote)this,
+					entry.getValue());
+			}
 		}
+	}
 
-		Long voteId = (Long)attributes.get("voteId");
+	public Map<String, Function<PollsVote, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
+	}
 
-		if (voteId != null) {
-			setVoteId(voteId);
-		}
+	public Map<String, BiConsumer<PollsVote, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		Long groupId = (Long)attributes.get("groupId");
+	private static final Map<String, Function<PollsVote, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<PollsVote, Object>> _attributeSetterBiConsumers;
 
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
+	static {
+		Map<String, Function<PollsVote, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<PollsVote, Object>>();
+		Map<String, BiConsumer<PollsVote, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<PollsVote, ?>>();
 
-		Long companyId = (Long)attributes.get("companyId");
+		attributeGetterFunctions.put("uuid", PollsVote::getUuid);
+		attributeSetterBiConsumers.put("uuid", (BiConsumer<PollsVote, String>)PollsVote::setUuid);
+		attributeGetterFunctions.put("voteId", PollsVote::getVoteId);
+		attributeSetterBiConsumers.put("voteId", (BiConsumer<PollsVote, Long>)PollsVote::setVoteId);
+		attributeGetterFunctions.put("groupId", PollsVote::getGroupId);
+		attributeSetterBiConsumers.put("groupId", (BiConsumer<PollsVote, Long>)PollsVote::setGroupId);
+		attributeGetterFunctions.put("companyId", PollsVote::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<PollsVote, Long>)PollsVote::setCompanyId);
+		attributeGetterFunctions.put("userId", PollsVote::getUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<PollsVote, Long>)PollsVote::setUserId);
+		attributeGetterFunctions.put("userName", PollsVote::getUserName);
+		attributeSetterBiConsumers.put("userName", (BiConsumer<PollsVote, String>)PollsVote::setUserName);
+		attributeGetterFunctions.put("createDate", PollsVote::getCreateDate);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<PollsVote, Date>)PollsVote::setCreateDate);
+		attributeGetterFunctions.put("modifiedDate", PollsVote::getModifiedDate);
+		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<PollsVote, Date>)PollsVote::setModifiedDate);
+		attributeGetterFunctions.put("questionId", PollsVote::getQuestionId);
+		attributeSetterBiConsumers.put("questionId", (BiConsumer<PollsVote, Long>)PollsVote::setQuestionId);
+		attributeGetterFunctions.put("choiceId", PollsVote::getChoiceId);
+		attributeSetterBiConsumers.put("choiceId", (BiConsumer<PollsVote, Long>)PollsVote::setChoiceId);
+		attributeGetterFunctions.put("lastPublishDate", PollsVote::getLastPublishDate);
+		attributeSetterBiConsumers.put("lastPublishDate", (BiConsumer<PollsVote, Date>)PollsVote::setLastPublishDate);
+		attributeGetterFunctions.put("voteDate", PollsVote::getVoteDate);
+		attributeSetterBiConsumers.put("voteDate", (BiConsumer<PollsVote, Date>)PollsVote::setVoteDate);
 
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		Long questionId = (Long)attributes.get("questionId");
-
-		if (questionId != null) {
-			setQuestionId(questionId);
-		}
-
-		Long choiceId = (Long)attributes.get("choiceId");
-
-		if (choiceId != null) {
-			setChoiceId(choiceId);
-		}
-
-		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
-
-		if (lastPublishDate != null) {
-			setLastPublishDate(lastPublishDate);
-		}
-
-		Date voteDate = (Date)attributes.get("voteDate");
-
-		if (voteDate != null) {
-			setVoteDate(voteDate);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@JSON
@@ -756,32 +742,27 @@ public class PollsVoteModelImpl extends BaseModelImpl<PollsVote>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		Map<String, Function<PollsVote, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		sb.append("{uuid=");
-		sb.append(getUuid());
-		sb.append(", voteId=");
-		sb.append(getVoteId());
-		sb.append(", groupId=");
-		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", userName=");
-		sb.append(getUserName());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", modifiedDate=");
-		sb.append(getModifiedDate());
-		sb.append(", questionId=");
-		sb.append(getQuestionId());
-		sb.append(", choiceId=");
-		sb.append(getChoiceId());
-		sb.append(", lastPublishDate=");
-		sb.append(getLastPublishDate());
-		sb.append(", voteDate=");
-		sb.append(getVoteDate());
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
+
+		sb.append("{");
+
+		for (Map.Entry<String, Function<PollsVote, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<PollsVote, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append(attributeName);
+			sb.append("=");
+			sb.append(attributeGetterFunction.apply((PollsVote)this));
+			sb.append(", ");
+		}
+
+		if (sb.index() > 1) {
+			sb.setIndex(sb.index() - 1);
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -789,60 +770,25 @@ public class PollsVoteModelImpl extends BaseModelImpl<PollsVote>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(40);
+		Map<String, Function<PollsVote, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
-		sb.append("com.liferay.polls.model.PollsVote");
+		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		sb.append(
-			"<column><column-name>uuid</column-name><column-value><![CDATA[");
-		sb.append(getUuid());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>voteId</column-name><column-value><![CDATA[");
-		sb.append(getVoteId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>groupId</column-name><column-value><![CDATA[");
-		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userName</column-name><column-value><![CDATA[");
-		sb.append(getUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
-		sb.append(getModifiedDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>questionId</column-name><column-value><![CDATA[");
-		sb.append(getQuestionId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>choiceId</column-name><column-value><![CDATA[");
-		sb.append(getChoiceId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
-		sb.append(getLastPublishDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>voteDate</column-name><column-value><![CDATA[");
-		sb.append(getVoteDate());
-		sb.append("]]></column-value></column>");
+		for (Map.Entry<String, Function<PollsVote, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<PollsVote, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append("<column><column-name>");
+			sb.append(attributeName);
+			sb.append("</column-name><column-value><![CDATA[");
+			sb.append(attributeGetterFunction.apply((PollsVote)this));
+			sb.append("]]></column-value></column>");
+		}
 
 		sb.append("</model>");
 

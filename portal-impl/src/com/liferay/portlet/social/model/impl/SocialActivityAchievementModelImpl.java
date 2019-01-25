@@ -39,8 +39,12 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the SocialActivityAchievement service. Represents a row in the &quot;SocialActivityAchievement&quot; database table, with each column mapped to a property of this class.
@@ -146,13 +150,16 @@ public class SocialActivityAchievementModelImpl extends BaseModelImpl<SocialActi
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("activityAchievementId", getActivityAchievementId());
-		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("name", getName());
-		attributes.put("firstInGroup", isFirstInGroup());
+		Map<String, Function<SocialActivityAchievement, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
+
+		for (Map.Entry<String, Function<SocialActivityAchievement, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<SocialActivityAchievement, Object> attributeGetterFunction = entry.getValue();
+
+			attributes.put(attributeName,
+				attributeGetterFunction.apply((SocialActivityAchievement)this));
+		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -162,48 +169,56 @@ public class SocialActivityAchievementModelImpl extends BaseModelImpl<SocialActi
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long activityAchievementId = (Long)attributes.get(
-				"activityAchievementId");
+		Map<String, BiConsumer<SocialActivityAchievement, Object>> attributeSetterBiConsumers =
+			getAttributeSetterBiConsumers();
 
-		if (activityAchievementId != null) {
-			setActivityAchievementId(activityAchievementId);
+		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
+			String attributeName = entry.getKey();
+
+			BiConsumer<SocialActivityAchievement, Object> attributeSetterBiConsumer =
+				attributeSetterBiConsumers.get(attributeName);
+
+			if (attributeSetterBiConsumer != null) {
+				attributeSetterBiConsumer.accept((SocialActivityAchievement)this,
+					entry.getValue());
+			}
 		}
+	}
 
-		Long groupId = (Long)attributes.get("groupId");
+	public Map<String, Function<SocialActivityAchievement, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
+	}
 
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
+	public Map<String, BiConsumer<SocialActivityAchievement, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		Long companyId = (Long)attributes.get("companyId");
+	private static final Map<String, Function<SocialActivityAchievement, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<SocialActivityAchievement, Object>> _attributeSetterBiConsumers;
 
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
+	static {
+		Map<String, Function<SocialActivityAchievement, Object>> attributeGetterFunctions =
+			new LinkedHashMap<String, Function<SocialActivityAchievement, Object>>();
+		Map<String, BiConsumer<SocialActivityAchievement, ?>> attributeSetterBiConsumers =
+			new LinkedHashMap<String, BiConsumer<SocialActivityAchievement, ?>>();
 
-		Long userId = (Long)attributes.get("userId");
+		attributeGetterFunctions.put("activityAchievementId", SocialActivityAchievement::getActivityAchievementId);
+		attributeSetterBiConsumers.put("activityAchievementId", (BiConsumer<SocialActivityAchievement, Long>)SocialActivityAchievement::setActivityAchievementId);
+		attributeGetterFunctions.put("groupId", SocialActivityAchievement::getGroupId);
+		attributeSetterBiConsumers.put("groupId", (BiConsumer<SocialActivityAchievement, Long>)SocialActivityAchievement::setGroupId);
+		attributeGetterFunctions.put("companyId", SocialActivityAchievement::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<SocialActivityAchievement, Long>)SocialActivityAchievement::setCompanyId);
+		attributeGetterFunctions.put("userId", SocialActivityAchievement::getUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<SocialActivityAchievement, Long>)SocialActivityAchievement::setUserId);
+		attributeGetterFunctions.put("createDate", SocialActivityAchievement::getCreateDate);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<SocialActivityAchievement, Long>)SocialActivityAchievement::setCreateDate);
+		attributeGetterFunctions.put("name", SocialActivityAchievement::getName);
+		attributeSetterBiConsumers.put("name", (BiConsumer<SocialActivityAchievement, String>)SocialActivityAchievement::setName);
+		attributeGetterFunctions.put("firstInGroup", SocialActivityAchievement::getFirstInGroup);
+		attributeSetterBiConsumers.put("firstInGroup", (BiConsumer<SocialActivityAchievement, Boolean>)SocialActivityAchievement::setFirstInGroup);
 
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		Long createDate = (Long)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		String name = (String)attributes.get("name");
-
-		if (name != null) {
-			setName(name);
-		}
-
-		Boolean firstInGroup = (Boolean)attributes.get("firstInGroup");
-
-		if (firstInGroup != null) {
-			setFirstInGroup(firstInGroup);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -494,22 +509,29 @@ public class SocialActivityAchievementModelImpl extends BaseModelImpl<SocialActi
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(15);
+		Map<String, Function<SocialActivityAchievement, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		sb.append("{activityAchievementId=");
-		sb.append(getActivityAchievementId());
-		sb.append(", groupId=");
-		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", name=");
-		sb.append(getName());
-		sb.append(", firstInGroup=");
-		sb.append(isFirstInGroup());
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
+
+		sb.append("{");
+
+		for (Map.Entry<String, Function<SocialActivityAchievement, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<SocialActivityAchievement, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append(attributeName);
+			sb.append("=");
+			sb.append(attributeGetterFunction.apply(
+					(SocialActivityAchievement)this));
+			sb.append(", ");
+		}
+
+		if (sb.index() > 1) {
+			sb.setIndex(sb.index() - 1);
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -517,40 +539,27 @@ public class SocialActivityAchievementModelImpl extends BaseModelImpl<SocialActi
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(25);
+		Map<String, Function<SocialActivityAchievement, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
+
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
-		sb.append("com.liferay.social.kernel.model.SocialActivityAchievement");
+		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		sb.append(
-			"<column><column-name>activityAchievementId</column-name><column-value><![CDATA[");
-		sb.append(getActivityAchievementId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>groupId</column-name><column-value><![CDATA[");
-		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>name</column-name><column-value><![CDATA[");
-		sb.append(getName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>firstInGroup</column-name><column-value><![CDATA[");
-		sb.append(isFirstInGroup());
-		sb.append("]]></column-value></column>");
+		for (Map.Entry<String, Function<SocialActivityAchievement, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<SocialActivityAchievement, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append("<column><column-name>");
+			sb.append(attributeName);
+			sb.append("</column-name><column-value><![CDATA[");
+			sb.append(attributeGetterFunction.apply(
+					(SocialActivityAchievement)this));
+			sb.append("]]></column-value></column>");
+		}
 
 		sb.append("</model>");
 

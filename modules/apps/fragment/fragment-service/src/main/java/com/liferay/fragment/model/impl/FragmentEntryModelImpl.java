@@ -46,10 +46,14 @@ import java.io.Serializable;
 import java.sql.Types;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the FragmentEntry service. Represents a row in the &quot;FragmentEntry&quot; database table, with each column mapped to a property of this class.
@@ -246,27 +250,15 @@ public class FragmentEntryModelImpl extends BaseModelImpl<FragmentEntry>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("uuid", getUuid());
-		attributes.put("fragmentEntryId", getFragmentEntryId());
-		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("fragmentCollectionId", getFragmentCollectionId());
-		attributes.put("fragmentEntryKey", getFragmentEntryKey());
-		attributes.put("name", getName());
-		attributes.put("css", getCss());
-		attributes.put("html", getHtml());
-		attributes.put("js", getJs());
-		attributes.put("previewFileEntryId", getPreviewFileEntryId());
-		attributes.put("type", getType());
-		attributes.put("lastPublishDate", getLastPublishDate());
-		attributes.put("status", getStatus());
-		attributes.put("statusByUserId", getStatusByUserId());
-		attributes.put("statusByUserName", getStatusByUserName());
-		attributes.put("statusDate", getStatusDate());
+		Map<String, Function<FragmentEntry, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+
+		for (Map.Entry<String, Function<FragmentEntry, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<FragmentEntry, Object> attributeGetterFunction = entry.getValue();
+
+			attributes.put(attributeName,
+				attributeGetterFunction.apply((FragmentEntry)this));
+		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -276,131 +268,81 @@ public class FragmentEntryModelImpl extends BaseModelImpl<FragmentEntry>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		String uuid = (String)attributes.get("uuid");
+		Map<String, BiConsumer<FragmentEntry, Object>> attributeSetterBiConsumers =
+			getAttributeSetterBiConsumers();
 
-		if (uuid != null) {
-			setUuid(uuid);
+		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
+			String attributeName = entry.getKey();
+
+			BiConsumer<FragmentEntry, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+
+			if (attributeSetterBiConsumer != null) {
+				attributeSetterBiConsumer.accept((FragmentEntry)this,
+					entry.getValue());
+			}
 		}
+	}
 
-		Long fragmentEntryId = (Long)attributes.get("fragmentEntryId");
+	public Map<String, Function<FragmentEntry, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
+	}
 
-		if (fragmentEntryId != null) {
-			setFragmentEntryId(fragmentEntryId);
-		}
+	public Map<String, BiConsumer<FragmentEntry, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		Long groupId = (Long)attributes.get("groupId");
+	private static final Map<String, Function<FragmentEntry, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<FragmentEntry, Object>> _attributeSetterBiConsumers;
 
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
+	static {
+		Map<String, Function<FragmentEntry, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<FragmentEntry, Object>>();
+		Map<String, BiConsumer<FragmentEntry, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<FragmentEntry, ?>>();
 
-		Long companyId = (Long)attributes.get("companyId");
+		attributeGetterFunctions.put("uuid", FragmentEntry::getUuid);
+		attributeSetterBiConsumers.put("uuid", (BiConsumer<FragmentEntry, String>)FragmentEntry::setUuid);
+		attributeGetterFunctions.put("fragmentEntryId", FragmentEntry::getFragmentEntryId);
+		attributeSetterBiConsumers.put("fragmentEntryId", (BiConsumer<FragmentEntry, Long>)FragmentEntry::setFragmentEntryId);
+		attributeGetterFunctions.put("groupId", FragmentEntry::getGroupId);
+		attributeSetterBiConsumers.put("groupId", (BiConsumer<FragmentEntry, Long>)FragmentEntry::setGroupId);
+		attributeGetterFunctions.put("companyId", FragmentEntry::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<FragmentEntry, Long>)FragmentEntry::setCompanyId);
+		attributeGetterFunctions.put("userId", FragmentEntry::getUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<FragmentEntry, Long>)FragmentEntry::setUserId);
+		attributeGetterFunctions.put("userName", FragmentEntry::getUserName);
+		attributeSetterBiConsumers.put("userName", (BiConsumer<FragmentEntry, String>)FragmentEntry::setUserName);
+		attributeGetterFunctions.put("createDate", FragmentEntry::getCreateDate);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<FragmentEntry, Date>)FragmentEntry::setCreateDate);
+		attributeGetterFunctions.put("modifiedDate", FragmentEntry::getModifiedDate);
+		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<FragmentEntry, Date>)FragmentEntry::setModifiedDate);
+		attributeGetterFunctions.put("fragmentCollectionId", FragmentEntry::getFragmentCollectionId);
+		attributeSetterBiConsumers.put("fragmentCollectionId", (BiConsumer<FragmentEntry, Long>)FragmentEntry::setFragmentCollectionId);
+		attributeGetterFunctions.put("fragmentEntryKey", FragmentEntry::getFragmentEntryKey);
+		attributeSetterBiConsumers.put("fragmentEntryKey", (BiConsumer<FragmentEntry, String>)FragmentEntry::setFragmentEntryKey);
+		attributeGetterFunctions.put("name", FragmentEntry::getName);
+		attributeSetterBiConsumers.put("name", (BiConsumer<FragmentEntry, String>)FragmentEntry::setName);
+		attributeGetterFunctions.put("css", FragmentEntry::getCss);
+		attributeSetterBiConsumers.put("css", (BiConsumer<FragmentEntry, String>)FragmentEntry::setCss);
+		attributeGetterFunctions.put("html", FragmentEntry::getHtml);
+		attributeSetterBiConsumers.put("html", (BiConsumer<FragmentEntry, String>)FragmentEntry::setHtml);
+		attributeGetterFunctions.put("js", FragmentEntry::getJs);
+		attributeSetterBiConsumers.put("js", (BiConsumer<FragmentEntry, String>)FragmentEntry::setJs);
+		attributeGetterFunctions.put("previewFileEntryId", FragmentEntry::getPreviewFileEntryId);
+		attributeSetterBiConsumers.put("previewFileEntryId", (BiConsumer<FragmentEntry, Long>)FragmentEntry::setPreviewFileEntryId);
+		attributeGetterFunctions.put("type", FragmentEntry::getType);
+		attributeSetterBiConsumers.put("type", (BiConsumer<FragmentEntry, Integer>)FragmentEntry::setType);
+		attributeGetterFunctions.put("lastPublishDate", FragmentEntry::getLastPublishDate);
+		attributeSetterBiConsumers.put("lastPublishDate", (BiConsumer<FragmentEntry, Date>)FragmentEntry::setLastPublishDate);
+		attributeGetterFunctions.put("status", FragmentEntry::getStatus);
+		attributeSetterBiConsumers.put("status", (BiConsumer<FragmentEntry, Integer>)FragmentEntry::setStatus);
+		attributeGetterFunctions.put("statusByUserId", FragmentEntry::getStatusByUserId);
+		attributeSetterBiConsumers.put("statusByUserId", (BiConsumer<FragmentEntry, Long>)FragmentEntry::setStatusByUserId);
+		attributeGetterFunctions.put("statusByUserName", FragmentEntry::getStatusByUserName);
+		attributeSetterBiConsumers.put("statusByUserName", (BiConsumer<FragmentEntry, String>)FragmentEntry::setStatusByUserName);
+		attributeGetterFunctions.put("statusDate", FragmentEntry::getStatusDate);
+		attributeSetterBiConsumers.put("statusDate", (BiConsumer<FragmentEntry, Date>)FragmentEntry::setStatusDate);
 
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		Long fragmentCollectionId = (Long)attributes.get("fragmentCollectionId");
-
-		if (fragmentCollectionId != null) {
-			setFragmentCollectionId(fragmentCollectionId);
-		}
-
-		String fragmentEntryKey = (String)attributes.get("fragmentEntryKey");
-
-		if (fragmentEntryKey != null) {
-			setFragmentEntryKey(fragmentEntryKey);
-		}
-
-		String name = (String)attributes.get("name");
-
-		if (name != null) {
-			setName(name);
-		}
-
-		String css = (String)attributes.get("css");
-
-		if (css != null) {
-			setCss(css);
-		}
-
-		String html = (String)attributes.get("html");
-
-		if (html != null) {
-			setHtml(html);
-		}
-
-		String js = (String)attributes.get("js");
-
-		if (js != null) {
-			setJs(js);
-		}
-
-		Long previewFileEntryId = (Long)attributes.get("previewFileEntryId");
-
-		if (previewFileEntryId != null) {
-			setPreviewFileEntryId(previewFileEntryId);
-		}
-
-		Integer type = (Integer)attributes.get("type");
-
-		if (type != null) {
-			setType(type);
-		}
-
-		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
-
-		if (lastPublishDate != null) {
-			setLastPublishDate(lastPublishDate);
-		}
-
-		Integer status = (Integer)attributes.get("status");
-
-		if (status != null) {
-			setStatus(status);
-		}
-
-		Long statusByUserId = (Long)attributes.get("statusByUserId");
-
-		if (statusByUserId != null) {
-			setStatusByUserId(statusByUserId);
-		}
-
-		String statusByUserName = (String)attributes.get("statusByUserName");
-
-		if (statusByUserName != null) {
-			setStatusByUserName(statusByUserName);
-		}
-
-		Date statusDate = (Date)attributes.get("statusDate");
-
-		if (statusDate != null) {
-			setStatusDate(statusDate);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@JSON
@@ -1158,50 +1100,27 @@ public class FragmentEntryModelImpl extends BaseModelImpl<FragmentEntry>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(43);
+		Map<String, Function<FragmentEntry, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		sb.append("{uuid=");
-		sb.append(getUuid());
-		sb.append(", fragmentEntryId=");
-		sb.append(getFragmentEntryId());
-		sb.append(", groupId=");
-		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", userName=");
-		sb.append(getUserName());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", modifiedDate=");
-		sb.append(getModifiedDate());
-		sb.append(", fragmentCollectionId=");
-		sb.append(getFragmentCollectionId());
-		sb.append(", fragmentEntryKey=");
-		sb.append(getFragmentEntryKey());
-		sb.append(", name=");
-		sb.append(getName());
-		sb.append(", css=");
-		sb.append(getCss());
-		sb.append(", html=");
-		sb.append(getHtml());
-		sb.append(", js=");
-		sb.append(getJs());
-		sb.append(", previewFileEntryId=");
-		sb.append(getPreviewFileEntryId());
-		sb.append(", type=");
-		sb.append(getType());
-		sb.append(", lastPublishDate=");
-		sb.append(getLastPublishDate());
-		sb.append(", status=");
-		sb.append(getStatus());
-		sb.append(", statusByUserId=");
-		sb.append(getStatusByUserId());
-		sb.append(", statusByUserName=");
-		sb.append(getStatusByUserName());
-		sb.append(", statusDate=");
-		sb.append(getStatusDate());
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
+
+		sb.append("{");
+
+		for (Map.Entry<String, Function<FragmentEntry, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<FragmentEntry, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append(attributeName);
+			sb.append("=");
+			sb.append(attributeGetterFunction.apply((FragmentEntry)this));
+			sb.append(", ");
+		}
+
+		if (sb.index() > 1) {
+			sb.setIndex(sb.index() - 1);
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -1209,96 +1128,25 @@ public class FragmentEntryModelImpl extends BaseModelImpl<FragmentEntry>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(67);
+		Map<String, Function<FragmentEntry, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
-		sb.append("com.liferay.fragment.model.FragmentEntry");
+		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		sb.append(
-			"<column><column-name>uuid</column-name><column-value><![CDATA[");
-		sb.append(getUuid());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>fragmentEntryId</column-name><column-value><![CDATA[");
-		sb.append(getFragmentEntryId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>groupId</column-name><column-value><![CDATA[");
-		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userName</column-name><column-value><![CDATA[");
-		sb.append(getUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
-		sb.append(getModifiedDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>fragmentCollectionId</column-name><column-value><![CDATA[");
-		sb.append(getFragmentCollectionId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>fragmentEntryKey</column-name><column-value><![CDATA[");
-		sb.append(getFragmentEntryKey());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>name</column-name><column-value><![CDATA[");
-		sb.append(getName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>css</column-name><column-value><![CDATA[");
-		sb.append(getCss());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>html</column-name><column-value><![CDATA[");
-		sb.append(getHtml());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>js</column-name><column-value><![CDATA[");
-		sb.append(getJs());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>previewFileEntryId</column-name><column-value><![CDATA[");
-		sb.append(getPreviewFileEntryId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>type</column-name><column-value><![CDATA[");
-		sb.append(getType());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
-		sb.append(getLastPublishDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>status</column-name><column-value><![CDATA[");
-		sb.append(getStatus());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>statusByUserId</column-name><column-value><![CDATA[");
-		sb.append(getStatusByUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>statusByUserName</column-name><column-value><![CDATA[");
-		sb.append(getStatusByUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>statusDate</column-name><column-value><![CDATA[");
-		sb.append(getStatusDate());
-		sb.append("]]></column-value></column>");
+		for (Map.Entry<String, Function<FragmentEntry, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<FragmentEntry, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append("<column><column-name>");
+			sb.append(attributeName);
+			sb.append("</column-name><column-value><![CDATA[");
+			sb.append(attributeGetterFunction.apply((FragmentEntry)this));
+			sb.append("]]></column-value></column>");
+		}
 
 		sb.append("</model>");
 

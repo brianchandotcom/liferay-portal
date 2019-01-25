@@ -41,9 +41,13 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the RepositoryEntry service. Represents a row in the &quot;RepositoryEntry&quot; database table, with each column mapped to a property of this class.
@@ -162,19 +166,15 @@ public class RepositoryEntryModelImpl extends BaseModelImpl<RepositoryEntry>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("mvccVersion", getMvccVersion());
-		attributes.put("uuid", getUuid());
-		attributes.put("repositoryEntryId", getRepositoryEntryId());
-		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("repositoryId", getRepositoryId());
-		attributes.put("mappedId", getMappedId());
-		attributes.put("manualCheckInRequired", isManualCheckInRequired());
-		attributes.put("lastPublishDate", getLastPublishDate());
+		Map<String, Function<RepositoryEntry, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+
+		for (Map.Entry<String, Function<RepositoryEntry, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<RepositoryEntry, Object> attributeGetterFunction = entry.getValue();
+
+			attributes.put(attributeName,
+				attributeGetterFunction.apply((RepositoryEntry)this));
+		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -184,84 +184,65 @@ public class RepositoryEntryModelImpl extends BaseModelImpl<RepositoryEntry>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long mvccVersion = (Long)attributes.get("mvccVersion");
+		Map<String, BiConsumer<RepositoryEntry, Object>> attributeSetterBiConsumers =
+			getAttributeSetterBiConsumers();
 
-		if (mvccVersion != null) {
-			setMvccVersion(mvccVersion);
+		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
+			String attributeName = entry.getKey();
+
+			BiConsumer<RepositoryEntry, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+
+			if (attributeSetterBiConsumer != null) {
+				attributeSetterBiConsumer.accept((RepositoryEntry)this,
+					entry.getValue());
+			}
 		}
+	}
 
-		String uuid = (String)attributes.get("uuid");
+	public Map<String, Function<RepositoryEntry, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
+	}
 
-		if (uuid != null) {
-			setUuid(uuid);
-		}
+	public Map<String, BiConsumer<RepositoryEntry, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		Long repositoryEntryId = (Long)attributes.get("repositoryEntryId");
+	private static final Map<String, Function<RepositoryEntry, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<RepositoryEntry, Object>> _attributeSetterBiConsumers;
 
-		if (repositoryEntryId != null) {
-			setRepositoryEntryId(repositoryEntryId);
-		}
+	static {
+		Map<String, Function<RepositoryEntry, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<RepositoryEntry, Object>>();
+		Map<String, BiConsumer<RepositoryEntry, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<RepositoryEntry, ?>>();
 
-		Long groupId = (Long)attributes.get("groupId");
+		attributeGetterFunctions.put("mvccVersion", RepositoryEntry::getMvccVersion);
+		attributeSetterBiConsumers.put("mvccVersion", (BiConsumer<RepositoryEntry, Long>)RepositoryEntry::setMvccVersion);
+		attributeGetterFunctions.put("uuid", RepositoryEntry::getUuid);
+		attributeSetterBiConsumers.put("uuid", (BiConsumer<RepositoryEntry, String>)RepositoryEntry::setUuid);
+		attributeGetterFunctions.put("repositoryEntryId", RepositoryEntry::getRepositoryEntryId);
+		attributeSetterBiConsumers.put("repositoryEntryId", (BiConsumer<RepositoryEntry, Long>)RepositoryEntry::setRepositoryEntryId);
+		attributeGetterFunctions.put("groupId", RepositoryEntry::getGroupId);
+		attributeSetterBiConsumers.put("groupId", (BiConsumer<RepositoryEntry, Long>)RepositoryEntry::setGroupId);
+		attributeGetterFunctions.put("companyId", RepositoryEntry::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<RepositoryEntry, Long>)RepositoryEntry::setCompanyId);
+		attributeGetterFunctions.put("userId", RepositoryEntry::getUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<RepositoryEntry, Long>)RepositoryEntry::setUserId);
+		attributeGetterFunctions.put("userName", RepositoryEntry::getUserName);
+		attributeSetterBiConsumers.put("userName", (BiConsumer<RepositoryEntry, String>)RepositoryEntry::setUserName);
+		attributeGetterFunctions.put("createDate", RepositoryEntry::getCreateDate);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<RepositoryEntry, Date>)RepositoryEntry::setCreateDate);
+		attributeGetterFunctions.put("modifiedDate", RepositoryEntry::getModifiedDate);
+		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<RepositoryEntry, Date>)RepositoryEntry::setModifiedDate);
+		attributeGetterFunctions.put("repositoryId", RepositoryEntry::getRepositoryId);
+		attributeSetterBiConsumers.put("repositoryId", (BiConsumer<RepositoryEntry, Long>)RepositoryEntry::setRepositoryId);
+		attributeGetterFunctions.put("mappedId", RepositoryEntry::getMappedId);
+		attributeSetterBiConsumers.put("mappedId", (BiConsumer<RepositoryEntry, String>)RepositoryEntry::setMappedId);
+		attributeGetterFunctions.put("manualCheckInRequired", RepositoryEntry::getManualCheckInRequired);
+		attributeSetterBiConsumers.put("manualCheckInRequired", (BiConsumer<RepositoryEntry, Boolean>)RepositoryEntry::setManualCheckInRequired);
+		attributeGetterFunctions.put("lastPublishDate", RepositoryEntry::getLastPublishDate);
+		attributeSetterBiConsumers.put("lastPublishDate", (BiConsumer<RepositoryEntry, Date>)RepositoryEntry::setLastPublishDate);
 
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		Long repositoryId = (Long)attributes.get("repositoryId");
-
-		if (repositoryId != null) {
-			setRepositoryId(repositoryId);
-		}
-
-		String mappedId = (String)attributes.get("mappedId");
-
-		if (mappedId != null) {
-			setMappedId(mappedId);
-		}
-
-		Boolean manualCheckInRequired = (Boolean)attributes.get(
-				"manualCheckInRequired");
-
-		if (manualCheckInRequired != null) {
-			setManualCheckInRequired(manualCheckInRequired);
-		}
-
-		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
-
-		if (lastPublishDate != null) {
-			setLastPublishDate(lastPublishDate);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -699,34 +680,27 @@ public class RepositoryEntryModelImpl extends BaseModelImpl<RepositoryEntry>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		Map<String, Function<RepositoryEntry, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		sb.append("{mvccVersion=");
-		sb.append(getMvccVersion());
-		sb.append(", uuid=");
-		sb.append(getUuid());
-		sb.append(", repositoryEntryId=");
-		sb.append(getRepositoryEntryId());
-		sb.append(", groupId=");
-		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", userName=");
-		sb.append(getUserName());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", modifiedDate=");
-		sb.append(getModifiedDate());
-		sb.append(", repositoryId=");
-		sb.append(getRepositoryId());
-		sb.append(", mappedId=");
-		sb.append(getMappedId());
-		sb.append(", manualCheckInRequired=");
-		sb.append(isManualCheckInRequired());
-		sb.append(", lastPublishDate=");
-		sb.append(getLastPublishDate());
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
+
+		sb.append("{");
+
+		for (Map.Entry<String, Function<RepositoryEntry, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<RepositoryEntry, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append(attributeName);
+			sb.append("=");
+			sb.append(attributeGetterFunction.apply((RepositoryEntry)this));
+			sb.append(", ");
+		}
+
+		if (sb.index() > 1) {
+			sb.setIndex(sb.index() - 1);
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -734,64 +708,25 @@ public class RepositoryEntryModelImpl extends BaseModelImpl<RepositoryEntry>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(43);
+		Map<String, Function<RepositoryEntry, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
-		sb.append("com.liferay.portal.kernel.model.RepositoryEntry");
+		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		sb.append(
-			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
-		sb.append(getMvccVersion());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>uuid</column-name><column-value><![CDATA[");
-		sb.append(getUuid());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>repositoryEntryId</column-name><column-value><![CDATA[");
-		sb.append(getRepositoryEntryId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>groupId</column-name><column-value><![CDATA[");
-		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userName</column-name><column-value><![CDATA[");
-		sb.append(getUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
-		sb.append(getModifiedDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>repositoryId</column-name><column-value><![CDATA[");
-		sb.append(getRepositoryId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>mappedId</column-name><column-value><![CDATA[");
-		sb.append(getMappedId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>manualCheckInRequired</column-name><column-value><![CDATA[");
-		sb.append(isManualCheckInRequired());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
-		sb.append(getLastPublishDate());
-		sb.append("]]></column-value></column>");
+		for (Map.Entry<String, Function<RepositoryEntry, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<RepositoryEntry, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append("<column><column-name>");
+			sb.append(attributeName);
+			sb.append("</column-name><column-value><![CDATA[");
+			sb.append(attributeGetterFunction.apply((RepositoryEntry)this));
+			sb.append("]]></column-value></column>");
+		}
 
 		sb.append("</model>");
 

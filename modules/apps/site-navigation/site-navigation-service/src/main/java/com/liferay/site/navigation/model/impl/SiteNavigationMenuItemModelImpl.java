@@ -45,10 +45,14 @@ import java.io.Serializable;
 import java.sql.Types;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the SiteNavigationMenuItem service. Represents a row in the &quot;SiteNavigationMenuItem&quot; database table, with each column mapped to a property of this class.
@@ -228,22 +232,16 @@ public class SiteNavigationMenuItemModelImpl extends BaseModelImpl<SiteNavigatio
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("uuid", getUuid());
-		attributes.put("siteNavigationMenuItemId", getSiteNavigationMenuItemId());
-		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("siteNavigationMenuId", getSiteNavigationMenuId());
-		attributes.put("parentSiteNavigationMenuItemId",
-			getParentSiteNavigationMenuItemId());
-		attributes.put("name", getName());
-		attributes.put("type", getType());
-		attributes.put("typeSettings", getTypeSettings());
-		attributes.put("order", getOrder());
-		attributes.put("lastPublishDate", getLastPublishDate());
+		Map<String, Function<SiteNavigationMenuItem, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
+
+		for (Map.Entry<String, Function<SiteNavigationMenuItem, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<SiteNavigationMenuItem, Object> attributeGetterFunction = entry.getValue();
+
+			attributes.put(attributeName,
+				attributeGetterFunction.apply((SiteNavigationMenuItem)this));
+		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -253,97 +251,72 @@ public class SiteNavigationMenuItemModelImpl extends BaseModelImpl<SiteNavigatio
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		String uuid = (String)attributes.get("uuid");
+		Map<String, BiConsumer<SiteNavigationMenuItem, Object>> attributeSetterBiConsumers =
+			getAttributeSetterBiConsumers();
 
-		if (uuid != null) {
-			setUuid(uuid);
+		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
+			String attributeName = entry.getKey();
+
+			BiConsumer<SiteNavigationMenuItem, Object> attributeSetterBiConsumer =
+				attributeSetterBiConsumers.get(attributeName);
+
+			if (attributeSetterBiConsumer != null) {
+				attributeSetterBiConsumer.accept((SiteNavigationMenuItem)this,
+					entry.getValue());
+			}
 		}
+	}
 
-		Long siteNavigationMenuItemId = (Long)attributes.get(
-				"siteNavigationMenuItemId");
+	public Map<String, Function<SiteNavigationMenuItem, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
+	}
 
-		if (siteNavigationMenuItemId != null) {
-			setSiteNavigationMenuItemId(siteNavigationMenuItemId);
-		}
+	public Map<String, BiConsumer<SiteNavigationMenuItem, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		Long groupId = (Long)attributes.get("groupId");
+	private static final Map<String, Function<SiteNavigationMenuItem, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<SiteNavigationMenuItem, Object>> _attributeSetterBiConsumers;
 
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
+	static {
+		Map<String, Function<SiteNavigationMenuItem, Object>> attributeGetterFunctions =
+			new LinkedHashMap<String, Function<SiteNavigationMenuItem, Object>>();
+		Map<String, BiConsumer<SiteNavigationMenuItem, ?>> attributeSetterBiConsumers =
+			new LinkedHashMap<String, BiConsumer<SiteNavigationMenuItem, ?>>();
 
-		Long companyId = (Long)attributes.get("companyId");
+		attributeGetterFunctions.put("uuid", SiteNavigationMenuItem::getUuid);
+		attributeSetterBiConsumers.put("uuid", (BiConsumer<SiteNavigationMenuItem, String>)SiteNavigationMenuItem::setUuid);
+		attributeGetterFunctions.put("siteNavigationMenuItemId", SiteNavigationMenuItem::getSiteNavigationMenuItemId);
+		attributeSetterBiConsumers.put("siteNavigationMenuItemId", (BiConsumer<SiteNavigationMenuItem, Long>)SiteNavigationMenuItem::setSiteNavigationMenuItemId);
+		attributeGetterFunctions.put("groupId", SiteNavigationMenuItem::getGroupId);
+		attributeSetterBiConsumers.put("groupId", (BiConsumer<SiteNavigationMenuItem, Long>)SiteNavigationMenuItem::setGroupId);
+		attributeGetterFunctions.put("companyId", SiteNavigationMenuItem::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<SiteNavigationMenuItem, Long>)SiteNavigationMenuItem::setCompanyId);
+		attributeGetterFunctions.put("userId", SiteNavigationMenuItem::getUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<SiteNavigationMenuItem, Long>)SiteNavigationMenuItem::setUserId);
+		attributeGetterFunctions.put("userName", SiteNavigationMenuItem::getUserName);
+		attributeSetterBiConsumers.put("userName", (BiConsumer<SiteNavigationMenuItem, String>)SiteNavigationMenuItem::setUserName);
+		attributeGetterFunctions.put("createDate", SiteNavigationMenuItem::getCreateDate);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<SiteNavigationMenuItem, Date>)SiteNavigationMenuItem::setCreateDate);
+		attributeGetterFunctions.put("modifiedDate", SiteNavigationMenuItem::getModifiedDate);
+		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<SiteNavigationMenuItem, Date>)SiteNavigationMenuItem::setModifiedDate);
+		attributeGetterFunctions.put("siteNavigationMenuId", SiteNavigationMenuItem::getSiteNavigationMenuId);
+		attributeSetterBiConsumers.put("siteNavigationMenuId", (BiConsumer<SiteNavigationMenuItem, Long>)SiteNavigationMenuItem::setSiteNavigationMenuId);
+		attributeGetterFunctions.put("parentSiteNavigationMenuItemId", SiteNavigationMenuItem::getParentSiteNavigationMenuItemId);
+		attributeSetterBiConsumers.put("parentSiteNavigationMenuItemId", (BiConsumer<SiteNavigationMenuItem, Long>)SiteNavigationMenuItem::setParentSiteNavigationMenuItemId);
+		attributeGetterFunctions.put("name", SiteNavigationMenuItem::getName);
+		attributeSetterBiConsumers.put("name", (BiConsumer<SiteNavigationMenuItem, String>)SiteNavigationMenuItem::setName);
+		attributeGetterFunctions.put("type", SiteNavigationMenuItem::getType);
+		attributeSetterBiConsumers.put("type", (BiConsumer<SiteNavigationMenuItem, String>)SiteNavigationMenuItem::setType);
+		attributeGetterFunctions.put("typeSettings", SiteNavigationMenuItem::getTypeSettings);
+		attributeSetterBiConsumers.put("typeSettings", (BiConsumer<SiteNavigationMenuItem, String>)SiteNavigationMenuItem::setTypeSettings);
+		attributeGetterFunctions.put("order", SiteNavigationMenuItem::getOrder);
+		attributeSetterBiConsumers.put("order", (BiConsumer<SiteNavigationMenuItem, Integer>)SiteNavigationMenuItem::setOrder);
+		attributeGetterFunctions.put("lastPublishDate", SiteNavigationMenuItem::getLastPublishDate);
+		attributeSetterBiConsumers.put("lastPublishDate", (BiConsumer<SiteNavigationMenuItem, Date>)SiteNavigationMenuItem::setLastPublishDate);
 
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		Long siteNavigationMenuId = (Long)attributes.get("siteNavigationMenuId");
-
-		if (siteNavigationMenuId != null) {
-			setSiteNavigationMenuId(siteNavigationMenuId);
-		}
-
-		Long parentSiteNavigationMenuItemId = (Long)attributes.get(
-				"parentSiteNavigationMenuItemId");
-
-		if (parentSiteNavigationMenuItemId != null) {
-			setParentSiteNavigationMenuItemId(parentSiteNavigationMenuItemId);
-		}
-
-		String name = (String)attributes.get("name");
-
-		if (name != null) {
-			setName(name);
-		}
-
-		String type = (String)attributes.get("type");
-
-		if (type != null) {
-			setType(type);
-		}
-
-		String typeSettings = (String)attributes.get("typeSettings");
-
-		if (typeSettings != null) {
-			setTypeSettings(typeSettings);
-		}
-
-		Integer order = (Integer)attributes.get("order");
-
-		if (order != null) {
-			setOrder(order);
-		}
-
-		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
-
-		if (lastPublishDate != null) {
-			setLastPublishDate(lastPublishDate);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@JSON
@@ -856,38 +829,29 @@ public class SiteNavigationMenuItemModelImpl extends BaseModelImpl<SiteNavigatio
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(31);
+		Map<String, Function<SiteNavigationMenuItem, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		sb.append("{uuid=");
-		sb.append(getUuid());
-		sb.append(", siteNavigationMenuItemId=");
-		sb.append(getSiteNavigationMenuItemId());
-		sb.append(", groupId=");
-		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", userName=");
-		sb.append(getUserName());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", modifiedDate=");
-		sb.append(getModifiedDate());
-		sb.append(", siteNavigationMenuId=");
-		sb.append(getSiteNavigationMenuId());
-		sb.append(", parentSiteNavigationMenuItemId=");
-		sb.append(getParentSiteNavigationMenuItemId());
-		sb.append(", name=");
-		sb.append(getName());
-		sb.append(", type=");
-		sb.append(getType());
-		sb.append(", typeSettings=");
-		sb.append(getTypeSettings());
-		sb.append(", order=");
-		sb.append(getOrder());
-		sb.append(", lastPublishDate=");
-		sb.append(getLastPublishDate());
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
+
+		sb.append("{");
+
+		for (Map.Entry<String, Function<SiteNavigationMenuItem, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<SiteNavigationMenuItem, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append(attributeName);
+			sb.append("=");
+			sb.append(attributeGetterFunction.apply(
+					(SiteNavigationMenuItem)this));
+			sb.append(", ");
+		}
+
+		if (sb.index() > 1) {
+			sb.setIndex(sb.index() - 1);
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -895,72 +859,27 @@ public class SiteNavigationMenuItemModelImpl extends BaseModelImpl<SiteNavigatio
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(49);
+		Map<String, Function<SiteNavigationMenuItem, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
+
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
-		sb.append("com.liferay.site.navigation.model.SiteNavigationMenuItem");
+		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		sb.append(
-			"<column><column-name>uuid</column-name><column-value><![CDATA[");
-		sb.append(getUuid());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>siteNavigationMenuItemId</column-name><column-value><![CDATA[");
-		sb.append(getSiteNavigationMenuItemId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>groupId</column-name><column-value><![CDATA[");
-		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userName</column-name><column-value><![CDATA[");
-		sb.append(getUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
-		sb.append(getModifiedDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>siteNavigationMenuId</column-name><column-value><![CDATA[");
-		sb.append(getSiteNavigationMenuId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>parentSiteNavigationMenuItemId</column-name><column-value><![CDATA[");
-		sb.append(getParentSiteNavigationMenuItemId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>name</column-name><column-value><![CDATA[");
-		sb.append(getName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>type</column-name><column-value><![CDATA[");
-		sb.append(getType());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>typeSettings</column-name><column-value><![CDATA[");
-		sb.append(getTypeSettings());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>order</column-name><column-value><![CDATA[");
-		sb.append(getOrder());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
-		sb.append(getLastPublishDate());
-		sb.append("]]></column-value></column>");
+		for (Map.Entry<String, Function<SiteNavigationMenuItem, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<SiteNavigationMenuItem, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append("<column><column-name>");
+			sb.append(attributeName);
+			sb.append("</column-name><column-value><![CDATA[");
+			sb.append(attributeGetterFunction.apply(
+					(SiteNavigationMenuItem)this));
+			sb.append("]]></column-value></column>");
+		}
 
 		sb.append("</model>");
 

@@ -42,10 +42,14 @@ import java.io.Serializable;
 import java.sql.Types;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the Gadget service. Represents a row in the &quot;OpenSocial_Gadget&quot; database table, with each column mapped to a property of this class.
@@ -202,15 +206,15 @@ public class GadgetModelImpl extends BaseModelImpl<Gadget>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("uuid", getUuid());
-		attributes.put("gadgetId", getGadgetId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("name", getName());
-		attributes.put("url", getUrl());
-		attributes.put("portletCategoryNames", getPortletCategoryNames());
-		attributes.put("lastPublishDate", getLastPublishDate());
+		Map<String, Function<Gadget, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+
+		for (Map.Entry<String, Function<Gadget, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<Gadget, Object> attributeGetterFunction = entry.getValue();
+
+			attributes.put(attributeName,
+				attributeGetterFunction.apply((Gadget)this));
+		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -220,60 +224,55 @@ public class GadgetModelImpl extends BaseModelImpl<Gadget>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		String uuid = (String)attributes.get("uuid");
+		Map<String, BiConsumer<Gadget, Object>> attributeSetterBiConsumers = getAttributeSetterBiConsumers();
 
-		if (uuid != null) {
-			setUuid(uuid);
+		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
+			String attributeName = entry.getKey();
+
+			BiConsumer<Gadget, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+
+			if (attributeSetterBiConsumer != null) {
+				attributeSetterBiConsumer.accept((Gadget)this, entry.getValue());
+			}
 		}
+	}
 
-		Long gadgetId = (Long)attributes.get("gadgetId");
+	public Map<String, Function<Gadget, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
+	}
 
-		if (gadgetId != null) {
-			setGadgetId(gadgetId);
-		}
+	public Map<String, BiConsumer<Gadget, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		Long companyId = (Long)attributes.get("companyId");
+	private static final Map<String, Function<Gadget, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<Gadget, Object>> _attributeSetterBiConsumers;
 
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
+	static {
+		Map<String, Function<Gadget, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<Gadget, Object>>();
+		Map<String, BiConsumer<Gadget, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<Gadget, ?>>();
 
-		Date createDate = (Date)attributes.get("createDate");
+		attributeGetterFunctions.put("uuid", Gadget::getUuid);
+		attributeSetterBiConsumers.put("uuid", (BiConsumer<Gadget, String>)Gadget::setUuid);
+		attributeGetterFunctions.put("gadgetId", Gadget::getGadgetId);
+		attributeSetterBiConsumers.put("gadgetId", (BiConsumer<Gadget, Long>)Gadget::setGadgetId);
+		attributeGetterFunctions.put("companyId", Gadget::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<Gadget, Long>)Gadget::setCompanyId);
+		attributeGetterFunctions.put("createDate", Gadget::getCreateDate);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<Gadget, Date>)Gadget::setCreateDate);
+		attributeGetterFunctions.put("modifiedDate", Gadget::getModifiedDate);
+		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<Gadget, Date>)Gadget::setModifiedDate);
+		attributeGetterFunctions.put("name", Gadget::getName);
+		attributeSetterBiConsumers.put("name", (BiConsumer<Gadget, String>)Gadget::setName);
+		attributeGetterFunctions.put("url", Gadget::getUrl);
+		attributeSetterBiConsumers.put("url", (BiConsumer<Gadget, String>)Gadget::setUrl);
+		attributeGetterFunctions.put("portletCategoryNames", Gadget::getPortletCategoryNames);
+		attributeSetterBiConsumers.put("portletCategoryNames", (BiConsumer<Gadget, String>)Gadget::setPortletCategoryNames);
+		attributeGetterFunctions.put("lastPublishDate", Gadget::getLastPublishDate);
+		attributeSetterBiConsumers.put("lastPublishDate", (BiConsumer<Gadget, Date>)Gadget::setLastPublishDate);
 
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		String name = (String)attributes.get("name");
-
-		if (name != null) {
-			setName(name);
-		}
-
-		String url = (String)attributes.get("url");
-
-		if (url != null) {
-			setUrl(url);
-		}
-
-		String portletCategoryNames = (String)attributes.get(
-				"portletCategoryNames");
-
-		if (portletCategoryNames != null) {
-			setPortletCategoryNames(portletCategoryNames);
-		}
-
-		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
-
-		if (lastPublishDate != null) {
-			setLastPublishDate(lastPublishDate);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@JSON
@@ -627,26 +626,27 @@ public class GadgetModelImpl extends BaseModelImpl<Gadget>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		Map<String, Function<Gadget, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		sb.append("{uuid=");
-		sb.append(getUuid());
-		sb.append(", gadgetId=");
-		sb.append(getGadgetId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", modifiedDate=");
-		sb.append(getModifiedDate());
-		sb.append(", name=");
-		sb.append(getName());
-		sb.append(", url=");
-		sb.append(getUrl());
-		sb.append(", portletCategoryNames=");
-		sb.append(getPortletCategoryNames());
-		sb.append(", lastPublishDate=");
-		sb.append(getLastPublishDate());
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
+
+		sb.append("{");
+
+		for (Map.Entry<String, Function<Gadget, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<Gadget, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append(attributeName);
+			sb.append("=");
+			sb.append(attributeGetterFunction.apply((Gadget)this));
+			sb.append(", ");
+		}
+
+		if (sb.index() > 1) {
+			sb.setIndex(sb.index() - 1);
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -654,48 +654,25 @@ public class GadgetModelImpl extends BaseModelImpl<Gadget>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(31);
+		Map<String, Function<Gadget, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
-		sb.append("com.liferay.opensocial.model.Gadget");
+		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		sb.append(
-			"<column><column-name>uuid</column-name><column-value><![CDATA[");
-		sb.append(getUuid());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>gadgetId</column-name><column-value><![CDATA[");
-		sb.append(getGadgetId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
-		sb.append(getModifiedDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>name</column-name><column-value><![CDATA[");
-		sb.append(getName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>url</column-name><column-value><![CDATA[");
-		sb.append(getUrl());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>portletCategoryNames</column-name><column-value><![CDATA[");
-		sb.append(getPortletCategoryNames());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
-		sb.append(getLastPublishDate());
-		sb.append("]]></column-value></column>");
+		for (Map.Entry<String, Function<Gadget, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<Gadget, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append("<column><column-name>");
+			sb.append(attributeName);
+			sb.append("</column-name><column-value><![CDATA[");
+			sb.append(attributeGetterFunction.apply((Gadget)this));
+			sb.append("]]></column-value></column>");
+		}
 
 		sb.append("</model>");
 

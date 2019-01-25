@@ -43,10 +43,14 @@ import java.io.Serializable;
 import java.sql.Types;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the AnnouncementsFlag service. Represents a row in the &quot;AnnouncementsFlag&quot; database table, with each column mapped to a property of this class.
@@ -195,12 +199,16 @@ public class AnnouncementsFlagModelImpl extends BaseModelImpl<AnnouncementsFlag>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("flagId", getFlagId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("entryId", getEntryId());
-		attributes.put("value", getValue());
+		Map<String, Function<AnnouncementsFlag, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
+
+		for (Map.Entry<String, Function<AnnouncementsFlag, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<AnnouncementsFlag, Object> attributeGetterFunction = entry.getValue();
+
+			attributes.put(attributeName,
+				attributeGetterFunction.apply((AnnouncementsFlag)this));
+		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -210,41 +218,53 @@ public class AnnouncementsFlagModelImpl extends BaseModelImpl<AnnouncementsFlag>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long flagId = (Long)attributes.get("flagId");
+		Map<String, BiConsumer<AnnouncementsFlag, Object>> attributeSetterBiConsumers =
+			getAttributeSetterBiConsumers();
 
-		if (flagId != null) {
-			setFlagId(flagId);
+		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
+			String attributeName = entry.getKey();
+
+			BiConsumer<AnnouncementsFlag, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+
+			if (attributeSetterBiConsumer != null) {
+				attributeSetterBiConsumer.accept((AnnouncementsFlag)this,
+					entry.getValue());
+			}
 		}
+	}
 
-		Long companyId = (Long)attributes.get("companyId");
+	public Map<String, Function<AnnouncementsFlag, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
+	}
 
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
+	public Map<String, BiConsumer<AnnouncementsFlag, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		Long userId = (Long)attributes.get("userId");
+	private static final Map<String, Function<AnnouncementsFlag, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<AnnouncementsFlag, Object>> _attributeSetterBiConsumers;
 
-		if (userId != null) {
-			setUserId(userId);
-		}
+	static {
+		Map<String, Function<AnnouncementsFlag, Object>> attributeGetterFunctions =
+			new LinkedHashMap<String, Function<AnnouncementsFlag, Object>>();
+		Map<String, BiConsumer<AnnouncementsFlag, ?>> attributeSetterBiConsumers =
+			new LinkedHashMap<String, BiConsumer<AnnouncementsFlag, ?>>();
 
-		Date createDate = (Date)attributes.get("createDate");
+		attributeGetterFunctions.put("flagId", AnnouncementsFlag::getFlagId);
+		attributeSetterBiConsumers.put("flagId", (BiConsumer<AnnouncementsFlag, Long>)AnnouncementsFlag::setFlagId);
+		attributeGetterFunctions.put("companyId", AnnouncementsFlag::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<AnnouncementsFlag, Long>)AnnouncementsFlag::setCompanyId);
+		attributeGetterFunctions.put("userId", AnnouncementsFlag::getUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<AnnouncementsFlag, Long>)AnnouncementsFlag::setUserId);
+		attributeGetterFunctions.put("createDate", AnnouncementsFlag::getCreateDate);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<AnnouncementsFlag, Date>)AnnouncementsFlag::setCreateDate);
+		attributeGetterFunctions.put("entryId", AnnouncementsFlag::getEntryId);
+		attributeSetterBiConsumers.put("entryId", (BiConsumer<AnnouncementsFlag, Long>)AnnouncementsFlag::setEntryId);
+		attributeGetterFunctions.put("value", AnnouncementsFlag::getValue);
+		attributeSetterBiConsumers.put("value", (BiConsumer<AnnouncementsFlag, Integer>)AnnouncementsFlag::setValue);
 
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Long entryId = (Long)attributes.get("entryId");
-
-		if (entryId != null) {
-			setEntryId(entryId);
-		}
-
-		Integer value = (Integer)attributes.get("value");
-
-		if (value != null) {
-			setValue(value);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@JSON
@@ -522,20 +542,28 @@ public class AnnouncementsFlagModelImpl extends BaseModelImpl<AnnouncementsFlag>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(13);
+		Map<String, Function<AnnouncementsFlag, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		sb.append("{flagId=");
-		sb.append(getFlagId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", entryId=");
-		sb.append(getEntryId());
-		sb.append(", value=");
-		sb.append(getValue());
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
+
+		sb.append("{");
+
+		for (Map.Entry<String, Function<AnnouncementsFlag, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<AnnouncementsFlag, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append(attributeName);
+			sb.append("=");
+			sb.append(attributeGetterFunction.apply((AnnouncementsFlag)this));
+			sb.append(", ");
+		}
+
+		if (sb.index() > 1) {
+			sb.setIndex(sb.index() - 1);
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -543,36 +571,26 @@ public class AnnouncementsFlagModelImpl extends BaseModelImpl<AnnouncementsFlag>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(22);
+		Map<String, Function<AnnouncementsFlag, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
+
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
-		sb.append("com.liferay.announcements.kernel.model.AnnouncementsFlag");
+		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		sb.append(
-			"<column><column-name>flagId</column-name><column-value><![CDATA[");
-		sb.append(getFlagId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>entryId</column-name><column-value><![CDATA[");
-		sb.append(getEntryId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>value</column-name><column-value><![CDATA[");
-		sb.append(getValue());
-		sb.append("]]></column-value></column>");
+		for (Map.Entry<String, Function<AnnouncementsFlag, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<AnnouncementsFlag, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append("<column><column-name>");
+			sb.append(attributeName);
+			sb.append("</column-name><column-value><![CDATA[");
+			sb.append(attributeGetterFunction.apply((AnnouncementsFlag)this));
+			sb.append("]]></column-value></column>");
+		}
 
 		sb.append("</model>");
 

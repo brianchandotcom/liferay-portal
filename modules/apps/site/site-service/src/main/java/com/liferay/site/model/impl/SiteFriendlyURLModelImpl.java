@@ -42,9 +42,13 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the SiteFriendlyURL service. Represents a row in the &quot;SiteFriendlyURL&quot; database table, with each column mapped to a property of this class.
@@ -159,17 +163,15 @@ public class SiteFriendlyURLModelImpl extends BaseModelImpl<SiteFriendlyURL>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("uuid", getUuid());
-		attributes.put("siteFriendlyURLId", getSiteFriendlyURLId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("groupId", getGroupId());
-		attributes.put("friendlyURL", getFriendlyURL());
-		attributes.put("languageId", getLanguageId());
-		attributes.put("lastPublishDate", getLastPublishDate());
+		Map<String, Function<SiteFriendlyURL, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+
+		for (Map.Entry<String, Function<SiteFriendlyURL, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<SiteFriendlyURL, Object> attributeGetterFunction = entry.getValue();
+
+			attributes.put(attributeName,
+				attributeGetterFunction.apply((SiteFriendlyURL)this));
+		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -179,71 +181,61 @@ public class SiteFriendlyURLModelImpl extends BaseModelImpl<SiteFriendlyURL>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		String uuid = (String)attributes.get("uuid");
+		Map<String, BiConsumer<SiteFriendlyURL, Object>> attributeSetterBiConsumers =
+			getAttributeSetterBiConsumers();
 
-		if (uuid != null) {
-			setUuid(uuid);
+		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
+			String attributeName = entry.getKey();
+
+			BiConsumer<SiteFriendlyURL, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+
+			if (attributeSetterBiConsumer != null) {
+				attributeSetterBiConsumer.accept((SiteFriendlyURL)this,
+					entry.getValue());
+			}
 		}
+	}
 
-		Long siteFriendlyURLId = (Long)attributes.get("siteFriendlyURLId");
+	public Map<String, Function<SiteFriendlyURL, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
+	}
 
-		if (siteFriendlyURLId != null) {
-			setSiteFriendlyURLId(siteFriendlyURLId);
-		}
+	public Map<String, BiConsumer<SiteFriendlyURL, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		Long companyId = (Long)attributes.get("companyId");
+	private static final Map<String, Function<SiteFriendlyURL, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<SiteFriendlyURL, Object>> _attributeSetterBiConsumers;
 
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
+	static {
+		Map<String, Function<SiteFriendlyURL, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<SiteFriendlyURL, Object>>();
+		Map<String, BiConsumer<SiteFriendlyURL, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<SiteFriendlyURL, ?>>();
 
-		Long userId = (Long)attributes.get("userId");
+		attributeGetterFunctions.put("uuid", SiteFriendlyURL::getUuid);
+		attributeSetterBiConsumers.put("uuid", (BiConsumer<SiteFriendlyURL, String>)SiteFriendlyURL::setUuid);
+		attributeGetterFunctions.put("siteFriendlyURLId", SiteFriendlyURL::getSiteFriendlyURLId);
+		attributeSetterBiConsumers.put("siteFriendlyURLId", (BiConsumer<SiteFriendlyURL, Long>)SiteFriendlyURL::setSiteFriendlyURLId);
+		attributeGetterFunctions.put("companyId", SiteFriendlyURL::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<SiteFriendlyURL, Long>)SiteFriendlyURL::setCompanyId);
+		attributeGetterFunctions.put("userId", SiteFriendlyURL::getUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<SiteFriendlyURL, Long>)SiteFriendlyURL::setUserId);
+		attributeGetterFunctions.put("userName", SiteFriendlyURL::getUserName);
+		attributeSetterBiConsumers.put("userName", (BiConsumer<SiteFriendlyURL, String>)SiteFriendlyURL::setUserName);
+		attributeGetterFunctions.put("createDate", SiteFriendlyURL::getCreateDate);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<SiteFriendlyURL, Date>)SiteFriendlyURL::setCreateDate);
+		attributeGetterFunctions.put("modifiedDate", SiteFriendlyURL::getModifiedDate);
+		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<SiteFriendlyURL, Date>)SiteFriendlyURL::setModifiedDate);
+		attributeGetterFunctions.put("groupId", SiteFriendlyURL::getGroupId);
+		attributeSetterBiConsumers.put("groupId", (BiConsumer<SiteFriendlyURL, Long>)SiteFriendlyURL::setGroupId);
+		attributeGetterFunctions.put("friendlyURL", SiteFriendlyURL::getFriendlyURL);
+		attributeSetterBiConsumers.put("friendlyURL", (BiConsumer<SiteFriendlyURL, String>)SiteFriendlyURL::setFriendlyURL);
+		attributeGetterFunctions.put("languageId", SiteFriendlyURL::getLanguageId);
+		attributeSetterBiConsumers.put("languageId", (BiConsumer<SiteFriendlyURL, String>)SiteFriendlyURL::setLanguageId);
+		attributeGetterFunctions.put("lastPublishDate", SiteFriendlyURL::getLastPublishDate);
+		attributeSetterBiConsumers.put("lastPublishDate", (BiConsumer<SiteFriendlyURL, Date>)SiteFriendlyURL::setLastPublishDate);
 
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		Long groupId = (Long)attributes.get("groupId");
-
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
-
-		String friendlyURL = (String)attributes.get("friendlyURL");
-
-		if (friendlyURL != null) {
-			setFriendlyURL(friendlyURL);
-		}
-
-		String languageId = (String)attributes.get("languageId");
-
-		if (languageId != null) {
-			setLanguageId(languageId);
-		}
-
-		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
-
-		if (lastPublishDate != null) {
-			setLastPublishDate(lastPublishDate);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -657,30 +649,27 @@ public class SiteFriendlyURLModelImpl extends BaseModelImpl<SiteFriendlyURL>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		Map<String, Function<SiteFriendlyURL, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		sb.append("{uuid=");
-		sb.append(getUuid());
-		sb.append(", siteFriendlyURLId=");
-		sb.append(getSiteFriendlyURLId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", userName=");
-		sb.append(getUserName());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", modifiedDate=");
-		sb.append(getModifiedDate());
-		sb.append(", groupId=");
-		sb.append(getGroupId());
-		sb.append(", friendlyURL=");
-		sb.append(getFriendlyURL());
-		sb.append(", languageId=");
-		sb.append(getLanguageId());
-		sb.append(", lastPublishDate=");
-		sb.append(getLastPublishDate());
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
+
+		sb.append("{");
+
+		for (Map.Entry<String, Function<SiteFriendlyURL, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<SiteFriendlyURL, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append(attributeName);
+			sb.append("=");
+			sb.append(attributeGetterFunction.apply((SiteFriendlyURL)this));
+			sb.append(", ");
+		}
+
+		if (sb.index() > 1) {
+			sb.setIndex(sb.index() - 1);
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -688,56 +677,25 @@ public class SiteFriendlyURLModelImpl extends BaseModelImpl<SiteFriendlyURL>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(37);
+		Map<String, Function<SiteFriendlyURL, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
-		sb.append("com.liferay.site.model.SiteFriendlyURL");
+		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		sb.append(
-			"<column><column-name>uuid</column-name><column-value><![CDATA[");
-		sb.append(getUuid());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>siteFriendlyURLId</column-name><column-value><![CDATA[");
-		sb.append(getSiteFriendlyURLId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userName</column-name><column-value><![CDATA[");
-		sb.append(getUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
-		sb.append(getModifiedDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>groupId</column-name><column-value><![CDATA[");
-		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>friendlyURL</column-name><column-value><![CDATA[");
-		sb.append(getFriendlyURL());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>languageId</column-name><column-value><![CDATA[");
-		sb.append(getLanguageId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
-		sb.append(getLastPublishDate());
-		sb.append("]]></column-value></column>");
+		for (Map.Entry<String, Function<SiteFriendlyURL, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<SiteFriendlyURL, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append("<column><column-name>");
+			sb.append(attributeName);
+			sb.append("</column-name><column-value><![CDATA[");
+			sb.append(attributeGetterFunction.apply((SiteFriendlyURL)this));
+			sb.append("]]></column-value></column>");
+		}
 
 		sb.append("</model>");
 

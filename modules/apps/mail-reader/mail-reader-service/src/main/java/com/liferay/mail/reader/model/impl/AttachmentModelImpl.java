@@ -39,8 +39,12 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the Attachment service. Represents a row in the &quot;Mail_Attachment&quot; database table, with each column mapped to a property of this class.
@@ -147,15 +151,15 @@ public class AttachmentModelImpl extends BaseModelImpl<Attachment>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("attachmentId", getAttachmentId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("accountId", getAccountId());
-		attributes.put("folderId", getFolderId());
-		attributes.put("messageId", getMessageId());
-		attributes.put("contentPath", getContentPath());
-		attributes.put("fileName", getFileName());
-		attributes.put("size", getSize());
+		Map<String, Function<Attachment, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+
+		for (Map.Entry<String, Function<Attachment, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<Attachment, Object> attributeGetterFunction = entry.getValue();
+
+			attributes.put(attributeName,
+				attributeGetterFunction.apply((Attachment)this));
+		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -165,59 +169,56 @@ public class AttachmentModelImpl extends BaseModelImpl<Attachment>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long attachmentId = (Long)attributes.get("attachmentId");
+		Map<String, BiConsumer<Attachment, Object>> attributeSetterBiConsumers = getAttributeSetterBiConsumers();
 
-		if (attachmentId != null) {
-			setAttachmentId(attachmentId);
+		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
+			String attributeName = entry.getKey();
+
+			BiConsumer<Attachment, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+
+			if (attributeSetterBiConsumer != null) {
+				attributeSetterBiConsumer.accept((Attachment)this,
+					entry.getValue());
+			}
 		}
+	}
 
-		Long companyId = (Long)attributes.get("companyId");
+	public Map<String, Function<Attachment, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
+	}
 
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
+	public Map<String, BiConsumer<Attachment, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		Long userId = (Long)attributes.get("userId");
+	private static final Map<String, Function<Attachment, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<Attachment, Object>> _attributeSetterBiConsumers;
 
-		if (userId != null) {
-			setUserId(userId);
-		}
+	static {
+		Map<String, Function<Attachment, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<Attachment, Object>>();
+		Map<String, BiConsumer<Attachment, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<Attachment, ?>>();
 
-		Long accountId = (Long)attributes.get("accountId");
+		attributeGetterFunctions.put("attachmentId", Attachment::getAttachmentId);
+		attributeSetterBiConsumers.put("attachmentId", (BiConsumer<Attachment, Long>)Attachment::setAttachmentId);
+		attributeGetterFunctions.put("companyId", Attachment::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<Attachment, Long>)Attachment::setCompanyId);
+		attributeGetterFunctions.put("userId", Attachment::getUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<Attachment, Long>)Attachment::setUserId);
+		attributeGetterFunctions.put("accountId", Attachment::getAccountId);
+		attributeSetterBiConsumers.put("accountId", (BiConsumer<Attachment, Long>)Attachment::setAccountId);
+		attributeGetterFunctions.put("folderId", Attachment::getFolderId);
+		attributeSetterBiConsumers.put("folderId", (BiConsumer<Attachment, Long>)Attachment::setFolderId);
+		attributeGetterFunctions.put("messageId", Attachment::getMessageId);
+		attributeSetterBiConsumers.put("messageId", (BiConsumer<Attachment, Long>)Attachment::setMessageId);
+		attributeGetterFunctions.put("contentPath", Attachment::getContentPath);
+		attributeSetterBiConsumers.put("contentPath", (BiConsumer<Attachment, String>)Attachment::setContentPath);
+		attributeGetterFunctions.put("fileName", Attachment::getFileName);
+		attributeSetterBiConsumers.put("fileName", (BiConsumer<Attachment, String>)Attachment::setFileName);
+		attributeGetterFunctions.put("size", Attachment::getSize);
+		attributeSetterBiConsumers.put("size", (BiConsumer<Attachment, Long>)Attachment::setSize);
 
-		if (accountId != null) {
-			setAccountId(accountId);
-		}
-
-		Long folderId = (Long)attributes.get("folderId");
-
-		if (folderId != null) {
-			setFolderId(folderId);
-		}
-
-		Long messageId = (Long)attributes.get("messageId");
-
-		if (messageId != null) {
-			setMessageId(messageId);
-		}
-
-		String contentPath = (String)attributes.get("contentPath");
-
-		if (contentPath != null) {
-			setContentPath(contentPath);
-		}
-
-		String fileName = (String)attributes.get("fileName");
-
-		if (fileName != null) {
-			setFileName(fileName);
-		}
-
-		Long size = (Long)attributes.get("size");
-
-		if (size != null) {
-			setSize(size);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -496,26 +497,27 @@ public class AttachmentModelImpl extends BaseModelImpl<Attachment>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		Map<String, Function<Attachment, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		sb.append("{attachmentId=");
-		sb.append(getAttachmentId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", accountId=");
-		sb.append(getAccountId());
-		sb.append(", folderId=");
-		sb.append(getFolderId());
-		sb.append(", messageId=");
-		sb.append(getMessageId());
-		sb.append(", contentPath=");
-		sb.append(getContentPath());
-		sb.append(", fileName=");
-		sb.append(getFileName());
-		sb.append(", size=");
-		sb.append(getSize());
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
+
+		sb.append("{");
+
+		for (Map.Entry<String, Function<Attachment, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<Attachment, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append(attributeName);
+			sb.append("=");
+			sb.append(attributeGetterFunction.apply((Attachment)this));
+			sb.append(", ");
+		}
+
+		if (sb.index() > 1) {
+			sb.setIndex(sb.index() - 1);
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -523,48 +525,25 @@ public class AttachmentModelImpl extends BaseModelImpl<Attachment>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(31);
+		Map<String, Function<Attachment, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
-		sb.append("com.liferay.mail.reader.model.Attachment");
+		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		sb.append(
-			"<column><column-name>attachmentId</column-name><column-value><![CDATA[");
-		sb.append(getAttachmentId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>accountId</column-name><column-value><![CDATA[");
-		sb.append(getAccountId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>folderId</column-name><column-value><![CDATA[");
-		sb.append(getFolderId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>messageId</column-name><column-value><![CDATA[");
-		sb.append(getMessageId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>contentPath</column-name><column-value><![CDATA[");
-		sb.append(getContentPath());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>fileName</column-name><column-value><![CDATA[");
-		sb.append(getFileName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>size</column-name><column-value><![CDATA[");
-		sb.append(getSize());
-		sb.append("]]></column-value></column>");
+		for (Map.Entry<String, Function<Attachment, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<Attachment, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append("<column><column-name>");
+			sb.append(attributeName);
+			sb.append("</column-name><column-value><![CDATA[");
+			sb.append(attributeGetterFunction.apply((Attachment)this));
+			sb.append("]]></column-value></column>");
+		}
 
 		sb.append("</model>");
 

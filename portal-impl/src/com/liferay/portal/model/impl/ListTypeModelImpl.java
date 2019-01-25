@@ -38,9 +38,13 @@ import java.io.Serializable;
 import java.sql.Types;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the ListType service. Represents a row in the &quot;ListType&quot; database table, with each column mapped to a property of this class.
@@ -180,10 +184,15 @@ public class ListTypeModelImpl extends BaseModelImpl<ListType>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("mvccVersion", getMvccVersion());
-		attributes.put("listTypeId", getListTypeId());
-		attributes.put("name", getName());
-		attributes.put("type", getType());
+		Map<String, Function<ListType, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+
+		for (Map.Entry<String, Function<ListType, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<ListType, Object> attributeGetterFunction = entry.getValue();
+
+			attributes.put(attributeName,
+				attributeGetterFunction.apply((ListType)this));
+		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -193,29 +202,46 @@ public class ListTypeModelImpl extends BaseModelImpl<ListType>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long mvccVersion = (Long)attributes.get("mvccVersion");
+		Map<String, BiConsumer<ListType, Object>> attributeSetterBiConsumers = getAttributeSetterBiConsumers();
 
-		if (mvccVersion != null) {
-			setMvccVersion(mvccVersion);
+		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
+			String attributeName = entry.getKey();
+
+			BiConsumer<ListType, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+
+			if (attributeSetterBiConsumer != null) {
+				attributeSetterBiConsumer.accept((ListType)this,
+					entry.getValue());
+			}
 		}
+	}
 
-		Long listTypeId = (Long)attributes.get("listTypeId");
+	public Map<String, Function<ListType, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
+	}
 
-		if (listTypeId != null) {
-			setListTypeId(listTypeId);
-		}
+	public Map<String, BiConsumer<ListType, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		String name = (String)attributes.get("name");
+	private static final Map<String, Function<ListType, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<ListType, Object>> _attributeSetterBiConsumers;
 
-		if (name != null) {
-			setName(name);
-		}
+	static {
+		Map<String, Function<ListType, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<ListType, Object>>();
+		Map<String, BiConsumer<ListType, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<ListType, ?>>();
 
-		String type = (String)attributes.get("type");
+		attributeGetterFunctions.put("mvccVersion", ListType::getMvccVersion);
+		attributeSetterBiConsumers.put("mvccVersion", (BiConsumer<ListType, Long>)ListType::setMvccVersion);
+		attributeGetterFunctions.put("listTypeId", ListType::getListTypeId);
+		attributeSetterBiConsumers.put("listTypeId", (BiConsumer<ListType, Long>)ListType::setListTypeId);
+		attributeGetterFunctions.put("name", ListType::getName);
+		attributeSetterBiConsumers.put("name", (BiConsumer<ListType, String>)ListType::setName);
+		attributeGetterFunctions.put("type", ListType::getType);
+		attributeSetterBiConsumers.put("type", (BiConsumer<ListType, String>)ListType::setType);
 
-		if (type != null) {
-			setType(type);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@JSON
@@ -423,16 +449,27 @@ public class ListTypeModelImpl extends BaseModelImpl<ListType>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(9);
+		Map<String, Function<ListType, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		sb.append("{mvccVersion=");
-		sb.append(getMvccVersion());
-		sb.append(", listTypeId=");
-		sb.append(getListTypeId());
-		sb.append(", name=");
-		sb.append(getName());
-		sb.append(", type=");
-		sb.append(getType());
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
+
+		sb.append("{");
+
+		for (Map.Entry<String, Function<ListType, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<ListType, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append(attributeName);
+			sb.append("=");
+			sb.append(attributeGetterFunction.apply((ListType)this));
+			sb.append(", ");
+		}
+
+		if (sb.index() > 1) {
+			sb.setIndex(sb.index() - 1);
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -440,28 +477,25 @@ public class ListTypeModelImpl extends BaseModelImpl<ListType>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(16);
+		Map<String, Function<ListType, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
-		sb.append("com.liferay.portal.kernel.model.ListType");
+		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		sb.append(
-			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
-		sb.append(getMvccVersion());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>listTypeId</column-name><column-value><![CDATA[");
-		sb.append(getListTypeId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>name</column-name><column-value><![CDATA[");
-		sb.append(getName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>type</column-name><column-value><![CDATA[");
-		sb.append(getType());
-		sb.append("]]></column-value></column>");
+		for (Map.Entry<String, Function<ListType, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<ListType, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append("<column><column-name>");
+			sb.append(attributeName);
+			sb.append("</column-name><column-value><![CDATA[");
+			sb.append(attributeGetterFunction.apply((ListType)this));
+			sb.append("]]></column-value></column>");
+		}
 
 		sb.append("</model>");
 

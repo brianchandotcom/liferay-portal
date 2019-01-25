@@ -43,9 +43,13 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the FragmentEntryLink service. Represents a row in the &quot;FragmentEntryLink&quot; database table, with each column mapped to a property of this class.
@@ -179,27 +183,16 @@ public class FragmentEntryLinkModelImpl extends BaseModelImpl<FragmentEntryLink>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("uuid", getUuid());
-		attributes.put("fragmentEntryLinkId", getFragmentEntryLinkId());
-		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("originalFragmentEntryLinkId",
-			getOriginalFragmentEntryLinkId());
-		attributes.put("fragmentEntryId", getFragmentEntryId());
-		attributes.put("classNameId", getClassNameId());
-		attributes.put("classPK", getClassPK());
-		attributes.put("css", getCss());
-		attributes.put("html", getHtml());
-		attributes.put("js", getJs());
-		attributes.put("editableValues", getEditableValues());
-		attributes.put("position", getPosition());
-		attributes.put("lastPropagationDate", getLastPropagationDate());
-		attributes.put("namespace", getNamespace());
-		attributes.put("lastPublishDate", getLastPublishDate());
+		Map<String, Function<FragmentEntryLink, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
+
+		for (Map.Entry<String, Function<FragmentEntryLink, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<FragmentEntryLink, Object> attributeGetterFunction = entry.getValue();
+
+			attributes.put(attributeName,
+				attributeGetterFunction.apply((FragmentEntryLink)this));
+		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -209,126 +202,81 @@ public class FragmentEntryLinkModelImpl extends BaseModelImpl<FragmentEntryLink>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		String uuid = (String)attributes.get("uuid");
+		Map<String, BiConsumer<FragmentEntryLink, Object>> attributeSetterBiConsumers =
+			getAttributeSetterBiConsumers();
 
-		if (uuid != null) {
-			setUuid(uuid);
+		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
+			String attributeName = entry.getKey();
+
+			BiConsumer<FragmentEntryLink, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+
+			if (attributeSetterBiConsumer != null) {
+				attributeSetterBiConsumer.accept((FragmentEntryLink)this,
+					entry.getValue());
+			}
 		}
+	}
 
-		Long fragmentEntryLinkId = (Long)attributes.get("fragmentEntryLinkId");
+	public Map<String, Function<FragmentEntryLink, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
+	}
 
-		if (fragmentEntryLinkId != null) {
-			setFragmentEntryLinkId(fragmentEntryLinkId);
-		}
+	public Map<String, BiConsumer<FragmentEntryLink, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		Long groupId = (Long)attributes.get("groupId");
+	private static final Map<String, Function<FragmentEntryLink, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<FragmentEntryLink, Object>> _attributeSetterBiConsumers;
 
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
+	static {
+		Map<String, Function<FragmentEntryLink, Object>> attributeGetterFunctions =
+			new LinkedHashMap<String, Function<FragmentEntryLink, Object>>();
+		Map<String, BiConsumer<FragmentEntryLink, ?>> attributeSetterBiConsumers =
+			new LinkedHashMap<String, BiConsumer<FragmentEntryLink, ?>>();
 
-		Long companyId = (Long)attributes.get("companyId");
+		attributeGetterFunctions.put("uuid", FragmentEntryLink::getUuid);
+		attributeSetterBiConsumers.put("uuid", (BiConsumer<FragmentEntryLink, String>)FragmentEntryLink::setUuid);
+		attributeGetterFunctions.put("fragmentEntryLinkId", FragmentEntryLink::getFragmentEntryLinkId);
+		attributeSetterBiConsumers.put("fragmentEntryLinkId", (BiConsumer<FragmentEntryLink, Long>)FragmentEntryLink::setFragmentEntryLinkId);
+		attributeGetterFunctions.put("groupId", FragmentEntryLink::getGroupId);
+		attributeSetterBiConsumers.put("groupId", (BiConsumer<FragmentEntryLink, Long>)FragmentEntryLink::setGroupId);
+		attributeGetterFunctions.put("companyId", FragmentEntryLink::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<FragmentEntryLink, Long>)FragmentEntryLink::setCompanyId);
+		attributeGetterFunctions.put("userId", FragmentEntryLink::getUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<FragmentEntryLink, Long>)FragmentEntryLink::setUserId);
+		attributeGetterFunctions.put("userName", FragmentEntryLink::getUserName);
+		attributeSetterBiConsumers.put("userName", (BiConsumer<FragmentEntryLink, String>)FragmentEntryLink::setUserName);
+		attributeGetterFunctions.put("createDate", FragmentEntryLink::getCreateDate);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<FragmentEntryLink, Date>)FragmentEntryLink::setCreateDate);
+		attributeGetterFunctions.put("modifiedDate", FragmentEntryLink::getModifiedDate);
+		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<FragmentEntryLink, Date>)FragmentEntryLink::setModifiedDate);
+		attributeGetterFunctions.put("originalFragmentEntryLinkId", FragmentEntryLink::getOriginalFragmentEntryLinkId);
+		attributeSetterBiConsumers.put("originalFragmentEntryLinkId", (BiConsumer<FragmentEntryLink, Long>)FragmentEntryLink::setOriginalFragmentEntryLinkId);
+		attributeGetterFunctions.put("fragmentEntryId", FragmentEntryLink::getFragmentEntryId);
+		attributeSetterBiConsumers.put("fragmentEntryId", (BiConsumer<FragmentEntryLink, Long>)FragmentEntryLink::setFragmentEntryId);
+		attributeGetterFunctions.put("classNameId", FragmentEntryLink::getClassNameId);
+		attributeSetterBiConsumers.put("classNameId", (BiConsumer<FragmentEntryLink, Long>)FragmentEntryLink::setClassNameId);
+		attributeGetterFunctions.put("classPK", FragmentEntryLink::getClassPK);
+		attributeSetterBiConsumers.put("classPK", (BiConsumer<FragmentEntryLink, Long>)FragmentEntryLink::setClassPK);
+		attributeGetterFunctions.put("css", FragmentEntryLink::getCss);
+		attributeSetterBiConsumers.put("css", (BiConsumer<FragmentEntryLink, String>)FragmentEntryLink::setCss);
+		attributeGetterFunctions.put("html", FragmentEntryLink::getHtml);
+		attributeSetterBiConsumers.put("html", (BiConsumer<FragmentEntryLink, String>)FragmentEntryLink::setHtml);
+		attributeGetterFunctions.put("js", FragmentEntryLink::getJs);
+		attributeSetterBiConsumers.put("js", (BiConsumer<FragmentEntryLink, String>)FragmentEntryLink::setJs);
+		attributeGetterFunctions.put("editableValues", FragmentEntryLink::getEditableValues);
+		attributeSetterBiConsumers.put("editableValues", (BiConsumer<FragmentEntryLink, String>)FragmentEntryLink::setEditableValues);
+		attributeGetterFunctions.put("position", FragmentEntryLink::getPosition);
+		attributeSetterBiConsumers.put("position", (BiConsumer<FragmentEntryLink, Integer>)FragmentEntryLink::setPosition);
+		attributeGetterFunctions.put("lastPropagationDate", FragmentEntryLink::getLastPropagationDate);
+		attributeSetterBiConsumers.put("lastPropagationDate", (BiConsumer<FragmentEntryLink, Date>)FragmentEntryLink::setLastPropagationDate);
+		attributeGetterFunctions.put("namespace", FragmentEntryLink::getNamespace);
+		attributeSetterBiConsumers.put("namespace", (BiConsumer<FragmentEntryLink, String>)FragmentEntryLink::setNamespace);
+		attributeGetterFunctions.put("lastPublishDate", FragmentEntryLink::getLastPublishDate);
+		attributeSetterBiConsumers.put("lastPublishDate", (BiConsumer<FragmentEntryLink, Date>)FragmentEntryLink::setLastPublishDate);
 
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		Long originalFragmentEntryLinkId = (Long)attributes.get(
-				"originalFragmentEntryLinkId");
-
-		if (originalFragmentEntryLinkId != null) {
-			setOriginalFragmentEntryLinkId(originalFragmentEntryLinkId);
-		}
-
-		Long fragmentEntryId = (Long)attributes.get("fragmentEntryId");
-
-		if (fragmentEntryId != null) {
-			setFragmentEntryId(fragmentEntryId);
-		}
-
-		Long classNameId = (Long)attributes.get("classNameId");
-
-		if (classNameId != null) {
-			setClassNameId(classNameId);
-		}
-
-		Long classPK = (Long)attributes.get("classPK");
-
-		if (classPK != null) {
-			setClassPK(classPK);
-		}
-
-		String css = (String)attributes.get("css");
-
-		if (css != null) {
-			setCss(css);
-		}
-
-		String html = (String)attributes.get("html");
-
-		if (html != null) {
-			setHtml(html);
-		}
-
-		String js = (String)attributes.get("js");
-
-		if (js != null) {
-			setJs(js);
-		}
-
-		String editableValues = (String)attributes.get("editableValues");
-
-		if (editableValues != null) {
-			setEditableValues(editableValues);
-		}
-
-		Integer position = (Integer)attributes.get("position");
-
-		if (position != null) {
-			setPosition(position);
-		}
-
-		Date lastPropagationDate = (Date)attributes.get("lastPropagationDate");
-
-		if (lastPropagationDate != null) {
-			setLastPropagationDate(lastPropagationDate);
-		}
-
-		String namespace = (String)attributes.get("namespace");
-
-		if (namespace != null) {
-			setNamespace(namespace);
-		}
-
-		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
-
-		if (lastPublishDate != null) {
-			setLastPublishDate(lastPublishDate);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -979,48 +927,28 @@ public class FragmentEntryLinkModelImpl extends BaseModelImpl<FragmentEntryLink>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(41);
+		Map<String, Function<FragmentEntryLink, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		sb.append("{uuid=");
-		sb.append(getUuid());
-		sb.append(", fragmentEntryLinkId=");
-		sb.append(getFragmentEntryLinkId());
-		sb.append(", groupId=");
-		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", userName=");
-		sb.append(getUserName());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", modifiedDate=");
-		sb.append(getModifiedDate());
-		sb.append(", originalFragmentEntryLinkId=");
-		sb.append(getOriginalFragmentEntryLinkId());
-		sb.append(", fragmentEntryId=");
-		sb.append(getFragmentEntryId());
-		sb.append(", classNameId=");
-		sb.append(getClassNameId());
-		sb.append(", classPK=");
-		sb.append(getClassPK());
-		sb.append(", css=");
-		sb.append(getCss());
-		sb.append(", html=");
-		sb.append(getHtml());
-		sb.append(", js=");
-		sb.append(getJs());
-		sb.append(", editableValues=");
-		sb.append(getEditableValues());
-		sb.append(", position=");
-		sb.append(getPosition());
-		sb.append(", lastPropagationDate=");
-		sb.append(getLastPropagationDate());
-		sb.append(", namespace=");
-		sb.append(getNamespace());
-		sb.append(", lastPublishDate=");
-		sb.append(getLastPublishDate());
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
+
+		sb.append("{");
+
+		for (Map.Entry<String, Function<FragmentEntryLink, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<FragmentEntryLink, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append(attributeName);
+			sb.append("=");
+			sb.append(attributeGetterFunction.apply((FragmentEntryLink)this));
+			sb.append(", ");
+		}
+
+		if (sb.index() > 1) {
+			sb.setIndex(sb.index() - 1);
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -1028,92 +956,26 @@ public class FragmentEntryLinkModelImpl extends BaseModelImpl<FragmentEntryLink>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(64);
+		Map<String, Function<FragmentEntryLink, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
+
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
-		sb.append("com.liferay.fragment.model.FragmentEntryLink");
+		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		sb.append(
-			"<column><column-name>uuid</column-name><column-value><![CDATA[");
-		sb.append(getUuid());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>fragmentEntryLinkId</column-name><column-value><![CDATA[");
-		sb.append(getFragmentEntryLinkId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>groupId</column-name><column-value><![CDATA[");
-		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userName</column-name><column-value><![CDATA[");
-		sb.append(getUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
-		sb.append(getModifiedDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>originalFragmentEntryLinkId</column-name><column-value><![CDATA[");
-		sb.append(getOriginalFragmentEntryLinkId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>fragmentEntryId</column-name><column-value><![CDATA[");
-		sb.append(getFragmentEntryId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>classNameId</column-name><column-value><![CDATA[");
-		sb.append(getClassNameId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>classPK</column-name><column-value><![CDATA[");
-		sb.append(getClassPK());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>css</column-name><column-value><![CDATA[");
-		sb.append(getCss());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>html</column-name><column-value><![CDATA[");
-		sb.append(getHtml());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>js</column-name><column-value><![CDATA[");
-		sb.append(getJs());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>editableValues</column-name><column-value><![CDATA[");
-		sb.append(getEditableValues());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>position</column-name><column-value><![CDATA[");
-		sb.append(getPosition());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>lastPropagationDate</column-name><column-value><![CDATA[");
-		sb.append(getLastPropagationDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>namespace</column-name><column-value><![CDATA[");
-		sb.append(getNamespace());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
-		sb.append(getLastPublishDate());
-		sb.append("]]></column-value></column>");
+		for (Map.Entry<String, Function<FragmentEntryLink, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<FragmentEntryLink, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append("<column><column-name>");
+			sb.append(attributeName);
+			sb.append("</column-name><column-value><![CDATA[");
+			sb.append(attributeGetterFunction.apply((FragmentEntryLink)this));
+			sb.append("]]></column-value></column>");
+		}
 
 		sb.append("</model>");
 

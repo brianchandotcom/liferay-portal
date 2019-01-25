@@ -40,9 +40,13 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the PortletItem service. Represents a row in the &quot;PortletItem&quot; database table, with each column mapped to a property of this class.
@@ -156,17 +160,15 @@ public class PortletItemModelImpl extends BaseModelImpl<PortletItem>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("mvccVersion", getMvccVersion());
-		attributes.put("portletItemId", getPortletItemId());
-		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("name", getName());
-		attributes.put("portletId", getPortletId());
-		attributes.put("classNameId", getClassNameId());
+		Map<String, Function<PortletItem, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+
+		for (Map.Entry<String, Function<PortletItem, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<PortletItem, Object> attributeGetterFunction = entry.getValue();
+
+			attributes.put(attributeName,
+				attributeGetterFunction.apply((PortletItem)this));
+		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -176,71 +178,60 @@ public class PortletItemModelImpl extends BaseModelImpl<PortletItem>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long mvccVersion = (Long)attributes.get("mvccVersion");
+		Map<String, BiConsumer<PortletItem, Object>> attributeSetterBiConsumers = getAttributeSetterBiConsumers();
 
-		if (mvccVersion != null) {
-			setMvccVersion(mvccVersion);
+		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
+			String attributeName = entry.getKey();
+
+			BiConsumer<PortletItem, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+
+			if (attributeSetterBiConsumer != null) {
+				attributeSetterBiConsumer.accept((PortletItem)this,
+					entry.getValue());
+			}
 		}
+	}
 
-		Long portletItemId = (Long)attributes.get("portletItemId");
+	public Map<String, Function<PortletItem, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
+	}
 
-		if (portletItemId != null) {
-			setPortletItemId(portletItemId);
-		}
+	public Map<String, BiConsumer<PortletItem, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		Long groupId = (Long)attributes.get("groupId");
+	private static final Map<String, Function<PortletItem, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<PortletItem, Object>> _attributeSetterBiConsumers;
 
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
+	static {
+		Map<String, Function<PortletItem, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<PortletItem, Object>>();
+		Map<String, BiConsumer<PortletItem, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<PortletItem, ?>>();
 
-		Long companyId = (Long)attributes.get("companyId");
+		attributeGetterFunctions.put("mvccVersion", PortletItem::getMvccVersion);
+		attributeSetterBiConsumers.put("mvccVersion", (BiConsumer<PortletItem, Long>)PortletItem::setMvccVersion);
+		attributeGetterFunctions.put("portletItemId", PortletItem::getPortletItemId);
+		attributeSetterBiConsumers.put("portletItemId", (BiConsumer<PortletItem, Long>)PortletItem::setPortletItemId);
+		attributeGetterFunctions.put("groupId", PortletItem::getGroupId);
+		attributeSetterBiConsumers.put("groupId", (BiConsumer<PortletItem, Long>)PortletItem::setGroupId);
+		attributeGetterFunctions.put("companyId", PortletItem::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<PortletItem, Long>)PortletItem::setCompanyId);
+		attributeGetterFunctions.put("userId", PortletItem::getUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<PortletItem, Long>)PortletItem::setUserId);
+		attributeGetterFunctions.put("userName", PortletItem::getUserName);
+		attributeSetterBiConsumers.put("userName", (BiConsumer<PortletItem, String>)PortletItem::setUserName);
+		attributeGetterFunctions.put("createDate", PortletItem::getCreateDate);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<PortletItem, Date>)PortletItem::setCreateDate);
+		attributeGetterFunctions.put("modifiedDate", PortletItem::getModifiedDate);
+		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<PortletItem, Date>)PortletItem::setModifiedDate);
+		attributeGetterFunctions.put("name", PortletItem::getName);
+		attributeSetterBiConsumers.put("name", (BiConsumer<PortletItem, String>)PortletItem::setName);
+		attributeGetterFunctions.put("portletId", PortletItem::getPortletId);
+		attributeSetterBiConsumers.put("portletId", (BiConsumer<PortletItem, String>)PortletItem::setPortletId);
+		attributeGetterFunctions.put("classNameId", PortletItem::getClassNameId);
+		attributeSetterBiConsumers.put("classNameId", (BiConsumer<PortletItem, Long>)PortletItem::setClassNameId);
 
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		String name = (String)attributes.get("name");
-
-		if (name != null) {
-			setName(name);
-		}
-
-		String portletId = (String)attributes.get("portletId");
-
-		if (portletId != null) {
-			setPortletId(portletId);
-		}
-
-		Long classNameId = (Long)attributes.get("classNameId");
-
-		if (classNameId != null) {
-			setClassNameId(classNameId);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -638,30 +629,27 @@ public class PortletItemModelImpl extends BaseModelImpl<PortletItem>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		Map<String, Function<PortletItem, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		sb.append("{mvccVersion=");
-		sb.append(getMvccVersion());
-		sb.append(", portletItemId=");
-		sb.append(getPortletItemId());
-		sb.append(", groupId=");
-		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", userName=");
-		sb.append(getUserName());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", modifiedDate=");
-		sb.append(getModifiedDate());
-		sb.append(", name=");
-		sb.append(getName());
-		sb.append(", portletId=");
-		sb.append(getPortletId());
-		sb.append(", classNameId=");
-		sb.append(getClassNameId());
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
+
+		sb.append("{");
+
+		for (Map.Entry<String, Function<PortletItem, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<PortletItem, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append(attributeName);
+			sb.append("=");
+			sb.append(attributeGetterFunction.apply((PortletItem)this));
+			sb.append(", ");
+		}
+
+		if (sb.index() > 1) {
+			sb.setIndex(sb.index() - 1);
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -669,56 +657,25 @@ public class PortletItemModelImpl extends BaseModelImpl<PortletItem>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(37);
+		Map<String, Function<PortletItem, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
-		sb.append("com.liferay.portal.kernel.model.PortletItem");
+		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		sb.append(
-			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
-		sb.append(getMvccVersion());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>portletItemId</column-name><column-value><![CDATA[");
-		sb.append(getPortletItemId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>groupId</column-name><column-value><![CDATA[");
-		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userName</column-name><column-value><![CDATA[");
-		sb.append(getUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
-		sb.append(getModifiedDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>name</column-name><column-value><![CDATA[");
-		sb.append(getName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>portletId</column-name><column-value><![CDATA[");
-		sb.append(getPortletId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>classNameId</column-name><column-value><![CDATA[");
-		sb.append(getClassNameId());
-		sb.append("]]></column-value></column>");
+		for (Map.Entry<String, Function<PortletItem, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<PortletItem, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append("<column><column-name>");
+			sb.append(attributeName);
+			sb.append("</column-name><column-value><![CDATA[");
+			sb.append(attributeGetterFunction.apply((PortletItem)this));
+			sb.append("]]></column-value></column>");
+		}
 
 		sb.append("</model>");
 

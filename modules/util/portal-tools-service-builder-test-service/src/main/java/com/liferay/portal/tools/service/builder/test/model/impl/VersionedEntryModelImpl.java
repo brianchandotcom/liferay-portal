@@ -35,8 +35,12 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the VersionedEntry service. Represents a row in the &quot;VersionedEntry&quot; database table, with each column mapped to a property of this class.
@@ -134,10 +138,15 @@ public class VersionedEntryModelImpl extends BaseModelImpl<VersionedEntry>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("mvccVersion", getMvccVersion());
-		attributes.put("headId", getHeadId());
-		attributes.put("versionedEntryId", getVersionedEntryId());
-		attributes.put("groupId", getGroupId());
+		Map<String, Function<VersionedEntry, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+
+		for (Map.Entry<String, Function<VersionedEntry, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<VersionedEntry, Object> attributeGetterFunction = entry.getValue();
+
+			attributes.put(attributeName,
+				attributeGetterFunction.apply((VersionedEntry)this));
+		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -147,29 +156,119 @@ public class VersionedEntryModelImpl extends BaseModelImpl<VersionedEntry>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long mvccVersion = (Long)attributes.get("mvccVersion");
+		Map<String, BiConsumer<VersionedEntry, Object>> attributeSetterBiConsumers =
+			getAttributeSetterBiConsumers();
 
-		if (mvccVersion != null) {
-			setMvccVersion(mvccVersion);
+		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
+			String attributeName = entry.getKey();
+
+			BiConsumer<VersionedEntry, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+
+			if (attributeSetterBiConsumer != null) {
+				attributeSetterBiConsumer.accept((VersionedEntry)this,
+					entry.getValue());
+			}
 		}
+	}
 
-		Long headId = (Long)attributes.get("headId");
+	public Map<String, Function<VersionedEntry, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
+	}
 
-		if (headId != null) {
-			setHeadId(headId);
-		}
+	public Map<String, BiConsumer<VersionedEntry, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		Long versionedEntryId = (Long)attributes.get("versionedEntryId");
+	private static final Map<String, Function<VersionedEntry, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<VersionedEntry, Object>> _attributeSetterBiConsumers;
 
-		if (versionedEntryId != null) {
-			setVersionedEntryId(versionedEntryId);
-		}
+	static {
+		Map<String, Function<VersionedEntry, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<VersionedEntry, Object>>();
+		Map<String, BiConsumer<VersionedEntry, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<VersionedEntry, ?>>();
 
-		Long groupId = (Long)attributes.get("groupId");
+		attributeGetterFunctions.put(
+			"mvccVersion",
+			new Function<VersionedEntry, Object>() {
 
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
+				@Override
+				public Object apply(VersionedEntry versionedEntry) {
+					return versionedEntry.getMvccVersion();
+				}
+
+			});
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			new BiConsumer<VersionedEntry, Object>() {
+
+				@Override
+				public void accept(VersionedEntry versionedEntry, Object mvccVersion) {
+					versionedEntry.setMvccVersion((Long)mvccVersion);
+				}
+
+			});
+		attributeGetterFunctions.put(
+			"headId",
+			new Function<VersionedEntry, Object>() {
+
+				@Override
+				public Object apply(VersionedEntry versionedEntry) {
+					return versionedEntry.getHeadId();
+				}
+
+			});
+		attributeSetterBiConsumers.put(
+			"headId",
+			new BiConsumer<VersionedEntry, Object>() {
+
+				@Override
+				public void accept(VersionedEntry versionedEntry, Object headId) {
+					versionedEntry.setHeadId((Long)headId);
+				}
+
+			});
+		attributeGetterFunctions.put(
+			"versionedEntryId",
+			new Function<VersionedEntry, Object>() {
+
+				@Override
+				public Object apply(VersionedEntry versionedEntry) {
+					return versionedEntry.getVersionedEntryId();
+				}
+
+			});
+		attributeSetterBiConsumers.put(
+			"versionedEntryId",
+			new BiConsumer<VersionedEntry, Object>() {
+
+				@Override
+				public void accept(VersionedEntry versionedEntry, Object versionedEntryId) {
+					versionedEntry.setVersionedEntryId((Long)versionedEntryId);
+				}
+
+			});
+		attributeGetterFunctions.put(
+			"groupId",
+			new Function<VersionedEntry, Object>() {
+
+				@Override
+				public Object apply(VersionedEntry versionedEntry) {
+					return versionedEntry.getGroupId();
+				}
+
+			});
+		attributeSetterBiConsumers.put(
+			"groupId",
+			new BiConsumer<VersionedEntry, Object>() {
+
+				@Override
+				public void accept(VersionedEntry versionedEntry, Object groupId) {
+					versionedEntry.setGroupId((Long)groupId);
+				}
+
+			});
+
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -376,16 +475,27 @@ public class VersionedEntryModelImpl extends BaseModelImpl<VersionedEntry>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(9);
+		Map<String, Function<VersionedEntry, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		sb.append("{mvccVersion=");
-		sb.append(getMvccVersion());
-		sb.append(", headId=");
-		sb.append(getHeadId());
-		sb.append(", versionedEntryId=");
-		sb.append(getVersionedEntryId());
-		sb.append(", groupId=");
-		sb.append(getGroupId());
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
+
+		sb.append("{");
+
+		for (Map.Entry<String, Function<VersionedEntry, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<VersionedEntry, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append(attributeName);
+			sb.append("=");
+			sb.append(attributeGetterFunction.apply((VersionedEntry)this));
+			sb.append(", ");
+		}
+
+		if (sb.index() > 1) {
+			sb.setIndex(sb.index() - 1);
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -393,29 +503,25 @@ public class VersionedEntryModelImpl extends BaseModelImpl<VersionedEntry>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(16);
+		Map<String, Function<VersionedEntry, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
-		sb.append(
-			"com.liferay.portal.tools.service.builder.test.model.VersionedEntry");
+		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		sb.append(
-			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
-		sb.append(getMvccVersion());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>headId</column-name><column-value><![CDATA[");
-		sb.append(getHeadId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>versionedEntryId</column-name><column-value><![CDATA[");
-		sb.append(getVersionedEntryId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>groupId</column-name><column-value><![CDATA[");
-		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
+		for (Map.Entry<String, Function<VersionedEntry, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<VersionedEntry, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append("<column><column-name>");
+			sb.append(attributeName);
+			sb.append("</column-name><column-value><![CDATA[");
+			sb.append(attributeGetterFunction.apply((VersionedEntry)this));
+			sb.append("]]></column-value></column>");
+		}
 
 		sb.append("</model>");
 

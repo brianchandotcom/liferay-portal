@@ -47,10 +47,14 @@ import java.io.Serializable;
 import java.sql.Types;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the AnnouncementsEntry service. Represents a row in the &quot;AnnouncementsEntry&quot; database table, with each column mapped to a property of this class.
@@ -236,23 +240,16 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("uuid", getUuid());
-		attributes.put("entryId", getEntryId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("classNameId", getClassNameId());
-		attributes.put("classPK", getClassPK());
-		attributes.put("title", getTitle());
-		attributes.put("content", getContent());
-		attributes.put("url", getUrl());
-		attributes.put("type", getType());
-		attributes.put("displayDate", getDisplayDate());
-		attributes.put("expirationDate", getExpirationDate());
-		attributes.put("priority", getPriority());
-		attributes.put("alert", isAlert());
+		Map<String, Function<AnnouncementsEntry, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
+
+		for (Map.Entry<String, Function<AnnouncementsEntry, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<AnnouncementsEntry, Object> attributeGetterFunction = entry.getValue();
+
+			attributes.put(attributeName,
+				attributeGetterFunction.apply((AnnouncementsEntry)this));
+		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -262,107 +259,75 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		String uuid = (String)attributes.get("uuid");
+		Map<String, BiConsumer<AnnouncementsEntry, Object>> attributeSetterBiConsumers =
+			getAttributeSetterBiConsumers();
 
-		if (uuid != null) {
-			setUuid(uuid);
+		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
+			String attributeName = entry.getKey();
+
+			BiConsumer<AnnouncementsEntry, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+
+			if (attributeSetterBiConsumer != null) {
+				attributeSetterBiConsumer.accept((AnnouncementsEntry)this,
+					entry.getValue());
+			}
 		}
+	}
 
-		Long entryId = (Long)attributes.get("entryId");
+	public Map<String, Function<AnnouncementsEntry, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
+	}
 
-		if (entryId != null) {
-			setEntryId(entryId);
-		}
+	public Map<String, BiConsumer<AnnouncementsEntry, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		Long companyId = (Long)attributes.get("companyId");
+	private static final Map<String, Function<AnnouncementsEntry, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<AnnouncementsEntry, Object>> _attributeSetterBiConsumers;
 
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
+	static {
+		Map<String, Function<AnnouncementsEntry, Object>> attributeGetterFunctions =
+			new LinkedHashMap<String, Function<AnnouncementsEntry, Object>>();
+		Map<String, BiConsumer<AnnouncementsEntry, ?>> attributeSetterBiConsumers =
+			new LinkedHashMap<String, BiConsumer<AnnouncementsEntry, ?>>();
 
-		Long userId = (Long)attributes.get("userId");
+		attributeGetterFunctions.put("uuid", AnnouncementsEntry::getUuid);
+		attributeSetterBiConsumers.put("uuid", (BiConsumer<AnnouncementsEntry, String>)AnnouncementsEntry::setUuid);
+		attributeGetterFunctions.put("entryId", AnnouncementsEntry::getEntryId);
+		attributeSetterBiConsumers.put("entryId", (BiConsumer<AnnouncementsEntry, Long>)AnnouncementsEntry::setEntryId);
+		attributeGetterFunctions.put("companyId", AnnouncementsEntry::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<AnnouncementsEntry, Long>)AnnouncementsEntry::setCompanyId);
+		attributeGetterFunctions.put("userId", AnnouncementsEntry::getUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<AnnouncementsEntry, Long>)AnnouncementsEntry::setUserId);
+		attributeGetterFunctions.put("userName", AnnouncementsEntry::getUserName);
+		attributeSetterBiConsumers.put("userName", (BiConsumer<AnnouncementsEntry, String>)AnnouncementsEntry::setUserName);
+		attributeGetterFunctions.put("createDate", AnnouncementsEntry::getCreateDate);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<AnnouncementsEntry, Date>)AnnouncementsEntry::setCreateDate);
+		attributeGetterFunctions.put("modifiedDate", AnnouncementsEntry::getModifiedDate);
+		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<AnnouncementsEntry, Date>)AnnouncementsEntry::setModifiedDate);
+		attributeGetterFunctions.put("classNameId", AnnouncementsEntry::getClassNameId);
+		attributeSetterBiConsumers.put("classNameId", (BiConsumer<AnnouncementsEntry, Long>)AnnouncementsEntry::setClassNameId);
+		attributeGetterFunctions.put("classPK", AnnouncementsEntry::getClassPK);
+		attributeSetterBiConsumers.put("classPK", (BiConsumer<AnnouncementsEntry, Long>)AnnouncementsEntry::setClassPK);
+		attributeGetterFunctions.put("title", AnnouncementsEntry::getTitle);
+		attributeSetterBiConsumers.put("title", (BiConsumer<AnnouncementsEntry, String>)AnnouncementsEntry::setTitle);
+		attributeGetterFunctions.put("content", AnnouncementsEntry::getContent);
+		attributeSetterBiConsumers.put("content", (BiConsumer<AnnouncementsEntry, String>)AnnouncementsEntry::setContent);
+		attributeGetterFunctions.put("url", AnnouncementsEntry::getUrl);
+		attributeSetterBiConsumers.put("url", (BiConsumer<AnnouncementsEntry, String>)AnnouncementsEntry::setUrl);
+		attributeGetterFunctions.put("type", AnnouncementsEntry::getType);
+		attributeSetterBiConsumers.put("type", (BiConsumer<AnnouncementsEntry, String>)AnnouncementsEntry::setType);
+		attributeGetterFunctions.put("displayDate", AnnouncementsEntry::getDisplayDate);
+		attributeSetterBiConsumers.put("displayDate", (BiConsumer<AnnouncementsEntry, Date>)AnnouncementsEntry::setDisplayDate);
+		attributeGetterFunctions.put("expirationDate", AnnouncementsEntry::getExpirationDate);
+		attributeSetterBiConsumers.put("expirationDate", (BiConsumer<AnnouncementsEntry, Date>)AnnouncementsEntry::setExpirationDate);
+		attributeGetterFunctions.put("priority", AnnouncementsEntry::getPriority);
+		attributeSetterBiConsumers.put("priority", (BiConsumer<AnnouncementsEntry, Integer>)AnnouncementsEntry::setPriority);
+		attributeGetterFunctions.put("alert", AnnouncementsEntry::getAlert);
+		attributeSetterBiConsumers.put("alert", (BiConsumer<AnnouncementsEntry, Boolean>)AnnouncementsEntry::setAlert);
 
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		Long classNameId = (Long)attributes.get("classNameId");
-
-		if (classNameId != null) {
-			setClassNameId(classNameId);
-		}
-
-		Long classPK = (Long)attributes.get("classPK");
-
-		if (classPK != null) {
-			setClassPK(classPK);
-		}
-
-		String title = (String)attributes.get("title");
-
-		if (title != null) {
-			setTitle(title);
-		}
-
-		String content = (String)attributes.get("content");
-
-		if (content != null) {
-			setContent(content);
-		}
-
-		String url = (String)attributes.get("url");
-
-		if (url != null) {
-			setUrl(url);
-		}
-
-		String type = (String)attributes.get("type");
-
-		if (type != null) {
-			setType(type);
-		}
-
-		Date displayDate = (Date)attributes.get("displayDate");
-
-		if (displayDate != null) {
-			setDisplayDate(displayDate);
-		}
-
-		Date expirationDate = (Date)attributes.get("expirationDate");
-
-		if (expirationDate != null) {
-			setExpirationDate(expirationDate);
-		}
-
-		Integer priority = (Integer)attributes.get("priority");
-
-		if (priority != null) {
-			setPriority(priority);
-		}
-
-		Boolean alert = (Boolean)attributes.get("alert");
-
-		if (alert != null) {
-			setAlert(alert);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@JSON
@@ -967,42 +932,28 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(35);
+		Map<String, Function<AnnouncementsEntry, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		sb.append("{uuid=");
-		sb.append(getUuid());
-		sb.append(", entryId=");
-		sb.append(getEntryId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", userName=");
-		sb.append(getUserName());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", modifiedDate=");
-		sb.append(getModifiedDate());
-		sb.append(", classNameId=");
-		sb.append(getClassNameId());
-		sb.append(", classPK=");
-		sb.append(getClassPK());
-		sb.append(", title=");
-		sb.append(getTitle());
-		sb.append(", content=");
-		sb.append(getContent());
-		sb.append(", url=");
-		sb.append(getUrl());
-		sb.append(", type=");
-		sb.append(getType());
-		sb.append(", displayDate=");
-		sb.append(getDisplayDate());
-		sb.append(", expirationDate=");
-		sb.append(getExpirationDate());
-		sb.append(", priority=");
-		sb.append(getPriority());
-		sb.append(", alert=");
-		sb.append(isAlert());
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
+
+		sb.append("{");
+
+		for (Map.Entry<String, Function<AnnouncementsEntry, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<AnnouncementsEntry, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append(attributeName);
+			sb.append("=");
+			sb.append(attributeGetterFunction.apply((AnnouncementsEntry)this));
+			sb.append(", ");
+		}
+
+		if (sb.index() > 1) {
+			sb.setIndex(sb.index() - 1);
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -1010,80 +961,26 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(55);
+		Map<String, Function<AnnouncementsEntry, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
+
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
-		sb.append("com.liferay.announcements.kernel.model.AnnouncementsEntry");
+		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		sb.append(
-			"<column><column-name>uuid</column-name><column-value><![CDATA[");
-		sb.append(getUuid());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>entryId</column-name><column-value><![CDATA[");
-		sb.append(getEntryId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userName</column-name><column-value><![CDATA[");
-		sb.append(getUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
-		sb.append(getModifiedDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>classNameId</column-name><column-value><![CDATA[");
-		sb.append(getClassNameId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>classPK</column-name><column-value><![CDATA[");
-		sb.append(getClassPK());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>title</column-name><column-value><![CDATA[");
-		sb.append(getTitle());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>content</column-name><column-value><![CDATA[");
-		sb.append(getContent());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>url</column-name><column-value><![CDATA[");
-		sb.append(getUrl());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>type</column-name><column-value><![CDATA[");
-		sb.append(getType());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>displayDate</column-name><column-value><![CDATA[");
-		sb.append(getDisplayDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>expirationDate</column-name><column-value><![CDATA[");
-		sb.append(getExpirationDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>priority</column-name><column-value><![CDATA[");
-		sb.append(getPriority());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>alert</column-name><column-value><![CDATA[");
-		sb.append(isAlert());
-		sb.append("]]></column-value></column>");
+		for (Map.Entry<String, Function<AnnouncementsEntry, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<AnnouncementsEntry, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append("<column><column-name>");
+			sb.append(attributeName);
+			sb.append("</column-name><column-value><![CDATA[");
+			sb.append(attributeGetterFunction.apply((AnnouncementsEntry)this));
+			sb.append("]]></column-value></column>");
+		}
 
 		sb.append("</model>");
 

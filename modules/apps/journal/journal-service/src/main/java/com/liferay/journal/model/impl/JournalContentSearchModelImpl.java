@@ -36,8 +36,12 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the JournalContentSearch service. Represents a row in the &quot;JournalContentSearch&quot; database table, with each column mapped to a property of this class.
@@ -144,13 +148,16 @@ public class JournalContentSearchModelImpl extends BaseModelImpl<JournalContentS
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("contentSearchId", getContentSearchId());
-		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("privateLayout", isPrivateLayout());
-		attributes.put("layoutId", getLayoutId());
-		attributes.put("portletId", getPortletId());
-		attributes.put("articleId", getArticleId());
+		Map<String, Function<JournalContentSearch, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
+
+		for (Map.Entry<String, Function<JournalContentSearch, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<JournalContentSearch, Object> attributeGetterFunction = entry.getValue();
+
+			attributes.put(attributeName,
+				attributeGetterFunction.apply((JournalContentSearch)this));
+		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -160,47 +167,55 @@ public class JournalContentSearchModelImpl extends BaseModelImpl<JournalContentS
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long contentSearchId = (Long)attributes.get("contentSearchId");
+		Map<String, BiConsumer<JournalContentSearch, Object>> attributeSetterBiConsumers =
+			getAttributeSetterBiConsumers();
 
-		if (contentSearchId != null) {
-			setContentSearchId(contentSearchId);
+		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
+			String attributeName = entry.getKey();
+
+			BiConsumer<JournalContentSearch, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+
+			if (attributeSetterBiConsumer != null) {
+				attributeSetterBiConsumer.accept((JournalContentSearch)this,
+					entry.getValue());
+			}
 		}
+	}
 
-		Long groupId = (Long)attributes.get("groupId");
+	public Map<String, Function<JournalContentSearch, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
+	}
 
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
+	public Map<String, BiConsumer<JournalContentSearch, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		Long companyId = (Long)attributes.get("companyId");
+	private static final Map<String, Function<JournalContentSearch, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<JournalContentSearch, Object>> _attributeSetterBiConsumers;
 
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
+	static {
+		Map<String, Function<JournalContentSearch, Object>> attributeGetterFunctions =
+			new LinkedHashMap<String, Function<JournalContentSearch, Object>>();
+		Map<String, BiConsumer<JournalContentSearch, ?>> attributeSetterBiConsumers =
+			new LinkedHashMap<String, BiConsumer<JournalContentSearch, ?>>();
 
-		Boolean privateLayout = (Boolean)attributes.get("privateLayout");
+		attributeGetterFunctions.put("contentSearchId", JournalContentSearch::getContentSearchId);
+		attributeSetterBiConsumers.put("contentSearchId", (BiConsumer<JournalContentSearch, Long>)JournalContentSearch::setContentSearchId);
+		attributeGetterFunctions.put("groupId", JournalContentSearch::getGroupId);
+		attributeSetterBiConsumers.put("groupId", (BiConsumer<JournalContentSearch, Long>)JournalContentSearch::setGroupId);
+		attributeGetterFunctions.put("companyId", JournalContentSearch::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<JournalContentSearch, Long>)JournalContentSearch::setCompanyId);
+		attributeGetterFunctions.put("privateLayout", JournalContentSearch::getPrivateLayout);
+		attributeSetterBiConsumers.put("privateLayout", (BiConsumer<JournalContentSearch, Boolean>)JournalContentSearch::setPrivateLayout);
+		attributeGetterFunctions.put("layoutId", JournalContentSearch::getLayoutId);
+		attributeSetterBiConsumers.put("layoutId", (BiConsumer<JournalContentSearch, Long>)JournalContentSearch::setLayoutId);
+		attributeGetterFunctions.put("portletId", JournalContentSearch::getPortletId);
+		attributeSetterBiConsumers.put("portletId", (BiConsumer<JournalContentSearch, String>)JournalContentSearch::setPortletId);
+		attributeGetterFunctions.put("articleId", JournalContentSearch::getArticleId);
+		attributeSetterBiConsumers.put("articleId", (BiConsumer<JournalContentSearch, String>)JournalContentSearch::setArticleId);
 
-		if (privateLayout != null) {
-			setPrivateLayout(privateLayout);
-		}
-
-		Long layoutId = (Long)attributes.get("layoutId");
-
-		if (layoutId != null) {
-			setLayoutId(layoutId);
-		}
-
-		String portletId = (String)attributes.get("portletId");
-
-		if (portletId != null) {
-			setPortletId(portletId);
-		}
-
-		String articleId = (String)attributes.get("articleId");
-
-		if (articleId != null) {
-			setArticleId(articleId);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -498,22 +513,28 @@ public class JournalContentSearchModelImpl extends BaseModelImpl<JournalContentS
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(15);
+		Map<String, Function<JournalContentSearch, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		sb.append("{contentSearchId=");
-		sb.append(getContentSearchId());
-		sb.append(", groupId=");
-		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", privateLayout=");
-		sb.append(isPrivateLayout());
-		sb.append(", layoutId=");
-		sb.append(getLayoutId());
-		sb.append(", portletId=");
-		sb.append(getPortletId());
-		sb.append(", articleId=");
-		sb.append(getArticleId());
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
+
+		sb.append("{");
+
+		for (Map.Entry<String, Function<JournalContentSearch, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<JournalContentSearch, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append(attributeName);
+			sb.append("=");
+			sb.append(attributeGetterFunction.apply((JournalContentSearch)this));
+			sb.append(", ");
+		}
+
+		if (sb.index() > 1) {
+			sb.setIndex(sb.index() - 1);
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -521,40 +542,26 @@ public class JournalContentSearchModelImpl extends BaseModelImpl<JournalContentS
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(25);
+		Map<String, Function<JournalContentSearch, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
+
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
-		sb.append("com.liferay.journal.model.JournalContentSearch");
+		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		sb.append(
-			"<column><column-name>contentSearchId</column-name><column-value><![CDATA[");
-		sb.append(getContentSearchId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>groupId</column-name><column-value><![CDATA[");
-		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>privateLayout</column-name><column-value><![CDATA[");
-		sb.append(isPrivateLayout());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>layoutId</column-name><column-value><![CDATA[");
-		sb.append(getLayoutId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>portletId</column-name><column-value><![CDATA[");
-		sb.append(getPortletId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>articleId</column-name><column-value><![CDATA[");
-		sb.append(getArticleId());
-		sb.append("]]></column-value></column>");
+		for (Map.Entry<String, Function<JournalContentSearch, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<JournalContentSearch, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append("<column><column-name>");
+			sb.append(attributeName);
+			sb.append("</column-name><column-value><![CDATA[");
+			sb.append(attributeGetterFunction.apply((JournalContentSearch)this));
+			sb.append("]]></column-value></column>");
+		}
 
 		sb.append("</model>");
 

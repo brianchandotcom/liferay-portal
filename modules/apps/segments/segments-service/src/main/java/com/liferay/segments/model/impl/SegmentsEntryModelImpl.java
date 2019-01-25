@@ -47,13 +47,17 @@ import java.io.Serializable;
 import java.sql.Types;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the SegmentsEntry service. Represents a row in the &quot;SegmentsEntry&quot; database table, with each column mapped to a property of this class.
@@ -227,20 +231,15 @@ public class SegmentsEntryModelImpl extends BaseModelImpl<SegmentsEntry>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("segmentsEntryId", getSegmentsEntryId());
-		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("name", getName());
-		attributes.put("description", getDescription());
-		attributes.put("active", isActive());
-		attributes.put("criteria", getCriteria());
-		attributes.put("key", getKey());
-		attributes.put("source", getSource());
-		attributes.put("type", getType());
+		Map<String, Function<SegmentsEntry, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+
+		for (Map.Entry<String, Function<SegmentsEntry, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<SegmentsEntry, Object> attributeGetterFunction = entry.getValue();
+
+			attributes.put(attributeName,
+				attributeGetterFunction.apply((SegmentsEntry)this));
+		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -250,89 +249,67 @@ public class SegmentsEntryModelImpl extends BaseModelImpl<SegmentsEntry>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long segmentsEntryId = (Long)attributes.get("segmentsEntryId");
+		Map<String, BiConsumer<SegmentsEntry, Object>> attributeSetterBiConsumers =
+			getAttributeSetterBiConsumers();
 
-		if (segmentsEntryId != null) {
-			setSegmentsEntryId(segmentsEntryId);
+		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
+			String attributeName = entry.getKey();
+
+			BiConsumer<SegmentsEntry, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+
+			if (attributeSetterBiConsumer != null) {
+				attributeSetterBiConsumer.accept((SegmentsEntry)this,
+					entry.getValue());
+			}
 		}
+	}
 
-		Long groupId = (Long)attributes.get("groupId");
+	public Map<String, Function<SegmentsEntry, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
+	}
 
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
+	public Map<String, BiConsumer<SegmentsEntry, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		Long companyId = (Long)attributes.get("companyId");
+	private static final Map<String, Function<SegmentsEntry, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<SegmentsEntry, Object>> _attributeSetterBiConsumers;
 
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
+	static {
+		Map<String, Function<SegmentsEntry, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<SegmentsEntry, Object>>();
+		Map<String, BiConsumer<SegmentsEntry, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<SegmentsEntry, ?>>();
 
-		Long userId = (Long)attributes.get("userId");
+		attributeGetterFunctions.put("segmentsEntryId", SegmentsEntry::getSegmentsEntryId);
+		attributeSetterBiConsumers.put("segmentsEntryId", (BiConsumer<SegmentsEntry, Long>)SegmentsEntry::setSegmentsEntryId);
+		attributeGetterFunctions.put("groupId", SegmentsEntry::getGroupId);
+		attributeSetterBiConsumers.put("groupId", (BiConsumer<SegmentsEntry, Long>)SegmentsEntry::setGroupId);
+		attributeGetterFunctions.put("companyId", SegmentsEntry::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<SegmentsEntry, Long>)SegmentsEntry::setCompanyId);
+		attributeGetterFunctions.put("userId", SegmentsEntry::getUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<SegmentsEntry, Long>)SegmentsEntry::setUserId);
+		attributeGetterFunctions.put("userName", SegmentsEntry::getUserName);
+		attributeSetterBiConsumers.put("userName", (BiConsumer<SegmentsEntry, String>)SegmentsEntry::setUserName);
+		attributeGetterFunctions.put("createDate", SegmentsEntry::getCreateDate);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<SegmentsEntry, Date>)SegmentsEntry::setCreateDate);
+		attributeGetterFunctions.put("modifiedDate", SegmentsEntry::getModifiedDate);
+		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<SegmentsEntry, Date>)SegmentsEntry::setModifiedDate);
+		attributeGetterFunctions.put("name", SegmentsEntry::getName);
+		attributeSetterBiConsumers.put("name", (BiConsumer<SegmentsEntry, String>)SegmentsEntry::setName);
+		attributeGetterFunctions.put("description", SegmentsEntry::getDescription);
+		attributeSetterBiConsumers.put("description", (BiConsumer<SegmentsEntry, String>)SegmentsEntry::setDescription);
+		attributeGetterFunctions.put("active", SegmentsEntry::getActive);
+		attributeSetterBiConsumers.put("active", (BiConsumer<SegmentsEntry, Boolean>)SegmentsEntry::setActive);
+		attributeGetterFunctions.put("criteria", SegmentsEntry::getCriteria);
+		attributeSetterBiConsumers.put("criteria", (BiConsumer<SegmentsEntry, String>)SegmentsEntry::setCriteria);
+		attributeGetterFunctions.put("key", SegmentsEntry::getKey);
+		attributeSetterBiConsumers.put("key", (BiConsumer<SegmentsEntry, String>)SegmentsEntry::setKey);
+		attributeGetterFunctions.put("source", SegmentsEntry::getSource);
+		attributeSetterBiConsumers.put("source", (BiConsumer<SegmentsEntry, String>)SegmentsEntry::setSource);
+		attributeGetterFunctions.put("type", SegmentsEntry::getType);
+		attributeSetterBiConsumers.put("type", (BiConsumer<SegmentsEntry, String>)SegmentsEntry::setType);
 
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		String name = (String)attributes.get("name");
-
-		if (name != null) {
-			setName(name);
-		}
-
-		String description = (String)attributes.get("description");
-
-		if (description != null) {
-			setDescription(description);
-		}
-
-		Boolean active = (Boolean)attributes.get("active");
-
-		if (active != null) {
-			setActive(active);
-		}
-
-		String criteria = (String)attributes.get("criteria");
-
-		if (criteria != null) {
-			setCriteria(criteria);
-		}
-
-		String key = (String)attributes.get("key");
-
-		if (key != null) {
-			setKey(key);
-		}
-
-		String source = (String)attributes.get("source");
-
-		if (source != null) {
-			setSource(source);
-		}
-
-		String type = (String)attributes.get("type");
-
-		if (type != null) {
-			setType(type);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@JSON
@@ -1080,36 +1057,27 @@ public class SegmentsEntryModelImpl extends BaseModelImpl<SegmentsEntry>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		Map<String, Function<SegmentsEntry, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		sb.append("{segmentsEntryId=");
-		sb.append(getSegmentsEntryId());
-		sb.append(", groupId=");
-		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", userName=");
-		sb.append(getUserName());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", modifiedDate=");
-		sb.append(getModifiedDate());
-		sb.append(", name=");
-		sb.append(getName());
-		sb.append(", description=");
-		sb.append(getDescription());
-		sb.append(", active=");
-		sb.append(isActive());
-		sb.append(", criteria=");
-		sb.append(getCriteria());
-		sb.append(", key=");
-		sb.append(getKey());
-		sb.append(", source=");
-		sb.append(getSource());
-		sb.append(", type=");
-		sb.append(getType());
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
+
+		sb.append("{");
+
+		for (Map.Entry<String, Function<SegmentsEntry, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<SegmentsEntry, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append(attributeName);
+			sb.append("=");
+			sb.append(attributeGetterFunction.apply((SegmentsEntry)this));
+			sb.append(", ");
+		}
+
+		if (sb.index() > 1) {
+			sb.setIndex(sb.index() - 1);
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -1117,68 +1085,25 @@ public class SegmentsEntryModelImpl extends BaseModelImpl<SegmentsEntry>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(46);
+		Map<String, Function<SegmentsEntry, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
-		sb.append("com.liferay.segments.model.SegmentsEntry");
+		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		sb.append(
-			"<column><column-name>segmentsEntryId</column-name><column-value><![CDATA[");
-		sb.append(getSegmentsEntryId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>groupId</column-name><column-value><![CDATA[");
-		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userName</column-name><column-value><![CDATA[");
-		sb.append(getUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
-		sb.append(getModifiedDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>name</column-name><column-value><![CDATA[");
-		sb.append(getName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>description</column-name><column-value><![CDATA[");
-		sb.append(getDescription());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>active</column-name><column-value><![CDATA[");
-		sb.append(isActive());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>criteria</column-name><column-value><![CDATA[");
-		sb.append(getCriteria());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>key</column-name><column-value><![CDATA[");
-		sb.append(getKey());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>source</column-name><column-value><![CDATA[");
-		sb.append(getSource());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>type</column-name><column-value><![CDATA[");
-		sb.append(getType());
-		sb.append("]]></column-value></column>");
+		for (Map.Entry<String, Function<SegmentsEntry, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<SegmentsEntry, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append("<column><column-name>");
+			sb.append(attributeName);
+			sb.append("</column-name><column-value><![CDATA[");
+			sb.append(attributeGetterFunction.apply((SegmentsEntry)this));
+			sb.append("]]></column-value></column>");
+		}
 
 		sb.append("</model>");
 

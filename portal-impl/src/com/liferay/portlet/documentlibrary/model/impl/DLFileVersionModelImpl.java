@@ -47,10 +47,14 @@ import java.io.Serializable;
 import java.sql.Types;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the DLFileVersion service. Represents a row in the &quot;DLFileVersion&quot; database table, with each column mapped to a property of this class.
@@ -270,34 +274,15 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("uuid", getUuid());
-		attributes.put("fileVersionId", getFileVersionId());
-		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("repositoryId", getRepositoryId());
-		attributes.put("folderId", getFolderId());
-		attributes.put("fileEntryId", getFileEntryId());
-		attributes.put("treePath", getTreePath());
-		attributes.put("fileName", getFileName());
-		attributes.put("extension", getExtension());
-		attributes.put("mimeType", getMimeType());
-		attributes.put("title", getTitle());
-		attributes.put("description", getDescription());
-		attributes.put("changeLog", getChangeLog());
-		attributes.put("extraSettings", getExtraSettings());
-		attributes.put("fileEntryTypeId", getFileEntryTypeId());
-		attributes.put("version", getVersion());
-		attributes.put("size", getSize());
-		attributes.put("checksum", getChecksum());
-		attributes.put("lastPublishDate", getLastPublishDate());
-		attributes.put("status", getStatus());
-		attributes.put("statusByUserId", getStatusByUserId());
-		attributes.put("statusByUserName", getStatusByUserName());
-		attributes.put("statusDate", getStatusDate());
+		Map<String, Function<DLFileVersion, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+
+		for (Map.Entry<String, Function<DLFileVersion, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<DLFileVersion, Object> attributeGetterFunction = entry.getValue();
+
+			attributes.put(attributeName,
+				attributeGetterFunction.apply((DLFileVersion)this));
+		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -307,173 +292,95 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		String uuid = (String)attributes.get("uuid");
+		Map<String, BiConsumer<DLFileVersion, Object>> attributeSetterBiConsumers =
+			getAttributeSetterBiConsumers();
 
-		if (uuid != null) {
-			setUuid(uuid);
+		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
+			String attributeName = entry.getKey();
+
+			BiConsumer<DLFileVersion, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+
+			if (attributeSetterBiConsumer != null) {
+				attributeSetterBiConsumer.accept((DLFileVersion)this,
+					entry.getValue());
+			}
 		}
+	}
 
-		Long fileVersionId = (Long)attributes.get("fileVersionId");
+	public Map<String, Function<DLFileVersion, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
+	}
 
-		if (fileVersionId != null) {
-			setFileVersionId(fileVersionId);
-		}
+	public Map<String, BiConsumer<DLFileVersion, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		Long groupId = (Long)attributes.get("groupId");
+	private static final Map<String, Function<DLFileVersion, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<DLFileVersion, Object>> _attributeSetterBiConsumers;
 
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
+	static {
+		Map<String, Function<DLFileVersion, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<DLFileVersion, Object>>();
+		Map<String, BiConsumer<DLFileVersion, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<DLFileVersion, ?>>();
 
-		Long companyId = (Long)attributes.get("companyId");
+		attributeGetterFunctions.put("uuid", DLFileVersion::getUuid);
+		attributeSetterBiConsumers.put("uuid", (BiConsumer<DLFileVersion, String>)DLFileVersion::setUuid);
+		attributeGetterFunctions.put("fileVersionId", DLFileVersion::getFileVersionId);
+		attributeSetterBiConsumers.put("fileVersionId", (BiConsumer<DLFileVersion, Long>)DLFileVersion::setFileVersionId);
+		attributeGetterFunctions.put("groupId", DLFileVersion::getGroupId);
+		attributeSetterBiConsumers.put("groupId", (BiConsumer<DLFileVersion, Long>)DLFileVersion::setGroupId);
+		attributeGetterFunctions.put("companyId", DLFileVersion::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<DLFileVersion, Long>)DLFileVersion::setCompanyId);
+		attributeGetterFunctions.put("userId", DLFileVersion::getUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<DLFileVersion, Long>)DLFileVersion::setUserId);
+		attributeGetterFunctions.put("userName", DLFileVersion::getUserName);
+		attributeSetterBiConsumers.put("userName", (BiConsumer<DLFileVersion, String>)DLFileVersion::setUserName);
+		attributeGetterFunctions.put("createDate", DLFileVersion::getCreateDate);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<DLFileVersion, Date>)DLFileVersion::setCreateDate);
+		attributeGetterFunctions.put("modifiedDate", DLFileVersion::getModifiedDate);
+		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<DLFileVersion, Date>)DLFileVersion::setModifiedDate);
+		attributeGetterFunctions.put("repositoryId", DLFileVersion::getRepositoryId);
+		attributeSetterBiConsumers.put("repositoryId", (BiConsumer<DLFileVersion, Long>)DLFileVersion::setRepositoryId);
+		attributeGetterFunctions.put("folderId", DLFileVersion::getFolderId);
+		attributeSetterBiConsumers.put("folderId", (BiConsumer<DLFileVersion, Long>)DLFileVersion::setFolderId);
+		attributeGetterFunctions.put("fileEntryId", DLFileVersion::getFileEntryId);
+		attributeSetterBiConsumers.put("fileEntryId", (BiConsumer<DLFileVersion, Long>)DLFileVersion::setFileEntryId);
+		attributeGetterFunctions.put("treePath", DLFileVersion::getTreePath);
+		attributeSetterBiConsumers.put("treePath", (BiConsumer<DLFileVersion, String>)DLFileVersion::setTreePath);
+		attributeGetterFunctions.put("fileName", DLFileVersion::getFileName);
+		attributeSetterBiConsumers.put("fileName", (BiConsumer<DLFileVersion, String>)DLFileVersion::setFileName);
+		attributeGetterFunctions.put("extension", DLFileVersion::getExtension);
+		attributeSetterBiConsumers.put("extension", (BiConsumer<DLFileVersion, String>)DLFileVersion::setExtension);
+		attributeGetterFunctions.put("mimeType", DLFileVersion::getMimeType);
+		attributeSetterBiConsumers.put("mimeType", (BiConsumer<DLFileVersion, String>)DLFileVersion::setMimeType);
+		attributeGetterFunctions.put("title", DLFileVersion::getTitle);
+		attributeSetterBiConsumers.put("title", (BiConsumer<DLFileVersion, String>)DLFileVersion::setTitle);
+		attributeGetterFunctions.put("description", DLFileVersion::getDescription);
+		attributeSetterBiConsumers.put("description", (BiConsumer<DLFileVersion, String>)DLFileVersion::setDescription);
+		attributeGetterFunctions.put("changeLog", DLFileVersion::getChangeLog);
+		attributeSetterBiConsumers.put("changeLog", (BiConsumer<DLFileVersion, String>)DLFileVersion::setChangeLog);
+		attributeGetterFunctions.put("extraSettings", DLFileVersion::getExtraSettings);
+		attributeSetterBiConsumers.put("extraSettings", (BiConsumer<DLFileVersion, String>)DLFileVersion::setExtraSettings);
+		attributeGetterFunctions.put("fileEntryTypeId", DLFileVersion::getFileEntryTypeId);
+		attributeSetterBiConsumers.put("fileEntryTypeId", (BiConsumer<DLFileVersion, Long>)DLFileVersion::setFileEntryTypeId);
+		attributeGetterFunctions.put("version", DLFileVersion::getVersion);
+		attributeSetterBiConsumers.put("version", (BiConsumer<DLFileVersion, String>)DLFileVersion::setVersion);
+		attributeGetterFunctions.put("size", DLFileVersion::getSize);
+		attributeSetterBiConsumers.put("size", (BiConsumer<DLFileVersion, Long>)DLFileVersion::setSize);
+		attributeGetterFunctions.put("checksum", DLFileVersion::getChecksum);
+		attributeSetterBiConsumers.put("checksum", (BiConsumer<DLFileVersion, String>)DLFileVersion::setChecksum);
+		attributeGetterFunctions.put("lastPublishDate", DLFileVersion::getLastPublishDate);
+		attributeSetterBiConsumers.put("lastPublishDate", (BiConsumer<DLFileVersion, Date>)DLFileVersion::setLastPublishDate);
+		attributeGetterFunctions.put("status", DLFileVersion::getStatus);
+		attributeSetterBiConsumers.put("status", (BiConsumer<DLFileVersion, Integer>)DLFileVersion::setStatus);
+		attributeGetterFunctions.put("statusByUserId", DLFileVersion::getStatusByUserId);
+		attributeSetterBiConsumers.put("statusByUserId", (BiConsumer<DLFileVersion, Long>)DLFileVersion::setStatusByUserId);
+		attributeGetterFunctions.put("statusByUserName", DLFileVersion::getStatusByUserName);
+		attributeSetterBiConsumers.put("statusByUserName", (BiConsumer<DLFileVersion, String>)DLFileVersion::setStatusByUserName);
+		attributeGetterFunctions.put("statusDate", DLFileVersion::getStatusDate);
+		attributeSetterBiConsumers.put("statusDate", (BiConsumer<DLFileVersion, Date>)DLFileVersion::setStatusDate);
 
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		Long repositoryId = (Long)attributes.get("repositoryId");
-
-		if (repositoryId != null) {
-			setRepositoryId(repositoryId);
-		}
-
-		Long folderId = (Long)attributes.get("folderId");
-
-		if (folderId != null) {
-			setFolderId(folderId);
-		}
-
-		Long fileEntryId = (Long)attributes.get("fileEntryId");
-
-		if (fileEntryId != null) {
-			setFileEntryId(fileEntryId);
-		}
-
-		String treePath = (String)attributes.get("treePath");
-
-		if (treePath != null) {
-			setTreePath(treePath);
-		}
-
-		String fileName = (String)attributes.get("fileName");
-
-		if (fileName != null) {
-			setFileName(fileName);
-		}
-
-		String extension = (String)attributes.get("extension");
-
-		if (extension != null) {
-			setExtension(extension);
-		}
-
-		String mimeType = (String)attributes.get("mimeType");
-
-		if (mimeType != null) {
-			setMimeType(mimeType);
-		}
-
-		String title = (String)attributes.get("title");
-
-		if (title != null) {
-			setTitle(title);
-		}
-
-		String description = (String)attributes.get("description");
-
-		if (description != null) {
-			setDescription(description);
-		}
-
-		String changeLog = (String)attributes.get("changeLog");
-
-		if (changeLog != null) {
-			setChangeLog(changeLog);
-		}
-
-		String extraSettings = (String)attributes.get("extraSettings");
-
-		if (extraSettings != null) {
-			setExtraSettings(extraSettings);
-		}
-
-		Long fileEntryTypeId = (Long)attributes.get("fileEntryTypeId");
-
-		if (fileEntryTypeId != null) {
-			setFileEntryTypeId(fileEntryTypeId);
-		}
-
-		String version = (String)attributes.get("version");
-
-		if (version != null) {
-			setVersion(version);
-		}
-
-		Long size = (Long)attributes.get("size");
-
-		if (size != null) {
-			setSize(size);
-		}
-
-		String checksum = (String)attributes.get("checksum");
-
-		if (checksum != null) {
-			setChecksum(checksum);
-		}
-
-		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
-
-		if (lastPublishDate != null) {
-			setLastPublishDate(lastPublishDate);
-		}
-
-		Integer status = (Integer)attributes.get("status");
-
-		if (status != null) {
-			setStatus(status);
-		}
-
-		Long statusByUserId = (Long)attributes.get("statusByUserId");
-
-		if (statusByUserId != null) {
-			setStatusByUserId(statusByUserId);
-		}
-
-		String statusByUserName = (String)attributes.get("statusByUserName");
-
-		if (statusByUserName != null) {
-			setStatusByUserName(statusByUserName);
-		}
-
-		Date statusDate = (Date)attributes.get("statusDate");
-
-		if (statusDate != null) {
-			setStatusDate(statusDate);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@JSON
@@ -1417,64 +1324,27 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(57);
+		Map<String, Function<DLFileVersion, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		sb.append("{uuid=");
-		sb.append(getUuid());
-		sb.append(", fileVersionId=");
-		sb.append(getFileVersionId());
-		sb.append(", groupId=");
-		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", userName=");
-		sb.append(getUserName());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", modifiedDate=");
-		sb.append(getModifiedDate());
-		sb.append(", repositoryId=");
-		sb.append(getRepositoryId());
-		sb.append(", folderId=");
-		sb.append(getFolderId());
-		sb.append(", fileEntryId=");
-		sb.append(getFileEntryId());
-		sb.append(", treePath=");
-		sb.append(getTreePath());
-		sb.append(", fileName=");
-		sb.append(getFileName());
-		sb.append(", extension=");
-		sb.append(getExtension());
-		sb.append(", mimeType=");
-		sb.append(getMimeType());
-		sb.append(", title=");
-		sb.append(getTitle());
-		sb.append(", description=");
-		sb.append(getDescription());
-		sb.append(", changeLog=");
-		sb.append(getChangeLog());
-		sb.append(", extraSettings=");
-		sb.append(getExtraSettings());
-		sb.append(", fileEntryTypeId=");
-		sb.append(getFileEntryTypeId());
-		sb.append(", version=");
-		sb.append(getVersion());
-		sb.append(", size=");
-		sb.append(getSize());
-		sb.append(", checksum=");
-		sb.append(getChecksum());
-		sb.append(", lastPublishDate=");
-		sb.append(getLastPublishDate());
-		sb.append(", status=");
-		sb.append(getStatus());
-		sb.append(", statusByUserId=");
-		sb.append(getStatusByUserId());
-		sb.append(", statusByUserName=");
-		sb.append(getStatusByUserName());
-		sb.append(", statusDate=");
-		sb.append(getStatusDate());
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
+
+		sb.append("{");
+
+		for (Map.Entry<String, Function<DLFileVersion, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<DLFileVersion, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append(attributeName);
+			sb.append("=");
+			sb.append(attributeGetterFunction.apply((DLFileVersion)this));
+			sb.append(", ");
+		}
+
+		if (sb.index() > 1) {
+			sb.setIndex(sb.index() - 1);
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -1482,124 +1352,25 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(88);
+		Map<String, Function<DLFileVersion, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
-		sb.append("com.liferay.document.library.kernel.model.DLFileVersion");
+		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		sb.append(
-			"<column><column-name>uuid</column-name><column-value><![CDATA[");
-		sb.append(getUuid());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>fileVersionId</column-name><column-value><![CDATA[");
-		sb.append(getFileVersionId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>groupId</column-name><column-value><![CDATA[");
-		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userName</column-name><column-value><![CDATA[");
-		sb.append(getUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
-		sb.append(getModifiedDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>repositoryId</column-name><column-value><![CDATA[");
-		sb.append(getRepositoryId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>folderId</column-name><column-value><![CDATA[");
-		sb.append(getFolderId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>fileEntryId</column-name><column-value><![CDATA[");
-		sb.append(getFileEntryId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>treePath</column-name><column-value><![CDATA[");
-		sb.append(getTreePath());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>fileName</column-name><column-value><![CDATA[");
-		sb.append(getFileName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>extension</column-name><column-value><![CDATA[");
-		sb.append(getExtension());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>mimeType</column-name><column-value><![CDATA[");
-		sb.append(getMimeType());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>title</column-name><column-value><![CDATA[");
-		sb.append(getTitle());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>description</column-name><column-value><![CDATA[");
-		sb.append(getDescription());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>changeLog</column-name><column-value><![CDATA[");
-		sb.append(getChangeLog());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>extraSettings</column-name><column-value><![CDATA[");
-		sb.append(getExtraSettings());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>fileEntryTypeId</column-name><column-value><![CDATA[");
-		sb.append(getFileEntryTypeId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>version</column-name><column-value><![CDATA[");
-		sb.append(getVersion());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>size</column-name><column-value><![CDATA[");
-		sb.append(getSize());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>checksum</column-name><column-value><![CDATA[");
-		sb.append(getChecksum());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
-		sb.append(getLastPublishDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>status</column-name><column-value><![CDATA[");
-		sb.append(getStatus());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>statusByUserId</column-name><column-value><![CDATA[");
-		sb.append(getStatusByUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>statusByUserName</column-name><column-value><![CDATA[");
-		sb.append(getStatusByUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>statusDate</column-name><column-value><![CDATA[");
-		sb.append(getStatusDate());
-		sb.append("]]></column-value></column>");
+		for (Map.Entry<String, Function<DLFileVersion, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<DLFileVersion, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append("<column><column-name>");
+			sb.append(attributeName);
+			sb.append("</column-name><column-value><![CDATA[");
+			sb.append(attributeGetterFunction.apply((DLFileVersion)this));
+			sb.append("]]></column-value></column>");
+		}
 
 		sb.append("</model>");
 

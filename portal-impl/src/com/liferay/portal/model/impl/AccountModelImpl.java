@@ -41,10 +41,14 @@ import java.io.Serializable;
 import java.sql.Types;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the Account service. Represents a row in the &quot;Account_&quot; database table, with each column mapped to a property of this class.
@@ -219,23 +223,15 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("mvccVersion", getMvccVersion());
-		attributes.put("accountId", getAccountId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("parentAccountId", getParentAccountId());
-		attributes.put("name", getName());
-		attributes.put("legalName", getLegalName());
-		attributes.put("legalId", getLegalId());
-		attributes.put("legalType", getLegalType());
-		attributes.put("sicCode", getSicCode());
-		attributes.put("tickerSymbol", getTickerSymbol());
-		attributes.put("industry", getIndustry());
-		attributes.put("type", getType());
-		attributes.put("size", getSize());
+		Map<String, Function<Account, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+
+		for (Map.Entry<String, Function<Account, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<Account, Object> attributeGetterFunction = entry.getValue();
+
+			attributes.put(attributeName,
+				attributeGetterFunction.apply((Account)this));
+		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -245,107 +241,71 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long mvccVersion = (Long)attributes.get("mvccVersion");
+		Map<String, BiConsumer<Account, Object>> attributeSetterBiConsumers = getAttributeSetterBiConsumers();
 
-		if (mvccVersion != null) {
-			setMvccVersion(mvccVersion);
+		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
+			String attributeName = entry.getKey();
+
+			BiConsumer<Account, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+
+			if (attributeSetterBiConsumer != null) {
+				attributeSetterBiConsumer.accept((Account)this, entry.getValue());
+			}
 		}
+	}
 
-		Long accountId = (Long)attributes.get("accountId");
+	public Map<String, Function<Account, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
+	}
 
-		if (accountId != null) {
-			setAccountId(accountId);
-		}
+	public Map<String, BiConsumer<Account, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		Long companyId = (Long)attributes.get("companyId");
+	private static final Map<String, Function<Account, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<Account, Object>> _attributeSetterBiConsumers;
 
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
+	static {
+		Map<String, Function<Account, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<Account, Object>>();
+		Map<String, BiConsumer<Account, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<Account, ?>>();
 
-		Long userId = (Long)attributes.get("userId");
+		attributeGetterFunctions.put("mvccVersion", Account::getMvccVersion);
+		attributeSetterBiConsumers.put("mvccVersion", (BiConsumer<Account, Long>)Account::setMvccVersion);
+		attributeGetterFunctions.put("accountId", Account::getAccountId);
+		attributeSetterBiConsumers.put("accountId", (BiConsumer<Account, Long>)Account::setAccountId);
+		attributeGetterFunctions.put("companyId", Account::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<Account, Long>)Account::setCompanyId);
+		attributeGetterFunctions.put("userId", Account::getUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<Account, Long>)Account::setUserId);
+		attributeGetterFunctions.put("userName", Account::getUserName);
+		attributeSetterBiConsumers.put("userName", (BiConsumer<Account, String>)Account::setUserName);
+		attributeGetterFunctions.put("createDate", Account::getCreateDate);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<Account, Date>)Account::setCreateDate);
+		attributeGetterFunctions.put("modifiedDate", Account::getModifiedDate);
+		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<Account, Date>)Account::setModifiedDate);
+		attributeGetterFunctions.put("parentAccountId", Account::getParentAccountId);
+		attributeSetterBiConsumers.put("parentAccountId", (BiConsumer<Account, Long>)Account::setParentAccountId);
+		attributeGetterFunctions.put("name", Account::getName);
+		attributeSetterBiConsumers.put("name", (BiConsumer<Account, String>)Account::setName);
+		attributeGetterFunctions.put("legalName", Account::getLegalName);
+		attributeSetterBiConsumers.put("legalName", (BiConsumer<Account, String>)Account::setLegalName);
+		attributeGetterFunctions.put("legalId", Account::getLegalId);
+		attributeSetterBiConsumers.put("legalId", (BiConsumer<Account, String>)Account::setLegalId);
+		attributeGetterFunctions.put("legalType", Account::getLegalType);
+		attributeSetterBiConsumers.put("legalType", (BiConsumer<Account, String>)Account::setLegalType);
+		attributeGetterFunctions.put("sicCode", Account::getSicCode);
+		attributeSetterBiConsumers.put("sicCode", (BiConsumer<Account, String>)Account::setSicCode);
+		attributeGetterFunctions.put("tickerSymbol", Account::getTickerSymbol);
+		attributeSetterBiConsumers.put("tickerSymbol", (BiConsumer<Account, String>)Account::setTickerSymbol);
+		attributeGetterFunctions.put("industry", Account::getIndustry);
+		attributeSetterBiConsumers.put("industry", (BiConsumer<Account, String>)Account::setIndustry);
+		attributeGetterFunctions.put("type", Account::getType);
+		attributeSetterBiConsumers.put("type", (BiConsumer<Account, String>)Account::setType);
+		attributeGetterFunctions.put("size", Account::getSize);
+		attributeSetterBiConsumers.put("size", (BiConsumer<Account, String>)Account::setSize);
 
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		Long parentAccountId = (Long)attributes.get("parentAccountId");
-
-		if (parentAccountId != null) {
-			setParentAccountId(parentAccountId);
-		}
-
-		String name = (String)attributes.get("name");
-
-		if (name != null) {
-			setName(name);
-		}
-
-		String legalName = (String)attributes.get("legalName");
-
-		if (legalName != null) {
-			setLegalName(legalName);
-		}
-
-		String legalId = (String)attributes.get("legalId");
-
-		if (legalId != null) {
-			setLegalId(legalId);
-		}
-
-		String legalType = (String)attributes.get("legalType");
-
-		if (legalType != null) {
-			setLegalType(legalType);
-		}
-
-		String sicCode = (String)attributes.get("sicCode");
-
-		if (sicCode != null) {
-			setSicCode(sicCode);
-		}
-
-		String tickerSymbol = (String)attributes.get("tickerSymbol");
-
-		if (tickerSymbol != null) {
-			setTickerSymbol(tickerSymbol);
-		}
-
-		String industry = (String)attributes.get("industry");
-
-		if (industry != null) {
-			setIndustry(industry);
-		}
-
-		String type = (String)attributes.get("type");
-
-		if (type != null) {
-			setType(type);
-		}
-
-		String size = (String)attributes.get("size");
-
-		if (size != null) {
-			setSize(size);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@JSON
@@ -833,42 +793,27 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(35);
+		Map<String, Function<Account, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		sb.append("{mvccVersion=");
-		sb.append(getMvccVersion());
-		sb.append(", accountId=");
-		sb.append(getAccountId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", userName=");
-		sb.append(getUserName());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", modifiedDate=");
-		sb.append(getModifiedDate());
-		sb.append(", parentAccountId=");
-		sb.append(getParentAccountId());
-		sb.append(", name=");
-		sb.append(getName());
-		sb.append(", legalName=");
-		sb.append(getLegalName());
-		sb.append(", legalId=");
-		sb.append(getLegalId());
-		sb.append(", legalType=");
-		sb.append(getLegalType());
-		sb.append(", sicCode=");
-		sb.append(getSicCode());
-		sb.append(", tickerSymbol=");
-		sb.append(getTickerSymbol());
-		sb.append(", industry=");
-		sb.append(getIndustry());
-		sb.append(", type=");
-		sb.append(getType());
-		sb.append(", size=");
-		sb.append(getSize());
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
+
+		sb.append("{");
+
+		for (Map.Entry<String, Function<Account, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<Account, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append(attributeName);
+			sb.append("=");
+			sb.append(attributeGetterFunction.apply((Account)this));
+			sb.append(", ");
+		}
+
+		if (sb.index() > 1) {
+			sb.setIndex(sb.index() - 1);
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -876,80 +821,25 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(55);
+		Map<String, Function<Account, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
-		sb.append("com.liferay.portal.kernel.model.Account");
+		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		sb.append(
-			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
-		sb.append(getMvccVersion());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>accountId</column-name><column-value><![CDATA[");
-		sb.append(getAccountId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userName</column-name><column-value><![CDATA[");
-		sb.append(getUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
-		sb.append(getModifiedDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>parentAccountId</column-name><column-value><![CDATA[");
-		sb.append(getParentAccountId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>name</column-name><column-value><![CDATA[");
-		sb.append(getName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>legalName</column-name><column-value><![CDATA[");
-		sb.append(getLegalName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>legalId</column-name><column-value><![CDATA[");
-		sb.append(getLegalId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>legalType</column-name><column-value><![CDATA[");
-		sb.append(getLegalType());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>sicCode</column-name><column-value><![CDATA[");
-		sb.append(getSicCode());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>tickerSymbol</column-name><column-value><![CDATA[");
-		sb.append(getTickerSymbol());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>industry</column-name><column-value><![CDATA[");
-		sb.append(getIndustry());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>type</column-name><column-value><![CDATA[");
-		sb.append(getType());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>size</column-name><column-value><![CDATA[");
-		sb.append(getSize());
-		sb.append("]]></column-value></column>");
+		for (Map.Entry<String, Function<Account, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<Account, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append("<column><column-name>");
+			sb.append(attributeName);
+			sb.append("</column-name><column-value><![CDATA[");
+			sb.append(attributeGetterFunction.apply((Account)this));
+			sb.append("]]></column-value></column>");
+		}
 
 		sb.append("</model>");
 

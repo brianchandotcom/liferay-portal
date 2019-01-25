@@ -47,13 +47,17 @@ import java.io.Serializable;
 import java.sql.Types;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the LayoutRevision service. Represents a row in the &quot;LayoutRevision&quot; database table, with each column mapped to a property of this class.
@@ -273,35 +277,15 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("mvccVersion", getMvccVersion());
-		attributes.put("layoutRevisionId", getLayoutRevisionId());
-		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("layoutSetBranchId", getLayoutSetBranchId());
-		attributes.put("layoutBranchId", getLayoutBranchId());
-		attributes.put("parentLayoutRevisionId", getParentLayoutRevisionId());
-		attributes.put("head", isHead());
-		attributes.put("major", isMajor());
-		attributes.put("plid", getPlid());
-		attributes.put("privateLayout", isPrivateLayout());
-		attributes.put("name", getName());
-		attributes.put("title", getTitle());
-		attributes.put("description", getDescription());
-		attributes.put("keywords", getKeywords());
-		attributes.put("robots", getRobots());
-		attributes.put("typeSettings", getTypeSettings());
-		attributes.put("iconImageId", getIconImageId());
-		attributes.put("themeId", getThemeId());
-		attributes.put("colorSchemeId", getColorSchemeId());
-		attributes.put("css", getCss());
-		attributes.put("status", getStatus());
-		attributes.put("statusByUserId", getStatusByUserId());
-		attributes.put("statusByUserName", getStatusByUserName());
-		attributes.put("statusDate", getStatusDate());
+		Map<String, Function<LayoutRevision, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+
+		for (Map.Entry<String, Function<LayoutRevision, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<LayoutRevision, Object> attributeGetterFunction = entry.getValue();
+
+			attributes.put(attributeName,
+				attributeGetterFunction.apply((LayoutRevision)this));
+		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -311,180 +295,97 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long mvccVersion = (Long)attributes.get("mvccVersion");
+		Map<String, BiConsumer<LayoutRevision, Object>> attributeSetterBiConsumers =
+			getAttributeSetterBiConsumers();
 
-		if (mvccVersion != null) {
-			setMvccVersion(mvccVersion);
+		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
+			String attributeName = entry.getKey();
+
+			BiConsumer<LayoutRevision, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+
+			if (attributeSetterBiConsumer != null) {
+				attributeSetterBiConsumer.accept((LayoutRevision)this,
+					entry.getValue());
+			}
 		}
+	}
 
-		Long layoutRevisionId = (Long)attributes.get("layoutRevisionId");
+	public Map<String, Function<LayoutRevision, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
+	}
 
-		if (layoutRevisionId != null) {
-			setLayoutRevisionId(layoutRevisionId);
-		}
+	public Map<String, BiConsumer<LayoutRevision, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		Long groupId = (Long)attributes.get("groupId");
+	private static final Map<String, Function<LayoutRevision, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<LayoutRevision, Object>> _attributeSetterBiConsumers;
 
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
+	static {
+		Map<String, Function<LayoutRevision, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<LayoutRevision, Object>>();
+		Map<String, BiConsumer<LayoutRevision, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<LayoutRevision, ?>>();
 
-		Long companyId = (Long)attributes.get("companyId");
+		attributeGetterFunctions.put("mvccVersion", LayoutRevision::getMvccVersion);
+		attributeSetterBiConsumers.put("mvccVersion", (BiConsumer<LayoutRevision, Long>)LayoutRevision::setMvccVersion);
+		attributeGetterFunctions.put("layoutRevisionId", LayoutRevision::getLayoutRevisionId);
+		attributeSetterBiConsumers.put("layoutRevisionId", (BiConsumer<LayoutRevision, Long>)LayoutRevision::setLayoutRevisionId);
+		attributeGetterFunctions.put("groupId", LayoutRevision::getGroupId);
+		attributeSetterBiConsumers.put("groupId", (BiConsumer<LayoutRevision, Long>)LayoutRevision::setGroupId);
+		attributeGetterFunctions.put("companyId", LayoutRevision::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<LayoutRevision, Long>)LayoutRevision::setCompanyId);
+		attributeGetterFunctions.put("userId", LayoutRevision::getUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<LayoutRevision, Long>)LayoutRevision::setUserId);
+		attributeGetterFunctions.put("userName", LayoutRevision::getUserName);
+		attributeSetterBiConsumers.put("userName", (BiConsumer<LayoutRevision, String>)LayoutRevision::setUserName);
+		attributeGetterFunctions.put("createDate", LayoutRevision::getCreateDate);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<LayoutRevision, Date>)LayoutRevision::setCreateDate);
+		attributeGetterFunctions.put("modifiedDate", LayoutRevision::getModifiedDate);
+		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<LayoutRevision, Date>)LayoutRevision::setModifiedDate);
+		attributeGetterFunctions.put("layoutSetBranchId", LayoutRevision::getLayoutSetBranchId);
+		attributeSetterBiConsumers.put("layoutSetBranchId", (BiConsumer<LayoutRevision, Long>)LayoutRevision::setLayoutSetBranchId);
+		attributeGetterFunctions.put("layoutBranchId", LayoutRevision::getLayoutBranchId);
+		attributeSetterBiConsumers.put("layoutBranchId", (BiConsumer<LayoutRevision, Long>)LayoutRevision::setLayoutBranchId);
+		attributeGetterFunctions.put("parentLayoutRevisionId", LayoutRevision::getParentLayoutRevisionId);
+		attributeSetterBiConsumers.put("parentLayoutRevisionId", (BiConsumer<LayoutRevision, Long>)LayoutRevision::setParentLayoutRevisionId);
+		attributeGetterFunctions.put("head", LayoutRevision::getHead);
+		attributeSetterBiConsumers.put("head", (BiConsumer<LayoutRevision, Boolean>)LayoutRevision::setHead);
+		attributeGetterFunctions.put("major", LayoutRevision::getMajor);
+		attributeSetterBiConsumers.put("major", (BiConsumer<LayoutRevision, Boolean>)LayoutRevision::setMajor);
+		attributeGetterFunctions.put("plid", LayoutRevision::getPlid);
+		attributeSetterBiConsumers.put("plid", (BiConsumer<LayoutRevision, Long>)LayoutRevision::setPlid);
+		attributeGetterFunctions.put("privateLayout", LayoutRevision::getPrivateLayout);
+		attributeSetterBiConsumers.put("privateLayout", (BiConsumer<LayoutRevision, Boolean>)LayoutRevision::setPrivateLayout);
+		attributeGetterFunctions.put("name", LayoutRevision::getName);
+		attributeSetterBiConsumers.put("name", (BiConsumer<LayoutRevision, String>)LayoutRevision::setName);
+		attributeGetterFunctions.put("title", LayoutRevision::getTitle);
+		attributeSetterBiConsumers.put("title", (BiConsumer<LayoutRevision, String>)LayoutRevision::setTitle);
+		attributeGetterFunctions.put("description", LayoutRevision::getDescription);
+		attributeSetterBiConsumers.put("description", (BiConsumer<LayoutRevision, String>)LayoutRevision::setDescription);
+		attributeGetterFunctions.put("keywords", LayoutRevision::getKeywords);
+		attributeSetterBiConsumers.put("keywords", (BiConsumer<LayoutRevision, String>)LayoutRevision::setKeywords);
+		attributeGetterFunctions.put("robots", LayoutRevision::getRobots);
+		attributeSetterBiConsumers.put("robots", (BiConsumer<LayoutRevision, String>)LayoutRevision::setRobots);
+		attributeGetterFunctions.put("typeSettings", LayoutRevision::getTypeSettings);
+		attributeSetterBiConsumers.put("typeSettings", (BiConsumer<LayoutRevision, String>)LayoutRevision::setTypeSettings);
+		attributeGetterFunctions.put("iconImageId", LayoutRevision::getIconImageId);
+		attributeSetterBiConsumers.put("iconImageId", (BiConsumer<LayoutRevision, Long>)LayoutRevision::setIconImageId);
+		attributeGetterFunctions.put("themeId", LayoutRevision::getThemeId);
+		attributeSetterBiConsumers.put("themeId", (BiConsumer<LayoutRevision, String>)LayoutRevision::setThemeId);
+		attributeGetterFunctions.put("colorSchemeId", LayoutRevision::getColorSchemeId);
+		attributeSetterBiConsumers.put("colorSchemeId", (BiConsumer<LayoutRevision, String>)LayoutRevision::setColorSchemeId);
+		attributeGetterFunctions.put("css", LayoutRevision::getCss);
+		attributeSetterBiConsumers.put("css", (BiConsumer<LayoutRevision, String>)LayoutRevision::setCss);
+		attributeGetterFunctions.put("status", LayoutRevision::getStatus);
+		attributeSetterBiConsumers.put("status", (BiConsumer<LayoutRevision, Integer>)LayoutRevision::setStatus);
+		attributeGetterFunctions.put("statusByUserId", LayoutRevision::getStatusByUserId);
+		attributeSetterBiConsumers.put("statusByUserId", (BiConsumer<LayoutRevision, Long>)LayoutRevision::setStatusByUserId);
+		attributeGetterFunctions.put("statusByUserName", LayoutRevision::getStatusByUserName);
+		attributeSetterBiConsumers.put("statusByUserName", (BiConsumer<LayoutRevision, String>)LayoutRevision::setStatusByUserName);
+		attributeGetterFunctions.put("statusDate", LayoutRevision::getStatusDate);
+		attributeSetterBiConsumers.put("statusDate", (BiConsumer<LayoutRevision, Date>)LayoutRevision::setStatusDate);
 
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		Long layoutSetBranchId = (Long)attributes.get("layoutSetBranchId");
-
-		if (layoutSetBranchId != null) {
-			setLayoutSetBranchId(layoutSetBranchId);
-		}
-
-		Long layoutBranchId = (Long)attributes.get("layoutBranchId");
-
-		if (layoutBranchId != null) {
-			setLayoutBranchId(layoutBranchId);
-		}
-
-		Long parentLayoutRevisionId = (Long)attributes.get(
-				"parentLayoutRevisionId");
-
-		if (parentLayoutRevisionId != null) {
-			setParentLayoutRevisionId(parentLayoutRevisionId);
-		}
-
-		Boolean head = (Boolean)attributes.get("head");
-
-		if (head != null) {
-			setHead(head);
-		}
-
-		Boolean major = (Boolean)attributes.get("major");
-
-		if (major != null) {
-			setMajor(major);
-		}
-
-		Long plid = (Long)attributes.get("plid");
-
-		if (plid != null) {
-			setPlid(plid);
-		}
-
-		Boolean privateLayout = (Boolean)attributes.get("privateLayout");
-
-		if (privateLayout != null) {
-			setPrivateLayout(privateLayout);
-		}
-
-		String name = (String)attributes.get("name");
-
-		if (name != null) {
-			setName(name);
-		}
-
-		String title = (String)attributes.get("title");
-
-		if (title != null) {
-			setTitle(title);
-		}
-
-		String description = (String)attributes.get("description");
-
-		if (description != null) {
-			setDescription(description);
-		}
-
-		String keywords = (String)attributes.get("keywords");
-
-		if (keywords != null) {
-			setKeywords(keywords);
-		}
-
-		String robots = (String)attributes.get("robots");
-
-		if (robots != null) {
-			setRobots(robots);
-		}
-
-		String typeSettings = (String)attributes.get("typeSettings");
-
-		if (typeSettings != null) {
-			setTypeSettings(typeSettings);
-		}
-
-		Long iconImageId = (Long)attributes.get("iconImageId");
-
-		if (iconImageId != null) {
-			setIconImageId(iconImageId);
-		}
-
-		String themeId = (String)attributes.get("themeId");
-
-		if (themeId != null) {
-			setThemeId(themeId);
-		}
-
-		String colorSchemeId = (String)attributes.get("colorSchemeId");
-
-		if (colorSchemeId != null) {
-			setColorSchemeId(colorSchemeId);
-		}
-
-		String css = (String)attributes.get("css");
-
-		if (css != null) {
-			setCss(css);
-		}
-
-		Integer status = (Integer)attributes.get("status");
-
-		if (status != null) {
-			setStatus(status);
-		}
-
-		Long statusByUserId = (Long)attributes.get("statusByUserId");
-
-		if (statusByUserId != null) {
-			setStatusByUserId(statusByUserId);
-		}
-
-		String statusByUserName = (String)attributes.get("statusByUserName");
-
-		if (statusByUserName != null) {
-			setStatusByUserName(statusByUserName);
-		}
-
-		Date statusDate = (Date)attributes.get("statusDate");
-
-		if (statusDate != null) {
-			setStatusDate(statusDate);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@JSON
@@ -1940,66 +1841,27 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(59);
+		Map<String, Function<LayoutRevision, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		sb.append("{mvccVersion=");
-		sb.append(getMvccVersion());
-		sb.append(", layoutRevisionId=");
-		sb.append(getLayoutRevisionId());
-		sb.append(", groupId=");
-		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", userName=");
-		sb.append(getUserName());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", modifiedDate=");
-		sb.append(getModifiedDate());
-		sb.append(", layoutSetBranchId=");
-		sb.append(getLayoutSetBranchId());
-		sb.append(", layoutBranchId=");
-		sb.append(getLayoutBranchId());
-		sb.append(", parentLayoutRevisionId=");
-		sb.append(getParentLayoutRevisionId());
-		sb.append(", head=");
-		sb.append(isHead());
-		sb.append(", major=");
-		sb.append(isMajor());
-		sb.append(", plid=");
-		sb.append(getPlid());
-		sb.append(", privateLayout=");
-		sb.append(isPrivateLayout());
-		sb.append(", name=");
-		sb.append(getName());
-		sb.append(", title=");
-		sb.append(getTitle());
-		sb.append(", description=");
-		sb.append(getDescription());
-		sb.append(", keywords=");
-		sb.append(getKeywords());
-		sb.append(", robots=");
-		sb.append(getRobots());
-		sb.append(", typeSettings=");
-		sb.append(getTypeSettings());
-		sb.append(", iconImageId=");
-		sb.append(getIconImageId());
-		sb.append(", themeId=");
-		sb.append(getThemeId());
-		sb.append(", colorSchemeId=");
-		sb.append(getColorSchemeId());
-		sb.append(", css=");
-		sb.append(getCss());
-		sb.append(", status=");
-		sb.append(getStatus());
-		sb.append(", statusByUserId=");
-		sb.append(getStatusByUserId());
-		sb.append(", statusByUserName=");
-		sb.append(getStatusByUserName());
-		sb.append(", statusDate=");
-		sb.append(getStatusDate());
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
+
+		sb.append("{");
+
+		for (Map.Entry<String, Function<LayoutRevision, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<LayoutRevision, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append(attributeName);
+			sb.append("=");
+			sb.append(attributeGetterFunction.apply((LayoutRevision)this));
+			sb.append(", ");
+		}
+
+		if (sb.index() > 1) {
+			sb.setIndex(sb.index() - 1);
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -2007,128 +1869,25 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(91);
+		Map<String, Function<LayoutRevision, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
-		sb.append("com.liferay.portal.kernel.model.LayoutRevision");
+		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		sb.append(
-			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
-		sb.append(getMvccVersion());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>layoutRevisionId</column-name><column-value><![CDATA[");
-		sb.append(getLayoutRevisionId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>groupId</column-name><column-value><![CDATA[");
-		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userName</column-name><column-value><![CDATA[");
-		sb.append(getUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
-		sb.append(getModifiedDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>layoutSetBranchId</column-name><column-value><![CDATA[");
-		sb.append(getLayoutSetBranchId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>layoutBranchId</column-name><column-value><![CDATA[");
-		sb.append(getLayoutBranchId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>parentLayoutRevisionId</column-name><column-value><![CDATA[");
-		sb.append(getParentLayoutRevisionId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>head</column-name><column-value><![CDATA[");
-		sb.append(isHead());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>major</column-name><column-value><![CDATA[");
-		sb.append(isMajor());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>plid</column-name><column-value><![CDATA[");
-		sb.append(getPlid());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>privateLayout</column-name><column-value><![CDATA[");
-		sb.append(isPrivateLayout());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>name</column-name><column-value><![CDATA[");
-		sb.append(getName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>title</column-name><column-value><![CDATA[");
-		sb.append(getTitle());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>description</column-name><column-value><![CDATA[");
-		sb.append(getDescription());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>keywords</column-name><column-value><![CDATA[");
-		sb.append(getKeywords());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>robots</column-name><column-value><![CDATA[");
-		sb.append(getRobots());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>typeSettings</column-name><column-value><![CDATA[");
-		sb.append(getTypeSettings());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>iconImageId</column-name><column-value><![CDATA[");
-		sb.append(getIconImageId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>themeId</column-name><column-value><![CDATA[");
-		sb.append(getThemeId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>colorSchemeId</column-name><column-value><![CDATA[");
-		sb.append(getColorSchemeId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>css</column-name><column-value><![CDATA[");
-		sb.append(getCss());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>status</column-name><column-value><![CDATA[");
-		sb.append(getStatus());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>statusByUserId</column-name><column-value><![CDATA[");
-		sb.append(getStatusByUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>statusByUserName</column-name><column-value><![CDATA[");
-		sb.append(getStatusByUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>statusDate</column-name><column-value><![CDATA[");
-		sb.append(getStatusDate());
-		sb.append("]]></column-value></column>");
+		for (Map.Entry<String, Function<LayoutRevision, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<LayoutRevision, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append("<column><column-name>");
+			sb.append(attributeName);
+			sb.append("</column-name><column-value><![CDATA[");
+			sb.append(attributeGetterFunction.apply((LayoutRevision)this));
+			sb.append("]]></column-value></column>");
+		}
 
 		sb.append("</model>");
 

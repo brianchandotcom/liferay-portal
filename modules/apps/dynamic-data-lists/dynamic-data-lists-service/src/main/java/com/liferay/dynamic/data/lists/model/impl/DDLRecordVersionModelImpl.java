@@ -43,10 +43,14 @@ import java.io.Serializable;
 import java.sql.Types;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the DDLRecordVersion service. Represents a row in the &quot;DDLRecordVersion&quot; database table, with each column mapped to a property of this class.
@@ -231,23 +235,16 @@ public class DDLRecordVersionModelImpl extends BaseModelImpl<DDLRecordVersion>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("mvccVersion", getMvccVersion());
-		attributes.put("recordVersionId", getRecordVersionId());
-		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("DDMStorageId", getDDMStorageId());
-		attributes.put("recordSetId", getRecordSetId());
-		attributes.put("recordSetVersion", getRecordSetVersion());
-		attributes.put("recordId", getRecordId());
-		attributes.put("version", getVersion());
-		attributes.put("displayIndex", getDisplayIndex());
-		attributes.put("status", getStatus());
-		attributes.put("statusByUserId", getStatusByUserId());
-		attributes.put("statusByUserName", getStatusByUserName());
-		attributes.put("statusDate", getStatusDate());
+		Map<String, Function<DDLRecordVersion, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
+
+		for (Map.Entry<String, Function<DDLRecordVersion, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<DDLRecordVersion, Object> attributeGetterFunction = entry.getValue();
+
+			attributes.put(attributeName,
+				attributeGetterFunction.apply((DDLRecordVersion)this));
+		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -257,107 +254,74 @@ public class DDLRecordVersionModelImpl extends BaseModelImpl<DDLRecordVersion>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long mvccVersion = (Long)attributes.get("mvccVersion");
+		Map<String, BiConsumer<DDLRecordVersion, Object>> attributeSetterBiConsumers =
+			getAttributeSetterBiConsumers();
 
-		if (mvccVersion != null) {
-			setMvccVersion(mvccVersion);
+		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
+			String attributeName = entry.getKey();
+
+			BiConsumer<DDLRecordVersion, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+
+			if (attributeSetterBiConsumer != null) {
+				attributeSetterBiConsumer.accept((DDLRecordVersion)this,
+					entry.getValue());
+			}
 		}
+	}
 
-		Long recordVersionId = (Long)attributes.get("recordVersionId");
+	public Map<String, Function<DDLRecordVersion, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
+	}
 
-		if (recordVersionId != null) {
-			setRecordVersionId(recordVersionId);
-		}
+	public Map<String, BiConsumer<DDLRecordVersion, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		Long groupId = (Long)attributes.get("groupId");
+	private static final Map<String, Function<DDLRecordVersion, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<DDLRecordVersion, Object>> _attributeSetterBiConsumers;
 
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
+	static {
+		Map<String, Function<DDLRecordVersion, Object>> attributeGetterFunctions =
+			new LinkedHashMap<String, Function<DDLRecordVersion, Object>>();
+		Map<String, BiConsumer<DDLRecordVersion, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<DDLRecordVersion, ?>>();
 
-		Long companyId = (Long)attributes.get("companyId");
+		attributeGetterFunctions.put("mvccVersion", DDLRecordVersion::getMvccVersion);
+		attributeSetterBiConsumers.put("mvccVersion", (BiConsumer<DDLRecordVersion, Long>)DDLRecordVersion::setMvccVersion);
+		attributeGetterFunctions.put("recordVersionId", DDLRecordVersion::getRecordVersionId);
+		attributeSetterBiConsumers.put("recordVersionId", (BiConsumer<DDLRecordVersion, Long>)DDLRecordVersion::setRecordVersionId);
+		attributeGetterFunctions.put("groupId", DDLRecordVersion::getGroupId);
+		attributeSetterBiConsumers.put("groupId", (BiConsumer<DDLRecordVersion, Long>)DDLRecordVersion::setGroupId);
+		attributeGetterFunctions.put("companyId", DDLRecordVersion::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<DDLRecordVersion, Long>)DDLRecordVersion::setCompanyId);
+		attributeGetterFunctions.put("userId", DDLRecordVersion::getUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<DDLRecordVersion, Long>)DDLRecordVersion::setUserId);
+		attributeGetterFunctions.put("userName", DDLRecordVersion::getUserName);
+		attributeSetterBiConsumers.put("userName", (BiConsumer<DDLRecordVersion, String>)DDLRecordVersion::setUserName);
+		attributeGetterFunctions.put("createDate", DDLRecordVersion::getCreateDate);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<DDLRecordVersion, Date>)DDLRecordVersion::setCreateDate);
+		attributeGetterFunctions.put("DDMStorageId", DDLRecordVersion::getDDMStorageId);
+		attributeSetterBiConsumers.put("DDMStorageId", (BiConsumer<DDLRecordVersion, Long>)DDLRecordVersion::setDDMStorageId);
+		attributeGetterFunctions.put("recordSetId", DDLRecordVersion::getRecordSetId);
+		attributeSetterBiConsumers.put("recordSetId", (BiConsumer<DDLRecordVersion, Long>)DDLRecordVersion::setRecordSetId);
+		attributeGetterFunctions.put("recordSetVersion", DDLRecordVersion::getRecordSetVersion);
+		attributeSetterBiConsumers.put("recordSetVersion", (BiConsumer<DDLRecordVersion, String>)DDLRecordVersion::setRecordSetVersion);
+		attributeGetterFunctions.put("recordId", DDLRecordVersion::getRecordId);
+		attributeSetterBiConsumers.put("recordId", (BiConsumer<DDLRecordVersion, Long>)DDLRecordVersion::setRecordId);
+		attributeGetterFunctions.put("version", DDLRecordVersion::getVersion);
+		attributeSetterBiConsumers.put("version", (BiConsumer<DDLRecordVersion, String>)DDLRecordVersion::setVersion);
+		attributeGetterFunctions.put("displayIndex", DDLRecordVersion::getDisplayIndex);
+		attributeSetterBiConsumers.put("displayIndex", (BiConsumer<DDLRecordVersion, Integer>)DDLRecordVersion::setDisplayIndex);
+		attributeGetterFunctions.put("status", DDLRecordVersion::getStatus);
+		attributeSetterBiConsumers.put("status", (BiConsumer<DDLRecordVersion, Integer>)DDLRecordVersion::setStatus);
+		attributeGetterFunctions.put("statusByUserId", DDLRecordVersion::getStatusByUserId);
+		attributeSetterBiConsumers.put("statusByUserId", (BiConsumer<DDLRecordVersion, Long>)DDLRecordVersion::setStatusByUserId);
+		attributeGetterFunctions.put("statusByUserName", DDLRecordVersion::getStatusByUserName);
+		attributeSetterBiConsumers.put("statusByUserName", (BiConsumer<DDLRecordVersion, String>)DDLRecordVersion::setStatusByUserName);
+		attributeGetterFunctions.put("statusDate", DDLRecordVersion::getStatusDate);
+		attributeSetterBiConsumers.put("statusDate", (BiConsumer<DDLRecordVersion, Date>)DDLRecordVersion::setStatusDate);
 
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Long DDMStorageId = (Long)attributes.get("DDMStorageId");
-
-		if (DDMStorageId != null) {
-			setDDMStorageId(DDMStorageId);
-		}
-
-		Long recordSetId = (Long)attributes.get("recordSetId");
-
-		if (recordSetId != null) {
-			setRecordSetId(recordSetId);
-		}
-
-		String recordSetVersion = (String)attributes.get("recordSetVersion");
-
-		if (recordSetVersion != null) {
-			setRecordSetVersion(recordSetVersion);
-		}
-
-		Long recordId = (Long)attributes.get("recordId");
-
-		if (recordId != null) {
-			setRecordId(recordId);
-		}
-
-		String version = (String)attributes.get("version");
-
-		if (version != null) {
-			setVersion(version);
-		}
-
-		Integer displayIndex = (Integer)attributes.get("displayIndex");
-
-		if (displayIndex != null) {
-			setDisplayIndex(displayIndex);
-		}
-
-		Integer status = (Integer)attributes.get("status");
-
-		if (status != null) {
-			setStatus(status);
-		}
-
-		Long statusByUserId = (Long)attributes.get("statusByUserId");
-
-		if (statusByUserId != null) {
-			setStatusByUserId(statusByUserId);
-		}
-
-		String statusByUserName = (String)attributes.get("statusByUserName");
-
-		if (statusByUserName != null) {
-			setStatusByUserName(statusByUserName);
-		}
-
-		Date statusDate = (Date)attributes.get("statusDate");
-
-		if (statusDate != null) {
-			setStatusDate(statusDate);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@JSON
@@ -961,42 +925,28 @@ public class DDLRecordVersionModelImpl extends BaseModelImpl<DDLRecordVersion>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(35);
+		Map<String, Function<DDLRecordVersion, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		sb.append("{mvccVersion=");
-		sb.append(getMvccVersion());
-		sb.append(", recordVersionId=");
-		sb.append(getRecordVersionId());
-		sb.append(", groupId=");
-		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", userName=");
-		sb.append(getUserName());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", DDMStorageId=");
-		sb.append(getDDMStorageId());
-		sb.append(", recordSetId=");
-		sb.append(getRecordSetId());
-		sb.append(", recordSetVersion=");
-		sb.append(getRecordSetVersion());
-		sb.append(", recordId=");
-		sb.append(getRecordId());
-		sb.append(", version=");
-		sb.append(getVersion());
-		sb.append(", displayIndex=");
-		sb.append(getDisplayIndex());
-		sb.append(", status=");
-		sb.append(getStatus());
-		sb.append(", statusByUserId=");
-		sb.append(getStatusByUserId());
-		sb.append(", statusByUserName=");
-		sb.append(getStatusByUserName());
-		sb.append(", statusDate=");
-		sb.append(getStatusDate());
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
+
+		sb.append("{");
+
+		for (Map.Entry<String, Function<DDLRecordVersion, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<DDLRecordVersion, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append(attributeName);
+			sb.append("=");
+			sb.append(attributeGetterFunction.apply((DDLRecordVersion)this));
+			sb.append(", ");
+		}
+
+		if (sb.index() > 1) {
+			sb.setIndex(sb.index() - 1);
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -1004,80 +954,26 @@ public class DDLRecordVersionModelImpl extends BaseModelImpl<DDLRecordVersion>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(55);
+		Map<String, Function<DDLRecordVersion, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
+
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
-		sb.append("com.liferay.dynamic.data.lists.model.DDLRecordVersion");
+		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		sb.append(
-			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
-		sb.append(getMvccVersion());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>recordVersionId</column-name><column-value><![CDATA[");
-		sb.append(getRecordVersionId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>groupId</column-name><column-value><![CDATA[");
-		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userName</column-name><column-value><![CDATA[");
-		sb.append(getUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>DDMStorageId</column-name><column-value><![CDATA[");
-		sb.append(getDDMStorageId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>recordSetId</column-name><column-value><![CDATA[");
-		sb.append(getRecordSetId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>recordSetVersion</column-name><column-value><![CDATA[");
-		sb.append(getRecordSetVersion());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>recordId</column-name><column-value><![CDATA[");
-		sb.append(getRecordId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>version</column-name><column-value><![CDATA[");
-		sb.append(getVersion());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>displayIndex</column-name><column-value><![CDATA[");
-		sb.append(getDisplayIndex());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>status</column-name><column-value><![CDATA[");
-		sb.append(getStatus());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>statusByUserId</column-name><column-value><![CDATA[");
-		sb.append(getStatusByUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>statusByUserName</column-name><column-value><![CDATA[");
-		sb.append(getStatusByUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>statusDate</column-name><column-value><![CDATA[");
-		sb.append(getStatusDate());
-		sb.append("]]></column-value></column>");
+		for (Map.Entry<String, Function<DDLRecordVersion, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<DDLRecordVersion, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append("<column><column-name>");
+			sb.append(attributeName);
+			sb.append("</column-name><column-value><![CDATA[");
+			sb.append(attributeGetterFunction.apply((DDLRecordVersion)this));
+			sb.append("]]></column-value></column>");
+		}
 
 		sb.append("</model>");
 

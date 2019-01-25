@@ -36,8 +36,12 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the JournalArticleLocalization service. Represents a row in the &quot;JournalArticleLocalization&quot; database table, with each column mapped to a property of this class.
@@ -139,12 +143,17 @@ public class JournalArticleLocalizationModelImpl extends BaseModelImpl<JournalAr
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("articleLocalizationId", getArticleLocalizationId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("articlePK", getArticlePK());
-		attributes.put("title", getTitle());
-		attributes.put("description", getDescription());
-		attributes.put("languageId", getLanguageId());
+		Map<String, Function<JournalArticleLocalization, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
+
+		for (Map.Entry<String, Function<JournalArticleLocalization, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<JournalArticleLocalization, Object> attributeGetterFunction =
+				entry.getValue();
+
+			attributes.put(attributeName,
+				attributeGetterFunction.apply((JournalArticleLocalization)this));
+		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -154,42 +163,54 @@ public class JournalArticleLocalizationModelImpl extends BaseModelImpl<JournalAr
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long articleLocalizationId = (Long)attributes.get(
-				"articleLocalizationId");
+		Map<String, BiConsumer<JournalArticleLocalization, Object>> attributeSetterBiConsumers =
+			getAttributeSetterBiConsumers();
 
-		if (articleLocalizationId != null) {
-			setArticleLocalizationId(articleLocalizationId);
+		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
+			String attributeName = entry.getKey();
+
+			BiConsumer<JournalArticleLocalization, Object> attributeSetterBiConsumer =
+				attributeSetterBiConsumers.get(attributeName);
+
+			if (attributeSetterBiConsumer != null) {
+				attributeSetterBiConsumer.accept((JournalArticleLocalization)this,
+					entry.getValue());
+			}
 		}
+	}
 
-		Long companyId = (Long)attributes.get("companyId");
+	public Map<String, Function<JournalArticleLocalization, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
+	}
 
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
+	public Map<String, BiConsumer<JournalArticleLocalization, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		Long articlePK = (Long)attributes.get("articlePK");
+	private static final Map<String, Function<JournalArticleLocalization, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<JournalArticleLocalization, Object>> _attributeSetterBiConsumers;
 
-		if (articlePK != null) {
-			setArticlePK(articlePK);
-		}
+	static {
+		Map<String, Function<JournalArticleLocalization, Object>> attributeGetterFunctions =
+			new LinkedHashMap<String, Function<JournalArticleLocalization, Object>>();
+		Map<String, BiConsumer<JournalArticleLocalization, ?>> attributeSetterBiConsumers =
+			new LinkedHashMap<String, BiConsumer<JournalArticleLocalization, ?>>();
 
-		String title = (String)attributes.get("title");
+		attributeGetterFunctions.put("articleLocalizationId", JournalArticleLocalization::getArticleLocalizationId);
+		attributeSetterBiConsumers.put("articleLocalizationId", (BiConsumer<JournalArticleLocalization, Long>)JournalArticleLocalization::setArticleLocalizationId);
+		attributeGetterFunctions.put("companyId", JournalArticleLocalization::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<JournalArticleLocalization, Long>)JournalArticleLocalization::setCompanyId);
+		attributeGetterFunctions.put("articlePK", JournalArticleLocalization::getArticlePK);
+		attributeSetterBiConsumers.put("articlePK", (BiConsumer<JournalArticleLocalization, Long>)JournalArticleLocalization::setArticlePK);
+		attributeGetterFunctions.put("title", JournalArticleLocalization::getTitle);
+		attributeSetterBiConsumers.put("title", (BiConsumer<JournalArticleLocalization, String>)JournalArticleLocalization::setTitle);
+		attributeGetterFunctions.put("description", JournalArticleLocalization::getDescription);
+		attributeSetterBiConsumers.put("description", (BiConsumer<JournalArticleLocalization, String>)JournalArticleLocalization::setDescription);
+		attributeGetterFunctions.put("languageId", JournalArticleLocalization::getLanguageId);
+		attributeSetterBiConsumers.put("languageId", (BiConsumer<JournalArticleLocalization, String>)JournalArticleLocalization::setLanguageId);
 
-		if (title != null) {
-			setTitle(title);
-		}
-
-		String description = (String)attributes.get("description");
-
-		if (description != null) {
-			setDescription(description);
-		}
-
-		String languageId = (String)attributes.get("languageId");
-
-		if (languageId != null) {
-			setLanguageId(languageId);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -437,20 +458,30 @@ public class JournalArticleLocalizationModelImpl extends BaseModelImpl<JournalAr
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(13);
+		Map<String, Function<JournalArticleLocalization, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		sb.append("{articleLocalizationId=");
-		sb.append(getArticleLocalizationId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", articlePK=");
-		sb.append(getArticlePK());
-		sb.append(", title=");
-		sb.append(getTitle());
-		sb.append(", description=");
-		sb.append(getDescription());
-		sb.append(", languageId=");
-		sb.append(getLanguageId());
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
+
+		sb.append("{");
+
+		for (Map.Entry<String, Function<JournalArticleLocalization, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<JournalArticleLocalization, Object> attributeGetterFunction =
+				entry.getValue();
+
+			sb.append(attributeName);
+			sb.append("=");
+			sb.append(attributeGetterFunction.apply(
+					(JournalArticleLocalization)this));
+			sb.append(", ");
+		}
+
+		if (sb.index() > 1) {
+			sb.setIndex(sb.index() - 1);
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -458,36 +489,28 @@ public class JournalArticleLocalizationModelImpl extends BaseModelImpl<JournalAr
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(22);
+		Map<String, Function<JournalArticleLocalization, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
+
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
-		sb.append("com.liferay.journal.model.JournalArticleLocalization");
+		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		sb.append(
-			"<column><column-name>articleLocalizationId</column-name><column-value><![CDATA[");
-		sb.append(getArticleLocalizationId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>articlePK</column-name><column-value><![CDATA[");
-		sb.append(getArticlePK());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>title</column-name><column-value><![CDATA[");
-		sb.append(getTitle());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>description</column-name><column-value><![CDATA[");
-		sb.append(getDescription());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>languageId</column-name><column-value><![CDATA[");
-		sb.append(getLanguageId());
-		sb.append("]]></column-value></column>");
+		for (Map.Entry<String, Function<JournalArticleLocalization, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<JournalArticleLocalization, Object> attributeGetterFunction =
+				entry.getValue();
+
+			sb.append("<column><column-name>");
+			sb.append(attributeName);
+			sb.append("</column-name><column-value><![CDATA[");
+			sb.append(attributeGetterFunction.apply(
+					(JournalArticleLocalization)this));
+			sb.append("]]></column-value></column>");
+		}
 
 		sb.append("</model>");
 

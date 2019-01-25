@@ -38,9 +38,13 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the Lock service. Represents a row in the &quot;Lock_&quot; database table, with each column mapped to a property of this class.
@@ -156,18 +160,15 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("mvccVersion", getMvccVersion());
-		attributes.put("uuid", getUuid());
-		attributes.put("lockId", getLockId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("className", getClassName());
-		attributes.put("key", getKey());
-		attributes.put("owner", getOwner());
-		attributes.put("inheritable", isInheritable());
-		attributes.put("expirationDate", getExpirationDate());
+		Map<String, Function<Lock, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+
+		for (Map.Entry<String, Function<Lock, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<Lock, Object> attributeGetterFunction = entry.getValue();
+
+			attributes.put(attributeName,
+				attributeGetterFunction.apply((Lock)this));
+		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -177,77 +178,61 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long mvccVersion = (Long)attributes.get("mvccVersion");
+		Map<String, BiConsumer<Lock, Object>> attributeSetterBiConsumers = getAttributeSetterBiConsumers();
 
-		if (mvccVersion != null) {
-			setMvccVersion(mvccVersion);
+		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
+			String attributeName = entry.getKey();
+
+			BiConsumer<Lock, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+
+			if (attributeSetterBiConsumer != null) {
+				attributeSetterBiConsumer.accept((Lock)this, entry.getValue());
+			}
 		}
+	}
 
-		String uuid = (String)attributes.get("uuid");
+	public Map<String, Function<Lock, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
+	}
 
-		if (uuid != null) {
-			setUuid(uuid);
-		}
+	public Map<String, BiConsumer<Lock, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		Long lockId = (Long)attributes.get("lockId");
+	private static final Map<String, Function<Lock, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<Lock, Object>> _attributeSetterBiConsumers;
 
-		if (lockId != null) {
-			setLockId(lockId);
-		}
+	static {
+		Map<String, Function<Lock, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<Lock, Object>>();
+		Map<String, BiConsumer<Lock, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<Lock, ?>>();
 
-		Long companyId = (Long)attributes.get("companyId");
+		attributeGetterFunctions.put("mvccVersion", Lock::getMvccVersion);
+		attributeSetterBiConsumers.put("mvccVersion", (BiConsumer<Lock, Long>)Lock::setMvccVersion);
+		attributeGetterFunctions.put("uuid", Lock::getUuid);
+		attributeSetterBiConsumers.put("uuid", (BiConsumer<Lock, String>)Lock::setUuid);
+		attributeGetterFunctions.put("lockId", Lock::getLockId);
+		attributeSetterBiConsumers.put("lockId", (BiConsumer<Lock, Long>)Lock::setLockId);
+		attributeGetterFunctions.put("companyId", Lock::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<Lock, Long>)Lock::setCompanyId);
+		attributeGetterFunctions.put("userId", Lock::getUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<Lock, Long>)Lock::setUserId);
+		attributeGetterFunctions.put("userName", Lock::getUserName);
+		attributeSetterBiConsumers.put("userName", (BiConsumer<Lock, String>)Lock::setUserName);
+		attributeGetterFunctions.put("createDate", Lock::getCreateDate);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<Lock, Date>)Lock::setCreateDate);
+		attributeGetterFunctions.put("className", Lock::getClassName);
+		attributeSetterBiConsumers.put("className", (BiConsumer<Lock, String>)Lock::setClassName);
+		attributeGetterFunctions.put("key", Lock::getKey);
+		attributeSetterBiConsumers.put("key", (BiConsumer<Lock, String>)Lock::setKey);
+		attributeGetterFunctions.put("owner", Lock::getOwner);
+		attributeSetterBiConsumers.put("owner", (BiConsumer<Lock, String>)Lock::setOwner);
+		attributeGetterFunctions.put("inheritable", Lock::getInheritable);
+		attributeSetterBiConsumers.put("inheritable", (BiConsumer<Lock, Boolean>)Lock::setInheritable);
+		attributeGetterFunctions.put("expirationDate", Lock::getExpirationDate);
+		attributeSetterBiConsumers.put("expirationDate", (BiConsumer<Lock, Date>)Lock::setExpirationDate);
 
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		String className = (String)attributes.get("className");
-
-		if (className != null) {
-			setClassName(className);
-		}
-
-		String key = (String)attributes.get("key");
-
-		if (key != null) {
-			setKey(key);
-		}
-
-		String owner = (String)attributes.get("owner");
-
-		if (owner != null) {
-			setOwner(owner);
-		}
-
-		Boolean inheritable = (Boolean)attributes.get("inheritable");
-
-		if (inheritable != null) {
-			setInheritable(inheritable);
-		}
-
-		Date expirationDate = (Date)attributes.get("expirationDate");
-
-		if (expirationDate != null) {
-			setExpirationDate(expirationDate);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -665,32 +650,27 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		Map<String, Function<Lock, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		sb.append("{mvccVersion=");
-		sb.append(getMvccVersion());
-		sb.append(", uuid=");
-		sb.append(getUuid());
-		sb.append(", lockId=");
-		sb.append(getLockId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", userName=");
-		sb.append(getUserName());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", className=");
-		sb.append(getClassName());
-		sb.append(", key=");
-		sb.append(getKey());
-		sb.append(", owner=");
-		sb.append(getOwner());
-		sb.append(", inheritable=");
-		sb.append(isInheritable());
-		sb.append(", expirationDate=");
-		sb.append(getExpirationDate());
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
+
+		sb.append("{");
+
+		for (Map.Entry<String, Function<Lock, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<Lock, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append(attributeName);
+			sb.append("=");
+			sb.append(attributeGetterFunction.apply((Lock)this));
+			sb.append(", ");
+		}
+
+		if (sb.index() > 1) {
+			sb.setIndex(sb.index() - 1);
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -698,60 +678,25 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(40);
+		Map<String, Function<Lock, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
-		sb.append("com.liferay.portal.lock.model.Lock");
+		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		sb.append(
-			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
-		sb.append(getMvccVersion());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>uuid</column-name><column-value><![CDATA[");
-		sb.append(getUuid());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>lockId</column-name><column-value><![CDATA[");
-		sb.append(getLockId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userName</column-name><column-value><![CDATA[");
-		sb.append(getUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>className</column-name><column-value><![CDATA[");
-		sb.append(getClassName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>key</column-name><column-value><![CDATA[");
-		sb.append(getKey());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>owner</column-name><column-value><![CDATA[");
-		sb.append(getOwner());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>inheritable</column-name><column-value><![CDATA[");
-		sb.append(isInheritable());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>expirationDate</column-name><column-value><![CDATA[");
-		sb.append(getExpirationDate());
-		sb.append("]]></column-value></column>");
+		for (Map.Entry<String, Function<Lock, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<Lock, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append("<column><column-name>");
+			sb.append(attributeName);
+			sb.append("</column-name><column-value><![CDATA[");
+			sb.append(attributeGetterFunction.apply((Lock)this));
+			sb.append("]]></column-value></column>");
+		}
 
 		sb.append("</model>");
 

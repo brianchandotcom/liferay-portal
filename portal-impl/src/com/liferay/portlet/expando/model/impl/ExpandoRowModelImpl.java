@@ -32,9 +32,13 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the ExpandoRow service. Represents a row in the &quot;ExpandoRow&quot; database table, with each column mapped to a property of this class.
@@ -134,11 +138,15 @@ public class ExpandoRowModelImpl extends BaseModelImpl<ExpandoRow>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("rowId", getRowId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("tableId", getTableId());
-		attributes.put("classPK", getClassPK());
+		Map<String, Function<ExpandoRow, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+
+		for (Map.Entry<String, Function<ExpandoRow, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<ExpandoRow, Object> attributeGetterFunction = entry.getValue();
+
+			attributes.put(attributeName,
+				attributeGetterFunction.apply((ExpandoRow)this));
+		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -148,35 +156,48 @@ public class ExpandoRowModelImpl extends BaseModelImpl<ExpandoRow>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long rowId = (Long)attributes.get("rowId");
+		Map<String, BiConsumer<ExpandoRow, Object>> attributeSetterBiConsumers = getAttributeSetterBiConsumers();
 
-		if (rowId != null) {
-			setRowId(rowId);
+		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
+			String attributeName = entry.getKey();
+
+			BiConsumer<ExpandoRow, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+
+			if (attributeSetterBiConsumer != null) {
+				attributeSetterBiConsumer.accept((ExpandoRow)this,
+					entry.getValue());
+			}
 		}
+	}
 
-		Long companyId = (Long)attributes.get("companyId");
+	public Map<String, Function<ExpandoRow, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
+	}
 
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
+	public Map<String, BiConsumer<ExpandoRow, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
+	private static final Map<String, Function<ExpandoRow, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<ExpandoRow, Object>> _attributeSetterBiConsumers;
 
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
+	static {
+		Map<String, Function<ExpandoRow, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<ExpandoRow, Object>>();
+		Map<String, BiConsumer<ExpandoRow, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<ExpandoRow, ?>>();
 
-		Long tableId = (Long)attributes.get("tableId");
+		attributeGetterFunctions.put("rowId", ExpandoRow::getRowId);
+		attributeSetterBiConsumers.put("rowId", (BiConsumer<ExpandoRow, Long>)ExpandoRow::setRowId);
+		attributeGetterFunctions.put("companyId", ExpandoRow::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<ExpandoRow, Long>)ExpandoRow::setCompanyId);
+		attributeGetterFunctions.put("modifiedDate", ExpandoRow::getModifiedDate);
+		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<ExpandoRow, Date>)ExpandoRow::setModifiedDate);
+		attributeGetterFunctions.put("tableId", ExpandoRow::getTableId);
+		attributeSetterBiConsumers.put("tableId", (BiConsumer<ExpandoRow, Long>)ExpandoRow::setTableId);
+		attributeGetterFunctions.put("classPK", ExpandoRow::getClassPK);
+		attributeSetterBiConsumers.put("classPK", (BiConsumer<ExpandoRow, Long>)ExpandoRow::setClassPK);
 
-		if (tableId != null) {
-			setTableId(tableId);
-		}
-
-		Long classPK = (Long)attributes.get("classPK");
-
-		if (classPK != null) {
-			setClassPK(classPK);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -375,18 +396,27 @@ public class ExpandoRowModelImpl extends BaseModelImpl<ExpandoRow>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		Map<String, Function<ExpandoRow, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		sb.append("{rowId=");
-		sb.append(getRowId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", modifiedDate=");
-		sb.append(getModifiedDate());
-		sb.append(", tableId=");
-		sb.append(getTableId());
-		sb.append(", classPK=");
-		sb.append(getClassPK());
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
+
+		sb.append("{");
+
+		for (Map.Entry<String, Function<ExpandoRow, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<ExpandoRow, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append(attributeName);
+			sb.append("=");
+			sb.append(attributeGetterFunction.apply((ExpandoRow)this));
+			sb.append(", ");
+		}
+
+		if (sb.index() > 1) {
+			sb.setIndex(sb.index() - 1);
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -394,32 +424,25 @@ public class ExpandoRowModelImpl extends BaseModelImpl<ExpandoRow>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(19);
+		Map<String, Function<ExpandoRow, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
-		sb.append("com.liferay.expando.kernel.model.ExpandoRow");
+		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		sb.append(
-			"<column><column-name>rowId</column-name><column-value><![CDATA[");
-		sb.append(getRowId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
-		sb.append(getModifiedDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>tableId</column-name><column-value><![CDATA[");
-		sb.append(getTableId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>classPK</column-name><column-value><![CDATA[");
-		sb.append(getClassPK());
-		sb.append("]]></column-value></column>");
+		for (Map.Entry<String, Function<ExpandoRow, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<ExpandoRow, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append("<column><column-name>");
+			sb.append(attributeName);
+			sb.append("</column-name><column-value><![CDATA[");
+			sb.append(attributeGetterFunction.apply((ExpandoRow)this));
+			sb.append("]]></column-value></column>");
+		}
 
 		sb.append("</model>");
 

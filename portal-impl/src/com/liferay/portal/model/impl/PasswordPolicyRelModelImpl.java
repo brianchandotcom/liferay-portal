@@ -37,8 +37,12 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the PasswordPolicyRel service. Represents a row in the &quot;PasswordPolicyRel&quot; database table, with each column mapped to a property of this class.
@@ -141,12 +145,16 @@ public class PasswordPolicyRelModelImpl extends BaseModelImpl<PasswordPolicyRel>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("mvccVersion", getMvccVersion());
-		attributes.put("passwordPolicyRelId", getPasswordPolicyRelId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("passwordPolicyId", getPasswordPolicyId());
-		attributes.put("classNameId", getClassNameId());
-		attributes.put("classPK", getClassPK());
+		Map<String, Function<PasswordPolicyRel, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
+
+		for (Map.Entry<String, Function<PasswordPolicyRel, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<PasswordPolicyRel, Object> attributeGetterFunction = entry.getValue();
+
+			attributes.put(attributeName,
+				attributeGetterFunction.apply((PasswordPolicyRel)this));
+		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -156,41 +164,53 @@ public class PasswordPolicyRelModelImpl extends BaseModelImpl<PasswordPolicyRel>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long mvccVersion = (Long)attributes.get("mvccVersion");
+		Map<String, BiConsumer<PasswordPolicyRel, Object>> attributeSetterBiConsumers =
+			getAttributeSetterBiConsumers();
 
-		if (mvccVersion != null) {
-			setMvccVersion(mvccVersion);
+		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
+			String attributeName = entry.getKey();
+
+			BiConsumer<PasswordPolicyRel, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+
+			if (attributeSetterBiConsumer != null) {
+				attributeSetterBiConsumer.accept((PasswordPolicyRel)this,
+					entry.getValue());
+			}
 		}
+	}
 
-		Long passwordPolicyRelId = (Long)attributes.get("passwordPolicyRelId");
+	public Map<String, Function<PasswordPolicyRel, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
+	}
 
-		if (passwordPolicyRelId != null) {
-			setPasswordPolicyRelId(passwordPolicyRelId);
-		}
+	public Map<String, BiConsumer<PasswordPolicyRel, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		Long companyId = (Long)attributes.get("companyId");
+	private static final Map<String, Function<PasswordPolicyRel, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<PasswordPolicyRel, Object>> _attributeSetterBiConsumers;
 
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
+	static {
+		Map<String, Function<PasswordPolicyRel, Object>> attributeGetterFunctions =
+			new LinkedHashMap<String, Function<PasswordPolicyRel, Object>>();
+		Map<String, BiConsumer<PasswordPolicyRel, ?>> attributeSetterBiConsumers =
+			new LinkedHashMap<String, BiConsumer<PasswordPolicyRel, ?>>();
 
-		Long passwordPolicyId = (Long)attributes.get("passwordPolicyId");
+		attributeGetterFunctions.put("mvccVersion", PasswordPolicyRel::getMvccVersion);
+		attributeSetterBiConsumers.put("mvccVersion", (BiConsumer<PasswordPolicyRel, Long>)PasswordPolicyRel::setMvccVersion);
+		attributeGetterFunctions.put("passwordPolicyRelId", PasswordPolicyRel::getPasswordPolicyRelId);
+		attributeSetterBiConsumers.put("passwordPolicyRelId", (BiConsumer<PasswordPolicyRel, Long>)PasswordPolicyRel::setPasswordPolicyRelId);
+		attributeGetterFunctions.put("companyId", PasswordPolicyRel::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<PasswordPolicyRel, Long>)PasswordPolicyRel::setCompanyId);
+		attributeGetterFunctions.put("passwordPolicyId", PasswordPolicyRel::getPasswordPolicyId);
+		attributeSetterBiConsumers.put("passwordPolicyId", (BiConsumer<PasswordPolicyRel, Long>)PasswordPolicyRel::setPasswordPolicyId);
+		attributeGetterFunctions.put("classNameId", PasswordPolicyRel::getClassNameId);
+		attributeSetterBiConsumers.put("classNameId", (BiConsumer<PasswordPolicyRel, Long>)PasswordPolicyRel::setClassNameId);
+		attributeGetterFunctions.put("classPK", PasswordPolicyRel::getClassPK);
+		attributeSetterBiConsumers.put("classPK", (BiConsumer<PasswordPolicyRel, Long>)PasswordPolicyRel::setClassPK);
 
-		if (passwordPolicyId != null) {
-			setPasswordPolicyId(passwordPolicyId);
-		}
-
-		Long classNameId = (Long)attributes.get("classNameId");
-
-		if (classNameId != null) {
-			setClassNameId(classNameId);
-		}
-
-		Long classPK = (Long)attributes.get("classPK");
-
-		if (classPK != null) {
-			setClassPK(classPK);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -444,20 +464,28 @@ public class PasswordPolicyRelModelImpl extends BaseModelImpl<PasswordPolicyRel>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(13);
+		Map<String, Function<PasswordPolicyRel, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		sb.append("{mvccVersion=");
-		sb.append(getMvccVersion());
-		sb.append(", passwordPolicyRelId=");
-		sb.append(getPasswordPolicyRelId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", passwordPolicyId=");
-		sb.append(getPasswordPolicyId());
-		sb.append(", classNameId=");
-		sb.append(getClassNameId());
-		sb.append(", classPK=");
-		sb.append(getClassPK());
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
+
+		sb.append("{");
+
+		for (Map.Entry<String, Function<PasswordPolicyRel, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<PasswordPolicyRel, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append(attributeName);
+			sb.append("=");
+			sb.append(attributeGetterFunction.apply((PasswordPolicyRel)this));
+			sb.append(", ");
+		}
+
+		if (sb.index() > 1) {
+			sb.setIndex(sb.index() - 1);
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -465,36 +493,26 @@ public class PasswordPolicyRelModelImpl extends BaseModelImpl<PasswordPolicyRel>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(22);
+		Map<String, Function<PasswordPolicyRel, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
+
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
-		sb.append("com.liferay.portal.kernel.model.PasswordPolicyRel");
+		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		sb.append(
-			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
-		sb.append(getMvccVersion());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>passwordPolicyRelId</column-name><column-value><![CDATA[");
-		sb.append(getPasswordPolicyRelId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>passwordPolicyId</column-name><column-value><![CDATA[");
-		sb.append(getPasswordPolicyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>classNameId</column-name><column-value><![CDATA[");
-		sb.append(getClassNameId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>classPK</column-name><column-value><![CDATA[");
-		sb.append(getClassPK());
-		sb.append("]]></column-value></column>");
+		for (Map.Entry<String, Function<PasswordPolicyRel, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<PasswordPolicyRel, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append("<column><column-name>");
+			sb.append(attributeName);
+			sb.append("</column-name><column-value><![CDATA[");
+			sb.append(attributeGetterFunction.apply((PasswordPolicyRel)this));
+			sb.append("]]></column-value></column>");
+		}
 
 		sb.append("</model>");
 

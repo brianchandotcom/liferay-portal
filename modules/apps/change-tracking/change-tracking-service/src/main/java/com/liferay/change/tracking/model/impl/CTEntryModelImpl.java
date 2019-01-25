@@ -41,9 +41,13 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the CTEntry service. Represents a row in the &quot;CTEntry&quot; database table, with each column mapped to a property of this class.
@@ -163,15 +167,15 @@ public class CTEntryModelImpl extends BaseModelImpl<CTEntry>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("ctEntryId", getCtEntryId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("classNameId", getClassNameId());
-		attributes.put("classPK", getClassPK());
-		attributes.put("resourcePrimKey", getResourcePrimKey());
+		Map<String, Function<CTEntry, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+
+		for (Map.Entry<String, Function<CTEntry, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<CTEntry, Object> attributeGetterFunction = entry.getValue();
+
+			attributes.put(attributeName,
+				attributeGetterFunction.apply((CTEntry)this));
+		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -181,59 +185,55 @@ public class CTEntryModelImpl extends BaseModelImpl<CTEntry>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long ctEntryId = (Long)attributes.get("ctEntryId");
+		Map<String, BiConsumer<CTEntry, Object>> attributeSetterBiConsumers = getAttributeSetterBiConsumers();
 
-		if (ctEntryId != null) {
-			setCtEntryId(ctEntryId);
+		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
+			String attributeName = entry.getKey();
+
+			BiConsumer<CTEntry, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+
+			if (attributeSetterBiConsumer != null) {
+				attributeSetterBiConsumer.accept((CTEntry)this, entry.getValue());
+			}
 		}
+	}
 
-		Long companyId = (Long)attributes.get("companyId");
+	public Map<String, Function<CTEntry, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
+	}
 
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
+	public Map<String, BiConsumer<CTEntry, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		Long userId = (Long)attributes.get("userId");
+	private static final Map<String, Function<CTEntry, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<CTEntry, Object>> _attributeSetterBiConsumers;
 
-		if (userId != null) {
-			setUserId(userId);
-		}
+	static {
+		Map<String, Function<CTEntry, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<CTEntry, Object>>();
+		Map<String, BiConsumer<CTEntry, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<CTEntry, ?>>();
 
-		String userName = (String)attributes.get("userName");
+		attributeGetterFunctions.put("ctEntryId", CTEntry::getCtEntryId);
+		attributeSetterBiConsumers.put("ctEntryId", (BiConsumer<CTEntry, Long>)CTEntry::setCtEntryId);
+		attributeGetterFunctions.put("companyId", CTEntry::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<CTEntry, Long>)CTEntry::setCompanyId);
+		attributeGetterFunctions.put("userId", CTEntry::getUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<CTEntry, Long>)CTEntry::setUserId);
+		attributeGetterFunctions.put("userName", CTEntry::getUserName);
+		attributeSetterBiConsumers.put("userName", (BiConsumer<CTEntry, String>)CTEntry::setUserName);
+		attributeGetterFunctions.put("createDate", CTEntry::getCreateDate);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<CTEntry, Date>)CTEntry::setCreateDate);
+		attributeGetterFunctions.put("modifiedDate", CTEntry::getModifiedDate);
+		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<CTEntry, Date>)CTEntry::setModifiedDate);
+		attributeGetterFunctions.put("classNameId", CTEntry::getClassNameId);
+		attributeSetterBiConsumers.put("classNameId", (BiConsumer<CTEntry, Long>)CTEntry::setClassNameId);
+		attributeGetterFunctions.put("classPK", CTEntry::getClassPK);
+		attributeSetterBiConsumers.put("classPK", (BiConsumer<CTEntry, Long>)CTEntry::setClassPK);
+		attributeGetterFunctions.put("resourcePrimKey", CTEntry::getResourcePrimKey);
+		attributeSetterBiConsumers.put("resourcePrimKey", (BiConsumer<CTEntry, Long>)CTEntry::setResourcePrimKey);
 
-		if (userName != null) {
-			setUserName(userName);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		Long classNameId = (Long)attributes.get("classNameId");
-
-		if (classNameId != null) {
-			setClassNameId(classNameId);
-		}
-
-		Long classPK = (Long)attributes.get("classPK");
-
-		if (classPK != null) {
-			setClassPK(classPK);
-		}
-
-		Long resourcePrimKey = (Long)attributes.get("resourcePrimKey");
-
-		if (resourcePrimKey != null) {
-			setResourcePrimKey(resourcePrimKey);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -580,26 +580,27 @@ public class CTEntryModelImpl extends BaseModelImpl<CTEntry>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		Map<String, Function<CTEntry, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		sb.append("{ctEntryId=");
-		sb.append(getCtEntryId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", userName=");
-		sb.append(getUserName());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", modifiedDate=");
-		sb.append(getModifiedDate());
-		sb.append(", classNameId=");
-		sb.append(getClassNameId());
-		sb.append(", classPK=");
-		sb.append(getClassPK());
-		sb.append(", resourcePrimKey=");
-		sb.append(getResourcePrimKey());
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
+
+		sb.append("{");
+
+		for (Map.Entry<String, Function<CTEntry, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<CTEntry, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append(attributeName);
+			sb.append("=");
+			sb.append(attributeGetterFunction.apply((CTEntry)this));
+			sb.append(", ");
+		}
+
+		if (sb.index() > 1) {
+			sb.setIndex(sb.index() - 1);
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -607,48 +608,25 @@ public class CTEntryModelImpl extends BaseModelImpl<CTEntry>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(31);
+		Map<String, Function<CTEntry, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
-		sb.append("com.liferay.change.tracking.model.CTEntry");
+		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		sb.append(
-			"<column><column-name>ctEntryId</column-name><column-value><![CDATA[");
-		sb.append(getCtEntryId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userName</column-name><column-value><![CDATA[");
-		sb.append(getUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
-		sb.append(getModifiedDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>classNameId</column-name><column-value><![CDATA[");
-		sb.append(getClassNameId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>classPK</column-name><column-value><![CDATA[");
-		sb.append(getClassPK());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>resourcePrimKey</column-name><column-value><![CDATA[");
-		sb.append(getResourcePrimKey());
-		sb.append("]]></column-value></column>");
+		for (Map.Entry<String, Function<CTEntry, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<CTEntry, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append("<column><column-name>");
+			sb.append(attributeName);
+			sb.append("</column-name><column-value><![CDATA[");
+			sb.append(attributeGetterFunction.apply((CTEntry)this));
+			sb.append("]]></column-value></column>");
+		}
 
 		sb.append("</model>");
 

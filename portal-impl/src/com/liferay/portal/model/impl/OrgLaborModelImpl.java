@@ -38,9 +38,13 @@ import java.io.Serializable;
 import java.sql.Types;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the OrgLabor service. Represents a row in the &quot;OrgLabor&quot; database table, with each column mapped to a property of this class.
@@ -225,25 +229,15 @@ public class OrgLaborModelImpl extends BaseModelImpl<OrgLabor>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("mvccVersion", getMvccVersion());
-		attributes.put("orgLaborId", getOrgLaborId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("organizationId", getOrganizationId());
-		attributes.put("typeId", getTypeId());
-		attributes.put("sunOpen", getSunOpen());
-		attributes.put("sunClose", getSunClose());
-		attributes.put("monOpen", getMonOpen());
-		attributes.put("monClose", getMonClose());
-		attributes.put("tueOpen", getTueOpen());
-		attributes.put("tueClose", getTueClose());
-		attributes.put("wedOpen", getWedOpen());
-		attributes.put("wedClose", getWedClose());
-		attributes.put("thuOpen", getThuOpen());
-		attributes.put("thuClose", getThuClose());
-		attributes.put("friOpen", getFriOpen());
-		attributes.put("friClose", getFriClose());
-		attributes.put("satOpen", getSatOpen());
-		attributes.put("satClose", getSatClose());
+		Map<String, Function<OrgLabor, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+
+		for (Map.Entry<String, Function<OrgLabor, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<OrgLabor, Object> attributeGetterFunction = entry.getValue();
+
+			attributes.put(attributeName,
+				attributeGetterFunction.apply((OrgLabor)this));
+		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -253,119 +247,76 @@ public class OrgLaborModelImpl extends BaseModelImpl<OrgLabor>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long mvccVersion = (Long)attributes.get("mvccVersion");
+		Map<String, BiConsumer<OrgLabor, Object>> attributeSetterBiConsumers = getAttributeSetterBiConsumers();
 
-		if (mvccVersion != null) {
-			setMvccVersion(mvccVersion);
+		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
+			String attributeName = entry.getKey();
+
+			BiConsumer<OrgLabor, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+
+			if (attributeSetterBiConsumer != null) {
+				attributeSetterBiConsumer.accept((OrgLabor)this,
+					entry.getValue());
+			}
 		}
+	}
 
-		Long orgLaborId = (Long)attributes.get("orgLaborId");
+	public Map<String, Function<OrgLabor, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
+	}
 
-		if (orgLaborId != null) {
-			setOrgLaborId(orgLaborId);
-		}
+	public Map<String, BiConsumer<OrgLabor, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		Long companyId = (Long)attributes.get("companyId");
+	private static final Map<String, Function<OrgLabor, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<OrgLabor, Object>> _attributeSetterBiConsumers;
 
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
+	static {
+		Map<String, Function<OrgLabor, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<OrgLabor, Object>>();
+		Map<String, BiConsumer<OrgLabor, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<OrgLabor, ?>>();
 
-		Long organizationId = (Long)attributes.get("organizationId");
+		attributeGetterFunctions.put("mvccVersion", OrgLabor::getMvccVersion);
+		attributeSetterBiConsumers.put("mvccVersion", (BiConsumer<OrgLabor, Long>)OrgLabor::setMvccVersion);
+		attributeGetterFunctions.put("orgLaborId", OrgLabor::getOrgLaborId);
+		attributeSetterBiConsumers.put("orgLaborId", (BiConsumer<OrgLabor, Long>)OrgLabor::setOrgLaborId);
+		attributeGetterFunctions.put("companyId", OrgLabor::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<OrgLabor, Long>)OrgLabor::setCompanyId);
+		attributeGetterFunctions.put("organizationId", OrgLabor::getOrganizationId);
+		attributeSetterBiConsumers.put("organizationId", (BiConsumer<OrgLabor, Long>)OrgLabor::setOrganizationId);
+		attributeGetterFunctions.put("typeId", OrgLabor::getTypeId);
+		attributeSetterBiConsumers.put("typeId", (BiConsumer<OrgLabor, Long>)OrgLabor::setTypeId);
+		attributeGetterFunctions.put("sunOpen", OrgLabor::getSunOpen);
+		attributeSetterBiConsumers.put("sunOpen", (BiConsumer<OrgLabor, Integer>)OrgLabor::setSunOpen);
+		attributeGetterFunctions.put("sunClose", OrgLabor::getSunClose);
+		attributeSetterBiConsumers.put("sunClose", (BiConsumer<OrgLabor, Integer>)OrgLabor::setSunClose);
+		attributeGetterFunctions.put("monOpen", OrgLabor::getMonOpen);
+		attributeSetterBiConsumers.put("monOpen", (BiConsumer<OrgLabor, Integer>)OrgLabor::setMonOpen);
+		attributeGetterFunctions.put("monClose", OrgLabor::getMonClose);
+		attributeSetterBiConsumers.put("monClose", (BiConsumer<OrgLabor, Integer>)OrgLabor::setMonClose);
+		attributeGetterFunctions.put("tueOpen", OrgLabor::getTueOpen);
+		attributeSetterBiConsumers.put("tueOpen", (BiConsumer<OrgLabor, Integer>)OrgLabor::setTueOpen);
+		attributeGetterFunctions.put("tueClose", OrgLabor::getTueClose);
+		attributeSetterBiConsumers.put("tueClose", (BiConsumer<OrgLabor, Integer>)OrgLabor::setTueClose);
+		attributeGetterFunctions.put("wedOpen", OrgLabor::getWedOpen);
+		attributeSetterBiConsumers.put("wedOpen", (BiConsumer<OrgLabor, Integer>)OrgLabor::setWedOpen);
+		attributeGetterFunctions.put("wedClose", OrgLabor::getWedClose);
+		attributeSetterBiConsumers.put("wedClose", (BiConsumer<OrgLabor, Integer>)OrgLabor::setWedClose);
+		attributeGetterFunctions.put("thuOpen", OrgLabor::getThuOpen);
+		attributeSetterBiConsumers.put("thuOpen", (BiConsumer<OrgLabor, Integer>)OrgLabor::setThuOpen);
+		attributeGetterFunctions.put("thuClose", OrgLabor::getThuClose);
+		attributeSetterBiConsumers.put("thuClose", (BiConsumer<OrgLabor, Integer>)OrgLabor::setThuClose);
+		attributeGetterFunctions.put("friOpen", OrgLabor::getFriOpen);
+		attributeSetterBiConsumers.put("friOpen", (BiConsumer<OrgLabor, Integer>)OrgLabor::setFriOpen);
+		attributeGetterFunctions.put("friClose", OrgLabor::getFriClose);
+		attributeSetterBiConsumers.put("friClose", (BiConsumer<OrgLabor, Integer>)OrgLabor::setFriClose);
+		attributeGetterFunctions.put("satOpen", OrgLabor::getSatOpen);
+		attributeSetterBiConsumers.put("satOpen", (BiConsumer<OrgLabor, Integer>)OrgLabor::setSatOpen);
+		attributeGetterFunctions.put("satClose", OrgLabor::getSatClose);
+		attributeSetterBiConsumers.put("satClose", (BiConsumer<OrgLabor, Integer>)OrgLabor::setSatClose);
 
-		if (organizationId != null) {
-			setOrganizationId(organizationId);
-		}
-
-		Long typeId = (Long)attributes.get("typeId");
-
-		if (typeId != null) {
-			setTypeId(typeId);
-		}
-
-		Integer sunOpen = (Integer)attributes.get("sunOpen");
-
-		if (sunOpen != null) {
-			setSunOpen(sunOpen);
-		}
-
-		Integer sunClose = (Integer)attributes.get("sunClose");
-
-		if (sunClose != null) {
-			setSunClose(sunClose);
-		}
-
-		Integer monOpen = (Integer)attributes.get("monOpen");
-
-		if (monOpen != null) {
-			setMonOpen(monOpen);
-		}
-
-		Integer monClose = (Integer)attributes.get("monClose");
-
-		if (monClose != null) {
-			setMonClose(monClose);
-		}
-
-		Integer tueOpen = (Integer)attributes.get("tueOpen");
-
-		if (tueOpen != null) {
-			setTueOpen(tueOpen);
-		}
-
-		Integer tueClose = (Integer)attributes.get("tueClose");
-
-		if (tueClose != null) {
-			setTueClose(tueClose);
-		}
-
-		Integer wedOpen = (Integer)attributes.get("wedOpen");
-
-		if (wedOpen != null) {
-			setWedOpen(wedOpen);
-		}
-
-		Integer wedClose = (Integer)attributes.get("wedClose");
-
-		if (wedClose != null) {
-			setWedClose(wedClose);
-		}
-
-		Integer thuOpen = (Integer)attributes.get("thuOpen");
-
-		if (thuOpen != null) {
-			setThuOpen(thuOpen);
-		}
-
-		Integer thuClose = (Integer)attributes.get("thuClose");
-
-		if (thuClose != null) {
-			setThuClose(thuClose);
-		}
-
-		Integer friOpen = (Integer)attributes.get("friOpen");
-
-		if (friOpen != null) {
-			setFriOpen(friOpen);
-		}
-
-		Integer friClose = (Integer)attributes.get("friClose");
-
-		if (friClose != null) {
-			setFriClose(friClose);
-		}
-
-		Integer satOpen = (Integer)attributes.get("satOpen");
-
-		if (satOpen != null) {
-			setSatOpen(satOpen);
-		}
-
-		Integer satClose = (Integer)attributes.get("satClose");
-
-		if (satClose != null) {
-			setSatClose(satClose);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@JSON
@@ -777,46 +728,27 @@ public class OrgLaborModelImpl extends BaseModelImpl<OrgLabor>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(39);
+		Map<String, Function<OrgLabor, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		sb.append("{mvccVersion=");
-		sb.append(getMvccVersion());
-		sb.append(", orgLaborId=");
-		sb.append(getOrgLaborId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", organizationId=");
-		sb.append(getOrganizationId());
-		sb.append(", typeId=");
-		sb.append(getTypeId());
-		sb.append(", sunOpen=");
-		sb.append(getSunOpen());
-		sb.append(", sunClose=");
-		sb.append(getSunClose());
-		sb.append(", monOpen=");
-		sb.append(getMonOpen());
-		sb.append(", monClose=");
-		sb.append(getMonClose());
-		sb.append(", tueOpen=");
-		sb.append(getTueOpen());
-		sb.append(", tueClose=");
-		sb.append(getTueClose());
-		sb.append(", wedOpen=");
-		sb.append(getWedOpen());
-		sb.append(", wedClose=");
-		sb.append(getWedClose());
-		sb.append(", thuOpen=");
-		sb.append(getThuOpen());
-		sb.append(", thuClose=");
-		sb.append(getThuClose());
-		sb.append(", friOpen=");
-		sb.append(getFriOpen());
-		sb.append(", friClose=");
-		sb.append(getFriClose());
-		sb.append(", satOpen=");
-		sb.append(getSatOpen());
-		sb.append(", satClose=");
-		sb.append(getSatClose());
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
+
+		sb.append("{");
+
+		for (Map.Entry<String, Function<OrgLabor, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<OrgLabor, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append(attributeName);
+			sb.append("=");
+			sb.append(attributeGetterFunction.apply((OrgLabor)this));
+			sb.append(", ");
+		}
+
+		if (sb.index() > 1) {
+			sb.setIndex(sb.index() - 1);
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -824,88 +756,25 @@ public class OrgLaborModelImpl extends BaseModelImpl<OrgLabor>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(61);
+		Map<String, Function<OrgLabor, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
-		sb.append("com.liferay.portal.kernel.model.OrgLabor");
+		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		sb.append(
-			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
-		sb.append(getMvccVersion());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>orgLaborId</column-name><column-value><![CDATA[");
-		sb.append(getOrgLaborId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>organizationId</column-name><column-value><![CDATA[");
-		sb.append(getOrganizationId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>typeId</column-name><column-value><![CDATA[");
-		sb.append(getTypeId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>sunOpen</column-name><column-value><![CDATA[");
-		sb.append(getSunOpen());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>sunClose</column-name><column-value><![CDATA[");
-		sb.append(getSunClose());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>monOpen</column-name><column-value><![CDATA[");
-		sb.append(getMonOpen());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>monClose</column-name><column-value><![CDATA[");
-		sb.append(getMonClose());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>tueOpen</column-name><column-value><![CDATA[");
-		sb.append(getTueOpen());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>tueClose</column-name><column-value><![CDATA[");
-		sb.append(getTueClose());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>wedOpen</column-name><column-value><![CDATA[");
-		sb.append(getWedOpen());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>wedClose</column-name><column-value><![CDATA[");
-		sb.append(getWedClose());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>thuOpen</column-name><column-value><![CDATA[");
-		sb.append(getThuOpen());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>thuClose</column-name><column-value><![CDATA[");
-		sb.append(getThuClose());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>friOpen</column-name><column-value><![CDATA[");
-		sb.append(getFriOpen());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>friClose</column-name><column-value><![CDATA[");
-		sb.append(getFriClose());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>satOpen</column-name><column-value><![CDATA[");
-		sb.append(getSatOpen());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>satClose</column-name><column-value><![CDATA[");
-		sb.append(getSatClose());
-		sb.append("]]></column-value></column>");
+		for (Map.Entry<String, Function<OrgLabor, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<OrgLabor, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append("<column><column-name>");
+			sb.append(attributeName);
+			sb.append("</column-name><column-value><![CDATA[");
+			sb.append(attributeGetterFunction.apply((OrgLabor)this));
+			sb.append("]]></column-value></column>");
+		}
 
 		sb.append("</model>");
 

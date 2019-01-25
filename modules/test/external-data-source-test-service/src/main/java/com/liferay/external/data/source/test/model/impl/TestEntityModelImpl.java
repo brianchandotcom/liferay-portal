@@ -35,8 +35,12 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the TestEntity service. Represents a row in the &quot;TestEntity&quot; database table, with each column mapped to a property of this class.
@@ -125,8 +129,15 @@ public class TestEntityModelImpl extends BaseModelImpl<TestEntity>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("id", getId());
-		attributes.put("data", getData());
+		Map<String, Function<TestEntity, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+
+		for (Map.Entry<String, Function<TestEntity, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<TestEntity, Object> attributeGetterFunction = entry.getValue();
+
+			attributes.put(attributeName,
+				attributeGetterFunction.apply((TestEntity)this));
+		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -136,17 +147,78 @@ public class TestEntityModelImpl extends BaseModelImpl<TestEntity>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long id = (Long)attributes.get("id");
+		Map<String, BiConsumer<TestEntity, Object>> attributeSetterBiConsumers = getAttributeSetterBiConsumers();
 
-		if (id != null) {
-			setId(id);
+		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
+			String attributeName = entry.getKey();
+
+			BiConsumer<TestEntity, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+
+			if (attributeSetterBiConsumer != null) {
+				attributeSetterBiConsumer.accept((TestEntity)this,
+					entry.getValue());
+			}
 		}
+	}
 
-		String data = (String)attributes.get("data");
+	public Map<String, Function<TestEntity, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
+	}
 
-		if (data != null) {
-			setData(data);
-		}
+	public Map<String, BiConsumer<TestEntity, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
+
+	private static final Map<String, Function<TestEntity, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<TestEntity, Object>> _attributeSetterBiConsumers;
+
+	static {
+		Map<String, Function<TestEntity, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<TestEntity, Object>>();
+		Map<String, BiConsumer<TestEntity, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<TestEntity, ?>>();
+
+		attributeGetterFunctions.put(
+			"id",
+			new Function<TestEntity, Object>() {
+
+				@Override
+				public Object apply(TestEntity testEntity) {
+					return testEntity.getId();
+				}
+
+			});
+		attributeSetterBiConsumers.put(
+			"id",
+			new BiConsumer<TestEntity, Object>() {
+
+				@Override
+				public void accept(TestEntity testEntity, Object id) {
+					testEntity.setId((Long)id);
+				}
+
+			});
+		attributeGetterFunctions.put(
+			"data",
+			new Function<TestEntity, Object>() {
+
+				@Override
+				public Object apply(TestEntity testEntity) {
+					return testEntity.getData();
+				}
+
+			});
+		attributeSetterBiConsumers.put(
+			"data",
+			new BiConsumer<TestEntity, Object>() {
+
+				@Override
+				public void accept(TestEntity testEntity, Object data) {
+					testEntity.setData((String)data);
+				}
+
+			});
+
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -284,12 +356,27 @@ public class TestEntityModelImpl extends BaseModelImpl<TestEntity>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(5);
+		Map<String, Function<TestEntity, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		sb.append("{id=");
-		sb.append(getId());
-		sb.append(", data=");
-		sb.append(getData());
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
+
+		sb.append("{");
+
+		for (Map.Entry<String, Function<TestEntity, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<TestEntity, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append(attributeName);
+			sb.append("=");
+			sb.append(attributeGetterFunction.apply((TestEntity)this));
+			sb.append(", ");
+		}
+
+		if (sb.index() > 1) {
+			sb.setIndex(sb.index() - 1);
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -297,20 +384,25 @@ public class TestEntityModelImpl extends BaseModelImpl<TestEntity>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(10);
+		Map<String, Function<TestEntity, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
-		sb.append("com.liferay.external.data.source.test.model.TestEntity");
+		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		sb.append(
-			"<column><column-name>id</column-name><column-value><![CDATA[");
-		sb.append(getId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>data</column-name><column-value><![CDATA[");
-		sb.append(getData());
-		sb.append("]]></column-value></column>");
+		for (Map.Entry<String, Function<TestEntity, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<TestEntity, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append("<column><column-name>");
+			sb.append(attributeName);
+			sb.append("</column-name><column-value><![CDATA[");
+			sb.append(attributeGetterFunction.apply((TestEntity)this));
+			sb.append("]]></column-value></column>");
+		}
 
 		sb.append("</model>");
 

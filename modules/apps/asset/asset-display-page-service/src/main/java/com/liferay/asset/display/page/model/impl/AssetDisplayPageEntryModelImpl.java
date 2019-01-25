@@ -43,9 +43,13 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the AssetDisplayPageEntry service. Represents a row in the &quot;AssetDisplayPageEntry&quot; database table, with each column mapped to a property of this class.
@@ -165,20 +169,16 @@ public class AssetDisplayPageEntryModelImpl extends BaseModelImpl<AssetDisplayPa
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("uuid", getUuid());
-		attributes.put("assetDisplayPageEntryId", getAssetDisplayPageEntryId());
-		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("classNameId", getClassNameId());
-		attributes.put("classPK", getClassPK());
-		attributes.put("layoutPageTemplateEntryId",
-			getLayoutPageTemplateEntryId());
-		attributes.put("type", getType());
-		attributes.put("plid", getPlid());
+		Map<String, Function<AssetDisplayPageEntry, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
+
+		for (Map.Entry<String, Function<AssetDisplayPageEntry, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<AssetDisplayPageEntry, Object> attributeGetterFunction = entry.getValue();
+
+			attributes.put(attributeName,
+				attributeGetterFunction.apply((AssetDisplayPageEntry)this));
+		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -188,85 +188,67 @@ public class AssetDisplayPageEntryModelImpl extends BaseModelImpl<AssetDisplayPa
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		String uuid = (String)attributes.get("uuid");
+		Map<String, BiConsumer<AssetDisplayPageEntry, Object>> attributeSetterBiConsumers =
+			getAttributeSetterBiConsumers();
 
-		if (uuid != null) {
-			setUuid(uuid);
+		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
+			String attributeName = entry.getKey();
+
+			BiConsumer<AssetDisplayPageEntry, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+
+			if (attributeSetterBiConsumer != null) {
+				attributeSetterBiConsumer.accept((AssetDisplayPageEntry)this,
+					entry.getValue());
+			}
 		}
+	}
 
-		Long assetDisplayPageEntryId = (Long)attributes.get(
-				"assetDisplayPageEntryId");
+	public Map<String, Function<AssetDisplayPageEntry, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
+	}
 
-		if (assetDisplayPageEntryId != null) {
-			setAssetDisplayPageEntryId(assetDisplayPageEntryId);
-		}
+	public Map<String, BiConsumer<AssetDisplayPageEntry, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		Long groupId = (Long)attributes.get("groupId");
+	private static final Map<String, Function<AssetDisplayPageEntry, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<AssetDisplayPageEntry, Object>> _attributeSetterBiConsumers;
 
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
+	static {
+		Map<String, Function<AssetDisplayPageEntry, Object>> attributeGetterFunctions =
+			new LinkedHashMap<String, Function<AssetDisplayPageEntry, Object>>();
+		Map<String, BiConsumer<AssetDisplayPageEntry, ?>> attributeSetterBiConsumers =
+			new LinkedHashMap<String, BiConsumer<AssetDisplayPageEntry, ?>>();
 
-		Long companyId = (Long)attributes.get("companyId");
+		attributeGetterFunctions.put("uuid", AssetDisplayPageEntry::getUuid);
+		attributeSetterBiConsumers.put("uuid", (BiConsumer<AssetDisplayPageEntry, String>)AssetDisplayPageEntry::setUuid);
+		attributeGetterFunctions.put("assetDisplayPageEntryId", AssetDisplayPageEntry::getAssetDisplayPageEntryId);
+		attributeSetterBiConsumers.put("assetDisplayPageEntryId", (BiConsumer<AssetDisplayPageEntry, Long>)AssetDisplayPageEntry::setAssetDisplayPageEntryId);
+		attributeGetterFunctions.put("groupId", AssetDisplayPageEntry::getGroupId);
+		attributeSetterBiConsumers.put("groupId", (BiConsumer<AssetDisplayPageEntry, Long>)AssetDisplayPageEntry::setGroupId);
+		attributeGetterFunctions.put("companyId", AssetDisplayPageEntry::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<AssetDisplayPageEntry, Long>)AssetDisplayPageEntry::setCompanyId);
+		attributeGetterFunctions.put("userId", AssetDisplayPageEntry::getUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<AssetDisplayPageEntry, Long>)AssetDisplayPageEntry::setUserId);
+		attributeGetterFunctions.put("userName", AssetDisplayPageEntry::getUserName);
+		attributeSetterBiConsumers.put("userName", (BiConsumer<AssetDisplayPageEntry, String>)AssetDisplayPageEntry::setUserName);
+		attributeGetterFunctions.put("createDate", AssetDisplayPageEntry::getCreateDate);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<AssetDisplayPageEntry, Date>)AssetDisplayPageEntry::setCreateDate);
+		attributeGetterFunctions.put("modifiedDate", AssetDisplayPageEntry::getModifiedDate);
+		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<AssetDisplayPageEntry, Date>)AssetDisplayPageEntry::setModifiedDate);
+		attributeGetterFunctions.put("classNameId", AssetDisplayPageEntry::getClassNameId);
+		attributeSetterBiConsumers.put("classNameId", (BiConsumer<AssetDisplayPageEntry, Long>)AssetDisplayPageEntry::setClassNameId);
+		attributeGetterFunctions.put("classPK", AssetDisplayPageEntry::getClassPK);
+		attributeSetterBiConsumers.put("classPK", (BiConsumer<AssetDisplayPageEntry, Long>)AssetDisplayPageEntry::setClassPK);
+		attributeGetterFunctions.put("layoutPageTemplateEntryId", AssetDisplayPageEntry::getLayoutPageTemplateEntryId);
+		attributeSetterBiConsumers.put("layoutPageTemplateEntryId", (BiConsumer<AssetDisplayPageEntry, Long>)AssetDisplayPageEntry::setLayoutPageTemplateEntryId);
+		attributeGetterFunctions.put("type", AssetDisplayPageEntry::getType);
+		attributeSetterBiConsumers.put("type", (BiConsumer<AssetDisplayPageEntry, Integer>)AssetDisplayPageEntry::setType);
+		attributeGetterFunctions.put("plid", AssetDisplayPageEntry::getPlid);
+		attributeSetterBiConsumers.put("plid", (BiConsumer<AssetDisplayPageEntry, Long>)AssetDisplayPageEntry::setPlid);
 
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		Long classNameId = (Long)attributes.get("classNameId");
-
-		if (classNameId != null) {
-			setClassNameId(classNameId);
-		}
-
-		Long classPK = (Long)attributes.get("classPK");
-
-		if (classPK != null) {
-			setClassPK(classPK);
-		}
-
-		Long layoutPageTemplateEntryId = (Long)attributes.get(
-				"layoutPageTemplateEntryId");
-
-		if (layoutPageTemplateEntryId != null) {
-			setLayoutPageTemplateEntryId(layoutPageTemplateEntryId);
-		}
-
-		Integer type = (Integer)attributes.get("type");
-
-		if (type != null) {
-			setType(type);
-		}
-
-		Long plid = (Long)attributes.get("plid");
-
-		if (plid != null) {
-			setPlid(plid);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -721,34 +703,28 @@ public class AssetDisplayPageEntryModelImpl extends BaseModelImpl<AssetDisplayPa
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		Map<String, Function<AssetDisplayPageEntry, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		sb.append("{uuid=");
-		sb.append(getUuid());
-		sb.append(", assetDisplayPageEntryId=");
-		sb.append(getAssetDisplayPageEntryId());
-		sb.append(", groupId=");
-		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", userName=");
-		sb.append(getUserName());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", modifiedDate=");
-		sb.append(getModifiedDate());
-		sb.append(", classNameId=");
-		sb.append(getClassNameId());
-		sb.append(", classPK=");
-		sb.append(getClassPK());
-		sb.append(", layoutPageTemplateEntryId=");
-		sb.append(getLayoutPageTemplateEntryId());
-		sb.append(", type=");
-		sb.append(getType());
-		sb.append(", plid=");
-		sb.append(getPlid());
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
+
+		sb.append("{");
+
+		for (Map.Entry<String, Function<AssetDisplayPageEntry, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<AssetDisplayPageEntry, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append(attributeName);
+			sb.append("=");
+			sb.append(attributeGetterFunction.apply((AssetDisplayPageEntry)this));
+			sb.append(", ");
+		}
+
+		if (sb.index() > 1) {
+			sb.setIndex(sb.index() - 1);
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -756,64 +732,26 @@ public class AssetDisplayPageEntryModelImpl extends BaseModelImpl<AssetDisplayPa
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(43);
+		Map<String, Function<AssetDisplayPageEntry, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
+
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
-		sb.append("com.liferay.asset.display.page.model.AssetDisplayPageEntry");
+		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		sb.append(
-			"<column><column-name>uuid</column-name><column-value><![CDATA[");
-		sb.append(getUuid());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>assetDisplayPageEntryId</column-name><column-value><![CDATA[");
-		sb.append(getAssetDisplayPageEntryId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>groupId</column-name><column-value><![CDATA[");
-		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userName</column-name><column-value><![CDATA[");
-		sb.append(getUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
-		sb.append(getModifiedDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>classNameId</column-name><column-value><![CDATA[");
-		sb.append(getClassNameId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>classPK</column-name><column-value><![CDATA[");
-		sb.append(getClassPK());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>layoutPageTemplateEntryId</column-name><column-value><![CDATA[");
-		sb.append(getLayoutPageTemplateEntryId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>type</column-name><column-value><![CDATA[");
-		sb.append(getType());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>plid</column-name><column-value><![CDATA[");
-		sb.append(getPlid());
-		sb.append("]]></column-value></column>");
+		for (Map.Entry<String, Function<AssetDisplayPageEntry, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<AssetDisplayPageEntry, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append("<column><column-name>");
+			sb.append(attributeName);
+			sb.append("</column-name><column-value><![CDATA[");
+			sb.append(attributeGetterFunction.apply((AssetDisplayPageEntry)this));
+			sb.append("]]></column-value></column>");
+		}
 
 		sb.append("</model>");
 

@@ -39,9 +39,13 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the Folder service. Represents a row in the &quot;Mail_Folder&quot; database table, with each column mapped to a property of this class.
@@ -150,16 +154,15 @@ public class FolderModelImpl extends BaseModelImpl<Folder>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("folderId", getFolderId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("accountId", getAccountId());
-		attributes.put("fullName", getFullName());
-		attributes.put("displayName", getDisplayName());
-		attributes.put("remoteMessageCount", getRemoteMessageCount());
+		Map<String, Function<Folder, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+
+		for (Map.Entry<String, Function<Folder, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<Folder, Object> attributeGetterFunction = entry.getValue();
+
+			attributes.put(attributeName,
+				attributeGetterFunction.apply((Folder)this));
+		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -169,66 +172,57 @@ public class FolderModelImpl extends BaseModelImpl<Folder>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long folderId = (Long)attributes.get("folderId");
+		Map<String, BiConsumer<Folder, Object>> attributeSetterBiConsumers = getAttributeSetterBiConsumers();
 
-		if (folderId != null) {
-			setFolderId(folderId);
+		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
+			String attributeName = entry.getKey();
+
+			BiConsumer<Folder, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+
+			if (attributeSetterBiConsumer != null) {
+				attributeSetterBiConsumer.accept((Folder)this, entry.getValue());
+			}
 		}
+	}
 
-		Long companyId = (Long)attributes.get("companyId");
+	public Map<String, Function<Folder, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
+	}
 
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
+	public Map<String, BiConsumer<Folder, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		Long userId = (Long)attributes.get("userId");
+	private static final Map<String, Function<Folder, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<Folder, Object>> _attributeSetterBiConsumers;
 
-		if (userId != null) {
-			setUserId(userId);
-		}
+	static {
+		Map<String, Function<Folder, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<Folder, Object>>();
+		Map<String, BiConsumer<Folder, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<Folder, ?>>();
 
-		String userName = (String)attributes.get("userName");
+		attributeGetterFunctions.put("folderId", Folder::getFolderId);
+		attributeSetterBiConsumers.put("folderId", (BiConsumer<Folder, Long>)Folder::setFolderId);
+		attributeGetterFunctions.put("companyId", Folder::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<Folder, Long>)Folder::setCompanyId);
+		attributeGetterFunctions.put("userId", Folder::getUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<Folder, Long>)Folder::setUserId);
+		attributeGetterFunctions.put("userName", Folder::getUserName);
+		attributeSetterBiConsumers.put("userName", (BiConsumer<Folder, String>)Folder::setUserName);
+		attributeGetterFunctions.put("createDate", Folder::getCreateDate);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<Folder, Date>)Folder::setCreateDate);
+		attributeGetterFunctions.put("modifiedDate", Folder::getModifiedDate);
+		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<Folder, Date>)Folder::setModifiedDate);
+		attributeGetterFunctions.put("accountId", Folder::getAccountId);
+		attributeSetterBiConsumers.put("accountId", (BiConsumer<Folder, Long>)Folder::setAccountId);
+		attributeGetterFunctions.put("fullName", Folder::getFullName);
+		attributeSetterBiConsumers.put("fullName", (BiConsumer<Folder, String>)Folder::setFullName);
+		attributeGetterFunctions.put("displayName", Folder::getDisplayName);
+		attributeSetterBiConsumers.put("displayName", (BiConsumer<Folder, String>)Folder::setDisplayName);
+		attributeGetterFunctions.put("remoteMessageCount", Folder::getRemoteMessageCount);
+		attributeSetterBiConsumers.put("remoteMessageCount", (BiConsumer<Folder, Integer>)Folder::setRemoteMessageCount);
 
-		if (userName != null) {
-			setUserName(userName);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		Long accountId = (Long)attributes.get("accountId");
-
-		if (accountId != null) {
-			setAccountId(accountId);
-		}
-
-		String fullName = (String)attributes.get("fullName");
-
-		if (fullName != null) {
-			setFullName(fullName);
-		}
-
-		String displayName = (String)attributes.get("displayName");
-
-		if (displayName != null) {
-			setDisplayName(displayName);
-		}
-
-		Integer remoteMessageCount = (Integer)attributes.get(
-				"remoteMessageCount");
-
-		if (remoteMessageCount != null) {
-			setRemoteMessageCount(remoteMessageCount);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -563,28 +557,27 @@ public class FolderModelImpl extends BaseModelImpl<Folder>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		Map<String, Function<Folder, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		sb.append("{folderId=");
-		sb.append(getFolderId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", userName=");
-		sb.append(getUserName());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", modifiedDate=");
-		sb.append(getModifiedDate());
-		sb.append(", accountId=");
-		sb.append(getAccountId());
-		sb.append(", fullName=");
-		sb.append(getFullName());
-		sb.append(", displayName=");
-		sb.append(getDisplayName());
-		sb.append(", remoteMessageCount=");
-		sb.append(getRemoteMessageCount());
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
+
+		sb.append("{");
+
+		for (Map.Entry<String, Function<Folder, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<Folder, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append(attributeName);
+			sb.append("=");
+			sb.append(attributeGetterFunction.apply((Folder)this));
+			sb.append(", ");
+		}
+
+		if (sb.index() > 1) {
+			sb.setIndex(sb.index() - 1);
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -592,52 +585,25 @@ public class FolderModelImpl extends BaseModelImpl<Folder>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(34);
+		Map<String, Function<Folder, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
-		sb.append("com.liferay.mail.reader.model.Folder");
+		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		sb.append(
-			"<column><column-name>folderId</column-name><column-value><![CDATA[");
-		sb.append(getFolderId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userName</column-name><column-value><![CDATA[");
-		sb.append(getUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
-		sb.append(getModifiedDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>accountId</column-name><column-value><![CDATA[");
-		sb.append(getAccountId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>fullName</column-name><column-value><![CDATA[");
-		sb.append(getFullName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>displayName</column-name><column-value><![CDATA[");
-		sb.append(getDisplayName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>remoteMessageCount</column-name><column-value><![CDATA[");
-		sb.append(getRemoteMessageCount());
-		sb.append("]]></column-value></column>");
+		for (Map.Entry<String, Function<Folder, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<Folder, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append("<column><column-name>");
+			sb.append(attributeName);
+			sb.append("</column-name><column-value><![CDATA[");
+			sb.append(attributeGetterFunction.apply((Folder)this));
+			sb.append("]]></column-value></column>");
+		}
 
 		sb.append("</model>");
 

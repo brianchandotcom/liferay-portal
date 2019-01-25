@@ -38,9 +38,13 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the KaleoTaskAssignment service. Represents a row in the &quot;KaleoTaskAssignment&quot; database table, with each column mapped to a property of this class.
@@ -167,24 +171,16 @@ public class KaleoTaskAssignmentModelImpl extends BaseModelImpl<KaleoTaskAssignm
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("kaleoTaskAssignmentId", getKaleoTaskAssignmentId());
-		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("kaleoClassName", getKaleoClassName());
-		attributes.put("kaleoClassPK", getKaleoClassPK());
-		attributes.put("kaleoDefinitionVersionId", getKaleoDefinitionVersionId());
-		attributes.put("kaleoNodeId", getKaleoNodeId());
-		attributes.put("assigneeClassName", getAssigneeClassName());
-		attributes.put("assigneeClassPK", getAssigneeClassPK());
-		attributes.put("assigneeActionId", getAssigneeActionId());
-		attributes.put("assigneeScript", getAssigneeScript());
-		attributes.put("assigneeScriptLanguage", getAssigneeScriptLanguage());
-		attributes.put("assigneeScriptRequiredContexts",
-			getAssigneeScriptRequiredContexts());
+		Map<String, Function<KaleoTaskAssignment, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
+
+		for (Map.Entry<String, Function<KaleoTaskAssignment, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<KaleoTaskAssignment, Object> attributeGetterFunction = entry.getValue();
+
+			attributes.put(attributeName,
+				attributeGetterFunction.apply((KaleoTaskAssignment)this));
+		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -194,111 +190,75 @@ public class KaleoTaskAssignmentModelImpl extends BaseModelImpl<KaleoTaskAssignm
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long kaleoTaskAssignmentId = (Long)attributes.get(
-				"kaleoTaskAssignmentId");
+		Map<String, BiConsumer<KaleoTaskAssignment, Object>> attributeSetterBiConsumers =
+			getAttributeSetterBiConsumers();
 
-		if (kaleoTaskAssignmentId != null) {
-			setKaleoTaskAssignmentId(kaleoTaskAssignmentId);
+		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
+			String attributeName = entry.getKey();
+
+			BiConsumer<KaleoTaskAssignment, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+
+			if (attributeSetterBiConsumer != null) {
+				attributeSetterBiConsumer.accept((KaleoTaskAssignment)this,
+					entry.getValue());
+			}
 		}
+	}
 
-		Long groupId = (Long)attributes.get("groupId");
+	public Map<String, Function<KaleoTaskAssignment, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
+	}
 
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
+	public Map<String, BiConsumer<KaleoTaskAssignment, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		Long companyId = (Long)attributes.get("companyId");
+	private static final Map<String, Function<KaleoTaskAssignment, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<KaleoTaskAssignment, Object>> _attributeSetterBiConsumers;
 
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
+	static {
+		Map<String, Function<KaleoTaskAssignment, Object>> attributeGetterFunctions =
+			new LinkedHashMap<String, Function<KaleoTaskAssignment, Object>>();
+		Map<String, BiConsumer<KaleoTaskAssignment, ?>> attributeSetterBiConsumers =
+			new LinkedHashMap<String, BiConsumer<KaleoTaskAssignment, ?>>();
 
-		Long userId = (Long)attributes.get("userId");
+		attributeGetterFunctions.put("kaleoTaskAssignmentId", KaleoTaskAssignment::getKaleoTaskAssignmentId);
+		attributeSetterBiConsumers.put("kaleoTaskAssignmentId", (BiConsumer<KaleoTaskAssignment, Long>)KaleoTaskAssignment::setKaleoTaskAssignmentId);
+		attributeGetterFunctions.put("groupId", KaleoTaskAssignment::getGroupId);
+		attributeSetterBiConsumers.put("groupId", (BiConsumer<KaleoTaskAssignment, Long>)KaleoTaskAssignment::setGroupId);
+		attributeGetterFunctions.put("companyId", KaleoTaskAssignment::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<KaleoTaskAssignment, Long>)KaleoTaskAssignment::setCompanyId);
+		attributeGetterFunctions.put("userId", KaleoTaskAssignment::getUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<KaleoTaskAssignment, Long>)KaleoTaskAssignment::setUserId);
+		attributeGetterFunctions.put("userName", KaleoTaskAssignment::getUserName);
+		attributeSetterBiConsumers.put("userName", (BiConsumer<KaleoTaskAssignment, String>)KaleoTaskAssignment::setUserName);
+		attributeGetterFunctions.put("createDate", KaleoTaskAssignment::getCreateDate);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<KaleoTaskAssignment, Date>)KaleoTaskAssignment::setCreateDate);
+		attributeGetterFunctions.put("modifiedDate", KaleoTaskAssignment::getModifiedDate);
+		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<KaleoTaskAssignment, Date>)KaleoTaskAssignment::setModifiedDate);
+		attributeGetterFunctions.put("kaleoClassName", KaleoTaskAssignment::getKaleoClassName);
+		attributeSetterBiConsumers.put("kaleoClassName", (BiConsumer<KaleoTaskAssignment, String>)KaleoTaskAssignment::setKaleoClassName);
+		attributeGetterFunctions.put("kaleoClassPK", KaleoTaskAssignment::getKaleoClassPK);
+		attributeSetterBiConsumers.put("kaleoClassPK", (BiConsumer<KaleoTaskAssignment, Long>)KaleoTaskAssignment::setKaleoClassPK);
+		attributeGetterFunctions.put("kaleoDefinitionVersionId", KaleoTaskAssignment::getKaleoDefinitionVersionId);
+		attributeSetterBiConsumers.put("kaleoDefinitionVersionId", (BiConsumer<KaleoTaskAssignment, Long>)KaleoTaskAssignment::setKaleoDefinitionVersionId);
+		attributeGetterFunctions.put("kaleoNodeId", KaleoTaskAssignment::getKaleoNodeId);
+		attributeSetterBiConsumers.put("kaleoNodeId", (BiConsumer<KaleoTaskAssignment, Long>)KaleoTaskAssignment::setKaleoNodeId);
+		attributeGetterFunctions.put("assigneeClassName", KaleoTaskAssignment::getAssigneeClassName);
+		attributeSetterBiConsumers.put("assigneeClassName", (BiConsumer<KaleoTaskAssignment, String>)KaleoTaskAssignment::setAssigneeClassName);
+		attributeGetterFunctions.put("assigneeClassPK", KaleoTaskAssignment::getAssigneeClassPK);
+		attributeSetterBiConsumers.put("assigneeClassPK", (BiConsumer<KaleoTaskAssignment, Long>)KaleoTaskAssignment::setAssigneeClassPK);
+		attributeGetterFunctions.put("assigneeActionId", KaleoTaskAssignment::getAssigneeActionId);
+		attributeSetterBiConsumers.put("assigneeActionId", (BiConsumer<KaleoTaskAssignment, String>)KaleoTaskAssignment::setAssigneeActionId);
+		attributeGetterFunctions.put("assigneeScript", KaleoTaskAssignment::getAssigneeScript);
+		attributeSetterBiConsumers.put("assigneeScript", (BiConsumer<KaleoTaskAssignment, String>)KaleoTaskAssignment::setAssigneeScript);
+		attributeGetterFunctions.put("assigneeScriptLanguage", KaleoTaskAssignment::getAssigneeScriptLanguage);
+		attributeSetterBiConsumers.put("assigneeScriptLanguage", (BiConsumer<KaleoTaskAssignment, String>)KaleoTaskAssignment::setAssigneeScriptLanguage);
+		attributeGetterFunctions.put("assigneeScriptRequiredContexts", KaleoTaskAssignment::getAssigneeScriptRequiredContexts);
+		attributeSetterBiConsumers.put("assigneeScriptRequiredContexts", (BiConsumer<KaleoTaskAssignment, String>)KaleoTaskAssignment::setAssigneeScriptRequiredContexts);
 
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		String kaleoClassName = (String)attributes.get("kaleoClassName");
-
-		if (kaleoClassName != null) {
-			setKaleoClassName(kaleoClassName);
-		}
-
-		Long kaleoClassPK = (Long)attributes.get("kaleoClassPK");
-
-		if (kaleoClassPK != null) {
-			setKaleoClassPK(kaleoClassPK);
-		}
-
-		Long kaleoDefinitionVersionId = (Long)attributes.get(
-				"kaleoDefinitionVersionId");
-
-		if (kaleoDefinitionVersionId != null) {
-			setKaleoDefinitionVersionId(kaleoDefinitionVersionId);
-		}
-
-		Long kaleoNodeId = (Long)attributes.get("kaleoNodeId");
-
-		if (kaleoNodeId != null) {
-			setKaleoNodeId(kaleoNodeId);
-		}
-
-		String assigneeClassName = (String)attributes.get("assigneeClassName");
-
-		if (assigneeClassName != null) {
-			setAssigneeClassName(assigneeClassName);
-		}
-
-		Long assigneeClassPK = (Long)attributes.get("assigneeClassPK");
-
-		if (assigneeClassPK != null) {
-			setAssigneeClassPK(assigneeClassPK);
-		}
-
-		String assigneeActionId = (String)attributes.get("assigneeActionId");
-
-		if (assigneeActionId != null) {
-			setAssigneeActionId(assigneeActionId);
-		}
-
-		String assigneeScript = (String)attributes.get("assigneeScript");
-
-		if (assigneeScript != null) {
-			setAssigneeScript(assigneeScript);
-		}
-
-		String assigneeScriptLanguage = (String)attributes.get(
-				"assigneeScriptLanguage");
-
-		if (assigneeScriptLanguage != null) {
-			setAssigneeScriptLanguage(assigneeScriptLanguage);
-		}
-
-		String assigneeScriptRequiredContexts = (String)attributes.get(
-				"assigneeScriptRequiredContexts");
-
-		if (assigneeScriptRequiredContexts != null) {
-			setAssigneeScriptRequiredContexts(assigneeScriptRequiredContexts);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -825,42 +785,28 @@ public class KaleoTaskAssignmentModelImpl extends BaseModelImpl<KaleoTaskAssignm
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(35);
+		Map<String, Function<KaleoTaskAssignment, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		sb.append("{kaleoTaskAssignmentId=");
-		sb.append(getKaleoTaskAssignmentId());
-		sb.append(", groupId=");
-		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", userName=");
-		sb.append(getUserName());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", modifiedDate=");
-		sb.append(getModifiedDate());
-		sb.append(", kaleoClassName=");
-		sb.append(getKaleoClassName());
-		sb.append(", kaleoClassPK=");
-		sb.append(getKaleoClassPK());
-		sb.append(", kaleoDefinitionVersionId=");
-		sb.append(getKaleoDefinitionVersionId());
-		sb.append(", kaleoNodeId=");
-		sb.append(getKaleoNodeId());
-		sb.append(", assigneeClassName=");
-		sb.append(getAssigneeClassName());
-		sb.append(", assigneeClassPK=");
-		sb.append(getAssigneeClassPK());
-		sb.append(", assigneeActionId=");
-		sb.append(getAssigneeActionId());
-		sb.append(", assigneeScript=");
-		sb.append(getAssigneeScript());
-		sb.append(", assigneeScriptLanguage=");
-		sb.append(getAssigneeScriptLanguage());
-		sb.append(", assigneeScriptRequiredContexts=");
-		sb.append(getAssigneeScriptRequiredContexts());
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
+
+		sb.append("{");
+
+		for (Map.Entry<String, Function<KaleoTaskAssignment, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<KaleoTaskAssignment, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append(attributeName);
+			sb.append("=");
+			sb.append(attributeGetterFunction.apply((KaleoTaskAssignment)this));
+			sb.append(", ");
+		}
+
+		if (sb.index() > 1) {
+			sb.setIndex(sb.index() - 1);
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -868,80 +814,26 @@ public class KaleoTaskAssignmentModelImpl extends BaseModelImpl<KaleoTaskAssignm
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(55);
+		Map<String, Function<KaleoTaskAssignment, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
+
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
-		sb.append("com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignment");
+		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		sb.append(
-			"<column><column-name>kaleoTaskAssignmentId</column-name><column-value><![CDATA[");
-		sb.append(getKaleoTaskAssignmentId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>groupId</column-name><column-value><![CDATA[");
-		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userName</column-name><column-value><![CDATA[");
-		sb.append(getUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
-		sb.append(getModifiedDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>kaleoClassName</column-name><column-value><![CDATA[");
-		sb.append(getKaleoClassName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>kaleoClassPK</column-name><column-value><![CDATA[");
-		sb.append(getKaleoClassPK());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>kaleoDefinitionVersionId</column-name><column-value><![CDATA[");
-		sb.append(getKaleoDefinitionVersionId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>kaleoNodeId</column-name><column-value><![CDATA[");
-		sb.append(getKaleoNodeId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>assigneeClassName</column-name><column-value><![CDATA[");
-		sb.append(getAssigneeClassName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>assigneeClassPK</column-name><column-value><![CDATA[");
-		sb.append(getAssigneeClassPK());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>assigneeActionId</column-name><column-value><![CDATA[");
-		sb.append(getAssigneeActionId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>assigneeScript</column-name><column-value><![CDATA[");
-		sb.append(getAssigneeScript());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>assigneeScriptLanguage</column-name><column-value><![CDATA[");
-		sb.append(getAssigneeScriptLanguage());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>assigneeScriptRequiredContexts</column-name><column-value><![CDATA[");
-		sb.append(getAssigneeScriptRequiredContexts());
-		sb.append("]]></column-value></column>");
+		for (Map.Entry<String, Function<KaleoTaskAssignment, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<KaleoTaskAssignment, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append("<column><column-name>");
+			sb.append(attributeName);
+			sb.append("</column-name><column-value><![CDATA[");
+			sb.append(attributeGetterFunction.apply((KaleoTaskAssignment)this));
+			sb.append("]]></column-value></column>");
+		}
 
 		sb.append("</model>");
 

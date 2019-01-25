@@ -38,8 +38,12 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the DDMStructureLink service. Represents a row in the &quot;DDMStructureLink&quot; database table, with each column mapped to a property of this class.
@@ -140,11 +144,16 @@ public class DDMStructureLinkModelImpl extends BaseModelImpl<DDMStructureLink>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("structureLinkId", getStructureLinkId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("classNameId", getClassNameId());
-		attributes.put("classPK", getClassPK());
-		attributes.put("structureId", getStructureId());
+		Map<String, Function<DDMStructureLink, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
+
+		for (Map.Entry<String, Function<DDMStructureLink, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<DDMStructureLink, Object> attributeGetterFunction = entry.getValue();
+
+			attributes.put(attributeName,
+				attributeGetterFunction.apply((DDMStructureLink)this));
+		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -154,35 +163,50 @@ public class DDMStructureLinkModelImpl extends BaseModelImpl<DDMStructureLink>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long structureLinkId = (Long)attributes.get("structureLinkId");
+		Map<String, BiConsumer<DDMStructureLink, Object>> attributeSetterBiConsumers =
+			getAttributeSetterBiConsumers();
 
-		if (structureLinkId != null) {
-			setStructureLinkId(structureLinkId);
+		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
+			String attributeName = entry.getKey();
+
+			BiConsumer<DDMStructureLink, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+
+			if (attributeSetterBiConsumer != null) {
+				attributeSetterBiConsumer.accept((DDMStructureLink)this,
+					entry.getValue());
+			}
 		}
+	}
 
-		Long companyId = (Long)attributes.get("companyId");
+	public Map<String, Function<DDMStructureLink, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
+	}
 
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
+	public Map<String, BiConsumer<DDMStructureLink, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		Long classNameId = (Long)attributes.get("classNameId");
+	private static final Map<String, Function<DDMStructureLink, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<DDMStructureLink, Object>> _attributeSetterBiConsumers;
 
-		if (classNameId != null) {
-			setClassNameId(classNameId);
-		}
+	static {
+		Map<String, Function<DDMStructureLink, Object>> attributeGetterFunctions =
+			new LinkedHashMap<String, Function<DDMStructureLink, Object>>();
+		Map<String, BiConsumer<DDMStructureLink, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<DDMStructureLink, ?>>();
 
-		Long classPK = (Long)attributes.get("classPK");
+		attributeGetterFunctions.put("structureLinkId", DDMStructureLink::getStructureLinkId);
+		attributeSetterBiConsumers.put("structureLinkId", (BiConsumer<DDMStructureLink, Long>)DDMStructureLink::setStructureLinkId);
+		attributeGetterFunctions.put("companyId", DDMStructureLink::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<DDMStructureLink, Long>)DDMStructureLink::setCompanyId);
+		attributeGetterFunctions.put("classNameId", DDMStructureLink::getClassNameId);
+		attributeSetterBiConsumers.put("classNameId", (BiConsumer<DDMStructureLink, Long>)DDMStructureLink::setClassNameId);
+		attributeGetterFunctions.put("classPK", DDMStructureLink::getClassPK);
+		attributeSetterBiConsumers.put("classPK", (BiConsumer<DDMStructureLink, Long>)DDMStructureLink::setClassPK);
+		attributeGetterFunctions.put("structureId", DDMStructureLink::getStructureId);
+		attributeSetterBiConsumers.put("structureId", (BiConsumer<DDMStructureLink, Long>)DDMStructureLink::setStructureId);
 
-		if (classPK != null) {
-			setClassPK(classPK);
-		}
-
-		Long structureId = (Long)attributes.get("structureId");
-
-		if (structureId != null) {
-			setStructureId(structureId);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -423,18 +447,28 @@ public class DDMStructureLinkModelImpl extends BaseModelImpl<DDMStructureLink>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		Map<String, Function<DDMStructureLink, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		sb.append("{structureLinkId=");
-		sb.append(getStructureLinkId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", classNameId=");
-		sb.append(getClassNameId());
-		sb.append(", classPK=");
-		sb.append(getClassPK());
-		sb.append(", structureId=");
-		sb.append(getStructureId());
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
+
+		sb.append("{");
+
+		for (Map.Entry<String, Function<DDMStructureLink, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<DDMStructureLink, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append(attributeName);
+			sb.append("=");
+			sb.append(attributeGetterFunction.apply((DDMStructureLink)this));
+			sb.append(", ");
+		}
+
+		if (sb.index() > 1) {
+			sb.setIndex(sb.index() - 1);
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -442,32 +476,26 @@ public class DDMStructureLinkModelImpl extends BaseModelImpl<DDMStructureLink>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(19);
+		Map<String, Function<DDMStructureLink, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
+
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
-		sb.append("com.liferay.dynamic.data.mapping.model.DDMStructureLink");
+		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		sb.append(
-			"<column><column-name>structureLinkId</column-name><column-value><![CDATA[");
-		sb.append(getStructureLinkId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>classNameId</column-name><column-value><![CDATA[");
-		sb.append(getClassNameId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>classPK</column-name><column-value><![CDATA[");
-		sb.append(getClassPK());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>structureId</column-name><column-value><![CDATA[");
-		sb.append(getStructureId());
-		sb.append("]]></column-value></column>");
+		for (Map.Entry<String, Function<DDMStructureLink, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<DDMStructureLink, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append("<column><column-name>");
+			sb.append(attributeName);
+			sb.append("</column-name><column-value><![CDATA[");
+			sb.append(attributeGetterFunction.apply((DDMStructureLink)this));
+			sb.append("]]></column-value></column>");
+		}
 
 		sb.append("</model>");
 

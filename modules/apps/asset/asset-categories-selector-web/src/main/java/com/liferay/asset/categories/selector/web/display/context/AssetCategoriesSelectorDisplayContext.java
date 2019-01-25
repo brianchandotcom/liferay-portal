@@ -60,15 +60,15 @@ public class AssetCategoriesSelectorDisplayContext {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		JSONArray jsonArray = _getCategoriesJSONArray();
+		JSONArray vocabulariesJSONArray = _getVocabulariesJSONArray();
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		if (jsonArray.length() == 1) {
-			jsonObject = jsonArray.getJSONObject(0);
+		if (vocabulariesJSONArray.length() == 1) {
+			jsonObject = vocabulariesJSONArray.getJSONObject(0);
 		}
 		else {
-			jsonObject.put("children", jsonArray);
+			jsonObject.put("children", vocabulariesJSONArray);
 			jsonObject.put("icon", "folder");
 			jsonObject.put("id", "0");
 			jsonObject.put(
@@ -201,29 +201,6 @@ public class AssetCategoriesSelectorDisplayContext {
 		return _singleSelect;
 	}
 
-	private JSONArray _getCategoriesJSONArray() throws Exception {
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
-
-		boolean allowedSelectVocabularies = ParamUtil.getBoolean(
-			_request, "allowedSelectVocabularies");
-
-		for (long vocabularyId : getVocabularyIds()) {
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-			jsonObject.put(
-				"children", _getCategoriesJSONArray(vocabularyId, 0));
-			jsonObject.put("disabled", !allowedSelectVocabularies);
-			jsonObject.put("icon", "vocabulary");
-			jsonObject.put("id", vocabularyId);
-			jsonObject.put("name", getVocabularyTitle(vocabularyId));
-			jsonObject.put("vocabulary", true);
-
-			jsonArray.put(jsonObject);
-		}
-
-		return jsonArray;
-	}
-
 	private JSONArray _getCategoriesJSONArray(
 			long vocabularyId, long categoryId)
 		throws Exception {
@@ -257,6 +234,29 @@ public class AssetCategoriesSelectorDisplayContext {
 
 				jsonObject.put("selected", true);
 			}
+
+			jsonArray.put(jsonObject);
+		}
+
+		return jsonArray;
+	}
+
+	private JSONArray _getVocabulariesJSONArray() throws Exception {
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		boolean allowedSelectVocabularies = ParamUtil.getBoolean(
+			_request, "allowedSelectVocabularies");
+
+		for (long vocabularyId : getVocabularyIds()) {
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+			jsonObject.put(
+				"children", _getCategoriesJSONArray(vocabularyId, 0));
+			jsonObject.put("disabled", !allowedSelectVocabularies);
+			jsonObject.put("icon", "vocabulary");
+			jsonObject.put("id", vocabularyId);
+			jsonObject.put("name", getVocabularyTitle(vocabularyId));
+			jsonObject.put("vocabulary", true);
 
 			jsonArray.put(jsonObject);
 		}

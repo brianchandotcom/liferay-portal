@@ -691,6 +691,11 @@ public class LayoutPageTemplateEntryPersistenceTest {
 				"getOriginalGroupId", new Class<?>[0]));
 
 		Assert.assertEquals(Long.valueOf(
+				existingLayoutPageTemplateEntry.getPlid()),
+			ReflectionTestUtil.<Long>invoke(existingLayoutPageTemplateEntry,
+				"getOriginalPlid", new Class<?>[0]));
+
+		Assert.assertEquals(Long.valueOf(
 				existingLayoutPageTemplateEntry.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(existingLayoutPageTemplateEntry,
 				"getOriginalGroupId", new Class<?>[0]));

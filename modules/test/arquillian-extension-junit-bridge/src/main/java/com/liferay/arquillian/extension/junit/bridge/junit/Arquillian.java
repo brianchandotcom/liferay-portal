@@ -133,12 +133,12 @@ public class Arquillian extends BlockJUnit4ClassRunner {
 		try {
 			testObject = createTest();
 		}
-		catch (Throwable t) {
-			if (t instanceof InvocationTargetException) {
-				t = t.getCause();
+		catch (Exception e) {
+			if (e instanceof InvocationTargetException) {
+				return new Fail(e.getCause());
 			}
 
-			return new Fail(t);
+			return new Fail(e);
 		}
 
 		final Object test = testObject;

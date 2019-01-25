@@ -128,7 +128,10 @@ public class PreviewSegmentsEntryUsersDisplayContext {
 			}
 		}
 		catch (PortalException pe) {
-			_log.error("Unable to obtain a preview of the segment users", pe);
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to obtain a preview of the segment users", pe);
+			}
 		}
 
 		userSearchContainer.setResults(users);

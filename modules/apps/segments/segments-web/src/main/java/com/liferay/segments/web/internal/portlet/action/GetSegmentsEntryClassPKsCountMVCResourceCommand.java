@@ -16,6 +16,9 @@ package com.liferay.segments.web.internal.portlet.action;
 
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -89,8 +92,7 @@ public class GetSegmentsEntryClassPKsCountMVCResourceCommand
 	}
 
 	protected int getSegmentsEntryClassPKsCount(
-			long companyId, Criteria criteria, String type, Locale locale)
-		throws Exception {
+		long companyId, Criteria criteria, String type, Locale locale) {
 
 		ODataRetriever oDataRetriever = _serviceTrackerMap.getService(type);
 
@@ -98,13 +100,22 @@ public class GetSegmentsEntryClassPKsCountMVCResourceCommand
 			return 0;
 		}
 
-		return oDataRetriever.getResultsCount(
-			companyId, criteria.getFilterString(Criteria.Type.MODEL), locale);
+		try {
+			return oDataRetriever.getResultsCount(
+				companyId, criteria.getFilterString(Criteria.Type.MODEL),
+				locale);
+		}
+		catch (PortalException pe) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unable to obtain the segment user count", pe);
+			}
+
+			return 0;
+		}
 	}
 
 	protected String getText(
-			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
-		throws Exception {
+		ResourceRequest resourceRequest, ResourceResponse resourceResponse) {
 
 		HttpServletRequest request = _portal.getOriginalServletRequest(
 			_portal.getHttpServletRequest(resourceRequest));
@@ -136,6 +147,9 @@ public class GetSegmentsEntryClassPKsCountMVCResourceCommand
 		portletSession.setAttribute(
 			SegmentsWebKeys.PREVIEW_SEGMENTS_ENTRY_CRITERIA, criteria);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		GetSegmentsEntryClassPKsCountMVCResourceCommand.class);
 
 	@Reference
 	private Portal _portal;

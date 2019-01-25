@@ -180,25 +180,34 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 			);
 
 			function <portlet:namespace />registerFormPortlet(form) {
-				Liferay.component(
-					'formPortlet',
-					new Liferay.DDM.FormPortlet(
-						{
-							defaultLanguageId: '<%= ddmFormAdminDisplayContext.getDefaultLanguageId() %>',
-							editForm: form,
-							editingLanguageId: '<%= ddmFormAdminDisplayContext.getDefaultLanguageId() %>',
-							formBuilder: Liferay.component('<portlet:namespace />formBuilder'),
-							formInstanceId: <%= formInstanceId %>,
-							localizedDescription: <%= ddmFormAdminDisplayContext.getFormLocalizedDescription() %>,
-							localizedName: <%= ddmFormAdminDisplayContext.getFormLocalizedName() %>,
-							namespace: '<portlet:namespace />',
-							published: !!<%= ddmFormAdminDisplayContext.isFormPublished() %>,
-							publishFormInstanceURL: '<%= publishFormInstanceURL.toString() %>',
-							ruleBuilder: Liferay.component('<portlet:namespace />ruleBuilder'),
-							translationManager: Liferay.component('<portlet:namespace />translationManager')
-						}
-					)
-				);
+				var startFormPortlet = function() {
+					Liferay.component(
+						'formPortlet',
+						new Liferay.DDM.FormPortlet(
+							{
+								defaultLanguageId: '<%= ddmFormAdminDisplayContext.getDefaultLanguageId() %>',
+								editForm: form,
+								editingLanguageId: '<%= ddmFormAdminDisplayContext.getDefaultLanguageId() %>',
+								formBuilder: Liferay.component('<portlet:namespace />formBuilder'),
+								formInstanceId: <%= formInstanceId %>,
+								localizedDescription: <%= ddmFormAdminDisplayContext.getFormLocalizedDescription() %>,
+								localizedName: <%= ddmFormAdminDisplayContext.getFormLocalizedName() %>,
+								namespace: '<portlet:namespace />',
+								published: !!<%= ddmFormAdminDisplayContext.isFormPublished() %>,
+								publishFormInstanceURL: '<%= publishFormInstanceURL.toString() %>',
+								ruleBuilder: Liferay.component('<portlet:namespace />ruleBuilder'),
+								translationManager: Liferay.component('<portlet:namespace />translationManager')
+							}
+						)
+					);
+				};
+
+				if (Liferay.DDM.FormBuilder.ready) {
+					startFormPortlet();
+				}
+				else {
+					Liferay.onceAfter('DDMFormBuilderReady', startFormPortlet);
+				}
 			}
 		</aui:script>
 	</aui:form>

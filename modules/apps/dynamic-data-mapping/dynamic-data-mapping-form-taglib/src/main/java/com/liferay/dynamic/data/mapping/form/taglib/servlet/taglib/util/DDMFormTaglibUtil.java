@@ -46,6 +46,7 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesMerger;
+import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -222,6 +223,11 @@ public class DDMFormTaglibUtil {
 			ddmFormInstanceId, status);
 	}
 
+	public static String getNPMPackageName() {
+		return _npmResolver.resolveModuleName(
+			"dynamic-data-mapping-form-builder");
+	}
+
 	public static boolean hasWorkflowDefinitionLink(
 		long companyId, long groupId, String name, long ddmFormInstanceId) {
 
@@ -359,6 +365,11 @@ public class DDMFormTaglibUtil {
 	}
 
 	@Reference(unbind = "-")
+	protected void setNPMResolver(NPMResolver npmResolver) {
+		_npmResolver = npmResolver;
+	}
+
+	@Reference(unbind = "-")
 	protected void setWorkflowDefinitionLinkLocalService(
 		WorkflowDefinitionLinkLocalService workflowDefinitionLinkLocalService) {
 
@@ -388,6 +399,7 @@ public class DDMFormTaglibUtil {
 		_ddmStructureVersionLocalService;
 	private static GroupLocalService _groupLocalService;
 	private static JSONFactory _jsonFactory;
+	private static NPMResolver _npmResolver;
 	private static WorkflowDefinitionLinkLocalService
 		_workflowDefinitionLinkLocalService;
 

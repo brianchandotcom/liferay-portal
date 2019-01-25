@@ -17,45 +17,65 @@
 <%@ include file="/ddm_form_builder/init.jsp" %>
 
 <aui:script use="liferay-ddm-form-builder, liferay-ddm-form-builder-fieldset, liferay-ddm-form-builder-rule-builder">
+	function initTagLib() {
+		Liferay.namespace('DDM').Settings = {
+			evaluatorURL: '<%= HtmlUtil.escapeJS(evaluatorURL) %>',
+			fieldSetDefinitionURL: '<%= HtmlUtil.escapeJS(fieldSetDefinitionURL) %>',
+			functionsMetadata: JSON.parse('<%= HtmlUtil.escapeJS(functionsMetadata) %>'),
+			getDataProviderInstancesURL: '<%= HtmlUtil.escapeJS(dataProviderInstancesURL) %>',
+			getDataProviderParametersSettingsURL: '<%= HtmlUtil.escapeJS(dataProviderInstanceParameterSettingsURL) %>',
+			getFieldTypeSettingFormContextURL: '<%= HtmlUtil.escapeJS(fieldSettingsDDMFormContextURL) %>',
+			getFunctionsURL: '<%= HtmlUtil.escapeJS(functionsURL) %>',
+			getRolesURL: '<%= HtmlUtil.escapeJS(rolesURL) %>',
+			portletNamespace: '<%= HtmlUtil.escapeJS(refererPortletNamespace) %>'
+		};
 
-	Liferay.namespace('DDM').Settings = {
-		evaluatorURL: '<%= HtmlUtil.escapeJS(evaluatorURL) %>',
-		fieldSetDefinitionURL: '<%= HtmlUtil.escapeJS(fieldSetDefinitionURL) %>',
-		functionsMetadata: JSON.parse('<%= HtmlUtil.escapeJS(functionsMetadata) %>'),
-		getDataProviderInstancesURL: '<%= HtmlUtil.escapeJS(dataProviderInstancesURL) %>',
-		getDataProviderParametersSettingsURL: '<%= HtmlUtil.escapeJS(dataProviderInstanceParameterSettingsURL) %>',
-		getFieldTypeSettingFormContextURL: '<%= HtmlUtil.escapeJS(fieldSettingsDDMFormContextURL) %>',
-		getFunctionsURL: '<%= HtmlUtil.escapeJS(functionsURL) %>',
-		getRolesURL: '<%= HtmlUtil.escapeJS(rolesURL) %>',
-		portletNamespace: '<%= HtmlUtil.escapeJS(refererPortletNamespace) %>'
-	};
+		Liferay.DDM.FieldSets.register(<%= fieldSets %>);
 
-	Liferay.DDM.FieldSets.register(<%= fieldSets %>);
+		Liferay.component(
+			'<%= HtmlUtil.escapeJS(refererPortletNamespace) %>formBuilder',
+			function() {
+				return new Liferay.DDM.FormBuilder(
+					{
+						context: JSON.parse('<%= HtmlUtil.escapeJS(formBuilderContext) %>'),
+						defaultLanguageId: '<%= HtmlUtil.escapeJS(defaultLanguageId) %>',
+						editingLanguageId: '<%= HtmlUtil.escapeJS(editingLanguageId) %>',
+						showPagination: <%= showPagination %>
+					}
+				);
+			}
+		);
 
-	Liferay.component(
-		'<%= HtmlUtil.escapeJS(refererPortletNamespace) %>formBuilder',
-		function() {
-			return new Liferay.DDM.FormBuilder(
-				{
-					context: JSON.parse('<%= HtmlUtil.escapeJS(formBuilderContext) %>'),
-					defaultLanguageId: '<%= HtmlUtil.escapeJS(defaultLanguageId) %>',
-					editingLanguageId: '<%= HtmlUtil.escapeJS(editingLanguageId) %>',
-					showPagination: <%= showPagination %>
-				}
-			);
-		}
-	);
+		Liferay.component(
+			'<%= HtmlUtil.escapeJS(refererPortletNamespace) %>ruleBuilder',
+			function() {
+				return new Liferay.DDM.FormBuilderRuleBuilder(
+					{
+						formBuilder: Liferay.component('<%= HtmlUtil.escapeJS(refererPortletNamespace) %>formBuilder'),
+						rules: JSON.parse('<%= HtmlUtil.escapeJS(serializedDDMFormRules) %>'),
+						visible: false
+					}
+				);
+			}
+		);
 
-	Liferay.component(
-		'<%= HtmlUtil.escapeJS(refererPortletNamespace) %>ruleBuilder',
-		function() {
-			return new Liferay.DDM.FormBuilderRuleBuilder(
-				{
-					formBuilder: Liferay.component('<%= HtmlUtil.escapeJS(refererPortletNamespace) %>formBuilder'),
-					rules: JSON.parse('<%= HtmlUtil.escapeJS(serializedDDMFormRules) %>'),
-					visible: false
-				}
-			);
-		}
+		Liferay.fire('DDMFormBuilderReady');
+		Liferay.DDM.FormBuilder.ready = true;
+	}
+
+	Liferay.Loader.require.apply(
+		Liferay.Loader,
+		[
+			'<%= npmPackageName %>/alloy/templates/autocomplete.es',
+			'<%= npmPackageName %>/alloy/templates/calculate.es',
+			'<%= npmPackageName %>/alloy/templates/calculator.es',
+			'<%= npmPackageName %>/alloy/templates/data-provider-parameter.es',
+			'<%= npmPackageName %>/alloy/templates/field-options-toolbar.es',
+			'<%= npmPackageName %>/alloy/templates/field-types-sidebar.es',
+			'<%= npmPackageName %>/alloy/templates/rule-builder.es',
+			'<%= npmPackageName %>/alloy/templates/rule.es',
+			'<%= npmPackageName %>/alloy/templates/sidebar.es',
+			initTagLib
+		]
 	);
 </aui:script>

@@ -20,12 +20,14 @@ import com.liferay.data.engine.service.DEDataRecordCollectionSaveModelPermission
 import com.liferay.data.engine.service.DEDataRecordCollectionSaveModelPermissionsResponse;
 import com.liferay.data.engine.service.DEDataRecordCollectionService;
 import com.liferay.data.engine.web.internal.graphql.model.SaveModelPermissionsDataRecordCollectionType;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 
 import graphql.schema.DataFetcher;
 import graphql.schema.DataFetchingEnvironment;
 
+import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -58,18 +60,17 @@ public class DESaveModelPermissionsDataRecordCollectionDataFetcher
 				dataFetchingEnvironment.getArgument(
 					"saveDataRecordCollectionModelPermissionsInput");
 
+			List<String> roleNames = (List<String>)properties.get("roleNames");
+
 			DEDataRecordCollectionSaveModelPermissionsRequest.Builder builder =
 				DEDataRecordCollectionRequestBuilder.
 					saveModelPermissionsBuilder(
 						MapUtil.getLong(properties, "companyId"),
+						MapUtil.getLong(properties, "groupId"),
+						MapUtil.getLong(properties, "scopedUserId"),
 						MapUtil.getLong(properties, "scopedGroupId"),
-						MapUtil.getLong(properties, "dataRecordCollectionId"));
-
-			builder = builder.grantTo(
-				MapUtil.getLong(properties, "userId")
-			).inGroup(
-				MapUtil.getLong(properties, "groupId")
-			);
+						MapUtil.getLong(properties, "dataRecordCollectionId"),
+						ArrayUtil.toStringArray(roleNames));
 
 			if (MapUtil.getBoolean(properties, "delete")) {
 				builder = builder.allowDelete();
@@ -97,6 +98,11 @@ public class DESaveModelPermissionsDataRecordCollectionDataFetcher
 			errorMessage = getMessage(
 				languageId, "the-user-must-have-permission",
 				getActionMessage(languageId, mhp.getActionId()));
+		}
+		catch (DEDataRecordCollectionException.PrincipalException dedrcepe) {
+			errorMessage = getMessage(
+				languageId,
+				"this-role-does-not-support-this-type-of-permission");
 		}
 		catch (Exception e) {
 			errorMessage = getMessage(

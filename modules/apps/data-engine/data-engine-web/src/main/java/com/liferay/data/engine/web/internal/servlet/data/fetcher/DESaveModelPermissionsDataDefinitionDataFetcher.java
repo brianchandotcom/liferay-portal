@@ -20,12 +20,14 @@ import com.liferay.data.engine.service.DEDataDefinitionSaveModelPermissionsReque
 import com.liferay.data.engine.service.DEDataDefinitionSaveModelPermissionsResponse;
 import com.liferay.data.engine.service.DEDataDefinitionService;
 import com.liferay.data.engine.web.internal.graphql.model.SaveModelPermissionsDataDefinitionType;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 
 import graphql.schema.DataFetcher;
 import graphql.schema.DataFetchingEnvironment;
 
+import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -58,16 +60,16 @@ public class DESaveModelPermissionsDataDefinitionDataFetcher
 				dataFetchingEnvironment.getArgument(
 					"saveDataDefinitionModelPermissionsInput");
 
+			List<String> roleNames = (List<String>)properties.get("roleNames");
+
 			DEDataDefinitionSaveModelPermissionsRequest.Builder builder =
 				DEDataDefinitionRequestBuilder.saveModelPermissionsBuilder(
 					MapUtil.getLong(properties, "companyId"),
+					MapUtil.getLong(properties, "groupId"),
+					MapUtil.getLong(properties, "scopedUserId"),
 					MapUtil.getLong(properties, "scopedGroupId"),
-					MapUtil.getLong(properties, "dataDefinitionId")
-				).grantTo(
-					MapUtil.getLong(properties, "userId")
-				).inGroup(
-					MapUtil.getLong(properties, "groupId")
-				);
+					MapUtil.getLong(properties, "dataDefinitionId"),
+					ArrayUtil.toStringArray(roleNames));
 
 			if (MapUtil.getBoolean(properties, "delete")) {
 				builder = builder.allowDelete();
@@ -94,6 +96,11 @@ public class DESaveModelPermissionsDataDefinitionDataFetcher
 			errorMessage = getMessage(
 				languageId, "the-user-must-have-permission",
 				getActionMessage(languageId, mhp.getActionId()));
+		}
+		catch (DEDataDefinitionException.PrincipalException deddepe) {
+			errorMessage = getMessage(
+				languageId,
+				"this-role-does-not-support-this-type-of-permission");
 		}
 		catch (Exception e) {
 			errorMessage = getMessage(

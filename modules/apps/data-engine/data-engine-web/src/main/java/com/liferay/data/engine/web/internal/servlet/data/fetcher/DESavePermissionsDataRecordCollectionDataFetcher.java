@@ -88,6 +88,11 @@ public class DESavePermissionsDataRecordCollectionDataFetcher
 				languageId, "the-user-must-have-permission",
 				getActionMessage(languageId, mhp.getActionId()));
 		}
+		catch (DEDataRecordCollectionException.PrincipalException dedrcepe) {
+			errorMessage = getMessage(
+				languageId,
+				"this-role-does-not-support-this-type-of-permission");
+		}
 		catch (DEDataRecordCollectionException.NoSuchRoles nsr) {
 			errorMessage = getMessage(
 				languageId, "no-roles-exists-with-names-x",

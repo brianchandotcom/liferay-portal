@@ -58,12 +58,13 @@ public class DESavePermissionsDataDefinitionDataFetcher
 				dataFetchingEnvironment.getArgument(
 					"saveDataDefinitionPermissionsInput");
 
+			List<String> roleNames = (List<String>)properties.get("roleNames");
+
 			DEDataDefinitionSavePermissionsRequest.Builder builder =
 				DEDataDefinitionRequestBuilder.savePermissionsBuilder(
 					MapUtil.getLong(properties, "companyId"),
 					MapUtil.getLong(properties, "scopedGroupId"),
-					ArrayUtil.toStringArray(
-						(List<String>)properties.get("roleNames")));
+					ArrayUtil.toStringArray(roleNames));
 
 			if (MapUtil.getBoolean(properties, "addDataDefinition")) {
 				builder = builder.allowAddDataDefinition();

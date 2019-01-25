@@ -17,7 +17,7 @@ package com.liferay.portal.tools.rest.builder.internal.yaml;
 /**
  * @author Peter Shin
  */
-public class Configuration {
+public class OpenAPIYAML {
 
 	public Components getComponents() {
 		return _components;

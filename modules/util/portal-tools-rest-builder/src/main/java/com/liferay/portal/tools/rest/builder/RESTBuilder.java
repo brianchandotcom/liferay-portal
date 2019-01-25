@@ -20,7 +20,7 @@ import com.liferay.portal.tools.rest.builder.internal.freemarker.FreeMarkerConst
 import com.liferay.portal.tools.rest.builder.internal.util.FileUtil;
 import com.liferay.portal.tools.rest.builder.internal.yaml.Components;
 import com.liferay.portal.tools.rest.builder.internal.yaml.ConfigYAML;
-import com.liferay.portal.tools.rest.builder.internal.yaml.Configuration;
+import com.liferay.portal.tools.rest.builder.internal.yaml.OpenAPIYAML;
 import com.liferay.portal.tools.rest.builder.internal.yaml.Schema;
 
 import java.io.File;
@@ -94,34 +94,6 @@ public class RESTBuilder {
 		}
 	}
 
-	private Configuration _getConfiguration(String inputFileName) {
-		File inputFile = new File(inputFileName);
-
-		try (InputStream inputStream = new FileInputStream(inputFile)) {
-			Constructor constructor = new Constructor(Configuration.class);
-
-			Representer representer = new Representer();
-
-			PropertyUtils propertyUtils = representer.getPropertyUtils();
-
-			propertyUtils.setSkipMissingProperties(true);
-
-			Yaml yaml = new Yaml(constructor, representer);
-
-			return yaml.loadAs(inputStream, Configuration.class);
-		}
-		catch (FileNotFoundException fnfe) {
-			System.out.println(fnfe.getMessage());
-
-			return null;
-		}
-		catch (IOException ioe) {
-			ioe.printStackTrace();
-
-			return null;
-		}
-	}
-
 	private ConfigYAML _getConfigYAML(String restConfigFileName) {
 		File file = new File(restConfigFileName);
 
@@ -188,6 +160,34 @@ public class RESTBuilder {
 		sb.append(".java");
 
 		return new File(sb.toString());
+	}
+
+	private OpenAPIYAML _getOpenAPIYAML(String restOpenAPIFileName) {
+		File file = new File(restOpenAPIFileName);
+
+		try (InputStream inputStream = new FileInputStream(file)) {
+			Constructor constructor = new Constructor(OpenAPIYAML.class);
+
+			Representer representer = new Representer();
+
+			PropertyUtils propertyUtils = representer.getPropertyUtils();
+
+			propertyUtils.setSkipMissingProperties(true);
+
+			Yaml yaml = new Yaml(constructor, representer);
+
+			return yaml.loadAs(inputStream, OpenAPIYAML.class);
+		}
+		catch (FileNotFoundException fnfe) {
+			System.out.println(fnfe.getMessage());
+
+			return null;
+		}
+		catch (IOException ioe) {
+			ioe.printStackTrace();
+
+			return null;
+		}
 	}
 
 	private String _getResourceContent(

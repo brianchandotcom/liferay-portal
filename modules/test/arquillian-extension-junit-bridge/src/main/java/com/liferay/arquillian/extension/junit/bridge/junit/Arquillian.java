@@ -310,21 +310,11 @@ public class Arquillian extends BlockJUnit4ClassRunner {
 	private Statement _withRules(
 		FrameworkMethod frameworkMethod, Object target, Statement statement) {
 
-		Statement result = statement;
-
-		result = _withMethodRules(frameworkMethod, target, result);
-
-		return result;
-	}
-
-	private Statement _withMethodRules(
-		FrameworkMethod frameworkMethod, Object target, Statement result) {
-
 		for (MethodRule each : _getMethodRules(target)) {
-			result = each.apply(result, frameworkMethod, target);
+			statement = each.apply(statement, frameworkMethod, target);
 		}
 
-		return result;
+		return statement;
 	}
 
 	private List<MethodRule> _getMethodRules(Object target) {

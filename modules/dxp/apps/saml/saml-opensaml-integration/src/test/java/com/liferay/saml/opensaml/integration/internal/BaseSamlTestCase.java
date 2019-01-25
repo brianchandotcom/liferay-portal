@@ -734,7 +734,7 @@ public abstract class BaseSamlTestCase extends PowerMockito {
 				EntityDescriptor entityDescriptor =
 					MetadataGeneratorUtil.buildIdpEntityDescriptor(
 						mockHttpServletRequest, entityId, _idpNeedsSignature,
-						true, false, credential);
+						true, false, credential, null);
 
 				IDPSSODescriptor idpSSODescriptor =
 					entityDescriptor.getIDPSSODescriptor(
@@ -775,7 +775,7 @@ public abstract class BaseSamlTestCase extends PowerMockito {
 			else if (entityId.equals(SP_ENTITY_ID)) {
 				return MetadataGeneratorUtil.buildSpEntityDescriptor(
 					mockHttpServletRequest, entityId, true, true, false, false,
-					credential);
+					credential, null);
 			}
 
 			return null;

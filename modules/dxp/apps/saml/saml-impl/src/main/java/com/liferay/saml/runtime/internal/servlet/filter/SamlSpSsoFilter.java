@@ -139,6 +139,8 @@ public class SamlSpSsoFilter extends BaseSamlPortalFilter {
 			RequestDispatcher requestDispatcher =
 				_servletContext.getRequestDispatcher("/c/portal/saml/login");
 
+			response.setContentType("text/html");
+
 			requestDispatcher.include(request, response);
 
 			if (request.getAttribute(SamlWebKeys.SAML_SP_IDP_CONNECTION) !=

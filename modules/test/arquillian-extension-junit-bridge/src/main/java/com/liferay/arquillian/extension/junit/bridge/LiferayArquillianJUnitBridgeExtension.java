@@ -18,7 +18,6 @@ import com.liferay.arquillian.extension.junit.bridge.container.remote.LiferayRem
 import com.liferay.arquillian.extension.junit.bridge.deployment.BndDeploymentScenarioGenerator;
 import com.liferay.arquillian.extension.junit.bridge.deployment.JUnitBridgeAuxiliaryArchiveAppender;
 import com.liferay.arquillian.extension.junit.bridge.observer.ConfigurationRegistrar;
-import com.liferay.arquillian.extension.junit.bridge.observer.DeploymentObserver;
 import com.liferay.arquillian.extension.junit.bridge.observer.JUnitBridgeObserver;
 import com.liferay.arquillian.extension.junit.bridge.protocol.osgi.JMXOSGiProtocol;
 import com.liferay.arquillian.extension.junit.bridge.remote.processor.OSGiAllInProcessor;
@@ -46,7 +45,6 @@ public class LiferayArquillianJUnitBridgeExtension
 
 		if (url == null) {
 			extensionBuilder.observer(ConfigurationRegistrar.class);
-			extensionBuilder.observer(DeploymentObserver.class);
 			extensionBuilder.override(
 				AuxiliaryArchiveAppender.class, JUnitDeploymentAppender.class,
 				JUnitBridgeAuxiliaryArchiveAppender.class);

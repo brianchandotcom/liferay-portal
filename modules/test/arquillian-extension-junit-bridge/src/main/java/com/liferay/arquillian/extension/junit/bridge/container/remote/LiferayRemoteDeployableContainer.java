@@ -24,7 +24,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -35,8 +34,6 @@ import javax.management.MBeanServerConnection;
 import javax.management.MBeanServerInvocationHandler;
 import javax.management.MalformedObjectNameException;
 import javax.management.ObjectName;
-import javax.management.openmbean.CompositeData;
-import javax.management.openmbean.TabularData;
 import javax.management.remote.JMXConnector;
 import javax.management.remote.JMXConnectorFactory;
 import javax.management.remote.JMXServiceURL;
@@ -52,7 +49,6 @@ import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.exporter.ZipExporter;
 import org.jboss.shrinkwrap.descriptor.api.Descriptor;
 
-import org.osgi.jmx.framework.BundleStateMBean;
 import org.osgi.jmx.framework.FrameworkMBean;
 
 /**
@@ -67,6 +63,8 @@ public class LiferayRemoteDeployableContainer
 
 		try {
 			long bundleId = _installBundle(archive);
+
+			_frameworkMBean.startBundle(bundleId);
 
 			_deployedBundles.put(archive.getName(), bundleId);
 		}
@@ -120,26 +118,10 @@ public class LiferayRemoteDeployableContainer
 
 			_frameworkMBean = _getMBeanProxy(
 				mBeanServer, _frameworkObjectName, FrameworkMBean.class);
-
-			_bundleStateMBean = _getMBeanProxy(
-				mBeanServer, _bundleStateObjectName, BundleStateMBean.class);
 		}
 		catch (Exception e) {
 			throw new LifecycleException("Unable to start", e);
 		}
-	}
-
-	public void startBundle(String symbolicName, String version)
-		throws Exception {
-
-		long bundleId = _getBundle(symbolicName, version);
-
-		if (bundleId == 0) {
-			throw new IllegalStateException(
-				"Bundle '" + symbolicName + ":" + version + "' was not found");
-		}
-
-		_frameworkMBean.startBundle(bundleId);
 	}
 
 	@Override
@@ -163,34 +145,6 @@ public class LiferayRemoteDeployableContainer
 
 	@Override
 	public void undeploy(Descriptor desc) throws DeploymentException {
-	}
-
-	private long _getBundle(String symbolicName, String version)
-		throws Exception {
-
-		TabularData listBundles = _bundleStateMBean.listBundles();
-
-		Collection values = listBundles.values();
-
-		Iterator<?> iterator = values.iterator();
-
-		while (iterator.hasNext()) {
-			CompositeData bundleType = (CompositeData)iterator.next();
-
-			String mBeanSymbolicName = (String)bundleType.get(
-				BundleStateMBean.SYMBOLIC_NAME);
-
-			String mBeanVersion = (String)bundleType.get(
-				BundleStateMBean.VERSION);
-
-			if (symbolicName.equals(mBeanSymbolicName) &&
-				version.equals(mBeanVersion)) {
-
-				return (Long)bundleType.get(BundleStateMBean.IDENTIFIER);
-			}
-		}
-
-		return 0;
 	}
 
 	private <T> T _getMBeanProxy(
@@ -259,16 +213,12 @@ public class LiferayRemoteDeployableContainer
 
 	private static final String _LIFERAY_DEFAULT_JMX_USERNAME = "";
 
-	private static final ObjectName _bundleStateObjectName;
 	private static final ObjectName _frameworkObjectName;
 	private static final ProtocolDescription _protocolDescription =
 		new ProtocolDescription("jmx-osgi");
 
 	static {
 		try {
-			_bundleStateObjectName = new ObjectName(
-				"osgi.core:type=bundleState,*");
-
 			_frameworkObjectName = new ObjectName("osgi.core:type=framework,*");
 		}
 		catch (MalformedObjectNameException mone) {
@@ -276,7 +226,6 @@ public class LiferayRemoteDeployableContainer
 		}
 	}
 
-	private BundleStateMBean _bundleStateMBean;
 	private final Map<String, Long> _deployedBundles = new HashMap<>();
 	private FrameworkMBean _frameworkMBean;
 

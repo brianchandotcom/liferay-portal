@@ -116,11 +116,16 @@ public class LiferayRemoteDeployableContainer
 		try {
 			MBeanServerConnection mBeanServer = _getMBeanServerConnection();
 
-			_frameworkMBean = _getMBeanProxy(
-				mBeanServer, _frameworkObjectName, FrameworkMBean.class);
+			Set<ObjectName> names = mBeanServer.queryNames(
+				_frameworkObjectName, null);
+
+			Iterator<ObjectName> iterator = names.iterator();
+
+			_frameworkMBean = MBeanServerInvocationHandler.newProxyInstance(
+				mBeanServer, iterator.next(), FrameworkMBean.class, false);
 		}
-		catch (Exception e) {
-			throw new LifecycleException("Unable to start", e);
+		catch (IOException ioe) {
+			throw new LifecycleException("Unable to start", ioe);
 		}
 	}
 
@@ -145,19 +150,6 @@ public class LiferayRemoteDeployableContainer
 
 	@Override
 	public void undeploy(Descriptor desc) throws DeploymentException {
-	}
-
-	private <T> T _getMBeanProxy(
-			MBeanServerConnection mbeanServer, ObjectName objectName,
-			Class<T> type)
-		throws Exception {
-
-		Set<ObjectName> names = mbeanServer.queryNames(objectName, null);
-
-		Iterator<ObjectName> iterator = names.iterator();
-
-		return MBeanServerInvocationHandler.newProxyInstance(
-			mbeanServer, iterator.next(), type, false);
 	}
 
 	private MBeanServerConnection _getMBeanServerConnection()

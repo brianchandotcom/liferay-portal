@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.page.template.util;
+package com.liferay.layout.internal.search.util;
 
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;

@@ -16,9 +16,9 @@ package com.liferay.layout.internal.search;
 
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.layout.constants.LayoutConstants;
+import com.liferay.layout.internal.search.util.LayoutPageTemplateStructureRenderUtil;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
-import com.liferay.layout.page.template.util.LayoutPageTemplateStructureRenderUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;

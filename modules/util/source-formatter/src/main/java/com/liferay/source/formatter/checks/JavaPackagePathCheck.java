@@ -221,6 +221,16 @@ public class JavaPackagePathCheck extends BaseJavaTermCheck {
 				"The name of Class '" + className +
 					"' should be ending with 'DisplayContext'");
 		}
+
+		if (className.endsWith("BundleActivator") &&
+			implementedClassNames.contains("BundleActivator") &&
+			!packageName.contains("internal.activator")) {
+
+			addMessage(
+				fileName,
+				"Class '" + className +
+					"' should be in package 'internal.activator'");
+		}
 	}
 
 	private static final Pattern _internalPackagePattern = Pattern.compile(

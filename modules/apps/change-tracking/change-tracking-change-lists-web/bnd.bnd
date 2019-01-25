@@ -2,5 +2,12 @@ Bundle-Name: Liferay Change Tracking Change Lists Web
 Bundle-SymbolicName: com.liferay.change.tracking.change.lists.web
 Bundle-Version: 1.0.0
 Liferay-JS-Config: /META-INF/resources/js/config.js
+Provide-Capability:\
+	liferay.resource.bundle;\
+		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.change.tracking.lang)";\
+		resource.bundle.base.name="content.Language"
+Require-Capability:\
+	liferay.resource.bundle;\
+		filter:="(bundle.symbolic.name=com.liferay.segments.lang)"
 Web-ContextPath: /change-tracking-change-lists-web
 -dsannotations-options: inherit

@@ -310,25 +310,20 @@ public class Arquillian extends BlockJUnit4ClassRunner {
 	private Statement _withRules(
 		FrameworkMethod frameworkMethod, Object target, Statement statement) {
 
-		List<TestRule> testRules = Collections.emptyList();
-
 		Statement result = statement;
 
-		result = _withMethodRules(frameworkMethod, testRules, target, result);
+		result = _withMethodRules(frameworkMethod, target, result);
 
-		result = _withTestRules(frameworkMethod, testRules, result);
+		result = _withTestRules(frameworkMethod, result);
 
 		return result;
 	}
 
 	private Statement _withMethodRules(
-		FrameworkMethod frameworkMethod, List<TestRule> testRules,
-		Object target, Statement result) {
+		FrameworkMethod frameworkMethod, Object target, Statement result) {
 
 		for (MethodRule each : _getMethodRules(target)) {
-			if (!testRules.contains(each)) {
-				result = each.apply(result, frameworkMethod, target);
-			}
+			result = each.apply(result, frameworkMethod, target);
 		}
 
 		return result;
@@ -339,10 +334,9 @@ public class Arquillian extends BlockJUnit4ClassRunner {
 	}
 
 	private Statement _withTestRules(
-		FrameworkMethod frameworkMethod, List<TestRule> testRules,
-		Statement statement) {
+		FrameworkMethod frameworkMethod, Statement statement) {
 
-		return testRules.isEmpty() ? statement : new RunRules(statement, testRules, describeChild(frameworkMethod));
+		return statement;
 	}
 
 

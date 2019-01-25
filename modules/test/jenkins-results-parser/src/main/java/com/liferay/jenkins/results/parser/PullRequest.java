@@ -440,6 +440,8 @@ public class PullRequest {
 			sb.append(_testSuiteName);
 		}
 
+		sb.append(" ");
+
 		String testSuiteLabelPrefix = sb.toString();
 
 		List<String> oldLabelNames = new ArrayList<>();

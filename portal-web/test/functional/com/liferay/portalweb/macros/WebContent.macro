@@ -1120,12 +1120,12 @@ definition {
 			var key_webContentTitle = "${webContentTitle}";
 		}
 
-		Click(locator1 = "WC#ENTRY_LIST_MENULIST_ICON");
-
 		WebContentNavigator.gotoEntryMenuItem(
 			entry = "${webContentTitle}",
 			menuItem = "Move to Recycle Bin"
 		);
+
+		AssertConfirm(value1 = "Are you sure you want to move this to the Recycle Bin?");
 
 		AssertElementPresent(locator1 = "Message#SUCCESS");
 	}

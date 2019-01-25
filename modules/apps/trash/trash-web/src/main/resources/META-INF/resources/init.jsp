@@ -60,7 +60,8 @@ page import="com.liferay.trash.service.TrashEntryLocalServiceUtil" %><%@
 page import="com.liferay.trash.web.internal.constants.TrashWebKeys" %><%@
 page import="com.liferay.trash.web.internal.dao.search.TrashResultRowSplitter" %><%@
 page import="com.liferay.trash.web.internal.display.context.TrashContainerModelDisplayContext" %><%@
-page import="com.liferay.trash.web.internal.display.context.TrashDisplayContext" %>
+page import="com.liferay.trash.web.internal.display.context.TrashDisplayContext" %><%@
+page import="com.liferay.trash.web.internal.servlet.taglib.clay.TrashEntryVerticalCard" %>
 
 <%@ page import="java.text.Format" %>
 

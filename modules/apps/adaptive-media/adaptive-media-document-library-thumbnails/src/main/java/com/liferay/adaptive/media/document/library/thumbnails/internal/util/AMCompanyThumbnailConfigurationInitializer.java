@@ -144,7 +144,7 @@ public class AMCompanyThumbnailConfigurationInitializer {
 
 		Collection<AMImageConfigurationEntry> amImageConfigurationEntries =
 			_amImageConfigurationHelper.getAMImageConfigurationEntries(
-				companyId);
+				companyId, amImageConfigurationEntry -> true);
 
 		Stream<AMImageConfigurationEntry> amImageConfigurationEntryStream =
 			amImageConfigurationEntries.stream();

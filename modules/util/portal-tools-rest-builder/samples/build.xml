@@ -22,6 +22,9 @@
 		<build-rest
 			apiDirName="../sample-api/src/main/java"
 			apiPackagePath="com.example.sample"
+			applicationBaseURI="/sample"
+			applicationClassName="SampleApplication"
+			applicationName="sample-application"
 			author="John Doe"
 			inputFileName="rest.yaml"
 		/>

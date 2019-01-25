@@ -26,6 +26,9 @@ project(":sample-rest") {
 	buildREST {
 		apiDir = "../sample-api/src/main/java"
 		apiPackagePath = "com.example.sample"
+		applicationBaseURI = "/sample"
+		applicationClassName = "SampleApplication"
+		applicationName = "sample-application"
 		author = "John Doe"
 	}
 }

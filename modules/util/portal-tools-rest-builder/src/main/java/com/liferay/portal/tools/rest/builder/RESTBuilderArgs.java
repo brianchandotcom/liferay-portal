@@ -23,6 +23,12 @@ public class RESTBuilderArgs {
 
 	public static final String API_PACKAGE_PATH = "com.example.sample";
 
+	public static final String APPLICATION_BASE_URI = "/sample";
+
+	public static final String APPLICATION_CLASS_NAME = "SampleApplication";
+
+	public static final String APPLICATION_NAME = "sample";
+
 	public static final String AUTHOR = "John Doe";
 
 	public static final String INPUT_FILE_NAME = "rest.yaml";
@@ -33,6 +39,18 @@ public class RESTBuilderArgs {
 
 	public String getApiPackagePath() {
 		return _apiPackagePath;
+	}
+
+	public String getApplicationBaseURI() {
+		return _applicationBaseURI;
+	}
+
+	public String getApplicationClassName() {
+		return _applicationClassName;
+	}
+
+	public String getApplicationName() {
+		return _applicationName;
 	}
 
 	public String getAuthor() {
@@ -55,6 +73,18 @@ public class RESTBuilderArgs {
 		_apiPackagePath = apiPackagePath;
 	}
 
+	public void setApplicationBaseURI(String applicationBaseURI) {
+		_applicationBaseURI = applicationBaseURI;
+	}
+
+	public void setApplicationClassName(String applicationClassName) {
+		_applicationClassName = applicationClassName;
+	}
+
+	public void setApplicationName(String applicationName) {
+		_applicationName = applicationName;
+	}
+
 	public void setAuthor(String author) {
 		_author = author;
 	}
@@ -69,6 +99,9 @@ public class RESTBuilderArgs {
 
 	private String _apiDirName = API_DIR_NAME;
 	private String _apiPackagePath = API_PACKAGE_PATH;
+	private String _applicationBaseURI = APPLICATION_BASE_URI;
+	private String _applicationClassName = APPLICATION_BASE_URI;
+	private String _applicationName = APPLICATION_NAME;
 	private String _author = AUTHOR;
 	private String _copyrightFileName;
 	private String _inputFileName = INPUT_FILE_NAME;

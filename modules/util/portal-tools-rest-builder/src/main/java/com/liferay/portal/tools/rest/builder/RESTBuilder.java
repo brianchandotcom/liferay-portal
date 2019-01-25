@@ -46,14 +46,18 @@ public class RESTBuilder {
 
 		String apiDirName = arguments.get("api.dir");
 		String apiPackagePath = arguments.get("api.package.path");
+		String applicationBaseURI = arguments.get("application.base.uri");
+		String applicationClassName = arguments.get("application.class.name");
+		String applicationName = arguments.get("application.name");
 		String author = arguments.get("author");
 		String copyrightFileName = arguments.get("copyright.file");
 		String inputFileName = arguments.get("input.file");
 
 		try {
 			new RESTBuilder(
-				apiDirName, apiPackagePath, author, copyrightFileName,
-				inputFileName);
+				apiDirName, apiPackagePath, applicationBaseURI,
+				applicationClassName, applicationName, author,
+				copyrightFileName, inputFileName);
 		}
 		catch (Exception e) {
 			ArgumentsUtil.processMainException(arguments, e);
@@ -61,7 +65,8 @@ public class RESTBuilder {
 	}
 
 	public RESTBuilder(
-			String apiDirName, String apiPackagePath, String author,
+			String apiDirName, String apiPackagePath, String applicationBaseURI,
+			String applicationClassName, String applicationName, String author,
 			String copyrightFileName, String inputFileName)
 		throws Exception {
 

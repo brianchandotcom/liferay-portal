@@ -143,72 +143,67 @@ public class Arquillian extends BlockJUnit4ClassRunner {
 
 		final Object test = testObject;
 
-		try {
-			Statement statement = methodInvoker(method, test);
+		Statement statement = methodInvoker(method, test);
 
-			statement = possiblyExpectingExceptions(method, test, statement);
+		statement = possiblyExpectingExceptions(method, test, statement);
 
-			statement = withPotentialTimeout(method, test, statement);
+		statement = withPotentialTimeout(method, test, statement);
 
-			final Statement originalStatement = statement;
+		final Statement originalStatement = statement;
 
-			for (MethodRule methodRule : rules(test)) {
-				statement = methodRule.apply(statement, method, test);
-			}
+		for (MethodRule methodRule : rules(test)) {
+			statement = methodRule.apply(statement, method, test);
+		}
 
-			final Statement statementWithRules = statement;
+		final Statement statementWithRules = statement;
 
-			return new Statement() {
+		return new Statement() {
 
-				@Override
-				public void evaluate() throws Throwable {
-					final AtomicBoolean flag = new AtomicBoolean();
+			@Override
+			public void evaluate() throws Throwable {
+				final AtomicBoolean flag = new AtomicBoolean();
 
-					Throwable throwable = null;
+				Throwable throwable = null;
 
+				try {
+					_testRunnerAdaptor.fireCustomLifecycle(
+						new BeforeRules(
+							test, method.getMethod(),
+							() -> {
+								flag.set(true);
+
+								statementWithRules.evaluate();
+							}));
+
+					if (flag.get() == false) {
+						originalStatement.evaluate();
+					}
+				}
+				catch (Throwable t) {
+					throwable = t;
+				}
+				finally {
 					try {
 						_testRunnerAdaptor.fireCustomLifecycle(
-							new BeforeRules(
+							new AfterRules(
 								test, method.getMethod(),
-								() -> {
-									flag.set(true);
-
-									statementWithRules.evaluate();
-								}));
-
-						if (flag.get() == false) {
-							originalStatement.evaluate();
-						}
+								LifecycleMethodExecutor.NO_OP));
 					}
 					catch (Throwable t) {
+						if (throwable != null) {
+							t.addSuppressed(throwable);
+						}
+
 						throwable = t;
-					}
-					finally {
-						try {
-							_testRunnerAdaptor.fireCustomLifecycle(
-								new AfterRules(
-									test, method.getMethod(),
-									LifecycleMethodExecutor.NO_OP));
-						}
-						catch (Throwable t) {
-							if (throwable != null) {
-								t.addSuppressed(throwable);
-							}
-
-							throwable = t;
-						}
-					}
-
-					if (throwable != null) {
-						throw throwable;
 					}
 				}
 
-			};
-		}
-		catch (Exception e) {
-			throw new RuntimeException("Could not create statement", e);
-		}
+				if (throwable != null) {
+					throw throwable;
+				}
+			}
+
+		};
 	}
 
 	@Override

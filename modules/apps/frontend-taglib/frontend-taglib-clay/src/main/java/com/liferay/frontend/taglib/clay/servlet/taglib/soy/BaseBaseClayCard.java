@@ -28,6 +28,16 @@ public abstract class BaseBaseClayCard implements BaseClayCard {
 	}
 
 	@Override
+	public String getInputName() {
+		return rowChecker.getRowIds();
+	}
+
+	@Override
+	public String getInputValue() {
+		return String.valueOf(baseModel.getPrimaryKeyObj());
+	}
+
+	@Override
 	public boolean isDisabled() {
 		if (rowChecker == null) {
 			return false;

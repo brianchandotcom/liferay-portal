@@ -109,16 +109,6 @@ public class FragmentEntryVerticalCard
 	}
 
 	@Override
-	public String getInputName() {
-		return _renderResponse.getNamespace() + "rowIds";
-	}
-
-	@Override
-	public String getInputValue() {
-		return String.valueOf(_fragmentEntry.getFragmentEntryId());
-	}
-
-	@Override
 	public List<LabelItem> getLabels() {
 		return new LabelItemList() {
 			{

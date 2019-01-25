@@ -30,7 +30,8 @@ definition {
 			embedVideo = "${embedVideo}",
 			entryContent = "${entryContent}",
 			entrySubtitle = "${entrySubtitle}",
-			entryTitle = "${entryTitle}"
+			entryTitle = "${entryTitle}",
+			videoService = "${videoService}"
 		);
 
 		if (isSet(readingTime)) {

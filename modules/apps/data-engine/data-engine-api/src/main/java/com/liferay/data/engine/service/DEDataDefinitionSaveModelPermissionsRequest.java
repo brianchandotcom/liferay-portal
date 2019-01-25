@@ -14,6 +14,11 @@
 
 package com.liferay.data.engine.service;
 
+import com.liferay.portal.kernel.util.ListUtil;
+
+import java.util.Collections;
+import java.util.List;
+
 /**
  * @author Leonardo Barros
  */
@@ -31,12 +36,16 @@ public final class DEDataDefinitionSaveModelPermissionsRequest {
 		return _groupId;
 	}
 
+	public List<String> getRoleNames() {
+		return Collections.unmodifiableList(_roleNames);
+	}
+
 	public long getScopedGroupId() {
 		return _scopedGroupId;
 	}
 
-	public long getUserId() {
-		return _userId;
+	public long getScopedUserId() {
+		return _scopedUserId;
 	}
 
 	public boolean isDelete() {
@@ -54,13 +63,19 @@ public final class DEDataDefinitionSaveModelPermissionsRequest {
 	public static final class Builder {
 
 		public Builder(
-			long companyId, long scopedGroupId, long deDataDefinitionId) {
+			long companyId, long groupId, long scopedUserId, long scopedGroupId,
+			long deDataDefinitionId, String[] roleNames) {
 
 			_deDataDefinitionSaveModelPermissionsRequest._companyId = companyId;
+			_deDataDefinitionSaveModelPermissionsRequest._groupId = groupId;
+			_deDataDefinitionSaveModelPermissionsRequest._scopedUserId =
+				scopedUserId;
 			_deDataDefinitionSaveModelPermissionsRequest._scopedGroupId =
 				scopedGroupId;
 			_deDataDefinitionSaveModelPermissionsRequest._deDataDefinitionId =
 				deDataDefinitionId;
+			_deDataDefinitionSaveModelPermissionsRequest._roleNames =
+				ListUtil.fromArray(roleNames);
 		}
 
 		public Builder allowDelete() {
@@ -85,18 +100,6 @@ public final class DEDataDefinitionSaveModelPermissionsRequest {
 			return _deDataDefinitionSaveModelPermissionsRequest;
 		}
 
-		public Builder grantTo(long userId) {
-			_deDataDefinitionSaveModelPermissionsRequest._userId = userId;
-
-			return this;
-		}
-
-		public Builder inGroup(long groupId) {
-			_deDataDefinitionSaveModelPermissionsRequest._groupId = groupId;
-
-			return this;
-		}
-
 		private final DEDataDefinitionSaveModelPermissionsRequest
 			_deDataDefinitionSaveModelPermissionsRequest =
 				new DEDataDefinitionSaveModelPermissionsRequest();
@@ -107,9 +110,10 @@ public final class DEDataDefinitionSaveModelPermissionsRequest {
 	private long _deDataDefinitionId;
 	private boolean _delete;
 	private long _groupId;
+	private List<String> _roleNames;
 	private long _scopedGroupId;
+	private long _scopedUserId;
 	private boolean _update;
-	private long _userId;
 	private boolean _view;
 
 }

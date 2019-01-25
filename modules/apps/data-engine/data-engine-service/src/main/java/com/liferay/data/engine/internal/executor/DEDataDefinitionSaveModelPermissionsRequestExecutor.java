@@ -19,6 +19,7 @@ import com.liferay.data.engine.service.DEDataDefinitionSaveModelPermissionsReque
 import com.liferay.data.engine.service.DEDataDefinitionSaveModelPermissionsResponse;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.util.ArrayUtil;
 
 import java.util.ArrayList;
@@ -40,49 +41,47 @@ public class DEDataDefinitionSaveModelPermissionsRequestExecutor {
 				deDataDefinitionSaveModelPermissionsRequest)
 		throws Exception {
 
-		long userId = deDataDefinitionSaveModelPermissionsRequest.getUserId();
+		long scopedUserId =
+			deDataDefinitionSaveModelPermissionsRequest.getScopedUserId();
 
 		long groupId = deDataDefinitionSaveModelPermissionsRequest.getGroupId();
 
-		List<String> guestPermissions = new ArrayList<>();
-		List<String> groupPermissions = new ArrayList<>();
+		List<String> actionIds = new ArrayList<>();
 
 		if (deDataDefinitionSaveModelPermissionsRequest.isDelete()) {
-			if ((userId == 0) && (groupId == 0)) {
-				guestPermissions.add(ActionKeys.DELETE);
-			}
-			else if (groupId != 0) {
-				groupPermissions.add(ActionKeys.DELETE);
-			}
+			actionIds.add(ActionKeys.DELETE);
 		}
 
 		if (deDataDefinitionSaveModelPermissionsRequest.isUpdate()) {
-			if ((userId == 0) && (groupId == 0)) {
-				guestPermissions.add(ActionKeys.UPDATE);
-			}
-			else if (groupId != 0) {
-				groupPermissions.add(ActionKeys.UPDATE);
-			}
+			actionIds.add(ActionKeys.UPDATE);
 		}
 
 		if (deDataDefinitionSaveModelPermissionsRequest.isView()) {
-			if ((userId == 0) && (groupId == 0)) {
-				guestPermissions.add(ActionKeys.VIEW);
-			}
-			else if (groupId != 0) {
-				groupPermissions.add(ActionKeys.VIEW);
-			}
+			actionIds.add(ActionKeys.VIEW);
 		}
 
 		long deDataDefinitionId =
 			deDataDefinitionSaveModelPermissionsRequest.getDEDataDefinitionId();
 
+		if (actionIds.isEmpty()) {
+			return DEDataDefinitionSaveModelPermissionsResponse.Builder.of(
+				deDataDefinitionId);
+		}
+
+		ModelPermissions modelPermissions = new ModelPermissions();
+
+		List<String> roleNames =
+			deDataDefinitionSaveModelPermissionsRequest.getRoleNames();
+
+		for (String roleName : roleNames) {
+			modelPermissions.addRolePermissions(
+				roleName, ArrayUtil.toStringArray(actionIds));
+		}
+
 		_resourcePermissionLocalService.addModelResourcePermissions(
 			deDataDefinitionSaveModelPermissionsRequest.getCompanyId(), groupId,
-			userId, DEDataDefinitionConstants.MODEL_RESOURCE_NAME,
-			String.valueOf(deDataDefinitionId),
-			ArrayUtil.toStringArray(groupPermissions),
-			ArrayUtil.toStringArray(guestPermissions));
+			scopedUserId, DEDataDefinitionConstants.MODEL_RESOURCE_NAME,
+			String.valueOf(deDataDefinitionId), modelPermissions);
 
 		return DEDataDefinitionSaveModelPermissionsResponse.Builder.of(
 			deDataDefinitionId);

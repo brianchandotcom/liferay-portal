@@ -14,17 +14,25 @@
 
 package com.liferay.portal.dao.orm.hibernate;
 
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.petra.concurrent.ConcurrentReferenceValueHashMap;
+import com.liferay.petra.memory.FinalizeManager;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.util.TextFormatter;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Member;
 import java.lang.reflect.Method;
 
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 import org.hibernate.PropertyAccessException;
 import org.hibernate.PropertyNotFoundException;
@@ -37,6 +45,7 @@ import org.hibernate.property.Setter;
 /**
  * @author Preston Crary
  */
+@ProviderType
 public class LiferayPropertyAccessor extends BasicPropertyAccessor {
 
 	@Override
@@ -44,8 +53,14 @@ public class LiferayPropertyAccessor extends BasicPropertyAccessor {
 	public Getter getGetter(Class clazz, String propertyName)
 		throws PropertyNotFoundException {
 
-		String methodNameSuffix = TextFormatter.format(
-			propertyName, TextFormatter.G);
+		LiferayPropertyMutator liferayPropertyMutator =
+			_getLiferayPropertyMutator(clazz, propertyName);
+
+		if (liferayPropertyMutator != null) {
+			return liferayPropertyMutator;
+		}
+
+		String methodNameSuffix = formatPropertyName(propertyName);
 
 		String getterMethodName = "get".concat(methodNameSuffix);
 
@@ -72,8 +87,14 @@ public class LiferayPropertyAccessor extends BasicPropertyAccessor {
 	public Setter getSetter(Class clazz, String propertyName)
 		throws PropertyNotFoundException {
 
-		String methodNameSuffix = TextFormatter.format(
-			propertyName, TextFormatter.G);
+		LiferayPropertyMutator liferayPropertyMutator =
+			_getLiferayPropertyMutator(clazz, propertyName);
+
+		if (liferayPropertyMutator != null) {
+			return liferayPropertyMutator;
+		}
+
+		String methodNameSuffix = formatPropertyName(propertyName);
 
 		String getterMethodName = "get".concat(methodNameSuffix);
 		String setterMethodName = "set".concat(methodNameSuffix);
@@ -99,8 +120,92 @@ public class LiferayPropertyAccessor extends BasicPropertyAccessor {
 		}
 	}
 
+	protected String formatPropertyName(String propertyName) {
+		return TextFormatter.format(propertyName, TextFormatter.G);
+	}
+
+	private LiferayPropertyMutator _getLiferayPropertyMutator(
+		Class clazz, String name) {
+
+		ModelMutators modelMutators = _modelMutators.computeIfAbsent(
+			clazz,
+			modelClass -> {
+				if (!BaseModelImpl.class.isAssignableFrom(modelClass)) {
+					return new ModelMutators(null, null);
+				}
+
+				Class<?> superClass = modelClass.getSuperclass();
+
+				while (BaseModelImpl.class != superClass) {
+					modelClass = superClass;
+
+					superClass = modelClass.getSuperclass();
+				}
+
+				Map<String, Function<Object, Object>> attributeGetterFunctions =
+					null;
+				Map<String, BiConsumer<Object, Object>>
+					attributeSetterBiConsumers = null;
+
+				try {
+					Field attributeGetterFunctionsField =
+						modelClass.getDeclaredField(
+							"_attributeGetterFunctions");
+
+					attributeGetterFunctionsField.setAccessible(true);
+
+					attributeGetterFunctions =
+						(Map<String, Function<Object, Object>>)
+							attributeGetterFunctionsField.get(null);
+
+					Field attributeSetterBiConsumersField =
+						modelClass.getDeclaredField(
+							"_attributeSetterBiConsumers");
+
+					attributeSetterBiConsumersField.setAccessible(true);
+
+					attributeSetterBiConsumers =
+						(Map<String, BiConsumer<Object, Object>>)
+							attributeSetterBiConsumersField.get(null);
+				}
+				catch (ReflectiveOperationException roe) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(roe, roe);
+					}
+				}
+
+				return new ModelMutators(
+					attributeGetterFunctions, attributeSetterBiConsumers);
+			});
+
+		Map<String, Function<Object, Object>> attributeGetterFunctions =
+			modelMutators._attributeGetterFunctions;
+
+		Map<String, BiConsumer<Object, Object>> attributeSetterBiConsumers =
+			modelMutators._attributeSetterBiConsumers;
+
+		if (attributeSetterBiConsumers == null) {
+			return null;
+		}
+
+		Function<Object, Object> getterFunction = attributeGetterFunctions.get(
+			name);
+		BiConsumer<Object, Object> setterBiConsumer =
+			attributeSetterBiConsumers.get(name);
+
+		if ((getterFunction == null) || (setterBiConsumer == null)) {
+			return null;
+		}
+
+		return new LiferayPropertyMutator(getterFunction, setterBiConsumer);
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		LiferayPropertyAccessor.class);
+
+	private static final Map<Class, ModelMutators> _modelMutators =
+		new ConcurrentReferenceValueHashMap<>(
+			FinalizeManager.WEAK_REFERENCE_FACTORY);
 
 	private static class LiferayPropertyGetter implements Getter {
 
@@ -157,6 +262,61 @@ public class LiferayPropertyAccessor extends BasicPropertyAccessor {
 
 	}
 
+	private static class LiferayPropertyMutator implements Getter, Setter {
+
+		@Override
+		public Object get(Object target) {
+			return _getterFunction.apply(target);
+		}
+
+		@Override
+		public Object getForInsert(
+			Object target, Map mergeMap,
+			SessionImplementor sessionImplementor) {
+
+			return _getterFunction.apply(target);
+		}
+
+		@Override
+		public Member getMember() {
+			return null;
+		}
+
+		@Override
+		public Method getMethod() {
+			return null;
+		}
+
+		@Override
+		public String getMethodName() {
+			return null;
+		}
+
+		@Override
+		public Class getReturnType() {
+			return null;
+		}
+
+		@Override
+		public void set(
+			Object target, Object value, SessionFactoryImplementor factory) {
+
+			_setterBiConsumer.accept(target, value);
+		}
+
+		private LiferayPropertyMutator(
+			Function<Object, Object> getterFunction,
+			BiConsumer<Object, Object> setterBiConsumer) {
+
+			_getterFunction = getterFunction;
+			_setterBiConsumer = setterBiConsumer;
+		}
+
+		private final Function<Object, Object> _getterFunction;
+		private final BiConsumer<Object, Object> _setterBiConsumer;
+
+	}
+
 	private static class LiferayPropertySetter implements Setter {
 
 		@Override
@@ -194,6 +354,24 @@ public class LiferayPropertyAccessor extends BasicPropertyAccessor {
 
 		private final Method _method;
 		private final String _propertyName;
+
+	}
+
+	private static class ModelMutators {
+
+		private ModelMutators(
+			Map<String, Function<Object, Object>> attributeGetterFunctions,
+			Map<String, BiConsumer<Object, Object>>
+				attributeSetterBiConsumers) {
+
+			_attributeGetterFunctions = attributeGetterFunctions;
+			_attributeSetterBiConsumers = attributeSetterBiConsumers;
+		}
+
+		private final Map<String, Function<Object, Object>>
+			_attributeGetterFunctions;
+		private final Map<String, BiConsumer<Object, Object>>
+			_attributeSetterBiConsumers;
 
 	}
 

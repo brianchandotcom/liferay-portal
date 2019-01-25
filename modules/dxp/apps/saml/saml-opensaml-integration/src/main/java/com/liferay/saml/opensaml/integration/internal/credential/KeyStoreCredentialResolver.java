@@ -77,15 +77,6 @@ public class KeyStoreCredentialResolver extends AbstractCredentialResolver {
 				}
 			}
 
-			KeyStore keyStore = _keyStoreManager.getKeyStore();
-
-			KeyStore.Entry entry = keyStore.getEntry(
-				entityId, keyStorePasswordProtection);
-
-			if (entry == null) {
-				return Collections.emptySet();
-			}
-
 			UsageType usageType = UsageType.UNSPECIFIED;
 
 			UsageCriterion usageCriterion = criteriaSet.get(
@@ -93,6 +84,15 @@ public class KeyStoreCredentialResolver extends AbstractCredentialResolver {
 
 			if (usageCriterion != null) {
 				usageType = usageCriterion.getUsage();
+			}
+
+			KeyStore keyStore = _keyStoreManager.getKeyStore();
+
+			KeyStore.Entry entry = keyStore.getEntry(
+				getAlias(entityId, usageType), keyStorePasswordProtection);
+
+			if (entry == null) {
+				return Collections.emptySet();
 			}
 
 			Credential credential = buildCredential(entry, entityId, usageType);
@@ -148,6 +148,14 @@ public class KeyStoreCredentialResolver extends AbstractCredentialResolver {
 			throw new IllegalArgumentException(
 				"No entity ID criterion was available in criteria set");
 		}
+	}
+
+	protected String getAlias(String entityId, UsageType usageType) {
+		if (usageType.equals(UsageType.ENCRYPTION)) {
+			return entityId + "-encryption";
+		}
+
+		return entityId;
 	}
 
 	protected Credential processPrivateKeyEntry(

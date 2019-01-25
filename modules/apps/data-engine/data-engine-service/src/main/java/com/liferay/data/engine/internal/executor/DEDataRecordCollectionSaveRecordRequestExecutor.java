@@ -136,6 +136,25 @@ public class DEDataRecordCollectionSaveRecordRequestExecutor {
 			serviceContext);
 	}
 
+	protected void addStorageLink(
+			long deDataStorageId, DDLRecord ddlRecord,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		DDLRecordSet ddlRecordSet = ddlRecord.getRecordSet();
+
+		DDLRecordSetVersion ddlRecordSetVersion =
+			ddlRecordSet.getRecordSetVersion();
+
+		DDMStructureVersion ddmStructureVersion =
+			ddlRecordSetVersion.getDDMStructureVersion();
+
+		_ddmStorageLinkLocalService.addStorageLink(
+			_portal.getClassNameId(DEDataRecord.class.getName()),
+			deDataStorageId, ddmStructureVersion.getStructureVersionId(),
+			serviceContext);
+	}
+
 	private final DDLRecordLocalService _ddlRecordLocalService;
 	private final DDMStorageLinkLocalService _ddmStorageLinkLocalService;
 	private final DEDataStorageTracker _deDataStorageTracker;

@@ -1,0 +1,3 @@
+apiDir: "../document-library-rest-api/src/main/java"
+apiPackagePath: "com.liferay.document.library.rest"
+author: "Javier Gamarra"

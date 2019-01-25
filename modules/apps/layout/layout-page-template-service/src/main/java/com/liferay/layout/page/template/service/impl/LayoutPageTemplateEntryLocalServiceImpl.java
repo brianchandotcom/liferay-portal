@@ -103,6 +103,41 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 			long previewFileEntryId, int status, ServiceContext serviceContext)
 		throws PortalException {
 
+		Layout layout = null;
+
+		if (type == LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE) {
+			layout = _addLayout(
+				userId, groupId, classNameId, classTypeId, name,
+				LayoutConstants.LAYOUT_TYPE_ASSET_DISPLAY, serviceContext);
+		}
+		else if (type == LayoutPageTemplateEntryTypeConstants.TYPE_BASIC) {
+			layout = _addLayout(
+				userId, groupId, classNameId, classTypeId, name,
+				LayoutConstants.LAYOUT_TYPE_CONTENT, serviceContext);
+		}
+
+		long plid = 0;
+
+		if (layout != null) {
+			plid = layout.getPlid();
+		}
+
+		return addLayoutPageTemplateEntry(
+			userId, groupId, layoutPageTemplateCollectionId, classNameId,
+			classTypeId, name,
+			LayoutPageTemplateEntryTypeConstants.TYPE_WIDGET_PAGE,
+			defaultTemplate, 0, 0, plid, status, new ServiceContext());
+	}
+
+	@Override
+	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
+			long userId, long groupId, long layoutPageTemplateCollectionId,
+			long classNameId, long classTypeId, String name, int type,
+			boolean defaultTemplate, long layoutPrototypeId,
+			long previewFileEntryId, long plid, int status,
+			ServiceContext serviceContext)
+		throws PortalException {
+
 		// Layout page template entry
 
 		User user = userLocalService.getUser(userId);
@@ -133,29 +168,11 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 		layoutPageTemplateEntry.setPreviewFileEntryId(previewFileEntryId);
 		layoutPageTemplateEntry.setDefaultTemplate(defaultTemplate);
 		layoutPageTemplateEntry.setLayoutPrototypeId(layoutPrototypeId);
+		layoutPageTemplateEntry.setPlid(plid);
 		layoutPageTemplateEntry.setStatus(status);
 		layoutPageTemplateEntry.setStatusByUserId(userId);
 		layoutPageTemplateEntry.setStatusByUserName(user.getScreenName());
 		layoutPageTemplateEntry.setStatusDate(new Date());
-
-		// Layout
-
-		Layout layout = null;
-
-		if (type == LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE) {
-			layout = _addLayout(
-				userId, groupId, classNameId, classTypeId, name,
-				LayoutConstants.LAYOUT_TYPE_ASSET_DISPLAY, serviceContext);
-		}
-		else if (type == LayoutPageTemplateEntryTypeConstants.TYPE_BASIC) {
-			layout = _addLayout(
-				userId, groupId, classNameId, classTypeId, name,
-				LayoutConstants.LAYOUT_TYPE_CONTENT, serviceContext);
-		}
-
-		if (layout != null) {
-			layoutPageTemplateEntry.setPlid(layout.getPlid());
-		}
 
 		layoutPageTemplateEntryPersistence.update(layoutPageTemplateEntry);
 
@@ -684,6 +701,8 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 		Locale defaultLocale = LocaleUtil.fromLanguageId(
 			LocalizationUtil.getDefaultLanguageId(nameXML));
 
+		Layout layout = layoutPrototype.getLayout();
+
 		int status = WorkflowConstants.STATUS_APPROVED;
 
 		if (!layoutPrototype.isActive()) {
@@ -691,9 +710,10 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 		}
 
 		return addLayoutPageTemplateEntry(
-			layoutPrototype.getUserId(), groupId, 0, nameMap.get(defaultLocale),
-			LayoutPageTemplateEntryTypeConstants.TYPE_WIDGET_PAGE,
-			layoutPrototype.getLayoutPrototypeId(), status,
+			layoutPrototype.getUserId(), groupId, 0, 0, 0,
+			nameMap.get(defaultLocale),
+			LayoutPageTemplateEntryTypeConstants.TYPE_WIDGET_PAGE, false,
+			layoutPrototype.getLayoutPrototypeId(), 0, layout.getPlid(), status,
 			new ServiceContext());
 	}
 

@@ -1405,6 +1405,20 @@ definition {
 	@description = "This is a use case for LPS-74299."
 	@priority = "3"
 	test ViewFacetPersistence {
+		// Workaround for LPS-89026
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Search"
+		);
+
+		SearchAdministration.executeSearchActions(
+			actionsDescription = "Reindex all search indexes."
+		);
+
+		Navigator.openURL();
+
 		ProductMenu.gotoPortlet(
 			category = "Build",
 			panel = "Site Administration",

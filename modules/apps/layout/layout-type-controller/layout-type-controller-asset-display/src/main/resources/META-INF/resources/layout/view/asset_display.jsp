@@ -17,7 +17,22 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String renderedContent = assetDisplayLayoutTypeControllerDisplayContext.getRenderedContent();
+AssetEntry assetEntry = assetDisplayLayoutTypeControllerDisplayContext.getAssetEntry();
+
+String renderedContent = StringPool.BLANK;
+
+if (assetEntry != null) {
+	LayoutPageTemplateStructure layoutPageTemplateStructure = LayoutPageTemplateStructureLocalServiceUtil.fetchLayoutPageTemplateStructure(assetEntry.getGroupId(), PortalUtil.getClassNameId(LayoutPageTemplateEntry.class.getName()), assetDisplayLayoutTypeControllerDisplayContext.getLayoutPageTemplateEntryId(), true);
+
+	String currentI18nLanguageId = GetterUtil.getString(request.getAttribute(AssetDisplayWebKeys.CURRENT_I18N_LANGUAGE_ID), themeDisplay.getLanguageId());
+
+	try {
+		renderedContent = LayoutPageTemplateStructureRenderUtil.renderLayoutContent(request, response, layoutPageTemplateStructure, FragmentEntryLinkConstants.ASSET_DISPLAY_PAGE, assetDisplayLayoutTypeControllerDisplayContext.getAssetDisplayFieldsValues());
+	}
+	finally {
+		request.setAttribute(WebKeys.I18N_LANGUAGE_ID, currentI18nLanguageId);
+	}
+}
 %>
 
 <c:choose>
@@ -38,12 +53,7 @@ String renderedContent = assetDisplayLayoutTypeControllerDisplayContext.getRende
 		%>
 
 	</c:when>
-	<c:when test="<%= assetDisplayLayoutTypeControllerDisplayContext.getAssetEntry() != null %>">
-
-		<%
-		AssetEntry assetEntry = assetDisplayLayoutTypeControllerDisplayContext.getAssetEntry();
-		%>
-
+	<c:when test="<%= assetEntry != null %>">
 		<div class="sheet">
 			<div class="sheet-header">
 				<h2 class="sheet-title">

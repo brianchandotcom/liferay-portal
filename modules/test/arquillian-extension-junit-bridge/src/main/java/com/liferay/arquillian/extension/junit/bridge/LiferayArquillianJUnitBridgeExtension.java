@@ -30,7 +30,6 @@ import org.jboss.arquillian.container.test.spi.client.deployment.ApplicationArch
 import org.jboss.arquillian.container.test.spi.client.deployment.AuxiliaryArchiveAppender;
 import org.jboss.arquillian.container.test.spi.client.deployment.DeploymentScenarioGenerator;
 import org.jboss.arquillian.container.test.spi.client.protocol.Protocol;
-import org.jboss.arquillian.junit.container.JUnitDeploymentAppender;
 
 /**
  * @author Shuyang Zhou
@@ -45,8 +44,8 @@ public class LiferayArquillianJUnitBridgeExtension
 
 		if (url == null) {
 			extensionBuilder.observer(ConfigurationRegistrar.class);
-			extensionBuilder.override(
-				AuxiliaryArchiveAppender.class, JUnitDeploymentAppender.class,
+			extensionBuilder.service(
+				AuxiliaryArchiveAppender.class,
 				JUnitBridgeAuxiliaryArchiveAppender.class);
 			extensionBuilder.service(
 				ApplicationArchiveProcessor.class, OSGiAllInProcessor.class);

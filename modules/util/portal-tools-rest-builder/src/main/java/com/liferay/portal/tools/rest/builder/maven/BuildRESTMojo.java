@@ -57,6 +57,27 @@ public class BuildRESTMojo extends AbstractMojo {
 	/**
 	 * @parameter
 	 */
+	public void setApplicationBaseURI(String applicationBaseURI) {
+		_restBuilderArgs.setApplicationBaseURI(applicationBaseURI);
+	}
+
+	/**
+	 * @parameter
+	 */
+	public void setApplicationClassName(String applicationClassName) {
+		_restBuilderArgs.setApplicationClassName(applicationClassName);
+	}
+
+	/**
+	 * @parameter
+	 */
+	public void setApplicationName(String applicationName) {
+		_restBuilderArgs.setApplicationName(applicationName);
+	}
+
+	/**
+	 * @parameter
+	 */
 	public void setAuthor(String author) {
 		_restBuilderArgs.setAuthor(author);
 	}

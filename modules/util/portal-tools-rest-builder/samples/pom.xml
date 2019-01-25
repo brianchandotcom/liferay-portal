@@ -20,6 +20,9 @@
 				<configuration>
 					<apiDirName>../sample-api/src/main/java</apiDirName>
 					<apiPackagePath>com.example.sample</apiPackagePath>
+					<applicationBaseURI>/sample</applicationBaseURI>
+					<applicationClassName>SampleApplication</applicationClassName>
+					<applicationName>sample-application</applicationName>
 					<author>John Doe</author>
 					<inputFileName>rest.yaml</inputFileName>
 				</configuration>

@@ -164,7 +164,7 @@ public class DetailASTUtil {
 				TokenTypes.RPAREN);
 		}
 		else if ((detailAST.getType() == TokenTypes.LITERAL_IF) ||
-			(detailAST.getType() == TokenTypes.LITERAL_WHILE)) {
+				 (detailAST.getType() == TokenTypes.LITERAL_WHILE)) {
 
 			rparenDetailAST = detailAST.findFirstToken(TokenTypes.RPAREN);
 		}

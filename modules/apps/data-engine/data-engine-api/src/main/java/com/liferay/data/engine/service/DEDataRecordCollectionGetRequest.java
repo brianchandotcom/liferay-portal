@@ -15,20 +15,45 @@
 package com.liferay.data.engine.service;
 
 /**
- * @author Leonardo Barros
- */
+* This class represents a request to get a {@link DEDataRecordCollection} from the database.
+*
+* @author Leonardo Barros
+* @review
+*/
 public final class DEDataRecordCollectionGetRequest {
 
+	/**
+	 * Returns the Data Record Collection ID of the Get request.
+	 * @return deDataRecordCollectionId
+	 * @review
+	 */
 	public long getDEDataRecordCollectionId() {
 		return _deDataRecordCollectionId;
 	}
 
+	/**
+	 * Constructs the Get Data Record Collections request using parameters. A
+	 * Data Record Collection ID can be used as an argument.
+	 * @review
+	 */
 	public static final class Builder {
 
+		/**
+		 * Constructs the Get Data Record Collections request.
+		 * @return {@link DEDataRecordCollectionGetRequest }
+		 * @review
+		 */
 		public DEDataRecordCollectionGetRequest build() {
 			return _deDataRecordCollectionGetRequest;
 		}
 
+		/**
+		 * Includes a Data Record Collection ID in the Get request.
+		 * @param deDataRecordCollectionId ID from the Data Record
+		 * Collection to be retrieved
+		 * @return {@link Builder }
+		 * @review
+		 */
 		public Builder byId(long deDataRecordCollectionId) {
 			_deDataRecordCollectionGetRequest._deDataRecordCollectionId =
 				deDataRecordCollectionId;

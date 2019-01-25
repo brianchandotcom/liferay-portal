@@ -118,38 +118,29 @@ public class Arquillian extends BlockJUnit4ClassRunner {
 			}
 		}
 
+		if (_testRunnerAdaptor == null) {
+			return;
+		}
+
 		runNotifier.addListener(
 			new RunListener() {
 
 				@Override
 				public void testRunFinished(Result result) throws Exception {
-					shutdown();
-				}
-
-				private void shutdown() {
 					try {
-						try {
-							if (_testRunnerAdaptor != null) {
-								_testRunnerAdaptor.afterSuite();
-								_testRunnerAdaptor.shutdown();
-							}
-						}
-						finally {
-							_testRunnerAdaptorThreadLocal.remove();
-						}
+						_testRunnerAdaptor.afterSuite();
+						_testRunnerAdaptor.shutdown();
 
 						_testRunnerAdaptor = null;
 					}
-					catch (Exception e) {
-						throw new RuntimeException(
-							"Could not run @AfterSuite", e);
+					finally {
+						_testRunnerAdaptorThreadLocal.remove();
 					}
 				}
+
 			});
 
-		if(_testRunnerAdaptor != null) {
-			super.run(runNotifier);
-		}
+		super.run(runNotifier);
    }
 
 	@Override

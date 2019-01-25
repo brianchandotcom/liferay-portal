@@ -20,9 +20,11 @@ import java.util.Collections;
 import java.util.Map;
 
 import org.opensaml.core.config.ConfigurationService;
+import org.opensaml.xmlsec.DecryptionConfiguration;
 import org.opensaml.xmlsec.EncryptionConfiguration;
 import org.opensaml.xmlsec.SignatureSigningConfiguration;
 import org.opensaml.xmlsec.config.DefaultSecurityConfigurationBootstrap;
+import org.opensaml.xmlsec.impl.BasicDecryptionConfiguration;
 import org.opensaml.xmlsec.impl.BasicEncryptionConfiguration;
 import org.opensaml.xmlsec.impl.BasicSignatureSigningConfiguration;
 
@@ -40,17 +42,21 @@ public class SecurityConfigurationBootstrap {
 	@Activate
 	@Modified
 	public void activate(Map<String, Object> properties) {
+		BasicDecryptionConfiguration basicDecryptionConfiguration =
+			DefaultSecurityConfigurationBootstrap.
+				buildDefaultDecryptionConfiguration();
 		BasicEncryptionConfiguration basicEncryptionConfiguration =
 			DefaultSecurityConfigurationBootstrap.
 				buildDefaultEncryptionConfiguration();
-
 		BasicSignatureSigningConfiguration basicSignatureSigningConfiguration =
 			DefaultSecurityConfigurationBootstrap.
 				buildDefaultSignatureSigningConfiguration();
 
 		Collection<String> blacklistedAlgorithms = new ArrayList<>(
-			basicEncryptionConfiguration.getBlacklistedAlgorithms());
+			basicDecryptionConfiguration.getBlacklistedAlgorithms());
 
+		blacklistedAlgorithms.addAll(
+			basicEncryptionConfiguration.getBlacklistedAlgorithms());
 		blacklistedAlgorithms.addAll(
 			basicSignatureSigningConfiguration.getBlacklistedAlgorithms());
 
@@ -66,8 +72,9 @@ public class SecurityConfigurationBootstrap {
 		}
 
 		ConfigurationService.register(
+			DecryptionConfiguration.class, basicDecryptionConfiguration);
+		ConfigurationService.register(
 			EncryptionConfiguration.class, basicEncryptionConfiguration);
-
 		ConfigurationService.register(
 			SignatureSigningConfiguration.class,
 			basicSignatureSigningConfiguration);

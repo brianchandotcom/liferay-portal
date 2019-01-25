@@ -277,7 +277,8 @@ public class EntityModelFieldMapper {
 			Field field = new Field(
 				entityField.getName(), label, "id", Collections.emptyList(),
 				new Field.SelectEntity(
-					"selectEntity", selectEntityTitle, portletURL.toString()));
+					"selectEntity", selectEntityTitle, portletURL.toString(),
+					false));
 
 			return Optional.of(field);
 		}

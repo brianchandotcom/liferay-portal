@@ -84,7 +84,7 @@ public class OrganizationSegmentsFieldCustomizer
 				locale, "select-x", title);
 
 			return new Field.SelectEntity(
-				"selectEntity", selectEntityTitle, portletURL.toString());
+				"selectEntity", selectEntityTitle, portletURL.toString(), true);
 		}
 		catch (Exception e) {
 			if (_log.isWarnEnabled()) {

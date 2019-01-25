@@ -62,46 +62,50 @@ public class AssetAutoTaggerOSGiCommandsTest
 	public void testTagAllUntaggedTagsAllTheAssetsThatHaveNoTags()
 		throws Exception {
 
-		AssetEntry assetEntryWithPreviousTags = addFileEntryAssetEntry();
+		withAutoTaggerDisabled(
+			() -> {
+				AssetEntry assetEntryWithPreviousTags =
+					addFileEntryAssetEntry();
 
-		applyAssetTagName(assetEntryWithPreviousTags, ASSET_TAG_NAME_MANUAL);
+				applyAssetTagName(
+					assetEntryWithPreviousTags, ASSET_TAG_NAME_MANUAL);
 
-		assertContainsAssetTagName(
-			assetEntryWithPreviousTags, ASSET_TAG_NAME_MANUAL);
+				assertContainsAssetTagName(
+					assetEntryWithPreviousTags, ASSET_TAG_NAME_MANUAL);
 
-		AssetEntry assetEntryWithNoPreviousTags = addFileEntryAssetEntry();
+				AssetEntry assetEntryWithNoPreviousTags =
+					addFileEntryAssetEntry();
 
-		assertHasNoTags(assetEntryWithNoPreviousTags);
+				assertHasNoTags(assetEntryWithNoPreviousTags);
 
-		withAutoTaggerEnabled(
-			() -> _tagAllUntagged(DLFileEntryConstants.getClassName()));
+				withAutoTaggerEnabled(
+					() -> {
+						_tagAllUntagged(DLFileEntryConstants.getClassName());
 
-		assertContainsAssetTagName(
-			assetEntryWithNoPreviousTags, ASSET_TAG_NAME_AUTO);
+						assertContainsAssetTagName(
+							assetEntryWithNoPreviousTags, ASSET_TAG_NAME_AUTO);
 
-		assertDoesNotContainAssetTagName(
-			assetEntryWithPreviousTags, ASSET_TAG_NAME_AUTO);
+						assertDoesNotContainAssetTagName(
+							assetEntryWithPreviousTags, ASSET_TAG_NAME_AUTO);
+					});
+			});
 	}
 
 	@Test
 	public void testUnTagAllRemovesAllTheAutoTags() throws Exception {
-		withAutoTaggerEnabled(
-			() -> {
-				AssetEntry assetEntry = addFileEntryAssetEntry();
+		AssetEntry assetEntry = addFileEntryAssetEntry();
 
-				applyAssetTagName(assetEntry, ASSET_TAG_NAME_MANUAL);
+		applyAssetTagName(assetEntry, ASSET_TAG_NAME_MANUAL);
 
-				assertContainsAssetTagName(assetEntry, ASSET_TAG_NAME_AUTO);
+		assertContainsAssetTagName(assetEntry, ASSET_TAG_NAME_AUTO);
 
-				assertContainsAssetTagName(assetEntry, ASSET_TAG_NAME_MANUAL);
+		assertContainsAssetTagName(assetEntry, ASSET_TAG_NAME_MANUAL);
 
-				_untagAll(DLFileEntryConstants.getClassName());
+		_untagAll(DLFileEntryConstants.getClassName());
 
-				assertDoesNotContainAssetTagName(
-					assetEntry, ASSET_TAG_NAME_AUTO);
+		assertDoesNotContainAssetTagName(assetEntry, ASSET_TAG_NAME_AUTO);
 
-				assertContainsAssetTagName(assetEntry, ASSET_TAG_NAME_MANUAL);
-			});
+		assertContainsAssetTagName(assetEntry, ASSET_TAG_NAME_MANUAL);
 	}
 
 	private void _tagAllUntagged(String... classNames) throws Exception {

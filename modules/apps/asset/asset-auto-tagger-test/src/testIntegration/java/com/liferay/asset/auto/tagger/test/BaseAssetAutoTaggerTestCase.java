@@ -136,13 +136,30 @@ public abstract class BaseAssetAutoTaggerTestCase {
 		Assert.assertEquals(tags.toString(), 0, tags.size());
 	}
 
+	protected void withAutoTaggerDisabled(
+			UnsafeRunnable<Exception> unsafeRunnable)
+		throws Exception {
+
+		_withAutoTagger(false, unsafeRunnable);
+	}
+
 	protected void withAutoTaggerEnabled(
 			UnsafeRunnable<Exception> unsafeRunnable)
 		throws Exception {
 
+		_withAutoTagger(true, unsafeRunnable);
+	}
+
+	@DeleteAfterTestRun
+	protected Group group;
+
+	private void _withAutoTagger(
+			boolean enabled, UnsafeRunnable<Exception> unsafeRunnable)
+		throws Exception {
+
 		Dictionary<String, Object> dictionary = new HashMapDictionary<>();
 
-		dictionary.put("enabled", true);
+		dictionary.put("enabled", enabled);
 
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
 				new ConfigurationTemporarySwapper(
@@ -153,9 +170,6 @@ public abstract class BaseAssetAutoTaggerTestCase {
 			unsafeRunnable.run();
 		}
 	}
-
-	@DeleteAfterTestRun
-	protected Group group;
 
 	private ServiceRegistration<AssetAutoTagProvider>
 		_assetAutoTagProviderServiceRegistration;

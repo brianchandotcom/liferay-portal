@@ -53,90 +53,80 @@ public class AssetAutoTaggerTest extends BaseAssetAutoTaggerTestCase {
 
 	@Test
 	public void testAutoTagsANewAssetOnCreation() throws Exception {
-		withAutoTaggerEnabled(
-			() -> {
-				AssetEntry assetEntry = addFileEntryAssetEntry();
+		AssetEntry assetEntry = addFileEntryAssetEntry();
 
-				assertContainsAssetTagName(assetEntry, ASSET_TAG_NAME_AUTO);
-			});
+		assertContainsAssetTagName(assetEntry, ASSET_TAG_NAME_AUTO);
 	}
 
 	@Test
 	public void testDeletesAssetAutoTaggerEntriesWhenAssetIsDeleted()
 		throws Exception {
 
-		withAutoTaggerEnabled(
-			() -> {
-				AssetEntry assetEntry = addFileEntryAssetEntry();
+		AssetEntry assetEntry = addFileEntryAssetEntry();
 
-				List<AssetAutoTaggerEntry> assetAutoTaggerEntries =
-					_assetAutoTaggerEntryLocalService.getAssetAutoTaggerEntries(
-						assetEntry);
+		List<AssetAutoTaggerEntry> assetAutoTaggerEntries =
+			_assetAutoTaggerEntryLocalService.getAssetAutoTaggerEntries(
+				assetEntry);
 
-				Assert.assertEquals(
-					assetAutoTaggerEntries.toString(), 1,
-					assetAutoTaggerEntries.size());
+		Assert.assertEquals(
+			assetAutoTaggerEntries.toString(), 1,
+			assetAutoTaggerEntries.size());
 
-				DLAppServiceUtil.deleteFileEntry(assetEntry.getClassPK());
+		DLAppServiceUtil.deleteFileEntry(assetEntry.getClassPK());
 
-				assetAutoTaggerEntries =
-					_assetAutoTaggerEntryLocalService.getAssetAutoTaggerEntries(
-						assetEntry);
+		assetAutoTaggerEntries =
+			_assetAutoTaggerEntryLocalService.getAssetAutoTaggerEntries(
+				assetEntry);
 
-				Assert.assertEquals(
-					assetAutoTaggerEntries.toString(), 0,
-					assetAutoTaggerEntries.size());
-			});
+		Assert.assertEquals(
+			assetAutoTaggerEntries.toString(), 0,
+			assetAutoTaggerEntries.size());
 	}
 
 	@Test
-	public void testIsDisabledByDefault() throws Exception {
-		AssetEntry assetEntry = addFileEntryAssetEntry();
+	public void testDoesNotAddTagsWhenDisabled() throws Exception {
+		withAutoTaggerDisabled(
+			() -> {
+				AssetEntry assetEntry = addFileEntryAssetEntry();
 
-		List<AssetTag> assetTags = assetEntry.getTags();
+				List<AssetTag> assetTags = assetEntry.getTags();
 
-		Assert.assertTrue(assetTags.isEmpty());
+				Assert.assertTrue(assetTags.isEmpty());
+			});
 	}
 
 	@Test
 	public void testKeepsAssetTagCount() throws Exception {
-		withAutoTaggerEnabled(
-			() -> {
-				AssetEntry assetEntry = addFileEntryAssetEntry();
+		AssetEntry assetEntry = addFileEntryAssetEntry();
 
-				AssetTag assetTag = _assetTagLocalService.getTag(
-					group.getGroupId(), ASSET_TAG_NAME_AUTO);
+		AssetTag assetTag = _assetTagLocalService.getTag(
+			group.getGroupId(), ASSET_TAG_NAME_AUTO);
 
-				Assert.assertEquals(1, assetTag.getAssetCount());
+		Assert.assertEquals(1, assetTag.getAssetCount());
 
-				_assetAutoTagger.untag(assetEntry);
+		_assetAutoTagger.untag(assetEntry);
 
-				assetTag = _assetTagLocalService.getTag(
-					group.getGroupId(), ASSET_TAG_NAME_AUTO);
+		assetTag = _assetTagLocalService.getTag(
+			group.getGroupId(), ASSET_TAG_NAME_AUTO);
 
-				Assert.assertEquals(0, assetTag.getAssetCount());
-			});
+		Assert.assertEquals(0, assetTag.getAssetCount());
 	}
 
 	@Test
 	public void testRemovesAutoTags() throws Exception {
-		withAutoTaggerEnabled(
-			() -> {
-				AssetEntry assetEntry = addFileEntryAssetEntry();
+		AssetEntry assetEntry = addFileEntryAssetEntry();
 
-				assertContainsAssetTagName(assetEntry, ASSET_TAG_NAME_AUTO);
+		assertContainsAssetTagName(assetEntry, ASSET_TAG_NAME_AUTO);
 
-				applyAssetTagName(assetEntry, ASSET_TAG_NAME_MANUAL);
+		applyAssetTagName(assetEntry, ASSET_TAG_NAME_MANUAL);
 
-				_assetAutoTagger.untag(assetEntry);
+		_assetAutoTagger.untag(assetEntry);
 
-				String[] assetTagNames = assetEntry.getTagNames();
+		String[] assetTagNames = assetEntry.getTagNames();
 
-				Assert.assertEquals(
-					assetTagNames.toString(), 1, assetTagNames.length);
+		Assert.assertEquals(assetTagNames.toString(), 1, assetTagNames.length);
 
-				assertContainsAssetTagName(assetEntry, ASSET_TAG_NAME_MANUAL);
-			});
+		assertContainsAssetTagName(assetEntry, ASSET_TAG_NAME_MANUAL);
 	}
 
 	@Inject

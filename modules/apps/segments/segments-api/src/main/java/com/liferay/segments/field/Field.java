@@ -98,10 +98,13 @@ public final class Field implements Comparable<Field>, Serializable {
 		public SelectEntity() {
 		}
 
-		public SelectEntity(String id, String title, String uri) {
+		public SelectEntity(
+			String id, String title, String uri, boolean multiple) {
+
 			_id = id;
 			_title = title;
 			_uri = uri;
+			_multiple = multiple;
 		}
 
 		public String getId() {
@@ -116,7 +119,12 @@ public final class Field implements Comparable<Field>, Serializable {
 			return _uri;
 		}
 
+		public boolean isMultiple() {
+			return _multiple;
+		}
+
 		private String _id;
+		private boolean _multiple;
 		private String _title;
 		private String _uri;
 

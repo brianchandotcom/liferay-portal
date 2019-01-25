@@ -4180,9 +4180,15 @@ public class ServiceBuilder {
 		String beginPattern = "/modules/";
 		String endPattern = "/src/";
 
+		int beginPatternIndex = absolutePath.indexOf(beginPattern);
+		int endPatternIndex = absolutePath.indexOf(endPattern);
+
+		if ((beginPatternIndex == -1) || (endPatternIndex == -1)) {
+			return StringPool.BLANK;
+		}
+
 		String trimmed = absolutePath.substring(
-			absolutePath.indexOf(beginPattern) + beginPattern.length() - 1,
-			absolutePath.indexOf(endPattern));
+			beginPatternIndex + beginPattern.length() - 1, endPatternIndex);
 
 		return trimmed.replace(StringPool.FORWARD_SLASH, StringPool.COLON);
 	}

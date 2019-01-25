@@ -110,6 +110,8 @@ definition {
 	macro openPublishURL {
 		FormsAdminNavigator.gotoPublishCopyURLLink();
 
+		Pause(locator1 = "2000");
+
 		var publishFormURL = selenium.getElementValue("Form#PUBLISH_FORM_PUBLIC_URL");
 
 		Navigator.openSpecificURL(url = "${publishFormURL}");

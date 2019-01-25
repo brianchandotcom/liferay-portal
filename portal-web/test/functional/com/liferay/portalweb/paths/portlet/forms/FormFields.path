@@ -36,7 +36,7 @@
 <!--CHECKBOX-->
 <tr>
 	<td>CHECKBOX</td>
-	<td>//input[@type='checkbox' and contains(@id,'${key_fieldName}') or contains (@name,'${key_fieldName}')] | //li[contains(.,'${key_fieldName}')]//input[@type='checkbox']</td>
+	<td>//input[@type='checkbox' and contains(@id,'${key_fieldName}') or contains (@name,'${key_fieldName}')] | //li[contains(.,'${key_fieldName}')]//input[@type='checkbox'] | //label[contains(@class,'toggle-switch')]//input[contains(@type,'checkbox')]/following-sibling::span[contains(@class,'toggle-switch-bar')]//span[contains(text(),'${key_fieldName}')]/..//preceding-sibling::input[contains(@type,'checkbox')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -223,7 +223,7 @@
 </tr>
 <tr>
 	<td>PARAGRAPH_BODY_TEXT_FIELD</td>
-	<td>//div[contains(@id,'text') and contains(@aria-label,'Rich Text Editor')]</td>
+	<td>//div[contains(@id,'text') and contains(@aria-label,'Rich Text Editor')]//p</td>
 	<td></td>
 </tr>
 <tr>
@@ -286,7 +286,7 @@
 <!--SWITCHER-->
 <tr>
 	<td>SWITCHER</td>
-	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//span[@class='toggle-switch-bar']</td>
+	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//span[@class='toggle-switch-bar'] | //span[contains(text(),'${key_fieldName}')]/preceding-sibling::span[@class='toggle-switch-handle'] | //div[contains(@class,'validation')]//span[@class='toggle-switch-bar']</td>
 	<td></td>
 </tr>
 <tr>
@@ -302,22 +302,22 @@
 <!--VALIDATION-->
 <tr>
 	<td>VALIDATION_ARGUMENT</td>
-	<td>//div[contains(@data-fieldname,'validation')]//div[contains(@class,'select-field-trigger')]</td>
+	<td>//div[contains(@data-fieldname,'validation')]//div[contains(@class,'select-field-trigger')] | //div[contains(@class,'validation')]//div[contains(@class,'select-field-trigger')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>VALIDATION_ARGUMENT_OPTION</td>
-	<td>//div[contains(@data-fieldname,'validation')]//ul[contains(@class,'results-chosen')]//li[contains(.,'${key_validationArgument}')]</td>
+	<td>//div[contains(@data-fieldname,'validation')]//ul[contains(@class,'results-chosen')]//li[contains(.,'${key_validationArgument}')] | //div[contains(@class,'validation')]//ul[contains(@class,'list-unstyled')]//li[contains(text(),'${key_validationArgument}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>VALIDATION_INPUT</td>
-	<td>//div[contains(@class,'validation-input')]//input</td>
+	<td>//div[contains(@class,'validation-input')]//input | //input[contains(@name,'parameterMessage')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>VALIDATION_ERROR_MESSAGE</td>
-	<td>//input[contains(@class,'message-input')]</td>
+	<td>//input[contains(@class,'message-input')] | //input[contains(@name,'errorMessage')]</td>
 	<td></td>
 </tr>
 <tr>

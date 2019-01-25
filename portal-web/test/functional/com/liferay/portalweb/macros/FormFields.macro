@@ -76,12 +76,17 @@ definition {
 	}
 
 	macro editFieldName {
+
+		Form.gotoAdvancedTab();
+
 		var key_fieldValue = "${fieldValue}";
 
 		Type.clickAtType(
 			locator1 = "FormFields#FIELD_NAME_EDIT",
 			value1 = "${fieldValue}"
 		);
+
+		Form.gotoBasicTab();
 	}
 
 	macro editGridOptions {
@@ -125,10 +130,11 @@ definition {
 	}
 
 	macro editParagraphBody {
-		Type.clickAtType(
-			locator1 = "FormFields#PARAGRAPH_BODY_TEXT_FIELD",
-			value1 = "${fieldValue}"
-		);
+		
+		 Type.clickAtType(
+		 	locator1 = "FormFields#PARAGRAPH_BODY_TEXT_FIELD",
+		 	value1 = "${fieldValue}"
+		 );
 	}
 
 	macro editPassword {
@@ -498,10 +504,16 @@ definition {
 	}
 
 	macro viewFieldName {
+		
+		Form.gotoAdvancedTab();
+
 		AssertTextEquals(
 			locator1 = "FormFields#FIELD_NAME_EDIT",
 			value1 = "${fieldName}"
 		);
+
+		Form.gotoBasicTab();
+		
 	}
 
 	macro viewFieldValidationErrorMessage {

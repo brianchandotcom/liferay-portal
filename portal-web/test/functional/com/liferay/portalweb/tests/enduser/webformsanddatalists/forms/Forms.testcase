@@ -10,7 +10,7 @@ definition {
 
 		User.firstLoginPG();
 
-		TestCase.enableMetal();
+		//TestCase.enableMetal();
 
 	}
 
@@ -328,9 +328,7 @@ definition {
 
 		FormFields.editHelpText(fieldHelpText = "Help Text", fieldName = "tip");
 
-		FormFields.selectTextFieldLineOption(textFieldLineOption = "Multiple Lines");
-
-		FormFields.enableSwitcher(fieldName = "required");
+		FormFields.enableSwitcher(fieldName = "Required");
 
 		Form.closeSidebar();
 
@@ -1828,7 +1826,7 @@ definition {
 
 		FormFields.selectSelectOption(fieldName = "DisplayView", selectOption = "Table");
 
-		PortletEntry.save();
+		SystemSettings.saveConfiguration();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -3306,7 +3304,7 @@ definition {
 
 		Form.gotoAdvancedTab();
 
-		FormFields.enableSwitcher(fieldName = "validation");
+		FormFields.enableSwitcher(fieldName = "Validation");
 
 		FormFields.editValidation(
 			validationArgument = "Does not contain",

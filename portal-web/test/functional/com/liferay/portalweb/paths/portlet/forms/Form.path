@@ -67,27 +67,27 @@
 <!--PAGE_CONTROLS-->
 <tr>
 	<td>PAGE_CONTROLS_ELLIPSIS_ICON</td>
-	<td>//div[@class='form-builder-controls-trigger']</td>
+	<td>//div[@class='form-builder-controls-trigger'] | //div[contains(@class,'dropdown-action')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGE_CONTROLS_ADD_NEW_PAGE</td>
-	<td>//li[contains(@class,'dropdown-item')]//a[text()='Add New Page']</td>
+	<td>//li[contains(@class,'dropdown-item')]//a[text()='Add New Page'] | //button[contains(@class,'dropdown-item') and contains(text(),'Add New Page')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGE_CONTROLS_ADD_SUCCESS_PAGE</td>
-	<td>//li[contains(@class,'dropdown-item')]//a[text()='Add Success Page']</td>
+	<td>//li[contains(@class,'dropdown-item')]//a[text()='Add Success Page'] | //button[contains(@class,'dropdown-item') and contains(text(),'Add Success Page')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGE_CONTROLS_DELETE_CURRENT_PAGE</td>
-	<td>//li[contains(@class,'dropdown-item')]//a[text()='Delete Current Page']</td>
+	<td>//li[contains(@class,'dropdown-item')]//a[text()='Delete Current Page'] | //button[contains(@class,'dropdown-item') and contains(text(),'Delete Current Page')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGE_CONTROLS_SWITCH_PAGINATION_MODE</td>
-	<td>//li[contains(@class,'dropdown-item')]//a[text()='Switch Pagination Mode']</td>
+	<td>//li[contains(@class,'dropdown-item')]//a[text()='Switch Pagination Mode'] | //button[contains(@class,'dropdown-item') and contains(text(),'Switch Pagination Mode')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -140,7 +140,7 @@
 </tr>
 <tr>
 	<td>PUBLISH_FORM_PUBLIC_URL</td>
-	<td>//input[@class='form-control' and @type='text']</td>
+	<td>//div[contains(@class,'share-url-popover')]//input[@class='form-control' and @type='text'] | //input[@class='form-control' and @type='text']</td>
 	<td></td>
 </tr>
 <tr>
@@ -158,6 +158,13 @@
 	<td>//div[contains(@class,'alert-dismissable')]//div[contains(.,'${key_alertMessage}')]/preceding-sibling::button[@class='close']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>PUBLISH_URL_ICON</td>
+	<td>//button[contains(@class,'share-form-icon') and contains(@title,'Copy URL')]</td>
+	<td></td>
+</tr>
+
+
 <tr>
 	<td></td>
 	<td></td>

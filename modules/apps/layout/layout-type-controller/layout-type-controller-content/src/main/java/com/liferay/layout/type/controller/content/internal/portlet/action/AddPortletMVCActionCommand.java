@@ -98,6 +98,7 @@ public class AddPortletMVCActionCommand extends BaseMVCActionCommand {
 			jsonObject.put(
 				"fragmentEntryLinkId",
 				fragmentEntryLink.getFragmentEntryLinkId());
+
 			jsonObject.put(
 				"name",
 				_portal.getPortletTitle(portletId, themeDisplay.getLocale()));

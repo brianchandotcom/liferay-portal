@@ -37,7 +37,7 @@ FragmentManagementToolbarDisplayContext fragmentManagementToolbarDisplayContext 
 		>
 
 			<%
-			row.setCssClass("entry-card lfr-asset-item " + row.getCssClass());
+			row.setCssClass("card-page-item-asset " + row.getCssClass());
 			%>
 
 			<liferay-ui:search-container-column-text>
@@ -51,6 +51,7 @@ FragmentManagementToolbarDisplayContext fragmentManagementToolbarDisplayContext 
 			displayStyle="icon"
 			markupView="lexicon"
 			resultRowSplitter="<%= fragmentDisplayContext.isSearch() ? null : new FragmentEntryResultRowSplitter() %>"
+			searchResultCssClass="card-page"
 		/>
 	</liferay-ui:search-container>
 </aui:form>

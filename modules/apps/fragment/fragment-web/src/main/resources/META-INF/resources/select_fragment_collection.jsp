@@ -37,7 +37,7 @@ SelectFragmentCollectionManagementToolbarDisplayContext selectFragmentCollection
 		>
 
 			<%
-			row.setCssClass("entry-card lfr-asset-folder");
+			row.setCssClass("card-page-item-asset " + row.getCssClass());
 			%>
 
 			<liferay-ui:search-container-column-text>
@@ -50,6 +50,7 @@ SelectFragmentCollectionManagementToolbarDisplayContext selectFragmentCollection
 		<liferay-ui:search-iterator
 			displayStyle="icon"
 			markupView="lexicon"
+			searchResultCssClass="card-page"
 		/>
 	</liferay-ui:search-container>
 </aui:form>

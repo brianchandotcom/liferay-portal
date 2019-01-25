@@ -190,6 +190,9 @@ public class DEDataDefinitionServiceImpl
 			throw new DEDataDefinitionException.MustHavePermission(
 				mhp.actionId, mhp);
 		}
+		catch (PrincipalException pe) {
+			throw new DEDataDefinitionException.PrincipalException(pe);
+		}
 		catch (Exception e) {
 			throw new DEDataDefinitionException(e);
 		}

@@ -140,6 +140,9 @@ public class DEDataRecordCollectionServiceImpl
 			throw new DEDataRecordCollectionException.MustHavePermission(
 				mhp.actionId, mhp);
 		}
+		catch (PrincipalException pe) {
+			throw new DEDataRecordCollectionException.PrincipalException(pe);
+		}
 		catch (Exception e) {
 			throw new DEDataRecordCollectionException(e);
 		}
@@ -166,6 +169,9 @@ public class DEDataRecordCollectionServiceImpl
 		catch (PrincipalException.MustHavePermission mhp) {
 			throw new DEDataRecordCollectionException.MustHavePermission(
 				mhp.actionId, mhp);
+		}
+		catch (PrincipalException pe) {
+			throw new DEDataRecordCollectionException.PrincipalException(pe);
 		}
 		catch (DEDataRecordCollectionException dedrce) {
 			throw dedrce;

@@ -5,13 +5,19 @@ definition {
 	property testray.main.component.name = "Fragments";
 
 	setUp {
-		TestCase.setUpPortalInstance();
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
 
-		User.firstLoginPG();
+			User.firstLoginPG();
+		}
 
-		JSONGroup.addGroup(groupName = "Test Site Name");
+		task ("Add a site via JSON") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
 
-		FragmentsAdmin.openFragmentsAdmin(siteURLKey = "test-site-name");
+		task ("Navigate to fragments admin") {
+			FragmentsAdmin.openFragmentsAdmin(siteURLKey = "test-site-name");
+		}
 	}
 
 	tearDown {
@@ -29,102 +35,133 @@ definition {
 		}
 	}
 
-	@description = "This is a test case for LPS-80625."
+	@description = "This is a test case for LPS-80625. The fragment importer should not allow invalid zip files to be imported."
 	@priority = "5"
 	test CannotImportInvalidZip {
 		property portal.acceptance = "true";
 
-		FragmentsAdmin.gotoImportCollection();
+		task ("Navigate to the fragment import screen") {
+			FragmentsAdmin.gotoImportCollection();
+		}
 
-		UploadCommonFile(
-			locator1 = "TextInput#FILE",
-			value1 = "fragment-invalid-zip.zip"
-		);
+		task ("Attempt to import a zip file with invalid structure") {
+			UploadCommonFile(
+				locator1 = "TextInput#FILE",
+				value1 = "fragment-invalid-zip.zip"
+			);
 
-		Button.click(button = "Import");
+			Button.click(button = "Import");
+		}
 
-		Alert.viewErrorMessage(
-			errorMessage = "The selected file is not a valid zip file."
-		);
+		task ("Assert the user is prevented from importing an invalid zip and an error message displays") {
+			Alert.viewErrorMessage(
+				errorMessage = "The selected file is not a valid zip file."
+			);
 
-		IFrame.closeFrame();
+			IFrame.closeFrame();
+		}
 	}
 
-	@description = "This is a test case for LPS-80625."
+	@description = "This is a test case for LPS-80625. The fragment importer should not allow non-zip files to be imported."
 	@priority = "5"
 	test CannotImportNonZip {
 		property portal.acceptance = "true";
 
-		FragmentsAdmin.gotoImportCollection();
+		task ("Navigate to the fragment import screen") {
+			FragmentsAdmin.gotoImportCollection();
+		}
 
-		UploadCommonFile(locator1 = "TextInput#FILE", value1 = "Document_1.doc");
+		task ("Attempt to import a non-zip file") {
+			UploadCommonFile(locator1 = "TextInput#FILE", value1 = "Document_1.doc");
+		}
 
-		AssertTextEquals(
-			locator1 = "Message#ERROR_FORM_VALIDATION",
-			value1 = "Please enter a file with a valid extension (zip)."
-		);
+		task ("Assert the form validator displays an error that the file is not a zip file") {
+			AssertTextEquals(
+				locator1 = "Message#ERROR_FORM_VALIDATION",
+				value1 = "Please enter a file with a valid extension (zip)."
+			);
 
-		IFrame.closeFrame();
+			IFrame.closeFrame();
+		}
 	}
 
+	@description = "Fragment collections can be exported and imported."
 	@priority = "5"
 	test ExportImportCollectionViewFragment {
 		property portal.acceptance = "true";
 
-		FragmentsAdmin.addCollection(
-			collectionDescription = "Collection Description",
-			collectionName = "Collection Name"
-		);
-
-		Navigator.gotoNavNested(navNested = "Collection Name");
-
-		FragmentsAdmin.addSection(fragmentName = "Fragment Name");
-
-		var htmlSnippet = TestCase.getFileContent(fileName = "fragment_button.html");
-
-		Type.typeAceEditorNoError(
-			locator1 = "FragmentEditor#HTML_EDITOR",
-			value1 = "${htmlSnippet}"
-		);
-
-		var cssSnippet = TestCase.getFileContent(fileName = "fragment_button.css");
-
-		Type.typeAceEditorNoError(
-			locator1 = "FragmentEditor#CSS_EDITOR",
-			value1 = "${cssSnippet}"
-		);
-
-		var javascriptSnippet = TestCase.getFileContent(fileName = "fragment_button.js");
-
-		Type.typeAceEditorNoError(
-			locator1 = "FragmentEditor#JAVASCRIPT_EDITOR",
-			value1 = "${javascriptSnippet}"
-		);
-
-		PortletEntry.publish();
-
-		FragmentsAdmin.exportCollection(collectionName = "Collection Name");
-
-		JSONGroup.addGroup(groupName = "New Site Name");
-
-		FragmentsAdmin.openFragmentsAdmin(siteURLKey = "new-site-name");
-
-		FragmentsAdmin.importCollectionFromTempFolder();
-
-		Navigator.gotoNavNested(navNested = "Collection Name");
-
-		LexiconEntry.gotoEntryMenuItem(menuItem = "Edit", rowEntry = "Fragment Name");
-
-		SelectFrame(locator1 = "FragmentEditor#PREVIEW_IFRAME");
-
-		for (var button : list "Submit,Cancel") {
-			Button.viewPresent(button = "${button}");
+		task ("Add a fragment collection") {
+			FragmentsAdmin.addCollection(
+				collectionDescription = "Collection Description",
+				collectionName = "Collection Name"
+			);
 		}
 
-		Button.clickNoError(button = "Submit");
+		task ("Navigate to the fragment collection") {
+			Navigator.gotoNavNested(navNested = "Collection Name");
+		}
 
-		AssertConfirm(value1 = "Form submitted");
+		task ("Add a section fragment that uses the Button fragment code") {
+			FragmentsAdmin.addSection(fragmentName = "Fragment Name");
 
-		IFrame.selectTopFrame();
+			var htmlSnippet = TestCase.getFileContent(fileName = "fragment_button.html");
+
+			Type.typeAceEditorNoError(
+				locator1 = "FragmentEditor#HTML_EDITOR",
+				value1 = "${htmlSnippet}"
+			);
+
+			var cssSnippet = TestCase.getFileContent(fileName = "fragment_button.css");
+
+			Type.typeAceEditorNoError(
+				locator1 = "FragmentEditor#CSS_EDITOR",
+				value1 = "${cssSnippet}"
+			);
+
+			var javascriptSnippet = TestCase.getFileContent(fileName = "fragment_button.js");
+
+			Type.typeAceEditorNoError(
+				locator1 = "FragmentEditor#JAVASCRIPT_EDITOR",
+				value1 = "${javascriptSnippet}"
+			);
+
+			PortletEntry.publish();
+		}
+
+		task ("Export the fragment collection") {
+			FragmentsAdmin.exportCollection(collectionName = "Collection Name");
+		}
+
+		task ("Add a new site") {
+			JSONGroup.addGroup(groupName = "New Site Name");
+		}
+
+		task ("Navigate to fragments admin in the new site") {
+			FragmentsAdmin.openFragmentsAdmin(siteURLKey = "new-site-name");
+		}
+
+		task ("Import the fragment collection into the new site") {
+			FragmentsAdmin.importCollectionFromTempFolder();
+		}
+
+		task ("Navigate to the fragment collection in the new site") {
+			Navigator.gotoNavNested(navNested = "Collection Name");
+		}
+
+		task ("Assert the section fragment survived the import and the fragment preview displays the Button fragment") {
+			LexiconEntry.gotoEntryMenuItem(menuItem = "Edit", rowEntry = "Fragment Name");
+
+			SelectFrame(locator1 = "FragmentEditor#PREVIEW_IFRAME");
+
+			for (var button : list "Submit,Cancel") {
+				Button.viewPresent(button = "${button}");
+			}
+
+			Button.clickNoError(button = "Submit");
+
+			AssertConfirm(value1 = "Form submitted");
+
+			IFrame.selectTopFrame();
+		}
 	}
 }

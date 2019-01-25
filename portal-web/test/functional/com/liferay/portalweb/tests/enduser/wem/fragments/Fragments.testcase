@@ -5,24 +5,34 @@ definition {
 	property testray.main.component.name = "Fragments";
 
 	setUp {
-		TestCase.setUpPortalInstance();
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
 
-		User.firstLoginPG();
+			User.firstLoginPG();
+		}
 
-		JSONGroup.addGroup(groupName = "Test Site Name");
+		task ("Add a site via JSON") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
 
-		JSONFragment.addFragmentCollection(
-			groupName = "Test Site Name",
-			name = "Collection Name"
-		);
+		task ("Add a fragment collection via JSON") {
+			JSONFragment.addFragmentCollection(
+				groupName = "Test Site Name",
+				name = "Collection Name"
+			);
+		}
 
-		JSONFragment.addSection(
-			collectionName = "Collection Name",
-			groupName = "Test Site Name",
-			name = "Fragment Name"
-		);
+		task ("Add a section fragment to the fragment collection via JSON") {
+			JSONFragment.addSection(
+				collectionName = "Collection Name",
+				groupName = "Test Site Name",
+				name = "Fragment Name"
+			);
+		}
 
-		FragmentsAdmin.openFragmentsAdmin(siteURLKey = "test-site-name");
+		task ("Navigate to fragments admin") {
+			FragmentsAdmin.openFragmentsAdmin(siteURLKey = "test-site-name");
+		}
 	}
 
 	tearDown {
@@ -36,113 +46,172 @@ definition {
 		}
 	}
 
+	@description = "Fragments can be deleted."
 	@priority = "5"
 	test DeleteFragment {
 		property portal.acceptance = "true";
 
-		Navigator.gotoNavNested(navNested = "Collection Name");
+		task ("Navigate to the fragment collection") {
+			Navigator.gotoNavNested(navNested = "Collection Name");
+		}
 
-		LexiconEntry.delete(rowEntry = "Fragment Name");
+		task ("Delete the section fragment") {
+			LexiconEntry.delete(rowEntry = "Fragment Name");
+		}
 
-		FragmentsAdmin.openFragmentsAdmin(siteURLKey = "test-site-name");
+		task ("Navigate to fragments admin") {
+			FragmentsAdmin.openFragmentsAdmin(siteURLKey = "test-site-name");
+		}
 
-		Navigator.gotoNavNested(navNested = "Collection Name");
+		task ("Navigate to the fragment collection") {
+			Navigator.gotoNavNested(navNested = "Collection Name");
+		}
 
-		LexiconEntry.viewNoEntry(rowEntry = "Fragment Name");
+		task ("Assert the section fragment is not present") {
+			LexiconEntry.viewNoEntry(rowEntry = "Fragment Name");
+		}
 	}
 
+	@description = "Fragment collections can be deleted."
 	@priority = "5"
 	test DeleteFragmentCollection {
 		property portal.acceptance = "true";
 
-		Collection.deleteCollection(collectionName = "Collection Name");
+		task ("Delete the fragment collection") {
+			Collection.deleteCollection(collectionName = "Collection Name");
+		}
 
-		FragmentsAdmin.openFragmentsAdmin(siteURLKey = "test-site-name");
+		task ("Navigate to fragments admin") {
+			FragmentsAdmin.openFragmentsAdmin(siteURLKey = "test-site-name");
+		}
 
-		Collection.viewNotPresent(collectionName = "Collection Name");
+		task ("Assert the fragment collection is not present") {
+			Collection.viewNotPresent(collectionName = "Collection Name");
+		}
 	}
 
+	@description = "Fragments can be renamed."
 	@priority = "4"
 	test RenameFragment {
-		Navigator.gotoNavNested(navNested = "Collection Name");
+		task ("Navigate to the fragment collection") {
+			Navigator.gotoNavNested(navNested = "Collection Name");
+		}
 
-		LexiconEntry.gotoEntryMenuItem(menuItem = "Rename", rowEntry = "Fragment Name");
+		task ("Rename the section fragment") {
+			LexiconEntry.gotoEntryMenuItem(menuItem = "Rename", rowEntry = "Fragment Name");
 
-		PortletEntry.inputName(name = "Rename Fragment");
+			PortletEntry.inputName(name = "Rename Fragment");
 
-		Modal.save();
+			Modal.save();
+		}
 
-		FragmentsAdmin.openFragmentsAdmin(siteURLKey = "test-site-name");
+		task ("Navigate to fragments admin") {
+			FragmentsAdmin.openFragmentsAdmin(siteURLKey = "test-site-name");
+		}
 
-		Navigator.gotoNavNested(navNested = "Collection Name");
+		task ("Navigate to the fragment collection") {
+			Navigator.gotoNavNested(navNested = "Collection Name");
+		}
 
-		LexiconEntry.viewEntryName(rowEntry = "Rename Fragment");
+		task ("Assert the section fragment has the new name") {
+			LexiconEntry.viewEntryName(rowEntry = "Rename Fragment");
+		}
 	}
 
+	@description = "Fragments that are being used cannot be deleted."
 	@priority = "5"
 	test ViewCannotDeleteFragmentInUse {
-		Navigator.gotoNavNested(navNested = "Collection Name");
+		task ("Navigate to page templates admin") {
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+		}
 
-		PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+		task ("Add a page template collection") {
+			PageTemplatesAdmin.addCollection(collectionName = "Page Template Collection");
+		}
 
-		NavItem.gotoPageTemplates();
+		task ("Add a page template to the page template collection") {
+			PageTemplatesAdmin.add(pageTemplateName = "Page Template Name");
+		}
 
-		PageTemplatesAdmin.addCollection(collectionName = "Page Template Collection");
+		task ("Add the section fragment to the page template") {
+			PageEditor.addFragment(
+				collectionName = "Collection Name",
+				fragmentName = "Fragment Name"
+			);
 
-		PageTemplatesAdmin.add(pageTemplateName = "Page Template Name");
+			PageEditor.viewAutoSaveMessage();
+		}
 
-		PageEditor.addFragment(
-			collectionName = "Collection Name",
-			fragmentName = "Fragment Name"
-		);
+		task ("Navigate to fragments admin") {
+			FragmentsAdmin.openFragmentsAdmin(siteURLKey = "test-site-name");
+		}
 
-		PageEditor.viewAutoSaveMessage();
+		task ("Navigate to the fragment collection") {
+			Navigator.gotoNavNested(navNested = "Collection Name");
+		}
 
-		FragmentsAdmin.openFragmentsAdmin(siteURLKey = "test-site-name");
-
-		Navigator.gotoNavNested(navNested = "Collection Name");
-
-		LexiconEntry.delete(
-			failure = "Error:The fragment entry cannot be deleted because it is required by one or more page templates.",
-			rowEntry = "Fragment Name"
-		);
+		task ("Assert the section fragment cannot be deleted because it is being used by the page template") {
+			LexiconEntry.delete(
+				failure = "Error:The fragment entry cannot be deleted because it is required by one or more page templates.",
+				rowEntry = "Fragment Name"
+			);
+		}
 	}
 
+	@description = "Once fragments are published, they can no longer be saved as draft."
 	@priority = "4"
 	test ViewOnlyDraftFragmentsCanBeSaved {
-		Navigator.gotoNavNested(navNested = "Collection Name");
+		task ("Navigate to the fragment collection") {
+			Navigator.gotoNavNested(navNested = "Collection Name");
+		}
 
-		FragmentsAdmin.addSection(fragmentName = "Fragment Name 2");
+		task ("Add a second section fragment") {
+			FragmentsAdmin.addSection(fragmentName = "Fragment Name 2");
 
-		SiteAdmin.viewPortletTitle(portletTitle = "Fragment Name 2 (Draft)");
+			SiteAdmin.viewPortletTitle(portletTitle = "Fragment Name 2 (Draft)");
+		}
 
-		PortletEntry.saveAsDraft();
+		task ("Save the second section fragment as draft") {
+			PortletEntry.saveAsDraft();
+		}
 
-		FragmentsAdmin.openFragmentsAdmin(siteURLKey = "test-site-name");
+		task ("Navigate to fragments admin") {
+			FragmentsAdmin.openFragmentsAdmin(siteURLKey = "test-site-name");
+		}
 
-		Navigator.gotoNavNested(navNested = "Collection Name");
+		task ("Navigate to the fragment collection") {
+			Navigator.gotoNavNested(navNested = "Collection Name");
+		}
 
-		PortletEntry.viewWorkflowStatus(
-			rowEntry = "Fragment Name 2",
-			workflowStatus = "Draft"
-		);
+		task ("Assert the second section fragment is in draft status") {
+			PortletEntry.viewWorkflowStatus(
+				rowEntry = "Fragment Name 2",
+				workflowStatus = "Draft"
+			);
+		}
 
-		LexiconEntry.gotoEntryMenuItem(menuItem = "Edit", rowEntry = "Fragment Name 2");
+		task ("Edit the second section fragment") {
+			LexiconEntry.gotoEntryMenuItem(menuItem = "Edit", rowEntry = "Fragment Name 2");
 
-		var htmlSnippet = '''
+			var htmlSnippet = '''
 <html>${line.separator}
 <div>${line.separator}
 <span class="test">This is a test.</span>${line.separator}
 </div>${line.separator}
 </html>''';
 
-		Type.typeAceEditorNoError(
-			locator1 = "FragmentEditor#HTML_EDITOR",
-			value1 = "${htmlSnippet}"
-		);
+			Type.typeAceEditorNoError(
+				locator1 = "FragmentEditor#HTML_EDITOR",
+				value1 = "${htmlSnippet}"
+			);
+		}
 
-		PortletEntry.publish();
+		task ("Publish the second section fragment") {
+			PortletEntry.publish();
+		}
 
-		AssertElementNotPresent(locator1 = "Button#SAVE_AS_DRAFT");
+		task ("Assert the second section fragment can no longer be saved as draft") {
+			AssertElementNotPresent(locator1 = "Button#SAVE_AS_DRAFT");
+		}
 	}
 }

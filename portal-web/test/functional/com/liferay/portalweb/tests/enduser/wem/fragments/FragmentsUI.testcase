@@ -5,40 +5,52 @@ definition {
 	property testray.main.component.name = "Fragments";
 
 	setUp {
-		TestCase.setUpPortalInstance();
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
 
-		User.firstLoginPG();
+			User.firstLoginPG();
+		}
 
-		JSONGroup.addGroup(groupName = "Test Site Name");
+		task ("Add a site via JSON") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
 
-		FragmentsAdmin.openFragmentsAdmin(siteURLKey = "test-site-name");
+		task ("Navigate to fragments admin") {
+			FragmentsAdmin.openFragmentsAdmin(siteURLKey = "test-site-name");
+		}
 
-		FragmentsAdmin.addCollection(collectionName = "Collection Name");
+		task ("Add a fragment collection") {
+			FragmentsAdmin.addCollection(collectionName = "Collection Name");
+		}
 
-		Navigator.gotoNavNested(navNested = "Collection Name");
+		task ("Navigate to the fragment collection") {
+			Navigator.gotoNavNested(navNested = "Collection Name");
+		}
 
-		FragmentsAdmin.addSection(fragmentName = "Fragment Name");
+		task ("Add a section fragment that uses the Button fragment code") {
+			FragmentsAdmin.addSection(fragmentName = "Fragment Name");
 
-		var htmlSnippet = TestCase.getFileContent(fileName = "fragment_button.html");
+			var htmlSnippet = TestCase.getFileContent(fileName = "fragment_button.html");
 
-		Type.typeAceEditorNoError(
-			locator1 = "FragmentEditor#HTML_EDITOR",
-			value1 = "${htmlSnippet}"
-		);
+			Type.typeAceEditorNoError(
+				locator1 = "FragmentEditor#HTML_EDITOR",
+				value1 = "${htmlSnippet}"
+			);
 
-		var cssSnippet = TestCase.getFileContent(fileName = "fragment_button.css");
+			var cssSnippet = TestCase.getFileContent(fileName = "fragment_button.css");
 
-		Type.typeAceEditorNoError(
-			locator1 = "FragmentEditor#CSS_EDITOR",
-			value1 = "${cssSnippet}"
-		);
+			Type.typeAceEditorNoError(
+				locator1 = "FragmentEditor#CSS_EDITOR",
+				value1 = "${cssSnippet}"
+			);
 
-		var javascriptSnippet = TestCase.getFileContent(fileName = "fragment_button.js");
+			var javascriptSnippet = TestCase.getFileContent(fileName = "fragment_button.js");
 
-		Type.typeAceEditorNoError(
-			locator1 = "FragmentEditor#JAVASCRIPT_EDITOR",
-			value1 = "${javascriptSnippet}"
-		);
+			Type.typeAceEditorNoError(
+				locator1 = "FragmentEditor#JAVASCRIPT_EDITOR",
+				value1 = "${javascriptSnippet}"
+			);
+		}
 	}
 
 	tearDown {
@@ -60,42 +72,54 @@ definition {
 		property environment.acceptance = "true";
 		property portal.acceptance = "true";
 
-		PortletEntry.publish();
+		task ("Publish the section fragment") {
+			PortletEntry.publish();
+		}
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+		task ("Navigate to pages admin") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+		}
 
-		ContentPages.addPage(pageName = "Test Content Page Name");
+		task ("Add a content page") {
+			ContentPages.addPage(pageName = "Test Content Page Name");
+		}
 
-		PageEditor.addFragment(
-			collectionName = "Collection Name",
-			fragmentName = "Fragment Name"
-		);
+		task ("Add the section fragment to the content page") {
+			PageEditor.addFragment(
+				collectionName = "Collection Name",
+				fragmentName = "Fragment Name"
+			);
+		}
 
-		Navigator.openWithAppendToBaseURL(
-			urlAppend = "web/test-site-name/test-content-page-name"
-		);
+		task ("Navigate to the content page") {
+			Navigator.openWithAppendToBaseURL(
+				urlAppend = "web/test-site-name/test-content-page-name"
+			);
+		}
 
-		AssertVisible(
-			locator1 = "Fragment#FRAGMENT",
-			key_content = "Submit",
-			key_fragmentClass = "footer",
-			key_position = "1"
-		);
+		task ("Assert the section fragment is present by asserting the elements from the Button fragment") {
+			AssertVisible(
+				locator1 = "Fragment#FRAGMENT",
+				key_content = "Submit",
+				key_fragmentClass = "footer",
+				key_position = "1"
+			);
 
-		AssertVisible(
-			locator1 = "Fragment#FRAGMENT",
-			key_content = "Cancel",
-			key_fragmentClass = "footer",
-			key_position = "1"
-		);
+			AssertVisible(
+				locator1 = "Fragment#FRAGMENT",
+				key_content = "Cancel",
+				key_fragmentClass = "footer",
+				key_position = "1"
+			);
 
-		AssertElementPresent(locator1 = "Button#SUBMIT");
+			AssertElementPresent(locator1 = "Button#SUBMIT");
 
-		AssertElementPresent(locator1 = "Button#CANCEL");
+			AssertElementPresent(locator1 = "Button#CANCEL");
 
-		AssertClickNoError(locator1 = "Button#SUBMIT", value1 = "Submit");
+			AssertClickNoError(locator1 = "Button#SUBMIT", value1 = "Submit");
 
-		AssertConfirm(value1 = "Form submitted");
+			AssertConfirm(value1 = "Form submitted");
+		}
 	}
 
 	@description = "Edit a fragment and assert the edits persist."
@@ -104,50 +128,58 @@ definition {
 		property portal.acceptance = "true";
 		property testray.component.names = "Training";
 
-		PortletEntry.publish();
+		task ("Publish the section fragment") {
+			PortletEntry.publish();
+		}
 
-		LexiconEntry.gotoEntryMenuItem(menuItem = "Edit", rowEntry = "Fragment Name");
+		task ("Edit the section fragment to have the Title fragment code") {
+			LexiconEntry.gotoEntryMenuItem(menuItem = "Edit", rowEntry = "Fragment Name");
 
-		var htmlSnippet = TestCase.getFileContent(fileName = "fragment_title.html");
+			var htmlSnippet = TestCase.getFileContent(fileName = "fragment_title.html");
 
-		Type.typeAceEditorNoError(
-			locator1 = "FragmentEditor#HTML_EDITOR",
-			value1 = "${htmlSnippet}"
-		);
+			Type.typeAceEditorNoError(
+				locator1 = "FragmentEditor#HTML_EDITOR",
+				value1 = "${htmlSnippet}"
+			);
 
-		var cssSnippet = TestCase.getFileContent(fileName = "fragment_title.css");
+			var cssSnippet = TestCase.getFileContent(fileName = "fragment_title.css");
 
-		Type.typeAceEditorNoError(
-			locator1 = "FragmentEditor#CSS_EDITOR",
-			value1 = "${cssSnippet}"
-		);
+			Type.typeAceEditorNoError(
+				locator1 = "FragmentEditor#CSS_EDITOR",
+				value1 = "${cssSnippet}"
+			);
 
-		Type.typeAceEditorNoError(
-			locator1 = "FragmentEditor#JAVASCRIPT_EDITOR",
-			value1 = ""
-		);
+			Type.typeAceEditorNoError(
+				locator1 = "FragmentEditor#JAVASCRIPT_EDITOR",
+				value1 = ""
+			);
 
-		SelectFrame(locator1 = "FragmentEditor#PREVIEW_IFRAME");
+			SelectFrame(locator1 = "FragmentEditor#PREVIEW_IFRAME");
 
-		AssertTextEquals(
-			locator1 = "//div[@class='fragment-header']/h1[@class='title']",
-			value1 = "LOREM IPSUM DOLOR SIT AMET"
-		);
+			AssertTextEquals(
+				locator1 = "//div[@class='fragment-header']/h1[@class='title']",
+				value1 = "LOREM IPSUM DOLOR SIT AMET"
+			);
 
-		SelectFrameTop();
+			SelectFrameTop();
 
-		PortletEntry.publish();
+			PortletEntry.publish();
+		}
 
-		LexiconEntry.gotoEntryMenuItem(menuItem = "Edit", rowEntry = "Fragment Name");
+		task ("Navigate to the section fragment") {
+			LexiconEntry.gotoEntryMenuItem(menuItem = "Edit", rowEntry = "Fragment Name");
+		}
 
-		SelectFrame(locator1 = "FragmentEditor#PREVIEW_IFRAME");
+		task ("Assert the edits to the section fragment persist by asserting that the preview displays the Title fragment") {
+			SelectFrame(locator1 = "FragmentEditor#PREVIEW_IFRAME");
 
-		AssertTextEquals(
-			locator1 = "//div[@class='fragment-header']/h1[@class='title']",
-			value1 = "LOREM IPSUM DOLOR SIT AMET"
-		);
+			AssertTextEquals(
+				locator1 = "//div[@class='fragment-header']/h1[@class='title']",
+				value1 = "LOREM IPSUM DOLOR SIT AMET"
+			);
 
-		SelectFrameTop();
+			SelectFrameTop();
+		}
 	}
 
 	@description = "Fragment editor should show an accurate preview of the fragment."
@@ -155,16 +187,18 @@ definition {
 	test ViewFragmentEditorPreview {
 		property portal.acceptance = "true";
 
-		SelectFrame(locator1 = "FragmentEditor#PREVIEW_IFRAME");
+		task ("Assert the preview properly displays the Button fragment") {
+			SelectFrame(locator1 = "FragmentEditor#PREVIEW_IFRAME");
 
-		AssertElementPresent(locator1 = "Button#SUBMIT");
+			AssertElementPresent(locator1 = "Button#SUBMIT");
 
-		AssertElementPresent(locator1 = "Button#CANCEL");
+			AssertElementPresent(locator1 = "Button#CANCEL");
 
-		AssertClickNoError(locator1 = "Button#SUBMIT", value1 = "Submit");
+			AssertClickNoError(locator1 = "Button#SUBMIT", value1 = "Submit");
 
-		AssertConfirm(value1 = "Form submitted");
+			AssertConfirm(value1 = "Form submitted");
 
-		SelectFrameTop();
+			SelectFrameTop();
+		}
 	}
 }

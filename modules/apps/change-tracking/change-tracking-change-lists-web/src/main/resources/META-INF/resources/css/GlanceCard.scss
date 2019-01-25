@@ -1,0 +1,83 @@
+.glance-card-sheet {
+	background-color: #FFF;
+	border-color: #E7E7ED;
+	border-radius: 0.25rem;
+	border-style: solid;
+	border-width: 0.0625rem;
+	margin-bottom: 1.5rem;
+	margin-top: 1.5rem;
+	padding-bottom: 2rem;
+	padding-top: 1.5rem;
+}
+
+.glance-card-container{
+	padding-left: 1.5rem;
+	padding-right: 1.5rem;
+}
+
+.glance-card-sheet-title {
+	display: block;
+	font-size: 1.60rem;
+	font-weight: 700;
+	line-height: 1.2;
+	margin-bottom: 1.5rem;
+	word-wrap: break-word;
+}
+
+.glance-card-sheet-divider {
+	border-color: #A7A9BC;
+	border-style: solid;
+	border-width: 0 0 1px 0;
+	margin-bottom: 1.5rem;
+	padding-bottom: 0.5rem;
+	padding-top: 0.5rem;
+}
+
+.stick-to-bottom {
+	bottom: 0;
+	position: absolute;
+}
+
+.stick-to-right {
+	position: absolute;
+	right: 0;
+}
+
+.big-number{
+	font-size: 2.775rem;
+	font-weight: 620;
+}
+
+.changes-title{
+	color: inherit;
+	font-family: inherit;
+	font-size: 1.1875rem;
+	font-weight: 600;
+	line-height: 1.2;
+	margin-bottom: 0.5rem;
+}
+
+.changes-row{
+	display: flex;
+}
+
+.changes{
+	float: left;
+	padding-right: 3.4rem;
+}
+
+.user-icon-color-9 {
+	background-color: #FFF;
+	border: 1px solid #E7E7ED;
+	color: #9C33BE;
+}
+
+.border-left-blue {
+	border-left-color: #0B5FFF;
+	border-left-width: 0.45rem;
+}
+
+.border-left-green {
+	border-left-color: #28A745;
+	border-left-width: 0.45rem;
+} 

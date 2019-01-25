@@ -72,23 +72,15 @@ public class LiferayRemoteDeployableContainer
 				"Cannot deploy: " + archive.getName(), e);
 		}
 
-		try {
-			MBeanServerConnection mBeanServerConnection =
-				_getMBeanServerConnection();
+		ProtocolMetaData protocolMetaData = new ProtocolMetaData();
 
-			ProtocolMetaData protocolMetaData = new ProtocolMetaData();
+		protocolMetaData.addContext(new JMXContext(_mBeanServerConnection));
 
-			protocolMetaData.addContext(new JMXContext(mBeanServerConnection));
+		protocolMetaData.addContext(
+			new HTTPContext(
+				_LIFERAY_DEFAULT_HTTP_HOST, _LIFERAY_DEFAULT_HTTP_PORT));
 
-			protocolMetaData.addContext(
-				new HTTPContext(
-					_LIFERAY_DEFAULT_HTTP_HOST, _LIFERAY_DEFAULT_HTTP_PORT));
-
-			return protocolMetaData;
-		}
-		catch (IOException ioe) {
-			throw new DeploymentException("Unable to deploy " + archive, ioe);
-		}
+		return protocolMetaData;
 	}
 
 	@Override
@@ -113,15 +105,16 @@ public class LiferayRemoteDeployableContainer
 	@Override
 	public void start() throws LifecycleException {
 		try {
-			MBeanServerConnection mBeanServer = _getMBeanServerConnection();
+			_mBeanServerConnection = _getMBeanServerConnection();
 
-			Set<ObjectName> names = mBeanServer.queryNames(
+			Set<ObjectName> names = _mBeanServerConnection.queryNames(
 				_frameworkObjectName, null);
 
 			Iterator<ObjectName> iterator = names.iterator();
 
 			_frameworkMBean = MBeanServerInvocationHandler.newProxyInstance(
-				mBeanServer, iterator.next(), FrameworkMBean.class, false);
+				_mBeanServerConnection, iterator.next(), FrameworkMBean.class,
+				false);
 		}
 		catch (IOException ioe) {
 			throw new LifecycleException("Unable to start", ioe);
@@ -211,5 +204,6 @@ public class LiferayRemoteDeployableContainer
 
 	private final Map<String, Long> _deployedBundles = new HashMap<>();
 	private FrameworkMBean _frameworkMBean;
+	private MBeanServerConnection _mBeanServerConnection;
 
 }

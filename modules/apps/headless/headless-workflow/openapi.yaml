@@ -1,0 +1,551 @@
+components:
+  schemas:
+    AggregateRating:
+      description: https://www.schema.org/AggregateRating
+      properties:
+        bestRating:
+          type: number
+        id:
+          type: integer
+        ratingCount:
+          type: number
+        ratingValue:
+          type: number
+        self:
+          format: uri
+          type: string
+        worstRating:
+          type: number
+      type: object
+    Comment:
+      description: https://www.schema.org/Comment
+      properties:
+        comments:
+          $ref: "#/components/schemas/Comment"
+        creator:
+          format: uri
+          type: string
+        id:
+          type: integer
+        self:
+          format: uri
+          type: string
+        text:
+          type: string
+      type: object
+    ContentDocument:
+      description: https://www.schema.org/Liferay:Document
+      properties:
+        contentUrl:
+          type: string
+        creator:
+          format: uri
+          type: string
+        dateCreated:
+          type: string
+        dateModified:
+          type: string
+        encodingFormat:
+          type: string
+        fileExtension:
+          type: string
+        id:
+          type: integer
+        self:
+          format: uri
+          type: string
+        sizeInBytes:
+          type: number
+        title:
+          type: string
+      type: object
+    Structure:
+      description: https://www.schema.org/Structure
+      properties:
+        availableLanguages:
+          items:
+            type: string
+          type: array
+        contentSpace:
+          format: uri
+          type: string
+        creator:
+          format: uri
+          type: string
+        dateCreated:
+          type: string
+        dateModified:
+          type: string
+        description:
+          type: string
+        formPages:
+          description: https://www.schema.org/FormLayoutPage
+          properties:
+            fields:
+              description: https://www.schema.org/FormField
+              properties:
+                autocomplete:
+                  type: boolean
+                dataSourceType:
+                  type: string
+                dataType:
+                  type: string
+                displayStyle:
+                  type: string
+                grid:
+                  description: https://www.schema.org/FormFieldProperties
+                  properties:
+                    columns:
+                      description: https://www.schema.org/FormFieldOptions
+                      properties:
+                        id:
+                          type: integer
+                        label:
+                          type: string
+                        self:
+                          format: uri
+                          type: string
+                        value:
+                          type: string
+                      type: object
+                    id:
+                      type: integer
+                    rows:
+                      description: https://www.schema.org/FormFieldOptions
+                      properties:
+                        id:
+                          type: integer
+                        label:
+                          type: string
+                        self:
+                          format: uri
+                          type: string
+                        value:
+                          type: string
+                      type: object
+                    self:
+                      format: uri
+                      type: string
+                  type: object
+                hasFormRules:
+                  type: boolean
+                id:
+                  type: integer
+                inline:
+                  type: boolean
+                inputControl:
+                  type: string
+                label:
+                  type: string
+                localizable:
+                  type: boolean
+                multiple:
+                  type: boolean
+                name:
+                  type: string
+                options:
+                  description: https://www.schema.org/FormFieldOptions
+                  properties:
+                    id:
+                      type: integer
+                    label:
+                      type: string
+                    self:
+                      format: uri
+                      type: string
+                    value:
+                      type: string
+                  type: object
+                placeholder:
+                  type: string
+                predefinedValue:
+                  type: string
+                readOnly:
+                  type: boolean
+                repeatable:
+                  type: boolean
+                required:
+                  type: boolean
+                self:
+                  format: uri
+                  type: string
+                showAsSwitcher:
+                  type: boolean
+                showLabel:
+                  type: boolean
+                style:
+                  type: string
+                text:
+                  type: string
+                tooltip:
+                  type: string
+                transient:
+                  type: boolean
+                validation:
+                  description: https://www.schema.org/FormFieldProperties
+                  properties:
+                    errorMessage:
+                      type: string
+                    expression:
+                      type: string
+                    id:
+                      type: integer
+                    self:
+                      format: uri
+                      type: string
+                  type: object
+              type: object
+            headline:
+              type: string
+            id:
+              type: integer
+            self:
+              format: uri
+              type: string
+            text:
+              type: string
+          type: object
+        id:
+          type: integer
+        name:
+          type: string
+        self:
+          format: uri
+          type: string
+        successPage:
+          description: https://www.schema.org/FormSuccessPageSettings
+          properties:
+            description:
+              type: string
+            headline:
+              type: string
+            id:
+              type: integer
+            self:
+              format: uri
+              type: string
+          type: object
+      type: object
+    StructuredContent:
+      description: https://www.schema.org/StructuredContent
+      properties:
+        aggregateRating:
+          $ref: "#/components/schemas/AggregateRating"
+        availableLanguages:
+          items:
+            type: string
+          type: array
+        category:
+          format: uri
+          type: string
+        comment:
+          $ref: "#/components/schemas/Comment"
+        contentSpace:
+          format: uri
+          type: string
+        contentStructure:
+          $ref: "#/components/schemas/Structure"
+        creator:
+          format: uri
+          type: string
+        dateCreated:
+          type: string
+        dateModified:
+          type: string
+        datePublished:
+          type: string
+        description:
+          type: string
+        id:
+          type: integer
+        keywords:
+          items:
+            type: string
+          type: array
+        lastReviewed:
+          type: string
+        renderedContentsByTemplate:
+          description: https://www.schema.org/templates
+          properties:
+            id:
+              type: integer
+            renderedContent:
+              type: string
+            self:
+              format: uri
+              type: string
+            template:
+              type: string
+          type: object
+        self:
+          format: uri
+          type: string
+        title:
+          type: string
+        values:
+          description: https://www.schema.org/ContentFieldValue
+          properties:
+            dataType:
+              type: string
+            document:
+              $ref: "#/components/schemas/ContentDocument"
+            filterAndSortIdentifier:
+              type: string
+            geo:
+              description: https://www.schema.org/GeoCoordinates
+              properties:
+                id:
+                  type: integer
+                latitude:
+                  type: number
+                longitude:
+                  type: number
+                self:
+                  format: uri
+                  type: string
+              type: object
+            id:
+              type: integer
+            inputControl:
+              type: string
+            label:
+              type: string
+            link:
+              type: string
+            name:
+              type: string
+            self:
+              format: uri
+              type: string
+            structuredContent:
+              $ref: "#/components/schemas/StructuredContent"
+            value:
+              type: string
+          type: object
+      type: object
+info:
+  description: ""
+  title: ""
+  version: 1.0.0
+openapi: 3.0.1
+paths:
+  "/aggregate-rating/{id}":
+    get:
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/AggregateRating"
+          description: ""
+  "/content-document/{id}":
+    delete:
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        204:
+          content:
+            "*/*": {}
+          description: ""
+    get:
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/ContentDocument"
+          description: ""
+  "/content-space/{parent-id}/structured-contents":
+    get:
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+        - in: query
+          name: per_page
+          schema:
+            type: integer
+        - in: path
+          name: parent-id
+          required: true
+          schema:
+            type: integer
+        - in: header
+          name: Accept-Language
+          schema:
+            type: string
+        - in: query
+          name: filter
+          schema:
+            type: string
+        - in: query
+          name: sort
+          schema:
+            type: string
+      responses:
+        200:
+          content:
+            "*/*":
+              schema:
+                items:
+                  $ref: "#/components/schemas/StructuredContent"
+                type: array
+          description: ""
+    post:
+      parameters:
+        - in: path
+          name: parent-id
+          required: true
+          schema:
+            type: integer
+        - in: header
+          name: Accept-Language
+          schema:
+            type: string
+      requestBody:
+        content:
+          "*/*":
+            schema:
+              $ref: "#/components/schemas/StructuredContent"
+      responses:
+        200:
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/StructuredContent"
+          description: ""
+  "/content-space/{parent-id}/structured-contents/batch-create":
+    post:
+      parameters:
+        - in: path
+          name: parent-id
+          required: true
+          schema:
+            type: integer
+        - in: header
+          name: Accept-Language
+          schema:
+            type: string
+      requestBody:
+        content:
+          "*/*":
+            schema:
+              $ref: "#/components/schemas/StructuredContent"
+      responses:
+        200:
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/StructuredContent"
+          description: ""
+  "/content-structures/{id}":
+    get:
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/Structure"
+          description: ""
+  "/structured-contents/{id}":
+    delete:
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        204:
+          content:
+            "*/*": {}
+          description: ""
+    get:
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - in: header
+          name: Accept-Language
+          schema:
+            type: string
+      responses:
+        200:
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/StructuredContent"
+          description: ""
+    put:
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - in: header
+          name: Accept-Language
+          schema:
+            type: string
+      requestBody:
+        content:
+          "*/*":
+            schema:
+              $ref: "#/components/schemas/StructuredContent"
+      responses:
+        200:
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/StructuredContent"
+          description: ""
+  "/structured-contents/{parent-id}/comment":
+    get:
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+        - in: query
+          name: per_page
+          schema:
+            type: integer
+        - in: path
+          name: parent-id
+          required: true
+          schema:
+            $ref: "#/components/schemas/StructuredContent"
+      responses:
+        200:
+          content:
+            "*/*":
+              schema:
+                items:
+                  $ref: "#/components/schemas/Comment"
+                type: array
+          description: ""

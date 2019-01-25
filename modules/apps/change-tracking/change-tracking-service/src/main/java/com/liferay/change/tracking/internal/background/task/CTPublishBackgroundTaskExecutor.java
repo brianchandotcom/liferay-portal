@@ -15,14 +15,22 @@
 package com.liferay.change.tracking.internal.background.task;
 
 import com.liferay.change.tracking.CTEngineManager;
+import com.liferay.change.tracking.exception.CTException;
+import com.liferay.change.tracking.internal.process.model.CTProcessLogModel;
+import com.liferay.change.tracking.internal.process.util.CTProcessMessageSenderUtil;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
+import com.liferay.change.tracking.model.CTProcess;
 import com.liferay.change.tracking.service.CTCollectionLocalServiceUtil;
 import com.liferay.change.tracking.service.CTEntryLocalServiceUtil;
+import com.liferay.change.tracking.service.CTProcessLocalServiceUtil;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatus;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusRegistryUtil;
 import com.liferay.portal.kernel.backgroundtask.BaseBackgroundTaskExecutor;
 import com.liferay.portal.kernel.backgroundtask.display.BackgroundTaskDisplay;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -31,15 +39,18 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
+import java.io.IOException;
 import java.io.Serializable;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
@@ -47,6 +58,7 @@ import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * @author Zoltan Csaszi
+ * @author Daniel Kocsis
  */
 public class CTPublishBackgroundTaskExecutor
 	extends BaseBackgroundTaskExecutor {
@@ -70,38 +82,25 @@ public class CTPublishBackgroundTaskExecutor
 
 	@Override
 	public BackgroundTaskExecutor clone() {
-		CTPublishBackgroundTaskExecutor ctPublishBackgroundTaskExecutor =
-			new CTPublishBackgroundTaskExecutor();
-
-		ctPublishBackgroundTaskExecutor.
-			setBackgroundTaskStatusMessageTranslator(
-				getBackgroundTaskStatusMessageTranslator());
-		ctPublishBackgroundTaskExecutor.setIsolationLevel(getIsolationLevel());
-
-		return ctPublishBackgroundTaskExecutor;
+		return new CTPublishBackgroundTaskExecutor();
 	}
 
 	@Override
-	public BackgroundTaskResult execute(BackgroundTask backgroundTask) {
-		Map<String, Serializable> taskContextMap =
+	public BackgroundTaskResult execute(BackgroundTask backgroundTask)
+		throws Exception {
+
+		final Map<String, Serializable> taskContextMap =
 			backgroundTask.getTaskContextMap();
 
-		long ctCollectionId = GetterUtil.getLong(
+		final long ctProcessId = GetterUtil.getLong(
+			taskContextMap.get("ctProcessId"));
+
+		final long ctCollectionId = GetterUtil.getLong(
 			taskContextMap.get("ctCollectionId"));
 
-		List<CTEntry> ctEntries = _ctEngineManager.getCTEntries(ctCollectionId);
+		_publishCTCollection(backgroundTask, ctProcessId, ctCollectionId);
 
-		if (ListUtil.isEmpty(ctEntries)) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to find change tracking entries with change " +
-						"tracking collection ID " + ctCollectionId);
-			}
-		}
-		else {
-			_publishCTEntries(
-				backgroundTask.getUserId(), ctCollectionId, ctEntries);
-		}
+		_attachLogs(backgroundTask);
 
 		return BackgroundTaskResult.SUCCESS;
 	}
@@ -113,49 +112,114 @@ public class CTPublishBackgroundTaskExecutor
 		return null;
 	}
 
-	private void _publishCTEntries(
-		long userId, long ctCollectionId, List<CTEntry> ctEntries) {
+	private void _attachLogs(BackgroundTask backgroundTask)
+		throws IOException, PortalException {
 
-		User user = UserLocalServiceUtil.fetchUser(userId);
+		BackgroundTaskStatus backgroundTaskStatus =
+			BackgroundTaskStatusRegistryUtil.getBackgroundTaskStatus(
+				backgroundTask.getBackgroundTaskId());
 
-		if (user == null) {
-			_log.error("Unable to get user " + userId);
+		CTProcessLogModel ctProcessLogModel =
+			(CTProcessLogModel)backgroundTaskStatus.getAttribute(
+				"ctProcessLogModel");
 
-			return;
+		String ctProcessLogJSON = ctProcessLogModel.toString();
+
+		BackgroundTaskManagerUtil.addBackgroundTaskAttachment(
+			backgroundTask.getUserId(), backgroundTask.getBackgroundTaskId(),
+			"log", FileUtil.createTempFile(ctProcessLogJSON.getBytes()));
+	}
+
+	private void _publishCTCollection(
+			BackgroundTask backgroundTask, long ctProcessId,
+			long ctCollectionId)
+		throws Exception {
+
+		try {
+			CTProcess ctProcess = CTProcessLocalServiceUtil.getCTProcess(
+				ctProcessId);
+
+			CTProcessMessageSenderUtil.logCTProcessStarted(ctProcess);
+
+			List<CTEntry> ctEntries = _ctEngineManager.getCTEntries(
+				ctCollectionId);
+
+			if (ListUtil.isEmpty(ctEntries)) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Unable to find change tracking entries with change " +
+							"tracking collection ID " + ctCollectionId);
+				}
+
+				return;
+			}
+
+			_publishCTEntries(
+				backgroundTask.getUserId(), ctCollectionId, ctEntries);
 		}
+		catch (Exception e) {
+			CTProcessMessageSenderUtil.logCTProcessFailed();
+
+			_log.error(
+				"Unable to publish change tracking collection " +
+					ctCollectionId,
+				e);
+
+			throw e;
+		}
+		finally {
+			CTProcessMessageSenderUtil.logCTProcessFinished();
+		}
+	}
+
+	private void _publishCTEntries(
+			long userId, long ctCollectionId, List<CTEntry> ctEntries)
+		throws Exception {
+
+		User user = UserLocalServiceUtil.getUser(userId);
 
 		Optional<CTCollection> productionCTCollectionOptional =
 			_ctEngineManager.getProductionCTCollectionOptional(
 				user.getCompanyId());
 
-		if (!productionCTCollectionOptional.isPresent()) {
-			return;
-		}
-
 		long productionCTCollectionId = productionCTCollectionOptional.map(
 			CTCollection::getCtCollectionId
-		).get();
+		).orElseThrow(
+			() -> new CTException(
+				user.getCompanyId(),
+				"Unable to find production the change tracking collection")
+		);
 
-		CTEntryLocalServiceUtil.addCTCollectionCTEntries(
-			productionCTCollectionId, ctEntries);
+		Stream<CTEntry> ctEntryStream = ctEntries.stream();
+
+		ctEntryStream.peek(
+			CTProcessMessageSenderUtil::logCTEntryPublished
+		).forEach(
+			ctEntry -> CTEntryLocalServiceUtil.addCTCollectionCTEntry(
+				productionCTCollectionId, ctEntry)
+		);
 
 		Optional<CTCollection> ctCollectionOptional =
 			_ctEngineManager.getCTCollectionOptional(ctCollectionId);
 
-		if (!ctCollectionOptional.isPresent()) {
-			return;
-		}
+		CTCollection ctCollection = ctCollectionOptional.orElseThrow(
+			() -> new CTException(
+				user.getCompanyId(),
+				"Unable to find change tracking collection " + ctCollectionId)
+		);
 
 		try {
 			CTCollectionLocalServiceUtil.updateStatus(
-				userId, ctCollectionOptional.get(),
-				WorkflowConstants.STATUS_APPROVED, new ServiceContext());
+				userId, ctCollection, WorkflowConstants.STATUS_APPROVED,
+				new ServiceContext());
 		}
 		catch (PortalException pe) {
 			_log.error(
 				"Unable to update the status of the published change " +
 					"tracking collection",
 				pe);
+
+			throw pe;
 		}
 	}
 

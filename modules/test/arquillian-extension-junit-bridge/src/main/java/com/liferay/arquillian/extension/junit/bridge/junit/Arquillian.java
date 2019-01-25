@@ -135,8 +135,6 @@ public class Arquillian extends BlockJUnit4ClassRunner {
 							}
 						}
 						finally {
-							StateUtil.clean();
-
 							_testRunnerAdaptorThreadLocal.remove();
 						}
 
@@ -338,31 +336,6 @@ public class Arquillian extends BlockJUnit4ClassRunner {
          }
       };
    }
-
-	private static class StateUtil {
-
-		public static void clean() {
-			try {
-				_cleanMethod.invoke(null);
-			}
-			catch (ReflectiveOperationException roe) {
-				throw new RuntimeException(roe);
-			}
-		}
-
-		private static final Method _cleanMethod;
-
-		static {
-			try {
-				_cleanMethod = State.class.getDeclaredMethod("clean");
-
-				_cleanMethod.setAccessible(true);
-			}
-			catch (ReflectiveOperationException roe) {
-				throw new ExceptionInInitializerError(roe);
-			}
-		}
-	}
 
 	private static final ThreadLocal<TestRunnerAdaptor>
 		_testRunnerAdaptorThreadLocal = new ThreadLocal<>();

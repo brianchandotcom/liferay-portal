@@ -1,0 +1,3 @@
+apiDir: "../sample-api/src/main/java"
+apiPackagePath: "com.example.sample"
+author: "John Doe"

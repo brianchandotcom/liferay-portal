@@ -1,0 +1,10 @@
+{
+	"config": {
+		"imports": {
+			"dynamic-data-mapping-form-builder": {
+				"/": ">=2.0.0"
+			}
+		}
+	},
+	"output": "classes/META-INF/resources"
+}

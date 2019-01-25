@@ -5,6 +5,7 @@ import {Drag, DragDrop} from 'metal-drag-drop';
 import {EventHandler} from 'metal-events';
 import {focusedFieldStructure} from '../../util/config.es';
 import {getFieldPropertiesFromSettingsContext, normalizeSettingsContextPages} from '../../util/fieldSupport.es';
+import {PagesVisitor} from '../../util/visitors.es';
 import {selectText} from '../../util/dom.es';
 import autobind from 'autobind-decorator';
 import classnames from 'classnames';
@@ -14,7 +15,6 @@ import dom from 'metal-dom';
 import FieldTypeBox from '../FieldTypeBox/FieldTypeBox.es.js';
 import FormRenderer, {FormSupport} from '../Form/index.es.js';
 import WithEvaluator from '../Form/Evaluator.es';
-import {PagesVisitor} from '../../util/visitors.es';
 
 const EVALUATOR_URL = '/o/dynamic-data-mapping-form-context-provider/';
 const FormWithEvaluator = WithEvaluator(FormRenderer);
@@ -144,9 +144,6 @@ class Sidebar extends Component {
 
 	created() {
 		this._eventHandler = new EventHandler();
-		this._handleCloseButtonClicked = this._handleCloseButtonClicked.bind(this);
-		this._handleTabItemClicked = this._handleTabItemClicked.bind(this);
-
 		const transitionEnd = this._getTransitionEndEvent();
 
 		this.supportsTransitionEnd = transitionEnd !== false;
@@ -161,7 +158,7 @@ class Sidebar extends Component {
 		this._bindDragAndDrop();
 
 		this._eventHandler.add(
-			dom.on(document, 'mousedown', this._handleDocumentMouseDown.bind(this), true)
+			dom.on(document, 'mousedown', this._handleDocumentMouseDown, true)
 		);
 	}
 
@@ -183,6 +180,27 @@ class Sidebar extends Component {
 		}
 	}
 
+	changeFieldType(type) {
+		const {fieldTypes, focusedField, namespace} = this.props;
+		const newFieldType = fieldTypes.find(({name}) => name === type);
+		const newSettingsContext = {
+			...newFieldType.settingsContext,
+			pages: normalizeSettingsContextPages(newFieldType.settingsContext.pages, namespace, newFieldType, focusedField.fieldName)
+		};
+		const settingsContext = this._mergeFieldTypeSettings(focusedField.settingsContext, newSettingsContext);
+
+		this.emit(
+			'focusedFieldUpdated',
+			{
+				...focusedField,
+				...newFieldType,
+				...getFieldPropertiesFromSettingsContext(settingsContext),
+				settingsContext,
+				type: newFieldType.name
+			}
+		);
+	}
+
 	/**
 	 * Close the Sidebar and remove event to handle document click.
 	 * @public
@@ -200,6 +218,10 @@ class Sidebar extends Component {
 		if (this._dragAndDrop) {
 			this._dragAndDrop.dispose();
 		}
+	}
+
+	isChangeFieldTypeEnabled() {
+		return true;
 	}
 
 	/**
@@ -261,9 +283,9 @@ class Sidebar extends Component {
 		this._eventHandler.add(
 			this._dragAndDrop.on(
 				DragDrop.Events.END,
-				this._handleDragEnded.bind(this)
+				this._handleDragEnded
 			),
-			this._dragAndDrop.on(Drag.Events.START, this._handleDragStarted.bind(this))
+			this._dragAndDrop.on(Drag.Events.START, this._handleDragStarted)
 		);
 	}
 
@@ -272,20 +294,6 @@ class Sidebar extends Component {
 			'fieldChangesCanceled',
 			indexes
 		);
-	}
-
-	_checkSettingsActionsVisibility(target) {
-		const {fieldSettingsActions} = this.refs;
-		let dropdownPortal;
-
-		if (fieldSettingsActions) {
-			const {dropdown} = fieldSettingsActions.refs;
-			const {portal} = dropdown.refs;
-
-			dropdownPortal = portal.element.contains(target);
-		}
-
-		return dropdownPortal;
 	}
 
 	_deleteField(indexes) {
@@ -374,9 +382,20 @@ class Sidebar extends Component {
 	}
 
 	/**
+	 * Handle click on the dropdown to change the field type.
 	 * @protected
 	 */
+	@autobind
+	_handleChangeFieldTypeItemClicked({data}) {
+		const newFieldType = data.item.name;
 
+		this.changeFieldType(newFieldType);
+	}
+
+	/**
+	 * @protected
+	 */
+	@autobind
 	_handleCloseButtonClicked() {
 		this.close();
 	}
@@ -387,39 +406,64 @@ class Sidebar extends Component {
 	 * @param {Event} event
 	 * @protected
 	 */
-
+	@autobind
 	_handleDocumentMouseDown({target}) {
-		const {element, state, transitionEnd} = this;
-		const {open} = state;
-		const alloyEditorToolbarNode = dom.closest(target, '.ae-ui');
-		const fieldColumnNode = dom.closest(target, '.col-ddm');
-		const fieldTypesDropdownNode = dom.closest(target, '.dropdown-menu');
-		const modalNode = dom.closest(target, '.modal');
+		const {transitionEnd} = this;
+		const {open} = this.state;
 
-		if (!open || alloyEditorToolbarNode || fieldTypesDropdownNode || fieldColumnNode ||
-			modalNode || this._checkSettingsActionsVisibility(target) || element.contains(target)) {
+		if (this._isCloseButton(target) || (open && !this._isSidebarElement(target))) {
+			this.close();
 
+			dom.once(
+				this.refs.container,
+				transitionEnd,
+				() => this.emit('fieldBlurred')
+			);
+
+			if (!this._isModalElement(target)) {
+				setTimeout(() => this.emit('fieldBlurred'), 500);
+			}
+		}
+	}
+
+	/**
+	 * Handle a field move to dispatch the event to add in layout.
+	 * @param {Object} data
+	 * @param {Event} event
+	 * @protected
+	 */
+	@autobind
+	_handleDragEnded(data, event) {
+		event.preventDefault();
+
+		if (!data.target) {
 			return;
 		}
 
-		this.close();
+		const {fieldTypes} = this.props;
+		const fieldTypeName = data.source.dataset.fieldTypeName;
 
-		dom.once(
-			this.refs.container,
-			transitionEnd,
-			() => this.emit('fieldBlurred')
+		const fieldType = fieldTypes.find(({name}) => name === fieldTypeName);
+		const indexes = FormSupport.getIndexes(data.target.parentElement);
+
+		this.emit(
+			'fieldAdded',
+			{
+				data,
+				fieldType: {
+					...fieldType,
+					editable: true
+				},
+				target: indexes
+			}
 		);
-
-		if (!modalNode) {
-			setTimeout(() => this.emit('fieldBlurred'), 500);
-		}
 	}
 
 	/**
 	 * Handle with drag and close sidebar when moving.
 	 * @protected
 	 */
-
+	@autobind
 	_handleDragStarted() {
 		this.refreshDragAndDrop();
 
@@ -443,39 +487,6 @@ class Sidebar extends Component {
 					...focusedField.settingsContext,
 					pages
 				}
-			}
-		);
-	}
-
-	/**
-	 * Handle a field move to dispatch the event to add in layout.
-	 * @param {Object} data
-	 * @param {Event} event
-	 * @protected
-	 */
-
-	_handleDragEnded(data, event) {
-		event.preventDefault();
-
-		if (!data.target) {
-			return;
-		}
-
-		const {fieldTypes} = this.props;
-		const fieldTypeName = data.source.dataset.fieldTypeName;
-
-		const fieldType = fieldTypes.find(({name}) => name === fieldTypeName);
-		const indexes = FormSupport.getIndexes(data.target.parentElement);
-
-		this.emit(
-			'fieldAdded',
-			{
-				data,
-				fieldType: {
-					...fieldType,
-					editable: true
-				},
-				target: indexes
 			}
 		);
 	}
@@ -516,39 +527,79 @@ class Sidebar extends Component {
 	}
 
 	/**
-	 * Handle click on the dropdown to change the field type.
+	 * Handle click on the previous button.
 	 * @protected
 	 */
 	@autobind
-	_handleChangeFieldTypeItemClicked({data}) {
-		const newFieldType = data.item.name;
+	_handlePreviousButtonClicked() {
+		const {transitionEnd} = this;
 
-		this.changeFieldType(newFieldType);
-	}
+		this.close();
 
-	changeFieldType(type) {
-		const {fieldTypes, focusedField, namespace} = this.props;
-		const newFieldType = fieldTypes.find(({name}) => name === type);
-		const newSettingsContext = {
-			...newFieldType.settingsContext,
-			pages: normalizeSettingsContextPages(newFieldType.settingsContext.pages, namespace, newFieldType, focusedField.fieldName)
-		};
-		const settingsContext = this._mergeFieldTypeSettings(focusedField.settingsContext, newSettingsContext);
-
-		this.emit(
-			'focusedFieldUpdated',
-			{
-				...focusedField,
-				...newFieldType,
-				...getFieldPropertiesFromSettingsContext(settingsContext),
-				settingsContext,
-				type: newFieldType.name
+		dom.once(
+			this.refs.container,
+			transitionEnd,
+			() => {
+				this.emit('fieldBlurred');
+				this.open();
 			}
 		);
 	}
 
-	isChangeFieldTypeEnabled() {
-		return true;
+	/**
+	 * Handle click on the tab item and manipulate the active tab.
+	 * @param {number} index
+	 * @param {Event} event
+	 * @protected
+	 */
+	@autobind
+	_handleTabItemClicked(event) {
+		const {target} = event;
+		const {dataset: {index}} = dom.closest(target, '.nav-item');
+
+		event.preventDefault();
+
+		this.setState(
+			{
+				activeTab: parseInt(index, 10)
+			}
+		);
+	}
+
+	_isCloseButton(node) {
+		const {closeButton} = this.refs;
+
+		return closeButton.contains(node);
+	}
+
+	_isModalElement(node) {
+		return dom.closest(node, '.modal');
+	}
+
+	_isSettingsElement(target) {
+		const {fieldSettingsActions} = this.refs;
+		let dropdownPortal;
+
+		if (fieldSettingsActions) {
+			const {dropdown} = fieldSettingsActions.refs;
+			const {portal} = dropdown.refs;
+
+			dropdownPortal = portal.element.contains(target);
+		}
+
+		return dropdownPortal;
+	}
+
+	_isSidebarElement(node) {
+		const {element} = this;
+		const alloyEditorToolbarNode = dom.closest(node, '.ae-ui');
+		const fieldColumnNode = dom.closest(node, '.col-ddm');
+		const fieldTypesDropdownNode = dom.closest(node, '.dropdown-menu');
+
+		return (
+			alloyEditorToolbarNode || fieldTypesDropdownNode || fieldColumnNode ||
+			element.contains(node) || this._isSettingsElement(node)
+		);
 	}
 
 	_mergeFieldTypeSettings(oldSettingsContext, newSettingsContext) {
@@ -588,46 +639,6 @@ class Sidebar extends Component {
 				}
 			)
 		};
-	}
-
-	/**
-	 * Handle click on the previous button.
-	 * @protected
-	 */
-
-	_handlePreviousButtonClicked() {
-		const {transitionEnd} = this;
-
-		this.close();
-
-		dom.once(
-			this.refs.container,
-			transitionEnd,
-			() => {
-				this.emit('fieldBlurred');
-				this.open();
-			}
-		);
-	}
-
-	/**
-	 * Handle click on the tab item and manipulate the active tab.
-	 * @param {number} index
-	 * @param {Event} event
-	 * @protected
-	 */
-
-	_handleTabItemClicked(event) {
-		const {target} = event;
-		const {dataset: {index}} = dom.closest(target, '.nav-item');
-
-		event.preventDefault();
-
-		this.setState(
-			{
-				activeTab: parseInt(index, 10)
-			}
-		);
 	}
 
 	/**
@@ -786,7 +797,7 @@ class Sidebar extends Component {
 		];
 		const focusedFieldType = fieldTypes.find(({name}) => name === focusedField.type);
 		const previousButtonEvents = {
-			click: this._handlePreviousButtonClicked.bind(this)
+			click: this._handlePreviousButtonClicked
 		};
 
 		return (
@@ -848,7 +859,7 @@ class Sidebar extends Component {
 						class="component-action sidebar-close"
 						data-onclick={this._handleCloseButtonClicked}
 						href="#1"
-						ref="close"
+						ref="closeButton"
 						role="button"
 					>
 						<svg

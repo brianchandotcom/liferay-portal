@@ -1,0 +1,173 @@
+{namespace com.liferay.change.tracking.change.lists.web.ChangeList}
+
+/**
+ * Renders the ChangeList view
+ */
+{template .render}
+	{@param? description: string}
+	{@param? headerTitle: string}
+	{@param? initFetch: bool}
+	{@param? publishedBy: [
+		dateTime: string,
+		userIconUrl: string,
+		userMonogram: string,
+		userName: string
+	]}
+	{@param  translations: map<string, string>}
+
+	<div class="container-fluid-1280">
+		{if not $initFetch}
+			{call .loading}{/call}
+		{else}
+			<div class="row">
+				<div class="col-sm-6">
+					LeftCard
+				</div>
+				<div class="col-sm-6">
+					{delcall com.liferay.change.tracking.change.lists.web.GlanceCard}
+						{param cardState: 'border-left-blue' /}
+						{param description: $description /}
+						{param descriptionTitle: $translations['description'] /}
+						{param headerLink: ['href': 'href', 'label': $translations['production-view'] ] /}
+						{param headerSubTitle: $translations['published-change-list'] /}
+						{param headerTitle: $headerTitle /}
+						{param publishedBy:  $publishedBy /}
+						{param publishedByTitle: $translations['published-by'] /}
+					{/delcall}
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12">
+					Table
+				</div>
+			</div>
+		{/if}
+	</div>
+{/template}
+
+/**
+ * GlanceCard
+ *
+ * This template renders the component's whole content
+ */
+{deltemplate com.liferay.change.tracking.change.lists.web.GlanceCard}
+	{@param? cardState: string}
+	{@param? description: string}
+	{@param? descriptionTitle: string}
+	{@param? headerLink: [
+		href: string,
+		label: string
+	]}
+	{@param? headerSubTitle: string}
+	{@param? headerTitle: string}
+	{@param? publishedBy: [
+		dateTime: string,
+		userIconUrl: string,
+		userMonogram: string,
+		userName: string
+	]}
+	{@param? publishedByTitle: string}
+
+	<div class="glance-card-sheet {$cardState}">
+		{call .glanceCardHeader}
+			{param headerLink: $headerLink /}
+			{param headerSubTitle: $headerSubTitle /}
+			{param headerTitle: $headerTitle /}
+		{/call}
+
+		<div class="glance-card-sheet-divider"></div>
+
+		{call .glanceCardBody}
+			{param description: $description /}
+			{param descriptionTitle: $descriptionTitle /}
+			{param publishedBy: $publishedBy /}
+			{param publishedByTitle: $publishedByTitle /}
+		{/call}
+
+	</div>
+
+{/deltemplate} 
+
+{template .glanceCardHeader}
+	{@param? headerLink: [
+		href: string,
+		label: string
+	]}
+	{@param? headerSubTitle: string}
+	{@param? headerTitle: string}
+
+	<div class="glance-card-container glance-card-header">
+		<div class="row">
+			<div class="col-sm-12">
+				{if $headerSubTitle}
+					<h3>{$headerSubTitle}</h3>
+				{/if}
+				{if $headerTitle}
+					<div class="glance-card-sheet-title">{$headerTitle}</div>
+				{/if}
+				{if $headerLink}
+					<a href="{$headerLink.href}" class="stick-to-bottom" onclick="">{$headerLink.label}</a>
+				{/if}
+			</div>
+		</div>
+	</div>
+{/template}
+
+{template .glanceCardBody}
+	{@param? description: string}
+	{@param? descriptionTitle: string}
+	{@param? publishedBy: [
+		dateTime: string,
+		userIconUrl: string,
+		userMonogram: string,
+		userName: string
+	]}
+	{@param? publishedByTitle: string}
+
+	<div class="glance-card-container glance-card-body">
+
+		{if $description}
+			<div class="glance-card-sheet-block">
+				{if $descriptionTitle}
+					<h3>{$descriptionTitle}</h3>
+				{/if}
+				<div class="sheet-text">
+					{$description}
+				</div>
+			</div>
+		{/if}
+
+		{if $publishedBy}
+			<div class="glance-card-sheet-block">
+				{if $publishedByTitle}
+					<h3>{$publishedByTitle}</h3>
+				{/if}
+				<div class="autofit-padded-no-gutters-x autofit-row widget-metadata">
+
+					<div class="autofit-col">
+						{if $publishedBy.userMonogram}
+							<div class="user-icon-color-9 user-icon-lg user-icon user-icon-default">
+								<span>{$publishedBy.userMonogram}</span>
+							</div>
+						{elseif $publishedBy.userIconUrl}
+							<div class="user-icon-lg aspect-ratio-bg-cover user-icon" style="background-image:url({$publishedBy.userIconUrl})">
+							</div>
+						{/if}
+					</div>
+
+					<div class="autofit-col autofit-col-expand">
+						<div class="aspect-ratio-item-left-middle text-secondary">
+							{$publishedBy.dateTime} by {$publishedBy.userName}
+						</div>
+					</div>
+				</div>
+			</div>
+		{/if}
+	</div>
+{/template}
+
+{template .loading}
+	<div class="loading-indicator">
+		<span aria-hidden="true" class="loading-animation"></span>
+	</div>
+{/template}

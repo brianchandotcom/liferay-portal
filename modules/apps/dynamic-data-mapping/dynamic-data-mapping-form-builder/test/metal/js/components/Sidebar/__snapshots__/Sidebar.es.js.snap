@@ -88,7 +88,7 @@ exports[`Sidebar should close the sidebar in edition mode 1`] = `
                   <use xlink:href="icons.svg#ellipsis-v"></use>
                 </svg></button></div>
           </li>
-          <li class="tbar-item"><a class="component-action sidebar-close" href="#1" ref="close" role="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-times">
+          <li class="tbar-item"><a class="component-action sidebar-close" href="#1" ref="closeButton" role="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-times">
                 <use xlink:href="icons.svg#times"></use>
               </svg></a></li>
         </ul>
@@ -186,7 +186,7 @@ exports[`Sidebar should close the sidebar in edition mode 2`] = `
                   <use xlink:href="icons.svg#ellipsis-v"></use>
                 </svg></button></div>
           </li>
-          <li class="tbar-item"><a class="component-action sidebar-close" href="#1" ref="close" role="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-times">
+          <li class="tbar-item"><a class="component-action sidebar-close" href="#1" ref="closeButton" role="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-times">
                 <use xlink:href="icons.svg#times"></use>
               </svg></a></li>
         </ul>
@@ -266,7 +266,7 @@ exports[`Sidebar should close the sidebar when the mouse down event is not on it
           <li class="tbar-item tbar-item-expand text-left">
             <div class="tbar-section"><span class="text-truncate-inline"><span class="text-truncate">add-elements</span></span></div>
           </li>
-          <li class="tbar-item"><a class="component-action sidebar-close" href="#1" ref="close" role="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-times">
+          <li class="tbar-item"><a class="component-action sidebar-close" href="#1" ref="closeButton" role="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-times">
                 <use xlink:href="icons.svg#times"></use>
               </svg></a></li>
         </ul>
@@ -339,7 +339,7 @@ exports[`Sidebar should emit fieldMoved when the dragEnd method is called 1`] = 
           <li class="tbar-item tbar-item-expand text-left">
             <div class="tbar-section"><span class="text-truncate-inline"><span class="text-truncate">add-elements</span></span></div>
           </li>
-          <li class="tbar-item"><a class="component-action sidebar-close" href="#1" ref="close" role="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-times">
+          <li class="tbar-item"><a class="component-action sidebar-close" href="#1" ref="closeButton" role="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-times">
                 <use xlink:href="icons.svg#times"></use>
               </svg></a></li>
         </ul>
@@ -412,7 +412,7 @@ exports[`Sidebar should render a Sidebar closed 1`] = `
           <li class="tbar-item tbar-item-expand text-left">
             <div class="tbar-section"><span class="text-truncate-inline"><span class="text-truncate">add-elements</span></span></div>
           </li>
-          <li class="tbar-item"><a class="component-action sidebar-close" href="#1" ref="close" role="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-times">
+          <li class="tbar-item"><a class="component-action sidebar-close" href="#1" ref="closeButton" role="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-times">
                 <use xlink:href="icons.svg#times"></use>
               </svg></a></li>
         </ul>
@@ -485,7 +485,7 @@ exports[`Sidebar should render a Sidebar open 1`] = `
           <li class="tbar-item tbar-item-expand text-left">
             <div class="tbar-section"><span class="text-truncate-inline"><span class="text-truncate">add-elements</span></span></div>
           </li>
-          <li class="tbar-item"><a class="component-action sidebar-close" href="#1" ref="close" role="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-times">
+          <li class="tbar-item"><a class="component-action sidebar-close" href="#1" ref="closeButton" role="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-times">
                 <use xlink:href="icons.svg#times"></use>
               </svg></a></li>
         </ul>
@@ -558,7 +558,7 @@ exports[`Sidebar should render a Sidebar with fieldTypes 1`] = `
           <li class="tbar-item tbar-item-expand text-left">
             <div class="tbar-section"><span class="text-truncate-inline"><span class="text-truncate">add-elements</span></span></div>
           </li>
-          <li class="tbar-item"><a class="component-action sidebar-close" href="#1" ref="close" role="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-times">
+          <li class="tbar-item"><a class="component-action sidebar-close" href="#1" ref="closeButton" role="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-times">
                 <use xlink:href="icons.svg#times"></use>
               </svg></a></li>
         </ul>
@@ -631,7 +631,7 @@ exports[`Sidebar should render a Sidebar with spritemap 1`] = `
           <li class="tbar-item tbar-item-expand text-left">
             <div class="tbar-section"><span class="text-truncate-inline"><span class="text-truncate">add-elements</span></span></div>
           </li>
-          <li class="tbar-item"><a class="component-action sidebar-close" href="#1" ref="close" role="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-times">
+          <li class="tbar-item"><a class="component-action sidebar-close" href="#1" ref="closeButton" role="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-times">
                 <use xlink:href="icons.svg#times"></use>
               </svg></a></li>
         </ul>
@@ -704,7 +704,7 @@ exports[`Sidebar should render the default markup 1`] = `
           <li class="tbar-item tbar-item-expand text-left">
             <div class="tbar-section"><span class="text-truncate-inline"><span class="text-truncate">add-elements</span></span></div>
           </li>
-          <li class="tbar-item"><a class="component-action sidebar-close" href="#1" ref="close" role="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-times">
+          <li class="tbar-item"><a class="component-action sidebar-close" href="#1" ref="closeButton" role="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-times">
                 <use xlink:href="icons.svg#times"></use>
               </svg></a></li>
         </ul>

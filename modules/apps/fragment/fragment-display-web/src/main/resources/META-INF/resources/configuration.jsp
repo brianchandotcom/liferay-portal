@@ -124,7 +124,7 @@ FragmentEntry fragmentEntry = fragmentEntryDisplayContext.getFragmentEntry();
 </liferay-frontend:edit-form>
 
 <aui:script use="liferay-item-selector-dialog">
-	var fragmentEntrySelector = document.getElementById('<portlet:namespace />fragmentEntrySelector');
+	const fragmentEntrySelector = document.getElementById('<portlet:namespace />fragmentEntrySelector');
 
 	if (fragmentEntrySelector) {
 		fragmentEntrySelector.addEventListener(
@@ -132,12 +132,12 @@ FragmentEntry fragmentEntry = fragmentEntryDisplayContext.getFragmentEntry();
 			function(event) {
 				event.preventDefault();
 
-				var itemSelectorDialog = new A.LiferayItemSelectorDialog(
+				const itemSelectorDialog = new A.LiferayItemSelectorDialog(
 					{
 						eventName: '<%= fragmentEntryDisplayContext.getEventName() %>',
 						on: {
 							selectedItemChange: function(event) {
-								var selectedItem = event.newVal;
+								const selectedItem = event.newVal;
 
 								if (selectedItem) {
 									retrieveFragmentEntry(selectedItem.fragmentEntryId);
@@ -155,7 +155,7 @@ FragmentEntry fragmentEntry = fragmentEntryDisplayContext.getFragmentEntry();
 		);
 	}
 
-	var removeFragmentEntry = document.getElementById('<portlet:namespace />removeFragmentEntry');
+	const removeFragmentEntry = document.getElementById('<portlet:namespace />removeFragmentEntry');
 
 	if (removeFragmentEntry) {
 		removeFragmentEntry.addEventListener(
@@ -167,10 +167,9 @@ FragmentEntry fragmentEntry = fragmentEntryDisplayContext.getFragmentEntry();
 	}
 
 	function retrieveFragmentEntry(fragmentEntryId) {
-		var uri = '<%= configurationRenderURL %>';
-
-		uri = Liferay.Util.addParams('<portlet:namespace />fragmentEntryId=' + fragmentEntryId, uri);
-
-		location.href = uri;
+		location.href = Liferay.Util.addParams(
+			'<portlet:namespace />fragmentEntryId=' + fragmentEntryId,
+			'<%= configurationRenderURL %>'
+		);
 	}
 </aui:script>

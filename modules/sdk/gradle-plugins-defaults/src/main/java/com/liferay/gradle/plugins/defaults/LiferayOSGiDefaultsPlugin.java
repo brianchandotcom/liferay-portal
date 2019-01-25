@@ -2889,6 +2889,74 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		BuildRESTTask buildRESTTask = (BuildRESTTask)GradleUtil.getTask(
 			project, RESTBuilderPlugin.BUILD_REST_TASK_NAME);
 
+		File projectDir = project.getProjectDir();
+
+		String name = projectDir.getName();
+
+		if (name.endsWith("-impl")) {
+			name = name.substring(0, name.length() - 5);
+		}
+
+		final String simpleName = name;
+
+		buildRESTTask.setApiDir(
+			new Callable<String>() {
+
+				@Override
+				public String call() throws Exception {
+					return "../" + simpleName + "-api/src/main/java";
+				}
+
+			});
+
+		buildRESTTask.setApiPackagePath(
+			new Callable<String>() {
+
+				@Override
+				public String call() throws Exception {
+					return "com.liferay." + simpleName.replace('-', '.');
+				}
+
+			});
+
+		if (name.endsWith("-rest")) {
+			name = name.substring(0, name.length() - 5);
+		}
+
+		final String applicationName = name + "-application";
+
+		buildRESTTask.setApplicationBaseURI(
+			new Callable<String>() {
+
+				@Override
+				public String call() throws Exception {
+					int endIndex = applicationName.length() - 12;
+
+					return '/' + applicationName.substring(0, endIndex);
+				}
+
+			});
+
+		buildRESTTask.setApplicationClassName(
+			new Callable<String>() {
+
+				@Override
+				public String call() throws Exception {
+					return StringUtil.camelCase(applicationName, true);
+				}
+
+			});
+
+		buildRESTTask.setApplicationName(
+			new Callable<String>() {
+
+				@Override
+				public String call() throws Exception {
+					return applicationName;
+				}
+
+			});
+
 		buildRESTTask.setCopyrightFile(
 			new Callable<File>() {
 

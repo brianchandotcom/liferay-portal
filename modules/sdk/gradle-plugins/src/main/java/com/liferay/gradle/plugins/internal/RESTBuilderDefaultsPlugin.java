@@ -15,6 +15,8 @@
 package com.liferay.gradle.plugins.internal;
 
 import com.liferay.gradle.plugins.BasePortalToolDefaultsPlugin;
+import com.liferay.gradle.plugins.internal.util.GradleUtil;
+import com.liferay.gradle.plugins.rest.builder.BuildRESTTask;
 import com.liferay.gradle.plugins.rest.builder.RESTBuilderPlugin;
 
 import org.gradle.api.Plugin;
@@ -28,6 +30,15 @@ public class RESTBuilderDefaultsPlugin
 
 	public static final Plugin<Project> INSTANCE =
 		new RESTBuilderDefaultsPlugin();
+
+	@Override
+	protected void configureDefaults(
+		final Project project, RESTBuilderPlugin restBuilderPlugin) {
+
+		super.configureDefaults(project, restBuilderPlugin);
+
+		_configureTaskBuildREST(project);
+	}
 
 	@Override
 	protected Class<RESTBuilderPlugin> getPluginClass() {
@@ -45,6 +56,13 @@ public class RESTBuilderDefaultsPlugin
 	}
 
 	private RESTBuilderDefaultsPlugin() {
+	}
+
+	private void _configureTaskBuildREST(Project project) {
+		BuildRESTTask buildRESTTask = (BuildRESTTask)GradleUtil.getTask(
+			project, RESTBuilderPlugin.BUILD_REST_TASK_NAME);
+
+		buildRESTTask.setAuthor("Brian Wing Shun Chan");
 	}
 
 	private static final String _PORTAL_TOOL_NAME =

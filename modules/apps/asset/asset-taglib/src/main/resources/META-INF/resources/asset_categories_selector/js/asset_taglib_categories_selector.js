@@ -255,8 +255,8 @@ AUI.add(
 										instance._updateInputHidden();
 									}
 								},
-								'strings.add': Liferay.Language.get('done'),
-								title: Liferay.Language.get('categories'),
+								'strings.add': Liferay.Language.get('add'),
+								title: Liferay.Language.get('select-categories'),
 								url: uri
 							}
 						);

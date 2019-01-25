@@ -46,9 +46,7 @@ public class DEDataDefinitionSavePermissionsRequest {
 
 	public static final class Builder {
 
-		public Builder(
-			long companyId, long scopedGroupId, String... roleNames) {
-
+		public Builder(long companyId, long scopedGroupId, String[] roleNames) {
 			_deDataDefinitionSavePermissionsRequest._companyId = companyId;
 			_deDataDefinitionSavePermissionsRequest._scopedGroupId =
 				scopedGroupId;

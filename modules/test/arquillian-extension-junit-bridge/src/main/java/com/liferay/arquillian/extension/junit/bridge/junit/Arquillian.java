@@ -18,6 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.util.FrameworkMethodCompara
 
 import java.lang.annotation.Annotation;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -35,7 +36,6 @@ import org.jboss.arquillian.test.spi.TestRunnerAdaptorBuilder;
 import org.jboss.arquillian.test.spi.execution.SkippedTestExecutionException;
 import org.junit.internal.AssumptionViolatedException;
 import org.junit.internal.runners.model.MultipleFailureException;
-import org.junit.internal.runners.model.ReflectiveCallable;
 import org.junit.internal.runners.statements.Fail;
 import org.junit.rules.TestRule;
 import org.junit.runner.Result;
@@ -195,21 +195,23 @@ public class Arquillian extends BlockJUnit4ClassRunner {
 		};
 	}
 
-   @Override
-   @SuppressWarnings("deprecation")
-   protected Statement methodBlock(final FrameworkMethod method) {
-       Object temp;
-       try {
-           temp = new ReflectiveCallable() {
-               @Override
-               protected Object runReflectiveCall() throws Throwable {
-                   return createTest();
-               }
-           }.run();
-       } catch (Throwable e) {
-           return new Fail(e);
-       }
-       final Object test = temp;
+	@Override
+	@SuppressWarnings("deprecation")
+	protected Statement methodBlock(final FrameworkMethod method) {
+		Object testObject = null;
+
+		try {
+			testObject = createTest();
+		}
+		catch (Throwable t) {
+			if (t instanceof InvocationTargetException) {
+				t = t.getCause();
+			}
+
+			return new Fail(t);
+		}
+
+		final Object test = testObject;
        try
        {
            Method withRules = BlockJUnit4ClassRunner.class.getDeclaredMethod("withRules",

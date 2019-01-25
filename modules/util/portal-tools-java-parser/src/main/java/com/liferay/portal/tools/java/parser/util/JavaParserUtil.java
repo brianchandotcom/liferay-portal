@@ -939,12 +939,6 @@ public class JavaParserUtil {
 			javaElseStatement.setJavaIfStatement(
 				_parseJavaIfStatement(firstChildDetailAST));
 		}
-		else if ((firstChildDetailAST.getType() != TokenTypes.SEMI) &&
-				 (firstChildDetailAST.getType() != TokenTypes.SLIST)) {
-
-			javaElseStatement.setExecutionJavaTerm(
-				parseJavaTerm(firstChildDetailAST));
-		}
 
 		return javaElseStatement;
 	}
@@ -1220,25 +1214,10 @@ public class JavaParserUtil {
 	private static JavaIfStatement _parseJavaIfStatement(
 		DetailAST literalIfDetailAST) {
 
-		DetailAST lparenDetailAST = literalIfDetailAST.findFirstToken(
-			TokenTypes.LPAREN);
+		DetailAST firstChildDetailAST = literalIfDetailAST.getFirstChild();
 
-		JavaIfStatement javaIfStatement = new JavaIfStatement(
-			_parseJavaExpression(lparenDetailAST.getNextSibling()));
-
-		DetailAST rparenDetailAST = literalIfDetailAST.findFirstToken(
-			TokenTypes.RPAREN);
-
-		DetailAST nextSiblingDetailAST = rparenDetailAST.getNextSibling();
-
-		if ((nextSiblingDetailAST.getType() != TokenTypes.SEMI) &&
-			(nextSiblingDetailAST.getType() != TokenTypes.SLIST)) {
-
-			javaIfStatement.setExecutionJavaTerm(
-				parseJavaTerm(nextSiblingDetailAST));
-		}
-
-		return javaIfStatement;
+		return new JavaIfStatement(
+			_parseJavaExpression(firstChildDetailAST.getNextSibling()));
 	}
 
 	private static JavaImport _parseJavaImport(
@@ -1755,27 +1734,17 @@ public class JavaParserUtil {
 	private static JavaWhileStatement _parseJavaWhileStatement(
 		DetailAST detailAST) {
 
-		if (detailAST.getType() == TokenTypes.DO_WHILE) {
-			detailAST = detailAST.getParent();
+		DetailAST lparenDetailAST = null;
+
+		if (detailAST.getType() == TokenTypes.LITERAL_WHILE) {
+			lparenDetailAST = detailAST.getFirstChild();
+		}
+		else {
+			lparenDetailAST = detailAST.getNextSibling();
 		}
 
-		DetailAST lparenDetailAST = detailAST.findFirstToken(TokenTypes.LPAREN);
-
-		JavaWhileStatement javaWhileStatement = new JavaWhileStatement(
+		return new JavaWhileStatement(
 			_parseJavaExpression(lparenDetailAST.getNextSibling()));
-
-		DetailAST rparenDetailAST = detailAST.findFirstToken(TokenTypes.RPAREN);
-
-		DetailAST nextSiblingDetailAST = rparenDetailAST.getNextSibling();
-
-		if ((nextSiblingDetailAST.getType() != TokenTypes.SEMI) &&
-			(nextSiblingDetailAST.getType() != TokenTypes.SLIST)) {
-
-			javaWhileStatement.setExecutionJavaTerm(
-				parseJavaTerm(nextSiblingDetailAST));
-		}
-
-		return javaWhileStatement;
 	}
 
 	private static List<JavaSimpleValue> _parseModifiers(

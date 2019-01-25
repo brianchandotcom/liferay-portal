@@ -25,38 +25,19 @@ public class JavaWhileStatement extends JavaLoopStatement {
 		_conditionJavaExpression = conditionJavaExpression;
 	}
 
-	public void setExecutionJavaTerm(JavaTerm executionJavaTerm) {
-		_executionJavaTerm = executionJavaTerm;
-	}
-
 	@Override
 	public String toString(
 		String indent, String prefix, String suffix, int maxLineLength) {
 
 		StringBundler sb = appendLabelName(indent);
 
-		if (_executionJavaTerm == null) {
-			appendNewLine(
-				sb, _conditionJavaExpression, indent, "while (", ")" + suffix,
-				maxLineLength);
-
-			return sb.toString();
-		}
-
 		appendNewLine(
-			sb, _conditionJavaExpression, indent, "while (", ") ",
-			maxLineLength);
-
-		indent = "\t" + getIndent(getLastLine(sb));
-
-		append(
-			sb, _executionJavaTerm, indent, "", _executionJavaTerm.getSuffix(),
+			sb, _conditionJavaExpression, indent, "while (", ")" + suffix,
 			maxLineLength);
 
 		return sb.toString();
 	}
 
 	private final JavaExpression _conditionJavaExpression;
-	private JavaTerm _executionJavaTerm;
 
 }

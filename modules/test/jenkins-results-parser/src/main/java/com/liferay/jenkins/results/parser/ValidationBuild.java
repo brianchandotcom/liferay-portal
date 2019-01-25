@@ -119,6 +119,14 @@ public class ValidationBuild extends BaseBuild {
 		}
 		else {
 			Dom4JUtil.addToElement(rootElement, getFailureMessageElement());
+
+			Dom4JUtil.addToElement(
+				rootElement,
+				Dom4JUtil.getNewElement(
+					"h5", null, "For full console, click ",
+					Dom4JUtil.getNewAnchorElement(
+						getBuildURL() + "/consoleText", "here"),
+					"."));
 		}
 
 		return rootElement;

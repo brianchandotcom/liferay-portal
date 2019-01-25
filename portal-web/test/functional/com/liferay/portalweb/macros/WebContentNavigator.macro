@@ -138,7 +138,7 @@ definition {
 			key_webContentTitle = "${entry}"
 		);
 
-		MenuItem.click(
+		MenuItem.clickNoError(
 			menuItem = "${menuItem}"
 		);
 	}

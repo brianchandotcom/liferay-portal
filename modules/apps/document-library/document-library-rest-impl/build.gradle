@@ -1,5 +1,8 @@
 buildREST {
 	apiDir = "../document-library-rest-api/src/main/java"
 	apiPackagePath = "com.liferay.document.library.rest"
+	applicationBaseURI = "/document-library"
+	applicationClassName = "DocumentLibraryApplication"
+	applicationName = "document-library-application"
 	author = "Javier Gamarra"
 }

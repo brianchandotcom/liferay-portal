@@ -10,7 +10,9 @@ export default class EmptyContent extends React.Component {
 		return (
 			<div className="sheet taglib-empty-result-message">
 				<div className={classNameType} />
+
 				<h3 className="text-center"> {title} </h3>
+
 				<div className="sheet-text text-center">
 					<p> {message} </p>
 				</div>

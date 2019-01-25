@@ -121,15 +121,15 @@ String randomNamespace = ParamUtil.getString(request, "randomNamespace");
 		</aui:form>
 
 		<aui:script>
-			var uploadImage = $('#uploadImage');
+			var uploadImage = document.querySelector('#uploadImage');
 
-			uploadImage.on(
-				'keypress',
+			uploadImage.addEventListener(
+				'keydown',
 				function(event) {
 					event.preventDefault();
 
-					if (event.which == 13 || event.which == 32) {
-						uploadImage.trigger('click');
+					if (event.key == 'Enter' || event.key == ' ') {
+						uploadImage.click();
 					}
 				}
 			);

@@ -134,7 +134,7 @@ public class LiferayRemoteDeployableContainer
 	}
 
 	@Override
-	public void undeploy(Archive<?> archive) {
+	public void undeploy(Archive<?> archive) throws DeploymentException {
 		long bundleId = _deployedBundles.remove(archive.getName());
 
 		if (bundleId == 0) {
@@ -145,6 +145,8 @@ public class LiferayRemoteDeployableContainer
 			_frameworkMBean.uninstallBundle(bundleId);
 		}
 		catch (IOException ioe) {
+			throw new DeploymentException(
+				"Unable to uninstall bundle: " + bundleId, ioe);
 		}
 	}
 

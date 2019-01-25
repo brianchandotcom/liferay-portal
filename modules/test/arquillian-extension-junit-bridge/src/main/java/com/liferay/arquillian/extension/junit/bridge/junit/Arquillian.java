@@ -279,56 +279,62 @@ public class Arquillian extends BlockJUnit4ClassRunner {
        }
     }
 
-   @Override
-   protected Statement methodInvoker(final FrameworkMethod method, final Object test)
-   {
-      return new Statement()
-      {
-         @Override
-         public void evaluate() throws Throwable
-         {
-            TestResult result = _testRunnerAdaptor.test(new TestMethodExecutor()
-            {
-               @Override
-               public void invoke(Object... parameters) throws Throwable
-               {
-                  try
-                  {
-                     method.invokeExplosively(test, parameters);
-                  }
-                  catch (Throwable e)
-                  {
-                     // Force a way to return the thrown Exception from the Container to the client.
-                     State.caughtTestException(e);
-                     throw e;
-                  }
-               }
+	@Override
+	protected Statement methodInvoker(
+		FrameworkMethod frameworkMethod, Object testObject) {
 
-               public Method getMethod()
-               {
-                  return method.getMethod();
-               }
+		return new Statement() {
 
-               public Object getInstance()
-               {
-                  return test;
-               }
-            });
-            Throwable throwable = result.getThrowable();
-            if(throwable != null)
-            {
-               if (result.getStatus() == TestResult.Status.SKIPPED)
-               {
-                   if (throwable instanceof SkippedTestExecutionException)
-                   {
-                       result.setThrowable(new AssumptionViolatedException(throwable.getMessage()));
-                   }
-               }
-               throw result.getThrowable();
-            }
-         }
-      };
-   }
+			@Override
+			public void evaluate() throws Throwable {
+				TestResult testResult = _testRunnerAdaptor.test(
+					new TestMethodExecutor() {
+
+						@Override
+						public void invoke(Object... parameters)
+							throws Throwable {
+
+							try {
+								frameworkMethod.invokeExplosively(
+									testObject, parameters);
+							}
+							catch (Throwable t) {
+								State.caughtTestException(t);
+
+								throw t;
+							}
+						}
+
+						@Override
+						public Method getMethod() {
+							return frameworkMethod.getMethod();
+						}
+
+						@Override
+						public Object getInstance() {
+							return testObject;
+						}
+
+					});
+
+				Throwable throwable = testResult.getThrowable();
+
+				if (throwable == null) {
+					return;
+				}
+
+				if ((testResult.getStatus() == TestResult.Status.SKIPPED) &&
+						(throwable instanceof SkippedTestExecutionException)) {
+
+					testResult.setThrowable(
+						new AssumptionViolatedException(
+							throwable.getMessage()));
+				}
+
+				throw throwable;
+			}
+		};
+	}
 
 	private static final ThreadLocal<TestRunnerAdaptor>
 		_testRunnerAdaptorThreadLocal = new ThreadLocal<>();

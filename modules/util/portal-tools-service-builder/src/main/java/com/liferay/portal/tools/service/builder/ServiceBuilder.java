@@ -3947,6 +3947,7 @@ public class ServiceBuilder {
 		Map<String, Object> context = _getContext();
 
 		context.put("apiGradleProjectPath", _getAPIGradleProjectPath());
+		context.put("portalKernelVersion", _getPortalKernelVersion());
 
 		String content = _processTemplate(_tplUADBuildGradle, context);
 
@@ -4918,6 +4919,20 @@ public class ServiceBuilder {
 		sb.append(StringPool.CLOSE_PARENTHESIS);
 
 		return sb.toString();
+	}
+
+	private String _getPortalKernelVersion() throws Exception {
+		if (_osgiModule) {
+			Path dirPath = Paths.get(".");
+
+			for (String markerFile : _MARKER_FILES) {
+				if (Files.exists(dirPath.resolve(markerFile))) {
+					return "default";
+				}
+			}
+		}
+
+		return "3.0.0";
 	}
 
 	private String _getSessionTypeName(int sessionType) {
@@ -6949,6 +6964,17 @@ public class ServiceBuilder {
 	}
 
 	private static final int _DEFAULT_COLUMN_MAX_LENGTH = 75;
+
+	private static final String[] _MARKER_FILES = {
+		".lfrbuild-app-server-lib", ".lfrbuild-ci",
+		".lfrbuild-ci-skip-test-integration-check",
+		".lfrbuild-lowest-major-version", ".lfrbuild-packageinfo",
+		".lfrbuild-portal", ".lfrbuild-portal-deprecated",
+		".lfrbuild-portal-pre", ".lfrbuild-releng-ignore",
+		".lfrbuild-releng-skip-update-file-versions",
+		".lfrbuild-semantic-versioning", ".lfrbuild-slim", ".lfrbuild-static",
+		".lfrbuild-tool", "ci-merge"
+	};
 
 	private static final int _SESSION_TYPE_LOCAL = 1;
 

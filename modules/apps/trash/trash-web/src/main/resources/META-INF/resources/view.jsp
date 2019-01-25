@@ -198,17 +198,9 @@
 							%>
 
 							<liferay-ui:search-container-column-text>
-								<liferay-frontend:icon-vertical-card
-									actionJsp="<%= actionPath %>"
-									actionJspServletContext="<%= application %>"
-									icon="<%= trashRenderer.getIconCssClass() %>"
-									resultRow="<%= row %>"
-									rowChecker="<%= searchContainer.getRowChecker() %>"
-									title="<%= HtmlUtil.escape(trashRenderer.getTitle(locale)) %>"
-									url="<%= viewContentURLString %>"
-								>
-									<%@ include file="/trash_entry_vertical_card.jspf" %>
-								</liferay-frontend:icon-vertical-card>
+								<clay:vertical-card
+									verticalCard="<%= new TrashEntryVerticalCard(trashEntry, trashRenderer, renderRequest, searchContainer.getRowChecker(), viewContentURLString) %>"
+								/>
 							</liferay-ui:search-container-column-text>
 						</c:when>
 						<c:when test="<%= trashDisplayContext.isListView() %>">

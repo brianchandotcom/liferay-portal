@@ -59,6 +59,7 @@ PortletURL portletURL = currentURLObj;
 	namespace="<%= liferayPortletResponse.getNamespace() %>"
 	pathThemeImages="<%= themeDisplay.getPathThemeImages() %>"
 	privateLayout="<%= privateLayout %>"
+	showHiddenLayouts="<%= true %>"
 />
 
 <aui:script>

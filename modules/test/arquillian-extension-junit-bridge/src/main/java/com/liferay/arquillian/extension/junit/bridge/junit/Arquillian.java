@@ -86,11 +86,6 @@ public class Arquillian extends BlockJUnit4ClassRunner {
 	}
 
 	@Override
-	protected List<TestRule> getTestRules(Object target) {
-		return Collections.emptyList();
-	}
-
-	@Override
 	public void run(RunNotifier runNotifier) {
 		_testRunnerAdaptor = _testRunnerAdaptorThreadLocal.get();
 
@@ -315,7 +310,7 @@ public class Arquillian extends BlockJUnit4ClassRunner {
 	private Statement _withRules(
 		FrameworkMethod frameworkMethod, Object target, Statement statement) {
 
-		List<TestRule> testRules = getTestRules(target);
+		List<TestRule> testRules = Collections.emptyList();
 
 		Statement result = statement;
 

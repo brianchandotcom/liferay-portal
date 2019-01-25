@@ -1,6 +1,0 @@
-Bundle-Name: Liferay Headless Blog API
-Bundle-SymbolicName: com.liferay.headless.blog.api
-Bundle-Version: 1.0.0
-Export-Package:\
-	com.liferay.headless.blog.dto,\
-	com.liferay.headless.blog.resource

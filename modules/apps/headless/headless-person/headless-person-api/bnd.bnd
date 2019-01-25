@@ -1,6 +1,0 @@
-Bundle-Name: Liferay Headless Person API
-Bundle-SymbolicName: com.liferay.headless.person.api
-Bundle-Version: 1.0.0
-Export-Package:\
-	com.liferay.headless.person.dto,\
-	com.liferay.headless.person.resource

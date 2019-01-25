@@ -44,8 +44,22 @@ public class DEDataRecordCollectionRequestBuilder {
 			companyId, scopedGroupId, roleNames);
 	}
 
+	public static DEDataRecordCollectionDeleteRecordRequest.Builder
+		deleteRecordBuilder(long deDataRecordId) {
+
+		return new DEDataRecordCollectionDeleteRecordRequest.Builder(
+			deDataRecordId);
+	}
+
 	public static DEDataRecordCollectionGetRequest.Builder getBuilder() {
 		return new DEDataRecordCollectionGetRequest.Builder();
+	}
+
+	public static DEDataRecordCollectionGetRecordRequest.Builder
+		getRecordBuilder(long deDataRecordId) {
+
+		return new DEDataRecordCollectionGetRecordRequest.Builder(
+			deDataRecordId);
 	}
 
 	public static DEDataRecordCollectionSaveRequest.Builder saveBuilder(

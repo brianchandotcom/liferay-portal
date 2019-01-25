@@ -38,6 +38,8 @@ import org.jboss.arquillian.test.spi.execution.SkippedTestExecutionException;
 import org.junit.AssumptionViolatedException;
 import org.junit.internal.runners.model.MultipleFailureException;
 import org.junit.internal.runners.statements.Fail;
+import org.junit.rules.MethodRule;
+import org.junit.rules.RunRules;
 import org.junit.rules.TestRule;
 import org.junit.runner.Result;
 import org.junit.runner.notification.Failure;
@@ -201,16 +203,13 @@ public class Arquillian extends BlockJUnit4ClassRunner {
 		final Object test = testObject;
        try
        {
-           Method withRules = BlockJUnit4ClassRunner.class.getDeclaredMethod("withRules",
-                   new Class[] {FrameworkMethod.class, Object.class, Statement.class});
-           withRules.setAccessible(true);
-
            Statement statement = methodInvoker(method, test);
            statement = possiblyExpectingExceptions(method, test, statement);
            statement = withPotentialTimeout(method, test, statement);
 
            final Statement stmtwithLifecycle = statement;
-           final Statement stmtWithRules = (Statement)withRules.invoke(this, new Object[] {method, test, statement});
+           final Statement stmtWithRules = _withRules(method, test, statement);
+
            return new Statement() {
 
                @Override
@@ -312,6 +311,45 @@ public class Arquillian extends BlockJUnit4ClassRunner {
 			}
 		};
 	}
+
+	private Statement _withRules(
+		FrameworkMethod frameworkMethod, Object target, Statement statement) {
+
+		List<TestRule> testRules = getTestRules(target);
+
+		Statement result = statement;
+
+		result = _withMethodRules(frameworkMethod, testRules, target, result);
+
+		result = _withTestRules(frameworkMethod, testRules, result);
+
+		return result;
+	}
+
+	private Statement _withMethodRules(
+		FrameworkMethod frameworkMethod, List<TestRule> testRules,
+		Object target, Statement result) {
+
+		for (MethodRule each : _getMethodRules(target)) {
+			if (!testRules.contains(each)) {
+				result = each.apply(result, frameworkMethod, target);
+			}
+		}
+
+		return result;
+	}
+
+	private List<MethodRule> _getMethodRules(Object target) {
+		return rules(target);
+	}
+
+	private Statement _withTestRules(
+		FrameworkMethod frameworkMethod, List<TestRule> testRules,
+		Statement statement) {
+
+		return testRules.isEmpty() ? statement : new RunRules(statement, testRules, describeChild(frameworkMethod));
+	}
+
 
 	private static final ThreadLocal<TestRunnerAdaptor>
 		_testRunnerAdaptorThreadLocal = new ThreadLocal<>();

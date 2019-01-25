@@ -1,0 +1,3 @@
+Bundle-Name: Liferay Rest Booster Implementation
+Bundle-SymbolicName: com.liferay.rest.booster.impl
+Bundle-Version: 1.0.0

@@ -31,6 +31,7 @@ const ConnectedSegmentSelector = getConnectedComponent(
 	SegmentSelector,
 	[
 		'classPK',
+		'portletNamespace',
 		'segmentId',
 		'segments'
 	]

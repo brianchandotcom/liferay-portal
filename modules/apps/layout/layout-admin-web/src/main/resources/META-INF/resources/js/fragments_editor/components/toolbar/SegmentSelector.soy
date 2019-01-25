@@ -5,6 +5,7 @@
  */
 {template .render}
 	{@param? _handleSegmentChange: any}
+	{@param? portletNamespace: string}
 	{@param? segmentId: string}
 	{@param? segments: list<[
 		label: string,
@@ -15,7 +16,7 @@
 		<select
 			class="form-control form-control-sm"
 			data-onchange="{$_handleSegmentChange}"
-			id="segment-selector"
+			id="{$portletNamespace}SegmentSelector"
 		>
 			{foreach $segment in $segments}
 				{if $segment.id == $segmentId}

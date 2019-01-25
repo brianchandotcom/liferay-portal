@@ -60,6 +60,12 @@ public class DEDataRecordCollectionSaveModelPermissionsRequestExecutor {
 			actionIds.add(ActionKeys.DELETE);
 		}
 
+		if (deDataRecordCollectionSaveModelPermissionsRequest.
+				isDeleteDataRecord()) {
+
+			actionIds.add(DEActionKeys.DELETE_DATA_RECORD);
+		}
+
 		if (deDataRecordCollectionSaveModelPermissionsRequest.isUpdate()) {
 			actionIds.add(ActionKeys.UPDATE);
 		}
@@ -72,6 +78,12 @@ public class DEDataRecordCollectionSaveModelPermissionsRequestExecutor {
 
 		if (deDataRecordCollectionSaveModelPermissionsRequest.isView()) {
 			actionIds.add(ActionKeys.VIEW);
+		}
+
+		if (deDataRecordCollectionSaveModelPermissionsRequest.
+				isViewDataRecord()) {
+
+			actionIds.add(DEActionKeys.VIEW_DATA_RECORD);
 		}
 
 		long deDataRecordCollectionId =

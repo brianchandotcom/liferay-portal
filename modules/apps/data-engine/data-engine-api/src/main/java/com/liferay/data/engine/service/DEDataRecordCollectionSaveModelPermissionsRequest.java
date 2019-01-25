@@ -116,6 +116,19 @@ public final class DEDataRecordCollectionSaveModelPermissionsRequest {
 
 	/**
 	 * Returns true or false to inform if one of the permissions to grant is
+	 * the one that allows the user to delete any
+	 * {@link DEDataRecord} belonging to the Data Record Collection ID
+	 * set in the request
+	 *
+	 * @return deleteDataRecord
+	 * @review
+	 */
+	public boolean isDeleteDataRecord() {
+		return _deleteDataRecord;
+	}
+
+	/**
+	 * Returns true or false to inform if one of the permissions to grant is
 	 * the one that allows the user to update the
 	 * {@link DEDataRecordCollection} related to the Data Record Collection ID
 	 * set in the request
@@ -146,11 +159,24 @@ public final class DEDataRecordCollectionSaveModelPermissionsRequest {
 	 * {@link DEDataRecordCollection} related to the Data Record Collection ID
 	 * set in the request
 	 *
-	 * @return addDataRecordCollection
+	 * @return view
 	 * @review
 	 */
 	public boolean isView() {
 		return _view;
+	}
+
+	/**
+	 * Returns true or false to inform if one of the permissions to grant is
+	 * the one that allows the user to view any
+	 * {@link DEDataRecord} belonging to the Data Record Collection ID
+	 * set in the request
+	 *
+	 * @return viewDataRecord
+	 * @review
+	 */
+	public boolean isViewDataRecord() {
+		return _viewDataRecord;
 	}
 
 	/**
@@ -232,6 +258,21 @@ public final class DEDataRecordCollectionSaveModelPermissionsRequest {
 
 		/**
 		 * If this method is set on the permission request, it will set the
+		 * permission to allow the user to delete any  {@link DEDataRecord}
+		 * belong to the {@link DEDataRecordCollection} included in the request.
+		 *
+		 * @return {@link Builder}
+		 * @review
+		 */
+		public Builder allowDeleteDataRecord() {
+			_deDataRecordCollectionSaveModelPermissionsRequest.
+				_deleteDataRecord = true;
+
+			return this;
+		}
+
+		/**
+		 * If this method is set on the permission request, it will set the
 		 * permission to allow the user to update {@link DEDataRecordCollection}
 		 * included in the request.
 		 *
@@ -274,6 +315,21 @@ public final class DEDataRecordCollectionSaveModelPermissionsRequest {
 		}
 
 		/**
+		 * If this method is set on the permission request, it will set the
+		 * permission to allow the user to view all the {@link DEDataRecord}
+		 * belong to the {@link DEDataRecordCollection} included in the request.
+		 *
+		 * @return {@link Builder}
+		 * @review
+		 */
+		public Builder allowViewDataRecord() {
+			_deDataRecordCollectionSaveModelPermissionsRequest.
+				_viewDataRecord = true;
+
+			return this;
+		}
+
+		/**
 		 * Constructs the Save Data Record Collections Model Permission
 		 * request.
 		 *
@@ -294,6 +350,7 @@ public final class DEDataRecordCollectionSaveModelPermissionsRequest {
 	private long _companyId;
 	private long _deDataRecordCollectionId;
 	private boolean _delete;
+	private boolean _deleteDataRecord;
 	private long _groupId;
 	private List<String> _roleNames;
 	private long _scopedGroupId;
@@ -301,5 +358,6 @@ public final class DEDataRecordCollectionSaveModelPermissionsRequest {
 	private boolean _update;
 	private boolean _updateDataRecord;
 	private boolean _view;
+	private boolean _viewDataRecord;
 
 }

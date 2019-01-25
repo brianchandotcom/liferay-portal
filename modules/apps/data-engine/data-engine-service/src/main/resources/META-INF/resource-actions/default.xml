@@ -58,20 +58,25 @@
 			<supports>
 				<action-key>ADD_DATA_RECORD</action-key>
 				<action-key>DELETE</action-key>
+				<action-key>DELETE_DATA_RECORD</action-key>
 				<action-key>PERMISSIONS</action-key>
 				<action-key>UPDATE</action-key>
 				<action-key>UPDATE_DATA_RECORD</action-key>
 				<action-key>VIEW</action-key>
+				<action-key>VIEW_DATA_RECORD</action-key>
 			</supports>
 			<site-member-defaults>
 				<action-key>VIEW</action-key>
+				<action-key>VIEW_DATA_RECORD</action-key>
 			</site-member-defaults>
 			<guest-defaults>
 				<action-key>VIEW</action-key>
+				<action-key>VIEW_DATA_RECORD</action-key>
 			</guest-defaults>
 			<guest-unsupported>
 				<action-key>ADD_DATA_RECORD</action-key>
 				<action-key>DELETE</action-key>
+				<action-key>DELETE_DATA_RECORD</action-key>
 				<action-key>PERMISSIONS</action-key>
 				<action-key>UPDATE</action-key>
 				<action-key>UPDATE_DATA_RECORD</action-key>

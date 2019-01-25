@@ -2,12 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {DragDropContext as dragDropContext} from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
-import CriteriaSidebar from '../criteria_sidebar/CriteriaSidebar.es';
-import {sub} from '../../utils/utils.es';
+import Conjunction from './Conjunction.es';
 import CriteriaBuilder from './CriteriaBuilder.es';
+import CriteriaSidebar from '../criteria_sidebar/CriteriaSidebar.es';
+import getCN from 'classnames';
 import {buildQueryString, translateQueryToCriteria} from '../../utils/odata.es';
 import {CONJUNCTIONS} from '../../utils/constants.es';
-import Conjunction from './Conjunction.es';
+import {sub} from '../../utils/utils.es';
 
 const conjunctionShape = PropTypes.shape(
 	{
@@ -212,64 +213,15 @@ class ContributorBuilder extends React.Component {
 				propertyGroup => selectedContributor.propertyKey === propertyGroup.propertyKey
 			);
 
+		const rootClasses = getCN(
+			'criteria-builder-root',
+			{
+				editing: typeof editingId !== 'undefined'
+			}
+		);
+
 		return (
-			<div className="criteria-builder-root">
-				<div className="criteria-builder-section-main">
-					{contributors.map(
-						(criteria, i) => (
-							<React.Fragment key={i}>
-								<div className="sheet-lg">
-									{(i !== 0) &&
-										<React.Fragment>
-											<Conjunction
-												className="ml-0"
-												conjunctionName={criteria.conjunctionId}
-												editing
-												onClick={this._handleRootConjunctionClick}
-												supportedConjunctions={supportedConjunctions}
-											/>
-
-											<input
-												id={criteria.conjunctionInputId}
-												readOnly
-												type="hidden"
-												value={criteria.conjunctionId}
-											/>
-										</React.Fragment>
-									}
-								</div>
-
-								<CriteriaBuilder
-									criteria={criteria.criteriaMap}
-									editing={editingId === i}
-									entityName={criteria.entityName}
-									id={i}
-									modelLabel={criteria.modelLabel}
-									onChange={this._handleCriteriaChange}
-									onEditToggle={this._handleCriteriaEdit}
-									propertyKey={criteria.propertyKey}
-									supportedConjunctions={supportedConjunctions}
-									supportedOperators={supportedOperators}
-									supportedProperties={criteria.properties}
-									supportedPropertyTypes={supportedPropertyTypes}
-								/>
-
-								<div className="form-group">
-									<input
-										className="field form-control"
-										data-testid={criteria.inputId}
-										id={criteria.inputId}
-										name={criteria.inputId}
-										readOnly
-										type="hidden"
-										value={criteria.query}
-									/>
-								</div>
-							</React.Fragment>
-						)
-					)}
-				</div>
-
+			<div className={rootClasses}>
 				<div className="criteria-builder-section-sidebar">
 					<CriteriaSidebar
 						propertyKey={selectedProperty && selectedProperty.propertyKey}
@@ -279,6 +231,62 @@ class ContributorBuilder extends React.Component {
 							[selectedProperty && selectedProperty.name]
 						)}
 					/>
+				</div>
+
+				<div className="criteria-builder-section-main">
+					<div className="contributor-container">
+						<div className="container-fluid container-fluid-max-xl">
+							{contributors.map(
+								(criteria, i) => (
+									<React.Fragment key={i}>
+										{(i !== 0) &&
+											<React.Fragment>
+												<Conjunction
+													className="ml-0"
+													conjunctionName={criteria.conjunctionId}
+													editing
+													onClick={this._handleRootConjunctionClick}
+													supportedConjunctions={supportedConjunctions}
+												/>
+
+												<input
+													id={criteria.conjunctionInputId}
+													readOnly
+													type="hidden"
+													value={criteria.conjunctionId}
+												/>
+											</React.Fragment>
+										}
+
+										<CriteriaBuilder
+											criteria={criteria.criteriaMap}
+											editing={editingId === i}
+											entityName={criteria.entityName}
+											id={i}
+											modelLabel={criteria.modelLabel}
+											onChange={this._handleCriteriaChange}
+											onEditToggle={this._handleCriteriaEdit}
+											propertyKey={criteria.propertyKey}
+											supportedConjunctions={supportedConjunctions}
+											supportedOperators={supportedOperators}
+											supportedProperties={criteria.properties}
+											supportedPropertyTypes={supportedPropertyTypes}
+										/>
+
+										<input
+											className="field form-control"
+											data-testid={criteria.inputId}
+											id={criteria.inputId}
+											name={criteria.inputId}
+											readOnly
+											type="hidden"
+											value={criteria.query}
+										/>
+									</React.Fragment>
+								)
+							)}
+						</div>
+					</div>
 				</div>
 			</div>
 		);

@@ -1,15 +1,23 @@
 .criteria-builder-root {
 	height: 100%;
-	overflow: hidden;
-	position: relative;
+
+	.criteria-builder-section-main,
+	.criteria-builder-section-sidebar {
+		transition: all 0.5s ease;
+	}
 
 	.criteria-builder-section-main {
-		flex: 1;
+		display: flex;
 		height: 100%;
-		overflow: auto;
-		padding-right: 32px;
+		padding-right: 0;
+		width: 100%;
 
-		margin-right: $sidebarWidth;
+		.contributor-container {
+			background-color: $lightBackground;
+			overflow: auto;
+			position: relative;
+			width: 100%;
+		}
 
 		.sheet {
 			margin-top: 24px;
@@ -20,9 +28,12 @@
 	.criteria-builder-section-sidebar {
 		height: 100%;
 		position: absolute;
+		overflow: hidden;
 		right: 0;
 		top: 0;
-		width: $sidebarWidth;
+		visibility: hidden;
+		width: 0;
+		z-index: 10;
 	}
 
 	.criteria-builder-toolbar {
@@ -60,7 +71,14 @@
 		padding: 16px 32px;
 	}
 
-	&.read-only .criteria-group-root.criteria-group-item {
-		padding: 8px;
+	&.editing {
+		.criteria-builder-section-main {
+			padding-right: $sidebarWidth;
+		}
+
+		.criteria-builder-section-sidebar {
+			visibility: visible;
+			width: $sidebarWidth;
+		}
 	}
 }

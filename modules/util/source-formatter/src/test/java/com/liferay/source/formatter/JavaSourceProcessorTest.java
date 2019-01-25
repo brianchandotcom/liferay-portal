@@ -386,6 +386,10 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 			"PackageName.testjava",
 			"The declared package 'com.liferay.source.formatter.hello.world' " +
 				"does not match the expected package");
+		test(
+			"IncorrectPackageNameBundleActivator.testjava",
+			"Class 'IncorrectPackageNameBundleActivator' should be in package " +
+				"'internal.activator'");
 	}
 
 	@Test

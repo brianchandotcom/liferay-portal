@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.Locale;
 import java.util.Map;
 
@@ -101,9 +101,8 @@ public class LayoutPageTemplateStructureRenderUtil {
 					else {
 						renderFragmentEntryLink =
 							FragmentEntryRenderUtil.renderFragmentEntryLink(
-								fragmentEntryLink, mode,
-								new HashMap<String, Object>(), request,
-								response, locale);
+								fragmentEntryLink, mode, Collections.emptyMap(),
+								request, response, locale);
 					}
 
 					sb.append(renderFragmentEntryLink);

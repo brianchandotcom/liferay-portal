@@ -2,7 +2,7 @@ import OpenSimpleInputModal from 'frontend-js-web/liferay/modal/commands/OpenSim
 import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
 import {Config} from 'metal-state';
 
-class ElementsDefaultEventHandler extends PortletBase {
+class FragmentEntryDropdownDefaultEventHandler extends PortletBase {
 	handleItemClicked(event) {
 		const itemData = event.data.item.data;
 
@@ -18,8 +18,6 @@ class ElementsDefaultEventHandler extends PortletBase {
 	}
 
 	moveFragmentEntry(itemData) {
-		const namespace = this.namespace;
-
 		Liferay.Util.selectEntity(
 			{
 				dialog: {
@@ -34,12 +32,12 @@ class ElementsDefaultEventHandler extends PortletBase {
 			},
 			function(selectedItem) {
 				if (selectedItem) {
-					document.querySelector(`#${namespace}fragmentCollectionId`).value = selectedItem.id;
-					document.querySelector(`#${namespace}fragmentEntryIds`).value = itemData.fragmentEntryId;
+					this.one('#fragmentCollectionId').value = selectedItem.id;
+					this.one('#fragmentEntryIds').value = itemData.fragmentEntryId;
 
-					submitForm(document.querySelector(`#${namespace}moveFragmentEntryFm`));
+					submitForm(this.one('#moveFragmentEntryFm'));
 				}
-			}
+			}.bind(this)
 		);
 	}
 
@@ -61,8 +59,6 @@ class ElementsDefaultEventHandler extends PortletBase {
 	}
 
 	updateFragmentEntryPreview(itemData) {
-		const namespace = this.namespace;
-
 		AUI().use(
 			'liferay-item-selector-dialog',
 			A => {
@@ -76,12 +72,12 @@ class ElementsDefaultEventHandler extends PortletBase {
 								if (selectedItem) {
 									const itemValue = JSON.parse(selectedItem.value);
 
-									document.querySelector(`#${namespace}fragmentEntryId`).value = itemData.fragmentEntryId;
-									document.querySelector(`#${namespace}fileEntryId`).value = itemValue.fileEntryId;
+									this.one('#fragmentEntryId').value = itemData.fragmentEntryId;
+									this.one('#fileEntryId').value = itemValue.fileEntryId;
 
-									submitForm(document.querySelector(`#${namespace}fragmentEntryPreviewFm`));
+									submitForm(this.one('#fragmentEntryPreviewFm'));
 								}
-							}
+							}.bind(this)
 						},
 						'strings.add': Liferay.Language.get('ok'),
 						title: Liferay.Language.get('fragment-thumbnail'),
@@ -99,9 +95,9 @@ class ElementsDefaultEventHandler extends PortletBase {
 	}
 }
 
-ElementsDefaultEventHandler.STATE = {
+FragmentEntryDropdownDefaultEventHandler.STATE = {
 	namespace: Config.string(),
 	spritemap: Config.string(),
 };
 
-export default ElementsDefaultEventHandler;
+export default FragmentEntryDropdownDefaultEventHandler;

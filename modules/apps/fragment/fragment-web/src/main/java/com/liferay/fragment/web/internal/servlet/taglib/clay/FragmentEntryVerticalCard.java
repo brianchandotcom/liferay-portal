@@ -77,7 +77,7 @@ public class FragmentEntryVerticalCard
 
 	@Override
 	public String getDefaultEventHandler() {
-		return FragmentWebKeys.FRAGMENT_ENTRY_ELEMENTS_DEFAULT_EVENT_HANDLER;
+		return FragmentWebKeys.FRAGMENT_ENTRY_DROPDOWN_DEFAULT_EVENT_HANDLER;
 	}
 
 	@Override

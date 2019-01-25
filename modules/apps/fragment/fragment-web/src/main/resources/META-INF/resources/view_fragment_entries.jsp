@@ -74,10 +74,10 @@ FragmentManagementToolbarDisplayContext fragmentManagementToolbarDisplayContext 
 </aui:form>
 
 <c:if test="<%= FragmentPermission.contains(permissionChecker, scopeGroupId, FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES) %>">
-	<aui:script require='<%= npmResolvedPackageName + "/js/ElementsDefaultEventHandler.es as ElementsDefaultEventHandler" %>'>
+	<aui:script require='<%= npmResolvedPackageName + "/js/FragmentEntryDropdownDefaultEventHandler.es as FragmentEntryDropdownDefaultEventHandler" %>'>
 		Liferay.component(
-			'<%= FragmentWebKeys.FRAGMENT_ENTRY_ELEMENTS_DEFAULT_EVENT_HANDLER %>',
-			new ElementsDefaultEventHandler.default(
+			'<%= FragmentWebKeys.FRAGMENT_ENTRY_DROPDOWN_DEFAULT_EVENT_HANDLER %>',
+			new FragmentEntryDropdownDefaultEventHandler.default(
 				{
 					namespace: '<portlet:namespace />',
 					spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg'

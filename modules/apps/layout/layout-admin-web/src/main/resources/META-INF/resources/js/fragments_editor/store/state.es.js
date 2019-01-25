@@ -365,7 +365,8 @@ const INITIAL_STATE = {
 	 * @type {string}
 	 */
 	segmentId: Config
-		.string(),
+		.string()
+		.value(''),
 
 	/**
 	 * List of available segments

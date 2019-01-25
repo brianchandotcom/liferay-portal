@@ -36,10 +36,8 @@ import org.jboss.arquillian.test.spi.TestRunnerAdaptor;
 import org.jboss.arquillian.test.spi.TestRunnerAdaptorBuilder;
 import org.jboss.arquillian.test.spi.execution.SkippedTestExecutionException;
 import org.junit.AssumptionViolatedException;
-import org.junit.internal.runners.model.MultipleFailureException;
 import org.junit.internal.runners.statements.Fail;
 import org.junit.rules.MethodRule;
-import org.junit.rules.RunRules;
 import org.junit.rules.TestRule;
 import org.junit.runner.Result;
 import org.junit.runner.notification.Failure;
@@ -215,7 +213,7 @@ public class Arquillian extends BlockJUnit4ClassRunner {
                @Override
                public void evaluate() throws Throwable {
                    final AtomicInteger integer = new AtomicInteger();
-                   List<Throwable> exceptions = new ArrayList<Throwable>();
+                   Throwable throwable = null;
 
                    try {
                        _testRunnerAdaptor.fireCustomLifecycle(new BeforeRules(test, method.getMethod(), new LifecycleMethodExecutor() {
@@ -230,24 +228,23 @@ public class Arquillian extends BlockJUnit4ClassRunner {
                             stmtwithLifecycle.evaluate();
                        }
                    } catch(Throwable t) {
-                       exceptions.add(t);
+					   throwable = t;
                    }
                    finally {
                        try {
                            _testRunnerAdaptor.fireCustomLifecycle(new AfterRules(test, method.getMethod(), LifecycleMethodExecutor.NO_OP));
                        } catch(Throwable t) {
-                           exceptions.add(t);
+						   if (throwable != null) {
+							   t.addSuppressed(throwable);
+						   }
+
+						   throwable = t;
                        }
                    }
-                   if(exceptions.isEmpty())
-                   {
-                      return;
-                   }
-                   if(exceptions.size() == 1)
-                   {
-                      throw exceptions.get(0);
-                   }
-                   throw new MultipleFailureException(exceptions);
+
+				   if (throwable != null) {
+					   throw throwable;
+				   }
                }
            };
        } catch(Exception e) {

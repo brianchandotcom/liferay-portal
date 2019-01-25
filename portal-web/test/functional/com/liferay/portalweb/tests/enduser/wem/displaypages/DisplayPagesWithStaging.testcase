@@ -15,7 +15,7 @@ definition {
 			JSONGroup.addGroup(groupName = "Test Site Name");
 		}
 
-		task ("Activate staging") {
+		task ("Activate local live staging") {
 			Staging.openStagingAdmin(siteURLKey = "test-site-name");
 
 			Staging.activateStagingCP(siteName = "Test Site Name");

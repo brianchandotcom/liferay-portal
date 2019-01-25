@@ -101,84 +101,71 @@ public class Arquillian extends BlockJUnit4ClassRunner {
 		return statement;
 	}
 
-   @Override
-   public void run(final RunNotifier notifier)
-   {
+	@Override
+	public void run(RunNotifier runNotifier) {
+		_testRunnerAdaptor = _testRunnerAdaptorThreadLocal.get();
 
-      // first time we're being initialized
-      if(!StateUtil.hasTestAdaptor())
-      {
-         // no, initialization has been attempted before and failed, refuse to do anything else
+		if (_testRunnerAdaptor == null) {
+			Throwable throwable = StateUtil.getInitializationException();
 
-		Throwable throwable = StateUtil.getInitializationException();
-
-         if(throwable != null)
-         {
-            // failed on suite level, ignore children
-            //notifier.fireTestIgnored(getDescription());
-            notifier.fireTestFailure(
-                  new Failure(getDescription(),
-                        new RuntimeException(
+			if(throwable != null) {
+				runNotifier.fireTestFailure(
+					new Failure(
+						getDescription(),
+						new RuntimeException(
                               "Arquillian has previously been attempted initialized, but failed. See cause for previous exception",
                               throwable)));
-         }
-         else
-         {
-            try
-            {
-               // ARQ-1742 If exceptions happen during boot
-               TestRunnerAdaptor adaptor = TestRunnerAdaptorBuilder.build();
-               // don't set it if beforeSuite fails
-               adaptor.beforeSuite();
-               StateUtil.testAdaptor(adaptor);
-            }
-            catch (Exception e)
-            {
-               // caught exception during BeforeSuite, mark this as failed
-               StateUtil.caughtInitializationException(e);
-               notifier.fireTestFailure(new Failure(getDescription(), e));
-            }
-         }
-      }
-      notifier.addListener(new RunListener()
-      {
-         @Override
-         public void testRunFinished(Result result) throws Exception
-         {
-            shutdown();
-         }
+			}
+			else {
+				try {
+					_testRunnerAdaptor = TestRunnerAdaptorBuilder.build();
 
-         private void shutdown()
-         {
-            try
-            {
-				  try
-				  {
-					 if(adaptor != null)
-					 {
-						adaptor.afterSuite();
-						adaptor.shutdown();
-					 }
-				  }
-				  finally
-				  {
-					 StateUtil.clean();
-				  }
+					_testRunnerAdaptor.beforeSuite();
 
-               adaptor = null;
-            }
-            catch (Exception e)
-            {
-               throw new RuntimeException("Could not run @AfterSuite", e);
-            }
-         }
-      });
-      // initialization ok, run children
-      if(StateUtil.hasTestAdaptor())
-      {
-         adaptor = StateUtil.getTestAdaptor();
-         super.run(notifier);
-      }
+					_testRunnerAdaptorThreadLocal.set(_testRunnerAdaptor);
+				}
+				catch (Exception e) {
+					StateUtil.caughtInitializationException(e);
+
+					runNotifier.fireTestFailure(new Failure(getDescription(), e));
+				}
+			}
+		}
+
+		runNotifier.addListener(
+			new RunListener() {
+
+				@Override
+				public void testRunFinished(Result result) throws Exception {
+					shutdown();
+				}
+
+				private void shutdown() {
+					try {
+						try {
+							if (_testRunnerAdaptor != null) {
+								_testRunnerAdaptor.afterSuite();
+								_testRunnerAdaptor.shutdown();
+							}
+						}
+						finally {
+							StateUtil.clean();
+
+							_testRunnerAdaptorThreadLocal.remove();
+						}
+
+						_testRunnerAdaptor = null;
+					}
+					catch (Exception e) {
+						throw new RuntimeException(
+							"Could not run @AfterSuite", e);
+					}
+				}
+			});
+
+		if(_testRunnerAdaptor != null) {
+			super.run(runNotifier);
+		}
    }
 
 	@Override
@@ -189,7 +176,8 @@ public class Arquillian extends BlockJUnit4ClassRunner {
 			public void evaluate() throws Throwable {
 				TestClass testClass = getTestClass();
 
-				adaptor.beforeClass(testClass.getJavaClass(), () -> {});
+				_testRunnerAdaptor.beforeClass(
+					testClass.getJavaClass(), () -> {});
 
 				statement.evaluate();
 			}
@@ -214,7 +202,8 @@ public class Arquillian extends BlockJUnit4ClassRunner {
 				TestClass testClass = getTestClass();
 
 				try {
-					adaptor.afterClass(testClass.getJavaClass(), () -> {});
+					_testRunnerAdaptor.afterClass(
+						testClass.getJavaClass(), () -> {});
 				}
 				catch (Throwable t) {
 					if (throwable != null) {
@@ -269,7 +258,7 @@ public class Arquillian extends BlockJUnit4ClassRunner {
                    List<Throwable> exceptions = new ArrayList<Throwable>();
 
                    try {
-                       adaptor.fireCustomLifecycle(new BeforeRules(test, method.getMethod(), new LifecycleMethodExecutor() {
+                       _testRunnerAdaptor.fireCustomLifecycle(new BeforeRules(test, method.getMethod(), new LifecycleMethodExecutor() {
                            @Override
                            public void invoke() throws Throwable {
                                integer.incrementAndGet();
@@ -291,7 +280,7 @@ public class Arquillian extends BlockJUnit4ClassRunner {
                    }
                    finally {
                        try {
-                           adaptor.fireCustomLifecycle(new AfterRules(test, method.getMethod(), LifecycleMethodExecutor.NO_OP));
+                           _testRunnerAdaptor.fireCustomLifecycle(new AfterRules(test, method.getMethod(), LifecycleMethodExecutor.NO_OP));
                        } catch(Throwable t) {
                            State.caughtExceptionAfterJunit(t);
                            exceptions.add(t);
@@ -321,7 +310,7 @@ public class Arquillian extends BlockJUnit4ClassRunner {
          @Override
          public void evaluate() throws Throwable
          {
-            TestResult result = adaptor.test(new TestMethodExecutor()
+            TestResult result = _testRunnerAdaptor.test(new TestMethodExecutor()
             {
                @Override
                public void invoke(Object... parameters) throws Throwable
@@ -393,56 +382,16 @@ public class Arquillian extends BlockJUnit4ClassRunner {
 			}
 		}
 
-		public static TestRunnerAdaptor getTestAdaptor() {
-			try {
-				return (TestRunnerAdaptor)_getTestAdaptorMethod.invoke(null);
-			}
-			catch (ReflectiveOperationException roe) {
-				throw new RuntimeException(roe);
-			}
-		}
-
-		public static boolean hasTestAdaptor() {
-			try {
-				return (boolean)_hasTestAdaptorMethod.invoke(null);
-			}
-			catch (ReflectiveOperationException roe) {
-				throw new RuntimeException(roe);
-			}
-		}
-
-		public static void testAdaptor(TestRunnerAdaptor testRunnerAdaptor) {
-			try {
-				_testAdaptorMethod.invoke(null, testRunnerAdaptor);
-			}
-			catch (ReflectiveOperationException roe) {
-				throw new RuntimeException(roe);
-			}
-		}
-
 		private static final Method _caughtInitializationExceptionMethod;
 		private static final Method _cleanMethod;
 		private static final Method _getInitializationExceptionMethod;
-		private static final Method _getTestAdaptorMethod;
-		private static final Method _hasTestAdaptorMethod;
-		private static final Method _testAdaptorMethod;
 
 		static {
 			try {
-				_hasTestAdaptorMethod = State.class.getDeclaredMethod(
-					"hasTestAdaptor");
-
-				_hasTestAdaptorMethod.setAccessible(true);
-
 				_getInitializationExceptionMethod = State.class.getDeclaredMethod(
 					"getInitializationException");
 
 				_getInitializationExceptionMethod.setAccessible(true);
-
-				_testAdaptorMethod = State.class.getDeclaredMethod(
-					"testAdaptor", TestRunnerAdaptor.class);
-
-				_testAdaptorMethod.setAccessible(true);
 
 				_caughtInitializationExceptionMethod =
 					State.class.getDeclaredMethod(
@@ -453,11 +402,6 @@ public class Arquillian extends BlockJUnit4ClassRunner {
 				_cleanMethod = State.class.getDeclaredMethod("clean");
 
 				_cleanMethod.setAccessible(true);
-
-				_getTestAdaptorMethod = State.class.getDeclaredMethod(
-					"getTestAdaptor");
-
-				_getTestAdaptorMethod.setAccessible(true);
 			}
 			catch (ReflectiveOperationException roe) {
 				throw new ExceptionInInitializerError(roe);
@@ -465,6 +409,9 @@ public class Arquillian extends BlockJUnit4ClassRunner {
 		}
 	}
 
-   private TestRunnerAdaptor adaptor;
+	private static final ThreadLocal<TestRunnerAdaptor>
+		_testRunnerAdaptorThreadLocal = new ThreadLocal<>();
+
+	private TestRunnerAdaptor _testRunnerAdaptor;
 
 }

@@ -21,6 +21,7 @@
 			</site-member-defaults>
 			<guest-unsupported>
 				<action-key>ADD_DATA_DEFINITION</action-key>
+				<action-key>ADD_DATA_RECORD_COLLECTION</action-key>
 				<action-key>DEFINE_PERMISSIONS</action-key>
 			</guest-unsupported>
 		</permissions>
@@ -47,7 +48,9 @@
 				<action-key>VIEW</action-key>
 			</guest-defaults>
 			<guest-unsupported>
+				<action-key>DELETE</action-key>
 				<action-key>PERMISSIONS</action-key>
+				<action-key>UPDATE</action-key>
 			</guest-unsupported>
 		</permissions>
 	</model-resource>
@@ -73,7 +76,9 @@
 				<action-key>VIEW</action-key>
 			</guest-defaults>
 			<guest-unsupported>
+				<action-key>DELETE</action-key>
 				<action-key>PERMISSIONS</action-key>
+				<action-key>UPDATE</action-key>
 			</guest-unsupported>
 		</permissions>
 	</model-resource>

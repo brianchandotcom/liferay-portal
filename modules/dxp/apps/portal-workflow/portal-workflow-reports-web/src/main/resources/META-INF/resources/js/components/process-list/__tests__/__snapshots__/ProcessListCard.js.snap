@@ -66,17 +66,13 @@ exports[`Should render component 1`] = `
       <h3
         className="text-center"
       >
-
         No Current Reports
-
       </h3>
       <div
         className="sheet-text text-center"
       >
         <p>
-
           Once there are active processes, reports will appear here.
-
         </p>
       </div>
     </div>
@@ -150,17 +146,13 @@ exports[`Should render component with 4 records 1`] = `
       <h3
         className="text-center"
       >
-
         No Current Reports
-
       </h3>
       <div
         className="sheet-text text-center"
       >
         <p>
-
           Once there are active processes, reports will appear here.
-
         </p>
       </div>
     </div>
@@ -234,17 +226,13 @@ exports[`Should render component with 10 records 1`] = `
       <h3
         className="text-center"
       >
-
         No Current Reports
-
       </h3>
       <div
         className="sheet-text text-center"
       >
         <p>
-
           Once there are active processes, reports will appear here.
-
         </p>
       </div>
     </div>

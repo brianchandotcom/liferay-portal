@@ -19,7 +19,7 @@ package com.liferay.portal.tools.rest.builder;
  */
 public class RESTBuilderArgs {
 
-	public static final String API_DIR_NAME = "../rest-api/src/main/java";
+	public static final String API_DIR_NAME = "../sample-api/src/main/java";
 
 	public static final String API_PACKAGE_PATH = "com.example.sample";
 
@@ -29,7 +29,7 @@ public class RESTBuilderArgs {
 
 	public static final String APPLICATION_NAME = "sample";
 
-	public static final String AUTHOR = "John Doe";
+	public static final String AUTHOR = "Brian Wing Shun Chan";
 
 	public static final String INPUT_FILE_NAME = "rest.yaml";
 

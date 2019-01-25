@@ -25,6 +25,7 @@ import java.util.List;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputFile;
 import org.gradle.api.tasks.JavaExec;
+import org.gradle.api.tasks.Optional;
 
 /**
  * @author Peter Shin
@@ -73,6 +74,7 @@ public class BuildRESTTask extends JavaExec {
 	}
 
 	@InputFile
+	@Optional
 	public File getCopyrightFile() {
 		return GradleUtil.toFile(getProject(), _copyrightFile);
 	}
@@ -130,6 +132,10 @@ public class BuildRESTTask extends JavaExec {
 	}
 
 	private String _relativize(File file) {
+		if (file == null) {
+			return null;
+		}
+
 		String relativePath = FileUtil.relativize(file, getWorkingDir());
 
 		return relativePath.replace('\\', '/');

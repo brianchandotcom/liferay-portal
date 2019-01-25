@@ -2,18 +2,20 @@ import Component from 'metal-component';
 import Soy from 'metal-soy';
 import getConnectedComponent from '../../store/ConnectedComponent.es';
 import templates from './SegmentSelector.soy';
-import {
-	CHANGE_SEGMENT_ID
-} from '../../actions/actions.es';
+import {CHANGE_SEGMENT_ID} from '../../actions/actions.es';
 
+/**
+ * SegmentSelector
+ */
 class SegmentSelector extends Component {
 
 	/**
+	 * @param {object} event
 	 * @private
 	 * @review
 	 */
 	_handleSegmentChange(event) {
-		const value = event.target.value;
+		const {value} = event.target;
 
 		this.store.dispatchAction(
 			CHANGE_SEGMENT_ID,
@@ -22,6 +24,7 @@ class SegmentSelector extends Component {
 			}
 		);
 	}
+
 }
 
 const ConnectedSegmentSelector = getConnectedComponent(

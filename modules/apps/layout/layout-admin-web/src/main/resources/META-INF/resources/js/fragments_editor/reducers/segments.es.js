@@ -4,11 +4,12 @@ import {setIn} from '../../utils/utils.es';
 /**
  * @param {!object} state
  * @param {!string} actionType
- * @param {object} actionType
+ * @param {object} payload
+ * @param {string} payload.segmentId
  * @return {object}
  * @review
  */
-function switchToSegmentReducer(state, actionType, payload) {
+function segmentIdReducer(state, actionType, payload) {
 	let nextState = state;
 
 	if (actionType === CHANGE_SEGMENT_ID) {
@@ -18,6 +19,4 @@ function switchToSegmentReducer(state, actionType, payload) {
 	return nextState;
 }
 
-export {
-	switchToSegmentReducer
-};
+export {segmentIdReducer};

@@ -26,10 +26,10 @@ public class RESTBuilderInvoker {
 		throws Exception {
 
 		return new RESTBuilder(
-			_getAbsolutePath(baseDir, restBuilderArgs.getApiDirName()),
-			restBuilderArgs.getApiPackagePath(), restBuilderArgs.getAuthor(),
 			_getAbsolutePath(baseDir, restBuilderArgs.getCopyrightFileName()),
-			_getAbsolutePath(baseDir, restBuilderArgs.getInputFileName()));
+			_getAbsolutePath(baseDir, restBuilderArgs.getRESTConfigFileName()),
+			_getAbsolutePath(
+				baseDir, restBuilderArgs.getRESTOpenAPIFileName()));
 	}
 
 	private static String _getAbsolutePath(File baseDir, String fileName) {

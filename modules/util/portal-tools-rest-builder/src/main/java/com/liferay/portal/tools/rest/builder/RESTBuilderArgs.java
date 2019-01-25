@@ -19,58 +19,36 @@ package com.liferay.portal.tools.rest.builder;
  */
 public class RESTBuilderArgs {
 
-	public static final String API_DIR_NAME = "../rest-api/src/main/java";
+	public static final String REST_CONFIG_FILE_NAME = "rest-config.yaml";
 
-	public static final String API_PACKAGE_PATH = "com.example.sample";
-
-	public static final String AUTHOR = "John Doe";
-
-	public static final String INPUT_FILE_NAME = "rest.yaml";
-
-	public String getApiDirName() {
-		return _apiDirName;
-	}
-
-	public String getApiPackagePath() {
-		return _apiPackagePath;
-	}
-
-	public String getAuthor() {
-		return _author;
-	}
+	public static final String REST_OPENAPI_FILE_NAME = "rest-openapi.yaml";
 
 	public String getCopyrightFileName() {
 		return _copyrightFileName;
 	}
 
-	public String getInputFileName() {
-		return _inputFileName;
+	public String getRESTConfigFileName() {
+		return _restConfigFileName;
 	}
 
-	public void setApiDirName(String apiDirName) {
-		_apiDirName = apiDirName;
-	}
-
-	public void setApiPackagePath(String apiPackagePath) {
-		_apiPackagePath = apiPackagePath;
-	}
-
-	public void setAuthor(String author) {
-		_author = author;
+	public String getRESTOpenAPIFileName() {
+		return _restOpenAPIFileName;
 	}
 
 	public void setCopyrightFileName(String copyrightFileName) {
 		_copyrightFileName = copyrightFileName;
 	}
 
-	public void setInputFileName(String inputFileName) {
-		_inputFileName = inputFileName;
+	public void setRESTConfigFileName(String restConfigFileName) {
+		_restConfigFileName = restConfigFileName;
 	}
 
-	private String _apiDirName = API_DIR_NAME;
-	private String _apiPackagePath = API_PACKAGE_PATH;
-	private String _author = AUTHOR;
+	public void setRESTOpenAPIFileName(String restOpenAPIFileName) {
+		_restOpenAPIFileName = restOpenAPIFileName;
+	}
+
 	private String _copyrightFileName;
-	private String _inputFileName = INPUT_FILE_NAME;
+	private String _restConfigFileName = REST_CONFIG_FILE_NAME;
+	private String _restOpenAPIFileName = REST_OPENAPI_FILE_NAME;
 
 }

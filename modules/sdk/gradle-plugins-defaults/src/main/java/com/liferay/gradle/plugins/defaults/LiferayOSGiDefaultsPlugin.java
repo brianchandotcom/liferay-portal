@@ -1595,7 +1595,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		GradleUtil.applyPlugin(project, PmdPlugin.class);
 		GradleUtil.applyPlugin(project, ProvidedBasePlugin.class);
 
-		if (FileUtil.exists(project, "rest.yaml")) {
+		if (FileUtil.exists(project, "rest-openapi.yaml")) {
 			GradleUtil.applyPlugin(project, RESTBuilderPlugin.class);
 		}
 

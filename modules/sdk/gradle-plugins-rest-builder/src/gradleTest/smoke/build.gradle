@@ -22,12 +22,6 @@ task runGradleTest
 
 project(":sample-rest") {
 	apply plugin: "com.liferay.portal.tools.rest.builder"
-
-	buildREST {
-		apiDir = "../sample-api/src/main/java"
-		apiPackagePath = "com.example.sample"
-		author = "John Doe"
-	}
 }
 
 runGradleTest {

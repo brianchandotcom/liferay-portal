@@ -43,27 +43,6 @@ public class BuildRESTMojo extends AbstractMojo {
 	/**
 	 * @parameter
 	 */
-	public void setApiDirName(String apiDirName) {
-		_restBuilderArgs.setApiDirName(apiDirName);
-	}
-
-	/**
-	 * @parameter
-	 */
-	public void setApiPackagePath(String apiPackagePath) {
-		_restBuilderArgs.setApiPackagePath(apiPackagePath);
-	}
-
-	/**
-	 * @parameter
-	 */
-	public void setAuthor(String author) {
-		_restBuilderArgs.setAuthor(author);
-	}
-
-	/**
-	 * @parameter
-	 */
 	public void setCopyrightFileName(String copyrightFileName) {
 		_restBuilderArgs.setCopyrightFileName(copyrightFileName);
 	}
@@ -71,8 +50,15 @@ public class BuildRESTMojo extends AbstractMojo {
 	/**
 	 * @parameter
 	 */
-	public void setInputFileName(String inputFileName) {
-		_restBuilderArgs.setInputFileName(inputFileName);
+	public void setRESTConfigFileName(String restConfigFileName) {
+		_restBuilderArgs.setRESTConfigFileName(restConfigFileName);
+	}
+
+	/**
+	 * @parameter
+	 */
+	public void setRESTOpenAPIFileName(String restOpenAPIFileName) {
+		_restBuilderArgs.setRESTOpenAPIFileName(restOpenAPIFileName);
 	}
 
 	/**

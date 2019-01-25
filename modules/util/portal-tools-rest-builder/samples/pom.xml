@@ -18,10 +18,8 @@
 				<artifactId>com.liferay.portal.tools.rest.builder</artifactId>
 				<version>1.0.3</version>
 				<configuration>
-					<apiDirName>../sample-api/src/main/java</apiDirName>
-					<apiPackagePath>com.example.sample</apiPackagePath>
-					<author>John Doe</author>
-					<inputFileName>rest.yaml</inputFileName>
+					<restConfigFileName>rest-config.yaml</restConfigFileName>
+					<restOpenAPIFileName>rest-openapi.yaml</restOpenAPIFileName>
 				</configuration>
 			</plugin>
 		</plugins>

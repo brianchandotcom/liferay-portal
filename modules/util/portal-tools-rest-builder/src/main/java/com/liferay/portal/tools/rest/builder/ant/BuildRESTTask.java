@@ -38,24 +38,16 @@ public class BuildRESTTask extends Task {
 		}
 	}
 
-	public void setApiDirName(String apiDirName) {
-		_restBuilderArgs.setApiDirName(apiDirName);
-	}
-
-	public void setApiPackagePath(String apiPackagePath) {
-		_restBuilderArgs.setApiPackagePath(apiPackagePath);
-	}
-
-	public void setAuthor(String author) {
-		_restBuilderArgs.setAuthor(author);
-	}
-
 	public void setCopyrightFileName(String copyrightFileName) {
 		_restBuilderArgs.setCopyrightFileName(copyrightFileName);
 	}
 
-	public void setInputFileName(String inputFileName) {
-		_restBuilderArgs.setInputFileName(inputFileName);
+	public void setRESTConfigFileName(String restConfigFileName) {
+		_restBuilderArgs.setRESTConfigFileName(restConfigFileName);
+	}
+
+	public void setRESTOpenAPIFileName(String restOpenAPIFileName) {
+		_restBuilderArgs.setRESTOpenAPIFileName(restOpenAPIFileName);
 	}
 
 	private final RESTBuilderArgs _restBuilderArgs = new RESTBuilderArgs();

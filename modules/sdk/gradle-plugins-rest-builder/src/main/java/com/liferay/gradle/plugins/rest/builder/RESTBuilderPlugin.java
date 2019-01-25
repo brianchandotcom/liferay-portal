@@ -16,6 +16,8 @@ package com.liferay.gradle.plugins.rest.builder;
 
 import com.liferay.gradle.util.GradleUtil;
 
+import java.io.File;
+
 import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
@@ -77,7 +79,14 @@ public class RESTBuilderPlugin implements Plugin<Project> {
 		buildRESTTask.setDescription("Runs Liferay REST Builder.");
 		buildRESTTask.setGroup(BasePlugin.BUILD_GROUP);
 
-		buildRESTTask.setInputFile("rest.yaml");
+		File restConfigFile = new File(
+			project.getProjectDir(), "rest-config.yaml");
+
+		if (restConfigFile.exists()) {
+			buildRESTTask.setRESTConfigFile("rest-config.yaml");
+		}
+
+		buildRESTTask.setRESTOpenAPIFile("rest-openapi.yaml");
 
 		return buildRESTTask;
 	}

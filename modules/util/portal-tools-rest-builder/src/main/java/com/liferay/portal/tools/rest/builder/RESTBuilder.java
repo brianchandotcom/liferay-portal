@@ -45,16 +45,13 @@ public class RESTBuilder {
 	public static void main(String[] args) throws Exception {
 		Map<String, String> arguments = ArgumentsUtil.parseArguments(args);
 
-		String apiDirName = arguments.get("api.dir");
-		String apiPackagePath = arguments.get("api.package.path");
-		String author = arguments.get("author");
 		String copyrightFileName = arguments.get("copyright.file");
-		String inputFileName = arguments.get("input.file");
+		String restConfigFileName = arguments.get("rest.config.file");
+		String restOpenAPIFileName = arguments.get("rest.openapi.file");
 
 		try {
 			new RESTBuilder(
-				apiDirName, apiPackagePath, author, copyrightFileName,
-				inputFileName);
+				copyrightFileName, restConfigFileName, restOpenAPIFileName);
 		}
 		catch (Exception e) {
 			ArgumentsUtil.processMainException(arguments, e);
@@ -62,33 +59,31 @@ public class RESTBuilder {
 	}
 
 	public RESTBuilder(
-			String apiDirName, String apiPackagePath, String author,
-			String copyrightFileName, String inputFileName)
+			String copyrightFileName, String restConfigFileName,
+			String restOpenAPIFileName)
 		throws Exception {
 
-		Configuration configuration = _getConfiguration(inputFileName);
+		ConfigYAML configYAML = _getConfigYAML(restConfigFileName);
 
-		if (configuration == null) {
-			return;
-		}
+		OpenAPIYAML openAPIYAML = _getOpenAPIYAML(restOpenAPIFileName);
 
-		Components components = configuration.getComponents();
+		Components components = openAPIYAML.getComponents();
 
 		Map<String, Schema> schemas = components.getSchemas();
 
 		for (Map.Entry<String, Schema> entry : schemas.entrySet()) {
-			String name = entry.getKey();
+			String schemaName = entry.getKey();
 			Schema schema = entry.getValue();
 
-			File file = _getDTOFile(apiDirName, apiPackagePath, name);
+			File file = _getDTOFile(configYAML, schemaName);
 			String content = _getDTOContent(
-				apiPackagePath, author, copyrightFileName, name, schema);
+				configYAML, copyrightFileName, schema, schemaName);
 
 			FileUtil.write(file, content);
 
-			file = _getResourceFile(apiDirName, apiPackagePath, name);
+			file = _getResourceFile(configYAML, schemaName);
 			content = _getResourceContent(
-				apiPackagePath, author, copyrightFileName, name, configuration);
+				configYAML, copyrightFileName, openAPIYAML, schemaName);
 
 			FileUtil.write(file, content);
 		}
@@ -123,15 +118,14 @@ public class RESTBuilder {
 	}
 
 	private String _getDTOContent(
-			String apiPackagePath, String author, String copyrightFileName,
-			String name, Schema schema)
+			ConfigYAML configYAML, String copyrightFileName, Schema schema,
+			String schemaName)
 		throws Exception {
 
 		Map<String, Object> context = new HashMap<>();
 
-		context.put("apiPackagePath", apiPackagePath);
-		context.put("author", author);
-		context.put("name", name);
+		context.put("configYAML", configYAML);
+		context.put("name", schemaName);
 		context.put("schema", schema);
 
 		String content = _freeMarker.processTemplate(
@@ -146,17 +140,19 @@ public class RESTBuilder {
 		return content;
 	}
 
-	private File _getDTOFile(
-		String apiDir, String apiPackagePath, String name) {
-
+	private File _getDTOFile(ConfigYAML configYAML, String schemaName) {
 		StringBuilder sb = new StringBuilder();
 
-		sb.append(apiDir);
+		sb.append(configYAML.getApiDir());
 		sb.append("/");
+
+		String apiPackagePath = configYAML.getApiPackagePath();
+
 		sb.append(apiPackagePath.replace('.', '/'));
+
 		sb.append("/");
 		sb.append("/dto/");
-		sb.append(name);
+		sb.append(schemaName);
 		sb.append(".java");
 
 		return new File(sb.toString());
@@ -191,16 +187,15 @@ public class RESTBuilder {
 	}
 
 	private String _getResourceContent(
-			String apiPackagePath, String author, String copyrightFileName,
-			String name, Configuration configuration)
+			ConfigYAML configYAML, String copyrightFileName,
+			OpenAPIYAML openAPIYAML, String schemaName)
 		throws Exception {
 
 		Map<String, Object> context = new HashMap<>();
 
-		context.put("apiPackagePath", apiPackagePath);
-		context.put("author", author);
-		context.put("info", configuration.getInfo());
-		context.put("name", name);
+		context.put("configYAML", configYAML);
+		context.put("info", openAPIYAML.getInfo());
+		context.put("name", schemaName);
 
 		String content = _freeMarker.processTemplate(
 			FreeMarkerConstants.RESOURCE_FTL, context);
@@ -214,17 +209,19 @@ public class RESTBuilder {
 		return content;
 	}
 
-	private File _getResourceFile(
-		String apiDir, String apiPackagePath, String name) {
-
+	private File _getResourceFile(ConfigYAML configYAML, String schemaName) {
 		StringBuilder sb = new StringBuilder();
 
-		sb.append(apiDir);
+		sb.append(configYAML.getApiDir());
 		sb.append("/");
+
+		String apiPackagePath = configYAML.getApiPackagePath();
+
 		sb.append(apiPackagePath.replace('.', '/'));
+
 		sb.append("/");
 		sb.append("/resource/");
-		sb.append(name);
+		sb.append(schemaName);
 		sb.append("Resource.java");
 
 		return new File(sb.toString());

@@ -171,6 +171,7 @@
 		<suppress checks="JavaInnerClassImportsCheck" files="modules/apps/commerce/.*" />
 		<suppress checks="JavaInnerClassImportsCheck" files="modules/private/.*" />
 		<suppress checks="JavaInnerClassImportsCheck" files="modules/test/poshi-runner/.*" />
+		<suppress checks="JavaPackagePathCheck" files="modules/private/.*" />
 		<suppress checks="JSONLineBreakCheck" files="modules/apps/apio-architect/.*" />
 		<suppress checks="JSONLineBreakCheck" files="modules/apps/commerce/.*" />
 		<suppress checks="JSONLineBreakCheck" files="modules/private/apps/commerce/.*" />
@@ -181,5 +182,17 @@
 		<suppress checks="XMLLookAndFeelCompatibilityVersionCheck" files="modules/private/apio-architect/.*" />
 		<suppress checks="XMLLookAndFeelCompatibilityVersionCheck" files="modules/private/commerce/.*" />
 		<suppress checks="XMLServiceReferenceCheck" files="modules/private/.*" />
+
+		<!-- Temporary suppressions for test subdirectory -->
+
+		<suppress checks="JavaPackagePathCheck" files="modules/apps/static/portal-lpkg-deployer/portal-lpkg-deployer-impl/src/main/java/com/liferay/portal/lpkg/deployer/internal/wrapper/bundle/WARBundleWrapperBundleActivator\.java" />
+		<suppress checks="JavaPackagePathCheck" files="modules/apps/static/portal-osgi-web/portal-osgi-web-servlet-jsp-compiler-test/src/testIntegration/java/com/liferay/portal/osgi/web/servlet/jsp/compiler/test/JspPrecompileBundleActivator\.java" />
+		<suppress checks="JavaPackagePathCheck" files="modules/apps/static/portal/portal-classloader-tracker/src/main/java/com/liferay/portal/classloader/tracker/internal/ClassLoaderTrackerBundleActivator\.java" />
+		<suppress checks="JavaPackagePathCheck" files="modules/apps/static/portal/portal-log4j-extender/src/main/java/com/liferay/portal/log4j/extender/internal/Log4jExtenderBundleActivator\.java" />
+		<suppress checks="JavaPackagePathCheck" files="modules/apps/static/portal/portal-social-activity-extender/src/main/java/com/liferay/portal/social/activity/extender/internal/SocialActivityExtenderBundleActivator\.java" />
+		<suppress checks="JavaPackagePathCheck" files="modules/apps/websocket/websocket-whiteboard-test/src/testIntegration/java/com/liferay/websocket/whiteboard/test/activator/WebSocketWhiteboardTestBundleActivator\.java" />
+		<suppress checks="JavaPackagePathCheck" files="modules/core/registry-impl/src/main/java/com/liferay/registry/internal/RegistryImplBundleActivator\.java" />
+		<suppress checks="JavaPackagePathCheck" files="modules/test/arquillian-extension-junit-bridge/src/main/java/com/liferay/arquillian/extension/junit/bridge/remote/activator/ArquillianBundleActivator\.java" />
+		<suppress checks="JavaPackagePathCheck" files="modules/test/external-data-source-test/src/testIntegration/java/com/liferay/external/data/source/test/activator/ExternalDataSourceTestBundleActivator\.java" />
 	</source-check>
 </suppressions>

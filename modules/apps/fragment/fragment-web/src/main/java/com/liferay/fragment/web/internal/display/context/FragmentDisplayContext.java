@@ -264,7 +264,8 @@ public class FragmentDisplayContext {
 		SearchContainer fragmentEntriesSearchContainer = new SearchContainer(
 			_renderRequest, _getPortletURL(), null, "there-are-no-fragments");
 
-		fragmentEntriesSearchContainer.setId("fragmentEntries");
+		fragmentEntriesSearchContainer.setId(
+			"fragmentEntries" + getFragmentCollectionId());
 
 		fragmentEntriesSearchContainer.setRowChecker(
 			new EmptyOnClickRowChecker(_renderResponse));

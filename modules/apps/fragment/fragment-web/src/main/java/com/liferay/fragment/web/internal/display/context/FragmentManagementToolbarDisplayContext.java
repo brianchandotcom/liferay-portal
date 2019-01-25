@@ -114,7 +114,8 @@ public class FragmentManagementToolbarDisplayContext
 
 	@Override
 	public String getComponentId() {
-		return "fragmentEntriesManagementToolbar";
+		return "fragmentEntriesManagementToolbar" +
+			_fragmentDisplayContext.getFragmentCollectionId();
 	}
 
 	@Override

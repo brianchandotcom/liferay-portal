@@ -17,13 +17,12 @@ package com.liferay.arquillian.extension.junit.bridge.junit;
 import com.liferay.arquillian.extension.junit.bridge.util.FrameworkMethodComparator;
 
 import java.lang.annotation.Annotation;
-
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.jboss.arquillian.junit.State;
@@ -35,6 +34,7 @@ import org.jboss.arquillian.test.spi.TestResult;
 import org.jboss.arquillian.test.spi.TestRunnerAdaptor;
 import org.jboss.arquillian.test.spi.TestRunnerAdaptorBuilder;
 import org.jboss.arquillian.test.spi.execution.SkippedTestExecutionException;
+
 import org.junit.AssumptionViolatedException;
 import org.junit.internal.runners.statements.Fail;
 import org.junit.rules.MethodRule;
@@ -56,31 +56,6 @@ public class Arquillian extends BlockJUnit4ClassRunner {
 
 	public Arquillian(Class<?> clazz) throws InitializationError {
 		super(clazz);
-	}
-
-	@Override
-	protected List<TestRule> classRules() {
-		return Collections.emptyList();
-	}
-
-	@Override
-	protected TestClass createTestClass(Class<?> testClass) {
-		return new TestClass(testClass) {
-
-			@Override
-			public List<FrameworkMethod> getAnnotatedMethods(
-				Class<? extends Annotation> annotationClass) {
-
-				List<FrameworkMethod> frameworkMethods = new ArrayList<>(
-					super.getAnnotatedMethods(annotationClass));
-
-				Collections.sort(
-					frameworkMethods, FrameworkMethodComparator.INSTANCE);
-
-				return frameworkMethods;
-			}
-
-		};
 	}
 
 	@Override
@@ -123,57 +98,30 @@ public class Arquillian extends BlockJUnit4ClassRunner {
 			});
 
 		super.run(runNotifier);
-   }
-
-	@Override
-	protected Statement withBeforeClasses(Statement statement) {
-		return new Statement() {
-
-			@Override
-			public void evaluate() throws Throwable {
-				TestClass testClass = getTestClass();
-
-				_testRunnerAdaptor.beforeClass(
-					testClass.getJavaClass(), () -> {});
-
-				statement.evaluate();
-			}
-		};
 	}
 
 	@Override
-	protected Statement withAfterClasses(Statement statement) {
-		return new Statement() {
+	protected List<TestRule> classRules() {
+		return Collections.emptyList();
+	}
+
+	@Override
+	protected TestClass createTestClass(Class<?> testClass) {
+		return new TestClass(testClass) {
 
 			@Override
-			public void evaluate() throws Throwable {
-				Throwable throwable = null;
+			public List<FrameworkMethod> getAnnotatedMethods(
+				Class<? extends Annotation> annotationClass) {
 
-				try {
-					statement.evaluate();
-				}
-				catch (Throwable t) {
-					throwable = t;
-				}
+				List<FrameworkMethod> frameworkMethods = new ArrayList<>(
+					super.getAnnotatedMethods(annotationClass));
 
-				TestClass testClass = getTestClass();
+				Collections.sort(
+					frameworkMethods, FrameworkMethodComparator.INSTANCE);
 
-				try {
-					_testRunnerAdaptor.afterClass(
-						testClass.getJavaClass(), () -> {});
-				}
-				catch (Throwable t) {
-					if (throwable != null) {
-						t.addSuppressed(throwable);
-					}
-
-					throwable = t;
-				}
-
-				if (throwable != null) {
-					throw throwable;
-				}
+				return frameworkMethods;
 			}
+
 		};
 	}
 
@@ -226,14 +174,13 @@ public class Arquillian extends BlockJUnit4ClassRunner {
 									counter.incrementAndGet();
 
 									statementWithRules.evaluate();
-								}
-							));
+								}));
 
-						if(counter.get() == 0) {
+						if (counter.get() == 0) {
 							originalStatement.evaluate();
 						}
 					}
-					catch(Throwable t) {
+					catch (Throwable t) {
 						throwable = t;
 					}
 					finally {
@@ -243,7 +190,7 @@ public class Arquillian extends BlockJUnit4ClassRunner {
 									test, method.getMethod(),
 									LifecycleMethodExecutor.NO_OP));
 						}
-						catch(Throwable t) {
+						catch (Throwable t) {
 							if (throwable != null) {
 								t.addSuppressed(throwable);
 							}
@@ -256,12 +203,13 @@ public class Arquillian extends BlockJUnit4ClassRunner {
 						throw throwable;
 					}
 				}
+
 			};
 		}
-		catch(Exception e) {
+		catch (Exception e) {
 			throw new RuntimeException("Could not create statement", e);
 		}
-    }
+	}
 
 	@Override
 	protected Statement methodInvoker(
@@ -273,6 +221,15 @@ public class Arquillian extends BlockJUnit4ClassRunner {
 			public void evaluate() throws Throwable {
 				TestResult testResult = _testRunnerAdaptor.test(
 					new TestMethodExecutor() {
+
+						public Object getInstance() {
+							return testObject;
+						}
+
+						@Override
+						public Method getMethod() {
+							return frameworkMethod.getMethod();
+						}
 
 						@Override
 						public void invoke(Object... parameters)
@@ -289,16 +246,6 @@ public class Arquillian extends BlockJUnit4ClassRunner {
 							}
 						}
 
-						@Override
-						public Method getMethod() {
-							return frameworkMethod.getMethod();
-						}
-
-						@Override
-						public Object getInstance() {
-							return testObject;
-						}
-
 					});
 
 				Throwable throwable = testResult.getThrowable();
@@ -308,7 +255,7 @@ public class Arquillian extends BlockJUnit4ClassRunner {
 				}
 
 				if ((testResult.getStatus() == TestResult.Status.SKIPPED) &&
-						(throwable instanceof SkippedTestExecutionException)) {
+					(throwable instanceof SkippedTestExecutionException)) {
 
 					testResult.setThrowable(
 						new AssumptionViolatedException(
@@ -317,6 +264,62 @@ public class Arquillian extends BlockJUnit4ClassRunner {
 
 				throw throwable;
 			}
+
+		};
+	}
+
+	@Override
+	protected Statement withAfterClasses(Statement statement) {
+		return new Statement() {
+
+			@Override
+			public void evaluate() throws Throwable {
+				Throwable throwable = null;
+
+				try {
+					statement.evaluate();
+				}
+				catch (Throwable t) {
+					throwable = t;
+				}
+
+				TestClass testClass = getTestClass();
+
+				try {
+					_testRunnerAdaptor.afterClass(
+						testClass.getJavaClass(),
+						LifecycleMethodExecutor.NO_OP);
+				}
+				catch (Throwable t) {
+					if (throwable != null) {
+						t.addSuppressed(throwable);
+					}
+
+					throwable = t;
+				}
+
+				if (throwable != null) {
+					throw throwable;
+				}
+			}
+
+		};
+	}
+
+	@Override
+	protected Statement withBeforeClasses(Statement statement) {
+		return new Statement() {
+
+			@Override
+			public void evaluate() throws Throwable {
+				TestClass testClass = getTestClass();
+
+				_testRunnerAdaptor.beforeClass(
+					testClass.getJavaClass(), LifecycleMethodExecutor.NO_OP);
+
+				statement.evaluate();
+			}
+
 		};
 	}
 

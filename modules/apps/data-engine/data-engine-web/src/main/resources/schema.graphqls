@@ -34,10 +34,11 @@ input SaveDataDefinitionModelPermissionsInput {
 	companyId: ID!
 	dataDefinitionId: ID!
 	delete: Boolean
-	groupId: ID
+	groupId: ID!
+	roleNames: [String]!
 	scopedGroupId: ID!
+	scopedUserId: ID!
 	update: Boolean
-	userId: ID
 	view: Boolean
 }
 
@@ -45,10 +46,11 @@ input SaveDataRecordCollectionModelPermissionsInput {
 	companyId: ID!
 	dataRecordCollectionId: ID!
 	delete: Boolean
-	groupId: ID
+	groupId: ID!
+	roleNames: [String]!
 	scopedGroupId: ID!
+	scopedUserId: ID!
 	update: Boolean
-	userId: ID
 	view: Boolean
 }
 

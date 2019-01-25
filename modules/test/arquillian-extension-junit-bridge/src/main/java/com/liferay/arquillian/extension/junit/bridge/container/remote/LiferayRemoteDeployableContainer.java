@@ -32,7 +32,6 @@ import java.util.Set;
 
 import javax.management.MBeanServerConnection;
 import javax.management.MBeanServerInvocationHandler;
-import javax.management.MalformedObjectNameException;
 import javax.management.ObjectName;
 import javax.management.remote.JMXConnector;
 import javax.management.remote.JMXConnectorFactory;
@@ -157,20 +156,10 @@ public class LiferayRemoteDeployableContainer
 	private MBeanServerConnection _getMBeanServerConnection()
 		throws IOException {
 
-		String[] credentials = {
-			_LIFERAY_DEFAULT_JMX_USERNAME, _LIFERAY_DEFAULT_JMX_PASSWORD
-		};
+		JMXConnector jMXConnector = JMXConnectorFactory.connect(
+			_liferayJMXServiceURL, _liferayEnv);
 
-		Map<String, String[]> env = Collections.singletonMap(
-			JMXConnector.CREDENTIALS, credentials);
-
-		JMXServiceURL jmxServiceURL = new JMXServiceURL(
-			_LIFERAY_DEFAULT_JMX_SERVICE_URL);
-
-		JMXConnector connector = JMXConnectorFactory.connect(
-			jmxServiceURL, env);
-
-		return connector.getMBeanServerConnection();
+		return jMXConnector.getMBeanServerConnection();
 	}
 
 	private long _installBundle(Archive<?> archive) throws Exception {
@@ -200,23 +189,23 @@ public class LiferayRemoteDeployableContainer
 
 	private static final int _LIFERAY_DEFAULT_HTTP_PORT = 8080;
 
-	private static final String _LIFERAY_DEFAULT_JMX_PASSWORD = "";
-
-	private static final String _LIFERAY_DEFAULT_JMX_SERVICE_URL =
-		"service:jmx:rmi:///jndi/rmi://localhost:8099/jmxrmi";
-
-	private static final String _LIFERAY_DEFAULT_JMX_USERNAME = "";
-
 	private static final ObjectName _frameworkObjectName;
+	private static final Map<String, String[]> _liferayEnv =
+		Collections.singletonMap(
+			JMXConnector.CREDENTIALS, new String[] {"", ""});
+	private static final JMXServiceURL _liferayJMXServiceURL;
 	private static final ProtocolDescription _protocolDescription =
 		new ProtocolDescription("jmx-osgi");
 
 	static {
 		try {
 			_frameworkObjectName = new ObjectName("osgi.core:type=framework,*");
+
+			_liferayJMXServiceURL = new JMXServiceURL(
+				"service:jmx:rmi:///jndi/rmi://localhost:8099/jmxrmi");
 		}
-		catch (MalformedObjectNameException mone) {
-			throw new ExceptionInInitializerError(mone);
+		catch (Exception e) {
+			throw new ExceptionInInitializerError(e);
 		}
 	}
 

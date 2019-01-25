@@ -14,7 +14,10 @@
 
 package com.liferay.project.templates;
 
+import aQute.bnd.header.Attrs;
+import aQute.bnd.header.Parameters;
 import aQute.bnd.main.bnd;
+import aQute.bnd.osgi.Domain;
 
 import com.liferay.maven.executor.MavenExecutor;
 import com.liferay.project.templates.internal.ProjectGenerator;
@@ -188,6 +191,21 @@ public class ProjectTemplatesTest {
 			"-DclassName=BarActivator", "-Dpackage=bar.activator");
 
 		_buildProjects(gradleProjectDir, mavenProjectDir);
+
+		if (_isBuildProjects()) {
+			File jarFile = _testExists(
+				gradleProjectDir, "build/libs/bar.activator-1.0.0.jar");
+
+			Domain domain = Domain.domain(jarFile);
+
+			Parameters parameters = domain.getImportPackage();
+
+			Assert.assertNotNull(parameters);
+
+			Attrs attrs = parameters.get("org.osgi.framework");
+
+			Assert.assertNotNull(attrs);
+		}
 	}
 
 	@Test
@@ -230,6 +248,20 @@ public class ProjectTemplatesTest {
 			"api", "foo", "com.test", "-DclassName=Foo", "-Dpackage=foo");
 
 		_buildProjects(gradleProjectDir, mavenProjectDir);
+
+		if (_isBuildProjects()) {
+			File jarFile = _testExists(
+				gradleProjectDir, "build/libs/foo-1.0.0.jar");
+
+			Domain domain = Domain.domain(jarFile);
+
+			Parameters parameters = domain.getExportContents();
+
+			Assert.assertNotNull(parameters);
+
+			Assert.assertNotNull(
+				parameters.toString(), parameters.get("foo.api"));
+		}
 	}
 
 	@Test
@@ -739,10 +771,20 @@ public class ProjectTemplatesTest {
 				"\"com.liferay.login.web\", version: \"1.0.0\"",
 			"apply plugin: \"com.liferay.osgi.ext.plugin\"");
 
-		_executeGradle(gradleProjectDir, _GRADLE_TASK_PATH_BUILD);
+		if (_isBuildProjects()) {
+			_executeGradle(gradleProjectDir, _GRADLE_TASK_PATH_BUILD);
 
-		_testExists(
-			gradleProjectDir, "build/libs/com.liferay.login.web-1.0.0.ext.jar");
+			File jarFile = _testExists(
+				gradleProjectDir,
+				"build/libs/com.liferay.login.web-1.0.0.ext.jar");
+
+			Domain domain = Domain.domain(jarFile);
+
+			Map.Entry<String, Attrs> bsn = domain.getBundleSymbolicName();
+
+			Assert.assertEquals(
+				bsn.toString(), "com.liferay.login.web", bsn.getKey());
+		}
 	}
 
 	@Test
@@ -1003,6 +1045,21 @@ public class ProjectTemplatesTest {
 			"-DhostBundleVersion=1.0.0", "-Dpackage=loginhook");
 
 		_buildProjects(gradleProjectDir, mavenProjectDir);
+
+		if (_isBuildProjects()) {
+			File jarFile = _testExists(
+				gradleProjectDir, "build/libs/loginhook-1.0.0.jar");
+
+			Domain domain = Domain.domain(jarFile);
+
+			Map.Entry<String, Attrs> fragmentHost = domain.getFragmentHost();
+
+			Assert.assertNotNull(fragmentHost);
+
+			Assert.assertEquals(
+				fragmentHost.toString(), "com.liferay.login.web",
+				fragmentHost.getKey());
+		}
 	}
 
 	@Test

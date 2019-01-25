@@ -19,36 +19,118 @@
 <%
 AssetEntry assetEntry = assetDisplayLayoutTypeControllerDisplayContext.getAssetEntry();
 
-String renderedContent = StringPool.BLANK;
+LayoutPageTemplateStructure layoutPageTemplateStructure = null;
+
+JSONArray structureJSONArray = null;
 
 if (assetEntry != null) {
-	LayoutPageTemplateStructure layoutPageTemplateStructure = LayoutPageTemplateStructureLocalServiceUtil.fetchLayoutPageTemplateStructure(assetEntry.getGroupId(), PortalUtil.getClassNameId(LayoutPageTemplateEntry.class.getName()), assetDisplayLayoutTypeControllerDisplayContext.getLayoutPageTemplateEntryId(), true);
+	layoutPageTemplateStructure = LayoutPageTemplateStructureLocalServiceUtil.fetchLayoutPageTemplateStructure(assetEntry.getGroupId(), PortalUtil.getClassNameId(LayoutPageTemplateEntry.class.getName()), assetDisplayLayoutTypeControllerDisplayContext.getLayoutPageTemplateEntryId(), true);
 
-	String currentI18nLanguageId = GetterUtil.getString(request.getAttribute(AssetDisplayWebKeys.CURRENT_I18N_LANGUAGE_ID), themeDisplay.getLanguageId());
+	String data = layoutPageTemplateStructure.getData();
 
-	try {
-		renderedContent = LayoutPageTemplateStructureRenderUtil.renderLayoutContent(request, response, layoutPageTemplateStructure, FragmentEntryLinkConstants.ASSET_DISPLAY_PAGE, assetDisplayLayoutTypeControllerDisplayContext.getAssetDisplayFieldsValues());
-	}
-	finally {
-		request.setAttribute(WebKeys.I18N_LANGUAGE_ID, currentI18nLanguageId);
+	if (Validator.isNotNull(data)) {
+		JSONObject dataJSONObject = JSONFactoryUtil.createJSONObject(layoutPageTemplateStructure.getData());
+
+		structureJSONArray = dataJSONObject.getJSONArray("structure");
 	}
 }
 %>
 
 <c:choose>
-	<c:when test="<%= Validator.isNotNull(renderedContent) %>">
+	<c:when test="<%= structureJSONArray != null %>">
 
 		<%
+		String currentI18nLanguageId = GetterUtil.getString(request.getAttribute(AssetDisplayWebKeys.CURRENT_I18N_LANGUAGE_ID), themeDisplay.getLanguageId());
+
 		try {
 			request.setAttribute(WebKeys.PORTLET_DECORATE, Boolean.FALSE);
 		%>
 
-			<%= renderedContent %>
+			<div class="layout-content" id="main-content" role="main">
+
+				<%
+				for (int i = 0; i < structureJSONArray.length(); i++) {
+					JSONObject rowJSONObject = structureJSONArray.getJSONObject(i);
+
+					JSONObject rowConfigJSONObject = rowJSONObject.getJSONObject("config");
+
+					String backgroundColor = StringPool.BLANK;
+					String backgroundImage = StringPool.BLANK;
+					boolean columnSpacing = true;
+					String containerType = StringPool.BLANK;
+					long paddingHorizontal = 3L;
+					long paddingVertical = 3L;
+
+					if (rowConfigJSONObject != null) {
+						backgroundColor = rowConfigJSONObject.getString("backgroundColor");
+						backgroundImage = rowConfigJSONObject.getString("backgroundImage");
+						columnSpacing = GetterUtil.getBoolean(rowConfigJSONObject.getString("columnSpacing"), true);
+						containerType = rowConfigJSONObject.getString("containerType");
+						paddingHorizontal = GetterUtil.getLong(rowConfigJSONObject.getString("paddingHorizontal"), paddingHorizontal);
+						paddingVertical = GetterUtil.getLong(rowConfigJSONObject.getString("paddingVertical"), paddingVertical);
+					}
+				%>
+
+					<div class="container-fluid px-<%= paddingHorizontal %> py-<%= paddingVertical %>" style="<%= Validator.isNotNull(backgroundColor) ? "background-color:" + backgroundColor + ";" : StringPool.BLANK %> <%= Validator.isNotNull(backgroundImage) ? "background-image: url(" + backgroundImage + "); background-position: 50% 50%; background-repeat: no-repeat; background-size: cover;" : StringPool.BLANK %>">
+						<div class="<%= Objects.equals(containerType, "fixed") ? "container" : "container-fluid" %> p-0">
+							<div class="row <%= columnSpacing ? StringPool.BLANK : "no-gutters" %>">
+
+								<%
+								JSONArray columnsJSONArray = rowJSONObject.getJSONArray("columns");
+
+								for (int j = 0; j < columnsJSONArray.length(); j++) {
+									JSONObject columnJSONObject = columnsJSONArray.getJSONObject(j);
+
+									String size = columnJSONObject.getString("size");
+								%>
+
+									<div class="col <%= Validator.isNotNull(size) ? "col-" + size : StringPool.BLANK %>">
+
+										<%
+										JSONArray fragmentEntryLinkIdsJSONArray = columnJSONObject.getJSONArray("fragmentEntryLinkIds");
+
+										for (int k = 0; k < fragmentEntryLinkIdsJSONArray.length(); k++) {
+											long fragmentEntryLinkId = fragmentEntryLinkIdsJSONArray.getLong(k);
+
+											if (fragmentEntryLinkId <= 0) {
+												continue;
+											}
+
+											FragmentEntryLink fragmentEntryLink = FragmentEntryLinkLocalServiceUtil.fetchFragmentEntryLink(fragmentEntryLinkId);
+
+											if (fragmentEntryLink == null) {
+												continue;
+											}
+										%>
+
+											<%= FragmentEntryRenderUtil.renderFragmentEntryLink(fragmentEntryLink, FragmentEntryLinkConstants.ASSET_DISPLAY_PAGE, assetDisplayLayoutTypeControllerDisplayContext.getAssetDisplayFieldsValues(), request, response, locale) %>
+
+										<%
+										}
+										%>
+
+									</div>
+
+								<%
+								}
+								%>
+
+							</div>
+						</div>
+					</div>
+
+				<%
+				}
+				%>
+
+			</div>
 
 		<%
 		}
 		finally {
 			request.removeAttribute(WebKeys.PORTLET_DECORATE);
+
+			request.setAttribute(WebKeys.I18N_LANGUAGE_ID, currentI18nLanguageId);
 		}
 		%>
 

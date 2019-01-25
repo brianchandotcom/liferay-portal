@@ -5,18 +5,26 @@ definition {
 	property testray.main.component.name = "Fragments";
 
 	setUp {
-		TestCase.setUpPortalInstance();
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
 
-		User.firstLoginPG();
+			User.firstLoginPG();
+		}
 
-		JSONGroup.addGroup(groupName = "Test Site Name");
+		task ("Add a site via JSON") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
 
-		JSONFragment.addFragmentCollection(
-			groupName = "Test Site Name",
-			name = "Collection Name"
-		);
+		task ("Add a fragment collection via JSON") {
+			JSONFragment.addFragmentCollection(
+				groupName = "Test Site Name",
+				name = "Collection Name"
+			);
+		}
 
-		FragmentsAdmin.openFragmentsAdmin(siteURLKey = "test-site-name");
+		task ("Navigate to fragments admin") {
+			FragmentsAdmin.openFragmentsAdmin(siteURLKey = "test-site-name");
+		}
 	}
 
 	tearDown {
@@ -33,28 +41,30 @@ definition {
 	@description = "This is a test for LPS-80503. Assert that when lfr is typed within a tag, a list of choices to autocomplete the fragment are presented."
 	@priority = "4"
 	test AutocompleteFragment {
-		// Go to fragments editor
+		task ("Navigate to the fragment collection") {
+			Navigator.gotoNavNested(navNested = "Collection Name");
+		}
 
-		Navigator.gotoNavNested(navNested = "Collection Name");
+		task ("Add a fragment section") {
+			FragmentsAdmin.addSection(fragmentName = "Fragment Name");
+		}
 
-		FragmentsAdmin.addSection(fragmentName = "Fragment Name");
+		task ("Assert the fragment editor has autocomplete for lfr-editable tags") {
+			var fragmentHTML = '''<lfr-editable id="" type="image">''';
 
-		// Autocomplete editable fragment
+			FragmentsAdmin.autocompleteFragmentHTML(
+				autocompleteField = "lfr-editable:image",
+				fragmentHTML = "${fragmentHTML}"
+			);
+		}
 
-		var fragmentHTML = '''<lfr-editable id="" type="image">''';
+		task ("Assert the fragment editor has autocomplete for lfr-widget tags") {
+			var fragmentHTML = '''<lfr-widget-asset-list>''';
 
-		FragmentsAdmin.autocompleteFragmentHTML(
-			autocompleteField = "lfr-editable:image",
-			fragmentHTML = "${fragmentHTML}"
-		);
-
-		// Autocomplete widget fragment
-
-		var fragmentHTML = '''<lfr-widget-asset-list>''';
-
-		FragmentsAdmin.autocompleteFragmentHTML(
-			autocompleteField = "lfr-widget-asset-list",
-			fragmentHTML = "${fragmentHTML}"
-		);
+			FragmentsAdmin.autocompleteFragmentHTML(
+				autocompleteField = "lfr-widget-asset-list",
+				fragmentHTML = "${fragmentHTML}"
+			);
+		}
 	}
 }

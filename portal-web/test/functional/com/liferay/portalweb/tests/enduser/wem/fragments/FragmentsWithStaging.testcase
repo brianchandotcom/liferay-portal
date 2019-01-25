@@ -5,20 +5,28 @@ definition {
 	property testray.main.component.name = "Fragments";
 
 	setUp {
-		TestCase.setUpPortalInstance();
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
 
-		User.firstLoginPG();
+			User.firstLoginPG();
+		}
 
-		JSONGroup.addGroup(groupName = "Test Site Name");
+		task ("Add a site via JSON") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
 
-		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Staging Test Page"
-		);
+		task ("Add a page to the site") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Staging Test Page"
+			);
+		}
 
-		Staging.openStagingAdmin(siteURLKey = "test-site-name");
+		task ("Activate local live staging") {
+			Staging.openStagingAdmin(siteURLKey = "test-site-name");
 
-		Staging.activateStagingCP(siteName = "Test Site Name");
+			Staging.activateStagingCP(siteName = "Test Site Name");
+		}
 	}
 
 	tearDown {
@@ -35,58 +43,76 @@ definition {
 	@description = "Fragments are published automatically on any publishing process."
 	@priority = "5"
 	test AssertFragmentsAlwaysPublished {
-		JSONFragment.addFragmentCollection(
-			groupKey = "Test Site Name-staging",
-			name = "Collection Name",
-			site = "false"
-		);
+		task ("Add a fragment collection to the staging site via JSON") {
+			JSONFragment.addFragmentCollection(
+				groupKey = "Test Site Name-staging",
+				name = "Collection Name",
+				site = "false"
+			);
+		}
 
-		JSONFragment.addSection(
-			collectionName = "Collection Name",
-			groupKey = "Test Site Name-staging",
-			name = "Fragment Name",
-			site = "false"
-		);
+		task ("Add a section fragment to the staging site via JSON") {
+			JSONFragment.addSection(
+				collectionName = "Collection Name",
+				groupKey = "Test Site Name-staging",
+				name = "Fragment Name",
+				site = "false"
+			);
+		}
 
-		JSONFragment.assertFragmentCollectionNotInGroup(
-			collectionName = "Collection Name",
-			groupName = "Test Site Name"
-		);
+		task ("Assert the fragment collection is not present in the live site via JSON)") {
+			JSONFragment.assertFragmentCollectionNotInGroup(
+				collectionName = "Collection Name",
+				groupName = "Test Site Name"
+			);
+		}
 
-		Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
+		task ("Publish the site to live") {
+			Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
 
-		Staging.publishCustomPublication();
+			Staging.publishCustomPublication();
+		}
 
-		JSONFragment.assertFragmentCollectionInGroup(
-			collectionName = "Collection Name",
-			groupName = "Test Site Name"
-		);
+		task ("Assert the fragment collection is present in the live site via JSON") {
+			JSONFragment.assertFragmentCollectionInGroup(
+				collectionName = "Collection Name",
+				groupName = "Test Site Name"
+			);
+		}
 
-		JSONFragment.assertFragmentInGroup(
-			collectionName = "Collection Name",
-			fragmentName = "Fragment Name",
-			groupName = "Test Site Name"
-		);
+		task ("Assert the section fragment is present in the live site via JSON") {
+			JSONFragment.assertFragmentInGroup(
+				collectionName = "Collection Name",
+				fragmentName = "Fragment Name",
+				groupName = "Test Site Name"
+			);
+		}
 	}
 
 	@description = "Page Fragments administration is only be accessible in staging view."
 	@priority = "5"
 	test AssertFragmentsAreOnlyEditableInStagingView {
-		ProductMenuHelper.expandPanel(panel = "Site Administration");
+		task ("Assert fragments admin is accessible in the staging site") {
+			ProductMenuHelper.expandPanel(panel = "Site Administration");
 
-		ProductMenuHelper.expandCategory(category = "Build");
+			ProductMenuHelper.expandCategory(category = "Build");
 
-		AssertVisible(locator1 = "ProductMenu#PORTLET", key_portlet = "Page Fragments");
+			AssertVisible(locator1 = "ProductMenu#PORTLET", key_portlet = "Page Fragments");
+		}
 
-		ProductMenu.gotoLiveSite(site = "Site Name");
+		task ("Navigate to the live site") {
+			ProductMenu.gotoLiveSite(site = "Site Name");
+		}
 
-		ProductMenuHelper.expandPanel(panel = "Site Administration");
+		task ("Assert fragments admin is not accessible in the live site") {
+			ProductMenuHelper.expandPanel(panel = "Site Administration");
 
-		ProductMenuHelper.expandCategory(category = "Build");
+			ProductMenuHelper.expandCategory(category = "Build");
 
-		AssertElementNotPresent(
-			locator1 = "ProductMenu#PORTLET",
-			key_portlet = "Page Fragments"
-		);
+			AssertElementNotPresent(
+				locator1 = "ProductMenu#PORTLET",
+				key_portlet = "Page Fragments"
+			);
+		}
 	}
 }

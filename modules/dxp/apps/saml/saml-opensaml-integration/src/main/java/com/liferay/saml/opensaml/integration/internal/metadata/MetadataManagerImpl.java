@@ -73,6 +73,8 @@ import org.opensaml.saml.saml2.metadata.RoleDescriptor;
 import org.opensaml.saml.security.impl.MetadataCredentialResolver;
 import org.opensaml.security.credential.Credential;
 import org.opensaml.security.credential.CredentialResolver;
+import org.opensaml.security.credential.UsageType;
+import org.opensaml.security.criteria.UsageCriterion;
 import org.opensaml.security.x509.X509Credential;
 import org.opensaml.xmlsec.DecryptionConfiguration;
 import org.opensaml.xmlsec.SecurityConfigurationSupport;
@@ -232,13 +234,14 @@ public class MetadataManagerImpl
 			if (_samlProviderConfigurationHelper.isRoleIdp()) {
 				return MetadataGeneratorUtil.buildIdpEntityDescriptor(
 					request, getLocalEntityId(), isWantAuthnRequestSigned(),
-					isSignMetadata(), isSSLRequired(), getSigningCredential());
+					isSignMetadata(), isSSLRequired(), getSigningCredential(),
+					getEncryptionCredential());
 			}
 			else if (_samlProviderConfigurationHelper.isRoleSp()) {
 				return MetadataGeneratorUtil.buildSpEntityDescriptor(
 					request, getLocalEntityId(), isSignAuthnRequest(),
 					isSignMetadata(), isSSLRequired(), isWantAssertionsSigned(),
-					getSigningCredential());
+					getSigningCredential(), getEncryptionCredential());
 			}
 
 			return null;
@@ -451,6 +454,25 @@ public class MetadataManagerImpl
 	}
 
 	@Override
+	public Credential getEncryptionCredential() throws SamlException {
+		try {
+			String entityId = getLocalEntityId();
+
+			if (Validator.isNull(entityId)) {
+				return null;
+			}
+
+			return _credentialResolver.resolveSingle(
+				new CriteriaSet(
+					new EntityIdCriterion(entityId),
+					new UsageCriterion(UsageType.ENCRYPTION)));
+		}
+		catch (ResolverException re) {
+			throw new SamlException(re);
+		}
+	}
+
+	@Override
 	public Credential getSigningCredential() throws SamlException {
 		try {
 			String entityId = getLocalEntityId();
@@ -459,14 +481,10 @@ public class MetadataManagerImpl
 				return null;
 			}
 
-			CriteriaSet criteriaSet = new CriteriaSet();
-
-			EntityIdCriterion entityIdCriterion = new EntityIdCriterion(
-				entityId);
-
-			criteriaSet.add(entityIdCriterion);
-
-			return _credentialResolver.resolveSingle(criteriaSet);
+			return _credentialResolver.resolveSingle(
+				new CriteriaSet(
+					new EntityIdCriterion(entityId),
+					new UsageCriterion(UsageType.SIGNING)));
 		}
 		catch (ResolverException re) {
 			throw new SamlException(re);

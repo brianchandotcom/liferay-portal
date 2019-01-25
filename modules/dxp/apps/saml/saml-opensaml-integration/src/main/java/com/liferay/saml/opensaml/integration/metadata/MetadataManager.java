@@ -54,6 +54,8 @@ public interface MetadataManager {
 
 	public SignatureTrustEngine getSignatureTrustEngine() throws SamlException;
 
+	Credential getEncryptionCredential() throws SamlException;
+
 	public Credential getSigningCredential() throws SamlException;
 
 	public String getUserAttributeMappings(String entityId);

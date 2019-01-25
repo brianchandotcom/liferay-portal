@@ -203,7 +203,12 @@ public class Arquillian extends BlockJUnit4ClassRunner {
            statement = withPotentialTimeout(method, test, statement);
 
            final Statement stmtwithLifecycle = statement;
-           final Statement stmtWithRules = _withRules(method, test, statement);
+
+		   for (MethodRule methodRule : rules(test)) {
+				statement = methodRule.apply(statement, method, test);
+			}
+
+           final Statement stmtWithRules = statement;
 
            return new Statement() {
 
@@ -305,16 +310,6 @@ public class Arquillian extends BlockJUnit4ClassRunner {
 				throw throwable;
 			}
 		};
-	}
-
-	private Statement _withRules(
-		FrameworkMethod frameworkMethod, Object target, Statement statement) {
-
-		for (MethodRule methodRule : rules(target)) {
-			statement = methodRule.apply(statement, frameworkMethod, target);
-		}
-
-		return statement;
 	}
 
 	private static final ThreadLocal<TestRunnerAdaptor>

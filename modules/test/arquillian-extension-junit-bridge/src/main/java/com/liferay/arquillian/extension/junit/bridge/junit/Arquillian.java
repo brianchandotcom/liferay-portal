@@ -106,29 +106,15 @@ public class Arquillian extends BlockJUnit4ClassRunner {
 		_testRunnerAdaptor = _testRunnerAdaptorThreadLocal.get();
 
 		if (_testRunnerAdaptor == null) {
-			Throwable throwable = StateUtil.getInitializationException();
+			try {
+				_testRunnerAdaptor = TestRunnerAdaptorBuilder.build();
 
-			if(throwable != null) {
-				runNotifier.fireTestFailure(
-					new Failure(
-						getDescription(),
-						new RuntimeException(
-                              "Arquillian has previously been attempted initialized, but failed. See cause for previous exception",
-                              throwable)));
+				_testRunnerAdaptor.beforeSuite();
+
+				_testRunnerAdaptorThreadLocal.set(_testRunnerAdaptor);
 			}
-			else {
-				try {
-					_testRunnerAdaptor = TestRunnerAdaptorBuilder.build();
-
-					_testRunnerAdaptor.beforeSuite();
-
-					_testRunnerAdaptorThreadLocal.set(_testRunnerAdaptor);
-				}
-				catch (Exception e) {
-					StateUtil.caughtInitializationException(e);
-
-					runNotifier.fireTestFailure(new Failure(getDescription(), e));
-				}
+			catch (Exception e) {
+				runNotifier.fireTestFailure(new Failure(getDescription(), e));
 			}
 		}
 
@@ -355,15 +341,6 @@ public class Arquillian extends BlockJUnit4ClassRunner {
 
 	private static class StateUtil {
 
-		public static void caughtInitializationException(Throwable throwable) {
-			try {
-				_caughtInitializationExceptionMethod.invoke(null, throwable);
-			}
-			catch (ReflectiveOperationException roe) {
-				throw new RuntimeException(roe);
-			}
-		}
-
 		public static void clean() {
 			try {
 				_cleanMethod.invoke(null);
@@ -373,32 +350,10 @@ public class Arquillian extends BlockJUnit4ClassRunner {
 			}
 		}
 
-		public static Throwable getInitializationException() {
-			try {
-				return (Throwable)_getInitializationExceptionMethod.invoke(null);
-			}
-			catch (ReflectiveOperationException roe) {
-				throw new RuntimeException(roe);
-			}
-		}
-
-		private static final Method _caughtInitializationExceptionMethod;
 		private static final Method _cleanMethod;
-		private static final Method _getInitializationExceptionMethod;
 
 		static {
 			try {
-				_getInitializationExceptionMethod = State.class.getDeclaredMethod(
-					"getInitializationException");
-
-				_getInitializationExceptionMethod.setAccessible(true);
-
-				_caughtInitializationExceptionMethod =
-					State.class.getDeclaredMethod(
-						"caughtInitializationException", Throwable.class);
-
-				_caughtInitializationExceptionMethod.setAccessible(true);
-
 				_cleanMethod = State.class.getDeclaredMethod("clean");
 
 				_cleanMethod.setAccessible(true);

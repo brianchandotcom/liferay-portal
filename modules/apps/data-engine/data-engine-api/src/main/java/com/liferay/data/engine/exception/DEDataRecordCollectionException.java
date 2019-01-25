@@ -44,6 +44,23 @@ public class DEDataRecordCollectionException extends PortalException {
 
 	}
 
+	public static class DeleteDataRecord
+		extends DEDataRecordCollectionException {
+
+		public DeleteDataRecord(Throwable cause) {
+			super(cause);
+		}
+
+	}
+
+	public static class GetDataRecord extends DEDataRecordCollectionException {
+
+		public GetDataRecord(Throwable cause) {
+			super(cause);
+		}
+
+	}
+
 	public static class MustHavePermission
 		extends DEDataRecordCollectionException {
 
@@ -58,6 +75,23 @@ public class DEDataRecordCollectionException extends PortalException {
 		}
 
 		private final String[] _actionId;
+
+	}
+
+	public static class NoSuchDataRecord
+		extends DEDataRecordCollectionException {
+
+		public NoSuchDataRecord(long deDataRecordId, Throwable cause) {
+			super(cause);
+
+			_deDataRecordId = deDataRecordId;
+		}
+
+		public long getDEDataRecordId() {
+			return _deDataRecordId;
+		}
+
+		private final long _deDataRecordId;
 
 	}
 

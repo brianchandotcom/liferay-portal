@@ -57,8 +57,12 @@ public class DEDataJSONStorage implements DEDataStorage {
 			DEDataStorageDeleteRequest deDataStorageDeleteRequest)
 		throws PortalException {
 
-		ddmContentLocalService.deleteDDMContent(
+		DDMContent ddmContent = ddmContentLocalService.fetchDDMContent(
 			deDataStorageDeleteRequest.getDEDataStorageId());
+
+		if (ddmContent != null) {
+			ddmContentLocalService.deleteDDMContent(ddmContent);
+		}
 
 		return DEDataStorageResponseBuilder.deleteBuilder(
 			deDataStorageDeleteRequest.getDEDataStorageId()

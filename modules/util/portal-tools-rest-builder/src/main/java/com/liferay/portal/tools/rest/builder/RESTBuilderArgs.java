@@ -19,7 +19,7 @@ package com.liferay.portal.tools.rest.builder;
  */
 public class RESTBuilderArgs {
 
-	public static final String API_DIR_NAME = "../rest-api/src/main/java";
+	public static final String API_DIR_NAME = "../sample-api/src/main/java";
 
 	public static final String API_PACKAGE_PATH = "com.example.sample";
 

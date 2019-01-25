@@ -194,62 +194,73 @@ public class Arquillian extends BlockJUnit4ClassRunner {
 		}
 
 		final Object test = testObject;
-       try
-       {
-           Statement statement = methodInvoker(method, test);
-           statement = possiblyExpectingExceptions(method, test, statement);
-           statement = withPotentialTimeout(method, test, statement);
 
-           final Statement stmtwithLifecycle = statement;
+		try {
+			Statement statement = methodInvoker(method, test);
 
-		   for (MethodRule methodRule : rules(test)) {
+			statement = possiblyExpectingExceptions(method, test, statement);
+
+			statement = withPotentialTimeout(method, test, statement);
+
+			final Statement originalStatement = statement;
+
+			for (MethodRule methodRule : rules(test)) {
 				statement = methodRule.apply(statement, method, test);
 			}
 
-           final Statement stmtWithRules = statement;
+			final Statement statementWithRules = statement;
 
-           return new Statement() {
+			return new Statement() {
 
-               @Override
-               public void evaluate() throws Throwable {
-                   final AtomicInteger integer = new AtomicInteger();
-                   Throwable throwable = null;
+				@Override
+				public void evaluate() throws Throwable {
+					final AtomicInteger counter = new AtomicInteger();
 
-                   try {
-                       _testRunnerAdaptor.fireCustomLifecycle(new BeforeRules(test, method.getMethod(), new LifecycleMethodExecutor() {
-                           @Override
-                           public void invoke() throws Throwable {
-                               integer.incrementAndGet();
-                               stmtWithRules.evaluate();
-                           }
-                       }));
-                       // If AroundRules (includes lifecycles) were not executed, invoke only lifecycles+test
-                       if(integer.get() == 0) {
-                            stmtwithLifecycle.evaluate();
-                       }
-                   } catch(Throwable t) {
-					   throwable = t;
-                   }
-                   finally {
-                       try {
-                           _testRunnerAdaptor.fireCustomLifecycle(new AfterRules(test, method.getMethod(), LifecycleMethodExecutor.NO_OP));
-                       } catch(Throwable t) {
-						   if (throwable != null) {
-							   t.addSuppressed(throwable);
-						   }
+					Throwable throwable = null;
 
-						   throwable = t;
-                       }
-                   }
+					try {
+						_testRunnerAdaptor.fireCustomLifecycle(
+							new BeforeRules(
+								test, method.getMethod(),
+								() -> {
+									counter.incrementAndGet();
 
-				   if (throwable != null) {
-					   throw throwable;
-				   }
-               }
-           };
-       } catch(Exception e) {
-           throw new RuntimeException("Could not create statement", e);
-       }
+									statementWithRules.evaluate();
+								}
+							));
+
+						if(counter.get() == 0) {
+							originalStatement.evaluate();
+						}
+					}
+					catch(Throwable t) {
+						throwable = t;
+					}
+					finally {
+						try {
+							_testRunnerAdaptor.fireCustomLifecycle(
+								new AfterRules(
+									test, method.getMethod(),
+									LifecycleMethodExecutor.NO_OP));
+						}
+						catch(Throwable t) {
+							if (throwable != null) {
+								t.addSuppressed(throwable);
+							}
+
+							throwable = t;
+						}
+					}
+
+					if (throwable != null) {
+						throw throwable;
+					}
+				}
+			};
+		}
+		catch(Exception e) {
+			throw new RuntimeException("Could not create statement", e);
+		}
     }
 
 	@Override

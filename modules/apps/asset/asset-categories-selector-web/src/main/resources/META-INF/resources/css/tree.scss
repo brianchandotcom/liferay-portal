@@ -28,19 +28,6 @@ $spacer: 1rem;
 		&:hover {
 			background-color: #F7F8F9;
 		}
-
-		.sticker {
-			background-color: $background-color-default;
-			color: $color-default;
-			font-size: 0.625rem;
-			height: 2rem;
-			line-height: 2rem;
-			width: 2rem;
-
-			> .inline-item {
-				font-size: 1rem;
-			}
-		}
 	}
 
 	.card-row-padded {
@@ -50,23 +37,11 @@ $spacer: 1rem;
 	.selected .card {
 		background-color: $background-color-selected;
 		color: $color-selected;
-
-		.sticker {
-			color: $color-selected;
-		}
 	}
 
 	.disabled .card {
-		color: $color-disabled;
 		cursor: not-allowed;
-
-		&:hover {
-			background-color: $background-color-default;
-		}
-
-		.sticker {
-			color: $color-disabled;
-		}
+		opacity: 0.4;
 	}
 
 	.treeview-node {

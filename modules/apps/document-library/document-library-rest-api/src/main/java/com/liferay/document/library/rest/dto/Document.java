@@ -17,7 +17,7 @@ package com.liferay.document.library.rest.dto;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- * @author Javier Gamarra
+ * @author Brian Wing Shun Chan
  */
 @XmlRootElement(name = "Document")
 public class Document {

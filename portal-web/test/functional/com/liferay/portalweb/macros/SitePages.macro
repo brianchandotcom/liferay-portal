@@ -259,6 +259,12 @@ definition {
 	}
 
 	macro deletePage {
+		var browserType = PropsUtil.get("browser.type");
+
+		if ("${browserType}" == "chrome") {
+			MetalComponent.waitForLayout();
+		}
+
 		Click(
 			locator1 = "SitePages#LIST_GROUP_ITEM_ELLIPSIS_ICON",
 			key_pageName = "${pageName}"

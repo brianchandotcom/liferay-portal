@@ -719,8 +719,7 @@ public abstract class BaseSamlTestCase extends PowerMockito {
 				EntityIdCriterion.class);
 
 			if (entityIdCriterion == null) {
-				throw new ResolverException(
-					"Mock cannot resolve without EntityIdCriterion");
+				throw new ResolverException("Entity ID criterion is null");
 			}
 
 			String entityId = entityIdCriterion.getEntityId();

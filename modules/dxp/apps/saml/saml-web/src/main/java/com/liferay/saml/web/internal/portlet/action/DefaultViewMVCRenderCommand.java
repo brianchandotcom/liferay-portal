@@ -197,12 +197,13 @@ public class DefaultViewMVCRenderCommand implements MVCRenderCommand {
 				themeDisplay.getCompanyId(), searchContainer.getStart(),
 				searchContainer.getEnd());
 
+		renderRequest.setAttribute(
+			SamlWebKeys.SAML_SP_IDP_CONNECTIONS, samlSpIdpConnections);
+
 		int samlSpIdpConnectionsCount =
 			_samlSpIdpConnectionLocalService.getSamlSpIdpConnectionsCount(
 				themeDisplay.getCompanyId());
 
-		renderRequest.setAttribute(
-			SamlWebKeys.SAML_SP_IDP_CONNECTIONS, samlSpIdpConnections);
 		renderRequest.setAttribute(
 			SamlWebKeys.SAML_SP_IDP_CONNECTIONS_COUNT,
 			samlSpIdpConnectionsCount);

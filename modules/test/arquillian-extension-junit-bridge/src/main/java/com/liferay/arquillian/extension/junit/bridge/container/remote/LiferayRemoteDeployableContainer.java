@@ -105,7 +105,10 @@ public class LiferayRemoteDeployableContainer
 	@Override
 	public void start() throws LifecycleException {
 		try {
-			_mBeanServerConnection = _getMBeanServerConnection();
+			JMXConnector jmxConnector = JMXConnectorFactory.connect(
+				_liferayJMXServiceURL, _liferayEnv);
+
+			_mBeanServerConnection = jmxConnector.getMBeanServerConnection();
 
 			Set<ObjectName> names = _mBeanServerConnection.queryNames(
 				_frameworkObjectName, null);
@@ -144,15 +147,6 @@ public class LiferayRemoteDeployableContainer
 
 	@Override
 	public void undeploy(Descriptor desc) {
-	}
-
-	private MBeanServerConnection _getMBeanServerConnection()
-		throws IOException {
-
-		JMXConnector jMXConnector = JMXConnectorFactory.connect(
-			_liferayJMXServiceURL, _liferayEnv);
-
-		return jMXConnector.getMBeanServerConnection();
 	}
 
 	private long _installBundle(Archive<?> archive) throws Exception {

@@ -84,33 +84,12 @@ public class KBFolderPersistenceImpl extends BasePersistenceImpl<KBFolder>
 		".List1";
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION = FINDER_CLASS_NAME_ENTITY +
 		".List2";
-	private final FinderPath _finderPathWithPaginationFindAll = new FinderPath(KBFolderModelImpl.ENTITY_CACHE_ENABLED,
-			KBFolderModelImpl.FINDER_CACHE_ENABLED, KBFolderImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
-	private final FinderPath _finderPathWithoutPaginationFindAll = new FinderPath(KBFolderModelImpl.ENTITY_CACHE_ENABLED,
-			KBFolderModelImpl.FINDER_CACHE_ENABLED, KBFolderImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0]);
-	private final FinderPath _finderPathCountAll = new FinderPath(KBFolderModelImpl.ENTITY_CACHE_ENABLED,
-			KBFolderModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
-	private final FinderPath _finderPathWithPaginationFindByUuid = new FinderPath(KBFolderModelImpl.ENTITY_CACHE_ENABLED,
-			KBFolderModelImpl.FINDER_CACHE_ENABLED, KBFolderImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	private final FinderPath _finderPathWithoutPaginationFindByUuid = new FinderPath(KBFolderModelImpl.ENTITY_CACHE_ENABLED,
-			KBFolderModelImpl.FINDER_CACHE_ENABLED, KBFolderImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] { String.class.getName() },
-			KBFolderModelImpl.UUID_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByUuid = new FinderPath(KBFolderModelImpl.ENTITY_CACHE_ENABLED,
-			KBFolderModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] { String.class.getName() });
+	private FinderPath _finderPathWithPaginationFindAll;
+	private FinderPath _finderPathWithoutPaginationFindAll;
+	private FinderPath _finderPathCountAll;
+	private FinderPath _finderPathWithPaginationFindByUuid;
+	private FinderPath _finderPathWithoutPaginationFindByUuid;
+	private FinderPath _finderPathCountByUuid;
 
 	/**
 	 * Returns all the kb folders where uuid = &#63;.
@@ -630,16 +609,8 @@ public class KBFolderPersistenceImpl extends BasePersistenceImpl<KBFolder>
 
 	private static final String _FINDER_COLUMN_UUID_UUID_2 = "kbFolder.uuid = ?";
 	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(kbFolder.uuid IS NULL OR kbFolder.uuid = '')";
-	private final FinderPath _finderPathFetchByUUID_G = new FinderPath(KBFolderModelImpl.ENTITY_CACHE_ENABLED,
-			KBFolderModelImpl.FINDER_CACHE_ENABLED, KBFolderImpl.class,
-			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
-			new String[] { String.class.getName(), Long.class.getName() },
-			KBFolderModelImpl.UUID_COLUMN_BITMASK |
-			KBFolderModelImpl.GROUPID_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByUUID_G = new FinderPath(KBFolderModelImpl.ENTITY_CACHE_ENABLED,
-			KBFolderModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G",
-			new String[] { String.class.getName(), Long.class.getName() });
+	private FinderPath _finderPathFetchByUUID_G;
+	private FinderPath _finderPathCountByUUID_G;
 
 	/**
 	 * Returns the kb folder where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchFolderException} if it could not be found.
@@ -874,25 +845,9 @@ public class KBFolderPersistenceImpl extends BasePersistenceImpl<KBFolder>
 	private static final String _FINDER_COLUMN_UUID_G_UUID_2 = "kbFolder.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_3 = "(kbFolder.uuid IS NULL OR kbFolder.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_G_GROUPID_2 = "kbFolder.groupId = ?";
-	private final FinderPath _finderPathWithPaginationFindByUuid_C = new FinderPath(KBFolderModelImpl.ENTITY_CACHE_ENABLED,
-			KBFolderModelImpl.FINDER_CACHE_ENABLED, KBFolderImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	private final FinderPath _finderPathWithoutPaginationFindByUuid_C = new FinderPath(KBFolderModelImpl.ENTITY_CACHE_ENABLED,
-			KBFolderModelImpl.FINDER_CACHE_ENABLED, KBFolderImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] { String.class.getName(), Long.class.getName() },
-			KBFolderModelImpl.UUID_COLUMN_BITMASK |
-			KBFolderModelImpl.COMPANYID_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByUuid_C = new FinderPath(KBFolderModelImpl.ENTITY_CACHE_ENABLED,
-			KBFolderModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] { String.class.getName(), Long.class.getName() });
+	private FinderPath _finderPathWithPaginationFindByUuid_C;
+	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
+	private FinderPath _finderPathCountByUuid_C;
 
 	/**
 	 * Returns all the kb folders where uuid = &#63; and companyId = &#63;.
@@ -1453,25 +1408,9 @@ public class KBFolderPersistenceImpl extends BasePersistenceImpl<KBFolder>
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "kbFolder.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(kbFolder.uuid IS NULL OR kbFolder.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "kbFolder.companyId = ?";
-	private final FinderPath _finderPathWithPaginationFindByG_P = new FinderPath(KBFolderModelImpl.ENTITY_CACHE_ENABLED,
-			KBFolderModelImpl.FINDER_CACHE_ENABLED, KBFolderImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	private final FinderPath _finderPathWithoutPaginationFindByG_P = new FinderPath(KBFolderModelImpl.ENTITY_CACHE_ENABLED,
-			KBFolderModelImpl.FINDER_CACHE_ENABLED, KBFolderImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_P",
-			new String[] { Long.class.getName(), Long.class.getName() },
-			KBFolderModelImpl.GROUPID_COLUMN_BITMASK |
-			KBFolderModelImpl.PARENTKBFOLDERID_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByG_P = new FinderPath(KBFolderModelImpl.ENTITY_CACHE_ENABLED,
-			KBFolderModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_P",
-			new String[] { Long.class.getName(), Long.class.getName() });
+	private FinderPath _finderPathWithPaginationFindByG_P;
+	private FinderPath _finderPathWithoutPaginationFindByG_P;
+	private FinderPath _finderPathCountByG_P;
 
 	/**
 	 * Returns all the kb folders where groupId = &#63; and parentKBFolderId = &#63;.
@@ -2369,23 +2308,8 @@ public class KBFolderPersistenceImpl extends BasePersistenceImpl<KBFolder>
 
 	private static final String _FINDER_COLUMN_G_P_GROUPID_2 = "kbFolder.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_P_PARENTKBFOLDERID_2 = "kbFolder.parentKBFolderId = ?";
-	private final FinderPath _finderPathFetchByG_P_N = new FinderPath(KBFolderModelImpl.ENTITY_CACHE_ENABLED,
-			KBFolderModelImpl.FINDER_CACHE_ENABLED, KBFolderImpl.class,
-			FINDER_CLASS_NAME_ENTITY, "fetchByG_P_N",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName()
-			},
-			KBFolderModelImpl.GROUPID_COLUMN_BITMASK |
-			KBFolderModelImpl.PARENTKBFOLDERID_COLUMN_BITMASK |
-			KBFolderModelImpl.NAME_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByG_P_N = new FinderPath(KBFolderModelImpl.ENTITY_CACHE_ENABLED,
-			KBFolderModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_P_N",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName()
-			});
+	private FinderPath _finderPathFetchByG_P_N;
+	private FinderPath _finderPathCountByG_P_N;
 
 	/**
 	 * Returns the kb folder where groupId = &#63; and parentKBFolderId = &#63; and name = &#63; or throws a {@link NoSuchFolderException} if it could not be found.
@@ -2650,23 +2574,8 @@ public class KBFolderPersistenceImpl extends BasePersistenceImpl<KBFolder>
 	private static final String _FINDER_COLUMN_G_P_N_PARENTKBFOLDERID_2 = "kbFolder.parentKBFolderId = ? AND ";
 	private static final String _FINDER_COLUMN_G_P_N_NAME_2 = "kbFolder.name = ?";
 	private static final String _FINDER_COLUMN_G_P_N_NAME_3 = "(kbFolder.name IS NULL OR kbFolder.name = '')";
-	private final FinderPath _finderPathFetchByG_P_UT = new FinderPath(KBFolderModelImpl.ENTITY_CACHE_ENABLED,
-			KBFolderModelImpl.FINDER_CACHE_ENABLED, KBFolderImpl.class,
-			FINDER_CLASS_NAME_ENTITY, "fetchByG_P_UT",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName()
-			},
-			KBFolderModelImpl.GROUPID_COLUMN_BITMASK |
-			KBFolderModelImpl.PARENTKBFOLDERID_COLUMN_BITMASK |
-			KBFolderModelImpl.URLTITLE_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByG_P_UT = new FinderPath(KBFolderModelImpl.ENTITY_CACHE_ENABLED,
-			KBFolderModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_P_UT",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName()
-			});
+	private FinderPath _finderPathFetchByG_P_UT;
+	private FinderPath _finderPathCountByG_P_UT;
 
 	/**
 	 * Returns the kb folder where groupId = &#63; and parentKBFolderId = &#63; and urlTitle = &#63; or throws a {@link NoSuchFolderException} if it could not be found.
@@ -3682,6 +3591,134 @@ public class KBFolderPersistenceImpl extends BasePersistenceImpl<KBFolder>
 	 * Initializes the kb folder persistence.
 	 */
 	public void afterPropertiesSet() {
+		_finderPathWithPaginationFindAll = new FinderPath(KBFolderModelImpl.ENTITY_CACHE_ENABLED,
+				KBFolderModelImpl.FINDER_CACHE_ENABLED, KBFolderImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
+
+		_finderPathWithoutPaginationFindAll = new FinderPath(KBFolderModelImpl.ENTITY_CACHE_ENABLED,
+				KBFolderModelImpl.FINDER_CACHE_ENABLED, KBFolderImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
+				new String[0]);
+
+		_finderPathCountAll = new FinderPath(KBFolderModelImpl.ENTITY_CACHE_ENABLED,
+				KBFolderModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+				new String[0]);
+
+		_finderPathWithPaginationFindByUuid = new FinderPath(KBFolderModelImpl.ENTITY_CACHE_ENABLED,
+				KBFolderModelImpl.FINDER_CACHE_ENABLED, KBFolderImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+				new String[] {
+					String.class.getName(),
+					
+				Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
+
+		_finderPathWithoutPaginationFindByUuid = new FinderPath(KBFolderModelImpl.ENTITY_CACHE_ENABLED,
+				KBFolderModelImpl.FINDER_CACHE_ENABLED, KBFolderImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+				new String[] { String.class.getName() },
+				KBFolderModelImpl.UUID_COLUMN_BITMASK);
+
+		_finderPathCountByUuid = new FinderPath(KBFolderModelImpl.ENTITY_CACHE_ENABLED,
+				KBFolderModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+				new String[] { String.class.getName() });
+
+		_finderPathFetchByUUID_G = new FinderPath(KBFolderModelImpl.ENTITY_CACHE_ENABLED,
+				KBFolderModelImpl.FINDER_CACHE_ENABLED, KBFolderImpl.class,
+				FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
+				new String[] { String.class.getName(), Long.class.getName() },
+				KBFolderModelImpl.UUID_COLUMN_BITMASK |
+				KBFolderModelImpl.GROUPID_COLUMN_BITMASK);
+
+		_finderPathCountByUUID_G = new FinderPath(KBFolderModelImpl.ENTITY_CACHE_ENABLED,
+				KBFolderModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G",
+				new String[] { String.class.getName(), Long.class.getName() });
+
+		_finderPathWithPaginationFindByUuid_C = new FinderPath(KBFolderModelImpl.ENTITY_CACHE_ENABLED,
+				KBFolderModelImpl.FINDER_CACHE_ENABLED, KBFolderImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+				new String[] {
+					String.class.getName(), Long.class.getName(),
+					
+				Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
+
+		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(KBFolderModelImpl.ENTITY_CACHE_ENABLED,
+				KBFolderModelImpl.FINDER_CACHE_ENABLED, KBFolderImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+				new String[] { String.class.getName(), Long.class.getName() },
+				KBFolderModelImpl.UUID_COLUMN_BITMASK |
+				KBFolderModelImpl.COMPANYID_COLUMN_BITMASK);
+
+		_finderPathCountByUuid_C = new FinderPath(KBFolderModelImpl.ENTITY_CACHE_ENABLED,
+				KBFolderModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+				new String[] { String.class.getName(), Long.class.getName() });
+
+		_finderPathWithPaginationFindByG_P = new FinderPath(KBFolderModelImpl.ENTITY_CACHE_ENABLED,
+				KBFolderModelImpl.FINDER_CACHE_ENABLED, KBFolderImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					
+				Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
+
+		_finderPathWithoutPaginationFindByG_P = new FinderPath(KBFolderModelImpl.ENTITY_CACHE_ENABLED,
+				KBFolderModelImpl.FINDER_CACHE_ENABLED, KBFolderImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_P",
+				new String[] { Long.class.getName(), Long.class.getName() },
+				KBFolderModelImpl.GROUPID_COLUMN_BITMASK |
+				KBFolderModelImpl.PARENTKBFOLDERID_COLUMN_BITMASK);
+
+		_finderPathCountByG_P = new FinderPath(KBFolderModelImpl.ENTITY_CACHE_ENABLED,
+				KBFolderModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_P",
+				new String[] { Long.class.getName(), Long.class.getName() });
+
+		_finderPathFetchByG_P_N = new FinderPath(KBFolderModelImpl.ENTITY_CACHE_ENABLED,
+				KBFolderModelImpl.FINDER_CACHE_ENABLED, KBFolderImpl.class,
+				FINDER_CLASS_NAME_ENTITY, "fetchByG_P_N",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					String.class.getName()
+				},
+				KBFolderModelImpl.GROUPID_COLUMN_BITMASK |
+				KBFolderModelImpl.PARENTKBFOLDERID_COLUMN_BITMASK |
+				KBFolderModelImpl.NAME_COLUMN_BITMASK);
+
+		_finderPathCountByG_P_N = new FinderPath(KBFolderModelImpl.ENTITY_CACHE_ENABLED,
+				KBFolderModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_P_N",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					String.class.getName()
+				});
+
+		_finderPathFetchByG_P_UT = new FinderPath(KBFolderModelImpl.ENTITY_CACHE_ENABLED,
+				KBFolderModelImpl.FINDER_CACHE_ENABLED, KBFolderImpl.class,
+				FINDER_CLASS_NAME_ENTITY, "fetchByG_P_UT",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					String.class.getName()
+				},
+				KBFolderModelImpl.GROUPID_COLUMN_BITMASK |
+				KBFolderModelImpl.PARENTKBFOLDERID_COLUMN_BITMASK |
+				KBFolderModelImpl.URLTITLE_COLUMN_BITMASK);
+
+		_finderPathCountByG_P_UT = new FinderPath(KBFolderModelImpl.ENTITY_CACHE_ENABLED,
+				KBFolderModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_P_UT",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					String.class.getName()
+				});
 	}
 
 	public void destroy() {

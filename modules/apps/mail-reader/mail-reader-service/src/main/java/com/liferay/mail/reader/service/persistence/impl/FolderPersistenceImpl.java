@@ -78,34 +78,12 @@ public class FolderPersistenceImpl extends BasePersistenceImpl<Folder>
 		".List1";
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION = FINDER_CLASS_NAME_ENTITY +
 		".List2";
-	private final FinderPath _finderPathWithPaginationFindAll = new FinderPath(FolderModelImpl.ENTITY_CACHE_ENABLED,
-			FolderModelImpl.FINDER_CACHE_ENABLED, FolderImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
-	private final FinderPath _finderPathWithoutPaginationFindAll = new FinderPath(FolderModelImpl.ENTITY_CACHE_ENABLED,
-			FolderModelImpl.FINDER_CACHE_ENABLED, FolderImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0]);
-	private final FinderPath _finderPathCountAll = new FinderPath(FolderModelImpl.ENTITY_CACHE_ENABLED,
-			FolderModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
-	private final FinderPath _finderPathWithPaginationFindByAccountId = new FinderPath(FolderModelImpl.ENTITY_CACHE_ENABLED,
-			FolderModelImpl.FINDER_CACHE_ENABLED, FolderImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByAccountId",
-			new String[] {
-				Long.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	private final FinderPath _finderPathWithoutPaginationFindByAccountId = new FinderPath(FolderModelImpl.ENTITY_CACHE_ENABLED,
-			FolderModelImpl.FINDER_CACHE_ENABLED, FolderImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByAccountId",
-			new String[] { Long.class.getName() },
-			FolderModelImpl.ACCOUNTID_COLUMN_BITMASK |
-			FolderModelImpl.FULLNAME_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByAccountId = new FinderPath(FolderModelImpl.ENTITY_CACHE_ENABLED,
-			FolderModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByAccountId",
-			new String[] { Long.class.getName() });
+	private FinderPath _finderPathWithPaginationFindAll;
+	private FinderPath _finderPathWithoutPaginationFindAll;
+	private FinderPath _finderPathCountAll;
+	private FinderPath _finderPathWithPaginationFindByAccountId;
+	private FinderPath _finderPathWithoutPaginationFindByAccountId;
+	private FinderPath _finderPathCountByAccountId;
 
 	/**
 	 * Returns all the folders where accountId = &#63;.
@@ -586,16 +564,8 @@ public class FolderPersistenceImpl extends BasePersistenceImpl<Folder>
 	}
 
 	private static final String _FINDER_COLUMN_ACCOUNTID_ACCOUNTID_2 = "folder.accountId = ?";
-	private final FinderPath _finderPathFetchByA_F = new FinderPath(FolderModelImpl.ENTITY_CACHE_ENABLED,
-			FolderModelImpl.FINDER_CACHE_ENABLED, FolderImpl.class,
-			FINDER_CLASS_NAME_ENTITY, "fetchByA_F",
-			new String[] { Long.class.getName(), String.class.getName() },
-			FolderModelImpl.ACCOUNTID_COLUMN_BITMASK |
-			FolderModelImpl.FULLNAME_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByA_F = new FinderPath(FolderModelImpl.ENTITY_CACHE_ENABLED,
-			FolderModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByA_F",
-			new String[] { Long.class.getName(), String.class.getName() });
+	private FinderPath _finderPathFetchByA_F;
+	private FinderPath _finderPathCountByA_F;
 
 	/**
 	 * Returns the folder where accountId = &#63; and fullName = &#63; or throws a {@link NoSuchFolderException} if it could not be found.
@@ -1437,6 +1407,53 @@ public class FolderPersistenceImpl extends BasePersistenceImpl<Folder>
 	 * Initializes the folder persistence.
 	 */
 	public void afterPropertiesSet() {
+		_finderPathWithPaginationFindAll = new FinderPath(FolderModelImpl.ENTITY_CACHE_ENABLED,
+				FolderModelImpl.FINDER_CACHE_ENABLED, FolderImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
+
+		_finderPathWithoutPaginationFindAll = new FinderPath(FolderModelImpl.ENTITY_CACHE_ENABLED,
+				FolderModelImpl.FINDER_CACHE_ENABLED, FolderImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
+				new String[0]);
+
+		_finderPathCountAll = new FinderPath(FolderModelImpl.ENTITY_CACHE_ENABLED,
+				FolderModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+				new String[0]);
+
+		_finderPathWithPaginationFindByAccountId = new FinderPath(FolderModelImpl.ENTITY_CACHE_ENABLED,
+				FolderModelImpl.FINDER_CACHE_ENABLED, FolderImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByAccountId",
+				new String[] {
+					Long.class.getName(),
+					
+				Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
+
+		_finderPathWithoutPaginationFindByAccountId = new FinderPath(FolderModelImpl.ENTITY_CACHE_ENABLED,
+				FolderModelImpl.FINDER_CACHE_ENABLED, FolderImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByAccountId",
+				new String[] { Long.class.getName() },
+				FolderModelImpl.ACCOUNTID_COLUMN_BITMASK |
+				FolderModelImpl.FULLNAME_COLUMN_BITMASK);
+
+		_finderPathCountByAccountId = new FinderPath(FolderModelImpl.ENTITY_CACHE_ENABLED,
+				FolderModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByAccountId",
+				new String[] { Long.class.getName() });
+
+		_finderPathFetchByA_F = new FinderPath(FolderModelImpl.ENTITY_CACHE_ENABLED,
+				FolderModelImpl.FINDER_CACHE_ENABLED, FolderImpl.class,
+				FINDER_CLASS_NAME_ENTITY, "fetchByA_F",
+				new String[] { Long.class.getName(), String.class.getName() },
+				FolderModelImpl.ACCOUNTID_COLUMN_BITMASK |
+				FolderModelImpl.FULLNAME_COLUMN_BITMASK);
+
+		_finderPathCountByA_F = new FinderPath(FolderModelImpl.ENTITY_CACHE_ENABLED,
+				FolderModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByA_F",
+				new String[] { Long.class.getName(), String.class.getName() });
 	}
 
 	public void destroy() {

@@ -76,38 +76,12 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 		".List1";
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION = FINDER_CLASS_NAME_ENTITY +
 		".List2";
-	private final FinderPath _finderPathWithPaginationFindAll = new FinderPath(ResourceBlockModelImpl.ENTITY_CACHE_ENABLED,
-			ResourceBlockModelImpl.FINDER_CACHE_ENABLED,
-			ResourceBlockImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findAll", new String[0]);
-	private final FinderPath _finderPathWithoutPaginationFindAll = new FinderPath(ResourceBlockModelImpl.ENTITY_CACHE_ENABLED,
-			ResourceBlockModelImpl.FINDER_CACHE_ENABLED,
-			ResourceBlockImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findAll", new String[0]);
-	private final FinderPath _finderPathCountAll = new FinderPath(ResourceBlockModelImpl.ENTITY_CACHE_ENABLED,
-			ResourceBlockModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
-	private final FinderPath _finderPathWithPaginationFindByC_N = new FinderPath(ResourceBlockModelImpl.ENTITY_CACHE_ENABLED,
-			ResourceBlockModelImpl.FINDER_CACHE_ENABLED,
-			ResourceBlockImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByC_N",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	private final FinderPath _finderPathWithoutPaginationFindByC_N = new FinderPath(ResourceBlockModelImpl.ENTITY_CACHE_ENABLED,
-			ResourceBlockModelImpl.FINDER_CACHE_ENABLED,
-			ResourceBlockImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByC_N",
-			new String[] { Long.class.getName(), String.class.getName() },
-			ResourceBlockModelImpl.COMPANYID_COLUMN_BITMASK |
-			ResourceBlockModelImpl.NAME_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByC_N = new FinderPath(ResourceBlockModelImpl.ENTITY_CACHE_ENABLED,
-			ResourceBlockModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_N",
-			new String[] { Long.class.getName(), String.class.getName() });
+	private FinderPath _finderPathWithPaginationFindAll;
+	private FinderPath _finderPathWithoutPaginationFindAll;
+	private FinderPath _finderPathCountAll;
+	private FinderPath _finderPathWithPaginationFindByC_N;
+	private FinderPath _finderPathWithoutPaginationFindByC_N;
+	private FinderPath _finderPathCountByC_N;
 
 	/**
 	 * Returns all the resource blocks where companyId = &#63; and name = &#63;.
@@ -670,35 +644,9 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 	private static final String _FINDER_COLUMN_C_N_COMPANYID_2 = "resourceBlock.companyId = ? AND ";
 	private static final String _FINDER_COLUMN_C_N_NAME_2 = "resourceBlock.name = ?";
 	private static final String _FINDER_COLUMN_C_N_NAME_3 = "(resourceBlock.name IS NULL OR resourceBlock.name = '')";
-	private final FinderPath _finderPathWithPaginationFindByC_G_N = new FinderPath(ResourceBlockModelImpl.ENTITY_CACHE_ENABLED,
-			ResourceBlockModelImpl.FINDER_CACHE_ENABLED,
-			ResourceBlockImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByC_G_N",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	private final FinderPath _finderPathWithoutPaginationFindByC_G_N = new FinderPath(ResourceBlockModelImpl.ENTITY_CACHE_ENABLED,
-			ResourceBlockModelImpl.FINDER_CACHE_ENABLED,
-			ResourceBlockImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByC_G_N",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName()
-			},
-			ResourceBlockModelImpl.COMPANYID_COLUMN_BITMASK |
-			ResourceBlockModelImpl.GROUPID_COLUMN_BITMASK |
-			ResourceBlockModelImpl.NAME_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByC_G_N = new FinderPath(ResourceBlockModelImpl.ENTITY_CACHE_ENABLED,
-			ResourceBlockModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_G_N",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName()
-			});
+	private FinderPath _finderPathWithPaginationFindByC_G_N;
+	private FinderPath _finderPathWithoutPaginationFindByC_G_N;
+	private FinderPath _finderPathCountByC_G_N;
 
 	/**
 	 * Returns all the resource blocks where companyId = &#63; and groupId = &#63; and name = &#63;.
@@ -1296,25 +1244,8 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 	private static final String _FINDER_COLUMN_C_G_N_GROUPID_2 = "resourceBlock.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_C_G_N_NAME_2 = "resourceBlock.name = ?";
 	private static final String _FINDER_COLUMN_C_G_N_NAME_3 = "(resourceBlock.name IS NULL OR resourceBlock.name = '')";
-	private final FinderPath _finderPathFetchByC_G_N_P = new FinderPath(ResourceBlockModelImpl.ENTITY_CACHE_ENABLED,
-			ResourceBlockModelImpl.FINDER_CACHE_ENABLED,
-			ResourceBlockImpl.class, FINDER_CLASS_NAME_ENTITY,
-			"fetchByC_G_N_P",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), String.class.getName()
-			},
-			ResourceBlockModelImpl.COMPANYID_COLUMN_BITMASK |
-			ResourceBlockModelImpl.GROUPID_COLUMN_BITMASK |
-			ResourceBlockModelImpl.NAME_COLUMN_BITMASK |
-			ResourceBlockModelImpl.PERMISSIONSHASH_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByC_G_N_P = new FinderPath(ResourceBlockModelImpl.ENTITY_CACHE_ENABLED,
-			ResourceBlockModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_G_N_P",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), String.class.getName()
-			});
+	private FinderPath _finderPathFetchByC_G_N_P;
+	private FinderPath _finderPathCountByC_G_N_P;
 
 	/**
 	 * Returns the resource block where companyId = &#63; and groupId = &#63; and name = &#63; and permissionsHash = &#63; or throws a {@link NoSuchResourceBlockException} if it could not be found.
@@ -2257,6 +2188,98 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 	 * Initializes the resource block persistence.
 	 */
 	public void afterPropertiesSet() {
+		_finderPathWithPaginationFindAll = new FinderPath(ResourceBlockModelImpl.ENTITY_CACHE_ENABLED,
+				ResourceBlockModelImpl.FINDER_CACHE_ENABLED,
+				ResourceBlockImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
+
+		_finderPathWithoutPaginationFindAll = new FinderPath(ResourceBlockModelImpl.ENTITY_CACHE_ENABLED,
+				ResourceBlockModelImpl.FINDER_CACHE_ENABLED,
+				ResourceBlockImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
+				new String[0]);
+
+		_finderPathCountAll = new FinderPath(ResourceBlockModelImpl.ENTITY_CACHE_ENABLED,
+				ResourceBlockModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+				new String[0]);
+
+		_finderPathWithPaginationFindByC_N = new FinderPath(ResourceBlockModelImpl.ENTITY_CACHE_ENABLED,
+				ResourceBlockModelImpl.FINDER_CACHE_ENABLED,
+				ResourceBlockImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_N",
+				new String[] {
+					Long.class.getName(), String.class.getName(),
+					
+				Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
+
+		_finderPathWithoutPaginationFindByC_N = new FinderPath(ResourceBlockModelImpl.ENTITY_CACHE_ENABLED,
+				ResourceBlockModelImpl.FINDER_CACHE_ENABLED,
+				ResourceBlockImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_N",
+				new String[] { Long.class.getName(), String.class.getName() },
+				ResourceBlockModelImpl.COMPANYID_COLUMN_BITMASK |
+				ResourceBlockModelImpl.NAME_COLUMN_BITMASK);
+
+		_finderPathCountByC_N = new FinderPath(ResourceBlockModelImpl.ENTITY_CACHE_ENABLED,
+				ResourceBlockModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_N",
+				new String[] { Long.class.getName(), String.class.getName() });
+
+		_finderPathWithPaginationFindByC_G_N = new FinderPath(ResourceBlockModelImpl.ENTITY_CACHE_ENABLED,
+				ResourceBlockModelImpl.FINDER_CACHE_ENABLED,
+				ResourceBlockImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_G_N",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					String.class.getName(),
+					
+				Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
+
+		_finderPathWithoutPaginationFindByC_G_N = new FinderPath(ResourceBlockModelImpl.ENTITY_CACHE_ENABLED,
+				ResourceBlockModelImpl.FINDER_CACHE_ENABLED,
+				ResourceBlockImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_G_N",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					String.class.getName()
+				},
+				ResourceBlockModelImpl.COMPANYID_COLUMN_BITMASK |
+				ResourceBlockModelImpl.GROUPID_COLUMN_BITMASK |
+				ResourceBlockModelImpl.NAME_COLUMN_BITMASK);
+
+		_finderPathCountByC_G_N = new FinderPath(ResourceBlockModelImpl.ENTITY_CACHE_ENABLED,
+				ResourceBlockModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_G_N",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					String.class.getName()
+				});
+
+		_finderPathFetchByC_G_N_P = new FinderPath(ResourceBlockModelImpl.ENTITY_CACHE_ENABLED,
+				ResourceBlockModelImpl.FINDER_CACHE_ENABLED,
+				ResourceBlockImpl.class, FINDER_CLASS_NAME_ENTITY,
+				"fetchByC_G_N_P",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					String.class.getName(), String.class.getName()
+				},
+				ResourceBlockModelImpl.COMPANYID_COLUMN_BITMASK |
+				ResourceBlockModelImpl.GROUPID_COLUMN_BITMASK |
+				ResourceBlockModelImpl.NAME_COLUMN_BITMASK |
+				ResourceBlockModelImpl.PERMISSIONSHASH_COLUMN_BITMASK);
+
+		_finderPathCountByC_G_N_P = new FinderPath(ResourceBlockModelImpl.ENTITY_CACHE_ENABLED,
+				ResourceBlockModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_G_N_P",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					String.class.getName(), String.class.getName()
+				});
 	}
 
 	public void destroy() {

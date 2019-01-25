@@ -76,37 +76,12 @@ public class ChangesetEntryPersistenceImpl extends BasePersistenceImpl<Changeset
 		".List1";
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION = FINDER_CLASS_NAME_ENTITY +
 		".List2";
-	private final FinderPath _finderPathWithPaginationFindAll = new FinderPath(ChangesetEntryModelImpl.ENTITY_CACHE_ENABLED,
-			ChangesetEntryModelImpl.FINDER_CACHE_ENABLED,
-			ChangesetEntryImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findAll", new String[0]);
-	private final FinderPath _finderPathWithoutPaginationFindAll = new FinderPath(ChangesetEntryModelImpl.ENTITY_CACHE_ENABLED,
-			ChangesetEntryModelImpl.FINDER_CACHE_ENABLED,
-			ChangesetEntryImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0]);
-	private final FinderPath _finderPathCountAll = new FinderPath(ChangesetEntryModelImpl.ENTITY_CACHE_ENABLED,
-			ChangesetEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
-	private final FinderPath _finderPathWithPaginationFindByGroupId = new FinderPath(ChangesetEntryModelImpl.ENTITY_CACHE_ENABLED,
-			ChangesetEntryModelImpl.FINDER_CACHE_ENABLED,
-			ChangesetEntryImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByGroupId",
-			new String[] {
-				Long.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	private final FinderPath _finderPathWithoutPaginationFindByGroupId = new FinderPath(ChangesetEntryModelImpl.ENTITY_CACHE_ENABLED,
-			ChangesetEntryModelImpl.FINDER_CACHE_ENABLED,
-			ChangesetEntryImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
-			new String[] { Long.class.getName() },
-			ChangesetEntryModelImpl.GROUPID_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByGroupId = new FinderPath(ChangesetEntryModelImpl.ENTITY_CACHE_ENABLED,
-			ChangesetEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
-			new String[] { Long.class.getName() });
+	private FinderPath _finderPathWithPaginationFindAll;
+	private FinderPath _finderPathWithoutPaginationFindAll;
+	private FinderPath _finderPathCountAll;
+	private FinderPath _finderPathWithPaginationFindByGroupId;
+	private FinderPath _finderPathWithoutPaginationFindByGroupId;
+	private FinderPath _finderPathCountByGroupId;
 
 	/**
 	 * Returns all the changeset entries where groupId = &#63;.
@@ -590,26 +565,9 @@ public class ChangesetEntryPersistenceImpl extends BasePersistenceImpl<Changeset
 	}
 
 	private static final String _FINDER_COLUMN_GROUPID_GROUPID_2 = "changesetEntry.groupId = ?";
-	private final FinderPath _finderPathWithPaginationFindByCompanyId = new FinderPath(ChangesetEntryModelImpl.ENTITY_CACHE_ENABLED,
-			ChangesetEntryModelImpl.FINDER_CACHE_ENABLED,
-			ChangesetEntryImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByCompanyId",
-			new String[] {
-				Long.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	private final FinderPath _finderPathWithoutPaginationFindByCompanyId = new FinderPath(ChangesetEntryModelImpl.ENTITY_CACHE_ENABLED,
-			ChangesetEntryModelImpl.FINDER_CACHE_ENABLED,
-			ChangesetEntryImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
-			new String[] { Long.class.getName() },
-			ChangesetEntryModelImpl.COMPANYID_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByCompanyId = new FinderPath(ChangesetEntryModelImpl.ENTITY_CACHE_ENABLED,
-			ChangesetEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
-			new String[] { Long.class.getName() });
+	private FinderPath _finderPathWithPaginationFindByCompanyId;
+	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
+	private FinderPath _finderPathCountByCompanyId;
 
 	/**
 	 * Returns all the changeset entries where companyId = &#63;.
@@ -1095,30 +1053,9 @@ public class ChangesetEntryPersistenceImpl extends BasePersistenceImpl<Changeset
 	}
 
 	private static final String _FINDER_COLUMN_COMPANYID_COMPANYID_2 = "changesetEntry.companyId = ?";
-	private final FinderPath _finderPathWithPaginationFindByChangesetCollectionId =
-		new FinderPath(ChangesetEntryModelImpl.ENTITY_CACHE_ENABLED,
-			ChangesetEntryModelImpl.FINDER_CACHE_ENABLED,
-			ChangesetEntryImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByChangesetCollectionId",
-			new String[] {
-				Long.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	private final FinderPath _finderPathWithoutPaginationFindByChangesetCollectionId =
-		new FinderPath(ChangesetEntryModelImpl.ENTITY_CACHE_ENABLED,
-			ChangesetEntryModelImpl.FINDER_CACHE_ENABLED,
-			ChangesetEntryImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByChangesetCollectionId",
-			new String[] { Long.class.getName() },
-			ChangesetEntryModelImpl.CHANGESETCOLLECTIONID_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByChangesetCollectionId = new FinderPath(ChangesetEntryModelImpl.ENTITY_CACHE_ENABLED,
-			ChangesetEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByChangesetCollectionId",
-			new String[] { Long.class.getName() });
+	private FinderPath _finderPathWithPaginationFindByChangesetCollectionId;
+	private FinderPath _finderPathWithoutPaginationFindByChangesetCollectionId;
+	private FinderPath _finderPathCountByChangesetCollectionId;
 
 	/**
 	 * Returns all the changeset entries where changesetCollectionId = &#63;.
@@ -1623,27 +1560,9 @@ public class ChangesetEntryPersistenceImpl extends BasePersistenceImpl<Changeset
 
 	private static final String _FINDER_COLUMN_CHANGESETCOLLECTIONID_CHANGESETCOLLECTIONID_2 =
 		"changesetEntry.changesetCollectionId = ?";
-	private final FinderPath _finderPathWithPaginationFindByG_C = new FinderPath(ChangesetEntryModelImpl.ENTITY_CACHE_ENABLED,
-			ChangesetEntryModelImpl.FINDER_CACHE_ENABLED,
-			ChangesetEntryImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByG_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	private final FinderPath _finderPathWithoutPaginationFindByG_C = new FinderPath(ChangesetEntryModelImpl.ENTITY_CACHE_ENABLED,
-			ChangesetEntryModelImpl.FINDER_CACHE_ENABLED,
-			ChangesetEntryImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C",
-			new String[] { Long.class.getName(), Long.class.getName() },
-			ChangesetEntryModelImpl.GROUPID_COLUMN_BITMASK |
-			ChangesetEntryModelImpl.CLASSNAMEID_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByG_C = new FinderPath(ChangesetEntryModelImpl.ENTITY_CACHE_ENABLED,
-			ChangesetEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C",
-			new String[] { Long.class.getName(), Long.class.getName() });
+	private FinderPath _finderPathWithPaginationFindByG_C;
+	private FinderPath _finderPathWithoutPaginationFindByG_C;
+	private FinderPath _finderPathCountByG_C;
 
 	/**
 	 * Returns all the changeset entries where groupId = &#63; and classNameId = &#63;.
@@ -2167,27 +2086,9 @@ public class ChangesetEntryPersistenceImpl extends BasePersistenceImpl<Changeset
 
 	private static final String _FINDER_COLUMN_G_C_GROUPID_2 = "changesetEntry.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_C_CLASSNAMEID_2 = "changesetEntry.classNameId = ?";
-	private final FinderPath _finderPathWithPaginationFindByC_C = new FinderPath(ChangesetEntryModelImpl.ENTITY_CACHE_ENABLED,
-			ChangesetEntryModelImpl.FINDER_CACHE_ENABLED,
-			ChangesetEntryImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByC_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	private final FinderPath _finderPathWithoutPaginationFindByC_C = new FinderPath(ChangesetEntryModelImpl.ENTITY_CACHE_ENABLED,
-			ChangesetEntryModelImpl.FINDER_CACHE_ENABLED,
-			ChangesetEntryImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C",
-			new String[] { Long.class.getName(), Long.class.getName() },
-			ChangesetEntryModelImpl.CHANGESETCOLLECTIONID_COLUMN_BITMASK |
-			ChangesetEntryModelImpl.CLASSNAMEID_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByC_C = new FinderPath(ChangesetEntryModelImpl.ENTITY_CACHE_ENABLED,
-			ChangesetEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
-			new String[] { Long.class.getName(), Long.class.getName() });
+	private FinderPath _finderPathWithPaginationFindByC_C;
+	private FinderPath _finderPathWithoutPaginationFindByC_C;
+	private FinderPath _finderPathCountByC_C;
 
 	/**
 	 * Returns all the changeset entries where changesetCollectionId = &#63; and classNameId = &#63;.
@@ -2714,21 +2615,8 @@ public class ChangesetEntryPersistenceImpl extends BasePersistenceImpl<Changeset
 
 	private static final String _FINDER_COLUMN_C_C_CHANGESETCOLLECTIONID_2 = "changesetEntry.changesetCollectionId = ? AND ";
 	private static final String _FINDER_COLUMN_C_C_CLASSNAMEID_2 = "changesetEntry.classNameId = ?";
-	private final FinderPath _finderPathFetchByC_C_C = new FinderPath(ChangesetEntryModelImpl.ENTITY_CACHE_ENABLED,
-			ChangesetEntryModelImpl.FINDER_CACHE_ENABLED,
-			ChangesetEntryImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByC_C_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName()
-			},
-			ChangesetEntryModelImpl.CHANGESETCOLLECTIONID_COLUMN_BITMASK |
-			ChangesetEntryModelImpl.CLASSNAMEID_COLUMN_BITMASK |
-			ChangesetEntryModelImpl.CLASSPK_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByC_C_C = new FinderPath(ChangesetEntryModelImpl.ENTITY_CACHE_ENABLED,
-			ChangesetEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName()
-			});
+	private FinderPath _finderPathFetchByC_C_C;
+	private FinderPath _finderPathCountByC_C_C;
 
 	/**
 	 * Returns the changeset entry where changesetCollectionId = &#63; and classNameId = &#63; and classPK = &#63; or throws a {@link NoSuchEntryException} if it could not be found.
@@ -3687,6 +3575,161 @@ public class ChangesetEntryPersistenceImpl extends BasePersistenceImpl<Changeset
 	 * Initializes the changeset entry persistence.
 	 */
 	public void afterPropertiesSet() {
+		_finderPathWithPaginationFindAll = new FinderPath(ChangesetEntryModelImpl.ENTITY_CACHE_ENABLED,
+				ChangesetEntryModelImpl.FINDER_CACHE_ENABLED,
+				ChangesetEntryImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
+
+		_finderPathWithoutPaginationFindAll = new FinderPath(ChangesetEntryModelImpl.ENTITY_CACHE_ENABLED,
+				ChangesetEntryModelImpl.FINDER_CACHE_ENABLED,
+				ChangesetEntryImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
+				new String[0]);
+
+		_finderPathCountAll = new FinderPath(ChangesetEntryModelImpl.ENTITY_CACHE_ENABLED,
+				ChangesetEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+				new String[0]);
+
+		_finderPathWithPaginationFindByGroupId = new FinderPath(ChangesetEntryModelImpl.ENTITY_CACHE_ENABLED,
+				ChangesetEntryModelImpl.FINDER_CACHE_ENABLED,
+				ChangesetEntryImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
+				new String[] {
+					Long.class.getName(),
+					
+				Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
+
+		_finderPathWithoutPaginationFindByGroupId = new FinderPath(ChangesetEntryModelImpl.ENTITY_CACHE_ENABLED,
+				ChangesetEntryModelImpl.FINDER_CACHE_ENABLED,
+				ChangesetEntryImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
+				new String[] { Long.class.getName() },
+				ChangesetEntryModelImpl.GROUPID_COLUMN_BITMASK);
+
+		_finderPathCountByGroupId = new FinderPath(ChangesetEntryModelImpl.ENTITY_CACHE_ENABLED,
+				ChangesetEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
+				new String[] { Long.class.getName() });
+
+		_finderPathWithPaginationFindByCompanyId = new FinderPath(ChangesetEntryModelImpl.ENTITY_CACHE_ENABLED,
+				ChangesetEntryModelImpl.FINDER_CACHE_ENABLED,
+				ChangesetEntryImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
+				new String[] {
+					Long.class.getName(),
+					
+				Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
+
+		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(ChangesetEntryModelImpl.ENTITY_CACHE_ENABLED,
+				ChangesetEntryModelImpl.FINDER_CACHE_ENABLED,
+				ChangesetEntryImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
+				new String[] { Long.class.getName() },
+				ChangesetEntryModelImpl.COMPANYID_COLUMN_BITMASK);
+
+		_finderPathCountByCompanyId = new FinderPath(ChangesetEntryModelImpl.ENTITY_CACHE_ENABLED,
+				ChangesetEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
+				new String[] { Long.class.getName() });
+
+		_finderPathWithPaginationFindByChangesetCollectionId = new FinderPath(ChangesetEntryModelImpl.ENTITY_CACHE_ENABLED,
+				ChangesetEntryModelImpl.FINDER_CACHE_ENABLED,
+				ChangesetEntryImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+				"findByChangesetCollectionId",
+				new String[] {
+					Long.class.getName(),
+					
+				Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
+
+		_finderPathWithoutPaginationFindByChangesetCollectionId = new FinderPath(ChangesetEntryModelImpl.ENTITY_CACHE_ENABLED,
+				ChangesetEntryModelImpl.FINDER_CACHE_ENABLED,
+				ChangesetEntryImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				"findByChangesetCollectionId",
+				new String[] { Long.class.getName() },
+				ChangesetEntryModelImpl.CHANGESETCOLLECTIONID_COLUMN_BITMASK);
+
+		_finderPathCountByChangesetCollectionId = new FinderPath(ChangesetEntryModelImpl.ENTITY_CACHE_ENABLED,
+				ChangesetEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				"countByChangesetCollectionId",
+				new String[] { Long.class.getName() });
+
+		_finderPathWithPaginationFindByG_C = new FinderPath(ChangesetEntryModelImpl.ENTITY_CACHE_ENABLED,
+				ChangesetEntryModelImpl.FINDER_CACHE_ENABLED,
+				ChangesetEntryImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					
+				Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
+
+		_finderPathWithoutPaginationFindByG_C = new FinderPath(ChangesetEntryModelImpl.ENTITY_CACHE_ENABLED,
+				ChangesetEntryModelImpl.FINDER_CACHE_ENABLED,
+				ChangesetEntryImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C",
+				new String[] { Long.class.getName(), Long.class.getName() },
+				ChangesetEntryModelImpl.GROUPID_COLUMN_BITMASK |
+				ChangesetEntryModelImpl.CLASSNAMEID_COLUMN_BITMASK);
+
+		_finderPathCountByG_C = new FinderPath(ChangesetEntryModelImpl.ENTITY_CACHE_ENABLED,
+				ChangesetEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C",
+				new String[] { Long.class.getName(), Long.class.getName() });
+
+		_finderPathWithPaginationFindByC_C = new FinderPath(ChangesetEntryModelImpl.ENTITY_CACHE_ENABLED,
+				ChangesetEntryModelImpl.FINDER_CACHE_ENABLED,
+				ChangesetEntryImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					
+				Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
+
+		_finderPathWithoutPaginationFindByC_C = new FinderPath(ChangesetEntryModelImpl.ENTITY_CACHE_ENABLED,
+				ChangesetEntryModelImpl.FINDER_CACHE_ENABLED,
+				ChangesetEntryImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C",
+				new String[] { Long.class.getName(), Long.class.getName() },
+				ChangesetEntryModelImpl.CHANGESETCOLLECTIONID_COLUMN_BITMASK |
+				ChangesetEntryModelImpl.CLASSNAMEID_COLUMN_BITMASK);
+
+		_finderPathCountByC_C = new FinderPath(ChangesetEntryModelImpl.ENTITY_CACHE_ENABLED,
+				ChangesetEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
+				new String[] { Long.class.getName(), Long.class.getName() });
+
+		_finderPathFetchByC_C_C = new FinderPath(ChangesetEntryModelImpl.ENTITY_CACHE_ENABLED,
+				ChangesetEntryModelImpl.FINDER_CACHE_ENABLED,
+				ChangesetEntryImpl.class, FINDER_CLASS_NAME_ENTITY,
+				"fetchByC_C_C",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Long.class.getName()
+				},
+				ChangesetEntryModelImpl.CHANGESETCOLLECTIONID_COLUMN_BITMASK |
+				ChangesetEntryModelImpl.CLASSNAMEID_COLUMN_BITMASK |
+				ChangesetEntryModelImpl.CLASSPK_COLUMN_BITMASK);
+
+		_finderPathCountByC_C_C = new FinderPath(ChangesetEntryModelImpl.ENTITY_CACHE_ENABLED,
+				ChangesetEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C_C",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Long.class.getName()
+				});
 	}
 
 	public void destroy() {

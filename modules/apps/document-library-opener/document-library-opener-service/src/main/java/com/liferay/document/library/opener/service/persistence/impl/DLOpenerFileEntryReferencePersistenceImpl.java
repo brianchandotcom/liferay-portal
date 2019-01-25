@@ -79,27 +79,11 @@ public class DLOpenerFileEntryReferencePersistenceImpl
 		".List1";
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION = FINDER_CLASS_NAME_ENTITY +
 		".List2";
-	private final FinderPath _finderPathWithPaginationFindAll = new FinderPath(DLOpenerFileEntryReferenceModelImpl.ENTITY_CACHE_ENABLED,
-			DLOpenerFileEntryReferenceModelImpl.FINDER_CACHE_ENABLED,
-			DLOpenerFileEntryReferenceImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
-	private final FinderPath _finderPathWithoutPaginationFindAll = new FinderPath(DLOpenerFileEntryReferenceModelImpl.ENTITY_CACHE_ENABLED,
-			DLOpenerFileEntryReferenceModelImpl.FINDER_CACHE_ENABLED,
-			DLOpenerFileEntryReferenceImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0]);
-	private final FinderPath _finderPathCountAll = new FinderPath(DLOpenerFileEntryReferenceModelImpl.ENTITY_CACHE_ENABLED,
-			DLOpenerFileEntryReferenceModelImpl.FINDER_CACHE_ENABLED,
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
-			new String[0]);
-	private final FinderPath _finderPathFetchByFileEntryId = new FinderPath(DLOpenerFileEntryReferenceModelImpl.ENTITY_CACHE_ENABLED,
-			DLOpenerFileEntryReferenceModelImpl.FINDER_CACHE_ENABLED,
-			DLOpenerFileEntryReferenceImpl.class, FINDER_CLASS_NAME_ENTITY,
-			"fetchByFileEntryId", new String[] { Long.class.getName() },
-			DLOpenerFileEntryReferenceModelImpl.FILEENTRYID_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByFileEntryId = new FinderPath(DLOpenerFileEntryReferenceModelImpl.ENTITY_CACHE_ENABLED,
-			DLOpenerFileEntryReferenceModelImpl.FINDER_CACHE_ENABLED,
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByFileEntryId", new String[] { Long.class.getName() });
+	private FinderPath _finderPathWithPaginationFindAll;
+	private FinderPath _finderPathWithoutPaginationFindAll;
+	private FinderPath _finderPathCountAll;
+	private FinderPath _finderPathFetchByFileEntryId;
+	private FinderPath _finderPathCountByFileEntryId;
 
 	/**
 	 * Returns the dl opener file entry reference where fileEntryId = &#63; or throws a {@link NoSuchFileEntryReferenceException} if it could not be found.
@@ -892,6 +876,32 @@ public class DLOpenerFileEntryReferencePersistenceImpl
 	 * Initializes the dl opener file entry reference persistence.
 	 */
 	public void afterPropertiesSet() {
+		_finderPathWithPaginationFindAll = new FinderPath(DLOpenerFileEntryReferenceModelImpl.ENTITY_CACHE_ENABLED,
+				DLOpenerFileEntryReferenceModelImpl.FINDER_CACHE_ENABLED,
+				DLOpenerFileEntryReferenceImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
+
+		_finderPathWithoutPaginationFindAll = new FinderPath(DLOpenerFileEntryReferenceModelImpl.ENTITY_CACHE_ENABLED,
+				DLOpenerFileEntryReferenceModelImpl.FINDER_CACHE_ENABLED,
+				DLOpenerFileEntryReferenceImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
+				new String[0]);
+
+		_finderPathCountAll = new FinderPath(DLOpenerFileEntryReferenceModelImpl.ENTITY_CACHE_ENABLED,
+				DLOpenerFileEntryReferenceModelImpl.FINDER_CACHE_ENABLED,
+				Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				"countAll", new String[0]);
+
+		_finderPathFetchByFileEntryId = new FinderPath(DLOpenerFileEntryReferenceModelImpl.ENTITY_CACHE_ENABLED,
+				DLOpenerFileEntryReferenceModelImpl.FINDER_CACHE_ENABLED,
+				DLOpenerFileEntryReferenceImpl.class, FINDER_CLASS_NAME_ENTITY,
+				"fetchByFileEntryId", new String[] { Long.class.getName() },
+				DLOpenerFileEntryReferenceModelImpl.FILEENTRYID_COLUMN_BITMASK);
+
+		_finderPathCountByFileEntryId = new FinderPath(DLOpenerFileEntryReferenceModelImpl.ENTITY_CACHE_ENABLED,
+				DLOpenerFileEntryReferenceModelImpl.FINDER_CACHE_ENABLED,
+				Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				"countByFileEntryId", new String[] { Long.class.getName() });
 	}
 
 	public void destroy() {

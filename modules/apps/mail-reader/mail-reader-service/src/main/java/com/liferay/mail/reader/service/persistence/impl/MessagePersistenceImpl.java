@@ -79,34 +79,12 @@ public class MessagePersistenceImpl extends BasePersistenceImpl<Message>
 		".List1";
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION = FINDER_CLASS_NAME_ENTITY +
 		".List2";
-	private final FinderPath _finderPathWithPaginationFindAll = new FinderPath(MessageModelImpl.ENTITY_CACHE_ENABLED,
-			MessageModelImpl.FINDER_CACHE_ENABLED, MessageImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
-	private final FinderPath _finderPathWithoutPaginationFindAll = new FinderPath(MessageModelImpl.ENTITY_CACHE_ENABLED,
-			MessageModelImpl.FINDER_CACHE_ENABLED, MessageImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0]);
-	private final FinderPath _finderPathCountAll = new FinderPath(MessageModelImpl.ENTITY_CACHE_ENABLED,
-			MessageModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
-	private final FinderPath _finderPathWithPaginationFindByCompanyId = new FinderPath(MessageModelImpl.ENTITY_CACHE_ENABLED,
-			MessageModelImpl.FINDER_CACHE_ENABLED, MessageImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
-			new String[] {
-				Long.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	private final FinderPath _finderPathWithoutPaginationFindByCompanyId = new FinderPath(MessageModelImpl.ENTITY_CACHE_ENABLED,
-			MessageModelImpl.FINDER_CACHE_ENABLED, MessageImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
-			new String[] { Long.class.getName() },
-			MessageModelImpl.COMPANYID_COLUMN_BITMASK |
-			MessageModelImpl.SENTDATE_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByCompanyId = new FinderPath(MessageModelImpl.ENTITY_CACHE_ENABLED,
-			MessageModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
-			new String[] { Long.class.getName() });
+	private FinderPath _finderPathWithPaginationFindAll;
+	private FinderPath _finderPathWithoutPaginationFindAll;
+	private FinderPath _finderPathCountAll;
+	private FinderPath _finderPathWithPaginationFindByCompanyId;
+	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
+	private FinderPath _finderPathCountByCompanyId;
 
 	/**
 	 * Returns all the messages where companyId = &#63;.
@@ -587,25 +565,9 @@ public class MessagePersistenceImpl extends BasePersistenceImpl<Message>
 	}
 
 	private static final String _FINDER_COLUMN_COMPANYID_COMPANYID_2 = "message.companyId = ?";
-	private final FinderPath _finderPathWithPaginationFindByFolderId = new FinderPath(MessageModelImpl.ENTITY_CACHE_ENABLED,
-			MessageModelImpl.FINDER_CACHE_ENABLED, MessageImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByFolderId",
-			new String[] {
-				Long.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	private final FinderPath _finderPathWithoutPaginationFindByFolderId = new FinderPath(MessageModelImpl.ENTITY_CACHE_ENABLED,
-			MessageModelImpl.FINDER_CACHE_ENABLED, MessageImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByFolderId",
-			new String[] { Long.class.getName() },
-			MessageModelImpl.FOLDERID_COLUMN_BITMASK |
-			MessageModelImpl.SENTDATE_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByFolderId = new FinderPath(MessageModelImpl.ENTITY_CACHE_ENABLED,
-			MessageModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByFolderId",
-			new String[] { Long.class.getName() });
+	private FinderPath _finderPathWithPaginationFindByFolderId;
+	private FinderPath _finderPathWithoutPaginationFindByFolderId;
+	private FinderPath _finderPathCountByFolderId;
 
 	/**
 	 * Returns all the messages where folderId = &#63;.
@@ -1086,16 +1048,8 @@ public class MessagePersistenceImpl extends BasePersistenceImpl<Message>
 	}
 
 	private static final String _FINDER_COLUMN_FOLDERID_FOLDERID_2 = "message.folderId = ?";
-	private final FinderPath _finderPathFetchByF_R = new FinderPath(MessageModelImpl.ENTITY_CACHE_ENABLED,
-			MessageModelImpl.FINDER_CACHE_ENABLED, MessageImpl.class,
-			FINDER_CLASS_NAME_ENTITY, "fetchByF_R",
-			new String[] { Long.class.getName(), Long.class.getName() },
-			MessageModelImpl.FOLDERID_COLUMN_BITMASK |
-			MessageModelImpl.REMOTEMESSAGEID_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByF_R = new FinderPath(MessageModelImpl.ENTITY_CACHE_ENABLED,
-			MessageModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByF_R",
-			new String[] { Long.class.getName(), Long.class.getName() });
+	private FinderPath _finderPathFetchByF_R;
+	private FinderPath _finderPathCountByF_R;
 
 	/**
 	 * Returns the message where folderId = &#63; and remoteMessageId = &#63; or throws a {@link NoSuchMessageException} if it could not be found.
@@ -1942,6 +1896,75 @@ public class MessagePersistenceImpl extends BasePersistenceImpl<Message>
 	 * Initializes the message persistence.
 	 */
 	public void afterPropertiesSet() {
+		_finderPathWithPaginationFindAll = new FinderPath(MessageModelImpl.ENTITY_CACHE_ENABLED,
+				MessageModelImpl.FINDER_CACHE_ENABLED, MessageImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
+
+		_finderPathWithoutPaginationFindAll = new FinderPath(MessageModelImpl.ENTITY_CACHE_ENABLED,
+				MessageModelImpl.FINDER_CACHE_ENABLED, MessageImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
+				new String[0]);
+
+		_finderPathCountAll = new FinderPath(MessageModelImpl.ENTITY_CACHE_ENABLED,
+				MessageModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+				new String[0]);
+
+		_finderPathWithPaginationFindByCompanyId = new FinderPath(MessageModelImpl.ENTITY_CACHE_ENABLED,
+				MessageModelImpl.FINDER_CACHE_ENABLED, MessageImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
+				new String[] {
+					Long.class.getName(),
+					
+				Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
+
+		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(MessageModelImpl.ENTITY_CACHE_ENABLED,
+				MessageModelImpl.FINDER_CACHE_ENABLED, MessageImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
+				new String[] { Long.class.getName() },
+				MessageModelImpl.COMPANYID_COLUMN_BITMASK |
+				MessageModelImpl.SENTDATE_COLUMN_BITMASK);
+
+		_finderPathCountByCompanyId = new FinderPath(MessageModelImpl.ENTITY_CACHE_ENABLED,
+				MessageModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
+				new String[] { Long.class.getName() });
+
+		_finderPathWithPaginationFindByFolderId = new FinderPath(MessageModelImpl.ENTITY_CACHE_ENABLED,
+				MessageModelImpl.FINDER_CACHE_ENABLED, MessageImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByFolderId",
+				new String[] {
+					Long.class.getName(),
+					
+				Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
+
+		_finderPathWithoutPaginationFindByFolderId = new FinderPath(MessageModelImpl.ENTITY_CACHE_ENABLED,
+				MessageModelImpl.FINDER_CACHE_ENABLED, MessageImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByFolderId",
+				new String[] { Long.class.getName() },
+				MessageModelImpl.FOLDERID_COLUMN_BITMASK |
+				MessageModelImpl.SENTDATE_COLUMN_BITMASK);
+
+		_finderPathCountByFolderId = new FinderPath(MessageModelImpl.ENTITY_CACHE_ENABLED,
+				MessageModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByFolderId",
+				new String[] { Long.class.getName() });
+
+		_finderPathFetchByF_R = new FinderPath(MessageModelImpl.ENTITY_CACHE_ENABLED,
+				MessageModelImpl.FINDER_CACHE_ENABLED, MessageImpl.class,
+				FINDER_CLASS_NAME_ENTITY, "fetchByF_R",
+				new String[] { Long.class.getName(), Long.class.getName() },
+				MessageModelImpl.FOLDERID_COLUMN_BITMASK |
+				MessageModelImpl.REMOTEMESSAGEID_COLUMN_BITMASK);
+
+		_finderPathCountByF_R = new FinderPath(MessageModelImpl.ENTITY_CACHE_ENABLED,
+				MessageModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByF_R",
+				new String[] { Long.class.getName(), Long.class.getName() });
 	}
 
 	public void destroy() {

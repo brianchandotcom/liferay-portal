@@ -73,24 +73,11 @@ public class StatusPersistenceImpl extends BasePersistenceImpl<Status>
 		".List1";
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION = FINDER_CLASS_NAME_ENTITY +
 		".List2";
-	private final FinderPath _finderPathWithPaginationFindAll = new FinderPath(StatusModelImpl.ENTITY_CACHE_ENABLED,
-			StatusModelImpl.FINDER_CACHE_ENABLED, StatusImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
-	private final FinderPath _finderPathWithoutPaginationFindAll = new FinderPath(StatusModelImpl.ENTITY_CACHE_ENABLED,
-			StatusModelImpl.FINDER_CACHE_ENABLED, StatusImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0]);
-	private final FinderPath _finderPathCountAll = new FinderPath(StatusModelImpl.ENTITY_CACHE_ENABLED,
-			StatusModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
-	private final FinderPath _finderPathFetchByUserId = new FinderPath(StatusModelImpl.ENTITY_CACHE_ENABLED,
-			StatusModelImpl.FINDER_CACHE_ENABLED, StatusImpl.class,
-			FINDER_CLASS_NAME_ENTITY, "fetchByUserId",
-			new String[] { Long.class.getName() },
-			StatusModelImpl.USERID_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByUserId = new FinderPath(StatusModelImpl.ENTITY_CACHE_ENABLED,
-			StatusModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUserId",
-			new String[] { Long.class.getName() });
+	private FinderPath _finderPathWithPaginationFindAll;
+	private FinderPath _finderPathWithoutPaginationFindAll;
+	private FinderPath _finderPathCountAll;
+	private FinderPath _finderPathFetchByUserId;
+	private FinderPath _finderPathCountByUserId;
 
 	/**
 	 * Returns the status where userId = &#63; or throws a {@link NoSuchStatusException} if it could not be found.
@@ -277,24 +264,9 @@ public class StatusPersistenceImpl extends BasePersistenceImpl<Status>
 	}
 
 	private static final String _FINDER_COLUMN_USERID_USERID_2 = "status.userId = ?";
-	private final FinderPath _finderPathWithPaginationFindByModifiedDate = new FinderPath(StatusModelImpl.ENTITY_CACHE_ENABLED,
-			StatusModelImpl.FINDER_CACHE_ENABLED, StatusImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByModifiedDate",
-			new String[] {
-				Long.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	private final FinderPath _finderPathWithoutPaginationFindByModifiedDate = new FinderPath(StatusModelImpl.ENTITY_CACHE_ENABLED,
-			StatusModelImpl.FINDER_CACHE_ENABLED, StatusImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByModifiedDate",
-			new String[] { Long.class.getName() },
-			StatusModelImpl.MODIFIEDDATE_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByModifiedDate = new FinderPath(StatusModelImpl.ENTITY_CACHE_ENABLED,
-			StatusModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByModifiedDate",
-			new String[] { Long.class.getName() });
+	private FinderPath _finderPathWithPaginationFindByModifiedDate;
+	private FinderPath _finderPathWithoutPaginationFindByModifiedDate;
+	private FinderPath _finderPathCountByModifiedDate;
 
 	/**
 	 * Returns all the statuses where modifiedDate = &#63;.
@@ -783,24 +755,9 @@ public class StatusPersistenceImpl extends BasePersistenceImpl<Status>
 	}
 
 	private static final String _FINDER_COLUMN_MODIFIEDDATE_MODIFIEDDATE_2 = "status.modifiedDate = ?";
-	private final FinderPath _finderPathWithPaginationFindByOnline = new FinderPath(StatusModelImpl.ENTITY_CACHE_ENABLED,
-			StatusModelImpl.FINDER_CACHE_ENABLED, StatusImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByOnline",
-			new String[] {
-				Boolean.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	private final FinderPath _finderPathWithoutPaginationFindByOnline = new FinderPath(StatusModelImpl.ENTITY_CACHE_ENABLED,
-			StatusModelImpl.FINDER_CACHE_ENABLED, StatusImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByOnline",
-			new String[] { Boolean.class.getName() },
-			StatusModelImpl.ONLINE_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByOnline = new FinderPath(StatusModelImpl.ENTITY_CACHE_ENABLED,
-			StatusModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByOnline",
-			new String[] { Boolean.class.getName() });
+	private FinderPath _finderPathWithPaginationFindByOnline;
+	private FinderPath _finderPathWithoutPaginationFindByOnline;
+	private FinderPath _finderPathCountByOnline;
 
 	/**
 	 * Returns all the statuses where online = &#63;.
@@ -1280,25 +1237,9 @@ public class StatusPersistenceImpl extends BasePersistenceImpl<Status>
 	}
 
 	private static final String _FINDER_COLUMN_ONLINE_ONLINE_2 = "status.online = ?";
-	private final FinderPath _finderPathWithPaginationFindByM_O = new FinderPath(StatusModelImpl.ENTITY_CACHE_ENABLED,
-			StatusModelImpl.FINDER_CACHE_ENABLED, StatusImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByM_O",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	private final FinderPath _finderPathWithoutPaginationFindByM_O = new FinderPath(StatusModelImpl.ENTITY_CACHE_ENABLED,
-			StatusModelImpl.FINDER_CACHE_ENABLED, StatusImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByM_O",
-			new String[] { Long.class.getName(), Boolean.class.getName() },
-			StatusModelImpl.MODIFIEDDATE_COLUMN_BITMASK |
-			StatusModelImpl.ONLINE_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByM_O = new FinderPath(StatusModelImpl.ENTITY_CACHE_ENABLED,
-			StatusModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByM_O",
-			new String[] { Long.class.getName(), Boolean.class.getName() });
+	private FinderPath _finderPathWithPaginationFindByM_O;
+	private FinderPath _finderPathWithoutPaginationFindByM_O;
+	private FinderPath _finderPathCountByM_O;
 
 	/**
 	 * Returns all the statuses where modifiedDate = &#63; and online = &#63;.
@@ -2437,6 +2378,94 @@ public class StatusPersistenceImpl extends BasePersistenceImpl<Status>
 	 * Initializes the status persistence.
 	 */
 	public void afterPropertiesSet() {
+		_finderPathWithPaginationFindAll = new FinderPath(StatusModelImpl.ENTITY_CACHE_ENABLED,
+				StatusModelImpl.FINDER_CACHE_ENABLED, StatusImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
+
+		_finderPathWithoutPaginationFindAll = new FinderPath(StatusModelImpl.ENTITY_CACHE_ENABLED,
+				StatusModelImpl.FINDER_CACHE_ENABLED, StatusImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
+				new String[0]);
+
+		_finderPathCountAll = new FinderPath(StatusModelImpl.ENTITY_CACHE_ENABLED,
+				StatusModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+				new String[0]);
+
+		_finderPathFetchByUserId = new FinderPath(StatusModelImpl.ENTITY_CACHE_ENABLED,
+				StatusModelImpl.FINDER_CACHE_ENABLED, StatusImpl.class,
+				FINDER_CLASS_NAME_ENTITY, "fetchByUserId",
+				new String[] { Long.class.getName() },
+				StatusModelImpl.USERID_COLUMN_BITMASK);
+
+		_finderPathCountByUserId = new FinderPath(StatusModelImpl.ENTITY_CACHE_ENABLED,
+				StatusModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUserId",
+				new String[] { Long.class.getName() });
+
+		_finderPathWithPaginationFindByModifiedDate = new FinderPath(StatusModelImpl.ENTITY_CACHE_ENABLED,
+				StatusModelImpl.FINDER_CACHE_ENABLED, StatusImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByModifiedDate",
+				new String[] {
+					Long.class.getName(),
+					
+				Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
+
+		_finderPathWithoutPaginationFindByModifiedDate = new FinderPath(StatusModelImpl.ENTITY_CACHE_ENABLED,
+				StatusModelImpl.FINDER_CACHE_ENABLED, StatusImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				"findByModifiedDate", new String[] { Long.class.getName() },
+				StatusModelImpl.MODIFIEDDATE_COLUMN_BITMASK);
+
+		_finderPathCountByModifiedDate = new FinderPath(StatusModelImpl.ENTITY_CACHE_ENABLED,
+				StatusModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				"countByModifiedDate", new String[] { Long.class.getName() });
+
+		_finderPathWithPaginationFindByOnline = new FinderPath(StatusModelImpl.ENTITY_CACHE_ENABLED,
+				StatusModelImpl.FINDER_CACHE_ENABLED, StatusImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByOnline",
+				new String[] {
+					Boolean.class.getName(),
+					
+				Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
+
+		_finderPathWithoutPaginationFindByOnline = new FinderPath(StatusModelImpl.ENTITY_CACHE_ENABLED,
+				StatusModelImpl.FINDER_CACHE_ENABLED, StatusImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByOnline",
+				new String[] { Boolean.class.getName() },
+				StatusModelImpl.ONLINE_COLUMN_BITMASK);
+
+		_finderPathCountByOnline = new FinderPath(StatusModelImpl.ENTITY_CACHE_ENABLED,
+				StatusModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByOnline",
+				new String[] { Boolean.class.getName() });
+
+		_finderPathWithPaginationFindByM_O = new FinderPath(StatusModelImpl.ENTITY_CACHE_ENABLED,
+				StatusModelImpl.FINDER_CACHE_ENABLED, StatusImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByM_O",
+				new String[] {
+					Long.class.getName(), Boolean.class.getName(),
+					
+				Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
+
+		_finderPathWithoutPaginationFindByM_O = new FinderPath(StatusModelImpl.ENTITY_CACHE_ENABLED,
+				StatusModelImpl.FINDER_CACHE_ENABLED, StatusImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByM_O",
+				new String[] { Long.class.getName(), Boolean.class.getName() },
+				StatusModelImpl.MODIFIEDDATE_COLUMN_BITMASK |
+				StatusModelImpl.ONLINE_COLUMN_BITMASK);
+
+		_finderPathCountByM_O = new FinderPath(StatusModelImpl.ENTITY_CACHE_ENABLED,
+				StatusModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByM_O",
+				new String[] { Long.class.getName(), Boolean.class.getName() });
 	}
 
 	public void destroy() {

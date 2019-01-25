@@ -81,37 +81,12 @@ public class AssetDisplayPageEntryPersistenceImpl extends BasePersistenceImpl<As
 		".List1";
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION = FINDER_CLASS_NAME_ENTITY +
 		".List2";
-	private final FinderPath _finderPathWithPaginationFindAll = new FinderPath(AssetDisplayPageEntryModelImpl.ENTITY_CACHE_ENABLED,
-			AssetDisplayPageEntryModelImpl.FINDER_CACHE_ENABLED,
-			AssetDisplayPageEntryImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
-	private final FinderPath _finderPathWithoutPaginationFindAll = new FinderPath(AssetDisplayPageEntryModelImpl.ENTITY_CACHE_ENABLED,
-			AssetDisplayPageEntryModelImpl.FINDER_CACHE_ENABLED,
-			AssetDisplayPageEntryImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0]);
-	private final FinderPath _finderPathCountAll = new FinderPath(AssetDisplayPageEntryModelImpl.ENTITY_CACHE_ENABLED,
-			AssetDisplayPageEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
-	private final FinderPath _finderPathWithPaginationFindByUuid = new FinderPath(AssetDisplayPageEntryModelImpl.ENTITY_CACHE_ENABLED,
-			AssetDisplayPageEntryModelImpl.FINDER_CACHE_ENABLED,
-			AssetDisplayPageEntryImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	private final FinderPath _finderPathWithoutPaginationFindByUuid = new FinderPath(AssetDisplayPageEntryModelImpl.ENTITY_CACHE_ENABLED,
-			AssetDisplayPageEntryModelImpl.FINDER_CACHE_ENABLED,
-			AssetDisplayPageEntryImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] { String.class.getName() },
-			AssetDisplayPageEntryModelImpl.UUID_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByUuid = new FinderPath(AssetDisplayPageEntryModelImpl.ENTITY_CACHE_ENABLED,
-			AssetDisplayPageEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] { String.class.getName() });
+	private FinderPath _finderPathWithPaginationFindAll;
+	private FinderPath _finderPathWithoutPaginationFindAll;
+	private FinderPath _finderPathCountAll;
+	private FinderPath _finderPathWithPaginationFindByUuid;
+	private FinderPath _finderPathWithoutPaginationFindByUuid;
+	private FinderPath _finderPathCountByUuid;
 
 	/**
 	 * Returns all the asset display page entries where uuid = &#63;.
@@ -638,17 +613,8 @@ public class AssetDisplayPageEntryPersistenceImpl extends BasePersistenceImpl<As
 
 	private static final String _FINDER_COLUMN_UUID_UUID_2 = "assetDisplayPageEntry.uuid = ?";
 	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(assetDisplayPageEntry.uuid IS NULL OR assetDisplayPageEntry.uuid = '')";
-	private final FinderPath _finderPathFetchByUUID_G = new FinderPath(AssetDisplayPageEntryModelImpl.ENTITY_CACHE_ENABLED,
-			AssetDisplayPageEntryModelImpl.FINDER_CACHE_ENABLED,
-			AssetDisplayPageEntryImpl.class, FINDER_CLASS_NAME_ENTITY,
-			"fetchByUUID_G",
-			new String[] { String.class.getName(), Long.class.getName() },
-			AssetDisplayPageEntryModelImpl.UUID_COLUMN_BITMASK |
-			AssetDisplayPageEntryModelImpl.GROUPID_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByUUID_G = new FinderPath(AssetDisplayPageEntryModelImpl.ENTITY_CACHE_ENABLED,
-			AssetDisplayPageEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G",
-			new String[] { String.class.getName(), Long.class.getName() });
+	private FinderPath _finderPathFetchByUUID_G;
+	private FinderPath _finderPathCountByUUID_G;
 
 	/**
 	 * Returns the asset display page entry where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchDisplayPageEntryException} if it could not be found.
@@ -884,27 +850,9 @@ public class AssetDisplayPageEntryPersistenceImpl extends BasePersistenceImpl<As
 	private static final String _FINDER_COLUMN_UUID_G_UUID_2 = "assetDisplayPageEntry.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_3 = "(assetDisplayPageEntry.uuid IS NULL OR assetDisplayPageEntry.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_G_GROUPID_2 = "assetDisplayPageEntry.groupId = ?";
-	private final FinderPath _finderPathWithPaginationFindByUuid_C = new FinderPath(AssetDisplayPageEntryModelImpl.ENTITY_CACHE_ENABLED,
-			AssetDisplayPageEntryModelImpl.FINDER_CACHE_ENABLED,
-			AssetDisplayPageEntryImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	private final FinderPath _finderPathWithoutPaginationFindByUuid_C = new FinderPath(AssetDisplayPageEntryModelImpl.ENTITY_CACHE_ENABLED,
-			AssetDisplayPageEntryModelImpl.FINDER_CACHE_ENABLED,
-			AssetDisplayPageEntryImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] { String.class.getName(), Long.class.getName() },
-			AssetDisplayPageEntryModelImpl.UUID_COLUMN_BITMASK |
-			AssetDisplayPageEntryModelImpl.COMPANYID_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByUuid_C = new FinderPath(AssetDisplayPageEntryModelImpl.ENTITY_CACHE_ENABLED,
-			AssetDisplayPageEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] { String.class.getName(), Long.class.getName() });
+	private FinderPath _finderPathWithPaginationFindByUuid_C;
+	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
+	private FinderPath _finderPathCountByUuid_C;
 
 	/**
 	 * Returns all the asset display page entries where uuid = &#63; and companyId = &#63;.
@@ -1473,26 +1421,9 @@ public class AssetDisplayPageEntryPersistenceImpl extends BasePersistenceImpl<As
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "assetDisplayPageEntry.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(assetDisplayPageEntry.uuid IS NULL OR assetDisplayPageEntry.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "assetDisplayPageEntry.companyId = ?";
-	private final FinderPath _finderPathWithPaginationFindByGroupId = new FinderPath(AssetDisplayPageEntryModelImpl.ENTITY_CACHE_ENABLED,
-			AssetDisplayPageEntryModelImpl.FINDER_CACHE_ENABLED,
-			AssetDisplayPageEntryImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
-			new String[] {
-				Long.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	private final FinderPath _finderPathWithoutPaginationFindByGroupId = new FinderPath(AssetDisplayPageEntryModelImpl.ENTITY_CACHE_ENABLED,
-			AssetDisplayPageEntryModelImpl.FINDER_CACHE_ENABLED,
-			AssetDisplayPageEntryImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
-			new String[] { Long.class.getName() },
-			AssetDisplayPageEntryModelImpl.GROUPID_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByGroupId = new FinderPath(AssetDisplayPageEntryModelImpl.ENTITY_CACHE_ENABLED,
-			AssetDisplayPageEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
-			new String[] { Long.class.getName() });
+	private FinderPath _finderPathWithPaginationFindByGroupId;
+	private FinderPath _finderPathWithoutPaginationFindByGroupId;
+	private FinderPath _finderPathCountByGroupId;
 
 	/**
 	 * Returns all the asset display page entries where groupId = &#63;.
@@ -1979,31 +1910,9 @@ public class AssetDisplayPageEntryPersistenceImpl extends BasePersistenceImpl<As
 	}
 
 	private static final String _FINDER_COLUMN_GROUPID_GROUPID_2 = "assetDisplayPageEntry.groupId = ?";
-	private final FinderPath _finderPathWithPaginationFindByLayoutPageTemplateEntryId =
-		new FinderPath(AssetDisplayPageEntryModelImpl.ENTITY_CACHE_ENABLED,
-			AssetDisplayPageEntryModelImpl.FINDER_CACHE_ENABLED,
-			AssetDisplayPageEntryImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByLayoutPageTemplateEntryId",
-			new String[] {
-				Long.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	private final FinderPath _finderPathWithoutPaginationFindByLayoutPageTemplateEntryId =
-		new FinderPath(AssetDisplayPageEntryModelImpl.ENTITY_CACHE_ENABLED,
-			AssetDisplayPageEntryModelImpl.FINDER_CACHE_ENABLED,
-			AssetDisplayPageEntryImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByLayoutPageTemplateEntryId",
-			new String[] { Long.class.getName() },
-			AssetDisplayPageEntryModelImpl.LAYOUTPAGETEMPLATEENTRYID_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByLayoutPageTemplateEntryId = new FinderPath(AssetDisplayPageEntryModelImpl.ENTITY_CACHE_ENABLED,
-			AssetDisplayPageEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByLayoutPageTemplateEntryId",
-			new String[] { Long.class.getName() });
+	private FinderPath _finderPathWithPaginationFindByLayoutPageTemplateEntryId;
+	private FinderPath _finderPathWithoutPaginationFindByLayoutPageTemplateEntryId;
+	private FinderPath _finderPathCountByLayoutPageTemplateEntryId;
 
 	/**
 	 * Returns all the asset display page entries where layoutPageTemplateEntryId = &#63;.
@@ -2510,22 +2419,8 @@ public class AssetDisplayPageEntryPersistenceImpl extends BasePersistenceImpl<As
 
 	private static final String _FINDER_COLUMN_LAYOUTPAGETEMPLATEENTRYID_LAYOUTPAGETEMPLATEENTRYID_2 =
 		"assetDisplayPageEntry.layoutPageTemplateEntryId = ?";
-	private final FinderPath _finderPathFetchByG_C_C = new FinderPath(AssetDisplayPageEntryModelImpl.ENTITY_CACHE_ENABLED,
-			AssetDisplayPageEntryModelImpl.FINDER_CACHE_ENABLED,
-			AssetDisplayPageEntryImpl.class, FINDER_CLASS_NAME_ENTITY,
-			"fetchByG_C_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName()
-			},
-			AssetDisplayPageEntryModelImpl.GROUPID_COLUMN_BITMASK |
-			AssetDisplayPageEntryModelImpl.CLASSNAMEID_COLUMN_BITMASK |
-			AssetDisplayPageEntryModelImpl.CLASSPK_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByG_C_C = new FinderPath(AssetDisplayPageEntryModelImpl.ENTITY_CACHE_ENABLED,
-			AssetDisplayPageEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName()
-			});
+	private FinderPath _finderPathFetchByG_C_C;
+	private FinderPath _finderPathCountByG_C_C;
 
 	/**
 	 * Returns the asset display page entry where groupId = &#63; and classNameId = &#63; and classPK = &#63; or throws a {@link NoSuchDisplayPageEntryException} if it could not be found.
@@ -3514,6 +3409,153 @@ public class AssetDisplayPageEntryPersistenceImpl extends BasePersistenceImpl<As
 	 * Initializes the asset display page entry persistence.
 	 */
 	public void afterPropertiesSet() {
+		_finderPathWithPaginationFindAll = new FinderPath(AssetDisplayPageEntryModelImpl.ENTITY_CACHE_ENABLED,
+				AssetDisplayPageEntryModelImpl.FINDER_CACHE_ENABLED,
+				AssetDisplayPageEntryImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
+
+		_finderPathWithoutPaginationFindAll = new FinderPath(AssetDisplayPageEntryModelImpl.ENTITY_CACHE_ENABLED,
+				AssetDisplayPageEntryModelImpl.FINDER_CACHE_ENABLED,
+				AssetDisplayPageEntryImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
+				new String[0]);
+
+		_finderPathCountAll = new FinderPath(AssetDisplayPageEntryModelImpl.ENTITY_CACHE_ENABLED,
+				AssetDisplayPageEntryModelImpl.FINDER_CACHE_ENABLED,
+				Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				"countAll", new String[0]);
+
+		_finderPathWithPaginationFindByUuid = new FinderPath(AssetDisplayPageEntryModelImpl.ENTITY_CACHE_ENABLED,
+				AssetDisplayPageEntryModelImpl.FINDER_CACHE_ENABLED,
+				AssetDisplayPageEntryImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+				new String[] {
+					String.class.getName(),
+					
+				Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
+
+		_finderPathWithoutPaginationFindByUuid = new FinderPath(AssetDisplayPageEntryModelImpl.ENTITY_CACHE_ENABLED,
+				AssetDisplayPageEntryModelImpl.FINDER_CACHE_ENABLED,
+				AssetDisplayPageEntryImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+				new String[] { String.class.getName() },
+				AssetDisplayPageEntryModelImpl.UUID_COLUMN_BITMASK);
+
+		_finderPathCountByUuid = new FinderPath(AssetDisplayPageEntryModelImpl.ENTITY_CACHE_ENABLED,
+				AssetDisplayPageEntryModelImpl.FINDER_CACHE_ENABLED,
+				Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				"countByUuid", new String[] { String.class.getName() });
+
+		_finderPathFetchByUUID_G = new FinderPath(AssetDisplayPageEntryModelImpl.ENTITY_CACHE_ENABLED,
+				AssetDisplayPageEntryModelImpl.FINDER_CACHE_ENABLED,
+				AssetDisplayPageEntryImpl.class, FINDER_CLASS_NAME_ENTITY,
+				"fetchByUUID_G",
+				new String[] { String.class.getName(), Long.class.getName() },
+				AssetDisplayPageEntryModelImpl.UUID_COLUMN_BITMASK |
+				AssetDisplayPageEntryModelImpl.GROUPID_COLUMN_BITMASK);
+
+		_finderPathCountByUUID_G = new FinderPath(AssetDisplayPageEntryModelImpl.ENTITY_CACHE_ENABLED,
+				AssetDisplayPageEntryModelImpl.FINDER_CACHE_ENABLED,
+				Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				"countByUUID_G",
+				new String[] { String.class.getName(), Long.class.getName() });
+
+		_finderPathWithPaginationFindByUuid_C = new FinderPath(AssetDisplayPageEntryModelImpl.ENTITY_CACHE_ENABLED,
+				AssetDisplayPageEntryModelImpl.FINDER_CACHE_ENABLED,
+				AssetDisplayPageEntryImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+				new String[] {
+					String.class.getName(), Long.class.getName(),
+					
+				Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
+
+		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(AssetDisplayPageEntryModelImpl.ENTITY_CACHE_ENABLED,
+				AssetDisplayPageEntryModelImpl.FINDER_CACHE_ENABLED,
+				AssetDisplayPageEntryImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+				new String[] { String.class.getName(), Long.class.getName() },
+				AssetDisplayPageEntryModelImpl.UUID_COLUMN_BITMASK |
+				AssetDisplayPageEntryModelImpl.COMPANYID_COLUMN_BITMASK);
+
+		_finderPathCountByUuid_C = new FinderPath(AssetDisplayPageEntryModelImpl.ENTITY_CACHE_ENABLED,
+				AssetDisplayPageEntryModelImpl.FINDER_CACHE_ENABLED,
+				Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				"countByUuid_C",
+				new String[] { String.class.getName(), Long.class.getName() });
+
+		_finderPathWithPaginationFindByGroupId = new FinderPath(AssetDisplayPageEntryModelImpl.ENTITY_CACHE_ENABLED,
+				AssetDisplayPageEntryModelImpl.FINDER_CACHE_ENABLED,
+				AssetDisplayPageEntryImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
+				new String[] {
+					Long.class.getName(),
+					
+				Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
+
+		_finderPathWithoutPaginationFindByGroupId = new FinderPath(AssetDisplayPageEntryModelImpl.ENTITY_CACHE_ENABLED,
+				AssetDisplayPageEntryModelImpl.FINDER_CACHE_ENABLED,
+				AssetDisplayPageEntryImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
+				new String[] { Long.class.getName() },
+				AssetDisplayPageEntryModelImpl.GROUPID_COLUMN_BITMASK);
+
+		_finderPathCountByGroupId = new FinderPath(AssetDisplayPageEntryModelImpl.ENTITY_CACHE_ENABLED,
+				AssetDisplayPageEntryModelImpl.FINDER_CACHE_ENABLED,
+				Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				"countByGroupId", new String[] { Long.class.getName() });
+
+		_finderPathWithPaginationFindByLayoutPageTemplateEntryId = new FinderPath(AssetDisplayPageEntryModelImpl.ENTITY_CACHE_ENABLED,
+				AssetDisplayPageEntryModelImpl.FINDER_CACHE_ENABLED,
+				AssetDisplayPageEntryImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+				"findByLayoutPageTemplateEntryId",
+				new String[] {
+					Long.class.getName(),
+					
+				Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
+
+		_finderPathWithoutPaginationFindByLayoutPageTemplateEntryId = new FinderPath(AssetDisplayPageEntryModelImpl.ENTITY_CACHE_ENABLED,
+				AssetDisplayPageEntryModelImpl.FINDER_CACHE_ENABLED,
+				AssetDisplayPageEntryImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				"findByLayoutPageTemplateEntryId",
+				new String[] { Long.class.getName() },
+				AssetDisplayPageEntryModelImpl.LAYOUTPAGETEMPLATEENTRYID_COLUMN_BITMASK);
+
+		_finderPathCountByLayoutPageTemplateEntryId = new FinderPath(AssetDisplayPageEntryModelImpl.ENTITY_CACHE_ENABLED,
+				AssetDisplayPageEntryModelImpl.FINDER_CACHE_ENABLED,
+				Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				"countByLayoutPageTemplateEntryId",
+				new String[] { Long.class.getName() });
+
+		_finderPathFetchByG_C_C = new FinderPath(AssetDisplayPageEntryModelImpl.ENTITY_CACHE_ENABLED,
+				AssetDisplayPageEntryModelImpl.FINDER_CACHE_ENABLED,
+				AssetDisplayPageEntryImpl.class, FINDER_CLASS_NAME_ENTITY,
+				"fetchByG_C_C",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Long.class.getName()
+				},
+				AssetDisplayPageEntryModelImpl.GROUPID_COLUMN_BITMASK |
+				AssetDisplayPageEntryModelImpl.CLASSNAMEID_COLUMN_BITMASK |
+				AssetDisplayPageEntryModelImpl.CLASSPK_COLUMN_BITMASK);
+
+		_finderPathCountByG_C_C = new FinderPath(AssetDisplayPageEntryModelImpl.ENTITY_CACHE_ENABLED,
+				AssetDisplayPageEntryModelImpl.FINDER_CACHE_ENABLED,
+				Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				"countByG_C_C",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Long.class.getName()
+				});
 	}
 
 	public void destroy() {

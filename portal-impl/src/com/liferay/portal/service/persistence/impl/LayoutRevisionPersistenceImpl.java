@@ -77,39 +77,12 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 		".List1";
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION = FINDER_CLASS_NAME_ENTITY +
 		".List2";
-	private final FinderPath _finderPathWithPaginationFindAll = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutRevisionModelImpl.FINDER_CACHE_ENABLED,
-			LayoutRevisionImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findAll", new String[0]);
-	private final FinderPath _finderPathWithoutPaginationFindAll = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutRevisionModelImpl.FINDER_CACHE_ENABLED,
-			LayoutRevisionImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0]);
-	private final FinderPath _finderPathCountAll = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutRevisionModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
-	private final FinderPath _finderPathWithPaginationFindByLayoutSetBranchId = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutRevisionModelImpl.FINDER_CACHE_ENABLED,
-			LayoutRevisionImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByLayoutSetBranchId",
-			new String[] {
-				Long.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	private final FinderPath _finderPathWithoutPaginationFindByLayoutSetBranchId =
-		new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutRevisionModelImpl.FINDER_CACHE_ENABLED,
-			LayoutRevisionImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByLayoutSetBranchId", new String[] { Long.class.getName() },
-			LayoutRevisionModelImpl.LAYOUTSETBRANCHID_COLUMN_BITMASK |
-			LayoutRevisionModelImpl.MODIFIEDDATE_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByLayoutSetBranchId = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutRevisionModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByLayoutSetBranchId", new String[] { Long.class.getName() });
+	private FinderPath _finderPathWithPaginationFindAll;
+	private FinderPath _finderPathWithoutPaginationFindAll;
+	private FinderPath _finderPathCountAll;
+	private FinderPath _finderPathWithPaginationFindByLayoutSetBranchId;
+	private FinderPath _finderPathWithoutPaginationFindByLayoutSetBranchId;
+	private FinderPath _finderPathCountByLayoutSetBranchId;
 
 	/**
 	 * Returns all the layout revisions where layoutSetBranchId = &#63;.
@@ -608,27 +581,9 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 
 	private static final String _FINDER_COLUMN_LAYOUTSETBRANCHID_LAYOUTSETBRANCHID_2 =
 		"layoutRevision.layoutSetBranchId = ?";
-	private final FinderPath _finderPathWithPaginationFindByPlid = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutRevisionModelImpl.FINDER_CACHE_ENABLED,
-			LayoutRevisionImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByPlid",
-			new String[] {
-				Long.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	private final FinderPath _finderPathWithoutPaginationFindByPlid = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutRevisionModelImpl.FINDER_CACHE_ENABLED,
-			LayoutRevisionImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByPlid",
-			new String[] { Long.class.getName() },
-			LayoutRevisionModelImpl.PLID_COLUMN_BITMASK |
-			LayoutRevisionModelImpl.MODIFIEDDATE_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByPlid = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutRevisionModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByPlid",
-			new String[] { Long.class.getName() });
+	private FinderPath _finderPathWithPaginationFindByPlid;
+	private FinderPath _finderPathWithoutPaginationFindByPlid;
+	private FinderPath _finderPathCountByPlid;
 
 	/**
 	 * Returns all the layout revisions where plid = &#63;.
@@ -1111,27 +1066,9 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 	}
 
 	private static final String _FINDER_COLUMN_PLID_PLID_2 = "layoutRevision.plid = ?";
-	private final FinderPath _finderPathWithPaginationFindByStatus = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutRevisionModelImpl.FINDER_CACHE_ENABLED,
-			LayoutRevisionImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByStatus",
-			new String[] {
-				Integer.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	private final FinderPath _finderPathWithoutPaginationFindByStatus = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutRevisionModelImpl.FINDER_CACHE_ENABLED,
-			LayoutRevisionImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByStatus",
-			new String[] { Integer.class.getName() },
-			LayoutRevisionModelImpl.STATUS_COLUMN_BITMASK |
-			LayoutRevisionModelImpl.MODIFIEDDATE_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByStatus = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutRevisionModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByStatus",
-			new String[] { Integer.class.getName() });
+	private FinderPath _finderPathWithPaginationFindByStatus;
+	private FinderPath _finderPathWithoutPaginationFindByStatus;
+	private FinderPath _finderPathCountByStatus;
 
 	/**
 	 * Returns all the layout revisions where status = &#63;.
@@ -1615,28 +1552,9 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 	}
 
 	private static final String _FINDER_COLUMN_STATUS_STATUS_2 = "layoutRevision.status = ?";
-	private final FinderPath _finderPathWithPaginationFindByL_H = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutRevisionModelImpl.FINDER_CACHE_ENABLED,
-			LayoutRevisionImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByL_H",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	private final FinderPath _finderPathWithoutPaginationFindByL_H = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutRevisionModelImpl.FINDER_CACHE_ENABLED,
-			LayoutRevisionImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByL_H",
-			new String[] { Long.class.getName(), Boolean.class.getName() },
-			LayoutRevisionModelImpl.LAYOUTSETBRANCHID_COLUMN_BITMASK |
-			LayoutRevisionModelImpl.HEAD_COLUMN_BITMASK |
-			LayoutRevisionModelImpl.MODIFIEDDATE_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByL_H = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutRevisionModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByL_H",
-			new String[] { Long.class.getName(), Boolean.class.getName() });
+	private FinderPath _finderPathWithPaginationFindByL_H;
+	private FinderPath _finderPathWithoutPaginationFindByL_H;
+	private FinderPath _finderPathCountByL_H;
 
 	/**
 	 * Returns all the layout revisions where layoutSetBranchId = &#63; and head = &#63;.
@@ -2161,28 +2079,9 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 
 	private static final String _FINDER_COLUMN_L_H_LAYOUTSETBRANCHID_2 = "layoutRevision.layoutSetBranchId = ? AND ";
 	private static final String _FINDER_COLUMN_L_H_HEAD_2 = "layoutRevision.head = ?";
-	private final FinderPath _finderPathWithPaginationFindByL_P = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutRevisionModelImpl.FINDER_CACHE_ENABLED,
-			LayoutRevisionImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByL_P",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	private final FinderPath _finderPathWithoutPaginationFindByL_P = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutRevisionModelImpl.FINDER_CACHE_ENABLED,
-			LayoutRevisionImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByL_P",
-			new String[] { Long.class.getName(), Long.class.getName() },
-			LayoutRevisionModelImpl.LAYOUTSETBRANCHID_COLUMN_BITMASK |
-			LayoutRevisionModelImpl.PLID_COLUMN_BITMASK |
-			LayoutRevisionModelImpl.MODIFIEDDATE_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByL_P = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutRevisionModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByL_P",
-			new String[] { Long.class.getName(), Long.class.getName() });
+	private FinderPath _finderPathWithPaginationFindByL_P;
+	private FinderPath _finderPathWithoutPaginationFindByL_P;
+	private FinderPath _finderPathCountByL_P;
 
 	/**
 	 * Returns all the layout revisions where layoutSetBranchId = &#63; and plid = &#63;.
@@ -2707,28 +2606,9 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 
 	private static final String _FINDER_COLUMN_L_P_LAYOUTSETBRANCHID_2 = "layoutRevision.layoutSetBranchId = ? AND ";
 	private static final String _FINDER_COLUMN_L_P_PLID_2 = "layoutRevision.plid = ?";
-	private final FinderPath _finderPathWithPaginationFindByL_S = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutRevisionModelImpl.FINDER_CACHE_ENABLED,
-			LayoutRevisionImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByL_S",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	private final FinderPath _finderPathWithoutPaginationFindByL_S = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutRevisionModelImpl.FINDER_CACHE_ENABLED,
-			LayoutRevisionImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByL_S",
-			new String[] { Long.class.getName(), Integer.class.getName() },
-			LayoutRevisionModelImpl.LAYOUTSETBRANCHID_COLUMN_BITMASK |
-			LayoutRevisionModelImpl.STATUS_COLUMN_BITMASK |
-			LayoutRevisionModelImpl.MODIFIEDDATE_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByL_S = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutRevisionModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByL_S",
-			new String[] { Long.class.getName(), Integer.class.getName() });
+	private FinderPath _finderPathWithPaginationFindByL_S;
+	private FinderPath _finderPathWithoutPaginationFindByL_S;
+	private FinderPath _finderPathCountByL_S;
 
 	/**
 	 * Returns all the layout revisions where layoutSetBranchId = &#63; and status = &#63;.
@@ -3253,28 +3133,9 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 
 	private static final String _FINDER_COLUMN_L_S_LAYOUTSETBRANCHID_2 = "layoutRevision.layoutSetBranchId = ? AND ";
 	private static final String _FINDER_COLUMN_L_S_STATUS_2 = "layoutRevision.status = ?";
-	private final FinderPath _finderPathWithPaginationFindByH_P = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutRevisionModelImpl.FINDER_CACHE_ENABLED,
-			LayoutRevisionImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByH_P",
-			new String[] {
-				Boolean.class.getName(), Long.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	private final FinderPath _finderPathWithoutPaginationFindByH_P = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutRevisionModelImpl.FINDER_CACHE_ENABLED,
-			LayoutRevisionImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByH_P",
-			new String[] { Boolean.class.getName(), Long.class.getName() },
-			LayoutRevisionModelImpl.HEAD_COLUMN_BITMASK |
-			LayoutRevisionModelImpl.PLID_COLUMN_BITMASK |
-			LayoutRevisionModelImpl.MODIFIEDDATE_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByH_P = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutRevisionModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByH_P",
-			new String[] { Boolean.class.getName(), Long.class.getName() });
+	private FinderPath _finderPathWithPaginationFindByH_P;
+	private FinderPath _finderPathWithoutPaginationFindByH_P;
+	private FinderPath _finderPathCountByH_P;
 
 	/**
 	 * Returns all the layout revisions where head = &#63; and plid = &#63;.
@@ -3792,20 +3653,8 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 
 	private static final String _FINDER_COLUMN_H_P_HEAD_2 = "layoutRevision.head = ? AND ";
 	private static final String _FINDER_COLUMN_H_P_PLID_2 = "layoutRevision.plid = ?";
-	private final FinderPath _finderPathWithPaginationFindByP_NotS = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutRevisionModelImpl.FINDER_CACHE_ENABLED,
-			LayoutRevisionImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByP_NotS",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	private final FinderPath _finderPathWithPaginationCountByP_NotS = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutRevisionModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByP_NotS",
-			new String[] { Long.class.getName(), Integer.class.getName() });
+	private FinderPath _finderPathWithPaginationFindByP_NotS;
+	private FinderPath _finderPathWithPaginationCountByP_NotS;
 
 	/**
 	 * Returns all the layout revisions where plid = &#63; and status &ne; &#63;.
@@ -4316,33 +4165,9 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 
 	private static final String _FINDER_COLUMN_P_NOTS_PLID_2 = "layoutRevision.plid = ? AND ";
 	private static final String _FINDER_COLUMN_P_NOTS_STATUS_2 = "layoutRevision.status != ?";
-	private final FinderPath _finderPathWithPaginationFindByL_L_P = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutRevisionModelImpl.FINDER_CACHE_ENABLED,
-			LayoutRevisionImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByL_L_P",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	private final FinderPath _finderPathWithoutPaginationFindByL_L_P = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutRevisionModelImpl.FINDER_CACHE_ENABLED,
-			LayoutRevisionImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByL_L_P",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName()
-			},
-			LayoutRevisionModelImpl.LAYOUTSETBRANCHID_COLUMN_BITMASK |
-			LayoutRevisionModelImpl.LAYOUTBRANCHID_COLUMN_BITMASK |
-			LayoutRevisionModelImpl.PLID_COLUMN_BITMASK |
-			LayoutRevisionModelImpl.MODIFIEDDATE_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByL_L_P = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutRevisionModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByL_L_P",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName()
-			});
+	private FinderPath _finderPathWithPaginationFindByL_L_P;
+	private FinderPath _finderPathWithoutPaginationFindByL_L_P;
+	private FinderPath _finderPathCountByL_L_P;
 
 	/**
 	 * Returns all the layout revisions where layoutSetBranchId = &#63; and layoutBranchId = &#63; and plid = &#63;.
@@ -4912,33 +4737,9 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 	private static final String _FINDER_COLUMN_L_L_P_LAYOUTSETBRANCHID_2 = "layoutRevision.layoutSetBranchId = ? AND ";
 	private static final String _FINDER_COLUMN_L_L_P_LAYOUTBRANCHID_2 = "layoutRevision.layoutBranchId = ? AND ";
 	private static final String _FINDER_COLUMN_L_L_P_PLID_2 = "layoutRevision.plid = ? AND layoutRevision.status != 5";
-	private final FinderPath _finderPathWithPaginationFindByL_P_P = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutRevisionModelImpl.FINDER_CACHE_ENABLED,
-			LayoutRevisionImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByL_P_P",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	private final FinderPath _finderPathWithoutPaginationFindByL_P_P = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutRevisionModelImpl.FINDER_CACHE_ENABLED,
-			LayoutRevisionImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByL_P_P",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName()
-			},
-			LayoutRevisionModelImpl.LAYOUTSETBRANCHID_COLUMN_BITMASK |
-			LayoutRevisionModelImpl.PARENTLAYOUTREVISIONID_COLUMN_BITMASK |
-			LayoutRevisionModelImpl.PLID_COLUMN_BITMASK |
-			LayoutRevisionModelImpl.MODIFIEDDATE_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByL_P_P = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutRevisionModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByL_P_P",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName()
-			});
+	private FinderPath _finderPathWithPaginationFindByL_P_P;
+	private FinderPath _finderPathWithoutPaginationFindByL_P_P;
+	private FinderPath _finderPathCountByL_P_P;
 
 	/**
 	 * Returns all the layout revisions where layoutSetBranchId = &#63; and parentLayoutRevisionId = &#63; and plid = &#63;.
@@ -5512,23 +5313,8 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 	private static final String _FINDER_COLUMN_L_P_P_LAYOUTSETBRANCHID_2 = "layoutRevision.layoutSetBranchId = ? AND ";
 	private static final String _FINDER_COLUMN_L_P_P_PARENTLAYOUTREVISIONID_2 = "layoutRevision.parentLayoutRevisionId = ? AND ";
 	private static final String _FINDER_COLUMN_L_P_P_PLID_2 = "layoutRevision.plid = ?";
-	private final FinderPath _finderPathFetchByL_H_P = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutRevisionModelImpl.FINDER_CACHE_ENABLED,
-			LayoutRevisionImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByL_H_P",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Long.class.getName()
-			},
-			LayoutRevisionModelImpl.LAYOUTSETBRANCHID_COLUMN_BITMASK |
-			LayoutRevisionModelImpl.HEAD_COLUMN_BITMASK |
-			LayoutRevisionModelImpl.PLID_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByL_H_P = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutRevisionModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByL_H_P",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Long.class.getName()
-			});
+	private FinderPath _finderPathFetchByL_H_P;
+	private FinderPath _finderPathCountByL_H_P;
 
 	/**
 	 * Returns the layout revision where layoutSetBranchId = &#63; and head = &#63; and plid = &#63; or throws a {@link NoSuchLayoutRevisionException} if it could not be found.
@@ -5769,38 +5555,9 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 	private static final String _FINDER_COLUMN_L_H_P_LAYOUTSETBRANCHID_2 = "layoutRevision.layoutSetBranchId = ? AND ";
 	private static final String _FINDER_COLUMN_L_H_P_HEAD_2 = "layoutRevision.head = ? AND ";
 	private static final String _FINDER_COLUMN_L_H_P_PLID_2 = "layoutRevision.plid = ?";
-	private final FinderPath _finderPathWithPaginationFindByL_H_P_Collection = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutRevisionModelImpl.FINDER_CACHE_ENABLED,
-			LayoutRevisionImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByL_H_P_Collection",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Long.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	private final FinderPath _finderPathWithoutPaginationFindByL_H_P_Collection = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutRevisionModelImpl.FINDER_CACHE_ENABLED,
-			LayoutRevisionImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByL_H_P_Collection",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Long.class.getName()
-			},
-			LayoutRevisionModelImpl.LAYOUTSETBRANCHID_COLUMN_BITMASK |
-			LayoutRevisionModelImpl.HEAD_COLUMN_BITMASK |
-			LayoutRevisionModelImpl.PLID_COLUMN_BITMASK |
-			LayoutRevisionModelImpl.MODIFIEDDATE_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByL_H_P_Collection = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutRevisionModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByL_H_P_Collection",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Long.class.getName()
-			});
+	private FinderPath _finderPathWithPaginationFindByL_H_P_Collection;
+	private FinderPath _finderPathWithoutPaginationFindByL_H_P_Collection;
+	private FinderPath _finderPathCountByL_H_P_Collection;
 
 	/**
 	 * Returns all the layout revisions where layoutSetBranchId = &#63; and head = &#63; and plid = &#63;.
@@ -6370,36 +6127,9 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 		"layoutRevision.layoutSetBranchId = ? AND ";
 	private static final String _FINDER_COLUMN_L_H_P_COLLECTION_HEAD_2 = "layoutRevision.head = ? AND ";
 	private static final String _FINDER_COLUMN_L_H_P_COLLECTION_PLID_2 = "layoutRevision.plid = ?";
-	private final FinderPath _finderPathWithPaginationFindByL_H_S = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutRevisionModelImpl.FINDER_CACHE_ENABLED,
-			LayoutRevisionImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByL_H_S",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	private final FinderPath _finderPathWithoutPaginationFindByL_H_S = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutRevisionModelImpl.FINDER_CACHE_ENABLED,
-			LayoutRevisionImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByL_H_S",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName()
-			},
-			LayoutRevisionModelImpl.LAYOUTSETBRANCHID_COLUMN_BITMASK |
-			LayoutRevisionModelImpl.HEAD_COLUMN_BITMASK |
-			LayoutRevisionModelImpl.STATUS_COLUMN_BITMASK |
-			LayoutRevisionModelImpl.MODIFIEDDATE_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByL_H_S = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutRevisionModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByL_H_S",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName()
-			});
+	private FinderPath _finderPathWithPaginationFindByL_H_S;
+	private FinderPath _finderPathWithoutPaginationFindByL_H_S;
+	private FinderPath _finderPathCountByL_H_S;
 
 	/**
 	 * Returns all the layout revisions where layoutSetBranchId = &#63; and head = &#63; and status = &#63;.
@@ -6962,36 +6692,9 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 	private static final String _FINDER_COLUMN_L_H_S_LAYOUTSETBRANCHID_2 = "layoutRevision.layoutSetBranchId = ? AND ";
 	private static final String _FINDER_COLUMN_L_H_S_HEAD_2 = "layoutRevision.head = ? AND ";
 	private static final String _FINDER_COLUMN_L_H_S_STATUS_2 = "layoutRevision.status = ?";
-	private final FinderPath _finderPathWithPaginationFindByL_P_S = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutRevisionModelImpl.FINDER_CACHE_ENABLED,
-			LayoutRevisionImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByL_P_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	private final FinderPath _finderPathWithoutPaginationFindByL_P_S = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutRevisionModelImpl.FINDER_CACHE_ENABLED,
-			LayoutRevisionImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByL_P_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName()
-			},
-			LayoutRevisionModelImpl.LAYOUTSETBRANCHID_COLUMN_BITMASK |
-			LayoutRevisionModelImpl.PLID_COLUMN_BITMASK |
-			LayoutRevisionModelImpl.STATUS_COLUMN_BITMASK |
-			LayoutRevisionModelImpl.MODIFIEDDATE_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByL_P_S = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutRevisionModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByL_P_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName()
-			});
+	private FinderPath _finderPathWithPaginationFindByL_P_S;
+	private FinderPath _finderPathWithoutPaginationFindByL_P_S;
+	private FinderPath _finderPathCountByL_P_S;
 
 	/**
 	 * Returns all the layout revisions where layoutSetBranchId = &#63; and plid = &#63; and status = &#63;.
@@ -7550,25 +7253,8 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 	private static final String _FINDER_COLUMN_L_P_S_LAYOUTSETBRANCHID_2 = "layoutRevision.layoutSetBranchId = ? AND ";
 	private static final String _FINDER_COLUMN_L_P_S_PLID_2 = "layoutRevision.plid = ? AND ";
 	private static final String _FINDER_COLUMN_L_P_S_STATUS_2 = "layoutRevision.status = ?";
-	private final FinderPath _finderPathFetchByL_L_H_P = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutRevisionModelImpl.FINDER_CACHE_ENABLED,
-			LayoutRevisionImpl.class, FINDER_CLASS_NAME_ENTITY,
-			"fetchByL_L_H_P",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName(), Long.class.getName()
-			},
-			LayoutRevisionModelImpl.LAYOUTSETBRANCHID_COLUMN_BITMASK |
-			LayoutRevisionModelImpl.LAYOUTBRANCHID_COLUMN_BITMASK |
-			LayoutRevisionModelImpl.HEAD_COLUMN_BITMASK |
-			LayoutRevisionModelImpl.PLID_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByL_L_H_P = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutRevisionModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByL_L_H_P",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName(), Long.class.getName()
-			});
+	private FinderPath _finderPathFetchByL_L_H_P;
+	private FinderPath _finderPathCountByL_L_H_P;
 
 	/**
 	 * Returns the layout revision where layoutSetBranchId = &#63; and layoutBranchId = &#63; and head = &#63; and plid = &#63; or throws a {@link NoSuchLayoutRevisionException} if it could not be found.
@@ -8836,6 +8522,421 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 	 * Initializes the layout revision persistence.
 	 */
 	public void afterPropertiesSet() {
+		_finderPathWithPaginationFindAll = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
+				LayoutRevisionModelImpl.FINDER_CACHE_ENABLED,
+				LayoutRevisionImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
+
+		_finderPathWithoutPaginationFindAll = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
+				LayoutRevisionModelImpl.FINDER_CACHE_ENABLED,
+				LayoutRevisionImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
+				new String[0]);
+
+		_finderPathCountAll = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
+				LayoutRevisionModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+				new String[0]);
+
+		_finderPathWithPaginationFindByLayoutSetBranchId = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
+				LayoutRevisionModelImpl.FINDER_CACHE_ENABLED,
+				LayoutRevisionImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+				"findByLayoutSetBranchId",
+				new String[] {
+					Long.class.getName(),
+					
+				Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
+
+		_finderPathWithoutPaginationFindByLayoutSetBranchId = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
+				LayoutRevisionModelImpl.FINDER_CACHE_ENABLED,
+				LayoutRevisionImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				"findByLayoutSetBranchId",
+				new String[] { Long.class.getName() },
+				LayoutRevisionModelImpl.LAYOUTSETBRANCHID_COLUMN_BITMASK |
+				LayoutRevisionModelImpl.MODIFIEDDATE_COLUMN_BITMASK);
+
+		_finderPathCountByLayoutSetBranchId = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
+				LayoutRevisionModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				"countByLayoutSetBranchId",
+				new String[] { Long.class.getName() });
+
+		_finderPathWithPaginationFindByPlid = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
+				LayoutRevisionModelImpl.FINDER_CACHE_ENABLED,
+				LayoutRevisionImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByPlid",
+				new String[] {
+					Long.class.getName(),
+					
+				Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
+
+		_finderPathWithoutPaginationFindByPlid = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
+				LayoutRevisionModelImpl.FINDER_CACHE_ENABLED,
+				LayoutRevisionImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByPlid",
+				new String[] { Long.class.getName() },
+				LayoutRevisionModelImpl.PLID_COLUMN_BITMASK |
+				LayoutRevisionModelImpl.MODIFIEDDATE_COLUMN_BITMASK);
+
+		_finderPathCountByPlid = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
+				LayoutRevisionModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByPlid",
+				new String[] { Long.class.getName() });
+
+		_finderPathWithPaginationFindByStatus = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
+				LayoutRevisionModelImpl.FINDER_CACHE_ENABLED,
+				LayoutRevisionImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByStatus",
+				new String[] {
+					Integer.class.getName(),
+					
+				Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
+
+		_finderPathWithoutPaginationFindByStatus = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
+				LayoutRevisionModelImpl.FINDER_CACHE_ENABLED,
+				LayoutRevisionImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByStatus",
+				new String[] { Integer.class.getName() },
+				LayoutRevisionModelImpl.STATUS_COLUMN_BITMASK |
+				LayoutRevisionModelImpl.MODIFIEDDATE_COLUMN_BITMASK);
+
+		_finderPathCountByStatus = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
+				LayoutRevisionModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByStatus",
+				new String[] { Integer.class.getName() });
+
+		_finderPathWithPaginationFindByL_H = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
+				LayoutRevisionModelImpl.FINDER_CACHE_ENABLED,
+				LayoutRevisionImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByL_H",
+				new String[] {
+					Long.class.getName(), Boolean.class.getName(),
+					
+				Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
+
+		_finderPathWithoutPaginationFindByL_H = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
+				LayoutRevisionModelImpl.FINDER_CACHE_ENABLED,
+				LayoutRevisionImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByL_H",
+				new String[] { Long.class.getName(), Boolean.class.getName() },
+				LayoutRevisionModelImpl.LAYOUTSETBRANCHID_COLUMN_BITMASK |
+				LayoutRevisionModelImpl.HEAD_COLUMN_BITMASK |
+				LayoutRevisionModelImpl.MODIFIEDDATE_COLUMN_BITMASK);
+
+		_finderPathCountByL_H = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
+				LayoutRevisionModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByL_H",
+				new String[] { Long.class.getName(), Boolean.class.getName() });
+
+		_finderPathWithPaginationFindByL_P = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
+				LayoutRevisionModelImpl.FINDER_CACHE_ENABLED,
+				LayoutRevisionImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByL_P",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					
+				Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
+
+		_finderPathWithoutPaginationFindByL_P = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
+				LayoutRevisionModelImpl.FINDER_CACHE_ENABLED,
+				LayoutRevisionImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByL_P",
+				new String[] { Long.class.getName(), Long.class.getName() },
+				LayoutRevisionModelImpl.LAYOUTSETBRANCHID_COLUMN_BITMASK |
+				LayoutRevisionModelImpl.PLID_COLUMN_BITMASK |
+				LayoutRevisionModelImpl.MODIFIEDDATE_COLUMN_BITMASK);
+
+		_finderPathCountByL_P = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
+				LayoutRevisionModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByL_P",
+				new String[] { Long.class.getName(), Long.class.getName() });
+
+		_finderPathWithPaginationFindByL_S = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
+				LayoutRevisionModelImpl.FINDER_CACHE_ENABLED,
+				LayoutRevisionImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByL_S",
+				new String[] {
+					Long.class.getName(), Integer.class.getName(),
+					
+				Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
+
+		_finderPathWithoutPaginationFindByL_S = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
+				LayoutRevisionModelImpl.FINDER_CACHE_ENABLED,
+				LayoutRevisionImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByL_S",
+				new String[] { Long.class.getName(), Integer.class.getName() },
+				LayoutRevisionModelImpl.LAYOUTSETBRANCHID_COLUMN_BITMASK |
+				LayoutRevisionModelImpl.STATUS_COLUMN_BITMASK |
+				LayoutRevisionModelImpl.MODIFIEDDATE_COLUMN_BITMASK);
+
+		_finderPathCountByL_S = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
+				LayoutRevisionModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByL_S",
+				new String[] { Long.class.getName(), Integer.class.getName() });
+
+		_finderPathWithPaginationFindByH_P = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
+				LayoutRevisionModelImpl.FINDER_CACHE_ENABLED,
+				LayoutRevisionImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByH_P",
+				new String[] {
+					Boolean.class.getName(), Long.class.getName(),
+					
+				Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
+
+		_finderPathWithoutPaginationFindByH_P = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
+				LayoutRevisionModelImpl.FINDER_CACHE_ENABLED,
+				LayoutRevisionImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByH_P",
+				new String[] { Boolean.class.getName(), Long.class.getName() },
+				LayoutRevisionModelImpl.HEAD_COLUMN_BITMASK |
+				LayoutRevisionModelImpl.PLID_COLUMN_BITMASK |
+				LayoutRevisionModelImpl.MODIFIEDDATE_COLUMN_BITMASK);
+
+		_finderPathCountByH_P = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
+				LayoutRevisionModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByH_P",
+				new String[] { Boolean.class.getName(), Long.class.getName() });
+
+		_finderPathWithPaginationFindByP_NotS = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
+				LayoutRevisionModelImpl.FINDER_CACHE_ENABLED,
+				LayoutRevisionImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByP_NotS",
+				new String[] {
+					Long.class.getName(), Integer.class.getName(),
+					
+				Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
+
+		_finderPathWithPaginationCountByP_NotS = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
+				LayoutRevisionModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByP_NotS",
+				new String[] { Long.class.getName(), Integer.class.getName() });
+
+		_finderPathWithPaginationFindByL_L_P = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
+				LayoutRevisionModelImpl.FINDER_CACHE_ENABLED,
+				LayoutRevisionImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByL_L_P",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Long.class.getName(),
+					
+				Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
+
+		_finderPathWithoutPaginationFindByL_L_P = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
+				LayoutRevisionModelImpl.FINDER_CACHE_ENABLED,
+				LayoutRevisionImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByL_L_P",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Long.class.getName()
+				},
+				LayoutRevisionModelImpl.LAYOUTSETBRANCHID_COLUMN_BITMASK |
+				LayoutRevisionModelImpl.LAYOUTBRANCHID_COLUMN_BITMASK |
+				LayoutRevisionModelImpl.PLID_COLUMN_BITMASK |
+				LayoutRevisionModelImpl.MODIFIEDDATE_COLUMN_BITMASK);
+
+		_finderPathCountByL_L_P = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
+				LayoutRevisionModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByL_L_P",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Long.class.getName()
+				});
+
+		_finderPathWithPaginationFindByL_P_P = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
+				LayoutRevisionModelImpl.FINDER_CACHE_ENABLED,
+				LayoutRevisionImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByL_P_P",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Long.class.getName(),
+					
+				Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
+
+		_finderPathWithoutPaginationFindByL_P_P = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
+				LayoutRevisionModelImpl.FINDER_CACHE_ENABLED,
+				LayoutRevisionImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByL_P_P",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Long.class.getName()
+				},
+				LayoutRevisionModelImpl.LAYOUTSETBRANCHID_COLUMN_BITMASK |
+				LayoutRevisionModelImpl.PARENTLAYOUTREVISIONID_COLUMN_BITMASK |
+				LayoutRevisionModelImpl.PLID_COLUMN_BITMASK |
+				LayoutRevisionModelImpl.MODIFIEDDATE_COLUMN_BITMASK);
+
+		_finderPathCountByL_P_P = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
+				LayoutRevisionModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByL_P_P",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Long.class.getName()
+				});
+
+		_finderPathFetchByL_H_P = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
+				LayoutRevisionModelImpl.FINDER_CACHE_ENABLED,
+				LayoutRevisionImpl.class, FINDER_CLASS_NAME_ENTITY,
+				"fetchByL_H_P",
+				new String[] {
+					Long.class.getName(), Boolean.class.getName(),
+					Long.class.getName()
+				},
+				LayoutRevisionModelImpl.LAYOUTSETBRANCHID_COLUMN_BITMASK |
+				LayoutRevisionModelImpl.HEAD_COLUMN_BITMASK |
+				LayoutRevisionModelImpl.PLID_COLUMN_BITMASK);
+
+		_finderPathCountByL_H_P = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
+				LayoutRevisionModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByL_H_P",
+				new String[] {
+					Long.class.getName(), Boolean.class.getName(),
+					Long.class.getName()
+				});
+
+		_finderPathWithPaginationFindByL_H_P_Collection = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
+				LayoutRevisionModelImpl.FINDER_CACHE_ENABLED,
+				LayoutRevisionImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+				"findByL_H_P_Collection",
+				new String[] {
+					Long.class.getName(), Boolean.class.getName(),
+					Long.class.getName(),
+					
+				Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
+
+		_finderPathWithoutPaginationFindByL_H_P_Collection = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
+				LayoutRevisionModelImpl.FINDER_CACHE_ENABLED,
+				LayoutRevisionImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				"findByL_H_P_Collection",
+				new String[] {
+					Long.class.getName(), Boolean.class.getName(),
+					Long.class.getName()
+				},
+				LayoutRevisionModelImpl.LAYOUTSETBRANCHID_COLUMN_BITMASK |
+				LayoutRevisionModelImpl.HEAD_COLUMN_BITMASK |
+				LayoutRevisionModelImpl.PLID_COLUMN_BITMASK |
+				LayoutRevisionModelImpl.MODIFIEDDATE_COLUMN_BITMASK);
+
+		_finderPathCountByL_H_P_Collection = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
+				LayoutRevisionModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				"countByL_H_P_Collection",
+				new String[] {
+					Long.class.getName(), Boolean.class.getName(),
+					Long.class.getName()
+				});
+
+		_finderPathWithPaginationFindByL_H_S = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
+				LayoutRevisionModelImpl.FINDER_CACHE_ENABLED,
+				LayoutRevisionImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByL_H_S",
+				new String[] {
+					Long.class.getName(), Boolean.class.getName(),
+					Integer.class.getName(),
+					
+				Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
+
+		_finderPathWithoutPaginationFindByL_H_S = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
+				LayoutRevisionModelImpl.FINDER_CACHE_ENABLED,
+				LayoutRevisionImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByL_H_S",
+				new String[] {
+					Long.class.getName(), Boolean.class.getName(),
+					Integer.class.getName()
+				},
+				LayoutRevisionModelImpl.LAYOUTSETBRANCHID_COLUMN_BITMASK |
+				LayoutRevisionModelImpl.HEAD_COLUMN_BITMASK |
+				LayoutRevisionModelImpl.STATUS_COLUMN_BITMASK |
+				LayoutRevisionModelImpl.MODIFIEDDATE_COLUMN_BITMASK);
+
+		_finderPathCountByL_H_S = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
+				LayoutRevisionModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByL_H_S",
+				new String[] {
+					Long.class.getName(), Boolean.class.getName(),
+					Integer.class.getName()
+				});
+
+		_finderPathWithPaginationFindByL_P_S = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
+				LayoutRevisionModelImpl.FINDER_CACHE_ENABLED,
+				LayoutRevisionImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByL_P_S",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Integer.class.getName(),
+					
+				Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
+
+		_finderPathWithoutPaginationFindByL_P_S = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
+				LayoutRevisionModelImpl.FINDER_CACHE_ENABLED,
+				LayoutRevisionImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByL_P_S",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Integer.class.getName()
+				},
+				LayoutRevisionModelImpl.LAYOUTSETBRANCHID_COLUMN_BITMASK |
+				LayoutRevisionModelImpl.PLID_COLUMN_BITMASK |
+				LayoutRevisionModelImpl.STATUS_COLUMN_BITMASK |
+				LayoutRevisionModelImpl.MODIFIEDDATE_COLUMN_BITMASK);
+
+		_finderPathCountByL_P_S = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
+				LayoutRevisionModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByL_P_S",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Integer.class.getName()
+				});
+
+		_finderPathFetchByL_L_H_P = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
+				LayoutRevisionModelImpl.FINDER_CACHE_ENABLED,
+				LayoutRevisionImpl.class, FINDER_CLASS_NAME_ENTITY,
+				"fetchByL_L_H_P",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Boolean.class.getName(), Long.class.getName()
+				},
+				LayoutRevisionModelImpl.LAYOUTSETBRANCHID_COLUMN_BITMASK |
+				LayoutRevisionModelImpl.LAYOUTBRANCHID_COLUMN_BITMASK |
+				LayoutRevisionModelImpl.HEAD_COLUMN_BITMASK |
+				LayoutRevisionModelImpl.PLID_COLUMN_BITMASK);
+
+		_finderPathCountByL_L_H_P = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
+				LayoutRevisionModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByL_L_H_P",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Boolean.class.getName(), Long.class.getName()
+				});
 	}
 
 	public void destroy() {

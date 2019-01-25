@@ -81,37 +81,12 @@ public class SegmentsEntryPersistenceImpl extends BasePersistenceImpl<SegmentsEn
 		".List1";
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION = FINDER_CLASS_NAME_ENTITY +
 		".List2";
-	private final FinderPath _finderPathWithPaginationFindAll = new FinderPath(SegmentsEntryModelImpl.ENTITY_CACHE_ENABLED,
-			SegmentsEntryModelImpl.FINDER_CACHE_ENABLED,
-			SegmentsEntryImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findAll", new String[0]);
-	private final FinderPath _finderPathWithoutPaginationFindAll = new FinderPath(SegmentsEntryModelImpl.ENTITY_CACHE_ENABLED,
-			SegmentsEntryModelImpl.FINDER_CACHE_ENABLED,
-			SegmentsEntryImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findAll", new String[0]);
-	private final FinderPath _finderPathCountAll = new FinderPath(SegmentsEntryModelImpl.ENTITY_CACHE_ENABLED,
-			SegmentsEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
-	private final FinderPath _finderPathWithPaginationFindByGroupId = new FinderPath(SegmentsEntryModelImpl.ENTITY_CACHE_ENABLED,
-			SegmentsEntryModelImpl.FINDER_CACHE_ENABLED,
-			SegmentsEntryImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByGroupId",
-			new String[] {
-				Long.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	private final FinderPath _finderPathWithoutPaginationFindByGroupId = new FinderPath(SegmentsEntryModelImpl.ENTITY_CACHE_ENABLED,
-			SegmentsEntryModelImpl.FINDER_CACHE_ENABLED,
-			SegmentsEntryImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByGroupId", new String[] { Long.class.getName() },
-			SegmentsEntryModelImpl.GROUPID_COLUMN_BITMASK |
-			SegmentsEntryModelImpl.MODIFIEDDATE_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByGroupId = new FinderPath(SegmentsEntryModelImpl.ENTITY_CACHE_ENABLED,
-			SegmentsEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
-			new String[] { Long.class.getName() });
+	private FinderPath _finderPathWithPaginationFindAll;
+	private FinderPath _finderPathWithoutPaginationFindAll;
+	private FinderPath _finderPathCountAll;
+	private FinderPath _finderPathWithPaginationFindByGroupId;
+	private FinderPath _finderPathWithoutPaginationFindByGroupId;
+	private FinderPath _finderPathCountByGroupId;
 
 	/**
 	 * Returns all the segments entries where groupId = &#63;.
@@ -954,26 +929,9 @@ public class SegmentsEntryPersistenceImpl extends BasePersistenceImpl<SegmentsEn
 	}
 
 	private static final String _FINDER_COLUMN_GROUPID_GROUPID_2 = "segmentsEntry.groupId = ?";
-	private final FinderPath _finderPathWithPaginationFindBySource = new FinderPath(SegmentsEntryModelImpl.ENTITY_CACHE_ENABLED,
-			SegmentsEntryModelImpl.FINDER_CACHE_ENABLED,
-			SegmentsEntryImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findBySource",
-			new String[] {
-				String.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	private final FinderPath _finderPathWithoutPaginationFindBySource = new FinderPath(SegmentsEntryModelImpl.ENTITY_CACHE_ENABLED,
-			SegmentsEntryModelImpl.FINDER_CACHE_ENABLED,
-			SegmentsEntryImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findBySource", new String[] { String.class.getName() },
-			SegmentsEntryModelImpl.SOURCE_COLUMN_BITMASK |
-			SegmentsEntryModelImpl.MODIFIEDDATE_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountBySource = new FinderPath(SegmentsEntryModelImpl.ENTITY_CACHE_ENABLED,
-			SegmentsEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countBySource",
-			new String[] { String.class.getName() });
+	private FinderPath _finderPathWithPaginationFindBySource;
+	private FinderPath _finderPathWithoutPaginationFindBySource;
+	private FinderPath _finderPathCountBySource;
 
 	/**
 	 * Returns all the segments entries where source = &#63;.
@@ -1496,26 +1454,9 @@ public class SegmentsEntryPersistenceImpl extends BasePersistenceImpl<SegmentsEn
 
 	private static final String _FINDER_COLUMN_SOURCE_SOURCE_2 = "segmentsEntry.source = ?";
 	private static final String _FINDER_COLUMN_SOURCE_SOURCE_3 = "(segmentsEntry.source IS NULL OR segmentsEntry.source = '')";
-	private final FinderPath _finderPathWithPaginationFindByType = new FinderPath(SegmentsEntryModelImpl.ENTITY_CACHE_ENABLED,
-			SegmentsEntryModelImpl.FINDER_CACHE_ENABLED,
-			SegmentsEntryImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByType",
-			new String[] {
-				String.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	private final FinderPath _finderPathWithoutPaginationFindByType = new FinderPath(SegmentsEntryModelImpl.ENTITY_CACHE_ENABLED,
-			SegmentsEntryModelImpl.FINDER_CACHE_ENABLED,
-			SegmentsEntryImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByType", new String[] { String.class.getName() },
-			SegmentsEntryModelImpl.TYPE_COLUMN_BITMASK |
-			SegmentsEntryModelImpl.MODIFIEDDATE_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByType = new FinderPath(SegmentsEntryModelImpl.ENTITY_CACHE_ENABLED,
-			SegmentsEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByType",
-			new String[] { String.class.getName() });
+	private FinderPath _finderPathWithPaginationFindByType;
+	private FinderPath _finderPathWithoutPaginationFindByType;
+	private FinderPath _finderPathCountByType;
 
 	/**
 	 * Returns all the segments entries where type = &#63;.
@@ -2036,28 +1977,9 @@ public class SegmentsEntryPersistenceImpl extends BasePersistenceImpl<SegmentsEn
 
 	private static final String _FINDER_COLUMN_TYPE_TYPE_2 = "segmentsEntry.type = ?";
 	private static final String _FINDER_COLUMN_TYPE_TYPE_3 = "(segmentsEntry.type IS NULL OR segmentsEntry.type = '')";
-	private final FinderPath _finderPathWithPaginationFindByG_A = new FinderPath(SegmentsEntryModelImpl.ENTITY_CACHE_ENABLED,
-			SegmentsEntryModelImpl.FINDER_CACHE_ENABLED,
-			SegmentsEntryImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByG_A",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	private final FinderPath _finderPathWithoutPaginationFindByG_A = new FinderPath(SegmentsEntryModelImpl.ENTITY_CACHE_ENABLED,
-			SegmentsEntryModelImpl.FINDER_CACHE_ENABLED,
-			SegmentsEntryImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByG_A",
-			new String[] { Long.class.getName(), Boolean.class.getName() },
-			SegmentsEntryModelImpl.GROUPID_COLUMN_BITMASK |
-			SegmentsEntryModelImpl.ACTIVE_COLUMN_BITMASK |
-			SegmentsEntryModelImpl.MODIFIEDDATE_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByG_A = new FinderPath(SegmentsEntryModelImpl.ENTITY_CACHE_ENABLED,
-			SegmentsEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_A",
-			new String[] { Long.class.getName(), Boolean.class.getName() });
+	private FinderPath _finderPathWithPaginationFindByG_A;
+	private FinderPath _finderPathWithoutPaginationFindByG_A;
+	private FinderPath _finderPathCountByG_A;
 
 	/**
 	 * Returns all the segments entries where groupId = &#63; and active = &#63;.
@@ -2956,16 +2878,8 @@ public class SegmentsEntryPersistenceImpl extends BasePersistenceImpl<SegmentsEn
 	private static final String _FINDER_COLUMN_G_A_GROUPID_2 = "segmentsEntry.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_A_ACTIVE_2 = "segmentsEntry.active = ?";
 	private static final String _FINDER_COLUMN_G_A_ACTIVE_2_SQL = "segmentsEntry.active_ = ?";
-	private final FinderPath _finderPathFetchByG_K = new FinderPath(SegmentsEntryModelImpl.ENTITY_CACHE_ENABLED,
-			SegmentsEntryModelImpl.FINDER_CACHE_ENABLED,
-			SegmentsEntryImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByG_K",
-			new String[] { Long.class.getName(), String.class.getName() },
-			SegmentsEntryModelImpl.GROUPID_COLUMN_BITMASK |
-			SegmentsEntryModelImpl.KEY_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByG_K = new FinderPath(SegmentsEntryModelImpl.ENTITY_CACHE_ENABLED,
-			SegmentsEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_K",
-			new String[] { Long.class.getName(), String.class.getName() });
+	private FinderPath _finderPathFetchByG_K;
+	private FinderPath _finderPathCountByG_K;
 
 	/**
 	 * Returns the segments entry where groupId = &#63; and key = &#63; or throws a {@link NoSuchEntryException} if it could not be found.
@@ -3200,28 +3114,9 @@ public class SegmentsEntryPersistenceImpl extends BasePersistenceImpl<SegmentsEn
 	private static final String _FINDER_COLUMN_G_K_GROUPID_2 = "segmentsEntry.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_K_KEY_2 = "segmentsEntry.key = ?";
 	private static final String _FINDER_COLUMN_G_K_KEY_3 = "(segmentsEntry.key IS NULL OR segmentsEntry.key = '')";
-	private final FinderPath _finderPathWithPaginationFindByA_T = new FinderPath(SegmentsEntryModelImpl.ENTITY_CACHE_ENABLED,
-			SegmentsEntryModelImpl.FINDER_CACHE_ENABLED,
-			SegmentsEntryImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByA_T",
-			new String[] {
-				Boolean.class.getName(), String.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	private final FinderPath _finderPathWithoutPaginationFindByA_T = new FinderPath(SegmentsEntryModelImpl.ENTITY_CACHE_ENABLED,
-			SegmentsEntryModelImpl.FINDER_CACHE_ENABLED,
-			SegmentsEntryImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByA_T",
-			new String[] { Boolean.class.getName(), String.class.getName() },
-			SegmentsEntryModelImpl.ACTIVE_COLUMN_BITMASK |
-			SegmentsEntryModelImpl.TYPE_COLUMN_BITMASK |
-			SegmentsEntryModelImpl.MODIFIEDDATE_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByA_T = new FinderPath(SegmentsEntryModelImpl.ENTITY_CACHE_ENABLED,
-			SegmentsEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByA_T",
-			new String[] { Boolean.class.getName(), String.class.getName() });
+	private FinderPath _finderPathWithPaginationFindByA_T;
+	private FinderPath _finderPathWithoutPaginationFindByA_T;
+	private FinderPath _finderPathCountByA_T;
 
 	/**
 	 * Returns all the segments entries where active = &#63; and type = &#63;.
@@ -3783,36 +3678,9 @@ public class SegmentsEntryPersistenceImpl extends BasePersistenceImpl<SegmentsEn
 	private static final String _FINDER_COLUMN_A_T_ACTIVE_2 = "segmentsEntry.active = ? AND ";
 	private static final String _FINDER_COLUMN_A_T_TYPE_2 = "segmentsEntry.type = ?";
 	private static final String _FINDER_COLUMN_A_T_TYPE_3 = "(segmentsEntry.type IS NULL OR segmentsEntry.type = '')";
-	private final FinderPath _finderPathWithPaginationFindByG_A_T = new FinderPath(SegmentsEntryModelImpl.ENTITY_CACHE_ENABLED,
-			SegmentsEntryModelImpl.FINDER_CACHE_ENABLED,
-			SegmentsEntryImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByG_A_T",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				String.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	private final FinderPath _finderPathWithoutPaginationFindByG_A_T = new FinderPath(SegmentsEntryModelImpl.ENTITY_CACHE_ENABLED,
-			SegmentsEntryModelImpl.FINDER_CACHE_ENABLED,
-			SegmentsEntryImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByG_A_T",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				String.class.getName()
-			},
-			SegmentsEntryModelImpl.GROUPID_COLUMN_BITMASK |
-			SegmentsEntryModelImpl.ACTIVE_COLUMN_BITMASK |
-			SegmentsEntryModelImpl.TYPE_COLUMN_BITMASK |
-			SegmentsEntryModelImpl.MODIFIEDDATE_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByG_A_T = new FinderPath(SegmentsEntryModelImpl.ENTITY_CACHE_ENABLED,
-			SegmentsEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_A_T",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				String.class.getName()
-			});
+	private FinderPath _finderPathWithPaginationFindByG_A_T;
+	private FinderPath _finderPathWithoutPaginationFindByG_A_T;
+	private FinderPath _finderPathCountByG_A_T;
 
 	/**
 	 * Returns all the segments entries where groupId = &#63; and active = &#63; and type = &#63;.
@@ -5597,6 +5465,189 @@ public class SegmentsEntryPersistenceImpl extends BasePersistenceImpl<SegmentsEn
 	 * Initializes the segments entry persistence.
 	 */
 	public void afterPropertiesSet() {
+		_finderPathWithPaginationFindAll = new FinderPath(SegmentsEntryModelImpl.ENTITY_CACHE_ENABLED,
+				SegmentsEntryModelImpl.FINDER_CACHE_ENABLED,
+				SegmentsEntryImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
+
+		_finderPathWithoutPaginationFindAll = new FinderPath(SegmentsEntryModelImpl.ENTITY_CACHE_ENABLED,
+				SegmentsEntryModelImpl.FINDER_CACHE_ENABLED,
+				SegmentsEntryImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
+				new String[0]);
+
+		_finderPathCountAll = new FinderPath(SegmentsEntryModelImpl.ENTITY_CACHE_ENABLED,
+				SegmentsEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+				new String[0]);
+
+		_finderPathWithPaginationFindByGroupId = new FinderPath(SegmentsEntryModelImpl.ENTITY_CACHE_ENABLED,
+				SegmentsEntryModelImpl.FINDER_CACHE_ENABLED,
+				SegmentsEntryImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
+				new String[] {
+					Long.class.getName(),
+					
+				Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
+
+		_finderPathWithoutPaginationFindByGroupId = new FinderPath(SegmentsEntryModelImpl.ENTITY_CACHE_ENABLED,
+				SegmentsEntryModelImpl.FINDER_CACHE_ENABLED,
+				SegmentsEntryImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
+				new String[] { Long.class.getName() },
+				SegmentsEntryModelImpl.GROUPID_COLUMN_BITMASK |
+				SegmentsEntryModelImpl.MODIFIEDDATE_COLUMN_BITMASK);
+
+		_finderPathCountByGroupId = new FinderPath(SegmentsEntryModelImpl.ENTITY_CACHE_ENABLED,
+				SegmentsEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
+				new String[] { Long.class.getName() });
+
+		_finderPathWithPaginationFindBySource = new FinderPath(SegmentsEntryModelImpl.ENTITY_CACHE_ENABLED,
+				SegmentsEntryModelImpl.FINDER_CACHE_ENABLED,
+				SegmentsEntryImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findBySource",
+				new String[] {
+					String.class.getName(),
+					
+				Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
+
+		_finderPathWithoutPaginationFindBySource = new FinderPath(SegmentsEntryModelImpl.ENTITY_CACHE_ENABLED,
+				SegmentsEntryModelImpl.FINDER_CACHE_ENABLED,
+				SegmentsEntryImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findBySource",
+				new String[] { String.class.getName() },
+				SegmentsEntryModelImpl.SOURCE_COLUMN_BITMASK |
+				SegmentsEntryModelImpl.MODIFIEDDATE_COLUMN_BITMASK);
+
+		_finderPathCountBySource = new FinderPath(SegmentsEntryModelImpl.ENTITY_CACHE_ENABLED,
+				SegmentsEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countBySource",
+				new String[] { String.class.getName() });
+
+		_finderPathWithPaginationFindByType = new FinderPath(SegmentsEntryModelImpl.ENTITY_CACHE_ENABLED,
+				SegmentsEntryModelImpl.FINDER_CACHE_ENABLED,
+				SegmentsEntryImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByType",
+				new String[] {
+					String.class.getName(),
+					
+				Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
+
+		_finderPathWithoutPaginationFindByType = new FinderPath(SegmentsEntryModelImpl.ENTITY_CACHE_ENABLED,
+				SegmentsEntryModelImpl.FINDER_CACHE_ENABLED,
+				SegmentsEntryImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByType",
+				new String[] { String.class.getName() },
+				SegmentsEntryModelImpl.TYPE_COLUMN_BITMASK |
+				SegmentsEntryModelImpl.MODIFIEDDATE_COLUMN_BITMASK);
+
+		_finderPathCountByType = new FinderPath(SegmentsEntryModelImpl.ENTITY_CACHE_ENABLED,
+				SegmentsEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByType",
+				new String[] { String.class.getName() });
+
+		_finderPathWithPaginationFindByG_A = new FinderPath(SegmentsEntryModelImpl.ENTITY_CACHE_ENABLED,
+				SegmentsEntryModelImpl.FINDER_CACHE_ENABLED,
+				SegmentsEntryImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_A",
+				new String[] {
+					Long.class.getName(), Boolean.class.getName(),
+					
+				Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
+
+		_finderPathWithoutPaginationFindByG_A = new FinderPath(SegmentsEntryModelImpl.ENTITY_CACHE_ENABLED,
+				SegmentsEntryModelImpl.FINDER_CACHE_ENABLED,
+				SegmentsEntryImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_A",
+				new String[] { Long.class.getName(), Boolean.class.getName() },
+				SegmentsEntryModelImpl.GROUPID_COLUMN_BITMASK |
+				SegmentsEntryModelImpl.ACTIVE_COLUMN_BITMASK |
+				SegmentsEntryModelImpl.MODIFIEDDATE_COLUMN_BITMASK);
+
+		_finderPathCountByG_A = new FinderPath(SegmentsEntryModelImpl.ENTITY_CACHE_ENABLED,
+				SegmentsEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_A",
+				new String[] { Long.class.getName(), Boolean.class.getName() });
+
+		_finderPathFetchByG_K = new FinderPath(SegmentsEntryModelImpl.ENTITY_CACHE_ENABLED,
+				SegmentsEntryModelImpl.FINDER_CACHE_ENABLED,
+				SegmentsEntryImpl.class, FINDER_CLASS_NAME_ENTITY,
+				"fetchByG_K",
+				new String[] { Long.class.getName(), String.class.getName() },
+				SegmentsEntryModelImpl.GROUPID_COLUMN_BITMASK |
+				SegmentsEntryModelImpl.KEY_COLUMN_BITMASK);
+
+		_finderPathCountByG_K = new FinderPath(SegmentsEntryModelImpl.ENTITY_CACHE_ENABLED,
+				SegmentsEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_K",
+				new String[] { Long.class.getName(), String.class.getName() });
+
+		_finderPathWithPaginationFindByA_T = new FinderPath(SegmentsEntryModelImpl.ENTITY_CACHE_ENABLED,
+				SegmentsEntryModelImpl.FINDER_CACHE_ENABLED,
+				SegmentsEntryImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByA_T",
+				new String[] {
+					Boolean.class.getName(), String.class.getName(),
+					
+				Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
+
+		_finderPathWithoutPaginationFindByA_T = new FinderPath(SegmentsEntryModelImpl.ENTITY_CACHE_ENABLED,
+				SegmentsEntryModelImpl.FINDER_CACHE_ENABLED,
+				SegmentsEntryImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByA_T",
+				new String[] { Boolean.class.getName(), String.class.getName() },
+				SegmentsEntryModelImpl.ACTIVE_COLUMN_BITMASK |
+				SegmentsEntryModelImpl.TYPE_COLUMN_BITMASK |
+				SegmentsEntryModelImpl.MODIFIEDDATE_COLUMN_BITMASK);
+
+		_finderPathCountByA_T = new FinderPath(SegmentsEntryModelImpl.ENTITY_CACHE_ENABLED,
+				SegmentsEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByA_T",
+				new String[] { Boolean.class.getName(), String.class.getName() });
+
+		_finderPathWithPaginationFindByG_A_T = new FinderPath(SegmentsEntryModelImpl.ENTITY_CACHE_ENABLED,
+				SegmentsEntryModelImpl.FINDER_CACHE_ENABLED,
+				SegmentsEntryImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_A_T",
+				new String[] {
+					Long.class.getName(), Boolean.class.getName(),
+					String.class.getName(),
+					
+				Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
+
+		_finderPathWithoutPaginationFindByG_A_T = new FinderPath(SegmentsEntryModelImpl.ENTITY_CACHE_ENABLED,
+				SegmentsEntryModelImpl.FINDER_CACHE_ENABLED,
+				SegmentsEntryImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_A_T",
+				new String[] {
+					Long.class.getName(), Boolean.class.getName(),
+					String.class.getName()
+				},
+				SegmentsEntryModelImpl.GROUPID_COLUMN_BITMASK |
+				SegmentsEntryModelImpl.ACTIVE_COLUMN_BITMASK |
+				SegmentsEntryModelImpl.TYPE_COLUMN_BITMASK |
+				SegmentsEntryModelImpl.MODIFIEDDATE_COLUMN_BITMASK);
+
+		_finderPathCountByG_A_T = new FinderPath(SegmentsEntryModelImpl.ENTITY_CACHE_ENABLED,
+				SegmentsEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_A_T",
+				new String[] {
+					Long.class.getName(), Boolean.class.getName(),
+					String.class.getName()
+				});
 	}
 
 	public void destroy() {

@@ -73,38 +73,12 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 		".List1";
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION = FINDER_CLASS_NAME_ENTITY +
 		".List2";
-	private final FinderPath _finderPathWithPaginationFindAll = new FinderPath(ServiceComponentModelImpl.ENTITY_CACHE_ENABLED,
-			ServiceComponentModelImpl.FINDER_CACHE_ENABLED,
-			ServiceComponentImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findAll", new String[0]);
-	private final FinderPath _finderPathWithoutPaginationFindAll = new FinderPath(ServiceComponentModelImpl.ENTITY_CACHE_ENABLED,
-			ServiceComponentModelImpl.FINDER_CACHE_ENABLED,
-			ServiceComponentImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0]);
-	private final FinderPath _finderPathCountAll = new FinderPath(ServiceComponentModelImpl.ENTITY_CACHE_ENABLED,
-			ServiceComponentModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
-	private final FinderPath _finderPathWithPaginationFindByBuildNamespace = new FinderPath(ServiceComponentModelImpl.ENTITY_CACHE_ENABLED,
-			ServiceComponentModelImpl.FINDER_CACHE_ENABLED,
-			ServiceComponentImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByBuildNamespace",
-			new String[] {
-				String.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	private final FinderPath _finderPathWithoutPaginationFindByBuildNamespace = new FinderPath(ServiceComponentModelImpl.ENTITY_CACHE_ENABLED,
-			ServiceComponentModelImpl.FINDER_CACHE_ENABLED,
-			ServiceComponentImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByBuildNamespace",
-			new String[] { String.class.getName() },
-			ServiceComponentModelImpl.BUILDNAMESPACE_COLUMN_BITMASK |
-			ServiceComponentModelImpl.BUILDNUMBER_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByBuildNamespace = new FinderPath(ServiceComponentModelImpl.ENTITY_CACHE_ENABLED,
-			ServiceComponentModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByBuildNamespace",
-			new String[] { String.class.getName() });
+	private FinderPath _finderPathWithPaginationFindAll;
+	private FinderPath _finderPathWithoutPaginationFindAll;
+	private FinderPath _finderPathCountAll;
+	private FinderPath _finderPathWithPaginationFindByBuildNamespace;
+	private FinderPath _finderPathWithoutPaginationFindByBuildNamespace;
+	private FinderPath _finderPathCountByBuildNamespace;
 
 	/**
 	 * Returns all the service components where buildNamespace = &#63;.
@@ -641,17 +615,8 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 
 	private static final String _FINDER_COLUMN_BUILDNAMESPACE_BUILDNAMESPACE_2 = "serviceComponent.buildNamespace = ?";
 	private static final String _FINDER_COLUMN_BUILDNAMESPACE_BUILDNAMESPACE_3 = "(serviceComponent.buildNamespace IS NULL OR serviceComponent.buildNamespace = '')";
-	private final FinderPath _finderPathFetchByBNS_BNU = new FinderPath(ServiceComponentModelImpl.ENTITY_CACHE_ENABLED,
-			ServiceComponentModelImpl.FINDER_CACHE_ENABLED,
-			ServiceComponentImpl.class, FINDER_CLASS_NAME_ENTITY,
-			"fetchByBNS_BNU",
-			new String[] { String.class.getName(), Long.class.getName() },
-			ServiceComponentModelImpl.BUILDNAMESPACE_COLUMN_BITMASK |
-			ServiceComponentModelImpl.BUILDNUMBER_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByBNS_BNU = new FinderPath(ServiceComponentModelImpl.ENTITY_CACHE_ENABLED,
-			ServiceComponentModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByBNS_BNU",
-			new String[] { String.class.getName(), Long.class.getName() });
+	private FinderPath _finderPathFetchByBNS_BNU;
+	private FinderPath _finderPathCountByBNS_BNU;
 
 	/**
 	 * Returns the service component where buildNamespace = &#63; and buildNumber = &#63; or throws a {@link NoSuchServiceComponentException} if it could not be found.
@@ -1493,6 +1458,59 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 	 * Initializes the service component persistence.
 	 */
 	public void afterPropertiesSet() {
+		_finderPathWithPaginationFindAll = new FinderPath(ServiceComponentModelImpl.ENTITY_CACHE_ENABLED,
+				ServiceComponentModelImpl.FINDER_CACHE_ENABLED,
+				ServiceComponentImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
+
+		_finderPathWithoutPaginationFindAll = new FinderPath(ServiceComponentModelImpl.ENTITY_CACHE_ENABLED,
+				ServiceComponentModelImpl.FINDER_CACHE_ENABLED,
+				ServiceComponentImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
+				new String[0]);
+
+		_finderPathCountAll = new FinderPath(ServiceComponentModelImpl.ENTITY_CACHE_ENABLED,
+				ServiceComponentModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+				new String[0]);
+
+		_finderPathWithPaginationFindByBuildNamespace = new FinderPath(ServiceComponentModelImpl.ENTITY_CACHE_ENABLED,
+				ServiceComponentModelImpl.FINDER_CACHE_ENABLED,
+				ServiceComponentImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByBuildNamespace",
+				new String[] {
+					String.class.getName(),
+					
+				Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
+
+		_finderPathWithoutPaginationFindByBuildNamespace = new FinderPath(ServiceComponentModelImpl.ENTITY_CACHE_ENABLED,
+				ServiceComponentModelImpl.FINDER_CACHE_ENABLED,
+				ServiceComponentImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				"findByBuildNamespace",
+				new String[] { String.class.getName() },
+				ServiceComponentModelImpl.BUILDNAMESPACE_COLUMN_BITMASK |
+				ServiceComponentModelImpl.BUILDNUMBER_COLUMN_BITMASK);
+
+		_finderPathCountByBuildNamespace = new FinderPath(ServiceComponentModelImpl.ENTITY_CACHE_ENABLED,
+				ServiceComponentModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				"countByBuildNamespace", new String[] { String.class.getName() });
+
+		_finderPathFetchByBNS_BNU = new FinderPath(ServiceComponentModelImpl.ENTITY_CACHE_ENABLED,
+				ServiceComponentModelImpl.FINDER_CACHE_ENABLED,
+				ServiceComponentImpl.class, FINDER_CLASS_NAME_ENTITY,
+				"fetchByBNS_BNU",
+				new String[] { String.class.getName(), Long.class.getName() },
+				ServiceComponentModelImpl.BUILDNAMESPACE_COLUMN_BITMASK |
+				ServiceComponentModelImpl.BUILDNUMBER_COLUMN_BITMASK);
+
+		_finderPathCountByBNS_BNU = new FinderPath(ServiceComponentModelImpl.ENTITY_CACHE_ENABLED,
+				ServiceComponentModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByBNS_BNU",
+				new String[] { String.class.getName(), Long.class.getName() });
 	}
 
 	public void destroy() {

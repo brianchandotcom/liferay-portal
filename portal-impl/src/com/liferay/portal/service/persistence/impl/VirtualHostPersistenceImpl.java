@@ -74,24 +74,11 @@ public class VirtualHostPersistenceImpl extends BasePersistenceImpl<VirtualHost>
 		".List1";
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION = FINDER_CLASS_NAME_ENTITY +
 		".List2";
-	private final FinderPath _finderPathWithPaginationFindAll = new FinderPath(VirtualHostModelImpl.ENTITY_CACHE_ENABLED,
-			VirtualHostModelImpl.FINDER_CACHE_ENABLED, VirtualHostImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
-	private final FinderPath _finderPathWithoutPaginationFindAll = new FinderPath(VirtualHostModelImpl.ENTITY_CACHE_ENABLED,
-			VirtualHostModelImpl.FINDER_CACHE_ENABLED, VirtualHostImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0]);
-	private final FinderPath _finderPathCountAll = new FinderPath(VirtualHostModelImpl.ENTITY_CACHE_ENABLED,
-			VirtualHostModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
-	private final FinderPath _finderPathFetchByHostname = new FinderPath(VirtualHostModelImpl.ENTITY_CACHE_ENABLED,
-			VirtualHostModelImpl.FINDER_CACHE_ENABLED, VirtualHostImpl.class,
-			FINDER_CLASS_NAME_ENTITY, "fetchByHostname",
-			new String[] { String.class.getName() },
-			VirtualHostModelImpl.HOSTNAME_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByHostname = new FinderPath(VirtualHostModelImpl.ENTITY_CACHE_ENABLED,
-			VirtualHostModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByHostname",
-			new String[] { String.class.getName() });
+	private FinderPath _finderPathWithPaginationFindAll;
+	private FinderPath _finderPathWithoutPaginationFindAll;
+	private FinderPath _finderPathCountAll;
+	private FinderPath _finderPathFetchByHostname;
+	private FinderPath _finderPathCountByHostname;
 
 	/**
 	 * Returns the virtual host where hostname = &#63; or throws a {@link NoSuchVirtualHostException} if it could not be found.
@@ -310,16 +297,8 @@ public class VirtualHostPersistenceImpl extends BasePersistenceImpl<VirtualHost>
 
 	private static final String _FINDER_COLUMN_HOSTNAME_HOSTNAME_2 = "virtualHost.hostname = ?";
 	private static final String _FINDER_COLUMN_HOSTNAME_HOSTNAME_3 = "(virtualHost.hostname IS NULL OR virtualHost.hostname = '')";
-	private final FinderPath _finderPathFetchByC_L = new FinderPath(VirtualHostModelImpl.ENTITY_CACHE_ENABLED,
-			VirtualHostModelImpl.FINDER_CACHE_ENABLED, VirtualHostImpl.class,
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_L",
-			new String[] { Long.class.getName(), Long.class.getName() },
-			VirtualHostModelImpl.COMPANYID_COLUMN_BITMASK |
-			VirtualHostModelImpl.LAYOUTSETID_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByC_L = new FinderPath(VirtualHostModelImpl.ENTITY_CACHE_ENABLED,
-			VirtualHostModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_L",
-			new String[] { Long.class.getName(), Long.class.getName() });
+	private FinderPath _finderPathFetchByC_L;
+	private FinderPath _finderPathCountByC_L;
 
 	/**
 	 * Returns the virtual host where companyId = &#63; and layoutSetId = &#63; or throws a {@link NoSuchVirtualHostException} if it could not be found.
@@ -1116,6 +1095,44 @@ public class VirtualHostPersistenceImpl extends BasePersistenceImpl<VirtualHost>
 	 * Initializes the virtual host persistence.
 	 */
 	public void afterPropertiesSet() {
+		_finderPathWithPaginationFindAll = new FinderPath(VirtualHostModelImpl.ENTITY_CACHE_ENABLED,
+				VirtualHostModelImpl.FINDER_CACHE_ENABLED,
+				VirtualHostImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+				"findAll", new String[0]);
+
+		_finderPathWithoutPaginationFindAll = new FinderPath(VirtualHostModelImpl.ENTITY_CACHE_ENABLED,
+				VirtualHostModelImpl.FINDER_CACHE_ENABLED,
+				VirtualHostImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
+				new String[0]);
+
+		_finderPathCountAll = new FinderPath(VirtualHostModelImpl.ENTITY_CACHE_ENABLED,
+				VirtualHostModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+				new String[0]);
+
+		_finderPathFetchByHostname = new FinderPath(VirtualHostModelImpl.ENTITY_CACHE_ENABLED,
+				VirtualHostModelImpl.FINDER_CACHE_ENABLED,
+				VirtualHostImpl.class, FINDER_CLASS_NAME_ENTITY,
+				"fetchByHostname", new String[] { String.class.getName() },
+				VirtualHostModelImpl.HOSTNAME_COLUMN_BITMASK);
+
+		_finderPathCountByHostname = new FinderPath(VirtualHostModelImpl.ENTITY_CACHE_ENABLED,
+				VirtualHostModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByHostname",
+				new String[] { String.class.getName() });
+
+		_finderPathFetchByC_L = new FinderPath(VirtualHostModelImpl.ENTITY_CACHE_ENABLED,
+				VirtualHostModelImpl.FINDER_CACHE_ENABLED,
+				VirtualHostImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByC_L",
+				new String[] { Long.class.getName(), Long.class.getName() },
+				VirtualHostModelImpl.COMPANYID_COLUMN_BITMASK |
+				VirtualHostModelImpl.LAYOUTSETID_COLUMN_BITMASK);
+
+		_finderPathCountByC_L = new FinderPath(VirtualHostModelImpl.ENTITY_CACHE_ENABLED,
+				VirtualHostModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_L",
+				new String[] { Long.class.getName(), Long.class.getName() });
 	}
 
 	public void destroy() {

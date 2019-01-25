@@ -73,37 +73,12 @@ public class RecentLayoutSetBranchPersistenceImpl extends BasePersistenceImpl<Re
 		".List1";
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION = FINDER_CLASS_NAME_ENTITY +
 		".List2";
-	private final FinderPath _finderPathWithPaginationFindAll = new FinderPath(RecentLayoutSetBranchModelImpl.ENTITY_CACHE_ENABLED,
-			RecentLayoutSetBranchModelImpl.FINDER_CACHE_ENABLED,
-			RecentLayoutSetBranchImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
-	private final FinderPath _finderPathWithoutPaginationFindAll = new FinderPath(RecentLayoutSetBranchModelImpl.ENTITY_CACHE_ENABLED,
-			RecentLayoutSetBranchModelImpl.FINDER_CACHE_ENABLED,
-			RecentLayoutSetBranchImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0]);
-	private final FinderPath _finderPathCountAll = new FinderPath(RecentLayoutSetBranchModelImpl.ENTITY_CACHE_ENABLED,
-			RecentLayoutSetBranchModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
-	private final FinderPath _finderPathWithPaginationFindByGroupId = new FinderPath(RecentLayoutSetBranchModelImpl.ENTITY_CACHE_ENABLED,
-			RecentLayoutSetBranchModelImpl.FINDER_CACHE_ENABLED,
-			RecentLayoutSetBranchImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
-			new String[] {
-				Long.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	private final FinderPath _finderPathWithoutPaginationFindByGroupId = new FinderPath(RecentLayoutSetBranchModelImpl.ENTITY_CACHE_ENABLED,
-			RecentLayoutSetBranchModelImpl.FINDER_CACHE_ENABLED,
-			RecentLayoutSetBranchImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
-			new String[] { Long.class.getName() },
-			RecentLayoutSetBranchModelImpl.GROUPID_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByGroupId = new FinderPath(RecentLayoutSetBranchModelImpl.ENTITY_CACHE_ENABLED,
-			RecentLayoutSetBranchModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
-			new String[] { Long.class.getName() });
+	private FinderPath _finderPathWithPaginationFindAll;
+	private FinderPath _finderPathWithoutPaginationFindAll;
+	private FinderPath _finderPathCountAll;
+	private FinderPath _finderPathWithPaginationFindByGroupId;
+	private FinderPath _finderPathWithoutPaginationFindByGroupId;
+	private FinderPath _finderPathCountByGroupId;
 
 	/**
 	 * Returns all the recent layout set branchs where groupId = &#63;.
@@ -591,26 +566,9 @@ public class RecentLayoutSetBranchPersistenceImpl extends BasePersistenceImpl<Re
 	}
 
 	private static final String _FINDER_COLUMN_GROUPID_GROUPID_2 = "recentLayoutSetBranch.groupId = ?";
-	private final FinderPath _finderPathWithPaginationFindByUserId = new FinderPath(RecentLayoutSetBranchModelImpl.ENTITY_CACHE_ENABLED,
-			RecentLayoutSetBranchModelImpl.FINDER_CACHE_ENABLED,
-			RecentLayoutSetBranchImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUserId",
-			new String[] {
-				Long.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	private final FinderPath _finderPathWithoutPaginationFindByUserId = new FinderPath(RecentLayoutSetBranchModelImpl.ENTITY_CACHE_ENABLED,
-			RecentLayoutSetBranchModelImpl.FINDER_CACHE_ENABLED,
-			RecentLayoutSetBranchImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUserId",
-			new String[] { Long.class.getName() },
-			RecentLayoutSetBranchModelImpl.USERID_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByUserId = new FinderPath(RecentLayoutSetBranchModelImpl.ENTITY_CACHE_ENABLED,
-			RecentLayoutSetBranchModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUserId",
-			new String[] { Long.class.getName() });
+	private FinderPath _finderPathWithPaginationFindByUserId;
+	private FinderPath _finderPathWithoutPaginationFindByUserId;
+	private FinderPath _finderPathCountByUserId;
 
 	/**
 	 * Returns all the recent layout set branchs where userId = &#63;.
@@ -1098,27 +1056,9 @@ public class RecentLayoutSetBranchPersistenceImpl extends BasePersistenceImpl<Re
 	}
 
 	private static final String _FINDER_COLUMN_USERID_USERID_2 = "recentLayoutSetBranch.userId = ?";
-	private final FinderPath _finderPathWithPaginationFindByLayoutSetBranchId = new FinderPath(RecentLayoutSetBranchModelImpl.ENTITY_CACHE_ENABLED,
-			RecentLayoutSetBranchModelImpl.FINDER_CACHE_ENABLED,
-			RecentLayoutSetBranchImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLayoutSetBranchId",
-			new String[] {
-				Long.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	private final FinderPath _finderPathWithoutPaginationFindByLayoutSetBranchId =
-		new FinderPath(RecentLayoutSetBranchModelImpl.ENTITY_CACHE_ENABLED,
-			RecentLayoutSetBranchModelImpl.FINDER_CACHE_ENABLED,
-			RecentLayoutSetBranchImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByLayoutSetBranchId", new String[] { Long.class.getName() },
-			RecentLayoutSetBranchModelImpl.LAYOUTSETBRANCHID_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByLayoutSetBranchId = new FinderPath(RecentLayoutSetBranchModelImpl.ENTITY_CACHE_ENABLED,
-			RecentLayoutSetBranchModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByLayoutSetBranchId", new String[] { Long.class.getName() });
+	private FinderPath _finderPathWithPaginationFindByLayoutSetBranchId;
+	private FinderPath _finderPathWithoutPaginationFindByLayoutSetBranchId;
+	private FinderPath _finderPathCountByLayoutSetBranchId;
 
 	/**
 	 * Returns all the recent layout set branchs where layoutSetBranchId = &#63;.
@@ -1623,17 +1563,8 @@ public class RecentLayoutSetBranchPersistenceImpl extends BasePersistenceImpl<Re
 
 	private static final String _FINDER_COLUMN_LAYOUTSETBRANCHID_LAYOUTSETBRANCHID_2 =
 		"recentLayoutSetBranch.layoutSetBranchId = ?";
-	private final FinderPath _finderPathFetchByU_L = new FinderPath(RecentLayoutSetBranchModelImpl.ENTITY_CACHE_ENABLED,
-			RecentLayoutSetBranchModelImpl.FINDER_CACHE_ENABLED,
-			RecentLayoutSetBranchImpl.class, FINDER_CLASS_NAME_ENTITY,
-			"fetchByU_L",
-			new String[] { Long.class.getName(), Long.class.getName() },
-			RecentLayoutSetBranchModelImpl.USERID_COLUMN_BITMASK |
-			RecentLayoutSetBranchModelImpl.LAYOUTSETID_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByU_L = new FinderPath(RecentLayoutSetBranchModelImpl.ENTITY_CACHE_ENABLED,
-			RecentLayoutSetBranchModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_L",
-			new String[] { Long.class.getName(), Long.class.getName() });
+	private FinderPath _finderPathFetchByU_L;
+	private FinderPath _finderPathCountByU_L;
 
 	/**
 	 * Returns the recent layout set branch where userId = &#63; and layoutSetId = &#63; or throws a {@link NoSuchRecentLayoutSetBranchException} if it could not be found.
@@ -2495,6 +2426,107 @@ public class RecentLayoutSetBranchPersistenceImpl extends BasePersistenceImpl<Re
 	 * Initializes the recent layout set branch persistence.
 	 */
 	public void afterPropertiesSet() {
+		_finderPathWithPaginationFindAll = new FinderPath(RecentLayoutSetBranchModelImpl.ENTITY_CACHE_ENABLED,
+				RecentLayoutSetBranchModelImpl.FINDER_CACHE_ENABLED,
+				RecentLayoutSetBranchImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
+
+		_finderPathWithoutPaginationFindAll = new FinderPath(RecentLayoutSetBranchModelImpl.ENTITY_CACHE_ENABLED,
+				RecentLayoutSetBranchModelImpl.FINDER_CACHE_ENABLED,
+				RecentLayoutSetBranchImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
+				new String[0]);
+
+		_finderPathCountAll = new FinderPath(RecentLayoutSetBranchModelImpl.ENTITY_CACHE_ENABLED,
+				RecentLayoutSetBranchModelImpl.FINDER_CACHE_ENABLED,
+				Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				"countAll", new String[0]);
+
+		_finderPathWithPaginationFindByGroupId = new FinderPath(RecentLayoutSetBranchModelImpl.ENTITY_CACHE_ENABLED,
+				RecentLayoutSetBranchModelImpl.FINDER_CACHE_ENABLED,
+				RecentLayoutSetBranchImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
+				new String[] {
+					Long.class.getName(),
+					
+				Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
+
+		_finderPathWithoutPaginationFindByGroupId = new FinderPath(RecentLayoutSetBranchModelImpl.ENTITY_CACHE_ENABLED,
+				RecentLayoutSetBranchModelImpl.FINDER_CACHE_ENABLED,
+				RecentLayoutSetBranchImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
+				new String[] { Long.class.getName() },
+				RecentLayoutSetBranchModelImpl.GROUPID_COLUMN_BITMASK);
+
+		_finderPathCountByGroupId = new FinderPath(RecentLayoutSetBranchModelImpl.ENTITY_CACHE_ENABLED,
+				RecentLayoutSetBranchModelImpl.FINDER_CACHE_ENABLED,
+				Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				"countByGroupId", new String[] { Long.class.getName() });
+
+		_finderPathWithPaginationFindByUserId = new FinderPath(RecentLayoutSetBranchModelImpl.ENTITY_CACHE_ENABLED,
+				RecentLayoutSetBranchModelImpl.FINDER_CACHE_ENABLED,
+				RecentLayoutSetBranchImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUserId",
+				new String[] {
+					Long.class.getName(),
+					
+				Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
+
+		_finderPathWithoutPaginationFindByUserId = new FinderPath(RecentLayoutSetBranchModelImpl.ENTITY_CACHE_ENABLED,
+				RecentLayoutSetBranchModelImpl.FINDER_CACHE_ENABLED,
+				RecentLayoutSetBranchImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUserId",
+				new String[] { Long.class.getName() },
+				RecentLayoutSetBranchModelImpl.USERID_COLUMN_BITMASK);
+
+		_finderPathCountByUserId = new FinderPath(RecentLayoutSetBranchModelImpl.ENTITY_CACHE_ENABLED,
+				RecentLayoutSetBranchModelImpl.FINDER_CACHE_ENABLED,
+				Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				"countByUserId", new String[] { Long.class.getName() });
+
+		_finderPathWithPaginationFindByLayoutSetBranchId = new FinderPath(RecentLayoutSetBranchModelImpl.ENTITY_CACHE_ENABLED,
+				RecentLayoutSetBranchModelImpl.FINDER_CACHE_ENABLED,
+				RecentLayoutSetBranchImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+				"findByLayoutSetBranchId",
+				new String[] {
+					Long.class.getName(),
+					
+				Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
+
+		_finderPathWithoutPaginationFindByLayoutSetBranchId = new FinderPath(RecentLayoutSetBranchModelImpl.ENTITY_CACHE_ENABLED,
+				RecentLayoutSetBranchModelImpl.FINDER_CACHE_ENABLED,
+				RecentLayoutSetBranchImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				"findByLayoutSetBranchId",
+				new String[] { Long.class.getName() },
+				RecentLayoutSetBranchModelImpl.LAYOUTSETBRANCHID_COLUMN_BITMASK);
+
+		_finderPathCountByLayoutSetBranchId = new FinderPath(RecentLayoutSetBranchModelImpl.ENTITY_CACHE_ENABLED,
+				RecentLayoutSetBranchModelImpl.FINDER_CACHE_ENABLED,
+				Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				"countByLayoutSetBranchId",
+				new String[] { Long.class.getName() });
+
+		_finderPathFetchByU_L = new FinderPath(RecentLayoutSetBranchModelImpl.ENTITY_CACHE_ENABLED,
+				RecentLayoutSetBranchModelImpl.FINDER_CACHE_ENABLED,
+				RecentLayoutSetBranchImpl.class, FINDER_CLASS_NAME_ENTITY,
+				"fetchByU_L",
+				new String[] { Long.class.getName(), Long.class.getName() },
+				RecentLayoutSetBranchModelImpl.USERID_COLUMN_BITMASK |
+				RecentLayoutSetBranchModelImpl.LAYOUTSETID_COLUMN_BITMASK);
+
+		_finderPathCountByU_L = new FinderPath(RecentLayoutSetBranchModelImpl.ENTITY_CACHE_ENABLED,
+				RecentLayoutSetBranchModelImpl.FINDER_CACHE_ENABLED,
+				Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				"countByU_L",
+				new String[] { Long.class.getName(), Long.class.getName() });
 	}
 
 	public void destroy() {

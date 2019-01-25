@@ -82,37 +82,12 @@ public class OAuth2AuthorizationPersistenceImpl extends BasePersistenceImpl<OAut
 		".List1";
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION = FINDER_CLASS_NAME_ENTITY +
 		".List2";
-	private final FinderPath _finderPathWithPaginationFindAll = new FinderPath(OAuth2AuthorizationModelImpl.ENTITY_CACHE_ENABLED,
-			OAuth2AuthorizationModelImpl.FINDER_CACHE_ENABLED,
-			OAuth2AuthorizationImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
-	private final FinderPath _finderPathWithoutPaginationFindAll = new FinderPath(OAuth2AuthorizationModelImpl.ENTITY_CACHE_ENABLED,
-			OAuth2AuthorizationModelImpl.FINDER_CACHE_ENABLED,
-			OAuth2AuthorizationImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0]);
-	private final FinderPath _finderPathCountAll = new FinderPath(OAuth2AuthorizationModelImpl.ENTITY_CACHE_ENABLED,
-			OAuth2AuthorizationModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
-	private final FinderPath _finderPathWithPaginationFindByUserId = new FinderPath(OAuth2AuthorizationModelImpl.ENTITY_CACHE_ENABLED,
-			OAuth2AuthorizationModelImpl.FINDER_CACHE_ENABLED,
-			OAuth2AuthorizationImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUserId",
-			new String[] {
-				Long.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	private final FinderPath _finderPathWithoutPaginationFindByUserId = new FinderPath(OAuth2AuthorizationModelImpl.ENTITY_CACHE_ENABLED,
-			OAuth2AuthorizationModelImpl.FINDER_CACHE_ENABLED,
-			OAuth2AuthorizationImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUserId",
-			new String[] { Long.class.getName() },
-			OAuth2AuthorizationModelImpl.USERID_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByUserId = new FinderPath(OAuth2AuthorizationModelImpl.ENTITY_CACHE_ENABLED,
-			OAuth2AuthorizationModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUserId",
-			new String[] { Long.class.getName() });
+	private FinderPath _finderPathWithPaginationFindAll;
+	private FinderPath _finderPathWithoutPaginationFindAll;
+	private FinderPath _finderPathCountAll;
+	private FinderPath _finderPathWithPaginationFindByUserId;
+	private FinderPath _finderPathWithoutPaginationFindByUserId;
+	private FinderPath _finderPathCountByUserId;
 
 	/**
 	 * Returns all the o auth2 authorizations where userId = &#63;.
@@ -599,28 +574,9 @@ public class OAuth2AuthorizationPersistenceImpl extends BasePersistenceImpl<OAut
 	}
 
 	private static final String _FINDER_COLUMN_USERID_USERID_2 = "oAuth2Authorization.userId = ?";
-	private final FinderPath _finderPathWithPaginationFindByOAuth2ApplicationId = new FinderPath(OAuth2AuthorizationModelImpl.ENTITY_CACHE_ENABLED,
-			OAuth2AuthorizationModelImpl.FINDER_CACHE_ENABLED,
-			OAuth2AuthorizationImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByOAuth2ApplicationId",
-			new String[] {
-				Long.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	private final FinderPath _finderPathWithoutPaginationFindByOAuth2ApplicationId =
-		new FinderPath(OAuth2AuthorizationModelImpl.ENTITY_CACHE_ENABLED,
-			OAuth2AuthorizationModelImpl.FINDER_CACHE_ENABLED,
-			OAuth2AuthorizationImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByOAuth2ApplicationId", new String[] { Long.class.getName() },
-			OAuth2AuthorizationModelImpl.OAUTH2APPLICATIONID_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByOAuth2ApplicationId = new FinderPath(OAuth2AuthorizationModelImpl.ENTITY_CACHE_ENABLED,
-			OAuth2AuthorizationModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByOAuth2ApplicationId", new String[] { Long.class.getName() });
+	private FinderPath _finderPathWithPaginationFindByOAuth2ApplicationId;
+	private FinderPath _finderPathWithoutPaginationFindByOAuth2ApplicationId;
+	private FinderPath _finderPathCountByOAuth2ApplicationId;
 
 	/**
 	 * Returns all the o auth2 authorizations where oAuth2ApplicationId = &#63;.
@@ -1124,31 +1080,9 @@ public class OAuth2AuthorizationPersistenceImpl extends BasePersistenceImpl<OAut
 
 	private static final String _FINDER_COLUMN_OAUTH2APPLICATIONID_OAUTH2APPLICATIONID_2 =
 		"oAuth2Authorization.oAuth2ApplicationId = ?";
-	private final FinderPath _finderPathWithPaginationFindByAccessTokenContentHash =
-		new FinderPath(OAuth2AuthorizationModelImpl.ENTITY_CACHE_ENABLED,
-			OAuth2AuthorizationModelImpl.FINDER_CACHE_ENABLED,
-			OAuth2AuthorizationImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByAccessTokenContentHash",
-			new String[] {
-				Long.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	private final FinderPath _finderPathWithoutPaginationFindByAccessTokenContentHash =
-		new FinderPath(OAuth2AuthorizationModelImpl.ENTITY_CACHE_ENABLED,
-			OAuth2AuthorizationModelImpl.FINDER_CACHE_ENABLED,
-			OAuth2AuthorizationImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByAccessTokenContentHash",
-			new String[] { Long.class.getName() },
-			OAuth2AuthorizationModelImpl.ACCESSTOKENCONTENTHASH_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByAccessTokenContentHash = new FinderPath(OAuth2AuthorizationModelImpl.ENTITY_CACHE_ENABLED,
-			OAuth2AuthorizationModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByAccessTokenContentHash",
-			new String[] { Long.class.getName() });
+	private FinderPath _finderPathWithPaginationFindByAccessTokenContentHash;
+	private FinderPath _finderPathWithoutPaginationFindByAccessTokenContentHash;
+	private FinderPath _finderPathCountByAccessTokenContentHash;
 
 	/**
 	 * Returns all the o auth2 authorizations where accessTokenContentHash = &#63;.
@@ -1654,31 +1588,9 @@ public class OAuth2AuthorizationPersistenceImpl extends BasePersistenceImpl<OAut
 
 	private static final String _FINDER_COLUMN_ACCESSTOKENCONTENTHASH_ACCESSTOKENCONTENTHASH_2 =
 		"oAuth2Authorization.accessTokenContentHash = ?";
-	private final FinderPath _finderPathWithPaginationFindByRefreshTokenContentHash =
-		new FinderPath(OAuth2AuthorizationModelImpl.ENTITY_CACHE_ENABLED,
-			OAuth2AuthorizationModelImpl.FINDER_CACHE_ENABLED,
-			OAuth2AuthorizationImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByRefreshTokenContentHash",
-			new String[] {
-				Long.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	private final FinderPath _finderPathWithoutPaginationFindByRefreshTokenContentHash =
-		new FinderPath(OAuth2AuthorizationModelImpl.ENTITY_CACHE_ENABLED,
-			OAuth2AuthorizationModelImpl.FINDER_CACHE_ENABLED,
-			OAuth2AuthorizationImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByRefreshTokenContentHash",
-			new String[] { Long.class.getName() },
-			OAuth2AuthorizationModelImpl.REFRESHTOKENCONTENTHASH_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByRefreshTokenContentHash = new FinderPath(OAuth2AuthorizationModelImpl.ENTITY_CACHE_ENABLED,
-			OAuth2AuthorizationModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByRefreshTokenContentHash",
-			new String[] { Long.class.getName() });
+	private FinderPath _finderPathWithPaginationFindByRefreshTokenContentHash;
+	private FinderPath _finderPathWithoutPaginationFindByRefreshTokenContentHash;
+	private FinderPath _finderPathCountByRefreshTokenContentHash;
 
 	/**
 	 * Returns all the o auth2 authorizations where refreshTokenContentHash = &#63;.
@@ -3133,6 +3045,123 @@ public class OAuth2AuthorizationPersistenceImpl extends BasePersistenceImpl<OAut
 		oAuth2AuthorizationToOAuth2ScopeGrantTableMapper = TableMapperFactory.getTableMapper("OA2Auths_OA2ScopeGrants",
 				"companyId", "oAuth2AuthorizationId", "oAuth2ScopeGrantId",
 				this, oAuth2ScopeGrantPersistence);
+
+		_finderPathWithPaginationFindAll = new FinderPath(OAuth2AuthorizationModelImpl.ENTITY_CACHE_ENABLED,
+				OAuth2AuthorizationModelImpl.FINDER_CACHE_ENABLED,
+				OAuth2AuthorizationImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
+
+		_finderPathWithoutPaginationFindAll = new FinderPath(OAuth2AuthorizationModelImpl.ENTITY_CACHE_ENABLED,
+				OAuth2AuthorizationModelImpl.FINDER_CACHE_ENABLED,
+				OAuth2AuthorizationImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
+				new String[0]);
+
+		_finderPathCountAll = new FinderPath(OAuth2AuthorizationModelImpl.ENTITY_CACHE_ENABLED,
+				OAuth2AuthorizationModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+				new String[0]);
+
+		_finderPathWithPaginationFindByUserId = new FinderPath(OAuth2AuthorizationModelImpl.ENTITY_CACHE_ENABLED,
+				OAuth2AuthorizationModelImpl.FINDER_CACHE_ENABLED,
+				OAuth2AuthorizationImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUserId",
+				new String[] {
+					Long.class.getName(),
+					
+				Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
+
+		_finderPathWithoutPaginationFindByUserId = new FinderPath(OAuth2AuthorizationModelImpl.ENTITY_CACHE_ENABLED,
+				OAuth2AuthorizationModelImpl.FINDER_CACHE_ENABLED,
+				OAuth2AuthorizationImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUserId",
+				new String[] { Long.class.getName() },
+				OAuth2AuthorizationModelImpl.USERID_COLUMN_BITMASK);
+
+		_finderPathCountByUserId = new FinderPath(OAuth2AuthorizationModelImpl.ENTITY_CACHE_ENABLED,
+				OAuth2AuthorizationModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUserId",
+				new String[] { Long.class.getName() });
+
+		_finderPathWithPaginationFindByOAuth2ApplicationId = new FinderPath(OAuth2AuthorizationModelImpl.ENTITY_CACHE_ENABLED,
+				OAuth2AuthorizationModelImpl.FINDER_CACHE_ENABLED,
+				OAuth2AuthorizationImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+				"findByOAuth2ApplicationId",
+				new String[] {
+					Long.class.getName(),
+					
+				Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
+
+		_finderPathWithoutPaginationFindByOAuth2ApplicationId = new FinderPath(OAuth2AuthorizationModelImpl.ENTITY_CACHE_ENABLED,
+				OAuth2AuthorizationModelImpl.FINDER_CACHE_ENABLED,
+				OAuth2AuthorizationImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				"findByOAuth2ApplicationId",
+				new String[] { Long.class.getName() },
+				OAuth2AuthorizationModelImpl.OAUTH2APPLICATIONID_COLUMN_BITMASK);
+
+		_finderPathCountByOAuth2ApplicationId = new FinderPath(OAuth2AuthorizationModelImpl.ENTITY_CACHE_ENABLED,
+				OAuth2AuthorizationModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				"countByOAuth2ApplicationId",
+				new String[] { Long.class.getName() });
+
+		_finderPathWithPaginationFindByAccessTokenContentHash = new FinderPath(OAuth2AuthorizationModelImpl.ENTITY_CACHE_ENABLED,
+				OAuth2AuthorizationModelImpl.FINDER_CACHE_ENABLED,
+				OAuth2AuthorizationImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+				"findByAccessTokenContentHash",
+				new String[] {
+					Long.class.getName(),
+					
+				Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
+
+		_finderPathWithoutPaginationFindByAccessTokenContentHash = new FinderPath(OAuth2AuthorizationModelImpl.ENTITY_CACHE_ENABLED,
+				OAuth2AuthorizationModelImpl.FINDER_CACHE_ENABLED,
+				OAuth2AuthorizationImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				"findByAccessTokenContentHash",
+				new String[] { Long.class.getName() },
+				OAuth2AuthorizationModelImpl.ACCESSTOKENCONTENTHASH_COLUMN_BITMASK);
+
+		_finderPathCountByAccessTokenContentHash = new FinderPath(OAuth2AuthorizationModelImpl.ENTITY_CACHE_ENABLED,
+				OAuth2AuthorizationModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				"countByAccessTokenContentHash",
+				new String[] { Long.class.getName() });
+
+		_finderPathWithPaginationFindByRefreshTokenContentHash = new FinderPath(OAuth2AuthorizationModelImpl.ENTITY_CACHE_ENABLED,
+				OAuth2AuthorizationModelImpl.FINDER_CACHE_ENABLED,
+				OAuth2AuthorizationImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+				"findByRefreshTokenContentHash",
+				new String[] {
+					Long.class.getName(),
+					
+				Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
+
+		_finderPathWithoutPaginationFindByRefreshTokenContentHash = new FinderPath(OAuth2AuthorizationModelImpl.ENTITY_CACHE_ENABLED,
+				OAuth2AuthorizationModelImpl.FINDER_CACHE_ENABLED,
+				OAuth2AuthorizationImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				"findByRefreshTokenContentHash",
+				new String[] { Long.class.getName() },
+				OAuth2AuthorizationModelImpl.REFRESHTOKENCONTENTHASH_COLUMN_BITMASK);
+
+		_finderPathCountByRefreshTokenContentHash = new FinderPath(OAuth2AuthorizationModelImpl.ENTITY_CACHE_ENABLED,
+				OAuth2AuthorizationModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				"countByRefreshTokenContentHash",
+				new String[] { Long.class.getName() });
 	}
 
 	public void destroy() {

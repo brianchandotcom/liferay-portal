@@ -85,33 +85,12 @@ public class CTEntryPersistenceImpl extends BasePersistenceImpl<CTEntry>
 		".List1";
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION = FINDER_CLASS_NAME_ENTITY +
 		".List2";
-	private final FinderPath _finderPathWithPaginationFindAll = new FinderPath(CTEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CTEntryModelImpl.FINDER_CACHE_ENABLED, CTEntryImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
-	private final FinderPath _finderPathWithoutPaginationFindAll = new FinderPath(CTEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CTEntryModelImpl.FINDER_CACHE_ENABLED, CTEntryImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0]);
-	private final FinderPath _finderPathCountAll = new FinderPath(CTEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CTEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
-	private final FinderPath _finderPathWithPaginationFindByResourcePrimKey = new FinderPath(CTEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CTEntryModelImpl.FINDER_CACHE_ENABLED, CTEntryImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByResourcePrimKey",
-			new String[] {
-				Long.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	private final FinderPath _finderPathWithoutPaginationFindByResourcePrimKey = new FinderPath(CTEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CTEntryModelImpl.FINDER_CACHE_ENABLED, CTEntryImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByResourcePrimKey",
-			new String[] { Long.class.getName() },
-			CTEntryModelImpl.RESOURCEPRIMKEY_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByResourcePrimKey = new FinderPath(CTEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CTEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByResourcePrimKey", new String[] { Long.class.getName() });
+	private FinderPath _finderPathWithPaginationFindAll;
+	private FinderPath _finderPathWithoutPaginationFindAll;
+	private FinderPath _finderPathCountAll;
+	private FinderPath _finderPathWithPaginationFindByResourcePrimKey;
+	private FinderPath _finderPathWithoutPaginationFindByResourcePrimKey;
+	private FinderPath _finderPathCountByResourcePrimKey;
 
 	/**
 	 * Returns all the ct entries where resourcePrimKey = &#63;.
@@ -603,16 +582,8 @@ public class CTEntryPersistenceImpl extends BasePersistenceImpl<CTEntry>
 
 	private static final String _FINDER_COLUMN_RESOURCEPRIMKEY_RESOURCEPRIMKEY_2 =
 		"ctEntry.resourcePrimKey = ?";
-	private final FinderPath _finderPathFetchByC_C = new FinderPath(CTEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CTEntryModelImpl.FINDER_CACHE_ENABLED, CTEntryImpl.class,
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_C",
-			new String[] { Long.class.getName(), Long.class.getName() },
-			CTEntryModelImpl.CLASSNAMEID_COLUMN_BITMASK |
-			CTEntryModelImpl.CLASSPK_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByC_C = new FinderPath(CTEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CTEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
-			new String[] { Long.class.getName(), Long.class.getName() });
+	private FinderPath _finderPathFetchByC_C;
+	private FinderPath _finderPathCountByC_C;
 
 	/**
 	 * Returns the ct entry where classNameId = &#63; and classPK = &#63; or throws a {@link NoSuchEntryException} if it could not be found.
@@ -1726,6 +1697,54 @@ public class CTEntryPersistenceImpl extends BasePersistenceImpl<CTEntry>
 		ctEntryToCTCollectionTableMapper = TableMapperFactory.getTableMapper("CTCollections_CTEntries",
 				"companyId", "ctEntryId", "ctCollectionId", this,
 				ctCollectionPersistence);
+
+		_finderPathWithPaginationFindAll = new FinderPath(CTEntryModelImpl.ENTITY_CACHE_ENABLED,
+				CTEntryModelImpl.FINDER_CACHE_ENABLED, CTEntryImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
+
+		_finderPathWithoutPaginationFindAll = new FinderPath(CTEntryModelImpl.ENTITY_CACHE_ENABLED,
+				CTEntryModelImpl.FINDER_CACHE_ENABLED, CTEntryImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
+				new String[0]);
+
+		_finderPathCountAll = new FinderPath(CTEntryModelImpl.ENTITY_CACHE_ENABLED,
+				CTEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+				new String[0]);
+
+		_finderPathWithPaginationFindByResourcePrimKey = new FinderPath(CTEntryModelImpl.ENTITY_CACHE_ENABLED,
+				CTEntryModelImpl.FINDER_CACHE_ENABLED, CTEntryImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+				"findByResourcePrimKey",
+				new String[] {
+					Long.class.getName(),
+					
+				Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
+
+		_finderPathWithoutPaginationFindByResourcePrimKey = new FinderPath(CTEntryModelImpl.ENTITY_CACHE_ENABLED,
+				CTEntryModelImpl.FINDER_CACHE_ENABLED, CTEntryImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				"findByResourcePrimKey", new String[] { Long.class.getName() },
+				CTEntryModelImpl.RESOURCEPRIMKEY_COLUMN_BITMASK);
+
+		_finderPathCountByResourcePrimKey = new FinderPath(CTEntryModelImpl.ENTITY_CACHE_ENABLED,
+				CTEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				"countByResourcePrimKey", new String[] { Long.class.getName() });
+
+		_finderPathFetchByC_C = new FinderPath(CTEntryModelImpl.ENTITY_CACHE_ENABLED,
+				CTEntryModelImpl.FINDER_CACHE_ENABLED, CTEntryImpl.class,
+				FINDER_CLASS_NAME_ENTITY, "fetchByC_C",
+				new String[] { Long.class.getName(), Long.class.getName() },
+				CTEntryModelImpl.CLASSNAMEID_COLUMN_BITMASK |
+				CTEntryModelImpl.CLASSPK_COLUMN_BITMASK);
+
+		_finderPathCountByC_C = new FinderPath(CTEntryModelImpl.ENTITY_CACHE_ENABLED,
+				CTEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
+				new String[] { Long.class.getName(), Long.class.getName() });
 	}
 
 	public void destroy() {

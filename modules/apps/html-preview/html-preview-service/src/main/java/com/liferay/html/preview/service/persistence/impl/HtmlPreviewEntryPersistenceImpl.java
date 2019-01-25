@@ -77,33 +77,11 @@ public class HtmlPreviewEntryPersistenceImpl extends BasePersistenceImpl<HtmlPre
 		".List1";
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION = FINDER_CLASS_NAME_ENTITY +
 		".List2";
-	private final FinderPath _finderPathWithPaginationFindAll = new FinderPath(HtmlPreviewEntryModelImpl.ENTITY_CACHE_ENABLED,
-			HtmlPreviewEntryModelImpl.FINDER_CACHE_ENABLED,
-			HtmlPreviewEntryImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findAll", new String[0]);
-	private final FinderPath _finderPathWithoutPaginationFindAll = new FinderPath(HtmlPreviewEntryModelImpl.ENTITY_CACHE_ENABLED,
-			HtmlPreviewEntryModelImpl.FINDER_CACHE_ENABLED,
-			HtmlPreviewEntryImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0]);
-	private final FinderPath _finderPathCountAll = new FinderPath(HtmlPreviewEntryModelImpl.ENTITY_CACHE_ENABLED,
-			HtmlPreviewEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
-	private final FinderPath _finderPathFetchByG_C_C = new FinderPath(HtmlPreviewEntryModelImpl.ENTITY_CACHE_ENABLED,
-			HtmlPreviewEntryModelImpl.FINDER_CACHE_ENABLED,
-			HtmlPreviewEntryImpl.class, FINDER_CLASS_NAME_ENTITY,
-			"fetchByG_C_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName()
-			},
-			HtmlPreviewEntryModelImpl.GROUPID_COLUMN_BITMASK |
-			HtmlPreviewEntryModelImpl.CLASSNAMEID_COLUMN_BITMASK |
-			HtmlPreviewEntryModelImpl.CLASSPK_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByG_C_C = new FinderPath(HtmlPreviewEntryModelImpl.ENTITY_CACHE_ENABLED,
-			HtmlPreviewEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName()
-			});
+	private FinderPath _finderPathWithPaginationFindAll;
+	private FinderPath _finderPathWithoutPaginationFindAll;
+	private FinderPath _finderPathCountAll;
+	private FinderPath _finderPathFetchByG_C_C;
+	private FinderPath _finderPathCountByG_C_C;
 
 	/**
 	 * Returns the html preview entry where groupId = &#63; and classNameId = &#63; and classPK = &#63; or throws a {@link NoSuchHtmlPreviewEntryException} if it could not be found.
@@ -935,6 +913,41 @@ public class HtmlPreviewEntryPersistenceImpl extends BasePersistenceImpl<HtmlPre
 	 * Initializes the html preview entry persistence.
 	 */
 	public void afterPropertiesSet() {
+		_finderPathWithPaginationFindAll = new FinderPath(HtmlPreviewEntryModelImpl.ENTITY_CACHE_ENABLED,
+				HtmlPreviewEntryModelImpl.FINDER_CACHE_ENABLED,
+				HtmlPreviewEntryImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
+
+		_finderPathWithoutPaginationFindAll = new FinderPath(HtmlPreviewEntryModelImpl.ENTITY_CACHE_ENABLED,
+				HtmlPreviewEntryModelImpl.FINDER_CACHE_ENABLED,
+				HtmlPreviewEntryImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
+				new String[0]);
+
+		_finderPathCountAll = new FinderPath(HtmlPreviewEntryModelImpl.ENTITY_CACHE_ENABLED,
+				HtmlPreviewEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+				new String[0]);
+
+		_finderPathFetchByG_C_C = new FinderPath(HtmlPreviewEntryModelImpl.ENTITY_CACHE_ENABLED,
+				HtmlPreviewEntryModelImpl.FINDER_CACHE_ENABLED,
+				HtmlPreviewEntryImpl.class, FINDER_CLASS_NAME_ENTITY,
+				"fetchByG_C_C",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Long.class.getName()
+				},
+				HtmlPreviewEntryModelImpl.GROUPID_COLUMN_BITMASK |
+				HtmlPreviewEntryModelImpl.CLASSNAMEID_COLUMN_BITMASK |
+				HtmlPreviewEntryModelImpl.CLASSPK_COLUMN_BITMASK);
+
+		_finderPathCountByG_C_C = new FinderPath(HtmlPreviewEntryModelImpl.ENTITY_CACHE_ENABLED,
+				HtmlPreviewEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C_C",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Long.class.getName()
+				});
 	}
 
 	public void destroy() {

@@ -77,28 +77,11 @@ public class WeDeployAuthAppPersistenceImpl extends BasePersistenceImpl<WeDeploy
 		".List1";
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION = FINDER_CLASS_NAME_ENTITY +
 		".List2";
-	private final FinderPath _finderPathWithPaginationFindAll = new FinderPath(WeDeployAuthAppModelImpl.ENTITY_CACHE_ENABLED,
-			WeDeployAuthAppModelImpl.FINDER_CACHE_ENABLED,
-			WeDeployAuthAppImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findAll", new String[0]);
-	private final FinderPath _finderPathWithoutPaginationFindAll = new FinderPath(WeDeployAuthAppModelImpl.ENTITY_CACHE_ENABLED,
-			WeDeployAuthAppModelImpl.FINDER_CACHE_ENABLED,
-			WeDeployAuthAppImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0]);
-	private final FinderPath _finderPathCountAll = new FinderPath(WeDeployAuthAppModelImpl.ENTITY_CACHE_ENABLED,
-			WeDeployAuthAppModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
-	private final FinderPath _finderPathFetchByRU_CI = new FinderPath(WeDeployAuthAppModelImpl.ENTITY_CACHE_ENABLED,
-			WeDeployAuthAppModelImpl.FINDER_CACHE_ENABLED,
-			WeDeployAuthAppImpl.class, FINDER_CLASS_NAME_ENTITY,
-			"fetchByRU_CI",
-			new String[] { String.class.getName(), String.class.getName() },
-			WeDeployAuthAppModelImpl.REDIRECTURI_COLUMN_BITMASK |
-			WeDeployAuthAppModelImpl.CLIENTID_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByRU_CI = new FinderPath(WeDeployAuthAppModelImpl.ENTITY_CACHE_ENABLED,
-			WeDeployAuthAppModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByRU_CI",
-			new String[] { String.class.getName(), String.class.getName() });
+	private FinderPath _finderPathWithPaginationFindAll;
+	private FinderPath _finderPathWithoutPaginationFindAll;
+	private FinderPath _finderPathCountAll;
+	private FinderPath _finderPathFetchByRU_CI;
+	private FinderPath _finderPathCountByRU_CI;
 
 	/**
 	 * Returns the we deploy auth app where redirectURI = &#63; and clientId = &#63; or throws a {@link NoSuchAppException} if it could not be found.
@@ -369,17 +352,8 @@ public class WeDeployAuthAppPersistenceImpl extends BasePersistenceImpl<WeDeploy
 	private static final String _FINDER_COLUMN_RU_CI_REDIRECTURI_3 = "(weDeployAuthApp.redirectURI IS NULL OR weDeployAuthApp.redirectURI = '') AND ";
 	private static final String _FINDER_COLUMN_RU_CI_CLIENTID_2 = "weDeployAuthApp.clientId = ?";
 	private static final String _FINDER_COLUMN_RU_CI_CLIENTID_3 = "(weDeployAuthApp.clientId IS NULL OR weDeployAuthApp.clientId = '')";
-	private final FinderPath _finderPathFetchByCI_CS = new FinderPath(WeDeployAuthAppModelImpl.ENTITY_CACHE_ENABLED,
-			WeDeployAuthAppModelImpl.FINDER_CACHE_ENABLED,
-			WeDeployAuthAppImpl.class, FINDER_CLASS_NAME_ENTITY,
-			"fetchByCI_CS",
-			new String[] { String.class.getName(), String.class.getName() },
-			WeDeployAuthAppModelImpl.CLIENTID_COLUMN_BITMASK |
-			WeDeployAuthAppModelImpl.CLIENTSECRET_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByCI_CS = new FinderPath(WeDeployAuthAppModelImpl.ENTITY_CACHE_ENABLED,
-			WeDeployAuthAppModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCI_CS",
-			new String[] { String.class.getName(), String.class.getName() });
+	private FinderPath _finderPathFetchByCI_CS;
+	private FinderPath _finderPathCountByCI_CS;
 
 	/**
 	 * Returns the we deploy auth app where clientId = &#63; and clientSecret = &#63; or throws a {@link NoSuchAppException} if it could not be found.
@@ -1273,6 +1247,47 @@ public class WeDeployAuthAppPersistenceImpl extends BasePersistenceImpl<WeDeploy
 	 * Initializes the we deploy auth app persistence.
 	 */
 	public void afterPropertiesSet() {
+		_finderPathWithPaginationFindAll = new FinderPath(WeDeployAuthAppModelImpl.ENTITY_CACHE_ENABLED,
+				WeDeployAuthAppModelImpl.FINDER_CACHE_ENABLED,
+				WeDeployAuthAppImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
+
+		_finderPathWithoutPaginationFindAll = new FinderPath(WeDeployAuthAppModelImpl.ENTITY_CACHE_ENABLED,
+				WeDeployAuthAppModelImpl.FINDER_CACHE_ENABLED,
+				WeDeployAuthAppImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
+				new String[0]);
+
+		_finderPathCountAll = new FinderPath(WeDeployAuthAppModelImpl.ENTITY_CACHE_ENABLED,
+				WeDeployAuthAppModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+				new String[0]);
+
+		_finderPathFetchByRU_CI = new FinderPath(WeDeployAuthAppModelImpl.ENTITY_CACHE_ENABLED,
+				WeDeployAuthAppModelImpl.FINDER_CACHE_ENABLED,
+				WeDeployAuthAppImpl.class, FINDER_CLASS_NAME_ENTITY,
+				"fetchByRU_CI",
+				new String[] { String.class.getName(), String.class.getName() },
+				WeDeployAuthAppModelImpl.REDIRECTURI_COLUMN_BITMASK |
+				WeDeployAuthAppModelImpl.CLIENTID_COLUMN_BITMASK);
+
+		_finderPathCountByRU_CI = new FinderPath(WeDeployAuthAppModelImpl.ENTITY_CACHE_ENABLED,
+				WeDeployAuthAppModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByRU_CI",
+				new String[] { String.class.getName(), String.class.getName() });
+
+		_finderPathFetchByCI_CS = new FinderPath(WeDeployAuthAppModelImpl.ENTITY_CACHE_ENABLED,
+				WeDeployAuthAppModelImpl.FINDER_CACHE_ENABLED,
+				WeDeployAuthAppImpl.class, FINDER_CLASS_NAME_ENTITY,
+				"fetchByCI_CS",
+				new String[] { String.class.getName(), String.class.getName() },
+				WeDeployAuthAppModelImpl.CLIENTID_COLUMN_BITMASK |
+				WeDeployAuthAppModelImpl.CLIENTSECRET_COLUMN_BITMASK);
+
+		_finderPathCountByCI_CS = new FinderPath(WeDeployAuthAppModelImpl.ENTITY_CACHE_ENABLED,
+				WeDeployAuthAppModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCI_CS",
+				new String[] { String.class.getName(), String.class.getName() });
 	}
 
 	public void destroy() {

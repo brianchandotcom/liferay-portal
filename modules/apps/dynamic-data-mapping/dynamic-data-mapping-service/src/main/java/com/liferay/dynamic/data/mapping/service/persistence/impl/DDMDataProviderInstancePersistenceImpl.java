@@ -86,37 +86,12 @@ public class DDMDataProviderInstancePersistenceImpl extends BasePersistenceImpl<
 		".List1";
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION = FINDER_CLASS_NAME_ENTITY +
 		".List2";
-	private final FinderPath _finderPathWithPaginationFindAll = new FinderPath(DDMDataProviderInstanceModelImpl.ENTITY_CACHE_ENABLED,
-			DDMDataProviderInstanceModelImpl.FINDER_CACHE_ENABLED,
-			DDMDataProviderInstanceImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
-	private final FinderPath _finderPathWithoutPaginationFindAll = new FinderPath(DDMDataProviderInstanceModelImpl.ENTITY_CACHE_ENABLED,
-			DDMDataProviderInstanceModelImpl.FINDER_CACHE_ENABLED,
-			DDMDataProviderInstanceImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0]);
-	private final FinderPath _finderPathCountAll = new FinderPath(DDMDataProviderInstanceModelImpl.ENTITY_CACHE_ENABLED,
-			DDMDataProviderInstanceModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
-	private final FinderPath _finderPathWithPaginationFindByUuid = new FinderPath(DDMDataProviderInstanceModelImpl.ENTITY_CACHE_ENABLED,
-			DDMDataProviderInstanceModelImpl.FINDER_CACHE_ENABLED,
-			DDMDataProviderInstanceImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	private final FinderPath _finderPathWithoutPaginationFindByUuid = new FinderPath(DDMDataProviderInstanceModelImpl.ENTITY_CACHE_ENABLED,
-			DDMDataProviderInstanceModelImpl.FINDER_CACHE_ENABLED,
-			DDMDataProviderInstanceImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] { String.class.getName() },
-			DDMDataProviderInstanceModelImpl.UUID_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByUuid = new FinderPath(DDMDataProviderInstanceModelImpl.ENTITY_CACHE_ENABLED,
-			DDMDataProviderInstanceModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] { String.class.getName() });
+	private FinderPath _finderPathWithPaginationFindAll;
+	private FinderPath _finderPathWithoutPaginationFindAll;
+	private FinderPath _finderPathCountAll;
+	private FinderPath _finderPathWithPaginationFindByUuid;
+	private FinderPath _finderPathWithoutPaginationFindByUuid;
+	private FinderPath _finderPathCountByUuid;
 
 	/**
 	 * Returns all the ddm data provider instances where uuid = &#63;.
@@ -643,17 +618,8 @@ public class DDMDataProviderInstancePersistenceImpl extends BasePersistenceImpl<
 
 	private static final String _FINDER_COLUMN_UUID_UUID_2 = "ddmDataProviderInstance.uuid = ?";
 	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(ddmDataProviderInstance.uuid IS NULL OR ddmDataProviderInstance.uuid = '')";
-	private final FinderPath _finderPathFetchByUUID_G = new FinderPath(DDMDataProviderInstanceModelImpl.ENTITY_CACHE_ENABLED,
-			DDMDataProviderInstanceModelImpl.FINDER_CACHE_ENABLED,
-			DDMDataProviderInstanceImpl.class, FINDER_CLASS_NAME_ENTITY,
-			"fetchByUUID_G",
-			new String[] { String.class.getName(), Long.class.getName() },
-			DDMDataProviderInstanceModelImpl.UUID_COLUMN_BITMASK |
-			DDMDataProviderInstanceModelImpl.GROUPID_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByUUID_G = new FinderPath(DDMDataProviderInstanceModelImpl.ENTITY_CACHE_ENABLED,
-			DDMDataProviderInstanceModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G",
-			new String[] { String.class.getName(), Long.class.getName() });
+	private FinderPath _finderPathFetchByUUID_G;
+	private FinderPath _finderPathCountByUUID_G;
 
 	/**
 	 * Returns the ddm data provider instance where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchDataProviderInstanceException} if it could not be found.
@@ -890,27 +856,9 @@ public class DDMDataProviderInstancePersistenceImpl extends BasePersistenceImpl<
 	private static final String _FINDER_COLUMN_UUID_G_UUID_2 = "ddmDataProviderInstance.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_3 = "(ddmDataProviderInstance.uuid IS NULL OR ddmDataProviderInstance.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_G_GROUPID_2 = "ddmDataProviderInstance.groupId = ?";
-	private final FinderPath _finderPathWithPaginationFindByUuid_C = new FinderPath(DDMDataProviderInstanceModelImpl.ENTITY_CACHE_ENABLED,
-			DDMDataProviderInstanceModelImpl.FINDER_CACHE_ENABLED,
-			DDMDataProviderInstanceImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	private final FinderPath _finderPathWithoutPaginationFindByUuid_C = new FinderPath(DDMDataProviderInstanceModelImpl.ENTITY_CACHE_ENABLED,
-			DDMDataProviderInstanceModelImpl.FINDER_CACHE_ENABLED,
-			DDMDataProviderInstanceImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] { String.class.getName(), Long.class.getName() },
-			DDMDataProviderInstanceModelImpl.UUID_COLUMN_BITMASK |
-			DDMDataProviderInstanceModelImpl.COMPANYID_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByUuid_C = new FinderPath(DDMDataProviderInstanceModelImpl.ENTITY_CACHE_ENABLED,
-			DDMDataProviderInstanceModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] { String.class.getName(), Long.class.getName() });
+	private FinderPath _finderPathWithPaginationFindByUuid_C;
+	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
+	private FinderPath _finderPathCountByUuid_C;
 
 	/**
 	 * Returns all the ddm data provider instances where uuid = &#63; and companyId = &#63;.
@@ -1483,30 +1431,10 @@ public class DDMDataProviderInstancePersistenceImpl extends BasePersistenceImpl<
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "ddmDataProviderInstance.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(ddmDataProviderInstance.uuid IS NULL OR ddmDataProviderInstance.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "ddmDataProviderInstance.companyId = ?";
-	private final FinderPath _finderPathWithPaginationFindByGroupId = new FinderPath(DDMDataProviderInstanceModelImpl.ENTITY_CACHE_ENABLED,
-			DDMDataProviderInstanceModelImpl.FINDER_CACHE_ENABLED,
-			DDMDataProviderInstanceImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
-			new String[] {
-				Long.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	private final FinderPath _finderPathWithoutPaginationFindByGroupId = new FinderPath(DDMDataProviderInstanceModelImpl.ENTITY_CACHE_ENABLED,
-			DDMDataProviderInstanceModelImpl.FINDER_CACHE_ENABLED,
-			DDMDataProviderInstanceImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
-			new String[] { Long.class.getName() },
-			DDMDataProviderInstanceModelImpl.GROUPID_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByGroupId = new FinderPath(DDMDataProviderInstanceModelImpl.ENTITY_CACHE_ENABLED,
-			DDMDataProviderInstanceModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
-			new String[] { Long.class.getName() });
-	private final FinderPath _finderPathWithPaginationCountByGroupId = new FinderPath(DDMDataProviderInstanceModelImpl.ENTITY_CACHE_ENABLED,
-			DDMDataProviderInstanceModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByGroupId",
-			new String[] { Long.class.getName() });
+	private FinderPath _finderPathWithPaginationFindByGroupId;
+	private FinderPath _finderPathWithoutPaginationFindByGroupId;
+	private FinderPath _finderPathCountByGroupId;
+	private FinderPath _finderPathWithPaginationCountByGroupId;
 
 	/**
 	 * Returns all the ddm data provider instances where groupId = &#63;.
@@ -2823,26 +2751,9 @@ public class DDMDataProviderInstancePersistenceImpl extends BasePersistenceImpl<
 
 	private static final String _FINDER_COLUMN_GROUPID_GROUPID_2 = "ddmDataProviderInstance.groupId = ?";
 	private static final String _FINDER_COLUMN_GROUPID_GROUPID_7 = "ddmDataProviderInstance.groupId IN (";
-	private final FinderPath _finderPathWithPaginationFindByCompanyId = new FinderPath(DDMDataProviderInstanceModelImpl.ENTITY_CACHE_ENABLED,
-			DDMDataProviderInstanceModelImpl.FINDER_CACHE_ENABLED,
-			DDMDataProviderInstanceImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
-			new String[] {
-				Long.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	private final FinderPath _finderPathWithoutPaginationFindByCompanyId = new FinderPath(DDMDataProviderInstanceModelImpl.ENTITY_CACHE_ENABLED,
-			DDMDataProviderInstanceModelImpl.FINDER_CACHE_ENABLED,
-			DDMDataProviderInstanceImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
-			new String[] { Long.class.getName() },
-			DDMDataProviderInstanceModelImpl.COMPANYID_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByCompanyId = new FinderPath(DDMDataProviderInstanceModelImpl.ENTITY_CACHE_ENABLED,
-			DDMDataProviderInstanceModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
-			new String[] { Long.class.getName() });
+	private FinderPath _finderPathWithPaginationFindByCompanyId;
+	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
+	private FinderPath _finderPathCountByCompanyId;
 
 	/**
 	 * Returns all the ddm data provider instances where companyId = &#63;.
@@ -4053,6 +3964,134 @@ public class DDMDataProviderInstancePersistenceImpl extends BasePersistenceImpl<
 	 * Initializes the ddm data provider instance persistence.
 	 */
 	public void afterPropertiesSet() {
+		_finderPathWithPaginationFindAll = new FinderPath(DDMDataProviderInstanceModelImpl.ENTITY_CACHE_ENABLED,
+				DDMDataProviderInstanceModelImpl.FINDER_CACHE_ENABLED,
+				DDMDataProviderInstanceImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
+
+		_finderPathWithoutPaginationFindAll = new FinderPath(DDMDataProviderInstanceModelImpl.ENTITY_CACHE_ENABLED,
+				DDMDataProviderInstanceModelImpl.FINDER_CACHE_ENABLED,
+				DDMDataProviderInstanceImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
+				new String[0]);
+
+		_finderPathCountAll = new FinderPath(DDMDataProviderInstanceModelImpl.ENTITY_CACHE_ENABLED,
+				DDMDataProviderInstanceModelImpl.FINDER_CACHE_ENABLED,
+				Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				"countAll", new String[0]);
+
+		_finderPathWithPaginationFindByUuid = new FinderPath(DDMDataProviderInstanceModelImpl.ENTITY_CACHE_ENABLED,
+				DDMDataProviderInstanceModelImpl.FINDER_CACHE_ENABLED,
+				DDMDataProviderInstanceImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+				new String[] {
+					String.class.getName(),
+					
+				Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
+
+		_finderPathWithoutPaginationFindByUuid = new FinderPath(DDMDataProviderInstanceModelImpl.ENTITY_CACHE_ENABLED,
+				DDMDataProviderInstanceModelImpl.FINDER_CACHE_ENABLED,
+				DDMDataProviderInstanceImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+				new String[] { String.class.getName() },
+				DDMDataProviderInstanceModelImpl.UUID_COLUMN_BITMASK);
+
+		_finderPathCountByUuid = new FinderPath(DDMDataProviderInstanceModelImpl.ENTITY_CACHE_ENABLED,
+				DDMDataProviderInstanceModelImpl.FINDER_CACHE_ENABLED,
+				Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				"countByUuid", new String[] { String.class.getName() });
+
+		_finderPathFetchByUUID_G = new FinderPath(DDMDataProviderInstanceModelImpl.ENTITY_CACHE_ENABLED,
+				DDMDataProviderInstanceModelImpl.FINDER_CACHE_ENABLED,
+				DDMDataProviderInstanceImpl.class, FINDER_CLASS_NAME_ENTITY,
+				"fetchByUUID_G",
+				new String[] { String.class.getName(), Long.class.getName() },
+				DDMDataProviderInstanceModelImpl.UUID_COLUMN_BITMASK |
+				DDMDataProviderInstanceModelImpl.GROUPID_COLUMN_BITMASK);
+
+		_finderPathCountByUUID_G = new FinderPath(DDMDataProviderInstanceModelImpl.ENTITY_CACHE_ENABLED,
+				DDMDataProviderInstanceModelImpl.FINDER_CACHE_ENABLED,
+				Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				"countByUUID_G",
+				new String[] { String.class.getName(), Long.class.getName() });
+
+		_finderPathWithPaginationFindByUuid_C = new FinderPath(DDMDataProviderInstanceModelImpl.ENTITY_CACHE_ENABLED,
+				DDMDataProviderInstanceModelImpl.FINDER_CACHE_ENABLED,
+				DDMDataProviderInstanceImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+				new String[] {
+					String.class.getName(), Long.class.getName(),
+					
+				Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
+
+		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(DDMDataProviderInstanceModelImpl.ENTITY_CACHE_ENABLED,
+				DDMDataProviderInstanceModelImpl.FINDER_CACHE_ENABLED,
+				DDMDataProviderInstanceImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+				new String[] { String.class.getName(), Long.class.getName() },
+				DDMDataProviderInstanceModelImpl.UUID_COLUMN_BITMASK |
+				DDMDataProviderInstanceModelImpl.COMPANYID_COLUMN_BITMASK);
+
+		_finderPathCountByUuid_C = new FinderPath(DDMDataProviderInstanceModelImpl.ENTITY_CACHE_ENABLED,
+				DDMDataProviderInstanceModelImpl.FINDER_CACHE_ENABLED,
+				Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				"countByUuid_C",
+				new String[] { String.class.getName(), Long.class.getName() });
+
+		_finderPathWithPaginationFindByGroupId = new FinderPath(DDMDataProviderInstanceModelImpl.ENTITY_CACHE_ENABLED,
+				DDMDataProviderInstanceModelImpl.FINDER_CACHE_ENABLED,
+				DDMDataProviderInstanceImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
+				new String[] {
+					Long.class.getName(),
+					
+				Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
+
+		_finderPathWithoutPaginationFindByGroupId = new FinderPath(DDMDataProviderInstanceModelImpl.ENTITY_CACHE_ENABLED,
+				DDMDataProviderInstanceModelImpl.FINDER_CACHE_ENABLED,
+				DDMDataProviderInstanceImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
+				new String[] { Long.class.getName() },
+				DDMDataProviderInstanceModelImpl.GROUPID_COLUMN_BITMASK);
+
+		_finderPathCountByGroupId = new FinderPath(DDMDataProviderInstanceModelImpl.ENTITY_CACHE_ENABLED,
+				DDMDataProviderInstanceModelImpl.FINDER_CACHE_ENABLED,
+				Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				"countByGroupId", new String[] { Long.class.getName() });
+
+		_finderPathWithPaginationCountByGroupId = new FinderPath(DDMDataProviderInstanceModelImpl.ENTITY_CACHE_ENABLED,
+				DDMDataProviderInstanceModelImpl.FINDER_CACHE_ENABLED,
+				Long.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+				"countByGroupId", new String[] { Long.class.getName() });
+
+		_finderPathWithPaginationFindByCompanyId = new FinderPath(DDMDataProviderInstanceModelImpl.ENTITY_CACHE_ENABLED,
+				DDMDataProviderInstanceModelImpl.FINDER_CACHE_ENABLED,
+				DDMDataProviderInstanceImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
+				new String[] {
+					Long.class.getName(),
+					
+				Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
+
+		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(DDMDataProviderInstanceModelImpl.ENTITY_CACHE_ENABLED,
+				DDMDataProviderInstanceModelImpl.FINDER_CACHE_ENABLED,
+				DDMDataProviderInstanceImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
+				new String[] { Long.class.getName() },
+				DDMDataProviderInstanceModelImpl.COMPANYID_COLUMN_BITMASK);
+
+		_finderPathCountByCompanyId = new FinderPath(DDMDataProviderInstanceModelImpl.ENTITY_CACHE_ENABLED,
+				DDMDataProviderInstanceModelImpl.FINDER_CACHE_ENABLED,
+				Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				"countByCompanyId", new String[] { Long.class.getName() });
 	}
 
 	public void destroy() {

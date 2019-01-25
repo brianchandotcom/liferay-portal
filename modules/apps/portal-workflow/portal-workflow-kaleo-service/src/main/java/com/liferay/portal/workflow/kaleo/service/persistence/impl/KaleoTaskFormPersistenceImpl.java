@@ -77,37 +77,12 @@ public class KaleoTaskFormPersistenceImpl extends BasePersistenceImpl<KaleoTaskF
 		".List1";
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION = FINDER_CLASS_NAME_ENTITY +
 		".List2";
-	private final FinderPath _finderPathWithPaginationFindAll = new FinderPath(KaleoTaskFormModelImpl.ENTITY_CACHE_ENABLED,
-			KaleoTaskFormModelImpl.FINDER_CACHE_ENABLED,
-			KaleoTaskFormImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findAll", new String[0]);
-	private final FinderPath _finderPathWithoutPaginationFindAll = new FinderPath(KaleoTaskFormModelImpl.ENTITY_CACHE_ENABLED,
-			KaleoTaskFormModelImpl.FINDER_CACHE_ENABLED,
-			KaleoTaskFormImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findAll", new String[0]);
-	private final FinderPath _finderPathCountAll = new FinderPath(KaleoTaskFormModelImpl.ENTITY_CACHE_ENABLED,
-			KaleoTaskFormModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
-	private final FinderPath _finderPathWithPaginationFindByCompanyId = new FinderPath(KaleoTaskFormModelImpl.ENTITY_CACHE_ENABLED,
-			KaleoTaskFormModelImpl.FINDER_CACHE_ENABLED,
-			KaleoTaskFormImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByCompanyId",
-			new String[] {
-				Long.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	private final FinderPath _finderPathWithoutPaginationFindByCompanyId = new FinderPath(KaleoTaskFormModelImpl.ENTITY_CACHE_ENABLED,
-			KaleoTaskFormModelImpl.FINDER_CACHE_ENABLED,
-			KaleoTaskFormImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByCompanyId", new String[] { Long.class.getName() },
-			KaleoTaskFormModelImpl.COMPANYID_COLUMN_BITMASK |
-			KaleoTaskFormModelImpl.PRIORITY_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByCompanyId = new FinderPath(KaleoTaskFormModelImpl.ENTITY_CACHE_ENABLED,
-			KaleoTaskFormModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
-			new String[] { Long.class.getName() });
+	private FinderPath _finderPathWithPaginationFindAll;
+	private FinderPath _finderPathWithoutPaginationFindAll;
+	private FinderPath _finderPathCountAll;
+	private FinderPath _finderPathWithPaginationFindByCompanyId;
+	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
+	private FinderPath _finderPathCountByCompanyId;
 
 	/**
 	 * Returns all the kaleo task forms where companyId = &#63;.
@@ -593,30 +568,9 @@ public class KaleoTaskFormPersistenceImpl extends BasePersistenceImpl<KaleoTaskF
 	}
 
 	private static final String _FINDER_COLUMN_COMPANYID_COMPANYID_2 = "kaleoTaskForm.companyId = ?";
-	private final FinderPath _finderPathWithPaginationFindByKaleoDefinitionVersionId =
-		new FinderPath(KaleoTaskFormModelImpl.ENTITY_CACHE_ENABLED,
-			KaleoTaskFormModelImpl.FINDER_CACHE_ENABLED,
-			KaleoTaskFormImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByKaleoDefinitionVersionId",
-			new String[] {
-				Long.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	private final FinderPath _finderPathWithoutPaginationFindByKaleoDefinitionVersionId =
-		new FinderPath(KaleoTaskFormModelImpl.ENTITY_CACHE_ENABLED,
-			KaleoTaskFormModelImpl.FINDER_CACHE_ENABLED,
-			KaleoTaskFormImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByKaleoDefinitionVersionId",
-			new String[] { Long.class.getName() },
-			KaleoTaskFormModelImpl.KALEODEFINITIONVERSIONID_COLUMN_BITMASK |
-			KaleoTaskFormModelImpl.PRIORITY_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByKaleoDefinitionVersionId = new FinderPath(KaleoTaskFormModelImpl.ENTITY_CACHE_ENABLED,
-			KaleoTaskFormModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByKaleoDefinitionVersionId",
-			new String[] { Long.class.getName() });
+	private FinderPath _finderPathWithPaginationFindByKaleoDefinitionVersionId;
+	private FinderPath _finderPathWithoutPaginationFindByKaleoDefinitionVersionId;
+	private FinderPath _finderPathCountByKaleoDefinitionVersionId;
 
 	/**
 	 * Returns all the kaleo task forms where kaleoDefinitionVersionId = &#63;.
@@ -1121,26 +1075,9 @@ public class KaleoTaskFormPersistenceImpl extends BasePersistenceImpl<KaleoTaskF
 
 	private static final String _FINDER_COLUMN_KALEODEFINITIONVERSIONID_KALEODEFINITIONVERSIONID_2 =
 		"kaleoTaskForm.kaleoDefinitionVersionId = ?";
-	private final FinderPath _finderPathWithPaginationFindByKaleoNodeId = new FinderPath(KaleoTaskFormModelImpl.ENTITY_CACHE_ENABLED,
-			KaleoTaskFormModelImpl.FINDER_CACHE_ENABLED,
-			KaleoTaskFormImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByKaleoNodeId",
-			new String[] {
-				Long.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	private final FinderPath _finderPathWithoutPaginationFindByKaleoNodeId = new FinderPath(KaleoTaskFormModelImpl.ENTITY_CACHE_ENABLED,
-			KaleoTaskFormModelImpl.FINDER_CACHE_ENABLED,
-			KaleoTaskFormImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByKaleoNodeId", new String[] { Long.class.getName() },
-			KaleoTaskFormModelImpl.KALEONODEID_COLUMN_BITMASK |
-			KaleoTaskFormModelImpl.PRIORITY_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByKaleoNodeId = new FinderPath(KaleoTaskFormModelImpl.ENTITY_CACHE_ENABLED,
-			KaleoTaskFormModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByKaleoNodeId",
-			new String[] { Long.class.getName() });
+	private FinderPath _finderPathWithPaginationFindByKaleoNodeId;
+	private FinderPath _finderPathWithoutPaginationFindByKaleoNodeId;
+	private FinderPath _finderPathCountByKaleoNodeId;
 
 	/**
 	 * Returns all the kaleo task forms where kaleoNodeId = &#63;.
@@ -1627,26 +1564,9 @@ public class KaleoTaskFormPersistenceImpl extends BasePersistenceImpl<KaleoTaskF
 	}
 
 	private static final String _FINDER_COLUMN_KALEONODEID_KALEONODEID_2 = "kaleoTaskForm.kaleoNodeId = ?";
-	private final FinderPath _finderPathWithPaginationFindByKaleoTaskId = new FinderPath(KaleoTaskFormModelImpl.ENTITY_CACHE_ENABLED,
-			KaleoTaskFormModelImpl.FINDER_CACHE_ENABLED,
-			KaleoTaskFormImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByKaleoTaskId",
-			new String[] {
-				Long.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	private final FinderPath _finderPathWithoutPaginationFindByKaleoTaskId = new FinderPath(KaleoTaskFormModelImpl.ENTITY_CACHE_ENABLED,
-			KaleoTaskFormModelImpl.FINDER_CACHE_ENABLED,
-			KaleoTaskFormImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByKaleoTaskId", new String[] { Long.class.getName() },
-			KaleoTaskFormModelImpl.KALEOTASKID_COLUMN_BITMASK |
-			KaleoTaskFormModelImpl.PRIORITY_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByKaleoTaskId = new FinderPath(KaleoTaskFormModelImpl.ENTITY_CACHE_ENABLED,
-			KaleoTaskFormModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByKaleoTaskId",
-			new String[] { Long.class.getName() });
+	private FinderPath _finderPathWithPaginationFindByKaleoTaskId;
+	private FinderPath _finderPathWithoutPaginationFindByKaleoTaskId;
+	private FinderPath _finderPathCountByKaleoTaskId;
 
 	/**
 	 * Returns all the kaleo task forms where kaleoTaskId = &#63;.
@@ -2133,17 +2053,8 @@ public class KaleoTaskFormPersistenceImpl extends BasePersistenceImpl<KaleoTaskF
 	}
 
 	private static final String _FINDER_COLUMN_KALEOTASKID_KALEOTASKID_2 = "kaleoTaskForm.kaleoTaskId = ?";
-	private final FinderPath _finderPathFetchByFormUuid_KTI = new FinderPath(KaleoTaskFormModelImpl.ENTITY_CACHE_ENABLED,
-			KaleoTaskFormModelImpl.FINDER_CACHE_ENABLED,
-			KaleoTaskFormImpl.class, FINDER_CLASS_NAME_ENTITY,
-			"fetchByFormUuid_KTI",
-			new String[] { Long.class.getName(), String.class.getName() },
-			KaleoTaskFormModelImpl.KALEOTASKID_COLUMN_BITMASK |
-			KaleoTaskFormModelImpl.FORMUUID_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByFormUuid_KTI = new FinderPath(KaleoTaskFormModelImpl.ENTITY_CACHE_ENABLED,
-			KaleoTaskFormModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByFormUuid_KTI",
-			new String[] { Long.class.getName(), String.class.getName() });
+	private FinderPath _finderPathFetchByFormUuid_KTI;
+	private FinderPath _finderPathCountByFormUuid_KTI;
 
 	/**
 	 * Returns the kaleo task form where kaleoTaskId = &#63; and formUuid = &#63; or throws a {@link NoSuchTaskFormException} if it could not be found.
@@ -3075,6 +2986,134 @@ public class KaleoTaskFormPersistenceImpl extends BasePersistenceImpl<KaleoTaskF
 	 * Initializes the kaleo task form persistence.
 	 */
 	public void afterPropertiesSet() {
+		_finderPathWithPaginationFindAll = new FinderPath(KaleoTaskFormModelImpl.ENTITY_CACHE_ENABLED,
+				KaleoTaskFormModelImpl.FINDER_CACHE_ENABLED,
+				KaleoTaskFormImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
+
+		_finderPathWithoutPaginationFindAll = new FinderPath(KaleoTaskFormModelImpl.ENTITY_CACHE_ENABLED,
+				KaleoTaskFormModelImpl.FINDER_CACHE_ENABLED,
+				KaleoTaskFormImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
+				new String[0]);
+
+		_finderPathCountAll = new FinderPath(KaleoTaskFormModelImpl.ENTITY_CACHE_ENABLED,
+				KaleoTaskFormModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+				new String[0]);
+
+		_finderPathWithPaginationFindByCompanyId = new FinderPath(KaleoTaskFormModelImpl.ENTITY_CACHE_ENABLED,
+				KaleoTaskFormModelImpl.FINDER_CACHE_ENABLED,
+				KaleoTaskFormImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
+				new String[] {
+					Long.class.getName(),
+					
+				Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
+
+		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(KaleoTaskFormModelImpl.ENTITY_CACHE_ENABLED,
+				KaleoTaskFormModelImpl.FINDER_CACHE_ENABLED,
+				KaleoTaskFormImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
+				new String[] { Long.class.getName() },
+				KaleoTaskFormModelImpl.COMPANYID_COLUMN_BITMASK |
+				KaleoTaskFormModelImpl.PRIORITY_COLUMN_BITMASK);
+
+		_finderPathCountByCompanyId = new FinderPath(KaleoTaskFormModelImpl.ENTITY_CACHE_ENABLED,
+				KaleoTaskFormModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
+				new String[] { Long.class.getName() });
+
+		_finderPathWithPaginationFindByKaleoDefinitionVersionId = new FinderPath(KaleoTaskFormModelImpl.ENTITY_CACHE_ENABLED,
+				KaleoTaskFormModelImpl.FINDER_CACHE_ENABLED,
+				KaleoTaskFormImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+				"findByKaleoDefinitionVersionId",
+				new String[] {
+					Long.class.getName(),
+					
+				Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
+
+		_finderPathWithoutPaginationFindByKaleoDefinitionVersionId = new FinderPath(KaleoTaskFormModelImpl.ENTITY_CACHE_ENABLED,
+				KaleoTaskFormModelImpl.FINDER_CACHE_ENABLED,
+				KaleoTaskFormImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				"findByKaleoDefinitionVersionId",
+				new String[] { Long.class.getName() },
+				KaleoTaskFormModelImpl.KALEODEFINITIONVERSIONID_COLUMN_BITMASK |
+				KaleoTaskFormModelImpl.PRIORITY_COLUMN_BITMASK);
+
+		_finderPathCountByKaleoDefinitionVersionId = new FinderPath(KaleoTaskFormModelImpl.ENTITY_CACHE_ENABLED,
+				KaleoTaskFormModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				"countByKaleoDefinitionVersionId",
+				new String[] { Long.class.getName() });
+
+		_finderPathWithPaginationFindByKaleoNodeId = new FinderPath(KaleoTaskFormModelImpl.ENTITY_CACHE_ENABLED,
+				KaleoTaskFormModelImpl.FINDER_CACHE_ENABLED,
+				KaleoTaskFormImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByKaleoNodeId",
+				new String[] {
+					Long.class.getName(),
+					
+				Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
+
+		_finderPathWithoutPaginationFindByKaleoNodeId = new FinderPath(KaleoTaskFormModelImpl.ENTITY_CACHE_ENABLED,
+				KaleoTaskFormModelImpl.FINDER_CACHE_ENABLED,
+				KaleoTaskFormImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByKaleoNodeId",
+				new String[] { Long.class.getName() },
+				KaleoTaskFormModelImpl.KALEONODEID_COLUMN_BITMASK |
+				KaleoTaskFormModelImpl.PRIORITY_COLUMN_BITMASK);
+
+		_finderPathCountByKaleoNodeId = new FinderPath(KaleoTaskFormModelImpl.ENTITY_CACHE_ENABLED,
+				KaleoTaskFormModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				"countByKaleoNodeId", new String[] { Long.class.getName() });
+
+		_finderPathWithPaginationFindByKaleoTaskId = new FinderPath(KaleoTaskFormModelImpl.ENTITY_CACHE_ENABLED,
+				KaleoTaskFormModelImpl.FINDER_CACHE_ENABLED,
+				KaleoTaskFormImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByKaleoTaskId",
+				new String[] {
+					Long.class.getName(),
+					
+				Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
+
+		_finderPathWithoutPaginationFindByKaleoTaskId = new FinderPath(KaleoTaskFormModelImpl.ENTITY_CACHE_ENABLED,
+				KaleoTaskFormModelImpl.FINDER_CACHE_ENABLED,
+				KaleoTaskFormImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByKaleoTaskId",
+				new String[] { Long.class.getName() },
+				KaleoTaskFormModelImpl.KALEOTASKID_COLUMN_BITMASK |
+				KaleoTaskFormModelImpl.PRIORITY_COLUMN_BITMASK);
+
+		_finderPathCountByKaleoTaskId = new FinderPath(KaleoTaskFormModelImpl.ENTITY_CACHE_ENABLED,
+				KaleoTaskFormModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				"countByKaleoTaskId", new String[] { Long.class.getName() });
+
+		_finderPathFetchByFormUuid_KTI = new FinderPath(KaleoTaskFormModelImpl.ENTITY_CACHE_ENABLED,
+				KaleoTaskFormModelImpl.FINDER_CACHE_ENABLED,
+				KaleoTaskFormImpl.class, FINDER_CLASS_NAME_ENTITY,
+				"fetchByFormUuid_KTI",
+				new String[] { Long.class.getName(), String.class.getName() },
+				KaleoTaskFormModelImpl.KALEOTASKID_COLUMN_BITMASK |
+				KaleoTaskFormModelImpl.FORMUUID_COLUMN_BITMASK);
+
+		_finderPathCountByFormUuid_KTI = new FinderPath(KaleoTaskFormModelImpl.ENTITY_CACHE_ENABLED,
+				KaleoTaskFormModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				"countByFormUuid_KTI",
+				new String[] { Long.class.getName(), String.class.getName() });
 	}
 
 	public void destroy() {

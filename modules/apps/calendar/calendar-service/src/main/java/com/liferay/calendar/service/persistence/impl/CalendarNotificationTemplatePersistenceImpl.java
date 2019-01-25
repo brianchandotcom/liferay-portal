@@ -83,38 +83,12 @@ public class CalendarNotificationTemplatePersistenceImpl
 		".List1";
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION = FINDER_CLASS_NAME_ENTITY +
 		".List2";
-	private final FinderPath _finderPathWithPaginationFindAll = new FinderPath(CalendarNotificationTemplateModelImpl.ENTITY_CACHE_ENABLED,
-			CalendarNotificationTemplateModelImpl.FINDER_CACHE_ENABLED,
-			CalendarNotificationTemplateImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
-	private final FinderPath _finderPathWithoutPaginationFindAll = new FinderPath(CalendarNotificationTemplateModelImpl.ENTITY_CACHE_ENABLED,
-			CalendarNotificationTemplateModelImpl.FINDER_CACHE_ENABLED,
-			CalendarNotificationTemplateImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0]);
-	private final FinderPath _finderPathCountAll = new FinderPath(CalendarNotificationTemplateModelImpl.ENTITY_CACHE_ENABLED,
-			CalendarNotificationTemplateModelImpl.FINDER_CACHE_ENABLED,
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
-			new String[0]);
-	private final FinderPath _finderPathWithPaginationFindByUuid = new FinderPath(CalendarNotificationTemplateModelImpl.ENTITY_CACHE_ENABLED,
-			CalendarNotificationTemplateModelImpl.FINDER_CACHE_ENABLED,
-			CalendarNotificationTemplateImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	private final FinderPath _finderPathWithoutPaginationFindByUuid = new FinderPath(CalendarNotificationTemplateModelImpl.ENTITY_CACHE_ENABLED,
-			CalendarNotificationTemplateModelImpl.FINDER_CACHE_ENABLED,
-			CalendarNotificationTemplateImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] { String.class.getName() },
-			CalendarNotificationTemplateModelImpl.UUID_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByUuid = new FinderPath(CalendarNotificationTemplateModelImpl.ENTITY_CACHE_ENABLED,
-			CalendarNotificationTemplateModelImpl.FINDER_CACHE_ENABLED,
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByUuid", new String[] { String.class.getName() });
+	private FinderPath _finderPathWithPaginationFindAll;
+	private FinderPath _finderPathWithoutPaginationFindAll;
+	private FinderPath _finderPathCountAll;
+	private FinderPath _finderPathWithPaginationFindByUuid;
+	private FinderPath _finderPathWithoutPaginationFindByUuid;
+	private FinderPath _finderPathCountByUuid;
 
 	/**
 	 * Returns all the calendar notification templates where uuid = &#63;.
@@ -644,18 +618,8 @@ public class CalendarNotificationTemplatePersistenceImpl
 
 	private static final String _FINDER_COLUMN_UUID_UUID_2 = "calendarNotificationTemplate.uuid = ?";
 	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(calendarNotificationTemplate.uuid IS NULL OR calendarNotificationTemplate.uuid = '')";
-	private final FinderPath _finderPathFetchByUUID_G = new FinderPath(CalendarNotificationTemplateModelImpl.ENTITY_CACHE_ENABLED,
-			CalendarNotificationTemplateModelImpl.FINDER_CACHE_ENABLED,
-			CalendarNotificationTemplateImpl.class, FINDER_CLASS_NAME_ENTITY,
-			"fetchByUUID_G",
-			new String[] { String.class.getName(), Long.class.getName() },
-			CalendarNotificationTemplateModelImpl.UUID_COLUMN_BITMASK |
-			CalendarNotificationTemplateModelImpl.GROUPID_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByUUID_G = new FinderPath(CalendarNotificationTemplateModelImpl.ENTITY_CACHE_ENABLED,
-			CalendarNotificationTemplateModelImpl.FINDER_CACHE_ENABLED,
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByUUID_G",
-			new String[] { String.class.getName(), Long.class.getName() });
+	private FinderPath _finderPathFetchByUUID_G;
+	private FinderPath _finderPathCountByUUID_G;
 
 	/**
 	 * Returns the calendar notification template where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchNotificationTemplateException} if it could not be found.
@@ -892,28 +856,9 @@ public class CalendarNotificationTemplatePersistenceImpl
 	private static final String _FINDER_COLUMN_UUID_G_UUID_2 = "calendarNotificationTemplate.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_3 = "(calendarNotificationTemplate.uuid IS NULL OR calendarNotificationTemplate.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_G_GROUPID_2 = "calendarNotificationTemplate.groupId = ?";
-	private final FinderPath _finderPathWithPaginationFindByUuid_C = new FinderPath(CalendarNotificationTemplateModelImpl.ENTITY_CACHE_ENABLED,
-			CalendarNotificationTemplateModelImpl.FINDER_CACHE_ENABLED,
-			CalendarNotificationTemplateImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	private final FinderPath _finderPathWithoutPaginationFindByUuid_C = new FinderPath(CalendarNotificationTemplateModelImpl.ENTITY_CACHE_ENABLED,
-			CalendarNotificationTemplateModelImpl.FINDER_CACHE_ENABLED,
-			CalendarNotificationTemplateImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] { String.class.getName(), Long.class.getName() },
-			CalendarNotificationTemplateModelImpl.UUID_COLUMN_BITMASK |
-			CalendarNotificationTemplateModelImpl.COMPANYID_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByUuid_C = new FinderPath(CalendarNotificationTemplateModelImpl.ENTITY_CACHE_ENABLED,
-			CalendarNotificationTemplateModelImpl.FINDER_CACHE_ENABLED,
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByUuid_C",
-			new String[] { String.class.getName(), Long.class.getName() });
+	private FinderPath _finderPathWithPaginationFindByUuid_C;
+	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
+	private FinderPath _finderPathCountByUuid_C;
 
 	/**
 	 * Returns all the calendar notification templates where uuid = &#63; and companyId = &#63;.
@@ -1487,26 +1432,9 @@ public class CalendarNotificationTemplatePersistenceImpl
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "calendarNotificationTemplate.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(calendarNotificationTemplate.uuid IS NULL OR calendarNotificationTemplate.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "calendarNotificationTemplate.companyId = ?";
-	private final FinderPath _finderPathWithPaginationFindByCalendarId = new FinderPath(CalendarNotificationTemplateModelImpl.ENTITY_CACHE_ENABLED,
-			CalendarNotificationTemplateModelImpl.FINDER_CACHE_ENABLED,
-			CalendarNotificationTemplateImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCalendarId",
-			new String[] {
-				Long.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	private final FinderPath _finderPathWithoutPaginationFindByCalendarId = new FinderPath(CalendarNotificationTemplateModelImpl.ENTITY_CACHE_ENABLED,
-			CalendarNotificationTemplateModelImpl.FINDER_CACHE_ENABLED,
-			CalendarNotificationTemplateImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCalendarId",
-			new String[] { Long.class.getName() },
-			CalendarNotificationTemplateModelImpl.CALENDARID_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByCalendarId = new FinderPath(CalendarNotificationTemplateModelImpl.ENTITY_CACHE_ENABLED,
-			CalendarNotificationTemplateModelImpl.FINDER_CACHE_ENABLED,
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByCalendarId", new String[] { Long.class.getName() });
+	private FinderPath _finderPathWithPaginationFindByCalendarId;
+	private FinderPath _finderPathWithoutPaginationFindByCalendarId;
+	private FinderPath _finderPathCountByCalendarId;
 
 	/**
 	 * Returns all the calendar notification templates where calendarId = &#63;.
@@ -2003,25 +1931,8 @@ public class CalendarNotificationTemplatePersistenceImpl
 	}
 
 	private static final String _FINDER_COLUMN_CALENDARID_CALENDARID_2 = "calendarNotificationTemplate.calendarId = ?";
-	private final FinderPath _finderPathFetchByC_NT_NTT = new FinderPath(CalendarNotificationTemplateModelImpl.ENTITY_CACHE_ENABLED,
-			CalendarNotificationTemplateModelImpl.FINDER_CACHE_ENABLED,
-			CalendarNotificationTemplateImpl.class, FINDER_CLASS_NAME_ENTITY,
-			"fetchByC_NT_NTT",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				String.class.getName()
-			},
-			CalendarNotificationTemplateModelImpl.CALENDARID_COLUMN_BITMASK |
-			CalendarNotificationTemplateModelImpl.NOTIFICATIONTYPE_COLUMN_BITMASK |
-			CalendarNotificationTemplateModelImpl.NOTIFICATIONTEMPLATETYPE_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByC_NT_NTT = new FinderPath(CalendarNotificationTemplateModelImpl.ENTITY_CACHE_ENABLED,
-			CalendarNotificationTemplateModelImpl.FINDER_CACHE_ENABLED,
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByC_NT_NTT",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				String.class.getName()
-			});
+	private FinderPath _finderPathFetchByC_NT_NTT;
+	private FinderPath _finderPathCountByC_NT_NTT;
 
 	/**
 	 * Returns the calendar notification template where calendarId = &#63; and notificationType = &#63; and notificationTemplateType = &#63; or throws a {@link NoSuchNotificationTemplateException} if it could not be found.
@@ -3073,6 +2984,127 @@ public class CalendarNotificationTemplatePersistenceImpl
 	 * Initializes the calendar notification template persistence.
 	 */
 	public void afterPropertiesSet() {
+		_finderPathWithPaginationFindAll = new FinderPath(CalendarNotificationTemplateModelImpl.ENTITY_CACHE_ENABLED,
+				CalendarNotificationTemplateModelImpl.FINDER_CACHE_ENABLED,
+				CalendarNotificationTemplateImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
+
+		_finderPathWithoutPaginationFindAll = new FinderPath(CalendarNotificationTemplateModelImpl.ENTITY_CACHE_ENABLED,
+				CalendarNotificationTemplateModelImpl.FINDER_CACHE_ENABLED,
+				CalendarNotificationTemplateImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
+				new String[0]);
+
+		_finderPathCountAll = new FinderPath(CalendarNotificationTemplateModelImpl.ENTITY_CACHE_ENABLED,
+				CalendarNotificationTemplateModelImpl.FINDER_CACHE_ENABLED,
+				Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				"countAll", new String[0]);
+
+		_finderPathWithPaginationFindByUuid = new FinderPath(CalendarNotificationTemplateModelImpl.ENTITY_CACHE_ENABLED,
+				CalendarNotificationTemplateModelImpl.FINDER_CACHE_ENABLED,
+				CalendarNotificationTemplateImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+				new String[] {
+					String.class.getName(),
+					
+				Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
+
+		_finderPathWithoutPaginationFindByUuid = new FinderPath(CalendarNotificationTemplateModelImpl.ENTITY_CACHE_ENABLED,
+				CalendarNotificationTemplateModelImpl.FINDER_CACHE_ENABLED,
+				CalendarNotificationTemplateImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+				new String[] { String.class.getName() },
+				CalendarNotificationTemplateModelImpl.UUID_COLUMN_BITMASK);
+
+		_finderPathCountByUuid = new FinderPath(CalendarNotificationTemplateModelImpl.ENTITY_CACHE_ENABLED,
+				CalendarNotificationTemplateModelImpl.FINDER_CACHE_ENABLED,
+				Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				"countByUuid", new String[] { String.class.getName() });
+
+		_finderPathFetchByUUID_G = new FinderPath(CalendarNotificationTemplateModelImpl.ENTITY_CACHE_ENABLED,
+				CalendarNotificationTemplateModelImpl.FINDER_CACHE_ENABLED,
+				CalendarNotificationTemplateImpl.class,
+				FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
+				new String[] { String.class.getName(), Long.class.getName() },
+				CalendarNotificationTemplateModelImpl.UUID_COLUMN_BITMASK |
+				CalendarNotificationTemplateModelImpl.GROUPID_COLUMN_BITMASK);
+
+		_finderPathCountByUUID_G = new FinderPath(CalendarNotificationTemplateModelImpl.ENTITY_CACHE_ENABLED,
+				CalendarNotificationTemplateModelImpl.FINDER_CACHE_ENABLED,
+				Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				"countByUUID_G",
+				new String[] { String.class.getName(), Long.class.getName() });
+
+		_finderPathWithPaginationFindByUuid_C = new FinderPath(CalendarNotificationTemplateModelImpl.ENTITY_CACHE_ENABLED,
+				CalendarNotificationTemplateModelImpl.FINDER_CACHE_ENABLED,
+				CalendarNotificationTemplateImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+				new String[] {
+					String.class.getName(), Long.class.getName(),
+					
+				Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
+
+		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(CalendarNotificationTemplateModelImpl.ENTITY_CACHE_ENABLED,
+				CalendarNotificationTemplateModelImpl.FINDER_CACHE_ENABLED,
+				CalendarNotificationTemplateImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+				new String[] { String.class.getName(), Long.class.getName() },
+				CalendarNotificationTemplateModelImpl.UUID_COLUMN_BITMASK |
+				CalendarNotificationTemplateModelImpl.COMPANYID_COLUMN_BITMASK);
+
+		_finderPathCountByUuid_C = new FinderPath(CalendarNotificationTemplateModelImpl.ENTITY_CACHE_ENABLED,
+				CalendarNotificationTemplateModelImpl.FINDER_CACHE_ENABLED,
+				Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				"countByUuid_C",
+				new String[] { String.class.getName(), Long.class.getName() });
+
+		_finderPathWithPaginationFindByCalendarId = new FinderPath(CalendarNotificationTemplateModelImpl.ENTITY_CACHE_ENABLED,
+				CalendarNotificationTemplateModelImpl.FINDER_CACHE_ENABLED,
+				CalendarNotificationTemplateImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCalendarId",
+				new String[] {
+					Long.class.getName(),
+					
+				Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
+
+		_finderPathWithoutPaginationFindByCalendarId = new FinderPath(CalendarNotificationTemplateModelImpl.ENTITY_CACHE_ENABLED,
+				CalendarNotificationTemplateModelImpl.FINDER_CACHE_ENABLED,
+				CalendarNotificationTemplateImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCalendarId",
+				new String[] { Long.class.getName() },
+				CalendarNotificationTemplateModelImpl.CALENDARID_COLUMN_BITMASK);
+
+		_finderPathCountByCalendarId = new FinderPath(CalendarNotificationTemplateModelImpl.ENTITY_CACHE_ENABLED,
+				CalendarNotificationTemplateModelImpl.FINDER_CACHE_ENABLED,
+				Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				"countByCalendarId", new String[] { Long.class.getName() });
+
+		_finderPathFetchByC_NT_NTT = new FinderPath(CalendarNotificationTemplateModelImpl.ENTITY_CACHE_ENABLED,
+				CalendarNotificationTemplateModelImpl.FINDER_CACHE_ENABLED,
+				CalendarNotificationTemplateImpl.class,
+				FINDER_CLASS_NAME_ENTITY, "fetchByC_NT_NTT",
+				new String[] {
+					Long.class.getName(), String.class.getName(),
+					String.class.getName()
+				},
+				CalendarNotificationTemplateModelImpl.CALENDARID_COLUMN_BITMASK |
+				CalendarNotificationTemplateModelImpl.NOTIFICATIONTYPE_COLUMN_BITMASK |
+				CalendarNotificationTemplateModelImpl.NOTIFICATIONTEMPLATETYPE_COLUMN_BITMASK);
+
+		_finderPathCountByC_NT_NTT = new FinderPath(CalendarNotificationTemplateModelImpl.ENTITY_CACHE_ENABLED,
+				CalendarNotificationTemplateModelImpl.FINDER_CACHE_ENABLED,
+				Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				"countByC_NT_NTT",
+				new String[] {
+					Long.class.getName(), String.class.getName(),
+					String.class.getName()
+				});
 	}
 
 	public void destroy() {

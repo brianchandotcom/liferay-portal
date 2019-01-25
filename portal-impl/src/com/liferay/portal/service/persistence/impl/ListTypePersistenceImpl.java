@@ -74,34 +74,12 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 		".List1";
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION = FINDER_CLASS_NAME_ENTITY +
 		".List2";
-	private final FinderPath _finderPathWithPaginationFindAll = new FinderPath(ListTypeModelImpl.ENTITY_CACHE_ENABLED,
-			ListTypeModelImpl.FINDER_CACHE_ENABLED, ListTypeImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
-	private final FinderPath _finderPathWithoutPaginationFindAll = new FinderPath(ListTypeModelImpl.ENTITY_CACHE_ENABLED,
-			ListTypeModelImpl.FINDER_CACHE_ENABLED, ListTypeImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0]);
-	private final FinderPath _finderPathCountAll = new FinderPath(ListTypeModelImpl.ENTITY_CACHE_ENABLED,
-			ListTypeModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
-	private final FinderPath _finderPathWithPaginationFindByType = new FinderPath(ListTypeModelImpl.ENTITY_CACHE_ENABLED,
-			ListTypeModelImpl.FINDER_CACHE_ENABLED, ListTypeImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByType",
-			new String[] {
-				String.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	private final FinderPath _finderPathWithoutPaginationFindByType = new FinderPath(ListTypeModelImpl.ENTITY_CACHE_ENABLED,
-			ListTypeModelImpl.FINDER_CACHE_ENABLED, ListTypeImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByType",
-			new String[] { String.class.getName() },
-			ListTypeModelImpl.TYPE_COLUMN_BITMASK |
-			ListTypeModelImpl.NAME_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByType = new FinderPath(ListTypeModelImpl.ENTITY_CACHE_ENABLED,
-			ListTypeModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByType",
-			new String[] { String.class.getName() });
+	private FinderPath _finderPathWithPaginationFindAll;
+	private FinderPath _finderPathWithoutPaginationFindAll;
+	private FinderPath _finderPathCountAll;
+	private FinderPath _finderPathWithPaginationFindByType;
+	private FinderPath _finderPathWithoutPaginationFindByType;
+	private FinderPath _finderPathCountByType;
 
 	/**
 	 * Returns all the list types where type = &#63;.
@@ -622,16 +600,8 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 
 	private static final String _FINDER_COLUMN_TYPE_TYPE_2 = "listType.type = ?";
 	private static final String _FINDER_COLUMN_TYPE_TYPE_3 = "(listType.type IS NULL OR listType.type = '')";
-	private final FinderPath _finderPathFetchByN_T = new FinderPath(ListTypeModelImpl.ENTITY_CACHE_ENABLED,
-			ListTypeModelImpl.FINDER_CACHE_ENABLED, ListTypeImpl.class,
-			FINDER_CLASS_NAME_ENTITY, "fetchByN_T",
-			new String[] { String.class.getName(), String.class.getName() },
-			ListTypeModelImpl.NAME_COLUMN_BITMASK |
-			ListTypeModelImpl.TYPE_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByN_T = new FinderPath(ListTypeModelImpl.ENTITY_CACHE_ENABLED,
-			ListTypeModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByN_T",
-			new String[] { String.class.getName(), String.class.getName() });
+	private FinderPath _finderPathFetchByN_T;
+	private FinderPath _finderPathCountByN_T;
 
 	/**
 	 * Returns the list type where name = &#63; and type = &#63; or throws a {@link NoSuchListTypeException} if it could not be found.
@@ -1482,6 +1452,53 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 	 * Initializes the list type persistence.
 	 */
 	public void afterPropertiesSet() {
+		_finderPathWithPaginationFindAll = new FinderPath(ListTypeModelImpl.ENTITY_CACHE_ENABLED,
+				ListTypeModelImpl.FINDER_CACHE_ENABLED, ListTypeImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
+
+		_finderPathWithoutPaginationFindAll = new FinderPath(ListTypeModelImpl.ENTITY_CACHE_ENABLED,
+				ListTypeModelImpl.FINDER_CACHE_ENABLED, ListTypeImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
+				new String[0]);
+
+		_finderPathCountAll = new FinderPath(ListTypeModelImpl.ENTITY_CACHE_ENABLED,
+				ListTypeModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+				new String[0]);
+
+		_finderPathWithPaginationFindByType = new FinderPath(ListTypeModelImpl.ENTITY_CACHE_ENABLED,
+				ListTypeModelImpl.FINDER_CACHE_ENABLED, ListTypeImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByType",
+				new String[] {
+					String.class.getName(),
+					
+				Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
+
+		_finderPathWithoutPaginationFindByType = new FinderPath(ListTypeModelImpl.ENTITY_CACHE_ENABLED,
+				ListTypeModelImpl.FINDER_CACHE_ENABLED, ListTypeImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByType",
+				new String[] { String.class.getName() },
+				ListTypeModelImpl.TYPE_COLUMN_BITMASK |
+				ListTypeModelImpl.NAME_COLUMN_BITMASK);
+
+		_finderPathCountByType = new FinderPath(ListTypeModelImpl.ENTITY_CACHE_ENABLED,
+				ListTypeModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByType",
+				new String[] { String.class.getName() });
+
+		_finderPathFetchByN_T = new FinderPath(ListTypeModelImpl.ENTITY_CACHE_ENABLED,
+				ListTypeModelImpl.FINDER_CACHE_ENABLED, ListTypeImpl.class,
+				FINDER_CLASS_NAME_ENTITY, "fetchByN_T",
+				new String[] { String.class.getName(), String.class.getName() },
+				ListTypeModelImpl.NAME_COLUMN_BITMASK |
+				ListTypeModelImpl.TYPE_COLUMN_BITMASK);
+
+		_finderPathCountByN_T = new FinderPath(ListTypeModelImpl.ENTITY_CACHE_ENABLED,
+				ListTypeModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByN_T",
+				new String[] { String.class.getName(), String.class.getName() });
 	}
 
 	public void destroy() {

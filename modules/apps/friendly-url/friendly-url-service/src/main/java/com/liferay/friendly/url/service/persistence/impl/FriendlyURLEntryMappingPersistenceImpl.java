@@ -71,28 +71,11 @@ public class FriendlyURLEntryMappingPersistenceImpl extends BasePersistenceImpl<
 		".List1";
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION = FINDER_CLASS_NAME_ENTITY +
 		".List2";
-	private final FinderPath _finderPathWithPaginationFindAll = new FinderPath(FriendlyURLEntryMappingModelImpl.ENTITY_CACHE_ENABLED,
-			FriendlyURLEntryMappingModelImpl.FINDER_CACHE_ENABLED,
-			FriendlyURLEntryMappingImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
-	private final FinderPath _finderPathWithoutPaginationFindAll = new FinderPath(FriendlyURLEntryMappingModelImpl.ENTITY_CACHE_ENABLED,
-			FriendlyURLEntryMappingModelImpl.FINDER_CACHE_ENABLED,
-			FriendlyURLEntryMappingImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0]);
-	private final FinderPath _finderPathCountAll = new FinderPath(FriendlyURLEntryMappingModelImpl.ENTITY_CACHE_ENABLED,
-			FriendlyURLEntryMappingModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
-	private final FinderPath _finderPathFetchByC_C = new FinderPath(FriendlyURLEntryMappingModelImpl.ENTITY_CACHE_ENABLED,
-			FriendlyURLEntryMappingModelImpl.FINDER_CACHE_ENABLED,
-			FriendlyURLEntryMappingImpl.class, FINDER_CLASS_NAME_ENTITY,
-			"fetchByC_C",
-			new String[] { Long.class.getName(), Long.class.getName() },
-			FriendlyURLEntryMappingModelImpl.CLASSNAMEID_COLUMN_BITMASK |
-			FriendlyURLEntryMappingModelImpl.CLASSPK_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByC_C = new FinderPath(FriendlyURLEntryMappingModelImpl.ENTITY_CACHE_ENABLED,
-			FriendlyURLEntryMappingModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
-			new String[] { Long.class.getName(), Long.class.getName() });
+	private FinderPath _finderPathWithPaginationFindAll;
+	private FinderPath _finderPathWithoutPaginationFindAll;
+	private FinderPath _finderPathCountAll;
+	private FinderPath _finderPathFetchByC_C;
+	private FinderPath _finderPathCountByC_C;
 
 	/**
 	 * Returns the friendly url entry mapping where classNameId = &#63; and classPK = &#63; or throws a {@link NoSuchFriendlyURLEntryMappingException} if it could not be found.
@@ -875,6 +858,35 @@ public class FriendlyURLEntryMappingPersistenceImpl extends BasePersistenceImpl<
 	 * Initializes the friendly url entry mapping persistence.
 	 */
 	public void afterPropertiesSet() {
+		_finderPathWithPaginationFindAll = new FinderPath(FriendlyURLEntryMappingModelImpl.ENTITY_CACHE_ENABLED,
+				FriendlyURLEntryMappingModelImpl.FINDER_CACHE_ENABLED,
+				FriendlyURLEntryMappingImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
+
+		_finderPathWithoutPaginationFindAll = new FinderPath(FriendlyURLEntryMappingModelImpl.ENTITY_CACHE_ENABLED,
+				FriendlyURLEntryMappingModelImpl.FINDER_CACHE_ENABLED,
+				FriendlyURLEntryMappingImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
+				new String[0]);
+
+		_finderPathCountAll = new FinderPath(FriendlyURLEntryMappingModelImpl.ENTITY_CACHE_ENABLED,
+				FriendlyURLEntryMappingModelImpl.FINDER_CACHE_ENABLED,
+				Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				"countAll", new String[0]);
+
+		_finderPathFetchByC_C = new FinderPath(FriendlyURLEntryMappingModelImpl.ENTITY_CACHE_ENABLED,
+				FriendlyURLEntryMappingModelImpl.FINDER_CACHE_ENABLED,
+				FriendlyURLEntryMappingImpl.class, FINDER_CLASS_NAME_ENTITY,
+				"fetchByC_C",
+				new String[] { Long.class.getName(), Long.class.getName() },
+				FriendlyURLEntryMappingModelImpl.CLASSNAMEID_COLUMN_BITMASK |
+				FriendlyURLEntryMappingModelImpl.CLASSPK_COLUMN_BITMASK);
+
+		_finderPathCountByC_C = new FinderPath(FriendlyURLEntryMappingModelImpl.ENTITY_CACHE_ENABLED,
+				FriendlyURLEntryMappingModelImpl.FINDER_CACHE_ENABLED,
+				Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				"countByC_C",
+				new String[] { Long.class.getName(), Long.class.getName() });
 	}
 
 	public void destroy() {

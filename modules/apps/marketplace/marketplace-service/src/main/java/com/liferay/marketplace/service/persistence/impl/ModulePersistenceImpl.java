@@ -79,33 +79,12 @@ public class ModulePersistenceImpl extends BasePersistenceImpl<Module>
 		".List1";
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION = FINDER_CLASS_NAME_ENTITY +
 		".List2";
-	private final FinderPath _finderPathWithPaginationFindAll = new FinderPath(ModuleModelImpl.ENTITY_CACHE_ENABLED,
-			ModuleModelImpl.FINDER_CACHE_ENABLED, ModuleImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
-	private final FinderPath _finderPathWithoutPaginationFindAll = new FinderPath(ModuleModelImpl.ENTITY_CACHE_ENABLED,
-			ModuleModelImpl.FINDER_CACHE_ENABLED, ModuleImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0]);
-	private final FinderPath _finderPathCountAll = new FinderPath(ModuleModelImpl.ENTITY_CACHE_ENABLED,
-			ModuleModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
-	private final FinderPath _finderPathWithPaginationFindByUuid = new FinderPath(ModuleModelImpl.ENTITY_CACHE_ENABLED,
-			ModuleModelImpl.FINDER_CACHE_ENABLED, ModuleImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	private final FinderPath _finderPathWithoutPaginationFindByUuid = new FinderPath(ModuleModelImpl.ENTITY_CACHE_ENABLED,
-			ModuleModelImpl.FINDER_CACHE_ENABLED, ModuleImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] { String.class.getName() },
-			ModuleModelImpl.UUID_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByUuid = new FinderPath(ModuleModelImpl.ENTITY_CACHE_ENABLED,
-			ModuleModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] { String.class.getName() });
+	private FinderPath _finderPathWithPaginationFindAll;
+	private FinderPath _finderPathWithoutPaginationFindAll;
+	private FinderPath _finderPathCountAll;
+	private FinderPath _finderPathWithPaginationFindByUuid;
+	private FinderPath _finderPathWithoutPaginationFindByUuid;
+	private FinderPath _finderPathCountByUuid;
 
 	/**
 	 * Returns all the modules where uuid = &#63;.
@@ -624,25 +603,9 @@ public class ModulePersistenceImpl extends BasePersistenceImpl<Module>
 
 	private static final String _FINDER_COLUMN_UUID_UUID_2 = "module.uuid = ?";
 	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(module.uuid IS NULL OR module.uuid = '')";
-	private final FinderPath _finderPathWithPaginationFindByUuid_C = new FinderPath(ModuleModelImpl.ENTITY_CACHE_ENABLED,
-			ModuleModelImpl.FINDER_CACHE_ENABLED, ModuleImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	private final FinderPath _finderPathWithoutPaginationFindByUuid_C = new FinderPath(ModuleModelImpl.ENTITY_CACHE_ENABLED,
-			ModuleModelImpl.FINDER_CACHE_ENABLED, ModuleImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] { String.class.getName(), Long.class.getName() },
-			ModuleModelImpl.UUID_COLUMN_BITMASK |
-			ModuleModelImpl.COMPANYID_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByUuid_C = new FinderPath(ModuleModelImpl.ENTITY_CACHE_ENABLED,
-			ModuleModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] { String.class.getName(), Long.class.getName() });
+	private FinderPath _finderPathWithPaginationFindByUuid_C;
+	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
+	private FinderPath _finderPathCountByUuid_C;
 
 	/**
 	 * Returns all the modules where uuid = &#63; and companyId = &#63;.
@@ -1201,24 +1164,9 @@ public class ModulePersistenceImpl extends BasePersistenceImpl<Module>
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "module.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(module.uuid IS NULL OR module.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "module.companyId = ?";
-	private final FinderPath _finderPathWithPaginationFindByAppId = new FinderPath(ModuleModelImpl.ENTITY_CACHE_ENABLED,
-			ModuleModelImpl.FINDER_CACHE_ENABLED, ModuleImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByAppId",
-			new String[] {
-				Long.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	private final FinderPath _finderPathWithoutPaginationFindByAppId = new FinderPath(ModuleModelImpl.ENTITY_CACHE_ENABLED,
-			ModuleModelImpl.FINDER_CACHE_ENABLED, ModuleImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByAppId",
-			new String[] { Long.class.getName() },
-			ModuleModelImpl.APPID_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByAppId = new FinderPath(ModuleModelImpl.ENTITY_CACHE_ENABLED,
-			ModuleModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByAppId",
-			new String[] { Long.class.getName() });
+	private FinderPath _finderPathWithPaginationFindByAppId;
+	private FinderPath _finderPathWithoutPaginationFindByAppId;
+	private FinderPath _finderPathCountByAppId;
 
 	/**
 	 * Returns all the modules where appId = &#63;.
@@ -1698,26 +1646,9 @@ public class ModulePersistenceImpl extends BasePersistenceImpl<Module>
 	}
 
 	private static final String _FINDER_COLUMN_APPID_APPID_2 = "module.appId = ?";
-	private final FinderPath _finderPathWithPaginationFindByBundleSymbolicName = new FinderPath(ModuleModelImpl.ENTITY_CACHE_ENABLED,
-			ModuleModelImpl.FINDER_CACHE_ENABLED, ModuleImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByBundleSymbolicName",
-			new String[] {
-				String.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	private final FinderPath _finderPathWithoutPaginationFindByBundleSymbolicName =
-		new FinderPath(ModuleModelImpl.ENTITY_CACHE_ENABLED,
-			ModuleModelImpl.FINDER_CACHE_ENABLED, ModuleImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByBundleSymbolicName",
-			new String[] { String.class.getName() },
-			ModuleModelImpl.BUNDLESYMBOLICNAME_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByBundleSymbolicName = new FinderPath(ModuleModelImpl.ENTITY_CACHE_ENABLED,
-			ModuleModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByBundleSymbolicName", new String[] { String.class.getName() });
+	private FinderPath _finderPathWithPaginationFindByBundleSymbolicName;
+	private FinderPath _finderPathWithoutPaginationFindByBundleSymbolicName;
+	private FinderPath _finderPathCountByBundleSymbolicName;
 
 	/**
 	 * Returns all the modules where bundleSymbolicName = &#63;.
@@ -2251,24 +2182,9 @@ public class ModulePersistenceImpl extends BasePersistenceImpl<Module>
 		"module.bundleSymbolicName = ?";
 	private static final String _FINDER_COLUMN_BUNDLESYMBOLICNAME_BUNDLESYMBOLICNAME_3 =
 		"(module.bundleSymbolicName IS NULL OR module.bundleSymbolicName = '')";
-	private final FinderPath _finderPathWithPaginationFindByContextName = new FinderPath(ModuleModelImpl.ENTITY_CACHE_ENABLED,
-			ModuleModelImpl.FINDER_CACHE_ENABLED, ModuleImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByContextName",
-			new String[] {
-				String.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	private final FinderPath _finderPathWithoutPaginationFindByContextName = new FinderPath(ModuleModelImpl.ENTITY_CACHE_ENABLED,
-			ModuleModelImpl.FINDER_CACHE_ENABLED, ModuleImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByContextName",
-			new String[] { String.class.getName() },
-			ModuleModelImpl.CONTEXTNAME_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByContextName = new FinderPath(ModuleModelImpl.ENTITY_CACHE_ENABLED,
-			ModuleModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByContextName",
-			new String[] { String.class.getName() });
+	private FinderPath _finderPathWithPaginationFindByContextName;
+	private FinderPath _finderPathWithoutPaginationFindByContextName;
+	private FinderPath _finderPathCountByContextName;
 
 	/**
 	 * Returns all the modules where contextName = &#63;.
@@ -2792,16 +2708,8 @@ public class ModulePersistenceImpl extends BasePersistenceImpl<Module>
 
 	private static final String _FINDER_COLUMN_CONTEXTNAME_CONTEXTNAME_2 = "module.contextName = ?";
 	private static final String _FINDER_COLUMN_CONTEXTNAME_CONTEXTNAME_3 = "(module.contextName IS NULL OR module.contextName = '')";
-	private final FinderPath _finderPathFetchByA_CN = new FinderPath(ModuleModelImpl.ENTITY_CACHE_ENABLED,
-			ModuleModelImpl.FINDER_CACHE_ENABLED, ModuleImpl.class,
-			FINDER_CLASS_NAME_ENTITY, "fetchByA_CN",
-			new String[] { Long.class.getName(), String.class.getName() },
-			ModuleModelImpl.APPID_COLUMN_BITMASK |
-			ModuleModelImpl.CONTEXTNAME_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByA_CN = new FinderPath(ModuleModelImpl.ENTITY_CACHE_ENABLED,
-			ModuleModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByA_CN",
-			new String[] { Long.class.getName(), String.class.getName() });
+	private FinderPath _finderPathFetchByA_CN;
+	private FinderPath _finderPathCountByA_CN;
 
 	/**
 	 * Returns the module where appId = &#63; and contextName = &#63; or throws a {@link NoSuchModuleException} if it could not be found.
@@ -3047,23 +2955,8 @@ public class ModulePersistenceImpl extends BasePersistenceImpl<Module>
 	private static final String _FINDER_COLUMN_A_CN_APPID_2 = "module.appId = ? AND ";
 	private static final String _FINDER_COLUMN_A_CN_CONTEXTNAME_2 = "module.contextName = ?";
 	private static final String _FINDER_COLUMN_A_CN_CONTEXTNAME_3 = "(module.contextName IS NULL OR module.contextName = '')";
-	private final FinderPath _finderPathFetchByA_BSN_BV = new FinderPath(ModuleModelImpl.ENTITY_CACHE_ENABLED,
-			ModuleModelImpl.FINDER_CACHE_ENABLED, ModuleImpl.class,
-			FINDER_CLASS_NAME_ENTITY, "fetchByA_BSN_BV",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				String.class.getName()
-			},
-			ModuleModelImpl.APPID_COLUMN_BITMASK |
-			ModuleModelImpl.BUNDLESYMBOLICNAME_COLUMN_BITMASK |
-			ModuleModelImpl.BUNDLEVERSION_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByA_BSN_BV = new FinderPath(ModuleModelImpl.ENTITY_CACHE_ENABLED,
-			ModuleModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByA_BSN_BV",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				String.class.getName()
-			});
+	private FinderPath _finderPathFetchByA_BSN_BV;
+	private FinderPath _finderPathCountByA_BSN_BV;
 
 	/**
 	 * Returns the module where appId = &#63; and bundleSymbolicName = &#63; and bundleVersion = &#63; or throws a {@link NoSuchModuleException} if it could not be found.
@@ -4083,6 +3976,159 @@ public class ModulePersistenceImpl extends BasePersistenceImpl<Module>
 	 * Initializes the module persistence.
 	 */
 	public void afterPropertiesSet() {
+		_finderPathWithPaginationFindAll = new FinderPath(ModuleModelImpl.ENTITY_CACHE_ENABLED,
+				ModuleModelImpl.FINDER_CACHE_ENABLED, ModuleImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
+
+		_finderPathWithoutPaginationFindAll = new FinderPath(ModuleModelImpl.ENTITY_CACHE_ENABLED,
+				ModuleModelImpl.FINDER_CACHE_ENABLED, ModuleImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
+				new String[0]);
+
+		_finderPathCountAll = new FinderPath(ModuleModelImpl.ENTITY_CACHE_ENABLED,
+				ModuleModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+				new String[0]);
+
+		_finderPathWithPaginationFindByUuid = new FinderPath(ModuleModelImpl.ENTITY_CACHE_ENABLED,
+				ModuleModelImpl.FINDER_CACHE_ENABLED, ModuleImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+				new String[] {
+					String.class.getName(),
+					
+				Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
+
+		_finderPathWithoutPaginationFindByUuid = new FinderPath(ModuleModelImpl.ENTITY_CACHE_ENABLED,
+				ModuleModelImpl.FINDER_CACHE_ENABLED, ModuleImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+				new String[] { String.class.getName() },
+				ModuleModelImpl.UUID_COLUMN_BITMASK);
+
+		_finderPathCountByUuid = new FinderPath(ModuleModelImpl.ENTITY_CACHE_ENABLED,
+				ModuleModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+				new String[] { String.class.getName() });
+
+		_finderPathWithPaginationFindByUuid_C = new FinderPath(ModuleModelImpl.ENTITY_CACHE_ENABLED,
+				ModuleModelImpl.FINDER_CACHE_ENABLED, ModuleImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+				new String[] {
+					String.class.getName(), Long.class.getName(),
+					
+				Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
+
+		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(ModuleModelImpl.ENTITY_CACHE_ENABLED,
+				ModuleModelImpl.FINDER_CACHE_ENABLED, ModuleImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+				new String[] { String.class.getName(), Long.class.getName() },
+				ModuleModelImpl.UUID_COLUMN_BITMASK |
+				ModuleModelImpl.COMPANYID_COLUMN_BITMASK);
+
+		_finderPathCountByUuid_C = new FinderPath(ModuleModelImpl.ENTITY_CACHE_ENABLED,
+				ModuleModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+				new String[] { String.class.getName(), Long.class.getName() });
+
+		_finderPathWithPaginationFindByAppId = new FinderPath(ModuleModelImpl.ENTITY_CACHE_ENABLED,
+				ModuleModelImpl.FINDER_CACHE_ENABLED, ModuleImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByAppId",
+				new String[] {
+					Long.class.getName(),
+					
+				Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
+
+		_finderPathWithoutPaginationFindByAppId = new FinderPath(ModuleModelImpl.ENTITY_CACHE_ENABLED,
+				ModuleModelImpl.FINDER_CACHE_ENABLED, ModuleImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByAppId",
+				new String[] { Long.class.getName() },
+				ModuleModelImpl.APPID_COLUMN_BITMASK);
+
+		_finderPathCountByAppId = new FinderPath(ModuleModelImpl.ENTITY_CACHE_ENABLED,
+				ModuleModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByAppId",
+				new String[] { Long.class.getName() });
+
+		_finderPathWithPaginationFindByBundleSymbolicName = new FinderPath(ModuleModelImpl.ENTITY_CACHE_ENABLED,
+				ModuleModelImpl.FINDER_CACHE_ENABLED, ModuleImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+				"findByBundleSymbolicName",
+				new String[] {
+					String.class.getName(),
+					
+				Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
+
+		_finderPathWithoutPaginationFindByBundleSymbolicName = new FinderPath(ModuleModelImpl.ENTITY_CACHE_ENABLED,
+				ModuleModelImpl.FINDER_CACHE_ENABLED, ModuleImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				"findByBundleSymbolicName",
+				new String[] { String.class.getName() },
+				ModuleModelImpl.BUNDLESYMBOLICNAME_COLUMN_BITMASK);
+
+		_finderPathCountByBundleSymbolicName = new FinderPath(ModuleModelImpl.ENTITY_CACHE_ENABLED,
+				ModuleModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				"countByBundleSymbolicName",
+				new String[] { String.class.getName() });
+
+		_finderPathWithPaginationFindByContextName = new FinderPath(ModuleModelImpl.ENTITY_CACHE_ENABLED,
+				ModuleModelImpl.FINDER_CACHE_ENABLED, ModuleImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByContextName",
+				new String[] {
+					String.class.getName(),
+					
+				Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
+
+		_finderPathWithoutPaginationFindByContextName = new FinderPath(ModuleModelImpl.ENTITY_CACHE_ENABLED,
+				ModuleModelImpl.FINDER_CACHE_ENABLED, ModuleImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByContextName",
+				new String[] { String.class.getName() },
+				ModuleModelImpl.CONTEXTNAME_COLUMN_BITMASK);
+
+		_finderPathCountByContextName = new FinderPath(ModuleModelImpl.ENTITY_CACHE_ENABLED,
+				ModuleModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				"countByContextName", new String[] { String.class.getName() });
+
+		_finderPathFetchByA_CN = new FinderPath(ModuleModelImpl.ENTITY_CACHE_ENABLED,
+				ModuleModelImpl.FINDER_CACHE_ENABLED, ModuleImpl.class,
+				FINDER_CLASS_NAME_ENTITY, "fetchByA_CN",
+				new String[] { Long.class.getName(), String.class.getName() },
+				ModuleModelImpl.APPID_COLUMN_BITMASK |
+				ModuleModelImpl.CONTEXTNAME_COLUMN_BITMASK);
+
+		_finderPathCountByA_CN = new FinderPath(ModuleModelImpl.ENTITY_CACHE_ENABLED,
+				ModuleModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByA_CN",
+				new String[] { Long.class.getName(), String.class.getName() });
+
+		_finderPathFetchByA_BSN_BV = new FinderPath(ModuleModelImpl.ENTITY_CACHE_ENABLED,
+				ModuleModelImpl.FINDER_CACHE_ENABLED, ModuleImpl.class,
+				FINDER_CLASS_NAME_ENTITY, "fetchByA_BSN_BV",
+				new String[] {
+					Long.class.getName(), String.class.getName(),
+					String.class.getName()
+				},
+				ModuleModelImpl.APPID_COLUMN_BITMASK |
+				ModuleModelImpl.BUNDLESYMBOLICNAME_COLUMN_BITMASK |
+				ModuleModelImpl.BUNDLEVERSION_COLUMN_BITMASK);
+
+		_finderPathCountByA_BSN_BV = new FinderPath(ModuleModelImpl.ENTITY_CACHE_ENABLED,
+				ModuleModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByA_BSN_BV",
+				new String[] {
+					Long.class.getName(), String.class.getName(),
+					String.class.getName()
+				});
 	}
 
 	public void destroy() {

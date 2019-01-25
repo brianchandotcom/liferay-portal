@@ -71,24 +71,11 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 		".List1";
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION = FINDER_CLASS_NAME_ENTITY +
 		".List2";
-	private final FinderPath _finderPathWithPaginationFindAll = new FinderPath(ClassNameModelImpl.ENTITY_CACHE_ENABLED,
-			ClassNameModelImpl.FINDER_CACHE_ENABLED, ClassNameImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
-	private final FinderPath _finderPathWithoutPaginationFindAll = new FinderPath(ClassNameModelImpl.ENTITY_CACHE_ENABLED,
-			ClassNameModelImpl.FINDER_CACHE_ENABLED, ClassNameImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0]);
-	private final FinderPath _finderPathCountAll = new FinderPath(ClassNameModelImpl.ENTITY_CACHE_ENABLED,
-			ClassNameModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
-	private final FinderPath _finderPathFetchByValue = new FinderPath(ClassNameModelImpl.ENTITY_CACHE_ENABLED,
-			ClassNameModelImpl.FINDER_CACHE_ENABLED, ClassNameImpl.class,
-			FINDER_CLASS_NAME_ENTITY, "fetchByValue",
-			new String[] { String.class.getName() },
-			ClassNameModelImpl.VALUE_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByValue = new FinderPath(ClassNameModelImpl.ENTITY_CACHE_ENABLED,
-			ClassNameModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByValue",
-			new String[] { String.class.getName() });
+	private FinderPath _finderPathWithPaginationFindAll;
+	private FinderPath _finderPathWithoutPaginationFindAll;
+	private FinderPath _finderPathCountAll;
+	private FinderPath _finderPathFetchByValue;
+	private FinderPath _finderPathCountByValue;
 
 	/**
 	 * Returns the class name where value = &#63; or throws a {@link NoSuchClassNameException} if it could not be found.
@@ -850,6 +837,30 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 	 * Initializes the class name persistence.
 	 */
 	public void afterPropertiesSet() {
+		_finderPathWithPaginationFindAll = new FinderPath(ClassNameModelImpl.ENTITY_CACHE_ENABLED,
+				ClassNameModelImpl.FINDER_CACHE_ENABLED, ClassNameImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
+
+		_finderPathWithoutPaginationFindAll = new FinderPath(ClassNameModelImpl.ENTITY_CACHE_ENABLED,
+				ClassNameModelImpl.FINDER_CACHE_ENABLED, ClassNameImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
+				new String[0]);
+
+		_finderPathCountAll = new FinderPath(ClassNameModelImpl.ENTITY_CACHE_ENABLED,
+				ClassNameModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+				new String[0]);
+
+		_finderPathFetchByValue = new FinderPath(ClassNameModelImpl.ENTITY_CACHE_ENABLED,
+				ClassNameModelImpl.FINDER_CACHE_ENABLED, ClassNameImpl.class,
+				FINDER_CLASS_NAME_ENTITY, "fetchByValue",
+				new String[] { String.class.getName() },
+				ClassNameModelImpl.VALUE_COLUMN_BITMASK);
+
+		_finderPathCountByValue = new FinderPath(ClassNameModelImpl.ENTITY_CACHE_ENABLED,
+				ClassNameModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByValue",
+				new String[] { String.class.getName() });
 	}
 
 	public void destroy() {

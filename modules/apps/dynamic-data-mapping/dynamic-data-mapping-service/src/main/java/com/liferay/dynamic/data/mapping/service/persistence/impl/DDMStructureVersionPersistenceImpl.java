@@ -76,37 +76,12 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 		".List1";
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION = FINDER_CLASS_NAME_ENTITY +
 		".List2";
-	private final FinderPath _finderPathWithPaginationFindAll = new FinderPath(DDMStructureVersionModelImpl.ENTITY_CACHE_ENABLED,
-			DDMStructureVersionModelImpl.FINDER_CACHE_ENABLED,
-			DDMStructureVersionImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
-	private final FinderPath _finderPathWithoutPaginationFindAll = new FinderPath(DDMStructureVersionModelImpl.ENTITY_CACHE_ENABLED,
-			DDMStructureVersionModelImpl.FINDER_CACHE_ENABLED,
-			DDMStructureVersionImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0]);
-	private final FinderPath _finderPathCountAll = new FinderPath(DDMStructureVersionModelImpl.ENTITY_CACHE_ENABLED,
-			DDMStructureVersionModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
-	private final FinderPath _finderPathWithPaginationFindByStructureId = new FinderPath(DDMStructureVersionModelImpl.ENTITY_CACHE_ENABLED,
-			DDMStructureVersionModelImpl.FINDER_CACHE_ENABLED,
-			DDMStructureVersionImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByStructureId",
-			new String[] {
-				Long.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	private final FinderPath _finderPathWithoutPaginationFindByStructureId = new FinderPath(DDMStructureVersionModelImpl.ENTITY_CACHE_ENABLED,
-			DDMStructureVersionModelImpl.FINDER_CACHE_ENABLED,
-			DDMStructureVersionImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByStructureId",
-			new String[] { Long.class.getName() },
-			DDMStructureVersionModelImpl.STRUCTUREID_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByStructureId = new FinderPath(DDMStructureVersionModelImpl.ENTITY_CACHE_ENABLED,
-			DDMStructureVersionModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByStructureId",
-			new String[] { Long.class.getName() });
+	private FinderPath _finderPathWithPaginationFindAll;
+	private FinderPath _finderPathWithoutPaginationFindAll;
+	private FinderPath _finderPathCountAll;
+	private FinderPath _finderPathWithPaginationFindByStructureId;
+	private FinderPath _finderPathWithoutPaginationFindByStructureId;
+	private FinderPath _finderPathCountByStructureId;
 
 	/**
 	 * Returns all the ddm structure versions where structureId = &#63;.
@@ -598,17 +573,8 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 	}
 
 	private static final String _FINDER_COLUMN_STRUCTUREID_STRUCTUREID_2 = "ddmStructureVersion.structureId = ?";
-	private final FinderPath _finderPathFetchByS_V = new FinderPath(DDMStructureVersionModelImpl.ENTITY_CACHE_ENABLED,
-			DDMStructureVersionModelImpl.FINDER_CACHE_ENABLED,
-			DDMStructureVersionImpl.class, FINDER_CLASS_NAME_ENTITY,
-			"fetchByS_V",
-			new String[] { Long.class.getName(), String.class.getName() },
-			DDMStructureVersionModelImpl.STRUCTUREID_COLUMN_BITMASK |
-			DDMStructureVersionModelImpl.VERSION_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByS_V = new FinderPath(DDMStructureVersionModelImpl.ENTITY_CACHE_ENABLED,
-			DDMStructureVersionModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByS_V",
-			new String[] { Long.class.getName(), String.class.getName() });
+	private FinderPath _finderPathFetchByS_V;
+	private FinderPath _finderPathCountByS_V;
 
 	/**
 	 * Returns the ddm structure version where structureId = &#63; and version = &#63; or throws a {@link NoSuchStructureVersionException} if it could not be found.
@@ -844,27 +810,9 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 	private static final String _FINDER_COLUMN_S_V_STRUCTUREID_2 = "ddmStructureVersion.structureId = ? AND ";
 	private static final String _FINDER_COLUMN_S_V_VERSION_2 = "ddmStructureVersion.version = ?";
 	private static final String _FINDER_COLUMN_S_V_VERSION_3 = "(ddmStructureVersion.version IS NULL OR ddmStructureVersion.version = '')";
-	private final FinderPath _finderPathWithPaginationFindByS_S = new FinderPath(DDMStructureVersionModelImpl.ENTITY_CACHE_ENABLED,
-			DDMStructureVersionModelImpl.FINDER_CACHE_ENABLED,
-			DDMStructureVersionImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByS_S",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	private final FinderPath _finderPathWithoutPaginationFindByS_S = new FinderPath(DDMStructureVersionModelImpl.ENTITY_CACHE_ENABLED,
-			DDMStructureVersionModelImpl.FINDER_CACHE_ENABLED,
-			DDMStructureVersionImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByS_S",
-			new String[] { Long.class.getName(), Integer.class.getName() },
-			DDMStructureVersionModelImpl.STRUCTUREID_COLUMN_BITMASK |
-			DDMStructureVersionModelImpl.STATUS_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByS_S = new FinderPath(DDMStructureVersionModelImpl.ENTITY_CACHE_ENABLED,
-			DDMStructureVersionModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByS_S",
-			new String[] { Long.class.getName(), Integer.class.getName() });
+	private FinderPath _finderPathWithPaginationFindByS_S;
+	private FinderPath _finderPathWithoutPaginationFindByS_S;
+	private FinderPath _finderPathCountByS_S;
 
 	/**
 	 * Returns all the ddm structure versions where structureId = &#63; and status = &#63;.
@@ -2022,6 +1970,81 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 	 * Initializes the ddm structure version persistence.
 	 */
 	public void afterPropertiesSet() {
+		_finderPathWithPaginationFindAll = new FinderPath(DDMStructureVersionModelImpl.ENTITY_CACHE_ENABLED,
+				DDMStructureVersionModelImpl.FINDER_CACHE_ENABLED,
+				DDMStructureVersionImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
+
+		_finderPathWithoutPaginationFindAll = new FinderPath(DDMStructureVersionModelImpl.ENTITY_CACHE_ENABLED,
+				DDMStructureVersionModelImpl.FINDER_CACHE_ENABLED,
+				DDMStructureVersionImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
+				new String[0]);
+
+		_finderPathCountAll = new FinderPath(DDMStructureVersionModelImpl.ENTITY_CACHE_ENABLED,
+				DDMStructureVersionModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+				new String[0]);
+
+		_finderPathWithPaginationFindByStructureId = new FinderPath(DDMStructureVersionModelImpl.ENTITY_CACHE_ENABLED,
+				DDMStructureVersionModelImpl.FINDER_CACHE_ENABLED,
+				DDMStructureVersionImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByStructureId",
+				new String[] {
+					Long.class.getName(),
+					
+				Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
+
+		_finderPathWithoutPaginationFindByStructureId = new FinderPath(DDMStructureVersionModelImpl.ENTITY_CACHE_ENABLED,
+				DDMStructureVersionModelImpl.FINDER_CACHE_ENABLED,
+				DDMStructureVersionImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByStructureId",
+				new String[] { Long.class.getName() },
+				DDMStructureVersionModelImpl.STRUCTUREID_COLUMN_BITMASK);
+
+		_finderPathCountByStructureId = new FinderPath(DDMStructureVersionModelImpl.ENTITY_CACHE_ENABLED,
+				DDMStructureVersionModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				"countByStructureId", new String[] { Long.class.getName() });
+
+		_finderPathFetchByS_V = new FinderPath(DDMStructureVersionModelImpl.ENTITY_CACHE_ENABLED,
+				DDMStructureVersionModelImpl.FINDER_CACHE_ENABLED,
+				DDMStructureVersionImpl.class, FINDER_CLASS_NAME_ENTITY,
+				"fetchByS_V",
+				new String[] { Long.class.getName(), String.class.getName() },
+				DDMStructureVersionModelImpl.STRUCTUREID_COLUMN_BITMASK |
+				DDMStructureVersionModelImpl.VERSION_COLUMN_BITMASK);
+
+		_finderPathCountByS_V = new FinderPath(DDMStructureVersionModelImpl.ENTITY_CACHE_ENABLED,
+				DDMStructureVersionModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByS_V",
+				new String[] { Long.class.getName(), String.class.getName() });
+
+		_finderPathWithPaginationFindByS_S = new FinderPath(DDMStructureVersionModelImpl.ENTITY_CACHE_ENABLED,
+				DDMStructureVersionModelImpl.FINDER_CACHE_ENABLED,
+				DDMStructureVersionImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByS_S",
+				new String[] {
+					Long.class.getName(), Integer.class.getName(),
+					
+				Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
+
+		_finderPathWithoutPaginationFindByS_S = new FinderPath(DDMStructureVersionModelImpl.ENTITY_CACHE_ENABLED,
+				DDMStructureVersionModelImpl.FINDER_CACHE_ENABLED,
+				DDMStructureVersionImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByS_S",
+				new String[] { Long.class.getName(), Integer.class.getName() },
+				DDMStructureVersionModelImpl.STRUCTUREID_COLUMN_BITMASK |
+				DDMStructureVersionModelImpl.STATUS_COLUMN_BITMASK);
+
+		_finderPathCountByS_S = new FinderPath(DDMStructureVersionModelImpl.ENTITY_CACHE_ENABLED,
+				DDMStructureVersionModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByS_S",
+				new String[] { Long.class.getName(), Integer.class.getName() });
 	}
 
 	public void destroy() {

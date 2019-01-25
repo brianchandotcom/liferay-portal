@@ -80,35 +80,12 @@ public class PowwowServerPersistenceImpl extends BasePersistenceImpl<PowwowServe
 		".List1";
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION = FINDER_CLASS_NAME_ENTITY +
 		".List2";
-	private final FinderPath _finderPathWithPaginationFindAll = new FinderPath(PowwowServerModelImpl.ENTITY_CACHE_ENABLED,
-			PowwowServerModelImpl.FINDER_CACHE_ENABLED, PowwowServerImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
-	private final FinderPath _finderPathWithoutPaginationFindAll = new FinderPath(PowwowServerModelImpl.ENTITY_CACHE_ENABLED,
-			PowwowServerModelImpl.FINDER_CACHE_ENABLED, PowwowServerImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0]);
-	private final FinderPath _finderPathCountAll = new FinderPath(PowwowServerModelImpl.ENTITY_CACHE_ENABLED,
-			PowwowServerModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
-	private final FinderPath _finderPathWithPaginationFindByPT_A = new FinderPath(PowwowServerModelImpl.ENTITY_CACHE_ENABLED,
-			PowwowServerModelImpl.FINDER_CACHE_ENABLED, PowwowServerImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByPT_A",
-			new String[] {
-				String.class.getName(), Boolean.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	private final FinderPath _finderPathWithoutPaginationFindByPT_A = new FinderPath(PowwowServerModelImpl.ENTITY_CACHE_ENABLED,
-			PowwowServerModelImpl.FINDER_CACHE_ENABLED, PowwowServerImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByPT_A",
-			new String[] { String.class.getName(), Boolean.class.getName() },
-			PowwowServerModelImpl.PROVIDERTYPE_COLUMN_BITMASK |
-			PowwowServerModelImpl.ACTIVE_COLUMN_BITMASK |
-			PowwowServerModelImpl.NAME_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByPT_A = new FinderPath(PowwowServerModelImpl.ENTITY_CACHE_ENABLED,
-			PowwowServerModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByPT_A",
-			new String[] { String.class.getName(), Boolean.class.getName() });
+	private FinderPath _finderPathWithPaginationFindAll;
+	private FinderPath _finderPathWithoutPaginationFindAll;
+	private FinderPath _finderPathCountAll;
+	private FinderPath _finderPathWithPaginationFindByPT_A;
+	private FinderPath _finderPathWithoutPaginationFindByPT_A;
+	private FinderPath _finderPathCountByPT_A;
 
 	/**
 	 * Returns all the powwow servers where providerType = &#63; and active = &#63;.
@@ -1243,6 +1220,46 @@ public class PowwowServerPersistenceImpl extends BasePersistenceImpl<PowwowServe
 	 * Initializes the powwow server persistence.
 	 */
 	public void afterPropertiesSet() {
+		_finderPathWithPaginationFindAll = new FinderPath(PowwowServerModelImpl.ENTITY_CACHE_ENABLED,
+				PowwowServerModelImpl.FINDER_CACHE_ENABLED,
+				PowwowServerImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+				"findAll", new String[0]);
+
+		_finderPathWithoutPaginationFindAll = new FinderPath(PowwowServerModelImpl.ENTITY_CACHE_ENABLED,
+				PowwowServerModelImpl.FINDER_CACHE_ENABLED,
+				PowwowServerImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
+				new String[0]);
+
+		_finderPathCountAll = new FinderPath(PowwowServerModelImpl.ENTITY_CACHE_ENABLED,
+				PowwowServerModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+				new String[0]);
+
+		_finderPathWithPaginationFindByPT_A = new FinderPath(PowwowServerModelImpl.ENTITY_CACHE_ENABLED,
+				PowwowServerModelImpl.FINDER_CACHE_ENABLED,
+				PowwowServerImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+				"findByPT_A",
+				new String[] {
+					String.class.getName(), Boolean.class.getName(),
+					
+				Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
+
+		_finderPathWithoutPaginationFindByPT_A = new FinderPath(PowwowServerModelImpl.ENTITY_CACHE_ENABLED,
+				PowwowServerModelImpl.FINDER_CACHE_ENABLED,
+				PowwowServerImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByPT_A",
+				new String[] { String.class.getName(), Boolean.class.getName() },
+				PowwowServerModelImpl.PROVIDERTYPE_COLUMN_BITMASK |
+				PowwowServerModelImpl.ACTIVE_COLUMN_BITMASK |
+				PowwowServerModelImpl.NAME_COLUMN_BITMASK);
+
+		_finderPathCountByPT_A = new FinderPath(PowwowServerModelImpl.ENTITY_CACHE_ENABLED,
+				PowwowServerModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByPT_A",
+				new String[] { String.class.getName(), Boolean.class.getName() });
 	}
 
 	public void destroy() {

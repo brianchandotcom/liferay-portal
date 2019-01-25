@@ -75,42 +75,12 @@ public class DDMFormInstanceRecordVersionPersistenceImpl
 		".List1";
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION = FINDER_CLASS_NAME_ENTITY +
 		".List2";
-	private final FinderPath _finderPathWithPaginationFindAll = new FinderPath(DDMFormInstanceRecordVersionModelImpl.ENTITY_CACHE_ENABLED,
-			DDMFormInstanceRecordVersionModelImpl.FINDER_CACHE_ENABLED,
-			DDMFormInstanceRecordVersionImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
-	private final FinderPath _finderPathWithoutPaginationFindAll = new FinderPath(DDMFormInstanceRecordVersionModelImpl.ENTITY_CACHE_ENABLED,
-			DDMFormInstanceRecordVersionModelImpl.FINDER_CACHE_ENABLED,
-			DDMFormInstanceRecordVersionImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0]);
-	private final FinderPath _finderPathCountAll = new FinderPath(DDMFormInstanceRecordVersionModelImpl.ENTITY_CACHE_ENABLED,
-			DDMFormInstanceRecordVersionModelImpl.FINDER_CACHE_ENABLED,
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
-			new String[0]);
-	private final FinderPath _finderPathWithPaginationFindByFormInstanceRecordId =
-		new FinderPath(DDMFormInstanceRecordVersionModelImpl.ENTITY_CACHE_ENABLED,
-			DDMFormInstanceRecordVersionModelImpl.FINDER_CACHE_ENABLED,
-			DDMFormInstanceRecordVersionImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByFormInstanceRecordId",
-			new String[] {
-				Long.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	private final FinderPath _finderPathWithoutPaginationFindByFormInstanceRecordId =
-		new FinderPath(DDMFormInstanceRecordVersionModelImpl.ENTITY_CACHE_ENABLED,
-			DDMFormInstanceRecordVersionModelImpl.FINDER_CACHE_ENABLED,
-			DDMFormInstanceRecordVersionImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByFormInstanceRecordId",
-			new String[] { Long.class.getName() },
-			DDMFormInstanceRecordVersionModelImpl.FORMINSTANCERECORDID_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByFormInstanceRecordId = new FinderPath(DDMFormInstanceRecordVersionModelImpl.ENTITY_CACHE_ENABLED,
-			DDMFormInstanceRecordVersionModelImpl.FINDER_CACHE_ENABLED,
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByFormInstanceRecordId", new String[] { Long.class.getName() });
+	private FinderPath _finderPathWithPaginationFindAll;
+	private FinderPath _finderPathWithoutPaginationFindAll;
+	private FinderPath _finderPathCountAll;
+	private FinderPath _finderPathWithPaginationFindByFormInstanceRecordId;
+	private FinderPath _finderPathWithoutPaginationFindByFormInstanceRecordId;
+	private FinderPath _finderPathCountByFormInstanceRecordId;
 
 	/**
 	 * Returns all the ddm form instance record versions where formInstanceRecordId = &#63;.
@@ -615,28 +585,9 @@ public class DDMFormInstanceRecordVersionPersistenceImpl
 
 	private static final String _FINDER_COLUMN_FORMINSTANCERECORDID_FORMINSTANCERECORDID_2 =
 		"ddmFormInstanceRecordVersion.formInstanceRecordId = ?";
-	private final FinderPath _finderPathWithPaginationFindByF_F = new FinderPath(DDMFormInstanceRecordVersionModelImpl.ENTITY_CACHE_ENABLED,
-			DDMFormInstanceRecordVersionModelImpl.FINDER_CACHE_ENABLED,
-			DDMFormInstanceRecordVersionImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByF_F",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	private final FinderPath _finderPathWithoutPaginationFindByF_F = new FinderPath(DDMFormInstanceRecordVersionModelImpl.ENTITY_CACHE_ENABLED,
-			DDMFormInstanceRecordVersionModelImpl.FINDER_CACHE_ENABLED,
-			DDMFormInstanceRecordVersionImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByF_F",
-			new String[] { Long.class.getName(), String.class.getName() },
-			DDMFormInstanceRecordVersionModelImpl.FORMINSTANCEID_COLUMN_BITMASK |
-			DDMFormInstanceRecordVersionModelImpl.FORMINSTANCEVERSION_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByF_F = new FinderPath(DDMFormInstanceRecordVersionModelImpl.ENTITY_CACHE_ENABLED,
-			DDMFormInstanceRecordVersionModelImpl.FINDER_CACHE_ENABLED,
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByF_F",
-			new String[] { Long.class.getName(), String.class.getName() });
+	private FinderPath _finderPathWithPaginationFindByF_F;
+	private FinderPath _finderPathWithoutPaginationFindByF_F;
+	private FinderPath _finderPathCountByF_F;
 
 	/**
 	 * Returns all the ddm form instance record versions where formInstanceId = &#63; and formInstanceVersion = &#63;.
@@ -1214,18 +1165,8 @@ public class DDMFormInstanceRecordVersionPersistenceImpl
 	private static final String _FINDER_COLUMN_F_F_FORMINSTANCEID_2 = "ddmFormInstanceRecordVersion.formInstanceId = ? AND ";
 	private static final String _FINDER_COLUMN_F_F_FORMINSTANCEVERSION_2 = "ddmFormInstanceRecordVersion.formInstanceVersion = ?";
 	private static final String _FINDER_COLUMN_F_F_FORMINSTANCEVERSION_3 = "(ddmFormInstanceRecordVersion.formInstanceVersion IS NULL OR ddmFormInstanceRecordVersion.formInstanceVersion = '')";
-	private final FinderPath _finderPathFetchByF_V = new FinderPath(DDMFormInstanceRecordVersionModelImpl.ENTITY_CACHE_ENABLED,
-			DDMFormInstanceRecordVersionModelImpl.FINDER_CACHE_ENABLED,
-			DDMFormInstanceRecordVersionImpl.class, FINDER_CLASS_NAME_ENTITY,
-			"fetchByF_V",
-			new String[] { Long.class.getName(), String.class.getName() },
-			DDMFormInstanceRecordVersionModelImpl.FORMINSTANCERECORDID_COLUMN_BITMASK |
-			DDMFormInstanceRecordVersionModelImpl.VERSION_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByF_V = new FinderPath(DDMFormInstanceRecordVersionModelImpl.ENTITY_CACHE_ENABLED,
-			DDMFormInstanceRecordVersionModelImpl.FINDER_CACHE_ENABLED,
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByF_V",
-			new String[] { Long.class.getName(), String.class.getName() });
+	private FinderPath _finderPathFetchByF_V;
+	private FinderPath _finderPathCountByF_V;
 
 	/**
 	 * Returns the ddm form instance record version where formInstanceRecordId = &#63; and version = &#63; or throws a {@link NoSuchFormInstanceRecordVersionException} if it could not be found.
@@ -1464,28 +1405,9 @@ public class DDMFormInstanceRecordVersionPersistenceImpl
 	private static final String _FINDER_COLUMN_F_V_FORMINSTANCERECORDID_2 = "ddmFormInstanceRecordVersion.formInstanceRecordId = ? AND ";
 	private static final String _FINDER_COLUMN_F_V_VERSION_2 = "ddmFormInstanceRecordVersion.version = ?";
 	private static final String _FINDER_COLUMN_F_V_VERSION_3 = "(ddmFormInstanceRecordVersion.version IS NULL OR ddmFormInstanceRecordVersion.version = '')";
-	private final FinderPath _finderPathWithPaginationFindByF_S = new FinderPath(DDMFormInstanceRecordVersionModelImpl.ENTITY_CACHE_ENABLED,
-			DDMFormInstanceRecordVersionModelImpl.FINDER_CACHE_ENABLED,
-			DDMFormInstanceRecordVersionImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByF_S",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	private final FinderPath _finderPathWithoutPaginationFindByF_S = new FinderPath(DDMFormInstanceRecordVersionModelImpl.ENTITY_CACHE_ENABLED,
-			DDMFormInstanceRecordVersionModelImpl.FINDER_CACHE_ENABLED,
-			DDMFormInstanceRecordVersionImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByF_S",
-			new String[] { Long.class.getName(), Integer.class.getName() },
-			DDMFormInstanceRecordVersionModelImpl.FORMINSTANCERECORDID_COLUMN_BITMASK |
-			DDMFormInstanceRecordVersionModelImpl.STATUS_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByF_S = new FinderPath(DDMFormInstanceRecordVersionModelImpl.ENTITY_CACHE_ENABLED,
-			DDMFormInstanceRecordVersionModelImpl.FINDER_CACHE_ENABLED,
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByF_S",
-			new String[] { Long.class.getName(), Integer.class.getName() });
+	private FinderPath _finderPathWithPaginationFindByF_S;
+	private FinderPath _finderPathWithoutPaginationFindByF_S;
+	private FinderPath _finderPathCountByF_S;
 
 	/**
 	 * Returns all the ddm form instance record versions where formInstanceRecordId = &#63; and status = &#63;.
@@ -2022,37 +1944,9 @@ public class DDMFormInstanceRecordVersionPersistenceImpl
 
 	private static final String _FINDER_COLUMN_F_S_FORMINSTANCERECORDID_2 = "ddmFormInstanceRecordVersion.formInstanceRecordId = ? AND ";
 	private static final String _FINDER_COLUMN_F_S_STATUS_2 = "ddmFormInstanceRecordVersion.status = ?";
-	private final FinderPath _finderPathWithPaginationFindByU_F_F_S = new FinderPath(DDMFormInstanceRecordVersionModelImpl.ENTITY_CACHE_ENABLED,
-			DDMFormInstanceRecordVersionModelImpl.FINDER_CACHE_ENABLED,
-			DDMFormInstanceRecordVersionImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU_F_F_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), Integer.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	private final FinderPath _finderPathWithoutPaginationFindByU_F_F_S = new FinderPath(DDMFormInstanceRecordVersionModelImpl.ENTITY_CACHE_ENABLED,
-			DDMFormInstanceRecordVersionModelImpl.FINDER_CACHE_ENABLED,
-			DDMFormInstanceRecordVersionImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByU_F_F_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), Integer.class.getName()
-			},
-			DDMFormInstanceRecordVersionModelImpl.USERID_COLUMN_BITMASK |
-			DDMFormInstanceRecordVersionModelImpl.FORMINSTANCEID_COLUMN_BITMASK |
-			DDMFormInstanceRecordVersionModelImpl.FORMINSTANCEVERSION_COLUMN_BITMASK |
-			DDMFormInstanceRecordVersionModelImpl.STATUS_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByU_F_F_S = new FinderPath(DDMFormInstanceRecordVersionModelImpl.ENTITY_CACHE_ENABLED,
-			DDMFormInstanceRecordVersionModelImpl.FINDER_CACHE_ENABLED,
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByU_F_F_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), Integer.class.getName()
-			});
+	private FinderPath _finderPathWithPaginationFindByU_F_F_S;
+	private FinderPath _finderPathWithoutPaginationFindByU_F_F_S;
+	private FinderPath _finderPathCountByU_F_F_S;
 
 	/**
 	 * Returns all the ddm form instance record versions where userId = &#63; and formInstanceId = &#63; and formInstanceVersion = &#63; and status = &#63;.
@@ -3411,6 +3305,145 @@ public class DDMFormInstanceRecordVersionPersistenceImpl
 	 * Initializes the ddm form instance record version persistence.
 	 */
 	public void afterPropertiesSet() {
+		_finderPathWithPaginationFindAll = new FinderPath(DDMFormInstanceRecordVersionModelImpl.ENTITY_CACHE_ENABLED,
+				DDMFormInstanceRecordVersionModelImpl.FINDER_CACHE_ENABLED,
+				DDMFormInstanceRecordVersionImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
+
+		_finderPathWithoutPaginationFindAll = new FinderPath(DDMFormInstanceRecordVersionModelImpl.ENTITY_CACHE_ENABLED,
+				DDMFormInstanceRecordVersionModelImpl.FINDER_CACHE_ENABLED,
+				DDMFormInstanceRecordVersionImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
+				new String[0]);
+
+		_finderPathCountAll = new FinderPath(DDMFormInstanceRecordVersionModelImpl.ENTITY_CACHE_ENABLED,
+				DDMFormInstanceRecordVersionModelImpl.FINDER_CACHE_ENABLED,
+				Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				"countAll", new String[0]);
+
+		_finderPathWithPaginationFindByFormInstanceRecordId = new FinderPath(DDMFormInstanceRecordVersionModelImpl.ENTITY_CACHE_ENABLED,
+				DDMFormInstanceRecordVersionModelImpl.FINDER_CACHE_ENABLED,
+				DDMFormInstanceRecordVersionImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+				"findByFormInstanceRecordId",
+				new String[] {
+					Long.class.getName(),
+					
+				Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
+
+		_finderPathWithoutPaginationFindByFormInstanceRecordId = new FinderPath(DDMFormInstanceRecordVersionModelImpl.ENTITY_CACHE_ENABLED,
+				DDMFormInstanceRecordVersionModelImpl.FINDER_CACHE_ENABLED,
+				DDMFormInstanceRecordVersionImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				"findByFormInstanceRecordId",
+				new String[] { Long.class.getName() },
+				DDMFormInstanceRecordVersionModelImpl.FORMINSTANCERECORDID_COLUMN_BITMASK);
+
+		_finderPathCountByFormInstanceRecordId = new FinderPath(DDMFormInstanceRecordVersionModelImpl.ENTITY_CACHE_ENABLED,
+				DDMFormInstanceRecordVersionModelImpl.FINDER_CACHE_ENABLED,
+				Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				"countByFormInstanceRecordId",
+				new String[] { Long.class.getName() });
+
+		_finderPathWithPaginationFindByF_F = new FinderPath(DDMFormInstanceRecordVersionModelImpl.ENTITY_CACHE_ENABLED,
+				DDMFormInstanceRecordVersionModelImpl.FINDER_CACHE_ENABLED,
+				DDMFormInstanceRecordVersionImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByF_F",
+				new String[] {
+					Long.class.getName(), String.class.getName(),
+					
+				Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
+
+		_finderPathWithoutPaginationFindByF_F = new FinderPath(DDMFormInstanceRecordVersionModelImpl.ENTITY_CACHE_ENABLED,
+				DDMFormInstanceRecordVersionModelImpl.FINDER_CACHE_ENABLED,
+				DDMFormInstanceRecordVersionImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByF_F",
+				new String[] { Long.class.getName(), String.class.getName() },
+				DDMFormInstanceRecordVersionModelImpl.FORMINSTANCEID_COLUMN_BITMASK |
+				DDMFormInstanceRecordVersionModelImpl.FORMINSTANCEVERSION_COLUMN_BITMASK);
+
+		_finderPathCountByF_F = new FinderPath(DDMFormInstanceRecordVersionModelImpl.ENTITY_CACHE_ENABLED,
+				DDMFormInstanceRecordVersionModelImpl.FINDER_CACHE_ENABLED,
+				Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				"countByF_F",
+				new String[] { Long.class.getName(), String.class.getName() });
+
+		_finderPathFetchByF_V = new FinderPath(DDMFormInstanceRecordVersionModelImpl.ENTITY_CACHE_ENABLED,
+				DDMFormInstanceRecordVersionModelImpl.FINDER_CACHE_ENABLED,
+				DDMFormInstanceRecordVersionImpl.class,
+				FINDER_CLASS_NAME_ENTITY, "fetchByF_V",
+				new String[] { Long.class.getName(), String.class.getName() },
+				DDMFormInstanceRecordVersionModelImpl.FORMINSTANCERECORDID_COLUMN_BITMASK |
+				DDMFormInstanceRecordVersionModelImpl.VERSION_COLUMN_BITMASK);
+
+		_finderPathCountByF_V = new FinderPath(DDMFormInstanceRecordVersionModelImpl.ENTITY_CACHE_ENABLED,
+				DDMFormInstanceRecordVersionModelImpl.FINDER_CACHE_ENABLED,
+				Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				"countByF_V",
+				new String[] { Long.class.getName(), String.class.getName() });
+
+		_finderPathWithPaginationFindByF_S = new FinderPath(DDMFormInstanceRecordVersionModelImpl.ENTITY_CACHE_ENABLED,
+				DDMFormInstanceRecordVersionModelImpl.FINDER_CACHE_ENABLED,
+				DDMFormInstanceRecordVersionImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByF_S",
+				new String[] {
+					Long.class.getName(), Integer.class.getName(),
+					
+				Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
+
+		_finderPathWithoutPaginationFindByF_S = new FinderPath(DDMFormInstanceRecordVersionModelImpl.ENTITY_CACHE_ENABLED,
+				DDMFormInstanceRecordVersionModelImpl.FINDER_CACHE_ENABLED,
+				DDMFormInstanceRecordVersionImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByF_S",
+				new String[] { Long.class.getName(), Integer.class.getName() },
+				DDMFormInstanceRecordVersionModelImpl.FORMINSTANCERECORDID_COLUMN_BITMASK |
+				DDMFormInstanceRecordVersionModelImpl.STATUS_COLUMN_BITMASK);
+
+		_finderPathCountByF_S = new FinderPath(DDMFormInstanceRecordVersionModelImpl.ENTITY_CACHE_ENABLED,
+				DDMFormInstanceRecordVersionModelImpl.FINDER_CACHE_ENABLED,
+				Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				"countByF_S",
+				new String[] { Long.class.getName(), Integer.class.getName() });
+
+		_finderPathWithPaginationFindByU_F_F_S = new FinderPath(DDMFormInstanceRecordVersionModelImpl.ENTITY_CACHE_ENABLED,
+				DDMFormInstanceRecordVersionModelImpl.FINDER_CACHE_ENABLED,
+				DDMFormInstanceRecordVersionImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU_F_F_S",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					String.class.getName(), Integer.class.getName(),
+					
+				Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
+
+		_finderPathWithoutPaginationFindByU_F_F_S = new FinderPath(DDMFormInstanceRecordVersionModelImpl.ENTITY_CACHE_ENABLED,
+				DDMFormInstanceRecordVersionModelImpl.FINDER_CACHE_ENABLED,
+				DDMFormInstanceRecordVersionImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByU_F_F_S",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					String.class.getName(), Integer.class.getName()
+				},
+				DDMFormInstanceRecordVersionModelImpl.USERID_COLUMN_BITMASK |
+				DDMFormInstanceRecordVersionModelImpl.FORMINSTANCEID_COLUMN_BITMASK |
+				DDMFormInstanceRecordVersionModelImpl.FORMINSTANCEVERSION_COLUMN_BITMASK |
+				DDMFormInstanceRecordVersionModelImpl.STATUS_COLUMN_BITMASK);
+
+		_finderPathCountByU_F_F_S = new FinderPath(DDMFormInstanceRecordVersionModelImpl.ENTITY_CACHE_ENABLED,
+				DDMFormInstanceRecordVersionModelImpl.FINDER_CACHE_ENABLED,
+				Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				"countByU_F_F_S",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					String.class.getName(), Integer.class.getName()
+				});
 	}
 
 	public void destroy() {

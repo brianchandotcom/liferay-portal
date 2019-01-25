@@ -73,37 +73,12 @@ public class VersionedEntryPersistenceImpl extends BasePersistenceImpl<Versioned
 		".List1";
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION = FINDER_CLASS_NAME_ENTITY +
 		".List2";
-	private final FinderPath _finderPathWithPaginationFindAll = new FinderPath(VersionedEntryModelImpl.ENTITY_CACHE_ENABLED,
-			VersionedEntryModelImpl.FINDER_CACHE_ENABLED,
-			VersionedEntryImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findAll", new String[0]);
-	private final FinderPath _finderPathWithoutPaginationFindAll = new FinderPath(VersionedEntryModelImpl.ENTITY_CACHE_ENABLED,
-			VersionedEntryModelImpl.FINDER_CACHE_ENABLED,
-			VersionedEntryImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0]);
-	private final FinderPath _finderPathCountAll = new FinderPath(VersionedEntryModelImpl.ENTITY_CACHE_ENABLED,
-			VersionedEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
-	private final FinderPath _finderPathWithPaginationFindByGroupId = new FinderPath(VersionedEntryModelImpl.ENTITY_CACHE_ENABLED,
-			VersionedEntryModelImpl.FINDER_CACHE_ENABLED,
-			VersionedEntryImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByGroupId",
-			new String[] {
-				Long.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	private final FinderPath _finderPathWithoutPaginationFindByGroupId = new FinderPath(VersionedEntryModelImpl.ENTITY_CACHE_ENABLED,
-			VersionedEntryModelImpl.FINDER_CACHE_ENABLED,
-			VersionedEntryImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
-			new String[] { Long.class.getName() },
-			VersionedEntryModelImpl.GROUPID_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByGroupId = new FinderPath(VersionedEntryModelImpl.ENTITY_CACHE_ENABLED,
-			VersionedEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
-			new String[] { Long.class.getName() });
+	private FinderPath _finderPathWithPaginationFindAll;
+	private FinderPath _finderPathWithoutPaginationFindAll;
+	private FinderPath _finderPathCountAll;
+	private FinderPath _finderPathWithPaginationFindByGroupId;
+	private FinderPath _finderPathWithoutPaginationFindByGroupId;
+	private FinderPath _finderPathCountByGroupId;
 
 	/**
 	 * Returns all the versioned entries where groupId = &#63;.
@@ -587,15 +562,8 @@ public class VersionedEntryPersistenceImpl extends BasePersistenceImpl<Versioned
 	}
 
 	private static final String _FINDER_COLUMN_GROUPID_GROUPID_2 = "versionedEntry.groupId = ?";
-	private final FinderPath _finderPathFetchByHeadId = new FinderPath(VersionedEntryModelImpl.ENTITY_CACHE_ENABLED,
-			VersionedEntryModelImpl.FINDER_CACHE_ENABLED,
-			VersionedEntryImpl.class, FINDER_CLASS_NAME_ENTITY,
-			"fetchByHeadId", new String[] { Long.class.getName() },
-			VersionedEntryModelImpl.HEADID_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByHeadId = new FinderPath(VersionedEntryModelImpl.ENTITY_CACHE_ENABLED,
-			VersionedEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByHeadId",
-			new String[] { Long.class.getName() });
+	private FinderPath _finderPathFetchByHeadId;
+	private FinderPath _finderPathCountByHeadId;
 
 	/**
 	 * Returns the versioned entry where headId = &#63; or throws a {@link NoSuchVersionedEntryException} if it could not be found.
@@ -1483,6 +1451,55 @@ public class VersionedEntryPersistenceImpl extends BasePersistenceImpl<Versioned
 	 * Initializes the versioned entry persistence.
 	 */
 	public void afterPropertiesSet() {
+		_finderPathWithPaginationFindAll = new FinderPath(VersionedEntryModelImpl.ENTITY_CACHE_ENABLED,
+				VersionedEntryModelImpl.FINDER_CACHE_ENABLED,
+				VersionedEntryImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
+
+		_finderPathWithoutPaginationFindAll = new FinderPath(VersionedEntryModelImpl.ENTITY_CACHE_ENABLED,
+				VersionedEntryModelImpl.FINDER_CACHE_ENABLED,
+				VersionedEntryImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
+				new String[0]);
+
+		_finderPathCountAll = new FinderPath(VersionedEntryModelImpl.ENTITY_CACHE_ENABLED,
+				VersionedEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+				new String[0]);
+
+		_finderPathWithPaginationFindByGroupId = new FinderPath(VersionedEntryModelImpl.ENTITY_CACHE_ENABLED,
+				VersionedEntryModelImpl.FINDER_CACHE_ENABLED,
+				VersionedEntryImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
+				new String[] {
+					Long.class.getName(),
+					
+				Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
+
+		_finderPathWithoutPaginationFindByGroupId = new FinderPath(VersionedEntryModelImpl.ENTITY_CACHE_ENABLED,
+				VersionedEntryModelImpl.FINDER_CACHE_ENABLED,
+				VersionedEntryImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
+				new String[] { Long.class.getName() },
+				VersionedEntryModelImpl.GROUPID_COLUMN_BITMASK);
+
+		_finderPathCountByGroupId = new FinderPath(VersionedEntryModelImpl.ENTITY_CACHE_ENABLED,
+				VersionedEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
+				new String[] { Long.class.getName() });
+
+		_finderPathFetchByHeadId = new FinderPath(VersionedEntryModelImpl.ENTITY_CACHE_ENABLED,
+				VersionedEntryModelImpl.FINDER_CACHE_ENABLED,
+				VersionedEntryImpl.class, FINDER_CLASS_NAME_ENTITY,
+				"fetchByHeadId", new String[] { Long.class.getName() },
+				VersionedEntryModelImpl.HEADID_COLUMN_BITMASK);
+
+		_finderPathCountByHeadId = new FinderPath(VersionedEntryModelImpl.ENTITY_CACHE_ENABLED,
+				VersionedEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByHeadId",
+				new String[] { Long.class.getName() });
 	}
 
 	public void destroy() {

@@ -73,34 +73,12 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 		".List1";
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION = FINDER_CLASS_NAME_ENTITY +
 		".List2";
-	private final FinderPath _finderPathWithPaginationFindAll = new FinderPath(RegionModelImpl.ENTITY_CACHE_ENABLED,
-			RegionModelImpl.FINDER_CACHE_ENABLED, RegionImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
-	private final FinderPath _finderPathWithoutPaginationFindAll = new FinderPath(RegionModelImpl.ENTITY_CACHE_ENABLED,
-			RegionModelImpl.FINDER_CACHE_ENABLED, RegionImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0]);
-	private final FinderPath _finderPathCountAll = new FinderPath(RegionModelImpl.ENTITY_CACHE_ENABLED,
-			RegionModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
-	private final FinderPath _finderPathWithPaginationFindByCountryId = new FinderPath(RegionModelImpl.ENTITY_CACHE_ENABLED,
-			RegionModelImpl.FINDER_CACHE_ENABLED, RegionImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCountryId",
-			new String[] {
-				Long.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	private final FinderPath _finderPathWithoutPaginationFindByCountryId = new FinderPath(RegionModelImpl.ENTITY_CACHE_ENABLED,
-			RegionModelImpl.FINDER_CACHE_ENABLED, RegionImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCountryId",
-			new String[] { Long.class.getName() },
-			RegionModelImpl.COUNTRYID_COLUMN_BITMASK |
-			RegionModelImpl.NAME_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByCountryId = new FinderPath(RegionModelImpl.ENTITY_CACHE_ENABLED,
-			RegionModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCountryId",
-			new String[] { Long.class.getName() });
+	private FinderPath _finderPathWithPaginationFindAll;
+	private FinderPath _finderPathWithoutPaginationFindAll;
+	private FinderPath _finderPathCountAll;
+	private FinderPath _finderPathWithPaginationFindByCountryId;
+	private FinderPath _finderPathWithoutPaginationFindByCountryId;
+	private FinderPath _finderPathCountByCountryId;
 
 	/**
 	 * Returns all the regions where countryId = &#63;.
@@ -582,25 +560,9 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 	}
 
 	private static final String _FINDER_COLUMN_COUNTRYID_COUNTRYID_2 = "region.countryId = ?";
-	private final FinderPath _finderPathWithPaginationFindByActive = new FinderPath(RegionModelImpl.ENTITY_CACHE_ENABLED,
-			RegionModelImpl.FINDER_CACHE_ENABLED, RegionImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByActive",
-			new String[] {
-				Boolean.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	private final FinderPath _finderPathWithoutPaginationFindByActive = new FinderPath(RegionModelImpl.ENTITY_CACHE_ENABLED,
-			RegionModelImpl.FINDER_CACHE_ENABLED, RegionImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByActive",
-			new String[] { Boolean.class.getName() },
-			RegionModelImpl.ACTIVE_COLUMN_BITMASK |
-			RegionModelImpl.NAME_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByActive = new FinderPath(RegionModelImpl.ENTITY_CACHE_ENABLED,
-			RegionModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByActive",
-			new String[] { Boolean.class.getName() });
+	private FinderPath _finderPathWithPaginationFindByActive;
+	private FinderPath _finderPathWithoutPaginationFindByActive;
+	private FinderPath _finderPathCountByActive;
 
 	/**
 	 * Returns all the regions where active = &#63;.
@@ -1081,16 +1043,8 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 	}
 
 	private static final String _FINDER_COLUMN_ACTIVE_ACTIVE_2 = "region.active = ?";
-	private final FinderPath _finderPathFetchByC_R = new FinderPath(RegionModelImpl.ENTITY_CACHE_ENABLED,
-			RegionModelImpl.FINDER_CACHE_ENABLED, RegionImpl.class,
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_R",
-			new String[] { Long.class.getName(), String.class.getName() },
-			RegionModelImpl.COUNTRYID_COLUMN_BITMASK |
-			RegionModelImpl.REGIONCODE_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByC_R = new FinderPath(RegionModelImpl.ENTITY_CACHE_ENABLED,
-			RegionModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_R",
-			new String[] { Long.class.getName(), String.class.getName() });
+	private FinderPath _finderPathFetchByC_R;
+	private FinderPath _finderPathCountByC_R;
 
 	/**
 	 * Returns the region where countryId = &#63; and regionCode = &#63; or throws a {@link NoSuchRegionException} if it could not be found.
@@ -1326,26 +1280,9 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 	private static final String _FINDER_COLUMN_C_R_COUNTRYID_2 = "region.countryId = ? AND ";
 	private static final String _FINDER_COLUMN_C_R_REGIONCODE_2 = "region.regionCode = ?";
 	private static final String _FINDER_COLUMN_C_R_REGIONCODE_3 = "(region.regionCode IS NULL OR region.regionCode = '')";
-	private final FinderPath _finderPathWithPaginationFindByC_A = new FinderPath(RegionModelImpl.ENTITY_CACHE_ENABLED,
-			RegionModelImpl.FINDER_CACHE_ENABLED, RegionImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_A",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	private final FinderPath _finderPathWithoutPaginationFindByC_A = new FinderPath(RegionModelImpl.ENTITY_CACHE_ENABLED,
-			RegionModelImpl.FINDER_CACHE_ENABLED, RegionImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_A",
-			new String[] { Long.class.getName(), Boolean.class.getName() },
-			RegionModelImpl.COUNTRYID_COLUMN_BITMASK |
-			RegionModelImpl.ACTIVE_COLUMN_BITMASK |
-			RegionModelImpl.NAME_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByC_A = new FinderPath(RegionModelImpl.ENTITY_CACHE_ENABLED,
-			RegionModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_A",
-			new String[] { Long.class.getName(), Boolean.class.getName() });
+	private FinderPath _finderPathWithPaginationFindByC_A;
+	private FinderPath _finderPathWithoutPaginationFindByC_A;
+	private FinderPath _finderPathCountByC_A;
 
 	/**
 	 * Returns all the regions where countryId = &#63; and active = &#63;.
@@ -2494,6 +2431,98 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 	 * Initializes the region persistence.
 	 */
 	public void afterPropertiesSet() {
+		_finderPathWithPaginationFindAll = new FinderPath(RegionModelImpl.ENTITY_CACHE_ENABLED,
+				RegionModelImpl.FINDER_CACHE_ENABLED, RegionImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
+
+		_finderPathWithoutPaginationFindAll = new FinderPath(RegionModelImpl.ENTITY_CACHE_ENABLED,
+				RegionModelImpl.FINDER_CACHE_ENABLED, RegionImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
+				new String[0]);
+
+		_finderPathCountAll = new FinderPath(RegionModelImpl.ENTITY_CACHE_ENABLED,
+				RegionModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+				new String[0]);
+
+		_finderPathWithPaginationFindByCountryId = new FinderPath(RegionModelImpl.ENTITY_CACHE_ENABLED,
+				RegionModelImpl.FINDER_CACHE_ENABLED, RegionImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCountryId",
+				new String[] {
+					Long.class.getName(),
+					
+				Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
+
+		_finderPathWithoutPaginationFindByCountryId = new FinderPath(RegionModelImpl.ENTITY_CACHE_ENABLED,
+				RegionModelImpl.FINDER_CACHE_ENABLED, RegionImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCountryId",
+				new String[] { Long.class.getName() },
+				RegionModelImpl.COUNTRYID_COLUMN_BITMASK |
+				RegionModelImpl.NAME_COLUMN_BITMASK);
+
+		_finderPathCountByCountryId = new FinderPath(RegionModelImpl.ENTITY_CACHE_ENABLED,
+				RegionModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCountryId",
+				new String[] { Long.class.getName() });
+
+		_finderPathWithPaginationFindByActive = new FinderPath(RegionModelImpl.ENTITY_CACHE_ENABLED,
+				RegionModelImpl.FINDER_CACHE_ENABLED, RegionImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByActive",
+				new String[] {
+					Boolean.class.getName(),
+					
+				Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
+
+		_finderPathWithoutPaginationFindByActive = new FinderPath(RegionModelImpl.ENTITY_CACHE_ENABLED,
+				RegionModelImpl.FINDER_CACHE_ENABLED, RegionImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByActive",
+				new String[] { Boolean.class.getName() },
+				RegionModelImpl.ACTIVE_COLUMN_BITMASK |
+				RegionModelImpl.NAME_COLUMN_BITMASK);
+
+		_finderPathCountByActive = new FinderPath(RegionModelImpl.ENTITY_CACHE_ENABLED,
+				RegionModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByActive",
+				new String[] { Boolean.class.getName() });
+
+		_finderPathFetchByC_R = new FinderPath(RegionModelImpl.ENTITY_CACHE_ENABLED,
+				RegionModelImpl.FINDER_CACHE_ENABLED, RegionImpl.class,
+				FINDER_CLASS_NAME_ENTITY, "fetchByC_R",
+				new String[] { Long.class.getName(), String.class.getName() },
+				RegionModelImpl.COUNTRYID_COLUMN_BITMASK |
+				RegionModelImpl.REGIONCODE_COLUMN_BITMASK);
+
+		_finderPathCountByC_R = new FinderPath(RegionModelImpl.ENTITY_CACHE_ENABLED,
+				RegionModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_R",
+				new String[] { Long.class.getName(), String.class.getName() });
+
+		_finderPathWithPaginationFindByC_A = new FinderPath(RegionModelImpl.ENTITY_CACHE_ENABLED,
+				RegionModelImpl.FINDER_CACHE_ENABLED, RegionImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_A",
+				new String[] {
+					Long.class.getName(), Boolean.class.getName(),
+					
+				Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
+
+		_finderPathWithoutPaginationFindByC_A = new FinderPath(RegionModelImpl.ENTITY_CACHE_ENABLED,
+				RegionModelImpl.FINDER_CACHE_ENABLED, RegionImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_A",
+				new String[] { Long.class.getName(), Boolean.class.getName() },
+				RegionModelImpl.COUNTRYID_COLUMN_BITMASK |
+				RegionModelImpl.ACTIVE_COLUMN_BITMASK |
+				RegionModelImpl.NAME_COLUMN_BITMASK);
+
+		_finderPathCountByC_A = new FinderPath(RegionModelImpl.ENTITY_CACHE_ENABLED,
+				RegionModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_A",
+				new String[] { Long.class.getName(), Boolean.class.getName() });
 	}
 
 	public void destroy() {

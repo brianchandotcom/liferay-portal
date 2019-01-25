@@ -79,28 +79,11 @@ public class WeDeployAuthTokenPersistenceImpl extends BasePersistenceImpl<WeDepl
 		".List1";
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION = FINDER_CLASS_NAME_ENTITY +
 		".List2";
-	private final FinderPath _finderPathWithPaginationFindAll = new FinderPath(WeDeployAuthTokenModelImpl.ENTITY_CACHE_ENABLED,
-			WeDeployAuthTokenModelImpl.FINDER_CACHE_ENABLED,
-			WeDeployAuthTokenImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
-	private final FinderPath _finderPathWithoutPaginationFindAll = new FinderPath(WeDeployAuthTokenModelImpl.ENTITY_CACHE_ENABLED,
-			WeDeployAuthTokenModelImpl.FINDER_CACHE_ENABLED,
-			WeDeployAuthTokenImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0]);
-	private final FinderPath _finderPathCountAll = new FinderPath(WeDeployAuthTokenModelImpl.ENTITY_CACHE_ENABLED,
-			WeDeployAuthTokenModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
-	private final FinderPath _finderPathFetchByT_T = new FinderPath(WeDeployAuthTokenModelImpl.ENTITY_CACHE_ENABLED,
-			WeDeployAuthTokenModelImpl.FINDER_CACHE_ENABLED,
-			WeDeployAuthTokenImpl.class, FINDER_CLASS_NAME_ENTITY,
-			"fetchByT_T",
-			new String[] { String.class.getName(), Integer.class.getName() },
-			WeDeployAuthTokenModelImpl.TOKEN_COLUMN_BITMASK |
-			WeDeployAuthTokenModelImpl.TYPE_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByT_T = new FinderPath(WeDeployAuthTokenModelImpl.ENTITY_CACHE_ENABLED,
-			WeDeployAuthTokenModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByT_T",
-			new String[] { String.class.getName(), Integer.class.getName() });
+	private FinderPath _finderPathWithPaginationFindAll;
+	private FinderPath _finderPathWithoutPaginationFindAll;
+	private FinderPath _finderPathCountAll;
+	private FinderPath _finderPathFetchByT_T;
+	private FinderPath _finderPathCountByT_T;
 
 	/**
 	 * Returns the we deploy auth token where token = &#63; and type = &#63; or throws a {@link NoSuchTokenException} if it could not be found.
@@ -346,24 +329,8 @@ public class WeDeployAuthTokenPersistenceImpl extends BasePersistenceImpl<WeDepl
 	private static final String _FINDER_COLUMN_T_T_TOKEN_2 = "weDeployAuthToken.token = ? AND ";
 	private static final String _FINDER_COLUMN_T_T_TOKEN_3 = "(weDeployAuthToken.token IS NULL OR weDeployAuthToken.token = '') AND ";
 	private static final String _FINDER_COLUMN_T_T_TYPE_2 = "weDeployAuthToken.type = ?";
-	private final FinderPath _finderPathFetchByCI_T_T = new FinderPath(WeDeployAuthTokenModelImpl.ENTITY_CACHE_ENABLED,
-			WeDeployAuthTokenModelImpl.FINDER_CACHE_ENABLED,
-			WeDeployAuthTokenImpl.class, FINDER_CLASS_NAME_ENTITY,
-			"fetchByCI_T_T",
-			new String[] {
-				String.class.getName(), String.class.getName(),
-				Integer.class.getName()
-			},
-			WeDeployAuthTokenModelImpl.CLIENTID_COLUMN_BITMASK |
-			WeDeployAuthTokenModelImpl.TOKEN_COLUMN_BITMASK |
-			WeDeployAuthTokenModelImpl.TYPE_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByCI_T_T = new FinderPath(WeDeployAuthTokenModelImpl.ENTITY_CACHE_ENABLED,
-			WeDeployAuthTokenModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCI_T_T",
-			new String[] {
-				String.class.getName(), String.class.getName(),
-				Integer.class.getName()
-			});
+	private FinderPath _finderPathFetchByCI_T_T;
+	private FinderPath _finderPathCountByCI_T_T;
 
 	/**
 	 * Returns the we deploy auth token where clientId = &#63; and token = &#63; and type = &#63; or throws a {@link NoSuchTokenException} if it could not be found.
@@ -1288,6 +1255,54 @@ public class WeDeployAuthTokenPersistenceImpl extends BasePersistenceImpl<WeDepl
 	 * Initializes the we deploy auth token persistence.
 	 */
 	public void afterPropertiesSet() {
+		_finderPathWithPaginationFindAll = new FinderPath(WeDeployAuthTokenModelImpl.ENTITY_CACHE_ENABLED,
+				WeDeployAuthTokenModelImpl.FINDER_CACHE_ENABLED,
+				WeDeployAuthTokenImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
+
+		_finderPathWithoutPaginationFindAll = new FinderPath(WeDeployAuthTokenModelImpl.ENTITY_CACHE_ENABLED,
+				WeDeployAuthTokenModelImpl.FINDER_CACHE_ENABLED,
+				WeDeployAuthTokenImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
+				new String[0]);
+
+		_finderPathCountAll = new FinderPath(WeDeployAuthTokenModelImpl.ENTITY_CACHE_ENABLED,
+				WeDeployAuthTokenModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+				new String[0]);
+
+		_finderPathFetchByT_T = new FinderPath(WeDeployAuthTokenModelImpl.ENTITY_CACHE_ENABLED,
+				WeDeployAuthTokenModelImpl.FINDER_CACHE_ENABLED,
+				WeDeployAuthTokenImpl.class, FINDER_CLASS_NAME_ENTITY,
+				"fetchByT_T",
+				new String[] { String.class.getName(), Integer.class.getName() },
+				WeDeployAuthTokenModelImpl.TOKEN_COLUMN_BITMASK |
+				WeDeployAuthTokenModelImpl.TYPE_COLUMN_BITMASK);
+
+		_finderPathCountByT_T = new FinderPath(WeDeployAuthTokenModelImpl.ENTITY_CACHE_ENABLED,
+				WeDeployAuthTokenModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByT_T",
+				new String[] { String.class.getName(), Integer.class.getName() });
+
+		_finderPathFetchByCI_T_T = new FinderPath(WeDeployAuthTokenModelImpl.ENTITY_CACHE_ENABLED,
+				WeDeployAuthTokenModelImpl.FINDER_CACHE_ENABLED,
+				WeDeployAuthTokenImpl.class, FINDER_CLASS_NAME_ENTITY,
+				"fetchByCI_T_T",
+				new String[] {
+					String.class.getName(), String.class.getName(),
+					Integer.class.getName()
+				},
+				WeDeployAuthTokenModelImpl.CLIENTID_COLUMN_BITMASK |
+				WeDeployAuthTokenModelImpl.TOKEN_COLUMN_BITMASK |
+				WeDeployAuthTokenModelImpl.TYPE_COLUMN_BITMASK);
+
+		_finderPathCountByCI_T_T = new FinderPath(WeDeployAuthTokenModelImpl.ENTITY_CACHE_ENABLED,
+				WeDeployAuthTokenModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCI_T_T",
+				new String[] {
+					String.class.getName(), String.class.getName(),
+					Integer.class.getName()
+				});
 	}
 
 	public void destroy() {

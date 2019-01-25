@@ -75,33 +75,12 @@ public class AttachmentPersistenceImpl extends BasePersistenceImpl<Attachment>
 		".List1";
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION = FINDER_CLASS_NAME_ENTITY +
 		".List2";
-	private final FinderPath _finderPathWithPaginationFindAll = new FinderPath(AttachmentModelImpl.ENTITY_CACHE_ENABLED,
-			AttachmentModelImpl.FINDER_CACHE_ENABLED, AttachmentImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
-	private final FinderPath _finderPathWithoutPaginationFindAll = new FinderPath(AttachmentModelImpl.ENTITY_CACHE_ENABLED,
-			AttachmentModelImpl.FINDER_CACHE_ENABLED, AttachmentImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0]);
-	private final FinderPath _finderPathCountAll = new FinderPath(AttachmentModelImpl.ENTITY_CACHE_ENABLED,
-			AttachmentModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
-	private final FinderPath _finderPathWithPaginationFindByMessageId = new FinderPath(AttachmentModelImpl.ENTITY_CACHE_ENABLED,
-			AttachmentModelImpl.FINDER_CACHE_ENABLED, AttachmentImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByMessageId",
-			new String[] {
-				Long.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	private final FinderPath _finderPathWithoutPaginationFindByMessageId = new FinderPath(AttachmentModelImpl.ENTITY_CACHE_ENABLED,
-			AttachmentModelImpl.FINDER_CACHE_ENABLED, AttachmentImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByMessageId",
-			new String[] { Long.class.getName() },
-			AttachmentModelImpl.MESSAGEID_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByMessageId = new FinderPath(AttachmentModelImpl.ENTITY_CACHE_ENABLED,
-			AttachmentModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByMessageId",
-			new String[] { Long.class.getName() });
+	private FinderPath _finderPathWithPaginationFindAll;
+	private FinderPath _finderPathWithoutPaginationFindAll;
+	private FinderPath _finderPathCountAll;
+	private FinderPath _finderPathWithPaginationFindByMessageId;
+	private FinderPath _finderPathWithoutPaginationFindByMessageId;
+	private FinderPath _finderPathCountByMessageId;
 
 	/**
 	 * Returns all the attachments where messageId = &#63;.
@@ -1126,6 +1105,40 @@ public class AttachmentPersistenceImpl extends BasePersistenceImpl<Attachment>
 	 * Initializes the attachment persistence.
 	 */
 	public void afterPropertiesSet() {
+		_finderPathWithPaginationFindAll = new FinderPath(AttachmentModelImpl.ENTITY_CACHE_ENABLED,
+				AttachmentModelImpl.FINDER_CACHE_ENABLED, AttachmentImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
+
+		_finderPathWithoutPaginationFindAll = new FinderPath(AttachmentModelImpl.ENTITY_CACHE_ENABLED,
+				AttachmentModelImpl.FINDER_CACHE_ENABLED, AttachmentImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
+				new String[0]);
+
+		_finderPathCountAll = new FinderPath(AttachmentModelImpl.ENTITY_CACHE_ENABLED,
+				AttachmentModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+				new String[0]);
+
+		_finderPathWithPaginationFindByMessageId = new FinderPath(AttachmentModelImpl.ENTITY_CACHE_ENABLED,
+				AttachmentModelImpl.FINDER_CACHE_ENABLED, AttachmentImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByMessageId",
+				new String[] {
+					Long.class.getName(),
+					
+				Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
+
+		_finderPathWithoutPaginationFindByMessageId = new FinderPath(AttachmentModelImpl.ENTITY_CACHE_ENABLED,
+				AttachmentModelImpl.FINDER_CACHE_ENABLED, AttachmentImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByMessageId",
+				new String[] { Long.class.getName() },
+				AttachmentModelImpl.MESSAGEID_COLUMN_BITMASK);
+
+		_finderPathCountByMessageId = new FinderPath(AttachmentModelImpl.ENTITY_CACHE_ENABLED,
+				AttachmentModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByMessageId",
+				new String[] { Long.class.getName() });
 	}
 
 	public void destroy() {

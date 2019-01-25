@@ -195,6 +195,12 @@ public class CTProcessLocalServiceWrapper implements CTProcessLocalService,
 	}
 
 	@Override
+	public com.liferay.change.tracking.model.CTProcess fetchLatestCTProcess(
+		long companyId) {
+		return _ctProcessLocalService.fetchLatestCTProcess(companyId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return _ctProcessLocalService.getActionableDynamicQuery();
 	}

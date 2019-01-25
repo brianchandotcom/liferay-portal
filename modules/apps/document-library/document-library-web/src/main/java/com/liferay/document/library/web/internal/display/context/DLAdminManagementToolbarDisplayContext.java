@@ -363,7 +363,19 @@ public class DLAdminManagementToolbarDisplayContext {
 					add(
 						SafeConsumer.ignore(
 							labelItem -> {
-								labelItem.setCloseable(false);
+								PortletURL removeLabelURL =
+									PortletURLUtil.clone(
+										_currentURLObj,
+										_liferayPortletResponse);
+
+								removeLabelURL.setParameter(
+									"fileEntryTypeId", (String)null);
+
+								labelItem.putData(
+									"removeLabelURL",
+									removeLabelURL.toString());
+
+								labelItem.setCloseable(true);
 
 								String fileEntryTypeName = LanguageUtil.get(
 									_request, "basic-document");
@@ -393,17 +405,31 @@ public class DLAdminManagementToolbarDisplayContext {
 
 				if (navigation.equals("mine")) {
 					add(
-						labelItem -> {
-							labelItem.setCloseable(false);
+						SafeConsumer.ignore(
+							labelItem -> {
+								PortletURL removeLabelURL =
+									PortletURLUtil.clone(
+										_currentURLObj,
+										_liferayPortletResponse);
 
-							User user = _themeDisplay.getUser();
+								removeLabelURL.setParameter(
+									"navigation", (String)null);
 
-							String label = String.format(
-								"%s: %s", LanguageUtil.get(_request, "owner"),
-								user.getFullName());
+								labelItem.putData(
+									"removeLabelURL",
+									removeLabelURL.toString());
 
-							labelItem.setLabel(label);
-						});
+								labelItem.setCloseable(true);
+
+								User user = _themeDisplay.getUser();
+
+								String label = String.format(
+									"%s: %s",
+									LanguageUtil.get(_request, "owner"),
+									user.getFullName());
+
+								labelItem.setLabel(label);
+							}));
 				}
 			}
 		};

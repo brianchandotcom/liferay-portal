@@ -389,6 +389,17 @@
 	<td>//button[contains(@id,'field-type-menu-content')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--FRONTEND SPA INFRASTRUCTURE-->
+<tr>
+	<td>USER_NOTIFICATION_TIMEOUT</td>
+	<td>//input[contains(@id,'userNotificationTimeout')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

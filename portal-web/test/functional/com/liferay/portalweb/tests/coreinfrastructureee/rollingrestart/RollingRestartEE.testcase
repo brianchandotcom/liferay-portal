@@ -446,6 +446,215 @@ definition {
 	}
 
 	@priority = "5"
+	test InstallFixPackWithNewOSGIConfiguration {
+		property app.server.bundles.size = "2";
+		property osgi.module.configuration.file.names = "com.liferay.frontend.js.spa.web.configuration.SPAConfiguration.cfg";
+		property osgi.module.configurations = "userNotificationTimeout=30000";
+		property portal.fixpack.release = "true";
+		property test.name.skip.portal.instance = "RollingRestartEE#InstallFixPackWithNewOSGIConfiguration";
+
+		Clustering.viewClusterStatusInConsole();
+
+		Navigator.openURL();
+
+		Page.assertNodePortPG(nodePort = "8080");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings"
+		);
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Infrastructure",
+			configurationName = "Frontend SPA Infrastructure",
+			configurationScope = "System Scope"
+		);
+
+		AssertTextEquals(
+			locator1 = "FormFields#USER_NOTIFICATION_TIMEOUT",
+			value1 = "30000"
+		);
+
+		User.logoutPG(password = "test", userEmailAddress = "test@liferay.com");
+
+		User.loginPG(
+			nodePort = "9080",
+			password = "test",
+			userEmailAddress = "test@liferay.com"
+		);
+
+		Page.assertNodePortPG(nodePort = "9080");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings"
+		);
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Infrastructure",
+			configurationName = "Frontend SPA Infrastructure",
+			configurationScope = "System Scope"
+		);
+
+		AssertTextEquals(
+			locator1 = "FormFields#USER_NOTIFICATION_TIMEOUT",
+			value1 = "30000"
+		);
+
+		User.logoutPG(specificURL = "http://localhost:9080");
+
+		User.loginPG(
+			nodePort = "10080",
+			password = "test",
+			userEmailAddress = "test@liferay.com"
+		);
+
+		Page.assertNodePortPG(nodePort = "10080");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings"
+		);
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Infrastructure",
+			configurationName = "Frontend SPA Infrastructure",
+			configurationScope = "System Scope"
+		);
+
+		AssertTextEquals(
+			locator1 = "FormFields#USER_NOTIFICATION_TIMEOUT",
+			value1 = "30000"
+		);
+
+		Portlet.shutdownSpecificServer(nodePort = "8080");
+
+		PatchingTool.updateConfigurationOnSpecificServer(
+			nodePort = "8080",
+			updateConfiguration = "userNotificationTimeout=25000"
+		);
+
+		Portlet.startSpecificServer(
+			deleteLiferayHome = "false",
+			keepCachedAppServerData = "true",
+			nodePort = "8080"
+		);
+
+		User.logoutPG(specificURL = "http://localhost:10080");
+
+		User.loginPG(password = "test", userEmailAddress = "test@liferay.com");
+
+		Page.assertNodePortPG(nodePort = "8080");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings"
+		);
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Infrastructure",
+			configurationName = "Frontend SPA Infrastructure",
+			configurationScope = "System Scope"
+		);
+
+		AssertTextEquals(
+			locator1 = "FormFields#USER_NOTIFICATION_TIMEOUT",
+			value1 = "25000"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "WC WebContent Content Cluster1",
+			webContentTitle = "WC WebContent Title Cluster1"
+		);
+
+		PortletEntry.publish();
+
+		WebContent.viewTitle(webContentTitle = "WC WebContent Title Cluster1");
+
+		User.logoutPG(password = "test", userEmailAddress = "test@liferay.com");
+
+		User.loginPG(
+			nodePort = "9080",
+			password = "test",
+			userEmailAddress = "test@liferay.com"
+		);
+
+		Page.assertNodePortPG(nodePort = "9080");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings"
+		);
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Infrastructure",
+			configurationName = "Frontend SPA Infrastructure",
+			configurationScope = "System Scope"
+		);
+
+		AssertTextEquals(
+			locator1 = "FormFields#USER_NOTIFICATION_TIMEOUT",
+			value1 = "30000"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContent.viewTitle(webContentTitle = "WC WebContent Title Cluster1");
+
+		User.logoutPG(specificURL = "http://localhost:9080");
+
+		User.loginPG(
+			nodePort = "10080",
+			password = "test",
+			userEmailAddress = "test@liferay.com"
+		);
+
+		Page.assertNodePortPG(nodePort = "10080");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings"
+		);
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Infrastructure",
+			configurationName = "Frontend SPA Infrastructure",
+			configurationScope = "System Scope"
+		);
+
+		AssertTextEquals(
+			locator1 = "FormFields#USER_NOTIFICATION_TIMEOUT",
+			value1 = "30000"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContent.viewTitle(webContentTitle = "WC WebContent Title Cluster1");
+	}
+
+	@priority = "5"
 	test RevertFixPackWithMultipleClusters {
 		property app.server.bundles.size = "2";
 		property portal.fixpack.release = "true";

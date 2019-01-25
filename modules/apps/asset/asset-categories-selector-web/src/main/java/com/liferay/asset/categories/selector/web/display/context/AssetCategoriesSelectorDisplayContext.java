@@ -64,25 +64,20 @@ public class AssetCategoriesSelectorDisplayContext {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		jsonObject.put("disabled", true);
-		jsonObject.put("expanded", true);
-		jsonObject.put("id", "0");
-
 		if (jsonArray.length() == 1) {
-			JSONObject firstVocabularyJSONObject = jsonArray.getJSONObject(0);
-
-			jsonObject.put(
-				"children", firstVocabularyJSONObject.getJSONArray("children"));
-			jsonObject.put("icon", "vocabulary");
-			jsonObject.put("name", firstVocabularyJSONObject.getString("name"));
+			jsonObject = jsonArray.getJSONObject(0);
 		}
 		else {
 			jsonObject.put("children", jsonArray);
 			jsonObject.put("icon", "folder");
+			jsonObject.put("id", "0");
 			jsonObject.put(
 				"name",
 				LanguageUtil.get(themeDisplay.getLocale(), "vocabularies"));
 		}
+
+		jsonObject.put("disabled", true);
+		jsonObject.put("expanded", true);
 
 		JSONArray rootJSONArray = JSONFactoryUtil.createJSONArray();
 

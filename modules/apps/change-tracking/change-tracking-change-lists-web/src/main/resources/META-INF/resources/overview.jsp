@@ -16,22 +16,9 @@
 
 <%@ include file="/init.jsp" %>
 
-<clay:management-toolbar
-	componentId="overviewManagementToolbar"
-	creationMenu="<%= changeListsDisplayContext.getCreationMenu() %>"
-	filterDropdownItems="<%= changeListsDisplayContext.getFilterDropdownItems() %>"
-	selectable="<%= false %>"
-	showCreationMenu="<%= true %>"
-	showSearch="<%= true %>"
-	sortingOrder="<%= changeListsDisplayContext.getOrderByType() %>"
-	sortingURL="<%= changeListsDisplayContext.getSortingURL() %>"
-	viewTypeItems="<%= changeListsDisplayContext.getViewTypeItems() %>"
+<soy:component-renderer
+	componentId="change-tracking-change-lists-window"
+	context="<%= changeListsDisplayContext.getChangeListsContext() %>"
+	module="js/ChangeList.es"
+	templateNamespace="com.liferay.change.tracking.change.lists.web.ChangeList.render"
 />
-
-<div class="change-lists-sheet sheet sheet-lg">
-	<div class="sheet-header">
-		<h2 class="sheet-title">Change Lists Overview</h2>
-
-		<div class="sheet-text">This is only a placeholder for what's later be added to the change lists overview screen.</div>
-	</div>
-</div>

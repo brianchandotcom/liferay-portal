@@ -13,18 +13,24 @@
 	]>}
 
 	{if $segments and length($segments) > 0}
-		<select
-			class="form-control form-control-sm"
-			data-onchange="{$_handleSegmentChange}"
-			id="{$portletNamespace}SegmentSelector"
-		>
-			{foreach $segment in $segments}
-				{if $segment.id == $segmentId}
-					<option value="{$segment.id}" selected>{$segment.label}</option>
-				{else}
-					<option value="{$segment.id}">{$segment.label}</option>
-				{/if}
-			{/foreach}
-		</select>
+		<div class="form-group mb-0">
+			<label class="sr-only" for="{$portletNamespace}SegmentSelector">
+				{msg desc=""}select-segment{/msg}
+			</label>
+
+			<select
+				class="form-control form-control-sm"
+				data-onchange="{$_handleSegmentChange}"
+				id="{$portletNamespace}SegmentSelector"
+			>
+				{foreach $segment in $segments}
+					{if $segment.id == $segmentId}
+						<option value="{$segment.id}" selected>{$segment.label}</option>
+					{else}
+						<option value="{$segment.id}">{$segment.label}</option>
+					{/if}
+				{/foreach}
+			</select>
+		</div>
 	{/if}
 {/template}

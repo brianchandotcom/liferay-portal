@@ -19,6 +19,7 @@ import com.liferay.portal.tools.rest.builder.internal.freemarker.FreeMarker;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.FreeMarkerConstants;
 import com.liferay.portal.tools.rest.builder.internal.util.FileUtil;
 import com.liferay.portal.tools.rest.builder.internal.yaml.Components;
+import com.liferay.portal.tools.rest.builder.internal.yaml.ConfigYAML;
 import com.liferay.portal.tools.rest.builder.internal.yaml.Configuration;
 import com.liferay.portal.tools.rest.builder.internal.yaml.Schema;
 
@@ -108,6 +109,34 @@ public class RESTBuilder {
 			Yaml yaml = new Yaml(constructor, representer);
 
 			return yaml.loadAs(inputStream, Configuration.class);
+		}
+		catch (FileNotFoundException fnfe) {
+			System.out.println(fnfe.getMessage());
+
+			return null;
+		}
+		catch (IOException ioe) {
+			ioe.printStackTrace();
+
+			return null;
+		}
+	}
+
+	private ConfigYAML _getConfigYAML(String restConfigFileName) {
+		File file = new File(restConfigFileName);
+
+		try (InputStream inputStream = new FileInputStream(file)) {
+			Constructor constructor = new Constructor(ConfigYAML.class);
+
+			Representer representer = new Representer();
+
+			PropertyUtils propertyUtils = representer.getPropertyUtils();
+
+			propertyUtils.setSkipMissingProperties(true);
+
+			Yaml yaml = new Yaml(constructor, representer);
+
+			return yaml.loadAs(inputStream, ConfigYAML.class);
 		}
 		catch (FileNotFoundException fnfe) {
 			System.out.println(fnfe.getMessage());

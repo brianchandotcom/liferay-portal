@@ -15,20 +15,56 @@
 package com.liferay.data.engine.service;
 
 /**
+ * This class represents a response of the save Data Record Collection model
+ * permissions request to a user
+ *
  * @author Leonardo Barros
+ * @review
  */
 public final class DEDataRecordCollectionSaveModelPermissionsResponse {
 
+	/**
+	 * Returns the Data Record Collection ID of the save model permissions
+	 * response.
+	 *
+	 * @return deDataRecordCollectionId
+	 * @review
+	 */
 	public long getDEDataRecordCollectionId() {
 		return _deDataRecordCollectionId;
 	}
 
+	/**
+	 * Constructs the Save Data Record Collections Model Permissions response.
+	 * The Data Record Collection ID must be an argument in the response
+	 * builder.
+	 *
+	 * @return {@link DEDataRecordCollectionSaveModelPermissionsResponse}
+	 * @review
+	 */
 	public static final class Builder {
 
+		/**
+		 * Returns the Save Data Record Collection Model Permissions builder
+		 *
+		 * @param deDataRecordCollectionId the primary key of the Data Record
+		 * Collection
+		 * @return {@link Builder}
+		 * @review
+		 */
 		public static Builder newBuilder(long deDataRecordCollectionId) {
 			return new Builder(deDataRecordCollectionId);
 		}
 
+		/**
+		 * Includes a data record collection ID in the Save Model Permission
+		 * response.
+		 *
+		 * @param deDataRecordCollectionId the primary key of the Data Record
+		 * Collection
+		 * @return {@link DEDataRecordCollectionSaveModelPermissionsResponse}
+		 * @review
+		 */
 		public static DEDataRecordCollectionSaveModelPermissionsResponse of(
 			long deDataRecordCollectionId) {
 
@@ -37,6 +73,13 @@ public final class DEDataRecordCollectionSaveModelPermissionsResponse {
 			).build();
 		}
 
+		/**
+		 * Constructs the Save Data Record Collections Model Permissions
+		 * response.
+		 *
+		 * @return {@link DEDataRecordCollectionSaveModelPermissionsResponse}
+		 * @review
+		 */
 		public DEDataRecordCollectionSaveModelPermissionsResponse build() {
 			return _deDataRecordCollectionSaveModelPermissionsResponse;
 		}

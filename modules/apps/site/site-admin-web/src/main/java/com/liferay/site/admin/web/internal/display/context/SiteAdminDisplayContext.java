@@ -22,15 +22,12 @@ import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.portal.kernel.model.MembershipRequestConstants;
 import com.liferay.portal.kernel.model.OrganizationConstants;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
-import com.liferay.portal.kernel.security.membershippolicy.SiteMembershipPolicyUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetPrototypeServiceUtil;
 import com.liferay.portal.kernel.service.MembershipRequestLocalServiceUtil;
@@ -43,7 +40,6 @@ import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -140,14 +136,6 @@ public class SiteAdminDisplayContext {
 		breadcrumbEntries.add(breadcrumbEntry);
 
 		return breadcrumbEntries;
-	}
-
-	public int getChildSitesCount(Group group) {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		return GroupLocalServiceUtil.getGroupsCount(
-			themeDisplay.getCompanyId(), group.getGroupId(), true);
 	}
 
 	public String getDisplayStyle() {
@@ -330,49 +318,6 @@ public class SiteAdminDisplayContext {
 				permissionChecker, ActionKeys.ADD_COMMUNITY) ||
 			 GroupPermissionUtil.contains(
 				 permissionChecker, group, ActionKeys.ADD_COMMUNITY))) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	public boolean hasDeleteGroupPermission(Group group)
-		throws PortalException {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		PermissionChecker permissionChecker =
-			themeDisplay.getPermissionChecker();
-
-		if (!group.isCompany() &&
-			GroupPermissionUtil.contains(
-				permissionChecker, group, ActionKeys.DELETE) &&
-			!PortalUtil.isSystemGroup(group.getGroupKey())) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	public boolean hasEditAssignmentsPermission(
-			Group group, boolean organizationUser, boolean userGroupUser)
-		throws PortalException {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		User user = themeDisplay.getUser();
-
-		if (!group.isCompany() && !(organizationUser || userGroupUser) &&
-			((group.getType() == GroupConstants.TYPE_SITE_OPEN) ||
-			 (group.getType() == GroupConstants.TYPE_SITE_RESTRICTED)) &&
-			GroupLocalServiceUtil.hasUserGroup(
-				user.getUserId(), group.getGroupId()) &&
-			!SiteMembershipPolicyUtil.isMembershipRequired(
-				user.getUserId(), group.getGroupId())) {
 
 			return true;
 		}

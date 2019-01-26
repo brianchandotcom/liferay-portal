@@ -17,18 +17,11 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String displayStyle = GetterUtil.getString((String)request.getAttribute("view.jsp-displayStyle"));
-SearchContainer groupSearch = (SearchContainer)request.getAttribute("view.jsp-groupSearchContainer");
-
-SiteChecker siteChecker = new SiteChecker(liferayPortletResponse);
-
-siteChecker.setRememberCheckBoxStateURLRegex("^(?!.*" + liferayPortletResponse.getNamespace() + "redirect).*(groupId=" + siteAdminDisplayContext.getGroupId() + ")");
+GroupURLProvider groupURLProvider = (GroupURLProvider)request.getAttribute(SiteWebKeys.GROUP_URL_PROVIDER);
 %>
 
 <liferay-ui:search-container
-	id="sites"
-	rowChecker="<%= siteChecker %>"
-	searchContainer="<%= groupSearch %>"
+	searchContainer="<%= siteAdminDisplayContext.getSearchContainer() %>"
 >
 	<liferay-ui:search-container-row
 		className="com.liferay.portal.kernel.model.Group"
@@ -36,7 +29,6 @@ siteChecker.setRememberCheckBoxStateURLRegex("^(?!.*" + liferayPortletResponse.g
 		keyProperty="groupId"
 		modelVar="curGroup"
 		rowIdProperty="friendlyURL"
-		rowVar="row"
 	>
 
 		<%
@@ -48,20 +40,16 @@ siteChecker.setRememberCheckBoxStateURLRegex("^(?!.*" + liferayPortletResponse.g
 
 		PortletURL viewSubsitesURL = null;
 
-		if (hasAddChildSitePermisison && (row != null)) {
+		if (hasAddChildSitePermisison) {
 			viewSubsitesURL = renderResponse.createRenderURL();
 
 			viewSubsitesURL.setParameter("mvcPath", "/view.jsp");
 			viewSubsitesURL.setParameter("groupId", String.valueOf(curGroup.getGroupId()));
 		}
-
-		GroupURLProvider groupURLProvider = (GroupURLProvider)request.getAttribute(SiteWebKeys.GROUP_URL_PROVIDER);
-
-		String viewSiteURL = groupURLProvider.getGroupURL(curGroup, liferayPortletRequest);
 		%>
 
 		<c:choose>
-			<c:when test='<%= displayStyle.equals("descriptive") %>'>
+			<c:when test='<%= Objects.equals(siteAdminDisplayContext.getDisplayStyle(), "descriptive") %>'>
 				<c:choose>
 					<c:when test="<%= Validator.isNotNull(siteImageURL) %>">
 						<liferay-ui:search-container-column-image
@@ -79,7 +67,7 @@ siteChecker.setRememberCheckBoxStateURLRegex("^(?!.*" + liferayPortletResponse.g
 					colspan="<%= 2 %>"
 				>
 					<h5>
-						<aui:a href="<%= viewSiteURL %>" label="<%= HtmlUtil.escape(curGroup.getDescriptiveName(locale)) %>" localizeLabel="<%= false %>" />
+						<aui:a href="<%= groupURLProvider.getGroupURL(curGroup, liferayPortletRequest) %>" label="<%= HtmlUtil.escape(curGroup.getDescriptiveName(locale)) %>" localizeLabel="<%= false %>" />
 					</h5>
 
 					<ul class="list-inline">
@@ -108,7 +96,7 @@ siteChecker.setRememberCheckBoxStateURLRegex("^(?!.*" + liferayPortletResponse.g
 					path="/site_action.jsp"
 				/>
 			</c:when>
-			<c:when test='<%= displayStyle.equals("icon") %>'>
+			<c:when test='<%= Objects.equals(siteAdminDisplayContext.getDisplayStyle(), "icon") %>'>
 
 				<%
 				row.setCssClass("entry-card lfr-asset-item " + row.getCssClass());
@@ -124,7 +112,7 @@ siteChecker.setRememberCheckBoxStateURLRegex("^(?!.*" + liferayPortletResponse.g
 								resultRow="<%= row %>"
 								rowChecker="<%= searchContainer.getRowChecker() %>"
 								title="<%= curGroup.getDescriptiveName(locale) %>"
-								url="<%= viewSiteURL %>"
+								url="<%= groupURLProvider.getGroupURL(curGroup, liferayPortletRequest) %>"
 							>
 								<%@ include file="/site_vertical_card.jspf" %>
 							</liferay-frontend:vertical-card>
@@ -137,7 +125,7 @@ siteChecker.setRememberCheckBoxStateURLRegex("^(?!.*" + liferayPortletResponse.g
 								resultRow="<%= row %>"
 								rowChecker="<%= searchContainer.getRowChecker() %>"
 								title="<%= curGroup.getDescriptiveName(locale) %>"
-								url="<%= viewSiteURL %>"
+								url="<%= groupURLProvider.getGroupURL(curGroup, liferayPortletRequest) %>"
 							>
 								<%@ include file="/site_vertical_card.jspf" %>
 							</liferay-frontend:icon-vertical-card>
@@ -152,7 +140,7 @@ siteChecker.setRememberCheckBoxStateURLRegex("^(?!.*" + liferayPortletResponse.g
 	</liferay-ui:search-container-row>
 
 	<liferay-ui:search-iterator
-		displayStyle="<%= displayStyle %>"
+		displayStyle="<%= siteAdminDisplayContext.getDisplayStyle() %>"
 		markupView="lexicon"
 	/>
 </liferay-ui:search-container>

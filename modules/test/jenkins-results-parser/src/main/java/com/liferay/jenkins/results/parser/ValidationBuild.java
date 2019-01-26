@@ -106,27 +106,13 @@ public class ValidationBuild extends BaseBuild {
 			}
 
 			Dom4JUtil.addToElement(
-				rootElement,
-				Dom4JUtil.getNewElement(
-					"h5", null, "For full console, click ",
-					Dom4JUtil.getNewAnchorElement(
-						getBuildURL() + "/consoleText", "here"),
-					"."));
-
-			Dom4JUtil.addToElement(
-				rootElement, Dom4JUtil.getNewElement("hr"),
-				getTestSummaryElement());
+				rootElement, getFullConsoleAnchorElement(),
+				Dom4JUtil.getNewElement("hr"), getTestSummaryElement());
 		}
 		else {
-			Dom4JUtil.addToElement(rootElement, getFailureMessageElement());
-
 			Dom4JUtil.addToElement(
-				rootElement,
-				Dom4JUtil.getNewElement(
-					"h5", null, "For full console, click ",
-					Dom4JUtil.getNewAnchorElement(
-						getBuildURL() + "/consoleText", "here"),
-					"."));
+				rootElement, getFailureMessageElement(),
+				getFullConsoleAnchorElement());
 		}
 
 		return rootElement;
@@ -197,6 +183,14 @@ public class ValidationBuild extends BaseBuild {
 	@Override
 	protected FailureMessageGenerator[] getFailureMessageGenerators() {
 		return _FAILURE_MESSAGE_GENERATORS;
+	}
+
+	protected Element getFullConsoleAnchorElement() {
+		return Dom4JUtil.getNewElement(
+			"h5", null, "For full console, click ",
+			Dom4JUtil.getNewAnchorElement(
+				getBuildURL() + "/consoleText", "here"),
+			".");
 	}
 
 	@Override

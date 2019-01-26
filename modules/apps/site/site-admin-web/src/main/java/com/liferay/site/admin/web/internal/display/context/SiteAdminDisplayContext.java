@@ -14,14 +14,7 @@
 
 package com.liferay.site.admin.web.internal.display.context;
 
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
-import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
@@ -66,9 +59,7 @@ import com.liferay.site.util.GroupSearchProvider;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Objects;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -90,24 +81,8 @@ public class SiteAdminDisplayContext {
 		_siteInitializerRegistry =
 			(SiteInitializerRegistry)request.getAttribute(
 				SiteWebKeys.SITE_INITIALIZER_REGISTRY);
-
 		_groupSearchProvider = (GroupSearchProvider)request.getAttribute(
 			SiteWebKeys.GROUP_SEARCH_PROVIDER);
-	}
-
-	public List<DropdownItem> getActionDropdownItems() {
-		return new DropdownItemList() {
-			{
-				add(
-					dropdownItem -> {
-						dropdownItem.putData("action", "deleteSites");
-						dropdownItem.setIcon("times-circle");
-						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "delete"));
-						dropdownItem.setQuickAction(true);
-					});
-			}
-		};
 	}
 
 	public int getChildSitesCount(Group group) {
@@ -116,44 +91,6 @@ public class SiteAdminDisplayContext {
 
 		return GroupLocalServiceUtil.getGroupsCount(
 			themeDisplay.getCompanyId(), group.getGroupId(), true);
-	}
-
-	public String getClearResultsURL() {
-		PortletURL clearResultsURL = getPortletURL();
-
-		clearResultsURL.setParameter("orderByCol", _getOrderByCol());
-		clearResultsURL.setParameter("orderByType", getOrderByType());
-
-		return clearResultsURL.toString();
-	}
-
-	public CreationMenu getCreationMenu() throws PortalException {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		PortletURL addSiteURL = _liferayPortletResponse.createRenderURL();
-
-		addSiteURL.setParameter("jspPage", "/select_site_initializer.jsp");
-		addSiteURL.setParameter("redirect", themeDisplay.getURLCurrent());
-
-		Group group = getGroup();
-
-		if ((group != null) && hasAddChildSitePermission(group)) {
-			addSiteURL.setParameter(
-				"parentGroupSearchContainerPrimaryKeys",
-				String.valueOf(group.getGroupId()));
-		}
-
-		return new CreationMenu() {
-			{
-				addPrimaryDropdownItem(
-					dropdownItem -> {
-						dropdownItem.setHref(addSiteURL.toString());
-						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "add"));
-					});
-			}
-		};
 	}
 
 	public String getDisplayStyle() {
@@ -168,28 +105,6 @@ public class SiteAdminDisplayContext {
 			SiteAdminPortletKeys.SITE_ADMIN, "display-style", "list");
 
 		return _displayStyle;
-	}
-
-	public List<DropdownItem> getFilterDropdownItems() {
-		return new DropdownItemList() {
-			{
-				addGroup(
-					dropdownGroupItem -> {
-						dropdownGroupItem.setDropdownItems(
-							_getFilterNavigationDropdownItems());
-						dropdownGroupItem.setLabel(
-							LanguageUtil.get(_request, "filter-by-navigation"));
-					});
-
-				addGroup(
-					dropdownGroupItem -> {
-						dropdownGroupItem.setDropdownItems(
-							_getOrderByDropdownItems());
-						dropdownGroupItem.setLabel(
-							LanguageUtil.get(_request, "order-by"));
-					});
-			}
-		};
 	}
 
 	public Group getGroup() throws PortalException {
@@ -209,16 +124,6 @@ public class SiteAdminDisplayContext {
 		}
 
 		return _groupId;
-	}
-
-	public String getOrderByType() {
-		if (Validator.isNotNull(_orderByType)) {
-			return _orderByType;
-		}
-
-		_orderByType = ParamUtil.getString(_request, "orderByType", "asc");
-
-		return _orderByType;
 	}
 
 	public int getOrganizationsCount(Group group) {
@@ -257,15 +162,6 @@ public class SiteAdminDisplayContext {
 		portletURL.setParameter("displayStyle", getDisplayStyle());
 
 		return portletURL;
-	}
-
-	public String getSearchActionURL() {
-		PortletURL searchTagURL = getPortletURL();
-
-		searchTagURL.setParameter("orderByCol", _getOrderByCol());
-		searchTagURL.setParameter("orderByType", getOrderByType());
-
-		return searchTagURL.toString();
 	}
 
 	public GroupSearch getSearchContainer() throws PortalException {
@@ -331,24 +227,6 @@ public class SiteAdminDisplayContext {
 		return siteInitializerItemDisplayContexts;
 	}
 
-	public String getSortingURL() {
-		PortletURL sortingURL = getPortletURL();
-
-		sortingURL.setParameter("keywords", _getKeywords());
-		sortingURL.setParameter("orderByCol", _getOrderByCol());
-		sortingURL.setParameter(
-			"orderByType",
-			Objects.equals(getOrderByType(), "asc") ? "desc" : "asc");
-
-		return sortingURL.toString();
-	}
-
-	public int getTotalItems() throws PortalException {
-		SearchContainer groupSearch = getSearchContainer();
-
-		return groupSearch.getTotal();
-	}
-
 	public int getUserGroupsCount(Group group) {
 		LinkedHashMap<String, Object> userGroupParams = new LinkedHashMap<>();
 
@@ -379,22 +257,6 @@ public class SiteAdminDisplayContext {
 		return UserLocalServiceUtil.searchCount(
 			company.getCompanyId(), null, WorkflowConstants.STATUS_APPROVED,
 			userParams);
-	}
-
-	public List<ViewTypeItem> getViewTypeItems() {
-		PortletURL portletURL = _liferayPortletResponse.createActionURL();
-
-		portletURL.setParameter(
-			ActionRequest.ACTION_NAME, "changeDisplayStyle");
-		portletURL.setParameter("redirect", PortalUtil.getCurrentURL(_request));
-
-		return new ViewTypeItemList(portletURL, getDisplayStyle()) {
-			{
-				addCardViewTypeItem();
-				addListViewTypeItem();
-				addTableViewTypeItem();
-			}
-		};
 	}
 
 	public boolean hasAddChildSitePermission(Group group)
@@ -461,62 +323,12 @@ public class SiteAdminDisplayContext {
 		return false;
 	}
 
-	private List<DropdownItem> _getFilterNavigationDropdownItems() {
-		return new DropdownItemList() {
-			{
-				add(
-					dropdownItem -> {
-						dropdownItem.setActive(true);
-						dropdownItem.setHref(getPortletURL());
-						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "all"));
-					});
-			}
-		};
-	}
-
-	private String _getKeywords() {
-		if (_keywords == null) {
-			_keywords = ParamUtil.getString(_request, "keywords");
-		}
-
-		return _keywords;
-	}
-
-	private String _getOrderByCol() {
-		if (Validator.isNotNull(_orderByCol)) {
-			return _orderByCol;
-		}
-
-		_orderByCol = ParamUtil.getString(_request, "orderByCol", "name");
-
-		return _orderByCol;
-	}
-
-	private List<DropdownItem> _getOrderByDropdownItems() {
-		return new DropdownItemList() {
-			{
-				add(
-					dropdownItem -> {
-						dropdownItem.setActive(true);
-						dropdownItem.setHref(
-							getPortletURL(), "orderByCol", "name");
-						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "name"));
-					});
-			}
-		};
-	}
-
 	private String _displayStyle;
 	private Group _group;
 	private long _groupId;
 	private final GroupSearchProvider _groupSearchProvider;
-	private String _keywords;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
-	private String _orderByCol;
-	private String _orderByType;
 	private final HttpServletRequest _request;
 	private final SiteInitializerRegistry _siteInitializerRegistry;
 

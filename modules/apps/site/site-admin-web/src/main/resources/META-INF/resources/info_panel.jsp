@@ -20,20 +20,18 @@
 List<Group> groups = (List<Group>)request.getAttribute(SiteAdminWebKeys.GROUP_ENTRIES);
 
 if (ListUtil.isEmpty(groups)) {
-	long groupId = GetterUtil.getLong((String)request.getAttribute("view.jsp-groupId"), ParamUtil.getLong(request, "groupId"));
+	groups = new ArrayList<>();
 
-	groups = new ArrayList<Group>();
-
-	Group group = (Group)request.getAttribute("view.jsp-group");
+	Group group = siteAdminDisplayContext.getGroup();
 
 	if (group != null) {
 		groups.add(group);
 	}
-	else if (groupId != GroupConstants.DEFAULT_PARENT_GROUP_ID) {
-		groups.add(GroupLocalServiceUtil.fetchGroup(groupId));
+	else if (siteAdminDisplayContext.getGroupId() != GroupConstants.DEFAULT_PARENT_GROUP_ID) {
+		groups.add(GroupLocalServiceUtil.fetchGroup(siteAdminDisplayContext.getGroupId()));
 	}
 	else {
-		groups.add(siteAdminDisplayContext.getGroup());
+		groups.add(group);
 	}
 }
 

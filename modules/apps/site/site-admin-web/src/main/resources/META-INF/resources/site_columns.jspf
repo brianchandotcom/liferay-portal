@@ -19,7 +19,7 @@
 	name="name"
 	orderable="<%= true %>"
 >
-	<aui:a href="<%= viewSiteURL %>" label="<%= HtmlUtil.escape(curGroup.getDescriptiveName(locale)) %>" localizeLabel="<%= false %>" />
+	<aui:a href="<%= groupURLProvider.getGroupURL(curGroup, liferayPortletRequest) %>" label="<%= HtmlUtil.escape(curGroup.getDescriptiveName(locale)) %>" localizeLabel="<%= false %>" />
 
 	<c:if test="<%= curGroup.isOrganization() %>">
 
@@ -31,25 +31,11 @@
 	</c:if>
 
 	<%
-	List<String> names = new ArrayList<String>();
+	List<String> names = SitesUtil.getOrganizationNames(curGroup, user);
 
-	List<String> organizationNames = SitesUtil.getOrganizationNames(curGroup, user);
+	names.addAll(SitesUtil.getUserGroupNames(curGroup, user));
 
-	names.addAll(organizationNames);
-
-	boolean organizationUser = !organizationNames.isEmpty();
-
-	row.setParameter("organizationUser", organizationUser);
-
-	List<String> userGroupNames = SitesUtil.getUserGroupNames(curGroup, user);
-
-	names.addAll(userGroupNames);
-
-	boolean userGroupUser = !userGroupNames.isEmpty();
-
-	row.setParameter("userGroupUser", userGroupUser);
-
-	if (organizationUser || userGroupUser) {
+	if (ListUtil.isNotEmpty(names)) {
 		String message = StringPool.BLANK;
 
 		if (names.size() == 1) {

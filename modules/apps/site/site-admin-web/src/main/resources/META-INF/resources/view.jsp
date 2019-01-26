@@ -44,20 +44,7 @@ if (group != null) {
 %>
 
 <clay:management-toolbar
-	actionDropdownItems="<%= siteAdminDisplayContext.getActionDropdownItems() %>"
-	clearResultsURL="<%= siteAdminDisplayContext.getClearResultsURL() %>"
-	componentId="siteAdminWebManagementToolbar"
-	creationMenu="<%= PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_COMMUNITY) ? siteAdminDisplayContext.getCreationMenu() : null %>"
-	filterDropdownItems="<%= siteAdminDisplayContext.getFilterDropdownItems() %>"
-	infoPanelId="infoPanelId"
-	itemsTotal="<%= siteAdminDisplayContext.getTotalItems() %>"
-	searchActionURL="<%= siteAdminDisplayContext.getSearchActionURL() %>"
-	searchContainerId="sites"
-	searchFormName="searchFm"
-	showInfoButton="<%= true %>"
-	sortingOrder="<%= siteAdminDisplayContext.getOrderByType() %>"
-	sortingURL="<%= siteAdminDisplayContext.getSortingURL() %>"
-	viewTypeItems="<%= siteAdminDisplayContext.getViewTypeItems() %>"
+	displayContext="<%= new SiteAdminManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, siteAdminDisplayContext) %>"
 />
 
 <div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">

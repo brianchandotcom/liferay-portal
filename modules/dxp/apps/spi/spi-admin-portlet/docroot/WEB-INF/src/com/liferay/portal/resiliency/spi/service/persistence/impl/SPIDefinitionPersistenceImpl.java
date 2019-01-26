@@ -82,36 +82,12 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 		".List1";
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION = FINDER_CLASS_NAME_ENTITY +
 		".List2";
-	private final FinderPath _finderPathWithPaginationFindAll = new FinderPath(SPIDefinitionModelImpl.ENTITY_CACHE_ENABLED,
-			SPIDefinitionModelImpl.FINDER_CACHE_ENABLED,
-			SPIDefinitionImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findAll", new String[0]);
-	private final FinderPath _finderPathWithoutPaginationFindAll = new FinderPath(SPIDefinitionModelImpl.ENTITY_CACHE_ENABLED,
-			SPIDefinitionModelImpl.FINDER_CACHE_ENABLED,
-			SPIDefinitionImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findAll", new String[0]);
-	private final FinderPath _finderPathCountAll = new FinderPath(SPIDefinitionModelImpl.ENTITY_CACHE_ENABLED,
-			SPIDefinitionModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
-	private final FinderPath _finderPathWithPaginationFindByCompanyId = new FinderPath(SPIDefinitionModelImpl.ENTITY_CACHE_ENABLED,
-			SPIDefinitionModelImpl.FINDER_CACHE_ENABLED,
-			SPIDefinitionImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByCompanyId",
-			new String[] {
-				Long.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	private final FinderPath _finderPathWithoutPaginationFindByCompanyId = new FinderPath(SPIDefinitionModelImpl.ENTITY_CACHE_ENABLED,
-			SPIDefinitionModelImpl.FINDER_CACHE_ENABLED,
-			SPIDefinitionImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByCompanyId", new String[] { Long.class.getName() },
-			SPIDefinitionModelImpl.COMPANYID_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByCompanyId = new FinderPath(SPIDefinitionModelImpl.ENTITY_CACHE_ENABLED,
-			SPIDefinitionModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
-			new String[] { Long.class.getName() });
+	private FinderPath _finderPathWithPaginationFindAll;
+	private FinderPath _finderPathWithoutPaginationFindAll;
+	private FinderPath _finderPathCountAll;
+	private FinderPath _finderPathWithPaginationFindByCompanyId;
+	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
+	private FinderPath _finderPathCountByCompanyId;
 
 	/**
 	 * Returns all the spi definitions where companyId = &#63;.
@@ -957,16 +933,8 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 	}
 
 	private static final String _FINDER_COLUMN_COMPANYID_COMPANYID_2 = "spiDefinition.companyId = ?";
-	private final FinderPath _finderPathFetchByC_N = new FinderPath(SPIDefinitionModelImpl.ENTITY_CACHE_ENABLED,
-			SPIDefinitionModelImpl.FINDER_CACHE_ENABLED,
-			SPIDefinitionImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByC_N",
-			new String[] { Long.class.getName(), String.class.getName() },
-			SPIDefinitionModelImpl.COMPANYID_COLUMN_BITMASK |
-			SPIDefinitionModelImpl.NAME_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByC_N = new FinderPath(SPIDefinitionModelImpl.ENTITY_CACHE_ENABLED,
-			SPIDefinitionModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_N",
-			new String[] { Long.class.getName(), String.class.getName() });
+	private FinderPath _finderPathFetchByC_N;
+	private FinderPath _finderPathCountByC_N;
 
 	/**
 	 * Returns the spi definition where companyId = &#63; and name = &#63; or throws a {@link NoSuchDefinitionException} if it could not be found.
@@ -1213,31 +1181,10 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 	private static final String _FINDER_COLUMN_C_N_COMPANYID_2 = "spiDefinition.companyId = ? AND ";
 	private static final String _FINDER_COLUMN_C_N_NAME_2 = "spiDefinition.name = ?";
 	private static final String _FINDER_COLUMN_C_N_NAME_3 = "(spiDefinition.name IS NULL OR spiDefinition.name = '')";
-	private final FinderPath _finderPathWithPaginationFindByC_S = new FinderPath(SPIDefinitionModelImpl.ENTITY_CACHE_ENABLED,
-			SPIDefinitionModelImpl.FINDER_CACHE_ENABLED,
-			SPIDefinitionImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByC_S",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	private final FinderPath _finderPathWithoutPaginationFindByC_S = new FinderPath(SPIDefinitionModelImpl.ENTITY_CACHE_ENABLED,
-			SPIDefinitionModelImpl.FINDER_CACHE_ENABLED,
-			SPIDefinitionImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByC_S",
-			new String[] { Long.class.getName(), Integer.class.getName() },
-			SPIDefinitionModelImpl.COMPANYID_COLUMN_BITMASK |
-			SPIDefinitionModelImpl.STATUS_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByC_S = new FinderPath(SPIDefinitionModelImpl.ENTITY_CACHE_ENABLED,
-			SPIDefinitionModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_S",
-			new String[] { Long.class.getName(), Integer.class.getName() });
-	private final FinderPath _finderPathWithPaginationCountByC_S = new FinderPath(SPIDefinitionModelImpl.ENTITY_CACHE_ENABLED,
-			SPIDefinitionModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_S",
-			new String[] { Long.class.getName(), Integer.class.getName() });
+	private FinderPath _finderPathWithPaginationFindByC_S;
+	private FinderPath _finderPathWithoutPaginationFindByC_S;
+	private FinderPath _finderPathCountByC_S;
+	private FinderPath _finderPathWithPaginationCountByC_S;
 
 	/**
 	 * Returns all the spi definitions where companyId = &#63; and status = &#63;.
@@ -2632,16 +2579,8 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 	private static final String _FINDER_COLUMN_C_S_COMPANYID_2 = "spiDefinition.companyId = ? AND ";
 	private static final String _FINDER_COLUMN_C_S_STATUS_2 = "spiDefinition.status = ?";
 	private static final String _FINDER_COLUMN_C_S_STATUS_7 = "spiDefinition.status IN (";
-	private final FinderPath _finderPathFetchByCA_CP = new FinderPath(SPIDefinitionModelImpl.ENTITY_CACHE_ENABLED,
-			SPIDefinitionModelImpl.FINDER_CACHE_ENABLED,
-			SPIDefinitionImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByCA_CP",
-			new String[] { String.class.getName(), Integer.class.getName() },
-			SPIDefinitionModelImpl.CONNECTORADDRESS_COLUMN_BITMASK |
-			SPIDefinitionModelImpl.CONNECTORPORT_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByCA_CP = new FinderPath(SPIDefinitionModelImpl.ENTITY_CACHE_ENABLED,
-			SPIDefinitionModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCA_CP",
-			new String[] { String.class.getName(), Integer.class.getName() });
+	private FinderPath _finderPathFetchByCA_CP;
+	private FinderPath _finderPathCountByCA_CP;
 
 	/**
 	 * Returns the spi definition where connectorAddress = &#63; and connectorPort = &#63; or throws a {@link NoSuchDefinitionException} if it could not be found.
@@ -3567,6 +3506,99 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 	 * Initializes the spi definition persistence.
 	 */
 	public void afterPropertiesSet() {
+		_finderPathWithPaginationFindAll = new FinderPath(SPIDefinitionModelImpl.ENTITY_CACHE_ENABLED,
+				SPIDefinitionModelImpl.FINDER_CACHE_ENABLED,
+				SPIDefinitionImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
+
+		_finderPathWithoutPaginationFindAll = new FinderPath(SPIDefinitionModelImpl.ENTITY_CACHE_ENABLED,
+				SPIDefinitionModelImpl.FINDER_CACHE_ENABLED,
+				SPIDefinitionImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
+				new String[0]);
+
+		_finderPathCountAll = new FinderPath(SPIDefinitionModelImpl.ENTITY_CACHE_ENABLED,
+				SPIDefinitionModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+				new String[0]);
+
+		_finderPathWithPaginationFindByCompanyId = new FinderPath(SPIDefinitionModelImpl.ENTITY_CACHE_ENABLED,
+				SPIDefinitionModelImpl.FINDER_CACHE_ENABLED,
+				SPIDefinitionImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
+				new String[] {
+					Long.class.getName(),
+					
+				Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
+
+		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(SPIDefinitionModelImpl.ENTITY_CACHE_ENABLED,
+				SPIDefinitionModelImpl.FINDER_CACHE_ENABLED,
+				SPIDefinitionImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
+				new String[] { Long.class.getName() },
+				SPIDefinitionModelImpl.COMPANYID_COLUMN_BITMASK);
+
+		_finderPathCountByCompanyId = new FinderPath(SPIDefinitionModelImpl.ENTITY_CACHE_ENABLED,
+				SPIDefinitionModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
+				new String[] { Long.class.getName() });
+
+		_finderPathFetchByC_N = new FinderPath(SPIDefinitionModelImpl.ENTITY_CACHE_ENABLED,
+				SPIDefinitionModelImpl.FINDER_CACHE_ENABLED,
+				SPIDefinitionImpl.class, FINDER_CLASS_NAME_ENTITY,
+				"fetchByC_N",
+				new String[] { Long.class.getName(), String.class.getName() },
+				SPIDefinitionModelImpl.COMPANYID_COLUMN_BITMASK |
+				SPIDefinitionModelImpl.NAME_COLUMN_BITMASK);
+
+		_finderPathCountByC_N = new FinderPath(SPIDefinitionModelImpl.ENTITY_CACHE_ENABLED,
+				SPIDefinitionModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_N",
+				new String[] { Long.class.getName(), String.class.getName() });
+
+		_finderPathWithPaginationFindByC_S = new FinderPath(SPIDefinitionModelImpl.ENTITY_CACHE_ENABLED,
+				SPIDefinitionModelImpl.FINDER_CACHE_ENABLED,
+				SPIDefinitionImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_S",
+				new String[] {
+					Long.class.getName(), Integer.class.getName(),
+					
+				Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
+
+		_finderPathWithoutPaginationFindByC_S = new FinderPath(SPIDefinitionModelImpl.ENTITY_CACHE_ENABLED,
+				SPIDefinitionModelImpl.FINDER_CACHE_ENABLED,
+				SPIDefinitionImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_S",
+				new String[] { Long.class.getName(), Integer.class.getName() },
+				SPIDefinitionModelImpl.COMPANYID_COLUMN_BITMASK |
+				SPIDefinitionModelImpl.STATUS_COLUMN_BITMASK);
+
+		_finderPathCountByC_S = new FinderPath(SPIDefinitionModelImpl.ENTITY_CACHE_ENABLED,
+				SPIDefinitionModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_S",
+				new String[] { Long.class.getName(), Integer.class.getName() });
+
+		_finderPathWithPaginationCountByC_S = new FinderPath(SPIDefinitionModelImpl.ENTITY_CACHE_ENABLED,
+				SPIDefinitionModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_S",
+				new String[] { Long.class.getName(), Integer.class.getName() });
+
+		_finderPathFetchByCA_CP = new FinderPath(SPIDefinitionModelImpl.ENTITY_CACHE_ENABLED,
+				SPIDefinitionModelImpl.FINDER_CACHE_ENABLED,
+				SPIDefinitionImpl.class, FINDER_CLASS_NAME_ENTITY,
+				"fetchByCA_CP",
+				new String[] { String.class.getName(), Integer.class.getName() },
+				SPIDefinitionModelImpl.CONNECTORADDRESS_COLUMN_BITMASK |
+				SPIDefinitionModelImpl.CONNECTORPORT_COLUMN_BITMASK);
+
+		_finderPathCountByCA_CP = new FinderPath(SPIDefinitionModelImpl.ENTITY_CACHE_ENABLED,
+				SPIDefinitionModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCA_CP",
+				new String[] { String.class.getName(), Integer.class.getName() });
 	}
 
 	public void destroy() {

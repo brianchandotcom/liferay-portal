@@ -78,37 +78,12 @@ public class OAuthApplicationPersistenceImpl extends BasePersistenceImpl<OAuthAp
 		".List1";
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION = FINDER_CLASS_NAME_ENTITY +
 		".List2";
-	private final FinderPath _finderPathWithPaginationFindAll = new FinderPath(OAuthApplicationModelImpl.ENTITY_CACHE_ENABLED,
-			OAuthApplicationModelImpl.FINDER_CACHE_ENABLED,
-			OAuthApplicationImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findAll", new String[0]);
-	private final FinderPath _finderPathWithoutPaginationFindAll = new FinderPath(OAuthApplicationModelImpl.ENTITY_CACHE_ENABLED,
-			OAuthApplicationModelImpl.FINDER_CACHE_ENABLED,
-			OAuthApplicationImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0]);
-	private final FinderPath _finderPathCountAll = new FinderPath(OAuthApplicationModelImpl.ENTITY_CACHE_ENABLED,
-			OAuthApplicationModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
-	private final FinderPath _finderPathWithPaginationFindByCompanyId = new FinderPath(OAuthApplicationModelImpl.ENTITY_CACHE_ENABLED,
-			OAuthApplicationModelImpl.FINDER_CACHE_ENABLED,
-			OAuthApplicationImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByCompanyId",
-			new String[] {
-				Long.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	private final FinderPath _finderPathWithoutPaginationFindByCompanyId = new FinderPath(OAuthApplicationModelImpl.ENTITY_CACHE_ENABLED,
-			OAuthApplicationModelImpl.FINDER_CACHE_ENABLED,
-			OAuthApplicationImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
-			new String[] { Long.class.getName() },
-			OAuthApplicationModelImpl.COMPANYID_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByCompanyId = new FinderPath(OAuthApplicationModelImpl.ENTITY_CACHE_ENABLED,
-			OAuthApplicationModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
-			new String[] { Long.class.getName() });
+	private FinderPath _finderPathWithPaginationFindAll;
+	private FinderPath _finderPathWithoutPaginationFindAll;
+	private FinderPath _finderPathCountAll;
+	private FinderPath _finderPathWithPaginationFindByCompanyId;
+	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
+	private FinderPath _finderPathCountByCompanyId;
 
 	/**
 	 * Returns all the o auth applications where companyId = &#63;.
@@ -595,26 +570,9 @@ public class OAuthApplicationPersistenceImpl extends BasePersistenceImpl<OAuthAp
 	}
 
 	private static final String _FINDER_COLUMN_COMPANYID_COMPANYID_2 = "oAuthApplication.companyId = ?";
-	private final FinderPath _finderPathWithPaginationFindByUserId = new FinderPath(OAuthApplicationModelImpl.ENTITY_CACHE_ENABLED,
-			OAuthApplicationModelImpl.FINDER_CACHE_ENABLED,
-			OAuthApplicationImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByUserId",
-			new String[] {
-				Long.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	private final FinderPath _finderPathWithoutPaginationFindByUserId = new FinderPath(OAuthApplicationModelImpl.ENTITY_CACHE_ENABLED,
-			OAuthApplicationModelImpl.FINDER_CACHE_ENABLED,
-			OAuthApplicationImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUserId",
-			new String[] { Long.class.getName() },
-			OAuthApplicationModelImpl.USERID_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByUserId = new FinderPath(OAuthApplicationModelImpl.ENTITY_CACHE_ENABLED,
-			OAuthApplicationModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUserId",
-			new String[] { Long.class.getName() });
+	private FinderPath _finderPathWithPaginationFindByUserId;
+	private FinderPath _finderPathWithoutPaginationFindByUserId;
+	private FinderPath _finderPathCountByUserId;
 
 	/**
 	 * Returns all the o auth applications where userId = &#63;.
@@ -1099,15 +1057,8 @@ public class OAuthApplicationPersistenceImpl extends BasePersistenceImpl<OAuthAp
 	}
 
 	private static final String _FINDER_COLUMN_USERID_USERID_2 = "oAuthApplication.userId = ?";
-	private final FinderPath _finderPathFetchByConsumerKey = new FinderPath(OAuthApplicationModelImpl.ENTITY_CACHE_ENABLED,
-			OAuthApplicationModelImpl.FINDER_CACHE_ENABLED,
-			OAuthApplicationImpl.class, FINDER_CLASS_NAME_ENTITY,
-			"fetchByConsumerKey", new String[] { String.class.getName() },
-			OAuthApplicationModelImpl.CONSUMERKEY_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByConsumerKey = new FinderPath(OAuthApplicationModelImpl.ENTITY_CACHE_ENABLED,
-			OAuthApplicationModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByConsumerKey",
-			new String[] { String.class.getName() });
+	private FinderPath _finderPathFetchByConsumerKey;
+	private FinderPath _finderPathCountByConsumerKey;
 
 	/**
 	 * Returns the o auth application where consumerKey = &#63; or throws a {@link NoSuchApplicationException} if it could not be found.
@@ -1325,20 +1276,8 @@ public class OAuthApplicationPersistenceImpl extends BasePersistenceImpl<OAuthAp
 
 	private static final String _FINDER_COLUMN_CONSUMERKEY_CONSUMERKEY_2 = "oAuthApplication.consumerKey = ?";
 	private static final String _FINDER_COLUMN_CONSUMERKEY_CONSUMERKEY_3 = "(oAuthApplication.consumerKey IS NULL OR oAuthApplication.consumerKey = '')";
-	private final FinderPath _finderPathWithPaginationFindByC_N = new FinderPath(OAuthApplicationModelImpl.ENTITY_CACHE_ENABLED,
-			OAuthApplicationModelImpl.FINDER_CACHE_ENABLED,
-			OAuthApplicationImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByC_N",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	private final FinderPath _finderPathWithPaginationCountByC_N = new FinderPath(OAuthApplicationModelImpl.ENTITY_CACHE_ENABLED,
-			OAuthApplicationModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_N",
-			new String[] { Long.class.getName(), String.class.getName() });
+	private FinderPath _finderPathWithPaginationFindByC_N;
+	private FinderPath _finderPathWithPaginationCountByC_N;
 
 	/**
 	 * Returns all the o auth applications where companyId = &#63; and name LIKE &#63;.
@@ -1892,20 +1831,8 @@ public class OAuthApplicationPersistenceImpl extends BasePersistenceImpl<OAuthAp
 	private static final String _FINDER_COLUMN_C_N_COMPANYID_2 = "oAuthApplication.companyId = ? AND ";
 	private static final String _FINDER_COLUMN_C_N_NAME_2 = "lower(oAuthApplication.name) LIKE ?";
 	private static final String _FINDER_COLUMN_C_N_NAME_3 = "(oAuthApplication.name IS NULL OR oAuthApplication.name LIKE '')";
-	private final FinderPath _finderPathWithPaginationFindByU_N = new FinderPath(OAuthApplicationModelImpl.ENTITY_CACHE_ENABLED,
-			OAuthApplicationModelImpl.FINDER_CACHE_ENABLED,
-			OAuthApplicationImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByU_N",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	private final FinderPath _finderPathWithPaginationCountByU_N = new FinderPath(OAuthApplicationModelImpl.ENTITY_CACHE_ENABLED,
-			OAuthApplicationModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByU_N",
-			new String[] { Long.class.getName(), String.class.getName() });
+	private FinderPath _finderPathWithPaginationFindByU_N;
+	private FinderPath _finderPathWithPaginationCountByU_N;
 
 	/**
 	 * Returns all the o auth applications where userId = &#63; and name LIKE &#63;.
@@ -3090,6 +3017,110 @@ public class OAuthApplicationPersistenceImpl extends BasePersistenceImpl<OAuthAp
 	 * Initializes the o auth application persistence.
 	 */
 	public void afterPropertiesSet() {
+		_finderPathWithPaginationFindAll = new FinderPath(OAuthApplicationModelImpl.ENTITY_CACHE_ENABLED,
+				OAuthApplicationModelImpl.FINDER_CACHE_ENABLED,
+				OAuthApplicationImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
+
+		_finderPathWithoutPaginationFindAll = new FinderPath(OAuthApplicationModelImpl.ENTITY_CACHE_ENABLED,
+				OAuthApplicationModelImpl.FINDER_CACHE_ENABLED,
+				OAuthApplicationImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
+				new String[0]);
+
+		_finderPathCountAll = new FinderPath(OAuthApplicationModelImpl.ENTITY_CACHE_ENABLED,
+				OAuthApplicationModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+				new String[0]);
+
+		_finderPathWithPaginationFindByCompanyId = new FinderPath(OAuthApplicationModelImpl.ENTITY_CACHE_ENABLED,
+				OAuthApplicationModelImpl.FINDER_CACHE_ENABLED,
+				OAuthApplicationImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
+				new String[] {
+					Long.class.getName(),
+					
+				Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
+
+		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(OAuthApplicationModelImpl.ENTITY_CACHE_ENABLED,
+				OAuthApplicationModelImpl.FINDER_CACHE_ENABLED,
+				OAuthApplicationImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
+				new String[] { Long.class.getName() },
+				OAuthApplicationModelImpl.COMPANYID_COLUMN_BITMASK);
+
+		_finderPathCountByCompanyId = new FinderPath(OAuthApplicationModelImpl.ENTITY_CACHE_ENABLED,
+				OAuthApplicationModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
+				new String[] { Long.class.getName() });
+
+		_finderPathWithPaginationFindByUserId = new FinderPath(OAuthApplicationModelImpl.ENTITY_CACHE_ENABLED,
+				OAuthApplicationModelImpl.FINDER_CACHE_ENABLED,
+				OAuthApplicationImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUserId",
+				new String[] {
+					Long.class.getName(),
+					
+				Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
+
+		_finderPathWithoutPaginationFindByUserId = new FinderPath(OAuthApplicationModelImpl.ENTITY_CACHE_ENABLED,
+				OAuthApplicationModelImpl.FINDER_CACHE_ENABLED,
+				OAuthApplicationImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUserId",
+				new String[] { Long.class.getName() },
+				OAuthApplicationModelImpl.USERID_COLUMN_BITMASK);
+
+		_finderPathCountByUserId = new FinderPath(OAuthApplicationModelImpl.ENTITY_CACHE_ENABLED,
+				OAuthApplicationModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUserId",
+				new String[] { Long.class.getName() });
+
+		_finderPathFetchByConsumerKey = new FinderPath(OAuthApplicationModelImpl.ENTITY_CACHE_ENABLED,
+				OAuthApplicationModelImpl.FINDER_CACHE_ENABLED,
+				OAuthApplicationImpl.class, FINDER_CLASS_NAME_ENTITY,
+				"fetchByConsumerKey", new String[] { String.class.getName() },
+				OAuthApplicationModelImpl.CONSUMERKEY_COLUMN_BITMASK);
+
+		_finderPathCountByConsumerKey = new FinderPath(OAuthApplicationModelImpl.ENTITY_CACHE_ENABLED,
+				OAuthApplicationModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				"countByConsumerKey", new String[] { String.class.getName() });
+
+		_finderPathWithPaginationFindByC_N = new FinderPath(OAuthApplicationModelImpl.ENTITY_CACHE_ENABLED,
+				OAuthApplicationModelImpl.FINDER_CACHE_ENABLED,
+				OAuthApplicationImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_N",
+				new String[] {
+					Long.class.getName(), String.class.getName(),
+					
+				Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
+
+		_finderPathWithPaginationCountByC_N = new FinderPath(OAuthApplicationModelImpl.ENTITY_CACHE_ENABLED,
+				OAuthApplicationModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_N",
+				new String[] { Long.class.getName(), String.class.getName() });
+
+		_finderPathWithPaginationFindByU_N = new FinderPath(OAuthApplicationModelImpl.ENTITY_CACHE_ENABLED,
+				OAuthApplicationModelImpl.FINDER_CACHE_ENABLED,
+				OAuthApplicationImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU_N",
+				new String[] {
+					Long.class.getName(), String.class.getName(),
+					
+				Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
+
+		_finderPathWithPaginationCountByU_N = new FinderPath(OAuthApplicationModelImpl.ENTITY_CACHE_ENABLED,
+				OAuthApplicationModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByU_N",
+				new String[] { Long.class.getName(), String.class.getName() });
 	}
 
 	public void destroy() {

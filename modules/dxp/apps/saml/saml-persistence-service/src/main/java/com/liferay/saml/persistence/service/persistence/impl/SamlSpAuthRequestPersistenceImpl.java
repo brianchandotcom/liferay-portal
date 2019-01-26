@@ -78,31 +78,11 @@ public class SamlSpAuthRequestPersistenceImpl extends BasePersistenceImpl<SamlSp
 		".List1";
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION = FINDER_CLASS_NAME_ENTITY +
 		".List2";
-	private final FinderPath _finderPathWithPaginationFindAll = new FinderPath(SamlSpAuthRequestModelImpl.ENTITY_CACHE_ENABLED,
-			SamlSpAuthRequestModelImpl.FINDER_CACHE_ENABLED,
-			SamlSpAuthRequestImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
-	private final FinderPath _finderPathWithoutPaginationFindAll = new FinderPath(SamlSpAuthRequestModelImpl.ENTITY_CACHE_ENABLED,
-			SamlSpAuthRequestModelImpl.FINDER_CACHE_ENABLED,
-			SamlSpAuthRequestImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0]);
-	private final FinderPath _finderPathCountAll = new FinderPath(SamlSpAuthRequestModelImpl.ENTITY_CACHE_ENABLED,
-			SamlSpAuthRequestModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
-	private final FinderPath _finderPathWithPaginationFindByCreateDate = new FinderPath(SamlSpAuthRequestModelImpl.ENTITY_CACHE_ENABLED,
-			SamlSpAuthRequestModelImpl.FINDER_CACHE_ENABLED,
-			SamlSpAuthRequestImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCreateDate",
-			new String[] {
-				Date.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	private final FinderPath _finderPathWithPaginationCountByCreateDate = new FinderPath(SamlSpAuthRequestModelImpl.ENTITY_CACHE_ENABLED,
-			SamlSpAuthRequestModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByCreateDate",
-			new String[] { Date.class.getName() });
+	private FinderPath _finderPathWithPaginationFindAll;
+	private FinderPath _finderPathWithoutPaginationFindAll;
+	private FinderPath _finderPathCountAll;
+	private FinderPath _finderPathWithPaginationFindByCreateDate;
+	private FinderPath _finderPathWithPaginationCountByCreateDate;
 
 	/**
 	 * Returns all the saml sp auth requests where createDate &lt; &#63;.
@@ -620,17 +600,8 @@ public class SamlSpAuthRequestPersistenceImpl extends BasePersistenceImpl<SamlSp
 
 	private static final String _FINDER_COLUMN_CREATEDATE_CREATEDATE_1 = "samlSpAuthRequest.createDate IS NULL";
 	private static final String _FINDER_COLUMN_CREATEDATE_CREATEDATE_2 = "samlSpAuthRequest.createDate < ?";
-	private final FinderPath _finderPathFetchBySIEI_SSARK = new FinderPath(SamlSpAuthRequestModelImpl.ENTITY_CACHE_ENABLED,
-			SamlSpAuthRequestModelImpl.FINDER_CACHE_ENABLED,
-			SamlSpAuthRequestImpl.class, FINDER_CLASS_NAME_ENTITY,
-			"fetchBySIEI_SSARK",
-			new String[] { String.class.getName(), String.class.getName() },
-			SamlSpAuthRequestModelImpl.SAMLIDPENTITYID_COLUMN_BITMASK |
-			SamlSpAuthRequestModelImpl.SAMLSPAUTHREQUESTKEY_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountBySIEI_SSARK = new FinderPath(SamlSpAuthRequestModelImpl.ENTITY_CACHE_ENABLED,
-			SamlSpAuthRequestModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countBySIEI_SSARK",
-			new String[] { String.class.getName(), String.class.getName() });
+	private FinderPath _finderPathFetchBySIEI_SSARK;
+	private FinderPath _finderPathCountBySIEI_SSARK;
 
 	/**
 	 * Returns the saml sp auth request where samlIdpEntityId = &#63; and samlSpAuthRequestKey = &#63; or throws a {@link NoSuchSpAuthRequestException} if it could not be found.
@@ -1476,6 +1447,50 @@ public class SamlSpAuthRequestPersistenceImpl extends BasePersistenceImpl<SamlSp
 	 * Initializes the saml sp auth request persistence.
 	 */
 	public void afterPropertiesSet() {
+		_finderPathWithPaginationFindAll = new FinderPath(SamlSpAuthRequestModelImpl.ENTITY_CACHE_ENABLED,
+				SamlSpAuthRequestModelImpl.FINDER_CACHE_ENABLED,
+				SamlSpAuthRequestImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
+
+		_finderPathWithoutPaginationFindAll = new FinderPath(SamlSpAuthRequestModelImpl.ENTITY_CACHE_ENABLED,
+				SamlSpAuthRequestModelImpl.FINDER_CACHE_ENABLED,
+				SamlSpAuthRequestImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
+				new String[0]);
+
+		_finderPathCountAll = new FinderPath(SamlSpAuthRequestModelImpl.ENTITY_CACHE_ENABLED,
+				SamlSpAuthRequestModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+				new String[0]);
+
+		_finderPathWithPaginationFindByCreateDate = new FinderPath(SamlSpAuthRequestModelImpl.ENTITY_CACHE_ENABLED,
+				SamlSpAuthRequestModelImpl.FINDER_CACHE_ENABLED,
+				SamlSpAuthRequestImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCreateDate",
+				new String[] {
+					Date.class.getName(),
+					
+				Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
+
+		_finderPathWithPaginationCountByCreateDate = new FinderPath(SamlSpAuthRequestModelImpl.ENTITY_CACHE_ENABLED,
+				SamlSpAuthRequestModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByCreateDate",
+				new String[] { Date.class.getName() });
+
+		_finderPathFetchBySIEI_SSARK = new FinderPath(SamlSpAuthRequestModelImpl.ENTITY_CACHE_ENABLED,
+				SamlSpAuthRequestModelImpl.FINDER_CACHE_ENABLED,
+				SamlSpAuthRequestImpl.class, FINDER_CLASS_NAME_ENTITY,
+				"fetchBySIEI_SSARK",
+				new String[] { String.class.getName(), String.class.getName() },
+				SamlSpAuthRequestModelImpl.SAMLIDPENTITYID_COLUMN_BITMASK |
+				SamlSpAuthRequestModelImpl.SAMLSPAUTHREQUESTKEY_COLUMN_BITMASK);
+
+		_finderPathCountBySIEI_SSARK = new FinderPath(SamlSpAuthRequestModelImpl.ENTITY_CACHE_ENABLED,
+				SamlSpAuthRequestModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countBySIEI_SSARK",
+				new String[] { String.class.getName(), String.class.getName() });
 	}
 
 	public void destroy() {

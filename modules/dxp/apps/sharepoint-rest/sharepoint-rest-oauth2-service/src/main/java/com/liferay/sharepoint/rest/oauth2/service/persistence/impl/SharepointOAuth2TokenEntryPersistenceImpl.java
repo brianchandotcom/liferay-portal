@@ -73,30 +73,11 @@ public class SharepointOAuth2TokenEntryPersistenceImpl
 		".List1";
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION = FINDER_CLASS_NAME_ENTITY +
 		".List2";
-	private final FinderPath _finderPathWithPaginationFindAll = new FinderPath(SharepointOAuth2TokenEntryModelImpl.ENTITY_CACHE_ENABLED,
-			SharepointOAuth2TokenEntryModelImpl.FINDER_CACHE_ENABLED,
-			SharepointOAuth2TokenEntryImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
-	private final FinderPath _finderPathWithoutPaginationFindAll = new FinderPath(SharepointOAuth2TokenEntryModelImpl.ENTITY_CACHE_ENABLED,
-			SharepointOAuth2TokenEntryModelImpl.FINDER_CACHE_ENABLED,
-			SharepointOAuth2TokenEntryImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0]);
-	private final FinderPath _finderPathCountAll = new FinderPath(SharepointOAuth2TokenEntryModelImpl.ENTITY_CACHE_ENABLED,
-			SharepointOAuth2TokenEntryModelImpl.FINDER_CACHE_ENABLED,
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
-			new String[0]);
-	private final FinderPath _finderPathFetchByU_C = new FinderPath(SharepointOAuth2TokenEntryModelImpl.ENTITY_CACHE_ENABLED,
-			SharepointOAuth2TokenEntryModelImpl.FINDER_CACHE_ENABLED,
-			SharepointOAuth2TokenEntryImpl.class, FINDER_CLASS_NAME_ENTITY,
-			"fetchByU_C",
-			new String[] { Long.class.getName(), String.class.getName() },
-			SharepointOAuth2TokenEntryModelImpl.USERID_COLUMN_BITMASK |
-			SharepointOAuth2TokenEntryModelImpl.CONFIGURATIONPID_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountByU_C = new FinderPath(SharepointOAuth2TokenEntryModelImpl.ENTITY_CACHE_ENABLED,
-			SharepointOAuth2TokenEntryModelImpl.FINDER_CACHE_ENABLED,
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByU_C",
-			new String[] { Long.class.getName(), String.class.getName() });
+	private FinderPath _finderPathWithPaginationFindAll;
+	private FinderPath _finderPathWithoutPaginationFindAll;
+	private FinderPath _finderPathCountAll;
+	private FinderPath _finderPathFetchByU_C;
+	private FinderPath _finderPathCountByU_C;
 
 	/**
 	 * Returns the sharepoint o auth2 token entry where userId = &#63; and configurationPid = &#63; or throws a {@link NoSuch2TokenEntryException} if it could not be found.
@@ -910,6 +891,35 @@ public class SharepointOAuth2TokenEntryPersistenceImpl
 	 * Initializes the sharepoint o auth2 token entry persistence.
 	 */
 	public void afterPropertiesSet() {
+		_finderPathWithPaginationFindAll = new FinderPath(SharepointOAuth2TokenEntryModelImpl.ENTITY_CACHE_ENABLED,
+				SharepointOAuth2TokenEntryModelImpl.FINDER_CACHE_ENABLED,
+				SharepointOAuth2TokenEntryImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
+
+		_finderPathWithoutPaginationFindAll = new FinderPath(SharepointOAuth2TokenEntryModelImpl.ENTITY_CACHE_ENABLED,
+				SharepointOAuth2TokenEntryModelImpl.FINDER_CACHE_ENABLED,
+				SharepointOAuth2TokenEntryImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
+				new String[0]);
+
+		_finderPathCountAll = new FinderPath(SharepointOAuth2TokenEntryModelImpl.ENTITY_CACHE_ENABLED,
+				SharepointOAuth2TokenEntryModelImpl.FINDER_CACHE_ENABLED,
+				Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				"countAll", new String[0]);
+
+		_finderPathFetchByU_C = new FinderPath(SharepointOAuth2TokenEntryModelImpl.ENTITY_CACHE_ENABLED,
+				SharepointOAuth2TokenEntryModelImpl.FINDER_CACHE_ENABLED,
+				SharepointOAuth2TokenEntryImpl.class, FINDER_CLASS_NAME_ENTITY,
+				"fetchByU_C",
+				new String[] { Long.class.getName(), String.class.getName() },
+				SharepointOAuth2TokenEntryModelImpl.USERID_COLUMN_BITMASK |
+				SharepointOAuth2TokenEntryModelImpl.CONFIGURATIONPID_COLUMN_BITMASK);
+
+		_finderPathCountByU_C = new FinderPath(SharepointOAuth2TokenEntryModelImpl.ENTITY_CACHE_ENABLED,
+				SharepointOAuth2TokenEntryModelImpl.FINDER_CACHE_ENABLED,
+				Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				"countByU_C",
+				new String[] { Long.class.getName(), String.class.getName() });
 	}
 
 	public void destroy() {

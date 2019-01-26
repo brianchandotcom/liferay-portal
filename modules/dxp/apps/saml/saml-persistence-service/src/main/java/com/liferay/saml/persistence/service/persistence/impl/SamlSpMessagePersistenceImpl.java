@@ -78,31 +78,11 @@ public class SamlSpMessagePersistenceImpl extends BasePersistenceImpl<SamlSpMess
 		".List1";
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION = FINDER_CLASS_NAME_ENTITY +
 		".List2";
-	private final FinderPath _finderPathWithPaginationFindAll = new FinderPath(SamlSpMessageModelImpl.ENTITY_CACHE_ENABLED,
-			SamlSpMessageModelImpl.FINDER_CACHE_ENABLED,
-			SamlSpMessageImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findAll", new String[0]);
-	private final FinderPath _finderPathWithoutPaginationFindAll = new FinderPath(SamlSpMessageModelImpl.ENTITY_CACHE_ENABLED,
-			SamlSpMessageModelImpl.FINDER_CACHE_ENABLED,
-			SamlSpMessageImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findAll", new String[0]);
-	private final FinderPath _finderPathCountAll = new FinderPath(SamlSpMessageModelImpl.ENTITY_CACHE_ENABLED,
-			SamlSpMessageModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
-	private final FinderPath _finderPathWithPaginationFindByExpirationDate = new FinderPath(SamlSpMessageModelImpl.ENTITY_CACHE_ENABLED,
-			SamlSpMessageModelImpl.FINDER_CACHE_ENABLED,
-			SamlSpMessageImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByExpirationDate",
-			new String[] {
-				Date.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	private final FinderPath _finderPathWithPaginationCountByExpirationDate = new FinderPath(SamlSpMessageModelImpl.ENTITY_CACHE_ENABLED,
-			SamlSpMessageModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByExpirationDate",
-			new String[] { Date.class.getName() });
+	private FinderPath _finderPathWithPaginationFindAll;
+	private FinderPath _finderPathWithoutPaginationFindAll;
+	private FinderPath _finderPathCountAll;
+	private FinderPath _finderPathWithPaginationFindByExpirationDate;
+	private FinderPath _finderPathWithPaginationCountByExpirationDate;
 
 	/**
 	 * Returns all the saml sp messages where expirationDate &lt; &#63;.
@@ -621,17 +601,8 @@ public class SamlSpMessagePersistenceImpl extends BasePersistenceImpl<SamlSpMess
 
 	private static final String _FINDER_COLUMN_EXPIRATIONDATE_EXPIRATIONDATE_1 = "samlSpMessage.expirationDate IS NULL";
 	private static final String _FINDER_COLUMN_EXPIRATIONDATE_EXPIRATIONDATE_2 = "samlSpMessage.expirationDate < ?";
-	private final FinderPath _finderPathFetchBySIEI_SIRK = new FinderPath(SamlSpMessageModelImpl.ENTITY_CACHE_ENABLED,
-			SamlSpMessageModelImpl.FINDER_CACHE_ENABLED,
-			SamlSpMessageImpl.class, FINDER_CLASS_NAME_ENTITY,
-			"fetchBySIEI_SIRK",
-			new String[] { String.class.getName(), String.class.getName() },
-			SamlSpMessageModelImpl.SAMLIDPENTITYID_COLUMN_BITMASK |
-			SamlSpMessageModelImpl.SAMLIDPRESPONSEKEY_COLUMN_BITMASK);
-	private final FinderPath _finderPathCountBySIEI_SIRK = new FinderPath(SamlSpMessageModelImpl.ENTITY_CACHE_ENABLED,
-			SamlSpMessageModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countBySIEI_SIRK",
-			new String[] { String.class.getName(), String.class.getName() });
+	private FinderPath _finderPathFetchBySIEI_SIRK;
+	private FinderPath _finderPathCountBySIEI_SIRK;
 
 	/**
 	 * Returns the saml sp message where samlIdpEntityId = &#63; and samlIdpResponseKey = &#63; or throws a {@link NoSuchSpMessageException} if it could not be found.
@@ -1470,6 +1441,50 @@ public class SamlSpMessagePersistenceImpl extends BasePersistenceImpl<SamlSpMess
 	 * Initializes the saml sp message persistence.
 	 */
 	public void afterPropertiesSet() {
+		_finderPathWithPaginationFindAll = new FinderPath(SamlSpMessageModelImpl.ENTITY_CACHE_ENABLED,
+				SamlSpMessageModelImpl.FINDER_CACHE_ENABLED,
+				SamlSpMessageImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
+
+		_finderPathWithoutPaginationFindAll = new FinderPath(SamlSpMessageModelImpl.ENTITY_CACHE_ENABLED,
+				SamlSpMessageModelImpl.FINDER_CACHE_ENABLED,
+				SamlSpMessageImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
+				new String[0]);
+
+		_finderPathCountAll = new FinderPath(SamlSpMessageModelImpl.ENTITY_CACHE_ENABLED,
+				SamlSpMessageModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+				new String[0]);
+
+		_finderPathWithPaginationFindByExpirationDate = new FinderPath(SamlSpMessageModelImpl.ENTITY_CACHE_ENABLED,
+				SamlSpMessageModelImpl.FINDER_CACHE_ENABLED,
+				SamlSpMessageImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByExpirationDate",
+				new String[] {
+					Date.class.getName(),
+					
+				Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
+
+		_finderPathWithPaginationCountByExpirationDate = new FinderPath(SamlSpMessageModelImpl.ENTITY_CACHE_ENABLED,
+				SamlSpMessageModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+				"countByExpirationDate", new String[] { Date.class.getName() });
+
+		_finderPathFetchBySIEI_SIRK = new FinderPath(SamlSpMessageModelImpl.ENTITY_CACHE_ENABLED,
+				SamlSpMessageModelImpl.FINDER_CACHE_ENABLED,
+				SamlSpMessageImpl.class, FINDER_CLASS_NAME_ENTITY,
+				"fetchBySIEI_SIRK",
+				new String[] { String.class.getName(), String.class.getName() },
+				SamlSpMessageModelImpl.SAMLIDPENTITYID_COLUMN_BITMASK |
+				SamlSpMessageModelImpl.SAMLIDPRESPONSEKEY_COLUMN_BITMASK);
+
+		_finderPathCountBySIEI_SIRK = new FinderPath(SamlSpMessageModelImpl.ENTITY_CACHE_ENABLED,
+				SamlSpMessageModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countBySIEI_SIRK",
+				new String[] { String.class.getName(), String.class.getName() });
 	}
 
 	public void destroy() {

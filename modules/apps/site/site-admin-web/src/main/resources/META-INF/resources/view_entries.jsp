@@ -17,8 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String searchContainerId = ParamUtil.getString(request, "searchContainerId");
-
 String displayStyle = GetterUtil.getString((String)request.getAttribute("view.jsp-displayStyle"));
 SearchContainer groupSearch = (SearchContainer)request.getAttribute("view.jsp-groupSearchContainer");
 
@@ -28,7 +26,7 @@ siteChecker.setRememberCheckBoxStateURLRegex("^(?!.*" + liferayPortletResponse.g
 %>
 
 <liferay-ui:search-container
-	id="<%= searchContainerId %>"
+	id="sites"
 	rowChecker="<%= siteChecker %>"
 	searchContainer="<%= groupSearch %>"
 >

@@ -31,10 +31,12 @@ if (group != null) {
 
 	renderResponse.setTitle(HtmlUtil.escape(group.getDescriptiveName(locale)));
 }
+
+SiteAdminManagementToolbarDisplayContext siteAdminManagementToolbarDisplayContext = new SiteAdminManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, siteAdminDisplayContext);
 %>
 
 <clay:management-toolbar
-	displayContext="<%= new SiteAdminManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, siteAdminDisplayContext) %>"
+	displayContext="<%= siteAdminManagementToolbarDisplayContext %>"
 />
 
 <div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
@@ -89,29 +91,17 @@ if (group != null) {
 	</div>
 </div>
 
-<aui:script sandbox="<%= true %>">
-	var deleteSites = function() {
-		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this") %>')) {
-			submitForm(AUI.$(document.<portlet:namespace />fm));
-		}
-	};
-
-	var ACTIONS = {
-		'deleteSites': deleteSites
-	};
-
-	Liferay.componentReady('siteAdminWebManagementToolbar').then(
-		function(managementToolbar) {
-			managementToolbar.on(
-				'actionItemClicked',
-				function(event) {
-					var itemData = event.data.item.data;
-
-					if (itemData && itemData.action && ACTIONS[itemData.action]) {
-						ACTIONS[itemData.action]();
-					}
-				}
-			);
+<aui:script require='<%= npmResolvedPackageName + "/js/ManagementToolbarDefaultEventHandler.es as ManagementToolbarDefaultEventHandler" %>'>
+	Liferay.component(
+		'<%= siteAdminManagementToolbarDisplayContext.getDefaultEventHandler() %>',
+		new ManagementToolbarDefaultEventHandler.default(
+			{
+				namespace: '<portlet:namespace />'
+			}
+		),
+		{
+			destroyOnNavigate: true,
+			portletId: '<%= HtmlUtil.escapeJS(portletDisplay.getId()) %>'
 		}
 	);
 </aui:script>

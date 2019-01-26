@@ -75,15 +75,13 @@ request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 				</div>
 			</c:when>
 			<c:otherwise>
-
-				<%
-				request.setAttribute("info_panel.jsp-group", group);
-				%>
-
 				<div class="sidebar-header">
 					<ul class="sidebar-header-actions">
 						<li>
-							<liferay-util:include page="/site_action.jsp" servletContext="<%= application %>" />
+							<clay:dropdown-actions
+								defaultEventHandler="<%= SiteAdminWebKeys.SITE_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
+								dropdownItems="<%= siteAdminDisplayContext.getActionDropdownItems(group) %>"
+							/>
 						</li>
 					</ul>
 
@@ -200,3 +198,18 @@ request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 		</div>
 	</c:otherwise>
 </c:choose>
+
+<aui:script require='<%= npmResolvedPackageName + "/js/SiteDropdownDefaultEventHandler.es as SiteDropdownDefaultEventHandler" %>'>
+	Liferay.component(
+		'<%= SiteAdminWebKeys.SITE_DROPDOWN_DEFAULT_EVENT_HANDLER %>',
+		new SiteDropdownDefaultEventHandler.default(
+			{
+				namespace: '<portlet:namespace />'
+			}
+		),
+		{
+			destroyOnNavigate: true,
+			portletId: '<%= HtmlUtil.escapeJS(portletDisplay.getId()) %>'
+		}
+	);
+</aui:script>

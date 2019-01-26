@@ -21,4 +21,7 @@ public class SiteAdminWebKeys {
 
 	public static final String GROUP_ENTRIES = "GROUP_ENTRIES";
 
+	public static final String SITE_DROPDOWN_DEFAULT_EVENT_HANDLER =
+		"SITE_DROPDOWN_DEFAULT_EVENT_HANDLER";
+
 }

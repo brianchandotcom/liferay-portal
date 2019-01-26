@@ -106,34 +106,9 @@ GroupURLProvider groupURLProvider = (GroupURLProvider)request.getAttribute(SiteW
 				%>
 
 				<liferay-ui:search-container-column-text>
-					<c:choose>
-						<c:when test="<%= Validator.isNotNull(siteImageURL) %>">
-							<liferay-frontend:vertical-card
-								actionJsp="/site_action.jsp"
-								actionJspServletContext="<%= application %>"
-								imageUrl="<%= siteImageURL %>"
-								resultRow="<%= row %>"
-								rowChecker="<%= searchContainer.getRowChecker() %>"
-								title="<%= curGroup.getDescriptiveName(locale) %>"
-								url="<%= groupURLProvider.getGroupURL(curGroup, liferayPortletRequest) %>"
-							>
-								<%@ include file="/site_vertical_card.jspf" %>
-							</liferay-frontend:vertical-card>
-						</c:when>
-						<c:otherwise>
-							<liferay-frontend:icon-vertical-card
-								actionJsp="/site_action.jsp"
-								actionJspServletContext="<%= application %>"
-								icon="sites"
-								resultRow="<%= row %>"
-								rowChecker="<%= searchContainer.getRowChecker() %>"
-								title="<%= curGroup.getDescriptiveName(locale) %>"
-								url="<%= groupURLProvider.getGroupURL(curGroup, liferayPortletRequest) %>"
-							>
-								<%@ include file="/site_vertical_card.jspf" %>
-							</liferay-frontend:icon-vertical-card>
-						</c:otherwise>
-					</c:choose>
+					<clay:vertical-card
+						verticalCard="<%= new SiteVerticalCard(curGroup, liferayPortletRequest, liferayPortletResponse, searchContainer.getRowChecker(), siteAdminDisplayContext) %>"
+					/>
 				</liferay-ui:search-container-column-text>
 			</c:when>
 			<c:otherwise>

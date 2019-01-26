@@ -816,6 +816,25 @@ definition {
 			dmDocumentTitleEdit = "${dmDocumentTitleEdit}"
 		);
 
+		if (isSet(versioning)) {
+			Panel.expandPanel(panel = "Categorization");
+
+			Check.checkToggleSwitch(
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH",
+				key_toggleSwitchLabel = " Customize the Version Number Increment and Describe My Changes"
+			);
+
+			if ("${revision}" == "Major") {
+				Click(locator1 = "Radio#MAJOR_VERSION");
+			}
+			else if ("${revision}" == "Minor") {
+				Click(locator1 = "Radio#MINOR_VERSION");
+			}
+			else if ("${revision}" == "Current") {
+				Click(locator1 = "Radio#CURRENT_VERSION");
+			}
+		}
+
 		if (isSet(checkedOut)) {
 			Click(locator1 = "Button#SAVE");
 		}

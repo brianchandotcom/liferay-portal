@@ -14,6 +14,7 @@
 
 package com.liferay.users.admin.web.internal.portlet.action;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.User;
@@ -28,20 +29,28 @@ import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUti
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.UserService;
+import com.liferay.portal.kernel.service.permission.OrganizationPermissionUtil;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.users.admin.constants.UsersAdminPortletKeys;
 import com.liferay.users.admin.kernel.util.UsersAdmin;
 
 import java.util.Calendar;
 import java.util.List;
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -101,7 +110,7 @@ public class UpdateUserRolesMVCActionCommand extends BaseMVCActionCommand {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				User.class.getName(), actionRequest);
 
-			_userService.updateUser(
+			user = _userService.updateUser(
 				user.getUserId(), user.getPassword(), null, null,
 				user.isPasswordReset(), null, null, user.getScreenName(),
 				user.getEmailAddress(), user.getFacebookId(), user.getOpenId(),
@@ -117,29 +126,17 @@ public class UpdateUserRolesMVCActionCommand extends BaseMVCActionCommand {
 				user.getOrganizationIds(), roleIds, userGroupRoles,
 				user.getUserGroupIds(), serviceContext);
 
-			PortletConfig portletConfig =
-				(PortletConfig)actionRequest.getAttribute(
-					JavaConstants.JAVAX_PORTLET_CONFIG);
+			User currentUser = _userService.getCurrentUser();
 
-			String portletName = portletConfig.getPortletName();
+			if (currentUser.getUserId() != user.getUserId()) {
+				return;
+			}
 
-			if (portletName.equals(UsersAdminPortletKeys.USERS_ADMIN)) {
-				PermissionChecker permissionChecker =
-					PermissionCheckerFactoryUtil.create(
-						_userService.getCurrentUser());
+			String specialRedirect = _getSpecialRedirect(
+				actionRequest, currentUser);
 
-				boolean hasPermission = PortletPermissionUtil.contains(
-					permissionChecker, UsersAdminPortletKeys.USERS_ADMIN,
-					ActionKeys.ACCESS_IN_CONTROL_PANEL);
-
-				if (!hasPermission) {
-					HttpServletRequest request = _portal.getHttpServletRequest(
-						actionRequest);
-
-					sendRedirect(
-						actionRequest, actionResponse,
-						_portal.getHomeURL(request));
-				}
+			if (Validator.isNotNull(specialRedirect)) {
+				sendRedirect(actionRequest, actionResponse, specialRedirect);
 			}
 		}
 		catch (Exception e) {
@@ -160,6 +157,73 @@ public class UpdateUserRolesMVCActionCommand extends BaseMVCActionCommand {
 			}
 		}
 	}
+
+	private String _getSpecialRedirect(
+			ActionRequest actionRequest, User currentUser)
+		throws Exception {
+
+		PortletConfig portletConfig = (PortletConfig)actionRequest.getAttribute(
+			JavaConstants.JAVAX_PORTLET_CONFIG);
+
+		String portletName = portletConfig.getPortletName();
+
+		PermissionChecker permissionChecker =
+			PermissionCheckerFactoryUtil.create(currentUser);
+
+		if (!PortletPermissionUtil.contains(
+				permissionChecker, portletName,
+				ActionKeys.ACCESS_IN_CONTROL_PANEL)) {
+
+			HttpServletRequest request = _portal.getHttpServletRequest(
+				actionRequest);
+
+			return _portal.getHomeURL(request);
+		}
+
+		if (portletName.equals(UsersAdminPortletKeys.MY_ORGANIZATIONS)) {
+			HttpServletRequest request = _portal.getHttpServletRequest(
+				actionRequest);
+
+			long organizationId = 0;
+
+			String backURL = null;
+
+			String redirect = ParamUtil.getString(request, "redirect");
+
+			String portletNameSpace = _portal.getPortletNamespace(
+				UsersAdminPortletKeys.MY_ORGANIZATIONS);
+
+			if (Validator.isNotNull(redirect)) {
+				Map<String, String[]> parameterMap = _http.getParameterMap(
+					redirect);
+
+				backURL = parameterMap.get(portletNameSpace + "backURL")[0];
+			}
+
+			if (Validator.isNotNull(backURL)) {
+				Map<String, String[]> parameterMap = _http.getParameterMap(
+					backURL);
+
+				organizationId = GetterUtil.getLong(
+					parameterMap.get(portletNameSpace + "organizationId")[0]);
+			}
+
+			if ((organizationId > 0) &&
+				!OrganizationPermissionUtil.contains(
+					permissionChecker, organizationId, ActionKeys.VIEW)) {
+
+				PortletURL portletURL = _portal.getControlPanelPortletURL(
+					request, portletName, PortletRequest.RENDER_PHASE);
+
+				return portletURL.toString();
+			}
+		}
+
+		return StringPool.BLANK;
+	}
+
+	@Reference
+	private Http _http;
 
 	@Reference
 	private Portal _portal;

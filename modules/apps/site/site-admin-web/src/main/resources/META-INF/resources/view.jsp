@@ -19,17 +19,7 @@
 <%
 Group group = siteAdminDisplayContext.getGroup();
 
-PortletURL portletURL = siteAdminDisplayContext.getPortletURL();
-
-PortletURL mainURL = renderResponse.createRenderURL();
-
-mainURL.setParameter("mvcPath", "/view.jsp");
-
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "sites"), mainURL.toString());
-
 if (group != null) {
-	SitesUtil.addPortletBreadcrumbEntries(group, request, mainURL);
-
 	portletDisplay.setShowBackIcon(true);
 
 	PortletURL backURL = renderResponse.createRenderURL();
@@ -61,16 +51,11 @@ if (group != null) {
 		<portlet:actionURL name="deleteGroups" var="deleteGroupsURL" />
 
 		<aui:form action="<%= deleteGroupsURL %>" name="fm">
-			<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
+			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
-			<div id="breadcrumb">
-				<liferay-ui:breadcrumb
-					showCurrentGroup="<%= false %>"
-					showGuestGroup="<%= false %>"
-					showLayout="<%= false %>"
-					showPortletBreadcrumb="<%= true %>"
-				/>
-			</div>
+			<liferay-site-navigation:breadcrumb
+				breadcrumbEntries="<%= siteAdminDisplayContext.getBreadcrumbEntries() %>"
+			/>
 
 			<liferay-ui:error exception="<%= NoSuchLayoutSetException.class %>">
 

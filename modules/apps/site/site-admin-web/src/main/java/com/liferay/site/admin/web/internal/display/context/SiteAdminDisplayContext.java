@@ -15,6 +15,7 @@
 package com.liferay.site.admin.web.internal.display.context;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
@@ -38,6 +39,7 @@ import com.liferay.portal.kernel.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
+import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -57,6 +59,7 @@ import com.liferay.site.initializer.SiteInitializerRegistry;
 import com.liferay.site.util.GroupSearchProvider;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -83,6 +86,60 @@ public class SiteAdminDisplayContext {
 				SiteWebKeys.SITE_INITIALIZER_REGISTRY);
 		_groupSearchProvider = (GroupSearchProvider)request.getAttribute(
 			SiteWebKeys.GROUP_SEARCH_PROVIDER);
+	}
+
+	public List<BreadcrumbEntry> getBreadcrumbEntries() throws PortalException {
+		List<BreadcrumbEntry> breadcrumbEntries = new ArrayList<>();
+
+		BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
+
+		breadcrumbEntry.setTitle(LanguageUtil.get(_request, "sites"));
+
+		PortletURL mainURL = _liferayPortletResponse.createRenderURL();
+
+		mainURL.setParameter("mvcPath", "/view.jsp");
+
+		breadcrumbEntry.setURL(mainURL.toString());
+
+		breadcrumbEntries.add(breadcrumbEntry);
+
+		Group group = getGroup();
+
+		if (group == null) {
+			return breadcrumbEntries;
+		}
+
+		List<Group> ancestorGroups = group.getAncestors();
+
+		Collections.reverse(ancestorGroups);
+
+		for (Group ancestorGroup : ancestorGroups) {
+			breadcrumbEntry = new BreadcrumbEntry();
+
+			breadcrumbEntry.setTitle(ancestorGroup.getDescriptiveName());
+
+			mainURL.setParameter(
+				"groupId", String.valueOf(ancestorGroup.getGroupId()));
+
+			breadcrumbEntry.setURL(mainURL.toString());
+
+			breadcrumbEntries.add(breadcrumbEntry);
+		}
+
+		Group unescapedGroup = group.toUnescapedModel();
+
+		breadcrumbEntry = new BreadcrumbEntry();
+
+		breadcrumbEntry.setTitle(unescapedGroup.getDescriptiveName());
+
+		mainURL.setParameter(
+			"groupId", String.valueOf(unescapedGroup.getGroupId()));
+
+		breadcrumbEntry.setURL(mainURL.toString());
+
+		breadcrumbEntries.add(breadcrumbEntry);
+
+		return breadcrumbEntries;
 	}
 
 	public int getChildSitesCount(Group group) {

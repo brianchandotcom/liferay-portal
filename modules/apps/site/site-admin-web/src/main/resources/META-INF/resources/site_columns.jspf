@@ -131,6 +131,9 @@
 	value='<%= LanguageUtil.get(request, (curGroup.isActive() ? "yes" : "no")) %>'
 />
 
-<liferay-ui:search-container-column-jsp
-	path="/site_action.jsp"
-/>
+<liferay-ui:search-container-column-text>
+	<clay:dropdown-actions
+		defaultEventHandler="<%= SiteAdminWebKeys.SITE_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
+		dropdownItems="<%= siteAdminDisplayContext.getActionDropdownItems(curGroup) %>"
+	/>
+</liferay-ui:search-container-column-text>

@@ -14,6 +14,7 @@
 
 package com.liferay.site.admin.web.internal.display.context;
 
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -49,6 +50,7 @@ import com.liferay.portlet.sitesadmin.search.SiteChecker;
 import com.liferay.portlet.usersadmin.search.GroupSearch;
 import com.liferay.site.admin.web.internal.constants.SiteAdminPortletKeys;
 import com.liferay.site.admin.web.internal.display.context.comparator.SiteInitializerNameComparator;
+import com.liferay.site.admin.web.internal.servlet.taglib.util.SiteActionDropdownItems;
 import com.liferay.site.constants.SiteWebKeys;
 import com.liferay.site.initializer.SiteInitializer;
 import com.liferay.site.initializer.SiteInitializerRegistry;
@@ -82,6 +84,16 @@ public class SiteAdminDisplayContext {
 				SiteWebKeys.SITE_INITIALIZER_REGISTRY);
 		_groupSearchProvider = (GroupSearchProvider)request.getAttribute(
 			SiteWebKeys.GROUP_SEARCH_PROVIDER);
+	}
+
+	public List<DropdownItem> getActionDropdownItems(Group group)
+		throws Exception {
+
+		SiteActionDropdownItems siteActionDropdownItems =
+			new SiteActionDropdownItems(
+				group, _liferayPortletRequest, _liferayPortletResponse, this);
+
+		return siteActionDropdownItems.getActionDropdownItems();
 	}
 
 	public List<BreadcrumbEntry> getBreadcrumbEntries() throws PortalException {

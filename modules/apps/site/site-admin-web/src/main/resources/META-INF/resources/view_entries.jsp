@@ -92,9 +92,12 @@ GroupURLProvider groupURLProvider = (GroupURLProvider)request.getAttribute(SiteW
 					</ul>
 				</liferay-ui:search-container-column-text>
 
-				<liferay-ui:search-container-column-jsp
-					path="/site_action.jsp"
-				/>
+				<liferay-ui:search-container-column-text>
+					<clay:dropdown-actions
+						defaultEventHandler="<%= SiteAdminWebKeys.SITE_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
+						dropdownItems="<%= siteAdminDisplayContext.getActionDropdownItems(curGroup) %>"
+					/>
+				</liferay-ui:search-container-column-text>
 			</c:when>
 			<c:when test='<%= Objects.equals(siteAdminDisplayContext.getDisplayStyle(), "icon") %>'>
 
@@ -144,3 +147,18 @@ GroupURLProvider groupURLProvider = (GroupURLProvider)request.getAttribute(SiteW
 		markupView="lexicon"
 	/>
 </liferay-ui:search-container>
+
+<aui:script require='<%= npmResolvedPackageName + "/js/SiteDropdownDefaultEventHandler.es as SiteDropdownDefaultEventHandler" %>'>
+	Liferay.component(
+		'<%= SiteAdminWebKeys.SITE_DROPDOWN_DEFAULT_EVENT_HANDLER %>',
+		new SiteDropdownDefaultEventHandler.default(
+			{
+				namespace: '<portlet:namespace />'
+			}
+		),
+		{
+			destroyOnNavigate: true,
+			portletId: '<%= HtmlUtil.escapeJS(portletDisplay.getId()) %>'
+		}
+	);
+</aui:script>

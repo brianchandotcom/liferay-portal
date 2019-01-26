@@ -130,6 +130,11 @@ public class SiteAdminManagementToolbarDisplayContext
 	}
 
 	@Override
+	public String getDefaultEventHandler() {
+		return "sitesManagementToolbarDefaultEventHandler";
+	}
+
+	@Override
 	public String getInfoPanelId() {
 		return "infoPanelId";
 	}

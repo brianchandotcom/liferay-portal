@@ -507,7 +507,14 @@ public class BeanPortletExtension implements Extension {
 		for (ServiceRegistration<?> serviceRegistration :
 				_serviceRegistrations) {
 
-			serviceRegistration.unregister();
+			try {
+				serviceRegistration.unregister();
+			}
+			catch (IllegalStateException ise) {
+
+				// The service has already been unregistered
+
+			}
 		}
 
 		_serviceRegistrations.clear();

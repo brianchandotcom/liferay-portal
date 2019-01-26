@@ -17,16 +17,9 @@
 <%@ include file="/init.jsp" %>
 
 <%
-long groupId = siteAdminDisplayContext.getGroupId();
-
 Group group = siteAdminDisplayContext.getGroup();
 
-String displayStyle = siteAdminDisplayContext.getDisplayStyle();
-SearchContainer groupSearch = siteAdminDisplayContext.getSearchContainer();
 PortletURL portletURL = siteAdminDisplayContext.getPortletURL();
-
-request.setAttribute("view.jsp-displayStyle", displayStyle);
-request.setAttribute("view.jsp-groupSearchContainer", groupSearch);
 
 PortletURL mainURL = renderResponse.createRenderURL();
 
@@ -67,68 +60,60 @@ if (group != null) {
 	viewTypeItems="<%= siteAdminDisplayContext.getViewTypeItems() %>"
 />
 
-<div id="<portlet:namespace />sitesContainer">
-	<div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
-		<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/site/info_panel" var="sidebarPanelURL">
-			<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-			<portlet:param name="displayStyle" value="<%= displayStyle %>" />
-		</liferay-portlet:resourceURL>
+<div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
+	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/site/info_panel" var="sidebarPanelURL" />
 
-		<liferay-frontend:sidebar-panel
-			resourceURL="<%= sidebarPanelURL %>"
-			searchContainerId="sites"
-		>
-			<liferay-util:include page="/info_panel.jsp" servletContext="<%= application %>" />
-		</liferay-frontend:sidebar-panel>
+	<liferay-frontend:sidebar-panel
+		resourceURL="<%= sidebarPanelURL %>"
+		searchContainerId="sites"
+	>
+		<liferay-util:include page="/info_panel.jsp" servletContext="<%= application %>" />
+	</liferay-frontend:sidebar-panel>
 
-		<div class="sidenav-content">
-			<portlet:actionURL name="deleteGroups" var="deleteGroupsURL" />
+	<div class="sidenav-content">
+		<portlet:actionURL name="deleteGroups" var="deleteGroupsURL" />
 
-			<aui:form action="<%= deleteGroupsURL %>" name="fm">
-				<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
+		<aui:form action="<%= deleteGroupsURL %>" name="fm">
+			<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
 
-				<div id="breadcrumb">
-					<liferay-ui:breadcrumb
-						showCurrentGroup="<%= false %>"
-						showGuestGroup="<%= false %>"
-						showLayout="<%= false %>"
-						showPortletBreadcrumb="<%= true %>"
-					/>
-				</div>
+			<div id="breadcrumb">
+				<liferay-ui:breadcrumb
+					showCurrentGroup="<%= false %>"
+					showGuestGroup="<%= false %>"
+					showLayout="<%= false %>"
+					showPortletBreadcrumb="<%= true %>"
+				/>
+			</div>
 
-				<liferay-ui:error exception="<%= NoSuchLayoutSetException.class %>">
+			<liferay-ui:error exception="<%= NoSuchLayoutSetException.class %>">
 
-					<%
-					Group curGroup = GroupLocalServiceUtil.getGroup(scopeGroupId);
+				<%
+				Group curGroup = GroupLocalServiceUtil.fetchGroup(scopeGroupId);
 
-					NoSuchLayoutSetException nslse = (NoSuchLayoutSetException)errorException;
+				NoSuchLayoutSetException nslse = (NoSuchLayoutSetException)errorException;
 
-					String message = nslse.getMessage();
+				String message = nslse.getMessage();
 
-					int index = message.indexOf("{");
+				int index = message.indexOf("{");
 
-					if (index > 0) {
-						try {
-							JSONObject jsonObject = JSONFactoryUtil.createJSONObject(message.substring(index));
+				if (index > 0) {
+					JSONObject jsonObject = JSONFactoryUtil.createJSONObject(message.substring(index));
 
-							curGroup = GroupLocalServiceUtil.getGroup(jsonObject.getLong("groupId"));
-						}
-						catch (Exception e) {
-							_log.error(e, e);
-						}
-					}
-					%>
+					curGroup = GroupLocalServiceUtil.fetchGroup(jsonObject.getLong("groupId"));
+				}
+				%>
 
+				<c:if test="<%= curGroup != null %>">
 					<liferay-ui:message arguments="<%= HtmlUtil.escape(curGroup.getDescriptiveName(locale)) %>" key="site-x-does-not-have-any-private-pages" translateArguments="<%= false %>" />
-				</liferay-ui:error>
+				</c:if>
+			</liferay-ui:error>
 
-				<liferay-ui:error exception="<%= RequiredGroupException.MustNotDeleteCurrentGroup.class %>" message="the-site-cannot-be-deleted-or-deactivated-because-you-are-accessing-the-site" />
-				<liferay-ui:error exception="<%= RequiredGroupException.MustNotDeleteGroupThatHasChild.class %>" message="you-cannot-delete-sites-that-have-subsites" />
-				<liferay-ui:error exception="<%= RequiredGroupException.MustNotDeleteSystemGroup.class %>" message="the-site-cannot-be-deleted-or-deactivated-because-it-is-a-required-system-site" />
+			<liferay-ui:error exception="<%= RequiredGroupException.MustNotDeleteCurrentGroup.class %>" message="the-site-cannot-be-deleted-or-deactivated-because-you-are-accessing-the-site" />
+			<liferay-ui:error exception="<%= RequiredGroupException.MustNotDeleteGroupThatHasChild.class %>" message="you-cannot-delete-sites-that-have-subsites" />
+			<liferay-ui:error exception="<%= RequiredGroupException.MustNotDeleteSystemGroup.class %>" message="the-site-cannot-be-deleted-or-deactivated-because-it-is-a-required-system-site" />
 
-				<liferay-util:include page="/view_entries.jsp" servletContext="<%= application %>" />
-			</aui:form>
-		</div>
+			<liferay-util:include page="/view_entries.jsp" servletContext="<%= application %>" />
+		</aui:form>
 	</div>
 </div>
 
@@ -158,7 +143,3 @@ if (group != null) {
 		}
 	);
 </aui:script>
-
-<%!
-private static Log _log = LogFactoryUtil.getLog("com_liferay_site_admin_web.view_jsp");
-%>

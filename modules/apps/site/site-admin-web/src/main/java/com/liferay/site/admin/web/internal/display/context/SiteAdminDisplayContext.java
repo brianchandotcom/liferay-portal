@@ -49,10 +49,12 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.service.persistence.constants.UserGroupFinderConstants;
+import com.liferay.portlet.sitesadmin.search.SiteChecker;
 import com.liferay.portlet.usersadmin.search.GroupSearch;
 import com.liferay.site.admin.web.internal.constants.SiteAdminPortletKeys;
 import com.liferay.site.admin.web.internal.display.context.comparator.SiteInitializerNameComparator;
@@ -267,8 +269,26 @@ public class SiteAdminDisplayContext {
 	}
 
 	public GroupSearch getSearchContainer() throws PortalException {
-		return _groupSearchProvider.getGroupSearch(
+		GroupSearch groupSearch = _groupSearchProvider.getGroupSearch(
 			_liferayPortletRequest, getPortletURL());
+
+		groupSearch.setId("sites");
+
+		SiteChecker siteChecker = new SiteChecker(_liferayPortletResponse);
+
+		StringBundler sb = new StringBundler(5);
+
+		sb.append("^(?!.*");
+		sb.append(_liferayPortletResponse.getNamespace());
+		sb.append("redirect).*(groupId=");
+		sb.append(getGroupId());
+		sb.append(")");
+
+		siteChecker.setRememberCheckBoxStateURLRegex(sb.toString());
+
+		groupSearch.setRowChecker(siteChecker);
+
+		return groupSearch;
 	}
 
 	public List<SiteInitializerItemDisplayContext> getSiteInitializerItems()

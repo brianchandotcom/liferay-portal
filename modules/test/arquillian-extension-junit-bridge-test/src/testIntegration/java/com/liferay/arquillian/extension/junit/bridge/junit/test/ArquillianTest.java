@@ -15,6 +15,9 @@
 package com.liferay.arquillian.extension.junit.bridge.junit.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.test.dependencies.AssumeTestItem;
+import com.liferay.arquillian.extension.junit.bridge.junit.test.dependencies.BatchTestItem1;
+import com.liferay.arquillian.extension.junit.bridge.junit.test.dependencies.BatchTestItem2;
+import com.liferay.arquillian.extension.junit.bridge.junit.test.dependencies.BatchTestItem3;
 import com.liferay.arquillian.extension.junit.bridge.junit.test.dependencies.BeforeAfterClassTestItem;
 import com.liferay.arquillian.extension.junit.bridge.junit.test.dependencies.BeforeAfterTestItem;
 import com.liferay.arquillian.extension.junit.bridge.junit.test.dependencies.ClassRuleTestItem;
@@ -45,6 +48,26 @@ public class ArquillianTest {
 			AssumeTestItem.class);
 
 		assertResult(result, AssumeTestItem.class);
+	}
+
+	@Test
+	public void testBatch() throws IOException {
+		try {
+			Result result = BridgeJUnitTestRunner.runBridgeTests(
+				new BridgeJUnitTestRunner.BridgeRunListener(
+					ArquillianTest.class),
+				BatchTestItem1.class, BatchTestItem2.class,
+				BatchTestItem3.class);
+
+			assertResult(
+				result, BatchTestItem1.class, BatchTestItem2.class,
+				BatchTestItem3.class);
+		}
+		finally {
+			BatchTestItem1.assertAndTearDown();
+			BatchTestItem2.assertAndTearDown();
+			BatchTestItem3.assertAndTearDown();
+		}
 	}
 
 	@Test

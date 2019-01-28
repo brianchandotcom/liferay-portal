@@ -128,15 +128,14 @@ public class UpdateUserRolesMVCActionCommand extends BaseMVCActionCommand {
 
 			User currentUser = _userService.getCurrentUser();
 
-			if (currentUser.getUserId() != user.getUserId()) {
-				return;
-			}
+			if (currentUser.getUserId() == user.getUserId()) {
+				String specialRedirect = _getSpecialRedirect(
+					actionRequest, currentUser);
 
-			String specialRedirect = _getSpecialRedirect(
-				actionRequest, currentUser);
-
-			if (Validator.isNotNull(specialRedirect)) {
-				sendRedirect(actionRequest, actionResponse, specialRedirect);
+				if (Validator.isNotNull(specialRedirect)) {
+					sendRedirect(
+						actionRequest, actionResponse, specialRedirect);
+				}
 			}
 		}
 		catch (Exception e) {

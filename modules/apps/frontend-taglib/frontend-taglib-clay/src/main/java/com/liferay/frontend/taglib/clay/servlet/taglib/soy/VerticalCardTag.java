@@ -135,11 +135,11 @@ public class VerticalCardTag extends BaseClayCardTag {
 		}
 
 		if (context.get("stickerClasses") == null) {
-			setStickerImageAlt(_verticalCard.getStickerCssClass());
+			setStickerCssClass(_verticalCard.getStickerCssClass());
 		}
 
 		if (context.get("stickerIcon") == null) {
-			setStickerImageAlt(_verticalCard.getStickerIcon());
+			setStickerIcon(_verticalCard.getStickerIcon());
 		}
 
 		if (context.get("stickerImageAlt") == null) {

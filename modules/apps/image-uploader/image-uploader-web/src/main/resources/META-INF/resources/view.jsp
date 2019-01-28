@@ -100,7 +100,7 @@ String randomNamespace = ParamUtil.getString(request, "randomNamespace");
 							</c:if>
 
 							<div class="button-holder">
-								<label class="btn btn-default" for="<portlet:namespace />fileName" id="uploadImage" tabindex="0"><liferay-ui:message key="select" /></label>
+								<label class="btn btn-default" for="<portlet:namespace />fileName" id="<portlet:namespace />uploadImage" tabindex="0"><liferay-ui:message key="select" /></label>
 
 								<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) || windowState.equals(LiferayWindowState.POP_UP) %>" cssClass="hide" label="" name="fileName" type="file">
 									<aui:validator name="acceptFiles">
@@ -121,18 +121,20 @@ String randomNamespace = ParamUtil.getString(request, "randomNamespace");
 		</aui:form>
 
 		<aui:script>
-			var uploadImage = document.querySelector('#uploadImage');
+			var uploadImageButton = document.querySelector('#<portlet:namespace />uploadImage');
 
-			uploadImage.addEventListener(
-				'keydown',
-				function(event) {
-					event.preventDefault();
+			if (uploadImageButton) {
+				uploadImageButton.addEventListener(
+					'keydown',
+					function(event) {
+						event.preventDefault();
 
-					if (event.key == 'Enter' || event.key == ' ') {
-						uploadImage.click();
+						if (event.key == 'Enter' || event.key == ' ') {
+							uploadImageButton.click();
+						}
 					}
-				}
-			);
+				);
+			}
 		</aui:script>
 
 		<aui:script use="liferay-logo-editor">

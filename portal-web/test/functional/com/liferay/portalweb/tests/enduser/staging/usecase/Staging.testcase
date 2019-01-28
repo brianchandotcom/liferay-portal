@@ -671,147 +671,6 @@ definition {
 		);
 	}
 
-	@priority = "5"
-	test StagingDemoDocumentsAndMedia {
-		property custom.properties = "default.layout.template.id=1_column";
-		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "Staging#StagingDemoDocumentsAndMedia";
-		property testray.component.names = "Training";
-
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "System Settings"
-		);
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Documents and Media",
-			configurationName = "Service",
-			configurationScope = "System Scope"
-		);
-
-		Type(
-			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "30000000",
-			key_fieldLabel = "Maximum File Size"
-		);
-
-		ScrollWebElementIntoView(locator1 = "Button#SAVE");
-
-		PortletEntry.save();
-
-		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
-
-		Portlet.addPG(portletName = "Documents and Media");
-
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
-
-		DMDocument.enableActionsMenuOnPortlet();
-
-		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
-
-		DMFolder.addPG(
-			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder Name"
-		);
-
-		DMFolder.addPG(
-			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder Name Empty"
-		);
-
-		ProductMenu.gotoPortlet(
-			category = "Content",
-			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
-
-		DMNavigator.gotoMetadataSets();
-
-		DMMetadataSet.add(
-			dmMetadataSetFieldNames = "Text,Number",
-			metadataSetName = "DM Metadata Set Name"
-		);
-
-		DDLDataDefinition.save();
-
-		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Content",
-			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
-
-		DMNavigator.gotoDocumentType();
-
-		DMDocumentType.add(
-			dmDocumentTypeDescription = "DM Document Type Description",
-			dmDocumentTypeFieldNames = "Boolean",
-			dmDocumentTypeName = "DM Document Type Name",
-			metadataSetName = "DM Metadata Set Name"
-		);
-
-		Navigator.openSiteURL(siteName = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Publishing",
-			panel = "Site Administration",
-			portlet = "Staging"
-		);
-
-		Staging.activateStagingCP(
-			pageVersioningEnabled = "true",
-			siteName = "Site Name"
-		);
-
-		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
-
-		DMFolder.viewCP(dmFolderName = "DM Folder Name Empty");
-
-		Navigator.gotoStagedSitePage(
-			pageName = "Staging Test Page",
-			siteName = "Site Name"
-		);
-
-		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
-
-		DMDocument.addDocumentTypePG(
-			booleanField = "Boolean Field",
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_1.mp3",
-			dmDocumentTitle = "DM Document Title",
-			dmDocumentTypeName = "DM Document Type Name",
-			numberField = "1234",
-			textField = "Text"
-		);
-
-		Staging.gotoPublishToLive();
-
-		Staging.publishToLive();
-
-		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
-
-		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
-
-		DMDocument.viewPG(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document Title"
-		);
-
-		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
-
-		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
-
-		DMNavigator.gotoDocumentPG(dmDocumentTitle = "DM Document Title");
-
-		DMDocument.viewDocumentTypePG(booleanValue = "Yes");
-
-		DMDocument.viewDocumentTypePG(numberValue = "1234");
-
-		DMDocument.viewDocumentTypePG(textContent = "Text");
-	}
-
 	@description = "This is a use case for LPS-77728."
 	@priority = "5"
 	test StagingDraftWebContent {
@@ -1065,7 +924,7 @@ definition {
 			portlet = "Web Content"
 		);
 
-		Workflow.configureWCWorkflowViaFolderInfo(workflowDefinition = "Single Approver");
+		Workflow.configureWorkflow(workflowDefinition = "Single Approver");
 
 		Navigator.openSiteURL(siteName = "Site Name");
 
@@ -1207,7 +1066,7 @@ definition {
 	@priority = "5"
 	test StagingOnlyApprovedPublishToLive {
 		property portal.acceptance = "false";
-		property testray.component.names = "Training";
+			property testray.component.names = "Training";
 
 		ProductMenu.gotoSite(site = "Site Name");
 
@@ -1235,7 +1094,7 @@ definition {
 			portlet = "Web Content"
 		);
 
-		Workflow.configureWCWorkflowViaFolderInfo(workflowDefinition = "Single Approver");
+		Workflow.configureWorkflow(workflowDefinition = "Single Approver");
 
 		Navigator.openSiteURL(siteName = "Site Name");
 
@@ -1532,156 +1391,6 @@ definition {
 			campaignTheme = "Making a Difference",
 			legalReview = "Yes",
 			marketingSelect = "Company Philosophy"
-		);
-	}
-
-	@description = "This is a use case for LPS-72461."
-	@priority = "5"
-	test StagingRemoteLiveBlogsPG {
-		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
-		property test.name.skip.portal.instance = "Staging#StagingRemoteLiveBlogsPG";
-
-		Staging.remoteStagingSetUp(siteName = "Site Name");
-
-		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
-
-		Portlet.addPG(portletName = "Blogs");
-
-		Staging.gotoPublishToLive();
-
-		Staging.publishToLive();
-
-		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
-
-		Blogs.addEntry(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title"
-		);
-
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title"
-		);
-
-		BlogsEntry.viewEntry(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title"
-		);
-
-		Staging.gotoPublishToLive();
-
-		Staging.publishToLive();
-
-		Pause(locator1 = "5000");
-
-		AssertConsoleTextNotPresent(value1 = "RuntimeException");
-
-		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Remote Site");
-
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title"
-		);
-
-		BlogsEntry.viewEntry(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title"
-		);
-	}
-
-	@description = "This is a use case for LPS-74206."
-	@priority = "5"
-	test StagingRemoteLiveBlogsWithWorkflow {
-		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
-		property test.name.skip.portal.instance = "Staging#StagingRemoteLiveBlogsWithWorkflow";
-
-		Staging.remoteStagingSetUp(siteName = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Control Panel",
-			portlet = "Process Builder"
-		);
-
-		NavItem.gotoConfiguration();
-
-		Workflow.configureWorkflow(
-			workflowDefinition = "Single Approver",
-			workflowResourceValue = "Blogs Entry"
-		);
-
-		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
-
-		Portlet.addPG(portletName = "Blogs");
-
-		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
-
-		Blogs.addWithWorkflow(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title"
-		);
-
-		ProductMenu.gotoSite(site = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Content",
-			panel = "Site Administration",
-			portlet = "Blogs"
-		);
-
-		BlogsEntry.viewWithWorkflowCP(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title"
-		);
-
-		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
-
-		Click(locator1 = "Notifications#USER_BAR_BADGE_COUNT");
-
-		Click(locator1 = "Notifications#NOTIFICATIONS_BADGE_COUNT");
-
-		AssertClick(
-			locator1 = "Notifications#NOTIFICATIONS_WORKFLOW_TITLE",
-			value1 = "Test Test sent you a Blogs Entry for review in the workflow."
-		);
-
-		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Assign to Me");
-
-		Workflow.confirmWorkflowAction();
-
-		ProductMenu.gotoPortlet(
-			category = "My Account",
-			panel = "User",
-			portlet = "My Workflow Tasks"
-		);
-
-		Workflow.approveTaskByActions(
-			workflowActivityComment = "Process is approved",
-			workflowAssetTitle = "Blogs Entry Title",
-			workflowAssetType = "Blogs Entry",
-			workflowTask = "Review"
-		);
-
-		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
-
-		Staging.gotoPublishToLive();
-
-		Staging.publishToLive();
-
-		Pause(locator1 = "5000");
-
-		AssertConsoleTextNotPresent(value1 = "RuntimeException");
-
-		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Remote Site");
-
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title"
-		);
-
-		BlogsEntry.viewEntry(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title"
 		);
 	}
 

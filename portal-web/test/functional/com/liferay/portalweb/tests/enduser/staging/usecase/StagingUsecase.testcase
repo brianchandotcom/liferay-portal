@@ -568,18 +568,17 @@ definition {
 		ProductMenu.gotoSite(site = "Site Name");
 
 		Navigator.gotoStagedView();
+	
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Site Name",
+			title = "WC WebContent Title"
+		);
 
 		ProductMenu.gotoPortlet(
 			category = "Content",
 			panel = "Site Administration",
 			portlet = "Web Content"
-		);
-
-		WebContentNavigator.gotoAddCP();
-
-		WebContent.addCP(
-			webContentContent = "Web Content Content",
-			webContentTitle = "Web Content Title"
 		);
 
 		PortletEntry.publish();
@@ -677,83 +676,6 @@ definition {
 		);
 
 		Staging.searchPublishTemplate(searchTerm = "Second");
-	}
-
-	@description = "This is a use case for LPS-72949."
-	@priority = "5"
-	test StagingLocalLiveLockAndEditBlogsEntry {
-		Navigator.gotoStagedSitePage(
-			pageName = "Staging Test Page",
-			siteName = "Site Name"
-		);
-
-		Portlet.addPG(portletName = "Blogs");
-
-		Blogs.addEntry(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title"
-		);
-
-		Navigator.gotoStagedSitePage(
-			pageName = "Staging Test Page",
-			siteName = "Site Name"
-		);
-
-		Staging.gotoPublishToLive();
-
-		Staging.publishToLive();
-
-		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
-
-		BlogsEntry.editNoPermissionPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title"
-		);
-
-		Navigator.openSiteURL(siteName = "Site Name");
-
-		Navigator.gotoStagedView();
-
-		ProductMenu.gotoPortlet(
-			category = "Publishing",
-			panel = "Site Administration",
-			portlet = "Staging"
-		);
-
-		Staging.editStagingConfiguration(isNotEditable = "Blogs");
-
-		Navigator.gotoStagedSitePage(
-			pageName = "Staging Test Page",
-			siteName = "Site Name"
-		);
-
-		Blogs.editEntryPG(
-			entryContent = "Blogs Entry Content",
-			entryContentEdit = "Blogs Entry Content Edit",
-			entryTitle = "Blogs Entry Title",
-			entryTitleEdit = "Blogs Entry Title Edit"
-		);
-
-		Navigator.gotoStagedSitePage(
-			pageName = "Staging Test Page",
-			siteName = "Site Name"
-		);
-
-		Staging.gotoPublishToLive();
-
-		Staging.publishToLive();
-
-		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
-
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "Blogs Entry Content Edit",
-			entryTitle = "Blogs Entry Title Edit"
-		);
-
-		BlogsEntry.viewEntry(
-			entryContent = "Blogs Entry Content Edit",
-			entryTitle = "Blogs Entry Title Edit"
-		);
 	}
 
 	@description = "This is a use case for LPS-81196."

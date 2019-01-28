@@ -308,31 +308,6 @@ definition {
 		Portlet.viewSpecificPG(portletName = "Sites Directory Custom");
 	}
 
-	@priority = "5"
-	test StagingBlogsCP {
-		property portal.acceptance = "true";
-		property testray.component.names = "Training";
-
-		ProductMenu.gotoPortlet(
-			category = "Content",
-			panel = "Site Administration",
-			portlet = "Blogs"
-		);
-
-		Blogs.addEntry(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title"
-		);
-
-		ProductMenu.gotoSite(site = "Site Name");
-
-		Navigator.gotoStagedView();
-
-		Staging.gotoPublishToLive();
-
-		Staging.publishToLive();
-	}
-
 	@priority = "4"
 	test StagingDeletePageVariation {
 		Navigator.openSiteURL(siteName = "Site Name");

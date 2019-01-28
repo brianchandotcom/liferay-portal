@@ -1,0 +1,176 @@
+@component-name = "portal-collaboration"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Documents Management";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Staging DM Page");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Site Name");
+		}
+	}
+
+	@priority = "5"
+	test StagingDemoDocumentsAndMedia {
+		property custom.properties = "default.layout.template.id=1_column";
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "Staging#StagingDemoDocumentsAndMedia";
+		property testray.component.names = "Training";
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings"
+		);
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Documents and Media",
+			configurationName = "Service",
+			configurationScope = "System Scope"
+		);
+
+		Type(
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "30000000",
+			key_fieldLabel = "Maximum File Size"
+		);
+
+		ScrollWebElementIntoView(locator1 = "Button#SAVE");
+
+		PortletEntry.save();
+
+		Navigator.gotoSitePage(pageName = "Staging DM Page", siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Documents and Media");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		DMDocument.enableActionsMenuOnPortlet();
+
+		Navigator.gotoSitePage(pageName = "Staging DM Page", siteName = "Site Name");
+
+		DMFolder.addPG(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name"
+		);
+
+		DMFolder.addPG(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name Empty"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMNavigator.gotoMetadataSets();
+
+		DMMetadataSet.add(
+			dmMetadataSetFieldNames = "Text,Number",
+			metadataSetName = "DM Metadata Set Name"
+		);
+
+		DDLDataDefinition.save();
+
+		Navigator.gotoSitePage(pageName = "Staging DM Page", siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMNavigator.gotoDocumentType();
+
+		DMDocumentType.add(
+			dmDocumentTypeDescription = "DM Document Type Description",
+			dmDocumentTypeFieldNames = "Boolean",
+			dmDocumentTypeName = "DM Document Type Name",
+			metadataSetName = "DM Metadata Set Name"
+		);
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			panel = "Site Administration",
+			portlet = "Staging"
+		);
+
+		Staging.activateStagingCP(
+			pageVersioningEnabled = "true",
+			siteName = "Site Name"
+		);
+
+		Navigator.gotoSitePage(pageName = "Staging DM Page", siteName = "Site Name");
+
+		DMFolder.viewCP(dmFolderName = "DM Folder Name Empty");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging DM Page",
+			siteName = "Site Name"
+		);
+
+		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
+
+		DMDocument.addDocumentTypePG(
+			booleanField = "Boolean Field",
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.mp3",
+			dmDocumentTitle = "DM Document Title",
+			dmDocumentTypeName = "DM Document Type Name",
+			numberField = "1234",
+			textField = "Text"
+		);
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		Navigator.gotoSitePage(pageName = "Staging DM Page", siteName = "Site Name");
+
+		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
+
+		DMDocument.viewPG(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title"
+		);
+
+		Navigator.gotoSitePage(pageName = "Staging DM Page", siteName = "Site Name");
+
+		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
+
+		DMNavigator.gotoDocumentPG(dmDocumentTitle = "DM Document Title");
+
+		DMDocument.viewDocumentTypePG(booleanValue = "Yes");
+
+		DMDocument.viewDocumentTypePG(numberValue = "1234");
+
+		DMDocument.viewDocumentTypePG(textContent = "Text");
+	}
+}

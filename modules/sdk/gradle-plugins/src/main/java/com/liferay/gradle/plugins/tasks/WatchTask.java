@@ -367,7 +367,7 @@ public class WatchTask extends DefaultTask {
 		return response;
 	}
 
-	private String _getFragmentHostName() throws IOException {
+	private String _getFragmentHost() throws IOException {
 		Project project = getProject();
 
 		FileCollection fileCollection = project.files("bnd.bnd");
@@ -377,15 +377,20 @@ public class WatchTask extends DefaultTask {
 
 			Properties properties = FileUtil.readProperties(file);
 
-			String fragmentHost = properties.getProperty(
-				Constants.FRAGMENT_HOST);
+			return properties.getProperty(Constants.FRAGMENT_HOST);
+		}
 
-			if (fragmentHost != null) {
-				String[] fragmentNames = fragmentHost.split(";");
+		return null;
+	}
 
-				if (ArrayUtil.isNotEmpty(fragmentNames)) {
-					return fragmentNames[0];
-				}
+	private String _getFragmentHostName() throws IOException {
+		String fragmentHost = _getFragmentHost();
+
+		if (fragmentHost != null) {
+			String[] fragmentNames = fragmentHost.split(";");
+
+			if (ArrayUtil.isNotEmpty(fragmentNames)) {
+				return fragmentNames[0];
 			}
 		}
 
@@ -576,21 +581,8 @@ public class WatchTask extends DefaultTask {
 	}
 
 	private boolean _isFragmentModule() throws IOException {
-		Project project = getProject();
-
-		FileCollection fileCollection = project.files("bnd.bnd");
-
-		if (fileCollection != null) {
-			File file = fileCollection.getSingleFile();
-
-			Properties properties = FileUtil.readProperties(file);
-
-			String fragmentHost = properties.getProperty(
-				Constants.FRAGMENT_HOST);
-
-			if (fragmentHost != null) {
-				return true;
-			}
+		if (_getFragmentHost() != null) {
+			return true;
 		}
 
 		return false;

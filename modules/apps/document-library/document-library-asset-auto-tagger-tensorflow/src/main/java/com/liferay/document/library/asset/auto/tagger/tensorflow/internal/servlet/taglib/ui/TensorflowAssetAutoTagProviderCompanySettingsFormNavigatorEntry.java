@@ -118,7 +118,7 @@ public class TensorflowAssetAutoTagProviderCompanySettingsFormNavigatorEntry
 			_assetAutoTaggerConfigurationFactory.
 				getAssetAutoTaggerConfiguration(company);
 
-		return assetAutoTaggerConfiguration.isAvailable();
+		return assetAutoTaggerConfiguration.isEnabled();
 	}
 
 	@Override

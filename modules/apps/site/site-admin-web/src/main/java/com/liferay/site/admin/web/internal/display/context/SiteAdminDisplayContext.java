@@ -51,6 +51,7 @@ import com.liferay.portlet.usersadmin.search.GroupSearch;
 import com.liferay.site.admin.web.internal.constants.SiteAdminPortletKeys;
 import com.liferay.site.admin.web.internal.display.context.comparator.SiteInitializerNameComparator;
 import com.liferay.site.admin.web.internal.servlet.taglib.util.SiteActionDropdownItems;
+import com.liferay.site.admin.web.internal.util.SiteInitializerItem;
 import com.liferay.site.constants.SiteWebKeys;
 import com.liferay.site.initializer.SiteInitializer;
 import com.liferay.site.initializer.SiteInitializerRegistry;
@@ -244,11 +245,11 @@ public class SiteAdminDisplayContext {
 		return groupSearch;
 	}
 
-	public List<SiteInitializerItemDisplayContext> getSiteInitializerItems()
+	public List<SiteInitializerItem> getSiteInitializerItems()
 		throws PortalException {
 
-		List<SiteInitializerItemDisplayContext>
-			siteInitializerItemDisplayContexts = new ArrayList<>();
+		List<SiteInitializerItem> siteInitializerItemDisplayContexts =
+			new ArrayList<>();
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -259,7 +260,7 @@ public class SiteAdminDisplayContext {
 
 		for (LayoutSetPrototype layoutSetPrototype : layoutSetPrototypes) {
 			siteInitializerItemDisplayContexts.add(
-				new SiteInitializerItemDisplayContext(
+				new SiteInitializerItem(
 					layoutSetPrototype, themeDisplay.getLocale()));
 		}
 
@@ -268,10 +269,9 @@ public class SiteAdminDisplayContext {
 				themeDisplay.getCompanyId());
 
 		for (SiteInitializer siteInitializer : siteInitializers) {
-			SiteInitializerItemDisplayContext
-				siteInitializerItemDisplayContext =
-					new SiteInitializerItemDisplayContext(
-						siteInitializer, themeDisplay.getLocale());
+			SiteInitializerItem siteInitializerItemDisplayContext =
+				new SiteInitializerItem(
+					siteInitializer, themeDisplay.getLocale());
 
 			siteInitializerItemDisplayContexts.add(
 				siteInitializerItemDisplayContext);

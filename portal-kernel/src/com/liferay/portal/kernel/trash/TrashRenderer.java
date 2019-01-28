@@ -39,6 +39,10 @@ public interface TrashRenderer extends Renderer {
 
 	public String getType();
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), with no direct replacement
+	 */
+	@Deprecated
 	public String renderActions(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws Exception;

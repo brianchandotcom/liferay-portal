@@ -25,13 +25,13 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.jboss.arquillian.junit.State;
-import org.jboss.arquillian.junit.event.AfterRules;
-import org.jboss.arquillian.junit.event.BeforeRules;
 import org.jboss.arquillian.test.spi.LifecycleMethodExecutor;
 import org.jboss.arquillian.test.spi.TestMethodExecutor;
 import org.jboss.arquillian.test.spi.TestResult;
 import org.jboss.arquillian.test.spi.TestRunnerAdaptor;
 import org.jboss.arquillian.test.spi.TestRunnerAdaptorBuilder;
+import org.jboss.arquillian.test.spi.event.suite.AfterTestLifecycleEvent;
+import org.jboss.arquillian.test.spi.event.suite.BeforeTestLifecycleEvent;
 import org.jboss.arquillian.test.spi.execution.SkippedTestExecutionException;
 
 import org.junit.AssumptionViolatedException;
@@ -167,7 +167,7 @@ public class Arquillian extends BlockJUnit4ClassRunner {
 
 				try {
 					_testRunnerAdaptor.fireCustomLifecycle(
-						new BeforeRules(
+						new BeforeTestLifecycleEvent(
 							test, method.getMethod(),
 							() -> {
 								flag.set(true);
@@ -185,7 +185,7 @@ public class Arquillian extends BlockJUnit4ClassRunner {
 				finally {
 					try {
 						_testRunnerAdaptor.fireCustomLifecycle(
-							new AfterRules(
+							new AfterTestLifecycleEvent(
 								test, method.getMethod(),
 								LifecycleMethodExecutor.NO_OP));
 					}

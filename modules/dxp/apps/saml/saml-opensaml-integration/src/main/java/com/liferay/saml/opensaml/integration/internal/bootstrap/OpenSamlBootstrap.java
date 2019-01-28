@@ -121,11 +121,15 @@ public class OpenSamlBootstrap {
 		builderFeatures.put(
 			"http://xml.org/sax/features/external-parameter-entities",
 			Boolean.FALSE);
+		builderFeatures.put(
+			"http://apache.org/xml/features/dom/defer-node-expansion",
+			Boolean.FALSE);
 
 		parserPool.setBuilderFeatures(builderFeatures);
 
 		parserPool.setDTDValidating(false);
 		parserPool.setExpandEntityReferences(false);
+		parserPool.setNamespaceAware(true);
 		parserPool.setMaxPoolSize(50);
 
 		try {

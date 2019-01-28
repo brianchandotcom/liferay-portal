@@ -72,9 +72,7 @@ public class NettyUtil {
 
 			});
 
-		ChannelPipeline channelPipeline = channel.pipeline();
-
-		return channelPipeline;
+		return channel.pipeline();
 	}
 
 	public static <T> void scheduleCancellation(

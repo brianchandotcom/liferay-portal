@@ -15,6 +15,7 @@
 package com.liferay.arquillian.extension.junit.bridge.junit.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.test.dependencies.BeforeAfterClassTestItem;
+import com.liferay.arquillian.extension.junit.bridge.junit.test.dependencies.BeforeAfterTestItem;
 import com.liferay.arquillian.extension.junit.bridge.junit.test.dependencies.ClassRuleTestItem;
 import com.liferay.arquillian.extension.junit.bridge.junit.test.dependencies.ExpectedExceptionTestItem;
 import com.liferay.portal.kernel.test.junit.BridgeJUnitTestRunner;
@@ -34,6 +35,21 @@ import org.junit.runners.model.TestClass;
  */
 @RunWith(BridgeJUnitTestRunner.class)
 public class ArquillianTest {
+
+	@Test
+	public void testBeforeAfter() throws IOException {
+		try {
+			Result result = BridgeJUnitTestRunner.runBridgeTests(
+				new BridgeJUnitTestRunner.BridgeRunListener(
+					ArquillianTest.class),
+				BeforeAfterTestItem.class);
+
+			assertResult(result, BeforeAfterTestItem.class);
+		}
+		finally {
+			BeforeAfterTestItem.assertAndTearDown();
+		}
+	}
 
 	@Test
 	public void testBeforeAfterClass() throws IOException {

@@ -135,8 +135,7 @@ public class SiteActionDropdownItems {
 			dropdownItem.setHref(
 				_liferayPortletResponse.createRenderURL(), "mvcPath",
 				"/select_site_initializer.jsp", "redirect",
-				_themeDisplay.getURLCurrent(),
-				"parentGroupSearchContainerPrimaryKeys",
+				_themeDisplay.getURLCurrent(), "parentGroupId",
 				String.valueOf(_group.getGroupId()));
 			dropdownItem.setLabel(LanguageUtil.get(_request, "add-child-site"));
 		};

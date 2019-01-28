@@ -20,7 +20,7 @@
 Group group = (Group)request.getAttribute("site.group");
 Group liveGroup = (Group)request.getAttribute("site.liveGroup");
 
-long parentGroupId = ParamUtil.getLong(request, "parentGroupSearchContainerPrimaryKeys", group.getParentGroupId());
+long parentGroupId = ParamUtil.getLong(request, "parentGroupId", group.getParentGroupId());
 
 if (parentGroupId <= 0) {
 	parentGroupId = GroupConstants.DEFAULT_PARENT_GROUP_ID;

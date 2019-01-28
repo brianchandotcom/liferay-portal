@@ -8,7 +8,7 @@
 		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
 	</route>
 	<route>
-		<pattern>/site/{parentGroupSearchContainerPrimaryKeys:\d+}/new/{layoutSetPrototypeId:\d+}</pattern>
+		<pattern>/site/{parentGroupId:\d+}/new/{layoutSetPrototypeId:\d+}</pattern>
 		<implicit-parameter name="mvcPath">/edit_site.jsp</implicit-parameter>
 		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
 	</route>
@@ -18,7 +18,7 @@
 		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
 	</route>
 	<route>
-		<pattern>/site/{parentGroupSearchContainerPrimaryKeys:\d+}/new</pattern>
+		<pattern>/site/{parentGroupId:\d+}/new</pattern>
 		<implicit-parameter name="mvcPath">/edit_site.jsp</implicit-parameter>
 		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
 	</route>

@@ -16,13 +16,12 @@ package com.liferay.arquillian.extension.junit.bridge.deployment;
 
 import com.liferay.arquillian.extension.junit.bridge.LiferayArquillianJUnitBridgeExtension;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.arquillian.extension.junit.bridge.junit.container.JUnitTestRunner;
 import com.liferay.arquillian.extension.junit.bridge.observer.JUnitBridgeObserver;
 
 import org.jboss.arquillian.container.test.spi.RemoteLoadableExtension;
 import org.jboss.arquillian.container.test.spi.TestRunner;
 import org.jboss.arquillian.container.test.spi.client.deployment.AuxiliaryArchiveAppender;
-import org.jboss.arquillian.junit.container.JUnitTestRunner;
-import org.jboss.arquillian.junit.event.BeforeRules;
 import org.jboss.osgi.metadata.OSGiManifestBuilder;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -48,9 +47,7 @@ public class JUnitBridgeAuxiliaryArchiveAppender
 		javaArchive.addAsServiceProviderAndClasses(
 			TestRunner.class, JUnitTestRunner.class);
 		javaArchive.addClasses(Arquillian.class, JUnitBridgeObserver.class);
-		javaArchive.addPackages(
-			false, BeforeRules.class.getPackage(),
-			org.jboss.arquillian.junit.Arquillian.class.getPackage());
+		javaArchive.addPackages(false, Arquillian.class.getPackage());
 
 		OSGiManifestBuilder osgiManifestBuilder =
 			OSGiManifestBuilder.newInstance();

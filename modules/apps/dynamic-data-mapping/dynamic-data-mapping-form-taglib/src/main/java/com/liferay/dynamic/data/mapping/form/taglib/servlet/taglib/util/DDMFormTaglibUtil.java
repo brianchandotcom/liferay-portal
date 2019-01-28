@@ -223,7 +223,7 @@ public class DDMFormTaglibUtil {
 			ddmFormInstanceId, status);
 	}
 
-	public static String getNPMPackageName() {
+	public static String getNPMResolvedPackageName() {
 		return _npmResolver.resolveModuleName(
 			"dynamic-data-mapping-form-builder");
 	}

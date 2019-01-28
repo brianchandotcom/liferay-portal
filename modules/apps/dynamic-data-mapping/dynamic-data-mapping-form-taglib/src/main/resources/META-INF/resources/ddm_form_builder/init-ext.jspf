@@ -29,7 +29,7 @@ String fieldSettingsDDMFormContextURL = (String)request.getAttribute("liferay-fo
 String formBuilderContext = (String)request.getAttribute("liferay-form:ddm-form-builder:formBuilderContext");
 String functionsMetadata = (String)request.getAttribute("liferay-form:ddm-form-builder:functionsMetadata");
 String functionsURL = (String)request.getAttribute("liferay-form:ddm-form-builder:functionsURL");
-String npmPackageName = (String)request.getAttribute("liferay-form:ddm-form-builder:npmPackageName");
+String npmResolvedPackageName = (String)request.getAttribute("liferay-form:ddm-form-builder:npmResolvedPackageName");
 String rolesURL = (String)request.getAttribute("liferay-form:ddm-form-builder:rolesURL");
 String serializedDDMFormRules = (String)request.getAttribute("liferay-form:ddm-form-builder:serializedDDMFormRules");
 %>

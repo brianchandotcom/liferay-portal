@@ -66,15 +66,15 @@
 	Liferay.Loader.require.apply(
 		Liferay.Loader,
 		[
-			'<%= npmPackageName %>/alloy/templates/autocomplete.es',
-			'<%= npmPackageName %>/alloy/templates/calculate.es',
-			'<%= npmPackageName %>/alloy/templates/calculator.es',
-			'<%= npmPackageName %>/alloy/templates/data-provider-parameter.es',
-			'<%= npmPackageName %>/alloy/templates/field-options-toolbar.es',
-			'<%= npmPackageName %>/alloy/templates/field-types-sidebar.es',
-			'<%= npmPackageName %>/alloy/templates/rule-builder.es',
-			'<%= npmPackageName %>/alloy/templates/rule.es',
-			'<%= npmPackageName %>/alloy/templates/sidebar.es',
+			'<%= npmResolvedPackageName %>/alloy/templates/autocomplete.es',
+			'<%= npmResolvedPackageName %>/alloy/templates/calculate.es',
+			'<%= npmResolvedPackageName %>/alloy/templates/calculator.es',
+			'<%= npmResolvedPackageName %>/alloy/templates/data-provider-parameter.es',
+			'<%= npmResolvedPackageName %>/alloy/templates/field-options-toolbar.es',
+			'<%= npmResolvedPackageName %>/alloy/templates/field-types-sidebar.es',
+			'<%= npmResolvedPackageName %>/alloy/templates/rule-builder.es',
+			'<%= npmResolvedPackageName %>/alloy/templates/rule.es',
+			'<%= npmResolvedPackageName %>/alloy/templates/sidebar.es',
 			initTagLib
 		]
 	);

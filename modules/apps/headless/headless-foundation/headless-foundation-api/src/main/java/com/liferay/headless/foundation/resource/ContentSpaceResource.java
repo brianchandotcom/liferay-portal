@@ -14,9 +14,16 @@
 
 package com.liferay.headless.foundation.resource;
 
+import com.liferay.headless.foundation.dto.ContentSpace;
+import com.liferay.portal.kernel.exception.PortalException;
+
 import javax.annotation.Generated;
 
+import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 
 /**
  * @author Javier Gamarra
@@ -25,4 +32,10 @@ import javax.ws.rs.Path;
 @Generated("")
 @Path("/1.0.0/contentspace")
 public interface ContentSpaceResource {
+
+	@GET
+	@Path("/content-space/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public ContentSpace getContentSpace(@PathParam("id") long id);
+
 }

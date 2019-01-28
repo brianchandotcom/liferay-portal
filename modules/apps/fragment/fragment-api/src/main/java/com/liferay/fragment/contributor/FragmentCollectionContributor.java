@@ -14,6 +14,8 @@
 
 package com.liferay.fragment.contributor;
 
+import com.liferay.fragment.model.FragmentEntry;
+
 import java.util.List;
 
 /**
@@ -21,7 +23,7 @@ import java.util.List;
  */
 public interface FragmentCollectionContributor {
 
-	public List<DefaultFragmentEntry> getDefaultFragmentEntries();
+	public List<FragmentEntry> getFragmentEntries();
 
 	public String getKey();
 

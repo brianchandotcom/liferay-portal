@@ -15,6 +15,8 @@
 package com.liferay.fragment.contributor;
 
 import com.liferay.fragment.constants.FragmentEntryTypeConstants;
+import com.liferay.fragment.model.FragmentEntry;
+import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -34,8 +36,8 @@ public abstract class BaseFragmentCollectionContributor
 	implements FragmentCollectionContributor {
 
 	@Override
-	public List<DefaultFragmentEntry> getDefaultFragmentEntries() {
-		return _defaultFragmentEntries;
+	public List<FragmentEntry> getFragmentEntries() {
+		return _fragmentEntries;
 	}
 
 	@Override
@@ -56,17 +58,14 @@ public abstract class BaseFragmentCollectionContributor
 			JSONArray jsonArray = jsonObject.getJSONArray("fragments");
 
 			if (Validator.isNotNull(name) && (jsonArray.length() > 0)) {
-				List<DefaultFragmentEntry> defaultFragmentEntries =
-					new ArrayList<>();
+				_name = name;
+
+				_fragmentEntries = new ArrayList<>();
 
 				for (int i = 0; i < jsonArray.length(); i++) {
-					defaultFragmentEntries.add(
-						_getDefaultFragmentEntry(
-							getKey(), jsonArray.getString(i)));
+					_fragmentEntries.add(
+						_getFragmentEntry(jsonArray.getString(i)));
 				}
-
-				_name = name;
-				_defaultFragmentEntries = defaultFragmentEntries;
 			}
 		}
 		catch (Exception e) {
@@ -74,22 +73,6 @@ public abstract class BaseFragmentCollectionContributor
 				_log.debug(e, e);
 			}
 		}
-	}
-
-	private DefaultFragmentEntry _getDefaultFragmentEntry(
-			String key, String path)
-		throws Exception {
-
-		JSONObject jsonObject = _getStructure(path + "/fragment.json");
-
-		String name = jsonObject.getString("name");
-		String css = _getFileContent(path, jsonObject.getString("cssPath"));
-		String html = _getFileContent(path, jsonObject.getString("htmlPath"));
-		String js = _getFileContent(path, jsonObject.getString("jsPath"));
-		int type = FragmentEntryTypeConstants.getTypeFromLabel(
-			jsonObject.getString("type"));
-
-		return new DefaultFragmentEntry(key, name, css, html, js, type);
 	}
 
 	private String _getFileContent(String path, String fileName)
@@ -108,6 +91,28 @@ public abstract class BaseFragmentCollectionContributor
 			resourceClass.getResourceAsStream(sb.toString()));
 	}
 
+	private FragmentEntry _getFragmentEntry(String path) throws Exception {
+		JSONObject jsonObject = _getStructure(path + "/fragment.json");
+
+		String name = jsonObject.getString("name");
+		String css = _getFileContent(path, jsonObject.getString("cssPath"));
+		String html = _getFileContent(path, jsonObject.getString("htmlPath"));
+		String js = _getFileContent(path, jsonObject.getString("jsPath"));
+		int type = FragmentEntryTypeConstants.getTypeFromLabel(
+			jsonObject.getString("type"));
+
+		FragmentEntry fragmentEntry =
+			FragmentEntryLocalServiceUtil.createFragmentEntry(0L);
+
+		fragmentEntry.setName(name);
+		fragmentEntry.setCss(css);
+		fragmentEntry.setHtml(html);
+		fragmentEntry.setJs(js);
+		fragmentEntry.setType(type);
+
+		return fragmentEntry;
+	}
+
 	private JSONObject _getStructure(String path) throws Exception {
 		Class<?> resourceClass = getResourceClass();
 
@@ -120,7 +125,7 @@ public abstract class BaseFragmentCollectionContributor
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseFragmentCollectionContributor.class);
 
-	private List<DefaultFragmentEntry> _defaultFragmentEntries;
+	private List<FragmentEntry> _fragmentEntries;
 	private String _name;
 
 }

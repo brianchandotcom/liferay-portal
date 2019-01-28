@@ -14,8 +14,9 @@
 
 package com.liferay.arquillian.extension.junit.bridge.junit.container;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.State;
+
 import org.jboss.arquillian.container.test.spi.TestRunner;
-import org.jboss.arquillian.junit.State;
 import org.jboss.arquillian.test.spi.TestResult;
 
 import org.junit.AssumptionViolatedException;

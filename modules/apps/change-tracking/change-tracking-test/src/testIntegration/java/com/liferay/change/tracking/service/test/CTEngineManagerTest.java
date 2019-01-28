@@ -52,7 +52,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.io.Serializable;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -112,58 +111,6 @@ public class CTEngineManagerTest {
 			_ctEngineManager.disableChangeTracking(
 				TestPropsValues.getCompanyId());
 		}
-	}
-
-	@Test
-	public void testChangeTrackingPublishWithBackgroundTask() throws Exception {
-		_ctEngineManager.enableChangeTracking(
-			TestPropsValues.getCompanyId(), TestPropsValues.getUserId());
-
-		ServiceContext serviceContext = new ServiceContext();
-
-		Optional<CTCollection> ctCollectionOptional =
-			_ctEngineManager.createCTCollection(
-				TestPropsValues.getUserId(), "testCollection",
-				"testCollection");
-
-		CTCollection ctCollection = ctCollectionOptional.get();
-
-		_ctEntryLocalService.addCTEntry(
-			TestPropsValues.getUserId(), 1, 1, 1,
-			ctCollection.getCtCollectionId(), serviceContext);
-
-		Optional<CTCollection> productionCTCollectionOptional =
-			_ctEngineManager.getProductionCTCollectionOptional(
-				TestPropsValues.getCompanyId());
-
-		CTCollection productionCTCollection =
-			productionCTCollectionOptional.get();
-
-		List<CTEntry> ctEntries = _ctEntryLocalService.getCTCollectionCTEntries(
-			productionCTCollection.getCtCollectionId());
-
-		int count = ctEntries.size();
-
-		Map<String, Serializable> taskContextMap = new HashMap<>();
-
-		taskContextMap.put("ctCollectionId", ctCollection.getCtCollectionId());
-		taskContextMap.put("userId", ctCollection.getUserId());
-
-		_backgroundTaskManager.addBackgroundTask(
-			_user.getUserId(), TestPropsValues.getGroupId(),
-			ctCollection.getName(),
-			"com.liferay.change.tracking.internal.background.task." +
-				"CTPublishBackgroundTaskExecutor",
-			taskContextMap, serviceContext);
-
-		ctEntries = _ctEntryLocalService.getCTCollectionCTEntries(
-			productionCTCollection.getCtCollectionId());
-
-		Assert.assertEquals(
-			"Number of entries in productionCTCollection", count + 1,
-			ctEntries.size());
-
-		_ctCollectionLocalService.deleteCTCollection(ctCollection);
 	}
 
 	@Test

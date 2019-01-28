@@ -23,6 +23,8 @@ import java.util.Map;
 import net.shibboleth.utilities.java.support.xml.BasicParserPool;
 import net.shibboleth.utilities.java.support.xml.ParserPool;
 
+import org.apache.xml.security.stax.ext.XMLSecurityConstants;
+
 import org.opensaml.core.config.ConfigurationService;
 import org.opensaml.core.config.InitializationException;
 import org.opensaml.core.config.InitializationService;
@@ -64,6 +66,10 @@ public class OpenSamlBootstrap {
 		method.setAccessible(true);
 
 		method.invoke(null);
+
+		if (XMLSecurityConstants.xmlOutputFactory == null) {
+			throw new IllegalStateException();
+		}
 	}
 
 	@Activate

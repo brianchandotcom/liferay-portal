@@ -18,10 +18,7 @@ definition {
 	}
 
 	macro saveAndExit {
-		AssertElementPresent(
-			locator1 = "Button#ANY",
-			key_text = "Save and Return to Liferay"
-		);
+		AssertClick(locator1 = "Button#ANY", key_text = "Save and Return to Liferay", value1="Save and Return to Liferay");
 
 		Navigator.openURL();
 	}

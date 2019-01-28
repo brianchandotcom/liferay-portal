@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
+import com.liferay.portal.kernel.model.UserNotificationEventWrapper;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
@@ -172,20 +173,26 @@ public class WorkflowTaskUserNotificationHandlerTest extends PowerMockito {
 	protected UserNotificationEvent mockUserNotificationEvent(
 		String entryClassName, Long workflowTaskId) {
 
-		UserNotificationEvent userNotificationEvent = mock(
-			UserNotificationEvent.class);
-
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
 		jsonObject.put("entryClassName", entryClassName);
 		jsonObject.put("notificationMessage", _notificationMessage);
 		jsonObject.put("workflowTaskId", workflowTaskId);
 
-		when(
-			userNotificationEvent.getPayload()
-		).thenReturn(
-			jsonObject.toJSONString()
-		);
+		UserNotificationEvent userNotificationEvent =
+			new UserNotificationEventWrapper(null) {
+
+				@Override
+				public String getPayload() {
+					return jsonObject.toJSONString();
+				}
+
+				@Override
+				public long getUserNotificationEventId() {
+					return 0;
+				}
+
+			};
 
 		return userNotificationEvent;
 	}

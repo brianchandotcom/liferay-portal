@@ -38,7 +38,7 @@ public class FileUtil {
 		return s.replace("\r\n", "\n");
 	}
 
-	public static void write(File file, String content) throws Exception {
+	public static void write(String content, File file) throws Exception {
 		if (!file.exists()) {
 			Path path = file.toPath();
 

@@ -14,16 +14,18 @@
 
 package com.liferay.portal.tools.rest.builder;
 
+import com.liferay.portal.kernel.util.StringUtil_IW;
+import com.liferay.portal.kernel.util.Validator_IW;
 import com.liferay.portal.tools.ArgumentsUtil;
-import com.liferay.portal.tools.rest.builder.internal.freemarker.FreeMarker;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.FreeMarkerConstants;
+import com.liferay.portal.tools.rest.builder.internal.freemarker.util.FreeMarkerUtil;
 import com.liferay.portal.tools.rest.builder.internal.util.CamelCaseUtil;
 import com.liferay.portal.tools.rest.builder.internal.util.FileUtil;
-import com.liferay.portal.tools.rest.builder.internal.util.YAMLUtil;
-import com.liferay.portal.tools.rest.builder.internal.yaml.Components;
 import com.liferay.portal.tools.rest.builder.internal.yaml.ConfigYAML;
 import com.liferay.portal.tools.rest.builder.internal.yaml.OpenAPIYAML;
-import com.liferay.portal.tools.rest.builder.internal.yaml.Schema;
+import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Components;
+import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Schema;
+import com.liferay.portal.tools.rest.builder.internal.yaml.util.YAMLUtil;
 
 import java.io.File;
 
@@ -56,11 +58,9 @@ public class RESTBuilder {
 			String restOpenAPIFileName)
 		throws Exception {
 
-		ConfigYAML configYAML = YAMLUtil.load(
-			restConfigFileName, ConfigYAML.class);
+		ConfigYAML configYAML = YAMLUtil.loadConfigYAML(restConfigFileName);
 
-		OpenAPIYAML openAPIYAML = YAMLUtil.load(
-			restOpenAPIFileName, OpenAPIYAML.class);
+		OpenAPIYAML openAPIYAML = YAMLUtil.loadOpenAPIYAML(restOpenAPIFileName);
 
 		Components components = openAPIYAML.getComponents();
 
@@ -70,36 +70,18 @@ public class RESTBuilder {
 			String schemaName = entry.getKey();
 			Schema schema = entry.getValue();
 
-			File file = _getDTOFile(configYAML, schemaName);
-			String content = _getDTOContent(
-				configYAML, copyrightFileName, schema, schemaName);
+			_createDTOFile(configYAML, copyrightFileName, schema, schemaName);
 
-			FileUtil.write(file, content);
-
-			file = _getResourceFile(configYAML, schemaName);
-			content = _getResourceContent(
+			_createResourceFile(
 				configYAML, copyrightFileName, openAPIYAML, schemaName);
-
-			FileUtil.write(file, content);
 		}
 	}
 
-	private String _getDTOContent(
+	private File _createDTOFile(
 			ConfigYAML configYAML, String copyrightFileName, Schema schema,
 			String schemaName)
 		throws Exception {
 
-		Map<String, Object> context = new HashMap<>();
-
-		context.put("configYAML", configYAML);
-		context.put("schema", schema);
-		context.put("schemaName", schemaName);
-
-		return _freeMarker.processTemplate(
-			copyrightFileName, FreeMarkerConstants.DTO_FTL, context);
-	}
-
-	private File _getDTOFile(ConfigYAML configYAML, String schemaName) {
 		StringBuilder sb = new StringBuilder();
 
 		sb.append(configYAML.getApiDir());
@@ -113,26 +95,29 @@ public class RESTBuilder {
 		sb.append(schemaName);
 		sb.append(".java");
 
-		return new File(sb.toString());
-	}
-
-	private String _getResourceContent(
-			ConfigYAML configYAML, String copyrightFileName,
-			OpenAPIYAML openAPIYAML, String schemaName)
-		throws Exception {
+		File file = new File(sb.toString());
 
 		Map<String, Object> context = new HashMap<>();
 
 		context.put("configYAML", configYAML);
-		context.put("openAPIYAML", openAPIYAML);
+		context.put("schema", schema);
 		context.put("schemaName", schemaName);
-		context.put("schemaPath", CamelCaseUtil.fromCamelCase(schemaName));
+		context.put("stringUtil", StringUtil_IW.getInstance());
+		context.put("validator", Validator_IW.getInstance());
 
-		return _freeMarker.processTemplate(
-			copyrightFileName, FreeMarkerConstants.RESOURCE_FTL, context);
+		String content = FreeMarkerUtil.processTemplate(
+			copyrightFileName, FreeMarkerConstants.DTO_FTL, context);
+
+		FileUtil.write(content, file);
+
+		return file;
 	}
 
-	private File _getResourceFile(ConfigYAML configYAML, String schemaName) {
+	private File _createResourceFile(
+			ConfigYAML configYAML, String copyrightFileName,
+			OpenAPIYAML openAPIYAML, String schemaName)
+		throws Exception {
+
 		StringBuilder sb = new StringBuilder();
 
 		sb.append(configYAML.getApiDir());
@@ -146,9 +131,23 @@ public class RESTBuilder {
 		sb.append(schemaName);
 		sb.append("Resource.java");
 
-		return new File(sb.toString());
-	}
+		File file = new File(sb.toString());
 
-	private static final FreeMarker _freeMarker = new FreeMarker();
+		Map<String, Object> context = new HashMap<>();
+
+		context.put("configYAML", configYAML);
+		context.put("openAPIYAML", openAPIYAML);
+		context.put("schemaName", schemaName);
+		context.put("schemaPath", CamelCaseUtil.fromCamelCase(schemaName));
+		context.put("stringUtil", StringUtil_IW.getInstance());
+		context.put("validator", Validator_IW.getInstance());
+
+		String content = FreeMarkerUtil.processTemplate(
+			copyrightFileName, FreeMarkerConstants.RESOURCE_FTL, context);
+
+		FileUtil.write(content, file);
+
+		return file;
+	}
 
 }

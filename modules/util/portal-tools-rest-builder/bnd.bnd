@@ -15,4 +15,7 @@ Main-Class: com.liferay.portal.tools.rest.builder.RESTBuilder
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/util/GetterUtil.class,\
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/util/StringBundler.class,\
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/util/StringBundler$UnsafeStringBuilder.class,\
-	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/util/Validator.class
+	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/util/StringUtil.class,\
+	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/util/StringUtil_IW.class,\
+	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/util/Validator.class,\
+	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/util/Validator_IW.class

@@ -29,10 +29,10 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.admin.web.internal.constants.SiteAdminWebKeys;
 import com.liferay.site.admin.web.internal.display.context.SiteAdminDisplayContext;
 import com.liferay.site.admin.web.internal.servlet.taglib.util.SiteActionDropdownItems;
-import com.liferay.site.constants.SiteWebKeys;
-import com.liferay.site.util.GroupURLProvider;
 
 import java.util.List;
+
+import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -81,11 +81,16 @@ public class SiteVerticalCard extends BaseBaseClayCard implements VerticalCard {
 
 	@Override
 	public String getHref() {
-		GroupURLProvider groupURLProvider =
-			(GroupURLProvider)_request.getAttribute(
-				SiteWebKeys.GROUP_URL_PROVIDER);
+		if (_group.isCompany()) {
+			return null;
+		}
 
-		return groupURLProvider.getGroupURL(_group, _liferayPortletRequest);
+		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
+
+		portletURL.setParameter("backURL", _themeDisplay.getURLCurrent());
+		portletURL.setParameter("groupId", String.valueOf(_group.getGroupId()));
+
+		return portletURL.toString();
 	}
 
 	@Override

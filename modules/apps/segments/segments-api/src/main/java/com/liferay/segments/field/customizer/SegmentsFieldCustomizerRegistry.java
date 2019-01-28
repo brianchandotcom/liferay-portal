@@ -28,7 +28,7 @@ import java.util.Optional;
 @ProviderType
 public interface SegmentsFieldCustomizerRegistry {
 
-	public Optional<SegmentsFieldCustomizer> getSegmentFieldCustomizer(
+	public Optional<SegmentsFieldCustomizer> getSegmentFieldCustomizerOptional(
 		String name, String className);
 
 }

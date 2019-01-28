@@ -90,7 +90,7 @@ public class EntityModelFieldMapper {
 			_portal.getLocale(portletRequest), getClass());
 
 		Optional<SegmentsFieldCustomizer> segmentsFieldCustomizerOptional =
-			_segmentsFieldCustomizerRegistry.getSegmentFieldCustomizer(
+			_segmentsFieldCustomizerRegistry.getSegmentFieldCustomizerOptional(
 				entityModel.getName(), entityField.getName());
 
 		if (segmentsFieldCustomizerOptional.isPresent()) {

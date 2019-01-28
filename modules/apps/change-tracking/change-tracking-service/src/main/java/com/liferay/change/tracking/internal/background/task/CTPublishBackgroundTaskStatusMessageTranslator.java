@@ -36,6 +36,7 @@ public class CTPublishBackgroundTaskStatusMessageTranslator
 	implements BackgroundTaskStatusMessageTranslator {
 
 	@Override
+	@SuppressWarnings("unchecked")
 	public void translate(
 		BackgroundTaskStatus backgroundTaskStatus, Message message) {
 

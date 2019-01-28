@@ -14,6 +14,8 @@
 
 package com.liferay.change.tracking.rest.internal.model.collection;
 
+import com.liferay.change.tracking.model.CTCollection;
+
 import java.util.Date;
 
 import javax.xml.bind.annotation.XmlElement;
@@ -25,8 +27,34 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class CTCollectionModel {
 
-	public static CTCollectionModel.Builder forCompany(long companyId) {
-		return new Builder(companyId);
+	public static final CTCollectionModel EMPTY_CT_COLLECTION_MODEL =
+		new CTCollectionModel();
+
+	public static Builder builder() {
+		return new Builder();
+	}
+
+	public static CTCollectionModel forCTCollection(CTCollection ctCollection) {
+		Builder builder = new Builder();
+
+		return builder.setId(
+			ctCollection.getCtCollectionId()
+		).setCompanyId(
+			ctCollection.getCompanyId()
+		).setDescription(
+			ctCollection.getDescription()
+		).setName(
+			ctCollection.getName()
+		).setStatusByUserName(
+			ctCollection.getStatusByUserName()
+		).setStatusDate(
+			ctCollection.getStatusDate()
+		).build();
+	}
+
+	@XmlElement
+	public int getAdditionCount() {
+		return _additionCount;
 	}
 
 	@XmlElement
@@ -35,8 +63,23 @@ public class CTCollectionModel {
 	}
 
 	@XmlElement
+	public int getDeletionCount() {
+		return _deletionCount;
+	}
+
+	@XmlElement
 	public String getDescription() {
 		return _description;
+	}
+
+	@XmlElement
+	public long getId() {
+		return _id;
+	}
+
+	@XmlElement
+	public int getModificationCount() {
+		return _modificationCount;
 	}
 
 	@XmlElement
@@ -60,8 +103,38 @@ public class CTCollectionModel {
 			return _ctCollectionModel;
 		}
 
+		public Builder setAdditionCount(int additionCount) {
+			_ctCollectionModel._additionCount = additionCount;
+
+			return this;
+		}
+
+		public Builder setCompanyId(long companyId) {
+			_ctCollectionModel._companyId = companyId;
+
+			return this;
+		}
+
+		public Builder setDeletionCount(int deletionCount) {
+			_ctCollectionModel._deletionCount = deletionCount;
+
+			return this;
+		}
+
 		public Builder setDescription(String description) {
 			_ctCollectionModel._description = description;
+
+			return this;
+		}
+
+		public Builder setId(long id) {
+			_ctCollectionModel._id = id;
+
+			return this;
+		}
+
+		public Builder setModicationCount(int modificationCount) {
+			_ctCollectionModel._modificationCount = modificationCount;
 
 			return this;
 		}
@@ -84,10 +157,8 @@ public class CTCollectionModel {
 			return this;
 		}
 
-		private Builder(long companyId) {
+		private Builder() {
 			_ctCollectionModel = new CTCollectionModel();
-
-			_ctCollectionModel._companyId = companyId;
 		}
 
 		private final CTCollectionModel _ctCollectionModel;
@@ -97,8 +168,12 @@ public class CTCollectionModel {
 	private CTCollectionModel() {
 	}
 
+	private int _additionCount;
 	private long _companyId;
+	private int _deletionCount;
 	private String _description;
+	private long _id;
+	private int _modificationCount;
 	private String _name;
 	private String _statusByUserName;
 	private Date _statusDate;

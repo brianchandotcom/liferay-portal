@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.workflow.BaseWorkflowHandler;
+import com.liferay.portal.kernel.workflow.DefaultWorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
@@ -378,29 +379,28 @@ public class WorkflowTaskPermissionCheckerTest extends PowerMockito {
 		WorkflowTaskAssignee workflowTaskAssignee = mockWorkflowTaskAssignee(
 			assigneeClassName, assigneeClassPK);
 
-		WorkflowTask workflowTask = mock(WorkflowTask.class);
-
 		List<WorkflowTaskAssignee> workflowTaskAssignees = new ArrayList<>();
 
 		workflowTaskAssignees.add(workflowTaskAssignee);
 
-		when(
-			workflowTask.getOptionalAttributes()
-		).thenReturn(
-			new HashMap<String, Serializable>()
-		);
+		DefaultWorkflowTask workflowTask = new DefaultWorkflowTask() {
 
-		when(
-			workflowTask.getWorkflowTaskAssignees()
-		).thenReturn(
-			workflowTaskAssignees
-		);
+			@Override
+			public Map<String, Serializable> getOptionalAttributes() {
+				return new HashMap<>();
+			}
 
-		when(
-			workflowTask.isCompleted()
-		).thenReturn(
-			completed
-		);
+			@Override
+			public List<WorkflowTaskAssignee> getWorkflowTaskAssignees() {
+				return workflowTaskAssignees;
+			}
+
+			@Override
+			public boolean isCompleted() {
+				return completed;
+			}
+
+		};
 
 		return workflowTask;
 	}

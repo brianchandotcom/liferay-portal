@@ -32,14 +32,18 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.BaseWorkflowHandler;
+import com.liferay.portal.kernel.workflow.DefaultWorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManagerUtil;
 import com.liferay.portal.workflow.task.web.internal.permission.WorkflowTaskPermissionChecker;
 
+import java.io.Serializable;
+
 import java.lang.reflect.Field;
 
+import java.util.Collections;
 import java.util.Locale;
 import java.util.Map;
 
@@ -311,7 +315,14 @@ public class WorkflowTaskUserNotificationHandlerTest extends PowerMockito {
 			null
 		);
 
-		WorkflowTask workflowTask = mock(WorkflowTask.class);
+		DefaultWorkflowTask workflowTask = new DefaultWorkflowTask() {
+
+			@Override
+			public Map<String, Serializable> getOptionalAttributes() {
+				return Collections.emptyMap();
+			}
+
+		};
 
 		when(
 			WorkflowTaskManagerUtil.fetchWorkflowTask(

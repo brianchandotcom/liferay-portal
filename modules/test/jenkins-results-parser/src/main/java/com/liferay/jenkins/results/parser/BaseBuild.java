@@ -1776,6 +1776,14 @@ public abstract class BaseBuild implements Build {
 		return _FAILURE_MESSAGE_GENERATORS;
 	}
 
+	protected Element getFullConsoleClickHereElement() {
+		return Dom4JUtil.getNewElement(
+			"h5", null, "For full console, click ",
+			Dom4JUtil.getNewAnchorElement(
+				getBuildURL() + "/consoleText", "here"),
+			".");
+	}
+
 	protected abstract Element getGitHubMessageJobResultsElement();
 
 	protected Element getGitHubMessageJobResultsElement(

@@ -122,6 +122,19 @@ public class UserImpl extends UserBaseImpl {
 		return _contact;
 	}
 
+	@Override
+	public String fetchPortraitURL(ThemeDisplay themeDisplay) {
+		Contact contact = fetchContact();
+
+		if (contact == null) {
+			return StringPool.BLANK;
+		}
+
+		return UserConstants.getPortraitURL(
+			themeDisplay.getPathImage(), contact.isMale(), getPortraitId(),
+			getUserUuid());
+	}
+
 	/**
 	 * Returns the user's addresses.
 	 *

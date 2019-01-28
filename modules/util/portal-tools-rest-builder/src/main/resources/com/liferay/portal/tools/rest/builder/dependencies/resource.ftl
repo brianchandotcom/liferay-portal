@@ -9,6 +9,6 @@ import javax.ws.rs.Path;
  * @generated
  */
 @Generated("")
-@Path("/${openAPIYAML.info.version}/${schemaName?lower_case}")
+@Path("/${openAPIYAML.info.version}/${schemaPath}")
 public interface ${schemaName}Resource {
 }

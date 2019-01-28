@@ -17,6 +17,7 @@ package com.liferay.portal.tools.rest.builder;
 import com.liferay.portal.tools.ArgumentsUtil;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.FreeMarker;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.FreeMarkerConstants;
+import com.liferay.portal.tools.rest.builder.internal.util.CamelCaseUtil;
 import com.liferay.portal.tools.rest.builder.internal.util.FileUtil;
 import com.liferay.portal.tools.rest.builder.internal.util.YAMLUtil;
 import com.liferay.portal.tools.rest.builder.internal.yaml.Components;
@@ -125,6 +126,7 @@ public class RESTBuilder {
 		context.put("configYAML", configYAML);
 		context.put("openAPIYAML", openAPIYAML);
 		context.put("schemaName", schemaName);
+		context.put("schemaPath", CamelCaseUtil.fromCamelCase(schemaName));
 
 		return _freeMarker.processTemplate(
 			copyrightFileName, FreeMarkerConstants.RESOURCE_FTL, context);

@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
-import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.portal.kernel.model.MembershipRequestConstants;
 import com.liferay.portal.kernel.model.OrganizationConstants;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -30,7 +29,6 @@ import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.GroupServiceUtil;
-import com.liferay.portal.kernel.service.LayoutSetPrototypeServiceUtil;
 import com.liferay.portal.kernel.service.MembershipRequestLocalServiceUtil;
 import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserGroupLocalServiceUtil;
@@ -39,7 +37,6 @@ import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
@@ -49,12 +46,8 @@ import com.liferay.portal.service.persistence.constants.UserGroupFinderConstants
 import com.liferay.portlet.sitesadmin.search.SiteChecker;
 import com.liferay.portlet.usersadmin.search.GroupSearch;
 import com.liferay.site.admin.web.internal.constants.SiteAdminPortletKeys;
-import com.liferay.site.admin.web.internal.display.context.comparator.SiteInitializerNameComparator;
 import com.liferay.site.admin.web.internal.servlet.taglib.util.SiteActionDropdownItems;
-import com.liferay.site.admin.web.internal.util.SiteInitializerItem;
 import com.liferay.site.constants.SiteWebKeys;
-import com.liferay.site.initializer.SiteInitializer;
-import com.liferay.site.initializer.SiteInitializerRegistry;
 import com.liferay.site.util.GroupSearchProvider;
 
 import java.util.ArrayList;
@@ -80,9 +73,6 @@ public class SiteAdminDisplayContext {
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
 
-		_siteInitializerRegistry =
-			(SiteInitializerRegistry)request.getAttribute(
-				SiteWebKeys.SITE_INITIALIZER_REGISTRY);
 		_groupSearchProvider = (GroupSearchProvider)request.getAttribute(
 			SiteWebKeys.GROUP_SEARCH_PROVIDER);
 	}
@@ -245,45 +235,6 @@ public class SiteAdminDisplayContext {
 		return groupSearch;
 	}
 
-	public List<SiteInitializerItem> getSiteInitializerItems()
-		throws PortalException {
-
-		List<SiteInitializerItem> siteInitializerItemDisplayContexts =
-			new ArrayList<>();
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		List<LayoutSetPrototype> layoutSetPrototypes =
-			LayoutSetPrototypeServiceUtil.search(
-				themeDisplay.getCompanyId(), Boolean.TRUE, null);
-
-		for (LayoutSetPrototype layoutSetPrototype : layoutSetPrototypes) {
-			siteInitializerItemDisplayContexts.add(
-				new SiteInitializerItem(
-					layoutSetPrototype, themeDisplay.getLocale()));
-		}
-
-		List<SiteInitializer> siteInitializers =
-			_siteInitializerRegistry.getSiteInitializers(
-				themeDisplay.getCompanyId());
-
-		for (SiteInitializer siteInitializer : siteInitializers) {
-			SiteInitializerItem siteInitializerItemDisplayContext =
-				new SiteInitializerItem(
-					siteInitializer, themeDisplay.getLocale());
-
-			siteInitializerItemDisplayContexts.add(
-				siteInitializerItemDisplayContext);
-		}
-
-		siteInitializerItemDisplayContexts = ListUtil.sort(
-			siteInitializerItemDisplayContexts,
-			new SiteInitializerNameComparator(true));
-
-		return siteInitializerItemDisplayContexts;
-	}
-
 	public int getUserGroupsCount(Group group) {
 		LinkedHashMap<String, Object> userGroupParams = new LinkedHashMap<>();
 
@@ -344,6 +295,5 @@ public class SiteAdminDisplayContext {
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private final HttpServletRequest _request;
-	private final SiteInitializerRegistry _siteInitializerRegistry;
 
 }

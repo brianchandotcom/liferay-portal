@@ -277,7 +277,7 @@ public class JournalArticleLocalServiceImpl
 	 * @param  neverExpire whether the web content article is not set to auto
 	 *         expire
 	 * @param  reviewDateMonth the month the web content article is set for
-	 *         review
+	 *         reviewaddArticle
 	 * @param  reviewDateDay the calendar day the web content article is set for
 	 *         review
 	 * @param  reviewDateYear the year the web content article is set for review
@@ -459,6 +459,17 @@ public class JournalArticleLocalServiceImpl
 		journalArticlePersistence.update(article);
 
 		// Friendly URLs
+
+		List<FriendlyURLEntry> friendlyURLEntries =
+			friendlyURLEntryLocalService.getFriendlyURLEntries(
+				groupId,
+				classNameLocalService.getClassNameId(JournalArticle.class),
+				article.getResourcePrimKey());
+
+		for (FriendlyURLEntry friendlyURLEntry : friendlyURLEntries) {
+			friendlyURLEntryLocalService.deleteFriendlyURLEntry(
+				friendlyURLEntry);
+		}
 
 		friendlyURLEntryLocalService.addFriendlyURLEntry(
 			groupId, classNameLocalService.getClassNameId(JournalArticle.class),

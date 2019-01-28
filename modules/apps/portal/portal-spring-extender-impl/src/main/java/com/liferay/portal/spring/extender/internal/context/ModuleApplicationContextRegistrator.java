@@ -14,16 +14,15 @@
 
 package com.liferay.portal.spring.extender.internal.context;
 
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.bean.BeanLocatorImpl;
 import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
 import com.liferay.portal.kernel.util.AggregateClassLoader;
-import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.spring.configurator.ConfigurableApplicationContextConfigurator;
 import com.liferay.portal.spring.extender.internal.bean.ApplicationContextServicePublisherUtil;
+import com.liferay.portal.spring.extender.internal.jdbc.DataSourceUtil;
 
 import java.beans.Introspector;
 
@@ -47,14 +46,12 @@ public class ModuleApplicationContextRegistrator {
 	public ModuleApplicationContextRegistrator(
 		ConfigurableApplicationContextConfigurator
 			configurableApplicationContextConfigurator,
-		Bundle extendeeBundle, Bundle extenderBundle,
-		ServiceTrackerMap<String, DataSource> dataSources) {
+		Bundle extendeeBundle, Bundle extenderBundle) {
 
 		_configurableApplicationContextConfigurator =
 			configurableApplicationContextConfigurator;
 		_extendeeBundle = extendeeBundle;
 		_extenderBundle = extenderBundle;
-		_dataSources = dataSources;
 	}
 
 	protected void start() throws Exception {
@@ -86,12 +83,8 @@ public class ModuleApplicationContextRegistrator {
 			_configurableApplicationContext.addBeanFactoryPostProcessor(
 				beanFactory -> {
 					if (!beanFactory.containsBean("liferayDataSource")) {
-						DataSource dataSource = _dataSources.getService(
-							_extendeeBundle.getSymbolicName());
-
-						if (dataSource == null) {
-							dataSource = InfrastructureUtil.getDataSource();
-						}
+						DataSource dataSource = DataSourceUtil.getDataSource(
+							extendeeClassLoader);
 
 						beanFactory.registerSingleton(
 							"liferayDataSource", dataSource);
@@ -149,7 +142,6 @@ public class ModuleApplicationContextRegistrator {
 	private ConfigurableApplicationContext _configurableApplicationContext;
 	private final ConfigurableApplicationContextConfigurator
 		_configurableApplicationContextConfigurator;
-	private final ServiceTrackerMap<String, DataSource> _dataSources;
 	private final Bundle _extendeeBundle;
 	private final Bundle _extenderBundle;
 	private List<ServiceRegistration<?>> _serviceRegistrations;

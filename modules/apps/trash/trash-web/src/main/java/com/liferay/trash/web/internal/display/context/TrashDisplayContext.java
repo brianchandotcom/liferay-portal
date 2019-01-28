@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
-import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.trash.TrashHandler;
@@ -83,21 +82,6 @@ public class TrashDisplayContext {
 
 		_trashHelper = (TrashHelper)request.getAttribute(
 			TrashWebKeys.TRASH_HELPER);
-	}
-
-	public List<DropdownItem> getActionDropdownItems() {
-		return new DropdownItemList() {
-			{
-				add(
-					dropdownItem -> {
-						dropdownItem.putData("action", "deleteSelectedEntries");
-						dropdownItem.setIcon("times-circle");
-						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "delete"));
-						dropdownItem.setQuickAction(true);
-					});
-			}
-		};
 	}
 
 	public List<BreadcrumbEntry> getBaseModelBreadcrumbEntries()
@@ -174,14 +158,6 @@ public class TrashDisplayContext {
 		}
 
 		return ParamUtil.getLong(_request, "classPK");
-	}
-
-	public String getClearResultsURL() {
-		PortletURL clearResultsURL = getPortletURL();
-
-		clearResultsURL.setParameter("keywords", StringPool.BLANK);
-
-		return clearResultsURL.toString();
 	}
 
 	public List<BreadcrumbEntry> getContainerModelBreadcrumbEntries(
@@ -416,28 +392,6 @@ public class TrashDisplayContext {
 		return _entrySearch;
 	}
 
-	public List<DropdownItem> getFilterDropdownItems() {
-		return new DropdownItemList() {
-			{
-				addGroup(
-					dropdownGroupItem -> {
-						dropdownGroupItem.setDropdownItems(
-							_getFilterNavigationDropdownItems());
-						dropdownGroupItem.setLabel(
-							LanguageUtil.get(_request, "filter-by-navigation"));
-					});
-
-				addGroup(
-					dropdownGroupItem -> {
-						dropdownGroupItem.setDropdownItems(
-							_getOrderByDropdownItems());
-						dropdownGroupItem.setLabel(
-							LanguageUtil.get(_request, "order-by"));
-					});
-			}
-		};
-	}
-
 	public List<NavigationItem> getInfoPanelNavigationItems() {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -557,28 +511,6 @@ public class TrashDisplayContext {
 		}
 
 		return portletURL;
-	}
-
-	public String getSearchActionURL() {
-		PortletURL searchActionURL = getPortletURL();
-
-		return searchActionURL.toString();
-	}
-
-	public String getSortingURL() {
-		PortletURL sortingURL = getPortletURL();
-
-		sortingURL.setParameter(
-			"orderByType",
-			Objects.equals(getOrderByType(), "asc") ? "desc" : "asc");
-
-		return sortingURL.toString();
-	}
-
-	public int getTotalItems() throws PortalException {
-		EntrySearch entrySearch = getEntrySearch();
-
-		return entrySearch.getTotal();
 	}
 
 	public TrashEntry getTrashEntry() {
@@ -703,18 +635,6 @@ public class TrashDisplayContext {
 		return false;
 	}
 
-	public boolean isDisabledManagementBar() throws PortalException {
-		if (getTotalItems() > 0) {
-			return false;
-		}
-
-		if (Validator.isNotNull(getKeywords())) {
-			return false;
-		}
-
-		return true;
-	}
-
 	public boolean isIconView() {
 		if (Objects.equals(getDisplayStyle(), "icon")) {
 			return true;
@@ -808,60 +728,6 @@ public class TrashDisplayContext {
 							getPortletURL(), "navigation", "all");
 						dropdownItem.setLabel(
 							LanguageUtil.get(_request, "all"));
-					});
-			}
-		};
-	}
-
-	private List<DropdownItem> _getFilterNavigationDropdownItems() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		return new DropdownItemList() {
-			{
-				add(
-					dropdownItem -> {
-						dropdownItem.setActive(
-							Objects.equals(getNavigation(), "all"));
-						dropdownItem.setHref(
-							getPortletURL(), "navigation", "all");
-						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "all"));
-					});
-
-				for (TrashHandler trashHandler :
-						TrashHandlerRegistryUtil.getTrashHandlers()) {
-
-					add(
-						dropdownItem -> {
-							dropdownItem.setActive(
-								Objects.equals(
-									getNavigation(),
-									trashHandler.getClassName()));
-							dropdownItem.setHref(
-								getPortletURL(), "navigation",
-								trashHandler.getClassName());
-							dropdownItem.setLabel(
-								ResourceActionsUtil.getModelResource(
-									themeDisplay.getLocale(),
-									trashHandler.getClassName()));
-						});
-				}
-			}
-		};
-	}
-
-	private List<DropdownItem> _getOrderByDropdownItems() {
-		return new DropdownItemList() {
-			{
-				add(
-					dropdownItem -> {
-						dropdownItem.setActive(
-							Objects.equals(getOrderByCol(), "removed-date"));
-						dropdownItem.setHref(
-							getPortletURL(), "orderByCol", "removed-date");
-						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "removed-date"));
 					});
 			}
 		};

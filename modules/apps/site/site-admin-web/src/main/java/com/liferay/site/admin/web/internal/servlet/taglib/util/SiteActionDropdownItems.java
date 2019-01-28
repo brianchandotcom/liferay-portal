@@ -70,14 +70,6 @@ public class SiteActionDropdownItems {
 					ActionKeys.UPDATE);
 
 				if (hasUpdatePermission) {
-					int childSitesCount = GroupLocalServiceUtil.getGroupsCount(
-						_themeDisplay.getCompanyId(), _group.getGroupId(),
-						true);
-
-					if (childSitesCount > 0) {
-						add(_getViewSubsitesURL());
-					}
-
 					if (_siteAdminDisplayContext.hasAddChildSitePermission(
 							_group)) {
 
@@ -231,17 +223,6 @@ public class SiteActionDropdownItems {
 			dropdownItem.setTarget("_blank");
 			dropdownItem.setLabel(
 				LanguageUtil.format(_request, "go-to-x", "site-settings"));
-		};
-	}
-
-	private Consumer<DropdownItem> _getViewSubsitesURL() {
-		return dropdownItem -> {
-			dropdownItem.setHref(
-				_liferayPortletResponse.createRenderURL(), "backURL",
-				_themeDisplay.getURLCurrent(), "groupId",
-				String.valueOf(_group.getGroupId()));
-			dropdownItem.setLabel(
-				LanguageUtil.get(_request, "view-child-sites"));
 		};
 	}
 

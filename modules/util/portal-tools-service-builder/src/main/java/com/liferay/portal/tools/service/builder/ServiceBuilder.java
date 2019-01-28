@@ -14,8 +14,6 @@
 
 package com.liferay.portal.tools.service.builder;
 
-import static com.liferay.portal.tools.ToolsUtil.getPackagePath;
-
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.xml.Dom4jUtil;

@@ -47,6 +47,15 @@ entities to prevent lost updates. The default value is false.
 >
 
 <!--
+The dependency-injector value specifies which dependency injector to use. Valid
+values are "spring" and "ds". For new osgi modules the default value is ds, for
+existing modules or wars default value is spring.
+-->
+<!ATTLIST service-builder
+	dependency-injector CDATA #IMPLIED
+>
+
+<!--
 The author element is the name of the user associated with the generated code.
 -->
 <!ELEMENT author (#PCDATA)>

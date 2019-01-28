@@ -45,7 +45,9 @@ page import="com.liferay.segments.model.SegmentsEntry" %><%@
 page import="com.liferay.segments.web.internal.constants.SegmentsWebKeys" %><%@
 page import="com.liferay.segments.web.internal.display.context.EditSegmentsEntryDisplayContext" %><%@
 page import="com.liferay.segments.web.internal.display.context.PreviewSegmentsEntryUsersDisplayContext" %><%@
-page import="com.liferay.segments.web.internal.display.context.SegmentsDisplayContext" %>
+page import="com.liferay.segments.web.internal.display.context.SegmentsDisplayContext" %><%@
+page import="com.liferay.segments.web.internal.display.context.SelectOrganizationsDisplayContext" %><%@
+page import="com.liferay.segments.web.internal.display.context.SelectUsersDisplayContext" %>
 
 <liferay-frontend:defineObjects />
 

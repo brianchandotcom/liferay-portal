@@ -31,4 +31,10 @@ public class SegmentsWebKeys {
 	public static final String SEGMENTS_DISPLAY_CONTEXT =
 		"SEGMENTS_DISPLAY_CONTEXT";
 
+	public static final String SELECT_ORGANIZATIONS_DISPLAY_CONTEXT =
+		"SELECT_ORGANIZATIONS_DISPLAY_CONTEXT";
+
+	public static final String SELECT_USERS_DISPLAY_CONTEXT =
+		"SELECT_USERS_DISPLAY_CONTEXT";
+
 }

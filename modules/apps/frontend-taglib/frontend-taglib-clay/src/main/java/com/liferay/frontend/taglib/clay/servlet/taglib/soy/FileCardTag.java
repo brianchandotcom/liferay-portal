@@ -106,11 +106,11 @@ public class FileCardTag extends BaseClayCardTag {
 		}
 
 		if (context.get("stickerClasses") == null) {
-			setStickerImageAlt(_fileCard.getStickerCssClass());
+			setStickerCssClass(_fileCard.getStickerCssClass());
 		}
 
 		if (context.get("stickerIcon") == null) {
-			setStickerImageAlt(_fileCard.getStickerIcon());
+			setStickerIcon(_fileCard.getStickerIcon());
 		}
 
 		if (context.get("stickerImageAlt") == null) {

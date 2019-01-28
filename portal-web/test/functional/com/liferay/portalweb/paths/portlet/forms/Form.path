@@ -87,7 +87,7 @@
 </tr>
 <tr>
 	<td>PAGE_CONTROLS_SWITCH_PAGINATION_MODE</td>
-	<td>//li[contains(@class,'dropdown-item')]//a[text()='Switch Pagination Mode'] | //button[contains(@class,'dropdown-item') and contains(text(),'Switch Pagination Mode')]</td>
+	<td>//li[contains(@class,'dropdown-item')]//a[text()='Switch Pagination Mode'] | //button[contains(@class,'dropdown-item') and contains(text(),'Switch Pagination Mode')] | //button[contains(@class,'dropdown-item') and contains(text(),'Switch Pagination to Bottom')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -119,12 +119,12 @@
 <!--SUCCESS_PAGE-->
 <tr>
 	<td>SUCCESS_PAGE_TITLE_FIELD</td>
-	<td>//div[@class='form-builder-success-page']//input[contains(@class,'success-page-title')]</td>
+	<td>//div[@class='form-builder-success-page']//input[contains(@class,'success-page-title')] | //div[contains(@class,'form-builder-success-page')]//input[contains(@class,'success-page-title')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SUCCESS_PAGE_DESCRIPTION_FIELD</td>
-	<td>//div[@class='form-builder-success-page']//input[contains(@class,'success-page-content')]</td>
+	<td>//div[@class='form-builder-success-page']//input[contains(@class,'success-page-content')] | //div[contains(@class,'form-builder-success-page')]//input[contains(@class,'success-page-content')] </td>
 	<td></td>
 </tr>
 <tr>

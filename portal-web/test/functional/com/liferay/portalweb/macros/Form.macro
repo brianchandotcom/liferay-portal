@@ -213,7 +213,7 @@ definition {
 	}
 
 	macro enableAutocompleteConfiguration {
-		FormFields.enableSwitcher(fieldName = "autocomplete");
+		FormFields.enableSwitcher(fieldName = "Autocomplete");
 	}
 
 	macro getPublishedFormPublicURL {
@@ -361,7 +361,7 @@ definition {
 
 		AssertClick(
 			locator1 = "Form#PAGE_CONTROLS_SWITCH_PAGINATION_MODE",
-			value1 = "Switch Pagination Mode"
+			value1 = "Switch Pagination to Bottom"
 		);
 	}
 

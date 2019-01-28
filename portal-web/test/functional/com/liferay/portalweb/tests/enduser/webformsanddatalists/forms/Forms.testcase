@@ -10,7 +10,7 @@ definition {
 
 		User.firstLoginPG();
 
-		//TestCase.enableMetal();
+		TestCase.enableMetal();
 
 	}
 
@@ -3646,7 +3646,7 @@ definition {
 
 		FormFields.selectTextFieldLineOption(textFieldLineOption = "Multiple Lines");
 
-		FormFields.enableSwitcher(fieldName = "required");
+		FormFields.enableSwitcher(fieldName = "Required");
 
 		Form.closeSidebar();
 
@@ -3724,7 +3724,7 @@ definition {
 
 		Form.editFieldLabelMetal(fieldValue = "Radio Field");
 
-		FormFields.enableSwitcher(fieldName = "required");
+		FormFields.enableSwitcher(fieldName = "Required");
 
 		FormFields.editOptionsRow(optionName = "Option1", optionValue = "Option 1");
 
@@ -3806,11 +3806,11 @@ definition {
 
 		Form.editFieldLabelMetal(fieldValue = "Text Field");
 
-		FormFields.enableSwitcher(fieldName = "required");
+		FormFields.enableSwitcher(fieldName = "Required");
 
 		Form.gotoAdvancedTab();
 
-		FormFields.enableSwitcher(fieldName = "repeatable");
+		FormFields.enableSwitcher(fieldName = "Repeatable");
 
 		Form.closeSidebar();
 
@@ -3890,7 +3890,7 @@ definition {
 
 		Form.editFieldLabelMetal(fieldValue = "Text Field");
 
-		FormFields.enableSwitcher(fieldName = "required");
+		FormFields.enableSwitcher(fieldName = "Required");
 
 		Form.closeSidebar();
 
@@ -4133,7 +4133,7 @@ definition {
 
 		Form.editFieldLabelMetal(fieldValue = "Date Field");
 
-		FormFields.enableSwitcher(fieldName = "required");
+		FormFields.enableSwitcher(fieldName = "Required");
 
 		Form.closeSidebar();
 

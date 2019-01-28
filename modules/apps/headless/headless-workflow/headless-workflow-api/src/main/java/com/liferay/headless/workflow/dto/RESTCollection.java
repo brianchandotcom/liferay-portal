@@ -14,26 +14,50 @@
 
 package com.liferay.headless.workflow.dto;
 
+import java.util.Collection;
+import java.util.Collections;
+
 import javax.annotation.Generated;
 
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlSeeAlso;
 
 /**
  * @author Javier Gamarra
  * @generated
  */
 @Generated("")
-@XmlRootElement(name = "WorkflowTask")
-public class WorkflowTask {
+@XmlRootElement(name = "collection")
+@XmlSeeAlso({WorkflowLog.class, WorkflowTask.class})
+public class RESTCollection<T> {
 
-	public long getId() {
-		return _id;
+	public RESTCollection() {
+		_items = Collections.emptyList();
+		_totalCount = 0;
 	}
 
-	public void setId(long id) {
-		_id = id;
+	public RESTCollection(Collection<T> items, int totalCount) {
+		_items = items;
+		_totalCount = totalCount;
 	}
 
-	private long _id;
+	@XmlElement(name = "item")
+	public Collection<T> getItems() {
+		return _items;
+	}
+
+	@XmlElement
+	public int getItemsCount() {
+		return _items.size();
+	}
+
+	@XmlElement
+	public int getTotalCount() {
+		return _totalCount;
+	}
+
+	private final Collection<T> _items;
+	private final int _totalCount;
 
 }

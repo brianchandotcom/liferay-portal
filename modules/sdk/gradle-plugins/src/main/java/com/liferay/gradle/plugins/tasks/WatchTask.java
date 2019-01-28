@@ -368,8 +368,6 @@ public class WatchTask extends DefaultTask {
 	}
 
 	private String _getFragmentHostName() throws IOException {
-		String retVal = null;
-
 		Project project = getProject();
 
 		FileCollection fileCollection = project.files("bnd.bnd");
@@ -386,12 +384,12 @@ public class WatchTask extends DefaultTask {
 				String[] fragmentNames = fragmentHost.split(";");
 
 				if (ArrayUtil.isNotEmpty(fragmentNames)) {
-					retVal = fragmentNames[0];
+					return fragmentNames[0];
 				}
 			}
 		}
 
-		return retVal;
+		return null;
 	}
 
 	private long _getInstalledBundleId(GogoShellClient gogoShellClient)

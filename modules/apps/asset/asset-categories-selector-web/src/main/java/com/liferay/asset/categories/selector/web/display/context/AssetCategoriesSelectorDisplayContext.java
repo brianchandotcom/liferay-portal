@@ -157,12 +157,13 @@ public class AssetCategoriesSelectorDisplayContext {
 		AssetVocabulary assetVocabulary =
 			AssetVocabularyLocalServiceUtil.fetchAssetVocabulary(vocabularyId);
 
-		StringBundler sb = new StringBundler(4);
+		StringBundler sb = new StringBundler(5);
 
 		String title = assetVocabulary.getTitle(themeDisplay.getLocale());
 
 		sb.append(HtmlUtil.escape(title));
 
+		sb.append(StringPool.SPACE);
 		sb.append(StringPool.OPEN_PARENTHESIS);
 
 		if (assetVocabulary.getGroupId() == themeDisplay.getCompanyGroupId()) {

@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -96,7 +97,7 @@ public abstract class BaseFragmentCollectionContributor
 
 		Class<?> resourceClass = getResourceClass();
 
-		StringBuilder sb = new StringBuilder(3);
+		StringBundler sb = new StringBundler(4);
 
 		sb.append("dependencies/");
 		sb.append(path);

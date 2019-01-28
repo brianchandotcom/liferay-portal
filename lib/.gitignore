@@ -152,6 +152,9 @@
 /portal/im4java.jar
 /portal/isoparser.jar
 /portal/jabsorb.jar
+/portal/jackson-annotations.jar
+/portal/jackson-core.jar
+/portal/jackson-databind.jar
 /portal/jai_codec.jar
 /portal/jai_core.jar
 /portal/jakarta-regexp.jar

@@ -19,6 +19,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.test.dependencies.Bef
 import com.liferay.arquillian.extension.junit.bridge.junit.test.dependencies.BeforeAfterTestItem;
 import com.liferay.arquillian.extension.junit.bridge.junit.test.dependencies.ClassRuleTestItem;
 import com.liferay.arquillian.extension.junit.bridge.junit.test.dependencies.ExpectedExceptionTestItem;
+import com.liferay.arquillian.extension.junit.bridge.junit.test.dependencies.IgnoreTestItem;
 import com.liferay.portal.kernel.test.junit.BridgeJUnitTestRunner;
 
 import java.io.IOException;
@@ -98,6 +99,22 @@ public class ArquillianTest {
 			ExpectedExceptionTestItem.class);
 
 		assertResult(result, ExpectedExceptionTestItem.class);
+	}
+
+	@Test
+	public void testIgnore() throws IOException {
+		try {
+			Result result = BridgeJUnitTestRunner.runBridgeTests(
+				new BridgeJUnitTestRunner.BridgeRunListener(
+					ArquillianTest.class),
+				IgnoreTestItem.class);
+
+			Assert.assertEquals(1, result.getIgnoreCount());
+			Assert.assertEquals(0, result.getFailureCount());
+		}
+		finally {
+			IgnoreTestItem.assertAndTearDown();
+		}
 	}
 
 	protected void assertResult(Result result, Class<?>... testClasses) {

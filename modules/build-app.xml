@@ -475,6 +475,7 @@
 					<filetokenizer />
 					<replacestring from="${line.separator}" to=" " />
 					<replaceregex pattern="^ | $" replace="" />
+					<replaceregex pattern=".*(.{1000})" replace="[[trimmed]]\1" />
 				</tokenfilter>
 			</filterchain>
 		</loadfile>

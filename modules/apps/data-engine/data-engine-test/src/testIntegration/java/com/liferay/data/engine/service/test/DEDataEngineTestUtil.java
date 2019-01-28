@@ -21,6 +21,8 @@ import com.liferay.data.engine.service.DEDataDefinitionRequestBuilder;
 import com.liferay.data.engine.service.DEDataDefinitionSaveRequest;
 import com.liferay.data.engine.service.DEDataDefinitionSaveResponse;
 import com.liferay.data.engine.service.DEDataDefinitionService;
+import com.liferay.data.engine.service.DEDataRecordCollectionDeleteModelPermissionsRequest;
+import com.liferay.data.engine.service.DEDataRecordCollectionDeletePermissionsRequest;
 import com.liferay.data.engine.service.DEDataRecordCollectionRequestBuilder;
 import com.liferay.data.engine.service.DEDataRecordCollectionSaveRequest;
 import com.liferay.data.engine.service.DEDataRecordCollectionSaveResponse;
@@ -43,21 +45,87 @@ import java.util.Map;
  */
 public class DEDataEngineTestUtil {
 
+	public static void deleteDEDataRecordCollectionModelPermissions(
+			long companyId, User user, long groupId,
+			long deDataRecordCollectionId, String[] roleNames,
+			String[] actionIds,
+			DEDataRecordCollectionService deDataRecordCollectionService)
+		throws Exception {
+
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(user));
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(groupId, user.getUserId());
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+		try {
+			DEDataRecordCollectionDeleteModelPermissionsRequest.Builder
+				builder =
+					DEDataRecordCollectionRequestBuilder.
+						deleteModelPermissionsBuilder(
+							companyId, groupId, deDataRecordCollectionId,
+							roleNames, actionIds);
+
+			DEDataRecordCollectionDeleteModelPermissionsRequest
+				deDataRecordCollectionDeleteModelPermissionsRequest =
+					builder.build();
+
+			deDataRecordCollectionService.execute(
+				deDataRecordCollectionDeleteModelPermissionsRequest);
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
+	}
+
+	public static void deleteDEDataRecordCollectionPermissions(
+			long companyId, User user, long groupId, String roleName,
+			DEDataRecordCollectionService deDataRecordCollectionService)
+		throws Exception {
+
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(user));
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(groupId, user.getUserId());
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+		try {
+			DEDataRecordCollectionDeletePermissionsRequest.Builder builder =
+				DEDataRecordCollectionRequestBuilder.deletePermissionsBuilder(
+					companyId, groupId, roleName
+				);
+
+			DEDataRecordCollectionDeletePermissionsRequest
+				deDataRecordCollectionDeletePermissionsRequest =
+					builder.build();
+
+			deDataRecordCollectionService.execute(
+				deDataRecordCollectionDeletePermissionsRequest);
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
+	}
+
 	public static DEDataDefinition insertDEDataDefinition(
 			User user, Group group,
 			DEDataDefinitionService deDataDefinitionService)
 		throws Exception {
 
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(user));
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), user.getUserId());
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
 		try {
-			ServiceContext serviceContext =
-				ServiceContextTestUtil.getServiceContext(
-					group, user.getUserId());
-
-			ServiceContextThreadLocal.pushServiceContext(serviceContext);
-
-			PermissionThreadLocal.setPermissionChecker(
-				PermissionCheckerFactoryUtil.create(user));
-
 			Map<String, String> nameLabels = new HashMap() {
 				{
 					put("pt_BR", "Nome");
@@ -80,7 +148,7 @@ public class DEDataEngineTestUtil {
 			DEDataDefinitionField deDataDefinitionField2 =
 				new DEDataDefinitionField("email", "string");
 
-			deDataDefinitionField1.addLabels(emailLabels);
+			deDataDefinitionField2.addLabels(emailLabels);
 
 			DEDataDefinition deDataDefinition = new DEDataDefinition();
 
@@ -121,16 +189,16 @@ public class DEDataEngineTestUtil {
 			DEDataDefinitionService deDataDefinitionService)
 		throws Exception {
 
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(user));
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), user.getUserId());
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
 		try {
-			ServiceContext serviceContext =
-				ServiceContextTestUtil.getServiceContext(
-					group, user.getUserId());
-
-			ServiceContextThreadLocal.pushServiceContext(serviceContext);
-
-			PermissionThreadLocal.setPermissionChecker(
-				PermissionCheckerFactoryUtil.create(user));
-
 			Map<String, String> field1Labels = new HashMap() {
 				{
 					put("en_US", "Field Default");
@@ -177,16 +245,16 @@ public class DEDataEngineTestUtil {
 			DEDataRecordCollectionService deDataRecordCollectionService)
 		throws Exception {
 
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(user));
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), user.getUserId());
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
 		try {
-			ServiceContext serviceContext =
-				ServiceContextTestUtil.getServiceContext(
-					group, user.getUserId());
-
-			ServiceContextThreadLocal.pushServiceContext(serviceContext);
-
-			PermissionThreadLocal.setPermissionChecker(
-				PermissionCheckerFactoryUtil.create(user));
-
 			DEDataRecordCollection deDataRecordCollection =
 				new DEDataRecordCollection();
 
@@ -238,22 +306,59 @@ public class DEDataEngineTestUtil {
 			user, group, deDataDefinition, deDataRecordCollectionService);
 	}
 
+	public static DEDataDefinition updateDEDataDefinition(
+			User user, Group group, DEDataDefinition deDataDefinition,
+			DEDataDefinitionService deDataDefinitionService)
+		throws Exception {
+
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(user));
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), user.getUserId());
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+		try {
+			DEDataDefinitionSaveRequest deDataDefinitionSaveRequest =
+				DEDataDefinitionRequestBuilder.saveBuilder(
+					deDataDefinition
+				).onBehalfOf(
+					user.getUserId()
+				).inGroup(
+					group.getGroupId()
+				).build();
+
+			DEDataDefinitionSaveResponse deDataDefinitionSaveResponse =
+				deDataDefinitionService.execute(deDataDefinitionSaveRequest);
+
+			deDataDefinition.setDEDataDefinitionId(
+				deDataDefinitionSaveResponse.getDEDataDefinitionId());
+
+			return deDataDefinition;
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
+	}
+
 	public static DEDataRecordCollection updateDEDataRecordCollection(
 			User user, Group group,
 			DEDataRecordCollection deDataRecordCollection,
 			DEDataRecordCollectionService deDataRecordCollectionService)
 		throws Exception {
 
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(user));
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), user.getUserId());
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
 		try {
-			ServiceContext serviceContext =
-				ServiceContextTestUtil.getServiceContext(
-					group, user.getUserId());
-
-			ServiceContextThreadLocal.pushServiceContext(serviceContext);
-
-			PermissionThreadLocal.setPermissionChecker(
-				PermissionCheckerFactoryUtil.create(user));
-
 			DEDataRecordCollectionSaveRequest
 				deDataRecordCollectionSaveRequest =
 					DEDataRecordCollectionRequestBuilder.saveBuilder(

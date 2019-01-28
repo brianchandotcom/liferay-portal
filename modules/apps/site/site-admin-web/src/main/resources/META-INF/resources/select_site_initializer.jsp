@@ -17,31 +17,17 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect");
-
-String backURL = ParamUtil.getString(request, "backURL", redirect);
-
-long parentGroupId = ParamUtil.getLong(request, "parentGroupId");
-
-SearchContainer<SiteInitializerItem> siteInitializerItemSearchContainer = new SearchContainer<>(liferayPortletRequest, currentURLObj, null, "there-are-no-site-templates");
-
-List<SiteInitializerItem> siteInitializerItems = siteAdminDisplayContext.getSiteInitializerItems();
-
-siteInitializerItemSearchContainer.setTotal(siteInitializerItems.size());
-
-siteInitializerItems = ListUtil.subList(siteInitializerItems, siteInitializerItemSearchContainer.getStart(), siteInitializerItemSearchContainer.getEnd());
-
-siteInitializerItemSearchContainer.setResults(siteInitializerItems);
+SelectSiteInitializerDisplayContext selectSiteInitializerDisplayContext = new SelectSiteInitializerDisplayContext(request, renderRequest, renderResponse);
 
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(backURL);
+portletDisplay.setURLBack(selectSiteInitializerDisplayContext.getBackURL());
 
 renderResponse.setTitle(LanguageUtil.get(request, "select-site-template"));
 %>
 
 <aui:form cssClass="container-fluid-1280" name="fm">
 	<liferay-ui:search-container
-		searchContainer="<%= siteInitializerItemSearchContainer %>"
+		searchContainer="<%= selectSiteInitializerDisplayContext.getSearchContainer() %>"
 	>
 		<liferay-ui:search-container-row
 			className="com.liferay.site.admin.web.internal.util.SiteInitializerItem"
@@ -91,8 +77,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-site-template"));
 
 	<portlet:actionURL name="addGroup" var="addSiteURL">
 		<portlet:param name="mvcPath" value="/select_layout_set_prototype_entry.jsp" />
-		<portlet:param name="groupId" value="<%= String.valueOf(siteAdminDisplayContext.getGroupId()) %>" />
-		<portlet:param name="parentGroupId" value="<%= String.valueOf(parentGroupId) %>" />
+		<portlet:param name="parentGroupId" value="<%= String.valueOf(selectSiteInitializerDisplayContext.getParentGroupId()) %>" />
 	</portlet:actionURL>
 
 	<aui:script require="metal-dom/src/all/dom as dom,frontend-js-web/liferay/modal/commands/OpenSimpleInputModal.es as modalCommands">

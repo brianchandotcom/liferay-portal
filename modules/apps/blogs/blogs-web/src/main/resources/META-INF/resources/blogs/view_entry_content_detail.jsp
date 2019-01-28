@@ -117,7 +117,7 @@ RatingsStats ratingsStats = (RatingsStats)request.getAttribute("view_entry_conte
 							<div class="autofit-row">
 								<div class="autofit-col autofit-col-expand">
 									<div class="text-truncate-inline">
-										<a class="text-truncate username" href="<%= entryUserURL %>"><%= entry.getUserName() %></a>
+										<a class="text-truncate username" href="<%= entryUserURL %>"><%= HtmlUtil.escape(entry.getUserName()) %></a>
 									</div>
 
 									<div>

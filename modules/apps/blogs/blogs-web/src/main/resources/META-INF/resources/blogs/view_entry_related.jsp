@@ -85,7 +85,7 @@ BlogsEntry blogsEntry = (BlogsEntry)request.getAttribute("view_entry_related.jsp
 						<div class="autofit-row">
 							<div class="autofit-col autofit-col-expand">
 								<div class="text-truncate-inline">
-									<a class="text-truncate username" href="<%= blogsEntryUserURL %>"><%= blogsEntry.getUserName() %></a>
+									<a class="text-truncate username" href="<%= blogsEntryUserURL %>"><%= HtmlUtil.escape(blogsEntry.getUserName()) %></a>
 								</div>
 
 								<div class="text-secondary">

@@ -111,10 +111,10 @@ page import="com.liferay.ratings.kernel.transformer.RatingsDataTransformerUtil" 
 page import="com.liferay.site.admin.web.internal.constants.SiteAdminConstants" %><%@
 page import="com.liferay.site.admin.web.internal.constants.SiteAdminPortletKeys" %><%@
 page import="com.liferay.site.admin.web.internal.constants.SiteAdminWebKeys" %><%@
+page import="com.liferay.site.admin.web.internal.display.context.SelectSiteInitializerDisplayContext" %><%@
 page import="com.liferay.site.admin.web.internal.display.context.SiteAdminDisplayContext" %><%@
 page import="com.liferay.site.admin.web.internal.display.context.SiteAdminManagementToolbarDisplayContext" %><%@
 page import="com.liferay.site.admin.web.internal.servlet.taglib.clay.SiteVerticalCard" %><%@
-page import="com.liferay.site.admin.web.internal.util.SiteInitializerItem" %><%@
 page import="com.liferay.sites.kernel.util.Sites" %><%@
 page import="com.liferay.sites.kernel.util.SitesUtil" %>
 

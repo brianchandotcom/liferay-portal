@@ -12,14 +12,19 @@
  * details.
  */
 
-package com.liferay.portal.tools.rest.builder.internal.util;
+package com.liferay.portal.tools.rest.builder.internal.yaml.util;
+
+import com.liferay.portal.tools.rest.builder.internal.yaml.ConfigYAML;
+import com.liferay.portal.tools.rest.builder.internal.yaml.OpenAPIYAML;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.StringWriter;
 
+import org.yaml.snakeyaml.TypeDescription;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;
 import org.yaml.snakeyaml.introspector.PropertyUtils;
@@ -30,11 +35,27 @@ import org.yaml.snakeyaml.representer.Representer;
  */
 public class YAMLUtil {
 
-	public static <T> T load(String fileName, Class<T> clazz) {
+	public static <T> String dump(T t) {
+		StringWriter stringWriter = new StringWriter();
+
+		Yaml yaml = new Yaml();
+
+		yaml.dump(t, stringWriter);
+
+		return stringWriter.toString();
+	}
+
+	public static <T> T load(
+		Class<T> clazz, String fileName, TypeDescription... typeDescriptions) {
+
 		File file = new File(fileName);
 
 		try (InputStream inputStream = new FileInputStream(file)) {
 			Constructor constructor = new Constructor(clazz);
+
+			for (TypeDescription typeDescription : typeDescriptions) {
+				constructor.addTypeDescription(typeDescription);
+			}
 
 			Representer representer = new Representer();
 
@@ -56,6 +77,14 @@ public class YAMLUtil {
 
 			return null;
 		}
+	}
+
+	public static ConfigYAML loadConfigYAML(String fileName) {
+		return load(ConfigYAML.class, fileName);
+	}
+
+	public static OpenAPIYAML loadOpenAPIYAML(String fileName) {
+		return load(OpenAPIYAML.class, fileName);
 	}
 
 }

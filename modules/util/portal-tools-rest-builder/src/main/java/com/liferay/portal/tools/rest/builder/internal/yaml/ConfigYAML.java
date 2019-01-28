@@ -14,10 +14,14 @@
 
 package com.liferay.portal.tools.rest.builder.internal.yaml;
 
+import com.liferay.portal.tools.rest.builder.internal.yaml.config.Application;
+
 /**
  * @author Peter Shin
  */
 public class ConfigYAML {
+
+	public static final String IMPL_DIR = "src/main/java";
 
 	public String getApiDir() {
 		return _apiDir;
@@ -27,8 +31,16 @@ public class ConfigYAML {
 		return _apiPackagePath;
 	}
 
+	public Application getApplication() {
+		return _application;
+	}
+
 	public String getAuthor() {
 		return _author;
+	}
+
+	public String getImplDir() {
+		return _implDir;
 	}
 
 	public void setApiDir(String apiDir) {
@@ -39,12 +51,22 @@ public class ConfigYAML {
 		_apiPackagePath = apiPackagePath;
 	}
 
+	public void setApplication(Application application) {
+		_application = application;
+	}
+
 	public void setAuthor(String author) {
 		_author = author;
 	}
 
+	public void setImplDir(String implDir) {
+		_implDir = implDir;
+	}
+
 	private String _apiDir;
 	private String _apiPackagePath;
+	private Application _application;
 	private String _author;
+	private String _implDir = IMPL_DIR;
 
 }

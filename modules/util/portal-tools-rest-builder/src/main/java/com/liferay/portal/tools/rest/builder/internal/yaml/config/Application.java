@@ -12,21 +12,39 @@
  * details.
  */
 
-package com.liferay.portal.tools.rest.builder.internal.yaml;
+package com.liferay.portal.tools.rest.builder.internal.yaml.config;
 
 /**
  * @author Peter Shin
  */
-public class Info {
+public class Application {
 
-	public String getVersion() {
-		return _version;
+	public String getBaseURI() {
+		return _baseURI;
 	}
 
-	public void setVersion(String version) {
-		_version = version;
+	public String getClassName() {
+		return _className;
 	}
 
-	private String _version;
+	public String getName() {
+		return _name;
+	}
+
+	public void setBaseURI(String baseURI) {
+		_baseURI = baseURI;
+	}
+
+	public void setClassName(String className) {
+		_className = className;
+	}
+
+	public void setName(String name) {
+		_name = name;
+	}
+
+	private String _baseURI;
+	private String _className;
+	private String _name;
 
 }

@@ -11,13 +11,13 @@ class FragmentEntryDropdownDefaultEventHandler extends PortletBase {
 		}
 	}
 
-	deleteFragmentEn tryitemData) {
+	deleteFragmentEntry(itemData) {
 		if (confirm(Liferay.Language.get('are-you-sure-you-want-to-delete-this'))) {
 			this._send(itemData.deleteFragmentEntryURL);
 		}
 	}
 
-	moveFragmentEn tryitemData) {
+	moveFragmentEntry(itemData) {
 		Liferay.Util.selectEntity(
 			{
 				dialog: {
@@ -41,7 +41,7 @@ class FragmentEntryDropdownDefaultEventHandler extends PortletBase {
 		);
 	}
 
-	renameFragmentEn tryitemData) {
+	renameFragmentEntry(itemData) {
 		OpenSimpleInputModal(
 			{
 				dialogTitle: Liferay.Language.get('rename-fragment'),
@@ -97,7 +97,7 @@ class FragmentEntryDropdownDefaultEventHandler extends PortletBase {
 
 FragmentEntryDropdownDefaultEventHandler.STATE = {
 	namespace: Config.string(),
-	spritemap: Config.string()
+	spritemap: Config.string(),
 };
 
 export default FragmentEntryDropdownDefaultEventHandler;

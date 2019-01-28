@@ -21,6 +21,7 @@ import com.liferay.blogs.util.comparator.EntryDisplayDateComparator;
 import com.liferay.blogs.util.comparator.EntryIdComparator;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -30,9 +31,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -40,11 +39,10 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.rss.export.RSSExporter;
 import com.liferay.rss.model.SyndContent;
@@ -61,6 +59,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
+
 /**
  * Provides the remote service for accessing, adding, deleting, subscription
  * handling of, trash handling of, and updating blog entries. Its methods
@@ -69,6 +72,13 @@ import java.util.List;
  * @author Brian Wing Shun Chan
  * @author Máté Thurzó
  */
+@Component(
+	property = {
+		"json.web.service.context.name=blogs",
+		"json.web.service.context.path=BlogsEntry"
+	},
+	service = AopService.class
+)
 public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 
 	/**
@@ -691,7 +701,7 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 		for (BlogsEntry entry : blogsEntries) {
 			SyndEntry syndEntry = _syndModelFactory.createSyndEntry();
 
-			String author = PortalUtil.getUserName(entry);
+			String author = _portal.getUserName(entry);
 
 			syndEntry.setAuthor(author);
 
@@ -774,21 +784,28 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 	private static final Log _log = LogFactoryUtil.getLog(
 		BlogsEntryServiceImpl.class);
 
-	private static volatile ModelResourcePermission<BlogsEntry>
-		_blogsEntryModelResourcePermission =
-			ModelResourcePermissionFactory.getInstance(
-				BlogsEntryServiceImpl.class,
-				"_blogsEntryModelResourcePermission", BlogsEntry.class);
-	private static volatile PortletResourcePermission
-		_portletResourcePermission =
-			PortletResourcePermissionFactory.getInstance(
-				BlogsEntryServiceImpl.class, "_portletResourcePermission",
-				BlogsConstants.RESOURCE_NAME);
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(model.class.name=com.liferay.blogs.model.BlogsEntry)"
+	)
+	private volatile ModelResourcePermission<BlogsEntry>
+		_blogsEntryModelResourcePermission;
 
-	@ServiceReference(type = RSSExporter.class)
+	@Reference
+	private Portal _portal;
+
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(resource.name=" + BlogsConstants.RESOURCE_NAME + ")"
+	)
+	private volatile PortletResourcePermission _portletResourcePermission;
+
+	@Reference
 	private RSSExporter _rssExporter;
 
-	@ServiceReference(type = SyndModelFactory.class)
+	@Reference
 	private SyndModelFactory _syndModelFactory;
 
 }

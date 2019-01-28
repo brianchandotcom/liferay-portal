@@ -20,6 +20,7 @@ import com.liferay.blogs.model.BlogsStatsUser;
 import com.liferay.blogs.service.base.BlogsStatsUserLocalServiceBaseImpl;
 import com.liferay.blogs.util.comparator.EntryDisplayDateComparator;
 import com.liferay.blogs.util.comparator.StatsUserLastPostDateComparator;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -30,10 +31,16 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import java.util.Date;
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Máté Thurzó
  */
+@Component(
+	property = "model.class.name=com.liferay.blogs.model.BlogsStatsUser",
+	service = AopService.class
+)
 public class BlogsStatsUserLocalServiceImpl
 	extends BlogsStatsUserLocalServiceBaseImpl {
 

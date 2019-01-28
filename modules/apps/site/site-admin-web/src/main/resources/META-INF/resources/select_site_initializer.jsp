@@ -23,9 +23,9 @@ String backURL = ParamUtil.getString(request, "backURL", redirect);
 
 long parentGroupId = ParamUtil.getLong(request, "parentGroupId");
 
-SearchContainer<SiteInitializerItemDisplayContext> siteInitializerItemSearchContainer = new SearchContainer<>(liferayPortletRequest, currentURLObj, null, "there-are-no-site-templates");
+SearchContainer<SiteInitializerItem> siteInitializerItemSearchContainer = new SearchContainer<>(liferayPortletRequest, currentURLObj, null, "there-are-no-site-templates");
 
-List<SiteInitializerItemDisplayContext> siteInitializerItems = siteAdminDisplayContext.getSiteInitializerItems();
+List<SiteInitializerItem> siteInitializerItems = siteAdminDisplayContext.getSiteInitializerItems();
 
 siteInitializerItemSearchContainer.setTotal(siteInitializerItems.size());
 
@@ -44,7 +44,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-site-template"));
 		searchContainer="<%= siteInitializerItemSearchContainer %>"
 	>
 		<liferay-ui:search-container-row
-			className="com.liferay.site.admin.web.internal.display.context.SiteInitializerItemDisplayContext"
+			className="com.liferay.site.admin.web.internal.util.SiteInitializerItem"
 			keyProperty="key"
 			modelVar="siteInitializerItem"
 		>

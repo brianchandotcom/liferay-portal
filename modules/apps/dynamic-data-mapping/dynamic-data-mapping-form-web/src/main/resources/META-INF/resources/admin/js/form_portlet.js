@@ -451,7 +451,7 @@ AUI.add(
 
 						var editForm = instance.get('editForm');
 
-						submitForm(editForm.form);
+						Liferay.Util.submitForm(editForm.formNode);
 					},
 
 					syncInputValues: function() {

@@ -133,70 +133,109 @@ renderResponse.setTitle((structure == null) ? LanguageUtil.get(request, "new-ele
 			showPagination="<%= false %>"
 		/>
 
-		<liferay-util:html-top
-			outputKey="loadDDMFieldTypes"
-		>
-			<aui:script use="liferay-ddm-form-renderer-types,liferay-ddm-soy-template-util">
-				Liferay.DDM.SoyTemplateUtil.loadModules(
-					function() {
-						Liferay.DDM.Renderer.FieldTypes.register(<%= ddmFormAdminDisplayContext.getDDMFormFieldTypesJSONArray() %>);
+		<div class="hide">
+			<%= request.getAttribute(DDMWebKeys.DYNAMIC_DATA_MAPPING_FORM_HTML) %>
+		</div>
 
-						Liferay.DMMFieldTypesReady = true;
-
-						Liferay.fire('DMMFieldTypesReady');
-					}
-				);
-			</aui:script>
-		</liferay-util:html-top>
-
-		<aui:script use="liferay-ddm-form-portlet">
+		<aui:script use="aui-promise,liferay-ddm-form-portlet">
 			Liferay.namespace('DDM').FormSettings = {
 				portletNamespace: '<portlet:namespace />'
 			};
 
-			var initHandler = Liferay.after(
-				'form:registered',
-				function(event) {
-					if (event.formName === '<portlet:namespace />editForm') {
-						initHandler.detach();
+			A.Promise.all(
+				[
+					new A.Promise(
+						function(resolve) {
+							var formRegisteredHandler = Liferay.after(
+								'form:registered',
+								function(event) {
+									if (event.formName === '<portlet:namespace />editForm') {
+										formRegisteredHandler.detach();
 
-						if (Liferay.DMMFieldTypesReady) {
-							<portlet:namespace />registerFormPortlet(event.form);
-						}
-						else {
-							Liferay.onceAfter(
-								'DMMFieldTypesReady',
-								function() {
-									<portlet:namespace />registerFormPortlet(event.form);
+										resolve(event.form);
+									}
 								}
 							);
 						}
-					}
-				}
-			);
+					),
+					new A.Promise(
+						function(resolve) {
+							var formBuilderRegisteredHandler = Liferay.after(
+								'<portlet:namespace />formBuilder:registered',
+								function(event) {
+									formBuilderRegisteredHandler.detach();
 
-			function <portlet:namespace />registerFormPortlet(form) {
-				Liferay.component(
-					'formPortlet',
-					new Liferay.DDM.FormPortlet(
-						{
-							defaultLanguageId: '<%= ddmFormAdminDisplayContext.getDefaultLanguageId() %>',
-							editForm: form,
-							editingLanguageId: '<%= ddmFormAdminDisplayContext.getDefaultLanguageId() %>',
-							formBuilder: Liferay.component('<portlet:namespace />formBuilder'),
-							localizedDescription: <%= ddmFormAdminDisplayContext.getFormLocalizedDescription() %>,
-							localizedName: <%= ddmFormAdminDisplayContext.getFormLocalizedName() %>,
-							namespace: '<portlet:namespace />',
-							translationManager: Liferay.component('<portlet:namespace />translationManager'),
-							view: 'fieldSets'
+									resolve();
+								}
+							);
+						}
+					),
+					new A.Promise(
+						function(resolve) {
+							if (Liferay.DMMFieldTypesReady) {
+								resolve();
+							}
+							else {
+								var fieldTypesHandler = Liferay.onceAfter(
+									'DMMFieldTypesReady',
+									function() {
+										fieldTypesHandler.detach();
+
+										resolve();
+									}
+								);
+							}
 						}
 					)
-				);
-			}
+				]
+			).then(
+				function(result) {
+					var form = result[0];
+
+					Liferay.component(
+						'formPortlet',
+						new Liferay.DDM.FormPortlet(
+							{
+								defaultLanguageId: '<%= ddmFormAdminDisplayContext.getDefaultLanguageId() %>',
+								editForm: form,
+								editingLanguageId: '<%= ddmFormAdminDisplayContext.getDefaultLanguageId() %>',
+								formBuilder: Liferay.component('<portlet:namespace />formBuilder'),
+								localizedDescription: <%= ddmFormAdminDisplayContext.getFormLocalizedDescription() %>,
+								localizedName: <%= ddmFormAdminDisplayContext.getFormLocalizedName() %>,
+								namespace: '<portlet:namespace />',
+								translationManager: Liferay.component('<portlet:namespace />translationManager'),
+								view: 'fieldSets'
+							}
+						)
+					);
+				}
+			).catch(
+				function(error) {
+					throw error;
+				}
+			);
 
 			var clearPortletHandlers = function(event) {
 				if (event.portletId === '<%= portletDisplay.getRootPortletId() %>') {
 					Liferay.detach('destroyPortlet', clearPortletHandlers);
+
+					Liferay.destroyComponents(
+						function(component) {
+							var destroy = false;
+
+							if (
+								component === Liferay.component('<portlet:namespace />formBuilder') ||
+								component === Liferay.component('<portlet:namespace />ruleBuilder') ||
+								component === Liferay.component('<portlet:namespace />translationManager') ||
+								component === Liferay.component('formPortlet') ||
+								component === Liferay.component('settingsDDMForm')
+							) {
+								destroy = true;
+							}
+
+							return destroy;
+						}
+					);
 				}
 			};
 

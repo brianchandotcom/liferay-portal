@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.rest.booster.internal.context.provider;
+package com.liferay.rest.booster.apio.internal.context.provider;
 
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.rest.booster.context.Pagination;
+import com.liferay.rest.booster.apio.context.Pagination;
 
 import javax.servlet.http.HttpServletRequest;
 

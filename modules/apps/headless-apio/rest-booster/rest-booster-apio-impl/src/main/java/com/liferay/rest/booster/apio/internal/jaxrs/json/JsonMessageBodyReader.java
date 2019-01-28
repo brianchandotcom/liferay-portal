@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.rest.booster.internal.jaxrs.json;
+package com.liferay.rest.booster.apio.internal.jaxrs.json;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 

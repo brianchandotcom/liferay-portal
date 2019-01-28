@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.rest.booster.context;
+package com.liferay.rest.booster.apio.context;
 
 /**
  * @author Zoltán Takács

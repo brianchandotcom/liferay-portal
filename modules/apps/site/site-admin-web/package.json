@@ -1,0 +1,24 @@
+{
+	"dependencies": {
+		"metal": "^2.16.5",
+		"metal-component": "^2.16.3",
+		"metal-state": "^2.13.2"
+	},
+	"devDependencies": {
+		"babel-cli": "^6.26.0",
+		"babel-preset-env": "^1.7.0",
+		"check-source-formatting": "^2.0.12",
+		"cross-env": "^5.2.0",
+		"liferay-npm-bundler": "^2.5.1",
+		"liferay-npm-bundler-preset-liferay-dev": "^1.1.0"
+	},
+	"name": "site-admin-web",
+	"scripts": {
+		"build": "npm run compile && liferay-npm-bundler",
+		"checkFormat": "npm run csf",
+		"compile": "cross-env NODE_ENV=production babel --source-maps -d classes/META-INF/resources src/main/resources/META-INF/resources",
+		"csf": "csf src/**/*.js",
+		"format": "npm run csf -- -i"
+	},
+	"version": "3.0.0"
+}

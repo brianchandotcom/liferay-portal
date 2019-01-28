@@ -140,9 +140,7 @@ renderResponse.setTitle(journalEditDDMTemplateDisplayContext.getTitle());
 						<aui:input name="webDavURL" type="resource" value="<%= ddmTemplate.getWebDavURL(themeDisplay, WebDAVUtil.getStorageToken(portlet)) %>" />
 					</c:if>
 
-					<c:if test="<%= journalEditDDMTemplateDisplayContext.isShowCacheableInput() %>">
-						<aui:input helpMessage="journal-template-cacheable-help" name="cacheable" value="<%= journalEditDDMTemplateDisplayContext.isCacheable() %>" />
-					</c:if>
+					<aui:input helpMessage="journal-template-cacheable-help" name="cacheable" value="<%= journalEditDDMTemplateDisplayContext.isCacheable() %>" />
 
 					<div id="<portlet:namespace />smallImageContainer">
 						<div class="lfr-ddm-small-image-header">

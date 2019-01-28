@@ -278,17 +278,6 @@ public class JournalEditDDMTemplateDisplayContext {
 		return _cacheable;
 	}
 
-	public boolean isShowCacheableInput() {
-		if (_showCacheableInput != null) {
-			return _showCacheableInput;
-		}
-
-		_showCacheableInput = ParamUtil.getBoolean(
-			_request, "showCacheableInput");
-
-		return _showCacheableInput;
-	}
-
 	public boolean isSmallImage() {
 		if (_smallImage != null) {
 			return _smallImage;
@@ -318,7 +307,6 @@ public class JournalEditDDMTemplateDisplayContext {
 	private String _redirect;
 	private final HttpServletRequest _request;
 	private String _script;
-	private Boolean _showCacheableInput;
 	private Boolean _smallImage;
 
 }

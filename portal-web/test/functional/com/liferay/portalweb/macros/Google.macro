@@ -31,7 +31,5 @@ definition {
 			locator1 = "Button#ANY",
 			key_text = "Save and Return to Liferay"
 		);
-
-		Navigator.openURL();
 	}
 }

@@ -83,6 +83,8 @@ public class RESTBuilder {
 		_createApplicationFile(configYAML, copyrightFileName);
 
 		_createRESTCollectionFile(configYAML, copyrightFileName, openAPIYAML);
+
+		System.out.println(YAMLUtil.dump(openAPIYAML));
 	}
 
 	private File _createApplicationFile(

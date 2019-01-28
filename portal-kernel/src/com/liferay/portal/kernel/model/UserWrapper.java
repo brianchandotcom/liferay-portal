@@ -369,6 +369,12 @@ public class UserWrapper extends BaseModelWrapper<User> implements User,
 		return model.fetchContact();
 	}
 
+	@Override
+	public String fetchPortraitURL(
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay) {
+		return model.fetchPortraitURL(themeDisplay);
+	}
+
 	/**
 	* Returns the user's addresses.
 	*

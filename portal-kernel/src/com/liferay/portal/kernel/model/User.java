@@ -58,6 +58,9 @@ public interface User extends UserModel, PersistedModel {
 
 	public Contact fetchContact();
 
+	public String fetchPortraitURL(
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay);
+
 	/**
 	* Returns the user's addresses.
 	*

@@ -108,8 +108,7 @@ public class SiteAdminManagementToolbarDisplayContext
 				_siteAdminDisplayContext.hasAddChildSitePermission(group)) {
 
 				addSiteURL.setParameter(
-					"parentGroupSearchContainerPrimaryKeys",
-					String.valueOf(group.getGroupId()));
+					"parentGroupId", String.valueOf(group.getGroupId()));
 			}
 
 			return new CreationMenu() {

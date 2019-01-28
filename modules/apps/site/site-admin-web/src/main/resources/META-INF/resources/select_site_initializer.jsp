@@ -21,7 +21,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 String backURL = ParamUtil.getString(request, "backURL", redirect);
 
-long parentGroupSearchContainerPrimaryKeys = ParamUtil.getLong(request, "parentGroupSearchContainerPrimaryKeys");
+long parentGroupId = ParamUtil.getLong(request, "parentGroupId");
 
 SearchContainer<SiteInitializerItemDisplayContext> siteInitializerItemSearchContainer = new SearchContainer<>(liferayPortletRequest, currentURLObj, null, "there-are-no-site-templates");
 
@@ -92,7 +92,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-site-template"));
 	<portlet:actionURL name="addGroup" var="addSiteURL">
 		<portlet:param name="mvcPath" value="/select_layout_set_prototype_entry.jsp" />
 		<portlet:param name="groupId" value="<%= String.valueOf(siteAdminDisplayContext.getGroupId()) %>" />
-		<portlet:param name="parentGroupSearchContainerPrimaryKeys" value="<%= String.valueOf(parentGroupSearchContainerPrimaryKeys) %>" />
+		<portlet:param name="parentGroupId" value="<%= String.valueOf(parentGroupId) %>" />
 	</portlet:actionURL>
 
 	<aui:script require="metal-dom/src/all/dom as dom,frontend-js-web/liferay/modal/commands/OpenSimpleInputModal.es as modalCommands">

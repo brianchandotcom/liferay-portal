@@ -16,38 +16,43 @@ package com.liferay.blogs.service.persistence.impl;
 
 import com.liferay.blogs.model.BlogsStatsUser;
 import com.liferay.blogs.service.persistence.BlogsStatsUserPersistence;
+import com.liferay.blogs.service.persistence.impl.constants.BlogsPersistenceConstants;
 
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.configuration.Configuration;
+import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+
+import org.osgi.service.component.annotations.Reference;
+
+import javax.sql.DataSource;
 
 /**
  * @author Brian Wing Shun Chan
  * @generated
  */
-public class BlogsStatsUserFinderBaseImpl extends BasePersistenceImpl<BlogsStatsUser> {
+public abstract class BlogsStatsUserFinderBaseImpl extends BasePersistenceImpl<BlogsStatsUser> {
 	public BlogsStatsUserFinderBaseImpl() {
 		setModelClass(BlogsStatsUser.class);
 	}
 
-	/**
-	 * Returns the blogs stats user persistence.
-	 *
-	 * @return the blogs stats user persistence
-	 */
-	public BlogsStatsUserPersistence getBlogsStatsUserPersistence() {
-		return blogsStatsUserPersistence;
+	@Override
+	@Reference(target = BlogsPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER, unbind = "-")
+	public void setConfiguration(Configuration configuration) {
+		super.setConfiguration(configuration);
 	}
 
-	/**
-	 * Sets the blogs stats user persistence.
-	 *
-	 * @param blogsStatsUserPersistence the blogs stats user persistence
-	 */
-	public void setBlogsStatsUserPersistence(
-		BlogsStatsUserPersistence blogsStatsUserPersistence) {
-		this.blogsStatsUserPersistence = blogsStatsUserPersistence;
+	@Override
+	@Reference(target = BlogsPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER, unbind = "-")
+	public void setDataSource(DataSource dataSource) {
+		super.setDataSource(dataSource);
 	}
 
-	@BeanReference(type = BlogsStatsUserPersistence.class)
+	@Override
+	@Reference(target = BlogsPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER, unbind = "-")
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		super.setSessionFactory(sessionFactory);
+	}
+
+	@Reference
 	protected BlogsStatsUserPersistence blogsStatsUserPersistence;
 }

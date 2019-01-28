@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -48,8 +47,6 @@ import java.util.List;
  */
 @AccessControlled
 @JSONWebService
-@OSGiBeanProperties(property =  {
-	"json.web.service.context.name=blogs", "json.web.service.context.path=BlogsEntry"}, service = BlogsEntryService.class)
 @ProviderType
 @Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
 	PortalException.class, SystemException.class})

@@ -21,9 +21,11 @@ import com.liferay.blogs.model.BlogsStatsUser;
 import com.liferay.blogs.model.impl.BlogsStatsUserImpl;
 import com.liferay.blogs.model.impl.BlogsStatsUserModelImpl;
 import com.liferay.blogs.service.persistence.BlogsStatsUserPersistence;
+import com.liferay.blogs.service.persistence.impl.constants.BlogsPersistenceConstants;
 
 import com.liferay.petra.string.StringBundler;
 
+import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -31,14 +33,20 @@ import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
+
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 import java.io.Serializable;
 
@@ -52,6 +60,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import javax.sql.DataSource;
+
 /**
  * The persistence implementation for the blogs stats user service.
  *
@@ -62,6 +72,7 @@ import java.util.Objects;
  * @author Brian Wing Shun Chan
  * @generated
  */
+@Component(service = BlogsStatsUserPersistence.class)
 @ProviderType
 public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStatsUser>
 	implements BlogsStatsUserPersistence {
@@ -2859,7 +2870,6 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 
 		setModelImplClass(BlogsStatsUserImpl.class);
 		setModelPKClass(long.class);
-		setEntityCacheEnabled(BlogsStatsUserModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
 	/**
@@ -2869,9 +2879,8 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 	 */
 	@Override
 	public void cacheResult(BlogsStatsUser blogsStatsUser) {
-		entityCache.putResult(BlogsStatsUserModelImpl.ENTITY_CACHE_ENABLED,
-			BlogsStatsUserImpl.class, blogsStatsUser.getPrimaryKey(),
-			blogsStatsUser);
+		entityCache.putResult(entityCacheEnabled, BlogsStatsUserImpl.class,
+			blogsStatsUser.getPrimaryKey(), blogsStatsUser);
 
 		finderCache.putResult(_finderPathFetchByG_U,
 			new Object[] { blogsStatsUser.getGroupId(), blogsStatsUser.getUserId() },
@@ -2888,8 +2897,7 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 	@Override
 	public void cacheResult(List<BlogsStatsUser> blogsStatsUsers) {
 		for (BlogsStatsUser blogsStatsUser : blogsStatsUsers) {
-			if (entityCache.getResult(
-						BlogsStatsUserModelImpl.ENTITY_CACHE_ENABLED,
+			if (entityCache.getResult(entityCacheEnabled,
 						BlogsStatsUserImpl.class, blogsStatsUser.getPrimaryKey()) == null) {
 				cacheResult(blogsStatsUser);
 			}
@@ -2924,8 +2932,8 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 	 */
 	@Override
 	public void clearCache(BlogsStatsUser blogsStatsUser) {
-		entityCache.removeResult(BlogsStatsUserModelImpl.ENTITY_CACHE_ENABLED,
-			BlogsStatsUserImpl.class, blogsStatsUser.getPrimaryKey());
+		entityCache.removeResult(entityCacheEnabled, BlogsStatsUserImpl.class,
+			blogsStatsUser.getPrimaryKey());
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
@@ -2939,7 +2947,7 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (BlogsStatsUser blogsStatsUser : blogsStatsUsers) {
-			entityCache.removeResult(BlogsStatsUserModelImpl.ENTITY_CACHE_ENABLED,
+			entityCache.removeResult(entityCacheEnabled,
 				BlogsStatsUserImpl.class, blogsStatsUser.getPrimaryKey());
 
 			clearUniqueFindersCache((BlogsStatsUserModelImpl)blogsStatsUser,
@@ -3130,7 +3138,7 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (!BlogsStatsUserModelImpl.COLUMN_BITMASK_ENABLED) {
+		if (!_columnBitmaskEnabled) {
 			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
 		else
@@ -3217,9 +3225,8 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 			}
 		}
 
-		entityCache.putResult(BlogsStatsUserModelImpl.ENTITY_CACHE_ENABLED,
-			BlogsStatsUserImpl.class, blogsStatsUser.getPrimaryKey(),
-			blogsStatsUser, false);
+		entityCache.putResult(entityCacheEnabled, BlogsStatsUserImpl.class,
+			blogsStatsUser.getPrimaryKey(), blogsStatsUser, false);
 
 		clearUniqueFindersCache(blogsStatsUserModelImpl, false);
 		cacheUniqueFindersCache(blogsStatsUserModelImpl);
@@ -3490,26 +3497,27 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 	/**
 	 * Initializes the blogs stats user persistence.
 	 */
-	public void afterPropertiesSet() {
-		_finderPathWithPaginationFindAll = new FinderPath(BlogsStatsUserModelImpl.ENTITY_CACHE_ENABLED,
-				BlogsStatsUserModelImpl.FINDER_CACHE_ENABLED,
-				BlogsStatsUserImpl.class,
+	@Activate
+	public void activate() {
+		BlogsStatsUserModelImpl.setEntityCacheEnabled(entityCacheEnabled);
+		BlogsStatsUserModelImpl.setFinderCacheEnabled(finderCacheEnabled);
+
+		_finderPathWithPaginationFindAll = new FinderPath(entityCacheEnabled,
+				finderCacheEnabled, BlogsStatsUserImpl.class,
 				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
 
-		_finderPathWithoutPaginationFindAll = new FinderPath(BlogsStatsUserModelImpl.ENTITY_CACHE_ENABLED,
-				BlogsStatsUserModelImpl.FINDER_CACHE_ENABLED,
-				BlogsStatsUserImpl.class,
+		_finderPathWithoutPaginationFindAll = new FinderPath(entityCacheEnabled,
+				finderCacheEnabled, BlogsStatsUserImpl.class,
 				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
 				new String[0]);
 
-		_finderPathCountAll = new FinderPath(BlogsStatsUserModelImpl.ENTITY_CACHE_ENABLED,
-				BlogsStatsUserModelImpl.FINDER_CACHE_ENABLED, Long.class,
+		_finderPathCountAll = new FinderPath(entityCacheEnabled,
+				finderCacheEnabled, Long.class,
 				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 				new String[0]);
 
-		_finderPathWithPaginationFindByGroupId = new FinderPath(BlogsStatsUserModelImpl.ENTITY_CACHE_ENABLED,
-				BlogsStatsUserModelImpl.FINDER_CACHE_ENABLED,
-				BlogsStatsUserImpl.class,
+		_finderPathWithPaginationFindByGroupId = new FinderPath(entityCacheEnabled,
+				finderCacheEnabled, BlogsStatsUserImpl.class,
 				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
 				new String[] {
 					Long.class.getName(),
@@ -3518,22 +3526,20 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 					OrderByComparator.class.getName()
 				});
 
-		_finderPathWithoutPaginationFindByGroupId = new FinderPath(BlogsStatsUserModelImpl.ENTITY_CACHE_ENABLED,
-				BlogsStatsUserModelImpl.FINDER_CACHE_ENABLED,
-				BlogsStatsUserImpl.class,
+		_finderPathWithoutPaginationFindByGroupId = new FinderPath(entityCacheEnabled,
+				finderCacheEnabled, BlogsStatsUserImpl.class,
 				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
 				new String[] { Long.class.getName() },
 				BlogsStatsUserModelImpl.GROUPID_COLUMN_BITMASK |
 				BlogsStatsUserModelImpl.ENTRYCOUNT_COLUMN_BITMASK);
 
-		_finderPathCountByGroupId = new FinderPath(BlogsStatsUserModelImpl.ENTITY_CACHE_ENABLED,
-				BlogsStatsUserModelImpl.FINDER_CACHE_ENABLED, Long.class,
+		_finderPathCountByGroupId = new FinderPath(entityCacheEnabled,
+				finderCacheEnabled, Long.class,
 				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
 				new String[] { Long.class.getName() });
 
-		_finderPathWithPaginationFindByUserId = new FinderPath(BlogsStatsUserModelImpl.ENTITY_CACHE_ENABLED,
-				BlogsStatsUserModelImpl.FINDER_CACHE_ENABLED,
-				BlogsStatsUserImpl.class,
+		_finderPathWithPaginationFindByUserId = new FinderPath(entityCacheEnabled,
+				finderCacheEnabled, BlogsStatsUserImpl.class,
 				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUserId",
 				new String[] {
 					Long.class.getName(),
@@ -3542,35 +3548,32 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 					OrderByComparator.class.getName()
 				});
 
-		_finderPathWithoutPaginationFindByUserId = new FinderPath(BlogsStatsUserModelImpl.ENTITY_CACHE_ENABLED,
-				BlogsStatsUserModelImpl.FINDER_CACHE_ENABLED,
-				BlogsStatsUserImpl.class,
+		_finderPathWithoutPaginationFindByUserId = new FinderPath(entityCacheEnabled,
+				finderCacheEnabled, BlogsStatsUserImpl.class,
 				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUserId",
 				new String[] { Long.class.getName() },
 				BlogsStatsUserModelImpl.USERID_COLUMN_BITMASK |
 				BlogsStatsUserModelImpl.ENTRYCOUNT_COLUMN_BITMASK);
 
-		_finderPathCountByUserId = new FinderPath(BlogsStatsUserModelImpl.ENTITY_CACHE_ENABLED,
-				BlogsStatsUserModelImpl.FINDER_CACHE_ENABLED, Long.class,
+		_finderPathCountByUserId = new FinderPath(entityCacheEnabled,
+				finderCacheEnabled, Long.class,
 				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUserId",
 				new String[] { Long.class.getName() });
 
-		_finderPathFetchByG_U = new FinderPath(BlogsStatsUserModelImpl.ENTITY_CACHE_ENABLED,
-				BlogsStatsUserModelImpl.FINDER_CACHE_ENABLED,
-				BlogsStatsUserImpl.class, FINDER_CLASS_NAME_ENTITY,
-				"fetchByG_U",
+		_finderPathFetchByG_U = new FinderPath(entityCacheEnabled,
+				finderCacheEnabled, BlogsStatsUserImpl.class,
+				FINDER_CLASS_NAME_ENTITY, "fetchByG_U",
 				new String[] { Long.class.getName(), Long.class.getName() },
 				BlogsStatsUserModelImpl.GROUPID_COLUMN_BITMASK |
 				BlogsStatsUserModelImpl.USERID_COLUMN_BITMASK);
 
-		_finderPathCountByG_U = new FinderPath(BlogsStatsUserModelImpl.ENTITY_CACHE_ENABLED,
-				BlogsStatsUserModelImpl.FINDER_CACHE_ENABLED, Long.class,
+		_finderPathCountByG_U = new FinderPath(entityCacheEnabled,
+				finderCacheEnabled, Long.class,
 				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_U",
 				new String[] { Long.class.getName(), Long.class.getName() });
 
-		_finderPathWithPaginationFindByG_NotE = new FinderPath(BlogsStatsUserModelImpl.ENTITY_CACHE_ENABLED,
-				BlogsStatsUserModelImpl.FINDER_CACHE_ENABLED,
-				BlogsStatsUserImpl.class,
+		_finderPathWithPaginationFindByG_NotE = new FinderPath(entityCacheEnabled,
+				finderCacheEnabled, BlogsStatsUserImpl.class,
 				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_NotE",
 				new String[] {
 					Long.class.getName(), Integer.class.getName(),
@@ -3579,14 +3582,13 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 					OrderByComparator.class.getName()
 				});
 
-		_finderPathWithPaginationCountByG_NotE = new FinderPath(BlogsStatsUserModelImpl.ENTITY_CACHE_ENABLED,
-				BlogsStatsUserModelImpl.FINDER_CACHE_ENABLED, Long.class,
+		_finderPathWithPaginationCountByG_NotE = new FinderPath(entityCacheEnabled,
+				finderCacheEnabled, Long.class,
 				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_NotE",
 				new String[] { Long.class.getName(), Integer.class.getName() });
 
-		_finderPathWithPaginationFindByC_NotE = new FinderPath(BlogsStatsUserModelImpl.ENTITY_CACHE_ENABLED,
-				BlogsStatsUserModelImpl.FINDER_CACHE_ENABLED,
-				BlogsStatsUserImpl.class,
+		_finderPathWithPaginationFindByC_NotE = new FinderPath(entityCacheEnabled,
+				finderCacheEnabled, BlogsStatsUserImpl.class,
 				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_NotE",
 				new String[] {
 					Long.class.getName(), Integer.class.getName(),
@@ -3595,14 +3597,13 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 					OrderByComparator.class.getName()
 				});
 
-		_finderPathWithPaginationCountByC_NotE = new FinderPath(BlogsStatsUserModelImpl.ENTITY_CACHE_ENABLED,
-				BlogsStatsUserModelImpl.FINDER_CACHE_ENABLED, Long.class,
+		_finderPathWithPaginationCountByC_NotE = new FinderPath(entityCacheEnabled,
+				finderCacheEnabled, Long.class,
 				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_NotE",
 				new String[] { Long.class.getName(), Integer.class.getName() });
 
-		_finderPathWithPaginationFindByU_L = new FinderPath(BlogsStatsUserModelImpl.ENTITY_CACHE_ENABLED,
-				BlogsStatsUserModelImpl.FINDER_CACHE_ENABLED,
-				BlogsStatsUserImpl.class,
+		_finderPathWithPaginationFindByU_L = new FinderPath(entityCacheEnabled,
+				finderCacheEnabled, BlogsStatsUserImpl.class,
 				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU_L",
 				new String[] {
 					Long.class.getName(), Date.class.getName(),
@@ -3611,33 +3612,56 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 					OrderByComparator.class.getName()
 				});
 
-		_finderPathWithoutPaginationFindByU_L = new FinderPath(BlogsStatsUserModelImpl.ENTITY_CACHE_ENABLED,
-				BlogsStatsUserModelImpl.FINDER_CACHE_ENABLED,
-				BlogsStatsUserImpl.class,
+		_finderPathWithoutPaginationFindByU_L = new FinderPath(entityCacheEnabled,
+				finderCacheEnabled, BlogsStatsUserImpl.class,
 				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByU_L",
 				new String[] { Long.class.getName(), Date.class.getName() },
 				BlogsStatsUserModelImpl.USERID_COLUMN_BITMASK |
 				BlogsStatsUserModelImpl.LASTPOSTDATE_COLUMN_BITMASK |
 				BlogsStatsUserModelImpl.ENTRYCOUNT_COLUMN_BITMASK);
 
-		_finderPathCountByU_L = new FinderPath(BlogsStatsUserModelImpl.ENTITY_CACHE_ENABLED,
-				BlogsStatsUserModelImpl.FINDER_CACHE_ENABLED, Long.class,
+		_finderPathCountByU_L = new FinderPath(entityCacheEnabled,
+				finderCacheEnabled, Long.class,
 				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_L",
 				new String[] { Long.class.getName(), Date.class.getName() });
 	}
 
-	public void destroy() {
+	@Deactivate
+	public void deactivate() {
 		entityCache.removeCache(BlogsStatsUserImpl.class.getName());
 		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
 		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
-	@ServiceReference(type = CompanyProviderWrapper.class)
+	@Override
+	@Reference(target = BlogsPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER, unbind = "-")
+	public void setConfiguration(Configuration configuration) {
+		super.setConfiguration(configuration);
+
+		_columnBitmaskEnabled = GetterUtil.getBoolean(configuration.get(
+					"value.object.column.bitmask.enabled.com.liferay.blogs.model.BlogsStatsUser"),
+				true);
+	}
+
+	@Override
+	@Reference(target = BlogsPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER, unbind = "-")
+	public void setDataSource(DataSource dataSource) {
+		super.setDataSource(dataSource);
+	}
+
+	@Override
+	@Reference(target = BlogsPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER, unbind = "-")
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		super.setSessionFactory(sessionFactory);
+	}
+
+	private boolean _columnBitmaskEnabled;
+	@Reference(service = CompanyProviderWrapper.class)
 	protected CompanyProvider companyProvider;
-	@ServiceReference(type = EntityCache.class)
+	@Reference
 	protected EntityCache entityCache;
-	@ServiceReference(type = FinderCache.class)
+	@Reference
 	protected FinderCache finderCache;
 
 	private Long _getTime(Date date) {

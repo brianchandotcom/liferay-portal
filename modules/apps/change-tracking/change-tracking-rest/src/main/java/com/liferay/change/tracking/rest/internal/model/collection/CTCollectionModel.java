@@ -37,10 +37,10 @@ public class CTCollectionModel {
 	public static CTCollectionModel forCTCollection(CTCollection ctCollection) {
 		Builder builder = new Builder();
 
-		return builder.setId(
-			ctCollection.getCtCollectionId()
-		).setCompanyId(
+		return builder.setCompanyId(
 			ctCollection.getCompanyId()
+		).setCtCollectionId(
+			ctCollection.getCtCollectionId()
 		).setDescription(
 			ctCollection.getDescription()
 		).setName(
@@ -63,6 +63,11 @@ public class CTCollectionModel {
 	}
 
 	@XmlElement
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	@XmlElement
 	public int getDeletionCount() {
 		return _deletionCount;
 	}
@@ -70,11 +75,6 @@ public class CTCollectionModel {
 	@XmlElement
 	public String getDescription() {
 		return _description;
-	}
-
-	@XmlElement
-	public long getId() {
-		return _id;
 	}
 
 	@XmlElement
@@ -115,6 +115,12 @@ public class CTCollectionModel {
 			return this;
 		}
 
+		public Builder setCtCollectionId(long ctCollectionId) {
+			_ctCollectionModel._ctCollectionId = ctCollectionId;
+
+			return this;
+		}
+
 		public Builder setDeletionCount(int deletionCount) {
 			_ctCollectionModel._deletionCount = deletionCount;
 
@@ -123,12 +129,6 @@ public class CTCollectionModel {
 
 		public Builder setDescription(String description) {
 			_ctCollectionModel._description = description;
-
-			return this;
-		}
-
-		public Builder setId(long id) {
-			_ctCollectionModel._id = id;
 
 			return this;
 		}
@@ -170,9 +170,9 @@ public class CTCollectionModel {
 
 	private int _additionCount;
 	private long _companyId;
+	private long _ctCollectionId;
 	private int _deletionCount;
 	private String _description;
-	private long _id;
 	private int _modificationCount;
 	private String _name;
 	private String _statusByUserName;

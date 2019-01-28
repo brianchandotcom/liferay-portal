@@ -112,7 +112,7 @@ AUI.add(
 							normalizedKey += item;
 						}
 
-						if (isNaN(normalizedKey)) {
+						if (isNaN(normalizedKey) || normalizedKey.length == 0) {
 							return normalizedKey;
 						}
 						else {

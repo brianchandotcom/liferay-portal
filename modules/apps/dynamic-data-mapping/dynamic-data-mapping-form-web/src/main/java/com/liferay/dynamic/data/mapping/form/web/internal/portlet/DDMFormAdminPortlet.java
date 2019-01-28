@@ -206,7 +206,21 @@ public class DDMFormAdminPortlet extends MVCPortlet {
 		String currentTab = ParamUtil.getString(
 			renderRequest, "currentTab", "forms");
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		if (currentTab.equals("element-set")) {
+			DDMForm ddmForm = createSettingsDDMForm(0L, themeDisplay);
+
+			DDMFormRenderingContext ddmFormRenderingContext =
+				createDDMFormRenderingContext(renderRequest, renderResponse);
+
+			String ddmFormHTML = _ddmFormRenderer.render(
+				ddmForm, ddmFormRenderingContext);
+
+			renderRequest.setAttribute(
+				DDMWebKeys.DYNAMIC_DATA_MAPPING_FORM_HTML, ddmFormHTML);
+
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
 				new DDMFormAdminFieldSetDisplayContext(
@@ -227,9 +241,6 @@ public class DDMFormAdminPortlet extends MVCPortlet {
 					_ddmStructureService, _jsonFactory, _npmResolver));
 		}
 		else {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
-
 			long formInstanceId = ParamUtil.getLong(
 				renderRequest, "formInstanceId");
 

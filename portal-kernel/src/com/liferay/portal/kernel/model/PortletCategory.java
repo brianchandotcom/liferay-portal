@@ -43,6 +43,8 @@ public class PortletCategory implements Serializable {
 	public PortletCategory(String name, Set<String> portletIds) {
 		_portletCategories = new ConcurrentHashMap<>();
 
+		_portletIds = ConcurrentHashMap.newKeySet();
+
 		_portletIds.addAll(portletIds);
 
 		if (name.contains(_DELIMITER)) {
@@ -189,6 +191,6 @@ public class PortletCategory implements Serializable {
 	private PortletCategory _parentPortletCategory;
 	private String _path;
 	private final Map<String, PortletCategory> _portletCategories;
-	private final Set<String> _portletIds = ConcurrentHashMap.newKeySet();
+	private final Set<String> _portletIds;
 
 }

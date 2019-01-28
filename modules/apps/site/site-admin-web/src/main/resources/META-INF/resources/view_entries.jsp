@@ -16,10 +16,6 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-GroupURLProvider groupURLProvider = (GroupURLProvider)request.getAttribute(SiteWebKeys.GROUP_URL_PROVIDER);
-%>
-
 <liferay-ui:search-container
 	searchContainer="<%= siteAdminDisplayContext.getSearchContainer() %>"
 >
@@ -34,19 +30,13 @@ GroupURLProvider groupURLProvider = (GroupURLProvider)request.getAttribute(SiteW
 		<%
 		List<Group> childSites = curGroup.getChildren(true);
 
-		boolean hasAddChildSitePermisison = siteAdminDisplayContext.hasAddChildSitePermission(curGroup);
-
 		String siteImageURL = curGroup.getLogoURL(themeDisplay, false);
-
-		PortletURL viewSubsitesURL = null;
-
-		if (hasAddChildSitePermisison) {
-			viewSubsitesURL = renderResponse.createRenderURL();
-
-			viewSubsitesURL.setParameter("mvcPath", "/view.jsp");
-			viewSubsitesURL.setParameter("groupId", String.valueOf(curGroup.getGroupId()));
-		}
 		%>
+
+		<portlet:renderURL var="viewSubsitesURL">
+			<portlet:param name="backURL" value="<%= currentURL %>" />
+			<portlet:param name="groupId" value="<%= String.valueOf(curGroup.getGroupId()) %>" />
+		</portlet:renderURL>
 
 		<c:choose>
 			<c:when test='<%= Objects.equals(siteAdminDisplayContext.getDisplayStyle(), "descriptive") %>'>
@@ -67,7 +57,7 @@ GroupURLProvider groupURLProvider = (GroupURLProvider)request.getAttribute(SiteW
 					colspan="<%= 2 %>"
 				>
 					<h5>
-						<aui:a href="<%= groupURLProvider.getGroupURL(curGroup, liferayPortletRequest) %>" label="<%= HtmlUtil.escape(curGroup.getDescriptiveName(locale)) %>" localizeLabel="<%= false %>" />
+						<aui:a href="<%= !curGroup.isCompany() ? viewSubsitesURL : StringPool.BLANK %>" label="<%= HtmlUtil.escape(curGroup.getDescriptiveName(locale)) %>" localizeLabel="<%= false %>" />
 					</h5>
 
 					<ul class="list-inline">
@@ -81,14 +71,9 @@ GroupURLProvider groupURLProvider = (GroupURLProvider)request.getAttribute(SiteW
 								</c:otherwise>
 							</c:choose>
 						</li>
-
-						<c:if test="<%= hasAddChildSitePermisison && GroupPermissionUtil.contains(permissionChecker, curGroup, ActionKeys.VIEW) %>">
-							<li class="h6">
-								<aui:a href="<%= (viewSubsitesURL != null) ? viewSubsitesURL.toString() : StringPool.BLANK %>">
-									<span class="text-primary"><liferay-ui:message arguments="<%= String.valueOf(childSites.size()) %>" key="x-child-sites" /></span>
-								</aui:a>
-							</li>
-						</c:if>
+						<li class="h6">
+							<liferay-ui:message arguments="<%= String.valueOf(childSites.size()) %>" key="x-child-sites" />
+						</li>
 					</ul>
 				</liferay-ui:search-container-column-text>
 
@@ -117,7 +102,7 @@ GroupURLProvider groupURLProvider = (GroupURLProvider)request.getAttribute(SiteW
 					name="name"
 					orderable="<%= true %>"
 				>
-					<aui:a href="<%= groupURLProvider.getGroupURL(curGroup, liferayPortletRequest) %>" label="<%= HtmlUtil.escape(curGroup.getDescriptiveName(locale)) %>" localizeLabel="<%= false %>" />
+					<aui:a href="<%= !curGroup.isCompany() ? viewSubsitesURL : StringPool.BLANK %>" label="<%= HtmlUtil.escape(curGroup.getDescriptiveName(locale)) %>" localizeLabel="<%= false %>" />
 
 					<c:if test="<%= curGroup.isOrganization() %>">
 
@@ -156,16 +141,7 @@ GroupURLProvider groupURLProvider = (GroupURLProvider)request.getAttribute(SiteW
 					cssClass="table-cell-expand-smaller table-cell-ws-nowrap"
 					name="child-sites"
 				>
-					<c:choose>
-						<c:when test="<%= hasAddChildSitePermisison && GroupPermissionUtil.contains(permissionChecker, curGroup, ActionKeys.VIEW) %>">
-							<aui:a cssClass="table-link" href="<%= (viewSubsitesURL != null) ? viewSubsitesURL.toString() : StringPool.BLANK %>">
-								<span class="child-sites-text"><liferay-ui:message arguments="<%= String.valueOf(childSites.size()) %>" key="x-child-sites" /></span>
-							</aui:a>
-						</c:when>
-						<c:otherwise>
-							<%= StringPool.DASH %>
-						</c:otherwise>
-					</c:choose>
+					<liferay-ui:message arguments="<%= String.valueOf(childSites.size()) %>" key="x-child-sites" />
 				</liferay-ui:search-container-column-text>
 
 				<liferay-ui:search-container-column-text

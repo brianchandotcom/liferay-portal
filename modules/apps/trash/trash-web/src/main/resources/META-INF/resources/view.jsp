@@ -21,8 +21,12 @@
 	navigationItems="<%= trashDisplayContext.getNavigationItems() %>"
 />
 
+<%
+TrashManagementToolbarDisplayContext trashManagementToolbarDisplayContext = new TrashManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, trashDisplayContext);
+%>
+
 <clay:management-toolbar
-	displayContext="<%= new TrashManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, trashDisplayContext) %>"
+	displayContext="<%= trashManagementToolbarDisplayContext %>"
 />
 
 <liferay-util:include page="/restore_path.jsp" servletContext="<%= application %>" />
@@ -79,10 +83,6 @@
 	</c:if>
 </liferay-ui:error>
 
-<portlet:actionURL name="deleteEntries" var="deleteEntriesURL">
-	<portlet:param name="redirect" value="<%= currentURL %>" />
-</portlet:actionURL>
-
 <div class="closed container-fluid container-fluid-max-xl sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
 	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/trash/info_panel" var="sidebarPanelURL" />
 
@@ -100,7 +100,7 @@
 			/>
 		</c:if>
 
-		<aui:form action="<%= deleteEntriesURL %>" name="fm">
+		<aui:form name="fm">
 			<liferay-ui:search-container
 				id="trash"
 				searchContainer="<%= trashDisplayContext.getEntrySearch() %>"
@@ -270,33 +270,18 @@
 	</div>
 </div>
 
-<aui:script>
-	var deleteSelectedEntries = function() {
-		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
-			var form = document.getElementById('<portlet:namespace />fm');
-
-			if (form) {
-				submitForm(form);
+<aui:script require='<%= npmResolvedPackageName + "/js/ManagementToolbarDefaultEventHandler.es as ManagementToolbarDefaultEventHandler" %>'>
+	Liferay.component(
+		'<%= trashManagementToolbarDisplayContext.getDefaultEventHandler() %>',
+		new ManagementToolbarDefaultEventHandler.default(
+			{
+				deleteTrashEntriesURL: '<portlet:actionURL name="deleteEntries"><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>',
+				namespace: '<portlet:namespace />'
 			}
-		}
-	}
-
-	var ACTIONS = {
-		'deleteSelectedEntries': deleteSelectedEntries
-	};
-
-	Liferay.componentReady('trashWebManagementToolbar').then(
-		function(managementToolbar) {
-			managementToolbar.on(
-				'actionItemClicked',
-				function(event) {
-					var itemData = event.data.item.data;
-
-					if (itemData && itemData.action && ACTIONS[itemData.action]) {
-						ACTIONS[itemData.action]();
-					}
-				}
-			);
+		),
+		{
+			destroyOnNavigate: true,
+			portletId: '<%= HtmlUtil.escapeJS(portletDisplay.getId()) %>'
 		}
 	);
 </aui:script>

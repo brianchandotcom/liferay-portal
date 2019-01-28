@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.service.persistence.impl;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -139,7 +140,7 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 		EntityCache entityCache = getEntityCache();
 
 		Serializable serializable = entityCache.getResult(
-			_entityCacheEnabled, _modelImplClass, primaryKey);
+			entityCacheEnabled, _modelImplClass, primaryKey);
 
 		if (serializable == nullModel) {
 			return null;
@@ -157,7 +158,7 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 
 				if (model == null) {
 					entityCache.putResult(
-						_entityCacheEnabled, _modelImplClass, primaryKey,
+						entityCacheEnabled, _modelImplClass, primaryKey,
 						nullModel);
 				}
 				else {
@@ -166,7 +167,7 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 			}
 			catch (Exception e) {
 				entityCache.removeResult(
-					_entityCacheEnabled, _modelImplClass, primaryKey);
+					entityCacheEnabled, _modelImplClass, primaryKey);
 
 				throw processException(e);
 			}
@@ -221,7 +222,7 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 
 		for (Serializable primaryKey : primaryKeys) {
 			Serializable serializable = entityCache.getResult(
-				_entityCacheEnabled, _modelImplClass, primaryKey);
+				entityCacheEnabled, _modelImplClass, primaryKey);
 
 			if (serializable != nullModel) {
 				if (serializable == null) {
@@ -296,8 +297,7 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(
-					_entityCacheEnabled, _modelImplClass, primaryKey,
-					nullModel);
+					entityCacheEnabled, _modelImplClass, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -474,6 +474,19 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 		}
 
 		return model;
+	}
+
+	public void setConfiguration(Configuration configuration) {
+		String modelClassName = _modelClass.getName();
+
+		entityCacheEnabled = GetterUtil.getBoolean(
+			configuration.get(
+				"value.object.entity.cache.enabled.".concat(modelClassName)),
+			true);
+		finderCacheEnabled = GetterUtil.getBoolean(
+			configuration.get(
+				"value.object.finder.cache.enabled.".concat(modelClassName)),
+			true);
 	}
 
 	@Override
@@ -721,7 +734,7 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 	}
 
 	protected void setEntityCacheEnabled(boolean entityCacheEnabled) {
-		_entityCacheEnabled = entityCacheEnabled;
+		this.entityCacheEnabled = entityCacheEnabled;
 	}
 
 	protected void setModelClass(Class<T> modelClass) {
@@ -785,6 +798,8 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 	protected static final NullModel nullModel = new NullModel();
 
 	protected int databaseInMaxParameters;
+	protected boolean entityCacheEnabled;
+	protected boolean finderCacheEnabled;
 
 	/**
 	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
@@ -815,7 +830,6 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 	private DB _db;
 	private Map<String, String> _dbColumnNames;
 	private Dialect _dialect;
-	private boolean _entityCacheEnabled;
 	private Class<T> _modelClass;
 	private Class<? extends T> _modelImplClass;
 	private ModelPKType _modelPKType = ModelPKType.COMPOUND;

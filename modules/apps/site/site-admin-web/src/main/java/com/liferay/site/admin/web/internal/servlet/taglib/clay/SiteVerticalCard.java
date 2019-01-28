@@ -17,6 +17,7 @@ package com.liferay.site.admin.web.internal.servlet.taglib.clay;
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.BaseBaseClayCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.VerticalCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.BaseModel;
@@ -119,6 +120,10 @@ public class SiteVerticalCard extends BaseBaseClayCard implements VerticalCard {
 
 	@Override
 	public String getSubtitle() {
+		if (_group.isCompany()) {
+			return StringPool.DASH;
+		}
+
 		List<Group> childSites = _group.getChildren(true);
 
 		return LanguageUtil.format(

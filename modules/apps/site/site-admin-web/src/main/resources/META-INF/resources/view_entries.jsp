@@ -72,7 +72,14 @@
 							</c:choose>
 						</li>
 						<li class="h6">
-							<liferay-ui:message arguments="<%= String.valueOf(childSites.size()) %>" key="x-child-sites" />
+							<c:choose>
+								<c:when test="<%= !curGroup.isCompany() %>">
+									<liferay-ui:message arguments="<%= String.valueOf(childSites.size()) %>" key="x-child-sites" />
+								</c:when>
+								<c:otherwise>
+									-
+								</c:otherwise>
+							</c:choose>
 						</li>
 					</ul>
 				</liferay-ui:search-container-column-text>
@@ -141,7 +148,14 @@
 					cssClass="table-cell-expand-smaller table-cell-ws-nowrap"
 					name="child-sites"
 				>
-					<liferay-ui:message arguments="<%= String.valueOf(childSites.size()) %>" key="x-child-sites" />
+					<c:choose>
+						<c:when test="<%= !curGroup.isCompany() %>">
+							<liferay-ui:message arguments="<%= String.valueOf(childSites.size()) %>" key="x-child-sites" />
+						</c:when>
+						<c:otherwise>
+							-
+						</c:otherwise>
+					</c:choose>
 				</liferay-ui:search-container-column-text>
 
 				<liferay-ui:search-container-column-text

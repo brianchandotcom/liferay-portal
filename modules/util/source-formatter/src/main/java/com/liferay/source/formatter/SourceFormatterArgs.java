@@ -35,6 +35,8 @@ public class SourceFormatterArgs {
 
 	public static final String GIT_WORKING_BRANCH_NAME = "master";
 
+	public static final boolean INCLUDE_GENERATED_FILES = false;
+
 	public static final boolean INCLUDE_SUBREPOSITORIES = false;
 
 	public static final int MAX_LINE_LENGTH = 80;
@@ -106,6 +108,10 @@ public class SourceFormatterArgs {
 
 	public boolean isFormatLocalChanges() {
 		return _formatLocalChanges;
+	}
+
+	public boolean isIncludeGeneratedFiles() {
+		return _includeGeneratedFiles;
 	}
 
 	public boolean isIncludeSubrepositories() {
@@ -185,6 +191,10 @@ public class SourceFormatterArgs {
 		_gitWorkingBranchName = gitWorkingBranchName;
 	}
 
+	public void setIncludeGeneratedFiles(boolean includeGeneratedFiles) {
+		_includeGeneratedFiles = includeGeneratedFiles;
+	}
+
 	public void setIncludeSubrepositories(boolean includeSubrepositories) {
 		_includeSubrepositories = includeSubrepositories;
 	}
@@ -230,6 +240,7 @@ public class SourceFormatterArgs {
 	private boolean _formatLatestAuthor = FORMAT_LATEST_AUTHOR;
 	private boolean _formatLocalChanges = FORMAT_LOCAL_CHANGES;
 	private String _gitWorkingBranchName = GIT_WORKING_BRANCH_NAME;
+	private boolean _includeGeneratedFiles = INCLUDE_GENERATED_FILES;
 	private boolean _includeSubrepositories = INCLUDE_SUBREPOSITORIES;
 	private int _maxLineLength = MAX_LINE_LENGTH;
 	private boolean _printErrors = PRINT_ERRORS;

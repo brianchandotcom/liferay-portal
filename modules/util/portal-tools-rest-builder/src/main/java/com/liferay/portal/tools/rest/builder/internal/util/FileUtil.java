@@ -14,12 +14,17 @@
 
 package com.liferay.portal.tools.rest.builder.internal.util;
 
+import com.liferay.source.formatter.SourceFormatter;
+import com.liferay.source.formatter.SourceFormatterArgs;
+
 import java.io.File;
 import java.io.IOException;
 
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+
+import java.util.Collections;
 
 /**
  * @author Peter Shin
@@ -33,18 +38,40 @@ public class FileUtil {
 		return s.replace("\r\n", "\n");
 	}
 
-	public static void write(File file, String content) throws IOException {
-		if (file.exists() && content.equals(read(file))) {
-			return;
+	public static void write(File file, String content) throws Exception {
+		if (!file.exists()) {
+			Path path = file.toPath();
+
+			Files.createDirectories(path.getParent());
+
+			Files.createFile(file.toPath());
 		}
 
-		Path path = file.toPath();
+		String oldContent = read(file);
 
-		Files.createDirectories(path.getParent());
+		Files.write(file.toPath(), content.getBytes(StandardCharsets.UTF_8));
 
-		Files.write(path, content.getBytes(StandardCharsets.UTF_8));
+		String newContent = _format(file);
 
-		System.out.println("Writing " + file);
+		if (!oldContent.equals(newContent)) {
+			System.out.println("Writing " + file.getCanonicalPath());
+		}
+	}
+
+	private static String _format(File file) throws Exception {
+		SourceFormatterArgs sourceFormatterArgs = new SourceFormatterArgs();
+
+		sourceFormatterArgs.setFileNames(
+			Collections.singletonList(file.getCanonicalPath()));
+		sourceFormatterArgs.setIncludeGeneratedFiles(true);
+		sourceFormatterArgs.setPrintErrors(false);
+
+		SourceFormatter sourceFormatter = new SourceFormatter(
+			sourceFormatterArgs);
+
+		sourceFormatter.format();
+
+		return read(file);
 	}
 
 }

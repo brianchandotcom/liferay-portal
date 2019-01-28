@@ -179,6 +179,12 @@ public class SourceFormatter {
 					Arrays.asList(fileExtensions));
 			}
 
+			boolean includeGeneratedFiles = ArgumentsUtil.getBoolean(
+				arguments, "include.generated.files",
+				SourceFormatterArgs.INCLUDE_GENERATED_FILES);
+
+			sourceFormatterArgs.setIncludeGeneratedFiles(includeGeneratedFiles);
+
 			boolean includeSubrepositories = ArgumentsUtil.getBoolean(
 				arguments, "include.subrepositories",
 				SourceFormatterArgs.INCLUDE_SUBREPOSITORIES);

@@ -632,7 +632,9 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		String content = FileUtil.read(file);
 
-		if (hasGeneratedTag(content)) {
+		if (!_sourceFormatterArgs.isIncludeGeneratedFiles() &&
+			hasGeneratedTag(content)) {
+
 			return;
 		}
 

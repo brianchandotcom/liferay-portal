@@ -97,7 +97,7 @@ class FragmentEntryDropdownDefaultEventHandler extends PortletBase {
 
 FragmentEntryDropdownDefaultEventHandler.STATE = {
 	namespace: Config.string(),
-	spritemap: Config.string(),
+	spritemap: Config.string()
 };
 
 export default FragmentEntryDropdownDefaultEventHandler;

@@ -23,6 +23,7 @@ import com.liferay.portal.tools.rest.builder.internal.util.CamelCaseUtil;
 import com.liferay.portal.tools.rest.builder.internal.util.FileUtil;
 import com.liferay.portal.tools.rest.builder.internal.yaml.ConfigYAML;
 import com.liferay.portal.tools.rest.builder.internal.yaml.OpenAPIYAML;
+import com.liferay.portal.tools.rest.builder.internal.yaml.config.Application;
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Components;
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Schema;
 import com.liferay.portal.tools.rest.builder.internal.yaml.util.YAMLUtil;
@@ -74,7 +75,51 @@ public class RESTBuilder {
 
 			_createResourceFile(
 				configYAML, copyrightFileName, openAPIYAML, schemaName);
+
+			_createResourceImplFile(
+				configYAML, copyrightFileName, openAPIYAML, schemaName);
 		}
+
+		_createApplicationFile(configYAML, copyrightFileName);
+
+		_createRESTCollectionFile(configYAML, copyrightFileName, openAPIYAML);
+	}
+
+	private File _createApplicationFile(
+			ConfigYAML configYAML, String copyrightFileName)
+		throws Exception {
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(configYAML.getImplDir());
+		sb.append("/");
+
+		String apiPackagePath = configYAML.getApiPackagePath();
+
+		sb.append(apiPackagePath.replace('.', '/'));
+
+		sb.append("/internal/application/");
+
+		Application application = configYAML.getApplication();
+
+		sb.append(application.getClassName());
+
+		sb.append(".java");
+
+		File file = new File(sb.toString());
+
+		Map<String, Object> context = new HashMap<>();
+
+		context.put("configYAML", configYAML);
+		context.put("stringUtil", StringUtil_IW.getInstance());
+		context.put("validator", Validator_IW.getInstance());
+
+		String content = FreeMarkerUtil.processTemplate(
+			copyrightFileName, FreeMarkerConstants.APPLICATION_FTL, context);
+
+		FileUtil.write(content, file);
+
+		return file;
 	}
 
 	private File _createDTOFile(
@@ -144,6 +189,76 @@ public class RESTBuilder {
 
 		String content = FreeMarkerUtil.processTemplate(
 			copyrightFileName, FreeMarkerConstants.RESOURCE_FTL, context);
+
+		FileUtil.write(content, file);
+
+		return file;
+	}
+
+	private File _createResourceImplFile(
+			ConfigYAML configYAML, String copyrightFileName,
+			OpenAPIYAML openAPIYAML, String schemaName)
+		throws Exception {
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(configYAML.getImplDir());
+		sb.append("/");
+
+		String apiPackagePath = configYAML.getApiPackagePath();
+
+		sb.append(apiPackagePath.replace('.', '/'));
+
+		sb.append("/internal/resource/");
+		sb.append(schemaName);
+		sb.append("ResourceImpl.java");
+
+		File file = new File(sb.toString());
+
+		Map<String, Object> context = new HashMap<>();
+
+		context.put("configYAML", configYAML);
+		context.put("openAPIYAML", openAPIYAML);
+		context.put("schemaName", schemaName);
+		context.put("stringUtil", StringUtil_IW.getInstance());
+		context.put("validator", Validator_IW.getInstance());
+
+		String content = FreeMarkerUtil.processTemplate(
+			copyrightFileName, FreeMarkerConstants.RESOURCE_IMPL_FTL, context);
+
+		FileUtil.write(content, file);
+
+		return file;
+	}
+
+	private File _createRESTCollectionFile(
+			ConfigYAML configYAML, String copyrightFileName,
+			OpenAPIYAML openAPIYAML)
+		throws Exception {
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(configYAML.getApiDir());
+		sb.append("/");
+
+		String apiPackagePath = configYAML.getApiPackagePath();
+
+		sb.append(apiPackagePath.replace('.', '/'));
+
+		sb.append("/dto/RESTCollection.java");
+
+		File file = new File(sb.toString());
+
+		Map<String, Object> context = new HashMap<>();
+
+		context.put("configYAML", configYAML);
+		context.put("openAPIYAML", openAPIYAML);
+		context.put("stringUtil", StringUtil_IW.getInstance());
+		context.put("validator", Validator_IW.getInstance());
+
+		String content = FreeMarkerUtil.processTemplate(
+			copyrightFileName, FreeMarkerConstants.REST_COLLECTION_FTL,
+			context);
 
 		FileUtil.write(content, file);
 

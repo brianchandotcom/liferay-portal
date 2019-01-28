@@ -19,8 +19,14 @@ package com.liferay.portal.tools.rest.builder.internal.freemarker;
  */
 public class FreeMarkerConstants {
 
+	public static final String APPLICATION_FTL = "com/liferay/portal/tools/rest/builder/dependencies/application.ftl";
+
 	public static final String DTO_FTL = "com/liferay/portal/tools/rest/builder/dependencies/dto.ftl";
 
 	public static final String RESOURCE_FTL = "com/liferay/portal/tools/rest/builder/dependencies/resource.ftl";
+
+	public static final String RESOURCE_IMPL_FTL = "com/liferay/portal/tools/rest/builder/dependencies/resource_impl.ftl";
+
+	public static final String REST_COLLECTION_FTL = "com/liferay/portal/tools/rest/builder/dependencies/rest_collection.ftl";
 
 }

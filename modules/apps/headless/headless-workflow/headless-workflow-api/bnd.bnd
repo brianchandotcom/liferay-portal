@@ -1,3 +1,6 @@
 Bundle-Name: Liferay Headless Workflow API
 Bundle-SymbolicName: com.liferay.headless.workflow.api
 Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.headless.workflow.dto,\
+	com.liferay.headless.workflow.resource

@@ -1,5 +1,7 @@
 definition {
 	macro gotoDrive {
+		AssertElementPresent(locator1 = "Button#SELECT_FILE");
+
 		AssertClick(locator1 = "Button#SELECT_FILE", value1 = "Select File");
 
 		Pause(locator1 = "3000");

@@ -285,7 +285,7 @@ public class WorkflowTaskUserNotificationHandlerTest extends PowerMockito {
 
 	protected void setUpUserNotificationEventLocalService() throws Exception {
 		UserNotificationEventLocalService userNotificationEventLocalService =
-			mock(UserNotificationEventLocalService.class);
+			ProxyFactory.newDummyInstance(UserNotificationEventLocalService.class);
 
 		_workflowTaskUserNotificationHandler.
 			setUserNotificationEventLocalService(

@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceWrapper;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.kernel.workflow.BaseWorkflowHandler;
 import com.liferay.portal.kernel.workflow.DefaultWorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
@@ -433,7 +434,7 @@ public class WorkflowTaskPermissionCheckerTest extends PowerMockito {
 	}
 
 	protected void setUpGroupLocalServiceUtil() throws PortalException {
-		Group group = mock(Group.class);
+		Group group = ProxyFactory.newDummyInstance(Group.class);
 
 		GroupLocalService groupLocalService =
 			new GroupLocalServiceWrapper(null) {

@@ -55,7 +55,7 @@ public class CTCollectionResource {
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<CTCollectionModel> getActiveCTConfiguration(
+	public List<CTCollectionModel> getCTCollectionModels(
 			@QueryParam("companyId") long companyId,
 			@QueryParam("userId") long userId,
 			@DefaultValue(_TYPE_ALL) @QueryParam("type") String type)
@@ -106,7 +106,7 @@ public class CTCollectionResource {
 	@GET
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public CTCollectionModel getCTCollection(
+	public CTCollectionModel getCTCollectionModel(
 		@PathParam("id") long ctCollectionId) {
 
 		Optional<CTCollection> ctCollectionOptional =

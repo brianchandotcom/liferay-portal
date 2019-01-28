@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.admin.web.internal.constants.SiteAdminPortletKeys;
@@ -118,7 +119,7 @@ public class SiteActionDropdownItems {
 
 		activateSiteURL.setParameter(ActionRequest.ACTION_NAME, "activate");
 
-		activateSiteURL.setParameter("redirect", _themeDisplay.getURLCurrent());
+		activateSiteURL.setParameter("redirect", _getRedirect());
 		activateSiteURL.setParameter(
 			"groupId", String.valueOf(_group.getGroupId()));
 
@@ -147,8 +148,7 @@ public class SiteActionDropdownItems {
 
 		deactivateSiteURL.setParameter(ActionRequest.ACTION_NAME, "deactivate");
 
-		deactivateSiteURL.setParameter(
-			"redirect", _themeDisplay.getURLCurrent());
+		deactivateSiteURL.setParameter("redirect", _getRedirect());
 		deactivateSiteURL.setParameter(
 			"groupId", String.valueOf(_group.getGroupId()));
 
@@ -165,7 +165,7 @@ public class SiteActionDropdownItems {
 
 		deleteSiteURL.setParameter(ActionRequest.ACTION_NAME, "deleteGroups");
 
-		deleteSiteURL.setParameter("redirect", _themeDisplay.getURLCurrent());
+		deleteSiteURL.setParameter("redirect", _getRedirect());
 		deleteSiteURL.setParameter(
 			"groupId", String.valueOf(_group.getGroupId()));
 
@@ -182,7 +182,7 @@ public class SiteActionDropdownItems {
 		leaveSiteURL.setParameter(
 			ActionRequest.ACTION_NAME, "editGroupAssignments");
 
-		leaveSiteURL.setParameter("redirect", _themeDisplay.getURLCurrent());
+		leaveSiteURL.setParameter("redirect", _getRedirect());
 		leaveSiteURL.setParameter(
 			"groupId", String.valueOf(_group.getGroupId()));
 		leaveSiteURL.setParameter(
@@ -193,6 +193,17 @@ public class SiteActionDropdownItems {
 			dropdownItem.putData("leaveSiteURL", leaveSiteURL.toString());
 			dropdownItem.setLabel(LanguageUtil.get(_request, "leave"));
 		};
+	}
+
+	private String _getRedirect() {
+		if (_redirect != null) {
+			return _redirect;
+		}
+
+		_redirect = ParamUtil.getString(
+			_request, "redirect", _themeDisplay.getURLCurrent());
+
+		return _redirect;
 	}
 
 	private Consumer<DropdownItem> _getViewSitePrivatePagesURL() {
@@ -287,6 +298,7 @@ public class SiteActionDropdownItems {
 
 	private final Group _group;
 	private final LiferayPortletResponse _liferayPortletResponse;
+	private String _redirect;
 	private final HttpServletRequest _request;
 	private final SiteAdminDisplayContext _siteAdminDisplayContext;
 	private final ThemeDisplay _themeDisplay;

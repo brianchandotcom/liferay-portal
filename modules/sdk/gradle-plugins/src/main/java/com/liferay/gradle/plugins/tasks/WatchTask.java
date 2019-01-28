@@ -259,7 +259,8 @@ public class WatchTask extends DefaultTask {
 					String symbolicName = bundleDTO.symbolicName;
 
 					if (symbolicName.indexOf('(') > 0) {
-						symbolicName = symbolicName.substring(0, symbolicName.indexOf("(") - 1);
+						symbolicName = symbolicName.substring(
+							0, symbolicName.indexOf("(") - 1);
 					}
 
 					if (bundleSymbolicName.equals(symbolicName)) {

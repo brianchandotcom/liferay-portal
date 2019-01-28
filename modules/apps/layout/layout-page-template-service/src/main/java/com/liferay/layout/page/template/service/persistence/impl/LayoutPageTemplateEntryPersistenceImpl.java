@@ -21220,17 +21220,6 @@ public class LayoutPageTemplateEntryPersistenceImpl extends BasePersistenceImpl<
 				Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 				"countByPlid", new String[] { Long.class.getName() });
 
-		_finderPathFetchByPlid = new FinderPath(LayoutPageTemplateEntryModelImpl.ENTITY_CACHE_ENABLED,
-				LayoutPageTemplateEntryModelImpl.FINDER_CACHE_ENABLED,
-				LayoutPageTemplateEntryImpl.class, FINDER_CLASS_NAME_ENTITY,
-				"fetchByPlid", new String[] { Long.class.getName() },
-				LayoutPageTemplateEntryModelImpl.PLID_COLUMN_BITMASK);
-
-		_finderPathCountByPlid = new FinderPath(LayoutPageTemplateEntryModelImpl.ENTITY_CACHE_ENABLED,
-				LayoutPageTemplateEntryModelImpl.FINDER_CACHE_ENABLED,
-				Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-				"countByPlid", new String[] { Long.class.getName() });
-
 		_finderPathWithPaginationFindByG_L = new FinderPath(LayoutPageTemplateEntryModelImpl.ENTITY_CACHE_ENABLED,
 				LayoutPageTemplateEntryModelImpl.FINDER_CACHE_ENABLED,
 				LayoutPageTemplateEntryImpl.class,

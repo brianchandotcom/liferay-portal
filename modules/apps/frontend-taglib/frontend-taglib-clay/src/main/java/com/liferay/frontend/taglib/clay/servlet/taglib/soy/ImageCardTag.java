@@ -122,11 +122,11 @@ public class ImageCardTag extends BaseClayCardTag {
 		}
 
 		if (context.get("stickerClasses") == null) {
-			setStickerImageAlt(_imageCard.getStickerCssClass());
+			setStickerCssClass(_imageCard.getStickerCssClass());
 		}
 
 		if (context.get("stickerIcon") == null) {
-			setStickerImageAlt(_imageCard.getStickerIcon());
+			setStickerIcon(_imageCard.getStickerIcon());
 		}
 
 		if (context.get("stickerImageAlt") == null) {

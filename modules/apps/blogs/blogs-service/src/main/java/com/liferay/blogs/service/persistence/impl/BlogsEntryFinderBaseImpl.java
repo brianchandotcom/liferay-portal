@@ -16,48 +16,53 @@ package com.liferay.blogs.service.persistence.impl;
 
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.persistence.BlogsEntryPersistence;
+import com.liferay.blogs.service.persistence.impl.constants.BlogsPersistenceConstants;
 
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.configuration.Configuration;
+import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 
+import org.osgi.service.component.annotations.Reference;
+
 import java.util.Set;
+
+import javax.sql.DataSource;
 
 /**
  * @author Brian Wing Shun Chan
  * @generated
  */
-public class BlogsEntryFinderBaseImpl extends BasePersistenceImpl<BlogsEntry> {
+public abstract class BlogsEntryFinderBaseImpl extends BasePersistenceImpl<BlogsEntry> {
 	public BlogsEntryFinderBaseImpl() {
 		setModelClass(BlogsEntry.class);
 	}
 
 	@Override
 	public Set<String> getBadColumnNames() {
-		return getBlogsEntryPersistence().getBadColumnNames();
+		return blogsEntryPersistence.getBadColumnNames();
 	}
 
-	/**
-	 * Returns the blogs entry persistence.
-	 *
-	 * @return the blogs entry persistence
-	 */
-	public BlogsEntryPersistence getBlogsEntryPersistence() {
-		return blogsEntryPersistence;
+	@Override
+	@Reference(target = BlogsPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER, unbind = "-")
+	public void setConfiguration(Configuration configuration) {
+		super.setConfiguration(configuration);
 	}
 
-	/**
-	 * Sets the blogs entry persistence.
-	 *
-	 * @param blogsEntryPersistence the blogs entry persistence
-	 */
-	public void setBlogsEntryPersistence(
-		BlogsEntryPersistence blogsEntryPersistence) {
-		this.blogsEntryPersistence = blogsEntryPersistence;
+	@Override
+	@Reference(target = BlogsPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER, unbind = "-")
+	public void setDataSource(DataSource dataSource) {
+		super.setDataSource(dataSource);
 	}
 
-	@BeanReference(type = BlogsEntryPersistence.class)
+	@Override
+	@Reference(target = BlogsPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER, unbind = "-")
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		super.setSessionFactory(sessionFactory);
+	}
+
+	@Reference
 	protected BlogsEntryPersistence blogsEntryPersistence;
 	private static final Log _log = LogFactoryUtil.getLog(BlogsEntryFinderBaseImpl.class);
 }

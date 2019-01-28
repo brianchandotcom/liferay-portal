@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
@@ -99,22 +98,19 @@ public class BlogsStatsUserModelImpl extends BaseModelImpl<BlogsStatsUser>
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.blogs.service.util.ServiceProps.get(
-				"value.object.entity.cache.enabled.com.liferay.blogs.model.BlogsStatsUser"),
-			true);
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.blogs.service.util.ServiceProps.get(
-				"value.object.finder.cache.enabled.com.liferay.blogs.model.BlogsStatsUser"),
-			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.blogs.service.util.ServiceProps.get(
-				"value.object.column.bitmask.enabled.com.liferay.blogs.model.BlogsStatsUser"),
-			true);
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
 	public static final long ENTRYCOUNT_COLUMN_BITMASK = 2L;
 	public static final long GROUPID_COLUMN_BITMASK = 4L;
 	public static final long LASTPOSTDATE_COLUMN_BITMASK = 8L;
 	public static final long USERID_COLUMN_BITMASK = 16L;
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.blogs.service.util.ServiceProps.get(
-				"lock.expiration.time.com.liferay.blogs.model.BlogsStatsUser"));
+
+	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
+		_entityCacheEnabled = entityCacheEnabled;
+	}
+
+	public static void setFinderCacheEnabled(boolean finderCacheEnabled) {
+		_finderCacheEnabled = finderCacheEnabled;
+	}
 
 	public BlogsStatsUserModelImpl() {
 	}
@@ -504,12 +500,12 @@ public class BlogsStatsUserModelImpl extends BaseModelImpl<BlogsStatsUser>
 
 	@Override
 	public boolean isEntityCacheEnabled() {
-		return ENTITY_CACHE_ENABLED;
+		return _entityCacheEnabled;
 	}
 
 	@Override
 	public boolean isFinderCacheEnabled() {
-		return FINDER_CACHE_ENABLED;
+		return _finderCacheEnabled;
 	}
 
 	@Override
@@ -628,6 +624,8 @@ public class BlogsStatsUserModelImpl extends BaseModelImpl<BlogsStatsUser>
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			BlogsStatsUser.class, ModelWrapper.class
 		};
+	private static boolean _entityCacheEnabled;
+	private static boolean _finderCacheEnabled;
 	private long _statsUserId;
 	private long _groupId;
 	private long _originalGroupId;

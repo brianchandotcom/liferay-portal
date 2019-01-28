@@ -13,7 +13,11 @@
 		userMonogram: string,
 		userName: string
 	]}
-	{@param  translations: map<string, string>}
+	{@param  spritemap: string}
+
+	{let $headerLinkLabel kind="text"}
+		{msg desc=""}production-view{/msg}
+	{/let}
 
 	<div class="container-fluid-1280">
 		{if not $initFetch}
@@ -27,12 +31,21 @@
 					{delcall com.liferay.change.tracking.change.lists.web.GlanceCard}
 						{param cardState: 'border-left-blue' /}
 						{param description: $description /}
-						{param descriptionTitle: $translations['description'] /}
-						{param headerLink: ['href': 'href', 'label': $translations['production-view'] ] /}
-						{param headerSubTitle: $translations['published-change-list'] /}
+						{param descriptionTitle kind="text"}
+							{msg desc=""}description{/msg}
+						{/param}
+						{param headerLink: [
+							'href': 'href', 
+							'label': $headerLinkLabel ] /}
+						{param headerSubTitle kind="text"}
+							{msg desc=""}published-change-list{/msg}
+						{/param}
 						{param headerTitle: $headerTitle /}
-						{param publishedBy:  $publishedBy /}
-						{param publishedByTitle: $translations['published-by'] /}
+						{param publishedBy: $publishedBy /}
+						{param publishedByTitle kind="text"}
+							{msg desc=""}published-by{/msg}
+						{/param}
+						{param spritemap: $spritemap /}
 					{/delcall}
 				</div>
 			</div>
@@ -67,12 +80,14 @@
 		userName: string
 	]}
 	{@param? publishedByTitle: string}
+	{@param  spritemap: string}
 
 	<div class="glance-card-sheet {$cardState}">
 		{call .glanceCardHeader}
 			{param headerLink: $headerLink /}
 			{param headerSubTitle: $headerSubTitle /}
 			{param headerTitle: $headerTitle /}
+			{param spritemap: $spritemap /}
 		{/call}
 
 		<div class="glance-card-sheet-divider"></div>
@@ -82,6 +97,7 @@
 			{param descriptionTitle: $descriptionTitle /}
 			{param publishedBy: $publishedBy /}
 			{param publishedByTitle: $publishedByTitle /}
+			{param spritemap: $spritemap /}
 		{/call}
 
 	</div>

@@ -110,7 +110,6 @@ import com.liferay.structured.content.apio.internal.util.JournalArticleContentHe
 
 import io.vavr.control.Try;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collection;

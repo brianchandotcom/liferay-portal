@@ -2,8 +2,6 @@ Bundle-Name: Liferay Structured Content Apio Test
 Bundle-SymbolicName: com.liferay.structured.content.apio.test
 Bundle-Version: 2.0.0
 Import-Package:\
-	!com.fasterxml.jackson.*,\
-	\
 	!com.jayway.jsonpath.*,\
 	\
 	!com.liferay.petra.json.web.service.client.internal.*,\

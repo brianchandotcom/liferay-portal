@@ -11,7 +11,7 @@ Import-Package:\
 	!com.conversantmedia.util.concurrent.*,\
 	\
 	!com.fasterxml.aalto.*,\
-	!com.fasterxml.jackson.*,\
+	!com.fasterxml.jackson.dataformat.*,\
 	\
 	!com.github.mustachejava.*,\
 	\

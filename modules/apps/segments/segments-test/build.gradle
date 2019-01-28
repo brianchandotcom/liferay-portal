@@ -3,7 +3,7 @@ copyLibs {
 }
 
 dependencies {
-	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.6.7.1"
+	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.9.8"
 
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	testIntegrationCompile group: "javax.portlet", name: "portlet-api", version: "3.0.0"

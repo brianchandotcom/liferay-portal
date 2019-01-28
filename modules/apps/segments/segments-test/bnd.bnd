@@ -1,10 +1,7 @@
 Bundle-Name: Liferay Segments Test
 Bundle-SymbolicName: com.liferay.segments.test
 Bundle-Version: 1.0.0
-Import-Package:\
-	!com.fasterxml.jackson.*,\
-	\
-	*
+Import-Package: *
 -includeresource:\
 	test-classes/integration,\
 	@lib/jackson-databind.jar

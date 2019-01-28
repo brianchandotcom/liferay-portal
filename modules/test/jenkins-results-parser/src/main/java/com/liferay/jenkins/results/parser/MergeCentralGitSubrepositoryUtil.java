@@ -240,21 +240,6 @@ public class MergeCentralGitSubrepositoryUtil {
 		sb.append(gitSubrepositoryUpstreamCommit);
 		sb.append(")");
 
-		String subrepoPullMentionUsers = centralGitSubrepository.getCIProperty(
-			"subrepo.merge.pull.mention.users");
-
-		if (subrepoPullMentionUsers != null) {
-			sb.append("\n\n");
-
-			for (String subrepoPullMentionUser :
-					subrepoPullMentionUsers.split(",")) {
-
-				sb.append("@");
-				sb.append(subrepoPullMentionUser);
-				sb.append(" ");
-			}
-		}
-
 		String title = gitSubrepositoryName + " - Central Merge Pull Request";
 
 		String pullRequestURL = centralGitWorkingDirectory.createPullRequest(

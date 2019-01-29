@@ -35,7 +35,7 @@ import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.category.apio.architect.identifier.CategoryIdentifier;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLAppService;
-import com.liferay.document.library.kernel.util.DLUtil;
+import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.folder.apio.architect.identifier.FolderIdentifier;
 import com.liferay.folder.apio.architect.identifier.RootFolderIdentifier;
 import com.liferay.media.object.apio.architect.identifier.MediaObjectIdentifier;
@@ -211,7 +211,7 @@ public class MediaObjectNestedCollectionResource
 		try {
 			FileVersion fileVersion = fileEntry.getFileVersion();
 
-			return DLUtil.getPreviewURL(
+			return _dlurlHelper.getPreviewURL(
 				fileEntry, fileVersion, null, "", false, false);
 		}
 		catch (PortalException pe) {
@@ -256,6 +256,9 @@ public class MediaObjectNestedCollectionResource
 
 	@Reference
 	private DLAppService _dlAppService;
+
+	@Reference
+	private DLURLHelper _dlurlHelper;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.portal.kernel.repository.model.FileEntry)"

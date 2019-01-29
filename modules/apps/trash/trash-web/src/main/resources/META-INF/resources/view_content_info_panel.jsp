@@ -28,7 +28,10 @@ TrashHandler trashHandler = trashDisplayContext.getTrashHandler();
 	<div class="sidebar-header">
 		<ul class="sidebar-header-actions">
 			<li>
-				<liferay-util:include page="/container_action.jsp" servletContext="<%= application %>" />
+				<clay:dropdown-actions
+					defaultEventHandler="<%= TrashWebKeys.TRASH_ENTRIES_DEFAULT_EVENT_HANDLER %>"
+					dropdownItems="<%= trashDisplayContext.getTrashEntryActionDropdownItems(trashDisplayContext.getTrashEntry()) %>"
+				/>
 			</li>
 		</ul>
 

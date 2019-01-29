@@ -70,6 +70,8 @@ public class RESTBuilder {
 			String schemaName = entry.getKey();
 			Schema schema = entry.getValue();
 
+			_createCollectionFile(configYAML, copyrightFileName, schemaName);
+
 			_createDTOFile(configYAML, copyrightFileName, schema, schemaName);
 
 			_createResourceFile(
@@ -77,8 +79,6 @@ public class RESTBuilder {
 
 			_createResourceImplFile(
 				configYAML, copyrightFileName, openAPIYAML, schemaName);
-
-			_createCollectionFile(configYAML, copyrightFileName, schemaName);
 		}
 
 		_createApplicationFile(configYAML, copyrightFileName);

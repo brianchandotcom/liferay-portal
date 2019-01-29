@@ -43,10 +43,21 @@ FragmentsEditorDisplayContext fragmentsEditorDisplayContext = (FragmentsEditorDi
 />
 
 <%
+StringBundler sb = new StringBundler(8);
+
+sb.append(npmResolvedPackageName);
+sb.append("/js/components/edit_mode/DisabledAreaMask.es as DisabledAreaMaskModule, ");
+sb.append(npmResolvedPackageName);
+sb.append("/js/components/edit_mode/EditModeWrapper.es as EditModeWrapperModule, ");
+sb.append(npmResolvedPackageName);
+sb.append("/js/reducers/reducers.es as ReducersModule, ");
+sb.append(npmResolvedPackageName);
+sb.append("/js/store/store.es as StoreModule");
+
 JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
 %>
 
-<aui:script require="js/components/edit_mode/DisabledAreaMask.es as DisabledAreaMaskModule, js/components/edit_mode/EditModeWrapper.es as EditModeWrapperModule, js/reducers/reducers.es as ReducersModule, js/store/store.es as StoreModule">
+<aui:script require="<%= sb.toString() %>">
 	StoreModule.createStore(
 		<%= jsonSerializer.serializeDeep(fragmentsEditorDisplayContext.getEditorContext()) %>,
 		ReducersModule.reducers,

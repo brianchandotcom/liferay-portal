@@ -23,6 +23,7 @@ import com.liferay.data.engine.service.DEDataDefinitionSaveResponse;
 import com.liferay.data.engine.service.DEDataDefinitionService;
 import com.liferay.data.engine.service.DEDataRecordCollectionDeleteModelPermissionsRequest;
 import com.liferay.data.engine.service.DEDataRecordCollectionDeletePermissionsRequest;
+import com.liferay.data.engine.service.DEDataRecordCollectionDeleteRequest;
 import com.liferay.data.engine.service.DEDataRecordCollectionRequestBuilder;
 import com.liferay.data.engine.service.DEDataRecordCollectionSaveRequest;
 import com.liferay.data.engine.service.DEDataRecordCollectionSaveResponse;
@@ -44,6 +45,35 @@ import java.util.Map;
  * @author Leonardo Barros
  */
 public class DEDataEngineTestUtil {
+
+	public static void deleteDEDataRecordCollection(
+			User user, long groupId, long deDataRecordCollectionId,
+			DEDataRecordCollectionService deDataRecordCollectionService)
+		throws Exception {
+
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(user));
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(groupId, user.getUserId());
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+		try {
+			DEDataRecordCollectionDeleteRequest
+				deDataRecordCollectionDeleteRequest =
+					DEDataRecordCollectionRequestBuilder.deleteBuilder(
+					).byId(
+						deDataRecordCollectionId
+					).build();
+
+			deDataRecordCollectionService.execute(
+				deDataRecordCollectionDeleteRequest);
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
+	}
 
 	public static void deleteDEDataRecordCollectionModelPermissions(
 			long companyId, User user, long groupId,

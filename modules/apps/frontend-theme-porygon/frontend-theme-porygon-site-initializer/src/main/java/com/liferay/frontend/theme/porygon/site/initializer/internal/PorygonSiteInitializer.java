@@ -19,7 +19,7 @@ import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
-import com.liferay.document.library.kernel.util.DLUtil;
+import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.dynamic.data.mapping.io.DDMFormJSONDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutJSONDeserializer;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
@@ -794,7 +794,7 @@ public class PorygonSiteInitializer implements SiteInitializer {
 		Map<String, String> fileEntriesMap = new HashMap<>();
 
 		for (FileEntry fileEntry : fileEntries) {
-			String fileEntryURL = DLUtil.getPreviewURL(
+			String fileEntryURL = _dlurlHelper.getPreviewURL(
 				fileEntry, fileEntry.getFileVersion(), null, StringPool.BLANK,
 				false, false);
 
@@ -956,6 +956,9 @@ public class PorygonSiteInitializer implements SiteInitializer {
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;
+
+	@Reference
+	private DLURLHelper _dlurlHelper;
 
 	@Reference
 	private FragmentCollectionLocalService _fragmentCollectionLocalService;

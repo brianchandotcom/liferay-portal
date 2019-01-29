@@ -525,6 +525,17 @@ public class TrashDisplayContext {
 		return trashContainerActionDropdownItems.getActionDropdownItems();
 	}
 
+	public List<DropdownItem> getTrashContainerActionDropdownItems(
+			TrashEntry trashEntry)
+		throws Exception {
+
+		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
+			trashEntry.getClassName());
+
+		return getTrashContainerActionDropdownItems(
+			trashHandler.getTrashedModel(trashEntry.getClassPK()));
+	}
+
 	public TrashEntry getTrashEntry() {
 		if (_trashEntry != null) {
 			return _trashEntry;

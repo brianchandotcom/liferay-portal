@@ -37,25 +37,17 @@ List<TrashEntry> trashEntries = (List<TrashEntry>)request.getAttribute(TrashWebK
 					<ul class="sidebar-header-actions">
 						<li>
 							<c:choose>
-								<c:when test="<%= Validator.isNotNull(trashRenderer.renderActions(renderRequest, renderResponse)) %>">
-									<liferay-util:include page="<%= trashRenderer.renderActions(renderRequest, renderResponse) %>" servletContext="<%= application %>" />
-								</c:when>
 								<c:when test="<%= trashEntry.getRootEntry() == null %>">
-
-									<%
-									request.setAttribute(TrashWebKeys.TRASH_ENTRY, trashEntry);
-									%>
-
-									<liferay-util:include page="/entry_action.jsp" servletContext="<%= application %>" />
+									<clay:dropdown-actions
+										defaultEventHandler="<%= TrashWebKeys.TRASH_ENTRIES_DEFAULT_EVENT_HANDLER %>"
+										dropdownItems="<%= trashDisplayContext.getTrashEntryActionDropdownItems(trashEntry) %>"
+									/>
 								</c:when>
 								<c:otherwise>
-
-									<%
-									request.setAttribute("view.jsp-className", trashRenderer.getClassName());
-									request.setAttribute("view.jsp-classPK", String.valueOf(trashRenderer.getClassPK()));
-									%>
-
-									<liferay-util:include page="/view_content_action.jsp" servletContext="<%= application %>" />
+									<clay:dropdown-actions
+										defaultEventHandler="<%= TrashWebKeys.TRASH_ENTRIES_DEFAULT_EVENT_HANDLER %>"
+										dropdownItems="<%= trashDisplayContext.getTrashContainerActionDropdownItems(trashEntry) %>"
+									/>
 								</c:otherwise>
 							</c:choose>
 						</li>

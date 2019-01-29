@@ -16,4 +16,4 @@
 
 <%@ taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %>
 
-<%@ page import="com.liferay.layout.content.page.editor.web.internal.constants.ContentPageEditorPortletKeys" %>
+<%@ page import="com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys" %>

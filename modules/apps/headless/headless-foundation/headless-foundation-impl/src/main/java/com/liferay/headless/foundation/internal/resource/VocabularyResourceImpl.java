@@ -12,38 +12,41 @@
  * details.
  */
 
-package com.liferay.headless.foundation.resource;
+package com.liferay.headless.foundation.internal.resource;
 
 import com.liferay.headless.foundation.dto.Vocabulary;
 import com.liferay.headless.foundation.dto.VocabularyCollection;
-import com.liferay.oauth2.provider.scope.RequiresScope;
+import com.liferay.headless.foundation.resource.VocabularyResource;
 import com.liferay.portal.vulcan.context.Pagination;
+
+import java.util.Collections;
 
 import javax.annotation.Generated;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.Context;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ServiceScope;
+import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
 
 /**
- * To access this resource, run:
- *
- *     curl -u your@email.com:yourpassword -D - http://localhost:8080/o/headless-foundation/1.0.0/vocabulary
- *
  * @author Javier Gamarra
  * @generated
  */
+@Component(
+	property = {
+		JaxrsWhiteboardConstants.JAX_RS_APPLICATION_SELECT + "=(osgi.jaxrs.name=headless-foundation-application.rest)",
+		JaxrsWhiteboardConstants.JAX_RS_RESOURCE + "=true", "api.version=1.0.0"
+	},
+	scope = ServiceScope.PROTOTYPE, service = VocabularyResource.class
+)
 @Generated("")
-@Path("/1.0.0/vocabulary")
-public interface VocabularyResource {
+public class VocabularyResourceImpl implements VocabularyResource {
 
-	@GET
-	@Produces("application/json")
-	@RequiresScope("headless-foundation-application.read")
+	@Override
 	public VocabularyCollection<Vocabulary> getVocabularyCollection(
-			@Context Pagination pagination, @QueryParam("size") String size)
-		throws Exception;
+			Pagination pagination, String size)
+		throws Exception {
+
+		return new VocabularyCollection(Collections.emptyList(), 0);
+	}
 
 }

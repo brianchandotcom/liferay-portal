@@ -18,7 +18,7 @@ import com.liferay.adaptive.media.image.item.selector.AMImageURLItemSelectorRetu
 import com.liferay.adaptive.media.image.media.query.Condition;
 import com.liferay.adaptive.media.image.media.query.MediaQuery;
 import com.liferay.adaptive.media.image.media.query.MediaQueryProvider;
-import com.liferay.document.library.kernel.util.DLUtil;
+import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.item.selector.ItemSelectorReturnTypeResolver;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -66,7 +66,7 @@ public class FileEntryAMImageURLItemSelectorReturnTypeResolver
 		String previewURL = null;
 
 		if (fileEntry.getGroupId() == fileEntry.getRepositoryId()) {
-			previewURL = DLUtil.getImagePreviewURL(
+			previewURL = _dlurlHelper.getImagePreviewURL(
 				fileEntry, fileEntry.getFileVersion(), themeDisplay,
 				StringPool.BLANK, false, false);
 		}
@@ -113,6 +113,9 @@ public class FileEntryAMImageURLItemSelectorReturnTypeResolver
 
 		return sourceJSONObject;
 	}
+
+	@Reference
+	private DLURLHelper _dlurlHelper;
 
 	@Reference
 	private MediaQueryProvider _mediaQueryProvider;

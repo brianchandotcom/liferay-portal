@@ -46,25 +46,30 @@ public class TrashContainerActionDropdownItems {
 			TrashedModel trashedModel)
 		throws PortalException {
 
-		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
-		_trashedModel = trashedModel;
 
-		_trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
+		_themeDisplay = (ThemeDisplay)liferayPortletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
 			((ClassedModel)trashedModel).getModelClassName());
 
-		_trashRenderer = _trashHandler.getTrashRenderer(
-			_trashedModel.getTrashEntryClassPK());
+		_trashRenderer = trashHandler.getTrashRenderer(
+			trashedModel.getTrashEntryClassPK());
 	}
 
 	public List<DropdownItem> getActionDropdownItems() throws Exception {
 		return new DropdownItemList() {
 			{
-				if (_isRestorable()) {
+				TrashHandler trashHandler =
+					TrashHandlerRegistryUtil.getTrashHandler(
+						_trashRenderer.getClassName());
+
+				if (trashHandler.isDeletable()) {
 					add(_getRestoreAction());
 				}
 
-				if (_isDeletable()) {
+				if (trashHandler.isMovable()) {
 					add(_getDeleteAction());
 				}
 			}
@@ -72,28 +77,20 @@ public class TrashContainerActionDropdownItems {
 	}
 
 	private DropdownItem _getDeleteAction() {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_liferayPortletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		return new DropdownItem() {
 			{
 				putData("action", "deleteEntry");
 				putData("deleteURL", _getDeleteURL());
-				setLabel(LanguageUtil.get(themeDisplay.getLocale(), "delete"));
+				setLabel(LanguageUtil.get(_themeDisplay.getLocale(), "delete"));
 			}
 		};
 	}
 
 	private String _getDeleteURL() {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_liferayPortletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		PortletURL deleteURL = _liferayPortletResponse.createActionURL();
 
 		deleteURL.setParameter(ActionRequest.ACTION_NAME, "deleteEntries");
-		deleteURL.setParameter("redirect", themeDisplay.getURLCurrent());
+		deleteURL.setParameter("redirect", _themeDisplay.getURLCurrent());
 		deleteURL.setParameter("className", _trashRenderer.getClassName());
 		deleteURL.setParameter(
 			"classPK", String.valueOf(_trashRenderer.getClassPK()));
@@ -102,25 +99,18 @@ public class TrashContainerActionDropdownItems {
 	}
 
 	private DropdownItem _getRestoreAction() throws Exception {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_liferayPortletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		return new DropdownItem() {
 			{
 				putData("action", "restoreEntry");
 				putData("restoreURL", _getRestoreURL());
 				putData("move", Boolean.TRUE.toString());
-				setLabel(LanguageUtil.get(themeDisplay.getLocale(), "restore"));
+				setLabel(
+					LanguageUtil.get(_themeDisplay.getLocale(), "restore"));
 			}
 		};
 	}
 
 	private String _getRestoreURL() throws Exception {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_liferayPortletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		PortletURL moveURL = _liferayPortletResponse.createRenderURL();
 
 		String className = _trashRenderer.getClassName();
@@ -130,7 +120,7 @@ public class TrashContainerActionDropdownItems {
 			className);
 
 		moveURL.setParameter("mvcPath", "/view_container_model.jsp");
-		moveURL.setParameter("redirect", themeDisplay.getURLCurrent());
+		moveURL.setParameter("redirect", _themeDisplay.getURLCurrent());
 		moveURL.setParameter(
 			"classNameId",
 			String.valueOf(PortalUtil.getClassNameId(className)));
@@ -146,28 +136,8 @@ public class TrashContainerActionDropdownItems {
 		return moveURL.toString();
 	}
 
-	private boolean _isDeletable() {
-		String className = _trashRenderer.getClassName();
-
-		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
-			className);
-
-		return trashHandler.isDeletable();
-	}
-
-	private boolean _isRestorable() throws PortalException {
-		String className = _trashRenderer.getClassName();
-
-		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
-			className);
-
-		return trashHandler.isMovable();
-	}
-
-	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
-	private final TrashedModel _trashedModel;
-	private final TrashHandler _trashHandler;
+	private final ThemeDisplay _themeDisplay;
 	private final TrashRenderer _trashRenderer;
 
 }

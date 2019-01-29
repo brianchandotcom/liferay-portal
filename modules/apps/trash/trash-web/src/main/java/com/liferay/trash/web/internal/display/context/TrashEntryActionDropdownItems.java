@@ -51,6 +51,9 @@ public class TrashEntryActionDropdownItems {
 		_liferayPortletResponse = liferayPortletResponse;
 		_trashEntry = trashEntry;
 
+		_themeDisplay = (ThemeDisplay)_liferayPortletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		_trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
 			trashEntry.getClassName());
 
@@ -73,15 +76,11 @@ public class TrashEntryActionDropdownItems {
 	}
 
 	private DropdownItem _getDeleteAction() throws PortalException {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_liferayPortletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		return new DropdownItem() {
 			{
 				putData("action", "deleteEntry");
 				putData("deleteURL", _getDeleteURL());
-				setLabel(LanguageUtil.get(themeDisplay.getLocale(), "delete"));
+				setLabel(LanguageUtil.get(_themeDisplay.getLocale(), "delete"));
 			}
 		};
 	}
@@ -110,53 +109,43 @@ public class TrashEntryActionDropdownItems {
 	}
 
 	private String _getRedirectURL() throws PortalException {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_liferayPortletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		String redirect = themeDisplay.getURLCurrent();
-
 		long trashEntryId = ParamUtil.getLong(
 			_liferayPortletRequest, "trashEntryId");
 
-		if (trashEntryId > 0) {
-			TrashEntry trashEntry = TrashEntryLocalServiceUtil.getTrashEntry(
-				trashEntryId);
-
-			TrashEntry rootTrashEntry = trashEntry.getRootEntry();
-
-			PortletURL redirectURL = _liferayPortletResponse.createRenderURL();
-
-			if (rootTrashEntry != null) {
-				redirectURL.setParameter("mvcPath", "/view_content.jsp");
-				redirectURL.setParameter(
-					"classNameId",
-					String.valueOf(rootTrashEntry.getClassNameId()));
-				redirectURL.setParameter(
-					"classPK", String.valueOf(rootTrashEntry.getClassPK()));
-			}
-			else {
-				redirectURL.setParameter("mvcPath", "/view.jsp");
-			}
-
-			redirect = redirectURL.toString();
+		if (trashEntryId <= 0) {
+			return _themeDisplay.getURLCurrent();
 		}
 
-		return redirect;
+		TrashEntry trashEntry = TrashEntryLocalServiceUtil.getTrashEntry(
+			trashEntryId);
+
+		TrashEntry rootTrashEntry = trashEntry.getRootEntry();
+
+		PortletURL redirectURL = _liferayPortletResponse.createRenderURL();
+
+		if (rootTrashEntry != null) {
+			redirectURL.setParameter("mvcPath", "/view_content.jsp");
+			redirectURL.setParameter(
+				"classNameId", String.valueOf(rootTrashEntry.getClassNameId()));
+			redirectURL.setParameter(
+				"classPK", String.valueOf(rootTrashEntry.getClassPK()));
+		}
+		else {
+			redirectURL.setParameter("mvcPath", "/view.jsp");
+		}
+
+		return redirectURL.toString();
 	}
 
 	private DropdownItem _getRestoreAction() throws Exception {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_liferayPortletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		return new DropdownItem() {
 			{
 				putData("action", "restoreEntry");
 				putData("restoreURL", _getRestoreURL());
 				putData(
 					"move", String.valueOf(_trashEntry.getRootEntry() != null));
-				setLabel(LanguageUtil.get(themeDisplay.getLocale(), "restore"));
+				setLabel(
+					LanguageUtil.get(_themeDisplay.getLocale(), "restore"));
 			}
 		};
 	}
@@ -204,10 +193,8 @@ public class TrashEntryActionDropdownItems {
 			return true;
 		}
 
-		String className = _trashRenderer.getClassName();
-
 		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
-			className);
+			_trashRenderer.getClassName());
 
 		return trashHandler.isDeletable();
 	}
@@ -237,16 +224,15 @@ public class TrashEntryActionDropdownItems {
 			return false;
 		}
 
-		String className = _trashRenderer.getClassName();
-
 		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
-			className);
+			_trashRenderer.getClassName());
 
 		return trashHandler.isMovable();
 	}
 
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
+	private final ThemeDisplay _themeDisplay;
 	private final TrashEntry _trashEntry;
 	private final TrashHandler _trashHandler;
 	private final TrashRenderer _trashRenderer;

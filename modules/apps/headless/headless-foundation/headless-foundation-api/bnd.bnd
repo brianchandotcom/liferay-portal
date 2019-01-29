@@ -1,3 +1,6 @@
 Bundle-Name: Liferay Headless Foundation API
 Bundle-SymbolicName: com.liferay.headless.foundation.api
 Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.headless.foundation.dto,\
+	com.liferay.headless.foundation.resource

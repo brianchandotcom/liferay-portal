@@ -2305,25 +2305,6 @@
 				</comments>
 			</library>
 			<library>
-				<file-name>lib/portal/json-schema-validator.jar</file-name>
-				<version>2.2.3</version>
-				<project-name>json-schema-validator</project-name>
-				<project-url>https://github.com/fge/json-schema-validator</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-					<license>
-						<license-name>LGPL 3.0</license-name>
-						<license-url>https://www.gnu.org/licenses/lgpl-3.0</license-url>
-					</license>
-				</licenses>
-				<comments>
-					Removed javax.mail.* because it conflicts with mail.jar.
-				</comments>
-			</library>
-			<library>
 				<file-name>lib/portal/jsr107cache.jar</file-name>
 				<version>1.0</version>
 				<project-name>JSR 107</project-name>

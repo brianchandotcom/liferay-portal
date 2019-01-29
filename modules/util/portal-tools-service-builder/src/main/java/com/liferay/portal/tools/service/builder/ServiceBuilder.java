@@ -6966,14 +6966,7 @@ public class ServiceBuilder {
 	private static final int _DEFAULT_COLUMN_MAX_LENGTH = 75;
 
 	private static final String[] _MARKER_FILES = {
-		".lfrbuild-app-server-lib", ".lfrbuild-ci",
-		".lfrbuild-ci-skip-test-integration-check",
-		".lfrbuild-lowest-major-version", ".lfrbuild-packageinfo",
-		".lfrbuild-portal", ".lfrbuild-portal-deprecated",
-		".lfrbuild-portal-pre", ".lfrbuild-releng-ignore",
-		".lfrbuild-releng-skip-update-file-versions",
-		".lfrbuild-semantic-versioning", ".lfrbuild-slim", ".lfrbuild-static",
-		".lfrbuild-tool", "ci-merge"
+		".lfrbuild-ci", ".lfrbuild-portal", ".lfrbuild-portal-deprecated"
 	};
 
 	private static final int _SESSION_TYPE_LOCAL = 1;

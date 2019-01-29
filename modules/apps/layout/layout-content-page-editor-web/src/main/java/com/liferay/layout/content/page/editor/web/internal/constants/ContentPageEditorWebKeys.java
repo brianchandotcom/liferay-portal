@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,10 +11,17 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/layout_editor_toolbar/init.jsp" %>
+package com.liferay.layout.content.page.editor.web.internal.constants;
 
-<liferay-portlet:runtime
-	portletName="<%= ContentPageEditorPortletKeys.CONTENT_PAGE_TOOLBAR_PORTLET %>"
-/>
+/**
+ * @author Jürgen Kappler
+ */
+public class ContentPageEditorWebKeys {
+
+	public static final String ITEM_SELECTOR = "ITEM_SELECTOR";
+
+	public static final String LIFERAY_SHARED_FRAGMENTS_EDITOR_DISPLAY_CONTEXT =
+		"LIFERAY_SHARED_FRAGMENTS_EDITOR_DISPLAY_CONTEXT";
+
+}

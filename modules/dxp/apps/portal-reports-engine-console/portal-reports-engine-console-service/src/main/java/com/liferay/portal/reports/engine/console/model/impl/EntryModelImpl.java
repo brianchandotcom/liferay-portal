@@ -42,10 +42,14 @@ import java.io.Serializable;
 import java.sql.Types;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the Entry service. Represents a row in the &quot;Reports_Entry&quot; database table, with each column mapped to a property of this class.
@@ -231,27 +235,15 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("entryId", getEntryId());
-		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("definitionId", getDefinitionId());
-		attributes.put("format", getFormat());
-		attributes.put("scheduleRequest", isScheduleRequest());
-		attributes.put("startDate", getStartDate());
-		attributes.put("endDate", getEndDate());
-		attributes.put("repeating", isRepeating());
-		attributes.put("recurrence", getRecurrence());
-		attributes.put("emailNotifications", getEmailNotifications());
-		attributes.put("emailDelivery", getEmailDelivery());
-		attributes.put("portletId", getPortletId());
-		attributes.put("pageURL", getPageURL());
-		attributes.put("reportParameters", getReportParameters());
-		attributes.put("status", getStatus());
-		attributes.put("errorMessage", getErrorMessage());
+		Map<String, Function<Entry, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+
+		for (Map.Entry<String, Function<Entry, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<Entry, Object> attributeGetterFunction = entry.getValue();
+
+			attributes.put(attributeName,
+				attributeGetterFunction.apply((Entry)this));
+		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -261,131 +253,81 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long entryId = (Long)attributes.get("entryId");
+		Map<String, BiConsumer<Entry, Object>> attributeSetterBiConsumers = getAttributeSetterBiConsumers();
 
-		if (entryId != null) {
-			setEntryId(entryId);
+		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
+			String attributeName = entry.getKey();
+
+			BiConsumer<Entry, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+
+			if (attributeSetterBiConsumer != null) {
+				attributeSetterBiConsumer.accept((Entry)this, entry.getValue());
+			}
 		}
+	}
 
-		Long groupId = (Long)attributes.get("groupId");
+	public Map<String, Function<Entry, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
+	}
 
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
+	public Map<String, BiConsumer<Entry, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		Long companyId = (Long)attributes.get("companyId");
+	private static final Map<String, Function<Entry, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<Entry, Object>> _attributeSetterBiConsumers;
 
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
+	static {
+		Map<String, Function<Entry, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<Entry, Object>>();
+		Map<String, BiConsumer<Entry, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<Entry, ?>>();
 
-		Long userId = (Long)attributes.get("userId");
 
-		if (userId != null) {
-			setUserId(userId);
-		}
+		attributeGetterFunctions.put("entryId", Entry::getEntryId);
+		attributeSetterBiConsumers.put("entryId", (BiConsumer<Entry, Long>)Entry::setEntryId);
+		attributeGetterFunctions.put("groupId", Entry::getGroupId);
+		attributeSetterBiConsumers.put("groupId", (BiConsumer<Entry, Long>)Entry::setGroupId);
+		attributeGetterFunctions.put("companyId", Entry::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<Entry, Long>)Entry::setCompanyId);
+		attributeGetterFunctions.put("userId", Entry::getUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<Entry, Long>)Entry::setUserId);
+		attributeGetterFunctions.put("userName", Entry::getUserName);
+		attributeSetterBiConsumers.put("userName", (BiConsumer<Entry, String>)Entry::setUserName);
+		attributeGetterFunctions.put("createDate", Entry::getCreateDate);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<Entry, Date>)Entry::setCreateDate);
+		attributeGetterFunctions.put("modifiedDate", Entry::getModifiedDate);
+		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<Entry, Date>)Entry::setModifiedDate);
+		attributeGetterFunctions.put("definitionId", Entry::getDefinitionId);
+		attributeSetterBiConsumers.put("definitionId", (BiConsumer<Entry, Long>)Entry::setDefinitionId);
+		attributeGetterFunctions.put("format", Entry::getFormat);
+		attributeSetterBiConsumers.put("format", (BiConsumer<Entry, String>)Entry::setFormat);
+		attributeGetterFunctions.put("scheduleRequest", Entry::getScheduleRequest);
+		attributeSetterBiConsumers.put("scheduleRequest", (BiConsumer<Entry, Boolean>)Entry::setScheduleRequest);
+		attributeGetterFunctions.put("startDate", Entry::getStartDate);
+		attributeSetterBiConsumers.put("startDate", (BiConsumer<Entry, Date>)Entry::setStartDate);
+		attributeGetterFunctions.put("endDate", Entry::getEndDate);
+		attributeSetterBiConsumers.put("endDate", (BiConsumer<Entry, Date>)Entry::setEndDate);
+		attributeGetterFunctions.put("repeating", Entry::getRepeating);
+		attributeSetterBiConsumers.put("repeating", (BiConsumer<Entry, Boolean>)Entry::setRepeating);
+		attributeGetterFunctions.put("recurrence", Entry::getRecurrence);
+		attributeSetterBiConsumers.put("recurrence", (BiConsumer<Entry, String>)Entry::setRecurrence);
+		attributeGetterFunctions.put("emailNotifications", Entry::getEmailNotifications);
+		attributeSetterBiConsumers.put("emailNotifications", (BiConsumer<Entry, String>)Entry::setEmailNotifications);
+		attributeGetterFunctions.put("emailDelivery", Entry::getEmailDelivery);
+		attributeSetterBiConsumers.put("emailDelivery", (BiConsumer<Entry, String>)Entry::setEmailDelivery);
+		attributeGetterFunctions.put("portletId", Entry::getPortletId);
+		attributeSetterBiConsumers.put("portletId", (BiConsumer<Entry, String>)Entry::setPortletId);
+		attributeGetterFunctions.put("pageURL", Entry::getPageURL);
+		attributeSetterBiConsumers.put("pageURL", (BiConsumer<Entry, String>)Entry::setPageURL);
+		attributeGetterFunctions.put("reportParameters", Entry::getReportParameters);
+		attributeSetterBiConsumers.put("reportParameters", (BiConsumer<Entry, String>)Entry::setReportParameters);
+		attributeGetterFunctions.put("status", Entry::getStatus);
+		attributeSetterBiConsumers.put("status", (BiConsumer<Entry, String>)Entry::setStatus);
+		attributeGetterFunctions.put("errorMessage", Entry::getErrorMessage);
+		attributeSetterBiConsumers.put("errorMessage", (BiConsumer<Entry, String>)Entry::setErrorMessage);
 
-		String userName = (String)attributes.get("userName");
 
-		if (userName != null) {
-			setUserName(userName);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		Long definitionId = (Long)attributes.get("definitionId");
-
-		if (definitionId != null) {
-			setDefinitionId(definitionId);
-		}
-
-		String format = (String)attributes.get("format");
-
-		if (format != null) {
-			setFormat(format);
-		}
-
-		Boolean scheduleRequest = (Boolean)attributes.get("scheduleRequest");
-
-		if (scheduleRequest != null) {
-			setScheduleRequest(scheduleRequest);
-		}
-
-		Date startDate = (Date)attributes.get("startDate");
-
-		if (startDate != null) {
-			setStartDate(startDate);
-		}
-
-		Date endDate = (Date)attributes.get("endDate");
-
-		if (endDate != null) {
-			setEndDate(endDate);
-		}
-
-		Boolean repeating = (Boolean)attributes.get("repeating");
-
-		if (repeating != null) {
-			setRepeating(repeating);
-		}
-
-		String recurrence = (String)attributes.get("recurrence");
-
-		if (recurrence != null) {
-			setRecurrence(recurrence);
-		}
-
-		String emailNotifications = (String)attributes.get("emailNotifications");
-
-		if (emailNotifications != null) {
-			setEmailNotifications(emailNotifications);
-		}
-
-		String emailDelivery = (String)attributes.get("emailDelivery");
-
-		if (emailDelivery != null) {
-			setEmailDelivery(emailDelivery);
-		}
-
-		String portletId = (String)attributes.get("portletId");
-
-		if (portletId != null) {
-			setPortletId(portletId);
-		}
-
-		String pageURL = (String)attributes.get("pageURL");
-
-		if (pageURL != null) {
-			setPageURL(pageURL);
-		}
-
-		String reportParameters = (String)attributes.get("reportParameters");
-
-		if (reportParameters != null) {
-			setReportParameters(reportParameters);
-		}
-
-		String status = (String)attributes.get("status");
-
-		if (status != null) {
-			setStatus(status);
-		}
-
-		String errorMessage = (String)attributes.get("errorMessage");
-
-		if (errorMessage != null) {
-			setErrorMessage(errorMessage);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@JSON
@@ -953,50 +895,27 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(43);
+		Map<String, Function<Entry, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		sb.append("{entryId=");
-		sb.append(getEntryId());
-		sb.append(", groupId=");
-		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", userName=");
-		sb.append(getUserName());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", modifiedDate=");
-		sb.append(getModifiedDate());
-		sb.append(", definitionId=");
-		sb.append(getDefinitionId());
-		sb.append(", format=");
-		sb.append(getFormat());
-		sb.append(", scheduleRequest=");
-		sb.append(isScheduleRequest());
-		sb.append(", startDate=");
-		sb.append(getStartDate());
-		sb.append(", endDate=");
-		sb.append(getEndDate());
-		sb.append(", repeating=");
-		sb.append(isRepeating());
-		sb.append(", recurrence=");
-		sb.append(getRecurrence());
-		sb.append(", emailNotifications=");
-		sb.append(getEmailNotifications());
-		sb.append(", emailDelivery=");
-		sb.append(getEmailDelivery());
-		sb.append(", portletId=");
-		sb.append(getPortletId());
-		sb.append(", pageURL=");
-		sb.append(getPageURL());
-		sb.append(", reportParameters=");
-		sb.append(getReportParameters());
-		sb.append(", status=");
-		sb.append(getStatus());
-		sb.append(", errorMessage=");
-		sb.append(getErrorMessage());
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
+
+		sb.append("{");
+
+		for (Map.Entry<String, Function<Entry, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<Entry, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append(attributeName);
+			sb.append("=");
+			sb.append(attributeGetterFunction.apply((Entry)this));
+			sb.append(", ");
+		}
+
+		if (sb.index() > 1) {
+			sb.setIndex(sb.index() - 1);
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -1004,96 +923,25 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(67);
+		Map<String, Function<Entry, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
-		sb.append("com.liferay.portal.reports.engine.console.model.Entry");
+		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		sb.append(
-			"<column><column-name>entryId</column-name><column-value><![CDATA[");
-		sb.append(getEntryId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>groupId</column-name><column-value><![CDATA[");
-		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userName</column-name><column-value><![CDATA[");
-		sb.append(getUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
-		sb.append(getModifiedDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>definitionId</column-name><column-value><![CDATA[");
-		sb.append(getDefinitionId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>format</column-name><column-value><![CDATA[");
-		sb.append(getFormat());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>scheduleRequest</column-name><column-value><![CDATA[");
-		sb.append(isScheduleRequest());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>startDate</column-name><column-value><![CDATA[");
-		sb.append(getStartDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>endDate</column-name><column-value><![CDATA[");
-		sb.append(getEndDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>repeating</column-name><column-value><![CDATA[");
-		sb.append(isRepeating());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>recurrence</column-name><column-value><![CDATA[");
-		sb.append(getRecurrence());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>emailNotifications</column-name><column-value><![CDATA[");
-		sb.append(getEmailNotifications());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>emailDelivery</column-name><column-value><![CDATA[");
-		sb.append(getEmailDelivery());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>portletId</column-name><column-value><![CDATA[");
-		sb.append(getPortletId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>pageURL</column-name><column-value><![CDATA[");
-		sb.append(getPageURL());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>reportParameters</column-name><column-value><![CDATA[");
-		sb.append(getReportParameters());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>status</column-name><column-value><![CDATA[");
-		sb.append(getStatus());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>errorMessage</column-name><column-value><![CDATA[");
-		sb.append(getErrorMessage());
-		sb.append("]]></column-value></column>");
+		for (Map.Entry<String, Function<Entry, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<Entry, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append("<column><column-name>");
+			sb.append(attributeName);
+			sb.append("</column-name><column-value><![CDATA[");
+			sb.append(attributeGetterFunction.apply((Entry)this));
+			sb.append("]]></column-value></column>");
+		}
 
 		sb.append("</model>");
 

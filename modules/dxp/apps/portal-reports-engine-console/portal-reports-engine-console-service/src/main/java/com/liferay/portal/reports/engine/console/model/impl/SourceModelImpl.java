@@ -48,13 +48,17 @@ import java.io.Serializable;
 import java.sql.Types;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the Source service. Represents a row in the &quot;Reports_Source&quot; database table, with each column mapped to a property of this class.
@@ -226,20 +230,15 @@ public class SourceModelImpl extends BaseModelImpl<Source>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("uuid", getUuid());
-		attributes.put("sourceId", getSourceId());
-		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("lastPublishDate", getLastPublishDate());
-		attributes.put("name", getName());
-		attributes.put("driverClassName", getDriverClassName());
-		attributes.put("driverUrl", getDriverUrl());
-		attributes.put("driverUserName", getDriverUserName());
-		attributes.put("driverPassword", getDriverPassword());
+		Map<String, Function<Source, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+
+		for (Map.Entry<String, Function<Source, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<Source, Object> attributeGetterFunction = entry.getValue();
+
+			attributes.put(attributeName,
+				attributeGetterFunction.apply((Source)this));
+		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -249,89 +248,67 @@ public class SourceModelImpl extends BaseModelImpl<Source>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		String uuid = (String)attributes.get("uuid");
+		Map<String, BiConsumer<Source, Object>> attributeSetterBiConsumers = getAttributeSetterBiConsumers();
 
-		if (uuid != null) {
-			setUuid(uuid);
+		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
+			String attributeName = entry.getKey();
+
+			BiConsumer<Source, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+
+			if (attributeSetterBiConsumer != null) {
+				attributeSetterBiConsumer.accept((Source)this, entry.getValue());
+			}
 		}
+	}
 
-		Long sourceId = (Long)attributes.get("sourceId");
+	public Map<String, Function<Source, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
+	}
 
-		if (sourceId != null) {
-			setSourceId(sourceId);
-		}
+	public Map<String, BiConsumer<Source, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		Long groupId = (Long)attributes.get("groupId");
+	private static final Map<String, Function<Source, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<Source, Object>> _attributeSetterBiConsumers;
 
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
+	static {
+		Map<String, Function<Source, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<Source, Object>>();
+		Map<String, BiConsumer<Source, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<Source, ?>>();
 
-		Long companyId = (Long)attributes.get("companyId");
 
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
+		attributeGetterFunctions.put("uuid", Source::getUuid);
+		attributeSetterBiConsumers.put("uuid", (BiConsumer<Source, String>)Source::setUuid);
+		attributeGetterFunctions.put("sourceId", Source::getSourceId);
+		attributeSetterBiConsumers.put("sourceId", (BiConsumer<Source, Long>)Source::setSourceId);
+		attributeGetterFunctions.put("groupId", Source::getGroupId);
+		attributeSetterBiConsumers.put("groupId", (BiConsumer<Source, Long>)Source::setGroupId);
+		attributeGetterFunctions.put("companyId", Source::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<Source, Long>)Source::setCompanyId);
+		attributeGetterFunctions.put("userId", Source::getUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<Source, Long>)Source::setUserId);
+		attributeGetterFunctions.put("userName", Source::getUserName);
+		attributeSetterBiConsumers.put("userName", (BiConsumer<Source, String>)Source::setUserName);
+		attributeGetterFunctions.put("createDate", Source::getCreateDate);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<Source, Date>)Source::setCreateDate);
+		attributeGetterFunctions.put("modifiedDate", Source::getModifiedDate);
+		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<Source, Date>)Source::setModifiedDate);
+		attributeGetterFunctions.put("lastPublishDate", Source::getLastPublishDate);
+		attributeSetterBiConsumers.put("lastPublishDate", (BiConsumer<Source, Date>)Source::setLastPublishDate);
+		attributeGetterFunctions.put("name", Source::getName);
+		attributeSetterBiConsumers.put("name", (BiConsumer<Source, String>)Source::setName);
+		attributeGetterFunctions.put("driverClassName", Source::getDriverClassName);
+		attributeSetterBiConsumers.put("driverClassName", (BiConsumer<Source, String>)Source::setDriverClassName);
+		attributeGetterFunctions.put("driverUrl", Source::getDriverUrl);
+		attributeSetterBiConsumers.put("driverUrl", (BiConsumer<Source, String>)Source::setDriverUrl);
+		attributeGetterFunctions.put("driverUserName", Source::getDriverUserName);
+		attributeSetterBiConsumers.put("driverUserName", (BiConsumer<Source, String>)Source::setDriverUserName);
+		attributeGetterFunctions.put("driverPassword", Source::getDriverPassword);
+		attributeSetterBiConsumers.put("driverPassword", (BiConsumer<Source, String>)Source::setDriverPassword);
 
-		Long userId = (Long)attributes.get("userId");
 
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
-
-		if (lastPublishDate != null) {
-			setLastPublishDate(lastPublishDate);
-		}
-
-		String name = (String)attributes.get("name");
-
-		if (name != null) {
-			setName(name);
-		}
-
-		String driverClassName = (String)attributes.get("driverClassName");
-
-		if (driverClassName != null) {
-			setDriverClassName(driverClassName);
-		}
-
-		String driverUrl = (String)attributes.get("driverUrl");
-
-		if (driverUrl != null) {
-			setDriverUrl(driverUrl);
-		}
-
-		String driverUserName = (String)attributes.get("driverUserName");
-
-		if (driverUserName != null) {
-			setDriverUserName(driverUserName);
-		}
-
-		String driverPassword = (String)attributes.get("driverPassword");
-
-		if (driverPassword != null) {
-			setDriverPassword(driverPassword);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@JSON
@@ -951,36 +928,27 @@ public class SourceModelImpl extends BaseModelImpl<Source>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		Map<String, Function<Source, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		sb.append("{uuid=");
-		sb.append(getUuid());
-		sb.append(", sourceId=");
-		sb.append(getSourceId());
-		sb.append(", groupId=");
-		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", userName=");
-		sb.append(getUserName());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", modifiedDate=");
-		sb.append(getModifiedDate());
-		sb.append(", lastPublishDate=");
-		sb.append(getLastPublishDate());
-		sb.append(", name=");
-		sb.append(getName());
-		sb.append(", driverClassName=");
-		sb.append(getDriverClassName());
-		sb.append(", driverUrl=");
-		sb.append(getDriverUrl());
-		sb.append(", driverUserName=");
-		sb.append(getDriverUserName());
-		sb.append(", driverPassword=");
-		sb.append(getDriverPassword());
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
+
+		sb.append("{");
+
+		for (Map.Entry<String, Function<Source, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<Source, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append(attributeName);
+			sb.append("=");
+			sb.append(attributeGetterFunction.apply((Source)this));
+			sb.append(", ");
+		}
+
+		if (sb.index() > 1) {
+			sb.setIndex(sb.index() - 1);
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -988,68 +956,25 @@ public class SourceModelImpl extends BaseModelImpl<Source>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(46);
+		Map<String, Function<Source, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
-		sb.append("com.liferay.portal.reports.engine.console.model.Source");
+		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		sb.append(
-			"<column><column-name>uuid</column-name><column-value><![CDATA[");
-		sb.append(getUuid());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>sourceId</column-name><column-value><![CDATA[");
-		sb.append(getSourceId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>groupId</column-name><column-value><![CDATA[");
-		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userName</column-name><column-value><![CDATA[");
-		sb.append(getUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
-		sb.append(getModifiedDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
-		sb.append(getLastPublishDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>name</column-name><column-value><![CDATA[");
-		sb.append(getName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>driverClassName</column-name><column-value><![CDATA[");
-		sb.append(getDriverClassName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>driverUrl</column-name><column-value><![CDATA[");
-		sb.append(getDriverUrl());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>driverUserName</column-name><column-value><![CDATA[");
-		sb.append(getDriverUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>driverPassword</column-name><column-value><![CDATA[");
-		sb.append(getDriverPassword());
-		sb.append("]]></column-value></column>");
+		for (Map.Entry<String, Function<Source, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<Source, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append("<column><column-name>");
+			sb.append(attributeName);
+			sb.append("</column-name><column-value><![CDATA[");
+			sb.append(attributeGetterFunction.apply((Source)this));
+			sb.append("]]></column-value></column>");
+		}
 
 		sb.append("</model>");
 

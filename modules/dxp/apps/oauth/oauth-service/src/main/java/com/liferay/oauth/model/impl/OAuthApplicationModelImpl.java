@@ -42,10 +42,14 @@ import java.io.Serializable;
 import java.sql.Types;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the OAuthApplication service. Represents a row in the &quot;OAuth_OAuthApplication&quot; database table, with each column mapped to a property of this class.
@@ -222,21 +226,16 @@ public class OAuthApplicationModelImpl extends BaseModelImpl<OAuthApplication>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("oAuthApplicationId", getOAuthApplicationId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("name", getName());
-		attributes.put("description", getDescription());
-		attributes.put("consumerKey", getConsumerKey());
-		attributes.put("consumerSecret", getConsumerSecret());
-		attributes.put("accessLevel", getAccessLevel());
-		attributes.put("logoId", getLogoId());
-		attributes.put("shareableAccessToken", isShareableAccessToken());
-		attributes.put("callbackURI", getCallbackURI());
-		attributes.put("websiteURL", getWebsiteURL());
+		Map<String, Function<OAuthApplication, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
+
+		for (Map.Entry<String, Function<OAuthApplication, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<OAuthApplication, Object> attributeGetterFunction = entry.getValue();
+
+			attributes.put(attributeName,
+				attributeGetterFunction.apply((OAuthApplication)this));
+		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -246,96 +245,72 @@ public class OAuthApplicationModelImpl extends BaseModelImpl<OAuthApplication>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long oAuthApplicationId = (Long)attributes.get("oAuthApplicationId");
+		Map<String, BiConsumer<OAuthApplication, Object>> attributeSetterBiConsumers =
+			getAttributeSetterBiConsumers();
 
-		if (oAuthApplicationId != null) {
-			setOAuthApplicationId(oAuthApplicationId);
+		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
+			String attributeName = entry.getKey();
+
+			BiConsumer<OAuthApplication, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+
+			if (attributeSetterBiConsumer != null) {
+				attributeSetterBiConsumer.accept((OAuthApplication)this,
+					entry.getValue());
+			}
 		}
+	}
 
-		Long companyId = (Long)attributes.get("companyId");
+	public Map<String, Function<OAuthApplication, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
+	}
 
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
+	public Map<String, BiConsumer<OAuthApplication, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		Long userId = (Long)attributes.get("userId");
+	private static final Map<String, Function<OAuthApplication, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<OAuthApplication, Object>> _attributeSetterBiConsumers;
 
-		if (userId != null) {
-			setUserId(userId);
-		}
+	static {
+		Map<String, Function<OAuthApplication, Object>> attributeGetterFunctions =
+			new LinkedHashMap<String, Function<OAuthApplication, Object>>();
+		Map<String, BiConsumer<OAuthApplication, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<OAuthApplication, ?>>();
 
-		String userName = (String)attributes.get("userName");
 
-		if (userName != null) {
-			setUserName(userName);
-		}
+		attributeGetterFunctions.put("oAuthApplicationId", OAuthApplication::getOAuthApplicationId);
+		attributeSetterBiConsumers.put("oAuthApplicationId", (BiConsumer<OAuthApplication, Long>)OAuthApplication::setOAuthApplicationId);
+		attributeGetterFunctions.put("companyId", OAuthApplication::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<OAuthApplication, Long>)OAuthApplication::setCompanyId);
+		attributeGetterFunctions.put("userId", OAuthApplication::getUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<OAuthApplication, Long>)OAuthApplication::setUserId);
+		attributeGetterFunctions.put("userName", OAuthApplication::getUserName);
+		attributeSetterBiConsumers.put("userName", (BiConsumer<OAuthApplication, String>)OAuthApplication::setUserName);
+		attributeGetterFunctions.put("createDate", OAuthApplication::getCreateDate);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<OAuthApplication, Date>)OAuthApplication::setCreateDate);
+		attributeGetterFunctions.put("modifiedDate", OAuthApplication::getModifiedDate);
+		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<OAuthApplication, Date>)OAuthApplication::setModifiedDate);
+		attributeGetterFunctions.put("name", OAuthApplication::getName);
+		attributeSetterBiConsumers.put("name", (BiConsumer<OAuthApplication, String>)OAuthApplication::setName);
+		attributeGetterFunctions.put("description", OAuthApplication::getDescription);
+		attributeSetterBiConsumers.put("description", (BiConsumer<OAuthApplication, String>)OAuthApplication::setDescription);
+		attributeGetterFunctions.put("consumerKey", OAuthApplication::getConsumerKey);
+		attributeSetterBiConsumers.put("consumerKey", (BiConsumer<OAuthApplication, String>)OAuthApplication::setConsumerKey);
+		attributeGetterFunctions.put("consumerSecret", OAuthApplication::getConsumerSecret);
+		attributeSetterBiConsumers.put("consumerSecret", (BiConsumer<OAuthApplication, String>)OAuthApplication::setConsumerSecret);
+		attributeGetterFunctions.put("accessLevel", OAuthApplication::getAccessLevel);
+		attributeSetterBiConsumers.put("accessLevel", (BiConsumer<OAuthApplication, Integer>)OAuthApplication::setAccessLevel);
+		attributeGetterFunctions.put("logoId", OAuthApplication::getLogoId);
+		attributeSetterBiConsumers.put("logoId", (BiConsumer<OAuthApplication, Long>)OAuthApplication::setLogoId);
+		attributeGetterFunctions.put("shareableAccessToken", OAuthApplication::getShareableAccessToken);
+		attributeSetterBiConsumers.put("shareableAccessToken", (BiConsumer<OAuthApplication, Boolean>)OAuthApplication::setShareableAccessToken);
+		attributeGetterFunctions.put("callbackURI", OAuthApplication::getCallbackURI);
+		attributeSetterBiConsumers.put("callbackURI", (BiConsumer<OAuthApplication, String>)OAuthApplication::setCallbackURI);
+		attributeGetterFunctions.put("websiteURL", OAuthApplication::getWebsiteURL);
+		attributeSetterBiConsumers.put("websiteURL", (BiConsumer<OAuthApplication, String>)OAuthApplication::setWebsiteURL);
 
-		Date createDate = (Date)attributes.get("createDate");
 
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		String name = (String)attributes.get("name");
-
-		if (name != null) {
-			setName(name);
-		}
-
-		String description = (String)attributes.get("description");
-
-		if (description != null) {
-			setDescription(description);
-		}
-
-		String consumerKey = (String)attributes.get("consumerKey");
-
-		if (consumerKey != null) {
-			setConsumerKey(consumerKey);
-		}
-
-		String consumerSecret = (String)attributes.get("consumerSecret");
-
-		if (consumerSecret != null) {
-			setConsumerSecret(consumerSecret);
-		}
-
-		Integer accessLevel = (Integer)attributes.get("accessLevel");
-
-		if (accessLevel != null) {
-			setAccessLevel(accessLevel);
-		}
-
-		Long logoId = (Long)attributes.get("logoId");
-
-		if (logoId != null) {
-			setLogoId(logoId);
-		}
-
-		Boolean shareableAccessToken = (Boolean)attributes.get(
-				"shareableAccessToken");
-
-		if (shareableAccessToken != null) {
-			setShareableAccessToken(shareableAccessToken);
-		}
-
-		String callbackURI = (String)attributes.get("callbackURI");
-
-		if (callbackURI != null) {
-			setCallbackURI(callbackURI);
-		}
-
-		String websiteURL = (String)attributes.get("websiteURL");
-
-		if (websiteURL != null) {
-			setWebsiteURL(websiteURL);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@JSON
@@ -830,38 +805,28 @@ public class OAuthApplicationModelImpl extends BaseModelImpl<OAuthApplication>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(31);
+		Map<String, Function<OAuthApplication, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		sb.append("{oAuthApplicationId=");
-		sb.append(getOAuthApplicationId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", userName=");
-		sb.append(getUserName());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", modifiedDate=");
-		sb.append(getModifiedDate());
-		sb.append(", name=");
-		sb.append(getName());
-		sb.append(", description=");
-		sb.append(getDescription());
-		sb.append(", consumerKey=");
-		sb.append(getConsumerKey());
-		sb.append(", consumerSecret=");
-		sb.append(getConsumerSecret());
-		sb.append(", accessLevel=");
-		sb.append(getAccessLevel());
-		sb.append(", logoId=");
-		sb.append(getLogoId());
-		sb.append(", shareableAccessToken=");
-		sb.append(isShareableAccessToken());
-		sb.append(", callbackURI=");
-		sb.append(getCallbackURI());
-		sb.append(", websiteURL=");
-		sb.append(getWebsiteURL());
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
+
+		sb.append("{");
+
+		for (Map.Entry<String, Function<OAuthApplication, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<OAuthApplication, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append(attributeName);
+			sb.append("=");
+			sb.append(attributeGetterFunction.apply((OAuthApplication)this));
+			sb.append(", ");
+		}
+
+		if (sb.index() > 1) {
+			sb.setIndex(sb.index() - 1);
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -869,72 +834,26 @@ public class OAuthApplicationModelImpl extends BaseModelImpl<OAuthApplication>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(49);
+		Map<String, Function<OAuthApplication, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
+
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
-		sb.append("com.liferay.oauth.model.OAuthApplication");
+		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		sb.append(
-			"<column><column-name>oAuthApplicationId</column-name><column-value><![CDATA[");
-		sb.append(getOAuthApplicationId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userName</column-name><column-value><![CDATA[");
-		sb.append(getUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
-		sb.append(getModifiedDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>name</column-name><column-value><![CDATA[");
-		sb.append(getName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>description</column-name><column-value><![CDATA[");
-		sb.append(getDescription());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>consumerKey</column-name><column-value><![CDATA[");
-		sb.append(getConsumerKey());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>consumerSecret</column-name><column-value><![CDATA[");
-		sb.append(getConsumerSecret());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>accessLevel</column-name><column-value><![CDATA[");
-		sb.append(getAccessLevel());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>logoId</column-name><column-value><![CDATA[");
-		sb.append(getLogoId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>shareableAccessToken</column-name><column-value><![CDATA[");
-		sb.append(isShareableAccessToken());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>callbackURI</column-name><column-value><![CDATA[");
-		sb.append(getCallbackURI());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>websiteURL</column-name><column-value><![CDATA[");
-		sb.append(getWebsiteURL());
-		sb.append("]]></column-value></column>");
+		for (Map.Entry<String, Function<OAuthApplication, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<OAuthApplication, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append("<column><column-name>");
+			sb.append(attributeName);
+			sb.append("</column-name><column-value><![CDATA[");
+			sb.append(attributeGetterFunction.apply((OAuthApplication)this));
+			sb.append("]]></column-value></column>");
+		}
 
 		sb.append("</model>");
 

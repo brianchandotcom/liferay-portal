@@ -49,13 +49,17 @@ import java.io.Serializable;
 import java.sql.Types;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the Definition service. Represents a row in the &quot;Reports_Definition&quot; database table, with each column mapped to a property of this class.
@@ -227,20 +231,15 @@ public class DefinitionModelImpl extends BaseModelImpl<Definition>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("uuid", getUuid());
-		attributes.put("definitionId", getDefinitionId());
-		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("name", getName());
-		attributes.put("description", getDescription());
-		attributes.put("sourceId", getSourceId());
-		attributes.put("reportName", getReportName());
-		attributes.put("reportParameters", getReportParameters());
-		attributes.put("lastPublishDate", getLastPublishDate());
+		Map<String, Function<Definition, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+
+		for (Map.Entry<String, Function<Definition, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<Definition, Object> attributeGetterFunction = entry.getValue();
+
+			attributes.put(attributeName,
+				attributeGetterFunction.apply((Definition)this));
+		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -250,89 +249,68 @@ public class DefinitionModelImpl extends BaseModelImpl<Definition>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		String uuid = (String)attributes.get("uuid");
+		Map<String, BiConsumer<Definition, Object>> attributeSetterBiConsumers = getAttributeSetterBiConsumers();
 
-		if (uuid != null) {
-			setUuid(uuid);
+		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
+			String attributeName = entry.getKey();
+
+			BiConsumer<Definition, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+
+			if (attributeSetterBiConsumer != null) {
+				attributeSetterBiConsumer.accept((Definition)this,
+					entry.getValue());
+			}
 		}
+	}
 
-		Long definitionId = (Long)attributes.get("definitionId");
+	public Map<String, Function<Definition, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
+	}
 
-		if (definitionId != null) {
-			setDefinitionId(definitionId);
-		}
+	public Map<String, BiConsumer<Definition, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		Long groupId = (Long)attributes.get("groupId");
+	private static final Map<String, Function<Definition, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<Definition, Object>> _attributeSetterBiConsumers;
 
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
+	static {
+		Map<String, Function<Definition, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<Definition, Object>>();
+		Map<String, BiConsumer<Definition, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<Definition, ?>>();
 
-		Long companyId = (Long)attributes.get("companyId");
 
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
+		attributeGetterFunctions.put("uuid", Definition::getUuid);
+		attributeSetterBiConsumers.put("uuid", (BiConsumer<Definition, String>)Definition::setUuid);
+		attributeGetterFunctions.put("definitionId", Definition::getDefinitionId);
+		attributeSetterBiConsumers.put("definitionId", (BiConsumer<Definition, Long>)Definition::setDefinitionId);
+		attributeGetterFunctions.put("groupId", Definition::getGroupId);
+		attributeSetterBiConsumers.put("groupId", (BiConsumer<Definition, Long>)Definition::setGroupId);
+		attributeGetterFunctions.put("companyId", Definition::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<Definition, Long>)Definition::setCompanyId);
+		attributeGetterFunctions.put("userId", Definition::getUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<Definition, Long>)Definition::setUserId);
+		attributeGetterFunctions.put("userName", Definition::getUserName);
+		attributeSetterBiConsumers.put("userName", (BiConsumer<Definition, String>)Definition::setUserName);
+		attributeGetterFunctions.put("createDate", Definition::getCreateDate);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<Definition, Date>)Definition::setCreateDate);
+		attributeGetterFunctions.put("modifiedDate", Definition::getModifiedDate);
+		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<Definition, Date>)Definition::setModifiedDate);
+		attributeGetterFunctions.put("name", Definition::getName);
+		attributeSetterBiConsumers.put("name", (BiConsumer<Definition, String>)Definition::setName);
+		attributeGetterFunctions.put("description", Definition::getDescription);
+		attributeSetterBiConsumers.put("description", (BiConsumer<Definition, String>)Definition::setDescription);
+		attributeGetterFunctions.put("sourceId", Definition::getSourceId);
+		attributeSetterBiConsumers.put("sourceId", (BiConsumer<Definition, Long>)Definition::setSourceId);
+		attributeGetterFunctions.put("reportName", Definition::getReportName);
+		attributeSetterBiConsumers.put("reportName", (BiConsumer<Definition, String>)Definition::setReportName);
+		attributeGetterFunctions.put("reportParameters", Definition::getReportParameters);
+		attributeSetterBiConsumers.put("reportParameters", (BiConsumer<Definition, String>)Definition::setReportParameters);
+		attributeGetterFunctions.put("lastPublishDate", Definition::getLastPublishDate);
+		attributeSetterBiConsumers.put("lastPublishDate", (BiConsumer<Definition, Date>)Definition::setLastPublishDate);
 
-		Long userId = (Long)attributes.get("userId");
 
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		String name = (String)attributes.get("name");
-
-		if (name != null) {
-			setName(name);
-		}
-
-		String description = (String)attributes.get("description");
-
-		if (description != null) {
-			setDescription(description);
-		}
-
-		Long sourceId = (Long)attributes.get("sourceId");
-
-		if (sourceId != null) {
-			setSourceId(sourceId);
-		}
-
-		String reportName = (String)attributes.get("reportName");
-
-		if (reportName != null) {
-			setReportName(reportName);
-		}
-
-		String reportParameters = (String)attributes.get("reportParameters");
-
-		if (reportParameters != null) {
-			setReportParameters(reportParameters);
-		}
-
-		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
-
-		if (lastPublishDate != null) {
-			setLastPublishDate(lastPublishDate);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@JSON
@@ -1050,36 +1028,27 @@ public class DefinitionModelImpl extends BaseModelImpl<Definition>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		Map<String, Function<Definition, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		sb.append("{uuid=");
-		sb.append(getUuid());
-		sb.append(", definitionId=");
-		sb.append(getDefinitionId());
-		sb.append(", groupId=");
-		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", userName=");
-		sb.append(getUserName());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", modifiedDate=");
-		sb.append(getModifiedDate());
-		sb.append(", name=");
-		sb.append(getName());
-		sb.append(", description=");
-		sb.append(getDescription());
-		sb.append(", sourceId=");
-		sb.append(getSourceId());
-		sb.append(", reportName=");
-		sb.append(getReportName());
-		sb.append(", reportParameters=");
-		sb.append(getReportParameters());
-		sb.append(", lastPublishDate=");
-		sb.append(getLastPublishDate());
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
+
+		sb.append("{");
+
+		for (Map.Entry<String, Function<Definition, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<Definition, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append(attributeName);
+			sb.append("=");
+			sb.append(attributeGetterFunction.apply((Definition)this));
+			sb.append(", ");
+		}
+
+		if (sb.index() > 1) {
+			sb.setIndex(sb.index() - 1);
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -1087,68 +1056,25 @@ public class DefinitionModelImpl extends BaseModelImpl<Definition>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(46);
+		Map<String, Function<Definition, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
-		sb.append("com.liferay.portal.reports.engine.console.model.Definition");
+		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		sb.append(
-			"<column><column-name>uuid</column-name><column-value><![CDATA[");
-		sb.append(getUuid());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>definitionId</column-name><column-value><![CDATA[");
-		sb.append(getDefinitionId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>groupId</column-name><column-value><![CDATA[");
-		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userName</column-name><column-value><![CDATA[");
-		sb.append(getUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
-		sb.append(getModifiedDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>name</column-name><column-value><![CDATA[");
-		sb.append(getName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>description</column-name><column-value><![CDATA[");
-		sb.append(getDescription());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>sourceId</column-name><column-value><![CDATA[");
-		sb.append(getSourceId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>reportName</column-name><column-value><![CDATA[");
-		sb.append(getReportName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>reportParameters</column-name><column-value><![CDATA[");
-		sb.append(getReportParameters());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
-		sb.append(getLastPublishDate());
-		sb.append("]]></column-value></column>");
+		for (Map.Entry<String, Function<Definition, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<Definition, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append("<column><column-name>");
+			sb.append(attributeName);
+			sb.append("</column-name><column-value><![CDATA[");
+			sb.append(attributeGetterFunction.apply((Definition)this));
+			sb.append("]]></column-value></column>");
+		}
 
 		sb.append("</model>");
 

@@ -35,8 +35,12 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the KaleoProcessLink service. Represents a row in the &quot;KaleoProcessLink&quot; database table, with each column mapped to a property of this class.
@@ -134,10 +138,16 @@ public class KaleoProcessLinkModelImpl extends BaseModelImpl<KaleoProcessLink>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("kaleoProcessLinkId", getKaleoProcessLinkId());
-		attributes.put("kaleoProcessId", getKaleoProcessId());
-		attributes.put("workflowTaskName", getWorkflowTaskName());
-		attributes.put("DDMTemplateId", getDDMTemplateId());
+		Map<String, Function<KaleoProcessLink, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
+
+		for (Map.Entry<String, Function<KaleoProcessLink, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<KaleoProcessLink, Object> attributeGetterFunction = entry.getValue();
+
+			attributes.put(attributeName,
+				attributeGetterFunction.apply((KaleoProcessLink)this));
+		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -147,29 +157,50 @@ public class KaleoProcessLinkModelImpl extends BaseModelImpl<KaleoProcessLink>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long kaleoProcessLinkId = (Long)attributes.get("kaleoProcessLinkId");
+		Map<String, BiConsumer<KaleoProcessLink, Object>> attributeSetterBiConsumers =
+			getAttributeSetterBiConsumers();
 
-		if (kaleoProcessLinkId != null) {
-			setKaleoProcessLinkId(kaleoProcessLinkId);
+		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
+			String attributeName = entry.getKey();
+
+			BiConsumer<KaleoProcessLink, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+
+			if (attributeSetterBiConsumer != null) {
+				attributeSetterBiConsumer.accept((KaleoProcessLink)this,
+					entry.getValue());
+			}
 		}
+	}
 
-		Long kaleoProcessId = (Long)attributes.get("kaleoProcessId");
+	public Map<String, Function<KaleoProcessLink, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
+	}
 
-		if (kaleoProcessId != null) {
-			setKaleoProcessId(kaleoProcessId);
-		}
+	public Map<String, BiConsumer<KaleoProcessLink, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		String workflowTaskName = (String)attributes.get("workflowTaskName");
+	private static final Map<String, Function<KaleoProcessLink, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<KaleoProcessLink, Object>> _attributeSetterBiConsumers;
 
-		if (workflowTaskName != null) {
-			setWorkflowTaskName(workflowTaskName);
-		}
+	static {
+		Map<String, Function<KaleoProcessLink, Object>> attributeGetterFunctions =
+			new LinkedHashMap<String, Function<KaleoProcessLink, Object>>();
+		Map<String, BiConsumer<KaleoProcessLink, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<KaleoProcessLink, ?>>();
 
-		Long DDMTemplateId = (Long)attributes.get("DDMTemplateId");
 
-		if (DDMTemplateId != null) {
-			setDDMTemplateId(DDMTemplateId);
-		}
+		attributeGetterFunctions.put("kaleoProcessLinkId", KaleoProcessLink::getKaleoProcessLinkId);
+		attributeSetterBiConsumers.put("kaleoProcessLinkId", (BiConsumer<KaleoProcessLink, Long>)KaleoProcessLink::setKaleoProcessLinkId);
+		attributeGetterFunctions.put("kaleoProcessId", KaleoProcessLink::getKaleoProcessId);
+		attributeSetterBiConsumers.put("kaleoProcessId", (BiConsumer<KaleoProcessLink, Long>)KaleoProcessLink::setKaleoProcessId);
+		attributeGetterFunctions.put("workflowTaskName", KaleoProcessLink::getWorkflowTaskName);
+		attributeSetterBiConsumers.put("workflowTaskName", (BiConsumer<KaleoProcessLink, String>)KaleoProcessLink::setWorkflowTaskName);
+		attributeGetterFunctions.put("DDMTemplateId", KaleoProcessLink::getDDMTemplateId);
+		attributeSetterBiConsumers.put("DDMTemplateId", (BiConsumer<KaleoProcessLink, Long>)KaleoProcessLink::setDDMTemplateId);
+
+
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -368,16 +399,28 @@ public class KaleoProcessLinkModelImpl extends BaseModelImpl<KaleoProcessLink>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(9);
+		Map<String, Function<KaleoProcessLink, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		sb.append("{kaleoProcessLinkId=");
-		sb.append(getKaleoProcessLinkId());
-		sb.append(", kaleoProcessId=");
-		sb.append(getKaleoProcessId());
-		sb.append(", workflowTaskName=");
-		sb.append(getWorkflowTaskName());
-		sb.append(", DDMTemplateId=");
-		sb.append(getDDMTemplateId());
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
+
+		sb.append("{");
+
+		for (Map.Entry<String, Function<KaleoProcessLink, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<KaleoProcessLink, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append(attributeName);
+			sb.append("=");
+			sb.append(attributeGetterFunction.apply((KaleoProcessLink)this));
+			sb.append(", ");
+		}
+
+		if (sb.index() > 1) {
+			sb.setIndex(sb.index() - 1);
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -385,29 +428,26 @@ public class KaleoProcessLinkModelImpl extends BaseModelImpl<KaleoProcessLink>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(16);
+		Map<String, Function<KaleoProcessLink, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
+
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
-		sb.append(
-			"com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink");
+		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		sb.append(
-			"<column><column-name>kaleoProcessLinkId</column-name><column-value><![CDATA[");
-		sb.append(getKaleoProcessLinkId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>kaleoProcessId</column-name><column-value><![CDATA[");
-		sb.append(getKaleoProcessId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>workflowTaskName</column-name><column-value><![CDATA[");
-		sb.append(getWorkflowTaskName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>DDMTemplateId</column-name><column-value><![CDATA[");
-		sb.append(getDDMTemplateId());
-		sb.append("]]></column-value></column>");
+		for (Map.Entry<String, Function<KaleoProcessLink, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<KaleoProcessLink, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append("<column><column-name>");
+			sb.append(attributeName);
+			sb.append("</column-name><column-value><![CDATA[");
+			sb.append(attributeGetterFunction.apply((KaleoProcessLink)this));
+			sb.append("]]></column-value></column>");
+		}
 
 		sb.append("</model>");
 

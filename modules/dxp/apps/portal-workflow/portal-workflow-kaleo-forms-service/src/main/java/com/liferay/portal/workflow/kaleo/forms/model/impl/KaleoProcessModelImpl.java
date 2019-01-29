@@ -44,10 +44,14 @@ import java.io.Serializable;
 import java.sql.Types;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the KaleoProcess service. Represents a row in the &quot;KaleoProcess&quot; database table, with each column mapped to a property of this class.
@@ -214,19 +218,15 @@ public class KaleoProcessModelImpl extends BaseModelImpl<KaleoProcess>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("uuid", getUuid());
-		attributes.put("kaleoProcessId", getKaleoProcessId());
-		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("DDLRecordSetId", getDDLRecordSetId());
-		attributes.put("DDMTemplateId", getDDMTemplateId());
-		attributes.put("workflowDefinitionName", getWorkflowDefinitionName());
-		attributes.put("workflowDefinitionVersion",
-			getWorkflowDefinitionVersion());
+		Map<String, Function<KaleoProcess, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+
+		for (Map.Entry<String, Function<KaleoProcess, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<KaleoProcess, Object> attributeGetterFunction = entry.getValue();
+
+			attributes.put(attributeName,
+				attributeGetterFunction.apply((KaleoProcess)this));
+		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -236,79 +236,65 @@ public class KaleoProcessModelImpl extends BaseModelImpl<KaleoProcess>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		String uuid = (String)attributes.get("uuid");
+		Map<String, BiConsumer<KaleoProcess, Object>> attributeSetterBiConsumers =
+			getAttributeSetterBiConsumers();
 
-		if (uuid != null) {
-			setUuid(uuid);
+		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
+			String attributeName = entry.getKey();
+
+			BiConsumer<KaleoProcess, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+
+			if (attributeSetterBiConsumer != null) {
+				attributeSetterBiConsumer.accept((KaleoProcess)this,
+					entry.getValue());
+			}
 		}
+	}
 
-		Long kaleoProcessId = (Long)attributes.get("kaleoProcessId");
+	public Map<String, Function<KaleoProcess, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
+	}
 
-		if (kaleoProcessId != null) {
-			setKaleoProcessId(kaleoProcessId);
-		}
+	public Map<String, BiConsumer<KaleoProcess, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		Long groupId = (Long)attributes.get("groupId");
+	private static final Map<String, Function<KaleoProcess, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<KaleoProcess, Object>> _attributeSetterBiConsumers;
 
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
+	static {
+		Map<String, Function<KaleoProcess, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<KaleoProcess, Object>>();
+		Map<String, BiConsumer<KaleoProcess, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<KaleoProcess, ?>>();
 
-		Long companyId = (Long)attributes.get("companyId");
 
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
+		attributeGetterFunctions.put("uuid", KaleoProcess::getUuid);
+		attributeSetterBiConsumers.put("uuid", (BiConsumer<KaleoProcess, String>)KaleoProcess::setUuid);
+		attributeGetterFunctions.put("kaleoProcessId", KaleoProcess::getKaleoProcessId);
+		attributeSetterBiConsumers.put("kaleoProcessId", (BiConsumer<KaleoProcess, Long>)KaleoProcess::setKaleoProcessId);
+		attributeGetterFunctions.put("groupId", KaleoProcess::getGroupId);
+		attributeSetterBiConsumers.put("groupId", (BiConsumer<KaleoProcess, Long>)KaleoProcess::setGroupId);
+		attributeGetterFunctions.put("companyId", KaleoProcess::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<KaleoProcess, Long>)KaleoProcess::setCompanyId);
+		attributeGetterFunctions.put("userId", KaleoProcess::getUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<KaleoProcess, Long>)KaleoProcess::setUserId);
+		attributeGetterFunctions.put("userName", KaleoProcess::getUserName);
+		attributeSetterBiConsumers.put("userName", (BiConsumer<KaleoProcess, String>)KaleoProcess::setUserName);
+		attributeGetterFunctions.put("createDate", KaleoProcess::getCreateDate);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<KaleoProcess, Date>)KaleoProcess::setCreateDate);
+		attributeGetterFunctions.put("modifiedDate", KaleoProcess::getModifiedDate);
+		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<KaleoProcess, Date>)KaleoProcess::setModifiedDate);
+		attributeGetterFunctions.put("DDLRecordSetId", KaleoProcess::getDDLRecordSetId);
+		attributeSetterBiConsumers.put("DDLRecordSetId", (BiConsumer<KaleoProcess, Long>)KaleoProcess::setDDLRecordSetId);
+		attributeGetterFunctions.put("DDMTemplateId", KaleoProcess::getDDMTemplateId);
+		attributeSetterBiConsumers.put("DDMTemplateId", (BiConsumer<KaleoProcess, Long>)KaleoProcess::setDDMTemplateId);
+		attributeGetterFunctions.put("workflowDefinitionName", KaleoProcess::getWorkflowDefinitionName);
+		attributeSetterBiConsumers.put("workflowDefinitionName", (BiConsumer<KaleoProcess, String>)KaleoProcess::setWorkflowDefinitionName);
+		attributeGetterFunctions.put("workflowDefinitionVersion", KaleoProcess::getWorkflowDefinitionVersion);
+		attributeSetterBiConsumers.put("workflowDefinitionVersion", (BiConsumer<KaleoProcess, Integer>)KaleoProcess::setWorkflowDefinitionVersion);
 
-		Long userId = (Long)attributes.get("userId");
 
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		Long DDLRecordSetId = (Long)attributes.get("DDLRecordSetId");
-
-		if (DDLRecordSetId != null) {
-			setDDLRecordSetId(DDLRecordSetId);
-		}
-
-		Long DDMTemplateId = (Long)attributes.get("DDMTemplateId");
-
-		if (DDMTemplateId != null) {
-			setDDMTemplateId(DDMTemplateId);
-		}
-
-		String workflowDefinitionName = (String)attributes.get(
-				"workflowDefinitionName");
-
-		if (workflowDefinitionName != null) {
-			setWorkflowDefinitionName(workflowDefinitionName);
-		}
-
-		Integer workflowDefinitionVersion = (Integer)attributes.get(
-				"workflowDefinitionVersion");
-
-		if (workflowDefinitionVersion != null) {
-			setWorkflowDefinitionVersion(workflowDefinitionVersion);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@JSON
@@ -722,32 +708,27 @@ public class KaleoProcessModelImpl extends BaseModelImpl<KaleoProcess>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		Map<String, Function<KaleoProcess, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		sb.append("{uuid=");
-		sb.append(getUuid());
-		sb.append(", kaleoProcessId=");
-		sb.append(getKaleoProcessId());
-		sb.append(", groupId=");
-		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", userName=");
-		sb.append(getUserName());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", modifiedDate=");
-		sb.append(getModifiedDate());
-		sb.append(", DDLRecordSetId=");
-		sb.append(getDDLRecordSetId());
-		sb.append(", DDMTemplateId=");
-		sb.append(getDDMTemplateId());
-		sb.append(", workflowDefinitionName=");
-		sb.append(getWorkflowDefinitionName());
-		sb.append(", workflowDefinitionVersion=");
-		sb.append(getWorkflowDefinitionVersion());
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
+
+		sb.append("{");
+
+		for (Map.Entry<String, Function<KaleoProcess, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<KaleoProcess, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append(attributeName);
+			sb.append("=");
+			sb.append(attributeGetterFunction.apply((KaleoProcess)this));
+			sb.append(", ");
+		}
+
+		if (sb.index() > 1) {
+			sb.setIndex(sb.index() - 1);
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -755,60 +736,25 @@ public class KaleoProcessModelImpl extends BaseModelImpl<KaleoProcess>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(40);
+		Map<String, Function<KaleoProcess, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
-		sb.append("com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess");
+		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		sb.append(
-			"<column><column-name>uuid</column-name><column-value><![CDATA[");
-		sb.append(getUuid());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>kaleoProcessId</column-name><column-value><![CDATA[");
-		sb.append(getKaleoProcessId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>groupId</column-name><column-value><![CDATA[");
-		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userName</column-name><column-value><![CDATA[");
-		sb.append(getUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
-		sb.append(getModifiedDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>DDLRecordSetId</column-name><column-value><![CDATA[");
-		sb.append(getDDLRecordSetId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>DDMTemplateId</column-name><column-value><![CDATA[");
-		sb.append(getDDMTemplateId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>workflowDefinitionName</column-name><column-value><![CDATA[");
-		sb.append(getWorkflowDefinitionName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>workflowDefinitionVersion</column-name><column-value><![CDATA[");
-		sb.append(getWorkflowDefinitionVersion());
-		sb.append("]]></column-value></column>");
+		for (Map.Entry<String, Function<KaleoProcess, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<KaleoProcess, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append("<column><column-name>");
+			sb.append(attributeName);
+			sb.append("</column-name><column-value><![CDATA[");
+			sb.append(attributeGetterFunction.apply((KaleoProcess)this));
+			sb.append("]]></column-value></column>");
+		}
 
 		sb.append("</model>");
 

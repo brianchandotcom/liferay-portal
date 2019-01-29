@@ -36,9 +36,13 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the SamlSpAuthRequest service. Represents a row in the &quot;SamlSpAuthRequest&quot; database table, with each column mapped to a property of this class.
@@ -139,11 +143,16 @@ public class SamlSpAuthRequestModelImpl extends BaseModelImpl<SamlSpAuthRequest>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("samlSpAuthnRequestId", getSamlSpAuthnRequestId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("samlIdpEntityId", getSamlIdpEntityId());
-		attributes.put("samlSpAuthRequestKey", getSamlSpAuthRequestKey());
+		Map<String, Function<SamlSpAuthRequest, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
+
+		for (Map.Entry<String, Function<SamlSpAuthRequest, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<SamlSpAuthRequest, Object> attributeGetterFunction = entry.getValue();
+
+			attributes.put(attributeName,
+				attributeGetterFunction.apply((SamlSpAuthRequest)this));
+		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -153,36 +162,53 @@ public class SamlSpAuthRequestModelImpl extends BaseModelImpl<SamlSpAuthRequest>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long samlSpAuthnRequestId = (Long)attributes.get("samlSpAuthnRequestId");
+		Map<String, BiConsumer<SamlSpAuthRequest, Object>> attributeSetterBiConsumers =
+			getAttributeSetterBiConsumers();
 
-		if (samlSpAuthnRequestId != null) {
-			setSamlSpAuthnRequestId(samlSpAuthnRequestId);
+		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
+			String attributeName = entry.getKey();
+
+			BiConsumer<SamlSpAuthRequest, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+
+			if (attributeSetterBiConsumer != null) {
+				attributeSetterBiConsumer.accept((SamlSpAuthRequest)this,
+					entry.getValue());
+			}
 		}
+	}
 
-		Long companyId = (Long)attributes.get("companyId");
+	public Map<String, Function<SamlSpAuthRequest, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
+	}
 
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
+	public Map<String, BiConsumer<SamlSpAuthRequest, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		Date createDate = (Date)attributes.get("createDate");
+	private static final Map<String, Function<SamlSpAuthRequest, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<SamlSpAuthRequest, Object>> _attributeSetterBiConsumers;
 
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
+	static {
+		Map<String, Function<SamlSpAuthRequest, Object>> attributeGetterFunctions =
+			new LinkedHashMap<String, Function<SamlSpAuthRequest, Object>>();
+		Map<String, BiConsumer<SamlSpAuthRequest, ?>> attributeSetterBiConsumers =
+			new LinkedHashMap<String, BiConsumer<SamlSpAuthRequest, ?>>();
 
-		String samlIdpEntityId = (String)attributes.get("samlIdpEntityId");
 
-		if (samlIdpEntityId != null) {
-			setSamlIdpEntityId(samlIdpEntityId);
-		}
+		attributeGetterFunctions.put("samlSpAuthnRequestId", SamlSpAuthRequest::getSamlSpAuthnRequestId);
+		attributeSetterBiConsumers.put("samlSpAuthnRequestId", (BiConsumer<SamlSpAuthRequest, Long>)SamlSpAuthRequest::setSamlSpAuthnRequestId);
+		attributeGetterFunctions.put("companyId", SamlSpAuthRequest::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<SamlSpAuthRequest, Long>)SamlSpAuthRequest::setCompanyId);
+		attributeGetterFunctions.put("createDate", SamlSpAuthRequest::getCreateDate);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<SamlSpAuthRequest, Date>)SamlSpAuthRequest::setCreateDate);
+		attributeGetterFunctions.put("samlIdpEntityId", SamlSpAuthRequest::getSamlIdpEntityId);
+		attributeSetterBiConsumers.put("samlIdpEntityId", (BiConsumer<SamlSpAuthRequest, String>)SamlSpAuthRequest::setSamlIdpEntityId);
+		attributeGetterFunctions.put("samlSpAuthRequestKey", SamlSpAuthRequest::getSamlSpAuthRequestKey);
+		attributeSetterBiConsumers.put("samlSpAuthRequestKey", (BiConsumer<SamlSpAuthRequest, String>)SamlSpAuthRequest::setSamlSpAuthRequestKey);
 
-		String samlSpAuthRequestKey = (String)attributes.get(
-				"samlSpAuthRequestKey");
 
-		if (samlSpAuthRequestKey != null) {
-			setSamlSpAuthRequestKey(samlSpAuthRequestKey);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -421,18 +447,28 @@ public class SamlSpAuthRequestModelImpl extends BaseModelImpl<SamlSpAuthRequest>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		Map<String, Function<SamlSpAuthRequest, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		sb.append("{samlSpAuthnRequestId=");
-		sb.append(getSamlSpAuthnRequestId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", samlIdpEntityId=");
-		sb.append(getSamlIdpEntityId());
-		sb.append(", samlSpAuthRequestKey=");
-		sb.append(getSamlSpAuthRequestKey());
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
+
+		sb.append("{");
+
+		for (Map.Entry<String, Function<SamlSpAuthRequest, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<SamlSpAuthRequest, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append(attributeName);
+			sb.append("=");
+			sb.append(attributeGetterFunction.apply((SamlSpAuthRequest)this));
+			sb.append(", ");
+		}
+
+		if (sb.index() > 1) {
+			sb.setIndex(sb.index() - 1);
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -440,32 +476,26 @@ public class SamlSpAuthRequestModelImpl extends BaseModelImpl<SamlSpAuthRequest>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(19);
+		Map<String, Function<SamlSpAuthRequest, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
+
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
-		sb.append("com.liferay.saml.persistence.model.SamlSpAuthRequest");
+		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		sb.append(
-			"<column><column-name>samlSpAuthnRequestId</column-name><column-value><![CDATA[");
-		sb.append(getSamlSpAuthnRequestId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>samlIdpEntityId</column-name><column-value><![CDATA[");
-		sb.append(getSamlIdpEntityId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>samlSpAuthRequestKey</column-name><column-value><![CDATA[");
-		sb.append(getSamlSpAuthRequestKey());
-		sb.append("]]></column-value></column>");
+		for (Map.Entry<String, Function<SamlSpAuthRequest, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<SamlSpAuthRequest, Object> attributeGetterFunction = entry.getValue();
+
+			sb.append("<column><column-name>");
+			sb.append(attributeName);
+			sb.append("</column-name><column-value><![CDATA[");
+			sb.append(attributeGetterFunction.apply((SamlSpAuthRequest)this));
+			sb.append("]]></column-value></column>");
+		}
 
 		sb.append("</model>");
 

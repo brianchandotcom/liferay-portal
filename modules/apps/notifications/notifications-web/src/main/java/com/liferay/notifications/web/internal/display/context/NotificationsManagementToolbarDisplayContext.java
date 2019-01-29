@@ -127,8 +127,7 @@ public class NotificationsManagementToolbarDisplayContext {
 	public List<LabelItem> getFilterLabelItems() {
 		return new LabelItemList() {
 			{
-				String navigation = ParamUtil.getString(
-					_request, "navigation", "all");
+				String navigation = _getNavigation();
 
 				if (navigation.equals("read") || navigation.equals("unread")) {
 					add(
@@ -174,7 +173,7 @@ public class NotificationsManagementToolbarDisplayContext {
 	}
 
 	private List<DropdownItem> _getFilterNavigationDropdownItems() {
-		String navigation = ParamUtil.getString(_request, "navigation", "all");
+		String navigation = _getNavigation();
 
 		return new DropdownItemList() {
 			{
@@ -216,6 +215,10 @@ public class NotificationsManagementToolbarDisplayContext {
 						}));
 			}
 		};
+	}
+
+	private String _getNavigation() {
+		return ParamUtil.getString(_request, "navigation", "all");
 	}
 
 	private List<DropdownItem> _getOrderByDropdownItems() {

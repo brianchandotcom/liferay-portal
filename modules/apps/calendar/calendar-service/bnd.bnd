@@ -11,5 +11,5 @@ Import-Package:\
 	!org.codehaus.*,\
 	\
 	*
-Liferay-Require-SchemaVersion: 4.0.0
+Liferay-Require-SchemaVersion: 4.0.1
 Liferay-Service: true

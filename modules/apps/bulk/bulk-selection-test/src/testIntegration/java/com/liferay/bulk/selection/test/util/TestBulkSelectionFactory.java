@@ -14,6 +14,7 @@
 
 package com.liferay.bulk.selection.test.util;
 
+import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.bulk.selection.BulkSelection;
 import com.liferay.bulk.selection.BulkSelectionFactory;
 import com.liferay.petra.string.StringPool;
@@ -76,6 +77,11 @@ public class TestBulkSelectionFactory implements BulkSelectionFactory<Integer> {
 				).map(
 					Integer::new
 				);
+			}
+
+			@Override
+			public BulkSelection<AssetEntry> toAssetEntryBulkSelection() {
+				throw new UnsupportedOperationException();
 			}
 
 		};

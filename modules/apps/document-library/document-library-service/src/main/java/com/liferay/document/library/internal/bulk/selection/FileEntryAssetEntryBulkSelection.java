@@ -18,93 +18,82 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.bulk.selection.BulkSelection;
 import com.liferay.bulk.selection.BulkSelectionFactory;
-import com.liferay.document.library.kernel.service.DLAppService;
+import com.liferay.document.library.kernel.model.DLFileEntryConstants;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.util.ResourceBundleLoader;
 
 import java.io.Serializable;
 
-import java.util.Collections;
 import java.util.Locale;
 import java.util.Map;
-import java.util.ResourceBundle;
-import java.util.Set;
 import java.util.stream.Stream;
 
 /**
  * @author Adolfo Pérez
  */
-public class SingleFileEntryBulkSelection implements BulkSelection<FileEntry> {
+public class FileEntryAssetEntryBulkSelection
+	implements BulkSelection<AssetEntry> {
 
-	public SingleFileEntryBulkSelection(
-		long fileEntryId, Map<String, String[]> parameterMap,
-		ResourceBundleLoader resourceBundleLoader, Language language,
-		DLAppService dlAppService,
+	public FileEntryAssetEntryBulkSelection(
+		BulkSelection<FileEntry> fileEntryBulkSelection,
 		AssetEntryLocalService assetEntryLocalService) {
 
-		_fileEntryId = fileEntryId;
-		_parameterMap = parameterMap;
-		_resourceBundleLoader = resourceBundleLoader;
-		_language = language;
-		_dlAppService = dlAppService;
+		_fileEntryBulkSelection = fileEntryBulkSelection;
 		_assetEntryLocalService = assetEntryLocalService;
 	}
 
 	@Override
 	public String describe(Locale locale) throws PortalException {
-		ResourceBundle resourceBundle =
-			_resourceBundleLoader.loadResourceBundle(locale);
-
-		FileEntry fileEntry = _dlAppService.getFileEntry(_fileEntryId);
-
-		return _language.format(
-			resourceBundle, "these-changes-will-be-applied-to-x",
-			fileEntry.getTitle());
+		return _fileEntryBulkSelection.describe(locale);
 	}
 
 	@Override
 	public Class<? extends BulkSelectionFactory>
 		getBulkSelectionFactoryClass() {
 
-		return FileEntryBulkSelectionFactory.class;
+		return _fileEntryBulkSelection.getBulkSelectionFactoryClass();
 	}
 
 	@Override
 	public Map<String, String[]> getParameterMap() {
-		return _parameterMap;
+		return _fileEntryBulkSelection.getParameterMap();
 	}
 
 	@Override
 	public boolean isMultiple() {
-		return false;
+		return _fileEntryBulkSelection.isMultiple();
 	}
 
 	@Override
 	public Serializable serialize() {
-		return String.valueOf(_fileEntryId);
+		return _fileEntryBulkSelection.serialize();
 	}
 
 	@Override
-	public Stream<FileEntry> stream() throws PortalException {
-		Set<FileEntry> set = Collections.singleton(
-			_dlAppService.getFileEntry(_fileEntryId));
+	public Stream<AssetEntry> stream() throws PortalException {
+		Stream<FileEntry> fileEntryStream = _fileEntryBulkSelection.stream();
 
-		return set.stream();
+		return fileEntryStream.map(this::_toAssetEntry);
 	}
 
 	@Override
 	public BulkSelection<AssetEntry> toAssetEntryBulkSelection() {
-		return new FileEntryAssetEntryBulkSelection(
-			this, _assetEntryLocalService);
+		return this;
+	}
+
+	private AssetEntry _toAssetEntry(FileEntry fileEntry) {
+		try {
+			return _assetEntryLocalService.getEntry(
+				DLFileEntryConstants.getClassName(),
+				fileEntry.getFileEntryId());
+		}
+		catch (PortalException pe) {
+			return ReflectionUtil.throwException(pe);
+		}
 	}
 
 	private final AssetEntryLocalService _assetEntryLocalService;
-	private final DLAppService _dlAppService;
-	private final long _fileEntryId;
-	private final Language _language;
-	private final Map<String, String[]> _parameterMap;
-	private final ResourceBundleLoader _resourceBundleLoader;
+	private final BulkSelection<FileEntry> _fileEntryBulkSelection;
 
 }

@@ -14,6 +14,7 @@
 
 package com.liferay.document.library.internal.bulk.selection;
 
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.bulk.selection.BulkSelection;
 import com.liferay.bulk.selection.BulkSelectionFactory;
 import com.liferay.document.library.kernel.service.DLAppService;
@@ -73,7 +74,8 @@ public class FileEntryBulkSelectionFactory
 
 		return new FolderFileEntryBulkSelection(
 			repositoryId, folderId, parameterMap, _resourceBundleLoader,
-			_language, _repositoryProvider, _dlAppService);
+			_language, _repositoryProvider, _dlAppService,
+			_assetEntryLocalService);
 	}
 
 	private BulkSelection<FileEntry> _getFileEntrySelection(
@@ -88,13 +90,16 @@ public class FileEntryBulkSelectionFactory
 		if (fileEntryIds.length == 1) {
 			return new SingleFileEntryBulkSelection(
 				fileEntryIds[0], parameterMap, _resourceBundleLoader, _language,
-				_dlAppService);
+				_dlAppService, _assetEntryLocalService);
 		}
 
 		return new MultipleFileEntryBulkSelection(
 			fileEntryIds, parameterMap, _resourceBundleLoader, _language,
-			_dlAppService);
+			_dlAppService, _assetEntryLocalService);
 	}
+
+	@Reference
+	private AssetEntryLocalService _assetEntryLocalService;
 
 	@Reference
 	private DLAppService _dlAppService;

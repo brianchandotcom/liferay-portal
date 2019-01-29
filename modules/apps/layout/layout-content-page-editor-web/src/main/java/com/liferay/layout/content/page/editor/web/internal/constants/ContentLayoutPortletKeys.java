@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.type.controller.content.internal.constants;
+package com.liferay.layout.content.page.editor.web.internal.constants;
 
 /**
  * @author Eudaldo Alonso
@@ -20,11 +20,11 @@ package com.liferay.layout.type.controller.content.internal.constants;
 public class ContentLayoutPortletKeys {
 
 	public static final String CONTENT_PAGE_EDITOR_PORTLET =
-		"com_liferay_layout_type_controller_content_internal_portlet_" +
+		"com_liferay_layout_content_page_editor_web_internal_portlet_" +
 			"ContentPageEditorPortlet";
 
 	public static final String CONTENT_PAGE_TOOLBAR_PORTLET =
-		"com_liferay_layout_type_controller_content_internal_portlet_" +
+		"com_liferay_layout_content_page_editor_web_internal_portlet_" +
 			"ContentPageToolbarPortlet";
 
 }

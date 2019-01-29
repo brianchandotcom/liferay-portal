@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.layout.type.controller.content.internal.portlet;
+package com.liferay.layout.content.page.editor.web.internal.portlet;
 
-import com.liferay.layout.type.controller.content.internal.constants.ContentLayoutPortletKeys;
+import com.liferay.layout.content.page.editor.web.internal.constants.ContentLayoutPortletKeys;
+import com.liferay.layout.content.page.editor.web.internal.display.context.FragmentsEditorDisplayContext;
 import com.liferay.layout.type.controller.content.internal.constants.ContentLayoutTypeControllerWebKeys;
-import com.liferay.layout.type.controller.content.internal.display.context.FragmentsEditorDisplayContext;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.Portal;
 
@@ -48,13 +48,13 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.display-name=Content Page Editor",
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.template-path=/META-INF/resources/",
-		"javax.portlet.init-param.view-template=/view.jsp",
-		"javax.portlet.name=" + ContentLayoutPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
+		"javax.portlet.init-param.view-template=/view_toolbar.jsp",
+		"javax.portlet.name=" + ContentLayoutPortletKeys.CONTENT_PAGE_TOOLBAR_PORTLET,
 		"javax.portlet.supports.mime-type=text/html"
 	},
 	service = Portlet.class
 )
-public class ContentPageEditorPortlet extends MVCPortlet {
+public class ContentPageToolbarPortlet extends MVCPortlet {
 
 	@Override
 	protected void doDispatch(

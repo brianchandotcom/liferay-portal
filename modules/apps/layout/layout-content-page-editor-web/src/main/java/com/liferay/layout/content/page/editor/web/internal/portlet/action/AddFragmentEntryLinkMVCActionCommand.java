@@ -12,15 +12,15 @@
  * details.
  */
 
-package com.liferay.layout.type.controller.content.internal.portlet.action;
+package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
 import com.liferay.fragment.exception.NoSuchEntryException;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
+import com.liferay.layout.content.page.editor.web.internal.constants.ContentLayoutPortletKeys;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
-import com.liferay.layout.type.controller.content.internal.constants.ContentLayoutPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;

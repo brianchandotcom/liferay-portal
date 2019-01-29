@@ -1641,6 +1641,12 @@ definition {
 			roleTitle = "WC Author"
 		);
 
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW",
+			resourceName = "com.liferay.dynamic.data.mapping.model.DDMStructure-com.liferay.journal.model.JournalArticle",
+			roleTitle = "WC Author"
+		);
+
 		for (var resourceActionIndex : list "VIEW,PREFERENCES,PERMISSIONS,CONFIGURATION,ACCESS_IN_CONTROL_PANEL") {
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "${resourceActionIndex}",

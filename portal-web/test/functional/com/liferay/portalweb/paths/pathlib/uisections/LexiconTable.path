@@ -1,0 +1,39 @@
+<html>
+<head>
+<title>LexiconTable</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">LexiconTable</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>TABLE_ENTRY</td>
+	<td>//tr[@data-qa-id='row'][contains(.,'${key_tableEntry}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TABLE_ENTRY_CHECKBOX</td>
+	<td>//tr[@data-qa-id='row'][contains(.,'${key_tableEntry}')]//input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TABLE_ENTRY_TITLE</td>
+	<td>//tr[@data-qa-id='row'][contains(.,'${key_tableEntry}')]//td[contains(@class,'table-title')]//a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TABLE_ENTRY_TEXT</td>
+	<td>//tr[@data-qa-id='row'][contains(.,'${key_tableEntry}')]//td[contains(.,'${key_tableEntryText}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TABLE_ENTRY_ELLIPSIS</td>
+	<td>//tr[@data-qa-id='row'][contains(.,'${key_tableEntry}')]//button[@title='Actions']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

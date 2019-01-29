@@ -8532,15 +8532,22 @@ public class JournalArticleLocalServiceImpl
 				classNameLocalService.getClassNameId(JournalArticle.class),
 				article.getResourcePrimKey());
 
+		FriendlyURLEntry newFriendlyURLEntry =
+			friendlyURLEntryLocalService.addFriendlyURLEntry(
+				article.getGroupId(),
+				classNameLocalService.getClassNameId(JournalArticle.class),
+				article.getResourcePrimKey(), urlTitleMap, serviceContext);
+
 		for (FriendlyURLEntry friendlyURLEntry : friendlyURLEntries) {
+			if (newFriendlyURLEntry.getFriendlyURLEntryId() ==
+					friendlyURLEntry.getFriendlyURLEntryId()) {
+
+				continue;
+			}
+
 			friendlyURLEntryLocalService.deleteFriendlyURLEntry(
 				friendlyURLEntry);
 		}
-
-		friendlyURLEntryLocalService.addFriendlyURLEntry(
-			article.getGroupId(),
-			classNameLocalService.getClassNameId(JournalArticle.class),
-			article.getResourcePrimKey(), urlTitleMap, serviceContext);
 	}
 
 	protected void updatePreviousApprovedArticle(JournalArticle article)

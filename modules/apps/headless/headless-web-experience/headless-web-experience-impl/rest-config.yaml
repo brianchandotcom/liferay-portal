@@ -1,3 +1,7 @@
 apiDir: "../headless-web-experience-api/src/main/java"
 apiPackagePath: "com.liferay.headless.web.experience"
+application:
+    baseURI: "/headless-web-experience"
+    className: "HeadlessWebExperienceApplication"
+    name: "headless-web-experience-application"
 author: "Javier Gamarra"

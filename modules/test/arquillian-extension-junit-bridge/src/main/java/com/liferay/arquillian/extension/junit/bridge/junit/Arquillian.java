@@ -14,14 +14,13 @@
 
 package com.liferay.arquillian.extension.junit.bridge.junit;
 
-import com.liferay.arquillian.extension.junit.bridge.util.FrameworkMethodComparator;
-
 import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -117,8 +116,8 @@ public class Arquillian extends BlockJUnit4ClassRunner {
 				List<FrameworkMethod> frameworkMethods = new ArrayList<>(
 					super.getAnnotatedMethods(annotationClass));
 
-				Collections.sort(
-					frameworkMethods, FrameworkMethodComparator.INSTANCE);
+				frameworkMethods.sort(
+					Comparator.comparing(FrameworkMethod::getName));
 
 				return frameworkMethods;
 			}

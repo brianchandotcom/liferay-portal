@@ -14,13 +14,11 @@
 
 package com.liferay.arquillian.extension.junit.bridge.observer;
 
-import com.liferay.arquillian.extension.junit.bridge.util.FrameworkMethodComparator;
-
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.jboss.arquillian.core.api.annotation.Observes;
@@ -91,7 +89,7 @@ public class JUnitBridgeObserver {
 		frameworkMethods.removeAll(
 			junitTestClass.getAnnotatedMethods(Ignore.class));
 
-		Collections.sort(frameworkMethods, FrameworkMethodComparator.INSTANCE);
+		frameworkMethods.sort(Comparator.comparing(FrameworkMethod::getName));
 
 		FrameworkMethod firstFrameworkMethod = frameworkMethods.get(0);
 

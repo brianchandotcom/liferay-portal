@@ -20,7 +20,6 @@ import com.liferay.layout.constants.LayoutConstants;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorWebKeys;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
-import com.liferay.layout.type.controller.asset.display.internal.constants.AssetDisplayLayoutTypeControllerWebKeys;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.model.Layout;
@@ -95,8 +94,7 @@ public class AssetDisplayLayoutTypeController
 
 		if (layoutMode.equals(Constants.EDIT)) {
 			request.setAttribute(
-				AssetDisplayLayoutTypeControllerWebKeys.ITEM_SELECTOR,
-				_itemSelector);
+				ContentPageEditorWebKeys.ITEM_SELECTOR, _itemSelector);
 		}
 
 		String page = getViewPage();
@@ -135,8 +133,7 @@ public class AssetDisplayLayoutTypeController
 			}
 
 			request.setAttribute(
-				AssetDisplayLayoutTypeControllerWebKeys.
-					ASSET_DISPLAY_CONTRIBUTOR_TRACKER,
+				ContentPageEditorWebKeys.ASSET_DISPLAY_CONTRIBUTOR_TRACKER,
 				_assetDisplayContributorTracker);
 
 			addAttributes(request);

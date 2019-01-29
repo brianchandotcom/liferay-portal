@@ -19,8 +19,6 @@ package com.liferay.layout.content.page.editor.web.internal.constants;
  */
 public class ContentPageEditorWebKeys {
 
-	public static final String ITEM_SELECTOR = "ITEM_SELECTOR";
-
 	public static final String LIFERAY_SHARED_FRAGMENTS_EDITOR_DISPLAY_CONTEXT =
 		"LIFERAY_SHARED_FRAGMENTS_EDITOR_DISPLAY_CONTEXT";
 

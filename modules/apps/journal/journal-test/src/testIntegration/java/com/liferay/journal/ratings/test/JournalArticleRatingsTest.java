@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.PermissionCheckerTestRule;
 import com.liferay.portlet.ratings.test.BaseRatingsTestCase;
 
 import org.junit.ClassRule;
@@ -43,9 +42,7 @@ public class JournalArticleRatingsTest extends BaseRatingsTestCase {
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(),
-			PermissionCheckerTestRule.INSTANCE);
+		new LiferayIntegrationTestRule();
 
 	@Override
 	protected BaseModel<?> addBaseModel(

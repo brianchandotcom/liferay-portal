@@ -166,7 +166,6 @@
 
 		<!-- References -->
 
-		<reference entity="BlogsStatsUser" package-path="com.liferay.blogs" />
 		<reference entity="Company" package-path="com.liferay.portal" />
 		<reference entity="Group" package-path="com.liferay.portal" />
 		<reference entity="Image" package-path="com.liferay.portal" />

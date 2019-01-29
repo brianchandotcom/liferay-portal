@@ -19,6 +19,7 @@ import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.service.DLFolderLocalService;
+import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
@@ -88,7 +89,7 @@ public class ResourceImporter extends FileSystemImporter {
 		PortletPreferencesTranslator portletPreferencesTranslator,
 		Map<String, PortletPreferencesTranslator> portletPreferencesTranslators,
 		RepositoryLocalService repositoryLocalService, SAXReader saxReader,
-		ThemeLocalService themeLocalService) {
+		ThemeLocalService themeLocalService, DLURLHelper dlurlHelper) {
 
 		super(
 			assetTagLocalService, ddmFormJSONDeserializer,
@@ -101,7 +102,7 @@ public class ResourceImporter extends FileSystemImporter {
 			layoutSetPrototypeLocalService, mimeTypes, portal,
 			portletPreferencesFactory, portletPreferencesLocalService,
 			portletPreferencesTranslator, portletPreferencesTranslators,
-			repositoryLocalService, saxReader, themeLocalService);
+			repositoryLocalService, saxReader, themeLocalService, dlurlHelper);
 	}
 
 	@Override

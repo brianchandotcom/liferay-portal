@@ -14,30 +14,46 @@
 
 package com.liferay.portal.tools.rest.builder.internal.yaml.openapi;
 
-import java.util.Map;
-
 /**
  * @author Peter Shin
  */
-public class Components {
+public class Parameter {
 
-	public Map<String, Parameter> getParameters() {
-		return _parameters;
+	public String getIn() {
+		return _in;
 	}
 
-	public Map<String, Schema> getSchemas() {
-		return _schemas;
+	public String getName() {
+		return _name;
 	}
 
-	public void setParameters(Map<String, Parameter> parameters) {
-		_parameters = parameters;
+	public String getReference() {
+		return _reference;
 	}
 
-	public void setSchemas(Map<String, Schema> schemas) {
-		_schemas = schemas;
+	public Schema getSchema() {
+		return _schema;
 	}
 
-	private Map<String, Parameter> _parameters;
-	private Map<String, Schema> _schemas;
+	public void setIn(String in) {
+		_in = in;
+	}
+
+	public void setName(String name) {
+		_name = name;
+	}
+
+	public void setReference(String reference) {
+		_reference = reference;
+	}
+
+	public void setSchema(Schema schema) {
+		_schema = schema;
+	}
+
+	private String _in;
+	private String _name;
+	private String _reference;
+	private Schema _schema;
 
 }

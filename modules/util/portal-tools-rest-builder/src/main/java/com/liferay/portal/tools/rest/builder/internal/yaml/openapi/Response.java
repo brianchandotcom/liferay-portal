@@ -19,25 +19,25 @@ import java.util.Map;
 /**
  * @author Peter Shin
  */
-public class Components {
+public class Response {
 
-	public Map<String, Parameter> getParameters() {
-		return _parameters;
+	public Map<String, Content> getContent() {
+		return _content;
 	}
 
-	public Map<String, Schema> getSchemas() {
-		return _schemas;
+	public String getDescription() {
+		return _description;
 	}
 
-	public void setParameters(Map<String, Parameter> parameters) {
-		_parameters = parameters;
+	public void setContent(Map<String, Content> content) {
+		_content = content;
 	}
 
-	public void setSchemas(Map<String, Schema> schemas) {
-		_schemas = schemas;
+	public void setDescription(String description) {
+		_description = description;
 	}
 
-	private Map<String, Parameter> _parameters;
-	private Map<String, Schema> _schemas;
+	private Map<String, Content> _content;
+	private String _description;
 
 }

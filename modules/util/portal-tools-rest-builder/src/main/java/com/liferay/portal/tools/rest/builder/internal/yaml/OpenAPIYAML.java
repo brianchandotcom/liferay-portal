@@ -16,6 +16,9 @@ package com.liferay.portal.tools.rest.builder.internal.yaml;
 
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Components;
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Info;
+import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.PathItem;
+
+import java.util.Map;
 
 /**
  * @author Peter Shin
@@ -30,6 +33,10 @@ public class OpenAPIYAML {
 		return _info;
 	}
 
+	public Map<String, PathItem> getPathItems() {
+		return _pathItems;
+	}
+
 	public void setComponents(Components components) {
 		_components = components;
 	}
@@ -38,7 +45,12 @@ public class OpenAPIYAML {
 		_info = info;
 	}
 
+	public void setPathItems(Map<String, PathItem> pathItems) {
+		_pathItems = pathItems;
+	}
+
 	private Components _components;
 	private Info _info;
+	private Map<String, PathItem> _pathItems;
 
 }

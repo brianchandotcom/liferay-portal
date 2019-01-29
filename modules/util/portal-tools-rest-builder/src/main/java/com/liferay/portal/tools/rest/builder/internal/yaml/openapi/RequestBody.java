@@ -19,25 +19,16 @@ import java.util.Map;
 /**
  * @author Peter Shin
  */
-public class Components {
+public class RequestBody {
 
-	public Map<String, Parameter> getParameters() {
-		return _parameters;
+	public Map<String, Content> getContent() {
+		return _content;
 	}
 
-	public Map<String, Schema> getSchemas() {
-		return _schemas;
+	public void setContent(Map<String, Content> content) {
+		_content = content;
 	}
 
-	public void setParameters(Map<String, Parameter> parameters) {
-		_parameters = parameters;
-	}
-
-	public void setSchemas(Map<String, Schema> schemas) {
-		_schemas = schemas;
-	}
-
-	private Map<String, Parameter> _parameters;
-	private Map<String, Schema> _schemas;
+	private Map<String, Content> _content;
 
 }

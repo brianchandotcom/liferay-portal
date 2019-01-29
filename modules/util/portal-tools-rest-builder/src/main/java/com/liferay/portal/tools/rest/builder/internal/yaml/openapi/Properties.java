@@ -19,25 +19,43 @@ import java.util.Map;
 /**
  * @author Peter Shin
  */
-public class Components {
+public class Properties {
 
-	public Map<String, Parameter> getParameters() {
-		return _parameters;
+	public String getDescription() {
+		return _description;
 	}
 
-	public Map<String, Schema> getSchemas() {
-		return _schemas;
+	public String getFormat() {
+		return _format;
 	}
 
-	public void setParameters(Map<String, Parameter> parameters) {
-		_parameters = parameters;
+	public Map<String, Properties> getProperties() {
+		return _properties;
 	}
 
-	public void setSchemas(Map<String, Schema> schemas) {
-		_schemas = schemas;
+	public String getType() {
+		return _type;
 	}
 
-	private Map<String, Parameter> _parameters;
-	private Map<String, Schema> _schemas;
+	public void setDescription(String description) {
+		_description = description;
+	}
+
+	public void setFormat(String format) {
+		_format = format;
+	}
+
+	public void setProperties(Map<String, Properties> properties) {
+		_properties = properties;
+	}
+
+	public void setType(String type) {
+		_type = type;
+	}
+
+	private String _description;
+	private String _format;
+	private Map<String, Properties> _properties;
+	private String _type;
 
 }

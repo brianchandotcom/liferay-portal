@@ -16,6 +16,10 @@ package com.liferay.portal.tools.rest.builder.internal.yaml.util;
 
 import com.liferay.portal.tools.rest.builder.internal.yaml.ConfigYAML;
 import com.liferay.portal.tools.rest.builder.internal.yaml.OpenAPIYAML;
+import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Items;
+import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Parameter;
+import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.PathItem;
+import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Schema;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -23,6 +27,10 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import org.yaml.snakeyaml.TypeDescription;
 import org.yaml.snakeyaml.Yaml;
@@ -84,7 +92,51 @@ public class YAMLUtil {
 	}
 
 	public static OpenAPIYAML loadOpenAPIYAML(String fileName) {
-		return load(OpenAPIYAML.class, fileName);
+		List<TypeDescription> typeDescriptions = new ArrayList<>();
+
+		// Items
+
+		TypeDescription typeDescription = new TypeDescription(Items.class);
+
+		typeDescription.substituteProperty(
+			"$ref", String.class, "getReference", "setReference");
+
+		typeDescriptions.add(typeDescription);
+
+		// Open API YAML
+
+		typeDescription = new TypeDescription(OpenAPIYAML.class);
+
+		typeDescription.substituteProperty(
+			"paths", Map.class, "getPathItems", "setPathItems");
+
+		typeDescription.addPropertyParameters(
+			"paths", String.class, PathItem.class);
+
+		typeDescriptions.add(typeDescription);
+
+		// Parameter
+
+		typeDescription = new TypeDescription(Parameter.class);
+
+		typeDescription.substituteProperty(
+			"$ref", String.class, "getReference", "setReference");
+
+		typeDescriptions.add(typeDescription);
+
+		// Schema
+
+		typeDescription = new TypeDescription(Schema.class);
+
+		typeDescription.substituteProperty(
+			"$ref", String.class, "getReference", "setReference");
+
+		typeDescriptions.add(typeDescription);
+
+		TypeDescription[] typeDescriptionsArray = typeDescriptions.toArray(
+			new TypeDescription[typeDescriptions.size()]);
+
+		return load(OpenAPIYAML.class, fileName, typeDescriptionsArray);
 	}
 
 }

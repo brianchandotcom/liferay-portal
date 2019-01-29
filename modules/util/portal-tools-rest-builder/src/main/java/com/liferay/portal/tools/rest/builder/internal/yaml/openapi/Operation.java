@@ -14,30 +14,49 @@
 
 package com.liferay.portal.tools.rest.builder.internal.yaml.openapi;
 
+import java.util.List;
 import java.util.Map;
 
 /**
  * @author Peter Shin
  */
-public class Components {
+public class Operation {
 
-	public Map<String, Parameter> getParameters() {
+	public String getOperationId() {
+		return _operationId;
+	}
+
+	public List<Parameter> getParameters() {
 		return _parameters;
 	}
 
-	public Map<String, Schema> getSchemas() {
-		return _schemas;
+	public RequestBody getRequestBody() {
+		return _requestBody;
 	}
 
-	public void setParameters(Map<String, Parameter> parameters) {
+	public Map<String, Response> getResponses() {
+		return _responses;
+	}
+
+	public void setOperationId(String operationId) {
+		_operationId = operationId;
+	}
+
+	public void setParameters(List<Parameter> parameters) {
 		_parameters = parameters;
 	}
 
-	public void setSchemas(Map<String, Schema> schemas) {
-		_schemas = schemas;
+	public void setRequestBody(RequestBody requestBody) {
+		_requestBody = requestBody;
 	}
 
-	private Map<String, Parameter> _parameters;
-	private Map<String, Schema> _schemas;
+	public void setResponses(Map<String, Response> responses) {
+		_responses = responses;
+	}
+
+	private String _operationId;
+	private List<Parameter> _parameters;
+	private RequestBody _requestBody;
+	private Map<String, Response> _responses;
 
 }

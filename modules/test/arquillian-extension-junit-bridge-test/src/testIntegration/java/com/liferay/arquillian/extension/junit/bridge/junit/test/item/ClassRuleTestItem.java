@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.arquillian.extension.junit.bridge.junit.test.dependencies;
+package com.liferay.arquillian.extension.junit.bridge.junit.test.item;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;

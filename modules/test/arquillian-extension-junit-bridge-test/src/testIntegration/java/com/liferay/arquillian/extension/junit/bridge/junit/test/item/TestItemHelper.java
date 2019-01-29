@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.arquillian.extension.junit.bridge.junit.test.dependencies;
+package com.liferay.arquillian.extension.junit.bridge.junit.test.item;
 
 import java.io.BufferedWriter;
 import java.io.IOException;

@@ -14,8 +14,8 @@
 
 package com.liferay.arquillian.extension.junit.bridge.junit.test;
 
-import com.liferay.arquillian.extension.junit.bridge.junit.test.dependencies.BeforeAfterClassTestItem;
-import com.liferay.arquillian.extension.junit.bridge.junit.test.dependencies.ClassRuleTestItem;
+import com.liferay.arquillian.extension.junit.bridge.junit.test.item.BeforeAfterClassTestItem;
+import com.liferay.arquillian.extension.junit.bridge.junit.test.item.ClassRuleTestItem;
 import com.liferay.portal.kernel.test.junit.BridgeJUnitTestRunner;
 
 import java.io.IOException;

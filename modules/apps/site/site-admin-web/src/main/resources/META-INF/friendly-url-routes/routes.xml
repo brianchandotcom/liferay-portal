@@ -33,6 +33,16 @@
 		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
 	</route>
 	<route>
+		<pattern>/sites/{parentGroupId:\d+}/select_site</pattern>
+		<implicit-parameter name="mvcPath">/select_site_initializer.jsp</implicit-parameter>
+		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
+	</route>
+	<route>
+		<pattern>/sites/select_site</pattern>
+		<implicit-parameter name="mvcPath">/select_site_initializer.jsp</implicit-parameter>
+		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
+	</route>
+	<route>
 		<pattern>/site/{groupId:\d+}</pattern>
 		<implicit-parameter name="mvcPath">/view.jsp</implicit-parameter>
 		<implicit-parameter name="p_p_state">maximized</implicit-parameter>

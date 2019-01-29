@@ -89,6 +89,8 @@ public class SchedulerEventMessageListenerWrapper
 								" milliseconds before retry",
 						ie);
 				}
+
+				return;
 			}
 		}
 

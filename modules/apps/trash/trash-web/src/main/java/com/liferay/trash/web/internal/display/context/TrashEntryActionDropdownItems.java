@@ -25,9 +25,11 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.trash.TrashRenderer;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.trash.model.TrashEntry;
+import com.liferay.trash.service.TrashEntryLocalServiceUtil;
 
 import java.util.List;
 
@@ -70,7 +72,7 @@ public class TrashEntryActionDropdownItems {
 		};
 	}
 
-	private DropdownItem _getDeleteAction() {
+	private DropdownItem _getDeleteAction() throws PortalException {
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)_liferayPortletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
@@ -84,16 +86,12 @@ public class TrashEntryActionDropdownItems {
 		};
 	}
 
-	private String _getDeleteURL() {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_liferayPortletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
+	private String _getDeleteURL() throws PortalException {
 		if (_trashEntry.getRootEntry() == null) {
 			PortletURL deleteURL = _liferayPortletResponse.createActionURL();
 
 			deleteURL.setParameter(ActionRequest.ACTION_NAME, "deleteEntries");
-			deleteURL.setParameter("redirect", themeDisplay.getURLCurrent());
+			deleteURL.setParameter("redirect", _getRedirectURL());
 			deleteURL.setParameter(
 				"trashEntryId", String.valueOf(_trashEntry.getEntryId()));
 
@@ -103,12 +101,48 @@ public class TrashEntryActionDropdownItems {
 		PortletURL deleteURL = _liferayPortletResponse.createActionURL();
 
 		deleteURL.setParameter(ActionRequest.ACTION_NAME, "deleteEntries");
-		deleteURL.setParameter("redirect", themeDisplay.getURLCurrent());
+		deleteURL.setParameter("redirect", _getRedirectURL());
 		deleteURL.setParameter("className", _trashRenderer.getClassName());
 		deleteURL.setParameter(
 			"classPK", String.valueOf(_trashRenderer.getClassPK()));
 
 		return deleteURL.toString();
+	}
+
+	private String _getRedirectURL() throws PortalException {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_liferayPortletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		String redirect = themeDisplay.getURLCurrent();
+
+		long trashEntryId = ParamUtil.getLong(
+			_liferayPortletRequest, "trashEntryId");
+
+		if (trashEntryId > 0) {
+			TrashEntry trashEntry = TrashEntryLocalServiceUtil.getTrashEntry(
+				trashEntryId);
+
+			TrashEntry rootTrashEntry = trashEntry.getRootEntry();
+
+			PortletURL redirectURL = _liferayPortletResponse.createRenderURL();
+
+			if (rootTrashEntry != null) {
+				redirectURL.setParameter("mvcPath", "/view_content.jsp");
+				redirectURL.setParameter(
+					"classNameId",
+					String.valueOf(rootTrashEntry.getClassNameId()));
+				redirectURL.setParameter(
+					"classPK", String.valueOf(rootTrashEntry.getClassPK()));
+			}
+			else {
+				redirectURL.setParameter("mvcPath", "/view.jsp");
+			}
+
+			redirect = redirectURL.toString();
+		}
+
+		return redirect;
 	}
 
 	private DropdownItem _getRestoreAction() throws Exception {
@@ -128,16 +162,12 @@ public class TrashEntryActionDropdownItems {
 	}
 
 	private String _getRestoreURL() throws Exception {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_liferayPortletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		if (_trashEntry.getRootEntry() == null) {
 			PortletURL restoreURL = _liferayPortletResponse.createActionURL();
 
 			restoreURL.setParameter(
 				ActionRequest.ACTION_NAME, "restoreEntries");
-			restoreURL.setParameter("redirect", themeDisplay.getURLCurrent());
+			restoreURL.setParameter("redirect", _getRedirectURL());
 			restoreURL.setParameter(
 				"trashEntryId", String.valueOf(_trashEntry.getEntryId()));
 
@@ -153,7 +183,7 @@ public class TrashEntryActionDropdownItems {
 			className);
 
 		moveURL.setParameter("mvcPath", "/view_container_model.jsp");
-		moveURL.setParameter("redirect", themeDisplay.getURLCurrent());
+		moveURL.setParameter("redirect", _getRedirectURL());
 		moveURL.setParameter(
 			"classNameId",
 			String.valueOf(PortalUtil.getClassNameId(className)));

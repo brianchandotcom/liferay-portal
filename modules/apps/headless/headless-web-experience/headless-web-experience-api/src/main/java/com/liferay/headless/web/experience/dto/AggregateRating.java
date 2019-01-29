@@ -25,4 +25,15 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Generated("")
 @XmlRootElement(name = "AggregateRating")
 public class AggregateRating {
+
+	public long getId() {
+		return _id;
+	}
+
+	public void setId(long id) {
+		_id = id;
+	}
+
+	private long _id;
+
 }

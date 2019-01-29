@@ -14,6 +14,7 @@
 
 package com.liferay.change.tracking.service.impl;
 
+import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.exception.DuplicateCTEntryException;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.service.base.CTEntryLocalServiceBaseImpl;
@@ -34,10 +35,10 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 	@Override
 	public CTEntry addCTEntry(
 			long userId, long classNameId, long classPK, long resourcePrimKey,
-			long ctCollectionId, ServiceContext serviceContext)
+			int changeType, long ctCollectionId, ServiceContext serviceContext)
 		throws PortalException {
 
-		_validate(classNameId, classPK, ctCollectionId);
+		_validate(classNameId, classPK, ctCollectionId, changeType);
 
 		long ctEntryId = counterLocalService.increment();
 
@@ -57,6 +58,7 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 		ctEntry.setClassNameId(classNameId);
 		ctEntry.setClassPK(classPK);
 		ctEntry.setResourcePrimKey(resourcePrimKey);
+		ctEntry.setChangeType(changeType);
 
 		ctEntry = ctEntryPersistence.update(ctEntry);
 
@@ -94,7 +96,8 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 		return ctEntryFinder.findByC_C_C(ctCollectionId, classNameId, classPK);
 	}
 
-	private void _validate(long classNameId, long classPK, long ctCollectionId)
+	private void _validate(
+			long classNameId, long classPK, long ctCollectionId, int changeType)
 		throws PortalException {
 
 		CTEntry ctEntry = ctEntryPersistence.fetchByC_C(classNameId, classPK);
@@ -104,6 +107,13 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 		}
 
 		ctCollectionLocalService.getCTCollection(ctCollectionId);
+
+		if ((changeType != CTConstants.CT_CHANGE_TYPE_ADDITION) &&
+			(changeType != CTConstants.CT_CHANGE_TYPE_DELETION) &&
+			(changeType != CTConstants.CT_CHANGE_TYPE_MODIFICATION)) {
+
+			throw new IllegalArgumentException("Change type value is invalid");
+		}
 	}
 
 }

@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -248,15 +249,22 @@ public class CTManagerImpl implements CTManager {
 	}
 
 	private long _getCompanyId(long userId) {
+		long companyId = 0;
+
 		User user = _userLocalService.fetchUser(userId);
 
 		if (user == null) {
-			_log.error("Unable to get user " + userId);
-
-			return 0L;
+			companyId = CompanyThreadLocal.getCompanyId();
+		}
+		else {
+			companyId = user.getCompanyId();
 		}
 
-		return user.getCompanyId();
+		if (companyId <= 0) {
+			_log.error("Unable to get user " + userId);
+		}
+
+		return companyId;
 	}
 
 	private CTEntry _getCTentry(

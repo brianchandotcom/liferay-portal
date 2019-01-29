@@ -15,6 +15,7 @@
 package com.liferay.arquillian.extension.junit.bridge.junit;
 
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
@@ -130,14 +131,18 @@ public class Arquillian extends BlockJUnit4ClassRunner {
 		Object testObject = null;
 
 		try {
-			testObject = createTest();
+			TestClass testClass = getTestClass();
+
+			Constructor<?> constructor = testClass.getOnlyConstructor();
+
+			testObject = constructor.newInstance();
 		}
-		catch (Exception e) {
-			if (e instanceof InvocationTargetException) {
-				return new Fail(e.getCause());
+		catch (ReflectiveOperationException roe) {
+			if (roe instanceof InvocationTargetException) {
+				return new Fail(roe.getCause());
 			}
 
-			return new Fail(e);
+			return new Fail(roe);
 		}
 
 		final Object test = testObject;

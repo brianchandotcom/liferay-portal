@@ -54,6 +54,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -123,11 +124,15 @@ public class LVEntryPersistenceTest {
 
 		newLVEntry.setMvccVersion(RandomTestUtil.nextLong());
 
+		newLVEntry.setUuid(RandomTestUtil.randomString());
+
 		newLVEntry.setHeadId(RandomTestUtil.nextLong());
 
 		newLVEntry.setDefaultLanguageId(RandomTestUtil.randomString());
 
 		newLVEntry.setGroupId(RandomTestUtil.nextLong());
+
+		newLVEntry.setUniqueGroupKey(RandomTestUtil.randomString());
 
 		_lvEntries.add(_persistence.update(newLVEntry));
 
@@ -135,6 +140,7 @@ public class LVEntryPersistenceTest {
 
 		Assert.assertEquals(existingLVEntry.getMvccVersion(),
 			newLVEntry.getMvccVersion());
+		Assert.assertEquals(existingLVEntry.getUuid(), newLVEntry.getUuid());
 		Assert.assertEquals(existingLVEntry.getHeadId(), newLVEntry.getHeadId());
 		Assert.assertEquals(existingLVEntry.getDefaultLanguageId(),
 			newLVEntry.getDefaultLanguageId());
@@ -142,6 +148,26 @@ public class LVEntryPersistenceTest {
 			newLVEntry.getLvEntryId());
 		Assert.assertEquals(existingLVEntry.getGroupId(),
 			newLVEntry.getGroupId());
+		Assert.assertEquals(existingLVEntry.getUniqueGroupKey(),
+			newLVEntry.getUniqueGroupKey());
+	}
+
+	@Test
+	public void testCountByUuid() throws Exception {
+		_persistence.countByUuid("");
+
+		_persistence.countByUuid("null");
+
+		_persistence.countByUuid((String)null);
+	}
+
+	@Test
+	public void testCountByUUID_G() throws Exception {
+		_persistence.countByUUID_G("", RandomTestUtil.nextLong());
+
+		_persistence.countByUUID_G("null", 0L);
+
+		_persistence.countByUUID_G((String)null, 0L);
 	}
 
 	@Test
@@ -154,6 +180,15 @@ public class LVEntryPersistenceTest {
 	@Test
 	public void testCountByGroupIdArrayable() throws Exception {
 		_persistence.countByGroupId(new long[] { RandomTestUtil.nextLong(), 0L });
+	}
+
+	@Test
+	public void testCountByG_UGK() throws Exception {
+		_persistence.countByG_UGK(RandomTestUtil.nextLong(), "");
+
+		_persistence.countByG_UGK(0L, "null");
+
+		_persistence.countByG_UGK(0L, (String)null);
 	}
 
 	@Test
@@ -187,8 +222,8 @@ public class LVEntryPersistenceTest {
 
 	protected OrderByComparator<LVEntry> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("LVEntry", "mvccVersion",
-			true, "headId", true, "defaultLanguageId", true, "lvEntryId", true,
-			"groupId", true);
+			true, "uuid", true, "headId", true, "defaultLanguageId", true,
+			"lvEntryId", true, "groupId", true, "uniqueGroupKey", true);
 	}
 
 	@Test
@@ -391,6 +426,20 @@ public class LVEntryPersistenceTest {
 
 		LVEntry existingLVEntry = _persistence.findByPrimaryKey(newLVEntry.getPrimaryKey());
 
+		Assert.assertTrue(Objects.equals(existingLVEntry.getUuid(),
+				ReflectionTestUtil.invoke(existingLVEntry, "getOriginalUuid",
+					new Class<?>[0])));
+		Assert.assertEquals(Long.valueOf(existingLVEntry.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingLVEntry,
+				"getOriginalGroupId", new Class<?>[0]));
+
+		Assert.assertEquals(Long.valueOf(existingLVEntry.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingLVEntry,
+				"getOriginalGroupId", new Class<?>[0]));
+		Assert.assertTrue(Objects.equals(existingLVEntry.getUniqueGroupKey(),
+				ReflectionTestUtil.invoke(existingLVEntry,
+					"getOriginalUniqueGroupKey", new Class<?>[0])));
+
 		Assert.assertEquals(Long.valueOf(existingLVEntry.getHeadId()),
 			ReflectionTestUtil.<Long>invoke(existingLVEntry,
 				"getOriginalHeadId", new Class<?>[0]));
@@ -403,11 +452,15 @@ public class LVEntryPersistenceTest {
 
 		lvEntry.setMvccVersion(RandomTestUtil.nextLong());
 
+		lvEntry.setUuid(RandomTestUtil.randomString());
+
 		lvEntry.setHeadId(RandomTestUtil.nextLong());
 
 		lvEntry.setDefaultLanguageId(RandomTestUtil.randomString());
 
 		lvEntry.setGroupId(RandomTestUtil.nextLong());
+
+		lvEntry.setUniqueGroupKey(RandomTestUtil.randomString());
 
 		_lvEntries.add(_persistence.update(lvEntry));
 

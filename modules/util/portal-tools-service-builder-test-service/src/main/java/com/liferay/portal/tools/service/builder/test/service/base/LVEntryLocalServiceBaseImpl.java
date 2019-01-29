@@ -241,6 +241,18 @@ public abstract class LVEntryLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
+	 * Returns the lv entry matching the UUID and group.
+	 *
+	 * @param uuid the lv entry's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching lv entry, or <code>null</code> if a matching lv entry could not be found
+	 */
+	@Override
+	public LVEntry fetchLVEntryByUuidAndGroupId(String uuid, long groupId) {
+		return lvEntryPersistence.fetchByUUID_G(uuid, groupId);
+	}
+
+	/**
 	 * Returns the lv entry with the primary key.
 	 *
 	 * @param lvEntryId the primary key of the lv entry
@@ -300,6 +312,20 @@ public abstract class LVEntryLocalServiceBaseImpl extends BaseLocalServiceImpl
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 		return lvEntryPersistence.findByPrimaryKey(primaryKeyObj);
+	}
+
+	/**
+	 * Returns the lv entry matching the UUID and group.
+	 *
+	 * @param uuid the lv entry's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching lv entry
+	 * @throws PortalException if a matching lv entry could not be found
+	 */
+	@Override
+	public LVEntry getLVEntryByUuidAndGroupId(String uuid, long groupId)
+		throws PortalException {
+		return lvEntryPersistence.findByUUID_G(uuid, groupId);
 	}
 
 	/**
@@ -904,9 +930,11 @@ public abstract class LVEntryLocalServiceBaseImpl extends BaseLocalServiceImpl
 		throws PortalException {
 		LVEntry draftLVEntry = create();
 
+		draftLVEntry.setUuid(publishedLVEntry.getUuid());
 		draftLVEntry.setHeadId(publishedLVEntry.getPrimaryKey());
 		draftLVEntry.setDefaultLanguageId(publishedLVEntry.getDefaultLanguageId());
 		draftLVEntry.setGroupId(publishedLVEntry.getGroupId());
+		draftLVEntry.setUniqueGroupKey(publishedLVEntry.getUniqueGroupKey());
 
 		draftLVEntry.resetOriginalValues();
 

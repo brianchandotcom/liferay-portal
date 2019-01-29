@@ -19,10 +19,12 @@
 	</model>
 	<model name="com.liferay.portal.tools.service.builder.test.model.LVEntry">
 		<field name="mvccVersion" type="long" />
+		<field name="uuid" type="String" />
 		<field name="headId" type="long" />
 		<field name="defaultLanguageId" type="String" />
 		<field name="lvEntryId" type="long" />
 		<field name="groupId" type="long" />
+		<field name="uniqueGroupKey" type="String" />
 	</model>
 	<model name="com.liferay.portal.tools.service.builder.test.model.LVEntryLocalization">
 		<field name="mvccVersion" type="long" />
@@ -45,9 +47,11 @@
 	<model name="com.liferay.portal.tools.service.builder.test.model.LVEntryVersion">
 		<field name="lvEntryVersionId" type="long" />
 		<field name="version" type="int" />
+		<field name="uuid" type="String" />
 		<field name="defaultLanguageId" type="String" />
 		<field name="lvEntryId" type="long" />
 		<field name="groupId" type="long" />
+		<field name="uniqueGroupKey" type="String" />
 	</model>
 	<model name="com.liferay.portal.tools.service.builder.test.model.UADPartialEntry">
 		<field name="uadPartialEntryId" type="long" />

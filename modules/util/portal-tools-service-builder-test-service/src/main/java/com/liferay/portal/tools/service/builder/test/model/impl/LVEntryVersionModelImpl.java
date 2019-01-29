@@ -70,21 +70,25 @@ public class LVEntryVersionModelImpl extends BaseModelImpl<LVEntryVersion>
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "lvEntryVersionId", Types.BIGINT },
 			{ "version", Types.INTEGER },
+			{ "uuid_", Types.VARCHAR },
 			{ "defaultLanguageId", Types.VARCHAR },
 			{ "lvEntryId", Types.BIGINT },
-			{ "groupId", Types.BIGINT }
+			{ "groupId", Types.BIGINT },
+			{ "uniqueGroupKey", Types.VARCHAR }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("lvEntryVersionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("version", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("defaultLanguageId", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("lvEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("uniqueGroupKey", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table LVEntryVersion (lvEntryVersionId LONG not null primary key,version INTEGER,defaultLanguageId VARCHAR(75) null,lvEntryId LONG,groupId LONG)";
+	public static final String TABLE_SQL_CREATE = "create table LVEntryVersion (lvEntryVersionId LONG not null primary key,version INTEGER,uuid_ VARCHAR(75) null,defaultLanguageId VARCHAR(75) null,lvEntryId LONG,groupId LONG,uniqueGroupKey VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table LVEntryVersion";
 	public static final String ORDER_BY_JPQL = " ORDER BY lvEntryVersion.version DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY LVEntryVersion.version DESC";
@@ -102,7 +106,9 @@ public class LVEntryVersionModelImpl extends BaseModelImpl<LVEntryVersion>
 			true);
 	public static final long GROUPID_COLUMN_BITMASK = 1L;
 	public static final long LVENTRYID_COLUMN_BITMASK = 2L;
-	public static final long VERSION_COLUMN_BITMASK = 4L;
+	public static final long UNIQUEGROUPKEY_COLUMN_BITMASK = 4L;
+	public static final long UUID_COLUMN_BITMASK = 8L;
+	public static final long VERSION_COLUMN_BITMASK = 16L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.tools.service.builder.test.service.util.ServiceProps.get(
 				"lock.expiration.time.com.liferay.portal.tools.service.builder.test.model.LVEntryVersion"));
 
@@ -233,6 +239,26 @@ public class LVEntryVersionModelImpl extends BaseModelImpl<LVEntryVersion>
 
 			});
 		attributeGetterFunctions.put(
+			"uuid",
+			new Function<LVEntryVersion, Object>() {
+
+				@Override
+				public Object apply(LVEntryVersion lvEntryVersion) {
+					return lvEntryVersion.getUuid();
+				}
+
+			});
+		attributeSetterBiConsumers.put(
+			"uuid",
+			new BiConsumer<LVEntryVersion, Object>() {
+
+				@Override
+				public void accept(LVEntryVersion lvEntryVersion, Object uuid) {
+					lvEntryVersion.setUuid((String)uuid);
+				}
+
+			});
+		attributeGetterFunctions.put(
 			"defaultLanguageId",
 			new Function<LVEntryVersion, Object>() {
 
@@ -292,6 +318,26 @@ public class LVEntryVersionModelImpl extends BaseModelImpl<LVEntryVersion>
 				}
 
 			});
+		attributeGetterFunctions.put(
+			"uniqueGroupKey",
+			new Function<LVEntryVersion, Object>() {
+
+				@Override
+				public Object apply(LVEntryVersion lvEntryVersion) {
+					return lvEntryVersion.getUniqueGroupKey();
+				}
+
+			});
+		attributeSetterBiConsumers.put(
+			"uniqueGroupKey",
+			new BiConsumer<LVEntryVersion, Object>() {
+
+				@Override
+				public void accept(LVEntryVersion lvEntryVersion, Object uniqueGroupKey) {
+					lvEntryVersion.setUniqueGroupKey((String)uniqueGroupKey);
+				}
+
+			});
 
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
@@ -305,8 +351,10 @@ public class LVEntryVersionModelImpl extends BaseModelImpl<LVEntryVersion>
 
 	@Override
 	public void populateVersionedModel(LVEntry lvEntry) {
+		lvEntry.setUuid(getUuid());
 		lvEntry.setDefaultLanguageId(getDefaultLanguageId());
 		lvEntry.setGroupId(getGroupId());
+		lvEntry.setUniqueGroupKey(getUniqueGroupKey());
 	}
 
 	@Override
@@ -356,6 +404,31 @@ public class LVEntryVersionModelImpl extends BaseModelImpl<LVEntryVersion>
 
 	public int getOriginalVersion() {
 		return _originalVersion;
+	}
+
+	@Override
+	public String getUuid() {
+		if (_uuid == null) {
+			return "";
+		}
+		else {
+			return _uuid;
+		}
+	}
+
+	@Override
+	public void setUuid(String uuid) {
+		_columnBitmask |= UUID_COLUMN_BITMASK;
+
+		if (_originalUuid == null) {
+			_originalUuid = _uuid;
+		}
+
+		_uuid = uuid;
+	}
+
+	public String getOriginalUuid() {
+		return GetterUtil.getString(_originalUuid);
 	}
 
 	@Override
@@ -417,6 +490,31 @@ public class LVEntryVersionModelImpl extends BaseModelImpl<LVEntryVersion>
 		return _originalGroupId;
 	}
 
+	@Override
+	public String getUniqueGroupKey() {
+		if (_uniqueGroupKey == null) {
+			return "";
+		}
+		else {
+			return _uniqueGroupKey;
+		}
+	}
+
+	@Override
+	public void setUniqueGroupKey(String uniqueGroupKey) {
+		_columnBitmask |= UNIQUEGROUPKEY_COLUMN_BITMASK;
+
+		if (_originalUniqueGroupKey == null) {
+			_originalUniqueGroupKey = _uniqueGroupKey;
+		}
+
+		_uniqueGroupKey = uniqueGroupKey;
+	}
+
+	public String getOriginalUniqueGroupKey() {
+		return GetterUtil.getString(_originalUniqueGroupKey);
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -450,9 +548,11 @@ public class LVEntryVersionModelImpl extends BaseModelImpl<LVEntryVersion>
 
 		lvEntryVersionImpl.setLvEntryVersionId(getLvEntryVersionId());
 		lvEntryVersionImpl.setVersion(getVersion());
+		lvEntryVersionImpl.setUuid(getUuid());
 		lvEntryVersionImpl.setDefaultLanguageId(getDefaultLanguageId());
 		lvEntryVersionImpl.setLvEntryId(getLvEntryId());
 		lvEntryVersionImpl.setGroupId(getGroupId());
+		lvEntryVersionImpl.setUniqueGroupKey(getUniqueGroupKey());
 
 		lvEntryVersionImpl.resetOriginalValues();
 
@@ -527,6 +627,8 @@ public class LVEntryVersionModelImpl extends BaseModelImpl<LVEntryVersion>
 
 		lvEntryVersionModelImpl._setOriginalVersion = false;
 
+		lvEntryVersionModelImpl._originalUuid = lvEntryVersionModelImpl._uuid;
+
 		lvEntryVersionModelImpl._originalLvEntryId = lvEntryVersionModelImpl._lvEntryId;
 
 		lvEntryVersionModelImpl._setOriginalLvEntryId = false;
@@ -534,6 +636,8 @@ public class LVEntryVersionModelImpl extends BaseModelImpl<LVEntryVersion>
 		lvEntryVersionModelImpl._originalGroupId = lvEntryVersionModelImpl._groupId;
 
 		lvEntryVersionModelImpl._setOriginalGroupId = false;
+
+		lvEntryVersionModelImpl._originalUniqueGroupKey = lvEntryVersionModelImpl._uniqueGroupKey;
 
 		lvEntryVersionModelImpl._columnBitmask = 0;
 	}
@@ -546,6 +650,14 @@ public class LVEntryVersionModelImpl extends BaseModelImpl<LVEntryVersion>
 
 		lvEntryVersionCacheModel.version = getVersion();
 
+		lvEntryVersionCacheModel.uuid = getUuid();
+
+		String uuid = lvEntryVersionCacheModel.uuid;
+
+		if ((uuid != null) && (uuid.length() == 0)) {
+			lvEntryVersionCacheModel.uuid = null;
+		}
+
 		lvEntryVersionCacheModel.defaultLanguageId = getDefaultLanguageId();
 
 		String defaultLanguageId = lvEntryVersionCacheModel.defaultLanguageId;
@@ -557,6 +669,14 @@ public class LVEntryVersionModelImpl extends BaseModelImpl<LVEntryVersion>
 		lvEntryVersionCacheModel.lvEntryId = getLvEntryId();
 
 		lvEntryVersionCacheModel.groupId = getGroupId();
+
+		lvEntryVersionCacheModel.uniqueGroupKey = getUniqueGroupKey();
+
+		String uniqueGroupKey = lvEntryVersionCacheModel.uniqueGroupKey;
+
+		if ((uniqueGroupKey != null) && (uniqueGroupKey.length() == 0)) {
+			lvEntryVersionCacheModel.uniqueGroupKey = null;
+		}
 
 		return lvEntryVersionCacheModel;
 	}
@@ -631,6 +751,9 @@ public class LVEntryVersionModelImpl extends BaseModelImpl<LVEntryVersion>
 					"getPrimaryKey"),
 				LVEntryVersion.class.getMethod("getVersionedModelId"));
 
+			_versionedModelMethodsMap.put(LVEntry.class.getMethod("getUuid"),
+				LVEntryVersion.class.getMethod("getUuid"));
+
 			_versionedModelMethodsMap.put(LVEntry.class.getMethod(
 					"getDefaultLanguageId"),
 				LVEntryVersion.class.getMethod("getDefaultLanguageId"));
@@ -641,6 +764,10 @@ public class LVEntryVersionModelImpl extends BaseModelImpl<LVEntryVersion>
 
 			_versionedModelMethodsMap.put(LVEntry.class.getMethod("getGroupId"),
 				LVEntryVersion.class.getMethod("getGroupId"));
+
+			_versionedModelMethodsMap.put(LVEntry.class.getMethod(
+					"getUniqueGroupKey"),
+				LVEntryVersion.class.getMethod("getUniqueGroupKey"));
 		}
 		catch (ReflectiveOperationException roe) {
 			throw new ExceptionInInitializerError(roe);
@@ -652,6 +779,8 @@ public class LVEntryVersionModelImpl extends BaseModelImpl<LVEntryVersion>
 	private int _version;
 	private int _originalVersion;
 	private boolean _setOriginalVersion;
+	private String _uuid;
+	private String _originalUuid;
 	private String _defaultLanguageId;
 	private long _lvEntryId;
 	private long _originalLvEntryId;
@@ -659,6 +788,8 @@ public class LVEntryVersionModelImpl extends BaseModelImpl<LVEntryVersion>
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
+	private String _uniqueGroupKey;
+	private String _originalUniqueGroupKey;
 	private long _columnBitmask;
 	private LVEntryVersion _escapedModel;
 }

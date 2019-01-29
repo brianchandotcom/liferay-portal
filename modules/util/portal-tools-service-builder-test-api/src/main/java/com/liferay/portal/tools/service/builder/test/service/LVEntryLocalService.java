@@ -210,6 +210,16 @@ public interface LVEntryLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public LVEntry fetchLVEntry(long lvEntryId);
 
+	/**
+	* Returns the lv entry matching the UUID and group.
+	*
+	* @param uuid the lv entry's UUID
+	* @param groupId the primary key of the group
+	* @return the matching lv entry, or <code>null</code> if a matching lv entry could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public LVEntry fetchLVEntryByUuidAndGroupId(String uuid, long groupId);
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public LVEntryLocalization fetchLVEntryLocalization(long lvEntryId,
 		String languageId);
@@ -271,6 +281,18 @@ public interface LVEntryLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public LVEntry getLVEntry(long lvEntryId) throws PortalException;
+
+	/**
+	* Returns the lv entry matching the UUID and group.
+	*
+	* @param uuid the lv entry's UUID
+	* @param groupId the primary key of the group
+	* @return the matching lv entry
+	* @throws PortalException if a matching lv entry could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public LVEntry getLVEntryByUuidAndGroupId(String uuid, long groupId)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public LVEntryLocalization getLVEntryLocalization(long lvEntryId,

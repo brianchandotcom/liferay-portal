@@ -57,10 +57,12 @@ public class LVEntryWrapper implements LVEntry, ModelWrapper<LVEntry> {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("mvccVersion", getMvccVersion());
+		attributes.put("uuid", getUuid());
 		attributes.put("headId", getHeadId());
 		attributes.put("defaultLanguageId", getDefaultLanguageId());
 		attributes.put("lvEntryId", getLvEntryId());
 		attributes.put("groupId", getGroupId());
+		attributes.put("uniqueGroupKey", getUniqueGroupKey());
 
 		return attributes;
 	}
@@ -71,6 +73,12 @@ public class LVEntryWrapper implements LVEntry, ModelWrapper<LVEntry> {
 
 		if (mvccVersion != null) {
 			setMvccVersion(mvccVersion);
+		}
+
+		String uuid = (String)attributes.get("uuid");
+
+		if (uuid != null) {
+			setUuid(uuid);
 		}
 
 		Long headId = (Long)attributes.get("headId");
@@ -95,6 +103,12 @@ public class LVEntryWrapper implements LVEntry, ModelWrapper<LVEntry> {
 
 		if (groupId != null) {
 			setGroupId(groupId);
+		}
+
+		String uniqueGroupKey = (String)attributes.get("uniqueGroupKey");
+
+		if (uniqueGroupKey != null) {
+			setUniqueGroupKey(uniqueGroupKey);
 		}
 	}
 
@@ -233,6 +247,26 @@ public class LVEntryWrapper implements LVEntry, ModelWrapper<LVEntry> {
 		return _lvEntry.getTitleMapAsXML();
 	}
 
+	/**
+	* Returns the unique group key of this lv entry.
+	*
+	* @return the unique group key of this lv entry
+	*/
+	@Override
+	public String getUniqueGroupKey() {
+		return _lvEntry.getUniqueGroupKey();
+	}
+
+	/**
+	* Returns the uuid of this lv entry.
+	*
+	* @return the uuid of this lv entry
+	*/
+	@Override
+	public String getUuid() {
+		return _lvEntry.getUuid();
+	}
+
 	@Override
 	public int hashCode() {
 		return _lvEntry.hashCode();
@@ -347,6 +381,26 @@ public class LVEntryWrapper implements LVEntry, ModelWrapper<LVEntry> {
 	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		_lvEntry.setPrimaryKeyObj(primaryKeyObj);
+	}
+
+	/**
+	* Sets the unique group key of this lv entry.
+	*
+	* @param uniqueGroupKey the unique group key of this lv entry
+	*/
+	@Override
+	public void setUniqueGroupKey(String uniqueGroupKey) {
+		_lvEntry.setUniqueGroupKey(uniqueGroupKey);
+	}
+
+	/**
+	* Sets the uuid of this lv entry.
+	*
+	* @param uuid the uuid of this lv entry
+	*/
+	@Override
+	public void setUuid(String uuid) {
+		_lvEntry.setUuid(uuid);
 	}
 
 	@Override

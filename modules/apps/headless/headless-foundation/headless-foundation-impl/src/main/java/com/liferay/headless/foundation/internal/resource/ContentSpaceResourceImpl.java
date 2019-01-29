@@ -17,13 +17,19 @@ package com.liferay.headless.foundation.internal.resource;
 import com.liferay.headless.foundation.dto.ContentSpace;
 import com.liferay.headless.foundation.dto.ContentSpaceCollection;
 import com.liferay.headless.foundation.resource.ContentSpaceResource;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.comparator.GroupIdComparator;
 import com.liferay.portal.vulcan.context.Pagination;
 
-import java.util.Collections;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.annotation.Generated;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
 import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
 
@@ -46,7 +52,25 @@ public class ContentSpaceResourceImpl implements ContentSpaceResource {
 			Pagination pagination, String size)
 		throws Exception {
 
-		return new ContentSpaceCollection(Collections.emptyList(), 0);
+		List<Group> groups = _groupLocalService.getActiveGroups(
+			PortalUtil.getDefaultCompanyId(), true, true, pagination.getStartPosition(),
+			pagination.getEndPosition(), new GroupIdComparator(true));
+
+		ArrayList<ContentSpace> contentSpaces = new ArrayList<>();
+
+		for (Group group : groups) {
+			ContentSpace contentSpace = new ContentSpace();
+			contentSpace.setId(group.getGroupId());
+			contentSpaces.add(contentSpace);
+		}
+
+		int totalCount = _groupLocalService.getActiveGroupsCount(
+			PortalUtil.getDefaultCompanyId(), true, true);
+
+		return new ContentSpaceCollection(contentSpaces, totalCount);
 	}
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 }

@@ -89,42 +89,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.analytics.data.binding.impl.jar!jackson-annotations.jar</file-name>
-				<version>2.9.8</version>
-				<project-name>Jackson-annotations</project-name>
-				<project-url>http://github.com/FasterXML/jackson</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.analytics.data.binding.impl.jar!jackson-core.jar</file-name>
-				<version>2.9.8</version>
-				<project-name>Jackson-core</project-name>
-				<project-url>https://github.com/FasterXML/jackson-core</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.analytics.data.binding.impl.jar!jackson-databind.jar</file-name>
-				<version>2.9.8</version>
-				<project-name>jackson-databind</project-name>
-				<project-url>http://github.com/FasterXML/jackson</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>com.liferay.apio.architect.impl.jar!cdi-api.jar</file-name>
 				<version>2.0</version>
 				<project-name>CDI APIs</project-name>
@@ -182,42 +146,6 @@
 				<version>1.3.4</version>
 				<project-name>GeAnTyRef</project-name>
 				<project-url>https://github.com/leangen/geantyref</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.apio.architect.impl.jar!jackson-annotations.jar</file-name>
-				<version>2.9.6</version>
-				<project-name>Jackson-annotations</project-name>
-				<project-url>http://github.com/FasterXML/jackson</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.apio.architect.impl.jar!jackson-core.jar</file-name>
-				<version>2.9.6</version>
-				<project-name>Jackson-core</project-name>
-				<project-url>https://github.com/FasterXML/jackson-core</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.apio.architect.impl.jar!jackson-databind.jar</file-name>
-				<version>2.9.6</version>
-				<project-name>jackson-databind</project-name>
-				<project-url>http://github.com/FasterXML/jackson</project-url>
 				<licenses>
 					<license>
 						<license-name>The Apache Software License, Version 2.0</license-name>
@@ -298,42 +226,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.bulk.rest.jar!jackson-annotations.jar</file-name>
-				<version>2.8.3</version>
-				<project-name>Jackson-annotations</project-name>
-				<project-url>http://github.com/FasterXML/jackson</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.bulk.rest.jar!jackson-core.jar</file-name>
-				<version>2.8.3</version>
-				<project-name>Jackson-core</project-name>
-				<project-url>https://github.com/FasterXML/jackson-core</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.bulk.rest.jar!jackson-databind.jar</file-name>
-				<version>2.8.3</version>
-				<project-name>jackson-databind</project-name>
-				<project-url>http://github.com/FasterXML/jackson</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>com.liferay.calendar.api.jar!com.google.ical.jar</file-name>
 				<version>20110304</version>
 				<project-name>com.google.ical</project-name>
@@ -376,42 +268,6 @@
 				<file-name>com.liferay.captcha.api.jar!nl.captcha.simplecaptcha.jar</file-name>
 				<version>1.1.1</version>
 				<project-name>com.liferay:nl.captcha.simplecaptcha</project-name>
-			</library>
-			<library>
-				<file-name>com.liferay.change.tracking.rest.jar!jackson-annotations.jar</file-name>
-				<version>2.9.7</version>
-				<project-name>Jackson-annotations</project-name>
-				<project-url>http://github.com/FasterXML/jackson</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.change.tracking.rest.jar!jackson-core.jar</file-name>
-				<version>2.9.7</version>
-				<project-name>Jackson-core</project-name>
-				<project-url>https://github.com/FasterXML/jackson-core</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.change.tracking.rest.jar!jackson-databind.jar</file-name>
-				<version>2.9.7</version>
-				<project-name>jackson-databind</project-name>
-				<project-url>http://github.com/FasterXML/jackson</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
 			</library>
 			<library>
 				<file-name>com.liferay.comment.sanitizer.jar!guava.jar</file-name>
@@ -470,42 +326,6 @@
 					<license>
 						<license-name>MIT</license-name>
 						<license-url>https://github.com/graphql-java/graphql-java/blob/master/LICENSE.md</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.data.engine.web.jar!jackson-annotations.jar</file-name>
-				<version>2.8.4</version>
-				<project-name>Jackson-annotations</project-name>
-				<project-url>http://github.com/FasterXML/jackson</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.data.engine.web.jar!jackson-core.jar</file-name>
-				<version>2.8.4</version>
-				<project-name>Jackson-core</project-name>
-				<project-url>https://github.com/FasterXML/jackson-core</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.data.engine.web.jar!jackson-databind.jar</file-name>
-				<version>2.8.4</version>
-				<project-name>jackson-databind</project-name>
-				<project-url>http://github.com/FasterXML/jackson</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -789,18 +609,6 @@
 				<version>25.1-jre</version>
 				<project-name>Guava: Google Core Libraries for Java</project-name>
 				<project-url>https://github.com/google/guava/</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.document.library.opener.google.drive.web.jar!jackson-core.jar</file-name>
-				<version>2.1.3</version>
-				<project-name>Jackson-core</project-name>
-				<project-url>http://wiki.fasterxml.com/JacksonHome</project-url>
 				<licenses>
 					<license>
 						<license-name>The Apache Software License, Version 2.0</license-name>
@@ -2014,18 +1822,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.portal.odata.impl.jar!jackson-databind.jar</file-name>
-				<version>2.9.8</version>
-				<project-name>jackson-databind</project-name>
-				<project-url>http://github.com/FasterXML/jackson</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>com.liferay.portal.odata.impl.jar!odata-commons-api.jar</file-name>
 				<version>4.4.0</version>
 				<project-name>odata-commons-api</project-name>
@@ -2088,10 +1884,10 @@
 				<file-name>com.liferay.portal.osgi.web.servlet.jsp.compiler.jar!javax.servlet.jsp.jar</file-name>
 				<version>2.3.3-b02.LIFERAY-PATCHED-8</version>
 				<project-name>JSP implementation</project-name>
-				<project-url>http://glassfish.org</project-url>
+				<project-url>http://jsp.java.net</project-url>
 				<licenses>
 					<license>
-						<license-name>http://glassfish.dev.java.net/nonav/public/CDDL+GPL.html</license-name>
+						<license-name>CDDL + GPLv2 with classpath exception</license-name>
 						<license-url>http://glassfish.dev.java.net/nonav/public/CDDL+GPL.html</license-url>
 					</license>
 				</licenses>
@@ -2112,10 +1908,10 @@
 				<file-name>com.liferay.portal.osgi.web.wab.extender.jar!javax.servlet.jsp.jar</file-name>
 				<version>2.3.3-b02.LIFERAY-PATCHED-8</version>
 				<project-name>JSP implementation</project-name>
-				<project-url>http://glassfish.org</project-url>
+				<project-url>http://jsp.java.net</project-url>
 				<licenses>
 					<license>
-						<license-name>http://glassfish.dev.java.net/nonav/public/CDDL+GPL.html</license-name>
+						<license-name>CDDL + GPLv2 with classpath exception</license-name>
 						<license-url>http://glassfish.dev.java.net/nonav/public/CDDL+GPL.html</license-url>
 					</license>
 				</licenses>
@@ -2530,20 +2326,8 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.portal.search.elasticsearch6.impl.jar!jackson-core.jar</file-name>
-				<version>2.8.10</version>
-				<project-name>Jackson-core</project-name>
-				<project-url>https://github.com/FasterXML/jackson-core</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>com.liferay.portal.search.elasticsearch6.impl.jar!jackson-dataformat-cbor.jar</file-name>
-				<version>2.8.10</version>
+				<version>2.9.8</version>
 				<project-name>Jackson dataformat: CBOR</project-name>
 				<project-url>http://github.com/FasterXML/jackson-dataformats-binary</project-url>
 				<licenses>
@@ -2555,7 +2339,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.search.elasticsearch6.impl.jar!jackson-dataformat-smile.jar</file-name>
-				<version>2.8.10</version>
+				<version>2.9.8</version>
 				<project-name>Jackson dataformat: Smile</project-name>
 				<project-url>http://github.com/FasterXML/jackson-dataformats-binary</project-url>
 				<licenses>
@@ -2567,9 +2351,9 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.search.elasticsearch6.impl.jar!jackson-dataformat-yaml.jar</file-name>
-				<version>2.8.10</version>
+				<version>2.9.8</version>
 				<project-name>Jackson-dataformat-YAML</project-name>
-				<project-url>https://github.com/FasterXML/jackson</project-url>
+				<project-url>https://github.com/FasterXML/jackson-dataformats-text</project-url>
 				<licenses>
 					<license>
 						<license-name>The Apache Software License, Version 2.0</license-name>
@@ -3195,18 +2979,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.portal.security.sso.google.impl.jar!jackson-core.jar</file-name>
-				<version>2.5.3</version>
-				<project-name>Jackson-core</project-name>
-				<project-url>https://github.com/FasterXML/jackson</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>com.liferay.portal.security.sso.ntlm.impl.jar!jcifs.jar</file-name>
 				<version>1.3.17</version>
 				<project-name>jCIFS</project-name>
@@ -3694,42 +3466,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.portal.store.s3.jar!jackson-annotations.jar</file-name>
-				<version>2.5.0</version>
-				<project-name>Jackson-annotations</project-name>
-				<project-url>http://github.com/FasterXML/jackson</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.portal.store.s3.jar!jackson-core.jar</file-name>
-				<version>2.5.3</version>
-				<project-name>Jackson-core</project-name>
-				<project-url>https://github.com/FasterXML/jackson</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.portal.store.s3.jar!jackson-databind.jar</file-name>
-				<version>2.5.3</version>
-				<project-name>jackson-databind</project-name>
-				<project-url>http://github.com/FasterXML/jackson</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>com.liferay.portal.store.s3.jar!jackson-dataformat-cbor.jar</file-name>
 				<version>2.8.1</version>
 				<project-name>Jackson dataformat: CBOR</project-name>
@@ -4031,42 +3767,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.push.notifications.sender.apple.jar!jackson-annotations.jar</file-name>
-				<version>2.1.4</version>
-				<project-name>Jackson-annotations</project-name>
-				<project-url>http://wiki.fasterxml.com/JacksonHome</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.push.notifications.sender.apple.jar!jackson-core.jar</file-name>
-				<version>2.1.4</version>
-				<project-name>Jackson-core</project-name>
-				<project-url>http://wiki.fasterxml.com/JacksonHome</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.push.notifications.sender.apple.jar!jackson-databind.jar</file-name>
-				<version>2.1.4</version>
-				<project-name>jackson-databind</project-name>
-				<project-url>http://wiki.fasterxml.com/JacksonHome</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>com.liferay.push.notifications.sender.firebase.jar!fcm-client.jar</file-name>
 				<version>0.3.0</version>
 				<project-name>Firebase Cloud Messaging Client</project-name>
@@ -4288,42 +3988,6 @@
 					<license>
 						<license-name>ICU License</license-name>
 						<license-url>http://source.icu-project.org/repos/icu/icu/trunk/license.html</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.segments.service.jar!jackson-annotations.jar</file-name>
-				<version>2.9.7</version>
-				<project-name>Jackson-annotations</project-name>
-				<project-url>http://github.com/FasterXML/jackson</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.segments.service.jar!jackson-core.jar</file-name>
-				<version>2.9.7</version>
-				<project-name>Jackson-core</project-name>
-				<project-url>https://github.com/FasterXML/jackson-core</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.segments.service.jar!jackson-databind.jar</file-name>
-				<version>2.9.7</version>
-				<project-name>jackson-databind</project-name>
-				<project-url>http://github.com/FasterXML/jackson</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -6513,6 +6177,18 @@
 				<comments>Removed org.json.* because it json-java.jar. See LPS-78517.</comments>
 			</library>
 			<library>
+				<file-name>lib/portal/jackson-annotations.jar</file-name>
+				<version>2.9.8</version>
+			</library>
+			<library>
+				<file-name>lib/portal/jackson-core.jar</file-name>
+				<version>2.9.8</version>
+			</library>
+			<library>
+				<file-name>lib/portal/jackson-databind.jar</file-name>
+				<version>2.9.8</version>
+			</library>
+			<library>
 				<file-name>lib/portal/jai_codec.jar</file-name>
 				<version>1.1.3</version>
 				<project-name>Java Advanced Imaging</project-name>
@@ -6962,23 +6638,6 @@
 					</license>
 				</licenses>
 				<comments>See the Ant target "build-json-java-jar" in portal-impl/build.xml.</comments>
-			</library>
-			<library>
-				<file-name>lib/portal/json-schema-validator.jar</file-name>
-				<version>2.2.3</version>
-				<project-name>json-schema-validator</project-name>
-				<project-url>https://github.com/fge/json-schema-validator</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-					<license>
-						<license-name>LGPL 3.0</license-name>
-						<license-url>https://www.gnu.org/licenses/lgpl-3.0</license-url>
-					</license>
-				</licenses>
-				<comments>Removed javax.mail.* because it conflicts with mail.jar.</comments>
 			</library>
 			<library>
 				<file-name>lib/portal/jsr107cache.jar</file-name>

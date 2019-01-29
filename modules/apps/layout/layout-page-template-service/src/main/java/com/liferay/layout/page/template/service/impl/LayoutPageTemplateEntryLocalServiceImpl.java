@@ -103,29 +103,10 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 			long previewFileEntryId, int status, ServiceContext serviceContext)
 		throws PortalException {
 
-		Layout layout = null;
-
-		if (type == LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE) {
-			layout = _addLayout(
-				userId, groupId, classNameId, classTypeId, name,
-				LayoutConstants.LAYOUT_TYPE_ASSET_DISPLAY, serviceContext);
-		}
-		else if (type == LayoutPageTemplateEntryTypeConstants.TYPE_BASIC) {
-			layout = _addLayout(
-				userId, groupId, classNameId, classTypeId, name,
-				LayoutConstants.LAYOUT_TYPE_CONTENT, serviceContext);
-		}
-
-		long plid = 0;
-
-		if (layout != null) {
-			plid = layout.getPlid();
-		}
-
 		return addLayoutPageTemplateEntry(
 			userId, groupId, layoutPageTemplateCollectionId, classNameId,
-			classTypeId, name, type, defaultTemplate, 0, 0, plid, status,
-			new ServiceContext());
+			classTypeId, name, type, defaultTemplate, 0, 0, 0, status,
+			serviceContext);
 	}
 
 	@Override

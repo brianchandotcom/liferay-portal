@@ -6,20 +6,31 @@ definition {
 		);
 	}
 
+	macro clickCardTitle {
+		Click(
+			locator1 = "LexiconCard#CARD_TITLE",
+			key_card = "${card}"
+		);
+	}
+
+	macro clickEllipsisItem {
+		Click(
+			locator1 = "LexiconCard#CARD_ELLIPSIS",
+			key_card = "${card}"
+		);
+
+		MenuItem.clickNoError(
+			menuItem = "${item}"
+		);
+	}
+
 	macro delete {
-		LexiconCard.gotoEllipsisItem(
+		LexiconCard.clickEllipsisItem(
 			card = "${card}",
 			item = "Delete"
 		);
 
 		Confirm();
-	}
-
-	macro gotoCard {
-		Click(
-			locator1 = "LexiconCard#CARD_TITLE",
-			key_card = "${card}"
-		);
 	}
 
 	macro viewCardLabel {

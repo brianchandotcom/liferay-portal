@@ -65,14 +65,13 @@ definition {
 	}
 
 	macro gotoFragment {
-		Click(
-			locator1 = "LexiconCard#CARD_TITLE",
-			key_card = "${fragmentName}"
+		LexiconCard.clickCardTitle(
+			card = "${fragmentName}"
 		);
 	}
 
 	macro gotoFragmentEllipsisItem {
-		LexiconCard.gotoEllipsisItem(
+		LexiconCard.clickEllipsisItem(
 			card = "${fragmentName}",
 			item = "${item}"
 		);

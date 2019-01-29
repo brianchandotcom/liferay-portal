@@ -15,7 +15,9 @@
 package com.liferay.change.tracking.rest.internal.resource;
 
 import com.liferay.change.tracking.CTEngineManager;
+import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.model.CTCollection;
+import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.rest.internal.exception.NoSuchProductionCTCollectionException;
 import com.liferay.change.tracking.rest.internal.model.collection.CTCollectionModel;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -24,6 +26,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -125,7 +128,29 @@ public class CTCollectionResource {
 			return CTCollectionModel.EMPTY_CT_COLLECTION_MODEL;
 		}
 
-		return CTCollectionModel.forCTCollection(ctCollection);
+		List<CTEntry> ctEntries = _ctEngineManager.getCTEntries(
+			ctCollection.getCtCollectionId());
+
+		Stream<CTEntry> ctEntryStream = ctEntries.stream();
+
+		Map<Integer, Long> ctEntriesChangeTypes = ctEntryStream.collect(
+			Collectors.groupingBy(
+				CTEntry::getChangeType, Collectors.counting()));
+
+		CTCollectionModel.Builder builder = CTCollectionModel.forCTCollection(
+			ctCollection);
+
+		builder.setAdditionCount(
+			ctEntriesChangeTypes.getOrDefault(
+				CTConstants.CT_CHANGE_TYPE_ADDITION, 0L));
+		builder.setDeletionCount(
+			ctEntriesChangeTypes.getOrDefault(
+				CTConstants.CT_CHANGE_TYPE_DELETION, 0L));
+		builder.setModificationCount(
+			ctEntriesChangeTypes.getOrDefault(
+				CTConstants.CT_CHANGE_TYPE_MODIFICATION, 0L));
+
+		return builder.build();
 	}
 
 	private static final String _TYPE_ACTIVE = "active";

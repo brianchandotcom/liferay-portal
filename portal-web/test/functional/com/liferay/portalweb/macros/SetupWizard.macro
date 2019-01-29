@@ -306,4 +306,87 @@ definition {
 			);
 		}
 	}
+
+	macro viewPopulatedSampleData {
+		AssertConsoleTextPresent(value1 = "Finished adding data");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Search"
+		);
+
+		SearchAdministration.executeSearchActions(
+			actionsDescription = "Reindex all search indexes."
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		Pagination.viewResults(results = "Showing 1 to 20 of 101 entries.");
+
+		User.viewCP(
+			userEmailAddress = "default.dlc.1@liferay.com",
+			userFirstName = "Test",
+			userLastName = "DLC 1",
+			userScreenName = "default.dlc.1"
+		);
+
+		Navigator.gotoBack();
+
+		UsersAndOrganizationsNavigator.gotoOrganizations();
+
+		Organization.viewCP(orgName = "Liferay, Inc.", orgType = "Organization");
+
+		Navigator.gotoBack();
+
+		Organization.gotoCP(orgName = "Liferay, Inc.", searchToken = "Liferay, Inc.");
+
+		User.searchCP(searchTerm = "Test DLC 1");
+
+		Organization.viewAssignMemberCP(
+			userName = "Test DLC 1"
+		);
+
+		Search.searchCP(searchTerm = "LiferayChicago");
+
+		var key_suborgName = "LiferayChicago";
+
+		AssertTextEquals(
+			locator1 = "UsersAndOrganizationsOrganization#SUBORGANIZATION_TABLE_NAME",
+			value1 = "LiferayChicago"
+		);
+
+		AssertTextEquals(
+			locator1 = "UsersAndOrganizationsOrganization#SUBORGANIZATION_TABLE_TYPE",
+			value1 = "Organization"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Sites#SITE_TABLE_NAME",
+			value1 = "Liferay, Inc.",
+			key_siteName = "Liferay, Inc."
+		);
+	}
+
+	macro viewSampleDataEnabledInPropertiesFile {
+		var liferayHome = PropsUtil.get("liferay.home.dir.name");
+		var fileContent = FileUtil.read("${liferayHome}/portal-setup-wizard.properties");
+
+		if (contains("${fileContent}", "setup.wizard.add.sample.data=on")) {
+			echo("The Sample Data property was saved successfully in portal-setup-wizard.properties!");
+		}
+		else {
+			fail("Fail to save the Sample Data property in portal-setup-wizard.properties.");
+		}
+	}
 }

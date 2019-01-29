@@ -14,6 +14,7 @@
 
 package com.liferay.bulk.selection;
 
+import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.io.Serializable;
@@ -38,5 +39,7 @@ public interface BulkSelection<T> {
 	public Serializable serialize();
 
 	public Stream<T> stream() throws PortalException;
+
+	public BulkSelection<AssetEntry> toAssetEntryBulkSelection();
 
 }

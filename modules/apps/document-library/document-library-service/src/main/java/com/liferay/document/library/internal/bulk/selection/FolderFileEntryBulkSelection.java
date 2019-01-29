@@ -14,6 +14,8 @@
 
 package com.liferay.document.library.internal.bulk.selection;
 
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.bulk.selection.BulkSelection;
 import com.liferay.bulk.selection.BulkSelectionFactory;
 import com.liferay.document.library.kernel.service.DLAppService;
@@ -40,12 +42,13 @@ import java.util.stream.StreamSupport;
 /**
  * @author Adolfo Pérez
  */
-public class FolderFileEntryBulkSelection implements BulkSelection {
+public class FolderFileEntryBulkSelection implements BulkSelection<FileEntry> {
 
 	public FolderFileEntryBulkSelection(
 		long repositoryId, long folderId, Map<String, String[]> parameterMap,
 		ResourceBundleLoader resourceBundleLoader, Language language,
-		RepositoryProvider repositoryProvider, DLAppService dlAppService) {
+		RepositoryProvider repositoryProvider, DLAppService dlAppService,
+		AssetEntryLocalService assetEntryLocalService) {
 
 		_repositoryId = repositoryId;
 		_folderId = folderId;
@@ -54,6 +57,7 @@ public class FolderFileEntryBulkSelection implements BulkSelection {
 		_language = language;
 		_repositoryProvider = repositoryProvider;
 		_dlAppService = dlAppService;
+		_assetEntryLocalService = assetEntryLocalService;
 	}
 
 	@Override
@@ -167,6 +171,13 @@ public class FolderFileEntryBulkSelection implements BulkSelection {
 			false);
 	}
 
+	@Override
+	public BulkSelection<AssetEntry> toAssetEntryBulkSelection() {
+		return new FileEntryAssetEntryBulkSelection(
+			this, _assetEntryLocalService);
+	}
+
+	private final AssetEntryLocalService _assetEntryLocalService;
 	private final DLAppService _dlAppService;
 	private final long _folderId;
 	private final Language _language;

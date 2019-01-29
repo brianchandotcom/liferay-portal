@@ -61,7 +61,9 @@ definition {
 				var siteTemplateName = "${siteType} Site";
 			}
 
-			LexiconEntry.gotoEntry(rowEntry = "${siteTemplateName}");
+			LexiconCard.clickCard(
+				card = "${siteTemplateName}"
+			);
 
 			PortletEntry.inputName(name = "${siteName}");
 
@@ -1158,9 +1160,17 @@ definition {
 			);
 		}
 
-		AssertTextEquals(locator1 = "Sites#SITE_TABLE_ACTIVE", value1 = "Yes");
+		AssertTextEquals(
+			locator1 = "LexiconTable#TABLE_ENTRY_TEXT",
+			value1 = "Yes",
+			key_tableEntry = "${siteName}",
+			key_tableEntryText = "Yes"
+		);
 
-		AssertElementPresent(locator1 = "Sites#SITE_TABLE_ACTIONS");
+		AssertVisible(
+			locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS",
+			key_tableEntry = "${siteName}"
+		);
 	}
 
 	macro viewCurrentLanguagesCP {

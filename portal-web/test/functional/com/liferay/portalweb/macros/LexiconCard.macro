@@ -21,8 +21,8 @@ definition {
 			key_card = "${card}"
 		);
 
-		Button.click(
-			button = "${item}"
+		MenuItem.clickNoError(
+			menuItem = "${item}"
 		);
 	}
 

@@ -115,11 +115,13 @@ public interface CTManager {
 	 * @param  classNameId the primary key of the changed version model's class
 	 * @param  classPK the primary key of the changed version model
 	 * @param  resourcePrimKey the primary key of the changed resource model
+	 * @param  changeType the type of the model change
 	 * @return the change tracking entry representing the registered model
 	 *         change
 	 */
 	public Optional<CTEntry> registerModelChange(
-			long userId, long classNameId, long classPK, long resourcePrimKey)
+			long userId, long classNameId, long classPK, long resourcePrimKey,
+			int changeType)
 		throws CTException;
 
 	/**

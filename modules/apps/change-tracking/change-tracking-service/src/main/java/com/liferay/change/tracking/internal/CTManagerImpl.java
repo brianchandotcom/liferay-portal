@@ -185,7 +185,8 @@ public class CTManagerImpl implements CTManager {
 
 	@Override
 	public Optional<CTEntry> registerModelChange(
-			long userId, long classNameId, long classPK, long resourcePrimKey)
+			long userId, long classNameId, long classPK, long resourcePrimKey,
+			int changeType)
 		throws CTException {
 
 		long companyId = _getCompanyId(userId);
@@ -213,7 +214,7 @@ public class CTManagerImpl implements CTManager {
 		try {
 			return Optional.of(
 				_ctEntryLocalService.addCTEntry(
-					userId, classNameId, classPK, resourcePrimKey,
+					userId, classNameId, classPK, resourcePrimKey, changeType,
 					ctCollection.getCtCollectionId(), new ServiceContext()));
 		}
 		catch (DuplicateCTEntryException dctee) {

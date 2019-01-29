@@ -26,13 +26,14 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "ContentSpace")
 public class ContentSpace {
 
-	public ContentSpace(Long id) {
-		_id = id;
-	}
-
-	public Long getId() {
+	public long getId() {
 		return _id;
 	}
 
-	private Long _id;
+	public void setId(long id) {
+		_id = id;
+	}
+
+	private long _id;
+
 }

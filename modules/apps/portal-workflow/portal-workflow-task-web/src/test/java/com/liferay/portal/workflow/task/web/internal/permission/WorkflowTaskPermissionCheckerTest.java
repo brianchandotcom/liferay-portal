@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceWrapper;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -78,106 +77,91 @@ public class WorkflowTaskPermissionCheckerTest extends PowerMockito {
 		PermissionChecker permissionChecker =
 			mockContentReviewerPermissionChecker(RandomTestUtil.randomLong());
 
-		WorkflowTask workflowTask = mockWorkflowTask(
-			User.class.getName(), permissionChecker.getUserId());
-
 		Assert.assertTrue(
 			_workflowTaskPermissionChecker.hasPermission(
-				RandomTestUtil.randomLong(), workflowTask, permissionChecker));
+				RandomTestUtil.randomLong(),
+				mockWorkflowTask(
+					User.class.getName(), permissionChecker.getUserId()),
+				permissionChecker));
 	}
 
 	@Test
 	public void testContentReviewerRoleHasPermission() {
 		long[] permissionCheckerRoleIds = randomPermissionCheckerRoleIds();
 
-		WorkflowTask workflowTask = mockWorkflowTask(
-			Role.class.getName(), permissionCheckerRoleIds[0]);
-
-		PermissionChecker permissionChecker =
-			mockContentReviewerPermissionChecker(
-				RandomTestUtil.randomLong(), permissionCheckerRoleIds);
-
 		Assert.assertTrue(
 			_workflowTaskPermissionChecker.hasPermission(
-				RandomTestUtil.randomLong(), workflowTask, permissionChecker));
+				RandomTestUtil.randomLong(),
+				mockWorkflowTask(
+					Role.class.getName(), permissionCheckerRoleIds[0]),
+				mockContentReviewerPermissionChecker(
+					RandomTestUtil.randomLong(), permissionCheckerRoleIds)));
 	}
 
 	@Test
 	public void testContentReviewerRoleWithAssetViewPermissionHasPermission()
 		throws PortalException {
 
-		long[] permissionCheckerRoleIds = randomPermissionCheckerRoleIds();
-
-		WorkflowTask workflowTask = mockWorkflowTask(
-			Role.class.getName(), permissionCheckerRoleIds[0]);
-
-		PermissionChecker permissionChecker = mockPermissionChecker(
-			RandomTestUtil.randomLong(), permissionCheckerRoleIds, false, false,
-			false);
-
 		mockAssetRendererHasViewPermission(true);
+
+		long[] permissionCheckerRoleIds = randomPermissionCheckerRoleIds();
 
 		Assert.assertTrue(
 			_workflowTaskPermissionChecker.hasPermission(
-				RandomTestUtil.randomLong(), workflowTask, permissionChecker));
+				RandomTestUtil.randomLong(),
+				mockWorkflowTask(
+					Role.class.getName(), permissionCheckerRoleIds[0]),
+				mockPermissionChecker(
+					RandomTestUtil.randomLong(), permissionCheckerRoleIds,
+					false, false, false)));
 	}
 
 	@Test
 	public void testNotAssigneeHasNoPermission() {
 		long assigneeUserId = RandomTestUtil.randomLong();
 
-		WorkflowTask workflowTask = mockWorkflowTask(
-			User.class.getName(), assigneeUserId);
-
-		long permissionCheckerUserId = RandomTestUtil.randomLong();
-
-		PermissionChecker permissionChecker =
-			mockContentReviewerPermissionChecker(permissionCheckerUserId);
-
 		Assert.assertFalse(
 			_workflowTaskPermissionChecker.hasPermission(
-				assigneeUserId, workflowTask, permissionChecker));
+				assigneeUserId,
+				mockWorkflowTask(User.class.getName(), assigneeUserId),
+				mockContentReviewerPermissionChecker(
+					RandomTestUtil.randomLong())));
 	}
 
 	@Test
 	public void testNotAssigneeRoleHasNoPermission() {
 		long assigneeRoleId = RandomTestUtil.randomLong();
 
-		WorkflowTask workflowTask = mockWorkflowTask(
-			Role.class.getName(), assigneeRoleId);
-
-		PermissionChecker permissionChecker =
-			mockContentReviewerPermissionChecker(RandomTestUtil.randomLong());
-
 		Assert.assertFalse(
 			_workflowTaskPermissionChecker.hasPermission(
-				assigneeRoleId, workflowTask, permissionChecker));
+				assigneeRoleId,
+				mockWorkflowTask(Role.class.getName(), assigneeRoleId),
+				mockContentReviewerPermissionChecker(
+					RandomTestUtil.randomLong())));
 	}
 
 	@Test
 	public void testNotContentReviewerHasNoPermission() {
-		PermissionChecker permissionChecker = mockPermissionChecker(
-			RandomTestUtil.randomLong(), new long[0], false, false, false);
-
 		Assert.assertFalse(
 			_workflowTaskPermissionChecker.hasPermission(
 				RandomTestUtil.randomLong(), mockWorkflowTask(),
-				permissionChecker));
+				mockPermissionChecker(
+					RandomTestUtil.randomLong(), new long[0], false, false,
+					false)));
 	}
 
 	@Test
 	public void testNotContentReviewerWithAssetViewPermissionHasNoPermission()
 		throws PortalException {
 
-		PermissionChecker permissionChecker = mockPermissionChecker(
-			RandomTestUtil.randomLong(), new long[0], false, false, false);
-
 		mockAssetRendererHasViewPermission(true);
 
 		Assert.assertFalse(
 			_workflowTaskPermissionChecker.hasPermission(
 				RandomTestUtil.randomLong(), mockWorkflowTask(),
-				permissionChecker));
+				mockPermissionChecker(
+					RandomTestUtil.randomLong(), new long[0], false, false,
+					false)));
 	}
 
 	@Test
@@ -186,15 +170,14 @@ public class WorkflowTaskPermissionCheckerTest extends PowerMockito {
 
 		// Checks permission on completed workflow task
 
-		PermissionChecker permissionChecker = mockPermissionChecker(
-			RandomTestUtil.randomLong(), new long[0], false, false, false);
-
 		mockAssetRendererHasViewPermission(true);
 
 		Assert.assertTrue(
 			_workflowTaskPermissionChecker.hasPermission(
 				RandomTestUtil.randomLong(), mockCompletedWorkflowTask(),
-				permissionChecker));
+				mockPermissionChecker(
+					RandomTestUtil.randomLong(), new long[0], false, false,
+					false)));
 	}
 
 	@Test
@@ -203,18 +186,16 @@ public class WorkflowTaskPermissionCheckerTest extends PowerMockito {
 
 		long[] permissionCheckerRoleIds = randomPermissionCheckerRoleIds();
 
-		WorkflowTask workflowTask = mockWorkflowTask(
-			Role.class.getName(), permissionCheckerRoleIds[0]);
-
-		PermissionChecker permissionChecker = mockPermissionChecker(
-			RandomTestUtil.randomLong(), permissionCheckerRoleIds, false, false,
-			false);
-
 		mockAssetRendererHasViewPermission(false);
 
 		Assert.assertFalse(
 			_workflowTaskPermissionChecker.hasPermission(
-				RandomTestUtil.randomLong(), workflowTask, permissionChecker));
+				RandomTestUtil.randomLong(),
+				mockWorkflowTask(
+					Role.class.getName(), permissionCheckerRoleIds[0]),
+				mockPermissionChecker(
+					RandomTestUtil.randomLong(), permissionCheckerRoleIds,
+					false, false, false)));
 	}
 
 	@Test
@@ -223,15 +204,14 @@ public class WorkflowTaskPermissionCheckerTest extends PowerMockito {
 
 		// Checks permission on completed workflow task
 
-		PermissionChecker permissionChecker = mockPermissionChecker(
-			RandomTestUtil.randomLong(), new long[0], false, false, false);
-
 		mockAssetRendererHasViewPermission(false);
 
 		Assert.assertFalse(
 			_workflowTaskPermissionChecker.hasPermission(
 				RandomTestUtil.randomLong(), mockCompletedWorkflowTask(),
-				permissionChecker));
+				mockPermissionChecker(
+					RandomTestUtil.randomLong(), new long[0], false, false,
+					false)));
 	}
 
 	@Test
@@ -413,20 +393,16 @@ public class WorkflowTaskPermissionCheckerTest extends PowerMockito {
 	}
 
 	protected void setUpGroupLocalServiceUtil() throws PortalException {
-		Group group = ProxyFactory.newDummyInstance(Group.class);
-
-		GroupLocalService groupLocalService =
+		ReflectionTestUtil.setFieldValue(
+			GroupLocalServiceUtil.class, "_service",
 			new GroupLocalServiceWrapper(null) {
 
 				@Override
 				public Group getGroup(long groupId) throws PortalException {
-					return group;
+					return ProxyFactory.newDummyInstance(Group.class);
 				}
 
-			};
-
-		ReflectionTestUtil.setFieldValue(
-			GroupLocalServiceUtil.class, "_service", groupLocalService);
+			});
 	}
 
 	protected void setUpWorkflowHandlerRegistryUtil() throws Exception {

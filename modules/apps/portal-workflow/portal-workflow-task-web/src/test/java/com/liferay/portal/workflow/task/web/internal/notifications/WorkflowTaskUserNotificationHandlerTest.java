@@ -100,68 +100,57 @@ public class WorkflowTaskUserNotificationHandlerTest extends PowerMockito {
 	public void testInvalidWorkflowTaskIdShouldReturnBlankBody()
 		throws Exception {
 
-		UserNotificationEvent userNotificationEvent = mockUserNotificationEvent(
-			_INVALID_WORKFLOW_TASK_ID);
-
 		Assert.assertEquals(
 			StringPool.BLANK,
 			_workflowTaskUserNotificationHandler.getBody(
-				userNotificationEvent, _serviceContext));
+				mockUserNotificationEvent(_INVALID_WORKFLOW_TASK_ID),
+				_serviceContext));
 	}
 
 	@Test
 	public void testInvalidWorkflowTaskIdShouldReturnLink() throws Exception {
-		UserNotificationEvent userNotificationEvent = mockUserNotificationEvent(
-			_VALID_ENTRY_CLASS_NAME, _INVALID_WORKFLOW_TASK_ID);
-
 		Assert.assertEquals(
 			_VALID_LINK,
 			_workflowTaskUserNotificationHandler.getLink(
-				userNotificationEvent, _serviceContext));
+				mockUserNotificationEvent(
+					_VALID_ENTRY_CLASS_NAME, _INVALID_WORKFLOW_TASK_ID),
+				_serviceContext));
 	}
 
 	@Test
 	public void testNullWorkflowTaskIdShouldReturnBlankLink() throws Exception {
-		UserNotificationEvent userNotificationEvent = mockUserNotificationEvent(
-			_VALID_ENTRY_CLASS_NAME, 0L);
-
 		Assert.assertEquals(
 			StringPool.BLANK,
 			_workflowTaskUserNotificationHandler.getLink(
-				userNotificationEvent, _serviceContext));
+				mockUserNotificationEvent(_VALID_ENTRY_CLASS_NAME, 0L),
+				_serviceContext));
 	}
 
 	@Test
 	public void testNullWorkflowTaskIdShouldReturnBody() throws Exception {
-		UserNotificationEvent userNotificationEvent = mockUserNotificationEvent(
-			0);
-
 		Assert.assertEquals(
 			_notificationMessage,
 			_workflowTaskUserNotificationHandler.getBody(
-				userNotificationEvent, _serviceContext));
+				mockUserNotificationEvent(0), _serviceContext));
 	}
 
 	@Test
 	public void testValidWorkflowTaskIdShouldReturnBody() throws Exception {
-		UserNotificationEvent userNotificationEvent = mockUserNotificationEvent(
-			_VALID_WORKFLOW_TASK_ID);
-
 		Assert.assertEquals(
 			_notificationMessage,
 			_workflowTaskUserNotificationHandler.getBody(
-				userNotificationEvent, _serviceContext));
+				mockUserNotificationEvent(_VALID_WORKFLOW_TASK_ID),
+				_serviceContext));
 	}
 
 	@Test
 	public void testValidWorkflowTaskIdShouldReturnLink() throws Exception {
-		UserNotificationEvent userNotificationEvent = mockUserNotificationEvent(
-			_VALID_ENTRY_CLASS_NAME, _VALID_WORKFLOW_TASK_ID);
-
 		Assert.assertEquals(
 			_VALID_LINK,
 			_workflowTaskUserNotificationHandler.getLink(
-				userNotificationEvent, _serviceContext));
+				mockUserNotificationEvent(
+					_VALID_ENTRY_CLASS_NAME, _VALID_WORKFLOW_TASK_ID),
+				_serviceContext));
 	}
 
 	protected UserNotificationEvent mockUserNotificationEvent(
@@ -198,7 +187,7 @@ public class WorkflowTaskUserNotificationHandlerTest extends PowerMockito {
 	}
 
 	protected WorkflowHandler mockWorkflowHandler() throws PortalException {
-		WorkflowHandler workflowHandler = new BaseWorkflowHandler() {
+		return new BaseWorkflowHandler() {
 
 			@Override
 			public String getClassName() {
@@ -230,8 +219,6 @@ public class WorkflowTaskUserNotificationHandlerTest extends PowerMockito {
 			}
 
 		};
-
-		return workflowHandler;
 	}
 
 	protected void setUpHtmlUtil() {
@@ -284,12 +271,10 @@ public class WorkflowTaskUserNotificationHandlerTest extends PowerMockito {
 	}
 
 	protected void setUpUserNotificationEventLocalService() throws Exception {
-		UserNotificationEventLocalService userNotificationEventLocalService =
-			ProxyFactory.newDummyInstance(UserNotificationEventLocalService.class);
-
 		_workflowTaskUserNotificationHandler.
 			setUserNotificationEventLocalService(
-				userNotificationEventLocalService);
+				ProxyFactory.newDummyInstance(
+					UserNotificationEventLocalService.class));
 	}
 
 	protected void setUpWorkflowHandlerRegistryUtil() throws Exception {
@@ -328,20 +313,18 @@ public class WorkflowTaskUserNotificationHandlerTest extends PowerMockito {
 			null
 		);
 
-		DefaultWorkflowTask workflowTask = new DefaultWorkflowTask() {
-
-			@Override
-			public Map<String, Serializable> getOptionalAttributes() {
-				return Collections.emptyMap();
-			}
-
-		};
-
 		when(
 			WorkflowTaskManagerUtil.fetchWorkflowTask(
 				Matchers.anyLong(), Matchers.eq(_VALID_WORKFLOW_TASK_ID))
 		).thenReturn(
-			workflowTask
+			new DefaultWorkflowTask() {
+
+				@Override
+				public Map<String, Serializable> getOptionalAttributes() {
+					return Collections.emptyMap();
+				}
+
+			}
 		);
 	}
 

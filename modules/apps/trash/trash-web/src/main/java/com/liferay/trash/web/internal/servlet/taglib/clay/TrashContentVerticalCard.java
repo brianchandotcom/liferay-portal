@@ -87,7 +87,7 @@ public class TrashContentVerticalCard implements VerticalCard {
 			return _trashRenderer.getIconCssClass();
 		}
 		catch (PortalException pe) {
-			_log.error("Unable to get trash renderer icon CSS class", pe);
+			_log.error("Unable to get trash renderer icon css class", pe);
 		}
 
 		return "magic";

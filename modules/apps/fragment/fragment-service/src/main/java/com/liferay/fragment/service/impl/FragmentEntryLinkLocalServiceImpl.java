@@ -14,7 +14,7 @@
 
 package com.liferay.fragment.service.impl;
 
-import com.liferay.document.library.kernel.util.DLUtil;
+import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
@@ -411,7 +411,7 @@ public class FragmentEntryLinkLocalServiceImpl
 			String fileEntryURL = StringPool.BLANK;
 
 			if (fileEntry != null) {
-				fileEntryURL = DLUtil.getPreviewURL(
+				fileEntryURL = _dlurlHelper.getPreviewURL(
 					fileEntry, fileEntry.getFileVersion(), null,
 					StringPool.BLANK, false, false);
 			}
@@ -424,6 +424,9 @@ public class FragmentEntryLinkLocalServiceImpl
 
 	private static final Pattern _pattern = Pattern.compile(
 		"\\[resources:(.+?)\\]");
+
+	@ServiceReference(type = DLURLHelper.class)
+	private DLURLHelper _dlurlHelper;
 
 	@ServiceReference(type = FragmentEntryProcessorRegistry.class)
 	private FragmentEntryProcessorRegistry _fragmentEntryProcessorRegistry;

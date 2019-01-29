@@ -17,7 +17,7 @@ package com.liferay.layout.content.page.editor.web.internal.constants;
 /**
  * @author Eudaldo Alonso
  */
-public class ContentLayoutPortletKeys {
+public class ContentPageEditorPortletKeys {
 
 	public static final String CONTENT_PAGE_EDITOR_PORTLET =
 		"com_liferay_layout_content_page_editor_web_internal_portlet_" +

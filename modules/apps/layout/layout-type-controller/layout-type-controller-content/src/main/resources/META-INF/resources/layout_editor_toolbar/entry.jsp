@@ -1,4 +1,5 @@
-<%--
+<%@ page
+		import="com.liferay.layout.content.page.editor.web.internal.constants.ContentPageEditorPortletKeys" %><%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -17,5 +18,5 @@
 <%@ include file="/layout_editor_toolbar/init.jsp" %>
 
 <liferay-portlet:runtime
-	portletName="<%= ContentLayoutPortletKeys.CONTENT_PAGE_TOOLBAR_PORTLET %>"
+	portletName="<%= ContentPageEditorPortletKeys.CONTENT_PAGE_TOOLBAR_PORTLET %>"
 />

@@ -22,7 +22,7 @@ taglib uri="http://liferay.com/tld/soy" prefix="soy" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.layout.content.page.editor.web.internal.constants.ContentLayoutPortletKeys" %><%@
+<%@ page import="com.liferay.layout.content.page.editor.web.internal.constants.ContentPageEditorPortletKeys" %><%@
 page import="com.liferay.layout.content.page.editor.web.internal.display.context.FragmentsEditorDisplayContext" %><%@
 page import="com.liferay.layout.type.controller.content.internal.constants.ContentLayoutTypeControllerWebKeys" %><%@
 page import="com.liferay.portal.kernel.json.JSONFactoryUtil" %><%@

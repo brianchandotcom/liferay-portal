@@ -14,7 +14,7 @@
 
 package com.liferay.layout.content.page.editor.web.internal.portlet;
 
-import com.liferay.layout.content.page.editor.web.internal.constants.ContentLayoutPortletKeys;
+import com.liferay.layout.content.page.editor.web.internal.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.display.context.FragmentsEditorDisplayContext;
 import com.liferay.layout.type.controller.content.internal.constants.ContentLayoutTypeControllerWebKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -49,7 +49,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.template-path=/META-INF/resources/",
 		"javax.portlet.init-param.view-template=/view.jsp",
-		"javax.portlet.name=" + ContentLayoutPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
+		"javax.portlet.name=" + ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
 		"javax.portlet.supports.mime-type=text/html"
 	},
 	service = Portlet.class

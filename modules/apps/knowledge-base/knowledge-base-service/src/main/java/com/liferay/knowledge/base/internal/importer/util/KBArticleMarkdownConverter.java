@@ -14,7 +14,7 @@
 
 package com.liferay.knowledge.base.internal.importer.util;
 
-import com.liferay.document.library.kernel.util.DLUtil;
+import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.knowledge.base.exception.KBArticleImportException;
 import com.liferay.knowledge.base.markdown.converter.MarkdownConverter;
 import com.liferay.knowledge.base.model.KBArticle;
@@ -44,7 +44,8 @@ import java.util.TreeSet;
 public class KBArticleMarkdownConverter {
 
 	public KBArticleMarkdownConverter(
-			String markdown, String fileEntryName, Map<String, String> metadata)
+			String markdown, String fileEntryName, Map<String, String> metadata,
+			DLURLHelper dlurlHelper)
 		throws KBArticleImportException {
 
 		MarkdownConverter markdownConverter =
@@ -93,6 +94,8 @@ public class KBArticleMarkdownConverter {
 		String baseSourceURL = metadata.get(_METADATA_BASE_SOURCE_URL);
 
 		_sourceURL = buildSourceURL(baseSourceURL, fileEntryName);
+
+		_dlurlHelper = dlurlHelper;
 	}
 
 	public String getSourceURL() {
@@ -179,7 +182,7 @@ public class KBArticleMarkdownConverter {
 				String imageSrc = StringPool.BLANK;
 
 				try {
-					imageSrc = DLUtil.getPreviewURL(
+					imageSrc = _dlurlHelper.getPreviewURL(
 						imageFileEntry, imageFileEntry.getFileVersion(), null,
 						StringPool.BLANK);
 				}
@@ -372,6 +375,7 @@ public class KBArticleMarkdownConverter {
 	private static final Log _log = LogFactoryUtil.getLog(
 		KBArticleMarkdownConverter.class);
 
+	private final DLURLHelper _dlurlHelper;
 	private final String _html;
 	private final String _sourceURL;
 	private final String _title;

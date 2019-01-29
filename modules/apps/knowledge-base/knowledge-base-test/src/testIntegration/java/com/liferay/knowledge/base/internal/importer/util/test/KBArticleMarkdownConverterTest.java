@@ -15,7 +15,9 @@
 package com.liferay.knowledge.base.internal.importer.util.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.lang.reflect.Constructor;
@@ -68,7 +70,7 @@ public class KBArticleMarkdownConverterTest {
 				"KBArticleMarkdownConverter");
 
 		_constructor = clazz.getConstructor(
-			String.class, String.class, Map.class);
+			String.class, String.class, Map.class, DLURLHelper.class);
 
 		_method = clazz.getMethod("getSourceURL");
 	}
@@ -85,7 +87,7 @@ public class KBArticleMarkdownConverterTest {
 		metadata.put("base.source.url", "http://baseURL");
 
 		Object object = _constructor.newInstance(
-			markdown, fileEntryName, metadata);
+			markdown, fileEntryName, metadata, _dlurlHelper);
 
 		Assert.assertEquals(
 			"http://baseURL/some/unix/file", _method.invoke(object));
@@ -103,7 +105,7 @@ public class KBArticleMarkdownConverterTest {
 		metadata.put("base.source.url", "http://baseURL");
 
 		Object object = _constructor.newInstance(
-			markdown, fileEntryName, metadata);
+			markdown, fileEntryName, metadata, _dlurlHelper);
 
 		Assert.assertEquals(
 			"http://baseURL/some/windows/file", _method.invoke(object));
@@ -118,7 +120,7 @@ public class KBArticleMarkdownConverterTest {
 		Map<String, String> metadata = new HashMap<>();
 
 		Object object = _constructor.newInstance(
-			markdown, fileEntryName, metadata);
+			markdown, fileEntryName, metadata, _dlurlHelper);
 
 		Assert.assertNull(_method.invoke(object));
 	}
@@ -133,7 +135,7 @@ public class KBArticleMarkdownConverterTest {
 		metadata.put("base.source.url", "http://baseURL/");
 
 		Object object = _constructor.newInstance(
-			markdown, fileEntryName, metadata);
+			markdown, fileEntryName, metadata, _dlurlHelper);
 
 		Assert.assertEquals(
 			"http://baseURL/some/unix/file", _method.invoke(object));
@@ -141,5 +143,8 @@ public class KBArticleMarkdownConverterTest {
 
 	private static Constructor _constructor;
 	private static Method _method;
+
+	@Inject
+	private DLURLHelper _dlurlHelper;
 
 }

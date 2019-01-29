@@ -125,9 +125,12 @@ renderResponse.setTitle(trashRenderer.getTitle(locale));
 									</h6>
 								</liferay-ui:search-container-column-text>
 
-								<liferay-ui:search-container-column-jsp
-									path="/view_content_action.jsp"
-								/>
+								<liferay-ui:search-container-column-text>
+									<clay:dropdown-actions
+										defaultEventHandler="<%= TrashWebKeys.TRASH_ENTRIES_DEFAULT_EVENT_HANDLER %>"
+										dropdownItems="<%= trashDisplayContext.getTrashContainerActionDropdownItems(curTrashedModel) %>"
+									/>
+								</liferay-ui:search-container-column-text>
 							</c:when>
 							<c:when test="<%= trashDisplayContext.isIconView() %>">
 
@@ -160,9 +163,12 @@ renderResponse.setTitle(trashRenderer.getTitle(locale));
 									</aui:a>
 								</liferay-ui:search-container-column-text>
 
-								<liferay-ui:search-container-column-jsp
-									path="/view_content_action.jsp"
-								/>
+								<liferay-ui:search-container-column-text>
+									<clay:dropdown-actions
+										defaultEventHandler="<%= TrashWebKeys.TRASH_ENTRIES_DEFAULT_EVENT_HANDLER %>"
+										dropdownItems="<%= trashDisplayContext.getTrashContainerActionDropdownItems(curTrashedModel) %>"
+									/>
+								</liferay-ui:search-container-column-text>
 							</c:when>
 						</c:choose>
 					</liferay-ui:search-container-row>
@@ -188,3 +194,18 @@ renderResponse.setTitle(trashRenderer.getTitle(locale));
 		</div>
 	</c:otherwise>
 </c:choose>
+
+<aui:script require='<%= npmResolvedPackageName + "/js/EntriesDefaultEventHandler.es as EntriesDefaultEventHandler" %>'>
+	Liferay.component(
+		'<%= TrashWebKeys.TRASH_ENTRIES_DEFAULT_EVENT_HANDLER %>',
+		new EntriesDefaultEventHandler.default(
+			{
+				namespace: '<%= renderResponse.getNamespace() %>'
+			}
+		),
+		{
+			destroyOnNavigate: true,
+			portletId: '<%= HtmlUtil.escapeJS(portletDisplay.getId()) %>'
+		}
+	);
+</aui:script>

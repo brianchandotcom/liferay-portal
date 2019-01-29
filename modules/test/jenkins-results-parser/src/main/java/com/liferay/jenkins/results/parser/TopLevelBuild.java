@@ -347,6 +347,9 @@ public class TopLevelBuild extends BaseBuild {
 		super.update();
 
 		_updateDuration = System.currentTimeMillis() - start;
+
+		processCompletedDownstreamBuilds();
+		processRunningDownstreamBuilds();
 	}
 
 	protected TopLevelBuild(String url) {
@@ -481,6 +484,76 @@ public class TopLevelBuild extends BaseBuild {
 		}
 
 		return foundDownstreamBuildURLs;
+	}
+
+	protected String generateCountMetric(
+		String metricName, int metricValue, Map<String, String> labels) {
+
+		if (metricValue < 0) {
+			System.out.println("Count metric values cannot be negative");
+
+			return null;
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(metricName);
+		sb.append(":");
+		sb.append(metricValue);
+		sb.append("|c");
+		sb.append(generateMetricLabels(labels));
+
+		return sb.toString();
+	}
+
+	protected String generateGaugeDeltaMetric(
+		String metricName, int metricValue, Map<String, String> labels) {
+
+		if (metricValue == 0) {
+			System.out.println("Gauge metric values cannot be zero");
+
+			return null;
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(metricName);
+		sb.append(":");
+
+		if (metricValue < 0) {
+			sb.append("-");
+		}
+		else {
+			sb.append("+");
+		}
+
+		sb.append(Math.abs(metricValue));
+
+		sb.append("|g");
+		sb.append(generateMetricLabels(labels));
+
+		return sb.toString();
+	}
+
+	protected String generateMetricLabels(Map<String, String> labels) {
+		if ((labels == null) || labels.isEmpty()) {
+			return "";
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("|#");
+
+		for (Map.Entry<String, String> label : labels.entrySet()) {
+			sb.append(label.getKey());
+			sb.append(":");
+			sb.append(label.getValue());
+			sb.append(",");
+		}
+
+		sb.setLength(sb.length() - 1);
+
+		return sb.toString();
 	}
 
 	protected Element getBaseBranchDetailsElement() {
@@ -1328,6 +1401,34 @@ public class TopLevelBuild extends BaseBuild {
 	@Override
 	protected boolean isCompareToUpstream() {
 		return _compareToUpstream;
+	}
+
+	protected void processCompletedDownstreamBuilds() {
+		List<Build> modifiedDownstreamBuilds =
+			getModifiedDownstreamBuildsByStatus("completed");
+
+		if (modifiedDownstreamBuilds.isEmpty()) {
+			return;
+		}
+
+		DatagramRequestUtil.send(
+			generateGaugeDeltaMetric(
+				"build_slave_usage_gauge", -modifiedDownstreamBuilds.size(),
+				null));
+	}
+
+	protected void processRunningDownstreamBuilds() {
+		List<Build> modifiedDownstreamBuilds =
+			getModifiedDownstreamBuildsByStatus("running");
+
+		if (modifiedDownstreamBuilds.isEmpty()) {
+			return;
+		}
+
+		DatagramRequestUtil.send(
+			generateGaugeDeltaMetric(
+				"build_slave_usage_value", modifiedDownstreamBuilds.size(),
+				null));
 	}
 
 	protected static final Pattern gitRepositoryTempMapNamePattern =

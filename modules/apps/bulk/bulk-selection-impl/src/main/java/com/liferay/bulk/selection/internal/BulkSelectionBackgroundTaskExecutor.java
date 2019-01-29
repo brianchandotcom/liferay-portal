@@ -14,7 +14,9 @@
 
 package com.liferay.bulk.selection.internal;
 
+import com.liferay.bulk.selection.BulkSelection;
 import com.liferay.bulk.selection.BulkSelectionAction;
+import com.liferay.bulk.selection.BulkSelectionInputParameters;
 import com.liferay.bulk.selection.BulkSelectionFactory;
 import com.liferay.bulk.selection.internal.constants.BulkSelectionBackgroundTaskConstants;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
@@ -93,15 +95,29 @@ public class BulkSelectionBackgroundTaskExecutor
 				bulkSelectionFactoryOptional.ifPresent(
 					bulkSelectionFactory -> {
 						try {
+							BulkSelection bulkSelection =
+								bulkSelectionFactory.create(parameterMap);
+
 							Map<String, Serializable> inputMap =
 								(Map<String, Serializable>)taskContextMap.get(
 									BulkSelectionBackgroundTaskConstants.
 										BULK_SELECTION_ACTION_INPUT_MAP);
 
+							boolean assetEntryBulkSelection =
+								(boolean)inputMap.getOrDefault(
+									BulkSelectionInputParameters.
+										ASSET_ENTRY_BULK_SELECTION,
+									false);
+
+							if (assetEntryBulkSelection) {
+								bulkSelection =
+									bulkSelection.toAssetEntryBulkSelection();
+							}
+
 							bulkSelectionAction.execute(
 								_userLocalService.getUser(
 									backgroundTask.getUserId()),
-								bulkSelectionFactory.create(parameterMap),
+								bulkSelection,
 								inputMap);
 						}
 						catch (Exception e) {

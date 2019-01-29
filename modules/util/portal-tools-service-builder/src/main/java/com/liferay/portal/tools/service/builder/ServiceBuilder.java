@@ -4469,10 +4469,10 @@ public class ServiceBuilder {
 	}
 
 	private String _getCreateTableSQL(Entity entity) {
-		List<EntityColumn> regularEntityColumns =
-			entity.getRegularEntityColumns();
+		List<EntityColumn> regularEntityTableColumns =
+			entity.getRegularEntityTableColumns();
 
-		if (regularEntityColumns.isEmpty()) {
+		if (regularEntityTableColumns.isEmpty()) {
 			return null;
 		}
 
@@ -4501,8 +4501,8 @@ public class ServiceBuilder {
 
 		sb.append(" (\n");
 
-		for (int i = 0; i < regularEntityColumns.size(); i++) {
-			EntityColumn entityColumn = regularEntityColumns.get(i);
+		for (int i = 0; i < regularEntityTableColumns.size(); i++) {
+			EntityColumn entityColumn = regularEntityTableColumns.get(i);
 
 			String dbName = entityColumn.getDBName();
 
@@ -4617,7 +4617,7 @@ public class ServiceBuilder {
 				sb.append(" default 0 not null");
 			}
 
-			if (((i + 1) != regularEntityColumns.size()) ||
+			if (((i + 1) != regularEntityTableColumns.size()) ||
 				entity.hasCompoundPK()) {
 
 				sb.append(",");
@@ -5986,6 +5986,40 @@ public class ServiceBuilder {
 				Entity localizedEntity = entity.getLocalizedEntity();
 
 				entity.addReferenceEntity(localizedEntity.getVersionEntity());
+			}
+		}
+
+		if (versioned) {
+			EntityColumn headEntityColumn = new EntityColumn(
+				"head", "head", "boolean", false, false, false, null, null,
+				null, null, true, false, false, false, false, false, null,
+				false);
+
+			headEntityColumn.setComparator("=");
+			headEntityColumn.setFinderPath(true);
+			headEntityColumn.setInterfaceColumn(false);
+
+			List<EntityColumn> regularEntityTableColumns =
+				entity.getRegularEntityTableColumns();
+
+			regularEntityTableColumns.add(headEntityColumn);
+
+			List<EntityColumn> entityFinderColumns =
+				entity.getFinderEntityColumns();
+
+			entityFinderColumns.add(headEntityColumn);
+
+			Collections.sort(entityFinderColumns);
+
+			for (EntityFinder entityFinder : entityFinders) {
+				String finderName = entityFinder.getName();
+
+				if (entityFinder.isUnique() && !finderName.equals("HeadId")) {
+					List<EntityColumn> finderEntityColumns =
+						entityFinder.getEntityColumns();
+
+					finderEntityColumns.add(headEntityColumn);
+				}
 			}
 		}
 

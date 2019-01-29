@@ -141,7 +141,7 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 
 	<#compress>
 		public static final Object[][] TABLE_COLUMNS = {
-			<#list entity.regularEntityColumns as entityColumn>
+			<#list entity.regularEntityTableColumns as entityColumn>
 				<#assign sqlType = serviceBuilder.getSqlType(entity.getName(), entityColumn.getName(), entityColumn.getType()) />
 
 				{"${entityColumn.DBName}", Types.${sqlType}}
@@ -155,7 +155,7 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 		public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 		static {
-			<#list entity.regularEntityColumns as entityColumn>
+			<#list entity.regularEntityTableColumns as entityColumn>
 				<#assign sqlType = serviceBuilder.getSqlType(entity.getName(), entityColumn.getName(), entityColumn.getType()) />
 
 				TABLE_COLUMNS_MAP.put("${entityColumn.DBName}", Types.${sqlType});
@@ -612,13 +612,29 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 	<#if entity.versionEntity??>
 		<#assign versionEntity = entity.versionEntity />
 
+		public boolean getHead() {
+			return _head;
+		}
+
 		@Override
 		public boolean isHead() {
-			if (getHeadId() > 0) {
-				return false;
+			return _head;
+		}
+
+		public boolean getOriginalHead() {
+			return _originalHead;
+		}
+
+		public void setHead(boolean head) {
+			_columnBitmask |= HEAD_COLUMN_BITMASK;
+
+			if (!_setOriginalHead) {
+				_setOriginalHead = true;
+
+				_originalHead = _head;
 			}
 
-			return true;
+			_head = head;
 		}
 
 		@Override
@@ -809,6 +825,15 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 				</#if>
 
 					_original${entityColumn.methodName} = _${entityColumn.name};
+				}
+			</#if>
+
+			<#if entity.versionEntity?? && stringUtil.equals(entityColumn.name, "headId")>
+				if (headId >= 0) {
+					setHead(false);
+				}
+				else {
+					setHead(true);
 				}
 			</#if>
 
@@ -1498,7 +1523,7 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 
 	@Override
 	public void resetOriginalValues() {
-		<#list entity.regularEntityColumns as entityColumn>
+		<#list entity.regularEntityTableColumns as entityColumn>
 			<#if entityColumn.isFinderPath() || (validator.isNotNull(parentPKColumn) && (parentPKColumn.name == entityColumn.name)) || (stringUtil.equals(entityColumn.type, "Blob") && entityColumn.lazy) || (entity.hasEntityColumn("createDate", "Date") && entity.hasEntityColumn("modifiedDate", "Date"))>
 				<#if !cloneCastModelImpl??>
 					<#assign cloneCastModelImpl = true />
@@ -1546,7 +1571,7 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 			${entity.varName}CacheModel.${entity.PKVarName} = getPrimaryKey();
 		</#if>
 
-		<#list entity.regularEntityColumns as entityColumn>
+		<#list entity.regularEntityTableColumns as entityColumn>
 			<#if !stringUtil.equals(entityColumn.type, "Blob")>
 				<#if stringUtil.equals(entityColumn.type, "Date")>
 					Date ${entityColumn.name} = get${entityColumn.methodName}();
@@ -1721,7 +1746,7 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 		private volatile ${versionedEntity.name} _${versionedEntity.varName};
 	</#if>
 
-	<#list entity.regularEntityColumns as entityColumn>
+	<#list entity.regularEntityTableColumns as entityColumn>
 		<#if stringUtil.equals(entityColumn.type, "Blob") && entityColumn.lazy>
 			private ${entity.name}${entityColumn.methodName}BlobModel _${entityColumn.name}BlobModel;
 		<#else>

@@ -1,4 +1,6 @@
 dependencies {
+	compileOnly project(":apps:portal-vulcan:portal-vulcan-api")
+
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	testIntegrationCompile project(":apps:headless:headless-foundation:headless-foundation-api")
 	testIntegrationCompile project(":apps:portal-vulcan:portal-vulcan-api")

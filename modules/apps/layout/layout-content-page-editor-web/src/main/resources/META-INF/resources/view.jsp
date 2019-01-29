@@ -29,17 +29,10 @@ FragmentsEditorDisplayContext fragmentsEditorDisplayContext = (FragmentsEditorDi
 </liferay-util:html-top>
 
 <soy:component-renderer
-	componentId='<%= renderResponse.getNamespace() + "sidebar" %>'
-	context="<%= fragmentsEditorDisplayContext.getFragmentsEditorSidebarContext() %>"
-	module="js/components/sidebar/FragmentsEditorSidebar.es"
-	templateNamespace="com.liferay.layout.content.page.editor.web.FragmentsEditorSidebar.render"
-/>
-
-<soy:component-renderer
-	componentId='<%= renderResponse.getNamespace() + "fragments" %>'
-	context="<%= fragmentsEditorDisplayContext.getFragmentEntryLinkListContext() %>"
-	module="js/components/fragment_entry_link/FragmentEntryLinkList.es"
-	templateNamespace="com.liferay.layout.content.page.editor.web.FragmentEntryLinkList.render"
+	componentId='<%= renderResponse.getNamespace() + "fragmentsEditor" %>'
+	context="<%= fragmentsEditorDisplayContext.getEditorContext() %>"
+	module="js/FragmentsEditor.es"
+	templateNamespace="com.liferay.layout.content.page.editor.web.FragmentsEditor.render"
 />
 
 <%
@@ -63,7 +56,7 @@ JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
 		ReducersModule.reducers,
 		[
 			'<portlet:namespace />editModeWrapper',
-			'<portlet:namespace />fragments',
+			'<portlet:namespace />fragmentsEditor',
 			'<portlet:namespace />sidebar',
 			'<portlet:namespace />toolbar'
 		]

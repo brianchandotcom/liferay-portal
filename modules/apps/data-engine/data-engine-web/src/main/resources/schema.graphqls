@@ -42,43 +42,10 @@ input SaveDataDefinitionModelPermissionsInput {
 	view: Boolean
 }
 
-input SaveDataRecordCollectionModelPermissionsInput {
-	companyId: ID!
-	dataRecordCollectionId: ID!
-	delete: Boolean
-	groupId: ID!
-	roleNames: [String]!
-	scopedGroupId: ID!
-	scopedUserId: ID!
-	update: Boolean
-	view: Boolean
-}
-
 input SaveDataDefinitionPermissionsInput {
 	addDataDefinition: Boolean
 	companyId: ID!
 	definePermissions: Boolean
-	roleNames: [String]!
-	scopedGroupId: ID!
-}
-
-input SaveDataRecordCollectionPermissionsInput {
-	addDataRecordCollection: Boolean
-	companyId: ID!
-	definePermissions: Boolean
-	roleNames: [String]!
-	scopedGroupId: ID!
-}
-
-input DeleteDataRecordCollectionPermissionsInput {
-	companyId: ID!
-	roleNames: [String]!
-	scopedGroupId: ID!
-}
-
-input DeleteDataRecordCollectionModelPermissionsInput {
-	companyId: ID!
-	dataRecordCollectionId: ID!
 	roleNames: [String]!
 	scopedGroupId: ID!
 }
@@ -140,36 +107,16 @@ type SaveModelPermissionsDataDefinitionType {
 	dataDefinitionId: ID
 }
 
-type SaveModelPermissionsDataRecordCollectionType {
-	dataRecordCollectionId: ID
-}
-
-type DeleteModelPermissionsDataRecordCollectionType {
-	dataRecordCollectionId: ID
-}
-
 type SavePermissionsDataDefinitionType {
-	roleNames: [String]
-}
-
-type DeletePermissionsDataRecordCollectionType {
-	roleNames: [String]
-}
-
-type SavePermissionsDataRecordCollectionType {
 	roleNames: [String]
 }
 
 type MutationType {
 	deleteDataDefinition(dataDefinitionId: ID!, languageId: String!): DeleteDataDefinitionType
-	deleteDataRecordCollectionModelPermissions(deleteDataRecordCollectionModelPermissionsInput: DeleteDataRecordCollectionModelPermissionsInput!, languageId: String!): DeleteModelPermissionsDataRecordCollectionType
-	deleteDataRecordCollectionPermissions(deleteDataRecordCollectionPermissionsInput: DeleteDataRecordCollectionPermissionsInput!, languageId: String!): DeletePermissionsDataRecordCollectionType
 	saveDataDefinition(userId: ID!, groupId: ID!, dataDefinition: DataDefinitionInput!, languageId: String!): SaveDataDefinitionType
 	saveDataDefinitionModelPermissions(saveDataDefinitionModelPermissionsInput: SaveDataDefinitionModelPermissionsInput!, languageId: String!): SaveModelPermissionsDataDefinitionType
 	saveDataDefinitionPermissions(saveDataDefinitionPermissionsInput: SaveDataDefinitionPermissionsInput!, languageId: String!): SavePermissionsDataDefinitionType
 	saveDataRecordCollection(userId: ID!, groupId: ID!, dataRecordCollection: DataRecordCollectionInput!, languageId: String!): SaveDataRecordCollectionType
-	saveDataRecordCollectionModelPermissions(saveDataRecordCollectionModelPermissionsInput: SaveDataRecordCollectionModelPermissionsInput!, languageId: String!): SaveModelPermissionsDataRecordCollectionType
-	saveDataRecordCollectionPermissions(saveDataRecordCollectionPermissionsInput: SaveDataRecordCollectionPermissionsInput!, languageId: String!): SavePermissionsDataRecordCollectionType
 }
 
 type QueryType {
@@ -178,7 +125,6 @@ type QueryType {
 	listDataDefinition(companyId: ID!, groupId: ID!, languageId: String!, start: Int!, end: Int!): ListDataDefinitionType
 	searchCountDataDefinition(companyId: ID!, groupId: ID!, languageId: String!, keywords:String!): SearchCountDataDefinitionType
 	searchDataDefinition(companyId: ID!, groupId: ID!, languageId: String!, keywords:String!, start: Int!, end: Int!): SearchDataDefinitionType
-
 }
 
 type SaveDataDefinitionType {
@@ -189,13 +135,6 @@ type SaveDataRecordCollectionType {
 	dataRecordCollection: DataRecordCollection
 }
 
-type SaveModelPermissionsDataDefinitionType {
-	dataDefinitionId: ID
-}
-
-type SavePermissionsDataDefinitionType {
-	roleNames: [String]
-}
 
 type SearchCountDataDefinitionType {
 	total: Int

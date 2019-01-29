@@ -531,28 +531,13 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		if ((layoutPageTemplateEntry.getType() ==
-				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE) &&
-			(layoutPageTemplateEntry.getPlid() == 0)) {
+		Layout layout = null;
 
-			Layout layout = _addLayout(
-				layoutPageTemplateEntry.getUserId(),
-				layoutPageTemplateEntry.getGroupId(), classNameId, classTypeId,
-				layoutPageTemplateEntry.getName(),
-				LayoutConstants.LAYOUT_TYPE_ASSET_DISPLAY, serviceContext);
-
-			layoutPageTemplateEntry.setPlid(layout.getPlid());
+		if (layoutPageTemplateEntry.getPlid() == 0) {
+			layout = _addLayout(layoutPageTemplateEntry, serviceContext);
 		}
-		else if ((layoutPageTemplateEntry.getType() ==
-					LayoutPageTemplateEntryTypeConstants.TYPE_BASIC) &&
-				 (layoutPageTemplateEntry.getPlid() == 0)) {
 
-			Layout layout = _addLayout(
-				layoutPageTemplateEntry.getUserId(),
-				layoutPageTemplateEntry.getGroupId(), classNameId, classTypeId,
-				layoutPageTemplateEntry.getName(),
-				LayoutConstants.LAYOUT_TYPE_CONTENT, serviceContext);
-
+		if (layout != null) {
 			layoutPageTemplateEntry.setPlid(layout.getPlid());
 		}
 
@@ -560,7 +545,7 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE) &&
 			(layoutPageTemplateEntry.getPlid() > 0)) {
 
-			Layout layout = layoutLocalService.getLayout(
+			Layout existingLayout = layoutLocalService.getLayout(
 				layoutPageTemplateEntry.getPlid());
 
 			AssetRendererFactory assetRendererFactory =
@@ -576,12 +561,14 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 				"layout.instanceable.allowed", Boolean.TRUE);
 
 			layoutLocalService.updateLayout(
-				layout.getGroupId(), layout.isPrivateLayout(),
-				layout.getLayoutId(), layout.getParentLayoutId(), titleMap,
-				titleMap, layout.getDescriptionMap(), layout.getKeywordsMap(),
-				layout.getRobotsMap(), layout.getType(), layout.isHidden(),
-				layout.getFriendlyURLMap(), layout.getIconImage(), null,
-				serviceContext);
+				existingLayout.getGroupId(), existingLayout.isPrivateLayout(),
+				existingLayout.getLayoutId(),
+				existingLayout.getParentLayoutId(), titleMap, titleMap,
+				existingLayout.getDescriptionMap(),
+				existingLayout.getKeywordsMap(), existingLayout.getRobotsMap(),
+				existingLayout.getType(), existingLayout.isHidden(),
+				existingLayout.getFriendlyURLMap(),
+				existingLayout.getIconImage(), null, serviceContext);
 		}
 
 		layoutPageTemplateEntryPersistence.update(layoutPageTemplateEntry);

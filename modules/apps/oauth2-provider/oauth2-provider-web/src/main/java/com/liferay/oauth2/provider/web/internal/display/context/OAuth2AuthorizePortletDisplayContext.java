@@ -14,6 +14,7 @@
 
 package com.liferay.oauth2.provider.web.internal.display.context;
 
+import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.oauth2.provider.constants.OAuth2ProviderActionKeys;
 import com.liferay.oauth2.provider.model.OAuth2Application;
 import com.liferay.oauth2.provider.web.internal.AssignableScopes;
@@ -28,8 +29,11 @@ import java.util.Map;
 public class OAuth2AuthorizePortletDisplayContext
 	extends BaseOAuth2PortletDisplayContext {
 
-	public OAuth2AuthorizePortletDisplayContext(ThemeDisplay themeDisplay) {
+	public OAuth2AuthorizePortletDisplayContext(
+		ThemeDisplay themeDisplay, DLURLHelper dlurlHelper) {
+
 		super.themeDisplay = themeDisplay;
+		super.dlurlHelper = dlurlHelper;
 	}
 
 	public AssignableScopes getAssignableScopes() {

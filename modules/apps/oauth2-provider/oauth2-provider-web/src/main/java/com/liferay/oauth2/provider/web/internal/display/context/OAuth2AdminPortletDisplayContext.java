@@ -14,6 +14,7 @@
 
 package com.liferay.oauth2.provider.web.internal.display.context;
 
+import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.oauth2.provider.configuration.OAuth2ProviderConfiguration;
 import com.liferay.oauth2.provider.constants.ClientProfile;
 import com.liferay.oauth2.provider.constants.GrantType;
@@ -45,13 +46,15 @@ public class OAuth2AdminPortletDisplayContext
 	public OAuth2AdminPortletDisplayContext(
 		OAuth2ApplicationService oAuth2ApplicationService,
 		OAuth2ProviderConfiguration oAuth2ProviderConfiguration,
-		PortletRequest portletRequest, ThemeDisplay themeDisplay) {
+		PortletRequest portletRequest, ThemeDisplay themeDisplay,
+		DLURLHelper dlurlHelper) {
 
 		_oAuth2ProviderConfiguration = oAuth2ProviderConfiguration;
 
 		super.oAuth2ApplicationService = oAuth2ApplicationService;
 		super.portletRequest = portletRequest;
 		super.themeDisplay = themeDisplay;
+		super.dlurlHelper = dlurlHelper;
 	}
 
 	public List<GrantType> getGrantTypes(

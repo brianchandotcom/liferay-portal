@@ -14,6 +14,7 @@
 
 package com.liferay.oauth2.provider.web.internal.display.context;
 
+import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.oauth2.provider.configuration.OAuth2ProviderConfiguration;
 import com.liferay.oauth2.provider.scope.liferay.ApplicationDescriptorLocator;
 import com.liferay.oauth2.provider.scope.liferay.ScopeDescriptorLocator;
@@ -57,11 +58,11 @@ public class AssignScopesDisplayContext
 		PortletRequest portletRequest, ThemeDisplay themeDisplay,
 		ApplicationDescriptorLocator applicationDescriptorLocator,
 		ScopeDescriptorLocator scopeDescriptorLocator,
-		ScopeLocator scopeLocator) {
+		ScopeLocator scopeLocator, DLURLHelper dlurlHelper) {
 
 		super(
 			oAuth2ApplicationService, oAuth2ProviderConfiguration,
-			portletRequest, themeDisplay);
+			portletRequest, themeDisplay, dlurlHelper);
 
 		_applicationDescriptorLocator = applicationDescriptorLocator;
 		_locale = themeDisplay.getLocale();

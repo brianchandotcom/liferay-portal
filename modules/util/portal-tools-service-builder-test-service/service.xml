@@ -44,7 +44,7 @@
 			<localized-column name="content" />
 		</localized-entity>
 	</entity>
-	<entity local-service="true" name="LVEntry" remote-service="false" versioned="true">
+	<entity local-service="true" name="LVEntry" remote-service="false" uuid="true" versioned="true">
 
 		<!-- PK fields -->
 
@@ -53,6 +53,7 @@
 		<!-- Group instance -->
 
 		<column name="groupId" type="long" />
+		<column name="uniqueGroupKey" type="String" />
 
 		<!-- Localized entity -->
 
@@ -65,6 +66,10 @@
 
 		<finder name="GroupId" return-type="Collection" where="lvEntryId > 0">
 			<finder-column arrayable-operator="OR" arrayable-pagination="true" name="groupId" />
+		</finder>
+		<finder name="G_UGK" return-type="LVEntry" unique="true">
+			<finder-column name="groupId" />
+			<finder-column name="uniqueGroupKey" />
 		</finder>
 	</entity>
 	<entity local-service="true" name="UADPartialEntry">

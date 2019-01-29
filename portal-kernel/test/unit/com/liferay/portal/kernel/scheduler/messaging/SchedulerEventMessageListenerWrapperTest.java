@@ -27,6 +27,7 @@ import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
@@ -155,6 +156,60 @@ public class SchedulerEventMessageListenerWrapperTest {
 			_testMessage1.getResponse());
 	}
 
+	@Test
+	public void testConcurrentReceiveWithTimeoutAndInterrupted()
+		throws Exception {
+
+		PropsTestUtil.setProps(
+			PropsKeys.SCHEDULER_EVENT_MESSAGE_LISTENER_LOCK_TIMEOUT, "1000");
+
+		SchedulerEventMessageListenerWrapper
+			schedulerEventMessageListenerWrapper =
+				new SchedulerEventMessageListenerWrapper();
+
+		schedulerEventMessageListenerWrapper.setMessageListener(
+			_testMessageListener);
+
+		FutureTask<Void> futureTask1 = _startThread(
+			schedulerEventMessageListenerWrapper, "Thread1", _testMessage1);
+
+		_testMessageListener.waitUntilBlock();
+
+		FutureTask<Void> futureTask2 = new FutureTask<>(
+			() -> {
+				schedulerEventMessageListenerWrapper.receive(_testMessage2);
+
+				return null;
+			});
+
+		Thread thread2 = new Thread(
+			futureTask2,
+			"SchedulerEventMessageListenerWrapperTest_startThread_Thread2");
+
+		thread2.start();
+
+		thread2.interrupt();
+
+		_testMessageListener.unblock();
+
+		futureTask1.get();
+
+		Exception exception = null;
+
+		try {
+			futureTask2.get();
+		}
+		catch (ExecutionException ee) {
+			exception = ee;
+		}
+
+		Assert.assertSame(
+			"Message is not processed", _testMessage1,
+			_testMessage1.getResponse());
+		Assert.assertNull(_testMessage2.getResponse());
+		Assert.assertNull(exception);
+	}
+
 	private FutureTask<Void> _startThread(
 		SchedulerEventMessageListenerWrapper
 			schedulerEventMessageListenerWrapper,
@@ -185,19 +240,19 @@ public class SchedulerEventMessageListenerWrapperTest {
 
 		@Override
 		public void receive(Message message) {
-			if (_lock.tryLock()) {
-				try {
-					_waitCountDownLatch.countDown();
+			_lock.lock();
 
-					_blockCountDownLatch.await();
+			try {
+				_waitCountDownLatch.countDown();
 
-					message.setResponse(message);
-				}
-				catch (InterruptedException ie) {
-				}
-				finally {
-					_lock.unlock();
-				}
+				_blockCountDownLatch.await();
+
+				message.setResponse(message);
+			}
+			catch (InterruptedException ie) {
+			}
+			finally {
+				_lock.unlock();
 			}
 		}
 

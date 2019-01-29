@@ -17,7 +17,6 @@ package com.liferay.portal.tools.rest.builder;
 import com.liferay.portal.kernel.util.StringUtil_IW;
 import com.liferay.portal.kernel.util.Validator_IW;
 import com.liferay.portal.tools.ArgumentsUtil;
-import com.liferay.portal.tools.rest.builder.internal.freemarker.FreeMarkerConstants;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.util.FreeMarkerUtil;
 import com.liferay.portal.tools.rest.builder.internal.util.CamelCaseUtil;
 import com.liferay.portal.tools.rest.builder.internal.util.FileUtil;
@@ -117,7 +116,7 @@ public class RESTBuilder {
 		context.put("validator", Validator_IW.getInstance());
 
 		String content = FreeMarkerUtil.processTemplate(
-			copyrightFileName, FreeMarkerConstants.APPLICATION_FTL, context);
+			copyrightFileName, FreeMarkerUtil.APPLICATION_FTL, context);
 
 		FileUtil.write(content, file);
 
@@ -151,7 +150,7 @@ public class RESTBuilder {
 		context.put("validator", Validator_IW.getInstance());
 
 		String content = FreeMarkerUtil.processTemplate(
-			copyrightFileName, FreeMarkerConstants.COLLECTION_FTL, context);
+			copyrightFileName, FreeMarkerUtil.COLLECTION_FTL, context);
 
 		FileUtil.write(content, file);
 
@@ -187,7 +186,7 @@ public class RESTBuilder {
 		context.put("validator", Validator_IW.getInstance());
 
 		String content = FreeMarkerUtil.processTemplate(
-			copyrightFileName, FreeMarkerConstants.DTO_FTL, context);
+			copyrightFileName, FreeMarkerUtil.DTO_FTL, context);
 
 		FileUtil.write(content, file);
 
@@ -224,7 +223,7 @@ public class RESTBuilder {
 		context.put("validator", Validator_IW.getInstance());
 
 		String content = FreeMarkerUtil.processTemplate(
-			copyrightFileName, FreeMarkerConstants.RESOURCE_FTL, context);
+			copyrightFileName, FreeMarkerUtil.RESOURCE_FTL, context);
 
 		FileUtil.write(content, file);
 
@@ -260,7 +259,7 @@ public class RESTBuilder {
 		context.put("validator", Validator_IW.getInstance());
 
 		String content = FreeMarkerUtil.processTemplate(
-			copyrightFileName, FreeMarkerConstants.RESOURCE_IMPL_FTL, context);
+			copyrightFileName, FreeMarkerUtil.RESOURCE_IMPL_FTL, context);
 
 		FileUtil.write(content, file);
 

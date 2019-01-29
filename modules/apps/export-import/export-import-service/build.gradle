@@ -13,6 +13,7 @@ dependencies {
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"
 	compileOnly project(":apps:changeset:changeset-api")
 	compileOnly project(":apps:changeset:changeset-service")
+	compileOnly project(":apps:document-library:document-library-api")
 	compileOnly project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
 	compileOnly project(":apps:export-import:export-import-api")
 	compileOnly project(":apps:export-import:export-import-changeset-api")

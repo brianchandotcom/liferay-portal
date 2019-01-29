@@ -24,7 +24,7 @@ import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.service.DLFolderLocalService;
-import com.liferay.document.library.kernel.util.DLUtil;
+import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeRequest;
@@ -152,7 +152,7 @@ public class FileSystemImporter extends BaseImporter {
 		PortletPreferencesTranslator portletPreferencesTranslator,
 		Map<String, PortletPreferencesTranslator> portletPreferencesTranslators,
 		RepositoryLocalService repositoryLocalService, SAXReader saxReader,
-		ThemeLocalService themeLocalService) {
+		ThemeLocalService themeLocalService, DLURLHelper dlurlHelper) {
 
 		this.assetTagLocalService = assetTagLocalService;
 		this.ddmFormJSONDeserializer = ddmFormJSONDeserializer;
@@ -181,6 +181,7 @@ public class FileSystemImporter extends BaseImporter {
 		this.repositoryLocalService = repositoryLocalService;
 		this.saxReader = saxReader;
 		this.themeLocalService = themeLocalService;
+		_dlurlHelper = dlurlHelper;
 	}
 
 	@Override
@@ -951,7 +952,7 @@ public class FileSystemImporter extends BaseImporter {
 				FileEntry fileEntry = _fileEntries.get(smallImageFileName);
 
 				if (fileEntry != null) {
-					smallImageURL = DLUtil.getPreviewURL(
+					smallImageURL = _dlurlHelper.getPreviewURL(
 						fileEntry, fileEntry.getFileVersion(), null,
 						StringPool.BLANK);
 				}
@@ -1752,7 +1753,7 @@ public class FileSystemImporter extends BaseImporter {
 			String fileEntryURL = StringPool.BLANK;
 
 			if (fileEntry != null) {
-				fileEntryURL = DLUtil.getPreviewURL(
+				fileEntryURL = _dlurlHelper.getPreviewURL(
 					fileEntry, fileEntry.getFileVersion(), null,
 					StringPool.BLANK);
 			}
@@ -2087,6 +2088,7 @@ public class FileSystemImporter extends BaseImporter {
 	private final Map<String, JSONObject> _assetJSONObjectMap = new HashMap<>();
 	private final Set<String> _ddmStructureKeys = new HashSet<>();
 	private String _defaultLayoutTemplateId;
+	private final DLURLHelper _dlurlHelper;
 	private final Map<String, FileEntry> _fileEntries = new HashMap<>();
 	private final Map<String, Set<Long>> _primaryKeys = new HashMap<>();
 	private File _resourcesDir;

@@ -14,6 +14,7 @@
 
 package com.liferay.bulk.rest.internal.resource;
 
+import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.bulk.rest.internal.model.BulkActionResponseModel;
 import com.liferay.bulk.rest.internal.model.BulkAssetEntryCommonTagsActionModel;
@@ -22,16 +23,14 @@ import com.liferay.bulk.rest.internal.model.BulkAssetEntryUpdateCategoriesAction
 import com.liferay.bulk.rest.internal.model.BulkAssetEntryUpdateTagsActionModel;
 import com.liferay.bulk.selection.BulkSelection;
 import com.liferay.bulk.selection.BulkSelectionFactory;
+import com.liferay.bulk.selection.BulkSelectionFactoryRegistry;
 import com.liferay.bulk.selection.BulkSelectionRunner;
 import com.liferay.document.library.bulk.selection.EditCategoriesBulkSelectionAction;
 import com.liferay.document.library.bulk.selection.EditTagsBulkSelectionAction;
-import com.liferay.document.library.kernel.model.DLFileEntryConstants;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.BaseModelPermissionCheckerUtil;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -83,14 +82,21 @@ public class BulkAssetEntryResource {
 			bulkAssetEntryCommonTagsActionModel) {
 
 		try {
-			BulkSelection<FileEntry> bulkSelection =
-				_bulkSelectionFactory.create(
-					bulkAssetEntryCommonTagsActionModel.getParameterMap());
+			BulkSelectionFactory<?> bulkSelectionFactory =
+				_bulkSelectionFactoryRegistry.getBulkSelectionFactory(
+					classNameId);
 
-			Stream<FileEntry> stream = bulkSelection.stream();
+			BulkSelection<?> bulkSelection = bulkSelectionFactory.create(
+				bulkAssetEntryCommonTagsActionModel.getParameterMap());
 
-			Set<String> commonTags = stream.map(
-				_getFileEntryTagsFunction(
+			BulkSelection<AssetEntry> assetEntryBulkSelection =
+				bulkSelection.toAssetEntryBulkSelection();
+
+			Stream<AssetEntry> assetEntryStream =
+				assetEntryBulkSelection.stream();
+
+			Set<String> commonTags = assetEntryStream.map(
+				_getAssetEntryTagsFunction(
 					PermissionCheckerFactoryUtil.create(user))
 			).reduce(
 				SetUtil::intersect
@@ -99,7 +105,8 @@ public class BulkAssetEntryResource {
 			);
 
 			return new BulkAssetEntryCommonTagsModel(
-				bulkSelection.describe(locale), new ArrayList<>(commonTags));
+				assetEntryBulkSelection.describe(locale),
+				new ArrayList<>(commonTags));
 		}
 		catch (Exception e) {
 			return new BulkAssetEntryCommonTagsModel(e);
@@ -117,13 +124,19 @@ public class BulkAssetEntryResource {
 				bulkAssetEntryUpdateCategoriesActionModel) {
 
 		try {
-			BulkSelection<FileEntry> bulkSelection =
-				_bulkSelectionFactory.create(
-					bulkAssetEntryUpdateCategoriesActionModel.
-						getParameterMap());
+			BulkSelectionFactory<?> bulkSelectionFactory =
+				_bulkSelectionFactoryRegistry.getBulkSelectionFactory(
+					classNameId);
+
+			BulkSelection<?> bulkSelection = bulkSelectionFactory.create(
+				bulkAssetEntryUpdateCategoriesActionModel.getParameterMap());
+
+			BulkSelection<AssetEntry> assetEntryBulkSelection =
+				bulkSelection.toAssetEntryBulkSelection();
 
 			_bulkSelectionRunner.run(
-				user, bulkSelection, _editCategoriesBulkSelectionAction,
+				user, assetEntryBulkSelection,
+				_editCategoriesBulkSelectionAction,
 				new HashMap<String, Serializable>() {
 					{
 						put(
@@ -158,12 +171,18 @@ public class BulkAssetEntryResource {
 			bulkAssetEntryUpdateTagsActionModel) {
 
 		try {
-			BulkSelection<FileEntry> bulkSelection =
-				_bulkSelectionFactory.create(
-					bulkAssetEntryUpdateTagsActionModel.getParameterMap());
+			BulkSelectionFactory<?> bulkSelectionFactory =
+				_bulkSelectionFactoryRegistry.getBulkSelectionFactory(
+					classNameId);
+
+			BulkSelection<?> bulkSelection = bulkSelectionFactory.create(
+				bulkAssetEntryUpdateTagsActionModel.getParameterMap());
+
+			BulkSelection<AssetEntry> assetEntryBulkSelection =
+				bulkSelection.toAssetEntryBulkSelection();
 
 			_bulkSelectionRunner.run(
-				user, bulkSelection, _editTagsBulkSelectionAction,
+				user, assetEntryBulkSelection, _editTagsBulkSelectionAction,
 				new HashMap<String, Serializable>() {
 					{
 						put(
@@ -187,42 +206,29 @@ public class BulkAssetEntryResource {
 		}
 	}
 
-	private Function<FileEntry, Set<String>> _getFileEntryTagsFunction(
+	private Function<AssetEntry, Set<String>> _getAssetEntryTagsFunction(
 		PermissionChecker permissionChecker) {
 
-		return fileEntry -> {
-			try {
-				if (_fileEntryModelResourcePermission.contains(
-						permissionChecker, fileEntry, ActionKeys.UPDATE)) {
+		return assetEntry -> {
+			if (BaseModelPermissionCheckerUtil.containsBaseModelPermission(
+					permissionChecker, assetEntry.getGroupId(),
+					assetEntry.getClassName(), assetEntry.getClassPK(),
+					ActionKeys.UPDATE)) {
 
-					return SetUtil.fromArray(
-						_assetTagLocalService.getTagNames(
-							DLFileEntryConstants.getClassName(),
-							fileEntry.getFileEntryId()));
-				}
-
-				return Collections.emptySet();
+				return SetUtil.fromArray(
+					_assetTagLocalService.getTagNames(
+						assetEntry.getClassName(), assetEntry.getClassPK()));
 			}
-			catch (PortalException pe) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(pe, pe);
-				}
 
-				return Collections.emptySet();
-			}
+			return Collections.emptySet();
 		};
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		BulkAssetEntryResource.class);
 
 	@Reference
 	private AssetTagLocalService _assetTagLocalService;
 
-	@Reference(
-		target = "(model.class.name=com.liferay.portal.kernel.repository.model.FileEntry)"
-	)
-	private BulkSelectionFactory<FileEntry> _bulkSelectionFactory;
+	@Reference
+	private BulkSelectionFactoryRegistry _bulkSelectionFactoryRegistry;
 
 	@Reference
 	private BulkSelectionRunner _bulkSelectionRunner;
@@ -233,11 +239,5 @@ public class BulkAssetEntryResource {
 
 	@Reference
 	private EditTagsBulkSelectionAction _editTagsBulkSelectionAction;
-
-	@Reference(
-		target = "(model.class.name=com.liferay.portal.kernel.repository.model.FileEntry)"
-	)
-	private ModelResourcePermission<FileEntry>
-		_fileEntryModelResourcePermission;
 
 }

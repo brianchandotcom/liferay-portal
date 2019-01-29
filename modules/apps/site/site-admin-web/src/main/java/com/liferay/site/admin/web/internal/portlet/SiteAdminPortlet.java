@@ -891,6 +891,18 @@ public class SiteAdminPortlet extends MVCPortlet {
 						LanguageUtil.getAvailableLocales())));
 		}
 
+		if (formTypeSettingsProperties.containsKey(PropsKeys.LOCALES) &&
+			Validator.isNull(
+				formTypeSettingsProperties.getProperty(PropsKeys.LOCALES))) {
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Cannot have all locales missing from site " + liveGroupId);
+			}
+
+			throw new LocaleException(LocaleException.TYPE_DEFAULT);
+		}
+
 		typeSettingsProperties.putAll(formTypeSettingsProperties);
 
 		UnicodeProperties ratingsTypeProperties =

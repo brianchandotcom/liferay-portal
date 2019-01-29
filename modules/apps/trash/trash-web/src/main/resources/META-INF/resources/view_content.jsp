@@ -138,28 +138,14 @@ renderResponse.setTitle(trashRenderer.getTitle(locale));
 								<liferay-ui:search-container-column-text>
 									<c:choose>
 										<c:when test="<%= !curTrashHandler.isContainerModel() %>">
-											<liferay-frontend:icon-vertical-card
-												actionJsp="/view_content_action.jsp"
-												actionJspServletContext="<%= application %>"
-												icon="<%= curTrashRenderer.getIconCssClass() %>"
-												resultRow="<%= row %>"
-												title="<%= HtmlUtil.escape(curTrashRenderer.getTitle(locale)) %>"
-												url="<%= rowURL.toString() %>"
-											>
-												<liferay-frontend:vertical-card-footer>
-													<%= ResourceActionsUtil.getModelResource(locale, curTrashRenderer.getClassName()) %>
-												</liferay-frontend:vertical-card-footer>
-											</liferay-frontend:icon-vertical-card>
+											<clay:vertical-card
+												verticalCard="<%= new TrashContentVerticalCard(curTrashedModel, curTrashRenderer, renderRequest, liferayPortletResponse, rowURL.toString()) %>"
+											/>
 										</c:when>
 										<c:otherwise>
-											<liferay-frontend:horizontal-card
-												actionJsp="/view_content_action.jsp"
-												actionJspServletContext="<%= application %>"
-												resultRow="<%= row %>"
-												text="<%= curTrashRenderer.getTitle(locale) %>"
-												url="<%= rowURL.toString() %>"
-											>
-											</liferay-frontend:horizontal-card>
+											<clay:horizontal-card
+												horizontalCard="<%= new TrashContentHorizontalCard(curTrashedModel, curTrashRenderer, renderRequest, liferayPortletResponse, rowURL.toString()) %>"
+											/>
 										</c:otherwise>
 									</c:choose>
 								</liferay-ui:search-container-column-text>

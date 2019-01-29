@@ -17,7 +17,7 @@ package com.liferay.adaptive.media.image.item.selector.internal.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
-import com.liferay.document.library.kernel.util.DLUtil;
+import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.item.selector.ItemSelectorReturnTypeResolver;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -79,7 +79,7 @@ public class FileEntryAMImageFileEntryItemSelectorReturnTypeResolverTest {
 		long fileEntryId = jsonObject.getLong("fileEntryId");
 
 		Assert.assertEquals(
-			DLUtil.getImagePreviewURL(
+			_dlurlHelper.getImagePreviewURL(
 				fileEntry, fileEntry.getFileVersion(), null, StringPool.BLANK,
 				false, false),
 			url);
@@ -105,6 +105,9 @@ public class FileEntryAMImageFileEntryItemSelectorReturnTypeResolverTest {
 
 	@Inject
 	private DLAppLocalService _dlAppLocalService;
+
+	@Inject
+	private DLURLHelper _dlurlHelper;
 
 	@DeleteAfterTestRun
 	private Group _group;

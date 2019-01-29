@@ -27,6 +27,7 @@ import com.liferay.bulk.rest.internal.model.BulkAssetEntryUpdateTagsActionModel;
 import com.liferay.bulk.selection.BulkSelection;
 import com.liferay.bulk.selection.BulkSelectionFactory;
 import com.liferay.bulk.selection.BulkSelectionFactoryRegistry;
+import com.liferay.bulk.selection.BulkSelectionInputParameters;
 import com.liferay.bulk.selection.BulkSelectionRunner;
 import com.liferay.document.library.bulk.selection.EditCategoriesBulkSelectionAction;
 import com.liferay.document.library.bulk.selection.EditTagsBulkSelectionAction;
@@ -178,8 +179,10 @@ public class BulkAssetEntryResource {
 			BulkSelection<AssetEntry> assetEntryBulkSelection =
 				bulkSelection.toAssetEntryBulkSelection();
 
-			Map<String, Serializable> inputMap = new HashMap<>(3);
+			Map<String, Serializable> inputMap = new HashMap<>(4);
 
+			inputMap.put(
+				BulkSelectionInputParameters.ASSET_ENTRY_BULK_SELECTION, true);
 			inputMap.put(
 				"append",
 				bulkAssetEntryUpdateCategoriesActionModel.getAppend());
@@ -223,8 +226,10 @@ public class BulkAssetEntryResource {
 			BulkSelection<AssetEntry> assetEntryBulkSelection =
 				bulkSelection.toAssetEntryBulkSelection();
 
-			Map<String, Serializable> inputMap = new HashMap<>(3);
+			Map<String, Serializable> inputMap = new HashMap<>(4);
 
+			inputMap.put(
+				BulkSelectionInputParameters.ASSET_ENTRY_BULK_SELECTION, true);
 			inputMap.put(
 				"append", bulkAssetEntryUpdateTagsActionModel.getAppend());
 			inputMap.put(

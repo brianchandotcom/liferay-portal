@@ -379,7 +379,7 @@ public class WorkflowTaskPermissionCheckerTest extends PowerMockito {
 	protected WorkflowTask mockWorkflowTask(
 		String assigneeClassName, long assigneeClassPK, boolean completed) {
 
-		WorkflowTaskAssignee workflowTaskAssignee = mockWorkflowTaskAssignee(
+		WorkflowTaskAssignee workflowTaskAssignee = new WorkflowTaskAssignee(
 			assigneeClassName, assigneeClassPK);
 
 		List<WorkflowTaskAssignee> workflowTaskAssignees = new ArrayList<>();
@@ -406,27 +406,6 @@ public class WorkflowTaskPermissionCheckerTest extends PowerMockito {
 		};
 
 		return workflowTask;
-	}
-
-	protected WorkflowTaskAssignee mockWorkflowTaskAssignee(
-		String className, long classPK) {
-
-		WorkflowTaskAssignee workflowTaskAssignee = mock(
-			WorkflowTaskAssignee.class);
-
-		when(
-			workflowTaskAssignee.getAssigneeClassName()
-		).thenReturn(
-			className
-		);
-
-		when(
-			workflowTaskAssignee.getAssigneeClassPK()
-		).thenReturn(
-			classPK
-		);
-
-		return workflowTaskAssignee;
 	}
 
 	protected long[] randomPermissionCheckerRoleIds() {

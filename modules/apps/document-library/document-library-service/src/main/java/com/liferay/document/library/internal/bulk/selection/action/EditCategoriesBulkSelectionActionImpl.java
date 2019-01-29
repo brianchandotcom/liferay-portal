@@ -19,16 +19,14 @@ import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.bulk.selection.BulkSelection;
 import com.liferay.bulk.selection.BulkSelectionAction;
 import com.liferay.document.library.bulk.selection.EditCategoriesBulkSelectionAction;
-import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.BaseModelPermissionCheckerUtil;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -56,7 +54,7 @@ public class EditCategoriesBulkSelectionActionImpl
 
 	@Override
 	public void execute(
-			User user, BulkSelection<FileEntry> bulkSelection,
+			User user, BulkSelection<AssetEntry> bulkSelection,
 			Map<String, Serializable> inputMap)
 		throws Exception {
 
@@ -68,23 +66,22 @@ public class EditCategoriesBulkSelectionActionImpl
 		Set<Long> toRemoveCategoryIdsSet = SetUtil.fromArray(
 			(long[])inputMap.getOrDefault("toRemoveCategoryIds", new long[0]));
 
-		Stream<FileEntry> fileEntryStream = bulkSelection.stream();
+		Stream<AssetEntry> assetEntryStream = bulkSelection.stream();
 
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(user);
 
-		fileEntryStream.forEach(
-			fileEntry -> {
+		assetEntryStream.forEach(
+			assetEntry -> {
 				try {
-					if (!_fileEntryModelResourcePermission.contains(
-							permissionChecker, fileEntry, ActionKeys.UPDATE)) {
+					if (!BaseModelPermissionCheckerUtil.
+							containsBaseModelPermission(
+								permissionChecker, assetEntry.getGroupId(),
+								assetEntry.getClassName(),
+								assetEntry.getClassPK(), ActionKeys.UPDATE)) {
 
 						return;
 					}
-
-					AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
-						DLFileEntryConstants.getClassName(),
-						fileEntry.getFileEntryId());
 
 					long[] newCategoryIds = toAddCategoryIds;
 
@@ -118,11 +115,5 @@ public class EditCategoriesBulkSelectionActionImpl
 
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;
-
-	@Reference(
-		target = "(model.class.name=com.liferay.portal.kernel.repository.model.FileEntry)"
-	)
-	private ModelResourcePermission<FileEntry>
-		_fileEntryModelResourcePermission;
 
 }

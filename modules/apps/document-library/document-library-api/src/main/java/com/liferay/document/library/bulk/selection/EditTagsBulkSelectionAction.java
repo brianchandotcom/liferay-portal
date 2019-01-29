@@ -14,12 +14,12 @@
 
 package com.liferay.document.library.bulk.selection;
 
+import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.bulk.selection.BulkSelectionAction;
-import com.liferay.portal.kernel.repository.model.FileEntry;
 
 /**
  * @author Adolfo Pérez
  */
 public interface EditTagsBulkSelectionAction
-	extends BulkSelectionAction<FileEntry> {
+	extends BulkSelectionAction<AssetEntry> {
 }

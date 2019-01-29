@@ -11,7 +11,9 @@ dependencies {
 	compileOnly group: "org.apache.cxf", name: "cxf-core", version: "3.0.3"
 	compileOnly group: "org.apache.cxf", name: "cxf-rt-frontend-jaxrs", version: "3.0.0"
 	compileOnly group: "org.apache.cxf", name: "cxf-rt-rs-extension-providers", version: "3.0.3"
+	compileOnly group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
 	compileOnly project(":apps:bulk:bulk-selection-api")
 	compileOnly project(":apps:document-library:document-library-api")
+	compileOnly project(":core:osgi-service-tracker-collections")
 	compileOnly project(":core:petra:petra-string")
 }

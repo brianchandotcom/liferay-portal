@@ -25,30 +25,28 @@ FragmentsEditorDisplayContext fragmentsEditorDisplayContext = (FragmentsEditorDi
 />
 
 <liferay-util:html-top>
-	<link href="<%= PortalUtil.getStaticResourceURL(request, PortalUtil.getPathModule() + "/layout-admin-web/css/fragments_editor/FragmentsEditorEditMode.css") %>" rel="stylesheet">
+	<link href="<%= PortalUtil.getStaticResourceURL(request, PortalUtil.getPathModule() + "/layout-content-page-editor-web/css/FragmentsEditorEditMode.css") %>" rel="stylesheet">
 </liferay-util:html-top>
 
 <soy:component-renderer
 	componentId='<%= renderResponse.getNamespace() + "sidebar" %>'
 	context="<%= fragmentsEditorDisplayContext.getFragmentsEditorSidebarContext() %>"
-	module="layout-admin-web/js/fragments_editor/components/sidebar/FragmentsEditorSidebar.es"
-	templateNamespace="com.liferay.layout.admin.web.FragmentsEditorSidebar.render"
-	useNamespace="<%= false %>"
+	module="js/components/sidebar/FragmentsEditorSidebar.es"
+	templateNamespace="com.liferay.layout.content.page.editor.web.FragmentsEditorSidebar.render"
 />
 
 <soy:component-renderer
 	componentId='<%= renderResponse.getNamespace() + "fragments" %>'
 	context="<%= fragmentsEditorDisplayContext.getFragmentEntryLinkListContext() %>"
-	module="layout-admin-web/js/fragments_editor/components/fragment_entry_link/FragmentEntryLinkList.es"
-	templateNamespace="com.liferay.layout.admin.web.FragmentEntryLinkList.render"
-	useNamespace="<%= false %>"
+	module="js/components/fragment_entry_link/FragmentEntryLinkList.es"
+	templateNamespace="com.liferay.layout.content.page.editor.web.FragmentEntryLinkList.render"
 />
 
 <%
 JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
 %>
 
-<aui:script require="layout-admin-web/js/fragments_editor/components/edit_mode/DisabledAreaMask.es as DisabledAreaMaskModule, layout-admin-web/js/fragments_editor/components/edit_mode/EditModeWrapper.es as EditModeWrapperModule, layout-admin-web/js/fragments_editor/reducers/reducers.es as ReducersModule, layout-admin-web/js/fragments_editor/store/store.es as StoreModule">
+<aui:script require="js/components/edit_mode/DisabledAreaMask.es as DisabledAreaMaskModule, js/components/edit_mode/EditModeWrapper.es as EditModeWrapperModule, js/reducers/reducers.es as ReducersModule, js/store/store.es as StoreModule">
 	StoreModule.createStore(
 		<%= jsonSerializer.serializeDeep(fragmentsEditorDisplayContext.getEditorContext()) %>,
 		ReducersModule.reducers,

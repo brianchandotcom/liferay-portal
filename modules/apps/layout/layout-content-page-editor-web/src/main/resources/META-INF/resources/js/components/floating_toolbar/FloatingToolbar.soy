@@ -1,4 +1,4 @@
-{namespace com.liferay.layout.admin.web.FloatingToolbar}
+{namespace com.liferay.layout.content.page.editor.web.FloatingToolbar}
 
 /**
  * FloatingToolbar
@@ -33,7 +33,7 @@
 
 		{if $_selectedPanelId}
 			<div class="fragments-editor__floating-toolbar-panel popover">
-				{delcall com.liferay.layout.admin.web.FloatingToolbarPanel variant="$_selectedPanelId"}
+				{delcall com.liferay.layout.content.page.editor.web.FloatingToolbarPanel variant="$_selectedPanelId"}
 					{param item: $item /}
 					{param itemId: $itemId /}
 					{param store: $store /}
@@ -83,7 +83,7 @@
 /**
  * FloatingToolbarPanel
  */
-{deltemplate com.liferay.layout.admin.web.FloatingToolbarPanel}
+{deltemplate com.liferay.layout.content.page.editor.web.FloatingToolbarPanel}
 	{@param item: ?}
 	{@param itemId: string}
 	{@param? store: ?}

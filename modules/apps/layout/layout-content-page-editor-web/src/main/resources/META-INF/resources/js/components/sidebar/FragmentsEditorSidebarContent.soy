@@ -1,4 +1,4 @@
-{namespace com.liferay.layout.admin.web.FragmentsEditorSidebarContent}
+{namespace com.liferay.layout.content.page.editor.web.FragmentsEditorSidebarContent}
 
 /**
  * FragmentsEditorSidebarContent
@@ -19,23 +19,23 @@
 		<div class="fragments-editor-sidebar-section">
 			<h1 class="fragments-editor-sidebar-section__title">{$_sidebarTitle ?: ''}</h1>
 			{if $_panelId == 'sections'}
-				{call com.liferay.layout.admin.web.SidebarSectionsPanel.render}
+				{call com.liferay.layout.content.page.editor.web.SidebarSectionsPanel.render}
 					{param store: $store /}
 				{/call}
 			{elseif $_panelId == 'elements'}
-				{call com.liferay.layout.admin.web.SidebarElementsPanel.render}
+				{call com.liferay.layout.content.page.editor.web.SidebarElementsPanel.render}
 					{param store: $store /}
 				{/call}
 			{elseif $_panelId == 'mapping'}
-				{call com.liferay.layout.admin.web.SidebarMappingPanel.render}
+				{call com.liferay.layout.content.page.editor.web.SidebarMappingPanel.render}
 					{param store: $store /}
 				{/call}
 			{elseif $_panelId == 'structure'}
-				{call com.liferay.layout.admin.web.SidebarStructurePanel.render}
+				{call com.liferay.layout.content.page.editor.web.SidebarStructurePanel.render}
 					{param store: $store /}
 				{/call}
 			{elseif $_panelId == 'widgets'}
-				{call com.liferay.layout.admin.web.SidebarWidgetsPanel.render}
+				{call com.liferay.layout.content.page.editor.web.SidebarWidgetsPanel.render}
 					{param store: $store /}
 				{/call}
 			{/if}

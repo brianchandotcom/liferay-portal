@@ -1,4 +1,4 @@
-{namespace com.liferay.layout.admin.web.FragmentsEditor}
+{namespace com.liferay.layout.content.page.editor.web.FragmentsEditor}
 
 /**
  * FragmentsEditor
@@ -46,16 +46,16 @@
 	{@param? updateLayoutPageTemplateEntryAssetTypeURL: any}
 
 	<div class="fragments-editor" id="{$id}">
-		{call com.liferay.layout.admin.web.FragmentsEditorToolbar.render}
+		{call com.liferay.layout.content.page.editor.web.FragmentsEditorToolbar.render}
 			{param store: $store /}
 		{/call}
 
-		{call com.liferay.layout.admin.web.FragmentsEditorSidebar.render}
+		{call com.liferay.layout.content.page.editor.web.FragmentsEditorSidebar.render}
 			{param ref: 'sidebar' /}
 			{param store: $store /}
 		{/call}
 
-		{call com.liferay.layout.admin.web.FragmentEntryLinkList.render}
+		{call com.liferay.layout.content.page.editor.web.FragmentEntryLinkList.render}
 			{param activeItemId: $activeItemId /}
 			{param activeItemType: $activeItemType /}
 			{param defaultEditorConfigurations: $defaultEditorConfigurations /}
@@ -81,7 +81,7 @@
 		{/call}
 
 		{if $mappingFieldsURL and $selectMappingDialogVisible}
-			{call com.liferay.layout.admin.web.SelectMappingDialog.render}
+			{call com.liferay.layout.content.page.editor.web.SelectMappingDialog.render}
 				{param editableId: $selectMappingDialogEditableId /}
 				{param editableType: $selectMappingDialogEditableType /}
 				{param fragmentEntryLinkId: $selectMappingDialogFragmentEntryLinkId /}
@@ -97,7 +97,7 @@
 			and $getAssetDisplayContributorsURL
 			and $updateLayoutPageTemplateEntryAssetTypeURL
 			and $selectMappingTypeDialogVisible}
-			{call com.liferay.layout.admin.web.SelectMappingTypeDialog.render}
+			{call com.liferay.layout.content.page.editor.web.SelectMappingTypeDialog.render}
 				{param classPK: $classPK /}
 				{param getAssetClassTypesURL: $getAssetClassTypesURL /}
 				{param getAssetDisplayContributorsURL: $getAssetDisplayContributorsURL /}

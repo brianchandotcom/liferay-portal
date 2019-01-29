@@ -1,4 +1,4 @@
-{namespace com.liferay.layout.admin.web.FragmentEntryLinkList}
+{namespace com.liferay.layout.content.page.editor.web.FragmentEntryLinkList}
 
 /**
  * FragmentEntryLinkList
@@ -244,7 +244,7 @@
 		</nav>
 
 		{if ($activeItemId == $rowId) and ($activeItemType == $dropTargetItemTypes.section)}
-			{call com.liferay.layout.admin.web.FloatingToolbar.render}
+			{call com.liferay.layout.content.page.editor.web.FloatingToolbar.render}
 				{param item: $row /}
 				{param itemId: $rowId /}
 				{param store: $store /}
@@ -408,7 +408,7 @@
 		{/if}
 	{/let}
 
-	{call com.liferay.layout.admin.web.FragmentEntryLink.render}
+	{call com.liferay.layout.content.page.editor.web.FragmentEntryLink.render}
 		{param content: $content /}
 		{param defaultEditorConfigurations: $defaultEditorConfigurations /}
 		{param editableValues: $editableValues /}

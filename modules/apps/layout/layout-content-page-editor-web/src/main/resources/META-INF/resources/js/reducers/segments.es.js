@@ -1,5 +1,5 @@
 import {CHANGE_SEGMENT_ID} from '../actions/actions.es';
-import {setIn} from '../../utils/utils.es';
+import {setIn} from '../utils/utils.es';
 
 /**
  * @param {!object} state

@@ -23,7 +23,6 @@ FragmentsEditorDisplayContext fragmentsEditorDisplayContext = (FragmentsEditorDi
 <soy:component-renderer
 	componentId='<%= PortalUtil.getPortletNamespace(ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET) + "toolbar" %>'
 	context="<%= fragmentsEditorDisplayContext.getFragmentsEditorToolbarContext() %>"
-	module="layout-admin-web/js/fragments_editor/components/toolbar/FragmentsEditorToolbar.es"
-	templateNamespace="com.liferay.layout.admin.web.FragmentsEditorToolbar.render"
-	useNamespace="<%= false %>"
+	module="js/components/toolbar/FragmentsEditorToolbar.es"
+	templateNamespace="com.liferay.layout.content.page.editor.web.FragmentsEditorToolbar.render"
 />

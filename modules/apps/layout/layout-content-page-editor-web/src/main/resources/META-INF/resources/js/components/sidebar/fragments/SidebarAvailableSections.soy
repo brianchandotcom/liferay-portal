@@ -1,4 +1,4 @@
-{namespace com.liferay.layout.admin.web.SidebarAvailableSections}
+{namespace com.liferay.layout.content.page.editor.web.SidebarAvailableSections}
 
 /**
  * SidebarAvailableSections
@@ -60,7 +60,7 @@
 							role="tabpanel"
 						>
 							{foreach $fragmentEntry in $fragmentCollection.fragmentEntries}
-								{call com.liferay.layout.admin.web.FragmentsEditorSidebarCard.render}
+								{call com.liferay.layout.content.page.editor.web.FragmentsEditorSidebarCard.render}
 									{param events: ['itemClick': $_handleEntryClick] /}
 									{param icon: 'plus' /}
 									{param imagePreviewURL: $fragmentEntry.imagePreviewURL /}

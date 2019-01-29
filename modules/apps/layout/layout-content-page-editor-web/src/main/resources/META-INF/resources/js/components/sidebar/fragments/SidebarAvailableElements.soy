@@ -1,4 +1,4 @@
-{namespace com.liferay.layout.admin.web.SidebarAvailableElements}
+{namespace com.liferay.layout.content.page.editor.web.SidebarAvailableElements}
 
 /**
  * SidebarAvailableElements
@@ -52,7 +52,7 @@
 					id="structure-collection"
 					role="tabpanel"
 				>
-					{call com.liferay.layout.admin.web.SidebarLayoutsPanel.render}
+					{call com.liferay.layout.content.page.editor.web.SidebarLayoutsPanel.render}
 						{param store: $store /}
 					{/call}
 				</div>
@@ -96,7 +96,7 @@
 						>
 							<div class="fragments-editor-sidebar-section__elements-panel-grid">
 								{foreach $fragmentEntry in $fragmentCollection.fragmentEntries}
-									{call com.liferay.layout.admin.web.FragmentsEditorSidebarCard.render}
+									{call com.liferay.layout.content.page.editor.web.FragmentsEditorSidebarCard.render}
 										{param events: ['itemClick': $_handleEntryClick] /}
 										{param icon: 'plus' /}
 										{param imagePreviewURL: $fragmentEntry.imagePreviewURL /}

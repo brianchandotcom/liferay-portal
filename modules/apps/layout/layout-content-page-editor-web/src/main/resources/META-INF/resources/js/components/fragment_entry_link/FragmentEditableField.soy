@@ -1,4 +1,4 @@
-{namespace com.liferay.layout.admin.web.FragmentEditableField}
+{namespace com.liferay.layout.content.page.editor.web.FragmentEditableField}
 
 /**
  * FragmentEditableField
@@ -33,7 +33,7 @@
 		{$content}
 
 		{if not $_editing and $_showTooltip and $_tooltipAlignElement and $_tooltipButtons}
-			{call com.liferay.layout.admin.web.FragmentEditableFieldTooltip.render}
+			{call com.liferay.layout.content.page.editor.web.FragmentEditableFieldTooltip.render}
 				{param alignElement: $_tooltipAlignElement /}
 				{param buttons: $_tooltipButtons /}
 				{param events: [

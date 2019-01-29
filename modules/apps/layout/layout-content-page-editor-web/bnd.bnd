@@ -1,0 +1,15 @@
+Bundle-Name: Liferay Layout Content Page Editor Web
+Bundle-SymbolicName: com.liferay.layout.content.page.editor.web
+Bundle-Version: 1.0.0
+Provide-Capability:\
+	soy;\
+		type="layout-content-page-editor-web";\
+		version:Version="${Bundle-Version}"
+Require-Capability:\
+	liferay.resource.bundle;\
+		filter:="(bundle.symbolic.name=com.liferay.frontend.editor.lang)",\
+	osgi.extender;\
+		filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/soy))",\
+	soy;\
+		filter:="(type=layout-taglib)"
+Web-ContextPath: /layout-content-page-editor-web

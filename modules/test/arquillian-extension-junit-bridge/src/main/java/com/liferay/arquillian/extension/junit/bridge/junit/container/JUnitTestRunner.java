@@ -37,22 +37,21 @@ public class JUnitTestRunner implements TestRunner {
 	public TestResult execute(Class<?> testClass, String methodName) {
 		TestResult testResult = null;
 
-		ExpectedExceptionHolder exceptionHolder = new ExpectedExceptionHolder();
+		ExceptionRunListener exceptionRunListener = new ExceptionRunListener();
 
 		try {
 			JUnitCore jUnitCore = new JUnitCore();
 
-			jUnitCore.addListener(exceptionHolder);
+			jUnitCore.addListener(exceptionRunListener);
 
 			Result result = jUnitCore.run(
 				Request.method(testClass, methodName));
 
-			if (result.getFailureCount() > 0)
-			{
-				testResult = TestResult.failed(exceptionHolder.getException());
+			if (result.getFailureCount() > 0) {
+				testResult = TestResult.failed(
+					exceptionRunListener.getException());
 			}
-			else if (result.getIgnoreCount() > 0)
-			{
+			else if (result.getIgnoreCount() > 0) {
 				testResult = TestResult.skipped(null);
 			}
 			else {
@@ -60,7 +59,7 @@ public class JUnitTestRunner implements TestRunner {
 			}
 
 			if (testResult.getThrowable() == null) {
-				testResult.setThrowable(exceptionHolder.getException());
+				testResult.setThrowable(exceptionRunListener.getException());
 			}
 		}
 		catch (Throwable t) {
@@ -78,7 +77,7 @@ public class JUnitTestRunner implements TestRunner {
 		return testResult;
 	}
 
-	private class ExpectedExceptionHolder extends RunListener {
+	private class ExceptionRunListener extends RunListener {
 
 		public Throwable getException() {
 			return _throwable;
@@ -95,7 +94,7 @@ public class JUnitTestRunner implements TestRunner {
 		}
 
 		@Override
-		public void testFailure(Failure failure) throws Exception {
+		public void testFailure(Failure failure) {
 			_throwable = State.getTestException();
 
 			Description description = failure.getDescription();
@@ -110,7 +109,7 @@ public class JUnitTestRunner implements TestRunner {
 		}
 
 		@Override
-		public void testFinished(Description description) throws Exception {
+		public void testFinished(Description description) {
 			Test test = description.getAnnotation(Test.class);
 
 			if ((_throwable == null) && (test != null) &&

@@ -1,0 +1,54 @@
+{
+	"csfConfig": {
+		"path:**/*.js": {
+			"js": {
+				"lint": {
+					"globals": {
+						"$": true,
+						"AlloyEditor": true,
+						"CKEDITOR": true,
+						"MODULE_PATH": true,
+						"_": true
+					}
+				}
+			}
+		}
+	},
+	"dependencies": {
+		"clay-checkbox": "^2.6.0",
+		"clay-dropdown": "^2.5.1",
+		"metal": "^2.16.5",
+		"metal-component": "^2.16.3",
+		"metal-debounce": "^2.0.0",
+		"metal-dom": "^2.5.18",
+		"metal-drag-drop": "^3.1.0",
+		"metal-events": "^2.16.5",
+		"metal-position": "^2.1.1",
+		"metal-soy": "^2.13.2",
+		"metal-state": "^2.13.2",
+		"metal-throttle": "^3.0.0",
+		"metal-uri": "^3.1.0"
+	},
+	"devDependencies": {
+		"babel-cli": "^6.26.0",
+		"babel-preset-env": "^1.7.0",
+		"check-source-formatting": "^2.0.12",
+		"cross-env": "^5.2.0",
+		"liferay-npm-bridge-generator": "^2.6.1",
+		"liferay-npm-bundler": "^2.5.1",
+		"liferay-npm-bundler-preset-liferay-dev": "^1.1.0",
+		"metal-tools-soy": "^4.0.0",
+		"rimraf": "^2.6.2"
+	},
+	"name": "layout-content-page-editor-web",
+	"scripts": {
+		"build": "npm run build:soy && npm run compile && liferay-npm-bundler && liferay-npm-bridge-generator && npm run cleanSoy",
+		"build:soy": "metalsoy --soyDeps \"node_modules/+(clay-button|clay-checkbox|clay-dropdown|clay-icon|clay-link|clay-portal|clay-radio|com.liferay.frontend.js.web|com.liferay.frontend.taglib)/**/*.soy\"",
+		"checkFormat": "npm run csf",
+		"cleanSoy": "rimraf src/**/*.soy.js",
+		"compile": "cross-env NODE_ENV=production babel --source-maps -d classes/META-INF/resources src/main/resources/META-INF/resources",
+		"csf": "csf src/**/*.js src/**/*.scss src/**/*.soy",
+		"format": "npm run csf -- -i"
+	},
+	"version": "1.0.0"
+}

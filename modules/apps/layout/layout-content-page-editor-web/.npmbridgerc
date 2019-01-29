@@ -1,0 +1,15 @@
+{
+	"layout-content-page-editor-web": {
+		"dest-mod-name-mapper": {
+			"from": "(.*)\\.js$",
+			"to": "bridge/layout-content-page-editor-web/$1"
+		},
+		"file-globs": "**/*.es.js,**/*.soy.js",
+		"input": "classes/META-INF/resources",
+		"output": "classes/META-INF/resources/bridge/layout-content-page-editor-web",
+		"src-mod-name-mapper": {
+			"from": "(.*)\\.js$",
+			"to": "layout-content-page-editor-web/$1"
+		}
+	}
+}

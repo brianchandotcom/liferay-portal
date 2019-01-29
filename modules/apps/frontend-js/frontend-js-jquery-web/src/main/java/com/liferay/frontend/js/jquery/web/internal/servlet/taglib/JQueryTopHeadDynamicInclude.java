@@ -60,14 +60,12 @@ public class JQueryTopHeadDynamicInclude extends BaseDynamicInclude {
 			_absolutePortalURLBuilderFactory.getAbsolutePortalURLBuilder(
 				request);
 
-		String context = request.getContextPath();
-
 		for (String fileName : _FILE_NAMES) {
 			printWriter.print("<script data-senna-track=\"permanent\" src=\"");
 
 			printWriter.print(
-				absolutePortalURLBuilder.forResource(
-					context + "/o/frontend-js-jquery-web/" + fileName
+				absolutePortalURLBuilder.forModule(
+					"frontend-js-jquery-web/" + fileName
 				).build());
 
 			printWriter.println("\" type=\"text/javascript\"></script>");

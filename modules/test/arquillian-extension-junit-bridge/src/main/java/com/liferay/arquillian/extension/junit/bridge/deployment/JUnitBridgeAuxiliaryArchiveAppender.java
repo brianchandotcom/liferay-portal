@@ -18,13 +18,11 @@ import com.liferay.arquillian.extension.junit.bridge.LiferayArquillianJUnitBridg
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.arquillian.extension.junit.bridge.junit.container.JUnitTestRunner;
 import com.liferay.arquillian.extension.junit.bridge.observer.JUnitBridgeObserver;
-import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 
 import java.io.IOException;
-import java.io.InputStream;
 
 import java.util.jar.Attributes;
 import java.util.jar.Manifest;
@@ -34,6 +32,7 @@ import org.jboss.arquillian.container.test.spi.TestRunner;
 import org.jboss.arquillian.container.test.spi.client.deployment.AuxiliaryArchiveAppender;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.asset.Asset;
 import org.jboss.shrinkwrap.api.asset.ByteArrayAsset;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
@@ -59,14 +58,7 @@ public class JUnitBridgeAuxiliaryArchiveAppender
 			TestRunner.class, JUnitTestRunner.class);
 		javaArchive.addClasses(Arquillian.class, JUnitBridgeObserver.class);
 		javaArchive.addPackages(false, Arquillian.class.getPackage());
-
-		try (InputStream inputStream = _writeManifest()) {
-			javaArchive.add(
-				new ByteArrayAsset(inputStream), "/META-INF/MANIFEST.MF");
-		}
-		catch (IOException ioe) {
-			throw new IllegalStateException("Unable to add manifest", ioe);
-		}
+		javaArchive.add(_createManifestAsset(), "/META-INF/MANIFEST.MF");
 
 		return javaArchive;
 	}
@@ -84,7 +76,7 @@ public class JUnitBridgeAuxiliaryArchiveAppender
 		return sb.toString();
 	}
 
-	private InputStream _writeManifest() throws IOException {
+	private Asset _createManifestAsset() {
 		Manifest manifest = new Manifest();
 
 		Attributes attributes = manifest.getMainAttributes();
@@ -106,10 +98,14 @@ public class JUnitBridgeAuxiliaryArchiveAppender
 		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
 			new UnsyncByteArrayOutputStream();
 
-		manifest.write(unsyncByteArrayOutputStream);
+		try {
+			manifest.write(unsyncByteArrayOutputStream);
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
 
-		return new UnsyncByteArrayInputStream(
-			unsyncByteArrayOutputStream.toByteArray());
+		return new ByteArrayAsset(unsyncByteArrayOutputStream.toByteArray());
 	}
 
 }

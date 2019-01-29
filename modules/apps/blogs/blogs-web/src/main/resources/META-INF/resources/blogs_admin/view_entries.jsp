@@ -56,6 +56,7 @@ String displayStyle = blogEntriesManagementToolbarDisplayContext.getDisplayStyle
 	creationMenu="<%= blogEntriesManagementToolbarDisplayContext.getCreationMenu() %>"
 	disabled="<%= entriesSearchContainer.getTotal() <= 0 %>"
 	filterDropdownItems="<%= blogEntriesManagementToolbarDisplayContext.getFilterDropdownItems() %>"
+	filterLabelItems="<%= blogEntriesManagementToolbarDisplayContext.getFilterLabelItems() %>"
 	itemsTotal="<%= entriesSearchContainer.getTotal() %>"
 	searchActionURL="<%= blogEntriesManagementToolbarDisplayContext.getSearchActionURL() %>"
 	searchContainerId="blogEntries"

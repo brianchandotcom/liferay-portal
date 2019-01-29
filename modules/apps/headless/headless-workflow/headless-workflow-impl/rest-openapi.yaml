@@ -255,7 +255,7 @@ paths:
           name: parent-id
           required: true
           schema:
-            $ref: "#/components/schemas/WorkflowTask"
+            type: integer
       responses:
         200:
           content:

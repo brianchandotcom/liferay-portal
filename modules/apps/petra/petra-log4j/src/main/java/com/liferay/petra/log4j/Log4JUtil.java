@@ -14,14 +14,12 @@
 
 package com.liferay.petra.log4j;
 
-import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.log.LogFactory;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ServerDetector;
@@ -31,14 +29,13 @@ import com.liferay.portal.kernel.util.StringUtil;
 import java.io.IOException;
 import java.io.InputStream;
 
-import java.lang.reflect.Field;
-
 import java.net.URL;
 
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.LogManager;
@@ -146,7 +143,7 @@ public class Log4JUtil {
 	}
 
 	public static Map<String, String> getCustomLogSettings() {
-		return new HashMap<>(_getCustomLogSettings());
+		return new HashMap<>(_customLogSettings);
 	}
 
 	public static String getOriginalLevel(String className) {
@@ -202,9 +199,7 @@ public class Log4JUtil {
 		jdkLogger.setLevel(_getJdkLevel(priority));
 
 		if (custom) {
-			Map<String, String> customLogSettings = _getCustomLogSettings();
-
-			customLogSettings.put(name, priority);
+			_customLogSettings.put(name, priority);
 		}
 	}
 
@@ -230,23 +225,6 @@ public class Log4JUtil {
 		StreamUtil.transfer(inputStream, unsyncByteArrayOutputStream, -1, true);
 
 		return unsyncByteArrayOutputStream.toByteArray();
-	}
-
-	private static Map<String, String> _getCustomLogSettings() {
-		ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
-
-		try {
-			Class<?> clazz = classLoader.loadClass(
-				"com.liferay.util.log4j.Log4JUtil");
-
-			Field field = ReflectionUtil.getDeclaredField(
-				clazz, "_customLogSettings");
-
-			return (Map<String, String>)field.get(null);
-		}
-		catch (Exception e) {
-			return ReflectionUtil.throwException(e);
-		}
 	}
 
 	private static java.util.logging.Level _getJdkLevel(String priority) {
@@ -334,6 +312,8 @@ public class Log4JUtil {
 
 	private static final Logger _logger = Logger.getRootLogger();
 
+	private static final Map<String, String> _customLogSettings =
+		new ConcurrentHashMap<>();
 	private static String _liferayHome;
 
 }

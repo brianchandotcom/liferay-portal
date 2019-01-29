@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.admin.web.internal.display.context;
+package com.liferay.layout.content.page.editor.web.internal.display.context;
 
 import com.liferay.asset.display.contributor.AssetDisplayContributor;
 import com.liferay.asset.display.contributor.AssetDisplayContributorTracker;
@@ -77,9 +77,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Jürgen Kappler
  */
-public class FragmentsEditorDisplayContext {
+public class ContentPageEditorLayoutPageTemplateDisplayContext {
 
-	public FragmentsEditorDisplayContext(
+	public ContentPageEditorLayoutPageTemplateDisplayContext(
 		HttpServletRequest request, RenderResponse renderResponse,
 		String className, long classPK, boolean showMapping) {
 

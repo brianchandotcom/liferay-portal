@@ -447,31 +447,38 @@ if (comment) {
 		</liferay-portlet:resourceURL>
 
 		var createAutocomplete = function(contentTextarea) {
-			fetch('<%= HtmlUtil.escapeJS(userIdURL.toString()) %>')
-			.then(function(response) {
-				return response.json();
-			})
-			.then(function(response) {
-				autocompleteDiv = new A.AutoComplete(
-					{
-						inputNode: contentTextarea,
-						maxResults: 5,
-							on: {
-								clear: function() {
-								var highlighterContent = A.one('#<portlet:namespace />highlighterContent<%= formId %>');
+			fetch(
+				'<%= HtmlUtil.escapeJS(userIdURL.toString()) %>',
+				{
+					credentials: 'include'
+				}
+			).then(
+				function(response) {
+					return response.json();
+				}
+			).then(
+				function(response) {
+					autocompleteDiv = new A.AutoComplete(
+						{
+							inputNode: contentTextarea,
+							maxResults: 5,
+								on: {
+									clear: function() {
+									var highlighterContent = A.one('#<portlet:namespace />highlighterContent<%= formId %>');
 
-								highlighterContent.html('');
-							},
-							query: updateHighlightDivContent,
-							select: updateContentTextbox
-							},
-						resultFilters: 'phraseMatch',
-						resultFormatter: resultFormatter,
-						resultTextLocator: 'fullName',
-						source: response
-					}
-				).render();
-			})
+									highlighterContent.html('');
+								},
+								query: updateHighlightDivContent,
+								select: updateContentTextbox
+								},
+							resultFilters: 'phraseMatch',
+							resultFormatter: resultFormatter,
+							resultTextLocator: 'fullName',
+							source: response
+						}
+					).render();
+				}
+			);
 		};
 
 		<c:choose>

@@ -15,13 +15,22 @@
 package com.liferay.trash.web.internal.servlet.taglib.clay;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.BaseVerticalCard;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.trash.TrashRenderer;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.trash.model.TrashEntry;
+import com.liferay.trash.web.internal.constants.TrashWebKeys;
+import com.liferay.trash.web.internal.display.context.TrashEntryActionDropdownItems;
+
+import java.util.Collections;
+import java.util.List;
 
 import javax.portlet.RenderRequest;
 
@@ -32,14 +41,40 @@ public class TrashEntryVerticalCard extends BaseVerticalCard {
 
 	public TrashEntryVerticalCard(
 		TrashEntry trashEntry, TrashRenderer trashRenderer,
-		RenderRequest renderRequest, RowChecker rowChecker,
+		RenderRequest renderRequest,
+		LiferayPortletResponse liferayPortletResponse, RowChecker rowChecker,
 		String viewContentURL) {
 
 		super(trashEntry, renderRequest, rowChecker);
 
 		_trashEntry = trashEntry;
 		_trashRenderer = trashRenderer;
+		_liferayPortletRequest = PortalUtil.getLiferayPortletRequest(
+			renderRequest);
+		_liferayPortletResponse = liferayPortletResponse;
 		_viewContentURL = viewContentURL;
+	}
+
+	@Override
+	public List<DropdownItem> getActionDropdownItems() {
+		try {
+			TrashEntryActionDropdownItems trashEntryActionDropdownItems =
+				new TrashEntryActionDropdownItems(
+					_liferayPortletRequest, _liferayPortletResponse,
+					_trashEntry);
+
+			return trashEntryActionDropdownItems.getActionDropdownItems();
+		}
+		catch (Exception e) {
+			_log.error("Unable to get trash entry actions", e);
+		}
+
+		return Collections.emptyList();
+	}
+
+	@Override
+	public String getDefaultEventHandler() {
+		return TrashWebKeys.TRASH_ENTRIES_DEFAULT_EVENT_HANDLER;
 	}
 
 	@Override
@@ -73,6 +108,8 @@ public class TrashEntryVerticalCard extends BaseVerticalCard {
 	private static final Log _log = LogFactoryUtil.getLog(
 		TrashEntryVerticalCard.class);
 
+	private final LiferayPortletRequest _liferayPortletRequest;
+	private final LiferayPortletResponse _liferayPortletResponse;
 	private final TrashEntry _trashEntry;
 	private final TrashRenderer _trashRenderer;
 	private final String _viewContentURL;

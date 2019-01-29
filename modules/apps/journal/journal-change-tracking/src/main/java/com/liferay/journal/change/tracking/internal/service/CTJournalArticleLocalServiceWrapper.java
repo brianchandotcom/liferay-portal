@@ -15,6 +15,7 @@
 package com.liferay.journal.change.tracking.internal.service;
 
 import com.liferay.change.tracking.CTManager;
+import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.exception.CTEntryException;
 import com.liferay.change.tracking.exception.CTException;
 import com.liferay.journal.model.JournalArticle;
@@ -86,7 +87,7 @@ public class CTJournalArticleLocalServiceWrapper
 			smallImage, smallImageURL, smallImageFile, images, articleURL,
 			serviceContext);
 
-		_registerChange(journalArticle);
+		_registerChange(journalArticle, CTConstants.CT_CHANGE_TYPE_ADDITION);
 
 		return journalArticle;
 	}
@@ -121,7 +122,7 @@ public class CTJournalArticleLocalServiceWrapper
 			reviewDateMinute, neverReview, indexable, smallImage, smallImageURL,
 			smallImageFile, images, articleURL, serviceContext);
 
-		_registerChange(journalArticle);
+		_registerChange(journalArticle, CTConstants.CT_CHANGE_TYPE_ADDITION);
 
 		return journalArticle;
 	}
@@ -138,7 +139,7 @@ public class CTJournalArticleLocalServiceWrapper
 			userId, groupId, folderId, titleMap, descriptionMap, content,
 			ddmStructureKey, ddmTemplateKey, serviceContext);
 
-		_registerChange(journalArticle);
+		_registerChange(journalArticle, CTConstants.CT_CHANGE_TYPE_ADDITION);
 
 		return journalArticle;
 	}
@@ -151,7 +152,8 @@ public class CTJournalArticleLocalServiceWrapper
 		JournalArticle journalArticle = super.checkArticleResourcePrimKey(
 			groupId, articleId, version);
 
-		_registerChange(journalArticle);
+		_registerChange(
+			journalArticle, CTConstants.CT_CHANGE_TYPE_MODIFICATION);
 
 		return journalArticle;
 	}
@@ -165,7 +167,8 @@ public class CTJournalArticleLocalServiceWrapper
 		JournalArticle journalArticle = super.fetchArticle(
 			groupId, articleId, version);
 
-		_registerChange(journalArticle);
+		_registerChange(
+			journalArticle, CTConstants.CT_CHANGE_TYPE_MODIFICATION);
 	}
 
 	@Override
@@ -178,7 +181,7 @@ public class CTJournalArticleLocalServiceWrapper
 			userId, groupId, oldArticleId, newArticleId, autoArticleId,
 			version);
 
-		_registerChange(journalArticle);
+		_registerChange(journalArticle, CTConstants.CT_CHANGE_TYPE_ADDITION);
 
 		return journalArticle;
 	}
@@ -231,7 +234,8 @@ public class CTJournalArticleLocalServiceWrapper
 		JournalArticle journalArticle = super.moveArticle(
 			groupId, articleId, newFolderId, serviceContext);
 
-		_registerChange(journalArticle);
+		_registerChange(
+			journalArticle, CTConstants.CT_CHANGE_TYPE_MODIFICATION);
 
 		return journalArticle;
 	}
@@ -245,7 +249,8 @@ public class CTJournalArticleLocalServiceWrapper
 		JournalArticle journalArticle = super.moveArticleFromTrash(
 			userId, groupId, article, newFolderId, serviceContext);
 
-		_registerChange(journalArticle);
+		_registerChange(
+			journalArticle, CTConstants.CT_CHANGE_TYPE_MODIFICATION);
 
 		return journalArticle;
 	}
@@ -258,7 +263,7 @@ public class CTJournalArticleLocalServiceWrapper
 		JournalArticle journalArticle = super.moveArticleToTrash(
 			userId, article);
 
-		_registerChange(journalArticle);
+		_registerChange(journalArticle, CTConstants.CT_CHANGE_TYPE_DELETION);
 
 		return journalArticle;
 	}
@@ -271,7 +276,7 @@ public class CTJournalArticleLocalServiceWrapper
 		JournalArticle journalArticle = super.moveArticleToTrash(
 			userId, groupId, articleId);
 
-		_registerChange(journalArticle);
+		_registerChange(journalArticle, CTConstants.CT_CHANGE_TYPE_DELETION);
 
 		return journalArticle;
 	}
@@ -284,7 +289,8 @@ public class CTJournalArticleLocalServiceWrapper
 		JournalArticle journalArticle = super.removeArticleLocale(
 			groupId, articleId, version, languageId);
 
-		_registerChange(journalArticle);
+		_registerChange(
+			journalArticle, CTConstants.CT_CHANGE_TYPE_MODIFICATION);
 
 		return journalArticle;
 	}
@@ -297,7 +303,8 @@ public class CTJournalArticleLocalServiceWrapper
 		JournalArticle journalArticle = super.restoreArticleFromTrash(
 			userId, article);
 
-		_registerChange(journalArticle);
+		_registerChange(
+			journalArticle, CTConstants.CT_CHANGE_TYPE_MODIFICATION);
 
 		return journalArticle;
 	}
@@ -332,7 +339,8 @@ public class CTJournalArticleLocalServiceWrapper
 			reviewDateMinute, neverReview, indexable, smallImage, smallImageURL,
 			smallImageFile, images, articleURL, serviceContext);
 
-		_registerChange(journalArticle);
+		_registerChange(
+			journalArticle, CTConstants.CT_CHANGE_TYPE_MODIFICATION);
 
 		return journalArticle;
 	}
@@ -349,7 +357,8 @@ public class CTJournalArticleLocalServiceWrapper
 			userId, groupId, folderId, articleId, version, titleMap,
 			descriptionMap, content, layoutUuid, serviceContext);
 
-		_registerChange(journalArticle);
+		_registerChange(
+			journalArticle, CTConstants.CT_CHANGE_TYPE_MODIFICATION);
 
 		return journalArticle;
 	}
@@ -383,7 +392,8 @@ public class CTJournalArticleLocalServiceWrapper
 			indexable, smallImage, smallImageURL, smallImageFile, images,
 			articleURL, serviceContext);
 
-		_registerChange(journalArticle);
+		_registerChange(
+			journalArticle, CTConstants.CT_CHANGE_TYPE_MODIFICATION);
 
 		return journalArticle;
 	}
@@ -398,7 +408,8 @@ public class CTJournalArticleLocalServiceWrapper
 			userId, groupId, folderId, articleId, version, content,
 			serviceContext);
 
-		_registerChange(journalArticle);
+		_registerChange(
+			journalArticle, CTConstants.CT_CHANGE_TYPE_MODIFICATION);
 
 		return journalArticle;
 	}
@@ -409,7 +420,8 @@ public class CTJournalArticleLocalServiceWrapper
 
 		JournalArticle journalArticle = super.updateArticle(id, urlTitle);
 
-		_registerChange(journalArticle);
+		_registerChange(
+			journalArticle, CTConstants.CT_CHANGE_TYPE_MODIFICATION);
 
 		return journalArticle;
 	}
@@ -425,7 +437,8 @@ public class CTJournalArticleLocalServiceWrapper
 			groupId, articleId, version, locale, title, description, content,
 			images, serviceContext);
 
-		_registerChange(journalArticle);
+		_registerChange(
+			journalArticle, CTConstants.CT_CHANGE_TYPE_MODIFICATION);
 
 		return journalArticle;
 	}
@@ -438,7 +451,8 @@ public class CTJournalArticleLocalServiceWrapper
 		JournalArticle journalArticle = super.updateContent(
 			groupId, articleId, version, content);
 
-		_registerChange(journalArticle);
+		_registerChange(
+			journalArticle, CTConstants.CT_CHANGE_TYPE_MODIFICATION);
 
 		return journalArticle;
 	}
@@ -454,7 +468,8 @@ public class CTJournalArticleLocalServiceWrapper
 			userId, article, status, articleURL, serviceContext,
 			workflowContext);
 
-		_registerChange(journalArticle);
+		_registerChange(
+			journalArticle, CTConstants.CT_CHANGE_TYPE_MODIFICATION);
 
 		return journalArticle;
 	}
@@ -469,7 +484,8 @@ public class CTJournalArticleLocalServiceWrapper
 		JournalArticle journalArticle = super.updateStatus(
 			userId, classPK, status, workflowContext, serviceContext);
 
-		_registerChange(journalArticle);
+		_registerChange(
+			journalArticle, CTConstants.CT_CHANGE_TYPE_MODIFICATION);
 
 		return journalArticle;
 	}
@@ -486,19 +502,21 @@ public class CTJournalArticleLocalServiceWrapper
 			userId, groupId, articleId, version, status, articleURL,
 			workflowContext, serviceContext);
 
-		_registerChange(journalArticle);
+		_registerChange(
+			journalArticle, CTConstants.CT_CHANGE_TYPE_MODIFICATION);
 
 		return journalArticle;
 	}
 
-	private void _registerChange(JournalArticle journalArticle)
+	private void _registerChange(JournalArticle journalArticle, int changeType)
 		throws CTException {
 
 		try {
 			_ctManager.registerModelChange(
 				PrincipalThreadLocal.getUserId(),
 				_portal.getClassNameId(JournalArticle.class.getName()),
-				journalArticle.getId(), journalArticle.getResourcePrimKey());
+				journalArticle.getId(), journalArticle.getResourcePrimKey(),
+				changeType);
 		}
 		catch (CTException cte) {
 			if (cte instanceof CTEntryException) {
@@ -524,9 +542,6 @@ public class CTJournalArticleLocalServiceWrapper
 
 	@Reference
 	private CTManager _ctManager;
-
-	@Reference
-	private JournalArticleLocalService _journalArticleLocalService;
 
 	@Reference
 	private Portal _portal;

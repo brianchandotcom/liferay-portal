@@ -92,15 +92,15 @@ public class ContentStructureResourceImpl implements ContentStructureResource {
 	}
 
 	@Reference
-	private Portal _portal;
+	private ClassNameService _classNameService;
+
+	@Reference
+	private CompanyService _companyService;
 
 	@Reference
 	private DDMStructureService _ddmStructureService;
 
 	@Reference
-	private ClassNameService _classNameService;
-
-	@Reference
-	private CompanyService _companyService;
+	private Portal _portal;
 
 }

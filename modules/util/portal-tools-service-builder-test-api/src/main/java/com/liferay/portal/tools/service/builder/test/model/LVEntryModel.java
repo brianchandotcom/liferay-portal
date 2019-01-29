@@ -84,6 +84,21 @@ public interface LVEntryModel extends BaseModel<LVEntry>, MVCCModel,
 	public void setMvccVersion(long mvccVersion);
 
 	/**
+	 * Returns the uuid of this lv entry.
+	 *
+	 * @return the uuid of this lv entry
+	 */
+	@AutoEscape
+	public String getUuid();
+
+	/**
+	 * Sets the uuid of this lv entry.
+	 *
+	 * @param uuid the uuid of this lv entry
+	 */
+	public void setUuid(String uuid);
+
+	/**
 	 * Returns the head ID of this lv entry.
 	 *
 	 * @return the head ID of this lv entry
@@ -141,6 +156,21 @@ public interface LVEntryModel extends BaseModel<LVEntry>, MVCCModel,
 	 * @param groupId the group ID of this lv entry
 	 */
 	public void setGroupId(long groupId);
+
+	/**
+	 * Returns the unique group key of this lv entry.
+	 *
+	 * @return the unique group key of this lv entry
+	 */
+	@AutoEscape
+	public String getUniqueGroupKey();
+
+	/**
+	 * Sets the unique group key of this lv entry.
+	 *
+	 * @param uniqueGroupKey the unique group key of this lv entry
+	 */
+	public void setUniqueGroupKey(String uniqueGroupKey);
 
 	public String[] getAvailableLanguageIds();
 

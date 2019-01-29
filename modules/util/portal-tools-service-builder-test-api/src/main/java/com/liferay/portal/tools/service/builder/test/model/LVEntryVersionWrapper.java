@@ -59,9 +59,11 @@ public class LVEntryVersionWrapper implements LVEntryVersion,
 
 		attributes.put("lvEntryVersionId", getLvEntryVersionId());
 		attributes.put("version", getVersion());
+		attributes.put("uuid", getUuid());
 		attributes.put("defaultLanguageId", getDefaultLanguageId());
 		attributes.put("lvEntryId", getLvEntryId());
 		attributes.put("groupId", getGroupId());
+		attributes.put("uniqueGroupKey", getUniqueGroupKey());
 
 		return attributes;
 	}
@@ -80,6 +82,12 @@ public class LVEntryVersionWrapper implements LVEntryVersion,
 			setVersion(version);
 		}
 
+		String uuid = (String)attributes.get("uuid");
+
+		if (uuid != null) {
+			setUuid(uuid);
+		}
+
 		String defaultLanguageId = (String)attributes.get("defaultLanguageId");
 
 		if (defaultLanguageId != null) {
@@ -96,6 +104,12 @@ public class LVEntryVersionWrapper implements LVEntryVersion,
 
 		if (groupId != null) {
 			setGroupId(groupId);
+		}
+
+		String uniqueGroupKey = (String)attributes.get("uniqueGroupKey");
+
+		if (uniqueGroupKey != null) {
+			setUniqueGroupKey(uniqueGroupKey);
 		}
 	}
 
@@ -167,6 +181,26 @@ public class LVEntryVersionWrapper implements LVEntryVersion,
 	@Override
 	public Serializable getPrimaryKeyObj() {
 		return _lvEntryVersion.getPrimaryKeyObj();
+	}
+
+	/**
+	* Returns the unique group key of this lv entry version.
+	*
+	* @return the unique group key of this lv entry version
+	*/
+	@Override
+	public String getUniqueGroupKey() {
+		return _lvEntryVersion.getUniqueGroupKey();
+	}
+
+	/**
+	* Returns the uuid of this lv entry version.
+	*
+	* @return the uuid of this lv entry version
+	*/
+	@Override
+	public String getUuid() {
+		return _lvEntryVersion.getUuid();
 	}
 
 	/**
@@ -278,6 +312,26 @@ public class LVEntryVersionWrapper implements LVEntryVersion,
 	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		_lvEntryVersion.setPrimaryKeyObj(primaryKeyObj);
+	}
+
+	/**
+	* Sets the unique group key of this lv entry version.
+	*
+	* @param uniqueGroupKey the unique group key of this lv entry version
+	*/
+	@Override
+	public void setUniqueGroupKey(String uniqueGroupKey) {
+		_lvEntryVersion.setUniqueGroupKey(uniqueGroupKey);
+	}
+
+	/**
+	* Sets the uuid of this lv entry version.
+	*
+	* @param uuid the uuid of this lv entry version
+	*/
+	@Override
+	public void setUuid(String uuid) {
+		_lvEntryVersion.setUuid(uuid);
 	}
 
 	/**

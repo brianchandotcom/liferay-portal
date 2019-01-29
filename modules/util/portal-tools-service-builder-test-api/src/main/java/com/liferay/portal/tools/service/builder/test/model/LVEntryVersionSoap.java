@@ -34,9 +34,11 @@ public class LVEntryVersionSoap implements Serializable {
 
 		soapModel.setLvEntryVersionId(model.getLvEntryVersionId());
 		soapModel.setVersion(model.getVersion());
+		soapModel.setUuid(model.getUuid());
 		soapModel.setDefaultLanguageId(model.getDefaultLanguageId());
 		soapModel.setLvEntryId(model.getLvEntryId());
 		soapModel.setGroupId(model.getGroupId());
+		soapModel.setUniqueGroupKey(model.getUniqueGroupKey());
 
 		return soapModel;
 	}
@@ -105,6 +107,14 @@ public class LVEntryVersionSoap implements Serializable {
 		_version = version;
 	}
 
+	public String getUuid() {
+		return _uuid;
+	}
+
+	public void setUuid(String uuid) {
+		_uuid = uuid;
+	}
+
 	public String getDefaultLanguageId() {
 		return _defaultLanguageId;
 	}
@@ -129,9 +139,19 @@ public class LVEntryVersionSoap implements Serializable {
 		_groupId = groupId;
 	}
 
+	public String getUniqueGroupKey() {
+		return _uniqueGroupKey;
+	}
+
+	public void setUniqueGroupKey(String uniqueGroupKey) {
+		_uniqueGroupKey = uniqueGroupKey;
+	}
+
 	private long _lvEntryVersionId;
 	private int _version;
+	private String _uuid;
 	private String _defaultLanguageId;
 	private long _lvEntryId;
 	private long _groupId;
+	private String _uniqueGroupKey;
 }

@@ -95,6 +95,21 @@ public interface LVEntryVersionModel extends BaseModel<LVEntryVersion>,
 	public void setVersion(int version);
 
 	/**
+	 * Returns the uuid of this lv entry version.
+	 *
+	 * @return the uuid of this lv entry version
+	 */
+	@AutoEscape
+	public String getUuid();
+
+	/**
+	 * Sets the uuid of this lv entry version.
+	 *
+	 * @param uuid the uuid of this lv entry version
+	 */
+	public void setUuid(String uuid);
+
+	/**
 	 * Returns the default language ID of this lv entry version.
 	 *
 	 * @return the default language ID of this lv entry version
@@ -136,6 +151,21 @@ public interface LVEntryVersionModel extends BaseModel<LVEntryVersion>,
 	 * @param groupId the group ID of this lv entry version
 	 */
 	public void setGroupId(long groupId);
+
+	/**
+	 * Returns the unique group key of this lv entry version.
+	 *
+	 * @return the unique group key of this lv entry version
+	 */
+	@AutoEscape
+	public String getUniqueGroupKey();
+
+	/**
+	 * Sets the unique group key of this lv entry version.
+	 *
+	 * @param uniqueGroupKey the unique group key of this lv entry version
+	 */
+	public void setUniqueGroupKey(String uniqueGroupKey);
 
 	@Override
 	public boolean isNew();

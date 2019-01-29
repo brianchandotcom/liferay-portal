@@ -62,18 +62,22 @@ public class LVEntryVersionCacheModel implements CacheModel<LVEntryVersion>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(15);
 
 		sb.append("{lvEntryVersionId=");
 		sb.append(lvEntryVersionId);
 		sb.append(", version=");
 		sb.append(version);
+		sb.append(", uuid=");
+		sb.append(uuid);
 		sb.append(", defaultLanguageId=");
 		sb.append(defaultLanguageId);
 		sb.append(", lvEntryId=");
 		sb.append(lvEntryId);
 		sb.append(", groupId=");
 		sb.append(groupId);
+		sb.append(", uniqueGroupKey=");
+		sb.append(uniqueGroupKey);
 		sb.append("}");
 
 		return sb.toString();
@@ -86,6 +90,13 @@ public class LVEntryVersionCacheModel implements CacheModel<LVEntryVersion>,
 		lvEntryVersionImpl.setLvEntryVersionId(lvEntryVersionId);
 		lvEntryVersionImpl.setVersion(version);
 
+		if (uuid == null) {
+			lvEntryVersionImpl.setUuid("");
+		}
+		else {
+			lvEntryVersionImpl.setUuid(uuid);
+		}
+
 		if (defaultLanguageId == null) {
 			lvEntryVersionImpl.setDefaultLanguageId("");
 		}
@@ -95,6 +106,13 @@ public class LVEntryVersionCacheModel implements CacheModel<LVEntryVersion>,
 
 		lvEntryVersionImpl.setLvEntryId(lvEntryId);
 		lvEntryVersionImpl.setGroupId(groupId);
+
+		if (uniqueGroupKey == null) {
+			lvEntryVersionImpl.setUniqueGroupKey("");
+		}
+		else {
+			lvEntryVersionImpl.setUniqueGroupKey(uniqueGroupKey);
+		}
 
 		lvEntryVersionImpl.resetOriginalValues();
 
@@ -106,11 +124,13 @@ public class LVEntryVersionCacheModel implements CacheModel<LVEntryVersion>,
 		lvEntryVersionId = objectInput.readLong();
 
 		version = objectInput.readInt();
+		uuid = objectInput.readUTF();
 		defaultLanguageId = objectInput.readUTF();
 
 		lvEntryId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
+		uniqueGroupKey = objectInput.readUTF();
 	}
 
 	@Override
@@ -119,6 +139,13 @@ public class LVEntryVersionCacheModel implements CacheModel<LVEntryVersion>,
 		objectOutput.writeLong(lvEntryVersionId);
 
 		objectOutput.writeInt(version);
+
+		if (uuid == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(uuid);
+		}
 
 		if (defaultLanguageId == null) {
 			objectOutput.writeUTF("");
@@ -130,11 +157,20 @@ public class LVEntryVersionCacheModel implements CacheModel<LVEntryVersion>,
 		objectOutput.writeLong(lvEntryId);
 
 		objectOutput.writeLong(groupId);
+
+		if (uniqueGroupKey == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(uniqueGroupKey);
+		}
 	}
 
 	public long lvEntryVersionId;
 	public int version;
+	public String uuid;
 	public String defaultLanguageId;
 	public long lvEntryId;
 	public long groupId;
+	public String uniqueGroupKey;
 }

@@ -14,6 +14,7 @@
 
 package com.liferay.oauth2.provider.web.internal.portlet.action;
 
+import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.oauth2.provider.model.OAuth2ApplicationScopeAliases;
 import com.liferay.oauth2.provider.model.OAuth2Authorization;
 import com.liferay.oauth2.provider.scope.liferay.ApplicationDescriptorLocator;
@@ -90,7 +91,7 @@ public class ViewConnectedApplicationsMVCRenderCommand
 			OAuth2ConnectedApplicationsPortletDisplayContext
 				oAuth2ConnectedApplicationsPortletDisplayContext =
 					new OAuth2ConnectedApplicationsPortletDisplayContext(
-						renderRequest);
+						renderRequest, _dlurlHelper);
 
 			renderRequest.setAttribute(
 				OAuth2ProviderWebKeys.
@@ -140,7 +141,7 @@ public class ViewConnectedApplicationsMVCRenderCommand
 			oAuth2ConnectedApplicationsPortletDisplayContext =
 				new OAuth2ConnectedApplicationsPortletDisplayContext(
 					assignableScopes, renderRequest, _oAuth2ApplicationService,
-					oAuth2Authorization);
+					oAuth2Authorization, _dlurlHelper);
 
 		renderRequest.setAttribute(
 			OAuth2ProviderWebKeys.
@@ -155,6 +156,9 @@ public class ViewConnectedApplicationsMVCRenderCommand
 
 	@Reference
 	private ApplicationDescriptorLocator _applicationDescriptorLocator;
+
+	@Reference
+	private DLURLHelper _dlurlHelper;
 
 	@Reference
 	private OAuth2ApplicationScopeAliasesLocalService

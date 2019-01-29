@@ -63,7 +63,7 @@ public class ChangeListsDisplayContext {
 		soyContext.put(
 			"urlProductionCollection",
 			_themeDisplay.getPortalURL() +
-				"/o/change-tracking/collections/production/" +
+				"/o/change-tracking/collections?type=production&companyId=" +
 					_themeDisplay.getCompanyId());
 		soyContext.put("urlProductionView", _themeDisplay.getPortalURL());
 

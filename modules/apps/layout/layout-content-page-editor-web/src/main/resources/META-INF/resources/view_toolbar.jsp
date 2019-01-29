@@ -17,12 +17,12 @@
 <%@ include file="/init.jsp" %>
 
 <%
-FragmentsEditorDisplayContext fragmentsEditorDisplayContext = (FragmentsEditorDisplayContext)request.getAttribute(ContentPageEditorWebKeys.LIFERAY_SHARED_FRAGMENTS_EDITOR_DISPLAY_CONTEXT);
+ContentPageLayoutEditorDisplayContext contentPageEditorDisplayContext = (ContentPageLayoutEditorDisplayContext)request.getAttribute(ContentPageEditorWebKeys.LIFERAY_SHARED_FRAGMENTS_EDITOR_DISPLAY_CONTEXT);
 %>
 
 <soy:component-renderer
 	componentId='<%= PortalUtil.getPortletNamespace(ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET) + "toolbar" %>'
-	context="<%= fragmentsEditorDisplayContext.getFragmentsEditorToolbarContext() %>"
+	context="<%= contentPageEditorDisplayContext.getFragmentsEditorToolbarContext() %>"
 	module="js/components/toolbar/FragmentsEditorToolbar.es"
 	templateNamespace="com.liferay.layout.content.page.editor.web.FragmentsEditorToolbar.render"
 />

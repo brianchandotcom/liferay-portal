@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-FragmentsEditorDisplayContext fragmentsEditorDisplayContext = (FragmentsEditorDisplayContext)request.getAttribute(ContentPageEditorWebKeys.LIFERAY_SHARED_FRAGMENTS_EDITOR_DISPLAY_CONTEXT);
+ContentPageLayoutEditorDisplayContext contentPageEditorDisplayContext = (ContentPageLayoutEditorDisplayContext)request.getAttribute(ContentPageEditorWebKeys.LIFERAY_SHARED_FRAGMENTS_EDITOR_DISPLAY_CONTEXT);
 %>
 
 <liferay-editor:resources
@@ -30,7 +30,7 @@ FragmentsEditorDisplayContext fragmentsEditorDisplayContext = (FragmentsEditorDi
 
 <soy:component-renderer
 	componentId='<%= renderResponse.getNamespace() + "fragmentsEditor" %>'
-	context="<%= fragmentsEditorDisplayContext.getEditorContext() %>"
+	context="<%= contentPageEditorDisplayContext.getEditorContext() %>"
 	module="js/FragmentsEditor.es"
 	templateNamespace="com.liferay.layout.content.page.editor.web.FragmentsEditor.render"
 />
@@ -52,7 +52,7 @@ JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
 
 <aui:script require="<%= sb.toString() %>">
 	StoreModule.createStore(
-		<%= jsonSerializer.serializeDeep(fragmentsEditorDisplayContext.getEditorContext()) %>,
+		<%= jsonSerializer.serializeDeep(contentPageEditorDisplayContext.getEditorContext()) %>,
 		ReducersModule.reducers,
 		[
 			'<portlet:namespace />editModeWrapper',

@@ -98,9 +98,9 @@ import org.jsoup.select.Elements;
 /**
  * @author Eudaldo Alonso
  */
-public class FragmentsEditorDisplayContext {
+public class ContentPageLayoutEditorDisplayContext {
 
-	public FragmentsEditorDisplayContext(
+	public ContentPageLayoutEditorDisplayContext(
 		HttpServletRequest request, RenderResponse renderResponse) {
 
 		_request = request;
@@ -785,7 +785,7 @@ public class FragmentsEditorDisplayContext {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		FragmentsEditorDisplayContext.class);
+		ContentPageLayoutEditorDisplayContext.class);
 
 	private Map<String, Object> _defaultConfigurations;
 	private SoyContext _editorSoyContext;

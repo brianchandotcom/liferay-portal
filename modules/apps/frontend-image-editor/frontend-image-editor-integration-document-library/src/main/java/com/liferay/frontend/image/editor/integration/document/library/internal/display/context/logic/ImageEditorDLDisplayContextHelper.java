@@ -15,7 +15,7 @@
 package com.liferay.frontend.image.editor.integration.document.library.internal.display.context.logic;
 
 import com.liferay.document.library.constants.DLPortletKeys;
-import com.liferay.document.library.kernel.util.DLUtil;
+import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -64,10 +64,12 @@ import javax.servlet.http.HttpServletRequest;
 public class ImageEditorDLDisplayContextHelper {
 
 	public ImageEditorDLDisplayContextHelper(
-		FileVersion fileVersion, HttpServletRequest request) {
+		FileVersion fileVersion, HttpServletRequest request,
+		DLURLHelper dlurlHelper) {
 
 		_fileVersion = fileVersion;
 		_request = request;
+		_dlurlHelper = dlurlHelper;
 
 		_themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -230,7 +232,7 @@ public class ImageEditorDLDisplayContextHelper {
 		editURL.setParameter(
 			"fileEntryId", String.valueOf(_fileEntry.getFileEntryId()));
 
-		String fileEntryPreviewURL = DLUtil.getPreviewURL(
+		String fileEntryPreviewURL = _dlurlHelper.getPreviewURL(
 			_fileEntry, _fileVersion, _themeDisplay, StringPool.BLANK);
 
 		StringBundler sb = new StringBundler(12);
@@ -251,6 +253,7 @@ public class ImageEditorDLDisplayContextHelper {
 		return sb.toString();
 	}
 
+	private final DLURLHelper _dlurlHelper;
 	private final FileEntry _fileEntry;
 	private final FileVersion _fileVersion;
 	private final HttpServletRequest _request;

@@ -71,12 +71,12 @@ if (dlViewFileVersionDisplayContext.isVersionInfoVisible()) {
 		<div class="sidebar-body">
 
 			<%
-			String thumbnailSrc = DLUtil.getThumbnailSrc(fileEntry, fileVersion, themeDisplay);
+			String thumbnailSrc = dlurlHelper.getThumbnailSrc(fileEntry, fileVersion, themeDisplay);
 			%>
 
 			<c:if test="<%= Validator.isNotNull(thumbnailSrc) %>">
 				<div class="aspect-ratio aspect-ratio-16-to-9 sidebar-panel thumbnail">
-					<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="thumbnail" />" class="aspect-ratio-item-center-middle aspect-ratio-item-fluid" src="<%= DLUtil.getThumbnailSrc(fileEntry, fileVersion, themeDisplay) %>" />
+					<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="thumbnail" />" class="aspect-ratio-item-center-middle aspect-ratio-item-fluid" src="<%= dlurlHelper.getThumbnailSrc(fileEntry, fileVersion, themeDisplay) %>" />
 				</div>
 			</c:if>
 
@@ -125,7 +125,7 @@ if (dlViewFileVersionDisplayContext.isVersionInfoVisible()) {
 							<clay:link
 								buttonStyle="primary"
 								elementClasses='<%= "btn-sm" %>'
-								href="<%= DLUtil.getDownloadURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK) %>"
+								href="<%= dlurlHelper.getDownloadURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK) %>"
 								label='<%= LanguageUtil.get(resourceBundle, "download") %>'
 								title='<%= LanguageUtil.get(resourceBundle, "download") + " (" + TextFormatter.formatStorageSize(fileVersion.getSize(), locale) + ")" %>'
 							/>
@@ -149,7 +149,7 @@ if (dlViewFileVersionDisplayContext.isVersionInfoVisible()) {
 														for (String conversion : conversions) {
 															add(
 																dropdownItem -> {
-																	dropdownItem.setHref(DLUtil.getDownloadURL(fileEntry, fileVersion, themeDisplay, "&targetExtension=" + conversion));
+																	dropdownItem.setHref(dlurlHelper.getDownloadURL(fileEntry, fileVersion, themeDisplay, "&targetExtension=" + conversion));
 																	dropdownItem.setLabel(StringUtil.toUpperCase(conversion));
 																});
 														}
@@ -181,7 +181,7 @@ if (dlViewFileVersionDisplayContext.isVersionInfoVisible()) {
 						}
 						%>
 
-						<aui:input label="<%= urlLabel %>" name="url" type="resource" value="<%= DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK, !isLatestVersion, true) %>" />
+						<aui:input label="<%= urlLabel %>" name="url" type="resource" value="<%= dlurlHelper.getPreviewURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK, !isLatestVersion, true) %>" />
 
 						<c:if test="<%= portletDisplay.isWebDAVEnabled() && fileEntry.isSupportsSocial() && isLatestVersion %>">
 
@@ -196,7 +196,7 @@ if (dlViewFileVersionDisplayContext.isVersionInfoVisible()) {
 							}
 							%>
 
-							<aui:input helpMessage="<%= webDavHelpMessage %>" name="webDavURL" type="resource" value="<%= DLUtil.getWebDavURL(themeDisplay, fileEntry.getFolder(), fileEntry) %>" />
+							<aui:input helpMessage="<%= webDavHelpMessage %>" name="webDavURL" type="resource" value="<%= dlurlHelper.getWebDavURL(themeDisplay, fileEntry.getFolder(), fileEntry) %>" />
 						</c:if>
 					</div>
 				</div>

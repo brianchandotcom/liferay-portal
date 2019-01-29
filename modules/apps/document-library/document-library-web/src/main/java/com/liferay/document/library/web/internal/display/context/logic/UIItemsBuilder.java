@@ -21,8 +21,8 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFileShortcutConstants;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
-import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.document.library.kernel.versioning.VersioningStrategy;
+import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.document.library.web.internal.util.DLTrashUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerRegistryUtil;
@@ -94,22 +94,22 @@ public class UIItemsBuilder {
 	public UIItemsBuilder(
 			HttpServletRequest request, FileShortcut fileShortcut,
 			ResourceBundle resourceBundle, DLTrashUtil dlTrashUtil,
-			VersioningStrategy versioningStrategy)
+			VersioningStrategy versioningStrategy, DLURLHelper dlurlHelper)
 		throws PortalException {
 
 		this(
 			request, fileShortcut.getFileVersion(), fileShortcut,
-			resourceBundle, dlTrashUtil, versioningStrategy);
+			resourceBundle, dlTrashUtil, versioningStrategy, dlurlHelper);
 	}
 
 	public UIItemsBuilder(
 		HttpServletRequest request, FileVersion fileVersion,
 		ResourceBundle resourceBundle, DLTrashUtil dlTrashUtil,
-		VersioningStrategy versioningStrategy) {
+		VersioningStrategy versioningStrategy, DLURLHelper dlurlHelper) {
 
 		this(
 			request, fileVersion, null, resourceBundle, dlTrashUtil,
-			versioningStrategy);
+			versioningStrategy, dlurlHelper);
 	}
 
 	public void addCancelCheckoutMenuItem(List<MenuItem> menuItems)
@@ -469,7 +469,7 @@ public class UIItemsBuilder {
 			appendVersion = true;
 		}
 
-		String url = DLUtil.getDownloadURL(
+		String url = _dlurlHelper.getDownloadURL(
 			_fileEntry, _fileVersion, _themeDisplay, StringPool.BLANK,
 			appendVersion, true);
 
@@ -496,7 +496,7 @@ public class UIItemsBuilder {
 		_addURLUIItem(
 			new URLToolbarItem(), toolbarItems, DLUIItemKeys.DOWNLOAD,
 			LanguageUtil.get(_resourceBundle, "download"),
-			DLUtil.getDownloadURL(
+			_dlurlHelper.getDownloadURL(
 				_fileEntry, _fileVersion, _themeDisplay, StringPool.BLANK));
 	}
 
@@ -657,7 +657,7 @@ public class UIItemsBuilder {
 			return;
 		}
 
-		String webDavURL = DLUtil.getWebDavURL(
+		String webDavURL = _dlurlHelper.getWebDavURL(
 			_themeDisplay, _fileEntry.getFolder(), _fileEntry,
 			PropsValues.
 				DL_FILE_ENTRY_OPEN_IN_MS_OFFICE_MANUAL_CHECK_IN_REQUIRED,
@@ -704,7 +704,7 @@ public class UIItemsBuilder {
 			return;
 		}
 
-		String webDavURL = DLUtil.getWebDavURL(
+		String webDavURL = _dlurlHelper.getWebDavURL(
 			_themeDisplay, _fileEntry.getFolder(), _fileEntry,
 			PropsValues.
 				DL_FILE_ENTRY_OPEN_IN_MS_OFFICE_MANUAL_CHECK_IN_REQUIRED);
@@ -1073,7 +1073,8 @@ public class UIItemsBuilder {
 	private UIItemsBuilder(
 		HttpServletRequest request, FileVersion fileVersion,
 		FileShortcut fileShortcut, ResourceBundle resourceBundle,
-		DLTrashUtil dlTrashUtil, VersioningStrategy versioningStrategy) {
+		DLTrashUtil dlTrashUtil, VersioningStrategy versioningStrategy,
+		DLURLHelper dlurlHelper) {
 
 		try {
 			_request = request;
@@ -1082,6 +1083,7 @@ public class UIItemsBuilder {
 			_resourceBundle = resourceBundle;
 			_dlTrashUtil = dlTrashUtil;
 			_versioningStrategy = versioningStrategy;
+			_dlurlHelper = dlurlHelper;
 
 			FileEntry fileEntry = null;
 
@@ -1324,6 +1326,7 @@ public class UIItemsBuilder {
 
 	private String _currentURL;
 	private final DLTrashUtil _dlTrashUtil;
+	private final DLURLHelper _dlurlHelper;
 	private final FileEntry _fileEntry;
 	private final FileEntryDisplayContextHelper _fileEntryDisplayContextHelper;
 	private FileShortcut _fileShortcut;

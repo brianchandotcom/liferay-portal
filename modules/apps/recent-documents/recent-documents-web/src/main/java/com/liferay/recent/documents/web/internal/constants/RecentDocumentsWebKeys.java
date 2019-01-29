@@ -12,17 +12,13 @@
  * details.
  */
 
-package com.liferay.frontend.image.editor.integration.document.library.internal.constants;
+package com.liferay.recent.documents.web.internal.constants;
 
 /**
- * @author Sergio González
+ * @author Adolfo Pérez
  */
-public class ImageEditorIntegrationDLWebKeys {
+public class RecentDocumentsWebKeys {
 
-	public static final String IMAGE_EDITOR_INTEGRATION_DL_FILE_VERSION =
-		"IMAGE_EDITOR_INTEGRATION_DL_FILE_VERSION";
-
-	public static final String IMAGE_EDITOR_INTEGRATION_DL_URL_HELPER =
-		"IMAGE_EDITOR_INTEGRATION_DL_URL_HELPER";
+	public static final String DL_URL_HELPER = "DL_URL_HELPER";
 
 }

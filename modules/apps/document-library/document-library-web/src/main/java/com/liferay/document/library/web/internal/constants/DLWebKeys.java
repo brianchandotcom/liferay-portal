@@ -40,4 +40,7 @@ public class DLWebKeys {
 	public static final String DOCUMENT_LIBRARY_TRASH_UTIL =
 		"DOCUMENT_LIBRARY_TRASH_UTIL";
 
+	public static final String DOCUMENT_LIBRARY_URL_HELPER =
+		"DOCUMENT_LIBRARY_URL_HELPER";
+
 }

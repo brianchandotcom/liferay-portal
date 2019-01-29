@@ -16,6 +16,7 @@ package com.liferay.frontend.image.editor.integration.document.library.internal.
 
 import com.liferay.document.library.display.context.BaseDLViewFileVersionDisplayContext;
 import com.liferay.document.library.display.context.DLViewFileVersionDisplayContext;
+import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.frontend.image.editor.integration.document.library.internal.display.context.logic.ImageEditorDLDisplayContextHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -41,11 +42,13 @@ public class ImageEditorDLViewFileVersionDisplayContext
 	public ImageEditorDLViewFileVersionDisplayContext(
 		DLViewFileVersionDisplayContext parentDLDisplayContext,
 		HttpServletRequest request, HttpServletResponse response,
-		FileVersion fileVersion, ResourceBundle resourceBundle) {
+		FileVersion fileVersion, ResourceBundle resourceBundle,
+		DLURLHelper dlurlHelper) {
 
 		super(_UUID, parentDLDisplayContext, request, response, fileVersion);
 
 		_resourceBundle = resourceBundle;
+		_dlurlHelper = dlurlHelper;
 
 		try {
 			FileEntry fileEntry = null;
@@ -57,7 +60,8 @@ public class ImageEditorDLViewFileVersionDisplayContext
 			_fileEntry = fileEntry;
 
 			_imageEditorDLDisplayContextHelper =
-				new ImageEditorDLDisplayContextHelper(fileVersion, request);
+				new ImageEditorDLDisplayContextHelper(
+					fileVersion, request, dlurlHelper);
 		}
 		catch (PortalException pe) {
 			throw new SystemException(
@@ -78,7 +82,8 @@ public class ImageEditorDLViewFileVersionDisplayContext
 		}
 
 		ImageEditorDLDisplayContextHelper imageEditorDLDisplayContextHelper =
-			new ImageEditorDLDisplayContextHelper(fileVersion, request);
+			new ImageEditorDLDisplayContextHelper(
+				fileVersion, request, _dlurlHelper);
 
 		menuItems.add(
 			imageEditorDLDisplayContextHelper.
@@ -96,7 +101,8 @@ public class ImageEditorDLViewFileVersionDisplayContext
 		}
 
 		ImageEditorDLDisplayContextHelper imageEditorDLDisplayContextHelper =
-			new ImageEditorDLDisplayContextHelper(fileVersion, request);
+			new ImageEditorDLDisplayContextHelper(
+				fileVersion, request, _dlurlHelper);
 
 		toolbarItems.add(
 			imageEditorDLDisplayContextHelper.
@@ -108,6 +114,7 @@ public class ImageEditorDLViewFileVersionDisplayContext
 	private static final UUID _UUID = UUID.fromString(
 		"ec0c6ec4-8671-4c9e-94a3-8c6bcca0437c");
 
+	private final DLURLHelper _dlurlHelper;
 	private final FileEntry _fileEntry;
 	private final ImageEditorDLDisplayContextHelper
 		_imageEditorDLDisplayContextHelper;

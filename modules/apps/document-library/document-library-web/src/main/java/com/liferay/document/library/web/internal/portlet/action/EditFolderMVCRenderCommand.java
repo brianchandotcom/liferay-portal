@@ -15,6 +15,7 @@
 package com.liferay.document.library.web.internal.portlet.action;
 
 import com.liferay.document.library.constants.DLPortletKeys;
+import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.document.library.web.internal.util.DLTrashUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 
@@ -44,11 +45,19 @@ public class EditFolderMVCRenderCommand extends GetFolderMVCRenderCommand {
 	}
 
 	@Override
+	protected DLURLHelper getDLUrlHelper() {
+		return _dlurlHelper;
+	}
+
+	@Override
 	protected String getPath() {
 		return "/document_library/edit_folder.jsp";
 	}
 
 	@Reference
 	private DLTrashUtil _dlTrashUtil;
+
+	@Reference
+	private DLURLHelper _dlurlHelper;
 
 }

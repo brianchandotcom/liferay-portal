@@ -15,13 +15,13 @@
 package com.liferay.document.library.preview.video.internal;
 
 import com.liferay.document.library.kernel.util.DLProcessorRegistryUtil;
-import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.document.library.kernel.util.VideoProcessorUtil;
 import com.liferay.document.library.preview.DLPreviewRenderer;
 import com.liferay.document.library.preview.DLPreviewRendererProvider;
 import com.liferay.document.library.preview.exception.DLPreviewGenerationInProcessException;
 import com.liferay.document.library.preview.exception.DLPreviewSizeException;
 import com.liferay.document.library.preview.video.internal.constants.DLPreviewVideoWebKeys;
+import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -45,7 +45,10 @@ import javax.servlet.http.HttpServletRequest;
 public class VideoDLPreviewRendererProvider
 	implements DLPreviewRendererProvider {
 
-	public VideoDLPreviewRendererProvider(ServletContext servletContext) {
+	public VideoDLPreviewRendererProvider(
+		DLURLHelper dlurlHelper, ServletContext servletContext) {
+
+		_dlurlHelper = dlurlHelper;
 		_servletContext = servletContext;
 	}
 
@@ -125,7 +128,7 @@ public class VideoDLPreviewRendererProvider
 								0) {
 
 						previewFileURLs.add(
-							DLUtil.getPreviewURL(
+							_dlurlHelper.getPreviewURL(
 								fileVersion.getFileEntry(), fileVersion,
 								themeDisplay,
 								previewQueryString + "&type=" +
@@ -153,11 +156,12 @@ public class VideoDLPreviewRendererProvider
 			FileVersion fileVersion, ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		return DLUtil.getPreviewURL(
+		return _dlurlHelper.getPreviewURL(
 			fileVersion.getFileEntry(), fileVersion, themeDisplay,
 			"&videoThumbnail=1");
 	}
 
+	private final DLURLHelper _dlurlHelper;
 	private final ServletContext _servletContext;
 
 }

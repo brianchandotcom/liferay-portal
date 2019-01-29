@@ -16,6 +16,7 @@ package com.liferay.document.library.web.internal.portlet.configuration.icon;
 
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.versioning.VersioningStrategy;
+import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.document.library.web.internal.display.context.logic.FileEntryDisplayContextHelper;
 import com.liferay.document.library.web.internal.display.context.logic.UIItemsBuilder;
 import com.liferay.document.library.web.internal.portlet.action.ActionUtil;
@@ -103,7 +104,7 @@ public class CheckinFileEntryPortletConfigurationIcon
 				request, fileVersion,
 				_resourceBundleLoader.loadResourceBundle(
 					_portal.getLocale(request)),
-				_dlTrashUtil, _versioningStrategy);
+				_dlTrashUtil, _versioningStrategy, _dlurlHelper);
 
 			request.setAttribute(
 				"checkin.jsp-menuItem", uiItemsBuilder.getCheckinMenuItem());
@@ -152,6 +153,9 @@ public class CheckinFileEntryPortletConfigurationIcon
 
 	@Reference
 	private DLTrashUtil _dlTrashUtil;
+
+	@Reference
+	private DLURLHelper _dlurlHelper;
 
 	@Reference
 	private Portal _portal;

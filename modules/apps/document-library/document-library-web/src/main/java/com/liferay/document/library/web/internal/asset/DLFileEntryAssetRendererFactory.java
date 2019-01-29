@@ -27,6 +27,7 @@ import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
+import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -115,7 +116,8 @@ public class DLFileEntryAssetRendererFactory
 
 		DLFileEntryAssetRenderer dlFileEntryAssetRenderer =
 			new DLFileEntryAssetRenderer(
-				fileEntry, fileVersion, _dlFileEntryLocalService, _trashHelper);
+				fileEntry, fileVersion, _dlFileEntryLocalService, _trashHelper,
+				_dlurlHelper);
 
 		dlFileEntryAssetRenderer.setAssetRendererType(type);
 
@@ -266,6 +268,9 @@ public class DLFileEntryAssetRendererFactory
 	)
 	private ModelResourcePermission<DLFileEntryType>
 		_dlFileEntryTypeModelResourcePermission;
+
+	@Reference
+	private DLURLHelper _dlurlHelper;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.portal.kernel.repository.model.FileEntry)"

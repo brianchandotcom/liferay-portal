@@ -15,7 +15,7 @@
 package com.liferay.document.library.web.internal.portlet.configuration.icon;
 
 import com.liferay.document.library.constants.DLPortletKeys;
-import com.liferay.document.library.kernel.util.DLUtil;
+import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.document.library.web.internal.display.context.logic.FileEntryDisplayContextHelper;
 import com.liferay.document.library.web.internal.portlet.action.ActionUtil;
 import com.liferay.petra.string.StringPool;
@@ -31,6 +31,7 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Roberto Díaz
@@ -76,7 +77,7 @@ public class DownloadFileEntryPortletConfigurationIcon
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		return DLUtil.getDownloadURL(
+		return _dlurlHelper.getDownloadURL(
 			fileEntry, fileVersion, themeDisplay, StringPool.BLANK);
 	}
 
@@ -109,5 +110,8 @@ public class DownloadFileEntryPortletConfigurationIcon
 	public boolean isToolTip() {
 		return false;
 	}
+
+	@Reference
+	private DLURLHelper _dlurlHelper;
 
 }

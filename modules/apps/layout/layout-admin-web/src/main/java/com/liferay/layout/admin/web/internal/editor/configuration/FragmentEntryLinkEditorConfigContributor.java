@@ -14,7 +14,6 @@
 
 package com.liferay.layout.admin.web.internal.editor.configuration;
 
-import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelectorReturnType;
@@ -46,7 +45,6 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = {
 		"editor.config.key=fragmenEntryLinkEditor",
-		"javax.portlet.name=" + FragmentPortletKeys.FRAGMENT_DISPLAY,
 		"javax.portlet.name=" + LayoutAdminPortletKeys.GROUP_PAGES
 	},
 	service = EditorConfigContributor.class

@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Html;
@@ -38,14 +39,18 @@ import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManagerUtil;
 import com.liferay.portal.workflow.task.web.internal.permission.WorkflowTaskPermissionChecker;
+import com.liferay.registry.BasicRegistryImpl;
+import com.liferay.registry.RegistryUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 
 import java.util.Collections;
 import java.util.Locale;
 import java.util.Map;
+import java.util.TreeMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
@@ -68,15 +73,10 @@ import org.powermock.modules.junit4.PowerMockRunner;
 /**
  * @author Inácio Nery
  */
-@PrepareForTest(
-	{WorkflowHandlerRegistryUtil.class, WorkflowTaskManagerUtil.class}
-)
+@PrepareForTest(WorkflowTaskManagerUtil.class)
 @RunWith(PowerMockRunner.class)
 @SuppressStaticInitializationFor(
-	{
-		"com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil",
-		"com.liferay.portal.kernel.workflow.WorkflowTaskManagerUtil"
-	}
+	"com.liferay.portal.kernel.workflow.WorkflowTaskManagerUtil"
 )
 public class WorkflowTaskUserNotificationHandlerTest extends PowerMockito {
 
@@ -285,24 +285,30 @@ public class WorkflowTaskUserNotificationHandlerTest extends PowerMockito {
 				userNotificationEventLocalService);
 	}
 
-	protected void setUpWorkflowHandlerRegistryUtil() throws PortalException {
-		mockStatic(WorkflowHandlerRegistryUtil.class);
+	protected void setUpWorkflowHandlerRegistryUtil() throws Exception {
+		RegistryUtil.setRegistry(new BasicRegistryImpl());
 
-		when(
-			WorkflowHandlerRegistryUtil.getWorkflowHandler(
-				Matchers.eq(_INVALID_ENTRY_CLASS_NAME))
-		).thenReturn(
-			null
-		);
+		Constructor<WorkflowHandlerRegistryUtil> constructor =
+			WorkflowHandlerRegistryUtil.class.getDeclaredConstructor();
+
+		constructor.setAccessible(true);
+
+		WorkflowHandlerRegistryUtil workflowHandlerRegistryUtil =
+			constructor.newInstance();
 
 		WorkflowHandler workflowHandler = mockWorkflowHandler();
 
-		when(
-			WorkflowHandlerRegistryUtil.getWorkflowHandler(
-				Matchers.eq(_VALID_ENTRY_CLASS_NAME))
-		).thenReturn(
-			workflowHandler
-		);
+		Map<String, WorkflowHandler<?>> workflowHandlerMap = new TreeMap<>();
+
+		workflowHandlerMap.put(_VALID_ENTRY_CLASS_NAME, workflowHandler);
+
+		ReflectionTestUtil.setFieldValue(
+			workflowHandlerRegistryUtil, "_workflowHandlerMap",
+			workflowHandlerMap);
+
+		ReflectionTestUtil.setFieldValue(
+			WorkflowHandlerRegistryUtil.class, "_instance",
+			workflowHandlerRegistryUtil);
 	}
 
 	protected void setUpWorkflowTaskManagerUtil() throws PortalException {
@@ -354,9 +360,6 @@ public class WorkflowTaskUserNotificationHandlerTest extends PowerMockito {
 			_workflowTaskUserNotificationHandler,
 			workflowTaskPermissionChecker);
 	}
-
-	private static final String _INVALID_ENTRY_CLASS_NAME =
-		RandomTestUtil.randomString();
 
 	private static final Long _INVALID_WORKFLOW_TASK_ID =
 		RandomTestUtil.randomLong();

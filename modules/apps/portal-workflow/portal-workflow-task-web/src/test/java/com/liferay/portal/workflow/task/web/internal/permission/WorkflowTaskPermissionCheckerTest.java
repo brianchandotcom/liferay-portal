@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.workflow.BaseWorkflowHandler;
 import com.liferay.portal.kernel.workflow.DefaultWorkflowTask;
@@ -31,12 +32,16 @@ import com.liferay.portal.kernel.workflow.WorkflowTaskAssignee;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.TreeMap;
 
+import com.liferay.registry.BasicRegistryImpl;
+import com.liferay.registry.RegistryUtil;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -52,20 +57,15 @@ import org.powermock.modules.junit4.PowerMockRunner;
 /**
  * @author Adam Brandizzi
  */
-@PrepareForTest(
-	{GroupLocalServiceUtil.class, WorkflowHandlerRegistryUtil.class}
-)
+@PrepareForTest(GroupLocalServiceUtil.class)
 @RunWith(PowerMockRunner.class)
 @SuppressStaticInitializationFor(
-	{
-		"com.liferay.portal.kernel.service.GroupLocalServiceUtil",
-		"com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil"
-	}
+	"com.liferay.portal.kernel.service.GroupLocalServiceUtil"
 )
 public class WorkflowTaskPermissionCheckerTest extends PowerMockito {
 
 	@Before
-	public void setUp() throws PortalException {
+	public void setUp() throws Exception {
 		setUpGroupLocalServiceUtil();
 		setUpWorkflowHandlerRegistryUtil();
 	}
@@ -288,11 +288,17 @@ public class WorkflowTaskPermissionCheckerTest extends PowerMockito {
 
 		};
 
-		when(
-			WorkflowHandlerRegistryUtil.getWorkflowHandler(Matchers.anyString())
-		).thenReturn(
-			workflowHandler
-		);
+		Map<String, WorkflowHandler<?>> workflowHandlerMap =
+			new TreeMap<String, WorkflowHandler<?>>(){
+				@Override
+				public WorkflowHandler<?> get(Object key) {
+					return workflowHandler;
+				}
+			};
+
+		ReflectionTestUtil.setFieldValue(
+			_workflowHandlerRegistryUtil, "_workflowHandlerMap",
+			workflowHandlerMap);
 	}
 
 	protected PermissionChecker mockCompanyAdminPermissionChecker() {
@@ -442,10 +448,22 @@ public class WorkflowTaskPermissionCheckerTest extends PowerMockito {
 		);
 	}
 
-	protected void setUpWorkflowHandlerRegistryUtil() {
-		mockStatic(WorkflowHandlerRegistryUtil.class);
+	protected void setUpWorkflowHandlerRegistryUtil() throws Exception{
+		RegistryUtil.setRegistry(new BasicRegistryImpl());
+
+		Constructor<WorkflowHandlerRegistryUtil> constructor =
+			WorkflowHandlerRegistryUtil.class.getDeclaredConstructor();
+
+		constructor.setAccessible(true);
+
+		_workflowHandlerRegistryUtil = constructor.newInstance();
+
+		ReflectionTestUtil.setFieldValue(
+			WorkflowHandlerRegistryUtil.class, "_instance",
+			_workflowHandlerRegistryUtil);
 	}
 
+	private WorkflowHandlerRegistryUtil _workflowHandlerRegistryUtil;
 	private final WorkflowTaskPermissionChecker _workflowTaskPermissionChecker =
 		new WorkflowTaskPermissionChecker();
 

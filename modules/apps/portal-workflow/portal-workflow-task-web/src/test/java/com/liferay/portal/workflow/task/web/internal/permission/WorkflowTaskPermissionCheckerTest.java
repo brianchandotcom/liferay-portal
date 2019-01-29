@@ -20,7 +20,9 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.GroupLocalServiceWrapper;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.workflow.BaseWorkflowHandler;
@@ -29,10 +31,13 @@ import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskAssignee;
+import com.liferay.registry.BasicRegistryImpl;
+import com.liferay.registry.RegistryUtil;
 
 import java.io.Serializable;
 
 import java.lang.reflect.Constructor;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -40,28 +45,17 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.TreeMap;
 
-import com.liferay.registry.BasicRegistryImpl;
-import com.liferay.registry.RegistryUtil;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import org.mockito.Matchers;
 
 import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.core.classloader.annotations.SuppressStaticInitializationFor;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Adam Brandizzi
  */
-@PrepareForTest(GroupLocalServiceUtil.class)
-@RunWith(PowerMockRunner.class)
-@SuppressStaticInitializationFor(
-	"com.liferay.portal.kernel.service.GroupLocalServiceUtil"
-)
 public class WorkflowTaskPermissionCheckerTest extends PowerMockito {
 
 	@Before
@@ -289,11 +283,13 @@ public class WorkflowTaskPermissionCheckerTest extends PowerMockito {
 		};
 
 		Map<String, WorkflowHandler<?>> workflowHandlerMap =
-			new TreeMap<String, WorkflowHandler<?>>(){
+			new TreeMap<String, WorkflowHandler<?>>() {
+
 				@Override
 				public WorkflowHandler<?> get(Object key) {
 					return workflowHandler;
 				}
+
 			};
 
 		ReflectionTestUtil.setFieldValue(
@@ -437,18 +433,23 @@ public class WorkflowTaskPermissionCheckerTest extends PowerMockito {
 	}
 
 	protected void setUpGroupLocalServiceUtil() throws PortalException {
-		mockStatic(GroupLocalServiceUtil.class);
-
 		Group group = mock(Group.class);
 
-		when(
-			GroupLocalServiceUtil.getGroup(Matchers.anyLong())
-		).thenReturn(
-			group
-		);
+		GroupLocalService groupLocalService =
+			new GroupLocalServiceWrapper(null) {
+
+				@Override
+				public Group getGroup(long groupId) throws PortalException {
+					return group;
+				}
+
+			};
+
+		ReflectionTestUtil.setFieldValue(
+			GroupLocalServiceUtil.class, "_service", groupLocalService);
 	}
 
-	protected void setUpWorkflowHandlerRegistryUtil() throws Exception{
+	protected void setUpWorkflowHandlerRegistryUtil() throws Exception {
 		RegistryUtil.setRegistry(new BasicRegistryImpl());
 
 		Constructor<WorkflowHandlerRegistryUtil> constructor =

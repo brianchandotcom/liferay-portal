@@ -162,6 +162,13 @@ public class Entity implements Comparable<Entity> {
 			sessionFactory, _SESSION_FACTORY_DEFAULT);
 		_txManager = GetterUtil.getString(txManager, _TX_MANAGER_DEFAULT);
 
+		if (_entityColumns == null) {
+			_regularEntityTableColumns = null;
+		}
+		else {
+			_regularEntityTableColumns = new ArrayList<>(regularEntityColumns);
+		}
+
 		if (_entityFinders != null) {
 			Set<EntityColumn> finderEntityColumns = new HashSet<>();
 
@@ -574,6 +581,10 @@ public class Entity implements Comparable<Entity> {
 
 	public List<EntityColumn> getRegularEntityColumns() {
 		return _regularEntityColumns;
+	}
+
+	public List<EntityColumn> getRegularEntityTableColumns() {
+		return _regularEntityTableColumns;
 	}
 
 	public String getSessionFactory() {
@@ -1264,6 +1275,7 @@ public class Entity implements Comparable<Entity> {
 	private final String _portletShortName;
 	private final List<Entity> _referenceEntities;
 	private final List<EntityColumn> _regularEntityColumns;
+	private final List<EntityColumn> _regularEntityTableColumns;
 	private final boolean _remoteService;
 	private final boolean _resourceActionModel;
 	private ServiceBuilder _serviceBuilder;

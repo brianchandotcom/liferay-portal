@@ -83,11 +83,13 @@
 			<version access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor" name="mvccVersion" type="long" />
 		</#if>
 
-		<#list entity.entityColumns as entityColumn>
-			<#if !entityColumn.isPrimary() && !entityColumn.isCollection() && !entityColumn.entityName?? && (!stringUtil.equals(entityColumn.type, "Blob") || (stringUtil.equals(entityColumn.type, "Blob") && !entityColumn.lazy)) && !stringUtil.equals(entityColumn.name, "mvccVersion")>
+		<#list entity.regularEntityTableColumns as entityColumn>
+			<#if !entityColumn.isPrimary() && !entityColumn.entityName?? && (!stringUtil.equals(entityColumn.type, "Blob") || (stringUtil.equals(entityColumn.type, "Blob") && !entityColumn.lazy)) && !stringUtil.equals(entityColumn.name, "mvccVersion")>
 				<property
 
-				<#if serviceBuilder.isHBMCamelCasePropertyAccessor(entityColumn.name)>
+				<#if !entityColumn.isInterfaceColumn()>
+					access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor"
+				<#elseif serviceBuilder.isHBMCamelCasePropertyAccessor(entityColumn.name)>
 					access="com.liferay.portal.dao.orm.hibernate.CamelCasePropertyAccessor"
 				<#elseif serviceBuilder.isVersionGTE_7_1_0()>
 					access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor"

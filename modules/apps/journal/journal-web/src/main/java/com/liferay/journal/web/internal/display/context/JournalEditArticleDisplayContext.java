@@ -60,6 +60,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -94,6 +95,16 @@ public class JournalEditArticleDisplayContext {
 		_articleId = BeanParamUtil.getString(_article, _request, "articleId");
 
 		return _articleId;
+	}
+
+	public Set<Locale> getAvailableLocales() {
+		if (_availableLocales != null) {
+			return _availableLocales;
+		}
+
+		_availableLocales = LanguageUtil.getAvailableLocales(getGroupId());
+
+		return _availableLocales;
 	}
 
 	public Map<String, Object> getChangeDefaultLanguageSoyContext() {
@@ -716,6 +727,7 @@ public class JournalEditArticleDisplayContext {
 
 	private JournalArticle _article;
 	private String _articleId;
+	private Set<Locale> _availableLocales;
 	private Boolean _changeStructure;
 	private Long _classNameId;
 	private Long _classPK;

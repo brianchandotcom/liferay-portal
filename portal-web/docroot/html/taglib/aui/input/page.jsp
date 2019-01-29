@@ -319,7 +319,7 @@ boolean choiceField = checkboxField || radioField;
 			<c:when test='<%= localized && (type.equals("editor") || type.equals("text") || type.equals("textarea")) %>'>
 				<liferay-ui:input-localized
 					autoFocus="<%= autoFocus %>"
-					availableLocales="<%= LanguageUtil.getAvailableLocales(themeDisplay.getSiteGroupId()) %>"
+					availableLocales='<%= LanguageUtil.getAvailableLocales(BeanPropertiesUtil.getLongSilent(bean, "groupId", themeDisplay.getSiteGroupId())) %>'
 					cssClass="<%= fieldCssClass %>"
 					defaultLanguageId="<%= defaultLanguageId %>"
 					disabled="<%= disabled %>"

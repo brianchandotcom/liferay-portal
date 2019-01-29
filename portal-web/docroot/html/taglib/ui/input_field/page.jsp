@@ -438,7 +438,7 @@ if (hints != null) {
 
 			if (localized) {
 				if (ModelHintsUtil.hasField(model, "groupId")) {
-					availableLocales = LanguageUtil.getAvailableLocales(themeDisplay.getSiteGroupId());
+					availableLocales = LanguageUtil.getAvailableLocales(BeanPropertiesUtil.getLongSilent(bean, "groupId", themeDisplay.getSiteGroupId()));
 				}
 				else {
 					availableLocales = LanguageUtil.getAvailableLocales();

@@ -17,6 +17,7 @@ package com.liferay.portal.reports.engine.jasper.internal.fill.manager;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.reports.engine.ReportDataSourceType;
 
 import java.util.Map;
@@ -59,7 +60,7 @@ public class ReportFillManagerRegistry {
 		ReportDataSourceType reportDataSourceType = ReportDataSourceType.parse(
 			reportDataSourceTypeString);
 
-		if (reportDataSourceType == null) {
+		if (Validator.isNull(reportDataSourceType)) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					"No report data source type specified for " +

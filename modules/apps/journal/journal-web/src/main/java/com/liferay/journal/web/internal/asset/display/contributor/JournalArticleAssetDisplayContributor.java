@@ -17,7 +17,7 @@ package com.liferay.journal.web.internal.asset.display.contributor;
 import com.liferay.asset.display.contributor.AssetDisplayContributor;
 import com.liferay.asset.display.contributor.BaseAssetDisplayContributor;
 import com.liferay.document.library.kernel.service.DLAppService;
-import com.liferay.document.library.kernel.util.DLUtil;
+import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
 import com.liferay.dynamic.data.mapping.kernel.Value;
@@ -118,7 +118,7 @@ public class JournalArticleAssetDisplayContributor
 			FileEntry fileEntry = _dlAppService.getFileEntryByUuidAndGroupId(
 				uuid, groupId);
 
-			return DLUtil.getDownloadURL(
+			return _dlurlHelper.getDownloadURL(
 				fileEntry, fileEntry.getFileVersion(), null, StringPool.BLANK);
 		}
 		catch (Exception e) {
@@ -135,6 +135,9 @@ public class JournalArticleAssetDisplayContributor
 
 	@Reference
 	private DLAppService _dlAppService;
+
+	@Reference
+	private DLURLHelper _dlurlHelper;
 
 	@Reference
 	private FieldsToDDMFormValuesConverter _fieldsToDDMFormValuesConverter;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.site.admin.web.internal.display.context;
+package com.liferay.site.admin.web.internal.util;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
@@ -24,9 +24,9 @@ import java.util.Locale;
 /**
  * @author Marco Leo
  */
-public class SiteInitializerItemDisplayContext {
+public class SiteInitializerItem {
 
-	public SiteInitializerItemDisplayContext(
+	public SiteInitializerItem(
 		LayoutSetPrototype layoutSetPrototype, Locale locale) {
 
 		_siteInitializerKey = StringPool.BLANK;
@@ -36,9 +36,7 @@ public class SiteInitializerItemDisplayContext {
 		_type = SiteAdminConstants.CREATION_TYPE_SITE_TEMPLATE;
 	}
 
-	public SiteInitializerItemDisplayContext(
-		SiteInitializer siteInitializer, Locale locale) {
-
+	public SiteInitializerItem(SiteInitializer siteInitializer, Locale locale) {
 		_siteInitializerKey = siteInitializer.getKey();
 		_icon = siteInitializer.getThumbnailSrc();
 		_layoutSetPrototypeId = 0;

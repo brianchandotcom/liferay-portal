@@ -106,7 +106,6 @@ import com.liferay.site.constants.SiteWebKeys;
 import com.liferay.site.initializer.SiteInitializer;
 import com.liferay.site.initializer.SiteInitializerRegistry;
 import com.liferay.site.util.GroupSearchProvider;
-import com.liferay.site.util.GroupURLProvider;
 import com.liferay.sites.kernel.util.Sites;
 import com.liferay.sites.kernel.util.SitesUtil;
 
@@ -401,9 +400,6 @@ public class SiteAdminPortlet extends MVCPortlet {
 			SiteWebKeys.GROUP_SEARCH_PROVIDER, groupSearchProvider);
 
 		renderRequest.setAttribute(
-			SiteWebKeys.GROUP_URL_PROVIDER, groupURLProvider);
-
-		renderRequest.setAttribute(
 			SiteWebKeys.SITE_INITIALIZER_REGISTRY, siteInitializerRegistry);
 
 		if (SessionErrors.contains(
@@ -589,11 +585,6 @@ public class SiteAdminPortlet extends MVCPortlet {
 	}
 
 	@Reference(unbind = "-")
-	protected void setGroupURLProvider(GroupURLProvider groupURLProvider) {
-		this.groupURLProvider = groupURLProvider;
-	}
-
-	@Reference(unbind = "-")
 	protected void setLayoutLocalService(
 		LayoutLocalService layoutLocalService) {
 
@@ -690,7 +681,7 @@ public class SiteAdminPortlet extends MVCPortlet {
 		long liveGroupId = ParamUtil.getLong(actionRequest, "liveGroupId");
 
 		long parentGroupId = ParamUtil.getLong(
-			actionRequest, "parentGroupSearchContainerPrimaryKeys",
+			actionRequest, "parentGroupId",
 			GroupConstants.DEFAULT_PARENT_GROUP_ID);
 		Map<Locale, String> nameMap = null;
 		Map<Locale, String> descriptionMap = null;
@@ -1088,7 +1079,6 @@ public class SiteAdminPortlet extends MVCPortlet {
 	protected GroupLocalService groupLocalService;
 	protected GroupSearchProvider groupSearchProvider;
 	protected GroupService groupService;
-	protected GroupURLProvider groupURLProvider;
 
 	@Reference
 	protected Http http;

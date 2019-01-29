@@ -17,69 +17,32 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect");
-
-String backURL = ParamUtil.getString(request, "backURL", redirect);
-
-long parentGroupSearchContainerPrimaryKeys = ParamUtil.getLong(request, "parentGroupSearchContainerPrimaryKeys");
-
-SearchContainer<SiteInitializerItemDisplayContext> siteInitializerItemSearchContainer = new SearchContainer<>(liferayPortletRequest, currentURLObj, null, "there-are-no-site-templates");
-
-List<SiteInitializerItemDisplayContext> siteInitializerItems = siteAdminDisplayContext.getSiteInitializerItems();
-
-siteInitializerItemSearchContainer.setTotal(siteInitializerItems.size());
-
-siteInitializerItems = ListUtil.subList(siteInitializerItems, siteInitializerItemSearchContainer.getStart(), siteInitializerItemSearchContainer.getEnd());
-
-siteInitializerItemSearchContainer.setResults(siteInitializerItems);
+SelectSiteInitializerDisplayContext selectSiteInitializerDisplayContext = new SelectSiteInitializerDisplayContext(request, renderRequest, renderResponse);
 
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(backURL);
+portletDisplay.setURLBack(selectSiteInitializerDisplayContext.getBackURL());
 
 renderResponse.setTitle(LanguageUtil.get(request, "select-site-template"));
 %>
 
 <aui:form cssClass="container-fluid-1280" name="fm">
 	<liferay-ui:search-container
-		searchContainer="<%= siteInitializerItemSearchContainer %>"
+		searchContainer="<%= selectSiteInitializerDisplayContext.getSearchContainer() %>"
 	>
 		<liferay-ui:search-container-row
-			className="com.liferay.site.admin.web.internal.display.context.SiteInitializerItemDisplayContext"
+			className="com.liferay.site.admin.web.internal.util.SiteInitializerItem"
 			keyProperty="key"
 			modelVar="siteInitializerItem"
 		>
 
 			<%
 			row.setCssClass("entry-card lfr-asset-item " + row.getCssClass());
-
-			Map<String, Object> addLayoutData = new HashMap<>();
-
-			addLayoutData.put("creation-type", siteInitializerItem.getType());
-			addLayoutData.put("layout-set-prototype-id", siteInitializerItem.getLayoutSetPrototypeId());
-			addLayoutData.put("site-initializer-key", siteInitializerItem.getSiteInitializerKey());
 			%>
 
 			<liferay-ui:search-container-column-text>
-				<c:choose>
-					<c:when test="<%= Objects.equals(siteInitializerItem.getType(), SiteAdminConstants.CREATION_TYPE_SITE_TEMPLATE) || Validator.isBlank(siteInitializerItem.getIcon()) %>">
-						<liferay-frontend:icon-vertical-card
-							cssClass="add-site-action-option"
-							data="<%= addLayoutData %>"
-							icon="site-template"
-							title="<%= siteInitializerItem.getName() %>"
-							url="javascript:;"
-						/>
-					</c:when>
-					<c:otherwise>
-						<liferay-frontend:vertical-card
-							cssClass="add-site-action-option"
-							data="<%= addLayoutData %>"
-							imageUrl="<%= HtmlUtil.escape(siteInitializerItem.getIcon()) %>"
-							title="<%= siteInitializerItem.getName() %>"
-							url="javascript:;"
-						/>
-					</c:otherwise>
-				</c:choose>
+				<clay:vertical-card
+					verticalCard="<%= new SelectSiteInitializerVerticalCard(siteInitializerItem, renderRequest, renderResponse) %>"
+				/>
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 
@@ -91,8 +54,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-site-template"));
 
 	<portlet:actionURL name="addGroup" var="addSiteURL">
 		<portlet:param name="mvcPath" value="/select_layout_set_prototype_entry.jsp" />
-		<portlet:param name="groupId" value="<%= String.valueOf(siteAdminDisplayContext.getGroupId()) %>" />
-		<portlet:param name="parentGroupSearchContainerPrimaryKeys" value="<%= String.valueOf(parentGroupSearchContainerPrimaryKeys) %>" />
+		<portlet:param name="parentGroupId" value="<%= String.valueOf(selectSiteInitializerDisplayContext.getParentGroupId()) %>" />
 	</portlet:actionURL>
 
 	<aui:script require="metal-dom/src/all/dom as dom,frontend-js-web/liferay/modal/commands/OpenSimpleInputModal.es as modalCommands">
@@ -103,18 +65,13 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-site-template"));
 			function(event) {
 				var data = event.delegateTarget.dataset;
 
-				var uri = '<%= addSiteURL %>';
-
-				uri = Liferay.Util.addParams('<portlet:namespace />creationType=' + data.creationType, uri);
-				uri = Liferay.Util.addParams('<portlet:namespace />siteInitializerKey=' + data.siteInitializerKey, uri);
-
 				modalCommands.openSimpleInputModal(
 					{
 						checkboxFieldLabel: '<liferay-ui:message key="create-default-pages-as-private-available-only-to-members-if-unchecked-they-will-be-public-available-to-anyone" />',
-						checkboxFieldName: (data.creationType == '<%= SiteAdminConstants.CREATION_TYPE_SITE_TEMPLATE %>') ? 'layoutSetVisibilityPrivate' : '',
+						checkboxFieldName: data.checkboxFieldName,
 						checkboxFieldValue: false,
 						dialogTitle: '<liferay-ui:message key="add-site" />',
-						formSubmitURL: uri,
+						formSubmitURL: data.addSiteUrl,
 						idFieldName: 'layoutSetPrototypeId',
 						idFieldValue: data.layoutSetPrototypeId,
 						mainFieldName: 'name',

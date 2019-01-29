@@ -15,7 +15,7 @@
 package com.liferay.oauth2.provider.web.internal.display.context;
 
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
-import com.liferay.document.library.kernel.util.DLUtil;
+import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.oauth2.provider.constants.OAuth2ProviderActionKeys;
 import com.liferay.oauth2.provider.constants.OAuth2ProviderConstants;
 import com.liferay.oauth2.provider.model.OAuth2Application;
@@ -73,7 +73,7 @@ public abstract class BaseOAuth2PortletDisplayContext {
 		FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(
 			oAuth2Application.getIconFileEntryId());
 
-		return DLUtil.getThumbnailSrc(fileEntry, themeDisplay);
+		return dlurlHelper.getThumbnailSrc(fileEntry, themeDisplay);
 	}
 
 	public boolean hasAddApplicationPermission() {
@@ -143,6 +143,7 @@ public abstract class BaseOAuth2PortletDisplayContext {
 		}
 	}
 
+	protected DLURLHelper dlurlHelper;
 	protected OAuth2Application oAuth2Application;
 	protected OAuth2ApplicationService oAuth2ApplicationService;
 	protected PortletRequest portletRequest;

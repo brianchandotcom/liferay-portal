@@ -15,7 +15,7 @@
 package com.liferay.oauth2.provider.client.test;
 
 import com.liferay.document.library.kernel.service.DLAppLocalService;
-import com.liferay.document.library.kernel.util.DLUtil;
+import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.oauth2.provider.constants.GrantType;
 import com.liferay.oauth2.provider.test.internal.TestPreviewURLApplication;
 import com.liferay.oauth2.provider.test.internal.activator.BaseTestPreparatorBundleActivator;
@@ -99,14 +99,17 @@ public class OAuth2WebServerServletTest extends BaseClientTestCase {
 
 			String previewURL = null;
 
-			ServiceReference<DLAppLocalService> serviceReference =
-				bundleContext.getServiceReference(DLAppLocalService.class);
+			ServiceReference<DLAppLocalService>
+				dlAppLocalServiceServiceReference =
+					bundleContext.getServiceReference(DLAppLocalService.class);
+			ServiceReference<DLURLHelper> dlUrlHelperServiceReference =
+				bundleContext.getServiceReference(DLURLHelper.class);
 
 			User user = UserTestUtil.getAdminUser(defaultCompanyId);
 
 			try {
 				DLAppLocalService dlAppLocalService = bundleContext.getService(
-					serviceReference);
+					dlAppLocalServiceServiceReference);
 
 				FileEntry fileEntry = dlAppLocalService.addFileEntry(
 					user.getUserId(), user.getGroupId(), 0, "test-file.txt",
@@ -118,15 +121,21 @@ public class OAuth2WebServerServletTest extends BaseClientTestCase {
 						dlAppLocalService.deleteFileEntry(
 							fileEntry.getFileEntryId());
 
-						bundleContext.ungetService(serviceReference);
+						bundleContext.ungetService(
+							dlAppLocalServiceServiceReference);
+						bundleContext.ungetService(dlUrlHelperServiceReference);
 					});
 
-				previewURL = DLUtil.getPreviewURL(
+				DLURLHelper dlurlHelper = bundleContext.getService(
+					dlUrlHelperServiceReference);
+
+				previewURL = dlurlHelper.getPreviewURL(
 					fileEntry, fileEntry.getFileVersion(), null, "", false,
 					false);
 			}
 			catch (Exception e) {
-				bundleContext.ungetService(serviceReference);
+				bundleContext.ungetService(dlAppLocalServiceServiceReference);
+				bundleContext.ungetService(dlUrlHelperServiceReference);
 
 				throw e;
 			}

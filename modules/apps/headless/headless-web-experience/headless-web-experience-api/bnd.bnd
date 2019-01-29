@@ -1,3 +1,6 @@
 Bundle-Name: Liferay Headless Web Experience API
 Bundle-SymbolicName: com.liferay.headless.web.experience.api
 Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.headless.web.experience.dto,\
+	com.liferay.headless.web.experience.resource

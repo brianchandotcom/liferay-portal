@@ -15,8 +15,8 @@
 package com.liferay.document.library.web.internal.portlet.configuration.icon;
 
 import com.liferay.document.library.constants.DLPortletKeys;
-import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.document.library.kernel.versioning.VersioningStrategy;
+import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.document.library.web.internal.display.context.logic.UIItemsBuilder;
 import com.liferay.document.library.web.internal.portlet.action.ActionUtil;
 import com.liferay.document.library.web.internal.util.DLTrashUtil;
@@ -83,7 +83,7 @@ public class OpenInMSOfficeFileEntryPortletConfigurationIcon
 		try {
 			FileEntry fileEntry = ActionUtil.getFileEntry(portletRequest);
 
-			String webDavURL = DLUtil.getWebDavURL(
+			String webDavURL = _dlurlHelper.getWebDavURL(
 				themeDisplay, fileEntry.getFolder(), fileEntry,
 				PropsValues.
 					DL_FILE_ENTRY_OPEN_IN_MS_OFFICE_MANUAL_CHECK_IN_REQUIRED);
@@ -135,7 +135,7 @@ public class OpenInMSOfficeFileEntryPortletConfigurationIcon
 
 			UIItemsBuilder uiItemsBuilder = new UIItemsBuilder(
 				request, fileVersion, resourceBundle, _dlTrashUtil,
-				_versioningStrategy);
+				_versioningStrategy, _dlurlHelper);
 
 			return uiItemsBuilder.isOpenInMsOfficeActionAvailable();
 		}
@@ -157,6 +157,9 @@ public class OpenInMSOfficeFileEntryPortletConfigurationIcon
 
 	@Reference
 	private DLTrashUtil _dlTrashUtil;
+
+	@Reference
+	private DLURLHelper _dlurlHelper;
 
 	@Reference
 	private Portal _portal;

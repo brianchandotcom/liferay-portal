@@ -19,6 +19,7 @@ import com.liferay.document.library.display.context.DLEditFileEntryDisplayContex
 import com.liferay.document.library.display.context.DLViewFileVersionDisplayContext;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.service.DLAppService;
+import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
@@ -80,7 +81,8 @@ public class ImageEditorDLDisplayContextFactory
 			fileVersion,
 			ResourceBundleUtil.getBundle(
 				themeDisplay.getLocale(),
-				ImageEditorDLDisplayContextFactory.class));
+				ImageEditorDLDisplayContextFactory.class),
+			_dlurlHelper);
 	}
 
 	@Reference(unbind = "-")
@@ -89,5 +91,8 @@ public class ImageEditorDLDisplayContextFactory
 	}
 
 	private DLAppService _dlAppService;
+
+	@Reference
+	private DLURLHelper _dlurlHelper;
 
 }

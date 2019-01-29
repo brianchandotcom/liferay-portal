@@ -95,6 +95,7 @@ page import="com.liferay.document.library.kernel.util.RawMetadataProcessor" %><%
 page import="com.liferay.document.library.kernel.util.VideoProcessorUtil" %><%@
 page import="com.liferay.document.library.preview.exception.DLPreviewGenerationInProcessException" %><%@
 page import="com.liferay.document.library.preview.exception.DLPreviewSizeException" %><%@
+page import="com.liferay.document.library.util.DLURLHelper" %><%@
 page import="com.liferay.document.library.web.internal.constants.DLWebKeys" %><%@
 page import="com.liferay.document.library.web.internal.dao.search.DLResultRowSplitter" %><%@
 page import="com.liferay.document.library.web.internal.dao.search.IGResultRowSplitter" %><%@
@@ -257,6 +258,7 @@ page import="javax.portlet.WindowState" %>
 
 <%
 DLTrashUtil dlTrashUtil = (DLTrashUtil)request.getAttribute(DLWebKeys.DOCUMENT_LIBRARY_TRASH_UTIL);
+DLURLHelper dlurlHelper = (DLURLHelper)request.getAttribute(DLWebKeys.DOCUMENT_LIBRARY_URL_HELPER);
 
 DLWebComponentProvider dlWebComponentProvider = DLWebComponentProvider.getDLWebComponentProvider();
 

@@ -15,6 +15,7 @@
 package com.liferay.document.library.web.internal.portlet.action;
 
 import com.liferay.document.library.constants.DLPortletKeys;
+import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.document.library.web.internal.constants.DLWebKeys;
 import com.liferay.document.library.web.internal.util.DLTrashUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
@@ -57,6 +58,8 @@ public class InfoPanelMVCResourceCommand extends BaseMVCResourceCommand {
 			ActionUtil.getFolders(resourceRequest));
 		resourceRequest.setAttribute(
 			DLWebKeys.DOCUMENT_LIBRARY_TRASH_UTIL, _dlTrashUtil);
+		resourceRequest.setAttribute(
+			DLWebKeys.DOCUMENT_LIBRARY_URL_HELPER, _dlurlHelper);
 
 		include(
 			resourceRequest, resourceResponse,
@@ -65,5 +68,8 @@ public class InfoPanelMVCResourceCommand extends BaseMVCResourceCommand {
 
 	@Reference
 	private DLTrashUtil _dlTrashUtil;
+
+	@Reference
+	private DLURLHelper _dlurlHelper;
 
 }

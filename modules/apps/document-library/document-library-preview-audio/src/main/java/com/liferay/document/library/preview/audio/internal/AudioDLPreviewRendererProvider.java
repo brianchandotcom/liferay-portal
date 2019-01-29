@@ -16,12 +16,12 @@ package com.liferay.document.library.preview.audio.internal;
 
 import com.liferay.document.library.kernel.util.AudioProcessorUtil;
 import com.liferay.document.library.kernel.util.DLProcessorRegistryUtil;
-import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.document.library.preview.DLPreviewRenderer;
 import com.liferay.document.library.preview.DLPreviewRendererProvider;
 import com.liferay.document.library.preview.audio.internal.constants.DLPreviewAudioWebKeys;
 import com.liferay.document.library.preview.exception.DLPreviewGenerationInProcessException;
 import com.liferay.document.library.preview.exception.DLPreviewSizeException;
+import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -44,7 +44,10 @@ import javax.servlet.http.HttpServletRequest;
 public class AudioDLPreviewRendererProvider
 	implements DLPreviewRendererProvider {
 
-	public AudioDLPreviewRendererProvider(ServletContext servletContext) {
+	public AudioDLPreviewRendererProvider(
+		DLURLHelper dlurlHelper, ServletContext servletContext) {
+
+		_dlurlHelper = dlurlHelper;
 		_servletContext = servletContext;
 	}
 
@@ -115,7 +118,7 @@ public class AudioDLPreviewRendererProvider
 						fileVersion, dlFileEntryPreviewAudioContainer) > 0) {
 
 					previewFileURLs.add(
-						DLUtil.getPreviewURL(
+						_dlurlHelper.getPreviewURL(
 							fileVersion.getFileEntry(), fileVersion,
 							themeDisplay,
 							previewQueryString + "&type=" +
@@ -135,6 +138,7 @@ public class AudioDLPreviewRendererProvider
 		return previewFileURLs;
 	}
 
+	private final DLURLHelper _dlurlHelper;
 	private final ServletContext _servletContext;
 
 }

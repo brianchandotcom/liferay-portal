@@ -20,6 +20,7 @@ import com.liferay.document.library.kernel.model.DLFileShortcutConstants;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.util.DLUtil;
+import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -100,7 +101,7 @@ public class DLFileShortcutTrashHandler extends DLBaseTrashHandler {
 
 		DLFileShortcut dlFileShortcut = getDLFileShortcut(classPK);
 
-		return DLUtil.getDLFileEntryControlPanelLink(
+		return _dlurlHelper.getFileEntryControlPanelLink(
 			portletRequest, dlFileShortcut.getToFileEntryId());
 	}
 
@@ -111,7 +112,7 @@ public class DLFileShortcutTrashHandler extends DLBaseTrashHandler {
 
 		DLFileShortcut dlFileShortcut = getDLFileShortcut(classPK);
 
-		return DLUtil.getDLFolderControlPanelLink(
+		return _dlurlHelper.getFolderControlPanelLink(
 			portletRequest, dlFileShortcut.getFolderId());
 	}
 
@@ -297,6 +298,9 @@ public class DLFileShortcutTrashHandler extends DLBaseTrashHandler {
 		DLFileShortcutTrashHandler.class);
 
 	private DLAppLocalService _dlAppLocalService;
+
+	@Reference
+	private DLURLHelper _dlurlHelper;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.portal.kernel.repository.model.FileShortcut)"

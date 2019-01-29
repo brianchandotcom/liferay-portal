@@ -15,6 +15,7 @@
 package com.liferay.document.library.web.internal.display.context;
 
 import com.liferay.document.library.kernel.versioning.VersioningStrategy;
+import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.document.library.web.internal.display.context.logic.DLPortletInstanceSettingsHelper;
 import com.liferay.document.library.web.internal.display.context.logic.UIItemsBuilder;
 import com.liferay.document.library.web.internal.display.context.util.IGRequestHelper;
@@ -43,19 +44,20 @@ public class DefaultIGViewFileVersionDisplayContext
 	public DefaultIGViewFileVersionDisplayContext(
 			HttpServletRequest request, HttpServletResponse response,
 			FileShortcut fileShortcut, ResourceBundle resourceBundle,
-			DLTrashUtil dlTrashUtil, VersioningStrategy versioningStrategy)
+			DLTrashUtil dlTrashUtil, VersioningStrategy versioningStrategy,
+			DLURLHelper dlurlHelper)
 		throws PortalException {
 
 		this(
 			request, response, fileShortcut.getFileVersion(), fileShortcut,
-			resourceBundle, dlTrashUtil, versioningStrategy);
+			resourceBundle, dlTrashUtil, versioningStrategy, dlurlHelper);
 	}
 
 	public DefaultIGViewFileVersionDisplayContext(
 			HttpServletRequest request, HttpServletResponse response,
 			FileVersion fileVersion, FileShortcut fileShortcut,
 			ResourceBundle resourceBundle, DLTrashUtil dlTrashUtil,
-			VersioningStrategy versioningStrategy)
+			VersioningStrategy versioningStrategy, DLURLHelper dlurlHelper)
 		throws PortalException {
 
 		_igRequestHelper = new IGRequestHelper(request);
@@ -66,24 +68,25 @@ public class DefaultIGViewFileVersionDisplayContext
 		if (fileShortcut == null) {
 			_uiItemsBuilder = new UIItemsBuilder(
 				request, fileVersion, resourceBundle, dlTrashUtil,
-				versioningStrategy);
+				versioningStrategy, dlurlHelper);
 		}
 		else {
 			_uiItemsBuilder = new UIItemsBuilder(
 				request, fileShortcut, resourceBundle, dlTrashUtil,
-				versioningStrategy);
+				versioningStrategy, dlurlHelper);
 		}
 	}
 
 	public DefaultIGViewFileVersionDisplayContext(
 			HttpServletRequest request, HttpServletResponse response,
 			FileVersion fileVersion, ResourceBundle resourceBundle,
-			DLTrashUtil dlTrashUtil, VersioningStrategy versioningStrategy)
+			DLTrashUtil dlTrashUtil, VersioningStrategy versioningStrategy,
+			DLURLHelper dlurlHelper)
 		throws PortalException {
 
 		this(
 			request, response, fileVersion, null, resourceBundle, dlTrashUtil,
-			versioningStrategy);
+			versioningStrategy, dlurlHelper);
 	}
 
 	@Override

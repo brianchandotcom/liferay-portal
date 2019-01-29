@@ -23,7 +23,7 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
-import com.liferay.document.library.kernel.util.DLUtil;
+import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.document.library.web.internal.security.permission.resource.DLFileEntryPermission;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
@@ -87,18 +87,19 @@ public class DLFileEntryAssetRenderer
 		FileEntry fileEntry, FileVersion fileVersion,
 		DLFileEntryLocalService dlFileEntryLocalService) {
 
-		this(fileEntry, fileVersion, dlFileEntryLocalService, null);
+		this(fileEntry, fileVersion, dlFileEntryLocalService, null, null);
 	}
 
 	public DLFileEntryAssetRenderer(
 		FileEntry fileEntry, FileVersion fileVersion,
 		DLFileEntryLocalService dlFileEntryLocalService,
-		TrashHelper trashHelper) {
+		TrashHelper trashHelper, DLURLHelper dlurlHelper) {
 
 		_fileEntry = fileEntry;
 		_fileVersion = fileVersion;
 		_dlFileEntryLocalService = dlFileEntryLocalService;
 		_trashHelper = trashHelper;
+		_dlurlHelper = dlurlHelper;
 	}
 
 	@Override
@@ -223,7 +224,8 @@ public class DLFileEntryAssetRenderer
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String thumbnailSrc = DLUtil.getThumbnailSrc(_fileEntry, themeDisplay);
+		String thumbnailSrc = _dlurlHelper.getThumbnailSrc(
+			_fileEntry, themeDisplay);
 
 		if (Validator.isNotNull(thumbnailSrc)) {
 			return thumbnailSrc;
@@ -257,7 +259,7 @@ public class DLFileEntryAssetRenderer
 
 	@Override
 	public String getURLDownload(ThemeDisplay themeDisplay) {
-		return DLUtil.getDownloadURL(
+		return _dlurlHelper.getDownloadURL(
 			_fileEntry, _fileVersion, themeDisplay, StringPool.BLANK);
 	}
 
@@ -317,7 +319,7 @@ public class DLFileEntryAssetRenderer
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		return DLUtil.getImagePreviewURL(
+		return _dlurlHelper.getImagePreviewURL(
 			_fileEntry, _fileVersion, themeDisplay);
 	}
 
@@ -448,6 +450,7 @@ public class DLFileEntryAssetRenderer
 	}
 
 	private final DLFileEntryLocalService _dlFileEntryLocalService;
+	private DLURLHelper _dlurlHelper;
 	private final FileEntry _fileEntry;
 	private FileVersion _fileVersion;
 	private final TrashHelper _trashHelper;

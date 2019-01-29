@@ -18,6 +18,7 @@ import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.exception.NoSuchFileVersionException;
 import com.liferay.document.library.repository.authorization.capability.AuthorizationCapability;
+import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.portal.kernel.exception.NoSuchRepositoryEntryException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
@@ -35,6 +36,7 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Iván Zaera
@@ -97,5 +99,13 @@ public class ViewFileEntryMVCRenderCommand
 	protected String getPath() {
 		return "/document_library/view_file_entry.jsp";
 	}
+
+	@Override
+	protected DLURLHelper getDLUrlHelper() {
+		return _dlurlHelper;
+	}
+
+	@Reference
+	private DLURLHelper _dlurlHelper;
 
 }

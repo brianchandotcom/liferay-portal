@@ -14,6 +14,7 @@
 
 package com.liferay.frontend.image.editor.integration.document.library.internal.display.context;
 
+import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.frontend.image.editor.integration.document.library.internal.display.context.logic.ImageEditorDLDisplayContextHelper;
 import com.liferay.image.gallery.display.kernel.display.context.BaseIGViewFileVersionDisplayContext;
 import com.liferay.image.gallery.display.kernel.display.context.IGViewFileVersionDisplayContext;
@@ -40,11 +41,13 @@ public class ImageEditorIGViewFileVersionDisplayContext
 	public ImageEditorIGViewFileVersionDisplayContext(
 		IGViewFileVersionDisplayContext parentIGDisplayContext,
 		HttpServletRequest request, HttpServletResponse response,
-		FileVersion fileVersion, ResourceBundle resourceBundle) {
+		FileVersion fileVersion, ResourceBundle resourceBundle,
+		DLURLHelper dlurlHelper) {
 
 		super(_UUID, parentIGDisplayContext, request, response, fileVersion);
 
 		_resourceBundle = resourceBundle;
+		_dlurlHelper = dlurlHelper;
 
 		try {
 			FileEntry fileEntry = null;
@@ -56,7 +59,8 @@ public class ImageEditorIGViewFileVersionDisplayContext
 			_fileEntry = fileEntry;
 
 			_imageEditorDLDisplayContextHelper =
-				new ImageEditorDLDisplayContextHelper(fileVersion, request);
+				new ImageEditorDLDisplayContextHelper(
+					fileVersion, request, dlurlHelper);
 		}
 		catch (PortalException pe) {
 			throw new SystemException(
@@ -77,7 +81,8 @@ public class ImageEditorIGViewFileVersionDisplayContext
 		List<MenuItem> menuItems = menu.getMenuItems();
 
 		ImageEditorDLDisplayContextHelper imageEditorDLDisplayContextHelper =
-			new ImageEditorDLDisplayContextHelper(fileVersion, request);
+			new ImageEditorDLDisplayContextHelper(
+				fileVersion, request, _dlurlHelper);
 
 		menuItems.add(
 			imageEditorDLDisplayContextHelper.
@@ -89,6 +94,7 @@ public class ImageEditorIGViewFileVersionDisplayContext
 	private static final UUID _UUID = UUID.fromString(
 		"1cc61284-8baf-4904-8a65-b7b3845e64d7");
 
+	private final DLURLHelper _dlurlHelper;
 	private final FileEntry _fileEntry;
 	private final ImageEditorDLDisplayContextHelper
 		_imageEditorDLDisplayContextHelper;

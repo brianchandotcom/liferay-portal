@@ -25,6 +25,7 @@ import com.liferay.document.library.kernel.service.DLFolderLocalService;
 import com.liferay.document.library.kernel.service.DLTrashLocalService;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.document.library.kernel.util.DLValidator;
+import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -154,7 +155,7 @@ public class DLFileEntryTrashHandler extends DLBaseTrashHandler {
 
 		DLFileEntry dlFileEntry = getDLFileEntry(classPK);
 
-		return DLUtil.getDLFileEntryControlPanelLink(
+		return _dlurlHelper.getFileEntryControlPanelLink(
 			portletRequest, dlFileEntry.getFileEntryId());
 	}
 
@@ -165,7 +166,7 @@ public class DLFileEntryTrashHandler extends DLBaseTrashHandler {
 
 		DLFileEntry dlFileEntry = getDLFileEntry(classPK);
 
-		return DLUtil.getDLFolderControlPanelLink(
+		return _dlurlHelper.getFolderControlPanelLink(
 			portletRequest, dlFileEntry.getFolderId());
 	}
 
@@ -468,6 +469,9 @@ public class DLFileEntryTrashHandler extends DLBaseTrashHandler {
 	private DLFileVersionLocalService _dlFileVersionLocalService;
 	private DLFolderLocalService _dlFolderLocalService;
 	private DLTrashLocalService _dlTrashLocalService;
+
+	@Reference
+	private DLURLHelper _dlurlHelper;
 
 	@Reference
 	private DLValidator _dlValidator;

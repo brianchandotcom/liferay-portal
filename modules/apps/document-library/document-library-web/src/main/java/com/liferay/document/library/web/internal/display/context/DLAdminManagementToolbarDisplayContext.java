@@ -155,6 +155,16 @@ public class DLAdminManagementToolbarDisplayContext {
 									LanguageUtil.get(_request, "edit-tags"));
 								dropdownItem.setQuickAction(true);
 							}));
+					add(
+						SafeConsumer.ignore(
+							dropdownItem -> {
+								dropdownItem.putData("action", "editCategories");
+								dropdownItem.setIcon("categories");
+								dropdownItem.setLabel(
+									LanguageUtil.get(
+										_request, "edit-categories"));
+								dropdownItem.setQuickAction(true);
+							}));
 				}
 
 				if (!user.isDefaultUser()) {
@@ -234,6 +244,7 @@ public class DLAdminManagementToolbarDisplayContext {
 				availableActionDropdownItems.add("checkout");
 			}
 
+			availableActionDropdownItems.add("editCategories");
 			availableActionDropdownItems.add("editTags");
 		}
 

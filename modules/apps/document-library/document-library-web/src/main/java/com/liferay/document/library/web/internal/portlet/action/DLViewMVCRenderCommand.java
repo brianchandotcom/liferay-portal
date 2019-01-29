@@ -20,6 +20,7 @@ import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.service.DLFolderLocalService;
 import com.liferay.document.library.repository.authorization.capability.AuthorizationCapability;
+import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.document.library.web.internal.constants.DLWebKeys;
 import com.liferay.document.library.web.internal.portlet.toolbar.contributor.DLPortletToolbarContributorRegistry;
 import com.liferay.document.library.web.internal.util.DLTrashUtil;
@@ -81,6 +82,11 @@ public class DLViewMVCRenderCommand extends GetFolderMVCRenderCommand {
 	}
 
 	@Override
+	protected DLURLHelper getDLUrlHelper() {
+		return _dlurlHelper;
+	}
+
+	@Override
 	protected String getPath() {
 		return "/document_library/view.jsp";
 	}
@@ -139,5 +145,8 @@ public class DLViewMVCRenderCommand extends GetFolderMVCRenderCommand {
 
 	@Reference
 	private DLTrashUtil _dlTrashUtil;
+
+	@Reference
+	private DLURLHelper _dlurlHelper;
 
 }

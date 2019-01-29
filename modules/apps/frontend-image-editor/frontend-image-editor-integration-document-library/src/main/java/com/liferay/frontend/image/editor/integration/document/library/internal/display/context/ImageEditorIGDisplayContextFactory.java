@@ -16,6 +16,7 @@ package com.liferay.frontend.image.editor.integration.document.library.internal.
 
 import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.kernel.service.DLAppService;
+import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.image.gallery.display.kernel.display.context.IGDisplayContextFactory;
 import com.liferay.image.gallery.display.kernel.display.context.IGViewFileVersionDisplayContext;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
@@ -63,7 +64,8 @@ public class ImageEditorIGDisplayContextFactory
 				fileVersion,
 				ResourceBundleUtil.getBundle(
 					themeDisplay.getLocale(),
-					ImageEditorIGDisplayContextFactory.class));
+					ImageEditorIGDisplayContextFactory.class),
+				_dlurlHelper);
 		}
 
 		return parentIGViewFileVersionDisplayContext;
@@ -75,5 +77,8 @@ public class ImageEditorIGDisplayContextFactory
 	}
 
 	private DLAppService _dlAppService;
+
+	@Reference
+	private DLURLHelper _dlurlHelper;
 
 }

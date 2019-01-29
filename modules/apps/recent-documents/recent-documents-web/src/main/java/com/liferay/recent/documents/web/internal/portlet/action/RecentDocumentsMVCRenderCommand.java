@@ -14,13 +14,16 @@
 
 package com.liferay.recent.documents.web.internal.portlet.action;
 
+import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.recent.documents.web.internal.constants.RecentDocumentsPortletKeys;
+import com.liferay.recent.documents.web.internal.constants.RecentDocumentsWebKeys;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Peter Fellwock
@@ -39,7 +42,13 @@ public class RecentDocumentsMVCRenderCommand implements MVCRenderCommand {
 	public String render(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
+		renderRequest.setAttribute(
+			RecentDocumentsWebKeys.DL_URL_HELPER, _dlurlHelper);
+
 		return "/view.jsp";
 	}
+
+	@Reference
+	private DLURLHelper _dlurlHelper;
 
 }

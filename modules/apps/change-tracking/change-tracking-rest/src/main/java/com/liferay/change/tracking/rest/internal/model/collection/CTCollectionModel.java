@@ -34,7 +34,7 @@ public class CTCollectionModel {
 		return new Builder();
 	}
 
-	public static CTCollectionModel forCTCollection(CTCollection ctCollection) {
+	public static Builder forCTCollection(CTCollection ctCollection) {
 		Builder builder = new Builder();
 
 		return builder.setCompanyId(
@@ -49,11 +49,11 @@ public class CTCollectionModel {
 			ctCollection.getStatusByUserName()
 		).setStatusDate(
 			ctCollection.getStatusDate()
-		).build();
+		);
 	}
 
 	@XmlElement
-	public int getAdditionCount() {
+	public long getAdditionCount() {
 		return _additionCount;
 	}
 
@@ -68,7 +68,7 @@ public class CTCollectionModel {
 	}
 
 	@XmlElement
-	public int getDeletionCount() {
+	public long getDeletionCount() {
 		return _deletionCount;
 	}
 
@@ -78,7 +78,7 @@ public class CTCollectionModel {
 	}
 
 	@XmlElement
-	public int getModificationCount() {
+	public long getModificationCount() {
 		return _modificationCount;
 	}
 
@@ -103,7 +103,7 @@ public class CTCollectionModel {
 			return _ctCollectionModel;
 		}
 
-		public Builder setAdditionCount(int additionCount) {
+		public Builder setAdditionCount(long additionCount) {
 			_ctCollectionModel._additionCount = additionCount;
 
 			return this;
@@ -121,7 +121,7 @@ public class CTCollectionModel {
 			return this;
 		}
 
-		public Builder setDeletionCount(int deletionCount) {
+		public Builder setDeletionCount(long deletionCount) {
 			_ctCollectionModel._deletionCount = deletionCount;
 
 			return this;
@@ -133,7 +133,7 @@ public class CTCollectionModel {
 			return this;
 		}
 
-		public Builder setModicationCount(int modificationCount) {
+		public Builder setModificationCount(long modificationCount) {
 			_ctCollectionModel._modificationCount = modificationCount;
 
 			return this;
@@ -168,12 +168,12 @@ public class CTCollectionModel {
 	private CTCollectionModel() {
 	}
 
-	private int _additionCount;
+	private long _additionCount;
 	private long _companyId;
 	private long _ctCollectionId;
-	private int _deletionCount;
+	private long _deletionCount;
 	private String _description;
-	private int _modificationCount;
+	private long _modificationCount;
 	private String _name;
 	private String _statusByUserName;
 	private Date _statusDate;

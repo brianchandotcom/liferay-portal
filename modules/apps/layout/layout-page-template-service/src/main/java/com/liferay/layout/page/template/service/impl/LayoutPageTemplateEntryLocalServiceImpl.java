@@ -541,12 +541,13 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 			layoutPageTemplateEntry.setPlid(layout.getPlid());
 		}
 
-		if ((layoutPageTemplateEntry.getType() ==
-				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE) &&
-			(layoutPageTemplateEntry.getPlid() > 0)) {
+		if (layoutPageTemplateEntry.getType() ==
+				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE) {
 
-			Layout existingLayout = layoutLocalService.getLayout(
-				layoutPageTemplateEntry.getPlid());
+			if (layout == null) {
+				layout = layoutLocalService.fetchLayout(
+					layoutPageTemplateEntry.getPlid());
+			}
 
 			AssetRendererFactory assetRendererFactory =
 				AssetRendererFactoryRegistryUtil.
@@ -561,14 +562,12 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 				"layout.instanceable.allowed", Boolean.TRUE);
 
 			layoutLocalService.updateLayout(
-				existingLayout.getGroupId(), existingLayout.isPrivateLayout(),
-				existingLayout.getLayoutId(),
-				existingLayout.getParentLayoutId(), titleMap, titleMap,
-				existingLayout.getDescriptionMap(),
-				existingLayout.getKeywordsMap(), existingLayout.getRobotsMap(),
-				existingLayout.getType(), existingLayout.isHidden(),
-				existingLayout.getFriendlyURLMap(),
-				existingLayout.getIconImage(), null, serviceContext);
+				layout.getGroupId(), layout.isPrivateLayout(),
+				layout.getLayoutId(), layout.getParentLayoutId(), titleMap,
+				titleMap, layout.getDescriptionMap(), layout.getKeywordsMap(),
+				layout.getRobotsMap(), layout.getType(), layout.isHidden(),
+				layout.getFriendlyURLMap(), layout.getIconImage(), null,
+				serviceContext);
 		}
 
 		layoutPageTemplateEntryPersistence.update(layoutPageTemplateEntry);

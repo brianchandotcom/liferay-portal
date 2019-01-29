@@ -118,20 +118,18 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 			RequestDispatcher.INCLUDE_SERVLET_PATH);
 
 		try {
-			if (layout.isSystem()) {
+			LayoutPageTemplateEntry layoutPageTemplateEntry =
+				_layoutPageTemplateEntryLocalService.
+					fetchLayoutPageTemplateEntryByPlid(layout.getPlid());
+
+			if (layoutPageTemplateEntry != null) {
 				request.setAttribute(
 					ContentPageEditorWebKeys.CLASS_NAME,
 					LayoutPageTemplateEntry.class.getName());
 
-				LayoutPageTemplateEntry layoutPageTemplateEntry =
-					_layoutPageTemplateEntryLocalService.
-						fetchLayoutPageTemplateEntryByPlid(layout.getPlid());
-
-				if (layoutPageTemplateEntry != null) {
-					request.setAttribute(
-						ContentPageEditorWebKeys.CLASS_PK,
-						layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
-				}
+				request.setAttribute(
+					ContentPageEditorWebKeys.CLASS_PK,
+					layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
 			}
 			else {
 				request.setAttribute(

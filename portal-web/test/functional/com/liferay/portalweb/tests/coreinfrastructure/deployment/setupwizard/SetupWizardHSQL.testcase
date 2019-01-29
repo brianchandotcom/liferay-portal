@@ -54,6 +54,33 @@ definition {
 	}
 
 	@priority = "4"
+	test HSQLtoHSQLLportal1SampleDataEnabled {
+		property database.types = "hypersonic";
+		property test.name.skip.portal.instance = "SetupWizardHSQL#HSQLtoHSQLLportal1SampleDataEnabled";
+
+		SetupWizard.configurePG(
+			addSampleData = "true",
+			administratorEmail = "test@liferay.com",
+			administratorFirstName = "Test",
+			administratorLastName = "Test",
+			databaseName = "lportal1",
+			databasePassword = PropsUtil.get("database.hypersonic.password"),
+			databaseType = "Hypersonic",
+			databaseUserName = PropsUtil.get("database.hypersonic.username"),
+			jdbcDriverClassName = PropsUtil.get("database.hypersonic.driver"),
+			jdbcURL = PropsUtil.get("database.hypersonic.url")
+		);
+
+		Smoke.viewWelcomePage();
+
+		SetupWizard.viewSampleDataEnabledInPropertiesFile();
+
+		SetupWizard.viewPopulatedSampleData();
+
+		Smoke.runSmoke();
+	}
+
+	@priority = "4"
 	test HSQLtoMariaDB {
 		property database.types = "mariadb";
 		property test.name.skip.portal.instance = "SetupWizardHSQL#HSQLtoMariaDB";
@@ -99,6 +126,34 @@ definition {
 	}
 
 	@priority = "4"
+	test HSQLtoMariaDBSampleDataEnabled {
+		property databases.size = "1";
+		property database.types = "mariadb";
+		property test.name.skip.portal.instance = "SetupWizardHSQL#HSQLtoMariaDBSampleDataEnabled";
+
+		SetupWizard.configurePG(
+			addSampleData = "true",
+			administratorEmail = "test@liferay.com",
+			administratorFirstName = "Test",
+			administratorLastName = "Test",
+			databaseName = "lportal1",
+			databasePassword = PropsUtil.get("database.mariadb.password"),
+			databaseType = "MariaDB",
+			databaseUserName = PropsUtil.get("database.mariadb.username"),
+			jdbcDriverClassName = PropsUtil.get("database.mariadb.driver"),
+			jdbcURL = PropsUtil.get("database.mariadb.url")
+		);
+
+		Smoke.viewWelcomePage();
+
+		SetupWizard.viewSampleDataEnabledInPropertiesFile();
+
+		SetupWizard.viewPopulatedSampleData();
+
+		Smoke.runSmoke();
+	}
+
+	@priority = "4"
 	test HSQLtoMySQLSampleDataDisabled {
 		property custom.properties = "setup.wizard.add.sample.data=true";
 		property database.types = "mysql";
@@ -117,6 +172,34 @@ definition {
 		);
 
 		Smoke.viewWelcomePage();
+
+		Smoke.runSmoke();
+	}
+
+	@priority = "4"
+	test HSQLtoMySQLSampleDataEnabled {
+		property databases.size = "1";
+		property database.types = "mysql";
+		property test.name.skip.portal.instance = "SetupWizardHSQL#HSQLtoMySQLSampleDataEnabled";
+
+		SetupWizard.configurePG(
+			addSampleData = "true",
+			administratorEmail = "test@liferay.com",
+			administratorFirstName = "Test",
+			administratorLastName = "Test",
+			databaseName = "lportal1",
+			databasePassword = PropsUtil.get("database.mysql.password"),
+			databaseType = "MySQL",
+			databaseUserName = PropsUtil.get("database.mysql.username"),
+			jdbcDriverClassName = PropsUtil.get("database.mysql.driver"),
+			jdbcURL = PropsUtil.get("database.mysql.url")
+		);
+
+		Smoke.viewWelcomePage();
+
+		SetupWizard.viewSampleDataEnabledInPropertiesFile();
+
+		SetupWizard.viewPopulatedSampleData();
 
 		Smoke.runSmoke();
 	}
@@ -161,6 +244,34 @@ definition {
 		);
 
 		Smoke.viewWelcomePage();
+
+		Smoke.runSmoke();
+	}
+
+	@priority = "4"
+	test HSQLtoPostgreSQLSampleDataEnabled {
+		property databases.size = "1";
+		property database.types = "postgresql";
+		property test.name.skip.portal.instance = "SetupWizardHSQL#HSQLtoPostgreSQLSampleDataEnabled";
+
+		SetupWizard.configurePG(
+			addSampleData = "true",
+			administratorEmail = "test@liferay.com",
+			administratorFirstName = "Test",
+			administratorLastName = "Test",
+			databaseName = "lportal1",
+			databasePassword = PropsUtil.get("database.postgresql.password"),
+			databaseType = "PostgreSQL",
+			databaseUserName = PropsUtil.get("database.postgresql.username"),
+			jdbcDriverClassName = PropsUtil.get("database.postgresql.driver"),
+			jdbcURL = PropsUtil.get("database.postgresql.url")
+		);
+
+		Smoke.viewWelcomePage();
+
+		SetupWizard.viewSampleDataEnabledInPropertiesFile();
+
+		SetupWizard.viewPopulatedSampleData();
 
 		Smoke.runSmoke();
 	}

@@ -54,6 +54,34 @@ definition {
 	}
 
 	@priority = "4"
+	test HSQLtoDB2SampleDataEnabled {
+		property databases.size = "1";
+		property database.types = "db2";
+		property test.name.skip.portal.instance = "SetupWizardHSQL#HSQLtoDB2SampleDataEnabled";
+
+		SetupWizard.configurePG(
+			addSampleData = "true",
+			administratorEmail = "test@liferay.com",
+			administratorFirstName = "Test",
+			administratorLastName = "Test",
+			databaseName = "lportal1",
+			databasePassword = PropsUtil.get("database.db2.password"),
+			databaseType = "DB2",
+			databaseUserName = PropsUtil.get("database.db2.username"),
+			jdbcDriverClassName = PropsUtil.get("database.db2.driver"),
+			jdbcURL = PropsUtil.get("database.db2.url")
+		);
+
+		Smoke.viewWelcomePage();
+
+		SetupWizard.viewSampleDataEnabledInPropertiesFile();
+
+		SetupWizard.viewPopulatedSampleData();
+
+		Smoke.runSmoke();
+	}
+
+	@priority = "4"
 	test HSQLtoOracle {
 		property database.types = "oracle";
 		property test.name.skip.portal.instance = "SetupWizardHSQL#HSQLtoOracle";
@@ -98,6 +126,34 @@ definition {
 	}
 
 	@priority = "4"
+	test HSQLtoOracleSampleDataEnabled {
+		property databases.size = "1";
+		property database.types = "oracle";
+		property test.name.skip.portal.instance = "SetupWizardHSQL#HSQLtoOracleSampleDataEnabled";
+
+		SetupWizard.configurePG(
+			addSampleData = "true",
+			administratorEmail = "test@liferay.com",
+			administratorFirstName = "Test",
+			administratorLastName = "Test",
+			databaseName = "lportal1",
+			databasePassword = "lportal1",
+			databaseType = "Oracle",
+			databaseUserName = "lportal1",
+			jdbcDriverClassName = PropsUtil.get("database.oracle.driver"),
+			jdbcURL = PropsUtil.get("database.oracle.url")
+		);
+
+		Smoke.viewWelcomePage();
+
+		SetupWizard.viewSampleDataEnabledInPropertiesFile();
+
+		SetupWizard.viewPopulatedSampleData();
+
+		Smoke.runSmoke();
+	}
+
+	@priority = "4"
 	test HSQLtoSybase {
 		property database.types = "sybase";
 		property test.name.skip.portal.instance = "SetupWizardHSQL#HSQLtoSybase";
@@ -137,6 +193,34 @@ definition {
 		);
 
 		Smoke.viewWelcomePage();
+
+		Smoke.runSmoke();
+	}
+
+	@priority = "4"
+	test HSQLtoSybaseSampleDataEnabled {
+		property databases.size = "1";
+		property database.types = "sybase";
+		property test.name.skip.portal.instance = "SetupWizardHSQL#HSQLtoSybaseSampleDataEnabled";
+
+		SetupWizard.configurePG(
+			addSampleData = "true",
+			administratorEmail = "test@liferay.com",
+			administratorFirstName = "Test",
+			administratorLastName = "Test",
+			databaseName = "lportal1",
+			databasePassword = PropsUtil.get("database.sybase.password"),
+			databaseType = "Sybase",
+			databaseUserName = PropsUtil.get("database.sybase.username"),
+			jdbcDriverClassName = PropsUtil.get("database.sybase.driver"),
+			jdbcURL = PropsUtil.get("database.sybase.url")
+		);
+
+		Smoke.viewWelcomePage();
+
+		SetupWizard.viewSampleDataEnabledInPropertiesFile();
+
+		SetupWizard.viewPopulatedSampleData();
 
 		Smoke.runSmoke();
 	}

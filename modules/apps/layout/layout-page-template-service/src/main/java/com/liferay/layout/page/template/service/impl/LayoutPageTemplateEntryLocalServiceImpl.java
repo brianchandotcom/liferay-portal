@@ -148,6 +148,15 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 		layoutPageTemplateEntry.setPreviewFileEntryId(previewFileEntryId);
 		layoutPageTemplateEntry.setDefaultTemplate(defaultTemplate);
 		layoutPageTemplateEntry.setLayoutPrototypeId(layoutPrototypeId);
+
+		if (plid == 0) {
+			Layout layout = _addLayout(layoutPageTemplateEntry, serviceContext);
+
+			if (layout != null) {
+				plid = layout.getPlid();
+			}
+		}
+
 		layoutPageTemplateEntry.setPlid(plid);
 		layoutPageTemplateEntry.setStatus(status);
 		layoutPageTemplateEntry.setStatusByUserId(userId);

@@ -79,16 +79,17 @@ public class ContentStructureResourceImpl implements ContentStructureResource {
 		int count = _ddmStructureService.getStructuresCount(
 			groupId, new long[]{classNameId}, classNameId);
 
-		ArrayList<ContentStructure> structures = new ArrayList<>();
+		ArrayList<ContentStructure> contentStructures = new ArrayList<>();
 
 		for (DDMStructure ddmStructure : ddmStructures) {
-			ContentStructure structure = new ContentStructure();
-			structure.setId(ddmStructure.getStructureId());
+			ContentStructure contentStructure = new ContentStructure();
+			contentStructure.setId(ddmStructure.getStructureId());
 
-			structures.add(structure);
+			contentStructures.add(contentStructure);
 		}
 
-		return new ContentStructureCollection(structures, structures.size());
+		return new ContentStructureCollection(
+			contentStructures, contentStructures.size());
 	}
 
 	@Reference

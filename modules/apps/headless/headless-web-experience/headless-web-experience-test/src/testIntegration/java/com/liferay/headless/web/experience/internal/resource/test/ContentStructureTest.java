@@ -70,10 +70,10 @@ public class ContentStructureTest {
 				_contentStructureResource.getContentStructureCollection(
 					new Pagination(20, 1), "");
 
-		List<ContentStructure> structuredContents =
+		List<ContentStructure> contentStructures =
 			(List<ContentStructure>)contentStructureCollection.getItems();
 
-		Stream<ContentStructure> stream = structuredContents.stream();
+		Stream<ContentStructure> stream = contentStructures.stream();
 
 		Assert.assertTrue(
 			stream.anyMatch(

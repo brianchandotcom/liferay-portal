@@ -213,70 +213,6 @@ public class ContentPageLayoutEditorDisplayContext {
 		return _editorSoyContext;
 	}
 
-	public SoyContext getFragmentEntryLinkListContext() throws PortalException {
-		if (_fragmentEntryLinkListSoyContext != null) {
-			return _fragmentEntryLinkListSoyContext;
-		}
-
-		SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
-
-		soyContext.put(
-			"defaultEditorConfigurations", _getDefaultConfigurations());
-		soyContext.put("defaultLanguageId", _themeDisplay.getLanguageId());
-		soyContext.put(
-			"fragmentEntryLinks", _getSoyContextFragmentEntryLinks());
-
-		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
-			RequestBackedPortletURLFactoryUtil.create(_request),
-			_renderResponse.getNamespace() + "selectImage",
-			_getImageItemSelectorCriterion(), _getURLItemSelectorCriterion());
-
-		soyContext.put("imageSelectorURL", itemSelectorURL.toString());
-
-		soyContext.put("languageId", _themeDisplay.getLanguageId());
-		soyContext.put(
-			"layoutData", JSONFactoryUtil.createJSONObject(_getLayoutData()));
-		soyContext.put("portletNamespace", _renderResponse.getNamespace());
-		soyContext.put(
-			"spritemap",
-			_themeDisplay.getPathThemeImages() + "/lexicon/icons.svg");
-
-		_fragmentEntryLinkListSoyContext = soyContext;
-
-		return _fragmentEntryLinkListSoyContext;
-	}
-
-	public SoyContext getFragmentsEditorSidebarContext()
-		throws PortalException {
-
-		if (_fragmentsEditorSidebarSoyContext != null) {
-			return _fragmentsEditorSidebarSoyContext;
-		}
-
-		SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
-
-		soyContext.put(
-			"elements",
-			_getSoyContextFragmentCollections(
-				FragmentEntryTypeConstants.TYPE_ELEMENT));
-		soyContext.put(
-			"fragmentEntryLinks", _getSoyContextFragmentEntryLinks());
-		soyContext.put(
-			"layoutData", JSONFactoryUtil.createJSONObject(_getLayoutData()));
-		soyContext.put("panels", _getPanelSoyContexts());
-		soyContext.put(
-			"sections",
-			_getSoyContextFragmentCollections(
-				FragmentEntryTypeConstants.TYPE_SECTION));
-		soyContext.put(
-			"spritemap",
-			_themeDisplay.getPathThemeImages() + "/lexicon/icons.svg");
-
-		_fragmentsEditorSidebarSoyContext = soyContext;
-
-		return _fragmentsEditorSidebarSoyContext;
-	}
-
 	public SoyContext getFragmentsEditorToolbarContext() {
 		if (_fragmentsEditorToolbarSoyContext != null) {
 			return _fragmentsEditorToolbarSoyContext;
@@ -789,8 +725,6 @@ public class ContentPageLayoutEditorDisplayContext {
 
 	private Map<String, Object> _defaultConfigurations;
 	private SoyContext _editorSoyContext;
-	private SoyContext _fragmentEntryLinkListSoyContext;
-	private SoyContext _fragmentsEditorSidebarSoyContext;
 	private SoyContext _fragmentsEditorToolbarSoyContext;
 	private ItemSelectorCriterion _imageItemSelectorCriterion;
 	private final ItemSelector _itemSelector;

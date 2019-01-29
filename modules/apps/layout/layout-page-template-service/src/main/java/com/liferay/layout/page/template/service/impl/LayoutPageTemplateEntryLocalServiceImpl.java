@@ -150,7 +150,9 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 		layoutPageTemplateEntry.setLayoutPrototypeId(layoutPrototypeId);
 
 		if (plid == 0) {
-			Layout layout = _addLayout(layoutPageTemplateEntry, serviceContext);
+			Layout layout = _addLayout(
+				userId, groupId, classNameId, classTypeId, name, type,
+				serviceContext);
 
 			if (layout != null) {
 				plid = layout.getPlid();
@@ -534,19 +536,24 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 		Layout layout = null;
 
 		if (layoutPageTemplateEntry.getPlid() == 0) {
-			layout = _addLayout(layoutPageTemplateEntry, serviceContext);
+			layout = _addLayout(
+				layoutPageTemplateEntry.getUserId(),
+				layoutPageTemplateEntry.getGroupId(), classNameId, classTypeId,
+				layoutPageTemplateEntry.getName(),
+				layoutPageTemplateEntry.getType(), serviceContext);
 		}
 
 		if (layout != null) {
 			layoutPageTemplateEntry.setPlid(layout.getPlid());
 		}
 
-		if ((layoutPageTemplateEntry.getType() ==
-				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE) &&
-			(layoutPageTemplateEntry.getPlid() > 0)) {
+		if (layoutPageTemplateEntry.getType() ==
+				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE) {
 
-			Layout existingLayout = layoutLocalService.getLayout(
-				layoutPageTemplateEntry.getPlid());
+			if (layout == null) {
+				layout = layoutLocalService.fetchLayout(
+					layoutPageTemplateEntry.getPlid());
+			}
 
 			AssetRendererFactory assetRendererFactory =
 				AssetRendererFactoryRegistryUtil.
@@ -561,14 +568,12 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 				"layout.instanceable.allowed", Boolean.TRUE);
 
 			layoutLocalService.updateLayout(
-				existingLayout.getGroupId(), existingLayout.isPrivateLayout(),
-				existingLayout.getLayoutId(),
-				existingLayout.getParentLayoutId(), titleMap, titleMap,
-				existingLayout.getDescriptionMap(),
-				existingLayout.getKeywordsMap(), existingLayout.getRobotsMap(),
-				existingLayout.getType(), existingLayout.isHidden(),
-				existingLayout.getFriendlyURLMap(),
-				existingLayout.getIconImage(), null, serviceContext);
+				layout.getGroupId(), layout.isPrivateLayout(),
+				layout.getLayoutId(), layout.getParentLayoutId(), titleMap,
+				titleMap, layout.getDescriptionMap(), layout.getKeywordsMap(),
+				layout.getRobotsMap(), layout.getType(), layout.isHidden(),
+				layout.getFriendlyURLMap(), layout.getIconImage(), null,
+				serviceContext);
 		}
 
 		layoutPageTemplateEntryPersistence.update(layoutPageTemplateEntry);
@@ -720,7 +725,7 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 
 	private Layout _addLayout(
 			long userId, long groupId, long classNameId, long classTypeId,
-			String name, String type, ServiceContext serviceContext)
+			String name, int type, ServiceContext serviceContext)
 		throws PortalException {
 
 		Map<Locale, String> titleMap = Collections.singletonMap(
@@ -737,12 +742,18 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 					LocaleUtil.getSiteDefault(), classTypeId));
 		}
 
+		String layoutType = LayoutConstants.LAYOUT_TYPE_ASSET_DISPLAY;
+
+		if (type == LayoutPageTemplateEntryTypeConstants.TYPE_BASIC) {
+			layoutType = LayoutConstants.LAYOUT_TYPE_CONTENT;
+		}
+
 		serviceContext.setAttribute(
 			"layout.instanceable.allowed", Boolean.TRUE);
 
 		return layoutLocalService.addLayout(
 			userId, groupId, false, 0, titleMap, titleMap, null, null, null,
-			type, StringPool.BLANK, true, true, new HashMap<>(),
+			layoutType, StringPool.BLANK, true, true, new HashMap<>(),
 			serviceContext);
 	}
 

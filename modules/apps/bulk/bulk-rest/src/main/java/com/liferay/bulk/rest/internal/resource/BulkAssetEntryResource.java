@@ -14,8 +14,11 @@
 
 package com.liferay.bulk.rest.internal.resource;
 
+import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.bulk.rest.internal.model.BulkActionResponseModel;
+import com.liferay.bulk.rest.internal.model.BulkAssetEntryCommonCategoriesModel;
 import com.liferay.bulk.rest.internal.model.BulkAssetEntryCommonTagsActionModel;
 import com.liferay.bulk.rest.internal.model.BulkAssetEntryCommonTagsModel;
 import com.liferay.bulk.rest.internal.model.BulkAssetEntryUpdateCategoriesActionModel;
@@ -43,6 +46,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
 import java.util.function.Function;
@@ -71,6 +75,43 @@ import org.osgi.service.component.annotations.Reference;
 )
 @Path("/asset")
 public class BulkAssetEntryResource {
+
+	@Consumes(ContentTypes.APPLICATION_JSON)
+	@Path("/categories/{classNameId}/common")
+	@POST
+	@Produces(ContentTypes.APPLICATION_JSON)
+	public BulkAssetEntryCommonCategoriesModel
+		getBulkAssetEntryCommonCategoriesModel(
+			@Context User user, @Context Locale locale,
+			@PathParam("classNameId") long classNameId,
+			BulkAssetEntryCommonTagsActionModel
+				bulkAssetEntryCommonCategoriesActionModel) {
+
+		try {
+			BulkSelection<FileEntry> bulkSelection =
+				_bulkSelectionFactory.create(
+					bulkAssetEntryCommonCategoriesActionModel.
+						getParameterMap());
+
+			Stream<FileEntry> stream = bulkSelection.stream();
+
+			Set<AssetCategory> commonCategories = stream.map(
+				_getFileEntryCategoriesFunction(
+					PermissionCheckerFactoryUtil.create(user))
+			).reduce(
+				SetUtil::intersect
+			).orElse(
+				Collections.emptySet()
+			);
+
+			return new BulkAssetEntryCommonCategoriesModel(
+				bulkSelection.describe(locale),
+				new ArrayList<>(commonCategories));
+		}
+		catch (Exception e) {
+			return new BulkAssetEntryCommonCategoriesModel(e);
+		}
+	}
 
 	@Consumes(ContentTypes.APPLICATION_JSON)
 	@Path("/tags/{classNameId}/common")
@@ -187,6 +228,32 @@ public class BulkAssetEntryResource {
 		}
 	}
 
+	private Function<FileEntry, Set<AssetCategory>>
+		_getFileEntryCategoriesFunction(PermissionChecker permissionChecker) {
+
+		return fileEntry -> {
+			try {
+				if (_fileEntryModelResourcePermission.contains(
+						permissionChecker, fileEntry, ActionKeys.UPDATE)) {
+
+					return new HashSet<>(
+						_assetCategoryLocalService.getCategories(
+							DLFileEntryConstants.getClassName(),
+							fileEntry.getFileEntryId()));
+				}
+
+				return Collections.emptySet();
+			}
+			catch (PortalException pe) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(pe, pe);
+				}
+
+				return Collections.emptySet();
+			}
+		};
+	}
+
 	private Function<FileEntry, Set<String>> _getFileEntryTagsFunction(
 		PermissionChecker permissionChecker) {
 
@@ -215,6 +282,9 @@ public class BulkAssetEntryResource {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BulkAssetEntryResource.class);
+
+	@Reference
+	private AssetCategoryLocalService _assetCategoryLocalService;
 
 	@Reference
 	private AssetTagLocalService _assetTagLocalService;

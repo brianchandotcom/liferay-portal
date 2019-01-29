@@ -84,6 +84,10 @@ if (assetPublisherDisplayContext.isEnableTagBasedNavigation() && !assetPublisher
 <%
 PortletURL portletURL = renderResponse.createRenderURL();
 
+if (assetCategoryId > 0) {
+	portletURL.setParameter("categoryId", String.valueOf(assetCategoryId));
+}
+
 SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, assetPublisherDisplayContext.getDelta(), portletURL, null, null);
 
 if (!assetPublisherDisplayContext.isPaginationTypeNone()) {

@@ -94,10 +94,10 @@ AssetCategory category = (AssetCategory)row.getObject();
 
 <c:if test="<%= assetCategoriesDisplayContext.hasPermission(category, ActionKeys.UPDATE) %>">
 	<aui:script use="liferay-item-selector-dialog">
-		var moveCategory = document.querySelector('#<portlet:namespace /><%= row.getRowId() %>moveCategory');
+		var moveCategoryIcon = document.querySelector('#<portlet:namespace /><%= row.getRowId() %>moveCategory');
 
-		if (moveCategory){
-			moveCategory.addEventListener(
+		if (moveCategoryIcon) {
+			moveCategoryIcon.addEventListener(
 				'click',
 				function(event) {
 					var itemSelectorDialog = new A.LiferayItemSelectorDialog(

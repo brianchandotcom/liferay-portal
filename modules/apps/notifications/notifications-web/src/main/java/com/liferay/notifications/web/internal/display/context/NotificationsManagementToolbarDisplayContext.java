@@ -16,6 +16,8 @@ package com.liferay.notifications.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.SafeConsumer;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -118,6 +120,38 @@ public class NotificationsManagementToolbarDisplayContext {
 						dropdownGroupItem.setLabel(
 							LanguageUtil.get(_request, "order-by"));
 					});
+			}
+		};
+	}
+
+	public List<LabelItem> getFilterLabelItems() {
+		return new LabelItemList() {
+			{
+				String navigation = ParamUtil.getString(
+					_request, "navigation", "all");
+
+				if (navigation.equals("read") || navigation.equals("unread")) {
+					add(
+						SafeConsumer.ignore(
+							labelItem -> {
+								PortletURL removeLabelURL =
+									PortletURLUtil.clone(
+										_currentURLObj,
+										_liferayPortletResponse);
+
+								removeLabelURL.setParameter(
+									"navigation", (String)null);
+
+								labelItem.putData(
+									"removeLabelURL",
+									removeLabelURL.toString());
+
+								labelItem.setCloseable(true);
+
+								labelItem.setLabel(
+									LanguageUtil.get(_request, navigation));
+							}));
+				}
 			}
 		};
 	}

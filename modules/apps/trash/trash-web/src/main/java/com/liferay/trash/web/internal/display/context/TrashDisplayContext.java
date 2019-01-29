@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.ContainerModel;
+import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
@@ -511,6 +512,17 @@ public class TrashDisplayContext {
 		}
 
 		return portletURL;
+	}
+
+	public List<DropdownItem> getTrashContainerActionDropdownItems(
+			TrashedModel trashedModel)
+		throws Exception {
+
+		TrashContainerActionDropdownItems trashContainerActionDropdownItems =
+			new TrashContainerActionDropdownItems(
+				_liferayPortletRequest, _liferayPortletResponse, trashedModel);
+
+		return trashContainerActionDropdownItems.getActionDropdownItems();
 	}
 
 	public TrashEntry getTrashEntry() {

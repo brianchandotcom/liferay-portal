@@ -2,14 +2,6 @@ Bundle-Name: Liferay Layout Admin Web
 Bundle-SymbolicName: com.liferay.layout.admin.web
 Bundle-Version: 3.0.0
 Liferay-JS-Config: /META-INF/resources/js/config.js
-Liferay-JS-Submodules-Bridge:\
-	layout-admin-web/js/fragments_editor/components/edit_mode/DisabledAreaMask.es,\
-	layout-admin-web/js/fragments_editor/components/edit_mode/EditModeWrapper.es,\
-	layout-admin-web/js/fragments_editor/components/fragment_entry_link/FragmentEntryLinkList.es,\
-	layout-admin-web/js/fragments_editor/components/sidebar/FragmentsEditorSidebar.es,\
-	layout-admin-web/js/fragments_editor/components/toolbar/FragmentsEditorToolbar.es,\
-	layout-admin-web/js/fragments_editor/reducers/reducers.es,\
-	layout-admin-web/js/fragments_editor/store/store.es
 Provide-Capability:\
 	soy;\
 		type="layout-admin-web";\

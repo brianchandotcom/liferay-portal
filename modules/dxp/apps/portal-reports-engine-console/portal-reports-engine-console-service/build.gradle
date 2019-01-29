@@ -26,5 +26,5 @@ dependencies {
 	compileOnly project(":core:petra:petra-memory")
 	compileOnly project(":core:petra:petra-string")
 	compileOnly project(":core:registry-api")
-	compileOnly project(":private:apps:portal-reports-engine-console:portal-reports-engine-console-api")
+	compileOnly project(":private:apps:portal-reports-engine:portal-reports-engine-console-api")
 }

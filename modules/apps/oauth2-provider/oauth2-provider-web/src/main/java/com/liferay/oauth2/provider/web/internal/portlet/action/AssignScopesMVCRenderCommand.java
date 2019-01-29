@@ -14,6 +14,7 @@
 
 package com.liferay.oauth2.provider.web.internal.portlet.action;
 
+import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.oauth2.provider.configuration.OAuth2ProviderConfiguration;
 import com.liferay.oauth2.provider.scope.liferay.ApplicationDescriptorLocator;
 import com.liferay.oauth2.provider.scope.liferay.ScopeDescriptorLocator;
@@ -62,7 +63,7 @@ public class AssignScopesMVCRenderCommand implements MVCRenderCommand {
 				_oAuth2ApplicationService, _oAuth2ProviderConfiguration,
 				renderRequest, getThemeDisplay(renderRequest),
 				_applicationDescriptorLocator, _scopeDescriptorLocator,
-				_scopeLocator);
+				_scopeLocator, _dlurlHelper);
 
 		renderRequest.setAttribute(
 			OAuth2ProviderWebKeys.OAUTH2_ADMIN_PORTLET_DISPLAY_CONTEXT,
@@ -83,6 +84,9 @@ public class AssignScopesMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private ApplicationDescriptorLocator _applicationDescriptorLocator;
+
+	@Reference
+	private DLURLHelper _dlurlHelper;
 
 	@Reference
 	private OAuth2ApplicationService _oAuth2ApplicationService;

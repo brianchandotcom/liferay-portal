@@ -817,7 +817,7 @@ definition {
 		);
 
 		if (isSet(versioning)) {
-			Panel.expandPanel(panel = "Categorization");
+			Panel.expandPanel(panel = "Versioning");
 
 			Check.checkToggleSwitch(
 				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH",

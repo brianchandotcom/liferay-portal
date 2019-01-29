@@ -67,62 +67,8 @@ public class AssetDisplayLayoutTypeController
 
 	@Override
 	public String includeEditContent(
-			HttpServletRequest request, HttpServletResponse response,
-			Layout layout)
-		throws Exception {
-
-		RequestDispatcher requestDispatcher =
-			TransferHeadersHelperUtil.getTransferHeadersRequestDispatcher(
-				_editorServletContext.getRequestDispatcher(
-					"/layout/edit_layout/content.jsp"));
-
-		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
-
-		ServletResponse servletResponse = createServletResponse(
-			response, unsyncStringWriter);
-
-		String contentType = servletResponse.getContentType();
-
-		String includeServletPath = (String)request.getAttribute(
-			RequestDispatcher.INCLUDE_SERVLET_PATH);
-
-		try {
-			request.setAttribute(
-				ContentPageEditorWebKeys.CLASS_NAME,
-				LayoutPageTemplateEntry.class.getName());
-
-			LayoutPageTemplateEntry layoutPageTemplateEntry =
-				_layoutPageTemplateEntryLocalService.
-					fetchLayoutPageTemplateEntryByPlid(layout.getPlid());
-
-			if (layoutPageTemplateEntry != null) {
-				request.setAttribute(
-					ContentPageEditorWebKeys.CLASS_PK,
-					layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
-			}
-
-			request.setAttribute(
-				AssetDisplayLayoutTypeControllerWebKeys.
-					ASSET_DISPLAY_CONTRIBUTOR_TRACKER,
-				_assetDisplayContributorTracker);
-
-			addAttributes(request);
-
-			requestDispatcher.include(request, servletResponse);
-		}
-		finally {
-			removeAttributes(request);
-
-			request.setAttribute(
-				RequestDispatcher.INCLUDE_SERVLET_PATH, includeServletPath);
-		}
-
-		if (contentType != null) {
-			response.setContentType(contentType);
-		}
-
-		request.setAttribute(
-			WebKeys.LAYOUT_CONTENT, unsyncStringWriter.getStringBundler());
+		HttpServletRequest request, HttpServletResponse response,
+		Layout layout) {
 
 		return StringPool.BLANK;
 	}
@@ -151,13 +97,67 @@ public class AssetDisplayLayoutTypeController
 			request.setAttribute(
 				AssetDisplayLayoutTypeControllerWebKeys.ITEM_SELECTOR,
 				_itemSelector);
-
-			includeEditContent(request, response, layout);
-
-			return false;
 		}
 
-		return super.includeLayoutContent(request, response, layout);
+		String page = getViewPage();
+
+		if (layoutMode.equals(Constants.EDIT)) {
+			page = _EDIT_PAGE;
+		}
+
+		RequestDispatcher requestDispatcher =
+			TransferHeadersHelperUtil.getTransferHeadersRequestDispatcher(
+				servletContext.getRequestDispatcher(page));
+
+		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
+
+		ServletResponse servletResponse = createServletResponse(
+			response, unsyncStringWriter);
+
+		String contentType = servletResponse.getContentType();
+
+		String includeServletPath = (String)request.getAttribute(
+			RequestDispatcher.INCLUDE_SERVLET_PATH);
+
+		try {
+			LayoutPageTemplateEntry layoutPageTemplateEntry =
+				_layoutPageTemplateEntryLocalService.
+					fetchLayoutPageTemplateEntryByPlid(layout.getPlid());
+
+			if (layoutPageTemplateEntry != null) {
+				request.setAttribute(
+					ContentPageEditorWebKeys.CLASS_NAME,
+					LayoutPageTemplateEntry.class.getName());
+
+				request.setAttribute(
+					ContentPageEditorWebKeys.CLASS_PK,
+					layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
+			}
+
+			request.setAttribute(
+				AssetDisplayLayoutTypeControllerWebKeys.
+					ASSET_DISPLAY_CONTRIBUTOR_TRACKER,
+				_assetDisplayContributorTracker);
+
+			addAttributes(request);
+
+			requestDispatcher.include(request, servletResponse);
+		}
+		finally {
+			removeAttributes(request);
+
+			request.setAttribute(
+				RequestDispatcher.INCLUDE_SERVLET_PATH, includeServletPath);
+		}
+
+		if (contentType != null) {
+			response.setContentType(contentType);
+		}
+
+		request.setAttribute(
+			WebKeys.LAYOUT_CONTENT, unsyncStringWriter.getStringBundler());
+
+		return false;
 	}
 
 	@Override
@@ -215,6 +215,8 @@ public class AssetDisplayLayoutTypeController
 		this.servletContext = servletContext;
 	}
 
+	private static final String _EDIT_PAGE = "/layout/edit/asset_display.jsp";
+
 	private static final String _URL =
 		"${liferay:mainPath}/portal/layout?p_l_id=${liferay:plid}" +
 			"&p_v_l_s_g_id=${liferay:pvlsgid}";
@@ -223,11 +225,6 @@ public class AssetDisplayLayoutTypeController
 
 	@Reference
 	private AssetDisplayContributorTracker _assetDisplayContributorTracker;
-
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.layout.type.controller.content)"
-	)
-	private ServletContext _editorServletContext;
 
 	@Reference
 	private ItemSelector _itemSelector;

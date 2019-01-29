@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.security.auth.session.AuthenticatedSessionManag
 import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.servlet.filters.BasePortalFilter;
 
 import java.util.Date;
@@ -73,6 +74,12 @@ public class PasswordModifiedFilter extends BasePortalFilter {
 			User user = PortalUtil.getUser(request);
 
 			if ((user == null) || user.isDefaultUser()) {
+				return false;
+			}
+
+			Long realUserId = (Long)session.getAttribute(WebKeys.USER_ID);
+
+			if ((realUserId == null) || user.getUserId() != realUserId) {
 				return false;
 			}
 

@@ -80,6 +80,7 @@ import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 
 import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.lang.SystemUtils;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -1625,11 +1626,7 @@ public class JenkinsResultsParserUtil {
 	}
 
 	public static boolean isWindows() {
-		if (File.pathSeparator.equals(";")) {
-			return true;
-		}
-
-		return false;
+		return SystemUtils.IS_OS_WINDOWS;
 	}
 
 	public static String join(String delimiter, List<String> list) {

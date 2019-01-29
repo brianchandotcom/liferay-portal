@@ -61,12 +61,12 @@ class EntriesDefaultEventHandler extends PortletBase {
 			);
 		}
 		else {
-			submitForm(this.one('#fm'), itemData.restoreURL);
+			submitForm(document.hrefFm, itemData.restoreURL);
 		}
 	}
 
 	deleteEntry(itemData) {
-		submitForm(this.one('#fm'), itemData.deleteURL);
+		submitForm(document.hrefFm, itemData.deleteURL);
 	}
 
 }

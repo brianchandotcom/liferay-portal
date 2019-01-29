@@ -23,6 +23,7 @@ import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.service.DLFolderLocalService;
 import com.liferay.document.library.kernel.util.DLUtil;
+import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -129,7 +130,7 @@ public class DLFolderTrashHandler extends DLBaseTrashHandler {
 
 		DLFolder dlFolder = getDLFolder(classPK);
 
-		return DLUtil.getDLFolderControlPanelLink(
+		return _dlurlHelper.getFolderControlPanelLink(
 			portletRequest, dlFolder.getFolderId());
 	}
 
@@ -140,7 +141,7 @@ public class DLFolderTrashHandler extends DLBaseTrashHandler {
 
 		DLFolder dlFolder = getDLFolder(classPK);
 
-		return DLUtil.getDLFolderControlPanelLink(
+		return _dlurlHelper.getFolderControlPanelLink(
 			portletRequest, dlFolder.getParentFolderId());
 	}
 
@@ -386,6 +387,9 @@ public class DLFolderTrashHandler extends DLBaseTrashHandler {
 		target = "(model.class.name=com.liferay.document.library.kernel.model.DLFolder)"
 	)
 	private ModelResourcePermission<DLFolder> _dlFolderModelResourcePermission;
+
+	@Reference
+	private DLURLHelper _dlurlHelper;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.portal.kernel.repository.model.Folder)"

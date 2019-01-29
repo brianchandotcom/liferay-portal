@@ -23,6 +23,7 @@ import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.util.DLValidator;
 import com.liferay.document.library.kernel.versioning.VersioningStrategy;
 import com.liferay.document.library.preview.DLPreviewRendererProvider;
+import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.document.library.web.internal.util.DLTrashUtil;
 import com.liferay.dynamic.data.mapping.storage.StorageEngine;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
@@ -115,7 +116,7 @@ public class DLDisplayContextProvider {
 			dlViewFileEntryHistoryDisplayContext =
 				new DefaultDLViewFileEntryHistoryDisplayContext(
 					request, fileVersion, resourceBundle, _dlTrashUtil,
-					_versioningStrategy);
+					_versioningStrategy, _dlurlHelper);
 
 		if (fileVersion == null) {
 			return dlViewFileEntryHistoryDisplayContext;
@@ -155,7 +156,8 @@ public class DLDisplayContextProvider {
 				new DefaultDLViewFileVersionDisplayContext(
 					request, response, fileShortcut, _dlMimeTypeDisplayContext,
 					resourceBundle, _storageEngine, _dlTrashUtil,
-					dlPreviewRendererProvider, _versioningStrategy);
+					dlPreviewRendererProvider, _versioningStrategy,
+					_dlurlHelper);
 
 			if (fileShortcut == null) {
 				return dlViewFileVersionDisplayContext;
@@ -194,7 +196,7 @@ public class DLDisplayContextProvider {
 			new DefaultDLViewFileVersionDisplayContext(
 				request, response, fileVersion, _dlMimeTypeDisplayContext,
 				resourceBundle, _storageEngine, _dlTrashUtil,
-				dlPreviewRendererProvider, _versioningStrategy);
+				dlPreviewRendererProvider, _versioningStrategy, _dlurlHelper);
 
 		if (fileVersion == null) {
 			return dlViewFileVersionDisplayContext;
@@ -250,6 +252,9 @@ public class DLDisplayContextProvider {
 
 	@Reference
 	private DLTrashUtil _dlTrashUtil;
+
+	@Reference
+	private DLURLHelper _dlurlHelper;
 
 	@Reference
 	private DLValidator _dlValidator;

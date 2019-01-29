@@ -14,7 +14,7 @@
 
 package com.liferay.document.library.web.internal.upload;
 
-import com.liferay.document.library.kernel.util.DLUtil;
+import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.item.selector.ItemSelectorUploadResponseHandler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -69,7 +69,7 @@ public class DLUploadResponseHandler implements UploadResponseHandler {
 				(ThemeDisplay)uploadPortletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
 
-			return DLUtil.getPreviewURL(
+			return _dlurlHelper.getPreviewURL(
 				fileEntry, fileEntry.getLatestFileVersion(), themeDisplay,
 				StringPool.BLANK);
 		}
@@ -87,6 +87,9 @@ public class DLUploadResponseHandler implements UploadResponseHandler {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLUploadResponseHandler.class);
+
+	@Reference
+	private DLURLHelper _dlurlHelper;
 
 	@Reference
 	private ItemSelectorUploadResponseHandler

@@ -15,6 +15,7 @@
 package com.liferay.document.library.web.internal.portlet.action;
 
 import com.liferay.document.library.constants.DLPortletKeys;
+import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.document.library.web.internal.constants.DLWebKeys;
 import com.liferay.document.library.web.internal.portlet.toolbar.contributor.DLPortletToolbarContributorRegistry;
 import com.liferay.document.library.web.internal.util.DLTrashUtil;
@@ -49,6 +50,8 @@ public class SearchMVCRenderCommand implements MVCRenderCommand {
 				getDLPortletToolbarContributor());
 		renderRequest.setAttribute(
 			DLWebKeys.DOCUMENT_LIBRARY_TRASH_UTIL, _dlTrashUtil);
+		renderRequest.setAttribute(
+			DLWebKeys.DOCUMENT_LIBRARY_URL_HELPER, _dlurlHelper);
 
 		return "/document_library/view.jsp";
 	}
@@ -59,5 +62,8 @@ public class SearchMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private DLTrashUtil _dlTrashUtil;
+
+	@Reference
+	private DLURLHelper _dlurlHelper;
 
 }

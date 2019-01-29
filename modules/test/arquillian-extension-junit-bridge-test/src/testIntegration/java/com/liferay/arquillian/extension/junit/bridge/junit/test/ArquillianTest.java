@@ -16,6 +16,7 @@ package com.liferay.arquillian.extension.junit.bridge.junit.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.test.item.BeforeAfterClassTestItem;
 import com.liferay.arquillian.extension.junit.bridge.junit.test.item.ClassRuleTestItem;
+import com.liferay.arquillian.extension.junit.bridge.junit.test.item.ExpectedExceptionTestItem;
 import com.liferay.portal.kernel.test.junit.BridgeJUnitTestRunner;
 
 import java.io.IOException;
@@ -62,6 +63,15 @@ public class ArquillianTest {
 		finally {
 			ClassRuleTestItem.assertAndTearDown();
 		}
+	}
+
+	@Test
+	public void testExpectedException() throws IOException {
+		Result result = BridgeJUnitTestRunner.runBridgeTests(
+			new BridgeJUnitTestRunner.BridgeRunListener(ArquillianTest.class),
+			ExpectedExceptionTestItem.class);
+
+		assertResult(result, ExpectedExceptionTestItem.class);
 	}
 
 	protected void assertResult(Result result, Class<?>... testClasses) {

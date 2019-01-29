@@ -15,7 +15,7 @@
 package com.liferay.dynamic.data.mapping.internal.util;
 
 import com.liferay.document.library.kernel.service.DLAppLocalService;
-import com.liferay.document.library.kernel.util.DLUtil;
+import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeResponse;
@@ -345,7 +345,7 @@ public class DDMImpl implements DDM {
 			FileEntry fileEntry =
 				_dlAppLocalService.getFileEntryByUuidAndGroupId(uuid, groupId);
 
-			fieldValue = DLUtil.getPreviewURL(
+			fieldValue = _dlurlHelper.getPreviewURL(
 				fileEntry, fileEntry.getFileVersion(), null, StringPool.BLANK,
 				false, true);
 		}
@@ -1364,6 +1364,10 @@ public class DDMImpl implements DDM {
 	private DDMFormValuesSerializerTracker _ddmFormValuesSerializerTracker;
 	private DDMFormValuesToFieldsConverter _ddmFormValuesToFieldsConverter;
 	private DLAppLocalService _dlAppLocalService;
+
+	@Reference
+	private DLURLHelper _dlurlHelper;
+
 	private FieldsToDDMFormValuesConverter _fieldsToDDMFormValuesConverter;
 
 	@Reference

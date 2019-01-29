@@ -33,7 +33,7 @@ public class DLURLHelperProvider {
 		_dlurlHelperProvider = this;
 	}
 
-	private static final DLURLHelperProvider _dlurlHelperProvider;
+	private static DLURLHelperProvider _dlurlHelperProvider;
 
 	@Reference
 	private DLURLHelper _dlurlHelper;

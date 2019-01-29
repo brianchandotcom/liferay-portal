@@ -26,9 +26,9 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Adolfo Pérez
  */
 @XmlRootElement
-public class BulkAssetEntryCommonTagsActionModel {
+public class BulkAssetEntryActionModel {
 
-	public BulkAssetEntryCommonTagsActionModel() {
+	public BulkAssetEntryActionModel() {
 	}
 
 	@XmlTransient

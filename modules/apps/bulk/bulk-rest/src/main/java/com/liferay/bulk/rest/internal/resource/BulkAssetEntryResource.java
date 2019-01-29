@@ -18,8 +18,8 @@ import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.bulk.rest.internal.model.BulkActionResponseModel;
+import com.liferay.bulk.rest.internal.model.BulkAssetEntryActionModel;
 import com.liferay.bulk.rest.internal.model.BulkAssetEntryCommonCategoriesModel;
-import com.liferay.bulk.rest.internal.model.BulkAssetEntryCommonTagsActionModel;
 import com.liferay.bulk.rest.internal.model.BulkAssetEntryCommonTagsModel;
 import com.liferay.bulk.rest.internal.model.BulkAssetEntryUpdateCategoriesActionModel;
 import com.liferay.bulk.rest.internal.model.BulkAssetEntryUpdateTagsActionModel;
@@ -84,14 +84,12 @@ public class BulkAssetEntryResource {
 		getBulkAssetEntryCommonCategoriesModel(
 			@Context User user, @Context Locale locale,
 			@PathParam("classNameId") long classNameId,
-			BulkAssetEntryCommonTagsActionModel
-				bulkAssetEntryCommonCategoriesActionModel) {
+			BulkAssetEntryActionModel bulkAssetEntryActionModel) {
 
 		try {
 			BulkSelection<FileEntry> bulkSelection =
 				_bulkSelectionFactory.create(
-					bulkAssetEntryCommonCategoriesActionModel.
-						getParameterMap());
+					bulkAssetEntryActionModel.getParameterMap());
 
 			Stream<FileEntry> stream = bulkSelection.stream();
 
@@ -120,13 +118,12 @@ public class BulkAssetEntryResource {
 	public BulkAssetEntryCommonTagsModel getBulkAssetEntryCommonTagsModel(
 		@Context User user, @Context Locale locale,
 		@PathParam("classNameId") long classNameId,
-		BulkAssetEntryCommonTagsActionModel
-			bulkAssetEntryCommonTagsActionModel) {
+		BulkAssetEntryActionModel bulkAssetEntryActionModel) {
 
 		try {
 			BulkSelection<FileEntry> bulkSelection =
 				_bulkSelectionFactory.create(
-					bulkAssetEntryCommonTagsActionModel.getParameterMap());
+					bulkAssetEntryActionModel.getParameterMap());
 
 			Stream<FileEntry> stream = bulkSelection.stream();
 

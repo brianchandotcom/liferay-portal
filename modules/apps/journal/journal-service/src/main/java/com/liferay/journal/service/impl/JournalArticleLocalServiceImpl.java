@@ -22,6 +22,7 @@ import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.util.DLUtil;
+import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException;
 import com.liferay.dynamic.data.mapping.exception.StructureDefinitionException;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
@@ -7254,7 +7255,7 @@ public class JournalArticleLocalServiceImpl
 						newArticle.getGroupId(), folder.getFolderId(),
 						fileName);
 
-				String previewURL = DLUtil.getPreviewURL(
+				String previewURL = _dlurlHelper.getPreviewURL(
 					fileEntry, fileEntry.getFileVersion(), null,
 					StringPool.BLANK, false, true);
 
@@ -8958,6 +8959,9 @@ public class JournalArticleLocalServiceImpl
 
 	@ServiceReference(type = CommentManager.class)
 	private CommentManager _commentManager;
+
+	@ServiceReference(type = DLURLHelper.class)
+	private DLURLHelper _dlurlHelper;
 
 	@ServiceReference(type = JournalDefaultTemplateProvider.class)
 	private JournalDefaultTemplateProvider _journalDefaultTemplateProvider;

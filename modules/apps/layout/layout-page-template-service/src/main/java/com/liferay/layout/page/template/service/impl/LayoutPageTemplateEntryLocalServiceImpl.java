@@ -723,12 +723,23 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 	}
 
 	private Layout _addLayout(
-			long userId, long groupId, long classNameId, long classTypeId,
-			String name, String type, ServiceContext serviceContext)
+			LayoutPageTemplateEntry layoutPageTemplateEntry,
+			ServiceContext serviceContext)
 		throws PortalException {
 
+		int type = layoutPageTemplateEntry.getType();
+
+		if (!((type ==
+				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE) ||
+			  (type == LayoutPageTemplateEntryTypeConstants.TYPE_BASIC))) {
+
+			return null;
+		}
+
+		long classNameId = layoutPageTemplateEntry.getClassNameId();
+
 		Map<Locale, String> titleMap = Collections.singletonMap(
-			LocaleUtil.getSiteDefault(), name);
+			LocaleUtil.getSiteDefault(), layoutPageTemplateEntry.getName());
 
 		if (classNameId > 0) {
 			AssetRendererFactory assetRendererFactory =
@@ -738,16 +749,26 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 			titleMap = Collections.singletonMap(
 				LocaleUtil.getSiteDefault(),
 				assetRendererFactory.getTypeName(
-					LocaleUtil.getSiteDefault(), classTypeId));
+					LocaleUtil.getSiteDefault(),
+					layoutPageTemplateEntry.getClassTypeId()));
+		}
+
+		String layoutType = LayoutConstants.LAYOUT_TYPE_CONTENT;
+
+		if (layoutPageTemplateEntry.getType() ==
+				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE) {
+
+			layoutType = LayoutConstants.LAYOUT_TYPE_ASSET_DISPLAY;
 		}
 
 		serviceContext.setAttribute(
 			"layout.instanceable.allowed", Boolean.TRUE);
 
 		return layoutLocalService.addLayout(
-			userId, groupId, false, 0, titleMap, titleMap, null, null, null,
-			type, StringPool.BLANK, true, true, new HashMap<>(),
-			serviceContext);
+			layoutPageTemplateEntry.getUserId(),
+			layoutPageTemplateEntry.getGroupId(), false, 0, titleMap, titleMap,
+			null, null, null, layoutType, StringPool.BLANK, true, true,
+			new HashMap<>(), serviceContext);
 	}
 
 	@ServiceReference(type = CompanyLocalService.class)

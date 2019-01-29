@@ -51,12 +51,9 @@ public class NotificationsManagementToolbarDisplayContext {
 	}
 
 	public List<DropdownItem> getActionDropdownItems() {
-		boolean actionRequired = ParamUtil.getBoolean(
-			_request, "actionRequired");
-
 		return new DropdownItemList() {
 			{
-				if (!actionRequired) {
+				if (!_isActionRequired()) {
 					add(
 						SafeConsumer.ignore(
 							dropdownItem -> {
@@ -98,11 +95,8 @@ public class NotificationsManagementToolbarDisplayContext {
 	public String getClearResultsURL() {
 		PortletURL clearResultsURL = _liferayPortletResponse.createRenderURL();
 
-		boolean actionRequired = ParamUtil.getBoolean(
-			_request, "actionRequired");
-
 		clearResultsURL.setParameter(
-			"actionRequired", String.valueOf(actionRequired));
+			"actionRequired", String.valueOf(_isActionRequired()));
 
 		return clearResultsURL.toString();
 	}
@@ -110,10 +104,7 @@ public class NotificationsManagementToolbarDisplayContext {
 	public List<DropdownItem> getFilterDropdownItems() {
 		return new DropdownItemList() {
 			{
-				boolean actionRequired = ParamUtil.getBoolean(
-					_request, "actionRequired");
-
-				if (!actionRequired) {
+				if (!_isActionRequired()) {
 					addGroup(
 						SafeConsumer.ignore(
 							dropdownGroupItem -> {
@@ -246,6 +237,10 @@ public class NotificationsManagementToolbarDisplayContext {
 						}));
 			}
 		};
+	}
+
+	private boolean _isActionRequired() {
+		return ParamUtil.getBoolean(_request, "actionRequired");
 	}
 
 	private final PortletURL _currentURLObj;

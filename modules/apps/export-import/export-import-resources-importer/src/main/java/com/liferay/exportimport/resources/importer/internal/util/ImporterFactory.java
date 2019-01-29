@@ -18,6 +18,7 @@ import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.service.DLFolderLocalService;
+import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerTracker;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
@@ -215,7 +216,8 @@ public class ImporterFactory {
 			_layoutSetPrototypeLocalService, _mimeTypes, _portal,
 			_portletPreferencesFactory, _portletPreferencesLocalService,
 			_portletPreferencesTranslator, _portletPreferencesTranslators,
-			_repositoryLocalService, _saxReader, _themeLocalService);
+			_repositoryLocalService, _saxReader, _themeLocalService,
+			_dlurlHelper);
 	}
 
 	protected LARImporter getLARImporter() {
@@ -234,7 +236,8 @@ public class ImporterFactory {
 			_layoutSetPrototypeLocalService, _mimeTypes, _portal,
 			_portletPreferencesFactory, _portletPreferencesLocalService,
 			_portletPreferencesTranslator, _portletPreferencesTranslators,
-			_repositoryLocalService, _saxReader, _themeLocalService);
+			_repositoryLocalService, _saxReader, _themeLocalService,
+			_dlurlHelper);
 	}
 
 	@Reference(
@@ -308,6 +311,9 @@ public class ImporterFactory {
 
 	@Reference
 	private DLFolderLocalService _dlFolderLocalService;
+
+	@Reference
+	private DLURLHelper _dlurlHelper;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

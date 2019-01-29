@@ -18,7 +18,7 @@ import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
-import com.liferay.document.library.kernel.util.DLUtil;
+import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
 import com.liferay.exportimport.kernel.exception.ExportImportContentProcessorException;
 import com.liferay.exportimport.kernel.exception.ExportImportContentValidationException;
@@ -509,7 +509,7 @@ public class DLReferencesExportImportContentProcessor
 					continue;
 				}
 
-				String url = DLUtil.getPreviewURL(
+				String url = _dlurlHelper.getPreviewURL(
 					importedFileEntry, importedFileEntry.getFileVersion(), null,
 					StringPool.BLANK, false, false);
 
@@ -692,6 +692,9 @@ public class DLReferencesExportImportContentProcessor
 
 	@Reference
 	private DLFileEntryLocalService _dlFileEntryLocalService;
+
+	@Reference
+	private DLURLHelper _dlurlHelper;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

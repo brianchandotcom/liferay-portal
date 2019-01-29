@@ -1,3 +1,7 @@
 apiDir: "../headless-foundation-api/src/main/java"
 apiPackagePath: "com.liferay.headless.foundation"
+application:
+  baseURI: "/headless-foundation"
+  className: "HeadlessFoundationApplication"
+  name: "headless-foundation-application"
 author: "Javier Gamarra"

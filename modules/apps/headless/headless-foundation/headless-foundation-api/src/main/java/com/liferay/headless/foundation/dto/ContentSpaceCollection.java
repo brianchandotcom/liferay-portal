@@ -14,26 +14,33 @@
 
 package com.liferay.headless.foundation.dto;
 
+import com.liferay.portal.vulcan.collection.BaseCollection;
+
+import java.util.Collection;
+import java.util.Collections;
+
 import javax.annotation.Generated;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlSeeAlso;
 
 /**
  * @author Javier Gamarra
  * @generated
  */
 @Generated("")
-@XmlRootElement(name = "Organization")
-public class Organization {
+@XmlRootElement(name = "collection")
+@XmlSeeAlso({ContentSpace.class})
+public class ContentSpaceCollection<T> extends BaseCollection<T> {
 
-	public long getId() {
-		return _id;
+	public ContentSpaceCollection() {
+		setItems(Collections.emptyList());
+		setTotalCount(0);
 	}
 
-	public void setId(long id) {
-		_id = id;
+	public ContentSpaceCollection(Collection<T> items, int totalCount) {
+		setItems(items);
+		setTotalCount(totalCount);
 	}
-
-	private long _id;
 
 }

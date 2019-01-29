@@ -14,18 +14,29 @@
 
 package com.liferay.headless.web.experience.internal.resource;
 
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.service.DDMStructureService;
 import com.liferay.headless.web.experience.dto.ContentStructure;
 import com.liferay.headless.web.experience.dto.ContentStructureCollection;
 import com.liferay.headless.web.experience.resource.ContentStructureResource;
+import com.liferay.journal.model.JournalArticle;
+import com.liferay.portal.kernel.model.ClassName;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.ClassNameService;
+import com.liferay.portal.kernel.service.CompanyService;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.vulcan.context.Pagination;
-
-import java.util.Collections;
-
-import javax.annotation.Generated;
-
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
 import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
+
+import javax.annotation.Generated;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Javier Gamarra
@@ -42,11 +53,54 @@ import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
 public class ContentStructureResourceImpl implements ContentStructureResource {
 
 	@Override
-	public ContentStructureCollection<ContentStructure> getContentStructureCollection(
+	public ContentStructureCollection<ContentStructure>
+		getContentStructureCollection(
 			Pagination pagination, String size)
 		throws Exception {
 
-		return new ContentStructureCollection(Collections.emptyList(), 0);
+		String webId = PropsUtil.get(PropsKeys.COMPANY_DEFAULT_WEB_ID);
+
+		Company company = _companyService.getCompanyByWebId(webId);
+		Group group = company.getGroup();
+
+		long groupId = group.getGroupId();
+
+		ClassName className = _classNameService.fetchClassName(
+			JournalArticle.class.getName());
+
+		Long classNameId = className.getClassNameId();
+
+		List<DDMStructure> ddmStructures =
+			_ddmStructureService.getStructures(
+				company.getCompanyId(), new long[]{groupId}, classNameId,
+				pagination.getStartPosition(), pagination.getEndPosition(),
+				null);
+
+		int count = _ddmStructureService.getStructuresCount(
+			groupId, new long[]{classNameId}, classNameId);
+
+		ArrayList<ContentStructure> structures = new ArrayList<>();
+
+		for (DDMStructure ddmStructure : ddmStructures) {
+			ContentStructure structure = new ContentStructure();
+			structure.setId(ddmStructure.getStructureId());
+
+			structures.add(structure);
+		}
+
+		return new ContentStructureCollection(structures, structures.size());
 	}
+
+	@Reference
+	private Portal _portal;
+
+	@Reference
+	private DDMStructureService _ddmStructureService;
+
+	@Reference
+	private ClassNameService _classNameService;
+
+	@Reference
+	private CompanyService _companyService;
 
 }

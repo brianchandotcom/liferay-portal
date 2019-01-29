@@ -806,6 +806,28 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
+	public List<Build> getModifiedDownstreamBuilds() {
+		return getModifiedDownstreamBuildsByStatus(null);
+	}
+
+	@Override
+	public List<Build> getModifiedDownstreamBuildsByStatus(String status) {
+		List<Build> modifiedDownstreamBuilds = new ArrayList<>();
+
+		for (Build downstreamBuild : downstreamBuilds) {
+			if (downstreamBuild.isBuildModified()) {
+				modifiedDownstreamBuilds.add(downstreamBuild);
+			}
+		}
+
+		if (status != null) {
+			modifiedDownstreamBuilds.retainAll(getDownstreamBuilds(status));
+		}
+
+		return modifiedDownstreamBuilds;
+	}
+
+	@Override
 	public String getOperatingSystem() {
 		return null;
 	}
@@ -1097,6 +1119,11 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
+	public boolean isBuildModified() {
+		return _status.equals(_previousStatus);
+	}
+
+	@Override
 	public void reinvoke() {
 		reinvoke(null);
 	}
@@ -1262,6 +1289,8 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public void update() {
+		_previousStatus = _status;
+
 		String status = getStatus();
 
 		if (!status.equals("completed")) {
@@ -2595,6 +2624,7 @@ public abstract class BaseBuild implements Build {
 	private JenkinsSlave _jenkinsSlave;
 	private Map<String, String> _parameters = new HashMap<>();
 	private final Build _parentBuild;
+	private String _previousStatus;
 	private String _result;
 	private String _status;
 

@@ -95,6 +95,18 @@ public class NotificationsManagementToolbarDisplayContext {
 		};
 	}
 
+	public String getClearResultsURL() {
+		PortletURL clearResultsURL = _liferayPortletResponse.createRenderURL();
+
+		boolean actionRequired = ParamUtil.getBoolean(
+			_request, "actionRequired");
+
+		clearResultsURL.setParameter(
+			"actionRequired", String.valueOf(actionRequired));
+
+		return clearResultsURL.toString();
+	}
+
 	public List<DropdownItem> getFilterDropdownItems() {
 		return new DropdownItemList() {
 			{

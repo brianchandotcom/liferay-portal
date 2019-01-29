@@ -59,8 +59,8 @@ components:
         title:
           type: string
       type: object
-    Structure:
-      description: https://www.schema.org/Structure
+    ContentStructure:
+      description: https://www.schema.org/ContentStructure
       properties:
         availableLanguages:
           items:
@@ -244,7 +244,7 @@ components:
           format: uri
           type: string
         contentStructure:
-          $ref: "#/components/schemas/Structure"
+          $ref: "#/components/schemas/ContentStructure"
         creator:
           format: uri
           type: string
@@ -468,7 +468,7 @@ paths:
           content:
             "*/*":
               schema:
-                $ref: "#/components/schemas/Structure"
+                $ref: "#/components/schemas/ContentStructure"
           description: ""
   "/structured-contents/{id}":
     delete:

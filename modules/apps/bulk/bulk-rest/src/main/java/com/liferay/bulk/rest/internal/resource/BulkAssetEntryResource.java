@@ -28,12 +28,10 @@ import com.liferay.bulk.selection.BulkSelectionRunner;
 import com.liferay.document.library.bulk.selection.EditCategoriesBulkSelectionAction;
 import com.liferay.document.library.bulk.selection.EditTagsBulkSelectionAction;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.BaseModelPermissionCheckerUtil;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.SetUtil;
 
@@ -43,6 +41,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Stream;
@@ -134,25 +133,23 @@ public class BulkAssetEntryResource {
 			BulkSelection<AssetEntry> assetEntryBulkSelection =
 				bulkSelection.toAssetEntryBulkSelection();
 
+			Map<String, Serializable> inputMap = new HashMap<>(3);
+
+			inputMap.put(
+				"append",
+				bulkAssetEntryUpdateCategoriesActionModel.getAppend());
+			inputMap.put(
+				"toAddCategoryIds",
+				bulkAssetEntryUpdateCategoriesActionModel.
+					getToAddCategoryIds());
+			inputMap.put(
+				"toRemoveCategoryIds",
+				bulkAssetEntryUpdateCategoriesActionModel.
+					getToRemoveCategoryIds());
+
 			_bulkSelectionRunner.run(
 				user, assetEntryBulkSelection,
-				_editCategoriesBulkSelectionAction,
-				new HashMap<String, Serializable>() {
-					{
-						put(
-							"append",
-							bulkAssetEntryUpdateCategoriesActionModel.
-								getAppend());
-						put(
-							"toAddCategoryIds",
-							bulkAssetEntryUpdateCategoriesActionModel.
-								getToAddCategoryIds());
-						put(
-							"toRemoveCategoryIds",
-							bulkAssetEntryUpdateCategoriesActionModel.
-								getToRemoveCategoryIds());
-					}
-				});
+				_editCategoriesBulkSelectionAction, inputMap);
 
 			return BulkActionResponseModel.SUCCESS;
 		}
@@ -181,23 +178,20 @@ public class BulkAssetEntryResource {
 			BulkSelection<AssetEntry> assetEntryBulkSelection =
 				bulkSelection.toAssetEntryBulkSelection();
 
+			Map<String, Serializable> inputMap = new HashMap<>(3);
+
+			inputMap.put(
+				"append", bulkAssetEntryUpdateTagsActionModel.getAppend());
+			inputMap.put(
+				"toAddTagNames",
+				bulkAssetEntryUpdateTagsActionModel.getToAddTagNames());
+			inputMap.put(
+				"toRemoveTagNames",
+				bulkAssetEntryUpdateTagsActionModel.getToRemoveTagNames());
+
 			_bulkSelectionRunner.run(
 				user, assetEntryBulkSelection, _editTagsBulkSelectionAction,
-				new HashMap<String, Serializable>() {
-					{
-						put(
-							"append",
-							bulkAssetEntryUpdateTagsActionModel.getAppend());
-						put(
-							"toAddTagNames",
-							bulkAssetEntryUpdateTagsActionModel.
-								getToAddTagNames());
-						put(
-							"toRemoveTagNames",
-							bulkAssetEntryUpdateTagsActionModel.
-								getToRemoveTagNames());
-					}
-				});
+				inputMap);
 
 			return BulkActionResponseModel.SUCCESS;
 		}

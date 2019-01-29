@@ -15,6 +15,7 @@
 package com.liferay.knowledge.base.internal.importer;
 
 import com.liferay.asset.kernel.exception.AssetCategoryException;
+import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.knowledge.base.constants.KBArticleConstants;
 import com.liferay.knowledge.base.constants.KBFolderConstants;
 import com.liferay.knowledge.base.exception.KBArticleImportException;
@@ -51,11 +52,13 @@ public class KBArticleImporter {
 
 	public KBArticleImporter(
 		KBArchiveFactory kbArchiveFactory,
-		KBArticleLocalService kbArticleLocalService, Portal portal) {
+		KBArticleLocalService kbArticleLocalService, Portal portal,
+		DLURLHelper dlurlHelper) {
 
 		_kbArchiveFactory = kbArchiveFactory;
 		_kbArticleLocalService = kbArticleLocalService;
 		_portal = portal;
+		_dlurlHelper = dlurlHelper;
 	}
 
 	public int processZipFile(
@@ -96,7 +99,8 @@ public class KBArticleImporter {
 		}
 
 		KBArticleMarkdownConverter kbArticleMarkdownConverter =
-			new KBArticleMarkdownConverter(markdown, fileEntryName, metadata);
+			new KBArticleMarkdownConverter(
+				markdown, fileEntryName, metadata, _dlurlHelper);
 
 		String urlTitle = kbArticleMarkdownConverter.getUrlTitle();
 
@@ -335,6 +339,7 @@ public class KBArticleImporter {
 	private static final Log _log = LogFactoryUtil.getLog(
 		KBArticleImporter.class);
 
+	private final DLURLHelper _dlurlHelper;
 	private final KBArchiveFactory _kbArchiveFactory;
 	private final KBArticleLocalService _kbArticleLocalService;
 	private final Portal _portal;

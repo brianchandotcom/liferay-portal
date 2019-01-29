@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.Validator;
 
+import org.apache.commons.lang.StringEscapeUtils;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -55,6 +57,8 @@ public final class JournalValidatorImpl implements JournalValidator {
 		}
 
 		for (String blacklistChar : charactersBlacklist) {
+			blacklistChar = StringEscapeUtils.unescapeJava(blacklistChar);
+
 			if (name.contains(blacklistChar)) {
 				return false;
 			}

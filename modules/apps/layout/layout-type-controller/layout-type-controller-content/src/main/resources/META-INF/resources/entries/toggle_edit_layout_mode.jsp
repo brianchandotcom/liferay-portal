@@ -34,7 +34,7 @@ else {
 	title = LanguageUtil.get(resourceBundle, "view-mode");
 }
 
-String portletNamespace = PortalUtil.getPortletNamespace(ContentLayoutPortletKeys.CONTENT_PAGE_EDITOR_PORTLET);
+String portletNamespace = PortalUtil.getPortletNamespace(ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET);
 %>
 
 <label class="align-text-top toggle-switch">

@@ -18,7 +18,6 @@ import org.apache.log4j.Level;
 
 /**
  * @author Brian Wing Shun Chan
- * @see    com.liferay.util.log4j.Levels
  */
 public class Levels {
 

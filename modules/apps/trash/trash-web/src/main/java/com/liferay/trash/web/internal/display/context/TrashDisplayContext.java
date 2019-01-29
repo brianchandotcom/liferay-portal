@@ -538,6 +538,17 @@ public class TrashDisplayContext {
 		return _trashEntry;
 	}
 
+	public List<DropdownItem> getTrashEntryActionDropdownItems(
+			TrashEntry trashEntry)
+		throws Exception {
+
+		TrashEntryActionDropdownItems trashEntryActionDropdownItems =
+			new TrashEntryActionDropdownItems(
+				_liferayPortletRequest, _liferayPortletResponse, trashEntry);
+
+		return trashEntryActionDropdownItems.getActionDropdownItems();
+	}
+
 	public long getTrashEntryId() {
 		TrashEntry trashEntry = getTrashEntry();
 

@@ -134,19 +134,6 @@ TrashManagementToolbarDisplayContext trashManagementToolbarDisplayContext = new 
 
 						viewContentURLString = viewContentURL.toString();
 					}
-
-					String actionPath = "/view_content_action.jsp";
-
-					if (Validator.isNotNull(trashRenderer.renderActions(renderRequest, renderResponse))) {
-						actionPath = trashRenderer.renderActions(renderRequest, renderResponse);
-					}
-					else if (trashEntry.getRootEntry() == null) {
-						actionPath = "/entry_action.jsp";
-					}
-					else {
-						request.setAttribute("view.jsp-className", trashRenderer.getClassName());
-						request.setAttribute("view.jsp-classPK", String.valueOf(trashRenderer.getClassPK()));
-					}
 					%>
 
 					<c:choose>
@@ -174,9 +161,12 @@ TrashManagementToolbarDisplayContext trashManagementToolbarDisplayContext = new 
 								</h6>
 							</liferay-ui:search-container-column-text>
 
-							<liferay-ui:search-container-column-jsp
-								path="<%= actionPath %>"
-							/>
+							<liferay-ui:search-container-column-text>
+								<clay:dropdown-actions
+									defaultEventHandler="<%= TrashWebKeys.TRASH_ENTRIES_DEFAULT_EVENT_HANDLER %>"
+									dropdownItems="<%= trashDisplayContext.getTrashEntryActionDropdownItems(trashEntry) %>"
+								/>
+							</liferay-ui:search-container-column-text>
 						</c:when>
 						<c:when test="<%= trashDisplayContext.isIconView() %>">
 
@@ -186,7 +176,7 @@ TrashManagementToolbarDisplayContext trashManagementToolbarDisplayContext = new 
 
 							<liferay-ui:search-container-column-text>
 								<clay:vertical-card
-									verticalCard="<%= new TrashEntryVerticalCard(trashEntry, trashRenderer, renderRequest, searchContainer.getRowChecker(), viewContentURLString) %>"
+									verticalCard="<%= new TrashEntryVerticalCard(trashEntry, trashRenderer, renderRequest, liferayPortletResponse, searchContainer.getRowChecker(), viewContentURLString) %>"
 								/>
 							</liferay-ui:search-container-column-text>
 						</c:when>
@@ -253,9 +243,12 @@ TrashManagementToolbarDisplayContext trashManagementToolbarDisplayContext = new 
 								value="<%= HtmlUtil.escape(trashEntry.getUserName()) %>"
 							/>
 
-							<liferay-ui:search-container-column-jsp
-								path="<%= actionPath %>"
-							/>
+							<liferay-ui:search-container-column-text>
+								<clay:dropdown-actions
+									defaultEventHandler="<%= TrashWebKeys.TRASH_ENTRIES_DEFAULT_EVENT_HANDLER %>"
+									dropdownItems="<%= trashDisplayContext.getTrashEntryActionDropdownItems(trashEntry) %>"
+								/>
+							</liferay-ui:search-container-column-text>
 						</c:when>
 					</c:choose>
 				</liferay-ui:search-container-row>
@@ -269,6 +262,21 @@ TrashManagementToolbarDisplayContext trashManagementToolbarDisplayContext = new 
 		</aui:form>
 	</div>
 </div>
+
+<aui:script require='<%= npmResolvedPackageName + "/js/EntriesDefaultEventHandler.es as EntriesDefaultEventHandler" %>'>
+	Liferay.component(
+		'<%= TrashWebKeys.TRASH_ENTRIES_DEFAULT_EVENT_HANDLER %>',
+		new EntriesDefaultEventHandler.default(
+			{
+				namespace: '<%= renderResponse.getNamespace() %>'
+			}
+		),
+		{
+			destroyOnNavigate: true,
+			portletId: '<%= HtmlUtil.escapeJS(portletDisplay.getId()) %>'
+		}
+	);
+</aui:script>
 
 <aui:script require='<%= npmResolvedPackageName + "/js/ManagementToolbarDefaultEventHandler.es as ManagementToolbarDefaultEventHandler" %>'>
 	Liferay.component(

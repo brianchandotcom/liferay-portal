@@ -19,6 +19,12 @@ package com.liferay.change.tracking.constants;
  */
 public interface CTConstants {
 
+	public static final int CT_CHANGE_TYPE_ADDITION = 0;
+
+	public static final int CT_CHANGE_TYPE_DELETION = 1;
+
+	public static final int CT_CHANGE_TYPE_MODIFICATION = 2;
+
 	public static final String CT_COLLECTION_NAME_PRODUCTION =
 		"productionCTCollectionName";
 

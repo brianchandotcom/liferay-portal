@@ -4229,7 +4229,7 @@ definition {
 			successPageTitle = "Success Page Title"
 		);
 
-		Form.switchPaginationMode();
+		Form.switchPaginationModeToBottom();
 
 		Form.viewAltPagePagination(page = "2");
 
@@ -4429,7 +4429,7 @@ definition {
 
 		Form.editFieldLabelMetal(fieldValue = "Text Field Page 2");
 
-		FormFields.enableSwitcher(fieldName = "required");
+		FormFields.enableSwitcher(fieldName = "Required");
 
 		Form.closeSidebar();
 

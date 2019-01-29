@@ -51,12 +51,12 @@
 <!--ALT_PAGINATION-->
 <tr>
 	<td>ALT_PAGINATION_PAGE</td>
-	<td>//div[contains(@class,'form-builder-pagination')]//li[contains(.,'${key_page}')]</td>
+	<td>//div[contains(@class,'form-builder-pagination')]//li[contains(.,'${key_page}')] | //div[contains(@class,'ddm-form-pagination')]//a[contains(text(),'${key_page}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ALT_PAGINATION_SUCCESS_PAGE</td>
-	<td>//div[contains(@class,'form-builder-pagination')]//li[contains(@class,'pagination-success-page')]</td>
+	<td>//div[contains(@class,'form-builder-pagination')]//li[contains(@class,'pagination-success-page')] | //div[contains(@class,'ddm-form-pagination')]//a[contains(text(),'Success Page')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -87,9 +87,22 @@
 </tr>
 <tr>
 	<td>PAGE_CONTROLS_SWITCH_PAGINATION_MODE</td>
-	<td>//li[contains(@class,'dropdown-item')]//a[text()='Switch Pagination Mode'] | //button[contains(@class,'dropdown-item') and contains(text(),'Switch Pagination Mode')] | //button[contains(@class,'dropdown-item') and contains(text(),'Switch Pagination to Bottom')]</td>
+	<td>//li[contains(@class,'dropdown-item')]//a[text()='Switch Pagination Mode'] | //button[contains(@class,'dropdown-item') and contains(text(),'Switch Pagination Mode')] | //button[contains(@class,'dropdown-item') and contains(text(),'Switch Pagination to')]</td>
 	<td></td>
 </tr>
+
+<tr>
+	<td>PAGE_CONTROLS_SWITCH_PAGINATION_MODE_TO_BOTTOM</td>
+	<td>//button[contains(@class,'dropdown-item') and contains(text(),'Switch Pagination to Bottom')]</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>PAGE_CONTROLS_SWITCH_PAGINATION_MODE_TO_TOP</td>
+	<td>//button[contains(@class,'dropdown-item') and contains(text(),'Switch Pagination to Top')]</td>
+	<td></td>
+</tr>
+
 <tr>
 	<td></td>
 	<td></td>

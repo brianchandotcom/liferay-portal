@@ -195,8 +195,7 @@ public class BlogEntriesManagementToolbarDisplayContext {
 	public List<LabelItem> getFilterLabelItems() {
 		return new LabelItemList() {
 			{
-				String entriesNavigation = ParamUtil.getString(
-					_request, "entriesNavigation", "all");
+				String entriesNavigation = _getEntriesNavigation();
 
 				if (entriesNavigation.equals("mine")) {
 					add(
@@ -288,8 +287,7 @@ public class BlogEntriesManagementToolbarDisplayContext {
 		portletURL.setParameter("orderBycol", orderByCol);
 		portletURL.setParameter("orderByType", orderByType);
 
-		String entriesNavigation = ParamUtil.getString(
-			_request, "entriesNavigation", "all");
+		String entriesNavigation = _getEntriesNavigation();
 
 		portletURL.setParameter("entriesNavigation", entriesNavigation);
 
@@ -328,9 +326,12 @@ public class BlogEntriesManagementToolbarDisplayContext {
 		return sortingURL;
 	}
 
+	private String _getEntriesNavigation() {
+		return ParamUtil.getString(_request, "entriesNavigation", "all");
+	}
+
 	private List<DropdownItem> _getFilterNavigationDropdownItems() {
-		final String entriesNavigation = ParamUtil.getString(
-			_request, "entriesNavigation", "all");
+		final String entriesNavigation = _getEntriesNavigation();
 
 		return new DropdownItemList() {
 			{

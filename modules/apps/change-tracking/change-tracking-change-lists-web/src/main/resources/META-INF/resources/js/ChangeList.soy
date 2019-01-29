@@ -28,7 +28,7 @@
 					LeftCard
 				</div>
 				<div class="col-sm-6">
-					{delcall com.liferay.change.tracking.change.lists.web.GlanceCard}
+					{call .glanceCard}
 						{param cardState: 'border-left-blue' /}
 						{param description: $description /}
 						{param descriptionTitle kind="text"}
@@ -46,7 +46,7 @@
 							{msg desc=""}published-by{/msg}
 						{/param}
 						{param spritemap: $spritemap /}
-					{/delcall}
+					{/call}
 				</div>
 			</div>
 			<div class="row">
@@ -63,7 +63,7 @@
  *
  * This template renders the component's whole content
  */
-{deltemplate com.liferay.change.tracking.change.lists.web.GlanceCard}
+{template .glanceCard}
 	{@param? cardState: string}
 	{@param? description: string}
 	{@param? descriptionTitle: string}
@@ -102,7 +102,7 @@
 
 	</div>
 
-{/deltemplate} 
+{/template} 
 
 {template .glanceCardHeader}
 	{@param? headerLink: [

@@ -35,7 +35,7 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 	@Override
 	public CTEntry addCTEntry(
 			long userId, long classNameId, long classPK, long resourcePrimKey,
-			int changeType, long ctCollectionId, ServiceContext serviceContext)
+			long ctCollectionId, int changeType, ServiceContext serviceContext)
 		throws PortalException {
 
 		_validate(classNameId, classPK, ctCollectionId, changeType);

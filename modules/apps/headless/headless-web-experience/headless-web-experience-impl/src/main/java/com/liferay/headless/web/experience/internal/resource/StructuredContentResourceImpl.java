@@ -87,7 +87,7 @@ public class StructuredContentResourceImpl
 			Collectors.toList()
 		);
 
-		return new StructuredContentCollection(
+		return new StructuredContentCollection<>(
 			structuredContents, hits.getLength());
 	}
 

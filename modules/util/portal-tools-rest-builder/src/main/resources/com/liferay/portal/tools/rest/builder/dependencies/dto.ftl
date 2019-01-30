@@ -1,5 +1,12 @@
 package ${configYAML.apiPackagePath}.dto;
 
+<#compress>
+	<#list openAPIYAML.components.schemas?keys as schemaName>
+		import ${configYAML.apiPackagePath}.dto.${schemaName};
+		import ${configYAML.apiPackagePath}.dto.${schemaName}Collection;
+	</#list>
+</#compress>
+
 import javax.annotation.Generated;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -12,14 +19,50 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "${schemaName}")
 public class ${schemaName} {
 
-	public long getId() {
-		return _id;
-	}
+	<#list schema.properties?keys as propertyName>
+		<#assign properties = schema.properties[propertyName] />
 
-	public void setId(long id) {
-		_id = id;
-	}
+		<#list propertyName?split("[^A-Za-z0-9]", "r") as s>
+			<#if s?has_content>
+				<#if parameterName?has_content>
+					<#assign parameterName = "${parameterName}${s?cap_first}" />
+				<#else>
+					<#assign parameterName = "${s}" />
+				</#if>
+			</#if>
+		</#list>
 
-	private long _id;
+		<#assign parameterType = "" />
+
+		<#if properties.type??>
+			<#if stringUtil.equals(properties.type, "array") && properties.items?? && properties.items.type??>
+				<#assign parameterType = "${properties.items.type?cap_first}[]" />
+			<#else>
+				<#assign parameterType = properties.type?cap_first />
+			</#if>
+		<#else>
+			<#assign reference = "${properties.reference}" />
+
+			<#assign parameterType = "${reference[(reference?last_index_of('/') + 1)..(reference?length - 1)]}" />
+		</#if>
+
+		<#assign template>
+			public ${parameterType} get${propertyName?cap_first}() {
+				return _${propertyName};
+			}
+
+			public void set${propertyName?cap_first}(${parameterType} ${propertyName}) {
+				_${propertyName} = ${propertyName};
+			}
+
+			private ${parameterType} _${propertyName};
+		</#assign>
+
+		<#list template?split("\n") as line>
+			<#if line?trim?has_content>
+${line?replace("^\t\t", "", "r")}
+			</#if>
+		</#list>
+	</#list>
 
 }

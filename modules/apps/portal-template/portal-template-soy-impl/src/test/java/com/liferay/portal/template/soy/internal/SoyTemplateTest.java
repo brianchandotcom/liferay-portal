@@ -26,8 +26,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import org.mockito.Mockito;
-
 /**
  * @author Bruno Basto
  */
@@ -91,8 +89,7 @@ public class SoyTemplateTest {
 
 	@Test
 	public void testPutWithSameValue() {
-		SoyTemplate soyTemplate = Mockito.spy(
-			_soyTestHelper.getSoyTemplate("ijdata.soy"));
+		SoyTemplate soyTemplate = _soyTestHelper.getSoyTemplate("ijdata.soy");
 
 		String value = "value";
 

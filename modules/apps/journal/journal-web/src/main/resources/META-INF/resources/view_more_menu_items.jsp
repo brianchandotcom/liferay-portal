@@ -58,10 +58,6 @@ JournalViewMoreMenuItemsDisplayContext journalViewMoreMenuItemsDisplayContext = 
 	<liferay-ui:search-container
 		searchContainer="<%= journalViewMoreMenuItemsDisplayContext.getDDMStructuresSearchContainer() %>"
 	>
-		<liferay-ui:search-container-results
-			results="<%= ListUtil.subList(journalViewMoreMenuItemsDisplayContext.getDDMStructures(), searchContainer.getStart(), searchContainer.getEnd()) %>"
-		/>
-
 		<liferay-ui:search-container-row
 			className="com.liferay.dynamic.data.mapping.model.DDMStructure"
 			cssClass="selectable"

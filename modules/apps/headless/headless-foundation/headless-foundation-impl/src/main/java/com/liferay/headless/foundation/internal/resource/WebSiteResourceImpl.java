@@ -14,12 +14,7 @@
 
 package com.liferay.headless.foundation.internal.resource;
 
-import com.liferay.headless.foundation.dto.WebSite;
-import com.liferay.headless.foundation.dto.WebSiteCollection;
 import com.liferay.headless.foundation.resource.WebSiteResource;
-import com.liferay.portal.vulcan.context.Pagination;
-
-import java.util.Collections;
 
 import javax.annotation.Generated;
 
@@ -40,13 +35,5 @@ import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
 )
 @Generated("")
 public class WebSiteResourceImpl implements WebSiteResource {
-
-	@Override
-	public WebSiteCollection<WebSite> getWebSiteCollection(
-			Pagination pagination, String size)
-		throws Exception {
-
-		return new WebSiteCollection(Collections.emptyList(), 0);
-	}
 
 }

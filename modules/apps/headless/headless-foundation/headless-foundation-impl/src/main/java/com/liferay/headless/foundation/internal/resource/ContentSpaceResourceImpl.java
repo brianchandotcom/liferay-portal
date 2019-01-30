@@ -14,12 +14,7 @@
 
 package com.liferay.headless.foundation.internal.resource;
 
-import com.liferay.headless.foundation.dto.ContentSpace;
-import com.liferay.headless.foundation.dto.ContentSpaceCollection;
 import com.liferay.headless.foundation.resource.ContentSpaceResource;
-import com.liferay.portal.vulcan.context.Pagination;
-
-import java.util.Collections;
 
 import javax.annotation.Generated;
 
@@ -40,13 +35,5 @@ import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
 )
 @Generated("")
 public class ContentSpaceResourceImpl implements ContentSpaceResource {
-
-	@Override
-	public ContentSpaceCollection<ContentSpace> getContentSpaceCollection(
-			Pagination pagination, String size)
-		throws Exception {
-
-		return new ContentSpaceCollection(Collections.emptyList(), 0);
-	}
 
 }

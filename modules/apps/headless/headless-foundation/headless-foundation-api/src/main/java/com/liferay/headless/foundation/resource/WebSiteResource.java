@@ -14,18 +14,9 @@
 
 package com.liferay.headless.foundation.resource;
 
-import com.liferay.headless.foundation.dto.WebSite;
-import com.liferay.headless.foundation.dto.WebSiteCollection;
-import com.liferay.oauth2.provider.scope.RequiresScope;
-import com.liferay.portal.vulcan.context.Pagination;
-
 import javax.annotation.Generated;
 
-import javax.ws.rs.GET;
 import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.Context;
 
 /**
  * To access this resource, run:
@@ -38,12 +29,5 @@ import javax.ws.rs.core.Context;
 @Generated("")
 @Path("/1.0.0/web-site")
 public interface WebSiteResource {
-
-	@GET
-	@Produces("application/json")
-	@RequiresScope("headless-foundation-application.read")
-	public WebSiteCollection<WebSite> getWebSiteCollection(
-			@Context Pagination pagination, @QueryParam("size") String size)
-		throws Exception;
 
 }

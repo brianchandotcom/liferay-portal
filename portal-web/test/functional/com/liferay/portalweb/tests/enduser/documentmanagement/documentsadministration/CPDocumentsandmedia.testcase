@@ -710,6 +710,33 @@ definition {
 		);
 	}
 
+	@description = "This is a use case for LPS-88785."
+	@priority = "5"
+	test PreviewPDF {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMDocument.addCP(
+			dmDocumentFile = "large_file.pdf",
+			dmDocumentTitle = "large_file.pdf"
+		);
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "large_file.pdf");
+
+		AssertTextEquals(locator1="Message#INFO", value1="Generating preview will take a few minutes.");
+
+		Pause(locator1 = "3000");
+
+		Refresh();
+
+		AssertVisible(locator1="Toolbar#PREVIEW");
+	}
+
 	@priority = "4"
 	test RotateImageViaDMSiteAdmin {
 		Navigator.openURL();

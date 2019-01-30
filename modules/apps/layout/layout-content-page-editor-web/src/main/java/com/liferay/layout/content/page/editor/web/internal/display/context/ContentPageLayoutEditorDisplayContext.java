@@ -93,27 +93,6 @@ public class ContentPageLayoutEditorDisplayContext
 		return _editorSoyContext;
 	}
 
-	public SoyContext getFragmentsEditorToolbarContext() {
-		if (_fragmentsEditorToolbarSoyContext != null) {
-			return _fragmentsEditorToolbarSoyContext;
-		}
-
-		SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
-
-		soyContext.put("availableLanguages", getAvailableLanguagesSoyContext());
-		soyContext.put("classPK", themeDisplay.getPlid());
-		soyContext.put("defaultLanguageId", themeDisplay.getLanguageId());
-		soyContext.put("lastSaveDate", StringPool.BLANK);
-		soyContext.put("portletNamespace", renderResponse.getNamespace());
-		soyContext.put(
-			"spritemap",
-			themeDisplay.getPathThemeImages() + "/lexicon/icons.svg");
-
-		_fragmentsEditorToolbarSoyContext = soyContext;
-
-		return _fragmentsEditorToolbarSoyContext;
-	}
-
 	@Override
 	protected SoyContext getFragmentEntrySoyContext(
 		FragmentEntry fragmentEntry, String content) {
@@ -314,6 +293,5 @@ public class ContentPageLayoutEditorDisplayContext
 		ContentPageLayoutEditorDisplayContext.class);
 
 	private SoyContext _editorSoyContext;
-	private SoyContext _fragmentsEditorToolbarSoyContext;
 
 }

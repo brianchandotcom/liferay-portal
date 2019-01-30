@@ -28,6 +28,10 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 
 /**
+ * To access this resource, run:
+ *
+ *     curl -u your@email.com:yourpassword -D - http://localhost:8080/o/headless-foundation/1.0.0/user-account
+ *
  * @author Javier Gamarra
  * @generated
  */

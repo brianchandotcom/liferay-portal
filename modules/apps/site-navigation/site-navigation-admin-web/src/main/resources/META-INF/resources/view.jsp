@@ -16,23 +16,8 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-String displayStyle = siteNavigationAdminDisplayContext.getDisplayStyle();
-%>
-
 <clay:management-toolbar
-	actionDropdownItems="<%= siteNavigationAdminDisplayContext.getActionDropdownItems() %>"
-	clearResultsURL="<%= siteNavigationAdminDisplayContext.getClearResultsURL() %>"
-	componentId="siteNavigationMenuWebManagementToolbar"
-	filterDropdownItems="<%= siteNavigationAdminDisplayContext.getFilterDropdownItems() %>"
-	itemsTotal="<%= siteNavigationAdminDisplayContext.getTotalItems() %>"
-	searchActionURL="<%= siteNavigationAdminDisplayContext.getSearchActionURL() %>"
-	searchContainerId="siteNavigationMenus"
-	searchFormName="searchFm"
-	showCreationMenu="<%= siteNavigationAdminDisplayContext.isShowAddButton() %>"
-	sortingOrder="<%= siteNavigationAdminDisplayContext.getOrderByType() %>"
-	sortingURL="<%= siteNavigationAdminDisplayContext.getSortingURL() %>"
-	viewTypeItems="<%= siteNavigationAdminDisplayContext.getViewTypeItems() %>"
+	displayContext="<%= new SiteNavigationAdminManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, siteNavigationAdminDisplayContext) %>"
 />
 
 <portlet:actionURL name="/navigation_menu/delete_site_navigation_menu" var="deleteSitaNavigationMenuURL">
@@ -56,7 +41,7 @@ String displayStyle = siteNavigationAdminDisplayContext.getDisplayStyle();
 			</portlet:renderURL>
 
 			<c:choose>
-				<c:when test='<%= displayStyle.equals("descriptive") %>'>
+				<c:when test='<%= Objects.equals(siteNavigationAdminDisplayContext.getDisplayStyle(), "descriptive") %>'>
 					<liferay-ui:search-container-column-user
 						showDetails="<%= false %>"
 						userId="<%= siteNavigationMenu.getUserId() %>"
@@ -138,7 +123,7 @@ String displayStyle = siteNavigationAdminDisplayContext.getDisplayStyle();
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator
-			displayStyle="<%= displayStyle %>"
+			displayStyle="<%= siteNavigationAdminDisplayContext.getDisplayStyle() %>"
 			markupView="lexicon"
 		/>
 	</liferay-ui:search-container>

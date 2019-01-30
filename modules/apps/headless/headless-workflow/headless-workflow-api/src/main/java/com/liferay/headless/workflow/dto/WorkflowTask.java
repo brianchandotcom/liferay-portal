@@ -26,14 +26,113 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "WorkflowTask")
 public class WorkflowTask {
 
-	public long getId() {
+	public Boolean getCompleted() {
+		return _completed;
+	}
+
+	public String getDateCompleted() {
+		return _dateCompleted;
+	}
+
+	public String getDateCreated() {
+		return _dateCreated;
+	}
+
+	public String getDefinitionName() {
+		return _definitionName;
+	}
+
+	public String getDescription() {
+		return _description;
+	}
+
+	public String getDueDate() {
+		return _dueDate;
+	}
+
+	public Integer getId() {
 		return _id;
 	}
 
-	public void setId(long id) {
+	public WorkflowLog getLogs() {
+		return _logs;
+	}
+
+	public String getName() {
+		return _name;
+	}
+
+	public Object getObject() {
+		return _object;
+	}
+
+	public String getSelf() {
+		return _self;
+	}
+
+	public String[] getTransitions() {
+		return _transitions;
+	}
+
+	public void setCompleted(Boolean completed) {
+		_completed = completed;
+	}
+
+	public void setDateCompleted(String dateCompleted) {
+		_dateCompleted = dateCompleted;
+	}
+
+	public void setDateCreated(String dateCreated) {
+		_dateCreated = dateCreated;
+	}
+
+	public void setDefinitionName(String definitionName) {
+		_definitionName = definitionName;
+	}
+
+	public void setDescription(String description) {
+		_description = description;
+	}
+
+	public void setDueDate(String dueDate) {
+		_dueDate = dueDate;
+	}
+
+	public void setId(Integer id) {
 		_id = id;
 	}
 
-	private long _id;
+	public void setLogs(WorkflowLog logs) {
+		_logs = logs;
+	}
+
+	public void setName(String name) {
+		_name = name;
+	}
+
+	public void setObject(Object object) {
+		_object = object;
+	}
+
+	public void setSelf(String self) {
+		_self = self;
+	}
+
+	public void setTransitions(String[] transitions) {
+		_transitions = transitions;
+	}
+
+	private Boolean _completed;
+	private String _dateCompleted;
+	private String _dateCreated;
+	private String _definitionName;
+	private String _description;
+	private String _dueDate;
+	private Integer _id;
+	private WorkflowLog _logs;
+	private String _name;
+	private Object _object;
+	private String _self;
+	private String[] _transitions;
 
 }

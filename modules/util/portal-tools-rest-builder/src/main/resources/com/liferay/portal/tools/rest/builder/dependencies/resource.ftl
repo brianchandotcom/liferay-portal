@@ -36,7 +36,7 @@ import javax.ws.rs.core.Response;
  */
 @Generated("")
 @Path("/${openAPIYAML.info.version}")
-public interface ${resourceName}Resource {
+public interface ${schemaName}Resource {
 
 	<#list openAPIYAML.pathItems?keys as path>
 		<#assign pathItem = openAPIYAML.pathItems[path] />
@@ -201,11 +201,11 @@ public interface ${resourceName}Resource {
 									<#assign reference = "${schema.items.reference}" />
 
 									<#if reference?contains("/schemas/")>
-										<#assign schemaName = "${reference[(reference?last_index_of('/') + 1)..(reference?length - 1)]}" />
+										<#assign name = "${reference[(reference?last_index_of('/') + 1)..(reference?length - 1)]}" />
 
 										<#assign
-											methodReturnType = "${schemaName}Collection"
-											methodReturnValue = "${schemaName}Collection<${schemaName}>"
+											methodReturnType = "${name}Collection"
+											methodReturnValue = "${name}Collection<${name}>"
 										/>
 									</#if>
 								</#if>
@@ -215,11 +215,11 @@ public interface ${resourceName}Resource {
 								<#assign reference = "${schema.reference}" />
 
 								<#if reference?contains("/schemas/")>
-									<#assign schemaName = "${reference[(reference?last_index_of('/') + 1)..(reference?length - 1)]}" />
+									<#assign name = "${reference[(reference?last_index_of('/') + 1)..(reference?length - 1)]}" />
 
 									<#assign
-										methodReturnType = "${schemaName}"
-										methodReturnValue = "${schemaName}"
+										methodReturnType = "${name}"
+										methodReturnValue = "${name}"
 									/>
 								</#if>
 							</#if>
@@ -243,20 +243,22 @@ public interface ${resourceName}Resource {
 
 		<#assign name = "${name?replace(' ', '')}" />
 
-		<#assign template>
-			@Path("${path}")
-			${annotationConsumes}
-			${annotationHTTPMethod}
-			${annotationProduces}
-			${annotationRequiresScope}
-			public ${methodReturnValue} ${name}(${methodParameters}) throws Exception;
-		</#assign>
+		<#if stringUtil.equals(methodReturnType, schemaName) || stringUtil.equals(methodReturnType, schemaName + "Collection")>
+			<#assign template>
+				@Path("${path}")
+				${annotationConsumes}
+				${annotationHTTPMethod}
+				${annotationProduces}
+				${annotationRequiresScope}
+				public ${methodReturnValue} ${name}(${methodParameters}) throws Exception;
+			</#assign>
 
-		<#list template?split("\n") as line>
-			<#if line?trim?has_content>
-${line?replace("^\t\t", "", "r")}
-			</#if>
-		</#list>
+			<#list template?split("\n") as line>
+				<#if line?trim?has_content>
+${line?replace("^\t\t\t", "", "r")}
+				</#if>
+			</#list>
+		</#if>
 	</#list>
 
 }

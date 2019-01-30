@@ -25,7 +25,7 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys" %><%@
 page import="com.liferay.layout.content.page.editor.web.internal.constants.ContentPageEditorWebKeys" %><%@
-page import="com.liferay.layout.content.page.editor.web.internal.display.context.ContentPageLayoutEditorDisplayContext" %><%@
+page import="com.liferay.layout.content.page.editor.web.internal.display.context.ContentPageEditorDisplayContext" %><%@
 page import="com.liferay.portal.kernel.json.JSONFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.json.JSONSerializer" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %><%@

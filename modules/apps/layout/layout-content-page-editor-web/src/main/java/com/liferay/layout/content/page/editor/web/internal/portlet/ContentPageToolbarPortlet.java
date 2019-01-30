@@ -16,7 +16,8 @@ package com.liferay.layout.content.page.editor.web.internal.portlet;
 
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.constants.ContentPageEditorWebKeys;
-import com.liferay.layout.content.page.editor.web.internal.display.context.ContentPageLayoutEditorDisplayContext;
+import com.liferay.layout.content.page.editor.web.internal.display.context.ContentPageEditorDisplayContext;
+import com.liferay.layout.content.page.editor.web.internal.display.context.ContentPageEditorDisplayContextProvider;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.Portal;
 
@@ -64,24 +65,28 @@ public class ContentPageToolbarPortlet extends MVCPortlet {
 		HttpServletRequest request = _portal.getHttpServletRequest(
 			renderRequest);
 
-		ContentPageLayoutEditorDisplayContext fragmentsEditorDisplayContext =
-			(ContentPageLayoutEditorDisplayContext)request.getAttribute(
+		ContentPageEditorDisplayContext contentPageEditorDisplayContext =
+			(ContentPageEditorDisplayContext)request.getAttribute(
 				ContentPageEditorWebKeys.
 					LIFERAY_SHARED_FRAGMENTS_EDITOR_DISPLAY_CONTEXT);
 
-		if (fragmentsEditorDisplayContext == null) {
-			fragmentsEditorDisplayContext =
-				new ContentPageLayoutEditorDisplayContext(
-					request, renderResponse);
+		if (contentPageEditorDisplayContext == null) {
+			contentPageEditorDisplayContext =
+				_contentPageEditorDisplayContextProvider.
+					getContentPageEditorDisplayContext(request);
 
 			request.setAttribute(
 				ContentPageEditorWebKeys.
 					LIFERAY_SHARED_FRAGMENTS_EDITOR_DISPLAY_CONTEXT,
-				fragmentsEditorDisplayContext);
+				contentPageEditorDisplayContext);
 		}
 
 		super.doDispatch(renderRequest, renderResponse);
 	}
+
+	@Reference
+	private ContentPageEditorDisplayContextProvider
+		_contentPageEditorDisplayContextProvider;
 
 	@Reference
 	private Portal _portal;

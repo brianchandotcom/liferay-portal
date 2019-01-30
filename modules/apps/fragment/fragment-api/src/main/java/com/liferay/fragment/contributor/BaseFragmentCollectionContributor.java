@@ -16,7 +16,7 @@ package com.liferay.fragment.contributor;
 
 import com.liferay.fragment.constants.FragmentEntryTypeConstants;
 import com.liferay.fragment.model.FragmentEntry;
-import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
+import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -28,6 +28,8 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jürgen Kappler
@@ -72,6 +74,9 @@ public abstract class BaseFragmentCollectionContributor
 		}
 	}
 
+	@Reference
+	protected FragmentEntryLocalService fragmentEntryLocalService;
+
 	private String _getFileContent(String path, String fileName)
 		throws Exception {
 
@@ -100,7 +105,7 @@ public abstract class BaseFragmentCollectionContributor
 			jsonObject.getString("type"));
 
 		FragmentEntry fragmentEntry =
-			FragmentEntryLocalServiceUtil.createFragmentEntry(0L);
+			fragmentEntryLocalService.createFragmentEntry(0L);
 
 		fragmentEntry.setFragmentEntryKey(fragmentEntryKey);
 		fragmentEntry.setName(name);

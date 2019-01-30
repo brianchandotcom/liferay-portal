@@ -18,6 +18,7 @@ import com.google.template.soy.SoyFileSet;
 import com.google.template.soy.tofu.SoyTofu;
 
 import com.liferay.portal.kernel.template.TemplateResource;
+import com.liferay.portal.kernel.util.ProxyFactory;
 
 import java.util.Arrays;
 import java.util.List;
@@ -26,8 +27,6 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
-import org.mockito.Mockito;
 
 /**
  * @author Bruno Basto
@@ -55,7 +54,7 @@ public class SoyTofuCacheTest {
 
 		SoyFileSet soyFileSet = _soyTestHelper.getSoyFileSet(templateResources);
 
-		SoyTofu soyTofu = Mockito.mock(SoyTofu.class);
+		SoyTofu soyTofu = ProxyFactory.newDummyInstance(SoyTofu.class);
 
 		_soyTofuCacheHandler.add(templateResources, soyFileSet, soyTofu);
 
@@ -70,7 +69,7 @@ public class SoyTofuCacheTest {
 
 		SoyFileSet soyFileSet = _soyTestHelper.getSoyFileSet(templateResources);
 
-		SoyTofu soyTofu = Mockito.mock(SoyTofu.class);
+		SoyTofu soyTofu = ProxyFactory.newDummyInstance(SoyTofu.class);
 
 		_soyTofuCacheHandler.add(templateResources, soyFileSet, soyTofu);
 
@@ -90,7 +89,7 @@ public class SoyTofuCacheTest {
 		SoyFileSet soyFileSet = _soyTestHelper.getSoyFileSet(
 			cachedTemplateResources);
 
-		SoyTofu soyTofu = Mockito.mock(SoyTofu.class);
+		SoyTofu soyTofu = ProxyFactory.newDummyInstance(SoyTofu.class);
 
 		_soyTofuCacheHandler.add(cachedTemplateResources, soyFileSet, soyTofu);
 
@@ -110,7 +109,7 @@ public class SoyTofuCacheTest {
 		SoyFileSet soyFileSetA = _soyTestHelper.getSoyFileSet(
 			cachedTemplateResourcesA);
 
-		SoyTofu soyTofuA = Mockito.mock(SoyTofu.class);
+		SoyTofu soyTofuA = ProxyFactory.newDummyInstance(SoyTofu.class);
 
 		_soyTofuCacheHandler.add(
 			cachedTemplateResourcesA, soyFileSetA, soyTofuA);
@@ -125,7 +124,7 @@ public class SoyTofuCacheTest {
 		SoyFileSet soyFileSetB = _soyTestHelper.getSoyFileSet(
 			cachedTemplateResourcesA);
 
-		SoyTofu soyTofuB = Mockito.mock(SoyTofu.class);
+		SoyTofu soyTofuB = ProxyFactory.newDummyInstance(SoyTofu.class);
 
 		_soyTofuCacheHandler.add(
 			cachedTemplateResourcesB, soyFileSetB, soyTofuB);

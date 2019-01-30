@@ -20,10 +20,12 @@ import com.liferay.data.engine.model.DEDataDefinition;
 import com.liferay.data.engine.model.DEDataRecordCollection;
 import com.liferay.data.engine.service.DEDataDefinitionService;
 import com.liferay.data.engine.service.DEDataRecordCollectionDeleteRequest;
+import com.liferay.data.engine.service.DEDataRecordCollectionGetRequest;
 import com.liferay.data.engine.service.DEDataRecordCollectionRequestBuilder;
 import com.liferay.data.engine.service.DEDataRecordCollectionSaveModelPermissionsRequest;
 import com.liferay.data.engine.service.DEDataRecordCollectionSavePermissionsRequest;
 import com.liferay.data.engine.service.DEDataRecordCollectionSaveRequest;
+import com.liferay.data.engine.service.DEDataRecordCollectionSaveResponse;
 import com.liferay.data.engine.service.DEDataRecordCollectionService;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Role;
@@ -36,6 +38,7 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -530,6 +533,86 @@ public class DEDataRecordCollectionServiceTest {
 	}
 
 	@Test
+	public void testDefinePermissionToAllowViewDataRecordCollection()
+		throws Exception {
+
+		Role role1 = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		User user1 = UserTestUtil.addGroupUser(_group, role1.getName());
+
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(_adminUser));
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), _adminUser.getUserId());
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+		try {
+			DEDataRecordCollectionSavePermissionsRequest
+				deDataRecordCollectionSavePermissionsRequest =
+					DEDataRecordCollectionRequestBuilder.savePermissionsBuilder(
+						TestPropsValues.getCompanyId(), _group.getGroupId(),
+						new String[] {role1.getName()}
+					).allowDefinePermissions(
+					).build();
+
+			_deDataRecordCollectionService.execute(
+				deDataRecordCollectionSavePermissionsRequest);
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
+
+		DEDataRecordCollection deDataRecordCollectionExpected =
+			DEDataEngineTestUtil.insertDEDataRecordCollection(
+				_adminUser, _group, _deDataDefinitionService,
+				_deDataRecordCollectionService);
+
+		User user2 = UserTestUtil.addGroupUser(
+			_group, RoleConstants.ORGANIZATION_USER);
+
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(user1));
+
+		ServiceContext serviceContext2 =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), user1.getUserId());
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext2);
+
+		try {
+			DEDataRecordCollectionSaveModelPermissionsRequest
+				deDataRecordCollectionSaveModelPermissionsRequest2 =
+					DEDataRecordCollectionRequestBuilder.
+						saveModelPermissionsBuilder(
+							TestPropsValues.getCompanyId(), _group.getGroupId(),
+							user1.getUserId(), _group.getGroupId(),
+							deDataRecordCollectionExpected.
+								getDEDataRecordCollectionId(),
+							new String[] {RoleConstants.ORGANIZATION_USER}
+						).allowView(
+					).build();
+
+			_deDataRecordCollectionService.execute(
+				deDataRecordCollectionSaveModelPermissionsRequest2);
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
+
+		DEDataRecordCollection deDataRecordCollection =
+			DEDataEngineTestUtil.getDEDataRecordCollection(
+				user2, _group.getGroupId(),
+				deDataRecordCollectionExpected.getDEDataRecordCollectionId(),
+				_deDataRecordCollectionService);
+
+		Assert.assertEquals(
+			deDataRecordCollectionExpected, deDataRecordCollection);
+	}
+
+	@Test
 	public void testDelete() throws Exception {
 		DEDataRecordCollection deDataRecordCollection =
 			DEDataEngineTestUtil.insertDEDataRecordCollection(
@@ -661,6 +744,222 @@ public class DEDataRecordCollectionServiceTest {
 			_deDataRecordCollectionService);
 	}
 
+	@Test
+	public void testGet() throws Exception {
+		DEDataRecordCollection deDataRecordCollectionExpected =
+			DEDataEngineTestUtil.insertDEDataRecordCollection(
+				_adminUser, _group, _deDataDefinitionService,
+				_deDataRecordCollectionService);
+
+		DEDataRecordCollection deDataRecordCollection =
+			DEDataEngineTestUtil.getDEDataRecordCollection(
+				_adminUser, _group.getGroupId(),
+				deDataRecordCollectionExpected.getDEDataRecordCollectionId(),
+				_deDataRecordCollectionService);
+
+		Assert.assertEquals(
+			deDataRecordCollectionExpected, deDataRecordCollection);
+	}
+
+	@Test
+	public void testGetByGuestUser() throws Exception {
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(_adminUser));
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), _adminUser.getUserId());
+
+		ModelPermissions modelPermissions = new ModelPermissions();
+
+		modelPermissions.addRolePermissions(
+			RoleConstants.GUEST, ActionKeys.VIEW);
+
+		serviceContext.setModelPermissions(modelPermissions);
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+		DEDataDefinition deDataDefinition =
+			DEDataEngineTestUtil.insertDEDataDefinition(
+				_adminUser, _group, _deDataDefinitionService);
+
+		DEDataRecordCollection deDataRecordCollectionExpected =
+			new DEDataRecordCollection();
+
+		deDataRecordCollectionExpected.addName(
+			LocaleUtil.US, "Data record list");
+		deDataRecordCollectionExpected.addDescription(
+			LocaleUtil.BRAZIL, "Lista de registro de dados");
+		deDataRecordCollectionExpected.setDEDataDefinition(deDataDefinition);
+
+		try {
+			DEDataRecordCollectionSaveRequest
+				deDataRecordCollectionSaveRequest =
+					DEDataRecordCollectionRequestBuilder.saveBuilder(
+						deDataRecordCollectionExpected
+					).onBehalfOf(
+						_adminUser.getUserId()
+					).inGroup(
+						_group.getGroupId()
+					).build();
+
+			DEDataRecordCollectionSaveResponse
+				deDataRecordCollectionSaveResponse =
+					_deDataRecordCollectionService.execute(
+						deDataRecordCollectionSaveRequest);
+
+			deDataRecordCollectionExpected =
+				deDataRecordCollectionSaveResponse.getDEDataRecordCollection();
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
+
+		User user = UserTestUtil.addGroupUser(_group, RoleConstants.GUEST);
+
+		DEDataRecordCollection deDataRecordCollection =
+			DEDataEngineTestUtil.getDEDataRecordCollection(
+				user, _group.getGroupId(),
+				deDataRecordCollectionExpected.getDEDataRecordCollectionId(),
+				_deDataRecordCollectionService);
+
+		Assert.assertEquals(
+			deDataRecordCollectionExpected, deDataRecordCollection);
+	}
+
+	@Test
+	public void testGetBySiteMember() throws Exception {
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(_adminUser));
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), _adminUser.getUserId());
+
+		ModelPermissions modelPermissions = new ModelPermissions();
+
+		modelPermissions.addRolePermissions(
+			RoleConstants.SITE_MEMBER, ActionKeys.VIEW);
+
+		serviceContext.setModelPermissions(modelPermissions);
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+		DEDataDefinition deDataDefinition =
+			DEDataEngineTestUtil.insertDEDataDefinition(
+				_adminUser, _group, _deDataDefinitionService);
+
+		DEDataRecordCollection deDataRecordCollectionExpected =
+			new DEDataRecordCollection();
+
+		deDataRecordCollectionExpected.addName(
+			LocaleUtil.US, "Data record list");
+		deDataRecordCollectionExpected.addDescription(
+			LocaleUtil.BRAZIL, "Lista de registro de dados");
+		deDataRecordCollectionExpected.setDEDataDefinition(deDataDefinition);
+
+		try {
+			DEDataRecordCollectionSaveRequest
+				deDataRecordCollectionSaveRequest =
+					DEDataRecordCollectionRequestBuilder.saveBuilder(
+						deDataRecordCollectionExpected
+					).onBehalfOf(
+						_adminUser.getUserId()
+					).inGroup(
+						_group.getGroupId()
+					).build();
+
+			DEDataRecordCollectionSaveResponse
+				deDataRecordCollectionSaveResponse =
+					_deDataRecordCollectionService.execute(
+						deDataRecordCollectionSaveRequest);
+
+			deDataRecordCollectionExpected =
+				deDataRecordCollectionSaveResponse.getDEDataRecordCollection();
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
+
+		DEDataRecordCollection deDataRecordCollection =
+			DEDataEngineTestUtil.getDEDataRecordCollection(
+				_siteMember, _group.getGroupId(),
+				deDataRecordCollectionExpected.getDEDataRecordCollectionId(),
+				_deDataRecordCollectionService);
+
+		Assert.assertEquals(
+			deDataRecordCollectionExpected, deDataRecordCollection);
+	}
+
+	@Test(
+		expected =
+			DEDataRecordCollectionException.NoSuchDataRecordCollection.class
+	)
+	public void testGetWithNoId() throws Exception {
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(_adminUser));
+
+		DEDataEngineTestUtil.insertDEDataRecordCollection(
+			_adminUser, _group, _deDataDefinitionService,
+			_deDataRecordCollectionService);
+
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(_adminUser));
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), _adminUser.getUserId());
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+		try {
+			DEDataRecordCollectionGetRequest deDataRecordCollectionGetRequest =
+				DEDataRecordCollectionRequestBuilder.getBuilder().build();
+
+			_deDataRecordCollectionService.execute(
+				deDataRecordCollectionGetRequest);
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
+	}
+
+	@Test(
+		expected =
+			DEDataRecordCollectionException.NoSuchDataRecordCollection.class
+	)
+	public void testGetWithNonexistingId() throws Exception {
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(_adminUser));
+
+		DEDataEngineTestUtil.insertDEDataRecordCollection(
+			_adminUser, _group, _deDataDefinitionService,
+			_deDataRecordCollectionService);
+
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(_adminUser));
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), _adminUser.getUserId());
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+		try {
+			DEDataRecordCollectionGetRequest deDataRecordCollectionGetRequest =
+				DEDataRecordCollectionRequestBuilder.getBuilder(
+				).byId(
+					1
+				).build();
+
+			_deDataRecordCollectionService.execute(
+				deDataRecordCollectionGetRequest);
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
+	}
+
 	@Test(expected = DEDataRecordCollectionException.PrincipalException.class)
 	public void testGrantDeletePermissionToGuestUser() throws Exception {
 		DEDataRecordCollection deDataRecordCollection =
@@ -738,6 +1037,56 @@ public class DEDataRecordCollectionServiceTest {
 			_siteMember, _group.getGroupId(),
 			deDataRecordCollection.getDEDataRecordCollectionId(),
 			_deDataRecordCollectionService);
+	}
+
+	@Test
+	public void testGrantGetPermission() throws Exception {
+		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		User user = UserTestUtil.addGroupUser(_group, role.getName());
+
+		DEDataRecordCollection deDataRecordCollectionExpected =
+			DEDataEngineTestUtil.insertDEDataRecordCollection(
+				_adminUser, _group, _deDataDefinitionService,
+				_deDataRecordCollectionService);
+
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(_adminUser));
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), _adminUser.getUserId());
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+		try {
+			DEDataRecordCollectionSaveModelPermissionsRequest
+				deDataRecordCollectionSaveModelPermissionsRequest =
+					DEDataRecordCollectionRequestBuilder.
+						saveModelPermissionsBuilder(
+							TestPropsValues.getCompanyId(), _group.getGroupId(),
+							_adminUser.getUserId(), _group.getGroupId(),
+							deDataRecordCollectionExpected.
+								getDEDataRecordCollectionId(),
+							new String[] {role.getName()}
+						).allowView(
+					).build();
+
+			_deDataRecordCollectionService.execute(
+				deDataRecordCollectionSaveModelPermissionsRequest);
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
+
+		DEDataRecordCollection deDataRecordCollection =
+			DEDataEngineTestUtil.getDEDataRecordCollection(
+				user, _group.getGroupId(),
+				deDataRecordCollectionExpected.getDEDataRecordCollectionId(),
+				_deDataRecordCollectionService);
+
+		Assert.assertEquals(
+			deDataRecordCollectionExpected, deDataRecordCollection);
 	}
 
 	@Test(expected = DEDataRecordCollectionException.PrincipalException.class)
@@ -1351,6 +1700,60 @@ public class DEDataRecordCollectionServiceTest {
 
 		DEDataEngineTestUtil.updateDEDataRecordCollection(
 			user, _group, deDataRecordCollection,
+			_deDataRecordCollectionService);
+	}
+
+	@Test(expected = DEDataRecordCollectionException.MustHavePermission.class)
+	public void testRevokeViewDataRecordCollectionPermission()
+		throws Exception {
+
+		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		User user = UserTestUtil.addGroupUser(_group, role.getName());
+
+		DEDataRecordCollection deDataRecordCollection =
+			DEDataEngineTestUtil.insertDEDataRecordCollection(
+				_adminUser, _group, _deDataDefinitionService,
+				_deDataRecordCollectionService);
+
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(_adminUser));
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), _adminUser.getUserId());
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+		try {
+			DEDataRecordCollectionSaveModelPermissionsRequest
+				deDataRecordCollectionSaveModelPermissionsRequest =
+					DEDataRecordCollectionRequestBuilder.
+						saveModelPermissionsBuilder(
+							TestPropsValues.getCompanyId(), _group.getGroupId(),
+							_adminUser.getUserId(), _group.getGroupId(),
+							deDataRecordCollection.
+								getDEDataRecordCollectionId(),
+							new String[] {role.getName()}
+						).allowView(
+					).build();
+
+			_deDataRecordCollectionService.execute(
+				deDataRecordCollectionSaveModelPermissionsRequest);
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
+
+		DEDataEngineTestUtil.deleteDEDataRecordCollectionModelPermissions(
+			TestPropsValues.getCompanyId(), _adminUser, _group.getGroupId(),
+			deDataRecordCollection.getDEDataRecordCollectionId(),
+			new String[] {ActionKeys.VIEW}, new String[] {role.getName()},
+			_deDataRecordCollectionService);
+
+		DEDataEngineTestUtil.getDEDataRecordCollection(
+			user, _group.getGroupId(),
+			deDataRecordCollection.getDEDataRecordCollectionId(),
 			_deDataRecordCollectionService);
 	}
 

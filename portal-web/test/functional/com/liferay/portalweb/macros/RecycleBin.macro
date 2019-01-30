@@ -18,8 +18,9 @@ definition {
 			tableEntryText = "${assetType}"
 		);
 
-		LexiconTable.delete(
-			tableEntry = "${assetName}"
+		RecycleBin.clickEllipsisItem(
+			assetName = "${assetName}",
+			item = "Delete"
 		);
 
 		Alert.viewSuccessMessage();
@@ -233,9 +234,9 @@ definition {
 			tableEntryText = "${assetType}"
 		);
 
-		LexiconTable.viewTableEntryText(
+		LexiconTable.viewTableEntryPartialText(
 			tableEntry = "${assetName}",
-			tableEntryText = "Ago"
+			tableEntryPartialText = "Ago"
 		);
 
 		LexiconTable.viewTableEntryText(

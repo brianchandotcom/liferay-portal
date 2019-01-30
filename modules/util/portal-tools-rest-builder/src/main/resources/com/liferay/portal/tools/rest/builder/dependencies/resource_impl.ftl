@@ -84,27 +84,46 @@ public class ${resourceName}ResourceImpl implements ${resourceName}Resource {
 		<#assign methodParameters = "" />
 
 		<#if operation.parameters??>
+			<#assign
+				pageParameter = false
+				perPageParameter = false
+			/>
+
+			<#list operation.parameters as parameter>
+				<#if stringUtil.equals(parameter.name, "page")>
+					<#assign pageParameter = true />
+				<#elseif stringUtil.equals(parameter.name, "per_page")>
+					<#assign perPageParameter = true />
+				</#if>
+			</#list>
+
 			<#assign methodParameters>
 				<@compress single_line=true>
 					<#list operation.parameters as parameter>
-						${parameter.schema.type?cap_first}
+						<#if !pageParameter || !perPageParameter || !(stringUtil.equals(parameter.name, "page") || stringUtil.equals(parameter.name, "per_page"))>
+							${parameter.schema.type?cap_first}
 
-						<#assign parameterName = "" />
+							<#assign parameterName = "" />
 
-						<#list parameter.name?split("[^A-Za-z0-9]", "r") as s>
-							<#if s?has_content>
-								<#if parameterName?has_content>
-									<#assign parameterName = "${parameterName}${s?cap_first}" />
-								<#else>
-									<#assign parameterName = "${s}" />
+							<#list parameter.name?split("[^A-Za-z0-9]", "r") as s>
+								<#if s?has_content>
+									<#if parameterName?has_content>
+										<#assign parameterName = "${parameterName}${s?cap_first}" />
+									<#else>
+										<#assign parameterName = "${s}" />
+									</#if>
 								</#if>
-							</#if>
-						</#list>
+							</#list>
 
-						${parameterName},
+							${parameterName},
+						</#if>
 					</#list>
 				</@compress>
 			</#assign>
+
+			<#if pageParameter && perPageParameter>
+				<#assign methodParameters = "${methodParameters} Pagination pagination," />
+			</#if>
 
 			<#assign methodParameters = "${methodParameters[0..(methodParameters?length - 2)]}" />
 		</#if>

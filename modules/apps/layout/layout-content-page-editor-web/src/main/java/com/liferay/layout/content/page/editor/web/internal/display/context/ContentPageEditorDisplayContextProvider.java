@@ -31,6 +31,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
+import java.util.Objects;
+
 /**
  * @author Pavel Savinov
  */
@@ -53,7 +55,7 @@ public class ContentPageEditorDisplayContextProvider {
 		long classPK = GetterUtil.getLong(
 			httpServletRequest.getAttribute(ContentPageEditorWebKeys.CLASS_PK));
 
-		if (className == Layout.class.getName()) {
+		if (Objects.equals(className, Layout.class.getName())) {
 			return new ContentPageLayoutEditorDisplayContext(
 				httpServletRequest, renderResponse, className, classPK);
 		}

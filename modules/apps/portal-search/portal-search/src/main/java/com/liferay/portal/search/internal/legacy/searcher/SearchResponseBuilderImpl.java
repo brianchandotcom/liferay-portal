@@ -18,6 +18,13 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.searcher.SearchResponseBuilder;
+import com.liferay.portal.search.stats.StatsResponse;
+
+import java.io.Serializable;
+
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author André de Oliveira
@@ -48,6 +55,15 @@ public class SearchResponseBuilderImpl implements SearchResponseBuilder {
 		return this;
 	}
 
+	@Override
+	public SearchResponseBuilder statsResponseMap(
+		Map<String, StatsResponse> map) {
+
+		_searchContext.setAttribute(_STATS_RESPONSE_MAP, new HashMap<>(map));
+
+		return this;
+	}
+
 	public class SearchResponseImpl implements SearchResponse {
 
 		@Override
@@ -62,6 +78,18 @@ public class SearchResponseBuilderImpl implements SearchResponseBuilder {
 				_searchContext.getAttribute(_RESPONSE_STRING));
 		}
 
+		@Override
+		public Map<String, StatsResponse> getStatsResponseMap() {
+			Serializable serializable = _searchContext.getAttribute(
+				_STATS_RESPONSE_MAP);
+
+			if (serializable != null) {
+				return (Map<String, StatsResponse>)serializable;
+			}
+
+			return Collections.emptyMap();
+		}
+
 	}
 
 	private static final String _QUERY_STRING = "queryString";
@@ -69,6 +97,8 @@ public class SearchResponseBuilderImpl implements SearchResponseBuilder {
 	private static final String _REQUEST_STRING = "request.string";
 
 	private static final String _RESPONSE_STRING = "response.string";
+
+	private static final String _STATS_RESPONSE_MAP = "stats.response.map";
 
 	private final SearchContext _searchContext;
 

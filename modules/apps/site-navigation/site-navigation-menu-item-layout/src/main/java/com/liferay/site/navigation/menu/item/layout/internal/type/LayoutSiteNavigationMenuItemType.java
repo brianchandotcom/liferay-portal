@@ -402,6 +402,23 @@ public class LayoutSiteNavigationMenuItemType
 			layoutUuid, siteNavigationMenuItem.getGroupId(), privateLayout);
 	}
 
+	private Layout _getLayout(SiteNavigationMenuItem siteNavigationMenuItem)
+		throws PortalException {
+
+		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
+
+		typeSettingsProperties.fastLoad(
+			siteNavigationMenuItem.getTypeSettings());
+
+		String layoutUuid = typeSettingsProperties.get("layoutUuid");
+
+		boolean privateLayout = GetterUtil.getBoolean(
+			typeSettingsProperties.get("privateLayout"));
+
+		return _layoutLocalService.getLayoutByUuidAndGroupId(
+			layoutUuid, siteNavigationMenuItem.getGroupId(), privateLayout);
+	}
+
 	@Reference
 	private ItemSelector _itemSelector;
 

@@ -19,6 +19,11 @@ definition {
 		);
 
 		MenuItem.click(menuItem = "Edit in ${dmGoogleApp}");
+
+		AssertElementPresent(
+			locator1 = "Button#ANY",
+			key_text = "Save and Return to Liferay"
+		);
 	}
 
 	macro saveAndExit {

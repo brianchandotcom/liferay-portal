@@ -14,7 +14,6 @@
 
 package com.liferay.portal.search.elasticsearch6.internal.search.engine.adapter.search;
 
-import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.search.elasticsearch6.internal.search.response.SearchResponseTranslator;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
@@ -47,14 +46,8 @@ public class SearchSearchResponseAssemblerImpl
 
 		searchSearchResponse.setCount(searchHits.totalHits);
 
-		Hits hits = _searchResponseTranslator.translate(
-			searchResponse, searchSearchRequest.getFacets(),
-			searchSearchRequest.getGroupBy(), searchSearchRequest.getStats(),
-			searchSearchRequest.getAlternateUidFieldName(),
-			searchSearchRequest.getHighlightFieldNames(),
-			searchSearchRequest.getLocale());
-
-		searchSearchResponse.setHits(hits);
+		_searchResponseTranslator.populate(
+			searchSearchResponse, searchResponse, searchSearchRequest);
 	}
 
 	@Reference(unbind = "-")

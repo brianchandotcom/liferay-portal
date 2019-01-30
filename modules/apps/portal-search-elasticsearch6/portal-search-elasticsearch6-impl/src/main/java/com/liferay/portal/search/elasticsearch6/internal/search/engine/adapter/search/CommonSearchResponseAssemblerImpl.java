@@ -19,11 +19,14 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.search.elasticsearch6.internal.stats.StatsTranslator;
 import com.liferay.portal.search.engine.adapter.search.BaseSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.BaseSearchResponse;
+import com.liferay.portal.search.stats.StatsRequest;
 
 import java.io.IOException;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,10 +42,13 @@ import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.common.xcontent.XContentFactory;
 import org.elasticsearch.common.xcontent.XContentType;
 import org.elasticsearch.index.search.MatchQuery;
+import org.elasticsearch.search.aggregations.Aggregation;
+import org.elasticsearch.search.aggregations.Aggregations;
 import org.elasticsearch.search.profile.ProfileShardResult;
 import org.elasticsearch.search.profile.query.QueryProfileShardResult;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael C. Han
@@ -73,6 +79,10 @@ public class CommonSearchResponseAssemblerImpl
 		baseSearchResponse.setTerminatedEarly(
 			GetterUtil.getBoolean(searchResponse.isTerminatedEarly()));
 		baseSearchResponse.setTimedOut(searchResponse.isTimedOut());
+
+		updateStatsResponses(
+			baseSearchResponse, searchResponse.getAggregations(),
+			baseSearchRequest.getStatsRequests());
 	}
 
 	protected String getProfileShardResultString(
@@ -142,6 +152,42 @@ public class CommonSearchResponseAssemblerImpl
 		baseSearchResponse.setExecutionTime(tookTimeValue.getMillis());
 	}
 
+	@Reference(unbind = "-")
+	protected void setStatsTranslator(StatsTranslator statsTranslator) {
+		_statsTranslator = statsTranslator;
+	}
+
+	protected void updateStatsResponse(
+		BaseSearchResponse baseSearchResponse,
+		Map<String, Aggregation> aggregationsMap, StatsRequest statsRequest) {
+
+		baseSearchResponse.addStatsResponse(
+			_statsTranslator.translateResponse(aggregationsMap, statsRequest));
+	}
+
+	protected void updateStatsResponses(
+		BaseSearchResponse baseSearchResponse, Aggregations aggregations,
+		Collection<StatsRequest> statsRequests) {
+
+		if (aggregations == null) {
+			return;
+		}
+
+		updateStatsResponses(
+			baseSearchResponse, aggregations.getAsMap(), statsRequests);
+	}
+
+	protected void updateStatsResponses(
+		BaseSearchResponse baseSearchResponse,
+		Map<String, Aggregation> aggregationsMap,
+		Collection<StatsRequest> statsRequests) {
+
+		for (StatsRequest statsRequest : statsRequests) {
+			updateStatsResponse(
+				baseSearchResponse, aggregationsMap, statsRequest);
+		}
+	}
+
 	protected static final String ADJUST_PURE_NEGATIVE_STRING =
 		",\"adjust_pure_negative\":true";
 
@@ -153,5 +199,7 @@ public class CommonSearchResponseAssemblerImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommonSearchResponseAssemblerImpl.class);
+
+	private StatsTranslator _statsTranslator;
 
 }

@@ -25,6 +25,9 @@ import com.liferay.portal.search.elasticsearch6.internal.highlight.HighlighterTr
 import com.liferay.portal.search.elasticsearch6.internal.sort.SortTranslator;
 import com.liferay.portal.search.elasticsearch6.internal.stats.StatsTranslator;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
+import com.liferay.portal.search.legacy.stats.StatsRequestBuilderFactory;
+import com.liferay.portal.search.stats.StatsRequest;
+import com.liferay.portal.search.stats.StatsRequestBuilder;
 
 import java.util.Map;
 
@@ -48,14 +51,6 @@ public class SearchSearchRequestAssemblerImpl
 		_commonSearchRequestBuilderAssembler.assemble(
 			searchRequestBuilder, searchSearchRequest);
 
-		Map<String, Stats> stats = searchSearchRequest.getStats();
-
-		if (!MapUtil.isEmpty(stats)) {
-			stats.forEach(
-				(statsKey, stat) -> _statsTranslator.translate(
-					searchRequestBuilder, stat));
-		}
-
 		addGroupBy(searchRequestBuilder, searchSearchRequest);
 
 		if (searchSearchRequest.isHighlightEnabled()) {
@@ -74,6 +69,7 @@ public class SearchSearchRequestAssemblerImpl
 		addPreference(searchRequestBuilder, searchSearchRequest);
 		addSelectedFields(
 			searchRequestBuilder, searchSearchRequest.getSelectedFieldNames());
+		addStats(searchRequestBuilder, searchSearchRequest.getStats());
 
 		_sortTranslator.translate(
 			searchRequestBuilder, searchSearchRequest.getSorts());
@@ -134,6 +130,17 @@ public class SearchSearchRequestAssemblerImpl
 		}
 	}
 
+	protected void addStats(
+		SearchRequestBuilder searchRequestBuilder,
+		Map<String, Stats> statsMap) {
+
+		if (!MapUtil.isEmpty(statsMap)) {
+			statsMap.forEach(
+				(key, stats) -> _statsTranslator.populateRequest(
+					searchRequestBuilder, translate(stats)));
+		}
+	}
+
 	@Reference(unbind = "-")
 	protected void setCommonSearchRequestBuilderAssembler(
 		CommonSearchRequestBuilderAssembler
@@ -161,8 +168,22 @@ public class SearchSearchRequestAssemblerImpl
 	}
 
 	@Reference(unbind = "-")
+	protected void setStatsRequestBuilderFactory(
+		StatsRequestBuilderFactory statsRequestBuilderFactory) {
+
+		_statsRequestBuilderFactory = statsRequestBuilderFactory;
+	}
+
+	@Reference(unbind = "-")
 	protected void setStatsTranslator(StatsTranslator statsTranslator) {
 		_statsTranslator = statsTranslator;
+	}
+
+	protected StatsRequest translate(Stats stats) {
+		StatsRequestBuilder statsRequestBuilder =
+			_statsRequestBuilderFactory.getStatsRequestBuilder(stats);
+
+		return statsRequestBuilder.build();
 	}
 
 	private CommonSearchRequestBuilderAssembler
@@ -170,6 +191,7 @@ public class SearchSearchRequestAssemblerImpl
 	private GroupByTranslator _groupByTranslator;
 	private HighlighterTranslator _highlighterTranslator;
 	private SortTranslator _sortTranslator;
+	private StatsRequestBuilderFactory _statsRequestBuilderFactory;
 	private StatsTranslator _statsTranslator;
 
 }

@@ -246,7 +246,9 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 
 		CountSearchRequest countSearchRequest = new CountSearchRequest();
 
-		prepare(countSearchRequest, query, searchContext);
+		prepare(
+			countSearchRequest, getSearchRequest(searchContext), query,
+			searchContext);
 
 		return countSearchRequest;
 	}
@@ -256,7 +258,9 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
-		prepare(searchSearchRequest, query, searchContext);
+		SearchRequest searchRequest = getSearchRequest(searchContext);
+
+		prepare(searchSearchRequest, searchRequest, query, searchContext);
 
 		QueryConfig queryConfig = searchContext.getQueryConfig();
 
@@ -311,8 +315,18 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 
 		searchSearchRequest.setSorts(searchContext.getSorts());
 		searchSearchRequest.setStats(searchContext.getStats());
+		searchSearchRequest.setStatsRequests(searchRequest.getStatsRequests());
 
 		return searchSearchRequest;
+	}
+
+	protected SearchRequest getSearchRequest(SearchContext searchContext) {
+		SearchRequestBuilder searchRequestBuilder = _getSearchRequestBuilder(
+			searchContext);
+
+		SearchRequest searchRequest = searchRequestBuilder.build();
+
+		return searchRequest;
 	}
 
 	protected String[] getSelectedIndexNames(
@@ -362,12 +376,14 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 			baseSearchResponse.getSearchRequestString()
 		).responseString(
 			baseSearchResponse.getSearchResponseString()
+		).statsResponseMap(
+			baseSearchResponse.getStatsResponseMap()
 		);
 	}
 
 	protected void prepare(
-		BaseSearchRequest baseSearchRequest, Query query,
-		SearchContext searchContext) {
+		BaseSearchRequest baseSearchRequest, SearchRequest searchRequest,
+		Query query, SearchContext searchContext) {
 
 		QueryConfig queryConfig = searchContext.getQueryConfig();
 
@@ -378,15 +394,11 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		baseSearchRequest.setPostFilter(query.getPostFilter());
 		baseSearchRequest.setQuery(query);
 
-		SearchRequestBuilder searchRequestBuilder = _getSearchRequestBuilder(
-			searchContext);
-
-		SearchRequest searchRequest = searchRequestBuilder.build();
-
 		baseSearchRequest.setExplain(searchRequest.isExplain());
 		baseSearchRequest.setIncludeResponseString(
 			searchRequest.isIncludeResponseString());
 		baseSearchRequest.setRescoreQuery(searchRequest.getRescoreQuery());
+		baseSearchRequest.setStatsRequests(searchRequest.getStatsRequests());
 	}
 
 	@Reference(unbind = "-")

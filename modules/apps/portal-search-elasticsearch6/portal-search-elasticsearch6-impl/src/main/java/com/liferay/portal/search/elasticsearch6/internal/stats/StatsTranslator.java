@@ -14,8 +14,8 @@
 
 package com.liferay.portal.search.elasticsearch6.internal.stats;
 
-import com.liferay.portal.kernel.search.Stats;
-import com.liferay.portal.kernel.search.StatsResults;
+import com.liferay.portal.search.stats.StatsRequest;
+import com.liferay.portal.search.stats.StatsResponse;
 
 import java.util.Map;
 
@@ -27,10 +27,10 @@ import org.elasticsearch.search.aggregations.Aggregation;
  */
 public interface StatsTranslator {
 
-	public StatsResults translate(
-		Map<String, Aggregation> aggregationMap, Stats stats);
+	public void populateRequest(
+		SearchRequestBuilder searchRequestBuilder, StatsRequest statsRequest);
 
-	public void translate(
-		SearchRequestBuilder searchRequestBuilder, Stats stats);
+	public StatsResponse translateResponse(
+		Map<String, Aggregation> aggregationMap, StatsRequest statsRequest);
 
 }

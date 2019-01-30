@@ -14,8 +14,10 @@
 
 package com.liferay.portal.search.elasticsearch6.internal.stats;
 
-import com.liferay.portal.kernel.search.Stats;
-import com.liferay.portal.kernel.search.StatsResults;
+import com.liferay.portal.search.stats.StatsRequest;
+import com.liferay.portal.search.stats.StatsResponse;
+import com.liferay.portal.search.stats.StatsResponseBuilder;
+import com.liferay.portal.search.stats.StatsResponseBuilderFactory;
 
 import java.util.Map;
 
@@ -24,10 +26,13 @@ import org.elasticsearch.search.aggregations.Aggregation;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.bucket.missing.Missing;
 import org.elasticsearch.search.aggregations.bucket.missing.MissingAggregationBuilder;
+import org.elasticsearch.search.aggregations.metrics.cardinality.Cardinality;
+import org.elasticsearch.search.aggregations.metrics.cardinality.CardinalityAggregationBuilder;
 import org.elasticsearch.search.aggregations.metrics.max.Max;
 import org.elasticsearch.search.aggregations.metrics.max.MaxAggregationBuilder;
 import org.elasticsearch.search.aggregations.metrics.min.Min;
 import org.elasticsearch.search.aggregations.metrics.min.MinAggregationBuilder;
+import org.elasticsearch.search.aggregations.metrics.stats.Stats;
 import org.elasticsearch.search.aggregations.metrics.stats.StatsAggregationBuilder;
 import org.elasticsearch.search.aggregations.metrics.stats.extended.ExtendedStats;
 import org.elasticsearch.search.aggregations.metrics.stats.extended.ExtendedStatsAggregationBuilder;
@@ -37,6 +42,7 @@ import org.elasticsearch.search.aggregations.metrics.valuecount.ValueCount;
 import org.elasticsearch.search.aggregations.metrics.valuecount.ValueCountAggregationBuilder;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael C. Han
@@ -45,81 +51,21 @@ import org.osgi.service.component.annotations.Component;
 public class DefaultStatsTranslator implements StatsTranslator {
 
 	@Override
-	public StatsResults translate(
-		Map<String, Aggregation> aggregationMap, Stats stats) {
+	public void populateRequest(
+		SearchRequestBuilder searchRequestBuilder, StatsRequest statsRequest) {
 
-		String field = stats.getField();
+		String field = statsRequest.getField();
 
-		StatsResults statsResults = new StatsResults(field);
+		if (statsRequest.isCardinality()) {
+			CardinalityAggregationBuilder cardinalityAggregationBuilder =
+				AggregationBuilders.cardinality(field + "_cardinality");
 
-		if (stats.isCount()) {
-			ValueCount valueCount = (ValueCount)aggregationMap.get(
-				field + "_count");
+			cardinalityAggregationBuilder.field(field);
 
-			statsResults.setCount(valueCount.getValue());
+			searchRequestBuilder.addAggregation(cardinalityAggregationBuilder);
 		}
 
-		if (stats.isMax()) {
-			Max max = (Max)aggregationMap.get(field + "_max");
-
-			statsResults.setMax(max.getValue());
-		}
-
-		if (stats.isMean()) {
-			org.elasticsearch.search.aggregations.metrics.stats.Stats
-				elasticsearchStats =
-					(org.elasticsearch.search.aggregations.metrics.stats.Stats)
-						aggregationMap.get(field + "_stats");
-
-			statsResults.setMean(elasticsearchStats.getAvg());
-		}
-
-		if (stats.isMin()) {
-			Min min = (Min)aggregationMap.get(field + "_min");
-
-			statsResults.setMin(min.getValue());
-		}
-
-		if (stats.isMissing()) {
-			Missing missing = (Missing)aggregationMap.get(field + "_missing");
-
-			statsResults.setMissing((int)missing.getDocCount());
-		}
-
-		if (stats.isStandardDeviation()) {
-			ExtendedStats extendedStats = (ExtendedStats)aggregationMap.get(
-				field + "_extendedStats");
-
-			statsResults.setStandardDeviation(extendedStats.getStdDeviation());
-		}
-
-		if (stats.isSum()) {
-			Sum sum = (Sum)aggregationMap.get(field + "_sum");
-
-			statsResults.setSum(sum.getValue());
-		}
-
-		if (stats.isSumOfSquares()) {
-			ExtendedStats extendedStats = (ExtendedStats)aggregationMap.get(
-				field + "_extendedStats");
-
-			statsResults.setSumOfSquares(extendedStats.getSumOfSquares());
-		}
-
-		return statsResults;
-	}
-
-	@Override
-	public void translate(
-		SearchRequestBuilder searchRequestBuilder, Stats stats) {
-
-		if (!stats.isEnabled()) {
-			return;
-		}
-
-		String field = stats.getField();
-
-		if (stats.isCount()) {
+		if (statsRequest.isCount()) {
 			ValueCountAggregationBuilder valueCountAggregationBuilder =
 				AggregationBuilders.count(field + "_count");
 
@@ -128,7 +74,7 @@ public class DefaultStatsTranslator implements StatsTranslator {
 			searchRequestBuilder.addAggregation(valueCountAggregationBuilder);
 		}
 
-		if (stats.isMax()) {
+		if (statsRequest.isMax()) {
 			MaxAggregationBuilder maxAggregationBuilder =
 				AggregationBuilders.max(field + "_max");
 
@@ -137,7 +83,7 @@ public class DefaultStatsTranslator implements StatsTranslator {
 			searchRequestBuilder.addAggregation(maxAggregationBuilder);
 		}
 
-		if (stats.isMean()) {
+		if (statsRequest.isMean()) {
 			StatsAggregationBuilder statsAggregationBuilder =
 				AggregationBuilders.stats(field + "_stats");
 
@@ -146,7 +92,7 @@ public class DefaultStatsTranslator implements StatsTranslator {
 			searchRequestBuilder.addAggregation(statsAggregationBuilder);
 		}
 
-		if (stats.isMin()) {
+		if (statsRequest.isMin()) {
 			MinAggregationBuilder minAggregationBuilder =
 				AggregationBuilders.min(field + "_min");
 
@@ -155,7 +101,7 @@ public class DefaultStatsTranslator implements StatsTranslator {
 			searchRequestBuilder.addAggregation(minAggregationBuilder);
 		}
 
-		if (stats.isMissing()) {
+		if (statsRequest.isMissing()) {
 			MissingAggregationBuilder missingAggregationBuilder =
 				AggregationBuilders.missing(field + "_missing");
 
@@ -164,7 +110,9 @@ public class DefaultStatsTranslator implements StatsTranslator {
 			searchRequestBuilder.addAggregation(missingAggregationBuilder);
 		}
 
-		if (stats.isStandardDeviation() || stats.isSumOfSquares()) {
+		if (statsRequest.isStandardDeviation() ||
+			statsRequest.isSumOfSquares()) {
+
 			ExtendedStatsAggregationBuilder extendedStatsAggregationBuilder =
 				AggregationBuilders.extendedStats(field + "_extendedStats");
 
@@ -174,7 +122,7 @@ public class DefaultStatsTranslator implements StatsTranslator {
 				extendedStatsAggregationBuilder);
 		}
 
-		if (stats.isSum()) {
+		if (statsRequest.isSum()) {
 			SumAggregationBuilder sumAggregationBuilder =
 				AggregationBuilders.sum(field + "_sum");
 
@@ -183,5 +131,87 @@ public class DefaultStatsTranslator implements StatsTranslator {
 			searchRequestBuilder.addAggregation(sumAggregationBuilder);
 		}
 	}
+
+	@Override
+	public StatsResponse translateResponse(
+		Map<String, Aggregation> aggregationMap, StatsRequest statsRequest) {
+
+		StatsResponseBuilder statsResponseBuilder =
+			_statsResponseBuilderFactory.getStatsResponseBuilder();
+
+		String field = statsRequest.getField();
+
+		statsResponseBuilder.field(field);
+
+		if (statsRequest.isCardinality()) {
+			Cardinality cardinality = (Cardinality)aggregationMap.get(
+				field + "_cardinality");
+
+			statsResponseBuilder.cardinality(cardinality.getValue());
+		}
+
+		if (statsRequest.isCount()) {
+			ValueCount valueCount = (ValueCount)aggregationMap.get(
+				field + "_count");
+
+			statsResponseBuilder.count(valueCount.getValue());
+		}
+
+		if (statsRequest.isMax()) {
+			Max max = (Max)aggregationMap.get(field + "_max");
+
+			statsResponseBuilder.max(max.getValue());
+		}
+
+		if (statsRequest.isMean()) {
+			Stats stats = (Stats)aggregationMap.get(field + "_stats");
+
+			statsResponseBuilder.mean(stats.getAvg());
+		}
+
+		if (statsRequest.isMin()) {
+			Min min = (Min)aggregationMap.get(field + "_min");
+
+			statsResponseBuilder.min(min.getValue());
+		}
+
+		if (statsRequest.isMissing()) {
+			Missing missing = (Missing)aggregationMap.get(field + "_missing");
+
+			statsResponseBuilder.missing((int)missing.getDocCount());
+		}
+
+		if (statsRequest.isStandardDeviation()) {
+			ExtendedStats extendedStats = (ExtendedStats)aggregationMap.get(
+				field + "_extendedStats");
+
+			statsResponseBuilder.standardDeviation(
+				extendedStats.getStdDeviation());
+		}
+
+		if (statsRequest.isSum()) {
+			Sum sum = (Sum)aggregationMap.get(field + "_sum");
+
+			statsResponseBuilder.sum(sum.getValue());
+		}
+
+		if (statsRequest.isSumOfSquares()) {
+			ExtendedStats extendedStats = (ExtendedStats)aggregationMap.get(
+				field + "_extendedStats");
+
+			statsResponseBuilder.sumOfSquares(extendedStats.getSumOfSquares());
+		}
+
+		return statsResponseBuilder.build();
+	}
+
+	@Reference(unbind = "-")
+	protected void setStatsResponseBuilderFactory(
+		StatsResponseBuilderFactory statsResponseBuilderFactory) {
+
+		_statsResponseBuilderFactory = statsResponseBuilderFactory;
+	}
+
+	private StatsResponseBuilderFactory _statsResponseBuilderFactory;
 
 }

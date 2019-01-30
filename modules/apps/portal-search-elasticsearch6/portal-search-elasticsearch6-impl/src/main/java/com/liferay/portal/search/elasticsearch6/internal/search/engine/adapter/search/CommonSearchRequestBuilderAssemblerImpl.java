@@ -18,8 +18,13 @@ import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.filter.FilterTranslator;
 import com.liferay.portal.kernel.search.query.QueryTranslator;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.search.elasticsearch6.internal.facet.FacetTranslator;
+import com.liferay.portal.search.elasticsearch6.internal.stats.StatsTranslator;
 import com.liferay.portal.search.engine.adapter.search.BaseSearchRequest;
+import com.liferay.portal.search.stats.StatsRequest;
+
+import java.util.List;
 
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.common.unit.TimeValue;
@@ -82,6 +87,21 @@ public class CommonSearchRequestBuilderAssemblerImpl
 			searchRequestBuilder, baseSearchRequest.getQuery(),
 			baseSearchRequest.getFacets(),
 			baseSearchRequest.isBasicFacetSelection());
+
+		addStatsRequests(searchRequestBuilder, baseSearchRequest);
+	}
+
+	protected void addStatsRequests(
+		SearchRequestBuilder searchRequestBuilder,
+		BaseSearchRequest baseSearchRequest) {
+
+		List<StatsRequest> statsRequests = baseSearchRequest.getStatsRequests();
+
+		if (!ListUtil.isEmpty(statsRequests)) {
+			statsRequests.forEach(
+				statsRequest -> _statsTranslator.populateRequest(
+					searchRequestBuilder, statsRequest));
+		}
 	}
 
 	protected QueryBuilder getQueryBuilder(
@@ -145,8 +165,14 @@ public class CommonSearchRequestBuilderAssemblerImpl
 			new QueryRescorerBuilder(_queryTranslator.translate(query, null)));
 	}
 
+	@Reference(unbind = "-")
+	protected void setStatsTranslator(StatsTranslator statsTranslator) {
+		_statsTranslator = statsTranslator;
+	}
+
 	private FacetTranslator _facetTranslator;
 	private FilterTranslator<QueryBuilder> _filterTranslator;
 	private QueryTranslator<QueryBuilder> _queryTranslator;
+	private StatsTranslator _statsTranslator;
 
 }

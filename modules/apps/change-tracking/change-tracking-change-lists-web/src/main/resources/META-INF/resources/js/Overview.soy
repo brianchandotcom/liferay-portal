@@ -60,6 +60,9 @@
 							'deletedLabel': $deletedLabel,
 							'modified': $changes.modified,
 							'modifiedLabel': $modifiedLabel ] /}
+                        {param changesLabel kind="text"}
+                            {msg desc=""}changes{/msg}
+                        {/param}
 						{param description: $description /}
 						{param descriptionTitle kind="text"}
 							{msg desc=""}description{/msg}
@@ -125,6 +128,7 @@
 		modified: number,
 		modifiedLabel: string
 	]}
+	{@param? changesLabel: string}
 	{@param? description: string}
 	{@param? descriptionTitle: string}
 	{@param? headerButton: [
@@ -164,6 +168,7 @@
 
 		{call .overviewCardBody}
 			{param changes: $changes /}
+			{param changesLabel: $changesLabel /}
 			{param description: $description /}
 			{param descriptionTitle: $descriptionTitle /}
 			{param publishedBy: $publishedBy /}
@@ -269,6 +274,7 @@
 		modified: number,
 		modifiedLabel: string
 	]}
+	{@param? changesLabel: string}
 	{@param? description: string}
 	{@param? descriptionTitle: string}
 	{@param? publishedBy: [
@@ -321,7 +327,7 @@
 		{/if}
 		{if $changes}
 			<div class="glance-card-sheet-block">
-				<h3>Changes</h3>
+				<h3>{$changesLabel}</h3>
 
 				<div class="changes-row">
 					<div class="changes">

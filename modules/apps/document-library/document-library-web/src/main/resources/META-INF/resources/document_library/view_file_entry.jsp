@@ -98,6 +98,89 @@ if (portletTitleBasedNavigation) {
 	</liferay-frontend:info-bar>
 </c:if>
 
+<div class="subnav-tbar tbar">
+	<div class="container-fluid container-fluid-max-xl">
+		<ul class="tbar-nav">
+			<li class="tbar-item tbar-item-expand">
+				<div class="tbar-section">
+					<span class="component-title text-truncate-inline">
+						<span class="text-truncate">Document title</span>
+					</span>
+				</div>
+			</li>
+			<li class="tbar-item">
+				<div class="btn-group">
+					<button class="btn btn-monospaced btn-secondary btn-sm" type="button">
+						<svg class="lexicon-icon lexicon-icon-angle-left" focusable="false" role="presentation">
+							<use href="/o/classic-theme/images/lexicon/icons.svg#angle-left"></use>
+						</svg>
+					</button>
+					<button class="btn btn-monospaced btn-secondary btn-sm" type="button">
+						<svg class="lexicon-icon lexicon-icon-angle-right" focusable="false" role="presentation">
+							<use href="/o/classic-theme/images/lexicon/icons.svg#angle-right"></use>
+						</svg>
+					</button>
+				</div>
+			</li>
+			<li class="tbar-item">
+				<button class="btn btn-secondary btn-sm" type="button">Share</button>
+			</li>
+			<li class="tbar-item">
+				<button class="btn btn-primary btn-sm" type="button">Donwload</button>
+			</li>
+			<li class="tbar-item">
+				<a aria-expanded="true" aria-haspopup="true" class="component-action dropdown-toggle" data-toggle="dropdown" href="#1" id="dropdownAction1" role="button">
+					<svg class="lexicon-icon lexicon-icon-ellipsis-v" focusable="false" role="presentation">
+						<use href="/o/classic-theme/images/lexicon/icons.svg#ellipsis-v"></use>
+					</svg>
+				</a>
+			</li>
+		</ul>
+	</div>
+</div>
+
+
+<div class="bg-light component-tbar tbar" style="background: white">
+	<div class="container-fluid container-fluid-max-xl">
+		<ul class="tbar-nav">
+			<li class="tbar-item tbar-item-expand">
+				<div class="tbar-section text-left">
+					<span class="component-title text-truncate-inline">
+						<span class="text-truncate">Document title</span>
+					</span>
+				</div>
+			</li>
+			<li class="tbar-item">
+				<div class="btn-group">
+					<button class="btn btn-monospaced btn-secondary btn-sm" type="button">
+						<svg class="lexicon-icon lexicon-icon-angle-left" focusable="false" role="presentation">
+							<use href="/o/classic-theme/images/lexicon/icons.svg#angle-left"></use>
+						</svg>
+					</button>
+					<button class="btn btn-monospaced btn-secondary btn-sm" type="button">
+						<svg class="lexicon-icon lexicon-icon-angle-right" focusable="false" role="presentation">
+							<use href="/o/classic-theme/images/lexicon/icons.svg#angle-right"></use>
+						</svg>
+					</button>
+				</div>
+			</li>
+			<li class="tbar-item">
+				<button class="btn btn-secondary btn-sm" type="button">Share</button>
+			</li>
+			<li class="tbar-item">
+				<button class="btn btn-primary btn-sm" type="button">Donwload</button>
+			</li>
+			<li class="tbar-item">
+				<a aria-expanded="true" aria-haspopup="true" class="component-action dropdown-toggle" data-toggle="dropdown" href="#1" id="dropdownAction1" role="button">
+					<svg class="lexicon-icon lexicon-icon-ellipsis-v" focusable="false" role="presentation">
+						<use href="/o/classic-theme/images/lexicon/icons.svg#ellipsis-v"></use>
+					</svg>
+				</a>
+			</li>
+		</ul>
+	</div>
+</div>
+
 <div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
 	<portlet:actionURL name="/document_library/edit_file_entry" var="editFileEntry" />
 

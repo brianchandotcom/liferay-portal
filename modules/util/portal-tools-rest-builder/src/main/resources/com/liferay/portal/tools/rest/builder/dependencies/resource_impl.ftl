@@ -1,8 +1,6 @@
 package ${configYAML.apiPackagePath}.internal.resource;
 
-import ${configYAML.apiPackagePath}.dto.${schemaName};
-import ${configYAML.apiPackagePath}.dto.${schemaName}Collection;
-import ${configYAML.apiPackagePath}.resource.${schemaName}Resource;
+import ${configYAML.apiPackagePath}.resource.${resourceName}Resource;
 
 import com.liferay.portal.vulcan.context.Pagination;
 
@@ -23,15 +21,7 @@ import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
 		JaxrsWhiteboardConstants.JAX_RS_APPLICATION_SELECT + "=(osgi.jaxrs.name=${configYAML.application.name}.rest)",
 		JaxrsWhiteboardConstants.JAX_RS_RESOURCE + "=true", "api.version=${openAPIYAML.info.version}"
 	},
-	scope = ServiceScope.PROTOTYPE, service = ${schemaName}Resource.class)
+	scope = ServiceScope.PROTOTYPE, service = ${resourceName}Resource.class)
 @Generated("")
-public class ${schemaName}ResourceImpl implements ${schemaName}Resource {
-
-	@Override
-	public ${schemaName}Collection<${schemaName}> get${schemaName}Collection(Pagination pagination, String size)
-		throws Exception {
-
-		return new ${schemaName}Collection(Collections.emptyList(), 0);
-	}
-
+public class ${resourceName}ResourceImpl implements ${resourceName}Resource {
 }

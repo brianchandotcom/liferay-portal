@@ -125,7 +125,7 @@ FragmentsEditor.STATE = Object.assign(
 					entries: Config.arrayOf(
 						Config.shapeOf(
 							{
-								fragmentEntryId: Config.string().required(),
+								fragmentEntryKey: Config.string().required(),
 								name: Config.string().required()
 							}
 						)
@@ -208,7 +208,7 @@ FragmentsEditor.STATE = Object.assign(
 					entries: Config.arrayOf(
 						Config.shapeOf(
 							{
-								fragmentEntryId: Config.string().required(),
+								fragmentEntryKey: Config.string().required(),
 								name: Config.string().required()
 							}
 						)

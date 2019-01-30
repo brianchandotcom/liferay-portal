@@ -137,7 +137,7 @@ class SidebarAvailableSections extends Component {
 				.dispatchAction(
 					ADD_FRAGMENT_ENTRY_LINK,
 					{
-						fragmentEntryId: itemId,
+						fragmentEntryKey: itemId,
 						fragmentName: itemName
 					}
 				)
@@ -178,7 +178,7 @@ class SidebarAvailableSections extends Component {
 			.dispatchAction(
 				ADD_FRAGMENT_ENTRY_LINK,
 				{
-					fragmentEntryId: event.itemId,
+					fragmentEntryKey: event.itemId,
 					fragmentName: event.itemName
 				}
 			)

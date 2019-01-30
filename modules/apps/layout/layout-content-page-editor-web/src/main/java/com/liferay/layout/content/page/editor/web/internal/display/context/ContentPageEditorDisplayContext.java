@@ -502,7 +502,7 @@ public class ContentPageEditorDisplayContext {
 			SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
 
 			soyContext.put(
-				"fragmentEntryId", fragmentEntry.getFragmentEntryId());
+				"fragmentEntryKey", fragmentEntry.getFragmentEntryKey());
 			soyContext.put(
 				"imagePreviewURL",
 				fragmentEntry.getImagePreviewURL(themeDisplay));

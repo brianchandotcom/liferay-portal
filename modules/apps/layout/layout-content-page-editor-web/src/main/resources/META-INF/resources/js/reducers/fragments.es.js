@@ -84,8 +84,8 @@ function addFragment(
  * @param {!object} state
  * @param {!string} actionType
  * @param {!object} payload
- * @param {!string} payload.fragmentEntryLinkId
- * @param {!string} payload.fragmentEntryLinkName
+ * @param {!string} payload.fragmentEntryKey
+ * @param {!string} payload.fragmentName
  * @return {object}
  * @review
  */
@@ -100,7 +100,7 @@ function addFragmentEntryLinkReducer(state, actionType, payload) {
 
 				_addFragmentEntryLink(
 					nextState.addFragmentEntryLinkURL,
-					payload.fragmentEntryId,
+					payload.fragmentEntryKey,
 					payload.fragmentName,
 					nextState.classNameId,
 					nextState.classPK,
@@ -422,7 +422,7 @@ function updateEditableValueReducer(state, actionType, payload) {
 
 /**
  * @param {string} addFragmentEntryLinkURL
- * @param {string} fragmentEntryId
+ * @param {string} fragmentEntryKey
  * @param {string} fragmentName
  * @param {string} classNameId
  * @param {string} classPK
@@ -432,7 +432,7 @@ function updateEditableValueReducer(state, actionType, payload) {
  */
 function _addFragmentEntryLink(
 	addFragmentEntryLinkURL,
-	fragmentEntryId,
+	fragmentEntryKey,
 	fragmentName,
 	classNameId,
 	classPK,
@@ -440,7 +440,7 @@ function _addFragmentEntryLink(
 ) {
 	const formData = new FormData();
 
-	formData.append(`${portletNamespace}fragmentId`, fragmentEntryId);
+	formData.append(`${portletNamespace}fragmentKey`, fragmentEntryKey);
 	formData.append(`${portletNamespace}classNameId`, classNameId);
 	formData.append(`${portletNamespace}classPK`, classPK);
 
@@ -465,7 +465,7 @@ function _addFragmentEntryLink(
 					config: {},
 					content: '',
 					editableValues: JSON.parse(response.editableValues),
-					fragmentEntryId,
+					fragmentEntryKey,
 					fragmentEntryLinkId: response.fragmentEntryLinkId,
 					name: fragmentName
 				};

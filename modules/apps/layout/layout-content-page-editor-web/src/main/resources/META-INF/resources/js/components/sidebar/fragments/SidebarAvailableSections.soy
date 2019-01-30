@@ -8,6 +8,7 @@
 	{@param? sections: list<[
 		fragmentEntries: list<[
 			fragmentEntryId: string,
+			fragmentEntryKey: string,
 			imagePreviewURL: string,
 			name: string
 		]>,
@@ -64,9 +65,9 @@
 									{param events: ['itemClick': $_handleEntryClick] /}
 									{param icon: 'plus' /}
 									{param imagePreviewURL: $fragmentEntry.imagePreviewURL /}
-									{param itemId: $fragmentEntry.fragmentEntryId /}
+									{param itemId: $fragmentEntry.fragmentEntryKey /}
 									{param itemName: $fragmentEntry.name /}
-									{param key: $fragmentEntry.fragmentEntryId /}
+									{param key: $fragmentEntry.fragmentEntryKey /}
 									{param store: $store /}
 								{/call}
 							{/foreach}

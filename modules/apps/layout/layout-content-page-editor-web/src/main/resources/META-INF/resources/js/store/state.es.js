@@ -115,7 +115,7 @@ const INITIAL_STATE = {
 	 * @type {Array<{
 	 *   fragmentCollectionId: !string,
 	 *   fragmentEntries: Array<{
-	 *     fragmentEntryId: !string,
+	 *     fragmentEntryKey: !string,
 	 *     imagePreviewURL: string,
 	 *     name: !string
 	 *   }>,
@@ -130,7 +130,7 @@ const INITIAL_STATE = {
 					fragmentEntries: Config.arrayOf(
 						Config.shapeOf(
 							{
-								fragmentEntryId: Config.string().required(),
+								fragmentEntryKey: Config.string().required(),
 								imagePreviewURL: Config.string(),
 								name: Config.string().required()
 							}
@@ -155,7 +155,7 @@ const INITIAL_STATE = {
 					config: Config.object().value({}),
 					content: Config.any().value(''),
 					editableValues: Config.object().value({}),
-					fragmentEntryId: Config.string().required(),
+					fragmentEntryKey: Config.string().required(),
 					fragmentEntryLinkId: Config.string().required(),
 					name: Config.string().required()
 				}
@@ -507,7 +507,7 @@ const INITIAL_STATE = {
 	 * @type {Array<{
 	 *   fragmentCollectionId: !string,
 	 *   fragmentEntries: Array<{
-	 *     fragmentEntryId: !string,
+	 *     fragmentEntryKey: !string,
 	 *     imagePreviewURL: string,
 	 *     name: !string
 	 *   }>,
@@ -522,7 +522,7 @@ const INITIAL_STATE = {
 					fragmentEntries: Config.arrayOf(
 						Config.shapeOf(
 							{
-								fragmentEntryId: Config.string().required(),
+								fragmentEntryKey: Config.string().required(),
 								imagePreviewURL: Config.string(),
 								name: Config.string().required()
 							}

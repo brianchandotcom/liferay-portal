@@ -65,10 +65,15 @@ public class AddFragmentEntryLinkMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest)
 		throws PortalException {
 
-		long fragmentEntryId = ParamUtil.getLong(actionRequest, "fragmentId");
+		String fragmentEntryKey = ParamUtil.getString(
+			actionRequest, "fragmentKey");
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			actionRequest);
 
 		FragmentEntry fragmentEntry =
-			_fragmentEntryLocalService.fetchFragmentEntry(fragmentEntryId);
+			_fragmentEntryLocalService.fetchFragmentEntry(
+				serviceContext.getScopeGroupId(), fragmentEntryKey);
 
 		if (fragmentEntry == null) {
 			throw new NoSuchEntryException();
@@ -77,15 +82,12 @@ public class AddFragmentEntryLinkMVCActionCommand extends BaseMVCActionCommand {
 		long classNameId = ParamUtil.getLong(actionRequest, "classNameId");
 		long classPK = ParamUtil.getLong(actionRequest, "classPK");
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			actionRequest);
-
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
 				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
-				fragmentEntryId, classNameId, classPK, fragmentEntry.getCss(),
-				fragmentEntry.getHtml(), fragmentEntry.getJs(), null, 0,
-				serviceContext);
+				fragmentEntry.getFragmentEntryId(), classNameId, classPK,
+				fragmentEntry.getCss(), fragmentEntry.getHtml(),
+				fragmentEntry.getJs(), null, 0, serviceContext);
 
 		String data = ParamUtil.getString(actionRequest, "data");
 

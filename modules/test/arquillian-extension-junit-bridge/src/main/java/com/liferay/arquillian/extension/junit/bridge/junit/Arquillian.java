@@ -20,7 +20,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -46,8 +45,6 @@ import org.junit.internal.runners.statements.ExpectException;
 import org.junit.internal.runners.statements.Fail;
 import org.junit.internal.runners.statements.FailOnTimeout;
 import org.junit.rules.MethodRule;
-import org.junit.rules.RunRules;
-import org.junit.rules.TestRule;
 import org.junit.runner.Description;
 import org.junit.runner.Result;
 import org.junit.runner.notification.Failure;
@@ -126,11 +123,6 @@ public class Arquillian extends ParentRunner<FrameworkMethod> {
 		catch (Throwable t) {
 			eachTestNotifier.addFailure(t);
 		}
-	}
-
-	@Override
-	protected List<TestRule> classRules() {
-		return Collections.emptyList();
 	}
 
 	@Override
@@ -283,7 +275,6 @@ public class Arquillian extends ParentRunner<FrameworkMethod> {
 		if (!_areAllChildrenIgnored()) {
 			statement = withBeforeClasses(statement);
 			statement = withAfterClasses(statement);
-			statement = _withClassRules(statement);
 		}
 
 		return statement;
@@ -451,16 +442,6 @@ public class Arquillian extends ParentRunner<FrameworkMethod> {
 		}
 
 		return new ExpectException(statement, test.expected());
-	}
-
-	private Statement _withClassRules(Statement statement) {
-		List<TestRule> classRules = classRules();
-
-		if (classRules.isEmpty()) {
-			return statement;
-		}
-
-		return new RunRules(statement, classRules, getDescription());
 	}
 
 	private Statement _withPotentialTimeout(

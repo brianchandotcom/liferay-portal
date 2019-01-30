@@ -75,15 +75,12 @@ public class LayoutSiteNavigationMenuItemType
 
 	@Override
 	public boolean exportData(
-		PortletDataContext portletDataContext,
-		Element siteNavigationMenuItemElement,
-		SiteNavigationMenuItem siteNavigationMenuItem) {
+			PortletDataContext portletDataContext,
+			Element siteNavigationMenuItemElement,
+			SiteNavigationMenuItem siteNavigationMenuItem)
+		throws PortalException {
 
-		Layout layout = _fetchLayout(siteNavigationMenuItem);
-
-		if (layout == null) {
-			return false;
-		}
+		Layout layout = _getLayout(siteNavigationMenuItem);
 
 		LayoutRevision layoutRevision = _layoutStaging.getLayoutRevision(
 			layout);
@@ -271,15 +268,12 @@ public class LayoutSiteNavigationMenuItemType
 
 	@Override
 	public boolean importData(
-		PortletDataContext portletDataContext,
-		SiteNavigationMenuItem siteNavigationMenuItem,
-		SiteNavigationMenuItem importedSiteNavigationMenuItem) {
+			PortletDataContext portletDataContext,
+			SiteNavigationMenuItem siteNavigationMenuItem,
+			SiteNavigationMenuItem importedSiteNavigationMenuItem)
+		throws PortalException {
 
-		Layout layout = _fetchLayout(importedSiteNavigationMenuItem);
-
-		if (layout == null) {
-			return false;
-		}
+		Layout layout = _getLayout(importedSiteNavigationMenuItem);
 
 		LayoutRevision layoutRevision = _layoutStaging.getLayoutRevision(
 			layout);

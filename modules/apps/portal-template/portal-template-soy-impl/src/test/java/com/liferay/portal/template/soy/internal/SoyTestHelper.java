@@ -19,6 +19,9 @@ import com.google.template.soy.SoyFileSet;
 
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.cache.PortalCache;
+import com.liferay.portal.kernel.cache.PortalCacheListener;
+import com.liferay.portal.kernel.cache.PortalCacheListenerScope;
+import com.liferay.portal.kernel.cache.PortalCacheManager;
 import com.liferay.portal.kernel.cache.SingleVMPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.template.TemplateResource;
@@ -26,6 +29,7 @@ import com.liferay.portal.kernel.template.URLTemplateResource;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Reader;
+import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -38,11 +42,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-
-import org.mockito.Matchers;
-import org.mockito.Mockito;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
 
 /**
  * @author Marcellus Tavares
@@ -131,100 +130,75 @@ public class SoyTestHelper {
 	}
 
 	protected PortalCache mockPortalCache() {
-		PortalCache portalCache = Mockito.mock(PortalCache.class);
-
 		Map<HashSet<TemplateResource>, SoyTofuCacheBag> cache = new HashMap<>();
 
-		Mockito.when(
-			portalCache.get(Matchers.any())
-		).then(
-			new Answer<SoyTofuCacheBag>() {
+		return new PortalCache() {
 
-				@Override
-				public SoyTofuCacheBag answer(InvocationOnMock invocationOnMock)
-					throws Throwable {
-
-					Object[] args = invocationOnMock.getArguments();
-
-					HashSet<TemplateResource> key =
-						(HashSet<TemplateResource>)args[0];
-
-					return cache.get(key);
-				}
-
+			@Override
+			public Object get(Serializable key) {
+				return cache.get(key);
 			}
-		);
 
-		Mockito.when(
-			portalCache.getKeys()
-		).then(
-			new Answer<List<HashSet<TemplateResource>>>() {
-
-				@Override
-				public List<HashSet<TemplateResource>> answer(
-						InvocationOnMock invocationOnMock)
-					throws Throwable {
-
-					List<HashSet<TemplateResource>> list = new ArrayList<>(
-						cache.keySet());
-
-					return list;
-				}
-
+			@Override
+			public List getKeys() {
+				return new ArrayList<>(cache.keySet());
 			}
-		);
 
-		Mockito.doAnswer(
-			new Answer<Void>() {
-
-				@Override
-				public Void answer(InvocationOnMock invocationOnMock)
-					throws Throwable {
-
-					Object[] args = invocationOnMock.getArguments();
-
-					HashSet<TemplateResource> key =
-						(HashSet<TemplateResource>)args[0];
-
-					SoyTofuCacheBag value = (SoyTofuCacheBag)args[1];
-
-					cache.put(key, value);
-
-					return null;
-				}
-
+			@Override
+			public String getName() {
+				return null;
 			}
-		).when(
-			portalCache
-		).put(
-			Mockito.any(), Mockito.any()
-		);
 
-		Mockito.doAnswer(
-			new Answer<Void>() {
-
-				@Override
-				public Void answer(InvocationOnMock invocationOnMock)
-					throws Throwable {
-
-					Object[] args = invocationOnMock.getArguments();
-
-					HashSet<TemplateResource> key =
-						(HashSet<TemplateResource>)args[0];
-
-					cache.remove(key);
-
-					return null;
-				}
-
+			@Override
+			public PortalCacheManager getPortalCacheManager() {
+				return null;
 			}
-		).when(
-			portalCache
-		).remove(
-			Mockito.any()
-		);
 
-		return portalCache;
+			@Override
+			public String getPortalCacheName() {
+				return null;
+			}
+
+			@Override
+			public void put(Serializable key, Object value) {
+				cache.put(
+					(HashSet<TemplateResource>)key, (SoyTofuCacheBag)value);
+			}
+
+			@Override
+			public void put(Serializable key, Object value, int timeToLive) {
+			}
+
+			@Override
+			public void registerPortalCacheListener(
+				PortalCacheListener portalCacheListener) {
+			}
+
+			@Override
+			public void registerPortalCacheListener(
+				PortalCacheListener portalCacheListener,
+				PortalCacheListenerScope portalCacheListenerScope) {
+			}
+
+			@Override
+			public void remove(Serializable key) {
+				cache.remove(key);
+			}
+
+			@Override
+			public void removeAll() {
+			}
+
+			@Override
+			public void unregisterPortalCacheListener(
+				PortalCacheListener portalCacheListener) {
+			}
+
+			@Override
+			public void unregisterPortalCacheListeners() {
+			}
+
+		};
 	}
 
 	protected void setUpSoyManager() throws Exception {

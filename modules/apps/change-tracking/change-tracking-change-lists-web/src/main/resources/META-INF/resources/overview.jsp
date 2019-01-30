@@ -17,8 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <soy:component-renderer
-	componentId="change-tracking-change-lists-window"
 	context="<%= changeListsDisplayContext.getChangeListsContext() %>"
-	module="js/ChangeList.es"
-	templateNamespace="com.liferay.change.tracking.change.lists.web.ChangeList.render"
+	module="js/Overview.es"
+	templateNamespace="com.liferay.change.tracking.change.lists.web.Overview.render"
 />

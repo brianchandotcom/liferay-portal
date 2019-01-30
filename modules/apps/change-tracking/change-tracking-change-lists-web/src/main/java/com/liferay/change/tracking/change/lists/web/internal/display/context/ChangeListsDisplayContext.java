@@ -19,6 +19,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -53,16 +54,16 @@ public class ChangeListsDisplayContext {
 	public SoyContext getChangeListsContext() {
 		SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
 
-		soyContext.put("portletNamespace", _renderResponse.getNamespace());
 		soyContext.put(
 			"spritemap",
 			_themeDisplay.getPathThemeImages() + "/lexicon/icons.svg");
 
 		soyContext.put(
-			"urlProductionCollection",
-			_themeDisplay.getPortalURL() +
-				"/o/change-tracking/collections?type=production&companyId=" +
-					_themeDisplay.getCompanyId());
+			"urlProductionInformation",
+			StringBundler.concat(
+				_themeDisplay.getPortalURL(),
+				"/o/change-tracking/processes?companyId=",
+				_themeDisplay.getCompanyId(), "&published=true"));
 		soyContext.put("urlProductionView", _themeDisplay.getPortalURL());
 
 		return soyContext;

@@ -16,24 +16,4 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-String navigation = ParamUtil.get(renderRequest, "navigation", "overview");
-%>
-
-<clay:navigation-bar
-	inverted="<%= true %>"
-	navigationItems="<%=
-		new JSPNavigationItemList(pageContext) {
-			{
-				add(
-					navigationItem -> {
-						navigationItem.setActive(navigation.equals("overview"));
-						navigationItem.setHref(renderResponse.createRenderURL());
-						navigationItem.setLabel(LanguageUtil.get(request, "overview"));
-					});
-			}
-		}
-	%>"
-/>
-
 <liferay-util:include page="/overview.jsp" servletContext="<%= application %>" />

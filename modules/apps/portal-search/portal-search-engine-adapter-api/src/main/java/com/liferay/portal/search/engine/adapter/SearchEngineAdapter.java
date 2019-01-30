@@ -23,8 +23,8 @@ import com.liferay.portal.search.engine.adapter.document.DocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.DocumentResponse;
 import com.liferay.portal.search.engine.adapter.index.IndexRequest;
 import com.liferay.portal.search.engine.adapter.index.IndexResponse;
-import com.liferay.portal.search.engine.adapter.search.SearchRequest;
-import com.liferay.portal.search.engine.adapter.search.SearchResponse;
+import com.liferay.portal.search.engine.adapter.search2.SearchRequest;
+import com.liferay.portal.search.engine.adapter.search2.SearchResponse;
 import com.liferay.portal.search.engine.adapter.snapshot.SnapshotRequest;
 import com.liferay.portal.search.engine.adapter.snapshot.SnapshotResponse;
 
@@ -33,6 +33,13 @@ import com.liferay.portal.search.engine.adapter.snapshot.SnapshotResponse;
  */
 @ProviderType
 public interface SearchEngineAdapter {
+
+	public
+		<V extends
+			com.liferay.portal.search.engine.adapter.search.SearchResponse> V
+			execute(
+				com.liferay.portal.search.engine.adapter.search.SearchRequest<V>
+					searchRequest);
 
 	public <T extends ClusterResponse> T execute(
 		ClusterRequest<T> clusterRequest);

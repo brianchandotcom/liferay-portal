@@ -23,6 +23,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -129,6 +131,19 @@ public class Arquillian extends BlockJUnit4ClassRunner {
 			}
 
 		};
+	}
+
+	@Override
+	protected Description describeChild(FrameworkMethod frameworkMethod) {
+		return _methodDescriptions.computeIfAbsent(
+			frameworkMethod,
+			keyFrameworkMethod -> {
+				TestClass testClass = getTestClass();
+
+				return Description.createTestDescription(
+					testClass.getJavaClass(), keyFrameworkMethod.getName(),
+					keyFrameworkMethod.getAnnotations());
+			});
 	}
 
 	@Override
@@ -385,6 +400,8 @@ public class Arquillian extends BlockJUnit4ClassRunner {
 	private static final ThreadLocal<TestRunnerAdaptor>
 		_testRunnerAdaptorThreadLocal = new ThreadLocal<>();
 
+	private final Map<FrameworkMethod, Description> _methodDescriptions =
+		new ConcurrentHashMap<>();
 	private TestRunnerAdaptor _testRunnerAdaptor;
 
 }

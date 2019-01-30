@@ -27,7 +27,10 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.base.LayoutPageTemplateEntryLocalServiceBaseImpl;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutPrototype;
@@ -683,7 +686,18 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 		Locale defaultLocale = LocaleUtil.fromLanguageId(
 			LocalizationUtil.getDefaultLanguageId(nameXML));
 
-		Layout layout = layoutPrototype.getLayout();
+		long plid = 0;
+
+		try {
+			Layout layout = layoutPrototype.getLayout();
+
+			plid = layout.getPlid();
+		}
+		catch (NoSuchLayoutException nsle) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to get Layout for the LayoutPrototype");
+			}
+		}
 
 		int status = WorkflowConstants.STATUS_APPROVED;
 
@@ -695,7 +709,7 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 			layoutPrototype.getUserId(), groupId, 0, 0, 0,
 			nameMap.get(defaultLocale),
 			LayoutPageTemplateEntryTypeConstants.TYPE_WIDGET_PAGE, false,
-			layoutPrototype.getLayoutPrototypeId(), 0, layout.getPlid(), status,
+			layoutPrototype.getLayoutPrototypeId(), 0, plid, status,
 			new ServiceContext());
 	}
 
@@ -757,6 +771,9 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 			layoutType, StringPool.BLANK, true, true, new HashMap<>(),
 			serviceContext);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		LayoutPageTemplateEntryLocalServiceImpl.class);
 
 	@ServiceReference(type = CompanyLocalService.class)
 	private CompanyLocalService _companyLocalService;

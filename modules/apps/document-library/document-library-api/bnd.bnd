@@ -10,4 +10,5 @@ Export-Package:\
 	com.liferay.document.library.portlet.toolbar.contributor,\
 	com.liferay.document.library.preview,\
 	com.liferay.document.library.preview.exception,\
+	com.liferay.document.library.util,\
 	com.liferay.document.library.versioning

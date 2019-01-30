@@ -547,26 +547,6 @@ paths:
               schema:
                 $ref: "#/components/schemas/Category"
           description: ""
-  "/content-space":
-    get:
-      parameters:
-        - in: query
-          name: page
-          schema:
-            type: integer
-        - in: query
-          name: per_page
-          schema:
-            type: integer
-      responses:
-        200:
-          content:
-            "*/*":
-              schema:
-                items:
-                  $ref: "#/components/schemas/ContentSpace"
-                type: array
-          description: ""
   "/content-space/{id}":
     get:
       parameters:
@@ -1349,26 +1329,6 @@ paths:
             "*/*":
               schema:
                 $ref: "#/components/schemas/Category"
-          description: ""
-  "/web-site":
-    get:
-      parameters:
-        - in: query
-          name: page
-          schema:
-            type: integer
-        - in: query
-          name: per_page
-          schema:
-            type: integer
-      responses:
-        200:
-          content:
-            "*/*":
-              schema:
-                items:
-                  $ref: "#/components/schemas/WebSite"
-                type: array
           description: ""
   "/web-site/{id}":
     get:

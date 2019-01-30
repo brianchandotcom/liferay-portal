@@ -14,16 +14,26 @@
 
 package com.liferay.headless.document.library.internal.resource;
 
+import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.headless.document.library.dto.Document;
 import com.liferay.headless.document.library.dto.DocumentCollection;
 import com.liferay.headless.document.library.resource.DocumentResource;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.service.CompanyService;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.vulcan.context.Pagination;
 
-import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
 import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
 
@@ -46,7 +56,38 @@ public class DocumentResourceImpl implements DocumentResource {
 			Pagination pagination, String size)
 		throws Exception {
 
-		return new DocumentCollection(Collections.emptyList(), 0);
+		Company company = _companyService.getCompanyByWebId(
+			PropsUtil.get(PropsKeys.COMPANY_DEFAULT_WEB_ID));
+
+		Group group = company.getGroup();
+
+		List<FileEntry> fileEntries = _dlAppService.getFileEntries(
+			group.getGroupId(), 0, pagination.getStartPosition(),
+			pagination.getEndPosition(), null);
+
+		Stream<FileEntry> stream = fileEntries.stream();
+
+		List<Document> documents = stream.map(
+			fileEntry -> {
+				Document document = new Document();
+
+				document.setId(fileEntry.getFileEntryId());
+
+				return document;
+			}
+		).collect(
+			Collectors.toList()
+		);
+
+		int count = _dlAppService.getFileEntriesCount(group.getGroupId(), 0);
+
+		return new DocumentCollection(documents, count);
 	}
+
+	@Reference
+	private CompanyService _companyService;
+
+	@Reference
+	private DLAppService _dlAppService;
 
 }

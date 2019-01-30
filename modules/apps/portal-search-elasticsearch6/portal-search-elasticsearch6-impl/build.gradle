@@ -28,7 +28,7 @@ dependencies {
 	compileInclude group: "joda-time", name: "joda-time", version: "2.9.5"
 	compileInclude group: "net.sf.jopt-simple", name: "jopt-simple", version: "5.0.2"
 	compileInclude group: "net.sf.supercsv", name: "super-csv", version: "2.1.0"
-	compileInclude group: "org.antlr", name: "antlr-runtime", version: "3.5"
+	compileInclude group: "org.antlr", name: "antlr4-runtime", version: "4.5.3"
 	compileInclude group: "org.apache.httpcomponents", name: "httpasyncclient", version: "4.1.3"
 	compileInclude group: "org.apache.httpcomponents", name: "httpclient", version: "4.4"
 	compileInclude group: "org.apache.logging.log4j", name: "log4j-api", version: "2.7"
@@ -48,6 +48,7 @@ dependencies {
 	compileInclude group: "org.bouncycastle", name: "bcpg-jdk15on", version: "1.59"
 	compileInclude group: "org.bouncycastle", name: "bcpkix-jdk15on", version: "1.59"
 	compileInclude group: "org.bouncycastle", name: "bcprov-jdk15on", version: "1.59"
+	compileInclude group: "org.codelibs.elasticsearch.module", name: "lang-painless", version: elasticsearchVersion
 	compileInclude group: "org.elasticsearch", name: "elasticsearch", version: elasticsearchVersion
 	compileInclude group: "org.elasticsearch", name: "elasticsearch-cli", version: elasticsearchVersion
 	compileInclude group: "org.elasticsearch", name: "elasticsearch-core", version: elasticsearchVersion
@@ -62,6 +63,7 @@ dependencies {
 	compileInclude group: "org.elasticsearch.plugin", name: "transport-netty4-client", version: elasticsearchVersion
 	compileInclude group: "org.hdrhistogram", name: "HdrHistogram", version: "2.1.9"
 	compileInclude group: "org.locationtech.spatial4j", name: "spatial4j", version: "0.6"
+	compileInclude group: "org.ow2.asm", name: "asm-debug-all", version: "5.1"
 	compileInclude group: "org.yaml", name: "snakeyaml", version: "1.17"
 
 	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"

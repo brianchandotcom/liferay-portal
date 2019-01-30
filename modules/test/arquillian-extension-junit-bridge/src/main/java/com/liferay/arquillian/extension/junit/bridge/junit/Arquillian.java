@@ -53,7 +53,6 @@ import org.junit.runner.manipulation.NoTestsRemainException;
 import org.junit.runner.notification.Failure;
 import org.junit.runner.notification.RunListener;
 import org.junit.runner.notification.RunNotifier;
-import org.junit.runner.notification.StoppedByUserException;
 import org.junit.runners.model.FrameworkField;
 import org.junit.runners.model.FrameworkMethod;
 import org.junit.runners.model.MultipleFailureException;
@@ -143,9 +142,6 @@ public class Arquillian extends Runner implements Filterable {
 		}
 		catch (org.junit.internal.AssumptionViolatedException ave) {
 			runNotifier.fireTestAssumptionFailed(new Failure(description, ave));
-		}
-		catch (StoppedByUserException sbue) {
-			throw sbue;
 		}
 		catch (MultipleFailureException mfe) {
 			for (Throwable t : mfe.getFailures()) {

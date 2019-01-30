@@ -79,36 +79,6 @@ String displayStyle = siteNavigationMenuItemSelectorViewDisplayContext.getDispla
 						</h5>
 					</liferay-ui:search-container-column-text>
 				</c:when>
-				<c:when test='<%= displayStyle.equals("icon") %>'>
-
-					<%
-					row.setCssClass("entry-card lfr-asset-item");
-					%>
-
-					<liferay-ui:search-container-column-text>
-						<liferay-frontend:icon-vertical-card
-							icon="list"
-							resultRow="<%= row %>"
-						>
-							<liferay-frontend:vertical-card-header>
-								<div class="row">
-									<h5 class="col text-truncate">
-										<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
-											<%= HtmlUtil.escape(siteNavigationMenu.getName()) %>
-										</aui:a>
-									</h5>
-								</div>
-							</liferay-frontend:vertical-card-header>
-
-							<liferay-frontend:vertical-card-sticker-bottom>
-								<liferay-ui:user-portrait
-									cssClass="sticker sticker-bottom"
-									userId="<%= siteNavigationMenu.getUserId() %>"
-								/>
-							</liferay-frontend:vertical-card-sticker-bottom>
-						</liferay-frontend:icon-vertical-card>
-					</liferay-ui:search-container-column-text>
-				</c:when>
 				<c:otherwise>
 					<liferay-ui:search-container-column-text
 						cssClass="table-cell-content"

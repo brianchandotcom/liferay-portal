@@ -22,6 +22,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
+import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.ContainerModel;
@@ -34,6 +35,7 @@ import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
+import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.trash.TrashHandler;
@@ -486,6 +488,56 @@ public class TrashDisplayContext {
 			trashHandler.getTrashedModel(trashEntry.getClassPK()));
 	}
 
+	public SearchContainer getTrashContainerSearchContainer()
+		throws PortalException {
+
+		if (_trashContainerSearchContainer != null) {
+			return _trashContainerSearchContainer;
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String emptyResultsMessage = LanguageUtil.format(
+			_request, "this-x-does-not-contain-an-entry",
+			ResourceActionsUtil.getModelResource(
+				themeDisplay.getLocale(), getClassName()),
+			false);
+
+		PortletURL iteratorURL = _liferayPortletResponse.createRenderURL();
+
+		iteratorURL.setParameter("mvcPath", "/view_content.jsp");
+		iteratorURL.setParameter(
+			"classNameId", String.valueOf(getClassNameId()));
+		iteratorURL.setParameter("classPK", String.valueOf(getClassPK()));
+
+		SearchContainer searchContainer = new SearchContainer(
+			_liferayPortletRequest, iteratorURL, null, emptyResultsMessage);
+
+		searchContainer.setDeltaConfigurable(false);
+
+		TrashHandler trashHandler = getTrashHandler();
+
+		List results = trashHandler.getTrashModelTrashedModels(
+			getClassPK(), searchContainer.getStart(), searchContainer.getEnd(),
+			searchContainer.getOrderByComparator());
+
+		searchContainer.setResults(results);
+
+		searchContainer.setTotal(
+			trashHandler.getTrashModelsCount(getClassPK()));
+
+		_trashContainerSearchContainer = searchContainer;
+
+		return _trashContainerSearchContainer;
+	}
+
+	public int getTrashContainerTotalItems() throws PortalException {
+		SearchContainer searchContainer = getTrashContainerSearchContainer();
+
+		return searchContainer.getTotal();
+	}
+
 	public TrashEntry getTrashEntry() {
 		if (_trashEntry != null) {
 			return _trashEntry;
@@ -727,6 +779,7 @@ public class TrashDisplayContext {
 	private String _orderByCol;
 	private String _orderByType;
 	private final HttpServletRequest _request;
+	private SearchContainer _trashContainerSearchContainer;
 	private TrashEntry _trashEntry;
 	private TrashHandler _trashHandler;
 	private final TrashHelper _trashHelper;

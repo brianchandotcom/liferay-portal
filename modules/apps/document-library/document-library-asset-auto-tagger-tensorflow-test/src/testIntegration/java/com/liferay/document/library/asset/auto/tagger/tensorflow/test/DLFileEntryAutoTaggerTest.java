@@ -71,7 +71,7 @@ public class DLFileEntryAutoTaggerTest {
 
 	@Test
 	public void testAutoTagsABMPImage() throws Exception {
-		_withAutoTaggerEnabled(
+		_withTensorflowAutoTagProviderEnabled(
 			() -> {
 				FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
 					_serviceContext.getScopeGroupId(),
@@ -92,7 +92,7 @@ public class DLFileEntryAutoTaggerTest {
 
 	@Test
 	public void testAutoTagsAJPEGImage() throws Exception {
-		_withAutoTaggerEnabled(
+		_withTensorflowAutoTagProviderEnabled(
 			() -> {
 				FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
 					_serviceContext.getScopeGroupId(),
@@ -112,7 +112,7 @@ public class DLFileEntryAutoTaggerTest {
 
 	@Test
 	public void testAutoTagsAPNGImage() throws Exception {
-		_withAutoTaggerEnabled(
+		_withTensorflowAutoTagProviderEnabled(
 			() -> {
 				FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
 					_serviceContext.getScopeGroupId(),
@@ -140,7 +140,7 @@ public class DLFileEntryAutoTaggerTest {
 		throw new AssertionError("The asset entry was not tagged with " + tag);
 	}
 
-	private void _withAutoTaggerEnabled(
+	private void _withTensorflowAutoTagProviderEnabled(
 			UnsafeRunnable<Exception> unsafeRunnable)
 		throws Exception {
 
@@ -150,8 +150,10 @@ public class DLFileEntryAutoTaggerTest {
 
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
 				new ConfigurationTemporarySwapper(
-					"com.liferay.asset.auto.tagger.internal.configuration." +
-						"AssetAutoTaggerSystemConfiguration",
+					"com.liferay.document.library.asset.auto.tagger." +
+						"tensorflow.internal.configuration." +
+							"TensorFlowImageAssetAutoTagProviderCompany" +
+								"Configuration",
 					dictionary)) {
 
 			unsafeRunnable.run();

@@ -1,8 +1,5 @@
 package ${configYAML.apiPackagePath}.resource;
 
-import ${configYAML.apiPackagePath}.dto.${schemaName};
-import ${configYAML.apiPackagePath}.dto.${schemaName}Collection;
-
 import com.liferay.oauth2.provider.scope.RequiresScope;
 import com.liferay.portal.vulcan.context.Pagination;
 
@@ -24,13 +21,5 @@ import javax.ws.rs.core.Context;
  */
 @Generated("")
 @Path("/${openAPIYAML.info.version}")
-public interface ${schemaName}Resource {
-
-	@GET
-	@Produces("application/json")
-	@RequiresScope("${configYAML.application.name}.read")
-	public ${schemaName}Collection<${schemaName}> get${schemaName}Collection(
-			@Context Pagination pagination, @QueryParam("size") String size)
-		throws Exception;
-
+public interface ${resourceName}Resource {
 }

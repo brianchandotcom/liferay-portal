@@ -22,17 +22,9 @@ package com.liferay.trash.web.internal.constants;
  */
 public class TrashWebKeys extends com.liferay.trash.util.TrashWebKeys {
 
-	public static final String TRASH_CONTAINER_MODEL = "TRASH_CONTAINER_MODEL";
-
 	public static final String TRASH_ENTRIES = "TRASH_ENTRIES";
 
 	public static final String TRASH_ENTRIES_DEFAULT_EVENT_HANDLER =
 		"TRASH_ENTRIES_DEFAULT_EVENT_HANDLER";
-
-	public static final String TRASH_ENTRY = "TRASH_ENTRY";
-
-	public static final String TRASH_RENDERER = "TRASH_RENDERER";
-
-	public static final String TRASH_UTIL = "TRASH_UTIL";
 
 }

@@ -46,7 +46,7 @@ public interface SegmentsFieldCustomizer {
 			"content.Language", locale, getClass());
 
 		return LanguageUtil.get(
-			resourceBundle, CamelCaseUtil.fromCamelCase(fieldName));
+			resourceBundle, "field." + CamelCaseUtil.fromCamelCase(fieldName));
 	}
 
 	public default List<Field.Option> getOptions(Locale locale) {

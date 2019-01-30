@@ -14,13 +14,11 @@
 
 package com.liferay.segments.internal.criteria.contributor;
 
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.Team;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.segments.criteria.Criteria;
 import com.liferay.segments.criteria.contributor.SegmentsCriteriaContributor;
@@ -30,9 +28,7 @@ import com.liferay.segments.internal.odata.entity.UserEntityModel;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
-import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
 
@@ -68,14 +64,6 @@ public class UserSegmentsCriteriaContributor
 	@Override
 	public String getKey() {
 		return KEY;
-	}
-
-	@Override
-	public String getLabel(Locale locale) {
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			locale, getClass());
-
-		return LanguageUtil.get(resourceBundle, getKey());
 	}
 
 	@Override

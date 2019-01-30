@@ -16,11 +16,14 @@ package com.liferay.segments.criteria.contributor;
 
 import aQute.bnd.annotation.ConsumerType;
 
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.segments.criteria.Criteria;
 import com.liferay.segments.field.Field;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
 
@@ -84,7 +87,12 @@ public interface SegmentsCriteriaContributor {
 	 * @return the label
 	 * @review
 	 */
-	public String getLabel(Locale locale);
+	public default String getLabel(Locale locale) {
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			locale, getClass());
+
+		return LanguageUtil.get(resourceBundle, "contributor." + getKey());
+	}
 
 	/**
 	 * Returns the contributor's type. See {@link Criteria.Type}.

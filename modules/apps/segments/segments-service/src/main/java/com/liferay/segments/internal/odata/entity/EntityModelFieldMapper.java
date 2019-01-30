@@ -130,11 +130,11 @@ public class EntityModelFieldMapper {
 			);
 		}
 
-		String label = LanguageUtil.get(
-			resourceBundle, CamelCaseUtil.fromCamelCase(entityField.getName()));
-
 		return Collections.singletonList(
-			new Field(entityField.getName(), label, getType(entityFieldType)));
+			new Field(
+				entityField.getName(),
+				_getEntityFieldLabel(entityField, resourceBundle),
+				getType(entityFieldType)));
 	}
 
 	protected String getType(EntityField.Type entityFieldType) {
@@ -211,6 +211,14 @@ public class EntityModelFieldMapper {
 		return complexFields;
 	}
 
+	private String _getEntityFieldLabel(
+		EntityField entityField, ResourceBundle resourceBundle) {
+
+		return LanguageUtil.get(
+			resourceBundle,
+			"field." + CamelCaseUtil.fromCamelCase(entityField.getName()));
+	}
+
 	private List<Field.Option> _getExpandoColumnFieldOptions(
 		ExpandoColumn expandoColumn) {
 
@@ -264,10 +272,6 @@ public class EntityModelFieldMapper {
 			portletURL.setParameter("eventName", "selectEntity");
 			portletURL.setWindowState(LiferayWindowState.POP_UP);
 
-			String label = LanguageUtil.get(
-				resourceBundle,
-				CamelCaseUtil.fromCamelCase(entityField.getName()));
-
 			String title = ResourceActionsUtil.getModelResource(
 				resourceBundle.getLocale(), className);
 
@@ -275,7 +279,9 @@ public class EntityModelFieldMapper {
 				resourceBundle, "select-x", title);
 
 			Field field = new Field(
-				entityField.getName(), label, "id", Collections.emptyList(),
+				entityField.getName(),
+				_getEntityFieldLabel(entityField, resourceBundle), "id",
+				Collections.emptyList(),
 				new Field.SelectEntity(
 					"selectEntity", selectEntityTitle, portletURL.toString(),
 					false));

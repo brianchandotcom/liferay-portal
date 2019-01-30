@@ -56,8 +56,8 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 
 	@Override
 	public SoyContext getEditorContext() throws Exception {
-		if (_soyContext != null) {
-			return _soyContext;
+		if (_editorSoyContext != null) {
+			return _editorSoyContext;
 		}
 
 		SoyContext soyContext = super.getEditorContext();
@@ -112,9 +112,9 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 				"/content_layout" +
 					"/update_layout_page_template_entry_asset_type"));
 
-		_soyContext = soyContext;
+		_editorSoyContext = soyContext;
 
-		return _soyContext;
+		return _editorSoyContext;
 	}
 
 	private LayoutPageTemplateEntry _getLayoutPageTemplateEntry()
@@ -202,8 +202,8 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 
 	private final AssetDisplayContributorTracker
 		_assetDisplayContributorTracker;
+	private SoyContext _editorSoyContext;
 	private LayoutPageTemplateEntry _layoutPageTemplateEntry;
 	private final boolean _showMapping;
-	private SoyContext _soyContext;
 
 }

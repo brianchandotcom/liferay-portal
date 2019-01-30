@@ -107,11 +107,9 @@ public class Arquillian extends Runner implements Filterable {
 			}
 			catch (Exception e) {
 				runNotifier.fireTestFailure(new Failure(getDescription(), e));
-			}
-		}
 
-		if (_testRunnerAdaptor == null) {
-			return;
+				return;
+			}
 		}
 
 		runNotifier.addListener(

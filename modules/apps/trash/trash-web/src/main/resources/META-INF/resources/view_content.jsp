@@ -30,7 +30,7 @@ TrashHandler trashHandler = trashDisplayContext.getTrashHandler();
 			disabled="<%= (trashHandler.getTrashModelsCount(trashDisplayContext.getClassPK()) <= 0) && Validator.isNull(trashDisplayContext.getKeywords()) %>"
 			filterDropdownItems="<%= trashDisplayContext.getContentFilterDropdownItems() %>"
 			infoPanelId="infoPanelId"
-			itemsTotal="<%= trashHandler.getTrashModelsCount(trashDisplayContext.getClassPK()) %>"
+			itemsTotal="<%= trashDisplayContext.getTrashContainerTotalItems() %>"
 			searchActionURL="<%= trashDisplayContext.getContentSearchActionURL() %>"
 			searchFormName="searchFm"
 			selectable="<%= false %>"
@@ -52,27 +52,10 @@ TrashHandler trashHandler = trashDisplayContext.getTrashHandler();
 					breadcrumbEntries="<%= trashDisplayContext.getBaseModelBreadcrumbEntries() %>"
 				/>
 
-				<%
-				PortletURL iteratorURL = renderResponse.createRenderURL();
-
-				iteratorURL.setParameter("mvcPath", "/view_content.jsp");
-				iteratorURL.setParameter("classNameId", String.valueOf(trashDisplayContext.getClassNameId()));
-				iteratorURL.setParameter("classPK", String.valueOf(trashDisplayContext.getClassPK()));
-
-				String emptyResultsMessage = LanguageUtil.format(request, "this-x-does-not-contain-an-entry", ResourceActionsUtil.getModelResource(locale, trashDisplayContext.getClassName()), false);
-				%>
-
 				<liferay-ui:search-container
-					deltaConfigurable="<%= false %>"
-					emptyResultsMessage="<%= emptyResultsMessage %>"
 					id="trash"
-					iteratorURL="<%= iteratorURL %>"
-					total="<%= trashHandler.getTrashModelsCount(trashDisplayContext.getClassPK()) %>"
+					searchContainer="<%= trashDisplayContext.getTrashContainerSearchContainer() %>"
 				>
-					<liferay-ui:search-container-results
-						results="<%= trashHandler.getTrashModelTrashedModels(trashDisplayContext.getClassPK(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()) %>"
-					/>
-
 					<liferay-ui:search-container-row
 						className="com.liferay.portal.kernel.model.TrashedModel"
 						modelVar="curTrashedModel"

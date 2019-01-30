@@ -72,7 +72,8 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 
 		soyContext.put(
 			"addFragmentEntryLinkURL",
-			getFragmentEntryActionURL("/layout/add_fragment_entry_link"));
+			getFragmentEntryActionURL(
+				"/content_layout/add_fragment_entry_link"));
 		soyContext.put("availableLanguages", getAvailableLanguagesSoyContext());
 		soyContext.put("classNameId", classNameId);
 		soyContext.put("classPK", classPK);
@@ -81,10 +82,12 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 		soyContext.put("defaultLanguageId", themeDisplay.getLanguageId());
 		soyContext.put(
 			"deleteFragmentEntryLinkURL",
-			getFragmentEntryActionURL("/layout/delete_fragment_entry_link"));
+			getFragmentEntryActionURL(
+				"/content_layout/delete_fragment_entry_link"));
 		soyContext.put(
 			"editFragmentEntryLinkURL",
-			getFragmentEntryActionURL("/layout/edit_fragment_entry_link"));
+			getFragmentEntryActionURL(
+				"/content_layout/edit_fragment_entry_link"));
 		soyContext.put(
 			"elements",
 			getSoyContextFragmentCollections(
@@ -94,10 +97,10 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 		soyContext.put(
 			"getAssetDisplayContributorsURL",
 			getFragmentEntryActionURL(
-				"/layout/get_asset_display_contributors"));
+				"/content_layout/get_asset_display_contributors"));
 		soyContext.put(
 			"getAssetClassTypesURL",
-			getFragmentEntryActionURL("/layout/get_asset_class_types"));
+			getFragmentEntryActionURL("/content_layout/get_asset_class_types"));
 		soyContext.put("imageSelectorURL", getItemSelectorURL());
 		soyContext.put("languageId", themeDisplay.getLanguageId());
 		soyContext.put("lastSaveDate", StringPool.BLANK);
@@ -107,7 +110,8 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 		if (_showMapping) {
 			soyContext.put(
 				"mappingFieldsURL",
-				getFragmentEntryActionURL("/layout/get_mapping_fields"));
+				getFragmentEntryActionURL(
+					"/content_layout/get_mapping_fields"));
 		}
 
 		soyContext.put("panels", getPanelSoyContexts(_showMapping, false));
@@ -119,12 +123,12 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 			soyContext.put(
 				"publishLayoutPageTemplateEntryURL",
 				getFragmentEntryActionURL(
-					"/layout/publish_layout_page_template_entry"));
+					"/content_layout/publish_layout_page_template_entry"));
 		}
 
 		soyContext.put(
 			"renderFragmentEntryURL",
-			getFragmentEntryActionURL("/layout/render_fragment_entry"));
+			getFragmentEntryActionURL("/content_layout/render_fragment_entry"));
 		soyContext.put(
 			"sections",
 			getSoyContextFragmentCollections(
@@ -156,11 +160,12 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 		soyContext.put(
 			"updateLayoutPageTemplateDataURL",
 			getFragmentEntryActionURL(
-				"/layout/update_layout_page_template_data"));
+				"/content_layout/update_layout_page_template_data"));
 		soyContext.put(
 			"updateLayoutPageTemplateEntryAssetTypeURL",
 			getFragmentEntryActionURL(
-				"/layout/update_layout_page_template_entry_asset_type"));
+				"/content_layout" +
+					"/update_layout_page_template_entry_asset_type"));
 
 		_soyContext = soyContext;
 

@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.layout.admin.web.internal.portlet.action;
+package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
-import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
+import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
@@ -35,8 +35,8 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + LayoutAdminPortletKeys.GROUP_PAGES,
-		"mvc.command.name=/layout/update_layout_page_template_entry_asset_type"
+		"javax.portlet.name=" + ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
+		"mvc.command.name=/content_layout/update_layout_page_template_entry_asset_type"
 	},
 	service = MVCActionCommand.class
 )

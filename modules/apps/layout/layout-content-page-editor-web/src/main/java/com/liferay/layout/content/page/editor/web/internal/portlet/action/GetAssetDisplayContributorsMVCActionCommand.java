@@ -12,19 +12,20 @@
  * details.
  */
 
-package com.liferay.layout.admin.web.internal.portlet.action;
+package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
-import com.liferay.fragment.model.FragmentEntryLink;
-import com.liferay.fragment.service.FragmentEntryLinkLocalService;
-import com.liferay.fragment.util.FragmentEntryRenderUtil;
-import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
+import com.liferay.asset.display.contributor.AssetDisplayContributor;
+import com.liferay.asset.display.contributor.AssetDisplayContributorTracker;
+import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -33,47 +34,50 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Pablo Molina
+ * @author Jürgen Kappler
  */
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + LayoutAdminPortletKeys.GROUP_PAGES,
-		"mvc.command.name=/layout/render_fragment_entry"
+		"javax.portlet.name=" + ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
+		"mvc.command.name=/content_layout/get_asset_display_contributors"
 	},
 	service = MVCActionCommand.class
 )
-public class RenderFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
+public class GetAssetDisplayContributorsMVCActionCommand
+	extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long fragmentEntryLinkId = ParamUtil.getLong(
-			actionRequest, "fragmentEntryLinkId");
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
-		FragmentEntryLink fragmentEntryLink =
-			_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
-				fragmentEntryLinkId);
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+		for (AssetDisplayContributor assetDisplayContributor :
+				_assetDisplayContributorTracker.getAssetDisplayContributors()) {
 
-		if (fragmentEntryLink != null) {
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
 			jsonObject.put(
-				"content",
-				FragmentEntryRenderUtil.renderFragmentEntryLink(
-					fragmentEntryLink,
-					_portal.getHttpServletRequest(actionRequest),
-					_portal.getHttpServletResponse(actionResponse)));
+				"id",
+				_portal.getClassNameId(assetDisplayContributor.getClassName()));
+			jsonObject.put(
+				"label",
+				assetDisplayContributor.getLabel(themeDisplay.getLocale()));
+
+			jsonArray.put(jsonObject);
 		}
 
 		JSONPortletResponseUtil.writeJSON(
-			actionRequest, actionResponse, jsonObject);
+			actionRequest, actionResponse, jsonArray);
 	}
 
 	@Reference
-	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
+	private AssetDisplayContributorTracker _assetDisplayContributorTracker;
 
 	@Reference
 	private Portal _portal;

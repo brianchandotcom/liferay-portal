@@ -12,11 +12,12 @@
  * details.
  */
 
-package com.liferay.layout.admin.web.internal.portlet.action;
+package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
 import com.liferay.asset.display.contributor.AssetDisplayContributor;
 import com.liferay.asset.display.contributor.AssetDisplayContributorTracker;
-import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
+import com.liferay.asset.display.contributor.AssetDisplayField;
+import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -24,8 +25,11 @@ import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
+
+import java.util.Set;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -39,37 +43,44 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + LayoutAdminPortletKeys.GROUP_PAGES,
-		"mvc.command.name=/layout/get_asset_display_contributors"
+		"javax.portlet.name=" + ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
+		"mvc.command.name=/content_layout/get_mapping_fields"
 	},
 	service = MVCActionCommand.class
 )
-public class GetAssetDisplayContributorsMVCActionCommand
-	extends BaseMVCActionCommand {
+public class GetMappingFieldsMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		long classNameId = ParamUtil.getLong(actionRequest, "classNameId");
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-		for (AssetDisplayContributor assetDisplayContributor :
-				_assetDisplayContributorTracker.getAssetDisplayContributors()) {
+		AssetDisplayContributor assetDisplayContributor =
+			_assetDisplayContributorTracker.getAssetDisplayContributor(
+				_portal.getClassName(classNameId));
 
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+		if (assetDisplayContributor != null) {
+			long classTypeId = ParamUtil.getLong(actionRequest, "classTypeId");
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
-			jsonObject.put(
-				"id",
-				_portal.getClassNameId(assetDisplayContributor.getClassName()));
-			jsonObject.put(
-				"label",
-				assetDisplayContributor.getLabel(themeDisplay.getLocale()));
+			Set<AssetDisplayField> assetEntryFields =
+				assetDisplayContributor.getAssetDisplayFields(
+					classTypeId, themeDisplay.getLocale());
 
-			jsonArray.put(jsonObject);
+			for (AssetDisplayField assetEntryField : assetEntryFields) {
+				JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+				jsonObject.put("key", assetEntryField.getKey());
+				jsonObject.put("label", assetEntryField.getLabel());
+				jsonObject.put("type", assetEntryField.getType());
+
+				jsonArray.put(jsonObject);
+			}
 		}
 
 		JSONPortletResponseUtil.writeJSON(

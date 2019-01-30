@@ -895,12 +895,9 @@ public class SiteAdminPortlet extends MVCPortlet {
 			Validator.isNull(
 				formTypeSettingsProperties.getProperty(PropsKeys.LOCALES))) {
 
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Cannot have all locales missing from site " + liveGroupId);
-			}
-
-			throw new LocaleException(LocaleException.TYPE_DEFAULT);
+			throw new LocaleException(
+				LocaleException.TYPE_DEFAULT,
+				"Must have at least one valid locale for site " + liveGroupId);
 		}
 
 		typeSettingsProperties.putAll(formTypeSettingsProperties);

@@ -389,7 +389,7 @@ import ${apiPackagePath}.service.${entity.name}${sessionTypeName}Service;
 			return ${entity.varName}Persistence.fetchByPrimaryKey(${entity.PKVarName});
 		}
 
-		<#if entity.hasUuid() && entity.hasEntityColumn("companyId") && (!entity.hasEntityColumn("groupId") || stringUtil.equals(entity.name, "Group"))>
+		<#if entity.hasUuid() && entity.hasEntityColumn("companyId") && (!entity.hasEntityColumn("groupId") || stringUtil.equals(entity.name, "Group")) && !entity.versionEntity??>
 			/**
 			 * Returns the ${entity.humanName} with the matching UUID and company.
 			 *
@@ -406,7 +406,7 @@ import ${apiPackagePath}.service.${entity.name}${sessionTypeName}Service;
 			}
 		</#if>
 
-		<#if entity.hasUuid() && entity.hasEntityColumn("groupId") && !stringUtil.equals(entity.name, "Group")>
+		<#if entity.hasUuid() && entity.hasEntityColumn("groupId") && !stringUtil.equals(entity.name, "Group") && !entity.versionEntity??>
 			<#if stringUtil.equals(entity.name, "Layout")>
 				/**
 				 * Returns the ${entity.humanName} matching the UUID, group, and privacy.
@@ -441,7 +441,7 @@ import ${apiPackagePath}.service.${entity.name}${sessionTypeName}Service;
 			</#if>
 		</#if>
 
-		<#if entity.hasExternalReferenceCode() && entity.hasEntityColumn("companyId")>
+		<#if entity.hasExternalReferenceCode() && entity.hasEntityColumn("companyId") && !entity.versionEntity??>
 			/**
 			 * Returns the ${entity.humanName} with the matching external reference code and company.
 			 *
@@ -706,7 +706,7 @@ import ${apiPackagePath}.service.${entity.name}${sessionTypeName}Service;
 			}
 		</#if>
 
-		<#if entity.hasUuid() && entity.hasEntityColumn("companyId")>
+		<#if entity.hasUuid() && entity.hasEntityColumn("companyId") && !entity.versionEntity??>
 			<#if entity.hasEntityColumn("groupId") && !stringUtil.equals(entity.name, "Group")>
 				/**
 				 * Returns all the ${entity.humanNames} matching the UUID and company.
@@ -756,7 +756,7 @@ import ${apiPackagePath}.service.${entity.name}${sessionTypeName}Service;
 			</#if>
 		</#if>
 
-		<#if entity.hasUuid() && entity.hasEntityColumn("groupId") && !stringUtil.equals(entity.name, "Group")>
+		<#if entity.hasUuid() && entity.hasEntityColumn("groupId") && !stringUtil.equals(entity.name, "Group") && !entity.versionEntity??>
 			<#if stringUtil.equals(entity.name, "Layout")>
 				/**
 				 * Returns the ${entity.humanName} matching the UUID, group, and privacy.

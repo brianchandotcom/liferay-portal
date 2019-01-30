@@ -15,6 +15,7 @@
 package com.liferay.layout.content.page.editor.web.internal.display.context;
 
 import com.liferay.fragment.constants.FragmentEntryTypeConstants;
+import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
@@ -81,6 +82,10 @@ public class ContentPageEditorDisplayContext {
 		classNameId = PortalUtil.getClassNameId(className);
 		themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
+		_fragmentCollectionContributorTracker =
+			(FragmentCollectionContributorTracker)request.getAttribute(
+				ContentPageEditorWebKeys.
+					FRAGMENT_COLLECTION_CONTRIBUTOR_TRACKER);
 		_itemSelector = (ItemSelector)request.getAttribute(
 			ContentPageEditorWebKeys.ITEM_SELECTOR);
 	}
@@ -515,6 +520,8 @@ public class ContentPageEditorDisplayContext {
 	}
 
 	private Map<String, Object> _defaultConfigurations;
+	private final FragmentCollectionContributorTracker
+		_fragmentCollectionContributorTracker;
 	private SoyContext _fragmentsEditorToolbarSoyContext;
 	private Long _groupId;
 	private ItemSelectorCriterion _imageItemSelectorCriterion;

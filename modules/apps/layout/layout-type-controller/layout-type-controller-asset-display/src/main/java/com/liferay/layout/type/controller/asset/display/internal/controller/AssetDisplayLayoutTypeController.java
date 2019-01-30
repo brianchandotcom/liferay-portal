@@ -15,6 +15,7 @@
 package com.liferay.layout.type.controller.asset.display.internal.controller;
 
 import com.liferay.asset.display.contributor.AssetDisplayContributorTracker;
+import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.layout.constants.LayoutConstants;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorWebKeys;
@@ -93,6 +94,11 @@ public class AssetDisplayLayoutTypeController
 		}
 
 		if (layoutMode.equals(Constants.EDIT)) {
+			request.setAttribute(
+				ContentPageEditorWebKeys.
+					FRAGMENT_COLLECTION_CONTRIBUTOR_TRACKER,
+				_fragmentCollectionContributorTracker);
+
 			request.setAttribute(
 				ContentPageEditorWebKeys.ITEM_SELECTOR, _itemSelector);
 		}
@@ -222,6 +228,10 @@ public class AssetDisplayLayoutTypeController
 
 	@Reference
 	private AssetDisplayContributorTracker _assetDisplayContributorTracker;
+
+	@Reference
+	private FragmentCollectionContributorTracker
+		_fragmentCollectionContributorTracker;
 
 	@Reference
 	private ItemSelector _itemSelector;

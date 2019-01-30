@@ -14,6 +14,7 @@
 
 package com.liferay.layout.type.controller.content.internal.controller;
 
+import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.layout.constants.LayoutConstants;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorWebKeys;
@@ -101,6 +102,11 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 
 		if (layoutMode.equals(Constants.EDIT)) {
 			page = _EDIT_LAYOUT_PAGE;
+
+			request.setAttribute(
+				ContentPageEditorWebKeys.
+					FRAGMENT_COLLECTION_CONTRIBUTOR_TRACKER,
+				_fragmentCollectionContributorTracker);
 		}
 
 		RequestDispatcher requestDispatcher =
@@ -229,6 +235,10 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 			"&p_v_l_s_g_id=${liferay:pvlsgid}";
 
 	private static final String _VIEW_PAGE = "/layout/view/content.jsp";
+
+	@Reference
+	private FragmentCollectionContributorTracker
+		_fragmentCollectionContributorTracker;
 
 	@Reference
 	private ItemSelector _itemSelector;

@@ -1,0 +1,52 @@
+definition {
+	macro clickEllipsisItem {
+		Click(
+			locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS",
+			key_tableEntry = "${tableEntry}"
+		);
+
+		MenuItem.clickNoError(
+			menuItem = "${item}"
+		);
+	}
+
+	macro clickTableEntryTitle {
+		Click(
+			locator1 = "LexiconTable#TABLE_ENTRY_TITLE",
+			key_tableEntry = "${tableEntry}"
+		);
+	}
+
+	macro delete {
+		LexiconTable.clickEllipsisItem(
+			tableEntry = "${tableEntry}",
+			item = "Delete"
+		);
+
+		Confirm();
+	}
+
+	macro viewTableEntryNotPresent {
+		AssertElementNotPresent(
+			locator1 = "LexiconTable#TABLE_ENTRY",
+			key_tableEntry = "${tableEntry}"
+		);
+	}
+
+	macro viewTableEntryText {
+		AssertTextEquals(
+			locator1 = "LexiconTable#TABLE_ENTRY_TEXT",
+			value1 = "${tableEntryText}",
+			key_tableEntry = "${tableEntry}",
+			key_tableEntryText = "${tableEntryText}"
+		);
+	}
+
+	macro viewTableEntryTitle {
+		AssertTextEquals(
+			locator1 = "LexiconTable#TABLE_ENTRY_TITLE",
+			value1 = "${tableEntry}",
+			key_tableEntry = "${tableEntry}"
+		);
+	}
+}

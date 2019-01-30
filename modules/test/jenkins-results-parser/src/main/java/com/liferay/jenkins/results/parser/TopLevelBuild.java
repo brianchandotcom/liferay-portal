@@ -1423,7 +1423,7 @@ public class TopLevelBuild extends BaseBuild {
 
 		modifiedDownstreamBuilds.removeAll(ignoreDownstreamBuilds);
 
-		DatagramRequestUtil.send(
+		sendBuildMetric(
 			generateGaugeDeltaMetric(
 				"build_slave_usage_gauge", -modifiedDownstreamBuilds.size(),
 				null));
@@ -1437,10 +1437,28 @@ public class TopLevelBuild extends BaseBuild {
 			return;
 		}
 
-		DatagramRequestUtil.send(
+		sendBuildMetric(
 			generateGaugeDeltaMetric(
 				"build_slave_usage_value", modifiedDownstreamBuilds.size(),
 				null));
+	}
+
+	protected void sendBuildMetric(String message) {
+		Properties buildProperties = null;
+
+		try {
+			buildProperties = JenkinsResultsParserUtil.getBuildProperties();
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException("Unable to get build.properties", ioe);
+		}
+
+		String sendBuildEvents = buildProperties.getProperty(
+			"build.metrics.send.events");
+
+		if ((sendBuildEvents != null) && sendBuildEvents.equals("true")) {
+			DatagramRequestUtil.send(message);
+		}
 	}
 
 	protected static final Pattern gitRepositoryTempMapNamePattern =

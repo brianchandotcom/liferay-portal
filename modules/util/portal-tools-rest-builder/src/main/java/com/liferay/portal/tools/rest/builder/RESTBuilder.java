@@ -98,8 +98,6 @@ public class RESTBuilder {
 			_createCollectionFile(context, schemaName);
 			_createDTOFile(context, schemaName);
 		}
-
-		System.out.println(YAMLUtil.dump(_openAPIYAML));
 	}
 
 	private File _createApplicationFile(Map<String, Object> context)

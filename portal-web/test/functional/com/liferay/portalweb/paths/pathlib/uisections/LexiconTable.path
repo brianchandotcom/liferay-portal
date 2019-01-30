@@ -25,7 +25,12 @@
 </tr>
 <tr>
 	<td>TABLE_ENTRY_TEXT</td>
-	<td>//tr[@data-qa-id='row'][contains(.,'${key_tableEntry}')]//td[contains(.,'${key_tableEntryText}')]</td>
+	<td>//tr[@data-qa-id='row'][contains(.,'${key_tableEntry}')]//td[normalize-space(text())='${key_tableEntryText}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TABLE_ENTRY_PARTIAL_TEXT</td>
+	<td>//tr[@data-qa-id='row'][contains(.,'${key_tableEntry}')]//td[contains(.,'${key_tableEntryPartialText}')]</td>
 	<td></td>
 </tr>
 <tr>

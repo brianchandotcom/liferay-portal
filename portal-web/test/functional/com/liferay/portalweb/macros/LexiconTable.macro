@@ -33,6 +33,15 @@ definition {
 		);
 	}
 
+	macro viewTableEntryPartialText {
+		AssertTextEquals.assertPartialText(
+			locator1 = "LexiconTable#TABLE_ENTRY_PARTIAL_TEXT",
+			value1 = "${tableEntryPartialText}",
+			key_tableEntry = "${tableEntry}",
+			key_tableEntryPartialText = "${tableEntryPartialText}"
+		);
+	}
+
 	macro viewTableEntryText {
 		AssertTextEquals(
 			locator1 = "LexiconTable#TABLE_ENTRY_TEXT",

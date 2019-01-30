@@ -16,8 +16,11 @@ package com.liferay.layout.content.page.editor.web.internal.display.context;
 
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
+import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentCollectionServiceUtil;
+import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryServiceUtil;
+import com.liferay.fragment.util.FragmentEntryRenderUtil;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelectorReturnType;
@@ -33,6 +36,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.editor.configuration.EditorConfiguration;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -143,6 +147,17 @@ public class ContentPageEditorDisplayContext {
 		actionURL.setParameter(ActionRequest.ACTION_NAME, action);
 
 		return actionURL.toString();
+	}
+
+	protected SoyContext getFragmentEntrySoyContext(
+		FragmentEntry fragmentEntry, String content) {
+
+		SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
+
+		soyContext.put("fragmentEntryId", fragmentEntry.getFragmentEntryId());
+		soyContext.put("name", fragmentEntry.getName());
+
+		return soyContext;
 	}
 
 	protected long getGroupId() {
@@ -313,6 +328,64 @@ public class ContentPageEditorDisplayContext {
 		return soyContexts;
 	}
 
+	protected SoyContext getSoyContextFragmentEntryLinks()
+		throws PortalException {
+
+		if (_soyContextFragmentEntryLinksSoyContext != null) {
+			return _soyContextFragmentEntryLinksSoyContext;
+		}
+
+		SoyContext soyContexts = SoyContextFactoryUtil.createSoyContext();
+
+		List<FragmentEntryLink> fragmentEntryLinks =
+			FragmentEntryLinkLocalServiceUtil.getFragmentEntryLinks(
+				getGroupId(), classNameId, classPK);
+
+		boolean isolated = themeDisplay.isIsolated();
+
+		themeDisplay.setIsolated(true);
+
+		try {
+			for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
+				FragmentEntry fragmentEntry =
+					FragmentEntryServiceUtil.fetchFragmentEntry(
+						fragmentEntryLink.getFragmentEntryId());
+
+				SoyContext soyContext =
+					SoyContextFactoryUtil.createSoyContext();
+
+				String content =
+					FragmentEntryRenderUtil.renderFragmentEntryLink(
+						fragmentEntryLink, request,
+						PortalUtil.getHttpServletResponse(renderResponse));
+
+				soyContext.putHTML("content", content);
+
+				soyContext.put(
+					"editableValues",
+					JSONFactoryUtil.createJSONObject(
+						fragmentEntryLink.getEditableValues()));
+				soyContext.put(
+					"fragmentEntryLinkId",
+					String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()));
+
+				soyContext.putAll(
+					getFragmentEntrySoyContext(fragmentEntry, content));
+
+				soyContexts.put(
+					String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()),
+					soyContext);
+			}
+		}
+		finally {
+			themeDisplay.setIsolated(isolated);
+		}
+
+		_soyContextFragmentEntryLinksSoyContext = soyContexts;
+
+		return _soyContextFragmentEntryLinksSoyContext;
+	}
+
 	protected String[] getThemeColors() {
 		return new String[] {
 			"#393A4A", "#6B6C7E", "#A7A9BC", "#CDCED8", "#E7E7ED", "#F4F5F8",
@@ -375,6 +448,7 @@ public class ContentPageEditorDisplayContext {
 	private String _layoutData;
 	private List<SoyContext> _panelSoyContexts;
 	private String _redirect;
+	private SoyContext _soyContextFragmentEntryLinksSoyContext;
 	private ItemSelectorCriterion _urlItemSelectorCriterion;
 
 }

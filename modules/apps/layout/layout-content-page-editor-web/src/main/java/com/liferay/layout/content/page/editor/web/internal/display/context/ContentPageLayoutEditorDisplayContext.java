@@ -16,10 +16,6 @@ package com.liferay.layout.content.page.editor.web.internal.display.context;
 
 import com.liferay.fragment.constants.FragmentEntryTypeConstants;
 import com.liferay.fragment.model.FragmentEntry;
-import com.liferay.fragment.model.FragmentEntryLink;
-import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
-import com.liferay.fragment.service.FragmentEntryServiceUtil;
-import com.liferay.fragment.util.FragmentEntryRenderUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -112,8 +108,7 @@ public class ContentPageLayoutEditorDisplayContext
 			"elements",
 			getSoyContextFragmentCollections(
 				FragmentEntryTypeConstants.TYPE_ELEMENT));
-		soyContext.put(
-			"fragmentEntryLinks", _getSoyContextFragmentEntryLinks());
+		soyContext.put("fragmentEntryLinks", getSoyContextFragmentEntryLinks());
 		soyContext.put("imageSelectorURL", getItemSelectorURL());
 		soyContext.put("languageId", themeDisplay.getLanguageId());
 		soyContext.put(
@@ -162,6 +157,27 @@ public class ContentPageLayoutEditorDisplayContext
 		_fragmentsEditorToolbarSoyContext = soyContext;
 
 		return _fragmentsEditorToolbarSoyContext;
+	}
+
+	@Override
+	protected SoyContext getFragmentEntrySoyContext(
+		FragmentEntry fragmentEntry, String content) {
+
+		if (fragmentEntry != null) {
+			return super.getFragmentEntrySoyContext(fragmentEntry, content);
+		}
+
+		SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
+
+		String portletId = _getPortletId(content);
+
+		soyContext.put("fragmentEntryId", 0);
+		soyContext.put(
+			"name",
+			PortalUtil.getPortletTitle(portletId, themeDisplay.getLocale()));
+		soyContext.put("portletId", portletId);
+
+		return soyContext;
 	}
 
 	private String _getPortletCategoryTitle(PortletCategory portletCategory) {
@@ -275,77 +291,6 @@ public class ContentPageLayoutEditorDisplayContext
 		);
 	}
 
-	private SoyContext _getSoyContextFragmentEntryLinks()
-		throws PortalException {
-
-		if (_soyContextFragmentEntryLinksSoyContext != null) {
-			return _soyContextFragmentEntryLinksSoyContext;
-		}
-
-		SoyContext soyContexts = SoyContextFactoryUtil.createSoyContext();
-
-		List<FragmentEntryLink> fragmentEntryLinks =
-			FragmentEntryLinkLocalServiceUtil.getFragmentEntryLinks(
-				themeDisplay.getScopeGroupId(), classNameId, classPK);
-
-		boolean isolated = themeDisplay.isIsolated();
-
-		themeDisplay.setIsolated(true);
-
-		try {
-			for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
-				FragmentEntry fragmentEntry =
-					FragmentEntryServiceUtil.fetchFragmentEntry(
-						fragmentEntryLink.getFragmentEntryId());
-
-				SoyContext soyContext =
-					SoyContextFactoryUtil.createSoyContext();
-
-				String content =
-					FragmentEntryRenderUtil.renderFragmentEntryLink(
-						fragmentEntryLink, request,
-						PortalUtil.getHttpServletResponse(renderResponse));
-
-				soyContext.putHTML("content", content);
-
-				soyContext.put(
-					"editableValues",
-					JSONFactoryUtil.createJSONObject(
-						fragmentEntryLink.getEditableValues()));
-				soyContext.put(
-					"fragmentEntryLinkId",
-					String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()));
-
-				if (fragmentEntry != null) {
-					soyContext.put(
-						"fragmentEntryId", fragmentEntry.getFragmentEntryId());
-					soyContext.put("name", fragmentEntry.getName());
-				}
-				else {
-					String portletId = _getPortletId(content);
-
-					soyContext.put("fragmentEntryId", 0);
-					soyContext.put(
-						"name",
-						PortalUtil.getPortletTitle(
-							portletId, themeDisplay.getLocale()));
-					soyContext.put("portletId", portletId);
-				}
-
-				soyContexts.put(
-					String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()),
-					soyContext);
-			}
-		}
-		finally {
-			themeDisplay.setIsolated(isolated);
-		}
-
-		_soyContextFragmentEntryLinksSoyContext = soyContexts;
-
-		return _soyContextFragmentEntryLinksSoyContext;
-	}
-
 	private List<SoyContext> _getWidgetCategoriesContexts(
 		PortletCategory portletCategory) {
 
@@ -415,6 +360,5 @@ public class ContentPageLayoutEditorDisplayContext
 
 	private SoyContext _editorSoyContext;
 	private SoyContext _fragmentsEditorToolbarSoyContext;
-	private SoyContext _soyContextFragmentEntryLinksSoyContext;
 
 }

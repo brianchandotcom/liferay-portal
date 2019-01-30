@@ -21,11 +21,6 @@ import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.ClassType;
 import com.liferay.asset.kernel.model.ClassTypeReader;
 import com.liferay.fragment.constants.FragmentEntryTypeConstants;
-import com.liferay.fragment.model.FragmentEntry;
-import com.liferay.fragment.model.FragmentEntryLink;
-import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
-import com.liferay.fragment.service.FragmentEntryServiceUtil;
-import com.liferay.fragment.util.FragmentEntryRenderUtil;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorWebKeys;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
@@ -37,8 +32,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.template.soy.util.SoyContext;
 import com.liferay.portal.template.soy.util.SoyContextFactoryUtil;
-
-import java.util.List;
 
 import javax.portlet.RenderResponse;
 
@@ -92,8 +85,7 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 			"elements",
 			getSoyContextFragmentCollections(
 				FragmentEntryTypeConstants.TYPE_ELEMENT));
-		soyContext.put(
-			"fragmentEntryLinks", _getSoyContextFragmentEntryLinks());
+		soyContext.put("fragmentEntryLinks", getSoyContextFragmentEntryLinks());
 		soyContext.put(
 			"getAssetDisplayContributorsURL",
 			getFragmentEntryActionURL(
@@ -253,56 +245,6 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 		}
 
 		return soyContext;
-	}
-
-	private SoyContext _getSoyContextFragmentEntryLinks()
-		throws PortalException {
-
-		SoyContext soyContexts = SoyContextFactoryUtil.createSoyContext();
-
-		List<FragmentEntryLink> fragmentEntryLinks =
-			FragmentEntryLinkLocalServiceUtil.getFragmentEntryLinks(
-				getGroupId(), classNameId, classPK);
-
-		boolean isolated = themeDisplay.isIsolated();
-
-		themeDisplay.setIsolated(true);
-
-		try {
-			for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
-				FragmentEntry fragmentEntry =
-					FragmentEntryServiceUtil.fetchFragmentEntry(
-						fragmentEntryLink.getFragmentEntryId());
-
-				SoyContext soyContext =
-					SoyContextFactoryUtil.createSoyContext();
-
-				soyContext.putHTML(
-					"content",
-					FragmentEntryRenderUtil.renderFragmentEntryLink(
-						fragmentEntryLink, request,
-						PortalUtil.getHttpServletResponse(renderResponse)));
-				soyContext.put(
-					"editableValues",
-					JSONFactoryUtil.createJSONObject(
-						fragmentEntryLink.getEditableValues()));
-				soyContext.put(
-					"fragmentEntryId", fragmentEntry.getFragmentEntryId());
-				soyContext.put(
-					"fragmentEntryLinkId",
-					String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()));
-				soyContext.put("name", fragmentEntry.getName());
-
-				soyContexts.put(
-					String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()),
-					soyContext);
-			}
-		}
-		finally {
-			themeDisplay.setIsolated(isolated);
-		}
-
-		return soyContexts;
 	}
 
 	private final AssetDisplayContributorTracker

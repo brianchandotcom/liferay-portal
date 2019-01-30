@@ -12,6 +12,8 @@ definition {
 		AutoTagging.enableAutoTagging(
 			enableAutoTaggingFor = "System Settings"
 		);
+
+		AutoTagging.enableTensorFlow();
 	}
 
 	tearDown {

@@ -111,4 +111,28 @@ definition {
 			PortletEntry.save();
 		}
 	}
+
+	macro enableTensorFlow {
+		ProductMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "System Settings"
+			);
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Documents and Media",
+				configurationName = "TensorFlow Image Auto Tagging",
+				configurationScope = "Virtual Instance Scope"
+			);
+
+			FormFields.enableCheckbox(fieldName = "enabled");
+
+		if (IsElementPresent(locator1 = "Button#UPDATE")) {
+			PortletEntry.update();
+		}
+
+		else if (IsElementPresent(locator1 = "Button#SAVE")) {
+			PortletEntry.save();
+		}
+	}
 }

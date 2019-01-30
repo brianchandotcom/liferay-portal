@@ -84,13 +84,13 @@ SegmentsDisplayContext segmentsDisplayContext = (SegmentsDisplayContext)request.
 				<c:choose>
 					<c:when test="<%= segmentsEntry.getSource() == SegmentsConstants.SOURCE_ASAH_FARO_BACKEND %>">
 						<liferay-ui:icon
-							message="analytics-cloud"
+							message="source.analytics-cloud"
 							src='<%= PortalUtil.getPathContext(request) + "/assets/ac-icon.svg" %>'
 						/>
 					</c:when>
 					<c:otherwise>
 						<liferay-ui:icon
-							message="dxp"
+							message="source.dxp"
 							src='<%= PortalUtil.getPathContext(request) + "/assets/dxp-icon.svg" %>'
 						/>
 					</c:otherwise>

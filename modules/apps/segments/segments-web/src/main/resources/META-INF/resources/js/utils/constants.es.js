@@ -122,12 +122,12 @@ export const BOOLEAN_OPTIONS = [
 export const SOURCES = {
 	ASAH_FARO_BACKEND: {
 		icon: '/ac-icon.svg',
-		label: Liferay.Language.get('analytics-cloud'),
+		label: Liferay.Language.get('source.analytics-cloud'),
 		name: 'ASAH_FARO_BACKEND'
 	},
 	DEFAULT: {
 		icon: '/dxp-icon.svg',
-		label: Liferay.Language.get('dxp'),
+		label: Liferay.Language.get('source.dxp'),
 		name: 'DEFAULT'
 	}
 };

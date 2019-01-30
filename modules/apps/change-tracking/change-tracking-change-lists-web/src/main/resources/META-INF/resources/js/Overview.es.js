@@ -12,52 +12,69 @@ import templates from './Overview.soy';
 class Overview extends PortletBase {
 
 	created() {
-		this._getDataRequest(
-			this.urlProductionInformation,
-			response => {
-				if (response) {
-					this.changes = {
-						added: 42,
-						deleted: 2,
-						modified: 6
-					};
+	let urls = [this.urlActiveCollection, this.urlProductionInformation];
 
-					this.description = response.ctcollection.description;
-					this.headerTitle = response.ctcollection.name;
-					this.headerDropDownMenu = [
+		let headers = new Headers();
+		headers.append('Content-Type', 'application/json');
+
+		let init = {
+			credentials: 'include',
+			headers,
+			method: 'GET'
+		};
+
+		this._fetchAll(urls, init)
+			.then(result => {
+				this.initialFetch = true;
+
+				// urlActiveCollection
+
+				this.changes = {
+					added: result[0].additionCount,
+					deleted: result[0].deletionCount,
+					modified: result[0].modificationCount
+				};
+				this.descriptionActiveChangeList = result[0].description;
+				this.headerDropDownMenu = [
+					{label: 'Change List 01',
+link: 'link01'},
+					{label: 'Change List 02',
+link: 'link02'},
+					{label: 'Change List 03',
+link: 'link03'}
+				];
+				this.headerTitleActiveChangeList = result[0].name;
+
+				// urlProductionCollection
+
+				this.descriptionProductionActiveChangeList = result[1].description;
+				this.headerTitleProductionChangeList = result[1].name;
+				this.publishedBy = {
+					dateTime: result[1].statusDate,
+					userIconUrl: '',
+					userMonogram: 'TT',
+					userName: result[1].statusByUserName
+				};
+			});
+	}
+
+	_fetchAll(urls, init) {
+		return Promise.all(
+			urls.map(url => fetch(url, init)
+				.then(r => r.json())
+				.then(data => data[0])
+				.catch(error => {
+					const message = Liferay.Language.get('error');
+
+					openToast(
 						{
-							label: 'Change List 01',
-							link: 'link01'
-						},
-						{
-							label: 'Change List 02',
-							link: 'link02'
-						},
-						{
-							label: 'Change List 03',
-							link: 'link03'
+							message,
+							title: Liferay.Language.get('error'),
+							type: 'danger'
 						}
-					];
-
-					this.initialFetch = true;
-
-					let publishDate = new Date(response.date);
-					let publishDateFormatOptions = {
-						day: 'numeric',
-						hour: 'numeric',
-						minute: 'numeric',
-						month: 'numeric',
-						year: 'numeric'
-					};
-
-					this.publishedBy = {
-						dateTime: new Intl.DateTimeFormat(Liferay.ThemeDisplay.getBCP47LanguageId(), publishDateFormatOptions).format(publishDate),
-						userInitials: response.userInitials,
-						userName: response.userName,
-						userPortraitURL: response.userPortraitURL
-					};
-				}
-			}
+					);
+				})
+			)
 		);
 	}
 
@@ -111,9 +128,9 @@ Overview.STATE = {
 	 */
 	changes: Config.shapeOf(
 		{
-			added: Config.number(),
-			deleted: Config.number(),
-			modified: Config.number()
+			added: Config.number().value(0),
+			deleted: Config.number().value(0),
+			modified: Config.number().value(0)
 		}
 	),
 
@@ -125,7 +142,17 @@ Overview.STATE = {
 	 * @type {string}
 	 */
 
-	description: Config.string(),
+	descriptionActiveChangeList: Config.string(),
+
+	/**
+	 * Card description
+	 * @default
+	 * @instance
+	 * @memberOf ChangeList
+	 * @review
+	 * @type {String}
+	 */
+	descriptionProductionChangeList: Config.string(),
 
 	/**
 	 * List of drop down menu items
@@ -152,7 +179,17 @@ Overview.STATE = {
 	 * @type {string}
 	 */
 
-	headerTitle: Config.string(),
+	headerTitleActiveChangeList: Config.string(),
+
+	/**
+	 * Card header title
+	 * @default
+	 * @instance
+	 * @memberOf ChangeList
+	 * @review
+	 * @type {String}
+	 */
+	headerTitleProductionChangeList: Config.string(),
 
 	/**
 	 * If true, an initial fetch has already happened
@@ -181,6 +218,16 @@ Overview.STATE = {
 			userPortraitURL: Config.string()
 		}
 	),
+
+	/**
+	 * Api url
+	 * @default
+	 * @instance
+	 * @memberOf ChangeList
+	 * @review
+	 * @type {!String}
+	 */
+	urlActiveCollection: Config.string().required(),
 
 	/**
 	 * Property that contains the url for the REST service to the change

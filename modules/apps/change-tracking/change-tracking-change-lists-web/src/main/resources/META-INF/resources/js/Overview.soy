@@ -11,12 +11,14 @@
 		deleted: number,
 		modified: number
 	]}
-	{@param? description: string}
+	{@param? descriptionActiveChangeList: string}
+	{@param? descriptionProductionChangeList: string}
 	{@param? headerDropDownMenu: list<[
 		label: string,
 		link: string
 	]>}
-	{@param? headerTitle: string}
+	{@param? headerTitleActiveChangeList: string}
+	{@param? headerTitleProductionChangeList: string}
 	{@param? initialFetch: bool}
 	{@param? publishedBy: [
 		dateTime: string,
@@ -63,7 +65,7 @@
 						{param changesLabel kind="text"}
 							{msg desc=""}changes{/msg}
 						{/param}
-						{param description: $description /}
+						{param description: $descriptionActiveChangeList /}
 						{param descriptionTitle kind="text"}
 							{msg desc=""}description{/msg}
 						{/param}
@@ -75,7 +77,7 @@
 						{param headerSubTitle kind="text"}
 							{msg desc=""}active-change-list{/msg}
 						{/param}
-						{param headerTitle: $headerTitle /}
+						{param headerTitle: $headerTitleActiveChangeList /}
 						{param spritemap: $spritemap /}
 					{/call}
 				</div>
@@ -83,7 +85,7 @@
 				<div class="col-sm-6">
 					{call .overviewCard}
 						{param cardState: 'border-left-green' /}
-						{param description: $description /}
+						{param description: $descriptionProductionChangeList /}
 						{param descriptionTitle kind="text"}
 							{msg desc=""}description{/msg}
 						{/param}
@@ -93,7 +95,7 @@
 						{param headerSubTitle kind="text"}
 							{msg desc=""}published-change-list{/msg}
 						{/param}
-						{param headerTitle: $headerTitle /}
+						{param headerTitle: $headerTitleProductionChangeList /}
 						{param publishedBy: $publishedBy /}
 						{param publishedByTitle kind="text"}
 							{msg desc=""}published-by{/msg}

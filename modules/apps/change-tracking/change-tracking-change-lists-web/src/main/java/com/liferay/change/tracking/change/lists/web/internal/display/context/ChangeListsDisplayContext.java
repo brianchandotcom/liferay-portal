@@ -59,6 +59,11 @@ public class ChangeListsDisplayContext {
 			_themeDisplay.getPathThemeImages() + "/lexicon/icons.svg");
 
 		soyContext.put(
+			"urlActiveCollection",
+			_themeDisplay.getPortalURL() +
+				"/o/change-tracking/collections?type=active&userId=" +
+					_themeDisplay.getUserId());
+		soyContext.put(
 			"urlProductionInformation",
 			StringBundler.concat(
 				_themeDisplay.getPortalURL(),

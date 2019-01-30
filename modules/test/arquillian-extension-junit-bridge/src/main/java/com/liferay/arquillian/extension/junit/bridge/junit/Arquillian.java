@@ -43,6 +43,7 @@ import org.junit.internal.runners.statements.Fail;
 import org.junit.internal.runners.statements.FailOnTimeout;
 import org.junit.rules.MethodRule;
 import org.junit.rules.TestRule;
+import org.junit.runner.Description;
 import org.junit.runner.Result;
 import org.junit.runner.notification.Failure;
 import org.junit.runner.notification.RunListener;
@@ -213,6 +214,20 @@ public class Arquillian extends BlockJUnit4ClassRunner {
 			}
 
 		};
+	}
+
+	@Override
+	protected void runChild(
+		FrameworkMethod frameworkMethod, RunNotifier runNotifier) {
+
+		Description description = describeChild(frameworkMethod);
+
+		if (isIgnored(frameworkMethod)) {
+			runNotifier.fireTestIgnored(description);
+		}
+		else {
+			runLeaf(methodBlock(frameworkMethod), description, runNotifier);
+		}
 	}
 
 	@Override

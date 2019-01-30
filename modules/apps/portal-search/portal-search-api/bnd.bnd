@@ -13,6 +13,7 @@ Export-Package:\
 	com.liferay.portal.search.constants,\
 	com.liferay.portal.search.contributor,\
 	com.liferay.portal.search.contributor.sort,\
+	com.liferay.portal.search.document,\
 	com.liferay.portal.search.engine,\
 	com.liferay.portal.search.facet,\
 	com.liferay.portal.search.facet.category,\
@@ -24,6 +25,9 @@ Export-Package:\
 	com.liferay.portal.search.facet.type,\
 	com.liferay.portal.search.facet.user,\
 	com.liferay.portal.search.filter,\
+	com.liferay.portal.search.geolocation,\
+	com.liferay.portal.search.highlight,\
+	com.liferay.portal.search.hits,\
 	com.liferay.portal.search.index,\
 	com.liferay.portal.search.indexer,\
 	com.liferay.portal.search.legacy.searcher,\
@@ -31,7 +35,11 @@ Export-Package:\
 	com.liferay.portal.search.localization,\
 	com.liferay.portal.search.permission,\
 	com.liferay.portal.search.query,\
+	com.liferay.portal.search.query.field,\
+	com.liferay.portal.search.query.util,\
+	com.liferay.portal.search.script,\
 	com.liferay.portal.search.searcher,\
+	com.liferay.portal.search.significance,\
 	com.liferay.portal.search.sort,\
 	com.liferay.portal.search.stats,\
 	com.liferay.portal.search.suggest,\

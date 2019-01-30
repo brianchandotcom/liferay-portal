@@ -25,17 +25,7 @@ TrashHandler trashHandler = trashDisplayContext.getTrashHandler();
 <c:choose>
 	<c:when test="<%= trashHandler.isContainerModel() %>">
 		<clay:management-toolbar
-			clearResultsURL="<%= trashDisplayContext.getContentClearResultsURL() %>"
-			componentId="trashContentWebManagementToolbar"
-			disabled="<%= (trashHandler.getTrashModelsCount(trashDisplayContext.getClassPK()) <= 0) && Validator.isNull(trashDisplayContext.getKeywords()) %>"
-			filterDropdownItems="<%= trashDisplayContext.getContentFilterDropdownItems() %>"
-			infoPanelId="infoPanelId"
-			itemsTotal="<%= trashDisplayContext.getTrashContainerTotalItems() %>"
-			searchActionURL="<%= trashDisplayContext.getContentSearchActionURL() %>"
-			searchFormName="searchFm"
-			selectable="<%= false %>"
-			showInfoButton="<%= true %>"
-			viewTypeItems="<%= trashDisplayContext.getViewTypeItems() %>"
+			displayContext="<%= new TrashContainerManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, trashDisplayContext) %>"
 		/>
 
 		<div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">

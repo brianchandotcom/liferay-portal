@@ -15,7 +15,6 @@
 package com.liferay.trash.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
@@ -204,52 +203,6 @@ public class TrashDisplayContext {
 				false));
 
 		return breadcrumbEntries;
-	}
-
-	public String getContentClearResultsURL() {
-		PortletURL clearResultsURL = getContentPortletURL();
-
-		clearResultsURL.setParameter("keywords", StringPool.BLANK);
-
-		return clearResultsURL.toString();
-	}
-
-	public List<DropdownItem> getContentFilterDropdownItems() {
-		return new DropdownItemList() {
-			{
-				addGroup(
-					dropdownGroupItem -> {
-						dropdownGroupItem.setDropdownItems(
-							_getContentFilterNavigationDropdownItems());
-						dropdownGroupItem.setLabel(
-							LanguageUtil.get(_request, "filter-by-navigation"));
-					});
-			}
-		};
-	}
-
-	public PortletURL getContentPortletURL() {
-		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
-
-		String displayStyle = getDisplayStyle();
-
-		if (Validator.isNotNull(displayStyle)) {
-			portletURL.setParameter("displayStyle", displayStyle);
-		}
-
-		String keywords = ParamUtil.getString(_request, "keywords");
-
-		if (Validator.isNotNull(keywords)) {
-			portletURL.setParameter("keywords", keywords);
-		}
-
-		return portletURL;
-	}
-
-	public String getContentSearchActionURL() {
-		PortletURL searchActionURL = getContentPortletURL();
-
-		return searchActionURL.toString();
 	}
 
 	public String getDisplayStyle() {
@@ -751,22 +704,6 @@ public class TrashDisplayContext {
 		breadcrumbEntries.add(breadcrumbEntry);
 
 		return breadcrumbEntries;
-	}
-
-	private List<DropdownItem> _getContentFilterNavigationDropdownItems() {
-		return new DropdownItemList() {
-			{
-				add(
-					dropdownItem -> {
-						dropdownItem.setActive(
-							Objects.equals(getNavigation(), "all"));
-						dropdownItem.setHref(
-							getPortletURL(), "navigation", "all");
-						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "all"));
-					});
-			}
-		};
 	}
 
 	private boolean _approximate;

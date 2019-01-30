@@ -214,8 +214,9 @@ public class CTManagerImpl implements CTManager {
 		try {
 			return Optional.of(
 				_ctEntryLocalService.addCTEntry(
-					userId, classNameId, classPK, resourcePrimKey, changeType,
-					ctCollection.getCtCollectionId(), new ServiceContext()));
+					userId, classNameId, classPK, resourcePrimKey,
+					ctCollection.getCtCollectionId(), changeType,
+					new ServiceContext()));
 		}
 		catch (DuplicateCTEntryException dctee) {
 			StringBundler sb = new StringBundler(8);

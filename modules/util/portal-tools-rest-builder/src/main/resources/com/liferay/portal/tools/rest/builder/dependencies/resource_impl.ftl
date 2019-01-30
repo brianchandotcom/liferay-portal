@@ -7,7 +7,7 @@ package ${configYAML.apiPackagePath}.internal.resource;
 	</#list>
 </#compress>
 
-import ${configYAML.apiPackagePath}.resource.${resourceName}Resource;
+import ${configYAML.apiPackagePath}.resource.${schemaName}Resource;
 
 import com.liferay.portal.vulcan.context.Pagination;
 
@@ -30,9 +30,9 @@ import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
 		JaxrsWhiteboardConstants.JAX_RS_APPLICATION_SELECT + "=(osgi.jaxrs.name=${configYAML.application.name}.rest)",
 		JaxrsWhiteboardConstants.JAX_RS_RESOURCE + "=true", "api.version=${openAPIYAML.info.version}"
 	},
-	scope = ServiceScope.PROTOTYPE, service = ${resourceName}Resource.class)
+	scope = ServiceScope.PROTOTYPE, service = ${schemaName}Resource.class)
 @Generated("")
-public class ${resourceName}ResourceImpl implements ${resourceName}Resource {
+public class ${schemaName}ResourceImpl implements ${schemaName}Resource {
 
 	<#list openAPIYAML.pathItems?keys as path>
 		<#assign pathItem = openAPIYAML.pathItems[path] />
@@ -145,11 +145,11 @@ public class ${resourceName}ResourceImpl implements ${resourceName}Resource {
 									<#assign reference = "${schema.items.reference}" />
 
 									<#if reference?contains("/schemas/")>
-										<#assign schemaName = "${reference[(reference?last_index_of('/') + 1)..(reference?length - 1)]}" />
+										<#assign name = "${reference[(reference?last_index_of('/') + 1)..(reference?length - 1)]}" />
 
 										<#assign
-											methodReturnType = "${schemaName}Collection"
-											methodReturnValue = "${schemaName}Collection<${schemaName}>"
+											methodReturnType = "${name}Collection"
+											methodReturnValue = "${name}Collection<${name}>"
 										/>
 									</#if>
 								</#if>
@@ -159,11 +159,11 @@ public class ${resourceName}ResourceImpl implements ${resourceName}Resource {
 								<#assign reference = "${schema.reference}" />
 
 								<#if reference?contains("/schemas/")>
-									<#assign schemaName = "${reference[(reference?last_index_of('/') + 1)..(reference?length - 1)]}" />
+									<#assign name = "${reference[(reference?last_index_of('/') + 1)..(reference?length - 1)]}" />
 
 									<#assign
-										methodReturnType = "${schemaName}"
-										methodReturnValue = "${schemaName}"
+										methodReturnType = "${name}"
+										methodReturnValue = "${name}"
 									/>
 								</#if>
 							</#if>
@@ -187,36 +187,38 @@ public class ${resourceName}ResourceImpl implements ${resourceName}Resource {
 
 		<#assign name = "${name?replace(' ', '')}" />
 
-		<#if stringUtil.equals(methodReturnType, "Response")>
-			<#assign template>
-				@Override
-				public ${methodReturnValue} ${name}(${methodParameters}) throws Exception {
-					Response.ResponseBuilder responseBuilder = Response.ok();
+		<#if stringUtil.equals(methodReturnType, schemaName) || stringUtil.equals(methodReturnType, schemaName + "Collection")>
+			<#if stringUtil.equals(methodReturnType, "Response")>
+				<#assign template>
+					@Override
+					public ${methodReturnValue} ${name}(${methodParameters}) throws Exception {
+						Response.ResponseBuilder responseBuilder = Response.ok();
 
-					return responseBuilder.build();
-				}
-			</#assign>
-		<#elseif methodReturnValue?contains("Collection<")>
-			<#assign template>
-				@Override
-				public ${methodReturnValue} ${name}(${methodParameters}) throws Exception {
-					return new ${methodReturnType}(Collections.emptyList(), 0);
-				}
-			</#assign>
-		<#else>
-			<#assign template>
-				@Override
-				public ${methodReturnValue} ${name}(${methodParameters}) throws Exception {
-					return new ${methodReturnType}();
-				}
-			</#assign>
-		</#if>
-
-		<#list template?split("\n") as line>
-			<#if line?trim?has_content>
-${line?replace("^\t\t\t", "", "r")}
+						return responseBuilder.build();
+					}
+				</#assign>
+			<#elseif methodReturnValue?contains("Collection<")>
+				<#assign template>
+					@Override
+					public ${methodReturnValue} ${name}(${methodParameters}) throws Exception {
+						return new ${methodReturnType}(Collections.emptyList(), 0);
+					}
+				</#assign>
+			<#else>
+				<#assign template>
+					@Override
+					public ${methodReturnValue} ${name}(${methodParameters}) throws Exception {
+						return new ${methodReturnType}();
+					}
+				</#assign>
 			</#if>
-		</#list>
+
+			<#list template?split("\n") as line>
+				<#if line?trim?has_content>
+${line?replace("^\t\t\t\t", "", "r")}
+				</#if>
+			</#list>
+		</#if>
 	</#list>
 
 }

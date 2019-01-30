@@ -75,7 +75,7 @@ public class BlogPostingResourceImpl implements BlogPostingResource {
 
 			blogPostings.add(blogPosting);
 		}
-		
+
 		int count = _blogsEntryService.getGroupEntriesCount(
 			group.getGroupId(), WorkflowConstants.STATUS_APPROVED);
 

@@ -35,6 +35,8 @@ import org.jboss.arquillian.test.spi.event.suite.BeforeTestLifecycleEvent;
 import org.jboss.arquillian.test.spi.execution.SkippedTestExecutionException;
 
 import org.junit.AssumptionViolatedException;
+import org.junit.Test;
+import org.junit.internal.runners.statements.ExpectException;
 import org.junit.internal.runners.statements.Fail;
 import org.junit.rules.MethodRule;
 import org.junit.rules.TestRule;
@@ -149,7 +151,7 @@ public class Arquillian extends BlockJUnit4ClassRunner {
 
 		Statement statement = methodInvoker(method, test);
 
-		statement = possiblyExpectingExceptions(method, test, statement);
+		statement = _possiblyExpectingExceptions(method, statement);
 
 		statement = withPotentialTimeout(method, test, statement);
 
@@ -320,6 +322,18 @@ public class Arquillian extends BlockJUnit4ClassRunner {
 			}
 
 		};
+	}
+
+	private Statement _possiblyExpectingExceptions(
+		FrameworkMethod frameworkMethod, Statement statement) {
+
+		Test test = frameworkMethod.getAnnotation(Test.class);
+
+		if ((test == null) || (test.expected() == Test.None.class)) {
+			return statement;
+		}
+
+		return new ExpectException(statement, test.expected());
 	}
 
 	private static final ThreadLocal<TestRunnerAdaptor>

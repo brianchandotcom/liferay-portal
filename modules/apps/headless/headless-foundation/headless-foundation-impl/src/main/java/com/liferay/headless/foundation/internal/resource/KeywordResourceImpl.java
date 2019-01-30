@@ -14,16 +14,27 @@
 
 package com.liferay.headless.foundation.internal.resource;
 
+import com.liferay.asset.kernel.model.AssetTag;
+import com.liferay.asset.kernel.service.AssetTagService;
 import com.liferay.headless.foundation.dto.Keyword;
 import com.liferay.headless.foundation.dto.KeywordCollection;
 import com.liferay.headless.foundation.resource.KeywordResource;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.CompanyService;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.vulcan.context.Pagination;
+import com.liferay.portlet.asset.util.comparator.AssetTagNameComparator;
 
-import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
 import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
 
@@ -46,7 +57,38 @@ public class KeywordResourceImpl implements KeywordResource {
 			Pagination pagination, String size)
 		throws Exception {
 
-		return new KeywordCollection(Collections.emptyList(), 0);
+		Company company = _companyService.getCompanyByWebId(
+			PropsUtil.get(PropsKeys.COMPANY_DEFAULT_WEB_ID));
+
+		Group group = company.getGroup();
+
+		List<AssetTag> assetTags = _assetTagService.getGroupTags(
+			group.getGroupId(), pagination.getStartPosition(),
+			pagination.getEndPosition(), new AssetTagNameComparator());
+
+		Stream<AssetTag> stream = assetTags.stream();
+
+		List<Keyword> keywords = stream.map(
+			assetTag -> {
+				Keyword keyword = new Keyword();
+
+				keyword.setId(assetTag.getTagId());
+
+				return keyword;
+			}
+		).collect(
+			Collectors.toList()
+		);
+
+		int count = _assetTagService.getGroupTagsCount(group.getGroupId());
+
+		return new KeywordCollection(keywords, count);
 	}
+
+	@Reference
+	private AssetTagService _assetTagService;
+
+	@Reference
+	private CompanyService _companyService;
 
 }

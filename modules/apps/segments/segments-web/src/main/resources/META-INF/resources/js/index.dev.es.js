@@ -124,11 +124,6 @@ const altProps = {
 					type: 'string'
 				},
 				{
-					label: 'Organization Count',
-					name: 'organizationCount',
-					type: 'string'
-				},
-				{
 					label: 'Organization IDs',
 					name: 'organizationIds',
 					type: 'string'

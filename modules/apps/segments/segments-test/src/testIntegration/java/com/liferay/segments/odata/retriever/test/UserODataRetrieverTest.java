@@ -684,48 +684,6 @@ public class UserODataRetrieverTest {
 	}
 
 	@Test
-	public void testGetUsersFilterByOrganizationCount() throws Exception {
-		String firstName = RandomTestUtil.randomString();
-
-		_user1 = UserTestUtil.addUser(
-			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
-			RandomTestUtil.randomString(), new long[] {_group1.getGroupId()});
-		_user2 = UserTestUtil.addUser(
-			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
-			RandomTestUtil.randomString(), new long[] {_group1.getGroupId()});
-
-		Organization organization1 = OrganizationTestUtil.addOrganization();
-
-		_organizations.add(organization1);
-
-		_userLocalService.addOrganizationUsers(
-			organization1.getOrganizationId(),
-			new long[] {_user1.getUserId(), _user2.getUserId()});
-
-		Organization organization2 = OrganizationTestUtil.addOrganization();
-
-		_organizations.add(organization2);
-
-		_userLocalService.addOrganizationUser(
-			organization2.getOrganizationId(), _user1);
-
-		String filterString = String.format(
-			"(firstName eq '%s') and (organizationCount eq '%s')", firstName,
-			2);
-
-		int count = _oDataRetriever.getResultsCount(
-			_group1.getCompanyId(), filterString, LocaleUtil.getDefault());
-
-		Assert.assertEquals(1, count);
-
-		List<User> users = _oDataRetriever.getResults(
-			_group1.getCompanyId(), filterString, LocaleUtil.getDefault(), 0,
-			2);
-
-		Assert.assertEquals(_user1, users.get(0));
-	}
-
-	@Test
 	public void testGetUsersFilterByOrganizationIds() throws Exception {
 		String firstName = RandomTestUtil.randomString();
 

@@ -23,37 +23,6 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--RECYCLE_BIN_TABLE-->
-<tr>
-	<td>RECYCLE_BIN_TABLE_NAME</td>
-	<td>//div[contains(@id,'trashSearchContainer')]//tr[contains(.,'${key_assetName}')]/td[2]//a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>RECYCLE_BIN_TABLE_TYPE</td>
-	<td>//div[contains(@id,'trashSearchContainer')]//tr[contains(.,'${key_assetName}')]/td[3]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>RECYCLE_BIN_TABLE_REMOVED_DATE</td>
-	<td>//div[contains(@id,'trashSearchContainer')]//tr[contains(.,'${key_assetName}')]/td[4]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>RECYCLE_BIN_TABLE_REMOVED_BY</td>
-	<td>//div[contains(@id,'trashSearchContainer')]//tr[contains(.,'${key_assetName}')]/td[5]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>RECYCLE_BIN_TABLE_ACTIONS</td>
-	<td>//div[contains(@id,'trashSearchContainer')]//tr[contains(.,'${key_assetName}')]/td[6]//div/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--RECYCLE_BIN_WARNING-->
 <tr>
 	<td>RECYCLE_BIN_WARNING_OVERWRITE_RADIO</td>

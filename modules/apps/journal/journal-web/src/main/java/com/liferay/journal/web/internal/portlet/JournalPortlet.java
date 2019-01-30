@@ -881,7 +881,9 @@ public class JournalPortlet extends MVCPortlet {
 
 			String tempOldUrlTitle = article.getUrlTitle();
 
-			if (actionName.equals("updateArticle")) {
+			if (actionName.equals("previewArticle") ||
+				actionName.equals("updateArticle")) {
+
 				article = _journalArticleService.updateArticle(
 					groupId, folderId, articleId, version, titleMap,
 					descriptionMap, friendlyURLMap, content, ddmStructureKey,

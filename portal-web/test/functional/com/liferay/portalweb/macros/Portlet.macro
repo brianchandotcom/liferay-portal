@@ -347,6 +347,16 @@ definition {
 		}
 	}
 
+	macro updatePortalPropertiesOnSpecificServer {
+		var leadingPortNumber = StringUtil.replace("${nodePort}", "080", "");
+		var bundleIndex = MathUtil.difference("${leadingPortNumber}", "8");
+
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "portal-ext-properties-update -Dapp.server.bundle.index=${bundleIndex} -Dupdate.properties.original=${propertiesOriginal} -Dupdate.properties=${propertiesUpdate}"
+		);
+	}
+
 	macro viewApplicationDecorator {
 		AssertElementPresent(
 			locator1 = "Portlet#PORTLET_BORDER_DECORATOR",

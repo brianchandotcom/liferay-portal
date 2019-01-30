@@ -60,10 +60,10 @@ if (orderByType.equals("asc")) {
 	orderByAsc = true;
 }
 
-OrderByComparator orderByComparator = null;
+OrderByComparator threadOrderByComparator = null;
 
 if (orderByCol.equals("modified-date")) {
-	orderByComparator = new ThreadModifiedDateComparator(orderByAsc);
+	threadOrderByComparator = new ThreadModifiedDateComparator(orderByAsc);
 }
 
 MBListDisplayContext mbListDisplayContext = mbDisplayContextProvider.getMbListDisplayContext(request, response, categoryId);
@@ -398,7 +398,7 @@ request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 					mbListDisplayContext.setThreadEntriesDelta(categoryEntriesSearchContainer);
 
 					threadEntriesSearchContainer.setOrderByCol(orderByCol);
-					threadEntriesSearchContainer.setOrderByComparator(orderByComparator);
+					threadEntriesSearchContainer.setOrderByComparator(threadOrderByComparator);
 					threadEntriesSearchContainer.setOrderByType(orderByType);
 
 					mbListDisplayContext.populateThreadsResultsAndTotal(threadEntriesSearchContainer);
@@ -513,7 +513,7 @@ request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 					mbListDisplayContext.setThreadEntriesDelta(threadEntriesSearchContainer);
 
 					threadEntriesSearchContainer.setOrderByCol(orderByCol);
-					threadEntriesSearchContainer.setOrderByComparator(orderByComparator);
+					threadEntriesSearchContainer.setOrderByComparator(threadOrderByComparator);
 					threadEntriesSearchContainer.setOrderByType(orderByType);
 
 					mbListDisplayContext.populateThreadsResultsAndTotal(threadEntriesSearchContainer);

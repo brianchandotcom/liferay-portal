@@ -27,6 +27,7 @@
 				<div class="col-sm-6">
 					LeftCard
 				</div>
+
 				<div class="col-sm-6">
 					{call .glanceCard}
 						{param cardState: 'border-left-blue' /}
@@ -35,7 +36,7 @@
 							{msg desc=""}description{/msg}
 						{/param}
 						{param headerLink: [
-							'href': 'href', 
+							'href': 'href',
 							'label': $headerLinkLabel ] /}
 						{param headerSubTitle kind="text"}
 							{msg desc=""}published-change-list{/msg}
@@ -49,6 +50,7 @@
 					{/call}
 				</div>
 			</div>
+
 			<div class="row">
 				<div class="col-sm-12">
 					Table
@@ -101,8 +103,7 @@
 		{/call}
 
 	</div>
-
-{/template} 
+{/template}
 
 {template .glanceCardHeader}
 	{@param? headerLink: [

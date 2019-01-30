@@ -7,31 +7,27 @@ import templates from './ChangeList.soy';
 
 class ChangeList extends PortletBase {
 
-    created() {
-        this._getDataRequest(
+	created() {
+		this._getDataRequest(
 			this.urlProductionCollection,
 			response => {
 				if (response) {
-					this.setState(
-						{
-                            description: response.description,
-                            initFetch: true,
-                            headerTitle: response.name,
-                            publishedBy: {
-                                dateTime: response.statusDate,
-                                userIconUrl: '',
-                                userMonogram: 'TT',
-                                userName: response.statusByUserName
-                                
-                            }
-						}
-					);
+					this.description = response.description;
+					this.initFetch = true;
+					this.headerTitle = response.name;
+					this.publishedBy = {
+						dateTime: response.statusDate,
+						userIconUrl: '',
+						userMonogram: 'TT',
+						userName: response.statusByUserName
+
+					};
 				}
 			}
 		);
-    }
+	}
 
-    _getDataRequest(url, callback) {
+	_getDataRequest(url, callback) {
 		let headers = new Headers();
 		headers.append('Content-Type', 'application/json');
 
@@ -39,17 +35,11 @@ class ChangeList extends PortletBase {
 			credentials: 'include',
 			headers,
 			method: 'GET'
-        };
-        
+		};
+
 		fetch(url, request)
-			.then(
-				response => response.json()
-			)
-			.then(
-				response => {
-					callback(response);
-				}
-			)
+			.then(response => response.json())
+			.then(response => callback(response))
 			.catch(
 				(error) => {
 					const message = typeof error === 'string' ?
@@ -64,7 +54,7 @@ class ChangeList extends PortletBase {
 						}
 					);
 				}
-            );
+			);
 	}
 
 }
@@ -77,72 +67,72 @@ class ChangeList extends PortletBase {
  */
 ChangeList.STATE = {
 
-    /**
+	/**
 	 * Card description
 	 *
 	 * @type {String}
 	 */
-    description: Config.string(),
+	description: Config.string(),
 
-    /**
+	/**
 	 * Card header title
 	 *
 	 * @type {String}
 	 */
-    headerTitle: Config.string(),
+	headerTitle: Config.string(),
 
 	/**
 	 * Initial fetch happened?
 	 *
 	 * @type {Boolean}
 	 */
-    initFetch: Config.bool().value(false),
+	initFetch: Config.bool().value(false),
 
 	/**
 	 * Portlet namespace
 	 *
 	 * @type {!String}
 	 */
-    portletNamespace: Config.string().required(),
+	portletNamespace: Config.string().required(),
 
 	/**
-	 * Publised by 
+	 * Publised by
 	 *
 	 * @type {Object}
 	 */
-    publisedBy: Config.shapeOf(
-        {
-            dateTime: Config.string(),
-            userIconUrl: Config.string(),
-            userMonogram: Config.string(),
-            userName: Config.string()
-        }
-    ),
+	publisedBy: Config.shapeOf(
+		{
+			dateTime: Config.string(),
+			userIconUrl: Config.string(),
+			userMonogram: Config.string(),
+			userName: Config.string()
+		}
+	),
 
 	/**
 	 * Api url
 	 *
 	 * @type {!String}
 	 */
-    urlProductionCollection: Config.string().required(),
+	urlProductionCollection: Config.string().required(),
 
-    /**
+	/**
 	 * Portal url
 	 *
 	 * @type {!String}
 	 */
-    urlProductionView: Config.string().required(),
+	urlProductionView: Config.string().required(),
 
-    /**
+	/**
 	 * Path to images.
 	 *
 	 * @type {!String}
 	 */
 	spritemap: Config.string().required()
 
-}
+};
 
 Soy.register(ChangeList, templates);
 
 export {ChangeList};
-export default ChangeList; 
+export default ChangeList;

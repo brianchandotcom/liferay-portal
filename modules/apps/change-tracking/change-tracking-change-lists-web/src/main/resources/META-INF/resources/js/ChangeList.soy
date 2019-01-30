@@ -122,7 +122,9 @@
 					<div class="glance-card-sheet-title">{$headerTitle}</div>
 				{/if}
 				{if $headerLink}
-					<a href="{$headerLink.href}" class="stick-to-bottom" onclick="">{$headerLink.label}</a>
+					<div class="header-line">
+						<a href="{$headerLink.href}"  onclick="">{$headerLink.label}</a>
+					</div>
 				{/if}
 			</div>
 		</div>

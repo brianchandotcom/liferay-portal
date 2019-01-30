@@ -33,11 +33,6 @@
 	padding-top: 0.5rem;
 }
 
-.stick-to-bottom {
-	bottom: 0;
-	position: absolute;
-}
-
 .stick-to-right {
 	position: absolute;
 	right: 0;
@@ -81,3 +76,10 @@
 	border-left-color: #28A745;
 	border-left-width: 0.45rem;
 } 
+
+.header-line {
+    display: block;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    position: relative;
+}

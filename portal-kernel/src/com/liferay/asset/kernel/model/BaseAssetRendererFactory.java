@@ -221,7 +221,7 @@ public abstract class BaseAssetRendererFactory<T>
 
 		String value = LanguageUtil.get(locale, key, null);
 
-		if (value == null) {
+		if ((value == null) && (getPortletId() != null)) {
 			PortletBag portletBag = PortletBagPool.get(getPortletId());
 
 			ResourceBundle resourceBundle = portletBag.getResourceBundle(

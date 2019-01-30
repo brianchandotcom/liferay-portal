@@ -14,8 +14,8 @@
 
 package com.liferay.portal.search.solr7.internal.stats;
 
-import com.liferay.portal.kernel.search.Stats;
-import com.liferay.portal.kernel.search.StatsResults;
+import com.liferay.portal.search.stats.StatsRequest;
+import com.liferay.portal.search.stats.StatsResponse;
 
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.response.FieldStatsInfo;
@@ -25,8 +25,8 @@ import org.apache.solr.client.solrj.response.FieldStatsInfo;
  */
 public interface StatsTranslator {
 
-	public StatsResults translate(FieldStatsInfo fieldStatsInfo, Stats stats);
+	public void populateRequest(SolrQuery solrQuery, StatsRequest statsRequest);
 
-	public void translate(SolrQuery solrQuery, Stats stats);
+	public StatsResponse translateResponse(FieldStatsInfo fieldStatsInfo);
 
 }

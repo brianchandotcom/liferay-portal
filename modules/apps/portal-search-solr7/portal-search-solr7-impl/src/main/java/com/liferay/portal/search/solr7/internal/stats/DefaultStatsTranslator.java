@@ -15,16 +15,21 @@
 package com.liferay.portal.search.solr7.internal.stats;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.search.Stats;
-import com.liferay.portal.kernel.search.StatsResults;
+import com.liferay.portal.search.stats.StatsRequest;
+import com.liferay.portal.search.stats.StatsResponse;
+import com.liferay.portal.search.stats.StatsResponseBuilder;
+import com.liferay.portal.search.stats.StatsResponseBuilderFactory;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.response.FieldStatsInfo;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Miguel Angelo Caldas Gallindo
@@ -33,121 +38,106 @@ import org.osgi.service.component.annotations.Component;
 public class DefaultStatsTranslator implements StatsTranslator {
 
 	@Override
-	public StatsResults translate(FieldStatsInfo fieldStatsInfo, Stats stats) {
-		String field = stats.getField();
+	public void populateRequest(
+		SolrQuery solrQuery, StatsRequest statsRequest) {
 
-		StatsResults statsResults = new StatsResults(field);
+		List<String> solrStats = new ArrayList<>(9);
 
-		if (stats.isCount()) {
-			Long count = fieldStatsInfo.getCount();
-
-			if (count != null) {
-				statsResults.setCount(count);
-			}
+		if (statsRequest.isCardinality()) {
+			solrStats.add("cardinality");
 		}
 
-		if (stats.isMax()) {
-			Object max = fieldStatsInfo.getMax();
-
-			if (max != null) {
-				statsResults.setMax(toDouble(max));
-			}
-		}
-
-		if (stats.isMean()) {
-			Object mean = fieldStatsInfo.getMean();
-
-			if (mean != null) {
-				statsResults.setMean(toDouble(mean));
-			}
-		}
-
-		if (stats.isMin()) {
-			Object min = fieldStatsInfo.getMin();
-
-			if (min != null) {
-				statsResults.setMin(toDouble(min));
-			}
-		}
-
-		if (stats.isMissing()) {
-			Long missing = fieldStatsInfo.getMissing();
-
-			if (missing != null) {
-				statsResults.setMissing(missing.intValue());
-			}
-		}
-
-		if (stats.isStandardDeviation()) {
-			Double stddev = fieldStatsInfo.getStddev();
-
-			if (stddev != null) {
-				statsResults.setStandardDeviation(stddev);
-			}
-		}
-
-		if (stats.isSum()) {
-			Object sum = fieldStatsInfo.getSum();
-
-			if (sum != null) {
-				statsResults.setSum(toDouble(sum));
-			}
-		}
-
-		if (stats.isSumOfSquares()) {
-			Double sumOfSquares = fieldStatsInfo.getSumOfSquares();
-
-			if (sumOfSquares != null) {
-				statsResults.setSumOfSquares(sumOfSquares);
-			}
-		}
-
-		return statsResults;
-	}
-
-	@Override
-	public void translate(SolrQuery solrQuery, Stats stats) {
-		if (!stats.isEnabled()) {
-			return;
-		}
-
-		List<String> solrStats = new ArrayList<>(8);
-
-		if (stats.isCount()) {
+		if (statsRequest.isCount()) {
 			solrStats.add("count");
 		}
 
-		if (stats.isMax()) {
+		if (statsRequest.isMax()) {
 			solrStats.add("max");
 		}
 
-		if (stats.isMean()) {
+		if (statsRequest.isMean()) {
 			solrStats.add("mean");
 		}
 
-		if (stats.isMin()) {
+		if (statsRequest.isMin()) {
 			solrStats.add("min");
 		}
 
-		if (stats.isMissing()) {
+		if (statsRequest.isMissing()) {
 			solrStats.add("missing");
 		}
 
-		if (stats.isStandardDeviation()) {
+		if (statsRequest.isStandardDeviation()) {
 			solrStats.add("stddev");
 		}
 
-		if (stats.isSum()) {
+		if (statsRequest.isSum()) {
 			solrStats.add("sum");
 		}
 
-		if (stats.isSumOfSquares()) {
+		if (statsRequest.isSumOfSquares()) {
 			solrStats.add("sumOfSquares");
 		}
 
-		String fieldStatistics = buildField(stats.getField(), solrStats);
+		if (solrStats.isEmpty()) {
+			return;
+		}
+
+		String fieldStatistics = buildField(statsRequest.getField(), solrStats);
 
 		solrQuery.setGetFieldStatistics(fieldStatistics);
+	}
+
+	@Override
+	public StatsResponse translateResponse(FieldStatsInfo fieldStatsInfo) {
+		StatsResponseBuilder statsResponseBuilder =
+			_statsResponseBuilderFactory.getStatsResponseBuilder();
+
+		String field = fieldStatsInfo.getName();
+
+		statsResponseBuilder.field(field);
+
+		copy(fieldStatsInfo::getCardinality, statsResponseBuilder::cardinality);
+		copy(fieldStatsInfo::getCount, statsResponseBuilder::count);
+		copy(fieldStatsInfo::getMissing, statsResponseBuilder::missing);
+		copy(
+			fieldStatsInfo::getStddev, statsResponseBuilder::standardDeviation);
+		copy(
+			fieldStatsInfo::getSumOfSquares,
+			statsResponseBuilder::sumOfSquares);
+
+		copyDouble(fieldStatsInfo::getMax, statsResponseBuilder::max);
+		copyDouble(fieldStatsInfo::getMean, statsResponseBuilder::mean);
+		copyDouble(fieldStatsInfo::getMin, statsResponseBuilder::min);
+		copyDouble(fieldStatsInfo::getSum, statsResponseBuilder::sum);
+
+		return statsResponseBuilder.build();
+	}
+
+	protected static <T> void copy(Supplier<T> from, Consumer<T> to) {
+		T t = from.get();
+
+		if (t != null) {
+			to.accept(t);
+		}
+	}
+
+	protected static void copyDouble(Supplier<?> from, Consumer<Double> to) {
+		Object t = from.get();
+
+		if (t != null) {
+			to.accept(toDouble(t));
+		}
+	}
+
+	protected static double toDouble(Object value) {
+		if (value instanceof Number) {
+			Number number = (Number)value;
+
+			return number.doubleValue();
+		}
+
+		throw new IllegalArgumentException("Only numeric fields are supported");
 	}
 
 	protected String buildField(String field, List<String> solrStats) {
@@ -155,7 +145,7 @@ public class DefaultStatsTranslator implements StatsTranslator {
 			return field;
 		}
 
-		StringBundler sb = new StringBundler(solrStats.size() * 3 + 2);
+		StringBundler sb = new StringBundler(solrStats.size() * 3 + 3);
 
 		sb.append("{!");
 
@@ -174,14 +164,13 @@ public class DefaultStatsTranslator implements StatsTranslator {
 		return sb.toString();
 	}
 
-	protected double toDouble(Object value) {
-		if (value instanceof Number) {
-			Number number = (Number)value;
+	@Reference(unbind = "-")
+	protected void setStatsResponseBuilderFactory(
+		StatsResponseBuilderFactory statsResponseBuilderFactory) {
 
-			return number.doubleValue();
-		}
-
-		throw new IllegalArgumentException("Only numeric fields are supported");
+		_statsResponseBuilderFactory = statsResponseBuilderFactory;
 	}
+
+	private StatsResponseBuilderFactory _statsResponseBuilderFactory;
 
 }

@@ -59,6 +59,8 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.constants.SearchContextAttributes;
 import com.liferay.portal.search.legacy.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.legacy.searcher.SearchResponseBuilderFactory;
+import com.liferay.portal.search.legacy.stats.StatsRequestBuilderFactory;
+import com.liferay.portal.search.legacy.stats.StatsResultsTranslator;
 import com.liferay.portal.search.searcher.SearchRequest;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.searcher.SearchResponseBuilder;
@@ -71,6 +73,9 @@ import com.liferay.portal.search.solr7.internal.facet.SolrFacetFieldCollector;
 import com.liferay.portal.search.solr7.internal.facet.SolrFacetQueryCollector;
 import com.liferay.portal.search.solr7.internal.groupby.GroupByTranslator;
 import com.liferay.portal.search.solr7.internal.stats.StatsTranslator;
+import com.liferay.portal.search.stats.StatsRequest;
+import com.liferay.portal.search.stats.StatsRequestBuilder;
+import com.liferay.portal.search.stats.StatsResponse;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -466,7 +471,19 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 		Map<String, Stats> statsMap = searchContext.getStats();
 
 		for (Stats stats : statsMap.values()) {
-			_statsTranslator.translate(solrQuery, stats);
+			StatsRequestBuilder statsRequestBuilder =
+				_statsRequestBuilderFactory.getStatsRequestBuilder(stats);
+
+			_statsTranslator.populateRequest(
+				solrQuery, statsRequestBuilder.build());
+		}
+	}
+
+	protected void addStatsRequests(
+		SolrQuery solrQuery, SearchRequest searchRequest) {
+
+		for (StatsRequest statsRequest : searchRequest.getStatsRequests()) {
+			_statsTranslator.populateRequest(solrQuery, statsRequest);
 		}
 	}
 
@@ -489,6 +506,7 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 		}
 
 		addStats(solrQuery, searchContext);
+		addStatsRequests(solrQuery, searchRequest);
 
 		if (!count) {
 			addFacets(solrQuery, searchContext);
@@ -553,6 +571,13 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 		QueryResponse queryResponse = doSearch(
 			searchContext, query, searchContext.getStart(),
 			searchContext.getEnd(), true);
+
+		Map<String, StatsResponse> statsResponseMap = getStatusResponseMap(
+			queryResponse);
+
+		if (statsResponseMap != null) {
+			updateStatsResponses(searchContext, statsResponseMap);
+		}
 
 		SolrDocumentList solrDocumentList = queryResponse.getResults();
 
@@ -664,6 +689,32 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 		return Field.getSortFieldName(sort, scoreFieldName);
 	}
 
+	protected StatsResults getStatsResults(StatsResponse statsResponse) {
+		return _statsResultsTranslator.translate(statsResponse);
+	}
+
+	protected Map<String, StatsResponse> getStatusResponseMap(
+		QueryResponse queryResponse) {
+
+		Map<String, FieldStatsInfo> fieldStatsInfoMap =
+			queryResponse.getFieldStatsInfo();
+
+		if (MapUtil.isEmpty(fieldStatsInfoMap)) {
+			return null;
+		}
+
+		Map<String, StatsResponse> statsResponseMap = new LinkedHashMap<>();
+
+		for (FieldStatsInfo fieldStatsInfo : fieldStatsInfoMap.values()) {
+			StatsResponse statsResponse = _statsTranslator.translateResponse(
+				fieldStatsInfo);
+
+			statsResponseMap.put(fieldStatsInfo.getName(), statsResponse);
+		}
+
+		return statsResponseMap;
+	}
+
 	protected void populateResponse(
 		String requestString, String responseString,
 		SearchContext searchContext) {
@@ -685,7 +736,15 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 
 		updateFacetCollectors(queryResponse, searchContext);
 		updateGroupedHits(queryResponse, searchContext, query, hits);
-		updateStatsResults(searchContext, queryResponse, hits);
+
+		Map<String, StatsResponse> statsResponseMap = getStatusResponseMap(
+			queryResponse);
+
+		if (statsResponseMap != null) {
+			updateStatsResults(hits, statsResponseMap, searchContext);
+
+			updateStatsResponses(searchContext, statsResponseMap);
+		}
 
 		hits.setQuery(query);
 		hits.setSearchTime(queryResponse.getQTime());
@@ -814,6 +873,20 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 	}
 
 	@Reference(unbind = "-")
+	protected void setStatsRequestBuilderFactory(
+		StatsRequestBuilderFactory statsRequestBuilderFactory) {
+
+		_statsRequestBuilderFactory = statsRequestBuilderFactory;
+	}
+
+	@Reference(unbind = "-")
+	protected void setStatsResultsTranslator(
+		StatsResultsTranslator statsResultsTranslator) {
+
+		_statsResultsTranslator = statsResultsTranslator;
+	}
+
+	@Reference(unbind = "-")
 	protected void setStatsTranslator(StatsTranslator statsTranslator) {
 		_statsTranslator = statsTranslator;
 	}
@@ -886,31 +959,31 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 		}
 	}
 
+	protected void updateStatsResponses(
+		SearchContext searchContext,
+		Map<String, StatsResponse> statsResponseMap) {
+
+		SearchRequestBuilder searchRequestBuilder = _getSearchRequestBuilder(
+			searchContext);
+
+		SearchRequest searchRequest = searchRequestBuilder.build();
+
+		if (!ListUtil.isEmpty(searchRequest.getStatsRequests())) {
+			SearchResponseBuilder searchResponseBuilder =
+				_getSearchResponseBuilder(searchContext);
+
+			searchResponseBuilder.statsResponseMap(statsResponseMap);
+		}
+	}
+
 	protected void updateStatsResults(
-		SearchContext searchContext, QueryResponse queryResponse, Hits hits) {
+		Hits hits, Map<String, StatsResponse> statsResponseMap,
+		SearchContext searchContext) {
 
-		Map<String, Stats> statsMap = searchContext.getStats();
-
-		if (statsMap.isEmpty()) {
-			return;
-		}
-
-		Map<String, FieldStatsInfo> fieldsStatsInfo =
-			queryResponse.getFieldStatsInfo();
-
-		if (MapUtil.isEmpty(fieldsStatsInfo)) {
-			return;
-		}
-
-		for (Stats stats : statsMap.values()) {
-			if (!stats.isEnabled()) {
-				continue;
-			}
-
-			StatsResults statsResults = _statsTranslator.translate(
-				fieldsStatsInfo.get(stats.getField()), stats);
-
-			hits.addStatsResults(statsResults);
+		if (!MapUtil.isEmpty(searchContext.getStats())) {
+			statsResponseMap.forEach(
+				(key, statsResponse) -> hits.addStatsResults(
+					getStatsResults(statsResponse)));
 		}
 	}
 
@@ -961,6 +1034,8 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 	private SearchResponseBuilderFactory _searchResponseBuilderFactory;
 	private SolrClientManager _solrClientManager;
 	private volatile SolrConfiguration _solrConfiguration;
+	private StatsRequestBuilderFactory _statsRequestBuilderFactory;
+	private StatsResultsTranslator _statsResultsTranslator;
 	private StatsTranslator _statsTranslator;
 
 }

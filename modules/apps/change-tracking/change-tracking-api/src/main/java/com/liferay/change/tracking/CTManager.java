@@ -109,7 +109,9 @@ public interface CTManager {
 
 	/**
 	 * Registers a model change into the change tracking framework in the
-	 * context of the current user's active change collection.
+	 * context of the current user's active change collection. Throws
+	 * <code>DuplicateCTEntryException</code> if a change tracking entry already
+	 * exists with the same <code>classNameId</code> and <code> classPK</code>.
 	 *
 	 * @param  userId the primary key of the user
 	 * @param  classNameId the primary key of the changed version model's class
@@ -122,6 +124,27 @@ public interface CTManager {
 	public Optional<CTEntry> registerModelChange(
 			long userId, long classNameId, long classPK, long resourcePrimKey,
 			int changeType)
+		throws CTException;
+
+	/**
+	 * Registers a model change into the change tracking framework in the
+	 * context of the current user's active change collection. Throws
+	 * <code>DuplicateCTEntryException</code> if a change tracking entry already
+	 * exists with the same <code>classNameId</code> and <code> classPK</code>,
+	 * except when the <code>force</code> attribute is <code>true</code>.
+	 *
+	 * @param  userId the primary key of the user
+	 * @param  classNameId the primary key of the changed version model's class
+	 * @param  classPK the primary key of the changed version model
+	 * @param  resourcePrimKey the primary key of the changed resource model
+	 * @param  changeType the type of the model change
+	 * @param  force forces to override an existing change entry
+	 * @return the change tracking entry representing the registered model
+	 *         change
+	 */
+	public Optional<CTEntry> registerModelChange(
+			long userId, long classNameId, long classPK, long resourcePrimKey,
+			int changeType, boolean force)
 		throws CTException;
 
 	/**

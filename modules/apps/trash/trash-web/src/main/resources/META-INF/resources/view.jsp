@@ -16,11 +16,6 @@
 
 <%@ include file="/init.jsp" %>
 
-<clay:navigation-bar
-	inverted="<%= true %>"
-	navigationItems="<%= trashDisplayContext.getNavigationItems() %>"
-/>
-
 <%
 TrashManagementToolbarDisplayContext trashManagementToolbarDisplayContext = new TrashManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, trashDisplayContext);
 %>

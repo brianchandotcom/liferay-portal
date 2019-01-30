@@ -24,11 +24,11 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  */
 @ExtendedObjectClassDefinition(category = "sharing")
 @Meta.OCD(
-	id = "com.liferay.sharing.internal.configuration.SharingConfiguration",
+	id = "com.liferay.sharing.internal.configuration.SharingSystemConfiguration",
 	localization = "content/Language", name = "sharing-configuration-name"
 )
 @ProviderType
-public interface SharingConfiguration {
+public interface SharingSystemConfiguration {
 
 	/**
 	 * Sets the interval in minutes of how often {@code

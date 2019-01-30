@@ -18,13 +18,6 @@
 
 <%
 TrashHandler trashHandler = trashDisplayContext.getTrashHandler();
-
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(trashDisplayContext.getViewContentRedirectURL());
-
-TrashRenderer trashRenderer = trashDisplayContext.getTrashRenderer();
-
-renderResponse.setTitle(trashRenderer.getTitle(locale));
 %>
 
 <liferay-util:include page="/restore_path.jsp" servletContext="<%= application %>" />
@@ -183,6 +176,16 @@ renderResponse.setTitle(trashRenderer.getTitle(locale));
 		</div>
 	</c:when>
 	<c:otherwise>
+
+		<%
+		portletDisplay.setShowBackIcon(true);
+		portletDisplay.setURLBack(trashDisplayContext.getViewContentRedirectURL());
+
+		TrashRenderer trashRenderer = trashDisplayContext.getTrashRenderer();
+
+		renderResponse.setTitle(trashRenderer.getTitle(locale));
+		%>
+
 		<div class="container-fluid-1280">
 			<aui:fieldset-group markupView="lexicon">
 				<aui:fieldset>

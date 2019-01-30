@@ -18,11 +18,6 @@
 
 <%
 TrashContainerModelDisplayContext trashContainerModelDisplayContext = new TrashContainerModelDisplayContext(liferayPortletRequest, liferayPortletResponse);
-
-portletDisplay.setShowBackIcon(trashContainerModelDisplayContext.isShowBackIcon());
-portletDisplay.setURLBack(trashContainerModelDisplayContext.getBackURL());
-
-renderResponse.setTitle(LanguageUtil.format(request, "select-x", trashContainerModelDisplayContext.getContainerModelName()));
 %>
 
 <div class="alert alert-block">

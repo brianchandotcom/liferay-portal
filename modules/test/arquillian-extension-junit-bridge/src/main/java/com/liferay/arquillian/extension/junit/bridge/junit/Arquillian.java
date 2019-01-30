@@ -41,6 +41,7 @@ import org.junit.AssumptionViolatedException;
 import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.internal.runners.model.EachTestNotifier;
 import org.junit.internal.runners.statements.ExpectException;
 import org.junit.internal.runners.statements.Fail;
 import org.junit.internal.runners.statements.FailOnTimeout;
@@ -251,7 +252,25 @@ public class Arquillian extends BlockJUnit4ClassRunner {
 			runNotifier.fireTestIgnored(description);
 		}
 		else {
-			runLeaf(methodBlock(frameworkMethod), description, runNotifier);
+			Statement statement = methodBlock(frameworkMethod);
+
+			EachTestNotifier eachTestNotifier = new EachTestNotifier(
+				runNotifier, description);
+
+			eachTestNotifier.fireTestStarted();
+
+			try {
+				statement.evaluate();
+			}
+			catch (org.junit.internal.AssumptionViolatedException ave) {
+				eachTestNotifier.addFailedAssumption(ave);
+			}
+			catch (Throwable e) {
+				eachTestNotifier.addFailure(e);
+			}
+			finally {
+				eachTestNotifier.fireTestFinished();
+			}
 		}
 	}
 

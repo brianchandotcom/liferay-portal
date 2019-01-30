@@ -23,6 +23,8 @@ import java.util.List;
  */
 public interface FragmentCollectionContributor {
 
+	public String getFragmentCollectionKey();
+
 	public List<FragmentEntry> getFragmentEntries();
 
 	public String getName();

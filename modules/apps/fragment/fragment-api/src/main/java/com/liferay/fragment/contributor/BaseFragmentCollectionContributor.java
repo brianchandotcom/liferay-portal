@@ -92,6 +92,7 @@ public abstract class BaseFragmentCollectionContributor
 		JSONObject jsonObject = _getStructure(path + "/fragment.json");
 
 		String name = jsonObject.getString("name");
+		String fragmentEntryKey = jsonObject.getString("fragmentEntryKey");
 		String css = _getFileContent(path, jsonObject.getString("cssPath"));
 		String html = _getFileContent(path, jsonObject.getString("htmlPath"));
 		String js = _getFileContent(path, jsonObject.getString("jsPath"));
@@ -101,6 +102,7 @@ public abstract class BaseFragmentCollectionContributor
 		FragmentEntry fragmentEntry =
 			FragmentEntryLocalServiceUtil.createFragmentEntry(0L);
 
+		fragmentEntry.setFragmentEntryKey(fragmentEntryKey);
 		fragmentEntry.setName(name);
 		fragmentEntry.setCss(css);
 		fragmentEntry.setHtml(html);

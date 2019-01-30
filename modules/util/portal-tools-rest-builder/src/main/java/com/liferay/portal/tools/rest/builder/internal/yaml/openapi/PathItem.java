@@ -39,20 +39,12 @@ public class PathItem {
 		return _options;
 	}
 
-	public Patch getPatch() {
-		return _patch;
-	}
-
 	public Post getPost() {
 		return _post;
 	}
 
 	public Put getPut() {
 		return _put;
-	}
-
-	public Trace getTrace() {
-		return _trace;
 	}
 
 	public void setDelete(Delete delete) {
@@ -75,10 +67,6 @@ public class PathItem {
 		_options = options;
 	}
 
-	public void setPatch(Patch patch) {
-		_patch = patch;
-	}
-
 	public void setPost(Post post) {
 		_post = post;
 	}
@@ -87,18 +75,12 @@ public class PathItem {
 		_put = put;
 	}
 
-	public void setTrace(Trace trace) {
-		_trace = trace;
-	}
-
 	private Delete _delete;
 	private String _description;
 	private Get _get;
 	private Head _head;
 	private Options _options;
-	private Patch _patch;
 	private Post _post;
 	private Put _put;
-	private Trace _trace;
 
 }

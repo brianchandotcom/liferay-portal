@@ -158,91 +158,6 @@ public class Arquillian extends BlockJUnit4ClassRunner {
 	}
 
 	@Override
-	@SuppressWarnings("deprecation")
-	protected Statement methodBlock(final FrameworkMethod method) {
-		Object testObject = null;
-
-		try {
-			TestClass testClass = getTestClass();
-
-			Constructor<?> constructor = testClass.getOnlyConstructor();
-
-			testObject = constructor.newInstance();
-		}
-		catch (ReflectiveOperationException roe) {
-			if (roe instanceof InvocationTargetException) {
-				return new Fail(roe.getCause());
-			}
-
-			return new Fail(roe);
-		}
-
-		final Object test = testObject;
-
-		Statement statement = _methodInvoker(method, test);
-
-		statement = _possiblyExpectingExceptions(method, statement);
-
-		statement = _withPotentialTimeout(method, statement);
-
-		final Statement oldStatement = statement;
-
-		for (MethodRule methodRule : _getMethodRules(test)) {
-			statement = methodRule.apply(statement, method, test);
-		}
-
-		final Statement newStatement = statement;
-
-		return new Statement() {
-
-			@Override
-			public void evaluate() throws Throwable {
-				final AtomicBoolean flag = new AtomicBoolean();
-
-				Throwable throwable = null;
-
-				try {
-					_testRunnerAdaptor.fireCustomLifecycle(
-						new BeforeTestLifecycleEvent(
-							test, method.getMethod(),
-							() -> {
-								flag.set(true);
-
-								newStatement.evaluate();
-							}));
-
-					if (flag.get() == false) {
-						oldStatement.evaluate();
-					}
-				}
-				catch (Throwable t) {
-					throwable = t;
-				}
-				finally {
-					try {
-						_testRunnerAdaptor.fireCustomLifecycle(
-							new AfterTestLifecycleEvent(
-								test, method.getMethod(),
-								LifecycleMethodExecutor.NO_OP));
-					}
-					catch (Throwable t) {
-						if (throwable != null) {
-							t.addSuppressed(throwable);
-						}
-
-						throwable = t;
-					}
-				}
-
-				if (throwable != null) {
-					throw throwable;
-				}
-			}
-
-		};
-	}
-
-	@Override
 	protected void runChild(
 		FrameworkMethod frameworkMethod, RunNotifier runNotifier) {
 
@@ -252,7 +167,7 @@ public class Arquillian extends BlockJUnit4ClassRunner {
 			runNotifier.fireTestIgnored(description);
 		}
 		else {
-			Statement statement = methodBlock(frameworkMethod);
+			Statement statement = _methodBlock(frameworkMethod);
 
 			EachTestNotifier eachTestNotifier = new EachTestNotifier(
 				runNotifier, description);
@@ -340,6 +255,89 @@ public class Arquillian extends BlockJUnit4ClassRunner {
 				testObject, Rule.class, MethodRule.class));
 
 		return methodRules;
+	}
+
+	private Statement _methodBlock(FrameworkMethod frameworkMethod) {
+		Object testObject = null;
+
+		try {
+			TestClass testClass = getTestClass();
+
+			Constructor<?> constructor = testClass.getOnlyConstructor();
+
+			testObject = constructor.newInstance();
+		}
+		catch (ReflectiveOperationException roe) {
+			if (roe instanceof InvocationTargetException) {
+				return new Fail(roe.getCause());
+			}
+
+			return new Fail(roe);
+		}
+
+		final Object test = testObject;
+
+		Statement statement = _methodInvoker(frameworkMethod, test);
+
+		statement = _possiblyExpectingExceptions(frameworkMethod, statement);
+
+		statement = _withPotentialTimeout(frameworkMethod, statement);
+
+		final Statement oldStatement = statement;
+
+		for (MethodRule methodRule : _getMethodRules(test)) {
+			statement = methodRule.apply(statement, frameworkMethod, test);
+		}
+
+		final Statement newStatement = statement;
+
+		return new Statement() {
+
+			@Override
+			public void evaluate() throws Throwable {
+				final AtomicBoolean flag = new AtomicBoolean();
+
+				Throwable throwable = null;
+
+				try {
+					_testRunnerAdaptor.fireCustomLifecycle(
+						new BeforeTestLifecycleEvent(
+							test, frameworkMethod.getMethod(),
+							() -> {
+								flag.set(true);
+
+								newStatement.evaluate();
+							}));
+
+					if (flag.get() == false) {
+						oldStatement.evaluate();
+					}
+				}
+				catch (Throwable t) {
+					throwable = t;
+				}
+				finally {
+					try {
+						_testRunnerAdaptor.fireCustomLifecycle(
+							new AfterTestLifecycleEvent(
+								test, frameworkMethod.getMethod(),
+								LifecycleMethodExecutor.NO_OP));
+					}
+					catch (Throwable t) {
+						if (throwable != null) {
+							t.addSuppressed(throwable);
+						}
+
+						throwable = t;
+					}
+				}
+
+				if (throwable != null) {
+					throw throwable;
+				}
+			}
+
+		};
 	}
 
 	private Statement _methodInvoker(

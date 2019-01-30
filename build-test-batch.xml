@@ -4418,6 +4418,7 @@ log.sanitizer.enabled=false</echo>
 
 			<test-set-up>
 				<set-tomcat-version-number liferay.portal.bundle="${test.portal.bundle.version}" />
+				<propertycopy from="app.server.${app.server.type}.bin.dir" name="test.app.server.bin.dir" />
 
 				<if>
 					<and>
@@ -4428,8 +4429,6 @@ log.sanitizer.enabled=false</echo>
 						<matches pattern="https?://" string="${test.sql.zip.url}" />
 					</and>
 					<then>
-						<propertycopy from="app.server.${app.server.type}.bin.dir" name="test.app.server.bin.dir" />
-
 						<antcall inheritAll="false" target="prepare-test-bundle">
 							<param name="app.server.type" value="${app.server.type}" />
 							<param name="test.app.server.bin.dir" value="${test.app.server.bin.dir}" />
@@ -4465,6 +4464,37 @@ log.sanitizer.enabled=false</echo>
 							<prepare-test-environment app.server.type="${app.server.type}" />
 						</then>
 					</elseif>
+				</if>
+
+				<property name="max.metaspace.size" value="-XX:MaxMetaspaceSize=1024m" />
+				<replaceregexp
+					file="${test.app.server.bin.dir}/setenv.sh"
+					flags="gi"
+					match="-XX:MaxMetaspaceSize=[0-9]+[a-zA-Z]+"
+					replace="${max.metaspace.size}"
+				/>
+				<replaceregexp
+					file="${test.app.server.bin.dir}/setenv.bat"
+					flags="gi"
+					match="-XX:MaxMetaspaceSize=[0-9]+[a-zA-Z]+"
+					replace="${max.metaspace.size}"
+				/>
+				<if>
+					<not>
+						<or>
+							<resourcecontains
+								resource="${test.app.server.bin.dir}/setenv.sh"
+								substring="${max.metaspace.size}"
+							/>
+							<resourcecontains
+								resource="${test.app.server.bin.dir}/setenv.bat"
+								substring="${max.metaspace.size}"
+							/>
+						</or>
+					</not>
+					<then>
+						<fail message="Unable to set custom max metaspace of &quot;${max.metaspace.size}&quot; for ${test.app.server.bin.dir}/setenv.sh and setenv.bat." />
+					</then>
 				</if>
 			</test-set-up>
 		</run-batch-test>

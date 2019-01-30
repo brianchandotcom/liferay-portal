@@ -20,7 +20,6 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.JavaConstants;
 
 import java.util.Objects;
 
@@ -40,10 +39,7 @@ import org.osgi.service.component.annotations.Reference;
 public class ContentPageEditorDisplayContextProvider {
 
 	public ContentPageEditorDisplayContext getContentPageEditorDisplayContext(
-		HttpServletRequest request) {
-
-		RenderResponse renderResponse = (RenderResponse)request.getAttribute(
-			JavaConstants.JAVAX_PORTLET_RESPONSE);
+		HttpServletRequest request, RenderResponse renderResponse) {
 
 		String className = (String)request.getAttribute(
 			ContentPageEditorWebKeys.CLASS_NAME);

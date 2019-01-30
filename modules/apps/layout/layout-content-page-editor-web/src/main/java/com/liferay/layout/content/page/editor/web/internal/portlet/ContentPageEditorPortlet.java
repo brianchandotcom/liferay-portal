@@ -73,7 +73,7 @@ public class ContentPageEditorPortlet extends MVCPortlet {
 		if (contentPageEditorDisplayContext == null) {
 			contentPageEditorDisplayContext =
 				_contentPageEditorDisplayContextProvider.
-					getContentPageEditorDisplayContext(request);
+					getContentPageEditorDisplayContext(request, renderResponse);
 
 			request.setAttribute(
 				ContentPageEditorWebKeys.

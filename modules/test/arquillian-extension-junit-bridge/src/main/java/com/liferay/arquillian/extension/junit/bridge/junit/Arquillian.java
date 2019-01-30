@@ -201,8 +201,17 @@ public class Arquillian extends ParentRunner<FrameworkMethod> {
 		}
 	}
 
-	private Statement _classBlock(final RunNotifier notifier) {
-		Statement statement = childrenInvoker(notifier);
+	private Statement _classBlock(RunNotifier runNotifier) {
+		Statement statement = new Statement() {
+
+			@Override
+			public void evaluate() {
+				for (FrameworkMethod frameworkMethod : getChildren()) {
+					runChild(frameworkMethod, runNotifier);
+				}
+			}
+
+		};
 
 		boolean hasTestMethod = false;
 

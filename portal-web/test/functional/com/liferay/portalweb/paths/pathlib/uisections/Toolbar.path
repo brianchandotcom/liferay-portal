@@ -18,6 +18,11 @@
 	<td>//ul[contains(@id,'toolbarContainer')]/li/a[@title='Manage']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>PREVIEW</td>
+	<td>//div[contains(@class,'btn') and contains(@class,'preview')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

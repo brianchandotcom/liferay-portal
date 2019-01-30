@@ -61,12 +61,21 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro configureIdentityProviderConnection {
+	macro addIdentityProviderConnection {
+		AssertClick(
+			locator1 = "CPSAMLAdminIdentityProviderConnection#ADD_IDENTITY_PROVIDER_BUTTON",
+			value1 = "Add Identity Provider"
+		);
+
 		Type(locator1 = "TextInput#SAML_NAME_FIELD", value1 = "${IdpNameID}");
 
 		Type(
 			locator1 = "CPSAMLAdminIdentityProviderConnection#IDENTITY_PROVIDER_CONNECTION_ENTITY_ID_FIELD",
 			value1 = "${IdpEntityID}"
+		);
+
+		Check(
+			locator1 = "CPSAMLAdminIdentityProviderConnection#IDENTITY_PROVIDER_CONNECTION_ENABLED_CHECKBOX"
 		);
 
 		Type(

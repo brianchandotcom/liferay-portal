@@ -7,10 +7,10 @@ definition {
 		AssertClick(locator1 = "NavTab#IDENTITY_PROVIDER", value1 = "Identity Provider");
 	}
 
-	macro gotoIdentityProviderConnection {
+	macro gotoIdentityProviderConnections {
 		AssertClick(
-			locator1 = "NavTab#IDENTITY_PROVIDER_CONNECTION",
-			value1 = "Identity Provider Connection"
+			locator1 = "NavTab#IDENTITY_PROVIDER_CONNECTIONS",
+			value1 = "Identity Provider Connections"
 		);
 	}
 

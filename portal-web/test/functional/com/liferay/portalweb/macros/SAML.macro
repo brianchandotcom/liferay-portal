@@ -75,9 +75,9 @@ definition {
 			portlet = "SAML Admin"
 		);
 
-		SAMLNavigation.gotoIdentityProviderConnection();
+		SAMLNavigation.gotoIdentityProviderConnections();
 
-		SAMLPortlet.configureIdentityProviderConnection(
+		SAMLPortlet.addIdentityProviderConnection(
 			IdpEntityID = "samlidp",
 			IdpMetadataURL = "http://localhost:8080/c/portal/saml/metadata",
 			IdpNameID = "samlidp",

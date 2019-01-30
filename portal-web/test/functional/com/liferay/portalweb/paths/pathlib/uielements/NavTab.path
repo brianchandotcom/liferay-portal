@@ -74,8 +74,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>IDENTITY_PROVIDER_CONNECTION</td>
-	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'Identity Provider Connection')]</td>
+	<td>IDENTITY_PROVIDER_CONNECTIONS</td>
+	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'Identity Provider Connections')]</td>
 	<td></td>
 </tr>
 <tr>

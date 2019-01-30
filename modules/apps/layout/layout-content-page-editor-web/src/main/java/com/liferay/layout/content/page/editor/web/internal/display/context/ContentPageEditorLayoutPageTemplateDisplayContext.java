@@ -35,6 +35,7 @@ import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
 import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
 import com.liferay.item.selector.criteria.url.criterion.URLItemSelectorCriterion;
+import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorWebKeys;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
@@ -46,9 +47,7 @@ import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactory
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
-import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -240,11 +239,9 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext {
 	private Map<String, Object> _getDefaultConfigurations() {
 		Map<String, Object> configurations = new HashMap<>();
 
-		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
-
 		EditorConfiguration richTextEditorConfiguration =
 			EditorConfigurationFactoryUtil.getEditorConfiguration(
-				PortletIdCodec.decodePortletName(portletDisplay.getId()),
+				ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
 				"fragmenEntryLinkRichTextEditor", StringPool.BLANK,
 				Collections.emptyMap(), _themeDisplay,
 				RequestBackedPortletURLFactoryUtil.create(_request));
@@ -253,7 +250,7 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext {
 
 		EditorConfiguration editorConfiguration =
 			EditorConfigurationFactoryUtil.getEditorConfiguration(
-				PortletIdCodec.decodePortletName(portletDisplay.getId()),
+				ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
 				"fragmenEntryLinkEditor", StringPool.BLANK,
 				Collections.emptyMap(), _themeDisplay,
 				RequestBackedPortletURLFactoryUtil.create(_request));

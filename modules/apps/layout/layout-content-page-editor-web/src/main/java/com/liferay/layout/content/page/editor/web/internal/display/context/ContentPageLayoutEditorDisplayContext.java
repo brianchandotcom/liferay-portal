@@ -29,7 +29,7 @@ import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
 import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
 import com.liferay.item.selector.criteria.url.criterion.URLItemSelectorCriterion;
-import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
+import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorWebKeys;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
@@ -267,7 +267,7 @@ public class ContentPageLayoutEditorDisplayContext {
 
 		EditorConfiguration richTextEditorConfiguration =
 			EditorConfigurationFactoryUtil.getEditorConfiguration(
-				LayoutAdminPortletKeys.GROUP_PAGES,
+				ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
 				"fragmenEntryLinkRichTextEditor", StringPool.BLANK,
 				Collections.emptyMap(), _themeDisplay,
 				RequestBackedPortletURLFactoryUtil.create(_request));
@@ -276,8 +276,9 @@ public class ContentPageLayoutEditorDisplayContext {
 
 		EditorConfiguration editorConfiguration =
 			EditorConfigurationFactoryUtil.getEditorConfiguration(
-				LayoutAdminPortletKeys.GROUP_PAGES, "fragmenEntryLinkEditor",
-				StringPool.BLANK, Collections.emptyMap(), _themeDisplay,
+				ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
+				"fragmenEntryLinkEditor", StringPool.BLANK,
+				Collections.emptyMap(), _themeDisplay,
 				RequestBackedPortletURLFactoryUtil.create(_request));
 
 		configurations.put("text", editorConfiguration.getData());

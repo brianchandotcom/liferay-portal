@@ -983,4 +983,244 @@ definition {
 			);
 		}
 	}
+
+	@priority = "5"
+	test UpdatePortalPropertiesWithMultipleClusters {
+		property app.server.bundles.size = "2";
+		property custom.properties = "company.security.auth.type=emailAddress";
+		property portal.release = "true";
+		property portal.upstream = "true";
+		property test.name.skip.portal.instance = "RollingRestartEE#UpdatePortalPropertiesWithMultipleClusters";
+
+		Clustering.viewClusterStatusInConsole();
+
+		Page.assertNodePortPG(nodePort = "8080");
+
+		User.logoutPG(nodePort = "8080");
+
+		User.loginPG(
+			nodePort = "9080",
+			password = "test",
+			userEmailAddress = "test@liferay.com"
+		);
+
+		Page.assertNodePortPG(nodePort = "9080");
+
+		User.logoutPG(nodePort = "9080");
+
+		User.loginPG(
+			nodePort = "10080",
+			password = "test",
+			userEmailAddress = "test@liferay.com"
+		);
+
+		Page.assertNodePortPG(nodePort = "10080");
+
+		User.logoutPG(nodePort = "10080");
+
+		// Take down cluster2, update portal-ext.properties
+
+		Portlet.shutdownSpecificServer(nodePort = "9080");
+
+		Portlet.updatePortalPropertiesOnSpecificServer(
+			nodePort = "9080",
+			propertiesOriginal = "company.security.auth.type=emailAddress",
+			propertiesUpdate = "company.security.auth.type=screenName"
+		);
+
+		Portlet.startSpecificServer(
+			deleteLiferayHome = "false",
+			nodePort = "9080"
+		);
+
+		User.loginPG(
+			authenticationMethod = "By Screen Name",
+			nodePort = "9080",
+			password = "test",
+			userScreenName = "test"
+		);
+
+		Page.assertNodePortPG(nodePort = "9080");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "WC WebContent Content Cluster2",
+			webContentTitle = "WC WebContent Title Cluster2"
+		);
+
+		PortletEntry.publish();
+
+		WebContent.viewTitle(webContentTitle = "WC WebContent Title Cluster2");
+
+		User.logoutPG(nodePort = "9080");
+
+		for (var nodePort : list "8080,10080") {
+			User.loginPG(
+				nodePort = "${nodePort}",
+				password = "test",
+				userEmailAddress = "test@liferay.com"
+			);
+
+			Page.assertNodePortPG(nodePort = "${nodePort}");
+
+			ProductMenu.gotoPortlet(
+				category = "Content",
+				panel = "Site Administration",
+				portlet = "Web Content"
+			);
+
+			WebContent.viewTitle(webContentTitle = "WC WebContent Title Cluster2");
+
+			User.logoutPG(nodePort = "${nodePort}");
+		}
+
+		// Take down cluster1, update portal-ext.properties
+
+		Portlet.shutdownSpecificServer(nodePort = "8080");
+
+		Portlet.updatePortalPropertiesOnSpecificServer(
+			nodePort = "8080",
+			propertiesOriginal = "company.security.auth.type=emailAddress",
+			propertiesUpdate = "company.security.auth.type=screenName"
+		);
+
+		Portlet.startSpecificServer(
+			deleteLiferayHome = "false",
+			nodePort = "8080"
+		);
+
+		User.loginPG(
+			authenticationMethod = "By Screen Name",
+			nodePort = "8080",
+			password = "test",
+			userScreenName = "test"
+		);
+
+		Page.assertNodePortPG(nodePort = "8080");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(
+			pageName = "Documents and Media Page",
+			sitePageType = "Widget Page"
+		);
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Documents and Media Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		Portlet.addPG(portletName = "Documents and Media");
+
+		User.logoutPG(nodePort = "8080");
+
+		User.loginPG(
+			authenticationMethod = "By Screen Name",
+			nodePort = "9080",
+			password = "test",
+			userScreenName = "test"
+		);
+
+		Page.assertNodePortPG(nodePort = "9080");
+
+		Navigator.gotoSpecificURLPage(
+			pageName = "Documents and Media Page",
+			url = "http://localhost:9080"
+		);
+
+		Portlet.viewPG(portletName = "Documents and Media");
+
+		User.logoutPG(nodePort = "9080");
+
+		User.loginPG(
+			nodePort = "10080",
+			password = "test",
+			userEmailAddress = "test@liferay.com"
+		);
+
+		Page.assertNodePortPG(nodePort = "10080");
+
+		Navigator.gotoSpecificURLPage(
+			pageName = "Documents and Media Page",
+			url = "http://localhost:10080"
+		);
+
+		Portlet.viewPG(portletName = "Documents and Media");
+
+		User.logoutPG(nodePort = "10080");
+
+		// Take down cluster3, update portal-ext.properties
+
+		Portlet.shutdownSpecificServer(nodePort = "10080");
+
+		Portlet.updatePortalPropertiesOnSpecificServer(
+			nodePort = "10080",
+			propertiesOriginal = "company.security.auth.type=emailAddress",
+			propertiesUpdate = "company.security.auth.type=screenName"
+		);
+
+		Portlet.startSpecificServer(
+			deleteLiferayHome = "false",
+			nodePort = "10080"
+		);
+
+		User.loginPG(
+			authenticationMethod = "By Screen Name",
+			nodePort = "10080",
+			password = "test",
+			userScreenName = "test"
+		);
+
+		Page.assertNodePortPG(nodePort = "10080");
+
+		Navigator.gotoSpecificURLPage(
+			pageName = "Documents and Media Page",
+			url = "http://localhost:10080"
+		);
+
+		DMDocument.addPG(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.doc",
+			dmDocumentTitle = "DM Document Title Cluster3"
+		);
+
+		DMDocument.viewPG(dmDocumentTitle = "DM Document Title Cluster3");
+
+		User.logoutPG(nodePort = "10080");
+
+		for (var nodePort : list "8080,9080") {
+			User.loginPG(
+				authenticationMethod = "By Screen Name",
+				nodePort = "${nodePort}",
+				password = "test",
+				userScreenName = "test"
+			);
+
+			Page.assertNodePortPG(nodePort = "${nodePort}");
+
+			Navigator.gotoSpecificURLPage(
+				pageName = "Documents and Media Page",
+				url = "http://localhost:${nodePort}"
+			);
+
+			DMDocument.viewPG(dmDocumentTitle = "DM Document Title Cluster3");
+
+			User.logoutPG(nodePort = "${nodePort}");
+		}
+	}
 }

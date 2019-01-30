@@ -38,6 +38,7 @@ import org.jboss.arquillian.test.spi.event.suite.BeforeTestLifecycleEvent;
 import org.jboss.arquillian.test.spi.execution.SkippedTestExecutionException;
 
 import org.junit.AssumptionViolatedException;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.internal.runners.statements.ExpectException;
@@ -144,6 +145,15 @@ public class Arquillian extends BlockJUnit4ClassRunner {
 					testClass.getJavaClass(), keyFrameworkMethod.getName(),
 					keyFrameworkMethod.getAnnotations());
 			});
+	}
+
+	@Override
+	protected boolean isIgnored(FrameworkMethod frameworkMethod) {
+		if (frameworkMethod.getAnnotation(Ignore.class) != null) {
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override

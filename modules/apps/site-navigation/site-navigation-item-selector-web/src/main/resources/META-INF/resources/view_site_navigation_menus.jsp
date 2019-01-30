@@ -23,16 +23,7 @@ String displayStyle = siteNavigationMenuItemSelectorViewDisplayContext.getDispla
 %>
 
 <clay:management-toolbar
-	clearResultsURL="<%= siteNavigationMenuItemSelectorViewDisplayContext.getClearResultsURL() %>"
-	componentId="siteNavigationMenuWebManagementToolbar"
-	filterDropdownItems="<%= siteNavigationMenuItemSelectorViewDisplayContext.getFilterDropdownItems() %>"
-	itemsTotal="<%= siteNavigationMenuItemSelectorViewDisplayContext.getTotalItems() %>"
-	searchActionURL="<%= siteNavigationMenuItemSelectorViewDisplayContext.getSearchActionURL() %>"
-	searchFormName="searchFm"
-	selectable="<%= false %>"
-	sortingOrder="<%= siteNavigationMenuItemSelectorViewDisplayContext.getOrderByType() %>"
-	sortingURL="<%= siteNavigationMenuItemSelectorViewDisplayContext.getSortingURL() %>"
-	viewTypeItems="<%= siteNavigationMenuItemSelectorViewDisplayContext.getViewTypeItems() %>"
+	displayContext="<%= new SiteNavigationMenuItemSelectorViewManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, siteNavigationMenuItemSelectorViewDisplayContext) %>"
 />
 
 <aui:form action="<%= siteNavigationMenuItemSelectorViewDisplayContext.getPortletURL() %>" cssClass="container-fluid-1280" name="selectSiteNavigationMenuFm">

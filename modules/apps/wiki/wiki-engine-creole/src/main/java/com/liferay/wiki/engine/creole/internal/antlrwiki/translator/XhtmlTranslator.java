@@ -285,7 +285,7 @@ public class XhtmlTranslator extends XhtmlTranslationVisitor {
 		String postfix = StringPool.BLANK;
 
 		if (textCounts.containsKey(text)) {
-			postfix = StringPool.DASH + String.valueOf(textCounts.get(text));
+			postfix = StringPool.DASH + textCounts.get(text);
 		}
 
 		return StringUtil.replace(

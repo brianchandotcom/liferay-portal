@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.jboss.arquillian.test.spi.LifecycleMethodExecutor;
@@ -38,6 +39,7 @@ import org.junit.AssumptionViolatedException;
 import org.junit.Test;
 import org.junit.internal.runners.statements.ExpectException;
 import org.junit.internal.runners.statements.Fail;
+import org.junit.internal.runners.statements.FailOnTimeout;
 import org.junit.rules.MethodRule;
 import org.junit.rules.TestRule;
 import org.junit.runner.Result;
@@ -153,7 +155,7 @@ public class Arquillian extends BlockJUnit4ClassRunner {
 
 		statement = _possiblyExpectingExceptions(method, statement);
 
-		statement = withPotentialTimeout(method, test, statement);
+		statement = _withPotentialTimeout(method, statement);
 
 		final Statement oldStatement = statement;
 
@@ -334,6 +336,22 @@ public class Arquillian extends BlockJUnit4ClassRunner {
 		}
 
 		return new ExpectException(statement, test.expected());
+	}
+
+	private Statement _withPotentialTimeout(
+		FrameworkMethod frameworkMethod, Statement statement) {
+
+		Test test = frameworkMethod.getAnnotation(Test.class);
+
+		if ((test == null) || (test.timeout() <= 0)) {
+			return statement;
+		}
+
+		FailOnTimeout.Builder builder = FailOnTimeout.builder();
+
+		builder.withTimeout(test.timeout(), TimeUnit.MILLISECONDS);
+
+		return builder.build(statement);
 	}
 
 	private static final ThreadLocal<TestRunnerAdaptor>

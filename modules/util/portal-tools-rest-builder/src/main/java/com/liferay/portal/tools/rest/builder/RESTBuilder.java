@@ -67,20 +67,10 @@ public class RESTBuilder {
 
 		context.put("configYAML", _configYAML);
 		context.put("openAPIYAML", _openAPIYAML);
-
-		Application application = _configYAML.getApplication();
-
-		String resourceName = CamelCaseUtil.toCamelCase(
-			application.getBaseURI(), true);
-
-		context.put("resourceName", resourceName);
-
 		context.put("stringUtil", StringUtil_IW.getInstance());
 		context.put("validator", Validator_IW.getInstance());
 
 		_createApplicationFile(context);
-		_createResourceFile(context, resourceName);
-		_createResourceImplFile(context, resourceName);
 
 		Components components = _openAPIYAML.getComponents();
 
@@ -96,6 +86,8 @@ public class RESTBuilder {
 
 			_createCollectionFile(context, schemaName);
 			_createDTOFile(context, schemaName);
+			_createResourceFile(context, schemaName);
+			_createResourceImplFile(context, schemaName);
 		}
 	}
 
@@ -183,7 +175,7 @@ public class RESTBuilder {
 	}
 
 	private File _createResourceFile(
-			Map<String, Object> context, String resourceName)
+			Map<String, Object> context, String schemaName)
 		throws Exception {
 
 		StringBuilder sb = new StringBuilder();
@@ -196,7 +188,7 @@ public class RESTBuilder {
 		sb.append(apiPackagePath.replace('.', '/'));
 
 		sb.append("/resource/");
-		sb.append(resourceName);
+		sb.append(schemaName);
 		sb.append("Resource.java");
 
 		File file = new File(sb.toString());
@@ -210,7 +202,7 @@ public class RESTBuilder {
 	}
 
 	private File _createResourceImplFile(
-			Map<String, Object> context, String resourceName)
+			Map<String, Object> context, String schemaName)
 		throws Exception {
 
 		StringBuilder sb = new StringBuilder();
@@ -223,7 +215,7 @@ public class RESTBuilder {
 		sb.append(apiPackagePath.replace('.', '/'));
 
 		sb.append("/internal/resource/");
-		sb.append(resourceName);
+		sb.append(schemaName);
 		sb.append("ResourceImpl.java");
 
 		File file = new File(sb.toString());

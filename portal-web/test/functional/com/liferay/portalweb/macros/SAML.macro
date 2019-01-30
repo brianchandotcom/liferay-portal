@@ -1,4 +1,5 @@
 definition {
+
 	@description = "Configures Liferay SAML as the IdP and Liferay SAML as the SP."
 	macro configureLiferaySAMLAsIdP {
 		// Configure IdP (Identity Provider) on http://localhost:8080 with database lportal and saml deployed
@@ -69,6 +70,30 @@ definition {
 
 		SAMLRole.configureCertificateAndPrivateKey(samlKeyPassword = "${samlEntityID}");
 
+		SAML.connectSPAndIdP(
+			Attributes = "${Attributes}",
+			idpEntityID = "samlidp",
+			idpURL = "http://localhost:8080",
+			nameIdentifierAttributeName = "emailAddress",
+			nameIdentifierFormat = "${nameIdentifierFormat}",
+			spEntityID = "${samlEntityID}",
+			spURL = "${spURL}"
+		);
+	}
+
+	macro connectSPAndIdP {
+		// Add a configured IdP connection to an SP
+
+		Navigator.openSpecificURL(url = "${spURL}");
+
+		if (IsElementNotPresent(locator1 = "ProductMenu#PRODUCT_MENU_OPENED")) {
+			User.loginPG(
+				specificURL = "${spURL}",
+				password = "test",
+				userEmailAddress = "test@liferay.com"
+			);
+		}
+
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
@@ -78,24 +103,28 @@ definition {
 		SAMLNavigation.gotoIdentityProviderConnections();
 
 		SAMLPortlet.addIdentityProviderConnection(
-			IdpEntityID = "samlidp",
-			IdpMetadataURL = "http://localhost:8080/c/portal/saml/metadata",
-			IdpNameID = "samlidp",
+			IdpEntityID = "${idpEntityID}",
+			IdpMetadataURL = "${idpURL}/c/portal/saml/metadata",
+			IdpNameID = "${idpEntityID}",
 			nameIdentifierFormat = "${nameIdentifierFormat}"
 		);
 
 		SAMLNavigation.gotoGeneral();
 
-		SAMLRole.enable(samlEntityID = "${samlEntityID}");
+		SAMLRole.enable(samlEntityID = "${spEntityID}");
 
-		User.logoutPG(nodePort = "${nodePort}", specificURL = "${spURL}");
+		User.logoutPG(specificURL = "${spURL}");
 
-		// Add the configured SP connection to the IdP
+		// Add a configured SP connection to an IdP
 
-		Navigator.openURL();
+		Navigator.openSpecificURL(url = "${idpURL}");
 
 		if (IsElementNotPresent(locator1 = "ProductMenu#PRODUCT_MENU_OPENED")) {
-			User.loginPG(password = "test", userEmailAddress = "test@liferay.com");
+			User.loginPG(
+				specificURL = "${idpURL}",
+				password = "test",
+				userEmailAddress = "test@liferay.com"
+			);
 		}
 
 		ProductMenu.gotoPortlet(
@@ -110,9 +139,9 @@ definition {
 			Attributes = "${Attributes}",
 			nameIdentifierAttributeName = "${nameIdentifierAttributeName}",
 			nameIdentifierFormat = "${nameIdentifierFormat}",
-			SPEntityID = "${samlEntityID}",
+			SPEntityID = "${spEntityID}",
 			SPMetadataURL = "${spURL}/c/portal/saml/metadata",
-			SPNameID = "${samlEntityID}"
+			SPNameID = "${spEntityID}"
 		);
 	}
 

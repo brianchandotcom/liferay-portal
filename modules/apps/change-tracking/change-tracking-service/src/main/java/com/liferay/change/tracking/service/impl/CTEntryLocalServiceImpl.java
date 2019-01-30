@@ -53,8 +53,8 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 		}
 
 		return _createCTEntry(
-			user, classNameId, classPK, resourcePrimKey, changeType,
-			ctCollectionId, serviceContext);
+			user, classNameId, classPK, resourcePrimKey, ctCollectionId,
+			changeType, serviceContext);
 	}
 
 	@Override
@@ -87,7 +87,7 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 
 	private CTEntry _createCTEntry(
 		User user, long classNameId, long classPK, long resourcePrimKey,
-		int changeType, long ctCollectionId, ServiceContext serviceContext) {
+		long ctCollectionId, int changeType, ServiceContext serviceContext) {
 
 		long ctEntryId = counterLocalService.increment();
 

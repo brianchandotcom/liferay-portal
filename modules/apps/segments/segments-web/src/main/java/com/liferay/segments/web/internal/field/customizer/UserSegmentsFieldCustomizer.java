@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
+import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.segments.constants.SegmentsPortletKeys;
@@ -54,6 +56,23 @@ public class UserSegmentsFieldCustomizer implements SegmentsFieldCustomizer {
 	@Override
 	public List<String> getFieldNames() {
 		return _fieldNames;
+	}
+
+	@Override
+	public String getFieldValueName(String fieldValue, Locale locale) {
+		long userId = GetterUtil.getLong(fieldValue);
+
+		if (userId == 0) {
+			return fieldValue;
+		}
+
+		User user = _userLocalService.fetchUser(userId);
+
+		if (user == null) {
+			return fieldValue;
+		}
+
+		return user.getFullName();
 	}
 
 	@Override
@@ -100,5 +119,8 @@ public class UserSegmentsFieldCustomizer implements SegmentsFieldCustomizer {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

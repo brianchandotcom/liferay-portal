@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
+import com.liferay.portal.kernel.service.TeamLocalService;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.segments.field.Field;
@@ -55,6 +57,23 @@ public class TeamSegmentsFieldCustomizer implements SegmentsFieldCustomizer {
 	@Override
 	public List<String> getFieldNames() {
 		return _fieldNames;
+	}
+
+	@Override
+	public String getFieldValueName(String fieldValue, Locale locale) {
+		long teamId = GetterUtil.getLong(fieldValue);
+
+		if (teamId == 0) {
+			return fieldValue;
+		}
+
+		Team team = _teamLocalService.fetchTeam(teamId);
+
+		if (team == null) {
+			return fieldValue;
+		}
+
+		return team.getName();
 	}
 
 	@Override
@@ -105,5 +124,8 @@ public class TeamSegmentsFieldCustomizer implements SegmentsFieldCustomizer {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private TeamLocalService _teamLocalService;
 
 }

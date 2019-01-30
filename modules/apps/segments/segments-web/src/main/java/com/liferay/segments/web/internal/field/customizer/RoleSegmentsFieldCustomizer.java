@@ -14,6 +14,7 @@
 
 package com.liferay.segments.web.internal.field.customizer;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -22,6 +23,8 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
+import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.segments.field.Field;
@@ -55,6 +58,32 @@ public class RoleSegmentsFieldCustomizer implements SegmentsFieldCustomizer {
 	@Override
 	public List<String> getFieldNames() {
 		return _fieldNames;
+	}
+
+	@Override
+	public String getFieldValueName(String fieldValue, Locale locale) {
+		long roleId = GetterUtil.getLong(fieldValue);
+
+		if (roleId == 0) {
+			return fieldValue;
+		}
+
+		Role role = _roleLocalService.fetchRole(roleId);
+
+		if (role == null) {
+			return fieldValue;
+		}
+
+		try {
+			return role.getDescriptiveName();
+		}
+		catch (PortalException pe) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unable to get name for role " + fieldValue, pe);
+			}
+
+			return fieldValue;
+		}
 	}
 
 	@Override
@@ -105,5 +134,8 @@ public class RoleSegmentsFieldCustomizer implements SegmentsFieldCustomizer {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private RoleLocalService _roleLocalService;
 
 }

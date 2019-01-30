@@ -14,6 +14,7 @@
 
 package com.liferay.segments.web.internal.field.customizer;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -22,6 +23,8 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.segments.field.Field;
@@ -55,6 +58,32 @@ public class GroupSegmentsFieldCustomizer implements SegmentsFieldCustomizer {
 	@Override
 	public List<String> getFieldNames() {
 		return _fieldNames;
+	}
+
+	@Override
+	public String getFieldValueName(String fieldValue, Locale locale) {
+		long groupId = GetterUtil.getLong(fieldValue);
+
+		if (groupId == 0) {
+			return fieldValue;
+		}
+
+		Group group = _groupLocalService.fetchGroup(groupId);
+
+		if (group == null) {
+			return fieldValue;
+		}
+
+		try {
+			return group.getDescriptiveName(locale);
+		}
+		catch (PortalException pe) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unable to get name for group " + fieldValue, pe);
+			}
+
+			return fieldValue;
+		}
 	}
 
 	@Override
@@ -102,6 +131,9 @@ public class GroupSegmentsFieldCustomizer implements SegmentsFieldCustomizer {
 
 	private static final List<String> _fieldNames = ListUtil.fromArray(
 		new String[] {"groupIds"});
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private Portal _portal;

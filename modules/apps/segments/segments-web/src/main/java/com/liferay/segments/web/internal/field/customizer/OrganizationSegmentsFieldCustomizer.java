@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
+import com.liferay.portal.kernel.service.OrganizationLocalService;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.segments.constants.SegmentsPortletKeys;
@@ -55,6 +57,24 @@ public class OrganizationSegmentsFieldCustomizer
 	@Override
 	public List<String> getFieldNames() {
 		return _fieldNames;
+	}
+
+	@Override
+	public String getFieldValueName(String fieldValue, Locale locale) {
+		long organizationId = GetterUtil.getLong(fieldValue);
+
+		if (organizationId == 0) {
+			return fieldValue;
+		}
+
+		Organization organization = _organizationLocalService.fetchOrganization(
+			organizationId);
+
+		if (organization == null) {
+			return fieldValue;
+		}
+
+		return organization.getName();
 	}
 
 	@Override
@@ -99,7 +119,10 @@ public class OrganizationSegmentsFieldCustomizer
 		OrganizationSegmentsFieldCustomizer.class);
 
 	private static final List<String> _fieldNames = ListUtil.fromArray(
-		new String[] {"organizationId, parentOrganizationId"});
+		new String[] {"organizationId", "parentOrganizationId"});
+
+	@Reference
+	private OrganizationLocalService _organizationLocalService;
 
 	@Reference
 	private Portal _portal;

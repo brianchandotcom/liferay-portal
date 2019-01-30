@@ -4,6 +4,7 @@
  * Renders the ChangeList view
  */
 {template .render}
+	{@param  spritemap: string}
 	{@param? description: string}
 	{@param? headerTitle: string}
 	{@param? initFetch: bool}
@@ -13,7 +14,6 @@
 		userMonogram: string,
 		userName: string
 	]}
-	{@param  spritemap: string}
 
 	{let $headerLinkLabel kind="text"}
 		{msg desc=""}production-view{/msg}
@@ -66,6 +66,7 @@
  * This template renders the component's whole content
  */
 {template .glanceCard}
+	{@param  spritemap: string}
 	{@param? cardState: string}
 	{@param? description: string}
 	{@param? descriptionTitle: string}
@@ -82,7 +83,6 @@
 		userName: string
 	]}
 	{@param? publishedByTitle: string}
-	{@param  spritemap: string}
 
 	<div class="glance-card-sheet {$cardState}">
 		{call .glanceCardHeader}
@@ -143,7 +143,7 @@
 	]}
 	{@param? publishedByTitle: string}
 
-	<div class="glance-card-container glance-card-body">
+	<div class="glance-card-body glance-card-container">
 
 		{if $description}
 			<div class="glance-card-sheet-block">
@@ -165,11 +165,11 @@
 
 					<div class="autofit-col">
 						{if $publishedBy.userMonogram}
-							<div class="user-icon-color-9 user-icon-lg user-icon user-icon-default">
+							<div class="user-icon user-icon-color-9 user-icon-default user-icon-lg">
 								<span>{$publishedBy.userMonogram}</span>
 							</div>
 						{elseif $publishedBy.userIconUrl}
-							<div class="user-icon-lg aspect-ratio-bg-cover user-icon" style="background-image:url({$publishedBy.userIconUrl})">
+							<div class="aspect-ratio-bg-cover user-icon user-icon-lg" style="background-image:url({$publishedBy.userIconUrl})">
 							</div>
 						{/if}
 					</div>

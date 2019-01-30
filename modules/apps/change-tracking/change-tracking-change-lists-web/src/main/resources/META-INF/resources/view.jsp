@@ -16,24 +16,9 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-String navigation = ParamUtil.get(renderRequest, "navigation", "overview");
-%>
-
-<clay:navigation-bar
-	inverted="<%= true %>"
-	navigationItems="<%=
-		new JSPNavigationItemList(pageContext) {
-			{
-				add(
-					navigationItem -> {
-						navigationItem.setActive(navigation.equals("overview"));
-						navigationItem.setHref(renderResponse.createRenderURL());
-						navigationItem.setLabel(LanguageUtil.get(request, "overview"));
-					});
-			}
-		}
-	%>"
+<soy:component-renderer
+	componentId="change-tracking-change-lists-window"
+	context="<%= changeListsDisplayContext.getChangeListsContext() %>"
+	module="js/ChangeList.es"
+	templateNamespace="com.liferay.change.tracking.change.lists.web.ChangeList.render"
 />
-
-<liferay-util:include page="/overview.jsp" servletContext="<%= application %>" />

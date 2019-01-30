@@ -16,6 +16,7 @@ package com.liferay.change.tracking.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.change.tracking.CTEngineManager;
+import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.model.CTProcess;
@@ -94,6 +95,7 @@ public class CTProcessLocalServiceTest {
 		_ctEntryLocalService.addCTEntry(
 			TestPropsValues.getUserId(), _portal.getClassNameId(CTEntry.class),
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			CTConstants.CT_CHANGE_TYPE_ADDITION,
 			_ctCollection.getCtCollectionId(), new ServiceContext());
 
 		CTProcess ctProcess = _ctProcessLocalService.addCTProcess(

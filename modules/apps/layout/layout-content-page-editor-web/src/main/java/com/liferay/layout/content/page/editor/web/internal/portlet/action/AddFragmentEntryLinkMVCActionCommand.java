@@ -14,6 +14,8 @@
 
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
+import com.liferay.fragment.contributor.FragmentCollectionContributor;
+import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.exception.NoSuchEntryException;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
@@ -40,6 +42,8 @@ import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.Callable;
 
 import javax.portlet.ActionRequest;
@@ -76,7 +80,11 @@ public class AddFragmentEntryLinkMVCActionCommand extends BaseMVCActionCommand {
 				serviceContext.getScopeGroupId(), fragmentEntryKey);
 
 		if (fragmentEntry == null) {
-			throw new NoSuchEntryException();
+			fragmentEntry = _getContributedFragmentEntry(fragmentEntryKey);
+
+			if (fragmentEntry == null) {
+				throw new NoSuchEntryException();
+			}
 		}
 
 		long classNameId = ParamUtil.getLong(actionRequest, "classNameId");
@@ -145,12 +153,42 @@ public class AddFragmentEntryLinkMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, actionResponse, jsonObject);
 	}
 
+	private FragmentEntry _getContributedFragmentEntry(
+		String fragmentEntryKey) {
+
+		List<FragmentCollectionContributor> fragmentCollectionContributors =
+			_fragmentCollectionContributorTracker.
+				getFragmentCollectionContributors();
+
+		for (FragmentCollectionContributor fragmentCollectionContributor :
+				fragmentCollectionContributors) {
+
+			List<FragmentEntry> fragmentEntries =
+				fragmentCollectionContributor.getFragmentEntries();
+
+			for (FragmentEntry fragmentEntry : fragmentEntries) {
+				if (Objects.equals(
+						fragmentEntryKey,
+						fragmentEntry.getFragmentEntryKey())) {
+
+					return fragmentEntry;
+				}
+			}
+		}
+
+		return null;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		AddFragmentEntryLinkMVCActionCommand.class);
 
 	private static final TransactionConfig _transactionConfig =
 		TransactionConfig.Factory.create(
 			Propagation.REQUIRED, new Class<?>[] {Exception.class});
+
+	@Reference
+	private FragmentCollectionContributorTracker
+		_fragmentCollectionContributorTracker;
 
 	@Reference
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;

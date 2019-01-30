@@ -15,6 +15,7 @@
 package com.liferay.layout.content.page.editor.web.internal.display.context;
 
 import com.liferay.fragment.constants.FragmentEntryTypeConstants;
+import com.liferay.fragment.contributor.FragmentCollectionContributor;
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
@@ -375,7 +376,8 @@ public class ContentPageEditorDisplayContext {
 	}
 
 	protected List<SoyContext> getSoyContextFragmentCollections(int type) {
-		List<SoyContext> soyContexts = new ArrayList<>();
+		List<SoyContext> soyContexts =
+			_getSoyContextContributedFragmentCollections(type);
 
 		List<FragmentCollection> fragmentCollections =
 			FragmentCollectionServiceUtil.getFragmentCollections(getGroupId());
@@ -512,6 +514,42 @@ public class ContentPageEditorDisplayContext {
 				"imagePreviewURL",
 				fragmentEntry.getImagePreviewURL(themeDisplay));
 			soyContext.put("name", fragmentEntry.getName());
+
+			soyContexts.add(soyContext);
+		}
+
+		return soyContexts;
+	}
+
+	private List<SoyContext> _getSoyContextContributedFragmentCollections(
+		int type) {
+
+		List<SoyContext> soyContexts = new ArrayList<>();
+
+		List<FragmentCollectionContributor> fragmentCollectionContributors =
+			_fragmentCollectionContributorTracker.
+				getFragmentCollectionContributors();
+
+		for (FragmentCollectionContributor fragmentCollectionContributor :
+				fragmentCollectionContributors) {
+
+			List<FragmentEntry> filteredFragmentEntries = ListUtil.filter(
+				fragmentCollectionContributor.getFragmentEntries(),
+				fragmentEntry -> fragmentEntry.getType() == type);
+
+			if (ListUtil.isEmpty(filteredFragmentEntries)) {
+				continue;
+			}
+
+			SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
+
+			soyContext.put(
+				"fragmentCollectionId",
+				fragmentCollectionContributor.getFragmentCollectionKey());
+			soyContext.put(
+				"fragmentEntries",
+				_getFragmentEntriesSoyContext(filteredFragmentEntries));
+			soyContext.put("name", fragmentCollectionContributor.getName());
 
 			soyContexts.add(soyContext);
 		}

@@ -16,8 +16,12 @@
 
 <%@ include file="/init.jsp" %>
 
+<%
+SiteNavigationAdminManagementToolbarDisplayContext siteNavigationAdminManagementToolbarDisplayContext = new SiteNavigationAdminManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, siteNavigationAdminDisplayContext);
+%>
+
 <clay:management-toolbar
-	displayContext="<%= new SiteNavigationAdminManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, siteNavigationAdminDisplayContext) %>"
+	displayContext="<%= siteNavigationAdminManagementToolbarDisplayContext %>"
 />
 
 <portlet:actionURL name="/navigation_menu/delete_site_navigation_menu" var="deleteSitaNavigationMenuURL">
@@ -130,20 +134,6 @@
 </aui:form>
 
 <aui:script require="metal-dom/src/all/dom as dom,frontend-js-web/liferay/modal/commands/OpenSimpleInputModal.es as modalCommands" sandbox="<%= true %>">
-	var addNavigationMenuMenuItem = function(event) {
-		modalCommands.openSimpleInputModal(
-			{
-				dialogTitle: '<liferay-ui:message key="add-menu" />',
-				formSubmitURL: '<portlet:actionURL name="/navigation_menu/add_site_navigation_menu"><portlet:param name="mvcPath" value="/edit_site_navigation_menu.jsp" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>',
-				mainFieldLabel: '<liferay-ui:message key="name" />',
-				mainFieldName: 'name',
-				mainFieldPlaceholder: '<liferay-ui:message key="name" />',
-				namespace: '<portlet:namespace />',
-				spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg'
-			}
-		);
-	};
-
 	var renameSiteNavigationMenuClickHandler = dom.delegate(
 		document.body,
 		'click',
@@ -170,34 +160,6 @@
 		}
 	);
 
-	var deleteSelectedSiteNavigationMenus = function() {
-		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
-			submitForm($(document.<portlet:namespace />fm));
-		}
-	};
-
-	var ACTIONS = {
-		'addNavigationMenuMenuItem': addNavigationMenuMenuItem,
-		'deleteSelectedSiteNavigationMenus': deleteSelectedSiteNavigationMenus
-	};
-
-	Liferay.componentReady('siteNavigationMenuWebManagementToolbar').then(
-		function(managementToolbar) {
-			managementToolbar.on('creationButtonClicked', addNavigationMenuMenuItem);
-
-			managementToolbar.on(
-				'actionItemClicked',
-				function(event) {
-					var itemData = event.data.item.data;
-
-					if (itemData && itemData.action && ACTIONS[itemData.action]) {
-						ACTIONS[itemData.action]();
-					}
-				}
-			);
-		}
-	);
-
 	function handleDestroyPortlet() {
 		renameSiteNavigationMenuClickHandler.removeListener();
 
@@ -205,4 +167,21 @@
 	}
 
 	Liferay.on('destroyPortlet', handleDestroyPortlet);
+</aui:script>
+
+<aui:script require='<%= npmResolvedPackageName + "/js/ManagementToolbarDefaultEventHandler.es as ManagementToolbarDefaultEventHandler" %>'>
+	Liferay.component(
+		'<%= siteNavigationAdminManagementToolbarDisplayContext.getDefaultEventHandler() %>',
+		new ManagementToolbarDefaultEventHandler.default(
+			{
+				addSiteNavigationMenuURL: '<portlet:actionURL name="/navigation_menu/add_site_navigation_menu"><portlet:param name="mvcPath" value="/edit_site_navigation_menu.jsp" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>',
+				namespace: '<portlet:namespace />',
+				spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg'
+			}
+		),
+		{
+			destroyOnNavigate: true,
+			portletId: '<%= HtmlUtil.escapeJS(portletDisplay.getId()) %>'
+		}
+	);
 </aui:script>

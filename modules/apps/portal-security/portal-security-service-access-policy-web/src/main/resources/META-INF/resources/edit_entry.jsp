@@ -129,16 +129,27 @@ renderResponse.setTitle((sapEntry == null) ? LanguageUtil.get(request, "new-serv
 	<aui:button-row>
 		<aui:button type="submit" value="save" />
 
-		<aui:button id="advancedMode" onClick='<%= renderResponse.getNamespace() + "toggleAdvancedMode();" %>' value="switch-to-advanced-mode" />
+		<aui:button id="advancedMode" value="switch-to-advanced-mode" />
 
-		<aui:button cssClass="hide" id="friendlyMode" onClick='<%= renderResponse.getNamespace() + "toggleAdvancedMode();" %>' value="switch-to-friendly-mode" />
+		<aui:button cssClass="hide" id="friendlyMode" value="switch-to-friendly-mode" />
 	</aui:button-row>
 </aui:form>
 
-<aui:script>
-	function <portlet:namespace />toggleAdvancedMode(argument) {
-		AUI.$('#<portlet:namespace />advancedMode, #<portlet:namespace />friendlyMode, #<portlet:namespace />allowedServiceSignatures, #<portlet:namespace />allowedServiceSignaturesFriendlyContentBox').toggleClass('hide');
-	}
+<aui:script require="metal-dom/src/dom as dom">
+	var alternatingElements = document.querySelectorAll('#<portlet:namespace />advancedMode, #<portlet:namespace />friendlyMode, #<portlet:namespace />allowedServiceSignatures, #<portlet:namespace />allowedServiceSignaturesFriendlyContentBox');
+
+	dom.delegate(
+		document.<portlet:namespace />fm,
+		'click',
+		'#<portlet:namespace />advancedMode, #<portlet:namespace />friendlyMode',
+		function(event) {
+			alternatingElements.forEach(
+				function(element) {
+					dom.toggleClasses(element, 'hide');
+				}
+			);
+		}
+	);
 </aui:script>
 
 <aui:script use="autocomplete,autocomplete-filters,io-base,liferay-auto-fields,liferay-portlet-url">

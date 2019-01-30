@@ -14,6 +14,7 @@
 
 package com.liferay.layout.content.page.editor.web.internal.display.context;
 
+import com.liferay.fragment.constants.FragmentEntryTypeConstants;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
@@ -82,6 +83,57 @@ public class ContentPageEditorDisplayContext {
 			WebKeys.THEME_DISPLAY);
 		_itemSelector = (ItemSelector)request.getAttribute(
 			ContentPageEditorWebKeys.ITEM_SELECTOR);
+	}
+
+	public SoyContext getEditorContext() throws Exception {
+		SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
+
+		soyContext.put(
+			"addFragmentEntryLinkURL",
+			getFragmentEntryActionURL(
+				"/content_layout/add_fragment_entry_link"));
+		soyContext.put("availableLanguages", getAvailableLanguagesSoyContext());
+		soyContext.put("classNameId", classNameId);
+		soyContext.put("classPK", classPK);
+		soyContext.put(
+			"defaultEditorConfigurations", getDefaultConfigurations());
+		soyContext.put("defaultLanguageId", themeDisplay.getLanguageId());
+		soyContext.put(
+			"deleteFragmentEntryLinkURL",
+			getFragmentEntryActionURL(
+				"/content_layout/delete_fragment_entry_link"));
+		soyContext.put(
+			"editFragmentEntryLinkURL",
+			getFragmentEntryActionURL(
+				"/content_layout/edit_fragment_entry_link"));
+		soyContext.put(
+			"elements",
+			getSoyContextFragmentCollections(
+				FragmentEntryTypeConstants.TYPE_ELEMENT));
+		soyContext.put("fragmentEntryLinks", getSoyContextFragmentEntryLinks());
+		soyContext.put("imageSelectorURL", getItemSelectorURL());
+		soyContext.put("languageId", themeDisplay.getLanguageId());
+		soyContext.put(
+			"layoutData", JSONFactoryUtil.createJSONObject(getLayoutData()));
+		soyContext.put("portletNamespace", renderResponse.getNamespace());
+		soyContext.put(
+			"renderFragmentEntryURL",
+			getFragmentEntryActionURL("/content_layout/render_fragment_entry"));
+		soyContext.put("redirectURL", getRedirect());
+		soyContext.put(
+			"sections",
+			getSoyContextFragmentCollections(
+				FragmentEntryTypeConstants.TYPE_SECTION));
+		soyContext.put(
+			"spritemap",
+			themeDisplay.getPathThemeImages() + "/lexicon/icons.svg");
+		soyContext.put("themeColors", getThemeColors());
+		soyContext.put(
+			"updateLayoutPageTemplateDataURL",
+			getFragmentEntryActionURL(
+				"/content_layout/update_layout_page_template_data"));
+
+		return soyContext;
 	}
 
 	protected SoyContext getAvailableLanguagesSoyContext() {

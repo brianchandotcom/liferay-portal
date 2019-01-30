@@ -20,13 +20,11 @@ import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.ClassType;
 import com.liferay.asset.kernel.model.ClassTypeReader;
-import com.liferay.fragment.constants.FragmentEntryTypeConstants;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorWebKeys;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -56,36 +54,14 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 				ContentPageEditorWebKeys.ASSET_DISPLAY_CONTRIBUTOR_TRACKER);
 	}
 
-	public SoyContext getEditorContext() throws PortalException {
+	@Override
+	public SoyContext getEditorContext() throws Exception {
 		if (_soyContext != null) {
 			return _soyContext;
 		}
 
-		SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
+		SoyContext soyContext = super.getEditorContext();
 
-		soyContext.put(
-			"addFragmentEntryLinkURL",
-			getFragmentEntryActionURL(
-				"/content_layout/add_fragment_entry_link"));
-		soyContext.put("availableLanguages", getAvailableLanguagesSoyContext());
-		soyContext.put("classNameId", classNameId);
-		soyContext.put("classPK", classPK);
-		soyContext.put(
-			"defaultEditorConfigurations", getDefaultConfigurations());
-		soyContext.put("defaultLanguageId", themeDisplay.getLanguageId());
-		soyContext.put(
-			"deleteFragmentEntryLinkURL",
-			getFragmentEntryActionURL(
-				"/content_layout/delete_fragment_entry_link"));
-		soyContext.put(
-			"editFragmentEntryLinkURL",
-			getFragmentEntryActionURL(
-				"/content_layout/edit_fragment_entry_link"));
-		soyContext.put(
-			"elements",
-			getSoyContextFragmentCollections(
-				FragmentEntryTypeConstants.TYPE_ELEMENT));
-		soyContext.put("fragmentEntryLinks", getSoyContextFragmentEntryLinks());
 		soyContext.put(
 			"getAssetDisplayContributorsURL",
 			getFragmentEntryActionURL(
@@ -93,11 +69,7 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 		soyContext.put(
 			"getAssetClassTypesURL",
 			getFragmentEntryActionURL("/content_layout/get_asset_class_types"));
-		soyContext.put("imageSelectorURL", getItemSelectorURL());
-		soyContext.put("languageId", themeDisplay.getLanguageId());
 		soyContext.put("lastSaveDate", StringPool.BLANK);
-		soyContext.put(
-			"layoutData", JSONFactoryUtil.createJSONObject(getLayoutData()));
 
 		if (_showMapping) {
 			soyContext.put(
@@ -107,7 +79,6 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 		}
 
 		soyContext.put("panels", getPanelSoyContexts(_showMapping, false));
-		soyContext.put("portletNamespace", renderResponse.getNamespace());
 
 		if (classNameId == PortalUtil.getClassNameId(
 				LayoutPageTemplateEntry.class)) {
@@ -118,22 +89,9 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 					"/content_layout/publish_layout_page_template_entry"));
 		}
 
-		soyContext.put(
-			"renderFragmentEntryURL",
-			getFragmentEntryActionURL("/content_layout/render_fragment_entry"));
-		soyContext.put(
-			"sections",
-			getSoyContextFragmentCollections(
-				FragmentEntryTypeConstants.TYPE_SECTION));
-
 		if (_showMapping) {
 			soyContext.put("selectedMappingTypes", _getSelectedMappingTypes());
 		}
-
-		soyContext.put("redirectURL", getRedirect());
-		soyContext.put(
-			"spritemap",
-			themeDisplay.getPathThemeImages() + "/lexicon/icons.svg");
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_getLayoutPageTemplateEntry();
@@ -148,11 +106,6 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 			soyContext.put("status", LanguageUtil.get(request, statusLabel));
 		}
 
-		soyContext.put("themeColors", getThemeColors());
-		soyContext.put(
-			"updateLayoutPageTemplateDataURL",
-			getFragmentEntryActionURL(
-				"/content_layout/update_layout_page_template_data"));
 		soyContext.put(
 			"updateLayoutPageTemplateEntryAssetTypeURL",
 			getFragmentEntryActionURL(

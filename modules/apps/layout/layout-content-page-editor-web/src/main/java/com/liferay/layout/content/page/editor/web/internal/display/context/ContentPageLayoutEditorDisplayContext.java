@@ -14,11 +14,9 @@
 
 package com.liferay.layout.content.page.editor.web.internal.display.context;
 
-import com.liferay.fragment.constants.FragmentEntryTypeConstants;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -76,61 +74,18 @@ public class ContentPageLayoutEditorDisplayContext
 		super(request, renderResponse, className, classPK);
 	}
 
+	@Override
 	public SoyContext getEditorContext() throws Exception {
 		if (_editorSoyContext != null) {
 			return _editorSoyContext;
 		}
 
-		SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
+		SoyContext soyContext = super.getEditorContext();
 
-		soyContext.put(
-			"addFragmentEntryLinkURL",
-			getFragmentEntryActionURL(
-				"/content_layout/add_fragment_entry_link"));
 		soyContext.put(
 			"addPortletURL",
 			getFragmentEntryActionURL("/content_layout/add_portlet"));
-		soyContext.put("availableLanguages", getAvailableLanguagesSoyContext());
-		soyContext.put("classNameId", classNameId);
-		soyContext.put("classPK", classPK);
-		soyContext.put(
-			"defaultEditorConfigurations", getDefaultConfigurations());
-		soyContext.put("defaultLanguageId", themeDisplay.getLanguageId());
-		soyContext.put(
-			"deleteFragmentEntryLinkURL",
-			getFragmentEntryActionURL(
-				"/content_layout/delete_fragment_entry_link"));
-		soyContext.put(
-			"editFragmentEntryLinkURL",
-			getFragmentEntryActionURL(
-				"/content_layout/edit_fragment_entry_link"));
-		soyContext.put(
-			"elements",
-			getSoyContextFragmentCollections(
-				FragmentEntryTypeConstants.TYPE_ELEMENT));
-		soyContext.put("fragmentEntryLinks", getSoyContextFragmentEntryLinks());
-		soyContext.put("imageSelectorURL", getItemSelectorURL());
-		soyContext.put("languageId", themeDisplay.getLanguageId());
-		soyContext.put(
-			"layoutData", JSONFactoryUtil.createJSONObject(getLayoutData()));
 		soyContext.put("panels", getPanelSoyContexts(false, true));
-		soyContext.put("portletNamespace", renderResponse.getNamespace());
-		soyContext.put(
-			"renderFragmentEntryURL",
-			getFragmentEntryActionURL("/content_layout/render_fragment_entry"));
-		soyContext.put("redirectURL", getRedirect());
-		soyContext.put(
-			"sections",
-			getSoyContextFragmentCollections(
-				FragmentEntryTypeConstants.TYPE_SECTION));
-		soyContext.put(
-			"spritemap",
-			themeDisplay.getPathThemeImages() + "/lexicon/icons.svg");
-		soyContext.put("themeColors", getThemeColors());
-		soyContext.put(
-			"updateLayoutPageTemplateDataURL",
-			getFragmentEntryActionURL(
-				"/content_layout/update_layout_page_template_data"));
 		soyContext.put("widgets", _getWidgetsSoyContexts());
 
 		_editorSoyContext = soyContext;

@@ -75,8 +75,6 @@ public class UserEntityModel implements EntityModel {
 			new StringEntityField(
 				"lastName", locale -> Field.getSortableFieldName("lastName")),
 			new StringEntityField(
-				"organizationCount", locale -> "organizationCount"),
-			new StringEntityField(
 				"screenName",
 				locale -> Field.getSortableFieldName("screenName")),
 			new StringEntityField("userName", locale -> Field.USER_NAME)

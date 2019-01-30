@@ -15,6 +15,7 @@
 package com.liferay.portal.search.solr7.internal.groupby;
 
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.search.groupby.GroupByRequest;
 
 import org.apache.solr.client.solrj.SolrQuery;
 
@@ -24,6 +25,7 @@ import org.apache.solr.client.solrj.SolrQuery;
 public interface GroupByTranslator {
 
 	public void translate(
-		SolrQuery solrQuery, SearchContext searchContext, int start, int end);
+		SolrQuery solrQuery, GroupByRequest groupByRequest,
+		SearchContext searchContext);
 
 }

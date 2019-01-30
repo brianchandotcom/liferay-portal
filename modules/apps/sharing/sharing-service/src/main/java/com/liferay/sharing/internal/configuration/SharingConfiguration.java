@@ -42,4 +42,11 @@ public interface SharingConfiguration {
 	)
 	public int expiredSharingEntriesCheckInterval();
 
+	/**
+	 * Enables sharing.
+	 * @review
+	 */
+	@Meta.AD(deflt = "true", name = "enabled", required = false)
+	public boolean enabled();
+
 }

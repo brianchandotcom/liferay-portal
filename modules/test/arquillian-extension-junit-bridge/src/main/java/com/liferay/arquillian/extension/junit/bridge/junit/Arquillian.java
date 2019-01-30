@@ -149,6 +149,11 @@ public class Arquillian extends BlockJUnit4ClassRunner {
 	}
 
 	@Override
+	protected List<FrameworkMethod> getChildren() {
+		return getTestClass().getAnnotatedMethods(Test.class);
+	}
+
+	@Override
 	protected boolean isIgnored(FrameworkMethod frameworkMethod) {
 		if (frameworkMethod.getAnnotation(Ignore.class) != null) {
 			return true;

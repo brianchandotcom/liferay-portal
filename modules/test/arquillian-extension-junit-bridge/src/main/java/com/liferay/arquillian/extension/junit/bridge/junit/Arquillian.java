@@ -52,7 +52,7 @@ import org.junit.runner.Result;
 import org.junit.runner.notification.Failure;
 import org.junit.runner.notification.RunListener;
 import org.junit.runner.notification.RunNotifier;
-import org.junit.runners.BlockJUnit4ClassRunner;
+import org.junit.runners.ParentRunner;
 import org.junit.runners.model.FrameworkMethod;
 import org.junit.runners.model.InitializationError;
 import org.junit.runners.model.Statement;
@@ -61,7 +61,7 @@ import org.junit.runners.model.TestClass;
 /**
  * @author Shuyang Zhou
  */
-public class Arquillian extends BlockJUnit4ClassRunner {
+public class Arquillian extends ParentRunner<FrameworkMethod> {
 
 	public Arquillian(Class<?> clazz) throws InitializationError {
 		super(clazz);

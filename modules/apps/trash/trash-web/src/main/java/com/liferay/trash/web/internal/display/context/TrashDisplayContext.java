@@ -204,41 +204,6 @@ public class TrashDisplayContext {
 		return breadcrumbEntries;
 	}
 
-	public String getContainerModelRedirectURL() {
-		if (Validator.isNotNull(_containerModelRedirectURL)) {
-			return _containerModelRedirectURL;
-		}
-
-		String redirect = ParamUtil.getString(_request, "redirect");
-
-		if (Validator.isNull(redirect)) {
-			PortletURL redirectURL = _liferayPortletResponse.createRenderURL();
-
-			redirectURL.setParameter("mvcPath", "/view_content.jsp");
-
-			long trashEntryId = getTrashEntryId();
-
-			long classNameId = getClassNameId();
-			long classPK = getClassPK();
-
-			if (trashEntryId > 0) {
-				redirectURL.setParameter(
-					"trashEntryId", String.valueOf(trashEntryId));
-			}
-			else if ((classNameId > 0) && (classPK > 0)) {
-				redirectURL.setParameter(
-					"classNameId", String.valueOf(classNameId));
-				redirectURL.setParameter("classPK", String.valueOf(classPK));
-			}
-
-			redirect = redirectURL.toString();
-		}
-
-		_containerModelRedirectURL = redirect;
-
-		return redirect;
-	}
-
 	public String getContentClearResultsURL() {
 		PortletURL clearResultsURL = getContentPortletURL();
 
@@ -768,7 +733,6 @@ public class TrashDisplayContext {
 	}
 
 	private boolean _approximate;
-	private String _containerModelRedirectURL;
 	private String _displayStyle;
 	private EntrySearch _entrySearch;
 	private String _keywords;

@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -119,7 +120,7 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 
 			url = StringUtil.replaceFirst(
 				url, String.format("{%s}", pathParameter.getKey()),
-				pathParameter.getValue());
+				HtmlUtil.escapeURL(pathParameter.getValue()));
 		}
 
 		return url;

@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -128,7 +129,8 @@ public class DDMFormFieldOptionsFactoryImpl
 					ddmFormFieldRenderingContext.getLocale()
 				).withParameter(
 					"filterParameterValue",
-					String.valueOf(ddmFormFieldRenderingContext.getValue())
+					HtmlUtil.escapeURL(
+						String.valueOf(ddmFormFieldRenderingContext.getValue()))
 				).withParameter(
 					"httpServletRequest", httpServletRequest
 				).build();

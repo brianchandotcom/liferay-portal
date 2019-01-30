@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -136,11 +137,10 @@ public class CallFunction
 		}
 
 		if (_ddmExpressionFieldAccessor.isField(parameterValue)) {
-			parameters.put(parameterName, getDDMFormFieldValue(parameterValue));
+			parameterValue = getDDMFormFieldValue(parameterValue);
 		}
-		else {
-			parameters.put(parameterName, parameterValue);
-		}
+
+		parameters.put(parameterName, HtmlUtil.escapeURL(parameterValue));
 	}
 
 	protected Map<String, String> extractParameters(String expression) {

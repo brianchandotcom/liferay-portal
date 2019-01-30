@@ -232,4 +232,18 @@ public interface CTEntryModel extends AttachedModel, AuditedModel,
 
 	@Override
 	public boolean isResourceMain();
+
+	/**
+	 * Returns the change type of this ct entry.
+	 *
+	 * @return the change type of this ct entry
+	 */
+	public int getChangeType();
+
+	/**
+	 * Sets the change type of this ct entry.
+	 *
+	 * @param changeType the change type of this ct entry
+	 */
+	public void setChangeType(int changeType);
 }

@@ -80,7 +80,8 @@ public class CTEntryModelImpl extends BaseModelImpl<CTEntry>
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "classNameId", Types.BIGINT },
 			{ "classPK", Types.BIGINT },
-			{ "resourcePrimKey", Types.BIGINT }
+			{ "resourcePrimKey", Types.BIGINT },
+			{ "changeType", Types.INTEGER }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -94,9 +95,10 @@ public class CTEntryModelImpl extends BaseModelImpl<CTEntry>
 		TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("classPK", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("resourcePrimKey", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("changeType", Types.INTEGER);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CTEntry (ctEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,resourcePrimKey LONG)";
+	public static final String TABLE_SQL_CREATE = "create table CTEntry (ctEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,resourcePrimKey LONG,changeType INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table CTEntry";
 	public static final String ORDER_BY_JPQL = " ORDER BY ctEntry.ctEntryId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY CTEntry.ctEntryId ASC";
@@ -232,6 +234,8 @@ public class CTEntryModelImpl extends BaseModelImpl<CTEntry>
 		attributeSetterBiConsumers.put("classPK", (BiConsumer<CTEntry, Long>)CTEntry::setClassPK);
 		attributeGetterFunctions.put("resourcePrimKey", CTEntry::getResourcePrimKey);
 		attributeSetterBiConsumers.put("resourcePrimKey", (BiConsumer<CTEntry, Long>)CTEntry::setResourcePrimKey);
+		attributeGetterFunctions.put("changeType", CTEntry::getChangeType);
+		attributeSetterBiConsumers.put("changeType", (BiConsumer<CTEntry, Integer>)CTEntry::setChangeType);
 
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
@@ -416,6 +420,16 @@ public class CTEntryModelImpl extends BaseModelImpl<CTEntry>
 		return _originalResourcePrimKey;
 	}
 
+	@Override
+	public int getChangeType() {
+		return _changeType;
+	}
+
+	@Override
+	public void setChangeType(int changeType) {
+		_changeType = changeType;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -456,6 +470,7 @@ public class CTEntryModelImpl extends BaseModelImpl<CTEntry>
 		ctEntryImpl.setClassNameId(getClassNameId());
 		ctEntryImpl.setClassPK(getClassPK());
 		ctEntryImpl.setResourcePrimKey(getResourcePrimKey());
+		ctEntryImpl.setChangeType(getChangeType());
 
 		ctEntryImpl.resetOriginalValues();
 
@@ -577,6 +592,8 @@ public class CTEntryModelImpl extends BaseModelImpl<CTEntry>
 
 		ctEntryCacheModel.resourcePrimKey = getResourcePrimKey();
 
+		ctEntryCacheModel.changeType = getChangeType();
+
 		return ctEntryCacheModel;
 	}
 
@@ -655,6 +672,7 @@ public class CTEntryModelImpl extends BaseModelImpl<CTEntry>
 	private long _resourcePrimKey;
 	private long _originalResourcePrimKey;
 	private boolean _setOriginalResourcePrimKey;
+	private int _changeType;
 	private long _columnBitmask;
 	private CTEntry _escapedModel;
 }

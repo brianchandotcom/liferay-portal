@@ -58,4 +58,13 @@ public class DocumentCreationHelpers {
 		return document -> document.addText(fieldName, values);
 	}
 
+	public static DocumentCreationHelper twoKeywords(
+		String fieldName1, String value1, String fieldName2, String value2) {
+
+		return document -> {
+			document.addKeyword(fieldName1, value1);
+			document.addKeyword(fieldName2, value2);
+		};
+	}
+
 }

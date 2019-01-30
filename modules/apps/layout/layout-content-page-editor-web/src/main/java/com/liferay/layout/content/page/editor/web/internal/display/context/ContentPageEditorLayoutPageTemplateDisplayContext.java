@@ -28,9 +28,7 @@ import com.liferay.fragment.service.FragmentEntryServiceUtil;
 import com.liferay.fragment.util.FragmentEntryRenderUtil;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorWebKeys;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
-import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
-import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -59,15 +57,13 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 		HttpServletRequest request, RenderResponse renderResponse,
 		String className, long classPK, boolean showMapping) {
 
-		super(request, renderResponse);
+		super(request, renderResponse, className, classPK);
 
-		_classPK = classPK;
 		_showMapping = showMapping;
 
 		_assetDisplayContributorTracker =
 			(AssetDisplayContributorTracker)request.getAttribute(
 				ContentPageEditorWebKeys.ASSET_DISPLAY_CONTRIBUTOR_TRACKER);
-		_classNameId = PortalUtil.getClassNameId(className);
 	}
 
 	public SoyContext getEditorContext() throws PortalException {
@@ -81,8 +77,8 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 			"addFragmentEntryLinkURL",
 			getFragmentEntryActionURL("/layout/add_fragment_entry_link"));
 		soyContext.put("availableLanguages", getAvailableLanguagesSoyContext());
-		soyContext.put("classNameId", _classNameId);
-		soyContext.put("classPK", _classPK);
+		soyContext.put("classNameId", classNameId);
+		soyContext.put("classPK", classPK);
 		soyContext.put(
 			"defaultEditorConfigurations", getDefaultConfigurations());
 		soyContext.put("defaultLanguageId", themeDisplay.getLanguageId());
@@ -109,7 +105,7 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 		soyContext.put("languageId", themeDisplay.getLanguageId());
 		soyContext.put("lastSaveDate", StringPool.BLANK);
 		soyContext.put(
-			"layoutData", JSONFactoryUtil.createJSONObject(_getLayoutData()));
+			"layoutData", JSONFactoryUtil.createJSONObject(getLayoutData()));
 
 		if (_showMapping) {
 			soyContext.put(
@@ -120,7 +116,7 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 		soyContext.put("panels", _getSoyContextPanels());
 		soyContext.put("portletNamespace", renderResponse.getNamespace());
 
-		if (_classNameId == PortalUtil.getClassNameId(
+		if (classNameId == PortalUtil.getClassNameId(
 				LayoutPageTemplateEntry.class)) {
 
 			soyContext.put(
@@ -174,16 +170,6 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 		return _soyContext;
 	}
 
-	private String _getLayoutData() throws PortalException {
-		LayoutPageTemplateStructure layoutPageTemplateStructure =
-			LayoutPageTemplateStructureLocalServiceUtil.
-				fetchLayoutPageTemplateStructure(
-					themeDisplay.getScopeGroupId(), _classNameId, _classPK,
-					true);
-
-		return layoutPageTemplateStructure.getData();
-	}
-
 	private LayoutPageTemplateEntry _getLayoutPageTemplateEntry()
 		throws PortalException {
 
@@ -193,7 +179,7 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 
 		_layoutPageTemplateEntry =
 			LayoutPageTemplateEntryServiceUtil.fetchLayoutPageTemplateEntry(
-				_classPK);
+				classPK);
 
 		return _layoutPageTemplateEntry;
 	}
@@ -274,7 +260,7 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 
 		List<FragmentEntryLink> fragmentEntryLinks =
 			FragmentEntryLinkLocalServiceUtil.getFragmentEntryLinks(
-				getGroupId(), _classNameId, _classPK);
+				getGroupId(), classNameId, classPK);
 
 		boolean isolated = themeDisplay.isIsolated();
 
@@ -367,8 +353,6 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 
 	private final AssetDisplayContributorTracker
 		_assetDisplayContributorTracker;
-	private final long _classNameId;
-	private final long _classPK;
 	private LayoutPageTemplateEntry _layoutPageTemplateEntry;
 	private final boolean _showMapping;
 	private SoyContext _soyContext;

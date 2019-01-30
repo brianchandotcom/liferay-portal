@@ -20,15 +20,12 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryServiceUtil;
 import com.liferay.fragment.util.FragmentEntryRenderUtil;
-import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
-import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletApp;
 import com.liferay.portal.kernel.model.PortletCategory;
@@ -78,9 +75,10 @@ public class ContentPageLayoutEditorDisplayContext
 	extends ContentPageEditorDisplayContext {
 
 	public ContentPageLayoutEditorDisplayContext(
-		HttpServletRequest request, RenderResponse renderResponse) {
+		HttpServletRequest request, RenderResponse renderResponse,
+		String className, long classPK) {
 
-		super(request, renderResponse);
+		super(request, renderResponse, className, classPK);
 	}
 
 	public SoyContext getEditorContext() throws Exception {
@@ -98,9 +96,8 @@ public class ContentPageLayoutEditorDisplayContext
 			"addPortletURL",
 			getFragmentEntryActionURL("/content_layout/add_portlet"));
 		soyContext.put("availableLanguages", getAvailableLanguagesSoyContext());
-		soyContext.put(
-			"classNameId", PortalUtil.getClassNameId(Layout.class.getName()));
-		soyContext.put("classPK", themeDisplay.getPlid());
+		soyContext.put("classNameId", classNameId);
+		soyContext.put("classPK", classPK);
 		soyContext.put(
 			"defaultEditorConfigurations", getDefaultConfigurations());
 		soyContext.put("defaultLanguageId", themeDisplay.getLanguageId());
@@ -121,7 +118,7 @@ public class ContentPageLayoutEditorDisplayContext
 		soyContext.put("imageSelectorURL", getItemSelectorURL());
 		soyContext.put("languageId", themeDisplay.getLanguageId());
 		soyContext.put(
-			"layoutData", JSONFactoryUtil.createJSONObject(_getLayoutData()));
+			"layoutData", JSONFactoryUtil.createJSONObject(getLayoutData()));
 		soyContext.put("panels", _getPanelSoyContexts());
 		soyContext.put("portletNamespace", renderResponse.getNamespace());
 		soyContext.put(
@@ -166,23 +163,6 @@ public class ContentPageLayoutEditorDisplayContext
 		_fragmentsEditorToolbarSoyContext = soyContext;
 
 		return _fragmentsEditorToolbarSoyContext;
-	}
-
-	private String _getLayoutData() throws PortalException {
-		if (_layoutData != null) {
-			return _layoutData;
-		}
-
-		LayoutPageTemplateStructure layoutPageTemplateStructure =
-			LayoutPageTemplateStructureLocalServiceUtil.
-				fetchLayoutPageTemplateStructure(
-					themeDisplay.getScopeGroupId(),
-					PortalUtil.getClassNameId(Layout.class.getName()),
-					themeDisplay.getPlid(), true);
-
-		_layoutData = layoutPageTemplateStructure.getData();
-
-		return _layoutData;
 	}
 
 	private List<SoyContext> _getPanelSoyContexts() {
@@ -361,9 +341,7 @@ public class ContentPageLayoutEditorDisplayContext
 
 		List<FragmentEntryLink> fragmentEntryLinks =
 			FragmentEntryLinkLocalServiceUtil.getFragmentEntryLinks(
-				themeDisplay.getScopeGroupId(),
-				PortalUtil.getClassNameId(Layout.class.getName()),
-				themeDisplay.getPlid());
+				themeDisplay.getScopeGroupId(), classNameId, classPK);
 
 		boolean isolated = themeDisplay.isIsolated();
 
@@ -492,7 +470,6 @@ public class ContentPageLayoutEditorDisplayContext
 
 	private SoyContext _editorSoyContext;
 	private SoyContext _fragmentsEditorToolbarSoyContext;
-	private String _layoutData;
 	private List<SoyContext> _panelSoyContexts;
 	private SoyContext _soyContextFragmentEntryLinksSoyContext;
 

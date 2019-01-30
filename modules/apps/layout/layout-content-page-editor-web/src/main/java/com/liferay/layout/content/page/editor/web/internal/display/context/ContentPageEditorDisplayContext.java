@@ -27,15 +27,19 @@ import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCrite
 import com.liferay.item.selector.criteria.url.criterion.URLItemSelectorCriterion;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorWebKeys;
+import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
+import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.editor.configuration.EditorConfiguration;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactoryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -60,11 +64,14 @@ import javax.servlet.http.HttpServletRequest;
 public class ContentPageEditorDisplayContext {
 
 	public ContentPageEditorDisplayContext(
-		HttpServletRequest request, RenderResponse renderResponse) {
+		HttpServletRequest request, RenderResponse renderResponse,
+		String className, long classPK) {
 
 		this.request = request;
 		this.renderResponse = renderResponse;
+		this.classPK = classPK;
 
+		classNameId = PortalUtil.getClassNameId(className);
 		themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 		_itemSelector = (ItemSelector)request.getAttribute(
@@ -178,6 +185,21 @@ public class ContentPageEditorDisplayContext {
 		return itemSelectorURL.toString();
 	}
 
+	protected String getLayoutData() throws PortalException {
+		if (_layoutData != null) {
+			return _layoutData;
+		}
+
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			LayoutPageTemplateStructureLocalServiceUtil.
+				fetchLayoutPageTemplateStructure(
+					themeDisplay.getScopeGroupId(), classNameId, classPK, true);
+
+		_layoutData = layoutPageTemplateStructure.getData();
+
+		return _layoutData;
+	}
+
 	protected String getRedirect() {
 		if (_redirect != null) {
 			return _redirect;
@@ -248,6 +270,8 @@ public class ContentPageEditorDisplayContext {
 		return _urlItemSelectorCriterion;
 	}
 
+	protected final long classNameId;
+	protected final long classPK;
 	protected final RenderResponse renderResponse;
 	protected final HttpServletRequest request;
 	protected final ThemeDisplay themeDisplay;
@@ -277,6 +301,7 @@ public class ContentPageEditorDisplayContext {
 	private Long _groupId;
 	private ItemSelectorCriterion _imageItemSelectorCriterion;
 	private final ItemSelector _itemSelector;
+	private String _layoutData;
 	private String _redirect;
 	private ItemSelectorCriterion _urlItemSelectorCriterion;
 

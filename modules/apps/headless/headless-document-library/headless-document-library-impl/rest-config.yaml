@@ -1,3 +1,7 @@
 apiDir: "../headless-document-library-api/src/main/java"
 apiPackagePath: "com.liferay.headless.document.library"
+application:
+    baseURI: "/headless-document-library"
+    className: "HeadlessDocumentLibraryApplication"
+    name: "headless-document-library-application"
 author: "Javier Gamarra"

@@ -40,7 +40,6 @@ import org.junit.AssumptionViolatedException;
 import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.internal.runners.model.EachTestNotifier;
 import org.junit.internal.runners.statements.ExpectException;
 import org.junit.internal.runners.statements.Fail;
 import org.junit.internal.runners.statements.FailOnTimeout;
@@ -57,6 +56,7 @@ import org.junit.runner.notification.RunNotifier;
 import org.junit.runner.notification.StoppedByUserException;
 import org.junit.runners.model.FrameworkField;
 import org.junit.runners.model.FrameworkMethod;
+import org.junit.runners.model.MultipleFailureException;
 import org.junit.runners.model.Statement;
 import org.junit.runners.model.TestClass;
 
@@ -133,8 +133,7 @@ public class Arquillian extends Runner implements Filterable {
 
 			});
 
-		EachTestNotifier eachTestNotifier = new EachTestNotifier(
-			runNotifier, getDescription());
+		Description description = getDescription();
 
 		try {
 			Statement statement = _classBlock(runNotifier);
@@ -142,13 +141,18 @@ public class Arquillian extends Runner implements Filterable {
 			statement.evaluate();
 		}
 		catch (org.junit.internal.AssumptionViolatedException ave) {
-			eachTestNotifier.addFailedAssumption(ave);
+			runNotifier.fireTestAssumptionFailed(new Failure(description, ave));
 		}
 		catch (StoppedByUserException sbue) {
 			throw sbue;
 		}
+		catch (MultipleFailureException mfe) {
+			for (Throwable t : mfe.getFailures()) {
+				runNotifier.fireTestFailure(new Failure(description, t));
+			}
+		}
 		catch (Throwable t) {
-			eachTestNotifier.addFailure(t);
+			runNotifier.fireTestFailure(new Failure(description, t));
 		}
 	}
 
@@ -422,22 +426,25 @@ public class Arquillian extends Runner implements Filterable {
 		else {
 			Statement statement = _methodBlock(frameworkMethod);
 
-			EachTestNotifier eachTestNotifier = new EachTestNotifier(
-				runNotifier, description);
-
-			eachTestNotifier.fireTestStarted();
+			runNotifier.fireTestStarted(description);
 
 			try {
 				statement.evaluate();
 			}
 			catch (org.junit.internal.AssumptionViolatedException ave) {
-				eachTestNotifier.addFailedAssumption(ave);
+				runNotifier.fireTestAssumptionFailed(
+					new Failure(description, ave));
 			}
-			catch (Throwable e) {
-				eachTestNotifier.addFailure(e);
+			catch (MultipleFailureException mfe) {
+				for (Throwable t : mfe.getFailures()) {
+					runNotifier.fireTestFailure(new Failure(description, t));
+				}
+			}
+			catch (Throwable t) {
+				runNotifier.fireTestFailure(new Failure(description, t));
 			}
 			finally {
-				eachTestNotifier.fireTestFinished();
+				runNotifier.fireTestFinished(description);
 			}
 		}
 	}

@@ -68,7 +68,7 @@ public class ContentPageToolbarPortlet extends MVCPortlet {
 		ContentPageEditorDisplayContext contentPageEditorDisplayContext =
 			(ContentPageEditorDisplayContext)request.getAttribute(
 				ContentPageEditorWebKeys.
-					LIFERAY_SHARED_FRAGMENTS_EDITOR_DISPLAY_CONTEXT);
+					LIFERAY_SHARED_CONTENT_PAGE_EDITOR_DISPLAY_CONTEXT);
 
 		if (contentPageEditorDisplayContext == null) {
 			contentPageEditorDisplayContext =
@@ -77,7 +77,7 @@ public class ContentPageToolbarPortlet extends MVCPortlet {
 
 			request.setAttribute(
 				ContentPageEditorWebKeys.
-					LIFERAY_SHARED_FRAGMENTS_EDITOR_DISPLAY_CONTEXT,
+					LIFERAY_SHARED_CONTENT_PAGE_EDITOR_DISPLAY_CONTEXT,
 				contentPageEditorDisplayContext);
 		}
 

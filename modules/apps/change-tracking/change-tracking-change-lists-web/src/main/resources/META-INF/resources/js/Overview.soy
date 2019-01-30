@@ -6,7 +6,16 @@
 {template .render}
 	{@param spritemap: string}
 	{@param urlProductionView: string}
+	{@param? changes: [
+		added: number,
+		deleted: number,
+		modified: number
+	]}
 	{@param? description: string}
+	{@param? headerDropDownMenu: list<[
+		label: string,
+		link: string
+	]>}
 	{@param? headerTitle: string}
 	{@param? initialFetch: bool}
 	{@param? publishedBy: [
@@ -16,8 +25,24 @@
 		userName: string
 	]}
 
+	{let $headerButtonLabel kind="text"}
+		{msg desc=""}publish{/msg}
+	{/let}
+
 	{let $headerLinkLabel kind="text"}
 		{msg desc=""}production-view{/msg}
+	{/let}
+
+	{let $addedLabel kind="text"}
+		{msg desc=""}added{/msg}
+	{/let}
+
+	{let $deletedLabel kind="text"}
+		{msg desc=""}deleted{/msg}
+	{/let}
+
+	{let $modifiedLabel kind="text"}
+		{msg desc=""}modified{/msg}
 	{/let}
 
 	<div class="container-fluid-1280">
@@ -26,7 +51,30 @@
 		{else}
 			<div class="row">
 				<div class="col-sm-6">
-					Active Change List card placeholder
+					{call .glanceCard}
+						{param cardState: 'border-left-blue' /}
+						{param changes: [
+							'added': $changes.added,
+							'addedLabel': $addedLabel,
+							'deleted': $changes.deleted,
+							'deletedLabel': $deletedLabel,
+							'modified': $changes.modified,
+							'modifiedLabel': $modifiedLabel ] /}
+						{param description: $description /}
+						{param descriptionTitle kind="text"}
+							{msg desc=""}description{/msg}
+						{/param}
+						{param headerButton: ['label': $headerButtonLabel] /}
+						{param headerDropDownMenu: $headerDropDownMenu /}
+						{param headerDropDownMenuTitle kind="text"}
+							{msg desc=""}select-change-list{/msg}
+						{/param}
+						{param headerSubTitle kind="text"}
+							{msg desc=""}active-change-list{/msg}
+						{/param}
+						{param headerTitle: $headerTitle /}
+						{param spritemap: $spritemap /}
+					{/call}
 				</div>
 
 				<div class="col-sm-6">
@@ -37,7 +85,7 @@
 							{msg desc=""}description{/msg}
 						{/param}
 						{param headerLink: [
-							'href': $urlProductionView,
+							'link': $urlProductionView,
 							'label': $headerLinkLabel ] /}
 						{param headerSubTitle kind="text"}
 							{msg desc=""}published-change-list{/msg}
@@ -69,12 +117,28 @@
 {template .overviewCard}
 	{@param  spritemap: string}
 	{@param? cardState: string}
+	{@param? changes: [
+		added: number,
+		addedLabel: string,
+		deleted: number,
+		deletedLabel: string,
+		modified: number,
+		modifiedLabel: string
+	]}
 	{@param? description: string}
 	{@param? descriptionTitle: string}
-	{@param? headerLink: [
-		href: string,
+	{@param? headerButton: [
 		label: string
 	]}
+	{@param? headerLink: [
+		link: string,
+		label: string
+	]}
+	{@param? headerDropDownMenu: list<[
+		label: string,
+		link: string
+	]>}
+	{@param? headerDropDownMenuTitle: string}
 	{@param? headerSubTitle: string}
 	{@param? headerTitle: string}
 	{@param? publishedBy: [
@@ -87,6 +151,9 @@
 
 	<div class="overview-card-sheet {$cardState}">
 		{call .overviewCardHeader}
+			{param headerButton: $headerButton /}
+			{param headerDropDownMenu: $headerDropDownMenu /}
+			{param headerDropDownMenuTitle: $headerDropDownMenuTitle /}
 			{param headerLink: $headerLink /}
 			{param headerSubTitle: $headerSubTitle /}
 			{param headerTitle: $headerTitle /}
@@ -96,6 +163,7 @@
 		<div class="overview-card-sheet-divider"></div>
 
 		{call .overviewCardBody}
+			{param changes: $changes /}
 			{param description: $description /}
 			{param descriptionTitle: $descriptionTitle /}
 			{param publishedBy: $publishedBy /}
@@ -107,16 +175,25 @@
 {/template}
 
 {template .overviewCardHeader}
+	{@param  spritemap: string}
 	{@param? headerLink: [
-		href: string,
+		link: string,
 		label: string
 	]}
+	{@param? headerButton: [
+		label: string
+	]}
+	{@param? headerDropDownMenu: list<[
+		label: string,
+		link: string
+	]>}
+	{@param? headerDropDownMenuTitle: string}
 	{@param? headerSubTitle: string}
 	{@param? headerTitle: string}
 
 	<div class="overview-card-container overview-card-header">
 		<div class="row">
-			<div class="col-sm-12">
+			<div class="col-sm-{$twoColumns ? 6 : 12}">
 				{if $headerSubTitle}
 					<h3>{$headerSubTitle}</h3>
 				{/if}
@@ -125,15 +202,73 @@
 				{/if}
 				{if $headerLink}
 					<div class="header-line">
-						<a href="{$headerLink.href}"  onclick="">{$headerLink.label}</a>
+						<a href="{$headerLink.link}"  onclick="">{$headerLink.label}</a>
+					</div>
+				{/if}
+				{if $headerDropDownMenu and $headerDropDownMenuTitle}
+					<div class="header-line">
+						<a aria-expanded="false" aria-haspopup="true" class="dropdown-toggle" data-toggle="dropdown" href="#1" role="button">
+							<span class="navbar-text-truncate">{$headerDropDownMenuTitle}</span>
+							<span class="navbar-text-icon">
+								<svg class="lexicon-icon lexicon-icon-caret-bottom" focusable="false" role="presentation">
+									<use xlink:href="{$spritemap}#caret-bottom" />
+								</svg>
+							</span>
+						</a>
+
+						<div aria-labelledby="" class="dropdown-menu">
+							{foreach $headerDropDownMenuItem in $headerDropDownMenu}
+								<a class="dropdown-item" href="{$headerDropDownMenuItem.link}">{$headerDropDownMenuItem.label}</a>
+							{/foreach}
+							<a class="dropdown-item dropdown-item-last" href="#1">{$headerDropDownMenuTitle}</a>
+						</div>
 					</div>
 				{/if}
 			</div>
+
+			{if $twoColumns}
+				<div class="col-sm-6">
+					<div class="navbar-nav stick-to-right">
+						<div class="btn-group">
+							<div class="btn-group-item">
+								<svg class="lexicon-icon lexicon-icon-exclamation-circle" focusable="false" role="presentation">
+									<use xlink:href="{$spritemap}#exclamation-circle" />
+								</svg>
+							</div>
+							{if $headerButton}
+								<div class="btn-group-item">
+									<div class="flex-col">
+										<button class="btn btn-default btn-primary" data-qa-id="headerButton" id="" type="button">
+											<span class="lfr-btn-label">{$headerButton.label}</span>
+										</button>
+									</div>
+								</div>
+							{/if}
+							<div class="btn-group-item">
+								<button class="btn btn-monospaced btn-outline-borderless btn-outline-secondary btn-xs lfr-portal-tooltip" data-qa-id="headerTrash" type="button">
+									<svg class="icon-monospaced lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+										<use xlink:href="{$spritemap}#trash" />
+									</svg>
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			{/if}
+
 		</div>
 	</div>
 {/template}
 
 {template .overviewCardBody}
+	{@param? changes: [
+		added: number,
+		addedLabel: string,
+		deleted: number,
+		deletedLabel: string,
+		modified: number,
+		modifiedLabel: string
+	]}
 	{@param? description: string}
 	{@param? descriptionTitle: string}
 	{@param? publishedBy: [
@@ -180,6 +315,28 @@
 						<div class="aspect-ratio-item-left-middle text-secondary">
 							{$publishedBy.dateTime} by {$publishedBy.userName}
 						</div>
+					</div>
+				</div>
+			</div>
+		{/if}
+		{if $changes}
+			<div class="glance-card-sheet-block">
+				<h3>Changes</h3>
+
+				<div class="changes-row">
+					<div class="changes">
+						<div class="big-number" data-qa-id="changesAdded">{$changes.added}</div>
+						<div class="">{$changes.addedLabel}</div>
+					</div>
+
+					<div class="changes">
+						<div class="big-number" data-qa-id="changesModified">{$changes.modified}</div>
+						<div class="">{$changes.modifiedLabel}</div>
+					</div>
+
+					<div class="changes">
+						<div class="big-number" data-qa-id="changesDeleted">{$changes.deleted}</div>
+						<div class="">{$changes.deletedLabel}</div>
 					</div>
 				</div>
 			</div>

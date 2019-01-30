@@ -16,9 +16,23 @@ class Overview extends PortletBase {
 			this.urlProductionInformation,
 			response => {
 				if (response) {
+					this.changes = {
+						added: 42,
+						deleted: 2,
+						modified: 6
+					};
+
 					this.description = response.ctcollection.description;
 					this.headerTitle = response.ctcollection.name;
 					this.initialFetch = true;
+					this.headerDropDownMenu = [
+						{label: 'Change List 01',
+link: 'link01'},
+						{label: 'Change List 02',
+link: 'link02'},
+						{label: 'Change List 03',
+link: 'link03'}
+					];
 
 					let publishDate = new Date(response.date);
 					let publishDateFormatOptions = {
@@ -81,6 +95,22 @@ class Overview extends PortletBase {
 Overview.STATE = {
 
 	/**
+	 * Changes
+	 * @default
+	 * @instance
+	 * @memberOf ChangeList
+	 * @review
+	 * @type {Object}
+	 */
+	changes: Config.shapeOf(
+		{
+			added: Config.number(),
+			deleted: Config.number(),
+			modified: Config.number()
+		}
+	),
+
+	/**
 	 * Contains the card description
 	 * @default undefined
 	 * @instance
@@ -89,6 +119,23 @@ Overview.STATE = {
 	 */
 
 	description: Config.string(),
+
+	/**
+	 * List of drop down menu items
+	 * @default []
+	 * @instance
+	 * @memberOf ChangeList
+	 * @review
+	 * @type {Array}
+	 */
+	headerDropDownMenu: Config.arrayOf(
+		Config.shapeOf(
+			{
+				label: Config.string(),
+				link: Config.string()
+			}
+		)
+	),
 
 	/**
 	 * Contains the card header title

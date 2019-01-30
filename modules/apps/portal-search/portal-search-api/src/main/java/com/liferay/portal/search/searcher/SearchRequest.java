@@ -17,6 +17,9 @@ package com.liferay.portal.search.searcher;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.search.Query;
+import com.liferay.portal.search.stats.StatsRequest;
+
+import java.util.List;
 
 /**
  * Holds parameters to be used when performing a search.
@@ -36,6 +39,15 @@ public interface SearchRequest {
 	 * @review
 	 */
 	public Query getRescoreQuery();
+
+	/**
+	 * Provides the metric aggregations that are to be computed for each field.
+	 *
+	 * @return the stats that are enabled for each field.
+	 *
+	 * @review
+	 */
+	public List<StatsRequest> getStatsRequests();
 
 	/**
 	 * Enables explanation for each hit on how its score was computed.

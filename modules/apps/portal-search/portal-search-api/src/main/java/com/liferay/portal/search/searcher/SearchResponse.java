@@ -16,6 +16,10 @@ package com.liferay.portal.search.searcher;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.search.stats.StatsResponse;
+
+import java.util.Map;
+
 /**
  * Holds various outcomes returned when a search is performed.
  *
@@ -45,5 +49,15 @@ public interface SearchResponse {
 	 * @review
 	 */
 	public String getResponseString();
+
+	/**
+	 * Returns the map containing the metrics aggregations computed by the
+	 * search engine.
+	 *
+	 * @return the map containing the metrics aggregations per field
+	 *
+	 * @review
+	 */
+	public Map<String, StatsResponse> getStatsResponseMap();
 
 }

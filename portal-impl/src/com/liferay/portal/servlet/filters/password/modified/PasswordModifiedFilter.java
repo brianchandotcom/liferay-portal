@@ -79,7 +79,7 @@ public class PasswordModifiedFilter extends BasePortalFilter {
 
 			Long realUserId = (Long)session.getAttribute(WebKeys.USER_ID);
 
-			if ((realUserId == null) || user.getUserId() != realUserId) {
+			if (!_isValidRealUserId(realUserId, user)) {
 				return false;
 			}
 
@@ -102,6 +102,14 @@ public class PasswordModifiedFilter extends BasePortalFilter {
 
 			return false;
 		}
+	}
+
+	private boolean _isValidRealUserId(Long realUserId, User user) {
+		if ((realUserId == null) || (user.getUserId() != realUserId)) {
+			return false;
+		}
+
+		return true;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

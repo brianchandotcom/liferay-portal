@@ -31,8 +31,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
-import java.util.Objects;
-
 /**
  * @author Pavel Savinov
  */
@@ -42,22 +40,20 @@ import java.util.Objects;
 public class ContentPageEditorDisplayContextProvider {
 
 	public ContentPageEditorDisplayContext getContentPageEditorDisplayContext(
-		HttpServletRequest httpServletRequest) {
+		HttpServletRequest request) {
 
-		RenderResponse renderResponse =
-			(RenderResponse)httpServletRequest.getAttribute(
-				JavaConstants.JAVAX_PORTLET_RESPONSE);
+		RenderResponse renderResponse = (RenderResponse)request.getAttribute(
+			JavaConstants.JAVAX_PORTLET_RESPONSE);
 
-		String className = GetterUtil.getString(
-			httpServletRequest.getAttribute(
-				ContentPageEditorWebKeys.CLASS_NAME));
+		String className = (String)request.getAttribute(
+			ContentPageEditorWebKeys.CLASS_NAME);
 
 		long classPK = GetterUtil.getLong(
-			httpServletRequest.getAttribute(ContentPageEditorWebKeys.CLASS_PK));
+			request.getAttribute(ContentPageEditorWebKeys.CLASS_PK));
 
 		if (Objects.equals(className, Layout.class.getName())) {
 			return new ContentPageLayoutEditorDisplayContext(
-				httpServletRequest, renderResponse, className, classPK);
+				request, renderResponse, className, classPK);
 		}
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
@@ -74,8 +70,7 @@ public class ContentPageEditorDisplayContextProvider {
 		}
 
 		return new ContentPageEditorLayoutPageTemplateDisplayContext(
-			httpServletRequest, renderResponse, className, classPK,
-			showMapping);
+			request, renderResponse, className, classPK, showMapping);
 	}
 
 	@Reference

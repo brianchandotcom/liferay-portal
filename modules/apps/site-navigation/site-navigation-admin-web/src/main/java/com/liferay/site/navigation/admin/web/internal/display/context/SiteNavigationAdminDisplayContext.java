@@ -132,10 +132,6 @@ public class SiteNavigationAdminDisplayContext {
 		return _displayStyle;
 	}
 
-	public String[] getDisplayViews() {
-		return new String[] {"list", "icon", "descriptive"};
-	}
-
 	public List<DropdownItem> getFilterDropdownItems() {
 		return new DropdownItemList() {
 			{
@@ -338,7 +334,6 @@ public class SiteNavigationAdminDisplayContext {
 	public List<ViewTypeItem> getViewTypeItems() {
 		return new ViewTypeItemList(getPortletURL(), getDisplayStyle()) {
 			{
-				addCardViewTypeItem();
 				addListViewTypeItem();
 				addTableViewTypeItem();
 			}

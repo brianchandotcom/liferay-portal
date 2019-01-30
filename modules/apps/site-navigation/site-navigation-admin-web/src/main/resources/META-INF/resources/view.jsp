@@ -98,39 +98,6 @@ String displayStyle = siteNavigationAdminDisplayContext.getDisplayStyle();
 						path="/site_navigation_menu_action.jsp"
 					/>
 				</c:when>
-				<c:when test='<%= displayStyle.equals("icon") %>'>
-
-					<%
-					row.setCssClass("entry-card lfr-asset-item");
-					%>
-
-					<liferay-ui:search-container-column-text>
-						<liferay-frontend:icon-vertical-card
-							actionJsp="/site_navigation_menu_action.jsp"
-							actionJspServletContext="<%= application %>"
-							icon="list"
-							resultRow="<%= row %>"
-							rowChecker="<%= searchContainer.getRowChecker() %>"
-							title="<%= HtmlUtil.escape(siteNavigationMenu.getName()) %>"
-							url="<%= siteNavigationAdminDisplayContext.hasEditPermission() ? editSiteNavigationMenuURL : null %>"
-						>
-							<liferay-frontend:vertical-card-sticker-bottom>
-								<liferay-ui:user-portrait
-									cssClass="sticker sticker-bottom"
-									userId="<%= siteNavigationMenu.getUserId() %>"
-								/>
-							</liferay-frontend:vertical-card-sticker-bottom>
-
-							<liferay-frontend:vertical-card-header>
-								<liferay-ui:message arguments="<%= new String[] {LanguageUtil.getTimeDescription(locale, System.currentTimeMillis() - siteNavigationMenu.getModifiedDate().getTime(), true), HtmlUtil.escape(siteNavigationMenu.getUserName())} %>" key="x-ago-by-x" translateArguments="<%= true %>" />
-							</liferay-frontend:vertical-card-header>
-
-							<liferay-frontend:vertical-card-footer>
-								<liferay-ui:message key="<%= siteNavigationMenu.getTypeKey() %>" />
-							</liferay-frontend:vertical-card-footer>
-						</liferay-frontend:icon-vertical-card>
-					</liferay-ui:search-container-column-text>
-				</c:when>
 				<c:otherwise>
 					<liferay-ui:search-container-column-text
 						cssClass="table-cell-expand table-cell-minw-200 table-list-title"

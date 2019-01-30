@@ -19,6 +19,7 @@ import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Items;
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.OpenAPIYAML;
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Parameter;
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.PathItem;
+import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Properties;
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Schema;
 
 import java.io.File;
@@ -118,6 +119,15 @@ public class YAMLUtil {
 		// Parameter
 
 		typeDescription = new TypeDescription(Parameter.class);
+
+		typeDescription.substituteProperty(
+			"$ref", String.class, "getReference", "setReference");
+
+		typeDescriptions.add(typeDescription);
+
+		// Properties
+
+		typeDescription = new TypeDescription(Properties.class);
 
 		typeDescription.substituteProperty(
 			"$ref", String.class, "getReference", "setReference");

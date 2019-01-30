@@ -29,8 +29,16 @@ public class Properties {
 		return _format;
 	}
 
+	public Items getItems() {
+		return _items;
+	}
+
 	public Map<String, Properties> getProperties() {
 		return _properties;
+	}
+
+	public String getReference() {
+		return _reference;
 	}
 
 	public String getType() {
@@ -45,8 +53,16 @@ public class Properties {
 		_format = format;
 	}
 
+	public void setItems(Items items) {
+		_items = items;
+	}
+
 	public void setProperties(Map<String, Properties> properties) {
 		_properties = properties;
+	}
+
+	public void setReference(String reference) {
+		_reference = reference;
 	}
 
 	public void setType(String type) {
@@ -55,7 +71,9 @@ public class Properties {
 
 	private String _description;
 	private String _format;
+	private Items _items;
 	private Map<String, Properties> _properties;
+	private String _reference;
 	private String _type;
 
 }

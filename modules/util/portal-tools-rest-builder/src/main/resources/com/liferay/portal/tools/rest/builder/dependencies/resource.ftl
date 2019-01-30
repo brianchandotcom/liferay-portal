@@ -17,13 +17,13 @@ import javax.ws.rs.core.Context;
 /**
  * To access this resource, run:
  *
- *     curl -u your@email.com:yourpassword -D - http://localhost:8080/o${configYAML.application.baseURI}/${openAPIYAML.info.version}/${schemaPath}
+ *     curl -u your@email.com:yourpassword -D - http://localhost:8080/o${configYAML.application.baseURI}/${openAPIYAML.info.version}
  *
  * @author ${configYAML.author}
  * @generated
  */
 @Generated("")
-@Path("/${openAPIYAML.info.version}/${schemaPath}")
+@Path("/${openAPIYAML.info.version}")
 public interface ${schemaName}Resource {
 
 	@GET

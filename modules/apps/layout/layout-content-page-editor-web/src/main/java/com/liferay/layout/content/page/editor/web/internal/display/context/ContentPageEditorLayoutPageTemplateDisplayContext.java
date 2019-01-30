@@ -34,14 +34,11 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.template.soy.util.SoyContext;
 import com.liferay.portal.template.soy.util.SoyContextFactoryUtil;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 
 import javax.portlet.RenderResponse;
 
@@ -113,7 +110,7 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 				getFragmentEntryActionURL("/layout/get_mapping_fields"));
 		}
 
-		soyContext.put("panels", _getSoyContextPanels());
+		soyContext.put("panels", getPanelSoyContexts(_showMapping, false));
 		soyContext.put("portletNamespace", renderResponse.getNamespace());
 
 		if (classNameId == PortalUtil.getClassNameId(
@@ -299,54 +296,6 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 		finally {
 			themeDisplay.setIsolated(isolated);
 		}
-
-		return soyContexts;
-	}
-
-	private List<SoyContext> _getSoyContextPanels() {
-		List<SoyContext> soyContexts = new ArrayList<>();
-
-		SoyContext availableSoyContext =
-			SoyContextFactoryUtil.createSoyContext();
-
-		availableSoyContext.put("icon", "cards");
-		availableSoyContext.put(
-			"label", LanguageUtil.get(themeDisplay.getLocale(), "sections"));
-		availableSoyContext.put("panelId", "sections");
-
-		soyContexts.add(availableSoyContext);
-
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", request.getLocale(), getClass());
-
-		availableSoyContext = SoyContextFactoryUtil.createSoyContext();
-
-		availableSoyContext.put("icon", "page-template");
-		availableSoyContext.put(
-			"label", LanguageUtil.get(resourceBundle, "section-builder"));
-		availableSoyContext.put("panelId", "elements");
-
-		soyContexts.add(availableSoyContext);
-
-		if (_showMapping) {
-			availableSoyContext = SoyContextFactoryUtil.createSoyContext();
-
-			availableSoyContext.put("icon", "simulation-menu");
-			availableSoyContext.put(
-				"label", LanguageUtil.get(themeDisplay.getLocale(), "mapping"));
-			availableSoyContext.put("panelId", "mapping");
-
-			soyContexts.add(availableSoyContext);
-		}
-
-		availableSoyContext = SoyContextFactoryUtil.createSoyContext();
-
-		availableSoyContext.put("icon", "pages-tree");
-		availableSoyContext.put(
-			"label", LanguageUtil.get(themeDisplay.getLocale(), "structure"));
-		availableSoyContext.put("panelId", "structure");
-
-		soyContexts.add(availableSoyContext);
 
 		return soyContexts;
 	}

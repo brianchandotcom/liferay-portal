@@ -48,7 +48,6 @@ import com.liferay.portal.template.soy.util.SoyContextFactoryUtil;
 import com.liferay.portal.util.PortletCategoryUtil;
 import com.liferay.portal.util.WebAppPool;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -119,7 +118,7 @@ public class ContentPageLayoutEditorDisplayContext
 		soyContext.put("languageId", themeDisplay.getLanguageId());
 		soyContext.put(
 			"layoutData", JSONFactoryUtil.createJSONObject(getLayoutData()));
-		soyContext.put("panels", _getPanelSoyContexts());
+		soyContext.put("panels", getPanelSoyContexts(false, true));
 		soyContext.put("portletNamespace", renderResponse.getNamespace());
 		soyContext.put(
 			"renderFragmentEntryURL",
@@ -163,60 +162,6 @@ public class ContentPageLayoutEditorDisplayContext
 		_fragmentsEditorToolbarSoyContext = soyContext;
 
 		return _fragmentsEditorToolbarSoyContext;
-	}
-
-	private List<SoyContext> _getPanelSoyContexts() {
-		if (_panelSoyContexts != null) {
-			return _panelSoyContexts;
-		}
-
-		List<SoyContext> soyContexts = new ArrayList<>();
-
-		SoyContext availableSoyContext =
-			SoyContextFactoryUtil.createSoyContext();
-
-		availableSoyContext.put("icon", "cards");
-
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", request.getLocale(), getClass());
-
-		availableSoyContext.put(
-			"label", LanguageUtil.get(resourceBundle, "sections"));
-
-		availableSoyContext.put("panelId", "sections");
-
-		soyContexts.add(availableSoyContext);
-
-		availableSoyContext = SoyContextFactoryUtil.createSoyContext();
-
-		availableSoyContext.put("icon", "page-template");
-		availableSoyContext.put(
-			"label", LanguageUtil.get(resourceBundle, "section-builder"));
-		availableSoyContext.put("panelId", "elements");
-
-		soyContexts.add(availableSoyContext);
-
-		availableSoyContext = SoyContextFactoryUtil.createSoyContext();
-
-		availableSoyContext.put("icon", "pages-tree");
-		availableSoyContext.put(
-			"label", LanguageUtil.get(resourceBundle, "structure"));
-		availableSoyContext.put("panelId", "structure");
-
-		soyContexts.add(availableSoyContext);
-
-		availableSoyContext = SoyContextFactoryUtil.createSoyContext();
-
-		availableSoyContext.put("icon", "chip");
-		availableSoyContext.put(
-			"label", LanguageUtil.get(resourceBundle, "widgets"));
-		availableSoyContext.put("panelId", "widgets");
-
-		soyContexts.add(availableSoyContext);
-
-		_panelSoyContexts = soyContexts;
-
-		return _panelSoyContexts;
 	}
 
 	private String _getPortletCategoryTitle(PortletCategory portletCategory) {
@@ -470,7 +415,6 @@ public class ContentPageLayoutEditorDisplayContext
 
 	private SoyContext _editorSoyContext;
 	private SoyContext _fragmentsEditorToolbarSoyContext;
-	private List<SoyContext> _panelSoyContexts;
 	private SoyContext _soyContextFragmentEntryLinksSoyContext;
 
 }

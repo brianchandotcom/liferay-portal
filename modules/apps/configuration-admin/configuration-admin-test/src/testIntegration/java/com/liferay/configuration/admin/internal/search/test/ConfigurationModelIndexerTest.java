@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -37,7 +38,9 @@ import java.io.InputStream;
 
 import java.lang.reflect.Constructor;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -86,43 +89,31 @@ public class ConfigurationModelIndexerTest {
 
 	@After
 	public void tearDown() throws SearchException {
-		_indexWriterHelper.deleteDocument(
-			_indexer.getSearchEngineId(), CompanyConstants.SYSTEM,
-			_document.getUID(), true);
+		for (Document document : _documents) {
+			_indexWriterHelper.deleteDocument(
+				_indexer.getSearchEngineId(), CompanyConstants.SYSTEM,
+				document.getUID(), true);
+		}
+
+		_documents.clear();
 	}
 
 	@Test
 	public void testSearchAfterReindex() throws Exception {
-		Configuration configuration = _addCompanyFactoryConfiguration(
-			"test.pid");
+		_addCompanyFactoryConfiguration();
 
-		SearchContext searchContext = new SearchContext();
+		_assertSearchResults();
 
-		searchContext.setAndSearch(false);
-		searchContext.setCompanyId(CompanyConstants.SYSTEM);
-		searchContext.setKeywords("test.pid");
-		searchContext.setLocale(LocaleUtil.US);
+		_addCompanyFactoryConfiguration();
 
-		Hits hits = _indexer.search(searchContext);
-
-		Assert.assertEquals(hits.toString(), 1, hits.getLength());
-
-		configuration.delete();
-
-		_indexer.reindex(new String[0]);
-
-		hits = _indexer.search(searchContext);
-
-		Assert.assertEquals(hits.toString(), 0, hits.getLength());
+		_assertSearchResults();
 	}
 
-	private Configuration _addCompanyFactoryConfiguration(String factoryPid)
-		throws Exception {
-
+	private Configuration _addCompanyFactoryConfiguration() throws Exception {
 		Configuration configuration = OSGiServiceUtil.callService(
 			_bundleContext, ConfigurationAdmin.class,
 			configurationAdmin -> configurationAdmin.createFactoryConfiguration(
-				factoryPid, StringPool.QUESTION));
+				_PID, StringPool.QUESTION));
 
 		Map<String, String> extensionAttributes = new HashMap<>();
 
@@ -137,13 +128,28 @@ public class ConfigurationModelIndexerTest {
 			extendedObjectClassDefinition, configuration,
 			_bundle.getSymbolicName(), StringPool.QUESTION, true);
 
-		_document = _indexer.getDocument(configurationModel);
+		Document document = _indexer.getDocument(configurationModel);
+
+		_documents.add(document);
 
 		_indexWriterHelper.addDocument(
-			_indexer.getSearchEngineId(), CompanyConstants.SYSTEM, _document,
+			_indexer.getSearchEngineId(), CompanyConstants.SYSTEM, document,
 			true);
 
 		return configuration;
+	}
+
+	private void _assertSearchResults() throws Exception {
+		SearchContext searchContext = new SearchContext();
+
+		searchContext.setAndSearch(false);
+		searchContext.setCompanyId(CompanyConstants.SYSTEM);
+		searchContext.setKeywords(_PID);
+		searchContext.setLocale(LocaleUtil.US);
+
+		Hits hits = _indexer.search(searchContext);
+
+		Assert.assertEquals(hits.toString(), 1, hits.getLength());
 	}
 
 	private Bundle _getBundle(String bundleSymbolicName) {
@@ -158,10 +164,12 @@ public class ConfigurationModelIndexerTest {
 		return null;
 	}
 
+	private static final String _PID = RandomTestUtil.randomString(50);
+
 	private Bundle _bundle;
 	private BundleContext _bundleContext;
 	private Constructor _configurationModelConstructor;
-	private Document _document;
+	private final List<Document> _documents = new ArrayList<>();
 
 	@Inject(filter = "component.name=*.ConfigurationModelIndexer")
 	private Indexer _indexer;

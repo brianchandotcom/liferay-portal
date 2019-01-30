@@ -92,6 +92,11 @@ public class SearchSearchRequest
 		return _start;
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by
+	 * 		com.liferay.portal.search.stats.StatsRequest
+	 */
+	@Deprecated
 	public Map<String, Stats> getStats() {
 		return _stats;
 	}
@@ -182,6 +187,11 @@ public class SearchSearchRequest
 		_start = start;
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by
+	 * 		com.liferay.portal.search.stats.StatsRequest
+	 */
+	@Deprecated
 	public void setStats(Map<String, Stats> stats) {
 		_stats = stats;
 	}

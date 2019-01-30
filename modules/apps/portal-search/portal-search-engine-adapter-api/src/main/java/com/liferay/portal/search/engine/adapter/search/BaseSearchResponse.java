@@ -16,6 +16,10 @@ package com.liferay.portal.search.engine.adapter.search;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.search.stats.StatsResponse;
+
+import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -23,6 +27,10 @@ import java.util.Map;
  */
 @ProviderType
 public abstract class BaseSearchResponse implements SearchResponse {
+
+	public void addStatsResponse(StatsResponse statsResponse) {
+		_statsResponseMap.put(statsResponse.getField(), statsResponse);
+	}
 
 	public long getCount() {
 		return _count;
@@ -42,6 +50,10 @@ public abstract class BaseSearchResponse implements SearchResponse {
 
 	public String getSearchResponseString() {
 		return _searchResponseString;
+	}
+
+	public Map<String, StatsResponse> getStatsResponseMap() {
+		return Collections.unmodifiableMap(_statsResponseMap);
 	}
 
 	public boolean isTerminatedEarly() {
@@ -85,6 +97,8 @@ public abstract class BaseSearchResponse implements SearchResponse {
 	private long _executionTime;
 	private String _searchRequestString;
 	private String _searchResponseString;
+	private final Map<String, StatsResponse> _statsResponseMap =
+		new LinkedHashMap<>();
 	private boolean _terminatedEarly;
 	private boolean _timedOut;
 

@@ -19,8 +19,13 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.search.stats.StatsRequest;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -51,6 +56,10 @@ public abstract class BaseSearchRequest {
 
 	public Query getRescoreQuery() {
 		return _rescoreQuery;
+	}
+
+	public List<StatsRequest> getStatsRequests() {
+		return Collections.unmodifiableList(_statsRequests);
 	}
 
 	public long getTimeoutInMilliseconds() {
@@ -121,6 +130,10 @@ public abstract class BaseSearchRequest {
 		_rescoreQuery = rescoreQuery;
 	}
 
+	public void setStatsRequests(Collection<StatsRequest> statsRequests) {
+		_statsRequests = new ArrayList<>(statsRequests);
+	}
+
 	public void setTimeoutInMilliseconds(long timeoutInMilliseconds) {
 		_timeoutInMilliseconds = timeoutInMilliseconds;
 	}
@@ -139,6 +152,7 @@ public abstract class BaseSearchRequest {
 	private Query _query;
 	private boolean _requestCache;
 	private Query _rescoreQuery;
+	private List<StatsRequest> _statsRequests = Collections.emptyList();
 	private long _timeoutInMilliseconds;
 	private boolean _trackTotalHits = true;
 

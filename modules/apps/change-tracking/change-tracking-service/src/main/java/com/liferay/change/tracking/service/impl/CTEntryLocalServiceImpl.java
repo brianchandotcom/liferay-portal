@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.Date;
 import java.util.List;
@@ -38,34 +39,22 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 			int changeType, long ctCollectionId, ServiceContext serviceContext)
 		throws PortalException {
 
-		_validate(classNameId, classPK, changeType, ctCollectionId);
+		boolean force = GetterUtil.getBoolean(
+			serviceContext.getAttribute("force"));
 
-		long ctEntryId = counterLocalService.increment();
+		CTEntry ctEntry = ctEntryPersistence.fetchByC_C(classNameId, classPK);
 
-		CTEntry ctEntry = ctEntryPersistence.create(ctEntryId);
+		_validate(ctEntry, changeType, ctCollectionId, force);
 
 		User user = userLocalService.getUser(userId);
 
-		ctEntry.setCompanyId(user.getCompanyId());
-		ctEntry.setUserId(user.getUserId());
-		ctEntry.setUserName(user.getFullName());
+		if (ctEntry != null) {
+			return _updateCTEntry(ctEntry, user, changeType, serviceContext);
+		}
 
-		Date now = new Date();
-
-		ctEntry.setCreateDate(serviceContext.getCreateDate(now));
-		ctEntry.setModifiedDate(serviceContext.getModifiedDate(now));
-
-		ctEntry.setClassNameId(classNameId);
-		ctEntry.setClassPK(classPK);
-		ctEntry.setResourcePrimKey(resourcePrimKey);
-		ctEntry.setChangeType(changeType);
-
-		ctEntry = ctEntryPersistence.update(ctEntry);
-
-		ctCollectionLocalService.addCTEntryCTCollection(
-			ctEntry.getCtEntryId(), ctCollectionId);
-
-		return ctEntry;
+		return _createCTEntry(
+			user, classNameId, classPK, resourcePrimKey, changeType,
+			ctCollectionId, serviceContext);
 	}
 
 	@Override
@@ -96,13 +85,54 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 		return ctEntryFinder.findByC_C_C(ctCollectionId, classNameId, classPK);
 	}
 
+	private CTEntry _createCTEntry(
+		User user, long classNameId, long classPK, long resourcePrimKey,
+		int changeType, long ctCollectionId, ServiceContext serviceContext) {
+
+		long ctEntryId = counterLocalService.increment();
+
+		CTEntry ctEntry = ctEntryPersistence.create(ctEntryId);
+
+		ctEntry.setCompanyId(user.getCompanyId());
+		ctEntry.setUserId(user.getUserId());
+		ctEntry.setUserName(user.getFullName());
+
+		Date now = new Date();
+
+		ctEntry.setCreateDate(serviceContext.getCreateDate(now));
+		ctEntry.setModifiedDate(serviceContext.getModifiedDate(now));
+
+		ctEntry.setClassNameId(classNameId);
+		ctEntry.setClassPK(classPK);
+		ctEntry.setResourcePrimKey(resourcePrimKey);
+		ctEntry.setChangeType(changeType);
+
+		ctEntry = ctEntryPersistence.update(ctEntry);
+
+		ctCollectionLocalService.addCTEntryCTCollection(
+			ctEntry.getCtEntryId(), ctCollectionId);
+
+		return ctEntry;
+	}
+
+	private CTEntry _updateCTEntry(
+		CTEntry ctEntry, User user, int changeType,
+		ServiceContext serviceContext) {
+
+		ctEntry.setUserId(user.getUserId());
+		ctEntry.setUserName(user.getFullName());
+
+		ctEntry.setModifiedDate(serviceContext.getModifiedDate(new Date()));
+		ctEntry.setChangeType(changeType);
+
+		return ctEntryPersistence.update(ctEntry);
+	}
+
 	private void _validate(
-			long classNameId, long classPK, int changeType, long ctCollectionId)
+			CTEntry ctEntry, int changeType, long ctCollectionId, boolean force)
 		throws PortalException {
 
-		CTEntry ctEntry = ctEntryPersistence.fetchByC_C(classNameId, classPK);
-
-		if (ctEntry != null) {
+		if (!force && (ctEntry != null)) {
 			throw new DuplicateCTEntryException();
 		}
 

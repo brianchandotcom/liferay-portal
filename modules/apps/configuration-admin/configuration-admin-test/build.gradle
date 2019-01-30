@@ -7,6 +7,7 @@ dependencies {
 	compileOnly project(":apps:configuration-admin:configuration-admin-web")
 	compileOnly project(":apps:static:osgi:osgi-util")
 
+	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	testIntegrationCompile project(":apps:static:portal-configuration:portal-configuration-metatype-api")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

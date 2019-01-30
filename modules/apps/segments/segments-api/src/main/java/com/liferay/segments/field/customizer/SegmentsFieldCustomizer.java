@@ -39,6 +39,10 @@ public interface SegmentsFieldCustomizer {
 
 	public List<String> getFieldNames();
 
+	public default String getFieldValueName(String fieldValue, Locale locale) {
+		return fieldValue;
+	}
+
 	public String getKey();
 
 	public default String getLabel(String fieldName, Locale locale) {

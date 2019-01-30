@@ -138,12 +138,18 @@ public class TrashEntryActionDropdownItems {
 	}
 
 	private DropdownItem _getRestoreAction() throws Exception {
+		boolean inTrashContainer = _trashHandler.isInTrashContainer(
+			_trashEntry.getClassPK());
+
 		return new DropdownItem() {
 			{
 				putData("action", "restoreEntry");
 				putData("restoreURL", _getRestoreURL());
 				putData(
-					"move", String.valueOf(_trashEntry.getRootEntry() != null));
+					"move",
+					String.valueOf(
+						(_trashEntry.getRootEntry() != null) ||
+						inTrashContainer));
 				setLabel(
 					LanguageUtil.get(_themeDisplay.getLocale(), "restore"));
 			}
@@ -151,7 +157,10 @@ public class TrashEntryActionDropdownItems {
 	}
 
 	private String _getRestoreURL() throws Exception {
-		if (_trashEntry.getRootEntry() == null) {
+		boolean inTrashContainer = _trashHandler.isInTrashContainer(
+			_trashEntry.getClassPK());
+
+		if ((_trashEntry.getRootEntry() == null) && !inTrashContainer) {
 			PortletURL restoreURL = _liferayPortletResponse.createActionURL();
 
 			restoreURL.setParameter(

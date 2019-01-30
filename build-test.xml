@@ -101,6 +101,12 @@ module.framework.properties.osgi.console=11312</echo>
 
 					<var name="tstamp.value" unset="true" />
 				</then>
+				<elseif>
+					<isset property="update.properties" />
+					<then>
+						<print-file file.name="${test.app.server.classes.portal.dir}/portal-ext.properties" />
+					</then>
+				</elseif>
 				<else>
 					<copy
 						file="portal-impl/src/portal-ext.properties"
@@ -6652,14 +6658,35 @@ go</echo>
 
 	<target name="portal-ext-properties-update">
 		<if>
+			<not>
+				<isset property="app.server.bundle.index" />
+			</not>
+			<then>
+				<var name="app.server.bundle.index" value="0" />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${app.server.bundle.index}" arg2="0" />
+			<then>
+				<var name="test.app.server.classes.portal.dir" value="${app.server.classes.portal.dir}" />
+			</then>
+			<else>
+				<antelope:stringutil property="test.app.server.classes.portal.dir" string="${app.server.classes.portal.dir}">
+					<antelope:replace regex="(${app.server.parent.dir})(.*)" replacement="$1-${app.server.bundle.index}$2" />
+				</antelope:stringutil>
+			</else>
+		</if>
+
+		<if>
 			<equals arg1="${add.new.properties}" arg2="true" />
 			<then>
-				<echo append="true" file="portal-impl/src/portal-ext.properties">
+				<echo append="true" file="${test.app.server.classes.portal.dir}/portal-ext.properties">
 ${update.properties}</echo>
 			</then>
 			<else>
 				<replace
-					file="portal-impl/src/portal-ext.properties"
+					file="${test.app.server.classes.portal.dir}/portal-ext.properties"
 					token="${update.properties.original}"
 					value="${update.properties}"
 				/>

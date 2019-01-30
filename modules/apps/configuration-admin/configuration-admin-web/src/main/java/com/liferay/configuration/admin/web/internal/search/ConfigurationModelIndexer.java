@@ -287,10 +287,6 @@ public class ConfigurationModelIndexer extends BaseIndexer<ConfigurationModel> {
 		Map<String, ConfigurationModel> configurationModels =
 			_configurationModelRetriever.getConfigurationModels();
 
-		_indexWriterHelper.deleteEntityDocuments(
-			getSearchEngineId(), CompanyConstants.SYSTEM, getClassName(),
-			isCommitImmediately());
-
 		for (ConfigurationModel configurationModel :
 				configurationModels.values()) {
 

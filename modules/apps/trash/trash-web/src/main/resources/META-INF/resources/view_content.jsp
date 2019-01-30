@@ -24,11 +24,6 @@ TrashHandler trashHandler = trashDisplayContext.getTrashHandler();
 
 <c:choose>
 	<c:when test="<%= trashHandler.isContainerModel() %>">
-		<clay:navigation-bar
-			inverted="<%= true %>"
-			navigationItems="<%= trashDisplayContext.getNavigationItems() %>"
-		/>
-
 		<clay:management-toolbar
 			clearResultsURL="<%= trashDisplayContext.getContentClearResultsURL() %>"
 			componentId="trashContentWebManagementToolbar"

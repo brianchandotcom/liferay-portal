@@ -395,21 +395,6 @@ public class TrashDisplayContext {
 		return _navigation;
 	}
 
-	public List<NavigationItem> getNavigationItems() {
-		return new NavigationItemList() {
-			{
-				add(
-					navigationItem -> {
-						navigationItem.setActive(true);
-						navigationItem.setHref(
-							_liferayPortletResponse.createRenderURL());
-						navigationItem.setLabel(
-							LanguageUtil.get(_request, "entries"));
-					});
-			}
-		};
-	}
-
 	public String getOrderByCol() {
 		if (Validator.isNotNull(_orderByCol)) {
 			return _orderByCol;

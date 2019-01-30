@@ -204,61 +204,6 @@ public class Arquillian extends ParentRunner<FrameworkMethod> {
 		}
 	}
 
-	@Override
-	protected Statement withAfterClasses(Statement statement) {
-		return new Statement() {
-
-			@Override
-			public void evaluate() throws Throwable {
-				Throwable throwable = null;
-
-				try {
-					statement.evaluate();
-				}
-				catch (Throwable t) {
-					throwable = t;
-				}
-
-				TestClass testClass = getTestClass();
-
-				try {
-					_testRunnerAdaptor.afterClass(
-						testClass.getJavaClass(),
-						LifecycleMethodExecutor.NO_OP);
-				}
-				catch (Throwable t) {
-					if (throwable != null) {
-						t.addSuppressed(throwable);
-					}
-
-					throwable = t;
-				}
-
-				if (throwable != null) {
-					throw throwable;
-				}
-			}
-
-		};
-	}
-
-	@Override
-	protected Statement withBeforeClasses(Statement statement) {
-		return new Statement() {
-
-			@Override
-			public void evaluate() throws Throwable {
-				TestClass testClass = getTestClass();
-
-				_testRunnerAdaptor.beforeClass(
-					testClass.getJavaClass(), LifecycleMethodExecutor.NO_OP);
-
-				statement.evaluate();
-			}
-
-		};
-	}
-
 	private boolean _areAllChildrenIgnored() {
 		for (FrameworkMethod frameworkMethod : getChildren()) {
 			if (!isIgnored(frameworkMethod)) {
@@ -273,8 +218,44 @@ public class Arquillian extends ParentRunner<FrameworkMethod> {
 		Statement statement = childrenInvoker(notifier);
 
 		if (!_areAllChildrenIgnored()) {
-			statement = withBeforeClasses(statement);
-			statement = withAfterClasses(statement);
+			return new Statement() {
+
+				@Override
+				public void evaluate() throws Throwable {
+					TestClass testClass = getTestClass();
+
+					Throwable throwable = null;
+
+					try {
+						_testRunnerAdaptor.beforeClass(
+							testClass.getJavaClass(),
+							LifecycleMethodExecutor.NO_OP);
+
+						statement.evaluate();
+					}
+					catch (Throwable t) {
+						throwable = t;
+					}
+
+					try {
+						_testRunnerAdaptor.afterClass(
+							testClass.getJavaClass(),
+							LifecycleMethodExecutor.NO_OP);
+					}
+					catch (Throwable t) {
+						if (throwable != null) {
+							t.addSuppressed(throwable);
+						}
+
+						throwable = t;
+					}
+
+					if (throwable != null) {
+						throw throwable;
+					}
+				}
+
+			};
 		}
 
 		return statement;

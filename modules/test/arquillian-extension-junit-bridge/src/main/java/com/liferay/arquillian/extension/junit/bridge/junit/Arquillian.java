@@ -36,6 +36,7 @@ import org.jboss.arquillian.test.spi.event.suite.BeforeTestLifecycleEvent;
 import org.jboss.arquillian.test.spi.execution.SkippedTestExecutionException;
 
 import org.junit.AssumptionViolatedException;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.internal.runners.statements.ExpectException;
 import org.junit.internal.runners.statements.Fail;
@@ -159,7 +160,7 @@ public class Arquillian extends BlockJUnit4ClassRunner {
 
 		final Statement oldStatement = statement;
 
-		for (MethodRule methodRule : rules(test)) {
+		for (MethodRule methodRule : _getMethodRules(test)) {
 			statement = methodRule.apply(statement, method, test);
 		}
 
@@ -324,6 +325,19 @@ public class Arquillian extends BlockJUnit4ClassRunner {
 			}
 
 		};
+	}
+
+	private List<MethodRule> _getMethodRules(Object testObject) {
+		TestClass testClass = getTestClass();
+
+		List<MethodRule> methodRules = testClass.getAnnotatedMethodValues(
+			testObject, Rule.class, MethodRule.class);
+
+		methodRules.addAll(
+			testClass.getAnnotatedFieldValues(
+				testObject, Rule.class, MethodRule.class));
+
+		return methodRules;
 	}
 
 	private Statement _possiblyExpectingExceptions(

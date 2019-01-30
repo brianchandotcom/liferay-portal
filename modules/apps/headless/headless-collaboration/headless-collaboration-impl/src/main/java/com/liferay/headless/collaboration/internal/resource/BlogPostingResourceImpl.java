@@ -12,38 +12,37 @@
  * details.
  */
 
-package com.liferay.headless.collaboration.resource;
+package com.liferay.headless.collaboration.internal.resource;
 
 import com.liferay.headless.collaboration.dto.BlogPosting;
 import com.liferay.headless.collaboration.dto.BlogPostingCollection;
-import com.liferay.oauth2.provider.scope.RequiresScope;
+import com.liferay.headless.collaboration.resource.BlogPostingResource;
 import com.liferay.portal.vulcan.context.Pagination;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ServiceScope;
+import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
 
 import javax.annotation.Generated;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.Context;
-
 /**
- * To access this resource, run:
- *
- *     curl -u your@email.com:yourpassword -D - http://localhost:8080/o/headless-collaboration/1.0.0/blog-posting
- *
  * @author Javier Gamarra
  * @generated
  */
+@Component(
+	property = {
+		JaxrsWhiteboardConstants.JAX_RS_APPLICATION_SELECT + "=(osgi.jaxrs.name=headless-collaboration-application.rest)",
+		JaxrsWhiteboardConstants.JAX_RS_RESOURCE + "=true", "api.version=1.0.0"
+	},
+	scope = ServiceScope.PROTOTYPE, service = BlogPostingResource.class
+)
 @Generated("")
-@Path("/1.0.0/blog-posting")
-public interface BlogPostingResource {
+public class BlogPostingResourceImpl implements BlogPostingResource {
 
-	@GET
-	@Produces("application/json")
-	@RequiresScope("headless-collaboration-application.read")
+	@Override
 	public BlogPostingCollection<BlogPosting> getBlogPostingCollection(
-			@Context Pagination pagination, @QueryParam("size") String size)
-		throws Exception;
+			Pagination pagination, String size)
+		throws Exception {
+
+	}
 
 }

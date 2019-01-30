@@ -1,3 +1,7 @@
 apiDir: "../headless-collaboration-api/src/main/java"
 apiPackagePath: "com.liferay.headless.collaboration"
+application:
+    baseURI: "/headless-collaboration"
+    className: "HeadlessCollaborationApplication"
+    name: "headless-collaboration-application"
 author: "Javier Gamarra"

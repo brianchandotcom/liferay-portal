@@ -14,26 +14,35 @@
 
 package com.liferay.headless.collaboration.dto;
 
+import com.liferay.portal.vulcan.collection.BaseCollection;
+
+import java.util.Collection;
+import java.util.Collections;
+
 import javax.annotation.Generated;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlSeeAlso;
 
 /**
  * @author Javier Gamarra
  * @generated
  */
 @Generated("")
-@XmlRootElement(name = "Comment")
-public class Comment {
+@XmlRootElement(name = "collection")
+@XmlSeeAlso({ImageObjectRepository.class})
+public class ImageObjectRepositoryCollection<T> extends BaseCollection<T> {
 
-	public long getId() {
-		return _id;
+	public ImageObjectRepositoryCollection() {
+		setItems(Collections.emptyList());
+		setTotalCount(0);
 	}
 
-	public void setId(long id) {
-		_id = id;
-	}
+	public ImageObjectRepositoryCollection(
+		Collection<T> items, int totalCount) {
 
-	private long _id;
+		setItems(items);
+		setTotalCount(totalCount);
+	}
 
 }

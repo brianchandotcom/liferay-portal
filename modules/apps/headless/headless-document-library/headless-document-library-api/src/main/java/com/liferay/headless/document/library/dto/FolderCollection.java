@@ -14,26 +14,33 @@
 
 package com.liferay.headless.document.library.dto;
 
+import com.liferay.portal.vulcan.collection.BaseCollection;
+
+import java.util.Collection;
+import java.util.Collections;
+
 import javax.annotation.Generated;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlSeeAlso;
 
 /**
  * @author Javier Gamarra
  * @generated
  */
 @Generated("")
-@XmlRootElement(name = "Document")
-public class Document {
+@XmlRootElement(name = "collection")
+@XmlSeeAlso({Folder.class})
+public class FolderCollection<T> extends BaseCollection<T> {
 
-	public long getId() {
-		return _id;
+	public FolderCollection() {
+		setItems(Collections.emptyList());
+		setTotalCount(0);
 	}
 
-	public void setId(long id) {
-		_id = id;
+	public FolderCollection(Collection<T> items, int totalCount) {
+		setItems(items);
+		setTotalCount(totalCount);
 	}
-
-	private long _id;
 
 }

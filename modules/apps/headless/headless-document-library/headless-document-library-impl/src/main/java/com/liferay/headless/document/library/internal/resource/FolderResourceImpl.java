@@ -12,38 +12,41 @@
  * details.
  */
 
-package com.liferay.headless.document.library.resource;
+package com.liferay.headless.document.library.internal.resource;
 
 import com.liferay.headless.document.library.dto.Folder;
 import com.liferay.headless.document.library.dto.FolderCollection;
-import com.liferay.oauth2.provider.scope.RequiresScope;
+import com.liferay.headless.document.library.resource.FolderResource;
 import com.liferay.portal.vulcan.context.Pagination;
+
+import java.util.Collections;
 
 import javax.annotation.Generated;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.Context;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ServiceScope;
+import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
 
 /**
- * To access this resource, run:
- *
- *     curl -u your@email.com:yourpassword -D - http://localhost:8080/o/headless-document-library/1.0.0/folder
- *
  * @author Javier Gamarra
  * @generated
  */
+@Component(
+	property = {
+		JaxrsWhiteboardConstants.JAX_RS_APPLICATION_SELECT + "=(osgi.jaxrs.name=headless-document-library-application.rest)",
+		JaxrsWhiteboardConstants.JAX_RS_RESOURCE + "=true", "api.version=1.0.0"
+	},
+	scope = ServiceScope.PROTOTYPE, service = FolderResource.class
+)
 @Generated("")
-@Path("/1.0.0/folder")
-public interface FolderResource {
+public class FolderResourceImpl implements FolderResource {
 
-	@GET
-	@Produces("application/json")
-	@RequiresScope("headless-document-library-application.read")
+	@Override
 	public FolderCollection<Folder> getFolderCollection(
-			@Context Pagination pagination, @QueryParam("size") String size)
-		throws Exception;
+			Pagination pagination, String size)
+		throws Exception {
+
+		return new FolderCollection(Collections.emptyList(), 0);
+	}
 
 }

@@ -53,6 +53,7 @@ page import="com.liferay.trash.model.TrashEntry" %><%@
 page import="com.liferay.trash.service.TrashEntryLocalServiceUtil" %><%@
 page import="com.liferay.trash.web.internal.constants.TrashWebKeys" %><%@
 page import="com.liferay.trash.web.internal.dao.search.TrashResultRowSplitter" %><%@
+page import="com.liferay.trash.web.internal.display.context.TrashContainerManagementToolbarDisplayContext" %><%@
 page import="com.liferay.trash.web.internal.display.context.TrashContainerModelDisplayContext" %><%@
 page import="com.liferay.trash.web.internal.display.context.TrashDisplayContext" %><%@
 page import="com.liferay.trash.web.internal.display.context.TrashManagementToolbarDisplayContext" %><%@

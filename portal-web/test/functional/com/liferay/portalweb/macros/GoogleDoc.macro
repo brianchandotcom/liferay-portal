@@ -8,6 +8,8 @@ definition {
 	}
 
 	macro editTitleInGoogleDoc {
+		Click(locator1 = "GoogleDoc#TITLE");
+
 		Type(locator1 = "GoogleDoc#TITLE", value1 = "${dmDocumentTitle}");
 	}
 

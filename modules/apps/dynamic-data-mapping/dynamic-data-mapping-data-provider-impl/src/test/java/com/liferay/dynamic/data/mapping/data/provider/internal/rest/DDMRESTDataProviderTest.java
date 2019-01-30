@@ -37,10 +37,12 @@ import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.util.HtmlImpl;
 
 import java.io.Serializable;
 
@@ -79,6 +81,7 @@ public class DDMRESTDataProviderTest extends PowerMockito {
 
 	@Before
 	public void setUp() throws Exception {
+		_setUpHtmlUtil();
 		_setUpJSONFactoryUtil();
 		_setUpLanguageUtil();
 		_setUpPortalUtil();
@@ -985,6 +988,12 @@ public class DDMRESTDataProviderTest extends PowerMockito {
 
 		return DDMFormInstanceFactory.create(
 			DDMRESTDataProviderSettings.class, ddmFormValues);
+	}
+
+	private void _setUpHtmlUtil() {
+		HtmlUtil htmlUtil = new HtmlUtil();
+
+		htmlUtil.setHtml(new HtmlImpl());
 	}
 
 	private void _setUpJSONFactoryUtil() {

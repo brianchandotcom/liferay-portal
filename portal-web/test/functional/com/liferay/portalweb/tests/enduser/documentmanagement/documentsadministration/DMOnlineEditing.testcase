@@ -112,6 +112,8 @@ definition {
 
 		GoogleDoc.saveAndExit();
 
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
 		GoogleDoc.gotoEdit(dmDocumentTitle = "Untitled", dmGoogleApp = "Google Docs");
 
 		GoogleDoc.editTitleInGoogleDoc(
@@ -163,6 +165,8 @@ definition {
 
 		GoogleDoc.saveAndExit();
 
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
 		GoogleDoc.gotoEdit(dmDocumentTitle = "Untitled", dmGoogleApp = "Google Sheets");
 
 		GoogleDoc.editTitleInGoogleDoc(
@@ -213,6 +217,8 @@ definition {
 		);
 
 		GoogleDoc.saveAndExit();
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		GoogleDoc.gotoEdit(dmDocumentTitle = "Untitled", dmGoogleApp = "Google Slides");
 

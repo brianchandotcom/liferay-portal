@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
@@ -92,29 +91,6 @@ public class TrashManagementToolbarDisplayContext
 	}
 
 	@Override
-	public List<DropdownItem> getFilterDropdownItems() {
-		return new DropdownItemList() {
-			{
-				addGroup(
-					dropdownGroupItem -> {
-						dropdownGroupItem.setDropdownItems(
-							_getFilterNavigationDropdownItems());
-						dropdownGroupItem.setLabel(
-							LanguageUtil.get(request, "filter-by-navigation"));
-					});
-
-				addGroup(
-					dropdownGroupItem -> {
-						dropdownGroupItem.setDropdownItems(
-							_getOrderByDropdownItems());
-						dropdownGroupItem.setLabel(
-							LanguageUtil.get(request, "order-by"));
-					});
-			}
-		};
-	}
-
-	@Override
 	public String getInfoPanelId() {
 		return "infoPanelId";
 	}
@@ -132,50 +108,12 @@ public class TrashManagementToolbarDisplayContext
 	}
 
 	@Override
-	public String getSortingURL() {
-		PortletURL sortingURL = getPortletURL();
-
-		sortingURL.setParameter(
-			"orderByType",
-			Objects.equals(getOrderByType(), "asc") ? "desc" : "asc");
-
-		return sortingURL.toString();
-	}
-
-	@Override
 	public List<ViewTypeItem> getViewTypeItems() {
 		return _trashDisplayContext.getViewTypeItems();
 	}
 
 	@Override
-	public Boolean isDisabled() {
-		if (searchContainer.getTotal() > 0) {
-			return false;
-		}
-
-		if (Validator.isNotNull(_trashDisplayContext.getKeywords())) {
-			return false;
-		}
-
-		return true;
-	}
-
-	@Override
-	public Boolean isShowInfoButton() {
-		return true;
-	}
-
-	@Override
-	protected String getOrderByCol() {
-		return _trashDisplayContext.getOrderByCol();
-	}
-
-	@Override
-	protected String getOrderByType() {
-		return _trashDisplayContext.getOrderByType();
-	}
-
-	private List<DropdownItem> _getFilterNavigationDropdownItems() {
+	protected List<DropdownItem> getFilterNavigationDropdownItems() {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -212,20 +150,9 @@ public class TrashManagementToolbarDisplayContext
 		};
 	}
 
-	private List<DropdownItem> _getOrderByDropdownItems() {
-		return new DropdownItemList() {
-			{
-				add(
-					dropdownItem -> {
-						dropdownItem.setActive(
-							Objects.equals(getOrderByCol(), "removed-date"));
-						dropdownItem.setHref(
-							getPortletURL(), "orderByCol", "removed-date");
-						dropdownItem.setLabel(
-							LanguageUtil.get(request, "removed-date"));
-					});
-			}
-		};
+	@Override
+	protected String[] getOrderByKeys() {
+		return new String[] {"removed-date"};
 	}
 
 	private final TrashDisplayContext _trashDisplayContext;

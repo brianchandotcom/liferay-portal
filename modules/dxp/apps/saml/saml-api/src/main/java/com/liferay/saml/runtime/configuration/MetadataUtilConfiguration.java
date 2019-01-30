@@ -25,7 +25,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  * @author Carlos Sierra Andrés
  */
 @Deprecated
-@ExtendedObjectClassDefinition(category = "foundation")
+@ExtendedObjectClassDefinition(category = "sso")
 @Meta.OCD(
 	id = "com.liferay.saml.runtime.configuration.MetadataUtilConfiguration",
 	localization = "content/Language", name = "metadata-util-configuration-name"

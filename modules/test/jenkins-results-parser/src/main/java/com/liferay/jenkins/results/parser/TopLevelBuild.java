@@ -1411,6 +1411,18 @@ public class TopLevelBuild extends BaseBuild {
 			return;
 		}
 
+		List<Build> ignoreDownstreamBuilds = new ArrayList<>();
+
+		for (Build downstreamBuild : modifiedDownstreamBuilds) {
+			long runningDuration = downstreamBuild.getStatusDuration("running");
+
+			if (runningDuration == 0) {
+				ignoreDownstreamBuilds.add(downstreamBuild);
+			}
+		}
+
+		modifiedDownstreamBuilds.removeAll(ignoreDownstreamBuilds);
+
 		DatagramRequestUtil.send(
 			generateGaugeDeltaMetric(
 				"build_slave_usage_gauge", -modifiedDownstreamBuilds.size(),

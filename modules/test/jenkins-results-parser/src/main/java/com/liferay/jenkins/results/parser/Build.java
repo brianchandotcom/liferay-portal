@@ -128,6 +128,8 @@ public interface Build {
 
 	public long getStatusAge();
 
+	public long getStatusDuration(String status);
+
 	public String getStatusReport();
 
 	public String getStatusReport(int indentSize);

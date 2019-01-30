@@ -901,6 +901,15 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
+	public long getStatusDuration(String status) {
+		if (statusDurations.containsKey(status)) {
+			return statusDurations.get(status);
+		}
+
+		return 0;
+	}
+
+	@Override
 	public String getStatusReport() {
 		return getStatusReport(0);
 	}
@@ -2389,7 +2398,13 @@ public abstract class BaseBuild implements Build {
 		if (_isDifferent(status, _status)) {
 			_status = status;
 
+			long previousStatusModifiedTime = statusModifiedTime;
+
 			statusModifiedTime = System.currentTimeMillis();
+
+			statusDurations.put(
+				_previousStatus,
+				statusModifiedTime - previousStatusModifiedTime);
 
 			if (isParentBuildRoot()) {
 				System.out.println(getBuildMessage());
@@ -2465,6 +2480,7 @@ public abstract class BaseBuild implements Build {
 	protected List<SlaveOfflineRule> slaveOfflineRules =
 		SlaveOfflineRule.getSlaveOfflineRules();
 	protected Long startTime;
+	protected Map<String, Long> statusDurations = new HashMap<>();
 	protected long statusModifiedTime;
 	protected Element upstreamJobFailureMessageElement;
 

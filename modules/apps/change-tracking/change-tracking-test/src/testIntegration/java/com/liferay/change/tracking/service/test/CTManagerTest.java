@@ -121,13 +121,13 @@ public class CTManagerTest {
 		_ctEntryLocalService.addCTEntry(
 			_user.getUserId(), _testVersionClassClassName.getClassNameId(),
 			RandomTestUtil.nextLong(), _TEST_RESOURCE_CLASS_ENTITY_ID,
-			CTConstants.CT_CHANGE_TYPE_ADDITION, ctCollectionId,
+			ctCollectionId, CTConstants.CT_CHANGE_TYPE_ADDITION,
 			new ServiceContext());
 
 		CTEntry ctEntry = _ctEntryLocalService.addCTEntry(
 			_user.getUserId(), _testVersionClassClassName.getClassNameId(),
 			RandomTestUtil.nextLong(), _TEST_RESOURCE_CLASS_ENTITY_ID,
-			CTConstants.CT_CHANGE_TYPE_ADDITION, ctCollectionId,
+			ctCollectionId, CTConstants.CT_CHANGE_TYPE_ADDITION,
 			new ServiceContext());
 
 		Optional<CTEntry> ctEntryOptional =
@@ -155,7 +155,7 @@ public class CTManagerTest {
 		_ctEntryLocalService.addCTEntry(
 			_user.getUserId(), _testVersionClassClassName.getClassNameId(),
 			RandomTestUtil.nextLong(), _TEST_RESOURCE_CLASS_ENTITY_ID,
-			CTConstants.CT_CHANGE_TYPE_ADDITION, ctCollectionId,
+			ctCollectionId, CTConstants.CT_CHANGE_TYPE_ADDITION,
 			new ServiceContext());
 
 		_ctEngineManager.disableChangeTracking(TestPropsValues.getCompanyId());
@@ -188,12 +188,12 @@ public class CTManagerTest {
 		_ctEntryLocalService.addCTEntry(
 			_user.getUserId(), _testVersionClassClassName.getClassNameId(),
 			RandomTestUtil.nextLong(), _TEST_RESOURCE_CLASS_ENTITY_ID,
-			CTConstants.CT_CHANGE_TYPE_ADDITION, ctCollectionId,
+			ctCollectionId, CTConstants.CT_CHANGE_TYPE_ADDITION,
 			new ServiceContext());
 		_ctEntryLocalService.addCTEntry(
 			_user.getUserId(), _testVersionClassClassName.getClassNameId(),
 			RandomTestUtil.nextLong(), _TEST_RESOURCE_CLASS_ENTITY_ID,
-			CTConstants.CT_CHANGE_TYPE_ADDITION, ctCollectionId,
+			ctCollectionId, CTConstants.CT_CHANGE_TYPE_ADDITION,
 			new ServiceContext());
 
 		ctEntries = _ctManager.getModelChangeCTEntries(
@@ -221,7 +221,7 @@ public class CTManagerTest {
 		_ctEntryLocalService.addCTEntry(
 			_user.getUserId(), _testVersionClassClassName.getClassNameId(),
 			RandomTestUtil.nextLong(), _TEST_RESOURCE_CLASS_ENTITY_ID,
-			CTConstants.CT_CHANGE_TYPE_ADDITION, ctCollectionId,
+			ctCollectionId, CTConstants.CT_CHANGE_TYPE_ADDITION,
 			new ServiceContext());
 
 		_ctEngineManager.disableChangeTracking(TestPropsValues.getCompanyId());
@@ -246,7 +246,7 @@ public class CTManagerTest {
 		CTEntry originalCTEntry = _ctEntryLocalService.addCTEntry(
 			_user.getUserId(), _testVersionClassClassName.getClassNameId(),
 			_TEST_VERSION_CLASS_ENTITY_ID, _TEST_RESOURCE_CLASS_ENTITY_ID,
-			CTConstants.CT_CHANGE_TYPE_ADDITION, ctCollectionId,
+			ctCollectionId, CTConstants.CT_CHANGE_TYPE_ADDITION,
 			new ServiceContext());
 
 		Optional<CTEntry> ctEntryOptional =
@@ -275,7 +275,7 @@ public class CTManagerTest {
 		_ctEntryLocalService.addCTEntry(
 			_user.getUserId(), _testVersionClassClassName.getClassNameId(),
 			_TEST_VERSION_CLASS_ENTITY_ID, _TEST_RESOURCE_CLASS_ENTITY_ID,
-			CTConstants.CT_CHANGE_TYPE_ADDITION, ctCollectionId,
+			ctCollectionId, CTConstants.CT_CHANGE_TYPE_ADDITION,
 			new ServiceContext());
 
 		_ctEngineManager.disableChangeTracking(TestPropsValues.getCompanyId());

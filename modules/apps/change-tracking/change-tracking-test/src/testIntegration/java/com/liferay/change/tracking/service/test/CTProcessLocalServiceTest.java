@@ -95,8 +95,8 @@ public class CTProcessLocalServiceTest {
 		_ctEntryLocalService.addCTEntry(
 			TestPropsValues.getUserId(), _portal.getClassNameId(CTEntry.class),
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			CTConstants.CT_CHANGE_TYPE_ADDITION,
-			_ctCollection.getCtCollectionId(), new ServiceContext());
+			_ctCollection.getCtCollectionId(),
+			CTConstants.CT_CHANGE_TYPE_ADDITION, new ServiceContext());
 
 		CTProcess ctProcess = _ctProcessLocalService.addCTProcess(
 			TestPropsValues.getUserId(), _ctCollection.getCtCollectionId(),

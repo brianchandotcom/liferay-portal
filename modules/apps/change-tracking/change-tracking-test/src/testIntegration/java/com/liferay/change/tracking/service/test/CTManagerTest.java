@@ -20,6 +20,7 @@ import com.liferay.change.tracking.CTManager;
 import com.liferay.change.tracking.configuration.CTConfiguration;
 import com.liferay.change.tracking.configuration.CTConfigurationRegistrar;
 import com.liferay.change.tracking.configuration.builder.CTConfigurationBuilder;
+import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.service.CTEntryLocalService;
@@ -120,12 +121,14 @@ public class CTManagerTest {
 		_ctEntryLocalService.addCTEntry(
 			_user.getUserId(), _testVersionClassClassName.getClassNameId(),
 			RandomTestUtil.nextLong(), _TEST_RESOURCE_CLASS_ENTITY_ID,
-			ctCollectionId, new ServiceContext());
+			CTConstants.CT_CHANGE_TYPE_ADDITION, ctCollectionId,
+			new ServiceContext());
 
 		CTEntry ctEntry = _ctEntryLocalService.addCTEntry(
 			_user.getUserId(), _testVersionClassClassName.getClassNameId(),
 			RandomTestUtil.nextLong(), _TEST_RESOURCE_CLASS_ENTITY_ID,
-			ctCollectionId, new ServiceContext());
+			CTConstants.CT_CHANGE_TYPE_ADDITION, ctCollectionId,
+			new ServiceContext());
 
 		Optional<CTEntry> ctEntryOptional =
 			_ctManager.getLatestModelChangeCTEntryOptional(
@@ -152,7 +155,8 @@ public class CTManagerTest {
 		_ctEntryLocalService.addCTEntry(
 			_user.getUserId(), _testVersionClassClassName.getClassNameId(),
 			RandomTestUtil.nextLong(), _TEST_RESOURCE_CLASS_ENTITY_ID,
-			ctCollectionId, new ServiceContext());
+			CTConstants.CT_CHANGE_TYPE_ADDITION, ctCollectionId,
+			new ServiceContext());
 
 		_ctEngineManager.disableChangeTracking(TestPropsValues.getCompanyId());
 
@@ -184,11 +188,13 @@ public class CTManagerTest {
 		_ctEntryLocalService.addCTEntry(
 			_user.getUserId(), _testVersionClassClassName.getClassNameId(),
 			RandomTestUtil.nextLong(), _TEST_RESOURCE_CLASS_ENTITY_ID,
-			ctCollectionId, new ServiceContext());
+			CTConstants.CT_CHANGE_TYPE_ADDITION, ctCollectionId,
+			new ServiceContext());
 		_ctEntryLocalService.addCTEntry(
 			_user.getUserId(), _testVersionClassClassName.getClassNameId(),
 			RandomTestUtil.nextLong(), _TEST_RESOURCE_CLASS_ENTITY_ID,
-			ctCollectionId, new ServiceContext());
+			CTConstants.CT_CHANGE_TYPE_ADDITION, ctCollectionId,
+			new ServiceContext());
 
 		ctEntries = _ctManager.getModelChangeCTEntries(
 			_user.getUserId(), _TEST_RESOURCE_CLASS_ENTITY_ID);
@@ -215,7 +221,8 @@ public class CTManagerTest {
 		_ctEntryLocalService.addCTEntry(
 			_user.getUserId(), _testVersionClassClassName.getClassNameId(),
 			RandomTestUtil.nextLong(), _TEST_RESOURCE_CLASS_ENTITY_ID,
-			ctCollectionId, new ServiceContext());
+			CTConstants.CT_CHANGE_TYPE_ADDITION, ctCollectionId,
+			new ServiceContext());
 
 		_ctEngineManager.disableChangeTracking(TestPropsValues.getCompanyId());
 
@@ -239,7 +246,8 @@ public class CTManagerTest {
 		CTEntry originalCTEntry = _ctEntryLocalService.addCTEntry(
 			_user.getUserId(), _testVersionClassClassName.getClassNameId(),
 			_TEST_VERSION_CLASS_ENTITY_ID, _TEST_RESOURCE_CLASS_ENTITY_ID,
-			ctCollectionId, new ServiceContext());
+			CTConstants.CT_CHANGE_TYPE_ADDITION, ctCollectionId,
+			new ServiceContext());
 
 		Optional<CTEntry> ctEntryOptional =
 			_ctManager.getModelChangeCTEntryOptional(
@@ -267,7 +275,8 @@ public class CTManagerTest {
 		_ctEntryLocalService.addCTEntry(
 			_user.getUserId(), _testVersionClassClassName.getClassNameId(),
 			_TEST_VERSION_CLASS_ENTITY_ID, _TEST_RESOURCE_CLASS_ENTITY_ID,
-			ctCollectionId, new ServiceContext());
+			CTConstants.CT_CHANGE_TYPE_ADDITION, ctCollectionId,
+			new ServiceContext());
 
 		_ctEngineManager.disableChangeTracking(TestPropsValues.getCompanyId());
 
@@ -285,7 +294,8 @@ public class CTManagerTest {
 	public void testRegisterModelChange() throws PortalException {
 		Optional<CTEntry> ctEntryOptional = _ctManager.registerModelChange(
 			_user.getUserId(), _testVersionClassClassName.getClassNameId(),
-			_TEST_VERSION_CLASS_ENTITY_ID, _TEST_RESOURCE_CLASS_ENTITY_ID);
+			_TEST_VERSION_CLASS_ENTITY_ID, _TEST_RESOURCE_CLASS_ENTITY_ID,
+			CTConstants.CT_CHANGE_TYPE_ADDITION);
 
 		Assert.assertTrue(ctEntryOptional.isPresent());
 
@@ -308,7 +318,8 @@ public class CTManagerTest {
 
 		Optional<CTEntry> ctEntryOptional = _ctManager.registerModelChange(
 			_user.getUserId(), _testVersionClassClassName.getClassNameId(),
-			_TEST_VERSION_CLASS_ENTITY_ID, _TEST_RESOURCE_CLASS_ENTITY_ID);
+			_TEST_VERSION_CLASS_ENTITY_ID, _TEST_RESOURCE_CLASS_ENTITY_ID,
+			CTConstants.CT_CHANGE_TYPE_ADDITION);
 
 		Assert.assertFalse("Optional is present", ctEntryOptional.isPresent());
 	}

@@ -482,7 +482,8 @@ public class CTEngineManagerTest {
 			ListUtil.isEmpty(ctEntries));
 
 		CTEntry ctEntry = _ctEntryLocalService.addCTEntry(
-			TestPropsValues.getUserId(), 0, 0, 0,
+			TestPropsValues.getUserId(), 0, 0,
+			CTConstants.CT_CHANGE_TYPE_ADDITION, 0,
 			ctCollection.getCtCollectionId(), new ServiceContext());
 
 		ctEntries = _ctEngineManager.getCTEntries(
@@ -645,7 +646,8 @@ public class CTEngineManagerTest {
 		CTCollection ctCollection = ctCollectionOptional.get();
 
 		CTEntry ctEntry = _ctEntryLocalService.addCTEntry(
-			TestPropsValues.getUserId(), 0, 0, 0,
+			TestPropsValues.getUserId(), 0, 0,
+			CTConstants.CT_CHANGE_TYPE_ADDITION, 0,
 			ctCollection.getCtCollectionId(), new ServiceContext());
 
 		Optional<CTCollection> productionCTCollectionOptional =

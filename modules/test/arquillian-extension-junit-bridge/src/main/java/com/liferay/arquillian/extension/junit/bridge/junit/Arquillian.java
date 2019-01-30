@@ -152,7 +152,7 @@ public class Arquillian extends BlockJUnit4ClassRunner {
 
 		final Object test = testObject;
 
-		Statement statement = methodInvoker(method, test);
+		Statement statement = _methodInvoker(method, test);
 
 		statement = _possiblyExpectingExceptions(method, statement);
 
@@ -210,63 +210,6 @@ public class Arquillian extends BlockJUnit4ClassRunner {
 				if (throwable != null) {
 					throw throwable;
 				}
-			}
-
-		};
-	}
-
-	@Override
-	protected Statement methodInvoker(
-		FrameworkMethod frameworkMethod, Object testObject) {
-
-		return new Statement() {
-
-			@Override
-			public void evaluate() throws Throwable {
-				TestResult testResult = _testRunnerAdaptor.test(
-					new TestMethodExecutor() {
-
-						public Object getInstance() {
-							return testObject;
-						}
-
-						@Override
-						public Method getMethod() {
-							return frameworkMethod.getMethod();
-						}
-
-						@Override
-						public void invoke(Object... parameters)
-							throws Throwable {
-
-							try {
-								frameworkMethod.invokeExplosively(
-									testObject, parameters);
-							}
-							catch (Throwable t) {
-								State.caughtTestException(t);
-
-								throw t;
-							}
-						}
-
-					});
-
-				Throwable throwable = testResult.getThrowable();
-
-				if (throwable == null) {
-					return;
-				}
-
-				if ((testResult.getStatus() == TestResult.Status.SKIPPED) &&
-					(throwable instanceof SkippedTestExecutionException)) {
-
-					testResult.setThrowable(
-						new AssumptionViolatedException(
-							throwable.getMessage()));
-				}
-
-				throw throwable;
 			}
 
 		};
@@ -338,6 +281,62 @@ public class Arquillian extends BlockJUnit4ClassRunner {
 				testObject, Rule.class, MethodRule.class));
 
 		return methodRules;
+	}
+
+	private Statement _methodInvoker(
+		FrameworkMethod frameworkMethod, Object testObject) {
+
+		return new Statement() {
+
+			@Override
+			public void evaluate() throws Throwable {
+				TestResult testResult = _testRunnerAdaptor.test(
+					new TestMethodExecutor() {
+
+						public Object getInstance() {
+							return testObject;
+						}
+
+						@Override
+						public Method getMethod() {
+							return frameworkMethod.getMethod();
+						}
+
+						@Override
+						public void invoke(Object... parameters)
+							throws Throwable {
+
+							try {
+								frameworkMethod.invokeExplosively(
+									testObject, parameters);
+							}
+							catch (Throwable t) {
+								State.caughtTestException(t);
+
+								throw t;
+							}
+						}
+
+					});
+
+				Throwable throwable = testResult.getThrowable();
+
+				if (throwable == null) {
+					return;
+				}
+
+				if ((testResult.getStatus() == TestResult.Status.SKIPPED) &&
+					(throwable instanceof SkippedTestExecutionException)) {
+
+					testResult.setThrowable(
+						new AssumptionViolatedException(
+							throwable.getMessage()));
+				}
+
+				throw throwable;
+			}
+
+		};
 	}
 
 	private Statement _possiblyExpectingExceptions(

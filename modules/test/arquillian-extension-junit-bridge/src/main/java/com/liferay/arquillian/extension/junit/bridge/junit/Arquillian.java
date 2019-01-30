@@ -52,6 +52,7 @@ import org.junit.runner.Result;
 import org.junit.runner.notification.Failure;
 import org.junit.runner.notification.RunListener;
 import org.junit.runner.notification.RunNotifier;
+import org.junit.runner.notification.StoppedByUserException;
 import org.junit.runners.ParentRunner;
 import org.junit.runners.model.FrameworkMethod;
 import org.junit.runners.model.InitializationError;
@@ -107,7 +108,23 @@ public class Arquillian extends ParentRunner<FrameworkMethod> {
 
 			});
 
-		super.run(runNotifier);
+		EachTestNotifier eachTestNotifier = new EachTestNotifier(
+			runNotifier, getDescription());
+
+		try {
+			Statement statement = classBlock(runNotifier);
+
+			statement.evaluate();
+		}
+		catch (org.junit.internal.AssumptionViolatedException ave) {
+			eachTestNotifier.addFailedAssumption(ave);
+		}
+		catch (StoppedByUserException sbue) {
+			throw sbue;
+		}
+		catch (Throwable t) {
+			eachTestNotifier.addFailure(t);
+		}
 	}
 
 	@Override

@@ -698,4 +698,96 @@ definition {
 
 		User.viewLoggedOutPG();
 	}
+
+	@priority = "4"
+	test ViewSPInitiatedSSOWithMultipleIdPs {
+		property app.server.bundles.size = "2";
+		property databases.size = "2";
+		property test.name.skip.portal.instance = "SAML#ViewSPInitiatedSSOWithMultipleIdPs";
+
+		SAML.configureLiferaySAMLAsIdP(samlEntityID = "samlidp");
+
+		SAML.configureLiferaySAMLAsIdP(
+			idpURL = "http://www.able.com:9080",
+			samlEntityID = "samlidp2"
+		);
+
+		SAML.configureLiferaySAMLAsSP(
+			nameIdentifierAttributeName = "emailAddress",
+			samlEntityID = "samlsp",
+			spURL = "http://www.baker.com:10080"
+		);
+
+		User.logoutPG();
+
+		User.viewLoggedOutPG();
+
+		SAML.connectSPAndIdP(
+			idpEntityID = "samlidp2",
+			idpURL = "http://www.able.com:9080",
+			nameIdentifierAttributeName = "emailAddress",
+			spEntityID = "samlsp",
+			spURL = "http://www.baker.com:10080"
+		);
+
+		User.logoutPG(specificURL = "http://www.able.com:9080");
+
+		User.viewLoggedOutPG();
+
+		// Initiate Single Sign-On via SP with first IdP
+
+		SAML.executeSPInitiatedSSO(
+			idpName = "samlidp",
+			samlMultiIdPs = "true",
+			specificURL = "http://www.baker.com:10080"
+		);
+
+		User.viewLoggedInPG(userFirstName = "Test");
+
+		// Verify first IdP is logged in
+
+		Navigator.openURL();
+
+		User.viewLoggedInPG(userFirstName = "Test");
+
+		// Initiate Single Logout via SP with first IdP
+
+		User.logoutPG(specificURL = "http://www.baker.com:10080");
+
+		User.viewLoggedOutPG();
+
+		// Verify first IdP is logged out
+
+		Navigator.openURL();
+
+		User.viewLoggedOutPG();
+
+		// Initiate Single Sign-On via SP with second IdP
+
+		SAML.executeSPInitiatedSSO(
+			idpName = "samlidp2",
+			samlMultiIdPs = "true",
+			specificURL = "http://www.baker.com:10080"
+		);
+
+		User.viewLoggedInPG(userFirstName = "Test");
+
+		// Verify second IdP is logged in
+
+		Navigator.openSpecificURL(url = "http://www.able.com:9080");
+
+		User.viewLoggedInPG(userFirstName = "Test");
+
+		// Initiate Single Logout via SP with second IdP
+
+		User.logoutPG(specificURL = "http://www.baker.com:10080");
+
+		User.viewLoggedOutPG();
+
+		// Verify second IdP is logged out
+
+		Navigator.openSpecificURL(url = "http://www.able.com:9080");
+
+		User.viewLoggedOutPG();
+	}
 }

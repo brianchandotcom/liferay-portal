@@ -82,8 +82,8 @@ public interface CTEntryLocalService extends BaseLocalService,
 	public CTEntry addCTEntry(CTEntry ctEntry);
 
 	public CTEntry addCTEntry(long userId, long classNameId, long classPK,
-		long resourcePrimKey, long ctCollectionId, ServiceContext serviceContext)
-		throws PortalException;
+		long resourcePrimKey, long ctCollectionId, int changeType,
+		ServiceContext serviceContext) throws PortalException;
 
 	public void clearCTCollectionCTEntries(long ctCollectionId);
 

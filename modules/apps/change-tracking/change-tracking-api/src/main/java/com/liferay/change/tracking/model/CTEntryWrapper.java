@@ -52,6 +52,7 @@ public class CTEntryWrapper extends BaseModelWrapper<CTEntry> implements CTEntry
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
 		attributes.put("resourcePrimKey", getResourcePrimKey());
+		attributes.put("changeType", getChangeType());
 
 		return attributes;
 	}
@@ -111,6 +112,22 @@ public class CTEntryWrapper extends BaseModelWrapper<CTEntry> implements CTEntry
 		if (resourcePrimKey != null) {
 			setResourcePrimKey(resourcePrimKey);
 		}
+
+		Integer changeType = (Integer)attributes.get("changeType");
+
+		if (changeType != null) {
+			setChangeType(changeType);
+		}
+	}
+
+	/**
+	* Returns the change type of this ct entry.
+	*
+	* @return the change type of this ct entry
+	*/
+	@Override
+	public int getChangeType() {
+		return model.getChangeType();
 	}
 
 	/**
@@ -241,6 +258,16 @@ public class CTEntryWrapper extends BaseModelWrapper<CTEntry> implements CTEntry
 	@Override
 	public void persist() {
 		model.persist();
+	}
+
+	/**
+	* Sets the change type of this ct entry.
+	*
+	* @param changeType the change type of this ct entry
+	*/
+	@Override
+	public void setChangeType(int changeType) {
+		model.setChangeType(changeType);
 	}
 
 	@Override

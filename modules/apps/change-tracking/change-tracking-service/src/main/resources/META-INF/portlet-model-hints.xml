@@ -25,6 +25,7 @@
 		<field name="classNameId" type="long" />
 		<field name="classPK" type="long" />
 		<field name="resourcePrimKey" type="long" />
+		<field name="changeType" type="int" />
 	</model>
 	<model name="com.liferay.change.tracking.model.CTProcess">
 		<field name="ctProcessId" type="long" />

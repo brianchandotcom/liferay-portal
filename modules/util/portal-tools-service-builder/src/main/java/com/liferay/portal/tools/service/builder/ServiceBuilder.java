@@ -6011,10 +6011,19 @@ public class ServiceBuilder {
 
 			Collections.sort(entityFinderColumns);
 
+			String localizedPKEntityColumn = entityElement.attributeValue(
+				"localized-pk-entity-column");
+
 			for (EntityFinder entityFinder : entityFinders) {
 				String finderName = entityFinder.getName();
 
 				if (entityFinder.isUnique() && !finderName.equals("HeadId")) {
+					if ((localizedPKEntityColumn != null) &&
+						entityFinder.hasEntityColumn(localizedPKEntityColumn)) {
+
+						continue;
+					}
+
 					List<EntityColumn> finderEntityColumns =
 						entityFinder.getEntityColumns();
 
@@ -6121,6 +6130,11 @@ public class ServiceBuilder {
 		}
 
 		EntityColumn pkEntityColumn = pkEntityColumns.get(0);
+
+		if (entity.getVersionEntity() != null) {
+			newLocalizedEntityElement.addAttribute(
+				"localized-pk-entity-column", pkEntityColumn.getName());
+		}
 
 		newLocalizedColumnElement = newLocalizedEntityElement.addElement(
 			"column");

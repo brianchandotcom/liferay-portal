@@ -14,11 +14,6 @@
 
 package com.liferay.segments.internal.criteria.contributor;
 
-import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.Role;
-import com.liferay.portal.kernel.model.Team;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.segments.criteria.Criteria;
 import com.liferay.segments.criteria.contributor.SegmentsCriteriaContributor;
@@ -26,9 +21,7 @@ import com.liferay.segments.field.Field;
 import com.liferay.segments.internal.odata.entity.EntityModelFieldMapper;
 import com.liferay.segments.internal.odata.entity.UserEntityModel;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.portlet.PortletRequest;
 
@@ -57,8 +50,7 @@ public class UserSegmentsCriteriaContributor
 
 	@Override
 	public List<Field> getFields(PortletRequest portletRequest) {
-		return _entityModelFieldMapper.getFields(
-			_entityModel, _idEntityFieldTypes, portletRequest);
+		return _entityModelFieldMapper.getFields(_entityModel, portletRequest);
 	}
 
 	@Override
@@ -70,17 +62,6 @@ public class UserSegmentsCriteriaContributor
 	public Criteria.Type getType() {
 		return Criteria.Type.MODEL;
 	}
-
-	private static final Map<String, String> _idEntityFieldTypes =
-		new HashMap<String, String>() {
-			{
-				put("groupIds", Group.class.getName());
-				put("roleIds", Role.class.getName());
-				put("teamIds", Team.class.getName());
-				put("userGroupIds", UserGroup.class.getName());
-				put("userId", User.class.getName());
-			}
-		};
 
 	@Reference(
 		cardinality = ReferenceCardinality.MANDATORY,

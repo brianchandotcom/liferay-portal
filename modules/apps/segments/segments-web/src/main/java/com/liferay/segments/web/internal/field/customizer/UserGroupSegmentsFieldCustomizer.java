@@ -17,12 +17,13 @@ package com.liferay.segments.web.internal.field.customizer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.segments.constants.SegmentsPortletKeys;
 import com.liferay.segments.field.Field;
 import com.liferay.segments.field.customizer.SegmentsFieldCustomizer;
 
@@ -41,16 +42,16 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"segments.field.customizer.entity.name=Organization",
-		"segments.field.customizer.key=" + OrganizationSegmentsFieldCustomizer.KEY,
+		"segments.field.customizer.entity.name=User",
+		"segments.field.customizer.key=" + UserGroupSegmentsFieldCustomizer.KEY,
 		"segments.field.customizer.priority:Integer=50"
 	},
 	service = SegmentsFieldCustomizer.class
 )
-public class OrganizationSegmentsFieldCustomizer
+public class UserGroupSegmentsFieldCustomizer
 	implements SegmentsFieldCustomizer {
 
-	public static final String KEY = "organization";
+	public static final String KEY = "userGroup";
 
 	@Override
 	public List<String> getFieldNames() {
@@ -65,18 +66,19 @@ public class OrganizationSegmentsFieldCustomizer
 	@Override
 	public Field.SelectEntity getSelectEntity(PortletRequest portletRequest) {
 		try {
-			PortletURL portletURL = _portal.getControlPanelPortletURL(
-				portletRequest, SegmentsPortletKeys.SEGMENTS,
-				PortletRequest.RENDER_PHASE);
+			PortletURL portletURL = PortletProviderUtil.getPortletURL(
+				portletRequest, UserGroup.class.getName(),
+				PortletProvider.Action.BROWSE);
 
-			portletURL.setParameter(
-				"mvcRenderCommandName", "selectOrganizations");
+			if (portletURL == null) {
+				return null;
+			}
+
 			portletURL.setParameter("eventName", "selectEntity");
 			portletURL.setWindowState(LiferayWindowState.POP_UP);
 
 			String title = ResourceActionsUtil.getModelResource(
-				_portal.getLocale(portletRequest),
-				Organization.class.getName());
+				_portal.getLocale(portletRequest), UserGroup.class.getName());
 
 			Locale locale = _portal.getLocale(portletRequest);
 
@@ -84,7 +86,8 @@ public class OrganizationSegmentsFieldCustomizer
 				locale, "select-x", title);
 
 			return new Field.SelectEntity(
-				"selectEntity", selectEntityTitle, portletURL.toString(), true);
+				"selectEntity", selectEntityTitle, portletURL.toString(),
+				false);
 		}
 		catch (Exception e) {
 			if (_log.isWarnEnabled()) {
@@ -96,10 +99,10 @@ public class OrganizationSegmentsFieldCustomizer
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		OrganizationSegmentsFieldCustomizer.class);
+		UserGroupSegmentsFieldCustomizer.class);
 
 	private static final List<String> _fieldNames = ListUtil.fromArray(
-		new String[] {"organizationId, parentOrganizationId"});
+		new String[] {"userGroupIds"});
 
 	@Reference
 	private Portal _portal;

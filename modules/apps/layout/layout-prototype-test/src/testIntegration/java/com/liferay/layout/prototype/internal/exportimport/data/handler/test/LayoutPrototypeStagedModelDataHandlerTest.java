@@ -15,6 +15,7 @@
 package com.liferay.layout.prototype.internal.exportimport.data.handler.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.test.util.lar.BaseStagedModelDataHandlerTestCase;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -36,6 +37,7 @@ import java.util.Map;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
@@ -52,6 +54,14 @@ public class LayoutPrototypeStagedModelDataHandlerTest
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
+	@Before
+	@Override
+	public void setUp() throws Exception {
+		super.setUp();
+
+		ExportImportThreadLocal.setLayoutStagingInProcess(true);
+	}
+
 	@After
 	@Override
 	public void tearDown() throws Exception {
@@ -67,6 +77,8 @@ public class LayoutPrototypeStagedModelDataHandlerTest
 			LayoutPrototypeLocalServiceUtil.deleteLayoutPrototype(
 				_layoutPrototype);
 		}
+
+		ExportImportThreadLocal.setLayoutStagingInProcess(false);
 	}
 
 	@Override

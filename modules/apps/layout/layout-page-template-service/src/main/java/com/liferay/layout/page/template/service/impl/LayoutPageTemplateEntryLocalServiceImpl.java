@@ -695,7 +695,9 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 		}
 		catch (NoSuchLayoutException nsle) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to get Layout for the LayoutPrototype");
+				_log.debug(
+					"Unable to get Layout for the LayoutPrototype with ID " +
+						layoutPrototype.getLayoutPrototypeId());
 			}
 		}
 

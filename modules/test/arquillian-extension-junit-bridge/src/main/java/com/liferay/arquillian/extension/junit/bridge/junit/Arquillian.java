@@ -204,20 +204,20 @@ public class Arquillian extends ParentRunner<FrameworkMethod> {
 		}
 	}
 
-	private boolean _areAllChildrenIgnored() {
-		for (FrameworkMethod frameworkMethod : getChildren()) {
-			if (!isIgnored(frameworkMethod)) {
-				return false;
-			}
-		}
-
-		return true;
-	}
-
 	private Statement _classBlock(final RunNotifier notifier) {
 		Statement statement = childrenInvoker(notifier);
 
-		if (!_areAllChildrenIgnored()) {
+		boolean hasTestMethod = false;
+
+		for (FrameworkMethod frameworkMethod : getChildren()) {
+			if (!isIgnored(frameworkMethod)) {
+				hasTestMethod = true;
+
+				break;
+			}
+		}
+
+		if (hasTestMethod) {
 			return new Statement() {
 
 				@Override

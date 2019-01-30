@@ -2959,6 +2959,7 @@ log.sanitizer.enabled=false</echo>
 				<ant antfile="build-dist.xml" target="zip-tomcat" />
 
 				<propertyfile file="${blade.samples.dir}/liferay-workspace/gradle.properties">
+					<entry key="app.server.tomcat.version" value="${app.server.tomcat.version}" />
 					<entry key="liferay.workspace.bundle.url" value="file:///${project.dir}/dist/liferay-portal-tomcat-${lp.version}.zip" />
 				</propertyfile>
 

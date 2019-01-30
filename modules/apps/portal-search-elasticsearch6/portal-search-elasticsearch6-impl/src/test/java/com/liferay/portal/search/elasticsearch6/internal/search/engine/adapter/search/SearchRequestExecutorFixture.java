@@ -27,7 +27,12 @@ import com.liferay.portal.search.elasticsearch6.internal.query.ElasticsearchQuer
 import com.liferay.portal.search.elasticsearch6.internal.search.response.DefaultSearchResponseTranslator;
 import com.liferay.portal.search.elasticsearch6.internal.sort.DefaultSortTranslator;
 import com.liferay.portal.search.elasticsearch6.internal.stats.DefaultStatsTranslator;
+import com.liferay.portal.search.elasticsearch6.internal.stats.StatsTranslator;
 import com.liferay.portal.search.engine.adapter.search.SearchRequestExecutor;
+import com.liferay.portal.search.internal.legacy.stats.StatsRequestBuilderFactoryImpl;
+import com.liferay.portal.search.internal.legacy.stats.StatsResultsTranslatorImpl;
+import com.liferay.portal.search.internal.stats.StatsResponseBuilderFactoryImpl;
+import com.liferay.portal.search.legacy.stats.StatsRequestBuilderFactory;
 
 /**
  * @author Michael C. Han
@@ -42,12 +47,19 @@ public class SearchRequestExecutorFixture {
 		FacetProcessor<?> facetProcessor = getFacetProcessor();
 
 		_searchRequestExecutor = createSearchRequestExecutor(
-			_elasticsearchClientResolver, facetProcessor);
+			_elasticsearchClientResolver, facetProcessor,
+			new DefaultStatsTranslator() {
+				{
+					setStatsResponseBuilderFactory(
+						new StatsResponseBuilderFactoryImpl());
+				}
+			},
+			new StatsRequestBuilderFactoryImpl());
 	}
 
 	protected static CommonSearchRequestBuilderAssembler
 		createCommonSearchRequestBuilderAssembler(
-			FacetProcessor facetProcessor) {
+			FacetProcessor facetProcessor, StatsTranslator statsTranslator) {
 
 		return new CommonSearchRequestBuilderAssemblerImpl() {
 			{
@@ -68,6 +80,8 @@ public class SearchRequestExecutorFixture {
 				setQueryTranslator(
 					elasticsearchQueryTranslatorFixture.
 						getElasticsearchQueryTranslator());
+
+				setStatsTranslator(statsTranslator);
 			}
 		};
 	}
@@ -75,14 +89,19 @@ public class SearchRequestExecutorFixture {
 	protected static CountSearchRequestExecutor
 		createCountSearchRequestExecutor(
 			ElasticsearchClientResolver elasticsearchClientResolver,
-			FacetProcessor facetProcessor) {
+			FacetProcessor facetProcessor, StatsTranslator statsTranslator) {
 
 		return new CountSearchRequestExecutorImpl() {
 			{
 				setCommonSearchRequestBuilderAssembler(
-					createCommonSearchRequestBuilderAssembler(facetProcessor));
+					createCommonSearchRequestBuilderAssembler(
+						facetProcessor, statsTranslator));
 				setCommonSearchResponseAssembler(
-					new CommonSearchResponseAssemblerImpl());
+					new CommonSearchResponseAssemblerImpl() {
+						{
+							setStatsTranslator(statsTranslator);
+						}
+					});
 				setElasticsearchClientResolver(elasticsearchClientResolver);
 			}
 		};
@@ -109,49 +128,64 @@ public class SearchRequestExecutorFixture {
 	protected static MultisearchSearchRequestExecutor
 		createMultisearchSearchRequestExecutor(
 			ElasticsearchClientResolver elasticsearchClientResolver,
-			FacetProcessor facetProcessor) {
+			FacetProcessor facetProcessor,
+			StatsRequestBuilderFactory statsRequestBuilderFactory) {
+
+		StatsTranslator statsTranslator = new DefaultStatsTranslator();
 
 		return new MultisearchSearchRequestExecutorImpl() {
 			{
 				setElasticsearchClientResolver(elasticsearchClientResolver);
 				setSearchSearchRequestAssembler(
-					createSearchSearchRequestAssembler(facetProcessor));
+					createSearchSearchRequestAssembler(
+						facetProcessor, statsRequestBuilderFactory,
+						statsTranslator));
 				setSearchSearchResponseAssembler(
-					createSearchSearchResponseAssembler());
+					createSearchSearchResponseAssembler(
+						statsRequestBuilderFactory, statsTranslator));
 			}
 		};
 	}
 
 	protected static SearchRequestExecutor createSearchRequestExecutor(
 		ElasticsearchClientResolver elasticsearchClientResolver,
-		FacetProcessor facetProcessor) {
+		FacetProcessor facetProcessor, StatsTranslator statsTranslator,
+		StatsRequestBuilderFactory statsRequestBuilderFactory) {
 
 		return new ElasticsearchSearchRequestExecutor() {
 			{
 				setCountSearchRequestExecutor(
 					createCountSearchRequestExecutor(
-						elasticsearchClientResolver, facetProcessor));
+						elasticsearchClientResolver, facetProcessor,
+						statsTranslator));
 				setMultisearchSearchRequestExecutor(
 					createMultisearchSearchRequestExecutor(
-						elasticsearchClientResolver, facetProcessor));
+						elasticsearchClientResolver, facetProcessor,
+						statsRequestBuilderFactory));
 				setSearchSearchRequestExecutor(
 					createSearchSearchRequestExecutor(
-						elasticsearchClientResolver, facetProcessor));
+						elasticsearchClientResolver, facetProcessor,
+						statsRequestBuilderFactory, statsTranslator));
 			}
 		};
 	}
 
 	protected static SearchSearchRequestAssembler
-		createSearchSearchRequestAssembler(FacetProcessor facetProcessor) {
+		createSearchSearchRequestAssembler(
+			FacetProcessor facetProcessor,
+			StatsRequestBuilderFactory statsRequestBuilderFactory,
+			StatsTranslator statsTranslator) {
 
 		return new SearchSearchRequestAssemblerImpl() {
 			{
 				setCommonSearchRequestBuilderAssembler(
-					createCommonSearchRequestBuilderAssembler(facetProcessor));
+					createCommonSearchRequestBuilderAssembler(
+						facetProcessor, statsTranslator));
 				setGroupByTranslator(new DefaultGroupByTranslator());
 				setHighlighterTranslator(new DefaultHighlighterTranslator());
 				setSortTranslator(new DefaultSortTranslator());
-				setStatsTranslator(new DefaultStatsTranslator());
+				setStatsRequestBuilderFactory(statsRequestBuilderFactory);
+				setStatsTranslator(statsTranslator);
 			}
 		};
 	}
@@ -159,32 +193,47 @@ public class SearchRequestExecutorFixture {
 	protected static SearchSearchRequestExecutor
 		createSearchSearchRequestExecutor(
 			ElasticsearchClientResolver elasticsearchClientResolver,
-			FacetProcessor facetProcessor) {
+			FacetProcessor facetProcessor,
+			StatsRequestBuilderFactory statsRequestBuilderFactory,
+			StatsTranslator statsTranslator) {
 
 		return new SearchSearchRequestExecutorImpl() {
 			{
 				setElasticsearchClientResolver(elasticsearchClientResolver);
 				setSearchSearchRequestAssembler(
-					createSearchSearchRequestAssembler(facetProcessor));
+					createSearchSearchRequestAssembler(
+						facetProcessor, statsRequestBuilderFactory,
+						statsTranslator));
 				setSearchSearchResponseAssembler(
-					createSearchSearchResponseAssembler());
+					createSearchSearchResponseAssembler(
+						statsRequestBuilderFactory, statsTranslator));
 			}
 		};
 	}
 
 	protected static SearchSearchResponseAssembler
-		createSearchSearchResponseAssembler() {
+		createSearchSearchResponseAssembler(
+			StatsRequestBuilderFactory statsRequestBuilderFactory,
+			StatsTranslator statsTranslator) {
 
 		return new SearchSearchResponseAssemblerImpl() {
 			{
 				setCommonSearchResponseAssembler(
-					new CommonSearchResponseAssemblerImpl());
+					new CommonSearchResponseAssemblerImpl() {
+						{
+							setStatsTranslator(statsTranslator);
+						}
+					});
 				setSearchResponseTranslator(
 					new DefaultSearchResponseTranslator() {
 						{
 							setSearchHitDocumentTranslator(
 								new SearchHitDocumentTranslatorImpl());
-							setStatsTranslator(new DefaultStatsTranslator());
+							setStatsRequestBuilderFactory(
+								statsRequestBuilderFactory);
+							setStatsResultsTranslator(
+								new StatsResultsTranslatorImpl());
+							setStatsTranslator(statsTranslator);
 						}
 					});
 			}

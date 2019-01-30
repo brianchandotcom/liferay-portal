@@ -171,15 +171,14 @@ public class ElasticsearchIndexingFixture implements IndexingFixture {
 			{
 				setIndexNameBuilder(indexNameBuilder);
 				setProps(createProps());
+				setQuerySuggester(
+					createElasticsearchQuerySuggester(
+						elasticsearchFixture, indexNameBuilder, localization));
 				setSearchEngineAdapter(searchEngineAdapter);
 				setSearchRequestBuilderFactory(
 					new SearchRequestBuilderFactoryImpl());
 				setSearchResponseBuilderFactory(
 					new SearchResponseBuilderFactoryImpl());
-
-				setQuerySuggester(
-					createElasticsearchQuerySuggester(
-						elasticsearchFixture, indexNameBuilder, localization));
 
 				activate(
 					elasticsearchFixture.

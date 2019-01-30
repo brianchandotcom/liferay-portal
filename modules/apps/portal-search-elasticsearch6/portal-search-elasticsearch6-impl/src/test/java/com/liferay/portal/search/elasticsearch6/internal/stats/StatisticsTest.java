@@ -31,6 +31,7 @@ public class StatisticsTest extends BaseStatisticsTestCase {
 			{
 				setCompanyId(BaseIndexingTestCase.COMPANY_ID);
 				setElasticsearchFixture(new ElasticsearchFixture(getClass()));
+				setLiferayMappingsAddedToIndex(true);
 			}
 		};
 	}

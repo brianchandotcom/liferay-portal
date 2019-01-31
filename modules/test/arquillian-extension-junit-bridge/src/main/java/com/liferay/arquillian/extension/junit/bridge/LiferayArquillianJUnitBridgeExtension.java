@@ -27,7 +27,6 @@ import org.jboss.arquillian.container.impl.client.ContainerDeploymentContextHand
 import org.jboss.arquillian.container.impl.client.container.ContainerDeployController;
 import org.jboss.arquillian.container.impl.client.container.ContainerLifecycleController;
 import org.jboss.arquillian.container.impl.client.container.ContainerRegistryCreator;
-import org.jboss.arquillian.container.impl.client.container.DeploymentExceptionHandler;
 import org.jboss.arquillian.container.impl.client.deployment.ArchiveDeploymentExporter;
 import org.jboss.arquillian.container.impl.context.ContainerContextImpl;
 import org.jboss.arquillian.container.impl.context.DeploymentContextImpl;
@@ -57,7 +56,6 @@ public class LiferayArquillianJUnitBridgeExtension
 			extensionBuilder.observer(ContainerDeploymentContextHandler.class);
 			extensionBuilder.observer(ContainerLifecycleController.class);
 			extensionBuilder.observer(ContainerRegistryCreator.class);
-			extensionBuilder.observer(DeploymentExceptionHandler.class);
 			extensionBuilder.service(
 				ApplicationArchiveProcessor.class, OSGiAllInProcessor.class);
 			extensionBuilder.service(

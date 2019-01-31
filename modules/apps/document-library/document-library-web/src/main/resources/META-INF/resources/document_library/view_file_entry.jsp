@@ -98,84 +98,51 @@ if (portletTitleBasedNavigation) {
 	</liferay-frontend:info-bar>
 </c:if>
 
-<div class="subnav-tbar tbar">
-	<div class="container-fluid container-fluid-max-xl">
-		<ul class="tbar-nav">
-			<li class="tbar-item tbar-item-expand">
-				<div class="tbar-section">
-					<span class="component-title text-truncate-inline">
-						<span class="text-truncate">Document title</span>
-					</span>
-				</div>
-			</li>
-			<li class="tbar-item">
-				<div class="btn-group">
-					<button class="btn btn-monospaced btn-secondary btn-sm" type="button">
-						<svg class="lexicon-icon lexicon-icon-angle-left" focusable="false" role="presentation">
-							<use href="/o/classic-theme/images/lexicon/icons.svg#angle-left"></use>
-						</svg>
-					</button>
-					<button class="btn btn-monospaced btn-secondary btn-sm" type="button">
-						<svg class="lexicon-icon lexicon-icon-angle-right" focusable="false" role="presentation">
-							<use href="/o/classic-theme/images/lexicon/icons.svg#angle-right"></use>
-						</svg>
-					</button>
-				</div>
-			</li>
-			<li class="tbar-item">
-				<button class="btn btn-secondary btn-sm" type="button">Share</button>
-			</li>
-			<li class="tbar-item">
-				<button class="btn btn-primary btn-sm" type="button">Donwload</button>
-			</li>
-			<li class="tbar-item">
-				<a aria-expanded="true" aria-haspopup="true" class="component-action dropdown-toggle" data-toggle="dropdown" href="#1" id="dropdownAction1" role="button">
-					<svg class="lexicon-icon lexicon-icon-ellipsis-v" focusable="false" role="presentation">
-						<use href="/o/classic-theme/images/lexicon/icons.svg#ellipsis-v"></use>
-					</svg>
-				</a>
-			</li>
-		</ul>
-	</div>
-</div>
+<liferay-util:buffer
+	var="documentTitle"
+>
+	<%= fileVersion.getTitle() %>
 
+	<c:if test="<%= versionSpecific %>">
+		(<liferay-ui:message key="version" /> <%= fileVersion.getVersion() %>)
+	</c:if>
+</liferay-util:buffer>
 
-<div class="bg-light component-tbar tbar" style="background: white">
+<div class="component-tbar tbar" style="background: white">
 	<div class="container-fluid container-fluid-max-xl">
 		<ul class="tbar-nav">
 			<li class="tbar-item tbar-item-expand">
 				<div class="tbar-section text-left">
 					<span class="component-title text-truncate-inline">
-						<span class="text-truncate">Document title</span>
+						<span class="text-truncate"><%= HtmlUtil.escape(documentTitle) %></span>
 					</span>
 				</div>
 			</li>
 			<li class="tbar-item">
-				<div class="btn-group">
-					<button class="btn btn-monospaced btn-secondary btn-sm" type="button">
-						<svg class="lexicon-icon lexicon-icon-angle-left" focusable="false" role="presentation">
-							<use href="/o/classic-theme/images/lexicon/icons.svg#angle-left"></use>
-						</svg>
-					</button>
-					<button class="btn btn-monospaced btn-secondary btn-sm" type="button">
-						<svg class="lexicon-icon lexicon-icon-angle-right" focusable="false" role="presentation">
-							<use href="/o/classic-theme/images/lexicon/icons.svg#angle-right"></use>
-						</svg>
-					</button>
-				</div>
+				<liferay-frontend:info-bar-sidenav-toggler-button
+					label="info"
+					cssClass="btn-sm"
+				/>
 			</li>
 			<li class="tbar-item">
 				<button class="btn btn-secondary btn-sm" type="button">Share</button>
 			</li>
+			<c:if test="<%= dlViewFileVersionDisplayContext.isDownloadLinkVisible() %>">
+				<li class="tbar-item">
+					<clay:link
+						icon="download"
+						buttonStyle="primary"
+						elementClasses="btn-sm"
+						href="<%= DLUtil.getDownloadURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK) %>"
+						label='<%= LanguageUtil.get(resourceBundle, "download") %>'
+						title='<%= LanguageUtil.get(resourceBundle, "download") + " (" + TextFormatter.formatStorageSize(fileVersion.getSize(), locale) + ")" %>'
+					/>
+				</li>
+			</c:if>
 			<li class="tbar-item">
-				<button class="btn btn-primary btn-sm" type="button">Donwload</button>
-			</li>
-			<li class="tbar-item">
-				<a aria-expanded="true" aria-haspopup="true" class="component-action dropdown-toggle" data-toggle="dropdown" href="#1" id="dropdownAction1" role="button">
-					<svg class="lexicon-icon lexicon-icon-ellipsis-v" focusable="false" role="presentation">
-						<use href="/o/classic-theme/images/lexicon/icons.svg#ellipsis-v"></use>
-					</svg>
-				</a>
+				<liferay-ui:menu
+					menu="<%= dlViewFileVersionDisplayContext.getMenu() %>"
+				/>
 			</li>
 		</ul>
 	</div>
@@ -261,16 +228,6 @@ if (portletTitleBasedNavigation) {
 				</c:otherwise>
 			</c:choose>
 		</c:if>
-
-		<liferay-util:buffer
-			var="documentTitle"
-		>
-			<%= fileVersion.getTitle() %>
-
-			<c:if test="<%= versionSpecific %>">
-				(<liferay-ui:message key="version" /> <%= fileVersion.getVersion() %>)
-			</c:if>
-		</liferay-util:buffer>
 
 		<div class="body-row">
 			<div class="main-content-card panel">

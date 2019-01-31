@@ -51,13 +51,11 @@ LayoutPrototypeManagementToolbarDisplayContext layoutPrototypeManagementToolbarD
 			LayoutPrototype layoutPrototype = LayoutPrototypeServiceUtil.getLayoutPrototype(layoutPageTemplateEntry.getLayoutPrototypeId());
 
 			row.setCssClass("entry-card lfr-asset-item");
-
-			request.setAttribute(LayoutAdminWebKeys.LAYOUT_PROTOTYPE, layoutPrototype);
 			%>
 
 			<liferay-ui:search-container-column-text>
 				<clay:vertical-card
-					verticalCard="<%= new LayoutPrototypeVerticalCard(layoutPrototype, renderRequest, searchContainer.getRowChecker()) %>"
+					verticalCard="<%= new LayoutPrototypeVerticalCard(layoutPrototype, renderRequest, renderResponse, searchContainer.getRowChecker()) %>"
 				/>
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
@@ -68,6 +66,21 @@ LayoutPrototypeManagementToolbarDisplayContext layoutPrototypeManagementToolbarD
 		/>
 	</liferay-ui:search-container>
 </aui:form>
+
+<aui:script require='<%= npmResolvedPackageName + "/js/LayoutPrototypeDropdownDefaultEventHandler.es as LayoutPrototypeDropdownDefaultEventHandler" %>'>
+	Liferay.component(
+		'<%= LayoutAdminWebKeys.LAYOUT_PROTOTYPE_DROPDOWN_DEFAULT_EVENT_HANDLER %>',
+		new LayoutPrototypeDropdownDefaultEventHandler.default(
+			{
+				namespace: '<portlet:namespace />'
+			}
+		),
+		{
+			destroyOnNavigate: true,
+			portletId: '<%= HtmlUtil.escapeJS(portletDisplay.getId()) %>'
+		}
+	);
+</aui:script>
 
 <aui:script require='<%= npmResolvedPackageName + "/js/LayoutPrototypeManagementToolbarDefaultEventHandler.es as LayoutPrototypeManagementToolbarDefaultEventHandler" %>'>
 	Liferay.component(

@@ -67,7 +67,7 @@ JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
 
 	Liferay.component('<portlet:namespace />editModeWrapper', editModeWrapper);
 
-	function handleDestroyPortlet () {
+	function handleDestroyPortlet() {
 		disabledAreaMask.dispose();
 		editModeWrapper.dispose();
 

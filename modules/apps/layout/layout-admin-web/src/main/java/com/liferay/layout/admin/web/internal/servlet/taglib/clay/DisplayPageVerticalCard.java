@@ -22,7 +22,9 @@ import com.liferay.asset.kernel.model.ClassType;
 import com.liferay.asset.kernel.model.ClassTypeReader;
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.BaseBaseClayCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.VerticalCard;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.layout.admin.web.internal.constants.LayoutAdminWebKeys;
+import com.liferay.layout.admin.web.internal.servlet.taglib.util.DisplayPageActionDropdownItemsProvider;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.petra.string.StringPool;
@@ -41,9 +43,11 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.List;
 import java.util.Objects;
 
 import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 /**
  * @author Eudaldo Alonso
@@ -53,9 +57,12 @@ public class DisplayPageVerticalCard
 
 	public DisplayPageVerticalCard(
 		BaseModel<?> baseModel, RenderRequest renderRequest,
-		RowChecker rowChecker) {
+		RenderResponse renderResponse, RowChecker rowChecker) {
 
 		super(baseModel, rowChecker);
+
+		_renderRequest = renderRequest;
+		_renderResponse = renderResponse;
 
 		_assetDisplayContributorTracker =
 			(AssetDisplayContributorTracker)renderRequest.getAttribute(
@@ -63,6 +70,29 @@ public class DisplayPageVerticalCard
 		_layoutPageTemplateEntry = (LayoutPageTemplateEntry)baseModel;
 		_themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+	}
+
+	@Override
+	public List<DropdownItem> getActionDropdownItems() {
+		try {
+			DisplayPageActionDropdownItemsProvider
+				displayPageActionDropdownItemsProvider =
+					new DisplayPageActionDropdownItemsProvider(
+						_layoutPageTemplateEntry, _renderRequest,
+						_renderResponse);
+
+			return displayPageActionDropdownItemsProvider.
+				getActionDropdownItems();
+		}
+		catch (Exception e) {
+		}
+
+		return null;
+	}
+
+	@Override
+	public String getDefaultEventHandler() {
+		return LayoutAdminWebKeys.DISPLAY_PAGE_DROPDOWN_DEFAULT_EVENT_HANDLER;
 	}
 
 	@Override
@@ -188,6 +218,8 @@ public class DisplayPageVerticalCard
 	private final AssetDisplayContributorTracker
 		_assetDisplayContributorTracker;
 	private final LayoutPageTemplateEntry _layoutPageTemplateEntry;
+	private final RenderRequest _renderRequest;
+	private final RenderResponse _renderResponse;
 	private final ThemeDisplay _themeDisplay;
 
 }

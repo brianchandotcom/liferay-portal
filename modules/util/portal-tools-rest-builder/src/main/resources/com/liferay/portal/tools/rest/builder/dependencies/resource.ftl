@@ -181,7 +181,9 @@ public interface ${schemaName}Resource {
 				<#assign methodParameters = "${methodParameters} @Context Pagination pagination," />
 			</#if>
 
-			<#assign methodParameters = "${methodParameters[0..(methodParameters?length - 2)]}" />
+			<#if ((methodParameters?length - 2) >= 0)>
+				<#assign methodParameters = "${methodParameters[0..(methodParameters?length - 2)]}" />
+			</#if>
 		</#if>
 
 		<#assign

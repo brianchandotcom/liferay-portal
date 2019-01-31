@@ -52,8 +52,6 @@
 
 		<!-- References -->
 
-		<reference entity="Group" package-path="com.liferay.portal" />
-		<reference entity="Layout" package-path="com.liferay.portal" />
 		<reference entity="Resource" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />
 		<reference entity="SiteNavigationMenuItem" package-path="com.liferay.site.navigation" />

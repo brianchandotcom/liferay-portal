@@ -19,18 +19,18 @@ import javax.ws.rs.core.Response;
 /**
  * @author Máté Thurzó
  */
-public class NoSuchProductionCTCollectionException extends CTJaxRsException {
+public class ChangeTrackingNotEnabledException extends CTJaxRsException {
 
-	public NoSuchProductionCTCollectionException(long companyId) {
+	public ChangeTrackingNotEnabledException(long companyId) {
 		super(companyId);
 
-		setResponseStatus(Response.Status.BAD_REQUEST);
+		setResponseStatus(Response.Status.CONFLICT);
 	}
 
-	public NoSuchProductionCTCollectionException(long companyId, String msg) {
+	public ChangeTrackingNotEnabledException(long companyId, String msg) {
 		super(companyId, msg);
 
-		setResponseStatus(Response.Status.BAD_REQUEST);
+		setResponseStatus(Response.Status.CONFLICT);
 	}
 
 }

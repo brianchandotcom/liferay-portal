@@ -19,15 +19,15 @@ import javax.ws.rs.core.Response;
 /**
  * @author Máté Thurzó
  */
-public class NoSuchProductionCTCollectionException extends CTJaxRsException {
+public class CannotCreateCTCollectionException extends CTJaxRsException {
 
-	public NoSuchProductionCTCollectionException(long companyId) {
+	public CannotCreateCTCollectionException(long companyId) {
 		super(companyId);
 
 		setResponseStatus(Response.Status.BAD_REQUEST);
 	}
 
-	public NoSuchProductionCTCollectionException(long companyId, String msg) {
+	public CannotCreateCTCollectionException(long companyId, String msg) {
 		super(companyId, msg);
 
 		setResponseStatus(Response.Status.BAD_REQUEST);

@@ -37,7 +37,11 @@ public class ${schemaName} {
 			<#if stringUtil.equals(properties.type, "array") && properties.items?? && properties.items.type??>
 				<#assign parameterType = "${properties.items.type?cap_first}[]" />
 			<#else>
-				<#assign parameterType = properties.type?cap_first />
+				<#if properties.format?? && stringUtil.equals(properties.format, "int64") && stringUtil.equals(properties.type, "integer")>
+					<#assign parameterType = "Long" />
+				<#else>
+					<#assign parameterType = properties.type?cap_first />
+				</#if>
 			</#if>
 		<#else>
 			<#assign reference = "${properties.reference}" />

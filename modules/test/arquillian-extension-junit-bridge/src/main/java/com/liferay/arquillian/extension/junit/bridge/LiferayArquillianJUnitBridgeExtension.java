@@ -23,6 +23,14 @@ import com.liferay.arquillian.extension.junit.bridge.remote.processor.OSGiAllInP
 
 import java.net.URL;
 
+import org.jboss.arquillian.container.impl.client.ContainerDeploymentContextHandler;
+import org.jboss.arquillian.container.impl.client.container.ContainerDeployController;
+import org.jboss.arquillian.container.impl.client.container.ContainerLifecycleController;
+import org.jboss.arquillian.container.impl.client.container.ContainerRegistryCreator;
+import org.jboss.arquillian.container.impl.client.container.DeploymentExceptionHandler;
+import org.jboss.arquillian.container.impl.client.deployment.ArchiveDeploymentExporter;
+import org.jboss.arquillian.container.impl.context.ContainerContextImpl;
+import org.jboss.arquillian.container.impl.context.DeploymentContextImpl;
 import org.jboss.arquillian.container.spi.client.container.DeployableContainer;
 import org.jboss.arquillian.container.test.spi.RemoteLoadableExtension;
 import org.jboss.arquillian.container.test.spi.client.deployment.ApplicationArchiveProcessor;
@@ -41,7 +49,15 @@ public class LiferayArquillianJUnitBridgeExtension
 			"/arquillian.remote.marker");
 
 		if (url == null) {
+			extensionBuilder.context(ContainerContextImpl.class);
+			extensionBuilder.context(DeploymentContextImpl.class);
+			extensionBuilder.observer(ArchiveDeploymentExporter.class);
 			extensionBuilder.observer(ConfigurationRegistrar.class);
+			extensionBuilder.observer(ContainerDeployController.class);
+			extensionBuilder.observer(ContainerDeploymentContextHandler.class);
+			extensionBuilder.observer(ContainerLifecycleController.class);
+			extensionBuilder.observer(ContainerRegistryCreator.class);
+			extensionBuilder.observer(DeploymentExceptionHandler.class);
 			extensionBuilder.service(
 				ApplicationArchiveProcessor.class, OSGiAllInProcessor.class);
 			extensionBuilder.service(

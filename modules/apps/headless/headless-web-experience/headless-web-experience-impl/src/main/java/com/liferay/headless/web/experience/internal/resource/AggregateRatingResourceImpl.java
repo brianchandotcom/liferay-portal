@@ -15,9 +15,11 @@
 package com.liferay.headless.web.experience.internal.resource;
 
 import com.liferay.headless.web.experience.dto.AggregateRating;
-import com.liferay.headless.web.experience.dto.AggregateRatingCollection;
+import com.liferay.headless.web.experience.dto.Comment;
+import com.liferay.headless.web.experience.dto.StructuredContent;
 import com.liferay.headless.web.experience.resource.AggregateRatingResource;
 import com.liferay.portal.vulcan.context.Pagination;
+import com.liferay.portal.vulcan.dto.Page;
 
 import java.util.Collections;
 
@@ -42,11 +44,25 @@ import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
 public class AggregateRatingResourceImpl implements AggregateRatingResource {
 
 	@Override
-	public AggregateRatingCollection<AggregateRating> getAggregateRatingCollection(
-			Pagination pagination, String size)
+	public AggregateRating getAggregateRating(Integer id) throws Exception {
+		return new AggregateRating();
+	}
+
+	@Override
+	public Page<StructuredContent> getContentSpaceStructuredContentsPage(
+			Integer parentId, String AcceptLanguage, String filter, String sort,
+			Pagination pagination)
 		throws Exception {
 
-		return new AggregateRatingCollection(Collections.emptyList(), 0);
+		return new Page(Collections.emptyList(), 0);
+	}
+
+	@Override
+	public Page<Comment> getStructuredContentsCommentPage(
+			StructuredContent parentId, Pagination pagination)
+		throws Exception {
+
+		return new Page(Collections.emptyList(), 0);
 	}
 
 }

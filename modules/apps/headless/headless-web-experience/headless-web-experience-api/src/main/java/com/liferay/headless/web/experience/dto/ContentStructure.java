@@ -26,14 +26,104 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "ContentStructure")
 public class ContentStructure {
 
-	public long getId() {
+	public String[] getAvailableLanguages() {
+		return _availableLanguages;
+	}
+
+	public String getContentSpace() {
+		return _contentSpace;
+	}
+
+	public String getCreator() {
+		return _creator;
+	}
+
+	public String getDateCreated() {
+		return _dateCreated;
+	}
+
+	public String getDateModified() {
+		return _dateModified;
+	}
+
+	public String getDescription() {
+		return _description;
+	}
+
+	public Object getFormPages() {
+		return _formPages;
+	}
+
+	public Integer getId() {
 		return _id;
 	}
 
-	public void setId(long id) {
+	public String getName() {
+		return _name;
+	}
+
+	public String getSelf() {
+		return _self;
+	}
+
+	public Object getSuccessPage() {
+		return _successPage;
+	}
+
+	public void setAvailableLanguages(String[] availableLanguages) {
+		_availableLanguages = availableLanguages;
+	}
+
+	public void setContentSpace(String contentSpace) {
+		_contentSpace = contentSpace;
+	}
+
+	public void setCreator(String creator) {
+		_creator = creator;
+	}
+
+	public void setDateCreated(String dateCreated) {
+		_dateCreated = dateCreated;
+	}
+
+	public void setDateModified(String dateModified) {
+		_dateModified = dateModified;
+	}
+
+	public void setDescription(String description) {
+		_description = description;
+	}
+
+	public void setFormPages(Object formPages) {
+		_formPages = formPages;
+	}
+
+	public void setId(Integer id) {
 		_id = id;
 	}
 
-	private long _id;
+	public void setName(String name) {
+		_name = name;
+	}
+
+	public void setSelf(String self) {
+		_self = self;
+	}
+
+	public void setSuccessPage(Object successPage) {
+		_successPage = successPage;
+	}
+
+	private String[] _availableLanguages;
+	private String _contentSpace;
+	private String _creator;
+	private String _dateCreated;
+	private String _dateModified;
+	private String _description;
+	private Object _formPages;
+	private Integer _id;
+	private String _name;
+	private String _self;
+	private Object _successPage;
 
 }

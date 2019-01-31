@@ -14,31 +14,24 @@
 
 package com.liferay.headless.web.experience.internal.resource;
 
-import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.dynamic.data.mapping.service.DDMStructureService;
+import com.liferay.headless.web.experience.dto.Comment;
 import com.liferay.headless.web.experience.dto.ContentStructure;
-import com.liferay.headless.web.experience.dto.ContentStructureCollection;
+import com.liferay.headless.web.experience.dto.StructuredContent;
 import com.liferay.headless.web.experience.resource.ContentStructureResource;
-import com.liferay.journal.model.JournalArticle;
-import com.liferay.portal.kernel.model.ClassName;
-import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.service.ClassNameService;
-import com.liferay.portal.kernel.service.CompanyService;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.vulcan.context.Pagination;
+import com.liferay.portal.vulcan.dto.Page;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collections;
+
+import javax.annotation.Generated;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
 import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
 
 /**
  * @author Javier Gamarra
+ * @generated
  */
 @Component(
 	property = {
@@ -47,51 +40,29 @@ import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
 	},
 	scope = ServiceScope.PROTOTYPE, service = ContentStructureResource.class
 )
+@Generated("")
 public class ContentStructureResourceImpl implements ContentStructureResource {
 
 	@Override
-	public ContentStructureCollection<ContentStructure>
-			getContentStructureCollection(Pagination pagination, String size)
+	public Page<StructuredContent> getContentSpaceStructuredContentsPage(
+			Integer parentId, String AcceptLanguage, String filter, String sort,
+			Pagination pagination)
 		throws Exception {
 
-		Company company = _companyService.getCompanyByWebId(
-			PropsUtil.get(PropsKeys.COMPANY_DEFAULT_WEB_ID));
-
-		Group group = company.getGroup();
-
-		ClassName className = _classNameService.fetchClassName(
-			JournalArticle.class.getName());
-
-		List<DDMStructure> ddmStructures = _ddmStructureService.getStructures(
-			company.getCompanyId(), new long[] {group.getGroupId()},
-			className.getClassNameId(), pagination.getStartPosition(),
-			pagination.getEndPosition(), null);
-
-		List<ContentStructure> contentStructures = new ArrayList<>(
-			ddmStructures.size());
-
-		for (DDMStructure ddmStructure : ddmStructures) {
-			ContentStructure contentStructure = new ContentStructure();
-
-			contentStructure.setId(ddmStructure.getStructureId());
-
-			contentStructures.add(contentStructure);
-		}
-
-		int count = _ddmStructureService.getStructuresCount(
-			group.getGroupId(), new long[] {className.getClassNameId()},
-			className.getClassNameId());
-
-		return new ContentStructureCollection(contentStructures, count);
+		return new Page(Collections.emptyList(), 0);
 	}
 
-	@Reference
-	private ClassNameService _classNameService;
+	@Override
+	public ContentStructure getContentStructure(Integer id) throws Exception {
+		return new ContentStructure();
+	}
 
-	@Reference
-	private CompanyService _companyService;
+	@Override
+	public Page<Comment> getStructuredContentsCommentPage(
+			StructuredContent parentId, Pagination pagination)
+		throws Exception {
 
-	@Reference
-	private DDMStructureService _ddmStructureService;
+		return new Page(Collections.emptyList(), 0);
+	}
 
 }

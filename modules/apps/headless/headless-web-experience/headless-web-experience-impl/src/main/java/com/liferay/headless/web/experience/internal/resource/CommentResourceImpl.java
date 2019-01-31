@@ -15,9 +15,10 @@
 package com.liferay.headless.web.experience.internal.resource;
 
 import com.liferay.headless.web.experience.dto.Comment;
-import com.liferay.headless.web.experience.dto.CommentCollection;
+import com.liferay.headless.web.experience.dto.StructuredContent;
 import com.liferay.headless.web.experience.resource.CommentResource;
 import com.liferay.portal.vulcan.context.Pagination;
+import com.liferay.portal.vulcan.dto.Page;
 
 import java.util.Collections;
 
@@ -42,11 +43,20 @@ import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
 public class CommentResourceImpl implements CommentResource {
 
 	@Override
-	public CommentCollection<Comment> getCommentCollection(
-			Pagination pagination, String size)
+	public Page<StructuredContent> getContentSpaceStructuredContentsPage(
+			Integer parentId, String AcceptLanguage, String filter, String sort,
+			Pagination pagination)
 		throws Exception {
 
-		return new CommentCollection(Collections.emptyList(), 0);
+		return new Page(Collections.emptyList(), 0);
+	}
+
+	@Override
+	public Page<Comment> getStructuredContentsCommentPage(
+			StructuredContent parentId, Pagination pagination)
+		throws Exception {
+
+		return new Page(Collections.emptyList(), 0);
 	}
 
 }

@@ -53,7 +53,7 @@ public interface AggregateRatingResource {
 	@Path("/blog-posting/{parent-id}/comment")
 	@Produces({"*/*"})
 	@RequiresScope("headless-collaboration-application.read")
-	public Page<Comment> getBlogPostingComment(
+	public Page<Comment> getBlogPostingCommentPage(
 			@PathParam("parent-id") Integer parentId,
 			@Context Pagination pagination)
 		throws Exception;
@@ -62,7 +62,7 @@ public interface AggregateRatingResource {
 	@Path("/comment/{parent-id}/comment")
 	@Produces({"*/*"})
 	@RequiresScope("headless-collaboration-application.read")
-	public Page<Comment> getCommentComment(
+	public Page<Comment> getCommentCommentPage(
 			@PathParam("parent-id") Integer parentId,
 			@Context Pagination pagination)
 		throws Exception;
@@ -71,7 +71,7 @@ public interface AggregateRatingResource {
 	@Path("/content-space/{parent-id}/blog-posting")
 	@Produces({"*/*"})
 	@RequiresScope("headless-collaboration-application.read")
-	public Page<BlogPosting> getContentSpaceBlogPosting(
+	public Page<BlogPosting> getContentSpaceBlogPostingPage(
 			@PathParam("parent-id") Integer parentId,
 			@Context Pagination pagination)
 		throws Exception;
@@ -80,7 +80,7 @@ public interface AggregateRatingResource {
 	@Path("/image-object-repository/{parent-id}/image-object")
 	@Produces({"*/*"})
 	@RequiresScope("headless-collaboration-application.read")
-	public Page<ImageObject> getImageObjectRepositoryImageObject(
+	public Page<ImageObject> getImageObjectRepositoryImageObjectPage(
 			@PathParam("parent-id") Integer parentId,
 			@Context Pagination pagination)
 		throws Exception;

@@ -25,4 +25,42 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Generated("")
 @XmlRootElement(name = "WebUrl")
 public class WebUrl {
+
+	public Integer getId() {
+		return _id;
+	}
+
+	public String getSelf() {
+		return _self;
+	}
+
+	public String getUrl() {
+		return _url;
+	}
+
+	public String getUrlType() {
+		return _urlType;
+	}
+
+	public void setId(Integer id) {
+		_id = id;
+	}
+
+	public void setSelf(String self) {
+		_self = self;
+	}
+
+	public void setUrl(String url) {
+		_url = url;
+	}
+
+	public void setUrlType(String urlType) {
+		_urlType = urlType;
+	}
+
+	private Integer _id;
+	private String _self;
+	private String _url;
+	private String _urlType;
+
 }

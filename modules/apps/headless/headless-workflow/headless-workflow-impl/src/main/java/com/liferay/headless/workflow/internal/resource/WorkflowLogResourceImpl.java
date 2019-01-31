@@ -43,7 +43,7 @@ import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
 public class WorkflowLogResourceImpl implements WorkflowLogResource {
 
 	@Override
-	public Page<WorkflowTask> getRolesWorkflowTasks(
+	public Page<WorkflowTask> getRolesWorkflowTasksPage(
 			String parentId, Pagination pagination)
 		throws Exception {
 
@@ -51,12 +51,12 @@ public class WorkflowLogResourceImpl implements WorkflowLogResource {
 	}
 
 	@Override
-	public WorkflowLog getWorkflowLogs(Integer id) throws Exception {
+	public WorkflowLog getWorkflowLog(Integer id) throws Exception {
 		return new WorkflowLog();
 	}
 
 	@Override
-	public Page<WorkflowTask> getWorkflowTasks(
+	public Page<WorkflowTask> getWorkflowTasksPage(
 			Object genericparentid, Pagination pagination)
 		throws Exception {
 
@@ -64,7 +64,7 @@ public class WorkflowLogResourceImpl implements WorkflowLogResource {
 	}
 
 	@Override
-	public Page<WorkflowLog> getWorkflowTasksWorkflowLogs(
+	public Page<WorkflowLog> getWorkflowTasksWorkflowLogsPage(
 			Integer parentId, Pagination pagination)
 		throws Exception {
 

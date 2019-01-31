@@ -44,7 +44,7 @@ import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
 public class ImageObjectResourceImpl implements ImageObjectResource {
 
 	@Override
-	public Page<Comment> getBlogPostingComment(
+	public Page<Comment> getBlogPostingCommentPage(
 			Integer parentId, Pagination pagination)
 		throws Exception {
 
@@ -52,7 +52,7 @@ public class ImageObjectResourceImpl implements ImageObjectResource {
 	}
 
 	@Override
-	public Page<Comment> getCommentComment(
+	public Page<Comment> getCommentCommentPage(
 			Integer parentId, Pagination pagination)
 		throws Exception {
 
@@ -60,7 +60,7 @@ public class ImageObjectResourceImpl implements ImageObjectResource {
 	}
 
 	@Override
-	public Page<BlogPosting> getContentSpaceBlogPosting(
+	public Page<BlogPosting> getContentSpaceBlogPostingPage(
 			Integer parentId, Pagination pagination)
 		throws Exception {
 
@@ -68,7 +68,7 @@ public class ImageObjectResourceImpl implements ImageObjectResource {
 	}
 
 	@Override
-	public Page<ImageObject> getImageObjectRepositoryImageObject(
+	public Page<ImageObject> getImageObjectRepositoryImageObjectPage(
 			Integer parentId, Pagination pagination)
 		throws Exception {
 

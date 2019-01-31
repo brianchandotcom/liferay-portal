@@ -50,7 +50,7 @@ public class AggregateRatingResourceImpl implements AggregateRatingResource {
 	}
 
 	@Override
-	public Page<Comment> getBlogPostingComment(
+	public Page<Comment> getBlogPostingCommentPage(
 			Integer parentId, Pagination pagination)
 		throws Exception {
 
@@ -58,7 +58,7 @@ public class AggregateRatingResourceImpl implements AggregateRatingResource {
 	}
 
 	@Override
-	public Page<Comment> getCommentComment(
+	public Page<Comment> getCommentCommentPage(
 			Integer parentId, Pagination pagination)
 		throws Exception {
 
@@ -66,7 +66,7 @@ public class AggregateRatingResourceImpl implements AggregateRatingResource {
 	}
 
 	@Override
-	public Page<BlogPosting> getContentSpaceBlogPosting(
+	public Page<BlogPosting> getContentSpaceBlogPostingPage(
 			Integer parentId, Pagination pagination)
 		throws Exception {
 
@@ -74,7 +74,7 @@ public class AggregateRatingResourceImpl implements AggregateRatingResource {
 	}
 
 	@Override
-	public Page<ImageObject> getImageObjectRepositoryImageObject(
+	public Page<ImageObject> getImageObjectRepositoryImageObjectPage(
 			Integer parentId, Pagination pagination)
 		throws Exception {
 

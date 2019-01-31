@@ -15,14 +15,18 @@
 package com.liferay.headless.web.experience.resource;
 
 import com.liferay.headless.web.experience.dto.AggregateRating;
-import com.liferay.headless.web.experience.dto.AggregateRatingCollection;
+import com.liferay.headless.web.experience.dto.Comment;
+import com.liferay.headless.web.experience.dto.StructuredContent;
 import com.liferay.oauth2.provider.scope.RequiresScope;
 import com.liferay.portal.vulcan.context.Pagination;
+import com.liferay.portal.vulcan.dto.Page;
 
 import javax.annotation.Generated;
 
 import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
@@ -30,20 +34,39 @@ import javax.ws.rs.core.Context;
 /**
  * To access this resource, run:
  *
- *     curl -u your@email.com:yourpassword -D - http://localhost:8080/o/headless-web-experience/1.0.0/aggregate-rating
+ *     curl -u your@email.com:yourpassword -D - http://localhost:8080/o/headless-web-experience/1.0.0
  *
  * @author Javier Gamarra
  * @generated
  */
 @Generated("")
-@Path("/1.0.0/aggregate-rating")
+@Path("/1.0.0")
 public interface AggregateRatingResource {
 
 	@GET
-	@Produces("application/json")
+	@Path("/aggregate-rating/{id}")
+	@Produces({"*/*"})
 	@RequiresScope("headless-web-experience-application.read")
-	public AggregateRatingCollection<AggregateRating> getAggregateRatingCollection(
-			@Context Pagination pagination, @QueryParam("size") String size)
+	public AggregateRating getAggregateRating(@PathParam("id") Integer id)
+		throws Exception;
+
+	@GET
+	@Path("/content-space/{parent-id}/structured-contents")
+	@Produces({"*/*"})
+	@RequiresScope("headless-web-experience-application.read")
+	public Page<StructuredContent> getContentSpaceStructuredContentsPage(
+			@PathParam("parent-id") Integer parentId,
+			@HeaderParam("Accept-Language") String AcceptLanguage,
+			@QueryParam("filter") String filter,
+			@QueryParam("sort") String sort, @Context Pagination pagination)
+		throws Exception;
+
+	@GET
+	@Path("/structured-contents/{parent-id}/comment")
+	@Produces({"*/*"})
+	@RequiresScope("headless-web-experience-application.read")
+	public Page<Comment> getStructuredContentsCommentPage(
+			StructuredContent parentId, @Context Pagination pagination)
 		throws Exception;
 
 }

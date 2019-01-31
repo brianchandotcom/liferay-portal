@@ -1,5 +1,5 @@
 Bundle-Name: Liferay Journal Service
 Bundle-SymbolicName: com.liferay.journal.service
 Bundle-Version: 5.0.0
-Liferay-Require-SchemaVersion: 2.0.0
+Liferay-Require-SchemaVersion: 3.0.0
 Liferay-Service: true

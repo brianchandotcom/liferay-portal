@@ -5,5 +5,5 @@ Import-Package:\
 	com.liferay.layout.page.template.util.comparator,\
 	\
 	*
-Liferay-Require-SchemaVersion: 2.1.0
+Liferay-Require-SchemaVersion: 3.0.0
 Liferay-Service: true

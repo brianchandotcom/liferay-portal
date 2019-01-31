@@ -13,7 +13,7 @@ definition {
 	// All test cases are currently configured to run Liferay SAML as the IdP and Liferay SAML as the SP. This will change as more SAML implmentations are added to this test suite (ie Shibboleth)
 
 	setUp {
-		User.firstLoginPG(rememberMeChecked = "false");
+		User.firstLoginPG();
 	}
 
 	@priority = "5"
@@ -136,7 +136,7 @@ definition {
 			userEmailAddress = "test@liferay.com"
 		);
 
-		User.viewLoggedInPG(userFirstName = "Test", userLastName = "Test");
+		User.viewLoggedInPG(userFirstName = "Test");
 
 		AssertConsoleTextPresent(value1 = "TestSiteRole");
 	}
@@ -167,7 +167,6 @@ definition {
 		SAML.executeIdPInitiatedSSO(
 			idpInitiatedSSOURL = "${portalURL}/c/portal/saml/sso?entityId=samlsp&amp;RelayState=http://www.able.com:9080",
 			password = "test",
-			rememberMeChecked = "false",
 			samlEnabled = "true",
 			spURL = "http://www.able.com:9080/",
 			userEmailAddress = "test@liferay.com"
@@ -184,7 +183,7 @@ definition {
 
 		Refresh();
 
-		User.viewLoggedInPG(userFirstName = "Test", userLastName = "Test");
+		User.viewLoggedInPG(userFirstName = "Test");
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
@@ -206,7 +205,6 @@ definition {
 		SAML.executeIdPInitiatedSSO(
 			idpInitiatedSSOURL = "${portalURL}/c/portal/saml/sso?entityId=samlsp&amp;RelayState=http://www.able.com:9080",
 			password = "test",
-			rememberMeChecked = "false",
 			samlEnabled = "true",
 			spURL = "http://www.able.com:9080/",
 			userEmailAddress = "test@liferay.com"
@@ -248,12 +246,11 @@ definition {
 		SAML.executeIdPInitiatedSSO(
 			idpInitiatedSSOURL = "${portalURL}/c/portal/saml/sso?entityId=samlsp&amp;RelayState=http://www.able.com:9080",
 			password = "test",
-			rememberMeChecked = "false",
 			spURL = "http://www.able.com:9080/",
 			userEmailAddress = "test@liferay.com"
 		);
 
-		User.viewLoggedInPG(userFirstName = "Test", userLastName = "Test");
+		User.viewLoggedInPG(userFirstName = "Test");
 
 		Pause(locator1 = "120000");
 
@@ -266,7 +263,7 @@ definition {
 
 		AssertClick(locator1 = "UserBar#USER_SIGN_IN", value1 = "Sign In");
 
-		User.viewLoggedInPG(userFirstName = "Test", userLastName = "Test");
+		User.viewLoggedInPG(userFirstName = "Test");
 	}
 
 	@priority = "4"
@@ -295,7 +292,6 @@ definition {
 		SAML.executeIdPInitiatedSSO(
 			idpInitiatedSSOURL = "${portalURL}/c/portal/saml/sso?entityId=samlsp&amp;RelayState=http://www.able.com:9080",
 			password = "test",
-			rememberMeChecked = "false",
 			samlEnabled = "true",
 			spURL = "http://www.able.com:9080/",
 			userEmailAddress = "test@liferay.com"
@@ -312,7 +308,7 @@ definition {
 
 		Refresh();
 
-		User.viewLoggedInPG(userFirstName = "Test", userLastName = "Test");
+		User.viewLoggedInPG(userFirstName = "Test");
 
 		Pause(locator1 = "120000");
 
@@ -336,7 +332,7 @@ definition {
 			nameIdentifierAttributeName = "screenName",
 			nameIdentifierFormat = "Unspecified",
 			samlEntityID = "samlsp",
-			spURL = "http://www.able.com:9080/"
+			spURL = "http://www.able.com:9080"
 		);
 
 		ProductMenu.gotoPortlet(
@@ -361,7 +357,7 @@ definition {
 			userEmailAddress = "test@liferay.com"
 		);
 
-		User.viewLoggedInPG(userFirstName = "Test", userLastName = "Test");
+		User.viewLoggedInPG(userFirstName = "Test");
 
 		AssertConsoleTextPresent(value1 = "nameid-format:unspecified");
 	}
@@ -390,7 +386,7 @@ definition {
 			userEmailAddress = "test@liferay.com"
 		);
 
-		User.viewLoggedInPG(userFirstName = "Test", userLastName = "Test");
+		User.viewLoggedInPG(userFirstName = "Test");
 
 		ProductMenu.gotoPortlet(
 			category = "Content",
@@ -417,7 +413,7 @@ definition {
 
 		Navigator.openURL();
 
-		User.viewLoggedInPG(userFirstName = "Test", userLastName = "Test");
+		User.viewLoggedInPG(userFirstName = "Test");
 
 		ProductMenu.gotoPortlet(
 			category = "Content",
@@ -464,18 +460,17 @@ definition {
 		SAML.executeIdPInitiatedSSO(
 			idpInitiatedSSOURL = "${portalURL}/c/portal/saml/sso?entityId=samlsp&amp;RelayState=http://www.able.com:9080",
 			password = "test",
-			rememberMeChecked = "false",
 			spURL = "http://www.able.com:9080/",
 			userEmailAddress = "test@liferay.com"
 		);
 
-		User.viewLoggedInPG(userFirstName = "Test", userLastName = "Test");
+		User.viewLoggedInPG(userFirstName = "Test");
 
 		// Verify IdP is logged in
 
 		Navigator.openURL();
 
-		User.viewLoggedInPG(userFirstName = "Test", userLastName = "Test");
+		User.viewLoggedInPG(userFirstName = "Test");
 
 		// Logout SP and verify SP is logged out
 
@@ -519,13 +514,13 @@ definition {
 			userEmailAddress = "test@liferay.com"
 		);
 
-		User.viewLoggedInPG(userFirstName = "Test", userLastName = "Test");
+		User.viewLoggedInPG(userFirstName = "Test");
 
 		// Verify IdP is logged in
 
 		Navigator.openURL();
 
-		User.viewLoggedInPG(userFirstName = "Test", userLastName = "Test");
+		User.viewLoggedInPG(userFirstName = "Test");
 
 		// Logout SP and verify SP is logged out
 
@@ -618,19 +613,19 @@ definition {
 			userEmailAddress = "test@liferay.com"
 		);
 
-		User.viewLoggedInPG(userFirstName = "Test", userLastName = "Test");
+		User.viewLoggedInPG(userFirstName = "Test");
 
 		// Verify IdP is logged in
 
 		Navigator.openURL();
 
-		User.viewLoggedInPG(userFirstName = "Test", userLastName = "Test");
+		User.viewLoggedInPG(userFirstName = "Test");
 
 		Navigator.openSpecificURL(url = "http://www.baker.com:10080");
 
 		Navigator.gotoLoginPage();
 
-		User.viewLoggedInPG(userFirstName = "Test", userLastName = "Test");
+		User.viewLoggedInPG(userFirstName = "Test");
 
 		// Initiate Single Logout for first SP
 
@@ -678,13 +673,13 @@ definition {
 			userEmailAddress = "test@liferay.com"
 		);
 
-		User.viewLoggedInPG(userFirstName = "Test", userLastName = "Test");
+		User.viewLoggedInPG(userFirstName = "Test");
 
 		// Verify IdP is logged in
 
 		Navigator.openURL();
 
-		User.viewLoggedInPG(userFirstName = "Test", userLastName = "Test");
+		User.viewLoggedInPG(userFirstName = "Test");
 
 		// Logout SP and verify SP is logged out
 

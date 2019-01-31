@@ -16,6 +16,7 @@ package com.liferay.arquillian.extension.junit.bridge;
 
 import com.liferay.arquillian.extension.junit.bridge.container.ContainerDeployController;
 import com.liferay.arquillian.extension.junit.bridge.container.ContainerDeploymentContextHandler;
+import com.liferay.arquillian.extension.junit.bridge.container.ContainerLifecycleController;
 import com.liferay.arquillian.extension.junit.bridge.container.remote.LiferayRemoteDeployableContainer;
 import com.liferay.arquillian.extension.junit.bridge.context.ContainerContextImpl;
 import com.liferay.arquillian.extension.junit.bridge.context.DeploymentContextImpl;
@@ -28,7 +29,6 @@ import com.liferay.arquillian.extension.junit.bridge.remote.processor.OSGiAllInP
 
 import java.net.URL;
 
-import org.jboss.arquillian.container.impl.client.container.ContainerLifecycleController;
 import org.jboss.arquillian.container.spi.client.container.DeployableContainer;
 import org.jboss.arquillian.container.test.spi.RemoteLoadableExtension;
 import org.jboss.arquillian.container.test.spi.client.deployment.ApplicationArchiveProcessor;

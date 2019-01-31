@@ -15,6 +15,8 @@
 package com.liferay.portal.remote.json.web.service.extender.internal;
 
 import com.liferay.osgi.util.ServiceTrackerFactory;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManager;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceRegistrator;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceRegistratorFactory;
@@ -46,8 +48,9 @@ public class JSONWebServiceTracker
 
 		_serviceTracker = ServiceTrackerFactory.open(
 			bundleContext,
-			"(&(json.web.service.context.name=*)(json.web.service.context." +
-				"path=*))",
+			StringBundler.concat(
+				"(&(json.web.service.context.name=*)(json.web.service.context.",
+				"path=*)(!(objectClass=", AopService.class.getName(), ")))"),
 			this);
 	}
 

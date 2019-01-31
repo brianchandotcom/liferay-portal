@@ -156,9 +156,7 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 		}
 		catch (Exception e) {
 			PortletDataException pde = new PortletDataException(
-				"Unable to update portlet preferences while exporting " +
-					portletDataContext.getPortletId(),
-				e);
+				"Unable to update portlet preferences during export", e);
 
 			pde.setPortletId(AssetPublisherPortletKeys.ASSET_PUBLISHER);
 			pde.setType(PortletDataException.EXPORT_PORTLET_DATA);
@@ -183,9 +181,7 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 		}
 		catch (Exception e) {
 			PortletDataException pde = new PortletDataException(
-				"Unable to update portlet preferences while importing " +
-					portletDataContext.getPortletId(),
-				e);
+				"Unable to update portlet preferences during import", e);
 
 			pde.setPortletId(AssetPublisherPortletKeys.ASSET_PUBLISHER);
 			pde.setType(PortletDataException.IMPORT_PORTLET_DATA);

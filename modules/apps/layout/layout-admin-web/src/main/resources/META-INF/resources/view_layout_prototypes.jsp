@@ -50,50 +50,15 @@ LayoutPrototypeManagementToolbarDisplayContext layoutPrototypeManagementToolbarD
 			<%
 			LayoutPrototype layoutPrototype = LayoutPrototypeServiceUtil.getLayoutPrototype(layoutPageTemplateEntry.getLayoutPrototypeId());
 
-			Group layoutPrototypeGroup = layoutPrototype.getGroup();
-
 			row.setCssClass("entry-card lfr-asset-item");
 
 			request.setAttribute(LayoutAdminWebKeys.LAYOUT_PROTOTYPE, layoutPrototype);
 			%>
 
 			<liferay-ui:search-container-column-text>
-				<liferay-frontend:icon-vertical-card
-					actionJsp="/layout_prototype_action.jsp"
-					actionJspServletContext="<%= application %>"
-					cssClass="entry-display-style"
-					icon="page-template"
-					resultRow="<%= row %>"
-					rowChecker="<%= searchContainer.getRowChecker() %>"
-					title="<%= layoutPrototype.getName(locale) %>"
-					url="<%= layoutPrototypeGroup.getDisplayURL(themeDisplay, true) %>"
-				>
-					<liferay-frontend:vertical-card-header>
-
-						<%
-						Date createDate = layoutPrototype.getModifiedDate();
-
-						String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - createDate.getTime(), true);
-						%>
-
-						<label class="text-default">
-							<liferay-ui:message arguments="<%= modifiedDateDescription %>" key="created-x-ago" />
-						</label>
-					</liferay-frontend:vertical-card-header>
-
-					<liferay-frontend:vertical-card-footer>
-						<label class="text-default">
-							<c:choose>
-								<c:when test="<%= layoutPrototype.isActive() %>">
-									<liferay-ui:message key="active" />
-								</c:when>
-								<c:otherwise>
-									<liferay-ui:message key="not-active" />
-								</c:otherwise>
-							</c:choose>
-						</label>
-					</liferay-frontend:vertical-card-footer>
-				</liferay-frontend:icon-vertical-card>
+				<clay:vertical-card
+					verticalCard="<%= new LayoutPrototypeVerticalCard(layoutPrototype, renderRequest, searchContainer.getRowChecker()) %>"
+				/>
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 

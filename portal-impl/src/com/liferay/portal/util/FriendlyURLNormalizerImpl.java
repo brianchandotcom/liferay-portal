@@ -19,7 +19,7 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.util.Normalizer;
@@ -89,7 +89,7 @@ public class FriendlyURLNormalizerImpl implements FriendlyURLNormalizer {
 			return friendlyURL;
 		}
 
-		String decodedFriendlyURL = HttpUtil.decodePath(friendlyURL);
+		String decodedFriendlyURL = _http.decodePath(friendlyURL);
 
 		StringBuilder sb = new StringBuilder(decodedFriendlyURL.length());
 
@@ -200,6 +200,10 @@ public class FriendlyURLNormalizerImpl implements FriendlyURLNormalizer {
 		return normalize(friendlyURL, true);
 	}
 
+	public void setHttp(Http http) {
+		_http = http;
+	}
+
 	protected String normalize(String friendlyURL, boolean periodsAndSlashes) {
 		if (Validator.isNull(friendlyURL)) {
 			return friendlyURL;
@@ -267,5 +271,7 @@ public class FriendlyURLNormalizerImpl implements FriendlyURLNormalizer {
 
 		_REPLACE_CHARS = replaceChars;
 	}
+
+	private Http _http;
 
 }

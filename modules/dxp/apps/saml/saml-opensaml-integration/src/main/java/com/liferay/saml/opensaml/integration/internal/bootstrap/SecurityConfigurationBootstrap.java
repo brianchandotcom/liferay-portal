@@ -14,9 +14,9 @@
 
 package com.liferay.saml.opensaml.integration.internal.bootstrap;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Map;
 
 import org.opensaml.core.config.ConfigurationService;
@@ -52,23 +52,25 @@ public class SecurityConfigurationBootstrap {
 			DefaultSecurityConfigurationBootstrap.
 				buildDefaultSignatureSigningConfiguration();
 
-		Collection<String> blacklistedAlgorithms = new ArrayList<>(
-			basicDecryptionConfiguration.getBlacklistedAlgorithms());
-
-		blacklistedAlgorithms.addAll(
-			basicEncryptionConfiguration.getBlacklistedAlgorithms());
-		blacklistedAlgorithms.addAll(
-			basicSignatureSigningConfiguration.getBlacklistedAlgorithms());
-
 		Object blacklistedAlgorithmsObject = properties.get(
 			"blacklisted.algorithms");
 
 		if (blacklistedAlgorithmsObject instanceof String[]) {
-			Collections.addAll(
-				blacklistedAlgorithms, (String[])blacklistedAlgorithmsObject);
+			basicDecryptionConfiguration.setBlacklistedAlgorithms(
+				_combine(
+					basicDecryptionConfiguration.getBlacklistedAlgorithms(),
+					(String[])blacklistedAlgorithmsObject));
+
+			basicEncryptionConfiguration.setBlacklistedAlgorithms(
+				_combine(
+					basicEncryptionConfiguration.getBlacklistedAlgorithms(),
+					(String[])blacklistedAlgorithmsObject));
 
 			basicSignatureSigningConfiguration.setBlacklistedAlgorithms(
-				blacklistedAlgorithms);
+				_combine(
+					basicSignatureSigningConfiguration.
+						getBlacklistedAlgorithms(),
+					(String[])blacklistedAlgorithmsObject));
 		}
 
 		ConfigurationService.register(
@@ -78,6 +80,16 @@ public class SecurityConfigurationBootstrap {
 		ConfigurationService.register(
 			SignatureSigningConfiguration.class,
 			basicSignatureSigningConfiguration);
+	}
+
+	private Collection<String> _combine(
+		Collection<String> collection, String... str) {
+
+		Collection<String> combinedCollection = new HashSet<>(collection);
+
+		Collections.addAll(combinedCollection, str);
+
+		return combinedCollection;
 	}
 
 	@Reference

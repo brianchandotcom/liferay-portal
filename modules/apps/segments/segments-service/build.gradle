@@ -24,6 +24,7 @@ dependencies {
 	compileOnly project(":apps:portal-odata:portal-odata-api")
 	compileOnly project(":apps:portal-search:portal-search-api")
 	compileOnly project(":apps:portal-search:portal-search-spi")
+	compileOnly project(":apps:portal:portal-instance-lifecycle-api")
 	compileOnly project(":apps:portal:portal-spring-extender-api")
 	compileOnly project(":apps:portal:portal-upgrade-api")
 	compileOnly project(":apps:segments:segments-api")

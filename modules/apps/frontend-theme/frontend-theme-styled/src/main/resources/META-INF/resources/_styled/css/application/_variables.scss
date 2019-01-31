@@ -78,6 +78,41 @@ $file-icon-text-color-5: #FFF !default;
 $file-icon-text-color-6: #FFF !default;
 $file-icon-text-color-7: #FFF !default;
 
+/* ---------- Fragments colors ---------- */
+
+$fragment-blue: $blue !default;
+$fragment-indigo: $indigo !default;
+$fragment-purple: $purple !default;
+$fragment-pink: $pink !default;
+$fragment-red: $red !default;
+$fragment-orange: $orange !default;
+$fragment-yellow: $yellow !default;
+$fragment-green: $green !default;
+$fragment-teal: $teal !default;
+$fragment-cyan: $cyan !default;
+$fragment-white: $white !default;
+$fragment-gray-600: $gray-600 !default;
+$fragment-gray-800: $gray-800 !default;
+
+$fragments-colors: () !default;
+
+$fragments-colors: map-merge((
+	"blue": $fragment-blue,
+	"indigo": $fragment-indigo,
+	"purple": $fragment-purple,
+	"pink": $fragment-pink,
+	"red": $fragment-red,
+	"orange": $fragment-orange,
+	"yellow": $fragment-yellow,
+	"green": $fragment-green,
+	"teal": $fragment-teal,
+	"cyan": $fragment-cyan,
+	"white": $fragment-white,
+	"gray": $fragment-gray-600,
+	"gray-dark": $fragment-gray-800),
+$fragments-colors
+);
+
 /* ---------- User icons background colors ---------- */
 
 $user-icon-bg-color-0: #FFF !default;

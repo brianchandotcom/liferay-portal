@@ -36,6 +36,7 @@ import com.liferay.layout.content.page.editor.constants.ContentPageEditorWebKeys
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.editor.configuration.EditorConfiguration;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -72,6 +73,8 @@ import com.liferay.portal.template.soy.util.SoyContext;
 import com.liferay.portal.template.soy.util.SoyContextFactoryUtil;
 import com.liferay.portal.util.PortletCategoryUtil;
 import com.liferay.portal.util.WebAppPool;
+import com.liferay.segments.model.SegmentsEntry;
+import com.liferay.segments.service.SegmentsEntryServiceUtil;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -134,6 +137,7 @@ public class ContentPageEditorDisplayContext {
 			getFragmentEntryActionURL("/content_layout/add_portlet"));
 		soyContext.put(
 			"availableLanguages", _getAvailableLanguagesSoyContext());
+		soyContext.put("availableSegments", _getSoyContextAvailableSegments());
 		soyContext.put("classNameId", classNameId);
 		soyContext.put("classPK", classPK);
 		soyContext.put(
@@ -179,7 +183,9 @@ public class ContentPageEditorDisplayContext {
 		return soyContext;
 	}
 
-	public SoyContext getFragmentsEditorToolbarContext() {
+	public SoyContext getFragmentsEditorToolbarContext()
+		throws PortalException {
+
 		if (_fragmentsEditorToolbarSoyContext != null) {
 			return _fragmentsEditorToolbarSoyContext;
 		}
@@ -188,6 +194,7 @@ public class ContentPageEditorDisplayContext {
 
 		soyContext.put(
 			"availableLanguages", _getAvailableLanguagesSoyContext());
+        soyContext.put("availableSegments", _getSoyContextAvailableSegments());
 		soyContext.put("classPK", themeDisplay.getPlid());
 		soyContext.put("defaultLanguageId", themeDisplay.getLanguageId());
 		soyContext.put("lastSaveDate", StringPool.BLANK);
@@ -789,6 +796,35 @@ public class ContentPageEditorDisplayContext {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ContentPageEditorDisplayContext.class);
+
+	private SoyContext _getSoyContextAvailableSegments()
+		throws PortalException {
+
+		List<SegmentsEntry> segmentsEntries =
+			SegmentsEntryServiceUtil.getSegmentsEntries(
+				_getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		SoyContext availableSegmentsSoyContext =
+			SoyContextFactoryUtil.createSoyContext();
+
+		for (SegmentsEntry segmentsEntry : segmentsEntries) {
+			SoyContext segmentsSoyContext =
+				SoyContextFactoryUtil.createSoyContext();
+
+			segmentsSoyContext.put(
+				"segmentLabel",
+				segmentsEntry.getName(themeDisplay.getLocale()));
+
+			segmentsSoyContext.put(
+				"segmentId", segmentsEntry.getSegmentsEntryId());
+			segmentsSoyContext.put("segmentKey", segmentsEntry.getKey());
+
+			availableSegmentsSoyContext.put(
+				segmentsEntry.getKey(), segmentsSoyContext);
+		}
+
+		return availableSegmentsSoyContext;
+	}
 
 	private Map<String, Object> _defaultConfigurations;
 	private final FragmentCollectionContributorTracker

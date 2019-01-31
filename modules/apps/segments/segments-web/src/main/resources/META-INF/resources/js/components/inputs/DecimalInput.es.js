@@ -12,31 +12,14 @@ class DecimalInput extends React.Component {
 		)
 	};
 
-	constructor(props) {
-		super(props);
-
-		this.state = {
-			decimal: props.value
-		};
-	}
-
 	_handleDecimalBlur = event => {
 		const value = Number.parseFloat(event.target.value).toFixed(2);
 
-		this.setState(
-			{
-				decimal: value
-			},
-			this.props.onChange(value)
-		);
+		this.props.onChange(value);
 	}
 
 	_handleDecimalChange = event => {
-		this.setState(
-			{
-				decimal: event.target.value
-			}
-		);
+		this.props.onChange(event.target.value);
 	}
 
 	render() {
@@ -48,7 +31,7 @@ class DecimalInput extends React.Component {
 				onChange={this._handleDecimalChange}
 				step="0.01"
 				type="number"
-				value={this.state.decimal}
+				value={this.props.value}
 			/>
 		);
 	}

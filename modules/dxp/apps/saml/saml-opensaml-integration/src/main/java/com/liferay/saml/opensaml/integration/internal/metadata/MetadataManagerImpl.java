@@ -227,6 +227,25 @@ public class MetadataManagerImpl
 	}
 
 	@Override
+	public Credential getEncryptionCredential() throws SamlException {
+		try {
+			String entityId = getLocalEntityId();
+
+			if (Validator.isNull(entityId)) {
+				return null;
+			}
+
+			return _credentialResolver.resolveSingle(
+				new CriteriaSet(
+					new EntityIdCriterion(entityId),
+					new UsageCriterion(UsageType.ENCRYPTION)));
+		}
+		catch (ResolverException re) {
+			throw new SamlException(re);
+		}
+	}
+
+	@Override
 	public EntityDescriptor getEntityDescriptor(HttpServletRequest request)
 		throws SamlException {
 
@@ -451,25 +470,6 @@ public class MetadataManagerImpl
 	@Override
 	public SignatureTrustEngine getSignatureTrustEngine() throws SamlException {
 		return _chainingSignatureTrustEngine;
-	}
-
-	@Override
-	public Credential getEncryptionCredential() throws SamlException {
-		try {
-			String entityId = getLocalEntityId();
-
-			if (Validator.isNull(entityId)) {
-				return null;
-			}
-
-			return _credentialResolver.resolveSingle(
-				new CriteriaSet(
-					new EntityIdCriterion(entityId),
-					new UsageCriterion(UsageType.ENCRYPTION)));
-		}
-		catch (ResolverException re) {
-			throw new SamlException(re);
-		}
 	}
 
 	@Override

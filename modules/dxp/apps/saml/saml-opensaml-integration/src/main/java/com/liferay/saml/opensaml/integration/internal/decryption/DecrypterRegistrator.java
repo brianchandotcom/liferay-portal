@@ -17,7 +17,6 @@ package com.liferay.saml.opensaml.integration.internal.decryption;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.saml.opensaml.integration.metadata.MetadataManager;
 import com.liferay.saml.runtime.SamlException;
-import com.liferay.saml.runtime.configuration.SamlProviderConfiguration;
 import com.liferay.saml.runtime.configuration.SamlProviderConfigurationHelper;
 
 import java.util.Collections;
@@ -26,12 +25,8 @@ import net.shibboleth.utilities.java.support.resolver.CriteriaSet;
 import net.shibboleth.utilities.java.support.resolver.ResolverException;
 import net.shibboleth.utilities.java.support.xml.ParserPool;
 
-import org.opensaml.core.criterion.EntityIdCriterion;
 import org.opensaml.saml.saml2.encryption.Decrypter;
-import org.opensaml.saml.security.impl.MetadataCredentialResolver;
 import org.opensaml.security.credential.Credential;
-import org.opensaml.security.credential.UsageType;
-import org.opensaml.security.criteria.UsageCriterion;
 import org.opensaml.xmlsec.DecryptionParameters;
 import org.opensaml.xmlsec.DecryptionParametersResolver;
 import org.opensaml.xmlsec.SecurityConfigurationSupport;

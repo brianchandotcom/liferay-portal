@@ -36,6 +36,8 @@ public interface MetadataManager {
 
 	public long getClockSkew();
 
+	public Credential getEncryptionCredential() throws SamlException;
+
 	public EntityDescriptor getEntityDescriptor(HttpServletRequest request)
 		throws SamlException;
 
@@ -53,8 +55,6 @@ public interface MetadataManager {
 		throws SamlException;
 
 	public SignatureTrustEngine getSignatureTrustEngine() throws SamlException;
-
-	Credential getEncryptionCredential() throws SamlException;
 
 	public Credential getSigningCredential() throws SamlException;
 

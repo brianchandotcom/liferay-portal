@@ -16,10 +16,15 @@ class SegmentSelector extends Component {
 	 */
 	prepareStateForRender(state) {
 		const {availableSegments} = state;
-		const segments = Object.keys(availableSegments).map(key => ({
-			label: availableSegments[key].segmentLabel,
-			id: availableSegments[key].segmentId
-		}));
+		const segments = Object.keys(availableSegments)
+			.map(
+				key => (
+					{
+						id: availableSegments[key].segmentId,
+						label: availableSegments[key].segmentLabel
+					}
+				)
+			);
 
 		return Object.assign({}, state, {segments});
 	}
@@ -45,10 +50,10 @@ class SegmentSelector extends Component {
 const ConnectedSegmentSelector = getConnectedComponent(
 	SegmentSelector,
 	[
+		'availableSegments',
 		'classPK',
 		'portletNamespace',
-		'segmentId',
-		'availableSegments'
+		'segmentId'
 	]
 );
 

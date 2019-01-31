@@ -75,257 +75,251 @@ public interface ${schemaName}Resource {
 			<#if !operationName?trim?has_content>
 				<#continue>
 			</#if>
-		</#list>
 
-		<#if pathItem.delete??>
+			<#if stringUtil.equals(operationName, "delete")>
+				<#assign
+					annotationHTTPMethod = "@DELETE"
+
+					operation = pathItem.delete
+				/>
+			<#elseif stringUtil.equals(operationName, "get")>
+				<#assign
+					annotationHTTPMethod = "@GET"
+
+					operation = pathItem.get
+				/>
+			<#elseif stringUtil.equals(operationName, "head")>
+				<#assign
+					annotationHTTPMethod = "@HEAD"
+
+					operation = pathItem.head
+				/>
+			<#elseif stringUtil.equals(operationName, "options")>
+				<#assign
+					annotationHTTPMethod = "@OPTIONS"
+
+					operation = pathItem.options
+				/>
+			<#elseif stringUtil.equals(operationName, "post")>
+				<#assign
+					annotationHTTPMethod = "@POST"
+
+					operation = pathItem.post
+				/>
+			<#elseif stringUtil.equals(operationName, "put")>
+				<#assign
+					annotationHTTPMethod = "@PUT"
+
+					operation = pathItem.put
+				/>
+			</#if>
+
 			<#assign
-				annotationHTTPMethod = "@DELETE"
-
-				operation = pathItem.delete
-				operationName = "delete"
-			/>
-		<#elseif pathItem.get??>
-			<#assign
-				annotationHTTPMethod = "@GET"
-
-				operation = pathItem.get
-				operationName = "get"
-			/>
-		<#elseif pathItem.head??>
-			<#assign
-				annotationHTTPMethod = "@HEAD"
-
-				operation = pathItem.head
-				operationName = "head"
-			/>
-		<#elseif pathItem.options??>
-			<#assign
-				annotationHTTPMethod = "@OPTIONS"
-
-				operation = pathItem.options
-				operationName = "options"
-			/>
-		<#elseif pathItem.post??>
-			<#assign
-				annotationHTTPMethod = "@POST"
-
-				operation = pathItem.post
-				operationName = "post"
-			/>
-		<#elseif pathItem.put??>
-			<#assign
-				annotationHTTPMethod = "@PUT"
-
-				operation = pathItem.put
-				operationName = "put"
-			/>
-		</#if>
-
-		<#assign
-			annotationConsumes = ""
-			annotationConsumesValue = ""
-		/>
-
-		<#if operation.requestBody?? && operation.requestBody.content??>
-			<#assign annotationConsumesValue>
-				<#compress>
-					<#list operation.requestBody.content?keys?sort as mediaType>
-						"${mediaType}",
-					</#list>
-				</#compress>
-			</#assign>
-		</#if>
-
-		<#if annotationConsumesValue?has_content>
-			<#assign annotationConsumes = "@Consumes({${annotationConsumesValue[0..(annotationConsumesValue?length - 2)]}})" />
-		</#if>
-
-		<#assign
-			annotationProduces = ""
-			annotationProducesValue = ""
-		/>
-
-		<#if operation.responses??>
-			<#assign annotationProducesValue>
-				<#compress>
-					<#list operation.responses?values as response>
-						<#if response.content??>
-							<#list response.content?keys?sort as mediaType>
-								"${mediaType}",
-							</#list>
-						</#if>
-					</#list>
-				</#compress>
-			</#assign>
-		</#if>
-
-		<#if annotationProducesValue?has_content>
-			<#assign annotationProduces = "@Produces({${annotationProducesValue[0..(annotationProducesValue?length - 2)]}})" />
-		</#if>
-
-		<#assign annotationRequiresScope = "" />
-
-		<#if pathItem.get??>
-			<#assign annotationRequiresScope = "@RequiresScope(\"${configYAML.application.name}.read\")" />
-		<#else>
-			<#assign annotationRequiresScope = "@RequiresScope(\"${configYAML.application.name}.write\")" />
-		</#if>
-
-		<#assign methodParameters = "" />
-
-		<#if operation.parameters??>
-			<#assign
-				acceptLanguageParameter = false
-				pageParameter = false
-				perPageParameter = false
+				annotationConsumes = ""
+				annotationConsumesValue = ""
 			/>
 
-			<#list operation.parameters as parameter>
-				<#if stringUtil.equals(parameter.name, "Accept-Language")>
-					<#assign acceptLanguageParameter = true />
-				<#elseif stringUtil.equals(parameter.name, "page")>
-					<#assign pageParameter = true />
-				<#elseif stringUtil.equals(parameter.name, "per_page")>
-					<#assign perPageParameter = true />
-				</#if>
-			</#list>
+			<#if operation.requestBody?? && operation.requestBody.content??>
+				<#assign annotationConsumesValue>
+					<#compress>
+						<#list operation.requestBody.content?keys?sort as mediaType>
+							"${mediaType}",
+						</#list>
+					</#compress>
+				</#assign>
+			</#if>
 
-			<#assign methodParameters>
-				<@compress single_line=true>
-					<#list operation.parameters as parameter>
-						<#if acceptLanguageParameter && stringUtil.equals(parameter.name, "Accept-Language")>
-							<#continue>
-						</#if>
+			<#if annotationConsumesValue?has_content>
+				<#assign annotationConsumes = "@Consumes({${annotationConsumesValue[0..(annotationConsumesValue?length - 2)]}})" />
+			</#if>
 
-						<#if pageParameter && perPageParameter && (stringUtil.equals(parameter.name, "page") || stringUtil.equals(parameter.name, "per_page"))>
-							<#continue>
-						</#if>
+			<#assign
+				annotationProduces = ""
+				annotationProducesValue = ""
+			/>
 
-						<#if parameter.schema.type??>
-							@${parameter.in?cap_first}Param("${parameter.name}")
-
-							<#if parameter.schema.format?? && stringUtil.equals(parameter.schema.format, "int64") && stringUtil.equals(parameter.schema.type, "integer")>
-								Long
-							<#else>
-								${parameter.schema.type?cap_first}
-							</#if>
-						<#elseif parameter.schema.reference??>
-							<#assign reference = "${parameter.schema.reference}" />
-
-							${reference[(reference?last_index_of('/') + 1)..(reference?length - 1)]}
-						</#if>
-
-						<#assign parameterName = "" />
-
-						<#list parameter.name?split("[^A-Za-z0-9]", "r") as s>
-							<#if s?has_content>
-								<#if parameterName?has_content>
-									<#assign parameterName = "${parameterName}${s?cap_first}" />
-								<#else>
-									<#assign parameterName = "${s}" />
-								</#if>
+			<#if operation.responses??>
+				<#assign annotationProducesValue>
+					<#compress>
+						<#list operation.responses?values as response>
+							<#if response.content??>
+								<#list response.content?keys?sort as mediaType>
+									"${mediaType}",
+								</#list>
 							</#if>
 						</#list>
-
-						${parameterName},
-					</#list>
-				</@compress>
-			</#assign>
-
-			<#if acceptLanguageParameter>
-				<#assign methodParameters = "${methodParameters} @Context AcceptLanguage acceptLanguage," />
+					</#compress>
+				</#assign>
 			</#if>
 
-			<#if pageParameter && perPageParameter>
-				<#assign methodParameters = "${methodParameters} @Context Pagination pagination," />
+			<#if annotationProducesValue?has_content>
+				<#assign annotationProduces = "@Produces({${annotationProducesValue[0..(annotationProducesValue?length - 2)]}})" />
 			</#if>
 
-			<#if methodParameters?has_content>
-				<#assign methodParameters = "${methodParameters[0..(methodParameters?length - 2)]}" />
+			<#assign annotationRequiresScope = "" />
+
+			<#if pathItem.get??>
+				<#assign annotationRequiresScope = "@RequiresScope(\"${configYAML.application.name}.read\")" />
+			<#else>
+				<#assign annotationRequiresScope = "@RequiresScope(\"${configYAML.application.name}.write\")" />
 			</#if>
-		</#if>
 
-		<#assign
-			methodReturnType = "Response"
-			methodReturnValue = "Response"
-		/>
+			<#assign methodParameters = "" />
 
-		<#if operation.responses??>
-			<#list operation.responses?values as response>
-				<#if response.content??>
-					<#list response.content?values as content>
-						<#if content.schema??>
-							<#assign schema = content.schema />
+			<#if operation.parameters??>
+				<#assign
+					acceptLanguageParameter = false
+					pageParameter = false
+					perPageParameter = false
+				/>
 
-							<#if schema.type??>
-								<#if stringUtil.equals(schema.type, "array")>
-									<#assign reference = "${schema.items.reference}" />
+				<#list operation.parameters as parameter>
+					<#if stringUtil.equals(parameter.name, "Accept-Language")>
+						<#assign acceptLanguageParameter = true />
+					<#elseif stringUtil.equals(parameter.name, "page")>
+						<#assign pageParameter = true />
+					<#elseif stringUtil.equals(parameter.name, "per_page")>
+						<#assign perPageParameter = true />
+					</#if>
+				</#list>
+
+				<#assign methodParameters>
+					<@compress single_line=true>
+						<#list operation.parameters as parameter>
+							<#if acceptLanguageParameter && stringUtil.equals(parameter.name, "Accept-Language")>
+								<#continue>
+							</#if>
+
+							<#if pageParameter && perPageParameter && (stringUtil.equals(parameter.name, "page") || stringUtil.equals(parameter.name, "per_page"))>
+								<#continue>
+							</#if>
+
+							<#if parameter.schema.type??>
+								@${parameter.in?cap_first}Param("${parameter.name}")
+
+								<#if parameter.schema.format?? && stringUtil.equals(parameter.schema.format, "int64") && stringUtil.equals(parameter.schema.type, "integer")>
+									Long
+								<#else>
+									${parameter.schema.type?cap_first}
+								</#if>
+							<#elseif parameter.schema.reference??>
+								<#assign reference = "${parameter.schema.reference}" />
+
+								${reference[(reference?last_index_of('/') + 1)..(reference?length - 1)]}
+							</#if>
+
+							<#assign parameterName = "" />
+
+							<#list parameter.name?split("[^A-Za-z0-9]", "r") as s>
+								<#if s?has_content>
+									<#if parameterName?has_content>
+										<#assign parameterName = "${parameterName}${s?cap_first}" />
+									<#else>
+										<#assign parameterName = "${s}" />
+									</#if>
+								</#if>
+							</#list>
+
+							${parameterName},
+						</#list>
+					</@compress>
+				</#assign>
+
+				<#if acceptLanguageParameter>
+					<#assign methodParameters = "${methodParameters} @Context AcceptLanguage acceptLanguage," />
+				</#if>
+
+				<#if pageParameter && perPageParameter>
+					<#assign methodParameters = "${methodParameters} @Context Pagination pagination," />
+				</#if>
+
+				<#if methodParameters?has_content>
+					<#assign methodParameters = "${methodParameters[0..(methodParameters?length - 2)]}" />
+				</#if>
+			</#if>
+
+			<#assign
+				methodReturnType = "Response"
+				methodReturnValue = "Response"
+			/>
+
+			<#if operation.responses??>
+				<#list operation.responses?values as response>
+					<#if response.content??>
+						<#list response.content?values as content>
+							<#if content.schema??>
+								<#assign schema = content.schema />
+
+								<#if schema.type??>
+									<#if stringUtil.equals(schema.type, "array")>
+										<#assign reference = "${schema.items.reference}" />
+
+										<#if reference?contains("/schemas/")>
+											<#assign name = "${reference[(reference?last_index_of('/') + 1)..(reference?length - 1)]}" />
+
+											<#assign
+												methodReturnType = "Page"
+												methodReturnValue = "Page<${name}>"
+											/>
+										</#if>
+									</#if>
+								</#if>
+
+								<#if schema.reference??>
+									<#assign reference = "${schema.reference}" />
 
 									<#if reference?contains("/schemas/")>
 										<#assign name = "${reference[(reference?last_index_of('/') + 1)..(reference?length - 1)]}" />
 
 										<#assign
-											methodReturnType = "Page"
-											methodReturnValue = "Page<${name}>"
+											methodReturnType = "${name}"
+											methodReturnValue = "${name}"
 										/>
 									</#if>
 								</#if>
 							</#if>
-
-							<#if schema.reference??>
-								<#assign reference = "${schema.reference}" />
-
-								<#if reference?contains("/schemas/")>
-									<#assign name = "${reference[(reference?last_index_of('/') + 1)..(reference?length - 1)]}" />
-
-									<#assign
-										methodReturnType = "${name}"
-										methodReturnValue = "${name}"
-									/>
-								</#if>
-							</#if>
-						</#if>
-					</#list>
-				</#if>
-			</#list>
-		</#if>
-
-		<#assign name>
-			<@compress single_line=true>
-				${operationName?lower_case}
-
-				<#list path?replace("\\{.*?\\}", "", "rs")?split("[^A-Za-z0-9]", "r") as s>
-					<#if s?has_content>
-						${s?cap_first}
+						</#list>
 					</#if>
 				</#list>
-			</@compress>
-		</#assign>
+			</#if>
 
-		<#assign name = "${name?replace(' ', '')}" />
+			<#assign name>
+				<@compress single_line=true>
+					${operationName?lower_case}
 
-		<#if stringUtil.equals(methodReturnType, "Page") && !stringUtil.endsWith(name, "Page")>
-			<#assign name = "${name}Page" />
-		<#elseif stringUtil.equals(methodReturnType, schemaName) && stringUtil.endsWith(name, methodReturnType + "s")>
-			<#assign name = "${name[0..(name?length - 2)]}" />
-		</#if>
-
-		<#if stringUtil.equals(methodReturnValue, schemaName) || stringUtil.equals(methodReturnValue, "Page<${schemaName}>")>
-			<#assign template>
-				@Path("${path}")
-				${annotationConsumes}
-				${annotationHTTPMethod}
-				${annotationProduces}
-				${annotationRequiresScope}
-				public ${methodReturnValue} ${name}(${methodParameters}) throws Exception;
+					<#list path?replace("\\{.*?\\}", "", "rs")?split("[^A-Za-z0-9]", "r") as s>
+						<#if s?has_content>
+							${s?cap_first}
+						</#if>
+					</#list>
+				</@compress>
 			</#assign>
 
-			<#list template?split("\n") as line>
-				<#if line?trim?has_content>
-${line?replace("^\t\t\t", "", "r")}
-				</#if>
-			</#list>
-		</#if>
+			<#assign name = "${name?replace(' ', '')}" />
+
+			<#if stringUtil.equals(methodReturnType, "Page") && !stringUtil.endsWith(name, "Page")>
+				<#assign name = "${name}Page" />
+			<#elseif stringUtil.equals(methodReturnType, schemaName) && stringUtil.endsWith(name, methodReturnType + "s")>
+				<#assign name = "${name[0..(name?length - 2)]}" />
+			</#if>
+
+			<#if stringUtil.equals(methodReturnValue, schemaName) || stringUtil.equals(methodReturnValue, "Page<${schemaName}>")>
+				<#assign template>
+					@Path("${path}")
+					${annotationConsumes}
+					${annotationHTTPMethod}
+					${annotationProduces}
+					${annotationRequiresScope}
+					public ${methodReturnValue} ${name}(${methodParameters}) throws Exception;
+				</#assign>
+
+				<#list template?split("\n") as line>
+					<#if line?trim?has_content>
+${line?replace("^\t\t\t\t", "", "r")}
+					</#if>
+				</#list>
+			</#if>
+		</#list>
 	</#list>
 
 }

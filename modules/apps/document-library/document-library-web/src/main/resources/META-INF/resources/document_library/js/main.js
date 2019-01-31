@@ -22,10 +22,6 @@ AUI.add(
 						validator: Lang.isString
 					},
 
-					editTagsUrl: {
-						validator: Lang.isString
-					},
-
 					form: {
 						validator: Lang.isObject
 					},

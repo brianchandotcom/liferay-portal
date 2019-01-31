@@ -127,6 +127,17 @@ public class CTEngineManagerImpl implements CTEngineManager {
 			return;
 		}
 
+		CTCollection ctCollection = ctCollectionOptional.get();
+
+		if (ctCollection.isProduction()) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Deleting the production change collection is forbidden");
+			}
+
+			return;
+		}
+
 		try {
 			_ctCollectionLocalService.deleteCTCollection(
 				ctCollectionOptional.get());

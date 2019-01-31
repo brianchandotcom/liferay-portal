@@ -138,6 +138,7 @@ paths:
           schema: 
             $ref: "#/components/schemas/Folder"
             type: integer
+            format: int64
       responses: 
         200: 
           content: 
@@ -155,6 +156,7 @@ paths:
           schema: 
             $ref: "#/components/schemas/Folder"
             type: integer
+            format: int64
       requestBody: 
         content: 
           "*/*": 
@@ -176,6 +178,7 @@ paths:
           schema: 
             $ref: "#/components/schemas/Folder"
             type: integer
+            format: int64
       requestBody: 
         content: 
           "*/*": 
@@ -205,6 +208,7 @@ paths:
           schema: 
             $ref: "#/components/schemas/Folder"
             type: integer
+            format: int64
       responses: 
         200: 
           content: 
@@ -222,6 +226,7 @@ paths:
           schema: 
             $ref: "#/components/schemas/Folder"
             type: integer
+            format: int64
       requestBody: 
         content: 
           "*/*": 
@@ -243,6 +248,7 @@ paths:
           schema: 
             $ref: "#/components/schemas/Folder"
             type: integer
+            format: int64
       requestBody: 
         content: 
           "*/*": 
@@ -316,6 +322,7 @@ paths:
           schema: 
             $ref: "#/components/schemas/Folder"
             type: integer
+            format: int64
       responses: 
         200: 
           content: 
@@ -333,6 +340,7 @@ paths:
           schema: 
             $ref: "#/components/schemas/Folder"
             type: integer
+            format: int64
       requestBody: 
         content: 
           "*/*": 
@@ -354,6 +362,7 @@ paths:
           schema: 
             $ref: "#/components/schemas/Folder"
             type: integer
+            format: int64
       requestBody: 
         content: 
           "*/*": 
@@ -383,6 +392,7 @@ paths:
           schema: 
             $ref: "#/components/schemas/Folder"
             type: integer
+            format: int64
       responses: 
         200: 
           content: 
@@ -400,6 +410,7 @@ paths:
           schema: 
             $ref: "#/components/schemas/Folder"
             type: integer
+            format: int64
       requestBody: 
         content: 
           "*/*": 
@@ -421,6 +432,7 @@ paths:
           schema: 
             $ref: "#/components/schemas/Folder"
             type: integer
+            format: int64
       requestBody: 
         content: 
           "*/*": 

@@ -19,7 +19,6 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
@@ -56,6 +55,7 @@ import org.junit.runner.notification.Failure;
 import org.junit.runner.notification.RunListener;
 import org.junit.runner.notification.RunNotifier;
 import org.junit.runner.notification.StoppedByUserException;
+import org.junit.runners.model.FrameworkField;
 import org.junit.runners.model.FrameworkMethod;
 import org.junit.runners.model.Statement;
 import org.junit.runners.model.TestClass;
@@ -71,7 +71,9 @@ public class Arquillian extends Runner implements Filterable {
 
 	@Override
 	public void filter(Filter filter) throws NoTestsRemainException {
-		_testClass = new FilteredSortedTestClass(_clazz, filter);
+		_filter = filter;
+
+		_testClass = new FilteredSortedTestClass(_clazz);
 
 		List<FrameworkMethod> frameworkMethods = _testClass.getAnnotatedMethods(
 			Test.class);
@@ -243,7 +245,7 @@ public class Arquillian extends Runner implements Filterable {
 
 	private TestClass _getTestClass() {
 		if (_testClass == null) {
-			_testClass = new FilteredSortedTestClass(_clazz, null);
+			_testClass = new FilteredSortedTestClass(_clazz);
 		}
 
 		return _testClass;
@@ -460,6 +462,7 @@ public class Arquillian extends Runner implements Filterable {
 		_testRunnerAdaptorThreadLocal = new ThreadLocal<>();
 
 	private final Class<?> _clazz;
+	private Filter _filter;
 	private final Map<FrameworkMethod, Description> _methodDescriptions =
 		new ConcurrentHashMap<>();
 	private TestClass _testClass;
@@ -468,11 +471,13 @@ public class Arquillian extends Runner implements Filterable {
 	private class FilteredSortedTestClass extends TestClass {
 
 		@Override
-		public List<FrameworkMethod> getAnnotatedMethods(
-			Class<? extends Annotation> annotationClass) {
+		protected void scanAnnotatedMembers(
+			Map<Class<? extends Annotation>, List<FrameworkMethod>> methods,
+			Map<Class<? extends Annotation>, List<FrameworkField>> fields) {
 
-			List<FrameworkMethod> frameworkMethods = new ArrayList<>(
-				super.getAnnotatedMethods(annotationClass));
+			super.scanAnnotatedMembers(methods, fields);
+
+			List<FrameworkMethod> frameworkMethods = methods.get(Test.class);
 
 			if (_filter != null) {
 				Iterator<FrameworkMethod> iterator =
@@ -497,17 +502,11 @@ public class Arquillian extends Runner implements Filterable {
 
 			frameworkMethods.sort(
 				Comparator.comparing(FrameworkMethod::getName));
-
-			return frameworkMethods;
 		}
 
-		private FilteredSortedTestClass(Class<?> clazz, Filter filter) {
+		private FilteredSortedTestClass(Class<?> clazz) {
 			super(clazz);
-
-			_filter = filter;
 		}
-
-		private final Filter _filter;
 
 	}
 

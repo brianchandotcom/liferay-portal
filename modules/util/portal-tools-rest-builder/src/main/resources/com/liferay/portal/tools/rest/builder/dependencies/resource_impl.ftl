@@ -219,7 +219,7 @@ public class ${schemaName}ResourceImpl implements ${schemaName}Resource {
 			<#assign name = "${name[0..(name?length - 2)]}" />
 		</#if>
 
-		<#if stringUtil.equals(methodReturnType, schemaName) || stringUtil.equals(methodReturnType, "Page")>
+		<#if stringUtil.equals(methodReturnValue, schemaName) || stringUtil.equals(methodReturnValue, "Page<${schemaName}>")>
 			<#if stringUtil.equals(methodReturnType, "Response")>
 				<#assign template>
 					@Override

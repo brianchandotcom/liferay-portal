@@ -24,8 +24,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.opensaml.core.config.ConfigurationService;
 import org.opensaml.core.xml.XMLObject;
 import org.opensaml.core.xml.util.XMLObjectSupport;
@@ -60,9 +58,8 @@ import org.opensaml.xmlsec.encryption.impl.KeySizeBuilder;
 public class MetadataGeneratorUtil {
 
 	public static EntityDescriptor buildIdpEntityDescriptor(
-			HttpServletRequest request, String entityId,
-			boolean wantAuthnRequestSigned, boolean signMetadata,
-			boolean requireSSL, Credential credential,
+			String portalURL, String entityId, boolean wantAuthnRequestSigned,
+			boolean signMetadata, Credential credential,
 			Credential encryptionCredential)
 		throws Exception {
 
@@ -83,7 +80,7 @@ public class MetadataGeneratorUtil {
 			entityDescriptor.getRoleDescriptors();
 
 		RoleDescriptor roleDescriptor = buildIdpSsoDescriptor(
-			request, entityId, wantAuthnRequestSigned, requireSSL, credential,
+			portalURL, entityId, wantAuthnRequestSigned, credential,
 			encryptionCredential);
 
 		Extensions extensions = (Extensions)XMLObjectSupport.buildXMLObject(
@@ -105,8 +102,7 @@ public class MetadataGeneratorUtil {
 	}
 
 	public static IDPSSODescriptor buildIdpSsoDescriptor(
-			HttpServletRequest request, String entityId,
-			boolean wantAuthnRequestSigned, boolean requireSSL,
+			String portalURL, String entityId, boolean wantAuthnRequestSigned,
 			Credential credential, Credential encryptionCredential)
 		throws Exception {
 
@@ -132,7 +128,6 @@ public class MetadataGeneratorUtil {
 		List<SingleSignOnService> singleSignOnServices =
 			idpSSODescriptor.getSingleSignOnServices();
 
-		String portalURL = PortalUtil.getPortalURL(request, requireSSL);
 		String pathMain = PortalUtil.getPathMain();
 
 		SingleSignOnService singleSignOnService =
@@ -185,10 +180,9 @@ public class MetadataGeneratorUtil {
 	}
 
 	public static EntityDescriptor buildSpEntityDescriptor(
-			HttpServletRequest request, String entityId,
-			boolean signAuthnRequests, boolean signMetadata, boolean requireSSL,
-			boolean wantAssertionsSigned, Credential credential,
-			Credential encryptionCredential)
+			String portalURL, String entityId, boolean signAuthnRequests,
+			boolean signMetadata, boolean wantAssertionsSigned,
+			Credential credential, Credential encryptionCredential)
 		throws Exception {
 
 		EntityDescriptor entityDescriptor =
@@ -200,8 +194,8 @@ public class MetadataGeneratorUtil {
 			entityDescriptor.getRoleDescriptors();
 
 		RoleDescriptor roleDescriptor = buildSpSsoDescriptor(
-			request, entityId, signAuthnRequests, requireSSL,
-			wantAssertionsSigned, credential, encryptionCredential);
+			portalURL, entityId, signAuthnRequests, wantAssertionsSigned,
+			credential, encryptionCredential);
 
 		Extensions extensions = (Extensions)XMLObjectSupport.buildXMLObject(
 			Extensions.DEFAULT_ELEMENT_NAME);
@@ -222,8 +216,7 @@ public class MetadataGeneratorUtil {
 	}
 
 	public static SPSSODescriptor buildSpSsoDescriptor(
-			HttpServletRequest request, String entityId,
-			boolean signAuthnRequests, boolean requireSSL,
+			String portalURL, String entityId, boolean signAuthnRequests,
 			boolean wantAssertionsSigned, Credential credential,
 			Credential encryptionCredential)
 		throws Exception {
@@ -238,7 +231,6 @@ public class MetadataGeneratorUtil {
 		List<AssertionConsumerService> assertionConsumerServices =
 			spSSODescriptor.getAssertionConsumerServices();
 
-		String portalURL = PortalUtil.getPortalURL(request, requireSSL);
 		String pathMain = PortalUtil.getPathMain();
 
 		AssertionConsumerService assertionConsumerService =

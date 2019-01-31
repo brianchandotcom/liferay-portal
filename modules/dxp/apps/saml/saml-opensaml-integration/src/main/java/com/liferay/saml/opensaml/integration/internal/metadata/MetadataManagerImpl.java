@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -249,17 +250,19 @@ public class MetadataManagerImpl
 	public EntityDescriptor getEntityDescriptor(HttpServletRequest request)
 		throws SamlException {
 
+		String portalURL = _portal.getPortalURL(request, isSSLRequired());
+
 		try {
 			if (_samlProviderConfigurationHelper.isRoleIdp()) {
 				return MetadataGeneratorUtil.buildIdpEntityDescriptor(
-					request, getLocalEntityId(), isWantAuthnRequestSigned(),
-					isSignMetadata(), isSSLRequired(), getSigningCredential(),
+					portalURL, getLocalEntityId(), isWantAuthnRequestSigned(),
+					isSignMetadata(), getSigningCredential(),
 					getEncryptionCredential());
 			}
 			else if (_samlProviderConfigurationHelper.isRoleSp()) {
 				return MetadataGeneratorUtil.buildSpEntityDescriptor(
-					request, getLocalEntityId(), isSignAuthnRequest(),
-					isSignMetadata(), isSSLRequired(), isWantAssertionsSigned(),
+					portalURL, getLocalEntityId(), isSignAuthnRequest(),
+					isSignMetadata(), isWantAssertionsSigned(),
 					getSigningCredential(), getEncryptionCredential());
 			}
 
@@ -623,6 +626,11 @@ public class MetadataManagerImpl
 	}
 
 	@Reference(unbind = "-")
+	public void setPortal(Portal portal) {
+		_portal = portal;
+	}
+
+	@Reference(unbind = "-")
 	public void setSamlProviderConfigurationHelper(
 		SamlProviderConfigurationHelper samlProviderConfigurationHelper) {
 
@@ -685,6 +693,7 @@ public class MetadataManagerImpl
 	private Http _http;
 	private MetadataCredentialResolver _metadataCredentialResolver;
 	private ParserPool _parserPool;
+	private Portal _portal;
 	private final PredicateRoleDescriptorResolver
 		_predicateRoleDescriptorResolver = new PredicateRoleDescriptorResolver(
 			_cachingChainingMetadataResolver);

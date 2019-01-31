@@ -15,7 +15,6 @@
 package com.liferay.dynamic.data.mapping.data.provider.web.internal.display.context;
 
 import com.liferay.dynamic.data.mapping.constants.DDMActionKeys;
-import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProvider;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderTracker;
 import com.liferay.dynamic.data.mapping.data.provider.web.internal.constants.DDMDataProviderPortletKeys;
@@ -650,10 +649,7 @@ public class DDMDataProviderDisplayContext {
 
 		Group scopeGroup = themeDisplay.getScopeGroup();
 
-		if (scopeGroup.isStagingGroup() &&
-			!scopeGroup.isStagedPortlet(
-				DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN)) {
-
+		if (scopeGroup.isStagingGroup()) {
 			scopeGroupId = scopeGroup.getLiveGroupId();
 		}
 

@@ -14,7 +14,6 @@
 
 package com.liferay.dynamic.data.mapping.form.builder.internal.servlet;
 
-import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance;
 import com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceLocalService;
 import com.liferay.dynamic.data.mapping.util.comparator.DataProviderInstanceNameComparator;
@@ -100,10 +99,7 @@ public class DDMDataProviderInstancesServlet extends BaseDDMFormBuilderServlet {
 
 			Group scopeGroup = themeDisplay.getScopeGroup();
 
-			if (scopeGroup.isStagingGroup() &&
-				!scopeGroup.isStagedPortlet(
-					DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN)) {
-
+			if (scopeGroup.isStagingGroup()) {
 				scopeGroupId = scopeGroup.getLiveGroupId();
 			}
 

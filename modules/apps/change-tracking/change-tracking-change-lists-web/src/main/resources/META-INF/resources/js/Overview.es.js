@@ -3,6 +3,9 @@ import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
 import {Config} from 'metal-state';
 import {openToast} from 'frontend-js-web/liferay/toast/commands/OpenToast.es';
 
+
+import CTCollectionModel from './CTCollectionModel.es';
+
 import templates from './Overview.soy';
 
 /**
@@ -27,14 +30,16 @@ class Overview extends PortletBase {
 			.then(result => {
 				this.initialFetch = true;
 
-				// urlActiveCollection
+				//urlActiveCollection
+
+				let activeCollection = CTCollectionModel.build(result[0]);
 
 				this.changes = {
-					added: result[0].additionCount,
-					deleted: result[0].deletionCount,
-					modified: result[0].modificationCount
+					added: activeCollection.additionCount,
+					deleted: activeCollection.deletionCount,
+					modified: activeCollection.modificationCount
 				};
-				this.descriptionActiveChangeList = result[0].description;
+				this.descriptionActiveChangeList = activeCollection.description;
 				this.headerDropDownMenu = [
 					{label: 'Change List 01',
 link: 'link01'},
@@ -43,17 +48,19 @@ link: 'link02'},
 					{label: 'Change List 03',
 link: 'link03'}
 				];
-				this.headerTitleActiveChangeList = result[0].name;
+				this.headerTitleActiveChangeList = activeCollection.name;
 
-				// urlProductionCollection
+				//urlProductionCollection
 
-				this.descriptionProductionActiveChangeList = result[1].description;
-				this.headerTitleProductionChangeList = result[1].name;
+				let productionCollection = CTCollectionModel.build(result[1]);
+
+				this.descriptionProductionActiveChangeList = productionCollection.description;
+				this.headerTitleProductionChangeList = productionCollection.name;
 				this.publishedBy = {
-					dateTime: result[1].statusDate,
+					dateTime: productionCollection.statusDate,
 					userIconUrl: '',
 					userMonogram: 'TT',
-					userName: result[1].statusByUserName
+					userName: productionCollection.statusByUserName
 				};
 			});
 	}

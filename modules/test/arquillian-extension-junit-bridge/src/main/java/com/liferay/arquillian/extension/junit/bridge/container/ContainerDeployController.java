@@ -16,6 +16,7 @@ package com.liferay.arquillian.extension.junit.bridge.container;
 
 import java.util.List;
 import java.util.concurrent.Callable;
+import java.util.function.BiConsumer;
 
 import org.jboss.arquillian.config.descriptor.api.ContainerDef;
 import org.jboss.arquillian.container.spi.Container;
@@ -128,12 +129,10 @@ public class ContainerDeployController {
 		@Observes DeployManagedDeployments deployManagedDeployments) {
 
 		_forEachManagedDeployment(
-			new Operation<Container, Deployment>() {
+			new BiConsumer<Container, Deployment>() {
 
 				@Override
-				public void perform(
-					Container container, Deployment deployment) {
-
+				public void accept(Container container, Deployment deployment) {
 					ContainerDef containerDef =
 						container.getContainerConfiguration();
 
@@ -218,13 +217,11 @@ public class ContainerDeployController {
 		@Observes UnDeployManagedDeployments unDeployManagedDeployments) {
 
 		_forEachDeployedDeployment(
-			new Operation<Container, Deployment>() {
+			new BiConsumer<Container, Deployment>() {
 
 				@Override
-				public void perform(
-					Container container, Deployment deployment) {
-
-					if (Container.State.STARTED.equals(container.getState()) &&
+				public void accept(Container container, Deployment deployment) {
+					if (container.getState().equals(Container.State.STARTED) &&
 						deployment.isDeployed()) {
 
 						_deploymentEvent.fire(
@@ -238,12 +235,6 @@ public class ContainerDeployController {
 			});
 	}
 
-	public interface Operation<T, X> {
-
-		public void perform(T container, X deployment);
-
-	}
-
 	private void _executeOperation(Callable<Void> callable) throws Exception {
 		Injector injector = _injectorInstance.get();
 
@@ -253,7 +244,7 @@ public class ContainerDeployController {
 	}
 
 	private void _forEachDeployedDeployment(
-		Operation<Container, Deployment> operation) {
+		BiConsumer<Container, Deployment> biConsumer) {
 
 		DeploymentScenario scenario = _deploymentScenarioInstance.get();
 
@@ -262,16 +253,16 @@ public class ContainerDeployController {
 		}
 
 		_forEachDeployment(
-			scenario.deployedDeploymentsInUnDeployOrder(), operation);
+			scenario.deployedDeploymentsInUnDeployOrder(), biConsumer);
 	}
 
 	private void _forEachDeployment(
 		List<Deployment> deployments,
-		Operation<Container, Deployment> operation) {
+		BiConsumer<Container, Deployment> biConsumer) {
 
 		Injector injector = _injectorInstance.get();
 
-		injector.inject(operation);
+		injector.inject(biConsumer);
 
 		ContainerRegistry containerRegistry = _containerRegistryInstance.get();
 
@@ -286,12 +277,12 @@ public class ContainerDeployController {
 			Container container = containerRegistry.getContainer(
 				deploymentDescription.getTarget());
 
-			operation.perform(container, deployment);
+			biConsumer.accept(container, deployment);
 		}
 	}
 
 	private void _forEachManagedDeployment(
-		Operation<Container, Deployment> operation) {
+		BiConsumer<Container, Deployment> biConsumer) {
 
 		DeploymentScenario deploymentScenario =
 			_deploymentScenarioInstance.get();
@@ -301,7 +292,7 @@ public class ContainerDeployController {
 		}
 
 		_forEachDeployment(
-			deploymentScenario.managedDeploymentsInDeployOrder(), operation);
+			deploymentScenario.managedDeploymentsInDeployOrder(), biConsumer);
 	}
 
 	@Inject

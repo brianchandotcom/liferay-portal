@@ -59,12 +59,14 @@ definition {
 			value1 = "${SPMetadataURL}"
 		);
 
-		if (isSet(nameIdentifierAttributeName)) {
-			Type(
-				locator1 = "CPSAMLAdminAddServiceProvider#SERVICE_PROVIDER_NAME_IDENTIFIER_ATTRIBUTE_NAME_FIELD",
-				value1 = "${nameIdentifierAttributeName}"
-			);
+		if (!(isSet(nameIdentifierAttributeName))) {
+			var nameIdentifierAttributeName = "emailAddress";
 		}
+
+		Type(
+			locator1 = "CPSAMLAdminAddServiceProvider#SERVICE_PROVIDER_NAME_IDENTIFIER_ATTRIBUTE_NAME_FIELD",
+			value1 = "${nameIdentifierAttributeName}"
+		);
 
 		if (isSet(nameIdentifierFormat)) {
 			Select(

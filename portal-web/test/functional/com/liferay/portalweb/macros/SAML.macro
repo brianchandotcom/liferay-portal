@@ -71,7 +71,7 @@ definition {
 			Attributes = "${Attributes}",
 			idpEntityID = "samlidp",
 			idpURL = "http://localhost:8080",
-			nameIdentifierAttributeName = "emailAddress",
+			nameIdentifierAttributeName = "${nameIdentifierAttributeName}",
 			nameIdentifierFormat = "${nameIdentifierFormat}",
 			spEntityID = "${samlEntityID}",
 			spURL = "${spURL}"

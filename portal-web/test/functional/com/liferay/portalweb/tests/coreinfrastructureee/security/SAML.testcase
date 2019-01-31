@@ -24,7 +24,6 @@ definition {
 
 		SAML.configureLiferaySAMLAsSP(
 			Attributes = "siteRoles",
-			nameIdentifierAttributeName = "emailAddress",
 			samlEntityID = "samlsp",
 			spURL = "http://www.able.com:9080/"
 		);
@@ -153,7 +152,6 @@ definition {
 		);
 
 		SAML.configureLiferaySAMLAsSP(
-			nameIdentifierAttributeName = "emailAddress",
 			samlEntityID = "samlsp",
 			spURL = "http://www.able.com:9080/"
 		);
@@ -232,7 +230,6 @@ definition {
 		SAML.configureLiferaySAMLAsIdP(samlEntityID = "samlidp");
 
 		SAML.configureLiferaySAMLAsSP(
-			nameIdentifierAttributeName = "emailAddress",
 			samlEntityID = "samlsp",
 			spURL = "http://www.able.com:9080/"
 		);
@@ -278,7 +275,6 @@ definition {
 		);
 
 		SAML.configureLiferaySAMLAsSP(
-			nameIdentifierAttributeName = "emailAddress",
 			samlEntityID = "samlsp",
 			spURL = "http://www.able.com:9080/"
 		);
@@ -370,7 +366,6 @@ definition {
 		SAML.configureLiferaySAMLAsIdP(samlEntityID = "samlidp");
 
 		SAML.configureLiferaySAMLAsSP(
-			nameIdentifierAttributeName = "emailAddress",
 			samlEntityID = "samlsp",
 			spURL = "http://www.able.com:9080/"
 		);
@@ -444,7 +439,6 @@ definition {
 		SAML.configureLiferaySAMLAsIdP(samlEntityID = "samlidp");
 
 		SAML.configureLiferaySAMLAsSP(
-			nameIdentifierAttributeName = "emailAddress",
 			samlEntityID = "samlsp",
 			spURL = "http://www.able.com:9080/"
 		);
@@ -493,7 +487,6 @@ definition {
 		SAML.configureLiferaySAMLAsIdP(samlEntityID = "samlidp");
 
 		SAML.configureLiferaySAMLAsSP(
-			nameIdentifierAttributeName = "emailAddress",
 			samlEntityID = "samlsp",
 			spURL = "http://www.able.com:9080/"
 		);
@@ -543,7 +536,6 @@ definition {
 		SAML.configureLiferaySAMLAsIdP(samlEntityID = "samlidp");
 
 		SAML.configureLiferaySAMLAsSP(
-			nameIdentifierAttributeName = "emailAddress",
 			samlEntityID = "samlsp",
 			spURL = "http://www.able.com:9080/"
 		);
@@ -591,13 +583,11 @@ definition {
 		SAML.configureLiferaySAMLAsIdP(samlEntityID = "samlidp");
 
 		SAML.configureLiferaySAMLAsSP(
-			nameIdentifierAttributeName = "emailAddress",
 			samlEntityID = "samlsp",
 			spURL = "http://www.able.com:9080/"
 		);
 
 		SAML.configureLiferaySAMLAsSP(
-			nameIdentifierAttributeName = "emailAddress",
 			samlEntityID = "samlsp2",
 			spURL = "http://www.baker.com:10080"
 		);
@@ -655,7 +645,6 @@ definition {
 		SAML.configureLiferaySAMLAsIdP(samlEntityID = "samlidp");
 
 		SAML.configureLiferaySAMLAsSP(
-			nameIdentifierAttributeName = "emailAddress",
 			samlEntityID = "samlsp",
 			spURL = "http://www.able.com:9080/"
 		);
@@ -708,7 +697,6 @@ definition {
 		);
 
 		SAML.configureLiferaySAMLAsSP(
-			nameIdentifierAttributeName = "emailAddress",
 			samlEntityID = "samlsp",
 			spURL = "http://www.baker.com:10080"
 		);
@@ -720,7 +708,6 @@ definition {
 		SAML.connectSPAndIdP(
 			idpEntityID = "samlidp2",
 			idpURL = "http://www.able.com:9080",
-			nameIdentifierAttributeName = "emailAddress",
 			spEntityID = "samlsp",
 			spURL = "http://www.baker.com:10080"
 		);

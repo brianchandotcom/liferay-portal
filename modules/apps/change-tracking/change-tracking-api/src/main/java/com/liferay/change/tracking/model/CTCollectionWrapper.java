@@ -354,6 +354,11 @@ public class CTCollectionWrapper extends BaseModelWrapper<CTCollection>
 		return model.isPending();
 	}
 
+	@Override
+	public boolean isProduction() {
+		return model.isProduction();
+	}
+
 	/**
 	* Returns <code>true</code> if this ct collection is scheduled.
 	*

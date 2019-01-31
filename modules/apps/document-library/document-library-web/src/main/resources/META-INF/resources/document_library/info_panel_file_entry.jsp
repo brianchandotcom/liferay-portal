@@ -280,7 +280,7 @@ if (dlViewFileVersionDisplayContext.isVersionInfoVisible()) {
 						<liferay-ui:message key="description" />
 					</dt>
 					<dd class="sidebar-dd">
-						<%= HtmlUtil.escape(fileEntry.getDescription()) %>
+						<%= HtmlUtil.replaceNewLine(HtmlUtil.escape(fileEntry.getDescription())) %>
 					</dd>
 				</c:if>
 

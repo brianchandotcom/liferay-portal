@@ -172,7 +172,7 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(fileEntries) && ListUtil.isEmp
 							<liferay-ui:message key="description" />
 						</dt>
 						<dd class="sidebar-dd">
-							<%= HtmlUtil.escape(fileEntry.getDescription()) %>
+							<%= HtmlUtil.replaceNewLine(HtmlUtil.escape(fileEntry.getDescription())) %>
 						</dd>
 
 						<%

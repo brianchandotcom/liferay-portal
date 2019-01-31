@@ -40,7 +40,7 @@ if (fileEntry.getVersion().equals(fileVersion.getVersion())) {
 				</div>
 
 				<p class="asset-description">
-					<%= HtmlUtil.escape(StringUtil.shorten(fileEntry.getDescription(), abstractLength)) %>
+					<%= HtmlUtil.replaceNewLine(HtmlUtil.escape(StringUtil.shorten(fileEntry.getDescription(), abstractLength))) %>
 				</p>
 			</c:when>
 			<c:when test="<%= showThumbnail && PDFProcessorUtil.hasImages(fileVersion) %>">
@@ -49,7 +49,7 @@ if (fileEntry.getVersion().equals(fileVersion.getVersion())) {
 				</div>
 
 				<p class="asset-description">
-					<%= HtmlUtil.escape(StringUtil.shorten(fileEntry.getDescription(), abstractLength)) %>
+					<%= HtmlUtil.replaceNewLine(HtmlUtil.escape(StringUtil.shorten(fileEntry.getDescription(), abstractLength))) %>
 				</p>
 			</c:when>
 			<c:when test="<%= showThumbnail && VideoProcessorUtil.hasVideo(fileVersion) %>">
@@ -58,12 +58,12 @@ if (fileEntry.getVersion().equals(fileVersion.getVersion())) {
 				</div>
 
 				<p class="asset-description">
-					<%= HtmlUtil.escape(StringUtil.shorten(fileEntry.getDescription(), abstractLength)) %>
+					<%= HtmlUtil.replaceNewLine(HtmlUtil.escape(StringUtil.shorten(fileEntry.getDescription(), abstractLength))) %>
 				</p>
 			</c:when>
 			<c:otherwise>
 				<p class="asset-description">
-					<%= HtmlUtil.escape(StringUtil.shorten(fileEntry.getDescription(), abstractLength)) %>
+					<%= HtmlUtil.replaceNewLine(HtmlUtil.escape(StringUtil.shorten(fileEntry.getDescription(), abstractLength))) %>
 				</p>
 
 				<%

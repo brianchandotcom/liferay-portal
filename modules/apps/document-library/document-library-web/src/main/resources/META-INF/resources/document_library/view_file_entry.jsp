@@ -257,7 +257,7 @@ if (portletTitleBasedNavigation) {
 					</c:if>
 
 					<span class="document-description">
-						<%= HtmlUtil.escape(fileVersion.getDescription()) %>
+						<%= HtmlUtil.replaceNewLine(HtmlUtil.escape(fileVersion.getDescription())) %>
 					</span>
 
 					<c:if test="<%= fileEntry.isSupportsSocial() %>">

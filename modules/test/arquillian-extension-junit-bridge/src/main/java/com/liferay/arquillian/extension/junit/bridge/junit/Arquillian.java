@@ -86,8 +86,8 @@ public class Arquillian extends Runner implements Filterable {
 		Description description = Description.createSuiteDescription(
 			_clazz.getName(), _clazz.getAnnotations());
 
-		for (FrameworkMethod frameworkMethod : getChildren()) {
-			description.addChild(describeChild(frameworkMethod));
+		for (FrameworkMethod frameworkMethod : _getChildren()) {
+			description.addChild(_describeChild(frameworkMethod));
 		}
 
 		return description;
@@ -152,68 +152,13 @@ public class Arquillian extends Runner implements Filterable {
 		}
 	}
 
-	protected Description describeChild(FrameworkMethod frameworkMethod) {
-		return _methodDescriptions.computeIfAbsent(
-			frameworkMethod,
-			keyFrameworkMethod -> {
-				return Description.createTestDescription(
-					_clazz, keyFrameworkMethod.getName(),
-					keyFrameworkMethod.getAnnotations());
-			});
-	}
-
-	protected List<FrameworkMethod> getChildren() {
-		TestClass testClass = _getTestClass();
-
-		return testClass.getAnnotatedMethods(Test.class);
-	}
-
-	protected boolean isIgnored(FrameworkMethod frameworkMethod) {
-		if (frameworkMethod.getAnnotation(Ignore.class) != null) {
-			return true;
-		}
-
-		return false;
-	}
-
-	protected void runChild(
-		FrameworkMethod frameworkMethod, RunNotifier runNotifier) {
-
-		Description description = describeChild(frameworkMethod);
-
-		if (isIgnored(frameworkMethod)) {
-			runNotifier.fireTestIgnored(description);
-		}
-		else {
-			Statement statement = _methodBlock(frameworkMethod);
-
-			EachTestNotifier eachTestNotifier = new EachTestNotifier(
-				runNotifier, description);
-
-			eachTestNotifier.fireTestStarted();
-
-			try {
-				statement.evaluate();
-			}
-			catch (org.junit.internal.AssumptionViolatedException ave) {
-				eachTestNotifier.addFailedAssumption(ave);
-			}
-			catch (Throwable e) {
-				eachTestNotifier.addFailure(e);
-			}
-			finally {
-				eachTestNotifier.fireTestFinished();
-			}
-		}
-	}
-
 	private Statement _classBlock(RunNotifier runNotifier) {
 		Statement statement = new Statement() {
 
 			@Override
 			public void evaluate() {
-				for (FrameworkMethod frameworkMethod : getChildren()) {
-					runChild(frameworkMethod, runNotifier);
+				for (FrameworkMethod frameworkMethod : _getChildren()) {
+					_runChild(frameworkMethod, runNotifier);
 				}
 			}
 
@@ -221,8 +166,8 @@ public class Arquillian extends Runner implements Filterable {
 
 		boolean hasTestMethod = false;
 
-		for (FrameworkMethod frameworkMethod : getChildren()) {
-			if (!isIgnored(frameworkMethod)) {
+		for (FrameworkMethod frameworkMethod : _getChildren()) {
+			if (!_isIgnored(frameworkMethod)) {
 				hasTestMethod = true;
 
 				break;
@@ -269,6 +214,22 @@ public class Arquillian extends Runner implements Filterable {
 		return statement;
 	}
 
+	private Description _describeChild(FrameworkMethod frameworkMethod) {
+		return _methodDescriptions.computeIfAbsent(
+			frameworkMethod,
+			keyFrameworkMethod -> {
+				return Description.createTestDescription(
+					_clazz, keyFrameworkMethod.getName(),
+					keyFrameworkMethod.getAnnotations());
+			});
+	}
+
+	private List<FrameworkMethod> _getChildren() {
+		TestClass testClass = _getTestClass();
+
+		return testClass.getAnnotatedMethods(Test.class);
+	}
+
 	private List<MethodRule> _getMethodRules(Object testObject) {
 		TestClass testClass = _getTestClass();
 
@@ -288,6 +249,14 @@ public class Arquillian extends Runner implements Filterable {
 		}
 
 		return _testClass;
+	}
+
+	private boolean _isIgnored(FrameworkMethod frameworkMethod) {
+		if (frameworkMethod.getAnnotation(Ignore.class) != null) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private Statement _methodBlock(FrameworkMethod frameworkMethod) {
@@ -383,6 +352,7 @@ public class Arquillian extends Runner implements Filterable {
 				TestResult testResult = _testRunnerAdaptor.test(
 					new TestMethodExecutor() {
 
+						@Override
 						public Object getInstance() {
 							return testObject;
 						}
@@ -441,6 +411,37 @@ public class Arquillian extends Runner implements Filterable {
 		return new ExpectException(statement, test.expected());
 	}
 
+	private void _runChild(
+		FrameworkMethod frameworkMethod, RunNotifier runNotifier) {
+
+		Description description = _describeChild(frameworkMethod);
+
+		if (_isIgnored(frameworkMethod)) {
+			runNotifier.fireTestIgnored(description);
+		}
+		else {
+			Statement statement = _methodBlock(frameworkMethod);
+
+			EachTestNotifier eachTestNotifier = new EachTestNotifier(
+				runNotifier, description);
+
+			eachTestNotifier.fireTestStarted();
+
+			try {
+				statement.evaluate();
+			}
+			catch (org.junit.internal.AssumptionViolatedException ave) {
+				eachTestNotifier.addFailedAssumption(ave);
+			}
+			catch (Throwable e) {
+				eachTestNotifier.addFailure(e);
+			}
+			finally {
+				eachTestNotifier.fireTestFinished();
+			}
+		}
+	}
+
 	private Statement _withPotentialTimeout(
 		FrameworkMethod frameworkMethod, Statement statement) {
 
@@ -482,7 +483,7 @@ public class Arquillian extends Runner implements Filterable {
 				while (iterator.hasNext()) {
 					FrameworkMethod frameworkMethod = iterator.next();
 
-					if (_filter.shouldRun(describeChild(frameworkMethod))) {
+					if (_filter.shouldRun(_describeChild(frameworkMethod))) {
 						try {
 							_filter.apply(frameworkMethod);
 						}

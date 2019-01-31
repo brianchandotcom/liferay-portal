@@ -1,5 +1,4 @@
 definition {
-
 	@description = "Configures Liferay SAML as the IdP and Liferay SAML as the SP."
 	macro configureLiferaySAMLAsIdP {
 	// Configure IdP (Identity Provider) on specific Portal instance or http://localhost:8080 by default
@@ -68,7 +67,7 @@ definition {
 		SAMLRole.configureCertificateAndPrivateKey(samlKeyPassword = "${samlEntityID}");
 
 		SAML.connectSPAndIdP(
-			Attributes = "${Attributes}",
+			attributes = "${attributes}",
 			idpEntityID = "samlidp",
 			idpURL = "http://localhost:8080",
 			nameIdentifierAttributeName = "${nameIdentifierAttributeName}",
@@ -100,9 +99,9 @@ definition {
 		SAMLNavigation.gotoIdentityProviderConnections();
 
 		SAMLPortlet.addIdentityProviderConnection(
-			IdpEntityID = "${idpEntityID}",
-			IdpMetadataURL = "${idpURL}/c/portal/saml/metadata",
-			IdpNameID = "${idpEntityID}",
+			idpEntityID = "${idpEntityID}",
+			idpMetadataURL = "${idpURL}/c/portal/saml/metadata",
+			idpNameID = "${idpEntityID}",
 			nameIdentifierFormat = "${nameIdentifierFormat}"
 		);
 
@@ -133,12 +132,12 @@ definition {
 		SAMLNavigation.gotoServiceProviderConnection();
 
 		SAMLPortlet.addServiceProviderConnection(
-			Attributes = "${Attributes}",
+			attributes = "${attributes}",
 			nameIdentifierAttributeName = "${nameIdentifierAttributeName}",
 			nameIdentifierFormat = "${nameIdentifierFormat}",
-			SPEntityID = "${spEntityID}",
-			SPMetadataURL = "${spURL}/c/portal/saml/metadata",
-			SPNameID = "${spEntityID}"
+			spEntityID = "${spEntityID}",
+			spMetadataURL = "${spURL}/c/portal/saml/metadata",
+			spNameID = "${spEntityID}"
 		);
 	}
 

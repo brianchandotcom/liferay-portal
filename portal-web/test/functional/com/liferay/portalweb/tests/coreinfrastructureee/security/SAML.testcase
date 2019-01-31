@@ -23,7 +23,7 @@ definition {
 		SAML.configureLiferaySAMLAsIdP(samlEntityID = "samlidp");
 
 		SAML.configureLiferaySAMLAsSP(
-			Attributes = "siteRoles",
+			attributes = "siteRoles",
 			samlEntityID = "samlsp",
 			spURL = "http://www.able.com:9080/"
 		);

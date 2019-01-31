@@ -93,8 +93,12 @@ class FragmentEditableField extends Component {
 	 * @returns {object}
 	 */
 	prepareStateForRender(state) {
-		const translatedContent = this.editableValues[this.languageId] ||
-			this.editableValues[this.defaultLanguageId] ||
+		const segmentedContent = this.editableValues[this.segmentId] ||
+			this.editableValues[this.defaultSegmentId] ||
+			this.editableValues;
+
+		const translatedContent = segmentedContent[this.languageId] ||
+			segmentedContent[this.defaultLanguageId] ||
 			this.editableValues.defaultValue;
 
 		let content = Soy.toIncDom(translatedContent || this.content);
@@ -395,11 +399,15 @@ class FragmentEditableField extends Component {
 					editableId: this.editableId,
 					editableValue: newValue,
 					editableValueId: this.languageId || DEFAULT_LANGUAGE_ID_KEY,
+					editableValueSegmentId: this.segmentId || this.defaultSegmentId,
 					fragmentEntryLinkId: this.fragmentEntryLinkId
 				}
 			)
 			.dispatchAction(
-				UPDATE_TRANSLATION_STATUS
+				UPDATE_TRANSLATION_STATUS,
+				{
+					segmentId: this.segmentId || this.defaultSegmentId
+				}
 			)
 			.dispatchAction(
 				UPDATE_LAST_SAVE_DATE,
@@ -446,6 +454,16 @@ FragmentEditableField.STATE = {
 	defaultLanguageId: Config.string().required(),
 
 	/**
+	 * Default segment id.
+	 * @default undefined
+	 * @instance
+	 * @memberOf FragmentsEditor
+	 * @review
+	 * @type {!string}
+	 */
+	defaultSegmentId: Config.string().required(),
+
+	/**
 	 * Editable ID
 	 * @default undefined
 	 * @instance
@@ -484,6 +502,16 @@ FragmentEditableField.STATE = {
 	 * @type {!string}
 	 */
 	languageId: Config.string().required(),
+
+	/**
+	 * Currently selected segment id.
+	 * @default undefined
+	 * @instance
+	 * @memberOf FragmentsEditor
+	 * @review
+	 * @type {!string}
+	 */
+	segmentId: Config.string(),
 
 	/**
 	 * Portlet namespace

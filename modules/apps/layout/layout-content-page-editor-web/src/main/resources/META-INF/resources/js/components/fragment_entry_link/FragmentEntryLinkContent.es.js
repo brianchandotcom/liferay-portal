@@ -219,6 +219,7 @@ class FragmentEntryLinkContent extends Component {
 					{
 						content: editable.innerHTML,
 						defaultLanguageId: this.defaultLanguageId,
+						defaultSegmentId: this.defaultSegmentId,
 						editableId: editable.id,
 						editableValues,
 						element: editable,
@@ -236,6 +237,7 @@ class FragmentEntryLinkContent extends Component {
 							imageSelectorURL: this.imageSelectorURL
 						},
 
+						segmentId: this.segmentId,
 						showMapping: this.showMapping,
 						store: this.store,
 						type: editable.getAttribute('type')
@@ -458,6 +460,16 @@ FragmentEntryLinkContent.STATE = {
 	defaultLanguageId: Config.string().required(),
 
 	/**
+	 * Default segment id.
+	 * @default undefined
+	 * @instance
+	 * @memberOf FragmentsEditor
+	 * @review
+	 * @type {!string}
+	 */
+	defaultSegmentId: Config.string().required(),
+
+	/**
 	 * Editable values that should be used instead of the default ones
 	 * inside editable fields.
 	 * @default undefined
@@ -497,6 +509,16 @@ FragmentEntryLinkContent.STATE = {
 	 * @type {!string}
 	 */
 	languageId: Config.string().required(),
+
+	/**
+	 * Currently selected segment id.
+	 * @default undefined
+	 * @instance
+	 * @memberOf FragmentsEditor
+	 * @review
+	 * @type {!string}
+	 */
+	segmentId: Config.string().required(),
 
 	/**
 	 * Selected mapping type label

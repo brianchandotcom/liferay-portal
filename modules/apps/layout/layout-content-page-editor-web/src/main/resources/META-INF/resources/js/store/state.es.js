@@ -116,6 +116,16 @@ const INITIAL_STATE = {
 		.value(''),
 
 	/**
+	 * Default selected segmented id
+	 * @default undefined
+	 * @review
+	 * @type {string}
+	 */
+	defaultSegmentId: Config
+		.string()
+		.required(),
+
+	/**
 	 * URL for removing fragment entries of the underlying model.
 	 * @default ''
 	 * @review
@@ -370,13 +380,11 @@ const INITIAL_STATE = {
 
 	/**
 	 * Currently selected segment id.
-	 * @default ''
 	 * @review
 	 * @type {string}
 	 */
 	segmentId: Config
-		.string()
-		.value(''),
+		.string(),
 
 	/**
 	 * Editable type of the field that is being mapped

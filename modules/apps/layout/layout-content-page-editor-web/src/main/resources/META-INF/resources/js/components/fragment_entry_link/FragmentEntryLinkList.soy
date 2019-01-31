@@ -6,6 +6,8 @@
 {template .render}
 	{@param defaultEditorConfigurations: ?}
 	{@param defaultLanguageId: string}
+	{@param defaultSegmentId: string}
+	{@param? segmentId: string}
 	{@param fragmentEntryLinks: ?}
 	{@param languageId: string}
 	{@param layoutData: [
@@ -76,6 +78,8 @@
 					{param empty: $row.empty /}
 					{param fragmentEntryLinks: $fragmentEntryLinks /}
 					{param key: $row.rowId /}
+					{param defaultSegmentId: $defaultSegmentId /}
+					{param segmentId: $segmentId /}
 					{param mappingFieldsURL: $mappingFieldsURL /}
 					{param row: $row /}
 					{param rowId: $row.rowId /}

@@ -7,6 +7,8 @@
 	{@param classPK: ?}
 	{@param defaultEditorConfigurations: ?}
 	{@param defaultLanguageId: string}
+	{@param defaultSegmentId: string}
+	{@param segmentId: string}
 	{@param fragmentEntryLinks: ?}
 	{@param imageSelectorURL: string}
 	{@param languageId: string}
@@ -47,6 +49,8 @@
 		{call com.liferay.layout.content.page.editor.web.FragmentEntryLinkList.render}
 			{param defaultEditorConfigurations: $defaultEditorConfigurations /}
 			{param defaultLanguageId: $defaultLanguageId /}
+			{param defaultSegmentId: $defaultSegmentId /}
+			{param segmentId: $segmentId /}
 			{param fragmentEntryLinks: $fragmentEntryLinks /}
 			{param fragmentsEditorSidebarVisible: $fragmentsEditorSidebarVisible ?: true /}
 			{param imageSelectorURL: $imageSelectorURL /}

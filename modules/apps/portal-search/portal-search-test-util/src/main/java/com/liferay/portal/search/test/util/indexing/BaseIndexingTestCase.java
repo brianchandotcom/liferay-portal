@@ -37,6 +37,7 @@ import com.liferay.portal.search.aggregation.Aggregations;
 import com.liferay.portal.search.aggregation.HierarchicalAggregationResult;
 import com.liferay.portal.search.aggregation.bucket.Bucket;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregation;
+import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.internal.aggregation.AggregationsImpl;
 import com.liferay.portal.search.internal.legacy.searcher.SearchRequestBuilderImpl;
 import com.liferay.portal.search.internal.legacy.searcher.SearchResponseBuilderImpl;
@@ -210,6 +211,10 @@ public abstract class BaseIndexingTestCase {
 
 	protected IndexWriter getIndexWriter() {
 		return _indexWriter;
+	}
+
+	protected SearchEngineAdapter getSearchEngineAdapter() {
+		return _indexingFixture.getSearchEngineAdapter();
 	}
 
 	protected Hits search(SearchContext searchContext) {

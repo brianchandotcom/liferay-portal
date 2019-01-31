@@ -78,16 +78,16 @@ public class FragmentEntryActionDropdownItems {
 						_themeDisplay.getScopeGroupId(),
 						FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES)) {
 
-					add(_getEditFragmentEntryAction());
-					add(_getRenameFragmentEntryAction());
-					add(_getMoveFragmentEntryAction());
-					add(_getUpdateFragmentEntryPreviewAction());
+					add(_getEditFragmentEntryActionConsumer());
+					add(_getRenameFragmentEntryActionConsumer());
+					add(_getMoveFragmentEntryActionConsumer());
+					add(_getUpdateFragmentEntryPreviewActionConsumer());
 				}
 
-				add(_getExportFragmentEntryAction());
+				add(_getExportFragmentEntryActionConsumer());
 
 				if (_fragmentEntry.getUsageCount() > 0) {
-					add(_getViewFragmentEntryUsagesAction());
+					add(_getViewFragmentEntryUsagesActionConsumer());
 				}
 
 				if (FragmentPermission.contains(
@@ -95,13 +95,13 @@ public class FragmentEntryActionDropdownItems {
 						_themeDisplay.getScopeGroupId(),
 						FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES)) {
 
-					add(_getDeleteFragmentEntryAction());
+					add(_getDeleteFragmentEntryActionConsumer());
 				}
 			}
 		};
 	}
 
-	private Consumer<DropdownItem> _getDeleteFragmentEntryAction() {
+	private Consumer<DropdownItem> _getDeleteFragmentEntryActionConsumer() {
 		PortletURL deleteFragmentEntryURL = _renderResponse.createActionURL();
 
 		deleteFragmentEntryURL.setParameter(
@@ -121,7 +121,7 @@ public class FragmentEntryActionDropdownItems {
 		};
 	}
 
-	private Consumer<DropdownItem> _getEditFragmentEntryAction() {
+	private Consumer<DropdownItem> _getEditFragmentEntryActionConsumer() {
 		return dropdownItem -> {
 			dropdownItem.setHref(
 				_renderResponse.createRenderURL(), "mvcRenderCommandName",
@@ -133,7 +133,7 @@ public class FragmentEntryActionDropdownItems {
 		};
 	}
 
-	private Consumer<DropdownItem> _getExportFragmentEntryAction() {
+	private Consumer<DropdownItem> _getExportFragmentEntryActionConsumer() {
 		ResourceURL exportFragmentEntryURL =
 			_renderResponse.createResourceURL();
 
@@ -184,7 +184,7 @@ public class FragmentEntryActionDropdownItems {
 		return itemSelectorURL.toString();
 	}
 
-	private Consumer<DropdownItem> _getMoveFragmentEntryAction()
+	private Consumer<DropdownItem> _getMoveFragmentEntryActionConsumer()
 		throws Exception {
 
 		PortletURL selectFragmentCollectionURL =
@@ -207,7 +207,7 @@ public class FragmentEntryActionDropdownItems {
 		};
 	}
 
-	private Consumer<DropdownItem> _getRenameFragmentEntryAction() {
+	private Consumer<DropdownItem> _getRenameFragmentEntryActionConsumer() {
 		PortletURL updateFragmentEntryURL = _renderResponse.createActionURL();
 
 		updateFragmentEntryURL.setParameter(
@@ -232,7 +232,9 @@ public class FragmentEntryActionDropdownItems {
 		};
 	}
 
-	private Consumer<DropdownItem> _getUpdateFragmentEntryPreviewAction() {
+	private Consumer<DropdownItem>
+		_getUpdateFragmentEntryPreviewActionConsumer() {
+
 		return dropdownItem -> {
 			dropdownItem.putData("action", "updateFragmentEntryPreview");
 			dropdownItem.putData(
@@ -244,7 +246,7 @@ public class FragmentEntryActionDropdownItems {
 		};
 	}
 
-	private Consumer<DropdownItem> _getViewFragmentEntryUsagesAction() {
+	private Consumer<DropdownItem> _getViewFragmentEntryUsagesActionConsumer() {
 		return dropdownItem -> {
 			dropdownItem.setHref(
 				_renderResponse.createRenderURL(), "mvcRenderCommandName",

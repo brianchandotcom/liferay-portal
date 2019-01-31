@@ -40,7 +40,7 @@ public class GroupTable {
 		{"treePath", Types.VARCHAR},
 		{"groupKey", Types.VARCHAR},
 		{"name", Types.VARCHAR},
-		{"description", Types.VARCHAR},
+		{"description_", Types.VARCHAR},
 		{"type_", Types.INTEGER},
 		{"typeSettings", Types.CLOB},
 		{"manualMembership", Types.BOOLEAN},
@@ -79,7 +79,7 @@ TABLE_COLUMNS_MAP.put("groupKey", Types.VARCHAR);
 
 TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 
-TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
+TABLE_COLUMNS_MAP.put("description_", Types.VARCHAR);
 
 TABLE_COLUMNS_MAP.put("type_", Types.INTEGER);
 
@@ -100,7 +100,7 @@ TABLE_COLUMNS_MAP.put("inheritContent", Types.BOOLEAN);
 TABLE_COLUMNS_MAP.put("active_", Types.BOOLEAN);
 
 }
-	public static final String TABLE_SQL_CREATE = "create table Group_ (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,groupId LONG not null primary key,companyId LONG,creatorUserId LONG,classNameId LONG,classPK LONG,parentGroupId LONG,liveGroupId LONG,treePath STRING null,groupKey VARCHAR(150) null,name STRING null,description STRING null,type_ INTEGER,typeSettings TEXT null,manualMembership BOOLEAN,membershipRestriction INTEGER,friendlyURL VARCHAR(255) null,site BOOLEAN,remoteStagingGroupCount INTEGER,inheritContent BOOLEAN,active_ BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table Group_ (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,groupId LONG not null primary key,companyId LONG,creatorUserId LONG,classNameId LONG,classPK LONG,parentGroupId LONG,liveGroupId LONG,treePath STRING null,groupKey VARCHAR(150) null,name STRING null,description_ STRING null,type_ INTEGER,typeSettings TEXT null,manualMembership BOOLEAN,membershipRestriction INTEGER,friendlyURL VARCHAR(255) null,site BOOLEAN,remoteStagingGroupCount INTEGER,inheritContent BOOLEAN,active_ BOOLEAN)";
 
 	public static final String TABLE_SQL_DROP = "drop table Group_";
 
@@ -115,7 +115,7 @@ TABLE_COLUMNS_MAP.put("active_", Types.BOOLEAN);
 		"create unique index IX_ACD2B296 on Group_ (companyId, groupKey[$COLUMN_LENGTH:150$])",
 		"create unique index IX_AACD15F0 on Group_ (companyId, liveGroupId, groupKey[$COLUMN_LENGTH:150$])",
 		"create index IX_D4BFF38B on Group_ (companyId, parentGroupId, site, inheritContent)",
-		"create index IX_63A2AABD on Group_ (companyId, site)",
+		"create index IX_B91488EC on Group_ (companyId, site, active_)",
 		"create index IX_16218A38 on Group_ (liveGroupId)",
 		"create index IX_7B590A7A on Group_ (type_, active_)",
 		"create index IX_26CC761A on Group_ (uuid_[$COLUMN_LENGTH:75$], companyId)",

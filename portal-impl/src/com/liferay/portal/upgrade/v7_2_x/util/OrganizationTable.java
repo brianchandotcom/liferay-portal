@@ -98,7 +98,7 @@ TABLE_COLUMNS_MAP.put("logoId", Types.BIGINT);
 	public static final String[] TABLE_SQL_ADD_INDEXES = {
 		"create index IX_6B83F1C7 on Organization_ (companyId, externalReferenceCode[$COLUMN_LENGTH:75$])",
 		"create unique index IX_E301BDF5 on Organization_ (companyId, name[$COLUMN_LENGTH:100$])",
-		"create index IX_418E4522 on Organization_ (companyId, parentOrganizationId)",
+		"create index IX_D834B361 on Organization_ (companyId, parentOrganizationId, name[$COLUMN_LENGTH:100$])",
 		"create index IX_A9D85BA6 on Organization_ (uuid_[$COLUMN_LENGTH:75$], companyId)"
 	};
 

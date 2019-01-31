@@ -69,6 +69,12 @@ public class SegmentsEntryServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.segments.model.SegmentsEntry> getSegmentsEntries(
+		long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getSegmentsEntries(groupId);
+	}
+
+	public static java.util.List<com.liferay.segments.model.SegmentsEntry> getSegmentsEntries(
 		long groupId, boolean includeAncestorSegmentsEntries, int start,
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.segments.model.SegmentsEntry> orderByComparator) {

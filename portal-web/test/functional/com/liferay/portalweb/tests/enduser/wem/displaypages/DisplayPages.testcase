@@ -45,7 +45,7 @@ definition {
 	@priority = "3"
 	test AddBlankDisplayPage {
 		task ("Publish the display page") {
-			PortletEntry.publish();
+			Button.clickPublish();
 		}
 
 		task ("View the display page") {
@@ -77,7 +77,7 @@ definition {
 		}
 
 		task ("Publish the display page") {
-			PortletEntry.publish();
+			Button.clickPublish();
 		}
 
 		task ("Assert the fragment was added to the display page") {
@@ -282,7 +282,7 @@ definition {
 		}
 
 		task ("Publish the display page") {
-			PortletEntry.publish();
+			Button.clickPublish();
 		}
 
 		task ("Navigate back to the display page") {
@@ -312,7 +312,7 @@ definition {
 		}
 
 		task ("Publish the display page with the new edits") {
-			PortletEntry.publish();
+			Button.clickPublish();
 		}
 
 		task ("Navigate back to the display page") {

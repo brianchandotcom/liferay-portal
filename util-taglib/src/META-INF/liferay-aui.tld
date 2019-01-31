@@ -1562,6 +1562,12 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>The group ID of the site used to get the enabled locales. This is a Java <![CDATA[<code>long</code>]]>.</description>
+			<name>groupId</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<description><![CDATA[An ID for the component instance.]]></description>
 			<name>id</name>
 			<required>false</required>

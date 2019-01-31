@@ -76,9 +76,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Eudaldo Alonso
  */
-public class JournalArticleActionDropdownItems {
+public class JournalArticleActionDropdownItemsProvider {
 
-	public JournalArticleActionDropdownItems(
+	public JournalArticleActionDropdownItemsProvider(
 		JournalArticle article, LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
 		TrashHelper trashHelper) {
@@ -787,7 +787,7 @@ public class JournalArticleActionDropdownItems {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		JournalArticleActionDropdownItems.class);
+		JournalArticleActionDropdownItemsProvider.class);
 
 	private final JournalArticle _article;
 	private final JournalWebConfiguration _journalWebConfiguration;

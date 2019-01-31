@@ -55,8 +55,8 @@ import com.liferay.trash.web.internal.constants.TrashPortletKeys;
 import com.liferay.trash.web.internal.constants.TrashWebKeys;
 import com.liferay.trash.web.internal.search.EntrySearch;
 import com.liferay.trash.web.internal.search.EntrySearchTerms;
-import com.liferay.trash.web.internal.servlet.taglib.util.TrashContainerActionDropdownItems;
-import com.liferay.trash.web.internal.servlet.taglib.util.TrashEntryActionDropdownItems;
+import com.liferay.trash.web.internal.servlet.taglib.util.TrashContainerActionDropdownItemsProvider;
+import com.liferay.trash.web.internal.servlet.taglib.util.TrashEntryActionDropdownItemsProvider;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -425,11 +425,14 @@ public class TrashDisplayContext {
 			TrashedModel trashedModel)
 		throws Exception {
 
-		TrashContainerActionDropdownItems trashContainerActionDropdownItems =
-			new TrashContainerActionDropdownItems(
-				_liferayPortletRequest, _liferayPortletResponse, trashedModel);
+		TrashContainerActionDropdownItemsProvider
+			trashContainerActionDropdownItemsProvider =
+				new TrashContainerActionDropdownItemsProvider(
+					_liferayPortletRequest, _liferayPortletResponse,
+					trashedModel);
 
-		return trashContainerActionDropdownItems.getActionDropdownItems();
+		return trashContainerActionDropdownItemsProvider.
+			getActionDropdownItems();
 	}
 
 	public List<DropdownItem> getTrashContainerActionDropdownItems(
@@ -522,11 +525,13 @@ public class TrashDisplayContext {
 			TrashEntry trashEntry)
 		throws Exception {
 
-		TrashEntryActionDropdownItems trashEntryActionDropdownItems =
-			new TrashEntryActionDropdownItems(
-				_liferayPortletRequest, _liferayPortletResponse, trashEntry);
+		TrashEntryActionDropdownItemsProvider
+			trashEntryActionDropdownItemsProvider =
+				new TrashEntryActionDropdownItemsProvider(
+					_liferayPortletRequest, _liferayPortletResponse,
+					trashEntry);
 
-		return trashEntryActionDropdownItems.getActionDropdownItems();
+		return trashEntryActionDropdownItemsProvider.getActionDropdownItems();
 	}
 
 	public long getTrashEntryId() {

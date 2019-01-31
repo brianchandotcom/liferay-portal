@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.trash.web.internal.constants.TrashWebKeys;
-import com.liferay.trash.web.internal.servlet.taglib.util.TrashContainerActionDropdownItems;
+import com.liferay.trash.web.internal.servlet.taglib.util.TrashContainerActionDropdownItemsProvider;
 
 import java.util.Collections;
 import java.util.List;
@@ -56,13 +56,14 @@ public class TrashContentVerticalCard implements VerticalCard {
 	@Override
 	public List<DropdownItem> getActionDropdownItems() {
 		try {
-			TrashContainerActionDropdownItems
-				trashContainerActionDropdownItems =
-					new TrashContainerActionDropdownItems(
+			TrashContainerActionDropdownItemsProvider
+				trashContainerActionDropdownItemsProvider =
+					new TrashContainerActionDropdownItemsProvider(
 						_liferayPortletRequest, _liferayPortletResponse,
 						_trashedModel);
 
-			return trashContainerActionDropdownItems.getActionDropdownItems();
+			return trashContainerActionDropdownItemsProvider.
+				getActionDropdownItems();
 		}
 		catch (Exception e) {
 			_log.error("Unable to get trashed model actions", e);

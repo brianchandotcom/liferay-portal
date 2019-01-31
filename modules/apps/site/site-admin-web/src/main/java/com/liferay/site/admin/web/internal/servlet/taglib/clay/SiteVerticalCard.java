@@ -29,7 +29,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.admin.web.internal.constants.SiteAdminWebKeys;
 import com.liferay.site.admin.web.internal.display.context.SiteAdminDisplayContext;
-import com.liferay.site.admin.web.internal.servlet.taglib.util.SiteActionDropdownItems;
+import com.liferay.site.admin.web.internal.servlet.taglib.util.SiteActionDropdownItemsProvider;
 
 import java.util.List;
 
@@ -61,13 +61,13 @@ public class SiteVerticalCard extends BaseBaseClayCard implements VerticalCard {
 
 	@Override
 	public List<DropdownItem> getActionDropdownItems() {
-		SiteActionDropdownItems siteActionDropdownItems =
-			new SiteActionDropdownItems(
+		SiteActionDropdownItemsProvider siteActionDropdownItemsProvider =
+			new SiteActionDropdownItemsProvider(
 				_group, _liferayPortletRequest, _liferayPortletResponse,
 				_siteAdminDisplayContext);
 
 		try {
-			return siteActionDropdownItems.getActionDropdownItems();
+			return siteActionDropdownItemsProvider.getActionDropdownItems();
 		}
 		catch (Exception e) {
 		}

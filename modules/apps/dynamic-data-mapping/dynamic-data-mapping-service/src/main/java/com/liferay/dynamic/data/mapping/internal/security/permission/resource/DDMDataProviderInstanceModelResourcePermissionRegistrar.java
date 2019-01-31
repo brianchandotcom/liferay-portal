@@ -15,16 +15,12 @@
 package com.liferay.dynamic.data.mapping.internal.security.permission.resource;
 
 import com.liferay.dynamic.data.mapping.constants.DDMConstants;
-import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance;
 import com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceLocalService;
 import com.liferay.exportimport.kernel.staging.permission.StagingPermission;
-import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.StagedModelPermissionLogic;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 
@@ -58,36 +54,8 @@ public class DDMDataProviderInstanceModelResourcePermissionRegistrar {
 				_ddmDataProviderInstanceLocalService::
 					getDDMDataProviderInstance,
 				_portletResourcePermission,
-				(modelResourcePermission, consumer) -> consumer.accept(
-					new StagedModelPermissionLogic<DDMDataProviderInstance>(
-						_stagingPermission, DDMPortletKeys.DYNAMIC_DATA_MAPPING,
-						DDMDataProviderInstance::getDataProviderInstanceId) {
-
-						@Override
-						public Boolean contains(
-							PermissionChecker permissionChecker, String name,
-							DDMDataProviderInstance ddmDataProviderInstance,
-							String actionId) {
-
-							long groupId = ddmDataProviderInstance.getGroupId();
-
-							Group group = _groupLocalService.fetchGroup(
-								groupId);
-
-							if ((group != null) &&
-								!group.isStagedPortlet(
-									DDMPortletKeys.
-										DYNAMIC_DATA_MAPPING_FORM_ADMIN)) {
-
-								return null;
-							}
-
-							return super.contains(
-								permissionChecker, name,
-								ddmDataProviderInstance, actionId);
-						}
-
-					})),
+				(modelResourcePermission, consumer) -> {
+				}),
 			properties);
 	}
 

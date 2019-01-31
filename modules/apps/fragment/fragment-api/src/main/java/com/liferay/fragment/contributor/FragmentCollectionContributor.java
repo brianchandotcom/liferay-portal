@@ -25,8 +25,6 @@ public interface FragmentCollectionContributor {
 
 	public List<FragmentEntry> getFragmentEntries();
 
-	public String getKey();
-
 	public String getName();
 
 }

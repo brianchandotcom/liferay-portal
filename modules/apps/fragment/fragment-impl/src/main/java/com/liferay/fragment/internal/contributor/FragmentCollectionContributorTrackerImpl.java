@@ -16,13 +16,9 @@ package com.liferay.fragment.internal.contributor;
 
 import com.liferay.fragment.contributor.FragmentCollectionContributor;
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
-import com.liferay.portal.kernel.util.ListUtil;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -39,17 +35,10 @@ public class FragmentCollectionContributorTrackerImpl
 	implements FragmentCollectionContributorTracker {
 
 	@Override
-	public Map<String, List<FragmentCollectionContributor>>
+	public List<FragmentCollectionContributor>
 		getFragmentCollectionContributors() {
 
-		return new HashMap<>(_fragmentCollectionContributor);
-	}
-
-	@Override
-	public List<FragmentCollectionContributor>
-		getFragmentCollectionContributors(String key) {
-
-		return new ArrayList<>(_fragmentCollectionContributor.get(key));
+		return _fragmentCollectionContributors;
 	}
 
 	@Reference(
@@ -59,32 +48,16 @@ public class FragmentCollectionContributorTrackerImpl
 	protected void setFragmentCollectionContributor(
 		FragmentCollectionContributor fragmentCollectionContributor) {
 
-		List<FragmentCollectionContributor> fragmentCollectionContributors =
-			_fragmentCollectionContributor.computeIfAbsent(
-				fragmentCollectionContributor.getKey(),
-				type -> new ArrayList<>());
-
-		fragmentCollectionContributors.add(fragmentCollectionContributor);
+		_fragmentCollectionContributors.add(fragmentCollectionContributor);
 	}
 
 	protected void unsetFragmentCollectionContributor(
 		FragmentCollectionContributor fragmentCollectionContributor) {
 
-		_fragmentCollectionContributor.computeIfPresent(
-			fragmentCollectionContributor.getKey(),
-			(key, fragmentCollectionContributorList) -> {
-				fragmentCollectionContributorList.remove(
-					fragmentCollectionContributor);
-
-				if (ListUtil.isEmpty(fragmentCollectionContributorList)) {
-					return null;
-				}
-
-				return fragmentCollectionContributorList;
-			});
+		_fragmentCollectionContributors.remove(fragmentCollectionContributor);
 	}
 
-	private final Map<String, List<FragmentCollectionContributor>>
-		_fragmentCollectionContributor = new ConcurrentHashMap<>();
+	private final List<FragmentCollectionContributor>
+		_fragmentCollectionContributors = new CopyOnWriteArrayList<>();
 
 }

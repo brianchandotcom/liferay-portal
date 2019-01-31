@@ -41,9 +41,6 @@ public abstract class BaseFragmentCollectionContributor
 	}
 
 	@Override
-	public abstract String getKey();
-
-	@Override
 	public String getName() {
 		return _name;
 	}

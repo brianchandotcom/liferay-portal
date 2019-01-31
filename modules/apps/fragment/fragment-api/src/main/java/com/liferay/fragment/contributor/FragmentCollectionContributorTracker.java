@@ -15,17 +15,13 @@
 package com.liferay.fragment.contributor;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author Jürgen Kappler
  */
 public interface FragmentCollectionContributorTracker {
 
-	public Map<String, List<FragmentCollectionContributor>>
-		getFragmentCollectionContributors();
-
 	public List<FragmentCollectionContributor>
-		getFragmentCollectionContributors(String key);
+		getFragmentCollectionContributors();
 
 }

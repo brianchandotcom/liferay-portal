@@ -102,7 +102,8 @@ public class ContentPageEditorDisplayContext {
 			getFragmentEntryActionURL(
 				"/content_layout/add_fragment_entry_link"));
 		soyContext.put("availableLanguages", getAvailableLanguagesSoyContext());
-		soyContext.put("availableSegments", _getSoyContextAvailableSegments());
+		soyContext.put(
+			"availableSegments", _getSoyContextAvailableSegmentsEntries());
 		soyContext.put("classNameId", classNameId);
 		soyContext.put("classPK", classPK);
 		soyContext.put(
@@ -156,7 +157,8 @@ public class ContentPageEditorDisplayContext {
 		SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
 
 		soyContext.put("availableLanguages", getAvailableLanguagesSoyContext());
-		soyContext.put("availableSegments", _getSoyContextAvailableSegments());
+		soyContext.put(
+			"availableSegments", _getSoyContextAvailableSegmentsEntries());
 		soyContext.put("classPK", themeDisplay.getPlid());
 		soyContext.put("defaultLanguageId", themeDisplay.getLanguageId());
 		soyContext.put("lastSaveDate", StringPool.BLANK);
@@ -564,15 +566,15 @@ public class ContentPageEditorDisplayContext {
 		return soyContexts;
 	}
 
-	private SoyContext _getSoyContextAvailableSegments()
+	private SoyContext _getSoyContextAvailableSegmentsEntries()
 		throws PortalException {
+
+		SoyContext availableSegmentsEntriesSoyContext =
+			SoyContextFactoryUtil.createSoyContext();
 
 		List<SegmentsEntry> segmentsEntries =
 			SegmentsEntryServiceUtil.getSegmentsEntries(
 				getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-
-		SoyContext availableSegmentsSoyContext =
-			SoyContextFactoryUtil.createSoyContext();
 
 		for (SegmentsEntry segmentsEntry : segmentsEntries) {
 			SoyContext segmentsSoyContext =
@@ -581,16 +583,15 @@ public class ContentPageEditorDisplayContext {
 			segmentsSoyContext.put(
 				"segmentLabel",
 				segmentsEntry.getName(themeDisplay.getLocale()));
-
 			segmentsSoyContext.put(
 				"segmentId", segmentsEntry.getSegmentsEntryId());
 			segmentsSoyContext.put("segmentKey", segmentsEntry.getKey());
 
-			availableSegmentsSoyContext.put(
+			availableSegmentsEntriesSoyContext.put(
 				segmentsEntry.getKey(), segmentsSoyContext);
 		}
 
-		return availableSegmentsSoyContext;
+		return availableSegmentsEntriesSoyContext;
 	}
 
 	private Map<String, Object> _defaultConfigurations;

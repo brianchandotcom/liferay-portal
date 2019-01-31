@@ -19,6 +19,7 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.util.Normalizer;
@@ -88,7 +89,9 @@ public class FriendlyURLNormalizerImpl implements FriendlyURLNormalizer {
 			return friendlyURL;
 		}
 
-		StringBuilder sb = new StringBuilder(friendlyURL.length());
+		String decodedFriendlyURL = HttpUtil.decodePath(friendlyURL);
+
+		StringBuilder sb = new StringBuilder(decodedFriendlyURL.length());
 
 		boolean modified = false;
 
@@ -97,8 +100,8 @@ public class FriendlyURLNormalizerImpl implements FriendlyURLNormalizer {
 
 		CharsetEncoder charsetEncoder = null;
 
-		for (int i = 0; i < friendlyURL.length(); i++) {
-			char c = friendlyURL.charAt(i);
+		for (int i = 0; i < decodedFriendlyURL.length(); i++) {
+			char c = decodedFriendlyURL.charAt(i);
 
 			if ((CharPool.UPPER_CASE_A <= c) && (c <= CharPool.UPPER_CASE_Z)) {
 				sb.append((char)(c + 32));
@@ -142,14 +145,14 @@ public class FriendlyURLNormalizerImpl implements FriendlyURLNormalizer {
 
 				boolean endOfInput = false;
 
-				if ((friendlyURL.length() - 1) == i) {
+				if ((decodedFriendlyURL.length() - 1) == i) {
 					endOfInput = true;
 				}
 
 				if (Character.isHighSurrogate(c) &&
-					((i + 1) < friendlyURL.length())) {
+					((i + 1) < decodedFriendlyURL.length())) {
 
-					c = friendlyURL.charAt(i + 1);
+					c = decodedFriendlyURL.charAt(i + 1);
 
 					if (Character.isLowSurrogate(c)) {
 						charBuffer.put(c);

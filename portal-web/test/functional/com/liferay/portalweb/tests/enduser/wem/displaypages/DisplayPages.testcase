@@ -46,6 +46,8 @@ definition {
 	test AddBlankDisplayPage {
 		task ("Publish the display page") {
 			Button.clickPublish();
+
+			DisplayPagesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 		}
 
 		task ("View the display page") {
@@ -78,6 +80,8 @@ definition {
 
 		task ("Publish the display page") {
 			Button.clickPublish();
+
+			DisplayPagesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 		}
 
 		task ("Assert the fragment was added to the display page") {
@@ -283,6 +287,8 @@ definition {
 
 		task ("Publish the display page") {
 			Button.clickPublish();
+
+			DisplayPagesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 		}
 
 		task ("Navigate back to the display page") {
@@ -313,6 +319,8 @@ definition {
 
 		task ("Publish the display page with the new edits") {
 			Button.clickPublish();
+
+			DisplayPagesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 		}
 
 		task ("Navigate back to the display page") {
@@ -394,6 +402,8 @@ definition {
 
 		task ("Publish the display page") {
 			Button.clickPublish();
+
+			DisplayPagesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 		}
 
 		task ("Add a web content article that uses the display page") {

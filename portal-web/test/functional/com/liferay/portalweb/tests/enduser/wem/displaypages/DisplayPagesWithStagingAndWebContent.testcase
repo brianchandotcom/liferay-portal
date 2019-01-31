@@ -62,6 +62,8 @@ definition {
 			);
 
 			Button.clickPublish();
+
+			DisplayPagesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name-staging");
 		}
 	}
 

@@ -154,25 +154,27 @@ public interface ${schemaName}Resource {
 			<#assign methodParameters>
 				<@compress single_line=true>
 					<#list operation.parameters as parameter>
-						<#if !pageParameter || !perPageParameter || !(stringUtil.equals(parameter.name, "page") || stringUtil.equals(parameter.name, "per_page"))>
-							@${parameter.in?cap_first}Param("${parameter.name}")
-
-							${parameter.schema.type?cap_first}
-
-							<#assign parameterName = "" />
-
-							<#list parameter.name?split("[^A-Za-z0-9]", "r") as s>
-								<#if s?has_content>
-									<#if parameterName?has_content>
-										<#assign parameterName = "${parameterName}${s?cap_first}" />
-									<#else>
-										<#assign parameterName = "${s}" />
-									</#if>
-								</#if>
-							</#list>
-
-							${parameterName},
+						<#if pageParameter && perPageParameter && (stringUtil.equals(parameter.name, "page") || stringUtil.equals(parameter.name, "per_page"))>
+							<#continue>
 						</#if>
+
+						@${parameter.in?cap_first}Param("${parameter.name}")
+
+						${parameter.schema.type?cap_first}
+
+						<#assign parameterName = "" />
+
+						<#list parameter.name?split("[^A-Za-z0-9]", "r") as s>
+							<#if s?has_content>
+								<#if parameterName?has_content>
+									<#assign parameterName = "${parameterName}${s?cap_first}" />
+								<#else>
+									<#assign parameterName = "${s}" />
+								</#if>
+							</#if>
+						</#list>
+
+						${parameterName},
 					</#list>
 				</@compress>
 			</#assign>

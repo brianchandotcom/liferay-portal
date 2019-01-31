@@ -20,7 +20,7 @@ configurations {
 }
 
 dependencies {
-	compile group: "org.freemarker", name: "freemarker", transitive: false, version: "2.3.23"
+	compile group: "org.freemarker", name: "freemarker", transitive: false, version: "2.3.28"
 	compile group: "org.yaml", name: "snakeyaml", version: "1.23"
 
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.6.0"

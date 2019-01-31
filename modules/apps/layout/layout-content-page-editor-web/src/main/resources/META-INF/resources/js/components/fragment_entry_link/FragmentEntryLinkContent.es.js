@@ -71,6 +71,7 @@ class FragmentEntryLinkContent extends Component {
 			[
 				'content',
 				'languageId',
+				'segmentId',
 				'selectedMappingTypes',
 				'showMapping'
 			]
@@ -114,9 +115,13 @@ class FragmentEntryLinkContent extends Component {
 		}
 
 		this._update(
-			this.languageId,
-			this.defaultLanguageId,
-			[this._updateEditableStatus]
+			{
+				defaultLanguageId: this.defaultLanguageId,
+				defaultSegmentId: this.defaultSegmentId,
+				languageId: this.languageId,
+				segmentId: this.segmentId,
+				updateFunctions: [this._updateEditableStatus]
+			}
 		);
 	}
 
@@ -127,6 +132,17 @@ class FragmentEntryLinkContent extends Component {
 	 */
 	syncLanguageId(newLanguageId) {
 		if (this.content && (newLanguageId !== this.languageId)) {
+			this._renderContent(this.content);
+		}
+	}
+
+	/**
+	 * Callback executed when languageId property has changed
+	 * @inheritDoc
+	 * @review
+	 */
+	syncSegmentId(newSegmentId) {
+		if (this.content && (newSegmentId !== this.segmentId)) {
 			this._renderContent(this.content);
 		}
 	}
@@ -314,6 +330,7 @@ class FragmentEntryLinkContent extends Component {
 				editableId: event.name,
 				editableValue: event.value,
 				editableValueId: this.languageId,
+				editableValueSegmentId: this.segmentId || this.defaultSegmentId,
 				fragmentEntryLinkId: this.fragmentEntryLinkId
 			}
 		);
@@ -341,9 +358,13 @@ class FragmentEntryLinkContent extends Component {
 					this._createBackgroundImageStyleEditors();
 
 					this._update(
-						this.languageId,
-						this.defaultLanguageId,
-						[this._updateEditableStatus]
+						{
+							defaultLanguageId: this.defaultLanguageId,
+							defaultSegmentId: this.defaultSegmentId,
+							languageId: this.languageId,
+							segmentId: this.segmentId,
+							updateFunctions: [this._updateEditableStatus]
+						}
 					);
 				}
 			);
@@ -360,16 +381,27 @@ class FragmentEntryLinkContent extends Component {
 	 * @private
 	 * @review
 	 */
-	_update(languageId, defaultLanguageId, updateFunctions) {
+	_update(
+		{
+			defaultLanguageId,
+			defaultSegmentId,
+			languageId,
+			segmentId,
+			updateFunctions
+		}
+	) {
 		const editableValues = this.editableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR];
 
 		Object.keys(editableValues).forEach(
 			editableId => {
 				const editableValue = editableValues[editableId];
+				const segmentedEditableValue = segmentId && editableValue[segmentId] || editableValue[defaultSegmentId];
 
-				const defaultValue = editableValue[defaultLanguageId] || editableValue.defaultValue;
+				const defaultSegmentedEditableValue = editableValue[defaultSegmentId];
+
+				const defaultValue = segmentedEditableValue[defaultLanguageId] || defaultSegmentedEditableValue[defaultLanguageId] || editableValue.defaultValue;
 				const mappedField = editableValue.mappedField || '';
-				const value = editableValue[languageId];
+				const value = segmentedEditableValue[languageId];
 
 				updateFunctions.forEach(
 					updateFunction => updateFunction(

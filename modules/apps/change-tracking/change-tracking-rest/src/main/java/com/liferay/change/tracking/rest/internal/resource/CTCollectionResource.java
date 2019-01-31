@@ -18,9 +18,14 @@ import com.liferay.change.tracking.CTEngineManager;
 import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
+import com.liferay.change.tracking.rest.internal.exception.CTJaxRsException;
+import com.liferay.change.tracking.rest.internal.exception.CannotCreateCTCollectionException;
 import com.liferay.change.tracking.rest.internal.exception.NoSuchProductionCTCollectionException;
 import com.liferay.change.tracking.rest.internal.model.collection.CTCollectionModel;
+import com.liferay.change.tracking.rest.internal.model.collection.CTCollectionUpdateModel;
+import com.liferay.change.tracking.rest.internal.util.CTJaxRsUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 
@@ -31,13 +36,16 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -55,6 +63,48 @@ import org.osgi.service.component.annotations.ServiceScope;
 )
 @Path("/collections")
 public class CTCollectionResource {
+
+	@Path("/{ctCollectionId}/checkout")
+	@POST
+	public Response checkoutCTCollection(
+			@PathParam("ctCollectionId") long ctCollectionId,
+			@QueryParam("userId") long userId)
+		throws PortalException {
+
+		User user = CTJaxRsUtil.getUser(userId);
+
+		_ctEngineManager.checkoutCTCollection(user.getUserId(), ctCollectionId);
+
+		return _accepted();
+	}
+
+	@Consumes(MediaType.APPLICATION_JSON)
+	@POST
+	public CTCollectionModel createOrUpdateCTCollection(
+			@QueryParam("companyId") long companyId,
+			@QueryParam("userId") long userId,
+			CTCollectionUpdateModel ctCollectionUpdateModel)
+		throws CTJaxRsException {
+
+		CTJaxRsUtil.checkCompany(companyId);
+
+		User user = CTJaxRsUtil.getUser(userId);
+
+		CTJaxRsUtil.checkChangeTrackingEnabled(companyId, _ctEngineManager);
+
+		Optional<CTCollection> ctCollectionOptional =
+			_ctEngineManager.createCTCollection(
+				user.getUserId(), ctCollectionUpdateModel.getName(),
+				ctCollectionUpdateModel.getDescription());
+
+		return ctCollectionOptional.map(
+			this::_getCTCollectionModel
+		).orElseThrow(
+			() ->
+				new CannotCreateCTCollectionException(
+					companyId, "Cannot create Change Tracking Collection")
+		);
+	}
 
 	@GET
 	@Path("/{ctCollectionId}")
@@ -79,12 +129,12 @@ public class CTCollectionResource {
 			@QueryParam("companyId") long companyId,
 			@QueryParam("userId") long userId,
 			@DefaultValue(_TYPE_ALL) @QueryParam("type") String type)
-		throws PortalException {
+		throws CTJaxRsException {
 
 		List<CTCollection> ctCollections = new ArrayList<>();
 
 		if (_TYPE_ACTIVE.equals(type)) {
-			_userLocalService.getUser(userId);
+			CTJaxRsUtil.getUser(userId);
 
 			Optional<CTCollection> activeCTCollectionOptional =
 				_ctEngineManager.getActiveCTCollectionOptional(userId);
@@ -92,19 +142,21 @@ public class CTCollectionResource {
 			activeCTCollectionOptional.ifPresent(ctCollections::add);
 		}
 		else if (_TYPE_PRODUCTION.equals(type)) {
-			_companyLocalService.getCompany(companyId);
+			CTJaxRsUtil.checkCompany(companyId);
 
 			Optional<CTCollection> productionCTCollectionOptional =
 				_ctEngineManager.getProductionCTCollectionOptional(companyId);
 
 			CTCollection ctCollection =
 				productionCTCollectionOptional.orElseThrow(
-					NoSuchProductionCTCollectionException::new);
+					() -> new NoSuchProductionCTCollectionException(
+						companyId,
+						"Cannot find production Change Tracking Collection"));
 
 			ctCollections.add(ctCollection);
 		}
 		else if (_TYPE_ALL.equals(type)) {
-			_companyLocalService.getCompany(companyId);
+			CTJaxRsUtil.checkCompany(companyId);
 
 			ctCollections = _ctEngineManager.getCTCollections(companyId);
 		}
@@ -121,6 +173,26 @@ public class CTCollectionResource {
 		).collect(
 			Collectors.toList()
 		);
+	}
+
+	@Path("/{ctCollectionId}/publish")
+	@POST
+	public Response publishCTCollection(
+			@PathParam("ctCollectionId") long ctCollectionId,
+			@QueryParam("userId") long userId)
+		throws CTJaxRsException {
+
+		User user = CTJaxRsUtil.getUser(userId);
+
+		_ctEngineManager.publishCTCollection(user.getUserId(), ctCollectionId);
+
+		return _accepted();
+	}
+
+	private Response _accepted() {
+		Response.ResponseBuilder responseBuilder = Response.accepted();
+
+		return responseBuilder.build();
 	}
 
 	private CTCollectionModel _getCTCollectionModel(CTCollection ctCollection) {

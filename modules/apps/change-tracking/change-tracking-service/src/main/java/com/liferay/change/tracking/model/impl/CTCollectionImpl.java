@@ -16,13 +16,24 @@ package com.liferay.change.tracking.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.change.tracking.constants.CTConstants;
+
 /**
  * @author Brian Wing Shun Chan
+ * @author Daniel Kocsis
  */
 @ProviderType
 public class CTCollectionImpl extends CTCollectionBaseImpl {
 
 	public CTCollectionImpl() {
+	}
+
+	public boolean isProduction() {
+		if (CTConstants.CT_COLLECTION_NAME_PRODUCTION.equals(getName())) {
+			return true;
+		}
+
+		return false;
 	}
 
 }

@@ -69,9 +69,7 @@ public class BlogsAdminPortlet extends BaseBlogsPortlet {
 		throws IOException, PortletException {
 
 		renderRequest.setAttribute(AssetWebKeys.ASSET_HELPER, _assetHelper);
-
 		renderRequest.setAttribute(BlogsWebKeys.DL_URL_HELPER, _dlurlHelper);
-
 		renderRequest.setAttribute(TrashWebKeys.TRASH_HELPER, _trashHelper);
 
 		super.render(renderRequest, renderResponse);

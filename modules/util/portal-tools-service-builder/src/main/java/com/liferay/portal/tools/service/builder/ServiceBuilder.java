@@ -668,6 +668,34 @@ public class ServiceBuilder {
 			_autoNamespaceTables = GetterUtil.getBoolean(
 				rootElement.attributeValue("auto-namespace-tables"),
 				_autoNamespaceTables);
+
+			String dependencyInjector = rootElement.attributeValue(
+				"dependency-injector");
+
+			File springFile = new File(_springFileName);
+
+			if ((dependencyInjector != null) || !_osgiModule ||
+				isVersionLTE_7_1_0() || springFile.exists()) {
+
+				_ds = StringUtil.equalsIgnoreCase(dependencyInjector, "ds");
+			}
+			else {
+				_ds = true;
+			}
+
+			if (_ds) {
+				if (isVersionLTE_7_1_0()) {
+					throw new IllegalArgumentException(
+						"Cannot use dependency-injector=\"ds\" without using " +
+							"at least DTD version 7.2");
+				}
+
+				if (!_osgiModule) {
+					throw new IllegalArgumentException(
+						"Cannot use dependency-injector=\"ds\" with a war");
+				}
+			}
+
 			_mvccEnabled = GetterUtil.getBoolean(
 				rootElement.attributeValue("mvcc-enabled"));
 
@@ -890,6 +918,8 @@ public class ServiceBuilder {
 				_createSpringXml();
 
 				_createExceptions(exceptionList);
+
+				_createPersistenceDSConstants();
 
 				_createServicePropsUtil();
 				_createServletContextUtil();
@@ -1610,7 +1640,10 @@ public class ServiceBuilder {
 
 		if (methodName.equals("clearCache") ||
 			methodName.equals("fetchByPrimaryKeys") ||
-			methodName.equals("findWithDynamicQuery")) {
+			methodName.equals("findWithDynamicQuery") ||
+			methodName.equals("setConfiguration") ||
+			methodName.equals("setDataSource") ||
+			methodName.equals("setSessionFactory")) {
 
 			return true;
 		}
@@ -1654,13 +1687,17 @@ public class ServiceBuilder {
 	public boolean isCustomMethod(JavaMethod method) {
 		String methodName = method.getName();
 
-		if (methodName.equals("afterPropertiesSet") ||
-			methodName.equals("clearService") || methodName.equals("destroy") ||
-			methodName.equals("equals") || methodName.equals("getClass") ||
-			methodName.equals("getService") ||
+		if (methodName.equals("activate") ||
+			methodName.equals("afterPropertiesSet") ||
+			methodName.equals("clearService") ||
+			methodName.equals("deactivate") || methodName.equals("destroy") ||
+			methodName.equals("equals") ||
+			methodName.equals("getAopInterfaces") ||
+			methodName.equals("getClass") || methodName.equals("getService") ||
 			methodName.equals("getWrappedService") ||
 			methodName.equals("hashCode") || methodName.equals("notify") ||
 			methodName.equals("notifyAll") ||
+			methodName.equals("setAopProxy") ||
 			methodName.equals("setWrappedService") ||
 			methodName.equals("toString") || methodName.equals("wait")) {
 
@@ -2478,6 +2515,7 @@ public class ServiceBuilder {
 		Map<String, Object> context = _getContext();
 
 		context.put("entity", entity);
+		context.put("persistence", Boolean.FALSE);
 
 		context = _putDeprecatedKeys(context, javaClass);
 
@@ -2893,6 +2931,22 @@ public class ServiceBuilder {
 		}
 	}
 
+	private void _createPersistenceDSConstants() throws Exception {
+		if (!_ds) {
+			return;
+		}
+
+		File file = new File(
+			StringBundler.concat(
+				_outputPath, "/service/persistence/impl/constants/",
+				_portletShortName, "PersistenceConstants.java"));
+
+		String content = _processTemplate(
+			_tplPersistenceDSConstants, _getContext());
+
+		_write(file, content, AUTHOR, _jalopySettings, _modifiedFileNames);
+	}
+
 	private void _createPersistenceImpl(Entity entity) throws Exception {
 		File file = new File(
 			StringBundler.concat(
@@ -2903,6 +2957,7 @@ public class ServiceBuilder {
 			Map<String, Object> context = _getContext();
 
 			context.put("entity", entity);
+			context.put("persistence", Boolean.TRUE);
 			context.put("referenceEntities", _mergeReferenceEntities(entity));
 
 			JavaClass modelImplJavaClass = _getJavaClass(
@@ -3238,6 +3293,16 @@ public class ServiceBuilder {
 				_implDirName, "/", StringUtil.replace(_propsUtil, '.', '/'),
 				".java"));
 
+		if (_ds) {
+			if (file.exists()) {
+				file.delete();
+
+				System.out.println("Removing " + file);
+			}
+
+			return;
+		}
+
 		Map<String, Object> context = _getContext();
 
 		int index = _propsUtil.lastIndexOf(".");
@@ -3347,13 +3412,23 @@ public class ServiceBuilder {
 			return;
 		}
 
+		File xmlFile = new File(_springFileName);
+
+		if (_ds) {
+			if (xmlFile.exists()) {
+				xmlFile.delete();
+
+				System.out.println("Removing " + xmlFile);
+			}
+
+			return;
+		}
+
 		Map<String, Object> context = _getContext();
 
 		context.put("entities", _entities);
 
 		String content = _processTemplate(_tplSpringXml, context);
-
-		File xmlFile = new File(_springFileName);
 
 		StringBundler sb = new StringBundler(11);
 
@@ -4269,6 +4344,7 @@ public class ServiceBuilder {
 		context.put("apiPackagePath", _apiPackagePath);
 		context.put("author", _author);
 		context.put("beanLocatorUtil", _beanLocatorUtil);
+		context.put("ds", _ds);
 		context.put("modelHintsUtil", ModelHintsUtil.getModelHints());
 		context.put("osgiModule", _osgiModule);
 		context.put("packagePath", _packagePath);
@@ -7017,6 +7093,7 @@ public class ServiceBuilder {
 	private Properties _compatProperties;
 	private String _currentTplName;
 	private int _databaseNameMaxLength = 30;
+	private boolean _ds;
 	private Version _dtdVersion;
 	private List<Entity> _entities;
 	private Map<String, EntityMapping> _entityMappings;
@@ -7075,6 +7152,8 @@ public class ServiceBuilder {
 	private String _tplModelSoap = _TPL_ROOT + "model_soap.ftl";
 	private String _tplModelWrapper = _TPL_ROOT + "model_wrapper.ftl";
 	private String _tplPersistence = _TPL_ROOT + "persistence.ftl";
+	private String _tplPersistenceDSConstants =
+		_TPL_ROOT + "persistence_ds_constants.ftl";
 	private String _tplPersistenceImpl = _TPL_ROOT + "persistence_impl.ftl";
 	private String _tplPersistenceTest = _TPL_ROOT + "persistence_test.ftl";
 	private String _tplPersistenceUtil = _TPL_ROOT + "persistence_util.ftl";

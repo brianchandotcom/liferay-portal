@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.trash.web.internal.constants.TrashWebKeys;
-import com.liferay.trash.web.internal.display.context.TrashContainerActionDropdownItems;
+import com.liferay.trash.web.internal.servlet.taglib.util.TrashContainerActionDropdownItems;
 
 import java.util.Collections;
 import java.util.List;

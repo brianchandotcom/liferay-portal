@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.trash.web.internal.display.context;
+package com.liferay.trash.web.internal.servlet.taglib.util;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;

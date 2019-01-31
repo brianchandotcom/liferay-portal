@@ -55,6 +55,8 @@ import com.liferay.trash.web.internal.constants.TrashPortletKeys;
 import com.liferay.trash.web.internal.constants.TrashWebKeys;
 import com.liferay.trash.web.internal.search.EntrySearch;
 import com.liferay.trash.web.internal.search.EntrySearchTerms;
+import com.liferay.trash.web.internal.servlet.taglib.util.TrashContainerActionDropdownItems;
+import com.liferay.trash.web.internal.servlet.taglib.util.TrashEntryActionDropdownItems;
 
 import java.util.ArrayList;
 import java.util.Collections;

@@ -254,22 +254,7 @@ public class Arquillian extends ParentRunner<FrameworkMethod> {
 
 	private TestClass _getTestClass() {
 		if (_testClass == null) {
-			_testClass = new TestClass(_clazz) {
-
-				@Override
-				public List<FrameworkMethod> getAnnotatedMethods(
-					Class<? extends Annotation> annotationClass) {
-
-					List<FrameworkMethod> frameworkMethods = new ArrayList<>(
-						super.getAnnotatedMethods(annotationClass));
-
-					frameworkMethods.sort(
-						Comparator.comparing(FrameworkMethod::getName));
-
-					return frameworkMethods;
-				}
-
-			};
+			_testClass = new SortedTestClass(_clazz);
 		}
 
 		return _testClass;
@@ -450,5 +435,26 @@ public class Arquillian extends ParentRunner<FrameworkMethod> {
 		new ConcurrentHashMap<>();
 	private TestClass _testClass;
 	private TestRunnerAdaptor _testRunnerAdaptor;
+
+	private class SortedTestClass extends TestClass {
+
+		@Override
+		public List<FrameworkMethod> getAnnotatedMethods(
+			Class<? extends Annotation> annotationClass) {
+
+			List<FrameworkMethod> frameworkMethods = new ArrayList<>(
+				super.getAnnotatedMethods(annotationClass));
+
+			frameworkMethods.sort(
+				Comparator.comparing(FrameworkMethod::getName));
+
+			return frameworkMethods;
+		}
+
+		private SortedTestClass(Class<?> clazz) {
+			super(clazz);
+		}
+
+	}
 
 }

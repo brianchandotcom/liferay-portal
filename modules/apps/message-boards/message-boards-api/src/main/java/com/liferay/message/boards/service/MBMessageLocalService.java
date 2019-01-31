@@ -383,10 +383,6 @@ public interface MBMessageLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MBMessage getLastThreadMessage(long threadId, int status)
-		throws PortalException;
-
 	/**
 	* Returns the message-boards message with the primary key.
 	*

@@ -1,0 +1,10 @@
+Bundle-Name: Liferay Sharing Taglib
+Bundle-SymbolicName: com.liferay.sharing.taglib
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.sharing.taglib.servlet.taglib
+Provide-Capability:\
+	osgi.extender;\
+		osgi.extender="jsp.taglib";\
+		uri="http://liferay.com/tld/sharing";\
+		version:Version="${Bundle-Version}"
+Web-ContextPath: /sharing-taglib

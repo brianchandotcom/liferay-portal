@@ -31,7 +31,6 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.layout.admin.web.internal.display.context.DisplayPageManagementToolbarDisplayContext" %>
 <%@ page import="com.liferay.document.library.kernel.exception.FileSizeException" %><%@
 page import="com.liferay.document.library.kernel.util.DLValidatorUtil" %><%@
 page import="com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys" %><%@
@@ -40,6 +39,7 @@ page import="com.liferay.exportimport.kernel.staging.StagingUtil" %><%@
 page import="com.liferay.frontend.taglib.servlet.taglib.util.EmptyResultMessageKeys" %><%@
 page import="com.liferay.layout.admin.web.internal.constants.LayoutAdminWebKeys" %><%@
 page import="com.liferay.layout.admin.web.internal.display.context.DisplayPageDisplayContext" %><%@
+page import="com.liferay.layout.admin.web.internal.display.context.DisplayPageManagementToolbarDisplayContext" %><%@
 page import="com.liferay.layout.admin.web.internal.display.context.LayoutPageTemplateCollectionsDisplayContext" %><%@
 page import="com.liferay.layout.admin.web.internal.display.context.LayoutPageTemplateDisplayContext" %><%@
 page import="com.liferay.layout.admin.web.internal.display.context.LayoutPrototypeDisplayContext" %><%@

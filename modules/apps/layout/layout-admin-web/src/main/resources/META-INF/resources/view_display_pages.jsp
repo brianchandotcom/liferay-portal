@@ -29,8 +29,12 @@ DisplayPageDisplayContext displayPageDisplayContext = new DisplayPageDisplayCont
 	navigationItems="<%= layoutsAdminDisplayContext.getNavigationItems() %>"
 />
 
+<%
+DisplayPageManagementToolbarDisplayContext displayPageManagementToolbarDisplayContext = new DisplayPageManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, displayPageDisplayContext);
+%>
+
 <clay:management-toolbar
-	displayContext="<%= new DisplayPageManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, displayPageDisplayContext) %>"
+	displayContext="<%= displayPageManagementToolbarDisplayContext %>"
 />
 
 <portlet:actionURL name="/layout/delete_layout_page_template_entry" var="deleteDisplayPageURL">
@@ -211,29 +215,7 @@ DisplayPageDisplayContext displayPageDisplayContext = new DisplayPageDisplayCont
 	</liferay-ui:search-container>
 </aui:form>
 
-<portlet:actionURL name="/layout/add_layout_page_template_entry" var="addDisplayPageURL">
-	<portlet:param name="mvcRenderCommandName" value="/layout/edit_layout_page_template_entry" />
-	<portlet:param name="redirect" value="<%= currentURL %>" />
-	<portlet:param name="type" value="<%= String.valueOf(LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE) %>" />
-</portlet:actionURL>
-
 <aui:script require="metal-dom/src/all/dom as dom,frontend-js-web/liferay/modal/commands/OpenSimpleInputModal.es as modalCommands">
-	function handleAddDisplayPageMenuItemClick(event) {
-		event.preventDefault();
-
-		modalCommands.openSimpleInputModal(
-			{
-				dialogTitle: '<liferay-ui:message key="add-display-page" />',
-				formSubmitURL: '<%= addDisplayPageURL %>',
-				mainFieldLabel: '<liferay-ui:message key="name" />',
-				mainFieldName: 'name',
-				mainFieldPlaceholder: '<liferay-ui:message key="name" />',
-				namespace: '<portlet:namespace />',
-				spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg'
-			}
-		);
-	}
-
 	var updateDisplayPageMenuItemClickHandler = dom.delegate(
 		document.body,
 		'click',
@@ -260,33 +242,6 @@ DisplayPageDisplayContext displayPageDisplayContext = new DisplayPageDisplayCont
 		}
 	);
 
-	var deleteSelectedDisplayPages = function() {
-		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
-			submitForm($(document.<portlet:namespace />fm));
-		}
-	}
-
-	var ACTIONS = {
-		'deleteSelectedDisplayPages': deleteSelectedDisplayPages
-	};
-
-	Liferay.componentReady('displayPagesManagementToolbar').then(
-		function(managementToolbar) {
-			managementToolbar.on('creationButtonClicked', handleAddDisplayPageMenuItemClick);
-
-			managementToolbar.on(
-				['actionItemClicked', 'filterItemClicked'],
-				function(event) {
-					var itemData = event.data.item.data;
-
-					if (itemData && itemData.action && ACTIONS[itemData.action]) {
-						ACTIONS[itemData.action]();
-					}
-				}
-			);
-		}
-	);
-
 	function handleDestroyPortlet() {
 		updateDisplayPageMenuItemClickHandler.removeListener();
 
@@ -294,4 +249,21 @@ DisplayPageDisplayContext displayPageDisplayContext = new DisplayPageDisplayCont
 	}
 
 	Liferay.on('destroyPortlet', handleDestroyPortlet);
+</aui:script>
+
+<aui:script require='<%= npmResolvedPackageName + "/js/DisplayPageManagementToolbarDefaultEventHandler.es as DisplayPageManagementToolbarDefaultEventHandler" %>'>
+	Liferay.component(
+		'<%= displayPageManagementToolbarDisplayContext.getDefaultEventHandler() %>',
+		new DisplayPageManagementToolbarDefaultEventHandler.default(
+			{
+				addDisplayPageURL: '<portlet:actionURL name="/layout/add_layout_page_template_entry"><portlet:param name="mvcRenderCommandName" value="/layout/edit_layout_page_template_entry" /><portlet:param name="redirect" value="<%= currentURL %>" /><portlet:param name="type" value="<%= String.valueOf(LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE) %>" /></portlet:actionURL>',
+				namespace: '<portlet:namespace />',
+				spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg'
+			}
+		),
+		{
+			destroyOnNavigate: true,
+			portletId: '<%= HtmlUtil.escapeJS(portletDisplay.getId()) %>'
+		}
+	);
 </aui:script>

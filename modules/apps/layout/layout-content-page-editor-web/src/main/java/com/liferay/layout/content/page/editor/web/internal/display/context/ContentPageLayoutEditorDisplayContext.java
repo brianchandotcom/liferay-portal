@@ -108,13 +108,14 @@ public class ContentPageLayoutEditorDisplayContext
 
 		String portletId = _getPortletId(content);
 
-		if(Validator.isNotNull(portletId)) {
-			soyContext.put(
-				"name",
-				PortalUtil.getPortletTitle(
-					portletId, themeDisplay.getLocale()));
-			soyContext.put("portletId", portletId);
+		if (Validator.isNull(portletId)) {
+			return soyContext;
 		}
+
+		soyContext.put(
+			"name",
+			PortalUtil.getPortletTitle(portletId, themeDisplay.getLocale()));
+		soyContext.put("portletId", portletId);
 
 		return soyContext;
 	}

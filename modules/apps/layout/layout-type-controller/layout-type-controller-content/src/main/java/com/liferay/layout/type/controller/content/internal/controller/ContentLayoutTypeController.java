@@ -94,6 +94,11 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 
 		if (layoutMode.equals(Constants.EDIT)) {
 			request.setAttribute(
+				ContentPageEditorWebKeys.
+					FRAGMENT_COLLECTION_CONTRIBUTOR_TRACKER,
+				_fragmentCollectionContributorTracker);
+
+			request.setAttribute(
 				ContentLayoutTypeControllerWebKeys.ITEM_SELECTOR,
 				_itemSelector);
 		}
@@ -102,11 +107,6 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 
 		if (layoutMode.equals(Constants.EDIT)) {
 			page = _EDIT_LAYOUT_PAGE;
-
-			request.setAttribute(
-				ContentPageEditorWebKeys.
-					FRAGMENT_COLLECTION_CONTRIBUTOR_TRACKER,
-				_fragmentCollectionContributorTracker);
 		}
 
 		RequestDispatcher requestDispatcher =

@@ -274,63 +274,69 @@ public class LVEntryUtil {
 	}
 
 	/**
-	* Returns the lv entry where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchLVEntryException} if it could not be found.
+	* Returns the lv entry where uuid = &#63; and groupId = &#63; and head = &#63; or throws a {@link NoSuchLVEntryException} if it could not be found.
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
+	* @param head the head
 	* @return the matching lv entry
 	* @throws NoSuchLVEntryException if a matching lv entry could not be found
 	*/
-	public static LVEntry findByUUID_G(String uuid, long groupId)
+	public static LVEntry findByUUID_G(String uuid, long groupId, boolean head)
 		throws com.liferay.portal.tools.service.builder.test.exception.NoSuchLVEntryException {
-		return getPersistence().findByUUID_G(uuid, groupId);
+		return getPersistence().findByUUID_G(uuid, groupId, head);
 	}
 
 	/**
-	* Returns the lv entry where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	* Returns the lv entry where uuid = &#63; and groupId = &#63; and head = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
+	* @param head the head
 	* @return the matching lv entry, or <code>null</code> if a matching lv entry could not be found
 	*/
-	public static LVEntry fetchByUUID_G(String uuid, long groupId) {
-		return getPersistence().fetchByUUID_G(uuid, groupId);
+	public static LVEntry fetchByUUID_G(String uuid, long groupId, boolean head) {
+		return getPersistence().fetchByUUID_G(uuid, groupId, head);
 	}
 
 	/**
-	* Returns the lv entry where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	* Returns the lv entry where uuid = &#63; and groupId = &#63; and head = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
+	* @param head the head
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching lv entry, or <code>null</code> if a matching lv entry could not be found
 	*/
 	public static LVEntry fetchByUUID_G(String uuid, long groupId,
-		boolean retrieveFromCache) {
-		return getPersistence().fetchByUUID_G(uuid, groupId, retrieveFromCache);
+		boolean head, boolean retrieveFromCache) {
+		return getPersistence()
+				   .fetchByUUID_G(uuid, groupId, head, retrieveFromCache);
 	}
 
 	/**
-	* Removes the lv entry where uuid = &#63; and groupId = &#63; from the database.
+	* Removes the lv entry where uuid = &#63; and groupId = &#63; and head = &#63; from the database.
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
+	* @param head the head
 	* @return the lv entry that was removed
 	*/
-	public static LVEntry removeByUUID_G(String uuid, long groupId)
+	public static LVEntry removeByUUID_G(String uuid, long groupId, boolean head)
 		throws com.liferay.portal.tools.service.builder.test.exception.NoSuchLVEntryException {
-		return getPersistence().removeByUUID_G(uuid, groupId);
+		return getPersistence().removeByUUID_G(uuid, groupId, head);
 	}
 
 	/**
-	* Returns the number of lv entries where uuid = &#63; and groupId = &#63;.
+	* Returns the number of lv entries where uuid = &#63; and groupId = &#63; and head = &#63;.
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
+	* @param head the head
 	* @return the number of matching lv entries
 	*/
-	public static int countByUUID_G(String uuid, long groupId) {
-		return getPersistence().countByUUID_G(uuid, groupId);
+	public static int countByUUID_G(String uuid, long groupId, boolean head) {
+		return getPersistence().countByUUID_G(uuid, groupId, head);
 	}
 
 	/**
@@ -570,64 +576,74 @@ public class LVEntryUtil {
 	}
 
 	/**
-	* Returns the lv entry where groupId = &#63; and uniqueGroupKey = &#63; or throws a {@link NoSuchLVEntryException} if it could not be found.
+	* Returns the lv entry where groupId = &#63; and uniqueGroupKey = &#63; and head = &#63; or throws a {@link NoSuchLVEntryException} if it could not be found.
 	*
 	* @param groupId the group ID
 	* @param uniqueGroupKey the unique group key
+	* @param head the head
 	* @return the matching lv entry
 	* @throws NoSuchLVEntryException if a matching lv entry could not be found
 	*/
-	public static LVEntry findByG_UGK(long groupId, String uniqueGroupKey)
+	public static LVEntry findByG_UGK(long groupId, String uniqueGroupKey,
+		boolean head)
 		throws com.liferay.portal.tools.service.builder.test.exception.NoSuchLVEntryException {
-		return getPersistence().findByG_UGK(groupId, uniqueGroupKey);
+		return getPersistence().findByG_UGK(groupId, uniqueGroupKey, head);
 	}
 
 	/**
-	* Returns the lv entry where groupId = &#63; and uniqueGroupKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	* Returns the lv entry where groupId = &#63; and uniqueGroupKey = &#63; and head = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	*
 	* @param groupId the group ID
 	* @param uniqueGroupKey the unique group key
+	* @param head the head
 	* @return the matching lv entry, or <code>null</code> if a matching lv entry could not be found
 	*/
-	public static LVEntry fetchByG_UGK(long groupId, String uniqueGroupKey) {
-		return getPersistence().fetchByG_UGK(groupId, uniqueGroupKey);
+	public static LVEntry fetchByG_UGK(long groupId, String uniqueGroupKey,
+		boolean head) {
+		return getPersistence().fetchByG_UGK(groupId, uniqueGroupKey, head);
 	}
 
 	/**
-	* Returns the lv entry where groupId = &#63; and uniqueGroupKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	* Returns the lv entry where groupId = &#63; and uniqueGroupKey = &#63; and head = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
 	* @param groupId the group ID
 	* @param uniqueGroupKey the unique group key
+	* @param head the head
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching lv entry, or <code>null</code> if a matching lv entry could not be found
 	*/
 	public static LVEntry fetchByG_UGK(long groupId, String uniqueGroupKey,
-		boolean retrieveFromCache) {
+		boolean head, boolean retrieveFromCache) {
 		return getPersistence()
-				   .fetchByG_UGK(groupId, uniqueGroupKey, retrieveFromCache);
+				   .fetchByG_UGK(groupId, uniqueGroupKey, head,
+			retrieveFromCache);
 	}
 
 	/**
-	* Removes the lv entry where groupId = &#63; and uniqueGroupKey = &#63; from the database.
+	* Removes the lv entry where groupId = &#63; and uniqueGroupKey = &#63; and head = &#63; from the database.
 	*
 	* @param groupId the group ID
 	* @param uniqueGroupKey the unique group key
+	* @param head the head
 	* @return the lv entry that was removed
 	*/
-	public static LVEntry removeByG_UGK(long groupId, String uniqueGroupKey)
+	public static LVEntry removeByG_UGK(long groupId, String uniqueGroupKey,
+		boolean head)
 		throws com.liferay.portal.tools.service.builder.test.exception.NoSuchLVEntryException {
-		return getPersistence().removeByG_UGK(groupId, uniqueGroupKey);
+		return getPersistence().removeByG_UGK(groupId, uniqueGroupKey, head);
 	}
 
 	/**
-	* Returns the number of lv entries where groupId = &#63; and uniqueGroupKey = &#63;.
+	* Returns the number of lv entries where groupId = &#63; and uniqueGroupKey = &#63; and head = &#63;.
 	*
 	* @param groupId the group ID
 	* @param uniqueGroupKey the unique group key
+	* @param head the head
 	* @return the number of matching lv entries
 	*/
-	public static int countByG_UGK(long groupId, String uniqueGroupKey) {
-		return getPersistence().countByG_UGK(groupId, uniqueGroupKey);
+	public static int countByG_UGK(long groupId, String uniqueGroupKey,
+		boolean head) {
+		return getPersistence().countByG_UGK(groupId, uniqueGroupKey, head);
 	}
 
 	/**

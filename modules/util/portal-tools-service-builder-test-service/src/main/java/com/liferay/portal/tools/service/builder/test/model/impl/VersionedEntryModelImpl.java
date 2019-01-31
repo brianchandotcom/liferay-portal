@@ -68,7 +68,8 @@ public class VersionedEntryModelImpl extends BaseModelImpl<VersionedEntry>
 			{ "mvccVersion", Types.BIGINT },
 			{ "headId", Types.BIGINT },
 			{ "versionedEntryId", Types.BIGINT },
-			{ "groupId", Types.BIGINT }
+			{ "groupId", Types.BIGINT },
+			{ "head", Types.BOOLEAN }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -77,9 +78,10 @@ public class VersionedEntryModelImpl extends BaseModelImpl<VersionedEntry>
 		TABLE_COLUMNS_MAP.put("headId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("versionedEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("head", Types.BOOLEAN);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table VersionedEntry (mvccVersion LONG default 0 not null,headId LONG,versionedEntryId LONG not null primary key,groupId LONG)";
+	public static final String TABLE_SQL_CREATE = "create table VersionedEntry (mvccVersion LONG default 0 not null,headId LONG,versionedEntryId LONG not null primary key,groupId LONG,head BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table VersionedEntry";
 	public static final String ORDER_BY_JPQL = " ORDER BY versionedEntry.versionedEntryId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY VersionedEntry.versionedEntryId ASC";
@@ -96,8 +98,9 @@ public class VersionedEntryModelImpl extends BaseModelImpl<VersionedEntry>
 				"value.object.column.bitmask.enabled.com.liferay.portal.tools.service.builder.test.model.VersionedEntry"),
 			true);
 	public static final long GROUPID_COLUMN_BITMASK = 1L;
-	public static final long HEADID_COLUMN_BITMASK = 2L;
-	public static final long VERSIONEDENTRYID_COLUMN_BITMASK = 4L;
+	public static final long HEAD_COLUMN_BITMASK = 2L;
+	public static final long HEADID_COLUMN_BITMASK = 4L;
+	public static final long VERSIONEDENTRYID_COLUMN_BITMASK = 8L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.tools.service.builder.test.service.util.ServiceProps.get(
 				"lock.expiration.time.com.liferay.portal.tools.service.builder.test.model.VersionedEntry"));
 
@@ -273,13 +276,29 @@ public class VersionedEntryModelImpl extends BaseModelImpl<VersionedEntry>
 		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
+	public boolean getHead() {
+		return _head;
+	}
+
 	@Override
 	public boolean isHead() {
-		if (getHeadId() > 0) {
-			return false;
+		return _head;
+	}
+
+	public boolean getOriginalHead() {
+		return _originalHead;
+	}
+
+	public void setHead(boolean head) {
+		_columnBitmask |= HEAD_COLUMN_BITMASK;
+
+		if (!_setOriginalHead) {
+			_setOriginalHead = true;
+
+			_originalHead = _head;
 		}
 
-		return true;
+		_head = head;
 	}
 
 	@Override
@@ -311,6 +330,13 @@ public class VersionedEntryModelImpl extends BaseModelImpl<VersionedEntry>
 			_setOriginalHeadId = true;
 
 			_originalHeadId = _headId;
+		}
+
+		if (headId >= 0) {
+			setHead(false);
+		}
+		else {
+			setHead(true);
 		}
 
 		_headId = headId;
@@ -457,6 +483,10 @@ public class VersionedEntryModelImpl extends BaseModelImpl<VersionedEntry>
 
 		versionedEntryModelImpl._setOriginalGroupId = false;
 
+		versionedEntryModelImpl._originalHead = versionedEntryModelImpl._head;
+
+		versionedEntryModelImpl._setOriginalHead = false;
+
 		versionedEntryModelImpl._columnBitmask = 0;
 	}
 
@@ -471,6 +501,8 @@ public class VersionedEntryModelImpl extends BaseModelImpl<VersionedEntry>
 		versionedEntryCacheModel.versionedEntryId = getVersionedEntryId();
 
 		versionedEntryCacheModel.groupId = getGroupId();
+
+		versionedEntryCacheModel.head = isHead();
 
 		return versionedEntryCacheModel;
 	}
@@ -542,6 +574,9 @@ public class VersionedEntryModelImpl extends BaseModelImpl<VersionedEntry>
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
+	private boolean _head;
+	private boolean _originalHead;
+	private boolean _setOriginalHead;
 	private long _columnBitmask;
 	private VersionedEntry _escapedModel;
 }

@@ -163,11 +163,13 @@ public class LVEntryPersistenceTest {
 
 	@Test
 	public void testCountByUUID_G() throws Exception {
-		_persistence.countByUUID_G("", RandomTestUtil.nextLong());
+		_persistence.countByUUID_G("", RandomTestUtil.nextLong(),
+			RandomTestUtil.randomBoolean());
 
-		_persistence.countByUUID_G("null", 0L);
+		_persistence.countByUUID_G("null", 0L, RandomTestUtil.randomBoolean());
 
-		_persistence.countByUUID_G((String)null, 0L);
+		_persistence.countByUUID_G((String)null, 0L,
+			RandomTestUtil.randomBoolean());
 	}
 
 	@Test
@@ -184,11 +186,13 @@ public class LVEntryPersistenceTest {
 
 	@Test
 	public void testCountByG_UGK() throws Exception {
-		_persistence.countByG_UGK(RandomTestUtil.nextLong(), "");
+		_persistence.countByG_UGK(RandomTestUtil.nextLong(), "",
+			RandomTestUtil.randomBoolean());
 
-		_persistence.countByG_UGK(0L, "null");
+		_persistence.countByG_UGK(0L, "null", RandomTestUtil.randomBoolean());
 
-		_persistence.countByG_UGK(0L, (String)null);
+		_persistence.countByG_UGK(0L, (String)null,
+			RandomTestUtil.randomBoolean());
 	}
 
 	@Test

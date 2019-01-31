@@ -75,7 +75,8 @@ public class LVEntryModelImpl extends BaseModelImpl<LVEntry>
 			{ "defaultLanguageId", Types.VARCHAR },
 			{ "lvEntryId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
-			{ "uniqueGroupKey", Types.VARCHAR }
+			{ "uniqueGroupKey", Types.VARCHAR },
+			{ "head", Types.BOOLEAN }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -87,9 +88,10 @@ public class LVEntryModelImpl extends BaseModelImpl<LVEntry>
 		TABLE_COLUMNS_MAP.put("lvEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uniqueGroupKey", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("head", Types.BOOLEAN);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table LVEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,headId LONG,defaultLanguageId VARCHAR(75) null,lvEntryId LONG not null primary key,groupId LONG,uniqueGroupKey VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table LVEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,headId LONG,defaultLanguageId VARCHAR(75) null,lvEntryId LONG not null primary key,groupId LONG,uniqueGroupKey VARCHAR(75) null,head BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table LVEntry";
 	public static final String ORDER_BY_JPQL = " ORDER BY lvEntry.lvEntryId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY LVEntry.lvEntryId ASC";
@@ -106,10 +108,11 @@ public class LVEntryModelImpl extends BaseModelImpl<LVEntry>
 				"value.object.column.bitmask.enabled.com.liferay.portal.tools.service.builder.test.model.LVEntry"),
 			true);
 	public static final long GROUPID_COLUMN_BITMASK = 1L;
-	public static final long HEADID_COLUMN_BITMASK = 2L;
-	public static final long UNIQUEGROUPKEY_COLUMN_BITMASK = 4L;
-	public static final long UUID_COLUMN_BITMASK = 8L;
-	public static final long LVENTRYID_COLUMN_BITMASK = 16L;
+	public static final long HEAD_COLUMN_BITMASK = 2L;
+	public static final long HEADID_COLUMN_BITMASK = 4L;
+	public static final long UNIQUEGROUPKEY_COLUMN_BITMASK = 8L;
+	public static final long UUID_COLUMN_BITMASK = 16L;
+	public static final long LVENTRYID_COLUMN_BITMASK = 32L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.tools.service.builder.test.service.util.ServiceProps.get(
 				"lock.expiration.time.com.liferay.portal.tools.service.builder.test.model.LVEntry"));
 
@@ -468,13 +471,29 @@ public class LVEntryModelImpl extends BaseModelImpl<LVEntry>
 		return lvEntryLocalization.getContent();
 	}
 
+	public boolean getHead() {
+		return _head;
+	}
+
 	@Override
 	public boolean isHead() {
-		if (getHeadId() > 0) {
-			return false;
+		return _head;
+	}
+
+	public boolean getOriginalHead() {
+		return _originalHead;
+	}
+
+	public void setHead(boolean head) {
+		_columnBitmask |= HEAD_COLUMN_BITMASK;
+
+		if (!_setOriginalHead) {
+			_setOriginalHead = true;
+
+			_originalHead = _head;
 		}
 
-		return true;
+		_head = head;
 	}
 
 	@Override
@@ -533,6 +552,13 @@ public class LVEntryModelImpl extends BaseModelImpl<LVEntry>
 			_setOriginalHeadId = true;
 
 			_originalHeadId = _headId;
+		}
+
+		if (headId >= 0) {
+			setHead(false);
+		}
+		else {
+			setHead(true);
 		}
 
 		_headId = headId;
@@ -726,6 +752,10 @@ public class LVEntryModelImpl extends BaseModelImpl<LVEntry>
 
 		lvEntryModelImpl._originalUniqueGroupKey = lvEntryModelImpl._uniqueGroupKey;
 
+		lvEntryModelImpl._originalHead = lvEntryModelImpl._head;
+
+		lvEntryModelImpl._setOriginalHead = false;
+
 		lvEntryModelImpl._columnBitmask = 0;
 	}
 
@@ -764,6 +794,8 @@ public class LVEntryModelImpl extends BaseModelImpl<LVEntry>
 		if ((uniqueGroupKey != null) && (uniqueGroupKey.length() == 0)) {
 			lvEntryCacheModel.uniqueGroupKey = null;
 		}
+
+		lvEntryCacheModel.head = isHead();
 
 		return lvEntryCacheModel;
 	}
@@ -840,6 +872,9 @@ public class LVEntryModelImpl extends BaseModelImpl<LVEntry>
 	private boolean _setOriginalGroupId;
 	private String _uniqueGroupKey;
 	private String _originalUniqueGroupKey;
+	private boolean _head;
+	private boolean _originalHead;
+	private boolean _setOriginalHead;
 	private long _columnBitmask;
 	private LVEntry _escapedModel;
 }

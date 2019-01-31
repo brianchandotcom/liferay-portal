@@ -113,6 +113,9 @@ public class OpenSamlBootstrap {
 			"http://apache.org/xml/features/disallow-doctype-decl",
 			Boolean.TRUE);
 		builderFeatures.put(
+			"http://apache.org/xml/features/dom/defer-node-expansion",
+			Boolean.FALSE);
+		builderFeatures.put(
 			"http://javax.xml.XMLConstants/feature/secure-processing",
 			Boolean.TRUE);
 		builderFeatures.put(
@@ -120,9 +123,6 @@ public class OpenSamlBootstrap {
 			Boolean.FALSE);
 		builderFeatures.put(
 			"http://xml.org/sax/features/external-parameter-entities",
-			Boolean.FALSE);
-		builderFeatures.put(
-			"http://apache.org/xml/features/dom/defer-node-expansion",
 			Boolean.FALSE);
 
 		parserPool.setBuilderFeatures(builderFeatures);

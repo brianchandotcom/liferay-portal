@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
+import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
@@ -238,7 +239,8 @@ public interface CTCollectionLocalService extends BaseLocalService,
 	public List<CTCollection> getCTCollections(int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CTCollection> getCTCollections(long companyId);
+	public List<CTCollection> getCTCollections(long companyId,
+		QueryDefinition<CTCollection> queryDefinition);
 
 	/**
 	* Returns the number of ct collections.

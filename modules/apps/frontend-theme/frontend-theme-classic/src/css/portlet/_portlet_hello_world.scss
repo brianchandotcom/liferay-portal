@@ -1,6 +1,7 @@
-.portlet-hello-world .portlet-content {
-	background: url(../images/portlet_hello_world/welcome_bg.jpg) bottom left;
+.portlet-hello-world .portlet .portlet-content {
+	background: #4885B7 url(../images/portlet_hello_world/welcome_bg.jpg) bottom left;
 	background-size: cover;
+	color: $white;
 	min-height: 390px;
 	padding-top: 30px;
 
@@ -13,8 +14,9 @@
 	}
 
 	.portlet-title-text {
-		color: $dark-color;
-		font-size: 220%;
+		color: $white;
+		font-size: 2rem;
+		font-weight: 700;
 		text-transform: none;
 	}
 

@@ -33,7 +33,7 @@ public class DEDataRecordCollectionRequestBuilder {
 
 	public static DEDataRecordCollectionDeletePermissionsRequest.Builder
 		deletePermissionsBuilder(
-			long companyId, long scopedGroupId, String... roleNames) {
+			long companyId, long scopedGroupId, String[] roleNames) {
 
 		return new DEDataRecordCollectionDeletePermissionsRequest.Builder(
 			companyId, scopedGroupId, roleNames);

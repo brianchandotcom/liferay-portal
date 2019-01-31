@@ -82,7 +82,7 @@ public class DLViewMVCRenderCommand extends GetFolderMVCRenderCommand {
 	}
 
 	@Override
-	protected DLURLHelper getDLUrlHelper() {
+	protected DLURLHelper getDLURLHelper() {
 		return _dlurlHelper;
 	}
 

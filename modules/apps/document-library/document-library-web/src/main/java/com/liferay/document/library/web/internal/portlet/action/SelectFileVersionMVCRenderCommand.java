@@ -37,13 +37,13 @@ public class SelectFileVersionMVCRenderCommand
 	extends GetFileEntryMVCRenderCommand {
 
 	@Override
-	protected String getPath() {
-		return "/document_library/select_file_version.jsp";
+	protected DLURLHelper getDLURLHelper() {
+		return _dlurlHelper;
 	}
 
 	@Override
-	protected DLURLHelper getDLUrlHelper() {
-		return _dlurlHelper;
+	protected String getPath() {
+		return "/document_library/select_file_version.jsp";
 	}
 
 	@Reference

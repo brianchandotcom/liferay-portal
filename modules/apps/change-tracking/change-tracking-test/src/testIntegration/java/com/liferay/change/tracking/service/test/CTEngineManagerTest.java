@@ -249,6 +249,28 @@ public class CTEngineManagerTest {
 	}
 
 	@Test
+	public void testDeleteProductionCTCollection() throws Exception {
+		_ctEngineManager.enableChangeTracking(
+			TestPropsValues.getCompanyId(), TestPropsValues.getUserId());
+
+		Optional<CTCollection> ctCollectionOptional =
+			_ctEngineManager.getProductionCTCollectionOptional(
+				TestPropsValues.getCompanyId());
+
+		Assert.assertTrue(ctCollectionOptional.isPresent());
+
+		CTCollection ctCollection = ctCollectionOptional.get();
+
+		_ctEngineManager.deleteCTCollection(ctCollection.getCtCollectionId());
+
+		ctCollection = _ctCollectionLocalService.fetchCTCollection(
+			ctCollection.getCtCollectionId());
+
+		Assert.assertNotNull(
+			"Change tracking collection must have a value", ctCollection);
+	}
+
+	@Test
 	public void testDisableChangeTracking() throws PortalException {
 		_ctEngineManager.enableChangeTracking(
 			TestPropsValues.getCompanyId(), TestPropsValues.getUserId());

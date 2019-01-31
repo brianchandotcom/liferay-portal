@@ -49,6 +49,11 @@ public class UserSegmentsCriteriaContributor
 	public static final String KEY = "user";
 
 	@Override
+	public String getEntityName() {
+		return UserEntityModel.NAME;
+	}
+
+	@Override
 	public List<Field> getFields(PortletRequest portletRequest) {
 		return _entityModelFieldMapper.getFields(_entityModel, portletRequest);
 	}

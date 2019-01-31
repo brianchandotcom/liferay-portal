@@ -125,6 +125,8 @@ public class EditSegmentsEntryDisplayContext {
 				JSONFactoryUtil.createJSONObject();
 
 			jsonContributorObject.put(
+				"entityName", segmentsCriteriaContributor.getEntityName());
+			jsonContributorObject.put(
 				"name", segmentsCriteriaContributor.getLabel(locale));
 			jsonContributorObject.put(
 				"properties",

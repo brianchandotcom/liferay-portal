@@ -97,6 +97,11 @@ public class UserOrganizationSegmentsCriteriaContributor
 	}
 
 	@Override
+	public String getEntityName() {
+		return OrganizationEntityModel.NAME;
+	}
+
+	@Override
 	public List<Field> getFields(PortletRequest portletRequest) {
 		return _entityModelFieldMapper.getFields(_entityModel, portletRequest);
 	}

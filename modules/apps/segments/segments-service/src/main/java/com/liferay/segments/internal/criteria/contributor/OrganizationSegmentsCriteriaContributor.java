@@ -49,6 +49,11 @@ public class OrganizationSegmentsCriteriaContributor
 	public static final String KEY = "organization";
 
 	@Override
+	public String getEntityName() {
+		return OrganizationEntityModel.NAME;
+	}
+
+	@Override
 	public List<Field> getFields(PortletRequest portletRequest) {
 		return _entityModelFieldMapper.getFields(_entityModel, portletRequest);
 	}

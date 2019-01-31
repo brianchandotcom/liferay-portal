@@ -49,6 +49,11 @@ public class ContextSegmentsCriteriaContributor
 	public static final String KEY = "context";
 
 	@Override
+	public String getEntityName() {
+		return ContextEntityModel.NAME;
+	}
+
+	@Override
 	public List<Field> getFields(PortletRequest portletRequest) {
 		return _entityModelFieldMapper.getFields(_entityModel, portletRequest);
 	}

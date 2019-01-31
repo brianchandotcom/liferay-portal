@@ -65,6 +65,14 @@ public interface SegmentsCriteriaContributor {
 	}
 
 	/**
+	 * Returns the name of the entity model associated to the contributor.
+	 *
+	 * @return the name of the entity model associated to the contributor
+	 * @review
+	 */
+	public String getEntityName();
+
+	/**
 	 * Returns the list of fields that are supported by this contributor.
 	 *
 	 * @param  portletRequest the portlet request

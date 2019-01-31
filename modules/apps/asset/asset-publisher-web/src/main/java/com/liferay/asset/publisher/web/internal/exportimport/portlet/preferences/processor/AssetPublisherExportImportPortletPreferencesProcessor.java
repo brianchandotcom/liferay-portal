@@ -155,14 +155,15 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 				portletPreferences);
 		}
 		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to update portlet preferences while exporting " +
-						portletDataContext.getPortletId(),
-					e);
-			}
+			PortletDataException pde = new PortletDataException(
+				"Unable to update portlet preferences while exporting " +
+					portletDataContext.getPortletId(),
+				e);
 
-			return portletPreferences;
+			pde.setPortletId(AssetPublisherPortletKeys.ASSET_PUBLISHER);
+			pde.setType(PortletDataException.EXPORT_PORTLET_DATA);
+
+			throw pde;
 		}
 	}
 
@@ -181,14 +182,15 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 				portletDataContext, portletPreferences);
 		}
 		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to update portlet preferences while importing " +
-						portletDataContext.getPortletId(),
-					e);
-			}
+			PortletDataException pde = new PortletDataException(
+				"Unable to update portlet preferences while importing " +
+					portletDataContext.getPortletId(),
+				e);
 
-			return portletPreferences;
+			pde.setPortletId(AssetPublisherPortletKeys.ASSET_PUBLISHER);
+			pde.setType(PortletDataException.IMPORT_PORTLET_DATA);
+
+			throw pde;
 		}
 	}
 

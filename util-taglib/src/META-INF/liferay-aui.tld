@@ -1537,7 +1537,7 @@
 		<tag-class>com.liferay.taglib.aui.TranslationManagerTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description><![CDATA[Available locales of translation languages from which to choose.]]></description>
+			<description><![CDATA[Locales array with available translations.]]></description>
 			<name>availableLocales</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

@@ -103,13 +103,18 @@ public class ContentPageLayoutEditorDisplayContext
 
 		SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
 
+		soyContext.put("fragmentEntryId", 0);
+		soyContext.put("name", StringPool.BLANK);
+
 		String portletId = _getPortletId(content);
 
-		soyContext.put("fragmentEntryId", 0);
-		soyContext.put(
-			"name",
-			PortalUtil.getPortletTitle(portletId, themeDisplay.getLocale()));
-		soyContext.put("portletId", portletId);
+		if(Validator.isNotNull(portletId)) {
+			soyContext.put(
+				"name",
+				PortalUtil.getPortletTitle(
+					portletId, themeDisplay.getLocale()));
+			soyContext.put("portletId", portletId);
+		}
 
 		return soyContext;
 	}

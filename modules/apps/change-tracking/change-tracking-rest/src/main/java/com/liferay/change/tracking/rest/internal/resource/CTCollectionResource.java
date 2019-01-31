@@ -20,14 +20,13 @@ import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.rest.internal.exception.CTJaxRsException;
 import com.liferay.change.tracking.rest.internal.exception.CannotCreateCTCollectionException;
+import com.liferay.change.tracking.rest.internal.exception.CannotDeleteCTCollectionException;
 import com.liferay.change.tracking.rest.internal.exception.NoSuchProductionCTCollectionException;
 import com.liferay.change.tracking.rest.internal.model.collection.CTCollectionModel;
 import com.liferay.change.tracking.rest.internal.model.collection.CTCollectionUpdateModel;
 import com.liferay.change.tracking.rest.internal.util.CTJaxRsUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.CompanyLocalService;
-import com.liferay.portal.kernel.service.UserLocalService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +36,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -53,6 +53,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 
 /**
  * @author Zoltan Csaszi
+ * @author Daniel Kocsis
  */
 @Component(
 	property = {
@@ -104,6 +105,37 @@ public class CTCollectionResource {
 				new CannotCreateCTCollectionException(
 					companyId, "Cannot create Change Tracking Collection")
 		);
+	}
+
+	@DELETE
+	@Path("/{ctCollectionId}")
+	public Response deleteCTCollection(
+			@PathParam("ctCollectionId") long ctCollectionId)
+		throws CTJaxRsException {
+
+		Optional<CTCollection> ctCollectionOptional =
+			_ctEngineManager.getCTCollectionOptional(ctCollectionId);
+
+		if (!ctCollectionOptional.isPresent()) {
+			return Response.status(
+				Response.Status.NOT_FOUND
+			).build();
+		}
+
+		_ctEngineManager.deleteCTCollection(ctCollectionId);
+
+		ctCollectionOptional = _ctEngineManager.getCTCollectionOptional(
+			ctCollectionId);
+
+		if (ctCollectionOptional.isPresent()) {
+			throw new CannotDeleteCTCollectionException(
+				ctCollectionOptional.map(
+					CTCollection::getCompanyId
+				).get(),
+				"Cannot delete Change Tracking Collection");
+		}
+
+		return _noContent();
 	}
 
 	@GET
@@ -225,6 +257,12 @@ public class CTCollectionResource {
 		return builder.build();
 	}
 
+	private Response _noContent() {
+		Response.ResponseBuilder responseBuilder = Response.noContent();
+
+		return responseBuilder.build();
+	}
+
 	private static final String _TYPE_ACTIVE = "active";
 
 	private static final String _TYPE_ALL = "all";
@@ -232,12 +270,6 @@ public class CTCollectionResource {
 	private static final String _TYPE_PRODUCTION = "production";
 
 	@Reference
-	private CompanyLocalService _companyLocalService;
-
-	@Reference
 	private CTEngineManager _ctEngineManager;
-
-	@Reference
-	private UserLocalService _userLocalService;
 
 }

@@ -14,8 +14,6 @@
 
 package com.liferay.headless.collaboration.internal.resource;
 
-import com.liferay.headless.collaboration.dto.BlogPosting;
-import com.liferay.headless.collaboration.dto.Comment;
 import com.liferay.headless.collaboration.dto.ImageObject;
 import com.liferay.headless.collaboration.resource.ImageObjectResource;
 import com.liferay.portal.vulcan.context.Pagination;
@@ -44,31 +42,7 @@ import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
 public class ImageObjectResourceImpl implements ImageObjectResource {
 
 	@Override
-	public Page<Comment> getBlogPostingComment(
-			Integer parentId, Pagination pagination)
-		throws Exception {
-
-		return new Page(Collections.emptyList(), 0);
-	}
-
-	@Override
-	public Page<Comment> getCommentComment(
-			Integer parentId, Pagination pagination)
-		throws Exception {
-
-		return new Page(Collections.emptyList(), 0);
-	}
-
-	@Override
-	public Page<BlogPosting> getContentSpaceBlogPosting(
-			Integer parentId, Pagination pagination)
-		throws Exception {
-
-		return new Page(Collections.emptyList(), 0);
-	}
-
-	@Override
-	public Page<ImageObject> getImageObjectRepositoryImageObject(
+	public Page<ImageObject> getImageObjectRepositoryImageObjectPage(
 			Integer parentId, Pagination pagination)
 		throws Exception {
 

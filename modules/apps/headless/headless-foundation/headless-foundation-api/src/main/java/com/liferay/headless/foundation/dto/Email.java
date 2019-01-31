@@ -25,4 +25,42 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Generated("")
 @XmlRootElement(name = "Email")
 public class Email {
+
+	public String getEmail() {
+		return _email;
+	}
+
+	public Integer getId() {
+		return _id;
+	}
+
+	public String getSelf() {
+		return _self;
+	}
+
+	public String getType() {
+		return _type;
+	}
+
+	public void setEmail(String email) {
+		_email = email;
+	}
+
+	public void setId(Integer id) {
+		_id = id;
+	}
+
+	public void setSelf(String self) {
+		_self = self;
+	}
+
+	public void setType(String type) {
+		_type = type;
+	}
+
+	private String _email;
+	private Integer _id;
+	private String _self;
+	private String _type;
+
 }

@@ -14,15 +14,45 @@
 
 package com.liferay.headless.foundation.resource;
 
+import com.liferay.headless.foundation.dto.PostalAddress;
+import com.liferay.oauth2.provider.scope.RequiresScope;
+import com.liferay.portal.vulcan.context.Pagination;
+import com.liferay.portal.vulcan.dto.Page;
+
 import javax.annotation.Generated;
 
+import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 
 /**
+ * To access this resource, run:
+ *
+ *     curl -u your@email.com:yourpassword -D - http://localhost:8080/o/headless-foundation/1.0.0
+ *
  * @author Javier Gamarra
  * @generated
  */
 @Generated("")
-@Path("/1.0.0/postaladdress")
+@Path("/1.0.0")
 public interface PostalAddressResource {
+
+	@GET
+	@Path("/addresses/{id}")
+	@Produces({"*/*"})
+	@RequiresScope("headless-foundation-application.read")
+	public PostalAddress getAddresses(@PathParam("id") Integer id)
+		throws Exception;
+
+	@GET
+	@Path("/addresses")
+	@Produces({"*/*"})
+	@RequiresScope("headless-foundation-application.read")
+	public Page<PostalAddress> getAddressesPage(
+			@PathParam("genericparentid") Integer genericparentid,
+			@Context Pagination pagination)
+		throws Exception;
+
 }

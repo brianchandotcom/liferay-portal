@@ -26,14 +26,95 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "ContentDocument")
 public class ContentDocument {
 
-	public long getId() {
+	public String getContentUrl() {
+		return _contentUrl;
+	}
+
+	public String getCreator() {
+		return _creator;
+	}
+
+	public String getDateCreated() {
+		return _dateCreated;
+	}
+
+	public String getDateModified() {
+		return _dateModified;
+	}
+
+	public String getEncodingFormat() {
+		return _encodingFormat;
+	}
+
+	public String getFileExtension() {
+		return _fileExtension;
+	}
+
+	public Integer getId() {
 		return _id;
 	}
 
-	public void setId(long id) {
+	public String getSelf() {
+		return _self;
+	}
+
+	public Number getSizeInBytes() {
+		return _sizeInBytes;
+	}
+
+	public String getTitle() {
+		return _title;
+	}
+
+	public void setContentUrl(String contentUrl) {
+		_contentUrl = contentUrl;
+	}
+
+	public void setCreator(String creator) {
+		_creator = creator;
+	}
+
+	public void setDateCreated(String dateCreated) {
+		_dateCreated = dateCreated;
+	}
+
+	public void setDateModified(String dateModified) {
+		_dateModified = dateModified;
+	}
+
+	public void setEncodingFormat(String encodingFormat) {
+		_encodingFormat = encodingFormat;
+	}
+
+	public void setFileExtension(String fileExtension) {
+		_fileExtension = fileExtension;
+	}
+
+	public void setId(Integer id) {
 		_id = id;
 	}
 
-	private long _id;
+	public void setSelf(String self) {
+		_self = self;
+	}
+
+	public void setSizeInBytes(Number sizeInBytes) {
+		_sizeInBytes = sizeInBytes;
+	}
+
+	public void setTitle(String title) {
+		_title = title;
+	}
+
+	private String _contentUrl;
+	private String _creator;
+	private String _dateCreated;
+	private String _dateModified;
+	private String _encodingFormat;
+	private String _fileExtension;
+	private Integer _id;
+	private String _self;
+	private Number _sizeInBytes;
+	private String _title;
 
 }

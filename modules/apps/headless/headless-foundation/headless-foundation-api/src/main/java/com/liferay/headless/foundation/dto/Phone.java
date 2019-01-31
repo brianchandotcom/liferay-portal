@@ -25,4 +25,51 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Generated("")
 @XmlRootElement(name = "Phone")
 public class Phone {
+
+	public String getExtension() {
+		return _extension;
+	}
+
+	public Integer getId() {
+		return _id;
+	}
+
+	public String getPhoneNumber() {
+		return _phoneNumber;
+	}
+
+	public String getPhoneType() {
+		return _phoneType;
+	}
+
+	public String getSelf() {
+		return _self;
+	}
+
+	public void setExtension(String extension) {
+		_extension = extension;
+	}
+
+	public void setId(Integer id) {
+		_id = id;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		_phoneNumber = phoneNumber;
+	}
+
+	public void setPhoneType(String phoneType) {
+		_phoneType = phoneType;
+	}
+
+	public void setSelf(String self) {
+		_self = self;
+	}
+
+	private String _extension;
+	private Integer _id;
+	private String _phoneNumber;
+	private String _phoneType;
+	private String _self;
+
 }

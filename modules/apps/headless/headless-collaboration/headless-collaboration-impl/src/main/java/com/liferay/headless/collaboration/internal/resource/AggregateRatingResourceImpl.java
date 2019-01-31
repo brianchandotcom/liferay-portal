@@ -15,14 +15,7 @@
 package com.liferay.headless.collaboration.internal.resource;
 
 import com.liferay.headless.collaboration.dto.AggregateRating;
-import com.liferay.headless.collaboration.dto.BlogPosting;
-import com.liferay.headless.collaboration.dto.Comment;
-import com.liferay.headless.collaboration.dto.ImageObject;
 import com.liferay.headless.collaboration.resource.AggregateRatingResource;
-import com.liferay.portal.vulcan.context.Pagination;
-import com.liferay.portal.vulcan.dto.Page;
-
-import java.util.Collections;
 
 import javax.annotation.Generated;
 
@@ -47,38 +40,6 @@ public class AggregateRatingResourceImpl implements AggregateRatingResource {
 	@Override
 	public AggregateRating getAggregateRating(Integer id) throws Exception {
 		return new AggregateRating();
-	}
-
-	@Override
-	public Page<Comment> getBlogPostingComment(
-			Integer parentId, Pagination pagination)
-		throws Exception {
-
-		return new Page(Collections.emptyList(), 0);
-	}
-
-	@Override
-	public Page<Comment> getCommentComment(
-			Integer parentId, Pagination pagination)
-		throws Exception {
-
-		return new Page(Collections.emptyList(), 0);
-	}
-
-	@Override
-	public Page<BlogPosting> getContentSpaceBlogPosting(
-			Integer parentId, Pagination pagination)
-		throws Exception {
-
-		return new Page(Collections.emptyList(), 0);
-	}
-
-	@Override
-	public Page<ImageObject> getImageObjectRepositoryImageObject(
-			Integer parentId, Pagination pagination)
-		throws Exception {
-
-		return new Page(Collections.emptyList(), 0);
 	}
 
 }

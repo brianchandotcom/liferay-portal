@@ -14,12 +14,7 @@
 
 package com.liferay.headless.web.experience.internal.resource;
 
-import com.liferay.headless.web.experience.dto.ContentDocument;
-import com.liferay.headless.web.experience.dto.ContentDocumentCollection;
 import com.liferay.headless.web.experience.resource.ContentDocumentResource;
-import com.liferay.portal.vulcan.context.Pagination;
-
-import java.util.Collections;
 
 import javax.annotation.Generated;
 
@@ -40,13 +35,4 @@ import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
 )
 @Generated("")
 public class ContentDocumentResourceImpl implements ContentDocumentResource {
-
-	@Override
-	public ContentDocumentCollection<ContentDocument> getContentDocumentCollection(
-			Pagination pagination, String size)
-		throws Exception {
-
-		return new ContentDocumentCollection(Collections.emptyList(), 0);
-	}
-
 }

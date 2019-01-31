@@ -25,4 +25,87 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Generated("")
 @XmlRootElement(name = "Role")
 public class Role {
+
+	public String[] getAvailableLanguages() {
+		return _availableLanguages;
+	}
+
+	public UserAccount getCreator() {
+		return _creator;
+	}
+
+	public String getDateCreated() {
+		return _dateCreated;
+	}
+
+	public String getDateModified() {
+		return _dateModified;
+	}
+
+	public String getDescription() {
+		return _description;
+	}
+
+	public Integer getId() {
+		return _id;
+	}
+
+	public String getName() {
+		return _name;
+	}
+
+	public String getRoleType() {
+		return _roleType;
+	}
+
+	public String getSelf() {
+		return _self;
+	}
+
+	public void setAvailableLanguages(String[] availableLanguages) {
+		_availableLanguages = availableLanguages;
+	}
+
+	public void setCreator(UserAccount creator) {
+		_creator = creator;
+	}
+
+	public void setDateCreated(String dateCreated) {
+		_dateCreated = dateCreated;
+	}
+
+	public void setDateModified(String dateModified) {
+		_dateModified = dateModified;
+	}
+
+	public void setDescription(String description) {
+		_description = description;
+	}
+
+	public void setId(Integer id) {
+		_id = id;
+	}
+
+	public void setName(String name) {
+		_name = name;
+	}
+
+	public void setRoleType(String roleType) {
+		_roleType = roleType;
+	}
+
+	public void setSelf(String self) {
+		_self = self;
+	}
+
+	private String[] _availableLanguages;
+	private UserAccount _creator;
+	private String _dateCreated;
+	private String _dateModified;
+	private String _description;
+	private Integer _id;
+	private String _name;
+	private String _roleType;
+	private String _self;
+
 }

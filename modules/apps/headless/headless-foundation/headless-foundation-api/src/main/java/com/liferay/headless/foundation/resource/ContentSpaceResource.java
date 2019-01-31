@@ -14,15 +14,33 @@
 
 package com.liferay.headless.foundation.resource;
 
+import com.liferay.headless.foundation.dto.ContentSpace;
+import com.liferay.oauth2.provider.scope.RequiresScope;
+
 import javax.annotation.Generated;
 
+import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 
 /**
+ * To access this resource, run:
+ *
+ *     curl -u your@email.com:yourpassword -D - http://localhost:8080/o/headless-foundation/1.0.0
+ *
  * @author Javier Gamarra
  * @generated
  */
 @Generated("")
-@Path("/1.0.0/contentspace")
+@Path("/1.0.0")
 public interface ContentSpaceResource {
+
+	@GET
+	@Path("/content-space/{id}")
+	@Produces({"*/*"})
+	@RequiresScope("headless-foundation-application.read")
+	public ContentSpace getContentSpace(@PathParam("id") Integer id)
+		throws Exception;
+
 }

@@ -14,15 +14,49 @@
 
 package com.liferay.headless.foundation.resource;
 
+import com.liferay.headless.foundation.dto.Vocabulary;
+import com.liferay.oauth2.provider.scope.RequiresScope;
+import com.liferay.portal.vulcan.context.Pagination;
+import com.liferay.portal.vulcan.dto.Page;
+
 import javax.annotation.Generated;
 
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 
 /**
+ * To access this resource, run:
+ *
+ *     curl -u your@email.com:yourpassword -D - http://localhost:8080/o/headless-foundation/1.0.0
+ *
  * @author Javier Gamarra
  * @generated
  */
 @Generated("")
-@Path("/1.0.0/vocabulary")
+@Path("/1.0.0")
 public interface VocabularyResource {
+
+	@GET
+	@Path("/content-space/{parent-id}/vocabularies")
+	@Produces({"*/*"})
+	@RequiresScope("headless-foundation-application.read")
+	public Page<Vocabulary> getContentSpaceVocabulariesPage(
+			@PathParam("parent-id") Integer parentId,
+			@Context Pagination pagination)
+		throws Exception;
+
+	@Consumes({"*/*"})
+	@Path("/content-space/{parent-id}/vocabularies/batch-create")
+	@POST
+	@Produces({"*/*"})
+	@RequiresScope("headless-foundation-application.write")
+	public Vocabulary postContentSpaceVocabulariesBatchCreate(
+			@PathParam("parent-id") Integer parentId)
+		throws Exception;
+
 }

@@ -15,11 +15,7 @@
 package com.liferay.headless.web.experience.internal.resource;
 
 import com.liferay.headless.web.experience.dto.AggregateRating;
-import com.liferay.headless.web.experience.dto.AggregateRatingCollection;
 import com.liferay.headless.web.experience.resource.AggregateRatingResource;
-import com.liferay.portal.vulcan.context.Pagination;
-
-import java.util.Collections;
 
 import javax.annotation.Generated;
 
@@ -42,11 +38,8 @@ import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
 public class AggregateRatingResourceImpl implements AggregateRatingResource {
 
 	@Override
-	public AggregateRatingCollection<AggregateRating> getAggregateRatingCollection(
-			Pagination pagination, String size)
-		throws Exception {
-
-		return new AggregateRatingCollection(Collections.emptyList(), 0);
+	public AggregateRating getAggregateRating(Integer id) throws Exception {
+		return new AggregateRating();
 	}
 
 }

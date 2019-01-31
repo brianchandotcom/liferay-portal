@@ -64,23 +64,25 @@ import ${import};
 	@JSONWebService
 </#if>
 
-<#if entity.hasRemoteService() && !stringUtil.equals(sessionTypeName, "Local") && osgiModule>
-	@OSGiBeanProperties(
-		property = {
-			"json.web.service.context.name=${portletShortName?lower_case}",
-			"json.web.service.context.path=${entity.name}"
-		},
-		service = ${entity.name}${sessionTypeName}Service.class
-	)
-<#elseif stringUtil.equals(sessionTypeName, "Local") && entity.versionEntity??>
-	<#assign versionEntity = entity.versionEntity />
+<#if !ds>
+	<#if entity.hasRemoteService() && !stringUtil.equals(sessionTypeName, "Local") && osgiModule>
+		@OSGiBeanProperties(
+			property = {
+				"json.web.service.context.name=${portletShortName?lower_case}",
+				"json.web.service.context.path=${entity.name}"
+			},
+			service = ${entity.name}${sessionTypeName}Service.class
+		)
+	<#elseif stringUtil.equals(sessionTypeName, "Local") && entity.versionEntity??>
+		<#assign versionEntity = entity.versionEntity />
 
-	@OSGiBeanProperties(
-		property = {
-			"model.class.name=${apiPackagePath}.model.${entity.name}",
-			"version.model.class.name=${apiPackagePath}.model.${versionEntity.name}"
-		}
-	)
+		@OSGiBeanProperties(
+			property = {
+				"model.class.name=${apiPackagePath}.model.${entity.name}",
+				"version.model.class.name=${apiPackagePath}.model.${versionEntity.name}"
+			}
+		)
+	</#if>
 </#if>
 
 @ProviderType

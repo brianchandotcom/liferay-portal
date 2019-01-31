@@ -218,46 +218,56 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 	public static final String TX_MANAGER = "${entity.getTXManager()}";
 
 	<#if entity.hasEagerBlobColumn()>
-		public static final boolean ENTITY_CACHE_ENABLED = false;
+		<#if !ds>
+			public static final boolean ENTITY_CACHE_ENABLED = false;
 
-		public static final boolean FINDER_CACHE_ENABLED = false;
+			public static final boolean FINDER_CACHE_ENABLED = false;
+		</#if>
 	<#else>
-		public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(${propsUtil}.get("value.object.entity.cache.enabled.${apiPackagePath}.model.${entity.name}"),
+		<#if !ds>
+			public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(${propsUtil}.get("value.object.entity.cache.enabled.${apiPackagePath}.model.${entity.name}"),
 
-		<#if entity.isCacheEnabled()>
-			true
-		<#else>
-			false
+			<#if entity.isCacheEnabled()>
+				true
+			<#else>
+				false
+			</#if>
+
+			);
+
+			public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(${propsUtil}.get("value.object.finder.cache.enabled.${apiPackagePath}.model.${entity.name}"),
+
+			<#if entity.isCacheEnabled()>
+				true
+			<#else>
+				false
+			</#if>
+
+			);
 		</#if>
-
-		);
-
-		public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(${propsUtil}.get("value.object.finder.cache.enabled.${apiPackagePath}.model.${entity.name}"),
-
-		<#if entity.isCacheEnabled()>
-			true
-		<#else>
-			false
-		</#if>
-
-		);
 
 		<#assign columnBitmaskEnabled = true />
 
 		<#if entity.finderEntityColumns?size == 0>
-			public static final boolean COLUMN_BITMASK_ENABLED = false;
+			<#if !ds>
+				public static final boolean COLUMN_BITMASK_ENABLED = false;
+			</#if>
 
 			<#assign columnBitmaskEnabled = false />
 		</#if>
 
 		<#if entity.finderEntityColumns?size &gt; 64>
-			public static final boolean COLUMN_BITMASK_ENABLED = false;
+			<#if !ds>
+				public static final boolean COLUMN_BITMASK_ENABLED = false;
+			</#if>
 
 			<#assign columnBitmaskEnabled = false />
 		</#if>
 
 		<#if columnBitmaskEnabled>
-			public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(${propsUtil}.get("value.object.column.bitmask.enabled.${apiPackagePath}.model.${entity.name}"), true);
+			<#if !ds>
+				public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(${propsUtil}.get("value.object.column.bitmask.enabled.${apiPackagePath}.model.${entity.name}"), true);
+			</#if>
 
 			<#assign columnBitmask = 1 />
 
@@ -275,6 +285,16 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 				</#if>
 			</#list>
 		</#if>
+	</#if>
+
+	<#if ds>
+		public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
+			_entityCacheEnabled = entityCacheEnabled;
+		}
+
+		public static void setFinderCacheEnabled(boolean finderCacheEnabled) {
+			_finderCacheEnabled = finderCacheEnabled;
+		}
 	</#if>
 
 	<#if entity.hasRemoteService()>
@@ -353,7 +373,9 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 		</#if>
 	</#list>
 
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(${propsUtil}.get("lock.expiration.time.${apiPackagePath}.model.${entity.name}"));
+	<#if !ds>
+		public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(${propsUtil}.get("lock.expiration.time.${apiPackagePath}.model.${entity.name}"));
+	</#if>
 
 	public ${entity.name}ModelImpl() {
 	}
@@ -1511,12 +1533,20 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 
 	@Override
 	public boolean isEntityCacheEnabled() {
-		return ENTITY_CACHE_ENABLED;
+		<#if ds>
+			return _entityCacheEnabled;
+		<#else>
+			return ENTITY_CACHE_ENABLED;
+		</#if>
 	}
 
 	@Override
 	public boolean isFinderCacheEnabled() {
-		return FINDER_CACHE_ENABLED;
+		<#if ds>
+			return _finderCacheEnabled;
+		<#else>
+			return FINDER_CACHE_ENABLED;
+		</#if>
 	}
 
 	@Override
@@ -1715,6 +1745,11 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 	private static final ClassLoader _classLoader = ${entity.name}.class.getClassLoader();
 
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {${entity.name}.class, ModelWrapper.class};
+
+	<#if ds>
+		private static boolean _entityCacheEnabled;
+		private static boolean _finderCacheEnabled;
+	</#if>
 
 	<#if entity.versionedEntity??>
 		<#assign versionedEntity = entity.versionedEntity />

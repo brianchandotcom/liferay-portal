@@ -89,8 +89,9 @@ public class RESTBuilder {
 			_createResourceImplFile(context, schemaName);
 		}
 
-		FileUtil.format(new File(restConfigFileName));
-		FileUtil.format(new File(restOpenAPIFileName));
+		// FileUtil.format(new File(restConfigFileName));
+		// FileUtil.format(new File(restOpenAPIFileName));
+
 	}
 
 	private File _createApplicationFile(Map<String, Object> context)

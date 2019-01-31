@@ -18,13 +18,13 @@ import com.liferay.headless.web.experience.dto.Comment;
 import com.liferay.headless.web.experience.dto.ContentStructure;
 import com.liferay.headless.web.experience.dto.StructuredContent;
 import com.liferay.oauth2.provider.scope.RequiresScope;
+import com.liferay.portal.vulcan.context.AcceptLanguage;
 import com.liferay.portal.vulcan.context.Pagination;
 import com.liferay.portal.vulcan.dto.Page;
 
 import javax.annotation.Generated;
 
 import javax.ws.rs.GET;
-import javax.ws.rs.HeaderParam;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -49,9 +49,10 @@ public interface ContentStructureResource {
 	@RequiresScope("headless-web-experience-application.read")
 	public Page<StructuredContent> getContentSpaceStructuredContentsPage(
 			@PathParam("parent-id") Integer parentId,
-			@HeaderParam("Accept-Language") String AcceptLanguage,
 			@QueryParam("filter") String filter,
-			@QueryParam("sort") String sort, @Context Pagination pagination)
+			@QueryParam("sort") String sort,
+			@Context AcceptLanguage acceptLanguage,
+			@Context Pagination pagination)
 		throws Exception;
 
 	@GET

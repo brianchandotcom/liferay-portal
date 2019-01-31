@@ -54,7 +54,8 @@ public interface FolderResource {
 	@Produces({"*/*"})
 	@RequiresScope("headless-document-library-application.read")
 	public Page<Document> getDocumentsRepositoryDocumentPage(
-			Folder parentId, @Context Pagination pagination)
+			@PathParam("parent-id") Long parentId,
+			@Context Pagination pagination)
 		throws Exception;
 
 	@GET
@@ -62,7 +63,8 @@ public interface FolderResource {
 	@Produces({"*/*"})
 	@RequiresScope("headless-document-library-application.read")
 	public Page<Folder> getDocumentsRepositoryFolderPage(
-			Folder parentId, @Context Pagination pagination)
+			@PathParam("parent-id") Long parentId,
+			@Context Pagination pagination)
 		throws Exception;
 
 	@GET
@@ -70,7 +72,8 @@ public interface FolderResource {
 	@Produces({"*/*"})
 	@RequiresScope("headless-document-library-application.read")
 	public Page<Document> getFolderDocumentPage(
-			Folder parentId, @Context Pagination pagination)
+			@PathParam("parent-id") Long parentId,
+			@Context Pagination pagination)
 		throws Exception;
 
 	@GET
@@ -78,7 +81,8 @@ public interface FolderResource {
 	@Produces({"*/*"})
 	@RequiresScope("headless-document-library-application.read")
 	public Page<Folder> getFolderFolderPage(
-			Folder parentId, @Context Pagination pagination)
+			@PathParam("parent-id") Long parentId,
+			@Context Pagination pagination)
 		throws Exception;
 
 	@Consumes({"*/*"})
@@ -86,7 +90,8 @@ public interface FolderResource {
 	@POST
 	@Produces({"*/*"})
 	@RequiresScope("headless-document-library-application.write")
-	public Folder postDocumentsRepositoryFolderBatchCreate(Folder parentId)
+	public Folder postDocumentsRepositoryFolderBatchCreate(
+			@PathParam("parent-id") Long parentId)
 		throws Exception;
 
 	@Consumes({"*/*"})
@@ -94,6 +99,8 @@ public interface FolderResource {
 	@POST
 	@Produces({"*/*"})
 	@RequiresScope("headless-document-library-application.write")
-	public Folder postFolderFolderBatchCreate(Folder parentId) throws Exception;
+	public Folder postFolderFolderBatchCreate(
+			@PathParam("parent-id") Long parentId)
+		throws Exception;
 
 }

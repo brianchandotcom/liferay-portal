@@ -18,6 +18,7 @@ import com.liferay.headless.web.experience.dto.Comment;
 import com.liferay.headless.web.experience.dto.ContentStructure;
 import com.liferay.headless.web.experience.dto.StructuredContent;
 import com.liferay.headless.web.experience.resource.ContentStructureResource;
+import com.liferay.portal.vulcan.context.AcceptLanguage;
 import com.liferay.portal.vulcan.context.Pagination;
 import com.liferay.portal.vulcan.dto.Page;
 
@@ -45,8 +46,8 @@ public class ContentStructureResourceImpl implements ContentStructureResource {
 
 	@Override
 	public Page<StructuredContent> getContentSpaceStructuredContentsPage(
-			Integer parentId, String AcceptLanguage, String filter, String sort,
-			Pagination pagination)
+			Integer parentId, String filter, String sort,
+			AcceptLanguage acceptLanguage, Pagination pagination)
 		throws Exception {
 
 		return new Page(Collections.emptyList(), 0);

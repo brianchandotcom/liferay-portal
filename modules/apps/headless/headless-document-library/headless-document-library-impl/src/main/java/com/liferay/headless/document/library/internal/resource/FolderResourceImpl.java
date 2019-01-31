@@ -49,7 +49,7 @@ public class FolderResourceImpl implements FolderResource {
 
 	@Override
 	public Page<Document> getDocumentsRepositoryDocumentPage(
-			Folder parentId, Pagination pagination)
+			Long parentId, Pagination pagination)
 		throws Exception {
 
 		return new Page(Collections.emptyList(), 0);
@@ -57,7 +57,7 @@ public class FolderResourceImpl implements FolderResource {
 
 	@Override
 	public Page<Folder> getDocumentsRepositoryFolderPage(
-			Folder parentId, Pagination pagination)
+			Long parentId, Pagination pagination)
 		throws Exception {
 
 		return new Page(Collections.emptyList(), 0);
@@ -65,7 +65,7 @@ public class FolderResourceImpl implements FolderResource {
 
 	@Override
 	public Page<Document> getFolderDocumentPage(
-			Folder parentId, Pagination pagination)
+			Long parentId, Pagination pagination)
 		throws Exception {
 
 		return new Page(Collections.emptyList(), 0);
@@ -73,23 +73,21 @@ public class FolderResourceImpl implements FolderResource {
 
 	@Override
 	public Page<Folder> getFolderFolderPage(
-			Folder parentId, Pagination pagination)
+			Long parentId, Pagination pagination)
 		throws Exception {
 
 		return new Page(Collections.emptyList(), 0);
 	}
 
 	@Override
-	public Folder postDocumentsRepositoryFolderBatchCreate(Folder parentId)
+	public Folder postDocumentsRepositoryFolderBatchCreate(Long parentId)
 		throws Exception {
 
 		return new Folder();
 	}
 
 	@Override
-	public Folder postFolderFolderBatchCreate(Folder parentId)
-		throws Exception {
-
+	public Folder postFolderFolderBatchCreate(Long parentId) throws Exception {
 		return new Folder();
 	}
 

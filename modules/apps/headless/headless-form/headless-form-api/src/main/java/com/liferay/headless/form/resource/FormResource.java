@@ -18,6 +18,7 @@ import com.liferay.headless.form.dto.Form;
 import com.liferay.headless.form.dto.FormRecord;
 import com.liferay.headless.form.dto.FormStructure;
 import com.liferay.oauth2.provider.scope.RequiresScope;
+import com.liferay.portal.vulcan.context.AcceptLanguage;
 import com.liferay.portal.vulcan.context.Pagination;
 import com.liferay.portal.vulcan.dto.Page;
 
@@ -25,7 +26,6 @@ import javax.annotation.Generated;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
-import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -90,8 +90,7 @@ public interface FormResource {
 	@Produces({"*/*"})
 	@RequiresScope("headless-form-application.write")
 	public Form postFormEvaluateContext(
-			@PathParam("id") Integer id,
-			@HeaderParam("Accept-Language") String AcceptLanguage)
+			@PathParam("id") Integer id, @Context AcceptLanguage acceptLanguage)
 		throws Exception;
 
 	@Consumes({"*/*"})

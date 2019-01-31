@@ -18,6 +18,7 @@ import com.liferay.headless.form.dto.Form;
 import com.liferay.headless.form.dto.FormRecord;
 import com.liferay.headless.form.dto.FormStructure;
 import com.liferay.headless.form.resource.FormResource;
+import com.liferay.portal.vulcan.context.AcceptLanguage;
 import com.liferay.portal.vulcan.context.Pagination;
 import com.liferay.portal.vulcan.dto.Page;
 
@@ -78,7 +79,8 @@ public class FormResourceImpl implements FormResource {
 	}
 
 	@Override
-	public Form postFormEvaluateContext(Integer id, String AcceptLanguage)
+	public Form postFormEvaluateContext(
+			Integer id, AcceptLanguage acceptLanguage)
 		throws Exception {
 
 		return new Form();

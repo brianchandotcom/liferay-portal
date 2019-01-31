@@ -26,6 +26,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 
@@ -46,7 +47,8 @@ public interface DocumentResource {
 	@Produces({"*/*"})
 	@RequiresScope("headless-document-library-application.read")
 	public Page<Document> getDocumentsRepositoryDocumentPage(
-			Folder parentId, @Context Pagination pagination)
+			@PathParam("parent-id") Long parentId,
+			@Context Pagination pagination)
 		throws Exception;
 
 	@GET
@@ -54,7 +56,8 @@ public interface DocumentResource {
 	@Produces({"*/*"})
 	@RequiresScope("headless-document-library-application.read")
 	public Page<Folder> getDocumentsRepositoryFolderPage(
-			Folder parentId, @Context Pagination pagination)
+			@PathParam("parent-id") Long parentId,
+			@Context Pagination pagination)
 		throws Exception;
 
 	@GET
@@ -62,7 +65,8 @@ public interface DocumentResource {
 	@Produces({"*/*"})
 	@RequiresScope("headless-document-library-application.read")
 	public Page<Document> getFolderDocumentPage(
-			Folder parentId, @Context Pagination pagination)
+			@PathParam("parent-id") Long parentId,
+			@Context Pagination pagination)
 		throws Exception;
 
 	@GET
@@ -70,7 +74,8 @@ public interface DocumentResource {
 	@Produces({"*/*"})
 	@RequiresScope("headless-document-library-application.read")
 	public Page<Folder> getFolderFolderPage(
-			Folder parentId, @Context Pagination pagination)
+			@PathParam("parent-id") Long parentId,
+			@Context Pagination pagination)
 		throws Exception;
 
 	@Consumes({"*/*"})
@@ -78,7 +83,8 @@ public interface DocumentResource {
 	@POST
 	@Produces({"*/*"})
 	@RequiresScope("headless-document-library-application.write")
-	public Document postDocumentsRepositoryDocumentBatchCreate(Folder parentId)
+	public Document postDocumentsRepositoryDocumentBatchCreate(
+			@PathParam("parent-id") Long parentId)
 		throws Exception;
 
 	@Consumes({"*/*"})
@@ -86,7 +92,8 @@ public interface DocumentResource {
 	@POST
 	@Produces({"*/*"})
 	@RequiresScope("headless-document-library-application.write")
-	public Document postFolderDocumentBatchCreate(Folder parentId)
+	public Document postFolderDocumentBatchCreate(
+			@PathParam("parent-id") Long parentId)
 		throws Exception;
 
 }

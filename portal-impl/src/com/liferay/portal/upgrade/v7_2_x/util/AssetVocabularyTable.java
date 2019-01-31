@@ -39,7 +39,7 @@ public class AssetVocabularyTable {
 		{"modifiedDate", Types.TIMESTAMP},
 		{"name", Types.VARCHAR},
 		{"title", Types.VARCHAR},
-		{"description", Types.VARCHAR},
+		{"description_", Types.VARCHAR},
 		{"settings_", Types.VARCHAR},
 		{"lastPublishDate", Types.TIMESTAMP}
 	};
@@ -69,14 +69,14 @@ TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 
 TABLE_COLUMNS_MAP.put("title", Types.VARCHAR);
 
-TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
+TABLE_COLUMNS_MAP.put("description_", Types.VARCHAR);
 
 TABLE_COLUMNS_MAP.put("settings_", Types.VARCHAR);
 
 TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 
 }
-	public static final String TABLE_SQL_CREATE = "create table AssetVocabulary (uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,vocabularyId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,title STRING null,description STRING null,settings_ STRING null,lastPublishDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table AssetVocabulary (uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,vocabularyId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,title STRING null,description_ STRING null,settings_ STRING null,lastPublishDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table AssetVocabulary";
 

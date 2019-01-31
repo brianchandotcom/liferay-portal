@@ -7,6 +7,7 @@ package ${configYAML.apiPackagePath}.resource;
 </#compress>
 
 import com.liferay.oauth2.provider.scope.RequiresScope;
+import com.liferay.portal.vulcan.context.AcceptLanguage;
 import com.liferay.portal.vulcan.context.Pagination;
 import com.liferay.portal.vulcan.dto.Page;
 
@@ -140,12 +141,15 @@ public interface ${schemaName}Resource {
 
 		<#if operation.parameters??>
 			<#assign
+				acceptLanguageParameter = false
 				pageParameter = false
 				perPageParameter = false
 			/>
 
 			<#list operation.parameters as parameter>
-				<#if stringUtil.equals(parameter.name, "page")>
+				<#if stringUtil.equals(parameter.name, "Accept-Language")>
+					<#assign acceptLanguageParameter = true />
+				<#elseif stringUtil.equals(parameter.name, "page")>
 					<#assign pageParameter = true />
 				<#elseif stringUtil.equals(parameter.name, "per_page")>
 					<#assign perPageParameter = true />
@@ -155,6 +159,10 @@ public interface ${schemaName}Resource {
 			<#assign methodParameters>
 				<@compress single_line=true>
 					<#list operation.parameters as parameter>
+						<#if acceptLanguageParameter && stringUtil.equals(parameter.name, "Accept-Language")>
+							<#continue>
+						</#if>
+
 						<#if pageParameter && perPageParameter && (stringUtil.equals(parameter.name, "page") || stringUtil.equals(parameter.name, "per_page"))>
 							<#continue>
 						</#if>
@@ -189,6 +197,10 @@ public interface ${schemaName}Resource {
 					</#list>
 				</@compress>
 			</#assign>
+
+			<#if acceptLanguageParameter>
+				<#assign methodParameters = "${methodParameters} @Context AcceptLanguage acceptLanguage," />
+			</#if>
 
 			<#if pageParameter && perPageParameter>
 				<#assign methodParameters = "${methodParameters} @Context Pagination pagination," />

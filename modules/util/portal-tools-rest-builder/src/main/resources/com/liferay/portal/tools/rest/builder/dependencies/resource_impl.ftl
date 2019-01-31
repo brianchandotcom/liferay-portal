@@ -8,6 +8,7 @@ package ${configYAML.apiPackagePath}.internal.resource;
 
 import ${configYAML.apiPackagePath}.resource.${schemaName}Resource;
 
+import com.liferay.portal.vulcan.context.AcceptLanguage;
 import com.liferay.portal.vulcan.context.Pagination;
 import com.liferay.portal.vulcan.dto.Page;
 
@@ -85,12 +86,15 @@ public class ${schemaName}ResourceImpl implements ${schemaName}Resource {
 
 		<#if operation.parameters??>
 			<#assign
+				acceptLanguageParameter = false
 				pageParameter = false
 				perPageParameter = false
 			/>
 
 			<#list operation.parameters as parameter>
-				<#if stringUtil.equals(parameter.name, "page")>
+				<#if stringUtil.equals(parameter.name, "Accept-Language")>
+					<#assign acceptLanguageParameter = true />
+				<#elseif stringUtil.equals(parameter.name, "page")>
 					<#assign pageParameter = true />
 				<#elseif stringUtil.equals(parameter.name, "per_page")>
 					<#assign perPageParameter = true />
@@ -100,6 +104,10 @@ public class ${schemaName}ResourceImpl implements ${schemaName}Resource {
 			<#assign methodParameters>
 				<@compress single_line=true>
 					<#list operation.parameters as parameter>
+						<#if acceptLanguageParameter && stringUtil.equals(parameter.name, "Accept-Language")>
+							<#continue>
+						</#if>
+
 						<#if pageParameter && perPageParameter && (stringUtil.equals(parameter.name, "page") || stringUtil.equals(parameter.name, "per_page"))>
 							<#continue>
 						</#if>
@@ -132,6 +140,10 @@ public class ${schemaName}ResourceImpl implements ${schemaName}Resource {
 					</#list>
 				</@compress>
 			</#assign>
+
+			<#if acceptLanguageParameter>
+				<#assign methodParameters = "${methodParameters} AcceptLanguage acceptLanguage," />
+			</#if>
 
 			<#if pageParameter && perPageParameter>
 				<#assign methodParameters = "${methodParameters} Pagination pagination," />

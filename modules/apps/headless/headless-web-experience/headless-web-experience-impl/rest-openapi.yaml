@@ -540,6 +540,7 @@ paths:
           required: true
           schema:
             $ref: "#/components/schemas/StructuredContent"
+            type: integer
       responses:
         200:
           content:

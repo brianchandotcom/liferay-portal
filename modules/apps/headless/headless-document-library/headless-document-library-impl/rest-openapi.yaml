@@ -90,6 +90,7 @@ paths:
           required: true
           schema: 
             type: integer
+            format: int64
       responses: 
         204: 
           content: 
@@ -102,6 +103,7 @@ paths:
           required: true
           schema: 
             type: integer
+            format: int64
       responses: 
         200: 
           content: 
@@ -117,6 +119,7 @@ paths:
           required: true
           schema: 
             type: integer
+            format: int64
       responses: 
         200: 
           content: 
@@ -131,6 +134,7 @@ paths:
           name: page
           schema: 
             type: integer
+            format: int64
         - in: query
           name: per_page
           schema: 
@@ -272,6 +276,7 @@ paths:
           required: true
           schema: 
             type: integer
+            format: int64
       responses: 
         204: 
           content: 
@@ -284,6 +289,7 @@ paths:
           required: true
           schema: 
             type: integer
+            format: int64
       responses: 
         200: 
           content: 
@@ -298,6 +304,7 @@ paths:
           required: true
           schema: 
             type: integer
+            format: int64
       requestBody: 
         content: 
           "*/*": {}

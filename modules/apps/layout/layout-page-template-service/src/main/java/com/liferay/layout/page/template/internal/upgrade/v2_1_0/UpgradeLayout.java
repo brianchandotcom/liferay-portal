@@ -18,6 +18,7 @@ import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.layout.constants.LayoutConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
+import com.liferay.layout.page.template.internal.upgrade.v2_0_0.util.LayoutPageTemplateEntryTable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -54,6 +55,7 @@ public class UpgradeLayout extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
+		upgradeSchema();
 		upgradeLayout();
 	}
 
@@ -98,6 +100,12 @@ public class UpgradeLayout extends UpgradeProcess {
 
 			ps.executeBatch();
 		}
+	}
+
+	protected void upgradeSchema() throws Exception {
+		alter(
+			LayoutPageTemplateEntryTable.class,
+			new AlterTableAddColumn("plid LONG"));
 	}
 
 	private long _getPlid(

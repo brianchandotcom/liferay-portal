@@ -145,6 +145,21 @@ public class SegmentsEntryServiceSoap {
 		}
 	}
 
+	public static com.liferay.segments.model.SegmentsEntrySoap[] getSegmentsEntries(
+		long groupId) throws RemoteException {
+		try {
+			java.util.List<com.liferay.segments.model.SegmentsEntry> returnValue =
+				SegmentsEntryServiceUtil.getSegmentsEntries(groupId);
+
+			return com.liferay.segments.model.SegmentsEntrySoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static int getSegmentsEntriesCount(long groupId)
 		throws RemoteException {
 		try {

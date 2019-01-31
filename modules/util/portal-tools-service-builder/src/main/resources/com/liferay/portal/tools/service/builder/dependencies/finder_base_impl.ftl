@@ -3,7 +3,13 @@ package ${packagePath}.service.persistence.impl;
 import ${apiPackagePath}.model.${entity.name};
 import ${apiPackagePath}.service.persistence.${entity.name}Persistence;
 
+<#if ds>
+	import ${packagePath}.service.persistence.impl.constants.${portletShortName}PersistenceConstants;
+</#if>
+
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.configuration.Configuration;
+import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
@@ -13,6 +19,10 @@ import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+
+import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author ${author}
@@ -26,7 +36,7 @@ import java.util.Set;
 	@Deprecated
 </#if>
 
-public class ${entity.name}FinderBaseImpl
+public <#if ds>abstract </#if>class ${entity.name}FinderBaseImpl
 	extends BasePersistenceImpl<${entity.name}> {
 
 	public ${entity.name}FinderBaseImpl() {
@@ -57,11 +67,17 @@ public class ${entity.name}FinderBaseImpl
 	<#if entity.badEntityColumns?size != 0>
 		@Override
 		public Set<String> getBadColumnNames() {
-			return get${entity.name}Persistence().getBadColumnNames();
+			<#if ds>
+				return ${entity.varName}Persistence.getBadColumnNames();
+			<#else>
+				return get${entity.name}Persistence().getBadColumnNames();
+			</#if>
 		}
 	</#if>
 
-	<#if entity.hasEntityColumns() && entity.hasPersistence()>
+	<#if ds>
+		<#include "persistence_ds_references.ftl">
+	<#elseif entity.hasEntityColumns() && entity.hasPersistence()>
 		/**
 		 * Returns the ${entity.humanName} persistence.
 		 *
@@ -82,7 +98,12 @@ public class ${entity.name}FinderBaseImpl
 	</#if>
 
 	<#if entity.hasEntityColumns() && entity.hasPersistence()>
-		@BeanReference(type = ${entity.name}Persistence.class)
+		<#if ds>
+			@Reference
+		<#else>
+			@BeanReference(type = ${entity.name}Persistence.class)
+		</#if>
+
 		protected ${entity.name}Persistence ${entity.varName}Persistence;
 	</#if>
 

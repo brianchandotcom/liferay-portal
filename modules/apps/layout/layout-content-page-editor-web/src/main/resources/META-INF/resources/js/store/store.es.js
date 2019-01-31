@@ -1,4 +1,5 @@
 import State, {Config} from 'metal-state';
+import {DEFAULT_INITIAL_STATE} from './state.es';
 
 /**
  * Connects a given component to a given store, syncing it's properties with it.
@@ -200,7 +201,10 @@ class Store extends State {
 	 * @review
 	 */
 	_setInitialState(initialState) {
-		this._state = this._getFrozenState(initialState);
+		this._state = Object.assign(
+			DEFAULT_INITIAL_STATE,
+			this._getFrozenState(initialState)
+		);
 	}
 
 }

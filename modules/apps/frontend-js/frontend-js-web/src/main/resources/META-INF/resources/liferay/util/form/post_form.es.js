@@ -1,8 +1,8 @@
-import {
-	isString,
-	isObject
-} from 'metal';
 import dom from 'metal-dom';
+import {
+	isObject,
+	isString
+} from 'metal';
 import setFormValues from './set_form_values.es';
 
 /**
@@ -15,21 +15,17 @@ import setFormValues from './set_form_values.es';
  */
 
 export default function postForm(form, url, data) {
-	if (!isString(url)) {
-		return;
+	if (isString(url)) {
+		form = dom.toElement(form);
+
+		if (form && form.nodeName !== 'FORM') {
+			form.setAttribute('method', 'post');
+
+			if (isObject(data)) {
+				setFormValues(form, data);
+			}
+
+			submitForm(form, url);
+		}
 	}
-
-	form = dom.toElement(form);
-
-	if (!form || form.nodeName !== 'FORM') {
-		return;
-	}
-
-	form.setAttribute('method', 'post');
-
-	if (isObject(data)) {
-		setFormValues(form, data);
-	}
-
-	submitForm(form, url);
 }

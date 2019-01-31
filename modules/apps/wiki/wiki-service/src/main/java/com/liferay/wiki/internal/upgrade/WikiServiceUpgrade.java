@@ -30,6 +30,7 @@ import com.liferay.wiki.internal.upgrade.v1_0_0.UpgradeWikiPageResource;
 import com.liferay.wiki.internal.upgrade.v1_1_0.UpgradeWikiNode;
 import com.liferay.wiki.internal.upgrade.v2_0_0.util.WikiNodeTable;
 import com.liferay.wiki.internal.upgrade.v2_0_0.util.WikiPageTable;
+import com.liferay.wiki.internal.upgrade.v3_0_0.UpgradeBadColumnNames;
 import com.liferay.wiki.model.WikiPage;
 
 import org.osgi.service.component.annotations.Component;
@@ -66,6 +67,8 @@ public class WikiServiceUpgrade implements UpgradeStepRegistrator {
 			"1.2.0", "2.0.0",
 			new BaseUpgradeSQLServerDatetime(
 				new Class<?>[] {WikiNodeTable.class, WikiPageTable.class}));
+
+		registry.register("2.0.0", "3.0.0", new UpgradeBadColumnNames());
 	}
 
 	@Reference

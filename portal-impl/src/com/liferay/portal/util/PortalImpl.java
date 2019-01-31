@@ -2812,9 +2812,16 @@ public class PortalImpl implements Portal {
 		variables.put(
 			"liferay:groupId", String.valueOf(browsableLayout.getGroupId()));
 
+		variables.put(
+			"liferay:layoutId", String.valueOf(browsableLayout.getLayoutId()));
+
 		variables.put("liferay:mainPath", mainPath);
 		variables.put(
 			"liferay:plid", String.valueOf(browsableLayout.getPlid()));
+
+		variables.put(
+			"liferay:privateLayout",
+			String.valueOf(browsableLayout.isPrivateLayout()));
 
 		if (browsableLayout instanceof VirtualLayout) {
 			variables.put(

@@ -36,7 +36,41 @@ import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
 public class ${schemaName}ResourceImpl implements ${schemaName}Resource {
 
 	<#list openAPIYAML.pathItems?keys as path>
-		<#assign pathItem = openAPIYAML.pathItems[path] />
+		<#assign
+			pathItem = openAPIYAML.pathItems[path]
+
+			operationNames = ""
+		/>
+
+		<#if pathItem.delete??>
+			<#assign operationNames = "${operationNames},delete" />
+		</#if>
+
+		<#if pathItem.get??>
+			<#assign operationNames = "${operationNames},get" />
+		</#if>
+
+		<#if pathItem.head??>
+			<#assign operationNames = "${operationNames},head" />
+		</#if>
+
+		<#if pathItem.options??>
+			<#assign operationNames = "${operationNames},options" />
+		</#if>
+
+		<#if pathItem.post??>
+			<#assign operationNames = "${operationNames},post" />
+		</#if>
+
+		<#if pathItem.put??>
+			<#assign operationNames = "${operationNames},put" />
+		</#if>
+
+		<#list stringUtil.split(operationNames, ",") as operationName>
+			<#if !operationName?trim?has_content>
+				<#continue>
+			</#if>
+		</#list>
 
 		<#if pathItem.delete??>
 			<#assign

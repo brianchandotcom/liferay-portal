@@ -25,13 +25,19 @@ import com.liferay.change.tracking.rest.internal.exception.NoSuchProductionCTCol
 import com.liferay.change.tracking.rest.internal.model.collection.CTCollectionModel;
 import com.liferay.change.tracking.rest.internal.model.collection.CTCollectionUpdateModel;
 import com.liferay.change.tracking.rest.internal.util.CTJaxRsUtil;
+import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -160,7 +166,8 @@ public class CTCollectionResource {
 	public List<CTCollectionModel> getCTCollectionModels(
 			@QueryParam("companyId") long companyId,
 			@QueryParam("userId") long userId,
-			@DefaultValue(_TYPE_ALL) @QueryParam("type") String type)
+			@DefaultValue(_TYPE_ALL) @QueryParam("type") String type,
+			@QueryParam("limit") int limit, @QueryParam("sort") String sort)
 		throws CTJaxRsException {
 
 		List<CTCollection> ctCollections = new ArrayList<>();
@@ -190,7 +197,8 @@ public class CTCollectionResource {
 		else if (_TYPE_ALL.equals(type)) {
 			CTJaxRsUtil.checkCompany(companyId);
 
-			ctCollections = _ctEngineManager.getCTCollections(companyId);
+			ctCollections = _ctEngineManager.getCTCollections(
+				companyId, _getQueryDefinition(limit, sort));
 		}
 		else {
 			throw new IllegalArgumentException(
@@ -257,6 +265,24 @@ public class CTCollectionResource {
 		return builder.build();
 	}
 
+	private QueryDefinition<CTCollection> _getQueryDefinition(
+		int limit, String sort) {
+
+		QueryDefinition<CTCollection> queryDefinition = new QueryDefinition<>();
+
+		queryDefinition.setStart(0);
+		queryDefinition.setEnd(CTJaxRsUtil.checkLimit(limit));
+
+		OrderByComparator<CTCollection> orderByComparator =
+			OrderByComparatorFactoryUtil.create(
+				"CTCollection",
+				CTJaxRsUtil.checkSortColumns(sort, _orderByColumnNames));
+
+		queryDefinition.setOrderByComparator(orderByComparator);
+
+		return queryDefinition;
+	}
+
 	private Response _noContent() {
 		Response.ResponseBuilder responseBuilder = Response.noContent();
 
@@ -268,6 +294,9 @@ public class CTCollectionResource {
 	private static final String _TYPE_ALL = "all";
 
 	private static final String _TYPE_PRODUCTION = "production";
+
+	private static final Set<String> _orderByColumnNames = new HashSet<>(
+		Arrays.asList("createDate", "modifiedDate", "name", "statusDate"));
 
 	@Reference
 	private CTEngineManager _ctEngineManager;

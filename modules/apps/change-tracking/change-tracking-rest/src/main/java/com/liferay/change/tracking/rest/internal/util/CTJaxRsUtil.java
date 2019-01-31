@@ -23,6 +23,12 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
+
+import java.util.Arrays;
+import java.util.Set;
+import java.util.stream.Stream;
 
 /**
  * @author Máté Thurzó
@@ -50,6 +56,32 @@ public class CTJaxRsUtil {
 		}
 	}
 
+	public static int checkLimit(int limit) {
+		if (limit < 0) {
+			throw new IllegalArgumentException(
+				"Limit must be a positive number");
+		}
+
+		return limit;
+	}
+
+	public static Object[] checkSortColumns(
+		String sort, Set<String> validSortColumnNames) {
+
+		if (Validator.isNull(sort)) {
+			return new Object[0];
+		}
+
+		Stream<String> sortColumnsStream = Arrays.stream(sort.split(","));
+
+		return sortColumnsStream.map(
+			sortColumn -> sortColumn.split(":")
+		).flatMap(
+			sortElements ->
+				_getSortElementsStream(sortElements, validSortColumnNames)
+		).toArray();
+	}
+
 	public static User getUser(long userId) throws CTJaxRsException {
 		User user = UserLocalServiceUtil.fetchUser(userId);
 
@@ -59,6 +91,33 @@ public class CTJaxRsUtil {
 		}
 
 		return user;
+	}
+
+	private static Stream<Object> _getSortElementsStream(
+		String[] sortElements, Set<String> validSortColumnNames) {
+
+		String fieldName = sortElements[0].trim();
+
+		if (!validSortColumnNames.contains(fieldName)) {
+			throw new IllegalArgumentException("Invalid sort column name");
+		}
+
+		if (sortElements.length == 1) {
+			return Stream.of(fieldName, true);
+		}
+
+		boolean asc = true;
+
+		String direction = StringUtil.toLowerCase(sortElements[1].trim());
+
+		if ("desc".equals(direction)) {
+			asc = false;
+		}
+		else if (Validator.isNotNull(direction) && !"asc".equals(direction)) {
+			throw new IllegalArgumentException("Invalid sort direction value");
+		}
+
+		return Stream.of(fieldName, asc);
 	}
 
 }

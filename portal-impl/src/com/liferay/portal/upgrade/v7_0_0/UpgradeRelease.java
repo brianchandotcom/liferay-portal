@@ -51,7 +51,7 @@ public class UpgradeRelease extends UpgradeProcess {
 		try (LoggingTimer loggingTimer = new LoggingTimer();
 			PreparedStatement ps = connection.prepareStatement(
 				"select distinct buildNumber from Release_ where " +
-					"schemaVersion is null");
+					"schemaVersion is null or schemaVersion = ''");
 			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
@@ -63,7 +63,7 @@ public class UpgradeRelease extends UpgradeProcess {
 					StringBundler.concat(
 						"update Release_ set schemaVersion = '", schemaVersion,
 						"' where buildNumber = ", buildNumber,
-						" and schemaVersion is null"));
+						" and (schemaVersion is null or schemaVersion = '')"));
 			}
 		}
 	}

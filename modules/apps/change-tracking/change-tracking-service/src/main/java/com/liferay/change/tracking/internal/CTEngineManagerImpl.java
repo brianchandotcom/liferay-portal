@@ -25,6 +25,7 @@ import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.service.CTProcessLocalService;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -259,7 +260,19 @@ public class CTEngineManagerImpl implements CTEngineManager {
 			return Collections.emptyList();
 		}
 
-		return _ctCollectionLocalService.getCTCollections(companyId);
+		return _ctCollectionLocalService.getCTCollections(companyId, null);
+	}
+
+	@Override
+	public List<CTCollection> getCTCollections(
+		long companyId, QueryDefinition<CTCollection> queryDefinition) {
+
+		if (!isChangeTrackingEnabled(companyId)) {
+			return Collections.emptyList();
+		}
+
+		return _ctCollectionLocalService.getCTCollections(
+			companyId, queryDefinition);
 	}
 
 	@Override

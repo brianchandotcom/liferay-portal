@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
+import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.model.BaseModel;
 
 import java.util.List;
@@ -100,6 +101,18 @@ public interface CTEngineManager {
 	 * @return the list of change tracking collections
 	 */
 	public List<CTCollection> getCTCollections(long companyId);
+
+	/**
+	 * Returns all the change tracking collection associated with the given
+	 * company.
+	 *
+	 * @param  companyId the primary key of the company
+	 * @param  queryDefinition the object contains settings regarding
+	 *         pagination, order and filter
+	 * @return the list of change tracking collections
+	 */
+	public List<CTCollection> getCTCollections(
+		long companyId, QueryDefinition<CTCollection> queryDefinition);
 
 	/**
 	 * Returns all the change entries associated with the given change

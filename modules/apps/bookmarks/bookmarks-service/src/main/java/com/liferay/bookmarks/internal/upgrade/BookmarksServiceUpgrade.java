@@ -19,6 +19,7 @@ import com.liferay.bookmarks.internal.upgrade.v1_0_0.UpgradeLastPublishDate;
 import com.liferay.bookmarks.internal.upgrade.v1_0_0.UpgradePortletSettings;
 import com.liferay.bookmarks.internal.upgrade.v2_0_0.UpgradeBookmarksEntryResourceBlock;
 import com.liferay.bookmarks.internal.upgrade.v2_0_0.UpgradeBookmarksFolderResourceBlock;
+import com.liferay.bookmarks.internal.upgrade.v3_0_0.UpgradeBadColumnNames;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
@@ -42,6 +43,8 @@ public class BookmarksServiceUpgrade implements UpgradeStepRegistrator {
 		registry.register(
 			"1.0.0", "2.0.0", new UpgradeBookmarksEntryResourceBlock(),
 			new UpgradeBookmarksFolderResourceBlock());
+
+		registry.register("2.0.0", "3.0.0", new UpgradeBadColumnNames());
 	}
 
 	@Reference(unbind = "-")

@@ -197,7 +197,7 @@ public abstract class BaseDB implements DB {
 						catalog, schema, tableName, false, false)) {
 
 					while (indexRS.next()) {
-						String indexName = indexRS.getString("index_name");
+						String indexName = indexRS.getString("INDEX_NAME");
 
 						String lowerCaseIndexName = StringUtil.toLowerCase(
 							indexName);
@@ -208,7 +208,7 @@ public abstract class BaseDB implements DB {
 							continue;
 						}
 
-						boolean unique = !indexRS.getBoolean("non_unique");
+						boolean unique = !indexRS.getBoolean("NON_UNIQUE");
 
 						indexes.add(new Index(indexName, tableName, unique));
 					}

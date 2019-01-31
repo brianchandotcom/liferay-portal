@@ -14,6 +14,9 @@
 
 package com.liferay.taglib.aui.base;
 
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 
@@ -49,6 +52,10 @@ public abstract class BaseTranslationManagerTag extends com.liferay.taglib.util.
 		return _editingLanguageId;
 	}
 
+	public long getGroupId() {
+		return _groupId;
+	}
+
 	public java.lang.String getId() {
 		return _id;
 	}
@@ -77,6 +84,10 @@ public abstract class BaseTranslationManagerTag extends com.liferay.taglib.util.
 		_editingLanguageId = editingLanguageId;
 	}
 
+	public void setGroupId(long groupId) {
+		_groupId = groupId;
+	}
+
 	public void setId(java.lang.String id) {
 		_id = id;
 	}
@@ -97,6 +108,7 @@ public abstract class BaseTranslationManagerTag extends com.liferay.taglib.util.
 		_changeableDefaultLanguage = true;
 		_defaultLanguageId = null;
 		_editingLanguageId = null;
+		_groupId = 0;
 		_id = null;
 		_initialize = true;
 		_readOnly = false;
@@ -109,10 +121,18 @@ public abstract class BaseTranslationManagerTag extends com.liferay.taglib.util.
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
+		if (_groupId <= 0 ) {
+			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+			_groupId = themeDisplay.getSiteGroupId();
+		}
+
 		request.setAttribute("aui:translation-manager:availableLocales", _availableLocales);
 		request.setAttribute("aui:translation-manager:changeableDefaultLanguage", String.valueOf(_changeableDefaultLanguage));
 		request.setAttribute("aui:translation-manager:defaultLanguageId", _defaultLanguageId);
 		request.setAttribute("aui:translation-manager:editingLanguageId", _editingLanguageId);
+		request.setAttribute("aui:translation-manager:groupId", _groupId);
 		request.setAttribute("aui:translation-manager:id", _id);
 		request.setAttribute("aui:translation-manager:initialize", String.valueOf(_initialize));
 		request.setAttribute("aui:translation-manager:readOnly", String.valueOf(_readOnly));
@@ -127,6 +147,7 @@ public abstract class BaseTranslationManagerTag extends com.liferay.taglib.util.
 	private boolean _changeableDefaultLanguage = true;
 	private java.lang.String _defaultLanguageId = null;
 	private java.lang.String _editingLanguageId = null;
+	private long _groupId = 0;
 	private java.lang.String _id = null;
 	private boolean _initialize = true;
 	private boolean _readOnly = false;

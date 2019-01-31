@@ -17,10 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-LayoutPageTemplateDisplayContext layoutPageTemplateDisplayContext = new LayoutPageTemplateDisplayContext(renderRequest, renderResponse, request);
-
-request.setAttribute(LayoutAdminWebKeys.LAYOUT_PAGE_TEMPLATE_DISPLAY_CONTEXT, layoutPageTemplateDisplayContext);
-
 DisplayPageDisplayContext displayPageDisplayContext = new DisplayPageDisplayContext(renderRequest, renderResponse, request);
 %>
 
@@ -61,7 +57,7 @@ DisplayPageManagementToolbarDisplayContext displayPageManagementToolbarDisplayCo
 
 			<liferay-ui:search-container-column-text>
 				<clay:vertical-card
-					verticalCard="<%= new DisplayPageVerticalCard(layoutPageTemplateEntry, renderRequest, searchContainer.getRowChecker()) %>"
+					verticalCard="<%= new DisplayPageVerticalCard(layoutPageTemplateEntry, renderRequest, renderResponse, searchContainer.getRowChecker()) %>"
 				/>
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
@@ -73,40 +69,20 @@ DisplayPageManagementToolbarDisplayContext displayPageManagementToolbarDisplayCo
 	</liferay-ui:search-container>
 </aui:form>
 
-<aui:script require="metal-dom/src/all/dom as dom,frontend-js-web/liferay/modal/commands/OpenSimpleInputModal.es as modalCommands">
-	var updateDisplayPageMenuItemClickHandler = dom.delegate(
-		document.body,
-		'click',
-		'.<portlet:namespace />update-display-page-action-option > a',
-		function(event) {
-			var data = event.delegateTarget.dataset;
-
-			event.preventDefault();
-
-			modalCommands.openSimpleInputModal(
-				{
-					dialogTitle: '<liferay-ui:message key="rename-display-page" />',
-					formSubmitURL: data.formSubmitUrl,
-					idFieldName: 'layoutPageTemplateEntryId',
-					idFieldValue: data.idFieldValue,
-					mainFieldLabel: '<liferay-ui:message key="name" />',
-					mainFieldName: 'name',
-					mainFieldPlaceholder: '<liferay-ui:message key="name" />',
-					mainFieldValue: data.mainFieldValue,
-					namespace: '<portlet:namespace />',
-					spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg'
-				}
-			);
+<aui:script require='<%= npmResolvedPackageName + "/js/DisplayPageDropdownDefaultEventHandler.es as DisplayPageDropdownDefaultEventHandler" %>'>
+	Liferay.component(
+		'<%= LayoutAdminWebKeys.DISPLAY_PAGE_DROPDOWN_DEFAULT_EVENT_HANDLER %>',
+		new DisplayPageDropdownDefaultEventHandler.default(
+			{
+				namespace: '<portlet:namespace />',
+				spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg'
+			}
+		),
+		{
+			destroyOnNavigate: true,
+			portletId: '<%= HtmlUtil.escapeJS(portletDisplay.getId()) %>'
 		}
 	);
-
-	function handleDestroyPortlet() {
-		updateDisplayPageMenuItemClickHandler.removeListener();
-
-		Liferay.detach('destroyPortlet', handleDestroyPortlet);
-	}
-
-	Liferay.on('destroyPortlet', handleDestroyPortlet);
 </aui:script>
 
 <aui:script require='<%= npmResolvedPackageName + "/js/DisplayPageManagementToolbarDefaultEventHandler.es as DisplayPageManagementToolbarDefaultEventHandler" %>'>

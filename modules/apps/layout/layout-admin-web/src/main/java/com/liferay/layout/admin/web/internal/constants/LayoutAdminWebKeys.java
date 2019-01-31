@@ -22,6 +22,9 @@ public class LayoutAdminWebKeys {
 	public static final String ASSET_DISPLAY_CONTRIBUTOR_TRACKER =
 		"ASSET_DISPLAY_CONTRIBUTOR_TRACKER";
 
+	public static final String DISPLAY_PAGE_DROPDOWN_DEFAULT_EVENT_HANDLER =
+		"DISPLAY_PAGE_DROPDOWN_DEFAULT_EVENT_HANDLER";
+
 	public static final String ITEM_SELECTOR = "ITEM_SELECTOR";
 
 	public static final String LAYOUT_PAGE_TEMPLATE_DISPLAY_CONTEXT =

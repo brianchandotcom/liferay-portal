@@ -2807,16 +2807,19 @@ public class PortalImpl implements Portal {
 	public String getLayoutActualURL(Layout layout, String mainPath) {
 		Map<String, String> variables = new HashMap<>();
 
-		layout = getBrowsableLayout(layout);
+		Layout browsableLayout = getBrowsableLayout(layout);
 
-		variables.put("liferay:groupId", String.valueOf(layout.getGroupId()));
+		variables.put(
+			"liferay:groupId", String.valueOf(browsableLayout.getGroupId()));
 
 		variables.put("liferay:mainPath", mainPath);
-		variables.put("liferay:plid", String.valueOf(layout.getPlid()));
+		variables.put(
+			"liferay:plid", String.valueOf(browsableLayout.getPlid()));
 
-		if (layout instanceof VirtualLayout) {
+		if (browsableLayout instanceof VirtualLayout) {
 			variables.put(
-				"liferay:pvlsgid", String.valueOf(layout.getGroupId()));
+				"liferay:pvlsgid",
+				String.valueOf(browsableLayout.getGroupId()));
 		}
 		else {
 			variables.put("liferay:pvlsgid", "0");

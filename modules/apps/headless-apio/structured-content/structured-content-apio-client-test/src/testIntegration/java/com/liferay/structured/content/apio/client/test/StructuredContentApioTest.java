@@ -349,61 +349,6 @@ public class StructuredContentApioTest {
 	}
 
 	@Test
-	public void testGetStructuredContentWithoutAcceptedLanguageAndDefaultLanguageDifferentThanUserLanguage()
-		throws Exception {
-
-		URL structuredContentURL = _createStructuredContent(
-			LocaleUtil.SPAIN, "test-get-structured-content-es.json",
-			Collections.singletonList(_contentStructureURL.toExternalForm()));
-
-		ApioClientBuilder.given(
-		).basicAuth(
-			"test@liferay.com", "test"
-		).header(
-			"Accept", "application/hal+json"
-		).when(
-		).get(
-			_structuredContentEndpointURL.toExternalForm() +
-				"?filter=title eq 'Example Structured Content in Spanish'"
-		).then(
-		).log(
-		).ifError(
-		).statusCode(
-			200
-		).body(
-			"_embedded.StructuredContent", Matchers.hasSize(1)
-		).body(
-			"_embedded.StructuredContent[0].title",
-			IsEqual.equalTo("Example Structured Content in Spanish")
-		).body(
-			"_embedded.StructuredContent[0]._embedded.values._embedded.find " +
-				"{it.name == 'MyBoolean'}.dataType",
-			IsEqual.equalTo("boolean")
-		).body(
-			"_embedded.StructuredContent[0]._embedded.values._embedded.find " +
-				"{it.name == 'MyBoolean'}.dataType",
-			IsEqual.equalTo("boolean")
-		).body(
-			"_embedded.StructuredContent[0]._embedded.values._embedded.find " +
-				"{it.name == 'MyBoolean'}.inputControl",
-			IsEqual.equalTo("checkbox")
-		).body(
-			"_embedded.StructuredContent[0]._embedded.values._embedded.find " +
-				"{it.name == 'MyColor'}.inputControl",
-			IsNull.nullValue()
-		).body(
-			"_embedded.StructuredContent[0]._embedded.values._embedded.find " +
-				"{it.name == 'TextFieldName'}.label",
-			IsEqual.equalTo("TextFieldNameLabel_us")
-		).body(
-			"_embedded.StructuredContent[0]._links.self.href",
-			IsEqual.equalTo(structuredContentURL.toExternalForm())
-		).body(
-			"_links.self.href", IsNull.notNullValue()
-		);
-	}
-
-	@Test
 	public void testStructuredContentsMatchesSelfLink() {
 		ApioClientBuilder.given(
 		).basicAuth(

@@ -45,7 +45,7 @@ public class SelectFolderMVCRenderCommand extends GetFolderMVCRenderCommand {
 	}
 
 	@Override
-	protected DLURLHelper getDLUrlHelper() {
+	protected DLURLHelper getDLURLHelper() {
 		return _dlurlHelper;
 	}
 

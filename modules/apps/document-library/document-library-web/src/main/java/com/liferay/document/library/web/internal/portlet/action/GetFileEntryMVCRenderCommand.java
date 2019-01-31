@@ -59,7 +59,7 @@ public abstract class GetFileEntryMVCRenderCommand implements MVCRenderCommand {
 			}
 
 			renderRequest.setAttribute(
-				DLWebKeys.DOCUMENT_LIBRARY_URL_HELPER, getDLUrlHelper());
+				DLWebKeys.DOCUMENT_LIBRARY_URL_HELPER, getDLURLHelper());
 		}
 		catch (Exception e) {
 			if (e instanceof NoSuchFileEntryException ||
@@ -78,7 +78,7 @@ public abstract class GetFileEntryMVCRenderCommand implements MVCRenderCommand {
 		return getPath();
 	}
 
-	protected abstract DLURLHelper getDLUrlHelper();
+	protected abstract DLURLHelper getDLURLHelper();
 
 	protected abstract String getPath();
 

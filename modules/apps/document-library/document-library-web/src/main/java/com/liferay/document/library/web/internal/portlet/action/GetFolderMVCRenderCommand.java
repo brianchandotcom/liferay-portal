@@ -45,9 +45,8 @@ public abstract class GetFolderMVCRenderCommand implements MVCRenderCommand {
 
 			renderRequest.setAttribute(
 				DLWebKeys.DOCUMENT_LIBRARY_TRASH_UTIL, getDLTrashUtil());
-
 			renderRequest.setAttribute(
-				DLWebKeys.DOCUMENT_LIBRARY_URL_HELPER, getDLUrlHelper());
+				DLWebKeys.DOCUMENT_LIBRARY_URL_HELPER, getDLURLHelper());
 		}
 		catch (Exception e) {
 			if (e instanceof NoSuchFolderException ||
@@ -66,7 +65,7 @@ public abstract class GetFolderMVCRenderCommand implements MVCRenderCommand {
 
 	protected abstract DLTrashUtil getDLTrashUtil();
 
-	protected abstract DLURLHelper getDLUrlHelper();
+	protected abstract DLURLHelper getDLURLHelper();
 
 	protected abstract String getPath();
 

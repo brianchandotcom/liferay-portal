@@ -37,13 +37,13 @@ public class EditFileEntryMVCRenderCommand
 	extends GetFileEntryMVCRenderCommand {
 
 	@Override
-	protected String getPath() {
-		return "/document_library/edit_file_entry.jsp";
+	protected DLURLHelper getDLURLHelper() {
+		return _dlurlHelper;
 	}
 
 	@Override
-	protected DLURLHelper getDLUrlHelper() {
-		return _dlurlHelper;
+	protected String getPath() {
+		return "/document_library/edit_file_entry.jsp";
 	}
 
 	@Reference

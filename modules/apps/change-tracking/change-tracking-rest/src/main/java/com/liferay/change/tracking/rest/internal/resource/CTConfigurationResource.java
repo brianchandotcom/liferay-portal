@@ -61,7 +61,7 @@ public class CTConfigurationResource {
 	@GET
 	@Path("/{companyId}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public CTConfigurationModel getCtConfiguration(
+	public CTConfigurationModel getCtConfigurationModel(
 			@PathParam("companyId") long companyId)
 		throws CTJaxRsException {
 
@@ -72,7 +72,7 @@ public class CTConfigurationResource {
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<CTConfigurationModel> getCTConfigurations() {
+	public List<CTConfigurationModel> getCTConfigurationModels() {
 		List<CTConfigurationModel> ctConfigurationModels = new ArrayList<>();
 
 		for (Company company : _companyLocalService.getCompanies()) {

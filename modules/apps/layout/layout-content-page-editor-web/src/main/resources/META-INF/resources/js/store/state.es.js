@@ -84,7 +84,6 @@ const INITIAL_STATE = {
 		)
 		.value({}),
 
-
 	/**
 	 * Class name id used for storing changes.
 	 * @default ''
@@ -656,6 +655,7 @@ const DEFAULT_INITIAL_STATE = Object.keys(INITIAL_STATE)
 	.reduce(
 		(accumulatedState, key) => {
 			let newAccumulatgedState = accumulatedState;
+
 			if (INITIAL_STATE[key].config) {
 				newAccumulatgedState = Object.assign(
 					accumulatedState,
@@ -664,6 +664,7 @@ const DEFAULT_INITIAL_STATE = Object.keys(INITIAL_STATE)
 					}
 				);
 			}
+
 			return newAccumulatgedState;
 		},
 		{}

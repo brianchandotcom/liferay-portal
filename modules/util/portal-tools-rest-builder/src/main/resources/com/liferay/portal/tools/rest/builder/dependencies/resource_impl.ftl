@@ -125,7 +125,7 @@ public class ${schemaName}ResourceImpl implements ${schemaName}Resource {
 				<#assign methodParameters = "${methodParameters} Pagination pagination," />
 			</#if>
 
-			<#if ((methodParameters?length - 2) >= 0)>
+			<#if methodParameters?has_content>
 				<#assign methodParameters = "${methodParameters[0..(methodParameters?length - 2)]}" />
 			</#if>
 		</#if>

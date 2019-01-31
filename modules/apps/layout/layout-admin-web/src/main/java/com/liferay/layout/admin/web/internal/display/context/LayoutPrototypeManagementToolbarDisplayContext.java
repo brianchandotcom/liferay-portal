@@ -85,6 +85,11 @@ public class LayoutPrototypeManagementToolbarDisplayContext
 	}
 
 	@Override
+	public String getDefaultEventHandler() {
+		return "LAYOUT_PROTOTYPE_MANAGEMENT_TOOLBAR_DEFAULT_EVENT_HANDLER";
+	}
+
+	@Override
 	public String getSearchContainerId() {
 		return "layoutPrototype";
 	}

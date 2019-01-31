@@ -54,6 +54,10 @@ public class UpgradeLayout extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
+		upgradeLayout();
+	}
+
+	protected void upgradeLayout() throws Exception {
 		StringBundler sb = new StringBundler(3);
 
 		sb.append("select layoutPageTemplateEntryId, userId, groupId, ");

@@ -118,8 +118,9 @@ public abstract class BaseSamlTestCase extends PowerMockito {
 		setupIdentifiers();
 		setupParserPool();
 
-		setupMetadata();
 		setupPortal();
+
+		setupMetadata();
 
 		setupSamlBindings();
 	}
@@ -510,6 +511,8 @@ public abstract class BaseSamlTestCase extends PowerMockito {
 
 		metadataManagerImpl.setHttp(HttpUtil.getHttp());
 
+		metadataManagerImpl.setPortal(portal);
+
 		metadataManagerImpl.activate();
 	}
 
@@ -711,10 +714,6 @@ public abstract class BaseSamlTestCase extends PowerMockito {
 		protected EntityDescriptor doResolve(CriteriaSet criteriaSet)
 			throws Exception {
 
-			MockHttpServletRequest mockHttpServletRequest =
-				getMockHttpServletRequest(
-					"http://localhost:8080/c/portal/saml/metadata");
-
 			EntityIdCriterion entityIdCriterion = criteriaSet.get(
 				EntityIdCriterion.class);
 
@@ -733,8 +732,8 @@ public abstract class BaseSamlTestCase extends PowerMockito {
 			if (entityId.equals(IDP_ENTITY_ID)) {
 				EntityDescriptor entityDescriptor =
 					MetadataGeneratorUtil.buildIdpEntityDescriptor(
-						mockHttpServletRequest, entityId, _idpNeedsSignature,
-						true, false, credential, null);
+						PORTAL_URL, entityId, _idpNeedsSignature, true,
+						credential, null);
 
 				IDPSSODescriptor idpSSODescriptor =
 					entityDescriptor.getIDPSSODescriptor(
@@ -774,8 +773,7 @@ public abstract class BaseSamlTestCase extends PowerMockito {
 			}
 			else if (entityId.equals(SP_ENTITY_ID)) {
 				return MetadataGeneratorUtil.buildSpEntityDescriptor(
-					mockHttpServletRequest, entityId, true, true, false, false,
-					credential, null);
+					PORTAL_URL, entityId, true, true, false, credential, null);
 			}
 
 			return null;

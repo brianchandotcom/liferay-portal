@@ -18,7 +18,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.soy.BaseVerticalCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.web.internal.constants.JournalWebConstants;
-import com.liferay.journal.web.internal.servlet.taglib.util.JournalArticleActionDropdownItems;
+import com.liferay.journal.web.internal.servlet.taglib.util.JournalArticleActionDropdownItemsProvider;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.BaseModel;
@@ -63,13 +63,14 @@ public class JournalArticleHistoryVerticalCard extends BaseVerticalCard {
 		LiferayPortletResponse liferayPortletResponse =
 			PortalUtil.getLiferayPortletResponse(_renderResponse);
 
-		JournalArticleActionDropdownItems articleActionDropdownItems =
-			new JournalArticleActionDropdownItems(
-				_article, liferayPortletRequest, liferayPortletResponse,
-				_trashHelper);
+		JournalArticleActionDropdownItemsProvider
+			articleActionDropdownItemsProvider =
+				new JournalArticleActionDropdownItemsProvider(
+					_article, liferayPortletRequest, liferayPortletResponse,
+					_trashHelper);
 
 		try {
-			return articleActionDropdownItems.
+			return articleActionDropdownItemsProvider.
 				getArticleHistoryActionDropdownItems();
 		}
 		catch (Exception e) {

@@ -46,7 +46,7 @@ import com.liferay.portal.service.persistence.constants.UserGroupFinderConstants
 import com.liferay.portlet.sitesadmin.search.SiteChecker;
 import com.liferay.portlet.usersadmin.search.GroupSearch;
 import com.liferay.site.admin.web.internal.constants.SiteAdminPortletKeys;
-import com.liferay.site.admin.web.internal.servlet.taglib.util.SiteActionDropdownItems;
+import com.liferay.site.admin.web.internal.servlet.taglib.util.SiteActionDropdownItemsProvider;
 import com.liferay.site.constants.SiteWebKeys;
 import com.liferay.site.util.GroupSearchProvider;
 
@@ -80,11 +80,11 @@ public class SiteAdminDisplayContext {
 	public List<DropdownItem> getActionDropdownItems(Group group)
 		throws Exception {
 
-		SiteActionDropdownItems siteActionDropdownItems =
-			new SiteActionDropdownItems(
+		SiteActionDropdownItemsProvider siteActionDropdownItemsProvider =
+			new SiteActionDropdownItemsProvider(
 				group, _liferayPortletRequest, _liferayPortletResponse, this);
 
-		return siteActionDropdownItems.getActionDropdownItems();
+		return siteActionDropdownItemsProvider.getActionDropdownItems();
 	}
 
 	public List<BreadcrumbEntry> getBreadcrumbEntries() throws PortalException {

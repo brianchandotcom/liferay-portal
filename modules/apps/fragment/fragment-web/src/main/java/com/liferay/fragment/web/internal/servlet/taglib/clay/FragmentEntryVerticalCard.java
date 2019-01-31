@@ -17,7 +17,7 @@ package com.liferay.fragment.web.internal.servlet.taglib.clay;
 import com.liferay.fragment.constants.FragmentEntryTypeConstants;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.web.internal.constants.FragmentWebKeys;
-import com.liferay.fragment.web.internal.servlet.taglib.util.FragmentEntryActionDropdownItems;
+import com.liferay.fragment.web.internal.servlet.taglib.util.FragmentEntryActionDropdownItemsProvider;
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.BaseBaseClayCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.VerticalCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
@@ -62,12 +62,14 @@ public class FragmentEntryVerticalCard
 
 	@Override
 	public List<DropdownItem> getActionDropdownItems() {
-		FragmentEntryActionDropdownItems fragmentEntryActionDropdownItems =
-			new FragmentEntryActionDropdownItems(
-				_fragmentEntry, _renderRequest, _renderResponse);
+		FragmentEntryActionDropdownItemsProvider
+			fragmentEntryActionDropdownItemsProvider =
+				new FragmentEntryActionDropdownItemsProvider(
+					_fragmentEntry, _renderRequest, _renderResponse);
 
 		try {
-			return fragmentEntryActionDropdownItems.getActionDropdownItems();
+			return fragmentEntryActionDropdownItemsProvider.
+				getActionDropdownItems();
 		}
 		catch (Exception e) {
 		}

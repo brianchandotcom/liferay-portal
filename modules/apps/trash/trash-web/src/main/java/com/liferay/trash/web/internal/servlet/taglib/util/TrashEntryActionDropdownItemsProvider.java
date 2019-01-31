@@ -39,9 +39,9 @@ import javax.portlet.PortletURL;
 /**
  * @author Pavel Savinov
  */
-public class TrashEntryActionDropdownItems {
+public class TrashEntryActionDropdownItemsProvider {
 
-	public TrashEntryActionDropdownItems(
+	public TrashEntryActionDropdownItemsProvider(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse,
 			TrashEntry trashEntry)

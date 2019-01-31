@@ -46,9 +46,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Eudaldo Alonso
  */
-public class SiteActionDropdownItems {
+public class SiteActionDropdownItemsProvider {
 
-	public SiteActionDropdownItems(
+	public SiteActionDropdownItemsProvider(
 		Group group, LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
 		SiteAdminDisplayContext siteAdminDisplayContext) {

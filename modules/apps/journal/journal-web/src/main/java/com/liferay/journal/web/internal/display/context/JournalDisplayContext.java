@@ -42,7 +42,7 @@ import com.liferay.journal.web.internal.portlet.action.ActionUtil;
 import com.liferay.journal.web.internal.search.EntriesChecker;
 import com.liferay.journal.web.internal.search.EntriesMover;
 import com.liferay.journal.web.internal.search.JournalSearcher;
-import com.liferay.journal.web.internal.servlet.taglib.util.JournalArticleActionDropdownItems;
+import com.liferay.journal.web.internal.servlet.taglib.util.JournalArticleActionDropdownItemsProvider;
 import com.liferay.journal.web.internal.servlet.taglib.util.JournalFolderActionDropdownItems;
 import com.liferay.journal.web.util.JournalPortletUtil;
 import com.liferay.message.boards.model.MBMessage;
@@ -176,12 +176,13 @@ public class JournalDisplayContext {
 			JournalArticle article)
 		throws Exception {
 
-		JournalArticleActionDropdownItems articleActionDropdownItems =
-			new JournalArticleActionDropdownItems(
-				article, _liferayPortletRequest, _liferayPortletResponse,
-				_trashHelper);
+		JournalArticleActionDropdownItemsProvider
+			articleActionDropdownItemsProvider =
+				new JournalArticleActionDropdownItemsProvider(
+					article, _liferayPortletRequest, _liferayPortletResponse,
+					_trashHelper);
 
-		return articleActionDropdownItems.getActionDropdownItems();
+		return articleActionDropdownItemsProvider.getActionDropdownItems();
 	}
 
 	public JournalArticleDisplay getArticleDisplay() throws Exception {
@@ -215,12 +216,13 @@ public class JournalDisplayContext {
 			JournalArticle article)
 		throws Exception {
 
-		JournalArticleActionDropdownItems articleActionDropdownItems =
-			new JournalArticleActionDropdownItems(
-				article, _liferayPortletRequest, _liferayPortletResponse,
-				_trashHelper);
+		JournalArticleActionDropdownItemsProvider
+			articleActionDropdownItemsProvider =
+				new JournalArticleActionDropdownItemsProvider(
+					article, _liferayPortletRequest, _liferayPortletResponse,
+					_trashHelper);
 
-		return articleActionDropdownItems.
+		return articleActionDropdownItemsProvider.
 			getArticleHistoryActionDropdownItems();
 	}
 
@@ -235,12 +237,13 @@ public class JournalDisplayContext {
 			JournalArticle article)
 		throws Exception {
 
-		JournalArticleActionDropdownItems articleActionDropdownItems =
-			new JournalArticleActionDropdownItems(
-				article, _liferayPortletRequest, _liferayPortletResponse,
-				_trashHelper);
+		JournalArticleActionDropdownItemsProvider
+			articleActionDropdownItemsProvider =
+				new JournalArticleActionDropdownItemsProvider(
+					article, _liferayPortletRequest, _liferayPortletResponse,
+					_trashHelper);
 
-		return articleActionDropdownItems.
+		return articleActionDropdownItemsProvider.
 			getArticleVersionActionDropdownItems();
 	}
 

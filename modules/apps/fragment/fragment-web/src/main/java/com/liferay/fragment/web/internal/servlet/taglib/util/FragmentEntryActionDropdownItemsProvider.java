@@ -50,9 +50,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Eudaldo Alonso
  */
-public class FragmentEntryActionDropdownItems {
+public class FragmentEntryActionDropdownItemsProvider {
 
-	public FragmentEntryActionDropdownItems(
+	public FragmentEntryActionDropdownItemsProvider(
 		FragmentEntry fragmentEntry, RenderRequest renderRequest,
 		RenderResponse renderResponse) {
 

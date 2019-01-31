@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.trash.model.TrashEntry;
 import com.liferay.trash.web.internal.constants.TrashWebKeys;
-import com.liferay.trash.web.internal.servlet.taglib.util.TrashEntryActionDropdownItems;
+import com.liferay.trash.web.internal.servlet.taglib.util.TrashEntryActionDropdownItemsProvider;
 
 import java.util.Collections;
 import java.util.List;
@@ -58,12 +58,14 @@ public class TrashEntryVerticalCard extends BaseVerticalCard {
 	@Override
 	public List<DropdownItem> getActionDropdownItems() {
 		try {
-			TrashEntryActionDropdownItems trashEntryActionDropdownItems =
-				new TrashEntryActionDropdownItems(
-					_liferayPortletRequest, _liferayPortletResponse,
-					_trashEntry);
+			TrashEntryActionDropdownItemsProvider
+				trashEntryActionDropdownItemsProvider =
+					new TrashEntryActionDropdownItemsProvider(
+						_liferayPortletRequest, _liferayPortletResponse,
+						_trashEntry);
 
-			return trashEntryActionDropdownItems.getActionDropdownItems();
+			return trashEntryActionDropdownItemsProvider.
+				getActionDropdownItems();
 		}
 		catch (Exception e) {
 			_log.error("Unable to get trash entry actions", e);

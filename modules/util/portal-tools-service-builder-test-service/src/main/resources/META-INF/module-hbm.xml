@@ -44,6 +44,7 @@
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="defaultLanguageId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="uniqueGroupKey" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor" name="head" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 	</class>
 	<class dynamic-update="true" name="com.liferay.portal.tools.service.builder.test.model.impl.LVEntryLocalizationImpl" table="LVEntryLocalization">
 		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="lvEntryLocalizationId" type="long">
@@ -55,6 +56,7 @@
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="languageId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="title" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="content" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor" name="head" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 	</class>
 	<class name="com.liferay.portal.tools.service.builder.test.model.impl.LVEntryLocalizationVersionImpl" table="LVEntryLocalizationVersion">
 		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="lvEntryLocalizationVersionId" type="long">
@@ -93,6 +95,7 @@
 		<version access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor" name="mvccVersion" type="long" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="headId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor" name="head" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 	</class>
 	<class name="com.liferay.portal.tools.service.builder.test.model.impl.VersionedEntryVersionImpl" table="VersionedEntryVersion">
 		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="versionedEntryVersionId" type="long">

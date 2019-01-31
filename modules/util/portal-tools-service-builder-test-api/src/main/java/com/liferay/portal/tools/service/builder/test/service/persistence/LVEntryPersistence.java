@@ -177,54 +177,59 @@ public interface LVEntryPersistence extends BasePersistence<LVEntry> {
 	public int countByUuid(String uuid);
 
 	/**
-	* Returns the lv entry where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchLVEntryException} if it could not be found.
+	* Returns the lv entry where uuid = &#63; and groupId = &#63; and head = &#63; or throws a {@link NoSuchLVEntryException} if it could not be found.
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
+	* @param head the head
 	* @return the matching lv entry
 	* @throws NoSuchLVEntryException if a matching lv entry could not be found
 	*/
-	public LVEntry findByUUID_G(String uuid, long groupId)
+	public LVEntry findByUUID_G(String uuid, long groupId, boolean head)
 		throws NoSuchLVEntryException;
 
 	/**
-	* Returns the lv entry where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	* Returns the lv entry where uuid = &#63; and groupId = &#63; and head = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
+	* @param head the head
 	* @return the matching lv entry, or <code>null</code> if a matching lv entry could not be found
 	*/
-	public LVEntry fetchByUUID_G(String uuid, long groupId);
+	public LVEntry fetchByUUID_G(String uuid, long groupId, boolean head);
 
 	/**
-	* Returns the lv entry where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	* Returns the lv entry where uuid = &#63; and groupId = &#63; and head = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
+	* @param head the head
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching lv entry, or <code>null</code> if a matching lv entry could not be found
 	*/
-	public LVEntry fetchByUUID_G(String uuid, long groupId,
+	public LVEntry fetchByUUID_G(String uuid, long groupId, boolean head,
 		boolean retrieveFromCache);
 
 	/**
-	* Removes the lv entry where uuid = &#63; and groupId = &#63; from the database.
+	* Removes the lv entry where uuid = &#63; and groupId = &#63; and head = &#63; from the database.
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
+	* @param head the head
 	* @return the lv entry that was removed
 	*/
-	public LVEntry removeByUUID_G(String uuid, long groupId)
+	public LVEntry removeByUUID_G(String uuid, long groupId, boolean head)
 		throws NoSuchLVEntryException;
 
 	/**
-	* Returns the number of lv entries where uuid = &#63; and groupId = &#63;.
+	* Returns the number of lv entries where uuid = &#63; and groupId = &#63; and head = &#63;.
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
+	* @param head the head
 	* @return the number of matching lv entries
 	*/
-	public int countByUUID_G(String uuid, long groupId);
+	public int countByUUID_G(String uuid, long groupId, boolean head);
 
 	/**
 	* Returns all the lv entries where groupId = &#63;.
@@ -429,54 +434,60 @@ public interface LVEntryPersistence extends BasePersistence<LVEntry> {
 	public int countByGroupId(long[] groupIds);
 
 	/**
-	* Returns the lv entry where groupId = &#63; and uniqueGroupKey = &#63; or throws a {@link NoSuchLVEntryException} if it could not be found.
+	* Returns the lv entry where groupId = &#63; and uniqueGroupKey = &#63; and head = &#63; or throws a {@link NoSuchLVEntryException} if it could not be found.
 	*
 	* @param groupId the group ID
 	* @param uniqueGroupKey the unique group key
+	* @param head the head
 	* @return the matching lv entry
 	* @throws NoSuchLVEntryException if a matching lv entry could not be found
 	*/
-	public LVEntry findByG_UGK(long groupId, String uniqueGroupKey)
+	public LVEntry findByG_UGK(long groupId, String uniqueGroupKey, boolean head)
 		throws NoSuchLVEntryException;
 
 	/**
-	* Returns the lv entry where groupId = &#63; and uniqueGroupKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	* Returns the lv entry where groupId = &#63; and uniqueGroupKey = &#63; and head = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	*
 	* @param groupId the group ID
 	* @param uniqueGroupKey the unique group key
+	* @param head the head
 	* @return the matching lv entry, or <code>null</code> if a matching lv entry could not be found
 	*/
-	public LVEntry fetchByG_UGK(long groupId, String uniqueGroupKey);
+	public LVEntry fetchByG_UGK(long groupId, String uniqueGroupKey,
+		boolean head);
 
 	/**
-	* Returns the lv entry where groupId = &#63; and uniqueGroupKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	* Returns the lv entry where groupId = &#63; and uniqueGroupKey = &#63; and head = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
 	* @param groupId the group ID
 	* @param uniqueGroupKey the unique group key
+	* @param head the head
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching lv entry, or <code>null</code> if a matching lv entry could not be found
 	*/
 	public LVEntry fetchByG_UGK(long groupId, String uniqueGroupKey,
-		boolean retrieveFromCache);
+		boolean head, boolean retrieveFromCache);
 
 	/**
-	* Removes the lv entry where groupId = &#63; and uniqueGroupKey = &#63; from the database.
+	* Removes the lv entry where groupId = &#63; and uniqueGroupKey = &#63; and head = &#63; from the database.
 	*
 	* @param groupId the group ID
 	* @param uniqueGroupKey the unique group key
+	* @param head the head
 	* @return the lv entry that was removed
 	*/
-	public LVEntry removeByG_UGK(long groupId, String uniqueGroupKey)
-		throws NoSuchLVEntryException;
+	public LVEntry removeByG_UGK(long groupId, String uniqueGroupKey,
+		boolean head) throws NoSuchLVEntryException;
 
 	/**
-	* Returns the number of lv entries where groupId = &#63; and uniqueGroupKey = &#63;.
+	* Returns the number of lv entries where groupId = &#63; and uniqueGroupKey = &#63; and head = &#63;.
 	*
 	* @param groupId the group ID
 	* @param uniqueGroupKey the unique group key
+	* @param head the head
 	* @return the number of matching lv entries
 	*/
-	public int countByG_UGK(long groupId, String uniqueGroupKey);
+	public int countByG_UGK(long groupId, String uniqueGroupKey, boolean head);
 
 	/**
 	* Returns the lv entry where headId = &#63; or throws a {@link NoSuchLVEntryException} if it could not be found.

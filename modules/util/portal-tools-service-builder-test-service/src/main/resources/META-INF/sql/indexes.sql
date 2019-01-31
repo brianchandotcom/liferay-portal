@@ -1,8 +1,8 @@
 create index IX_867C5A9 on BigDecimalEntry (bigDecimalValue);
 
-create unique index IX_8F9FD921 on LVEntry (groupId, uniqueGroupKey[$COLUMN_LENGTH:75$]);
+create unique index IX_70D6DE35 on LVEntry (groupId, uniqueGroupKey[$COLUMN_LENGTH:75$], head);
 create unique index IX_50CAD09D on LVEntry (headId);
-create unique index IX_8C78F044 on LVEntry (uuid_[$COLUMN_LENGTH:75$], groupId);
+create unique index IX_91BCCF18 on LVEntry (uuid_[$COLUMN_LENGTH:75$], groupId, head);
 
 create unique index IX_FC1C4C16 on LVEntryLocalization (headId);
 create unique index IX_5233ABD3 on LVEntryLocalization (lvEntryId, languageId[$COLUMN_LENGTH:75$]);

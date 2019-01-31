@@ -226,19 +226,6 @@ public class LVEntryLocalServiceWrapper implements LVEntryLocalService,
 		return _lvEntryLocalService.fetchLVEntry(lvEntryId);
 	}
 
-	/**
-	* Returns the lv entry matching the UUID and group.
-	*
-	* @param uuid the lv entry's UUID
-	* @param groupId the primary key of the group
-	* @return the matching lv entry, or <code>null</code> if a matching lv entry could not be found
-	*/
-	@Override
-	public com.liferay.portal.tools.service.builder.test.model.LVEntry fetchLVEntryByUuidAndGroupId(
-		String uuid, long groupId) {
-		return _lvEntryLocalService.fetchLVEntryByUuidAndGroupId(uuid, groupId);
-	}
-
 	@Override
 	public com.liferay.portal.tools.service.builder.test.model.LVEntryLocalization fetchLVEntryLocalization(
 		long lvEntryId, String languageId) {
@@ -328,21 +315,6 @@ public class LVEntryLocalServiceWrapper implements LVEntryLocalService,
 		long lvEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _lvEntryLocalService.getLVEntry(lvEntryId);
-	}
-
-	/**
-	* Returns the lv entry matching the UUID and group.
-	*
-	* @param uuid the lv entry's UUID
-	* @param groupId the primary key of the group
-	* @return the matching lv entry
-	* @throws PortalException if a matching lv entry could not be found
-	*/
-	@Override
-	public com.liferay.portal.tools.service.builder.test.model.LVEntry getLVEntryByUuidAndGroupId(
-		String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _lvEntryLocalService.getLVEntryByUuidAndGroupId(uuid, groupId);
 	}
 
 	@Override

@@ -1084,21 +1084,6 @@ paths:
               schema:
                 $ref: "#/components/schemas/UserAccount"
           description: ""
-  "/user-account/batch-create":
-    post:
-      parameters: []
-      requestBody:
-        content:
-          "*/*":
-            schema:
-              $ref: "#/components/schemas/UserAccount"
-      responses:
-        200:
-          content:
-            "*/*":
-              schema:
-                $ref: "#/components/schemas/UserAccount"
-          description: ""
   "/user-account/{id}":
     delete:
       parameters:

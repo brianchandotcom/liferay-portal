@@ -14,15 +14,22 @@
 
 package com.liferay.portal.service;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.PermissionedModelLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceReference;
+import com.liferay.registry.ServiceTracker;
+import com.liferay.registry.ServiceTrackerCustomizer;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -31,6 +38,23 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class PersistedModelLocalServiceRegistryImpl
 	implements PersistedModelLocalServiceRegistry {
+
+	public PersistedModelLocalServiceRegistryImpl() {
+		Registry registry = RegistryUtil.getRegistry();
+
+		_serviceTracker = registry.trackServices(
+			registry.getFilter(
+				StringBundler.concat(
+					"(&(model.class.name=*)(objectClass=",
+					PersistedModelLocalService.class.getName(), "))")),
+			new PersistenceModelLocalServiceServiceTrackerCustomizer());
+
+		_serviceTracker.open();
+	}
+
+	public void destroy() {
+		_serviceTracker.close();
+	}
 
 	@Override
 	public PersistedModelLocalService getPersistedModelLocalService(
@@ -90,5 +114,57 @@ public class PersistedModelLocalServiceRegistryImpl
 
 	private final Map<String, PersistedModelLocalService>
 		_persistedModelLocalServices = new ConcurrentHashMap<>();
+	private final ServiceTracker<?, ?> _serviceTracker;
+
+	private class PersistenceModelLocalServiceServiceTrackerCustomizer
+		implements ServiceTrackerCustomizer
+			<PersistedModelLocalService, String> {
+
+		@Override
+		public String addingService(
+			ServiceReference<PersistedModelLocalService> serviceReference) {
+
+			String className = (String)serviceReference.getProperty(
+				"model.class.name");
+
+			Registry registry = RegistryUtil.getRegistry();
+
+			PersistedModelLocalService persistedModelLocalService =
+				registry.getService(serviceReference);
+
+			PersistedModelLocalServiceRegistryImpl.this.register(
+				className, persistedModelLocalService);
+
+			return className;
+		}
+
+		@Override
+		public void modifiedService(
+			ServiceReference<PersistedModelLocalService> serviceReference,
+			String className) {
+
+			if (!Objects.equals(
+					serviceReference.getProperty("model.class.name"),
+					className)) {
+
+				removedService(serviceReference, className);
+
+				addingService(serviceReference);
+			}
+		}
+
+		@Override
+		public void removedService(
+			ServiceReference<PersistedModelLocalService> serviceReference,
+			String className) {
+
+			PersistedModelLocalServiceRegistryImpl.this.unregister(className);
+
+			Registry registry = RegistryUtil.getRegistry();
+
+			registry.ungetService(serviceReference);
+		}
+
+	}
 
 }

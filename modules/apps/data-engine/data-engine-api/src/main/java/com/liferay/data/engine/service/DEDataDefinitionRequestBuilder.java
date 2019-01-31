@@ -29,6 +29,24 @@ public class DEDataDefinitionRequestBuilder {
 		return new DEDataDefinitionDeleteRequest.Builder();
 	}
 
+	public static DEDataDefinitionDeleteModelPermissionsRequest.Builder
+		deleteModelPermissionsBuilder(
+			long companyId, long scopedGroupId, long deDataRecordCollectionId,
+			String[] actionIds, String[] roleNames) {
+
+		return new DEDataDefinitionDeleteModelPermissionsRequest.Builder(
+			companyId, scopedGroupId, deDataRecordCollectionId, actionIds,
+			roleNames);
+	}
+
+	public static DEDataDefinitionDeletePermissionsRequest.Builder
+		deletePermissionsBuilder(
+			long companyId, long scopedGroupId, String[] roleNames) {
+
+		return new DEDataDefinitionDeletePermissionsRequest.Builder(
+			companyId, scopedGroupId, roleNames);
+	}
+
 	public static DEDataDefinitionGetRequest.Builder getBuilder() {
 		return new DEDataDefinitionGetRequest.Builder();
 	}

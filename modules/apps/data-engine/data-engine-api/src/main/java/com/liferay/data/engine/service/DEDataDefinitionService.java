@@ -27,6 +27,33 @@ public interface DEDataDefinitionService {
 	public DEDataDefinitionCountResponse execute(
 		DEDataDefinitionCountRequest deDataDefinitionCountRequest);
 
+	/**
+	 * Execute the Delete Model Permissions Request which can revoke a
+	 * permission to a role to not perform actions involving a Data
+	 * Definition model
+	 *
+	 * @param deDataDefinitionDeleteModelPermissionsRequest
+	 * @return {@link DEDataDefinitionDeleteModelPermissionsResponse}
+	 * @review
+	 */
+	public DEDataDefinitionDeleteModelPermissionsResponse execute(
+			DEDataDefinitionDeleteModelPermissionsRequest
+				deDataDefinitionDeleteModelPermissionsRequest)
+		throws DEDataDefinitionException;
+
+	/**
+	 * Execute the Delete Permissions Request which can revoke permission to
+	 * a role to not perform actions involving a Data Definition
+	 *
+	 * @param deDataDefinitionDeletePermissionsRequest
+	 * @return {@link DEDataDefinitionDeletePermissionsResponse}
+	 * @review
+	 */
+	public DEDataDefinitionDeletePermissionsResponse execute(
+			DEDataDefinitionDeletePermissionsRequest
+				deDataDefinitionDeletePermissionsRequest)
+		throws DEDataDefinitionException;
+
 	public DEDataDefinitionDeleteResponse execute(
 			DEDataDefinitionDeleteRequest deDataDefinitionDeleteRequest)
 		throws DEDataDefinitionException;
@@ -39,11 +66,27 @@ public interface DEDataDefinitionService {
 			DEDataDefinitionListRequest deDataDefinitionListRequest)
 		throws DEDataDefinitionException;
 
+	/**
+	 * Execute the Save Model Permissions Request which can grant permission
+	 * to a role to perform actions involving a Data Definition model
+	 *
+	 * @param deDataDefinitionSaveModelPermissionsRequest
+	 * @return {@link DEDataDefinitionSaveModelPermissionsResponse}
+	 * @review
+	 */
 	public DEDataDefinitionSaveModelPermissionsResponse execute(
 			DEDataDefinitionSaveModelPermissionsRequest
 				deDataDefinitionSaveModelPermissionsRequest)
 		throws DEDataDefinitionException;
 
+	/**
+	 * Execute the Save Permissions Request which can grant permission to a
+	 * role to perform actions involving a Data Definition
+	 *
+	 * @param deDataDefinitionSavePermissionsRequest
+	 * @return {@link DEDataDefinitionSavePermissionsResponse}
+	 * @review
+	 */
 	public DEDataDefinitionSavePermissionsResponse execute(
 			DEDataDefinitionSavePermissionsRequest
 				deDataDefinitionSavePermissionsRequest)

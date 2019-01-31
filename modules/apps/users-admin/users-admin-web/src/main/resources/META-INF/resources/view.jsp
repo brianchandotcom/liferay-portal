@@ -112,14 +112,17 @@ else {
 
 	function <portlet:namespace />deleteUsers(cmd) {
 		if (((cmd == '<%= Constants.DEACTIVATE %>') && confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-deactivate-the-selected-users") %>')) || ((cmd == '<%= Constants.DELETE %>') && confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-permanently-delete-the-selected-users") %>')) || (cmd == '<%= Constants.RESTORE %>')) {
-			var form = AUI.$(document.<portlet:namespace />fm);
+			var form = document.<portlet:namespace />fm;
 
-			form.attr('method', 'post');
-			form.fm('<%= Constants.CMD %>').val(cmd);
-			form.fm('redirect').val(form.fm('usersRedirect').val());
-			form.fm('deleteUserIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds', '<portlet:namespace />rowIdsUser'));
-
-			submitForm(form, '<portlet:actionURL name="/users_admin/edit_user" />');
+			Liferay.Util.postForm(
+				form,
+				'<portlet:actionURL name="/users_admin/edit_user" />',
+				{
+					'<%= Constants.CMD %>': cmd,
+					'redirect': Liferay.Util.getFormElement(form, 'usersRedirect').value,
+					'deleteUserIds': Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds', '<portlet:namespace />rowIdsUser')
+				}
+			);
 		}
 	}
 

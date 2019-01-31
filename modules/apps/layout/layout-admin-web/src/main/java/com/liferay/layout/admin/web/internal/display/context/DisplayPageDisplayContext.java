@@ -14,21 +14,12 @@
 
 package com.liferay.layout.admin.web.internal.display.context;
 
-import com.liferay.asset.display.contributor.AssetDisplayContributor;
-import com.liferay.asset.display.contributor.AssetDisplayContributorTracker;
-import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
-import com.liferay.asset.kernel.model.AssetRendererFactory;
-import com.liferay.asset.kernel.model.ClassType;
-import com.liferay.asset.kernel.model.ClassTypeReader;
-import com.liferay.layout.admin.web.internal.constants.LayoutAdminWebKeys;
 import com.liferay.layout.admin.web.internal.util.LayoutPageTemplatePortletUtil;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -56,9 +47,6 @@ public class DisplayPageDisplayContext {
 		_renderResponse = renderResponse;
 		_request = request;
 
-		_assetDisplayContributorTracker =
-			(AssetDisplayContributorTracker)request.getAttribute(
-				LayoutAdminWebKeys.ASSET_DISPLAY_CONTRIBUTOR_TRACKER);
 		_themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
@@ -196,44 +184,6 @@ public class DisplayPageDisplayContext {
 		return portletURL;
 	}
 
-	public String getSubtypeLabel(
-			LayoutPageTemplateEntry layoutPageTemplateEntry)
-		throws PortalException {
-
-		AssetRendererFactory assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-				layoutPageTemplateEntry.getClassName());
-
-		if ((assetRendererFactory == null) ||
-			(layoutPageTemplateEntry.getClassTypeId() <= 0)) {
-
-			return StringPool.BLANK;
-		}
-
-		ClassTypeReader classTypeReader =
-			assetRendererFactory.getClassTypeReader();
-
-		ClassType classType = classTypeReader.getClassType(
-			layoutPageTemplateEntry.getClassTypeId(),
-			_themeDisplay.getLocale());
-
-		return classType.getName();
-	}
-
-	public String getTypeLabel(
-		LayoutPageTemplateEntry layoutPageTemplateEntry) {
-
-		AssetDisplayContributor assetDisplayContributor =
-			_assetDisplayContributorTracker.getAssetDisplayContributor(
-				layoutPageTemplateEntry.getClassName());
-
-		if (assetDisplayContributor == null) {
-			return StringPool.BLANK;
-		}
-
-		return assetDisplayContributor.getLabel(_themeDisplay.getLocale());
-	}
-
 	public boolean isSearch() {
 		if (Validator.isNotNull(getKeywords())) {
 			return true;
@@ -242,8 +192,6 @@ public class DisplayPageDisplayContext {
 		return false;
 	}
 
-	private final AssetDisplayContributorTracker
-		_assetDisplayContributorTracker;
 	private SearchContainer _displayPagesSearchContainer;
 	private String _keywords;
 	private Long _layoutPageTemplateEntryId;

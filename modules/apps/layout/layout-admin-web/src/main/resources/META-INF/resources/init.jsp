@@ -51,6 +51,7 @@ page import="com.liferay.layout.admin.web.internal.display.context.SelectLayoutP
 page import="com.liferay.layout.admin.web.internal.display.context.SelectThemeDisplayContext" %><%@
 page import="com.liferay.layout.admin.web.internal.security.permission.resource.LayoutPageTemplateCollectionPermission" %><%@
 page import="com.liferay.layout.admin.web.internal.security.permission.resource.LayoutPageTemplateEntryPermission" %><%@
+page import="com.liferay.layout.admin.web.internal.servlet.taglib.clay.DisplayPageVerticalCard" %><%@
 page import="com.liferay.layout.admin.web.internal.servlet.taglib.clay.LayoutPrototypeVerticalCard" %><%@
 page import="com.liferay.layout.constants.LayoutConstants" %><%@
 page import="com.liferay.layout.page.template.constants.LayoutPageTemplateActionKeys" %><%@

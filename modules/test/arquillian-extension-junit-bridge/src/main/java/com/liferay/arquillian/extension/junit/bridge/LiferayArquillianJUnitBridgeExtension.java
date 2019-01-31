@@ -18,6 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.container.remote.LiferayRem
 import com.liferay.arquillian.extension.junit.bridge.deployment.BndDeploymentScenarioGenerator;
 import com.liferay.arquillian.extension.junit.bridge.observer.ConfigurationRegistrar;
 import com.liferay.arquillian.extension.junit.bridge.observer.JUnitBridgeObserver;
+import com.liferay.arquillian.extension.junit.bridge.observer.RegistryCreator;
 import com.liferay.arquillian.extension.junit.bridge.protocol.osgi.JMXOSGiProtocol;
 import com.liferay.arquillian.extension.junit.bridge.remote.processor.OSGiAllInProcessor;
 
@@ -26,7 +27,6 @@ import java.net.URL;
 import org.jboss.arquillian.container.impl.client.ContainerDeploymentContextHandler;
 import org.jboss.arquillian.container.impl.client.container.ContainerDeployController;
 import org.jboss.arquillian.container.impl.client.container.ContainerLifecycleController;
-import org.jboss.arquillian.container.impl.client.container.ContainerRegistryCreator;
 import org.jboss.arquillian.container.impl.client.deployment.ArchiveDeploymentExporter;
 import org.jboss.arquillian.container.impl.context.ContainerContextImpl;
 import org.jboss.arquillian.container.impl.context.DeploymentContextImpl;
@@ -55,7 +55,7 @@ public class LiferayArquillianJUnitBridgeExtension
 			extensionBuilder.observer(ContainerDeployController.class);
 			extensionBuilder.observer(ContainerDeploymentContextHandler.class);
 			extensionBuilder.observer(ContainerLifecycleController.class);
-			extensionBuilder.observer(ContainerRegistryCreator.class);
+			extensionBuilder.observer(RegistryCreator.class);
 			extensionBuilder.service(
 				ApplicationArchiveProcessor.class, OSGiAllInProcessor.class);
 			extensionBuilder.service(

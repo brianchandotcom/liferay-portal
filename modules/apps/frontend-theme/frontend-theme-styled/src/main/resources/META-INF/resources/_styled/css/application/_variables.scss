@@ -96,21 +96,23 @@ $fragment-gray-800: $gray-800 !default;
 
 $fragments-colors: () !default;
 
-$fragments-colors: map-merge((
-	"blue": $fragment-blue,
-	"indigo": $fragment-indigo,
-	"purple": $fragment-purple,
-	"pink": $fragment-pink,
-	"red": $fragment-red,
-	"orange": $fragment-orange,
-	"yellow": $fragment-yellow,
-	"green": $fragment-green,
-	"teal": $fragment-teal,
-	"cyan": $fragment-cyan,
-	"white": $fragment-white,
-	"gray": $fragment-gray-600,
-	"gray-dark": $fragment-gray-800),
-$fragments-colors
+$fragments-colors: map-merge(
+	(
+		"blue": $fragment-blue,
+		"indigo": $fragment-indigo,
+		"purple": $fragment-purple,
+		"pink": $fragment-pink,
+		"red": $fragment-red,
+		"orange": $fragment-orange,
+		"yellow": $fragment-yellow,
+		"green": $fragment-green,
+		"teal": $fragment-teal,
+		"cyan": $fragment-cyan,
+		"white": $fragment-white,
+		"gray": $fragment-gray-600,
+		"gray-dark": $fragment-gray-800
+	),
+	$fragments-colors
 );
 
 /* ---------- User icons background colors ---------- */

@@ -1,4 +1,4 @@
 @each $color, $value in $fragments-colors {
-@include bg-variant(".bg-fragment-#{$color}", $value);
-@include text-emphasis-variant(".text-fragment-#{$color}", $value);
+	@include bg-variant(".bg-fragment-#{$color}", $value);
+	@include text-emphasis-variant(".text-fragment-#{$color}", $value);
 }

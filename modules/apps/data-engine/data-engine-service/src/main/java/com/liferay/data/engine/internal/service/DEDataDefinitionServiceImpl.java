@@ -17,6 +17,8 @@ package com.liferay.data.engine.internal.service;
 import com.liferay.data.engine.constants.DEActionKeys;
 import com.liferay.data.engine.exception.DEDataDefinitionException;
 import com.liferay.data.engine.internal.executor.DEDataDefinitionCountRequestExecutor;
+import com.liferay.data.engine.internal.executor.DEDataDefinitionDeleteModelPermissionsRequestExecutor;
+import com.liferay.data.engine.internal.executor.DEDataDefinitionDeletePermissionsRequestExecutor;
 import com.liferay.data.engine.internal.executor.DEDataDefinitionDeleteRequestExecutor;
 import com.liferay.data.engine.internal.executor.DEDataDefinitionGetRequestExecutor;
 import com.liferay.data.engine.internal.executor.DEDataDefinitionListRequestExecutor;
@@ -32,6 +34,10 @@ import com.liferay.data.engine.internal.security.permission.DEDataEnginePermissi
 import com.liferay.data.engine.model.DEDataDefinition;
 import com.liferay.data.engine.service.DEDataDefinitionCountRequest;
 import com.liferay.data.engine.service.DEDataDefinitionCountResponse;
+import com.liferay.data.engine.service.DEDataDefinitionDeleteModelPermissionsRequest;
+import com.liferay.data.engine.service.DEDataDefinitionDeleteModelPermissionsResponse;
+import com.liferay.data.engine.service.DEDataDefinitionDeletePermissionsRequest;
+import com.liferay.data.engine.service.DEDataDefinitionDeletePermissionsResponse;
 import com.liferay.data.engine.service.DEDataDefinitionDeleteRequest;
 import com.liferay.data.engine.service.DEDataDefinitionDeleteResponse;
 import com.liferay.data.engine.service.DEDataDefinitionGetRequest;
@@ -82,6 +88,67 @@ public class DEDataDefinitionServiceImpl
 
 		return deDataDefinitionCountRequestExecutor.execute(
 			deDataDefinitionCountRequest);
+	}
+
+	@Override
+	public DEDataDefinitionDeleteModelPermissionsResponse execute(
+			DEDataDefinitionDeleteModelPermissionsRequest
+				deDataDefinitionDeleteModelPermissionsRequest)
+		throws DEDataDefinitionException {
+
+		DEDataDefinitionDeleteModelPermissionsRequestExecutor
+			deDataDefinitionDeleteModelPermissionsRequestExecutor =
+				getDEDataDefinitionDeleteModelPermissionsRequestExecutor();
+
+		try {
+			checkPermission(
+				deDataDefinitionDeleteModelPermissionsRequest.
+					getScopedGroupId(),
+				ActionKeys.DEFINE_PERMISSIONS, getPermissionChecker());
+
+			return deDataDefinitionDeleteModelPermissionsRequestExecutor.
+				execute(deDataDefinitionDeleteModelPermissionsRequest);
+		}
+		catch (PrincipalException.MustHavePermission mhp) {
+			throw new DEDataDefinitionException.MustHavePermission(
+				mhp.actionId, mhp);
+		}
+		catch (DEDataDefinitionException dedde) {
+			throw dedde;
+		}
+		catch (Exception e) {
+			throw new DEDataDefinitionException(e);
+		}
+	}
+
+	@Override
+	public DEDataDefinitionDeletePermissionsResponse execute(
+			DEDataDefinitionDeletePermissionsRequest
+				deDataDefinitionDeletePermissionsRequest)
+		throws DEDataDefinitionException {
+
+		try {
+			checkPermission(
+				deDataDefinitionDeletePermissionsRequest.getScopedGroupId(),
+				ActionKeys.DEFINE_PERMISSIONS, getPermissionChecker());
+
+			DEDataDefinitionDeletePermissionsRequestExecutor
+				deDataDefinitionDeletePermissionsRequestExecutor =
+					getDEDataDefinitionDeletePermissionsRequestExecutor();
+
+			return deDataDefinitionDeletePermissionsRequestExecutor.execute(
+				deDataDefinitionDeletePermissionsRequest);
+		}
+		catch (PrincipalException.MustHavePermission mhp) {
+			throw new DEDataDefinitionException.MustHavePermission(
+				mhp.actionId, mhp);
+		}
+		catch (DEDataDefinitionException dedde) {
+			throw dedde;
+		}
+		catch (Exception e) {
+			throw new DEDataDefinitionException(e);
+		}
 	}
 
 	@Override
@@ -428,6 +495,30 @@ public class DEDataDefinitionServiceImpl
 		return _deDataEngineRequestExecutor;
 	}
 
+	protected DEDataDefinitionDeleteModelPermissionsRequestExecutor
+		getDEDataDefinitionDeleteModelPermissionsRequestExecutor() {
+
+		if (_deDataDefinitionDeleteModelPermissionsRequestExecutor == null) {
+			_deDataDefinitionDeleteModelPermissionsRequestExecutor =
+				new DEDataDefinitionDeleteModelPermissionsRequestExecutor(
+					resourcePermissionLocalService, roleLocalService);
+		}
+
+		return _deDataDefinitionDeleteModelPermissionsRequestExecutor;
+	}
+
+	protected DEDataDefinitionDeletePermissionsRequestExecutor
+		getDEDataDefinitionDeletePermissionsRequestExecutor() {
+
+		if (_deDataDefinitionDeletePermissionsRequestExecutor == null) {
+			_deDataDefinitionDeletePermissionsRequestExecutor =
+				new DEDataDefinitionDeletePermissionsRequestExecutor(
+					resourcePermissionLocalService, roleLocalService);
+		}
+
+		return _deDataDefinitionDeletePermissionsRequestExecutor;
+	}
+
 	@Override
 	protected DEDataEnginePermissionSupport getDEDataEnginePermissionSupport() {
 		return new DEDataEnginePermissionSupport(groupLocalService);
@@ -477,6 +568,10 @@ public class DEDataDefinitionServiceImpl
 
 	private DEDataDefinitionCountRequestExecutor
 		_deDataDefinitionCountRequestExecutor;
+	private DEDataDefinitionDeleteModelPermissionsRequestExecutor
+		_deDataDefinitionDeleteModelPermissionsRequestExecutor;
+	private DEDataDefinitionDeletePermissionsRequestExecutor
+		_deDataDefinitionDeletePermissionsRequestExecutor;
 	private DEDataDefinitionDeleteRequestExecutor
 		_deDataDefinitionDeleteRequestExecutor;
 	private DEDataDefinitionGetRequestExecutor

@@ -20,10 +20,7 @@ import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.ClassType;
 import com.liferay.asset.kernel.model.ClassTypeReader;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.layout.admin.web.internal.constants.LayoutAdminWebKeys;
-import com.liferay.layout.admin.web.internal.security.permission.resource.LayoutPageTemplatePermission;
 import com.liferay.layout.admin.web.internal.util.LayoutPageTemplatePortletUtil;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
@@ -32,7 +29,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -40,7 +36,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
-import java.util.Objects;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -68,33 +63,7 @@ public class DisplayPageDisplayContext {
 			WebKeys.THEME_DISPLAY);
 	}
 
-	public List<DropdownItem> getActionDropdownItems() {
-		return new DropdownItemList() {
-			{
-				add(
-					dropdownItem -> {
-						dropdownItem.putData(
-							"action", "deleteSelectedDisplayPages");
-						dropdownItem.setIcon("times-circle");
-						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "delete"));
-						dropdownItem.setQuickAction(true);
-					});
-			}
-		};
-	}
-
-	public String getClearResultsURL() {
-		PortletURL clearResultsURL = getPortletURL();
-
-		clearResultsURL.setParameter("keywords", StringPool.BLANK);
-
-		return clearResultsURL.toString();
-	}
-
-	public SearchContainer getDisplayPagesSearchContainer()
-		throws PortalException {
-
+	public SearchContainer getDisplayPagesSearchContainer() {
 		if (_displayPagesSearchContainer != null) {
 			return _displayPagesSearchContainer;
 		}
@@ -155,28 +124,6 @@ public class DisplayPageDisplayContext {
 		_displayPagesSearchContainer = displayPagesSearchContainer;
 
 		return _displayPagesSearchContainer;
-	}
-
-	public List<DropdownItem> getFilterDropdownItems() {
-		return new DropdownItemList() {
-			{
-				addGroup(
-					dropdownGroupItem -> {
-						dropdownGroupItem.setDropdownItems(
-							_getFilterNavigationDropdownItems());
-						dropdownGroupItem.setLabel(
-							LanguageUtil.get(_request, "filter-by-navigation"));
-					});
-
-				addGroup(
-					dropdownGroupItem -> {
-						dropdownGroupItem.setDropdownItems(
-							_getOrderByDropdownItems());
-						dropdownGroupItem.setLabel(
-							LanguageUtil.get(_request, "order-by"));
-					});
-			}
-		};
 	}
 
 	public String getKeywords() {
@@ -249,22 +196,6 @@ public class DisplayPageDisplayContext {
 		return portletURL;
 	}
 
-	public String getSearchActionURL() {
-		PortletURL searchActionURL = getPortletURL();
-
-		return searchActionURL.toString();
-	}
-
-	public String getSortingURL() {
-		PortletURL sortingURL = getPortletURL();
-
-		sortingURL.setParameter(
-			"orderByType",
-			Objects.equals(getOrderByType(), "asc") ? "desc" : "asc");
-
-		return sortingURL.toString();
-	}
-
 	public String getSubtypeLabel(
 			LayoutPageTemplateEntry layoutPageTemplateEntry)
 		throws PortalException {
@@ -289,13 +220,6 @@ public class DisplayPageDisplayContext {
 		return classType.getName();
 	}
 
-	public int getTotalItems() throws Exception {
-		SearchContainer displayPagesSearchContainer =
-			getDisplayPagesSearchContainer();
-
-		return displayPagesSearchContainer.getTotal();
-	}
-
 	public String getTypeLabel(
 		LayoutPageTemplateEntry layoutPageTemplateEntry) {
 
@@ -310,91 +234,8 @@ public class DisplayPageDisplayContext {
 		return assetDisplayContributor.getLabel(_themeDisplay.getLocale());
 	}
 
-	public boolean isDisabledDisplayPagesManagementBar()
-		throws PortalException {
-
-		if (_hasDisplayPagesResults()) {
-			return false;
-		}
-
-		return true;
-	}
-
 	public boolean isSearch() {
 		if (Validator.isNotNull(getKeywords())) {
-			return true;
-		}
-
-		return false;
-	}
-
-	public boolean isShowAddButton(String actionId) {
-		if (LayoutPageTemplatePermission.contains(
-				_themeDisplay.getPermissionChecker(),
-				_themeDisplay.getSiteGroupId(), actionId)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	public boolean isShowDisplayPagesSearch() throws PortalException {
-		if (_hasDisplayPagesResults()) {
-			return true;
-		}
-
-		if (isSearch()) {
-			return true;
-		}
-
-		return false;
-	}
-
-	private List<DropdownItem> _getFilterNavigationDropdownItems() {
-		return new DropdownItemList() {
-			{
-				add(
-					dropdownItem -> {
-						dropdownItem.setActive(true);
-						dropdownItem.setHref(getPortletURL());
-						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "all"));
-					});
-			}
-		};
-	}
-
-	private List<DropdownItem> _getOrderByDropdownItems() {
-		return new DropdownItemList() {
-			{
-				add(
-					dropdownItem -> {
-						dropdownItem.setActive(
-							Objects.equals(getOrderByCol(), "create-date"));
-						dropdownItem.setHref(
-							getPortletURL(), "orderByCol", "create-date");
-						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "create-date"));
-					});
-
-				add(
-					dropdownItem -> {
-						dropdownItem.setActive(
-							Objects.equals(getOrderByCol(), "name"));
-						dropdownItem.setHref(
-							getPortletURL(), "orderByCol", "name");
-						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "name"));
-					});
-			}
-		};
-	}
-
-	private boolean _hasDisplayPagesResults() throws PortalException {
-		SearchContainer searchContainer = getDisplayPagesSearchContainer();
-
-		if (searchContainer.getTotal() > 0) {
 			return true;
 		}
 

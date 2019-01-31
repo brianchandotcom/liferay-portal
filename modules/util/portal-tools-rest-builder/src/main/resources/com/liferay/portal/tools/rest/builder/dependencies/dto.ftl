@@ -3,7 +3,6 @@ package ${configYAML.apiPackagePath}.dto;
 <#compress>
 	<#list openAPIYAML.components.schemas?keys as schemaName>
 		import ${configYAML.apiPackagePath}.dto.${schemaName};
-		import ${configYAML.apiPackagePath}.dto.${schemaName}Collection;
 	</#list>
 </#compress>
 

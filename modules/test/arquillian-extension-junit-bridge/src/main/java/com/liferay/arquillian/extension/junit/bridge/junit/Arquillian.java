@@ -72,6 +72,18 @@ public class Arquillian extends ParentRunner<FrameworkMethod> {
 	}
 
 	@Override
+	public void filter(Filter filter) throws NoTestsRemainException {
+		_testClass = new FilteredSortedTestClass(_clazz, filter);
+
+		List<FrameworkMethod> frameworkMethods = _testClass.getAnnotatedMethods(
+			Test.class);
+
+		if (frameworkMethods.isEmpty()) {
+			throw new NoTestsRemainException();
+		}
+	}
+
+	@Override
 	public void run(RunNotifier runNotifier) {
 		_testRunnerAdaptor = _testRunnerAdaptorThreadLocal.get();
 

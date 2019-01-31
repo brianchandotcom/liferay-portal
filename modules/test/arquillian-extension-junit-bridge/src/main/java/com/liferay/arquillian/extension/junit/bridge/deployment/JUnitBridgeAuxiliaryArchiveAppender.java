@@ -92,6 +92,7 @@ public class JUnitBridgeAuxiliaryArchiveAppender
 				"org.junit.internal.runners.statements",
 				"org.junit.internal.runners.model", "org.junit.rules",
 				"org.junit.runners", "org.junit.runners.model",
+				"org.junit.runner.manipulation",
 				"org.junit.runner.notification"));
 		attributes.putValue("Manifest-Version", "2");
 

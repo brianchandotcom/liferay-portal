@@ -247,6 +247,12 @@ public interface ${schemaName}Resource {
 
 		<#assign name = "${name?replace(' ', '')}" />
 
+		<#if stringUtil.equals(methodReturnType, "Page") && !stringUtil.endsWith(name, "Page")>
+			<#assign name = "${name}Page" />
+		<#elseif stringUtil.equals(methodReturnType, schemaName) && stringUtil.endsWith(name, methodReturnType + "s")>
+			<#assign name = "${name[0..(name?length - 2)]}" />
+		</#if>
+
 		<#if stringUtil.equals(methodReturnType, schemaName) || stringUtil.equals(methodReturnType, "Page")>
 			<#assign template>
 				@Path("${path}")

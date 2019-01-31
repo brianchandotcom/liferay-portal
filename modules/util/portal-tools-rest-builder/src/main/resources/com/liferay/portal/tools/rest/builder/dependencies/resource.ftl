@@ -162,7 +162,11 @@ public interface ${schemaName}Resource {
 						<#if parameter.schema.type??>
 							@${parameter.in?cap_first}Param("${parameter.name}")
 
-							${parameter.schema.type?cap_first}
+							<#if stringUtil.equals(parameter.schema.type, "integer") && parameter.schema.format?? && stringUtil.equals(parameter.schema.format, "int64")>
+								Long
+							<#else>
+								${parameter.schema.type?cap_first}
+							</#if>
 						<#elseif parameter.schema.reference??>
 							<#assign reference = "${parameter.schema.reference}" />
 

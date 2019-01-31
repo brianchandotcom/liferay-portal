@@ -105,7 +105,11 @@ public class ${schemaName}ResourceImpl implements ${schemaName}Resource {
 						</#if>
 
 						<#if parameter.schema.type??>
-							${parameter.schema.type?cap_first}
+							<#if stringUtil.equals(parameter.schema.type, "integer") && parameter.schema.format?? && stringUtil.equals(parameter.schema.format, "int64")>
+								Long
+							<#else>
+								${parameter.schema.type?cap_first}
+							</#if>
 						<#elseif parameter.schema.reference??>
 							<#assign reference = "${parameter.schema.reference}" />
 

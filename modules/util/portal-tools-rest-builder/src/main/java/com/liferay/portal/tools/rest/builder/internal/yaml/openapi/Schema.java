@@ -25,6 +25,10 @@ public class Schema {
 		return _description;
 	}
 
+	public String getFormat() {
+		return _format;
+	}
+
 	public Items getItems() {
 		return _items;
 	}
@@ -45,6 +49,10 @@ public class Schema {
 		_description = description;
 	}
 
+	public void setFormat(String format) {
+		_format = format;
+	}
+
 	public void setItems(Items items) {
 		_items = items;
 	}
@@ -62,6 +70,7 @@ public class Schema {
 	}
 
 	private String _description;
+	private String _format;
 	private Items _items;
 	private Map<String, Properties> _properties;
 	private String _reference;

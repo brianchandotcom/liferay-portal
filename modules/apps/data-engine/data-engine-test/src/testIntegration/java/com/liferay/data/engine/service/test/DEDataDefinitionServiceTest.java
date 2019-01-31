@@ -1452,6 +1452,339 @@ public class DEDataDefinitionServiceTest {
 			deDataDefinitions.toString(), 5, deDataDefinitions.size());
 	}
 
+	@Test(expected = DEDataDefinitionException.MustHavePermission.class)
+	public void testRevokeAddDataDefinitionPermission() throws Exception {
+		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		User user = UserTestUtil.addGroupUser(_group, role.getName());
+
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(_adminUser));
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), _adminUser.getUserId());
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+		try {
+			DEDataDefinitionSavePermissionsRequest
+				deDataDefinitionSavePermissionsRequest =
+					DEDataDefinitionRequestBuilder.savePermissionsBuilder(
+						TestPropsValues.getCompanyId(), _group.getGroupId(),
+						new String[] {role.getName()}
+					).allowAddDataDefinition(
+					).build();
+
+			_deDataDefinitionService.execute(
+				deDataDefinitionSavePermissionsRequest);
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
+
+		DEDataDefinition deDataDefinition =
+			DEDataEngineTestUtil.insertDEDataDefinition(
+				user, _group, _deDataDefinitionService);
+
+		Assert.assertTrue(deDataDefinition.getDEDataDefinitionId() > 0);
+
+		DEDataEngineTestUtil.deleteDEDataDefinitionPermissions(
+			TestPropsValues.getCompanyId(), _adminUser, _group.getGroupId(),
+			new String[] {role.getName()}, _deDataDefinitionService);
+
+		DEDataEngineTestUtil.insertDEDataDefinition(
+			user, _group, _deDataDefinitionService);
+	}
+
+	@Test(expected = DEDataDefinitionException.MustHavePermission.class)
+	public void testRevokeDefinePermissions() throws Exception {
+		DEDataDefinition deDataDefinition =
+			DEDataEngineTestUtil.insertDEDataDefinition(
+				_adminUser, _group, _deDataDefinitionService);
+
+		Role role1 = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		User user1 = UserTestUtil.addGroupUser(_group, role1.getName());
+
+		Role role2 = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		User user2 = UserTestUtil.addGroupUser(_group, role2.getName());
+
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(_adminUser));
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), _adminUser.getUserId());
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+		try {
+			DEDataDefinitionSavePermissionsRequest
+				deDataDefinitionSavePermissionsRequest =
+					DEDataDefinitionRequestBuilder.savePermissionsBuilder(
+						TestPropsValues.getCompanyId(), _group.getGroupId(),
+						new String[] {role1.getName()}
+					).allowDefinePermissions(
+					).build();
+
+			_deDataDefinitionService.execute(
+				deDataDefinitionSavePermissionsRequest);
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
+
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(user1));
+
+		ServiceContext serviceContext2 =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), user1.getUserId());
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext2);
+
+		try {
+			DEDataDefinitionSaveModelPermissionsRequest
+				deDataDefinitionSaveModelPermissionsRequest =
+					DEDataDefinitionRequestBuilder.saveModelPermissionsBuilder(
+						TestPropsValues.getCompanyId(), _group.getGroupId(),
+						user1.getUserId(), _group.getGroupId(),
+						deDataDefinition.getDEDataDefinitionId(),
+						new String[] {role2.getName()}
+					).allowUpdate(
+					).build();
+
+			_deDataDefinitionService.execute(
+				deDataDefinitionSaveModelPermissionsRequest);
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
+
+		DEDataDefinition deDataDefinitionAfterUpdate =
+			DEDataEngineTestUtil.updateDEDataDefinition(
+				user2, _group, deDataDefinition, _deDataDefinitionService);
+
+		Assert.assertEquals(
+			deDataDefinition.getDEDataDefinitionId(),
+			deDataDefinitionAfterUpdate.getDEDataDefinitionId());
+
+		DEDataEngineTestUtil.deleteDEDataDefinitionPermissions(
+			TestPropsValues.getCompanyId(), _adminUser, _group.getGroupId(),
+			new String[] {role1.getName()}, _deDataDefinitionService);
+
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(user1));
+
+		ServiceContext serviceContext3 =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), user1.getUserId());
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext3);
+
+		try {
+			DEDataDefinitionSaveModelPermissionsRequest
+				deDataDefinitionSaveModelPermissionsRequest =
+					DEDataDefinitionRequestBuilder.saveModelPermissionsBuilder(
+						TestPropsValues.getCompanyId(), _group.getGroupId(),
+						user1.getUserId(), _group.getGroupId(),
+						deDataDefinition.getDEDataDefinitionId(),
+						new String[] {role2.getName()}
+					).allowUpdate(
+					).build();
+
+			_deDataDefinitionService.execute(
+				deDataDefinitionSaveModelPermissionsRequest);
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
+	}
+
+	@Test(expected = DEDataDefinitionException.MustHavePermission.class)
+	public void testRevokeDeleteDataDefinitionPermission() throws Exception {
+		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		User user = UserTestUtil.addGroupUser(_group, role.getName());
+
+		DEDataDefinition deDataDefinition =
+			DEDataEngineTestUtil.insertDEDataDefinition(
+				_adminUser, _group, _deDataDefinitionService);
+
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(_adminUser));
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), _adminUser.getUserId());
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+		try {
+			DEDataDefinitionSaveModelPermissionsRequest
+				deDataDefinitionSaveModelPermissionsRequest2 =
+					DEDataDefinitionRequestBuilder.saveModelPermissionsBuilder(
+						TestPropsValues.getCompanyId(), _group.getGroupId(),
+						_adminUser.getUserId(), _group.getGroupId(),
+						deDataDefinition.getDEDataDefinitionId(),
+						new String[] {role.getName()}
+					).allowDelete(
+					).build();
+
+			_deDataDefinitionService.execute(
+				deDataDefinitionSaveModelPermissionsRequest2);
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
+
+		DEDataEngineTestUtil.deleteDEDataDefinitionModelPermissions(
+			TestPropsValues.getCompanyId(), _adminUser, _group.getGroupId(),
+			deDataDefinition.getDEDataDefinitionId(),
+			new String[] {ActionKeys.DELETE}, new String[] {role.getName()},
+			_deDataDefinitionService);
+
+		deleteDEDataDefinition(
+			user, _group, deDataDefinition.getDEDataDefinitionId());
+	}
+
+	@Test(expected = DEDataDefinitionException.MustHavePermission.class)
+	public void testRevokeModelPermissionsWithNoPermission() throws Exception {
+		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		User user = UserTestUtil.addGroupUser(_group, role.getName());
+
+		DEDataDefinition deDataDefinition =
+			DEDataEngineTestUtil.insertDEDataDefinition(
+				_adminUser, _group, _deDataDefinitionService);
+
+		DEDataEngineTestUtil.deleteDEDataDefinitionModelPermissions(
+			TestPropsValues.getCompanyId(), user, _group.getGroupId(),
+			deDataDefinition.getDEDataDefinitionId(),
+			new String[] {ActionKeys.UPDATE},
+			new String[] {RoleConstants.ORGANIZATION_USER},
+			_deDataDefinitionService);
+	}
+
+	@Test(expected = DEDataDefinitionException.MustHavePermission.class)
+	public void testRevokePermissionsWithNoPermission() throws Exception {
+		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		User user = UserTestUtil.addGroupUser(_group, role.getName());
+
+		DEDataEngineTestUtil.deleteDEDataDefinitionPermissions(
+			TestPropsValues.getCompanyId(), user, _group.getGroupId(),
+			new String[] {RoleConstants.ORGANIZATION_USER},
+			_deDataDefinitionService);
+	}
+
+	@Test(expected = DEDataDefinitionException.MustHavePermission.class)
+	public void testRevokeUpdateDataDefinitionPermission() throws Exception {
+		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		User user = UserTestUtil.addGroupUser(_group, role.getName());
+
+		DEDataDefinition deDataDefinition =
+			DEDataEngineTestUtil.insertDEDataDefinition(
+				_adminUser, _group, _deDataDefinitionService);
+
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(_adminUser));
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), _adminUser.getUserId());
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+		try {
+			DEDataDefinitionSaveModelPermissionsRequest
+				deDataDefinitionSaveModelPermissionsRequest2 =
+					DEDataDefinitionRequestBuilder.saveModelPermissionsBuilder(
+						TestPropsValues.getCompanyId(), _group.getGroupId(),
+						_adminUser.getUserId(), _group.getGroupId(),
+						deDataDefinition.getDEDataDefinitionId(),
+						new String[] {role.getName()}
+					).allowUpdate(
+					).build();
+
+			_deDataDefinitionService.execute(
+				deDataDefinitionSaveModelPermissionsRequest2);
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
+
+		DEDataEngineTestUtil.updateDEDataDefinition(
+			user, _group, deDataDefinition, _deDataDefinitionService);
+
+		DEDataEngineTestUtil.updateDEDataDefinition(
+			_adminUser, _group, deDataDefinition, _deDataDefinitionService);
+
+		DEDataEngineTestUtil.deleteDEDataDefinitionModelPermissions(
+			TestPropsValues.getCompanyId(), _adminUser, _group.getGroupId(),
+			deDataDefinition.getDEDataDefinitionId(),
+			new String[] {ActionKeys.UPDATE}, new String[] {role.getName()},
+			_deDataDefinitionService);
+
+		DEDataEngineTestUtil.updateDEDataDefinition(
+			user, _group, deDataDefinition, _deDataDefinitionService);
+	}
+
+	@Test(expected = DEDataDefinitionException.MustHavePermission.class)
+	public void testRevokeViewDataDefinitionPermission() throws Exception {
+		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		User user = UserTestUtil.addGroupUser(_group, role.getName());
+
+		DEDataDefinition deDataDefinition =
+			DEDataEngineTestUtil.insertDEDataDefinition(
+				_adminUser, _group, _deDataDefinitionService);
+
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(_adminUser));
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), _adminUser.getUserId());
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+		try {
+			DEDataDefinitionSaveModelPermissionsRequest
+				deDataDefinitionSaveModelPermissionsRequest2 =
+					DEDataDefinitionRequestBuilder.saveModelPermissionsBuilder(
+						TestPropsValues.getCompanyId(), _group.getGroupId(),
+						_adminUser.getUserId(), _group.getGroupId(),
+						deDataDefinition.getDEDataDefinitionId(),
+						new String[] {role.getName()}
+					).allowView(
+					).build();
+
+			_deDataDefinitionService.execute(
+				deDataDefinitionSaveModelPermissionsRequest2);
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
+
+		DEDataDefinition deDataDefinition2 = getDEDataDefinition(
+			user, _group, deDataDefinition.getDEDataDefinitionId());
+
+		Assert.assertTrue(deDataDefinition2.getDEDataDefinitionId() > 0);
+
+		DEDataEngineTestUtil.deleteDEDataDefinitionModelPermissions(
+			TestPropsValues.getCompanyId(), _adminUser, _group.getGroupId(),
+			deDataDefinition.getDEDataDefinitionId(),
+			new String[] {ActionKeys.VIEW}, new String[] {role.getName()},
+			_deDataDefinitionService);
+
+		getDEDataDefinition(
+			user, _group, deDataDefinition.getDEDataDefinitionId());
+	}
+
 	@Test
 	public void testSearchBlank() throws Exception {
 		int total = 5;

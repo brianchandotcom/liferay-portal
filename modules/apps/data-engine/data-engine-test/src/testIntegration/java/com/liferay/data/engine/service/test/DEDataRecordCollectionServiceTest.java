@@ -806,11 +806,10 @@ public class DEDataRecordCollectionServiceTest {
 
 		DEDataEngineTestUtil.deleteDEDataRecordCollectionPermissions(
 			TestPropsValues.getCompanyId(), _adminUser, _group.getGroupId(),
-			role.getName(), _deDataRecordCollectionService);
+			new String[] {role.getName()}, _deDataRecordCollectionService);
 
-		deDataRecordCollection =
-			DEDataEngineTestUtil.insertDEDataRecordCollection(
-				user, _group, deDataDefinition, _deDataRecordCollectionService);
+		DEDataEngineTestUtil.insertDEDataRecordCollection(
+			user, _group, deDataDefinition, _deDataRecordCollectionService);
 	}
 
 	@Test(expected = DEDataRecordCollectionException.MustHavePermission.class)
@@ -893,7 +892,7 @@ public class DEDataRecordCollectionServiceTest {
 
 		DEDataEngineTestUtil.deleteDEDataRecordCollectionPermissions(
 			TestPropsValues.getCompanyId(), _adminUser, _group.getGroupId(),
-			role1.getName(), _deDataRecordCollectionService);
+			new String[] {role1.getName()}, _deDataRecordCollectionService);
 
 		PermissionThreadLocal.setPermissionChecker(
 			PermissionCheckerFactoryUtil.create(user1));
@@ -939,8 +938,9 @@ public class DEDataRecordCollectionServiceTest {
 		DEDataEngineTestUtil.deleteDEDataRecordCollectionModelPermissions(
 			TestPropsValues.getCompanyId(), user, _group.getGroupId(),
 			deDataRecordCollection.getDEDataRecordCollectionId(),
+			new String[] {ActionKeys.UPDATE},
 			new String[] {RoleConstants.ORGANIZATION_USER},
-			new String[] {ActionKeys.UPDATE}, _deDataRecordCollectionService);
+			_deDataRecordCollectionService);
 	}
 
 	@Test(expected = DEDataRecordCollectionException.MustHavePermission.class)
@@ -951,7 +951,8 @@ public class DEDataRecordCollectionServiceTest {
 
 		DEDataEngineTestUtil.deleteDEDataRecordCollectionPermissions(
 			TestPropsValues.getCompanyId(), user, _group.getGroupId(),
-			RoleConstants.ORGANIZATION_USER, _deDataRecordCollectionService);
+			new String[] {RoleConstants.ORGANIZATION_USER},
+			_deDataRecordCollectionService);
 	}
 
 	@Test(expected = DEDataRecordCollectionException.MustHavePermission.class)
@@ -1003,7 +1004,7 @@ public class DEDataRecordCollectionServiceTest {
 		DEDataEngineTestUtil.deleteDEDataRecordCollectionModelPermissions(
 			TestPropsValues.getCompanyId(), _adminUser, _group.getGroupId(),
 			deDataRecordCollection.getDEDataRecordCollectionId(),
-			new String[] {role.getName()}, new String[] {ActionKeys.UPDATE},
+			new String[] {ActionKeys.UPDATE}, new String[] {role.getName()},
 			_deDataRecordCollectionService);
 
 		DEDataEngineTestUtil.updateDEDataRecordCollection(

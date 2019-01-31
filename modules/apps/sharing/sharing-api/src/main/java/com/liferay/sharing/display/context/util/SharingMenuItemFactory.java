@@ -17,8 +17,6 @@ package com.liferay.sharing.display.context.util;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 
-import java.util.ResourceBundle;
-
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -27,8 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 public interface SharingMenuItemFactory {
 
 	public MenuItem createShareMenuItem(
-			String className, long classPK, HttpServletRequest request,
-			ResourceBundle resourceBundle)
+			String className, long classPK, HttpServletRequest request)
 		throws PortalException;
 
 }

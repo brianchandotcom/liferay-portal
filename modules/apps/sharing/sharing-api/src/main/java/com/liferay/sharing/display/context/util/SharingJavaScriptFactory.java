@@ -15,16 +15,18 @@
 package com.liferay.sharing.display.context.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.servlet.taglib.ui.ToolbarItem;
 
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * @author Adolfo Pérez
+ * @author Alejandro Tardín
  */
-public interface SharingToolbarItemFactory {
+public interface SharingJavaScriptFactory {
 
-	public ToolbarItem createShareToolbarItem(
+	public String createSharingJavaScript(HttpServletRequest request)
+		throws PortalException;
+
+	public String createSharingOnclickMethod(
 			String className, long classPK, HttpServletRequest request)
 		throws PortalException;
 

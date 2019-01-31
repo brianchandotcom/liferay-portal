@@ -1,3 +1,5 @@
+import {contains} from 'metal-dom';
+
 import {CLEAR_ACTIVE_ITEM, CLEAR_DROP_TARGET, CLEAR_HOVERED_ITEM, UPDATE_LAST_SAVE_DATE, UPDATE_SAVING_CHANGES_STATUS} from '../actions/actions.es';
 import {FRAGMENTS_EDITOR_ITEM_TYPES} from '../utils/constants';
 import {getWidget, getWidgetPath} from './FragmentsEditorGetUtils.es';
@@ -151,15 +153,39 @@ function setIn(object, keyPath, value) {
 }
 
 /**
+ * Returns true if current active element should be clear
+ * @param {HTMLElement} oldActiveElement
+ * @return {boolean}
+ */
+function shouldClearFocus(oldActiveElement) {
+	const fragmentEntryLinkList = (
+		document.querySelector('#wrapper') ||
+		document.body
+	);
+	const newActiveElement = document.activeElement;
+
+	return (
+		oldActiveElement &&
+		newActiveElement &&
+		(oldActiveElement !== newActiveElement) &&
+		!contains(oldActiveElement, newActiveElement) &&
+		(
+			contains(fragmentEntryLinkList, newActiveElement) ||
+			(newActiveElement === document.body)
+		)
+	);
+}
+
+/**
  * Recursively inserts the value returned from updater inside an object creating
  * a copy of the original target. It the object (or any in the path),
  * it's an Array, it will generate new Arrays, preserving the same structure.
  * Updater receives the previous value or defaultValue and returns a new value.
  * @param {!Array|Object} object Original object that will be copied
  * @param {!Array<string>} keyPath Array of strings used for reaching the deep property
- * @param {!function} updater
+ * @param {!Function} updater
  * @param {*} defaultValue
- * @return {object}
+ * @return {Object}
  * @review
  */
 function updateIn(object, keyPath, updater, defaultValue) {
@@ -203,8 +229,8 @@ function updateIn(object, keyPath, updater, defaultValue) {
  * @param {!string} portletNamespace
  * @param {!string} classNameId
  * @param {!string} classPK
- * @param {!object} data
- * @param {!array} fragmentEntryLinkIds
+ * @param {!Object} data
+ * @param {!Array} fragmentEntryLinkIds
  * @return {Promise}
  * @review
  */
@@ -244,11 +270,11 @@ function updateLayoutData(
 }
 
 /**
- * @param {object} state
- * @param {object[]} state.fragmentEntryLinks
- * @param {object[]} state.widgets
+ * @param {Object} state
+ * @param {Object[]} state.fragmentEntryLinks
+ * @param {Object[]} state.widgets
  * @param {string} fragmentEntryLinkId
- * @return {object} Next state
+ * @return {Object} Next state
  */
 function updateWidgets(state, fragmentEntryLinkId) {
 	const fragmentEntryLink = state.fragmentEntryLinks[fragmentEntryLinkId];
@@ -262,7 +288,10 @@ function updateWidgets(state, fragmentEntryLinkId) {
 
 			nextState = setIn(
 				state,
-				[...widgetPath, 'used'],
+				[
+					...widgetPath,
+					'used'
+				],
 				false
 			);
 		}
@@ -278,6 +307,7 @@ export {
 	remove,
 	removeItem,
 	setIn,
+	shouldClearFocus,
 	updateIn,
 	updateLayoutData,
 	updateWidgets

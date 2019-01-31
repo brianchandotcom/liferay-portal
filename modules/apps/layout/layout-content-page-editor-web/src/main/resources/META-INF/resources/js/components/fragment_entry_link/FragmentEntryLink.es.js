@@ -1,16 +1,15 @@
 import Component from 'metal-component';
-import {Config} from 'metal-state';
-import {contains} from 'metal-dom';
 import Soy from 'metal-soy';
+import {Config} from 'metal-state';
 
 import './FragmentEntryLinkContent.es';
+import templates from './FragmentEntryLink.soy';
 import {CLEAR_ACTIVE_ITEM, REMOVE_FRAGMENT_ENTRY_LINK, UPDATE_ACTIVE_ITEM, UPDATE_HOVERED_ITEM} from '../../actions/actions.es';
 import {FRAGMENTS_EDITOR_ITEM_TYPES} from '../../utils/constants';
 import {getConnectedComponent} from '../../store/ConnectedComponent.es';
 import {getItemMoveDirection} from '../../utils/FragmentsEditorGetUtils.es';
+import {removeItem, shouldClearFocus} from '../../utils/FragmentsEditorUpdateUtils.es';
 import {shouldUpdatePureComponent} from '../../utils/FragmentsEditorComponentUtils.es';
-import {removeItem} from '../../utils/FragmentsEditorUpdateUtils.es';
-import templates from './FragmentEntryLink.soy';
 
 /**
  * FragmentEntryLink
@@ -48,12 +47,7 @@ class FragmentEntryLink extends Component {
 	_handleFragmentFocusOut() {
 		requestAnimationFrame(
 			() => {
-				if (
-					this.element &&
-					document.activeElement &&
-					(this.element !== document.activeElement) &&
-					!contains(this.element, document.activeElement)
-				) {
+				if (shouldClearFocus(this.element)) {
 					this.store.dispatchAction(CLEAR_ACTIVE_ITEM);
 				}
 			}
@@ -62,7 +56,7 @@ class FragmentEntryLink extends Component {
 
 	/**
 	 * Callback executed when a fragment is clicked
-	 * @param {object} event
+	 * @param {Object} event
 	 * @private
 	 */
 	_handleFragmentClick(event) {
@@ -79,7 +73,7 @@ class FragmentEntryLink extends Component {
 
 	/**
 	 * Callback executed when a fragment starts being hovered.
-	 * @param {object} event
+	 * @param {Object} event
 	 * @private
 	 */
 	_handleFragmentHoverStart(event) {
@@ -119,7 +113,7 @@ class FragmentEntryLink extends Component {
 
 	/**
 	 * Callback executed when the fragment remove button is clicked.
-	 * @param {object} event
+	 * @param {Object} event
 	 * @private
 	 */
 	_handleFragmentRemoveButtonClick(event) {
@@ -133,6 +127,7 @@ class FragmentEntryLink extends Component {
 			}
 		);
 	}
+
 }
 
 /**
@@ -151,7 +146,8 @@ FragmentEntryLink.STATE = {
 	 * @review
 	 * @type {!string}
 	 */
-	fragmentEntryLinkId: Config.string().required(),
+	fragmentEntryLinkId: Config.string()
+		.required(),
 
 	/**
 	 * Fragment name
@@ -161,7 +157,8 @@ FragmentEntryLink.STATE = {
 	 * @review
 	 * @type {string}
 	 */
-	name: Config.string().value(''),
+	name: Config.string()
+		.value(''),
 
 	/**
 	 * Shows FragmentEntryLink control toolbar
@@ -171,7 +168,8 @@ FragmentEntryLink.STATE = {
 	 * @review
 	 * @type {!bool}
 	 */
-	showControlBar: Config.bool().value(true),
+	showControlBar: Config.bool()
+		.value(true),
 
 	/**
 	 * CSS class to modify style

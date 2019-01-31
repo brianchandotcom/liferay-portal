@@ -2,7 +2,6 @@ import Component from 'metal-component';
 import position from 'metal-position';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
-import {contains} from 'metal-dom';
 import {Drag, DragDrop} from 'metal-drag-drop';
 
 import '../floating_toolbar/FloatingToolbar.es';
@@ -10,7 +9,7 @@ import './FragmentEntryLinkListSection.es';
 import getConnectedComponent from '../../store/ConnectedComponent.es';
 import templates from './FragmentEntryLinkList.soy';
 import {CLEAR_ACTIVE_ITEM, CLEAR_DROP_TARGET, CLEAR_HOVERED_ITEM, MOVE_FRAGMENT_ENTRY_LINK, MOVE_SECTION, REMOVE_SECTION, UPDATE_ACTIVE_ITEM, UPDATE_DROP_TARGET, UPDATE_HOVERED_ITEM} from '../../actions/actions.es';
-import {focusItem, moveItem, removeItem, setIn} from '../../utils/FragmentsEditorUpdateUtils.es';
+import {focusItem, moveItem, removeItem, setIn, shouldClearFocus} from '../../utils/FragmentsEditorUpdateUtils.es';
 import {FRAGMENTS_EDITOR_ITEM_BORDERS, FRAGMENTS_EDITOR_ITEM_TYPES} from '../../utils/constants';
 import {getFragmentColumn, getItemMoveDirection, getSectionIndex, getTargetBorder} from '../../utils/FragmentsEditorGetUtils.es';
 import {shouldUpdatePureComponent} from '../../utils/FragmentsEditorComponentUtils.es';
@@ -341,13 +340,7 @@ class FragmentEntryLinkList extends Component {
 	_handleSectionFocusOut() {
 		requestAnimationFrame(
 			() => {
-				if (
-					this.element &&
-					document.activeElement &&
-					(this.element !== document.activeElement) &&
-					!contains(this.element, document.activeElement) &&
-					(document.activeElement.parentElement !== document.body)
-				) {
+				if (shouldClearFocus(this.element)) {
 					this.store.dispatchAction(CLEAR_ACTIVE_ITEM);
 				}
 			}

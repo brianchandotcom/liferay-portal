@@ -63,6 +63,11 @@ public class ElasticsearchIndexingFixture implements IndexingFixture {
 	}
 
 	@Override
+	public SearchEngineAdapter getSearchEngineAdapter() {
+		return _searchEngineAdapter;
+	}
+
+	@Override
 	public boolean isSearchEngineAvailable() {
 		return true;
 	}
@@ -94,6 +99,7 @@ public class ElasticsearchIndexingFixture implements IndexingFixture {
 
 		_indexSearcher = elasticsearchIndexSearcher;
 		_indexWriter = indexWriter;
+		_searchEngineAdapter = searchEngineAdapter;
 
 		elasticsearchIndexSearcher.activate(
 			_elasticsearchFixture.getElasticsearchConfigurationProperties());
@@ -273,5 +279,6 @@ public class ElasticsearchIndexingFixture implements IndexingFixture {
 	private IndexSearcher _indexSearcher;
 	private IndexWriter _indexWriter;
 	private boolean _liferayMappingsAddedToIndex;
+	private SearchEngineAdapter _searchEngineAdapter;
 
 }

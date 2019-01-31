@@ -21,8 +21,12 @@
 	navigationItems="<%= layoutsAdminDisplayContext.getNavigationItems() %>"
 />
 
+<%
+LayoutPrototypeManagementToolbarDisplayContext layoutPrototypeManagementToolbarDisplayContext = new LayoutPrototypeManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, layoutPrototypeDisplayContext);
+%>
+
 <clay:management-toolbar
-	displayContext="<%= new LayoutPrototypeManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, layoutPrototypeDisplayContext) %>"
+	displayContext="<%= layoutPrototypeManagementToolbarDisplayContext %>"
 />
 
 <portlet:actionURL name="/layout_prototype/delete_layout_prototype" var="deleteLayoutPrototypesURL">
@@ -100,29 +104,17 @@
 	</liferay-ui:search-container>
 </aui:form>
 
-<aui:script sandbox="<%= true %>">
-	var deleteSelectedLayoutPrototypes = function() {
-		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
-			submitForm($(document.<portlet:namespace />fm));
-		}
-	}
-
-	var ACTIONS = {
-		'deleteSelectedLayoutPrototypes': deleteSelectedLayoutPrototypes
-	};
-
-	Liferay.componentReady('layoutPrototypeManagementToolbar').then(
-		function(managementToolbar) {
-			managementToolbar.on(
-				['actionItemClicked', 'filterItemClicked'],
-				function(event) {
-					var itemData = event.data.item.data;
-
-					if (itemData && itemData.action && ACTIONS[itemData.action]) {
-						ACTIONS[itemData.action]();
-					}
-				}
-			);
+<aui:script require='<%= npmResolvedPackageName + "/js/LayoutPrototypeManagementToolbarDefaultEventHandler.es as LayoutPrototypeManagementToolbarDefaultEventHandler" %>'>
+	Liferay.component(
+		'<%= layoutPrototypeManagementToolbarDisplayContext.getDefaultEventHandler() %>',
+		new LayoutPrototypeManagementToolbarDefaultEventHandler.default(
+			{
+				namespace: '<portlet:namespace />'
+			}
+		),
+		{
+			destroyOnNavigate: true,
+			portletId: '<%= HtmlUtil.escapeJS(portletDisplay.getId()) %>'
 		}
 	);
 </aui:script>

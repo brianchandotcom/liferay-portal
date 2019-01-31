@@ -30,19 +30,7 @@ DisplayPageDisplayContext displayPageDisplayContext = new DisplayPageDisplayCont
 />
 
 <clay:management-toolbar
-	actionDropdownItems="<%= displayPageDisplayContext.getActionDropdownItems() %>"
-	clearResultsURL="<%= displayPageDisplayContext.getClearResultsURL() %>"
-	componentId="displayPagesManagementToolbar"
-	disabled="<%= displayPageDisplayContext.isDisabledDisplayPagesManagementBar() %>"
-	filterDropdownItems="<%= displayPageDisplayContext.getFilterDropdownItems() %>"
-	itemsTotal="<%= displayPageDisplayContext.getTotalItems() %>"
-	searchActionURL="<%= displayPageDisplayContext.getSearchActionURL() %>"
-	searchContainerId="displayPages"
-	searchFormName="searchFm"
-	showCreationMenu="<%= displayPageDisplayContext.isShowAddButton(LayoutPageTemplateActionKeys.ADD_LAYOUT_PAGE_TEMPLATE_ENTRY) %>"
-	showSearch="<%= displayPageDisplayContext.isShowDisplayPagesSearch() %>"
-	sortingOrder="<%= displayPageDisplayContext.getOrderByType() %>"
-	sortingURL="<%= displayPageDisplayContext.getSortingURL() %>"
+	displayContext="<%= new DisplayPageManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, displayPageDisplayContext) %>"
 />
 
 <portlet:actionURL name="/layout/delete_layout_page_template_entry" var="deleteDisplayPageURL">

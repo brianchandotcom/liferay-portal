@@ -10,6 +10,7 @@
 		size: string
 	]>}
 	{@param defaultEditorConfigurations: ?}
+	{@param defaultSegmentId: string}
 	{@param fragmentEntryLinks: ?}
 	{@param key: string}
 	{@param row: ?}
@@ -30,6 +31,7 @@
 	{@param? hoveredItemId: string}
 	{@param? hoveredItemType: string}
 	{@param? mappingFieldsURL: string}
+	{@param? segmentId: string}
 	{@param? selectedMappingTypes: [
 		subtype: [
 			id: string,
@@ -152,6 +154,7 @@
 						{param _handleFragmentMove: $_handleFragmentMove /}
 						{param columnId: $column.columnId /}
 						{param defaultEditorConfigurations: $defaultEditorConfigurations /}
+						{param defaultSegmentId: $defaultSegmentId /}
 						{param dropTargetItemTypes: $dropTargetItemTypes /}
 						{param fragmentEntryLinkIds: $column.fragmentEntryLinkIds /}
 						{param fragmentEntryLinks: $fragmentEntryLinks /}
@@ -162,6 +165,7 @@
 						{param hoveredItemType: $hoveredItemType /}
 						{param key: $column.columnId /}
 						{param mappingFieldsURL: $mappingFieldsURL /}
+						{param segmentId: $segmentId /}
 						{param selectedMappingTypes: $selectedMappingTypes /}
 						{param size: $column.size /}
 						{param store: $store /}
@@ -178,6 +182,7 @@
 {template .column}
 	{@param columnId: string}
 	{@param defaultEditorConfigurations: ?}
+	{@param defaultSegmentId: string}
 	{@param fragmentEntryLinkIds: list<string>}
 	{@param fragmentEntryLinks: ?}
 	{@param key: string}
@@ -189,6 +194,7 @@
 	{@param? hoveredItemId: string}
 	{@param? hoveredItemType: string}
 	{@param? mappingFieldsURL: string}
+	{@param? segmentId: string}
 	{@param? selectedMappingTypes: [
 		subtype: [
 			id: string,
@@ -231,6 +237,7 @@
 				{call .fragmentEntryLink}
 					{param content: $fragmentEntryLink.content /}
 					{param defaultEditorConfigurations: $defaultEditorConfigurations /}
+					{param defaultSegmentId: $defaultSegmentId /}
 					{param dropTargetItemTypes: $dropTargetItemTypes /}
 					{param editableValues: $fragmentEntryLink.editableValues /}
 					{param fragmentEntryLinkId: $fragmentEntryLink.fragmentEntryLinkId /}
@@ -242,6 +249,7 @@
 					{param key: $fragmentEntryLink.fragmentEntryLinkId /}
 					{param mappingFieldsURL: $mappingFieldsURL /}
 					{param name: $fragmentEntryLink.name /}
+					{param segmentId: $segmentId /}
 					{param selectedMappingTypes: $selectedMappingTypes /}
 					{param store: $store /}
 					{param _handleFragmentMove: $_handleFragmentMove /}
@@ -256,6 +264,7 @@
  */
 {template .fragmentEntryLink}
 	{@param defaultEditorConfigurations: ?}
+	{@param defaultSegmentId: string}
 	{@param editableValues: ?}
 	{@param fragmentEntryLinkId: string}
 	{@param key: string}
@@ -271,6 +280,7 @@
 	{@param? _handleFragmentMove: ?}
 	{@param? content: ?}
 	{@param? dropTargetItemTypes: ?}
+	{@param? segmentId: string}
 
 	{let $styleModifier kind="text"}
 		{if $dropTargetItemId == $fragmentEntryLinkId and $dropTargetItemType == $dropTargetItemTypes.fragment}
@@ -286,6 +296,7 @@
 	{call com.liferay.layout.content.page.editor.web.FragmentEntryLink.render}
 		{param content: $content /}
 		{param defaultEditorConfigurations: $defaultEditorConfigurations /}
+		{param defaultSegmentId: $defaultSegmentId /}
 		{param editableValues: $editableValues /}
 		{param events: [
 			'moveFragment': $_handleFragmentMove
@@ -294,6 +305,7 @@
 		{param key: $key /}
 		{param name: $name /}
 		{param ref: $key /}
+		{param segmentId: $segmentId /}
 		{param showMapping: $selectedMappingTypes and $mappingFieldsURL ? true : false /}
 		{param store: $store /}
 		{param styleModifier: $styleModifier /}

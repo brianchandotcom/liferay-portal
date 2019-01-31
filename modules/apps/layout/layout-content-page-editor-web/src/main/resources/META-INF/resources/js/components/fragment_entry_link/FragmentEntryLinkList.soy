@@ -6,6 +6,7 @@
 {template .render}
 	{@param defaultEditorConfigurations: ?}
 	{@param defaultLanguageId: string}
+	{@param defaultSegmentId: string}
 	{@param fragmentEntryLinks: ?}
 	{@param languageId: string}
 	{@param layoutData: [
@@ -32,6 +33,7 @@
 	{@param? fragmentsEditorSidebarVisible: bool}
 	{@param? highlightMapping: bool}
 	{@param? mappingFieldsURL: string}
+	{@param? segmentId: string}
 	{@param? store: ?}
 
 	{let $entryLinksClasses kind="text"}
@@ -72,6 +74,7 @@
 					{param _handleSectionRemoveButtonClick: $_handleSectionRemoveButtonClick /}
 					{param columns: $row.columns /}
 					{param defaultEditorConfigurations: $defaultEditorConfigurations /}
+					{param defaultSegmentId: $defaultSegmentId /}
 					{param dropTargetItemTypes: $dropTargetItemTypes /}
 					{param empty: $row.empty /}
 					{param fragmentEntryLinks: $fragmentEntryLinks /}
@@ -79,6 +82,7 @@
 					{param mappingFieldsURL: $mappingFieldsURL /}
 					{param row: $row /}
 					{param rowId: $row.rowId /}
+					{param segmentId: $segmentId /}
 					{param store: $store /}
 				{/call}
 			{/foreach}

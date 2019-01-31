@@ -1,17 +1,18 @@
-{namespace com.liferay.change.tracking.change.lists.web.ChangeList}
+{namespace com.liferay.change.tracking.change.lists.web.Overview}
 
 /**
- * Renders the ChangeList view
+ * Renders the Overview screen
  */
 {template .render}
-	{@param  spritemap: string}
+	{@param spritemap: string}
+	{@param urlProductionView: string}
 	{@param? description: string}
 	{@param? headerTitle: string}
-	{@param? initFetch: bool}
+	{@param? initialFetch: bool}
 	{@param? publishedBy: [
 		dateTime: string,
-		userIconUrl: string,
-		userMonogram: string,
+		userInitials: string,
+		userPortraitURL: string,
 		userName: string
 	]}
 
@@ -20,23 +21,23 @@
 	{/let}
 
 	<div class="container-fluid-1280">
-		{if not $initFetch}
-			{call .loading}{/call}
+		{if not $initialFetch}
+			{call .loading /}
 		{else}
 			<div class="row">
 				<div class="col-sm-6">
-					LeftCard
+					Active Change List card placeholder
 				</div>
 
 				<div class="col-sm-6">
-					{call .glanceCard}
-						{param cardState: 'border-left-blue' /}
+					{call .overviewCard}
+						{param cardState: 'border-left-green' /}
 						{param description: $description /}
 						{param descriptionTitle kind="text"}
 							{msg desc=""}description{/msg}
 						{/param}
 						{param headerLink: [
-							'href': 'href',
+							'href': $urlProductionView,
 							'label': $headerLinkLabel ] /}
 						{param headerSubTitle kind="text"}
 							{msg desc=""}published-change-list{/msg}
@@ -53,7 +54,7 @@
 
 			<div class="row">
 				<div class="col-sm-12">
-					Table
+					Change List changes list placeholder
 				</div>
 			</div>
 		{/if}
@@ -61,11 +62,11 @@
 {/template}
 
 /**
- * GlanceCard
+ * Overview Card
  *
  * This template renders the component's whole content
  */
-{template .glanceCard}
+{template .overviewCard}
 	{@param  spritemap: string}
 	{@param? cardState: string}
 	{@param? description: string}
@@ -78,23 +79,23 @@
 	{@param? headerTitle: string}
 	{@param? publishedBy: [
 		dateTime: string,
-		userIconUrl: string,
-		userMonogram: string,
+		userInitials: string,
+		userPortraitURL: string,
 		userName: string
 	]}
 	{@param? publishedByTitle: string}
 
-	<div class="glance-card-sheet {$cardState}">
-		{call .glanceCardHeader}
+	<div class="overview-card-sheet {$cardState}">
+		{call .overviewCardHeader}
 			{param headerLink: $headerLink /}
 			{param headerSubTitle: $headerSubTitle /}
 			{param headerTitle: $headerTitle /}
 			{param spritemap: $spritemap /}
 		{/call}
 
-		<div class="glance-card-sheet-divider"></div>
+		<div class="overview-card-sheet-divider"></div>
 
-		{call .glanceCardBody}
+		{call .overviewCardBody}
 			{param description: $description /}
 			{param descriptionTitle: $descriptionTitle /}
 			{param publishedBy: $publishedBy /}
@@ -105,7 +106,7 @@
 	</div>
 {/template}
 
-{template .glanceCardHeader}
+{template .overviewCardHeader}
 	{@param? headerLink: [
 		href: string,
 		label: string
@@ -113,14 +114,14 @@
 	{@param? headerSubTitle: string}
 	{@param? headerTitle: string}
 
-	<div class="glance-card-container glance-card-header">
+	<div class="overview-card-container overview-card-header">
 		<div class="row">
 			<div class="col-sm-12">
 				{if $headerSubTitle}
 					<h3>{$headerSubTitle}</h3>
 				{/if}
 				{if $headerTitle}
-					<div class="glance-card-sheet-title">{$headerTitle}</div>
+					<div class="overview-card-sheet-title">{$headerTitle}</div>
 				{/if}
 				{if $headerLink}
 					<div class="header-line">
@@ -132,21 +133,21 @@
 	</div>
 {/template}
 
-{template .glanceCardBody}
+{template .overviewCardBody}
 	{@param? description: string}
 	{@param? descriptionTitle: string}
 	{@param? publishedBy: [
 		dateTime: string,
-		userIconUrl: string,
-		userMonogram: string,
+		userInitials: string,
+		userPortraitURL: string,
 		userName: string
 	]}
 	{@param? publishedByTitle: string}
 
-	<div class="glance-card-body glance-card-container">
+	<div class="overview-card-body overview-card-container">
 
 		{if $description}
-			<div class="glance-card-sheet-block">
+			<div class="overview-card-sheet-block">
 				{if $descriptionTitle}
 					<h3>{$descriptionTitle}</h3>
 				{/if}
@@ -157,19 +158,20 @@
 		{/if}
 
 		{if $publishedBy}
-			<div class="glance-card-sheet-block">
+			<div class="overview-card-sheet-block">
 				{if $publishedByTitle}
 					<h3>{$publishedByTitle}</h3>
 				{/if}
+
 				<div class="autofit-padded-no-gutters-x autofit-row widget-metadata">
 
 					<div class="autofit-col">
-						{if $publishedBy.userMonogram}
+						{if $publishedBy.userInitials}
 							<div class="user-icon user-icon-color-9 user-icon-default user-icon-lg">
-								<span>{$publishedBy.userMonogram}</span>
+								<span>{$publishedBy.userInitials}</span>
 							</div>
-						{elseif $publishedBy.userIconUrl}
-							<div class="aspect-ratio-bg-cover user-icon user-icon-lg" style="background-image:url({$publishedBy.userIconUrl})">
+						{elseif $publishedBy.userPortraitURL}
+							<div class="aspect-ratio-bg-cover user-icon user-icon-lg" style="background-image:url({$publishedBy.userPortraitURL})">
 							</div>
 						{/if}
 					</div>

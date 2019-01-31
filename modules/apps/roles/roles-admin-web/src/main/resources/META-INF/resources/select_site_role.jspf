@@ -31,7 +31,7 @@ if (step == 1) {
 	String keywords = ParamUtil.getString(request, "keywords");
 
 	if (Validator.isNull(keywords)) {
-		groups = selUser.getGroups();
+		groups = selUser.getSiteGroups();
 	}
 	else {
 		LinkedHashMap<String, Object> groupParams = new LinkedHashMap<>();

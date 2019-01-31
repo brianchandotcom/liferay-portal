@@ -13,13 +13,11 @@ import {
  */
 
 export default function getFormElement(form, elementName) {
-	let formElement = null;
-
-	if (isDef(form) && form.nodeName === 'FORM' && isString(elementName)) {
-		const ns = form.dataset.fmNamespace || '';
-
-		formElement = form.elements[ns + elementName];
+	if (!isDef(form) || form.nodeName !== 'FORM' || !isString(elementName)) {
+		return null;
 	}
 
-	return formElement;
+	const ns = form.dataset.fmNamespace || '';
+
+	return form.elements[ns + elementName];
 }

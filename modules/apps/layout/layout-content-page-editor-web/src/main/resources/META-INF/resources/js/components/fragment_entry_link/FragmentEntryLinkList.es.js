@@ -1,19 +1,19 @@
 import Component from 'metal-component';
+import position from 'metal-position';
+import Soy from 'metal-soy';
 import {Config} from 'metal-state';
 import {contains} from 'metal-dom';
 import {Drag, DragDrop} from 'metal-drag-drop';
-import position from 'metal-position';
-import Soy from 'metal-soy';
 
 import '../floating_toolbar/FloatingToolbar.es';
-import './FragmentEntryLink.es';
+import './FragmentEntryLinkListSection.es';
+import getConnectedComponent from '../../store/ConnectedComponent.es';
+import templates from './FragmentEntryLinkList.soy';
 import {CLEAR_ACTIVE_ITEM, CLEAR_DROP_TARGET, CLEAR_HOVERED_ITEM, MOVE_FRAGMENT_ENTRY_LINK, MOVE_SECTION, REMOVE_SECTION, UPDATE_ACTIVE_ITEM, UPDATE_DROP_TARGET, UPDATE_HOVERED_ITEM} from '../../actions/actions.es';
+import {focusItem, moveItem, removeItem, setIn} from '../../utils/FragmentsEditorUpdateUtils.es';
 import {FRAGMENTS_EDITOR_ITEM_BORDERS, FRAGMENTS_EDITOR_ITEM_TYPES} from '../../utils/constants';
 import {getFragmentColumn, getItemMoveDirection, getSectionIndex, getTargetBorder} from '../../utils/FragmentsEditorGetUtils.es';
-import {focusItem, moveItem, removeItem, setIn} from '../../utils/FragmentsEditorUpdateUtils.es';
 import {shouldUpdatePureComponent} from '../../utils/FragmentsEditorComponentUtils.es';
-import state from '../../store/state.es';
-import templates from './FragmentEntryLinkList.soy';
 
 /**
  * FragmentEntryLinkList
@@ -128,7 +128,7 @@ class FragmentEntryLinkList extends Component {
 	}
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 * @private
 	 * @review
 	 */
@@ -137,7 +137,7 @@ class FragmentEntryLinkList extends Component {
 	}
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 * @private
 	 * @review
 	 */
@@ -146,8 +146,9 @@ class FragmentEntryLinkList extends Component {
 	}
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 * @private
+	 * @return {Object}
 	 * @review
 	 */
 	prepareStateForRender(nextState) {
@@ -159,7 +160,7 @@ class FragmentEntryLinkList extends Component {
 	}
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 * @private
 	 * @review
 	 */
@@ -192,7 +193,7 @@ class FragmentEntryLinkList extends Component {
 
 	/**
 	 * Callback that is executed when an item is being dragged.
-	 * @param {object} eventData
+	 * @param {Object} eventData
 	 * @param {MouseEvent} eventData.originalEvent
 	 * @private
 	 * @review
@@ -240,7 +241,7 @@ class FragmentEntryLinkList extends Component {
 
 	/**
 	 * Callback that is executed when an item is dropped.
-	 * @param {object} data
+	 * @param {Object} data
 	 * @param {MouseEvent} event
 	 * @private
 	 * @review
@@ -295,7 +296,7 @@ class FragmentEntryLinkList extends Component {
 	}
 
 	/**
-	 * @param {object} event
+	 * @param {Event} event
 	 * @private
 	 * @review
 	 */
@@ -355,7 +356,7 @@ class FragmentEntryLinkList extends Component {
 
 	/**
 	 * Callback executed when a section is clicked.
-	 * @param {object} event
+	 * @param {Event} event
 	 * @private
 	 */
 	_handleSectionClick(event) {
@@ -372,7 +373,7 @@ class FragmentEntryLinkList extends Component {
 
 	/**
 	 * Callback executed when a section starts being hovered.
-	 * @param {object} event
+	 * @param {Event} event
 	 * @private
 	 */
 	_handleSectionHoverStart(event) {
@@ -390,7 +391,7 @@ class FragmentEntryLinkList extends Component {
 	/**
 	 * Callback executed when a key is pressed on focused section
 	 * @private
-	 * @param {object} event
+	 * @param {Event} event
 	 */
 	_handleSectionKeyUp(event) {
 		const direction = getItemMoveDirection(event.which);
@@ -424,7 +425,7 @@ class FragmentEntryLinkList extends Component {
 
 	/**
 	 * Callback executed when the remove section button is clicked
-	 * @param {object} event
+	 * @param {Event} event
 	 * @private
 	 */
 	_handleSectionRemoveButtonClick(event) {
@@ -485,76 +486,6 @@ class FragmentEntryLinkList extends Component {
 FragmentEntryLinkList.STATE = {
 
 	/**
-	 * Id of the active element
-	 * @default {string}
-	 * @instance
-	 * @memberOf FragmentEntryLinkList
-	 * @review
-	 * @type {string}
-	 */
-	activeItemId: state.activeItemId,
-
-	/**
-	 * Type of the active element
-	 * @default {string}
-	 * @instance
-	 * @memberOf FragmentEntryLinkList
-	 * @review
-	 * @type {string}
-	 */
-	activeItemType: state.activeItemType,
-
-	/**
-	 * Border of the target item where another item is being dragged to
-	 * @default {string}
-	 * @instance
-	 * @memberOf FragmentEntryLinkList
-	 * @review
-	 * @type {string}
-	 */
-	dropTargetBorder: state.dropTargetBorder,
-
-	/**
-	 * Id of the element where a fragment is being dragged over
-	 * @default {string}
-	 * @instance
-	 * @memberOf FragmentEntryLinkList
-	 * @review
-	 * @type {string}
-	 */
-	dropTargetItemId: state.dropTargetItemId,
-
-	/**
-	 * Type of the item where another item is being dragged over
-	 * @default {string}
-	 * @instance
-	 * @memberOf FragmentEntryLinkList
-	 * @review
-	 * @type {string}
-	 */
-	dropTargetItemType: state.dropTargetItemType,
-
-	/**
-	 * Id of the last element that was hovered
-	 * @default {string}
-	 * @instance
-	 * @memberOf FragmentEntryLinkList
-	 * @review
-	 * @type {string}
-	 */
-	hoveredItemId: state.hoveredItemId,
-
-	/**
-	 * Data associated to the layout
-	 * @default {object}
-	 * @instance
-	 * @memberOf FragmentEntryLinkList
-	 * @review
-	 * @type {object}
-	 */
-	layoutData: state.layoutData,
-
-	/**
 	 * Internal DragDrop instance.
 	 * @default null
 	 * @instance
@@ -562,10 +493,25 @@ FragmentEntryLinkList.STATE = {
 	 * @review
 	 * @type {object|null}
 	 */
-	_dragDrop: Config.internal().value(null)
+	_dragDrop: Config.internal()
+		.value(null)
 };
 
-Soy.register(FragmentEntryLinkList, templates);
+const ConnectedFragmentEntryLinkList = getConnectedComponent(
+	FragmentEntryLinkList,
+	[
+		'activeItemId',
+		'activeItemType',
+		'dropTargetBorder',
+		'dropTargetItemId',
+		'dropTargetItemType',
+		'hoveredItemId',
+		'hoveredItemType',
+		'layoutData'
+	]
+);
 
-export {FragmentEntryLinkList};
-export default FragmentEntryLinkList;
+Soy.register(ConnectedFragmentEntryLinkList, templates);
+
+export {ConnectedFragmentEntryLinkList, FragmentEntryLinkList};
+export default ConnectedFragmentEntryLinkList;

@@ -21,7 +21,6 @@
 			rowId: string
 		]>
 	]}
-	{@param spritemap: string}
 	{@param? _handleFragmentEntryLinkListHoverEnd: any}
 	{@param? _handleFragmentMove: any}
 	{@param? _handleSectionFocusOut: any}
@@ -29,27 +28,10 @@
 	{@param? _handleSectionHoverStart: any}
 	{@param? _handleSectionKeyUp: any}
 	{@param? _handleSectionRemoveButtonClick: any}
-	{@param? activeItemId: string}
-	{@param? activeItemType: string}
 	{@param? dropTargetItemTypes: ?}
 	{@param? fragmentsEditorSidebarVisible: bool}
 	{@param? highlightMapping: bool}
-	{@param? hoveredItemId: string}
-	{@param? hoveredItemType: string}
-	{@param? dropTargetBorder: string}
-	{@param? dropTargetItemId: string}
-	{@param? dropTargetItemType: string}
 	{@param? mappingFieldsURL: string}
-	{@param? selectedMappingTypes: [
-		subtype: [
-			id: string,
-			label: string
-		],
-		type: [
-			id: string,
-			label: string
-		]
-	]}
 	{@param? store: ?}
 
 	{let $entryLinksClasses kind="text"}
@@ -81,10 +63,10 @@
 			ref="fragmentEntryLinks"
 		>
 			{foreach $row in $layoutData.structure}
-				{call .row}
+				{call com.liferay.layout.content.page.editor.web.FragmentEntryLinkListSection.render}
 					{param _handleFragmentMove: $_handleFragmentMove /}
-					{param _handleSectionFocusOut: $_handleSectionFocusOut /}
 					{param _handleSectionClick: $_handleSectionClick /}
+					{param _handleSectionFocusOut: $_handleSectionFocusOut /}
 					{param _handleSectionHoverStart: $_handleSectionHoverStart /}
 					{param _handleSectionKeyUp: $_handleSectionKeyUp /}
 					{param _handleSectionRemoveButtonClick: $_handleSectionRemoveButtonClick /}
@@ -93,19 +75,10 @@
 					{param dropTargetItemTypes: $dropTargetItemTypes /}
 					{param empty: $row.empty /}
 					{param fragmentEntryLinks: $fragmentEntryLinks /}
-					{param activeItemId: $activeItemId /}
-					{param activeItemType: $activeItemType /}
-					{param hoveredItemId: $hoveredItemId /}
-					{param hoveredItemType: $hoveredItemType /}
-					{param dropTargetBorder: $dropTargetBorder /}
-					{param dropTargetItemId: $dropTargetItemId /}
-					{param dropTargetItemType: $dropTargetItemType /}
 					{param key: $row.rowId /}
 					{param mappingFieldsURL: $mappingFieldsURL /}
 					{param row: $row /}
 					{param rowId: $row.rowId /}
-					{param selectedMappingTypes: $selectedMappingTypes /}
-					{param spritemap: $spritemap /}
 					{param store: $store /}
 				{/call}
 			{/foreach}
@@ -115,314 +88,6 @@
 			{param fragmentsEditorSidebarVisible: $fragmentsEditorSidebarVisible ?: true /}
 		{/call}
 	{/if}
-{/template}
-
-/**
- * Row
- */
-{template .row}
-	{@param columns: list<[
-		columnId: string,
-		fragmentEntryLinkIds: list<string>,
-		size: string
-	]>}
-	{@param defaultEditorConfigurations: ?}
-	{@param fragmentEntryLinks: ?}
-	{@param key: string}
-	{@param row: ?}
-	{@param rowId: string}
-	{@param spritemap: string}
-	{@param? _handleFragmentMove: any}
-	{@param? _handleSectionFocusOut: any}
-	{@param? _handleSectionClick: any}
-	{@param? _handleSectionHoverStart: any}
-	{@param? _handleSectionKeyUp: any}
-	{@param? _handleSectionRemoveButtonClick: any}
-	{@param? activeItemId: string}
-	{@param? activeItemType: string}
-	{@param? dropTargetItemTypes: ?}
-	{@param? empty: bool}
-	{@param? dropTargetBorder: string}
-	{@param? dropTargetItemId: string}
-	{@param? dropTargetItemType: string}
-	{@param? hoveredItemId: string}
-	{@param? hoveredItemType: string}
-	{@param? mappingFieldsURL: string}
-	{@param? selectedMappingTypes: [
-		subtype: [
-			id: string,
-			label: string
-		],
-		type: [
-			id: string,
-			label: string
-		]
-	]}
-	{@param? store: ?}
-
-	{let $sectionClasses kind="text"}
-		container-fluid
-		{sp}fragments-editor__drag-source
-		{sp}fragments-editor__drag-source--layout
-		{sp}fragments-editor__drop-target
-		{sp}fragments-editor__drop-target--fragment
-		{sp}fragments-editor__drop-target--layout
-		{sp}fragments-editor__drop-target--sidebar-fragment
-		{sp}fragments-editor__drop-target--sidebar-layout
-		{sp}fragments-editor__drop-target--sidebar-widget
-		{sp}fragments-editor__topper-wrapper
-		{sp}fragment-entry-link-list__container
-
-		{if $empty}
-			{sp}fragment-entry-link-list__container--empty
-		{/if}
-
-		{if $dropTargetItemId == $rowId and $dropTargetItemType == $dropTargetItemTypes.section}
-			{sp}{$dropTargetBorder}
-		{/if}
-
-		{if $activeItemId == $rowId and $activeItemType == $dropTargetItemTypes.section}
-			{sp}fragment-entry-link-list__row-section--active
-			{sp}fragments-editor__topper-wrapper--active
-		{/if}
-
-		{if $hoveredItemId == $rowId and $hoveredItemType == $dropTargetItemTypes.section}
-			{sp}fragment-entry-link-list__container--hovered
-			{sp}fragments-editor__topper-wrapper--hovered
-		{/if}
-
-		{if $row and $row.config}
-			{sp}px-{$row.config.paddingHorizontal ?: '3'}
-		{/if}
-
-		{if $row and $row.config}
-			{sp}py-{$row.config.paddingVertical ?: '3'}
-		{/if}
-	{/let}
-
-	{let $sectionStyle kind="text"}
-		{if $row.config and $row.config.backgroundColor}
-			background-color: {$row.config.backgroundColor};
-		{/if}
-
-		{if $row.config and $row.config.backgroundImage}
-			background-image: url({$row.config.backgroundImage});
-			background-position: 50% 50%;
-			background-repeat: no-repeat;
-			background-size: cover;
-		{/if}
-	{/let}
-
-	<section
-		class="{$sectionClasses}"
-		data-drag-source-label="{msg desc=""}section{/msg}"
-		data-layout-section-id="{$rowId}"
-		data-onfocusout="{$_handleSectionFocusOut}"
-		data-onclick="{$_handleSectionClick}"
-		data-onkeyup="{$_handleSectionKeyUp}"
-		data-onmouseover="{$_handleSectionHoverStart}"
-		key="{$key}"
-		style="{$sectionStyle}"
-		tabindex="0"
-	>
-		<nav class="fragments-editor__topper tbar">
-			<ul class="tbar-nav">
-				<li class="fragments-editor__drag-handler fragments-editor__topper__item fragments-editor__topper__title tbar-item tbar-item-expand">
-					{msg desc=""}section{/msg}
-				</li>
-				<li class="fragments-editor__topper__item tbar-item">
-					<button
-						class="btn btn-small btn-unstyled"
-						data-onclick="{$_handleSectionRemoveButtonClick}"
-					>
-						<svg class="fragments-editor__topper__icon lexicon-icon">
-							<use xlink:href="{$spritemap}#times-circle"></use>
-						</svg>
-					</button>
-				</li>
-			</ul>
-		</nav>
-
-		{if ($activeItemId == $rowId) and ($activeItemType == $dropTargetItemTypes.section)}
-			{call com.liferay.layout.content.page.editor.web.FloatingToolbar.render}
-				{param item: $row /}
-				{param itemId: $rowId /}
-				{param store: $store /}
-			{/call}
-		{/if}
-
-		{let $rowWrapperClasses kind="text"}
-			p-0
-
-			{if $row and $row.config and $row.config.containerType == 'fixed'}
-				{sp}container
-			{else}
-				{sp}container-fluid
-			{/if}
-		{/let}
-
-		{let $rowClasses kind="text"}
-			fragment-entry-link-list__row
-			{sp}row
-
-			{if $row and $row.config and ($row.config.columnSpacing == false)}
-				{sp}no-gutters
-			{/if}
-		{/let}
-
-		<div class="{$rowWrapperClasses}">
-			<div class="{$rowClasses}">
-				{foreach $column in $columns}
-					{call .column}
-						{param _handleFragmentMove: $_handleFragmentMove /}
-						{param columnId: $column.columnId /}
-						{param defaultEditorConfigurations: $defaultEditorConfigurations /}
-						{param dropTargetItemTypes: $dropTargetItemTypes /}
-						{param fragmentEntryLinkIds: $column.fragmentEntryLinkIds /}
-						{param fragmentEntryLinks: $fragmentEntryLinks /}
-						{param dropTargetBorder: $dropTargetBorder /}
-						{param dropTargetItemId: $dropTargetItemId /}
-						{param dropTargetItemType: $dropTargetItemType /}
-						{param hoveredItemId: $hoveredItemId /}
-						{param hoveredItemType: $hoveredItemType /}
-						{param key: $column.columnId /}
-						{param mappingFieldsURL: $mappingFieldsURL /}
-						{param selectedMappingTypes: $selectedMappingTypes /}
-						{param size: $column.size /}
-						{param store: $store /}
-					{/call}
-				{/foreach}
-			</div>
-		</div>
-	</section>
-{/template}
-
-/**
- * Column
- */
-{template .column}
-	{@param columnId: string}
-	{@param defaultEditorConfigurations: ?}
-	{@param fragmentEntryLinkIds: list<string>}
-	{@param fragmentEntryLinks: ?}
-	{@param key: string}
-	{@param? _handleFragmentMove: any}
-	{@param? dropTargetItemTypes: ?}
-	{@param? dropTargetBorder: string}
-	{@param? dropTargetItemId: string}
-	{@param? dropTargetItemType: string}
-	{@param? hoveredItemId: string}
-	{@param? hoveredItemType: string}
-	{@param? mappingFieldsURL: string}
-	{@param? selectedMappingTypes: [
-		subtype: [
-			id: string,
-			label: string
-		],
-		type: [
-			id: string,
-			label: string
-		]
-	]}
-	{@param? size: string}
-	{@param? store: ?}
-
-	{let $columnClasses kind="text"}
-		col
-		{sp}fragments-editor__drop-target
-		{sp}fragments-editor__drop-target--fragment
-		{sp}fragments-editor__drop-target--sidebar-fragment
-		{sp}fragments-editor__drop-target--sidebar-widget
-		{sp}fragment-entry-link-list__col
-
-		{if $dropTargetItemId == $columnId and $dropTargetItemType == $dropTargetItemTypes.column}
-			{sp}{$dropTargetBorder}
-		{/if}
-
-		{if $size}
-			{sp}col-{$size}
-		{/if}
-	{/let}
-
-	<div
-		class="{$columnClasses}"
-		data-column-id="{$columnId}"
-		key="{$key}"
-	>
-		{foreach $fragmentEntryLinkId in $fragmentEntryLinkIds}
-			{let $fragmentEntryLink: $fragmentEntryLinks[$fragmentEntryLinkId] /}
-
-			{if $fragmentEntryLink}
-				{call .fragmentEntryLink}
-					{param content: $fragmentEntryLink.content /}
-					{param defaultEditorConfigurations: $defaultEditorConfigurations /}
-					{param dropTargetItemTypes: $dropTargetItemTypes /}
-					{param editableValues: $fragmentEntryLink.editableValues /}
-					{param fragmentEntryLinkId: $fragmentEntryLink.fragmentEntryLinkId /}
-					{param dropTargetBorder: $dropTargetBorder /}
-					{param dropTargetItemId: $dropTargetItemId /}
-					{param dropTargetItemType: $dropTargetItemType /}
-					{param hoveredItemId: $hoveredItemId /}
-					{param hoveredItemType: $hoveredItemType /}
-					{param key: $fragmentEntryLink.fragmentEntryLinkId /}
-					{param mappingFieldsURL: $mappingFieldsURL /}
-					{param name: $fragmentEntryLink.name /}
-					{param selectedMappingTypes: $selectedMappingTypes /}
-					{param store: $store /}
-					{param _handleFragmentMove: $_handleFragmentMove /}
-				{/call}
-			{/if}
-		{/foreach}
-	</div>
-{/template}
-
-/**
- * FragmentEntryLink
- */
-{template .fragmentEntryLink}
-	{@param defaultEditorConfigurations: ?}
-	{@param editableValues: ?}
-	{@param fragmentEntryLinkId: string}
-	{@param key: string}
-	{@param dropTargetBorder: ?}
-	{@param dropTargetItemId: ?}
-	{@param dropTargetItemType: ?}
-	{@param mappingFieldsURL: ?}
-	{@param name: string}
-	{@param selectedMappingTypes: ?}
-	{@param store: ?}
-	{@param? hoveredItemId: string}
-	{@param? hoveredItemType: string}
-	{@param? _handleFragmentMove: ?}
-	{@param? content: ?}
-	{@param? dropTargetItemTypes: ?}
-
-	{let $styleModifier kind="text"}
-		{if $dropTargetItemId == $fragmentEntryLinkId and $dropTargetItemType == $dropTargetItemTypes.fragment}
-			{sp}{$dropTargetBorder}
-		{/if}
-
-		{if $hoveredItemId == $fragmentEntryLinkId and $hoveredItemType == $dropTargetItemTypes.fragment}
-			{sp}fragments-editor__topper-wrapper--hovered
-			{sp}fragment-entry-link-wrapper--hovered
-		{/if}
-	{/let}
-
-	{call com.liferay.layout.content.page.editor.web.FragmentEntryLink.render}
-		{param content: $content /}
-		{param defaultEditorConfigurations: $defaultEditorConfigurations /}
-		{param editableValues: $editableValues /}
-		{param events: [
-			'moveFragment': $_handleFragmentMove
-		] /}
-		{param fragmentEntryLinkId: $fragmentEntryLinkId /}
-		{param key: $key /}
-		{param name: $name /}
-		{param ref: $key /}
-		{param showMapping: $selectedMappingTypes and $mappingFieldsURL ? true : false /}
-		{param store: $store /}
-		{param styleModifier: $styleModifier /}
-	{/call}
 {/template}
 
 /**

@@ -13,17 +13,10 @@
 	{@param layoutData: ?}
 	{@param portletNamespace: string}
 	{@param spritemap: string}
-	{@param? activeItemId: string}
-	{@param? activeItemType: string}
 	{@param? fragmentsEditorSidebarVisible: bool}
 	{@param? highlightMapping: bool}
 	{@param? getAssetClassTypesURL: any}
 	{@param? getAssetDisplayContributorsURL: any}
-	{@param? dropTargetBorder: string}
-	{@param? dropTargetItemId: string}
-	{@param? dropTargetItemType: string}
-	{@param? hoveredItemId: string}
-	{@param? hoveredItemType: string}
 	{@param? id: string}
 	{@param? mappingFieldsURL: string}
 	{@param? selectMappingDialogEditableId: string}
@@ -52,17 +45,10 @@
 		{/call}
 
 		{call com.liferay.layout.content.page.editor.web.FragmentEntryLinkList.render}
-			{param activeItemId: $activeItemId /}
-			{param activeItemType: $activeItemType /}
 			{param defaultEditorConfigurations: $defaultEditorConfigurations /}
 			{param defaultLanguageId: $defaultLanguageId /}
 			{param fragmentEntryLinks: $fragmentEntryLinks /}
 			{param fragmentsEditorSidebarVisible: $fragmentsEditorSidebarVisible ?: true /}
-			{param dropTargetBorder: $dropTargetBorder /}
-			{param dropTargetItemId: $dropTargetItemId /}
-			{param dropTargetItemType: $dropTargetItemType /}
-			{param hoveredItemId: $hoveredItemId /}
-			{param hoveredItemType: $hoveredItemType /}
 			{param imageSelectorURL: $imageSelectorURL /}
 			{param languageId: $languageId /}
 			{param layoutData: $layoutData /}
@@ -70,8 +56,6 @@
 			{param mappingFieldsURL: $mappingFieldsURL /}
 			{param portletNamespace: $portletNamespace /}
 			{param ref: 'fragmentsEditorRender' /}
-			{param selectedMappingTypes: $selectedMappingTypes /}
-			{param spritemap: $spritemap /}
 			{param store: $store /}
 			{param translating: $languageId != $defaultLanguageId /}
 		{/call}

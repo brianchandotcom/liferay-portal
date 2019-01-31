@@ -137,6 +137,7 @@ paths:
           required: true
           schema: 
             $ref: "#/components/schemas/Folder"
+            type: integer
       responses: 
         200: 
           content: 
@@ -153,6 +154,7 @@ paths:
           required: true
           schema: 
             $ref: "#/components/schemas/Folder"
+            type: integer
       requestBody: 
         content: 
           "*/*": 
@@ -173,6 +175,7 @@ paths:
           required: true
           schema: 
             $ref: "#/components/schemas/Folder"
+            type: integer
       requestBody: 
         content: 
           "*/*": 
@@ -201,6 +204,7 @@ paths:
           required: true
           schema: 
             $ref: "#/components/schemas/Folder"
+            type: integer
       responses: 
         200: 
           content: 
@@ -217,6 +221,7 @@ paths:
           required: true
           schema: 
             $ref: "#/components/schemas/Folder"
+            type: integer
       requestBody: 
         content: 
           "*/*": 
@@ -237,6 +242,7 @@ paths:
           required: true
           schema: 
             $ref: "#/components/schemas/Folder"
+            type: integer
       requestBody: 
         content: 
           "*/*": 
@@ -309,6 +315,7 @@ paths:
           required: true
           schema: 
             $ref: "#/components/schemas/Folder"
+            type: integer
       responses: 
         200: 
           content: 
@@ -325,6 +332,7 @@ paths:
           required: true
           schema: 
             $ref: "#/components/schemas/Folder"
+            type: integer
       requestBody: 
         content: 
           "*/*": 
@@ -345,6 +353,7 @@ paths:
           required: true
           schema: 
             $ref: "#/components/schemas/Folder"
+            type: integer
       requestBody: 
         content: 
           "*/*": 
@@ -373,6 +382,7 @@ paths:
           required: true
           schema: 
             $ref: "#/components/schemas/Folder"
+            type: integer
       responses: 
         200: 
           content: 
@@ -389,6 +399,7 @@ paths:
           required: true
           schema: 
             $ref: "#/components/schemas/Folder"
+            type: integer
       requestBody: 
         content: 
           "*/*": 
@@ -409,6 +420,7 @@ paths:
           required: true
           schema: 
             $ref: "#/components/schemas/Folder"
+            type: integer
       requestBody: 
         content: 
           "*/*": 

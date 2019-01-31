@@ -16,8 +16,11 @@ package com.liferay.layout.admin.web.internal.servlet.taglib.clay;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.BaseBaseClayCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.VerticalCard;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemList;
+import com.liferay.layout.admin.web.internal.constants.LayoutAdminWebKeys;
+import com.liferay.layout.admin.web.internal.servlet.taglib.util.LayoutPrototypeActionDropdownItemsProvider;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.BaseModel;
@@ -31,6 +34,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -42,14 +46,40 @@ public class LayoutPrototypeVerticalCard
 
 	public LayoutPrototypeVerticalCard(
 		BaseModel<?> baseModel, RenderRequest renderRequest,
-		RowChecker rowChecker) {
+		RenderResponse renderResponse, RowChecker rowChecker) {
 
 		super(baseModel, rowChecker);
+
+		_renderRequest = renderRequest;
+		_renderResponse = renderResponse;
 
 		_layoutPrototype = (LayoutPrototype)baseModel;
 		_themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 		_request = PortalUtil.getHttpServletRequest(renderRequest);
+	}
+
+	@Override
+	public List<DropdownItem> getActionDropdownItems() {
+		try {
+			LayoutPrototypeActionDropdownItemsProvider
+				layoutPrototypeActionDropdownItemsProvider =
+					new LayoutPrototypeActionDropdownItemsProvider(
+						_layoutPrototype, _renderRequest, _renderResponse);
+
+			return layoutPrototypeActionDropdownItemsProvider.
+				getActionDropdownItems();
+		}
+		catch (Exception e) {
+		}
+
+		return null;
+	}
+
+	@Override
+	public String getDefaultEventHandler() {
+		return
+			LayoutAdminWebKeys.LAYOUT_PROTOTYPE_DROPDOWN_DEFAULT_EVENT_HANDLER;
 	}
 
 	@Override
@@ -121,6 +151,8 @@ public class LayoutPrototypeVerticalCard
 	}
 
 	private final LayoutPrototype _layoutPrototype;
+	private final RenderRequest _renderRequest;
+	private final RenderResponse _renderResponse;
 	private final HttpServletRequest _request;
 	private final ThemeDisplay _themeDisplay;
 

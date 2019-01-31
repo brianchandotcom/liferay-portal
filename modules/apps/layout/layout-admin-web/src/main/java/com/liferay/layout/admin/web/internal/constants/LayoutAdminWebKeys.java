@@ -29,4 +29,7 @@ public class LayoutAdminWebKeys {
 
 	public static final String LAYOUT_PROTOTYPE = "LAYOUT_PROTOTYPE";
 
+	public static final String LAYOUT_PROTOTYPE_DROPDOWN_DEFAULT_EVENT_HANDLER =
+		"LAYOUT_PROTOTYPE_DROPDOWN_DEFAULT_EVENT_HANDLER";
+
 }

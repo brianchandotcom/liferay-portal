@@ -199,6 +199,10 @@ public abstract class BaseDB implements DB {
 					while (indexRS.next()) {
 						String indexName = indexRS.getString("INDEX_NAME");
 
+						if (indexName == null) {
+							continue;
+						}
+
 						String lowerCaseIndexName = StringUtil.toLowerCase(
 							indexName);
 

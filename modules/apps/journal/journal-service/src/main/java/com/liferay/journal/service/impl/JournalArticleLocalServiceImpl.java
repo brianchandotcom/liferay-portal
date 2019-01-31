@@ -277,7 +277,7 @@ public class JournalArticleLocalServiceImpl
 	 * @param  neverExpire whether the web content article is not set to auto
 	 *         expire
 	 * @param  reviewDateMonth the month the web content article is set for
-	 *         reviewaddArticle
+	 *         review
 	 * @param  reviewDateDay the calendar day the web content article is set for
 	 *         review
 	 * @param  reviewDateYear the year the web content article is set for review

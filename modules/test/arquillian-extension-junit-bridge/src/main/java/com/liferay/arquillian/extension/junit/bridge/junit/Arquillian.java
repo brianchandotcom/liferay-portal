@@ -21,6 +21,7 @@ import java.lang.reflect.Method;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -47,6 +48,8 @@ import org.junit.internal.runners.statements.FailOnTimeout;
 import org.junit.rules.MethodRule;
 import org.junit.runner.Description;
 import org.junit.runner.Result;
+import org.junit.runner.manipulation.Filter;
+import org.junit.runner.manipulation.NoTestsRemainException;
 import org.junit.runner.notification.Failure;
 import org.junit.runner.notification.RunListener;
 import org.junit.runner.notification.RunNotifier;
@@ -254,7 +257,7 @@ public class Arquillian extends ParentRunner<FrameworkMethod> {
 
 	private TestClass _getTestClass() {
 		if (_testClass == null) {
-			_testClass = new SortedTestClass(_clazz);
+			_testClass = new FilteredSortedTestClass(_clazz, null);
 		}
 
 		return _testClass;
@@ -436,7 +439,7 @@ public class Arquillian extends ParentRunner<FrameworkMethod> {
 	private TestClass _testClass;
 	private TestRunnerAdaptor _testRunnerAdaptor;
 
-	private class SortedTestClass extends TestClass {
+	private class FilteredSortedTestClass extends TestClass {
 
 		@Override
 		public List<FrameworkMethod> getAnnotatedMethods(
@@ -445,15 +448,40 @@ public class Arquillian extends ParentRunner<FrameworkMethod> {
 			List<FrameworkMethod> frameworkMethods = new ArrayList<>(
 				super.getAnnotatedMethods(annotationClass));
 
+			if (_filter != null) {
+				Iterator<FrameworkMethod> iterator =
+					frameworkMethods.iterator();
+
+				while (iterator.hasNext()) {
+					FrameworkMethod frameworkMethod = iterator.next();
+
+					if (_filter.shouldRun(describeChild(frameworkMethod))) {
+						try {
+							_filter.apply(frameworkMethod);
+						}
+						catch (NoTestsRemainException ntre) {
+							iterator.remove();
+						}
+					}
+					else {
+						iterator.remove();
+					}
+				}
+			}
+
 			frameworkMethods.sort(
 				Comparator.comparing(FrameworkMethod::getName));
 
 			return frameworkMethods;
 		}
 
-		private SortedTestClass(Class<?> clazz) {
+		private FilteredSortedTestClass(Class<?> clazz, Filter filter) {
 			super(clazz);
+
+			_filter = filter;
 		}
+
+		private final Filter _filter;
 
 	}
 

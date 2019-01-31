@@ -53,7 +53,7 @@ public class ContainerDeployController {
 	public void deploy(@Observes DeployDeployment deployDeployment)
 		throws Exception {
 
-		_executeOperation(
+		_executeCallable(
 			new Callable<Void>() {
 
 				@Override
@@ -162,7 +162,7 @@ public class ContainerDeployController {
 	public void undeploy(@Observes UnDeployDeployment unDeployDeployment)
 		throws Exception {
 
-		_executeOperation(
+		_executeCallable(
 			new Callable<Void>() {
 
 				@Override
@@ -235,7 +235,7 @@ public class ContainerDeployController {
 			});
 	}
 
-	private void _executeOperation(Callable<Void> callable) throws Exception {
+	private void _executeCallable(Callable<Void> callable) throws Exception {
 		Injector injector = _injectorInstance.get();
 
 		injector.inject(callable);

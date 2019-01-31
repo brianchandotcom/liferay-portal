@@ -14,6 +14,8 @@
 
 package com.liferay.portal.remote.json.web.service.extender.test.internal.activator;
 
+import com.liferay.portal.remote.json.web.service.extender.test.internal.TestWebService;
+
 import java.util.Dictionary;
 import java.util.Hashtable;
 

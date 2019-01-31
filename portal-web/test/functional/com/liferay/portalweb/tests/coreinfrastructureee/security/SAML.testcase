@@ -10,7 +10,7 @@ definition {
 	property test.run.environment = "EE";
 	property testray.main.component.name = "SAML";
 
-	// All test cases are currently configured to run Liferay SAML as the IdP and Liferay SAML as the SP. This will change as more SAML implmentations are added to this test suite (ie Shibboleth)
+	// All test cases are currently configured to run Liferay SAML as both the IdP and SP.
 
 	setUp {
 		User.firstLoginPG();
@@ -623,13 +623,13 @@ definition {
 
 		User.viewLoggedOutPG();
 
-		// Verify IdP is logged out
+		// Verify IdP is also logged out
 
 		Navigator.openURL();
 
 		User.viewLoggedOutPG();
 
-		// Verify second SP is logged out
+		// Verify second SP is also logged out
 
 		Navigator.openSpecificURL(url = "http://www.baker.com:10080");
 
@@ -653,7 +653,7 @@ definition {
 
 		User.viewLoggedOutPG();
 
-		// Verify SP is logged in
+		// Initiate Single Sign-On via SP
 
 		SAML.executeSPInitiatedSSO(
 			password = "test",
@@ -664,13 +664,13 @@ definition {
 
 		User.viewLoggedInPG(userFirstName = "Test");
 
-		// Verify IdP is logged in
+		// Verify IdP is also logged in
 
 		Navigator.openURL();
 
 		User.viewLoggedInPG(userFirstName = "Test");
 
-		// Logout SP and verify SP is logged out
+		// Initiate Single Logout via SP
 
 		User.logoutPG(specificURL = "http://www.able.com:9080");
 

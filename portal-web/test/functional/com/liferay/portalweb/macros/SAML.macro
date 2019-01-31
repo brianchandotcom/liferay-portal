@@ -1,7 +1,7 @@
 definition {
 	@description = "Configures Liferay SAML as the IdP and Liferay SAML as the SP."
 	macro configureLiferaySAMLAsIdP {
-	// Configure IdP (Identity Provider) on specific Portal instance or http://localhost:8080 by default
+		// Configure IdP (Identity Provider) on specific Portal URL or default to current URL
 
 		if (isSet(idpURL)) {
 			User.loginPG(

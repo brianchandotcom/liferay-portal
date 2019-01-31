@@ -61,7 +61,7 @@ definition {
 				itemName = "Content"
 			);
 
-			PortletEntry.publish();
+			Button.clickPublish();
 		}
 	}
 
@@ -305,7 +305,7 @@ definition {
 				webContentTitle = "Webcontent Title"
 			);
 
-			PortletEntry.publish();
+			Button.clickPublish();
 		}
 
 		task ("Publish the site to live") {
@@ -333,7 +333,7 @@ definition {
 				itemName = "Title"
 			);
 
-			PortletEntry.publish();
+			Button.clickPublish();
 		}
 
 		task ("Assert the web content article displays with the additional Content fragment in the staging site") {

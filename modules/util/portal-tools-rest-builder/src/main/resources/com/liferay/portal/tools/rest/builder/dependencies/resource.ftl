@@ -159,9 +159,15 @@ public interface ${schemaName}Resource {
 							<#continue>
 						</#if>
 
-						@${parameter.in?cap_first}Param("${parameter.name}")
+						<#if parameter.schema.type??>
+							@${parameter.in?cap_first}Param("${parameter.name}")
 
-						${parameter.schema.type?cap_first}
+							${parameter.schema.type?cap_first}
+						<#elseif parameter.schema.reference??>
+							<#assign reference = "${parameter.schema.reference}" />
+
+							${reference[(reference?last_index_of('/') + 1)..(reference?length - 1)]}
+						</#if>
 
 						<#assign parameterName = "" />
 

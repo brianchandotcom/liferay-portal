@@ -104,7 +104,13 @@ public class ${schemaName}ResourceImpl implements ${schemaName}Resource {
 							<#continue>
 						</#if>
 
-						${parameter.schema.type?cap_first}
+						<#if parameter.schema.type??>
+							${parameter.schema.type?cap_first}
+						<#elseif parameter.schema.reference??>
+							<#assign reference = "${parameter.schema.reference}" />
+
+							${reference[(reference?last_index_of('/') + 1)..(reference?length - 1)]}
+						</#if>
 
 						<#assign parameterName = "" />
 

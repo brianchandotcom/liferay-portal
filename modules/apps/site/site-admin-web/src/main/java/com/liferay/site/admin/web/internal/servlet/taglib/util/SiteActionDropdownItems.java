@@ -74,47 +74,47 @@ public class SiteActionDropdownItems {
 					if (_siteAdminDisplayContext.hasAddChildSitePermission(
 							_group)) {
 
-						add(_getAddChildSiteURL());
+						add(_getAddChildSiteActionConsumer());
 					}
 
-					add(_getViewSiteSettingsURL());
+					add(_getViewSiteSettingsActionConsumer());
 				}
 
 				if (_group.isActive() &&
 					(_group.getPublicLayoutsPageCount() > 0)) {
 
-					add(_getViewSitePublicPagesURL());
+					add(_getViewSitePublicPagesActionConsumer());
 				}
 
 				if (_group.isActive() &&
 					(_group.getPrivateLayoutsPageCount() > 0)) {
 
-					add(_getViewSitePrivatePagesURL());
+					add(_getViewSitePrivatePagesActionConsumer());
 				}
 
 				if (_hasEditAssignmentsPermission()) {
-					add(_getLeaveSiteURL());
+					add(_getLeaveSiteActionConsumer());
 				}
 
 				if (hasUpdatePermission) {
 					if (_group.isActive() && !_group.isCompany() &&
 						!_group.isGuest()) {
 
-						add(_getDeactivateSiteURL());
+						add(_getDeactivateSiteActionConsumer());
 					}
 					else if (!_group.isActive() && !_group.isCompany()) {
-						add(_getActivateSiteURL());
+						add(_getActivateSiteActionConsumer());
 					}
 				}
 
 				if (_hasDeleteGroupPermission()) {
-					add(_getDeleteSiteAction());
+					add(_getDeleteSiteActionConsumer());
 				}
 			}
 		};
 	}
 
-	private Consumer<DropdownItem> _getActivateSiteURL() {
+	private Consumer<DropdownItem> _getActivateSiteActionConsumer() {
 		PortletURL activateSiteURL = _liferayPortletResponse.createActionURL();
 
 		activateSiteURL.setParameter(ActionRequest.ACTION_NAME, "activate");
@@ -130,7 +130,7 @@ public class SiteActionDropdownItems {
 		};
 	}
 
-	private Consumer<DropdownItem> _getAddChildSiteURL() {
+	private Consumer<DropdownItem> _getAddChildSiteActionConsumer() {
 		return dropdownItem -> {
 			dropdownItem.setHref(
 				_liferayPortletResponse.createRenderURL(), "mvcPath",
@@ -141,7 +141,7 @@ public class SiteActionDropdownItems {
 		};
 	}
 
-	private Consumer<DropdownItem> _getDeactivateSiteURL() {
+	private Consumer<DropdownItem> _getDeactivateSiteActionConsumer() {
 		PortletURL deactivateSiteURL =
 			_liferayPortletResponse.createActionURL();
 
@@ -159,7 +159,7 @@ public class SiteActionDropdownItems {
 		};
 	}
 
-	private Consumer<DropdownItem> _getDeleteSiteAction() {
+	private Consumer<DropdownItem> _getDeleteSiteActionConsumer() {
 		PortletURL deleteSiteURL = _liferayPortletResponse.createActionURL();
 
 		deleteSiteURL.setParameter(ActionRequest.ACTION_NAME, "deleteGroups");
@@ -175,7 +175,7 @@ public class SiteActionDropdownItems {
 		};
 	}
 
-	private Consumer<DropdownItem> _getLeaveSiteURL() {
+	private Consumer<DropdownItem> _getLeaveSiteActionConsumer() {
 		PortletURL leaveSiteURL = _liferayPortletResponse.createActionURL();
 
 		leaveSiteURL.setParameter(
@@ -205,7 +205,7 @@ public class SiteActionDropdownItems {
 		return _redirect;
 	}
 
-	private Consumer<DropdownItem> _getViewSitePrivatePagesURL() {
+	private Consumer<DropdownItem> _getViewSitePrivatePagesActionConsumer() {
 		return dropdownItem -> {
 			dropdownItem.setHref(_group.getDisplayURL(_themeDisplay, true));
 			dropdownItem.setTarget("_blank");
@@ -214,7 +214,7 @@ public class SiteActionDropdownItems {
 		};
 	}
 
-	private Consumer<DropdownItem> _getViewSitePublicPagesURL() {
+	private Consumer<DropdownItem> _getViewSitePublicPagesActionConsumer() {
 		return dropdownItem -> {
 			dropdownItem.setHref(_group.getDisplayURL(_themeDisplay, false));
 			dropdownItem.setTarget("_blank");
@@ -223,7 +223,7 @@ public class SiteActionDropdownItems {
 		};
 	}
 
-	private Consumer<DropdownItem> _getViewSiteSettingsURL() {
+	private Consumer<DropdownItem> _getViewSiteSettingsActionConsumer() {
 		PortletURL viewSiteSettingsURL = PortalUtil.getControlPanelPortletURL(
 			_request, _group, SiteAdminPortletKeys.SITE_SETTINGS, 0, 0,
 			PortletRequest.RENDER_PHASE);

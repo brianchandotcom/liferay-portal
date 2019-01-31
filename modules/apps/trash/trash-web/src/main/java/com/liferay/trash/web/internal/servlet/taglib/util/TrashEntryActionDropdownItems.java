@@ -65,17 +65,17 @@ public class TrashEntryActionDropdownItems {
 		return new DropdownItemList() {
 			{
 				if (_isRestorable()) {
-					add(_getRestoreAction());
+					add(_getRestoreActionDropdownItem());
 				}
 
 				if (_isDeletable()) {
-					add(_getDeleteAction());
+					add(_getDeleteActionDropdownItem());
 				}
 			}
 		};
 	}
 
-	private DropdownItem _getDeleteAction() throws PortalException {
+	private DropdownItem _getDeleteActionDropdownItem() throws PortalException {
 		return new DropdownItem() {
 			{
 				putData("action", "deleteEntry");
@@ -137,7 +137,7 @@ public class TrashEntryActionDropdownItems {
 		return redirectURL.toString();
 	}
 
-	private DropdownItem _getRestoreAction() throws Exception {
+	private DropdownItem _getRestoreActionDropdownItem() throws Exception {
 		boolean inTrashContainer = _trashHandler.isInTrashContainer(
 			_trashEntry.getClassPK());
 

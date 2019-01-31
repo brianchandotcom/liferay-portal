@@ -103,15 +103,15 @@ public class JournalArticleActionDropdownItems {
 						_themeDisplay.getPermissionChecker(), _article,
 						ActionKeys.UPDATE)) {
 
-					add(_getEditArticleAction());
-					add(_getMoveArticleAction());
+					add(_getEditArticleActionConsumer());
+					add(_getMoveArticleActionConsumer());
 				}
 
 				if (JournalArticlePermission.contains(
 						_themeDisplay.getPermissionChecker(), _article,
 						ActionKeys.PERMISSIONS)) {
 
-					add(_getPermissionsArticleAction());
+					add(_getPermissionsArticleActionConsumer());
 				}
 
 				if (JournalArticlePermission.contains(
@@ -122,18 +122,18 @@ public class JournalArticleActionDropdownItems {
 							_themeDisplay.getPermissionChecker(), _article,
 							ActionKeys.SUBSCRIBE)) {
 
-						add(_getSubscribeArticleAction());
+						add(_getSubscribeArticleActionConsumer());
 					}
 
 					Consumer<DropdownItem> viewContentArticleAction =
-						_getViewContentArticleAction();
+						_getViewContentArticleActionConsumer();
 
 					if (viewContentArticleAction != null) {
 						add(viewContentArticleAction);
 					}
 
 					Consumer<DropdownItem> previewContentArticleAction =
-						_getPreviewArticleAction();
+						_getPreviewArticleActionConsumer();
 
 					if (previewContentArticleAction != null) {
 						add(previewContentArticleAction);
@@ -143,18 +143,18 @@ public class JournalArticleActionDropdownItems {
 							_themeDisplay.getPermissionChecker(), _article,
 							ActionKeys.UPDATE)) {
 
-						add(_getViewHistoryArticleAction());
+						add(_getViewHistoryArticleActionConsumer());
 					}
 				}
 
-				add(_getViewUsagesArticleAction());
+				add(_getViewUsagesArticleActionConsumer());
 
 				if (JournalFolderPermission.contains(
 						_themeDisplay.getPermissionChecker(),
 						_themeDisplay.getScopeGroupId(), _article.getFolderId(),
 						ActionKeys.ADD_ARTICLE)) {
 
-					add(_getCopyArticleAction());
+					add(_getCopyArticleActionConsumer());
 				}
 
 				if (JournalArticlePermission.contains(
@@ -162,7 +162,9 @@ public class JournalArticleActionDropdownItems {
 						ActionKeys.EXPIRE) &&
 					_article.hasApprovedVersion()) {
 
-					add(_getExpireArticleAction(_article.getArticleId()));
+					add(
+						_getExpireArticleActionConsumer(
+							_article.getArticleId()));
 				}
 
 				if (JournalArticlePermission.contains(
@@ -172,7 +174,7 @@ public class JournalArticleActionDropdownItems {
 					if (_trashHelper.isTrashEnabled(
 							_themeDisplay.getScopeGroupId())) {
 
-						add(_getMoveToTrashArticleAction());
+						add(_getMoveToTrashArticleActionConsumer());
 					}
 					else {
 						add(_getDeleteArticleAction(_article.getArticleId()));
@@ -182,7 +184,7 @@ public class JournalArticleActionDropdownItems {
 				Group group = _themeDisplay.getScopeGroup();
 
 				if (_isShowPublishArticleAction() && !group.isLayout()) {
-					add(_getPublishToLiveArticleAction());
+					add(_getPublishToLiveArticleActionConsumer());
 				}
 			}
 		};
@@ -198,7 +200,7 @@ public class JournalArticleActionDropdownItems {
 						ActionKeys.VIEW)) {
 
 					Consumer<DropdownItem> previewContentArticleAction =
-						_getPreviewArticleAction();
+						_getPreviewArticleActionConsumer();
 
 					if (previewContentArticleAction != null) {
 						add(previewContentArticleAction);
@@ -210,7 +212,7 @@ public class JournalArticleActionDropdownItems {
 						_themeDisplay.getScopeGroupId(), _article.getFolderId(),
 						ActionKeys.ADD_ARTICLE)) {
 
-					add(_getAutoCopyArticleAction());
+					add(_getAutoCopyArticleActionConsumer());
 				}
 
 				if (JournalArticlePermission.contains(
@@ -220,13 +222,13 @@ public class JournalArticleActionDropdownItems {
 						WorkflowConstants.STATUS_APPROVED)) {
 
 					add(
-						_getExpireArticleAction(
+						_getExpireArticleActionConsumer(
 							_article.getArticleId() +
 								JournalPortlet.VERSION_SEPARATOR +
 									_article.getVersion()));
 				}
 
-				add(_getCompareArticleVersionsAction());
+				add(_getCompareArticleVersionsActionConsumer());
 
 				if (JournalArticlePermission.contains(
 						_themeDisplay.getPermissionChecker(), _article,
@@ -251,14 +253,14 @@ public class JournalArticleActionDropdownItems {
 						_themeDisplay.getPermissionChecker(), _article,
 						ActionKeys.UPDATE)) {
 
-					add(_getEditArticleAction());
+					add(_getEditArticleActionConsumer());
 				}
 
 				if (JournalArticlePermission.contains(
 						_themeDisplay.getPermissionChecker(), _article,
 						ActionKeys.VIEW)) {
 
-					add(_getPreviewArticleAction());
+					add(_getPreviewArticleActionConsumer());
 				}
 
 				if (JournalFolderPermission.contains(
@@ -266,7 +268,7 @@ public class JournalArticleActionDropdownItems {
 						_themeDisplay.getScopeGroupId(), _article.getFolderId(),
 						ActionKeys.ADD_ARTICLE)) {
 
-					add(_getAutoCopyArticleAction());
+					add(_getAutoCopyArticleActionConsumer());
 				}
 
 				if (JournalArticlePermission.contains(
@@ -276,13 +278,13 @@ public class JournalArticleActionDropdownItems {
 						WorkflowConstants.STATUS_APPROVED)) {
 
 					add(
-						_getExpireArticleAction(
+						_getExpireArticleActionConsumer(
 							_article.getArticleId() +
 								JournalPortlet.VERSION_SEPARATOR +
 									_article.getVersion()));
 				}
 
-				add(_getCompareArticleVersionsAction());
+				add(_getCompareArticleVersionsActionConsumer());
 
 				if (JournalArticlePermission.contains(
 						_themeDisplay.getPermissionChecker(), _article,
@@ -298,7 +300,7 @@ public class JournalArticleActionDropdownItems {
 		};
 	}
 
-	private Consumer<DropdownItem> _getAutoCopyArticleAction() {
+	private Consumer<DropdownItem> _getAutoCopyArticleActionConsumer() {
 		return dropdownItem -> {
 			dropdownItem.setHref(
 				_liferayPortletResponse.createRenderURL(), "mvcPath",
@@ -309,7 +311,7 @@ public class JournalArticleActionDropdownItems {
 		};
 	}
 
-	private Consumer<DropdownItem> _getCompareArticleVersionsAction()
+	private Consumer<DropdownItem> _getCompareArticleVersionsActionConsumer()
 		throws Exception {
 
 		PortletURL compareVersionsURL =
@@ -340,7 +342,7 @@ public class JournalArticleActionDropdownItems {
 		};
 	}
 
-	private Consumer<DropdownItem> _getCopyArticleAction() {
+	private Consumer<DropdownItem> _getCopyArticleActionConsumer() {
 		if (_journalWebConfiguration.journalArticleForceAutogenerateId()) {
 			PortletURL copyArticleURL =
 				_liferayPortletResponse.createActionURL();
@@ -366,7 +368,7 @@ public class JournalArticleActionDropdownItems {
 			};
 		}
 
-		return _getAutoCopyArticleAction();
+		return _getAutoCopyArticleActionConsumer();
 	}
 
 	private Consumer<DropdownItem> _getDeleteArticleAction(String articleId) {
@@ -386,7 +388,7 @@ public class JournalArticleActionDropdownItems {
 		};
 	}
 
-	private Consumer<DropdownItem> _getEditArticleAction() {
+	private Consumer<DropdownItem> _getEditArticleActionConsumer() {
 		return dropdownItem -> {
 			dropdownItem.setHref(
 				_liferayPortletResponse.createRenderURL(), "mvcPath",
@@ -400,7 +402,9 @@ public class JournalArticleActionDropdownItems {
 		};
 	}
 
-	private Consumer<DropdownItem> _getExpireArticleAction(String articleId) {
+	private Consumer<DropdownItem> _getExpireArticleActionConsumer(
+		String articleId) {
+
 		PortletURL expireURL = _liferayPortletResponse.createActionURL();
 
 		expireURL.setParameter(ActionRequest.ACTION_NAME, "expireArticles");
@@ -416,7 +420,7 @@ public class JournalArticleActionDropdownItems {
 		};
 	}
 
-	private Consumer<DropdownItem> _getMoveArticleAction() {
+	private Consumer<DropdownItem> _getMoveArticleActionConsumer() {
 		return dropdownItem -> {
 			dropdownItem.setHref(
 				_liferayPortletResponse.createRenderURL(), "mvcPath",
@@ -428,7 +432,7 @@ public class JournalArticleActionDropdownItems {
 		};
 	}
 
-	private Consumer<DropdownItem> _getMoveToTrashArticleAction() {
+	private Consumer<DropdownItem> _getMoveToTrashArticleActionConsumer() {
 		PortletURL deleteURL = _liferayPortletResponse.createActionURL();
 
 		deleteURL.setParameter(ActionRequest.ACTION_NAME, "moveToTrash");
@@ -446,7 +450,7 @@ public class JournalArticleActionDropdownItems {
 		};
 	}
 
-	private Consumer<DropdownItem> _getPermissionsArticleAction()
+	private Consumer<DropdownItem> _getPermissionsArticleActionConsumer()
 		throws Exception {
 
 		String permissionsURL = PermissionsURLTag.doTag(
@@ -462,7 +466,9 @@ public class JournalArticleActionDropdownItems {
 		};
 	}
 
-	private Consumer<DropdownItem> _getPreviewArticleAction() throws Exception {
+	private Consumer<DropdownItem> _getPreviewArticleActionConsumer()
+		throws Exception {
+
 		String previewURL = _getPreviewURL();
 
 		if (Validator.isNull(previewURL)) {
@@ -536,7 +542,7 @@ public class JournalArticleActionDropdownItems {
 		return portletURL.toString();
 	}
 
-	private Consumer<DropdownItem> _getPublishToLiveArticleAction() {
+	private Consumer<DropdownItem> _getPublishToLiveArticleActionConsumer() {
 		PortletURL publishArticleURL =
 			_liferayPortletResponse.createActionURL();
 
@@ -579,7 +585,7 @@ public class JournalArticleActionDropdownItems {
 		return _referringPortletResource;
 	}
 
-	private Consumer<DropdownItem> _getSubscribeArticleAction() {
+	private Consumer<DropdownItem> _getSubscribeArticleActionConsumer() {
 		if (JournalUtil.isSubscribedToArticle(
 				_article.getCompanyId(), _themeDisplay.getScopeGroupId(),
 				_themeDisplay.getUserId(), _article.getResourcePrimKey())) {
@@ -621,7 +627,7 @@ public class JournalArticleActionDropdownItems {
 		};
 	}
 
-	private Consumer<DropdownItem> _getViewContentArticleAction()
+	private Consumer<DropdownItem> _getViewContentArticleActionConsumer()
 		throws Exception {
 
 		String viewContentURL = _getViewContentURL();
@@ -665,7 +671,7 @@ public class JournalArticleActionDropdownItems {
 		return viewContentURL;
 	}
 
-	private Consumer<DropdownItem> _getViewHistoryArticleAction() {
+	private Consumer<DropdownItem> _getViewHistoryArticleActionConsumer() {
 		return dropdownItem -> {
 			dropdownItem.setHref(
 				_liferayPortletResponse.createRenderURL(), "mvcPath",
@@ -677,7 +683,7 @@ public class JournalArticleActionDropdownItems {
 		};
 	}
 
-	private Consumer<DropdownItem> _getViewUsagesArticleAction()
+	private Consumer<DropdownItem> _getViewUsagesArticleActionConsumer()
 		throws Exception {
 
 		PortletURL viewUsagesURL = PortletProviderUtil.getPortletURL(

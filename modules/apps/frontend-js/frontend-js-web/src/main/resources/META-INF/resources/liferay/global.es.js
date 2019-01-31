@@ -14,7 +14,7 @@ import isEqual from 'lodash.isequal';
 import portlet from './portlet/portlet.es';
 import navigate from './util/navigate.es';
 import ns from './util/ns.es';
-import objectToFormData from './util/form/object_to_form_data.es';
+import objectToFormData from './util/object_to_form_data.es';
 import postForm from './util/form/post_form.es';
 import setFormValues from './util/form/set_form_values.es';
 import toCharCode from './util/to_char_code.es';

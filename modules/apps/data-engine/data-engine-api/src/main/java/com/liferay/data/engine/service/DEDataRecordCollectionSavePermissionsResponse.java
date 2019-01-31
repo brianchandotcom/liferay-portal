@@ -21,7 +21,7 @@ import java.util.List;
 
 /**
  * This class represents a response of the save Data Record Collection
- * permission request to a role
+ * permission request to one or more roles
  *
  * @author Leonardo Barros
  * @review
@@ -48,7 +48,7 @@ public final class DEDataRecordCollectionSavePermissionsResponse {
 	public static final class Builder {
 
 		/**
-		 * Returns the Save Data Record Collection Permissions builder
+		 * Returns the Save Data Record Collection Permissions builder.
 		 *
 		 * @param roleNames the list of the roles names that have been granted
 		 * permission in the request

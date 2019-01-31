@@ -101,7 +101,7 @@ public final class DEDataRecordCollectionSavePermissionsRequest {
 		 * resources
 		 * @param roleNames the role names list that are going to receive the
 		 * permissions
-		 * @return {@link DEDataRecordCollectionSavePermissionsRequest}
+		 * @return {@link Builder}
 		 * @review
 		 */
 		public Builder(long companyId, long scopedGroupId, String[] roleNames) {
@@ -115,9 +115,9 @@ public final class DEDataRecordCollectionSavePermissionsRequest {
 
 		/**
 		 * If this method is set on the permission request, it will set the
-		 * permission to allow the user to add data record collection
+		 * permission to allow the user to add {@link DEDataRecordCollection}
 		 *
-		 * @return {@link DEDataRecordCollectionSavePermissionsRequest}
+		 * @return {@link Builder}
 		 * @review
 		 */
 		public Builder allowAddDataRecordCollection() {
@@ -132,7 +132,7 @@ public final class DEDataRecordCollectionSavePermissionsRequest {
 		 * the user to define permissions to another user to perform actions
 		 * involving {@link DEDataRecordCollection}
 		 *
-		 * @return {@link DEDataRecordCollectionSavePermissionsRequest}
+		 * @return {@link Builder}
 		 * @review
 		 */
 		public Builder allowDefinePermissions() {

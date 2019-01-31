@@ -20,20 +20,52 @@ import java.util.Collections;
 import java.util.List;
 
 /**
+ * This class represents a response of the save Data Definition permission
+ * request to one or more roles
+ *
  * @author Marcela Cunha
  */
 public class DEDataDefinitionSavePermissionsResponse {
 
+	/**
+	 * Returns the role names list of the Permission response.
+	 *
+	 * @return a list of roleNames
+	 * @review
+	 */
 	public List<String> getRoleNames() {
 		return Collections.unmodifiableList(_roleNames);
 	}
 
+	/**
+	 * Constructs the Save Data Definition Permissions response.
+	 * The role names must be an argument in the response builder.
+	 *
+	 * @return {@link DEDataDefinitionSavePermissionsResponse}
+	 * @review
+	 */
 	public static final class Builder {
 
+		/**
+		 * Returns the Save Data Definition Permissions builder.
+		 *
+		 * @param roleNames the list of the roles names that have been granted
+		 * permission in the request
+		 * @return {@link Builder}
+		 * @review
+		 */
 		public static Builder newBuilder(String... roleNames) {
 			return new Builder(roleNames);
 		}
 
+		/**
+		 * Includes a role names list in the Save Permission response.
+		 *
+		 * @param roleNames the role names that are going to receive the
+		 * permissions
+		 * @return {@link DEDataDefinitionSavePermissionsResponse}
+		 * @review
+		 */
 		public static DEDataDefinitionSavePermissionsResponse of(
 			String... roleNames) {
 
@@ -42,6 +74,12 @@ public class DEDataDefinitionSavePermissionsResponse {
 			).build();
 		}
 
+		/**
+		 * Constructs the Save Data Definition Permissions response.
+		 *
+		 * @return {@link DEDataDefinitionSavePermissionsResponse}
+		 * @review
+		 */
 		public DEDataDefinitionSavePermissionsResponse build() {
 			return _deDataDefinitionSavePermissionsResponse;
 		}

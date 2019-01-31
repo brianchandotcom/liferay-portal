@@ -47,8 +47,8 @@ public final class DEDataRecordCollectionSaveModelPermissionsResponse {
 		/**
 		 * Returns the Save Data Record Collection Model Permissions builder
 		 *
-		 * @param deDataRecordCollectionId the primary key of the Data Record
-		 * Collection
+		 * @param deDataRecordCollectionId the primary key of the
+		 * {@link DEDataRecordCollection}
 		 * @return {@link Builder}
 		 * @review
 		 */
@@ -60,8 +60,8 @@ public final class DEDataRecordCollectionSaveModelPermissionsResponse {
 		 * Includes a data record collection ID in the Save Model Permission
 		 * response.
 		 *
-		 * @param deDataRecordCollectionId the primary key of the Data Record
-		 * Collection
+		 * @param deDataRecordCollectionId the primary key of the
+		 * {@link DEDataRecordCollection}
 		 * @return {@link DEDataRecordCollectionSaveModelPermissionsResponse}
 		 * @review
 		 */

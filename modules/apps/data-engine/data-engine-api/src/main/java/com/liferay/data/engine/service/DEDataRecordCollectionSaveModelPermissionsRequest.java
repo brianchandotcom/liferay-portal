@@ -94,7 +94,7 @@ public final class DEDataRecordCollectionSaveModelPermissionsRequest {
 	 * {@link DEDataRecordCollection} related to the Data Record Collection ID
 	 * set in the request
 	 *
-	 * @return addDataRecordCollection
+	 * @return delete
 	 * @review
 	 */
 	public boolean isDelete() {
@@ -107,7 +107,7 @@ public final class DEDataRecordCollectionSaveModelPermissionsRequest {
 	 * {@link DEDataRecordCollection} related to the Data Record Collection ID
 	 * set in the request
 	 *
-	 * @return addDataRecordCollection
+	 * @return update
 	 * @review
 	 */
 	public boolean isUpdate() {
@@ -119,8 +119,9 @@ public final class DEDataRecordCollectionSaveModelPermissionsRequest {
 	 * the one that allows the user to view the
 	 * {@link DEDataRecordCollection} related to the Data Record Collection ID
 	 * set in the request
-	 * @review
+	 *
 	 * @return addDataRecordCollection
+	 * @review
 	 */
 	public boolean isView() {
 		return _view;
@@ -128,12 +129,13 @@ public final class DEDataRecordCollectionSaveModelPermissionsRequest {
 
 	/**
 	 * Constructs the Save Data Record Collections Model Permissions request.
-	 * The company ID, the scoped group ID, the scoped user ID, and the data
-	 * record collection ID must be an argument in the request. The permission
-	 * to allow view, update, or delete a Data Record Collection can be used
-	 * as an alternative parameter
+	 * The company ID, the scoped group ID, the scoped user ID, the data record
+	 * collection ID, and the role names list must be an argument in the request.
+	 * The permission to allow view, update, or delete a Data Record Collection
+	 * can be used as an alternative parameter
+	 *
+	 * @return {@link DEDataRecordCollectionSaveModelPermissionsRequest}
 	 * @review
-	 * @return {@link DEDataRecordCollectionSavePermissionsRequest}
 	 */
 	public static final class Builder {
 
@@ -147,12 +149,12 @@ public final class DEDataRecordCollectionSaveModelPermissionsRequest {
 		 * resources
 		 * @param scopedGroupId the primary key of the group adding the
 		 * resources
-		 * @param deDataRecordCollectionId the primary key of the data record
-		 * collection that want to related to the model permission in the
-		 * request
+		 * @param deDataRecordCollectionId the primary key of the
+		 * {@link DEDataRecordCollection} collection that want to related to the
+		 * model permission in the request
 		 * @param roleNames the role names list that are going to receive the
 		 * permissions
-		 * @return {@link DEDataRecordCollectionSavePermissionsRequest }
+		 * @return {@link Builder}
 		 * @review
 		 */
 		public Builder(
@@ -178,7 +180,7 @@ public final class DEDataRecordCollectionSaveModelPermissionsRequest {
 		 * permission to allow the user to delete
 		 * {@link DEDataRecordCollection} included in the request
 		 *
-		 * @return {@link DEDataRecordCollectionSavePermissionsRequest}
+		 * @return {@link Builder}
 		 * @review
 		 */
 		public Builder allowDelete() {
@@ -189,10 +191,10 @@ public final class DEDataRecordCollectionSaveModelPermissionsRequest {
 
 		/**
 		 * If this method is set on the permission request, it will set the
-		 * permission to allow the user to update
-		 * {@link DEDataRecordCollection} included in the request
+		 * permission to allow the user to update {@link DEDataRecordCollection}
+		 * included in the request.
 		 *
-		 * @return {@link DEDataRecordCollectionSavePermissionsRequest}
+		 * @return {@link Builder}
 		 * @review
 		 */
 		public Builder allowUpdate() {
@@ -203,10 +205,10 @@ public final class DEDataRecordCollectionSaveModelPermissionsRequest {
 
 		/**
 		 * If this method is set on the permission request, it will set the
-		 * permission to allow the user to view
-		 * {@link DEDataRecordCollection} included in the request
+		 * permission to allow the user to view {@link DEDataRecordCollection}
+		 * included in the request.
 		 *
-		 * @return {@link DEDataRecordCollectionSavePermissionsRequest}
+		 * @return {@link Builder}
 		 * @review
 		 */
 		public Builder allowView() {
@@ -219,7 +221,7 @@ public final class DEDataRecordCollectionSaveModelPermissionsRequest {
 		 * Constructs the Save Data Record Collections Model Permission
 		 * request.
 		 *
-		 * @return {@link DEDataRecordCollectionSavePermissionsRequest}
+		 * @return {@link DEDataRecordCollectionSaveModelPermissionsRequest}
 		 * @review
 		 */
 		public DEDataRecordCollectionSaveModelPermissionsRequest build() {

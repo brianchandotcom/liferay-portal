@@ -20,27 +20,65 @@ import java.util.Collections;
 import java.util.List;
 
 /**
+ * This class represents a request to remove Data Record Collection permission
+ * to one or more roles
+ *
  * @author Leonardo Barros
  */
 public final class DEDataRecordCollectionDeletePermissionsRequest {
 
+	/**
+	 * Returns the company ID of the Permission request.
+	 *
+	 * @return companyId
+	 * @review
+	 */
 	public long getCompanyId() {
 		return _companyId;
 	}
 
+	/**
+	 * Returns the role names of the Permission request.
+	 *
+	 * @return a list of roleNames
+	 * @review
+	 */
 	public List<String> getRoleNames() {
 		return Collections.unmodifiableList(_roleNames);
 	}
 
+	/**
+	 * Returns the scoped group ID of the Permission request.
+	 *
+	 * @return scopedGroupId
+	 * @review
+	 */
 	public long getScopedGroupId() {
 		return _scopedGroupId;
 	}
 
+	/**
+	 * Constructs the Delete Data Record Collections Permissions request.
+	 * The company ID, the scoped group ID, and the role names list must be an
+	 * argument in the request.
+	 *
+	 * @return {@link DEDataRecordCollectionDeletePermissionsRequest}
+	 * @review
+	 */
 	public static final class Builder {
 
-		public Builder(
-			long companyId, long scopedGroupId, String... roleNames) {
-
+		/**
+		 * Constructs the Delete Data Record Collections Permission request.
+		 *
+		 * @param companyId the primary key of the portal instance
+		 * @param scopedGroupId the primary key of the group adding the
+		 * resources
+		 * @param roleNames the role names list that that will have the revoked
+		 * permission
+		 * @return {@link Builder}
+		 * @review
+		 */
+		public Builder(long companyId, long scopedGroupId, String[] roleNames) {
 			_deDataRecordCollectionDeletePermissionsRequest._companyId =
 				companyId;
 			_deDataRecordCollectionDeletePermissionsRequest._scopedGroupId =
@@ -49,6 +87,12 @@ public final class DEDataRecordCollectionDeletePermissionsRequest {
 				ListUtil.fromArray(roleNames);
 		}
 
+		/**
+		 * Constructs the Delete Data Record Collections Permission request.
+		 *
+		 * @return {@link DEDataRecordCollectionDeletePermissionsRequest}
+		 * @review
+		 */
 		public DEDataRecordCollectionDeletePermissionsRequest build() {
 			return _deDataRecordCollectionDeletePermissionsRequest;
 		}

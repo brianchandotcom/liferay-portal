@@ -358,6 +358,23 @@ public class TopLevelBuild extends BaseBuild {
 
 	protected TopLevelBuild(String url, TopLevelBuild topLevelBuild) {
 		super(url, topLevelBuild);
+
+		Properties buildProperties = null;
+
+		try {
+			buildProperties = JenkinsResultsParserUtil.getBuildProperties();
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException("Unable to get build.properties", ioe);
+		}
+
+		_sendBuildMetrics = Boolean.valueOf(
+			buildProperties.getProperty("build.metrics.send"));
+
+		_metricsHostName = buildProperties.getProperty(
+			"build.metrics.host.name");
+		_metricsHostPort = Integer.parseInt(
+			buildProperties.getProperty("build.metrics.host.port"));
 	}
 
 	@Override
@@ -1423,7 +1440,7 @@ public class TopLevelBuild extends BaseBuild {
 
 		modifiedDownstreamBuilds.removeAll(ignoreDownstreamBuilds);
 
-		sendBuildMetric(
+		sendBuildMetrics(
 			generateGaugeDeltaMetric(
 				"build_slave_usage_gauge", -modifiedDownstreamBuilds.size(),
 				null));
@@ -1437,27 +1454,16 @@ public class TopLevelBuild extends BaseBuild {
 			return;
 		}
 
-		sendBuildMetric(
+		sendBuildMetrics(
 			generateGaugeDeltaMetric(
 				"build_slave_usage_value", modifiedDownstreamBuilds.size(),
 				null));
 	}
 
-	protected void sendBuildMetric(String message) {
-		Properties buildProperties = null;
-
-		try {
-			buildProperties = JenkinsResultsParserUtil.getBuildProperties();
-		}
-		catch (IOException ioe) {
-			throw new RuntimeException("Unable to get build.properties", ioe);
-		}
-
-		String sendBuildEvents = buildProperties.getProperty(
-			"build.metrics.send.events");
-
-		if ((sendBuildEvents != null) && sendBuildEvents.equals("true")) {
-			DatagramRequestUtil.send(message);
+	protected void sendBuildMetrics(String message) {
+		if (_sendBuildMetrics) {
+			DatagramRequestUtil.send(
+				message, _metricsHostName, _metricsHostPort);
 		}
 	}
 
@@ -1492,6 +1498,9 @@ public class TopLevelBuild extends BaseBuild {
 
 	private boolean _compareToUpstream = true;
 	private long _lastDownstreamBuildsListingTimestamp = -1L;
+	private final String _metricsHostName;
+	private final int _metricsHostPort;
+	private final boolean _sendBuildMetrics;
 	private long _updateDuration;
 
 }

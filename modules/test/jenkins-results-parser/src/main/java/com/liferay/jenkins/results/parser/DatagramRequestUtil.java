@@ -20,34 +20,18 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 
-import java.util.Properties;
-
 /**
  * @author Leslie Wong
  */
 public class DatagramRequestUtil {
 
-	public static void send(String message) {
+	public static void send(
+		String message, String metricsHostName, int metricsHostPort) {
+
 		try (DatagramSocket datagramSocket = new DatagramSocket()) {
 			System.out.println("Message payload: " + message);
 
-			Properties buildProperties = null;
-
-			try {
-				buildProperties = JenkinsResultsParserUtil.getBuildProperties();
-			}
-			catch (IOException ioe) {
-				throw new RuntimeException(
-					"Unable to get build.properties", ioe);
-			}
-
-			String metricsHostName = buildProperties.getProperty(
-				"build.metrics.host.name");
-
 			InetAddress inetAddress = InetAddress.getByName(metricsHostName);
-
-			int metricsHostPort = Integer.valueOf(
-				buildProperties.getProperty("build.metrics.host.port"));
 
 			DatagramPacket datagramPacket = new DatagramPacket(
 				message.getBytes(), message.length(), inetAddress,

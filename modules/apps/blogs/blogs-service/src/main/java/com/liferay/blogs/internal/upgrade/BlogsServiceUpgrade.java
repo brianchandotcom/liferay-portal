@@ -20,6 +20,7 @@ import com.liferay.blogs.internal.upgrade.v1_1_1.UpgradeUrlTitle;
 import com.liferay.blogs.internal.upgrade.v1_1_2.UpgradeBlogsImages;
 import com.liferay.blogs.internal.upgrade.v2_0_0.util.BlogsEntryTable;
 import com.liferay.blogs.internal.upgrade.v2_0_0.util.BlogsStatsUserTable;
+import com.liferay.blogs.internal.upgrade.v3_0_0.UpgradeBadColumnNames;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.comment.upgrade.UpgradeDiscussionSubscriptionClassName;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
@@ -72,6 +73,8 @@ public class BlogsServiceUpgrade implements UpgradeStepRegistrator {
 				_subscriptionLocalService, BlogsEntry.class.getName(),
 				UpgradeDiscussionSubscriptionClassName.DeletionMode.
 					DELETE_OLD));
+
+		registry.register("2.0.1", "3.0.0", new UpgradeBadColumnNames());
 	}
 
 	@Reference

@@ -144,8 +144,8 @@ public class FragmentCollectionServiceImpl
 		OrderByComparator<FragmentCollection> orderByComparator) {
 
 		return fragmentCollectionPersistence.findByG_LikeN(
-			groupId, _customSQL.keywords(name, WildcardMode.SURROUND)[0], start,
-			end, orderByComparator);
+			groupId, _customSQL.keywords(name, false, WildcardMode.SURROUND)[0],
+			start, end, orderByComparator);
 	}
 
 	@Override
@@ -156,7 +156,8 @@ public class FragmentCollectionServiceImpl
 	@Override
 	public int getFragmentCollectionsCount(long groupId, String name) {
 		return fragmentCollectionPersistence.countByG_LikeN(
-			groupId, _customSQL.keywords(name, WildcardMode.SURROUND)[0]);
+			groupId,
+			_customSQL.keywords(name, false, WildcardMode.SURROUND)[0]);
 	}
 
 	@Override

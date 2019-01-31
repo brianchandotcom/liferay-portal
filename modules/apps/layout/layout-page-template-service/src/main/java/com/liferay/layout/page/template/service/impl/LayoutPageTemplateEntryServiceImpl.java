@@ -348,14 +348,14 @@ public class LayoutPageTemplateEntryServiceImpl
 		if (status == WorkflowConstants.STATUS_ANY) {
 			return layoutPageTemplateEntryPersistence.filterFindByG_C_C_LikeN_T(
 				groupId, classNameId, classTypeId,
-				_customSQL.keywords(name, WildcardMode.SURROUND)[0], type,
-				start, end, orderByComparator);
+				_customSQL.keywords(name, false, WildcardMode.SURROUND)[0],
+				type, start, end, orderByComparator);
 		}
 
 		return layoutPageTemplateEntryPersistence.filterFindByG_C_C_LikeN_T_S(
 			groupId, classNameId, classTypeId,
-			_customSQL.keywords(name, WildcardMode.SURROUND)[0], type, status,
-			start, end, orderByComparator);
+			_customSQL.keywords(name, false, WildcardMode.SURROUND)[0], type,
+			status, start, end, orderByComparator);
 	}
 
 	@Override
@@ -378,14 +378,14 @@ public class LayoutPageTemplateEntryServiceImpl
 		if (status == WorkflowConstants.STATUS_ANY) {
 			return layoutPageTemplateEntryPersistence.filterFindByG_L_LikeN(
 				groupId, layoutPageTemplateCollectionId,
-				_customSQL.keywords(name, WildcardMode.SURROUND)[0], start, end,
-				orderByComparator);
+				_customSQL.keywords(name, false, WildcardMode.SURROUND)[0],
+				start, end, orderByComparator);
 		}
 
 		return layoutPageTemplateEntryPersistence.filterFindByG_L_LikeN_S(
 			groupId, layoutPageTemplateCollectionId,
-			_customSQL.keywords(name, WildcardMode.SURROUND)[0], status, start,
-			end, orderByComparator);
+			_customSQL.keywords(name, false, WildcardMode.SURROUND)[0], status,
+			start, end, orderByComparator);
 	}
 
 	@Override
@@ -406,13 +406,14 @@ public class LayoutPageTemplateEntryServiceImpl
 
 		if (status == WorkflowConstants.STATUS_ANY) {
 			return layoutPageTemplateEntryPersistence.filterFindByG_T_LikeN(
-				groupId, _customSQL.keywords(name, WildcardMode.SURROUND)[0],
+				groupId,
+				_customSQL.keywords(name, false, WildcardMode.SURROUND)[0],
 				type, start, end, orderByComparator);
 		}
 
 		return layoutPageTemplateEntryPersistence.filterFindByG_T_LikeN_S(
-			groupId, _customSQL.keywords(name, WildcardMode.SURROUND)[0], type,
-			status, start, end, orderByComparator);
+			groupId, _customSQL.keywords(name, false, WildcardMode.SURROUND)[0],
+			type, status, start, end, orderByComparator);
 	}
 
 	@Override
@@ -517,12 +518,14 @@ public class LayoutPageTemplateEntryServiceImpl
 			return layoutPageTemplateEntryPersistence.
 				filterCountByG_C_C_LikeN_T(
 					groupId, classNameId, classTypeId,
-					_customSQL.keywords(name, WildcardMode.SURROUND)[0], type);
+					_customSQL.keywords(name, false, WildcardMode.SURROUND)[0],
+					type);
 		}
 
 		return layoutPageTemplateEntryPersistence.filterCountByG_C_C_LikeN_T_S(
 			groupId, classNameId, classTypeId,
-			_customSQL.keywords(name, WildcardMode.SURROUND)[0], type, status);
+			_customSQL.keywords(name, false, WildcardMode.SURROUND)[0], type,
+			status);
 	}
 
 	@Override
@@ -542,12 +545,12 @@ public class LayoutPageTemplateEntryServiceImpl
 		if (status == WorkflowConstants.STATUS_ANY) {
 			return layoutPageTemplateEntryPersistence.filterCountByG_L_LikeN(
 				groupId, layoutPageTemplateFolderId,
-				_customSQL.keywords(name, WildcardMode.SURROUND)[0]);
+				_customSQL.keywords(name, false, WildcardMode.SURROUND)[0]);
 		}
 
 		return layoutPageTemplateEntryPersistence.filterCountByG_L_LikeN_S(
 			groupId, layoutPageTemplateFolderId,
-			_customSQL.keywords(name, WildcardMode.SURROUND)[0], status);
+			_customSQL.keywords(name, false, WildcardMode.SURROUND)[0], status);
 	}
 
 	@Override
@@ -564,13 +567,14 @@ public class LayoutPageTemplateEntryServiceImpl
 
 		if (status == WorkflowConstants.STATUS_ANY) {
 			return layoutPageTemplateEntryPersistence.filterCountByG_T_LikeN(
-				groupId, _customSQL.keywords(name, WildcardMode.SURROUND)[0],
+				groupId,
+				_customSQL.keywords(name, false, WildcardMode.SURROUND)[0],
 				type);
 		}
 
 		return layoutPageTemplateEntryPersistence.filterCountByG_T_LikeN_S(
-			groupId, _customSQL.keywords(name, WildcardMode.SURROUND)[0], type,
-			status);
+			groupId, _customSQL.keywords(name, false, WildcardMode.SURROUND)[0],
+			type, status);
 	}
 
 	@Override

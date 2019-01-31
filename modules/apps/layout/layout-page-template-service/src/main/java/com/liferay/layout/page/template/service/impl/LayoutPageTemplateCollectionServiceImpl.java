@@ -134,8 +134,8 @@ public class LayoutPageTemplateCollectionServiceImpl
 		OrderByComparator<LayoutPageTemplateCollection> orderByComparator) {
 
 		return layoutPageTemplateCollectionPersistence.filterFindByG_LikeN(
-			groupId, _customSQL.keywords(name, WildcardMode.SURROUND)[0], start,
-			end, orderByComparator);
+			groupId, _customSQL.keywords(name, false, WildcardMode.SURROUND)[0],
+			start, end, orderByComparator);
 	}
 
 	@Override
@@ -149,7 +149,8 @@ public class LayoutPageTemplateCollectionServiceImpl
 		long groupId, String name) {
 
 		return layoutPageTemplateCollectionPersistence.filterCountByG_LikeN(
-			groupId, _customSQL.keywords(name, WildcardMode.SURROUND)[0]);
+			groupId,
+			_customSQL.keywords(name, false, WildcardMode.SURROUND)[0]);
 	}
 
 	@Override

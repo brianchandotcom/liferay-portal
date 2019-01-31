@@ -19,6 +19,7 @@
 <%
 User selUser = userDisplayContext.getSelectedUser();
 List<Group> groups = userDisplayContext.getGroups();
+List<Group> inheritedSites = userDisplayContext.getInheritedSites();
 List<Organization> organizations = userDisplayContext.getOrganizations();
 Long[] organizationIds = UsersAdminUtil.getOrganizationIds(organizations);
 List<Role> roles = userDisplayContext.getRoles();
@@ -451,7 +452,7 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 		<div class="text-muted"><liferay-ui:message key="this-user-does-not-belong-to-a-site-to-which-a-site-role-can-be-assigned" /></div>
 	</c:if>
 
-	<c:if test="<%= !groups.isEmpty() %>">
+	<c:if test="<%= !groups.isEmpty() || !inheritedSites.isEmpty() %>">
 		<liferay-ui:search-container
 			compactEmptyResultsMessage="<%= true %>"
 			cssClass="lfr-search-container-site-roles"

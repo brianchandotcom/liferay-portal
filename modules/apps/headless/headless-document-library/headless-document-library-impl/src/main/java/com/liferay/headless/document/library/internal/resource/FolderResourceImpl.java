@@ -14,7 +14,6 @@
 
 package com.liferay.headless.document.library.internal.resource;
 
-import com.liferay.headless.document.library.dto.Document;
 import com.liferay.headless.document.library.dto.Folder;
 import com.liferay.headless.document.library.resource.FolderResource;
 import com.liferay.portal.vulcan.context.Pagination;
@@ -43,16 +42,8 @@ import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
 public class FolderResourceImpl implements FolderResource {
 
 	@Override
-	public Folder getDocumentsRepository(Integer id) throws Exception {
+	public Folder getDocumentsRepository(Long id) throws Exception {
 		return new Folder();
-	}
-
-	@Override
-	public Page<Document> getDocumentsRepositoryDocumentPage(
-			Long parentId, Pagination pagination)
-		throws Exception {
-
-		return new Page(Collections.emptyList(), 0);
 	}
 
 	@Override
@@ -64,11 +55,8 @@ public class FolderResourceImpl implements FolderResource {
 	}
 
 	@Override
-	public Page<Document> getFolderDocumentPage(
-			Long parentId, Pagination pagination)
-		throws Exception {
-
-		return new Page(Collections.emptyList(), 0);
+	public Folder getFolder(Long id) throws Exception {
+		return new Folder();
 	}
 
 	@Override
@@ -80,6 +68,13 @@ public class FolderResourceImpl implements FolderResource {
 	}
 
 	@Override
+	public Folder postDocumentsRepositoryFolder(Long parentId)
+		throws Exception {
+
+		return new Folder();
+	}
+
+	@Override
 	public Folder postDocumentsRepositoryFolderBatchCreate(Long parentId)
 		throws Exception {
 
@@ -87,7 +82,17 @@ public class FolderResourceImpl implements FolderResource {
 	}
 
 	@Override
+	public Folder postFolderFolder(Long parentId) throws Exception {
+		return new Folder();
+	}
+
+	@Override
 	public Folder postFolderFolderBatchCreate(Long parentId) throws Exception {
+		return new Folder();
+	}
+
+	@Override
+	public Folder putFolder(Long id) throws Exception {
 		return new Folder();
 	}
 

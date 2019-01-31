@@ -15,7 +15,6 @@
 package com.liferay.headless.document.library.internal.resource;
 
 import com.liferay.headless.document.library.dto.Document;
-import com.liferay.headless.document.library.dto.Folder;
 import com.liferay.headless.document.library.resource.DocumentResource;
 import com.liferay.portal.vulcan.context.Pagination;
 import com.liferay.portal.vulcan.dto.Page;
@@ -43,15 +42,12 @@ import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
 public class DocumentResourceImpl implements DocumentResource {
 
 	@Override
-	public Page<Document> getDocumentsRepositoryDocumentPage(
-			Long parentId, Pagination pagination)
-		throws Exception {
-
-		return new Page(Collections.emptyList(), 0);
+	public Document getDocument(Long id) throws Exception {
+		return new Document();
 	}
 
 	@Override
-	public Page<Folder> getDocumentsRepositoryFolderPage(
+	public Page<Document> getDocumentsRepositoryDocumentPage(
 			Long parentId, Pagination pagination)
 		throws Exception {
 
@@ -67,17 +63,21 @@ public class DocumentResourceImpl implements DocumentResource {
 	}
 
 	@Override
-	public Page<Folder> getFolderFolderPage(
-			Long parentId, Pagination pagination)
+	public Document postDocumentsRepositoryDocument(Long parentId)
 		throws Exception {
 
-		return new Page(Collections.emptyList(), 0);
+		return new Document();
 	}
 
 	@Override
 	public Document postDocumentsRepositoryDocumentBatchCreate(Long parentId)
 		throws Exception {
 
+		return new Document();
+	}
+
+	@Override
+	public Document postFolderDocument(Long parentId) throws Exception {
 		return new Document();
 	}
 

@@ -62,7 +62,7 @@ public class Document {
 		return _folder;
 	}
 
-	public Integer getId() {
+	public Long getId() {
 		return _id;
 	}
 
@@ -118,7 +118,7 @@ public class Document {
 		_folder = folder;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		_id = id;
 	}
 
@@ -147,7 +147,7 @@ public class Document {
 	private String _encodingFormat;
 	private String _fileExtension;
 	private Folder _folder;
-	private Integer _id;
+	private Long _id;
 	private String[] _keywords;
 	private String _self;
 	private Number _sizeInBytes;

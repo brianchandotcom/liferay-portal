@@ -14,7 +14,6 @@
 
 package com.liferay.headless.document.library.resource;
 
-import com.liferay.headless.document.library.dto.Document;
 import com.liferay.headless.document.library.dto.Folder;
 import com.liferay.oauth2.provider.scope.RequiresScope;
 import com.liferay.portal.vulcan.context.Pagination;
@@ -25,6 +24,7 @@ import javax.annotation.Generated;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -46,16 +46,7 @@ public interface FolderResource {
 	@Path("/documents-repository/{id}")
 	@Produces({"*/*"})
 	@RequiresScope("headless-document-library-application.read")
-	public Folder getDocumentsRepository(@PathParam("id") Integer id)
-		throws Exception;
-
-	@GET
-	@Path("/documents-repository/{parent-id}/document")
-	@Produces({"*/*"})
-	@RequiresScope("headless-document-library-application.read")
-	public Page<Document> getDocumentsRepositoryDocumentPage(
-			@PathParam("parent-id") Long parentId,
-			@Context Pagination pagination)
+	public Folder getDocumentsRepository(@PathParam("id") Long id)
 		throws Exception;
 
 	@GET
@@ -68,13 +59,10 @@ public interface FolderResource {
 		throws Exception;
 
 	@GET
-	@Path("/folder/{parent-id}/document")
+	@Path("/folder/{id}")
 	@Produces({"*/*"})
 	@RequiresScope("headless-document-library-application.read")
-	public Page<Document> getFolderDocumentPage(
-			@PathParam("parent-id") Long parentId,
-			@Context Pagination pagination)
-		throws Exception;
+	public Folder getFolder(@PathParam("id") Long id) throws Exception;
 
 	@GET
 	@Path("/folder/{parent-id}/folder")
@@ -83,6 +71,15 @@ public interface FolderResource {
 	public Page<Folder> getFolderFolderPage(
 			@PathParam("parent-id") Long parentId,
 			@Context Pagination pagination)
+		throws Exception;
+
+	@Consumes({"*/*"})
+	@Path("/documents-repository/{parent-id}/folder")
+	@POST
+	@Produces({"*/*"})
+	@RequiresScope("headless-document-library-application.read")
+	public Folder postDocumentsRepositoryFolder(
+			@PathParam("parent-id") Long parentId)
 		throws Exception;
 
 	@Consumes({"*/*"})
@@ -95,6 +92,14 @@ public interface FolderResource {
 		throws Exception;
 
 	@Consumes({"*/*"})
+	@Path("/folder/{parent-id}/folder")
+	@POST
+	@Produces({"*/*"})
+	@RequiresScope("headless-document-library-application.read")
+	public Folder postFolderFolder(@PathParam("parent-id") Long parentId)
+		throws Exception;
+
+	@Consumes({"*/*"})
 	@Path("/folder/{parent-id}/folder/batch-create")
 	@POST
 	@Produces({"*/*"})
@@ -102,5 +107,12 @@ public interface FolderResource {
 	public Folder postFolderFolderBatchCreate(
 			@PathParam("parent-id") Long parentId)
 		throws Exception;
+
+	@Consumes({"*/*"})
+	@Path("/folder/{id}")
+	@Produces({"*/*"})
+	@PUT
+	@RequiresScope("headless-document-library-application.read")
+	public Folder putFolder(@PathParam("id") Long id) throws Exception;
 
 }

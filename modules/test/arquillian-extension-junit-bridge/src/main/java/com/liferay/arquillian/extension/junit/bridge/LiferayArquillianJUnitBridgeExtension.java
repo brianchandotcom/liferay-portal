@@ -27,7 +27,6 @@ import java.net.URL;
 import org.jboss.arquillian.container.impl.client.ContainerDeploymentContextHandler;
 import org.jboss.arquillian.container.impl.client.container.ContainerDeployController;
 import org.jboss.arquillian.container.impl.client.container.ContainerLifecycleController;
-import org.jboss.arquillian.container.impl.client.deployment.ArchiveDeploymentExporter;
 import org.jboss.arquillian.container.impl.context.ContainerContextImpl;
 import org.jboss.arquillian.container.impl.context.DeploymentContextImpl;
 import org.jboss.arquillian.container.spi.client.container.DeployableContainer;
@@ -50,7 +49,6 @@ public class LiferayArquillianJUnitBridgeExtension
 		if (url == null) {
 			extensionBuilder.context(ContainerContextImpl.class);
 			extensionBuilder.context(DeploymentContextImpl.class);
-			extensionBuilder.observer(ArchiveDeploymentExporter.class);
 			extensionBuilder.observer(ConfigurationRegistrar.class);
 			extensionBuilder.observer(ContainerDeployController.class);
 			extensionBuilder.observer(ContainerDeploymentContextHandler.class);

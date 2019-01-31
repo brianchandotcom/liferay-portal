@@ -279,8 +279,9 @@ public class CTCollectionLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.change.tracking.model.CTCollection> getCTCollections(
-		long companyId) {
-		return getService().getCTCollections(companyId);
+		long companyId,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.change.tracking.model.CTCollection> queryDefinition) {
+		return getService().getCTCollections(companyId, queryDefinition);
 	}
 
 	/**

@@ -44,7 +44,7 @@ public class DLFileVersionTable {
 		{"extension", Types.VARCHAR},
 		{"mimeType", Types.VARCHAR},
 		{"title", Types.VARCHAR},
-		{"description", Types.VARCHAR},
+		{"description_", Types.VARCHAR},
 		{"changeLog", Types.VARCHAR},
 		{"extraSettings", Types.CLOB},
 		{"fileEntryTypeId", Types.BIGINT},
@@ -93,7 +93,7 @@ TABLE_COLUMNS_MAP.put("mimeType", Types.VARCHAR);
 
 TABLE_COLUMNS_MAP.put("title", Types.VARCHAR);
 
-TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
+TABLE_COLUMNS_MAP.put("description_", Types.VARCHAR);
 
 TABLE_COLUMNS_MAP.put("changeLog", Types.VARCHAR);
 
@@ -118,7 +118,7 @@ TABLE_COLUMNS_MAP.put("statusByUserName", Types.VARCHAR);
 TABLE_COLUMNS_MAP.put("statusDate", Types.TIMESTAMP);
 
 }
-	public static final String TABLE_SQL_CREATE = "create table DLFileVersion (uuid_ VARCHAR(75) null,fileVersionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,repositoryId LONG,folderId LONG,fileEntryId LONG,treePath STRING null,fileName VARCHAR(255) null,extension VARCHAR(75) null,mimeType VARCHAR(75) null,title VARCHAR(255) null,description STRING null,changeLog VARCHAR(75) null,extraSettings TEXT null,fileEntryTypeId LONG,version VARCHAR(75) null,size_ LONG,checksum VARCHAR(75) null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table DLFileVersion (uuid_ VARCHAR(75) null,fileVersionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,repositoryId LONG,folderId LONG,fileEntryId LONG,treePath STRING null,fileName VARCHAR(255) null,extension VARCHAR(75) null,mimeType VARCHAR(75) null,title VARCHAR(255) null,description_ STRING null,changeLog VARCHAR(75) null,extraSettings TEXT null,fileEntryTypeId LONG,version VARCHAR(75) null,size_ LONG,checksum VARCHAR(75) null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table DLFileVersion";
 

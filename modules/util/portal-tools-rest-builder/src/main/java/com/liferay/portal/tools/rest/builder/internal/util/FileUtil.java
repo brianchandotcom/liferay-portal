@@ -31,6 +31,22 @@ import java.util.Collections;
  */
 public class FileUtil {
 
+	public static String format(File file) throws Exception {
+		SourceFormatterArgs sourceFormatterArgs = new SourceFormatterArgs();
+
+		sourceFormatterArgs.setFileNames(
+			Collections.singletonList(file.getCanonicalPath()));
+		sourceFormatterArgs.setIncludeGeneratedFiles(true);
+		sourceFormatterArgs.setPrintErrors(false);
+
+		SourceFormatter sourceFormatter = new SourceFormatter(
+			sourceFormatterArgs);
+
+		sourceFormatter.format();
+
+		return read(file);
+	}
+
 	public static String read(File file) throws IOException {
 		String s = new String(
 			Files.readAllBytes(file.toPath()), StandardCharsets.UTF_8);
@@ -51,27 +67,11 @@ public class FileUtil {
 
 		Files.write(file.toPath(), content.getBytes(StandardCharsets.UTF_8));
 
-		String newContent = _format(file);
+		String newContent = format(file);
 
 		if (!oldContent.equals(newContent)) {
 			System.out.println("Writing " + file.getCanonicalPath());
 		}
-	}
-
-	private static String _format(File file) throws Exception {
-		SourceFormatterArgs sourceFormatterArgs = new SourceFormatterArgs();
-
-		sourceFormatterArgs.setFileNames(
-			Collections.singletonList(file.getCanonicalPath()));
-		sourceFormatterArgs.setIncludeGeneratedFiles(true);
-		sourceFormatterArgs.setPrintErrors(false);
-
-		SourceFormatter sourceFormatter = new SourceFormatter(
-			sourceFormatterArgs);
-
-		sourceFormatter.format();
-
-		return read(file);
 	}
 
 }

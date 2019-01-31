@@ -24,6 +24,7 @@ import javax.annotation.Generated;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -50,6 +51,21 @@ public interface KeywordResource {
 			@Context Pagination pagination)
 		throws Exception;
 
+	@GET
+	@Path("/keywords/{id}")
+	@Produces({"*/*"})
+	@RequiresScope("headless-foundation-application.read")
+	public Keyword getKeyword(@PathParam("id") Integer id) throws Exception;
+
+	@Consumes({"*/*"})
+	@Path("/content-space/{parent-id}/keywords")
+	@POST
+	@Produces({"*/*"})
+	@RequiresScope("headless-foundation-application.read")
+	public Keyword postContentSpaceKeyword(
+			@PathParam("parent-id") Integer parentId)
+		throws Exception;
+
 	@Consumes({"*/*"})
 	@Path("/content-space/{parent-id}/keywords/batch-create")
 	@POST
@@ -58,5 +74,12 @@ public interface KeywordResource {
 	public Keyword postContentSpaceKeywordsBatchCreate(
 			@PathParam("parent-id") Integer parentId)
 		throws Exception;
+
+	@Consumes({"*/*"})
+	@Path("/keywords/{id}")
+	@Produces({"*/*"})
+	@PUT
+	@RequiresScope("headless-foundation-application.read")
+	public Keyword putKeyword(@PathParam("id") Integer id) throws Exception;
 
 }

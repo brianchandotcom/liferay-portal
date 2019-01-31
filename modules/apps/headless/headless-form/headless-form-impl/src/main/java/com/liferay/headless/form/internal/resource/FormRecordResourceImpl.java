@@ -55,8 +55,22 @@ public class FormRecordResourceImpl implements FormRecordResource {
 	}
 
 	@Override
+	public FormRecord postFormFormRecord(Integer parentId, String acceptlocale)
+		throws Exception {
+
+		return new FormRecord();
+	}
+
+	@Override
 	public FormRecord postFormFormRecordBatchCreate(
 			Integer parentId, String acceptlocale)
+		throws Exception {
+
+		return new FormRecord();
+	}
+
+	@Override
+	public FormRecord putFormRecord(Integer id, String acceptlocale)
 		throws Exception {
 
 		return new FormRecord();

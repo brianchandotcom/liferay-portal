@@ -50,9 +50,24 @@ public class KeywordResourceImpl implements KeywordResource {
 	}
 
 	@Override
+	public Keyword getKeyword(Integer id) throws Exception {
+		return new Keyword();
+	}
+
+	@Override
+	public Keyword postContentSpaceKeyword(Integer parentId) throws Exception {
+		return new Keyword();
+	}
+
+	@Override
 	public Keyword postContentSpaceKeywordsBatchCreate(Integer parentId)
 		throws Exception {
 
+		return new Keyword();
+	}
+
+	@Override
+	public Keyword putKeyword(Integer id) throws Exception {
 		return new Keyword();
 	}
 

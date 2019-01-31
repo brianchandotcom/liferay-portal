@@ -42,6 +42,12 @@ import javax.ws.rs.core.Context;
 public interface DocumentResource {
 
 	@GET
+	@Path("/document/{id}")
+	@Produces({"*/*"})
+	@RequiresScope("headless-document-library-application.read")
+	public Document getDocument(@PathParam("id") Integer id) throws Exception;
+
+	@GET
 	@Path("/documents-repository/{parent-id}/document")
 	@Produces({"*/*"})
 	@RequiresScope("headless-document-library-application.read")
@@ -60,12 +66,29 @@ public interface DocumentResource {
 		throws Exception;
 
 	@Consumes({"*/*"})
+	@Path("/documents-repository/{parent-id}/document")
+	@POST
+	@Produces({"*/*"})
+	@RequiresScope("headless-document-library-application.read")
+	public Document postDocumentsRepositoryDocument(
+			@PathParam("parent-id") Long parentId)
+		throws Exception;
+
+	@Consumes({"*/*"})
 	@Path("/documents-repository/{parent-id}/document/batch-create")
 	@POST
 	@Produces({"*/*"})
 	@RequiresScope("headless-document-library-application.write")
 	public Document postDocumentsRepositoryDocumentBatchCreate(
 			@PathParam("parent-id") Long parentId)
+		throws Exception;
+
+	@Consumes({"*/*"})
+	@Path("/folder/{parent-id}/document")
+	@POST
+	@Produces({"*/*"})
+	@RequiresScope("headless-document-library-application.read")
+	public Document postFolderDocument(@PathParam("parent-id") Long parentId)
 		throws Exception;
 
 	@Consumes({"*/*"})

@@ -42,6 +42,11 @@ import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
 public class CategoryResourceImpl implements CategoryResource {
 
 	@Override
+	public Category getCategories(Integer id) throws Exception {
+		return new Category();
+	}
+
+	@Override
 	public Page<Category> getCategoriesCategoriesPage(
 			Integer parentId, Pagination pagination)
 		throws Exception {
@@ -58,7 +63,21 @@ public class CategoryResourceImpl implements CategoryResource {
 	}
 
 	@Override
+	public Category postCategoriesCategories(Integer parentId)
+		throws Exception {
+
+		return new Category();
+	}
+
+	@Override
 	public Category postCategoriesCategoriesBatchCreate(Integer parentId)
+		throws Exception {
+
+		return new Category();
+	}
+
+	@Override
+	public Category postVocabulariesCategories(Integer parentId)
 		throws Exception {
 
 		return new Category();
@@ -68,6 +87,11 @@ public class CategoryResourceImpl implements CategoryResource {
 	public Category postVocabulariesCategoriesBatchCreate(Integer parentId)
 		throws Exception {
 
+		return new Category();
+	}
+
+	@Override
+	public Category putCategories(Integer id) throws Exception {
 		return new Category();
 	}
 

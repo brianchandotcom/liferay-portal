@@ -62,6 +62,11 @@ public class UserAccountResourceImpl implements UserAccountResource {
 	}
 
 	@Override
+	public UserAccount getUserAccount(Integer id) throws Exception {
+		return new UserAccount();
+	}
+
+	@Override
 	public Page<UserAccount> getUserAccountPage(
 			String fullnamequery, Pagination pagination)
 		throws Exception {
@@ -78,7 +83,17 @@ public class UserAccountResourceImpl implements UserAccountResource {
 	}
 
 	@Override
+	public UserAccount postUserAccount() throws Exception {
+		return new UserAccount();
+	}
+
+	@Override
 	public UserAccount postUserAccountBatchCreate() throws Exception {
+		return new UserAccount();
+	}
+
+	@Override
+	public UserAccount putUserAccount(Integer id) throws Exception {
 		return new UserAccount();
 	}
 

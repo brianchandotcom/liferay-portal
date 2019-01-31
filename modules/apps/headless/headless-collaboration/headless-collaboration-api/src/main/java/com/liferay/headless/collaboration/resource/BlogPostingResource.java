@@ -24,6 +24,7 @@ import javax.annotation.Generated;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -42,6 +43,13 @@ import javax.ws.rs.core.Context;
 public interface BlogPostingResource {
 
 	@GET
+	@Path("/blog-posting/{id}")
+	@Produces({"*/*"})
+	@RequiresScope("headless-collaboration-application.read")
+	public BlogPosting getBlogPosting(@PathParam("id") Integer id)
+		throws Exception;
+
+	@GET
 	@Path("/content-space/{parent-id}/blog-posting")
 	@Produces({"*/*"})
 	@RequiresScope("headless-collaboration-application.read")
@@ -51,12 +59,29 @@ public interface BlogPostingResource {
 		throws Exception;
 
 	@Consumes({"*/*"})
+	@Path("/content-space/{parent-id}/blog-posting")
+	@POST
+	@Produces({"*/*"})
+	@RequiresScope("headless-collaboration-application.read")
+	public BlogPosting postContentSpaceBlogPosting(
+			@PathParam("parent-id") Integer parentId)
+		throws Exception;
+
+	@Consumes({"*/*"})
 	@Path("/content-space/{parent-id}/blog-posting/batch-create")
 	@POST
 	@Produces({"*/*"})
 	@RequiresScope("headless-collaboration-application.write")
 	public BlogPosting postContentSpaceBlogPostingBatchCreate(
 			@PathParam("parent-id") Integer parentId)
+		throws Exception;
+
+	@Consumes({"*/*"})
+	@Path("/blog-posting/{id}")
+	@Produces({"*/*"})
+	@PUT
+	@RequiresScope("headless-collaboration-application.read")
+	public BlogPosting putBlogPosting(@PathParam("id") Integer id)
 		throws Exception;
 
 }

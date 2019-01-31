@@ -14,6 +14,7 @@
 
 package com.liferay.headless.web.experience.internal.resource;
 
+import com.liferay.headless.web.experience.dto.ContentDocument;
 import com.liferay.headless.web.experience.resource.ContentDocumentResource;
 
 import javax.annotation.Generated;
@@ -35,4 +36,10 @@ import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
 )
 @Generated("")
 public class ContentDocumentResourceImpl implements ContentDocumentResource {
+
+	@Override
+	public ContentDocument getContentDocument(Integer id) throws Exception {
+		return new ContentDocument();
+	}
+
 }

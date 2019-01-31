@@ -14,9 +14,15 @@
 
 package com.liferay.headless.form.resource;
 
+import com.liferay.headless.form.dto.FormDocument;
+import com.liferay.oauth2.provider.scope.RequiresScope;
+
 import javax.annotation.Generated;
 
+import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 
 /**
  * To access this resource, run:
@@ -29,4 +35,12 @@ import javax.ws.rs.Path;
 @Generated("")
 @Path("/1.0.0")
 public interface FormDocumentResource {
+
+	@GET
+	@Path("/form-document/{id}")
+	@Produces({"*/*"})
+	@RequiresScope("headless-form-application.read")
+	public FormDocument getFormDocument(@PathParam("id") Integer id)
+		throws Exception;
+
 }

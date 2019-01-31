@@ -24,6 +24,7 @@ import javax.annotation.Generated;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -40,6 +41,12 @@ import javax.ws.rs.core.Context;
 @Generated("")
 @Path("/1.0.0")
 public interface CategoryResource {
+
+	@GET
+	@Path("/categories/{id}")
+	@Produces({"*/*"})
+	@RequiresScope("headless-foundation-application.read")
+	public Category getCategories(@PathParam("id") Integer id) throws Exception;
 
 	@GET
 	@Path("/categories/{parent-id}/categories")
@@ -60,11 +67,29 @@ public interface CategoryResource {
 		throws Exception;
 
 	@Consumes({"*/*"})
+	@Path("/categories/{parent-id}/categories")
+	@POST
+	@Produces({"*/*"})
+	@RequiresScope("headless-foundation-application.read")
+	public Category postCategoriesCategories(
+			@PathParam("parent-id") Integer parentId)
+		throws Exception;
+
+	@Consumes({"*/*"})
 	@Path("/categories/{parent-id}/categories/batch-create")
 	@POST
 	@Produces({"*/*"})
 	@RequiresScope("headless-foundation-application.write")
 	public Category postCategoriesCategoriesBatchCreate(
+			@PathParam("parent-id") Integer parentId)
+		throws Exception;
+
+	@Consumes({"*/*"})
+	@Path("/vocabularies/{parent-id}/categories")
+	@POST
+	@Produces({"*/*"})
+	@RequiresScope("headless-foundation-application.read")
+	public Category postVocabulariesCategories(
 			@PathParam("parent-id") Integer parentId)
 		throws Exception;
 
@@ -76,5 +101,12 @@ public interface CategoryResource {
 	public Category postVocabulariesCategoriesBatchCreate(
 			@PathParam("parent-id") Integer parentId)
 		throws Exception;
+
+	@Consumes({"*/*"})
+	@Path("/categories/{id}")
+	@Produces({"*/*"})
+	@PUT
+	@RequiresScope("headless-foundation-application.read")
+	public Category putCategories(@PathParam("id") Integer id) throws Exception;
 
 }

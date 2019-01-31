@@ -55,11 +55,23 @@ public class FolderResourceImpl implements FolderResource {
 	}
 
 	@Override
+	public Folder getFolder(Integer id) throws Exception {
+		return new Folder();
+	}
+
+	@Override
 	public Page<Folder> getFolderFolderPage(
 			Long parentId, Pagination pagination)
 		throws Exception {
 
 		return new Page(Collections.emptyList(), 0);
+	}
+
+	@Override
+	public Folder postDocumentsRepositoryFolder(Long parentId)
+		throws Exception {
+
+		return new Folder();
 	}
 
 	@Override
@@ -70,7 +82,17 @@ public class FolderResourceImpl implements FolderResource {
 	}
 
 	@Override
+	public Folder postFolderFolder(Long parentId) throws Exception {
+		return new Folder();
+	}
+
+	@Override
 	public Folder postFolderFolderBatchCreate(Long parentId) throws Exception {
+		return new Folder();
+	}
+
+	@Override
+	public Folder putFolder(Integer id) throws Exception {
 		return new Folder();
 	}
 

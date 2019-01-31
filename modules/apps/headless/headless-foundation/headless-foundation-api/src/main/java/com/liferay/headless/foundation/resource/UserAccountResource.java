@@ -24,6 +24,7 @@ import javax.annotation.Generated;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -67,6 +68,13 @@ public interface UserAccountResource {
 		throws Exception;
 
 	@GET
+	@Path("/user-account/{id}")
+	@Produces({"*/*"})
+	@RequiresScope("headless-foundation-application.read")
+	public UserAccount getUserAccount(@PathParam("id") Integer id)
+		throws Exception;
+
+	@GET
 	@Path("/user-account")
 	@Produces({"*/*"})
 	@RequiresScope("headless-foundation-application.read")
@@ -85,10 +93,25 @@ public interface UserAccountResource {
 		throws Exception;
 
 	@Consumes({"*/*"})
+	@Path("/user-account")
+	@POST
+	@Produces({"*/*"})
+	@RequiresScope("headless-foundation-application.read")
+	public UserAccount postUserAccount() throws Exception;
+
+	@Consumes({"*/*"})
 	@Path("/user-account/batch-create")
 	@POST
 	@Produces({"*/*"})
 	@RequiresScope("headless-foundation-application.write")
 	public UserAccount postUserAccountBatchCreate() throws Exception;
+
+	@Consumes({"*/*"})
+	@Path("/user-account/{id}")
+	@Produces({"*/*"})
+	@PUT
+	@RequiresScope("headless-foundation-application.read")
+	public UserAccount putUserAccount(@PathParam("id") Integer id)
+		throws Exception;
 
 }

@@ -25,6 +25,7 @@ import javax.annotation.Generated;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -55,6 +56,24 @@ public interface StructuredContentResource {
 			@Context Pagination pagination)
 		throws Exception;
 
+	@GET
+	@Path("/structured-contents/{id}")
+	@Produces({"*/*"})
+	@RequiresScope("headless-web-experience-application.read")
+	public StructuredContent getStructuredContent(
+			@PathParam("id") Integer id, @Context AcceptLanguage acceptLanguage)
+		throws Exception;
+
+	@Consumes({"*/*"})
+	@Path("/content-space/{parent-id}/structured-contents")
+	@POST
+	@Produces({"*/*"})
+	@RequiresScope("headless-web-experience-application.read")
+	public StructuredContent postContentSpaceStructuredContent(
+			@PathParam("parent-id") Integer parentId,
+			@Context AcceptLanguage acceptLanguage)
+		throws Exception;
+
 	@Consumes({"*/*"})
 	@Path("/content-space/{parent-id}/structured-contents/batch-create")
 	@POST
@@ -63,6 +82,15 @@ public interface StructuredContentResource {
 	public StructuredContent postContentSpaceStructuredContentsBatchCreate(
 			@PathParam("parent-id") Integer parentId,
 			@Context AcceptLanguage acceptLanguage)
+		throws Exception;
+
+	@Consumes({"*/*"})
+	@Path("/structured-contents/{id}")
+	@Produces({"*/*"})
+	@PUT
+	@RequiresScope("headless-web-experience-application.read")
+	public StructuredContent putStructuredContent(
+			@PathParam("id") Integer id, @Context AcceptLanguage acceptLanguage)
 		throws Exception;
 
 }

@@ -24,6 +24,7 @@ import javax.annotation.Generated;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -59,12 +60,32 @@ public interface FormRecordResource {
 		throws Exception;
 
 	@Consumes({"*/*"})
+	@Path("/form/{parent-id}/form-record")
+	@POST
+	@Produces({"*/*"})
+	@RequiresScope("headless-form-application.read")
+	public FormRecord postFormFormRecord(
+			@PathParam("parent-id") Integer parentId,
+			@QueryParam("acceptlocale") String acceptlocale)
+		throws Exception;
+
+	@Consumes({"*/*"})
 	@Path("/form/{parent-id}/form-record/batch-create")
 	@POST
 	@Produces({"*/*"})
 	@RequiresScope("headless-form-application.write")
 	public FormRecord postFormFormRecordBatchCreate(
 			@PathParam("parent-id") Integer parentId,
+			@QueryParam("acceptlocale") String acceptlocale)
+		throws Exception;
+
+	@Consumes({"*/*"})
+	@Path("/form-record/{id}")
+	@Produces({"*/*"})
+	@PUT
+	@RequiresScope("headless-form-application.read")
+	public FormRecord putFormRecord(
+			@PathParam("id") Integer id,
 			@QueryParam("acceptlocale") String acceptlocale)
 		throws Exception;
 

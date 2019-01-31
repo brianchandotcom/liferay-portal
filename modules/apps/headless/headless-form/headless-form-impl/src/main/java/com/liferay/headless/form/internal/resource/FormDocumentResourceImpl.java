@@ -14,6 +14,7 @@
 
 package com.liferay.headless.form.internal.resource;
 
+import com.liferay.headless.form.dto.FormDocument;
 import com.liferay.headless.form.resource.FormDocumentResource;
 
 import javax.annotation.Generated;
@@ -35,4 +36,10 @@ import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
 )
 @Generated("")
 public class FormDocumentResourceImpl implements FormDocumentResource {
+
+	@Override
+	public FormDocument getFormDocument(Integer id) throws Exception {
+		return new FormDocument();
+	}
+
 }

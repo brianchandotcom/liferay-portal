@@ -50,9 +50,26 @@ public class VocabularyResourceImpl implements VocabularyResource {
 	}
 
 	@Override
+	public Vocabulary getVocabularies(Integer id) throws Exception {
+		return new Vocabulary();
+	}
+
+	@Override
+	public Vocabulary postContentSpaceVocabularies(Integer parentId)
+		throws Exception {
+
+		return new Vocabulary();
+	}
+
+	@Override
 	public Vocabulary postContentSpaceVocabulariesBatchCreate(Integer parentId)
 		throws Exception {
 
+		return new Vocabulary();
+	}
+
+	@Override
+	public Vocabulary putVocabularies(Integer id) throws Exception {
 		return new Vocabulary();
 	}
 

@@ -21,7 +21,9 @@ import com.liferay.portal.vulcan.dto.Page;
 
 import javax.annotation.Generated;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -40,12 +42,27 @@ import javax.ws.rs.core.Context;
 public interface ImageObjectResource {
 
 	@GET
+	@Path("/image-object/{id}")
+	@Produces({"*/*"})
+	@RequiresScope("headless-collaboration-application.read")
+	public ImageObject getImageObject(@PathParam("id") Integer id)
+		throws Exception;
+
+	@GET
 	@Path("/image-object-repository/{parent-id}/image-object")
 	@Produces({"*/*"})
 	@RequiresScope("headless-collaboration-application.read")
 	public Page<ImageObject> getImageObjectRepositoryImageObjectPage(
 			@PathParam("parent-id") Integer parentId,
 			@Context Pagination pagination)
+		throws Exception;
+
+	@Consumes({"*/*"})
+	@Path("/image-object-repository/{parent-id}/image-object")
+	@POST
+	@Produces({"*/*"})
+	@RequiresScope("headless-collaboration-application.read")
+	public ImageObject postImageObjectRepositoryImageObject(parentId)
 		throws Exception;
 
 }

@@ -42,6 +42,11 @@ import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
 public class BlogPostingResourceImpl implements BlogPostingResource {
 
 	@Override
+	public BlogPosting getBlogPosting(Integer id) throws Exception {
+		return new BlogPosting();
+	}
+
+	@Override
 	public Page<BlogPosting> getContentSpaceBlogPostingPage(
 			Integer parentId, Pagination pagination)
 		throws Exception {
@@ -50,9 +55,21 @@ public class BlogPostingResourceImpl implements BlogPostingResource {
 	}
 
 	@Override
+	public BlogPosting postContentSpaceBlogPosting(Integer parentId)
+		throws Exception {
+
+		return new BlogPosting();
+	}
+
+	@Override
 	public BlogPosting postContentSpaceBlogPostingBatchCreate(Integer parentId)
 		throws Exception {
 
+		return new BlogPosting();
+	}
+
+	@Override
+	public BlogPosting putBlogPosting(Integer id) throws Exception {
 		return new BlogPosting();
 	}
 

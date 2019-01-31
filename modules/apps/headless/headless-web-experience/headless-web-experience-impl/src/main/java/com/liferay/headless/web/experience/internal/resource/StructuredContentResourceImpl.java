@@ -53,8 +53,32 @@ public class StructuredContentResourceImpl
 	}
 
 	@Override
+	public StructuredContent getStructuredContent(
+			Integer id, AcceptLanguage acceptLanguage)
+		throws Exception {
+
+		return new StructuredContent();
+	}
+
+	@Override
+	public StructuredContent postContentSpaceStructuredContent(
+			Integer parentId, AcceptLanguage acceptLanguage)
+		throws Exception {
+
+		return new StructuredContent();
+	}
+
+	@Override
 	public StructuredContent postContentSpaceStructuredContentsBatchCreate(
 			Integer parentId, AcceptLanguage acceptLanguage)
+		throws Exception {
+
+		return new StructuredContent();
+	}
+
+	@Override
+	public StructuredContent putStructuredContent(
+			Integer id, AcceptLanguage acceptLanguage)
 		throws Exception {
 
 		return new StructuredContent();

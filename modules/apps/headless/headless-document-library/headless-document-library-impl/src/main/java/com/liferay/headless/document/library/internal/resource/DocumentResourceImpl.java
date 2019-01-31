@@ -42,6 +42,11 @@ import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
 public class DocumentResourceImpl implements DocumentResource {
 
 	@Override
+	public Document getDocument(Integer id) throws Exception {
+		return new Document();
+	}
+
+	@Override
 	public Page<Document> getDocumentsRepositoryDocumentPage(
 			Long parentId, Pagination pagination)
 		throws Exception {
@@ -58,9 +63,21 @@ public class DocumentResourceImpl implements DocumentResource {
 	}
 
 	@Override
+	public Document postDocumentsRepositoryDocument(Long parentId)
+		throws Exception {
+
+		return new Document();
+	}
+
+	@Override
 	public Document postDocumentsRepositoryDocumentBatchCreate(Long parentId)
 		throws Exception {
 
+		return new Document();
+	}
+
+	@Override
+	public Document postFolderDocument(Long parentId) throws Exception {
 		return new Document();
 	}
 

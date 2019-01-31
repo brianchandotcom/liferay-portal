@@ -24,6 +24,7 @@ import javax.annotation.Generated;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -50,6 +51,22 @@ public interface VocabularyResource {
 			@Context Pagination pagination)
 		throws Exception;
 
+	@GET
+	@Path("/vocabularies/{id}")
+	@Produces({"*/*"})
+	@RequiresScope("headless-foundation-application.read")
+	public Vocabulary getVocabularies(@PathParam("id") Integer id)
+		throws Exception;
+
+	@Consumes({"*/*"})
+	@Path("/content-space/{parent-id}/vocabularies")
+	@POST
+	@Produces({"*/*"})
+	@RequiresScope("headless-foundation-application.read")
+	public Vocabulary postContentSpaceVocabularies(
+			@PathParam("parent-id") Integer parentId)
+		throws Exception;
+
 	@Consumes({"*/*"})
 	@Path("/content-space/{parent-id}/vocabularies/batch-create")
 	@POST
@@ -57,6 +74,14 @@ public interface VocabularyResource {
 	@RequiresScope("headless-foundation-application.write")
 	public Vocabulary postContentSpaceVocabulariesBatchCreate(
 			@PathParam("parent-id") Integer parentId)
+		throws Exception;
+
+	@Consumes({"*/*"})
+	@Path("/vocabularies/{id}")
+	@Produces({"*/*"})
+	@PUT
+	@RequiresScope("headless-foundation-application.read")
+	public Vocabulary putVocabularies(@PathParam("id") Integer id)
 		throws Exception;
 
 }

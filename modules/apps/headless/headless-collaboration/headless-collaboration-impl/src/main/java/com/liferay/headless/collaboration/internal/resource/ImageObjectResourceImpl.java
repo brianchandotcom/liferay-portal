@@ -42,11 +42,23 @@ import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
 public class ImageObjectResourceImpl implements ImageObjectResource {
 
 	@Override
+	public ImageObject getImageObject(Integer id) throws Exception {
+		return new ImageObject();
+	}
+
+	@Override
 	public Page<ImageObject> getImageObjectRepositoryImageObjectPage(
 			Integer parentId, Pagination pagination)
 		throws Exception {
 
 		return new Page(Collections.emptyList(), 0);
+	}
+
+	@Override
+	public ImageObject postImageObjectRepositoryImageObject(parentId)
+		throws Exception {
+
+		return new ImageObject();
 	}
 
 }

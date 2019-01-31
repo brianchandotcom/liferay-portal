@@ -36,7 +36,6 @@ import com.liferay.layout.content.page.editor.constants.ContentPageEditorWebKeys
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.editor.configuration.EditorConfiguration;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -806,8 +805,7 @@ public class ContentPageEditorDisplayContext {
 			SoyContextFactoryUtil.createSoyContext();
 
 		List<SegmentsEntry> segmentsEntries =
-			SegmentsEntryServiceUtil.getSegmentsEntries(
-				_getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+			SegmentsEntryServiceUtil.getSegmentsEntries(_getGroupId());
 
 		for (SegmentsEntry segmentsEntry : segmentsEntries) {
 			SoyContext segmentsSoyContext =

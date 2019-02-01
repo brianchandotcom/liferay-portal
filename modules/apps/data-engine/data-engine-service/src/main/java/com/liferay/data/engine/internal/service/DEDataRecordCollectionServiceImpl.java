@@ -50,6 +50,7 @@ import com.liferay.data.engine.service.DEDataRecordCollectionService;
 import com.liferay.dynamic.data.lists.exception.NoSuchRecordSetException;
 import com.liferay.dynamic.data.lists.service.DDLRecordLocalService;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMStorageLinkLocalService;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -458,7 +459,8 @@ public class DEDataRecordCollectionServiceImpl
 		if (_deDataRecordCollectionSaveRecordRequestExecutor == null) {
 			_deDataRecordCollectionSaveRecordRequestExecutor =
 				new DEDataRecordCollectionSaveRecordRequestExecutor(
-					deDataStorageTracker, ddlRecordLocalService);
+					deDataStorageTracker, ddlRecordLocalService,
+					ddmStorageLinkLocalService, portal);
 		}
 
 		return _deDataRecordCollectionSaveRecordRequestExecutor;
@@ -493,6 +495,9 @@ public class DEDataRecordCollectionServiceImpl
 
 	@Reference
 	protected DDLRecordSetLocalService ddlRecordSetLocalService;
+
+	@Reference
+	protected DDMStorageLinkLocalService ddmStorageLinkLocalService;
 
 	@Reference
 	protected DEDataDefinitionFieldsDeserializerTracker

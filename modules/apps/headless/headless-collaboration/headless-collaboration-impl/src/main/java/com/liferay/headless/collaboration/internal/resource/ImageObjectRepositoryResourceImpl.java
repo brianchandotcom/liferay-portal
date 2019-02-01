@@ -24,7 +24,8 @@ import org.osgi.service.component.annotations.ServiceScope;
  */
 @Component(
 	properties = "OSGI-INF/image-object-repository.properties",
-	scope = ServiceScope.PROTOTYPE, service = ImageObjectRepositoryResource.class
+	scope = ServiceScope.PROTOTYPE,
+	service = ImageObjectRepositoryResource.class
 )
 public class ImageObjectRepositoryResourceImpl
 	extends BaseImageObjectRepositoryResourceImpl {

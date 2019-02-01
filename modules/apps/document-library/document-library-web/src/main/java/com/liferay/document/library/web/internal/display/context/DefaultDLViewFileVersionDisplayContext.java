@@ -179,6 +179,7 @@ public class DefaultDLViewFileVersionDisplayContext
 		menu.setMenuItems(_getMenuItems());
 		menu.setScroll(false);
 		menu.setShowWhenSingleIcon(true);
+		menu.setTriggerCssClass("component-action");
 
 		return menu;
 	}

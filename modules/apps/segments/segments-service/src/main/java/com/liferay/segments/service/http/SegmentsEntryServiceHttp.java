@@ -124,12 +124,13 @@ public class SegmentsEntryServiceHttp {
 		}
 	}
 
-	public static java.util.List<com.liferay.segments.model.SegmentsEntry> getSegmentsEntries(
+	public static java.util.List<com.liferay.segments.model.SegmentsEntry> getActiveSegmentsEntries(
 		HttpPrincipal httpPrincipal, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(SegmentsEntryServiceUtil.class,
-					"getSegmentsEntries", _getSegmentsEntriesParameterTypes2);
+					"getActiveSegmentsEntries",
+					_getActiveSegmentsEntriesParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId);
 
@@ -327,7 +328,7 @@ public class SegmentsEntryServiceHttp {
 	private static final Class<?>[] _deleteSegmentsEntryParameterTypes1 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _getSegmentsEntriesParameterTypes2 = new Class[] {
+	private static final Class<?>[] _getActiveSegmentsEntriesParameterTypes2 = new Class[] {
 			long.class
 		};
 	private static final Class<?>[] _getSegmentsEntriesParameterTypes3 = new Class[] {

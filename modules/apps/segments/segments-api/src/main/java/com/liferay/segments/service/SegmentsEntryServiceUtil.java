@@ -59,6 +59,12 @@ public class SegmentsEntryServiceUtil {
 		return getService().deleteSegmentsEntry(segmentsEntryId);
 	}
 
+	public static java.util.List<com.liferay.segments.model.SegmentsEntry> getActiveSegmentsEntries(
+		long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getActiveSegmentsEntries(groupId);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -66,12 +72,6 @@ public class SegmentsEntryServiceUtil {
 	*/
 	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
-	}
-
-	public static java.util.List<com.liferay.segments.model.SegmentsEntry> getSegmentsEntries(
-		long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getSegmentsEntries(groupId);
 	}
 
 	public static java.util.List<com.liferay.segments.model.SegmentsEntry> getSegmentsEntries(

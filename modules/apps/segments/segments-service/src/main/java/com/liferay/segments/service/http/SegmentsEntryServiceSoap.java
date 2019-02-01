@@ -109,11 +109,11 @@ public class SegmentsEntryServiceSoap {
 		}
 	}
 
-	public static com.liferay.segments.model.SegmentsEntrySoap[] getSegmentsEntries(
+	public static com.liferay.segments.model.SegmentsEntrySoap[] getActiveSegmentsEntries(
 		long groupId) throws RemoteException {
 		try {
 			java.util.List<com.liferay.segments.model.SegmentsEntry> returnValue =
-				SegmentsEntryServiceUtil.getSegmentsEntries(groupId);
+				SegmentsEntryServiceUtil.getActiveSegmentsEntries(groupId);
 
 			return com.liferay.segments.model.SegmentsEntrySoap.toSoapModels(returnValue);
 		}

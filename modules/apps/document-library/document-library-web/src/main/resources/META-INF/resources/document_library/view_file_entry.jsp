@@ -85,25 +85,25 @@ if (portletTitleBasedNavigation) {
 }
 %>
 
-<liferay-util:buffer
-	var="documentTitle"
->
-	<%= fileVersion.getTitle() %>
-
-	<c:if test="<%= versionSpecific %>">
-		(<liferay-ui:message key="version" /> <%= fileVersion.getVersion() %>)
-	</c:if>
-</liferay-util:buffer>
-
 <c:if test="<%= portletTitleBasedNavigation %>">
+	<liferay-util:buffer
+		var="documentTitle"
+	>
+		<%= fileVersion.getTitle() %>
+
+		<c:if test="<%= versionSpecific %>">
+			(<liferay-ui:message key="version" /> <%= fileVersion.getVersion() %>)
+		</c:if>
+	</liferay-util:buffer>
+
 	<div class="tbar upper-tbar">
 		<div class="container-fluid container-fluid-max-xl">
 			<ul class="tbar-nav">
 				<li class="tbar-item tbar-item-expand">
 					<div class="tbar-section text-left">
-						<span class="text-truncate-inline upper-tbar-title">
+						<h2 class="text-truncate-inline upper-tbar-title" title="<%= HtmlUtil.escapeAttribute(documentTitle) %>">
 							<span class="text-truncate"><%= HtmlUtil.escape(documentTitle) %></span>
-						</span>
+						</h2>
 
 						<c:if test="<%= fileEntry.hasLock() || fileEntry.isCheckedOut() %>">
 							<span>

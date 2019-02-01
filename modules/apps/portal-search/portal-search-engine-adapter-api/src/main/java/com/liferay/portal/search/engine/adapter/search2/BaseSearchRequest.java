@@ -124,7 +124,7 @@ public abstract class BaseSearchRequest {
 		_includeResponseString = includeResponseString;
 	}
 
-	public void setIndexNames(String[] indexNames) {
+	public void setIndexNames(String... indexNames) {
 		_indexNames = indexNames;
 	}
 

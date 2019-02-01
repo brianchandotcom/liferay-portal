@@ -15,6 +15,7 @@
 package com.liferay.arquillian.extension.junit.bridge.container.registry;
 
 import com.liferay.arquillian.extension.junit.bridge.container.impl.ContainerImpl;
+import com.liferay.arquillian.extension.junit.bridge.container.remote.LiferayRemoteDeployableContainer;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -23,7 +24,6 @@ import java.util.List;
 import org.jboss.arquillian.config.descriptor.api.ContainerDef;
 import org.jboss.arquillian.container.spi.Container;
 import org.jboss.arquillian.container.spi.ContainerRegistry;
-import org.jboss.arquillian.container.spi.client.container.DeployableContainer;
 import org.jboss.arquillian.container.spi.client.deployment.TargetDescription;
 import org.jboss.arquillian.core.api.Injector;
 import org.jboss.arquillian.core.spi.ServiceLoader;
@@ -41,19 +41,11 @@ public class LocalContainerRegistry implements ContainerRegistry {
 	public Container create(
 		ContainerDef containerDef, ServiceLoader serviceLoader) {
 
-		try {
-			return _addContainer(
-				_injector.inject(
-					new ContainerImpl(
-						containerDef.getContainerName(),
-						serviceLoader.onlyOne(DeployableContainer.class),
-						containerDef)));
-		}
-		catch (Exception e) {
-			throw new RuntimeException(
-				"Could not create Container " + containerDef.getContainerName(),
-				e);
-		}
+		return _addContainer(
+			_injector.inject(
+				new ContainerImpl(
+					containerDef.getContainerName(),
+					new LiferayRemoteDeployableContainer(), containerDef)));
 	}
 
 	@Override

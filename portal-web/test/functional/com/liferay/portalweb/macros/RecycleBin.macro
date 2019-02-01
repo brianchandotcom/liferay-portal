@@ -18,9 +18,8 @@ definition {
 			tableEntryText = "${assetType}"
 		);
 
-		RecycleBin.clickEllipsisItem(
-			assetName = "${assetName}",
-			item = "Delete"
+		LexiconTable.delete(
+			tableEntry = "${assetName}"
 		);
 
 		Alert.viewSuccessMessage();

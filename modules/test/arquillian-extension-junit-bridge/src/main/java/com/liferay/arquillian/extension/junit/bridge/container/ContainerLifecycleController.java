@@ -56,9 +56,6 @@ public class ContainerLifecycleController {
 					_setupContainerEvent.fire(new SetupContainer(container));
 				}
 
-				@Inject
-				private Event<SetupContainer> _setupContainerEvent;
-
 			});
 	}
 
@@ -134,5 +131,8 @@ public class ContainerLifecycleController {
 
 	@Inject
 	private Instance<Injector> _injectorInstance;
+
+	@Inject
+	private Event<SetupContainer> _setupContainerEvent;
 
 }

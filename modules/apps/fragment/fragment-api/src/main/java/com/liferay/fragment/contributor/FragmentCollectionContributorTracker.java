@@ -14,12 +14,39 @@
 
 package com.liferay.fragment.contributor;
 
+import com.liferay.fragment.model.FragmentEntry;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Jürgen Kappler
  */
 public interface FragmentCollectionContributorTracker {
+
+	public default Map<String, FragmentEntry>
+		getFragmentCollectionContributorEntries() {
+
+		Map<String, FragmentEntry> fragmentEntriesMap = new HashMap<>();
+
+		List<FragmentCollectionContributor> fragmentCollectionContributors =
+			getFragmentCollectionContributors();
+
+		for (FragmentCollectionContributor fragmentCollectionContributor :
+				fragmentCollectionContributors) {
+
+			List<FragmentEntry> fragmentEntries =
+				fragmentCollectionContributor.getFragmentEntries();
+
+			for (FragmentEntry fragmentEntry : fragmentEntries) {
+				fragmentEntriesMap.put(
+					fragmentEntry.getFragmentEntryKey(), fragmentEntry);
+			}
+		}
+
+		return fragmentEntriesMap;
+	}
 
 	public List<FragmentCollectionContributor>
 		getFragmentCollectionContributors();

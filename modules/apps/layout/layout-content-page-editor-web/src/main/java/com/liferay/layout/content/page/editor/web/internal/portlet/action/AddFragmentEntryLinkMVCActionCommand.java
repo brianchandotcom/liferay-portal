@@ -14,7 +14,6 @@
 
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
-import com.liferay.fragment.contributor.FragmentCollectionContributor;
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.exception.NoSuchEntryException;
 import com.liferay.fragment.model.FragmentEntry;
@@ -42,8 +41,7 @@ import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.List;
-import java.util.Objects;
+import java.util.Map;
 import java.util.concurrent.Callable;
 
 import javax.portlet.ActionRequest;
@@ -156,27 +154,11 @@ public class AddFragmentEntryLinkMVCActionCommand extends BaseMVCActionCommand {
 	private FragmentEntry _getContributedFragmentEntry(
 		String fragmentEntryKey) {
 
-		List<FragmentCollectionContributor> fragmentCollectionContributors =
+		Map<String, FragmentEntry> fragmentEntries =
 			_fragmentCollectionContributorTracker.
-				getFragmentCollectionContributors();
+				getFragmentCollectionContributorEntries();
 
-		for (FragmentCollectionContributor fragmentCollectionContributor :
-				fragmentCollectionContributors) {
-
-			List<FragmentEntry> fragmentEntries =
-				fragmentCollectionContributor.getFragmentEntries();
-
-			for (FragmentEntry fragmentEntry : fragmentEntries) {
-				if (Objects.equals(
-						fragmentEntryKey,
-						fragmentEntry.getFragmentEntryKey())) {
-
-					return fragmentEntry;
-				}
-			}
-		}
-
-		return null;
+		return fragmentEntries.get(fragmentEntryKey);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

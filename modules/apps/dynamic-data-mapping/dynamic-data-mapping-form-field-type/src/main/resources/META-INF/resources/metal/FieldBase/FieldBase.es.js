@@ -1,9 +1,8 @@
+import '../components/Tooltip/index.es';
 import 'clay-icon';
 import {Config} from 'metal-state';
 import Component from 'metal-component';
 import Soy from 'metal-soy';
-
-import '../components/Tooltip/index.es';
 import templates from './FieldBase.soy.js';
 
 class FieldBase extends Component {

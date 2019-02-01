@@ -1,9 +1,9 @@
+import '../FieldBase/FieldBase.es';
 import './TextRegister.soy.js';
-import 'dynamic-data-mapping-form-field-type/metal/FieldBase/index.es';
+import {Config} from 'metal-state';
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 import templates from './Text.soy.js';
-import {Config} from 'metal-state';
 
 class Text extends Component {
 	static STATE = {

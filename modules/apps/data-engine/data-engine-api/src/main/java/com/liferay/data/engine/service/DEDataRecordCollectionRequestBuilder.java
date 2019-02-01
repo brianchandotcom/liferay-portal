@@ -24,11 +24,11 @@ public class DEDataRecordCollectionRequestBuilder {
 	public static DEDataRecordCollectionDeleteModelPermissionsRequest.Builder
 		deleteModelPermissionsBuilder(
 			long companyId, long scopedGroupId, long deDataRecordCollectionId,
-			String[] roleNames, String[] actionIds) {
+			String[] actionIds, String[] roleNames) {
 
 		return new DEDataRecordCollectionDeleteModelPermissionsRequest.Builder(
-			companyId, scopedGroupId, deDataRecordCollectionId, roleNames,
-			actionIds);
+			companyId, scopedGroupId, deDataRecordCollectionId, actionIds,
+			roleNames);
 	}
 
 	public static DEDataRecordCollectionDeletePermissionsRequest.Builder

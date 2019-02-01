@@ -98,15 +98,15 @@ public final class DEDataRecordCollectionDeleteModelPermissionsRequest {
 		 * @param deDataRecordCollectionId the primary key of the data record
 		 * collection that want to related to the model permission in the
 		 * request
+		 * @param actionIds the actions id list that will be revoked
 		 * @param roleNames the role names list that that will have the revoked
 		 * permission
-		 * @param actionIds the actions id list that will be revoked
 		 * @return {@link Builder}
 		 * @review
 		 */
 		public Builder(
 			long companyId, long scopedGroupId, long deDataRecordCollectionId,
-			String[] roleNames, String[] actionIds) {
+			String[] actionIds, String[] roleNames) {
 
 			_deDataRecordCollectionDeleteModelPermissionsRequest._companyId =
 				companyId;
@@ -114,10 +114,10 @@ public final class DEDataRecordCollectionDeleteModelPermissionsRequest {
 				_scopedGroupId = scopedGroupId;
 			_deDataRecordCollectionDeleteModelPermissionsRequest.
 				_deDataRecordCollectionId = deDataRecordCollectionId;
-			_deDataRecordCollectionDeleteModelPermissionsRequest._roleNames =
-				ListUtil.fromArray(roleNames);
 			_deDataRecordCollectionDeleteModelPermissionsRequest._actionIds =
 				ListUtil.fromArray(actionIds);
+			_deDataRecordCollectionDeleteModelPermissionsRequest._roleNames =
+				ListUtil.fromArray(roleNames);
 		}
 
 		/**

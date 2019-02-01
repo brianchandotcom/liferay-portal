@@ -119,7 +119,10 @@ if (portletTitleBasedNavigation) {
 					/>
 				</li>
 				<li class="tbar-item">
-					<button class="btn btn-secondary btn-sm" type="button">Share</button>
+					<liferay-sharing:button
+						className="<%= DLFileEntryConstants.getClassName() %>"
+						classPK="<%= fileEntry.getFileEntryId() %>"
+					/>
 				</li>
 
 				<c:if test="<%= dlViewFileVersionDisplayContext.isDownloadLinkVisible() %>">

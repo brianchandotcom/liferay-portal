@@ -16,15 +16,14 @@ package com.liferay.portal.vulcan.internal.context.provider;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.cxf.jaxrs.ext.ContextProvider;
 import org.apache.cxf.message.Message;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Víctor Galán
  */
-public abstract class BaseContextProvider<T> implements ContextProvider<T> {
+public class ContextProviderUtil {
 
-	protected HttpServletRequest getHttpServletRequest(Message message) {
+	public static HttpServletRequest getHttpServletRequest(Message message) {
 		return (HttpServletRequest)message.getContextualProperty(
 			"HTTP.REQUEST");
 	}

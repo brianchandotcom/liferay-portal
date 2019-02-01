@@ -3,6 +3,7 @@
 .fragments-editor__floating-toolbar {
 	display: inline-block;
 	padding: $fragmentsEditorSpacing;
+	position: absolute;
 	text-align: right;
 	z-index: $floatingToolbarZIndex;
 

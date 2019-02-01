@@ -1,5 +1,6 @@
 import Component from 'metal-component';
 import Soy from 'metal-soy';
+import {Align} from 'metal-position';
 import {Config} from 'metal-state';
 
 import getConnectedComponent from '../../store/ConnectedComponent.es';
@@ -9,6 +10,38 @@ import templates from './FloatingToolbar.soy';
  * FloatingToolbar
  */
 class FloatingToolbar extends Component {
+
+	/**
+	 * @inheritdoc
+	 * @review
+	 */
+	created() {
+		this._handleWindowResize = this._handleWindowResize.bind(this);
+
+		window.addEventListener('resize', this._handleWindowResize);
+	}
+
+	/**
+	 * @inheritdoc
+	 * @review
+	 */
+	disposed() {
+		window.removeEventListener('resize', this._handleWindowResize);
+	}
+
+	/**
+	 * @inheritdoc
+	 * @review
+	 */
+	rendered() {
+		this._align();
+
+		requestAnimationFrame(
+			() => {
+				this._align();
+			}
+		);
+	}
 
 	/**
 	 * Handle button click
@@ -25,6 +58,25 @@ class FloatingToolbar extends Component {
 		}
 	}
 
+	/**
+	 * @private
+	 * @review
+	 */
+	_handleWindowResize() {
+		this._align();
+	}
+
+	/**
+	 * Aligns the floating panel to the anchorElement
+	 * @private
+	 * @review
+	 */
+	_align() {
+		if (this.element && this.anchorElement) {
+			Align.align(this.element, this.anchorElement, Align.BottomRight);
+		}
+	}
+
 }
 
 /**
@@ -33,7 +85,7 @@ class FloatingToolbar extends Component {
  * @static
  * @type {!Object}
  */
-FloatingToolbar.STATE = {,
+FloatingToolbar.STATE = {
 
 	/**
 	 * Selected panel ID.
@@ -48,6 +100,18 @@ FloatingToolbar.STATE = {,
 		.string()
 		.internal()
 		.value(null),
+
+	/**
+	 * Element where the floating toolbar is positioned with
+	 * @default undefined
+	 * @instance
+	 * @memberof FloatingToolbar
+	 * @review
+	 * @type {HTMLElement}
+	 */
+	anchorElement: Config
+		.instanceOf(HTMLElement)
+		.required(),
 
 	/**
 	 * List of available panels.

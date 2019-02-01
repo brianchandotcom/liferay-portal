@@ -82,6 +82,7 @@ class FragmentEntryLinkListSection extends Component {
 		if (!this._floatingToolbar) {
 			this._floatingToolbar = new FloatingToolbar(
 				{
+					anchorElement: this.element,
 					item: this.row,
 					itemId: this.rowId,
 					panels: FLOATING_TOOLBAR_PANELS,

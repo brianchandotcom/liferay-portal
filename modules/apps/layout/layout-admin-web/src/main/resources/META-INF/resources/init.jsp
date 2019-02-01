@@ -49,6 +49,7 @@ page import="com.liferay.layout.admin.web.internal.display.context.LayoutsAdminM
 page import="com.liferay.layout.admin.web.internal.display.context.OrphanPortletsDisplayContext" %><%@
 page import="com.liferay.layout.admin.web.internal.display.context.SelectLayoutPageTemplateEntryDisplayContext" %><%@
 page import="com.liferay.layout.admin.web.internal.display.context.SelectThemeDisplayContext" %><%@
+page import="com.liferay.layout.admin.web.internal.display.context.SelectThemeManagementToolbarDisplayContext" %><%@
 page import="com.liferay.layout.admin.web.internal.security.permission.resource.LayoutPageTemplateCollectionPermission" %><%@
 page import="com.liferay.layout.admin.web.internal.security.permission.resource.LayoutPageTemplateEntryPermission" %><%@
 page import="com.liferay.layout.admin.web.internal.servlet.taglib.clay.DisplayPageVerticalCard" %><%@

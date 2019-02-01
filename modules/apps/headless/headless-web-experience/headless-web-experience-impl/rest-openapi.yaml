@@ -6,6 +6,7 @@ components:
         bestRating:
           type: number
         id:
+          format: int64
           type: integer
         ratingCount:
           type: number
@@ -26,6 +27,7 @@ components:
           format: uri
           type: string
         id:
+          format: int64
           type: integer
         self:
           format: uri
@@ -34,7 +36,7 @@ components:
           type: string
       type: object
     ContentDocument:
-      description: https://www.schema.org/Liferay:Document
+      description: https://www.schema.org/ContentDocument
       properties:
         contentUrl:
           type: string
@@ -42,14 +44,17 @@ components:
           format: uri
           type: string
         dateCreated:
+          format: date-time
           type: string
         dateModified:
+          format: date-time
           type: string
         encodingFormat:
           type: string
         fileExtension:
           type: string
         id:
+          format: int64
           type: integer
         self:
           format: uri
@@ -73,158 +78,21 @@ components:
           format: uri
           type: string
         dateCreated:
+          format: date-time
           type: string
         dateModified:
+          format: date-time
           type: string
         description:
           type: string
-        formPages:
-          description: https://www.schema.org/FormLayoutPage
-          properties:
-            fields:
-              description: https://www.schema.org/FormField
-              properties:
-                autocomplete:
-                  type: boolean
-                dataSourceType:
-                  type: string
-                dataType:
-                  type: string
-                displayStyle:
-                  type: string
-                grid:
-                  description: https://www.schema.org/FormFieldProperties
-                  properties:
-                    columns:
-                      description: https://www.schema.org/FormFieldOptions
-                      properties:
-                        id:
-                          type: integer
-                        label:
-                          type: string
-                        self:
-                          format: uri
-                          type: string
-                        value:
-                          type: string
-                      type: object
-                    id:
-                      type: integer
-                    rows:
-                      description: https://www.schema.org/FormFieldOptions
-                      properties:
-                        id:
-                          type: integer
-                        label:
-                          type: string
-                        self:
-                          format: uri
-                          type: string
-                        value:
-                          type: string
-                      type: object
-                    self:
-                      format: uri
-                      type: string
-                  type: object
-                hasFormRules:
-                  type: boolean
-                id:
-                  type: integer
-                inline:
-                  type: boolean
-                inputControl:
-                  type: string
-                label:
-                  type: string
-                localizable:
-                  type: boolean
-                multiple:
-                  type: boolean
-                name:
-                  type: string
-                options:
-                  description: https://www.schema.org/FormFieldOptions
-                  properties:
-                    id:
-                      type: integer
-                    label:
-                      type: string
-                    self:
-                      format: uri
-                      type: string
-                    value:
-                      type: string
-                  type: object
-                placeholder:
-                  type: string
-                predefinedValue:
-                  type: string
-                readOnly:
-                  type: boolean
-                repeatable:
-                  type: boolean
-                required:
-                  type: boolean
-                self:
-                  format: uri
-                  type: string
-                showAsSwitcher:
-                  type: boolean
-                showLabel:
-                  type: boolean
-                style:
-                  type: string
-                text:
-                  type: string
-                tooltip:
-                  type: string
-                transient:
-                  type: boolean
-                validation:
-                  description: https://www.schema.org/FormFieldProperties
-                  properties:
-                    errorMessage:
-                      type: string
-                    expression:
-                      type: string
-                    id:
-                      type: integer
-                    self:
-                      format: uri
-                      type: string
-                  type: object
-              type: object
-            headline:
-              type: string
-            id:
-              type: integer
-            self:
-              format: uri
-              type: string
-            text:
-              type: string
-          type: object
         id:
+          format: int64
           type: integer
         name:
           type: string
         self:
           format: uri
           type: string
-        successPage:
-          description: https://www.schema.org/FormSuccessPageSettings
-          properties:
-            description:
-              type: string
-            headline:
-              type: string
-            id:
-              type: integer
-            self:
-              format: uri
-              type: string
-          type: object
       type: object
     StructuredContent:
       description: https://www.schema.org/StructuredContent
@@ -249,14 +117,18 @@ components:
           format: uri
           type: string
         dateCreated:
+          format: date-time
           type: string
         dateModified:
+          format: date-time
           type: string
         datePublished:
+          format: date-time
           type: string
         description:
           type: string
         id:
+          format: int64
           type: integer
         keywords:
           items:
@@ -268,6 +140,7 @@ components:
           description: https://www.schema.org/templates
           properties:
             id:
+              format: int64
               type: integer
             renderedContent:
               type: string
@@ -295,6 +168,7 @@ components:
               description: https://www.schema.org/GeoCoordinates
               properties:
                 id:
+                  format: int64
                   type: integer
                 latitude:
                   type: number
@@ -305,6 +179,7 @@ components:
                   type: string
               type: object
             id:
+              format: int64
               type: integer
             inputControl:
               type: string
@@ -336,13 +211,56 @@ paths:
           name: id
           required: true
           schema:
+            format: int64
             type: integer
       responses:
         200:
           content:
-            "*/*":
+            application/json:
               schema:
                 $ref: "#/components/schemas/AggregateRating"
+          description: ""
+  "/comment/{id}":
+    get:
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            format: int64
+            type: integer
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Comment"
+          description: ""
+  "/comment/{parent-id}/comment":
+    get:
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+        - in: query
+          name: per_page
+          schema:
+            type: integer
+        - in: path
+          name: parent-id
+          required: true
+          schema:
+            format: int64
+            type: integer
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: "#/components/schemas/Comment"
+                type: array
           description: ""
   "/content-document/{id}":
     delete:
@@ -351,11 +269,12 @@ paths:
           name: id
           required: true
           schema:
+            format: int64
             type: integer
       responses:
         204:
           content:
-            "*/*": {}
+            application/json: {}
           description: ""
     get:
       parameters:
@@ -363,13 +282,40 @@ paths:
           name: id
           required: true
           schema:
+            format: int64
             type: integer
       responses:
         200:
           content:
-            "*/*":
+            application/json:
               schema:
                 $ref: "#/components/schemas/ContentDocument"
+          description: ""
+  "/content-space/{parent-id}/content-structures":
+    get:
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+        - in: query
+          name: per_page
+          schema:
+            type: integer
+        - in: path
+          name: parent-id
+          required: true
+          schema:
+            format: int64
+            type: integer
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: "#/components/schemas/ContentStructure"
+                type: array
           description: ""
   "/content-space/{parent-id}/structured-contents":
     get:
@@ -386,6 +332,7 @@ paths:
           name: parent-id
           required: true
           schema:
+            format: int64
             type: integer
         - in: header
           name: Accept-Language
@@ -402,7 +349,7 @@ paths:
       responses:
         200:
           content:
-            "*/*":
+            application/json:
               schema:
                 items:
                   $ref: "#/components/schemas/StructuredContent"
@@ -414,6 +361,7 @@ paths:
           name: parent-id
           required: true
           schema:
+            format: int64
             type: integer
         - in: header
           name: Accept-Language
@@ -421,13 +369,13 @@ paths:
             type: string
       requestBody:
         content:
-          "*/*":
+          application/json:
             schema:
               $ref: "#/components/schemas/StructuredContent"
       responses:
         200:
           content:
-            "*/*":
+            application/json:
               schema:
                 $ref: "#/components/schemas/StructuredContent"
           description: ""
@@ -438,6 +386,7 @@ paths:
           name: parent-id
           required: true
           schema:
+            format: int64
             type: integer
         - in: header
           name: Accept-Language
@@ -445,13 +394,13 @@ paths:
             type: string
       requestBody:
         content:
-          "*/*":
+          application/json:
             schema:
               $ref: "#/components/schemas/StructuredContent"
       responses:
         200:
           content:
-            "*/*":
+            application/json:
               schema:
                 $ref: "#/components/schemas/StructuredContent"
           description: ""
@@ -462,13 +411,40 @@ paths:
           name: id
           required: true
           schema:
+            format: int64
             type: integer
       responses:
         200:
           content:
-            "*/*":
+            application/json:
               schema:
                 $ref: "#/components/schemas/ContentStructure"
+          description: ""
+  "/content-document/{parent-id}/comment":
+    get:
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+        - in: query
+          name: per_page
+          schema:
+            type: integer
+        - in: path
+          name: parent-id
+          required: true
+          schema:
+            format: int64
+            type: integer
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: "#/components/schemas/Comment"
+                type: array
           description: ""
   "/structured-contents/{id}":
     delete:
@@ -477,11 +453,12 @@ paths:
           name: id
           required: true
           schema:
+            format: int64
             type: integer
       responses:
         204:
           content:
-            "*/*": {}
+            application/json: {}
           description: ""
     get:
       parameters:
@@ -489,6 +466,7 @@ paths:
           name: id
           required: true
           schema:
+            format: int64
             type: integer
         - in: header
           name: Accept-Language
@@ -497,7 +475,7 @@ paths:
       responses:
         200:
           content:
-            "*/*":
+            application/json:
               schema:
                 $ref: "#/components/schemas/StructuredContent"
           description: ""
@@ -507,6 +485,7 @@ paths:
           name: id
           required: true
           schema:
+            format: int64
             type: integer
         - in: header
           name: Accept-Language
@@ -514,13 +493,13 @@ paths:
             type: string
       requestBody:
         content:
-          "*/*":
+          application/json:
             schema:
               $ref: "#/components/schemas/StructuredContent"
       responses:
         200:
           content:
-            "*/*":
+            application/json:
               schema:
                 $ref: "#/components/schemas/StructuredContent"
           description: ""
@@ -539,11 +518,12 @@ paths:
           name: parent-id
           required: true
           schema:
-            $ref: "#/components/schemas/StructuredContent"
+            format: int64
+            type: integer
       responses:
         200:
           content:
-            "*/*":
+            application/json:
               schema:
                 items:
                   $ref: "#/components/schemas/Comment"

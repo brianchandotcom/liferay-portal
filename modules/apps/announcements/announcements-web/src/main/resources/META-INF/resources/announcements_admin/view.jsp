@@ -74,6 +74,7 @@ AnnouncementsAdminViewManagementToolbarDisplayContext announcementsAdminViewMana
 	creationMenu="<%= announcementsAdminViewManagementToolbarDisplayContext.getCreationMenu() %>"
 	disabled="<%= announcementsAdminViewManagementToolbarDisplayContext.isDisabled() %>"
 	filterDropdownItems="<%= announcementsAdminViewManagementToolbarDisplayContext.getFilterDropdownItems() %>"
+	filterLabelItems="<%= announcementsAdminViewManagementToolbarDisplayContext.getFilterLabelItems() %>"
 	itemsTotal="<%= announcementsAdminViewManagementToolbarDisplayContext.getTotal() %>"
 	searchContainerId="announcementsEntries"
 	selectable="<%= true %>"

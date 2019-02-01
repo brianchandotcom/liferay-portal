@@ -1,15 +1,15 @@
 import Component from 'metal-component';
-import {Config} from 'metal-state';
-import {Drag, DragDrop} from 'metal-drag-drop';
 import position from 'metal-position';
 import Soy from 'metal-soy';
+import {Config} from 'metal-state';
+import {Drag, DragDrop} from 'metal-drag-drop';
 
+import templates from './SidebarWidgetsPanel.soy';
 import {ADD_PORTLET, CLEAR_DROP_TARGET, UPDATE_DROP_TARGET, UPDATE_LAST_SAVE_DATE, UPDATE_SAVING_CHANGES_STATUS} from '../../../actions/actions.es';
 import {FRAGMENTS_EDITOR_ITEM_BORDERS, FRAGMENTS_EDITOR_ITEM_TYPES} from '../../../utils/constants';
 import {getConnectedComponent} from '../../../store/ConnectedComponent.es';
 import {setIn} from '../../../utils/FragmentsEditorUpdateUtils.es';
 import {shouldUpdateOnChangeProperties} from '../../../utils/FragmentsEditorComponentUtils.es';
-import templates from './SidebarWidgetsPanel.soy';
 
 /**
  * KeyBoardEvent enter key
@@ -17,7 +17,6 @@ import templates from './SidebarWidgetsPanel.soy';
  * @type {!string}
  */
 const ENTER_KEY = 'Enter';
-
 
 /**
  * SidebarWidgetsPanel
@@ -37,10 +36,10 @@ class SidebarWidgetsPanel extends Component {
 
 	/**
 	 * Filters widgets tree based on the keywords provided
-	 * @param {object[]} widgets
+	 * @param {Object[]} widgets
 	 * @param {string} [keywords='']
 	 * @private
-	 * @return {object[]}
+	 * @return {Object[]}
 	 * @review
 	 */
 	static _filterWidgets(widgets, keywords = '') {
@@ -58,10 +57,10 @@ class SidebarWidgetsPanel extends Component {
 
 	/**
 	 * Returns a filtered list of categories
-	 * @param {object[]} categories
+	 * @param {Object[]} categories
 	 * @param {string} keywords
 	 * @private
-	 * @return {object[]}
+	 * @return {Object[]}
 	 * @review
 	 */
 	static _filterCategories(categories, keywords) {
@@ -79,10 +78,10 @@ class SidebarWidgetsPanel extends Component {
 
 	/**
 	 * Filters a widget category based on the keywords provided
-	 * @param {object} category
+	 * @param {Object} category
 	 * @param {string} keywords
 	 * @private
-	 * @return {object|null}
+	 * @return {Object}
 	 * @review
 	 */
 	static _filterCategory(category, keywords) {
@@ -111,7 +110,7 @@ class SidebarWidgetsPanel extends Component {
 	}
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 * @private
 	 * @review
 	 */
@@ -120,7 +119,7 @@ class SidebarWidgetsPanel extends Component {
 	}
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 * @private
 	 * @review
 	 */
@@ -130,8 +129,8 @@ class SidebarWidgetsPanel extends Component {
 
 	/**
 	 * @inheritdoc
-	 * @param {object} state
-	 * @return {object}
+	 * @param {Object} state
+	 * @return {Object}
 	 * @review
 	 */
 	prepareStateForRender(state) {
@@ -147,7 +146,7 @@ class SidebarWidgetsPanel extends Component {
 
 	/**
 	 * @inheritdoc
-	 * @param {object} changes
+	 * @param {Object} changes
 	 * @return {boolean}
 	 * @review
 	 */
@@ -164,8 +163,8 @@ class SidebarWidgetsPanel extends Component {
 
 	/**
 	 * Callback that is executed when an item is being dragged.
-	 * @param {object} eventData
-	 * @param {MouseEvent} data.originalEvent
+	 * @param {Object} eventData
+	 * @param {MouseEvent} eventData.originalEvent
 	 * @private
 	 * @review
 	 */
@@ -246,7 +245,7 @@ class SidebarWidgetsPanel extends Component {
 
 	/**
 	 * Callback that is executed when an item is dropped.
-	 * @param {!object} data
+	 * @param {!Object} data
 	 * @param {!MouseEvent} event
 	 * @private
 	 * @review

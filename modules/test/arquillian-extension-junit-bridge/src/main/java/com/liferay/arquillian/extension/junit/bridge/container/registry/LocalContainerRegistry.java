@@ -14,12 +14,13 @@
 
 package com.liferay.arquillian.extension.junit.bridge.container.registry;
 
+import com.liferay.arquillian.extension.junit.bridge.container.impl.ContainerImpl;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import org.jboss.arquillian.config.descriptor.api.ContainerDef;
-import org.jboss.arquillian.container.impl.ContainerImpl;
 import org.jboss.arquillian.container.spi.Container;
 import org.jboss.arquillian.container.spi.ContainerRegistry;
 import org.jboss.arquillian.container.spi.client.container.DeployableContainer;

@@ -164,21 +164,9 @@ public class ContainerImpl implements Container {
 	public void setup() throws Exception {
 		_containerEvent.fire(new BeforeSetup(_deployableContainer));
 
-		try {
-			_containerInstanceProducer.set(this);
+		_containerInstanceProducer.set(this);
 
-			((DeployableContainer)_deployableContainer).setup(
-				createDeployableConfiguration());
-
-			setState(Container.State.SETUP);
-		}
-		catch (Exception e) {
-			setState(Container.State.SETUP_FAILED);
-
-			_failureCause = e;
-
-			throw e;
-		}
+		setState(Container.State.SETUP);
 
 		_containerEvent.fire(new AfterSetup(_deployableContainer));
 	}

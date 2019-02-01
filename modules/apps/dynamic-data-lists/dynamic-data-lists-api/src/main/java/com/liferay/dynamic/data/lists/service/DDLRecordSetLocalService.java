@@ -462,6 +462,16 @@ public interface DDLRecordSetLocalService extends BaseLocalService,
 	public int getRecordSetsCount(long groupId);
 
 	/**
+	* Returns the number of all the record sets belonging the group and associated with the DDMStructure.
+	*
+	* @param groupId the primary key of the record set's group
+	* @return the number of record sets belonging to the group
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getRecordSetsCount(long groupId, long ddmStructureId,
+		boolean andOperator);
+
+	/**
 	* Returns the record set's settings as a DDMFormValues object. For more
 	* information see <code>DDMFormValues</code> in the
 	* <code>dynamic.data.mapping.api</code> module.

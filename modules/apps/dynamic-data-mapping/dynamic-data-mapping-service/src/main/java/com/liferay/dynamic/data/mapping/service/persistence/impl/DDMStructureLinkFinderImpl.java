@@ -105,7 +105,7 @@ public class DDMStructureLinkFinderImpl
 				false, names);
 
 			sql = _customSQL.replaceKeywords(
-				sql, "DDMStructure.description", StringPool.LIKE, true,
+				sql, "DDMStructure.description_", StringPool.LIKE, true,
 				descriptions);
 
 			sql = _customSQL.replaceAndOperator(sql, andOperator);
@@ -160,7 +160,7 @@ public class DDMStructureLinkFinderImpl
 				sql, "LOWER(CAST_TEXT(DDMStructure.name))", StringPool.LIKE,
 				false, names);
 			sql = _customSQL.replaceKeywords(
-				sql, "DDMStructure.description", StringPool.LIKE, true,
+				sql, "DDMStructure.description_", StringPool.LIKE, true,
 				descriptions);
 			sql = _customSQL.replaceAndOperator(sql, andOperator);
 

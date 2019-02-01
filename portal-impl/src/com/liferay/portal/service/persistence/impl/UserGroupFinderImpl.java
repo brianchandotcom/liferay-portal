@@ -241,7 +241,7 @@ public class UserGroupFinderImpl
 			sql = CustomSQLUtil.replaceKeywords(
 				sql, "LOWER(UserGroup.name)", StringPool.LIKE, false, names);
 			sql = CustomSQLUtil.replaceKeywords(
-				sql, "LOWER(UserGroup.description)", StringPool.LIKE, true,
+				sql, "LOWER(UserGroup.description_)", StringPool.LIKE, true,
 				descriptions);
 			sql = StringUtil.replace(sql, "[$JOIN$]", getJoin(params));
 			sql = StringUtil.replace(sql, "[$WHERE$]", getWhere(params));
@@ -327,7 +327,7 @@ public class UserGroupFinderImpl
 			sql = CustomSQLUtil.replaceKeywords(
 				sql, "LOWER(UserGroup.name)", StringPool.LIKE, false, names);
 			sql = CustomSQLUtil.replaceKeywords(
-				sql, "LOWER(UserGroup.description)", StringPool.LIKE, true,
+				sql, "LOWER(UserGroup.description_)", StringPool.LIKE, true,
 				descriptions);
 
 			sql = StringUtil.replace(sql, "[$JOIN$]", getJoin(params));

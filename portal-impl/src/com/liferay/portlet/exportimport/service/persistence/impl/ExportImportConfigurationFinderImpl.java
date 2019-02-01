@@ -265,7 +265,7 @@ public class ExportImportConfigurationFinderImpl
 			sql = CustomSQLUtil.replaceKeywords(
 				sql, "LOWER(name)", StringPool.LIKE, false, names);
 			sql = CustomSQLUtil.replaceKeywords(
-				sql, "description", StringPool.LIKE, true, descriptions);
+				sql, "description_", StringPool.LIKE, true, descriptions);
 
 			sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
 
@@ -336,7 +336,7 @@ public class ExportImportConfigurationFinderImpl
 			sql = CustomSQLUtil.replaceKeywords(
 				sql, "LOWER(name)", StringPool.LIKE, false, names);
 			sql = CustomSQLUtil.replaceKeywords(
-				sql, "description", StringPool.LIKE, true, descriptions);
+				sql, "description_", StringPool.LIKE, true, descriptions);
 
 			sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
 

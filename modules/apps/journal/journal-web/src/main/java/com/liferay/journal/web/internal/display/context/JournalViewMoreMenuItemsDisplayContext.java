@@ -109,7 +109,7 @@ public class JournalViewMoreMenuItemsDisplayContext {
 				PortalUtil.getCurrentAndAncestorSiteGroupIds(
 					themeDisplay.getScopeGroupId()),
 				_folderId, _restrictionType, _getKeywords(),
-				searchContainer.getStart(), searchContainer.getEnd(),
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 				_getOrderByComparator());
 
 		searchContainer.setTotal(ddmStructures.size());

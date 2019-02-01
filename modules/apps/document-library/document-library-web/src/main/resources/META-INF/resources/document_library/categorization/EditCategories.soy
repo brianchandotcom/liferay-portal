@@ -1,0 +1,101 @@
+{namespace EditCategories}
+
+{template .render}
+	{@param commonCategories: list<?>}
+	{@param dataSource: string|[]|list<?>}
+	{@param loading: bool}
+	{@param spritemap: string}
+	{@param? description: string}
+	{@param? multiple: bool}
+	{@param? _handleRadioChange: any}
+	{@param? _handleSaveBtnClick: any}
+
+	{call liferay.frontend.Modal.render}
+		{param body kind="html"}
+			{if $loading}
+				{call .loading /}
+			{else}
+				{call .categories}
+					{param commonCategories: $commonCategories /}
+					{param description: $description /}
+					{param dataSource: $dataSource /}
+					{param multiple: $multiple /}
+					{param spritemap: $spritemap /}
+					{param _handleRadioChange: $_handleRadioChange /}
+				{/call}
+			{/if}
+		{/param}
+
+		{param dialogClasses: 'edit-categories modal-dialog-sm' /}
+
+		{param header kind="html"}
+			{msg desc=""}edit-categories{/msg}
+		{/param}
+
+		{param footer kind="html"}
+			<button class="btn btn-secondary" data-onclick="hide" type="button">{msg desc=""}cancel{/msg}</button>
+			<button class="btn btn-primary" data-onclick="{$_handleSaveBtnClick}" type="button">{msg desc=""}save{/msg}</button>
+		{/param}
+
+		{param ref: 'modal' /}
+
+		{param spritemap: $spritemap /}
+
+		{param visible: true /}
+	{/call}
+{/template}
+
+{template .loading}
+	<div class="loading-indicator">
+		<span aria-hidden="true" class="loading-animation loading-animation-sm"></span>
+	</div>
+{/template}
+
+{template .categories}
+	{@param commonCategories: list<?>}
+	{@param dataSource: string|[]|list<?>}
+	{@param spritemap: string}
+	{@param? description: string}
+	{@param? multiple: bool}
+	{@param? _handleRadioChange: any}
+
+	<p>{$description} {if $multiple} {msg desc=""}select-append-or-replace-current-categories{/msg} {/if}</p>
+
+	{if $multiple}
+		{call ClayRadio.render}
+			{param checked: true /}
+			{param events: [
+				'change': $_handleRadioChange,
+			] /}
+			{param label kind="text"} {msg desc=""}append{/msg} {/param}
+			{param name: 'add-replace' /}
+			{param value: 'add' /}
+		{/call}
+
+		<p>
+			<small class="text-default">{msg desc=""}add-new-categories-to-the-existing-categories{/msg}</small>
+		</p>
+
+		{call ClayRadio.render}
+			{param events: [
+				'change': $_handleRadioChange,
+			] /}
+			{param label kind="text"} {msg desc=""}replace{/msg} {/param}
+			{param name: 'add-replace' /}
+			{param value: 'replace' /}
+		{/call}
+
+		<p>
+			<small class="text-default">{msg desc=""}new-categories-replace-all-existing-categories{/msg}</small>
+		</p>
+	{/if}
+
+	{call ClayMultiSelect.render}
+		{param dataSource: $dataSource /}
+		{param elementClasses: 'clay-multi-select' /}
+		{param helpText: '' /}
+		{param label kind="text"} {msg desc=""}categories{/msg} {/param}
+		{param selectedItems: $commonCategories /}
+		{param spritemap: $spritemap /}
+	{/call}
+{/template}

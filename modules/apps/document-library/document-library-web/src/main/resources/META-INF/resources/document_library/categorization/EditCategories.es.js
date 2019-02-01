@@ -1,0 +1,311 @@
+import 'clay-multi-select';
+import ClayButton from 'clay-button';
+import ClayRadio from 'clay-radio';
+import Component from 'metal-component';
+import {Config} from 'metal-state';
+import Soy from 'metal-soy';
+import 'frontend-js-web/liferay/compat/modal/Modal.es';
+import templates from './EditCategories.soy';
+
+/**
+ * Handles the categories of the selected
+ * fileEntries inside a modal.
+ */
+class EditCategories extends Component {
+
+	/**
+	 * @inheritDoc
+	 */
+	attached() {
+		this._getCommonCategories();
+
+		this._bulkStatusComponent =	Liferay.component(this.portletNamespace + 'BulkStatus');
+	}
+
+	/**
+	 * Close the modal.
+	 */
+	close() {
+		this.refs.modal.visible = false;
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	created() {
+		this.append = true;
+		this.dataSource = [];
+	}
+
+	/**
+	 * Open the modal and get the
+	 * commont categories.
+	 */
+	open() {
+		this.refs.modal.visible = true;
+		this._getCommonCategories();
+	}
+
+	/**
+	 * Creates the ajax request.
+	 *
+	 * @param {String} url Url of the request
+	 * @param {Object} bodyData The body of the request
+	 * @param {Function} callback Callback function
+	 */
+	_fetchCategoriesRequest(url, bodyData, callback) {
+		let body = JSON.stringify(bodyData);
+
+		let headers = new Headers();
+		headers.append('Content-Type', 'application/json');
+
+		const request = {
+			body,
+			credentials: 'include',
+			headers,
+			method: 'POST'
+		};
+
+		fetch(url, request)
+			.then(
+				response => response.json()
+			)
+			.then(
+				response => {
+					callback(response);
+				}
+			)
+			.catch(
+				(xhr) => {
+					this.close();
+				}
+			);
+	}
+
+	/**
+	 * Gets the common categories for the selected
+	 * file entries and updates the state.
+	 *
+	 * @private
+	 * @review
+	 */
+	_getCommonCategories() {
+		this.loading = true;
+
+		let bodyData = {
+			repositoryId: this.repositoryId,
+			selection: this._getSelection()
+		};
+
+		this._fetchCategoriesRequest(
+			this.urlCategories,
+			bodyData,
+			response => {
+				if (response) {
+					this.loading = false;
+					this.commonCategories = response.categories;
+					this.description = response.description;
+					this.multiple = (this.fileEntries.length > 1) || this.selectAll;
+				}
+			}
+		);
+	}
+
+	_getSelection() {
+		return this.selectAll ? ['all:' + this.folderId] : this.fileEntries;
+	}
+
+	/**
+	 * Sync the input radio with the state
+	 * @param {!Event} event
+	 * @private
+	 * @review
+	 */
+	_handleRadioChange(event) {
+		this.append = event.target.value === 'add';
+	}
+
+	/**
+	 * Sends request to backend services
+	 * to update the tags.
+	 *
+	 * @private
+	 * @review
+	 */
+	_handleSaveBtnClick() {
+		//TODO
+	}
+
+	/**
+	 * Transforms the categories list in the object needed
+	 * for the ClayMultiSelect component.
+	 *
+	 * @param {List<Long, String>} categories
+	 * @return {List<{label, value}>} new commonItems object list
+	 */
+	_setCommonCategories(categories) {
+		let categoriesObjList = [];
+
+		if (categories.length > 0) {
+			categories.forEach(
+				item => {
+					let itemObj = {
+						'label': item.name,
+						'value': item.categoryId
+					};
+
+					categoriesObjList.push(itemObj);
+				}
+			);
+		}
+
+		return categoriesObjList;
+	}
+}
+
+/**
+ * State definition.
+ * @ignore
+ * @static
+ * @type {!Object}
+ */
+EditCategories.STATE = {
+
+	/**
+	 * Categories of the selected fileEntries.
+	 *
+	 * @instance
+	 * @memberof EditCategories
+	 * @review
+	 * @type {List<String>}
+	 */
+	commonCategories: Config.array().setter('_setCommonCategories').value([]),
+
+	/**
+	 * Description
+	 *
+	 * @instance
+	 * @memberof EditCategories
+	 * @review
+	 * @type {String}
+	 */
+	description: Config.string(),
+
+	/**
+	 * List of selected file entries.
+	 *
+	 * @instance
+	 * @memberof EditCategories
+	 * @review
+	 * @type {List<String>}
+	 */
+	fileEntries: Config.array().required(),
+
+	/**
+	 * Folder Id
+	 *
+	 * @instance
+	 * @memberof EditCategories
+	 * @review
+	 * @type {String}
+	 */
+	folderId: Config.string().required(),
+
+	/**
+	 * Flag that indicate if loading icon must
+	 * be shown.
+	 *
+	 * @instance
+	 * @memberof EditCategories
+	 * @review
+	 * @type {Boolean}
+	 */
+	loading: Config.bool().value(false).internal(),
+
+	/**
+	 * Flag that indicate if multiple
+	 * file entries has been selected.
+	 *
+	 * @instance
+	 * @memberof EditCategories
+	 * @review
+	 * @type {Boolean}
+	 */
+	multiple: Config.bool().value(false),
+
+	/**
+	 * Portlet's namespace
+	 *
+	 * @instance
+	 * @memberof EditCategories
+	 * @review
+	 * @type {string}
+	 */
+	portletNamespace: Config.string().required(),
+
+	/**
+	 * RepositoryId
+	 *
+	 * @instance
+	 * @memberof EditCategories
+	 * @review
+	 * @type {Number}
+	 */
+	repositoryId: Config.number().required(),
+
+	/**
+	 * Flag that indicate if "select all" checkbox
+	 * is checked.
+	 *
+	 * @instance
+	 * @memberof EditCategories
+	 * @review
+	 * @type {Boolean}
+	 */
+	selectAll: Config.bool(),
+
+	/**
+	 * Url to the categories selector page
+	 * @type {String}
+	 */
+	selectCategoriesUrl: Config.string().required(),
+
+	/**
+	 * Path to images.
+	 *
+	 * @instance
+	 * @memberof EditCategories
+	 * @review
+	 * @type {String}
+	 */
+	spritemap: Config.string().required(),
+
+	/**
+	 * Url to backend service that provides
+	 * the common categories info.
+	 *
+	 * @instance
+	 * @memberof EditCategories
+	 * @review
+	 * @type {String}
+	 */
+	urlCategories: Config.string().required(),
+
+	/**
+	 * Url to backend service that updates
+	 * the categories.
+	 *
+	 * @instance
+	 * @memberof EditCategories
+	 * @review
+	 * @type {String}
+	 */
+	urlUpdateCategories: Config.string().required()
+};
+
+
+// Register component
+
+Soy.register(EditCategories, templates);
+
+export default EditCategories;

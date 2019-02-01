@@ -26,6 +26,8 @@ import com.liferay.journal.service.JournalArticleLocalServiceWrapper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceWrapper;
@@ -38,6 +40,7 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -982,6 +985,72 @@ public class CTJournalArticleLocalServiceWrapper
 		journalArticles.removeIf(journalArticle -> !_hasChange(journalArticle));
 
 		return journalArticles;
+	}
+
+	@Override
+	public BaseModelSearchResult<JournalArticle> searchJournalArticles(
+			long companyId, long groupId, List<Long> folderIds,
+			long classNameId, String ddmStructureKey, String ddmTemplateKey,
+			String keywords, LinkedHashMap<String, Object> params, int start,
+			int end, Sort sort)
+		throws PortalException {
+
+		BaseModelSearchResult<JournalArticle> baseModelSearchResult =
+			super.searchJournalArticles(
+				companyId, groupId, folderIds, classNameId, ddmStructureKey,
+				ddmTemplateKey, keywords, params, start, end, sort);
+
+		List<JournalArticle> journalArticles = new ArrayList<>(
+			baseModelSearchResult.getBaseModels());
+
+		journalArticles.removeIf(journalArticle -> !_hasChange(journalArticle));
+
+		return new BaseModelSearchResult<>(
+			journalArticles, journalArticles.size());
+	}
+
+	@Override
+	public BaseModelSearchResult<JournalArticle> searchJournalArticles(
+			long companyId, long groupId, List<Long> folderIds,
+			long classNameId, String articleId, String title,
+			String description, String content, int status,
+			String ddmStructureKey, String ddmTemplateKey,
+			LinkedHashMap<String, Object> params, boolean andSearch, int start,
+			int end, Sort sort)
+		throws PortalException {
+
+		BaseModelSearchResult<JournalArticle> baseModelSearchResult =
+			super.searchJournalArticles(
+				companyId, groupId, folderIds, classNameId, articleId, title,
+				description, content, status, ddmStructureKey, ddmTemplateKey,
+				params, andSearch, start, end, sort);
+
+		List<JournalArticle> journalArticles = new ArrayList<>(
+			baseModelSearchResult.getBaseModels());
+
+		journalArticles.removeIf(journalArticle -> !_hasChange(journalArticle));
+
+		return new BaseModelSearchResult<>(
+			journalArticles, journalArticles.size());
+	}
+
+	@Override
+	public BaseModelSearchResult<JournalArticle> searchJournalArticles(
+			long groupId, long userId, long creatorUserId, int status,
+			int start, int end)
+		throws PortalException {
+
+		BaseModelSearchResult<JournalArticle> baseModelSearchResult =
+			super.searchJournalArticles(
+				groupId, userId, creatorUserId, status, start, end);
+
+		List<JournalArticle> journalArticles = new ArrayList<>(
+			baseModelSearchResult.getBaseModels());
+
+		journalArticles.removeIf(journalArticle -> !_hasChange(journalArticle));
+
+		return new BaseModelSearchResult<>(
+			journalArticles, journalArticles.size());
 	}
 
 	@Override

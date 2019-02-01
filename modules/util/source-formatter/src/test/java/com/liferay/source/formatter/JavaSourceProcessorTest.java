@@ -47,6 +47,13 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testDeserializationSecurity() throws Exception {
+		test(
+			"DeserializationSecurity.testjava",
+			"Use ProtectedObjectInputStream instead of new ObjectInputStream");
+	}
+
+	@Test
 	public void testDiamondOperator() throws Exception {
 		test("DiamondOperator.testjava");
 	}

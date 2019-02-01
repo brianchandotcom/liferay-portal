@@ -83,8 +83,7 @@ public class AMManagementToolbarDisplayContext {
 	}
 
 	public List<LabelItem> getFilterLabelItems() {
-		final String entriesNavigation = ParamUtil.getString(
-			_request, "entriesNavigation", "all");
+		final String entriesNavigation = _getEntriesNavigation();
 
 		return new LabelItemList() {
 			{
@@ -132,8 +131,7 @@ public class AMManagementToolbarDisplayContext {
 		List<AMImageConfigurationEntry> selectedConfigurationEntries =
 			getSelectedConfigurationEntries();
 
-		String entriesNavigation = ParamUtil.getString(
-			_request, "entriesNavigation", "all");
+		String entriesNavigation = _getEntriesNavigation();
 
 		if ((selectedConfigurationEntries.size() <= 0) &&
 			entriesNavigation.equals("all")) {
@@ -144,9 +142,12 @@ public class AMManagementToolbarDisplayContext {
 		return false;
 	}
 
+	private String _getEntriesNavigation() {
+		return ParamUtil.getString(_request, "entriesNavigation", "all");
+	}
+
 	private List<DropdownItem> _getFilterNavigationDropdownItems() {
-		final String entriesNavigation = ParamUtil.getString(
-			_request, "entriesNavigation", "all");
+		final String entriesNavigation = _getEntriesNavigation();
 
 		return new DropdownItemList() {
 			{

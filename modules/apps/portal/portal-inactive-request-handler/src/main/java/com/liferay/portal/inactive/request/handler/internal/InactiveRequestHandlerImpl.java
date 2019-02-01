@@ -62,11 +62,7 @@ public class InactiveRequestHandlerImpl implements InactiveRequestHandler {
 
 		response.setStatus(HttpServletResponse.SC_NOT_FOUND);
 
-		PrintWriter printWriter = response.getWriter();
-
 		if (!_showInactiveRequestMessage) {
-			printWriter.print(StringPool.BLANK);
-
 			return;
 		}
 
@@ -84,6 +80,8 @@ public class InactiveRequestHandlerImpl implements InactiveRequestHandler {
 		}
 
 		String html = StringUtil.replace(_content, "[$MESSAGE$]", message);
+
+		PrintWriter printWriter = response.getWriter();
 
 		printWriter.print(html);
 	}

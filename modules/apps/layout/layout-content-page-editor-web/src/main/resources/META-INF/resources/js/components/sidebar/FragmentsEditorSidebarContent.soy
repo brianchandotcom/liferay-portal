@@ -5,12 +5,12 @@
  */
 {template .render}
 	{@param? _handlePanelButtonClick: any}
-	{@param? _panelId: string}
+	{@param? _sidebarPanelId: string}
 	{@param? _sidebarTitle: string}
-	{@param? panels: list<[
+	{@param? sidebarPanels: list<[
 		icon:string,
 		label:string,
-		panelId:string
+		sidebarPanelId:string
 	]>}
 	{@param? spritemap: string}
 	{@param? store: ?}
@@ -18,23 +18,23 @@
 	<div class="fragments-editor-sidebar-content">
 		<div class="fragments-editor-sidebar-section">
 			<h1 class="fragments-editor-sidebar-section__title">{$_sidebarTitle ?: ''}</h1>
-			{if $_panelId == 'sections'}
+			{if $_sidebarPanelId == 'sections'}
 				{call com.liferay.layout.content.page.editor.web.SidebarSectionsPanel.render}
 					{param store: $store /}
 				{/call}
-			{elseif $_panelId == 'elements'}
+			{elseif $_sidebarPanelId == 'elements'}
 				{call com.liferay.layout.content.page.editor.web.SidebarElementsPanel.render}
 					{param store: $store /}
 				{/call}
-			{elseif $_panelId == 'mapping'}
+			{elseif $_sidebarPanelId == 'mapping'}
 				{call com.liferay.layout.content.page.editor.web.SidebarMappingPanel.render}
 					{param store: $store /}
 				{/call}
-			{elseif $_panelId == 'structure'}
+			{elseif $_sidebarPanelId == 'structure'}
 				{call com.liferay.layout.content.page.editor.web.SidebarStructurePanel.render}
 					{param store: $store /}
 				{/call}
-			{elseif $_panelId == 'widgets'}
+			{elseif $_sidebarPanelId == 'widgets'}
 				{call com.liferay.layout.content.page.editor.web.SidebarWidgetsPanel.render}
 					{param store: $store /}
 				{/call}
@@ -42,15 +42,15 @@
 		</div>
 
 		<div class="fragments-editor-sidebar-sections-buttons" role="group">
-			{if $panels}
-				{foreach $panel in $panels}
+			{if $sidebarPanels}
+				{foreach $sidebarPanel in $sidebarPanels}
 					{let $sectionButtonClasses kind="text"}
 						btn
 						{sp}btn-unstyled
 						{sp}text-center
 						{sp}fragments-editor-sidebar-sections-buttons__btn
 
-						{if $panel.panelId == $_panelId}
+						{if $sidebarPanel.sidebarPanelId == $_sidebarPanelId}
 							{sp}fragments-editor-sidebar-sections-buttons__btn--active
 						{/if}
 					{/let}
@@ -58,13 +58,13 @@
 					<button
 						class="{$sectionButtonClasses}"
 						data-onclick="{$_handlePanelButtonClick}"
-						data-panel-id="{$panel.panelId}"
-						data-sidebar-title="{$panel.label}"
-						title="{$panel.label}"
+						data-sidebar-panel-id="{$sidebarPanel.sidebarPanelId}"
+						data-sidebar-title="{$sidebarPanel.label}"
+						title="{$sidebarPanel.label}"
 						type="button"
 					>
 						<svg class="lexicon-icon">
-							<use xlink:href="{$spritemap ?: ''}#{$panel.icon}"></use>
+							<use xlink:href="{$spritemap ?: ''}#{$sidebarPanel.icon}"></use>
 						</svg>
 					</button>
 				{/foreach}

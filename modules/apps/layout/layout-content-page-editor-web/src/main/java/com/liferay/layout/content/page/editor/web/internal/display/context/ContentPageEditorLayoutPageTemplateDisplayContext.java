@@ -78,7 +78,8 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 					"/content_layout/get_mapping_fields"));
 		}
 
-		soyContext.put("panels", getPanelSoyContexts(_showMapping, false));
+		soyContext.put(
+			"sidebarPanels", getSidebarPanelSoyContexts(_showMapping, false));
 
 		if (classNameId == PortalUtil.getClassNameId(
 				LayoutPageTemplateEntry.class)) {

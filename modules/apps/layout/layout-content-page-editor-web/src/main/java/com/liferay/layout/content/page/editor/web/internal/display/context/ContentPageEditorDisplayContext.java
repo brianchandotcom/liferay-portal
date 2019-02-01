@@ -296,11 +296,21 @@ public class ContentPageEditorDisplayContext {
 		return _layoutData;
 	}
 
-	protected List<SoyContext> getPanelSoyContexts(
+	protected String getRedirect() {
+		if (_redirect != null) {
+			return _redirect;
+		}
+
+		_redirect = ParamUtil.getString(request, "redirect");
+
+		return _redirect;
+	}
+
+	protected List<SoyContext> getSidebarPanelSoyContexts(
 		boolean showMapping, boolean showWidgets) {
 
-		if (_panelSoyContexts != null) {
-			return _panelSoyContexts;
+		if (_sidebarPanelSoyContexts != null) {
+			return _sidebarPanelSoyContexts;
 		}
 
 		List<SoyContext> soyContexts = new ArrayList<>();
@@ -316,7 +326,7 @@ public class ContentPageEditorDisplayContext {
 		availableSoyContext.put(
 			"label", LanguageUtil.get(resourceBundle, "sections"));
 
-		availableSoyContext.put("panelId", "sections");
+		availableSoyContext.put("sidebarPanelId", "sections");
 
 		soyContexts.add(availableSoyContext);
 
@@ -325,7 +335,7 @@ public class ContentPageEditorDisplayContext {
 		availableSoyContext.put("icon", "page-template");
 		availableSoyContext.put(
 			"label", LanguageUtil.get(resourceBundle, "section-builder"));
-		availableSoyContext.put("panelId", "elements");
+		availableSoyContext.put("sidebarPanelId", "elements");
 
 		soyContexts.add(availableSoyContext);
 
@@ -335,7 +345,7 @@ public class ContentPageEditorDisplayContext {
 			availableSoyContext.put("icon", "simulation-menu");
 			availableSoyContext.put(
 				"label", LanguageUtil.get(themeDisplay.getLocale(), "mapping"));
-			availableSoyContext.put("panelId", "mapping");
+			availableSoyContext.put("sidebarPanelId", "mapping");
 
 			soyContexts.add(availableSoyContext);
 		}
@@ -345,7 +355,7 @@ public class ContentPageEditorDisplayContext {
 		availableSoyContext.put("icon", "pages-tree");
 		availableSoyContext.put(
 			"label", LanguageUtil.get(resourceBundle, "structure"));
-		availableSoyContext.put("panelId", "structure");
+		availableSoyContext.put("sidebarPanelId", "structure");
 
 		soyContexts.add(availableSoyContext);
 
@@ -355,24 +365,14 @@ public class ContentPageEditorDisplayContext {
 			availableSoyContext.put("icon", "chip");
 			availableSoyContext.put(
 				"label", LanguageUtil.get(resourceBundle, "widgets"));
-			availableSoyContext.put("panelId", "widgets");
+			availableSoyContext.put("sidebarPanelId", "widgets");
 
 			soyContexts.add(availableSoyContext);
 		}
 
-		_panelSoyContexts = soyContexts;
+		_sidebarPanelSoyContexts = soyContexts;
 
-		return _panelSoyContexts;
-	}
-
-	protected String getRedirect() {
-		if (_redirect != null) {
-			return _redirect;
-		}
-
-		_redirect = ParamUtil.getString(request, "redirect");
-
-		return _redirect;
+		return _sidebarPanelSoyContexts;
 	}
 
 	protected List<SoyContext> getSoyContextFragmentCollections(int type) {
@@ -565,8 +565,8 @@ public class ContentPageEditorDisplayContext {
 	private ItemSelectorCriterion _imageItemSelectorCriterion;
 	private final ItemSelector _itemSelector;
 	private String _layoutData;
-	private List<SoyContext> _panelSoyContexts;
 	private String _redirect;
+	private List<SoyContext> _sidebarPanelSoyContexts;
 	private SoyContext _soyContextFragmentEntryLinksSoyContext;
 	private ItemSelectorCriterion _urlItemSelectorCriterion;
 

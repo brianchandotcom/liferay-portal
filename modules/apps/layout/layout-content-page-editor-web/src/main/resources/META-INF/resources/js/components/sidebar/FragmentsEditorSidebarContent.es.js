@@ -29,13 +29,13 @@ class FragmentsEditorSidebarContent extends Component {
 
 		if (!this.fragmentsEditorSidebarVisible) {
 			this.store.dispatchAction(TOGGLE_SIDEBAR);
-			this._setActivePanel(data.panelId, data.sidebarTitle);
+			this._setActivePanel(data.sidebarPanelId, data.sidebarTitle);
 		}
-		else if (this._panelId === data.panelId) {
+		else if (this._sidebarPanelId === data.sidebarPanelId) {
 			this._hideSidebar();
 		}
 		else {
-			this._setActivePanel(data.panelId, data.sidebarTitle);
+			this._setActivePanel(data.sidebarPanelId, data.sidebarTitle);
 		}
 	}
 
@@ -46,19 +46,19 @@ class FragmentsEditorSidebarContent extends Component {
 	 */
 	_hideSidebar() {
 		this.store.dispatchAction(HIDE_SIDEBAR);
-		this._panelId = '';
+		this._sidebarPanelId = '';
 		this._sidebarTitle = '';
 	}
 
 	/**
-	 * Set as active the panel with the given panelId and also set sidebar title
-	 * @param {string} panelId
+	 * Set as active the panel with the given sidebarPanelId and also set sidebar title
+	 * @param {string} sidebarPanelId
 	 * @param {string} title
 	 * @private
 	 * @review
 	 */
-	_setActivePanel(panelId, title) {
-		this._panelId = panelId;
+	_setActivePanel(sidebarPanelId, title) {
+		this._sidebarPanelId = sidebarPanelId;
 		this._sidebarTitle = title;
 	}
 
@@ -80,7 +80,7 @@ FragmentsEditorSidebarContent.STATE = {
 	 * @review
 	 * @type {string}
 	 */
-	_panelId: Config
+	_sidebarPanelId: Config
 		.string()
 		.internal()
 		.value('sections'),
@@ -103,7 +103,7 @@ const ConnectedFragmentsEditorSidebarContent = getConnectedComponent(
 	FragmentsEditorSidebarContent,
 	[
 		'fragmentsEditorSidebarVisible',
-		'panels',
+		'sidebarPanels',
 		'spritemap'
 	]
 );

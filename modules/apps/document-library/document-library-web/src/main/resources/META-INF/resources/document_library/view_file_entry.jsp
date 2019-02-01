@@ -85,19 +85,6 @@ if (portletTitleBasedNavigation) {
 }
 %>
 
-<c:if test="<%= portletTitleBasedNavigation %>">
-	<liferay-frontend:info-bar>
-		<aui:workflow-status markupView="lexicon" model="<%= DLFileEntry.class %>" showHelpMessage="<%= false %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= fileVersion.getStatus() %>" version="<%= fileVersion.getVersion() %>" />
-
-		<liferay-frontend:info-bar-buttons>
-			<liferay-frontend:info-bar-sidenav-toggler-button
-				icon="info-circle"
-				label="info"
-			/>
-		</liferay-frontend:info-bar-buttons>
-	</liferay-frontend:info-bar>
-</c:if>
-
 <liferay-util:buffer
 	var="documentTitle"
 >
@@ -108,53 +95,55 @@ if (portletTitleBasedNavigation) {
 	</c:if>
 </liferay-util:buffer>
 
-<div class="tbar upper-tbar">
-	<div class="container-fluid container-fluid-max-xl">
-		<ul class="tbar-nav">
-			<li class="tbar-item tbar-item-expand">
-				<div class="tbar-section text-left">
-					<span class="text-truncate-inline upper-tbar-title">
-						<span class="text-truncate"><%= HtmlUtil.escape(documentTitle) %></span>
-					</span>
-
-					<c:if test="<%= fileEntry.hasLock() || fileEntry.isCheckedOut() %>">
-						<span>
-							<aui:icon cssClass="icon-monospaced" image="lock" markupView="lexicon" message="locked" />
+<c:if test="<%= portletTitleBasedNavigation %>">
+	<div class="tbar upper-tbar">
+		<div class="container-fluid container-fluid-max-xl">
+			<ul class="tbar-nav">
+				<li class="tbar-item tbar-item-expand">
+					<div class="tbar-section text-left">
+						<span class="text-truncate-inline upper-tbar-title">
+							<span class="text-truncate"><%= HtmlUtil.escape(documentTitle) %></span>
 						</span>
-					</c:if>
-				</div>
-			</li>
-			<li class="tbar-item">
-				<liferay-frontend:info-bar-sidenav-toggler-button
-					cssClass="btn-sm"
-					label="info"
-				/>
-			</li>
-			<li class="tbar-item">
-				<button class="btn btn-secondary btn-sm" type="button">Share</button>
-			</li>
 
-			<c:if test="<%= dlViewFileVersionDisplayContext.isDownloadLinkVisible() %>">
+						<c:if test="<%= fileEntry.hasLock() || fileEntry.isCheckedOut() %>">
+							<span>
+								<aui:icon cssClass="icon-monospaced" image="lock" markupView="lexicon" message="locked" />
+							</span>
+						</c:if>
+					</div>
+				</li>
 				<li class="tbar-item">
-					<clay:link
-						buttonStyle="primary"
-						elementClasses="btn-sm"
-						href="<%= DLUtil.getDownloadURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK) %>"
-						icon="download"
-						label='<%= LanguageUtil.get(resourceBundle, "download") %>'
-						title='<%= LanguageUtil.get(resourceBundle, "download") + " (" + TextFormatter.formatStorageSize(fileVersion.getSize(), locale) + ")" %>'
+					<liferay-frontend:info-bar-sidenav-toggler-button
+						cssClass="btn-sm"
+						label="info"
 					/>
 				</li>
-			</c:if>
+				<li class="tbar-item">
+					<button class="btn btn-secondary btn-sm" type="button">Share</button>
+				</li>
 
-			<li class="tbar-item">
-				<liferay-ui:menu
-					menu="<%= dlViewFileVersionDisplayContext.getMenu() %>"
-				/>
-			</li>
-		</ul>
+				<c:if test="<%= dlViewFileVersionDisplayContext.isDownloadLinkVisible() %>">
+					<li class="tbar-item">
+						<clay:link
+							buttonStyle="primary"
+							elementClasses="btn-sm"
+							href="<%= DLUtil.getDownloadURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK) %>"
+							icon="download"
+							label='<%= LanguageUtil.get(resourceBundle, "download") %>'
+							title='<%= LanguageUtil.get(resourceBundle, "download") + " (" + TextFormatter.formatStorageSize(fileVersion.getSize(), locale) + ")" %>'
+						/>
+					</li>
+				</c:if>
+
+				<li class="tbar-item">
+					<liferay-ui:menu
+						menu="<%= dlViewFileVersionDisplayContext.getMenu() %>"
+					/>
+				</li>
+			</ul>
+		</div>
 	</div>
-</div>
+</c:if>
 
 <div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
 	<portlet:actionURL name="/document_library/edit_file_entry" var="editFileEntry" />

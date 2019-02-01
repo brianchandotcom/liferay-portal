@@ -102,6 +102,14 @@ public class AnnouncementsAdminViewManagementToolbarDisplayContext {
 		return availableActionDropdownItems;
 	}
 
+	public String getClearResultsURL() {
+		PortletURL clearResultsURL = _liferayPortletResponse.createRenderURL();
+
+		clearResultsURL.setParameter("navigation", _getNavigation());
+
+		return clearResultsURL.toString();
+	}
+
 	public CreationMenu getCreationMenu() {
 		return new CreationMenu() {
 			{

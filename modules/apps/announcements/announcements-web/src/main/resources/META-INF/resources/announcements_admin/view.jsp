@@ -70,6 +70,7 @@ AnnouncementsAdminViewManagementToolbarDisplayContext announcementsAdminViewMana
 
 <clay:management-toolbar
 	actionDropdownItems="<%= announcementsAdminViewManagementToolbarDisplayContext.getActionDropdownItems() %>"
+	clearResultsURL="<%= announcementsAdminViewManagementToolbarDisplayContext.getClearResultsURL() %>"
 	componentId="announcementsAdminViewManagementToolbar"
 	creationMenu="<%= announcementsAdminViewManagementToolbarDisplayContext.getCreationMenu() %>"
 	disabled="<%= announcementsAdminViewManagementToolbarDisplayContext.isDisabled() %>"

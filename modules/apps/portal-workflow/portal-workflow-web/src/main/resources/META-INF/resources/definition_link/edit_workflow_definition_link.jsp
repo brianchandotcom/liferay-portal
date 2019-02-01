@@ -48,6 +48,7 @@ String resource = workflowDefinitionLinkSearchEntry.getResource();
 		<aui:select cssClass="form-control-sm workflow-definition-form" label="<%= StringPool.BLANK %>" name='<%= "workflowDefinitionName@" + className %>' title="workflow-definition">
 
 			<%
+			WorkflowDefinition defaultWorkflowDefinition = workflowDefinitionLinkDisplayContext.fetchDefaultWorkflowDefinition(className);
 			String defaultWorkflowDefinitionLabel = workflowDefinitionLinkDisplayContext.getDefaultWorkflowDefinitionLabel(className);
 			%>
 
@@ -55,6 +56,10 @@ String resource = workflowDefinitionLinkSearchEntry.getResource();
 
 			<%
 			for (WorkflowDefinition workflowDefinition : workflowDefinitionLinkDisplayContext.getWorkflowDefinitions()) {
+				if (!workflowDefinitionLinkDisplayContext.isControlPanelPortlet() && workflowDefinitionLinkDisplayContext.isWorkflowDefinitionEquals(workflowDefinition, defaultWorkflowDefinition)) {
+					continue;
+				}
+
 				boolean selected = workflowDefinitionLinkDisplayContext.isWorkflowDefinitionSelected(workflowDefinition, className);
 
 				String value = workflowDefinitionLinkDisplayContext.getWorkflowDefinitionValue(workflowDefinition);

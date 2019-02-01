@@ -92,6 +92,7 @@ components:
           $ref: "#/components/schemas/Folder"
         id:
           format: int64
+          type: integer
         name:
           type: string
         self:

@@ -39,82 +39,6 @@ components:
         structure:
           $ref: "#/components/schemas/FormStructure"
       type: object
-    FormContext:
-      description: https://www.schema.org/FormContext
-      properties:
-        id:
-          format: int64
-          type: integer
-        isReadOnly:
-          type: boolean
-        isShowRequiredFieldsWarning:
-          type: boolean
-        isShowSubmitButton:
-          type: boolean
-        pages:
-          description: https://www.schema.org/FormPageContext
-          properties:
-            fields:
-              description: https://www.schema.org/FormFieldContext
-              properties:
-                errorMessage:
-                  type: string
-                id:
-                  format: int64
-                  type: integer
-                isEvaluable:
-                  type: boolean
-                isReadOnly:
-                  type: boolean
-                isRequired:
-                  type: boolean
-                isValid:
-                  type: boolean
-                isValueChanged:
-                  type: boolean
-                isVisible:
-                  type: boolean
-                name:
-                  type: string
-                options:
-                  description: https://www.schema.org/FormFieldOptions
-                  properties:
-                    id:
-                      format: int64
-                      type: integer
-                    label:
-                      type: string
-                    self:
-                      format: uri
-                      type: string
-                    value:
-                      type: string
-                  type: object
-                self:
-                  format: uri
-                  type: string
-                value:
-                  type: string
-              type: object
-            headline:
-              type: string
-            id:
-              format: int64
-              type: integer
-            isEnabled:
-              type: boolean
-            isShowRequiredFieldsWarning:
-              type: boolean
-            self:
-              format: uri
-              type: string
-            text:
-              type: string
-          type: object
-        self:
-          format: uri
-          type: string
-      type: object
     FormDocument:
       description: https://www.schema.org/FormDocument
       properties:
@@ -525,10 +449,6 @@ paths:
             type: integer
         - in: header
           name: Accept-Language
-          schema:
-            type: string
-        - in: query
-          name: ddmformrenderingcontext
           schema:
             type: string
       requestBody:

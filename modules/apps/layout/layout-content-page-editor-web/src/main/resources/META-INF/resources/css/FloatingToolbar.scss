@@ -1,13 +1,9 @@
 @import "variables";
 
 .fragments-editor__floating-toolbar {
-	bottom: auto;
-	left: auto;
+	display: inline-block;
 	padding: $fragmentsEditorSpacing;
-	position: absolute;
-	right: 0;
 	text-align: right;
-	top: 100%;
 	z-index: $floatingToolbarZIndex;
 
 	&-buttons.popover,

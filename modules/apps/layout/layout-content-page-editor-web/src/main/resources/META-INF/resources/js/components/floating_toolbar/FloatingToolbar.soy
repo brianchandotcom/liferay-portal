@@ -6,7 +6,7 @@
 {template .render}
 	{@param item: ?}
 	{@param itemId: string}
-	{@param? _panels: list<[
+	{@param panels: list<[
 		icon: string,
 		panelId: string,
 		title: string
@@ -17,13 +17,14 @@
 	{@param? store: ?}
 
 	<div class="fragments-editor__floating-toolbar">
-		{if $spritemap and $_panels and (length($_panels) > 0)}
+		{if $spritemap and $panels and (length($panels) > 0)}
 			<div class="fragments-editor__floating-toolbar-buttons popover">
-				{foreach $panel in $_panels}
+				{foreach $panel in $panels}
 					{call .panelButton}
 						{param handleButtonClick: $_handleButtonClick /}
 						{param key: $panel.panelId /}
 						{param panel: $panel /}
+						{param ref: $panel.panelId /}
 						{param selectedPanelId: $_selectedPanelId /}
 						{param spritemap: $spritemap /}
 					{/call}
@@ -36,6 +37,7 @@
 				{delcall com.liferay.layout.content.page.editor.web.FloatingToolbarPanel variant="$_selectedPanelId"}
 					{param item: $item /}
 					{param itemId: $itemId /}
+					{param portalElement: null /}
 					{param store: $store /}
 				{/delcall}
 			</div>

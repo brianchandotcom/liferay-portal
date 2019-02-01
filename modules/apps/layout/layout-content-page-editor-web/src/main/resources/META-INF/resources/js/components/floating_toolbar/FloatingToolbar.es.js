@@ -1,35 +1,9 @@
 import Component from 'metal-component';
-import {Config} from 'metal-state';
 import Soy from 'metal-soy';
+import {Config} from 'metal-state';
 
-import './background_color/FloatingToolbarBackgroundColorPanel.es';
-import './background_image/FloatingToolbarBackgroundImagePanel.es';
-import './spacing/FloatingToolbarSpacingPanel.es';
 import getConnectedComponent from '../../store/ConnectedComponent.es';
 import templates from './FloatingToolbar.soy';
-
-/**
- * List of available panels
- * @review
- * @type {object[]}
- */
-const FLOATING_TOOLBAR_PANELS = [
-	{
-		icon: 'format',
-		panelId: 'background_color',
-		title: Liferay.Language.get('background-color')
-	},
-	{
-		icon: 'table',
-		panelId: 'spacing',
-		title: Liferay.Language.get('spacing')
-	},
-	{
-		icon: 'picture',
-		panelId: 'background_image',
-		title: Liferay.Language.get('background-image')
-	}
-];
 
 /**
  * FloatingToolbar
@@ -59,29 +33,7 @@ class FloatingToolbar extends Component {
  * @static
  * @type {!Object}
  */
-FloatingToolbar.STATE = {
-
-	/**
-	 * List of available panels.
-	 * @default FLOATING_TOOLBAR_PANELS
-	 * @instance
-	 * @memberOf FloatingToolbar
-	 * @private
-	 * @review
-	 * @type {object[]}
-	 */
-	_panels: Config
-		.arrayOf(
-			Config.shapeOf(
-				{
-					icon: Config.string().required(),
-					panelId: Config.string().required(),
-					title: Config.string().required()
-				}
-			)
-		)
-		.internal()
-		.value(FLOATING_TOOLBAR_PANELS),
+FloatingToolbar.STATE = {,
 
 	/**
 	 * Selected panel ID.
@@ -93,9 +45,29 @@ FloatingToolbar.STATE = {
 	 * @type {string|null}
 	 */
 	_selectedPanelId: Config
-		.oneOf(FLOATING_TOOLBAR_PANELS.map(panel => panel.panelId))
+		.string()
 		.internal()
-		.value(null)
+		.value(null),
+
+	/**
+	 * List of available panels.
+	 * @default undefined
+	 * @instance
+	 * @memberOf FloatingToolbar
+	 * @review
+	 * @type {object[]}
+	 */
+	panels: Config
+		.arrayOf(
+			Config.shapeOf(
+				{
+					icon: Config.string(),
+					panelId: Config.string(),
+					title: Config.string()
+				}
+			)
+		)
+		.required()
 };
 
 const ConnectedFloatingToolbar = getConnectedComponent(

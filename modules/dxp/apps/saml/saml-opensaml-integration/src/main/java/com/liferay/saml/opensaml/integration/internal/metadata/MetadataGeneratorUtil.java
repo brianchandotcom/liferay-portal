@@ -306,7 +306,7 @@ public class MetadataGeneratorUtil {
 		List<EncryptionMethod> encryptionMethods =
 			encryptionKeyDescriptor.getEncryptionMethods();
 
-		ArrayList<String> algorithms = new ArrayList<>();
+		List<String> algorithms = new ArrayList<>();
 
 		EncryptionConfiguration encryptionConfiguration =
 			ConfigurationService.get(EncryptionConfiguration.class);
@@ -368,7 +368,7 @@ public class MetadataGeneratorUtil {
 	private static List<XMLObject> _getExtensionXmlObjects(
 		Credential credential) {
 
-		ArrayList<XMLObject> xmlObjects = new ArrayList<>();
+		List<XMLObject> xmlObjects = new ArrayList<>();
 
 		AlgorithmRegistry algorithmRegistry =
 			AlgorithmSupport.getGlobalAlgorithmRegistry();

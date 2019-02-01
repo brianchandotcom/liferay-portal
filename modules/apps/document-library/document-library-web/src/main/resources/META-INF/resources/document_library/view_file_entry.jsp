@@ -116,6 +116,11 @@ if (portletTitleBasedNavigation) {
 					<span class="component-title text-truncate-inline">
 						<span class="text-truncate"><%= HtmlUtil.escape(documentTitle) %></span>
 					</span>
+					<c:if test="<%= fileEntry.hasLock() || fileEntry.isCheckedOut() %>">
+						<span>
+							<aui:icon cssClass="icon-monospaced" image="lock" markupView="lexicon" message="locked" />
+						</span>
+					</c:if>
 				</div>
 			</li>
 			<li class="tbar-item">

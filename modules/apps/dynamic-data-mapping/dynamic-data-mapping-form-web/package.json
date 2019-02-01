@@ -168,9 +168,9 @@
 		"csf": "csf src/**/*.es.js src/**/*.jsp test/**/*.es.js --fail-on-errors",
 		"format": "npm run csf -- -i",
 		"start": "node watch.js",
-		"test": "npm run build-soy-tests && cross-env NODE_ENV=test jest --coverage && npm run clean",
 		"test:coverage:open": "opn build/coverage/lcov-report/index.html",
-		"test:snapshots": "npm run build-soy-tests && NODE_ENV=test jest --coverage -u && npm run clean"
+		"test:snapshots": "npm run build-soy-tests && NODE_ENV=test jest --coverage -u && npm run clean",
+		"test_DISABLED": "npm run build-soy-tests && cross-env NODE_ENV=test jest --coverage && npm run clean"
 	},
 	"version": "2.0.0"
 }

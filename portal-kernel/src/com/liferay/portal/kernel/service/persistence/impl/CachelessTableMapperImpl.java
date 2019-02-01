@@ -53,14 +53,14 @@ public class CachelessTableMapperImpl
 				" = ? AND ", rightColumnName, " = ?"),
 			RowMapper.COUNT, ParamSetter.BIGINT, ParamSetter.BIGINT);
 
+		destroy();
+
 		leftToRightPortalCache = new DummyPortalCache(
 			leftToRightPortalCache.getPortalCacheName(),
 			leftToRightPortalCache.getPortalCacheManager());
 		rightToLeftPortalCache = new DummyPortalCache(
 			rightToLeftPortalCache.getPortalCacheName(),
 			rightToLeftPortalCache.getPortalCacheManager());
-
-		destroy();
 	}
 
 	@Override

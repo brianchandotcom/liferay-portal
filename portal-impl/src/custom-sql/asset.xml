@@ -38,7 +38,7 @@
 							WHERE
 								(AssetEntry.groupId = ?) AND
 								(AssetEntry.classNameId = ?) AND
-								(AssetEntry.visible = [$TRUE$])
+								(AssetEntry.visible_ = [$TRUE$])
 						)
 				) AND
 				(
@@ -222,7 +222,7 @@
 								AssetEntry
 							WHERE
 								(AssetEntry.groupId = ?) AND
-								(AssetEntry.visible = [$TRUE$])
+								(AssetEntry.visible_ = [$TRUE$])
 						)
 				) AND
 				(AssetTag.name LIKE ?)
@@ -248,7 +248,7 @@
 							WHERE
 								(AssetEntry.groupId = ?) AND
 								(AssetEntry.classNameId = ?) AND
-								(AssetEntry.visible = [$TRUE$])
+								(AssetEntry.visible_ = [$TRUE$])
 						)
 				) AND
 				(
@@ -277,7 +277,7 @@
 							WHERE
 								(AssetEntry.groupId = ?) AND
 								(AssetEntry.classNameId = ?) AND
-								(AssetEntry.visible = [$TRUE$])
+								(AssetEntry.visible_ = [$TRUE$])
 						)
 				) AND
 				(

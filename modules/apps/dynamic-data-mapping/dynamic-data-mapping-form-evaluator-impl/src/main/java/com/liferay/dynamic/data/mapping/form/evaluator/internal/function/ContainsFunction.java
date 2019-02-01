@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.form.evaluator.internal.function;
 
 import com.liferay.dynamic.data.mapping.constants.DDMConstants;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunction;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -29,10 +30,31 @@ import org.osgi.service.component.annotations.Component;
 	service = DDMExpressionFunction.Function2.class
 )
 public class ContainsFunction
-	implements DDMExpressionFunction.Function2<String, String, Boolean> {
+	implements DDMExpressionFunction.Function2<Object, String, Boolean> {
 
 	@Override
-	public Boolean apply(String string1, String string2) {
+	public Boolean apply(Object object, String key) {
+		if (Validator.isNull(object)) {
+			return false;
+		}
+
+		if (object instanceof String) {
+			return apply((String)object, key);
+		}
+
+		if (object instanceof JSONArray) {
+			return apply(object.toString(), key);
+		}
+
+		return false;
+	}
+
+	@Override
+	public String getName() {
+		return "contains";
+	}
+
+	protected Boolean apply(String string1, String string2) {
 		if (Validator.isNull(string1) || Validator.isNull(string2)) {
 			return false;
 		}
@@ -41,11 +63,6 @@ public class ContainsFunction
 		string2 = StringUtil.toLowerCase(string2);
 
 		return string1.contains(string2);
-	}
-
-	@Override
-	public String getName() {
-		return "contains";
 	}
 
 }

@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.form.evaluator.internal.function;
 
 import com.liferay.dynamic.data.mapping.constants.DDMConstants;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunction;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.stream.Stream;
@@ -46,6 +47,12 @@ public class IsEmptyFunction
 			).allMatch(
 				Validator::isNull
 			);
+		}
+
+		if (parameter instanceof JSONArray) {
+			JSONArray jsonArray = (JSONArray)parameter;
+
+			return jsonArray.length() == 0;
 		}
 
 		return Validator.isNull(parameter);

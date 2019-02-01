@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.form.evaluator.internal.function;
 
 import com.liferay.dynamic.data.mapping.constants.DDMConstants;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunction;
+import com.liferay.portal.kernel.json.JSONArray;
 
 import java.util.Objects;
 
@@ -33,12 +34,31 @@ public class EqualsFunction
 
 	@Override
 	public Boolean apply(Object object1, Object object2) {
-		return Objects.equals(object1, object2);
+		Object value1 = object1;
+		Object value2 = object2;
+
+		if (object1 instanceof JSONArray) {
+			value1 = _getValue((JSONArray)object1);
+		}
+
+		if (object2 instanceof JSONArray) {
+			value2 = _getValue((JSONArray)object2);
+		}
+
+		return Objects.equals(value1, value2);
 	}
 
 	@Override
 	public String getName() {
 		return "equals";
+	}
+
+	private Object _getValue(JSONArray jsonArray) {
+		if (jsonArray.length() == 1) {
+			return jsonArray.get(0);
+		}
+
+		return jsonArray;
 	}
 
 }

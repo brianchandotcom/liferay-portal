@@ -20,9 +20,7 @@ import org.jboss.arquillian.container.spi.ContainerRegistry;
 import org.jboss.arquillian.container.spi.event.KillContainer;
 import org.jboss.arquillian.container.spi.event.SetupContainer;
 import org.jboss.arquillian.container.spi.event.SetupContainers;
-import org.jboss.arquillian.container.spi.event.StartContainer;
 import org.jboss.arquillian.container.spi.event.StartSuiteContainers;
-import org.jboss.arquillian.container.spi.event.StopContainer;
 import org.jboss.arquillian.container.spi.event.StopSuiteContainers;
 import org.jboss.arquillian.core.api.Event;
 import org.jboss.arquillian.core.api.Injector;
@@ -38,33 +36,13 @@ public class ContainerLifecycleController {
 	public void killContainer(@Observes KillContainer killContainer)
 		throws Exception {
 
-		_forContainer(
-			killContainer.getContainer(),
-			new Operation<Container>() {
-
-				@Override
-				public void perform(Container container) throws Exception {
-					if (container.getState().equals(Container.State.STARTED)) {
-						container.kill();
-					}
-				}
-
-			});
+		_forContainer(killContainer.getContainer(), Container::kill);
 	}
 
 	public void setupContainer(@Observes SetupContainer setupContainer)
 		throws Exception {
 
-		_forContainer(
-			setupContainer.getContainer(),
-			new Operation<Container>() {
-
-				@Override
-				public void perform(Container container) throws Exception {
-					container.setup();
-				}
-
-			});
+		_forContainer(setupContainer.getContainer(), Container::setup);
 	}
 
 	public void setupContainers(@Observes SetupContainers setupContainers)
@@ -74,7 +52,7 @@ public class ContainerLifecycleController {
 			new Operation<Container>() {
 
 				@Override
-				public void perform(Container container) {
+				public void perform(Container container) throws Exception {
 					_setupContainerEvent.fire(new SetupContainer(container));
 				}
 
@@ -84,74 +62,18 @@ public class ContainerLifecycleController {
 			});
 	}
 
-	public void startContainer(@Observes StartContainer startContainer)
-		throws Exception {
-
-		_forContainer(
-			startContainer.getContainer(),
-			new Operation<Container>() {
-
-				@Override
-				public void perform(Container container) throws Exception {
-					if (!container.getState().equals(Container.State.STARTED)) {
-						container.start();
-					}
-				}
-
-			});
-	}
-
 	public void startSuiteContainers(
 			@Observes StartSuiteContainers startSuiteContainers)
 		throws Exception {
 
-		_forEachSuiteContainer(
-			new Operation<Container>() {
-
-				@Override
-				public void perform(Container container) {
-					_startContainerEvent.fire(new StartContainer(container));
-				}
-
-				@Inject
-				private Event<StartContainer> _startContainerEvent;
-
-			});
-	}
-
-	public void stopContainer(@Observes StopContainer stopContainer)
-		throws Exception {
-
-		_forContainer(
-			stopContainer.getContainer(),
-			new Operation<Container>() {
-
-				@Override
-				public void perform(Container container) throws Exception {
-					if (container.getState().equals(Container.State.STARTED)) {
-						container.stop();
-					}
-				}
-
-			});
+		_forEachSuiteContainer(Container::start);
 	}
 
 	public void stopSuiteContainers(
 			@Observes StopSuiteContainers stopSuiteContainers)
 		throws Exception {
 
-		_forEachSuiteContainer(
-			new Operation<Container>() {
-
-				@Override
-				public void perform(Container container) {
-					_stopContainerEvent.fire(new StopContainer(container));
-				}
-
-				@Inject
-				private Event<StopContainer> _stopContainerEvent;
-
-			});
+		_forEachSuiteContainer(Container::stop);
 	}
 
 	public interface Operation<T> {

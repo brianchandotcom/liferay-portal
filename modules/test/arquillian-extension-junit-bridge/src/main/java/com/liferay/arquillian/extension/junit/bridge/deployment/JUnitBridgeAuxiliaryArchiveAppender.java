@@ -16,7 +16,6 @@ package com.liferay.arquillian.extension.junit.bridge.deployment;
 
 import com.liferay.arquillian.extension.junit.bridge.LiferayArquillianJUnitBridgeExtension;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.arquillian.extension.junit.bridge.junit.container.JUnitTestRunner;
 import com.liferay.arquillian.extension.junit.bridge.observer.JUnitBridgeObserver;
 import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.petra.string.StringBundler;
@@ -28,7 +27,6 @@ import java.util.jar.Attributes;
 import java.util.jar.Manifest;
 
 import org.jboss.arquillian.container.test.spi.RemoteLoadableExtension;
-import org.jboss.arquillian.container.test.spi.TestRunner;
 import org.jboss.arquillian.container.test.spi.client.deployment.AuxiliaryArchiveAppender;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -55,8 +53,6 @@ public class JUnitBridgeAuxiliaryArchiveAppender
 		javaArchive.addAsServiceProviderAndClasses(
 			RemoteLoadableExtension.class,
 			LiferayArquillianJUnitBridgeExtension.class);
-		javaArchive.addAsServiceProviderAndClasses(
-			TestRunner.class, JUnitTestRunner.class);
 		javaArchive.addClasses(Arquillian.class, JUnitBridgeObserver.class);
 		javaArchive.addPackages(false, Arquillian.class.getPackage());
 

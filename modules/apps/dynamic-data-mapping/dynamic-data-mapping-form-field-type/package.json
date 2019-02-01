@@ -86,7 +86,7 @@
 		},
 		"moduleNameMapper": {
 			"(.*)\\.soy$": "$1.soy.js",
-			"source\/(.*)": "<rootDir>/src/main/resources/META-INF/resources/metal/$1.js"
+			"source/(.*)": "<rootDir>/src/main/resources/META-INF/resources/metal/$1.js"
 		},
 		"modulePathIgnorePatterns": [
 			"/__fixtures__/",
@@ -121,9 +121,9 @@
 		"format": "npm run csf -- -i",
 		"lint": "eslint src/main/resources/META-INF/resources/metal/",
 		"start": "node watch.js",
+		"test": "npm run build-soy-tests && cross-env NODE_ENV=test jest --coverage && npm run clean",
 		"test:coverage:open": "opn build/coverage/lcov-report/index.html",
-		"test:snapshots": "npm run build-soy-tests && cross-env NODE_ENV=test jest --coverage -u && npm run clean",
-		"test": "npm run build-soy-tests && cross-env NODE_ENV=test jest --coverage && npm run clean"
+		"test:snapshots": "npm run build-soy-tests && cross-env NODE_ENV=test jest --coverage -u && npm run clean"
 	},
 	"version": "4.0.0"
 }

@@ -132,9 +132,9 @@
 		},
 		"moduleNameMapper": {
 			"(.*)\\.soy$": "$1.soy.js",
-			"fixtures\/(.*)": "<rootDir>/test/metal/js/__fixtures__/$1.js",
-			"mock\/(.*)": "<rootDir>/test/metal/js/__mock__/$1.js",
-			"source\/(.*)": "<rootDir>/src/main/resources/META-INF/resources/metal/js/$1.js"
+			"fixtures/(.*)": "<rootDir>/test/metal/js/__fixtures__/$1.js",
+			"mock/(.*)": "<rootDir>/test/metal/js/__mock__/$1.js",
+			"source/(.*)": "<rootDir>/src/main/resources/META-INF/resources/metal/js/$1.js"
 		},
 		"modulePathIgnorePatterns": [
 			"/__fixtures__/",
@@ -170,9 +170,9 @@
 		"csf": "csf src/**/*.es.js src/**/*.soy test/**/*.es.js --fail-on-errors",
 		"format": "npm run csf -- -i",
 		"start": "node watch.js",
+		"test": "npm run build-soy-tests && cross-env NODE_ENV=test jest --coverage && npm run clean",
 		"test:coverage:open": "opn build/coverage/lcov-report/index.html",
-		"test:snapshots": "npm run build-soy-tests && cross-env NODE_ENV=test jest --coverage -u && npm run clean",
-		"test": "npm run build-soy-tests && cross-env NODE_ENV=test jest --coverage && npm run clean"
+		"test:snapshots": "npm run build-soy-tests && cross-env NODE_ENV=test jest --coverage -u && npm run clean"
 	},
 	"version": "2.0.0"
 }

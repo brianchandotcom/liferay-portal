@@ -63,25 +63,6 @@ public class LocalContainerRegistry implements ContainerRegistry {
 
 	@Override
 	public Container getContainer(TargetDescription targetDescription) {
-		if (TargetDescription.DEFAULT.equals(targetDescription)) {
-			return _findDefaultContainer();
-		}
-
-		return _findMatchingContainer(targetDescription.getName());
-	}
-
-	@Override
-	public List<Container> getContainers() {
-		return Collections.unmodifiableList(_containers);
-	}
-
-	private Container _addContainer(Container container) {
-		_containers.add(container);
-
-		return container;
-	}
-
-	private Container _findDefaultContainer() {
 		if (_containers.size() == 1) {
 			return _containers.get(0);
 		}
@@ -95,6 +76,17 @@ public class LocalContainerRegistry implements ContainerRegistry {
 		}
 
 		return null;
+	}
+
+	@Override
+	public List<Container> getContainers() {
+		return Collections.unmodifiableList(_containers);
+	}
+
+	private Container _addContainer(Container container) {
+		_containers.add(container);
+
+		return container;
 	}
 
 	private Container _findMatchingContainer(String name) {

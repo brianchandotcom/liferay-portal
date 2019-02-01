@@ -108,14 +108,15 @@ if (portletTitleBasedNavigation) {
 	</c:if>
 </liferay-util:buffer>
 
-<div class="component-tbar tbar" style="background: white">
+<div class="tbar upper-tbar">
 	<div class="container-fluid container-fluid-max-xl">
 		<ul class="tbar-nav">
 			<li class="tbar-item tbar-item-expand">
 				<div class="tbar-section text-left">
-					<span class="component-title text-truncate-inline">
+					<span class="text-truncate-inline upper-tbar-title">
 						<span class="text-truncate"><%= HtmlUtil.escape(documentTitle) %></span>
 					</span>
+
 					<c:if test="<%= fileEntry.hasLock() || fileEntry.isCheckedOut() %>">
 						<span>
 							<aui:icon cssClass="icon-monospaced" image="lock" markupView="lexicon" message="locked" />
@@ -125,25 +126,27 @@ if (portletTitleBasedNavigation) {
 			</li>
 			<li class="tbar-item">
 				<liferay-frontend:info-bar-sidenav-toggler-button
-					label="info"
 					cssClass="btn-sm"
+					label="info"
 				/>
 			</li>
 			<li class="tbar-item">
 				<button class="btn btn-secondary btn-sm" type="button">Share</button>
 			</li>
+
 			<c:if test="<%= dlViewFileVersionDisplayContext.isDownloadLinkVisible() %>">
 				<li class="tbar-item">
 					<clay:link
-						icon="download"
 						buttonStyle="primary"
 						elementClasses="btn-sm"
 						href="<%= DLUtil.getDownloadURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK) %>"
+						icon="download"
 						label='<%= LanguageUtil.get(resourceBundle, "download") %>'
 						title='<%= LanguageUtil.get(resourceBundle, "download") + " (" + TextFormatter.formatStorageSize(fileVersion.getSize(), locale) + ")" %>'
 					/>
 				</li>
 			</c:if>
+
 			<li class="tbar-item">
 				<liferay-ui:menu
 					menu="<%= dlViewFileVersionDisplayContext.getMenu() %>"

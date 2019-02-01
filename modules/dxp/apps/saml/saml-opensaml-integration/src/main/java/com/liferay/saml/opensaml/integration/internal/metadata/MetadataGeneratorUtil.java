@@ -300,29 +300,29 @@ public class MetadataGeneratorUtil {
 			Credential credential)
 		throws SecurityException {
 
-		EncryptionConfiguration encryptionConfiguration =
-			ConfigurationService.get(EncryptionConfiguration.class);
-
-		ArrayList<String> algorithms = new ArrayList<>();
-
-		algorithms.addAll(
-			encryptionConfiguration.getDataEncryptionAlgorithms());
-		algorithms.addAll(
-			encryptionConfiguration.getKeyTransportEncryptionAlgorithms());
-
-		AlgorithmRegistry algorithmRegistry =
-			AlgorithmSupport.getGlobalAlgorithmRegistry();
-
-		Collection<String> blacklistedAlgorithms =
-			encryptionConfiguration.getBlacklistedAlgorithms();
-
 		KeyDescriptor encryptionKeyDescriptor = OpenSamlUtil.buildKeyDescriptor(
 			UsageType.ENCRYPTION, OpenSamlUtil.buildKeyInfo(credential));
 
 		List<EncryptionMethod> encryptionMethods =
 			encryptionKeyDescriptor.getEncryptionMethods();
 
+		ArrayList<String> algorithms = new ArrayList<>();
+
+		EncryptionConfiguration encryptionConfiguration =
+			ConfigurationService.get(EncryptionConfiguration.class);
+
+		algorithms.addAll(
+			encryptionConfiguration.getDataEncryptionAlgorithms());
+		algorithms.addAll(
+			encryptionConfiguration.getKeyTransportEncryptionAlgorithms());
+
 		for (String algorithm : algorithms) {
+			AlgorithmRegistry algorithmRegistry =
+				AlgorithmSupport.getGlobalAlgorithmRegistry();
+
+			Collection<String> blacklistedAlgorithms =
+				encryptionConfiguration.getBlacklistedAlgorithms();
+
 			if (!algorithmRegistry.isRuntimeSupported(algorithm) ||
 				blacklistedAlgorithms.contains(algorithm)) {
 
@@ -368,16 +368,16 @@ public class MetadataGeneratorUtil {
 	private static List<XMLObject> _getExtensionXmlObjects(
 		Credential credential) {
 
-		SignatureSigningConfiguration signatureSigningConfiguration =
-			ConfigurationService.get(SignatureSigningConfiguration.class);
+		ArrayList<XMLObject> xmlObjects = new ArrayList<>();
 
 		AlgorithmRegistry algorithmRegistry =
 			AlgorithmSupport.getGlobalAlgorithmRegistry();
 
+		SignatureSigningConfiguration signatureSigningConfiguration =
+			ConfigurationService.get(SignatureSigningConfiguration.class);
+
 		Collection<String> blacklistedAlgorithms =
 			signatureSigningConfiguration.getBlacklistedAlgorithms();
-
-		ArrayList<XMLObject> xmlObjects = new ArrayList<>();
 
 		for (String digestMethodString :
 				signatureSigningConfiguration.

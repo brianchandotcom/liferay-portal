@@ -135,6 +135,8 @@ public class AssetPublisherPortletLayoutListener
 			_addAssetListEntryUsage(assetListEntryId, plid, portletId);
 		}
 		else if (Objects.equals(selectionStyle, "manual")) {
+			_removeAssetEntryUsages(plid, portletId);
+
 			_addAssetEntryUsages(plid, portletId, portletPreferences);
 		}
 		else {

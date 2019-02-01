@@ -20,12 +20,9 @@ import org.jboss.arquillian.container.spi.ContainerRegistry;
 import org.jboss.arquillian.container.spi.event.KillContainer;
 import org.jboss.arquillian.container.spi.event.SetupContainer;
 import org.jboss.arquillian.container.spi.event.SetupContainers;
-import org.jboss.arquillian.container.spi.event.StartClassContainers;
 import org.jboss.arquillian.container.spi.event.StartContainer;
 import org.jboss.arquillian.container.spi.event.StartSuiteContainers;
-import org.jboss.arquillian.container.spi.event.StopClassContainers;
 import org.jboss.arquillian.container.spi.event.StopContainer;
-import org.jboss.arquillian.container.spi.event.StopManualContainers;
 import org.jboss.arquillian.container.spi.event.StopSuiteContainers;
 import org.jboss.arquillian.core.api.Event;
 import org.jboss.arquillian.core.api.Injector;
@@ -87,24 +84,6 @@ public class ContainerLifecycleController {
 			});
 	}
 
-	public void startClassContainers(
-			@Observes StartClassContainers startClassContainers)
-		throws Exception {
-
-		_forEachClassContainer(
-			new Operation<Container>() {
-
-				@Override
-				public void perform(Container container) {
-					_startContainerEvent.fire(new StartContainer(container));
-				}
-
-				@Inject
-				private Event<StartContainer> _startContainerEvent;
-
-			});
-	}
-
 	public void startContainer(@Observes StartContainer startContainer)
 		throws Exception {
 
@@ -140,24 +119,6 @@ public class ContainerLifecycleController {
 			});
 	}
 
-	public void stopClassContainers(
-			@Observes StopClassContainers stopClassContainers)
-		throws Exception {
-
-		_forEachClassContainer(
-			new Operation<Container>() {
-
-				@Override
-				public void perform(Container container) {
-					_stopContainerEvent.fire(new StopContainer(container));
-				}
-
-				@Inject
-				private Event<StopContainer> _stopContainerEvent;
-
-			});
-	}
-
 	public void stopContainer(@Observes StopContainer stopContainer)
 		throws Exception {
 
@@ -171,24 +132,6 @@ public class ContainerLifecycleController {
 						container.stop();
 					}
 				}
-
-			});
-	}
-
-	public void stopManualContainers(
-			@Observes StopManualContainers stopManualContainers)
-		throws Exception {
-
-		_forEachManualContainer(
-			new Operation<Container>() {
-
-				@Override
-				public void perform(Container container) {
-					_stopContainerEvent.fire(new StopContainer(container));
-				}
-
-				@Inject
-				private Event<StopContainer> _stopContainerEvent;
 
 			});
 	}
@@ -228,24 +171,6 @@ public class ContainerLifecycleController {
 		operation.perform(container);
 	}
 
-	private void _forEachClassContainer(Operation<Container> operation)
-		throws Exception {
-
-		Injector injector = _injectorInstance.get();
-
-		injector.inject(operation);
-
-		ContainerRegistry containerRegistry = _containerRegistryInstance.get();
-
-		for (Container container : containerRegistry.getContainers()) {
-			ContainerDef containerDef = container.getContainerConfiguration();
-
-			if ("class".equals(containerDef.getMode())) {
-				operation.perform(container);
-			}
-		}
-	}
-
 	private void _forEachContainer(Operation<Container> operation)
 		throws Exception {
 
@@ -261,24 +186,6 @@ public class ContainerLifecycleController {
 
 		for (Container container : containerRegistry.getContainers()) {
 			operation.perform(container);
-		}
-	}
-
-	private void _forEachManualContainer(Operation<Container> operation)
-		throws Exception {
-
-		Injector injector = _injectorInstance.get();
-
-		injector.inject(operation);
-
-		ContainerRegistry containerRegistry = _containerRegistryInstance.get();
-
-		for (Container container : containerRegistry.getContainers()) {
-			ContainerDef containerDef = container.getContainerConfiguration();
-
-			if ("manual".equals(containerDef.getMode())) {
-				operation.perform(container);
-			}
 		}
 	}
 

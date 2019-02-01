@@ -305,7 +305,7 @@ AUI.add(
 							var urlUpdateTags = themeDisplay.getPortalURL() + '/o/bulk/asset/tags/' + instance.get('classNameId');
 
 							Liferay.Loader.require(
-								instance.get('npmResolvedPackageName') + '/document_library/tags/EditTags.es',
+								instance.get('npmResolvedPackageName') + '/document_library/categorization/EditTags.es',
 								function(EditTags) {
 									instance._editTagsComponent = new EditTags.default(
 										{

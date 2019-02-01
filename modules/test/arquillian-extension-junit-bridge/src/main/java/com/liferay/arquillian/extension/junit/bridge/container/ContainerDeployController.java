@@ -104,24 +104,6 @@ public class ContainerDeployController {
 					return null;
 				}
 
-				@Inject
-				private Event<DeployerEvent> _deployerEvent;
-
-				@DeploymentScoped
-				@Inject
-				private InstanceProducer<DeploymentDescription>
-					_deploymentDescriptionInstanceProducer;
-
-				@DeploymentScoped
-				@Inject
-				private InstanceProducer<Deployment>
-					_deploymentInstanceProducer;
-
-				@DeploymentScoped
-				@Inject
-				private InstanceProducer<ProtocolMetaData>
-					_protocolMetadataInstanceProducer;
-
 			});
 	}
 
@@ -152,9 +134,6 @@ public class ContainerDeployController {
 							new DeployDeployment(container, deployment));
 					}
 				}
-
-				@Inject
-				private Event<DeploymentEvent> _deploymentEvent;
 
 			});
 	}
@@ -207,9 +186,6 @@ public class ContainerDeployController {
 					return null;
 				}
 
-				@Inject
-				private Event<DeployerEvent> _deployerEvent;
-
 			});
 	}
 
@@ -228,9 +204,6 @@ public class ContainerDeployController {
 							new UnDeployDeployment(container, deployment));
 					}
 				}
-
-				@Inject
-				private Event<DeploymentEvent> _deploymentEvent;
 
 			});
 	}
@@ -299,9 +272,29 @@ public class ContainerDeployController {
 	private Instance<ContainerRegistry> _containerRegistryInstance;
 
 	@Inject
+	private Event<DeployerEvent> _deployerEvent;
+
+	@DeploymentScoped
+	@Inject
+	private InstanceProducer<DeploymentDescription>
+		_deploymentDescriptionInstanceProducer;
+
+	@Inject
+	private Event<DeploymentEvent> _deploymentEvent;
+
+	@DeploymentScoped
+	@Inject
+	private InstanceProducer<Deployment> _deploymentInstanceProducer;
+
+	@Inject
 	private Instance<DeploymentScenario> _deploymentScenarioInstance;
 
 	@Inject
 	private Instance<Injector> _injectorInstance;
+
+	@DeploymentScoped
+	@Inject
+	private InstanceProducer<ProtocolMetaData>
+		_protocolMetadataInstanceProducer;
 
 }

@@ -32,11 +32,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.concurrent.ExecutorService;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -230,6 +232,15 @@ public class TopLevelBuild extends BaseBuild {
 			"https://", jenkinsMaster.getName(), ".liferay.com/",
 			"userContent/jobs/", getJobName(), "/builds/",
 			String.valueOf(getBuildNumber()), "/jenkins-report.html");
+	}
+
+	@Override
+	public Map<String, String> getMetricLabels() {
+		Map<String, String> metricLabels = new TreeMap<>();
+
+		metricLabels.put("top_level_job_name", getJobName());
+
+		return metricLabels;
 	}
 
 	@Override

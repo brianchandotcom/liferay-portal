@@ -106,6 +106,8 @@ public interface Build {
 
 	public TestResult getLongestRunningTest();
 
+	public Map<String, String> getMetricLabels();
+
 	public List<Build> getModifiedDownstreamBuilds();
 
 	public List<Build> getModifiedDownstreamBuildsByStatus(String status);

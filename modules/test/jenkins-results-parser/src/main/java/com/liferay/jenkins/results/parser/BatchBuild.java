@@ -213,6 +213,17 @@ public class BatchBuild extends BaseBuild {
 	}
 
 	@Override
+	public Map<String, String> getMetricLabels() {
+		Build parentBuild = getParentBuild();
+
+		Map<String, String> metricLabels = parentBuild.getMetricLabels();
+
+		metricLabels.put("batch_name", batchName);
+
+		return metricLabels;
+	}
+
+	@Override
 	public String getOperatingSystem() {
 		return getEnvironment("operating.system");
 	}

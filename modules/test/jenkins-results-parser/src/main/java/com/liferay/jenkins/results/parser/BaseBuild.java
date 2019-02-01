@@ -36,6 +36,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeoutException;
@@ -803,6 +804,10 @@ public abstract class BaseBuild implements Build {
 		}
 
 		return longestRunningTest;
+	}
+
+	public Map<String, String> getMetricLabels() {
+		return new TreeMap<>();
 	}
 
 	@Override

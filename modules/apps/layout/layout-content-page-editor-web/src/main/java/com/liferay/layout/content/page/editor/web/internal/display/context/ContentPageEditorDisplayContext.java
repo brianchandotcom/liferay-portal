@@ -53,8 +53,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.template.soy.util.SoyContext;
 import com.liferay.portal.template.soy.util.SoyContextFactoryUtil;
-import com.liferay.segments.model.SegmentsEntry;
-import com.liferay.segments.service.SegmentsEntryServiceUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -101,8 +99,6 @@ public class ContentPageEditorDisplayContext {
 			getFragmentEntryActionURL(
 				"/content_layout/add_fragment_entry_link"));
 		soyContext.put("availableLanguages", getAvailableLanguagesSoyContext());
-		soyContext.put(
-			"availableSegments", _getSoyContextAvailableSegmentsEntries());
 		soyContext.put("classNameId", classNameId);
 		soyContext.put("classPK", classPK);
 		soyContext.put(
@@ -149,15 +145,9 @@ public class ContentPageEditorDisplayContext {
 	public SoyContext getFragmentsEditorToolbarContext()
 		throws PortalException {
 
-		if (_fragmentsEditorToolbarSoyContext != null) {
-			return _fragmentsEditorToolbarSoyContext;
-		}
-
 		SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
 
 		soyContext.put("availableLanguages", getAvailableLanguagesSoyContext());
-		soyContext.put(
-			"availableSegments", _getSoyContextAvailableSegmentsEntries());
 		soyContext.put("classPK", themeDisplay.getPlid());
 		soyContext.put("defaultLanguageId", themeDisplay.getLanguageId());
 		soyContext.put("lastSaveDate", StringPool.BLANK);
@@ -166,9 +156,7 @@ public class ContentPageEditorDisplayContext {
 			"spritemap",
 			themeDisplay.getPathThemeImages() + "/lexicon/icons.svg");
 
-		_fragmentsEditorToolbarSoyContext = soyContext;
-
-		return _fragmentsEditorToolbarSoyContext;
+		return soyContext;
 	}
 
 	protected SoyContext getAvailableLanguagesSoyContext() {
@@ -565,37 +553,9 @@ public class ContentPageEditorDisplayContext {
 		return soyContexts;
 	}
 
-	private SoyContext _getSoyContextAvailableSegmentsEntries()
-		throws PortalException {
-
-		SoyContext availableSegmentsEntriesSoyContext =
-			SoyContextFactoryUtil.createSoyContext();
-
-		List<SegmentsEntry> segmentsEntries =
-			SegmentsEntryServiceUtil.getSegmentsEntries(getGroupId());
-
-		for (SegmentsEntry segmentsEntry : segmentsEntries) {
-			SoyContext segmentsSoyContext =
-				SoyContextFactoryUtil.createSoyContext();
-
-			segmentsSoyContext.put(
-				"segmentLabel",
-				segmentsEntry.getName(themeDisplay.getLocale()));
-			segmentsSoyContext.put(
-				"segmentId", segmentsEntry.getSegmentsEntryId());
-			segmentsSoyContext.put("segmentKey", segmentsEntry.getKey());
-
-			availableSegmentsEntriesSoyContext.put(
-				segmentsEntry.getKey(), segmentsSoyContext);
-		}
-
-		return availableSegmentsEntriesSoyContext;
-	}
-
 	private Map<String, Object> _defaultConfigurations;
 	private final FragmentCollectionContributorTracker
 		_fragmentCollectionContributorTracker;
-	private SoyContext _fragmentsEditorToolbarSoyContext;
 	private Long _groupId;
 	private ItemSelectorCriterion _imageItemSelectorCriterion;
 	private final ItemSelector _itemSelector;

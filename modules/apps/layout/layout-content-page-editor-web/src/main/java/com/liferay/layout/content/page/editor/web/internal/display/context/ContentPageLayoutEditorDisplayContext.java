@@ -41,6 +41,8 @@ import com.liferay.portal.template.soy.util.SoyContext;
 import com.liferay.portal.template.soy.util.SoyContextFactoryUtil;
 import com.liferay.portal.util.PortletCategoryUtil;
 import com.liferay.portal.util.WebAppPool;
+import com.liferay.segments.model.SegmentsEntry;
+import com.liferay.segments.service.SegmentsEntryServiceUtil;
 
 import java.util.Collection;
 import java.util.List;
@@ -83,6 +85,9 @@ public class ContentPageLayoutEditorDisplayContext
 		SoyContext soyContext = super.getEditorContext();
 
 		soyContext.put(
+			"availableSegments", _getSoyContextAvailableSegmentsEntries());
+
+		soyContext.put(
 			"addPortletURL",
 			getFragmentEntryActionURL("/content_layout/add_portlet"));
 		soyContext.put(
@@ -92,6 +97,24 @@ public class ContentPageLayoutEditorDisplayContext
 		_editorSoyContext = soyContext;
 
 		return _editorSoyContext;
+	}
+
+	@Override
+	public SoyContext getFragmentsEditorToolbarContext()
+		throws PortalException {
+
+		if (_fragmentsEditorToolbarSoyContext != null) {
+			return _fragmentsEditorToolbarSoyContext;
+		}
+
+		SoyContext soyContext = super.getFragmentsEditorToolbarContext();
+
+		soyContext.put(
+			"availableSegments", _getSoyContextAvailableSegmentsEntries());
+
+		_fragmentsEditorToolbarSoyContext = soyContext;
+
+		return _fragmentsEditorToolbarSoyContext;
 	}
 
 	@Override
@@ -232,6 +255,33 @@ public class ContentPageLayoutEditorDisplayContext
 		);
 	}
 
+	private SoyContext _getSoyContextAvailableSegmentsEntries()
+		throws PortalException {
+
+		SoyContext availableSegmentsEntriesSoyContext =
+			SoyContextFactoryUtil.createSoyContext();
+
+		List<SegmentsEntry> segmentsEntries =
+			SegmentsEntryServiceUtil.getSegmentsEntries(getGroupId());
+
+		for (SegmentsEntry segmentsEntry : segmentsEntries) {
+			SoyContext segmentsSoyContext =
+				SoyContextFactoryUtil.createSoyContext();
+
+			segmentsSoyContext.put(
+				"segmentLabel",
+				segmentsEntry.getName(themeDisplay.getLocale()));
+			segmentsSoyContext.put(
+				"segmentId", segmentsEntry.getSegmentsEntryId());
+			segmentsSoyContext.put("segmentKey", segmentsEntry.getKey());
+
+			availableSegmentsEntriesSoyContext.put(
+				segmentsEntry.getKey(), segmentsSoyContext);
+		}
+
+		return availableSegmentsEntriesSoyContext;
+	}
+
 	private List<SoyContext> _getWidgetCategoriesContexts(
 		PortletCategory portletCategory) {
 
@@ -300,5 +350,6 @@ public class ContentPageLayoutEditorDisplayContext
 		ContentPageLayoutEditorDisplayContext.class);
 
 	private SoyContext _editorSoyContext;
+	private SoyContext _fragmentsEditorToolbarSoyContext;
 
 }

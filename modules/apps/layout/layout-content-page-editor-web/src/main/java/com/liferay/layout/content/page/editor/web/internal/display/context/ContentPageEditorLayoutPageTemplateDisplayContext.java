@@ -118,6 +118,20 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 		return _editorSoyContext;
 	}
 
+	@Override
+	public SoyContext getFragmentsEditorToolbarContext()
+		throws PortalException {
+
+		if (_fragmentsEditorToolbarSoyContext != null) {
+			return _fragmentsEditorToolbarSoyContext;
+		}
+
+		_fragmentsEditorToolbarSoyContext =
+			super.getFragmentsEditorToolbarContext();
+
+		return _fragmentsEditorToolbarSoyContext;
+	}
+
 	private LayoutPageTemplateEntry _getLayoutPageTemplateEntry()
 		throws PortalException {
 
@@ -204,6 +218,7 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 	private final AssetDisplayContributorTracker
 		_assetDisplayContributorTracker;
 	private SoyContext _editorSoyContext;
+	private SoyContext _fragmentsEditorToolbarSoyContext;
 	private LayoutPageTemplateEntry _layoutPageTemplateEntry;
 	private final boolean _showMapping;
 

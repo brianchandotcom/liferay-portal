@@ -519,6 +519,18 @@ public class DDLRecordSetLocalServiceUtil {
 	}
 
 	/**
+	* Returns the number of all the record sets belonging the group and associated with the DDMStructure.
+	*
+	* @param groupId the primary key of the record set's group
+	* @return the number of record sets belonging to the group
+	*/
+	public static int getRecordSetsCount(long groupId, long ddmStructureId,
+		boolean andOperator) {
+		return getService()
+				   .getRecordSetsCount(groupId, ddmStructureId, andOperator);
+	}
+
+	/**
 	* Returns the record set's settings as a DDMFormValues object. For more
 	* information see <code>DDMFormValues</code> in the
 	* <code>dynamic.data.mapping.api</code> module.

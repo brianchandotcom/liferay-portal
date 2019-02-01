@@ -25,10 +25,10 @@ public interface DDLRecordSetFinder {
 	public int countByKeywords(long companyId, long groupId, String keywords,
 		int scope);
 
+	public int countByG_D(long groupId, long ddmStructureId, boolean andOperator);
+
 	public int countByC_G_N_D_S(long companyId, long groupId, String name,
 		String description, int scope, boolean andOperator);
-
-	public int countByG_D(long groupId, long ddmStructureId, boolean andOperator);
 
 	public int filterCountByKeywords(long companyId, long groupId,
 		String keywords, int scope);

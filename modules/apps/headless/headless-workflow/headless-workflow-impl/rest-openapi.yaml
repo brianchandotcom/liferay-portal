@@ -11,6 +11,7 @@ components:
         dateCreated:
           type: string
         id:
+          format: int64
           type: integer
         person:
           format: uri
@@ -46,6 +47,7 @@ components:
         dueDate:
           type: string
         id:
+          format: int64
           type: integer
         logs:
           $ref: "#/components/schemas/WorkflowLog"
@@ -55,6 +57,7 @@ components:
           description: https://www.schema.org/Object
           properties:
             id:
+              format: int64
               type: integer
             identifier:
               format: uri
@@ -112,6 +115,7 @@ paths:
           name: id
           required: true
           schema:
+            format: int64
             type: integer
       responses:
         200:
@@ -152,6 +156,7 @@ paths:
           name: id
           required: true
           schema:
+            format: int64
             type: integer
       responses:
         200:
@@ -167,6 +172,7 @@ paths:
           name: id
           required: true
           schema:
+            format: int64
             type: integer
       requestBody:
         content:
@@ -187,6 +193,7 @@ paths:
           name: id
           required: true
           schema:
+            format: int64
             type: integer
       requestBody:
         content:
@@ -207,6 +214,7 @@ paths:
           name: id
           required: true
           schema:
+            format: int64
             type: integer
       requestBody:
         content:
@@ -227,6 +235,7 @@ paths:
           name: id
           required: true
           schema:
+            format: int64
             type: integer
       requestBody:
         content:
@@ -255,6 +264,7 @@ paths:
           name: parent-id
           required: true
           schema:
+            format: int64
             type: integer
       responses:
         200:

@@ -4,13 +4,9 @@ exports[`Select should be closed by default 1`] = `
 <div class="form-group">
   <div class="form-builder-select-field input-group-container">
     <div class="form-control select-field-trigger">
-      <div class="option-selected option-selected-placeholder"></div>
-      <a class="select-arrow-down-container" href="javascript:;">
-        <svg aria-hidden="true" class="lexicon-icon lexicon-icon-caret-double" focusable="false">
-          <title>caret-double</title>
+      <div class="option-selected option-selected-placeholder"></div><a class="select-arrow-down-container" href="javascript:;"><svg class="lexicon-icon lexicon-icon-caret-double" focusable="false" role="presentation">
           <use xlink:href="icons.svg#caret-double"></use>
-        </svg>
-      </a>
+        </svg></a>
     </div>
   </div>
   <div class="dropdown-menu">
@@ -25,13 +21,9 @@ exports[`Select should be not edidable 1`] = `
 <div class="form-group">
   <div class="form-builder-select-field input-group-container">
     <div class="form-control select-field-trigger">
-      <div class="option-selected option-selected-placeholder"></div>
-      <a class="select-arrow-down-container" href="javascript:;">
-        <svg aria-hidden="true" class="lexicon-icon lexicon-icon-caret-double" focusable="false">
-          <title>caret-double</title>
+      <div class="option-selected option-selected-placeholder"></div><a class="select-arrow-down-container" href="javascript:;"><svg class="lexicon-icon lexicon-icon-caret-double" focusable="false" role="presentation">
           <use xlink:href="icons.svg#caret-double"></use>
-        </svg>
-      </a>
+        </svg></a>
     </div>
   </div>
   <div class="dropdown-menu">
@@ -46,21 +38,16 @@ exports[`Select should have a helptext 1`] = `
 <div class="form-group">
   <div class="form-builder-select-field input-group-container">
     <div class="form-control select-field-trigger">
-      <div class="option-selected option-selected-placeholder"></div>
-      <a class="select-arrow-down-container" href="javascript:;">
-        <svg aria-hidden="true" class="lexicon-icon lexicon-icon-caret-double" focusable="false">
-          <title>caret-double</title>
+      <div class="option-selected option-selected-placeholder"></div><a class="select-arrow-down-container" href="javascript:;"><svg class="lexicon-icon lexicon-icon-caret-double" focusable="false" role="presentation">
           <use xlink:href="icons.svg#caret-double"></use>
-        </svg>
-      </a>
+        </svg></a>
     </div>
   </div>
   <div class="dropdown-menu">
     <ul class="list-unstyled">
       <li class="dropdown-item" data-option-value="">choose-an-option</li>
     </ul>
-  </div>
-  <span class="form-text">Type something</span>
+  </div><span class="form-text">Type something</span>
 </div>
 `;
 
@@ -68,13 +55,9 @@ exports[`Select should have a key 1`] = `
 <div class="form-group">
   <div class="form-builder-select-field input-group-container">
     <div class="form-control select-field-trigger">
-      <div class="option-selected option-selected-placeholder"></div>
-      <a class="select-arrow-down-container" href="javascript:;">
-        <svg aria-hidden="true" class="lexicon-icon lexicon-icon-caret-double" focusable="false">
-          <title>caret-double</title>
+      <div class="option-selected option-selected-placeholder"></div><a class="select-arrow-down-container" href="javascript:;"><svg class="lexicon-icon lexicon-icon-caret-double" focusable="false" role="presentation">
           <use xlink:href="icons.svg#caret-double"></use>
-        </svg>
-      </a>
+        </svg></a>
     </div>
   </div>
   <div class="dropdown-menu">
@@ -86,17 +69,12 @@ exports[`Select should have a key 1`] = `
 `;
 
 exports[`Select should have a label 1`] = `
-<div class="form-group">
-  <label>label </label>
+<div class="form-group"><label>label </label>
   <div class="form-builder-select-field input-group-container">
     <div class="form-control select-field-trigger">
-      <div class="option-selected option-selected-placeholder"></div>
-      <a class="select-arrow-down-container" href="javascript:;">
-        <svg aria-hidden="true" class="lexicon-icon lexicon-icon-caret-double" focusable="false">
-          <title>caret-double</title>
+      <div class="option-selected option-selected-placeholder"></div><a class="select-arrow-down-container" href="javascript:;"><svg class="lexicon-icon lexicon-icon-caret-double" focusable="false" role="presentation">
           <use xlink:href="icons.svg#caret-double"></use>
-        </svg>
-      </a>
+        </svg></a>
     </div>
   </div>
   <div class="dropdown-menu">
@@ -111,13 +89,9 @@ exports[`Select should have a placeholder 1`] = `
 <div class="form-group">
   <div class="form-builder-select-field input-group-container">
     <div class="form-control select-field-trigger">
-      <div class="option-selected">Placeholder</div>
-      <a class="select-arrow-down-container" href="javascript:;">
-        <svg aria-hidden="true" class="lexicon-icon lexicon-icon-caret-double" focusable="false">
-          <title>caret-double</title>
+      <div class="option-selected">Placeholder</div><a class="select-arrow-down-container" href="javascript:;"><svg class="lexicon-icon lexicon-icon-caret-double" focusable="false" role="presentation">
           <use xlink:href="icons.svg#caret-double"></use>
-        </svg>
-      </a>
+        </svg></a>
     </div>
   </div>
   <div class="dropdown-menu">
@@ -132,13 +106,9 @@ exports[`Select should have a predefinedValue 1`] = `
 <div class="form-group">
   <div class="form-builder-select-field input-group-container">
     <div class="form-control select-field-trigger">
-      <div class="option-selected option-selected-placeholder"></div>
-      <a class="select-arrow-down-container" href="javascript:;">
-        <svg aria-hidden="true" class="lexicon-icon lexicon-icon-caret-double" focusable="false">
-          <title>caret-double</title>
+      <div class="option-selected option-selected-placeholder"></div><a class="select-arrow-down-container" href="javascript:;"><svg class="lexicon-icon lexicon-icon-caret-double" focusable="false" role="presentation">
           <use xlink:href="icons.svg#caret-double"></use>
-        </svg>
-      </a>
+        </svg></a>
     </div>
   </div>
   <div class="dropdown-menu">
@@ -153,13 +123,9 @@ exports[`Select should have a spritemap 1`] = `
 <div class="form-group">
   <div class="form-builder-select-field input-group-container">
     <div class="form-control select-field-trigger">
-      <div class="option-selected option-selected-placeholder"></div>
-      <a class="select-arrow-down-container" href="javascript:;">
-        <svg aria-hidden="true" class="lexicon-icon lexicon-icon-caret-double" focusable="false">
-          <title>caret-double</title>
+      <div class="option-selected option-selected-placeholder"></div><a class="select-arrow-down-container" href="javascript:;"><svg class="lexicon-icon lexicon-icon-caret-double" focusable="false" role="presentation">
           <use xlink:href="icons.svg#caret-double"></use>
-        </svg>
-      </a>
+        </svg></a>
     </div>
   </div>
   <div class="dropdown-menu">
@@ -174,13 +140,9 @@ exports[`Select should have a value 1`] = `
 <div class="form-group">
   <div class="form-builder-select-field input-group-container">
     <div class="form-control select-field-trigger">
-      <div class="option-selected option-selected-placeholder"></div>
-      <a class="select-arrow-down-container" href="javascript:;">
-        <svg aria-hidden="true" class="lexicon-icon lexicon-icon-caret-double" focusable="false">
-          <title>caret-double</title>
+      <div class="option-selected option-selected-placeholder"></div><a class="select-arrow-down-container" href="javascript:;"><svg class="lexicon-icon lexicon-icon-caret-double" focusable="false" role="presentation">
           <use xlink:href="icons.svg#caret-double"></use>
-        </svg>
-      </a>
+        </svg></a>
     </div>
   </div>
   <div class="dropdown-menu">
@@ -195,13 +157,9 @@ exports[`Select should have an id 1`] = `
 <div class="form-group">
   <div class="form-builder-select-field input-group-container">
     <div class="form-control select-field-trigger" id="ID">
-      <div class="option-selected option-selected-placeholder"></div>
-      <a class="select-arrow-down-container" href="javascript:;">
-        <svg aria-hidden="true" class="lexicon-icon lexicon-icon-caret-double" focusable="false">
-          <title>caret-double</title>
+      <div class="option-selected option-selected-placeholder"></div><a class="select-arrow-down-container" href="javascript:;"><svg class="lexicon-icon lexicon-icon-caret-double" focusable="false" role="presentation">
           <use xlink:href="icons.svg#caret-double"></use>
-        </svg>
-      </a>
+        </svg></a>
     </div>
   </div>
   <div class="dropdown-menu">
@@ -216,13 +174,9 @@ exports[`Select should have class dropdown-opened when it's opened 1`] = `
 <div class="form-group">
   <div class="form-builder-select-field input-group-container">
     <div class="form-control select-field-trigger">
-      <div class="option-selected option-selected-placeholder"></div>
-      <a class="select-arrow-down-container" href="javascript:;">
-        <svg aria-hidden="true" class="lexicon-icon lexicon-icon-caret-double" focusable="false">
-          <title>caret-double</title>
+      <div class="option-selected option-selected-placeholder"></div><a class="select-arrow-down-container" href="javascript:;"><svg class="lexicon-icon lexicon-icon-caret-double" focusable="false" role="presentation">
           <use xlink:href="icons.svg#caret-double"></use>
-        </svg>
-      </a>
+        </svg></a>
     </div>
   </div>
   <div class="dropdown-menu dropdown-opened">
@@ -237,13 +191,9 @@ exports[`Select should not be required 1`] = `
 <div class="form-group">
   <div class="form-builder-select-field input-group-container">
     <div class="form-control select-field-trigger">
-      <div class="option-selected option-selected-placeholder"></div>
-      <a class="select-arrow-down-container" href="javascript:;">
-        <svg aria-hidden="true" class="lexicon-icon lexicon-icon-caret-double" focusable="false">
-          <title>caret-double</title>
+      <div class="option-selected option-selected-placeholder"></div><a class="select-arrow-down-container" href="javascript:;"><svg class="lexicon-icon lexicon-icon-caret-double" focusable="false" role="presentation">
           <use xlink:href="icons.svg#caret-double"></use>
-        </svg>
-      </a>
+        </svg></a>
     </div>
   </div>
   <div class="dropdown-menu">
@@ -255,17 +205,12 @@ exports[`Select should not be required 1`] = `
 `;
 
 exports[`Select should render Label if showLabel is true 1`] = `
-<div class="form-group">
-  <label>text </label>
+<div class="form-group"><label>text </label>
   <div class="form-builder-select-field input-group-container">
     <div class="form-control select-field-trigger">
-      <div class="option-selected option-selected-placeholder"></div>
-      <a class="select-arrow-down-container" href="javascript:;">
-        <svg aria-hidden="true" class="lexicon-icon lexicon-icon-caret-double" focusable="false">
-          <title>caret-double</title>
+      <div class="option-selected option-selected-placeholder"></div><a class="select-arrow-down-container" href="javascript:;"><svg class="lexicon-icon lexicon-icon-caret-double" focusable="false" role="presentation">
           <use xlink:href="icons.svg#caret-double"></use>
-        </svg>
-      </a>
+        </svg></a>
     </div>
   </div>
   <div class="dropdown-menu">
@@ -280,13 +225,9 @@ exports[`Select should render no options when options come empty 1`] = `
 <div class="form-group">
   <div class="form-builder-select-field input-group-container">
     <div class="form-control select-field-trigger">
-      <div class="option-selected option-selected-placeholder"></div>
-      <a class="select-arrow-down-container" href="javascript:;">
-        <svg aria-hidden="true" class="lexicon-icon lexicon-icon-caret-double" focusable="false">
-          <title>caret-double</title>
+      <div class="option-selected option-selected-placeholder"></div><a class="select-arrow-down-container" href="javascript:;"><svg class="lexicon-icon lexicon-icon-caret-double" focusable="false" role="presentation">
           <use xlink:href="icons.svg#caret-double"></use>
-        </svg>
-      </a>
+        </svg></a>
     </div>
   </div>
   <div class="dropdown-menu">
@@ -301,13 +242,9 @@ exports[`Select should render options 1`] = `
 <div class="form-group">
   <div class="form-builder-select-field input-group-container">
     <div class="form-control select-field-trigger">
-      <div class="option-selected option-selected-placeholder"></div>
-      <a class="select-arrow-down-container" href="javascript:;">
-        <svg aria-hidden="true" class="lexicon-icon lexicon-icon-caret-double" focusable="false">
-          <title>caret-double</title>
+      <div class="option-selected option-selected-placeholder"></div><a class="select-arrow-down-container" href="javascript:;"><svg class="lexicon-icon lexicon-icon-caret-double" focusable="false" role="presentation">
           <use xlink:href="icons.svg#caret-double"></use>
-        </svg>
-      </a>
+        </svg></a>
     </div>
   </div>
   <div class="dropdown-menu">

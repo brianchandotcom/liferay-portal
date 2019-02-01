@@ -10,26 +10,13 @@ Object {
 
 exports[`Validation should render checkbox to enable Validation 1`] = `
 <div class="form-group lfr-ddm-form-field-validation">
-  <div class="form-group">
-    <label class="ddm-toggle-switch toggle-switch">
-      <input class="toggle-switch-check" type="checkbox">
-      <span aria-hidden="true" class="toggle-switch-bar">
-        <span class="toggle-switch-handle"></span>
-        <span class="toggle-switch-text toggle-switch-text-right">Validator</span>
-      </span>
-    </label>
-  </div>
-  <div class="form-group" style="display: none;">
-    <label>if-input </label>
+  <div class="form-group"><label class="ddm-toggle-switch toggle-switch"><input class="toggle-switch-check" type="checkbox"><span aria-hidden="true" class="toggle-switch-bar"><span class="toggle-switch-handle"></span><span class="toggle-switch-text toggle-switch-text-right">Validator</span></span></label></div>
+  <div class="form-group" style="display: none;"><label>if-input </label>
     <div class="form-builder-select-field input-group-container">
       <div class="form-control select-field-trigger">
-        <div class="option-selected">choose-an-option</div>
-        <a class="select-arrow-down-container" href="javascript:;">
-          <svg aria-hidden="true" class="lexicon-icon lexicon-icon-caret-double" focusable="false">
-            <title>caret-double</title>
+        <div class="option-selected">choose-an-option</div><a class="select-arrow-down-container" href="javascript:;"><svg class="lexicon-icon lexicon-icon-caret-double" focusable="false" role="presentation">
             <use xlink:href="icons.svg#caret-double"></use>
-          </svg>
-        </a>
+          </svg></a>
       </div>
     </div>
     <div class="dropdown-menu">
@@ -42,10 +29,7 @@ exports[`Validation should render checkbox to enable Validation 1`] = `
       </ul>
     </div>
   </div>
-  <div class="form-group" style="display: none;">
-    <label>show-error-message </label>
-    <input class="form-control" name="validation_errorMessage" placeholder="show-error-message" type="text" value="">
-  </div>
+  <div class="form-group" style="display: none;"><label>show-error-message </label><input class="form-control" name="validation_errorMessage" placeholder="show-error-message" type="text" value=""></div>
 </div>
 `;
 

@@ -2,28 +2,13 @@
 
 exports[`Layout Render should render fields 1`] = `
 <div class="container">
-  <div class="form-group">
-    <label class="ddm-toggle-switch toggle-switch">
-      <input checked="" class="toggle-switch-check" type="checkbox">
-      <span aria-hidden="true" class="toggle-switch-bar">
-        <span class="toggle-switch-handle"></span>
-        <span class="toggle-switch-text toggle-switch-text-right"></span>
-      </span>
-    </label>
-  </div>
+  <div class="form-group"><label class="ddm-toggle-switch toggle-switch"><input checked="" class="toggle-switch-check" type="checkbox"><span aria-hidden="true" class="toggle-switch-bar"><span class="toggle-switch-handle"></span><span class="toggle-switch-text toggle-switch-text-right"></span></span></label></div>
   <div class="form-group">
     <div class="input-group">
-      <div class="input-group-item input-group-prepend">
-        <input class="form-control" placeholder="__/__/____" type="text" disabled="">
-      </div>
-      <div class="input-group-append input-group-item input-group-item-shrink">
-        <span class="input-group-text">
-          <svg aria-hidden="true" class="lexicon-icon lexicon-icon-calendar" focusable="false">
-            <title>calendar</title>
+      <div class="input-group-item input-group-prepend"><input class="form-control" placeholder="__/__/____" type="text" disabled=""></div>
+      <div class="input-group-append input-group-item input-group-item-shrink"><span class="input-group-text"><svg class="lexicon-icon lexicon-icon-calendar" focusable="false" role="presentation">
             <use xlink:href="icons.svg#calendar"></use>
-          </svg>
-        </span>
-      </div>
+          </svg></span></div>
     </div>
   </div>
   <div class="form-group">
@@ -38,9 +23,7 @@ exports[`Layout Render should render fields 1`] = `
         <tbody>
           <tr name="jehf">
             <td>row</td>
-            <td>
-              <input class="form-builder-grid-field" data-row-index="0" name="jehf" type="radio" value="fieldId">
-            </td>
+            <td><input class="form-builder-grid-field" data-row-index="0" name="jehf" type="radio" value="fieldId"></td>
           </tr>
         </tbody>
       </table>
@@ -49,13 +32,9 @@ exports[`Layout Render should render fields 1`] = `
   <div class="form-group">
     <div class="form-builder-select-field input-group-container">
       <div class="form-control select-field-trigger">
-        <div class="option-selected option-selected-placeholder"></div>
-        <a class="select-arrow-down-container" href="javascript:;">
-          <svg aria-hidden="true" class="lexicon-icon lexicon-icon-caret-double" focusable="false">
-            <title>caret-double</title>
+        <div class="option-selected option-selected-placeholder"></div><a class="select-arrow-down-container" href="javascript:;"><svg class="lexicon-icon lexicon-icon-caret-double" focusable="false" role="presentation">
             <use xlink:href="icons.svg#caret-double"></use>
-          </svg>
-        </a>
+          </svg></a>
       </div>
     </div>
     <div class="dropdown-menu">
@@ -64,9 +43,7 @@ exports[`Layout Render should render fields 1`] = `
       </ul>
     </div>
   </div>
-  <div class="form-group">
-    <input class="form-control" name="textField" type="text" value="">
-  </div>
+  <div class="form-group"><input class="form-control" name="textField" type="text" value=""></div>
   <div class="form-group"></div>
 </div>
 `;

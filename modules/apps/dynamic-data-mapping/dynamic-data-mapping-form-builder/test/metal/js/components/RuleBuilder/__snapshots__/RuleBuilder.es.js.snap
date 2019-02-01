@@ -45,15 +45,13 @@ exports[`RuleBuilder should render rule screen creator when click add button 1`]
         <div class="operator panel panel-default panel-inline">
           <div class="panel-body text-uppercase">or</div>
         </div>
-        <div class="container-trash"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button" data-index="0"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-trash" focusable="false">
-              <title>trash</title>
+        <div class="container-trash"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button" data-index="0"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
               <use xlink:href="icons.svg#trash"></use>
             </svg></button></div>
       </li>
     </ul>
     <div class="addbutton-timeline-item">
-      <div class="add-item timeline-increment-icon"><button class="btn rounded-circle btn-monospaced btn-sm btn-primary" aria-label="plus" type="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-plus" focusable="false">
-            <title>plus</title>
+      <div class="add-item timeline-increment-icon"><button class="btn rounded-circle btn-monospaced btn-sm btn-primary" aria-label="plus" type="button"><svg class="lexicon-icon lexicon-icon-plus" focusable="false" role="presentation">
             <use xlink:href="icons.svg#plus"></use>
           </svg></button></div>
     </div>
@@ -85,15 +83,13 @@ exports[`RuleBuilder should render rule screen creator when click add button 1`]
             <div class="timeline-increment"><span class="timeline-icon"></span></div>
           </div>
         </div>
-        <div class="container-trash"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button" data-index="0"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-trash" focusable="false">
-              <title>trash</title>
+        <div class="container-trash"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button" data-index="0"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
               <use xlink:href="icons.svg#trash"></use>
             </svg></button></div>
       </li>
     </ul>
     <div class="addbutton-timeline-item">
-      <div class="add-item timeline-increment-icon"><button class="btn rounded-circle btn-monospaced btn-sm btn-primary" aria-label="plus" type="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-plus" focusable="false">
-            <title>plus</title>
+      <div class="add-item timeline-increment-icon"><button class="btn rounded-circle btn-monospaced btn-sm btn-primary" aria-label="plus" type="button"><svg class="lexicon-icon lexicon-icon-plus" focusable="false" role="presentation">
             <use xlink:href="icons.svg#plus"></use>
           </svg></button></div>
     </div>
@@ -101,8 +97,7 @@ exports[`RuleBuilder should render rule screen creator when click add button 1`]
       <div class="modal-dialog modal-sm">
         <div class="modal-content">
           <div class="modal-header">
-            <div class="modal-title">delete-condition</div><button class="btn close btn-unstyled" aria-label="close" type="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-times" focusable="false">
-                <title>times</title>
+            <div class="modal-title">delete-condition</div><button class="btn close btn-unstyled" aria-label="close" type="button"><svg class="lexicon-icon lexicon-icon-times" focusable="false" role="presentation">
                 <use xlink:href="icons.svg#times"></use>
               </svg></button>
           </div>
@@ -127,8 +122,7 @@ exports[`RuleBuilder should render rule screen creator when click add button 1`]
       <div class="modal-dialog modal-sm">
         <div class="modal-content">
           <div class="modal-header">
-            <div class="modal-title">delete-action</div><button class="btn close btn-unstyled" aria-label="close" type="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-times" focusable="false">
-                <title>times</title>
+            <div class="modal-title">delete-action</div><button class="btn close btn-unstyled" aria-label="close" type="button"><svg class="lexicon-icon lexicon-icon-times" focusable="false" role="presentation">
                 <use xlink:href="icons.svg#times"></use>
               </svg></button>
           </div>
@@ -172,11 +166,9 @@ exports[`RuleBuilder should render the list of rules when mode is set to view 1`
               <div class="card-col-field">
                 <div class="dropdown dropdown-action">
                   <div class="ddm-rule-list-settings" data-card-id="0">
-                    <div class="dropdown dropdown-action"><button aria-expanded="false" aria-haspopup="true" aria-label="toggle" class="dropdown-toggle btn btn-unstyled" ref="triggerButton" title="actions" type="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-ellipsis-v" focusable="false">
-                          <title>ellipsis-v</title>
+                    <div class="dropdown dropdown-action"><button aria-expanded="false" aria-haspopup="true" aria-label="toggle" class="dropdown-toggle btn btn-unstyled" ref="triggerButton" title="actions" type="button"><svg class="lexicon-icon lexicon-icon-ellipsis-v" focusable="false" role="presentation">
                           <use xlink:href="icons.svg#ellipsis-v"></use>
-                        </svg></button></div><button class="component-action cursor-pointer dropdown-toggle" data-rule-index="0"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-ellipsis-v" focusable="false">
-                        <title>ellipsis-v</title>
+                        </svg></button></div><button class="component-action cursor-pointer dropdown-toggle" data-rule-index="0"><svg class="lexicon-icon lexicon-icon-ellipsis-v" focusable="false" role="presentation">
                         <use xlink:href="icons.svg#ellipsis-v"></use>
                       </svg></button>
                   </div>
@@ -195,11 +187,9 @@ exports[`RuleBuilder should render the list of rules when mode is set to view 1`
               <div class="card-col-field">
                 <div class="dropdown dropdown-action">
                   <div class="ddm-rule-list-settings" data-card-id="1">
-                    <div class="dropdown dropdown-action"><button aria-expanded="false" aria-haspopup="true" aria-label="toggle" class="dropdown-toggle btn btn-unstyled" ref="triggerButton" title="actions" type="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-ellipsis-v" focusable="false">
-                          <title>ellipsis-v</title>
+                    <div class="dropdown dropdown-action"><button aria-expanded="false" aria-haspopup="true" aria-label="toggle" class="dropdown-toggle btn btn-unstyled" ref="triggerButton" title="actions" type="button"><svg class="lexicon-icon lexicon-icon-ellipsis-v" focusable="false" role="presentation">
                           <use xlink:href="icons.svg#ellipsis-v"></use>
-                        </svg></button></div><button class="component-action cursor-pointer dropdown-toggle" data-rule-index="1"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-ellipsis-v" focusable="false">
-                        <title>ellipsis-v</title>
+                        </svg></button></div><button class="component-action cursor-pointer dropdown-toggle" data-rule-index="1"><svg class="lexicon-icon lexicon-icon-ellipsis-v" focusable="false" role="presentation">
                         <use xlink:href="icons.svg#ellipsis-v"></use>
                       </svg></button>
                   </div>
@@ -214,14 +204,14 @@ exports[`RuleBuilder should render the list of rules when mode is set to view 1`
 </div>
 <div class="dropdown-menu" ref="menu">
   <ul class="list-unstyled">
-    <li><button class="btn dropdown-item btn-sm btn-link" aria-label="edit" type="button">edit</button></li>
-    <li><button class="btn dropdown-item btn-sm btn-link" aria-label="delete" type="button">delete</button></li>
+    <li tabindex="-1"><button class="btn dropdown-item btn-sm btn-link" aria-label="edit" type="button">edit</button></li>
+    <li tabindex="-1"><button class="btn dropdown-item btn-sm btn-link" aria-label="delete" type="button">delete</button></li>
   </ul>
 </div>
 <div class="dropdown-menu" ref="menu">
   <ul class="list-unstyled">
-    <li><button class="btn dropdown-item btn-sm btn-link" aria-label="edit" type="button">edit</button></li>
-    <li><button class="btn dropdown-item btn-sm btn-link" aria-label="delete" type="button">delete</button></li>
+    <li tabindex="-1"><button class="btn dropdown-item btn-sm btn-link" aria-label="edit" type="button">edit</button></li>
+    <li tabindex="-1"><button class="btn dropdown-item btn-sm btn-link" aria-label="delete" type="button">delete</button></li>
   </ul>
 </div>
 `;

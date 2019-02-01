@@ -2,40 +2,32 @@
 
 exports[`Field Tooltip should render the default markup 1`] = `
 <div class="ddm-tooltip">
-  <div ref="tooltipTarget">
-    <svg aria-hidden="true" class="lexicon-icon lexicon-icon-question-circle-full">
+  <div ref="tooltipTarget"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-question-circle-full">
       <use xlink:href="icons.svg#question-circle-full"></use>
-    </svg>
-  </div>
+    </svg></div>
 </div>
 `;
 
 exports[`Field Tooltip should update the tooltip visible state when the mouse is over the tooltip target 1`] = `
 <div class="ddm-tooltip">
-  <div ref="tooltipTarget">
-    <svg aria-hidden="true" class="lexicon-icon lexicon-icon-question-circle-full">
+  <div ref="tooltipTarget"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-question-circle-full">
       <use xlink:href="icons.svg#question-circle-full"></use>
-    </svg>
-  </div>
+    </svg></div>
 </div>
 `;
 
 exports[`Field Tooltip should update the tooltip visible state when the mouse is over the tooltip target 2`] = `
 <div class="ddm-tooltip">
-  <div ref="tooltipTarget">
-    <svg aria-hidden="true" class="lexicon-icon lexicon-icon-question-circle-full">
+  <div ref="tooltipTarget"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-question-circle-full">
       <use xlink:href="icons.svg#question-circle-full"></use>
-    </svg>
-  </div>
+    </svg></div>
 </div>
 `;
 
 exports[`Field Tooltip should update the tooltip visible state when the mouse leaved the tooltip target 1`] = `
 <div class="ddm-tooltip">
-  <div ref="tooltipTarget">
-    <svg aria-hidden="true" class="lexicon-icon lexicon-icon-question-circle-full">
+  <div ref="tooltipTarget"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-question-circle-full">
       <use xlink:href="icons.svg#question-circle-full"></use>
-    </svg>
-  </div>
+    </svg></div>
 </div>
 `;

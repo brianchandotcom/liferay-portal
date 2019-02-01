@@ -1,58 +1,19 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Field Text should have a helptext 1`] = `
-<div class="form-group">
-  <input class="form-control" name="textField" type="text" value="">
-  <span class="form-text">Type something</span>
-</div>
-`;
+exports[`Field Text should have a helptext 1`] = `<div class="form-group"><input class="form-control" name="textField" type="text" value=""><span class="form-text">Type something</span></div>`;
 
-exports[`Field Text should have a label 1`] = `
-<div class="form-group">
-  <label>label </label>
-  <input class="form-control" name="textField" type="text" value="">
-</div>
-`;
+exports[`Field Text should have a label 1`] = `<div class="form-group"><label>label </label><input class="form-control" name="textField" type="text" value=""></div>`;
 
-exports[`Field Text should have a placeholder 1`] = `
-<div class="form-group">
-  <input class="form-control" name="textField" placeholder="Placeholder" type="text" value="">
-</div>
-`;
+exports[`Field Text should have a placeholder 1`] = `<div class="form-group"><input class="form-control" name="textField" placeholder="Placeholder" type="text" value=""></div>`;
 
-exports[`Field Text should have a spritemap 1`] = `
-<div class="form-group">
-  <input class="form-control" name="textField" type="text" value="">
-</div>
-`;
+exports[`Field Text should have a spritemap 1`] = `<div class="form-group"><input class="form-control" name="textField" type="text" value=""></div>`;
 
-exports[`Field Text should have a value 1`] = `
-<div class="form-group">
-  <input class="form-control" name="textField" type="text" value="value">
-</div>
-`;
+exports[`Field Text should have a value 1`] = `<div class="form-group"><input class="form-control" name="textField" type="text" value="value"></div>`;
 
-exports[`Field Text should have an id 1`] = `
-<div class="form-group">
-  <input class="form-control" id="ID" name="textField" type="text" value="">
-</div>
-`;
+exports[`Field Text should have an id 1`] = `<div class="form-group"><input class="form-control" id="ID" name="textField" type="text" value=""></div>`;
 
-exports[`Field Text should not be readOnly 1`] = `
-<div class="form-group">
-  <input class="form-control" name="textField" type="text" value="">
-</div>
-`;
+exports[`Field Text should not be readOnly 1`] = `<div class="form-group"><input class="form-control" name="textField" type="text" value=""></div>`;
 
-exports[`Field Text should not be required 1`] = `
-<div class="form-group">
-  <input class="form-control" name="textField" type="text" value="">
-</div>
-`;
+exports[`Field Text should not be required 1`] = `<div class="form-group"><input class="form-control" name="textField" type="text" value=""></div>`;
 
-exports[`Field Text should render Label if showLabel is true 1`] = `
-<div class="form-group">
-  <label>text </label>
-  <input class="form-control" name="textField" type="text" value="">
-</div>
-`;
+exports[`Field Text should render Label if showLabel is true 1`] = `<div class="form-group"><label>text </label><input class="form-control" name="textField" type="text" value=""></div>`;

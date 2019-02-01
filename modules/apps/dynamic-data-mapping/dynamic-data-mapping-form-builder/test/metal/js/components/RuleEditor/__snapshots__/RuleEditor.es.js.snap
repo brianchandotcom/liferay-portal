@@ -54,8 +54,7 @@ exports[`Rule Editor Acceptance Criteria When a condition is added and there's m
       <div class="operator panel panel-default panel-inline">
         <div class="panel-body text-uppercase">or</div>
       </div>
-      <div class="container-trash"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button" data-index="0"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-trash" focusable="false">
-            <title>trash</title>
+      <div class="container-trash"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button" data-index="0"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
             <use xlink:href="icons.svg#trash"></use>
           </svg></button></div>
     </li>
@@ -83,15 +82,13 @@ exports[`Rule Editor Acceptance Criteria When a condition is added and there's m
       <div class="operator panel panel-default panel-inline">
         <div class="panel-body text-uppercase">or</div>
       </div>
-      <div class="container-trash"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button" data-index="1"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-trash" focusable="false">
-            <title>trash</title>
+      <div class="container-trash"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button" data-index="1"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
             <use xlink:href="icons.svg#trash"></use>
           </svg></button></div>
     </li>
   </ul>
   <div class="addbutton-timeline-item">
-    <div class="add-item timeline-increment-icon"><button class="btn rounded-circle btn-monospaced btn-sm btn-primary" aria-label="plus" type="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-plus" focusable="false">
-          <title>plus</title>
+    <div class="add-item timeline-increment-icon"><button class="btn rounded-circle btn-monospaced btn-sm btn-primary" aria-label="plus" type="button"><svg class="lexicon-icon lexicon-icon-plus" focusable="false" role="presentation">
           <use xlink:href="icons.svg#plus"></use>
         </svg></button></div>
   </div>
@@ -123,15 +120,13 @@ exports[`Rule Editor Acceptance Criteria When a condition is added and there's m
           <div class="timeline-increment"><span class="timeline-icon"></span></div>
         </div>
       </div>
-      <div class="container-trash"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button" data-index="0"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-trash" focusable="false">
-            <title>trash</title>
+      <div class="container-trash"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button" data-index="0"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
             <use xlink:href="icons.svg#trash"></use>
           </svg></button></div>
     </li>
   </ul>
   <div class="addbutton-timeline-item">
-    <div class="add-item timeline-increment-icon"><button class="btn rounded-circle btn-monospaced btn-sm btn-primary" aria-label="plus" type="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-plus" focusable="false">
-          <title>plus</title>
+    <div class="add-item timeline-increment-icon"><button class="btn rounded-circle btn-monospaced btn-sm btn-primary" aria-label="plus" type="button"><svg class="lexicon-icon lexicon-icon-plus" focusable="false" role="presentation">
           <use xlink:href="icons.svg#plus"></use>
         </svg></button></div>
   </div>
@@ -139,8 +134,7 @@ exports[`Rule Editor Acceptance Criteria When a condition is added and there's m
     <div class="modal-dialog modal-sm">
       <div class="modal-content">
         <div class="modal-header">
-          <div class="modal-title">delete-condition</div><button class="btn close btn-unstyled" aria-label="close" type="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-times" focusable="false">
-              <title>times</title>
+          <div class="modal-title">delete-condition</div><button class="btn close btn-unstyled" aria-label="close" type="button"><svg class="lexicon-icon lexicon-icon-times" focusable="false" role="presentation">
               <use xlink:href="icons.svg#times"></use>
             </svg></button>
         </div>
@@ -165,8 +159,7 @@ exports[`Rule Editor Acceptance Criteria When a condition is added and there's m
     <div class="modal-dialog modal-sm">
       <div class="modal-content">
         <div class="modal-header">
-          <div class="modal-title">delete-action</div><button class="btn close btn-unstyled" aria-label="close" type="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-times" focusable="false">
-              <title>times</title>
+          <div class="modal-title">delete-action</div><button class="btn close btn-unstyled" aria-label="close" type="button"><svg class="lexicon-icon lexicon-icon-times" focusable="false" role="presentation">
               <use xlink:href="icons.svg#times"></use>
             </svg></button>
         </div>
@@ -245,8 +238,7 @@ exports[`Rule Editor Acceptance Criteria should configure the conditions accordi
       <div class="operator panel panel-default panel-inline">
         <div class="panel-body text-uppercase">or</div>
       </div>
-      <div class="container-trash"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button" data-index="0"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-trash" focusable="false">
-            <title>trash</title>
+      <div class="container-trash"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button" data-index="0"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
             <use xlink:href="icons.svg#trash"></use>
           </svg></button></div>
     </li>
@@ -274,15 +266,13 @@ exports[`Rule Editor Acceptance Criteria should configure the conditions accordi
       <div class="operator panel panel-default panel-inline">
         <div class="panel-body text-uppercase">or</div>
       </div>
-      <div class="container-trash"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button" data-index="1"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-trash" focusable="false">
-            <title>trash</title>
+      <div class="container-trash"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button" data-index="1"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
             <use xlink:href="icons.svg#trash"></use>
           </svg></button></div>
     </li>
   </ul>
   <div class="addbutton-timeline-item">
-    <div class="add-item timeline-increment-icon"><button class="btn rounded-circle btn-monospaced btn-sm btn-primary" aria-label="plus" type="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-plus" focusable="false">
-          <title>plus</title>
+    <div class="add-item timeline-increment-icon"><button class="btn rounded-circle btn-monospaced btn-sm btn-primary" aria-label="plus" type="button"><svg class="lexicon-icon lexicon-icon-plus" focusable="false" role="presentation">
           <use xlink:href="icons.svg#plus"></use>
         </svg></button></div>
   </div>
@@ -314,15 +304,13 @@ exports[`Rule Editor Acceptance Criteria should configure the conditions accordi
           <div class="timeline-increment"><span class="timeline-icon"></span></div>
         </div>
       </div>
-      <div class="container-trash"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button" data-index="0"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-trash" focusable="false">
-            <title>trash</title>
+      <div class="container-trash"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button" data-index="0"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
             <use xlink:href="icons.svg#trash"></use>
           </svg></button></div>
     </li>
   </ul>
   <div class="addbutton-timeline-item">
-    <div class="add-item timeline-increment-icon"><button class="btn rounded-circle btn-monospaced btn-sm btn-primary" aria-label="plus" type="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-plus" focusable="false">
-          <title>plus</title>
+    <div class="add-item timeline-increment-icon"><button class="btn rounded-circle btn-monospaced btn-sm btn-primary" aria-label="plus" type="button"><svg class="lexicon-icon lexicon-icon-plus" focusable="false" role="presentation">
           <use xlink:href="icons.svg#plus"></use>
         </svg></button></div>
   </div>
@@ -330,8 +318,7 @@ exports[`Rule Editor Acceptance Criteria should configure the conditions accordi
     <div class="modal-dialog modal-sm">
       <div class="modal-content">
         <div class="modal-header">
-          <div class="modal-title">delete-condition</div><button class="btn close btn-unstyled" aria-label="close" type="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-times" focusable="false">
-              <title>times</title>
+          <div class="modal-title">delete-condition</div><button class="btn close btn-unstyled" aria-label="close" type="button"><svg class="lexicon-icon lexicon-icon-times" focusable="false" role="presentation">
               <use xlink:href="icons.svg#times"></use>
             </svg></button>
         </div>
@@ -356,8 +343,7 @@ exports[`Rule Editor Acceptance Criteria should configure the conditions accordi
     <div class="modal-dialog modal-sm">
       <div class="modal-content">
         <div class="modal-header">
-          <div class="modal-title">delete-action</div><button class="btn close btn-unstyled" aria-label="close" type="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-times" focusable="false">
-              <title>times</title>
+          <div class="modal-title">delete-action</div><button class="btn close btn-unstyled" aria-label="close" type="button"><svg class="lexicon-icon lexicon-icon-times" focusable="false" role="presentation">
               <use xlink:href="icons.svg#times"></use>
             </svg></button>
         </div>
@@ -436,8 +422,7 @@ exports[`Rule Editor Acceptance Criteria should configure the conditions accordi
       <div class="operator panel panel-default panel-inline">
         <div class="panel-body text-uppercase">&lt;a&gt;and&lt;/a&gt;</div>
       </div>
-      <div class="container-trash"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button" data-index="0"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-trash" focusable="false">
-            <title>trash</title>
+      <div class="container-trash"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button" data-index="0"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
             <use xlink:href="icons.svg#trash"></use>
           </svg></button></div>
     </li>
@@ -465,15 +450,13 @@ exports[`Rule Editor Acceptance Criteria should configure the conditions accordi
       <div class="operator panel panel-default panel-inline">
         <div class="panel-body text-uppercase">&lt;a&gt;and&lt;/a&gt;</div>
       </div>
-      <div class="container-trash"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button" data-index="1"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-trash" focusable="false">
-            <title>trash</title>
+      <div class="container-trash"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button" data-index="1"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
             <use xlink:href="icons.svg#trash"></use>
           </svg></button></div>
     </li>
   </ul>
   <div class="addbutton-timeline-item">
-    <div class="add-item timeline-increment-icon"><button class="btn rounded-circle btn-monospaced btn-sm btn-primary" aria-label="plus" type="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-plus" focusable="false">
-          <title>plus</title>
+    <div class="add-item timeline-increment-icon"><button class="btn rounded-circle btn-monospaced btn-sm btn-primary" aria-label="plus" type="button"><svg class="lexicon-icon lexicon-icon-plus" focusable="false" role="presentation">
           <use xlink:href="icons.svg#plus"></use>
         </svg></button></div>
   </div>
@@ -505,15 +488,13 @@ exports[`Rule Editor Acceptance Criteria should configure the conditions accordi
           <div class="timeline-increment"><span class="timeline-icon"></span></div>
         </div>
       </div>
-      <div class="container-trash"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button" data-index="0"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-trash" focusable="false">
-            <title>trash</title>
+      <div class="container-trash"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button" data-index="0"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
             <use xlink:href="icons.svg#trash"></use>
           </svg></button></div>
     </li>
   </ul>
   <div class="addbutton-timeline-item">
-    <div class="add-item timeline-increment-icon"><button class="btn rounded-circle btn-monospaced btn-sm btn-primary" aria-label="plus" type="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-plus" focusable="false">
-          <title>plus</title>
+    <div class="add-item timeline-increment-icon"><button class="btn rounded-circle btn-monospaced btn-sm btn-primary" aria-label="plus" type="button"><svg class="lexicon-icon lexicon-icon-plus" focusable="false" role="presentation">
           <use xlink:href="icons.svg#plus"></use>
         </svg></button></div>
   </div>
@@ -521,8 +502,7 @@ exports[`Rule Editor Acceptance Criteria should configure the conditions accordi
     <div class="modal-dialog modal-sm">
       <div class="modal-content">
         <div class="modal-header">
-          <div class="modal-title">delete-condition</div><button class="btn close btn-unstyled" aria-label="close" type="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-times" focusable="false">
-              <title>times</title>
+          <div class="modal-title">delete-condition</div><button class="btn close btn-unstyled" aria-label="close" type="button"><svg class="lexicon-icon lexicon-icon-times" focusable="false" role="presentation">
               <use xlink:href="icons.svg#times"></use>
             </svg></button>
         </div>
@@ -547,8 +527,7 @@ exports[`Rule Editor Acceptance Criteria should configure the conditions accordi
     <div class="modal-dialog modal-sm">
       <div class="modal-content">
         <div class="modal-header">
-          <div class="modal-title">delete-action</div><button class="btn close btn-unstyled" aria-label="close" type="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-times" focusable="false">
-              <title>times</title>
+          <div class="modal-title">delete-action</div><button class="btn close btn-unstyled" aria-label="close" type="button"><svg class="lexicon-icon lexicon-icon-times" focusable="false" role="presentation">
               <use xlink:href="icons.svg#times"></use>
             </svg></button>
         </div>

@@ -152,7 +152,7 @@ public class CTProcessResource {
 			companyId);
 
 		if (ctProcess == null) {
-			return CTProcessModel.EMPTY_CT_PROCESS_MODEL;
+			return CTProcessModel.emptyCTProcessModel();
 		}
 
 		return _getCTProcessModel(ctProcess);

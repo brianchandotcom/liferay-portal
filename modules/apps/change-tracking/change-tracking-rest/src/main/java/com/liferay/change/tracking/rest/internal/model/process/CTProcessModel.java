@@ -26,8 +26,13 @@ import javax.xml.bind.annotation.XmlElement;
  */
 public class CTProcessModel {
 
-	public static final CTProcessModel EMPTY_CT_PROCESS_MODEL =
-		new CTProcessModel();
+	public static CTProcessModel emptyCTProcessModel() {
+		Builder builder = forCompany(0);
+
+		return builder.setCTCollection(
+			null
+		).build();
+	}
 
 	public static CTProcessModel.Builder forCompany(long companyId) {
 		return new Builder(companyId);
@@ -76,6 +81,13 @@ public class CTProcessModel {
 		}
 
 		public Builder setCTCollection(CTCollection ctCollection) {
+			if (ctCollection == null) {
+				_ctProcessModel._ctCollection =
+					CTCollectionModel.EMPTY_CT_COLLECTION_MODEL;
+
+				return this;
+			}
+
 			CTCollectionModel.Builder builder =
 				CTCollectionModel.forCTCollection(ctCollection);
 

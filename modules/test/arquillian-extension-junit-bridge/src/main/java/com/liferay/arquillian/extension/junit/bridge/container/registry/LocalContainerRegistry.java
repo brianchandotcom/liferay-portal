@@ -41,16 +41,26 @@ public class LocalContainerRegistry implements ContainerRegistry {
 	public Container create(
 		ContainerDef containerDef, ServiceLoader serviceLoader) {
 
-		return _addContainer(
-			_injector.inject(
-				new ContainerImpl(
-					containerDef.getContainerName(),
-					new LiferayRemoteDeployableContainer(), containerDef)));
+		Container container = new ContainerImpl(
+			containerDef.getContainerName(),
+			new LiferayRemoteDeployableContainer(), containerDef);
+
+		_injector.inject(container);
+
+		_containers.add(container);
+
+		return container;
 	}
 
 	@Override
 	public Container getContainer(String name) {
-		return _findMatchingContainer(name);
+		for (Container container : _containers) {
+			if (name.equals(container.getName())) {
+				return container;
+			}
+		}
+
+		return null;
 	}
 
 	@Override
@@ -73,22 +83,6 @@ public class LocalContainerRegistry implements ContainerRegistry {
 	@Override
 	public List<Container> getContainers() {
 		return Collections.unmodifiableList(_containers);
-	}
-
-	private Container _addContainer(Container container) {
-		_containers.add(container);
-
-		return container;
-	}
-
-	private Container _findMatchingContainer(String name) {
-		for (Container container : _containers) {
-			if (name.equals(container.getName())) {
-				return container;
-			}
-		}
-
-		return null;
 	}
 
 	private final List<Container> _containers = new ArrayList<>();

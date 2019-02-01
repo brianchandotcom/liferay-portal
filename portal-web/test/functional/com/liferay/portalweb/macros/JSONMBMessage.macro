@@ -6,7 +6,7 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalURL}/api/jsonws/mbmessage/add-message \
+			${portalURL}/api/jsonws/mb.mbmessage/add-message \
 				-u test@liferay.com:test \
 				-d parentMessageId=${messageId} \
 				-d subject=<script>alert(123);</script> \

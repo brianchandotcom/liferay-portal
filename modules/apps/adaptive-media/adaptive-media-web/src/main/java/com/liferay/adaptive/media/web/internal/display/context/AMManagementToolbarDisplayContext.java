@@ -19,6 +19,8 @@ import com.liferay.adaptive.media.web.internal.constants.AMWebKeys;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.SafeConsumer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -76,6 +78,40 @@ public class AMManagementToolbarDisplayContext {
 							dropdownGroupItem.setLabel(
 								LanguageUtil.get(_request, "filter-by-state"));
 						}));
+			}
+		};
+	}
+
+	public List<LabelItem> getFilterLabelItems() {
+		final String entriesNavigation = ParamUtil.getString(
+			_request, "entriesNavigation", "all");
+
+		return new LabelItemList() {
+			{
+				if (entriesNavigation.equals("enabled") ||
+					entriesNavigation.equals("disabled")) {
+
+					add(
+						SafeConsumer.ignore(
+							labelItem -> {
+								PortletURL removeLabelURL =
+									PortletURLUtil.clone(
+										_currentURLObj,
+										_liferayPortletResponse);
+
+								removeLabelURL.setParameter(
+									"entriesNavigation", (String)null);
+
+								labelItem.putData(
+									"removeLabelURL",
+									removeLabelURL.toString());
+
+								labelItem.setCloseable(true);
+								labelItem.setLabel(
+									LanguageUtil.get(
+										_request, entriesNavigation));
+							}));
+				}
 			}
 		};
 	}

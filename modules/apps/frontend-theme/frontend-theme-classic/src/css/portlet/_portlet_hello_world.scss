@@ -1,5 +1,6 @@
 .portlet-hello-world .portlet .portlet-content {
 	background: #4885B7 url(../images/portlet_hello_world/welcome_bg.jpg) bottom left;
+	background-clip: padding-box;
 	background-size: cover;
 	color: $white;
 	min-height: 390px;

@@ -63,11 +63,21 @@ class FloatingToolbar extends Component {
 	_handlePanelButtonClick(event) {
 		const {panelId = null} = event.delegateTarget.dataset;
 
-		if (this.selectedPanelId === panelId) {
-			this.selectedPanelId = null;
-		}
-		else {
-			this.selectedPanelId = panelId;
+		this.emit(
+			'panelSelected',
+			event,
+			{
+				panelId
+			}
+		);
+
+		if (!event.defaultPrevented) {
+			if (this.selectedPanelId === panelId) {
+				this.selectedPanelId = null;
+			}
+			else {
+				this.selectedPanelId = panelId;
+			}
 		}
 	}
 

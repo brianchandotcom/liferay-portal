@@ -18,6 +18,8 @@ import com.liferay.change.tracking.CTManager;
 import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.exception.CTEntryException;
 import com.liferay.change.tracking.exception.CTException;
+import com.liferay.change.tracking.model.CTEntry;
+import com.liferay.journal.exception.NoSuchArticleException;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.JournalArticleLocalServiceWrapper;
@@ -28,12 +30,14 @@ import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.File;
 import java.io.Serializable;
 
 import java.util.Locale;
 import java.util.Map;
+import java.util.Optional;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -230,6 +234,246 @@ public class CTJournalArticleLocalServiceWrapper
 		_unregisterChange(journalArticle);
 
 		return journalArticle;
+	}
+
+	@Override
+	public JournalArticle fetchArticle(long id) {
+		JournalArticle journalArticle = super.fetchArticle(id);
+
+		if (_hasChange(journalArticle)) {
+			return journalArticle;
+		}
+
+		return null;
+	}
+
+	@Override
+	public JournalArticle fetchArticle(long groupId, String articleId) {
+		JournalArticle journalArticle = super.fetchArticle(groupId, articleId);
+
+		if (_hasChange(journalArticle)) {
+			return journalArticle;
+		}
+
+		return null;
+	}
+
+	@Override
+	public JournalArticle fetchArticle(
+		long groupId, String articleId, double version) {
+
+		JournalArticle journalArticle = super.fetchArticle(
+			groupId, articleId, version);
+
+		if (_hasChange(journalArticle)) {
+			return journalArticle;
+		}
+
+		return null;
+	}
+
+	@Override
+	public JournalArticle fetchArticleByUrlTitle(
+		long groupId, String urlTitle) {
+
+		JournalArticle journalArticle = super.fetchArticleByUrlTitle(
+			groupId, urlTitle);
+
+		if (_hasChange(journalArticle)) {
+			return journalArticle;
+		}
+
+		return null;
+	}
+
+	@Override
+	public JournalArticle fetchDisplayArticle(long groupId, String articleId) {
+		JournalArticle journalArticle = super.fetchDisplayArticle(
+			groupId, articleId);
+
+		if (_hasChange(journalArticle)) {
+			return journalArticle;
+		}
+
+		return null;
+	}
+
+	@Override
+	public JournalArticle getArticle(long id) throws PortalException {
+		JournalArticle journalArticle = super.getArticle(id);
+
+		if (_hasChange(journalArticle)) {
+			return journalArticle;
+		}
+
+		throw new NoSuchArticleException(
+			_NO_SUCH_ARTICLE_IN_CURRENT_CHANGE_COLLECTION + "id=" + id);
+	}
+
+	@Override
+	public JournalArticle getArticle(long groupId, String articleId)
+		throws PortalException {
+
+		JournalArticle journalArticle = super.getArticle(groupId, articleId);
+
+		if (_hasChange(journalArticle)) {
+			return journalArticle;
+		}
+
+		StringBundler sb = new StringBundler(5);
+
+		sb.append(_NO_SUCH_ARTICLE_IN_CURRENT_CHANGE_COLLECTION);
+
+		sb.append("groupId=");
+
+		sb.append(groupId);
+
+		sb.append(", articleId=");
+
+		sb.append(articleId);
+
+		throw new NoSuchArticleException(sb.toString());
+	}
+
+	@Override
+	public JournalArticle getArticle(
+			long groupId, String articleId, double version)
+		throws PortalException {
+
+		JournalArticle journalArticle = super.getArticle(
+			groupId, articleId, version);
+
+		if (_hasChange(journalArticle)) {
+			return journalArticle;
+		}
+
+		StringBundler sb = new StringBundler(7);
+
+		sb.append(_NO_SUCH_ARTICLE_IN_CURRENT_CHANGE_COLLECTION);
+
+		sb.append("groupId=");
+
+		sb.append(groupId);
+
+		sb.append(", articleId=");
+
+		sb.append(articleId);
+
+		sb.append(", version=");
+
+		sb.append(version);
+
+		throw new NoSuchArticleException(sb.toString());
+	}
+
+	@Override
+	public JournalArticle getArticle(
+			long groupId, String className, long classPK)
+		throws PortalException {
+
+		JournalArticle journalArticle = super.getArticle(
+			groupId, className, classPK);
+
+		if (_hasChange(journalArticle)) {
+			return journalArticle;
+		}
+
+		StringBundler sb = new StringBundler(7);
+
+		sb.append(_NO_SUCH_ARTICLE_IN_CURRENT_CHANGE_COLLECTION);
+
+		sb.append("groupId=");
+
+		sb.append(groupId);
+
+		sb.append(", className=");
+
+		sb.append(className);
+
+		sb.append(", classPK=");
+
+		sb.append(classPK);
+
+		throw new NoSuchArticleException(sb.toString());
+	}
+
+	@Override
+	public JournalArticle getArticleByUrlTitle(long groupId, String urlTitle)
+		throws PortalException {
+
+		JournalArticle journalArticle = super.getArticleByUrlTitle(
+			groupId, urlTitle);
+
+		if (_hasChange(journalArticle)) {
+			return journalArticle;
+		}
+
+		StringBundler sb = new StringBundler(5);
+
+		sb.append(_NO_SUCH_ARTICLE_IN_CURRENT_CHANGE_COLLECTION);
+
+		sb.append("groupId=");
+
+		sb.append(groupId);
+
+		sb.append(", urlTitle=");
+
+		sb.append(urlTitle);
+
+		throw new NoSuchArticleException(sb.toString());
+	}
+
+	@Override
+	public JournalArticle getDisplayArticle(long groupId, String articleId)
+		throws PortalException {
+
+		JournalArticle journalArticle = super.getDisplayArticle(
+			groupId, articleId);
+
+		if (_hasChange(journalArticle)) {
+			return journalArticle;
+		}
+
+		StringBundler sb = new StringBundler(5);
+
+		sb.append(_NO_SUCH_ARTICLE_IN_CURRENT_CHANGE_COLLECTION);
+
+		sb.append("groupId=");
+
+		sb.append(groupId);
+
+		sb.append(", articleId=");
+
+		sb.append(articleId);
+
+		throw new NoSuchArticleException(sb.toString());
+	}
+
+	@Override
+	public JournalArticle getDisplayArticleByUrlTitle(
+			long groupId, String urlTitle)
+		throws PortalException {
+
+		JournalArticle journalArticle = super.getDisplayArticleByUrlTitle(
+			groupId, urlTitle);
+
+		if (_hasChange(journalArticle)) {
+			return journalArticle;
+		}
+
+		StringBundler sb = new StringBundler(5);
+
+		sb.append(_NO_SUCH_ARTICLE_IN_CURRENT_CHANGE_COLLECTION);
+
+		sb.append("groupId=");
+
+		sb.append(groupId);
+
+		sb.append(", urlTitle=");
+
+		sb.append(urlTitle);
+
+		throw new NoSuchArticleException(sb.toString());
 	}
 
 	@Override
@@ -525,6 +769,16 @@ public class CTJournalArticleLocalServiceWrapper
 
 	}
 
+	private boolean _hasChange(JournalArticle journalArticle) {
+		Optional<CTEntry> ctEntryOptional =
+			_ctManager.getModelChangeCTEntryOptional(
+				PrincipalThreadLocal.getUserId(),
+				_portal.getClassNameId(JournalArticle.class.getName()),
+				journalArticle.getId());
+
+		return ctEntryOptional.isPresent();
+	}
+
 	private void _registerChange(JournalArticle journalArticle, int changeType)
 		throws CTException {
 
@@ -560,6 +814,10 @@ public class CTJournalArticleLocalServiceWrapper
 			_portal.getClassNameId(JournalArticle.class.getName()),
 			journalArticle.getId());
 	}
+
+	private static final String _NO_SUCH_ARTICLE_IN_CURRENT_CHANGE_COLLECTION =
+		"No JournalArticle exists in the current change collection or in " +
+			"production with the following parameters: ";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CTJournalArticleLocalServiceWrapper.class);

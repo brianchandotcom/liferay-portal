@@ -129,8 +129,8 @@ public class OpenSamlBootstrap {
 
 		parserPool.setDTDValidating(false);
 		parserPool.setExpandEntityReferences(false);
-		parserPool.setNamespaceAware(true);
 		parserPool.setMaxPoolSize(50);
+		parserPool.setNamespaceAware(true);
 
 		try {
 			parserPool.initialize();

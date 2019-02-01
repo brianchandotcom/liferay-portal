@@ -83,11 +83,11 @@ public class SecurityConfigurationBootstrap {
 	}
 
 	private Collection<String> _combine(
-		Collection<String> collection, String... str) {
+		Collection<String> collection, String... strings) {
 
 		Collection<String> combinedCollection = new HashSet<>(collection);
 
-		Collections.addAll(combinedCollection, str);
+		Collections.addAll(combinedCollection, strings);
 
 		return combinedCollection;
 	}

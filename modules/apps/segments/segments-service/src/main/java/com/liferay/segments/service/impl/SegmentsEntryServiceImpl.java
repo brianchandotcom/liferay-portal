@@ -66,14 +66,13 @@ public class SegmentsEntryServiceImpl extends SegmentsEntryServiceBaseImpl {
 		return segmentsEntryLocalService.deleteSegmentsEntry(segmentsEntryId);
 	}
 
-	@Override
-	public List<SegmentsEntry> getSegmentsEntries(long groupId)
+	public List<SegmentsEntry> getActiveSegmentsEntries(long groupId)
 		throws PortalException {
 
 		_portletResourcePermission.check(
 			getPermissionChecker(), groupId, ActionKeys.VIEW);
 
-		return segmentsEntryPersistence.filterFindByGroupId(groupId);
+		return segmentsEntryPersistence.filterFindByG_A(groupId, true);
 	}
 
 	@Override

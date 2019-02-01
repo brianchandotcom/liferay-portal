@@ -1489,7 +1489,7 @@ public class TableMapperTest {
 
 		Map<String, TableMapper<?, ?>> tableMappers =
 			ReflectionTestUtil.getFieldValue(
-				TableMapperFactory.class, "tableMappers");
+				TableMapperFactory.class, "_tableMappers");
 
 		Assert.assertTrue(tableMappers.toString(), tableMappers.isEmpty());
 

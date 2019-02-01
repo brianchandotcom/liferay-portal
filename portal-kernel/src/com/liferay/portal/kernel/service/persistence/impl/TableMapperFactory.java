@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.service.persistence.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.internal.service.persistence.CachelessTableMapperImpl;
 import com.liferay.portal.kernel.internal.service.persistence.ReverseTableMapper;
 import com.liferay.portal.kernel.internal.service.persistence.TableMapperImpl;
@@ -30,6 +32,7 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * @author Shuyang Zhou
  */
+@ProviderType
 public class TableMapperFactory {
 
 	public static <L extends BaseModel<L>, R extends BaseModel<R>>
@@ -38,7 +41,7 @@ public class TableMapperFactory {
 			String rightColumnName, BasePersistence<L> leftPersistence,
 			BasePersistence<R> rightPersistence) {
 
-		TableMapper<?, ?> tableMapper = tableMappers.get(tableName);
+		TableMapper<?, ?> tableMapper = _tableMappers.get(tableName);
 
 		if (tableMapper == null) {
 			TableMapperImpl<L, R> tableMapperImpl = null;
@@ -59,7 +62,7 @@ public class TableMapperFactory {
 
 			tableMapper = tableMapperImpl;
 
-			tableMappers.put(tableName, tableMapper);
+			_tableMappers.put(tableName, tableMapper);
 		}
 		else if (!tableMapper.matches(leftColumnName, rightColumnName)) {
 			tableMapper = tableMapper.getReverseTableMapper();
@@ -69,25 +72,18 @@ public class TableMapperFactory {
 	}
 
 	public static void removeTableMapper(String tableName) {
-		TableMapper<?, ?> tableMapper = tableMappers.remove(tableName);
+		TableMapper<?, ?> tableMapper = _tableMappers.remove(tableName);
 
 		if (tableMapper != null) {
 			tableMapper.destroy();
 		}
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	protected static final Set<String> cacheMappingTableNames = null;
-
-	protected static final Map<String, TableMapper<?, ?>> tableMappers =
-		new ConcurrentHashMap<>();
-
 	private static final Set<String> _cachelessMappingTableNames =
 		SetUtil.fromArray(
 			PropsUtil.getArray(
 				PropsKeys.TABLE_MAPPER_CACHELESS_MAPPING_TABLE_NAMES));
+	private static final Map<String, TableMapper<?, ?>> _tableMappers =
+		new ConcurrentHashMap<>();
 
 }

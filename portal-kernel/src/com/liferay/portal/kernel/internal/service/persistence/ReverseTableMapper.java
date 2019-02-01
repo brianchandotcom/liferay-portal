@@ -12,9 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.kernel.service.persistence.impl;
+package com.liferay.portal.kernel.internal.service.persistence;
 
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.service.persistence.impl.TableMapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;

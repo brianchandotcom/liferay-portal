@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.service.persistence.impl;
+package com.liferay.portal.kernel.internal.service.persistence;
 
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
@@ -33,6 +33,9 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
+import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.service.persistence.impl.TableMapper;
+import com.liferay.portal.kernel.service.persistence.impl.TableMapperFactory;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -1485,7 +1488,8 @@ public class TableMapperTest {
 		// Initial empty
 
 		Map<String, TableMapper<?, ?>> tableMappers =
-			TableMapperFactory.tableMappers;
+			ReflectionTestUtil.getFieldValue(
+				TableMapperFactory.class, "tableMappers");
 
 		Assert.assertTrue(tableMappers.toString(), tableMappers.isEmpty());
 

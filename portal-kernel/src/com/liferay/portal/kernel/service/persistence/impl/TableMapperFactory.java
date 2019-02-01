@@ -14,6 +14,9 @@
 
 package com.liferay.portal.kernel.service.persistence.impl;
 
+import com.liferay.portal.kernel.internal.service.persistence.CachelessTableMapperImpl;
+import com.liferay.portal.kernel.internal.service.persistence.ReverseTableMapper;
+import com.liferay.portal.kernel.internal.service.persistence.TableMapperImpl;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.util.PropsKeys;

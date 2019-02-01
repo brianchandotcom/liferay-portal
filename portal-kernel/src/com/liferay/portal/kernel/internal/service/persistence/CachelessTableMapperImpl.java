@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.service.persistence.impl;
+package com.liferay.portal.kernel.internal.service.persistence;
 
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheListener;

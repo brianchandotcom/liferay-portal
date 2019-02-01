@@ -1,0 +1,28 @@
+.upper-tbar {
+	background-color: #FFF;
+	border-color: #E7E7ED;
+	border-style: solid;
+	border-width: 0 0 1px;
+	height: 4rem;
+
+	.tbar-item {
+		padding-left: 0.5rem;
+		padding-right: 0.5rem;
+
+		&:first-child {
+			padding-left: 0;
+		}
+
+		&:last-child {
+			padding-right: 0;
+		}
+	}
+}
+
+.upper-tbar-title {
+	color: #272833;
+	font-size: 1.125rem;
+	font-weight: bold;
+	line-height: 1.25;
+	margin: 0;
+}

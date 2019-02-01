@@ -1,6 +1,8 @@
 @import "bourbon";
 @import "mixins";
 
+@import "upper_tbar";
+
 .portlet-document-library, .portlet-document-library-display {
 	@import "document_library_preview";
 

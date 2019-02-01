@@ -1386,52 +1386,59 @@ public class TopLevelBuild extends BaseBuild {
 	}
 
 	protected void sendBuildMetricsOnModifiedBuilds() {
-		sendBuildMetricsOnRecentlyCompletedDownstreamBuilds();
-		sendBuildMetricsOnRecentlyRunningDownstreamBuilds();
-	}
+		StringBuilder sb = new StringBuilder();
 
-	protected void sendBuildMetricsOnRecentlyCompletedDownstreamBuilds() {
-		List<Build> modifiedDownstreamBuilds =
-			getModifiedDownstreamBuildsByStatus("completed");
+		Map<Map<String, String>, Integer> slaveUsages =
+			_getSlaveUsageByLabels();
 
-		if (modifiedDownstreamBuilds.isEmpty()) {
-			return;
+		for (Map.Entry<Map<String, String>, Integer> slaveUsageEntry :
+				slaveUsages.entrySet()) {
+
+			Map<String, String> metricLabels = slaveUsageEntry.getKey();
+			Integer slaveUsage = slaveUsageEntry.getValue();
+
+			sb.append(
+				StatsDMetricsUtil.generateGaugeDeltaMetric(
+					"build_slave_usage_gauge", slaveUsage, metricLabels));
+
+			sb.append("\n");
 		}
 
-		List<Build> ignoreDownstreamBuilds = new ArrayList<>();
-
-		for (Build downstreamBuild : modifiedDownstreamBuilds) {
-			long runningDuration = downstreamBuild.getStatusDuration("running");
-
-			if (runningDuration == 0) {
-				ignoreDownstreamBuilds.add(downstreamBuild);
-			}
+		if (sb.length() > 0) {
+			sendBuildMetrics(sb.toString());
 		}
-
-		modifiedDownstreamBuilds.removeAll(ignoreDownstreamBuilds);
-
-		sendBuildMetrics(
-			StatsDMetricsUtil.generateGaugeDeltaMetric(
-				"build_slave_usage_gauge", -modifiedDownstreamBuilds.size(),
-				null));
-	}
-
-	protected void sendBuildMetricsOnRecentlyRunningDownstreamBuilds() {
-		List<Build> modifiedDownstreamBuilds =
-			getModifiedDownstreamBuildsByStatus("running");
-
-		if (modifiedDownstreamBuilds.isEmpty()) {
-			return;
-		}
-
-		sendBuildMetrics(
-			StatsDMetricsUtil.generateGaugeDeltaMetric(
-				"build_slave_usage_value", modifiedDownstreamBuilds.size(),
-				null));
 	}
 
 	protected static final Pattern gitRepositoryTempMapNamePattern =
 		Pattern.compile("git\\.(?<gitRepositoryType>.*)\\.properties");
+
+	private Map<Map<String, String>, Integer> _getSlaveUsageByLabels() {
+		Map<Map<String, String>, Integer> slaveUsages = new HashMap<>();
+
+		List<Build> modifiedDownstreamBuilds = getModifiedDownstreamBuilds();
+
+		for (Build modifiedDownstreamBuild : modifiedDownstreamBuilds) {
+			Map<String, String> metricLabels =
+				modifiedDownstreamBuild.getMetricLabels();
+
+			Integer slaveUsage = slaveUsages.get(metricLabels);
+
+			if (slaveUsage == null) {
+				slaveUsage = 0;
+			}
+
+			slaveUsage +=
+				modifiedDownstreamBuild.getTotalSlavesUsedCount(
+					"running", true);
+			slaveUsage -=
+				modifiedDownstreamBuild.getTotalSlavesUsedCount(
+					"completed", true);
+
+			slaveUsages.put(metricLabels, slaveUsage);
+		}
+
+		return slaveUsages;
+	}
 
 	private static final long _DOWNSTREAM_BUILDS_LISTING_INTERVAL =
 		1000 * 60 * 5;

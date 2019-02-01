@@ -6,6 +6,7 @@
 @import "components/splitter";
 @import "components/table";
 @import "components/widget";
+@import "portlet/portlet";
 @import "portlet/portlet_decorators";
 @import "portlet/portlet_hello_world";
 
@@ -68,26 +69,6 @@ header {
 	.user-full-name {
 		@include media-query(null, $screen-xs-max) {
 			display: none;
-		}
-	}
-}
-
-.portlet-layout {
-	.portlet {
-		.management-bar, .navbar-underline {
-			> .container-fluid-max-xl {
-				padding-left: 0;
-				padding-right: 0;
-			}
-		}
-
-		.portlet-title-text {
-			color: map-get($theme-colors, secondary);
-			font-size: 0.875rem;
-			font-weight: 600;
-			line-height: 2.2;
-			margin-bottom: 0;
-			text-transform: uppercase;
 		}
 	}
 }

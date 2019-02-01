@@ -1,0 +1,44 @@
+.portlet-layout {
+	.portlet {
+		.management-bar, .navbar-underline {
+			> .container-fluid-max-xl {
+				padding-left: 0;
+				padding-right: 0;
+			}
+		}
+
+		.portlet-title-text {
+			color: map-get($theme-colors, secondary);
+			font-size: 0.875rem;
+			font-weight: 600;
+			line-height: 2.2;
+			margin-bottom: 0;
+			text-transform: uppercase;
+		}
+	}
+}
+
+.portlet > .portlet-topper {
+	padding: 0 4px 0 8px;
+	right: auto;
+
+	.portlet-title-default {
+		line-height: 1.4;
+	}
+
+	.portlet-name-text {
+		margin-right: 0.75rem;
+	}
+
+	.portlet-topper-toolbar, .icon-monospaced {
+		height: 1.5rem;
+		line-height: 1.4;
+		width: 1.5rem;
+	}
+
+	.lexicon-icon {
+		height: 0.875rem;
+		margin-top: 0;
+		width: 0.875rem;
+	}
+}

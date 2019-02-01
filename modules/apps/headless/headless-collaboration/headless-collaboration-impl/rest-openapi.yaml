@@ -6,12 +6,14 @@ components:
         bestRating:
           type: number
         id:
+          format: int64
           type: integer
         ratingCount:
           type: number
         ratingValue:
           type: number
         self:
+          format: uri
           type: string
         worstRating:
           type: number
@@ -27,6 +29,9 @@ components:
           type: string
         caption:
           type: string
+        category:
+          format: uri
+          type: string
         comment:
           $ref: "#/components/schemas/Comment"
         contentSpace:
@@ -36,10 +41,13 @@ components:
           format: uri
           type: string
         dateCreated:
+          format: date-time
           type: string
         dateModified:
+          format: date-time
           type: string
         datePublished:
+          format: date-time
           type: string
         description:
           type: string
@@ -50,6 +58,7 @@ components:
         headline:
           type: string
         id:
+          format: int64
           type: integer
         image:
           $ref: "#/components/schemas/ImageObject"
@@ -60,6 +69,7 @@ components:
         repository:
           $ref: "#/components/schemas/ImageObjectRepository"
         self:
+          format: uri
           type: string
       type: object
     Comment:
@@ -71,8 +81,10 @@ components:
           format: uri
           type: string
         id:
+          format: int64
           type: integer
         self:
+          format: uri
           type: string
         text:
           type: string
@@ -87,8 +99,10 @@ components:
         fileExtension:
           type: string
         id:
+          format: int64
           type: integer
         self:
+          format: uri
           type: string
         sizeInBytes:
           type: number
@@ -96,19 +110,23 @@ components:
           type: string
       type: object
     ImageObjectRepository:
-      description: "https://www.schema.org/Folder"
+      description: https://www.schema.org/ImageObjectRepository
       properties:
         dateCreated:
+          format: date-time
           type: string
         dateModified:
+          format: date-time
           type: string
         id:
+          format: int64
           type: integer
         images:
           $ref: "#/components/schemas/ImageObject"
         name:
           type: string
         self:
+          format: uri
           type: string
       type: object
 info:
@@ -124,11 +142,12 @@ paths:
           name: id
           required: true
           schema:
+            format: int64
             type: integer
       responses:
         200:
           content:
-            "*/*":
+            application/json:
               schema:
                 $ref: "#/components/schemas/AggregateRating"
           description: ""
@@ -139,11 +158,12 @@ paths:
           name: id
           required: true
           schema:
+            format: int64
             type: integer
       responses:
         204:
           content:
-            "*/*": {}
+            application/json: {}
           description: ""
     get:
       parameters:
@@ -151,11 +171,12 @@ paths:
           name: id
           required: true
           schema:
+            format: int64
             type: integer
       responses:
         200:
           content:
-            "*/*":
+            application/json:
               schema:
                 $ref: "#/components/schemas/BlogPosting"
           description: ""
@@ -165,16 +186,17 @@ paths:
           name: id
           required: true
           schema:
+            format: int64
             type: integer
       requestBody:
         content:
-          "*/*":
+          application/json:
             schema:
               $ref: "#/components/schemas/BlogPosting"
       responses:
         200:
           content:
-            "*/*":
+            application/json:
               schema:
                 $ref: "#/components/schemas/BlogPosting"
           description: ""
@@ -193,11 +215,12 @@ paths:
           name: parent-id
           required: true
           schema:
+            format: int64
             type: integer
       responses:
         200:
           content:
-            "*/*":
+            application/json:
               schema:
                 items:
                   $ref: "#/components/schemas/Comment"
@@ -210,11 +233,12 @@ paths:
           name: id
           required: true
           schema:
+            format: int64
             type: integer
       responses:
         200:
           content:
-            "*/*":
+            application/json:
               schema:
                 $ref: "#/components/schemas/Comment"
           description: ""
@@ -233,11 +257,12 @@ paths:
           name: parent-id
           required: true
           schema:
+            format: int64
             type: integer
       responses:
         200:
           content:
-            "*/*":
+            application/json:
               schema:
                 items:
                   $ref: "#/components/schemas/Comment"
@@ -258,11 +283,12 @@ paths:
           name: parent-id
           required: true
           schema:
+            format: int64
             type: integer
       responses:
         200:
           content:
-            "*/*":
+            application/json:
               schema:
                 items:
                   $ref: "#/components/schemas/BlogPosting"
@@ -274,16 +300,17 @@ paths:
           name: parent-id
           required: true
           schema:
+            format: int64
             type: integer
       requestBody:
         content:
-          "*/*":
+          application/json:
             schema:
               $ref: "#/components/schemas/BlogPosting"
       responses:
         200:
           content:
-            "*/*":
+            application/json:
               schema:
                 $ref: "#/components/schemas/BlogPosting"
           description: ""
@@ -294,18 +321,35 @@ paths:
           name: parent-id
           required: true
           schema:
+            format: int64
             type: integer
       requestBody:
         content:
-          "*/*":
+          application/json:
             schema:
               $ref: "#/components/schemas/BlogPosting"
       responses:
         200:
           content:
-            "*/*":
+            application/json:
               schema:
                 $ref: "#/components/schemas/BlogPosting"
+          description: ""
+  "/image-object-repository/{id}":
+    get:
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            format: int64
+            type: integer
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ImageObjectRepository"
           description: ""
   "/image-object-repository/{parent-id}/image-object":
     get:
@@ -322,11 +366,12 @@ paths:
           name: parent-id
           required: true
           schema:
+            format: int64
             type: integer
       responses:
         200:
           content:
-            "*/*":
+            application/json:
               schema:
                 items:
                   $ref: "#/components/schemas/ImageObject"
@@ -338,16 +383,38 @@ paths:
           name: parent-id
           required: true
           schema:
-            format: integer
+            format: int64
+            type: integer
       requestBody:
         content:
-          "*/*":
+          application/json:
             schema:
               $ref: "#/components/schemas/ImageObject"
       responses:
         200:
           content:
-            "*/*":
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ImageObject"
+          description: ""
+  "/image-object-repository/{parent-id}/image-object/batch-create":
+    post:
+      parameters:
+        - in: path
+          name: parent-id
+          required: true
+          schema:
+            format: int64
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ImageObject"
+      responses:
+        200:
+          content:
+            application/json:
               schema:
                 $ref: "#/components/schemas/ImageObject"
           description: ""
@@ -358,11 +425,12 @@ paths:
           name: id
           required: true
           schema:
+            format: int64
             type: integer
       responses:
         204:
           content:
-            "*/*": {}
+            application/json: {}
           description: ""
     get:
       parameters:
@@ -370,11 +438,12 @@ paths:
           name: id
           required: true
           schema:
+            format: int64
             type: integer
       responses:
         200:
           content:
-            "*/*":
+            application/json:
               schema:
                 $ref: "#/components/schemas/ImageObject"
           description: ""

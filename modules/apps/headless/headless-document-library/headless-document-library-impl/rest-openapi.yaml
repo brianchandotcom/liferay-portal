@@ -134,7 +134,6 @@ paths:
           name: page
           schema: 
             type: integer
-            format: int64
         - in: query
           name: per_page
           schema: 

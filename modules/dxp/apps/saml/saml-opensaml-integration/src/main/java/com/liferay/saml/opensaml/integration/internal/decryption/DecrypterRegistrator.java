@@ -64,7 +64,7 @@ public class DecrypterRegistrator {
 
 		if (decryptionParameters == null) {
 			throw new ResolverException(
-				"Decryption parameters could not be resolved from the " +
+				"Unable to resolve decryption parameters from the " +
 					"configuration");
 		}
 

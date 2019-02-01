@@ -14,10 +14,11 @@
 
 package com.liferay.arquillian.extension.junit.bridge.observer;
 
+import com.liferay.arquillian.extension.junit.bridge.container.registry.LocalContainerRegistry;
+
 import org.jboss.arquillian.config.descriptor.api.ArquillianDescriptor;
 import org.jboss.arquillian.config.descriptor.api.ContainerDef;
 import org.jboss.arquillian.config.descriptor.impl.ContainerDefImpl;
-import org.jboss.arquillian.container.impl.LocalContainerRegistry;
 import org.jboss.arquillian.container.spi.ContainerRegistry;
 import org.jboss.arquillian.core.api.Injector;
 import org.jboss.arquillian.core.api.Instance;

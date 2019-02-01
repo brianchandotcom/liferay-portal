@@ -14,11 +14,11 @@
 
 package com.liferay.arquillian.extension.junit.bridge.container.impl;
 
+import com.liferay.arquillian.extension.junit.bridge.container.remote.DefaultContainerConfiguration;
+
 import org.jboss.arquillian.config.descriptor.api.ContainerDef;
 import org.jboss.arquillian.config.descriptor.api.ProtocolDef;
 import org.jboss.arquillian.container.impl.DefaultServerKillProcessor;
-import org.jboss.arquillian.container.impl.MapObject;
-import org.jboss.arquillian.container.impl.SecurityActions;
 import org.jboss.arquillian.container.spi.Container;
 import org.jboss.arquillian.container.spi.ServerKillProcessor;
 import org.jboss.arquillian.container.spi.client.container.ContainerConfiguration;
@@ -65,17 +65,7 @@ public class ContainerImpl implements Container {
 	public ContainerConfiguration createDeployableConfiguration()
 		throws Exception {
 
-		ContainerConfiguration containerConfiguration =
-			SecurityActions.newInstance(
-				_deployableContainer.getConfigurationClass(), new Class<?>[0],
-				new Object[0]);
-
-		MapObject.populate(
-			containerConfiguration, _containerDef.getContainerProperties());
-
-		containerConfiguration.validate();
-
-		return containerConfiguration;
+		return new DefaultContainerConfiguration();
 	}
 
 	@Override

@@ -9,8 +9,10 @@ components:
         commentLog:
           type: string
         dateCreated:
+          format: datetime
           type: string
         id:
+          format: int64
           type: integer
         person:
           format: uri
@@ -36,8 +38,10 @@ components:
         completed:
           type: boolean
         dateCompleted:
+          format: datetime
           type: string
         dateCreated:
+          format: datetime
           type: string
         definitionName:
           type: string
@@ -46,6 +50,7 @@ components:
         dueDate:
           type: string
         id:
+          format: int64
           type: integer
         logs:
           $ref: "#/components/schemas/WorkflowLog"
@@ -55,6 +60,7 @@ components:
           description: https://www.schema.org/Object
           properties:
             id:
+              format: int64
               type: integer
             identifier:
               format: uri
@@ -94,12 +100,12 @@ paths:
           name: parent-id
           required: true
           schema:
-            format: uri
-            type: string
+            format: int64
+            type: integer
       responses:
         200:
           content:
-            "*/*":
+            application/json:
               schema:
                 items:
                   $ref: "#/components/schemas/WorkflowTask"
@@ -112,11 +118,12 @@ paths:
           name: id
           required: true
           schema:
+            format: int64
             type: integer
       responses:
         200:
           content:
-            "*/*":
+            application/json:
               schema:
                 $ref: "#/components/schemas/WorkflowLog"
           description: ""
@@ -139,7 +146,7 @@ paths:
       responses:
         200:
           content:
-            "*/*":
+            application/json:
               schema:
                 items:
                   $ref: "#/components/schemas/WorkflowTask"
@@ -152,11 +159,12 @@ paths:
           name: id
           required: true
           schema:
+            format: int64
             type: integer
       responses:
         200:
           content:
-            "*/*":
+            application/json:
               schema:
                 $ref: "#/components/schemas/WorkflowTask"
           description: ""
@@ -167,16 +175,17 @@ paths:
           name: id
           required: true
           schema:
+            format: int64
             type: integer
       requestBody:
         content:
-          "*/*":
+          application/json:
             schema:
               $ref: "#/components/schemas/WorkflowTask"
       responses:
         200:
           content:
-            "*/*":
+            application/json:
               schema:
                 $ref: "#/components/schemas/WorkflowTask"
           description: ""
@@ -187,16 +196,17 @@ paths:
           name: id
           required: true
           schema:
+            format: int64
             type: integer
       requestBody:
         content:
-          "*/*":
+          application/json:
             schema:
               $ref: "#/components/schemas/WorkflowTask"
       responses:
         200:
           content:
-            "*/*":
+            application/json:
               schema:
                 $ref: "#/components/schemas/WorkflowTask"
           description: ""
@@ -207,16 +217,17 @@ paths:
           name: id
           required: true
           schema:
+            format: int64
             type: integer
       requestBody:
         content:
-          "*/*":
+          application/json:
             schema:
               $ref: "#/components/schemas/WorkflowTask"
       responses:
         200:
           content:
-            "*/*":
+            application/json:
               schema:
                 $ref: "#/components/schemas/WorkflowTask"
           description: ""
@@ -227,16 +238,17 @@ paths:
           name: id
           required: true
           schema:
+            format: int64
             type: integer
       requestBody:
         content:
-          "*/*":
+          application/json:
             schema:
               $ref: "#/components/schemas/WorkflowTask"
       responses:
         200:
           content:
-            "*/*":
+            application/json:
               schema:
                 $ref: "#/components/schemas/WorkflowTask"
           description: ""
@@ -255,11 +267,12 @@ paths:
           name: parent-id
           required: true
           schema:
+            format: int64
             type: integer
       responses:
         200:
           content:
-            "*/*":
+            application/json:
               schema:
                 items:
                   $ref: "#/components/schemas/WorkflowLog"

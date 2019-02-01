@@ -17,6 +17,7 @@ package com.liferay.fragment.contributor;
 import com.liferay.fragment.constants.FragmentEntryTypeConstants;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentEntryLocalService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -97,7 +98,7 @@ public abstract class BaseFragmentCollectionContributor
 		JSONObject jsonObject = _getStructure(path + "/fragment.json");
 
 		String name = jsonObject.getString("name");
-		String fragmentEntryKey = jsonObject.getString("fragmentEntryKey");
+		String fragmentEntryKey = _getFragmentEntryKey(jsonObject);
 		String css = _getFileContent(path, jsonObject.getString("cssPath"));
 		String html = _getFileContent(path, jsonObject.getString("htmlPath"));
 		String js = _getFileContent(path, jsonObject.getString("jsPath"));
@@ -107,14 +108,21 @@ public abstract class BaseFragmentCollectionContributor
 		FragmentEntry fragmentEntry =
 			fragmentEntryLocalService.createFragmentEntry(0L);
 
-		fragmentEntry.setFragmentEntryKey(fragmentEntryKey);
 		fragmentEntry.setName(name);
+		fragmentEntry.setFragmentEntryKey(fragmentEntryKey);
 		fragmentEntry.setCss(css);
 		fragmentEntry.setHtml(html);
 		fragmentEntry.setJs(js);
 		fragmentEntry.setType(type);
 
 		return fragmentEntry;
+	}
+
+	private String _getFragmentEntryKey(JSONObject jsonObject) {
+		String fragmentEntryKey = jsonObject.getString("fragmentEntryKey");
+
+		return String.join(
+			StringPool.DASH, getFragmentCollectionKey(), fragmentEntryKey);
 	}
 
 	private JSONObject _getStructure(String path) throws Exception {

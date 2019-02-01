@@ -1,4 +1,5 @@
 create table KaleoAction (
+	mvccVersion LONG default 0 not null,
 	kaleoActionId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
@@ -20,6 +21,7 @@ create table KaleoAction (
 );
 
 create table KaleoCondition (
+	mvccVersion LONG default 0 not null,
 	kaleoConditionId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
@@ -35,6 +37,7 @@ create table KaleoCondition (
 );
 
 create table KaleoDefinition (
+	mvccVersion LONG default 0 not null,
 	kaleoDefinitionId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
@@ -51,6 +54,7 @@ create table KaleoDefinition (
 );
 
 create table KaleoDefinitionVersion (
+	mvccVersion LONG default 0 not null,
 	kaleoDefinitionVersionId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
@@ -71,6 +75,7 @@ create table KaleoDefinitionVersion (
 );
 
 create table KaleoInstance (
+	mvccVersion LONG default 0 not null,
 	kaleoInstanceId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
@@ -90,6 +95,7 @@ create table KaleoInstance (
 );
 
 create table KaleoInstanceToken (
+	mvccVersion LONG default 0 not null,
 	kaleoInstanceTokenId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
@@ -109,6 +115,7 @@ create table KaleoInstanceToken (
 );
 
 create table KaleoLog (
+	mvccVersion LONG default 0 not null,
 	kaleoLogId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
@@ -142,6 +149,7 @@ create table KaleoLog (
 );
 
 create table KaleoNode (
+	mvccVersion LONG default 0 not null,
 	kaleoNodeId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
@@ -159,6 +167,7 @@ create table KaleoNode (
 );
 
 create table KaleoNotification (
+	mvccVersion LONG default 0 not null,
 	kaleoNotificationId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
@@ -179,6 +188,7 @@ create table KaleoNotification (
 );
 
 create table KaleoNotificationRecipient (
+	mvccVersion LONG default 0 not null,
 	kaleoNotificationRecipientId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
@@ -199,6 +209,7 @@ create table KaleoNotificationRecipient (
 );
 
 create table KaleoTask (
+	mvccVersion LONG default 0 not null,
 	kaleoTaskId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
@@ -213,6 +224,7 @@ create table KaleoTask (
 );
 
 create table KaleoTaskAssignment (
+	mvccVersion LONG default 0 not null,
 	kaleoTaskAssignmentId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
@@ -233,6 +245,7 @@ create table KaleoTaskAssignment (
 );
 
 create table KaleoTaskAssignmentInstance (
+	mvccVersion LONG default 0 not null,
 	kaleoTaskAssignmentInstanceId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
@@ -253,6 +266,7 @@ create table KaleoTaskAssignmentInstance (
 );
 
 create table KaleoTaskForm (
+	mvccVersion LONG default 0 not null,
 	kaleoTaskFormId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
@@ -276,6 +290,7 @@ create table KaleoTaskForm (
 );
 
 create table KaleoTaskFormInstance (
+	mvccVersion LONG default 0 not null,
 	kaleoTaskFormInstanceId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
@@ -296,6 +311,7 @@ create table KaleoTaskFormInstance (
 );
 
 create table KaleoTaskInstanceToken (
+	mvccVersion LONG default 0 not null,
 	kaleoTaskInstanceTokenId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
@@ -318,6 +334,7 @@ create table KaleoTaskInstanceToken (
 );
 
 create table KaleoTimer (
+	mvccVersion LONG default 0 not null,
 	kaleoTimerId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
@@ -338,6 +355,7 @@ create table KaleoTimer (
 );
 
 create table KaleoTimerInstanceToken (
+	mvccVersion LONG default 0 not null,
 	kaleoTimerInstanceTokenId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
@@ -361,6 +379,7 @@ create table KaleoTimerInstanceToken (
 );
 
 create table KaleoTransition (
+	mvccVersion LONG default 0 not null,
 	kaleoTransitionId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,

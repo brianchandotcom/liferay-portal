@@ -43,6 +43,7 @@ public class KaleoTransitionWrapper extends BaseModelWrapper<KaleoTransition>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("kaleoTransitionId", getKaleoTransitionId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
@@ -65,6 +66,12 @@ public class KaleoTransitionWrapper extends BaseModelWrapper<KaleoTransition>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		Long kaleoTransitionId = (Long)attributes.get("kaleoTransitionId");
 
 		if (kaleoTransitionId != null) {
@@ -253,6 +260,16 @@ public class KaleoTransitionWrapper extends BaseModelWrapper<KaleoTransition>
 	@Override
 	public Date getModifiedDate() {
 		return model.getModifiedDate();
+	}
+
+	/**
+	* Returns the mvcc version of this kaleo transition.
+	*
+	* @return the mvcc version of this kaleo transition
+	*/
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -460,6 +477,16 @@ public class KaleoTransitionWrapper extends BaseModelWrapper<KaleoTransition>
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		model.setModifiedDate(modifiedDate);
+	}
+
+	/**
+	* Sets the mvcc version of this kaleo transition.
+	*
+	* @param mvccVersion the mvcc version of this kaleo transition
+	*/
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**

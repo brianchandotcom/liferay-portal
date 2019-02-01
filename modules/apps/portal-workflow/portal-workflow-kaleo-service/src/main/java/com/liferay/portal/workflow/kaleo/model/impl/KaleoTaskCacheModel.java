@@ -20,6 +20,7 @@ import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.workflow.kaleo.model.KaleoTask;
 
 import java.io.Externalizable;
@@ -38,7 +39,7 @@ import java.util.Date;
  */
 @ProviderType
 public class KaleoTaskCacheModel implements CacheModel<KaleoTask>,
-	Externalizable {
+	Externalizable, MVCCModel {
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -51,7 +52,8 @@ public class KaleoTaskCacheModel implements CacheModel<KaleoTask>,
 
 		KaleoTaskCacheModel kaleoTaskCacheModel = (KaleoTaskCacheModel)obj;
 
-		if (kaleoTaskId == kaleoTaskCacheModel.kaleoTaskId) {
+		if ((kaleoTaskId == kaleoTaskCacheModel.kaleoTaskId) &&
+				(mvccVersion == kaleoTaskCacheModel.mvccVersion)) {
 			return true;
 		}
 
@@ -60,14 +62,28 @@ public class KaleoTaskCacheModel implements CacheModel<KaleoTask>,
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, kaleoTaskId);
+		int hashCode = HashUtil.hash(0, kaleoTaskId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(25);
 
-		sb.append("{kaleoTaskId=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", kaleoTaskId=");
 		sb.append(kaleoTaskId);
 		sb.append(", groupId=");
 		sb.append(groupId);
@@ -98,6 +114,7 @@ public class KaleoTaskCacheModel implements CacheModel<KaleoTask>,
 	public KaleoTask toEntityModel() {
 		KaleoTaskImpl kaleoTaskImpl = new KaleoTaskImpl();
 
+		kaleoTaskImpl.setMvccVersion(mvccVersion);
 		kaleoTaskImpl.setKaleoTaskId(kaleoTaskId);
 		kaleoTaskImpl.setGroupId(groupId);
 		kaleoTaskImpl.setCompanyId(companyId);
@@ -148,6 +165,8 @@ public class KaleoTaskCacheModel implements CacheModel<KaleoTask>,
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		mvccVersion = objectInput.readLong();
+
 		kaleoTaskId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
@@ -169,6 +188,8 @@ public class KaleoTaskCacheModel implements CacheModel<KaleoTask>,
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		objectOutput.writeLong(kaleoTaskId);
 
 		objectOutput.writeLong(groupId);
@@ -206,6 +227,7 @@ public class KaleoTaskCacheModel implements CacheModel<KaleoTask>,
 		}
 	}
 
+	public long mvccVersion;
 	public long kaleoTaskId;
 	public long groupId;
 	public long companyId;

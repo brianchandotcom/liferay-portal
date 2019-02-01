@@ -43,6 +43,7 @@ public class KaleoLogWrapper extends BaseModelWrapper<KaleoLog>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("kaleoLogId", getKaleoLogId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
@@ -80,6 +81,12 @@ public class KaleoLogWrapper extends BaseModelWrapper<KaleoLog>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		Long kaleoLogId = (Long)attributes.get("kaleoLogId");
 
 		if (kaleoLogId != null) {
@@ -470,6 +477,16 @@ public class KaleoLogWrapper extends BaseModelWrapper<KaleoLog>
 	}
 
 	/**
+	* Returns the mvcc version of this kaleo log.
+	*
+	* @return the mvcc version of this kaleo log
+	*/
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
+	}
+
+	/**
 	* Returns the previous assignee class name of this kaleo log.
 	*
 	* @return the previous assignee class name of this kaleo log
@@ -802,6 +819,16 @@ public class KaleoLogWrapper extends BaseModelWrapper<KaleoLog>
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		model.setModifiedDate(modifiedDate);
+	}
+
+	/**
+	* Sets the mvcc version of this kaleo log.
+	*
+	* @param mvccVersion the mvcc version of this kaleo log
+	*/
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**

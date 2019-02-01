@@ -43,6 +43,7 @@ public class KaleoTaskWrapper extends BaseModelWrapper<KaleoTask>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("kaleoTaskId", getKaleoTaskId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
@@ -60,6 +61,12 @@ public class KaleoTaskWrapper extends BaseModelWrapper<KaleoTask>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		Long kaleoTaskId = (Long)attributes.get("kaleoTaskId");
 
 		if (kaleoTaskId != null) {
@@ -220,6 +227,16 @@ public class KaleoTaskWrapper extends BaseModelWrapper<KaleoTask>
 	}
 
 	/**
+	* Returns the mvcc version of this kaleo task.
+	*
+	* @return the mvcc version of this kaleo task
+	*/
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
+	}
+
+	/**
 	* Returns the name of this kaleo task.
 	*
 	* @return the name of this kaleo task
@@ -352,6 +369,16 @@ public class KaleoTaskWrapper extends BaseModelWrapper<KaleoTask>
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		model.setModifiedDate(modifiedDate);
+	}
+
+	/**
+	* Sets the mvcc version of this kaleo task.
+	*
+	* @param mvccVersion the mvcc version of this kaleo task
+	*/
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**

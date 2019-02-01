@@ -122,6 +122,8 @@ public class KaleoTaskFormInstancePersistenceTest {
 
 		KaleoTaskFormInstance newKaleoTaskFormInstance = _persistence.create(pk);
 
+		newKaleoTaskFormInstance.setMvccVersion(RandomTestUtil.nextLong());
+
 		newKaleoTaskFormInstance.setGroupId(RandomTestUtil.nextLong());
 
 		newKaleoTaskFormInstance.setCompanyId(RandomTestUtil.nextLong());
@@ -159,6 +161,8 @@ public class KaleoTaskFormInstancePersistenceTest {
 
 		KaleoTaskFormInstance existingKaleoTaskFormInstance = _persistence.findByPrimaryKey(newKaleoTaskFormInstance.getPrimaryKey());
 
+		Assert.assertEquals(existingKaleoTaskFormInstance.getMvccVersion(),
+			newKaleoTaskFormInstance.getMvccVersion());
 		Assert.assertEquals(existingKaleoTaskFormInstance.getKaleoTaskFormInstanceId(),
 			newKaleoTaskFormInstance.getKaleoTaskFormInstanceId());
 		Assert.assertEquals(existingKaleoTaskFormInstance.getGroupId(),
@@ -264,14 +268,14 @@ public class KaleoTaskFormInstancePersistenceTest {
 
 	protected OrderByComparator<KaleoTaskFormInstance> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("KaleoTaskFormInstance",
-			"kaleoTaskFormInstanceId", true, "groupId", true, "companyId",
-			true, "userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "kaleoDefinitionVersionId", true,
-			"kaleoInstanceId", true, "kaleoTaskId", true,
-			"kaleoTaskInstanceTokenId", true, "kaleoTaskFormId", true,
-			"formValues", true, "formValueEntryGroupId", true,
-			"formValueEntryId", true, "formValueEntryUuid", true, "metadata",
-			true);
+			"mvccVersion", true, "kaleoTaskFormInstanceId", true, "groupId",
+			true, "companyId", true, "userId", true, "userName", true,
+			"createDate", true, "modifiedDate", true,
+			"kaleoDefinitionVersionId", true, "kaleoInstanceId", true,
+			"kaleoTaskId", true, "kaleoTaskInstanceTokenId", true,
+			"kaleoTaskFormId", true, "formValues", true,
+			"formValueEntryGroupId", true, "formValueEntryId", true,
+			"formValueEntryUuid", true, "metadata", true);
 	}
 
 	@Test
@@ -493,6 +497,8 @@ public class KaleoTaskFormInstancePersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		KaleoTaskFormInstance kaleoTaskFormInstance = _persistence.create(pk);
+
+		kaleoTaskFormInstance.setMvccVersion(RandomTestUtil.nextLong());
 
 		kaleoTaskFormInstance.setGroupId(RandomTestUtil.nextLong());
 

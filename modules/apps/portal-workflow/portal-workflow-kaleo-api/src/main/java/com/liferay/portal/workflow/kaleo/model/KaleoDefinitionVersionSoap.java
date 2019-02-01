@@ -34,6 +34,7 @@ public class KaleoDefinitionVersionSoap implements Serializable {
 		KaleoDefinitionVersion model) {
 		KaleoDefinitionVersionSoap soapModel = new KaleoDefinitionVersionSoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setKaleoDefinitionVersionId(model.getKaleoDefinitionVersionId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
@@ -104,6 +105,14 @@ public class KaleoDefinitionVersionSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setKaleoDefinitionVersionId(pk);
+	}
+
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	public long getKaleoDefinitionVersionId() {
@@ -242,6 +251,7 @@ public class KaleoDefinitionVersionSoap implements Serializable {
 		_status = status;
 	}
 
+	private long _mvccVersion;
 	private long _kaleoDefinitionVersionId;
 	private long _groupId;
 	private long _companyId;

@@ -43,6 +43,7 @@ public class KaleoTaskFormWrapper extends BaseModelWrapper<KaleoTaskForm>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("kaleoTaskFormId", getKaleoTaskFormId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
@@ -69,6 +70,12 @@ public class KaleoTaskFormWrapper extends BaseModelWrapper<KaleoTaskForm>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		Long kaleoTaskFormId = (Long)attributes.get("kaleoTaskFormId");
 
 		if (kaleoTaskFormId != null) {
@@ -352,6 +359,16 @@ public class KaleoTaskFormWrapper extends BaseModelWrapper<KaleoTaskForm>
 	}
 
 	/**
+	* Returns the mvcc version of this kaleo task form.
+	*
+	* @return the mvcc version of this kaleo task form
+	*/
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
+	}
+
+	/**
 	* Returns the name of this kaleo task form.
 	*
 	* @return the name of this kaleo task form
@@ -574,6 +591,16 @@ public class KaleoTaskFormWrapper extends BaseModelWrapper<KaleoTaskForm>
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		model.setModifiedDate(modifiedDate);
+	}
+
+	/**
+	* Sets the mvcc version of this kaleo task form.
+	*
+	* @param mvccVersion the mvcc version of this kaleo task form
+	*/
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**

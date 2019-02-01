@@ -69,6 +69,7 @@ public class KaleoTaskModelImpl extends BaseModelImpl<KaleoTask>
 	 */
 	public static final String TABLE_NAME = "KaleoTask";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "mvccVersion", Types.BIGINT },
 			{ "kaleoTaskId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
@@ -84,6 +85,7 @@ public class KaleoTaskModelImpl extends BaseModelImpl<KaleoTask>
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("kaleoTaskId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -97,7 +99,7 @@ public class KaleoTaskModelImpl extends BaseModelImpl<KaleoTask>
 		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table KaleoTask (kaleoTaskId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(200) null,createDate DATE null,modifiedDate DATE null,kaleoDefinitionVersionId LONG,kaleoNodeId LONG,name VARCHAR(200) null,description STRING null)";
+	public static final String TABLE_SQL_CREATE = "create table KaleoTask (mvccVersion LONG default 0 not null,kaleoTaskId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(200) null,createDate DATE null,modifiedDate DATE null,kaleoDefinitionVersionId LONG,kaleoNodeId LONG,name VARCHAR(200) null,description STRING null)";
 	public static final String TABLE_SQL_DROP = "drop table KaleoTask";
 	public static final String ORDER_BY_JPQL = " ORDER BY kaleoTask.kaleoTaskId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY KaleoTask.kaleoTaskId ASC";
@@ -205,6 +207,8 @@ public class KaleoTaskModelImpl extends BaseModelImpl<KaleoTask>
 		Map<String, BiConsumer<KaleoTask, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<KaleoTask, ?>>();
 
 
+		attributeGetterFunctions.put("mvccVersion", KaleoTask::getMvccVersion);
+		attributeSetterBiConsumers.put("mvccVersion", (BiConsumer<KaleoTask, Long>)KaleoTask::setMvccVersion);
 		attributeGetterFunctions.put("kaleoTaskId", KaleoTask::getKaleoTaskId);
 		attributeSetterBiConsumers.put("kaleoTaskId", (BiConsumer<KaleoTask, Long>)KaleoTask::setKaleoTaskId);
 		attributeGetterFunctions.put("groupId", KaleoTask::getGroupId);
@@ -231,6 +235,16 @@ public class KaleoTaskModelImpl extends BaseModelImpl<KaleoTask>
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@Override
@@ -449,6 +463,7 @@ public class KaleoTaskModelImpl extends BaseModelImpl<KaleoTask>
 	public Object clone() {
 		KaleoTaskImpl kaleoTaskImpl = new KaleoTaskImpl();
 
+		kaleoTaskImpl.setMvccVersion(getMvccVersion());
 		kaleoTaskImpl.setKaleoTaskId(getKaleoTaskId());
 		kaleoTaskImpl.setGroupId(getGroupId());
 		kaleoTaskImpl.setCompanyId(getCompanyId());
@@ -548,6 +563,8 @@ public class KaleoTaskModelImpl extends BaseModelImpl<KaleoTask>
 	@Override
 	public CacheModel<KaleoTask> toCacheModel() {
 		KaleoTaskCacheModel kaleoTaskCacheModel = new KaleoTaskCacheModel();
+
+		kaleoTaskCacheModel.mvccVersion = getMvccVersion();
 
 		kaleoTaskCacheModel.kaleoTaskId = getKaleoTaskId();
 
@@ -665,6 +682,7 @@ public class KaleoTaskModelImpl extends BaseModelImpl<KaleoTask>
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			KaleoTask.class, ModelWrapper.class
 		};
+	private long _mvccVersion;
 	private long _kaleoTaskId;
 	private long _groupId;
 	private long _companyId;

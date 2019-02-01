@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.GroupedModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 
 import java.util.Date;
@@ -38,7 +39,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface KaleoTaskAssignmentModel extends BaseModel<KaleoTaskAssignment>,
-	GroupedModel, ShardedModel {
+	GroupedModel, MVCCModel, ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -58,6 +59,22 @@ public interface KaleoTaskAssignmentModel extends BaseModel<KaleoTaskAssignment>
 	 * @param primaryKey the primary key of this kaleo task assignment
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the mvcc version of this kaleo task assignment.
+	 *
+	 * @return the mvcc version of this kaleo task assignment
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this kaleo task assignment.
+	 *
+	 * @param mvccVersion the mvcc version of this kaleo task assignment
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the kaleo task assignment ID of this kaleo task assignment.

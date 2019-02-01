@@ -69,6 +69,7 @@ public class KaleoNotificationModelImpl extends BaseModelImpl<KaleoNotification>
 	 */
 	public static final String TABLE_NAME = "KaleoNotification";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "mvccVersion", Types.BIGINT },
 			{ "kaleoNotificationId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
@@ -90,6 +91,7 @@ public class KaleoNotificationModelImpl extends BaseModelImpl<KaleoNotification>
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("kaleoNotificationId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -109,7 +111,7 @@ public class KaleoNotificationModelImpl extends BaseModelImpl<KaleoNotification>
 		TABLE_COLUMNS_MAP.put("notificationTypes", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table KaleoNotification (kaleoNotificationId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(200) null,createDate DATE null,modifiedDate DATE null,kaleoClassName VARCHAR(200) null,kaleoClassPK LONG,kaleoDefinitionVersionId LONG,kaleoNodeName VARCHAR(200) null,name VARCHAR(200) null,description STRING null,executionType VARCHAR(20) null,template TEXT null,templateLanguage VARCHAR(75) null,notificationTypes VARCHAR(255) null)";
+	public static final String TABLE_SQL_CREATE = "create table KaleoNotification (mvccVersion LONG default 0 not null,kaleoNotificationId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(200) null,createDate DATE null,modifiedDate DATE null,kaleoClassName VARCHAR(200) null,kaleoClassPK LONG,kaleoDefinitionVersionId LONG,kaleoNodeName VARCHAR(200) null,name VARCHAR(200) null,description STRING null,executionType VARCHAR(20) null,template TEXT null,templateLanguage VARCHAR(75) null,notificationTypes VARCHAR(255) null)";
 	public static final String TABLE_SQL_DROP = "drop table KaleoNotification";
 	public static final String ORDER_BY_JPQL = " ORDER BY kaleoNotification.kaleoNotificationId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY KaleoNotification.kaleoNotificationId ASC";
@@ -223,6 +225,8 @@ public class KaleoNotificationModelImpl extends BaseModelImpl<KaleoNotification>
 			new LinkedHashMap<String, BiConsumer<KaleoNotification, ?>>();
 
 
+		attributeGetterFunctions.put("mvccVersion", KaleoNotification::getMvccVersion);
+		attributeSetterBiConsumers.put("mvccVersion", (BiConsumer<KaleoNotification, Long>)KaleoNotification::setMvccVersion);
 		attributeGetterFunctions.put("kaleoNotificationId", KaleoNotification::getKaleoNotificationId);
 		attributeSetterBiConsumers.put("kaleoNotificationId", (BiConsumer<KaleoNotification, Long>)KaleoNotification::setKaleoNotificationId);
 		attributeGetterFunctions.put("groupId", KaleoNotification::getGroupId);
@@ -261,6 +265,16 @@ public class KaleoNotificationModelImpl extends BaseModelImpl<KaleoNotification>
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@Override
@@ -589,6 +603,7 @@ public class KaleoNotificationModelImpl extends BaseModelImpl<KaleoNotification>
 	public Object clone() {
 		KaleoNotificationImpl kaleoNotificationImpl = new KaleoNotificationImpl();
 
+		kaleoNotificationImpl.setMvccVersion(getMvccVersion());
 		kaleoNotificationImpl.setKaleoNotificationId(getKaleoNotificationId());
 		kaleoNotificationImpl.setGroupId(getGroupId());
 		kaleoNotificationImpl.setCompanyId(getCompanyId());
@@ -698,6 +713,8 @@ public class KaleoNotificationModelImpl extends BaseModelImpl<KaleoNotification>
 	@Override
 	public CacheModel<KaleoNotification> toCacheModel() {
 		KaleoNotificationCacheModel kaleoNotificationCacheModel = new KaleoNotificationCacheModel();
+
+		kaleoNotificationCacheModel.mvccVersion = getMvccVersion();
 
 		kaleoNotificationCacheModel.kaleoNotificationId = getKaleoNotificationId();
 
@@ -865,6 +882,7 @@ public class KaleoNotificationModelImpl extends BaseModelImpl<KaleoNotification>
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			KaleoNotification.class, ModelWrapper.class
 		};
+	private long _mvccVersion;
 	private long _kaleoNotificationId;
 	private long _groupId;
 	private long _companyId;

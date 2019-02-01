@@ -33,6 +33,7 @@ public class KaleoActionSoap implements Serializable {
 	public static KaleoActionSoap toSoapModel(KaleoAction model) {
 		KaleoActionSoap soapModel = new KaleoActionSoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setKaleoActionId(model.getKaleoActionId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
@@ -101,6 +102,14 @@ public class KaleoActionSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setKaleoActionId(pk);
+	}
+
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	public long getKaleoActionId() {
@@ -247,6 +256,7 @@ public class KaleoActionSoap implements Serializable {
 		_priority = priority;
 	}
 
+	private long _mvccVersion;
 	private long _kaleoActionId;
 	private long _groupId;
 	private long _companyId;

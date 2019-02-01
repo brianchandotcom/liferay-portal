@@ -121,6 +121,8 @@ public class KaleoNotificationRecipientPersistenceTest {
 
 		KaleoNotificationRecipient newKaleoNotificationRecipient = _persistence.create(pk);
 
+		newKaleoNotificationRecipient.setMvccVersion(RandomTestUtil.nextLong());
+
 		newKaleoNotificationRecipient.setGroupId(RandomTestUtil.nextLong());
 
 		newKaleoNotificationRecipient.setCompanyId(RandomTestUtil.nextLong());
@@ -159,6 +161,8 @@ public class KaleoNotificationRecipientPersistenceTest {
 
 		KaleoNotificationRecipient existingKaleoNotificationRecipient = _persistence.findByPrimaryKey(newKaleoNotificationRecipient.getPrimaryKey());
 
+		Assert.assertEquals(existingKaleoNotificationRecipient.getMvccVersion(),
+			newKaleoNotificationRecipient.getMvccVersion());
 		Assert.assertEquals(existingKaleoNotificationRecipient.getKaleoNotificationRecipientId(),
 			newKaleoNotificationRecipient.getKaleoNotificationRecipientId());
 		Assert.assertEquals(existingKaleoNotificationRecipient.getGroupId(),
@@ -245,13 +249,14 @@ public class KaleoNotificationRecipientPersistenceTest {
 
 	protected OrderByComparator<KaleoNotificationRecipient> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("KaleoNotificationRecipient",
-			"kaleoNotificationRecipientId", true, "groupId", true, "companyId",
-			true, "userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "kaleoDefinitionVersionId", true,
-			"kaleoNotificationId", true, "recipientClassName", true,
-			"recipientClassPK", true, "recipientRoleType", true,
-			"recipientScriptLanguage", true, "recipientScriptContexts", true,
-			"address", true, "notificationReceptionType", true);
+			"mvccVersion", true, "kaleoNotificationRecipientId", true,
+			"groupId", true, "companyId", true, "userId", true, "userName",
+			true, "createDate", true, "modifiedDate", true,
+			"kaleoDefinitionVersionId", true, "kaleoNotificationId", true,
+			"recipientClassName", true, "recipientClassPK", true,
+			"recipientRoleType", true, "recipientScriptLanguage", true,
+			"recipientScriptContexts", true, "address", true,
+			"notificationReceptionType", true);
 	}
 
 	@Test
@@ -469,6 +474,8 @@ public class KaleoNotificationRecipientPersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		KaleoNotificationRecipient kaleoNotificationRecipient = _persistence.create(pk);
+
+		kaleoNotificationRecipient.setMvccVersion(RandomTestUtil.nextLong());
 
 		kaleoNotificationRecipient.setGroupId(RandomTestUtil.nextLong());
 

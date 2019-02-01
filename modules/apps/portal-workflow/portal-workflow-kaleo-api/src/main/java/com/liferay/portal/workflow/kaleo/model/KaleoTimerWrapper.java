@@ -43,6 +43,7 @@ public class KaleoTimerWrapper extends BaseModelWrapper<KaleoTimer>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("kaleoTimerId", getKaleoTimerId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
@@ -66,6 +67,12 @@ public class KaleoTimerWrapper extends BaseModelWrapper<KaleoTimer>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		Long kaleoTimerId = (Long)attributes.get("kaleoTimerId");
 
 		if (kaleoTimerId != null) {
@@ -286,6 +293,16 @@ public class KaleoTimerWrapper extends BaseModelWrapper<KaleoTimer>
 	}
 
 	/**
+	* Returns the mvcc version of this kaleo timer.
+	*
+	* @return the mvcc version of this kaleo timer
+	*/
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
+	}
+
+	/**
 	* Returns the name of this kaleo timer.
 	*
 	* @return the name of this kaleo timer
@@ -493,6 +510,16 @@ public class KaleoTimerWrapper extends BaseModelWrapper<KaleoTimer>
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		model.setModifiedDate(modifiedDate);
+	}
+
+	/**
+	* Sets the mvcc version of this kaleo timer.
+	*
+	* @param mvccVersion the mvcc version of this kaleo timer
+	*/
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**

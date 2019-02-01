@@ -69,6 +69,7 @@ public class KaleoConditionModelImpl extends BaseModelImpl<KaleoCondition>
 	 */
 	public static final String TABLE_NAME = "KaleoCondition";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "mvccVersion", Types.BIGINT },
 			{ "kaleoConditionId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
@@ -85,6 +86,7 @@ public class KaleoConditionModelImpl extends BaseModelImpl<KaleoCondition>
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("kaleoConditionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -99,7 +101,7 @@ public class KaleoConditionModelImpl extends BaseModelImpl<KaleoCondition>
 		TABLE_COLUMNS_MAP.put("scriptRequiredContexts", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table KaleoCondition (kaleoConditionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(200) null,createDate DATE null,modifiedDate DATE null,kaleoDefinitionVersionId LONG,kaleoNodeId LONG,script TEXT null,scriptLanguage VARCHAR(75) null,scriptRequiredContexts STRING null)";
+	public static final String TABLE_SQL_CREATE = "create table KaleoCondition (mvccVersion LONG default 0 not null,kaleoConditionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(200) null,createDate DATE null,modifiedDate DATE null,kaleoDefinitionVersionId LONG,kaleoNodeId LONG,script TEXT null,scriptLanguage VARCHAR(75) null,scriptRequiredContexts STRING null)";
 	public static final String TABLE_SQL_DROP = "drop table KaleoCondition";
 	public static final String ORDER_BY_JPQL = " ORDER BY kaleoCondition.kaleoConditionId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY KaleoCondition.kaleoConditionId ASC";
@@ -208,6 +210,8 @@ public class KaleoConditionModelImpl extends BaseModelImpl<KaleoCondition>
 		Map<String, BiConsumer<KaleoCondition, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<KaleoCondition, ?>>();
 
 
+		attributeGetterFunctions.put("mvccVersion", KaleoCondition::getMvccVersion);
+		attributeSetterBiConsumers.put("mvccVersion", (BiConsumer<KaleoCondition, Long>)KaleoCondition::setMvccVersion);
 		attributeGetterFunctions.put("kaleoConditionId", KaleoCondition::getKaleoConditionId);
 		attributeSetterBiConsumers.put("kaleoConditionId", (BiConsumer<KaleoCondition, Long>)KaleoCondition::setKaleoConditionId);
 		attributeGetterFunctions.put("groupId", KaleoCondition::getGroupId);
@@ -236,6 +240,16 @@ public class KaleoConditionModelImpl extends BaseModelImpl<KaleoCondition>
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@Override
@@ -469,6 +483,7 @@ public class KaleoConditionModelImpl extends BaseModelImpl<KaleoCondition>
 	public Object clone() {
 		KaleoConditionImpl kaleoConditionImpl = new KaleoConditionImpl();
 
+		kaleoConditionImpl.setMvccVersion(getMvccVersion());
 		kaleoConditionImpl.setKaleoConditionId(getKaleoConditionId());
 		kaleoConditionImpl.setGroupId(getGroupId());
 		kaleoConditionImpl.setCompanyId(getCompanyId());
@@ -569,6 +584,8 @@ public class KaleoConditionModelImpl extends BaseModelImpl<KaleoCondition>
 	@Override
 	public CacheModel<KaleoCondition> toCacheModel() {
 		KaleoConditionCacheModel kaleoConditionCacheModel = new KaleoConditionCacheModel();
+
+		kaleoConditionCacheModel.mvccVersion = getMvccVersion();
 
 		kaleoConditionCacheModel.kaleoConditionId = getKaleoConditionId();
 
@@ -695,6 +712,7 @@ public class KaleoConditionModelImpl extends BaseModelImpl<KaleoCondition>
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			KaleoCondition.class, ModelWrapper.class
 		};
+	private long _mvccVersion;
 	private long _kaleoConditionId;
 	private long _groupId;
 	private long _companyId;

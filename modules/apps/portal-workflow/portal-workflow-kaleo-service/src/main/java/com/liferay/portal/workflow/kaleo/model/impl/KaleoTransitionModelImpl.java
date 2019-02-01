@@ -69,6 +69,7 @@ public class KaleoTransitionModelImpl extends BaseModelImpl<KaleoTransition>
 	 */
 	public static final String TABLE_NAME = "KaleoTransition";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "mvccVersion", Types.BIGINT },
 			{ "kaleoTransitionId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
@@ -89,6 +90,7 @@ public class KaleoTransitionModelImpl extends BaseModelImpl<KaleoTransition>
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("kaleoTransitionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -107,7 +109,7 @@ public class KaleoTransitionModelImpl extends BaseModelImpl<KaleoTransition>
 		TABLE_COLUMNS_MAP.put("defaultTransition", Types.BOOLEAN);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table KaleoTransition (kaleoTransitionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(200) null,createDate DATE null,modifiedDate DATE null,kaleoDefinitionVersionId LONG,kaleoNodeId LONG,name VARCHAR(200) null,description STRING null,sourceKaleoNodeId LONG,sourceKaleoNodeName VARCHAR(200) null,targetKaleoNodeId LONG,targetKaleoNodeName VARCHAR(200) null,defaultTransition BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table KaleoTransition (mvccVersion LONG default 0 not null,kaleoTransitionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(200) null,createDate DATE null,modifiedDate DATE null,kaleoDefinitionVersionId LONG,kaleoNodeId LONG,name VARCHAR(200) null,description STRING null,sourceKaleoNodeId LONG,sourceKaleoNodeName VARCHAR(200) null,targetKaleoNodeId LONG,targetKaleoNodeName VARCHAR(200) null,defaultTransition BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table KaleoTransition";
 	public static final String ORDER_BY_JPQL = " ORDER BY kaleoTransition.kaleoTransitionId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY KaleoTransition.kaleoTransitionId ASC";
@@ -218,6 +220,8 @@ public class KaleoTransitionModelImpl extends BaseModelImpl<KaleoTransition>
 		Map<String, BiConsumer<KaleoTransition, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<KaleoTransition, ?>>();
 
 
+		attributeGetterFunctions.put("mvccVersion", KaleoTransition::getMvccVersion);
+		attributeSetterBiConsumers.put("mvccVersion", (BiConsumer<KaleoTransition, Long>)KaleoTransition::setMvccVersion);
 		attributeGetterFunctions.put("kaleoTransitionId", KaleoTransition::getKaleoTransitionId);
 		attributeSetterBiConsumers.put("kaleoTransitionId", (BiConsumer<KaleoTransition, Long>)KaleoTransition::setKaleoTransitionId);
 		attributeGetterFunctions.put("groupId", KaleoTransition::getGroupId);
@@ -254,6 +258,16 @@ public class KaleoTransitionModelImpl extends BaseModelImpl<KaleoTransition>
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@Override
@@ -559,6 +573,7 @@ public class KaleoTransitionModelImpl extends BaseModelImpl<KaleoTransition>
 	public Object clone() {
 		KaleoTransitionImpl kaleoTransitionImpl = new KaleoTransitionImpl();
 
+		kaleoTransitionImpl.setMvccVersion(getMvccVersion());
 		kaleoTransitionImpl.setKaleoTransitionId(getKaleoTransitionId());
 		kaleoTransitionImpl.setGroupId(getGroupId());
 		kaleoTransitionImpl.setCompanyId(getCompanyId());
@@ -669,6 +684,8 @@ public class KaleoTransitionModelImpl extends BaseModelImpl<KaleoTransition>
 	@Override
 	public CacheModel<KaleoTransition> toCacheModel() {
 		KaleoTransitionCacheModel kaleoTransitionCacheModel = new KaleoTransitionCacheModel();
+
+		kaleoTransitionCacheModel.mvccVersion = getMvccVersion();
 
 		kaleoTransitionCacheModel.kaleoTransitionId = getKaleoTransitionId();
 
@@ -810,6 +827,7 @@ public class KaleoTransitionModelImpl extends BaseModelImpl<KaleoTransition>
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			KaleoTransition.class, ModelWrapper.class
 		};
+	private long _mvccVersion;
 	private long _kaleoTransitionId;
 	private long _groupId;
 	private long _companyId;

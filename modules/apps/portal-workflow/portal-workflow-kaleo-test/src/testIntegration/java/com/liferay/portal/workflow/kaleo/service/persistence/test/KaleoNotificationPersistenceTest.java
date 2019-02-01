@@ -121,6 +121,8 @@ public class KaleoNotificationPersistenceTest {
 
 		KaleoNotification newKaleoNotification = _persistence.create(pk);
 
+		newKaleoNotification.setMvccVersion(RandomTestUtil.nextLong());
+
 		newKaleoNotification.setGroupId(RandomTestUtil.nextLong());
 
 		newKaleoNotification.setCompanyId(RandomTestUtil.nextLong());
@@ -157,6 +159,8 @@ public class KaleoNotificationPersistenceTest {
 
 		KaleoNotification existingKaleoNotification = _persistence.findByPrimaryKey(newKaleoNotification.getPrimaryKey());
 
+		Assert.assertEquals(existingKaleoNotification.getMvccVersion(),
+			newKaleoNotification.getMvccVersion());
 		Assert.assertEquals(existingKaleoNotification.getKaleoNotificationId(),
 			newKaleoNotification.getKaleoNotificationId());
 		Assert.assertEquals(existingKaleoNotification.getGroupId(),
@@ -251,11 +255,11 @@ public class KaleoNotificationPersistenceTest {
 
 	protected OrderByComparator<KaleoNotification> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("KaleoNotification",
-			"kaleoNotificationId", true, "groupId", true, "companyId", true,
-			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "kaleoClassName", true, "kaleoClassPK", true,
-			"kaleoDefinitionVersionId", true, "kaleoNodeName", true, "name",
-			true, "description", true, "executionType", true,
+			"mvccVersion", true, "kaleoNotificationId", true, "groupId", true,
+			"companyId", true, "userId", true, "userName", true, "createDate",
+			true, "modifiedDate", true, "kaleoClassName", true, "kaleoClassPK",
+			true, "kaleoDefinitionVersionId", true, "kaleoNodeName", true,
+			"name", true, "description", true, "executionType", true,
 			"templateLanguage", true, "notificationTypes", true);
 	}
 
@@ -458,6 +462,8 @@ public class KaleoNotificationPersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		KaleoNotification kaleoNotification = _persistence.create(pk);
+
+		kaleoNotification.setMvccVersion(RandomTestUtil.nextLong());
 
 		kaleoNotification.setGroupId(RandomTestUtil.nextLong());
 

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.LocalizedModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 
 import java.util.Date;
@@ -42,7 +43,7 @@ import java.util.Map;
  */
 @ProviderType
 public interface KaleoDefinitionModel extends BaseModel<KaleoDefinition>,
-	GroupedModel, LocalizedModel, ShardedModel {
+	GroupedModel, LocalizedModel, MVCCModel, ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -62,6 +63,22 @@ public interface KaleoDefinitionModel extends BaseModel<KaleoDefinition>,
 	 * @param primaryKey the primary key of this kaleo definition
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the mvcc version of this kaleo definition.
+	 *
+	 * @return the mvcc version of this kaleo definition
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this kaleo definition.
+	 *
+	 * @param mvccVersion the mvcc version of this kaleo definition
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the kaleo definition ID of this kaleo definition.

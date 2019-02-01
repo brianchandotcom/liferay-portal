@@ -123,6 +123,8 @@ public class KaleoTransitionPersistenceTest {
 
 		KaleoTransition newKaleoTransition = _persistence.create(pk);
 
+		newKaleoTransition.setMvccVersion(RandomTestUtil.nextLong());
+
 		newKaleoTransition.setGroupId(RandomTestUtil.nextLong());
 
 		newKaleoTransition.setCompanyId(RandomTestUtil.nextLong());
@@ -157,6 +159,8 @@ public class KaleoTransitionPersistenceTest {
 
 		KaleoTransition existingKaleoTransition = _persistence.findByPrimaryKey(newKaleoTransition.getPrimaryKey());
 
+		Assert.assertEquals(existingKaleoTransition.getMvccVersion(),
+			newKaleoTransition.getMvccVersion());
 		Assert.assertEquals(existingKaleoTransition.getKaleoTransitionId(),
 			newKaleoTransition.getKaleoTransitionId());
 		Assert.assertEquals(existingKaleoTransition.getGroupId(),
@@ -255,9 +259,9 @@ public class KaleoTransitionPersistenceTest {
 
 	protected OrderByComparator<KaleoTransition> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("KaleoTransition",
-			"kaleoTransitionId", true, "groupId", true, "companyId", true,
-			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "kaleoDefinitionVersionId", true,
+			"mvccVersion", true, "kaleoTransitionId", true, "groupId", true,
+			"companyId", true, "userId", true, "userName", true, "createDate",
+			true, "modifiedDate", true, "kaleoDefinitionVersionId", true,
 			"kaleoNodeId", true, "name", true, "description", true,
 			"sourceKaleoNodeId", true, "sourceKaleoNodeName", true,
 			"targetKaleoNodeId", true, "targetKaleoNodeName", true,
@@ -488,6 +492,8 @@ public class KaleoTransitionPersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		KaleoTransition kaleoTransition = _persistence.create(pk);
+
+		kaleoTransition.setMvccVersion(RandomTestUtil.nextLong());
 
 		kaleoTransition.setGroupId(RandomTestUtil.nextLong());
 

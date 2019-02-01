@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.GroupedModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 
 import java.util.Date;
@@ -38,7 +39,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface KaleoTaskInstanceTokenModel extends BaseModel<KaleoTaskInstanceToken>,
-	GroupedModel, ShardedModel {
+	GroupedModel, MVCCModel, ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -58,6 +59,22 @@ public interface KaleoTaskInstanceTokenModel extends BaseModel<KaleoTaskInstance
 	 * @param primaryKey the primary key of this kaleo task instance token
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the mvcc version of this kaleo task instance token.
+	 *
+	 * @return the mvcc version of this kaleo task instance token
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this kaleo task instance token.
+	 *
+	 * @param mvccVersion the mvcc version of this kaleo task instance token
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the kaleo task instance token ID of this kaleo task instance token.

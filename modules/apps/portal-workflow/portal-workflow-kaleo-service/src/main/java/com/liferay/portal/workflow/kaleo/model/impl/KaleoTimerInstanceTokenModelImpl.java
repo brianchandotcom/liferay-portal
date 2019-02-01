@@ -69,6 +69,7 @@ public class KaleoTimerInstanceTokenModelImpl extends BaseModelImpl<KaleoTimerIn
 	 */
 	public static final String TABLE_NAME = "KaleoTimerInstanceToken";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "mvccVersion", Types.BIGINT },
 			{ "kaleoTimerInstanceTokenId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
@@ -93,6 +94,7 @@ public class KaleoTimerInstanceTokenModelImpl extends BaseModelImpl<KaleoTimerIn
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("kaleoTimerInstanceTokenId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -115,7 +117,7 @@ public class KaleoTimerInstanceTokenModelImpl extends BaseModelImpl<KaleoTimerIn
 		TABLE_COLUMNS_MAP.put("workflowContext", Types.CLOB);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table KaleoTimerInstanceToken (kaleoTimerInstanceTokenId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(200) null,createDate DATE null,modifiedDate DATE null,kaleoClassName VARCHAR(200) null,kaleoClassPK LONG,kaleoDefinitionVersionId LONG,kaleoInstanceId LONG,kaleoInstanceTokenId LONG,kaleoTaskInstanceTokenId LONG,kaleoTimerId LONG,kaleoTimerName VARCHAR(200) null,blocking BOOLEAN,completionUserId LONG,completed BOOLEAN,completionDate DATE null,workflowContext TEXT null)";
+	public static final String TABLE_SQL_CREATE = "create table KaleoTimerInstanceToken (mvccVersion LONG default 0 not null,kaleoTimerInstanceTokenId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(200) null,createDate DATE null,modifiedDate DATE null,kaleoClassName VARCHAR(200) null,kaleoClassPK LONG,kaleoDefinitionVersionId LONG,kaleoInstanceId LONG,kaleoInstanceTokenId LONG,kaleoTaskInstanceTokenId LONG,kaleoTimerId LONG,kaleoTimerName VARCHAR(200) null,blocking BOOLEAN,completionUserId LONG,completed BOOLEAN,completionDate DATE null,workflowContext TEXT null)";
 	public static final String TABLE_SQL_DROP = "drop table KaleoTimerInstanceToken";
 	public static final String ORDER_BY_JPQL = " ORDER BY kaleoTimerInstanceToken.kaleoTimerInstanceTokenId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY KaleoTimerInstanceToken.kaleoTimerInstanceTokenId ASC";
@@ -230,6 +232,8 @@ public class KaleoTimerInstanceTokenModelImpl extends BaseModelImpl<KaleoTimerIn
 			new LinkedHashMap<String, BiConsumer<KaleoTimerInstanceToken, ?>>();
 
 
+		attributeGetterFunctions.put("mvccVersion", KaleoTimerInstanceToken::getMvccVersion);
+		attributeSetterBiConsumers.put("mvccVersion", (BiConsumer<KaleoTimerInstanceToken, Long>)KaleoTimerInstanceToken::setMvccVersion);
 		attributeGetterFunctions.put("kaleoTimerInstanceTokenId", KaleoTimerInstanceToken::getKaleoTimerInstanceTokenId);
 		attributeSetterBiConsumers.put("kaleoTimerInstanceTokenId", (BiConsumer<KaleoTimerInstanceToken, Long>)KaleoTimerInstanceToken::setKaleoTimerInstanceTokenId);
 		attributeGetterFunctions.put("groupId", KaleoTimerInstanceToken::getGroupId);
@@ -274,6 +278,16 @@ public class KaleoTimerInstanceTokenModelImpl extends BaseModelImpl<KaleoTimerIn
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@Override
@@ -637,6 +651,7 @@ public class KaleoTimerInstanceTokenModelImpl extends BaseModelImpl<KaleoTimerIn
 	public Object clone() {
 		KaleoTimerInstanceTokenImpl kaleoTimerInstanceTokenImpl = new KaleoTimerInstanceTokenImpl();
 
+		kaleoTimerInstanceTokenImpl.setMvccVersion(getMvccVersion());
 		kaleoTimerInstanceTokenImpl.setKaleoTimerInstanceTokenId(getKaleoTimerInstanceTokenId());
 		kaleoTimerInstanceTokenImpl.setGroupId(getGroupId());
 		kaleoTimerInstanceTokenImpl.setCompanyId(getCompanyId());
@@ -753,6 +768,8 @@ public class KaleoTimerInstanceTokenModelImpl extends BaseModelImpl<KaleoTimerIn
 	@Override
 	public CacheModel<KaleoTimerInstanceToken> toCacheModel() {
 		KaleoTimerInstanceTokenCacheModel kaleoTimerInstanceTokenCacheModel = new KaleoTimerInstanceTokenCacheModel();
+
+		kaleoTimerInstanceTokenCacheModel.mvccVersion = getMvccVersion();
 
 		kaleoTimerInstanceTokenCacheModel.kaleoTimerInstanceTokenId = getKaleoTimerInstanceTokenId();
 
@@ -905,6 +922,7 @@ public class KaleoTimerInstanceTokenModelImpl extends BaseModelImpl<KaleoTimerIn
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			KaleoTimerInstanceToken.class, ModelWrapper.class
 		};
+	private long _mvccVersion;
 	private long _kaleoTimerInstanceTokenId;
 	private long _groupId;
 	private long _companyId;

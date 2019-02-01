@@ -20,6 +20,7 @@ import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.workflow.kaleo.model.KaleoNotification;
 
 import java.io.Externalizable;
@@ -38,7 +39,7 @@ import java.util.Date;
  */
 @ProviderType
 public class KaleoNotificationCacheModel implements CacheModel<KaleoNotification>,
-	Externalizable {
+	Externalizable, MVCCModel {
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -51,7 +52,8 @@ public class KaleoNotificationCacheModel implements CacheModel<KaleoNotification
 
 		KaleoNotificationCacheModel kaleoNotificationCacheModel = (KaleoNotificationCacheModel)obj;
 
-		if (kaleoNotificationId == kaleoNotificationCacheModel.kaleoNotificationId) {
+		if ((kaleoNotificationId == kaleoNotificationCacheModel.kaleoNotificationId) &&
+				(mvccVersion == kaleoNotificationCacheModel.mvccVersion)) {
 			return true;
 		}
 
@@ -60,14 +62,28 @@ public class KaleoNotificationCacheModel implements CacheModel<KaleoNotification
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, kaleoNotificationId);
+		int hashCode = HashUtil.hash(0, kaleoNotificationId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(35);
+		StringBundler sb = new StringBundler(37);
 
-		sb.append("{kaleoNotificationId=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", kaleoNotificationId=");
 		sb.append(kaleoNotificationId);
 		sb.append(", groupId=");
 		sb.append(groupId);
@@ -110,6 +126,7 @@ public class KaleoNotificationCacheModel implements CacheModel<KaleoNotification
 	public KaleoNotification toEntityModel() {
 		KaleoNotificationImpl kaleoNotificationImpl = new KaleoNotificationImpl();
 
+		kaleoNotificationImpl.setMvccVersion(mvccVersion);
 		kaleoNotificationImpl.setKaleoNotificationId(kaleoNotificationId);
 		kaleoNotificationImpl.setGroupId(groupId);
 		kaleoNotificationImpl.setCompanyId(companyId);
@@ -202,6 +219,8 @@ public class KaleoNotificationCacheModel implements CacheModel<KaleoNotification
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		mvccVersion = objectInput.readLong();
+
 		kaleoNotificationId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
@@ -229,6 +248,8 @@ public class KaleoNotificationCacheModel implements CacheModel<KaleoNotification
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		objectOutput.writeLong(kaleoNotificationId);
 
 		objectOutput.writeLong(groupId);
@@ -308,6 +329,7 @@ public class KaleoNotificationCacheModel implements CacheModel<KaleoNotification
 		}
 	}
 
+	public long mvccVersion;
 	public long kaleoNotificationId;
 	public long groupId;
 	public long companyId;

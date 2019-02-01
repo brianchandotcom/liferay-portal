@@ -33,6 +33,7 @@ public class KaleoConditionSoap implements Serializable {
 	public static KaleoConditionSoap toSoapModel(KaleoCondition model) {
 		KaleoConditionSoap soapModel = new KaleoConditionSoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setKaleoConditionId(model.getKaleoConditionId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
@@ -95,6 +96,14 @@ public class KaleoConditionSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setKaleoConditionId(pk);
+	}
+
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	public long getKaleoConditionId() {
@@ -193,6 +202,7 @@ public class KaleoConditionSoap implements Serializable {
 		_scriptRequiredContexts = scriptRequiredContexts;
 	}
 
+	private long _mvccVersion;
 	private long _kaleoConditionId;
 	private long _groupId;
 	private long _companyId;

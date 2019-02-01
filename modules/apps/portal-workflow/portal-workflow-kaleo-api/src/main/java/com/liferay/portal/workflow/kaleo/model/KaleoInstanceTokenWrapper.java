@@ -43,6 +43,7 @@ public class KaleoInstanceTokenWrapper extends BaseModelWrapper<KaleoInstanceTok
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("kaleoInstanceTokenId", getKaleoInstanceTokenId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
@@ -66,6 +67,12 @@ public class KaleoInstanceTokenWrapper extends BaseModelWrapper<KaleoInstanceTok
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		Long kaleoInstanceTokenId = (Long)attributes.get("kaleoInstanceTokenId");
 
 		if (kaleoInstanceTokenId != null) {
@@ -318,6 +325,16 @@ public class KaleoInstanceTokenWrapper extends BaseModelWrapper<KaleoInstanceTok
 		return model.getModifiedDate();
 	}
 
+	/**
+	* Returns the mvcc version of this kaleo instance token.
+	*
+	* @return the mvcc version of this kaleo instance token
+	*/
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
+	}
+
 	@Override
 	public KaleoInstanceToken getParentKaleoInstanceToken()
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -528,6 +545,16 @@ public class KaleoInstanceTokenWrapper extends BaseModelWrapper<KaleoInstanceTok
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		model.setModifiedDate(modifiedDate);
+	}
+
+	/**
+	* Sets the mvcc version of this kaleo instance token.
+	*
+	* @param mvccVersion the mvcc version of this kaleo instance token
+	*/
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**

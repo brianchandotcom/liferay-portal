@@ -44,6 +44,7 @@ public class KaleoTimerInstanceTokenWrapper extends BaseModelWrapper<KaleoTimerI
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("kaleoTimerInstanceTokenId",
 			getKaleoTimerInstanceTokenId());
 		attributes.put("groupId", getGroupId());
@@ -71,6 +72,12 @@ public class KaleoTimerInstanceTokenWrapper extends BaseModelWrapper<KaleoTimerI
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		Long kaleoTimerInstanceTokenId = (Long)attributes.get(
 				"kaleoTimerInstanceTokenId");
 
@@ -393,6 +400,16 @@ public class KaleoTimerInstanceTokenWrapper extends BaseModelWrapper<KaleoTimerI
 	}
 
 	/**
+	* Returns the mvcc version of this kaleo timer instance token.
+	*
+	* @return the mvcc version of this kaleo timer instance token
+	*/
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
+	}
+
+	/**
 	* Returns the primary key of this kaleo timer instance token.
 	*
 	* @return the primary key of this kaleo timer instance token
@@ -645,6 +662,16 @@ public class KaleoTimerInstanceTokenWrapper extends BaseModelWrapper<KaleoTimerI
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		model.setModifiedDate(modifiedDate);
+	}
+
+	/**
+	* Sets the mvcc version of this kaleo timer instance token.
+	*
+	* @param mvccVersion the mvcc version of this kaleo timer instance token
+	*/
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**

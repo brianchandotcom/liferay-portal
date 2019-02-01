@@ -69,6 +69,7 @@ public class KaleoNotificationRecipientModelImpl extends BaseModelImpl<KaleoNoti
 	 */
 	public static final String TABLE_NAME = "KaleoNotificationRecipient";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "mvccVersion", Types.BIGINT },
 			{ "kaleoNotificationRecipientId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
@@ -90,6 +91,7 @@ public class KaleoNotificationRecipientModelImpl extends BaseModelImpl<KaleoNoti
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("kaleoNotificationRecipientId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -109,7 +111,7 @@ public class KaleoNotificationRecipientModelImpl extends BaseModelImpl<KaleoNoti
 		TABLE_COLUMNS_MAP.put("notificationReceptionType", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table KaleoNotificationRecipient (kaleoNotificationRecipientId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(200) null,createDate DATE null,modifiedDate DATE null,kaleoDefinitionVersionId LONG,kaleoNotificationId LONG,recipientClassName VARCHAR(200) null,recipientClassPK LONG,recipientRoleType INTEGER,recipientScript TEXT null,recipientScriptLanguage VARCHAR(75) null,recipientScriptContexts STRING null,address VARCHAR(255) null,notificationReceptionType VARCHAR(3) null)";
+	public static final String TABLE_SQL_CREATE = "create table KaleoNotificationRecipient (mvccVersion LONG default 0 not null,kaleoNotificationRecipientId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(200) null,createDate DATE null,modifiedDate DATE null,kaleoDefinitionVersionId LONG,kaleoNotificationId LONG,recipientClassName VARCHAR(200) null,recipientClassPK LONG,recipientRoleType INTEGER,recipientScript TEXT null,recipientScriptLanguage VARCHAR(75) null,recipientScriptContexts STRING null,address VARCHAR(255) null,notificationReceptionType VARCHAR(3) null)";
 	public static final String TABLE_SQL_DROP = "drop table KaleoNotificationRecipient";
 	public static final String ORDER_BY_JPQL = " ORDER BY kaleoNotificationRecipient.kaleoNotificationRecipientId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY KaleoNotificationRecipient.kaleoNotificationRecipientId ASC";
@@ -223,6 +225,8 @@ public class KaleoNotificationRecipientModelImpl extends BaseModelImpl<KaleoNoti
 			new LinkedHashMap<String, BiConsumer<KaleoNotificationRecipient, ?>>();
 
 
+		attributeGetterFunctions.put("mvccVersion", KaleoNotificationRecipient::getMvccVersion);
+		attributeSetterBiConsumers.put("mvccVersion", (BiConsumer<KaleoNotificationRecipient, Long>)KaleoNotificationRecipient::setMvccVersion);
 		attributeGetterFunctions.put("kaleoNotificationRecipientId", KaleoNotificationRecipient::getKaleoNotificationRecipientId);
 		attributeSetterBiConsumers.put("kaleoNotificationRecipientId", (BiConsumer<KaleoNotificationRecipient, Long>)KaleoNotificationRecipient::setKaleoNotificationRecipientId);
 		attributeGetterFunctions.put("groupId", KaleoNotificationRecipient::getGroupId);
@@ -261,6 +265,16 @@ public class KaleoNotificationRecipientModelImpl extends BaseModelImpl<KaleoNoti
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@Override
@@ -560,6 +574,7 @@ public class KaleoNotificationRecipientModelImpl extends BaseModelImpl<KaleoNoti
 	public Object clone() {
 		KaleoNotificationRecipientImpl kaleoNotificationRecipientImpl = new KaleoNotificationRecipientImpl();
 
+		kaleoNotificationRecipientImpl.setMvccVersion(getMvccVersion());
 		kaleoNotificationRecipientImpl.setKaleoNotificationRecipientId(getKaleoNotificationRecipientId());
 		kaleoNotificationRecipientImpl.setGroupId(getGroupId());
 		kaleoNotificationRecipientImpl.setCompanyId(getCompanyId());
@@ -666,6 +681,8 @@ public class KaleoNotificationRecipientModelImpl extends BaseModelImpl<KaleoNoti
 	public CacheModel<KaleoNotificationRecipient> toCacheModel() {
 		KaleoNotificationRecipientCacheModel kaleoNotificationRecipientCacheModel =
 			new KaleoNotificationRecipientCacheModel();
+
+		kaleoNotificationRecipientCacheModel.mvccVersion = getMvccVersion();
 
 		kaleoNotificationRecipientCacheModel.kaleoNotificationRecipientId = getKaleoNotificationRecipientId();
 
@@ -828,6 +845,7 @@ public class KaleoNotificationRecipientModelImpl extends BaseModelImpl<KaleoNoti
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			KaleoNotificationRecipient.class, ModelWrapper.class
 		};
+	private long _mvccVersion;
 	private long _kaleoNotificationRecipientId;
 	private long _groupId;
 	private long _companyId;

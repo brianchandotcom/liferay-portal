@@ -33,6 +33,7 @@ public class KaleoTaskAssignmentSoap implements Serializable {
 	public static KaleoTaskAssignmentSoap toSoapModel(KaleoTaskAssignment model) {
 		KaleoTaskAssignmentSoap soapModel = new KaleoTaskAssignmentSoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setKaleoTaskAssignmentId(model.getKaleoTaskAssignmentId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
@@ -103,6 +104,14 @@ public class KaleoTaskAssignmentSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setKaleoTaskAssignmentId(pk);
+	}
+
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	public long getKaleoTaskAssignmentId() {
@@ -242,6 +251,7 @@ public class KaleoTaskAssignmentSoap implements Serializable {
 		_assigneeScriptRequiredContexts = assigneeScriptRequiredContexts;
 	}
 
+	private long _mvccVersion;
 	private long _kaleoTaskAssignmentId;
 	private long _groupId;
 	private long _companyId;

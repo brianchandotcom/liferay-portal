@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.GroupedModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 
 import java.util.Date;
@@ -38,7 +39,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface KaleoTimerInstanceTokenModel extends BaseModel<KaleoTimerInstanceToken>,
-	GroupedModel, ShardedModel {
+	GroupedModel, MVCCModel, ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -58,6 +59,22 @@ public interface KaleoTimerInstanceTokenModel extends BaseModel<KaleoTimerInstan
 	 * @param primaryKey the primary key of this kaleo timer instance token
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the mvcc version of this kaleo timer instance token.
+	 *
+	 * @return the mvcc version of this kaleo timer instance token
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this kaleo timer instance token.
+	 *
+	 * @param mvccVersion the mvcc version of this kaleo timer instance token
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the kaleo timer instance token ID of this kaleo timer instance token.

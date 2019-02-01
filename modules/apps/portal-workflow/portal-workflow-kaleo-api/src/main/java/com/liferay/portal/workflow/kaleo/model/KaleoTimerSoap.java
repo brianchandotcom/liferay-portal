@@ -33,6 +33,7 @@ public class KaleoTimerSoap implements Serializable {
 	public static KaleoTimerSoap toSoapModel(KaleoTimer model) {
 		KaleoTimerSoap soapModel = new KaleoTimerSoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setKaleoTimerId(model.getKaleoTimerId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
@@ -100,6 +101,14 @@ public class KaleoTimerSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setKaleoTimerId(pk);
+	}
+
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	public long getKaleoTimerId() {
@@ -242,6 +251,7 @@ public class KaleoTimerSoap implements Serializable {
 		_recurrenceScale = recurrenceScale;
 	}
 
+	private long _mvccVersion;
 	private long _kaleoTimerId;
 	private long _groupId;
 	private long _companyId;

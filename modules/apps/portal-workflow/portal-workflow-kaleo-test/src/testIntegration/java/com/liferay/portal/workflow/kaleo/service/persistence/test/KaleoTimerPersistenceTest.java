@@ -122,6 +122,8 @@ public class KaleoTimerPersistenceTest {
 
 		KaleoTimer newKaleoTimer = _persistence.create(pk);
 
+		newKaleoTimer.setMvccVersion(RandomTestUtil.nextLong());
+
 		newKaleoTimer.setGroupId(RandomTestUtil.nextLong());
 
 		newKaleoTimer.setCompanyId(RandomTestUtil.nextLong());
@@ -158,6 +160,8 @@ public class KaleoTimerPersistenceTest {
 
 		KaleoTimer existingKaleoTimer = _persistence.findByPrimaryKey(newKaleoTimer.getPrimaryKey());
 
+		Assert.assertEquals(existingKaleoTimer.getMvccVersion(),
+			newKaleoTimer.getMvccVersion());
 		Assert.assertEquals(existingKaleoTimer.getKaleoTimerId(),
 			newKaleoTimer.getKaleoTimerId());
 		Assert.assertEquals(existingKaleoTimer.getGroupId(),
@@ -240,10 +244,10 @@ public class KaleoTimerPersistenceTest {
 	}
 
 	protected OrderByComparator<KaleoTimer> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("KaleoTimer",
-			"kaleoTimerId", true, "groupId", true, "companyId", true, "userId",
-			true, "userName", true, "createDate", true, "modifiedDate", true,
-			"kaleoClassName", true, "kaleoClassPK", true,
+		return OrderByComparatorFactoryUtil.create("KaleoTimer", "mvccVersion",
+			true, "kaleoTimerId", true, "groupId", true, "companyId", true,
+			"userId", true, "userName", true, "createDate", true,
+			"modifiedDate", true, "kaleoClassName", true, "kaleoClassPK", true,
 			"kaleoDefinitionVersionId", true, "name", true, "blocking", true,
 			"description", true, "duration", true, "scale", true,
 			"recurrenceDuration", true, "recurrenceScale", true);
@@ -447,6 +451,8 @@ public class KaleoTimerPersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		KaleoTimer kaleoTimer = _persistence.create(pk);
+
+		kaleoTimer.setMvccVersion(RandomTestUtil.nextLong());
 
 		kaleoTimer.setGroupId(RandomTestUtil.nextLong());
 

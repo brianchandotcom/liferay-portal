@@ -1,6 +1,7 @@
 drop table if exists KaleoTaskForm;
 
 create table KaleoTaskForm (
+	mvccVersion LONG default 0 not null,
 	kaleoTaskFormId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
@@ -26,6 +27,7 @@ create table KaleoTaskForm (
 drop table if exists KaleoTaskFormInstance;
 
 create table KaleoTaskFormInstance (
+	mvccVersion LONG default 0 not null,
 	kaleoTaskFormInstanceId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
@@ -48,6 +50,7 @@ create table KaleoTaskFormInstance (
 drop table if exists KaleoDefinitionVersion;
 
 create table KaleoDefinitionVersion (
+	mvccVersion LONG default 0 not null,
 	kaleoDefinitionVersionId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,

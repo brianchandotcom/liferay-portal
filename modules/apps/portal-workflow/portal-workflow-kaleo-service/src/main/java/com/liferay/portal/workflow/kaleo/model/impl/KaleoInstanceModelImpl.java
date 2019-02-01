@@ -69,6 +69,7 @@ public class KaleoInstanceModelImpl extends BaseModelImpl<KaleoInstance>
 	 */
 	public static final String TABLE_NAME = "KaleoInstance";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "mvccVersion", Types.BIGINT },
 			{ "kaleoInstanceId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
@@ -89,6 +90,7 @@ public class KaleoInstanceModelImpl extends BaseModelImpl<KaleoInstance>
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("kaleoInstanceId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -107,7 +109,7 @@ public class KaleoInstanceModelImpl extends BaseModelImpl<KaleoInstance>
 		TABLE_COLUMNS_MAP.put("workflowContext", Types.CLOB);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table KaleoInstance (kaleoInstanceId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(200) null,createDate DATE null,modifiedDate DATE null,kaleoDefinitionVersionId LONG,kaleoDefinitionName VARCHAR(200) null,kaleoDefinitionVersion INTEGER,rootKaleoInstanceTokenId LONG,className VARCHAR(200) null,classPK LONG,completed BOOLEAN,completionDate DATE null,workflowContext TEXT null)";
+	public static final String TABLE_SQL_CREATE = "create table KaleoInstance (mvccVersion LONG default 0 not null,kaleoInstanceId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(200) null,createDate DATE null,modifiedDate DATE null,kaleoDefinitionVersionId LONG,kaleoDefinitionName VARCHAR(200) null,kaleoDefinitionVersion INTEGER,rootKaleoInstanceTokenId LONG,className VARCHAR(200) null,classPK LONG,completed BOOLEAN,completionDate DATE null,workflowContext TEXT null)";
 	public static final String TABLE_SQL_DROP = "drop table KaleoInstance";
 	public static final String ORDER_BY_JPQL = " ORDER BY kaleoInstance.kaleoInstanceId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY KaleoInstance.kaleoInstanceId ASC";
@@ -222,6 +224,8 @@ public class KaleoInstanceModelImpl extends BaseModelImpl<KaleoInstance>
 		Map<String, BiConsumer<KaleoInstance, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<KaleoInstance, ?>>();
 
 
+		attributeGetterFunctions.put("mvccVersion", KaleoInstance::getMvccVersion);
+		attributeSetterBiConsumers.put("mvccVersion", (BiConsumer<KaleoInstance, Long>)KaleoInstance::setMvccVersion);
 		attributeGetterFunctions.put("kaleoInstanceId", KaleoInstance::getKaleoInstanceId);
 		attributeSetterBiConsumers.put("kaleoInstanceId", (BiConsumer<KaleoInstance, Long>)KaleoInstance::setKaleoInstanceId);
 		attributeGetterFunctions.put("groupId", KaleoInstance::getGroupId);
@@ -258,6 +262,16 @@ public class KaleoInstanceModelImpl extends BaseModelImpl<KaleoInstance>
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@Override
@@ -602,6 +616,7 @@ public class KaleoInstanceModelImpl extends BaseModelImpl<KaleoInstance>
 	public Object clone() {
 		KaleoInstanceImpl kaleoInstanceImpl = new KaleoInstanceImpl();
 
+		kaleoInstanceImpl.setMvccVersion(getMvccVersion());
 		kaleoInstanceImpl.setKaleoInstanceId(getKaleoInstanceId());
 		kaleoInstanceImpl.setGroupId(getGroupId());
 		kaleoInstanceImpl.setCompanyId(getCompanyId());
@@ -724,6 +739,8 @@ public class KaleoInstanceModelImpl extends BaseModelImpl<KaleoInstance>
 	@Override
 	public CacheModel<KaleoInstance> toCacheModel() {
 		KaleoInstanceCacheModel kaleoInstanceCacheModel = new KaleoInstanceCacheModel();
+
+		kaleoInstanceCacheModel.mvccVersion = getMvccVersion();
 
 		kaleoInstanceCacheModel.kaleoInstanceId = getKaleoInstanceId();
 
@@ -865,6 +882,7 @@ public class KaleoInstanceModelImpl extends BaseModelImpl<KaleoInstance>
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			KaleoInstance.class, ModelWrapper.class
 		};
+	private long _mvccVersion;
 	private long _kaleoInstanceId;
 	private long _groupId;
 	private long _companyId;

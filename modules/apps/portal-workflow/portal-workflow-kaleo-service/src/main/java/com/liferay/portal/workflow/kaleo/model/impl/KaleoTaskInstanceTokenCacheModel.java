@@ -20,6 +20,7 @@ import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
 
 import java.io.Externalizable;
@@ -38,7 +39,7 @@ import java.util.Date;
  */
 @ProviderType
 public class KaleoTaskInstanceTokenCacheModel implements CacheModel<KaleoTaskInstanceToken>,
-	Externalizable {
+	Externalizable, MVCCModel {
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -51,7 +52,8 @@ public class KaleoTaskInstanceTokenCacheModel implements CacheModel<KaleoTaskIns
 
 		KaleoTaskInstanceTokenCacheModel kaleoTaskInstanceTokenCacheModel = (KaleoTaskInstanceTokenCacheModel)obj;
 
-		if (kaleoTaskInstanceTokenId == kaleoTaskInstanceTokenCacheModel.kaleoTaskInstanceTokenId) {
+		if ((kaleoTaskInstanceTokenId == kaleoTaskInstanceTokenCacheModel.kaleoTaskInstanceTokenId) &&
+				(mvccVersion == kaleoTaskInstanceTokenCacheModel.mvccVersion)) {
 			return true;
 		}
 
@@ -60,14 +62,28 @@ public class KaleoTaskInstanceTokenCacheModel implements CacheModel<KaleoTaskIns
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, kaleoTaskInstanceTokenId);
+		int hashCode = HashUtil.hash(0, kaleoTaskInstanceTokenId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(39);
+		StringBundler sb = new StringBundler(41);
 
-		sb.append("{kaleoTaskInstanceTokenId=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", kaleoTaskInstanceTokenId=");
 		sb.append(kaleoTaskInstanceTokenId);
 		sb.append(", groupId=");
 		sb.append(groupId);
@@ -114,6 +130,7 @@ public class KaleoTaskInstanceTokenCacheModel implements CacheModel<KaleoTaskIns
 	public KaleoTaskInstanceToken toEntityModel() {
 		KaleoTaskInstanceTokenImpl kaleoTaskInstanceTokenImpl = new KaleoTaskInstanceTokenImpl();
 
+		kaleoTaskInstanceTokenImpl.setMvccVersion(mvccVersion);
 		kaleoTaskInstanceTokenImpl.setKaleoTaskInstanceTokenId(kaleoTaskInstanceTokenId);
 		kaleoTaskInstanceTokenImpl.setGroupId(groupId);
 		kaleoTaskInstanceTokenImpl.setCompanyId(companyId);
@@ -192,6 +209,8 @@ public class KaleoTaskInstanceTokenCacheModel implements CacheModel<KaleoTaskIns
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		mvccVersion = objectInput.readLong();
+
 		kaleoTaskInstanceTokenId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
@@ -226,6 +245,8 @@ public class KaleoTaskInstanceTokenCacheModel implements CacheModel<KaleoTaskIns
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		objectOutput.writeLong(kaleoTaskInstanceTokenId);
 
 		objectOutput.writeLong(groupId);
@@ -282,6 +303,7 @@ public class KaleoTaskInstanceTokenCacheModel implements CacheModel<KaleoTaskIns
 		}
 	}
 
+	public long mvccVersion;
 	public long kaleoTaskInstanceTokenId;
 	public long groupId;
 	public long companyId;

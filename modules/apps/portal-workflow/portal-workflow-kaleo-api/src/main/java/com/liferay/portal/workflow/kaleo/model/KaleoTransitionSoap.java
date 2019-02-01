@@ -33,6 +33,7 @@ public class KaleoTransitionSoap implements Serializable {
 	public static KaleoTransitionSoap toSoapModel(KaleoTransition model) {
 		KaleoTransitionSoap soapModel = new KaleoTransitionSoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setKaleoTransitionId(model.getKaleoTransitionId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
@@ -101,6 +102,14 @@ public class KaleoTransitionSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setKaleoTransitionId(pk);
+	}
+
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	public long getKaleoTransitionId() {
@@ -235,6 +244,7 @@ public class KaleoTransitionSoap implements Serializable {
 		_defaultTransition = defaultTransition;
 	}
 
+	private long _mvccVersion;
 	private long _kaleoTransitionId;
 	private long _groupId;
 	private long _companyId;

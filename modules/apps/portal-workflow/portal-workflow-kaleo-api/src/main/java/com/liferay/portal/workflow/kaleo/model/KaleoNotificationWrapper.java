@@ -43,6 +43,7 @@ public class KaleoNotificationWrapper extends BaseModelWrapper<KaleoNotification
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("kaleoNotificationId", getKaleoNotificationId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
@@ -66,6 +67,12 @@ public class KaleoNotificationWrapper extends BaseModelWrapper<KaleoNotification
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		Long kaleoNotificationId = (Long)attributes.get("kaleoNotificationId");
 
 		if (kaleoNotificationId != null) {
@@ -281,6 +288,16 @@ public class KaleoNotificationWrapper extends BaseModelWrapper<KaleoNotification
 	}
 
 	/**
+	* Returns the mvcc version of this kaleo notification.
+	*
+	* @return the mvcc version of this kaleo notification
+	*/
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
+	}
+
+	/**
 	* Returns the name of this kaleo notification.
 	*
 	* @return the name of this kaleo notification
@@ -473,6 +490,16 @@ public class KaleoNotificationWrapper extends BaseModelWrapper<KaleoNotification
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		model.setModifiedDate(modifiedDate);
+	}
+
+	/**
+	* Sets the mvcc version of this kaleo notification.
+	*
+	* @param mvccVersion the mvcc version of this kaleo notification
+	*/
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**

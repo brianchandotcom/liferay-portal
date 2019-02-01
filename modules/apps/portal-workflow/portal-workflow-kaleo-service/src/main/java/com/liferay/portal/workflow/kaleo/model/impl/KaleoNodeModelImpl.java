@@ -69,6 +69,7 @@ public class KaleoNodeModelImpl extends BaseModelImpl<KaleoNode>
 	 */
 	public static final String TABLE_NAME = "KaleoNode";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "mvccVersion", Types.BIGINT },
 			{ "kaleoNodeId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
@@ -87,6 +88,7 @@ public class KaleoNodeModelImpl extends BaseModelImpl<KaleoNode>
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("kaleoNodeId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -103,7 +105,7 @@ public class KaleoNodeModelImpl extends BaseModelImpl<KaleoNode>
 		TABLE_COLUMNS_MAP.put("terminal", Types.BOOLEAN);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table KaleoNode (kaleoNodeId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(200) null,createDate DATE null,modifiedDate DATE null,kaleoDefinitionVersionId LONG,name VARCHAR(200) null,metadata STRING null,description STRING null,type_ VARCHAR(20) null,initial_ BOOLEAN,terminal BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table KaleoNode (mvccVersion LONG default 0 not null,kaleoNodeId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(200) null,createDate DATE null,modifiedDate DATE null,kaleoDefinitionVersionId LONG,name VARCHAR(200) null,metadata STRING null,description STRING null,type_ VARCHAR(20) null,initial_ BOOLEAN,terminal BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table KaleoNode";
 	public static final String ORDER_BY_JPQL = " ORDER BY kaleoNode.kaleoNodeId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY KaleoNode.kaleoNodeId ASC";
@@ -210,6 +212,8 @@ public class KaleoNodeModelImpl extends BaseModelImpl<KaleoNode>
 		Map<String, BiConsumer<KaleoNode, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<KaleoNode, ?>>();
 
 
+		attributeGetterFunctions.put("mvccVersion", KaleoNode::getMvccVersion);
+		attributeSetterBiConsumers.put("mvccVersion", (BiConsumer<KaleoNode, Long>)KaleoNode::setMvccVersion);
 		attributeGetterFunctions.put("kaleoNodeId", KaleoNode::getKaleoNodeId);
 		attributeSetterBiConsumers.put("kaleoNodeId", (BiConsumer<KaleoNode, Long>)KaleoNode::setKaleoNodeId);
 		attributeGetterFunctions.put("groupId", KaleoNode::getGroupId);
@@ -242,6 +246,16 @@ public class KaleoNodeModelImpl extends BaseModelImpl<KaleoNode>
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@Override
@@ -498,6 +512,7 @@ public class KaleoNodeModelImpl extends BaseModelImpl<KaleoNode>
 	public Object clone() {
 		KaleoNodeImpl kaleoNodeImpl = new KaleoNodeImpl();
 
+		kaleoNodeImpl.setMvccVersion(getMvccVersion());
 		kaleoNodeImpl.setKaleoNodeId(getKaleoNodeId());
 		kaleoNodeImpl.setGroupId(getGroupId());
 		kaleoNodeImpl.setCompanyId(getCompanyId());
@@ -596,6 +611,8 @@ public class KaleoNodeModelImpl extends BaseModelImpl<KaleoNode>
 	@Override
 	public CacheModel<KaleoNode> toCacheModel() {
 		KaleoNodeCacheModel kaleoNodeCacheModel = new KaleoNodeCacheModel();
+
+		kaleoNodeCacheModel.mvccVersion = getMvccVersion();
 
 		kaleoNodeCacheModel.kaleoNodeId = getKaleoNodeId();
 
@@ -731,6 +748,7 @@ public class KaleoNodeModelImpl extends BaseModelImpl<KaleoNode>
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			KaleoNode.class, ModelWrapper.class
 		};
+	private long _mvccVersion;
 	private long _kaleoNodeId;
 	private long _groupId;
 	private long _companyId;

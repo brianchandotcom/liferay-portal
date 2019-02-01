@@ -34,6 +34,7 @@ public class KaleoTimerInstanceTokenSoap implements Serializable {
 		KaleoTimerInstanceToken model) {
 		KaleoTimerInstanceTokenSoap soapModel = new KaleoTimerInstanceTokenSoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setKaleoTimerInstanceTokenId(model.getKaleoTimerInstanceTokenId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
@@ -107,6 +108,14 @@ public class KaleoTimerInstanceTokenSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setKaleoTimerInstanceTokenId(pk);
+	}
+
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	public long getKaleoTimerInstanceTokenId() {
@@ -277,6 +286,7 @@ public class KaleoTimerInstanceTokenSoap implements Serializable {
 		_workflowContext = workflowContext;
 	}
 
+	private long _mvccVersion;
 	private long _kaleoTimerInstanceTokenId;
 	private long _groupId;
 	private long _companyId;

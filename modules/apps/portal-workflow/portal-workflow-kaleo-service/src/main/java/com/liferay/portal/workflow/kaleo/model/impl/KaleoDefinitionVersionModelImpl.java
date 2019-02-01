@@ -78,6 +78,7 @@ public class KaleoDefinitionVersionModelImpl extends BaseModelImpl<KaleoDefiniti
 	 */
 	public static final String TABLE_NAME = "KaleoDefinitionVersion";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "mvccVersion", Types.BIGINT },
 			{ "kaleoDefinitionVersionId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
@@ -99,6 +100,7 @@ public class KaleoDefinitionVersionModelImpl extends BaseModelImpl<KaleoDefiniti
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("kaleoDefinitionVersionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -118,7 +120,7 @@ public class KaleoDefinitionVersionModelImpl extends BaseModelImpl<KaleoDefiniti
 		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table KaleoDefinitionVersion (kaleoDefinitionVersionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(200) null,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,createDate DATE null,modifiedDate DATE null,name VARCHAR(200) null,title STRING null,description STRING null,content TEXT null,version VARCHAR(75) null,startKaleoNodeId LONG,status INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table KaleoDefinitionVersion (mvccVersion LONG default 0 not null,kaleoDefinitionVersionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(200) null,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,createDate DATE null,modifiedDate DATE null,name VARCHAR(200) null,title STRING null,description STRING null,content TEXT null,version VARCHAR(75) null,startKaleoNodeId LONG,status INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table KaleoDefinitionVersion";
 	public static final String ORDER_BY_JPQL = " ORDER BY kaleoDefinitionVersion.kaleoDefinitionVersionId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY KaleoDefinitionVersion.kaleoDefinitionVersionId ASC";
@@ -231,6 +233,8 @@ public class KaleoDefinitionVersionModelImpl extends BaseModelImpl<KaleoDefiniti
 			new LinkedHashMap<String, BiConsumer<KaleoDefinitionVersion, ?>>();
 
 
+		attributeGetterFunctions.put("mvccVersion", KaleoDefinitionVersion::getMvccVersion);
+		attributeSetterBiConsumers.put("mvccVersion", (BiConsumer<KaleoDefinitionVersion, Long>)KaleoDefinitionVersion::setMvccVersion);
 		attributeGetterFunctions.put("kaleoDefinitionVersionId", KaleoDefinitionVersion::getKaleoDefinitionVersionId);
 		attributeSetterBiConsumers.put("kaleoDefinitionVersionId", (BiConsumer<KaleoDefinitionVersion, Long>)KaleoDefinitionVersion::setKaleoDefinitionVersionId);
 		attributeGetterFunctions.put("groupId", KaleoDefinitionVersion::getGroupId);
@@ -269,6 +273,16 @@ public class KaleoDefinitionVersionModelImpl extends BaseModelImpl<KaleoDefiniti
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@Override
@@ -801,6 +815,7 @@ public class KaleoDefinitionVersionModelImpl extends BaseModelImpl<KaleoDefiniti
 	public Object clone() {
 		KaleoDefinitionVersionImpl kaleoDefinitionVersionImpl = new KaleoDefinitionVersionImpl();
 
+		kaleoDefinitionVersionImpl.setMvccVersion(getMvccVersion());
 		kaleoDefinitionVersionImpl.setKaleoDefinitionVersionId(getKaleoDefinitionVersionId());
 		kaleoDefinitionVersionImpl.setGroupId(getGroupId());
 		kaleoDefinitionVersionImpl.setCompanyId(getCompanyId());
@@ -896,6 +911,8 @@ public class KaleoDefinitionVersionModelImpl extends BaseModelImpl<KaleoDefiniti
 	@Override
 	public CacheModel<KaleoDefinitionVersion> toCacheModel() {
 		KaleoDefinitionVersionCacheModel kaleoDefinitionVersionCacheModel = new KaleoDefinitionVersionCacheModel();
+
+		kaleoDefinitionVersionCacheModel.mvccVersion = getMvccVersion();
 
 		kaleoDefinitionVersionCacheModel.kaleoDefinitionVersionId = getKaleoDefinitionVersionId();
 
@@ -1060,6 +1077,7 @@ public class KaleoDefinitionVersionModelImpl extends BaseModelImpl<KaleoDefiniti
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			KaleoDefinitionVersion.class, ModelWrapper.class
 		};
+	private long _mvccVersion;
 	private long _kaleoDefinitionVersionId;
 	private long _groupId;
 	private long _companyId;

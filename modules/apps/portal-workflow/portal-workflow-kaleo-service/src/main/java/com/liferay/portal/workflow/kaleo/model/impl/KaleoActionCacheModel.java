@@ -20,6 +20,7 @@ import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.workflow.kaleo.model.KaleoAction;
 
 import java.io.Externalizable;
@@ -38,7 +39,7 @@ import java.util.Date;
  */
 @ProviderType
 public class KaleoActionCacheModel implements CacheModel<KaleoAction>,
-	Externalizable {
+	Externalizable, MVCCModel {
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -51,7 +52,8 @@ public class KaleoActionCacheModel implements CacheModel<KaleoAction>,
 
 		KaleoActionCacheModel kaleoActionCacheModel = (KaleoActionCacheModel)obj;
 
-		if (kaleoActionId == kaleoActionCacheModel.kaleoActionId) {
+		if ((kaleoActionId == kaleoActionCacheModel.kaleoActionId) &&
+				(mvccVersion == kaleoActionCacheModel.mvccVersion)) {
 			return true;
 		}
 
@@ -60,14 +62,28 @@ public class KaleoActionCacheModel implements CacheModel<KaleoAction>,
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, kaleoActionId);
+		int hashCode = HashUtil.hash(0, kaleoActionId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(39);
 
-		sb.append("{kaleoActionId=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", kaleoActionId=");
 		sb.append(kaleoActionId);
 		sb.append(", groupId=");
 		sb.append(groupId);
@@ -112,6 +128,7 @@ public class KaleoActionCacheModel implements CacheModel<KaleoAction>,
 	public KaleoAction toEntityModel() {
 		KaleoActionImpl kaleoActionImpl = new KaleoActionImpl();
 
+		kaleoActionImpl.setMvccVersion(mvccVersion);
 		kaleoActionImpl.setKaleoActionId(kaleoActionId);
 		kaleoActionImpl.setGroupId(groupId);
 		kaleoActionImpl.setCompanyId(companyId);
@@ -206,6 +223,8 @@ public class KaleoActionCacheModel implements CacheModel<KaleoAction>,
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		mvccVersion = objectInput.readLong();
+
 		kaleoActionId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
@@ -235,6 +254,8 @@ public class KaleoActionCacheModel implements CacheModel<KaleoAction>,
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		objectOutput.writeLong(kaleoActionId);
 
 		objectOutput.writeLong(groupId);
@@ -316,6 +337,7 @@ public class KaleoActionCacheModel implements CacheModel<KaleoAction>,
 		objectOutput.writeInt(priority);
 	}
 
+	public long mvccVersion;
 	public long kaleoActionId;
 	public long groupId;
 	public long companyId;

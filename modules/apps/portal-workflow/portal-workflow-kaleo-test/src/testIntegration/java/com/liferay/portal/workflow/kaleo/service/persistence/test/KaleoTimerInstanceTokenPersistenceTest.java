@@ -122,6 +122,8 @@ public class KaleoTimerInstanceTokenPersistenceTest {
 
 		KaleoTimerInstanceToken newKaleoTimerInstanceToken = _persistence.create(pk);
 
+		newKaleoTimerInstanceToken.setMvccVersion(RandomTestUtil.nextLong());
+
 		newKaleoTimerInstanceToken.setGroupId(RandomTestUtil.nextLong());
 
 		newKaleoTimerInstanceToken.setCompanyId(RandomTestUtil.nextLong());
@@ -165,6 +167,8 @@ public class KaleoTimerInstanceTokenPersistenceTest {
 
 		KaleoTimerInstanceToken existingKaleoTimerInstanceToken = _persistence.findByPrimaryKey(newKaleoTimerInstanceToken.getPrimaryKey());
 
+		Assert.assertEquals(existingKaleoTimerInstanceToken.getMvccVersion(),
+			newKaleoTimerInstanceToken.getMvccVersion());
 		Assert.assertEquals(existingKaleoTimerInstanceToken.getKaleoTimerInstanceTokenId(),
 			newKaleoTimerInstanceToken.getKaleoTimerInstanceTokenId());
 		Assert.assertEquals(existingKaleoTimerInstanceToken.getGroupId(),
@@ -268,13 +272,14 @@ public class KaleoTimerInstanceTokenPersistenceTest {
 
 	protected OrderByComparator<KaleoTimerInstanceToken> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("KaleoTimerInstanceToken",
-			"kaleoTimerInstanceTokenId", true, "groupId", true, "companyId",
-			true, "userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "kaleoClassName", true, "kaleoClassPK", true,
-			"kaleoDefinitionVersionId", true, "kaleoInstanceId", true,
-			"kaleoInstanceTokenId", true, "kaleoTaskInstanceTokenId", true,
-			"kaleoTimerId", true, "kaleoTimerName", true, "blocking", true,
-			"completionUserId", true, "completed", true, "completionDate", true);
+			"mvccVersion", true, "kaleoTimerInstanceTokenId", true, "groupId",
+			true, "companyId", true, "userId", true, "userName", true,
+			"createDate", true, "modifiedDate", true, "kaleoClassName", true,
+			"kaleoClassPK", true, "kaleoDefinitionVersionId", true,
+			"kaleoInstanceId", true, "kaleoInstanceTokenId", true,
+			"kaleoTaskInstanceTokenId", true, "kaleoTimerId", true,
+			"kaleoTimerName", true, "blocking", true, "completionUserId", true,
+			"completed", true, "completionDate", true);
 	}
 
 	@Test
@@ -505,6 +510,8 @@ public class KaleoTimerInstanceTokenPersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		KaleoTimerInstanceToken kaleoTimerInstanceToken = _persistence.create(pk);
+
+		kaleoTimerInstanceToken.setMvccVersion(RandomTestUtil.nextLong());
 
 		kaleoTimerInstanceToken.setGroupId(RandomTestUtil.nextLong());
 

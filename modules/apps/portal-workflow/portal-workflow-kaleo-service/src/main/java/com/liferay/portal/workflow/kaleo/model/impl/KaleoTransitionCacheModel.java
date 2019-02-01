@@ -20,6 +20,7 @@ import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.workflow.kaleo.model.KaleoTransition;
 
 import java.io.Externalizable;
@@ -38,7 +39,7 @@ import java.util.Date;
  */
 @ProviderType
 public class KaleoTransitionCacheModel implements CacheModel<KaleoTransition>,
-	Externalizable {
+	Externalizable, MVCCModel {
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -51,7 +52,8 @@ public class KaleoTransitionCacheModel implements CacheModel<KaleoTransition>,
 
 		KaleoTransitionCacheModel kaleoTransitionCacheModel = (KaleoTransitionCacheModel)obj;
 
-		if (kaleoTransitionId == kaleoTransitionCacheModel.kaleoTransitionId) {
+		if ((kaleoTransitionId == kaleoTransitionCacheModel.kaleoTransitionId) &&
+				(mvccVersion == kaleoTransitionCacheModel.mvccVersion)) {
 			return true;
 		}
 
@@ -60,14 +62,28 @@ public class KaleoTransitionCacheModel implements CacheModel<KaleoTransition>,
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, kaleoTransitionId);
+		int hashCode = HashUtil.hash(0, kaleoTransitionId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(35);
 
-		sb.append("{kaleoTransitionId=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", kaleoTransitionId=");
 		sb.append(kaleoTransitionId);
 		sb.append(", groupId=");
 		sb.append(groupId);
@@ -108,6 +124,7 @@ public class KaleoTransitionCacheModel implements CacheModel<KaleoTransition>,
 	public KaleoTransition toEntityModel() {
 		KaleoTransitionImpl kaleoTransitionImpl = new KaleoTransitionImpl();
 
+		kaleoTransitionImpl.setMvccVersion(mvccVersion);
 		kaleoTransitionImpl.setKaleoTransitionId(kaleoTransitionId);
 		kaleoTransitionImpl.setGroupId(groupId);
 		kaleoTransitionImpl.setCompanyId(companyId);
@@ -178,6 +195,8 @@ public class KaleoTransitionCacheModel implements CacheModel<KaleoTransition>,
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		mvccVersion = objectInput.readLong();
+
 		kaleoTransitionId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
@@ -207,6 +226,8 @@ public class KaleoTransitionCacheModel implements CacheModel<KaleoTransition>,
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		objectOutput.writeLong(kaleoTransitionId);
 
 		objectOutput.writeLong(groupId);
@@ -264,6 +285,7 @@ public class KaleoTransitionCacheModel implements CacheModel<KaleoTransition>,
 		objectOutput.writeBoolean(defaultTransition);
 	}
 
+	public long mvccVersion;
 	public long kaleoTransitionId;
 	public long groupId;
 	public long companyId;

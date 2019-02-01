@@ -34,6 +34,7 @@ public class KaleoTaskFormInstanceSoap implements Serializable {
 		KaleoTaskFormInstance model) {
 		KaleoTaskFormInstanceSoap soapModel = new KaleoTaskFormInstanceSoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setKaleoTaskFormInstanceId(model.getKaleoTaskFormInstanceId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
@@ -104,6 +105,14 @@ public class KaleoTaskFormInstanceSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setKaleoTaskFormInstanceId(pk);
+	}
+
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	public long getKaleoTaskFormInstanceId() {
@@ -242,6 +251,7 @@ public class KaleoTaskFormInstanceSoap implements Serializable {
 		_metadata = metadata;
 	}
 
+	private long _mvccVersion;
 	private long _kaleoTaskFormInstanceId;
 	private long _groupId;
 	private long _companyId;

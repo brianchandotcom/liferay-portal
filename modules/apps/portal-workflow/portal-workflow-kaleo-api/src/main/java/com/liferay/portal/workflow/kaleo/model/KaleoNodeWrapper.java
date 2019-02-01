@@ -43,6 +43,7 @@ public class KaleoNodeWrapper extends BaseModelWrapper<KaleoNode>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("kaleoNodeId", getKaleoNodeId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
@@ -63,6 +64,12 @@ public class KaleoNodeWrapper extends BaseModelWrapper<KaleoNode>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		Long kaleoNodeId = (Long)attributes.get("kaleoNodeId");
 
 		if (kaleoNodeId != null) {
@@ -257,6 +264,16 @@ public class KaleoNodeWrapper extends BaseModelWrapper<KaleoNode>
 	}
 
 	/**
+	* Returns the mvcc version of this kaleo node.
+	*
+	* @return the mvcc version of this kaleo node
+	*/
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
+	}
+
+	/**
 	* Returns the name of this kaleo node.
 	*
 	* @return the name of this kaleo node
@@ -444,6 +461,16 @@ public class KaleoNodeWrapper extends BaseModelWrapper<KaleoNode>
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		model.setModifiedDate(modifiedDate);
+	}
+
+	/**
+	* Sets the mvcc version of this kaleo node.
+	*
+	* @param mvccVersion the mvcc version of this kaleo node
+	*/
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**

@@ -69,6 +69,7 @@ public class KaleoTaskFormModelImpl extends BaseModelImpl<KaleoTaskForm>
 	 */
 	public static final String TABLE_NAME = "KaleoTaskForm";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "mvccVersion", Types.BIGINT },
 			{ "kaleoTaskFormId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
@@ -93,6 +94,7 @@ public class KaleoTaskFormModelImpl extends BaseModelImpl<KaleoTaskForm>
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("kaleoTaskFormId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -115,7 +117,7 @@ public class KaleoTaskFormModelImpl extends BaseModelImpl<KaleoTaskForm>
 		TABLE_COLUMNS_MAP.put("priority", Types.INTEGER);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table KaleoTaskForm (kaleoTaskFormId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,kaleoDefinitionVersionId LONG,kaleoNodeId LONG,kaleoTaskId LONG,kaleoTaskName VARCHAR(200) null,name VARCHAR(200) null,description STRING null,formCompanyId LONG,formDefinition STRING null,formGroupId LONG,formId LONG,formUuid VARCHAR(75) null,metadata STRING null,priority INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table KaleoTaskForm (mvccVersion LONG default 0 not null,kaleoTaskFormId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,kaleoDefinitionVersionId LONG,kaleoNodeId LONG,kaleoTaskId LONG,kaleoTaskName VARCHAR(200) null,name VARCHAR(200) null,description STRING null,formCompanyId LONG,formDefinition STRING null,formGroupId LONG,formId LONG,formUuid VARCHAR(75) null,metadata STRING null,priority INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table KaleoTaskForm";
 	public static final String ORDER_BY_JPQL = " ORDER BY kaleoTaskForm.priority ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY KaleoTaskForm.priority ASC";
@@ -226,6 +228,8 @@ public class KaleoTaskFormModelImpl extends BaseModelImpl<KaleoTaskForm>
 		Map<String, BiConsumer<KaleoTaskForm, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<KaleoTaskForm, ?>>();
 
 
+		attributeGetterFunctions.put("mvccVersion", KaleoTaskForm::getMvccVersion);
+		attributeSetterBiConsumers.put("mvccVersion", (BiConsumer<KaleoTaskForm, Long>)KaleoTaskForm::setMvccVersion);
 		attributeGetterFunctions.put("kaleoTaskFormId", KaleoTaskForm::getKaleoTaskFormId);
 		attributeSetterBiConsumers.put("kaleoTaskFormId", (BiConsumer<KaleoTaskForm, Long>)KaleoTaskForm::setKaleoTaskFormId);
 		attributeGetterFunctions.put("groupId", KaleoTaskForm::getGroupId);
@@ -270,6 +274,16 @@ public class KaleoTaskFormModelImpl extends BaseModelImpl<KaleoTaskForm>
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@Override
@@ -620,6 +634,7 @@ public class KaleoTaskFormModelImpl extends BaseModelImpl<KaleoTaskForm>
 	public Object clone() {
 		KaleoTaskFormImpl kaleoTaskFormImpl = new KaleoTaskFormImpl();
 
+		kaleoTaskFormImpl.setMvccVersion(getMvccVersion());
 		kaleoTaskFormImpl.setKaleoTaskFormId(getKaleoTaskFormId());
 		kaleoTaskFormImpl.setGroupId(getGroupId());
 		kaleoTaskFormImpl.setCompanyId(getCompanyId());
@@ -734,6 +749,8 @@ public class KaleoTaskFormModelImpl extends BaseModelImpl<KaleoTaskForm>
 	@Override
 	public CacheModel<KaleoTaskForm> toCacheModel() {
 		KaleoTaskFormCacheModel kaleoTaskFormCacheModel = new KaleoTaskFormCacheModel();
+
+		kaleoTaskFormCacheModel.mvccVersion = getMvccVersion();
 
 		kaleoTaskFormCacheModel.kaleoTaskFormId = getKaleoTaskFormId();
 
@@ -893,6 +910,7 @@ public class KaleoTaskFormModelImpl extends BaseModelImpl<KaleoTaskForm>
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			KaleoTaskForm.class, ModelWrapper.class
 		};
+	private long _mvccVersion;
 	private long _kaleoTaskFormId;
 	private long _groupId;
 	private long _companyId;

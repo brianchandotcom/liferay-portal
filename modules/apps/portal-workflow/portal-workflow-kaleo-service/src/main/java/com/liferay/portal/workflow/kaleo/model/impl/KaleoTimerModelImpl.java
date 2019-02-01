@@ -69,6 +69,7 @@ public class KaleoTimerModelImpl extends BaseModelImpl<KaleoTimer>
 	 */
 	public static final String TABLE_NAME = "KaleoTimer";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "mvccVersion", Types.BIGINT },
 			{ "kaleoTimerId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
@@ -90,6 +91,7 @@ public class KaleoTimerModelImpl extends BaseModelImpl<KaleoTimer>
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("kaleoTimerId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -109,7 +111,7 @@ public class KaleoTimerModelImpl extends BaseModelImpl<KaleoTimer>
 		TABLE_COLUMNS_MAP.put("recurrenceScale", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table KaleoTimer (kaleoTimerId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(200) null,createDate DATE null,modifiedDate DATE null,kaleoClassName VARCHAR(200) null,kaleoClassPK LONG,kaleoDefinitionVersionId LONG,name VARCHAR(75) null,blocking BOOLEAN,description STRING null,duration DOUBLE,scale VARCHAR(75) null,recurrenceDuration DOUBLE,recurrenceScale VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table KaleoTimer (mvccVersion LONG default 0 not null,kaleoTimerId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(200) null,createDate DATE null,modifiedDate DATE null,kaleoClassName VARCHAR(200) null,kaleoClassPK LONG,kaleoDefinitionVersionId LONG,name VARCHAR(75) null,blocking BOOLEAN,description STRING null,duration DOUBLE,scale VARCHAR(75) null,recurrenceDuration DOUBLE,recurrenceScale VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table KaleoTimer";
 	public static final String ORDER_BY_JPQL = " ORDER BY kaleoTimer.kaleoTimerId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY KaleoTimer.kaleoTimerId ASC";
@@ -217,6 +219,8 @@ public class KaleoTimerModelImpl extends BaseModelImpl<KaleoTimer>
 		Map<String, BiConsumer<KaleoTimer, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<KaleoTimer, ?>>();
 
 
+		attributeGetterFunctions.put("mvccVersion", KaleoTimer::getMvccVersion);
+		attributeSetterBiConsumers.put("mvccVersion", (BiConsumer<KaleoTimer, Long>)KaleoTimer::setMvccVersion);
 		attributeGetterFunctions.put("kaleoTimerId", KaleoTimer::getKaleoTimerId);
 		attributeSetterBiConsumers.put("kaleoTimerId", (BiConsumer<KaleoTimer, Long>)KaleoTimer::setKaleoTimerId);
 		attributeGetterFunctions.put("groupId", KaleoTimer::getGroupId);
@@ -255,6 +259,16 @@ public class KaleoTimerModelImpl extends BaseModelImpl<KaleoTimer>
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@Override
@@ -551,6 +565,7 @@ public class KaleoTimerModelImpl extends BaseModelImpl<KaleoTimer>
 	public Object clone() {
 		KaleoTimerImpl kaleoTimerImpl = new KaleoTimerImpl();
 
+		kaleoTimerImpl.setMvccVersion(getMvccVersion());
 		kaleoTimerImpl.setKaleoTimerId(getKaleoTimerId());
 		kaleoTimerImpl.setGroupId(getGroupId());
 		kaleoTimerImpl.setCompanyId(getCompanyId());
@@ -654,6 +669,8 @@ public class KaleoTimerModelImpl extends BaseModelImpl<KaleoTimer>
 	@Override
 	public CacheModel<KaleoTimer> toCacheModel() {
 		KaleoTimerCacheModel kaleoTimerCacheModel = new KaleoTimerCacheModel();
+
+		kaleoTimerCacheModel.mvccVersion = getMvccVersion();
 
 		kaleoTimerCacheModel.kaleoTimerId = getKaleoTimerId();
 
@@ -801,6 +818,7 @@ public class KaleoTimerModelImpl extends BaseModelImpl<KaleoTimer>
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			KaleoTimer.class, ModelWrapper.class
 		};
+	private long _mvccVersion;
 	private long _kaleoTimerId;
 	private long _groupId;
 	private long _companyId;

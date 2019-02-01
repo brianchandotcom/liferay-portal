@@ -20,6 +20,7 @@ import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.workflow.kaleo.model.KaleoLog;
 
 import java.io.Externalizable;
@@ -37,7 +38,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public class KaleoLogCacheModel implements CacheModel<KaleoLog>, Externalizable {
+public class KaleoLogCacheModel implements CacheModel<KaleoLog>, Externalizable,
+	MVCCModel {
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -50,7 +52,8 @@ public class KaleoLogCacheModel implements CacheModel<KaleoLog>, Externalizable 
 
 		KaleoLogCacheModel kaleoLogCacheModel = (KaleoLogCacheModel)obj;
 
-		if (kaleoLogId == kaleoLogCacheModel.kaleoLogId) {
+		if ((kaleoLogId == kaleoLogCacheModel.kaleoLogId) &&
+				(mvccVersion == kaleoLogCacheModel.mvccVersion)) {
 			return true;
 		}
 
@@ -59,14 +62,28 @@ public class KaleoLogCacheModel implements CacheModel<KaleoLog>, Externalizable 
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, kaleoLogId);
+		int hashCode = HashUtil.hash(0, kaleoLogId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(61);
+		StringBundler sb = new StringBundler(63);
 
-		sb.append("{kaleoLogId=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", kaleoLogId=");
 		sb.append(kaleoLogId);
 		sb.append(", groupId=");
 		sb.append(groupId);
@@ -135,6 +152,7 @@ public class KaleoLogCacheModel implements CacheModel<KaleoLog>, Externalizable 
 	public KaleoLog toEntityModel() {
 		KaleoLogImpl kaleoLogImpl = new KaleoLogImpl();
 
+		kaleoLogImpl.setMvccVersion(mvccVersion);
 		kaleoLogImpl.setKaleoLogId(kaleoLogId);
 		kaleoLogImpl.setGroupId(groupId);
 		kaleoLogImpl.setCompanyId(companyId);
@@ -269,6 +287,8 @@ public class KaleoLogCacheModel implements CacheModel<KaleoLog>, Externalizable 
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		mvccVersion = objectInput.readLong();
+
 		kaleoLogId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
@@ -318,6 +338,8 @@ public class KaleoLogCacheModel implements CacheModel<KaleoLog>, Externalizable 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		objectOutput.writeLong(kaleoLogId);
 
 		objectOutput.writeLong(groupId);
@@ -432,6 +454,7 @@ public class KaleoLogCacheModel implements CacheModel<KaleoLog>, Externalizable 
 		}
 	}
 
+	public long mvccVersion;
 	public long kaleoLogId;
 	public long groupId;
 	public long companyId;

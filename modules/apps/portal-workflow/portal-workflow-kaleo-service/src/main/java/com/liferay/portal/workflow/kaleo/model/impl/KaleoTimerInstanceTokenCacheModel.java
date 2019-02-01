@@ -20,6 +20,7 @@ import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.workflow.kaleo.model.KaleoTimerInstanceToken;
 
 import java.io.Externalizable;
@@ -38,7 +39,7 @@ import java.util.Date;
  */
 @ProviderType
 public class KaleoTimerInstanceTokenCacheModel implements CacheModel<KaleoTimerInstanceToken>,
-	Externalizable {
+	Externalizable, MVCCModel {
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -51,7 +52,8 @@ public class KaleoTimerInstanceTokenCacheModel implements CacheModel<KaleoTimerI
 
 		KaleoTimerInstanceTokenCacheModel kaleoTimerInstanceTokenCacheModel = (KaleoTimerInstanceTokenCacheModel)obj;
 
-		if (kaleoTimerInstanceTokenId == kaleoTimerInstanceTokenCacheModel.kaleoTimerInstanceTokenId) {
+		if ((kaleoTimerInstanceTokenId == kaleoTimerInstanceTokenCacheModel.kaleoTimerInstanceTokenId) &&
+				(mvccVersion == kaleoTimerInstanceTokenCacheModel.mvccVersion)) {
 			return true;
 		}
 
@@ -60,14 +62,28 @@ public class KaleoTimerInstanceTokenCacheModel implements CacheModel<KaleoTimerI
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, kaleoTimerInstanceTokenId);
+		int hashCode = HashUtil.hash(0, kaleoTimerInstanceTokenId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(41);
+		StringBundler sb = new StringBundler(43);
 
-		sb.append("{kaleoTimerInstanceTokenId=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", kaleoTimerInstanceTokenId=");
 		sb.append(kaleoTimerInstanceTokenId);
 		sb.append(", groupId=");
 		sb.append(groupId);
@@ -116,6 +132,7 @@ public class KaleoTimerInstanceTokenCacheModel implements CacheModel<KaleoTimerI
 	public KaleoTimerInstanceToken toEntityModel() {
 		KaleoTimerInstanceTokenImpl kaleoTimerInstanceTokenImpl = new KaleoTimerInstanceTokenImpl();
 
+		kaleoTimerInstanceTokenImpl.setMvccVersion(mvccVersion);
 		kaleoTimerInstanceTokenImpl.setKaleoTimerInstanceTokenId(kaleoTimerInstanceTokenId);
 		kaleoTimerInstanceTokenImpl.setGroupId(groupId);
 		kaleoTimerInstanceTokenImpl.setCompanyId(companyId);
@@ -189,6 +206,8 @@ public class KaleoTimerInstanceTokenCacheModel implements CacheModel<KaleoTimerI
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		mvccVersion = objectInput.readLong();
+
 		kaleoTimerInstanceTokenId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
@@ -226,6 +245,8 @@ public class KaleoTimerInstanceTokenCacheModel implements CacheModel<KaleoTimerI
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		objectOutput.writeLong(kaleoTimerInstanceTokenId);
 
 		objectOutput.writeLong(groupId);
@@ -285,6 +306,7 @@ public class KaleoTimerInstanceTokenCacheModel implements CacheModel<KaleoTimerI
 		}
 	}
 
+	public long mvccVersion;
 	public long kaleoTimerInstanceTokenId;
 	public long groupId;
 	public long companyId;

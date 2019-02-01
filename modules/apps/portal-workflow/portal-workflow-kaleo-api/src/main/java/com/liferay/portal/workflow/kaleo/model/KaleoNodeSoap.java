@@ -33,6 +33,7 @@ public class KaleoNodeSoap implements Serializable {
 	public static KaleoNodeSoap toSoapModel(KaleoNode model) {
 		KaleoNodeSoap soapModel = new KaleoNodeSoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setKaleoNodeId(model.getKaleoNodeId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
@@ -97,6 +98,14 @@ public class KaleoNodeSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setKaleoNodeId(pk);
+	}
+
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	public long getKaleoNodeId() {
@@ -219,6 +228,7 @@ public class KaleoNodeSoap implements Serializable {
 		_terminal = terminal;
 	}
 
+	private long _mvccVersion;
 	private long _kaleoNodeId;
 	private long _groupId;
 	private long _companyId;

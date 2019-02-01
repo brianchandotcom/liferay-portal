@@ -43,6 +43,7 @@ public class KaleoTaskAssignmentWrapper extends BaseModelWrapper<KaleoTaskAssign
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("kaleoTaskAssignmentId", getKaleoTaskAssignmentId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
@@ -67,6 +68,12 @@ public class KaleoTaskAssignmentWrapper extends BaseModelWrapper<KaleoTaskAssign
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		Long kaleoTaskAssignmentId = (Long)attributes.get(
 				"kaleoTaskAssignmentId");
 
@@ -325,6 +332,16 @@ public class KaleoTaskAssignmentWrapper extends BaseModelWrapper<KaleoTaskAssign
 	}
 
 	/**
+	* Returns the mvcc version of this kaleo task assignment.
+	*
+	* @return the mvcc version of this kaleo task assignment
+	*/
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
+	}
+
+	/**
 	* Returns the primary key of this kaleo task assignment.
 	*
 	* @return the primary key of this kaleo task assignment
@@ -518,6 +535,16 @@ public class KaleoTaskAssignmentWrapper extends BaseModelWrapper<KaleoTaskAssign
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		model.setModifiedDate(modifiedDate);
+	}
+
+	/**
+	* Sets the mvcc version of this kaleo task assignment.
+	*
+	* @param mvccVersion the mvcc version of this kaleo task assignment
+	*/
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**

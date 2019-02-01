@@ -69,6 +69,7 @@ public class KaleoLogModelImpl extends BaseModelImpl<KaleoLog>
 	 */
 	public static final String TABLE_NAME = "KaleoLog";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "mvccVersion", Types.BIGINT },
 			{ "kaleoLogId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
@@ -103,6 +104,7 @@ public class KaleoLogModelImpl extends BaseModelImpl<KaleoLog>
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("kaleoLogId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -135,7 +137,7 @@ public class KaleoLogModelImpl extends BaseModelImpl<KaleoLog>
 		TABLE_COLUMNS_MAP.put("workflowContext", Types.CLOB);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table KaleoLog (kaleoLogId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(200) null,createDate DATE null,modifiedDate DATE null,kaleoClassName VARCHAR(200) null,kaleoClassPK LONG,kaleoDefinitionVersionId LONG,kaleoInstanceId LONG,kaleoInstanceTokenId LONG,kaleoTaskInstanceTokenId LONG,kaleoNodeName VARCHAR(200) null,terminalKaleoNode BOOLEAN,kaleoActionId LONG,kaleoActionName VARCHAR(200) null,kaleoActionDescription STRING null,previousKaleoNodeId LONG,previousKaleoNodeName VARCHAR(200) null,previousAssigneeClassName VARCHAR(200) null,previousAssigneeClassPK LONG,currentAssigneeClassName VARCHAR(200) null,currentAssigneeClassPK LONG,type_ VARCHAR(50) null,comment_ TEXT null,startDate DATE null,endDate DATE null,duration LONG,workflowContext TEXT null)";
+	public static final String TABLE_SQL_CREATE = "create table KaleoLog (mvccVersion LONG default 0 not null,kaleoLogId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(200) null,createDate DATE null,modifiedDate DATE null,kaleoClassName VARCHAR(200) null,kaleoClassPK LONG,kaleoDefinitionVersionId LONG,kaleoInstanceId LONG,kaleoInstanceTokenId LONG,kaleoTaskInstanceTokenId LONG,kaleoNodeName VARCHAR(200) null,terminalKaleoNode BOOLEAN,kaleoActionId LONG,kaleoActionName VARCHAR(200) null,kaleoActionDescription STRING null,previousKaleoNodeId LONG,previousKaleoNodeName VARCHAR(200) null,previousAssigneeClassName VARCHAR(200) null,previousAssigneeClassPK LONG,currentAssigneeClassName VARCHAR(200) null,currentAssigneeClassPK LONG,type_ VARCHAR(50) null,comment_ TEXT null,startDate DATE null,endDate DATE null,duration LONG,workflowContext TEXT null)";
 	public static final String TABLE_SQL_DROP = "drop table KaleoLog";
 	public static final String ORDER_BY_JPQL = " ORDER BY kaleoLog.kaleoLogId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY KaleoLog.kaleoLogId ASC";
@@ -248,6 +250,8 @@ public class KaleoLogModelImpl extends BaseModelImpl<KaleoLog>
 		Map<String, BiConsumer<KaleoLog, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<KaleoLog, ?>>();
 
 
+		attributeGetterFunctions.put("mvccVersion", KaleoLog::getMvccVersion);
+		attributeSetterBiConsumers.put("mvccVersion", (BiConsumer<KaleoLog, Long>)KaleoLog::setMvccVersion);
 		attributeGetterFunctions.put("kaleoLogId", KaleoLog::getKaleoLogId);
 		attributeSetterBiConsumers.put("kaleoLogId", (BiConsumer<KaleoLog, Long>)KaleoLog::setKaleoLogId);
 		attributeGetterFunctions.put("groupId", KaleoLog::getGroupId);
@@ -312,6 +316,16 @@ public class KaleoLogModelImpl extends BaseModelImpl<KaleoLog>
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@Override
@@ -821,6 +835,7 @@ public class KaleoLogModelImpl extends BaseModelImpl<KaleoLog>
 	public Object clone() {
 		KaleoLogImpl kaleoLogImpl = new KaleoLogImpl();
 
+		kaleoLogImpl.setMvccVersion(getMvccVersion());
 		kaleoLogImpl.setKaleoLogId(getKaleoLogId());
 		kaleoLogImpl.setGroupId(getGroupId());
 		kaleoLogImpl.setCompanyId(getCompanyId());
@@ -955,6 +970,8 @@ public class KaleoLogModelImpl extends BaseModelImpl<KaleoLog>
 	@Override
 	public CacheModel<KaleoLog> toCacheModel() {
 		KaleoLogCacheModel kaleoLogCacheModel = new KaleoLogCacheModel();
+
+		kaleoLogCacheModel.mvccVersion = getMvccVersion();
 
 		kaleoLogCacheModel.kaleoLogId = getKaleoLogId();
 
@@ -1176,6 +1193,7 @@ public class KaleoLogModelImpl extends BaseModelImpl<KaleoLog>
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			KaleoLog.class, ModelWrapper.class
 		};
+	private long _mvccVersion;
 	private long _kaleoLogId;
 	private long _groupId;
 	private long _companyId;

@@ -33,6 +33,7 @@ public class KaleoLogSoap implements Serializable {
 	public static KaleoLogSoap toSoapModel(KaleoLog model) {
 		KaleoLogSoap soapModel = new KaleoLogSoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setKaleoLogId(model.getKaleoLogId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
@@ -113,6 +114,14 @@ public class KaleoLogSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setKaleoLogId(pk);
+	}
+
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	public long getKaleoLogId() {
@@ -359,6 +368,7 @@ public class KaleoLogSoap implements Serializable {
 		_workflowContext = workflowContext;
 	}
 
+	private long _mvccVersion;
 	private long _kaleoLogId;
 	private long _groupId;
 	private long _companyId;

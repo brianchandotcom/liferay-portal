@@ -123,6 +123,8 @@ public class KaleoDefinitionVersionPersistenceTest {
 
 		KaleoDefinitionVersion newKaleoDefinitionVersion = _persistence.create(pk);
 
+		newKaleoDefinitionVersion.setMvccVersion(RandomTestUtil.nextLong());
+
 		newKaleoDefinitionVersion.setGroupId(RandomTestUtil.nextLong());
 
 		newKaleoDefinitionVersion.setCompanyId(RandomTestUtil.nextLong());
@@ -160,6 +162,8 @@ public class KaleoDefinitionVersionPersistenceTest {
 
 		KaleoDefinitionVersion existingKaleoDefinitionVersion = _persistence.findByPrimaryKey(newKaleoDefinitionVersion.getPrimaryKey());
 
+		Assert.assertEquals(existingKaleoDefinitionVersion.getMvccVersion(),
+			newKaleoDefinitionVersion.getMvccVersion());
 		Assert.assertEquals(existingKaleoDefinitionVersion.getKaleoDefinitionVersionId(),
 			newKaleoDefinitionVersion.getKaleoDefinitionVersionId());
 		Assert.assertEquals(existingKaleoDefinitionVersion.getGroupId(),
@@ -249,11 +253,12 @@ public class KaleoDefinitionVersionPersistenceTest {
 
 	protected OrderByComparator<KaleoDefinitionVersion> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("KaleoDefinitionVersion",
-			"kaleoDefinitionVersionId", true, "groupId", true, "companyId",
-			true, "userId", true, "userName", true, "statusByUserId", true,
-			"statusByUserName", true, "statusDate", true, "createDate", true,
-			"modifiedDate", true, "name", true, "title", true, "description",
-			true, "version", true, "startKaleoNodeId", true, "status", true);
+			"mvccVersion", true, "kaleoDefinitionVersionId", true, "groupId",
+			true, "companyId", true, "userId", true, "userName", true,
+			"statusByUserId", true, "statusByUserName", true, "statusDate",
+			true, "createDate", true, "modifiedDate", true, "name", true,
+			"title", true, "description", true, "version", true,
+			"startKaleoNodeId", true, "status", true);
 	}
 
 	@Test
@@ -488,6 +493,8 @@ public class KaleoDefinitionVersionPersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		KaleoDefinitionVersion kaleoDefinitionVersion = _persistence.create(pk);
+
+		kaleoDefinitionVersion.setMvccVersion(RandomTestUtil.nextLong());
 
 		kaleoDefinitionVersion.setGroupId(RandomTestUtil.nextLong());
 

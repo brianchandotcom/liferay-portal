@@ -69,6 +69,7 @@ public class KaleoTaskAssignmentModelImpl extends BaseModelImpl<KaleoTaskAssignm
 	 */
 	public static final String TABLE_NAME = "KaleoTaskAssignment";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "mvccVersion", Types.BIGINT },
 			{ "kaleoTaskAssignmentId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
@@ -90,6 +91,7 @@ public class KaleoTaskAssignmentModelImpl extends BaseModelImpl<KaleoTaskAssignm
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("kaleoTaskAssignmentId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -109,7 +111,7 @@ public class KaleoTaskAssignmentModelImpl extends BaseModelImpl<KaleoTaskAssignm
 		TABLE_COLUMNS_MAP.put("assigneeScriptRequiredContexts", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table KaleoTaskAssignment (kaleoTaskAssignmentId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(200) null,createDate DATE null,modifiedDate DATE null,kaleoClassName VARCHAR(200) null,kaleoClassPK LONG,kaleoDefinitionVersionId LONG,kaleoNodeId LONG,assigneeClassName VARCHAR(200) null,assigneeClassPK LONG,assigneeActionId VARCHAR(75) null,assigneeScript TEXT null,assigneeScriptLanguage VARCHAR(75) null,assigneeScriptRequiredContexts STRING null)";
+	public static final String TABLE_SQL_CREATE = "create table KaleoTaskAssignment (mvccVersion LONG default 0 not null,kaleoTaskAssignmentId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(200) null,createDate DATE null,modifiedDate DATE null,kaleoClassName VARCHAR(200) null,kaleoClassPK LONG,kaleoDefinitionVersionId LONG,kaleoNodeId LONG,assigneeClassName VARCHAR(200) null,assigneeClassPK LONG,assigneeActionId VARCHAR(75) null,assigneeScript TEXT null,assigneeScriptLanguage VARCHAR(75) null,assigneeScriptRequiredContexts STRING null)";
 	public static final String TABLE_SQL_DROP = "drop table KaleoTaskAssignment";
 	public static final String ORDER_BY_JPQL = " ORDER BY kaleoTaskAssignment.kaleoTaskAssignmentId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY KaleoTaskAssignment.kaleoTaskAssignmentId ASC";
@@ -223,6 +225,8 @@ public class KaleoTaskAssignmentModelImpl extends BaseModelImpl<KaleoTaskAssignm
 			new LinkedHashMap<String, BiConsumer<KaleoTaskAssignment, ?>>();
 
 
+		attributeGetterFunctions.put("mvccVersion", KaleoTaskAssignment::getMvccVersion);
+		attributeSetterBiConsumers.put("mvccVersion", (BiConsumer<KaleoTaskAssignment, Long>)KaleoTaskAssignment::setMvccVersion);
 		attributeGetterFunctions.put("kaleoTaskAssignmentId", KaleoTaskAssignment::getKaleoTaskAssignmentId);
 		attributeSetterBiConsumers.put("kaleoTaskAssignmentId", (BiConsumer<KaleoTaskAssignment, Long>)KaleoTaskAssignment::setKaleoTaskAssignmentId);
 		attributeGetterFunctions.put("groupId", KaleoTaskAssignment::getGroupId);
@@ -261,6 +265,16 @@ public class KaleoTaskAssignmentModelImpl extends BaseModelImpl<KaleoTaskAssignm
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@Override
@@ -580,6 +594,7 @@ public class KaleoTaskAssignmentModelImpl extends BaseModelImpl<KaleoTaskAssignm
 	public Object clone() {
 		KaleoTaskAssignmentImpl kaleoTaskAssignmentImpl = new KaleoTaskAssignmentImpl();
 
+		kaleoTaskAssignmentImpl.setMvccVersion(getMvccVersion());
 		kaleoTaskAssignmentImpl.setKaleoTaskAssignmentId(getKaleoTaskAssignmentId());
 		kaleoTaskAssignmentImpl.setGroupId(getGroupId());
 		kaleoTaskAssignmentImpl.setCompanyId(getCompanyId());
@@ -689,6 +704,8 @@ public class KaleoTaskAssignmentModelImpl extends BaseModelImpl<KaleoTaskAssignm
 	@Override
 	public CacheModel<KaleoTaskAssignment> toCacheModel() {
 		KaleoTaskAssignmentCacheModel kaleoTaskAssignmentCacheModel = new KaleoTaskAssignmentCacheModel();
+
+		kaleoTaskAssignmentCacheModel.mvccVersion = getMvccVersion();
 
 		kaleoTaskAssignmentCacheModel.kaleoTaskAssignmentId = getKaleoTaskAssignmentId();
 
@@ -846,6 +863,7 @@ public class KaleoTaskAssignmentModelImpl extends BaseModelImpl<KaleoTaskAssignm
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			KaleoTaskAssignment.class, ModelWrapper.class
 		};
+	private long _mvccVersion;
 	private long _kaleoTaskAssignmentId;
 	private long _groupId;
 	private long _companyId;

@@ -69,6 +69,7 @@ public class KaleoActionModelImpl extends BaseModelImpl<KaleoAction>
 	 */
 	public static final String TABLE_NAME = "KaleoAction";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "mvccVersion", Types.BIGINT },
 			{ "kaleoActionId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
@@ -91,6 +92,7 @@ public class KaleoActionModelImpl extends BaseModelImpl<KaleoAction>
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("kaleoActionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -111,7 +113,7 @@ public class KaleoActionModelImpl extends BaseModelImpl<KaleoAction>
 		TABLE_COLUMNS_MAP.put("priority", Types.INTEGER);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table KaleoAction (kaleoActionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(200) null,createDate DATE null,modifiedDate DATE null,kaleoClassName VARCHAR(200) null,kaleoClassPK LONG,kaleoDefinitionVersionId LONG,kaleoNodeName VARCHAR(200) null,name VARCHAR(200) null,description STRING null,executionType VARCHAR(20) null,script TEXT null,scriptLanguage VARCHAR(75) null,scriptRequiredContexts STRING null,priority INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table KaleoAction (mvccVersion LONG default 0 not null,kaleoActionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(200) null,createDate DATE null,modifiedDate DATE null,kaleoClassName VARCHAR(200) null,kaleoClassPK LONG,kaleoDefinitionVersionId LONG,kaleoNodeName VARCHAR(200) null,name VARCHAR(200) null,description STRING null,executionType VARCHAR(20) null,script TEXT null,scriptLanguage VARCHAR(75) null,scriptRequiredContexts STRING null,priority INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table KaleoAction";
 	public static final String ORDER_BY_JPQL = " ORDER BY kaleoAction.priority ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY KaleoAction.priority ASC";
@@ -221,6 +223,8 @@ public class KaleoActionModelImpl extends BaseModelImpl<KaleoAction>
 		Map<String, BiConsumer<KaleoAction, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<KaleoAction, ?>>();
 
 
+		attributeGetterFunctions.put("mvccVersion", KaleoAction::getMvccVersion);
+		attributeSetterBiConsumers.put("mvccVersion", (BiConsumer<KaleoAction, Long>)KaleoAction::setMvccVersion);
 		attributeGetterFunctions.put("kaleoActionId", KaleoAction::getKaleoActionId);
 		attributeSetterBiConsumers.put("kaleoActionId", (BiConsumer<KaleoAction, Long>)KaleoAction::setKaleoActionId);
 		attributeGetterFunctions.put("groupId", KaleoAction::getGroupId);
@@ -261,6 +265,16 @@ public class KaleoActionModelImpl extends BaseModelImpl<KaleoAction>
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@Override
@@ -599,6 +613,7 @@ public class KaleoActionModelImpl extends BaseModelImpl<KaleoAction>
 	public Object clone() {
 		KaleoActionImpl kaleoActionImpl = new KaleoActionImpl();
 
+		kaleoActionImpl.setMvccVersion(getMvccVersion());
 		kaleoActionImpl.setKaleoActionId(getKaleoActionId());
 		kaleoActionImpl.setGroupId(getGroupId());
 		kaleoActionImpl.setCompanyId(getCompanyId());
@@ -709,6 +724,8 @@ public class KaleoActionModelImpl extends BaseModelImpl<KaleoAction>
 	@Override
 	public CacheModel<KaleoAction> toCacheModel() {
 		KaleoActionCacheModel kaleoActionCacheModel = new KaleoActionCacheModel();
+
+		kaleoActionCacheModel.mvccVersion = getMvccVersion();
 
 		kaleoActionCacheModel.kaleoActionId = getKaleoActionId();
 
@@ -877,6 +894,7 @@ public class KaleoActionModelImpl extends BaseModelImpl<KaleoAction>
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			KaleoAction.class, ModelWrapper.class
 		};
+	private long _mvccVersion;
 	private long _kaleoActionId;
 	private long _groupId;
 	private long _companyId;

@@ -33,6 +33,7 @@ public class KaleoNotificationSoap implements Serializable {
 	public static KaleoNotificationSoap toSoapModel(KaleoNotification model) {
 		KaleoNotificationSoap soapModel = new KaleoNotificationSoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setKaleoNotificationId(model.getKaleoNotificationId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
@@ -103,6 +104,14 @@ public class KaleoNotificationSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setKaleoNotificationId(pk);
+	}
+
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	public long getKaleoNotificationId() {
@@ -241,6 +250,7 @@ public class KaleoNotificationSoap implements Serializable {
 		_notificationTypes = notificationTypes;
 	}
 
+	private long _mvccVersion;
 	private long _kaleoNotificationId;
 	private long _groupId;
 	private long _companyId;

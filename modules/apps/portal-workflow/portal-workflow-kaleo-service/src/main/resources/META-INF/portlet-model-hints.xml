@@ -2,6 +2,7 @@
 
 <model-hints>
 	<model name="com.liferay.portal.workflow.kaleo.model.KaleoAction">
+		<field name="mvccVersion" type="long" />
 		<field name="kaleoActionId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
@@ -38,6 +39,7 @@
 		<field name="priority" type="int" />
 	</model>
 	<model name="com.liferay.portal.workflow.kaleo.model.KaleoCondition">
+		<field name="mvccVersion" type="long" />
 		<field name="kaleoConditionId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
@@ -58,6 +60,7 @@
 		</field>
 	</model>
 	<model name="com.liferay.portal.workflow.kaleo.model.KaleoDefinition">
+		<field name="mvccVersion" type="long" />
 		<field name="kaleoDefinitionId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
@@ -83,6 +86,7 @@
 		<field name="active" type="boolean" />
 	</model>
 	<model name="com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion">
+		<field name="mvccVersion" type="long" />
 		<field name="kaleoDefinitionVersionId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
@@ -112,6 +116,7 @@
 		<field name="status" type="int" />
 	</model>
 	<model name="com.liferay.portal.workflow.kaleo.model.KaleoInstance">
+		<field name="mvccVersion" type="long" />
 		<field name="kaleoInstanceId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
@@ -138,6 +143,7 @@
 		</field>
 	</model>
 	<model name="com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken">
+		<field name="mvccVersion" type="long" />
 		<field name="kaleoInstanceTokenId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
@@ -162,6 +168,7 @@
 		<field name="completionDate" type="Date" />
 	</model>
 	<model name="com.liferay.portal.workflow.kaleo.model.KaleoLog">
+		<field name="mvccVersion" type="long" />
 		<field name="kaleoLogId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
@@ -216,6 +223,7 @@
 		</field>
 	</model>
 	<model name="com.liferay.portal.workflow.kaleo.model.KaleoNode">
+		<field name="mvccVersion" type="long" />
 		<field name="kaleoNodeId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
@@ -242,6 +250,7 @@
 		<field name="terminal" type="boolean" />
 	</model>
 	<model name="com.liferay.portal.workflow.kaleo.model.KaleoNotification">
+		<field name="mvccVersion" type="long" />
 		<field name="kaleoNotificationId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
@@ -277,6 +286,7 @@
 		</field>
 	</model>
 	<model name="com.liferay.portal.workflow.kaleo.model.KaleoNotificationRecipient">
+		<field name="mvccVersion" type="long" />
 		<field name="kaleoNotificationRecipientId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
@@ -308,6 +318,7 @@
 		</field>
 	</model>
 	<model name="com.liferay.portal.workflow.kaleo.model.KaleoTask">
+		<field name="mvccVersion" type="long" />
 		<field name="kaleoTaskId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
@@ -327,6 +338,7 @@
 		</field>
 	</model>
 	<model name="com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignment">
+		<field name="mvccVersion" type="long" />
 		<field name="kaleoTaskAssignmentId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
@@ -356,6 +368,7 @@
 		</field>
 	</model>
 	<model name="com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignmentInstance">
+		<field name="mvccVersion" type="long" />
 		<field name="kaleoTaskAssignmentInstanceId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
@@ -381,6 +394,7 @@
 		<field name="completionDate" type="Date" />
 	</model>
 	<model name="com.liferay.portal.workflow.kaleo.model.KaleoTaskForm">
+		<field name="mvccVersion" type="long" />
 		<field name="kaleoTaskFormId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
@@ -413,6 +427,7 @@
 		<field name="priority" type="int" />
 	</model>
 	<model name="com.liferay.portal.workflow.kaleo.model.KaleoTaskFormInstance">
+		<field name="mvccVersion" type="long" />
 		<field name="kaleoTaskFormInstanceId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
@@ -436,6 +451,7 @@
 		</field>
 	</model>
 	<model name="com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken">
+		<field name="mvccVersion" type="long" />
 		<field name="kaleoTaskInstanceTokenId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
@@ -465,6 +481,7 @@
 		</field>
 	</model>
 	<model name="com.liferay.portal.workflow.kaleo.model.KaleoTimer">
+		<field name="mvccVersion" type="long" />
 		<field name="kaleoTimerId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
@@ -490,6 +507,7 @@
 		<field name="recurrenceScale" type="String" />
 	</model>
 	<model name="com.liferay.portal.workflow.kaleo.model.KaleoTimerInstanceToken">
+		<field name="mvccVersion" type="long" />
 		<field name="kaleoTimerInstanceTokenId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
@@ -520,6 +538,7 @@
 		</field>
 	</model>
 	<model name="com.liferay.portal.workflow.kaleo.model.KaleoTransition">
+		<field name="mvccVersion" type="long" />
 		<field name="kaleoTransitionId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />

@@ -2,6 +2,7 @@ import {ADD_PORTLET} from '../actions/actions.es';
 import {addFragment, getFragmentEntryLinkContent} from './fragments.es';
 import {getWidgetPath} from '../utils/FragmentsEditorGetUtils.es';
 import {setIn, updateLayoutData} from '../utils/FragmentsEditorUpdateUtils.es';
+import editableValuesMigrator from '../utils/fragmentMigrator.es';
 
 /**
  * @param {!object} state
@@ -26,7 +27,8 @@ function addPortletReducer(state, actionType, payload) {
 					payload.portletId,
 					nextState.classNameId,
 					nextState.classPK,
-					nextState.portletNamespace
+					nextState.portletNamespace,
+					nextState.defaultSegmentId
 				)
 					.then(
 						response => {
@@ -120,7 +122,8 @@ function _addPortlet(
 	portletId,
 	classNameId,
 	classPK,
-	portletNamespace
+	portletNamespace,
+	defaultSegmentId
 ) {
 	const formData = new FormData();
 
@@ -148,7 +151,7 @@ function _addPortlet(
 				return {
 					config: {},
 					content: response.content,
-					editableValues: JSON.parse(response.editableValues),
+					editableValues: editableValuesMigrator(response.editableValues, defaultSegmentId),
 					fragmentEntryLinkId: response.fragmentEntryLinkId,
 					name: response.name
 				};

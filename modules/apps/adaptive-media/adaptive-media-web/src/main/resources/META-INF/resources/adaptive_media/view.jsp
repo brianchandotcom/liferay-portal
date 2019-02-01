@@ -40,6 +40,7 @@ AMManagementToolbarDisplayContext amManagementToolbarDisplayContext = new AMMana
 	creationMenu="<%= amManagementToolbarDisplayContext.getCreationMenu() %>"
 	disabled="<%= amManagementToolbarDisplayContext.isDisabled() %>"
 	filterDropdownItems="<%= amManagementToolbarDisplayContext.getFilterDropdownItems() %>"
+	filterLabelItems="<%= amManagementToolbarDisplayContext.getFilterLabelItems() %>"
 	infoPanelId="infoPanelId"
 	itemsTotal="<%= amManagementToolbarDisplayContext.getTotalItems() %>"
 	searchContainerId="imageConfigurationEntries"

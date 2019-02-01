@@ -37,29 +37,9 @@ SelectLayoutPageTemplateEntryDisplayContext selectLayoutPageTemplateEntryDisplay
 			row.setCssClass("entry-card lfr-asset-item " + row.getCssClass());
 			%>
 
-			<portlet:renderURL var="addLayoutURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-				<portlet:param name="mvcRenderCommandName" value="/layout/add_layout" />
-				<portlet:param name="layoutPageTemplateEntryId" value="<%= String.valueOf(layoutPageTemplateEntry.getLayoutPageTemplateEntryId()) %>" />
-				<portlet:param name="layoutPrototypeId" value="<%= String.valueOf(layoutPageTemplateEntry.getLayoutPrototypeId()) %>" />
-			</portlet:renderURL>
-
 			<liferay-ui:search-container-column-text>
-
-				<%
-				Map<String, Object> addLayoutPrototypeData = new HashMap<>();
-
-				addLayoutPrototypeData.put("add-layout-url", addLayoutURL);
-				%>
-
-				<liferay-frontend:icon-vertical-card
-					actionJspServletContext="<%= application %>"
-					cssClass="add-layout-prototype-action-option"
-					data="<%= addLayoutPrototypeData %>"
-					icon="page-template"
-					resultRow="<%= row %>"
-					rowChecker="<%= searchContainer.getRowChecker() %>"
-					title="<%= HtmlUtil.escape(layoutPageTemplateEntry.getName()) %>"
-					url="javascript:;"
+				<clay:vertical-card
+					verticalCard="<%= new SelectGlobalTemplatesVerticalCard(layoutPageTemplateEntry, renderResponse) %>"
 				/>
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>

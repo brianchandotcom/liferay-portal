@@ -23,6 +23,7 @@ import com.liferay.journal.exception.NoSuchArticleException;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.JournalArticleLocalServiceWrapper;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -611,6 +612,43 @@ public class CTJournalArticleLocalServiceWrapper
 	}
 
 	@Override
+	public int getArticlesCount(long groupId) {
+		super.getArticlesCount(groupId);
+
+		List<JournalArticle> journalArticles = getArticles(groupId);
+
+		return journalArticles.size();
+	}
+
+	@Override
+	public int getArticlesCount(long groupId, long folderId) {
+		super.getArticlesCount(groupId, folderId);
+
+		List<JournalArticle> journalArticles = getArticles(groupId, folderId);
+
+		return journalArticles.size();
+	}
+
+	@Override
+	public int getArticlesCount(long groupId, long folderId, int status) {
+		super.getArticlesCount(groupId, folderId, status);
+
+		List<JournalArticle> journalArticles = getArticles(
+			groupId, folderId, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		return journalArticles.size();
+	}
+
+	@Override
+	public int getArticlesCount(long groupId, String articleId) {
+		super.getArticlesCount(groupId, articleId);
+
+		List<JournalArticle> journalArticles = getArticles(groupId, articleId);
+
+		return journalArticles.size();
+	}
+
+	@Override
 	public List<JournalArticle> getCompanyArticles(
 		long companyId, double version, int status, int start, int end) {
 
@@ -632,6 +670,28 @@ public class CTJournalArticleLocalServiceWrapper
 		journalArticles.removeIf(journalArticle -> !_hasChange(journalArticle));
 
 		return journalArticles;
+	}
+
+	@Override
+	public int getCompanyArticlesCount(
+		long companyId, double version, int status, int start, int end) {
+
+		super.getCompanyArticlesCount(companyId, version, status, start, end);
+
+		List<JournalArticle> journalArticles = getCompanyArticles(
+			companyId, version, status, start, end);
+
+		return journalArticles.size();
+	}
+
+	@Override
+	public int getCompanyArticlesCount(long companyId, int status) {
+		super.getCompanyArticlesCount(companyId, status);
+
+		List<JournalArticle> journalArticles = getCompanyArticles(
+			companyId, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		return journalArticles.size();
 	}
 
 	@Override
@@ -762,6 +822,16 @@ public class CTJournalArticleLocalServiceWrapper
 	}
 
 	@Override
+	public int getStructureArticlesCount(long groupId, String ddmStructureKey) {
+		super.getStructureArticlesCount(groupId, ddmStructureKey);
+
+		List<JournalArticle> journalArticles = getStructureArticles(
+			groupId, ddmStructureKey);
+
+		return journalArticles.size();
+	}
+
+	@Override
 	public List<JournalArticle> getTemplateArticles(
 		long groupId, String ddmTemplateKey) {
 
@@ -785,6 +855,16 @@ public class CTJournalArticleLocalServiceWrapper
 		journalArticles.removeIf(journalArticle -> !_hasChange(journalArticle));
 
 		return journalArticles;
+	}
+
+	@Override
+	public int getTemplateArticlesCount(long groupId, String ddmTemplateKey) {
+		super.getTemplateArticlesCount(groupId, ddmTemplateKey);
+
+		List<JournalArticle> journalArticles = getTemplateArticles(
+			groupId, ddmTemplateKey);
+
+		return journalArticles.size();
 	}
 
 	@Override
@@ -957,6 +1037,70 @@ public class CTJournalArticleLocalServiceWrapper
 		journalArticles.removeIf(journalArticle -> !_hasChange(journalArticle));
 
 		return journalArticles;
+	}
+
+	@Override
+	public int searchCount(
+		long companyId, long groupId, List<Long> folderIds, long classNameId,
+		String keywords, Double version, String ddmStructureKey,
+		String ddmTemplateKey, Date displayDateGT, Date displayDateLT,
+		int status, Date reviewDate) {
+
+		super.searchCount(
+			companyId, groupId, folderIds, classNameId, keywords, version,
+			ddmStructureKey, ddmTemplateKey, displayDateGT, displayDateLT,
+			status, reviewDate);
+
+		List<JournalArticle> journalArticles = search(
+			companyId, groupId, folderIds, classNameId, keywords, version,
+			ddmStructureKey, ddmTemplateKey, displayDateGT, displayDateLT,
+			status, reviewDate, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		return journalArticles.size();
+	}
+
+	@Override
+	public int searchCount(
+		long companyId, long groupId, List<Long> folderIds, long classNameId,
+		String articleId, Double version, String title, String description,
+		String content, String ddmStructureKey, String ddmTemplateKey,
+		Date displayDateGT, Date displayDateLT, int status, Date reviewDate,
+		boolean andOperator) {
+
+		super.searchCount(
+			companyId, groupId, folderIds, classNameId, articleId, version,
+			title, description, content, ddmStructureKey, ddmTemplateKey,
+			displayDateGT, displayDateLT, status, reviewDate, andOperator);
+
+		List<JournalArticle> journalArticles = search(
+			companyId, groupId, folderIds, classNameId, articleId, version,
+			title, description, content, ddmStructureKey, ddmTemplateKey,
+			displayDateGT, displayDateLT, status, reviewDate, andOperator,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		return journalArticles.size();
+	}
+
+	@Override
+	public int searchCount(
+		long companyId, long groupId, List<Long> folderIds, long classNameId,
+		String articleId, Double version, String title, String description,
+		String content, String[] ddmStructureKeys, String[] ddmTemplateKeys,
+		Date displayDateGT, Date displayDateLT, int status, Date reviewDate,
+		boolean andOperator) {
+
+		super.searchCount(
+			companyId, groupId, folderIds, classNameId, articleId, version,
+			title, description, content, ddmStructureKeys, ddmTemplateKeys,
+			displayDateGT, displayDateLT, status, reviewDate, andOperator);
+
+		List<JournalArticle> journalArticles = search(
+			companyId, groupId, folderIds, classNameId, articleId, version,
+			title, description, content, ddmStructureKeys, ddmTemplateKeys,
+			displayDateGT, displayDateLT, status, reviewDate, andOperator,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		return journalArticles.size();
 	}
 
 	@Override

@@ -14,10 +14,13 @@ components:
           format: uri
           type: string
         dateCreated:
+          format: date-time
           type: string
         dateModified:
+          format: date-time
           type: string
         datePublished:
+          format: date-time
           type: string
         defaultLanguage:
           type: string
@@ -26,6 +29,7 @@ components:
         formRecords:
           $ref: "#/components/schemas/FormRecord"
         id:
+          format: int64
           type: integer
         name:
           type: string
@@ -35,8 +39,84 @@ components:
         structure:
           $ref: "#/components/schemas/FormStructure"
       type: object
+    FormContext:
+      description: https://www.schema.org/FormContext
+      properties:
+        id:
+          format: int64
+          type: integer
+        isReadOnly:
+          type: boolean
+        isShowRequiredFieldsWarning:
+          type: boolean
+        isShowSubmitButton:
+          type: boolean
+        pages:
+          description: https://www.schema.org/FormPageContext
+          properties:
+            fields:
+              description: https://www.schema.org/FormFieldContext
+              properties:
+                errorMessage:
+                  type: string
+                id:
+                  format: int64
+                  type: integer
+                isEvaluable:
+                  type: boolean
+                isReadOnly:
+                  type: boolean
+                isRequired:
+                  type: boolean
+                isValid:
+                  type: boolean
+                isValueChanged:
+                  type: boolean
+                isVisible:
+                  type: boolean
+                name:
+                  type: string
+                options:
+                  description: https://www.schema.org/FormFieldOptions
+                  properties:
+                    id:
+                      format: int64
+                      type: integer
+                    label:
+                      type: string
+                    self:
+                      format: uri
+                      type: string
+                    value:
+                      type: string
+                  type: object
+                self:
+                  format: uri
+                  type: string
+                value:
+                  type: string
+              type: object
+            headline:
+              type: string
+            id:
+              format: int64
+              type: integer
+            isEnabled:
+              type: boolean
+            isShowRequiredFieldsWarning:
+              type: boolean
+            self:
+              format: uri
+              type: string
+            text:
+              type: string
+          type: object
+        self:
+          format: uri
+          type: string
+      type: object
     FormDocument:
-      description: https://www.schema.org/Document
+      description: https://www.schema.org/FormDocument
       properties:
         contentUrl:
           type: string
@@ -45,8 +125,10 @@ components:
         fileExtension:
           type: string
         id:
+          format: int64
           type: integer
         self:
+          format: uri
           type: string
         sizeInBytes:
           type: number
@@ -60,10 +142,13 @@ components:
           format: uri
           type: string
         dateCreated:
+          format: date-time
           type: string
         dateModified:
+          format: date-time
           type: string
         datePublished:
+          format: date-time
           type: string
         draft:
           type: boolean
@@ -73,6 +158,7 @@ components:
             document:
               $ref: "#/components/schemas/FormDocument"
             id:
+              format: int64
               type: integer
             name:
               type: string
@@ -85,6 +171,7 @@ components:
         form:
           $ref: "#/components/schemas/Form"
         id:
+          format: int64
           type: integer
         self:
           format: uri
@@ -104,8 +191,10 @@ components:
           format: uri
           type: string
         dateCreated:
+          format: date-time
           type: string
         dateModified:
+          format: date-time
           type: string
         description:
           type: string
@@ -130,6 +219,7 @@ components:
                       description: https://www.schema.org/FormFieldOptions
                       properties:
                         id:
+                          format: int64
                           type: integer
                         label:
                           type: string
@@ -140,11 +230,13 @@ components:
                           type: string
                       type: object
                     id:
+                      format: int64
                       type: integer
                     rows:
                       description: https://www.schema.org/FormFieldOptions
                       properties:
                         id:
+                          format: int64
                           type: integer
                         label:
                           type: string
@@ -161,6 +253,7 @@ components:
                 hasFormRules:
                   type: boolean
                 id:
+                  format: int64
                   type: integer
                 inline:
                   type: boolean
@@ -178,6 +271,7 @@ components:
                   description: https://www.schema.org/FormFieldOptions
                   properties:
                     id:
+                      format: int64
                       type: integer
                     label:
                       type: string
@@ -220,6 +314,7 @@ components:
                     expression:
                       type: string
                     id:
+                      format: int64
                       type: integer
                     self:
                       format: uri
@@ -229,6 +324,7 @@ components:
             headline:
               type: string
             id:
+              format: int64
               type: integer
             self:
               format: uri
@@ -237,6 +333,7 @@ components:
               type: string
           type: object
         id:
+          format: int64
           type: integer
         name:
           type: string
@@ -251,6 +348,7 @@ components:
             headline:
               type: string
             id:
+              format: int64
               type: integer
             self:
               format: uri
@@ -263,31 +361,6 @@ info:
   version: 1.0.0
 openapi: 3.0.1
 paths:
-  "/content-space/{parent-id}/content-structures":
-    get:
-      parameters:
-        - in: query
-          name: page
-          schema:
-            type: integer
-        - in: query
-          name: per_page
-          schema:
-            type: integer
-        - in: path
-          name: parent-id
-          required: true
-          schema:
-            type: integer
-      responses:
-        200:
-          content:
-            "*/*":
-              schema:
-                items:
-                  $ref: "#/components/schemas/FormStructure"
-                type: array
-          description: ""
   "/content-space/{parent-id}/form":
     get:
       parameters:
@@ -303,14 +376,41 @@ paths:
           name: parent-id
           required: true
           schema:
+            format: int64
             type: integer
       responses:
         200:
           content:
-            "*/*":
+            application/json:
               schema:
                 items:
                   $ref: "#/components/schemas/Form"
+                type: array
+          description: ""
+  "/content-space/{parent-id}/form-structures":
+    get:
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+        - in: query
+          name: per_page
+          schema:
+            type: integer
+        - in: path
+          name: parent-id
+          required: true
+          schema:
+            format: int64
+            type: integer
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: "#/components/schemas/FormStructure"
                 type: array
           description: ""
   "/form-document/{id}":
@@ -320,11 +420,12 @@ paths:
           name: id
           required: true
           schema:
+            format: int64
             type: integer
       responses:
         204:
           content:
-            "*/*": {}
+            application/json: {}
           description: ""
     get:
       parameters:
@@ -332,11 +433,12 @@ paths:
           name: id
           required: true
           schema:
+            format: int64
             type: integer
       responses:
         200:
           content:
-            "*/*":
+            application/json:
               schema:
                 $ref: "#/components/schemas/FormDocument"
           description: ""
@@ -347,11 +449,12 @@ paths:
           name: id
           required: true
           schema:
+            format: int64
             type: integer
       responses:
         200:
           content:
-            "*/*":
+            application/json:
               schema:
                 $ref: "#/components/schemas/FormRecord"
           description: ""
@@ -361,6 +464,7 @@ paths:
           name: id
           required: true
           schema:
+            format: int64
             type: integer
         - in: query
           name: acceptlocale
@@ -368,15 +472,31 @@ paths:
             type: string
       requestBody:
         content:
-          "*/*":
+          application/json:
             schema:
               $ref: "#/components/schemas/FormRecord"
       responses:
         200:
           content:
-            "*/*":
+            application/json:
               schema:
                 $ref: "#/components/schemas/FormRecord"
+          description: ""
+  "/form-structures/{id}":
+    get:
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            format: int64
+            type: integer
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FormStructure"
           description: ""
   "/form/{id}":
     get:
@@ -385,11 +505,12 @@ paths:
           name: id
           required: true
           schema:
+            format: int64
             type: integer
       responses:
         200:
           content:
-            "*/*":
+            application/json:
               schema:
                 $ref: "#/components/schemas/Form"
           description: ""
@@ -400,20 +521,25 @@ paths:
           name: id
           required: true
           schema:
+            format: int64
             type: integer
         - in: header
           name: Accept-Language
           schema:
             type: string
+        - in: query
+          name: ddmformrenderingcontext
+          schema:
+            type: string
       requestBody:
         content:
-          "*/*":
+          application/json:
             schema:
               $ref: "#/components/schemas/Form"
       responses:
         200:
           content:
-            "*/*":
+            application/json:
               schema:
                 $ref: "#/components/schemas/Form"
           description: ""
@@ -424,11 +550,12 @@ paths:
           name: id
           required: true
           schema:
+            format: int64
             type: integer
       responses:
         200:
           content:
-            "*/*":
+            application/json:
               schema:
                 $ref: "#/components/schemas/Form"
           description: ""
@@ -439,16 +566,17 @@ paths:
           name: id
           required: true
           schema:
+            format: int64
             type: integer
       requestBody:
         content:
-          "*/*":
+          application/json:
             schema:
               $ref: "#/components/schemas/Form"
       responses:
         200:
           content:
-            "*/*":
+            application/json:
               schema:
                 $ref: "#/components/schemas/Form"
           description: ""
@@ -467,11 +595,12 @@ paths:
           name: parent-id
           required: true
           schema:
+            format: int64
             type: integer
       responses:
         200:
           content:
-            "*/*":
+            application/json:
               schema:
                 items:
                   $ref: "#/components/schemas/FormRecord"
@@ -483,6 +612,7 @@ paths:
           name: parent-id
           required: true
           schema:
+            format: int64
             type: integer
         - in: query
           name: acceptlocale
@@ -490,13 +620,13 @@ paths:
             type: string
       requestBody:
         content:
-          "*/*":
+          application/json:
             schema:
               $ref: "#/components/schemas/FormRecord"
       responses:
         200:
           content:
-            "*/*":
+            application/json:
               schema:
                 $ref: "#/components/schemas/FormRecord"
           description: ""
@@ -507,6 +637,7 @@ paths:
           name: parent-id
           required: true
           schema:
+            format: int64
             type: integer
         - in: query
           name: acceptlocale
@@ -514,13 +645,13 @@ paths:
             type: string
       requestBody:
         content:
-          "*/*":
+          application/json:
             schema:
               $ref: "#/components/schemas/FormRecord"
       responses:
         200:
           content:
-            "*/*":
+            application/json:
               schema:
                 $ref: "#/components/schemas/FormRecord"
           description: ""

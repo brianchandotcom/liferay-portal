@@ -15,6 +15,7 @@
 package com.liferay.fragment.contributor;
 
 import com.liferay.fragment.model.FragmentEntry;
+import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.List;
 
@@ -26,6 +27,13 @@ public interface FragmentCollectionContributor {
 	public String getFragmentCollectionKey();
 
 	public List<FragmentEntry> getFragmentEntries();
+
+	public default List<FragmentEntry> getFragmentEntries(int type) {
+		List<FragmentEntry> fragmentEntries = getFragmentEntries();
+
+		return ListUtil.filter(
+			fragmentEntries, fragmentEntry -> fragmentEntry.getType() == type);
+	}
 
 	public String getName();
 

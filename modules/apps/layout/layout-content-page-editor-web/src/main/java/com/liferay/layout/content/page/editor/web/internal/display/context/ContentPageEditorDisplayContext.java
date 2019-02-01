@@ -580,11 +580,10 @@ public class ContentPageEditorDisplayContext {
 		for (FragmentCollectionContributor fragmentCollectionContributor :
 				fragmentCollectionContributors) {
 
-			List<FragmentEntry> filteredFragmentEntries = ListUtil.filter(
-				fragmentCollectionContributor.getFragmentEntries(),
-				fragmentEntry -> fragmentEntry.getType() == type);
+			List<FragmentEntry> fragmentEntries =
+				fragmentCollectionContributor.getFragmentEntries(type);
 
-			if (ListUtil.isEmpty(filteredFragmentEntries)) {
+			if (ListUtil.isEmpty(fragmentEntries)) {
 				continue;
 			}
 
@@ -595,7 +594,7 @@ public class ContentPageEditorDisplayContext {
 				fragmentCollectionContributor.getFragmentCollectionKey());
 			soyContext.put(
 				"fragmentEntries",
-				_getFragmentEntriesSoyContext(filteredFragmentEntries));
+				_getFragmentEntriesSoyContext(fragmentEntries));
 			soyContext.put("name", fragmentCollectionContributor.getName());
 
 			soyContexts.add(soyContext);

@@ -122,6 +122,12 @@ AUI.add(
 							return;
 						}
 
+						if (action === 'editCategories') {
+							instance._openModalCategories();
+
+							return;
+						}
+
 						if (action === 'move' || action === 'moveEntries') {
 							url = instance.get('moveEntryUrl');
 						}
@@ -243,6 +249,45 @@ AUI.add(
 								}
 							}
 						);
+					},
+
+					_openModalCategories: function() {
+						var instance = this;
+
+						var editCategories = instance._editCategories;
+						var form = instance.get('form').node;
+						var namespace = instance.NS;
+
+						if (!editCategories) {
+							var urlCategories = themeDisplay.getPortalURL() + '/o/bulk/asset/categories/' + instance.get('classNameId') + '/common';
+							var urlUpdateCategories = themeDisplay.getPortalURL() + '/o/bulk/asset/categories/' + instance.get('classNameId');
+
+							Liferay.Loader.require(
+								instance.get('npmResolvedPackageName') + '/document_library/categorization/EditCategories.es',
+								function(EditCategories) {
+									instance._editCategories = new EditCategories.default(
+										{
+											fileEntries: instance._selectedFileEntries,
+											folderId: instance.getFolderId(),
+											portletNamespace: namespace,
+											repositoryId: parseFloat(form.get(namespace + 'repositoryId').val()),
+											selectAll: instance._isSelectAllChecked,
+											selectCategoriesUrl: '',
+											spritemap: themeDisplay.getPathThemeImages() + '/lexicon/icons.svg',
+											urlCategories: urlCategories,
+											urlUpdateCategories: urlUpdateCategories
+										},
+										'#' + instance.NS + 'documentLibraryModal'
+									);
+								}
+							);
+						}
+						else {
+							editCategories.fileEntries = instance._selectedFileEntries;
+							editCategories.selectAll = instance._isSelectAllChecked;
+							editCategories.folderId = instance.getFolderId();
+							editCategories.open();
+						}
 					},
 
 					_openModalTags: function() {

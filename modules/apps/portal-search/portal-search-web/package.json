@@ -10,7 +10,7 @@
 	},
 	"name": "portal-search-web",
 	"scripts": {
-		"test": "karma start"
+		"test_DISABLED": "karma start"
 	},
 	"version": "4.0.0"
 }

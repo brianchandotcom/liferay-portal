@@ -118,7 +118,7 @@
 		"format": "npm run csf -- -i",
 		"lint": "eslint src/main/resources/META-INF/resources/metal/",
 		"start": "node watch.js",
-		"test": "npm run build-soy-tests && NODE_ENV=test jest --coverage && npm run clean",
+		"test_DISABLED": "npm run build-soy-tests && NODE_ENV=test jest --coverage && npm run clean",
 		"test:coverage:open": "opn build/coverage/lcov-report/index.html",
 		"test:snapshots": "npm run build-soy-tests && NODE_ENV=test jest --coverage -u && npm run clean"
 	},

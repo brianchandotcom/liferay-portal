@@ -131,6 +131,19 @@ FloatingToolbar.STATE = {
 		.required(),
 
 	/**
+	 * If true, once a panel has been selected it cannot be changed
+	 * until selectedPanelId is set manually to null.
+	 * @default false
+	 * @instance
+	 * @memberof FloatingToolbar
+	 * @review
+	 * @type {boolean}
+	 */
+	fixSelectedPanel: Config
+		.bool()
+		.value(false),
+
+	/**
 	 * List of available panels.
 	 * @default undefined
 	 * @instance

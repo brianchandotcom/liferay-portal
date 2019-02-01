@@ -12,36 +12,39 @@
 		title: string
 	]>}
 	{@param? _handlePanelButtonClick: any}
+	{@param? fixSelectedPanel: bool}
 	{@param? selectedPanelId: string}
 	{@param? spritemap: string}
 	{@param? store: ?}
 
 	<div class="fragments-editor__floating-toolbar">
 		{if $spritemap and $panels and (length($panels) > 0)}
-			<div class="fragments-editor__floating-toolbar-buttons popover">
-				{foreach $panel in $panels}
-					{call .panelButton}
-						{param handleButtonClick: $_handlePanelButtonClick /}
-						{param key: $panel.panelId /}
-						{param panel: $panel /}
-						{param ref: $panel.panelId /}
-						{param selectedPanelId: $selectedPanelId /}
-						{param spritemap: $spritemap /}
-					{/call}
-				{/foreach}
-			</div>
-		{/if}
+			{if (not $selectedPanelId) or (not $fixSelectedPanel)}
+				<div class="fragments-editor__floating-toolbar-buttons popover">
+					{foreach $panel in $panels}
+						{call .panelButton}
+							{param handleButtonClick: $_handlePanelButtonClick /}
+							{param key: $panel.panelId /}
+							{param panel: $panel /}
+							{param ref: $panel.panelId /}
+							{param selectedPanelId: $selectedPanelId /}
+							{param spritemap: $spritemap /}
+						{/call}
+					{/foreach}
+				</div>
+			{/if}
 
-		{if $selectedPanelId}
-			<div class="fragments-editor__floating-toolbar-panel popover">
-				{delcall com.liferay.layout.content.page.editor.web.FloatingToolbarPanel variant="$selectedPanelId"}
-					{param item: $item /}
-					{param itemId: $itemId /}
-					{param portalElement: null /}
-					{param selectedPanelId: $selectedPanelId /}
-					{param store: $store /}
-				{/delcall}
-			</div>
+			{if $selectedPanelId}
+				<div class="fragments-editor__floating-toolbar-panel popover">
+					{delcall com.liferay.layout.content.page.editor.web.FloatingToolbarPanel variant="$selectedPanelId"}
+						{param item: $item /}
+						{param itemId: $itemId /}
+						{param portalElement: null /}
+						{param selectedPanelId: $selectedPanelId /}
+						{param store: $store /}
+					{/delcall}
+				</div>
+			{/if}
 		{/if}
 	</div>
 {/template}

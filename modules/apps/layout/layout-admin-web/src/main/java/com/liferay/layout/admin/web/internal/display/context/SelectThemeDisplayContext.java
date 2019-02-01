@@ -14,13 +14,8 @@
 
 package com.liferay.layout.admin.web.internal.display.context;
 
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.layout.admin.web.internal.util.comparator.ThemeNameComparator;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -33,7 +28,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.layoutsadmin.display.context.GroupDisplayContextHelper;
 
 import java.util.List;
-import java.util.Objects;
 
 import javax.portlet.PortletURL;
 
@@ -73,28 +67,6 @@ public class SelectThemeDisplayContext {
 			_liferayPortletResponse.getNamespace() + "selectTheme");
 
 		return _eventName;
-	}
-
-	public List<DropdownItem> getFilterDropdownItems() {
-		return new DropdownItemList() {
-			{
-				addGroup(
-					dropdownGroupItem -> {
-						dropdownGroupItem.setDropdownItems(
-							_getFilterNavigationDropdownItems());
-						dropdownGroupItem.setLabel(
-							LanguageUtil.get(_request, "filter-by-navigation"));
-					});
-
-				addGroup(
-					dropdownGroupItem -> {
-						dropdownGroupItem.setDropdownItems(
-							_getOrderByDropdownItems());
-						dropdownGroupItem.setLabel(
-							LanguageUtil.get(_request, "order-by"));
-					});
-			}
-		};
 	}
 
 	public String getOrderByCol() {
@@ -156,16 +128,6 @@ public class SelectThemeDisplayContext {
 		return _redirect;
 	}
 
-	public String getSortingURL() {
-		PortletURL sortingURL = getPortletURL();
-
-		sortingURL.setParameter(
-			"orderByType",
-			Objects.equals(getOrderByType(), "asc") ? "desc" : "asc");
-
-		return sortingURL.toString();
-	}
-
 	public String getThemeId() {
 		if (_themeId != null) {
 			return _themeId;
@@ -186,6 +148,9 @@ public class SelectThemeDisplayContext {
 
 		SearchContainer themesSearchContainer = new SearchContainer(
 			_liferayPortletRequest, getPortletURL(), null, null);
+
+		themesSearchContainer.setOrderByCol(getOrderByCol());
+		themesSearchContainer.setOrderByType(getOrderByType());
 
 		GroupDisplayContextHelper groupDisplayContextHelper =
 			new GroupDisplayContextHelper(_request);
@@ -212,52 +177,6 @@ public class SelectThemeDisplayContext {
 		_themesSearchContainer = themesSearchContainer;
 
 		return _themesSearchContainer;
-	}
-
-	public int getTotalItems() {
-		SearchContainer themesSearchContainer = getThemesSearchContainer();
-
-		return themesSearchContainer.getTotal();
-	}
-
-	public List<ViewTypeItem> getViewTypeItems() {
-		return new ViewTypeItemList(getPortletURL(), getDisplayStyle()) {
-			{
-				addCardViewTypeItem();
-				addListViewTypeItem();
-				addTableViewTypeItem();
-			}
-		};
-	}
-
-	private List<DropdownItem> _getFilterNavigationDropdownItems() {
-		return new DropdownItemList() {
-			{
-				add(
-					dropdownItem -> {
-						dropdownItem.setActive(true);
-						dropdownItem.setHref(getPortletURL());
-						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "all"));
-					});
-			}
-		};
-	}
-
-	private List<DropdownItem> _getOrderByDropdownItems() {
-		return new DropdownItemList() {
-			{
-				add(
-					dropdownItem -> {
-						dropdownItem.setActive(
-							Objects.equals(getOrderByCol(), "name"));
-						dropdownItem.setHref(
-							getPortletURL(), "orderByCol", "name");
-						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "name"));
-					});
-			}
-		};
 	}
 
 	private String _displayStyle;

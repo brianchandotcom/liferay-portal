@@ -21,14 +21,7 @@ SelectThemeDisplayContext selectThemeDisplayContext = new SelectThemeDisplayCont
 %>
 
 <clay:management-toolbar
-	componentId="siteAdminWebManagementToolbar"
-	filterDropdownItems="<%= selectThemeDisplayContext.getFilterDropdownItems() %>"
-	itemsTotal="<%= selectThemeDisplayContext.getTotalItems() %>"
-	selectable="<%= false %>"
-	showSearch="<%= false %>"
-	sortingOrder="<%= selectThemeDisplayContext.getOrderByType() %>"
-	sortingURL="<%= selectThemeDisplayContext.getSortingURL() %>"
-	viewTypeItems="<%= selectThemeDisplayContext.getViewTypeItems() %>"
+	displayContext="<%= new SelectThemeManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, selectThemeDisplayContext) %>"
 />
 
 <c:if test="<%= permissionChecker.isOmniadmin() && PortletLocalServiceUtil.hasPortlet(themeDisplay.getCompanyId(), PortletKeys.MARKETPLACE_STORE) && PropsValues.AUTO_DEPLOY_ENABLED %>">

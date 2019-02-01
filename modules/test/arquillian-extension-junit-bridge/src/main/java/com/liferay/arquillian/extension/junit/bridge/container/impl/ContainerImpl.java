@@ -18,9 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.container.remote.DefaultCon
 
 import org.jboss.arquillian.config.descriptor.api.ContainerDef;
 import org.jboss.arquillian.config.descriptor.api.ProtocolDef;
-import org.jboss.arquillian.container.impl.DefaultServerKillProcessor;
 import org.jboss.arquillian.container.spi.Container;
-import org.jboss.arquillian.container.spi.ServerKillProcessor;
 import org.jboss.arquillian.container.spi.client.container.ContainerConfiguration;
 import org.jboss.arquillian.container.spi.client.container.DeployableContainer;
 import org.jboss.arquillian.container.spi.client.container.LifecycleException;
@@ -127,21 +125,6 @@ public class ContainerImpl implements Container {
 	public void kill() throws Exception {
 		_containerEvent.fire(new BeforeKill(_deployableContainer));
 
-		try {
-			ServerKillProcessor serverKillProcessor = _getServerKillProcessor();
-
-			serverKillProcessor.kill(this);
-
-			setState(Container.State.KILLED);
-		}
-		catch (Exception e) {
-			setState(Container.State.KILLED_FAILED);
-
-			_failureCause = e;
-
-			throw e;
-		}
-
 		_containerEvent.fire(new AfterKill(_deployableContainer));
 	}
 
@@ -199,28 +182,6 @@ public class ContainerImpl implements Container {
 		}
 
 		_containerEvent.fire(new AfterStop(_deployableContainer));
-	}
-
-	private ServerKillProcessor _getServerKillProcessor() {
-		ServiceLoader loader = _serviceLoaderInstance.get();
-
-		if (loader == null) {
-			throw new IllegalStateException(
-				"No " + ServiceLoader.class.getName() + " found in context");
-		}
-
-		ServiceLoader serviceLoader = _serviceLoaderInstance.get();
-
-		ServerKillProcessor serverKillProcessor = serviceLoader.onlyOne(
-			ServerKillProcessor.class, DefaultServerKillProcessor.class);
-
-		if (serverKillProcessor == null) {
-			throw new IllegalStateException(
-				"No " + ServerKillProcessor.class.getName() +
-					" found in context");
-		}
-
-		return serverKillProcessor;
 	}
 
 	private final ContainerDef _containerDef;

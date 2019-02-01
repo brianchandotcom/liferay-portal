@@ -14,6 +14,7 @@
 
 package com.liferay.portal.workflow.kaleo.internal.upgrade.v2_0_0;
 
+import com.liferay.portal.kernel.upgrade.UpgradeMVCCVersion;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.workflow.kaleo.internal.upgrade.v2_0_0.util.KaleoNotificationTable;
@@ -25,6 +26,26 @@ public class UpgradeSchema extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
+		upgrade(
+			new UpgradeMVCCVersion() {
+
+				@Override
+				protected String[] getModuleTableNames() {
+					return new String[] {
+						"KaleoAction", "KaleoDefinition",
+						"KaleoDefinitionVersion", "KaleoInstance",
+						"KaleoInstanceToken", "KaleoLog", "KaleoNode",
+						"KaleoNotification", "KaleoNotificationRecipient",
+						"KaleoTask", "KaleoTaskAssignment",
+						"KaleoTaskAssignmentInstance", "KaleoTaskForm",
+						"KaleoTaskFormInstance", "KaleoTaskInstanceToken",
+						"KaleoTimer", "KaleoTimerInstanceToken",
+						"KaleoTransition"
+					};
+				}
+
+			});
+
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			alter(
 				KaleoNotificationTable.class,

@@ -45,39 +45,6 @@ public class JMXTestRunner
 
 	@Override
 	public byte[] runTestMethod(String className, String methodName) {
-		try {
-			Class<?> testClass = _classLoader.loadClass(className);
-
-			return _toByteArray(_execute(testClass, methodName));
-		}
-		catch (ClassNotFoundException cnfe) {
-			TestResult testResult = TestResult.failed(cnfe);
-
-			testResult.setEnd(System.currentTimeMillis());
-
-			return _toByteArray(testResult);
-		}
-	}
-
-	private static byte[] _toByteArray(TestResult testResult) {
-		try (ByteArrayOutputStream byteArrayOutputStream =
-				new ByteArrayOutputStream();
-			ObjectOutputStream objectOutputStream = new ObjectOutputStream(
-				byteArrayOutputStream)) {
-
-			objectOutputStream.writeObject(testResult);
-
-			objectOutputStream.flush();
-
-			return byteArrayOutputStream.toByteArray();
-		}
-		catch (IOException ioe) {
-			throw new RuntimeException(
-				"Unable to serialize object: " + testResult, ioe);
-		}
-	}
-
-	private TestResult _execute(Class<?> testClass, String methodName) {
 		TestResult testResult = null;
 
 		ExceptionRunListener exceptionRunListener = new ExceptionRunListener();
@@ -88,7 +55,7 @@ public class JMXTestRunner
 			jUnitCore.addListener(exceptionRunListener);
 
 			Result result = jUnitCore.run(
-				Request.method(testClass, methodName));
+				Request.method(_classLoader.loadClass(className), methodName));
 
 			if (result.getFailureCount() > 0) {
 				testResult = TestResult.failed(
@@ -117,7 +84,25 @@ public class JMXTestRunner
 
 		testResult.setEnd(System.currentTimeMillis());
 
-		return testResult;
+		return _toByteArray(testResult);
+	}
+
+	private static byte[] _toByteArray(TestResult testResult) {
+		try (ByteArrayOutputStream byteArrayOutputStream =
+				new ByteArrayOutputStream();
+			ObjectOutputStream objectOutputStream = new ObjectOutputStream(
+				byteArrayOutputStream)) {
+
+			objectOutputStream.writeObject(testResult);
+
+			objectOutputStream.flush();
+
+			return byteArrayOutputStream.toByteArray();
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(
+				"Unable to serialize object: " + testResult, ioe);
+		}
 	}
 
 	private final ClassLoader _classLoader;

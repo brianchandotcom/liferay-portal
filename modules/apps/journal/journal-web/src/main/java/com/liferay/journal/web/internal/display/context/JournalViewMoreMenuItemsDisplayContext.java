@@ -99,8 +99,7 @@ public class JournalViewMoreMenuItemsDisplayContext {
 			_renderRequest, getPortletURL(), null, "no-results-were-found");
 
 		searchContainer.setOrderByCol(getOrderByCol());
-		searchContainer.setOrderByComparator(
-			_getOrderByComparator());
+		searchContainer.setOrderByComparator(_getOrderByComparator());
 		searchContainer.setOrderByType(getOrderByType());
 
 		List<DDMStructure> ddmStructures =
@@ -108,12 +107,16 @@ public class JournalViewMoreMenuItemsDisplayContext {
 				themeDisplay.getCompanyId(),
 				PortalUtil.getCurrentAndAncestorSiteGroupIds(
 					themeDisplay.getScopeGroupId()),
-				_folderId, _restrictionType, _getKeywords(),
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				_getOrderByComparator());
+				_folderId, _restrictionType, _getKeywords(), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, _getOrderByComparator());
+
+		List<DDMStructure> results = ListUtil.subList(
+			ddmStructures, searchContainer.getStart(),
+			searchContainer.getEnd());
 
 		searchContainer.setTotal(ddmStructures.size());
-		searchContainer.setResults(ddmStructures);
+
+		searchContainer.setResults(results);
 
 		_ddmStructuresSearchContainer = searchContainer;
 

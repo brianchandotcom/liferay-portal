@@ -124,6 +124,38 @@ public class SegmentsEntryServiceHttp {
 		}
 	}
 
+	public static java.util.List<com.liferay.segments.model.SegmentsEntry> getActiveSegmentsEntries(
+		HttpPrincipal httpPrincipal, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(SegmentsEntryServiceUtil.class,
+					"getActiveSegmentsEntries",
+					_getActiveSegmentsEntriesParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (java.util.List<com.liferay.segments.model.SegmentsEntry>)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static java.util.List<com.liferay.segments.model.SegmentsEntry> getSegmentsEntries(
 		HttpPrincipal httpPrincipal, long groupId, boolean active, String type,
 		int start, int end,
@@ -131,7 +163,7 @@ public class SegmentsEntryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(SegmentsEntryServiceUtil.class,
-					"getSegmentsEntries", _getSegmentsEntriesParameterTypes2);
+					"getSegmentsEntries", _getSegmentsEntriesParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					active, type, start, end, orderByComparator);
@@ -164,41 +196,10 @@ public class SegmentsEntryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(SegmentsEntryServiceUtil.class,
-					"getSegmentsEntries", _getSegmentsEntriesParameterTypes3);
+					"getSegmentsEntries", _getSegmentsEntriesParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					start, end, orderByComparator);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
-			}
-
-			return (java.util.List<com.liferay.segments.model.SegmentsEntry>)returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException se) {
-			_log.error(se, se);
-
-			throw se;
-		}
-	}
-
-	public static java.util.List<com.liferay.segments.model.SegmentsEntry> getSegmentsEntries(
-		HttpPrincipal httpPrincipal, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		try {
-			MethodKey methodKey = new MethodKey(SegmentsEntryServiceUtil.class,
-					"getSegmentsEntries", _getSegmentsEntriesParameterTypes4);
-
-			MethodHandler methodHandler = new MethodHandler(methodKey, groupId);
 
 			Object returnObj = null;
 
@@ -367,16 +368,16 @@ public class SegmentsEntryServiceHttp {
 	private static final Class<?>[] _deleteSegmentsEntryParameterTypes1 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _getSegmentsEntriesParameterTypes2 = new Class[] {
+	private static final Class<?>[] _getActiveSegmentsEntriesParameterTypes2 = new Class[] {
+			long.class
+		};
+	private static final Class<?>[] _getSegmentsEntriesParameterTypes3 = new Class[] {
 			long.class, boolean.class, String.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _getSegmentsEntriesParameterTypes3 = new Class[] {
+	private static final Class<?>[] _getSegmentsEntriesParameterTypes4 = new Class[] {
 			long.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
-		};
-	private static final Class<?>[] _getSegmentsEntriesParameterTypes4 = new Class[] {
-			long.class
 		};
 	private static final Class<?>[] _getSegmentsEntriesCountParameterTypes5 = new Class[] {
 			long.class

@@ -51,6 +51,13 @@ public class SegmentsEntryServiceWrapper implements SegmentsEntryService,
 		return _segmentsEntryService.deleteSegmentsEntry(segmentsEntryId);
 	}
 
+	@Override
+	public java.util.List<com.liferay.segments.model.SegmentsEntry> getActiveSegmentsEntries(
+		long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _segmentsEntryService.getActiveSegmentsEntries(groupId);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -59,13 +66,6 @@ public class SegmentsEntryServiceWrapper implements SegmentsEntryService,
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _segmentsEntryService.getOSGiServiceIdentifier();
-	}
-
-	@Override
-	public java.util.List<com.liferay.segments.model.SegmentsEntry> getSegmentsEntries(
-		long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _segmentsEntryService.getSegmentsEntries(groupId);
 	}
 
 	@Override

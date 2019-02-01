@@ -291,7 +291,7 @@ definition {
 	@description = "Edits to display pages should not reflect in the live site until published."
 	@priority = "5"
 	test PublishEditedDisplayPage {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Mark the display page as default") {
 			DisplayPagesAdmin.markDisplayPageAsDefault(rowEntry = "Display Page Name");

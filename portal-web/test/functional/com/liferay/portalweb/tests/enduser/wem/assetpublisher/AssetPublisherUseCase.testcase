@@ -1198,7 +1198,7 @@ definition {
 
 	@priority = "5"
 	test AssetPublisherSiteAndGlobalScopeAccessibility {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "AssetPublisherUseCase#AssetPublisherSiteAndGlobalScopeAccessibility";
 
 		ProductMenu.gotoPortlet(

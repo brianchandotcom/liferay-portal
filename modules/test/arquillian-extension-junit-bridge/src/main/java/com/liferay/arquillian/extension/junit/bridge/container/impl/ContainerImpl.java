@@ -34,11 +34,8 @@ import org.jboss.arquillian.container.spi.event.container.BeforeStart;
 import org.jboss.arquillian.container.spi.event.container.BeforeStop;
 import org.jboss.arquillian.container.spi.event.container.ContainerEvent;
 import org.jboss.arquillian.core.api.Event;
-import org.jboss.arquillian.core.api.Instance;
 import org.jboss.arquillian.core.api.InstanceProducer;
 import org.jboss.arquillian.core.api.annotation.Inject;
-import org.jboss.arquillian.core.spi.ServiceLoader;
-import org.jboss.arquillian.core.spi.Validate;
 
 /**
  * @author Matthew Tambara
@@ -48,11 +45,6 @@ public class ContainerImpl implements Container {
 	public ContainerImpl(
 		String name, DeployableContainer<?> deployableContainer,
 		ContainerDef containerDef) {
-
-		Validate.notNull(name, "Name must be specified");
-		Validate.notNull(
-			deployableContainer, "DeployableContainer must be specified");
-		Validate.notNull(containerDef, "ContainerDef must be specified");
 
 		_name = name;
 		_deployableContainer = deployableContainer;
@@ -195,10 +187,6 @@ public class ContainerImpl implements Container {
 	private final DeployableContainer<?> _deployableContainer;
 	private Throwable _failureCause;
 	private final String _name;
-
-	@Inject
-	private Instance<ServiceLoader> _serviceLoaderInstance;
-
 	private Container.State _state = Container.State.STOPPED;
 
 }

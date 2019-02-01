@@ -27,7 +27,6 @@ import org.jboss.arquillian.container.spi.client.container.DeployableContainer;
 import org.jboss.arquillian.container.spi.client.deployment.TargetDescription;
 import org.jboss.arquillian.core.api.Injector;
 import org.jboss.arquillian.core.spi.ServiceLoader;
-import org.jboss.arquillian.core.spi.Validate;
 
 /**
  * @author Matthew Tambara
@@ -41,8 +40,6 @@ public class LocalContainerRegistry implements ContainerRegistry {
 	@Override
 	public Container create(
 		ContainerDef containerDef, ServiceLoader serviceLoader) {
-
-		Validate.notNull(containerDef, "Definition must be specified");
 
 		try {
 			return _addContainer(
@@ -66,8 +63,6 @@ public class LocalContainerRegistry implements ContainerRegistry {
 
 	@Override
 	public Container getContainer(TargetDescription targetDescription) {
-		Validate.notNull(targetDescription, "Target must be specified");
-
 		if (TargetDescription.DEFAULT.equals(targetDescription)) {
 			return _findDefaultContainer();
 		}

@@ -144,41 +144,6 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-template"));
 								markupView="lexicon"
 							/>
 						</liferay-ui:search-container>
-
-						<aui:script use="aui-base">
-							var addLayoutActionOptionQueryClickHandler = A.one('#<portlet:namespace />layoutPageTemplateEntries').delegate(
-								'click',
-								function(event) {
-									var actionElement = event.currentTarget;
-
-									Liferay.Util.openWindow(
-										{
-											dialog: {
-												destroyOnHide: true,
-												height: 480,
-												resizable: false,
-												width: 640
-											},
-											dialogIframe: {
-												bodyCssClass: 'dialog-with-footer'
-											},
-											id: '<portlet:namespace />addLayoutDialog',
-											title: '<liferay-ui:message key="add-page" />',
-											uri: actionElement.getData('add-layout-url')
-										}
-									);
-								},
-								'.add-layout-action-option'
-							);
-
-							function handleDestroyPortlet () {
-								addLayoutActionOptionQueryClickHandler.detach();
-
-								Liferay.detach('destroyPortlet', handleDestroyPortlet);
-							}
-
-							Liferay.on('destroyPortlet', handleDestroyPortlet);
-						</aui:script>
 					</c:when>
 					<c:when test="<%= selectLayoutPageTemplateEntryDisplayContext.isBasicPages() %>">
 						<liferay-util:include page="/select_basic_pages.jsp" servletContext="<%= application %>" />
@@ -191,3 +156,38 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-template"));
 		</div>
 	</div>
 </div>
+
+<aui:script use="aui-base">
+	var addLayoutActionOptionQueryClickHandler = A.one('#<portlet:namespace />layoutPageTemplateEntries').delegate(
+		'click',
+		function(event) {
+			var actionElement = event.currentTarget;
+
+			Liferay.Util.openWindow(
+				{
+					dialog: {
+						destroyOnHide: true,
+						height: 480,
+						resizable: false,
+						width: 640
+					},
+					dialogIframe: {
+						bodyCssClass: 'dialog-with-footer'
+					},
+					id: '<portlet:namespace />addLayoutDialog',
+					title: '<liferay-ui:message key="add-page" />',
+					uri: actionElement.getData('add-layout-url')
+				}
+			);
+		},
+		'.add-layout-action-option'
+	);
+
+	function handleDestroyPortlet () {
+		addLayoutActionOptionQueryClickHandler.detach();
+
+		Liferay.detach('destroyPortlet', handleDestroyPortlet);
+	}
+
+	Liferay.on('destroyPortlet', handleDestroyPortlet);
+</aui:script>

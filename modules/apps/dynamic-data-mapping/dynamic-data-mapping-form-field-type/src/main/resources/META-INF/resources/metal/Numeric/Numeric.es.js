@@ -1,12 +1,11 @@
-import createNumberMask from 'text-mask-addons/dist/createNumberMask';
-import vanillaTextMask from 'vanilla-text-mask';
-
+import '../FieldBase/FieldBase.es';
 import './NumericRegister.soy.js';
-import 'dynamic-data-mapping-form-field-type/metal/FieldBase/index.es';
+import {Config} from 'metal-state';
 import Component from 'metal-component';
+import createNumberMask from 'text-mask-addons/dist/createNumberMask';
 import Soy from 'metal-soy';
 import templates from './Numeric.soy.js';
-import {Config} from 'metal-state';
+import vanillaTextMask from 'vanilla-text-mask';
 
 class Numeric extends Component {
 	static STATE = {

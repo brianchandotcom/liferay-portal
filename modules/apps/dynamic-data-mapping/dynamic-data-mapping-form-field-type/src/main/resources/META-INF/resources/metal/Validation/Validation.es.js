@@ -1,16 +1,15 @@
+import '../Checkbox/Checkbox.es';
+import '../FieldBase/index.es';
+import '../Numeric/Numeric.es';
+import '../Select/Select.es';
+import '../Text/Text.es';
 import './ValidationRegister.soy.js';
-import 'dynamic-data-mapping-form-field-type/metal/FieldBase/index.es';
-import 'dynamic-data-mapping-form-field-type/metal/Checkbox/Checkbox.es';
-import 'dynamic-data-mapping-form-field-type/metal/Select/Select.es';
-import 'dynamic-data-mapping-form-field-type/metal/Text/Text.es';
-import 'dynamic-data-mapping-form-field-type/metal/Numeric/Numeric.es';
-
+import {Config} from 'metal-state';
+import {subWords} from '../util/strings.es';
 import autobind from 'autobind-decorator';
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 import templates from './Validation.soy.js';
-import {Config} from 'metal-state';
-import {subWords} from '../util/strings.es';
 import VALIDATIONS from '../util/validations.es';
 
 class Validation extends Component {

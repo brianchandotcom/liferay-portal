@@ -1,5 +1,5 @@
+import '../FieldBase/FieldBase.es';
 import './GridRegister.soy.js';
-import 'dynamic-data-mapping-form-field-type/metal/FieldBase/index.es';
 import {Config} from 'metal-state';
 import Component from 'metal-component';
 import Soy from 'metal-soy';

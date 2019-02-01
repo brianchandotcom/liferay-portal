@@ -1,6 +1,6 @@
+import '../FieldBase/FieldBase.es';
 import './DateRegister.soy.js';
 import 'clay-icon';
-import 'dynamic-data-mapping-form-field-type/metal/FieldBase/index.es';
 import {Config} from 'metal-state';
 import Component from 'metal-component';
 import Soy from 'metal-soy';

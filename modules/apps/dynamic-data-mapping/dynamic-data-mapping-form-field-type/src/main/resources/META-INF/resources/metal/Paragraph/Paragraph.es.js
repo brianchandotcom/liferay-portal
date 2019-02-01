@@ -1,9 +1,9 @@
+import '../FieldBase/FieldBase.es';
 import './ParagraphRegister.soy.js';
-import 'dynamic-data-mapping-form-field-type/metal/FieldBase/index.es';
+import {Config} from 'metal-state';
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 import templates from './Paragraph.soy.js';
-import {Config} from 'metal-state';
 
 class Paragraph extends Component {
 	static STATE = {

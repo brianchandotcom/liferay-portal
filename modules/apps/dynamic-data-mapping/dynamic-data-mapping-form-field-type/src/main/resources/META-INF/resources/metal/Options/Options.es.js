@@ -1,6 +1,6 @@
+import '../FieldBase/FieldBase.es';
+import '../Text/index.es';
 import './OptionsRegister.soy.js';
-import 'dynamic-data-mapping-form-field-type/metal/FieldBase/index.es';
-import 'dynamic-data-mapping-form-field-type/metal/Text/index.es';
 import {Config} from 'metal-state';
 import Component from 'metal-component';
 import Soy from 'metal-soy';

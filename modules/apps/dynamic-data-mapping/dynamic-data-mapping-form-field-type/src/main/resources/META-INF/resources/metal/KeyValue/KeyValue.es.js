@@ -1,10 +1,9 @@
+import '../FieldBase/FieldBase.es';
+import './KeyValueRegister.soy.js';
 import {Config} from 'metal-state';
 import Component from 'metal-component';
-import 'dynamic-data-mapping-form-field-type/metal/FieldBase/index.es';
 import Soy from 'metal-soy';
-
 import templates from './KeyValue.soy.js';
-import './KeyValueRegister.soy.js';
 
 /**
  * KeyValue.

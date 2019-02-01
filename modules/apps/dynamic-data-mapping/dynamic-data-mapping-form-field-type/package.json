@@ -86,7 +86,7 @@
 		},
 		"moduleNameMapper": {
 			"(.*)\\.soy$": "$1.soy.js",
-			"source\/(.*)": "<rootDir>/src/main/resources/META-INF/resources/metal/$1.js"
+			"source/(.*)": "<rootDir>/src/main/resources/META-INF/resources/metal/$1.js"
 		},
 		"modulePathIgnorePatterns": [
 			"/__fixtures__/",

@@ -55,6 +55,7 @@ page import="com.liferay.layout.admin.web.internal.servlet.taglib.clay.DisplayPa
 page import="com.liferay.layout.admin.web.internal.servlet.taglib.clay.LayoutPrototypeVerticalCard" %><%@
 page import="com.liferay.layout.admin.web.internal.servlet.taglib.clay.SelectBasicPagesHorizontalCard" %><%@
 page import="com.liferay.layout.admin.web.internal.servlet.taglib.clay.SelectBasicPagesVerticalCard" %><%@
+page import="com.liferay.layout.admin.web.internal.servlet.taglib.clay.SelectGlobalTemplatesVerticalCard" %><%@
 page import="com.liferay.layout.constants.LayoutConstants" %><%@
 page import="com.liferay.layout.page.template.constants.LayoutPageTemplateActionKeys" %><%@
 page import="com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants" %><%@

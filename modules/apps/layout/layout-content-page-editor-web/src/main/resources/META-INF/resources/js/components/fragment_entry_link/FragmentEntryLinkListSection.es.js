@@ -79,7 +79,10 @@ class FragmentEntryLinkListSection extends Component {
 	 * @review
 	 */
 	_createFloatingToolbar() {
-		if (!this._floatingToolbar) {
+		if (this._floatingToolbar) {
+			this._floatingToolbar.forceUpdate();
+		}
+		else {
 			this._floatingToolbar = new FloatingToolbar(
 				{
 					anchorElement: this.element,

@@ -12,13 +12,13 @@
 		modified: number
 	]}
 	{@param? descriptionActiveChangeList: string}
-	{@param? descriptionProductionChangeList: string}
-	{@param? headerDropDownMenu: list<[
+	{@param? descriptionProductionInformation: string}
+	{@param? changeListsDropdownMenu: list<[
 		label: string,
 		link: string
 	]>}
 	{@param? headerTitleActiveChangeList: string}
-	{@param? headerTitleProductionChangeList: string}
+	{@param? headerTitleProductionInformation: string}
 	{@param? initialFetch: bool}
 	{@param? publishedBy: [
 		dateTime: string,
@@ -70,8 +70,8 @@
 							{msg desc=""}description{/msg}
 						{/param}
 						{param headerButton: ['label': $headerButtonLabel] /}
-						{param headerDropDownMenu: $headerDropDownMenu /}
-						{param headerDropDownMenuTitle kind="text"}
+						{param changeListsDropdownMenu: $changeListsDropdownMenu /}
+						{param changeListsDropdownMenuTitle kind="text"}
 							{msg desc=""}select-change-list{/msg}
 						{/param}
 						{param headerSubTitle kind="text"}
@@ -85,7 +85,7 @@
 				<div class="col-sm-6">
 					{call .overviewCard}
 						{param cardState: 'border-left-green' /}
-						{param description: $descriptionProductionChangeList /}
+						{param description: $descriptionProductionInformation /}
 						{param descriptionTitle kind="text"}
 							{msg desc=""}description{/msg}
 						{/param}
@@ -95,7 +95,7 @@
 						{param headerSubTitle kind="text"}
 							{msg desc=""}published-change-list{/msg}
 						{/param}
-						{param headerTitle: $headerTitleProductionChangeList /}
+						{param headerTitle: $headerTitleProductionInformation /}
 						{param publishedBy: $publishedBy /}
 						{param publishedByTitle kind="text"}
 							{msg desc=""}published-by{/msg}
@@ -140,11 +140,11 @@
 		link: string,
 		label: string
 	]}
-	{@param? headerDropDownMenu: list<[
+	{@param? changeListsDropdownMenu: list<[
 		label: string,
 		link: string
 	]>}
-	{@param? headerDropDownMenuTitle: string}
+	{@param? changeListsDropdownMenuTitle: string}
 	{@param? headerSubTitle: string}
 	{@param? headerTitle: string}
 	{@param? publishedBy: [
@@ -158,8 +158,8 @@
 	<div class="overview-card-sheet {$cardState}">
 		{call .overviewCardHeader}
 			{param headerButton: $headerButton /}
-			{param headerDropDownMenu: $headerDropDownMenu /}
-			{param headerDropDownMenuTitle: $headerDropDownMenuTitle /}
+			{param changeListsDropdownMenu: $changeListsDropdownMenu /}
+			{param changeListsDropdownMenuTitle: $changeListsDropdownMenuTitle /}
 			{param headerLink: $headerLink /}
 			{param headerSubTitle: $headerSubTitle /}
 			{param headerTitle: $headerTitle /}
@@ -190,11 +190,11 @@
 	{@param? headerButton: [
 		label: string
 	]}
-	{@param? headerDropDownMenu: list<[
+	{@param? changeListsDropdownMenu: list<[
 		label: string,
 		link: string
 	]>}
-	{@param? headerDropDownMenuTitle: string}
+	{@param? changeListsDropdownMenuTitle: string}
 	{@param? headerSubTitle: string}
 	{@param? headerTitle: string}
 
@@ -211,13 +211,13 @@
 				{/if}
 				{if $headerLink}
 					<div class="header-line">
-						<a data-qa-id="headerLink" href="{$headerLink.link}" onclick="">{$headerLink.label}</a>
+						<a data-qa-id="headerLink" href="{$headerLink.link}" onclick="" target="_blank">{$headerLink.label}</a>
 					</div>
 				{/if}
-				{if $headerDropDownMenu and $headerDropDownMenuTitle}
+				{if $changeListsDropdownMenu and $changeListsDropdownMenuTitle}
 					<div class="header-line">
 						<a aria-expanded="false" aria-haspopup="true" class="dropdown-toggle" data-qa-id="headerDropDownMenu" data-toggle="dropdown" href="#1" role="button">
-							<span class="navbar-text-truncate">{$headerDropDownMenuTitle}</span>
+							<span class="navbar-text-truncate">{$changeListsDropdownMenuTitle}</span>
 							<span class="navbar-text-icon">
 								<svg class="lexicon-icon lexicon-icon-caret-bottom" focusable="false" role="presentation">
 									<use xlink:href="{$spritemap}#caret-bottom" />
@@ -226,10 +226,10 @@
 						</a>
 
 						<div aria-labelledby="" class="dropdown-menu">
-							{foreach $headerDropDownMenuItem in $headerDropDownMenu}
-								<a class="dropdown-item" href="{$headerDropDownMenuItem.link}">{$headerDropDownMenuItem.label}</a>
+							{foreach $changeListsDropdownMenuItem in $changeListsDropdownMenu}
+								<a class="dropdown-item" href="{$changeListsDropdownMenuItem.link}">{$changeListsDropdownMenuItem.label}</a>
 							{/foreach}
-							<a class="dropdown-item dropdown-item-last" href="#1">{$headerDropDownMenuTitle}</a>
+							<a class="dropdown-item dropdown-item-last" href="#1">{$changeListsDropdownMenuTitle}</a>
 						</div>
 					</div>
 				{/if}
@@ -323,7 +323,7 @@
 
 					<div class="autofit-col autofit-col-expand">
 						<div class="aspect-ratio-item-left-middle text-secondary" data-qa-id="publishedBy">
-							{$publishedBy.dateTime} by {$publishedBy.userName}
+							{$publishedBy.dateTime} {msg desc=""}by{/msg} {$publishedBy.userName}
 						</div>
 					</div>
 				</div>

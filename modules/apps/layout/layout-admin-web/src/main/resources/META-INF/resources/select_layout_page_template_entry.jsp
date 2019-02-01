@@ -132,50 +132,10 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-template"));
 								row.setCssClass("entry-card lfr-asset-item " + row.getCssClass());
 								%>
 
-								<portlet:renderURL var="addLayoutURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-									<portlet:param name="mvcRenderCommandName" value="/layout/add_layout" />
-									<portlet:param name="layoutPageTemplateEntryId" value="<%= String.valueOf(layoutPageTemplateEntry.getLayoutPageTemplateEntryId()) %>" />
-								</portlet:renderURL>
-
 								<liferay-ui:search-container-column-text>
-
-									<%
-									Map<String, Object> addLayoutData = new HashMap<>();
-
-									addLayoutData.put("add-layout-url", addLayoutURL);
-
-									String imagePreviewURL = layoutPageTemplateEntry.getImagePreviewURL(themeDisplay);
-									%>
-
-									<c:choose>
-										<c:when test="<%= Validator.isNotNull(imagePreviewURL) %>">
-											<liferay-frontend:vertical-card
-												cssClass="add-layout-action-option"
-												data="<%= addLayoutData %>"
-												imageCSSClass="aspect-ratio-bg-contain"
-												imageUrl="<%= imagePreviewURL %>"
-												title="<%= layoutPageTemplateEntry.getName() %>"
-												url="javascript:;"
-											>
-												<liferay-frontend:vertical-card-header>
-													<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - layoutPageTemplateEntry.getCreateDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
-												</liferay-frontend:vertical-card-header>
-											</liferay-frontend:vertical-card>
-										</c:when>
-										<c:otherwise>
-											<liferay-frontend:icon-vertical-card
-												cssClass="add-layout-action-option"
-												data="<%= addLayoutData %>"
-												icon='<%= Objects.equals(layoutPageTemplateEntry.getType(), LayoutPageTemplateEntryTypeConstants.TYPE_WIDGET_PAGE) ? "page-template" : "page" %>'
-												title="<%= layoutPageTemplateEntry.getName() %>"
-												url="javascript:;"
-											>
-												<liferay-frontend:vertical-card-header>
-													<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - layoutPageTemplateEntry.getCreateDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
-												</liferay-frontend:vertical-card-header>
-											</liferay-frontend:icon-vertical-card>
-										</c:otherwise>
-									</c:choose>
+									<clay:vertical-card
+										verticalCard="<%= new SelectLayoutPageTemplateEntryVerticalCard(layoutPageTemplateEntry, renderRequest, renderResponse) %>"
+									/>
 								</liferay-ui:search-container-column-text>
 							</liferay-ui:search-container-row>
 

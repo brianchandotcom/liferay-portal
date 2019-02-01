@@ -12,8 +12,7 @@ exports[`Field Paragraph should have a helptext 1`] = `
 <div class="form-group">
   <div class="form-group liferay-ddm-form-field-paragraph" data-fieldname="textField">
     <div class="liferay-ddm-form-field-paragraph-text"></div>
-  </div>
-  <span class="form-text">Type something</span>
+  </div><span class="form-text">Type something</span>
 </div>
 `;
 
@@ -26,8 +25,7 @@ exports[`Field Paragraph should have a key 1`] = `
 `;
 
 exports[`Field Paragraph should have a label 1`] = `
-<div class="form-group">
-  <label>label </label>
+<div class="form-group"><label>label </label>
   <div class="form-group liferay-ddm-form-field-paragraph" data-fieldname="textField">
     <div class="liferay-ddm-form-field-paragraph-text"></div>
   </div>
@@ -75,8 +73,7 @@ exports[`Field Paragraph should not be required 1`] = `
 `;
 
 exports[`Field Paragraph should render Label if showLabel is true 1`] = `
-<div class="form-group">
-  <label>text </label>
+<div class="form-group"><label>text </label>
   <div class="form-group liferay-ddm-form-field-paragraph" data-fieldname="textField">
     <div class="liferay-ddm-form-field-paragraph-text"></div>
   </div>

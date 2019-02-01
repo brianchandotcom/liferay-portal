@@ -19,11 +19,9 @@ exports[`PageRenderer should change the page title 1`] = `
                   <p>Radio Field</p>
                 </div>
               </div>
-              <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-paste" focusable="false">
-                    <title>paste</title>
+              <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
                     <use xlink:href="icons.svg#paste"></use>
-                  </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-trash" focusable="false">
-                    <title>trash</title>
+                  </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
                     <use xlink:href="icons.svg#trash"></use>
                   </svg></button></div>
               <div class="ddm-resize-handle-right"></div>
@@ -50,11 +48,9 @@ exports[`PageRenderer should change the page title 1`] = `
                   <p>Text Field</p>
                 </div>
               </div>
-              <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-paste" focusable="false">
-                    <title>paste</title>
+              <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
                     <use xlink:href="icons.svg#paste"></use>
-                  </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-trash" focusable="false">
-                    <title>trash</title>
+                  </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
                     <use xlink:href="icons.svg#trash"></use>
                   </svg></button></div>
               <div class="ddm-resize-handle-right"></div>
@@ -68,11 +64,9 @@ exports[`PageRenderer should change the page title 1`] = `
                   <p>Select Field</p>
                 </div>
               </div>
-              <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-paste" focusable="false">
-                    <title>paste</title>
+              <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
                     <use xlink:href="icons.svg#paste"></use>
-                  </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-trash" focusable="false">
-                    <title>trash</title>
+                  </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
                     <use xlink:href="icons.svg#trash"></use>
                   </svg></button></div>
               <div class="ddm-resize-handle-right"></div>
@@ -96,11 +90,9 @@ exports[`PageRenderer should change the page title 1`] = `
                   <p>Date Field</p>
                 </div>
               </div>
-              <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-paste" focusable="false">
-                    <title>paste</title>
+              <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
                     <use xlink:href="icons.svg#paste"></use>
-                  </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-trash" focusable="false">
-                    <title>trash</title>
+                  </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
                     <use xlink:href="icons.svg#trash"></use>
                   </svg></button></div>
               <div class="ddm-resize-handle-right"></div>
@@ -121,11 +113,9 @@ exports[`PageRenderer should change the page title 1`] = `
                   <p>Numeric Field</p>
                 </div>
               </div>
-              <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-paste" focusable="false">
-                    <title>paste</title>
+              <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
                     <use xlink:href="icons.svg#paste"></use>
-                  </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-trash" focusable="false">
-                    <title>trash</title>
+                  </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
                     <use xlink:href="icons.svg#trash"></use>
                   </svg></button></div>
               <div class="ddm-resize-handle-right"></div>
@@ -162,11 +152,9 @@ exports[`PageRenderer should change the page title 2`] = `
                   <p>Radio Field</p>
                 </div>
               </div>
-              <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-paste" focusable="false">
-                    <title>paste</title>
+              <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
                     <use xlink:href="icons.svg#paste"></use>
-                  </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-trash" focusable="false">
-                    <title>trash</title>
+                  </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
                     <use xlink:href="icons.svg#trash"></use>
                   </svg></button></div>
               <div class="ddm-resize-handle-right"></div>
@@ -193,11 +181,9 @@ exports[`PageRenderer should change the page title 2`] = `
                   <p>Text Field</p>
                 </div>
               </div>
-              <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-paste" focusable="false">
-                    <title>paste</title>
+              <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
                     <use xlink:href="icons.svg#paste"></use>
-                  </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-trash" focusable="false">
-                    <title>trash</title>
+                  </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
                     <use xlink:href="icons.svg#trash"></use>
                   </svg></button></div>
               <div class="ddm-resize-handle-right"></div>
@@ -211,11 +197,9 @@ exports[`PageRenderer should change the page title 2`] = `
                   <p>Select Field</p>
                 </div>
               </div>
-              <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-paste" focusable="false">
-                    <title>paste</title>
+              <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
                     <use xlink:href="icons.svg#paste"></use>
-                  </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-trash" focusable="false">
-                    <title>trash</title>
+                  </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
                     <use xlink:href="icons.svg#trash"></use>
                   </svg></button></div>
               <div class="ddm-resize-handle-right"></div>
@@ -239,11 +223,9 @@ exports[`PageRenderer should change the page title 2`] = `
                   <p>Date Field</p>
                 </div>
               </div>
-              <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-paste" focusable="false">
-                    <title>paste</title>
+              <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
                     <use xlink:href="icons.svg#paste"></use>
-                  </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-trash" focusable="false">
-                    <title>trash</title>
+                  </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
                     <use xlink:href="icons.svg#trash"></use>
                   </svg></button></div>
               <div class="ddm-resize-handle-right"></div>
@@ -264,11 +246,9 @@ exports[`PageRenderer should change the page title 2`] = `
                   <p>Numeric Field</p>
                 </div>
               </div>
-              <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-paste" focusable="false">
-                    <title>paste</title>
+              <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
                     <use xlink:href="icons.svg#paste"></use>
-                  </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-trash" focusable="false">
-                    <title>trash</title>
+                  </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
                     <use xlink:href="icons.svg#trash"></use>
                   </svg></button></div>
               <div class="ddm-resize-handle-right"></div>
@@ -321,11 +301,9 @@ exports[`PageRenderer should resize a specific column on the drag and drop layou
                   <p>Radio Field</p>
                 </div>
               </div>
-              <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-paste" focusable="false">
-                    <title>paste</title>
+              <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
                     <use xlink:href="icons.svg#paste"></use>
-                  </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-trash" focusable="false">
-                    <title>trash</title>
+                  </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
                     <use xlink:href="icons.svg#trash"></use>
                   </svg></button></div>
               <div class="ddm-resize-handle-right"></div>
@@ -352,11 +330,9 @@ exports[`PageRenderer should resize a specific column on the drag and drop layou
                   <p>Text Field</p>
                 </div>
               </div>
-              <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-paste" focusable="false">
-                    <title>paste</title>
+              <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
                     <use xlink:href="icons.svg#paste"></use>
-                  </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-trash" focusable="false">
-                    <title>trash</title>
+                  </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
                     <use xlink:href="icons.svg#trash"></use>
                   </svg></button></div>
               <div class="ddm-resize-handle-right"></div>
@@ -370,11 +346,9 @@ exports[`PageRenderer should resize a specific column on the drag and drop layou
                   <p>Select Field</p>
                 </div>
               </div>
-              <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-paste" focusable="false">
-                    <title>paste</title>
+              <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
                     <use xlink:href="icons.svg#paste"></use>
-                  </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-trash" focusable="false">
-                    <title>trash</title>
+                  </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
                     <use xlink:href="icons.svg#trash"></use>
                   </svg></button></div>
               <div class="ddm-resize-handle-right"></div>
@@ -398,11 +372,9 @@ exports[`PageRenderer should resize a specific column on the drag and drop layou
                   <p>Date Field</p>
                 </div>
               </div>
-              <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-paste" focusable="false">
-                    <title>paste</title>
+              <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
                     <use xlink:href="icons.svg#paste"></use>
-                  </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-trash" focusable="false">
-                    <title>trash</title>
+                  </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
                     <use xlink:href="icons.svg#trash"></use>
                   </svg></button></div>
               <div class="ddm-resize-handle-right"></div>
@@ -423,11 +395,9 @@ exports[`PageRenderer should resize a specific column on the drag and drop layou
                   <p>Numeric Field</p>
                 </div>
               </div>
-              <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-paste" focusable="false">
-                    <title>paste</title>
+              <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
                     <use xlink:href="icons.svg#paste"></use>
-                  </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-trash" focusable="false">
-                    <title>trash</title>
+                  </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
                     <use xlink:href="icons.svg#trash"></use>
                   </svg></button></div>
               <div class="ddm-resize-handle-right"></div>

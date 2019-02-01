@@ -1,70 +1,23 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Field Numeric should have a helptext 1`] = `
-<div class="form-group">
-  <input class="form-control" name="numericField" type="text" value="">
-  <span class="form-text">Type something</span>
-</div>
-`;
+exports[`Field Numeric should have a helptext 1`] = `<div class="form-group"><input class="form-control" name="numericField" type="text" value=""><span class="form-text">Type something</span></div>`;
 
-exports[`Field Numeric should have a key 1`] = `
-<div class="form-group">
-  <input class="form-control" name="numericField" type="text" value="">
-</div>
-`;
+exports[`Field Numeric should have a key 1`] = `<div class="form-group"><input class="form-control" name="numericField" type="text" value=""></div>`;
 
-exports[`Field Numeric should have a label 1`] = `
-<div class="form-group">
-  <label>label </label>
-  <input class="form-control" name="numericField" type="text" value="">
-</div>
-`;
+exports[`Field Numeric should have a label 1`] = `<div class="form-group"><label>label </label><input class="form-control" name="numericField" type="text" value=""></div>`;
 
-exports[`Field Numeric should have a placeholder 1`] = `
-<div class="form-group">
-  <input class="form-control" name="numericField" placeholder="Placeholder" type="text" value="">
-</div>
-`;
+exports[`Field Numeric should have a placeholder 1`] = `<div class="form-group"><input class="form-control" name="numericField" placeholder="Placeholder" type="text" value=""></div>`;
 
-exports[`Field Numeric should have a spritemap 1`] = `
-<div class="form-group">
-  <input class="form-control" name="numericField" type="text" value="">
-</div>
-`;
+exports[`Field Numeric should have a spritemap 1`] = `<div class="form-group"><input class="form-control" name="numericField" type="text" value=""></div>`;
 
-exports[`Field Numeric should have a value 1`] = `
-<div class="form-group">
-  <input class="form-control" name="numericField" type="text" value="123">
-</div>
-`;
+exports[`Field Numeric should have a value 1`] = `<div class="form-group"><input class="form-control" name="numericField" type="text" value="123"></div>`;
 
-exports[`Field Numeric should have an id 1`] = `
-<div class="form-group">
-  <input class="form-control" id="ID" name="numericField" type="text" value="">
-</div>
-`;
+exports[`Field Numeric should have an id 1`] = `<div class="form-group"><input class="form-control" id="ID" name="numericField" type="text" value=""></div>`;
 
-exports[`Field Numeric should not be readOnly 1`] = `
-<div class="form-group">
-  <input class="form-control" name="numericField" type="text" value="">
-</div>
-`;
+exports[`Field Numeric should not be readOnly 1`] = `<div class="form-group"><input class="form-control" name="numericField" type="text" value=""></div>`;
 
-exports[`Field Numeric should not be required 1`] = `
-<div class="form-group">
-  <input class="form-control" name="numericField" type="text" value="">
-</div>
-`;
+exports[`Field Numeric should not be required 1`] = `<div class="form-group"><input class="form-control" name="numericField" type="text" value=""></div>`;
 
-exports[`Field Numeric should render Label if showLabel is true 1`] = `
-<div class="form-group">
-  <label>Numeric Field </label>
-  <input class="form-control" name="numericField" type="text" value="">
-</div>
-`;
+exports[`Field Numeric should render Label if showLabel is true 1`] = `<div class="form-group"><label>Numeric Field </label><input class="form-control" name="numericField" type="text" value=""></div>`;
 
-exports[`Field Numeric should render the default markup 1`] = `
-<div class="form-group">
-  <input class="form-control" name="numericField" type="text" value="">
-</div>
-`;
+exports[`Field Numeric should render the default markup 1`] = `<div class="form-group"><input class="form-control" name="numericField" type="text" value=""></div>`;

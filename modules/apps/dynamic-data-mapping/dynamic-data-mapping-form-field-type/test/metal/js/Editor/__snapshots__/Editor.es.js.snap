@@ -16,8 +16,7 @@ exports[`Field Editor should have a helptext 1`] = `
     <div class="alloy-editor-container input-group" id="textFieldContainer">
       <div class="alloy-editor alloy-editor-placeholder" contenteditable="false" id="textFieldEditorContainer" name="textFieldEditor"></div>
     </div>
-  </div>
-  <span class="form-text">Type something</span>
+  </div><span class="form-text">Type something</span>
 </div>
 `;
 
@@ -32,8 +31,7 @@ exports[`Field Editor should have a key 1`] = `
 `;
 
 exports[`Field Editor should have a label 1`] = `
-<div class="form-group">
-  <label>label </label>
+<div class="form-group"><label>label </label>
   <div class="field-type-editor form-control input-group-container">
     <div class="alloy-editor-container input-group" id="textFieldContainer">
       <div class="alloy-editor alloy-editor-placeholder" contenteditable="false" id="textFieldEditorContainer" name="textFieldEditor"></div>
@@ -93,8 +91,7 @@ exports[`Field Editor should not be required 1`] = `
 `;
 
 exports[`Field Editor should render Label if showLabel is true 1`] = `
-<div class="form-group">
-  <label>text </label>
+<div class="form-group"><label>text </label>
   <div class="field-type-editor form-control input-group-container">
     <div class="alloy-editor-container input-group" id="textFieldContainer">
       <div class="alloy-editor alloy-editor-placeholder" contenteditable="false" id="textFieldEditorContainer" name="textFieldEditor"></div>

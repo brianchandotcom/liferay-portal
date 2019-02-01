@@ -18,6 +18,7 @@ components:
         description:
           type: string
         id:
+          format: int64
           type: integer
         name:
           type: string
@@ -56,6 +57,7 @@ components:
           format: uri
           type: string
         id:
+          format: int64
           type: integer
         keywords:
           $ref: "#/components/schemas/Keyword"
@@ -78,6 +80,7 @@ components:
         email:
           type: string
         id:
+          format: int64
           type: integer
         self:
           format: uri
@@ -97,6 +100,7 @@ components:
         dateModified:
           type: string
         id:
+          format: int64
           type: integer
         keywordUsageCount:
           type: number
@@ -119,6 +123,7 @@ components:
             email:
               $ref: "#/components/schemas/Email"
             id:
+              format: int64
               type: integer
             self:
               format: uri
@@ -129,6 +134,7 @@ components:
               $ref: "#/components/schemas/WebUrl"
           type: object
         id:
+          format: int64
           type: integer
         location:
           description: https://www.schema.org/PostalAddress
@@ -138,6 +144,7 @@ components:
             addressRegion:
               type: string
             id:
+              format: int64
               type: integer
             self:
               format: uri
@@ -166,6 +173,7 @@ components:
                   type: string
                 id:
                   type: integer
+                  format: int64
                 opens:
                   type: string
                 self:
@@ -173,6 +181,7 @@ components:
                   type: string
               type: object
             id:
+              format: int64
               type: integer
             self:
               format: uri
@@ -191,6 +200,7 @@ components:
         extension:
           type: string
         id:
+          format: int64
           type: integer
         phoneNumber:
           type: string
@@ -212,6 +222,7 @@ components:
         addressType:
           type: string
         id:
+          format: int64
           type: integer
         postalCode:
           type: string
@@ -241,6 +252,7 @@ components:
         description:
           type: string
         id:
+          format: int64
           type: integer
         name:
           type: string
@@ -269,6 +281,7 @@ components:
             facebook:
               type: string
             id:
+              format: int64
               type: integer
             jabber:
               type: string
@@ -299,6 +312,7 @@ components:
         honorificSuffix:
           type: string
         id:
+          format: int64
           type: integer
         image:
           type: string
@@ -336,6 +350,7 @@ components:
         description:
           type: string
         id:
+          format: int64
           type: integer
         name:
           type: string
@@ -359,6 +374,7 @@ components:
         description:
           type: string
         id:
+          format: int64
           type: integer
         members:
           $ref: "#/components/schemas/UserAccount"
@@ -382,6 +398,7 @@ components:
       description: https://www.schema.org/WebUrl
       properties:
         id:
+          format: int64
           type: integer
         self:
           format: uri
@@ -412,6 +429,7 @@ paths:
           name: genericparentid
           required: true
           schema:
+            format: int64
             type: integer
       responses:
         200:
@@ -429,6 +447,7 @@ paths:
           name: id
           required: true
           schema:
+            format: int64
             type: integer
       responses:
         200:
@@ -444,6 +463,7 @@ paths:
           name: id
           required: true
           schema:
+            format: int64
             type: integer
       responses:
         204:
@@ -456,6 +476,7 @@ paths:
           name: id
           required: true
           schema:
+            format: int64
             type: integer
       responses:
         200:
@@ -470,6 +491,7 @@ paths:
           name: id
           required: true
           schema:
+            format: int64
             type: integer
       requestBody:
         content:
@@ -498,6 +520,7 @@ paths:
           name: parent-id
           required: true
           schema:
+            format: int64
             type: integer
       responses:
         200:
@@ -514,6 +537,7 @@ paths:
           name: parent-id
           required: true
           schema:
+            format: int64
             type: integer
       requestBody:
         content:
@@ -534,6 +558,7 @@ paths:
           name: parent-id
           required: true
           schema:
+            format: int64
             type: integer
       requestBody:
         content:
@@ -554,6 +579,7 @@ paths:
           name: id
           required: true
           schema:
+            format: int64
             type: integer
       responses:
         200:
@@ -577,6 +603,7 @@ paths:
           name: parent-id
           required: true
           schema:
+            format: int64
             type: integer
       responses:
         200:
@@ -593,6 +620,7 @@ paths:
           name: parent-id
           required: true
           schema:
+            format: int64
             type: integer
       requestBody:
         content:
@@ -613,6 +641,7 @@ paths:
           name: parent-id
           required: true
           schema:
+            format: int64
             type: integer
       requestBody:
         content:
@@ -641,6 +670,7 @@ paths:
           name: parent-id
           required: true
           schema:
+            format: int64
             type: integer
       responses:
         200:
@@ -657,6 +687,7 @@ paths:
           name: parent-id
           required: true
           schema:
+            format: int64
             type: integer
       requestBody:
         content:
@@ -677,6 +708,7 @@ paths:
           name: parent-id
           required: true
           schema:
+            format: int64
             type: integer
       requestBody:
         content:
@@ -722,6 +754,7 @@ paths:
           name: id
           required: true
           schema:
+            format: int64
             type: integer
       responses:
         200:
@@ -737,6 +770,7 @@ paths:
           name: id
           required: true
           schema:
+            format: int64
             type: integer
       responses:
         204:
@@ -749,6 +783,7 @@ paths:
           name: id
           required: true
           schema:
+            format: int64
             type: integer
       responses:
         200:
@@ -763,6 +798,7 @@ paths:
           name: id
           required: true
           schema:
+            format: int64
             type: integer
       requestBody:
         content:
@@ -803,6 +839,7 @@ paths:
           name: id
           required: true
           schema:
+            format: int64
             type: integer
       responses:
         200:
@@ -826,6 +863,7 @@ paths:
           name: parent-id
           required: true
           schema:
+            format: int64
             type: integer
       responses:
         200:
@@ -851,6 +889,7 @@ paths:
           name: parent-id
           required: true
           schema:
+            format: int64
             type: integer
       responses:
         200:
@@ -876,6 +915,7 @@ paths:
           name: parent-id
           required: true
           schema:
+            format: int64
             type: integer
       responses:
         200:
@@ -913,6 +953,7 @@ paths:
           name: id
           required: true
           schema:
+            format: int64
             type: integer
       responses:
         200:
@@ -936,6 +977,7 @@ paths:
           name: parent-id
           required: true
           schema:
+            format: int64
             type: integer
       responses:
         200:
@@ -961,6 +1003,7 @@ paths:
           name: parent-id
           required: true
           schema:
+            format: int64
             type: integer
       responses:
         200:
@@ -1003,6 +1046,7 @@ paths:
           name: id
           required: true
           schema:
+            format: int64
             type: integer
       responses:
         200:
@@ -1038,6 +1082,7 @@ paths:
           name: id
           required: true
           schema:
+            format: int64
             type: integer
       responses:
         200:
@@ -1106,6 +1151,7 @@ paths:
           name: id
           required: true
           schema:
+            format: int64
             type: integer
       responses:
         204:
@@ -1118,6 +1164,7 @@ paths:
           name: id
           required: true
           schema:
+            format: int64
             type: integer
       responses:
         200:
@@ -1132,6 +1179,7 @@ paths:
           name: id
           required: true
           schema:
+            format: int64
             type: integer
       requestBody:
         content:
@@ -1160,6 +1208,7 @@ paths:
           name: parent-id
           required: true
           schema:
+            format: int64
             type: integer
       responses:
         200:
@@ -1185,6 +1234,7 @@ paths:
           name: parent-id
           required: true
           schema:
+            format: int64
             type: integer
       responses:
         200:
@@ -1210,6 +1260,7 @@ paths:
           name: parent-id
           required: true
           schema:
+            format: int64
             type: integer
       responses:
         200:
@@ -1227,6 +1278,7 @@ paths:
           name: id
           required: true
           schema:
+            format: int64
             type: integer
       responses:
         204:
@@ -1239,6 +1291,7 @@ paths:
           name: id
           required: true
           schema:
+            format: int64
             type: integer
       responses:
         200:
@@ -1253,6 +1306,7 @@ paths:
           name: id
           required: true
           schema:
+            format: int64
             type: integer
       requestBody:
         content:
@@ -1281,6 +1335,7 @@ paths:
           name: parent-id
           required: true
           schema:
+            format: int64
             type: integer
       responses:
         200:
@@ -1297,6 +1352,7 @@ paths:
           name: parent-id
           required: true
           schema:
+            format: int64
             type: integer
       requestBody:
         content:
@@ -1317,6 +1373,7 @@ paths:
           name: parent-id
           required: true
           schema:
+            format: int64
             type: integer
       requestBody:
         content:
@@ -1337,6 +1394,7 @@ paths:
           name: id
           required: true
           schema:
+            format: int64
             type: integer
       responses:
         200:
@@ -1360,6 +1418,7 @@ paths:
           name: parent-id
           required: true
           schema:
+            format: int64
             type: integer
       responses:
         200:
@@ -1385,6 +1444,7 @@ paths:
           name: parent-id
           required: true
           schema:
+            format: int64
             type: integer
       responses:
         200:
@@ -1427,6 +1487,7 @@ paths:
           name: id
           required: true
           schema:
+            format: int64
             type: integer
       responses:
         200:

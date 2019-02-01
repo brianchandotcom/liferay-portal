@@ -77,6 +77,8 @@ public class KeyStoreCredentialResolver extends AbstractCredentialResolver {
 				}
 			}
 
+			KeyStore keyStore = _keyStoreManager.getKeyStore();
+
 			UsageType usageType = UsageType.UNSPECIFIED;
 
 			UsageCriterion usageCriterion = criteriaSet.get(
@@ -85,8 +87,6 @@ public class KeyStoreCredentialResolver extends AbstractCredentialResolver {
 			if (usageCriterion != null) {
 				usageType = usageCriterion.getUsage();
 			}
-
-			KeyStore keyStore = _keyStoreManager.getKeyStore();
 
 			KeyStore.Entry entry = keyStore.getEntry(
 				getAlias(entityId, usageType), keyStorePasswordProtection);

@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.tools.ToolsUtil;
 
 import java.io.IOException;
 
@@ -172,6 +173,15 @@ public class GradleDependencyVersionCheck extends BaseFileCheck {
 		return matcher.group();
 	}
 
+	private String _getModulesPropertiesContent() throws IOException {
+		if (!isPortalSource()) {
+			return getPortalContent(_MODULES_PROPERTIES_FILE_NAME);
+		}
+
+		return getContent(
+			_MODULES_PROPERTIES_FILE_NAME, ToolsUtil.PORTAL_MAX_DIR_LEVEL);
+	}
+
 	private synchronized Map<String, Integer> _getPublishedMajorVersionsMap()
 		throws IOException {
 
@@ -179,7 +189,7 @@ public class GradleDependencyVersionCheck extends BaseFileCheck {
 			return _publishedMajorVersionsMap;
 		}
 
-		String content = getPortalContent(_MODULES_PROPERTIES_FILE_NAME);
+		String content = _getModulesPropertiesContent();
 
 		if (Validator.isNull(content)) {
 			_publishedMajorVersionsMap = Collections.emptyMap();

@@ -36,11 +36,12 @@ import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
 	service = ContextProvider.class
 )
 @Provider
-public class PaginationContextProvider extends BaseContextProvider<Pagination> {
+public class PaginationContextProvider implements ContextProvider<Pagination> {
 
 	@Override
 	public Pagination createContext(Message message) {
-		HttpServletRequest httpServletRequest = getHttpServletRequest(message);
+		HttpServletRequest httpServletRequest =
+			ContextProviderUtil.getHttpServletRequest(message);
 
 		int pageNumber = ParamUtil.getInteger(httpServletRequest, "page", 1);
 		int itemsPerPage = ParamUtil.getInteger(

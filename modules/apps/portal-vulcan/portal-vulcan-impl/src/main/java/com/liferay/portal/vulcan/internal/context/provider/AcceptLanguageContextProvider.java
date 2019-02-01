@@ -36,11 +36,12 @@ import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
 )
 @Provider
 public class AcceptLanguageContextProvider
-	extends BaseContextProvider<AcceptLanguage> {
+	implements ContextProvider<AcceptLanguage> {
 
 	@Override
 	public AcceptLanguage createContext(Message message) {
-		return new AcceptLanguageImpl(getHttpServletRequest(message), _portal);
+		return new AcceptLanguageImpl(
+			ContextProviderUtil.getHttpServletRequest(message), _portal);
 	}
 
 	@Reference

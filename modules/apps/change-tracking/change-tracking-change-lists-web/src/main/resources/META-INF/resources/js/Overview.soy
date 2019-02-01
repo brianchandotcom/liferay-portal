@@ -51,7 +51,7 @@
 		{else}
 			<div class="row">
 				<div class="col-sm-6">
-					{call .glanceCard}
+					{call .overviewCard}
 						{param cardState: 'border-left-blue' /}
 						{param changes: [
 							'added': $changes.added,
@@ -60,9 +60,9 @@
 							'deletedLabel': $deletedLabel,
 							'modified': $changes.modified,
 							'modifiedLabel': $modifiedLabel ] /}
-                        {param changesLabel kind="text"}
-                            {msg desc=""}changes{/msg}
-                        {/param}
+						{param changesLabel kind="text"}
+							{msg desc=""}changes{/msg}
+						{/param}
 						{param description: $description /}
 						{param descriptionTitle kind="text"}
 							{msg desc=""}description{/msg}
@@ -196,6 +196,8 @@
 	{@param? headerSubTitle: string}
 	{@param? headerTitle: string}
 
+	{let $twoColumns: $headerButton /}
+
 	<div class="overview-card-container overview-card-header">
 		<div class="row">
 			<div class="col-sm-{$twoColumns ? 6 : 12}">
@@ -207,12 +209,12 @@
 				{/if}
 				{if $headerLink}
 					<div class="header-line">
-						<a href="{$headerLink.link}" onclick="" data-qa-id="headerLink">{$headerLink.label}</a>
+						<a data-qa-id="headerLink" href="{$headerLink.link}" onclick="">{$headerLink.label}</a>
 					</div>
 				{/if}
 				{if $headerDropDownMenu and $headerDropDownMenuTitle}
 					<div class="header-line">
-						<a aria-expanded="false" aria-haspopup="true" class="dropdown-toggle" data-toggle="dropdown" href="#1" role="button" data-qa-id="headerDropDownMenu">
+						<a aria-expanded="false" aria-haspopup="true" class="dropdown-toggle" data-qa-id="headerDropDownMenu" data-toggle="dropdown" href="#1" role="button">
 							<span class="navbar-text-truncate">{$headerDropDownMenuTitle}</span>
 							<span class="navbar-text-icon">
 								<svg class="lexicon-icon lexicon-icon-caret-bottom" focusable="false" role="presentation">
@@ -250,7 +252,7 @@
 								</div>
 							{/if}
 							<div class="btn-group-item">
-								<button class="btn btn-monospaced btn-outline-borderless btn-outline-secondary btn-xs lfr-portal-tooltip" data-qa-id="headerTrash" type="button">
+								<button class="btn btn-monospaced btn-outline-borderless btn-outline-secondary btn-xs" data-qa-id="headerTrash" type="button">
 									<svg class="icon-monospaced lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
 										<use xlink:href="{$spritemap}#trash" />
 									</svg>

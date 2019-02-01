@@ -370,10 +370,28 @@ public class TopLevelBuild extends BaseBuild {
 		_sendBuildMetrics = Boolean.valueOf(
 			buildProperties.getProperty("build.metrics.send"));
 
-		_metricsHostName = buildProperties.getProperty(
-			"build.metrics.host.name");
-		_metricsHostPort = Integer.parseInt(
-			buildProperties.getProperty("build.metrics.host.port"));
+		if (_sendBuildMetrics) {
+			_metricsHostName = buildProperties.getProperty(
+				"build.metrics.host.name");
+
+			String metricsHostPortString = buildProperties.getProperty(
+				"build.metrics.host.port");
+
+			if ((_metricsHostName == null) || (metricsHostPortString == null)) {
+				throw new IllegalArgumentException(
+					"Properties 'build.metrics.host.name' and " +
+						"'build.metrics.host.port' must be set to send build " +
+							"metrics");
+			}
+
+			try {
+				_metricsHostPort = Integer.parseInt(metricsHostPortString);
+			}
+			catch (NumberFormatException nfe) {
+				throw new IllegalArgumentException(
+					"Please set 'build.metrics.host.port' to an integer");
+			}
+		}
 	}
 
 	@Override
@@ -1432,8 +1450,8 @@ public class TopLevelBuild extends BaseBuild {
 
 	private boolean _compareToUpstream = true;
 	private long _lastDownstreamBuildsListingTimestamp = -1L;
-	private final String _metricsHostName;
-	private final int _metricsHostPort;
+	private String _metricsHostName;
+	private int _metricsHostPort;
 	private final boolean _sendBuildMetrics;
 	private long _updateDuration;
 

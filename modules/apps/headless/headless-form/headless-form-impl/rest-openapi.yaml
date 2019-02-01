@@ -26,6 +26,7 @@ components:
         formRecords:
           $ref: "#/components/schemas/FormRecord"
         id:
+          format: int64
           type: integer
         name:
           type: string
@@ -45,6 +46,7 @@ components:
         fileExtension:
           type: string
         id:
+          format: int64
           type: integer
         self:
           type: string
@@ -73,6 +75,7 @@ components:
             document:
               $ref: "#/components/schemas/FormDocument"
             id:
+              format: int64
               type: integer
             name:
               type: string
@@ -85,6 +88,7 @@ components:
         form:
           $ref: "#/components/schemas/Form"
         id:
+          format: int64
           type: integer
         self:
           format: uri
@@ -130,6 +134,7 @@ components:
                       description: https://www.schema.org/FormFieldOptions
                       properties:
                         id:
+                          format: int64
                           type: integer
                         label:
                           type: string
@@ -140,11 +145,13 @@ components:
                           type: string
                       type: object
                     id:
+                      format: int64
                       type: integer
                     rows:
                       description: https://www.schema.org/FormFieldOptions
                       properties:
                         id:
+                          format: int64
                           type: integer
                         label:
                           type: string
@@ -161,6 +168,7 @@ components:
                 hasFormRules:
                   type: boolean
                 id:
+                  format: int64
                   type: integer
                 inline:
                   type: boolean
@@ -178,6 +186,7 @@ components:
                   description: https://www.schema.org/FormFieldOptions
                   properties:
                     id:
+                      format: int64
                       type: integer
                     label:
                       type: string
@@ -220,6 +229,7 @@ components:
                     expression:
                       type: string
                     id:
+                      format: int64
                       type: integer
                     self:
                       format: uri
@@ -229,6 +239,7 @@ components:
             headline:
               type: string
             id:
+              format: int64
               type: integer
             self:
               format: uri
@@ -237,6 +248,7 @@ components:
               type: string
           type: object
         id:
+          format: int64
           type: integer
         name:
           type: string
@@ -251,6 +263,7 @@ components:
             headline:
               type: string
             id:
+              format: int64
               type: integer
             self:
               format: uri
@@ -278,6 +291,7 @@ paths:
           name: parent-id
           required: true
           schema:
+            format: int64
             type: integer
       responses:
         200:
@@ -303,6 +317,7 @@ paths:
           name: parent-id
           required: true
           schema:
+            format: int64
             type: integer
       responses:
         200:
@@ -467,6 +482,7 @@ paths:
           name: parent-id
           required: true
           schema:
+            format: int64
             type: integer
       responses:
         200:
@@ -483,6 +499,7 @@ paths:
           name: parent-id
           required: true
           schema:
+            format: int64
             type: integer
         - in: query
           name: acceptlocale
@@ -507,6 +524,7 @@ paths:
           name: parent-id
           required: true
           schema:
+            format: int64
             type: integer
         - in: query
           name: acceptlocale

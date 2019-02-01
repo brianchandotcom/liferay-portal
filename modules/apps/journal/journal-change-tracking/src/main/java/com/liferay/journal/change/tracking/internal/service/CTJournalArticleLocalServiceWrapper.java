@@ -29,12 +29,16 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.File;
 import java.io.Serializable;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
@@ -444,6 +448,210 @@ public class CTJournalArticleLocalServiceWrapper
 	}
 
 	@Override
+	public List<JournalArticle> getArticles() {
+		List<JournalArticle> journalArticles = new ArrayList<>(
+			super.getArticles());
+
+		journalArticles.removeIf(journalArticle -> !_hasChange(journalArticle));
+
+		return journalArticles;
+	}
+
+	@Override
+	public List<JournalArticle> getArticles(long groupId) {
+		List<JournalArticle> journalArticles = new ArrayList<>(
+			super.getArticles(groupId));
+
+		journalArticles.removeIf(journalArticle -> !_hasChange(journalArticle));
+
+		return journalArticles;
+	}
+
+	@Override
+	public List<JournalArticle> getArticles(long groupId, int start, int end) {
+		List<JournalArticle> journalArticles = new ArrayList<>(
+			super.getArticles(groupId, start, end));
+
+		journalArticles.removeIf(journalArticle -> !_hasChange(journalArticle));
+
+		return journalArticles;
+	}
+
+	@Override
+	public List<JournalArticle> getArticles(
+		long groupId, int start, int end,
+		OrderByComparator<JournalArticle> obc) {
+
+		List<JournalArticle> journalArticles = new ArrayList<>(
+			super.getArticles(groupId, start, end, obc));
+
+		journalArticles.removeIf(journalArticle -> !_hasChange(journalArticle));
+
+		return journalArticles;
+	}
+
+	@Override
+	public List<JournalArticle> getArticles(long groupId, long folderId) {
+		List<JournalArticle> journalArticles = new ArrayList<>(
+			super.getArticles(groupId, folderId));
+
+		journalArticles.removeIf(journalArticle -> !_hasChange(journalArticle));
+
+		return journalArticles;
+	}
+
+	@Override
+	public List<JournalArticle> getArticles(
+		long groupId, long folderId, int start, int end) {
+
+		List<JournalArticle> journalArticles = new ArrayList<>(
+			super.getArticles(groupId, folderId, start, end));
+
+		journalArticles.removeIf(journalArticle -> !_hasChange(journalArticle));
+
+		return journalArticles;
+	}
+
+	@Override
+	public List<JournalArticle> getArticles(
+		long groupId, long folderId, int status, int start, int end) {
+
+		List<JournalArticle> journalArticles = new ArrayList<>(
+			super.getArticles(groupId, folderId, status, start, end));
+
+		journalArticles.removeIf(journalArticle -> !_hasChange(journalArticle));
+
+		return journalArticles;
+	}
+
+	@Override
+	public List<JournalArticle> getArticles(
+		long groupId, long folderId, int start, int end,
+		OrderByComparator<JournalArticle> orderByComparator) {
+
+		List<JournalArticle> journalArticles = new ArrayList<>(
+			super.getArticles(
+				groupId, folderId, start, end, orderByComparator));
+
+		journalArticles.removeIf(journalArticle -> !_hasChange(journalArticle));
+
+		return journalArticles;
+	}
+
+	@Override
+	public List<JournalArticle> getArticles(long groupId, String articleId) {
+		List<JournalArticle> journalArticles = new ArrayList<>(
+			super.getArticles(groupId, articleId));
+
+		journalArticles.removeIf(journalArticle -> !_hasChange(journalArticle));
+
+		return journalArticles;
+	}
+
+	@Override
+	public List<JournalArticle> getArticles(
+		long groupId, String articleId, int start, int end,
+		OrderByComparator<JournalArticle> orderByComparator) {
+
+		List<JournalArticle> journalArticles = new ArrayList<>(
+			super.getArticles(
+				groupId, articleId, start, end, orderByComparator));
+
+		journalArticles.removeIf(journalArticle -> !_hasChange(journalArticle));
+
+		return journalArticles;
+	}
+
+	@Override
+	public List<JournalArticle> getArticlesByResourcePrimKey(
+		long resourcePrimKey) {
+
+		List<JournalArticle> journalArticles = new ArrayList<>(
+			super.getArticlesByResourcePrimKey(resourcePrimKey));
+
+		journalArticles.removeIf(journalArticle -> !_hasChange(journalArticle));
+
+		return journalArticles;
+	}
+
+	@Override
+	public List<JournalArticle> getArticlesBySmallImageId(long smallImageId) {
+		List<JournalArticle> journalArticles = new ArrayList<>(
+			super.getArticlesBySmallImageId(smallImageId));
+
+		journalArticles.removeIf(journalArticle -> !_hasChange(journalArticle));
+
+		return journalArticles;
+	}
+
+	@Override
+	public List<JournalArticle> getArticlesByStructureId(
+		long groupId, long classNameId, String ddmStructureKey, int status,
+		int start, int end, OrderByComparator<JournalArticle> obc) {
+
+		List<JournalArticle> journalArticles = new ArrayList<>(
+			super.getArticlesByStructureId(
+				groupId, classNameId, ddmStructureKey, status, start, end,
+				obc));
+
+		journalArticles.removeIf(journalArticle -> !_hasChange(journalArticle));
+
+		return journalArticles;
+	}
+
+	@Override
+	public List<JournalArticle> getArticlesByStructureId(
+		long groupId, String ddmStructureKey, int status, int start, int end,
+		OrderByComparator<JournalArticle> obc) {
+
+		List<JournalArticle> journalArticles = new ArrayList<>(
+			super.getArticlesByStructureId(
+				groupId, ddmStructureKey, status, start, end, obc));
+
+		journalArticles.removeIf(journalArticle -> !_hasChange(journalArticle));
+
+		return journalArticles;
+	}
+
+	@Override
+	public List<JournalArticle> getArticlesByStructureId(
+		long groupId, String ddmStructureKey, int start, int end,
+		OrderByComparator<JournalArticle> obc) {
+
+		List<JournalArticle> journalArticles = new ArrayList<>(
+			super.getArticlesByStructureId(
+				groupId, ddmStructureKey, start, end, obc));
+
+		journalArticles.removeIf(journalArticle -> !_hasChange(journalArticle));
+
+		return journalArticles;
+	}
+
+	@Override
+	public List<JournalArticle> getCompanyArticles(
+		long companyId, double version, int status, int start, int end) {
+
+		List<JournalArticle> journalArticles = new ArrayList<>(
+			super.getCompanyArticles(companyId, version, status, start, end));
+
+		journalArticles.removeIf(journalArticle -> !_hasChange(journalArticle));
+
+		return journalArticles;
+	}
+
+	@Override
+	public List<JournalArticle> getCompanyArticles(
+		long companyId, int status, int start, int end) {
+
+		List<JournalArticle> journalArticles = new ArrayList<>(
+			super.getCompanyArticles(companyId, status, start, end));
+
+		journalArticles.removeIf(journalArticle -> !_hasChange(journalArticle));
+
+		return journalArticles;
+	}
+
+	@Override
 	public JournalArticle getDisplayArticle(long groupId, String articleId)
 		throws PortalException {
 
@@ -494,6 +702,114 @@ public class CTJournalArticleLocalServiceWrapper
 		sb.append(urlTitle);
 
 		throw new NoSuchArticleException(sb.toString());
+	}
+
+	@Override
+	public List<JournalArticle> getIndexableArticlesByDDMStructureKey(
+		String[] ddmStructureKeys) {
+
+		List<JournalArticle> journalArticles = new ArrayList<>(
+			super.getIndexableArticlesByDDMStructureKey(ddmStructureKeys));
+
+		journalArticles.removeIf(journalArticle -> !_hasChange(journalArticle));
+
+		return journalArticles;
+	}
+
+	@Override
+	public List<JournalArticle> getIndexableArticlesByResourcePrimKey(
+		long resourcePrimKey) {
+
+		List<JournalArticle> journalArticles = new ArrayList<>(
+			super.getIndexableArticlesByResourcePrimKey(resourcePrimKey));
+
+		journalArticles.removeIf(journalArticle -> !_hasChange(journalArticle));
+
+		return journalArticles;
+	}
+
+	@Override
+	public List<JournalArticle> getNoAssetArticles() {
+		List<JournalArticle> journalArticles = new ArrayList<>(
+			super.getNoAssetArticles());
+
+		journalArticles.removeIf(journalArticle -> !_hasChange(journalArticle));
+
+		return journalArticles;
+	}
+
+	@Override
+	public List<JournalArticle> getNoPermissionArticles() {
+		List<JournalArticle> journalArticles = new ArrayList<>(
+			super.getNoPermissionArticles());
+
+		journalArticles.removeIf(journalArticle -> !_hasChange(journalArticle));
+
+		return journalArticles;
+	}
+
+	@Override
+	public List<JournalArticle> getStructureArticles(
+		long groupId, String ddmStructureKey) {
+
+		List<JournalArticle> journalArticles = new ArrayList<>(
+			super.getStructureArticles(groupId, ddmStructureKey));
+
+		journalArticles.removeIf(journalArticle -> !_hasChange(journalArticle));
+
+		return journalArticles;
+	}
+
+	@Override
+	public List<JournalArticle> getStructureArticles(
+		long groupId, String ddmStructureKey, int start, int end,
+		OrderByComparator<JournalArticle> obc) {
+
+		List<JournalArticle> journalArticles = new ArrayList<>(
+			super.getStructureArticles(
+				groupId, ddmStructureKey, start, end, obc));
+
+		journalArticles.removeIf(journalArticle -> !_hasChange(journalArticle));
+
+		return journalArticles;
+	}
+
+	@Override
+	public List<JournalArticle> getStructureArticles(
+		String[] ddmStructureKeys) {
+
+		List<JournalArticle> journalArticles = new ArrayList<>(
+			super.getStructureArticles(ddmStructureKeys));
+
+		journalArticles.removeIf(journalArticle -> !_hasChange(journalArticle));
+
+		return journalArticles;
+	}
+
+	@Override
+	public List<JournalArticle> getTemplateArticles(
+		long groupId, String ddmTemplateKey) {
+
+		List<JournalArticle> journalArticles = new ArrayList<>(
+			super.getTemplateArticles(groupId, ddmTemplateKey));
+
+		journalArticles.removeIf(journalArticle -> !_hasChange(journalArticle));
+
+		return journalArticles;
+	}
+
+	@Override
+	public List<JournalArticle> getTemplateArticles(
+		long groupId, String ddmTemplateKey, int start, int end,
+		OrderByComparator<JournalArticle> obc) {
+
+		List<JournalArticle> journalArticles = new ArrayList<>(
+			super.getTemplateArticles(
+				groupId, ddmTemplateKey, start, end, obc));
+
+		journalArticles.removeIf(journalArticle -> !_hasChange(journalArticle));
+
+		return journalArticles;
 	}
 
 	@Override
@@ -580,6 +896,92 @@ public class CTJournalArticleLocalServiceWrapper
 			journalArticle, CTConstants.CT_CHANGE_TYPE_MODIFICATION);
 
 		return journalArticle;
+	}
+
+	@Override
+	public List<JournalArticle> search(
+		long groupId, List<Long> folderIds, Locale locale, int status,
+		int start, int end) {
+
+		List<JournalArticle> journalArticles = new ArrayList<>(
+			super.search(groupId, folderIds, locale, status, start, end));
+
+		journalArticles.removeIf(journalArticle -> !_hasChange(journalArticle));
+
+		return journalArticles;
+	}
+
+	@Override
+	public List<JournalArticle> search(
+		long groupId, long folderId, int status, int start, int end) {
+
+		List<JournalArticle> journalArticles = new ArrayList<>(
+			super.search(groupId, folderId, status, start, end));
+
+		journalArticles.removeIf(journalArticle -> !_hasChange(journalArticle));
+
+		return journalArticles;
+	}
+
+	@Override
+	public List<JournalArticle> search(
+		long companyId, long groupId, List<Long> folderIds, long classNameId,
+		String keywords, Double version, String ddmStructureKey,
+		String ddmTemplateKey, Date displayDateGT, Date displayDateLT,
+		int status, Date reviewDate, int start, int end,
+		OrderByComparator<JournalArticle> obc) {
+
+		List<JournalArticle> journalArticles = new ArrayList<>(
+			super.search(
+				companyId, groupId, folderIds, classNameId, keywords, version,
+				ddmStructureKey, ddmTemplateKey, displayDateGT, displayDateLT,
+				status, reviewDate, start, end, obc));
+
+		journalArticles.removeIf(journalArticle -> !_hasChange(journalArticle));
+
+		return journalArticles;
+	}
+
+	@Override
+	public List<JournalArticle> search(
+		long companyId, long groupId, List<Long> folderIds, long classNameId,
+		String articleId, Double version, String title, String description,
+		String content, String ddmStructureKey, String ddmTemplateKey,
+		Date displayDateGT, Date displayDateLT, int status, Date reviewDate,
+		boolean andOperator, int start, int end,
+		OrderByComparator<JournalArticle> obc) {
+
+		List<JournalArticle> journalArticles = new ArrayList<>(
+			super.search(
+				companyId, groupId, folderIds, classNameId, articleId, version,
+				title, description, content, ddmStructureKey, ddmTemplateKey,
+				displayDateGT, displayDateLT, status, reviewDate, andOperator,
+				start, end, obc));
+
+		journalArticles.removeIf(journalArticle -> !_hasChange(journalArticle));
+
+		return journalArticles;
+	}
+
+	@Override
+	public List<JournalArticle> search(
+		long companyId, long groupId, List<Long> folderIds, long classNameId,
+		String articleId, Double version, String title, String description,
+		String content, String[] ddmStructureKeys, String[] ddmTemplateKeys,
+		Date displayDateGT, Date displayDateLT, int status, Date reviewDate,
+		boolean andOperator, int start, int end,
+		OrderByComparator<JournalArticle> obc) {
+
+		List<JournalArticle> journalArticles = new ArrayList<>(
+			super.search(
+				companyId, groupId, folderIds, classNameId, articleId, version,
+				title, description, content, ddmStructureKeys, ddmTemplateKeys,
+				displayDateGT, displayDateLT, status, reviewDate, andOperator,
+				start, end, obc));
+
+		journalArticles.removeIf(journalArticle -> !_hasChange(journalArticle));
+
+		return journalArticles;
 	}
 
 	@Override

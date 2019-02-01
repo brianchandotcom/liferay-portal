@@ -56,13 +56,13 @@
 	"devDependencies": {
 		"babel-cli": "^6.26.0",
 		"babel-eslint": "^8.2.6",
-		"babel-plugin-module-resolver": "^3.1.1",
 		"babel-plugin-transform-class-properties": "^6.24.1",
 		"babel-plugin-transform-decorators-legacy": "^1.3.5",
 		"babel-plugin-transform-object-rest-spread": "^6.26.0",
 		"babel-preset-env": "^1.7.0",
 		"browser-sync": "^2.24.7",
 		"check-source-formatting": "^2.0.4",
+		"cross-env": "^5.2.0",
 		"eslint": "^4.10.0",
 		"eslint-config-liferay": "^2.0.8",
 		"eslint-plugin-react": "^7.4.0",
@@ -76,6 +76,7 @@
 		"rimraf": "^2.6.2"
 	},
 	"jest": {
+		"automock": false,
 		"coverageDirectory": "build/coverage",
 		"coverageThreshold": {
 			"global": {
@@ -84,10 +85,12 @@
 			}
 		},
 		"moduleNameMapper": {
-			"clay-(.*)$": "<rootDir>/node_modules/clay-$1"
+			"(.*)\\.soy$": "$1.soy.js",
+			"source\/(.*)": "<rootDir>/src/main/resources/META-INF/resources/metal/$1.js"
 		},
 		"modulePathIgnorePatterns": [
 			"/__fixtures__/",
+			"/__mock__/",
 			"/classes/"
 		],
 		"setupTestFrameworkScriptFile": "<rootDir>/test/metal/setup/setup_framework.es.js",
@@ -119,8 +122,8 @@
 		"lint": "eslint src/main/resources/META-INF/resources/metal/",
 		"start": "node watch.js",
 		"test:coverage:open": "opn build/coverage/lcov-report/index.html",
-		"test:snapshots": "npm run build-soy-tests && NODE_ENV=test jest --coverage -u && npm run clean",
-		"test_DISABLED": "npm run build-soy-tests && NODE_ENV=test jest --coverage && npm run clean"
+		"test:snapshots": "npm run build-soy-tests && cross-env NODE_ENV=test jest --coverage -u && npm run clean",
+		"test": "npm run build-soy-tests && cross-env NODE_ENV=test jest --coverage && npm run clean"
 	},
 	"version": "4.0.0"
 }

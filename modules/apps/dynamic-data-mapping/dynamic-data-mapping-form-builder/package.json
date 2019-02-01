@@ -99,7 +99,6 @@
 		"babel-cli": "^6.26.0",
 		"babel-core": "^6.26.3",
 		"babel-eslint": "^8.2.6",
-		"babel-plugin-module-resolver": "^3.1.1",
 		"babel-plugin-transform-class-properties": "^6.24.1",
 		"babel-plugin-transform-decorators-legacy": "^1.3.5",
 		"babel-plugin-transform-object-rest-spread": "^6.26.0",
@@ -133,12 +132,14 @@
 		},
 		"moduleNameMapper": {
 			"(.*)\\.soy$": "$1.soy.js",
-			"clay-(.*)$": "<rootDir>/node_modules/clay-$1"
+			"fixtures\/(.*)": "<rootDir>/test/metal/js/__fixtures__/$1.js",
+			"mock\/(.*)": "<rootDir>/test/metal/js/__mock__/$1.js",
+			"source\/(.*)": "<rootDir>/src/main/resources/META-INF/resources/metal/js/$1.js"
 		},
 		"modulePathIgnorePatterns": [
-			"/classes/",
+			"/__fixtures__/",
 			"/__mock__/",
-			"/__fixtures__/"
+			"/classes/"
 		],
 		"setupFiles": [
 			"<rootDir>/test/metal/setup/setup.js"
@@ -170,8 +171,8 @@
 		"format": "npm run csf -- -i",
 		"start": "node watch.js",
 		"test:coverage:open": "opn build/coverage/lcov-report/index.html",
-		"test:snapshots": "npm run build-soy-tests && NODE_ENV=test jest --coverage -u && npm run clean",
-		"test_DISABLED": "npm run build-soy-tests && cross-env NODE_ENV=test jest --coverage && npm run clean"
+		"test:snapshots": "npm run build-soy-tests && cross-env NODE_ENV=test jest --coverage -u && npm run clean",
+		"test": "npm run build-soy-tests && cross-env NODE_ENV=test jest --coverage && npm run clean"
 	},
 	"version": "2.0.0"
 }

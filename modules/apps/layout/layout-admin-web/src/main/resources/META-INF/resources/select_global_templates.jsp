@@ -50,38 +50,3 @@ SelectLayoutPageTemplateEntryDisplayContext selectLayoutPageTemplateEntryDisplay
 		/>
 	</liferay-ui:search-container>
 </div>
-
-<aui:script use="aui-base">
-	var addLayoutActionOptionQueryClickHandler = A.one('#<portlet:namespace />layoutPageTemplateEntries').delegate(
-		'click',
-		function(event) {
-			var actionElement = event.currentTarget;
-
-			Liferay.Util.openWindow(
-				{
-					dialog: {
-						destroyOnHide: true,
-						height: 480,
-						resizable: false,
-						width: 640
-					},
-					dialogIframe: {
-						bodyCssClass: 'dialog-with-footer'
-					},
-					id: '<portlet:namespace />addLayoutDialog',
-					title: '<liferay-ui:message key="add-page" />',
-					uri: actionElement.getData('add-layout-url')
-				}
-			);
-		},
-		'.add-layout-prototype-action-option'
-	);
-
-	function handleDestroyPortlet () {
-		addLayoutActionOptionQueryClickHandler.detach();
-
-		Liferay.detach('destroyPortlet', handleDestroyPortlet);
-	}
-
-	Liferay.on('destroyPortlet', handleDestroyPortlet);
-</aui:script>

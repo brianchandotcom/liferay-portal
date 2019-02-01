@@ -36,6 +36,9 @@ Export-Package:\
 	com.liferay.portal.search.permission,\
 	com.liferay.portal.search.query,\
 	com.liferay.portal.search.query.field,\
+	com.liferay.portal.search.query.function,\
+	com.liferay.portal.search.query.function.score,\
+	com.liferay.portal.search.query.geolocation,\
 	com.liferay.portal.search.query.util,\
 	com.liferay.portal.search.script,\
 	com.liferay.portal.search.searcher,\

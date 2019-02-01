@@ -250,9 +250,9 @@ public class MetadataManagerImpl
 	public EntityDescriptor getEntityDescriptor(HttpServletRequest request)
 		throws SamlException {
 
-		String portalURL = _portal.getPortalURL(request, isSSLRequired());
-
 		try {
+			String portalURL = _portal.getPortalURL(request, isSSLRequired());
+
 			if (_samlProviderConfigurationHelper.isRoleIdp()) {
 				return MetadataGeneratorUtil.buildIdpEntityDescriptor(
 					portalURL, getLocalEntityId(), isWantAuthnRequestSigned(),

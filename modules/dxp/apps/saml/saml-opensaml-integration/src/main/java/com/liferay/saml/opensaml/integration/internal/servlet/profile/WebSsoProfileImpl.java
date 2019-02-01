@@ -649,7 +649,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 					assertions.add(_decrypter.decrypt(encryptedAssertion));
 				}
 				catch (DecryptionException de) {
-					_log.error("Assertion decryption failed", de);
+					_log.error("Unable to assertion decryption", de);
 				}
 			}
 		}

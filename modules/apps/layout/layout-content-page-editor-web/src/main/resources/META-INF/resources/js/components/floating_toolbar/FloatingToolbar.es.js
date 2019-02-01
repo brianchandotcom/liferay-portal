@@ -44,17 +44,30 @@ class FloatingToolbar extends Component {
 	}
 
 	/**
-	 * Handle button click
+	 * @param {string} selectedPanelId
+	 * @return {string}
+	 * @review
+	 */
+	syncSelectedPanelId(selectedPanelId) {
+		this._selectedPanel = this.panels.find(
+			panel => panel.panelId === selectedPanelId
+		);
+
+		return selectedPanelId;
+	}
+
+	/**
+	 * Handle panel button click
 	 * @param {MouseEvent} event Click event
 	 */
-	_handleButtonClick(event) {
+	_handlePanelButtonClick(event) {
 		const {panelId = null} = event.delegateTarget.dataset;
 
-		if (this._selectedPanelId === panelId) {
-			this._selectedPanelId = null;
+		if (this.selectedPanelId === panelId) {
+			this.selectedPanelId = null;
 		}
 		else {
-			this._selectedPanelId = panelId;
+			this.selectedPanelId = panelId;
 		}
 	}
 
@@ -73,7 +86,12 @@ class FloatingToolbar extends Component {
 	 */
 	_align() {
 		if (this.element && this.anchorElement) {
-			Align.align(this.element, this.anchorElement, Align.BottomRight);
+			Align.align(
+				this.element,
+				this.anchorElement,
+				Align.BottomRight,
+				false
+			);
 		}
 	}
 
@@ -88,16 +106,15 @@ class FloatingToolbar extends Component {
 FloatingToolbar.STATE = {
 
 	/**
-	 * Selected panel ID.
+	 * Selected panel
 	 * @default null
 	 * @instance
-	 * @memberOf FloatingToolbar
-	 * @private
+	 * @memberof FloatingToolbar
 	 * @review
-	 * @type {string|null}
+	 * @type {object|null}
 	 */
-	_selectedPanelId: Config
-		.string()
+	_selectedPanel: Config
+		.object()
 		.internal()
 		.value(null),
 
@@ -131,7 +148,21 @@ FloatingToolbar.STATE = {
 				}
 			)
 		)
-		.required()
+		.required(),
+
+	/**
+	 * Selected panel ID.
+	 * @default null
+	 * @instance
+	 * @memberOf FloatingToolbar
+	 * @private
+	 * @review
+	 * @type {string|null}
+	 */
+	selectedPanelId: Config
+		.string()
+		.internal()
+		.value(null)
 };
 
 const ConnectedFloatingToolbar = getConnectedComponent(

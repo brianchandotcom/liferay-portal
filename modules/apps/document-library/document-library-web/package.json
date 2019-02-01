@@ -21,8 +21,11 @@
 	"scripts": {
 		"build": "npm run build:soy && npm run compile && liferay-npm-bundler && npm run cleanSoy",
 		"build:soy": "metalsoy --soyDeps \"node_modules/+(clay-*|com.liferay.frontend.js.web)/**/*.soy\"",
+		"checkFormat": "npm run csf",
 		"cleanSoy": "rimraf src/**/*.soy.js",
-		"compile": "cross-env NODE_ENV=production babel --source-maps -d classes/META-INF/resources src/main/resources/META-INF/resources"
+		"compile": "cross-env NODE_ENV=production babel --source-maps -d classes/META-INF/resources src/main/resources/META-INF/resources",
+		"csf": "csf src/**/*.{es.js,soy,scss}",
+		"format": "npm run csf -- -i"
 	},
 	"version": "4.0.0"
 }

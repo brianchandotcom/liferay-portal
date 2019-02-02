@@ -28,7 +28,6 @@ import com.liferay.petra.string.StringUtil;
 import java.io.IOException;
 import java.io.InputStream;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -38,22 +37,17 @@ import java.util.jar.Attributes;
 import java.util.jar.JarFile;
 import java.util.jar.Manifest;
 
+import org.jboss.arquillian.container.test.impl.ContainerTestRemoteExtension;
+import org.jboss.arquillian.container.test.impl.RemoteExtensionLoader;
 import org.jboss.arquillian.container.test.spi.RemoteLoadableExtension;
 import org.jboss.arquillian.container.test.spi.client.deployment.ApplicationArchiveProcessor;
-import org.jboss.arquillian.container.test.spi.client.deployment.AuxiliaryArchiveAppender;
-import org.jboss.arquillian.core.api.Instance;
-import org.jboss.arquillian.core.api.annotation.Inject;
-import org.jboss.arquillian.core.spi.ServiceLoader;
+import org.jboss.arquillian.core.spi.ExtensionLoader;
 import org.jboss.arquillian.test.spi.TestClass;
 import org.jboss.shrinkwrap.api.Archive;
-import org.jboss.shrinkwrap.api.ArchivePath;
-import org.jboss.shrinkwrap.api.ArchivePaths;
 import org.jboss.shrinkwrap.api.Node;
-import org.jboss.shrinkwrap.api.asset.ArchiveAsset;
 import org.jboss.shrinkwrap.api.asset.Asset;
 import org.jboss.shrinkwrap.api.asset.ByteArrayAsset;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
-import org.jboss.shrinkwrap.api.exporter.ZipExporter;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 
 /**
@@ -71,10 +65,15 @@ public class OSGiAllInProcessor implements ApplicationArchiveProcessor {
 			_addArquillianDependencies(javaArchive);
 
 			javaArchive.add(EmptyAsset.INSTANCE, "/arquillian.remote.marker");
-			javaArchive.addAsServiceProviderAndClasses(
+			javaArchive.addClasses(
+				LiferayArquillianJUnitBridgeExtension.class,
+				JUnitBridgeObserver.class);
+			javaArchive.addAsServiceProvider(
 				RemoteLoadableExtension.class,
+				ContainerTestRemoteExtension.class,
 				LiferayArquillianJUnitBridgeExtension.class);
-			javaArchive.addClasses(Arquillian.class, JUnitBridgeObserver.class);
+			javaArchive.addAsServiceProvider(
+				ExtensionLoader.class, RemoteExtensionLoader.class);
 
 			Package pkg = Arquillian.class.getPackage();
 
@@ -82,12 +81,8 @@ public class OSGiAllInProcessor implements ApplicationArchiveProcessor {
 
 			Manifest manifest = _getManifest(javaArchive);
 
-			Map<String, String> importPackages = _createImportPackages();
-
-			List<Archive<?>> auxiliaryArchives = _loadAuxiliaryArchives(
-				javaArchive, manifest, importPackages);
-
-			_cleanRepeatedImports(auxiliaryArchives, manifest, importPackages);
+			Map<String, String> importPackages = _createImportPackages(
+				manifest);
 
 			importPackages.remove(pkg.getName());
 
@@ -112,6 +107,15 @@ public class OSGiAllInProcessor implements ApplicationArchiveProcessor {
 
 	private void _addArquillianDependencies(JavaArchive javaArchive) {
 		javaArchive.addPackage(JMXTestRunner.class.getPackage());
+		javaArchive.addPackages(
+			true, "org.jboss.arquillian.core",
+			"org.jboss.arquillian.container.spi",
+			"org.jboss.arquillian.container.impl",
+			"org.jboss.arquillian.container.test.api",
+			"org.jboss.arquillian.container.test.spi",
+			"org.jboss.arquillian.container.test.impl",
+			"org.jboss.arquillian.config", "org.jboss.arquillian.test",
+			"org.jboss.shrinkwrap.api", "org.jboss.shrinkwrap.descriptor.api");
 	}
 
 	private void _addTestClass(JavaArchive javaArchive, TestClass testClass) {
@@ -124,10 +128,12 @@ public class OSGiAllInProcessor implements ApplicationArchiveProcessor {
 		}
 	}
 
-	private void _cleanRepeatedImports(
-			Collection<Archive<?>> auxiliaryArchives, Manifest manifest,
-			Map<String, String> importPackages)
-		throws IOException {
+	private Map<String, String> _createImportPackages(Manifest manifest) {
+		Map<String, String> importPackages = new LinkedHashMap<>();
+
+		for (String importPackage : _IMPORTS_PACKAGES) {
+			importPackages.put(importPackage, importPackage);
+		}
 
 		Attributes mainAttributes = manifest.getMainAttributes();
 
@@ -148,26 +154,7 @@ public class OSGiAllInProcessor implements ApplicationArchiveProcessor {
 				importPackage = originalImportPackage.substring(0, index);
 			}
 
-			ArchivePath archivePath = ArchivePaths.create(
-				importPackage.replace(CharPool.PERIOD, CharPool.SLASH));
-
-			for (Archive<?> archive : auxiliaryArchives) {
-				if (archive.contains(archivePath)) {
-					iterator.remove();
-
-					continue packages;
-				}
-			}
-
 			importPackages.put(importPackage, originalImportPackage);
-		}
-	}
-
-	private Map<String, String> _createImportPackages() {
-		Map<String, String> importPackages = new LinkedHashMap<>();
-
-		for (String importPackage : _IMPORTS_PACKAGES) {
-			importPackages.put(importPackage, importPackage);
 		}
 
 		return importPackages;
@@ -185,71 +172,6 @@ public class OSGiAllInProcessor implements ApplicationArchiveProcessor {
 		try (InputStream inputStream = manifestAsset.openStream()) {
 			return new Manifest(inputStream);
 		}
-	}
-
-	private List<Archive<?>> _loadAuxiliaryArchives(
-			JavaArchive javaArchive, Manifest manifest,
-			Map<String, String> importPackages)
-		throws IOException {
-
-		List<Archive<?>> archives = new ArrayList<>();
-
-		ServiceLoader serviceLoader = _serviceLoaderInstance.get();
-
-		Collection<AuxiliaryArchiveAppender> archiveAppenders =
-			serviceLoader.all(AuxiliaryArchiveAppender.class);
-
-		List<String> bundleClassPaths = new ArrayList<>();
-
-		bundleClassPaths.add(StringPool.PERIOD);
-
-		for (AuxiliaryArchiveAppender archiveAppender : archiveAppenders) {
-			Archive<?> auxiliaryArchive =
-				archiveAppender.createAuxiliaryArchive();
-
-			if (auxiliaryArchive == null) {
-				continue;
-			}
-
-			archives.add(auxiliaryArchive);
-
-			String path = "extension/" + auxiliaryArchive.getName();
-
-			javaArchive.addAsResource(
-				new ArchiveAsset(auxiliaryArchive, ZipExporter.class), path);
-
-			bundleClassPaths.add(path);
-
-			Manifest auxiliaryArchiveManifest = _getManifest(auxiliaryArchive);
-
-			if (auxiliaryArchiveManifest == null) {
-				continue;
-			}
-
-			Attributes mainAttributes =
-				auxiliaryArchiveManifest.getMainAttributes();
-
-			String importPackageString = mainAttributes.getValue(
-				_importPackageName);
-
-			for (String newImportPackage :
-					StringUtil.split(importPackageString)) {
-
-				String importPackage = newImportPackage;
-
-				int index = newImportPackage.indexOf(CharPool.SEMICOLON);
-
-				if (index != -1) {
-					importPackage = newImportPackage.substring(0, index);
-				}
-
-				importPackages.put(importPackage, newImportPackage);
-			}
-		}
-
-		_setManifestValues(manifest, _bundleClassPathName, bundleClassPaths);
-
-		return archives;
 	}
 
 	private void _setManifest(Archive<?> archive, Manifest manifest)
@@ -298,12 +220,7 @@ public class OSGiAllInProcessor implements ApplicationArchiveProcessor {
 
 	private static final Attributes.Name _bundleActivatorName =
 		new Attributes.Name("Bundle-Activator");
-	private static final Attributes.Name _bundleClassPathName =
-		new Attributes.Name("Bundle-ClassPath");
 	private static final Attributes.Name _importPackageName =
 		new Attributes.Name("Import-Package");
-
-	@Inject
-	private Instance<ServiceLoader> _serviceLoaderInstance;
 
 }

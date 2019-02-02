@@ -15,7 +15,6 @@
 package com.liferay.arquillian.extension.junit.bridge.container;
 
 import java.util.List;
-import java.util.concurrent.Callable;
 import java.util.function.BiConsumer;
 
 import org.jboss.arquillian.config.descriptor.api.ContainerDef;
@@ -51,60 +50,45 @@ import org.jboss.arquillian.core.api.annotation.Observes;
 public class ContainerDeployController {
 
 	public void deploy(@Observes DeployDeployment deployDeployment)
-		throws Exception {
+		throws DeploymentException {
 
-		_executeCallable(
-			new Callable<Void>() {
+		DeployableContainer<?> deployableContainer =
+			deployDeployment.getDeployableContainer();
 
-				@Override
-				public Void call() throws DeploymentException {
-					DeployableContainer<?> deployableContainer =
-						deployDeployment.getDeployableContainer();
+		Deployment deployment = deployDeployment.getDeployment();
 
-					Deployment deployment = deployDeployment.getDeployment();
+		DeploymentDescription deploymentDescription =
+			deployment.getDescription();
 
-					DeploymentDescription deploymentDescription =
-						deployment.getDescription();
+		_deploymentDescriptionInstanceProducer.set(deploymentDescription);
 
-					_deploymentDescriptionInstanceProducer.set(
-						deploymentDescription);
+		_deploymentInstanceProducer.set(deployment);
 
-					_deploymentInstanceProducer.set(deployment);
+		_deployerEvent.fire(
+			new BeforeDeploy(deployableContainer, deploymentDescription));
 
-					_deployerEvent.fire(
-						new BeforeDeploy(
-							deployableContainer, deploymentDescription));
+		try {
+			if (deploymentDescription.isArchiveDeployment()) {
+				ProtocolMetaData protocolMetaData = deployableContainer.deploy(
+					deploymentDescription.getTestableArchive());
 
-					try {
-						if (deploymentDescription.isArchiveDeployment()) {
-							ProtocolMetaData protocolMetaData =
-								deployableContainer.deploy(
-									deploymentDescription.getTestableArchive());
+				_protocolMetadataInstanceProducer.set(protocolMetaData);
+			}
+			else {
+				deployableContainer.deploy(
+					deploymentDescription.getDescriptor());
+			}
 
-							_protocolMetadataInstanceProducer.set(
-								protocolMetaData);
-						}
-						else {
-							deployableContainer.deploy(
-								deploymentDescription.getDescriptor());
-						}
+			deployment.deployed();
+		}
+		catch (DeploymentException de) {
+			deployment.deployedWithError(de);
 
-						deployment.deployed();
-					}
-					catch (DeploymentException de) {
-						deployment.deployedWithError(de);
+			throw de;
+		}
 
-						throw de;
-					}
-
-					_deployerEvent.fire(
-						new AfterDeploy(
-							deployableContainer, deploymentDescription));
-
-					return null;
-				}
-
-			});
+		_deployerEvent.fire(
+			new AfterDeploy(deployableContainer, deploymentDescription));
 	}
 
 	public void deployManaged(
@@ -139,54 +123,42 @@ public class ContainerDeployController {
 	}
 
 	public void undeploy(@Observes UnDeployDeployment unDeployDeployment)
-		throws Exception {
+		throws DeploymentException {
 
-		_executeCallable(
-			new Callable<Void>() {
+		DeployableContainer<?> deployableContainer =
+			unDeployDeployment.getDeployableContainer();
 
-				@Override
-				public Void call() throws DeploymentException {
-					DeployableContainer<?> deployableContainer =
-						unDeployDeployment.getDeployableContainer();
+		Deployment deployment = unDeployDeployment.getDeployment();
 
-					Deployment deployment = unDeployDeployment.getDeployment();
+		DeploymentDescription deploymentDescription =
+			deployment.getDescription();
 
-					DeploymentDescription deploymentDescription =
-						deployment.getDescription();
+		_deployerEvent.fire(
+			new BeforeUnDeploy(deployableContainer, deploymentDescription));
 
-					_deployerEvent.fire(
-						new BeforeUnDeploy(
-							deployableContainer, deploymentDescription));
-
-					try {
-						if (deployment.getDescription().isArchiveDeployment()) {
-							try {
-								deployableContainer.undeploy(
-									deploymentDescription.getTestableArchive());
-							}
-							catch (DeploymentException de) {
-								if (!deployment.hasDeploymentError()) {
-									throw de;
-								}
-							}
-						}
-						else {
-							deployableContainer.undeploy(
-								deploymentDescription.getDescriptor());
-						}
-					}
-					finally {
-						deployment.undeployed();
-					}
-
-					_deployerEvent.fire(
-						new AfterUnDeploy(
-							deployableContainer, deploymentDescription));
-
-					return null;
+		try {
+			if (deployment.getDescription().isArchiveDeployment()) {
+				try {
+					deployableContainer.undeploy(
+						deploymentDescription.getTestableArchive());
 				}
+				catch (DeploymentException de) {
+					if (!deployment.hasDeploymentError()) {
+						throw de;
+					}
+				}
+			}
+			else {
+				deployableContainer.undeploy(
+					deploymentDescription.getDescriptor());
+			}
+		}
+		finally {
+			deployment.undeployed();
+		}
 
-			});
+		_deployerEvent.fire(
+			new AfterUnDeploy(deployableContainer, deploymentDescription));
 	}
 
 	public void undeployManaged(
@@ -206,14 +178,6 @@ public class ContainerDeployController {
 				}
 
 			});
-	}
-
-	private void _executeCallable(Callable<Void> callable) throws Exception {
-		Injector injector = _injectorInstance.get();
-
-		injector.inject(callable);
-
-		callable.call();
 	}
 
 	private void _forEachDeployedDeployment(

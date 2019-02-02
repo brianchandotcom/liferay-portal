@@ -22,13 +22,12 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
@@ -48,11 +47,9 @@ import java.util.List;
 public class UpgradeContentImages extends UpgradeProcess {
 
 	public UpgradeContentImages(
-		JournalArticleImageUpgradeUtil journalArticleImageUpgradeUtil,
-		UserLocalService userLocalService) {
+		JournalArticleImageUpgradeUtil journalArticleImageUpgradeUtil) {
 
 		_journalArticleImageUpgradeUtil = journalArticleImageUpgradeUtil;
-		_userLocalService = userLocalService;
 	}
 
 	protected String convertTypeImageElements(
@@ -187,20 +184,7 @@ public class UpgradeContentImages extends UpgradeProcess {
 			String id)
 		throws PortalException {
 
-		User user = _userLocalService.fetchUser(userId);
-
-		if (user == null) {
-			user = _userLocalService.getFallbackUser(companyId);
-
-			userId = user.getUserId();
-
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					StringBundler.concat(
-						"UserId for ", id,
-						" has been changed to fallback user."));
-			}
-		}
+		userId = PortalUtil.getValidUserId(companyId, userId);
 
 		long folderId = _journalArticleImageUpgradeUtil.getFolderId(
 			userId, groupId, resourcePrimKey);
@@ -228,6 +212,5 @@ public class UpgradeContentImages extends UpgradeProcess {
 
 	private final JournalArticleImageUpgradeUtil
 		_journalArticleImageUpgradeUtil;
-	private final UserLocalService _userLocalService;
 
 }

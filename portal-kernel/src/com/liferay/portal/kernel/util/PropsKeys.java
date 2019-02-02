@@ -1265,24 +1265,6 @@ public interface PropsKeys {
 	public static final String FACEBOOK_CONNECT_VERIFIED_ACCOUNT_REQUIRED =
 		"facebook.connect.verified.account.required";
 
-	public static final String FALLBACK_USER_EMAIL_ADDRESS_PREFIX =
-		"fallback.user.email.address.prefix";
-
-	public static final String FALLBACK_USER_FIRST_NAME =
-		"fallback.user.first.name";
-
-	public static final String FALLBACK_USER_LAST_NAME =
-		"fallback.user.last.name";
-
-	public static final String FALLBACK_USER_MIDDLE_NAME =
-		"fallback.user.middle.name";
-
-	public static final String FALLBACK_USER_PASSWORD =
-		"fallback.user.password";
-
-	public static final String FALLBACK_USER_SCREEN_NAME =
-		"fallback.user.screen.name";
-
 	public static final String FIELD_EDITABLE_DOMAINS =
 		"field.editable.domains";
 

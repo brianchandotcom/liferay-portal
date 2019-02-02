@@ -128,7 +128,6 @@ import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.TimeZoneUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -174,7 +173,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.TimeZone;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -2205,68 +2203,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		User user = getDefaultUser(companyId);
 
 		return user.getUserId();
-	}
-
-	/**
-	 * Returns the fallback user for the company.
-	 *
-	 * @param  companyId the primary key of the company
-	 * @return the default user for the company
-	 */
-	@Override
-	public User getFallbackUser(long companyId) throws PortalException {
-		Company company = companyLocalService.getCompany(companyId);
-
-		User fallbackUser = fetchUserByScreenName(
-			companyId, PropsValues.FALLBACK_USER_SCREEN_NAME);
-
-		if (fallbackUser == null) {
-			long userId = counterLocalService.increment();
-
-			fallbackUser = userPersistence.create(userId);
-
-			fallbackUser.setCompanyId(company.getCompanyId());
-			fallbackUser.setDefaultUser(false);
-			fallbackUser.setContactId(counterLocalService.increment());
-			fallbackUser.setPassword(PropsValues.FALLBACK_USER_PASSWORD);
-			fallbackUser.setScreenName(PropsValues.FALLBACK_USER_SCREEN_NAME);
-			fallbackUser.setEmailAddress(
-				PropsValues.FALLBACK_USER_EMAIL_ADDRESS_PREFIX + StringPool.AT +
-					company.getMx());
-			fallbackUser.setFirstName(PropsValues.FALLBACK_USER_FIRST_NAME);
-			fallbackUser.setMiddleName(PropsValues.FALLBACK_USER_MIDDLE_NAME);
-			fallbackUser.setLastName(PropsValues.FALLBACK_USER_LAST_NAME);
-
-			Locale companyDefaultLocale = LocaleUtil.fromLanguageId(
-				PropsValues.COMPANY_DEFAULT_LOCALE);
-
-			fallbackUser.setLanguageId(
-				LocaleUtil.toLanguageId(companyDefaultLocale));
-
-			if (Validator.isNotNull(PropsValues.COMPANY_DEFAULT_TIME_ZONE)) {
-				fallbackUser.setTimeZoneId(
-					PropsValues.COMPANY_DEFAULT_TIME_ZONE);
-			}
-			else {
-				TimeZone timeZone = TimeZoneUtil.getDefault();
-
-				fallbackUser.setTimeZoneId(timeZone.getID());
-			}
-
-			String greeting = LanguageUtil.format(
-				fallbackUser.getLocale(), "welcome", null, false);
-
-			fallbackUser.setGreeting(greeting + StringPool.EXCLAMATION);
-
-			fallbackUser.setLoginDate(new Date());
-			fallbackUser.setFailedLoginAttempts(0);
-			fallbackUser.setAgreedToTermsOfUse(true);
-			fallbackUser.setStatus(WorkflowConstants.STATUS_APPROVED);
-
-			userPersistence.update(fallbackUser);
-		}
-
-		return fallbackUser;
 	}
 
 	/**

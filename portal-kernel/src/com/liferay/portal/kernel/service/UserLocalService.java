@@ -901,15 +901,6 @@ public interface UserLocalService extends BaseLocalService,
 		PortletDataContext portletDataContext);
 
 	/**
-	* Returns the fallback user for the company.
-	*
-	* @param companyId the primary key of the company
-	* @return the default user for the company
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public User getFallbackUser(long companyId) throws PortalException;
-
-	/**
 	* Returns the groupIds of the groups associated with the user.
 	*
 	* @param userId the userId of the user

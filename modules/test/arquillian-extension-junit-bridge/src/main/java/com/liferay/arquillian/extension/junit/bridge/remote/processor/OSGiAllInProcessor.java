@@ -14,6 +14,9 @@
 
 package com.liferay.arquillian.extension.junit.bridge.remote.processor;
 
+import com.liferay.arquillian.extension.junit.bridge.LiferayArquillianJUnitBridgeExtension;
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.arquillian.extension.junit.bridge.observer.JUnitBridgeObserver;
 import com.liferay.arquillian.extension.junit.bridge.protocol.jmx.JMXTestRunner;
 import com.liferay.arquillian.extension.junit.bridge.remote.activator.ArquillianBundleActivator;
 import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
@@ -35,6 +38,7 @@ import java.util.jar.Attributes;
 import java.util.jar.JarFile;
 import java.util.jar.Manifest;
 
+import org.jboss.arquillian.container.test.spi.RemoteLoadableExtension;
 import org.jboss.arquillian.container.test.spi.client.deployment.ApplicationArchiveProcessor;
 import org.jboss.arquillian.container.test.spi.client.deployment.AuxiliaryArchiveAppender;
 import org.jboss.arquillian.core.api.Instance;
@@ -48,6 +52,7 @@ import org.jboss.shrinkwrap.api.Node;
 import org.jboss.shrinkwrap.api.asset.ArchiveAsset;
 import org.jboss.shrinkwrap.api.asset.Asset;
 import org.jboss.shrinkwrap.api.asset.ByteArrayAsset;
+import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.exporter.ZipExporter;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 
@@ -65,6 +70,16 @@ public class OSGiAllInProcessor implements ApplicationArchiveProcessor {
 
 			_addArquillianDependencies(javaArchive);
 
+			javaArchive.add(EmptyAsset.INSTANCE, "/arquillian.remote.marker");
+			javaArchive.addAsServiceProviderAndClasses(
+				RemoteLoadableExtension.class,
+				LiferayArquillianJUnitBridgeExtension.class);
+			javaArchive.addClasses(Arquillian.class, JUnitBridgeObserver.class);
+
+			Package pkg = Arquillian.class.getPackage();
+
+			javaArchive.addPackages(false, pkg);
+
 			Manifest manifest = _getManifest(javaArchive);
 
 			Map<String, String> importPackages = _createImportPackages();
@@ -73,6 +88,8 @@ public class OSGiAllInProcessor implements ApplicationArchiveProcessor {
 				javaArchive, manifest, importPackages);
 
 			_cleanRepeatedImports(auxiliaryArchives, manifest, importPackages);
+
+			importPackages.remove(pkg.getName());
 
 			_setManifestValues(
 				manifest, _importPackageName, importPackages.values());
@@ -149,7 +166,7 @@ public class OSGiAllInProcessor implements ApplicationArchiveProcessor {
 	private Map<String, String> _createImportPackages() {
 		Map<String, String> importPackages = new LinkedHashMap<>();
 
-		for (String importPackage : _OSGI_IMPORTS_PACKAGES) {
+		for (String importPackage : _IMPORTS_PACKAGES) {
 			importPackages.put(importPackage, importPackage);
 		}
 
@@ -268,11 +285,15 @@ public class OSGiAllInProcessor implements ApplicationArchiveProcessor {
 		mainAttributes.put(attributeName, sb.toString());
 	}
 
-	private static final String[] _OSGI_IMPORTS_PACKAGES = {
+	private static final String[] _IMPORTS_PACKAGES = {
 		"org.osgi.framework", "org.osgi.framework.wiring", "javax.management",
 		"javax.management.*", "javax.naming", "javax.naming.*",
 		"org.osgi.service.packageadmin", "org.osgi.service.startlevel",
-		"org.osgi.util.tracker"
+		"org.osgi.util.tracker", "org.junit.internal",
+		"org.junit.internal.runners", "org.junit.internal.runners.statements",
+		"org.junit.internal.runners.model", "org.junit.rules",
+		"org.junit.runners", "org.junit.runners.model",
+		"org.junit.runner.manipulation", "org.junit.runner.notification"
 	};
 
 	private static final Attributes.Name _bundleActivatorName =

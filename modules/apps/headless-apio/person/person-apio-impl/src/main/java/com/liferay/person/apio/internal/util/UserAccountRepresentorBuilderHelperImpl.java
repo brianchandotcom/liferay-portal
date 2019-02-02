@@ -51,7 +51,7 @@ public class UserAccountRepresentorBuilderHelperImpl
 		Representor.Builder<UserWrapper, Long> builder) {
 
 		return builder.types(
-			"Liferay:UserAccount", "Person"
+			"UserAccount"
 		).identifier(
 			User::getUserId
 		).addDate(

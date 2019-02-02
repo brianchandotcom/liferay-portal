@@ -108,7 +108,7 @@ public class MediaObjectNestedCollectionResource
 		Representor.Builder<FileEntry, Long> builder) {
 
 		return builder.types(
-			"Liferay:Document", "MediaObject"
+			"Document"
 		).identifier(
 			FileEntry::getFileEntryId
 		).addBidirectionalModel(

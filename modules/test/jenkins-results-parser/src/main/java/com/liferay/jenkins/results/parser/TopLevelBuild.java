@@ -685,6 +685,29 @@ public class TopLevelBuild extends BaseBuild {
 				".");
 
 			buildFailureElements.add(upstreamResultElement);
+
+			Map<String, String> startPropertiesTempMap =
+				getStartPropertiesTempMap();
+
+			String subrepositoryMergePullMentionUsers =
+				startPropertiesTempMap.get(
+					"SUBREPOSITORY_MERGE_PULL_MENTION_USERS");
+
+			if (subrepositoryMergePullMentionUsers != null) {
+				StringBuilder sb = new StringBuilder();
+
+				sb.append("cc");
+
+				for (String subrepositoryMergePullMentionUser :
+						subrepositoryMergePullMentionUsers.split(",")) {
+
+					sb.append(" @");
+					sb.append(subrepositoryMergePullMentionUser);
+				}
+
+				buildFailureElements.add(
+					Dom4JUtil.getNewElement("div", null, sb.toString()));
+			}
 		}
 
 		return buildFailureElements.toArray(

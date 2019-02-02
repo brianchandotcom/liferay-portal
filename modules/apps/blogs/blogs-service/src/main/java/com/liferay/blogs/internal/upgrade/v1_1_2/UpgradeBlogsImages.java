@@ -22,20 +22,17 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Image;
 import com.liferay.portal.kernel.model.Repository;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.ImageLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -50,12 +47,10 @@ public class UpgradeBlogsImages extends UpgradeProcess {
 
 	public UpgradeBlogsImages(
 		ImageLocalService imageLocalService,
-		PortletFileRepository portletFileRepository,
-		UserLocalService userLocalService) {
+		PortletFileRepository portletFileRepository) {
 
 		_imageLocalService = imageLocalService;
 		_portletFileRepository = portletFileRepository;
-		_userLocalService = userLocalService;
 	}
 
 	@Override
@@ -84,22 +79,8 @@ public class UpgradeBlogsImages extends UpgradeProcess {
 				long entryId = rs.getLong("entryId");
 				long groupId = rs.getLong("groupId");
 
-				long userId = rs.getLong("userId");
-
-				User user = _userLocalService.fetchUser(userId);
-
-				if (user == null) {
-					user = _userLocalService.getFallbackUser(companyId);
-
-					userId = user.getUserId();
-
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							StringBundler.concat(
-								"UserId for ", smallImageId,
-								" has been changed to fallback user."));
-					}
-				}
+				long userId = PortalUtil.getValidUserId(
+					companyId, rs.getLong("userId"));
 
 				byte[] bytes = smallImage.getTextObj();
 
@@ -165,11 +146,7 @@ public class UpgradeBlogsImages extends UpgradeProcess {
 		}
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		UpgradeBlogsImages.class);
-
 	private final ImageLocalService _imageLocalService;
 	private final PortletFileRepository _portletFileRepository;
-	private final UserLocalService _userLocalService;
 
 }

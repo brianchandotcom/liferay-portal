@@ -177,7 +177,7 @@ public class JournalServiceUpgrade implements UpgradeStepRegistrator {
 
 		registry.register(
 			"1.1.4", "1.1.5",
-			new UpgradeContentImages(journalArticleImageUpgradeUtil));
+			new UpgradeContentImages(_journalArticleImageUpgradeUtil));
 
 		registry.register(
 			"1.1.5", "1.1.6",

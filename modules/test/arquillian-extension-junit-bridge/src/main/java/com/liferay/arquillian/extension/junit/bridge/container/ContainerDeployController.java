@@ -14,9 +14,6 @@
 
 package com.liferay.arquillian.extension.junit.bridge.container;
 
-import java.util.List;
-import java.util.function.BiConsumer;
-
 import org.jboss.arquillian.config.descriptor.api.ContainerDef;
 import org.jboss.arquillian.container.spi.Container;
 import org.jboss.arquillian.container.spi.ContainerRegistry;
@@ -25,6 +22,7 @@ import org.jboss.arquillian.container.spi.client.container.DeploymentException;
 import org.jboss.arquillian.container.spi.client.deployment.Deployment;
 import org.jboss.arquillian.container.spi.client.deployment.DeploymentDescription;
 import org.jboss.arquillian.container.spi.client.deployment.DeploymentScenario;
+import org.jboss.arquillian.container.spi.client.deployment.DeploymentTargetDescription;
 import org.jboss.arquillian.container.spi.client.protocol.metadata.ProtocolMetaData;
 import org.jboss.arquillian.container.spi.context.annotation.DeploymentScoped;
 import org.jboss.arquillian.container.spi.event.DeployDeployment;
@@ -38,7 +36,6 @@ import org.jboss.arquillian.container.spi.event.container.BeforeDeploy;
 import org.jboss.arquillian.container.spi.event.container.BeforeUnDeploy;
 import org.jboss.arquillian.container.spi.event.container.DeployerEvent;
 import org.jboss.arquillian.core.api.Event;
-import org.jboss.arquillian.core.api.Injector;
 import org.jboss.arquillian.core.api.Instance;
 import org.jboss.arquillian.core.api.InstanceProducer;
 import org.jboss.arquillian.core.api.annotation.Inject;
@@ -94,32 +91,33 @@ public class ContainerDeployController {
 	public void deployManaged(
 		@Observes DeployManagedDeployments deployManagedDeployments) {
 
-		_forEachManagedDeployment(
-			new BiConsumer<Container, Deployment>() {
+		DeploymentScenario deploymentScenario =
+			_deploymentScenarioInstance.get();
 
-				@Override
-				public void accept(Container container, Deployment deployment) {
-					ContainerDef containerDef =
-						container.getContainerConfiguration();
+		Deployment deployment = deploymentScenario.deployment(
+			DeploymentTargetDescription.DEFAULT);
 
-					if (!"manual".equals(containerDef.getMode())) {
-						if (container.getState() != Container.State.STARTED) {
-							DeploymentDescription deploymentDescription =
-								deployment.getDescription();
+		ContainerRegistry containerRegistry = _containerRegistryInstance.get();
 
-							throw new IllegalStateException(
-								"Trying to deploy a managed deployment " +
-									deploymentDescription.getName() +
-										" to a non started managed contianer " +
-											container.getName());
-						}
+		DeploymentDescription deploymentDescription =
+			deployment.getDescription();
 
-						_deploymentEvent.fire(
-							new DeployDeployment(container, deployment));
-					}
-				}
+		Container container = containerRegistry.getContainer(
+			deploymentDescription.getTarget());
 
-			});
+		ContainerDef containerDef = container.getContainerConfiguration();
+
+		if (!"manual".equals(containerDef.getMode())) {
+			if (container.getState() != Container.State.STARTED) {
+				throw new IllegalStateException(
+					"Trying to deploy a managed deployment " +
+						deploymentDescription.getName() +
+							" to a non started managed contianer " +
+								container.getName());
+			}
+
+			_deploymentEvent.fire(new DeployDeployment(container, deployment));
+		}
 	}
 
 	public void undeploy(@Observes UnDeployDeployment unDeployDeployment)
@@ -164,72 +162,26 @@ public class ContainerDeployController {
 	public void undeployManaged(
 		@Observes UnDeployManagedDeployments unDeployManagedDeployments) {
 
-		_forEachDeployedDeployment(
-			new BiConsumer<Container, Deployment>() {
-
-				@Override
-				public void accept(Container container, Deployment deployment) {
-					if (container.getState().equals(Container.State.STARTED) &&
-						deployment.isDeployed()) {
-
-						_deploymentEvent.fire(
-							new UnDeployDeployment(container, deployment));
-					}
-				}
-
-			});
-	}
-
-	private void _forEachDeployedDeployment(
-		BiConsumer<Container, Deployment> biConsumer) {
-
-		DeploymentScenario scenario = _deploymentScenarioInstance.get();
-
-		if (scenario == null) {
-			return;
-		}
-
-		_forEachDeployment(
-			scenario.deployedDeploymentsInUnDeployOrder(), biConsumer);
-	}
-
-	private void _forEachDeployment(
-		List<Deployment> deployments,
-		BiConsumer<Container, Deployment> biConsumer) {
-
-		Injector injector = _injectorInstance.get();
-
-		injector.inject(biConsumer);
-
-		ContainerRegistry containerRegistry = _containerRegistryInstance.get();
-
-		if (containerRegistry == null) {
-			return;
-		}
-
-		for (Deployment deployment : deployments) {
-			DeploymentDescription deploymentDescription =
-				deployment.getDescription();
-
-			Container container = containerRegistry.getContainer(
-				deploymentDescription.getTarget());
-
-			biConsumer.accept(container, deployment);
-		}
-	}
-
-	private void _forEachManagedDeployment(
-		BiConsumer<Container, Deployment> biConsumer) {
-
 		DeploymentScenario deploymentScenario =
 			_deploymentScenarioInstance.get();
 
-		if (deploymentScenario == null) {
-			return;
-		}
+		Deployment deployment = deploymentScenario.deployment(
+			DeploymentTargetDescription.DEFAULT);
 
-		_forEachDeployment(
-			deploymentScenario.managedDeploymentsInDeployOrder(), biConsumer);
+		ContainerRegistry containerRegistry = _containerRegistryInstance.get();
+
+		DeploymentDescription deploymentDescription =
+			deployment.getDescription();
+
+		Container container = containerRegistry.getContainer(
+			deploymentDescription.getTarget());
+
+		if (container.getState().equals(Container.State.STARTED) &&
+			deployment.isDeployed()) {
+
+			_deploymentEvent.fire(
+				new UnDeployDeployment(container, deployment));
+		}
 	}
 
 	@Inject
@@ -252,9 +204,6 @@ public class ContainerDeployController {
 
 	@Inject
 	private Instance<DeploymentScenario> _deploymentScenarioInstance;
-
-	@Inject
-	private Instance<Injector> _injectorInstance;
 
 	@DeploymentScoped
 	@Inject

@@ -15,7 +15,6 @@
 package com.liferay.portal.service;
 
 import com.liferay.announcements.kernel.service.AnnouncementsDeliveryLocalServiceUtil;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
@@ -34,7 +33,6 @@ import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,43 +64,6 @@ public class UserLocalServiceTest {
 		User user = companyUsers.get(0);
 
 		Assert.assertFalse(user.isDefaultUser());
-	}
-
-	@Test
-	public void testGetFallbackUser() throws Exception {
-		_company = CompanyTestUtil.addCompany();
-
-		User fallbackUser = UserLocalServiceUtil.getFallbackUser(
-			_company.getCompanyId());
-
-		Assert.assertEquals(
-			PropsValues.FALLBACK_USER_EMAIL_ADDRESS_PREFIX + StringPool.AT +
-				_company.getMx(),
-			fallbackUser.getEmailAddress());
-		Assert.assertEquals(
-			PropsValues.FALLBACK_USER_FIRST_NAME, fallbackUser.getFirstName());
-		Assert.assertEquals(
-			PropsValues.FALLBACK_USER_MIDDLE_NAME,
-			fallbackUser.getMiddleName());
-		Assert.assertEquals(
-			PropsValues.FALLBACK_USER_LAST_NAME, fallbackUser.getLastName());
-		Assert.assertEquals(
-			PropsValues.FALLBACK_USER_SCREEN_NAME,
-			fallbackUser.getScreenName());
-	}
-
-	@Test
-	public void testGetFallbackUserIsNotGeneratedTwice() throws Exception {
-		_company = CompanyTestUtil.addCompany();
-
-		User initialFallbackUser = UserLocalServiceUtil.getFallbackUser(
-			_company.getCompanyId());
-
-		User finalFallbackUser = UserLocalServiceUtil.getFallbackUser(
-			_company.getCompanyId());
-
-		Assert.assertEquals(
-			initialFallbackUser.getUserId(), finalFallbackUser.getUserId());
 	}
 
 	@Test

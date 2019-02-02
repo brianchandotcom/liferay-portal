@@ -56,6 +56,19 @@ public abstract class BaseUpgradeBadColumnNames extends UpgradeProcess {
 			columnNames.length);
 
 		for (String columnName : columnNames) {
+			String newColumnName = columnName.concat(StringPool.UNDERLINE);
+
+			try (ResultSet columnResultSet = databaseMetaData.getColumns(
+					dbInspector.getCatalog(), dbInspector.getSchema(),
+					tableName,
+					dbInspector.normalizeName(
+						newColumnName, databaseMetaData))) {
+
+				if (columnResultSet.next()) {
+					continue;
+				}
+			}
+
 			try (ResultSet columnResultSet = databaseMetaData.getColumns(
 					dbInspector.getCatalog(), dbInspector.getSchema(),
 					tableName,
@@ -73,8 +86,7 @@ public abstract class BaseUpgradeBadColumnNames extends UpgradeProcess {
 				}
 			}
 
-			String columnSQL = columnSQLs.get(
-				columnName.concat(StringPool.UNDERLINE));
+			String columnSQL = columnSQLs.get(newColumnName);
 
 			if (Validator.isNull(columnSQL)) {
 				if (_log.isWarnEnabled()) {

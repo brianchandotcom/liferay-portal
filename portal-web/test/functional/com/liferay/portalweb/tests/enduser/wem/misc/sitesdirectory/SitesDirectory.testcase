@@ -23,7 +23,7 @@ definition {
 
 	@priority = "5"
 	test DisplayStyleOptions {
-		property portal.acceptance = "true";
+		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Sites",

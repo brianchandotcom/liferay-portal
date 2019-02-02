@@ -42,6 +42,7 @@ import java.util.Map;
 
 import org.junit.Before;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -72,6 +73,7 @@ public class CalendarBookingIndexerIndexedFieldsTest
 		setIndexerClass(CalendarBooking.class);
 	}
 
+	@Ignore
 	@Test
 	public void testIndexedFields() throws Exception {
 		String originalTitle = "entity title";

@@ -49,6 +49,7 @@ import java.util.stream.Stream;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -87,6 +88,7 @@ public class JournalArticleIndexerLocalizedContentTest {
 		_journalArticleSearchFixture.tearDown();
 	}
 
+	@Ignore
 	@Test
 	public void testIndexedFields() throws Exception {
 		String originalTitle = "entity title";
@@ -200,6 +202,7 @@ public class JournalArticleIndexerLocalizedContentTest {
 			"gamma", LocaleUtil.HUNGARY, "title", "title_en_US");
 	}
 
+	@Ignore
 	@Test
 	public void testIndexedFieldsMissingWhenContentIsEmpty() throws Exception {
 		String originalTitle = "entity title";
@@ -267,6 +270,7 @@ public class JournalArticleIndexerLocalizedContentTest {
 			ddmContentStrings, "ddm__text", document, searchTerm);
 	}
 
+	@Ignore
 	@Test
 	public void testJapaneseTitle() throws Exception {
 		String title = "新規作成";

@@ -20,7 +20,6 @@ import com.liferay.arquillian.extension.junit.bridge.observer.JUnitBridgeObserve
 import com.liferay.arquillian.extension.junit.bridge.protocol.jmx.JMXTestRunner;
 import com.liferay.arquillian.extension.junit.bridge.remote.activator.ArquillianBundleActivator;
 import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
-import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
@@ -29,10 +28,9 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.Collection;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.jar.Attributes;
 import java.util.jar.JarFile;
 import java.util.jar.Manifest;
@@ -81,13 +79,11 @@ public class OSGiAllInProcessor implements ApplicationArchiveProcessor {
 
 			Manifest manifest = _getManifest(javaArchive);
 
-			Map<String, String> importPackages = _createImportPackages(
-				manifest);
+			Set<String> importPackages = _createImportPackages(manifest);
 
 			importPackages.remove(pkg.getName());
 
-			_setManifestValues(
-				manifest, _importPackageName, importPackages.values());
+			_setManifestValues(manifest, _importPackageName, importPackages);
 
 			Attributes mainAttributes = manifest.getMainAttributes();
 
@@ -128,34 +124,15 @@ public class OSGiAllInProcessor implements ApplicationArchiveProcessor {
 		}
 	}
 
-	private Map<String, String> _createImportPackages(Manifest manifest) {
-		Map<String, String> importPackages = new LinkedHashMap<>();
+	private Set<String> _createImportPackages(Manifest manifest) {
+		Set<String> importPackages = new HashSet<>();
 
-		for (String importPackage : _IMPORTS_PACKAGES) {
-			importPackages.put(importPackage, importPackage);
-		}
+		Collections.addAll(importPackages, _IMPORTS_PACKAGES);
 
 		Attributes mainAttributes = manifest.getMainAttributes();
 
-		List<String> originalImportPackages = StringUtil.split(
-			mainAttributes.getValue(_importPackageName));
-
-		Iterator<String> iterator = originalImportPackages.iterator();
-
-		packages:
-		while (iterator.hasNext()) {
-			String originalImportPackage = iterator.next();
-
-			String importPackage = originalImportPackage;
-
-			int index = originalImportPackage.indexOf(CharPool.SEMICOLON);
-
-			if (index != -1) {
-				importPackage = originalImportPackage.substring(0, index);
-			}
-
-			importPackages.put(importPackage, originalImportPackage);
-		}
+		importPackages.addAll(
+			StringUtil.split(mainAttributes.getValue(_importPackageName)));
 
 		return importPackages;
 	}

@@ -80,23 +80,12 @@ SelectThemeDisplayContext selectThemeDisplayContext = new SelectThemeDisplayCont
 				<c:when test='<%= Objects.equals(selectThemeDisplayContext.getDisplayStyle(), "icon") %>'>
 
 					<%
-					String author = StringPool.NBSP;
-
-					if ((selPluginPackage != null) && Validator.isNotNull(selPluginPackage.getAuthor())) {
-						author = LanguageUtil.format(request, "by-x", selPluginPackage.getAuthor());
-					}
-
 					row.setCssClass("entry-card lfr-asset-item");
 					%>
 
 					<liferay-ui:search-container-column-text>
-						<liferay-frontend:vertical-card
-							cssClass="selector-button"
-							data="<%= data %>"
-							imageCSSClass="aspect-ratio-4-to-3"
-							imageUrl='<%= theme.getStaticResourcePath() + theme.getImagesPath() + "/thumbnail.png" %>'
-							subtitle="<%= author %>"
-							title="<%= theme.getName() %>"
+						<clay:vertical-card
+							verticalCard="<%= new SelectThemeVerticalCard(theme, renderRequest) %>"
 						/>
 					</liferay-ui:search-container-column-text>
 				</c:when>

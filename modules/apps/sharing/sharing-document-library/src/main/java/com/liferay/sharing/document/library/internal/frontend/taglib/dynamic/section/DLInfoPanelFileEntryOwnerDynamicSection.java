@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.sharing.configuration.SharingConfiguration;
+import com.liferay.sharing.configuration.SharingConfigurationFactory;
 import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.model.SharingEntryModel;
 import com.liferay.sharing.service.SharingEntryLocalService;
@@ -60,6 +62,14 @@ public class DLInfoPanelFileEntryOwnerDynamicSection implements DynamicSection {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
+		SharingConfiguration sharingConfiguration =
+			_sharingConfigurationFactory.getSharingConfiguration(
+				themeDisplay.getSiteGroup());
+
+		if (!sharingConfiguration.isEnabled()) {
+			return sb;
+		}
 
 		long classNameId = _classNameLocalService.getClassNameId(
 			DLFileEntryConstants.getClassName());
@@ -131,6 +141,9 @@ public class DLInfoPanelFileEntryOwnerDynamicSection implements DynamicSection {
 		target = "(osgi.web.symbolicname=com.liferay.sharing.document.library)"
 	)
 	private ServletContext _servletContext;
+
+	@Reference
+	private SharingConfigurationFactory _sharingConfigurationFactory;
 
 	@Reference
 	private SharingEntryLocalService _sharingEntryLocalService;

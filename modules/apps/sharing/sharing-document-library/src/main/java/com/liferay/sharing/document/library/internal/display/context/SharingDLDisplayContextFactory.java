@@ -26,6 +26,8 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.sharing.configuration.SharingConfiguration;
+import com.liferay.sharing.configuration.SharingConfigurationFactory;
 import com.liferay.sharing.display.context.util.SharingMenuItemFactory;
 import com.liferay.sharing.display.context.util.SharingToolbarItemFactory;
 import com.liferay.sharing.document.library.internal.security.permission.SharingPermissionHelper;
@@ -79,6 +81,14 @@ public class SharingDLDisplayContextFactory implements DLDisplayContextFactory {
 			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
+			SharingConfiguration sharingConfiguration =
+				_sharingConfigurationFactory.getSharingConfiguration(
+					themeDisplay.getSiteGroup());
+
+			if (!sharingConfiguration.isEnabled()) {
+				return parentDLViewFileVersionDisplayContext;
+			}
+
 			FileEntry fileEntry = null;
 
 			if (fileVersion != null) {
@@ -92,7 +102,7 @@ public class SharingDLDisplayContextFactory implements DLDisplayContextFactory {
 					themeDisplay.getLocale(),
 					SharingDLDisplayContextFactory.class),
 				_sharingMenuItemFactory, _sharingToolbarItemFactory,
-				_sharingPermissionHelper);
+				_sharingPermissionHelper, sharingConfiguration);
 		}
 		catch (PortalException pe) {
 			throw new SystemException(
@@ -101,6 +111,9 @@ public class SharingDLDisplayContextFactory implements DLDisplayContextFactory {
 				pe);
 		}
 	}
+
+	@Reference
+	private SharingConfigurationFactory _sharingConfigurationFactory;
 
 	@Reference
 	private SharingMenuItemFactory _sharingMenuItemFactory;

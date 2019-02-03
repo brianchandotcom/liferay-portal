@@ -23,8 +23,11 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionLogic;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portlet.documentlibrary.constants.DLConstants;
+import com.liferay.sharing.configuration.SharingConfiguration;
+import com.liferay.sharing.configuration.SharingConfigurationFactory;
 import com.liferay.sharing.security.permission.SharingEntryAction;
 import com.liferay.sharing.service.SharingEntryLocalService;
 
@@ -86,10 +89,16 @@ public class SharingEntryDLFileEntryModelResourcePermissionRegistrar {
 	private ModelResourcePermission<DLFileEntry>
 		_dlFileEntryModelResourcePermission;
 
+	@Reference
+	private GroupLocalService _groupLocalService;
+
 	@Reference(target = "(resource.name=" + DLConstants.RESOURCE_NAME + ")")
 	private PortletResourcePermission _portletResourcePermission;
 
 	private ServiceRegistration<ModelResourcePermission> _serviceRegistration;
+
+	@Reference
+	private SharingConfigurationFactory _sharingConfigurationFactory;
 
 	@Reference
 	private SharingEntryLocalService _sharingEntryLocalService;
@@ -107,6 +116,14 @@ public class SharingEntryDLFileEntryModelResourcePermissionRegistrar {
 					permissionChecker, dlFileEntry, actionId)) {
 
 				return true;
+			}
+
+			SharingConfiguration sharingConfiguration =
+				_sharingConfigurationFactory.getSharingConfiguration(
+					_groupLocalService.getGroup(dlFileEntry.getGroupId()));
+
+			if (!sharingConfiguration.isEnabled()) {
+				return false;
 			}
 
 			if (SharingEntryAction.isSupportedActionId(actionId)) {

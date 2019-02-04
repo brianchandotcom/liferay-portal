@@ -103,6 +103,8 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 
 				<div class="sheet-section">
 					<h3 class="sheet-subtitle"><liferay-ui:message key="view-data" /></h3>
+
+					<liferay-util:include page="/view_uad_entities.jsp" servletContext="<%= application %>" />
 				</div>
 			</div>
 		</div>

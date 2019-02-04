@@ -108,7 +108,7 @@ public interface WikiGroupServiceConfiguration {
 	public String getHTMLEditor();
 
 	/**
-	 * @deprecated As of Mueller (7.2.x), with no direct replacement.
+	 * @deprecated As of Mueller (7.2.x), with no direct replacement
 	 */
 	@Deprecated
 	@Meta.AD(deflt = "simple", name = "get-media-wiki-editor", required = false)

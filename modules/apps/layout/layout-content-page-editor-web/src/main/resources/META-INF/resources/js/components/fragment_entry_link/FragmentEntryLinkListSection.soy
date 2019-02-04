@@ -74,6 +74,10 @@
 			{sp}fragments-editor__topper-wrapper--hovered
 		{/if}
 
+		{if $row.config and $row.config.backgroundColorCssClass}
+			{sp}bg-fragment-{$row.config.backgroundColorCssClass};
+		{/if}
+
 		{if $row and $row.config}
 			{sp}px-{$row.config.paddingHorizontal ?: '3'}
 		{/if}
@@ -84,10 +88,6 @@
 	{/let}
 
 	{let $sectionStyle kind="text"}
-		{if $row.config and $row.config.backgroundColor}
-			background-color: {$row.config.backgroundColor};
-		{/if}
-
 		{if $row.config and $row.config.backgroundImage}
 			background-image: url({$row.config.backgroundImage});
 			background-position: 50% 50%;

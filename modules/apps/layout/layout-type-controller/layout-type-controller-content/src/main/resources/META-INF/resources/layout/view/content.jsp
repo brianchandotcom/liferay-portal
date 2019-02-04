@@ -75,7 +75,7 @@ String ppid = ParamUtil.getString(request, "p_p_id");
 
 							JSONObject rowConfigJSONObject = rowJSONObject.getJSONObject("config");
 
-							String backgroundColor = StringPool.BLANK;
+							String backgroundColorCssClass = StringPool.BLANK;
 							String backgroundImage = StringPool.BLANK;
 							boolean columnSpacing = true;
 							String containerType = StringPool.BLANK;
@@ -83,7 +83,7 @@ String ppid = ParamUtil.getString(request, "p_p_id");
 							long paddingVertical = 3L;
 
 							if (rowConfigJSONObject != null) {
-								backgroundColor = rowConfigJSONObject.getString("backgroundColor");
+								backgroundColorCssClass = rowConfigJSONObject.getString("backgroundColorCssClass");
 								backgroundImage = rowConfigJSONObject.getString("backgroundImage");
 								columnSpacing = GetterUtil.getBoolean(rowConfigJSONObject.getString("columnSpacing"), true);
 								containerType = rowConfigJSONObject.getString("containerType");
@@ -92,7 +92,7 @@ String ppid = ParamUtil.getString(request, "p_p_id");
 							}
 					%>
 
-							<div class="container-fluid px-<%= paddingHorizontal %> py-<%= paddingVertical %>" style="<%= Validator.isNotNull(backgroundColor) ? "background-color:" + backgroundColor + ";" : StringPool.BLANK %> <%= Validator.isNotNull(backgroundImage) ? "background-image: url(" + backgroundImage + "); background-position: 50% 50%; background-repeat: no-repeat; background-size: cover;" : StringPool.BLANK %>">
+							<div class="container-fluid bg-fragment-<%= backgroundColorCssClass %> px-<%= paddingHorizontal %> py-<%= paddingVertical %>" style="<%= Validator.isNotNull(backgroundImage) ? "background-image: url(" + backgroundImage + "); background-position: 50% 50%; background-repeat: no-repeat; background-size: cover;" : StringPool.BLANK %>">
 								<div class="<%= Objects.equals(containerType, "fixed") ? "container" : "container-fluid" %> p-0">
 									<div class="row <%= columnSpacing ? StringPool.BLANK : "no-gutters" %>">
 

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.tools.rest.builder.internal.util;
 
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.SourceFormatter;
 import com.liferay.source.formatter.SourceFormatterArgs;
 
@@ -31,7 +32,21 @@ import java.util.Collections;
  */
 public class FileUtil {
 
-	public static String format(File file) throws Exception {
+	public static String format(String content, File file) throws Exception {
+		if (!file.exists()) {
+			Path path = file.toPath();
+
+			if (path.getParent() != null) {
+				Files.createDirectories(path.getParent());
+			}
+
+			Files.createFile(file.toPath());
+		}
+
+		String newContent = _fixWhitespace(content, file);
+
+		Files.write(file.toPath(), newContent.getBytes(StandardCharsets.UTF_8));
+
 		SourceFormatterArgs sourceFormatterArgs = new SourceFormatterArgs();
 
 		sourceFormatterArgs.setFileNames(
@@ -48,6 +63,10 @@ public class FileUtil {
 	}
 
 	public static String read(File file) throws IOException {
+		if (!file.exists()) {
+			return "";
+		}
+
 		String s = new String(
 			Files.readAllBytes(file.toPath()), StandardCharsets.UTF_8);
 
@@ -55,23 +74,39 @@ public class FileUtil {
 	}
 
 	public static void write(String content, File file) throws Exception {
-		if (!file.exists()) {
-			Path path = file.toPath();
-
-			Files.createDirectories(path.getParent());
-
-			Files.createFile(file.toPath());
-		}
-
 		String oldContent = read(file);
 
-		Files.write(file.toPath(), content.getBytes(StandardCharsets.UTF_8));
-
-		String newContent = format(file);
-
-		if (!oldContent.equals(newContent)) {
+		if (!oldContent.equals(format(content, file))) {
 			System.out.println("Writing " + file.getCanonicalPath());
 		}
+	}
+
+	private static String _fixWhitespace(String content, File file) {
+		String newContent = content.replaceAll("(?m)^\n+", "\n");
+
+		newContent = newContent.trim();
+
+		if (!StringUtil.endsWith(file.getName(), ".java")) {
+			return newContent;
+		}
+
+		int index = newContent.indexOf("\npublic ");
+
+		if (index == -1) {
+			return newContent;
+		}
+
+		int x = newContent.indexOf("\n", index + 2);
+		int y = newContent.lastIndexOf("}");
+
+		String oldSub = newContent.substring(x, y);
+
+		String newSub = oldSub.replaceAll(
+			"(?m)^\t*(@|public|protected|private)", "\t$1");
+
+		newSub = newSub.replaceAll("(?m)^\t*}$", "\t}");
+
+		return newContent.replace(oldSub, newSub);
 	}
 
 }

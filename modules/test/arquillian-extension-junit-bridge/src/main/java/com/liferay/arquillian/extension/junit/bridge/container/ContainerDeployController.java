@@ -14,7 +14,6 @@
 
 package com.liferay.arquillian.extension.junit.bridge.container;
 
-import org.jboss.arquillian.config.descriptor.api.ContainerDef;
 import org.jboss.arquillian.container.spi.Container;
 import org.jboss.arquillian.container.spi.ContainerRegistry;
 import org.jboss.arquillian.container.spi.client.container.DeployableContainer;
@@ -105,19 +104,15 @@ public class ContainerDeployController {
 		Container container = containerRegistry.getContainer(
 			deploymentDescription.getTarget());
 
-		ContainerDef containerDef = container.getContainerConfiguration();
-
-		if (!"manual".equals(containerDef.getMode())) {
-			if (container.getState() != Container.State.STARTED) {
-				throw new IllegalStateException(
-					"Trying to deploy a managed deployment " +
-						deploymentDescription.getName() +
-							" to a non started managed contianer " +
-								container.getName());
-			}
-
-			_deploymentEvent.fire(new DeployDeployment(container, deployment));
+		if (container.getState() != Container.State.STARTED) {
+			throw new IllegalStateException(
+				"Trying to deploy a managed deployment " +
+					deploymentDescription.getName() +
+						" to a non started managed contianer " +
+							container.getName());
 		}
+
+		_deploymentEvent.fire(new DeployDeployment(container, deployment));
 	}
 
 	public void undeploy(@Observes UnDeployDeployment unDeployDeployment)

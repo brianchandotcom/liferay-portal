@@ -21,8 +21,6 @@ OrphanPortletsDisplayContext orphanPortletsDisplayContext = new OrphanPortletsDi
 
 Layout selLayout = orphanPortletsDisplayContext.getSelLayout();
 
-List<Portlet> portlets = orphanPortletsDisplayContext.getOrphanPortlets();
-
 portletDisplay.setDescription(LanguageUtil.get(request, "orphan-widgets-description"));
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(orphanPortletsDisplayContext.getBackURL());
@@ -31,15 +29,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "orphan-widgets"));
 %>
 
 <clay:management-toolbar
-	actionDropdownItems="<%= orphanPortletsDisplayContext.getActionDropdownItems() %>"
-	componentId="portletsManagementToolbar"
-	filterDropdownItems="<%= orphanPortletsDisplayContext.getFilterDropdownItems() %>"
-	itemsTotal="<%= portlets.size() %>"
-	searchContainerId="portlets"
-	showSearch="<%= false %>"
-	sortingOrder="<%= orphanPortletsDisplayContext.getOrderByType() %>"
-	sortingURL="<%= orphanPortletsDisplayContext.getSortingURL() %>"
-	viewTypeItems="<%= orphanPortletsDisplayContext.getViewTypeItems() %>"
+	displayContext="<%= new OrphanPortletsManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, orphanPortletsDisplayContext) %>"
 />
 
 <div class="container-fluid-1280">

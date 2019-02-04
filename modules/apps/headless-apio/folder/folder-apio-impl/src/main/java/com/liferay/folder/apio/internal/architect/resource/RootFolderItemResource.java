@@ -54,7 +54,7 @@ public class RootFolderItemResource
 		Representor.Builder<Group, Long> builder) {
 
 		return builder.types(
-			"Folder"
+			"RootFolder"
 		).identifier(
 			Group::getGroupId
 		).addRelatedCollection(

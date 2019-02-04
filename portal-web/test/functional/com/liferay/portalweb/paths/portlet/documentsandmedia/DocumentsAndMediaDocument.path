@@ -21,7 +21,7 @@
 <!--DOCUMENT_INFO-->
 <tr>
 	<td>DOCUMENT_INFO_TITLE</td>
-	<td>//div[contains(@class,'document-info')]/h2[contains(@title,'${key_dmDocumentTitle}')]</td>
+	<td>//div[contains(@class,'tbar-section')]/h2[contains(@title,'${key_dmDocumentTitle}')] | //h3[contains(@class,'header-title')]/span[contains(.,'${key_dmDocumentTitle}')]</td>
 	<td></td>
 </tr>
 <tr>

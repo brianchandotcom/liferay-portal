@@ -66,7 +66,6 @@ import com.liferay.wiki.engine.creole.internal.parser.ast.table.TableHeaderNode;
 import com.liferay.wiki.engine.creole.internal.parser.ast.table.TableNode;
 
 import java.util.List;
-import java.util.Stack;
 
 /**
  * @author Miguel Pastor
@@ -398,33 +397,6 @@ public class XhtmlTranslationVisitor implements ASTVisitor {
 		append("</a>");
 	}
 
-	protected void appendLevelTags(int nodeLevel, boolean ordered) {
-		int diff = nodeLevel - _currentNodeLevel.pop();
-
-		if (diff > 0) {
-			for (int i = 0; i < diff; i++) {
-				if (ordered) {
-					append("<ol>");
-				}
-				else {
-					append("<ul>");
-				}
-			}
-		}
-		else if (diff < 0) {
-			for (int i = 0; i > diff; i--) {
-				if (ordered) {
-					append("</ol>");
-				}
-				else {
-					append("</ul>");
-				}
-			}
-		}
-
-		_currentNodeLevel.push(nodeLevel);
-	}
-
 	protected void traverse(List<ASTNode> astNodes) {
 		if (astNodes != null) {
 			for (ASTNode astNode : astNodes) {
@@ -461,7 +433,6 @@ public class XhtmlTranslationVisitor implements ASTVisitor {
 		}
 	}
 
-	private final Stack<Integer> _currentNodeLevel = new Stack<>();
 	private final StringBundler _sb = new StringBundler();
 
 }

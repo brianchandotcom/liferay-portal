@@ -36,10 +36,6 @@ public class MediaWikiToCreoleTranslator extends BaseTranslator {
 		initNowikiRegexps();
 	}
 
-	public boolean isStrictImportMode() {
-		return _strictImportMode;
-	}
-
 	public void setStrictImportMode(boolean strictImportMode) {
 		_strictImportMode = strictImportMode;
 	}

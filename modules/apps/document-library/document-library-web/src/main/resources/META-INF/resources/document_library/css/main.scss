@@ -123,8 +123,10 @@
 		margin-top: 1em;
 	}
 
-	.modal .edit-tags small {
-		padding-left: 25px;
+	.modal .edit-categories, .modal .edit-tags{
+		small {
+			padding-left: 25px;
+		}
 	}
 
 	.move-list {

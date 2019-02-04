@@ -111,12 +111,12 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 			</div>
 
 			<div class="sheet-text">
-				<portlet:renderURL var="viewUADEntitiesURL">
-					<portlet:param name="mvcRenderCommandName" value="/view_uad_applications_summary" />
+				<portlet:renderURL var="reviewUADDataURL">
+					<portlet:param name="mvcRenderCommandName" value="/review_uad_data" />
 					<portlet:param name="p_u_i_d" value="<%= String.valueOf(selectedUser.getUserId()) %>" />
 				</portlet:renderURL>
 
-				<aui:button cssClass="btn-sm" disabled="<%= step != 3 %>" onClick="<%= viewUADEntitiesURL %>" value="review" />
+				<aui:button cssClass="btn-sm" disabled="<%= step != 3 %>" onClick="<%= reviewUADDataURL %>" value="review" />
 
 				<c:if test="<%= step > 3 %>">
 					<liferay-ui:icon

@@ -66,7 +66,7 @@ SearchContainer roleSearchContainer = SelectRoleManagementToolbarDisplayContext.
 					data.put("iconcssclass", RolesAdminUtil.getIconCssClass(role));
 					data.put("searchcontainername", "roles");
 
-					long[] defaultRoleIds = selUser.getRoleIds();
+					long[] defaultRoleIds = (selUser != null) ? selUser.getRoleIds() : new long[0];
 
 					long[] roleIds = ParamUtil.getLongValues(request, "roleIds", defaultRoleIds);
 

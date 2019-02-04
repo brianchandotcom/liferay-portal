@@ -3,6 +3,7 @@ package com.liferay.frontend.js.loader.modules.extender.internal;
 import com.liferay.frontend.js.loader.modules.extender.internal.adapter.JSLoaderModuleAdapter;
 import com.liferay.frontend.js.loader.modules.extender.internal.adapter.JSModuleAdapter;
 import com.liferay.frontend.js.loader.modules.extender.internal.adapter.NPMRegistryModuleAdapter;
+import com.liferay.frontend.js.loader.modules.extender.internal.config.generator.JSConfigGeneratorPackagesTracker;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSModule;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMRegistry;
 import com.liferay.portal.kernel.util.Portal;
@@ -37,9 +38,9 @@ public class JSModulesContextResolver {
 	}
 
 	@Reference(unbind = "-")
-	public void setJsLoaderModulesTracker(
-		JSLoaderModulesTracker jsLoaderModulesTracker) {
-		_jsLoaderModulesTracker = jsLoaderModulesTracker;
+	public void setJsConfigGeneratorPackagesTracker(
+		JSConfigGeneratorPackagesTracker jsConfigGeneratorPackagesTracker) {
+		_jsConfigGeneratorPackagesTracker = jsConfigGeneratorPackagesTracker;
 	}
 
 	@Reference(unbind = "-")
@@ -59,7 +60,8 @@ public class JSModulesContextResolver {
 
 	private ArrayList<JSModuleAdapter> _getAllModules() {
 		List<JSLoaderModuleAdapter> jsLoaderModuleAdapters =
-			_jsLoaderModulesTracker.getJSLoaderModules().stream()
+			_jsConfigGeneratorPackagesTracker.getJSConfigGeneratorPackages()
+				.stream()
 				.map(m -> new JSLoaderModuleAdapter(m, _portal))
 				.collect(Collectors.toList());
 
@@ -161,7 +163,7 @@ public class JSModulesContextResolver {
 		}
 	}
 
-	private JSLoaderModulesTracker _jsLoaderModulesTracker;
+	private JSConfigGeneratorPackagesTracker _jsConfigGeneratorPackagesTracker;
 	private JSModulesNameMapper _mapper;
 	private NPMRegistry _npmRegistry;
 	private Portal _portal;

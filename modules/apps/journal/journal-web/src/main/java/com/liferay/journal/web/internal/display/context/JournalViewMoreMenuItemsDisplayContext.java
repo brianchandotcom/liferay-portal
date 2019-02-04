@@ -92,9 +92,6 @@ public class JournalViewMoreMenuItemsDisplayContext {
 			return _ddmStructuresSearchContainer;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		SearchContainer searchContainer = new SearchContainer(
 			_renderRequest, getPortletURL(), null, "no-results-were-found");
 
@@ -102,19 +99,13 @@ public class JournalViewMoreMenuItemsDisplayContext {
 		searchContainer.setOrderByComparator(_getOrderByComparator());
 		searchContainer.setOrderByType(getOrderByType());
 
-		List<DDMStructure> ddmStructures =
-			JournalFolderServiceUtil.searchDDMStructures(
-				themeDisplay.getCompanyId(),
-				PortalUtil.getCurrentAndAncestorSiteGroupIds(
-					themeDisplay.getScopeGroupId()),
-				_folderId, _restrictionType, _getKeywords(), QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, _getOrderByComparator());
+		List<DDMStructure> ddmStructures = getDDMStructures();
+
+		searchContainer.setTotal(ddmStructures.size());
 
 		List<DDMStructure> results = ListUtil.subList(
 			ddmStructures, searchContainer.getStart(),
 			searchContainer.getEnd());
-
-		searchContainer.setTotal(ddmStructures.size());
 
 		searchContainer.setResults(results);
 

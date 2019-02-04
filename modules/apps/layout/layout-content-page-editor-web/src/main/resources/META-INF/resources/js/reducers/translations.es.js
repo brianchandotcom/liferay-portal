@@ -119,7 +119,12 @@ function _getTranslationStatus(languageIds, editableValues, segmentId) {
 		languageId => {
 			const values = editableValues.map(
 				editableValue => Object.keys(editableValue).map(
-					editableValueId => editableValue[editableValueId][segmentId][languageId]
+					editableValueId => {
+						return editableValue &&
+							editableValue[editableValueId] &&
+							editableValue[editableValueId][segmentId] &&
+							editableValue[editableValueId][segmentId][languageId];
+					}
 				)
 			)
 				.reduce(

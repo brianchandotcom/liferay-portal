@@ -14,7 +14,6 @@
 
 package com.liferay.arquillian.extension.junit.bridge.container;
 
-import org.jboss.arquillian.config.descriptor.api.ContainerDef;
 import org.jboss.arquillian.container.spi.Container;
 import org.jboss.arquillian.container.spi.ContainerRegistry;
 import org.jboss.arquillian.container.spi.event.KillContainer;
@@ -23,7 +22,6 @@ import org.jboss.arquillian.container.spi.event.SetupContainers;
 import org.jboss.arquillian.container.spi.event.StartSuiteContainers;
 import org.jboss.arquillian.container.spi.event.StopSuiteContainers;
 import org.jboss.arquillian.core.api.Event;
-import org.jboss.arquillian.core.api.Injector;
 import org.jboss.arquillian.core.api.Instance;
 import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.arquillian.core.api.annotation.Observes;
@@ -36,101 +34,53 @@ public class ContainerLifecycleController {
 	public void killContainer(@Observes KillContainer killContainer)
 		throws Exception {
 
-		_forContainer(killContainer.getContainer(), Container::kill);
+		Container container = killContainer.getContainer();
+
+		container.kill();
 	}
 
 	public void setupContainer(@Observes SetupContainer setupContainer)
 		throws Exception {
 
-		_forContainer(setupContainer.getContainer(), Container::setup);
+		Container container = setupContainer.getContainer();
+
+		container.setup();
 	}
 
 	public void setupContainers(@Observes SetupContainers setupContainers)
 		throws Exception {
 
-		_forEachContainer(
-			new Operation<Container>() {
+		ContainerRegistry containerRegistry = _containerRegistryInstance.get();
 
-				@Override
-				public void perform(Container container) throws Exception {
-					_setupContainerEvent.fire(new SetupContainer(container));
-				}
+		Container container = containerRegistry.getContainer("default");
 
-			});
+		_setupContainerEvent.fire(new SetupContainer(container));
 	}
 
 	public void startSuiteContainers(
 			@Observes StartSuiteContainers startSuiteContainers)
 		throws Exception {
 
-		_forEachSuiteContainer(Container::start);
+		ContainerRegistry containerRegistry = _containerRegistryInstance.get();
+
+		Container container = containerRegistry.getContainer("default");
+
+		container.start();
 	}
 
 	public void stopSuiteContainers(
 			@Observes StopSuiteContainers stopSuiteContainers)
 		throws Exception {
 
-		_forEachSuiteContainer(Container::stop);
-	}
-
-	public interface Operation<T> {
-
-		public void perform(T container) throws Exception;
-
-	}
-
-	private void _forContainer(
-			Container container, Operation<Container> operation)
-		throws Exception {
-
-		Injector injector = _injectorInstance.get();
-
-		injector.inject(operation);
-
-		operation.perform(container);
-	}
-
-	private void _forEachContainer(Operation<Container> operation)
-		throws Exception {
-
-		Injector injector = _injectorInstance.get();
-
-		injector.inject(operation);
-
 		ContainerRegistry containerRegistry = _containerRegistryInstance.get();
 
-		if (containerRegistry == null) {
-			return;
-		}
+		Container container = containerRegistry.getContainer("default");
 
-		for (Container container : containerRegistry.getContainers()) {
-			operation.perform(container);
-		}
-	}
-
-	private void _forEachSuiteContainer(Operation<Container> operation)
-		throws Exception {
-
-		Injector injector = _injectorInstance.get();
-
-		injector.inject(operation);
-
-		ContainerRegistry containerRegistry = _containerRegistryInstance.get();
-
-		for (Container container : containerRegistry.getContainers()) {
-			ContainerDef containerDef = container.getContainerConfiguration();
-
-			if ("suite".equals(containerDef.getMode())) {
-				operation.perform(container);
-			}
-		}
+		container.stop();
 	}
 
 	@Inject
 	private Instance<ContainerRegistry> _containerRegistryInstance;
-
-	@Inject
-	private Instance<Injector> _injectorInstance;
 
 	@Inject
 	private Event<SetupContainer> _setupContainerEvent;

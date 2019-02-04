@@ -32,13 +32,18 @@ import javax.ws.rs.ext.MessageBodyWriter;
 import javax.ws.rs.ext.Provider;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ServiceScope;
 import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
 
 /**
  * @author Ivica Cardic
  */
 @Component(
-	property = JaxrsWhiteboardConstants.JAX_RS_EXTENSION + "=true",
+	property = {
+		JaxrsWhiteboardConstants.JAX_RS_EXTENSION + "=true",
+		JaxrsWhiteboardConstants.JAX_RS_NAME + "=vulcan.JSONMessageBodyWriter",
+	},
+	scope = ServiceScope.PROTOTYPE,
 	service = MessageBodyWriter.class
 )
 @Produces(MediaType.APPLICATION_JSON)

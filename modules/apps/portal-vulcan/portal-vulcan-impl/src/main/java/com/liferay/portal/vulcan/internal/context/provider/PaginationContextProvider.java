@@ -26,13 +26,18 @@ import org.apache.cxf.jaxrs.ext.ContextProvider;
 import org.apache.cxf.message.Message;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ServiceScope;
 import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
 
 /**
  * @author Zoltán Takács
  */
 @Component(
-	property = JaxrsWhiteboardConstants.JAX_RS_EXTENSION + "=true",
+	property = {
+		JaxrsWhiteboardConstants.JAX_RS_EXTENSION + "=true",
+		JaxrsWhiteboardConstants.JAX_RS_NAME + "=vulcan.PaginationContextProvider",
+	},
+	scope = ServiceScope.PROTOTYPE,
 	service = ContextProvider.class
 )
 @Provider

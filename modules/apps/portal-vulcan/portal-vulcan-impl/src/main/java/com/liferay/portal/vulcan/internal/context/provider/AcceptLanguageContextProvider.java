@@ -25,13 +25,18 @@ import org.apache.cxf.message.Message;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ServiceScope;
 import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
 
 /**
  * @author Cristina González
  */
 @Component(
-	property = JaxrsWhiteboardConstants.JAX_RS_EXTENSION + "=true",
+	property = {
+		JaxrsWhiteboardConstants.JAX_RS_EXTENSION + "=true",
+		JaxrsWhiteboardConstants.JAX_RS_NAME + "=vulcan.AcceptLanguageContextProvider",
+	},
+	scope = ServiceScope.PROTOTYPE,
 	service = ContextProvider.class
 )
 @Provider

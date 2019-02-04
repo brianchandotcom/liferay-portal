@@ -123,6 +123,10 @@ public class RESTBuilder {
 			context.put("openAPIYAML", openAPIYAML);
 			context.put("versionDirName", versionDirName);
 
+			_createMutationFile(context);
+			_createQueryFile(context);
+			_createServletFile(context);
+
 			Components components = openAPIYAML.getComponents();
 
 			Map<String, Schema> schemas = components.getSchemas();
@@ -334,6 +338,30 @@ public class RESTBuilder {
 			FreeMarkerUtil.processTemplate(_copyrightFileName, "dto", context));
 	}
 
+	private void _createMutationFile(Map<String, Object> context)
+		throws Exception {
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(_configYAML.getImplDir());
+		sb.append("/");
+
+		String apiPackagePath = _configYAML.getApiPackagePath();
+
+		sb.append(apiPackagePath.replace('.', '/'));
+
+		sb.append("/internal/mutation/Mutation.java");
+
+		File file = new File(sb.toString());
+
+		_files.add(file);
+
+		FileUtil.write(
+			file,
+			FreeMarkerUtil.processTemplate(
+				_copyrightFileName, "mutation", context));
+	}
+
 	private void _createPropertiesFile(
 			Map<String, Object> context, String schemaName,
 			String versionDirName)
@@ -354,6 +382,30 @@ public class RESTBuilder {
 
 		FileUtil.write(
 			file, FreeMarkerUtil.processTemplate(null, "properties", context));
+	}
+
+	private void _createQueryFile(Map<String, Object> context)
+		throws Exception {
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(_configYAML.getImplDir());
+		sb.append("/");
+
+		String apiPackagePath = _configYAML.getApiPackagePath();
+
+		sb.append(apiPackagePath.replace('.', '/'));
+
+		sb.append("/internal/query/Query.java");
+
+		File file = new File(sb.toString());
+
+		_files.add(file);
+
+		FileUtil.write(
+			file,
+			FreeMarkerUtil.processTemplate(
+				_copyrightFileName, "query", context));
 	}
 
 	private void _createResourceFile(
@@ -452,6 +504,30 @@ public class RESTBuilder {
 			file,
 			FreeMarkerUtil.processTemplate(
 				_copyrightFileName, "resource_test", context));
+	}
+
+	private void _createServletFile(Map<String, Object> context)
+		throws Exception {
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(_configYAML.getImplDir());
+		sb.append("/");
+
+		String apiPackagePath = _configYAML.getApiPackagePath();
+
+		sb.append(apiPackagePath.replace('.', '/'));
+
+		sb.append("/internal/servlet/GraphQLServlet.java");
+
+		File file = new File(sb.toString());
+
+		_files.add(file);
+
+		FileUtil.write(
+			file,
+			FreeMarkerUtil.processTemplate(
+				_copyrightFileName, "servlet", context));
 	}
 
 	private static final Pattern _leadingUnderscorePattern = Pattern.compile(

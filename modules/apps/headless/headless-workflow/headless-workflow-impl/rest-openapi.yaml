@@ -140,7 +140,7 @@ paths:
           schema:
             type: integer
         - in: path
-          name: genericparentid
+          name: generic-parent-id
           required: true
           schema:
             type: object

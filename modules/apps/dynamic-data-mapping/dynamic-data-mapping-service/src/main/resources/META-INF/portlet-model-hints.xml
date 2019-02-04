@@ -181,8 +181,12 @@
 		<field name="definition" type="String">
 			<hint-collection name="CLOB" />
 		</field>
-		<field localized="true" name="description" type="String" />
-		<field localized="true" name="name" type="String" />
+		<field localized="true" name="description" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+		<field localized="true" name="name" type="String">
+			<hint-collection name="CLOB" />
+		</field>
 	</model>
 	<model name="com.liferay.dynamic.data.mapping.model.DDMStructureLink">
 		<field name="structureLinkId" type="long" />

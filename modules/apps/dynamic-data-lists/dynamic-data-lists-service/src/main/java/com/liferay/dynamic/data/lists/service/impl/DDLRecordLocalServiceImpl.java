@@ -263,8 +263,11 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 		// Record
 
 		User user = userLocalService.getUser(userId);
+
 		DDLRecordSet ddlRecordSet = ddlRecordSetPersistence.findByPrimaryKey(
 			ddlRecordSetId);
+
+		validate(groupId, ddlRecordSet);
 
 		long recordId = counterLocalService.increment();
 

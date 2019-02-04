@@ -131,7 +131,8 @@ public interface SamlProviderConfiguration {
 	 * If no SAML IdP is matched then show the login portlet
 	 */
 	@Meta.AD(
-		deflt = "true", description = "saml-sp-allow-showing-the-login-portlet",
+		deflt = "true",
+		description = "saml-sp-allow-showing-the-login-portlet-description",
 		id = "saml.sp.allow.showing.the.login.portlet",
 		name = "saml-sp-allow-showing-the-login-portlet", required = false
 	)

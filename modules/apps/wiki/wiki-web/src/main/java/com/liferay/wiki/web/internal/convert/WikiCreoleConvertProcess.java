@@ -41,21 +41,21 @@ public class WikiCreoleConvertProcess extends BaseConvertProcess {
 
 	@Override
 	public boolean isEnabled() {
-		boolean enabled = false;
-
 		try {
 			int pagesCount = _wikiPageLocalService.getPagesCount(
 				"classic_wiki");
 
 			if (pagesCount > 0) {
-				enabled = true;
+				return true;
 			}
+
+			return false;
 		}
 		catch (Exception e) {
 			_log.error(e, e);
-		}
 
-		return enabled;
+			return false;
+		}
 	}
 
 	@Override

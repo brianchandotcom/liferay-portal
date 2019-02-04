@@ -1537,7 +1537,7 @@
 		<tag-class>com.liferay.taglib.aui.TranslationManagerTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description><![CDATA[Locales array with available translations.]]></description>
+			<description><![CDATA[Available locales of translation languages from which to choose.]]></description>
 			<name>availableLocales</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1558,12 +1558,6 @@
 		</attribute>
 		<attribute>
 			<name>editingLanguageId</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<description>The group ID of the site used to get the enabled locales. This is a Java <![CDATA[<code>long</code>]]>.</description>
-			<name>groupId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

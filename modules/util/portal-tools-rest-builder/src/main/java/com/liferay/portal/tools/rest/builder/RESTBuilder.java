@@ -73,6 +73,9 @@ public class RESTBuilder {
 		context.put("validator", Validator_IW.getInstance());
 
 		_createApplicationFile(context);
+		_createMutationFile(context);
+		_createQueryFile(context);
+		_createServletFile(context);
 
 		Components components = _openAPIYAML.getComponents();
 
@@ -168,6 +171,26 @@ public class RESTBuilder {
 			FreeMarkerUtil.processTemplate(_copyrightFileName, "dto", context));
 	}
 
+	private void _createMutationFile(Map<String, Object> context)
+		throws Exception {
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(_configYAML.getImplDir());
+		sb.append("/");
+
+		String apiPackagePath = _configYAML.getApiPackagePath();
+
+		sb.append(apiPackagePath.replace('.', '/'));
+
+		sb.append("/internal/mutation/Mutation.java");
+
+		FileUtil.write(
+			sb.toString(),
+			FreeMarkerUtil.processTemplate(
+				_copyrightFileName, "mutation", context));
+	}
+
 	private void _createPropertiesFile(
 			Map<String, Object> context, String schemaName)
 		throws Exception {
@@ -182,6 +205,26 @@ public class RESTBuilder {
 		FileUtil.write(
 			sb.toString(),
 			FreeMarkerUtil.processTemplate(null, "properties", context));
+	}
+
+	private void _createQueryFile(Map<String, Object> context)
+		throws Exception {
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(_configYAML.getImplDir());
+		sb.append("/");
+
+		String apiPackagePath = _configYAML.getApiPackagePath();
+
+		sb.append(apiPackagePath.replace('.', '/'));
+
+		sb.append("/internal/query/Query.java");
+
+		FileUtil.write(
+			sb.toString(),
+			FreeMarkerUtil.processTemplate(
+				_copyrightFileName, "query", context));
 	}
 
 	private void _createResourceFile(
@@ -234,6 +277,26 @@ public class RESTBuilder {
 			file,
 			FreeMarkerUtil.processTemplate(
 				_copyrightFileName, "resource_impl", context));
+	}
+
+	private void _createServletFile(Map<String, Object> context)
+		throws Exception {
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(_configYAML.getImplDir());
+		sb.append("/");
+
+		String apiPackagePath = _configYAML.getApiPackagePath();
+
+		sb.append(apiPackagePath.replace('.', '/'));
+
+		sb.append("/internal/servlet/GraphQLServlet.java");
+
+		FileUtil.write(
+			sb.toString(),
+			FreeMarkerUtil.processTemplate(
+				_copyrightFileName, "servlet", context));
 	}
 
 	private final ConfigYAML _configYAML;

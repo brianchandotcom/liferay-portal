@@ -94,6 +94,10 @@ public class SourceFormatterArgs {
 		return _recentChangesFileNames;
 	}
 
+	public List<String> getSkipCheckNames() {
+		return _skipCheckNames;
+	}
+
 	public boolean isAutoFix() {
 		return _autoFix;
 	}
@@ -227,6 +231,10 @@ public class SourceFormatterArgs {
 		_showStatusUpdates = showStatusUpdates;
 	}
 
+	public void setSkipCheckNames(List<String> skipCheckNames) {
+		_skipCheckNames = skipCheckNames;
+	}
+
 	public void setThrowException(boolean throwException) {
 		_throwException = throwException;
 	}
@@ -249,6 +257,7 @@ public class SourceFormatterArgs {
 	private boolean _showDebugInformation = SHOW_DEBUG_INFORMATION;
 	private boolean _showDocumentation = SHOW_DOCUMENTATION;
 	private boolean _showStatusUpdates = SHOW_STATUS_UPDATES;
+	private List<String> _skipCheckNames = new ArrayList<>();
 	private boolean _throwException = THROW_EXCEPTION;
 
 }

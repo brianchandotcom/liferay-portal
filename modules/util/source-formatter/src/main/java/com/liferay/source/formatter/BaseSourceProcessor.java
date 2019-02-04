@@ -653,8 +653,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		List<SourceCheck> sourceChecks = SourceChecksUtil.getSourceChecks(
 			sourceFormatterConfiguration, clazz.getSimpleName(),
-			getPropertiesMap(), _portalSource, _subrepository,
-			includeModuleChecks, checkName);
+			getPropertiesMap(), _sourceFormatterArgs.getSkipCheckNames(),
+			_portalSource, _subrepository, includeModuleChecks, checkName);
 
 		for (SourceCheck sourceCheck : sourceChecks) {
 			_initSourceCheck(sourceCheck);

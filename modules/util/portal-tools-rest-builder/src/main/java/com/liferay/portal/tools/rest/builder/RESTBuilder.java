@@ -28,8 +28,6 @@ import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.OpenAPIYAML;
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Schema;
 import com.liferay.portal.tools.rest.builder.internal.yaml.util.YAMLUtil;
 
-import java.io.File;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -73,8 +71,6 @@ public class RESTBuilder {
 		context.put("validator", Validator_IW.getInstance());
 
 		_createApplicationFile(context);
-
-		//_createSourceFormatterPropertiesFile();
 
 		Components components = _openAPIYAML.getComponents();
 
@@ -230,27 +226,6 @@ public class RESTBuilder {
 			sb.toString(),
 			FreeMarkerUtil.processTemplate(
 				_copyrightFileName, "resource_impl", context));
-	}
-
-	private void _createSourceFormatterPropertiesFile() throws Exception {
-		String content = FreeMarkerUtil.processTemplate(
-			null, "source-formatter-properties", null);
-
-		String[] dirNames = {_configYAML.getApiDir(), _configYAML.getImplDir()};
-
-		for (String dirName : dirNames) {
-			if (dirName.endsWith("src/main/java")) {
-				dirName = dirName.substring(0, dirName.length() - 13);
-			}
-
-			File file = new File(dirName + "/source-formatter.properties");
-
-			if (dirName.isEmpty()) {
-				file = new File("source-formatter.properties");
-			}
-
-			FileUtil.write(file, content);
-		}
 	}
 
 	private final ConfigYAML _configYAML;

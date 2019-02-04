@@ -57,19 +57,21 @@ public class SourceChecksUtil {
 	public static List<SourceCheck> getSourceChecks(
 			SourceFormatterConfiguration sourceFormatterConfiguration,
 			String sourceProcessorName, Map<String, Properties> propertiesMap,
-			boolean portalSource, boolean subrepository,
-			boolean includeModuleChecks, String checkName)
+			List<String> skipCheckNames, boolean portalSource,
+			boolean subrepository, boolean includeModuleChecks,
+			String checkName)
 		throws Exception {
 
 		List<SourceCheck> sourceChecks = _getSourceChecks(
 			sourceFormatterConfiguration, sourceProcessorName, propertiesMap,
-			portalSource, subrepository, includeModuleChecks, checkName);
+			skipCheckNames, portalSource, subrepository, includeModuleChecks,
+			checkName);
 
 		sourceChecks.addAll(
 			_getSourceChecks(
 				sourceFormatterConfiguration, "all", propertiesMap,
-				includeModuleChecks, subrepository, includeModuleChecks,
-				checkName));
+				skipCheckNames, includeModuleChecks, subrepository,
+				includeModuleChecks, checkName));
 
 		return sourceChecks;
 	}
@@ -189,8 +191,9 @@ public class SourceChecksUtil {
 	private static List<SourceCheck> _getSourceChecks(
 			SourceFormatterConfiguration sourceFormatterConfiguration,
 			String sourceProcessorName, Map<String, Properties> propertiesMap,
-			boolean portalSource, boolean subrepository,
-			boolean includeModuleChecks, String checkName)
+			List<String> skipCheckNames, boolean portalSource,
+			boolean subrepository, boolean includeModuleChecks,
+			String checkName)
 		throws Exception {
 
 		List<SourceCheck> sourceChecks = new ArrayList<>();
@@ -249,6 +252,10 @@ public class SourceChecksUtil {
 			}
 
 			Class<?> clazz = sourceCheck.getClass();
+
+			if (skipCheckNames.contains(clazz.getSimpleName())) {
+				continue;
+			}
 
 			for (String attributeName :
 					sourceCheckConfiguration.attributeNames()) {

@@ -235,6 +235,17 @@ public class SourceFormatter {
 
 			sourceFormatterArgs.setShowStatusUpdates(showStatusUpdates);
 
+			String skipCheckNamesString = ArgumentsUtil.getString(
+				arguments, "skip.check.names", null);
+
+			String[] skipCheckNames = StringUtil.split(
+				skipCheckNamesString, StringPool.COMMA);
+
+			if (ArrayUtil.isNotEmpty(skipCheckNames)) {
+				sourceFormatterArgs.setSkipCheckNames(
+					Arrays.asList(skipCheckNames));
+			}
+
 			boolean throwException = ArgumentsUtil.getBoolean(
 				arguments, "source.throw.exception",
 				SourceFormatterArgs.THROW_EXCEPTION);

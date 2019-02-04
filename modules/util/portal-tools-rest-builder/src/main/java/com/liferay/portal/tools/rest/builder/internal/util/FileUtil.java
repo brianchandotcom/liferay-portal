@@ -53,6 +53,8 @@ public class FileUtil {
 			Collections.singletonList(file.getCanonicalPath()));
 		sourceFormatterArgs.setIncludeGeneratedFiles(true);
 		sourceFormatterArgs.setPrintErrors(false);
+		sourceFormatterArgs.setSkipCheckNames(
+			Collections.singletonList("JavaOSGiReferenceCheck"));
 
 		SourceFormatter sourceFormatter = new SourceFormatter(
 			sourceFormatterArgs);
@@ -82,7 +84,7 @@ public class FileUtil {
 	}
 
 	public static void write(String fileName, String content) throws Exception {
-		write (new File(fileName), content);
+		write(new File(fileName), content);
 	}
 
 	private static String _fixWhitespace(File file, String content) {

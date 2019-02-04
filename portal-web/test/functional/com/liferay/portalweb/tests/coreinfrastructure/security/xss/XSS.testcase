@@ -505,14 +505,6 @@ definition {
 		AssertHTMLSourceTextNotPresent(value1 = "${actualScript}");
 
 		AssertHTMLSourceTextPresent(value1 = "${escapedScript}");
-
-		AssertTextEquals(locator1 = "Portlet#HEADER", value1 = "Pages");
-
-		AssertTextEquals(
-			locator1 = "ProductMenu#PRODUCT_MENU_PANEL_SITE_ADMINISTRATION_SITE_NAME",
-			value1 = "${siteName}",
-			key_siteName = "${siteName}"
-		);
 	}
 
 	@priority = "4"

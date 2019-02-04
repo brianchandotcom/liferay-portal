@@ -17,6 +17,9 @@ package com.liferay.portal.kernel.portlet.configuration.icon;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.configuration.icon.locator.PortletConfigurationIconLocator;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 import com.liferay.registry.collections.ServiceTrackerList;
@@ -27,10 +30,13 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.filter.PortletRequestWrapper;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Eudaldo Alonso
@@ -125,6 +131,13 @@ public class PortletConfigurationIconTracker {
 
 		};
 
+		HttpServletRequest originalHttpServletRequest =
+			PortalUtil.getOriginalServletRequest(
+				PortalUtil.getHttpServletRequest(portletRequest));
+
+		String layoutMode = ParamUtil.getString(
+			originalHttpServletRequest, "p_l_mode", Constants.VIEW);
+
 		for (String path : getPaths(portletId, portletRequest)) {
 			List<PortletConfigurationIcon> portletPortletConfigurationIcons =
 				_serviceTrackerMap.getService(getKey(StringPool.STAR, path));
@@ -132,6 +145,13 @@ public class PortletConfigurationIconTracker {
 			if (portletPortletConfigurationIcons != null) {
 				for (PortletConfigurationIcon portletConfigurationIcon :
 						portletPortletConfigurationIcons) {
+
+					if (Objects.equals(layoutMode, Constants.EDIT) &&
+						!portletConfigurationIcon.isShowInEditMode(
+							portletRequest)) {
+
+						continue;
+					}
 
 					if (!filter ||
 						portletConfigurationIcon.isShow(
@@ -151,6 +171,13 @@ public class PortletConfigurationIconTracker {
 
 			for (PortletConfigurationIcon portletConfigurationIcon :
 					portletPortletConfigurationIcons) {
+
+				if (Objects.equals(layoutMode, Constants.EDIT) &&
+					!portletConfigurationIcon.isShowInEditMode(
+						portletRequestWrapper)) {
+
+					continue;
+				}
 
 				if (!portletConfigurationIcons.contains(
 						portletConfigurationIcon) &&

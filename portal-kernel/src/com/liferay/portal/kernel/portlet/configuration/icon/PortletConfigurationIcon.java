@@ -75,6 +75,10 @@ public interface PortletConfigurationIcon {
 
 	public boolean isShow(PortletRequest portletRequest);
 
+	public default boolean isShowInEditMode(PortletRequest portletRequest) {
+		return false;
+	}
+
 	public boolean isToolTip();
 
 	public boolean isUseDialog();

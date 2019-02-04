@@ -15,7 +15,10 @@
 package com.liferay.layout.admin.web.internal.servlet.taglib.clay;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.BaseVerticalCard;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.layout.admin.web.internal.constants.LayoutAdminWebKeys;
 import com.liferay.layout.admin.web.internal.security.permission.resource.LayoutPageTemplateEntryPermission;
+import com.liferay.layout.admin.web.internal.servlet.taglib.util.LayoutPageTemplateEntryActionDropdownItemsProvider;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.portal.kernel.dao.search.RowChecker;
@@ -31,6 +34,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 
+import java.util.List;
 import java.util.Objects;
 
 import javax.portlet.RenderRequest;
@@ -49,8 +53,33 @@ public class LayoutPageTemplateEntryVerticalCard extends BaseVerticalCard {
 
 		super(baseModel, renderRequest, rowChecker);
 
+		_renderResponse = renderResponse;
+
 		_layoutPageTemplateEntry = (LayoutPageTemplateEntry)baseModel;
 		_request = PortalUtil.getHttpServletRequest(renderRequest);
+	}
+
+	@Override
+	public List<DropdownItem> getActionDropdownItems() {
+		LayoutPageTemplateEntryActionDropdownItemsProvider
+			layoutPageTemplateEntryActionDropdownItemsProvider =
+				new LayoutPageTemplateEntryActionDropdownItemsProvider(
+					_layoutPageTemplateEntry, renderRequest, _renderResponse);
+
+		try {
+			return layoutPageTemplateEntryActionDropdownItemsProvider.
+				getActionDropdownItems();
+		}
+		catch (Exception e) {
+		}
+
+		return null;
+	}
+
+	@Override
+	public String getDefaultEventHandler() {
+		return LayoutAdminWebKeys.
+			LAYOUT_PAGE_TEMPLATE_ENTRY_DROPDOWN_DEFAULT_EVENT_HANDLER;
 	}
 
 	@Override
@@ -130,6 +159,7 @@ public class LayoutPageTemplateEntryVerticalCard extends BaseVerticalCard {
 	}
 
 	private final LayoutPageTemplateEntry _layoutPageTemplateEntry;
+	private final RenderResponse _renderResponse;
 	private final HttpServletRequest _request;
 
 }

@@ -72,82 +72,20 @@ LayoutPageTemplateManagementToolbarDisplayContext layoutPageTemplateManagementTo
 	<aui:input name="fileEntryId" type="hidden" />
 </aui:form>
 
-<aui:script require="metal-dom/src/all/dom as dom,frontend-js-web/liferay/modal/commands/OpenSimpleInputModal.es as modalCommands">
-	var updateLayoutPageTemplateEntryMenuItemClickHandler = dom.delegate(
-		document.body,
-		'click',
-		'.<portlet:namespace />update-layout-page-template-action-option > a',
-		function(event) {
-			var data = event.delegateTarget.dataset;
-
-			event.preventDefault();
-
-			modalCommands.openSimpleInputModal(
-				{
-					dialogTitle: '<liferay-ui:message key="rename-layout-page-template" />',
-					formSubmitURL: data.formSubmitUrl,
-					idFieldName: data.idFieldName,
-					idFieldValue: data.idFieldValue,
-					mainFieldLabel: '<liferay-ui:message key="name" />',
-					mainFieldName: 'name',
-					mainFieldPlaceholder: '<liferay-ui:message key="name" />',
-					mainFieldValue: data.mainFieldValue,
-					namespace: '<portlet:namespace />',
-					spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg'
-				}
-			);
+<aui:script require='<%= npmResolvedPackageName + "/js/LayoutPageTemplateEntryDropdownDefaultEventHandler.es as LayoutPageTemplateEntryDropdownDefaultEventHandler" %>'>
+	Liferay.component(
+		'<%= LayoutAdminWebKeys.LAYOUT_PAGE_TEMPLATE_ENTRY_DROPDOWN_DEFAULT_EVENT_HANDLER %>',
+		new LayoutPageTemplateEntryDropdownDefaultEventHandler.default(
+			{
+				namespace: '<portlet:namespace />',
+				spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg'
+			}
+		),
+		{
+			destroyOnNavigate: true,
+			portletId: '<%= HtmlUtil.escapeJS(portletDisplay.getId()) %>'
 		}
 	);
-
-	var updateLayoutPageTemplateEntryPreviewMenuItemClickHandler = dom.delegate(
-		document.body,
-		'click',
-		'.update-layout-page-template-entry-preview > a',
-		function(event) {
-			var data = event.delegateTarget.dataset;
-
-			event.preventDefault();
-
-			AUI().use(
-				'liferay-item-selector-dialog',
-				function(A) {
-					var itemSelectorDialog = new A.LiferayItemSelectorDialog(
-						{
-							eventName: '<portlet:namespace />changePreview',
-							on: {
-								selectedItemChange: function(event) {
-									var selectedItem = event.newVal;
-
-									if (selectedItem) {
-										var itemValue = JSON.parse(selectedItem.value);
-
-										document.<portlet:namespace />layoutPageTemplateEntryPreviewFm.<portlet:namespace />layoutPageTemplateEntryId.value = data.layoutPageTemplateEntryId;
-										document.<portlet:namespace />layoutPageTemplateEntryPreviewFm.<portlet:namespace />fileEntryId.value = itemValue.fileEntryId;
-
-										submitForm(document.<portlet:namespace />layoutPageTemplateEntryPreviewFm);
-									}
-								}
-							},
-							'strings.add': '<liferay-ui:message key="ok" />',
-							title: '<liferay-ui:message key="page-template-thumbnail" />',
-							url: data.itemSelectorUrl
-						}
-					);
-
-					itemSelectorDialog.open();
-				}
-			);
-		}
-	);
-
-	function handleDestroyPortlet() {
-		updateLayoutPageTemplateEntryMenuItemClickHandler.removeListener();
-		updateLayoutPageTemplateEntryPreviewMenuItemClickHandler.removeListener();
-
-		Liferay.detach('destroyPortlet', handleDestroyPortlet);
-	}
-
-	Liferay.on('destroyPortlet', handleDestroyPortlet);
 </aui:script>
 
 <aui:script require='<%= npmResolvedPackageName + "/js/LayoutPageTemplateEntryManagementToolbarDefaultEventHandler.es as LayoutPageTemplateEntryManagementToolbarDefaultEventHandler" %>'>

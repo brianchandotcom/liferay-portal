@@ -73,7 +73,7 @@ public class DeleteExpiredSharingEntriesMessageListener
 	}
 
 	@Override
-	protected void doReceive(Message message) throws Exception {
+	protected void doReceive(Message message) {
 		_sharingEntryLocalService.deleteExpiredEntries();
 	}
 

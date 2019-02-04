@@ -15,6 +15,7 @@
 package com.liferay.oauth2.provider.rest.internal.jaxrs.feature;
 
 import com.liferay.oauth2.provider.scope.RequiresScope;
+import com.liferay.petra.reflect.AnnotationLocator;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.AnnotatedElement;
@@ -55,7 +56,18 @@ public class RequiresScopeAnnotationFinder {
 			return requiresScope;
 		}
 
-		Annotation[] annotations = annotatedElement.getAnnotations();
+		List<Annotation> annotations;
+
+		if (annotatedElement instanceof Class<?>) {
+			annotations = AnnotationLocator.locate((Class<?>)annotatedElement);
+		}
+		else if (annotatedElement instanceof Method) {
+			annotations = AnnotationLocator.locate(
+				(Method)annotatedElement, null);
+		}
+		else {
+			annotations = Collections.emptyList();
+		}
 
 		for (Annotation annotation : annotations) {
 			Class<? extends Annotation> annotationClass =
@@ -114,9 +126,10 @@ public class RequiresScopeAnnotationFinder {
 	}
 
 	private static boolean _isAnnotatedMethod(Method method) {
-		if ((method.getDeclaredAnnotation(Path.class) != null) ||
-			_isHttpMethod(method)) {
+		List<Annotation> annotations = AnnotationLocator.locate(
+			method, Path.class);
 
+		if (!annotations.isEmpty() || _isHttpMethod(method)) {
 			return true;
 		}
 
@@ -124,7 +137,7 @@ public class RequiresScopeAnnotationFinder {
 	}
 
 	private static boolean _isHttpMethod(Method method) {
-		Annotation[] annotations = method.getAnnotations();
+		List<Annotation> annotations = AnnotationLocator.locate(method, null);
 
 		for (Annotation annotation : annotations) {
 			Class<? extends Annotation> annotationType =

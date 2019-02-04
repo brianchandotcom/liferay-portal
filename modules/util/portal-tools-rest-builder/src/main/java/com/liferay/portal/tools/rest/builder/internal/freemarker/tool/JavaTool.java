@@ -181,8 +181,13 @@ public class JavaTool {
 		}
 
 		if (type != null) {
-			if (StringUtil.equals(format, "int64") &&
-				StringUtil.equals(type, "integer")) {
+			if (StringUtil.equals(format, "date-time") &&
+				StringUtil.equals(type, "string")) {
+
+				return "Date";
+			}
+			else if (StringUtil.equals(format, "int64") &&
+					 StringUtil.equals(type, "integer")) {
 
 				return "Long";
 			}

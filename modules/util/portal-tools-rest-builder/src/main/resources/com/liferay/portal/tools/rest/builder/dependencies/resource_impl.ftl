@@ -2,6 +2,8 @@ package ${configYAML.apiPackagePath}.internal.resource;
 
 import ${configYAML.apiPackagePath}.resource.${schemaName}Resource;
 
+import java.util.Date;
+
 import org.osgi.service.component.annotations.Component;
 
 /**

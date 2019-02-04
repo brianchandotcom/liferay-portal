@@ -6,6 +6,8 @@ package ${configYAML.apiPackagePath}.dto;
 	</#list>
 </#compress>
 
+import java.util.Date;
+
 import javax.annotation.Generated;
 
 import javax.xml.bind.annotation.XmlRootElement;

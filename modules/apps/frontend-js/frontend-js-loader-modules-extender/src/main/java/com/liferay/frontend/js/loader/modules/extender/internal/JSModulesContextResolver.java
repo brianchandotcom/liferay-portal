@@ -7,6 +7,7 @@ import com.liferay.frontend.js.loader.modules.extender.internal.config.generator
 import com.liferay.frontend.js.loader.modules.extender.internal.config.generator.JSConfigGeneratorPackage;
 import com.liferay.frontend.js.loader.modules.extender.internal.config.generator.JSConfigGeneratorPackagesTracker;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSModule;
+import com.liferay.frontend.js.loader.modules.extender.npm.ModuleNameUtil;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMRegistry;
 import com.liferay.portal.kernel.util.Portal;
 import org.osgi.service.component.annotations.Component;
@@ -134,7 +135,7 @@ public class JSModulesContextResolver {
 				!dependency.equals("module")) {
 
 				String resolvedPath =
-					PathResolver.resolvePath(alias, dependency);
+					ModuleNameUtil.resolvePath(alias, dependency);
 
 				String mappedModuleName =
 					_mapModuleName(resolvedPath, adapter.getMap());

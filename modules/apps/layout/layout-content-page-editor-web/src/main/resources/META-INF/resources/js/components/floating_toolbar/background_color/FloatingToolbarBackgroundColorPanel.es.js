@@ -14,39 +14,6 @@ import {UPDATE_LAST_SAVE_DATE, UPDATE_SAVING_CHANGES_STATUS, UPDATE_SECTION_CONF
 class FloatingToolbarBackgroundColorPanel extends Component {
 
 	/**
-	 * @inheritDoc
-	 */
-	disposed() {
-		this._colorPalette.destroy();
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	rendered() {
-		AUI().use(
-			'aui-color-palette',
-			(A) => {
-				this._colorPalette = new A.ColorPalette(
-					{
-						items: this.themeColorsCssClasses
-					}
-				);
-
-				this._colorPalette.after(
-					'select',
-					this._handleColorSelect,
-					this
-				);
-
-				this._colorPalette.render(
-					'#floatingToolbarBackgroundColorPanelPalette'
-				);
-			}
-		);
-	}
-
-	/**
 	 * Handle Clear button click
 	 * @private
 	 * @review
@@ -55,20 +22,6 @@ class FloatingToolbarBackgroundColorPanel extends Component {
 		this._updateSectionConfig(
 			{
 				[ITEM_CONFIG_KEYS.backgroundColorCssClass]: ''
-			}
-		);
-	}
-
-	/**
-	 * Handle color palette color select
-	 * @param {Event} event
-	 * @private
-	 * @review
-	 */
-	_handleColorSelect(event) {
-		this._updateSectionConfig(
-			{
-				[ITEM_CONFIG_KEYS.backgroundColorCssClass]: event.value.value
 			}
 		);
 	}
@@ -128,18 +81,7 @@ FloatingToolbarBackgroundColorPanel.STATE = {
 	 */
 	itemId: Config
 		.string()
-		.required(),
-
-	/**
-	 * Internal Color Palette instance
-	 * @default null
-	 * @memberof FloatingToolbarBackgroundColorPanel
-	 * @review
-	 * @type {object}
-	 */
-	_colorPalette: Config
-		.internal()
-		.value(null)
+		.required()
 };
 
 const ConnectedFloatingToolbarBackgroundColorPanel = getConnectedComponent(

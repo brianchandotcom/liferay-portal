@@ -1,8 +1,10 @@
 package com.liferay.frontend.js.loader.modules.extender.internal;
 
-import com.liferay.frontend.js.loader.modules.extender.internal.adapter.JSLoaderModuleAdapter;
+import com.liferay.frontend.js.loader.modules.extender.internal.adapter.JSConfigGeneratorModuleAdapter;
 import com.liferay.frontend.js.loader.modules.extender.internal.adapter.JSModuleAdapter;
 import com.liferay.frontend.js.loader.modules.extender.internal.adapter.NPMRegistryModuleAdapter;
+import com.liferay.frontend.js.loader.modules.extender.internal.config.generator.JSConfigGeneratorModule;
+import com.liferay.frontend.js.loader.modules.extender.internal.config.generator.JSConfigGeneratorPackage;
 import com.liferay.frontend.js.loader.modules.extender.internal.config.generator.JSConfigGeneratorPackagesTracker;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSModule;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMRegistry;
@@ -16,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @author Rodolfo Roza Miranda
@@ -59,11 +62,34 @@ public class JSModulesContextResolver {
 	}
 
 	private ArrayList<JSModuleAdapter> _getAllModules() {
-		List<JSLoaderModuleAdapter> jsLoaderModuleAdapters =
-			_jsConfigGeneratorPackagesTracker.getJSConfigGeneratorPackages()
-				.stream()
-				.map(m -> new JSLoaderModuleAdapter(m, _portal))
-				.collect(Collectors.toList());
+		Collection<JSConfigGeneratorPackage> jsConfigGeneratorPackages =
+			_jsConfigGeneratorPackagesTracker.getJSConfigGeneratorPackages();
+
+		Stream<JSConfigGeneratorPackage> jsConfigGeneratorPackagesStream =
+			jsConfigGeneratorPackages.stream();
+
+		List<JSConfigGeneratorModuleAdapter> jsConfigGeneratorModuleAdapters =
+			jsConfigGeneratorPackagesStream.reduce(
+				new ArrayList<>(),
+				(arrayList, pkg) -> {
+					for (JSConfigGeneratorModule jsConfigGeneratorModule :
+						pkg.getJSConfigGeneratorModules()) {
+
+						arrayList.add(
+							new JSConfigGeneratorModuleAdapter(
+								jsConfigGeneratorModule));
+					}
+
+					return arrayList;
+				},
+				(arrayList1, arrayList2) -> {
+					ArrayList<JSConfigGeneratorModuleAdapter> result =
+						new ArrayList<>(arrayList1);
+
+					result.addAll(arrayList2);
+
+					return result;
+				});
 
 		List<NPMRegistryModuleAdapter> npmRegistryModules =
 			_npmRegistry.getResolvedJSModules().stream()
@@ -73,7 +99,7 @@ public class JSModulesContextResolver {
 
 		ArrayList<JSModuleAdapter> allModules = new ArrayList<>();
 
-		allModules.addAll(jsLoaderModuleAdapters);
+		allModules.addAll(jsConfigGeneratorModuleAdapters);
 		allModules.addAll(npmRegistryModules);
 
 		return allModules;

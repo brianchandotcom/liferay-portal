@@ -1,7 +1,7 @@
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 
-import {CHANGE_SEGMENT_ID} from '../../actions/actions.es';
+import {CHANGE_SEGMENT_ID, UPDATE_TRANSLATION_STATUS} from '../../actions/actions.es';
 import getConnectedComponent from '../../store/ConnectedComponent.es';
 import {setIn} from '../../utils/FragmentsEditorUpdateUtils.es';
 import templates from './SegmentSelector.soy';
@@ -37,6 +37,8 @@ class SegmentSelector extends Component {
 			{
 				segmentId: value
 			}
+		).dispatchAction(
+			UPDATE_TRANSLATION_STATUS
 		);
 	}
 

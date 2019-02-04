@@ -1,0 +1,9 @@
+dependencies {
+	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	testIntegrationCompile project(":apps:apio-architect:apio-architect-api")
+	testIntegrationCompile project(":apps:blogs:blogs-api")
+	testIntegrationCompile project(":apps:blogs:blogs-test-util")
+	testIntegrationCompile project(":apps:headless:headless-collaboration:headless-collaboration-api")
+	testIntegrationCompile project(":apps:portal-vulcan:portal-vulcan-api")
+	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
+}

@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.ModelListener;
+import com.liferay.portal.kernel.model.ModelListenerRegistrationUtil;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.impl.TableMapper;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -56,6 +57,8 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 		this.rightColumnName = rightColumnName;
 		this.leftBasePersistence = leftBasePersistence;
 		this.rightBasePersistence = rightBasePersistence;
+		leftModelClass = leftBasePersistence.getModelClass();
+		rightModelClass = rightBasePersistence.getModelClass();
 
 		DataSource dataSource = leftBasePersistence.getDataSource();
 
@@ -192,7 +195,7 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 	@Override
 	public int deleteLeftPrimaryKeyTableMappings(long leftPrimaryKey) {
 		return deleteTableMappings(
-			leftBasePersistence, rightBasePersistence, leftToRightPortalCache,
+			leftModelClass, rightModelClass, leftToRightPortalCache,
 			rightToLeftPortalCache, getRightPrimaryKeysSqlQuery,
 			deleteLeftPrimaryKeyTableMappingsSqlUpdate, leftPrimaryKey);
 	}
@@ -200,7 +203,7 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 	@Override
 	public int deleteRightPrimaryKeyTableMappings(long rightPrimaryKey) {
 		return deleteTableMappings(
-			rightBasePersistence, leftBasePersistence, rightToLeftPortalCache,
+			rightModelClass, leftModelClass, rightToLeftPortalCache,
 			leftToRightPortalCache, getLeftPrimaryKeysSqlQuery,
 			deleteRightPrimaryKeyTableMappingsSqlUpdate, rightPrimaryKey);
 	}
@@ -345,29 +348,22 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 
 	protected static <M extends BaseModel<M>, S extends BaseModel<S>> int
 		deleteTableMappings(
-			BasePersistence<M> masterBasePersistence,
-			BasePersistence<S> slaveBasePersistence,
+			Class<M> masterModelClass, Class<S> slaveModelClass,
 			PortalCache<Long, long[]> masterToSlavePortalCache,
 			PortalCache<Long, long[]> slaveToMasterPortalCache,
 			MappingSqlQuery<Long> mappingSqlQuery, SqlUpdate deleteSqlUpdate,
 			long masterPrimaryKey) {
 
 		ModelListener<M>[] masterModelListeners =
-			masterBasePersistence.getListeners();
+			ModelListenerRegistrationUtil.getModelListeners(masterModelClass);
 		ModelListener<S>[] slaveModelListeners =
-			slaveBasePersistence.getListeners();
+			ModelListenerRegistrationUtil.getModelListeners(slaveModelClass);
 
 		long[] slavePrimaryKeys = getPrimaryKeys(
 			masterToSlavePortalCache, mappingSqlQuery, masterPrimaryKey, false);
 
-		Class<M> masterModelClass = null;
-		Class<S> slaveModelClass = null;
-
 		if ((masterModelListeners.length > 0) ||
 			(slaveModelListeners.length > 0)) {
-
-			masterModelClass = masterBasePersistence.getModelClass();
-			slaveModelClass = slaveBasePersistence.getModelClass();
 
 			for (long slavePrimaryKey : slavePrimaryKeys) {
 				for (ModelListener<M> masterModelListener :
@@ -516,29 +512,27 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 	protected MappingSqlQuery<Long> getRightPrimaryKeysSqlQuery;
 	protected BasePersistence<L> leftBasePersistence;
 	protected String leftColumnName;
+	protected final Class<L> leftModelClass;
 	protected PortalCache<Long, long[]> leftToRightPortalCache;
 	protected TableMapper<R, L> reverseTableMapper;
 	protected BasePersistence<R> rightBasePersistence;
 	protected String rightColumnName;
+	protected final Class<R> rightModelClass;
 	protected PortalCache<Long, long[]> rightToLeftPortalCache;
 
 	private void _addTableMapping(
 		long companyId, long leftPrimaryKey, long rightPrimaryKey) {
 
-		Class<R> rightModelClass = rightBasePersistence.getModelClass();
-
 		ModelListener<L>[] leftModelListeners =
-			leftBasePersistence.getListeners();
+			ModelListenerRegistrationUtil.getModelListeners(leftModelClass);
 
 		for (ModelListener<L> leftModelListener : leftModelListeners) {
 			leftModelListener.onBeforeAddAssociation(
 				leftPrimaryKey, rightModelClass.getName(), rightPrimaryKey);
 		}
 
-		Class<L> leftModelClass = leftBasePersistence.getModelClass();
-
 		ModelListener<R>[] rightModelListeners =
-			rightBasePersistence.getListeners();
+			ModelListenerRegistrationUtil.getModelListeners(rightModelClass);
 
 		for (ModelListener<R> rightModelListener : rightModelListeners) {
 			rightModelListener.onBeforeAddAssociation(
@@ -567,20 +561,16 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 	private boolean _deleteTableMapping(
 		long leftPrimaryKey, long rightPrimaryKey) {
 
-		Class<R> rightModelClass = rightBasePersistence.getModelClass();
-
 		ModelListener<L>[] leftModelListeners =
-			leftBasePersistence.getListeners();
+			ModelListenerRegistrationUtil.getModelListeners(leftModelClass);
 
 		for (ModelListener<L> leftModelListener : leftModelListeners) {
 			leftModelListener.onBeforeRemoveAssociation(
 				leftPrimaryKey, rightModelClass.getName(), rightPrimaryKey);
 		}
 
-		Class<L> leftModelClass = leftBasePersistence.getModelClass();
-
 		ModelListener<R>[] rightModelListeners =
-			rightBasePersistence.getListeners();
+			ModelListenerRegistrationUtil.getModelListeners(rightModelClass);
 
 		for (ModelListener<R> rightModelListener : rightModelListeners) {
 			rightModelListener.onBeforeRemoveAssociation(

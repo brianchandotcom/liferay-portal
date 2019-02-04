@@ -118,12 +118,16 @@ public class ReviewUADDataMVCRenderCommand implements MVCRenderCommand {
 				_getSearchContainer(
 					renderRequest, currentURL, uadDisplay,
 					selectedUser.getUserId(), liferayPortletResponse));
+
 			viewUADEntitiesDisplay.setTypeName(
 				uadDisplay.getTypeName(
 					LocaleThreadLocal.getThemeDisplayLocale()));
 
 			viewUADEntitiesDisplay.setUADRegistryKey(uadRegistryKey);
 
+			renderRequest.setAttribute(
+				UADWebKeys.APPLICATION_UAD_DISPLAYS,
+				_uadRegistry.getApplicationUADDisplays(applicationKey));
 			renderRequest.setAttribute(
 				UADWebKeys.INFO_PANEL_UAD_DISPLAY, uadDisplay);
 			renderRequest.setAttribute(

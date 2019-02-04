@@ -19,6 +19,8 @@
 <%
 int totalReviewableUADEntitiesCount = (int)request.getAttribute(UADWebKeys.TOTAL_REVIEWABLE_UAD_ENTITIES_COUNT);
 List<UADApplicationSummaryDisplay> uadApplicationSummaryDisplays = (List<UADApplicationSummaryDisplay>)request.getAttribute(UADWebKeys.UAD_APPLICATION_SUMMARY_DISPLAY_LIST);
+List<UADDisplay> uadDisplays = (List<UADDisplay>)request.getAttribute(UADWebKeys.APPLICATION_UAD_DISPLAYS);
+ViewUADEntitiesDisplay viewUADEntitiesDisplay = (ViewUADEntitiesDisplay)request.getAttribute(UADWebKeys.VIEW_UAD_ENTITIES_DISPLAY);
 
 portletDisplay.setShowBackIcon(true);
 
@@ -82,6 +84,45 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 						}
 						%>
 
+					</div>
+				</div>
+			</div>
+
+			<div class="panel-group">
+				<div class="panel panel-secondary">
+					<div class="collapse-icon collapse-icon-middle panel-header" data-target="#<portlet:namespace />entitiesTypePanelBody" data-toggle="collapse">
+						<span class="panel-title">
+
+							<%
+								String applicationName = UADLanguageUtil.getApplicationName(viewUADEntitiesDisplay.getApplicationKey(), locale);
+							%>
+
+							<%= StringUtil.toUpperCase(applicationName, locale) %>
+						</span>
+
+						<aui:icon cssClass="collapse-icon-closed" image="angle-right" markupView="lexicon" />
+
+						<aui:icon cssClass="collapse-icon-open" image="angle-down" markupView="lexicon" />
+					</div>
+
+					<div class="collapse panel-collapse show" id="<portlet:namespace />entitiesTypePanelBody">
+						<div class="panel-body">
+
+							<%
+							for (UADDisplay uadDisplay : uadDisplays) {
+							%>
+
+								<clay:radio
+									checked="<%= Objects.equals(uadDisplay.getTypeName(locale), viewUADEntitiesDisplay.getTypeName()) %>"
+									label="<%= StringUtil.appendParentheticalSuffix(uadDisplay.getTypeName(locale), (int)uadDisplay.count(selectedUser.getUserId())) %>"
+									name="entities"
+								/>
+
+							<%
+							}
+							%>
+
+						</div>
 					</div>
 				</div>
 			</div>

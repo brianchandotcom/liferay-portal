@@ -14,10 +14,7 @@
 
 package com.liferay.user.associated.data.web.internal.display;
 
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-
-import java.util.List;
 
 /**
  * @author Drew Brokke
@@ -26,10 +23,6 @@ public class ViewUADEntitiesDisplay {
 
 	public String getApplicationKey() {
 		return _applicationKey;
-	}
-
-	public List<NavigationItem> getNavigationItems() {
-		return _navigationItems;
 	}
 
 	public SearchContainer<UADEntity> getSearchContainer() {
@@ -48,10 +41,6 @@ public class ViewUADEntitiesDisplay {
 		_applicationKey = applicationKey;
 	}
 
-	public void setNavigationItems(List<NavigationItem> navigationItems) {
-		_navigationItems = navigationItems;
-	}
-
 	public void setSearchContainer(SearchContainer<UADEntity> searchContainer) {
 		_searchContainer = searchContainer;
 	}
@@ -65,7 +54,6 @@ public class ViewUADEntitiesDisplay {
 	}
 
 	private String _applicationKey;
-	private List<NavigationItem> _navigationItems;
 	private SearchContainer<UADEntity> _searchContainer;
 	private String _typeName;
 	private String _uadRegistryKey;

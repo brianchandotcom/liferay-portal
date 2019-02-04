@@ -35,10 +35,6 @@ portletDisplay.setURLBack(backURL.toString());
 renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", LanguageUtil.get(request, "personal-data-erasure"), " - ", viewUADEntitiesDisplay.getTypeName()));
 %>
 
-<clay:navigation-bar
-	navigationItems="<%= viewUADEntitiesDisplay.getNavigationItems() %>"
-/>
-
 <clay:management-toolbar
 	displayContext="<%= viewUADEntitiesManagementToolbarDisplayContext %>"
 />

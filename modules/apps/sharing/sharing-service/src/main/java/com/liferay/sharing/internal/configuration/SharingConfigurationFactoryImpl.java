@@ -61,6 +61,11 @@ public class SharingConfigurationFactoryImpl
 		}
 	}
 
+	@Override
+	public SharingConfiguration getSystemSharingConfiguration() {
+		return new SharingConfigurationImpl(null, _sharingSystemConfiguration);
+	}
+
 	@Activate
 	protected void activate(Map<String, Object> properties) {
 		_sharingSystemConfiguration = ConfigurableUtil.createConfigurable(

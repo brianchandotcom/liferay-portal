@@ -50,6 +50,13 @@ public class DLFileEntrySharingPermissionSQLContributor
 		String className, String classPKField, String userIdField,
 		String groupIdField, long[] groupIds) {
 
+		SharingConfiguration sharingConfiguration =
+			_sharingConfigurationFactory.getSystemSharingConfiguration();
+
+		if (!sharingConfiguration.isEnabled()) {
+			return StringPool.BLANK;
+		}
+
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 

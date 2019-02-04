@@ -23,4 +23,6 @@ public interface SharingConfigurationFactory {
 
 	public SharingConfiguration getSharingConfiguration(Group group);
 
+	public SharingConfiguration getSystemSharingConfiguration();
+
 }

@@ -46,14 +46,13 @@ public class RequiresScopeAnnotationFinder {
 		return scopes;
 	}
 
-	public static RequiresScope getRequiresScope(
-		AnnotatedElement annotatedElement) {
+	public static <T extends Annotation> T getScopeAnnotation(
+		AnnotatedElement annotatedElement, Class<T> annotationClass) {
 
-		RequiresScope requiresScope = annotatedElement.getAnnotation(
-			RequiresScope.class);
+		T t = annotatedElement.getAnnotation(annotationClass);
 
-		if (requiresScope != null) {
-			return requiresScope;
+		if (t != null) {
+			return t;
 		}
 
 		List<Annotation> annotations;
@@ -70,13 +69,17 @@ public class RequiresScopeAnnotationFinder {
 		}
 
 		for (Annotation annotation : annotations) {
-			Class<? extends Annotation> annotationClass =
+			Class<? extends Annotation> curAnnotationClass =
 				annotation.annotationType();
 
-			requiresScope = annotationClass.getAnnotation(RequiresScope.class);
+			if (curAnnotationClass.equals(annotationClass)) {
+				return (T)annotation;
+			}
 
-			if (requiresScope != null) {
-				return requiresScope;
+			t = curAnnotationClass.getAnnotation(annotationClass);
+
+			if (t != null) {
+				return t;
 			}
 		}
 
@@ -87,7 +90,8 @@ public class RequiresScopeAnnotationFinder {
 		Set<Class<?>> classes, Set<String> scopes, boolean recurse,
 		Class<?> clazz) {
 
-		RequiresScope requiresScope = getRequiresScope(clazz);
+		RequiresScope requiresScope = getScopeAnnotation(
+			clazz, RequiresScope.class);
 
 		if (requiresScope != null) {
 			Collections.addAll(scopes, requiresScope.value());
@@ -112,7 +116,8 @@ public class RequiresScopeAnnotationFinder {
 		Set<Class<?>> visited, Set<String> scopes, boolean recurse,
 		Method method) {
 
-		RequiresScope requiresScope = getRequiresScope(method);
+		RequiresScope requiresScope = getScopeAnnotation(
+			method, RequiresScope.class);
 
 		if (requiresScope != null) {
 			Collections.addAll(scopes, requiresScope.value());

@@ -4,4 +4,19 @@ Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.portal.vulcan.context,\
 	com.liferay.portal.vulcan.dto,\
-	com.liferay.portal.vulcan.util
+	com.liferay.portal.vulcan.util,\
+	\
+	graphql.annotations;version="5.4",\
+	graphql.annotations.annotationTypes;version="5.4",\
+	graphql.annotations.processor;version="5.4",\
+	\
+	graphql.execution;version="8.0",\
+	graphql.execution.instrumentation;version="8.0",\
+	\
+	graphql.schema;version="8.0",\
+	\
+	graphql.servlet;version="6.1.3"
+Import-Package:\
+	!com.google.errorprone.annotations.*,\
+	\
+	*

@@ -1,8 +1,8 @@
-package com.liferay.frontend.js.loader.modules.extender.internal;
+package com.liferay.frontend.js.loader.modules.extender.internal.resolution;
 
-import com.liferay.frontend.js.loader.modules.extender.internal.adapter.JSConfigGeneratorModuleAdapter;
-import com.liferay.frontend.js.loader.modules.extender.internal.adapter.JSModuleAdapter;
-import com.liferay.frontend.js.loader.modules.extender.internal.adapter.NPMRegistryModuleAdapter;
+import com.liferay.frontend.js.loader.modules.extender.internal.resolution.descriptor.JSConfigGeneratorModuleAdapter;
+import com.liferay.frontend.js.loader.modules.extender.internal.resolution.descriptor.JSModuleAdapter;
+import com.liferay.frontend.js.loader.modules.extender.internal.resolution.descriptor.NPMRegistryModuleAdapter;
 import com.liferay.frontend.js.loader.modules.extender.internal.config.generator.JSConfigGeneratorModule;
 import com.liferay.frontend.js.loader.modules.extender.internal.config.generator.JSConfigGeneratorPackage;
 import com.liferay.frontend.js.loader.modules.extender.internal.config.generator.JSConfigGeneratorPackagesTracker;

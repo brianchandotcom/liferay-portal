@@ -1,4 +1,4 @@
-package com.liferay.frontend.js.loader.modules.extender.internal;
+package com.liferay.frontend.js.loader.modules.extender.internal.resolution;
 
 import java.util.ArrayList;
 import java.util.Collections;

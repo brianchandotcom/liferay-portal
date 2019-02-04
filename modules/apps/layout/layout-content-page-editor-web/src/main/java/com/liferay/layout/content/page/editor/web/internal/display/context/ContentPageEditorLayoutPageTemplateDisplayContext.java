@@ -92,7 +92,7 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 		}
 
 		soyContext.put(
-			"sidebarPanels", getSidebarPanelSoyContexts(_showMapping, false));
+			"sidebarPanels", getSidebarPanelSoyContexts(_showMapping, true));
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_getLayoutPageTemplateEntry();

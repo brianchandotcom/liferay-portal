@@ -9,7 +9,7 @@ import org.osgi.service.component.annotations.ServiceScope;
  * @author ${configYAML.author}
  */
 @Component(
-	properties = "OSGI-INF/${schemaPath}.properties",
-	scope = ServiceScope.PROTOTYPE, service = ${schemaName}Resource.class)
+	properties = "OSGI-INF/${schemaPath}.properties", scope = ServiceScope.PROTOTYPE,
+	service = ${schemaName}Resource.class)
 public class ${schemaName}ResourceImpl extends Base${schemaName}ResourceImpl {
 }

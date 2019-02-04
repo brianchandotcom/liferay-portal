@@ -66,6 +66,7 @@ public class SegmentsEntryServiceImpl extends SegmentsEntryServiceBaseImpl {
 		return segmentsEntryLocalService.deleteSegmentsEntry(segmentsEntryId);
 	}
 
+	@Override
 	public List<SegmentsEntry> getActiveSegmentsEntries(long groupId)
 		throws PortalException {
 

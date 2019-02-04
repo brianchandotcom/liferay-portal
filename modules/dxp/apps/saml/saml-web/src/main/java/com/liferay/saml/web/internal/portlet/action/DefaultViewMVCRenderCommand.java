@@ -66,7 +66,6 @@ public class DefaultViewMVCRenderCommand implements MVCRenderCommand {
 
 		renderRequest.setAttribute(
 			LocalEntityManager.class.getName(), _localEntityManager);
-
 		renderRequest.setAttribute(
 			SamlProviderConfigurationHelper.class.getName(),
 			_samlProviderConfigurationHelper);

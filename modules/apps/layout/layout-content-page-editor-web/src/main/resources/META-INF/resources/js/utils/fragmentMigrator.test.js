@@ -15,7 +15,6 @@ describe(
 				);
 			}
 		);
-
 		test(
 			'should migrate double editable fragment',
 			() => {
@@ -27,7 +26,6 @@ describe(
 				);
 			}
 		);
-
 		test(
 			'should leave already migrated segments as they are',
 			() => {

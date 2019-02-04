@@ -114,13 +114,15 @@ class FragmentEntryLinkContent extends Component {
 			);
 		}
 
-		this._update({
-			languageId: this.languageId,
-			defaultLanguageId: this.defaultLanguageId,
-			segmentId: this.segmentId,
-			defaultSegmentId: this.defaultSegmentId,
-			updateFunctions: [this._updateEditableStatus],
-		});
+		this._update(
+			{
+				defaultLanguageId: this.defaultLanguageId,
+				defaultSegmentId: this.defaultSegmentId,
+				languageId: this.languageId,
+				segmentId: this.segmentId,
+				updateFunctions: [this._updateEditableStatus]
+			}
+		);
 	}
 
 	/**
@@ -129,7 +131,6 @@ class FragmentEntryLinkContent extends Component {
 	 * @review
 	 */
 	syncLanguageId(newLanguageId) {
-		// TODO does this ever get fired
 		if (this.content && (newLanguageId !== this.languageId)) {
 			this._renderContent(this.content);
 		}
@@ -141,8 +142,6 @@ class FragmentEntryLinkContent extends Component {
 	 * @review
 	 */
 	syncSegmentId(newSegmentId) {
-		// TODO does this ever get fired
-		// do I need this
 		if (this.content && (newSegmentId !== this.segmentId)) {
 			this._renderContent(this.content);
 		}
@@ -248,6 +247,7 @@ class FragmentEntryLinkContent extends Component {
 						fragmentEntryLinkId: this.fragmentEntryLinkId,
 						languageId: this.languageId,
 						portletNamespace: this.portletNamespace,
+						segmentId: this.segmentId,
 
 						processorsOptions: {
 							defaultEditorConfiguration,
@@ -331,8 +331,8 @@ class FragmentEntryLinkContent extends Component {
 				editableId: event.name,
 				editableValue: event.value,
 				editableValueId: this.languageId,
-				fragmentEntryLinkId: this.fragmentEntryLinkId,
-				editableValueSegmentId: this.segmentId || this.defaultSegmentId
+				editableValueSegmentId: this.segmentId || this.defaultSegmentId,
+				fragmentEntryLinkId: this.fragmentEntryLinkId
 			}
 		);
 	}
@@ -358,13 +358,15 @@ class FragmentEntryLinkContent extends Component {
 
 					this._createBackgroundImageStyleEditors();
 
-					this._update({
-						languageId: this.languageId,
-						defaultLanguageId: this.defaultLanguageId,
-						segmentId: this.segmentId,
-						defaultSegmentId: this.defaultSegmentId,
-						updateFunctions: [this._updateEditableStatus]
-					});
+					this._update(
+						{
+							defaultLanguageId: this.defaultLanguageId,
+							defaultSegmentId: this.defaultSegmentId,
+							languageId: this.languageId,
+							segmentId: this.segmentId,
+							updateFunctions: [this._updateEditableStatus]
+						}
+					);
 				}
 			);
 		}
@@ -380,24 +382,30 @@ class FragmentEntryLinkContent extends Component {
 	 * @private
 	 * @review
 	 */
-	_update({
-		languageId,
-		defaultLanguageId,
-		segmentId,
-		defaultSegmentId,
-		updateFunctions
-	}) {
+	_update(
+		{
+			defaultLanguageId,
+			defaultSegmentId,
+			languageId,
+			segmentId,
+			updateFunctions
+		}
+	) {
 		const editableValues = this.editableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR];
 
 		Object.keys(editableValues).forEach(
 			editableId => {
 				const editableValue = editableValues[editableId];
-				const segmentedEditableValue = segmentId && editableValue[segmentId] || editableValue[defaultSegmentId];
+
 				const defaultSegmentedEditableValue = editableValue[defaultSegmentId];
 
-				const defaultValue = segmentedEditableValue[defaultLanguageId] || defaultSegmentedEditableValue[defaultLanguageId] || editableValue.defaultValue;
+				const segmentedEditableValue = segmentId && editableValue[segmentId] || editableValue[defaultSegmentId];
+
+				const defaultValue = (defaultSegmentedEditableValue && segmentedEditableValue[defaultLanguageId]) ||
+					defaultSegmentedEditableValue && defaultSegmentedEditableValue[defaultLanguageId] ||
+					editableValue.defaultValue;
 				const mappedField = editableValue.mappedField || '';
-				const value = segmentedEditableValue[languageId];
+				const value = segmentedEditableValue && segmentedEditableValue[languageId];
 
 				updateFunctions.forEach(
 					updateFunction => updateFunction(

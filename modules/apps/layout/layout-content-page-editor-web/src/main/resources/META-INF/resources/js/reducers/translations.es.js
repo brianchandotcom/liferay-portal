@@ -41,9 +41,12 @@ function translationStatusReducer(state, actionType) {
 		actionType === UPDATE_TRANSLATION_STATUS ||
 		actionType === REMOVE_FRAGMENT_ENTRY_LINK
 	) {
+		const segmentId = nextState.segmentId || nextState.defaultSegmentId;
+
 		const nextTranslationStatus = _getTranslationStatus(
 			_getLanguageKeys(nextState.availableLanguages),
-			_getEditableValues(nextState.fragmentEntryLinks)
+			_getEditableValues(nextState.fragmentEntryLinks),
+			segmentId
 		);
 
 		nextState = setIn(nextState, ['translationStatus'], nextTranslationStatus);
@@ -60,7 +63,7 @@ function translationStatusReducer(state, actionType) {
  * @review
  */
 function _getEditableValues(fragmentEntryLinks) {
-	return Object.values(fragmentEntryLinks)
+	const values = Object.values(fragmentEntryLinks)
 		.filter(
 			fragmentEntryLink => fragmentEntryLink.editableValues
 		)
@@ -69,7 +72,10 @@ function _getEditableValues(fragmentEntryLinks) {
 				fragmentEntryLink.editableValues[EDITABLE_VALUES_KEY]
 			)
 		)
-		.filter(editableValues => editableValues);
+		.filter(
+			editableValues => editableValues
+		);
+	return values;
 }
 
 /**
@@ -99,7 +105,7 @@ function _getLanguageKeys(availableLanguages) {
  * @return {object} A translation status object
  * @review
  */
-function _getTranslationStatus(languageIds, editableValues) {
+function _getTranslationStatus(languageIds, editableValues, segmentId) {
 	const translationKeys = editableValues.map(
 		editableValue => Object.keys(editableValue).map(
 			editableValueId => editableValue[editableValueId].defaultValue
@@ -113,7 +119,7 @@ function _getTranslationStatus(languageIds, editableValues) {
 		languageId => {
 			const values = editableValues.map(
 				editableValue => Object.keys(editableValue).map(
-					editableValueId => editableValue[editableValueId][languageId]
+					editableValueId => editableValue[editableValueId][segmentId][languageId]
 				)
 			)
 				.reduce(

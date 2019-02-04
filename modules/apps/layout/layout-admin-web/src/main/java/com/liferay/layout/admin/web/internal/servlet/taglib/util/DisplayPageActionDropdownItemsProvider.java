@@ -285,14 +285,14 @@ public class DisplayPageActionDropdownItemsProvider {
 		return dropdownItem -> {
 			dropdownItem.putData("action", "renameDisplayPage");
 			dropdownItem.putData(
-				"updateDisplayPageURL", updateDisplayPageURL.toString());
-			dropdownItem.putData(
 				"layoutPageTemplateEntryId",
 				String.valueOf(
 					_layoutPageTemplateEntry.getLayoutPageTemplateEntryId()));
 			dropdownItem.putData(
 				"layoutPageTemplateEntryName",
 				_layoutPageTemplateEntry.getName());
+			dropdownItem.putData(
+				"updateDisplayPageURL", updateDisplayPageURL.toString());
 			dropdownItem.setLabel(LanguageUtil.get(_request, "rename"));
 		};
 	}

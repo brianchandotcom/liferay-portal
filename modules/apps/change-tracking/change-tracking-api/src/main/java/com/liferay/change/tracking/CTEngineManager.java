@@ -86,6 +86,29 @@ public interface CTEngineManager {
 	public Optional<CTCollection> getActiveCTCollectionOptional(long userId);
 
 	/**
+	 * Returns all the change entries associated with the given change
+	 * collection what collide with any of the production change collection
+	 * entries.
+	 *
+	 * @param  ctCollectionId the primary key of the change collection
+	 * @return the list of the colliding change entries
+	 */
+	public List<CTEntry> getCollidingCTEntries(long ctCollectionId);
+
+	/**
+	 * Returns all the change entries associated with the source change
+	 * collection what collide with any of the target change collection entries.
+	 *
+	 * @param  sourceCTCollectionId the primary key of the source change
+	 *         collection
+	 * @param  targetCTCollectionId the primary key of the target change
+	 *         collection
+	 * @return the list of the colliding change entries
+	 */
+	public List<CTEntry> getCollidingCTEntries(
+		long sourceCTCollectionId, long targetCTCollectionId);
+
+	/**
 	 * Returns the change tracking collection identified by the primary key.
 	 *
 	 * @param  ctCollectionId the primary key of the change collection

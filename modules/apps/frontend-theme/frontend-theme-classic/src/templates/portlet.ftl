@@ -32,9 +32,22 @@
 				</#foreach>
 
 				<#if portlet_configuration_icons?has_content>
-					<menu class="portlet-topper-toolbar" id="portlet-topper-toolbar_${portlet_id}" type="toolbar">
-						<@liferay_portlet["icon-options"] portletConfigurationIcons=portlet_configuration_icons />
-					</menu>
+					<#if (portlet_configuration_icons?size > 1)>
+						<menu class="portlet-topper-toolbar" id="portlet-topper-toolbar_${portlet_id}" type="toolbar">
+							<@liferay_portlet["icon-options"] portletConfigurationIcons=portlet_configuration_icons />
+						</menu>
+					<#else>
+						<menu class="portlet-topper-toolbar" id="portlet-topper-toolbar_${portlet_id}" type="toolbar">
+							<#assign portletConfigurationIcon = portlet_configuration_icons[0] />
+
+							<@liferay_ui["icon"]
+								icon="${portletConfigurationIcon.getIconCssClass()}"
+								markupView="lexicon"
+								onClick="${portletConfigurationIcon.getOnClick(renderRequest, renderResponse)}"
+								url="javascript:;"
+							/>
+						</menu>
+					</#if>
 				</#if>
 			</header>
 

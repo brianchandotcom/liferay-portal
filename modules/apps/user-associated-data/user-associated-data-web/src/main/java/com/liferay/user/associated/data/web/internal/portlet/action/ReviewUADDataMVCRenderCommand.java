@@ -84,6 +84,18 @@ public class ReviewUADDataMVCRenderCommand implements MVCRenderCommand {
 			UADApplicationSummaryDisplay uadApplicationSummaryDisplay =
 				uadApplicationSummaryDisplays.get(0);
 
+			for (UADApplicationSummaryDisplay
+					currentUadApplicationSummaryDisplay :
+						uadApplicationSummaryDisplays) {
+
+				if (currentUadApplicationSummaryDisplay.getCount() > 0) {
+					uadApplicationSummaryDisplay =
+						currentUadApplicationSummaryDisplay;
+
+					break;
+				}
+			}
+
 			String applicationKey = ParamUtil.getString(
 				renderRequest, "applicationKey");
 

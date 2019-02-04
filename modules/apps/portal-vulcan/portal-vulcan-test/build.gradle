@@ -1,0 +1,9 @@
+dependencies {
+	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	testIntegrationCompile group: "javax.ws.rs", name: "javax.ws.rs-api", version: "2.0.1"
+	testIntegrationCompile group: "org.apache.cxf", name: "cxf-core", version: "3.0.3"
+	testIntegrationCompile group: "org.apache.cxf", name: "cxf-rt-frontend-jaxrs", version: "3.0.0"
+	testIntegrationCompile group: "org.springframework", name: "spring-test", version: "5.1.4.RELEASE"
+	testIntegrationCompile project(":apps:portal-vulcan:portal-vulcan-api")
+	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
+}

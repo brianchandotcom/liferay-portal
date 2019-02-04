@@ -198,9 +198,9 @@ public class NodeDefaultsPlugin extends BaseDefaultsPlugin<NodePlugin> {
 		executeNodeTask.args(key + value);
 	}
 
-	private static final String _NODE_VERSION = "8.10.0";
+	private static final String _NODE_VERSION = "10.15.1";
 
-	private static final String _NPM_VERSION = "5.7.1";
+	private static final String _NPM_VERSION = "6.4.1";
 
 	private static final String _SASS_BINARY_SITE_ARG = "--sass-binary-site=";
 

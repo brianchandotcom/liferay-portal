@@ -17,6 +17,7 @@ package com.liferay.portal.tools.rest.builder;
 import com.liferay.portal.kernel.util.StringUtil_IW;
 import com.liferay.portal.kernel.util.Validator_IW;
 import com.liferay.portal.tools.ArgumentsUtil;
+import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.JavaTool;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.util.FreeMarkerUtil;
 import com.liferay.portal.tools.rest.builder.internal.util.CamelCaseUtil;
 import com.liferay.portal.tools.rest.builder.internal.util.FileUtil;
@@ -66,6 +67,7 @@ public class RESTBuilder {
 		Map<String, Object> context = new HashMap<>();
 
 		context.put("configYAML", _configYAML);
+		context.put("javaTool", JavaTool.getInstance());
 		context.put("openAPIYAML", _openAPIYAML);
 		context.put("stringUtil", StringUtil_IW.getInstance());
 		context.put("validator", Validator_IW.getInstance());

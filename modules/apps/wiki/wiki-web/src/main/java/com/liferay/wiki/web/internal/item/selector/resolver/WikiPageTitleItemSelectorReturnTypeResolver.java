@@ -45,16 +45,12 @@ public class WikiPageTitleItemSelectorReturnTypeResolver
 	}
 
 	@Override
-	public String getTitle(WikiPage page, ThemeDisplay themeDisplay)
-		throws Exception {
-
+	public String getTitle(WikiPage page, ThemeDisplay themeDisplay) {
 		return getValue(page, themeDisplay);
 	}
 
 	@Override
-	public String getValue(WikiPage page, ThemeDisplay themeDisplay)
-		throws Exception {
-
+	public String getValue(WikiPage page, ThemeDisplay themeDisplay) {
 		return page.getTitle();
 	}
 

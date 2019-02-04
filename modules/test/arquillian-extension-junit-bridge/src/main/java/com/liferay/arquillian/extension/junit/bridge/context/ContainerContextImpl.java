@@ -29,13 +29,13 @@ public class ContainerContextImpl
 	extends AbstractContext<String> implements ContainerContext {
 
 	@Override
-	public ObjectStore createNewObjectStore() {
-		return new HashObjectStore();
+	public Class<? extends Annotation> getScope() {
+		return ContainerScoped.class;
 	}
 
 	@Override
-	public Class<? extends Annotation> getScope() {
-		return ContainerScoped.class;
+	protected ObjectStore createNewObjectStore() {
+		return new HashObjectStore();
 	}
 
 }

@@ -144,8 +144,7 @@ class SoyPortletRouter extends State {
 							this.router.component = component;
 
 							resolve();
-						},
-						error => reject(error)
+						}
 					)
 				});
 

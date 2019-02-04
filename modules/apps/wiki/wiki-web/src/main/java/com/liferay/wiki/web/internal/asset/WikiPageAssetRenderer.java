@@ -163,16 +163,15 @@ public class WikiPageAssetRenderer
 	public String getSummary(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		String content = _page.getContent();
-
 		try {
-			content = HtmlUtil.extractText(
+			return HtmlUtil.extractText(
 				_wikiEngineRenderer.convert(_page, null, null, null));
 		}
 		catch (Exception e) {
-		}
+			_log.error(e, e);
 
-		return content;
+			return _page.getContent();
+		}
 	}
 
 	@Override

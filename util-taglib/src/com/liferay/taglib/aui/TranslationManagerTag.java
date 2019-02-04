@@ -14,7 +14,11 @@
 
 package com.liferay.taglib.aui;
 
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.aui.base.BaseTranslationManagerTag;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Eduardo Lundgren
@@ -23,4 +27,20 @@ import com.liferay.taglib.aui.base.BaseTranslationManagerTag;
  * @author Julio Camarero
  */
 public class TranslationManagerTag extends BaseTranslationManagerTag {
+
+	@Override
+	protected void setAttributes(HttpServletRequest request) {
+		super.setAttributes(request);
+
+		if (getGroupId() > 0) {
+			return;
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		setNamespacedAttribute(
+			request, "groupId", String.valueOf(themeDisplay.getSiteGroupId()));
+	}
+
 }

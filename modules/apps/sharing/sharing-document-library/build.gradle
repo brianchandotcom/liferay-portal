@@ -15,5 +15,6 @@ dependencies {
 	compileOnly project(":apps:portal-security:portal-security-permission-api")
 	compileOnly project(":apps:sharing:sharing-api")
 	compileOnly project(":core:petra:petra-function")
+	compileOnly project(":core:petra:petra-reflect")
 	compileOnly project(":core:petra:petra-string")
 }

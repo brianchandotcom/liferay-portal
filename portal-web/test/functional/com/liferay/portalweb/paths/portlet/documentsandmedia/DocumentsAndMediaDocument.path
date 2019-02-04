@@ -80,11 +80,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>DOCUMENT_INFO_DOWNLOAD_DOCUMENT</td>
-	<td>//div[@class='sidebar-section']//a[contains(.,'Download')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>DOCUMENT_INFO_GET_URL_OR_WEBDAV_URL</td>
 	<td>//input[contains(@id,'webDavURL')]</td>
 	<td></td>

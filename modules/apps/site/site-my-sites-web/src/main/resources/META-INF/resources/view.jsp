@@ -25,16 +25,7 @@
 />
 
 <clay:management-toolbar
-	clearResultsURL="<%= siteMySitesDisplayContext.getClearResultsURL() %>"
-	componentId="siteMySitesWebManagementToolbar"
-	filterDropdownItems="<%= siteMySitesDisplayContext.getFilterDropdownItems() %>"
-	itemsTotal="<%= siteMySitesDisplayContext.getTotalItems() %>"
-	searchActionURL="<%= siteMySitesDisplayContext.getSearchActionURL() %>"
-	searchFormName="searchFm"
-	selectable="<%= false %>"
-	sortingOrder="<%= siteMySitesDisplayContext.getOrderByType() %>"
-	sortingURL="<%= siteMySitesDisplayContext.getSortingURL() %>"
-	viewTypeItems="<%= siteMySitesDisplayContext.getViewTypeItems() %>"
+	displayContext="<%= new SiteMySitesManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, siteMySitesDisplayContext) %>"
 />
 
 <aui:form action="<%= siteMySitesDisplayContext.getPortletURL() %>" cssClass="container-fluid-1280" method="get" name="fm">

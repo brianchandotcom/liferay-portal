@@ -43,7 +43,8 @@ page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.liveusers.LiveUsers" %><%@
 page import="com.liferay.portal.util.PropsValues" %><%@
-page import="com.liferay.site.my.sites.web.internal.display.context.SiteMySitesDisplayContext" %>
+page import="com.liferay.site.my.sites.web.internal.display.context.SiteMySitesDisplayContext" %><%@
+page import="com.liferay.site.my.sites.web.internal.display.context.SiteMySitesManagementToolbarDisplayContext" %>
 
 <%@ page import="java.util.Objects" %>
 

@@ -28,7 +28,7 @@ dependencies {
 	compileOnly group: "org.apache.ant", name: "ant", transitive: false, version: "1.9.4"
 	compileOnly group: "org.apache.maven", name: "maven-plugin-api", transitive: false, version: "3.0.4"
 
-	sourceFormatter group: "com.liferay", name: "com.liferay.source.formatter", version: "1.0.779"
+	sourceFormatter group: "com.liferay", name: "com.liferay.source.formatter", version: "1.0.780"
 }
 
 deployDependencies {

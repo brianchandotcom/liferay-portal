@@ -376,13 +376,13 @@
 	// ]]>
 </script>
 
-<c:if test="<%= PortalWebResourcesUtil.getPortalWebResources(PortalWebResourceConstants.RESOURCE_TYPE_JS_LOADER_MODULES) != null %>">
+<c:if test="<%= PortalWebResourcesUtil.getPortalWebResources(PortalWebResourceConstants.RESOURCE_TYPE_JS_LOADER_CONFIG) != null %>">
 
 	<%
-	long jsLoaderModulesLastModified = PortalWebResourcesUtil.getLastModified(PortalWebResourceConstants.RESOURCE_TYPE_JS_LOADER_MODULES);
+	long jsLoaderConfigLastModified = PortalWebResourcesUtil.getLastModified(PortalWebResourceConstants.RESOURCE_TYPE_JS_LOADER_CONFIG);
 	%>
 
-	<script src="<%= HtmlUtil.escape(themeDisplay.getCDNDynamicResourcesHost() + PortalWebResourcesUtil.getContextPath(PortalWebResourceConstants.RESOURCE_TYPE_JS_LOADER_MODULES) + "/js_loader_modules?t=" + jsLoaderModulesLastModified) %>" type="text/javascript"></script>
+	<script src="<%= HtmlUtil.escape(themeDisplay.getCDNDynamicResourcesHost() + PortalWebResourcesUtil.getContextPath(PortalWebResourceConstants.RESOURCE_TYPE_JS_LOADER_CONFIG) + "/js_loader_config?t=" + jsLoaderConfigLastModified) %>" type="text/javascript"></script>
 </c:if>
 
 <liferay-util:dynamic-include key="/html/common/themes/top_js.jspf#resources" />

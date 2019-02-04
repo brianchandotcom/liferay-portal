@@ -43,8 +43,8 @@ public class PortalWebResourceConstants {
 	public static final String RESOURCE_TYPE_JS_BUNDLE_CONFIG =
 		"js_bundle_config";
 
-	public static final String RESOURCE_TYPE_JS_LOADER_MODULES =
-		"js_loader_modules";
+	public static final String RESOURCE_TYPE_JS_LOADER_CONFIG =
+		"js_loader_config";
 
 	public static final String RESOURCE_TYPE_THEME_ADMIN = "theme_admin";
 

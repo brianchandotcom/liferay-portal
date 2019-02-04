@@ -15,6 +15,7 @@
 			opacity: 0;
 			padding: 10px 20px 10px 10px;
 			pointer-events: none;
+			width: 100%;
 			z-index: $portletTopperZIndex;
 
 			@include transform(translateY(0));
@@ -27,12 +28,22 @@
 					pointer-events: all;
 
 					@include transform(translateY(0));
+
+					.portlet-topper-toolbar {
+						position: absolute;
+						right: 5px;
+
+						.lexicon-icon {
+							fill: $topperBackgroundColor;
+							stroke: currentColor;
+						}
+					}
 				}
 			}
 		}
 
 		.portlet-title-default {
-			color: $portletColor;
+			display: none;
 		}
 	}
 

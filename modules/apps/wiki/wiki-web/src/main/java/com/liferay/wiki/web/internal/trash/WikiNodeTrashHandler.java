@@ -148,15 +148,14 @@ public class WikiNodeTrashHandler extends BaseWikiTrashHandler {
 	}
 
 	@Override
-	public int getTrashModelsCount(long classPK) throws PortalException {
+	public int getTrashModelsCount(long classPK) {
 		return _wikiPageLocalService.getPagesCount(
 			classPK, true, WorkflowConstants.STATUS_IN_TRASH);
 	}
 
 	@Override
 	public List<TrashedModel> getTrashModelTrashedModels(
-			long classPK, int start, int end, OrderByComparator<?> obc)
-		throws PortalException {
+		long classPK, int start, int end, OrderByComparator<?> obc) {
 
 		List<WikiPage> pages = _wikiPageLocalService.getPages(
 			classPK, true, WorkflowConstants.STATUS_IN_TRASH, start, end,

@@ -57,9 +57,7 @@ public class WikiPageURLItemSelectorReturnTypeResolver
 	}
 
 	@Override
-	public String getTitle(WikiPage page, ThemeDisplay themeDisplay)
-		throws Exception {
-
+	public String getTitle(WikiPage page, ThemeDisplay themeDisplay) {
 		return StringPool.BLANK;
 	}
 

@@ -205,9 +205,8 @@ public class WikiPageAssetRenderer
 
 	@Override
 	public PortletURL getURLEdit(
-			LiferayPortletRequest liferayPortletRequest,
-			LiferayPortletResponse liferayPortletResponse)
-		throws Exception {
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse) {
 
 		Group group = GroupLocalServiceUtil.fetchGroup(_page.getGroupId());
 
@@ -232,9 +231,8 @@ public class WikiPageAssetRenderer
 
 	@Override
 	public PortletURL getURLExport(
-			LiferayPortletRequest liferayPortletRequest,
-			LiferayPortletResponse liferayPortletResponse)
-		throws Exception {
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse) {
 
 		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
 			liferayPortletRequest, WikiPortletKeys.WIKI,

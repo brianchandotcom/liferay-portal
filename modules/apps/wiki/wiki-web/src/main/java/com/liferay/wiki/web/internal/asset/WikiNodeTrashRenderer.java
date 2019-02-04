@@ -96,9 +96,8 @@ public class WikiNodeTrashRenderer extends BaseTrashRenderer {
 
 	@Override
 	public boolean include(
-			HttpServletRequest request, HttpServletResponse response,
-			String template)
-		throws Exception {
+		HttpServletRequest request, HttpServletResponse response,
+		String template) {
 
 		return false;
 	}

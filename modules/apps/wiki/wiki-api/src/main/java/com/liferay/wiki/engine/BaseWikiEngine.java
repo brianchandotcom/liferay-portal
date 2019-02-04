@@ -66,9 +66,8 @@ public abstract class BaseWikiEngine implements WikiEngine {
 
 	@Override
 	public String convert(
-			WikiPage page, PortletURL viewPageURL, PortletURL editPageURL,
-			String attachmentURLPrefix)
-		throws PageContentException {
+		WikiPage page, PortletURL viewPageURL, PortletURL editPageURL,
+		String attachmentURLPrefix) {
 
 		return page.getContent();
 	}

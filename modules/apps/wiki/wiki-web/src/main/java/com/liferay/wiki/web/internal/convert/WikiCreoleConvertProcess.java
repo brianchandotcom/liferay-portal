@@ -59,7 +59,7 @@ public class WikiCreoleConvertProcess extends BaseConvertProcess {
 	}
 
 	@Override
-	protected void doConvert() throws Exception {
+	protected void doConvert() {
 		List<WikiPage> pages = _wikiPageLocalService.getPages("classic_wiki");
 
 		ClassicToCreoleTranslator translator = new ClassicToCreoleTranslator();

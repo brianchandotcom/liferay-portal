@@ -1609,7 +1609,8 @@ public class ServiceBuilder {
 
 		if (methodName.equals("clearCache") ||
 			methodName.equals("fetchByPrimaryKeys") ||
-			methodName.equals("findWithDynamicQuery")) {
+			methodName.equals("findWithDynamicQuery") ||
+			methodName.equals("getBadColumnNames")) {
 
 			return true;
 		}

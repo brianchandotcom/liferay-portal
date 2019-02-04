@@ -72,15 +72,8 @@ renderResponse.setTitle(LanguageUtil.get(request, "orphan-widgets"));
 
 	<aui:form action="<%= deleteOrphanPortletsURL %>" name="fm">
 		<liferay-ui:search-container
-			deltaConfigurable="<%= false %>"
-			id="portlets"
-			iteratorURL="<%= orphanPortletsDisplayContext.getPortletURL() %>"
-			rowChecker="<%= selLayout.isLayoutPrototypeLinkActive() ? null : new EmptyOnClickRowChecker(liferayPortletResponse) %>"
+			searchContainer="<%= orphanPortletsDisplayContext.getOrphanPortletsSearchContainer() %>"
 		>
-			<liferay-ui:search-container-results
-				results="<%= portlets %>"
-			/>
-
 			<liferay-ui:search-container-row
 				className="com.liferay.portal.kernel.model.Portlet"
 				escapedModel="<%= true %>"

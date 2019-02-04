@@ -18,6 +18,8 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
+import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
+import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -212,6 +214,35 @@ public class OrphanPortletsDisplayContext {
 		return orphanPortlets;
 	}
 
+	public SearchContainer getOrphanPortletsSearchContainer() {
+		if (_orphanPortletsSearchContainer != null) {
+			return _orphanPortletsSearchContainer;
+		}
+
+		SearchContainer orphanPortletsSearchContainer = new SearchContainer(
+			_liferayPortletRequest, getPortletURL(), null, null);
+
+		orphanPortletsSearchContainer.setDeltaConfigurable(false);
+		orphanPortletsSearchContainer.setId("portlets");
+
+		Layout selLayout = getSelLayout();
+
+		if (!selLayout.isLayoutPrototypeLinkActive()) {
+			orphanPortletsSearchContainer.setRowChecker(
+				new EmptyOnClickRowChecker(_liferayPortletResponse));
+		}
+
+		List<Portlet> portlets = getOrphanPortlets();
+
+		orphanPortletsSearchContainer.setResults(portlets);
+
+		orphanPortletsSearchContainer.setTotal(portlets.size());
+
+		_orphanPortletsSearchContainer = orphanPortletsSearchContainer;
+
+		return _orphanPortletsSearchContainer;
+	}
+
 	public PortletURL getPortletURL() {
 		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
 
@@ -317,6 +348,7 @@ public class OrphanPortletsDisplayContext {
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private String _orderByCol;
 	private String _orderByType;
+	private SearchContainer _orphanPortletsSearchContainer;
 	private final HttpServletRequest _request;
 	private Layout _selLayout;
 	private Long _selPlid;

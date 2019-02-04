@@ -73,7 +73,6 @@ page import="com.liferay.layout.page.template.service.LayoutPageTemplateEntrySer
 page import="com.liferay.layouts.admin.kernel.model.LayoutTypePortletConstants" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
-page import="com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker" %><%@
 page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@
 page import="com.liferay.portal.kernel.exception.GroupInheritContentException" %><%@
 page import="com.liferay.portal.kernel.exception.ImageTypeException" %><%@

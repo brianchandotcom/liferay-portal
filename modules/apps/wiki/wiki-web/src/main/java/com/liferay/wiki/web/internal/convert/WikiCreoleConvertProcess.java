@@ -83,16 +83,10 @@ public class WikiCreoleConvertProcess extends BaseConvertProcess {
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setWikiPageLocalService(
-		WikiPageLocalService wikiPageLocalService) {
-
-		_wikiPageLocalService = wikiPageLocalService;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		WikiCreoleConvertProcess.class);
 
+	@Reference
 	private WikiPageLocalService _wikiPageLocalService;
 
 }

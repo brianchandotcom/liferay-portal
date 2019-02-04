@@ -442,49 +442,28 @@ public class WikiPageTrashHandler extends BaseWikiTrashHandler {
 			permissionChecker, classPK, actionId);
 	}
 
-	@Reference(unbind = "-")
-	protected void setWikiEngineRenderer(
-		WikiEngineRenderer wikiEngineRenderer) {
-
-		_wikiEngineRenderer = wikiEngineRenderer;
-	}
-
-	@Reference(unbind = "-")
-	protected void setWikiPageLocalService(
-		WikiPageLocalService wikiPageLocalService) {
-
-		_wikiPageLocalService = wikiPageLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setWikiPageResourceLocalService(
-		WikiPageResourceLocalService wikiPageResourceLocalService) {
-
-		_wikiPageResourceLocalService = wikiPageResourceLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setWikiPageService(WikiPageService wikiPageService) {
-		_wikiPageService = wikiPageService;
-	}
-
 	@Reference
 	private Portal _portal;
 
 	@Reference
 	private TrashHelper _trashHelper;
 
+	@Reference
 	private WikiEngineRenderer _wikiEngineRenderer;
 
 	@Reference(target = "(model.class.name=com.liferay.wiki.model.WikiNode)")
 	private ModelResourcePermission<WikiNode> _wikiNodeModelResourcePermission;
 
+	@Reference
 	private WikiPageLocalService _wikiPageLocalService;
 
 	@Reference(target = "(model.class.name=com.liferay.wiki.model.WikiPage)")
 	private ModelResourcePermission<WikiPage> _wikiPageModelResourcePermission;
 
+	@Reference
 	private WikiPageResourceLocalService _wikiPageResourceLocalService;
+
+	@Reference
 	private WikiPageService _wikiPageService;
 
 }

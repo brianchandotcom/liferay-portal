@@ -238,31 +238,19 @@ public class WikiNodeTrashHandler extends BaseWikiTrashHandler {
 			permissionChecker, classPK, actionId);
 	}
 
-	@Reference(unbind = "-")
-	protected void setWikiNodeLocalService(
-		WikiNodeLocalService wikiNodeLocalService) {
-
-		_wikiNodeLocalService = wikiNodeLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setWikiPageLocalService(
-		WikiPageLocalService wikiPageLocalService) {
-
-		_wikiPageLocalService = wikiPageLocalService;
-	}
-
 	@Reference
 	private Portal _portal;
 
 	@Reference
 	private TrashHelper _trashHelper;
 
+	@Reference
 	private WikiNodeLocalService _wikiNodeLocalService;
 
 	@Reference(target = "(model.class.name=com.liferay.wiki.model.WikiNode)")
 	private ModelResourcePermission<WikiNode> _wikiNodeModelResourcePermission;
 
+	@Reference
 	private WikiPageLocalService _wikiPageLocalService;
 
 }

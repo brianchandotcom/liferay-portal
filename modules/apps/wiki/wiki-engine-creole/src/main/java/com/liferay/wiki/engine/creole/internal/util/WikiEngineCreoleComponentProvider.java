@@ -47,22 +47,10 @@ public class WikiEngineCreoleComponentProvider {
 		return _wikiGroupServiceConfiguration;
 	}
 
-	@Reference
-	public void setWikiGroupServiceConfiguration(
-		WikiGroupServiceConfiguration wikiGroupServiceConfiguration) {
-
-		_wikiGroupServiceConfiguration = wikiGroupServiceConfiguration;
-	}
-
-	protected void unsetWikiGroupServiceConfiguration(
-		WikiGroupServiceConfiguration wikiGroupServiceConfiguration) {
-
-		_wikiGroupServiceConfiguration = null;
-	}
-
 	private static WikiEngineCreoleComponentProvider
 		_wikiEngineCreoleComponentProvider;
 
+	@Reference
 	private WikiGroupServiceConfiguration _wikiGroupServiceConfiguration;
 
 }

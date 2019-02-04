@@ -139,41 +139,19 @@ public class WikiPageAssetRendererFactory
 			permissionChecker, classPK, actionId);
 	}
 
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.wiki.web)", unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		_servletContext = servletContext;
-	}
-
-	@Reference(unbind = "-")
-	protected void setWikiEngineRenderer(
-		WikiEngineRenderer wikiEngineRenderer) {
-
-		_wikiEngineRenderer = wikiEngineRenderer;
-	}
-
-	@Reference(unbind = "-")
-	protected void setWikiPageLocalService(
-		WikiPageLocalService wikiPageLocalService) {
-
-		_wikiPageLocalService = wikiPageLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setWikiPageResourceLocalService(
-		WikiPageResourceLocalService wikiPageResourceLocalService) {
-
-		_wikiPageResourceLocalService = wikiPageResourceLocalService;
-	}
-
+	@Reference(target = "(osgi.web.symbolicname=com.liferay.wiki.web)")
 	private ServletContext _servletContext;
 
 	@Reference
 	private TrashHelper _trashHelper;
 
+	@Reference
 	private WikiEngineRenderer _wikiEngineRenderer;
+
+	@Reference
 	private WikiPageLocalService _wikiPageLocalService;
+
+	@Reference
 	private WikiPageResourceLocalService _wikiPageResourceLocalService;
 
 }

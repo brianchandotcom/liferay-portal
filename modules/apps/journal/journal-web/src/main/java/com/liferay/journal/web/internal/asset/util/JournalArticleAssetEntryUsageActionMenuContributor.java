@@ -139,6 +139,20 @@ public class JournalArticleAssetEntryUsageActionMenuContributor
 									resourceBundle, "preview-pending-in-page"));
 						});
 				}
+
+				if (article.isScheduled() && hasUpdatePermission) {
+					add(
+						dropdownItem -> {
+							dropdownItem.setHref(
+								_getURL(
+									article, assetEntryUsage.getClassPK(),
+									assetEntryUsage.getPortletId(), request));
+							dropdownItem.setLabel(
+								LanguageUtil.get(
+									resourceBundle,
+									"preview-scheduled-in-page"));
+						});
+				}
 			}
 		};
 	}

@@ -1,4 +1,4 @@
-package com.liferay.frontend.js.loader.modules.extender.internal;
+package com.liferay.frontend.js.loader.modules.extender.internal.resolution;
 
 import com.liferay.frontend.js.loader.modules.extender.internal.config.generator.JSConfigGeneratorPackage;
 import com.liferay.frontend.js.loader.modules.extender.internal.config.generator.JSConfigGeneratorPackagesTracker;

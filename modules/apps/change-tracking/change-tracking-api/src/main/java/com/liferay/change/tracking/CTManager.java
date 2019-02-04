@@ -18,7 +18,9 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.change.tracking.exception.CTException;
 import com.liferay.change.tracking.model.CTEntry;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
+import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.List;
 import java.util.Optional;
@@ -32,6 +34,21 @@ import java.util.Optional;
  */
 @ProviderType
 public interface CTManager {
+
+	/**
+	 * Executes a model addition or update using the given supplier, with
+	 * setting and un-setting the flag that indicates the update before and
+	 * after the operation. Therefore during the execution
+	 * {@link #isModelUpdateInProgress()} will return true.
+	 *
+	 * @param modelUpdateSupplier The supplier that performs the add or update
+	 *        and supplies the resulting model
+	 * @param <T> The model's type
+	 * @return The created or updated model of type T
+	 */
+	public <T> T executeModelUpdate(
+			UnsafeSupplier<T, PortalException> modelUpdateSupplier)
+		throws PortalException;
 
 	/**
 	 * Retrieves a model change in the context of the current user's active
@@ -106,6 +123,18 @@ public interface CTManager {
 	 */
 	public Optional<CTEntry> getProductionCTCollectionCTEntryOptional(
 		long userId, long classNameId, long classPK);
+
+	/**
+	 * Indicates whether an add or update is in progress for a model. This will
+	 * only return true if the add or update is being executed with
+	 * {@link #executeModelUpdate(UnsafeSupplier)} and the execution is in progress.
+	 * Useful to be able to bypass change tracking consideration when a get or
+	 * fetch is executed for a model during it's own addition or update.
+	 *
+	 * @return true if an add or update is in progress for a model using
+	 *         {@link #executeModelUpdate(UnsafeSupplier)}
+	 */
+	public boolean isModelUpdateInProgress();
 
 	/**
 	 * Registers a model change into the change tracking framework in the

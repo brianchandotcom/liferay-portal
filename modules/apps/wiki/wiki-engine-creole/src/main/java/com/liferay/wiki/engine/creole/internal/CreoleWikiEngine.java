@@ -169,37 +169,12 @@ public class CreoleWikiEngine extends BaseWikiEngine {
 		return creole10Parser.getWikiPageNode();
 	}
 
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.wiki.engine.creole)",
-		unbind = "-"
-	)
-	protected void setServletContext(ServletContext servletContext) {
-		_servletContext = servletContext;
-	}
-
-	@Reference
-	protected void setWikiGroupServiceConfiguration(
-		WikiGroupServiceConfiguration wikiGroupServiceConfiguration) {
-
-		_wikiGroupServiceConfiguration = wikiGroupServiceConfiguration;
-	}
-
-	@Reference(unbind = "-")
-	protected void setWikiPageLocalService(
-		WikiPageLocalService wikiPageLocalService) {
-
-		_wikiPageLocalService = wikiPageLocalService;
-	}
-
-	protected void unsetWikiGroupServiceConfiguration(
-		WikiGroupServiceConfiguration wikiGroupServiceConfiguration) {
-
-		_wikiGroupServiceConfiguration = null;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		CreoleWikiEngine.class);
 
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.wiki.engine.creole)"
+	)
 	private ServletContext _servletContext;
 
 	@Reference(
@@ -207,7 +182,10 @@ public class CreoleWikiEngine extends BaseWikiEngine {
 	)
 	private ServletContext _wikiEngineInputEditorServletContext;
 
+	@Reference
 	private WikiGroupServiceConfiguration _wikiGroupServiceConfiguration;
+
+	@Reference
 	private WikiPageLocalService _wikiPageLocalService;
 
 }

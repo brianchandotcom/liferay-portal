@@ -70,13 +70,7 @@ public class WikiPermissionPropagatorImpl extends BasePermissionPropagator {
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setWikiPageLocalService(
-		WikiPageLocalService wikiPageLocalService) {
-
-		_wikiPageLocalService = wikiPageLocalService;
-	}
-
+	@Reference
 	private WikiPageLocalService _wikiPageLocalService;
 
 }

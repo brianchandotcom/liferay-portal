@@ -34,16 +34,7 @@ public class WikiResourcePermission {
 			permissionChecker, groupId, actionId);
 	}
 
-	@Reference(
-		target = "(resource.name=" + WikiConstants.RESOURCE_NAME + ")",
-		unbind = "-"
-	)
-	protected void setPortletResourcePermission(
-		PortletResourcePermission portletResourcePermission) {
-
-		_portletResourcePermission = portletResourcePermission;
-	}
-
+	@Reference(target = "(resource.name=" + WikiConstants.RESOURCE_NAME + ")")
 	private static PortletResourcePermission _portletResourcePermission;
 
 }

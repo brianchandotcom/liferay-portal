@@ -268,20 +268,6 @@ public class WikiActivityInterpreter extends BaseSocialActivityInterpreter {
 		return true;
 	}
 
-	@Reference(unbind = "-")
-	protected void setWikiPageLocalService(
-		WikiPageLocalService wikiPageLocalService) {
-
-		_wikiPageLocalService = wikiPageLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setWikiPageResourceLocalService(
-		WikiPageResourceLocalService wikiPageResourceLocalService) {
-
-		_wikiPageResourceLocalService = wikiPageResourceLocalService;
-	}
-
 	private static final String[] _CLASS_NAMES = {WikiPage.class.getName()};
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -294,11 +280,13 @@ public class WikiActivityInterpreter extends BaseSocialActivityInterpreter {
 	)
 	private volatile ResourceBundleLoader _resourceBundleLoader;
 
+	@Reference
 	private WikiPageLocalService _wikiPageLocalService;
 
 	@Reference(target = "(model.class.name=com.liferay.wiki.model.WikiPage)")
 	private ModelResourcePermission<WikiPage> _wikiPageModelResourcePermission;
 
+	@Reference
 	private WikiPageResourceLocalService _wikiPageResourceLocalService;
 
 }

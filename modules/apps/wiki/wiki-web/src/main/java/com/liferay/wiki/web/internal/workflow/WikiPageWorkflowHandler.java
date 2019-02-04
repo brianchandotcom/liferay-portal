@@ -72,13 +72,7 @@ public class WikiPageWorkflowHandler extends BaseWorkflowHandler<WikiPage> {
 			userId, page, status, serviceContext, workflowContext);
 	}
 
-	@Reference(unbind = "-")
-	protected void setWikiPageLocalService(
-		WikiPageLocalService wikiPageLocalService) {
-
-		_wikiPageLocalService = wikiPageLocalService;
-	}
-
+	@Reference
 	private WikiPageLocalService _wikiPageLocalService;
 
 }

@@ -44,16 +44,7 @@ public class WikiNodePermission {
 			permissionChecker, node, actionId);
 	}
 
-	@Reference(
-		target = "(model.class.name=com.liferay.wiki.model.WikiNode)",
-		unbind = "-"
-	)
-	protected void setModelResourcePermission(
-		ModelResourcePermission<WikiNode> modelResourcePermission) {
-
-		_wikiNodeModelResourcePermission = modelResourcePermission;
-	}
-
+	@Reference(target = "(model.class.name=com.liferay.wiki.model.WikiNode)")
 	private static ModelResourcePermission<WikiNode>
 		_wikiNodeModelResourcePermission;
 

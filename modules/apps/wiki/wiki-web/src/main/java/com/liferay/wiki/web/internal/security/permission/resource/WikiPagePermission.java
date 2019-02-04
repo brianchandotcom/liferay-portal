@@ -44,16 +44,7 @@ public class WikiPagePermission {
 			permissionChecker, page, actionId);
 	}
 
-	@Reference(
-		target = "(model.class.name=com.liferay.wiki.model.WikiPage)",
-		unbind = "-"
-	)
-	protected void setModelResourcePermission(
-		ModelResourcePermission<WikiPage> modelResourcePermission) {
-
-		_wikiPageModelResourcePermission = modelResourcePermission;
-	}
-
+	@Reference(target = "(model.class.name=com.liferay.wiki.model.WikiPage)")
 	private static ModelResourcePermission<WikiPage>
 		_wikiPageModelResourcePermission;
 

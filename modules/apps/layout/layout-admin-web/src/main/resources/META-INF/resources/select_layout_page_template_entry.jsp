@@ -183,7 +183,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-template"));
 		'.add-layout-action-option'
 	);
 
-	function handleDestroyPortlet () {
+	function handleDestroyPortlet() {
 		addLayoutActionOptionQueryClickHandler.detach();
 
 		Liferay.detach('destroyPortlet', handleDestroyPortlet);

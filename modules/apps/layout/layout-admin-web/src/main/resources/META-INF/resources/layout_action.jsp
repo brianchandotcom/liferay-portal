@@ -107,8 +107,6 @@ String autoSiteNavigationMenuNames = layoutsAdminDisplayContext.getAutoSiteNavig
 		'click',
 		'.<portlet:namespace />copy-layout-action-option',
 		function(event) {
-			var actionElement = event.delegateTarget;
-
 			modalCommands.openSimpleInputModal(
 				{
 					<c:if test="<%= Validator.isNotNull(autoSiteNavigationMenuNames) %>">
@@ -119,8 +117,8 @@ String autoSiteNavigationMenuNames = layoutsAdminDisplayContext.getAutoSiteNavig
 
 					dialogTitle: '<liferay-ui:message key="copy-page" />',
 					formSubmitURL: '<%= layoutsAdminDisplayContext.getCopyLayoutURL(curLayout) %>',
-					mainFieldName: 'name',
 					mainFieldLabel: '<liferay-ui:message key="name" />',
+					mainFieldName: 'name',
 					namespace: '<portlet:namespace />',
 					spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg'
 				}
@@ -128,7 +126,7 @@ String autoSiteNavigationMenuNames = layoutsAdminDisplayContext.getAutoSiteNavig
 		}
 	);
 
-	function handleDestroyPortlet () {
+	function handleDestroyPortlet() {
 		addLayoutPrototypeActionOptionQueryClickHandler.removeListener();
 
 		Liferay.detach('destroyPortlet', handleDestroyPortlet);

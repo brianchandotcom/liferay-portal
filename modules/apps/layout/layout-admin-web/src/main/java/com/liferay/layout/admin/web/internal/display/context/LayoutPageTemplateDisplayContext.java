@@ -36,21 +36,15 @@ import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutPrototypeServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadServletRequestConfigurationHelperUtil;
-import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -123,38 +117,6 @@ public class LayoutPageTemplateDisplayContext {
 				}
 			}
 		};
-	}
-
-	public String getEditLayoutPageTemplateEntryURL(
-			LayoutPageTemplateEntry layoutPageTemplateEntry)
-		throws PortalException {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		if (Objects.equals(
-				layoutPageTemplateEntry.getType(),
-				LayoutPageTemplateEntryTypeConstants.TYPE_WIDGET_PAGE)) {
-
-			LayoutPrototype layoutPrototype = getLayoutPrototype(
-				layoutPageTemplateEntry);
-
-			if (layoutPrototype == null) {
-				return null;
-			}
-
-			Group layoutPrototypeGroup = layoutPrototype.getGroup();
-
-			return layoutPrototypeGroup.getDisplayURL(themeDisplay, true);
-		}
-
-		Layout layout = LayoutLocalServiceUtil.getLayout(
-			layoutPageTemplateEntry.getPlid());
-
-		String layoutFullURL = PortalUtil.getLayoutFullURL(
-			layout, themeDisplay);
-
-		return HttpUtil.setParameter(layoutFullURL, "p_l_mode", Constants.EDIT);
 	}
 
 	public PortletURL getItemSelectorURL(long layoutPageTemplateEntryId) {

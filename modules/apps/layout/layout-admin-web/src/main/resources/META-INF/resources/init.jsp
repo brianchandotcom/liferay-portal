@@ -55,6 +55,7 @@ page import="com.liferay.layout.admin.web.internal.display.context.SelectThemeMa
 page import="com.liferay.layout.admin.web.internal.security.permission.resource.LayoutPageTemplateCollectionPermission" %><%@
 page import="com.liferay.layout.admin.web.internal.security.permission.resource.LayoutPageTemplateEntryPermission" %><%@
 page import="com.liferay.layout.admin.web.internal.servlet.taglib.clay.DisplayPageVerticalCard" %><%@
+page import="com.liferay.layout.admin.web.internal.servlet.taglib.clay.LayoutPageTemplateEntryVerticalCard" %><%@
 page import="com.liferay.layout.admin.web.internal.servlet.taglib.clay.LayoutPrototypeVerticalCard" %><%@
 page import="com.liferay.layout.admin.web.internal.servlet.taglib.clay.SelectBasicPagesHorizontalCard" %><%@
 page import="com.liferay.layout.admin.web.internal.servlet.taglib.clay.SelectBasicPagesVerticalCard" %><%@

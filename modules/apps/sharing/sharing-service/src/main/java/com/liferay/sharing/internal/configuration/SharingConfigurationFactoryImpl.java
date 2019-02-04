@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.sharing.configuration.SharingConfiguration;
 import com.liferay.sharing.configuration.SharingConfigurationFactory;
 import com.liferay.sharing.constants.SharingConstants;
@@ -46,21 +48,18 @@ public class SharingConfigurationFactoryImpl
 	public SharingConfiguration getCompanySharingConfiguration(
 		Company company) {
 
-		long companyId = company.getCompanyId();
-
-		return _getSharingConfiguration(companyId);
+		return _getSharingConfiguration(company.getCompanyId(), null);
 	}
 
 	@Override
 	public SharingConfiguration getGroupSharingConfiguration(Group group) {
-		long companyId = group.getCompanyId();
-
-		return _getSharingConfiguration(companyId);
+		return _getSharingConfiguration(group.getCompanyId(), group);
 	}
 
 	@Override
 	public SharingConfiguration getSystemSharingConfiguration() {
-		return new SharingConfigurationImpl(null, _sharingSystemConfiguration);
+		return new SharingConfigurationImpl(
+			null, null, null, _sharingSystemConfiguration);
 	}
 
 	@Activate
@@ -69,8 +68,18 @@ public class SharingConfigurationFactoryImpl
 			SharingSystemConfiguration.class, properties);
 	}
 
-	private SharingConfiguration _getSharingConfiguration(long companyId) {
+	private SharingConfiguration _getSharingConfiguration(
+		long companyId, Group group) {
+
 		try {
+			SharingGroupConfiguration sharingGroupConfiguration = null;
+
+			if (group != null) {
+				sharingGroupConfiguration =
+					_configurationProvider.getGroupConfiguration(
+						SharingGroupConfiguration.class, group.getGroupId());
+			}
+
 			SharingCompanyConfiguration sharingCompanyConfiguration =
 				_configurationProvider.getConfiguration(
 					SharingCompanyConfiguration.class,
@@ -78,13 +87,14 @@ public class SharingConfigurationFactoryImpl
 						companyId, SharingConstants.SERVICE_NAME));
 
 			return new SharingConfigurationImpl(
-				sharingCompanyConfiguration, _sharingSystemConfiguration);
+				group, sharingGroupConfiguration, sharingCompanyConfiguration,
+				_sharingSystemConfiguration);
 		}
 		catch (ConfigurationException ce) {
 			_log.error(ce, ce);
 
 			return new SharingConfigurationImpl(
-				null, _sharingSystemConfiguration);
+				null, null, null, _sharingSystemConfiguration);
 		}
 	}
 
@@ -100,9 +110,12 @@ public class SharingConfigurationFactoryImpl
 		implements SharingConfiguration {
 
 		public SharingConfigurationImpl(
+			Group group, SharingGroupConfiguration sharingGroupConfiguration,
 			SharingCompanyConfiguration sharingCompanyConfiguration,
 			SharingSystemConfiguration sharingSystemConfiguration) {
 
+			_group = group;
+			_sharingGroupConfiguration = sharingGroupConfiguration;
 			_sharingCompanyConfiguration = sharingCompanyConfiguration;
 			_sharingSystemConfiguration = sharingSystemConfiguration;
 		}
@@ -113,14 +126,34 @@ public class SharingConfigurationFactoryImpl
 				return false;
 			}
 
-			if (_sharingCompanyConfiguration != null) {
-				return _sharingCompanyConfiguration.enabled();
+			if ((_sharingCompanyConfiguration != null) &&
+				!_sharingCompanyConfiguration.enabled()) {
+
+				return false;
 			}
 
-			return true;
+			if (_group == null) {
+				return true;
+			}
+
+			UnicodeProperties typeSettingsProperties =
+				_group.getTypeSettingsProperties();
+
+			if (typeSettingsProperties.containsKey("sharingEnabled")) {
+				return GetterUtil.getBoolean(
+					typeSettingsProperties.get("sharingEnabled"));
+			}
+
+			if (_sharingGroupConfiguration == null) {
+				return true;
+			}
+
+			return _sharingGroupConfiguration.enabled();
 		}
 
+		private final Group _group;
 		private final SharingCompanyConfiguration _sharingCompanyConfiguration;
+		private final SharingGroupConfiguration _sharingGroupConfiguration;
 		private final SharingSystemConfiguration _sharingSystemConfiguration;
 
 	}

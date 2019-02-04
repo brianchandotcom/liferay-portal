@@ -33,6 +33,7 @@ import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
  */
 @Component(
 	property = {
+		JaxrsWhiteboardConstants.JAX_RS_APPLICATION_SELECT + "=(osgi.jaxrs.extension.select=\\(osgi.jaxrs.name=vulcan.AcceptLanguageContextProvider\\))",
 		JaxrsWhiteboardConstants.JAX_RS_EXTENSION + "=true",
 		JaxrsWhiteboardConstants.JAX_RS_NAME + "=vulcan.AcceptLanguageContextProvider",
 	},

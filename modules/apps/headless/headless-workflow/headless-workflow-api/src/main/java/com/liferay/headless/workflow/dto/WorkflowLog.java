@@ -14,6 +14,9 @@
 
 package com.liferay.headless.workflow.dto;
 
+import graphql.annotations.annotationTypes.GraphQLField;
+import graphql.annotations.annotationTypes.GraphQLName;
+
 import javax.annotation.Generated;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -23,107 +26,129 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
+@GraphQLName("WorkflowLog")
 @XmlRootElement(name = "WorkflowLog")
 public class WorkflowLog {
 
 	public String getAuditPerson() {
-		return _auditPerson;
+		return auditPerson;
 	}
 
 	public String getCommentLog() {
-		return _commentLog;
+		return commentLog;
 	}
 
 	public String getDateCreated() {
-		return _dateCreated;
+		return dateCreated;
 	}
 
 	public Long getId() {
-		return _id;
+		return id;
 	}
 
 	public String getPerson() {
-		return _person;
+		return person;
 	}
 
 	public String getPreviousPerson() {
-		return _previousPerson;
+		return previousPerson;
 	}
 
 	public String getPreviousState() {
-		return _previousState;
+		return previousState;
 	}
 
 	public String getSelf() {
-		return _self;
+		return self;
 	}
 
 	public String getState() {
-		return _state;
+		return state;
 	}
 
 	public WorkflowTask getTask() {
-		return _task;
+		return task;
 	}
 
 	public String getType() {
-		return _type;
+		return type;
 	}
 
 	public void setAuditPerson(String auditPerson) {
-		_auditPerson = auditPerson;
+		this.auditPerson = auditPerson;
 	}
 
 	public void setCommentLog(String commentLog) {
-		_commentLog = commentLog;
+		this.commentLog = commentLog;
 	}
 
 	public void setDateCreated(String dateCreated) {
-		_dateCreated = dateCreated;
+		this.dateCreated = dateCreated;
 	}
 
 	public void setId(Long id) {
-		_id = id;
+		this.id = id;
 	}
 
 	public void setPerson(String person) {
-		_person = person;
+		this.person = person;
 	}
 
 	public void setPreviousPerson(String previousPerson) {
-		_previousPerson = previousPerson;
+		this.previousPerson = previousPerson;
 	}
 
 	public void setPreviousState(String previousState) {
-		_previousState = previousState;
+		this.previousState = previousState;
 	}
 
 	public void setSelf(String self) {
-		_self = self;
+		this.self = self;
 	}
 
 	public void setState(String state) {
-		_state = state;
+		this.state = state;
 	}
 
 	public void setTask(WorkflowTask task) {
-		_task = task;
+		this.task = task;
 	}
 
 	public void setType(String type) {
-		_type = type;
+		this.type = type;
 	}
 
-	private String _auditPerson;
-	private String _commentLog;
-	private String _dateCreated;
-	private Long _id;
-	private String _person;
-	private String _previousPerson;
-	private String _previousState;
-	private String _self;
-	private String _state;
-	private WorkflowTask _task;
-	private String _type;
+	@GraphQLField
+	private String auditPerson;
+
+	@GraphQLField
+	private String commentLog;
+
+	@GraphQLField
+	private String dateCreated;
+
+	@GraphQLField
+	private Long id;
+
+	@GraphQLField
+	private String person;
+
+	@GraphQLField
+	private String previousPerson;
+
+	@GraphQLField
+	private String previousState;
+
+	@GraphQLField
+	private String self;
+
+	@GraphQLField
+	private String state;
+
+	@GraphQLField
+	private WorkflowTask task;
+
+	@GraphQLField
+	private String type;
 
 }

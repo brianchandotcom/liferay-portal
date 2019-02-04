@@ -45,8 +45,7 @@ public abstract class BaseWorkflowTaskResourceImpl
 	}
 
 	@Override
-	public Page<WorkflowTask> getWorkflowTasksPage(
-			Object genericparentid, Pagination pagination)
+	public Page<WorkflowTask> getWorkflowTasksPage(Pagination pagination)
 		throws Exception {
 
 		return new Page<>(Collections.emptyList(), 0);

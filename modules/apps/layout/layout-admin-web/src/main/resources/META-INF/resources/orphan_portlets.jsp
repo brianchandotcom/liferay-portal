@@ -26,10 +26,12 @@ portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(orphanPortletsDisplayContext.getBackURL());
 
 renderResponse.setTitle(LanguageUtil.get(request, "orphan-widgets"));
+
+OrphanPortletsManagementToolbarDisplayContext orphanPortletsManagementToolbarDisplayContext = new OrphanPortletsManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, orphanPortletsDisplayContext);
 %>
 
 <clay:management-toolbar
-	displayContext="<%= new OrphanPortletsManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, orphanPortletsDisplayContext) %>"
+	displayContext="<%= orphanPortletsManagementToolbarDisplayContext %>"
 />
 
 <portlet:actionURL name="/layout/delete_orphan_portlets" var="deleteOrphanPortletsURL">
@@ -129,29 +131,17 @@ renderResponse.setTitle(LanguageUtil.get(request, "orphan-widgets"));
 	</liferay-ui:search-container>
 </aui:form>
 
-<aui:script sandbox="<%= true %>">
-	var deleteOrphanPortlets = function() {
-		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
-			submitForm($(document.<portlet:namespace />fm));
-		}
-	}
-
-	var ACTIONS = {
-		'deleteOrphanPortlets': deleteOrphanPortlets
-	};
-
-	Liferay.componentReady('portletsManagementToolbar').then(
-		function(managementToolbar) {
-			managementToolbar.on(
-				'actionItemClicked',
-				function(event) {
-					var itemData = event.data.item.data;
-
-					if (itemData && itemData.action && ACTIONS[itemData.action]) {
-						ACTIONS[itemData.action]();
-					}
-				}
-			);
+<aui:script require='<%= npmResolvedPackageName + "/js/OrphanPortletsManagementToolbarDefaultEventHandler.es as OrphanPortletsManagementToolbarDefaultEventHandler" %>'>
+	Liferay.component(
+		'<%= orphanPortletsManagementToolbarDisplayContext.getDefaultEventHandler() %>',
+		new OrphanPortletsManagementToolbarDefaultEventHandler.default(
+			{
+				namespace: '<portlet:namespace />'
+			}
+		),
+		{
+			destroyOnNavigate: true,
+			portletId: '<%= HtmlUtil.escapeJS(portletDisplay.getId()) %>'
 		}
 	);
 </aui:script>

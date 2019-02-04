@@ -43,7 +43,6 @@ import com.liferay.wiki.model.WikiPageConstants;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.wiki.web.internal.security.permission.resource.WikiPagePermission;
 
-import java.util.Date;
 import java.util.Locale;
 
 import javax.portlet.PortletRequest;
@@ -132,15 +131,6 @@ public class WikiPageAssetRenderer
 		}
 
 		return null;
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public Date getDisplayDate() {
-		return _page.getModifiedDate();
 	}
 
 	@Override
@@ -319,13 +309,6 @@ public class WikiPageAssetRenderer
 	@Override
 	public String getUuid() {
 		return _page.getUuid();
-	}
-
-	public boolean hasDeletePermission(PermissionChecker permissionChecker)
-		throws PortalException {
-
-		return WikiPagePermission.contains(
-			permissionChecker, _page, ActionKeys.DELETE);
 	}
 
 	@Override

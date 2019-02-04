@@ -84,17 +84,18 @@ definition {
 			var sitePageType = "Widget Page";
 		}
 
-		var rowEntry = "${sitePageType}";
-
 		if (!(contains("${pageTemplateName}", "{pageTemplateName}"))) {
 			Navigator.gotoNavNested(navNested = "Global Templates");
 
-			var rowEntry = "${pageTemplateName}";
-
-			LexiconEntry.gotoEntry(rowEntry = "${rowEntry}");
+			LexiconCard.clickCard(
+				card = "${pageTemplateName}"
+			);
 		}
 		else {
-			Card.clickSitePagesCardLink(cardName = "${rowEntry}");
+
+			LexiconCard.clickCard(
+				card = "${sitePageType}"
+			);
 		}
 	}
 

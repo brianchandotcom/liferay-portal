@@ -22,10 +22,14 @@ definition {
 		Navigator.gotoNavNested(navNested = "${collectionName}");
 
 		if (isSet(pageTemplateName)) {
-			LexiconEntry.gotoEntry(rowEntry = "${pageTemplateName}");
+			LexiconCard.clickCard(
+				card = "${pageTemplateName}"
+			);
 		}
 		else {
-			Card.clickSitePagesCardLink(cardName = "Content Page");
+			LexiconCard.clickCard(
+				card = "Content Page"
+			);
 		}
 
 		SelectFrame(locator1 = "IFrame#DIALOG");

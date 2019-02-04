@@ -141,12 +141,10 @@ public class AddLayoutPrototypeMVCActionCommand extends BaseMVCActionCommand {
 
 			String errorMessage = "an-unexpected-error-occurred";
 
-			Throwable cause = t.getCause();
-
-			if (cause instanceof LayoutPageTemplateEntryNameException) {
+			if (t instanceof LayoutPageTemplateEntryNameException) {
 				errorMessage = "please-enter-a-valid-name";
 			}
-			else if (cause instanceof
+			else if (t instanceof
 						DuplicateLayoutPageTemplateEntryException) {
 
 				errorMessage =

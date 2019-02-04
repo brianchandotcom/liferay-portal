@@ -28,6 +28,8 @@ import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.OpenAPIYAML;
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Schema;
 import com.liferay.portal.tools.rest.builder.internal.yaml.util.YAMLUtil;
 
+import java.io.File;
+
 import java.util.HashMap;
 import java.util.Map;
 

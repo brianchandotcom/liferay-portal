@@ -2,7 +2,7 @@
  * Available element config keys
  */
 export const ITEM_CONFIG_KEYS = {
-	backgroundColor: 'backgroundColor',
+	backgroundColorCssClass: 'backgroundColorCssClass',
 	columnSpacing: 'columnSpacing',
 	containerType: 'containerType',
 	padding: 'padding'

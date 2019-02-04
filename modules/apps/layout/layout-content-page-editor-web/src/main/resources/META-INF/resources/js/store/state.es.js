@@ -548,7 +548,7 @@ const INITIAL_STATE = {
 	 * @review
 	 * @type {Array}
 	 */
-	themeColors: Config
+	themeColorsCssClasses: Config
 		.arrayOf(
 			Config.string()
 		)

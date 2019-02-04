@@ -29,7 +29,7 @@ class FloatingToolbarBackgroundColorPanel extends Component {
 			(A) => {
 				this._colorPalette = new A.ColorPalette(
 					{
-						items: this.themeColors
+						items: this.themeColorsCssClasses
 					}
 				);
 
@@ -54,7 +54,7 @@ class FloatingToolbarBackgroundColorPanel extends Component {
 	_handleClearButtonClick() {
 		this._updateSectionConfig(
 			{
-				[ITEM_CONFIG_KEYS.backgroundColor]: ''
+				[ITEM_CONFIG_KEYS.backgroundColorCssClass]: ''
 			}
 		);
 	}
@@ -68,7 +68,7 @@ class FloatingToolbarBackgroundColorPanel extends Component {
 	_handleColorSelect(event) {
 		this._updateSectionConfig(
 			{
-				[ITEM_CONFIG_KEYS.backgroundColor]: event.value.value
+				[ITEM_CONFIG_KEYS.backgroundColorCssClass]: event.value.value
 			}
 		);
 	}
@@ -144,7 +144,7 @@ FloatingToolbarBackgroundColorPanel.STATE = {
 
 const ConnectedFloatingToolbarBackgroundColorPanel = getConnectedComponent(
 	FloatingToolbarBackgroundColorPanel,
-	['themeColors']
+	['themeColorsCssClasses']
 );
 
 Soy.register(ConnectedFloatingToolbarBackgroundColorPanel, templates);

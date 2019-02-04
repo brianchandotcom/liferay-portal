@@ -1,5 +1,7 @@
 package com.liferay.frontend.js.loader.modules.extender.internal;
 
+import com.liferay.frontend.js.loader.modules.extender.internal.config.generator.JSConfigGeneratorPackage;
+import com.liferay.frontend.js.loader.modules.extender.internal.config.generator.JSConfigGeneratorPackagesTracker;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSModuleAlias;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSPackage;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMRegistry;
@@ -47,8 +49,9 @@ public class JSModulesNameMapper {
 	}
 
 	@Reference(unbind = "-")
-	protected void setJSLoaderModulesTracker(JSLoaderModulesTracker jsLoaderModulesTracker) {
-		_jsLoaderModulesTracker = jsLoaderModulesTracker;
+	protected void setJSLoaderModulesTracker(
+		JSConfigGeneratorPackagesTracker jsConfigGeneratorPackagesTracker) {
+		_jsConfigGeneratorPackagesTracker = jsConfigGeneratorPackagesTracker;
 	}
 
 	@Reference(unbind = "-")
@@ -83,21 +86,21 @@ public class JSModulesNameMapper {
 	}
 
 	private Map<String, String> _getPartialMatchContextMap() {
-		if (_jsLoaderModulesTracker.getLastModified() > _jsLoaderModulesTrackerLastModified) {
+		if (_jsConfigGeneratorPackagesTracker.getLastModified() > _jsLoaderModulesTrackerLastModified) {
 			_partialMatchContextMap.clear();
 			_cache.clear();
 
-			Collection<JSLoaderModule> loaderModules = _jsLoaderModulesTracker.getJSLoaderModules();
+			Collection<JSConfigGeneratorPackage> loaderModules = _jsConfigGeneratorPackagesTracker.getJSConfigGeneratorPackages();
 
-			Function<JSLoaderModule, String> valueMapper = m -> m.getName() + StringPool.AT + m.getVersion();
+			Function<JSConfigGeneratorPackage, String> valueMapper = m -> m.getName() + StringPool.AT + m.getVersion();
 
 			Map<String, String> map = loaderModules.stream()
-				.collect(Collectors.toMap(JSLoaderModule::getName, valueMapper));
+				.collect(Collectors.toMap(JSConfigGeneratorPackage::getName, valueMapper));
 
 			_partialMatchContextMap.putAll(map);
 			_partialMatchContextMap.putAll(_npmRegistry.getGlobalAliases());
 
-			_jsLoaderModulesTrackerLastModified = _jsLoaderModulesTracker.getLastModified();
+			_jsLoaderModulesTrackerLastModified = _jsConfigGeneratorPackagesTracker.getLastModified();
 		}
 
 		return _partialMatchContextMap;
@@ -137,7 +140,7 @@ public class JSModulesNameMapper {
 
 	private final Map<String, String> _partialMatchContextMap = new ConcurrentHashMap<>();
 
-	private JSLoaderModulesTracker _jsLoaderModulesTracker;
+	private JSConfigGeneratorPackagesTracker _jsConfigGeneratorPackagesTracker;
 
 	private long _jsLoaderModulesTrackerLastModified = 0L;
 

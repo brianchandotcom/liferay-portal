@@ -45,7 +45,7 @@ import org.springframework.mock.web.MockServletContext;
  * @author Raymond Augé
  */
 @RunWith(PowerMockRunner.class)
-public class JSLoaderModulesServletTest extends PowerMockito {
+public class JSLoaderConfigServletTest extends PowerMockito {
 
 	@Before
 	public void setUp() {
@@ -69,7 +69,7 @@ public class JSLoaderModulesServletTest extends PowerMockito {
 
 	@Test
 	public void testBasicOutput() throws Exception {
-		JSLoaderModulesServlet jsLoaderModulesServlet =
+		JSLoaderConfigServlet jsLoaderConfigServlet =
 			buildJSLoaderModulesServlet();
 
 		MockHttpServletRequest mockHttpServletRequest =
@@ -77,7 +77,7 @@ public class JSLoaderModulesServletTest extends PowerMockito {
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
 
-		jsLoaderModulesServlet.service(
+		jsLoaderConfigServlet.service(
 			mockHttpServletRequest, mockHttpServletResponse);
 
 		Assert.assertNotNull(mockHttpServletResponse.getContentAsString());
@@ -85,53 +85,33 @@ public class JSLoaderModulesServletTest extends PowerMockito {
 			Details.CONTENT_TYPE, mockHttpServletResponse.getContentType());
 	}
 
-	private JSLoaderModulesServlet buildJSLoaderModulesServlet()
+	private JSLoaderConfigServlet buildJSLoaderModulesServlet()
 		throws Exception {
 
 		return buildJSLoaderModulesServlet(
 			Collections.emptyMap());
 	}
 
-	private JSLoaderModulesServlet buildJSLoaderModulesServlet(
+	private JSLoaderConfigServlet buildJSLoaderModulesServlet(
 		Map<String, Object> properties)
 		throws Exception {
 
-		JSLoaderModulesServlet jsLoaderModulesServlet =
-			new JSLoaderModulesServlet();
+		JSLoaderConfigServlet jsLoaderConfigServlet =
+			new JSLoaderConfigServlet();
 
-		ReflectionTestUtil.setFieldValue(
-			jsLoaderModulesServlet, "_minifier",
-			new Minifier() {
-
-				@Override
-				public String minify(String resourceName, String content) {
-					return content;
-				}
-
-			});
-
-		jsLoaderModulesServlet.activate(
+		jsLoaderConfigServlet.activate(
 			mock(ComponentContext.class), properties);
 
 		MockServletContext mockServletContext = new MockServletContext();
 
 		mockServletContext.setContextPath("/loader");
 
-		jsLoaderModulesServlet.init(new MockServletConfig(mockServletContext));
+		jsLoaderConfigServlet.init(new MockServletConfig(mockServletContext));
 
-		jsLoaderModulesServlet.setDetails(
+		jsLoaderConfigServlet.setDetails(
 			Converter.cnv(Details.class, properties));
 
-		JSLoaderModulesTracker jsLoaderModulesTracker =
-			new JSLoaderModulesTracker();
-
-		jsLoaderModulesTracker.setDetails(
-			Converter.cnv(Details.class, properties));
-
-		jsLoaderModulesServlet.setJSLoaderModulesTracker(
-			jsLoaderModulesTracker);
-
-		return jsLoaderModulesServlet;
+		return jsLoaderConfigServlet;
 	}
 
 	private Portal _portal;

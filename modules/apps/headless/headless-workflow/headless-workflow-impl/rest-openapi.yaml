@@ -57,20 +57,7 @@ components:
         name:
           type: string
         object:
-          description: https://www.schema.org/Object
-          properties:
-            id:
-              format: int64
-              type: integer
-            identifier:
-              format: uri
-              type: string
-            resourceType:
-              type: string
-            self:
-              format: uri
-              type: string
-          type: object
+         $ref: "#/components/schemas/Object"
         self:
           format: uri
           type: string
@@ -79,6 +66,21 @@ components:
             type: string
           type: array
       type: object
+    Object:
+      description: https://www.schema.org/Object
+      properties:
+        id:
+          format: int64
+          type: integer
+        identifier:
+          format: uri
+          type: string
+        resourceType:
+          type: string
+        self:
+          format: uri
+          type: string
+      type: object    
 info:
   description: ""
   title: ""
@@ -138,11 +140,6 @@ paths:
           name: per_page
           schema:
             type: integer
-        - in: path
-          name: genericparentid
-          required: true
-          schema:
-            type: object
       responses:
         200:
           content:

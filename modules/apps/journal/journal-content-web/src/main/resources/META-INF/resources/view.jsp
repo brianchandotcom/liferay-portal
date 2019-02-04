@@ -115,7 +115,7 @@ if (journalContentDisplayContext.isShowArticle()) {
 							<liferay-ui:message arguments="<%= HtmlUtil.escape(article.getTitle(locale)) %>" key="x-is-expired" />
 						</div>
 					</c:when>
-					<c:when test="<%= article.isScheduled() %>">
+					<c:when test="<%= article.isScheduled() && !journalContentDisplayContext.isPreview() %>">
 						<div class="alert alert-warning">
 							<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(article.getTitle(locale)), dateFormatDateTime.format(article.getDisplayDate())} %>" key="x-is-scheduled-and-will-be-displayed-on-x" />
 						</div>

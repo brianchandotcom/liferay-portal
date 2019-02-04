@@ -810,6 +810,22 @@ public class JournalContentDisplayContext {
 		return _expired;
 	}
 
+	public boolean isPreview() {
+		String previewArticleId = ParamUtil.getString(
+			_portletRequest, "previewArticleId");
+
+		JournalArticle article =
+			JournalArticleLocalServiceUtil.fetchLatestArticle(
+				getArticleGroupId(), previewArticleId,
+				WorkflowConstants.STATUS_ANY);
+
+		if (Validator.isNotNull(previewArticleId) && (article != null)) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isShowArticle() throws PortalException {
 		if (_showArticle != null) {
 			return _showArticle;

@@ -4,7 +4,6 @@ dependencies {
 	compile group: "junit", name: "junit", version: "4.12"
 	compile group: "org.jboss.arquillian.config", name: "arquillian-config-api", version: "1.1.10.Final", transitive: false
 	compile group: "org.jboss.arquillian.config", name: "arquillian-config-impl-base", version: "1.1.10.Final", transitive: false
-	compile group: "org.jboss.arquillian.container", name: "arquillian-container-impl-base", version: "1.1.10.Final", transitive: false
 	compile group: "org.jboss.arquillian.container", name: "arquillian-container-spi", version: "1.1.10.Final", transitive: false
 	compile group: "org.jboss.arquillian.container", name: "arquillian-container-test-api", version: "1.1.10.Final", transitive: false
 	compile group: "org.jboss.arquillian.container", name: "arquillian-container-test-impl-base", version: "1.1.10.Final", transitive: false

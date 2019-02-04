@@ -235,6 +235,34 @@ public class JavaTool {
 		return operations;
 	}
 
+	public boolean hasJavaParameterAcceptLanguage(OpenAPIYAML openAPIYAML) {
+		Map<String, PathItem> pathItems = openAPIYAML.getPathItems();
+
+		for (PathItem pathItem : pathItems.values()) {
+			for (Operation operation : getOperations(pathItem)) {
+				if (_hasJavaParameterAcceptLanguage(operation)) {
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
+	public boolean hasJavaParameterPagination(OpenAPIYAML openAPIYAML) {
+		Map<String, PathItem> pathItems = openAPIYAML.getPathItems();
+
+		for (PathItem pathItem : pathItems.values()) {
+			for (Operation operation : getOperations(pathItem)) {
+				if (_hasJavaParameterPagination(operation)) {
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
 	private JavaTool() {
 	}
 

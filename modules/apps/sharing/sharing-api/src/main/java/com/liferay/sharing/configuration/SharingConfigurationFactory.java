@@ -14,12 +14,15 @@
 
 package com.liferay.sharing.configuration;
 
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 
 /**
  * @author Adolfo Pérez
  */
 public interface SharingConfigurationFactory {
+
+	public SharingConfiguration getCompanySharingConfiguration(Company company);
 
 	public SharingConfiguration getGroupSharingConfiguration(Group group);
 

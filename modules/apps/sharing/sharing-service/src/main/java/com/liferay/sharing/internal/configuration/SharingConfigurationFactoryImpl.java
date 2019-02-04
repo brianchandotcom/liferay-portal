@@ -17,6 +17,7 @@ package com.liferay.sharing.internal.configuration;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
@@ -42,23 +43,19 @@ public class SharingConfigurationFactoryImpl
 	implements SharingConfigurationFactory {
 
 	@Override
+	public SharingConfiguration getCompanySharingConfiguration(
+		Company company) {
+
+		long companyId = company.getCompanyId();
+
+		return _getSharingConfiguration(companyId);
+	}
+
+	@Override
 	public SharingConfiguration getGroupSharingConfiguration(Group group) {
-		try {
-			SharingCompanyConfiguration sharingCompanyConfiguration =
-				_configurationProvider.getConfiguration(
-					SharingCompanyConfiguration.class,
-					new CompanyServiceSettingsLocator(
-						group.getCompanyId(), SharingConstants.SERVICE_NAME));
+		long companyId = group.getCompanyId();
 
-			return new SharingConfigurationImpl(
-				sharingCompanyConfiguration, _sharingSystemConfiguration);
-		}
-		catch (ConfigurationException ce) {
-			_log.error(ce, ce);
-
-			return new SharingConfigurationImpl(
-				null, _sharingSystemConfiguration);
-		}
+		return _getSharingConfiguration(companyId);
 	}
 
 	@Override
@@ -70,6 +67,25 @@ public class SharingConfigurationFactoryImpl
 	protected void activate(Map<String, Object> properties) {
 		_sharingSystemConfiguration = ConfigurableUtil.createConfigurable(
 			SharingSystemConfiguration.class, properties);
+	}
+
+	private SharingConfiguration _getSharingConfiguration(long companyId) {
+		try {
+			SharingCompanyConfiguration sharingCompanyConfiguration =
+				_configurationProvider.getConfiguration(
+					SharingCompanyConfiguration.class,
+					new CompanyServiceSettingsLocator(
+						companyId, SharingConstants.SERVICE_NAME));
+
+			return new SharingConfigurationImpl(
+				sharingCompanyConfiguration, _sharingSystemConfiguration);
+		}
+		catch (ConfigurationException ce) {
+			_log.error(ce, ce);
+
+			return new SharingConfigurationImpl(
+				null, _sharingSystemConfiguration);
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

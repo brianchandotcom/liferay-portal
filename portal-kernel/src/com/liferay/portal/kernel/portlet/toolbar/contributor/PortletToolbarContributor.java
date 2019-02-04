@@ -46,4 +46,8 @@ public interface PortletToolbarContributor {
 	public List<Menu> getPortletTitleMenus(
 		PortletRequest portletRequest, PortletResponse portletResponse);
 
+	public default boolean isShowInEditMode() {
+		return false;
+	}
+
 }

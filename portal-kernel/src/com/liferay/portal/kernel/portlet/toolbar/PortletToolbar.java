@@ -17,7 +17,10 @@ package com.liferay.portal.kernel.portlet.toolbar;
 import com.liferay.portal.kernel.portlet.toolbar.contributor.PortletToolbarContributor;
 import com.liferay.portal.kernel.portlet.toolbar.contributor.locator.PortletToolbarContributorLocator;
 import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
@@ -28,10 +31,13 @@ import com.liferay.registry.ServiceTrackerCustomizer;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * Provides elements to be rendered in the portlet toolbar. To obtain those
@@ -62,6 +68,13 @@ public class PortletToolbar {
 			return Collections.emptyList();
 		}
 
+		HttpServletRequest originalHttpServletRequest =
+			PortalUtil.getOriginalServletRequest(
+				PortalUtil.getHttpServletRequest(portletRequest));
+
+		String layoutMode = ParamUtil.getString(
+			originalHttpServletRequest, "p_l_mode", Constants.VIEW);
+
 		List<Menu> portletTitleMenus = new ArrayList<>();
 
 		for (PortletToolbarContributorLocator portletToolbarContributorLocator :
@@ -77,6 +90,12 @@ public class PortletToolbar {
 
 			for (PortletToolbarContributor portletToolbarContributor :
 					portletToolbarContributors) {
+
+				if (Objects.equals(layoutMode, Constants.EDIT) &&
+					!portletToolbarContributor.isShowInEditMode()) {
+
+					continue;
+				}
 
 				List<Menu> curPortletTitleMenus =
 					portletToolbarContributor.getPortletTitleMenus(

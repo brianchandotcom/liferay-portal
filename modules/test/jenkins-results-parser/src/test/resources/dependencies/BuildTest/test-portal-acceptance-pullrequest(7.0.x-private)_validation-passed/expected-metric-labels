@@ -1,0 +1,9 @@
+test-portal-acceptance-pullrequest(7.0.x-private)_top_level_job_name=test-portal-acceptance-pullrequest(7.0.x-private)
+test-portal-acceptance-pullrequest-dist(7.0.x-private)_jdk8_batch_name=jdk8
+test-portal-acceptance-pullrequest-dist(7.0.x-private)_jdk8_top_level_job_name=test-portal-acceptance-pullrequest(7.0.x-private)
+test-portal-acceptance-pullrequest-batch(7.0.x-private)_central-requirements-jdk8_batch_name=central-requirements-jdk8
+test-portal-acceptance-pullrequest-batch(7.0.x-private)_central-requirements-jdk8_top_level_job_name=test-portal-acceptance-pullrequest(7.0.x-private)
+test-portal-acceptance-pullrequest-batch(7.0.x-private)_subrepository-assemble-jdk8/com-liferay-osb-cerebro-private_batch_name=subrepository-assemble-jdk8
+test-portal-acceptance-pullrequest-batch(7.0.x-private)_subrepository-assemble-jdk8/com-liferay-osb-cerebro-private_top_level_job_name=test-portal-acceptance-pullrequest(7.0.x-private)
+test-portal-acceptance-pullrequest-batch(7.0.x-private)_functional-smoke-tomcat80-mysql56-jdk8/com-liferay-osb-cerebro-private/0_batch_name=functional-smoke-tomcat80-mysql56-jdk8
+test-portal-acceptance-pullrequest-batch(7.0.x-private)_functional-smoke-tomcat80-mysql56-jdk8/com-liferay-osb-cerebro-private/0_top_level_job_name=test-portal-acceptance-pullrequest(7.0.x-private)

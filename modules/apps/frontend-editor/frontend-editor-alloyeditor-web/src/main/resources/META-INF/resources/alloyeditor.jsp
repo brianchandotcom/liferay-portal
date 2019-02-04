@@ -150,6 +150,27 @@ name = HtmlUtil.escapeJS(name);
 
 	var alloyEditor;
 
+	var documentBrowseLinkCallback = function(editor, linkHref, callback) {
+		AUI().use('liferay-item-selector-dialog', function(A) {
+			var itemSelectorDialog = new A.LiferayItemSelectorDialog(
+				{
+					eventName: editor.name + 'selectDocument',
+					on: {
+						selectedItemChange: function(event) {
+							var selectedItem = event.newVal;
+							if (selectedItem) {
+								callback(selectedItem);
+							}
+						}
+					},
+					title: Liferay.Language.get('select-item'),
+					url: linkHref
+				}
+			);
+			itemSelectorDialog.open();
+		});
+	};
+
 	var getInitialContent = function() {
 		var data;
 
@@ -197,6 +218,8 @@ name = HtmlUtil.escapeJS(name);
 
 		editorConfig = A.merge(
 			{
+				documentBrowseLinkCallback: documentBrowseLinkCallback,
+				spritemap: themeDisplay.getPathThemeImages() + '/lexicon/icons.svg',
 				title: false,
 				uiNode: uiNode
 			},

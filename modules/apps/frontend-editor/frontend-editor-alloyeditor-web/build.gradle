@@ -23,7 +23,6 @@ buildAlloyEditor {
 
 classes {
 	dependsOn buildAlloyEditor
-	dependsOn npmRunWebpack
 }
 
 clean {

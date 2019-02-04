@@ -25,41 +25,18 @@
 		}
 	},
 	"dependencies": {
-		"alloyeditor": "^1.5.19",
+		"alloyeditor": "^2.0.0-alpha.2",
 		"liferay-module-config-generator": "^1.3.3"
 	},
 	"devDependencies": {
-		"babel-core": "^6.26.0",
-		"babel-loader": "^7.1.2",
-		"babel-preset-env": "^1.6.1",
-		"babel-preset-react": "^6.24.1",
 		"check-source-formatting": "^2.0.4",
-		"jest": "^22.4.2",
-		"liferay-jest-junit-reporter": "1.0.0",
-		"webpack": "^3.10.0",
-		"webpack-dev-server": "^2.11.1",
-		"webpack-merge": "^4.1.1"
-	},
-	"jest": {
-		"globals": {
-			"CKEDITOR": {},
-			"Liferay": {}
-		},
-		"testMatch": [
-			"**/test/**/*.js"
-		],
-		"testResultsProcessor": "./node_modules/liferay-jest-junit-reporter",
-		"testURL": "http://localhost"
+		"liferay-jest-junit-reporter": "1.0.0"
 	},
 	"name": "frontend-editor-alloyeditor-web",
 	"scripts": {
 		"checkFormat": "npm run csf",
 		"csf": "csf src/**/*.js test/**/*.js",
-		"format": "npm run csf -- -i",
-		"start": "webpack-dev-server --config webpack.dev.js",
-		"test": "jest",
-		"webpack": "webpack --config webpack.prod.js",
-		"webpack:dev": "webpack --config webpack.dev.js"
+		"format": "npm run csf -- -i"
 	},
 	"version": "3.0.0"
 }

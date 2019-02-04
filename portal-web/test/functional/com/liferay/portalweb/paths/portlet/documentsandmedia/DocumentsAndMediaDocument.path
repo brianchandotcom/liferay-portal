@@ -26,42 +26,42 @@
 </tr>
 <tr>
 	<td>DOCUMENT_INFO_THUMBNAIL</td>
-	<td>//span[contains(@class,'document-thumbnail')] | //span[contains(@class,'document-thumbnail')]/img</td>
+	<td>//div[contains(@class,'preview-file-container')]/img</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DOCUMENT_INFO_UPLOADED_BY</td>
-	<td>//span[@class='user-date']/span/span/a</td>
+	<td>//div[contains(@class,'username')]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DOCUMENT_INFO_RATING</td>
-	<td>//div[contains(@class,'document-info')]/span[@class='lfr-asset-ratings']</td>
+	<td>//dd[contains(@class,'sidebar-dd')]/div[contains(@class,'taglib-ratings')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DOCUMENT_INFO_RELATED_ASSETS_HEADER</td>
-	<td>//div[contains(@class,'document-info')]//h2[contains(@class,'asset-links-title')]</td>
+	<td>//div[contains(@class,'sidebar-body')]//h2[contains(@class,'asset-links-title')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DOCUMENT_INFO_RELATED_ASSETS_TITLE</td>
-	<td>//div[contains(@class,'document-info')]//li[@class='asset-links-list-item']//a</td>
+	<td>//div[contains(@class,'sidebar-body')]//li[@class='asset-links-list-item']//a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DOCUMENT_INFO_DESCRIPTION</td>
-	<td>//div[contains(@class,'document-info')]/span[@class='document-description']</td>
+	<td>//dt[contains(@class,'sidebar-dt') and contains (.,'Description')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DOCUMENT_INFO_CATEGORIES</td>
-	<td>//div[contains(@class,'document-info')]/div[@class='lfr-asset-categories']</td>
+	<td>//dt[contains(@class,'sidebar-dt') and contains (.,'Categories')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DOCUMENT_INFO_TAGS</td>
-	<td>//div[contains(@class,'document-info')]/div[@class='lfr-asset-tags']</td>
+	<td>//dt[contains(@class,'sidebar-dt') and contains (.,'Tags')]</td>
 	<td></td>
 </tr>
 <tr>

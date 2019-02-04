@@ -83,14 +83,18 @@ public class AssetDisplayPagesItemSelectorView
 			PortletURL portletURL, String itemSelectedEventName, boolean search)
 		throws IOException, ServletException {
 
+		request.setAttribute(
+			AssetDisplayPageItemSelectorWebKeys.
+				ASSET_DISPLAY_CONTRIBUTOR_TRACKER,
+			_assetDisplayContributorTracker);
+
 		HttpServletRequest httpServletRequest = (HttpServletRequest)request;
 
 		AssetDisplayPagesItemSelectorViewDisplayContext
 			assetDisplayPagesItemSelectorViewDisplayContext =
 				new AssetDisplayPagesItemSelectorViewDisplayContext(
-					httpServletRequest, _assetDisplayContributorTracker,
-					assetDisplayPageSelectorCriterion, itemSelectedEventName,
-					portletURL);
+					httpServletRequest, assetDisplayPageSelectorCriterion,
+					itemSelectedEventName, portletURL);
 
 		request.setAttribute(
 			AssetDisplayPageItemSelectorWebKeys.

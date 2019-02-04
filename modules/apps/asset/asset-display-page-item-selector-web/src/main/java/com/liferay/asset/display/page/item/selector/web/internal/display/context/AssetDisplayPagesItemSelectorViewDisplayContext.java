@@ -14,21 +14,13 @@
 
 package com.liferay.asset.display.page.item.selector.web.internal.display.context;
 
-import com.liferay.asset.display.contributor.AssetDisplayContributor;
-import com.liferay.asset.display.contributor.AssetDisplayContributorTracker;
 import com.liferay.asset.display.page.item.selector.criterion.AssetDisplayPageSelectorCriterion;
-import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
-import com.liferay.asset.kernel.model.AssetRendererFactory;
-import com.liferay.asset.kernel.model.ClassType;
-import com.liferay.asset.kernel.model.ClassTypeReader;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
 import com.liferay.layout.page.template.util.comparator.LayoutPageTemplateEntryCreateDateComparator;
 import com.liferay.layout.page.template.util.comparator.LayoutPageTemplateEntryNameComparator;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
@@ -55,12 +47,10 @@ public class AssetDisplayPagesItemSelectorViewDisplayContext {
 
 	public AssetDisplayPagesItemSelectorViewDisplayContext(
 		HttpServletRequest request,
-		AssetDisplayContributorTracker assetDisplayContributorTracker,
 		AssetDisplayPageSelectorCriterion assetDisplayPageSelectorCriterion,
 		String itemSelectedEventName, PortletURL portletURL) {
 
 		_request = request;
-		_assetDisplayContributorTracker = assetDisplayContributorTracker;
 		_assetDisplayPageSelectorCriterion = assetDisplayPageSelectorCriterion;
 		_itemSelectedEventName = itemSelectedEventName;
 		_portletURL = portletURL;
@@ -166,44 +156,6 @@ public class AssetDisplayPagesItemSelectorViewDisplayContext {
 		return _orderByType;
 	}
 
-	public String getSubtypeLabel(
-			LayoutPageTemplateEntry layoutPageTemplateEntry)
-		throws PortalException {
-
-		AssetRendererFactory assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-				layoutPageTemplateEntry.getClassName());
-
-		if ((assetRendererFactory == null) ||
-			(layoutPageTemplateEntry.getClassTypeId() <= 0)) {
-
-			return StringPool.BLANK;
-		}
-
-		ClassTypeReader classTypeReader =
-			assetRendererFactory.getClassTypeReader();
-
-		ClassType classType = classTypeReader.getClassType(
-			layoutPageTemplateEntry.getClassTypeId(),
-			_themeDisplay.getLocale());
-
-		return classType.getName();
-	}
-
-	public String getTypeLabel(
-		LayoutPageTemplateEntry layoutPageTemplateEntry) {
-
-		AssetDisplayContributor assetDisplayContributor =
-			_assetDisplayContributorTracker.getAssetDisplayContributor(
-				layoutPageTemplateEntry.getClassName());
-
-		if (assetDisplayContributor == null) {
-			return StringPool.BLANK;
-		}
-
-		return assetDisplayContributor.getLabel(_themeDisplay.getLocale());
-	}
-
 	private String _getKeywords() {
 		if (Validator.isNotNull(_keywords)) {
 			return _keywords;
@@ -260,8 +212,6 @@ public class AssetDisplayPagesItemSelectorViewDisplayContext {
 		return portletURL;
 	}
 
-	private final AssetDisplayContributorTracker
-		_assetDisplayContributorTracker;
 	private SearchContainer _assetDisplayPageSearchContainer;
 	private final AssetDisplayPageSelectorCriterion
 		_assetDisplayPageSelectorCriterion;

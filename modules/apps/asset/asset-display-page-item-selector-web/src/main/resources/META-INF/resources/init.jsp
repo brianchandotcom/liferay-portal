@@ -14,8 +14,6 @@
  */
 --%>
 
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
@@ -27,10 +25,7 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 <%@ page import="com.liferay.asset.display.page.item.selector.web.internal.constants.AssetDisplayPageItemSelectorWebKeys" %><%@
 page import="com.liferay.asset.display.page.item.selector.web.internal.display.context.AssetDisplayPagesItemSelectorViewDisplayContext" %><%@
 page import="com.liferay.asset.display.page.item.selector.web.internal.display.context.AssetDisplayPagesItemSelectorViewManagementToolbarDisplayContext" %><%@
-page import="com.liferay.portal.kernel.util.Validator" %>
-
-<%@ page import="java.util.HashMap" %><%@
-page import="java.util.Map" %>
+page import="com.liferay.asset.display.page.item.selector.web.internal.servlet.taglib.clay.LayoutPageTemplateEntryVerticalCard" %>
 
 <liferay-frontend:defineObjects />
 

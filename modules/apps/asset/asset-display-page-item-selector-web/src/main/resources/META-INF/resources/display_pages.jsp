@@ -37,61 +37,12 @@ AssetDisplayPagesItemSelectorViewDisplayContext assetDisplayPagesItemSelectorVie
 
 			<%
 			row.setCssClass("entry-card form-check-card lfr-asset-item " + row.getCssClass());
-
-			Map<String, Object> data = new HashMap<String, Object>();
-
-			data.put("id", layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
-			data.put("name", layoutPageTemplateEntry.getName());
-			data.put("type", "asset-display-page");
 			%>
 
 			<liferay-ui:search-container-column-text>
-				<liferay-frontend:icon-vertical-card
-					cssClass="entry-display-style layout-page-template-entry"
-					data="<%= data %>"
-					icon="page"
-					resultRow="<%= row %>"
-					title="<%= layoutPageTemplateEntry.getName() %>"
-					url="javascript:;"
-				>
-					<liferay-frontend:vertical-card-footer>
-						<div class="row">
-							<div class="col text-truncate">
-
-								<%
-								String typeLabel = assetDisplayPagesItemSelectorViewDisplayContext.getTypeLabel(layoutPageTemplateEntry);
-								%>
-
-								<c:choose>
-									<c:when test="<%= Validator.isNotNull(typeLabel) %>">
-										<%= typeLabel %>
-									</c:when>
-									<c:otherwise>
-										&nbsp;
-									</c:otherwise>
-								</c:choose>
-							</div>
-						</div>
-
-						<div class="card-subtitle row">
-							<div class="col text-truncate">
-
-								<%
-								String subtypeLabel = assetDisplayPagesItemSelectorViewDisplayContext.getSubtypeLabel(layoutPageTemplateEntry);
-								%>
-
-								<c:choose>
-									<c:when test="<%= Validator.isNotNull(subtypeLabel) %>">
-										<%= subtypeLabel %>
-									</c:when>
-									<c:otherwise>
-										&nbsp;
-									</c:otherwise>
-								</c:choose>
-							</div>
-						</div>
-					</liferay-frontend:vertical-card-footer>
-				</liferay-frontend:icon-vertical-card>
+				<clay:vertical-card
+					verticalCard="<%= new LayoutPageTemplateEntryVerticalCard(layoutPageTemplateEntry, renderRequest) %>"
+				/>
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 

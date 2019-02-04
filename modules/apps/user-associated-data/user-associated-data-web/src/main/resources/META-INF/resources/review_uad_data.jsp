@@ -18,6 +18,7 @@
 
 <%
 int totalReviewableUADEntitiesCount = (int)request.getAttribute(UADWebKeys.TOTAL_REVIEWABLE_UAD_ENTITIES_COUNT);
+List<UADApplicationSummaryDisplay> uadApplicationSummaryDisplays = (List<UADApplicationSummaryDisplay>)request.getAttribute(UADWebKeys.UAD_APPLICATION_SUMMARY_DISPLAY_LIST);
 
 portletDisplay.setShowBackIcon(true);
 
@@ -48,6 +49,42 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 <div class="container-fluid container-fluid-max-xl container-form-lg">
 	<div class="row">
 		<div class="col-lg-3">
+			<div class="panel panel-secondary">
+				<div class="collapse-icon collapse-icon-middle panel-header" data-target="#<portlet:namespace />applicationPanelBody" data-toggle="collapse">
+					<span class="panel-title">
+
+						<%
+						String applicationPanelTitle = StringUtil.toUpperCase(LanguageUtil.get(request, "applications"), locale);
+						%>
+
+						<%= StringUtil.appendParentheticalSuffix(applicationPanelTitle, totalReviewableUADEntitiesCount) %>
+					</span>
+
+					<aui:icon cssClass="collapse-icon-closed" image="angle-right" markupView="lexicon" />
+
+					<aui:icon cssClass="collapse-icon-open" image="angle-down" markupView="lexicon" />
+				</div>
+
+				<div class="collapse panel-collapse show" id="<portlet:namespace />applicationPanelBody">
+					<div class="panel-body">
+
+						<%
+						for (UADApplicationSummaryDisplay uadApplicationSummaryDisplay : uadApplicationSummaryDisplays) {
+							String applicationName = UADLanguageUtil.getApplicationName(uadApplicationSummaryDisplay.getApplicationKey(), locale);
+						%>
+
+							<clay:radio
+								label="<%= StringUtil.appendParentheticalSuffix(applicationName, uadApplicationSummaryDisplay.getCount()) %>"
+								name="applications"
+							/>
+
+						<%
+						}
+						%>
+
+					</div>
+				</div>
+			</div>
 		</div>
 
 		<div class="col-lg-8">

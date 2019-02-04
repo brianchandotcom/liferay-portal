@@ -55,6 +55,11 @@ public class ReviewUADDataMVCRenderCommand implements MVCRenderCommand {
 				UADWebKeys.TOTAL_REVIEWABLE_UAD_ENTITIES_COUNT,
 				_uadApplicationSummaryHelper.getTotalReviewableUADEntitiesCount(
 					selectedUser.getUserId()));
+
+			renderRequest.setAttribute(
+				UADWebKeys.UAD_APPLICATION_SUMMARY_DISPLAY_LIST,
+				_uadApplicationSummaryHelper.getUADApplicationSummaryDisplays(
+					renderRequest, selectedUser.getUserId()));
 		}
 		catch (PortalException pe) {
 			throw new PortletException(pe);

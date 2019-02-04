@@ -69,6 +69,11 @@ public class OrphanPortletsManagementToolbarDisplayContext
 	}
 
 	@Override
+	public String getDefaultEventHandler() {
+		return "ORPHAN_PORTLETS_MANAGEMENT_TOOLBAR_DEFAULT_EVENT_HANDLER";
+	}
+
+	@Override
 	public List<ViewTypeItem> getViewTypeItems() {
 		return new ViewTypeItemList(
 			getPortletURL(), _orphanPortletsDisplayContext.getDisplayStyle()) {

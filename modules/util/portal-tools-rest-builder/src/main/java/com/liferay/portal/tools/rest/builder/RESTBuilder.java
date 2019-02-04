@@ -72,6 +72,8 @@ public class RESTBuilder {
 
 		_createApplicationFile(context);
 
+		_createSourceFormatterPropertiesFile();
+
 		Components components = _openAPIYAML.getComponents();
 
 		Map<String, Schema> schemas = components.getSchemas();
@@ -236,14 +238,31 @@ public class RESTBuilder {
 
 		File file = new File(sb.toString());
 
-		if (file.exists()) {
-			return;
-		}
-
 		String content = FreeMarkerUtil.processTemplate(
 			_copyrightFileName, "resource_impl", context);
 
 		FileUtil.write(content, file);
+	}
+
+	private void _createSourceFormatterPropertiesFile() throws Exception {
+		String content = FreeMarkerUtil.processTemplate(
+			null, "source-formatter-properties", null);
+
+		String[] dirNames = {_configYAML.getApiDir(), _configYAML.getImplDir()};
+
+		for (String dirName : dirNames) {
+			if (dirName.endsWith("src/main/java")) {
+				dirName = dirName.substring(0, dirName.length() - 13);
+			}
+
+			File file = new File(dirName + "/source-formatter.properties");
+
+			if (dirName.isEmpty()) {
+				file = new File("source-formatter.properties");
+			}
+
+			FileUtil.write(content, file);
+		}
 	}
 
 	private final ConfigYAML _configYAML;

@@ -1,5 +1,7 @@
 package com.liferay.frontend.js.loader.modules.extender.internal;
 
+import com.liferay.frontend.js.loader.modules.extender.internal.resolution.JSModuleContext;
+import com.liferay.frontend.js.loader.modules.extender.internal.resolution.JSModulesContextResolver;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.util.ParamUtil;
 import org.osgi.service.component.annotations.Component;
@@ -33,7 +35,8 @@ import java.util.List;
 public class JSModuleLoaderServlet extends HttpServlet {
 
 	@Reference(unbind = "-")
-	public void setJsModulesContextResolver(JSModulesContextResolver jsModulesContextResolver) {
+	public void setJsModulesContextResolver(
+		JSModulesContextResolver jsModulesContextResolver) {
 		_jsModulesContextResolver = jsModulesContextResolver;
 	}
 

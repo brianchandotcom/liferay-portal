@@ -49,7 +49,6 @@ import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.zip.ZipReader;
 import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
 import com.liferay.wiki.configuration.WikiGroupServiceConfiguration;
-import com.liferay.wiki.engine.WikiEngineRenderer;
 import com.liferay.wiki.exception.ImportFilesException;
 import com.liferay.wiki.exception.NoSuchPageException;
 import com.liferay.wiki.importer.WikiImporter;
@@ -65,12 +64,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -198,6 +195,7 @@ public class MediaWikiImporter implements WikiImporter {
 			long authorUserId = getUserId(userId, node, author, usersMap);
 
 			String parentTitle = readParentTitle(content);
+
 			String redirectTitle = readRedirectTitle(content);
 
 			if (Validator.isNotNull(redirectTitle)) {
@@ -228,8 +226,8 @@ public class MediaWikiImporter implements WikiImporter {
 
 			_wikiPageLocalService.updatePage(
 				authorUserId, node.getNodeId(), title, page.getVersion(),
-				content, summary, true, FORMAT_CREOLE, parentTitle, redirectTitle,
-				serviceContext);
+				content, summary, true, FORMAT_CREOLE, parentTitle,
+				redirectTitle, serviceContext);
 		}
 		catch (Exception e) {
 			throw new PortalException("Error importing page " + title, e);

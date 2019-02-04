@@ -17,6 +17,7 @@ package com.liferay.portal.vulcan.internal.jaxrs.json;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -79,6 +80,7 @@ public class JSONMessageBodyWriter implements MessageBodyWriter<Object> {
 		{
 			configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 			enable(SerializationFeature.INDENT_OUTPUT);
+			setDateFormat(new ISO8601DateFormat());
 		}
 	};
 

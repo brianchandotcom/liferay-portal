@@ -15,6 +15,7 @@
 package com.liferay.portal.vulcan.internal.jaxrs.json;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -61,6 +62,10 @@ public class JSONMessageBodyReader implements MessageBodyReader<Object> {
 		return _objectMapper.readValue(inputStream, clazz);
 	}
 
-	private static final ObjectMapper _objectMapper = new ObjectMapper();
+	private static final ObjectMapper _objectMapper = new ObjectMapper() {
+		{
+			setDateFormat(new ISO8601DateFormat());
+		}
+	};
 
 }

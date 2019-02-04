@@ -172,6 +172,8 @@ public class OrphanPortletsDisplayContext {
 
 		orphanPortletsSearchContainer.setDeltaConfigurable(false);
 		orphanPortletsSearchContainer.setId("portlets");
+		orphanPortletsSearchContainer.setOrderByCol("name");
+		orphanPortletsSearchContainer.setOrderByType(getOrderByType());
 
 		Layout selLayout = getSelLayout();
 

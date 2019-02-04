@@ -81,8 +81,10 @@ components:
       description: https://www.schema.org/Folder
       properties:
         dateCreated:
+          format: date-time
           type: string
         dateModified:
+          format: date-time
           type: string
         description:
           type: string

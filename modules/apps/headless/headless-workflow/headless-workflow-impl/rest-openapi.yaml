@@ -9,7 +9,7 @@ components:
         commentLog:
           type: string
         dateCreated:
-          format: datetime
+          format: date-time
           type: string
         id:
           format: int64
@@ -38,16 +38,17 @@ components:
         completed:
           type: boolean
         dateCompleted:
-          format: datetime
+          format: date-time
           type: string
         dateCreated:
-          format: datetime
+          format: date-time
           type: string
         definitionName:
           type: string
         description:
           type: string
         dueDate:
+          format: date-time
           type: string
         id:
           format: int64

@@ -276,6 +276,7 @@ components:
         alternateName:
           type: string
         birthDate:
+          format: date-time
           type: string
         contactInformation:
           description: https://www.schema.org/ContactInformation

@@ -14,7 +14,6 @@
 
 package com.liferay.fragment.entry.processor.portlet;
 
-import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.FragmentEntryProcessor;
@@ -31,20 +30,14 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.ModelHintsConstants;
 import com.liferay.portal.kernel.model.Portlet;
-import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
-import com.liferay.portal.kernel.portlet.PortletProvider;
-import com.liferay.portal.kernel.portlet.PortletProviderUtil;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -52,7 +45,6 @@ import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portlet.configuration.kernel.util.PortletConfigurationApplicationType;
 
 import java.util.List;
 import java.util.Locale;
@@ -60,9 +52,6 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 
 import javax.portlet.PortletPreferences;
-import javax.portlet.PortletURL;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -179,24 +168,6 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 
 			portletElement.attr("class", "portlet");
 
-			ServiceContext serviceContext =
-				ServiceContextThreadLocal.getServiceContext();
-
-			ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
-
-			Layout layout = themeDisplay.getLayout();
-
-			if (PortletPermissionUtil.contains(
-					themeDisplay.getPermissionChecker(),
-					fragmentEntryLink.getGroupId(), portletName,
-					ActionKeys.CONFIGURATION) &&
-				layout.isTypeControlPanel() &&
-				Objects.equals(mode, FragmentEntryLinkConstants.EDIT)) {
-
-				portletElement.appendChild(
-					_getPortletTopperElement(portletName, instanceId, locale));
-			}
-
 			portletElement.appendChild(runtimeTagElement);
 
 			element.replaceWith(portletElement);
@@ -270,50 +241,6 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 		}
 	}
 
-	private String _getConfigurationURL(String portletId) throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		HttpServletRequest request = serviceContext.getRequest();
-
-		PortletURL configurationURL = PortletProviderUtil.getPortletURL(
-			request,
-			PortletConfigurationApplicationType.PortletConfiguration.CLASS_NAME,
-			PortletProvider.Action.VIEW);
-
-		configurationURL.setParameter("mvcPath", "/edit_configuration.jsp");
-		configurationURL.setParameter("settingsScope", "portletInstance");
-		configurationURL.setParameter(
-			"redirect", _portal.getCurrentURL(request));
-		configurationURL.setParameter(
-			"returnToFullPageURL", _portal.getCurrentURL(request));
-		configurationURL.setParameter(
-			"portletConfiguration", Boolean.TRUE.toString());
-		configurationURL.setParameter("portletResource", portletId);
-		configurationURL.setParameter(
-			"resourcePrimKey",
-			PortletPermissionUtil.getPrimaryKey(
-				serviceContext.getPlid(), portletId));
-
-		configurationURL.setWindowState(LiferayWindowState.POP_UP);
-
-		StringBundler jsConfigurationURLSB = new StringBundler(11);
-
-		jsConfigurationURLSB.append("Liferay.Portlet.openWindow({");
-		jsConfigurationURLSB.append("bodyCssClass:'dialog-with-footer', ");
-		jsConfigurationURLSB.append("destroyOnHide: true, portlet: '#p_p_id_");
-		jsConfigurationURLSB.append(portletId);
-		jsConfigurationURLSB.append("_', portletId: '");
-		jsConfigurationURLSB.append(portletId);
-		jsConfigurationURLSB.append("', title: '");
-		jsConfigurationURLSB.append(LanguageUtil.get(request, "configuration"));
-		jsConfigurationURLSB.append("', uri: '");
-		jsConfigurationURLSB.append(configurationURL.toString());
-		jsConfigurationURLSB.append("'}); return false;");
-
-		return jsConfigurationURLSB.toString();
-	}
-
 	private Document _getDocument(String html) {
 		Document document = Jsoup.parseBodyFragment(html);
 
@@ -332,74 +259,6 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 		}
 
 		return namespace + id;
-	}
-
-	private Element _getPortletMenuElement(
-			String portletName, String instanceId)
-		throws PortalException {
-
-		String portletId = PortletIdCodec.encode(
-			PortletIdCodec.decodePortletName(portletName),
-			PortletIdCodec.decodeUserId(portletName), instanceId);
-
-		Element menuElement = new Element("menu");
-
-		menuElement.attr("class", "portlet-topper-toolbar");
-		menuElement.attr("id", "portlet-topper-toolbar_" + portletId);
-		menuElement.attr("type", "toolbar");
-
-		Element buttonElement = new Element("button");
-
-		buttonElement.attr("class", "btn btn-primary btn-sm");
-
-		try {
-			buttonElement.attr("onClick", _getConfigurationURL(portletId));
-		}
-		catch (Exception e) {
-			throw new PortalException(e);
-		}
-
-		buttonElement.attr("url", "javascript:;");
-
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		buttonElement.text(
-			LanguageUtil.get(serviceContext.getRequest(), "configure"));
-
-		menuElement.appendChild(buttonElement);
-
-		return menuElement;
-	}
-
-	private Element _getPortletTopperElement(
-			String portletName, String instanceId, Locale locale)
-		throws PortalException {
-
-		Element portletTopperElement = new Element("header");
-
-		portletTopperElement.attr("class", "portlet-topper");
-
-		Element portletTitleElement = new Element("div");
-
-		portletTitleElement.attr("class", "portlet-title-default");
-
-		Element portletNameElement = new Element("span");
-
-		portletNameElement.attr("class", "portlet-name-text");
-
-		String portletTitle = _portal.getPortletTitle(portletName, locale);
-
-		portletNameElement.text(portletTitle);
-
-		portletTitleElement.appendChild(portletNameElement);
-
-		portletTopperElement.appendChild(portletTitleElement);
-
-		portletTopperElement.appendChild(
-			_getPortletMenuElement(portletName, instanceId));
-
-		return portletTopperElement;
 	}
 
 	private String _getPreferences(

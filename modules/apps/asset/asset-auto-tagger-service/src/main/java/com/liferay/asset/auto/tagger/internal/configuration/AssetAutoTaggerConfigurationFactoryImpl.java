@@ -169,7 +169,7 @@ public class AssetAutoTaggerConfigurationFactoryImpl
 			return _assetAutoTaggerCompanyConfiguration.enabled();
 		}
 
-		private AssetAutoTaggerCompanyConfiguration
+		private final AssetAutoTaggerCompanyConfiguration
 			_assetAutoTaggerCompanyConfiguration;
 
 	}
@@ -232,7 +232,7 @@ public class AssetAutoTaggerConfigurationFactoryImpl
 			}
 		}
 
-		private AssetAutoTaggerConfiguration
+		private final AssetAutoTaggerConfiguration
 			_assetAutoTaggerCompanyConfiguration;
 		private final Group _group;
 

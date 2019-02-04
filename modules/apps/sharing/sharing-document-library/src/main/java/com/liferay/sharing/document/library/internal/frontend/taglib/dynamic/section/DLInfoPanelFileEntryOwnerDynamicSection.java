@@ -33,6 +33,7 @@ import com.liferay.taglib.servlet.PipingServletResponse;
 import java.io.ByteArrayOutputStream;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -102,7 +103,7 @@ public class DLInfoPanelFileEntryOwnerDynamicSection implements DynamicSection {
 		).map(
 			_userLocalService::fetchUserById
 		).filter(
-			user -> user != null
+			Objects::nonNull
 		).collect(
 			Collectors.toList()
 		);

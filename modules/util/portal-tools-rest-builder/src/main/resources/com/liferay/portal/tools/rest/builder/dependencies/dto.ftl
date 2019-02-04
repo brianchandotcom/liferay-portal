@@ -6,6 +6,9 @@ package ${configYAML.apiPackagePath}.dto;
 	</#list>
 </#compress>
 
+import graphql.annotations.annotationTypes.GraphQLField;
+import graphql.annotations.annotationTypes.GraphQLName;
+
 import javax.annotation.Generated;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -15,6 +18,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
+@GraphQLName("${schemaName}")
 @XmlRootElement(name = "${schemaName}")
 public class ${schemaName} {
 
@@ -23,14 +27,15 @@ public class ${schemaName} {
 
 		<#assign content>
 			public ${javaParameter.parameterType} get${javaParameter.parameterName?cap_first}() {
-				return _${propertyName};
+				return ${propertyName};
 			}
 
 			public void set${javaParameter.parameterName?cap_first}(${javaParameter.parameterType} ${javaParameter.parameterName}) {
-				_${propertyName} = ${propertyName};
+				this.${propertyName} = ${propertyName};
 			}
 
-			private ${javaParameter.parameterType} _${propertyName};
+			@GraphQLField
+			private ${javaParameter.parameterType} ${propertyName};
 		</#assign>
 
 		<#list content?split("\n") as line>

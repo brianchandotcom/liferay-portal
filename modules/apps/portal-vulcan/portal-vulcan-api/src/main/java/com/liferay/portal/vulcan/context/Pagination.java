@@ -14,9 +14,12 @@
 
 package com.liferay.portal.vulcan.context;
 
+import graphql.annotations.annotationTypes.GraphQLName;
+
 /**
  * @author Zoltán Takács
  */
+@GraphQLName("Pagination")
 public interface Pagination {
 
 	public int getEndPosition();

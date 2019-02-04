@@ -33,13 +33,6 @@ LayoutPageTemplateEntry layoutPageTemplateEntry = (LayoutPageTemplateEntry)row.g
 >
 	<c:if test="<%= LayoutPageTemplateEntryPermission.contains(permissionChecker, layoutPageTemplateEntry, ActionKeys.UPDATE) %>">
 		<liferay-ui:icon
-			message="edit"
-			url="<%= layoutPageTemplateDisplayContext.getEditLayoutPageTemplateEntryURL(layoutPageTemplateEntry) %>"
-		/>
-	</c:if>
-
-	<c:if test="<%= LayoutPageTemplateEntryPermission.contains(permissionChecker, layoutPageTemplateEntry, ActionKeys.UPDATE) %>">
-		<liferay-ui:icon
 			cssClass='<%= renderResponse.getNamespace() + "update-layout-page-template-action-option" %>'
 			data="<%= layoutPageTemplateDisplayContext.getUpdateLayoutPageTemplateEntryData(layoutPageTemplateEntry) %>"
 			message="rename"

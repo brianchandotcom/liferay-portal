@@ -47,85 +47,12 @@ LayoutPageTemplateManagementToolbarDisplayContext layoutPageTemplateManagementTo
 
 			<%
 			row.setCssClass("entry-card lfr-asset-item " + row.getCssClass());
-
-			String editLayoutPageTemplateURL = layoutPageTemplateDisplayContext.getEditLayoutPageTemplateEntryURL(layoutPageTemplateEntry);
-			String imagePreviewURL = layoutPageTemplateEntry.getImagePreviewURL(themeDisplay);
 			%>
 
 			<liferay-ui:search-container-column-text>
-				<c:choose>
-					<c:when test="<%= Validator.isNotNull(imagePreviewURL) %>">
-						<liferay-frontend:vertical-card
-							actionJsp="/layout_page_template_entry_action.jsp"
-							actionJspServletContext="<%= application %>"
-							cssClass="entry-display-style"
-							imageCSSClass="aspect-ratio-bg-contain"
-							imageUrl="<%= imagePreviewURL %>"
-							resultRow="<%= row %>"
-							rowChecker="<%= searchContainer.getRowChecker() %>"
-							title="<%= layoutPageTemplateEntry.getName() %>"
-							url="<%= editLayoutPageTemplateURL %>"
-						>
-							<liferay-frontend:vertical-card-footer>
-								<div class="card-subtitle row">
-									<div class="col text-truncate">
-										<c:choose>
-											<c:when test="<%= Objects.equals(layoutPageTemplateEntry.getType(), LayoutPageTemplateEntryTypeConstants.TYPE_WIDGET_PAGE) %>">
-												<liferay-ui:message key="widget-page-template" />
-											</c:when>
-											<c:otherwise>
-												<liferay-ui:message key="content-page-template" />
-											</c:otherwise>
-										</c:choose>
-									</div>
-								</div>
-
-								<div class="card-subtitle row">
-									<div class="col text-truncate">
-										<span class="label <%= (layoutPageTemplateEntry.getStatus() == WorkflowConstants.STATUS_APPROVED) ? "label-success" : "label-secondary" %>">
-											<liferay-ui:message key="<%= WorkflowConstants.getStatusLabel(layoutPageTemplateEntry.getStatus()) %>" />
-										</span>
-									</div>
-								</div>
-							</liferay-frontend:vertical-card-footer>
-						</liferay-frontend:vertical-card>
-					</c:when>
-					<c:otherwise>
-						<liferay-frontend:icon-vertical-card
-							actionJsp="/layout_page_template_entry_action.jsp"
-							actionJspServletContext="<%= application %>"
-							cssClass="entry-display-style"
-							icon='<%= Objects.equals(layoutPageTemplateEntry.getType(), LayoutPageTemplateEntryTypeConstants.TYPE_WIDGET_PAGE) ? "page-template" : "page" %>'
-							resultRow="<%= row %>"
-							rowChecker="<%= searchContainer.getRowChecker() %>"
-							title="<%= layoutPageTemplateEntry.getName() %>"
-							url="<%= editLayoutPageTemplateURL %>"
-						>
-							<liferay-frontend:vertical-card-footer>
-								<div class="card-subtitle row">
-									<div class="col text-truncate">
-										<c:choose>
-											<c:when test="<%= Objects.equals(layoutPageTemplateEntry.getType(), LayoutPageTemplateEntryTypeConstants.TYPE_WIDGET_PAGE) %>">
-												<liferay-ui:message key="widget-page-template" />
-											</c:when>
-											<c:otherwise>
-												<liferay-ui:message key="content-page-template" />
-											</c:otherwise>
-										</c:choose>
-									</div>
-								</div>
-
-								<div class="card-subtitle row">
-									<div class="col text-truncate">
-										<span class="label <%= (layoutPageTemplateEntry.getStatus() == WorkflowConstants.STATUS_APPROVED) ? "label-success" : "label-secondary" %>">
-											<liferay-ui:message key="<%= WorkflowConstants.getStatusLabel(layoutPageTemplateEntry.getStatus()) %>" />
-										</span>
-									</div>
-								</div>
-							</liferay-frontend:vertical-card-footer>
-						</liferay-frontend:icon-vertical-card>
-					</c:otherwise>
-				</c:choose>
+				<clay:vertical-card
+					verticalCard="<%= new LayoutPageTemplateEntryVerticalCard(layoutPageTemplateEntry, renderRequest, renderResponse, searchContainer.getRowChecker()) %>"
+				/>
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 

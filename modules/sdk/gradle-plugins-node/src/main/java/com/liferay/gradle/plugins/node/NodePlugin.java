@@ -22,6 +22,7 @@ import com.liferay.gradle.plugins.node.tasks.DownloadNodeTask;
 import com.liferay.gradle.plugins.node.tasks.ExecuteNodeTask;
 import com.liferay.gradle.plugins.node.tasks.ExecuteNpmTask;
 import com.liferay.gradle.plugins.node.tasks.NpmInstallTask;
+import com.liferay.gradle.plugins.node.tasks.NpmLinkTask;
 import com.liferay.gradle.plugins.node.tasks.NpmRunTask;
 import com.liferay.gradle.plugins.node.tasks.NpmShrinkwrapTask;
 import com.liferay.gradle.plugins.node.tasks.PublishNodeModuleTask;
@@ -216,6 +217,25 @@ public class NodePlugin implements Plugin<Project> {
 		return npmInstallTask;
 	}
 
+	private ExecuteNpmTask _addTaskNpmLink(
+		String dependencyName, NpmInstallTask npmInstallTask) {
+
+		Project project = npmInstallTask.getProject();
+
+		String suffix = StringUtil.camelCase(dependencyName, true);
+
+		final NpmLinkTask npmLinkTask = GradleUtil.addTask(
+			project, "npmLink" + suffix, NpmLinkTask.class);
+
+		npmLinkTask.dependsOn(npmInstallTask);
+		npmLinkTask.setDescription(
+			"Links the \"" + dependencyName + "\" NPM dependency.");
+		npmLinkTask.setGroup(BasePlugin.BUILD_GROUP);
+		npmLinkTask.setDependencyName(dependencyName);
+
+		return npmLinkTask;
+	}
+
 	private Task _addTaskNpmPackageLock(
 		Project project, Delete cleanNpmTask, NpmInstallTask npmInstallTask) {
 
@@ -318,15 +338,22 @@ public class NodePlugin implements Plugin<Project> {
 			return;
 		}
 
+		Map<String, String> dependenciesJsonMap =
+			(Map<String, String>)packageJsonMap.get("dependencies");
+
+		if (dependenciesJsonMap != null) {
+			for (String dependencyName : dependenciesJsonMap.keySet()) {
+				_addTaskNpmLink(dependencyName, npmInstallTask);
+			}
+		}
+
 		Map<String, String> scriptsJsonMap =
 			(Map<String, String>)packageJsonMap.get("scripts");
 
-		if (scriptsJsonMap == null) {
-			return;
-		}
-
-		for (String scriptName : scriptsJsonMap.keySet()) {
-			_addTaskNpmRun(scriptName, npmInstallTask);
+		if (scriptsJsonMap != null) {
+			for (String scriptName : scriptsJsonMap.keySet()) {
+				_addTaskNpmRun(scriptName, npmInstallTask);
+			}
 		}
 	}
 

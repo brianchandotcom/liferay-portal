@@ -31,14 +31,14 @@ import org.osgi.service.component.annotations.Reference;
  * @author Raymond Augé
  */
 @Component(enabled = false, immediate = true, service = {})
-public class JSLoaderModulesPortalWebResources {
+public class JSLoaderConfigPortalWebResources {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		try {
 			PortalWebResources portalWebResources =
 				new InternalPortalWebResources(
-					_jsLoaderModulesServlet.getServletContext());
+					_jsLoaderConfigServlet.getServletContext());
 
 			_serviceRegistration = bundleContext.registerService(
 				PortalWebResources.class, portalWebResources, null);
@@ -56,10 +56,7 @@ public class JSLoaderModulesPortalWebResources {
 	}
 
 	@Reference
-	private JSLoaderModulesServlet _jsLoaderModulesServlet;
-
-	@Reference
-	private JSLoaderModulesTracker _jsLoaderModulesTracker;
+	private JSLoaderConfigServlet _jsLoaderConfigServlet;
 
 	private ServiceRegistration<?> _serviceRegistration;
 
@@ -72,12 +69,12 @@ public class JSLoaderModulesPortalWebResources {
 
 		@Override
 		public long getLastModified() {
-			return _jsLoaderModulesTracker.getLastModified();
+			return System.currentTimeMillis();
 		}
 
 		@Override
 		public String getResourceType() {
-			return PortalWebResourceConstants.RESOURCE_TYPE_JS_LOADER_MODULES;
+			return PortalWebResourceConstants.RESOURCE_TYPE_JS_LOADER_CONFIG;
 		}
 
 		@Override

@@ -19,7 +19,6 @@ import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
-import org.osgi.service.component.annotations.Reference;
 
 import javax.servlet.Servlet;
 import javax.servlet.ServletConfig;
@@ -40,26 +39,26 @@ import java.util.Map;
 	configurationPid = "com.liferay.frontend.js.loader.modules.extender.internal.Details",
 	immediate = true,
 	property = {
-		"osgi.http.whiteboard.servlet.name=com.liferay.frontend.js.loader.modules.extender.internal.JSLoaderModulesServlet",
-		"osgi.http.whiteboard.servlet.pattern=/js_loader_modules",
+		"osgi.http.whiteboard.servlet.name=com.liferay.frontend.js.loader.modules.extender.internal.JSLoaderConfigServlet",
+		"osgi.http.whiteboard.servlet.pattern=/js_loader_config",
 		"service.ranking:Integer=" + Details.MAX_VALUE_LESS_1K
 	},
-	service = {JSLoaderModulesServlet.class, Servlet.class}
+	service = {JSLoaderConfigServlet.class, Servlet.class}
 )
-public class JSLoaderModulesServlet extends HttpServlet {
+public class JSLoaderConfigServlet extends HttpServlet {
 
 	@Override
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);
 
 		_componentContext.enableComponent(
-			JSLoaderModulesPortalWebResources.class.getName());
+			JSLoaderConfigPortalWebResources.class.getName());
 	}
 
 	@Activate
 	@Modified
 	protected void activate(
-		ComponentContext componentContext, Map<String, Object> properties)
+			ComponentContext componentContext, Map<String, Object> properties)
 		throws Exception {
 
 		_details = ConfigurableUtil.createConfigurable(
@@ -68,20 +67,9 @@ public class JSLoaderModulesServlet extends HttpServlet {
 		_componentContext = componentContext;
 	}
 
-	protected JSLoaderModulesTracker getJSLoaderModulesTracker() {
-		return _jsLoaderModulesTracker;
-	}
-
-	@Reference(unbind = "-")
-	protected void setJSLoaderModulesTracker(
-		JSLoaderModulesTracker jsLoaderModulesTracker) {
-
-		_jsLoaderModulesTracker = jsLoaderModulesTracker;
-	}
-
 	@Override
 	protected void service(
-		HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest request, HttpServletResponse response)
 		throws IOException {
 
 		StringWriter stringWriter = new StringWriter();
@@ -92,14 +80,14 @@ public class JSLoaderModulesServlet extends HttpServlet {
 
 		printWriter.println(
 			"Liferay.EXPLAIN_RESOLUTIONS = " + _details.explainResolutions() +
-			";\n");
+				";\n");
 
 		printWriter.println(
 			"Liferay.EXPOSE_GLOBAL = " + _details.exposeGlobal() + ";\n");
 
 		printWriter.println(
 			"Liferay.WAIT_TIMEOUT = " + (_details.waitTimeout() * 1000) +
-			";\n");
+				";\n");
 
 		printWriter.println("}());");
 
@@ -121,16 +109,12 @@ public class JSLoaderModulesServlet extends HttpServlet {
 
 		PrintWriter printWriter = new PrintWriter(servletOutputStream, true);
 
-		printWriter.write(_minifier.minify("/o/js_loader_modules", content));
+		printWriter.write(content);
 
 		printWriter.close();
 	}
 
 	private ComponentContext _componentContext;
 	private volatile Details _details;
-	private JSLoaderModulesTracker _jsLoaderModulesTracker;
-
-	@Reference
-	private Minifier _minifier;
 
 }

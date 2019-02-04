@@ -70,22 +70,24 @@ components:
         name:
           type: string
         objectReviewed:
-          description: https://www.schema.org/Object
-          properties:
-            id:
-              format: int64
-              type: integer
-            identifier:
-              format: uri
-              type: string
-            resourceType:
-              type: string
-          type: object
+         $ref: "#/components/schemas/ObjectReviewed"
         transitions:
           items:
             type: string
           type: array
       type: object
+    ObjectReviewed:
+      description: https://www.schema.org/ObjectReviewed
+      properties:
+        id:
+          format: int64
+          type: integer
+        identifier:
+          format: uri
+          type: string
+        resourceType:
+          type: string
+      type: object    
 info:
   description: ""
   title: ""
@@ -147,11 +149,6 @@ paths:
           name: per_page
           schema:
             type: integer
-        - in: path
-          name: generic-parent-id
-          required: true
-          schema:
-            type: object
       responses:
         200:
           content:

@@ -12,25 +12,27 @@
  * details.
  */
 
-package com.liferay.frontend.js.loader.modules.extender.internal;
+package com.liferay.frontend.js.loader.modules.extender.internal.config.generator;
 
 import aQute.bnd.osgi.Constants;
 
+import com.liferay.frontend.js.loader.modules.extender.internal.Details;
+import com.liferay.frontend.js.loader.modules.extender.npm.ModuleNameUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 
+import java.io.StringReader;
 import java.net.URL;
 
+import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.List;
 import java.util.Map;
@@ -48,9 +50,9 @@ import org.osgi.framework.wiring.BundleWiring;
 /**
  * @author Carlos Sierra Andrés
  */
-public class JSLoaderModule {
+public class JSConfigGeneratorPackage {
 
-	public JSLoaderModule(
+	public JSConfigGeneratorPackage(
 		boolean applyVersioning, Bundle bundle, String contextPath) {
 
 		_applyVersioning = applyVersioning;
@@ -81,6 +83,8 @@ public class JSLoaderModule {
 		URL url = _bundle.getEntry(Details.CONFIG_JSON);
 
 		urlToConfiguration(url, bundleWiring);
+
+		_setJSConfigGeneratorModules();
 	}
 
 	public String getContextPath() {
@@ -91,24 +95,20 @@ public class JSLoaderModule {
 		return _name;
 	}
 
-	public String getUnversionedConfiguration() {
-		return _unversionedConfiguration;
+	public String getConfiguration() {
+		return _configuration;
 	}
 
-	public String getUnversionedMapsConfiguration() {
-		return _unversionedMapsConfiguration;
+	public List<JSConfigGeneratorModule> getJSConfigGeneratorModules() {
+		return _jsConfigGeneratorModules;
 	}
 
 	public String getVersion() {
 		return _version;
 	}
 
-	public String getVersionedConfiguration() {
-		return _versionedConfiguration;
-	}
-
 	protected String generateConfiguration(
-		JSONObject jsonObject, BundleWiring bundleWiring,
+			JSONObject jsonObject, BundleWiring bundleWiring,
 		boolean versionedModuleName) {
 
 		if (!_applyVersioning) {
@@ -191,49 +191,6 @@ public class JSLoaderModule {
 		return jsonObject.toString();
 	}
 
-	protected String generateMapsConfiguration(
-		String configuration, String[] jsSubmodulesExport) {
-
-		boolean exportAll = ArrayUtil.contains(
-			jsSubmodulesExport, StringPool.STAR);
-
-		JSONObject mapsConfigurationJSONObject = new JSONObject();
-
-		JSONObject configurationJSONObject = new JSONObject(
-			"{" + configuration + "}");
-
-		JSONArray namesJSONArray = configurationJSONObject.names();
-
-		for (int i = 0; i < namesJSONArray.length(); i++) {
-			String name = (String)namesJSONArray.get(i);
-
-			int x = name.indexOf('/');
-
-			String moduleRootPath = name.substring(0, x + 1);
-
-			String submodulePath = name.substring(x + 1);
-
-			int y = submodulePath.indexOf('/');
-
-			if (y == -1) {
-				continue;
-			}
-
-			String submoduleName = submodulePath.substring(0, y);
-
-			if (exportAll ||
-				ArrayUtil.exists(
-					jsSubmodulesExport,
-					item -> _matchesWildcard(submoduleName, item))) {
-
-				mapsConfigurationJSONObject.put(
-					submoduleName, moduleRootPath.concat(submoduleName));
-			}
-		}
-
-		return mapsConfigurationJSONObject.toString();
-	}
-
 	protected String normalize(String jsonString) {
 		if (jsonString.startsWith("{") && jsonString.endsWith("}")) {
 			jsonString = jsonString.substring(1, jsonString.length() - 1);
@@ -280,51 +237,62 @@ public class JSLoaderModule {
 
 			JSONObject jsonObject = new JSONObject(jsonTokener);
 
-			_unversionedConfiguration = normalize(
+			_configuration = normalize(
 				generateConfiguration(jsonObject, bundleWiring, false));
-			_versionedConfiguration = normalize(
-				generateConfiguration(jsonObject, bundleWiring, true));
 
 			Dictionary<String, String> headers = _bundle.getHeaders(
 				StringPool.BLANK);
-
-			String jsSubmodulesExport = GetterUtil.getString(
-				headers.get("Liferay-JS-Submodules-Export"));
-
-			if (Validator.isNotNull(jsSubmodulesExport)) {
-				_unversionedMapsConfiguration = normalize(
-					generateMapsConfiguration(
-						_unversionedConfiguration,
-						StringUtil.split(jsSubmodulesExport)));
-
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Liferay-JS-Submodules-Export is deprecated and " +
-							"replaced with Liferay-JS-Submodules-Bridge");
-				}
-			}
 		}
 		catch (IOException ioe) {
 			throw new RuntimeException(ioe);
 		}
 	}
 
-	private boolean _matchesWildcard(String text, String pattern) {
-		pattern = StringUtil.replace(
-			pattern, new String[] {"?", "*"}, new String[] {".?", ".*"});
+	private JSONObject _parse(String json, boolean addBraces) {
+		if (addBraces) {
+			json = StringBundler.concat(
+				StringPool.OPEN_CURLY_BRACE, json,
+				StringPool.CLOSE_CURLY_BRACE);
+		}
 
-		return text.matches(pattern);
+		JSONTokener jsonTokener = new JSONTokener(new StringReader(json));
+
+		return new JSONObject(jsonTokener);
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(JSLoaderModule.class);
+	private void _setJSConfigGeneratorModules() {
+		JSONObject jsonObject = _parse(_configuration, true);
+
+		for (Object key : jsonObject.keySet()) {
+			String name = (String)key;
+
+			JSONObject moduleJSONObject = jsonObject.getJSONObject(name);
+
+			JSONArray jsonArray = moduleJSONObject.getJSONArray("dependencies");
+
+			List<String> dependencies = new ArrayList<>();
+
+			for (int i = 0; i < jsonArray.length(); i++) {
+				dependencies.add((String)jsonArray.get(i));
+			}
+
+			_jsConfigGeneratorModules.add(
+				new JSConfigGeneratorModule(
+					this, ModuleNameUtil.getPackagePath(name), dependencies,
+					_contextPath));
+		}
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		JSConfigGeneratorPackage.class);
 
 	private final boolean _applyVersioning;
 	private final Bundle _bundle;
 	private final String _contextPath;
 	private final String _name;
-	private String _unversionedConfiguration = "";
-	private String _unversionedMapsConfiguration = "";
+	private String _configuration = "";
+	private List<JSConfigGeneratorModule> _jsConfigGeneratorModules =
+		new ArrayList<>();
 	private final String _version;
-	private String _versionedConfiguration = "";
 
 }

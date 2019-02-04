@@ -1,7 +1,7 @@
 package com.liferay.frontend.js.loader.modules.extender.internal.adapter;
 
 
-import com.liferay.frontend.js.loader.modules.extender.internal.JSLoaderModule;
+import com.liferay.frontend.js.loader.modules.extender.internal.config.generator.JSConfigGeneratorPackage;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
@@ -22,7 +22,7 @@ import java.util.Set;
 public class JSLoaderModuleAdapter implements JSModuleAdapter {
 
 	public JSLoaderModuleAdapter(
-		JSLoaderModule module, Portal portal) {
+		JSConfigGeneratorPackage module, Portal portal) {
 		_module = module;
 		_portal = portal;
 
@@ -50,7 +50,7 @@ public class JSLoaderModuleAdapter implements JSModuleAdapter {
 	}
 
 	private void _initialize() {
-		String unversionedConfiguration = _module.getUnversionedConfiguration();
+		String unversionedConfiguration = _module.getConfiguration();
 
 		if (Validator.isNotNull(unversionedConfiguration)) {
 			try {
@@ -76,7 +76,7 @@ public class JSLoaderModuleAdapter implements JSModuleAdapter {
 			}
 		}
 	}
-	private final JSLoaderModule _module;
+	private final JSConfigGeneratorPackage _module;
 	private final Portal _portal;
 	private String _alias = StringPool.BLANK;
 	private Set<String> _dependencies = new HashSet<>();

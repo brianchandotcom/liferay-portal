@@ -42,6 +42,7 @@ page import="com.liferay.layout.admin.web.internal.display.context.DisplayPageDi
 page import="com.liferay.layout.admin.web.internal.display.context.DisplayPageManagementToolbarDisplayContext" %><%@
 page import="com.liferay.layout.admin.web.internal.display.context.LayoutPageTemplateCollectionsDisplayContext" %><%@
 page import="com.liferay.layout.admin.web.internal.display.context.LayoutPageTemplateDisplayContext" %><%@
+page import="com.liferay.layout.admin.web.internal.display.context.LayoutPageTemplateManagementToolbarDisplayContext" %><%@
 page import="com.liferay.layout.admin.web.internal.display.context.LayoutPrototypeDisplayContext" %><%@
 page import="com.liferay.layout.admin.web.internal.display.context.LayoutPrototypeManagementToolbarDisplayContext" %><%@
 page import="com.liferay.layout.admin.web.internal.display.context.LayoutsAdminDisplayContext" %><%@

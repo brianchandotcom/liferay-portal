@@ -14,7 +14,6 @@
 
 package com.liferay.layout.admin.web.internal.display.context;
 
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.item.selector.ItemSelector;
@@ -33,7 +32,6 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -91,22 +89,6 @@ public class LayoutPageTemplateDisplayContext {
 			WebKeys.THEME_DISPLAY);
 	}
 
-	public List<DropdownItem> geLayoutPageTemplateEntriesActionDropdownItems() {
-		return new DropdownItemList() {
-			{
-				add(
-					dropdownItem -> {
-						dropdownItem.putData(
-							"action", "deleteLayoutPageTemplateEntries");
-						dropdownItem.setIcon("times-circle");
-						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "delete"));
-						dropdownItem.setQuickAction(true);
-					});
-			}
-		};
-	}
-
 	public List<DropdownItem> getActionDropdownItems() {
 		return new DropdownItemList() {
 			{
@@ -124,14 +106,6 @@ public class LayoutPageTemplateDisplayContext {
 		};
 	}
 
-	public String getClearResultsURL() {
-		PortletURL clearResultsURL = getPortletURL();
-
-		clearResultsURL.setParameter("keywords", StringPool.BLANK);
-
-		return clearResultsURL.toString();
-	}
-
 	public List<DropdownItem> getCollectionsDropdownItems() throws Exception {
 		return new DropdownItemList() {
 			{
@@ -147,36 +121,6 @@ public class LayoutPageTemplateDisplayContext {
 								LanguageUtil.get(_request, "delete"));
 						});
 				}
-			}
-		};
-	}
-
-	public CreationMenu getCreationMenu() {
-		return new CreationMenu() {
-			{
-				addPrimaryDropdownItem(
-					dropdownItem -> {
-						dropdownItem.putData(
-							"action", "addLayoutPageTemplateEntry");
-						dropdownItem.putData(
-							"addPageTemplateURL",
-							_getAddLayoutPageTemplateEntryURL());
-						dropdownItem.setHref("#");
-						dropdownItem.setLabel(
-							LanguageUtil.get(
-								_request, "content-page-template"));
-					});
-
-				addPrimaryDropdownItem(
-					dropdownItem -> {
-						dropdownItem.putData(
-							"action", "addLayoutPageTemplateEntry");
-						dropdownItem.putData(
-							"addPageTemplateURL", _getAddLayoutPrototypeURL());
-						dropdownItem.setHref("#");
-						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "widget-page-template"));
-					});
 			}
 		};
 	}
@@ -211,28 +155,6 @@ public class LayoutPageTemplateDisplayContext {
 			layout, themeDisplay);
 
 		return HttpUtil.setParameter(layoutFullURL, "p_l_mode", Constants.EDIT);
-	}
-
-	public List<DropdownItem> getFilterDropdownItems() {
-		return new DropdownItemList() {
-			{
-				addGroup(
-					dropdownGroupItem -> {
-						dropdownGroupItem.setDropdownItems(
-							_getFilterNavigationDropdownItems());
-						dropdownGroupItem.setLabel(
-							LanguageUtil.get(_request, "filter-by-navigation"));
-					});
-
-				addGroup(
-					dropdownGroupItem -> {
-						dropdownGroupItem.setDropdownItems(
-							_getOrderByDropdownItems());
-						dropdownGroupItem.setLabel(
-							LanguageUtil.get(_request, "order-by"));
-					});
-			}
-		};
 	}
 
 	public PortletURL getItemSelectorURL(long layoutPageTemplateEntryId) {
@@ -429,17 +351,6 @@ public class LayoutPageTemplateDisplayContext {
 		return _layoutPageTemplateEntryId;
 	}
 
-	public String getLayoutPageTemplateEntryTitle() throws PortalException {
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			getLayoutPageTemplateEntry();
-
-		if (layoutPageTemplateEntry == null) {
-			return LanguageUtil.get(_request, "add-page-template");
-		}
-
-		return layoutPageTemplateEntry.getName();
-	}
-
 	public LayoutPrototype getLayoutPrototype(
 			LayoutPageTemplateEntry layoutPageTemplateEntry)
 		throws PortalException {
@@ -505,29 +416,6 @@ public class LayoutPageTemplateDisplayContext {
 		return portletURL;
 	}
 
-	public String getSearchActionURL() {
-		PortletURL searchActionURL = getPortletURL();
-
-		return searchActionURL.toString();
-	}
-
-	public String getSortingURL() {
-		PortletURL sortingURL = getPortletURL();
-
-		sortingURL.setParameter(
-			"orderByType",
-			Objects.equals(getOrderByType(), "asc") ? "desc" : "asc");
-
-		return sortingURL.toString();
-	}
-
-	public int getTotalItems() {
-		SearchContainer layoutPageTemplateEntriesSearchContainer =
-			getLayoutPageTemplateEntriesSearchContainer();
-
-		return layoutPageTemplateEntriesSearchContainer.getTotal();
-	}
-
 	public Map<String, Object> getUpdateLayoutPageTemplateEntryData(
 			LayoutPageTemplateEntry layoutPageTemplateEntry)
 		throws PortalException {
@@ -565,28 +453,6 @@ public class LayoutPageTemplateDisplayContext {
 		return updateLayoutPageTemplateEntryData;
 	}
 
-	public boolean isDisabledLayoutPageTemplateEntriesManagementBar() {
-		if (_hasLayoutPageTemplateEntriesResults()) {
-			return false;
-		}
-
-		return true;
-	}
-
-	public boolean isDisplayPage() throws PortalException {
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			getLayoutPageTemplateEntry();
-
-		if (Objects.equals(
-				layoutPageTemplateEntry.getType(),
-				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
 	public boolean isSearch() {
 		if (Validator.isNotNull(getKeywords())) {
 			return true;
@@ -604,87 +470,6 @@ public class LayoutPageTemplateDisplayContext {
 		}
 
 		return false;
-	}
-
-	public boolean isShowLayoutPageTemplateEntriesSearch() {
-		if (_hasLayoutPageTemplateEntriesResults()) {
-			return true;
-		}
-
-		if (isSearch()) {
-			return true;
-		}
-
-		return false;
-	}
-
-	private String _getAddLayoutPageTemplateEntryURL() {
-		PortletURL actionURL = _renderResponse.createActionURL();
-
-		actionURL.setParameter(
-			ActionRequest.ACTION_NAME,
-			"/layout/add_layout_page_template_entry");
-		actionURL.setParameter(
-			"mvcRenderCommandName", "/layout/edit_layout_page_template_entry");
-		actionURL.setParameter("redirect", _themeDisplay.getURLCurrent());
-		actionURL.setParameter(
-			"layoutPageTemplateCollectionId",
-			String.valueOf(getLayoutPageTemplateCollectionId()));
-
-		return actionURL.toString();
-	}
-
-	private String _getAddLayoutPrototypeURL() {
-		PortletURL actionURL = _renderResponse.createActionURL();
-
-		actionURL.setParameter(
-			ActionRequest.ACTION_NAME,
-			"/layout_prototype/add_layout_prototype");
-		actionURL.setParameter(
-			"layoutPageTemplateCollectionId",
-			String.valueOf(getLayoutPageTemplateCollectionId()));
-
-		return actionURL.toString();
-	}
-
-	private List<DropdownItem> _getFilterNavigationDropdownItems() {
-		return new DropdownItemList() {
-			{
-				add(
-					dropdownItem -> {
-						dropdownItem.setActive(true);
-						dropdownItem.setHref(getPortletURL());
-						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "all"));
-					});
-			}
-		};
-	}
-
-	private List<DropdownItem> _getOrderByDropdownItems() {
-		return new DropdownItemList() {
-			{
-				add(
-					dropdownItem -> {
-						dropdownItem.setActive(
-							Objects.equals(getOrderByCol(), "create-date"));
-						dropdownItem.setHref(
-							getPortletURL(), "orderByCol", "create-date");
-						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "create-date"));
-					});
-
-				add(
-					dropdownItem -> {
-						dropdownItem.setActive(
-							Objects.equals(getOrderByCol(), "name"));
-						dropdownItem.setHref(
-							getPortletURL(), "orderByCol", "name");
-						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "name"));
-					});
-			}
-		};
 	}
 
 	private String _getUpdateLayoutPageTemplateEntryURL(
@@ -725,17 +510,6 @@ public class LayoutPageTemplateDisplayContext {
 			String.valueOf(layoutPrototype.getLayoutPrototypeId()));
 
 		return updateLayoutPrototypeURL.toString();
-	}
-
-	private boolean _hasLayoutPageTemplateEntriesResults() {
-		SearchContainer searchContainer =
-			getLayoutPageTemplateEntriesSearchContainer();
-
-		if (searchContainer.getTotal() > 0) {
-			return true;
-		}
-
-		return false;
 	}
 
 	private final ItemSelector _itemSelector;

@@ -23,20 +23,7 @@ request.setAttribute(LayoutAdminWebKeys.LAYOUT_PAGE_TEMPLATE_DISPLAY_CONTEXT, la
 %>
 
 <clay:management-toolbar
-	actionDropdownItems="<%= layoutPageTemplateDisplayContext.geLayoutPageTemplateEntriesActionDropdownItems() %>"
-	clearResultsURL="<%= layoutPageTemplateDisplayContext.getClearResultsURL() %>"
-	componentId="layoutPageTemplateEntriesManagementToolbar"
-	creationMenu="<%= layoutPageTemplateDisplayContext.getCreationMenu() %>"
-	disabled="<%= layoutPageTemplateDisplayContext.isDisabledLayoutPageTemplateEntriesManagementBar() %>"
-	filterDropdownItems="<%= layoutPageTemplateDisplayContext.getFilterDropdownItems() %>"
-	itemsTotal="<%= layoutPageTemplateDisplayContext.getTotalItems() %>"
-	searchActionURL="<%= layoutPageTemplateDisplayContext.getSearchActionURL() %>"
-	searchContainerId="layoutPageTemplateEntries"
-	searchFormName="searchFm"
-	showCreationMenu="<%= layoutPageTemplateDisplayContext.isShowAddButton(LayoutPageTemplateActionKeys.ADD_LAYOUT_PAGE_TEMPLATE_ENTRY) %>"
-	showSearch="<%= layoutPageTemplateDisplayContext.isShowLayoutPageTemplateEntriesSearch() %>"
-	sortingOrder="<%= layoutPageTemplateDisplayContext.getOrderByType() %>"
-	sortingURL="<%= layoutPageTemplateDisplayContext.getSortingURL() %>"
+	displayContext="<%= new LayoutPageTemplateManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, layoutPageTemplateDisplayContext) %>"
 />
 
 <portlet:actionURL name="/layout/delete_layout_page_template_entry" var="deleteLayoutPageTemplateEntryURL">

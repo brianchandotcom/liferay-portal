@@ -446,10 +446,12 @@
 
 		<column name="structureVersionId" type="long" />
 		<column name="definition" type="String" />
+		<column localized="true" name="description" type="String" />
+		<column localized="true" name="name" type="String" />
 
 		<!-- Finder methods -->
 
-		<finder name="StructureVersionId" return-type="DDMStructureLayout" unique="true">
+		<finder name="StructureVersionId" return-type="DDMStructureLayout">
 			<finder-column name="structureVersionId" />
 		</finder>
 

@@ -18,6 +18,9 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchCon
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemList;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -27,6 +30,8 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
+
+import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -45,6 +50,8 @@ public class LayoutPrototypeManagementToolbarDisplayContext
 		super(
 			liferayPortletRequest, liferayPortletResponse, request,
 			layoutPrototypeDisplayContext.getSearchContainer());
+
+		_layoutPrototypeDisplayContext = layoutPrototypeDisplayContext;
 	}
 
 	@Override
@@ -62,6 +69,15 @@ public class LayoutPrototypeManagementToolbarDisplayContext
 					});
 			}
 		};
+	}
+
+	@Override
+	public String getClearResultsURL() {
+		PortletURL clearResultsURL = getPortletURL();
+
+		clearResultsURL.setParameter("navigation", StringPool.BLANK);
+
+		return clearResultsURL.toString();
 	}
 
 	@Override
@@ -87,6 +103,32 @@ public class LayoutPrototypeManagementToolbarDisplayContext
 	@Override
 	public String getDefaultEventHandler() {
 		return "LAYOUT_PROTOTYPE_MANAGEMENT_TOOLBAR_DEFAULT_EVENT_HANDLER";
+	}
+
+	@Override
+	public List<LabelItem> getFilterLabelItems() {
+		Boolean active = _layoutPrototypeDisplayContext.getActive();
+
+		return new LabelItemList() {
+			{
+				if (active != null) {
+					if (active) {
+						add(
+							labelItem -> {
+								labelItem.setLabel(
+									LanguageUtil.get(request, "active"));
+							});
+					}
+					else {
+						add(
+							labelItem -> {
+								labelItem.setLabel(
+									LanguageUtil.get(request, "inactive"));
+							});
+					}
+				}
+			}
+		};
 	}
 
 	@Override
@@ -118,5 +160,7 @@ public class LayoutPrototypeManagementToolbarDisplayContext
 	protected String[] getOrderByKeys() {
 		return new String[] {"create-date"};
 	}
+
+	private final LayoutPrototypeDisplayContext _layoutPrototypeDisplayContext;
 
 }

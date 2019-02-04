@@ -102,7 +102,7 @@ components:
           type: string
       type: object
     FormStructure:
-      description: https://www.schema.org/Structure
+      description: https://www.schema.org/FormStructure
       properties:
         availableLanguages:
           items:
@@ -390,8 +390,8 @@ paths:
           schema:
             format: int64
             type: integer
-        - in: query
-          name: acceptlocale
+        - in: header
+          name: Accept-Language
           schema:
             type: string
       requestBody:
@@ -534,8 +534,8 @@ paths:
           schema:
             format: int64
             type: integer
-        - in: query
-          name: acceptlocale
+        - in: header
+          name: Accept-Language
           schema:
             type: string
       requestBody:
@@ -559,8 +559,8 @@ paths:
           schema:
             format: int64
             type: integer
-        - in: query
-          name: acceptlocale
+        - in: header
+          name: Accept-Language
           schema:
             type: string
       requestBody:

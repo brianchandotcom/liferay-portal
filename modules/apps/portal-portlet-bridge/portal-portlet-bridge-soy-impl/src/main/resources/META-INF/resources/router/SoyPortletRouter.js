@@ -151,9 +151,8 @@ class SoyPortletRouter extends State {
 							this.router.component = component;
 
 							resolve();
-						},
-						error => reject(error)
-					);
+						}
+					)
 				});
 
 				return deferred.then(() => super.flip());

@@ -21,14 +21,7 @@ LayoutPageTemplateCollectionsDisplayContext layoutPageTemplateCollectionsDisplay
 %>
 
 <clay:management-toolbar
-	clearResultsURL="<%= layoutPageTemplateCollectionsDisplayContext.getClearResultsURL() %>"
-	filterDropdownItems="<%= layoutPageTemplateCollectionsDisplayContext.getFilterItemsDropdownItems() %>"
-	itemsTotal="<%= layoutPageTemplateCollectionsDisplayContext.getTotalItems() %>"
-	searchActionURL="<%= layoutPageTemplateCollectionsDisplayContext.getSearchActionURL() %>"
-	searchContainerId="layoutPageTemplateCollections"
-	searchFormName="searchFm"
-	sortingOrder="<%= layoutPageTemplateCollectionsDisplayContext.getOrderByType() %>"
-	sortingURL="<%= layoutPageTemplateCollectionsDisplayContext.getSortingURL() %>"
+	displayContext="<%= new LayoutPageTemplateCollectionsManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, layoutPageTemplateCollectionsDisplayContext) %>"
 />
 
 <aui:form cssClass="container-fluid-1280" name="fm">

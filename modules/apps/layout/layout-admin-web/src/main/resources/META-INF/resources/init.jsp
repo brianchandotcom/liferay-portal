@@ -41,6 +41,7 @@ page import="com.liferay.layout.admin.web.internal.constants.LayoutAdminWebKeys"
 page import="com.liferay.layout.admin.web.internal.display.context.DisplayPageDisplayContext" %><%@
 page import="com.liferay.layout.admin.web.internal.display.context.DisplayPageManagementToolbarDisplayContext" %><%@
 page import="com.liferay.layout.admin.web.internal.display.context.LayoutPageTemplateCollectionsDisplayContext" %><%@
+page import="com.liferay.layout.admin.web.internal.display.context.LayoutPageTemplateCollectionsManagementToolbarDisplayContext" %><%@
 page import="com.liferay.layout.admin.web.internal.display.context.LayoutPageTemplateDisplayContext" %><%@
 page import="com.liferay.layout.admin.web.internal.display.context.LayoutPageTemplateManagementToolbarDisplayContext" %><%@
 page import="com.liferay.layout.admin.web.internal.display.context.LayoutPrototypeDisplayContext" %><%@

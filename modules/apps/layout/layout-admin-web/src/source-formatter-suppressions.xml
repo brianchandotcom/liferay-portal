@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<source-check>
+		<suppress checks="JavaLongLinesCheck" files="src/main/java/com/liferay/layout/admin/web/internal/servlet/taglib/util/LayoutPageTemplateEntryActionDropdownItemsProvider.java" />
+	</source-check>
+</suppressions>

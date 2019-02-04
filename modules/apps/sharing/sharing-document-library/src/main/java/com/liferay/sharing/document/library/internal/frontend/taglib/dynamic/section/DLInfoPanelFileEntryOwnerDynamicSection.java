@@ -64,7 +64,7 @@ public class DLInfoPanelFileEntryOwnerDynamicSection implements DynamicSection {
 			WebKeys.THEME_DISPLAY);
 
 		SharingConfiguration sharingConfiguration =
-			_sharingConfigurationFactory.getSharingConfiguration(
+			_sharingConfigurationFactory.getGroupSharingConfiguration(
 				themeDisplay.getSiteGroup());
 
 		if (!sharingConfiguration.isEnabled()) {

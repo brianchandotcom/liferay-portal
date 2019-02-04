@@ -119,7 +119,7 @@ public class SharingEntryDLFileEntryModelResourcePermissionRegistrar {
 			}
 
 			SharingConfiguration sharingConfiguration =
-				_sharingConfigurationFactory.getSharingConfiguration(
+				_sharingConfigurationFactory.getGroupSharingConfiguration(
 					_groupLocalService.getGroup(dlFileEntry.getGroupId()));
 
 			if (!sharingConfiguration.isEnabled()) {

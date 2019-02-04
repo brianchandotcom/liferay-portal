@@ -64,7 +64,7 @@ public class AssetAutoTaggerOSGiCommands {
 	public void tagAllUntagged(String companyId, String... classNames) {
 		AssetAutoTaggerConfiguration assetAutoTaggerConfiguration =
 			_assetAutoTaggerConfigurationFactory.
-				getAssetAutoTaggerConfiguration();
+				getSystemAssetAutoTaggerConfiguration();
 
 		if (!assetAutoTaggerConfiguration.isEnabled()) {
 			System.out.println("Asset auto tagger is disabled");

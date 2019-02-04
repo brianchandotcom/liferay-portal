@@ -42,7 +42,7 @@ public class SharingConfigurationFactoryImpl
 	implements SharingConfigurationFactory {
 
 	@Override
-	public SharingConfiguration getSharingConfiguration(Group group) {
+	public SharingConfiguration getGroupSharingConfiguration(Group group) {
 		try {
 			SharingCompanyConfiguration sharingCompanyConfiguration =
 				_configurationProvider.getConfiguration(

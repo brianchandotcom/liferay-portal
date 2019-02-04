@@ -100,7 +100,7 @@ public class
 	public boolean isVisible(User user, Company company) {
 		AssetAutoTaggerConfiguration assetAutoTaggerConfiguration =
 			_assetAutoTaggerConfigurationFactory.
-				getAssetAutoTaggerConfiguration(company);
+				getCompanyAssetAutoTaggerConfiguration(company);
 
 		return assetAutoTaggerConfiguration.isEnabled();
 	}

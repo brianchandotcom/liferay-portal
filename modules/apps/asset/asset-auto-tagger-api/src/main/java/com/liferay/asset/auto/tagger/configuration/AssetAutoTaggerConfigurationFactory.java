@@ -22,12 +22,12 @@ import com.liferay.portal.kernel.model.Group;
  */
 public interface AssetAutoTaggerConfigurationFactory {
 
-	public AssetAutoTaggerConfiguration getAssetAutoTaggerConfiguration();
-
-	public AssetAutoTaggerConfiguration getAssetAutoTaggerConfiguration(
+	public AssetAutoTaggerConfiguration getCompanyAssetAutoTaggerConfiguration(
 		Company company);
 
-	public AssetAutoTaggerConfiguration getAssetAutoTaggerConfiguration(
+	public AssetAutoTaggerConfiguration getGroupAssetAutoTaggerConfiguration(
 		Group group);
+
+	public AssetAutoTaggerConfiguration getSystemAssetAutoTaggerConfiguration();
 
 }

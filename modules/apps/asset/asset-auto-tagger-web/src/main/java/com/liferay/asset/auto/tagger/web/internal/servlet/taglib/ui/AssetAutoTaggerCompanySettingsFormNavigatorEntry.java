@@ -80,7 +80,8 @@ public class AssetAutoTaggerCompanySettingsFormNavigatorEntry
 		request.setAttribute(
 			AssetAutoTaggerConfiguration.class.getName(),
 			_assetAutoTaggerConfigurationFactory.
-				getAssetAutoTaggerConfiguration(themeDisplay.getCompany()));
+				getCompanyAssetAutoTaggerConfiguration(
+					themeDisplay.getCompany()));
 
 		super.include(request, response);
 	}
@@ -89,7 +90,7 @@ public class AssetAutoTaggerCompanySettingsFormNavigatorEntry
 	public boolean isVisible(User user, Company company) {
 		AssetAutoTaggerConfiguration assetAutoTaggerConfiguration =
 			_assetAutoTaggerConfigurationFactory.
-				getAssetAutoTaggerConfiguration(company);
+				getCompanyAssetAutoTaggerConfiguration(company);
 
 		return assetAutoTaggerConfiguration.isAvailable();
 	}

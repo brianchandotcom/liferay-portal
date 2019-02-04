@@ -77,7 +77,7 @@ public class AssetAutoTaggerSitesFormNavigatorEntry
 		request.setAttribute(
 			AssetAutoTaggerConfiguration.class.getName(),
 			_assetAutoTaggerConfigurationFactory.
-				getAssetAutoTaggerConfiguration(liveGroup));
+				getGroupAssetAutoTaggerConfiguration(liveGroup));
 
 		super.include(request, response);
 	}
@@ -86,7 +86,7 @@ public class AssetAutoTaggerSitesFormNavigatorEntry
 	public boolean isVisible(User user, Group group) {
 		AssetAutoTaggerConfiguration assetAutoTaggerConfiguration =
 			_assetAutoTaggerConfigurationFactory.
-				getAssetAutoTaggerConfiguration(group);
+				getGroupAssetAutoTaggerConfiguration(group);
 
 		return assetAutoTaggerConfiguration.isAvailable();
 	}

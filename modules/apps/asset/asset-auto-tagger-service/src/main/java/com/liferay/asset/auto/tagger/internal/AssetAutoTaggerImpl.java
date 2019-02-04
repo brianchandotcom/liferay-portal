@@ -202,7 +202,7 @@ public class AssetAutoTaggerImpl implements AssetAutoTagger {
 		throws PortalException {
 
 		return _assetAutoTaggerConfigurationFactory.
-			getAssetAutoTaggerConfiguration(
+			getGroupAssetAutoTaggerConfiguration(
 				_groupLocalService.getGroup(assetEntry.getGroupId()));
 	}
 

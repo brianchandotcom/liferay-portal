@@ -112,7 +112,7 @@ public class DLFileEntrySharingPermissionSQLContributor
 
 	private SharingConfiguration _getSharingConfiguration(long groupId) {
 		try {
-			return _sharingConfigurationFactory.getSharingConfiguration(
+			return _sharingConfigurationFactory.getGroupSharingConfiguration(
 				_groupLocalService.getGroup(groupId));
 		}
 		catch (PortalException pe) {

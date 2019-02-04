@@ -49,6 +49,10 @@ public abstract class BaseTranslationManagerTag extends com.liferay.taglib.util.
 		return _editingLanguageId;
 	}
 
+	public long getGroupId() {
+		return _groupId;
+	}
+
 	public java.lang.String getId() {
 		return _id;
 	}
@@ -77,6 +81,10 @@ public abstract class BaseTranslationManagerTag extends com.liferay.taglib.util.
 		_editingLanguageId = editingLanguageId;
 	}
 
+	public void setGroupId(long groupId) {
+		_groupId = groupId;
+	}
+
 	public void setId(java.lang.String id) {
 		_id = id;
 	}
@@ -97,6 +105,7 @@ public abstract class BaseTranslationManagerTag extends com.liferay.taglib.util.
 		_changeableDefaultLanguage = true;
 		_defaultLanguageId = null;
 		_editingLanguageId = null;
+		_groupId = 0;
 		_id = null;
 		_initialize = true;
 		_readOnly = false;
@@ -109,13 +118,14 @@ public abstract class BaseTranslationManagerTag extends com.liferay.taglib.util.
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute("aui:translation-manager:availableLocales", _availableLocales);
-		request.setAttribute("aui:translation-manager:changeableDefaultLanguage", String.valueOf(_changeableDefaultLanguage));
-		request.setAttribute("aui:translation-manager:defaultLanguageId", _defaultLanguageId);
-		request.setAttribute("aui:translation-manager:editingLanguageId", _editingLanguageId);
-		request.setAttribute("aui:translation-manager:id", _id);
-		request.setAttribute("aui:translation-manager:initialize", String.valueOf(_initialize));
-		request.setAttribute("aui:translation-manager:readOnly", String.valueOf(_readOnly));
+		setNamespacedAttribute(request, "availableLocales", _availableLocales);
+		setNamespacedAttribute(request, "changeableDefaultLanguage", _changeableDefaultLanguage);
+		setNamespacedAttribute(request, "defaultLanguageId", _defaultLanguageId);
+		setNamespacedAttribute(request, "editingLanguageId", _editingLanguageId);
+		setNamespacedAttribute(request, "groupId", _groupId);
+		setNamespacedAttribute(request, "id", _id);
+		setNamespacedAttribute(request, "initialize", _initialize);
+		setNamespacedAttribute(request, "readOnly", _readOnly);
 	}
 
 	protected static final String _ATTRIBUTE_NAMESPACE = "aui:translation-manager:";
@@ -127,6 +137,7 @@ public abstract class BaseTranslationManagerTag extends com.liferay.taglib.util.
 	private boolean _changeableDefaultLanguage = true;
 	private java.lang.String _defaultLanguageId = null;
 	private java.lang.String _editingLanguageId = null;
+	private long _groupId = 0;
 	private java.lang.String _id = null;
 	private boolean _initialize = true;
 	private boolean _readOnly = false;

@@ -1562,6 +1562,13 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description><![CDATA[The group ID of the site.]]></description>
+			<name>groupId</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>long</type>
+		</attribute>
+		<attribute>
 			<description><![CDATA[An ID for the component instance.]]></description>
 			<name>id</name>
 			<required>false</required>

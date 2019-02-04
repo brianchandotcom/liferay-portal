@@ -23,6 +23,7 @@ java.util.Locale[] availableLocales = (java.util.Locale[])request.getAttribute("
 boolean changeableDefaultLanguage = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:translation-manager:changeableDefaultLanguage")), true);
 java.lang.String defaultLanguageId = GetterUtil.getString((java.lang.String)request.getAttribute("aui:translation-manager:defaultLanguageId"));
 java.lang.String editingLanguageId = GetterUtil.getString((java.lang.String)request.getAttribute("aui:translation-manager:editingLanguageId"));
+long groupId = GetterUtil.getLong(String.valueOf(request.getAttribute("aui:translation-manager:groupId")));
 java.lang.String id = GetterUtil.getString((java.lang.String)request.getAttribute("aui:translation-manager:id"));
 boolean initialize = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:translation-manager:initialize")), true);
 boolean readOnly = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:translation-manager:readOnly")));

@@ -15,16 +15,22 @@
 package com.liferay.site.my.sites.web.internal.servlet.taglib.clay;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.VerticalCard;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.site.my.sites.web.internal.constants.MySitesWebKeys;
+import com.liferay.site.my.sites.web.internal.servlet.taglib.util.SiteActionDropdownItemsProvider;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 
 import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -34,9 +40,11 @@ import javax.servlet.http.HttpServletRequest;
 public class SiteVerticalCard implements VerticalCard {
 
 	public SiteVerticalCard(
-		BaseModel<?> baseModel, RenderRequest renderRequest, String tabs1,
-		int groupUsersCount) {
+		BaseModel<?> baseModel, RenderRequest renderRequest,
+		RenderResponse renderResponse, String tabs1, int groupUsersCount) {
 
+		_renderRequest = renderRequest;
+		_renderResponse = renderResponse;
 		_tabs1 = tabs1;
 		_groupUsersCount = groupUsersCount;
 
@@ -44,6 +52,26 @@ public class SiteVerticalCard implements VerticalCard {
 		_request = PortalUtil.getHttpServletRequest(renderRequest);
 		_themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+	}
+
+	@Override
+	public List<DropdownItem> getActionDropdownItems() {
+		try {
+			SiteActionDropdownItemsProvider siteActionDropdownItemsProvider =
+				new SiteActionDropdownItemsProvider(
+					_group, _renderRequest, _renderResponse, _tabs1);
+
+			return siteActionDropdownItemsProvider.getActionDropdownItems();
+		}
+		catch (Exception e) {
+		}
+
+		return Collections.emptyList();
+	}
+
+	@Override
+	public String getDefaultEventHandler() {
+		return MySitesWebKeys.SITES_DROPDOWN_DEFAULT_EVENT_HANDLER;
 	}
 
 	@Override
@@ -94,6 +122,8 @@ public class SiteVerticalCard implements VerticalCard {
 
 	private final Group _group;
 	private final int _groupUsersCount;
+	private final RenderRequest _renderRequest;
+	private final RenderResponse _renderResponse;
 	private final HttpServletRequest _request;
 	private final String _tabs1;
 	private final ThemeDisplay _themeDisplay;

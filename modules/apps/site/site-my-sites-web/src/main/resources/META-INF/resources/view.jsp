@@ -107,9 +107,12 @@
 						</c:if>
 					</liferay-ui:search-container-column-text>
 
-					<liferay-ui:search-container-column-jsp
-						path="/site_action.jsp"
-					/>
+					<liferay-ui:search-container-column-text>
+						<clay:dropdown-actions
+							defaultEventHandler="<%= MySitesWebKeys.SITES_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
+							dropdownItems="<%= siteMySitesDisplayContext.getArticleActionDropdownItems(group) %>"
+						/>
+					</liferay-ui:search-container-column-text>
 				</c:when>
 				<c:when test='<%= Objects.equals(siteMySitesDisplayContext.getDisplayStyle(), "icon") %>'>
 
@@ -119,7 +122,7 @@
 
 					<liferay-ui:search-container-column-text>
 						<clay:vertical-card
-							verticalCard="<%= new SiteVerticalCard(group, renderRequest, siteMySitesDisplayContext.getTabs1(), siteMySitesDisplayContext.getGroupUsersCounts(group.getGroupId())) %>"
+							verticalCard="<%= new SiteVerticalCard(group, renderRequest, renderResponse, siteMySitesDisplayContext.getTabs1(), siteMySitesDisplayContext.getGroupUsersCounts(group.getGroupId())) %>"
 						/>
 					</liferay-ui:search-container-column-text>
 				</c:when>
@@ -168,9 +171,12 @@
 						/>
 					</liferay-ui:search-container-column-text>
 
-					<liferay-ui:search-container-column-jsp
-						path="/site_action.jsp"
-					/>
+					<liferay-ui:search-container-column-text>
+						<clay:dropdown-actions
+							defaultEventHandler="<%= MySitesWebKeys.SITES_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
+							dropdownItems="<%= siteMySitesDisplayContext.getArticleActionDropdownItems(group) %>"
+						/>
+					</liferay-ui:search-container-column-text>
 				</c:when>
 			</c:choose>
 		</liferay-ui:search-container-row>
@@ -181,3 +187,18 @@
 		/>
 	</liferay-ui:search-container>
 </aui:form>
+
+<aui:script require='<%= npmResolvedPackageName + "/js/SiteDropdownDefaultEventHandler.es as SiteDropdownDefaultEventHandler" %>'>
+	Liferay.component(
+		'<%= MySitesWebKeys.SITES_DROPDOWN_DEFAULT_EVENT_HANDLER %>',
+		new SiteDropdownDefaultEventHandler.default(
+			{
+				namespace: '<portlet:namespace />'
+			}
+		),
+		{
+			destroyOnNavigate: true,
+			portletId: '<%= HtmlUtil.escapeJS(portletDisplay.getId()) %>'
+		}
+	);
+</aui:script>

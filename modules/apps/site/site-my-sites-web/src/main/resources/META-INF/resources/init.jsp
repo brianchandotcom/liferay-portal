@@ -26,23 +26,18 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.petra.string.StringPool" %><%@
-page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@
 page import="com.liferay.portal.kernel.exception.MembershipRequestCommentsException" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.model.Group" %><%@
-page import="com.liferay.portal.kernel.model.GroupConstants" %><%@
 page import="com.liferay.portal.kernel.model.MembershipRequest" %><%@
-page import="com.liferay.portal.kernel.model.MembershipRequestConstants" %><%@
-page import="com.liferay.portal.kernel.security.membershippolicy.SiteMembershipPolicyUtil" %><%@
 page import="com.liferay.portal.kernel.service.GroupLocalServiceUtil" %><%@
-page import="com.liferay.portal.kernel.service.LayoutServiceUtil" %><%@
-page import="com.liferay.portal.kernel.service.MembershipRequestLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.liveusers.LiveUsers" %><%@
 page import="com.liferay.portal.util.PropsValues" %><%@
+page import="com.liferay.site.my.sites.web.internal.constants.MySitesWebKeys" %><%@
 page import="com.liferay.site.my.sites.web.internal.display.context.SiteMySitesDisplayContext" %><%@
 page import="com.liferay.site.my.sites.web.internal.display.context.SiteMySitesManagementToolbarDisplayContext" %><%@
 page import="com.liferay.site.my.sites.web.internal.servlet.taglib.clay.SiteVerticalCard" %>

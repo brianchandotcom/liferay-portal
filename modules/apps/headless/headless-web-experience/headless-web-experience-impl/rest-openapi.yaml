@@ -186,6 +186,7 @@ components:
             label:
               type: string
             link:
+              format: uri
               type: string
             name:
               type: string

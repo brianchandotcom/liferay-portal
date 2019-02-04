@@ -24,6 +24,7 @@ components:
           description: https://www.schema.org/ImageObject
           properties:
             contentUrl:
+              format: uri
               type: string
             height:
               type: number
@@ -44,6 +45,7 @@ components:
           format: uri
           type: string
         contentUrl:
+          format: uri
           type: string
         creator:
           format: uri

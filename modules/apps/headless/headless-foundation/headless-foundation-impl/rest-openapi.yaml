@@ -155,6 +155,7 @@ components:
               type: string
           type: object
         logo:
+          format: uri
           type: string
         members:
           $ref: "#/components/schemas/UserAccount"
@@ -322,6 +323,7 @@ components:
           format: int64
           type: integer
         image:
+          format: uri
           type: string
         jobTitle:
           type: string

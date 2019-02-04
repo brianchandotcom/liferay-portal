@@ -61,10 +61,6 @@ else {
 		function(event) {
 			event.preventDefault();
 
-			var currentTarget = $(event.currentTarget);
-
-			url = Util.addParams('<portlet:namespace />themeId=' + selThemeId, '<%= selectThemeURL %>');
-
 			Util.selectEntity(
 				{
 					dialog: {
@@ -74,7 +70,7 @@ else {
 					},
 					eventName: '<portlet:namespace />selectTheme',
 					title: '<liferay-ui:message key="available-themes" />',
-					uri: url
+					uri: Util.addParams('<portlet:namespace />themeId=' + selThemeId, '<%= selectThemeURL %>')
 				},
 				function(event) {
 					var selectedItem = event.themeid;

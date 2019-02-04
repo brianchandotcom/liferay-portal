@@ -14,60 +14,58 @@
  */
 --%>
 
-<div>
-	<c:if test="<%= exceptionLocale != null %>">
-		<liferay-ui:icon
-			image='<%= "../language/" + LocaleUtil.toLanguageId(exceptionLocale) %>'
-			lang="<%= LocaleUtil.toW3cLanguageId(exceptionLocale) %>"
-			message=""
-		/>
-	</c:if>
+<c:if test="<%= exceptionLocale != null %>">
+	<liferay-ui:icon
+		image='<%= "../language/" + LocaleUtil.toLanguageId(exceptionLocale) %>'
+		lang="<%= LocaleUtil.toW3cLanguageId(exceptionLocale) %>"
+		message=""
+	/>
+</c:if>
 
-	<c:if test="<%= lfurle.getType() == LayoutFriendlyURLException.ADJACENT_SLASHES %>">
-		<liferay-ui:message key="please-enter-a-friendly-url-that-does-not-have-adjacent-slashes" />
-	</c:if>
+<c:if test="<%= lfurle.getType() == LayoutFriendlyURLException.ADJACENT_SLASHES %>">
+	<liferay-ui:message key="please-enter-a-friendly-url-that-does-not-have-adjacent-slashes" />
+</c:if>
 
-	<c:if test="<%= lfurle.getType() == LayoutFriendlyURLException.DOES_NOT_START_WITH_SLASH %>">
-		<liferay-ui:message key="please-enter-a-friendly-url-that-begins-with-a-slash" />
-	</c:if>
+<c:if test="<%= lfurle.getType() == LayoutFriendlyURLException.DOES_NOT_START_WITH_SLASH %>">
+	<liferay-ui:message key="please-enter-a-friendly-url-that-begins-with-a-slash" />
+</c:if>
 
-	<c:if test="<%= lfurle.getType() == LayoutFriendlyURLException.DUPLICATE %>">
+<c:if test="<%= lfurle.getType() == LayoutFriendlyURLException.DUPLICATE %>">
 
-		<%
-		long duplicateClassPK = lfurle.getDuplicateClassPK();
-		String duplicateClassName = lfurle.getDuplicateClassName();
+	<%
+	long duplicateClassPK = lfurle.getDuplicateClassPK();
+	String duplicateClassName = lfurle.getDuplicateClassName();
 
-		Layout duplicateLayout = LayoutLocalServiceUtil.getLayout(duplicateClassPK);
-		%>
+	Layout duplicateLayout = LayoutLocalServiceUtil.getLayout(duplicateClassPK);
+	%>
 
-		<liferay-ui:message arguments="<%= new Object[] {ResourceActionsUtil.getModelResource(locale, duplicateClassName), duplicateLayout.getName(locale)} %>" key="please-enter-a-unique-friendly-url" translateArguments="<%= false %>" />
-	</c:if>
+	<liferay-ui:message arguments="<%= new Object[] {ResourceActionsUtil.getModelResource(locale, duplicateClassName), duplicateLayout.getName(locale)} %>" key="please-enter-a-unique-friendly-url" translateArguments="<%= false %>" />
+</c:if>
 
-	<c:if test="<%= lfurle.getType() == LayoutFriendlyURLException.ENDS_WITH_DASH %>">
-		<liferay-ui:message key="please-enter-a-friendly-url-that-does-not-end-with-a-dash" />
-	</c:if>
+<c:if test="<%= lfurle.getType() == LayoutFriendlyURLException.ENDS_WITH_DASH %>">
+	<liferay-ui:message key="please-enter-a-friendly-url-that-does-not-end-with-a-dash" />
+</c:if>
 
-	<c:if test="<%= lfurle.getType() == LayoutFriendlyURLException.ENDS_WITH_SLASH %>">
-		<liferay-ui:message key="please-enter-a-friendly-url-that-does-not-end-with-a-slash" />
-	</c:if>
+<c:if test="<%= lfurle.getType() == LayoutFriendlyURLException.ENDS_WITH_SLASH %>">
+	<liferay-ui:message key="please-enter-a-friendly-url-that-does-not-end-with-a-slash" />
+</c:if>
 
-	<c:if test="<%= lfurle.getType() == LayoutFriendlyURLException.INVALID_CHARACTERS %>">
-		<liferay-ui:message key="please-enter-a-friendly-url-with-valid-characters" />
-	</c:if>
+<c:if test="<%= lfurle.getType() == LayoutFriendlyURLException.INVALID_CHARACTERS %>">
+	<liferay-ui:message key="please-enter-a-friendly-url-with-valid-characters" />
+</c:if>
 
-	<c:if test="<%= lfurle.getType() == LayoutFriendlyURLException.KEYWORD_CONFLICT %>">
-		<liferay-ui:message arguments="<%= lfurle.getKeywordConflict() %>" key="please-enter-a-friendly-url-that-does-not-conflict-with-the-keyword-x" translateArguments="<%= false %>" />
-	</c:if>
+<c:if test="<%= lfurle.getType() == LayoutFriendlyURLException.KEYWORD_CONFLICT %>">
+	<liferay-ui:message arguments="<%= lfurle.getKeywordConflict() %>" key="please-enter-a-friendly-url-that-does-not-conflict-with-the-keyword-x" translateArguments="<%= false %>" />
+</c:if>
 
-	<c:if test="<%= lfurle.getType() == LayoutFriendlyURLException.POSSIBLE_DUPLICATE %>">
-		<liferay-ui:message key="the-friendly-url-may-conflict-with-another-page" />
-	</c:if>
+<c:if test="<%= lfurle.getType() == LayoutFriendlyURLException.POSSIBLE_DUPLICATE %>">
+	<liferay-ui:message key="the-friendly-url-may-conflict-with-another-page" />
+</c:if>
 
-	<c:if test="<%= lfurle.getType() == LayoutFriendlyURLException.TOO_DEEP %>">
-		<liferay-ui:message key="the-friendly-url-has-too-many-slashes" />
-	</c:if>
+<c:if test="<%= lfurle.getType() == LayoutFriendlyURLException.TOO_DEEP %>">
+	<liferay-ui:message key="the-friendly-url-has-too-many-slashes" />
+</c:if>
 
-	<c:if test="<%= lfurle.getType() == LayoutFriendlyURLException.TOO_SHORT %>">
-		<liferay-ui:message key="please-enter-a-friendly-url-that-is-at-least-two-characters-long" />
-	</c:if>
-</div>
+<c:if test="<%= lfurle.getType() == LayoutFriendlyURLException.TOO_SHORT %>">
+	<liferay-ui:message key="please-enter-a-friendly-url-that-is-at-least-two-characters-long" />
+</c:if>

@@ -1519,7 +1519,7 @@ definition {
 		var key_dmDocumentSize = "${dmDocumentSize}";
 
 		AssertElementPresent(
-			locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_DOWNLOAD_DOCUMENT"
+			locator1 = "Button#DOWNLOAD"
 		);
 
 		AssertElementPresent(

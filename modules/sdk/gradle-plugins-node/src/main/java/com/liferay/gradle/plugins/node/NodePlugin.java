@@ -229,19 +229,20 @@ public class NodePlugin implements Plugin<Project> {
 	}
 
 	private ExecuteNpmTask _addTaskNpmRun(
-		String name, NpmInstallTask npmInstallTask) {
+		String scriptName, NpmInstallTask npmInstallTask) {
 
 		Project project = npmInstallTask.getProject();
 
-		String taskName = "npmRun" + StringUtil.camelCase(name, true);
+		String taskName = "npmRun" + StringUtil.camelCase(scriptName, true);
 
 		final NpmRunTask npmRunTask = GradleUtil.addTask(
 			project, taskName, NpmRunTask.class);
 
 		npmRunTask.dependsOn(npmInstallTask);
-		npmRunTask.setDescription("Runs the \"" + name + "\" NPM script.");
+		npmRunTask.setDescription(
+			"Runs the \"" + scriptName + "\" NPM script.");
 		npmRunTask.setGroup(BasePlugin.BUILD_GROUP);
-		npmRunTask.setScriptName(name);
+		npmRunTask.setScriptName(scriptName);
 
 		npmRunTask.doLast(
 			new Action<Task>() {
@@ -324,8 +325,8 @@ public class NodePlugin implements Plugin<Project> {
 			return;
 		}
 
-		for (String name : scriptsJsonMap.keySet()) {
-			_addTaskNpmRun(name, npmInstallTask);
+		for (String scriptName : scriptsJsonMap.keySet()) {
+			_addTaskNpmRun(scriptName, npmInstallTask);
 		}
 	}
 

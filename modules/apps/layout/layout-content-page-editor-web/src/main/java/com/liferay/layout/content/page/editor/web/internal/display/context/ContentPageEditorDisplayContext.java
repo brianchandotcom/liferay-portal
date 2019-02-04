@@ -133,7 +133,7 @@ public class ContentPageEditorDisplayContext {
 		soyContext.put(
 			"spritemap",
 			themeDisplay.getPathThemeImages() + "/lexicon/icons.svg");
-		soyContext.put("themeColors", getThemeColors());
+		soyContext.put("themeColorsCssClasses", getThemeColorsCssClasses());
 		soyContext.put(
 			"updateLayoutPageTemplateDataURL",
 			getFragmentEntryActionURL(
@@ -466,10 +466,10 @@ public class ContentPageEditorDisplayContext {
 		return _soyContextFragmentEntryLinksSoyContext;
 	}
 
-	protected String[] getThemeColors() {
+	protected String[] getThemeColorsCssClasses() {
 		return new String[] {
-			"#393A4A", "#6B6C7E", "#A7A9BC", "#CDCED8", "#E7E7ED", "#F4F5F8",
-			"#435FFE", "#41A967", "#F35F60", "#F6BB54"
+			"blue", "cyan", "gray", "gray-dark", "green", "indigo", "orange",
+			"pink", "purple", "red", "teal", "white", "yellow"
 		};
 	}
 

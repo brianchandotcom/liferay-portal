@@ -21,16 +21,7 @@ AssetDisplayPagesItemSelectorViewDisplayContext assetDisplayPagesItemSelectorVie
 %>
 
 <clay:management-toolbar
-	clearResultsURL="<%= assetDisplayPagesItemSelectorViewDisplayContext.getClearResultsURL() %>"
-	disabled="<%= assetDisplayPagesItemSelectorViewDisplayContext.isDisabledManagementBar() %>"
-	filterDropdownItems="<%= assetDisplayPagesItemSelectorViewDisplayContext.getFilterDropdownItems() %>"
-	itemsTotal="<%= assetDisplayPagesItemSelectorViewDisplayContext.getTotalItems() %>"
-	searchActionURL="<%= assetDisplayPagesItemSelectorViewDisplayContext.getSearchActionURL() %>"
-	searchContainerId="displayPages"
-	searchFormName="searchFm"
-	selectable="<%= false %>"
-	sortingOrder="<%= assetDisplayPagesItemSelectorViewDisplayContext.getOrderByType() %>"
-	sortingURL="<%= assetDisplayPagesItemSelectorViewDisplayContext.getSortingURL() %>"
+	displayContext="<%= new AssetDisplayPagesItemSelectorViewManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, assetDisplayPagesItemSelectorViewDisplayContext) %>"
 />
 
 <aui:form cssClass="container-fluid-1280" name="fm">

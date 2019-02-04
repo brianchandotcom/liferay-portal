@@ -62,7 +62,6 @@ public interface WorkflowTaskResource {
 	@Produces("application/json")
 	@RequiresScope("headless-workflow-application.read")
 	public Page<WorkflowTask> getWorkflowTasksPage(
-			@PathParam("generic-parent-id") Object genericParentId,
 			@Context Pagination pagination)
 		throws Exception;
 

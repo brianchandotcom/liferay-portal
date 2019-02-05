@@ -305,8 +305,8 @@ public class MediaObjectApioTest {
 				).then(
 				).extract(
 				).path(
-					"_embedded.'Liferay:Document'.find {it.title == '" +
-						imageFileName + "'}._embedded.adaptedMedia._embedded"
+					"_embedded.'Document'.find {it.title == '" + imageFileName +
+						"'}._embedded.adaptedMedia._embedded"
 				);
 
 				return adaptiveMedia != null;
@@ -325,42 +325,42 @@ public class MediaObjectApioTest {
 		).statusCode(
 			200
 		).body(
-			"_embedded.'Liferay:Document'.find {it.title == '" + imageFileName +
+			"_embedded.'Document'.find {it.title == '" + imageFileName +
 				"'}._embedded.adaptedMedia._embedded.find {it.resolutionName " +
 					"== 'Preview-1000x0'}.contentUrl",
 			IsNull.notNullValue()
 		).body(
-			"_embedded.'Liferay:Document'.find {it.title == '" + imageFileName +
+			"_embedded.'Document'.find {it.title == '" + imageFileName +
 				"'}._embedded.adaptedMedia._embedded.find {it.resolutionName " +
 					"== 'Preview-1000x0'}.height",
 			Matchers.greaterThan(0)
 		).body(
-			"_embedded.'Liferay:Document'.find {it.title == '" + imageFileName +
+			"_embedded.'Document'.find {it.title == '" + imageFileName +
 				"'}._embedded.adaptedMedia._embedded.find {it.resolutionName " +
 					"== 'Preview-1000x0'}.sizeInBytes",
 			Matchers.greaterThan(0)
 		).body(
-			"_embedded.'Liferay:Document'.find {it.title == '" + imageFileName +
+			"_embedded.'Document'.find {it.title == '" + imageFileName +
 				"'}._embedded.adaptedMedia._embedded.find {it.resolutionName " +
 					"== 'Preview-1000x0'}.width",
 			Matchers.greaterThan(0)
 		).body(
-			"_embedded.'Liferay:Document'.find {it.title == '" + imageFileName +
+			"_embedded.'Document'.find {it.title == '" + imageFileName +
 				"'}._embedded.adaptedMedia._embedded.find {it.resolutionName " +
 					"== 'Thumbnail-300x300'}.contentUrl",
 			IsNull.notNullValue()
 		).body(
-			"_embedded.'Liferay:Document'.find {it.title == '" + imageFileName +
+			"_embedded.'Document'.find {it.title == '" + imageFileName +
 				"'}._embedded.adaptedMedia._embedded.find {it.resolutionName " +
 					"== 'Thumbnail-300x300'}.height",
 			Matchers.greaterThan(0)
 		).body(
-			"_embedded.'Liferay:Document'.find {it.title == '" + imageFileName +
+			"_embedded.'Document'.find {it.title == '" + imageFileName +
 				"'}._embedded.adaptedMedia._embedded.find {it.resolutionName " +
 					"== 'Thumbnail-300x300'}.sizeInBytes",
 			Matchers.greaterThan(0)
 		).body(
-			"_embedded.'Liferay:Document'.find {it.title == '" + imageFileName +
+			"_embedded.'Document'.find {it.title == '" + imageFileName +
 				"'}._embedded.adaptedMedia._embedded.find {it.resolutionName " +
 					"== 'Thumbnail-300x300'}.width",
 			Matchers.greaterThan(0)
@@ -390,52 +390,49 @@ public class MediaObjectApioTest {
 		).statusCode(
 			200
 		).body(
-			"_embedded.'Liferay:Document'.find {it.title == 'document.pdf'}." +
-				"contentUrl",
+			"_embedded.'Document'.find {it.title == 'document.pdf'}.contentUrl",
 			IsNull.notNullValue()
 		).body(
-			"_embedded.'Liferay:Document'.find {it.title == 'document.pdf'}." +
+			"_embedded.'Document'.find {it.title == 'document.pdf'}." +
 				"dateCreated",
 			IsNull.notNullValue()
 		).body(
-			"_embedded.'Liferay:Document'.find {it.title == 'document.pdf'}." +
+			"_embedded.'Document'.find {it.title == 'document.pdf'}." +
 				"dateModified",
 			IsNull.notNullValue()
 		).body(
-			"_embedded.'Liferay:Document'.find {it.title == 'document.pdf'}." +
+			"_embedded.'Document'.find {it.title == 'document.pdf'}." +
 				"encodingFormat",
 			Matchers.equalTo("application/pdf")
 		).body(
-			"_embedded.'Liferay:Document'.find {it.title == 'document.pdf'}." +
+			"_embedded.'Document'.find {it.title == 'document.pdf'}." +
 				"fileExtension",
 			Matchers.equalTo("pdf")
 		).body(
-			"_embedded.'Liferay:Document'.find {it.title == 'document.pdf'}." +
-				"keywords",
+			"_embedded.'Document'.find {it.title == 'document.pdf'}.keywords",
 			IsNull.notNullValue()
 		).body(
-			"_embedded.'Liferay:Document'.find {it.title == 'document.pdf'}." +
+			"_embedded.'Document'.find {it.title == 'document.pdf'}." +
 				"sizeInBytes",
 			Matchers.greaterThan(0)
 		).body(
-			"_embedded.'Liferay:Document'.find {it.title == 'document.pdf'}." +
-				"title",
+			"_embedded.'Document'.find {it.title == 'document.pdf'}.title",
 			Matchers.equalTo("document.pdf")
 		).body(
-			"_embedded.'Liferay:Document'.find {it.title == 'document.pdf'}." +
-				"_links.category.href",
+			"_embedded.'Document'.find {it.title == 'document.pdf'}._links." +
+				"category.href",
 			IsNull.notNullValue()
 		).body(
-			"_embedded.'Liferay:Document'.find {it.title == 'document.pdf'}." +
-				"_links.creator",
+			"_embedded.'Document'.find {it.title == 'document.pdf'}._links." +
+				"creator",
 			IsNull.notNullValue()
 		).body(
-			"_embedded.'Liferay:Document'.find {it.title == 'document.pdf'}." +
-				"_links.folder",
+			"_embedded.'Document'.find {it.title == 'document.pdf'}._links." +
+				"folder",
 			IsNull.notNullValue()
 		).body(
-			"_embedded.'Liferay:Document'.find {it.title == 'document.pdf'}." +
-				"_links.self",
+			"_embedded.'Document'.find {it.title == 'document.pdf'}._links." +
+				"self",
 			IsNull.notNullValue()
 		);
 	}
@@ -463,52 +460,49 @@ public class MediaObjectApioTest {
 		).statusCode(
 			200
 		).body(
-			"_embedded.'Liferay:Document'.find {it.title == 'document.pdf'}." +
-				"contentUrl",
+			"_embedded.'Document'.find {it.title == 'document.pdf'}.contentUrl",
 			IsNull.notNullValue()
 		).body(
-			"_embedded.'Liferay:Document'.find {it.title == 'document.pdf'}." +
+			"_embedded.'Document'.find {it.title == 'document.pdf'}." +
 				"dateCreated",
 			IsNull.notNullValue()
 		).body(
-			"_embedded.'Liferay:Document'.find {it.title == 'document.pdf'}." +
+			"_embedded.'Document'.find {it.title == 'document.pdf'}." +
 				"dateModified",
 			IsNull.notNullValue()
 		).body(
-			"_embedded.'Liferay:Document'.find {it.title == 'document.pdf'}." +
+			"_embedded.'Document'.find {it.title == 'document.pdf'}." +
 				"encodingFormat",
 			Matchers.equalTo("application/pdf")
 		).body(
-			"_embedded.'Liferay:Document'.find {it.title == 'document.pdf'}." +
+			"_embedded.'Document'.find {it.title == 'document.pdf'}." +
 				"fileExtension",
 			Matchers.equalTo("pdf")
 		).body(
-			"_embedded.'Liferay:Document'.find {it.title == 'document.pdf'}." +
-				"keywords",
+			"_embedded.'Document'.find {it.title == 'document.pdf'}.keywords",
 			IsNull.notNullValue()
 		).body(
-			"_embedded.'Liferay:Document'.find {it.title == 'document.pdf'}." +
+			"_embedded.'Document'.find {it.title == 'document.pdf'}." +
 				"sizeInBytes",
 			Matchers.greaterThan(0)
 		).body(
-			"_embedded.'Liferay:Document'.find {it.title == 'document.pdf'}." +
-				"title",
+			"_embedded.'Document'.find {it.title == 'document.pdf'}.title",
 			Matchers.equalTo("document.pdf")
 		).body(
-			"_embedded.'Liferay:Document'.find {it.title == 'document.pdf'}." +
-				"_links.category.href",
+			"_embedded.'Document'.find {it.title == 'document.pdf'}._links." +
+				"category.href",
 			IsNull.notNullValue()
 		).body(
-			"_embedded.'Liferay:Document'.find {it.title == 'document.pdf'}." +
-				"_links.creator",
+			"_embedded.'Document'.find {it.title == 'document.pdf'}._links." +
+				"creator",
 			IsNull.notNullValue()
 		).body(
-			"_embedded.'Liferay:Document'.find {it.title == 'document.pdf'}." +
-				"_links.folder",
+			"_embedded.'Document'.find {it.title == 'document.pdf'}._links." +
+				"folder",
 			IsNull.notNullValue()
 		).body(
-			"_embedded.'Liferay:Document'.find {it.title == 'document.pdf'}." +
-				"_links.self",
+			"_embedded.'Document'.find {it.title == 'document.pdf'}._links." +
+				"self",
 			IsNull.notNullValue()
 		);
 	}

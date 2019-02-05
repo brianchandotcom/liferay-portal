@@ -1,5 +1,6 @@
 package com.liferay.frontend.js.loader.modules.extender.internal.resolution.descriptor;
 
+import com.liferay.frontend.js.loader.modules.extender.internal.resolution.ModuleDescriptor;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSModule;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSPackage;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSPackageDependency;
@@ -13,18 +14,18 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * @author Rodolfo Roza Miranda
  */
-public class NPMRegistryModuleAdapter implements JSModuleAdapter {
+public class JSModuleDescriptor implements ModuleDescriptor {
 
-	public NPMRegistryModuleAdapter(
-		JSModule module, NPMRegistry npmRegistry,
-		Portal portal) {
+	public JSModuleDescriptor(
+		JSModule module, NPMRegistry npmRegistry, Portal portal) {
+
 		_module = module;
 		_npmRegistry = npmRegistry;
 		_portal = portal;
 	}
 
 	@Override
-	public String getAlias() {
+	public String getName() {
 		return _module.getResolvedId();
 	}
 
@@ -34,7 +35,7 @@ public class NPMRegistryModuleAdapter implements JSModuleAdapter {
 	}
 
 	@Override
-	public Map<String, String> getMap() {
+	public Map<String, String> getMappings() {
 		JSPackage jsPackage = _module.getJSPackage();
 
 		Map<String, String> contextMap = new ConcurrentHashMap<>();

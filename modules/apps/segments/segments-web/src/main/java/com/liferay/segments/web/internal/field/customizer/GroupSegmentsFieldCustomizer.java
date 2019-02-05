@@ -94,14 +94,6 @@ public class GroupSegmentsFieldCustomizer implements SegmentsFieldCustomizer {
 	@Override
 	public Field.SelectEntity getSelectEntity(PortletRequest portletRequest) {
 		try {
-			Locale locale = _portal.getLocale(portletRequest);
-
-			String title = ResourceActionsUtil.getModelResource(
-				locale, Group.class.getName());
-
-			String selectEntityTitle = LanguageUtil.format(
-				locale, "select-x", title);
-
 			PortletURL portletURL = PortletProviderUtil.getPortletURL(
 				portletRequest, Group.class.getName(),
 				PortletProvider.Action.BROWSE);
@@ -109,6 +101,14 @@ public class GroupSegmentsFieldCustomizer implements SegmentsFieldCustomizer {
 			if (portletURL == null) {
 				return null;
 			}
+
+			Locale locale = _portal.getLocale(portletRequest);
+
+			String title = ResourceActionsUtil.getModelResource(
+				locale, Group.class.getName());
+
+			String selectEntityTitle = LanguageUtil.format(
+				locale, "select-x", title);
 
 			portletURL.setParameter("eventName", "selectEntity");
 			portletURL.setWindowState(LiferayWindowState.POP_UP);

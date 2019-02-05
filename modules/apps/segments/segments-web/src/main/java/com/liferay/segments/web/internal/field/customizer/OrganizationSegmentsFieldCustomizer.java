@@ -95,8 +95,8 @@ public class OrganizationSegmentsFieldCustomizer
 				locale, "select-x", title);
 
 			PortletURL portletURL = _portal.getControlPanelPortletURL(
-			portletRequest, SegmentsPortletKeys.SEGMENTS,
-			PortletRequest.RENDER_PHASE);
+				portletRequest, SegmentsPortletKeys.SEGMENTS,
+				PortletRequest.RENDER_PHASE);
 
 			portletURL.setParameter(
 				"mvcRenderCommandName", "selectOrganizations");

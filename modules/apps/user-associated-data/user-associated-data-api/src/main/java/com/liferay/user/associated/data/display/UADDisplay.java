@@ -104,6 +104,10 @@ public interface UADDisplay<T> extends UADComponent<T> {
 	 */
 	public Map<String, Object> getFieldValues(T t, String[] fieldNames);
 
+	public default Serializable getParentContainerId(T t) {
+		return null;
+	}
+
 	/**
 	 * Returns the primary key of the entity of type {@code T}.
 	 *
@@ -132,6 +136,13 @@ public interface UADDisplay<T> extends UADComponent<T> {
 	 * @review
 	 */
 	public String[] getSortingFieldNames();
+
+	public default T getTopLevelContainer(
+		Class<?> parentContainerType, Serializable parentContainerId,
+		Object childObject) {
+
+		return null;
+	}
 
 	/**
 	 * Returns a localized string representing type {@code T}.

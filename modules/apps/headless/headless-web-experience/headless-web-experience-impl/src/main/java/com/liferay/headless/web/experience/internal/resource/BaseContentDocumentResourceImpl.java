@@ -16,10 +16,6 @@ package com.liferay.headless.web.experience.internal.resource;
 
 import com.liferay.headless.web.experience.dto.ContentDocument;
 import com.liferay.headless.web.experience.resource.ContentDocumentResource;
-import com.liferay.portal.vulcan.util.TransformUtil;
-
-import java.util.List;
-import java.util.function.Function;
 
 import javax.annotation.Generated;
 
@@ -43,12 +39,6 @@ public abstract class BaseContentDocumentResourceImpl
 	@Override
 	public ContentDocument getContentDocument(Long id) throws Exception {
 		return new ContentDocument();
-	}
-
-	protected <T, R> List<R> transform(
-		List<T> list, Function<T, R> transformFunction) {
-
-		return TransformUtil.transform(list, transformFunction);
 	}
 
 }

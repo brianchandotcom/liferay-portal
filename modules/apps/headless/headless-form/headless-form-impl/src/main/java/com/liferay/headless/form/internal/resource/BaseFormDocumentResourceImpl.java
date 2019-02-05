@@ -16,10 +16,6 @@ package com.liferay.headless.form.internal.resource;
 
 import com.liferay.headless.form.dto.FormDocument;
 import com.liferay.headless.form.resource.FormDocumentResource;
-import com.liferay.portal.vulcan.util.TransformUtil;
-
-import java.util.List;
-import java.util.function.Function;
 
 import javax.annotation.Generated;
 
@@ -43,12 +39,6 @@ public abstract class BaseFormDocumentResourceImpl
 	@Override
 	public FormDocument getFormDocument(Long id) throws Exception {
 		return new FormDocument();
-	}
-
-	protected <T, R> List<R> transform(
-		List<T> list, Function<T, R> transformFunction) {
-
-		return TransformUtil.transform(list, transformFunction);
 	}
 
 }

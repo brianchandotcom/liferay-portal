@@ -18,11 +18,8 @@ import com.liferay.headless.workflow.dto.WorkflowTask;
 import com.liferay.headless.workflow.resource.WorkflowTaskResource;
 import com.liferay.portal.vulcan.context.Pagination;
 import com.liferay.portal.vulcan.dto.Page;
-import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.Collections;
-import java.util.List;
-import java.util.function.Function;
 
 import javax.annotation.Generated;
 
@@ -79,12 +76,6 @@ public abstract class BaseWorkflowTaskResourceImpl
 		throws Exception {
 
 		return new WorkflowTask();
-	}
-
-	protected <T, R> List<R> transform(
-		List<T> list, Function<T, R> transformFunction) {
-
-		return TransformUtil.transform(list, transformFunction);
 	}
 
 }

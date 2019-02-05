@@ -18,11 +18,8 @@ import com.liferay.headless.foundation.dto.Keyword;
 import com.liferay.headless.foundation.resource.KeywordResource;
 import com.liferay.portal.vulcan.context.Pagination;
 import com.liferay.portal.vulcan.dto.Page;
-import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.Collections;
-import java.util.List;
-import java.util.function.Function;
 
 import javax.annotation.Generated;
 
@@ -61,12 +58,6 @@ public abstract class BaseKeywordResourceImpl implements KeywordResource {
 	@Override
 	public Keyword putKeyword(Long id) throws Exception {
 		return new Keyword();
-	}
-
-	protected <T, R> List<R> transform(
-		List<T> list, Function<T, R> transformFunction) {
-
-		return TransformUtil.transform(list, transformFunction);
 	}
 
 }

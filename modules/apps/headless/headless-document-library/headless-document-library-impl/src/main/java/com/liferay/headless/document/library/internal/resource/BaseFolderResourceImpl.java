@@ -18,11 +18,8 @@ import com.liferay.headless.document.library.dto.Folder;
 import com.liferay.headless.document.library.resource.FolderResource;
 import com.liferay.portal.vulcan.context.Pagination;
 import com.liferay.portal.vulcan.dto.Page;
-import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.Collections;
-import java.util.List;
-import java.util.function.Function;
 
 import javax.annotation.Generated;
 
@@ -95,12 +92,6 @@ public abstract class BaseFolderResourceImpl implements FolderResource {
 	@Override
 	public Folder putFolder(Long id) throws Exception {
 		return new Folder();
-	}
-
-	protected <T, R> List<R> transform(
-		List<T> list, Function<T, R> transformFunction) {
-
-		return TransformUtil.transform(list, transformFunction);
 	}
 
 }

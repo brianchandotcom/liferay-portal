@@ -16,10 +16,6 @@ package com.liferay.headless.collaboration.internal.resource;
 
 import com.liferay.headless.collaboration.dto.AggregateRating;
 import com.liferay.headless.collaboration.resource.AggregateRatingResource;
-import com.liferay.portal.vulcan.util.TransformUtil;
-
-import java.util.List;
-import java.util.function.Function;
 
 import javax.annotation.Generated;
 
@@ -34,12 +30,6 @@ public abstract class BaseAggregateRatingResourceImpl
 	@Override
 	public AggregateRating getAggregateRating(Long id) throws Exception {
 		return new AggregateRating();
-	}
-
-	protected <T, R> List<R> transform(
-		List<T> list, Function<T, R> transformFunction) {
-
-		return TransformUtil.transform(list, transformFunction);
 	}
 
 }

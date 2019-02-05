@@ -24,11 +24,13 @@ import com.liferay.portal.kernel.security.permission.resource.PortletResourcePer
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.segments.constants.SegmentsActionKeys;
 import com.liferay.segments.constants.SegmentsConstants;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.service.base.SegmentsEntryServiceBaseImpl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -66,16 +68,36 @@ public class SegmentsEntryServiceImpl extends SegmentsEntryServiceBaseImpl {
 
 	@Override
 	public List<SegmentsEntry> getSegmentsEntries(
-		long groupId, int start, int end,
-		OrderByComparator<SegmentsEntry> orderByComparator) {
+		long groupId, boolean includeAncestorSegmentsEntries, int start,
+		int end, OrderByComparator<SegmentsEntry> orderByComparator) {
 
-		return segmentsEntryPersistence.filterFindByGroupId(
-			groupId, start, end, orderByComparator);
+		List<SegmentsEntry> segmentsEntries = new ArrayList<>(
+			segmentsEntryPersistence.filterFindByGroupId(groupId));
+
+		if (!includeAncestorSegmentsEntries) {
+			return segmentsEntries;
+		}
+
+		segmentsEntries.addAll(
+			segmentsEntryPersistence.filterFindByGroupId(
+				PortalUtil.getAncestorSiteGroupIds(groupId)));
+
+		return segmentsEntries;
 	}
 
 	@Override
-	public int getSegmentsEntriesCount(long groupId) throws PortalException {
-		return segmentsEntryPersistence.filterCountByGroupId(groupId);
+	public int getSegmentsEntriesCount(
+		long groupId, boolean includeAncestorSegmentsEntries) {
+
+		int count = segmentsEntryPersistence.filterCountByGroupId(groupId);
+
+		if (!includeAncestorSegmentsEntries) {
+			return count;
+		}
+
+		return count +
+			segmentsEntryPersistence.filterCountByGroupId(
+				PortalUtil.getAncestorSiteGroupIds(groupId));
 	}
 
 	@Override

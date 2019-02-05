@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.segments.constants.SegmentsConstants;
 import com.liferay.segments.exception.SegmentsEntryKeyException;
@@ -165,8 +166,28 @@ public class SegmentsEntryLocalServiceImpl
 	}
 
 	@Override
-	public SegmentsEntry fetchSegmentsEntry(long groupId, String key) {
-		return segmentsEntryPersistence.fetchByG_K(groupId, key);
+	public SegmentsEntry fetchSegmentsEntry(
+		long groupId, String key, boolean includeAncestorSegmentsEntries) {
+
+		SegmentsEntry segmentsEntry = segmentsEntryPersistence.fetchByG_K(
+			groupId, key);
+
+		if (segmentsEntry != null) {
+			return segmentsEntry;
+		}
+
+		for (long ancestorSiteGroupId :
+				PortalUtil.getAncestorSiteGroupIds(groupId)) {
+
+			segmentsEntry = segmentsEntryPersistence.fetchByG_K(
+				ancestorSiteGroupId, key);
+
+			if (segmentsEntry != null) {
+				return segmentsEntry;
+			}
+		}
+
+		return null;
 	}
 
 	@Override
@@ -180,11 +201,23 @@ public class SegmentsEntryLocalServiceImpl
 
 	@Override
 	public List<SegmentsEntry> getSegmentsEntries(
-		long groupId, int start, int end,
-		OrderByComparator<SegmentsEntry> orderByComparator) {
+		long groupId, boolean includeAncestorSegmentsEntries, int start,
+		int end, OrderByComparator<SegmentsEntry> orderByComparator) {
 
-		return segmentsEntryPersistence.findByGroupId(
-			groupId, start, end, orderByComparator);
+		List<SegmentsEntry> segmentsEntries = new ArrayList<>(
+			segmentsEntryPersistence.findByGroupId(
+				groupId, start, end, orderByComparator));
+
+		if (!includeAncestorSegmentsEntries) {
+			return segmentsEntries;
+		}
+
+		segmentsEntries.addAll(
+			segmentsEntryPersistence.findByGroupId(
+				PortalUtil.getAncestorSiteGroupIds(groupId), start, end,
+				orderByComparator));
+
+		return segmentsEntries;
 	}
 
 	@Override
@@ -197,8 +230,18 @@ public class SegmentsEntryLocalServiceImpl
 	}
 
 	@Override
-	public int getSegmentsEntriesCount(long groupId) {
-		return segmentsEntryPersistence.countByGroupId(groupId);
+	public int getSegmentsEntriesCount(
+		long groupId, boolean includeAncestorSegmentsEntries) {
+
+		int count = segmentsEntryPersistence.countByGroupId(groupId);
+
+		if (!includeAncestorSegmentsEntries) {
+			return count;
+		}
+
+		return count +
+			segmentsEntryPersistence.countByGroupId(
+				PortalUtil.getAncestorSiteGroupIds(groupId));
 	}
 
 	@Override
@@ -335,8 +378,7 @@ public class SegmentsEntryLocalServiceImpl
 	protected void validate(long segmentsEntryId, long groupId, String key)
 		throws PortalException {
 
-		SegmentsEntry segmentsEntry = segmentsEntryPersistence.fetchByG_K(
-			groupId, key);
+		SegmentsEntry segmentsEntry = fetchSegmentsEntry(groupId, key, true);
 
 		if ((segmentsEntry != null) &&
 			(segmentsEntry.getSegmentsEntryId() != segmentsEntryId)) {

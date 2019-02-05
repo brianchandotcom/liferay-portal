@@ -34,12 +34,6 @@ import java.util.List;
 )
 public class JSResolveModulesServlet extends HttpServlet {
 
-	@Reference(unbind = "-")
-	public void setJsModulesResolver(
-		JSModulesResolver jsModulesResolver) {
-		_jsModulesResolver = jsModulesResolver;
-	}
-
 	@Override
 	protected void service(
 		HttpServletRequest req, HttpServletResponse resp)

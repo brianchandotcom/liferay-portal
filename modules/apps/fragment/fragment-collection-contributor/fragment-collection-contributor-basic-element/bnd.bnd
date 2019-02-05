@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Fragment Collection Contributor Basic Element
+Bundle-SymbolicName: com.liferay.fragment.collection.contributor.basic.element
+Bundle-Version: 1.0.0
+-dsannotations-options: inherit

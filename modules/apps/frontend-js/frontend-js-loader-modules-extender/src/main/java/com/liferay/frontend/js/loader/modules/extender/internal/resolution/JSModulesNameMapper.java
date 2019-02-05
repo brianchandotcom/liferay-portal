@@ -48,17 +48,6 @@ public class JSModulesNameMapper {
 		return resolved;
 	}
 
-	@Reference(unbind = "-")
-	protected void setJSLoaderModulesTracker(
-		JSConfigGeneratorPackagesTracker jsConfigGeneratorPackagesTracker) {
-		_jsConfigGeneratorPackagesTracker = jsConfigGeneratorPackagesTracker;
-	}
-
-	@Reference(unbind = "-")
-	protected void setNPMRegistry(NPMRegistry npmRegistry) {
-		_npmRegistry = npmRegistry;
-	}
-
 	private Map<String, String> _getExactMatchContextMap() {
 
 		Collection<JSPackage> npmRegistryModules =
@@ -140,9 +129,11 @@ public class JSModulesNameMapper {
 
 	private final Map<String, String> _partialMatchContextMap = new ConcurrentHashMap<>();
 
+	@Reference
 	private JSConfigGeneratorPackagesTracker _jsConfigGeneratorPackagesTracker;
 
 	private long _jsLoaderModulesTrackerLastModified = 0L;
 
+	@Reference
 	private NPMRegistry _npmRegistry;
 }

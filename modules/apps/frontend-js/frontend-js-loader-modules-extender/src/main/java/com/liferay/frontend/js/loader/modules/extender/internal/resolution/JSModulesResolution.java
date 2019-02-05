@@ -16,7 +16,6 @@ package com.liferay.frontend.js.loader.modules.extender.internal.resolution;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -34,12 +33,12 @@ public class JSModulesResolution {
 		_explainResolutions = explainResolutions;
 	}
 
-	public void addProcessedModule(String module) {
-		_processedModules.add(module);
+	public void addProcessedModule(String moduleName) {
+		_processedModules.add(moduleName);
 	}
 
-	public void addResolvedModule(String alias) {
-		_resolvedModules.add(0, alias);
+	public void addResolvedModule(String moduleName) {
+		_resolvedModules.add(moduleName);
 
 		if (!_explainResolutions) {
 			return;
@@ -51,7 +50,7 @@ public class JSModulesResolution {
 			sb.append("  ");
 		}
 
-		sb.append(alias);
+		sb.append(moduleName);
 
 		_explanation.add(0, sb.toString());
 	}
@@ -77,33 +76,29 @@ public class JSModulesResolution {
 	}
 
 	public List<String> getResolvedModules() {
-		ArrayList<String> copy = new ArrayList<>(_resolvedModules);
-
-		Collections.reverse(copy);
-
-		return copy;
+		return _resolvedModules;
 	}
 
 	public void indentExplanation() {
 		_explanationIndentation++;
 	}
 
-	public boolean processedModule(String module) {
-		return _processedModules.contains(module);
+	public boolean isProcessedModule(String moduleName) {
+		return _processedModules.contains(moduleName);
 	}
 
-	public void putConfig(String module, String mappedModule) {
-		_configMap.put(module, mappedModule);
+	public void putGlobalMapping(String moduleName, String mappedModuleName) {
+		_configMap.put(moduleName, mappedModuleName);
 	}
 
-	public void putModuleDependencyMap(
-		String alias, Map<String, String> dependenciesMap) {
+	public void putModuleMapping(
+		String moduleName, Map<String, String> dependenciesMap) {
 
-		_moduleMap.put(alias, dependenciesMap);
+		_moduleMap.put(moduleName, dependenciesMap);
 	}
 
-	public void putPath(String alias, String path) {
-		_pathMap.put(alias, path);
+	public void putPath(String moduleName, String path) {
+		_pathMap.put(moduleName, path);
 	}
 
 	private final Map<String, String> _configMap = new ConcurrentHashMap<>();

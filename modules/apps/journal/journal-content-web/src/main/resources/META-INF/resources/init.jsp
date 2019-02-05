@@ -62,7 +62,8 @@ page import="com.liferay.portal.kernel.util.Validator" %>
 page import="java.util.List" %><%@
 page import="java.util.Map" %>
 
-<%@ page import="javax.portlet.PortletURL" %>
+<%@ page import="javax.portlet.PortletURL" %><%@
+page import="javax.portlet.WindowState" %>
 
 <liferay-frontend:defineObjects />
 

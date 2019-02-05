@@ -75,17 +75,18 @@ public class CTJournalArticleLocalServiceWrapper
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		JournalArticle journalArticle = super.addArticle(
-			userId, groupId, folderId, classNameId, classPK, articleId,
-			autoArticleId, version, titleMap, descriptionMap, friendlyURLMap,
-			content, ddmStructureKey, ddmTemplateKey, layoutUuid,
-			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
-			displayDateMinute, expirationDateMonth, expirationDateDay,
-			expirationDateYear, expirationDateHour, expirationDateMinute,
-			neverExpire, reviewDateMonth, reviewDateDay, reviewDateYear,
-			reviewDateHour, reviewDateMinute, neverReview, indexable,
-			smallImage, smallImageURL, smallImageFile, images, articleURL,
-			serviceContext);
+		JournalArticle journalArticle = _ctManager.executeModelUpdate(
+			() -> super.addArticle(
+				userId, groupId, folderId, classNameId, classPK, articleId,
+				autoArticleId, version, titleMap, descriptionMap,
+				friendlyURLMap, content, ddmStructureKey, ddmTemplateKey,
+				layoutUuid, displayDateMonth, displayDateDay, displayDateYear,
+				displayDateHour, displayDateMinute, expirationDateMonth,
+				expirationDateDay, expirationDateYear, expirationDateHour,
+				expirationDateMinute, neverExpire, reviewDateMonth,
+				reviewDateDay, reviewDateYear, reviewDateHour, reviewDateMinute,
+				neverReview, indexable, smallImage, smallImageURL,
+				smallImageFile, images, articleURL, serviceContext));
 
 		_registerChange(
 			journalArticle, CTConstants.CT_CHANGE_TYPE_ADDITION, true);
@@ -112,16 +113,18 @@ public class CTJournalArticleLocalServiceWrapper
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		JournalArticle journalArticle = super.addArticle(
-			userId, groupId, folderId, classNameId, classPK, articleId,
-			autoArticleId, version, titleMap, descriptionMap, content,
-			ddmStructureKey, ddmTemplateKey, layoutUuid, displayDateMonth,
-			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
-			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, neverExpire,
-			reviewDateMonth, reviewDateDay, reviewDateYear, reviewDateHour,
-			reviewDateMinute, neverReview, indexable, smallImage, smallImageURL,
-			smallImageFile, images, articleURL, serviceContext);
+		JournalArticle journalArticle = _ctManager.executeModelUpdate(
+			() -> super.addArticle(
+				userId, groupId, folderId, classNameId, classPK, articleId,
+				autoArticleId, version, titleMap, descriptionMap, content,
+				ddmStructureKey, ddmTemplateKey, layoutUuid, displayDateMonth,
+				displayDateDay, displayDateYear, displayDateHour,
+				displayDateMinute, expirationDateMonth, expirationDateDay,
+				expirationDateYear, expirationDateHour, expirationDateMinute,
+				neverExpire, reviewDateMonth, reviewDateDay, reviewDateYear,
+				reviewDateHour, reviewDateMinute, neverReview, indexable,
+				smallImage, smallImageURL, smallImageFile, images, articleURL,
+				serviceContext));
 
 		_registerChange(
 			journalArticle, CTConstants.CT_CHANGE_TYPE_ADDITION, true);
@@ -137,9 +140,10 @@ public class CTJournalArticleLocalServiceWrapper
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		JournalArticle journalArticle = super.addArticle(
-			userId, groupId, folderId, titleMap, descriptionMap, content,
-			ddmStructureKey, ddmTemplateKey, serviceContext);
+		JournalArticle journalArticle = _ctManager.executeModelUpdate(
+			() -> super.addArticle(
+				userId, groupId, folderId, titleMap, descriptionMap, content,
+				ddmStructureKey, ddmTemplateKey, serviceContext));
 
 		_registerChange(
 			journalArticle, CTConstants.CT_CHANGE_TYPE_ADDITION, true);

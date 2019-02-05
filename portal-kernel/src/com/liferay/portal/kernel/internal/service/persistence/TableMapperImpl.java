@@ -50,15 +50,16 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 
 	public TableMapperImpl(
 		String tableName, String companyColumnName, String leftColumnName,
-		String rightColumnName, BasePersistence<L> leftBasePersistence,
+		String rightColumnName, Class<L> leftModelClass,
+		Class<R> rightModelClass, BasePersistence<L> leftBasePersistence,
 		BasePersistence<R> rightBasePersistence) {
 
 		this.leftColumnName = leftColumnName;
 		this.rightColumnName = rightColumnName;
+		this.leftModelClass = leftModelClass;
+		this.rightModelClass = rightModelClass;
 		this.leftBasePersistence = leftBasePersistence;
 		this.rightBasePersistence = rightBasePersistence;
-		leftModelClass = leftBasePersistence.getModelClass();
-		rightModelClass = rightBasePersistence.getModelClass();
 
 		DataSource dataSource = leftBasePersistence.getDataSource();
 

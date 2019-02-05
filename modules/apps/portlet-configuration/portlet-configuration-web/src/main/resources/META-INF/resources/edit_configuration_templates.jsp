@@ -87,17 +87,9 @@ PortletConfigurationTemplatesManagementToolbarDisplayContext portletConfiguratio
 								%>
 
 								<liferay-ui:search-container-column-text>
-									<liferay-frontend:icon-vertical-card
-										actionJsp="/configuration_template_action.jsp"
-										actionJspServletContext="<%= application %>"
-										icon="archive"
-										resultRow="<%= row %>"
-										title="<%= archivedSettings.getName() %>"
-									>
-										<liferay-frontend:vertical-card-header>
-											<liferay-ui:message arguments="<%= new String[] {LanguageUtil.getTimeDescription(locale, System.currentTimeMillis() - archivedSettings.getModifiedDate().getTime(), true), HtmlUtil.escape(archivedSettings.getUserName())} %>" key="x-ago-by-x" translateArguments="<%= false %>" />
-										</liferay-frontend:vertical-card-header>
-									</liferay-frontend:icon-vertical-card>
+									<clay:vertical-card
+										verticalCard="<%= new ArchivedSettingsVerticalCard(archivedSettings, renderRequest) %>"
+									/>
 								</liferay-ui:search-container-column-text>
 							</c:when>
 							<c:when test='<%= Objects.equals(portletConfigurationTemplatesDisplayContext.getDisplayStyle(), "list") %>'>

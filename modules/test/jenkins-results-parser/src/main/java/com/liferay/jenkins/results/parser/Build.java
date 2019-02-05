@@ -150,6 +150,9 @@ public interface Build {
 
 	public int getTotalSlavesUsedCount();
 
+	public int getTotalSlavesUsedCount(
+		String status, boolean modifiedBuildsOnly);
+
 	public boolean hasBuildURL(String buildURL);
 
 	public boolean hasModifiedDownstreamBuilds();

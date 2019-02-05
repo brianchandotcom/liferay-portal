@@ -820,7 +820,9 @@ public abstract class BaseBuild implements Build {
 		List<Build> modifiedDownstreamBuilds = new ArrayList<>();
 
 		for (Build downstreamBuild : downstreamBuilds) {
-			if (downstreamBuild.isBuildModified()) {
+			if (downstreamBuild.isBuildModified() ||
+				downstreamBuild.hasModifiedDownstreamBuilds()) {
+
 				modifiedDownstreamBuilds.add(downstreamBuild);
 			}
 		}
@@ -1093,10 +1095,34 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public int getTotalSlavesUsedCount() {
+		return getTotalSlavesUsedCount(null, false);
+	}
+
+	@Override
+	public int getTotalSlavesUsedCount(
+		String status, boolean modifiedBuildsOnly) {
+
 		int totalSlavesUsedCount = 1;
 
-		for (Build downstreamBuild : getDownstreamBuilds(null)) {
-			totalSlavesUsedCount += downstreamBuild.getTotalSlavesUsedCount();
+		if ((modifiedBuildsOnly && !isBuildModified()) ||
+			((status != null) && !_status.equals(status))) {
+
+			totalSlavesUsedCount = 0;
+		}
+
+		List<Build> downstreamBuilds;
+
+		if (modifiedBuildsOnly) {
+			downstreamBuilds = getModifiedDownstreamBuildsByStatus(status);
+		}
+		else {
+			downstreamBuilds = getDownstreamBuilds(status);
+		}
+
+		for (Build downstreamBuild : downstreamBuilds) {
+			totalSlavesUsedCount +=
+				downstreamBuild.getTotalSlavesUsedCount(
+					status, modifiedBuildsOnly);
 		}
 
 		return totalSlavesUsedCount;

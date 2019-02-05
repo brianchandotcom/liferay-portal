@@ -77,6 +77,7 @@ page import="com.liferay.site.memberships.web.internal.display.context.SelectOrg
 page import="com.liferay.site.memberships.web.internal.display.context.SelectSiteRolesDisplayContext" %><%@
 page import="com.liferay.site.memberships.web.internal.display.context.SelectUserGroupsDisplayContext" %><%@
 page import="com.liferay.site.memberships.web.internal.display.context.SelectUsersDisplayContext" %><%@
+page import="com.liferay.site.memberships.web.internal.display.context.SelectUsersManagementToolbarDisplayContext" %><%@
 page import="com.liferay.site.memberships.web.internal.display.context.SiteMembershipsDisplayContext" %><%@
 page import="com.liferay.site.memberships.web.internal.display.context.SiteRolesDisplayContext" %><%@
 page import="com.liferay.site.memberships.web.internal.display.context.UserGroupRolesDisplayContext" %><%@

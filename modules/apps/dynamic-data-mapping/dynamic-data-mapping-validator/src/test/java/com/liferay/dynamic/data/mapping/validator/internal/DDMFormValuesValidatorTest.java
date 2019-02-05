@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.validator.internal;
 
+import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunction;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunctionTracker;
 import com.liferay.dynamic.data.mapping.expression.internal.DDMExpressionFactoryImpl;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
@@ -37,9 +38,13 @@ import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidationExcepti
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -769,7 +774,23 @@ public class DDMFormValuesValidatorTest extends PowerMockito {
 		field(
 			DDMExpressionFactoryImpl.class, "ddmExpressionFunctionTracker"
 		).set(
-			ddmExpressionFactoryImpl, mock(DDMExpressionFunctionTracker.class)
+			ddmExpressionFactoryImpl,
+			new DDMExpressionFunctionTracker() {
+
+				@Override
+				public Map<String, DDMExpressionFunction>
+					getDDMExpressionFunctions(Set<String> functionNames) {
+
+					return Collections.emptyMap();
+				}
+
+				@Override
+				public void ungetDDMExpressionFunctions(
+					Map<String, DDMExpressionFunction>
+						ddmExpressionFunctionsMap) {
+				}
+
+			}
 		);
 
 		_ddmFormValuesValidatorImpl.setDDMExpressionFactory(
@@ -781,7 +802,7 @@ public class DDMFormValuesValidatorTest extends PowerMockito {
 			DDMFormValuesValidatorImpl.class, "_ddmFormFieldTypeServicesTracker"
 		).set(
 			_ddmFormValuesValidatorImpl,
-			mock(DDMFormFieldTypeServicesTracker.class)
+			ProxyFactory.newDummyInstance(DDMFormFieldTypeServicesTracker.class)
 		);
 	}
 

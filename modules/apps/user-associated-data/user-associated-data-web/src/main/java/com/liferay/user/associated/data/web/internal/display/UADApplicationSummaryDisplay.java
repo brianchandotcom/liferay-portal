@@ -27,10 +27,6 @@ public class UADApplicationSummaryDisplay {
 		return _count;
 	}
 
-	public String getViewURL() {
-		return _viewURL;
-	}
-
 	public boolean hasItems() {
 		if (getCount() > 0) {
 			return true;
@@ -47,12 +43,7 @@ public class UADApplicationSummaryDisplay {
 		_count = count;
 	}
 
-	public void setViewURL(String viewURL) {
-		_viewURL = viewURL;
-	}
-
 	private String _applicationKey;
 	private int _count;
-	private String _viewURL;
 
 }

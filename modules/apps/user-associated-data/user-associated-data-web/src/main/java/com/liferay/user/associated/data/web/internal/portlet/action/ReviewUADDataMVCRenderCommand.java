@@ -79,7 +79,7 @@ public class ReviewUADDataMVCRenderCommand implements MVCRenderCommand {
 
 			List<UADApplicationSummaryDisplay> uadApplicationSummaryDisplays =
 				_uadApplicationSummaryHelper.getUADApplicationSummaryDisplays(
-					renderRequest, selectedUser.getUserId());
+					selectedUser.getUserId());
 
 			UADApplicationSummaryDisplay uadApplicationSummaryDisplay =
 				uadApplicationSummaryDisplays.get(0);

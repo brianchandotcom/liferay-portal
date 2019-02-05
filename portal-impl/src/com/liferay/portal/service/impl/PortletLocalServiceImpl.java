@@ -1231,8 +1231,20 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 					continue;
 				}
 
-				Role role = roleLocalService.getRole(
+				Role role = roleLocalService.fetchRole(
 					portlet.getCompanyId(), roleName);
+
+				if (role == null) {
+					if (_log.isWarnEnabled()) {
+						_log.warn("No role exist with companyId: " +
+								  portlet.getCompanyId() + " and role name: " +
+								  roleName + " required by portlet " +
+								  portlet.getPortletName() + ". Create role " +
+								  "and redeploy the portlet.");
+					}
+
+					continue;
+				}
 
 				resourcePermissionLocalService.addResourcePermission(
 					portlet.getCompanyId(), portlet.getRootPortletId(),

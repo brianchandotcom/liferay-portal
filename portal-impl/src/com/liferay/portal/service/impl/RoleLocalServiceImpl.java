@@ -1097,6 +1097,11 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 		Role role = rolePersistence.fetchByC_N(companyId, name);
 
 		if (role == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Role " + name + " with companyId " + companyId +
+						  " does not exist.");
+			}
+
 			return false;
 		}
 

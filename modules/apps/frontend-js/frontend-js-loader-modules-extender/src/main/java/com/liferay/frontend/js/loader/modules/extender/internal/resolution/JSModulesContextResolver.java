@@ -1,8 +1,7 @@
 package com.liferay.frontend.js.loader.modules.extender.internal.resolution;
 
-import com.liferay.frontend.js.loader.modules.extender.internal.resolution.descriptor.JSConfigGeneratorModuleAdapter;
-import com.liferay.frontend.js.loader.modules.extender.internal.resolution.descriptor.JSModuleAdapter;
-import com.liferay.frontend.js.loader.modules.extender.internal.resolution.descriptor.NPMRegistryModuleAdapter;
+import com.liferay.frontend.js.loader.modules.extender.internal.resolution.descriptor.JSConfigGeneratorModuleDescriptor;
+import com.liferay.frontend.js.loader.modules.extender.internal.resolution.descriptor.JSModuleDescriptor;
 import com.liferay.frontend.js.loader.modules.extender.internal.config.generator.JSConfigGeneratorModule;
 import com.liferay.frontend.js.loader.modules.extender.internal.config.generator.JSConfigGeneratorPackage;
 import com.liferay.frontend.js.loader.modules.extender.internal.config.generator.JSConfigGeneratorPackagesTracker;
@@ -62,14 +61,14 @@ public class JSModulesContextResolver {
 		_portal = portal;
 	}
 
-	private ArrayList<JSModuleAdapter> _getAllModules() {
+	private ArrayList<ModuleDescriptor> _getAllModules() {
 		Collection<JSConfigGeneratorPackage> jsConfigGeneratorPackages =
 			_jsConfigGeneratorPackagesTracker.getJSConfigGeneratorPackages();
 
 		Stream<JSConfigGeneratorPackage> jsConfigGeneratorPackagesStream =
 			jsConfigGeneratorPackages.stream();
 
-		List<JSConfigGeneratorModuleAdapter> jsConfigGeneratorModuleAdapters =
+		List<JSConfigGeneratorModuleDescriptor> jsConfigGeneratorModuleAdapters =
 			jsConfigGeneratorPackagesStream.reduce(
 				new ArrayList<>(),
 				(arrayList, pkg) -> {
@@ -77,14 +76,14 @@ public class JSModulesContextResolver {
 						pkg.getJSConfigGeneratorModules()) {
 
 						arrayList.add(
-							new JSConfigGeneratorModuleAdapter(
+							new JSConfigGeneratorModuleDescriptor(
 								jsConfigGeneratorModule));
 					}
 
 					return arrayList;
 				},
 				(arrayList1, arrayList2) -> {
-					ArrayList<JSConfigGeneratorModuleAdapter> result =
+					ArrayList<JSConfigGeneratorModuleDescriptor> result =
 						new ArrayList<>(arrayList1);
 
 					result.addAll(arrayList2);
@@ -92,13 +91,13 @@ public class JSModulesContextResolver {
 					return result;
 				});
 
-		List<NPMRegistryModuleAdapter> npmRegistryModules =
+		List<JSModuleDescriptor> npmRegistryModules =
 			_npmRegistry.getResolvedJSModules().stream()
 				.map(
-					m -> new NPMRegistryModuleAdapter(m, _npmRegistry, _portal))
+					m -> new JSModuleDescriptor(m, _npmRegistry, _portal))
 				.collect(Collectors.toList());
 
-		ArrayList<JSModuleAdapter> allModules = new ArrayList<>();
+		ArrayList<ModuleDescriptor> allModules = new ArrayList<>();
 
 		allModules.addAll(jsConfigGeneratorModuleAdapters);
 		allModules.addAll(npmRegistryModules);
@@ -116,7 +115,7 @@ public class JSModulesContextResolver {
 	}
 
 	private void _processModule(
-		JSModuleAdapter adapter, JSModuleContext context) {
+		ModuleDescriptor adapter, JSModuleContext context) {
 
 		if (adapter == null) {
 			return;
@@ -124,7 +123,7 @@ public class JSModulesContextResolver {
 
 		Collection<String> dependencies = adapter.getDependencies();
 
-		String alias = adapter.getAlias();
+		String alias = adapter.getName();
 
 		Map<String, String> dependenciesMap = new ConcurrentHashMap<>();
 
@@ -138,7 +137,7 @@ public class JSModulesContextResolver {
 					ModuleNameUtil.resolvePath(alias, dependency);
 
 				String mappedModuleName =
-					_mapModuleName(resolvedPath, adapter.getMap());
+					_mapModuleName(resolvedPath, adapter.getMappings());
 
 				dependenciesMap.put(dependency, mappedModuleName);
 
@@ -158,7 +157,7 @@ public class JSModulesContextResolver {
 		JSModule jsModule = _npmRegistry.getResolvedJSModule(module);
 
 		if (jsModule != null) {
-			_processModule(new NPMRegistryModuleAdapter(jsModule, _npmRegistry,
+			_processModule(new JSModuleDescriptor(jsModule, _npmRegistry,
 				_portal), context);
 		}
 	}
@@ -166,12 +165,12 @@ public class JSModulesContextResolver {
 	private void _resolve(String module, JSModuleContext context) {
 		String mappedModule = _mapModuleName(module);
 
-		ArrayList<JSModuleAdapter> allModules = _getAllModules();
+		ArrayList<ModuleDescriptor> allModules = _getAllModules();
 
-		JSModuleAdapter adapter = null;
+		ModuleDescriptor adapter = null;
 
-		for (JSModuleAdapter m : allModules) {
-			if (m.getAlias().equals(mappedModule)) {
+		for (ModuleDescriptor m : allModules) {
+			if (m.getName().equals(mappedModule)) {
 				adapter = m;
 				break;
 			}
@@ -182,7 +181,7 @@ public class JSModulesContextResolver {
 
 			_processModule(adapter, context);
 
-			context.addResolvedModule(adapter.getAlias());
+			context.addResolvedModule(adapter.getName());
 		}
 		else {
 			context.addResolvedModule(

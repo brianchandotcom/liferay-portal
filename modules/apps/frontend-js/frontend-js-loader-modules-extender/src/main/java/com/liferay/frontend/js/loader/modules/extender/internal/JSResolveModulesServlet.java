@@ -1,7 +1,7 @@
 package com.liferay.frontend.js.loader.modules.extender.internal;
 
-import com.liferay.frontend.js.loader.modules.extender.internal.resolution.JSModuleContext;
-import com.liferay.frontend.js.loader.modules.extender.internal.resolution.JSModulesContextResolver;
+import com.liferay.frontend.js.loader.modules.extender.internal.resolution.JSModulesResolution;
+import com.liferay.frontend.js.loader.modules.extender.internal.resolution.JSModulesResolver;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.util.ParamUtil;
 import org.osgi.service.component.annotations.Component;
@@ -35,9 +35,9 @@ import java.util.List;
 public class JSResolveModulesServlet extends HttpServlet {
 
 	@Reference(unbind = "-")
-	public void setJsModulesContextResolver(
-		JSModulesContextResolver jsModulesContextResolver) {
-		_jsModulesContextResolver = jsModulesContextResolver;
+	public void setJsModulesResolver(
+		JSModulesResolver jsModulesResolver) {
+		_jsModulesResolver = jsModulesResolver;
 	}
 
 	@Override
@@ -47,7 +47,7 @@ public class JSResolveModulesServlet extends HttpServlet {
 
 		List<String> reqModules = _getRequestModules(req);
 
-		JSModuleContext context = _jsModulesContextResolver.resolve(reqModules);
+		JSModulesResolution context = _jsModulesResolver.resolve(reqModules);
 
 		StringWriter stringWriter = new StringWriter();
 
@@ -87,7 +87,7 @@ public class JSResolveModulesServlet extends HttpServlet {
 	}
 
 	@Reference
-	private JSModulesContextResolver _jsModulesContextResolver;
+	private JSModulesResolver _jsModulesResolver;
 
 	@Reference
 	private JSONFactory _jsonFactory;

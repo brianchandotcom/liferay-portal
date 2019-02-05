@@ -91,7 +91,7 @@ public class DLFileEntrySharingPermissionSQLContributor
 			SharingConfiguration sharingConfiguration =
 				_getSharingConfiguration(groupId);
 
-			if (sharingConfiguration.isEnabled()) {
+			if (!sharingConfiguration.isEnabled()) {
 				if (groupCount == 0) {
 					sb.append("(SharingEntry.groupId NOT IN (");
 				}

@@ -104,13 +104,13 @@ public class DLFileEntrySharingPermissionSQLContributorTest {
 			StringBundler sb = new StringBundler(6);
 
 			sb.append("1234 IN (SELECT SharingEntry.classPK FROM ");
-			sb.append("SharingEntry WHERE SharingEntry.toUserId = ");
+			sb.append("SharingEntry WHERE (SharingEntry.toUserId = ");
 			sb.append(TestPropsValues.getUserId());
-			sb.append(" AND SharingEntry.classNameId = ");
+			sb.append(") AND (SharingEntry.classNameId = ");
 			sb.append(
 				_classNameLocalService.getClassNameId(
 					DLFileEntry.class.getName()));
-			sb.append(")");
+			sb.append("))");
 
 			Assert.assertEquals(
 				sb.toString(),

@@ -47,7 +47,6 @@ import java.util.jar.JarFile;
 import java.util.jar.Manifest;
 
 import org.jboss.arquillian.container.spi.client.deployment.DeploymentDescription;
-import org.jboss.arquillian.container.test.impl.ContainerTestRemoteExtension;
 import org.jboss.arquillian.container.test.impl.RemoteExtensionLoader;
 import org.jboss.arquillian.container.test.spi.RemoteLoadableExtension;
 import org.jboss.arquillian.container.test.spi.client.deployment.DeploymentScenarioGenerator;
@@ -208,7 +207,6 @@ public class BndDeploymentScenarioGenerator
 				ExtensionLoader.class, RemoteExtensionLoader.class);
 			javaArchive.addAsServiceProvider(
 				RemoteLoadableExtension.class,
-				ContainerTestRemoteExtension.class,
 				LiferayArquillianJUnitBridgeExtension.class);
 			javaArchive.addClasses(
 				ArquillianBundleActivator.class, JUnitBridgeObserver.class,

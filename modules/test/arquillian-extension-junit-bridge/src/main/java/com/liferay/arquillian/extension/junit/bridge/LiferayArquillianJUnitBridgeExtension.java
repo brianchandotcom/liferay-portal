@@ -28,9 +28,28 @@ import com.liferay.arquillian.extension.junit.bridge.protocol.osgi.JMXOSGiProtoc
 import java.net.URL;
 
 import org.jboss.arquillian.container.spi.client.container.DeployableContainer;
+import org.jboss.arquillian.container.test.impl.client.container.ContainerContainerControllerCreator;
+import org.jboss.arquillian.container.test.impl.client.deployment.ContainerDeployerCreator;
+import org.jboss.arquillian.container.test.impl.enricher.resource.ContainerControllerProvider;
+import org.jboss.arquillian.container.test.impl.enricher.resource.ContainerURIResourceProvider;
+import org.jboss.arquillian.container.test.impl.enricher.resource.ContainerURLResourceProvider;
+import org.jboss.arquillian.container.test.impl.enricher.resource.DeployerProvider;
+import org.jboss.arquillian.container.test.impl.enricher.resource.InitialContextProvider;
+import org.jboss.arquillian.container.test.impl.execution.AfterLifecycleEventExecuter;
+import org.jboss.arquillian.container.test.impl.execution.BeforeLifecycleEventExecuter;
+import org.jboss.arquillian.container.test.impl.execution.ContainerTestExecuter;
+import org.jboss.arquillian.container.test.impl.execution.LocalTestExecuter;
 import org.jboss.arquillian.container.test.spi.RemoteLoadableExtension;
 import org.jboss.arquillian.container.test.spi.client.deployment.DeploymentScenarioGenerator;
 import org.jboss.arquillian.container.test.spi.client.protocol.Protocol;
+import org.jboss.arquillian.test.impl.TestContextHandler;
+import org.jboss.arquillian.test.impl.TestInstanceEnricher;
+import org.jboss.arquillian.test.impl.context.ClassContextImpl;
+import org.jboss.arquillian.test.impl.context.SuiteContextImpl;
+import org.jboss.arquillian.test.impl.context.TestContextImpl;
+import org.jboss.arquillian.test.impl.enricher.resource.ArquillianResourceTestEnricher;
+import org.jboss.arquillian.test.spi.TestEnricher;
+import org.jboss.arquillian.test.spi.enricher.resource.ResourceProvider;
 
 /**
  * @author Shuyang Zhou
@@ -59,7 +78,31 @@ public class LiferayArquillianJUnitBridgeExtension
 			extensionBuilder.service(Protocol.class, JMXOSGiProtocol.class);
 		}
 		else {
+			extensionBuilder.context(ClassContextImpl.class);
+			extensionBuilder.context(SuiteContextImpl.class);
+			extensionBuilder.context(TestContextImpl.class);
+			extensionBuilder.observer(AfterLifecycleEventExecuter.class);
+			extensionBuilder.observer(BeforeLifecycleEventExecuter.class);
+			extensionBuilder.observer(ContainerTestExecuter.class);
+			extensionBuilder.observer(ContainerDeployerCreator.class);
+			extensionBuilder.observer(
+				ContainerContainerControllerCreator.class);
 			extensionBuilder.observer(JUnitBridgeObserver.class);
+			extensionBuilder.observer(LocalTestExecuter.class);
+			extensionBuilder.observer(TestContextHandler.class);
+			extensionBuilder.observer(TestInstanceEnricher.class);
+			extensionBuilder.service(
+				ResourceProvider.class, ContainerControllerProvider.class);
+			extensionBuilder.service(
+				ResourceProvider.class, ContainerURIResourceProvider.class);
+			extensionBuilder.service(
+				ResourceProvider.class, ContainerURLResourceProvider.class);
+			extensionBuilder.service(
+				ResourceProvider.class, DeployerProvider.class);
+			extensionBuilder.service(
+				ResourceProvider.class, InitialContextProvider.class);
+			extensionBuilder.service(
+				TestEnricher.class, ArquillianResourceTestEnricher.class);
 		}
 	}
 

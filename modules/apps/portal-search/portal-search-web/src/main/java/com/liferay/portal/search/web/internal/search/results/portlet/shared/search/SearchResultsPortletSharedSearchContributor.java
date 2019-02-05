@@ -15,6 +15,7 @@
 package com.liferay.portal.search.web.internal.search.results.portlet.shared.search;
 
 import com.liferay.portal.kernel.search.QueryConfig;
+import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.search.web.internal.search.results.constants.SearchResultsPortletKeys;
 import com.liferay.portal.search.web.internal.search.results.portlet.SearchResultsPortletPreferences;
 import com.liferay.portal.search.web.internal.search.results.portlet.SearchResultsPortletPreferencesImpl;
@@ -25,6 +26,7 @@ import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchSe
 import java.util.Optional;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author André de Oliveira
@@ -43,7 +45,7 @@ public class SearchResultsPortletSharedSearchContributor
 
 		SearchResultsPortletPreferences searchResultsPortletPreferences =
 			new SearchResultsPortletPreferencesImpl(
-				portletSharedSearchSettings.getPortletPreferences());
+				portletSharedSearchSettings.getPortletPreferences(), props);
 
 		paginate(searchResultsPortletPreferences, portletSharedSearchSettings);
 
@@ -95,5 +97,8 @@ public class SearchResultsPortletSharedSearchContributor
 
 		portletSharedSearchSettings.setPaginationDelta(paginationDelta);
 	}
+
+	@Reference
+	protected Props props;
 
 }

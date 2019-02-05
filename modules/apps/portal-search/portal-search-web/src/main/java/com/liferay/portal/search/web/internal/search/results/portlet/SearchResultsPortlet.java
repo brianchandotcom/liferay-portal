@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.util.FastDateFormatFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.constants.SearchContextAttributes;
 import com.liferay.portal.search.summary.SummaryBuilderFactory;
@@ -159,7 +160,8 @@ public class SearchResultsPortlet extends MVCPortlet {
 		SearchResultsPortletPreferences searchResultsPortletPreferences =
 			new SearchResultsPortletPreferencesImpl(
 				portletSharedSearchResponse.getPortletPreferences(
-					renderRequest));
+					renderRequest),
+				props);
 
 		searchResultsPortletDisplayContext.setSearchContainer(
 			buildSearchContainer(
@@ -239,7 +241,8 @@ public class SearchResultsPortlet extends MVCPortlet {
 		SearchResultsPortletPreferences searchResultsPortletPreferences =
 			new SearchResultsPortletPreferencesImpl(
 				portletSharedSearchResponse.getPortletPreferences(
-					renderRequest));
+					renderRequest),
+				props);
 
 		ThemeDisplay themeDisplay = portletSharedSearchResponse.getThemeDisplay(
 			renderRequest);
@@ -427,6 +430,9 @@ public class SearchResultsPortlet extends MVCPortlet {
 
 	@Reference
 	protected PortletSharedSearchRequest portletSharedSearchRequest;
+
+	@Reference
+	protected Props props;
 
 	@Reference
 	protected ResourceActions resourceActions;

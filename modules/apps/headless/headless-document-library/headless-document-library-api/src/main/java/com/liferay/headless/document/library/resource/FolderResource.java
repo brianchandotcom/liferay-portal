@@ -47,20 +47,20 @@ public interface FolderResource {
 	@DELETE
 	@Path("/folder/{id}")
 	@Produces("application/json")
-	@RequiresScope("headless-document-library-application.read")
+	@RequiresScope("everything.read")
 	public Response deleteFolder(@PathParam("id") Long id) throws Exception;
 
 	@GET
 	@Path("/documents-repository/{id}")
 	@Produces("application/json")
-	@RequiresScope("headless-document-library-application.read")
+	@RequiresScope("everything.read")
 	public Folder getDocumentsRepository(@PathParam("id") Long id)
 		throws Exception;
 
 	@GET
 	@Path("/documents-repository/{parent-id}/folder")
 	@Produces("application/json")
-	@RequiresScope("headless-document-library-application.read")
+	@RequiresScope("everything.read")
 	public Page<Folder> getDocumentsRepositoryFolderPage(
 			@PathParam("parent-id") Long parentId,
 			@Context Pagination pagination)
@@ -69,13 +69,13 @@ public interface FolderResource {
 	@GET
 	@Path("/folder/{id}")
 	@Produces("application/json")
-	@RequiresScope("headless-document-library-application.read")
+	@RequiresScope("everything.read")
 	public Folder getFolder(@PathParam("id") Long id) throws Exception;
 
 	@GET
 	@Path("/folder/{parent-id}/folder")
 	@Produces("application/json")
-	@RequiresScope("headless-document-library-application.read")
+	@RequiresScope("everything.read")
 	public Page<Folder> getFolderFolderPage(
 			@PathParam("parent-id") Long parentId,
 			@Context Pagination pagination)
@@ -85,7 +85,7 @@ public interface FolderResource {
 	@Path("/documents-repository/{parent-id}/folder")
 	@POST
 	@Produces("application/json")
-	@RequiresScope("headless-document-library-application.read")
+	@RequiresScope("everything.read")
 	public Folder postDocumentsRepositoryFolder(
 			@PathParam("parent-id") Long parentId)
 		throws Exception;
@@ -94,7 +94,7 @@ public interface FolderResource {
 	@Path("/documents-repository/{parent-id}/folder/batch-create")
 	@POST
 	@Produces("application/json")
-	@RequiresScope("headless-document-library-application.write")
+	@RequiresScope("everything.write")
 	public Folder postDocumentsRepositoryFolderBatchCreate(
 			@PathParam("parent-id") Long parentId)
 		throws Exception;
@@ -103,7 +103,7 @@ public interface FolderResource {
 	@Path("/folder/{parent-id}/folder")
 	@POST
 	@Produces("application/json")
-	@RequiresScope("headless-document-library-application.read")
+	@RequiresScope("everything.read")
 	public Folder postFolderFolder(@PathParam("parent-id") Long parentId)
 		throws Exception;
 
@@ -111,7 +111,7 @@ public interface FolderResource {
 	@Path("/folder/{parent-id}/folder/batch-create")
 	@POST
 	@Produces("application/json")
-	@RequiresScope("headless-document-library-application.write")
+	@RequiresScope("everything.write")
 	public Folder postFolderFolderBatchCreate(
 			@PathParam("parent-id") Long parentId)
 		throws Exception;
@@ -120,7 +120,7 @@ public interface FolderResource {
 	@Path("/folder/{id}")
 	@Produces("application/json")
 	@PUT
-	@RequiresScope("headless-document-library-application.read")
+	@RequiresScope("everything.read")
 	public Folder putFolder(@PathParam("id") Long id) throws Exception;
 
 }

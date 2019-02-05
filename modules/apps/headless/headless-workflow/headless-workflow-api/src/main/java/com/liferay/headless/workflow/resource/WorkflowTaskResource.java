@@ -44,7 +44,7 @@ public interface WorkflowTaskResource {
 	@GET
 	@Path("/roles/{parent-id}/workflow-tasks")
 	@Produces("application/json")
-	@RequiresScope("headless-workflow-application.read")
+	@RequiresScope("everything.read")
 	public Page<WorkflowTask> getRolesWorkflowTasksPage(
 			@PathParam("parent-id") Long parentId,
 			@Context Pagination pagination)
@@ -53,14 +53,14 @@ public interface WorkflowTaskResource {
 	@GET
 	@Path("/workflow-tasks/{id}")
 	@Produces("application/json")
-	@RequiresScope("headless-workflow-application.read")
+	@RequiresScope("everything.read")
 	public WorkflowTask getWorkflowTask(@PathParam("id") Long id)
 		throws Exception;
 
 	@GET
 	@Path("/workflow-tasks")
 	@Produces("application/json")
-	@RequiresScope("headless-workflow-application.read")
+	@RequiresScope("everything.read")
 	public Page<WorkflowTask> getWorkflowTasksPage(
 			@PathParam("generic-parent-id") Object genericParentId,
 			@Context Pagination pagination)
@@ -70,7 +70,7 @@ public interface WorkflowTaskResource {
 	@Path("/workflow-tasks/{id}/assign-to-me")
 	@POST
 	@Produces("application/json")
-	@RequiresScope("headless-workflow-application.write")
+	@RequiresScope("everything.write")
 	public WorkflowTask postWorkflowTasksAssignToMe(@PathParam("id") Long id)
 		throws Exception;
 
@@ -78,7 +78,7 @@ public interface WorkflowTaskResource {
 	@Path("/workflow-tasks/{id}/assign-to-user")
 	@POST
 	@Produces("application/json")
-	@RequiresScope("headless-workflow-application.write")
+	@RequiresScope("everything.write")
 	public WorkflowTask postWorkflowTasksAssignToUser(@PathParam("id") Long id)
 		throws Exception;
 
@@ -86,7 +86,7 @@ public interface WorkflowTaskResource {
 	@Path("/workflow-tasks/{id}/change-transition")
 	@POST
 	@Produces("application/json")
-	@RequiresScope("headless-workflow-application.write")
+	@RequiresScope("everything.write")
 	public WorkflowTask postWorkflowTasksChangeTransition(
 			@PathParam("id") Long id)
 		throws Exception;
@@ -95,7 +95,7 @@ public interface WorkflowTaskResource {
 	@Path("/workflow-tasks/{id}/update-due-date")
 	@POST
 	@Produces("application/json")
-	@RequiresScope("headless-workflow-application.write")
+	@RequiresScope("everything.write")
 	public WorkflowTask postWorkflowTasksUpdateDueDate(@PathParam("id") Long id)
 		throws Exception;
 

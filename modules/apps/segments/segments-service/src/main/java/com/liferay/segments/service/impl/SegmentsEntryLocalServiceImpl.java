@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -246,12 +247,14 @@ public class SegmentsEntryLocalServiceImpl
 
 	@Override
 	public BaseModelSearchResult<SegmentsEntry> searchSegmentsEntries(
-			long companyId, long groupId, String keywords, int start, int end,
+			long companyId, long groupId, String keywords,
+			boolean includeAncestorSegmentsEntries, int start, int end,
 			Sort sort)
 		throws PortalException {
 
 		SearchContext searchContext = buildSearchContext(
-			companyId, groupId, keywords, start, end, sort);
+			companyId, groupId, keywords, includeAncestorSegmentsEntries, start,
+			end, sort);
 
 		return segmentsEntryLocalService.searchSegmentsEntries(searchContext);
 	}
@@ -304,8 +307,8 @@ public class SegmentsEntryLocalServiceImpl
 	}
 
 	protected SearchContext buildSearchContext(
-		long companyId, long groupId, String keywords, int start, int end,
-		Sort sort) {
+		long companyId, long groupId, String keywords,
+		boolean includeAncestorSegmentsEntries, int start, int end, Sort sort) {
 
 		SearchContext searchContext = new SearchContext();
 
@@ -328,7 +331,15 @@ public class SegmentsEntryLocalServiceImpl
 
 		searchContext.setCompanyId(companyId);
 		searchContext.setEnd(end);
-		searchContext.setGroupIds(new long[] {groupId});
+
+		long[] groupIds = {groupId};
+
+		if (includeAncestorSegmentsEntries) {
+			groupIds = ArrayUtil.append(
+				groupIds, PortalUtil.getAncestorSiteGroupIds(groupId));
+		}
+
+		searchContext.setGroupIds(groupIds);
 
 		if (Validator.isNotNull(keywords)) {
 			searchContext.setKeywords(keywords);

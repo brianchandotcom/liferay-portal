@@ -112,7 +112,8 @@ public class SegmentsEntryServiceImpl extends SegmentsEntryServiceBaseImpl {
 
 	@Override
 	public BaseModelSearchResult<SegmentsEntry> searchSegmentsEntries(
-			long companyId, long groupId, String keywords, int start, int end,
+			long companyId, long groupId, String keywords,
+			boolean includeAncestorSegmentsEntries, int start, int end,
 			Sort sort)
 		throws PortalException {
 
@@ -120,7 +121,8 @@ public class SegmentsEntryServiceImpl extends SegmentsEntryServiceBaseImpl {
 			getPermissionChecker(), groupId, ActionKeys.VIEW);
 
 		return segmentsEntryLocalService.searchSegmentsEntries(
-			companyId, groupId, keywords, start, end, sort);
+			companyId, groupId, keywords, includeAncestorSegmentsEntries, start,
+			end, sort);
 	}
 
 	@Override

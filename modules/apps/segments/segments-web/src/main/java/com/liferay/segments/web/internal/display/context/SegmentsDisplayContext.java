@@ -178,7 +178,7 @@ public class SegmentsDisplayContext {
 			BaseModelSearchResult<SegmentsEntry> baseModelSearchResult =
 				_segmentsEntryService.searchSegmentsEntries(
 					_themeDisplay.getCompanyId(),
-					_themeDisplay.getScopeGroupId(), _getKeywords(),
+					_themeDisplay.getScopeGroupId(), _getKeywords(), true,
 					searchContainer.getStart(), searchContainer.getEnd(),
 					_getSort());
 

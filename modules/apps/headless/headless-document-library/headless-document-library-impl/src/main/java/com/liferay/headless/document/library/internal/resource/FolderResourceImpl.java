@@ -24,10 +24,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.vulcan.context.Pagination;
 import com.liferay.portal.vulcan.dto.Page;
 
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
 import javax.ws.rs.InternalServerErrorException;
 import javax.ws.rs.NotFoundException;
 

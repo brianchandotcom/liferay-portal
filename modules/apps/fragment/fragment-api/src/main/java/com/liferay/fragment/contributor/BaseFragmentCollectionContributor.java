@@ -28,14 +28,11 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Reference;
@@ -45,20 +42,6 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class BaseFragmentCollectionContributor
 	implements FragmentCollectionContributor {
-
-	@Override
-	public List<FragmentEntry> getFragmentEntries() {
-		Collection<List<FragmentEntry>> fragmentEntryCollection =
-			_fragmentEntries.values();
-
-		Stream<List<FragmentEntry>> stream = fragmentEntryCollection.stream();
-
-		return stream.flatMap(
-			fragmentEntriesList -> fragmentEntriesList.stream()
-		).collect(
-			Collectors.toList()
-		);
-	}
 
 	@Override
 	public List<FragmentEntry> getFragmentEntries(int type) {

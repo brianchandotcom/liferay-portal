@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portlet.configuration.web.internal.constants.PortletConfigurationWebKeys;
 import com.liferay.portlet.configuration.web.internal.util.comparator.ArchivedSettingsModifiedDateComparator;
 import com.liferay.portlet.configuration.web.internal.util.comparator.ArchivedSettingsNameComparator;
 
@@ -50,6 +51,9 @@ public class PortletConfigurationTemplatesDisplayContext {
 		_request = request;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
+
+		_moduleName = (String)renderRequest.getAttribute(
+			PortletConfigurationWebKeys.MODULE_NAME);
 	}
 
 	public SearchContainer getArchivedSettingsSearchContainer() {
@@ -124,6 +128,10 @@ public class PortletConfigurationTemplatesDisplayContext {
 		_displayStyle = ParamUtil.getString(_request, "displayStyle", "list");
 
 		return _displayStyle;
+	}
+
+	public String getModuleName() {
+		return _moduleName;
 	}
 
 	public String getOrderByCol() {
@@ -209,6 +217,7 @@ public class PortletConfigurationTemplatesDisplayContext {
 
 	private SearchContainer _archivedSettingsSearch;
 	private String _displayStyle;
+	private final String _moduleName;
 	private String _orderByCol;
 	private String _orderByType;
 	private String _portletResource;

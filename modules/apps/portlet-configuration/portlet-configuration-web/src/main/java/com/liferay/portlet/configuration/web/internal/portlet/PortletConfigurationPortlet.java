@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.configuration.web.internal.portlet;
 
+import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -66,6 +67,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.configuration.kernel.util.PortletConfigurationUtil;
 import com.liferay.portlet.configuration.web.internal.constants.PortletConfigurationPortletKeys;
+import com.liferay.portlet.configuration.web.internal.constants.PortletConfigurationWebKeys;
 import com.liferay.portlet.portletconfiguration.action.ActionUtil;
 import com.liferay.portlet.portletconfiguration.util.PublicRenderParameterConfiguration;
 
@@ -659,6 +661,14 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 
 				renderRequest = ActionUtil.getWrappedRenderRequest(
 					renderRequest, portletPreferences);
+
+				if (mvcPath.endsWith("edit_configuration_templates.jsp")) {
+					String moduleName = _npmResolver.resolveModuleName(
+						"portlet-configuration-web");
+
+					renderRequest.setAttribute(
+						PortletConfigurationWebKeys.MODULE_NAME, moduleName);
+				}
 			}
 
 			renderResponse.setTitle(
@@ -1072,6 +1082,10 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 
 	private GroupLocalService _groupLocalService;
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private NPMResolver _npmResolver;
+
 	private PermissionService _permissionService;
 
 	@Reference

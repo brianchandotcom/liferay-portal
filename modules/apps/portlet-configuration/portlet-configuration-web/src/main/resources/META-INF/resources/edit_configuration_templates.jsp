@@ -137,7 +137,7 @@ PortletConfigurationTemplatesManagementToolbarDisplayContext portletConfiguratio
 	</aui:form>
 </div>
 
-<aui:script require='<%= npmResolvedPackageName + "/js/ManagementToolbarDefaultEventHandler.es as ManagementToolbarDefaultEventHandler" %>'>
+<aui:script require='<%= portletConfigurationTemplatesDisplayContext.getModuleName() + "/js/ManagementToolbarDefaultEventHandler.es as ManagementToolbarDefaultEventHandler" %>'>
 	Liferay.component(
 		'<%= portletConfigurationTemplatesManagementToolbarDisplayContext.getDefaultEventHandler() %>',
 		new ManagementToolbarDefaultEventHandler.default(

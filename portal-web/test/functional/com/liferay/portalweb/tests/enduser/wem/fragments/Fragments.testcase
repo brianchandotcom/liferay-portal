@@ -156,9 +156,13 @@ definition {
 		}
 
 		task ("Assert the section fragment cannot be deleted because it is being used by the page template") {
-			LexiconEntry.delete(
-				failure = "Error:The fragment entry cannot be deleted because it is required by one or more page templates.",
-				rowEntry = "Fragment Name"
+			FragmentsAdmin.deleteFragment(
+				fragmentName = "Fragment Name"
+			);
+
+			AssertTextEquals(
+				locator1 = "Message#ERROR",
+				value1 = "Error:The fragment entry cannot be deleted because it is required by one or more page templates."
 			);
 		}
 	}

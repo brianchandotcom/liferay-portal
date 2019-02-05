@@ -38,7 +38,7 @@ public abstract class BaseRoleResourceImpl implements RoleResource {
 			Long parentId, Pagination pagination)
 		throws Exception {
 
-		return new Page<>(Collections.emptyList(), 0);
+		return Page.of(Collections.emptyList());
 	}
 
 	@Override
@@ -48,7 +48,7 @@ public abstract class BaseRoleResourceImpl implements RoleResource {
 
 	@Override
 	public Page<Role> getRolesPage(Pagination pagination) throws Exception {
-		return new Page<>(Collections.emptyList(), 0);
+		return Page.of(Collections.emptyList());
 	}
 
 	@Override
@@ -56,7 +56,7 @@ public abstract class BaseRoleResourceImpl implements RoleResource {
 			Long parentId, Pagination pagination)
 		throws Exception {
 
-		return new Page<>(Collections.emptyList(), 0);
+		return Page.of(Collections.emptyList());
 	}
 
 	protected <T, R> List<R> transform(

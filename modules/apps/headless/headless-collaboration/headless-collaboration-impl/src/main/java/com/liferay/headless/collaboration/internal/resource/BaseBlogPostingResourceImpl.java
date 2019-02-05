@@ -53,7 +53,7 @@ public abstract class BaseBlogPostingResourceImpl
 			Long parentId, Pagination pagination)
 		throws Exception {
 
-		return new Page<>(Collections.emptyList(), 0);
+		return Page.of(Collections.emptyList());
 	}
 
 	@Override

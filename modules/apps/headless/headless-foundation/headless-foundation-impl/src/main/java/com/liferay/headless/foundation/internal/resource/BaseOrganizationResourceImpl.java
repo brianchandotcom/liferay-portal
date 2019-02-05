@@ -39,7 +39,7 @@ public abstract class BaseOrganizationResourceImpl
 			Long parentId, Pagination pagination)
 		throws Exception {
 
-		return new Page<>(Collections.emptyList(), 0);
+		return Page.of(Collections.emptyList());
 	}
 
 	@Override
@@ -52,14 +52,14 @@ public abstract class BaseOrganizationResourceImpl
 			Long parentId, Pagination pagination)
 		throws Exception {
 
-		return new Page<>(Collections.emptyList(), 0);
+		return Page.of(Collections.emptyList());
 	}
 
 	@Override
 	public Page<Organization> getOrganizationPage(Pagination pagination)
 		throws Exception {
 
-		return new Page<>(Collections.emptyList(), 0);
+		return Page.of(Collections.emptyList());
 	}
 
 	@Override
@@ -67,7 +67,7 @@ public abstract class BaseOrganizationResourceImpl
 			Long parentId, Pagination pagination)
 		throws Exception {
 
-		return new Page<>(Collections.emptyList(), 0);
+		return Page.of(Collections.emptyList());
 	}
 
 	protected <T, R> List<R> transform(

@@ -17,16 +17,35 @@ package com.liferay.data.engine.io;
 import java.util.Map;
 
 /**
+ * Provides the response builders from the serialize/deserialize
+ * process of the Data Record field values
+ *
  * @author Leonardo Barros
+ * @review
  */
 public class DEDataRecordValuesResponseBuilder {
 
+	/**
+	 * Returns the deserialize response builder of the Data Record field values
+	 *
+	 * @param values The deserialized data record field values
+	 * @return the response builder
+	 * @review
+	 */
 	public static DEDataRecordValuesDeserializerApplyResponse.Builder
 		deserializeBuilder(Map<String, Object> values) {
 
 		return new DEDataRecordValuesDeserializerApplyResponse.Builder(values);
 	}
 
+	/**
+	 * Returns the serialize response builder of the Data Record field values
+	 *
+	 * @param content The serialized data record field values
+	 * @param deDataDefinition the Data Definition related do the Data Record
+	 * @return the response builder
+	 * @review
+	 */
 	public static DEDataRecordValuesSerializerApplyResponse.Builder
 		serializeBuilder(String content) {
 

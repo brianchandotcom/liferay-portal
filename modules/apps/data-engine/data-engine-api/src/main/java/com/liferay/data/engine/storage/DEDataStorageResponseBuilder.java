@@ -17,22 +17,46 @@ package com.liferay.data.engine.storage;
 import java.util.Map;
 
 /**
+ * Provides the response builders from the data storage API
+ *
  * @author Leonardo Barros
+ * @review
  */
 public class DEDataStorageResponseBuilder {
 
+	/**
+	 * Returns the delete response builder of the data storage
+	 *
+	 * @param deDataStorageId The id of the deleted data storage.
+	 * @return the response builder
+	 * @review
+	 */
 	public static DEDataStorageDeleteResponse.Builder deleteBuilder(
 		long deDataStorageId) {
 
 		return new DEDataStorageDeleteResponse.Builder(deDataStorageId);
 	}
 
+	/**
+	 * Returns the get response builder of the data storage
+	 *
+	 * @param values The field values of the retrieved data storage.
+	 * @return the response builder
+	 * @review
+	 */
 	public static DEDataStorageGetResponse.Builder getBuilder(
 		Map<String, Object> values) {
 
 		return new DEDataStorageGetResponse.Builder(values);
 	}
 
+	/**
+	 * Returns the save response builder of the data storage
+	 *
+	 * @param deDataStorageId The id of the saved data storage.
+	 * @return the response builder
+	 * @review
+	 */
 	public static DEDataStorageSaveResponse.Builder saveBuilder(
 		long deDataStorageId) {
 

@@ -24,10 +24,19 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
+ * This class represents a record belonging to a {@link DEDataRecordCollection}.
+ *
  * @author Leonardo Barros
+ * @review
  */
 public class DEDataRecord implements Serializable {
 
+	/**
+	 * Overrided equals method
+	 * @param obj
+	 * @return
+	 * @review
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -55,6 +64,12 @@ public class DEDataRecord implements Serializable {
 		return false;
 	}
 
+	/**
+	 * Returns the data definition related to the data record
+	 *
+	 * @return the data definition
+	 * @review
+	 */
 	public DEDataDefinition getDEDataDefinition() {
 		DEDataRecordCollection deDataRecordCollection =
 			getDEDataRecordCollection();
@@ -66,10 +81,22 @@ public class DEDataRecord implements Serializable {
 		return deDataRecordCollection.getDEDataDefinition();
 	}
 
+	/**
+	 * Returns the data record collection related to the data record
+	 *
+	 * @return the data record collection
+	 * @review
+	 */
 	public DEDataRecordCollection getDEDataRecordCollection() {
 		return _deDataRecordCollection;
 	}
 
+	/**
+	 * Returns the id from the data record collection related to the data record
+	 *
+	 * @return the data record collection id
+	 * @review
+	 */
 	public long getDEDataRecordCollectionId() {
 		DEDataRecordCollection deDataRecordCollection =
 			getDEDataRecordCollection();
@@ -81,14 +108,31 @@ public class DEDataRecord implements Serializable {
 		return deDataRecordCollection.getDEDataRecordCollectionId();
 	}
 
+	/**
+	 * Returns the id from the data record
+	 *
+	 * @return the data record id
+	 * @review
+	 */
 	public long getDEDataRecordId() {
 		return _deDataRecordId;
 	}
 
+	/**
+	 * Returns the field values related to the data record
+	 *
+	 * @return a map of field values
+	 * @review
+	 */
 	public Map<String, Object> getValues() {
 		return Collections.unmodifiableMap(_values);
 	}
 
+	/**
+	 * Overrided hashCode method
+	 * @return
+	 * @review
+	 */
 	@Override
 	public int hashCode() {
 		int hash = HashUtil.hash(0, _deDataRecordId);
@@ -98,20 +142,46 @@ public class DEDataRecord implements Serializable {
 		return HashUtil.hash(hash, _values.hashCode());
 	}
 
+	/**
+	 * Sets the data record collection related to the data record
+	 *
+	 * @param deDataRecordCollection the data record collection
+	 * @review
+	 */
 	public void setDEDataRecordCollection(
 		DEDataRecordCollection deDataRecordCollection) {
 
 		_deDataRecordCollection = deDataRecordCollection;
 	}
 
+	/**
+	 * Sets the id from the data record. If no id is passed it's assumed that a create
+	 * operation will be performed. If the id is informed, an update operation
+	 * will be executed
+	 *
+	 * @param deDataRecordId the Id of the Data Record
+	 * @review
+	 */
 	public void setDEDataRecordId(long deDataRecordId) {
 		_deDataRecordId = deDataRecordId;
 	}
 
+	/**
+	 * Sets the Data Record field values of the Data Record
+	 *
+	 * @param deDataRecordId the data record id
+	 * @review
+	 */
 	public void setValues(Map<String, Object> values) {
 		_values = values;
 	}
 
+	/**
+	 * Returns true if the values passed as parameter are equals to the Data Record values
+	 *
+	 * @param values field values
+	 * @review
+	 */
 	protected boolean equals(Map<String, Object> values) {
 		boolean result = true;
 

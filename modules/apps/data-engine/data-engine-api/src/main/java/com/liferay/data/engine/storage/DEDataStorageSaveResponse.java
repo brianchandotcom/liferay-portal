@@ -15,20 +15,44 @@
 package com.liferay.data.engine.storage;
 
 /**
+ * Response class used as a return value for the data storage save operation
+ *
  * @author Leonardo Barros
+ *
+ * @review
  */
 public final class DEDataStorageSaveResponse {
 
+	/**
+	 * Returns the id of the saved data storage.
+	 * @review
+	 * @return saved data storage id
+	 */
 	public long getDEDataStorageId() {
 		return _deDataStorageId;
 	}
 
+	/**
+	 * Inner builder that assembles the response.
+	 * @review
+	 */
 	public static final class Builder {
 
+		/**
+		 * Builder constructor that receives the data storage id as parameter.
+		 * @param deDataStorageId The data storage id
+		 * @review
+		 */
 		public Builder(long deDataStorageId) {
 			_deDataStorageSaveResponse._deDataStorageId = deDataStorageId;
 		}
 
+		/**
+		 * Builds the response and returns the {@link DEDataStorageSaveResponse}
+		 * object.
+		 * @review
+		 * @return The response object.
+		 */
 		public DEDataStorageSaveResponse build() {
 			return _deDataStorageSaveResponse;
 		}

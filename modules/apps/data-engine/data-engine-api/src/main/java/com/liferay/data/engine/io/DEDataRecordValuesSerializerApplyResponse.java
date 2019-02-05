@@ -15,20 +15,44 @@
 package com.liferay.data.engine.io;
 
 /**
+ * Serialize Data Record field values response class.
+ *
  * @author Leonardo Barros
+ *
+ * @review
  */
 public class DEDataRecordValuesSerializerApplyResponse {
 
+	/**
+	 * Return the serialized field values string content.
+	 * @return The serialized field values.
+	 * @review
+	 */
 	public String getContent() {
 		return _content;
 	}
 
+	/**
+	* Inner builder that assembles the response
+	* @review
+	*/
 	public static class Builder {
 
+		/**
+		 * Creates a builder receiving the serialized content.
+		 * @param content The serialized content String
+		 * @return the builder object
+		 * @review
+		 */
 		public Builder(String content) {
 			_deDataRecordValuesSerializerApplyResponse._content = content;
 		}
 
+		/**
+		 * Builds the response object
+		 * @return the {@link DEDataRecordValuesSerializerApplyResponse} object.
+		 * @review
+		 */
 		public DEDataRecordValuesSerializerApplyResponse build() {
 			return _deDataRecordValuesSerializerApplyResponse;
 		}

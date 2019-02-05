@@ -15,20 +15,43 @@
 package com.liferay.data.engine.storage;
 
 /**
+ * Request class used to delete a data record on a data storage
+ *
  * @author Leonardo Barros
+ * @review
  */
 public final class DEDataStorageDeleteRequest {
 
+	/**
+	 * Returns the data storage id to be deleted.
+	 * @review
+	 * @return the data storage id
+	 */
 	public long getDEDataStorageId() {
 		return _deDataStorageId;
 	}
 
+	/**
+	 * Inner builder that assembles the request
+	 * @review
+	 */
 	public static final class Builder {
 
+		/**
+		 * Builder constructor that receives the data storage id as parameter
+		 * @param deDataStorageId The data storage id
+		 * @review
+		 */
 		public Builder(long deDataStorageId) {
 			_deDataDefinitionDeleteRequest._deDataStorageId = deDataStorageId;
 		}
 
+		/**
+		 * Builds the request and return the {@link DEDataStorageDeleteRequest}
+		 * object.
+		 * @return the {@link DEDataStorageDeleteRequest} object.
+		 * @review
+		 */
 		public DEDataStorageDeleteRequest build() {
 			return _deDataDefinitionDeleteRequest;
 		}

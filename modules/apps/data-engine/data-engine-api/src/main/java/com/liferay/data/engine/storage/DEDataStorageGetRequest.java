@@ -17,20 +17,43 @@ package com.liferay.data.engine.storage;
 import com.liferay.data.engine.model.DEDataDefinition;
 
 /**
+ * Request class used to retrieve a data record on a data storage
+ *
  * @author Leonardo Barros
+ * @review
  */
 public final class DEDataStorageGetRequest {
 
+	/**
+	 * Returns the {@link DEDataDefinition} associated to that data storage
+	 * @review
+	 * @return the {@link DEDataDefinition}
+	 */
 	public DEDataDefinition getDEDataDefinition() {
 		return _deDataDefinition;
 	}
 
+	/**
+	 * Returns the id from the data storage to be retrieved
+	 * @review
+	 * @return the data storage id
+	 */
 	public long getDEDataStorageId() {
 		return _deDataStorageId;
 	}
 
+	/**
+	 * Inner builder that assembles the request
+	 * @review
+	 */
 	public static class Builder {
 
+		/**
+		 * Builder constructor that receives the data storage id and a data definition as parameters
+		 * @param deDataStorageId The id from the data storage to be retrieved
+		 * @param deDataDefinition The {@link DEDataDefinition} associated to that data storage
+		 * @review
+		 */
 		public Builder(
 			long deDataStorageId, DEDataDefinition deDataDefinition) {
 
@@ -38,6 +61,12 @@ public final class DEDataStorageGetRequest {
 			_deDataStorageGetRequest._deDataDefinition = deDataDefinition;
 		}
 
+		/**
+		 * Builds the request and return the {@link DEDataStorageGetRequest}
+		 * object.
+		 * @return the {@link DEDataStorageGetRequest} object.
+		 * @review
+		 */
 		public DEDataStorageGetRequest build() {
 			return _deDataStorageGetRequest;
 		}

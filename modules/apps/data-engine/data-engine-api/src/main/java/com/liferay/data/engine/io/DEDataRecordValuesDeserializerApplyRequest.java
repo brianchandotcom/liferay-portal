@@ -17,26 +17,55 @@ package com.liferay.data.engine.io;
 import com.liferay.data.engine.model.DEDataDefinition;
 
 /**
+ * Data Record field values deserializer request
+ *
  * @author Leonardo Barros
+ * @review
  */
 public final class DEDataRecordValuesDeserializerApplyRequest {
 
+	/**
+	 * The serialized Data Record field values.
+	 * @return The serialized content
+	 * @review
+	 */
 	public String getContent() {
 		return _content;
 	}
 
+	/**
+	 * The {@link DEDataDefinition} used to deserialize the field values
+	 * @return DEDataDefinition
+	 * @review
+	 */
 	public DEDataDefinition getDEDataDefinition() {
 		return _deDataDefinition;
 	}
 
+	/**
+	 * Inner Builder
+	 * @review
+	 */
 	public static final class Builder {
 
+		/**
+		 * Creates a Builder with the serialized content and a {@link DEDataDefinition}.
+		 * @param content The serialized Data Record field values
+		 * @param deDataDefinition The {@link DEDataDefinition} used to deserialize the field values
+		 * @return the builder
+		 * @review
+		 */
 		public Builder(String content, DEDataDefinition deDataDefinition) {
 			_deDataRecordDeserializerApplyRequest._content = content;
 			_deDataRecordDeserializerApplyRequest._deDataDefinition =
 				deDataDefinition;
 		}
 
+		/**
+		 * Creates the builder.
+		 * @return the builder object.
+		 * @review
+		 */
 		public DEDataRecordValuesDeserializerApplyRequest build() {
 			return _deDataRecordDeserializerApplyRequest;
 		}

@@ -15,10 +15,22 @@
 package com.liferay.data.engine.io;
 
 /**
+ * Serializer interface for DEDataRecord field values.
+ *
  * @author Leonardo Barros
+ *
+ * @review
  */
 public interface DEDataRecordValuesSerializer {
 
+	/**
+	 * Performs the serialization and return the content as a response object.
+	 * @param deDataRecordValuesSerializerApplyRequest A {@link DEDataRecordValuesSerializerApplyRequest}
+	 * object containing a map of field values and a DEDataDefinition
+	 * @return A {@link DEDataRecordValuesSerializerApplyResponse} object containing
+	 * the serialized Data Record field values.
+	 * @review
+	 */
 	public DEDataRecordValuesSerializerApplyResponse apply(
 		DEDataRecordValuesSerializerApplyRequest
 			deDataRecordValuesSerializerApplyRequest);

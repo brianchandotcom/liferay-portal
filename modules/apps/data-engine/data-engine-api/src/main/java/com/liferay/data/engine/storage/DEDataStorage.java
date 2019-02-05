@@ -17,18 +17,45 @@ package com.liferay.data.engine.storage;
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
+ * Provides the remote service interface for the Data Storage.
+ *
  * @author Leonardo Barros
+ * @review
  */
 public interface DEDataStorage {
 
+	/**
+	 * Deletes a data record on a data storage using the id passed
+	 * on the delete request.
+	 *
+	 * @param deDataStorageDeleteRequest
+	 * @return {@link DEDataStorageDeleteResponse}
+	 * @review
+	 */
 	public DEDataStorageDeleteResponse delete(
 			DEDataStorageDeleteRequest deDataStorageDeleteRequest)
 		throws PortalException;
 
+	/**
+	 * Retrieves a data record on a data storage using an id
+	 * and a data definition passed on the get request.
+	 *
+	 * @param deDataStorageGetRequest
+	 * @return {@link DEDataStorageGetResponse}
+	 * @review
+	 */
 	public DEDataStorageGetResponse get(
 			DEDataStorageGetRequest deDataStorageGetRequest)
 		throws PortalException;
 
+	/**
+	 * Saves a data record on a data storage using the data record
+	 * passed on the get request.
+	 *
+	 * @param deDataStorageSaveRequest
+	 * @return {@link DEDataStorageSaveResponse}
+	 * @review
+	 */
 	public DEDataStorageSaveResponse save(
 			DEDataStorageSaveRequest deDataStorageSaveRequest)
 		throws PortalException;

@@ -20,20 +20,45 @@ import java.util.Collections;
 import java.util.Map;
 
 /**
+ * Data Record field values serialize request class.
+ *
  * @author Leonardo Barros
+ *
+ * @review
  */
 public final class DEDataRecordValuesSerializerApplyRequest {
 
+	/**
+	 * Returns the {@link DEDataDefinition} used to serialize the Data Record field values
+	 * @return the DEDataDefinition object
+	 * @review
+	 */
 	public DEDataDefinition getDEDataDefinition() {
 		return _deDataDefinition;
 	}
 
+	/**
+	 * Returns the Data Record field values that will be serialized
+	 * @return the field values
+	 * @review
+	 */
 	public Map<String, Object> getValues() {
 		return Collections.unmodifiableMap(_values);
 	}
 
+	/**
+	* Inner builder that assembles the request.
+	* @review
+	*/
 	public static final class Builder {
 
+		/**
+		 * Creates a new Builder with a deDataDefinition and field values as parameters
+		 * @param deDataDefinition The {@link DEDataDefinition} used to serialize the Data Record field values
+		 * @param deDataLayout The Data Record field values that will be serialized
+		 * @return the builder object
+		 * @review
+		 */
 		public Builder(
 			Map<String, Object> values, DEDataDefinition deDataDefinition) {
 
@@ -42,6 +67,11 @@ public final class DEDataRecordValuesSerializerApplyRequest {
 				deDataDefinition;
 		}
 
+		/**
+		 * Builds the request.
+		 * @return the {@link DEDataRecordValuesSerializerApplyRequest} object.
+		 * @review
+		 */
 		public DEDataRecordValuesSerializerApplyRequest build() {
 			return _deDataRecordSerializerApplyRequest;
 		}

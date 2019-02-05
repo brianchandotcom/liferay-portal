@@ -17,20 +17,44 @@ package com.liferay.data.engine.service;
 import com.liferay.data.engine.model.DEDataRecord;
 
 /**
+ * Response class used as a return value for the data record save operation
+ *
  * @author Leonardo Barros
+ * @review
  */
 public final class DEDataRecordCollectionSaveRecordResponse {
 
+	/**
+	 * Returns the saved data record.
+	 * @review
+	 * @return the data record
+	 */
 	public DEDataRecord getDEDataRecord() {
 		return _deDataRecord;
 	}
 
+	/**
+	 * Inner builder that assembles the response.
+	 * @review
+	 */
 	public static final class Builder {
 
+		/**
+		 * Instantiate the builder providing a deDataRecord
+		 * @review
+		 * @param deDataRecord
+		 * @return The builder
+		 */
 		public static Builder newBuilder(DEDataRecord deDataRecord) {
 			return new Builder(deDataRecord);
 		}
 
+		/**
+		 * Builds a response directly from a {@link DEDataRecord}.
+		 * @review
+		 * @param deDataRecord the saved data record
+		 * @return The response object
+		 */
 		public static DEDataRecordCollectionSaveRecordResponse of(
 			DEDataRecord deDataRecord) {
 
@@ -39,6 +63,12 @@ public final class DEDataRecordCollectionSaveRecordResponse {
 			).build();
 		}
 
+		/**
+		 * Builds the response and returns the {@link DEDataRecordCollectionSaveRecordResponse}
+		 * object.
+		 * @review
+		 * @return The response object.
+		 */
 		public DEDataRecordCollectionSaveRecordResponse build() {
 			return _deDataRecordCollectionSaveRecordResponse;
 		}

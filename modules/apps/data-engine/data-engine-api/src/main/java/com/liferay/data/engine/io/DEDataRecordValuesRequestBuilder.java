@@ -19,10 +19,22 @@ import com.liferay.data.engine.model.DEDataDefinition;
 import java.util.Map;
 
 /**
+ * Provides the request builders from the serialize/deserialize
+ * process of the Data Record field values
+ *
  * @author Leonardo Barros
+ * @review
  */
 public class DEDataRecordValuesRequestBuilder {
 
+	/**
+	 * Returns the deserialize request builder of the Data Record field values
+	 *
+	 * @param content The content to be deserialized
+	 * @param deDataDefinition the Data Definition related do the Data Record
+	 * @return the request builder
+	 * @review
+	 */
 	public static DEDataRecordValuesDeserializerApplyRequest.Builder
 		deserializeBuilder(String content, DEDataDefinition deDataDefinition) {
 
@@ -30,6 +42,14 @@ public class DEDataRecordValuesRequestBuilder {
 			content, deDataDefinition);
 	}
 
+	/**
+	 * Returns the serialize request builder of the Data Record field values
+	 *
+	 * @param values A map of data record field values to be serialized
+	 * @param deDataDefinition the Data Definition related do the Data Record
+	 * @return the request builder
+	 * @review
+	 */
 	public static DEDataRecordValuesSerializerApplyRequest.Builder
 		serializeBuilder(
 			Map<String, Object> values, DEDataDefinition deDataDefinition) {

@@ -18,16 +18,34 @@ import com.liferay.data.engine.model.DEDataDefinition;
 import com.liferay.data.engine.model.DEDataRecord;
 
 /**
+ * Provides the request builders from the data storage API
+ *
  * @author Leonardo Barros
+ * @review
  */
 public class DEDataStorageRequestBuilder {
 
+	/**
+	 * Returns the delete request builder of the data storage
+	 *
+	 * @param deDataStorageId The data storage id to be deleted.
+	 * @return the request builder
+	 * @review
+	 */
 	public static DEDataStorageDeleteRequest.Builder deleteBuilder(
 		long deDataStorageId) {
 
 		return new DEDataStorageDeleteRequest.Builder(deDataStorageId);
 	}
 
+	/**
+	 * Returns the get request builder of the data storage
+	 *
+	 * @param deDataStorageId The data storage id to be retrieved.
+	 * @param deDataDefinition The data definition associated with that data storage.
+	 * @return the request builder
+	 * @review
+	 */
 	public static DEDataStorageGetRequest.Builder getBuilder(
 		long deDataStorageId, DEDataDefinition deDataDefinition) {
 
@@ -35,6 +53,13 @@ public class DEDataStorageRequestBuilder {
 			deDataStorageId, deDataDefinition);
 	}
 
+	/**
+	 * Returns the save request builder of the data storage
+	 *
+	 * @param deDataRecord The data record to be saved
+	 * @return the request builder
+	 * @review
+	 */
 	public static DEDataStorageSaveRequest.Builder saveBuilder(
 		DEDataRecord deDataRecord) {
 

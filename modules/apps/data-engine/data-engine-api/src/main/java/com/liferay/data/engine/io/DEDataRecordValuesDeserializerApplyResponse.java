@@ -18,20 +18,43 @@ import java.util.Collections;
 import java.util.Map;
 
 /**
+ * Data Record field values deserializer response
+ *
  * @author Leonardo Barros
+ * @review
  */
 public final class DEDataRecordValuesDeserializerApplyResponse {
 
+	/**
+	 * Returns the deserialized Data Record field values
+	 * @return the Data Record field values
+	 * @review
+	 */
 	public Map<String, Object> getValues() {
 		return Collections.unmodifiableMap(_values);
 	}
 
+	/**
+	 * Inner Builder
+	 * @review
+	 */
 	public static class Builder {
 
+		/**
+		 * Creates a Builder with the deserialized content.
+		 * @param values The deserialized Data Record field values object.
+		 * @return the builder
+		 * @review
+		 */
 		public Builder(Map<String, Object> values) {
 			_deDataRecordValuesDeserializerApplyResponse._values = values;
 		}
 
+		/**
+		 * Creates the builder.
+		 * @return The builder Object
+		 * @review
+		 */
 		public DEDataRecordValuesDeserializerApplyResponse build() {
 			return _deDataRecordValuesDeserializerApplyResponse;
 		}

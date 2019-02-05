@@ -15,6 +15,7 @@
 package com.liferay.portal.tools.rest.builder.internal.yaml.util;
 
 import com.liferay.portal.tools.rest.builder.internal.yaml.config.ConfigYAML;
+import com.liferay.portal.tools.rest.builder.internal.yaml.config.Security;
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Items;
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.OpenAPIYAML;
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Parameter;
@@ -89,7 +90,21 @@ public class YAMLUtil {
 	}
 
 	public static ConfigYAML loadConfigYAML(String fileName) {
-		return load(ConfigYAML.class, fileName);
+		List<TypeDescription> typeDescriptions = new ArrayList<>();
+
+		// Security
+
+		TypeDescription typeDescription = new TypeDescription(Security.class);
+
+		typeDescription.substituteProperty(
+			"oAuth2", String.class, "getOAuth2", "setOAuth2");
+
+		typeDescriptions.add(typeDescription);
+
+		TypeDescription[] typeDescriptionsArray = typeDescriptions.toArray(
+			new TypeDescription[typeDescriptions.size()]);
+
+		return load(ConfigYAML.class, fileName, typeDescriptionsArray);
 	}
 
 	public static OpenAPIYAML loadOpenAPIYAML(String fileName) {

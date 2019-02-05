@@ -12,13 +12,22 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = {
-		"auth.verifier.auth.verifier.BasicAuthHeaderAuthVerifier.urls.includes=/*",
-		"auth.verifier.auth.verifier.OAuth2RestAuthVerifier.urls.includes=/*",
+		<#if !configYAML.application.security?? || !configYAML.application.security.basicAuth?? || stringUtil.equalsIgnoreCase(configYAML.application.security.basicAuth, "true")>
+			"auth.verifier.auth.verifier.BasicAuthHeaderAuthVerifier.urls.includes=/*",
+		</#if>
+
+		<#if !configYAML.application.security?? || !configYAML.application.security.guestAllowed?? || stringUtil.equalsIgnoreCase(configYAML.application.security.guestAllowed, "true")>
+			"auth.verifier.guest.allowed=true",
+		</#if>
+
+		<#if !configYAML.application.security?? || !configYAML.application.security.OAuth2?? || stringUtil.equalsIgnoreCase(configYAML.application.security.OAuth2, "true")>
+			"auth.verifier.auth.verifier.OAuth2RestAuthVerifier.urls.includes=/*",
+			"oauth2.scope.checker.type=annotations",
+			"osgi.jaxrs.extension.select=(osgi.jaxrs.name=Liferay.OAuth2)",
+		</#if>
+
 		"auth.verifier.auth.verifier.PortalSessionAuthVerifier.urls.includes=/*",
-		"auth.verifier.guest.allowed=true",
-		"oauth2.scope.checker.type=annotations",
 		"osgi.jaxrs.application.base=${configYAML.application.baseURI}",
-		"osgi.jaxrs.extension.select=(osgi.jaxrs.name=Liferay.OAuth2)",
 
 		<#if javaTool.hasJavaParameterAcceptLanguage(openAPIYAML) || javaTool.hasJavaParameterPagination(openAPIYAML)>
 			<#if javaTool.hasJavaParameterAcceptLanguage(openAPIYAML)>

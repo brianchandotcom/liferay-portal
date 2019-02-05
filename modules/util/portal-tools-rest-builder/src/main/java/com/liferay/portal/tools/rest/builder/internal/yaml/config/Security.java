@@ -17,43 +17,34 @@ package com.liferay.portal.tools.rest.builder.internal.yaml.config;
 /**
  * @author Peter Shin
  */
-public class Application {
+public class Security {
 
-	public String getBaseURI() {
-		return _baseURI;
+	public String getBasicAuth() {
+		return _basicAuth;
 	}
 
-	public String getClassName() {
-		return _className;
+	public String getGuestAllowed() {
+		return _guestAllowed;
 	}
 
-	public String getName() {
-		return _name;
+	public String getOAuth2() {
+		return _oAuth2;
 	}
 
-	public Security getSecurity() {
-		return _security;
+	public void setBasicAuth(String basicAuth) {
+		_basicAuth = basicAuth;
 	}
 
-	public void setBaseURI(String baseURI) {
-		_baseURI = baseURI;
+	public void setGuestAllowed(String guestAllowed) {
+		_guestAllowed = guestAllowed;
 	}
 
-	public void setClassName(String className) {
-		_className = className;
+	public void setOAuth2(String oAuth2) {
+		_oAuth2 = oAuth2;
 	}
 
-	public void setName(String name) {
-		_name = name;
-	}
-
-	public void setSecurity(Security security) {
-		_security = security;
-	}
-
-	private String _baseURI;
-	private String _className;
-	private String _name;
-	private Security _security;
+	private String _basicAuth;
+	private String _guestAllowed;
+	private String _oAuth2;
 
 }

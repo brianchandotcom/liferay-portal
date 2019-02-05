@@ -18,11 +18,8 @@ import com.liferay.headless.foundation.dto.Phone;
 import com.liferay.headless.foundation.resource.PhoneResource;
 import com.liferay.portal.vulcan.context.Pagination;
 import com.liferay.portal.vulcan.dto.Page;
-import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.Collections;
-import java.util.List;
-import java.util.function.Function;
 
 import javax.annotation.Generated;
 
@@ -44,12 +41,6 @@ public abstract class BasePhoneResourceImpl implements PhoneResource {
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
-	}
-
-	protected <T, R> List<R> transform(
-		List<T> list, Function<T, R> transformFunction) {
-
-		return TransformUtil.transform(list, transformFunction);
 	}
 
 }

@@ -16,10 +16,6 @@ package com.liferay.headless.foundation.internal.resource;
 
 import com.liferay.headless.foundation.dto.ContentSpace;
 import com.liferay.headless.foundation.resource.ContentSpaceResource;
-import com.liferay.portal.vulcan.util.TransformUtil;
-
-import java.util.List;
-import java.util.function.Function;
 
 import javax.annotation.Generated;
 
@@ -34,12 +30,6 @@ public abstract class BaseContentSpaceResourceImpl
 	@Override
 	public ContentSpace getContentSpace(Long id) throws Exception {
 		return new ContentSpace();
-	}
-
-	protected <T, R> List<R> transform(
-		List<T> list, Function<T, R> transformFunction) {
-
-		return TransformUtil.transform(list, transformFunction);
 	}
 
 }

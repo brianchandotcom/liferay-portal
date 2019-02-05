@@ -16,10 +16,6 @@ package com.liferay.headless.collaboration.internal.resource;
 
 import com.liferay.headless.collaboration.dto.ImageObjectRepository;
 import com.liferay.headless.collaboration.resource.ImageObjectRepositoryResource;
-import com.liferay.portal.vulcan.util.TransformUtil;
-
-import java.util.List;
-import java.util.function.Function;
 
 import javax.annotation.Generated;
 
@@ -36,12 +32,6 @@ public abstract class BaseImageObjectRepositoryResourceImpl
 		throws Exception {
 
 		return new ImageObjectRepository();
-	}
-
-	protected <T, R> List<R> transform(
-		List<T> list, Function<T, R> transformFunction) {
-
-		return TransformUtil.transform(list, transformFunction);
 	}
 
 }

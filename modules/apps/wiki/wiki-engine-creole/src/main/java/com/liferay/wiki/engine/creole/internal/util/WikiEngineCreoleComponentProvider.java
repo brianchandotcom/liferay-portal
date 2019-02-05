@@ -47,6 +47,12 @@ public class WikiEngineCreoleComponentProvider {
 		return _wikiGroupServiceConfiguration;
 	}
 
+	public void setWikiGroupServiceConfiguration(
+		WikiGroupServiceConfiguration wikiGroupServiceConfiguration) {
+
+		_wikiGroupServiceConfiguration = wikiGroupServiceConfiguration;
+	}
+
 	private static WikiEngineCreoleComponentProvider
 		_wikiEngineCreoleComponentProvider;
 

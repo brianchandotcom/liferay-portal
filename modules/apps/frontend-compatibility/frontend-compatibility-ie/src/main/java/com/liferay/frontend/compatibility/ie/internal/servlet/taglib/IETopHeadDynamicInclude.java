@@ -39,8 +39,8 @@ public class IETopHeadDynamicInclude extends BaseDynamicInclude {
 
 	@Override
 	public void include(
-		HttpServletRequest request, HttpServletResponse response,
-		String key)
+			HttpServletRequest request, HttpServletResponse response,
+			String key)
 		throws IOException {
 
 		if (_browserSniffer.isIe(request)) {
@@ -73,7 +73,7 @@ public class IETopHeadDynamicInclude extends BaseDynamicInclude {
 	private static final String[] _FILE_NAMES = {
 		"array.fill.js", "array.find.js", "array.from.js", "fetch.js",
 		"formdata.js", "object.assign.js", "object.entries.js",
-		"object.values.js", "string.ends.with.js", "url.search.params.js"
+		"object.values.js", "string.endswith.js", "url.search.params.js"
 	};
 
 	@Reference

@@ -59,11 +59,11 @@ public class JSModulesNameMapper implements JSBundleTracker {
 		_clearCacheState();
 	}
 
-	public String mapModule(String module) {
-		return mapModule(module, null);
+	public String mapModule(String moduleName) {
+		return mapModule(moduleName, null);
 	}
 
-	public String mapModule(String module, Map<String, String> contextMap) {
+	public String mapModule(String moduleName, Map<String, String> mappings) {
 		CacheState cacheState = _cacheState.get();
 
 		if (cacheState.isOlderThan(
@@ -74,25 +74,25 @@ public class JSModulesNameMapper implements JSBundleTracker {
 			cacheState = _cacheState.get();
 		}
 
-		String resolved = cacheState.get(module);
+		String resolvedModuleName = cacheState.get(moduleName);
 
-		if (resolved != null) {
-			return resolved;
+		if (resolvedModuleName != null) {
+			return resolvedModuleName;
 		}
 
-		String matchModule = module;
+		resolvedModuleName = moduleName;
 
-		if (contextMap != null) {
-			matchModule = _map(matchModule, contextMap, contextMap);
+		if (mappings != null) {
+			resolvedModuleName = _map(moduleName, mappings, mappings);
 		}
 
-		resolved = _map(
-			matchModule, cacheState.getExactMatchContextMap(),
-			cacheState.getPartialMatchContextMap());
+		resolvedModuleName = _map(
+			resolvedModuleName, cacheState.getExactMatchMappings(),
+			cacheState.getPartialMatchMappings());
 
-		cacheState.put(module, resolved);
+		cacheState.put(moduleName, resolvedModuleName);
 
-		return resolved;
+		return resolvedModuleName;
 	}
 
 	@Override
@@ -107,26 +107,26 @@ public class JSModulesNameMapper implements JSBundleTracker {
 	}
 
 	private String _map(
-		String module, Map<String, String> exactMap,
-		Map<String, String> partialMap) {
+		String moduleName, Map<String, String> exactMatchMap,
+		Map<String, String> partialMatchMap) {
 
-		String aliasValue = exactMap.get(module);
+		String mappedModuleName = exactMatchMap.get(moduleName);
 
-		if (Validator.isNotNull(aliasValue)) {
-			return aliasValue;
+		if (Validator.isNotNull(mappedModuleName)) {
+			return mappedModuleName;
 		}
 
-		for (Map.Entry<String, String> entry : partialMap.entrySet()) {
+		for (Map.Entry<String, String> entry : partialMatchMap.entrySet()) {
 			String alias = entry.getKey();
 
-			if (alias.equals(module) ||
-				module.startsWith(alias + StringPool.SLASH)) {
+			if (alias.equals(moduleName) ||
+				moduleName.startsWith(alias + StringPool.SLASH)) {
 
-				return entry.getValue() + module.substring(alias.length());
+				return entry.getValue() + moduleName.substring(alias.length());
 			}
 		}
 
-		return module;
+		return moduleName;
 	}
 
 	private final AtomicReference<CacheState> _cacheState =
@@ -142,20 +142,21 @@ public class JSModulesNameMapper implements JSBundleTracker {
 
 		public CacheState() {
 			_lastModified = System.currentTimeMillis();
-			_exactMatchContextMap = _getExactMatchContextMap();
-			_partialMatchContextMap = _getPartialMatchContextMap();
+
+			_setExactMatchMappings();
+			_setPartialMatchMappings();
 		}
 
 		public String get(String key) {
 			return _cache.get(key);
 		}
 
-		public Map<String, String> getExactMatchContextMap() {
-			return _exactMatchContextMap;
+		public Map<String, String> getExactMatchMappings() {
+			return _exactMatchMappings;
 		}
 
-		public Map<String, String> getPartialMatchContextMap() {
-			return _partialMatchContextMap;
+		public Map<String, String> getPartialMatchMappings() {
+			return _partialMatchMappings;
 		}
 
 		public boolean isOlderThan(long lastModified) {
@@ -170,9 +171,7 @@ public class JSModulesNameMapper implements JSBundleTracker {
 			_cache.put(key, value);
 		}
 
-		private Map<String, String> _getExactMatchContextMap() {
-			Map<String, String> exactMatchContextMap = new HashMap<>();
-
+		private void _setExactMatchMappings() {
 			for (JSPackage jsPackage : _npmRegistry.getResolvedJSPackages()) {
 				String jsPackageResolvedId = jsPackage.getResolvedId();
 
@@ -180,7 +179,7 @@ public class JSModulesNameMapper implements JSBundleTracker {
 					jsPackageResolvedId + StringPool.SLASH +
 						jsPackage.getMainModuleName();
 
-				exactMatchContextMap.put(jsPackageResolvedId, mainModulePath);
+				_exactMatchMappings.put(jsPackageResolvedId, mainModulePath);
 
 				for (JSModuleAlias jsModuleAlias :
 						jsPackage.getJSModuleAliases()) {
@@ -193,41 +192,39 @@ public class JSModulesNameMapper implements JSBundleTracker {
 						jsPackageResolvedId + StringPool.SLASH +
 							jsModuleAlias.getModuleName();
 
-					exactMatchContextMap.put(aliasPath, moduleNamePath);
+					_exactMatchMappings.put(aliasPath, moduleNamePath);
 				}
 			}
-
-			return exactMatchContextMap;
 		}
 
-		private Map<String, String> _getPartialMatchContextMap() {
-			Map<String, String> partialContextMatch = new HashMap<>();
-
+		private void _setPartialMatchMappings() {
 			Collection<JSConfigGeneratorPackage> jsConfigGeneratorPackages =
 				_jsConfigGeneratorPackagesTracker.
 					getJSConfigGeneratorPackages();
 
 			Function<JSConfigGeneratorPackage, String> valueMapper =
-				m -> m.getName() + StringPool.AT + m.getVersion();
+				jsConfigGeneratorPackage ->
+					jsConfigGeneratorPackage.getName() + StringPool.AT +
+						jsConfigGeneratorPackage.getVersion();
 
-			Stream<JSConfigGeneratorPackage> jsConfigGeneratorPackageStream =
+			Stream<JSConfigGeneratorPackage> jsConfigGeneratorPackagesStream =
 				jsConfigGeneratorPackages.stream();
 
-			Map<String, String> map = jsConfigGeneratorPackageStream.collect(
-				Collectors.toMap(JSConfigGeneratorPackage::getName, valueMapper)
-			);
+			Map<String, String> mappings =
+				jsConfigGeneratorPackagesStream.collect(
+					Collectors.toMap(
+						JSConfigGeneratorPackage::getName, valueMapper));
 
-			partialContextMatch.putAll(map);
+			_partialMatchMappings.putAll(mappings);
 
-			partialContextMatch.putAll(_npmRegistry.getGlobalAliases());
-
-			return partialContextMatch;
+			_partialMatchMappings.putAll(_npmRegistry.getGlobalAliases());
 		}
 
 		private final Map<String, String> _cache = new ConcurrentHashMap<>();
-		private final Map<String, String> _exactMatchContextMap;
+		private final Map<String, String> _exactMatchMappings = new HashMap<>();
 		private final long _lastModified;
-		private final Map<String, String> _partialMatchContextMap;
+		private final Map<String, String> _partialMatchMappings =
+			new HashMap<>();
 
 	}
 

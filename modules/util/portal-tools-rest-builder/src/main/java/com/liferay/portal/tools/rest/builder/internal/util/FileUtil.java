@@ -104,17 +104,14 @@ public class FileUtil {
 
 		String oldSub = newContent.substring(0, index);
 
-		String newSub = oldSub.replaceAll(
-			"(?m)^\t*(\"osgi.jaxrs.extension.select=)", "\t\t$1");
-
-		newSub = newSub.replaceAll(",\n\n", ",\n");
+		String newSub = oldSub.replaceAll("(?m)^\".+\",$", "\t\t$0");
 
 		newContent = newContent.replace(oldSub, newSub);
 
-		int x = newContent.indexOf("\n", index + 2);
-		int y = newContent.lastIndexOf("}");
+		index = newContent.indexOf("\npublic ");
 
-		oldSub = newContent.substring(x, y);
+		oldSub = newContent.substring(
+			newContent.indexOf("\n", index + 2), newContent.lastIndexOf("}"));
 
 		newSub = oldSub.replaceAll(
 			"(?m)^\t*(@|public|protected|private)", "\t$1");

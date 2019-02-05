@@ -2,8 +2,10 @@ package com.liferay.frontend.js.loader.modules.extender.internal;
 
 import com.liferay.frontend.js.loader.modules.extender.internal.resolution.JSModulesResolution;
 import com.liferay.frontend.js.loader.modules.extender.internal.resolution.JSModulesResolver;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -15,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.net.URLDecoder;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -56,11 +59,28 @@ public class JSResolveModulesServlet extends HttpServlet {
 		_writeResponse(resp, content);
 	}
 
-	private List<String> _getRequestModules(HttpServletRequest req) {
-		String[] modulesParam = ParamUtil.getStringValues(req, "modules");
+	private List<String> _getRequestModules(HttpServletRequest req)
+		throws IOException {
 
-		if (modulesParam != null) {
-			return Arrays.asList(modulesParam);
+		String method = req.getMethod();
+
+		String[] modules;
+
+		if (method.equals("GET")) {
+			modules = ParamUtil.getStringValues(req, "modules");
+		}
+		else {
+			String body = StringUtil.read(req.getInputStream());
+
+			body = URLDecoder.decode(body, req.getCharacterEncoding());
+
+			body = body.substring(8);
+
+			modules = body.split(StringPool.COMMA);
+		}
+
+		if (modules != null) {
+			return Arrays.asList(modules);
 		}
 
 		return Collections.emptyList();

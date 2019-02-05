@@ -143,7 +143,7 @@ AUI.add(
 						var activeElement = A.one(document.activeElement);
 
 						if (activeElement) {
-							hasFocus = !!activeElement.ancestor('.ae-ui')
+							hasFocus = !!activeElement.ancestor('.ae-ui');
 						}
 
 						return hasFocus;

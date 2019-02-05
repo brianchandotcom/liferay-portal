@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Component;
 		"osgi.jaxrs.extension.select=(osgi.jaxrs.name=Liferay.Vulcan.JSONMessageBodyReader)",
 		"osgi.jaxrs.extension.select=(osgi.jaxrs.name=Liferay.Vulcan.JSONMessageBodyWriter)",
 		"osgi.jaxrs.extension.select=(osgi.jaxrs.name=Liferay.Vulcan.PaginationContextProvider)",
-		"osgi.jaxrs.name=headless-document-library-application.rest"
+		"osgi.jaxrs.name=headless-document-library-application"
 	},
 	service = Application.class
 )

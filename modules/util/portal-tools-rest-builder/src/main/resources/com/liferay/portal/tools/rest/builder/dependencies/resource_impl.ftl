@@ -10,6 +10,8 @@ import org.osgi.service.component.annotations.Component;
  * @author ${configYAML.author}
  */
 @Component(
-	properties = "OSGI-INF/${schemaPath}.properties", service = ${schemaName}Resource.class)
+	properties = "OSGI-INF/${schemaPath}.properties",
+	service = ${schemaName}Resource.class
+)
 public class ${schemaName}ResourceImpl extends Base${schemaName}ResourceImpl {
 }

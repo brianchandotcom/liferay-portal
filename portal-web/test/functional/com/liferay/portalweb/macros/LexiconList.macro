@@ -32,19 +32,19 @@ definition {
 		Confirm();
 	}
 
-	macro viewListEntryNotPresent {
-		AssertElementNotPresent(
-			locator1 = "LexiconList#LIST_ENTRY",
-			key_listEntry = "${listEntry}"
-		);
-	}
-
 	macro viewListEntryLabel {
 		AssertTextEquals(
 			locator1 = "LexiconList#LIST_ENTRY_LABEL",
 			value1 = "${listEntryLabel}",
 			key_listEntry = "${listEntry}",
 			key_listEntrySubtitle = "${listEntryLabel}"
+		);
+	}
+
+	macro viewListEntryNotPresent {
+		AssertElementNotPresent(
+			locator1 = "LexiconList#LIST_ENTRY",
+			key_listEntry = "${listEntry}"
 		);
 	}
 

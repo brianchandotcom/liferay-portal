@@ -165,7 +165,7 @@ public class LayoutLocalServiceHelper implements IdentifiableOSGiService {
 				Validator.isNull(sourcePrototypeLayoutUuid)) {
 
 				LayoutSet layoutSet = layoutSetPersistence.fetchByG_P(
-					groupId, privateLayout);
+					groupId, privateLayout, true);
 
 				if (Validator.isNotNull(
 						layoutSet.getLayoutSetPrototypeUuid()) &&

@@ -193,7 +193,7 @@ public class SegmentsDisplayContext {
 
 			segmentsEntriesCount =
 				_segmentsEntryService.getSegmentsEntriesCount(
-					_themeDisplay.getScopeGroupId(), false);
+					_themeDisplay.getScopeGroupId(), true);
 		}
 
 		searchContainer.setResults(segmentsEntries);

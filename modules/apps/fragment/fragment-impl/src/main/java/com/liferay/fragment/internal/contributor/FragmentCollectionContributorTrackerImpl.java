@@ -51,7 +51,7 @@ public class FragmentCollectionContributorTrackerImpl
 	public List<FragmentCollectionContributor>
 		getFragmentCollectionContributors() {
 
-		return _fragmentCollectionContributors;
+		return new ArrayList<>(_fragmentCollectionContributors);
 	}
 
 	@Reference(

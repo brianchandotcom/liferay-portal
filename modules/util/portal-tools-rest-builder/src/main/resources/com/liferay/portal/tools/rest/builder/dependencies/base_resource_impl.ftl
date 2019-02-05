@@ -20,6 +20,7 @@ import java.util.function.Function;
 
 import javax.annotation.Generated;
 
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 
 /**
@@ -75,5 +76,11 @@ public abstract class Base${schemaName}ResourceImpl implements ${schemaName}Reso
 	protected <T, R> List<R> transform(List<T> list, Function<T, R> transformFunction) {
 		return TransformUtil.transform(list, transformFunction);
 	}
+
+	@Context
+	protected AcceptLanguage acceptLanguage;
+
+	@Context
+	protected Company company;
 
 }

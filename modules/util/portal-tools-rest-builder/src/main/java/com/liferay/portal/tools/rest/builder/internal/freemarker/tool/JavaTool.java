@@ -307,18 +307,6 @@ public class JavaTool {
 			javaParameters.add(getJavaParameter(parameter));
 		}
 
-		if (_hasJavaParameterAcceptLanguage(operation)) {
-			JavaParameter javaParameter = new JavaParameter(
-				Collections.singletonList("@Context"), "acceptLanguage",
-				"AcceptLanguage");
-
-			javaParameters.add(javaParameter);
-		}
-
-		javaParameters.add(
-			new JavaParameter(
-				Collections.singletonList("@Context"), "company", "Company"));
-
 		if (pagination) {
 			JavaParameter javaParameter = new JavaParameter(
 				Collections.singletonList("@Context"), "pagination",

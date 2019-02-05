@@ -381,6 +381,14 @@ public class ComboServlet extends HttpServlet {
 						StringPool.NEW_LINE);
 				}
 			}
+			else if (StringUtil.endsWith(
+						resourcePath, _JAVASCRIPT_MINIFIED_DASH_SUFFIX) ||
+					 StringUtil.endsWith(
+						 resourcePath, _JAVASCRIPT_MINIFIED_DOT_SUFFIX)) {
+
+				stringFileContent = stringFileContent.concat(
+					StringPool.NEW_LINE);
+			}
 
 			fileContentBag = new FileContentBag(
 				stringFileContent.getBytes(StringPool.UTF8),

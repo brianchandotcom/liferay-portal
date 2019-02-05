@@ -8,6 +8,7 @@ import com.liferay.frontend.js.loader.modules.extender.npm.JSModuleAlias;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSPackage;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMRegistry;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import org.osgi.framework.Bundle;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -59,48 +60,54 @@ public class JSModulesNameMapper implements JSBundleTracker {
 	}
 
 	public String mapModule(String module, Map<String, String> contextMap) {
+		CacheState cacheState = _cacheState.get();
 
-		if (_cache.containsKey(module)) {
-			return _cache.get(module);
+		if (cacheState.isOlderThan(
+			_jsConfigGeneratorPackagesTracker.getLastModified())) {
+
+			_clearCacheState();
+
+			cacheState = _cacheState.get();
+		}
+
+		String resolved = cacheState.get(module);
+
+		if (resolved != null) {
+			return resolved;
 		}
 
 		String matchModule = module;
 
 		if (contextMap != null) {
-			matchModule = _map(matchModule, contextMap);
+			matchModule = _map(matchModule, contextMap, contextMap);
 		}
 
-		String resolved = _map(matchModule, null);
+		resolved = _map(
+			matchModule, cacheState.getExactMatchContextMap(),
+			cacheState.getPartialMatchContextMap());
 
-		_cache.put(module, resolved);
+		cacheState.put(module, resolved);
 
 		return resolved;
 	}
 
-	private String _map(String module, Map<String, String> map) {
-		Map<String, String> exactMap = this._getExactMatchContextMap();
-		Map<String, String> partialMap = this._getPartialMatchContextMap();
+	private String _map(
+		String module, Map<String, String> exactMap,
+		Map<String, String> partialMap) {
 
-		if (map != null) {
-			exactMap = map;
-			partialMap = map;
-		}
+		String aliasValue = exactMap.get(module);
 
-		for (Map.Entry<String, String> entry : exactMap.entrySet()) {
-			String alias = entry.getKey();
-			String aliasValue = entry.getValue();
-
-			if (alias.equals(module)) {
-				return aliasValue;
-			}
+		if (Validator.isNotNull(aliasValue)) {
+			return aliasValue;
 		}
 
 		for (Map.Entry<String, String> entry : partialMap.entrySet()) {
 			String alias = entry.getKey();
-			String aliasValue = entry.getValue();
 
-			if (alias.equals(module) || module.startsWith(alias + StringPool.SLASH)) {
-				return aliasValue + module.substring(alias.length());
+			if (alias.equals(module) ||
+				module.startsWith(alias + StringPool.SLASH)) {
+
+				return entry.getValue() + module.substring(alias.length());
 			}
 		}
 
@@ -112,8 +119,6 @@ public class JSModulesNameMapper implements JSBundleTracker {
 
 	@Reference
 	private JSConfigGeneratorPackagesTracker _jsConfigGeneratorPackagesTracker;
-
-	private long _jsLoaderModulesTrackerLastModified = 0L;
 
 	@Reference
 	private NPMRegistry _npmRegistry;

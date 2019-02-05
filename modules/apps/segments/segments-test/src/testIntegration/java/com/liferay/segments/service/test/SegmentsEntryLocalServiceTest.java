@@ -15,8 +15,10 @@
 package com.liferay.segments.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -183,6 +185,54 @@ public class SegmentsEntryLocalServiceTest {
 	}
 
 	@Test
+	public void testGetSegmentsEntriesCountWithIncludeAncestorSegmentsEntries()
+		throws Exception {
+
+		SegmentsTestUtil.addSegmentsEntry(_group.getGroupId());
+
+		Group childGroup = GroupTestUtil.addGroup(_group.getGroupId());
+
+		int segmentsEntriesCount =
+			_segmentsEntryLocalService.getSegmentsEntriesCount(
+				childGroup.getGroupId(), true);
+
+		Assert.assertTrue(segmentsEntriesCount > 0);
+
+		segmentsEntriesCount =
+			_segmentsEntryLocalService.getSegmentsEntriesCount(
+				childGroup.getGroupId(), false);
+
+		Assert.assertEquals(0, segmentsEntriesCount);
+
+		_groupLocalService.deleteGroup(childGroup);
+	}
+
+	@Test
+	public void testGetSegmentsEntriesWithIncludeAncestorSegmentsEntries()
+		throws Exception {
+
+		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
+			_group.getGroupId());
+
+		Group childGroup = GroupTestUtil.addGroup(_group.getGroupId());
+
+		List<SegmentsEntry> segmentsEntries =
+			_segmentsEntryLocalService.getSegmentsEntries(
+				childGroup.getGroupId(), true, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null);
+
+		Assert.assertTrue(segmentsEntries.contains(segmentsEntry));
+
+		segmentsEntries = _segmentsEntryLocalService.getSegmentsEntries(
+			childGroup.getGroupId(), false, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+
+		Assert.assertFalse(segmentsEntries.contains(segmentsEntry));
+
+		_groupLocalService.deleteGroup(childGroup);
+	}
+
+	@Test
 	public void testUpdateSegmentsEntry() throws PortalException {
 		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
 			_group.getGroupId());
@@ -243,6 +293,9 @@ public class SegmentsEntryLocalServiceTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private GroupLocalService _groupLocalService;
 
 	@Inject
 	private SegmentsEntryLocalService _segmentsEntryLocalService;

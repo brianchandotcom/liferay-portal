@@ -27,6 +27,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.portlet.PortletRequest;
@@ -116,7 +117,7 @@ public class PortletConfigurationIconTracker {
 
 			@Override
 			public Object getAttribute(String name) {
-				if (name == WebKeys.THEME_DISPLAY) {
+				if (Objects.equals(name, WebKeys.THEME_DISPLAY)) {
 					return themeDisplay;
 				}
 

@@ -148,7 +148,7 @@ public class PortletConfigurationIconTracker {
 
 					if (Objects.equals(layoutMode, Constants.EDIT) &&
 						!portletConfigurationIcon.isShowInEditMode(
-							portletRequest)) {
+							portletRequestWrapper)) {
 
 						continue;
 					}

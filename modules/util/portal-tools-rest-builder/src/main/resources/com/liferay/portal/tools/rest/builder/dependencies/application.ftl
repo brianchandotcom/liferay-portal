@@ -18,6 +18,8 @@ import org.osgi.service.component.annotations.Component;
 		"auth.verifier.guest.allowed=true",
 		"oauth2.scope.checker.type=annotations",
 		"osgi.jaxrs.application.base=${configYAML.application.baseURI}",
+		"osgi.jaxrs.extension.select=(osgi.jaxrs.name=Liferay.Vulcan.NoSuchModelExceptionMapper)",
+		"osgi.jaxrs.extension.select=(osgi.jaxrs.name=Liferay.Vulcan.PortalExceptionMapper)",
 		"osgi.jaxrs.extension.select=(osgi.jaxrs.name=Liferay.OAuth2)",
 
 		<#if javaTool.hasJavaParameterAcceptLanguage(openAPIYAML) || javaTool.hasJavaParameterPagination(openAPIYAML)>

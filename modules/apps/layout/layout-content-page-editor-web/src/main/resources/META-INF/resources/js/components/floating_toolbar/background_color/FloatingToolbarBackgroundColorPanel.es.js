@@ -1,3 +1,4 @@
+import {addClasses, contains, removeClasses} from 'metal-dom';
 import Component from 'metal-component';
 import {Config} from 'metal-state';
 import Soy from 'metal-soy';
@@ -34,6 +35,13 @@ class FloatingToolbarBackgroundColorPanel extends Component {
 	 */
 	_handleBackgroundColorButtonClick(event) {
 		const button = event.delegateTarget;
+		const paletteItemSelected = this.element.querySelector('.palette-item-selected');
+
+		if (paletteItemSelected) {
+			removeClasses(paletteItemSelected, 'palette-item-selected');
+		}
+
+		addClasses(button.parentNode, 'palette-item-selected');
 
 		this._updateSectionConfig(
 			{

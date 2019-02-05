@@ -4,6 +4,12 @@
  * FloatingToolbarBackgroundColorPanel
  */
 {template .render}
+	{@param item: [
+		config: [
+			backgroundColorCssClass: string
+		]
+	]}
+	{@param? backgroundColorCssClass: ?}
 	{@param? themeColorsCssClasses: ?}
 	{@param? _handleBackgroundColorButtonClick: any}
 	{@param? _handleClearButtonClick: any}
@@ -15,8 +21,24 @@
 
 		<div class="palette-container" id="floatingToolbarBackgroundColorPanelPalette">
 			<ul class="list-unstyled palette-items-container">
+				{let $selectedBackgroundColorCssClass kind="text"}
+					{if $backgroundColorCssClass}
+						{$backgroundColorCssClass}
+					{elseif $item.config and $item.config.backgroundColorCssClass}
+						{$item.config.backgroundColorCssClass}
+					{/if}
+				{/let}
+
 				{foreach $themeColorsCssClass in $themeColorsCssClasses}
-					<li class="palette-item">
+					{let $paletteItemClasses kind="text"}
+						palette-item
+
+						{if $themeColorsCssClass == $selectedBackgroundColorCssClass}
+							{sp}palette-item-selected
+						{/if}
+					{/let}
+
+					<li class="{$paletteItemClasses}">
 						{let $wrapperClasses kind="text"}
 							bg-fragment-{$themeColorsCssClass}
 							{sp}btn

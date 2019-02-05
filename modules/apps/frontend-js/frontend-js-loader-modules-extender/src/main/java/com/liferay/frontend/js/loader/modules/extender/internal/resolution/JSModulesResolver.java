@@ -25,13 +25,13 @@ import java.util.stream.Stream;
  */
 @Component(
 	immediate = true,
-	service = JSModulesContextResolver.class
+	service = JSModulesResolver.class
 )
-public class JSModulesContextResolver {
+public class JSModulesResolver {
 
-	public JSModuleContext resolve(List<String> modules) {
+	public JSModulesResolution resolve(List<String> modules) {
 
-		JSModuleContext context = new JSModuleContext();
+		JSModulesResolution context = new JSModulesResolution();
 
 		for (String module : modules) {
 			_resolve(module, context);
@@ -115,7 +115,7 @@ public class JSModulesContextResolver {
 	}
 
 	private void _processModule(
-		ModuleDescriptor adapter, JSModuleContext context) {
+		ModuleDescriptor adapter, JSModulesResolution context) {
 
 		if (adapter == null) {
 			return;
@@ -153,7 +153,7 @@ public class JSModulesContextResolver {
 		context.putModuleDependencyMap(alias, dependenciesMap);
 	}
 
-	private void _processModule(String module, JSModuleContext context) {
+	private void _processModule(String module, JSModulesResolution context) {
 		JSModule jsModule = _npmRegistry.getResolvedJSModule(module);
 
 		if (jsModule != null) {
@@ -162,7 +162,7 @@ public class JSModulesContextResolver {
 		}
 	}
 
-	private void _resolve(String module, JSModuleContext context) {
+	private void _resolve(String module, JSModulesResolution context) {
 		String mappedModule = _mapModuleName(module);
 
 		ArrayList<ModuleDescriptor> allModules = _getAllModules();

@@ -1,4 +1,4 @@
-import {addClasses, contains, removeClasses} from 'metal-dom';
+import {addClasses, removeClasses} from 'metal-dom';
 import Component from 'metal-component';
 import {Config} from 'metal-state';
 import Soy from 'metal-soy';

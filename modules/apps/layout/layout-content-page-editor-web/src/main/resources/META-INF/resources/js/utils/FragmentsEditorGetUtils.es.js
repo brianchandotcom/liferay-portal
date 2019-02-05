@@ -177,21 +177,23 @@ function getTargetBorder(direction) {
  * @review
  */
 function getWidget(widgets, portletId) {
+	let widget = null;
+
 	for (const widgetCategory of widgets) {
 		const {categories = [], portlets = []} = widgetCategory;
 		const categoryPortlet = portlets.find(_portlet => _portlet.portletId === portletId);
 		const subCategoryPortlet = getWidget(categories, portletId);
 
 		if (categoryPortlet) {
-			return categoryPortlet;
+			widget = categoryPortlet;
 		}
 
 		if (subCategoryPortlet) {
-			return subCategoryPortlet;
+			widget = subCategoryPortlet;
 		}
 	}
 
-	return null;
+	return widget;
 }
 
 /**
@@ -203,6 +205,8 @@ function getWidget(widgets, portletId) {
  * @review
  */
 function getWidgetPath(widgets, portletId, _path = ['widgets']) {
+	let widgetPath = null;
+
 	for (let categoryIndex = 0; categoryIndex < widgets.length; categoryIndex += 1) {
 		const {categories = [], portlets = []} = widgets[categoryIndex];
 
@@ -221,7 +225,7 @@ function getWidgetPath(widgets, portletId, _path = ['widgets']) {
 		);
 
 		if (categoryPortletIndex !== -1) {
-			return [
+			widgetPath = [
 				..._path,
 				categoryIndex,
 				'portlets',
@@ -230,11 +234,11 @@ function getWidgetPath(widgets, portletId, _path = ['widgets']) {
 		}
 
 		if (subCategoryPortletPath) {
-			return subCategoryPortletPath;
+			widgetPath = subCategoryPortletPath;
 		}
 	}
 
-	return null;
+	return widgetPath;
 }
 
 export {

@@ -203,45 +203,45 @@ public class ModuleNameUtil {
 	 * @review
 	 */
 	public static String resolvePath(
-   		String currentModulePath, String dependency) {
+		String currentModulePath, String dependency) {
 
 		if (!isLocalModuleName(dependency)) {
-		   return dependency;
+			return dependency;
 		}
 
 		List<String> dependencyParts = _getDirNameParts(dependency);
 
 		List<String> currentModulePathParts = _getDirNameParts(
-		   currentModulePath);
+			currentModulePath);
 
 		for (int i = 0; i < dependencyParts.size(); i++) {
-		   String dependencyPart = dependencyParts.get(i);
+			String dependencyPart = dependencyParts.get(i);
 
-		   if (dependencyPart.equals(".")) {
-			   continue;
-		   }
+			if (dependencyPart.equals(".")) {
+				continue;
+			}
 
-		   if (dependencyPart.equals("..")) {
-			   if (!currentModulePathParts.isEmpty()) {
-				   currentModulePathParts.remove(
-					   currentModulePathParts.size() - 1);
-			   }
-			   else {
-				   currentModulePathParts.addAll(
-					   dependencyParts.subList(i, dependencyParts.size()));
+			if (dependencyPart.equals("..")) {
+				if (!currentModulePathParts.isEmpty()) {
+					currentModulePathParts.remove(
+						currentModulePathParts.size() - 1);
+				}
+				else {
+					currentModulePathParts.addAll(
+						dependencyParts.subList(i, dependencyParts.size()));
 
-				   break;
-			   }
-		   }
-		   else {
-			   currentModulePathParts.add(dependencyPart);
-		   }
+					break;
+				}
+			}
+			else {
+				currentModulePathParts.add(dependencyPart);
+			}
 		}
 
 		currentModulePathParts.add(_getBaseName(dependency));
 
 		return String.join(StringPool.SLASH, currentModulePathParts);
-    }
+	}
 
 	/**
 	 * Returns the file name implementing the module.
@@ -270,19 +270,19 @@ public class ModuleNameUtil {
 	}
 
 	private static String _getBaseName(String dependency) {
-        int i = dependency.lastIndexOf(StringPool.SLASH);
+		int i = dependency.lastIndexOf(StringPool.SLASH);
 
 		return dependency.substring(i + 1);
-    }
+	}
 
 	private static List<String> _getDirNameParts(String modulePath) {
-        List<String> modulePathParts = new ArrayList<>(
+		List<String> modulePathParts = new ArrayList<>(
 			Arrays.asList(modulePath.split(StringPool.SLASH)));
 
 		modulePathParts.remove(modulePathParts.size() - 1);
 
 		return modulePathParts;
-    }
+	}
 
 	private static final Set<String> _reservedModuleNames = new HashSet<>(
 		Arrays.asList("exports", "module", "require"));

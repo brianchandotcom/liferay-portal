@@ -2,6 +2,7 @@ package com.liferay.frontend.js.loader.modules.extender.internal.resolution.desc
 
 import com.liferay.frontend.js.loader.modules.extender.internal.config.generator.JSConfigGeneratorModule;
 import com.liferay.frontend.js.loader.modules.extender.internal.config.generator.JSConfigGeneratorPackage;
+import com.liferay.frontend.js.loader.modules.extender.internal.resolution.ModuleDescriptor;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 
@@ -11,9 +12,9 @@ import java.util.Map;
 /**
  * @author Rodolfo Roza Miranda
  */
-public class JSConfigGeneratorModuleAdapter implements JSModuleAdapter {
+public class JSConfigGeneratorModuleDescriptor implements ModuleDescriptor {
 
-	public JSConfigGeneratorModuleAdapter(
+	public JSConfigGeneratorModuleDescriptor(
 		JSConfigGeneratorModule jsConfigGeneratorModule) {
 
 		_jsConfigGeneratorModule = jsConfigGeneratorModule;
@@ -21,15 +22,15 @@ public class JSConfigGeneratorModuleAdapter implements JSModuleAdapter {
 		JSConfigGeneratorPackage jsConfigGeneratorPackage =
 			_jsConfigGeneratorModule.getJSConfigGeneratorPackage();
 
-		_alias = StringBundler.concat(
+		_name = StringBundler.concat(
 			jsConfigGeneratorPackage.getName(), StringPool.AT,
 			jsConfigGeneratorPackage.getVersion(), StringPool.SLASH,
 			_jsConfigGeneratorModule.getName());
 	}
 
 	@Override
-	public String getAlias() {
-		return _alias;
+	public String getName() {
+		return _name;
 	}
 
 	@Override
@@ -38,7 +39,7 @@ public class JSConfigGeneratorModuleAdapter implements JSModuleAdapter {
 	}
 
 	@Override
-	public Map<String, String> getMap() {
+	public Map<String, String> getMappings() {
 		return null;
 	}
 
@@ -47,7 +48,7 @@ public class JSConfigGeneratorModuleAdapter implements JSModuleAdapter {
 		return _jsConfigGeneratorModule.getResolvedURL();
 	}
 
-	private String _alias;
+	private String _name;
 	private final JSConfigGeneratorModule _jsConfigGeneratorModule;
 
 }

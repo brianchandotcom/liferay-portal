@@ -76,18 +76,13 @@ public interface SegmentsEntryService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<SegmentsEntry> getSegmentsEntries(long groupId, boolean active,
-		String type, int start, int end,
-		OrderByComparator<SegmentsEntry> orderByComparator)
-		throws PortalException;
+	public List<SegmentsEntry> getSegmentsEntries(long groupId,
+		boolean includeAncestorSegmentsEntries, int start, int end,
+		OrderByComparator<SegmentsEntry> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<SegmentsEntry> getSegmentsEntries(long groupId, int start,
-		int end, OrderByComparator<SegmentsEntry> orderByComparator)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getSegmentsEntriesCount(long groupId) throws PortalException;
+	public int getSegmentsEntriesCount(long groupId,
+		boolean includeAncestorSegmentsEntries);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public SegmentsEntry getSegmentsEntry(long segmentsEntryId)

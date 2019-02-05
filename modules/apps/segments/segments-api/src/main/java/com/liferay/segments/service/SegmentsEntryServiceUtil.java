@@ -69,25 +69,19 @@ public class SegmentsEntryServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.segments.model.SegmentsEntry> getSegmentsEntries(
-		long groupId, boolean active, String type, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.segments.model.SegmentsEntry> orderByComparator)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		long groupId, boolean includeAncestorSegmentsEntries, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.segments.model.SegmentsEntry> orderByComparator) {
 		return getService()
-				   .getSegmentsEntries(groupId, active, type, start, end,
-			orderByComparator);
+				   .getSegmentsEntries(groupId, includeAncestorSegmentsEntries,
+			start, end, orderByComparator);
 	}
 
-	public static java.util.List<com.liferay.segments.model.SegmentsEntry> getSegmentsEntries(
-		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.segments.model.SegmentsEntry> orderByComparator)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static int getSegmentsEntriesCount(long groupId,
+		boolean includeAncestorSegmentsEntries) {
 		return getService()
-				   .getSegmentsEntries(groupId, start, end, orderByComparator);
-	}
-
-	public static int getSegmentsEntriesCount(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getSegmentsEntriesCount(groupId);
+				   .getSegmentsEntriesCount(groupId,
+			includeAncestorSegmentsEntries);
 	}
 
 	public static com.liferay.segments.model.SegmentsEntry getSegmentsEntry(

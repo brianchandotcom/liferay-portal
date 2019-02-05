@@ -194,6 +194,11 @@ public class SegmentsEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByGroupIdArrayable() throws Exception {
+		_persistence.countByGroupId(new long[] { RandomTestUtil.nextLong(), 0L });
+	}
+
+	@Test
 	public void testCountBySource() throws Exception {
 		_persistence.countBySource("");
 
@@ -217,6 +222,12 @@ public class SegmentsEntryPersistenceTest {
 			RandomTestUtil.randomBoolean());
 
 		_persistence.countByG_A(0L, RandomTestUtil.randomBoolean());
+	}
+
+	@Test
+	public void testCountByG_AArrayable() throws Exception {
+		_persistence.countByG_A(new long[] { RandomTestUtil.nextLong(), 0L },
+			RandomTestUtil.randomBoolean());
 	}
 
 	@Test
@@ -246,6 +257,12 @@ public class SegmentsEntryPersistenceTest {
 
 		_persistence.countByG_A_T(0L, RandomTestUtil.randomBoolean(),
 			(String)null);
+	}
+
+	@Test
+	public void testCountByG_A_TArrayable() throws Exception {
+		_persistence.countByG_A_T(new long[] { RandomTestUtil.nextLong(), 0L },
+			RandomTestUtil.randomBoolean(), RandomTestUtil.randomString());
 	}
 
 	@Test

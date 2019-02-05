@@ -110,13 +110,15 @@ public class SegmentsEntryServiceSoap {
 	}
 
 	public static com.liferay.segments.model.SegmentsEntrySoap[] getSegmentsEntries(
-		long groupId, boolean active, String type, int start, int end,
+		long groupId, boolean includeAncestorSegmentsEntries, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.segments.model.SegmentsEntry> orderByComparator)
 		throws RemoteException {
 		try {
 			java.util.List<com.liferay.segments.model.SegmentsEntry> returnValue =
-				SegmentsEntryServiceUtil.getSegmentsEntries(groupId, active,
-					type, start, end, orderByComparator);
+				SegmentsEntryServiceUtil.getSegmentsEntries(groupId,
+					includeAncestorSegmentsEntries, start, end,
+					orderByComparator);
 
 			return com.liferay.segments.model.SegmentsEntrySoap.toSoapModels(returnValue);
 		}
@@ -127,28 +129,11 @@ public class SegmentsEntryServiceSoap {
 		}
 	}
 
-	public static com.liferay.segments.model.SegmentsEntrySoap[] getSegmentsEntries(
-		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.segments.model.SegmentsEntry> orderByComparator)
-		throws RemoteException {
+	public static int getSegmentsEntriesCount(long groupId,
+		boolean includeAncestorSegmentsEntries) throws RemoteException {
 		try {
-			java.util.List<com.liferay.segments.model.SegmentsEntry> returnValue =
-				SegmentsEntryServiceUtil.getSegmentsEntries(groupId, start,
-					end, orderByComparator);
-
-			return com.liferay.segments.model.SegmentsEntrySoap.toSoapModels(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	public static int getSegmentsEntriesCount(long groupId)
-		throws RemoteException {
-		try {
-			int returnValue = SegmentsEntryServiceUtil.getSegmentsEntriesCount(groupId);
+			int returnValue = SegmentsEntryServiceUtil.getSegmentsEntriesCount(groupId,
+					includeAncestorSegmentsEntries);
 
 			return returnValue;
 		}

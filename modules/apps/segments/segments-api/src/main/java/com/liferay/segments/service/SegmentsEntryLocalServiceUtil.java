@@ -204,8 +204,10 @@ public class SegmentsEntryLocalServiceUtil {
 	}
 
 	public static com.liferay.segments.model.SegmentsEntry fetchSegmentsEntry(
-		long groupId, String key) {
-		return getService().fetchSegmentsEntry(groupId, key);
+		long groupId, String key, boolean includeAncestorSegmentsEntries) {
+		return getService()
+				   .fetchSegmentsEntry(groupId, key,
+			includeAncestorSegmentsEntries);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
@@ -256,25 +258,12 @@ public class SegmentsEntryLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.segments.model.SegmentsEntry> getSegmentsEntries(
-		long groupId, boolean active, String type, int start, int end,
+		long groupId, boolean includeAncestorSegmentsEntries, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.segments.model.SegmentsEntry> orderByComparator) {
 		return getService()
-				   .getSegmentsEntries(groupId, active, type, start, end,
-			orderByComparator);
-	}
-
-	public static java.util.List<com.liferay.segments.model.SegmentsEntry> getSegmentsEntries(
-		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.segments.model.SegmentsEntry> orderByComparator) {
-		return getService()
-				   .getSegmentsEntries(groupId, start, end, orderByComparator);
-	}
-
-	public static java.util.List<com.liferay.segments.model.SegmentsEntry> getSegmentsEntries(
-		String type, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.segments.model.SegmentsEntry> orderByComparator) {
-		return getService()
-				   .getSegmentsEntries(type, start, end, orderByComparator);
+				   .getSegmentsEntries(groupId, includeAncestorSegmentsEntries,
+			start, end, orderByComparator);
 	}
 
 	public static java.util.List<com.liferay.segments.model.SegmentsEntry> getSegmentsEntriesBySource(
@@ -294,8 +283,11 @@ public class SegmentsEntryLocalServiceUtil {
 		return getService().getSegmentsEntriesCount();
 	}
 
-	public static int getSegmentsEntriesCount(long groupId) {
-		return getService().getSegmentsEntriesCount(groupId);
+	public static int getSegmentsEntriesCount(long groupId,
+		boolean includeAncestorSegmentsEntries) {
+		return getService()
+				   .getSegmentsEntriesCount(groupId,
+			includeAncestorSegmentsEntries);
 	}
 
 	/**
@@ -309,12 +301,6 @@ public class SegmentsEntryLocalServiceUtil {
 		long segmentsEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getSegmentsEntry(segmentsEntryId);
-	}
-
-	public static com.liferay.segments.model.SegmentsEntry getSegmentsEntry(
-		long groupId, String key)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getSegmentsEntry(groupId, key);
 	}
 
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.segments.model.SegmentsEntry> searchSegmentsEntries(

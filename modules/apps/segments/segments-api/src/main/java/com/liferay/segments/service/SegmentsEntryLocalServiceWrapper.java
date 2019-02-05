@@ -212,8 +212,9 @@ public class SegmentsEntryLocalServiceWrapper
 
 	@Override
 	public com.liferay.segments.model.SegmentsEntry fetchSegmentsEntry(
-		long groupId, String key) {
-		return _segmentsEntryLocalService.fetchSegmentsEntry(groupId, key);
+		long groupId, String key, boolean includeAncestorSegmentsEntries) {
+		return _segmentsEntryLocalService.fetchSegmentsEntry(groupId, key,
+			includeAncestorSegmentsEntries);
 	}
 
 	@Override
@@ -270,26 +271,11 @@ public class SegmentsEntryLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.segments.model.SegmentsEntry> getSegmentsEntries(
-		long groupId, boolean active, String type, int start, int end,
+		long groupId, boolean includeAncestorSegmentsEntries, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.segments.model.SegmentsEntry> orderByComparator) {
-		return _segmentsEntryLocalService.getSegmentsEntries(groupId, active,
-			type, start, end, orderByComparator);
-	}
-
-	@Override
-	public java.util.List<com.liferay.segments.model.SegmentsEntry> getSegmentsEntries(
-		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.segments.model.SegmentsEntry> orderByComparator) {
-		return _segmentsEntryLocalService.getSegmentsEntries(groupId, start,
-			end, orderByComparator);
-	}
-
-	@Override
-	public java.util.List<com.liferay.segments.model.SegmentsEntry> getSegmentsEntries(
-		String type, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.segments.model.SegmentsEntry> orderByComparator) {
-		return _segmentsEntryLocalService.getSegmentsEntries(type, start, end,
-			orderByComparator);
+		return _segmentsEntryLocalService.getSegmentsEntries(groupId,
+			includeAncestorSegmentsEntries, start, end, orderByComparator);
 	}
 
 	@Override
@@ -311,8 +297,10 @@ public class SegmentsEntryLocalServiceWrapper
 	}
 
 	@Override
-	public int getSegmentsEntriesCount(long groupId) {
-		return _segmentsEntryLocalService.getSegmentsEntriesCount(groupId);
+	public int getSegmentsEntriesCount(long groupId,
+		boolean includeAncestorSegmentsEntries) {
+		return _segmentsEntryLocalService.getSegmentsEntriesCount(groupId,
+			includeAncestorSegmentsEntries);
 	}
 
 	/**
@@ -327,13 +315,6 @@ public class SegmentsEntryLocalServiceWrapper
 		long segmentsEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _segmentsEntryLocalService.getSegmentsEntry(segmentsEntryId);
-	}
-
-	@Override
-	public com.liferay.segments.model.SegmentsEntry getSegmentsEntry(
-		long groupId, String key)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _segmentsEntryLocalService.getSegmentsEntry(groupId, key);
 	}
 
 	@Override

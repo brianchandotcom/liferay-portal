@@ -195,7 +195,8 @@ public interface SegmentsEntryLocalService extends BaseLocalService,
 	public SegmentsEntry fetchSegmentsEntry(long segmentsEntryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public SegmentsEntry fetchSegmentsEntry(long groupId, String key);
+	public SegmentsEntry fetchSegmentsEntry(long groupId, String key,
+		boolean includeAncestorSegmentsEntries);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -234,17 +235,9 @@ public interface SegmentsEntryLocalService extends BaseLocalService,
 	public List<SegmentsEntry> getSegmentsEntries(int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<SegmentsEntry> getSegmentsEntries(long groupId, boolean active,
-		String type, int start, int end,
+	public List<SegmentsEntry> getSegmentsEntries(long groupId,
+		boolean includeAncestorSegmentsEntries, int start, int end,
 		OrderByComparator<SegmentsEntry> orderByComparator);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<SegmentsEntry> getSegmentsEntries(long groupId, int start,
-		int end, OrderByComparator<SegmentsEntry> orderByComparator);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<SegmentsEntry> getSegmentsEntries(String type, int start,
-		int end, OrderByComparator<SegmentsEntry> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<SegmentsEntry> getSegmentsEntriesBySource(String source,
@@ -259,7 +252,8 @@ public interface SegmentsEntryLocalService extends BaseLocalService,
 	public int getSegmentsEntriesCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getSegmentsEntriesCount(long groupId);
+	public int getSegmentsEntriesCount(long groupId,
+		boolean includeAncestorSegmentsEntries);
 
 	/**
 	* Returns the segments entry with the primary key.
@@ -270,10 +264,6 @@ public interface SegmentsEntryLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public SegmentsEntry getSegmentsEntry(long segmentsEntryId)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public SegmentsEntry getSegmentsEntry(long groupId, String key)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

@@ -58,27 +58,6 @@ public class JSModulesResolver {
 			Details.class, properties);
 	}
 
-	@Reference(unbind = "-")
-	public void setJsConfigGeneratorPackagesTracker(
-		JSConfigGeneratorPackagesTracker jsConfigGeneratorPackagesTracker) {
-		_jsConfigGeneratorPackagesTracker = jsConfigGeneratorPackagesTracker;
-	}
-
-	@Reference(unbind = "-")
-	public void setMapper(JSModulesNameMapper mapper) {
-		_mapper = mapper;
-	}
-
-	@Reference(unbind = "-")
-	public void setNpmRegistry(NPMRegistry npmRegistry) {
-		_npmRegistry = npmRegistry;
-	}
-
-	@Reference(unbind = "-")
-	public void setPortal(Portal portal) {
-		_portal = portal;
-	}
-
 	private Map<String, ModuleDescriptor> _getAllModuleDescriptors() {
 		Collection<JSConfigGeneratorPackage> jsConfigGeneratorPackages =
 			_jsConfigGeneratorPackagesTracker.getJSConfigGeneratorPackages();
@@ -213,9 +192,16 @@ public class JSModulesResolver {
 		}
 	}
 
+	@Reference
 	private JSConfigGeneratorPackagesTracker _jsConfigGeneratorPackagesTracker;
+
+	@Reference
 	private JSModulesNameMapper _mapper;
+
+	@Reference
 	private NPMRegistry _npmRegistry;
+
+	@Reference
 	private Portal _portal;
 
 }

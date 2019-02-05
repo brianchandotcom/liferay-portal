@@ -144,8 +144,8 @@ public abstract class BaseFragmentCollectionContributor
 		FragmentEntry fragmentEntry =
 			fragmentEntryLocalService.createFragmentEntry(0L);
 
-		fragmentEntry.setName(name);
 		fragmentEntry.setFragmentEntryKey(fragmentEntryKey);
+		fragmentEntry.setName(name);
 		fragmentEntry.setCss(css);
 		fragmentEntry.setHtml(html);
 		fragmentEntry.setJs(js);

@@ -39,8 +39,12 @@
 		}
 
 		.palette-item {
-			border: 5px solid transparent;
+			$paletteItemPadding: 5px;
+			$paletteItemSize: 20px;
+
+			border: $paletteItemPadding solid transparent;
 			border-radius: 50%;
+			height: $paletteItemSize + ($paletteItemPadding * 2);
 			transition: border-color ease 0.2s;
 			will-change: border-color;
 
@@ -49,9 +53,11 @@
 			}
 
 			&-inner {
-				border-color: #CDCED9;
-				height: 20px;
-				width: 20px;
+				border: none;
+				box-shadow: inset 0 0 0 1px #CDCED9;
+				height: $paletteItemSize;
+				overflow: hidden;
+				width: $paletteItemSize;
 			}
 
 			&-selected .palette-item-inner {

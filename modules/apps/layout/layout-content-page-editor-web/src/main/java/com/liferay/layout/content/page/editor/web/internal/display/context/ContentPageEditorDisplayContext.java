@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletApp;
 import com.liferay.portal.kernel.model.PortletCategory;
 import com.liferay.portal.kernel.portlet.PortletConfigFactoryUtil;
+import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
@@ -92,6 +93,11 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
 /**
  * @author Eudaldo Alonso
  */
@@ -123,6 +129,9 @@ public class ContentPageEditorDisplayContext {
 			"addFragmentEntryLinkURL",
 			getFragmentEntryActionURL(
 				"/content_layout/add_fragment_entry_link"));
+		soyContext.put(
+			"addPortletURL",
+			getFragmentEntryActionURL("/content_layout/add_portlet"));
 		soyContext.put("availableLanguages", getAvailableLanguagesSoyContext());
 		soyContext.put("classNameId", classNameId);
 		soyContext.put("classPK", classPK);
@@ -253,17 +262,6 @@ public class ContentPageEditorDisplayContext {
 
 		return HttpUtil.addParameter(
 			actionURL.toString(), "p_l_mode", Constants.EDIT);
-	}
-
-	protected SoyContext getFragmentEntrySoyContext(
-		FragmentEntry fragmentEntry, String content) {
-
-		SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
-
-		soyContext.put("fragmentEntryId", fragmentEntry.getFragmentEntryId());
-		soyContext.put("name", fragmentEntry.getName());
-
-		return soyContext;
 	}
 
 	protected long getGroupId() {
@@ -473,7 +471,7 @@ public class ContentPageEditorDisplayContext {
 					String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()));
 
 				soyContext.putAll(
-					getFragmentEntrySoyContext(fragmentEntry, content));
+					_getFragmentEntrySoyContext(fragmentEntry, content));
 
 				soyContexts.put(
 					String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()),
@@ -544,6 +542,38 @@ public class ContentPageEditorDisplayContext {
 		return soyContexts;
 	}
 
+	private SoyContext _getFragmentEntrySoyContext(
+		FragmentEntry fragmentEntry, String content) {
+
+		if (fragmentEntry != null) {
+			SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
+
+			soyContext.put(
+				"fragmentEntryId", fragmentEntry.getFragmentEntryId());
+			soyContext.put("name", fragmentEntry.getName());
+
+			return soyContext;
+		}
+
+		SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
+
+		soyContext.put("fragmentEntryId", 0);
+		soyContext.put("name", StringPool.BLANK);
+
+		String portletId = _getPortletId(content);
+
+		if (Validator.isNull(portletId)) {
+			return soyContext;
+		}
+
+		soyContext.put(
+			"name",
+			PortalUtil.getPortletTitle(portletId, themeDisplay.getLocale()));
+		soyContext.put("portletId", portletId);
+
+		return soyContext;
+	}
+
 	private String _getPortletCategoryTitle(PortletCategory portletCategory) {
 		String title = LanguageUtil.get(request, portletCategory.getName());
 
@@ -578,6 +608,23 @@ public class ContentPageEditorDisplayContext {
 		}
 
 		return StringPool.BLANK;
+	}
+
+	private String _getPortletId(String content) {
+		Document document = Jsoup.parse(content);
+
+		Elements elements = document.getElementsByAttributeValueStarting(
+			"id", "portlet_");
+
+		if (elements.size() != 1) {
+			return StringPool.BLANK;
+		}
+
+		Element element = elements.get(0);
+
+		String id = element.id();
+
+		return PortletIdCodec.decodePortletName(id.substring(8));
 	}
 
 	private List<SoyContext> _getPortletsContexts(

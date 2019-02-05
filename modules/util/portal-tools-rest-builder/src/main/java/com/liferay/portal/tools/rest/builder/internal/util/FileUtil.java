@@ -59,7 +59,9 @@ public class FileUtil {
 		SourceFormatter sourceFormatter = new SourceFormatter(
 			sourceFormatterArgs);
 
-		sourceFormatter.format();
+		if (!StringUtil.endsWith(file.getName(), "Resource.java")) {
+			sourceFormatter.format();
+		}
 
 		return read(file);
 	}

@@ -41,7 +41,7 @@
 		<!-- Finder methods -->
 
 		<finder name="GroupId" return-type="Collection">
-			<finder-column name="groupId" />
+			<finder-column arrayable-operator="OR" name="groupId" />
 		</finder>
 		<finder name="Source" return-type="Collection">
 			<finder-column name="source" />
@@ -50,7 +50,7 @@
 			<finder-column name="type" />
 		</finder>
 		<finder name="G_A" return-type="Collection">
-			<finder-column name="groupId" />
+			<finder-column arrayable-operator="OR" name="groupId" />
 			<finder-column name="active" />
 		</finder>
 		<finder name="G_K" return-type="SegmentsEntry" unique="true">
@@ -62,7 +62,7 @@
 			<finder-column name="type" />
 		</finder>
 		<finder name="G_A_T" return-type="Collection">
-			<finder-column name="groupId" />
+			<finder-column arrayable-operator="OR" name="groupId" />
 			<finder-column name="active" />
 			<finder-column name="type" />
 		</finder>

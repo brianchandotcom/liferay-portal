@@ -21,18 +21,7 @@ SelectUserGroupsDisplayContext selectUserGroupsDisplayContext = new SelectUserGr
 %>
 
 <clay:management-toolbar
-	clearResultsURL="<%= selectUserGroupsDisplayContext.getClearResultsURL() %>"
-	componentId="userGroupsManagementToolbar"
-	disabled="<%= selectUserGroupsDisplayContext.isDisabledManagementBar() %>"
-	filterDropdownItems="<%= selectUserGroupsDisplayContext.getFilterDropdownItems() %>"
-	itemsTotal="<%= selectUserGroupsDisplayContext.getTotalItems() %>"
-	searchActionURL="<%= selectUserGroupsDisplayContext.getSearchActionURL() %>"
-	searchContainerId="userGroups"
-	searchFormName="searchFm"
-	showSearch="<%= selectUserGroupsDisplayContext.isShowSearch() %>"
-	sortingOrder="<%= selectUserGroupsDisplayContext.getOrderByType() %>"
-	sortingURL="<%= selectUserGroupsDisplayContext.getSortingURL() %>"
-	viewTypeItems="<%= selectUserGroupsDisplayContext.getViewTypeItems() %>"
+	displayContext="<%= new SelectUserGroupsManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, selectUserGroupsDisplayContext) %>"
 />
 
 <aui:form cssClass="container-fluid-1280 portlet-site-memberships-user-groups" name="fm">

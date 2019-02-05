@@ -51,20 +51,19 @@ public class JSConfigGeneratorPackage {
 		boolean applyVersioning, Bundle bundle, String contextPath) {
 
 		_applyVersioning = applyVersioning;
-		_bundle = bundle;
 		_contextPath = contextPath;
 
-		Version version = _bundle.getVersion();
+		Version version = bundle.getVersion();
 
 		_version = version.toString();
 
-		BundleWiring bundleWiring = _bundle.adapt(BundleWiring.class);
+		BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
 
 		List<BundleCapability> bundleCapabilities =
 			bundleWiring.getCapabilities(Details.OSGI_WEBRESOURCE);
 
 		if (bundleCapabilities.isEmpty()) {
-			_name = _bundle.getSymbolicName();
+			_name = bundle.getSymbolicName();
 
 			return;
 		}
@@ -75,7 +74,7 @@ public class JSConfigGeneratorPackage {
 
 		_name = (String)attributes.get(Details.OSGI_WEBRESOURCE);
 
-		URL url = _bundle.getEntry(Details.CONFIG_JSON);
+		URL url = bundle.getEntry(Details.CONFIG_JSON);
 
 		urlToConfiguration(url, bundleWiring);
 
@@ -103,14 +102,9 @@ public class JSConfigGeneratorPackage {
 	}
 
 	protected String generateConfiguration(
-		JSONObject jsonObject, BundleWiring bundleWiring,
-		boolean versionedModuleName) {
+		JSONObject jsonObject, BundleWiring bundleWiring) {
 
 		if (!_applyVersioning) {
-			if (versionedModuleName) {
-				return "";
-			}
-
 			return jsonObject.toString();
 		}
 
@@ -126,22 +120,22 @@ public class JSConfigGeneratorPackage {
 		for (int i = 0; i < namesJSONArray.length(); i++) {
 			String name = (String)namesJSONArray.get(i);
 
-			int x = name.indexOf('/');
+			int pos = name.indexOf(StringPool.SLASH);
 
-			if (x == -1) {
+			if (pos == -1) {
 				continue;
 			}
 
-			String moduleName = name.substring(0, x);
+			String moduleName = name.substring(0, pos);
 
 			if (!moduleName.equals(getName())) {
 				continue;
 			}
 
-			String modulePath = name.substring(x);
+			String modulePath = name.substring(pos);
 
 			moduleName = StringBundler.concat(
-				getName(), "@", getVersion(), modulePath);
+				getName(), StringPool.AT, getVersion(), modulePath);
 
 			JSONObject nameJSONObject = jsonObject.getJSONObject(name);
 
@@ -151,18 +145,18 @@ public class JSConfigGeneratorPackage {
 			for (int j = 0; j < dependenciesJSONArray.length(); j++) {
 				String dependency = dependenciesJSONArray.getString(j);
 
-				int y = dependency.indexOf('/');
+				int pos2 = dependency.indexOf('/');
 
-				if (y == -1) {
+				if (pos2 == -1) {
 					continue;
 				}
 
-				String dependencyName = dependency.substring(0, y);
-				String dependencyPath = dependency.substring(y);
+				String dependencyName = dependency.substring(0, pos2);
+				String dependencyPath = dependency.substring(pos2);
 
 				if (dependencyName.equals(getName())) {
 					dependencyName = StringBundler.concat(
-						getName(), "@", getVersion(), dependencyPath);
+						getName(), StringPool.AT, getVersion(), dependencyPath);
 
 					dependenciesJSONArray.put(j, dependencyName);
 				}
@@ -173,21 +167,16 @@ public class JSConfigGeneratorPackage {
 				}
 			}
 
-			if (versionedModuleName) {
-				jsonObject.remove(name);
-
-				jsonObject.put(moduleName, nameJSONObject);
-			}
-			else {
-				jsonObject.put(name, nameJSONObject);
-			}
+			jsonObject.put(name, nameJSONObject);
 		}
 
 		return jsonObject.toString();
 	}
 
 	protected String normalize(String jsonString) {
-		if (jsonString.startsWith("{") && jsonString.endsWith("}")) {
+		if (jsonString.startsWith(StringPool.OPEN_CURLY_BRACE) &&
+			jsonString.endsWith(StringPool.CLOSE_CURLY_BRACE)) {
+
 			jsonString = jsonString.substring(1, jsonString.length() - 1);
 		}
 
@@ -214,7 +203,8 @@ public class JSConfigGeneratorPackage {
 				Constants.VERSION_ATTRIBUTE);
 
 			dependencyName = StringBundler.concat(
-				dependencyName, "@", version.toString(), dependencyPath);
+				dependencyName, StringPool.AT, version.toString(),
+				dependencyPath);
 
 			jsonArray.put(index, dependencyName);
 
@@ -233,7 +223,7 @@ public class JSConfigGeneratorPackage {
 			JSONObject jsonObject = new JSONObject(jsonTokener);
 
 			_configuration = normalize(
-				generateConfiguration(jsonObject, bundleWiring, false));
+				generateConfiguration(jsonObject, bundleWiring));
 		}
 		catch (IOException ioe) {
 			throw new RuntimeException(ioe);
@@ -260,12 +250,13 @@ public class JSConfigGeneratorPackage {
 
 			JSONObject moduleJSONObject = jsonObject.getJSONObject(name);
 
-			JSONArray jsonArray = moduleJSONObject.getJSONArray("dependencies");
+			JSONArray dependenciesJSONArray = moduleJSONObject.getJSONArray(
+				"dependencies");
 
 			List<String> dependencies = new ArrayList<>();
 
-			for (int i = 0; i < jsonArray.length(); i++) {
-				dependencies.add((String)jsonArray.get(i));
+			for (int i = 0; i < dependenciesJSONArray.length(); i++) {
+				dependencies.add((String)dependenciesJSONArray.get(i));
 			}
 
 			_jsConfigGeneratorModules.add(
@@ -276,7 +267,6 @@ public class JSConfigGeneratorPackage {
 	}
 
 	private final boolean _applyVersioning;
-	private final Bundle _bundle;
 	private String _configuration = "";
 	private final String _contextPath;
 	private List<JSConfigGeneratorModule> _jsConfigGeneratorModules =

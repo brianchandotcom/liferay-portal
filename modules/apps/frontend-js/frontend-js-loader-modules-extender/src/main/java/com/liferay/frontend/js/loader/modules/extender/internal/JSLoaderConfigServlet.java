@@ -15,17 +15,16 @@
 package com.liferay.frontend.js.loader.modules.extender.internal;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.util.ContentTypes;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.StringWriter;
 
 import java.util.Map;
 
 import javax.servlet.Servlet;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -75,9 +74,10 @@ public class JSLoaderConfigServlet extends HttpServlet {
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException {
 
-		StringWriter stringWriter = new StringWriter();
+		response.setContentType(ContentTypes.TEXT_JAVASCRIPT_UTF8);
 
-		PrintWriter printWriter = new PrintWriter(stringWriter);
+		PrintWriter printWriter = new PrintWriter(
+			response.getOutputStream(), true);
 
 		printWriter.println("(function() {");
 
@@ -95,26 +95,10 @@ public class JSLoaderConfigServlet extends HttpServlet {
 		printWriter.println("}());");
 
 		printWriter.close();
-
-		_writeResponse(response, stringWriter.toString());
 	}
 
 	protected void setDetails(Details details) {
 		_details = details;
-	}
-
-	private void _writeResponse(HttpServletResponse response, String content)
-		throws IOException {
-
-		response.setContentType(Details.CONTENT_TYPE);
-
-		ServletOutputStream servletOutputStream = response.getOutputStream();
-
-		PrintWriter printWriter = new PrintWriter(servletOutputStream, true);
-
-		printWriter.write(content);
-
-		printWriter.close();
 	}
 
 	private ComponentContext _componentContext;

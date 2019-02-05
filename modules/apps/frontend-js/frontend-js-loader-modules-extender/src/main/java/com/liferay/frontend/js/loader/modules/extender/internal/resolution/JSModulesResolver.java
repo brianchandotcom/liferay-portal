@@ -1,5 +1,6 @@
 package com.liferay.frontend.js.loader.modules.extender.internal.resolution;
 
+import com.liferay.frontend.js.loader.modules.extender.internal.Details;
 import com.liferay.frontend.js.loader.modules.extender.internal.resolution.descriptor.JSConfigGeneratorModuleDescriptor;
 import com.liferay.frontend.js.loader.modules.extender.internal.resolution.descriptor.JSModuleDescriptor;
 import com.liferay.frontend.js.loader.modules.extender.internal.config.generator.JSConfigGeneratorModule;
@@ -8,8 +9,11 @@ import com.liferay.frontend.js.loader.modules.extender.internal.config.generator
 import com.liferay.frontend.js.loader.modules.extender.npm.JSModule;
 import com.liferay.frontend.js.loader.modules.extender.npm.ModuleNameUtil;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMRegistry;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.util.Portal;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 import java.util.ArrayList;
@@ -24,20 +28,30 @@ import java.util.stream.Stream;
  * @author Rodolfo Roza Miranda
  */
 @Component(
+	configurationPid = "com.liferay.frontend.js.loader.modules.extender.internal.Details",
 	immediate = true,
 	service = JSModulesResolver.class
 )
 public class JSModulesResolver {
 
 	public JSModulesResolution resolve(List<String> modules) {
-
-		JSModulesResolution context = new JSModulesResolution();
+		JSModulesResolution context = new JSModulesResolution(
+			_details.explainResolutions());
 
 		for (String module : modules) {
 			_resolve(module, context);
 		}
 
 		return context;
+	}
+
+	private Details _details;
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_details = ConfigurableUtil.createConfigurable(
+			Details.class, properties);
 	}
 
 	@Reference(unbind = "-")
@@ -127,6 +141,8 @@ public class JSModulesResolver {
 
 		Map<String, String> dependenciesMap = new ConcurrentHashMap<>();
 
+		context.indentExplanation();
+
 		for (String dependency : dependencies) {
 
 			if (!dependency.equals("require") &&
@@ -148,6 +164,8 @@ public class JSModulesResolver {
 				}
 			}
 		}
+
+		context.dedentExplanation();
 
 		context.putPath(alias, adapter.getPath());
 		context.putModuleDependencyMap(alias, dependenciesMap);

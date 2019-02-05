@@ -1,6 +1,7 @@
 package com.liferay.frontend.js.loader.modules.extender.internal.resolution;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -9,12 +10,46 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentSkipListSet;
 
 /**
+ * Object to hold the results of a resolution of a list of modules.
  * @author Rodolfo Roza Miranda
+ * @review
  */
 public class JSModulesResolution {
 
+	private final boolean _explainResolutions;
+
+	public JSModulesResolution(boolean explainResolutions) {
+		_explainResolutions = explainResolutions;
+	}
+
+	public void indentExplanation() {
+		_explanationIndentation++;
+	}
+
+	public void dedentExplanation() {
+		_explanationIndentation--;
+	}
+
 	public void addResolvedModule(String alias) {
 		_resolvedModules.add(0, alias);
+
+		if (!_explainResolutions) {
+			return;
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		for (int i = 0; i < _explanationIndentation; i++) {
+			sb.append("  ");
+		}
+
+		sb.append(alias);
+
+		_explanation.add(0, sb.toString());
+	}
+
+	public Collection<String> getExplanation() {
+		return _explanation;
 	}
 
 	public Map<String, String> getConfigMap() {
@@ -56,6 +91,8 @@ public class JSModulesResolution {
 		return _processedModules.contains(module);
 	}
 
+	private int _explanationIndentation = 0;
+	private List<String> _explanation = new ArrayList<>();
 	private final Map<String, String> _configMap = new ConcurrentHashMap<>();
 	private final Map<String, String> _pathMap = new ConcurrentHashMap<>();
 	private final Map<String, Map<String, String>> _moduleMap =

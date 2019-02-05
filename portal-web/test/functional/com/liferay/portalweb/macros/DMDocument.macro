@@ -1810,10 +1810,6 @@ definition {
 
 		DMDocument.viewDocumentTitleCmdPG(dmDocumentTitle = "${dmDocumentTitle}");
 
-		AssertElementPresent(
-			locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_THUMBNAIL"
-		);
-
 		if ("${dmRepositoryName}" == "true") {
 			AssertElementNotPresent(
 				locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_RATING"

@@ -108,7 +108,7 @@ public class ContentPageEditorDisplayContext {
 		String className, long classPK) {
 
 		this.request = request;
-		this.renderResponse = renderResponse;
+		_renderResponse = renderResponse;
 		this.classPK = classPK;
 
 		classNameId = PortalUtil.getClassNameId(className);
@@ -132,11 +132,12 @@ public class ContentPageEditorDisplayContext {
 		soyContext.put(
 			"addPortletURL",
 			getFragmentEntryActionURL("/content_layout/add_portlet"));
-		soyContext.put("availableLanguages", getAvailableLanguagesSoyContext());
+		soyContext.put(
+			"availableLanguages", _getAvailableLanguagesSoyContext());
 		soyContext.put("classNameId", classNameId);
 		soyContext.put("classPK", classPK);
 		soyContext.put(
-			"defaultEditorConfigurations", getDefaultConfigurations());
+			"defaultEditorConfigurations", _getDefaultConfigurations());
 		soyContext.put("defaultLanguageId", themeDisplay.getLanguageId());
 		soyContext.put(
 			"deleteFragmentEntryLinkURL",
@@ -148,26 +149,27 @@ public class ContentPageEditorDisplayContext {
 				"/content_layout/edit_fragment_entry_link"));
 		soyContext.put(
 			"elements",
-			getSoyContextFragmentCollections(
+			_getSoyContextFragmentCollections(
 				FragmentEntryTypeConstants.TYPE_ELEMENT));
-		soyContext.put("fragmentEntryLinks", getSoyContextFragmentEntryLinks());
-		soyContext.put("imageSelectorURL", getItemSelectorURL());
+		soyContext.put(
+			"fragmentEntryLinks", _getSoyContextFragmentEntryLinks());
+		soyContext.put("imageSelectorURL", _getItemSelectorURL());
 		soyContext.put("languageId", themeDisplay.getLanguageId());
 		soyContext.put(
-			"layoutData", JSONFactoryUtil.createJSONObject(getLayoutData()));
-		soyContext.put("portletNamespace", renderResponse.getNamespace());
+			"layoutData", JSONFactoryUtil.createJSONObject(_getLayoutData()));
+		soyContext.put("portletNamespace", _renderResponse.getNamespace());
 		soyContext.put(
 			"renderFragmentEntryURL",
 			getFragmentEntryActionURL("/content_layout/render_fragment_entry"));
-		soyContext.put("redirectURL", getRedirect());
+		soyContext.put("redirectURL", _getRedirect());
 		soyContext.put(
 			"sections",
-			getSoyContextFragmentCollections(
+			_getSoyContextFragmentCollections(
 				FragmentEntryTypeConstants.TYPE_SECTION));
 		soyContext.put(
 			"spritemap",
 			themeDisplay.getPathThemeImages() + "/lexicon/icons.svg");
-		soyContext.put("themeColorsCssClasses", getThemeColorsCssClasses());
+		soyContext.put("themeColorsCssClasses", _getThemeColorsCssClasses());
 		soyContext.put(
 			"updateLayoutPageTemplateDataURL",
 			getFragmentEntryActionURL(
@@ -184,11 +186,12 @@ public class ContentPageEditorDisplayContext {
 
 		SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
 
-		soyContext.put("availableLanguages", getAvailableLanguagesSoyContext());
+		soyContext.put(
+			"availableLanguages", _getAvailableLanguagesSoyContext());
 		soyContext.put("classPK", themeDisplay.getPlid());
 		soyContext.put("defaultLanguageId", themeDisplay.getLanguageId());
 		soyContext.put("lastSaveDate", StringPool.BLANK);
-		soyContext.put("portletNamespace", renderResponse.getNamespace());
+		soyContext.put("portletNamespace", _renderResponse.getNamespace());
 		soyContext.put(
 			"spritemap",
 			themeDisplay.getPathThemeImages() + "/lexicon/icons.svg");
@@ -198,137 +201,13 @@ public class ContentPageEditorDisplayContext {
 		return _fragmentsEditorToolbarSoyContext;
 	}
 
-	protected SoyContext getAvailableLanguagesSoyContext() {
-		SoyContext availableLanguagesSoyContext =
-			SoyContextFactoryUtil.createSoyContext();
-
-		String[] languageIds = LocaleUtil.toLanguageIds(
-			LanguageUtil.getAvailableLocales(themeDisplay.getSiteGroupId()));
-
-		for (String languageId : languageIds) {
-			SoyContext languageSoyContext =
-				SoyContextFactoryUtil.createSoyContext();
-
-			String languageIcon = StringUtil.toLowerCase(
-				languageId.replace(StringPool.UNDERLINE, StringPool.DASH));
-
-			languageSoyContext.put("languageIcon", languageIcon);
-
-			String languageLabel = languageId.replace(
-				StringPool.UNDERLINE, StringPool.DASH);
-
-			languageSoyContext.put("languageLabel", languageLabel);
-
-			availableLanguagesSoyContext.put(languageId, languageSoyContext);
-		}
-
-		return availableLanguagesSoyContext;
-	}
-
-	protected Map<String, Object> getDefaultConfigurations() {
-		if (_defaultConfigurations != null) {
-			return _defaultConfigurations;
-		}
-
-		Map<String, Object> configurations = new HashMap<>();
-
-		EditorConfiguration richTextEditorConfiguration =
-			EditorConfigurationFactoryUtil.getEditorConfiguration(
-				ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
-				"fragmenEntryLinkRichTextEditor", StringPool.BLANK,
-				Collections.emptyMap(), themeDisplay,
-				RequestBackedPortletURLFactoryUtil.create(request));
-
-		configurations.put("rich-text", richTextEditorConfiguration.getData());
-
-		EditorConfiguration editorConfiguration =
-			EditorConfigurationFactoryUtil.getEditorConfiguration(
-				ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
-				"fragmenEntryLinkEditor", StringPool.BLANK,
-				Collections.emptyMap(), themeDisplay,
-				RequestBackedPortletURLFactoryUtil.create(request));
-
-		configurations.put("text", editorConfiguration.getData());
-
-		_defaultConfigurations = configurations;
-
-		return _defaultConfigurations;
-	}
-
 	protected String getFragmentEntryActionURL(String action) {
-		PortletURL actionURL = renderResponse.createActionURL();
+		PortletURL actionURL = _renderResponse.createActionURL();
 
 		actionURL.setParameter(ActionRequest.ACTION_NAME, action);
 
 		return HttpUtil.addParameter(
 			actionURL.toString(), "p_l_mode", Constants.EDIT);
-	}
-
-	protected long getGroupId() {
-		if (_groupId != null) {
-			return _groupId;
-		}
-
-		_groupId = ParamUtil.getLong(
-			request, "groupId", themeDisplay.getScopeGroupId());
-
-		return _groupId;
-	}
-
-	protected ItemSelectorCriterion getImageItemSelectorCriterion() {
-		if (_imageItemSelectorCriterion != null) {
-			return _imageItemSelectorCriterion;
-		}
-
-		List<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
-			new ArrayList<>();
-
-		desiredItemSelectorReturnTypes.add(
-			new FileEntryItemSelectorReturnType());
-
-		ItemSelectorCriterion imageItemSelectorCriterion =
-			new ImageItemSelectorCriterion();
-
-		imageItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-			desiredItemSelectorReturnTypes);
-
-		_imageItemSelectorCriterion = imageItemSelectorCriterion;
-
-		return _imageItemSelectorCriterion;
-	}
-
-	protected String getItemSelectorURL() {
-		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
-			RequestBackedPortletURLFactoryUtil.create(request),
-			renderResponse.getNamespace() + "selectImage",
-			getImageItemSelectorCriterion(), getURLItemSelectorCriterion());
-
-		return itemSelectorURL.toString();
-	}
-
-	protected String getLayoutData() throws PortalException {
-		if (_layoutData != null) {
-			return _layoutData;
-		}
-
-		LayoutPageTemplateStructure layoutPageTemplateStructure =
-			LayoutPageTemplateStructureLocalServiceUtil.
-				fetchLayoutPageTemplateStructure(
-					themeDisplay.getScopeGroupId(), classNameId, classPK, true);
-
-		_layoutData = layoutPageTemplateStructure.getData();
-
-		return _layoutData;
-	}
-
-	protected String getRedirect() {
-		if (_redirect != null) {
-			return _redirect;
-		}
-
-		_redirect = ParamUtil.getString(request, "redirect");
-
-		return _redirect;
 	}
 
 	protected List<SoyContext> getSidebarPanelSoyContexts(boolean showMapping) {
@@ -396,130 +275,67 @@ public class ContentPageEditorDisplayContext {
 		return _sidebarPanelSoyContexts;
 	}
 
-	protected List<SoyContext> getSoyContextFragmentCollections(int type) {
-		List<SoyContext> soyContexts =
-			_getSoyContextContributedFragmentCollections(type);
-
-		List<FragmentCollection> fragmentCollections =
-			FragmentCollectionServiceUtil.getFragmentCollections(getGroupId());
-
-		for (FragmentCollection fragmentCollection : fragmentCollections) {
-			List<FragmentEntry> fragmentEntries =
-				FragmentEntryServiceUtil.getFragmentEntriesByType(
-					getGroupId(), fragmentCollection.getFragmentCollectionId(),
-					type, WorkflowConstants.STATUS_APPROVED);
-
-			if (ListUtil.isEmpty(fragmentEntries)) {
-				continue;
-			}
-
-			SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
-
-			soyContext.put(
-				"fragmentCollectionId",
-				fragmentCollection.getFragmentCollectionId());
-			soyContext.put(
-				"fragmentEntries",
-				_getFragmentEntriesSoyContext(fragmentEntries));
-			soyContext.put("name", fragmentCollection.getName());
-
-			soyContexts.add(soyContext);
-		}
-
-		return soyContexts;
-	}
-
-	protected SoyContext getSoyContextFragmentEntryLinks()
-		throws PortalException {
-
-		if (_soyContextFragmentEntryLinksSoyContext != null) {
-			return _soyContextFragmentEntryLinksSoyContext;
-		}
-
-		SoyContext soyContexts = SoyContextFactoryUtil.createSoyContext();
-
-		List<FragmentEntryLink> fragmentEntryLinks =
-			FragmentEntryLinkLocalServiceUtil.getFragmentEntryLinks(
-				getGroupId(), classNameId, classPK);
-
-		boolean isolated = themeDisplay.isIsolated();
-
-		themeDisplay.setIsolated(true);
-
-		try {
-			for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
-				FragmentEntry fragmentEntry =
-					FragmentEntryServiceUtil.fetchFragmentEntry(
-						fragmentEntryLink.getFragmentEntryId());
-
-				SoyContext soyContext =
-					SoyContextFactoryUtil.createSoyContext();
-
-				String content =
-					FragmentEntryRenderUtil.renderFragmentEntryLink(
-						fragmentEntryLink, request,
-						PortalUtil.getHttpServletResponse(renderResponse));
-
-				soyContext.putHTML("content", content);
-
-				soyContext.put(
-					"editableValues",
-					JSONFactoryUtil.createJSONObject(
-						fragmentEntryLink.getEditableValues()));
-				soyContext.put(
-					"fragmentEntryLinkId",
-					String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()));
-
-				soyContext.putAll(
-					_getFragmentEntrySoyContext(fragmentEntry, content));
-
-				soyContexts.put(
-					String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()),
-					soyContext);
-			}
-		}
-		finally {
-			themeDisplay.setIsolated(isolated);
-		}
-
-		_soyContextFragmentEntryLinksSoyContext = soyContexts;
-
-		return _soyContextFragmentEntryLinksSoyContext;
-	}
-
-	protected String[] getThemeColorsCssClasses() {
-		return new String[] {
-			"blue", "cyan", "gray", "gray-dark", "green", "indigo", "orange",
-			"pink", "purple", "red", "teal", "white", "yellow"
-		};
-	}
-
-	protected ItemSelectorCriterion getURLItemSelectorCriterion() {
-		if (_urlItemSelectorCriterion != null) {
-			return _urlItemSelectorCriterion;
-		}
-
-		ItemSelectorCriterion urlItemSelectorCriterion =
-			new URLItemSelectorCriterion();
-
-		List<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
-			new ArrayList<>();
-
-		desiredItemSelectorReturnTypes.add(new URLItemSelectorReturnType());
-
-		urlItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-			desiredItemSelectorReturnTypes);
-
-		_urlItemSelectorCriterion = urlItemSelectorCriterion;
-
-		return _urlItemSelectorCriterion;
-	}
-
 	protected final long classNameId;
 	protected final long classPK;
-	protected final RenderResponse renderResponse;
 	protected final HttpServletRequest request;
 	protected final ThemeDisplay themeDisplay;
+
+	private SoyContext _getAvailableLanguagesSoyContext() {
+		SoyContext availableLanguagesSoyContext =
+			SoyContextFactoryUtil.createSoyContext();
+
+		String[] languageIds = LocaleUtil.toLanguageIds(
+			LanguageUtil.getAvailableLocales(themeDisplay.getSiteGroupId()));
+
+		for (String languageId : languageIds) {
+			SoyContext languageSoyContext =
+				SoyContextFactoryUtil.createSoyContext();
+
+			String languageIcon = StringUtil.toLowerCase(
+				languageId.replace(StringPool.UNDERLINE, StringPool.DASH));
+
+			languageSoyContext.put("languageIcon", languageIcon);
+
+			String languageLabel = languageId.replace(
+				StringPool.UNDERLINE, StringPool.DASH);
+
+			languageSoyContext.put("languageLabel", languageLabel);
+
+			availableLanguagesSoyContext.put(languageId, languageSoyContext);
+		}
+
+		return availableLanguagesSoyContext;
+	}
+
+	private Map<String, Object> _getDefaultConfigurations() {
+		if (_defaultConfigurations != null) {
+			return _defaultConfigurations;
+		}
+
+		Map<String, Object> configurations = new HashMap<>();
+
+		EditorConfiguration richTextEditorConfiguration =
+			EditorConfigurationFactoryUtil.getEditorConfiguration(
+				ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
+				"fragmenEntryLinkRichTextEditor", StringPool.BLANK,
+				Collections.emptyMap(), themeDisplay,
+				RequestBackedPortletURLFactoryUtil.create(request));
+
+		configurations.put("rich-text", richTextEditorConfiguration.getData());
+
+		EditorConfiguration editorConfiguration =
+			EditorConfigurationFactoryUtil.getEditorConfiguration(
+				ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
+				"fragmenEntryLinkEditor", StringPool.BLANK,
+				Collections.emptyMap(), themeDisplay,
+				RequestBackedPortletURLFactoryUtil.create(request));
+
+		configurations.put("text", editorConfiguration.getData());
+
+		_defaultConfigurations = configurations;
+
+		return _defaultConfigurations;
+	}
 
 	private List<SoyContext> _getFragmentEntriesSoyContext(
 		List<FragmentEntry> fragmentEntries) {
@@ -572,6 +388,63 @@ public class ContentPageEditorDisplayContext {
 		soyContext.put("portletId", portletId);
 
 		return soyContext;
+	}
+
+	private long _getGroupId() {
+		if (_groupId != null) {
+			return _groupId;
+		}
+
+		_groupId = ParamUtil.getLong(
+			request, "groupId", themeDisplay.getScopeGroupId());
+
+		return _groupId;
+	}
+
+	private ItemSelectorCriterion _getImageItemSelectorCriterion() {
+		if (_imageItemSelectorCriterion != null) {
+			return _imageItemSelectorCriterion;
+		}
+
+		List<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
+			new ArrayList<>();
+
+		desiredItemSelectorReturnTypes.add(
+			new FileEntryItemSelectorReturnType());
+
+		ItemSelectorCriterion imageItemSelectorCriterion =
+			new ImageItemSelectorCriterion();
+
+		imageItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			desiredItemSelectorReturnTypes);
+
+		_imageItemSelectorCriterion = imageItemSelectorCriterion;
+
+		return _imageItemSelectorCriterion;
+	}
+
+	private String _getItemSelectorURL() {
+		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
+			RequestBackedPortletURLFactoryUtil.create(request),
+			_renderResponse.getNamespace() + "selectImage",
+			_getImageItemSelectorCriterion(), _getURLItemSelectorCriterion());
+
+		return itemSelectorURL.toString();
+	}
+
+	private String _getLayoutData() throws PortalException {
+		if (_layoutData != null) {
+			return _layoutData;
+		}
+
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			LayoutPageTemplateStructureLocalServiceUtil.
+				fetchLayoutPageTemplateStructure(
+					themeDisplay.getScopeGroupId(), classNameId, classPK, true);
+
+		_layoutData = layoutPageTemplateStructure.getData();
+
+		return _layoutData;
 	}
 
 	private String _getPortletCategoryTitle(PortletCategory portletCategory) {
@@ -685,6 +558,16 @@ public class ContentPageEditorDisplayContext {
 		);
 	}
 
+	private String _getRedirect() {
+		if (_redirect != null) {
+			return _redirect;
+		}
+
+		_redirect = ParamUtil.getString(request, "redirect");
+
+		return _redirect;
+	}
+
 	private List<SoyContext> _getSoyContextContributedFragmentCollections(
 		int type) {
 
@@ -719,6 +602,125 @@ public class ContentPageEditorDisplayContext {
 		}
 
 		return soyContexts;
+	}
+
+	private List<SoyContext> _getSoyContextFragmentCollections(int type) {
+		List<SoyContext> soyContexts =
+			_getSoyContextContributedFragmentCollections(type);
+
+		List<FragmentCollection> fragmentCollections =
+			FragmentCollectionServiceUtil.getFragmentCollections(_getGroupId());
+
+		for (FragmentCollection fragmentCollection : fragmentCollections) {
+			List<FragmentEntry> fragmentEntries =
+				FragmentEntryServiceUtil.getFragmentEntriesByType(
+					_getGroupId(), fragmentCollection.getFragmentCollectionId(),
+					type, WorkflowConstants.STATUS_APPROVED);
+
+			if (ListUtil.isEmpty(fragmentEntries)) {
+				continue;
+			}
+
+			SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
+
+			soyContext.put(
+				"fragmentCollectionId",
+				fragmentCollection.getFragmentCollectionId());
+			soyContext.put(
+				"fragmentEntries",
+				_getFragmentEntriesSoyContext(fragmentEntries));
+			soyContext.put("name", fragmentCollection.getName());
+
+			soyContexts.add(soyContext);
+		}
+
+		return soyContexts;
+	}
+
+	private SoyContext _getSoyContextFragmentEntryLinks()
+		throws PortalException {
+
+		if (_soyContextFragmentEntryLinksSoyContext != null) {
+			return _soyContextFragmentEntryLinksSoyContext;
+		}
+
+		SoyContext soyContexts = SoyContextFactoryUtil.createSoyContext();
+
+		List<FragmentEntryLink> fragmentEntryLinks =
+			FragmentEntryLinkLocalServiceUtil.getFragmentEntryLinks(
+				_getGroupId(), classNameId, classPK);
+
+		boolean isolated = themeDisplay.isIsolated();
+
+		themeDisplay.setIsolated(true);
+
+		try {
+			for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
+				FragmentEntry fragmentEntry =
+					FragmentEntryServiceUtil.fetchFragmentEntry(
+						fragmentEntryLink.getFragmentEntryId());
+
+				SoyContext soyContext =
+					SoyContextFactoryUtil.createSoyContext();
+
+				String content =
+					FragmentEntryRenderUtil.renderFragmentEntryLink(
+						fragmentEntryLink, request,
+						PortalUtil.getHttpServletResponse(_renderResponse));
+
+				soyContext.putHTML("content", content);
+
+				soyContext.put(
+					"editableValues",
+					JSONFactoryUtil.createJSONObject(
+						fragmentEntryLink.getEditableValues()));
+				soyContext.put(
+					"fragmentEntryLinkId",
+					String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()));
+
+				soyContext.putAll(
+					_getFragmentEntrySoyContext(fragmentEntry, content));
+
+				soyContexts.put(
+					String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()),
+					soyContext);
+			}
+		}
+		finally {
+			themeDisplay.setIsolated(isolated);
+		}
+
+		_soyContextFragmentEntryLinksSoyContext = soyContexts;
+
+		return _soyContextFragmentEntryLinksSoyContext;
+	}
+
+	private String[] _getThemeColorsCssClasses() {
+		return new String[] {
+			"blue", "cyan", "gray", "gray-dark", "green", "indigo", "orange",
+			"pink", "purple", "red", "teal", "white", "yellow"
+		};
+	}
+
+	private ItemSelectorCriterion _getURLItemSelectorCriterion() {
+		if (_urlItemSelectorCriterion != null) {
+			return _urlItemSelectorCriterion;
+		}
+
+		ItemSelectorCriterion urlItemSelectorCriterion =
+			new URLItemSelectorCriterion();
+
+		List<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
+			new ArrayList<>();
+
+		desiredItemSelectorReturnTypes.add(new URLItemSelectorReturnType());
+
+		urlItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			desiredItemSelectorReturnTypes);
+
+		_urlItemSelectorCriterion = urlItemSelectorCriterion;
+
+		return _urlItemSelectorCriterion;
 	}
 
 	private List<SoyContext> _getWidgetCategoriesContexts(
@@ -797,6 +799,7 @@ public class ContentPageEditorDisplayContext {
 	private final ItemSelector _itemSelector;
 	private String _layoutData;
 	private String _redirect;
+	private final RenderResponse _renderResponse;
 	private List<SoyContext> _sidebarPanelSoyContexts;
 	private SoyContext _soyContextFragmentEntryLinksSoyContext;
 	private ItemSelectorCriterion _urlItemSelectorCriterion;

@@ -32,17 +32,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "membership-requests"));
 />
 
 <clay:management-toolbar
-	componentId="siteAdminWebManagementToolbar"
-	disabled="<%= viewMembershipRequestsDisplayContext.isDisabledManagementBar() %>"
-	filterDropdownItems="<%= viewMembershipRequestsDisplayContext.getFilterDropdownItems() %>"
-	itemsTotal="<%= viewMembershipRequestsDisplayContext.getTotalItems() %>"
-	searchContainerId="sites"
-	searchFormName="searchFm"
-	selectable="<%= false %>"
-	showSearch="<%= false %>"
-	sortingOrder="<%= viewMembershipRequestsDisplayContext.getOrderByType() %>"
-	sortingURL="<%= viewMembershipRequestsDisplayContext.getSortingURL() %>"
-	viewTypeItems="<%= viewMembershipRequestsDisplayContext.getViewTypeItems() %>"
+	displayContext="<%= new ViewMembershipRequestsManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, viewMembershipRequestsDisplayContext) %>"
 />
 
 <liferay-ui:success key="membershipReplySent" message="your-reply-will-be-sent-to-the-user-by-email" />

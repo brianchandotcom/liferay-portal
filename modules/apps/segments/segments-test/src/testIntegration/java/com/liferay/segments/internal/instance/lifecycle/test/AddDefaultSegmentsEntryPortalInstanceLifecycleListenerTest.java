@@ -56,8 +56,8 @@ public class AddDefaultSegmentsEntryPortalInstanceLifecycleListenerTest {
 
 		List<SegmentsEntry> segmentsEntries =
 			_segmentsEntryLocalService.getSegmentsEntries(
-				_company.getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				null);
+				_company.getGroupId(), false, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null);
 
 		Assert.assertEquals(
 			segmentsEntries.toString(), 1, segmentsEntries.size());

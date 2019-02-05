@@ -187,13 +187,13 @@ public class SegmentsDisplayContext {
 		}
 		else {
 			segmentsEntries = _segmentsEntryService.getSegmentsEntries(
-				_themeDisplay.getScopeGroupId(), searchContainer.getStart(),
-				searchContainer.getEnd(),
+				_themeDisplay.getScopeGroupId(), true,
+				searchContainer.getStart(), searchContainer.getEnd(),
 				searchContainer.getOrderByComparator());
 
 			segmentsEntriesCount =
 				_segmentsEntryService.getSegmentsEntriesCount(
-					_themeDisplay.getScopeGroupId());
+					_themeDisplay.getScopeGroupId(), false);
 		}
 
 		searchContainer.setResults(segmentsEntries);

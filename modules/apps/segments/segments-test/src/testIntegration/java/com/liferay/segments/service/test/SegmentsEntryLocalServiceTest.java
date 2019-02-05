@@ -90,7 +90,7 @@ public class SegmentsEntryLocalServiceTest {
 		Assert.assertEquals(
 			1,
 			_segmentsEntryLocalService.getSegmentsEntriesCount(
-				_group.getGroupId()));
+				_group.getGroupId(), false));
 	}
 
 	@Test(expected = SegmentsEntryKeyException.class)
@@ -112,7 +112,7 @@ public class SegmentsEntryLocalServiceTest {
 		Assert.assertEquals(
 			0,
 			_segmentsEntryLocalService.getSegmentsEntriesCount(
-				_group.getGroupId()));
+				_group.getGroupId(), false));
 	}
 
 	@Test
@@ -126,14 +126,14 @@ public class SegmentsEntryLocalServiceTest {
 		Assert.assertEquals(
 			count,
 			_segmentsEntryLocalService.getSegmentsEntriesCount(
-				_group.getGroupId()));
+				_group.getGroupId(), false));
 
 		_segmentsEntryLocalService.deleteSegmentsEntries(_group.getGroupId());
 
 		Assert.assertEquals(
 			0,
 			_segmentsEntryLocalService.getSegmentsEntriesCount(
-				_group.getGroupId()));
+				_group.getGroupId(), false));
 	}
 
 	@Test
@@ -207,7 +207,7 @@ public class SegmentsEntryLocalServiceTest {
 		Assert.assertEquals(
 			1,
 			_segmentsEntryLocalService.getSegmentsEntriesCount(
-				_group.getGroupId()));
+				_group.getGroupId(), false));
 	}
 
 	@Test(expected = SegmentsEntryKeyException.class)

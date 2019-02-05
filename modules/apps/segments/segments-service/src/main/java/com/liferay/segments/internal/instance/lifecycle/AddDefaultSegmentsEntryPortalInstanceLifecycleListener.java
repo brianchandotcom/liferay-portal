@@ -76,8 +76,10 @@ public class AddDefaultSegmentsEntryPortalInstanceLifecycleListener
 	private void _addDefaultSegmentsEntry(ServiceContext serviceContext)
 		throws PortalException {
 
-		SegmentsEntry segmentsEntry = _fetchSegmentsEntryIncludingAncestors(
-			serviceContext.getScopeGroupId(), SegmentsConstants.KEY_DEFAULT);
+		SegmentsEntry segmentsEntry =
+			_segmentsEntryLocalService.fetchSegmentsEntry(
+				serviceContext.getScopeGroupId(), SegmentsConstants.KEY_DEFAULT,
+				true);
 
 		if (segmentsEntry != null) {
 			return;
@@ -90,30 +92,6 @@ public class AddDefaultSegmentsEntryPortalInstanceLifecycleListener
 			nameMap, Collections.emptyMap(), true, StringPool.BLANK,
 			SegmentsConstants.KEY_DEFAULT, SegmentsConstants.SOURCE_DEFAULT,
 			User.class.getName(), serviceContext);
-	}
-
-	private SegmentsEntry _fetchSegmentsEntryIncludingAncestors(
-		long groupId, String key) {
-
-		SegmentsEntry segmentsEntry =
-			_segmentsEntryLocalService.fetchSegmentsEntry(groupId, key);
-
-		if (segmentsEntry != null) {
-			return segmentsEntry;
-		}
-
-		for (long ancestorSiteGroupId :
-				_portal.getAncestorSiteGroupIds(groupId)) {
-
-			segmentsEntry = _segmentsEntryLocalService.fetchSegmentsEntry(
-				ancestorSiteGroupId, key);
-
-			if (segmentsEntry != null) {
-				return segmentsEntry;
-			}
-		}
-
-		return null;
 	}
 
 	@Reference

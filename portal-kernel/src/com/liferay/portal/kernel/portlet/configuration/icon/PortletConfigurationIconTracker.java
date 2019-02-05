@@ -116,7 +116,7 @@ public class PortletConfigurationIconTracker {
 
 			@Override
 			public Object getAttribute(String name) {
-				if (name == WebKeys.THEME_DISPLAY) {
+				if (Objects.equals(name, WebKeys.THEME_DISPLAY)) {
 					return themeDisplay;
 				}
 

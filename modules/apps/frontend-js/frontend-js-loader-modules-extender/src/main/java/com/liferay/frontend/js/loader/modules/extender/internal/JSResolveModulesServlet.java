@@ -26,13 +26,13 @@ import java.util.List;
 	configurationPid = "com.liferay.frontend.js.loader.modules.extender.internal.Details",
 	immediate = true,
 	property = {
-		"osgi.http.whiteboard.servlet.name=com.liferay.frontend.js.loader.modules.extender.internal.JSModuleLoaderServlet",
-		"osgi.http.whiteboard.servlet.pattern=/js_module_loader",
+		"osgi.http.whiteboard.servlet.name=com.liferay.frontend.js.loader.modules.extender.internal.JSResolveModulesServlet",
+		"osgi.http.whiteboard.servlet.pattern=/js_resolve_modules",
 		"service.ranking:Integer=" + Details.MAX_VALUE_LESS_1K
 	},
-	service = {JSModuleLoaderServlet.class, Servlet.class}
+	service = {JSResolveModulesServlet.class, Servlet.class}
 )
-public class JSModuleLoaderServlet extends HttpServlet {
+public class JSResolveModulesServlet extends HttpServlet {
 
 	@Reference(unbind = "-")
 	public void setJsModulesContextResolver(

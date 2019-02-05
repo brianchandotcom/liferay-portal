@@ -163,10 +163,11 @@ public class Entity implements Comparable<Entity> {
 		_txManager = GetterUtil.getString(txManager, _TX_MANAGER_DEFAULT);
 
 		if (_entityColumns == null) {
-			_regularEntityTableColumns = null;
+			_databaseRegularEntityColumns = null;
 		}
 		else {
-			_regularEntityTableColumns = new ArrayList<>(regularEntityColumns);
+			_databaseRegularEntityColumns = new ArrayList<>(
+				regularEntityColumns);
 		}
 
 		if (_entityFinders != null) {
@@ -295,6 +296,10 @@ public class Entity implements Comparable<Entity> {
 	public String getConstantName() {
 		return TextFormatter.format(
 			TextFormatter.format(_name, TextFormatter.H), TextFormatter.A);
+	}
+
+	public List<EntityColumn> getDatabaseRegularEntityColumns() {
+		return _databaseRegularEntityColumns;
 	}
 
 	public String getDataSource() {
@@ -581,10 +586,6 @@ public class Entity implements Comparable<Entity> {
 
 	public List<EntityColumn> getRegularEntityColumns() {
 		return _regularEntityColumns;
-	}
-
-	public List<EntityColumn> getRegularEntityTableColumns() {
-		return _regularEntityTableColumns;
 	}
 
 	public String getSessionFactory() {
@@ -1250,6 +1251,7 @@ public class Entity implements Comparable<Entity> {
 	private final boolean _cacheEnabled;
 	private final List<EntityColumn> _collectionEntityColumns;
 	private final boolean _containerModel;
+	private final List<EntityColumn> _databaseRegularEntityColumns;
 	private final String _dataSource;
 	private final boolean _deprecated;
 	private final boolean _dynamicUpdateEnabled;
@@ -1275,7 +1277,6 @@ public class Entity implements Comparable<Entity> {
 	private final String _portletShortName;
 	private final List<Entity> _referenceEntities;
 	private final List<EntityColumn> _regularEntityColumns;
-	private final List<EntityColumn> _regularEntityTableColumns;
 	private final boolean _remoteService;
 	private final boolean _resourceActionModel;
 	private ServiceBuilder _serviceBuilder;

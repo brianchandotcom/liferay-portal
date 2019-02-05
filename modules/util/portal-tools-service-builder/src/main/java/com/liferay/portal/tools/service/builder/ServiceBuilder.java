@@ -4469,10 +4469,10 @@ public class ServiceBuilder {
 	}
 
 	private String _getCreateTableSQL(Entity entity) {
-		List<EntityColumn> regularEntityTableColumns =
-			entity.getRegularEntityTableColumns();
+		List<EntityColumn> databaseRegularEntityColumns =
+			entity.getDatabaseRegularEntityColumns();
 
-		if (regularEntityTableColumns.isEmpty()) {
+		if (databaseRegularEntityColumns.isEmpty()) {
 			return null;
 		}
 
@@ -4501,8 +4501,8 @@ public class ServiceBuilder {
 
 		sb.append(" (\n");
 
-		for (int i = 0; i < regularEntityTableColumns.size(); i++) {
-			EntityColumn entityColumn = regularEntityTableColumns.get(i);
+		for (int i = 0; i < databaseRegularEntityColumns.size(); i++) {
+			EntityColumn entityColumn = databaseRegularEntityColumns.get(i);
 
 			String dbName = entityColumn.getDBName();
 
@@ -4617,7 +4617,7 @@ public class ServiceBuilder {
 				sb.append(" default 0 not null");
 			}
 
-			if (((i + 1) != regularEntityTableColumns.size()) ||
+			if (((i + 1) != databaseRegularEntityColumns.size()) ||
 				entity.hasCompoundPK()) {
 
 				sb.append(",");
@@ -5999,10 +5999,10 @@ public class ServiceBuilder {
 			headEntityColumn.setFinderPath(true);
 			headEntityColumn.setInterfaceColumn(false);
 
-			List<EntityColumn> regularEntityTableColumns =
-				entity.getRegularEntityTableColumns();
+			List<EntityColumn> databaseRegularEntityColumns =
+				entity.getDatabaseRegularEntityColumns();
 
-			regularEntityTableColumns.add(headEntityColumn);
+			databaseRegularEntityColumns.add(headEntityColumn);
 
 			List<EntityColumn> entityFinderColumns =
 				entity.getFinderEntityColumns();

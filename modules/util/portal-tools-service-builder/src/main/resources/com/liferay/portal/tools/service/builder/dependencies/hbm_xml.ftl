@@ -83,7 +83,7 @@
 			<version access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor" name="mvccVersion" type="long" />
 		</#if>
 
-		<#list entity.regularEntityTableColumns as entityColumn>
+		<#list entity.databaseRegularEntityColumns as entityColumn>
 			<#if !entityColumn.isPrimary() && !entityColumn.entityName?? && (!stringUtil.equals(entityColumn.type, "Blob") || (stringUtil.equals(entityColumn.type, "Blob") && !entityColumn.lazy)) && !stringUtil.equals(entityColumn.name, "mvccVersion")>
 				<property
 

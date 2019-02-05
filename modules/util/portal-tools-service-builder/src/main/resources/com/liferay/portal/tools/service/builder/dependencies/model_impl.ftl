@@ -141,7 +141,7 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 
 	<#compress>
 		public static final Object[][] TABLE_COLUMNS = {
-			<#list entity.regularEntityTableColumns as entityColumn>
+			<#list entity.databaseRegularEntityColumns as entityColumn>
 				<#assign sqlType = serviceBuilder.getSqlType(entity.getName(), entityColumn.getName(), entityColumn.getType()) />
 
 				{"${entityColumn.DBName}", Types.${sqlType}}
@@ -155,7 +155,7 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 		public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 		static {
-			<#list entity.regularEntityTableColumns as entityColumn>
+			<#list entity.databaseRegularEntityColumns as entityColumn>
 				<#assign sqlType = serviceBuilder.getSqlType(entity.getName(), entityColumn.getName(), entityColumn.getType()) />
 
 				TABLE_COLUMNS_MAP.put("${entityColumn.DBName}", Types.${sqlType});
@@ -1523,7 +1523,7 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 
 	@Override
 	public void resetOriginalValues() {
-		<#list entity.regularEntityTableColumns as entityColumn>
+		<#list entity.databaseRegularEntityColumns as entityColumn>
 			<#if entityColumn.isFinderPath() || (validator.isNotNull(parentPKColumn) && (parentPKColumn.name == entityColumn.name)) || (stringUtil.equals(entityColumn.type, "Blob") && entityColumn.lazy) || (entity.hasEntityColumn("createDate", "Date") && entity.hasEntityColumn("modifiedDate", "Date"))>
 				<#if !cloneCastModelImpl??>
 					<#assign cloneCastModelImpl = true />
@@ -1571,7 +1571,7 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 			${entity.varName}CacheModel.${entity.PKVarName} = getPrimaryKey();
 		</#if>
 
-		<#list entity.regularEntityTableColumns as entityColumn>
+		<#list entity.databaseRegularEntityColumns as entityColumn>
 			<#if !stringUtil.equals(entityColumn.type, "Blob")>
 				<#if stringUtil.equals(entityColumn.type, "Date")>
 					Date ${entityColumn.name} = get${entityColumn.methodName}();
@@ -1746,7 +1746,7 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 		private volatile ${versionedEntity.name} _${versionedEntity.varName};
 	</#if>
 
-	<#list entity.regularEntityTableColumns as entityColumn>
+	<#list entity.databaseRegularEntityColumns as entityColumn>
 		<#if stringUtil.equals(entityColumn.type, "Blob") && entityColumn.lazy>
 			private ${entity.name}${entityColumn.methodName}BlobModel _${entityColumn.name}BlobModel;
 		<#else>

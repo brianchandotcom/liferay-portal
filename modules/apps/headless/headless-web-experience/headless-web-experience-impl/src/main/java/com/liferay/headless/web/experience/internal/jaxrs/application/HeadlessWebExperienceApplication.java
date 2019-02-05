@@ -36,7 +36,9 @@ import org.osgi.service.component.annotations.Component;
 		"osgi.jaxrs.extension.select=(osgi.jaxrs.name=Liferay.Vulcan.AcceptLanguageContextProvider)",
 		"osgi.jaxrs.extension.select=(osgi.jaxrs.name=Liferay.Vulcan.JSONMessageBodyReader)",
 		"osgi.jaxrs.extension.select=(osgi.jaxrs.name=Liferay.Vulcan.JSONMessageBodyWriter)",
+		"osgi.jaxrs.extension.select=(osgi.jaxrs.name=Liferay.Vulcan.NoSuchModelExceptionMapper)",
 		"osgi.jaxrs.extension.select=(osgi.jaxrs.name=Liferay.Vulcan.PaginationContextProvider)",
+		"osgi.jaxrs.extension.select=(osgi.jaxrs.name=Liferay.Vulcan.PortalExceptionMapper)",
 		"osgi.jaxrs.name=headless-web-experience-application.rest"
 	},
 	service = Application.class

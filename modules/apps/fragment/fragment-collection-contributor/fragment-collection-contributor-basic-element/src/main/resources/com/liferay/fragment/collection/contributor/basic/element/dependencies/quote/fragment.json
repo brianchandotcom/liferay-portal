@@ -1,0 +1,8 @@
+{
+	"cssPath": "index.css",
+	"fragmentEntryKey": "quote",
+	"htmlPath": "index.html",
+	"jsPath": "index.js",
+	"name": "Quote",
+	"type": "element"
+}

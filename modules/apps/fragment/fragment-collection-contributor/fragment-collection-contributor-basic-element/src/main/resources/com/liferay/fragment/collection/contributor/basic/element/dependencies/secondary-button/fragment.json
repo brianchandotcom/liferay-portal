@@ -1,0 +1,8 @@
+{
+	"cssPath": "index.css",
+	"fragmentEntryKey": "secondary-button",
+	"htmlPath": "index.html",
+	"jsPath": "index.js",
+	"name": "Secondary Button",
+	"type": "element"
+}

@@ -1,0 +1,8 @@
+{
+	"cssPath": "index.css",
+	"fragmentEntryKey": "text",
+	"htmlPath": "index.html",
+	"jsPath": "index.js",
+	"name": "Text",
+	"type": "element"
+}

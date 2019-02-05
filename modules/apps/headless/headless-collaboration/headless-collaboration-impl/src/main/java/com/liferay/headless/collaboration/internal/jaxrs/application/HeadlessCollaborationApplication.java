@@ -26,10 +26,6 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = {
-		"auth.verifier.auth.verifier.BasicAuthHeaderAuthVerifier.urls.includes=/*",
-		"auth.verifier.auth.verifier.OAuth2RestAuthVerifier.urls.includes=/*",
-		"auth.verifier.auth.verifier.PortalSessionAuthVerifier.urls.includes=/*",
-		"auth.verifier.guest.allowed=true",
 		"oauth2.scope.checker.type=annotations",
 		"osgi.jaxrs.application.base=/headless-collaboration",
 		"osgi.jaxrs.extension.select=(osgi.jaxrs.name=Liferay.OAuth2)",

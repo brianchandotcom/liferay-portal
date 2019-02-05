@@ -48,6 +48,29 @@ public class TableMapperFactory {
 			rightColumnName, leftPersistence, rightPersistence);
 	}
 
+	/**
+	 * Creates a left side only TableMapper
+	 */
+	public static <L extends BaseModel<L>, R extends BaseModel<R>>
+		TableMapper<L, R> getTableMapper(
+			String tableMapperKey, String tableName, String companyColumnName,
+			String leftColumnName, String rightColumnName,
+			BasePersistence<L> leftPersistence, Class<R> rightModelClass) {
+
+		return _getTableMapper(
+			tableMapperKey, tableName, companyColumnName, leftColumnName,
+			rightColumnName, leftPersistence,
+			new RejectingBasePersistenceImpl<>(rightModelClass));
+	}
+
+	public static void removeTableMapper(String tableMapperKey) {
+		TableMapper<?, ?> tableMapper = _tableMappers.remove(tableMapperKey);
+
+		if (tableMapper != null) {
+			tableMapper.destroy();
+		}
+	}
+
 	private static <L extends BaseModel<L>, R extends BaseModel<R>>
 		TableMapper<L, R> _getTableMapper(
 			String tableMapperKey, String tableName, String companyColumnName,
@@ -87,29 +110,6 @@ public class TableMapperFactory {
 		}
 
 		return (TableMapper<L, R>)tableMapper;
-	}
-
-	/**
-	 * Creates a left side only TableMapper
-	 */
-	public static <L extends BaseModel<L>, R extends BaseModel<R>>
-		TableMapper<L, R> getTableMapper(
-			String tableMapperKey, String tableName, String companyColumnName,
-			String leftColumnName, String rightColumnName,
-			BasePersistence<L> leftPersistence, Class<R> rightModelClass) {
-
-		return _getTableMapper(
-			tableMapperKey, tableName, companyColumnName, leftColumnName,
-			rightColumnName, leftPersistence,
-			new RejectingBasePersistenceImpl<>(rightModelClass));
-	}
-
-	public static void removeTableMapper(String tableMapperKey) {
-		TableMapper<?, ?> tableMapper = _tableMappers.remove(tableMapperKey);
-
-		if (tableMapper != null) {
-			tableMapper.destroy();
-		}
 	}
 
 	private static final Set<String> _cachelessMappingTableNames =

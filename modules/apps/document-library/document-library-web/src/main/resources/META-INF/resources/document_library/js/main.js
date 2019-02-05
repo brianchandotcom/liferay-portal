@@ -38,6 +38,10 @@ AUI.add(
 						validator: Lang.isString
 					},
 
+					selectCategoriesURL: {
+						validator: Lang.isString
+					},
+
 					selectFileEntryTypeURL: {
 						validator: Lang.isString
 					},
@@ -272,7 +276,7 @@ AUI.add(
 											portletNamespace: namespace,
 											repositoryId: parseFloat(form.get(namespace + 'repositoryId').val()),
 											selectAll: instance._isSelectAllChecked,
-											selectCategoriesUrl: '',
+											selectCategoriesUrl: instance.get('selectCategoriesURL'),
 											spritemap: themeDisplay.getPathThemeImages() + '/lexicon/icons.svg',
 											urlCategories: urlCategories,
 											urlUpdateCategories: urlUpdateCategories

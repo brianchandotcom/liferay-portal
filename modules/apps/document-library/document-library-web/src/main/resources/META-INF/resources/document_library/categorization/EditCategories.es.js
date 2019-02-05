@@ -136,6 +136,32 @@ class EditCategories extends Component {
 	_handleSaveBtnClick() {
 		//TODO
 	}
+
+	/**
+	 * Transforms the categories list in the object needed
+	 * for the ClayMultiSelect component.
+	 *
+	 * @param {List<Long, String>} categories
+	 * @return {List<{label, value}>} new commonItems object list
+	 */
+	_setCommonCategories(categories) {
+		let categoriesObjList = [];
+
+		if (categories.length > 0) {
+			categories.forEach(
+				item => {
+					let itemObj = {
+						'label': item.name,
+						'value': item.categoryId
+					};
+
+					categoriesObjList.push(itemObj);
+				}
+			);
+		}
+
+		return categoriesObjList;
+	}
 }
 
 /**
@@ -154,7 +180,7 @@ EditCategories.STATE = {
 	 * @review
 	 * @type {List<String>}
 	 */
-	commonCategories: Config.array().value([]),
+	commonCategories: Config.array().setter('_setCommonCategories').value([]),
 
 	/**
 	 * Description
@@ -238,6 +264,8 @@ EditCategories.STATE = {
 	 * @type {Boolean}
 	 */
 	selectAll: Config.bool(),
+
+	selectCategoriesEventName: Config.string().internal(),
 
 	/**
 	 * Url to the categories selector page

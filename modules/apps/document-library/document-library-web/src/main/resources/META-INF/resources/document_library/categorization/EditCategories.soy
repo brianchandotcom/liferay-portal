@@ -7,6 +7,8 @@
 	{@param spritemap: string}
 	{@param? description: string}
 	{@param? multiple: bool}
+	{@param? portletNamespace: string}
+	{@param? selectCategoriesUrl: string}
 	{@param? _handleRadioChange: any}
 	{@param? _handleSaveBtnClick: any}
 
@@ -20,6 +22,8 @@
 					{param description: $description /}
 					{param dataSource: $dataSource /}
 					{param multiple: $multiple /}
+					{param portletNamespace: $portletNamespace /}
+					{param selectCategoriesUrl: $selectCategoriesUrl /}
 					{param spritemap: $spritemap /}
 					{param _handleRadioChange: $_handleRadioChange /}
 				{/call}
@@ -54,6 +58,8 @@
 {template .categories}
 	{@param commonCategories: list<?>}
 	{@param dataSource: string|[]|list<?>}
+	{@param? portletNamespace: string}
+	{@param? selectCategoriesUrl: string}
 	{@param spritemap: string}
 	{@param? description: string}
 	{@param? multiple: bool}
@@ -93,6 +99,8 @@
 	{call InputCategoriesSelector.render}
 		{param commonCategories: $commonCategories /}
 		{param dataSource: $dataSource /}
+		{param eventName: $portletNamespace + 'selectCategories' /}
+		{param selectCategoriesUrl: $selectCategoriesUrl /}
 		{param spritemap: $spritemap /}
 	{/call}
 {/template}

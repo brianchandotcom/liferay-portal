@@ -168,6 +168,18 @@ String navigation = ParamUtil.getString(request, "navigation");
 				}
 			}
 		}
+
+		PortletURL selectCategoriesURL = PortletProviderUtil.getPortletURL(
+			request, AssetCategory.class.getName(),
+			PortletProvider.Action.BROWSE);
+
+		selectCategoriesURL.setParameter("eventName", liferayPortletResponse.getNamespace() + "selectCategories");
+        selectCategoriesURL.setParameter(
+			"selectedCategories", "{selectedCategories}");
+		selectCategoriesURL.setParameter("singleSelect", "false");
+		selectCategoriesURL.setParameter("vocabularyIds", "{vocabularyIds}");
+
+		selectCategoriesURL.setWindowState(LiferayWindowState.POP_UP);
 		%>
 
 		<aui:script>
@@ -254,6 +266,7 @@ String navigation = ParamUtil.getString(request, "navigation");
 							%>
 
 						],
+						selectCategoriesURL: '<%= selectCategoriesURL.toString() %>',
 						selectFileEntryTypeURL: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/document_library/select_file_entry_type.jsp" /><portlet:param name="fileEntryTypeId" value="<%= String.valueOf(fileEntryTypeId) %>" /></portlet:renderURL>',
 						scopeGroupId: <%= scopeGroupId %>,
 						searchContainerId: 'entries',

@@ -10,37 +10,81 @@ class InputCategoriesSelector extends Component {
 	 * @inheritDoc
 	 */
 	attached() {
-		this.refs.categoriesSelector.on('buttonClicked', this._handleButtonClicked);
-	}
-
-	_handleButtonClicked(event) {
+		this.refs.categoriesSelector.on('buttonClicked', this._handleButtonClicked.bind(this));
 	}
 
 	/**
-	 * Transforms the categories list in the object needed
-	 * for the ClayMultiSelect component.
+	 * Opens an itemSelectorDialog to choose the categories.
 	 *
-	 * @param {List<Long, String>} categories
-	 * @return {List<{label, value}>} new commonItems object list
 	 */
-	_setCommonCategories(categories) {
-		let categoriesObjList = [];
+	_handleButtonClicked() {
+		AUI().use(
+			'liferay-item-selector-dialog',
+			A => {
+				let commonCategories = this.commonCategories;
+				const selectedCategoriesIds = commonCategories.map(category => category.value);
+				const vocabularyId = 38406; //TODO
 
-		if (categories.length > 0) {
-			categories.forEach(
-				item => {
-					let itemObj = {
-						'label': item.name,
-						'value': item.categoryId
-					};
+				const uri = A.Lang.sub(
+					decodeURIComponent(this.selectCategoriesUrl),
+					{
+						selectedCategories: selectedCategoriesIds,
+						vocabularyIds: vocabularyId
+					}
+				);
 
-					categoriesObjList.push(itemObj);
-				}
-			);
-		}
+				const itemSelectorDialog = new A.LiferayItemSelectorDialog(
+					{
+						eventName: this.eventName,
+						'strings.add': Liferay.Language.get('save'),
+						title: Liferay.Language.get('select-categories'),
+						url: uri
+					}
+				);
 
-		return categoriesObjList;
+				itemSelectorDialog.on('selectedItemChange', this._onSelectedItemChange.bind(this));
+
+				itemSelectorDialog.open();
+			}
+		);
 	}
+
+	/**
+	 * Updates the input with the selected categories.
+	 *
+	 * @param  {Event} event
+	 */
+	_onSelectedItemChange(event) {
+		let commonCategories = this.commonCategories;
+
+		const data = event.newVal;
+
+		if (data) {
+			for (const key in data) {
+				const existingCategory = commonCategories.find(
+					item => item.label === key
+				);
+
+				if (existingCategory && data[key].unchecked) {
+					this.commonCategories = commonCategories.filter(
+						item => item.label !== existingCategory.label
+					);
+				}
+
+				if (!existingCategory) {
+					commonCategories.push(
+						{
+							label: data[key].value,
+							value: parseFloat(data[key].categoryId)
+						}
+					);
+
+					this.commonCategories = commonCategories;
+				}
+			}
+		}
+	}
+
 }
 
 /**
@@ -59,7 +103,13 @@ InputCategoriesSelector.STATE = {
 	 * @review
 	 * @type {List<String>}
 	 */
-	commonCategories: Config.array().setter('_setCommonCategories').value([]),
+	commonCategories: Config.array().value([]),
+
+	/**
+	 * Name of the event that will be dispatched when the
+	 * category selector dialog is closed
+	 */
+	eventName: Config.string().required,
 
 	/**
 	 * Url to the categories selector page

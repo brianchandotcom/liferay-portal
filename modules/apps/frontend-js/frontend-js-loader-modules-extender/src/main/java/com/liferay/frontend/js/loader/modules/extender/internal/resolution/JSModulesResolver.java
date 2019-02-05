@@ -1,20 +1,30 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
 package com.liferay.frontend.js.loader.modules.extender.internal.resolution;
 
 import com.liferay.frontend.js.loader.modules.extender.internal.Details;
-import com.liferay.frontend.js.loader.modules.extender.internal.resolution.descriptor.JSConfigGeneratorModuleDescriptor;
-import com.liferay.frontend.js.loader.modules.extender.internal.resolution.descriptor.JSModuleDescriptor;
 import com.liferay.frontend.js.loader.modules.extender.internal.config.generator.JSConfigGeneratorModule;
 import com.liferay.frontend.js.loader.modules.extender.internal.config.generator.JSConfigGeneratorPackage;
 import com.liferay.frontend.js.loader.modules.extender.internal.config.generator.JSConfigGeneratorPackagesTracker;
+import com.liferay.frontend.js.loader.modules.extender.internal.resolution.descriptor.JSConfigGeneratorModuleDescriptor;
+import com.liferay.frontend.js.loader.modules.extender.internal.resolution.descriptor.JSModuleDescriptor;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSModule;
 import com.liferay.frontend.js.loader.modules.extender.npm.ModuleNameUtil;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMRegistry;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.util.Portal;
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Modified;
-import org.osgi.service.component.annotations.Reference;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -22,16 +32,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Rodolfo Roza Miranda
  */
 @Component(
 	configurationPid = "com.liferay.frontend.js.loader.modules.extender.internal.Details",
-	immediate = true,
-	service = JSModulesResolver.class
+	immediate = true, service = JSModulesResolver.class
 )
 public class JSModulesResolver {
 
@@ -49,8 +62,6 @@ public class JSModulesResolver {
 		return context;
 	}
 
-	private Details _details;
-
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
@@ -65,39 +76,39 @@ public class JSModulesResolver {
 		Stream<JSConfigGeneratorPackage> jsConfigGeneratorPackagesStream =
 			jsConfigGeneratorPackages.stream();
 
-		List<JSConfigGeneratorModuleDescriptor> jsConfigGeneratorModuleAdapters =
-			jsConfigGeneratorPackagesStream.reduce(
-				new ArrayList<>(),
-				(arrayList, pkg) -> {
-					for (JSConfigGeneratorModule jsConfigGeneratorModule :
-						pkg.getJSConfigGeneratorModules()) {
+		List<JSConfigGeneratorModuleDescriptor>
+			jsConfigGeneratorModuleAdapters =
+				jsConfigGeneratorPackagesStream.reduce(
+					new ArrayList<>(),
+					(arrayList, pkg) -> {
+						for (JSConfigGeneratorModule jsConfigGeneratorModule :
+								pkg.getJSConfigGeneratorModules()) {
 
-						arrayList.add(
-							new JSConfigGeneratorModuleDescriptor(
-								jsConfigGeneratorModule));
-					}
+							arrayList.add(
+								new JSConfigGeneratorModuleDescriptor(
+									jsConfigGeneratorModule));
+						}
 
-					return arrayList;
-				},
-				(arrayList1, arrayList2) -> {
-					ArrayList<JSConfigGeneratorModuleDescriptor> result =
-						new ArrayList<>(arrayList1);
+						return arrayList;
+					},
+					(arrayList1, arrayList2) -> {
+						ArrayList<JSConfigGeneratorModuleDescriptor> result =
+							new ArrayList<>(arrayList1);
 
-					result.addAll(arrayList2);
+						result.addAll(arrayList2);
 
-					return result;
-				});
+						return result;
+					});
 
 		Map<String, ModuleDescriptor> moduleDescriptors = new HashMap<>();
 
-		for(ModuleDescriptor moduleDescriptor :
-			jsConfigGeneratorModuleAdapters) {
+		for (ModuleDescriptor moduleDescriptor :
+				jsConfigGeneratorModuleAdapters) {
 
-			moduleDescriptors.put(
-				moduleDescriptor.getName(), moduleDescriptor);
+			moduleDescriptors.put(moduleDescriptor.getName(), moduleDescriptor);
 		}
 
-		for(JSModule jsModule : _npmRegistry.getResolvedJSModules()) {
+		for (JSModule jsModule : _npmRegistry.getResolvedJSModules()) {
 			JSModuleDescriptor npmRegistryModuleDescriptor =
 				new JSModuleDescriptor(jsModule, _npmRegistry);
 
@@ -134,20 +145,17 @@ public class JSModulesResolver {
 
 			String resolvedPath = ModuleNameUtil.resolvePath(alias, dependency);
 
-			String mappedModuleName =
-				_mapper.mapModule(
-					resolvedPath,
-					adapter.getMappings());
+			String mappedModuleName = _mapper.mapModule(
+				resolvedPath, adapter.getMappings());
 
 			dependenciesMap.put(dependency, mappedModuleName);
 
-			ModuleDescriptor dependencyModuleDescriptor =
-				moduleDescriptors.get(mappedModuleName);
+			ModuleDescriptor dependencyModuleDescriptor = moduleDescriptors.get(
+				mappedModuleName);
 
 			if (dependencyModuleDescriptor != null) {
 				_processModule(
-					moduleDescriptors, dependencyModuleDescriptor,
-					context);
+					moduleDescriptors, dependencyModuleDescriptor, context);
 			}
 		}
 
@@ -160,19 +168,23 @@ public class JSModulesResolver {
 		return true;
 	}
 
-	private void _resolve(Map<String, ModuleDescriptor> moduleDescriptors, String module, JSModulesResolution context) {
+	private void _resolve(
+		Map<String, ModuleDescriptor> moduleDescriptors, String module,
+		JSModulesResolution context) {
+
 		String mappedModuleName = _mapper.mapModule(module);
 
-		ModuleDescriptor moduleDescriptor =
-			moduleDescriptors.get(mappedModuleName);
+		ModuleDescriptor moduleDescriptor = moduleDescriptors.get(
+			mappedModuleName);
 
 		if (moduleDescriptor != null) {
 			context.putConfig(module, mappedModuleName);
 
-			_processModule(
-				moduleDescriptors, moduleDescriptor, context);
+			_processModule(moduleDescriptors, moduleDescriptor, context);
 		}
 	}
+
+	private Details _details;
 
 	@Reference
 	private JSConfigGeneratorPackagesTracker _jsConfigGeneratorPackagesTracker;

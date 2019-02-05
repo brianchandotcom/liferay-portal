@@ -17,7 +17,6 @@ package com.liferay.frontend.js.loader.modules.extender.internal;
 import aQute.lib.converter.Converter;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.util.PortalImpl;
@@ -70,7 +69,7 @@ public class JSLoaderConfigServletTest extends PowerMockito {
 	@Test
 	public void testBasicOutput() throws Exception {
 		JSLoaderConfigServlet jsLoaderConfigServlet =
-			buildJSLoaderModulesServlet();
+			_buildJSLoaderModulesServlet();
 
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
@@ -85,15 +84,14 @@ public class JSLoaderConfigServletTest extends PowerMockito {
 			Details.CONTENT_TYPE, mockHttpServletResponse.getContentType());
 	}
 
-	private JSLoaderConfigServlet buildJSLoaderModulesServlet()
+	private JSLoaderConfigServlet _buildJSLoaderModulesServlet()
 		throws Exception {
 
-		return buildJSLoaderModulesServlet(
-			Collections.emptyMap());
+		return _buildJSLoaderModulesServlet(Collections.emptyMap());
 	}
 
-	private JSLoaderConfigServlet buildJSLoaderModulesServlet(
-		Map<String, Object> properties)
+	private JSLoaderConfigServlet _buildJSLoaderModulesServlet(
+			Map<String, Object> properties)
 		throws Exception {
 
 		JSLoaderConfigServlet jsLoaderConfigServlet =

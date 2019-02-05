@@ -76,6 +76,7 @@ public class FolderResourceImpl extends BaseFolderResourceImpl {
 						groupId, parentFolderId, pagination.getStartPosition(),
 						pagination.getEndPosition(), null),
 					this::_toFolder),
+				pagination,
 				_dlAppService.getFoldersCount(groupId, parentFolderId));
 		}
 		catch (NoSuchGroupException nsge) {

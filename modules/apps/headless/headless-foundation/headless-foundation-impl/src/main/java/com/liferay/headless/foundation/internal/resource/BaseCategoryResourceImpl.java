@@ -43,7 +43,7 @@ public abstract class BaseCategoryResourceImpl implements CategoryResource {
 			Long parentId, Pagination pagination)
 		throws Exception {
 
-		return new Page<>(Collections.emptyList(), 0);
+		return Page.of(Collections.emptyList());
 	}
 
 	@Override
@@ -51,7 +51,7 @@ public abstract class BaseCategoryResourceImpl implements CategoryResource {
 			Long parentId, Pagination pagination)
 		throws Exception {
 
-		return new Page<>(Collections.emptyList(), 0);
+		return Page.of(Collections.emptyList());
 	}
 
 	@Override

@@ -48,6 +48,17 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 		} %>'
 />
 
+<portlet:renderURL var="reviewUADDataURL">
+	<portlet:param name="mvcRenderCommandName" value="/review_uad_data" />
+</portlet:renderURL>
+
+<aui:form action="<%= reviewUADDataURL %>" method="post" name="reviewUADDataFm">
+	<aui:input name="p_u_i_d" type="hidden" value="<%= String.valueOf(selectedUser.getUserId()) %>" />
+
+	<aui:input name="applicationKey" type="hidden" value="<%= viewUADEntitiesDisplay.getApplicationKey() %>" />
+	<aui:input name="uadRegistryKey" type="hidden" />
+</aui:form>
+
 <div class="container-fluid container-fluid-max-xl container-form-lg">
 	<div class="row">
 		<div class="col-lg-3">
@@ -78,7 +89,8 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 							<clay:radio
 								checked="<%= Objects.equals(uadApplicationSummaryDisplay.getApplicationKey(), viewUADEntitiesDisplay.getApplicationKey()) %>"
 								label="<%= StringUtil.appendParentheticalSuffix(applicationName, uadApplicationSummaryDisplay.getCount()) %>"
-								name="applications"
+								name="applicationKey"
+								value="<%= uadApplicationSummaryDisplay.getApplicationKey() %>"
 							/>
 
 						<%
@@ -116,7 +128,8 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 								<clay:radio
 									checked="<%= Objects.equals(uadDisplay.getTypeName(locale), viewUADEntitiesDisplay.getTypeName()) %>"
 									label="<%= StringUtil.appendParentheticalSuffix(uadDisplay.getTypeName(locale), (int)uadDisplay.count(selectedUser.getUserId())) %>"
-									name="entities"
+									name="uadRegistryKey"
+									value="<%= uadDisplay.getTypeClass().getName() %>"
 								/>
 
 							<%
@@ -152,3 +165,27 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 		</div>
 	</div>
 </div>
+
+<aui:script use="aui-base">
+	var form = AUI.$(document.<portlet:namespace />reviewUADDataFm);
+
+	A.one('#<portlet:namespace />applicationPanelBody').delegate(
+		'click',
+		function(event) {
+			form.fm('applicationKey').val(event.currentTarget.val());
+
+			submitForm(form);
+		},
+		'input'
+	);
+
+	A.one('#<portlet:namespace />entitiesTypePanelBody').delegate(
+		'click',
+		function(event) {
+			form.fm('uadRegistryKey').val(event.currentTarget.val());
+
+			submitForm(form);
+		},
+		'input'
+	);
+</aui:script>

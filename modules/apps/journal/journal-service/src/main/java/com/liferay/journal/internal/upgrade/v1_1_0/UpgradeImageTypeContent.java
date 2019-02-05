@@ -59,10 +59,10 @@ public class UpgradeImageTypeContent extends UpgradeProcess {
 		StringBundler sb = new StringBundler(8);
 
 		sb.append("select JournalArticleImage.articleImageId, ");
-		sb.append("JournalArticleImage.companyId, ");
-		sb.append("JournalArticleImage.groupId, ");
-		sb.append("JournalArticle.resourcePrimKey, JournalArticle.userId ");
-		sb.append("from JournalArticleImage inner join JournalArticle on ");
+		sb.append("JournalArticleImage.resourcePrimKey, ");
+		sb.append("JournalArticleImage.groupId, JournalArticle.companyId, ");
+		sb.append("JournalArticle.userId from JournalArticleImage inner join ");
+		sb.append("JournalArticle on ");
 		sb.append("(JournalArticle.groupId=JournalArticleImage.groupId and ");
 		sb.append("JournalArticle.articleId=JournalArticleImage.articleId ");
 		sb.append("and JournalArticle.version=JournalArticleImage.version)");
@@ -76,10 +76,10 @@ public class UpgradeImageTypeContent extends UpgradeProcess {
 
 			while (rs1.next()) {
 				long articleImageId = rs1.getLong(1);
-
-				long companyId = rs1.getLong(2);
+				long resourcePrimKey = rs1.getLong(2);
 				long groupId = rs1.getLong(3);
-				long resourcePrimKey = rs1.getLong(4);
+
+				long companyId = rs1.getLong(4);
 
 				long userId = PortalUtil.getValidUserId(
 					companyId, rs1.getLong(5));

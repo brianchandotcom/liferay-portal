@@ -53,7 +53,7 @@ public class UpgradeContentImages extends UpgradeProcess {
 	}
 
 	protected String convertTypeImageElements(
-			long companyId, long userId, long groupId, String content,
+			long userId, long groupId, long companyId, String content,
 			long resourcePrimKey)
 		throws Exception {
 
@@ -82,7 +82,7 @@ public class UpgradeContentImages extends UpgradeProcess {
 
 				if (Validator.isNotNull(id)) {
 					fileEntry = _getFileEntryById(
-						companyId, userId, groupId, resourcePrimKey, id);
+						userId, groupId, companyId, resourcePrimKey, id);
 				}
 				else if (fileEntryId > 0) {
 					fileEntry = _getFileEntryByFileEntryId(fileEntryId);
@@ -132,23 +132,24 @@ public class UpgradeContentImages extends UpgradeProcess {
 	protected void updateContentImages() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer();
 			PreparedStatement ps1 = connection.prepareStatement(
-				"select companyId, content, groupId, id_, resourcePrimKey, " +
-					"userId from JournalArticle where content like ?")) {
+				"select id_, resourcePrimKey, groupId, companyId, userId, " +
+					"content from JournalArticle where content like ?")) {
 
 			ps1.setString(1, "%type=\"image\"%");
 
 			ResultSet rs1 = ps1.executeQuery();
 
 			while (rs1.next()) {
-				long companyId = rs1.getLong(1);
-				String content = rs1.getString(2);
+				long id = rs1.getLong(1);
+
+				long resourcePrimKey = rs1.getLong(2);
 				long groupId = rs1.getLong(3);
-				long id = rs1.getLong(4);
-				long resourcePrimKey = rs1.getLong(5);
-				long userId = rs1.getLong(6);
+				long companyId = rs1.getLong(4);
+				long userId = rs1.getLong(5);
+				String content = rs1.getString(6);
 
 				String newContent = convertTypeImageElements(
-					companyId, userId, groupId, content, resourcePrimKey);
+					userId, groupId, companyId, content, resourcePrimKey);
 
 				try (PreparedStatement ps2 =
 						AutoBatchPreparedStatementUtil.concurrentAutoBatch(
@@ -180,7 +181,7 @@ public class UpgradeContentImages extends UpgradeProcess {
 	}
 
 	private FileEntry _getFileEntryById(
-			long companyId, long userId, long groupId, long resourcePrimKey,
+			long userId, long groupId, long companyId, long resourcePrimKey,
 			String id)
 		throws PortalException {
 

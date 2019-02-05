@@ -10,7 +10,7 @@ definition {
 
 		User.firstLoginPG();
 
-		TestCase.enableMetal();
+		//TestCase.enableMetal();
 	}
 
 	tearDown {
@@ -207,13 +207,13 @@ definition {
 
 		FormRules.selectAction(action = "Calculate", actionRowNumber = "1");
 
+		FormRules.selectCalculateResultField(calculateResultField = "Total");
+
 		FormRules.selectCalculateField(calculateFieldOption = "Value");
 
 		FormRules.chooseCalculateOperator(calculateOperator = "*");
 
 		FormRules.selectCalculateField(calculateFieldOption = "Quantity");
-
-		FormRules.selectCalculateResultField(calculateResultField = "Total");
 
 		FormRules.save();
 

@@ -21,7 +21,7 @@
 </tr>
 <tr>
 	<td>RULE_BUILDER_ADD_ACTION</td>
-	<td>//a[contains(@class,'form-builder-rule-add-action')]</td>
+	<td>//a[contains(@class,'form-builder-rule-add-action')] | //div[contains(@class,'timeline-increment-icon')][2]//button[contains(@class,'btn-primary')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -56,12 +56,12 @@
 </tr>
 <tr>
 	<td>RULE_BUILDER_CONDITION_VALUE_TYPE_FIELD</td>
-	<td>//li[contains(@class,'rule-condition-container')][${key_conditionRowNumber}]//div[contains(@id,'condition-second-oper') and contains(@class,'select-field-trigger')]</td>
+	<td>//li[contains(@class,'rule-condition-container')][${key_conditionRowNumber}]//div[contains(@id,'condition-second-oper') and contains(@class,'select-field-trigger')] | //li[contains(@class,'rule-condition-container')][${key_conditionRowNumber}]//div[contains(@class,'condition-type-value')]//div[contains(@class,'select-field-trigger')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RULE_BUILDER_SELECT_CONDITION_VALUE_TYPE</td>
-	<td>//li[contains(@class,'form-builder-rule-condition')][${key_conditionRowNumber}]//div[contains(@id,'condition-second-operand-type')]/following-sibling::div[@class='drop-chosen']//li[contains(.,'${key_conditionValueType}')]</td>
+	<td>//li[contains(@class,'form-builder-rule-condition')][${key_conditionRowNumber}]//div[contains(@id,'condition-second-operand-type')]/following-sibling::div[@class='drop-chosen']//li[contains(.,'${key_conditionValueType}')] | //div[contains(@class,'dropdown-opened')]//li[contains(text(),'${key_conditionValueType}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -86,22 +86,22 @@
 </tr>
 <tr>
 	<td>RULE_BUILDER_ACTION_FIELD</td>
-	<td>//li[contains(@class,'form-builder-rule-action')][${key_actionRowNumber}]//div[contains(@id,'target') and contains(@class,'select-field-trigger')]</td>
+	<td>//li[contains(@class,'form-builder-rule-action')][${key_actionRowNumber}]//div[contains(@id,'target') and contains(@class,'select-field-trigger')] | //li[contains(@class,'form-builder-rule-action')][1]//div[contains(@class,'select-field-trigger')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RULE_BUILDER_SELECT_ACTION</td>
-	<td>//li[contains(@class,'form-builder-rule-action')][${key_actionRowNumber}]//div[contains(@id,'target')]/following-sibling::div[@class='drop-chosen']//li[contains(.,'${key_action}')]</td>
+	<td>//li[contains(@class,'form-builder-rule-action')][${key_actionRowNumber}]//div[contains(@id,'target')]/following-sibling::div[@class='drop-chosen']//li[contains(.,'${key_action}')] | //div[contains(@class,'dropdown-opened')]//li[contains(text(),'${key_action}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RULE_BUILDER_ACTION_TARGET_FIELD</td>
-	<td>//li[contains(@class,'form-builder-rule-action')][${key_actionRowNumber}]//div[contains(@id,'action') and contains(@class,'select-field-trigger')]/div</td>
+	<td>//li[contains(@class,'form-builder-rule-action')][${key_actionRowNumber}]//div[contains(@id,'action') and contains(@class,'select-field-trigger')]/div | //li[contains(@class,'form-builder-rule-action')][${key_actionRowNumber}]//div[contains(@class,'target-action')]//div[contains(@class,'select-field-trigger')]/div</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RULE_BUILDER_SELECT_ACTION_TARGET</td>
-	<td>//li[contains(@class,'form-builder-rule-action')][${key_actionRowNumber}]//div[contains(@id,'action')]/following-sibling::div[@class='drop-chosen']//li[contains(.,'${key_actionTarget}')]</td>
+	<td>//li[contains(@class,'form-builder-rule-action')][${key_actionRowNumber}]//div[contains(@id,'action')]/following-sibling::div[@class='drop-chosen']//li[contains(.,'${key_actionTarget}')] | //div[contains(@class,'dropdown-opened')]//li[contains(text(),'${key_actionTarget}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -153,17 +153,17 @@
 </tr>
 <tr>
 	<td>RULE_BUILDER_CALCULATE_ADD_FIELD_LIST</td>
-	<td>//div[@class='calculator-add-field-button-container']//ul[contains(@class,'results-chosen')]//li[contains(.,'${key_calculateFieldOption}')]</td>
+	<td>//div[@class='calculator-add-field-button-container']//ul[contains(@class,'results-chosen')]//li[contains(.,'${key_calculateFieldOption}')] | //div[contains(@class,'calculator-add-field-button-container')]//li[contains(text(),'${key_calculateFieldOption}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RULE_BUILDER_CALCULATE_RESULT_FIELD</td>
-	<td>//div[contains(@class,'calculate-container-fields')]//div[contains(@id,'action')]</td>
+	<td>//div[contains(@class,'calculate-container-fields')]//div[contains(@id,'action')] | //div[contains(@class,'target-action')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RULE_BUILDER_CALCULATE_RESULT_FIELD_LIST</td>
-	<td>//div[contains(@class,'calculate-container-fields')]//ul[contains(@class,'results-chosen')]//li[contains(.,'${key_calculateResultField}')]</td>
+	<td>//div[contains(@class,'calculate-container-fields')]//ul[contains(@class,'results-chosen')]//li[contains(.,'${key_calculateResultField}')] | //div[contains(@class,'dropdown-opened')]//li[contains(text(),'${key_calculateResultField}')]</td>
 	<td></td>
 </tr>
 <tr>

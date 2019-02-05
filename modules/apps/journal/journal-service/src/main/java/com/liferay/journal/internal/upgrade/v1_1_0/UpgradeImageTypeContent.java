@@ -63,9 +63,9 @@ public class UpgradeImageTypeContent extends UpgradeProcess {
 		sb.append("JournalArticleImage.companyId, ");
 		sb.append("JournalArticle.resourcePrimKey, JournalArticle.userId ");
 		sb.append("from JournalArticleImage inner join JournalArticle on ");
-		sb.append("(JournalArticle.groupId=JournalArticleImage.groupId and ");
-		sb.append("JournalArticle.articleId=JournalArticleImage.articleId ");
-		sb.append("and JournalArticle.version=JournalArticleImage.version)");
+		sb.append("(JournalArticle.groupId = JournalArticleImage.groupId and ");
+		sb.append("JournalArticle.articleId = JournalArticleImage.articleId ");
+		sb.append("and JournalArticle.version = JournalArticleImage.version)");
 
 		List<SaveImageFileEntryCallable> saveImageFileEntryCallables =
 			new ArrayList<>();

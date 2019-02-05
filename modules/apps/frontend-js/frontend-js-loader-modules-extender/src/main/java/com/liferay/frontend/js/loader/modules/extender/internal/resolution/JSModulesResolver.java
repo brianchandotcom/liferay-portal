@@ -109,15 +109,6 @@ public class JSModulesResolver {
 		return moduleDescriptors;
 	}
 
-	private String _mapModuleName(
-		String module, Map<String, String> contextMap) {
-		return _mapper.mapModule(module, contextMap);
-	}
-
-	private String _mapModuleName(String module) {
-		return _mapper.mapModule(module);
-	}
-
 	private boolean _processModule(
 		Map<String, ModuleDescriptor> moduleDescriptors,
 		ModuleDescriptor adapter, JSModulesResolution context) {
@@ -167,15 +158,6 @@ public class JSModulesResolver {
 		context.addResolvedModule(alias);
 
 		return true;
-	}
-
-	private void _processModule(String module, JSModulesResolution context) {
-		JSModule jsModule = _npmRegistry.getResolvedJSModule(module);
-
-		if (jsModule != null) {
-			_processModule(
-				new JSModuleDescriptor(jsModule, _npmRegistry), context);
-		}
 	}
 
 	private void _resolve(Map<String, ModuleDescriptor> moduleDescriptors, String module, JSModulesResolution context) {

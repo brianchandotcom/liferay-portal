@@ -1353,18 +1353,29 @@ definition {
 	macro viewSearchResultsCP {
 		var key_siteName = "${siteName}";
 
-		AssertElementPresent(locator1 = "Sites#SITE_TABLE_CHECKBOX");
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "Sites#SITE_TABLE_NAME",
-			value1 = "${siteName}"
+		AssertElementPresent(
+			locator1 = "LexiconTable#TABLE_ENTRY_CHECKBOX",
+			key_tableEntry = "${siteName}"
 		);
 
-		AssertTextEquals(locator1 = "Sites#SITE_TABLE_TYPE", value1 = "${siteType}");
+		LexiconTable.viewTableEntryTitle(
+			tableEntry = "${siteName}"
+		);
 
-		AssertTextEquals(locator1 = "Sites#SITE_TABLE_ACTIVE", value1 = "Yes");
+		LexiconTable.viewTableEntryText(
+			tableEntry = "${siteName}",
+			tableEntryText = "${siteType}"
+		);
 
-		AssertVisible(locator1 = "Sites#SITE_TABLE_ACTIONS");
+		LexiconTable.viewTableEntryText(
+			tableEntry = "${siteName}",
+			tableEntryText = "Yes"
+		);
+
+		AssertVisible(
+			locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS",
+			key_tableEntry = "${siteName}"
+		);
 	}
 
 	macro viewSiteAdminPermissionsCP {

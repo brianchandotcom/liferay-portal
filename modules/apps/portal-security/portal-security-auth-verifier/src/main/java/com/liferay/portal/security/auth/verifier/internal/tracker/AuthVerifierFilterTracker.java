@@ -49,8 +49,10 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 @Component(
 	immediate = true,
 	property = {
+		"default.registration.property=filter.init.auth.verifier.BasicAuthHeaderAuthVerifier.urls.includes=/*",
 		"default.registration.property=filter.init.auth.verifier.OAuth2RestAuthVerifier.urls.includes=*",
-		"default.registration.property=filter.init.guest.allowed=false",
+		"default.registration.property=filter.init.auth.verifier.PortalSessionAuthVerifier.urls.includes=/*",
+		"default.registration.property=filter.init.guest.allowed=true",
 		"default.whiteboard.property=" + HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_SERVLET + "=cxf-servlet",
 		"servlet.context.helper.select.filter=(&(!(liferay.auth.verifier=false))(osgi.jaxrs.name=*))"
 	},

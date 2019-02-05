@@ -31,7 +31,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Activate;
@@ -48,18 +47,18 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class JSModulesResolver {
 
-	public JSModulesResolution resolve(List<String> modules) {
-		JSModulesResolution context = new JSModulesResolution(
+	public JSModulesResolution resolve(List<String> moduleNames) {
+		JSModulesResolution jsModulesResolution = new JSModulesResolution(
 			_details.explainResolutions());
 
 		Map<String, ModuleDescriptor> moduleDescriptors =
 			_getAllModuleDescriptors();
 
-		for (String module : modules) {
-			_resolve(moduleDescriptors, module, context);
+		for (String moduleName : moduleNames) {
+			_resolve(moduleDescriptors, moduleName, jsModulesResolution);
 		}
 
-		return context;
+		return jsModulesResolution;
 	}
 
 	@Activate
@@ -77,12 +76,13 @@ public class JSModulesResolver {
 			jsConfigGeneratorPackages.stream();
 
 		List<JSConfigGeneratorModuleDescriptor>
-			jsConfigGeneratorModuleAdapters =
+			jsConfigGeneratorModuleDescriptors =
 				jsConfigGeneratorPackagesStream.reduce(
 					new ArrayList<>(),
-					(arrayList, pkg) -> {
+					(arrayList, jsConfigGeneratorPackage) -> {
 						for (JSConfigGeneratorModule jsConfigGeneratorModule :
-								pkg.getJSConfigGeneratorModules()) {
+								jsConfigGeneratorPackage.
+									getJSConfigGeneratorModules()) {
 
 							arrayList.add(
 								new JSConfigGeneratorModuleDescriptor(
@@ -102,19 +102,21 @@ public class JSModulesResolver {
 
 		Map<String, ModuleDescriptor> moduleDescriptors = new HashMap<>();
 
-		for (ModuleDescriptor moduleDescriptor :
-				jsConfigGeneratorModuleAdapters) {
+		for (JSConfigGeneratorModuleDescriptor
+				jsConfigGeneratorModuleDescriptor :
+					jsConfigGeneratorModuleDescriptors) {
 
-			moduleDescriptors.put(moduleDescriptor.getName(), moduleDescriptor);
+			moduleDescriptors.put(
+				jsConfigGeneratorModuleDescriptor.getName(),
+				jsConfigGeneratorModuleDescriptor);
 		}
 
 		for (JSModule jsModule : _npmRegistry.getResolvedJSModules()) {
-			JSModuleDescriptor npmRegistryModuleDescriptor =
-				new JSModuleDescriptor(jsModule, _npmRegistry);
+			JSModuleDescriptor jsModuleDescriptor = new JSModuleDescriptor(
+				jsModule, _npmRegistry);
 
 			moduleDescriptors.put(
-				npmRegistryModuleDescriptor.getName(),
-				npmRegistryModuleDescriptor);
+				jsModuleDescriptor.getName(), jsModuleDescriptor);
 		}
 
 		return moduleDescriptors;
@@ -122,31 +124,31 @@ public class JSModulesResolver {
 
 	private boolean _processModule(
 		Map<String, ModuleDescriptor> moduleDescriptors,
-		ModuleDescriptor adapter, JSModulesResolution context) {
+		ModuleDescriptor moduleDescriptor,
+		JSModulesResolution jsModulesResolution) {
 
-		String alias = adapter.getName();
+		String moduleName = moduleDescriptor.getName();
 
-		if (context.processedModule(alias)) {
+		if (jsModulesResolution.isProcessedModule(moduleName)) {
 			return false;
 		}
 
-		context.addProcessedModule(alias);
+		jsModulesResolution.addProcessedModule(moduleName);
 
-		Collection<String> dependencies = adapter.getDependencies();
+		Map<String, String> dependenciesMap = new HashMap<>();
 
-		Map<String, String> dependenciesMap = new ConcurrentHashMap<>();
+		jsModulesResolution.indentExplanation();
 
-		context.indentExplanation();
-
-		for (String dependency : dependencies) {
+		for (String dependency : moduleDescriptor.getDependencies()) {
 			if (ModuleNameUtil.isReservedModuleName(dependency)) {
 				continue;
 			}
 
-			String resolvedPath = ModuleNameUtil.resolvePath(alias, dependency);
+			String resolvedPath = ModuleNameUtil.resolvePath(
+				moduleName, dependency);
 
 			String mappedModuleName = _mapper.mapModule(
-				resolvedPath, adapter.getMappings());
+				resolvedPath, moduleDescriptor.getMappings());
 
 			dependenciesMap.put(dependency, mappedModuleName);
 
@@ -155,32 +157,34 @@ public class JSModulesResolver {
 
 			if (dependencyModuleDescriptor != null) {
 				_processModule(
-					moduleDescriptors, dependencyModuleDescriptor, context);
+					moduleDescriptors, dependencyModuleDescriptor,
+					jsModulesResolution);
 			}
 		}
 
-		context.dedentExplanation();
+		jsModulesResolution.dedentExplanation();
 
-		context.putPath(alias, adapter.getPath());
-		context.putModuleDependencyMap(alias, dependenciesMap);
-		context.addResolvedModule(alias);
+		jsModulesResolution.putModuleMapping(moduleName, dependenciesMap);
+		jsModulesResolution.putPath(moduleName, moduleDescriptor.getPath());
+		jsModulesResolution.addResolvedModule(moduleName);
 
 		return true;
 	}
 
 	private void _resolve(
-		Map<String, ModuleDescriptor> moduleDescriptors, String module,
-		JSModulesResolution context) {
+		Map<String, ModuleDescriptor> moduleDescriptors, String moduleName,
+		JSModulesResolution jsModulesResolution) {
 
-		String mappedModuleName = _mapper.mapModule(module);
+		String mappedModuleName = _mapper.mapModule(moduleName);
 
 		ModuleDescriptor moduleDescriptor = moduleDescriptors.get(
 			mappedModuleName);
 
 		if (moduleDescriptor != null) {
-			context.putConfig(module, mappedModuleName);
+			jsModulesResolution.putGlobalMapping(moduleName, mappedModuleName);
 
-			_processModule(moduleDescriptors, moduleDescriptor, context);
+			_processModule(
+				moduleDescriptors, moduleDescriptor, jsModulesResolution);
 		}
 	}
 

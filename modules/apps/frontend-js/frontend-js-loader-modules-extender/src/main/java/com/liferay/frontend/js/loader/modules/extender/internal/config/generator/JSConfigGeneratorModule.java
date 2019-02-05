@@ -31,10 +31,9 @@ public class JSConfigGeneratorModule {
 		_jsConfigGeneratorPackage = jsConfigGeneratorPackage;
 		_name = name;
 		_dependencies = dependencies;
-		_contextPath = contextPath;
 
 		_resolvedURL = StringBundler.concat(
-			_contextPath, StringPool.SLASH, _name);
+			contextPath, StringPool.SLASH, _name);
 	}
 
 	public List<String> getDependencies() {
@@ -53,7 +52,6 @@ public class JSConfigGeneratorModule {
 		return _resolvedURL;
 	}
 
-	private final String _contextPath;
 	private final List<String> _dependencies;
 	private final JSConfigGeneratorPackage _jsConfigGeneratorPackage;
 	private final String _name;

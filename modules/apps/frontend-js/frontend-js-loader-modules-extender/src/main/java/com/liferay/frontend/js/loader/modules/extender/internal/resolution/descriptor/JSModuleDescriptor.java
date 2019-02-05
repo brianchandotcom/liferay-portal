@@ -22,8 +22,8 @@ import com.liferay.frontend.js.loader.modules.extender.npm.NPMRegistry;
 import com.liferay.petra.string.StringBundler;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Rodolfo Roza Miranda
@@ -32,7 +32,8 @@ public class JSModuleDescriptor implements ModuleDescriptor {
 
 	public JSModuleDescriptor(JSModule jsModule, NPMRegistry npmRegistry) {
 		_jsModule = jsModule;
-		_npmRegistry = npmRegistry;
+
+		_setMappings(npmRegistry);
 	}
 
 	@Override
@@ -42,56 +43,7 @@ public class JSModuleDescriptor implements ModuleDescriptor {
 
 	@Override
 	public Map<String, String> getMappings() {
-		JSPackage jsPackage = _jsModule.getJSPackage();
-
-		Map<String, String> contextMap = new ConcurrentHashMap<>();
-
-		for (String dependencyPackageName :
-				_jsModule.getDependencyPackageNames()) {
-
-			if (dependencyPackageName == null) {
-				continue;
-			}
-
-			if (dependencyPackageName.equals(jsPackage.getName())) {
-				contextMap.put(
-					dependencyPackageName, jsPackage.getResolvedId());
-			}
-			else {
-				JSPackageDependency dependency =
-					jsPackage.getJSPackageDependency(dependencyPackageName);
-
-				if (dependency == null) {
-					String errorMessage = StringBundler.concat(
-						":ERROR:Missing version constraints for ",
-						dependencyPackageName, " in package.json of ",
-						jsPackage.getResolvedId());
-
-					contextMap.put(dependencyPackageName, errorMessage);
-				}
-				else {
-					JSPackage packageDependency =
-						_npmRegistry.resolveJSPackageDependency(dependency);
-
-					if (packageDependency == null) {
-						String errorMessage = StringBundler.concat(
-							":ERROR:Package ", dependencyPackageName,
-							" which is a dependency of ",
-							jsPackage.getResolvedId(),
-							" is not deployed in the server");
-
-						contextMap.put(dependencyPackageName, errorMessage);
-					}
-					else {
-						contextMap.put(
-							packageDependency.getName(),
-							packageDependency.getResolvedId());
-					}
-				}
-			}
-		}
-
-		return contextMap;
+		return _mappings;
 	}
 
 	@Override
@@ -104,7 +56,56 @@ public class JSModuleDescriptor implements ModuleDescriptor {
 		return _jsModule.getResolvedURL();
 	}
 
+	private void _setMappings(NPMRegistry npmRegistry) {
+		JSPackage jsPackage = _jsModule.getJSPackage();
+
+		for (String dependencyPackageName :
+				_jsModule.getDependencyPackageNames()) {
+
+			if (dependencyPackageName == null) {
+				continue;
+			}
+
+			if (dependencyPackageName.equals(jsPackage.getName())) {
+				_mappings.put(dependencyPackageName, jsPackage.getResolvedId());
+			}
+			else {
+				JSPackageDependency jsPackageDependency =
+					jsPackage.getJSPackageDependency(dependencyPackageName);
+
+				if (jsPackageDependency == null) {
+					String errorMessage = StringBundler.concat(
+						":ERROR:Missing version constraints for ",
+						dependencyPackageName, " in package.json of ",
+						jsPackage.getResolvedId());
+
+					_mappings.put(dependencyPackageName, errorMessage);
+				}
+				else {
+					JSPackage dependencyJSPackage =
+						npmRegistry.resolveJSPackageDependency(
+							jsPackageDependency);
+
+					if (dependencyJSPackage == null) {
+						String errorMessage = StringBundler.concat(
+							":ERROR:Package ", dependencyPackageName,
+							" which is a dependency of ",
+							jsPackage.getResolvedId(),
+							" is not deployed in the server");
+
+						_mappings.put(dependencyPackageName, errorMessage);
+					}
+					else {
+						_mappings.put(
+							dependencyJSPackage.getName(),
+							dependencyJSPackage.getResolvedId());
+					}
+				}
+			}
+		}
+	}
+
 	private final JSModule _jsModule;
-	private final NPMRegistry _npmRegistry;
+	private final Map<String, String> _mappings = new HashMap<>();
 
 }

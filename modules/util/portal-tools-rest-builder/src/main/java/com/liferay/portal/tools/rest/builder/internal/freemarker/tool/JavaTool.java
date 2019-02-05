@@ -199,7 +199,7 @@ public class JavaTool {
 	}
 
 	public List<String> getMediaTypes(Map<String, Content> contents) {
-		if (contents.isEmpty()) {
+		if ((contents == null) || contents.isEmpty()) {
 			return Collections.emptyList();
 		}
 
@@ -280,6 +280,10 @@ public class JavaTool {
 	}
 
 	private List<JavaParameter> _getJavaParameters(Operation operation) {
+		if ((operation == null) || (operation.getParameters() == null)) {
+			return Collections.emptyList();
+		}
+
 		List<JavaParameter> javaParameters = new ArrayList<>();
 
 		boolean pagination = _hasJavaParameterPagination(operation);
@@ -462,6 +466,10 @@ public class JavaTool {
 		for (Response response : responses.values()) {
 			Map<String, Content> contents = response.getContent();
 
+			if ((contents == null) || (contents.values() == null)) {
+				continue;
+			}
+
 			for (Content content : contents.values()) {
 				Schema schema = content.getSchema();
 
@@ -492,6 +500,10 @@ public class JavaTool {
 	}
 
 	private boolean _hasJavaParameterAcceptLanguage(Operation operation) {
+		if ((operation == null) || (operation.getParameters() == null)) {
+			return false;
+		}
+
 		for (Parameter parameter : operation.getParameters()) {
 			String parameterName = parameter.getName();
 
@@ -504,6 +516,10 @@ public class JavaTool {
 	}
 
 	private boolean _hasJavaParameterPagination(Operation operation) {
+		if ((operation == null) || (operation.getParameters() == null)) {
+			return false;
+		}
+
 		List<String> parameterNames = new ArrayList<>();
 
 		for (Parameter parameter : operation.getParameters()) {

@@ -11,7 +11,7 @@ import java.util.concurrent.ConcurrentSkipListSet;
 /**
  * @author Rodolfo Roza Miranda
  */
-public class JSModuleContext {
+public class JSModulesResolution {
 
 	public void addResolvedModule(String alias) {
 		_resolvedModules.add(0, alias);

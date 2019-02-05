@@ -90,12 +90,9 @@
 		</p>
 	{/if}
 
-	{call ClayMultiSelect.render}
+	{call InputCategoriesSelector.render}
+		{param commonCategories: $commonCategories /}
 		{param dataSource: $dataSource /}
-		{param elementClasses: 'clay-multi-select' /}
-		{param helpText: '' /}
-		{param label kind="text"} {msg desc=""}categories{/msg} {/param}
-		{param selectedItems: $commonCategories /}
 		{param spritemap: $spritemap /}
 	{/call}
 {/template}

@@ -5,6 +5,7 @@ import Component from 'metal-component';
 import {Config} from 'metal-state';
 import Soy from 'metal-soy';
 import 'frontend-js-web/liferay/compat/modal/Modal.es';
+import InputCategoriesSelector from './InputCategoriesSelector.es';
 import templates from './EditCategories.soy';
 
 /**
@@ -135,32 +136,6 @@ class EditCategories extends Component {
 	_handleSaveBtnClick() {
 		//TODO
 	}
-
-	/**
-	 * Transforms the categories list in the object needed
-	 * for the ClayMultiSelect component.
-	 *
-	 * @param {List<Long, String>} categories
-	 * @return {List<{label, value}>} new commonItems object list
-	 */
-	_setCommonCategories(categories) {
-		let categoriesObjList = [];
-
-		if (categories.length > 0) {
-			categories.forEach(
-				item => {
-					let itemObj = {
-						'label': item.name,
-						'value': item.categoryId
-					};
-
-					categoriesObjList.push(itemObj);
-				}
-			);
-		}
-
-		return categoriesObjList;
-	}
 }
 
 /**
@@ -179,7 +154,7 @@ EditCategories.STATE = {
 	 * @review
 	 * @type {List<String>}
 	 */
-	commonCategories: Config.array().setter('_setCommonCategories').value([]),
+	commonCategories: Config.array().value([]),
 
 	/**
 	 * Description
@@ -302,7 +277,6 @@ EditCategories.STATE = {
 	 */
 	urlUpdateCategories: Config.string().required()
 };
-
 
 // Register component
 

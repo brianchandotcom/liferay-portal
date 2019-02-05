@@ -1,0 +1,17 @@
+{namespace InputCategoriesSelector}
+
+{template .render}
+	{@param commonCategories: list<?>}
+	{@param dataSource: string|[]|list<?>}
+	{@param spritemap: string}
+
+	{call ClayMultiSelect.render}
+		{param dataSource: $dataSource /}
+		{param elementClasses: 'clay-multi-select' /}
+		{param helpText: '' /}
+		{param label kind="text"} {msg desc=""}categories{/msg} {/param}
+		{param selectedItems: $commonCategories /}
+		{param spritemap: $spritemap /}
+		{param ref: 'categoriesSelector' /}
+	{/call}
+{/template}

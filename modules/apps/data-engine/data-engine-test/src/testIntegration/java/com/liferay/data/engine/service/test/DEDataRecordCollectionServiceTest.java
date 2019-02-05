@@ -1257,7 +1257,7 @@ public class DEDataRecordCollectionServiceTest {
 		DEDataEngineTestUtil.deleteDEDataRecordCollectionModelPermissions(
 			TestPropsValues.getCompanyId(), _adminUser, _group.getGroupId(),
 			deDataRecordCollection.getDEDataRecordCollectionId(),
-			new String[] {role.getName()}, new String[] {ActionKeys.DELETE},
+			new String[] {ActionKeys.DELETE}, new String[] {role.getName()},
 			_deDataRecordCollectionService);
 
 		DEDataEngineTestUtil.deleteDEDataRecordCollection(

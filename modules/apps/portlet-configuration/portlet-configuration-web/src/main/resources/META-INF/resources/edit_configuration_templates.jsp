@@ -18,6 +18,8 @@
 
 <%
 PortletConfigurationTemplatesDisplayContext portletConfigurationTemplatesDisplayContext = new PortletConfigurationTemplatesDisplayContext(request, renderRequest, renderResponse);
+
+PortletConfigurationTemplatesManagementToolbarDisplayContext portletConfigurationTemplatesManagementToolbarDisplayContext = new PortletConfigurationTemplatesManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, portletConfigurationTemplatesDisplayContext);
 %>
 
 <div class="portlet-configuration-edit-templates">
@@ -31,7 +33,7 @@ PortletConfigurationTemplatesDisplayContext portletConfigurationTemplatesDisplay
 	<aui:form action="<%= deleteArchivedSetupsURL %>" name="fm">
 		<div class="portlet-configuration-body-content">
 			<clay:management-toolbar
-				displayContext="<%= new PortletConfigurationTemplatesManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, portletConfigurationTemplatesDisplayContext) %>"
+				displayContext="<%= portletConfigurationTemplatesManagementToolbarDisplayContext %>"
 			/>
 
 			<div class="container-fluid-1280">
@@ -135,33 +137,17 @@ PortletConfigurationTemplatesDisplayContext portletConfigurationTemplatesDisplay
 	</aui:form>
 </div>
 
-<aui:script sandbox="<%= true %>">
-	var deleteArchivedSettings = function() {
-		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
-			var form = document.getElementById('<portlet:namespace />fm');
-
-			if (form) {
-				submitForm(form);
+<aui:script require='<%= npmResolvedPackageName + "/js/ManagementToolbarDefaultEventHandler.es as ManagementToolbarDefaultEventHandler" %>'>
+	Liferay.component(
+		'<%= portletConfigurationTemplatesManagementToolbarDisplayContext.getDefaultEventHandler() %>',
+		new ManagementToolbarDefaultEventHandler.default(
+			{
+				namespace: '<portlet:namespace />'
 			}
-		}
-	}
-
-	var ACTIONS = {
-		'deleteArchivedSettings': deleteArchivedSettings
-	};
-
-	Liferay.componentReady('archivedSettingsManagementToolbar').then(
-		function(managementToolbar) {
-			managementToolbar.on(
-				'actionItemClicked',
-					function(event) {
-					var itemData = event.data.item.data;
-
-					if (itemData && itemData.action && ACTIONS[itemData.action]) {
-						ACTIONS[itemData.action]();
-					}
-				}
-			);
+		),
+		{
+			destroyOnNavigate: true,
+			portletId: '<%= HtmlUtil.escapeJS(portletDisplay.getId()) %>'
 		}
 	);
 </aui:script>

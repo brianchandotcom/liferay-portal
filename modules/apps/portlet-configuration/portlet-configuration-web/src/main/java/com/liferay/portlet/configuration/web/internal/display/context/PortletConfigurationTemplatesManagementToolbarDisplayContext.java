@@ -73,6 +73,12 @@ public class PortletConfigurationTemplatesManagementToolbarDisplayContext
 	}
 
 	@Override
+	public String getDefaultEventHandler() {
+		return "PORTLET_CONFIGURATION_TEMPLATES_MANAGEMENT_TOOLBAR_DEFAULT_" +
+			"EVENT_HANDLER";
+	}
+
+	@Override
 	public String getSearchContainerId() {
 		return "archivedSettings";
 	}

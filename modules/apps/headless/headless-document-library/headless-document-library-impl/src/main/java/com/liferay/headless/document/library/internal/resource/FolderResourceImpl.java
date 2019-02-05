@@ -70,7 +70,7 @@ public class FolderResourceImpl extends BaseFolderResourceImpl {
 		Long groupId, Long parentFolderId, Pagination pagination) {
 
 		try {
-			return new Page<>(
+			return Page.of(
 				transform(
 					_dlAppService.getFolders(
 						groupId, parentFolderId, pagination.getStartPosition(),

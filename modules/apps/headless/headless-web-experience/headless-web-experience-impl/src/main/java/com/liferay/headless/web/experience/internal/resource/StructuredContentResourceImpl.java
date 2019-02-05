@@ -64,7 +64,7 @@ public class StructuredContentResourceImpl
 
 		Hits hits = _getHits(pagination);
 
-		return new Page<>(
+		return Page.of(
 			transform(
 				_journalHelper.getArticles(hits), this::_toStructuredContent),
 			hits.getLength());

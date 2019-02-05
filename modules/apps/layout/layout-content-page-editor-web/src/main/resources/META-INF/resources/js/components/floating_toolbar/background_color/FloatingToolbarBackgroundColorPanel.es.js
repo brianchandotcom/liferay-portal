@@ -27,6 +27,22 @@ class FloatingToolbarBackgroundColorPanel extends Component {
 	}
 
 	/**
+	 * Handle BackgroundColor button click
+	 * @param {Event} event
+	 * @private
+	 * @review
+	 */
+	_handleBackgroundColorButtonClick(event) {
+		const button = event.delegateTarget;
+
+		this._updateSectionConfig(
+			{
+				[ITEM_CONFIG_KEYS.backgroundColorCssClass]: button.dataset.backgroundColorCssClass
+			}
+		);
+	}
+
+	/**
 	 * Updates section configuration
 	 * @param {object} config Section configuration
 	 * @private

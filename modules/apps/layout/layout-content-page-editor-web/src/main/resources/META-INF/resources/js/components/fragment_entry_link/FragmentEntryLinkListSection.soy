@@ -74,8 +74,8 @@
 			{sp}fragments-editor__topper-wrapper--hovered
 		{/if}
 
-		{if $row.config and $row.config.backgroundColorCssClass}
-			{sp}bg-fragment-{$row.config.backgroundColorCssClass};
+		{if $row and $row.config and $row.config.backgroundColorCssClass}
+			{sp}bg-fragment-{$row.config.backgroundColorCssClass}
 		{/if}
 
 		{if $row and $row.config}

@@ -4,6 +4,8 @@
  * FloatingToolbarBackgroundColorPanel
  */
 {template .render}
+	{@param? themeColorsCssClasses: ?}
+	{@param? _handleBackgroundColorButtonClick: any}
 	{@param? _handleClearButtonClick: any}
 
 	<div class="form-group">
@@ -11,7 +13,31 @@
 			{msg desc=""}background-color{/msg}
 		</label>
 
-		<div id="floatingToolbarBackgroundColorPanelPalette"></div>
+		<div class="palette-container" id="floatingToolbarBackgroundColorPanelPalette">
+			<ul class="list-unstyled palette-items-container">
+				{foreach $themeColorsCssClass in $themeColorsCssClasses}
+					<li class="palette-item">
+						{let $wrapperClasses kind="text"}
+							bg-fragment-{$themeColorsCssClass}
+							{sp}btn
+							{sp}btn-sm
+							{sp}btn-unstyled
+							{sp}palette-item-inner
+							{sp}p-1
+							{sp}rounded-circle
+						{/let}
+
+						<button
+							class="{$wrapperClasses}"
+							data-background-color-css-class="{$themeColorsCssClass}"
+							data-onclick="{$_handleBackgroundColorButtonClick}"
+							type="button"
+						>
+						</button>
+					</li>
+				{/foreach}
+			</ul>
+		</div>
 
 		<button
 			class="btn btn-secondary btn-sm"

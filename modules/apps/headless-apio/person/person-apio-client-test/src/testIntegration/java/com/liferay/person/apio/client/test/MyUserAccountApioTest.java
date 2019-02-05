@@ -139,26 +139,26 @@ public class MyUserAccountApioTest {
 		).statusCode(
 			200
 		).body(
-			"_embedded.'Liferay:UserAccount'.find {it.alternateName == " +
+			"_embedded.'UserAccount'.find {it.alternateName == " +
 				"'katew'}",
 			IsNull.notNullValue()
 		).body(
-			"_embedded.'Liferay:UserAccount'.find {it.birthDate == " +
+			"_embedded.'UserAccount'.find {it.birthDate == " +
 				"'1993-09-13T00:00Z'}",
 			IsNull.notNullValue()
 		).body(
-			"_embedded.'Liferay:UserAccount'.find {it.email == " +
+			"_embedded.'UserAccount'.find {it.email == " +
 				"'kate.williams@liferay.com'}",
 			IsNull.notNullValue()
 		).body(
-			"_embedded.'Liferay:UserAccount'.find {it.familyName == " +
+			"_embedded.'UserAccount'.find {it.familyName == " +
 				"'Williams'}",
 			IsNull.notNullValue()
 		).body(
-			"_embedded.'Liferay:UserAccount'.find {it.givenName == 'Kate'}",
+			"_embedded.'UserAccount'.find {it.givenName == 'Kate'}",
 			IsNull.notNullValue()
 		).body(
-			"_embedded.'Liferay:UserAccount'.find {it.jobTitle == 'UX " +
+			"_embedded.'UserAccount'.find {it.jobTitle == 'UX " +
 				"Designer'}",
 			IsNull.notNullValue()
 		);

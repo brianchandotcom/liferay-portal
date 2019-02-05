@@ -290,7 +290,7 @@ public class WebSiteApioTest {
 		).statusCode(
 			200
 		).body(
-			"_embedded.'Liferay:UserAccount'[0]._links.myWebSites.href",
+			"_embedded.'UserAccount'[0]._links.myWebSites.href",
 			IsNull.notNullValue()
 		);
 	}
@@ -329,7 +329,7 @@ public class WebSiteApioTest {
 		).statusCode(
 			200
 		).body(
-			"_embedded.'Liferay:UserAccount'[0]._links.webSites.href",
+			"_embedded.'UserAccount'[0]._links.webSites.href",
 			IsNull.notNullValue()
 		);
 	}

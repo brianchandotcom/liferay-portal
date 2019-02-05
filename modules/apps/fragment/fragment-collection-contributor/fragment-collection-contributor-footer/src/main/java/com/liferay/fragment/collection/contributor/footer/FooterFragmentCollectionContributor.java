@@ -17,7 +17,6 @@ package com.liferay.fragment.collection.contributor.footer;
 import com.liferay.fragment.contributor.BaseFragmentCollectionContributor;
 import com.liferay.fragment.contributor.FragmentCollectionContributor;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -30,16 +29,6 @@ public class FooterFragmentCollectionContributor
 	@Override
 	public String getFragmentCollectionKey() {
 		return "FOOTER";
-	}
-
-	@Activate
-	protected void activate() {
-		readAndCheckFragmentCollectionStructure();
-	}
-
-	@Override
-	protected Class getResourceClass() {
-		return FooterFragmentCollectionContributor.class;
 	}
 
 }

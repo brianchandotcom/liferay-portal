@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.util.Validator;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -48,7 +49,10 @@ public abstract class BaseFragmentCollectionContributor
 		return _name;
 	}
 
-	protected abstract Class getResourceClass();
+	@Activate
+	protected void activate() {
+		readAndCheckFragmentCollectionStructure();
+	}
 
 	protected void readAndCheckFragmentCollectionStructure() {
 		try {
@@ -81,7 +85,7 @@ public abstract class BaseFragmentCollectionContributor
 	private String _getFileContent(String path, String fileName)
 		throws Exception {
 
-		Class<?> resourceClass = getResourceClass();
+		Class<?> resourceClass = getClass();
 
 		StringBundler sb = new StringBundler(4);
 
@@ -126,7 +130,7 @@ public abstract class BaseFragmentCollectionContributor
 	}
 
 	private JSONObject _getStructure(String path) throws Exception {
-		Class<?> resourceClass = getResourceClass();
+		Class<?> resourceClass = getClass();
 
 		String structure = StringUtil.read(
 			resourceClass.getResourceAsStream("dependencies/" + path));

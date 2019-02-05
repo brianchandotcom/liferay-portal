@@ -17,7 +17,6 @@ package com.liferay.fragment.collection.contributor.content.section;
 import com.liferay.fragment.contributor.BaseFragmentCollectionContributor;
 import com.liferay.fragment.contributor.FragmentCollectionContributor;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -30,16 +29,6 @@ public class ContentSectionFragmentCollectionContributor
 	@Override
 	public String getFragmentCollectionKey() {
 		return "CONTENT_SECTION";
-	}
-
-	@Activate
-	protected void activate() {
-		readAndCheckFragmentCollectionStructure();
-	}
-
-	@Override
-	protected Class getResourceClass() {
-		return ContentSectionFragmentCollectionContributor.class;
 	}
 
 }

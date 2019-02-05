@@ -36,7 +36,7 @@ public class PageTest {
 	public void testPageFromEmptyListCreatesOnePageCollectionPage() {
 		List<Integer> items = Collections.emptyList();
 
-		Page<Integer> page = Page.of(items, 0);
+		Page<Integer> page = Page.of(items);
 
 		assertThat(page.hasNext(), is(false));
 		assertThat(page.hasPrevious(), is(false));
@@ -51,7 +51,7 @@ public class PageTest {
 	public void testPageFromListCreatesOnePageCollectionPage() {
 		List<Integer> items = Arrays.asList(1, 2, 3);
 
-		Page<Integer> page = Page.of(items, 3);
+		Page<Integer> page = Page.of(items);
 
 		assertThat(page.hasNext(), is(false));
 		assertThat(page.hasPrevious(), is(false));

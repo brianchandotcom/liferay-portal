@@ -31,8 +31,8 @@ import java.util.Collection;
 @JacksonXmlRootElement(localName = "page")
 public class Page<T> {
 
-	public static <T> Page<T> of(Collection<T> items, int totalCount) {
-		return new Page<>(items, totalCount);
+	public static <T> Page<T> of(Collection<T> items) {
+		return new Page<>(items);
 	}
 
 	public static <T> Page<T> of(
@@ -83,11 +83,12 @@ public class Page<T> {
 		return false;
 	}
 
-	private Page(Collection<T> items, int totalCount) {
+	private Page(Collection<T> items) {
 		_items = items;
 		_itemsPerPage = items.size();
 		_pageNumber = 1;
-		_totalCount = totalCount;
+
+		_totalCount = _itemsPerPage;
 	}
 
 	private Page(Collection<T> items, Pagination pagination, int totalCount) {

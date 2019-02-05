@@ -1321,12 +1321,12 @@ definition {
 
 		DMDocument.viewPG(dmDocumentTitle = "Document1");
 
+		DMDocument.expandInfo();
+
 		AssertTextEquals(
 			locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_UPLOADED_BY",
 			value1 = "Test Test"
 		);
-
-		DMDocument.expandInfo();
 
 		AssertTextEquals(
 			locator1 = "DocumentsAndMediaDocument#DOCUMENT_DETAILS_VERSION",
@@ -1392,12 +1392,12 @@ definition {
 
 		DMDocument.viewPG(dmDocumentTitle = "Document1");
 
+		DMDocument.expandInfo();
+
 		AssertTextEquals(
 			locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_UPLOADED_BY",
 			value1 = "Test Test"
 		);
-
-		DMDocument.expandInfo();
 
 		AssertTextEquals(
 			locator1 = "DocumentsAndMediaDocument#DOCUMENT_DETAILS_VERSION",

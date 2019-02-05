@@ -20,6 +20,7 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 
 import com.liferay.portal.vulcan.context.Pagination;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 /**
@@ -43,7 +44,7 @@ public class Page<T> {
 	@JacksonXmlElementWrapper(localName = "items")
 	@JacksonXmlProperty(localName = "item")
 	public Collection<T> getItems() {
-		return _items;
+		return new ArrayList<>(_items);
 	}
 
 	public int getItemsPerPage() {

@@ -94,7 +94,7 @@ public class JSModulesContextResolver {
 		List<JSModuleDescriptor> npmRegistryModules =
 			_npmRegistry.getResolvedJSModules().stream()
 				.map(
-					m -> new JSModuleDescriptor(m, _npmRegistry, _portal))
+					m -> new JSModuleDescriptor(m, _npmRegistry))
 				.collect(Collectors.toList());
 
 		ArrayList<ModuleDescriptor> allModules = new ArrayList<>();
@@ -157,8 +157,8 @@ public class JSModulesContextResolver {
 		JSModule jsModule = _npmRegistry.getResolvedJSModule(module);
 
 		if (jsModule != null) {
-			_processModule(new JSModuleDescriptor(jsModule, _npmRegistry,
-				_portal), context);
+			_processModule(
+				new JSModuleDescriptor(jsModule, _npmRegistry), context);
 		}
 	}
 

@@ -66,12 +66,8 @@ public class SegmentsEntryServiceImpl extends SegmentsEntryServiceBaseImpl {
 
 	@Override
 	public List<SegmentsEntry> getSegmentsEntries(
-			long groupId, int start, int end,
-			OrderByComparator<SegmentsEntry> orderByComparator)
-		throws PortalException {
-
-		_portletResourcePermission.check(
-			getPermissionChecker(), groupId, ActionKeys.VIEW);
+		long groupId, int start, int end,
+		OrderByComparator<SegmentsEntry> orderByComparator) {
 
 		return segmentsEntryPersistence.filterFindByGroupId(
 			groupId, start, end, orderByComparator);
@@ -79,9 +75,6 @@ public class SegmentsEntryServiceImpl extends SegmentsEntryServiceBaseImpl {
 
 	@Override
 	public int getSegmentsEntriesCount(long groupId) throws PortalException {
-		_portletResourcePermission.check(
-			getPermissionChecker(), groupId, ActionKeys.VIEW);
-
 		return segmentsEntryPersistence.filterCountByGroupId(groupId);
 	}
 

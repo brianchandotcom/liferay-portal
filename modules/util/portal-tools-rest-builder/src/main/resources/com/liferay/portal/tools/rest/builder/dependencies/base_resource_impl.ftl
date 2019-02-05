@@ -57,7 +57,7 @@ public abstract class Base${schemaName}ResourceImpl implements ${schemaName}Reso
 
 					return responseBuilder.build();
 				<#elseif stringUtil.equals(javaSignature.returnType, "Page<" + schemaName + ">")>
-					return new ${javaSignature.returnType}(Collections.emptyList(), 0);
+					return Page.of(Collections.emptyList());
 				<#else>
 					return new ${javaSignature.returnType}();
 				</#if>

@@ -1133,6 +1133,17 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
+	public boolean hasModifiedDownstreamBuilds() {
+		for (Build downstreamBuild : downstreamBuilds) {
+			if (downstreamBuild.isBuildModified()) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	@Override
 	public boolean isBuildModified() {
 		return _status.equals(_previousStatus);
 	}

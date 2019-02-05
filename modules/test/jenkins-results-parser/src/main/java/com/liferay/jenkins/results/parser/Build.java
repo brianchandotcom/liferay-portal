@@ -152,6 +152,8 @@ public interface Build {
 
 	public boolean hasBuildURL(String buildURL);
 
+	public boolean hasModifiedDownstreamBuilds();
+
 	public boolean isBuildModified();
 
 	public void reinvoke();

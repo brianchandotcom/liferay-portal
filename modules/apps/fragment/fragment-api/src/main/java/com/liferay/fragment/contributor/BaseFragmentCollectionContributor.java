@@ -28,7 +28,13 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Reference;
@@ -41,7 +47,21 @@ public abstract class BaseFragmentCollectionContributor
 
 	@Override
 	public List<FragmentEntry> getFragmentEntries() {
-		return _fragmentEntries;
+		Collection<List<FragmentEntry>> fragmentEntryCollection =
+			_fragmentEntries.values();
+
+		Stream<List<FragmentEntry>> stream = fragmentEntryCollection.stream();
+
+		return stream.flatMap(
+			fragmentEntriesList -> fragmentEntriesList.stream()
+		).collect(
+			Collectors.toList()
+		);
+	}
+
+	@Override
+	public List<FragmentEntry> getFragmentEntries(int type) {
+		return _fragmentEntries.getOrDefault(type, Collections.emptyList());
 	}
 
 	@Override
@@ -64,11 +84,20 @@ public abstract class BaseFragmentCollectionContributor
 			if (Validator.isNotNull(name) && (jsonArray.length() > 0)) {
 				_name = name;
 
-				_fragmentEntries = new ArrayList<>();
+				_fragmentEntries = new HashMap<>();
 
 				for (int i = 0; i < jsonArray.length(); i++) {
-					_fragmentEntries.add(
-						_getFragmentEntry(jsonArray.getString(i)));
+					FragmentEntry fragmentEntry = _getFragmentEntry(
+						jsonArray.getString(i));
+
+					List<FragmentEntry> fragmentEntryList =
+						_fragmentEntries.getOrDefault(
+							fragmentEntry.getType(), new ArrayList<>());
+
+					fragmentEntryList.add(fragmentEntry);
+
+					_fragmentEntries.put(
+						fragmentEntry.getType(), fragmentEntryList);
 				}
 			}
 		}
@@ -141,7 +170,7 @@ public abstract class BaseFragmentCollectionContributor
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseFragmentCollectionContributor.class);
 
-	private List<FragmentEntry> _fragmentEntries;
+	private Map<Integer, List<FragmentEntry>> _fragmentEntries;
 	private String _name;
 
 }

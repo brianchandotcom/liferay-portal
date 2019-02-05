@@ -31,16 +31,7 @@ PortletConfigurationTemplatesDisplayContext portletConfigurationTemplatesDisplay
 	<aui:form action="<%= deleteArchivedSetupsURL %>" name="fm">
 		<div class="portlet-configuration-body-content">
 			<clay:management-toolbar
-				actionDropdownItems="<%= portletConfigurationTemplatesDisplayContext.getActionDropdownItems() %>"
-				componentId="archivedSettingsManagementToolbar"
-				disabled="<%= portletConfigurationTemplatesDisplayContext.isDisabledManagementBar() %>"
-				filterDropdownItems="<%= portletConfigurationTemplatesDisplayContext.getFilterDropdownItems() %>"
-				itemsTotal="<%= portletConfigurationTemplatesDisplayContext.getTotalItems() %>"
-				searchContainerId="archivedSettings"
-				showSearch="<%= false %>"
-				sortingOrder="<%= portletConfigurationTemplatesDisplayContext.getOrderByType() %>"
-				sortingURL="<%= portletConfigurationTemplatesDisplayContext.getSortingURL() %>"
-				viewTypeItems="<%= portletConfigurationTemplatesDisplayContext.getViewTypeItems() %>"
+				displayContext="<%= new PortletConfigurationTemplatesManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, portletConfigurationTemplatesDisplayContext) %>"
 			/>
 
 			<div class="container-fluid-1280">

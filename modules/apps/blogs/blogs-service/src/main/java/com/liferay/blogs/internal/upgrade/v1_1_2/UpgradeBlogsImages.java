@@ -57,7 +57,7 @@ public class UpgradeBlogsImages extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		try (PreparedStatement ps1 = connection.prepareStatement(
 				SQLTransformer.transform(
-					"select entryId, groupId, company, userId, smallImageId " +
+					"select entryId, groupId, companyId, userId, smallImageId " +
 						"from BlogsEntry where smallImage = [$TRUE$] and " +
 							"smallImageId != 0"));
 			PreparedStatement ps2 = AutoBatchPreparedStatementUtil.autoBatch(

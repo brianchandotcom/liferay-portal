@@ -90,8 +90,9 @@ public interface SegmentsEntryService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<SegmentsEntry> searchSegmentsEntries(
-		long companyId, long groupId, String keywords, int start, int end,
-		Sort sort) throws PortalException;
+		long companyId, long groupId, String keywords,
+		boolean includeAncestorSegmentsEntries, int start, int end, Sort sort)
+		throws PortalException;
 
 	public SegmentsEntry updateSegmentsEntry(long segmentsEntryId,
 		Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,

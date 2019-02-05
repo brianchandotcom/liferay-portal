@@ -86,11 +86,12 @@ public class SegmentsEntryServiceWrapper implements SegmentsEntryService,
 
 	@Override
 	public com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.segments.model.SegmentsEntry> searchSegmentsEntries(
-		long companyId, long groupId, String keywords, int start, int end,
+		long companyId, long groupId, String keywords,
+		boolean includeAncestorSegmentsEntries, int start, int end,
 		com.liferay.portal.kernel.search.Sort sort)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _segmentsEntryService.searchSegmentsEntries(companyId, groupId,
-			keywords, start, end, sort);
+			keywords, includeAncestorSegmentsEntries, start, end, sort);
 	}
 
 	@Override

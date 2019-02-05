@@ -304,12 +304,13 @@ public class SegmentsEntryLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.segments.model.SegmentsEntry> searchSegmentsEntries(
-		long companyId, long groupId, String keywords, int start, int end,
+		long companyId, long groupId, String keywords,
+		boolean includeAncestorSegmentsEntries, int start, int end,
 		com.liferay.portal.kernel.search.Sort sort)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .searchSegmentsEntries(companyId, groupId, keywords, start,
-			end, sort);
+				   .searchSegmentsEntries(companyId, groupId, keywords,
+			includeAncestorSegmentsEntries, start, end, sort);
 	}
 
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.segments.model.SegmentsEntry> searchSegmentsEntries(

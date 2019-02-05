@@ -216,8 +216,8 @@ public class SegmentsEntryServiceHttp {
 
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.segments.model.SegmentsEntry> searchSegmentsEntries(
 		HttpPrincipal httpPrincipal, long companyId, long groupId,
-		String keywords, int start, int end,
-		com.liferay.portal.kernel.search.Sort sort)
+		String keywords, boolean includeAncestorSegmentsEntries, int start,
+		int end, com.liferay.portal.kernel.search.Sort sort)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(SegmentsEntryServiceUtil.class,
@@ -225,7 +225,8 @@ public class SegmentsEntryServiceHttp {
 					_searchSegmentsEntriesParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					companyId, groupId, keywords, start, end, sort);
+					companyId, groupId, keywords,
+					includeAncestorSegmentsEntries, start, end, sort);
 
 			Object returnObj = null;
 
@@ -306,8 +307,8 @@ public class SegmentsEntryServiceHttp {
 			long.class
 		};
 	private static final Class<?>[] _searchSegmentsEntriesParameterTypes5 = new Class[] {
-			long.class, long.class, String.class, int.class, int.class,
-			com.liferay.portal.kernel.search.Sort.class
+			long.class, long.class, String.class, boolean.class, int.class,
+			int.class, com.liferay.portal.kernel.search.Sort.class
 		};
 	private static final Class<?>[] _updateSegmentsEntryParameterTypes6 = new Class[] {
 			long.class, java.util.Map.class, java.util.Map.class, boolean.class,

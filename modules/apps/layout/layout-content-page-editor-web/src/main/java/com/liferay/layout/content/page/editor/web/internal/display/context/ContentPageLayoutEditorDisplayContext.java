@@ -56,8 +56,7 @@ public class ContentPageLayoutEditorDisplayContext
 			"addPortletURL",
 			getFragmentEntryActionURL("/content_layout/add_portlet"));
 
-		soyContext.put(
-			"sidebarPanels", getSidebarPanelSoyContexts(false, true));
+		soyContext.put("sidebarPanels", getSidebarPanelSoyContexts(false));
 
 		_editorSoyContext = soyContext;
 

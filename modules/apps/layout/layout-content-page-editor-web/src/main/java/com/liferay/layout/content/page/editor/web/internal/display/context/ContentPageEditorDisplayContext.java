@@ -333,9 +333,7 @@ public class ContentPageEditorDisplayContext {
 		return _redirect;
 	}
 
-	protected List<SoyContext> getSidebarPanelSoyContexts(
-		boolean showMapping, boolean showWidgets) {
-
+	protected List<SoyContext> getSidebarPanelSoyContexts(boolean showMapping) {
 		if (_sidebarPanelSoyContexts != null) {
 			return _sidebarPanelSoyContexts;
 		}
@@ -386,16 +384,14 @@ public class ContentPageEditorDisplayContext {
 
 		soyContexts.add(availableSoyContext);
 
-		if (showWidgets) {
-			availableSoyContext = SoyContextFactoryUtil.createSoyContext();
+		availableSoyContext = SoyContextFactoryUtil.createSoyContext();
 
-			availableSoyContext.put("icon", "chip");
-			availableSoyContext.put(
-				"label", LanguageUtil.get(resourceBundle, "widgets"));
-			availableSoyContext.put("sidebarPanelId", "widgets");
+		availableSoyContext.put("icon", "chip");
+		availableSoyContext.put(
+			"label", LanguageUtil.get(resourceBundle, "widgets"));
+		availableSoyContext.put("sidebarPanelId", "widgets");
 
-			soyContexts.add(availableSoyContext);
-		}
+		soyContexts.add(availableSoyContext);
 
 		_sidebarPanelSoyContexts = soyContexts;
 

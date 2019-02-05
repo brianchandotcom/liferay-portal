@@ -16,31 +16,28 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class JSModuleDescriptor implements ModuleDescriptor {
 
-	public JSModuleDescriptor(
-		JSModule module, NPMRegistry npmRegistry, Portal portal) {
-
-		_module = module;
+	public JSModuleDescriptor(JSModule jsModule, NPMRegistry npmRegistry) {
+		_jsModule = jsModule;
 		_npmRegistry = npmRegistry;
-		_portal = portal;
 	}
 
 	@Override
 	public String getName() {
-		return _module.getResolvedId();
+		return _jsModule.getResolvedId();
 	}
 
 	@Override
 	public Collection<String> getDependencies() {
-		return _module.getDependencies();
+		return _jsModule.getDependencies();
 	}
 
 	@Override
 	public Map<String, String> getMappings() {
-		JSPackage jsPackage = _module.getJSPackage();
+		JSPackage jsPackage = _jsModule.getJSPackage();
 
 		Map<String, String> contextMap = new ConcurrentHashMap<>();
 
-		for (String dependencyPackageName : _module.getDependencyPackageNames()) {
+		for (String dependencyPackageName : _jsModule.getDependencyPackageNames()) {
 
 			if (dependencyPackageName == null) {
 				continue;
@@ -90,12 +87,10 @@ public class JSModuleDescriptor implements ModuleDescriptor {
 
 	@Override
 	public String getPath() {
-		String pathModule = _portal.getPathModule();
-		String resolvedPath = "/js/resolved-module/";
-		return pathModule + resolvedPath + _module.getResolvedId();
+		return _jsModule.getResolvedURL();
 	}
 
-	private final JSModule _module;
+	private final JSModule _jsModule;
 	private final NPMRegistry _npmRegistry;
-	private final Portal _portal;
+
 }

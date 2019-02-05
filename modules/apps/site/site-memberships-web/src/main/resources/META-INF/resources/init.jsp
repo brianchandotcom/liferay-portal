@@ -74,6 +74,7 @@ page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %><%@
 page import="com.liferay.site.memberships.web.internal.constants.SiteMembershipWebKeys" %><%@
 page import="com.liferay.site.memberships.web.internal.display.context.OrganizationsDisplayContext" %><%@
 page import="com.liferay.site.memberships.web.internal.display.context.SelectOrganizationsDisplayContext" %><%@
+page import="com.liferay.site.memberships.web.internal.display.context.SelectOrganizationsManagementToolbarDisplayContext" %><%@
 page import="com.liferay.site.memberships.web.internal.display.context.SelectSiteRolesDisplayContext" %><%@
 page import="com.liferay.site.memberships.web.internal.display.context.SelectUserGroupsDisplayContext" %><%@
 page import="com.liferay.site.memberships.web.internal.display.context.SelectUserGroupsManagementToolbarDisplayContext" %><%@

@@ -180,29 +180,11 @@ public class SegmentsEntryLocalServiceImpl
 
 	@Override
 	public List<SegmentsEntry> getSegmentsEntries(
-		long groupId, boolean active, String type, int start, int end,
-		OrderByComparator<SegmentsEntry> orderByComparator) {
-
-		return segmentsEntryPersistence.findByG_A_T(
-			groupId, active, type, start, end, orderByComparator);
-	}
-
-	@Override
-	public List<SegmentsEntry> getSegmentsEntries(
 		long groupId, int start, int end,
 		OrderByComparator<SegmentsEntry> orderByComparator) {
 
 		return segmentsEntryPersistence.findByGroupId(
 			groupId, start, end, orderByComparator);
-	}
-
-	@Override
-	public List<SegmentsEntry> getSegmentsEntries(
-		String type, int start, int end,
-		OrderByComparator<SegmentsEntry> orderByComparator) {
-
-		return segmentsEntryPersistence.findByType(
-			type, start, end, orderByComparator);
 	}
 
 	@Override
@@ -217,13 +199,6 @@ public class SegmentsEntryLocalServiceImpl
 	@Override
 	public int getSegmentsEntriesCount(long groupId) {
 		return segmentsEntryPersistence.countByGroupId(groupId);
-	}
-
-	@Override
-	public SegmentsEntry getSegmentsEntry(long groupId, String key)
-		throws PortalException {
-
-		return segmentsEntryPersistence.findByG_K(groupId, key);
 	}
 
 	@Override

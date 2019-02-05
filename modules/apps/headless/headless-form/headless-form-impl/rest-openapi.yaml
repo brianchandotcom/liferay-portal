@@ -285,7 +285,7 @@ info:
   version: 1.0.0
 openapi: 3.0.1
 paths:
-  "/content-space/{parent-id}/form":
+  "/content-space/{content-space-id}/form":
     get:
       parameters:
         - in: query
@@ -297,7 +297,7 @@ paths:
           schema:
             type: integer
         - in: path
-          name: parent-id
+          name: content-space-id
           required: true
           schema:
             format: int64
@@ -311,7 +311,7 @@ paths:
                   $ref: "#/components/schemas/Form"
                 type: array
           description: ""
-  "/content-space/{parent-id}/form-structures":
+  "/content-space/{content-space-id}/form-structures":
     get:
       parameters:
         - in: query
@@ -323,7 +323,7 @@ paths:
           schema:
             type: integer
         - in: path
-          name: parent-id
+          name: content-space-id
           required: true
           schema:
             format: int64
@@ -337,11 +337,11 @@ paths:
                   $ref: "#/components/schemas/FormStructure"
                 type: array
           description: ""
-  "/form-document/{id}":
+  "/form-document/{form-document-id}":
     delete:
       parameters:
         - in: path
-          name: id
+          name: form-document-id
           required: true
           schema:
             format: int64
@@ -354,7 +354,7 @@ paths:
     get:
       parameters:
         - in: path
-          name: id
+          name: form-document-id
           required: true
           schema:
             format: int64
@@ -366,11 +366,11 @@ paths:
               schema:
                 $ref: "#/components/schemas/FormDocument"
           description: ""
-  "/form-record/{id}":
+  "/form-record/{form-record-id}":
     get:
       parameters:
         - in: path
-          name: id
+          name: form-record-id
           required: true
           schema:
             format: int64
@@ -385,7 +385,7 @@ paths:
     put:
       parameters:
         - in: path
-          name: id
+          name: form-record-id
           required: true
           schema:
             format: int64
@@ -406,11 +406,11 @@ paths:
               schema:
                 $ref: "#/components/schemas/FormRecord"
           description: ""
-  "/form-structures/{id}":
+  "/form-structures/{form-structures-id}":
     get:
       parameters:
         - in: path
-          name: id
+          name: form-structures-id
           required: true
           schema:
             format: int64
@@ -422,11 +422,11 @@ paths:
               schema:
                 $ref: "#/components/schemas/FormStructure"
           description: ""
-  "/form/{id}":
+  "/form/{form-id}":
     get:
       parameters:
         - in: path
-          name: id
+          name: form-id
           required: true
           schema:
             format: int64
@@ -438,11 +438,11 @@ paths:
               schema:
                 $ref: "#/components/schemas/Form"
           description: ""
-  "/form/{id}/evaluate-context":
+  "/form/{form-id}/evaluate-context":
     post:
       parameters:
         - in: path
-          name: id
+          name: form-id
           required: true
           schema:
             format: int64
@@ -463,11 +463,11 @@ paths:
               schema:
                 $ref: "#/components/schemas/Form"
           description: ""
-  "/form/{id}/fetch-latest-draft":
+  "/form/{form-id}/fetch-latest-draft":
     get:
       parameters:
         - in: path
-          name: id
+          name: form-id
           required: true
           schema:
             format: int64
@@ -479,28 +479,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/Form"
           description: ""
-  "/form/{id}/upload-file":
-    post:
-      parameters:
-        - in: path
-          name: id
-          required: true
-          schema:
-            format: int64
-            type: integer
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/Form"
-      responses:
-        200:
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Form"
-          description: ""
-  "/form/{parent-id}/form-record":
+  "/form/{form-id}/form-record":
     get:
       parameters:
         - in: query
@@ -512,7 +491,7 @@ paths:
           schema:
             type: integer
         - in: path
-          name: parent-id
+          name: form-id
           required: true
           schema:
             format: int64
@@ -529,7 +508,7 @@ paths:
     post:
       parameters:
         - in: path
-          name: parent-id
+          name: form-id
           required: true
           schema:
             format: int64
@@ -550,11 +529,11 @@ paths:
               schema:
                 $ref: "#/components/schemas/FormRecord"
           description: ""
-  "/form/{parent-id}/form-record/batch-create":
+  "/form/{form-id}/form-record/batch-create":
     post:
       parameters:
         - in: path
-          name: parent-id
+          name: form-id
           required: true
           schema:
             format: int64
@@ -574,4 +553,25 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/FormRecord"
+          description: ""
+  "/form/{form-id}/upload-file":
+    post:
+      parameters:
+        - in: path
+          name: form-id
+          required: true
+          schema:
+            format: int64
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Form"
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Form"
           description: ""

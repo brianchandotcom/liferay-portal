@@ -205,11 +205,11 @@ info:
   version: 1.0.0
 openapi: 3.0.1
 paths:
-  "/aggregate-rating/{id}":
+  "/aggregate-rating/{aggregate-rating-id}":
     get:
       parameters:
         - in: path
-          name: id
+          name: aggregate-rating-id
           required: true
           schema:
             format: int64
@@ -221,11 +221,11 @@ paths:
               schema:
                 $ref: "#/components/schemas/AggregateRating"
           description: ""
-  "/comment/{id}":
+  "/comment/{comment-id}":
     get:
       parameters:
         - in: path
-          name: id
+          name: comment-id
           required: true
           schema:
             format: int64
@@ -237,7 +237,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/Comment"
           description: ""
-  "/comment/{parent-id}/comment":
+  "/comment/{comment-id}/comment":
     get:
       parameters:
         - in: query
@@ -249,7 +249,7 @@ paths:
           schema:
             type: integer
         - in: path
-          name: parent-id
+          name: comment-id
           required: true
           schema:
             format: int64
@@ -263,11 +263,11 @@ paths:
                   $ref: "#/components/schemas/Comment"
                 type: array
           description: ""
-  "/content-document/{id}":
+  "/content-document/{content-document-id}":
     delete:
       parameters:
         - in: path
-          name: id
+          name: content-document-id
           required: true
           schema:
             format: int64
@@ -280,7 +280,7 @@ paths:
     get:
       parameters:
         - in: path
-          name: id
+          name: content-document-id
           required: true
           schema:
             format: int64
@@ -292,7 +292,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/ContentDocument"
           description: ""
-  "/content-space/{parent-id}/content-structures":
+  "/content-space/{content-space-id}/content-structures":
     get:
       parameters:
         - in: query
@@ -304,7 +304,7 @@ paths:
           schema:
             type: integer
         - in: path
-          name: parent-id
+          name: content-space-id
           required: true
           schema:
             format: int64
@@ -318,7 +318,7 @@ paths:
                   $ref: "#/components/schemas/ContentStructure"
                 type: array
           description: ""
-  "/content-space/{parent-id}/structured-contents":
+  "/content-space/{content-space-id}/structured-contents":
     get:
       parameters:
         - in: query
@@ -330,7 +330,7 @@ paths:
           schema:
             type: integer
         - in: path
-          name: parent-id
+          name: content-space-id
           required: true
           schema:
             format: int64
@@ -359,7 +359,7 @@ paths:
     post:
       parameters:
         - in: path
-          name: parent-id
+          name: content-space-id
           required: true
           schema:
             format: int64
@@ -380,11 +380,11 @@ paths:
               schema:
                 $ref: "#/components/schemas/StructuredContent"
           description: ""
-  "/content-space/{parent-id}/structured-contents/batch-create":
+  "/content-space/{content-space-id}/structured-contents/batch-create":
     post:
       parameters:
         - in: path
-          name: parent-id
+          name: content-space-id
           required: true
           schema:
             format: int64
@@ -405,11 +405,11 @@ paths:
               schema:
                 $ref: "#/components/schemas/StructuredContent"
           description: ""
-  "/content-structures/{id}":
+  "/content-structures/{content-structures-id}":
     get:
       parameters:
         - in: path
-          name: id
+          name: content-structures-id
           required: true
           schema:
             format: int64
@@ -421,37 +421,11 @@ paths:
               schema:
                 $ref: "#/components/schemas/ContentStructure"
           description: ""
-  "/content-document/{parent-id}/comment":
-    get:
-      parameters:
-        - in: query
-          name: page
-          schema:
-            type: integer
-        - in: query
-          name: per_page
-          schema:
-            type: integer
-        - in: path
-          name: parent-id
-          required: true
-          schema:
-            format: int64
-            type: integer
-      responses:
-        200:
-          content:
-            application/json:
-              schema:
-                items:
-                  $ref: "#/components/schemas/Comment"
-                type: array
-          description: ""
-  "/structured-contents/{id}":
+  "/structured-contents/{structured-contents-id}":
     delete:
       parameters:
         - in: path
-          name: id
+          name: structured-contents-id
           required: true
           schema:
             format: int64
@@ -464,7 +438,7 @@ paths:
     get:
       parameters:
         - in: path
-          name: id
+          name: structured-contents-id
           required: true
           schema:
             format: int64
@@ -483,7 +457,7 @@ paths:
     put:
       parameters:
         - in: path
-          name: id
+          name: structured-contents-id
           required: true
           schema:
             format: int64
@@ -504,7 +478,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/StructuredContent"
           description: ""
-  "/structured-contents/{parent-id}/comment":
+  "/structured-contents/{structured-contents-id}/comment":
     get:
       parameters:
         - in: query
@@ -516,7 +490,7 @@ paths:
           schema:
             type: integer
         - in: path
-          name: parent-id
+          name: structured-contents-id
           required: true
           schema:
             format: int64

@@ -111,11 +111,11 @@ info:
   version: 1.0.0
 openapi: 3.0.1
 paths:
-  "/document/{id}":
+  "/document/{document-id}":
     delete:
       parameters:
         - in: path
-          name: id
+          name: document-id
           required: true
           schema:
             format: int64
@@ -128,7 +128,7 @@ paths:
     get:
       parameters:
         - in: path
-          name: id
+          name: document-id
           required: true
           schema:
             format: int64
@@ -140,7 +140,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/Document"
           description: ""
-  "/document/{parent-id}/comment":
+  "/document/{document-id}/comment":
     get:
       parameters:
         - in: query
@@ -152,7 +152,7 @@ paths:
           schema:
             type: integer
         - in: path
-          name: parent-id
+          name: document-id
           required: true
           schema:
             format: int64
@@ -182,7 +182,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/Folder"
           description: ""
-  "/documents-repository/{parent-id}/document":
+  "/documents-repository/{documents-repository-id}/document":
     get:
       parameters:
         - in: query
@@ -194,7 +194,7 @@ paths:
           schema:
             type: integer
         - in: path
-          name: parent-id
+          name: documents-repository-id
           required: true
           schema:
             format: int64
@@ -211,7 +211,7 @@ paths:
     post:
       parameters:
         - in: path
-          name: parent-id
+          name: documents-repository-id
           required: true
           schema:
             format: int64
@@ -228,11 +228,11 @@ paths:
               schema:
                 $ref: "#/components/schemas/Document"
           description: ""
-  "/documents-repository/{parent-id}/document/batch-create":
+  "/documents-repository/{documents-repository-id}/document/batch-create":
     post:
       parameters:
         - in: path
-          name: parent-id
+          name: documents-repository-id
           required: true
           schema:
             format: int64
@@ -249,7 +249,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/Document"
           description: ""
-  "/documents-repository/{parent-id}/folder":
+  "/documents-repository/{documents-repository-id}/folder":
     get:
       parameters:
         - in: query
@@ -261,7 +261,7 @@ paths:
           schema:
             type: integer
         - in: path
-          name: parent-id
+          name: documents-repository-id
           required: true
           schema:
             format: int64
@@ -278,7 +278,7 @@ paths:
     post:
       parameters:
         - in: path
-          name: parent-id
+          name: documents-repository-id
           required: true
           schema:
             format: int64
@@ -295,11 +295,11 @@ paths:
               schema:
                 $ref: "#/components/schemas/Folder"
           description: ""
-  "/documents-repository/{parent-id}/folder/batch-create":
+  "/documents-repository/{documents-repository-id}/folder/batch-create":
     post:
       parameters:
         - in: path
-          name: parent-id
+          name: documents-repository-id
           required: true
           schema:
             format: int64
@@ -316,11 +316,11 @@ paths:
               schema:
                 $ref: "#/components/schemas/Folder"
           description: ""
-  "/folder/{id}":
+  "/folder/{folder-id}":
     delete:
       parameters:
         - in: path
-          name: id
+          name: folder-id
           required: true
           schema:
             format: int64
@@ -333,7 +333,7 @@ paths:
     get:
       parameters:
         - in: path
-          name: id
+          name: folder-id
           required: true
           schema:
             format: int64
@@ -348,7 +348,7 @@ paths:
     put:
       parameters:
         - in: path
-          name: id
+          name: folder-id
           required: true
           schema:
             format: int64
@@ -365,7 +365,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/Folder"
           description: ""
-  "/folder/{parent-id}/document":
+  "/folder/{folder-id}/document":
     get:
       parameters:
         - in: query
@@ -377,7 +377,7 @@ paths:
           schema:
             type: integer
         - in: path
-          name: parent-id
+          name: folder-id
           required: true
           schema:
             format: int64
@@ -394,7 +394,7 @@ paths:
     post:
       parameters:
         - in: path
-          name: parent-id
+          name: folder-id
           required: true
           schema:
             format: int64
@@ -411,11 +411,11 @@ paths:
               schema:
                 $ref: "#/components/schemas/Document"
           description: ""
-  "/folder/{parent-id}/document/batch-create":
+  "/folder/{folder-id}/document/batch-create":
     post:
       parameters:
         - in: path
-          name: parent-id
+          name: folder-id
           required: true
           schema:
             format: int64
@@ -432,7 +432,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/Document"
           description: ""
-  "/folder/{parent-id}/folder":
+  "/folder/{folder-id}/folder":
     get:
       parameters:
         - in: query
@@ -444,7 +444,7 @@ paths:
           schema:
             type: integer
         - in: path
-          name: parent-id
+          name: folder-id
           required: true
           schema:
             format: int64
@@ -461,7 +461,7 @@ paths:
     post:
       parameters:
         - in: path
-          name: parent-id
+          name: folder-id
           required: true
           schema:
             format: int64
@@ -478,11 +478,11 @@ paths:
               schema:
                 $ref: "#/components/schemas/Folder"
           description: ""
-  "/folder/{parent-id}/folder/batch-create":
+  "/folder/{folder-id}/folder/batch-create":
     post:
       parameters:
         - in: path
-          name: parent-id
+          name: folder-id
           required: true
           schema:
             format: int64

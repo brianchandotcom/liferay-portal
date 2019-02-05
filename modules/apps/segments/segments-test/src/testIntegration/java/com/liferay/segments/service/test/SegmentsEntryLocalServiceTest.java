@@ -101,6 +101,19 @@ public class SegmentsEntryLocalServiceTest {
 		SegmentsTestUtil.addSegmentsEntry(_group.getGroupId(), key);
 	}
 
+	@Test(expected = SegmentsEntryKeyException.class)
+	public void testAddSegmentsEntryWithExistingKeyInAncestorGroup()
+		throws Exception {
+
+		String key = RandomTestUtil.randomString();
+
+		SegmentsTestUtil.addSegmentsEntry(_group.getGroupId(), key);
+
+		Group childGroup = GroupTestUtil.addGroup(_group.getGroupId());
+
+		SegmentsTestUtil.addSegmentsEntry(childGroup.getGroupId(), key);
+	}
+
 	@Test
 	public void testDeleteSegmentsEntry() throws PortalException {
 		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(

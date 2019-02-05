@@ -179,6 +179,28 @@ renderResponse.setTitle(headerTitle);
 											url="<%= workflowTaskDisplayContext.getTaglibViewDiffsURL(workflowTask) %>"
 										/>
 									</c:if>
+
+									<%
+									AssetRenderer lastApprovedAssetRenderer = assetRendererFactory.getAssetRenderer(assetRenderer.getClassPK(), AssetRendererFactory.TYPE_LATEST_APPROVED);
+
+									AssetEntry lastApprovedAssetEntry = assetRendererFactory.getAssetEntry(workflowHandler.getClassName(), lastApprovedAssetRenderer.getClassPK());
+									%>
+
+									<c:if test="<%= lastApprovedAssetEntry != null %>">
+
+										<%
+										PortletURL viewUsagesURL = PortletProviderUtil.getPortletURL(request, AssetEntryUsage.class.getName(), PortletProvider.Action.VIEW);
+
+										viewUsagesURL.setParameter("assetEntryId", String.valueOf(lastApprovedAssetEntry.getEntryId()));
+										viewUsagesURL.setParameter("redirect", currentURL);
+										%>
+
+										<liferay-frontend:management-bar-button
+											href="<%= viewUsagesURL.toString() %>"
+											icon="list"
+											label="view-usages"
+										/>
+									</c:if>
 								</c:if>
 
 								<c:if test="<%= workflowTaskDisplayContext.hasEditPortletURL(workflowTask) %>">

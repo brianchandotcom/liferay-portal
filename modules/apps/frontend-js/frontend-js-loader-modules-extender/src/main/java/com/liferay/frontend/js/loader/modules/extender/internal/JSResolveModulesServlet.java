@@ -46,17 +46,7 @@ public class JSResolveModulesServlet extends HttpServlet {
 
 		JSModulesResolution context = _jsModulesResolver.resolve(reqModules);
 
-		StringWriter stringWriter = new StringWriter();
-
-		PrintWriter printWriter = new PrintWriter(stringWriter);
-
-		printWriter.write(_jsonFactory.looseSerializeDeep(context));
-
-		printWriter.close();
-
-		String content = stringWriter.toString();
-
-		_writeResponse(resp, content);
+		_writeResponse(resp, _jsonFactory.looseSerializeDeep(context));
 	}
 
 	private List<String> _getRequestModules(HttpServletRequest req)

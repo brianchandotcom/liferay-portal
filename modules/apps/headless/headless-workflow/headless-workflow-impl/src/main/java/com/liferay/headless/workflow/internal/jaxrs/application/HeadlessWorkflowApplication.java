@@ -28,7 +28,6 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"oauth2.scope.checker.type=annotations",
 		"osgi.jaxrs.application.base=/headless-workflow",
-		"osgi.jaxrs.extension.select=(osgi.jaxrs.name=Liferay.OAuth2)",
 		"osgi.jaxrs.extension.select=(osgi.jaxrs.name=Liferay.Vulcan.JSONMessageBodyReader)",
 		"osgi.jaxrs.extension.select=(osgi.jaxrs.name=Liferay.Vulcan.JSONMessageBodyWriter)",
 		"osgi.jaxrs.extension.select=(osgi.jaxrs.name=Liferay.Vulcan.PaginationContextProvider)",

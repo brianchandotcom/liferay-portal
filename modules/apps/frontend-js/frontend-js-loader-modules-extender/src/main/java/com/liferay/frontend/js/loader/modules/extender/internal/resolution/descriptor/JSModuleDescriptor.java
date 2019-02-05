@@ -1,3 +1,17 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
 package com.liferay.frontend.js.loader.modules.extender.internal.resolution.descriptor;
 
 import com.liferay.frontend.js.loader.modules.extender.internal.resolution.ModuleDescriptor;
@@ -5,7 +19,7 @@ import com.liferay.frontend.js.loader.modules.extender.npm.JSModule;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSPackage;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSPackageDependency;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMRegistry;
-import com.liferay.portal.kernel.util.Portal;
+import com.liferay.petra.string.StringBundler;
 
 import java.util.Collection;
 import java.util.Map;
@@ -22,11 +36,6 @@ public class JSModuleDescriptor implements ModuleDescriptor {
 	}
 
 	@Override
-	public String getName() {
-		return _jsModule.getResolvedId();
-	}
-
-	@Override
 	public Collection<String> getDependencies() {
 		return _jsModule.getDependencies();
 	}
@@ -37,7 +46,8 @@ public class JSModuleDescriptor implements ModuleDescriptor {
 
 		Map<String, String> contextMap = new ConcurrentHashMap<>();
 
-		for (String dependencyPackageName : _jsModule.getDependencyPackageNames()) {
+		for (String dependencyPackageName :
+				_jsModule.getDependencyPackageNames()) {
 
 			if (dependencyPackageName == null) {
 				continue;
@@ -52,11 +62,10 @@ public class JSModuleDescriptor implements ModuleDescriptor {
 					jsPackage.getJSPackageDependency(dependencyPackageName);
 
 				if (dependency == null) {
-					String errorMessage =
-						":ERROR:Missing version constraints for " +
-						dependencyPackageName +
-						" in package.json of " +
-						jsPackage.getResolvedId();
+					String errorMessage = StringBundler.concat(
+						":ERROR:Missing version constraints for ",
+						dependencyPackageName, " in package.json of ",
+						jsPackage.getResolvedId());
 
 					contextMap.put(dependencyPackageName, errorMessage);
 				}
@@ -65,11 +74,11 @@ public class JSModuleDescriptor implements ModuleDescriptor {
 						_npmRegistry.resolveJSPackageDependency(dependency);
 
 					if (packageDependency == null) {
-						String errorMessage = ":ERROR:Package " +
-											  dependencyPackageName +
-											  " which is a dependency of " +
-											  jsPackage.getResolvedId() +
-											  " is not deployed in the server";
+						String errorMessage = StringBundler.concat(
+							":ERROR:Package ", dependencyPackageName,
+							" which is a dependency of ",
+							jsPackage.getResolvedId(),
+							" is not deployed in the server");
 
 						contextMap.put(dependencyPackageName, errorMessage);
 					}
@@ -83,6 +92,11 @@ public class JSModuleDescriptor implements ModuleDescriptor {
 		}
 
 		return contextMap;
+	}
+
+	@Override
+	public String getName() {
+		return _jsModule.getResolvedId();
 	}
 
 	@Override

@@ -20,20 +20,15 @@ import com.liferay.frontend.js.loader.modules.extender.internal.Details;
 import com.liferay.frontend.js.loader.modules.extender.npm.ModuleNameUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
-
 import java.io.StringReader;
+
 import java.net.URL;
 
 import java.util.ArrayList;
-import java.util.Dictionary;
 import java.util.List;
 import java.util.Map;
 
@@ -87,20 +82,20 @@ public class JSConfigGeneratorPackage {
 		_setJSConfigGeneratorModules();
 	}
 
-	public String getContextPath() {
-		return _contextPath;
-	}
-
-	public String getName() {
-		return _name;
-	}
-
 	public String getConfiguration() {
 		return _configuration;
 	}
 
+	public String getContextPath() {
+		return _contextPath;
+	}
+
 	public List<JSConfigGeneratorModule> getJSConfigGeneratorModules() {
 		return _jsConfigGeneratorModules;
+	}
+
+	public String getName() {
+		return _name;
 	}
 
 	public String getVersion() {
@@ -108,7 +103,7 @@ public class JSConfigGeneratorPackage {
 	}
 
 	protected String generateConfiguration(
-			JSONObject jsonObject, BundleWiring bundleWiring,
+		JSONObject jsonObject, BundleWiring bundleWiring,
 		boolean versionedModuleName) {
 
 		if (!_applyVersioning) {
@@ -239,9 +234,6 @@ public class JSConfigGeneratorPackage {
 
 			_configuration = normalize(
 				generateConfiguration(jsonObject, bundleWiring, false));
-
-			Dictionary<String, String> headers = _bundle.getHeaders(
-				StringPool.BLANK);
 		}
 		catch (IOException ioe) {
 			throw new RuntimeException(ioe);
@@ -283,16 +275,13 @@ public class JSConfigGeneratorPackage {
 		}
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		JSConfigGeneratorPackage.class);
-
 	private final boolean _applyVersioning;
 	private final Bundle _bundle;
-	private final String _contextPath;
-	private final String _name;
 	private String _configuration = "";
+	private final String _contextPath;
 	private List<JSConfigGeneratorModule> _jsConfigGeneratorModules =
 		new ArrayList<>();
+	private final String _name;
 	private final String _version;
 
 }

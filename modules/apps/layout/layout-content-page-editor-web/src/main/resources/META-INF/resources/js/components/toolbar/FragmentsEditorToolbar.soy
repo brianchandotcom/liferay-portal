@@ -6,6 +6,7 @@
 {template .render}
 	{@param? _handleToggleContextualSidebarButtonClick: any}
 	{@param? classPK: ?}
+	{@param defaultSegmentId: string }
 	{@param? fragmentsEditorSidebarVisible: bool}
 	{@param? lastSaveDate: string}
 	{@param? portletNamespace: string}
@@ -90,6 +91,7 @@
 				<li class="nav-item">
 					{call com.liferay.layout.content.page.editor.web.SegmentSelector.render}
 						{param store: $store /}
+						{param defaultSegmentId: $defaultSegmentId /}
 					{/call}
 				</li>
 			</ul>

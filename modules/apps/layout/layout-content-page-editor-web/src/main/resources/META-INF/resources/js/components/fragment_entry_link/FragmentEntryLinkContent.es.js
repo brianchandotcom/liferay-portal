@@ -554,7 +554,7 @@ FragmentEntryLinkContent.STATE = {
 	 * @review
 	 * @type {!string}
 	 */
-	segmentId: Config.string().required(),
+	segmentId: Config.string(),
 
 	/**
 	 * Selected mapping type label

@@ -10,6 +10,7 @@
 		segmentLabel: string
 	]>}
 	{@param? portletNamespace: string}
+	{@param defaultSegmentId: string}
 	{@param? segmentId: string}
 
 	{if $availableSegments and length($availableSegments) > 0}
@@ -24,7 +25,9 @@
 				id="{$portletNamespace}SegmentSelector"
 			>
 				{foreach $segment in $availableSegments}
-					{if $segment.segmentId == $segmentId}
+					{if $segment.segmentId == $segmentId
+						or ($segment.segmentId == $defaultSegmentId and $defaultSegmentId != $segmentId)
+					}
 						<option value="{$segment.segmentId}" selected>{$segment.segmentLabel}</option>
 					{else}
 						<option value="{$segment.segmentId}">{$segment.segmentLabel}</option>

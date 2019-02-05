@@ -22,7 +22,7 @@ package com.liferay.portal.vulcan.context;
  * @see    com.liferay.portal.vulcan.dto.Page
  * @review
  */
-public interface Pagination {
+public class Pagination {
 
 	/**
 	 * Creates a new {@code Pagination} instance.
@@ -33,29 +33,7 @@ public interface Pagination {
 	 * @review
 	 */
 	public static Pagination of(int itemsPerPage, int pageNumber) {
-		return new Pagination() {
-
-			@Override
-			public int getEndPosition() {
-				return pageNumber * itemsPerPage;
-			}
-
-			@Override
-			public int getItemsPerPage() {
-				return itemsPerPage;
-			}
-
-			@Override
-			public int getPageNumber() {
-				return pageNumber;
-			}
-
-			@Override
-			public int getStartPosition() {
-				return (pageNumber - 1) * itemsPerPage;
-			}
-
-		};
+		return new Pagination(pageNumber, itemsPerPage);
 	}
 
 	/**
@@ -63,27 +41,43 @@ public interface Pagination {
 	 *
 	 * @review
 	 */
-	public int getEndPosition();
+	public int getEndPosition() {
+		return _pageNumber * _itemsPerPage;
+	}
 
 	/**
 	 * The selected number of items per page.
 	 *
 	 * @review
 	 */
-	public int getItemsPerPage();
+	public int getItemsPerPage() {
+		return _itemsPerPage;
+	}
 
 	/**
 	 * The requested page's number.
 	 *
 	 * @review
 	 */
-	public int getPageNumber();
+	public int getPageNumber() {
+		return _pageNumber;
+	}
 
 	/**
 	 * The position of the requested page's first element.
 	 *
 	 * @review
 	 */
-	public int getStartPosition();
+	public int getStartPosition() {
+		return (_pageNumber - 1) * _itemsPerPage;
+	}
+
+	private Pagination(int pageNumber, int itemsPerPage) {
+		_pageNumber = pageNumber;
+		_itemsPerPage = itemsPerPage;
+	}
+
+	private final int _itemsPerPage;
+	private final int _pageNumber;
 
 }

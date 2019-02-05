@@ -15,12 +15,15 @@
 package com.liferay.oauth2.provider.client.test;
 
 import com.liferay.oauth2.provider.test.internal.TestAnnotatedApplication;
+import com.liferay.oauth2.provider.test.internal.TestAnnotatedApplicationInterface;
 import com.liferay.oauth2.provider.test.internal.activator.BaseTestPreparatorBundleActivator;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.PortalUtil;
 
+import java.util.Arrays;
 import java.util.Dictionary;
 
 import javax.ws.rs.client.Invocation;
@@ -51,24 +54,11 @@ public class AnnotatedApplicationClientTest extends BaseClientTestCase {
 
 	@Test
 	public void test() throws Exception {
-		WebTarget webTarget = getWebTarget("/annotated");
+		testNoScopeAnnotation("/annotated-impl/no-scope");
+		testRequiresScopeAnnotation("/annotated-impl");
 
-		Invocation.Builder invocationBuilder = authorize(
-			webTarget.request(),
-			getToken(
-				"oauthTestApplicationAfter", null,
-				getResourceOwnerPasswordBiFunction("test@liferay.com", "test"),
-				this::parseTokenString));
-
-		Assert.assertEquals(
-			"everything.read", invocationBuilder.get(String.class));
-
-		invocationBuilder = authorize(
-			webTarget.request(), getToken("oauthTestApplicationBefore"));
-
-		Response response = invocationBuilder.get();
-
-		Assert.assertEquals(403, response.getStatus());
+		testNoScopeAnnotation("/annotated-interface/no-scope");
+		testRequiresScopeAnnotation("/annotated-interface");
 	}
 
 	public static class AnnotatedApplicationTestPreparatorBundleActivator
@@ -84,16 +74,73 @@ public class AnnotatedApplicationClientTest extends BaseClientTestCase {
 
 			properties.put("oauth2.scope.checker.type", "annotations");
 
-			createOAuth2Application(
-				defaultCompanyId, user, "oauthTestApplicationBefore");
+			registerJaxRsApplication(
+				new TestAnnotatedApplicationInterface(), "annotated-interface",
+				properties);
 
 			registerJaxRsApplication(
-				new TestAnnotatedApplication(), "annotated", properties);
+				new TestAnnotatedApplication(), "annotated-impl", properties);
 
 			createOAuth2Application(
-				defaultCompanyId, user, "oauthTestApplicationAfter");
+				defaultCompanyId, user, "oauthTestApplication",
+				Arrays.asList(
+					"everything", "everything.read", "everything.write"));
 		}
 
+	}
+
+	protected void testNoScopeAnnotation(String path) {
+		WebTarget webTarget = getWebTarget(path);
+
+		Invocation.Builder invocationBuilder = webTarget.request();
+
+		Response response = invocationBuilder.get();
+
+		Assert.assertEquals(403, response.getStatus());
+
+		invocationBuilder = authorize(
+			invocationBuilder,
+			getToken(
+				"oauthTestApplication", null,
+				getClientCredentialsResponseBiFunction(StringPool.BLANK),
+				this::parseTokenString));
+
+		response = invocationBuilder.get();
+
+		Assert.assertEquals("no-scope", invocationBuilder.get(String.class));
+	}
+
+	protected void testRequiresScopeAnnotation(String path) {
+		WebTarget webTarget = getWebTarget(path);
+
+		Invocation.Builder invocationBuilder = webTarget.request();
+
+		Response response = invocationBuilder.get();
+
+		Assert.assertEquals(403, response.getStatus());
+
+		invocationBuilder = authorize(
+			webTarget.request(),
+			getToken(
+				"oauthTestApplication", null,
+				getClientCredentialsResponseBiFunction("everything.write"),
+				this::parseTokenString));
+
+		response = invocationBuilder.get();
+
+		Assert.assertEquals(403, response.getStatus());
+
+		invocationBuilder = authorize(
+			webTarget.request(),
+			getToken(
+				"oauthTestApplication", null,
+				getClientCredentialsResponseBiFunction("everything.read"),
+				this::parseTokenString));
+
+		response = invocationBuilder.get();
+
+		Assert.assertEquals(
+			"everything.read", invocationBuilder.get(String.class));
 	}
 
 }

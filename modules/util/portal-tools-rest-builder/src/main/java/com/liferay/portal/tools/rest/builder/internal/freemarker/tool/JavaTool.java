@@ -243,6 +243,10 @@ public class JavaTool {
 	public boolean hasJavaParameterAcceptLanguage(OpenAPIYAML openAPIYAML) {
 		Map<String, PathItem> pathItems = openAPIYAML.getPathItems();
 
+		if (pathItems == null) {
+			return false;
+		}
+
 		for (PathItem pathItem : pathItems.values()) {
 			for (Operation operation : getOperations(pathItem)) {
 				if (_hasJavaParameterAcceptLanguage(operation)) {
@@ -256,6 +260,10 @@ public class JavaTool {
 
 	public boolean hasJavaParameterPagination(OpenAPIYAML openAPIYAML) {
 		Map<String, PathItem> pathItems = openAPIYAML.getPathItems();
+
+		if (pathItems == null) {
+			return false;
+		}
 
 		for (PathItem pathItem : pathItems.values()) {
 			for (Operation operation : getOperations(pathItem)) {

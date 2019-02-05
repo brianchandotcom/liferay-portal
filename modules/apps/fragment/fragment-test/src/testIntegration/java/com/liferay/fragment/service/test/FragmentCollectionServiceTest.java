@@ -151,7 +151,7 @@ public class FragmentCollectionServiceTest {
 
 		int originalFragmentCollectionsCount =
 			FragmentCollectionServiceUtil.getFragmentCollectionsCount(
-				_group.getGroupId(), "some");
+				_group.getGroupId(), "Some");
 
 		FragmentCollectionServiceUtil.addFragmentCollection(
 			_group.getGroupId(), "Other string", StringPool.BLANK,
@@ -167,7 +167,7 @@ public class FragmentCollectionServiceTest {
 
 		int actualFragmentCollectionsCount =
 			FragmentCollectionServiceUtil.getFragmentCollectionsCount(
-				_group.getGroupId(), "some");
+				_group.getGroupId(), "Some");
 
 		Assert.assertEquals(
 			originalFragmentCollectionsCount + 2,

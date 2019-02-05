@@ -318,10 +318,10 @@ public class LayoutPageTemplateCollectionServiceTest {
 		int originalLayoutPageTemplateCollectionsCount =
 			LayoutPageTemplateCollectionServiceUtil.
 				getLayoutPageTemplateCollectionsCount(
-					_group.getGroupId(), "theme");
+					_group.getGroupId(), "Theme");
 
 		LayoutPageTemplateCollectionServiceUtil.addLayoutPageTemplateCollection(
-			_group.getGroupId(), "Fjord theme collection", null,
+			_group.getGroupId(), "Fjord Theme collection", null,
 			serviceContext);
 
 		LayoutPageTemplateCollectionServiceUtil.addLayoutPageTemplateCollection(
@@ -331,7 +331,7 @@ public class LayoutPageTemplateCollectionServiceTest {
 		int actualLayoutPageTemplateCollectionsCount =
 			LayoutPageTemplateCollectionServiceUtil.
 				getLayoutPageTemplateCollectionsCount(
-					_group.getGroupId(), "theme");
+					_group.getGroupId(), "Theme");
 
 		Assert.assertEquals(
 			originalLayoutPageTemplateCollectionsCount + 2,
@@ -351,7 +351,7 @@ public class LayoutPageTemplateCollectionServiceTest {
 		try {
 			LayoutPageTemplateCollectionServiceUtil.
 				addLayoutPageTemplateCollection(
-					group.getGroupId(), "AA FjordCollection", null,
+					group.getGroupId(), "AA Fjord Collection", null,
 					serviceContext);
 
 			LayoutPageTemplateCollection layoutPageTemplateCollection =
@@ -371,7 +371,7 @@ public class LayoutPageTemplateCollectionServiceTest {
 			List<LayoutPageTemplateCollection> layoutPageTemplateCollections =
 				LayoutPageTemplateCollectionServiceUtil.
 					getLayoutPageTemplateCollections(
-						group.getGroupId(), "theme", QueryUtil.ALL_POS,
+						group.getGroupId(), "Theme", QueryUtil.ALL_POS,
 						QueryUtil.ALL_POS, orderByComparator);
 
 			LayoutPageTemplateCollection firstLayoutPageTemplateCollection =

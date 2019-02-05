@@ -64,44 +64,9 @@
 		%>
 
 		<liferay-ui:search-container-column-text>
-
-			<%
-			String entryImageURL = entry.getCoverImageURL(themeDisplay);
-
-			if (Validator.isNull(entryImageURL)) {
-				entryImageURL = entry.getSmallImageURL(themeDisplay);
-			}
-			%>
-
-			<c:choose>
-				<c:when test="<%= Validator.isNotNull(entryImageURL) %>">
-					<liferay-frontend:vertical-card
-						actionJsp="/blogs_admin/entry_action.jsp"
-						actionJspServletContext="<%= application %>"
-						cssClass="entry-display-style"
-						imageUrl="<%= entryImageURL %>"
-						resultRow="<%= row %>"
-						rowChecker="<%= searchContainer.getRowChecker() %>"
-						title="<%= BlogsEntryUtil.getDisplayTitle(resourceBundle, entry) %>"
-						url="<%= BlogsEntryPermission.contains(permissionChecker, entry, ActionKeys.UPDATE) ? rowURL.toString() : null %>"
-					>
-						<%@ include file="/blogs_admin/entry_vertical_card.jspf" %>
-					</liferay-frontend:vertical-card>
-				</c:when>
-				<c:otherwise>
-					<liferay-frontend:icon-vertical-card
-						actionJsp="/blogs_admin/entry_action.jsp"
-						actionJspServletContext="<%= application %>"
-						icon="blogs"
-						resultRow="<%= row %>"
-						rowChecker="<%= searchContainer.getRowChecker() %>"
-						title="<%= BlogsEntryUtil.getDisplayTitle(resourceBundle, entry) %>"
-						url="<%= BlogsEntryPermission.contains(permissionChecker, entry, ActionKeys.UPDATE) ? rowURL.toString() : null %>"
-					>
-						<%@ include file="/blogs_admin/entry_vertical_card.jspf" %>
-					</liferay-frontend:icon-vertical-card>
-				</c:otherwise>
-			</c:choose>
+			<clay:vertical-card
+				verticalCard="<%= new BlogsEntryVerticalCard(entry, renderRequest, searchContainer.getRowChecker(), rowURL.toString(), permissionChecker, resourceBundle) %>"
+			/>
 		</liferay-ui:search-container-column-text>
 	</c:when>
 	<c:otherwise>

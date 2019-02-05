@@ -72,6 +72,7 @@ page import="com.liferay.blogs.web.internal.display.context.BlogImagesManagement
 page import="com.liferay.blogs.web.internal.display.context.BlogsPortletInstanceSettingsHelper" %><%@
 page import="com.liferay.blogs.web.internal.security.permission.resource.BlogsEntryPermission" %><%@
 page import="com.liferay.blogs.web.internal.security.permission.resource.BlogsPermission" %><%@
+page import="com.liferay.blogs.web.internal.servlet.taglib.clay.BlogsEntryVerticalCard" %><%@
 page import="com.liferay.blogs.web.internal.social.SocialBookmarksUtil" %><%@
 page import="com.liferay.blogs.web.internal.util.BlogsEntryUtil" %><%@
 page import="com.liferay.blogs.web.internal.util.BlogsUtil" %><%@

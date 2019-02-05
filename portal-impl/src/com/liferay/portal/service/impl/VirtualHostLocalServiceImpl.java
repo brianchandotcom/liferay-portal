@@ -108,7 +108,7 @@ public class VirtualHostLocalServiceImpl
 
 			if (group != null) {
 				layoutSet = layoutSetPersistence.fetchByG_P(
-					group.getGroupId(), false);
+					group.getGroupId(), false, true);
 			}
 		}
 

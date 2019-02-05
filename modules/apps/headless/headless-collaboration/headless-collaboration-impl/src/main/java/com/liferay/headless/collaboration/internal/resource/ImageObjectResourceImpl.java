@@ -22,7 +22,8 @@ import org.osgi.service.component.annotations.Component;
  * @author Javier Gamarra
  */
 @Component(
-	properties = "OSGI-INF/image-object.properties", service = ImageObjectResource.class
+	properties = "OSGI-INF/image-object.properties",
+	service = ImageObjectResource.class
 )
 public class ImageObjectResourceImpl extends BaseImageObjectResourceImpl {
 }

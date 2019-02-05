@@ -22,7 +22,8 @@ import org.osgi.service.component.annotations.Component;
  * @author Javier Gamarra
  */
 @Component(
-	properties = "OSGI-INF/aggregate-rating.properties", service = AggregateRatingResource.class
+	properties = "OSGI-INF/aggregate-rating.properties",
+	service = AggregateRatingResource.class
 )
 public class AggregateRatingResourceImpl
 	extends BaseAggregateRatingResourceImpl {

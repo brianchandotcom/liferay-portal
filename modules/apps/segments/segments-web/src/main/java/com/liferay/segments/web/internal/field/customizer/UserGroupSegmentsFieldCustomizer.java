@@ -92,6 +92,14 @@ public class UserGroupSegmentsFieldCustomizer
 				return null;
 			}
 
+			Locale locale = _portal.getLocale(portletRequest);
+
+			String title = ResourceActionsUtil.getModelResource(
+				locale, UserGroup.class.getName());
+
+			String selectEntityTitle = LanguageUtil.format(
+				locale, "select-x", title);
+
 			portletURL.setParameter("eventName", "selectEntity");
 			portletURL.setWindowState(LiferayWindowState.POP_UP);
 

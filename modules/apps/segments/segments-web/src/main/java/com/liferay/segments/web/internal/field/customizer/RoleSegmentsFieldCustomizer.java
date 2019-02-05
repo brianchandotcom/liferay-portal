@@ -100,6 +100,14 @@ public class RoleSegmentsFieldCustomizer extends BaseSegmentsFieldCustomizer {
 				return null;
 			}
 
+			Locale locale = _portal.getLocale(portletRequest);
+
+			String title = ResourceActionsUtil.getModelResource(
+				locale, Role.class.getName());
+
+			String selectEntityTitle = LanguageUtil.format(
+				locale, "select-x", title);
+
 			portletURL.setParameter("eventName", "selectEntity");
 			portletURL.setWindowState(LiferayWindowState.POP_UP);
 

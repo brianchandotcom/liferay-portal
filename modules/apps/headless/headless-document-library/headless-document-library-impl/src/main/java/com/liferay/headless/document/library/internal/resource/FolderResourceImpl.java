@@ -21,8 +21,12 @@ import com.liferay.headless.document.library.dto.Folder;
 import com.liferay.headless.document.library.resource.FolderResource;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.vulcan.collector.PageCollectors;
 import com.liferay.portal.vulcan.context.Pagination;
 import com.liferay.portal.vulcan.dto.Page;
+
+import java.util.List;
+import java.util.stream.Stream;
 
 import javax.ws.rs.InternalServerErrorException;
 import javax.ws.rs.NotFoundException;
@@ -70,14 +74,22 @@ public class FolderResourceImpl extends BaseFolderResourceImpl {
 		Long groupId, Long parentFolderId, Pagination pagination) {
 
 		try {
-			return Page.of(
-				transform(
-					_dlAppService.getFolders(
-						groupId, parentFolderId, pagination.getStartPosition(),
-						pagination.getEndPosition(), null),
-					this::_toFolder),
-				pagination,
-				_dlAppService.getFoldersCount(groupId, parentFolderId));
+			List<com.liferay.portal.kernel.repository.model.Folder> folders =
+				_dlAppService.getFolders(
+					groupId, parentFolderId, pagination.getStartPosition(),
+					pagination.getEndPosition(), null);
+
+			int totalCount = _dlAppService.getFoldersCount(
+				groupId, parentFolderId);
+
+			Stream<com.liferay.portal.kernel.repository.model.Folder> stream =
+				folders.stream();
+
+			return stream.map(
+				this::_toFolder
+			).collect(
+				PageCollectors.toPage(pagination, totalCount)
+			);
 		}
 		catch (NoSuchGroupException nsge) {
 			throw new NotFoundException(nsge);

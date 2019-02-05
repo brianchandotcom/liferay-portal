@@ -39,9 +39,13 @@ import com.liferay.portal.kernel.service.CompanyService;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.vulcan.collector.PageCollectors;
 import com.liferay.portal.vulcan.context.AcceptLanguage;
 import com.liferay.portal.vulcan.context.Pagination;
 import com.liferay.portal.vulcan.dto.Page;
+
+import java.util.List;
+import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -64,11 +68,15 @@ public class StructuredContentResourceImpl
 
 		Hits hits = _getHits(pagination);
 
-		return Page.of(
-			transform(
-				_journalHelper.getArticles(hits), this::_toStructuredContent),
-			pagination,
-			hits.getLength());
+		List<JournalArticle> journalArticles = _journalHelper.getArticles(hits);
+
+		Stream<JournalArticle> stream = journalArticles.stream();
+
+		return stream.map(
+			this::_toStructuredContent
+		).collect(
+			PageCollectors.toPage(pagination, hits.getLength())
+		);
 	}
 
 	private SearchContext _createSearchContext(

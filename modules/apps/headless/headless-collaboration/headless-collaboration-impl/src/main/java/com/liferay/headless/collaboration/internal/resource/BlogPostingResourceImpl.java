@@ -19,8 +19,12 @@ import com.liferay.blogs.service.BlogsEntryService;
 import com.liferay.headless.collaboration.dto.BlogPosting;
 import com.liferay.headless.collaboration.resource.BlogPostingResource;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.vulcan.collector.PageCollectors;
 import com.liferay.portal.vulcan.context.Pagination;
 import com.liferay.portal.vulcan.dto.Page;
+
+import java.util.List;
+import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -38,15 +42,20 @@ public class BlogPostingResourceImpl extends BaseBlogPostingResourceImpl {
 	public Page<BlogPosting> getContentSpaceBlogPostingPage(
 		Long parentId, Pagination pagination) {
 
-		return Page.of(
-			transform(
-				_blogsEntryService.getGroupEntries(
-					parentId, WorkflowConstants.STATUS_APPROVED,
-					pagination.getStartPosition(), pagination.getEndPosition()),
-				this::_toBlogPosting),
-			pagination,
-			_blogsEntryService.getGroupEntriesCount(
-				parentId, WorkflowConstants.STATUS_APPROVED));
+		List<BlogsEntry> blogsEntries = _blogsEntryService.getGroupEntries(
+			parentId, WorkflowConstants.STATUS_APPROVED,
+			pagination.getStartPosition(), pagination.getEndPosition());
+
+		int totalCount = _blogsEntryService.getGroupEntriesCount(
+			parentId, WorkflowConstants.STATUS_APPROVED);
+
+		Stream<BlogsEntry> stream = blogsEntries.stream();
+
+		return stream.map(
+			this::_toBlogPosting
+		).collect(
+			PageCollectors.toPage(pagination, totalCount)
+		);
 	}
 
 	private BlogPosting _toBlogPosting(BlogsEntry blogsEntry) {

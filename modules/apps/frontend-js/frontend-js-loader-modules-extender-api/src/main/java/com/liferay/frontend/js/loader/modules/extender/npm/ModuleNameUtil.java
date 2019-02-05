@@ -270,9 +270,9 @@ public class ModuleNameUtil {
 	}
 
 	private static String _getBaseName(String dependency) {
-		int i = dependency.lastIndexOf(StringPool.SLASH);
+		int pos = dependency.lastIndexOf(StringPool.SLASH);
 
-		return dependency.substring(i + 1);
+		return dependency.substring(pos + 1);
 	}
 
 	private static List<String> _getDirNameParts(String modulePath) {

@@ -18,6 +18,7 @@ import com.liferay.frontend.js.loader.modules.extender.internal.resolution.JSMod
 import com.liferay.frontend.js.loader.modules.extender.internal.resolution.JSModulesResolver;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -31,7 +32,6 @@ import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.Servlet;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -55,30 +55,39 @@ import org.osgi.service.component.annotations.Reference;
 public class JSResolveModulesServlet extends HttpServlet {
 
 	@Override
-	protected void service(HttpServletRequest req, HttpServletResponse resp)
+	protected void service(
+			HttpServletRequest request, HttpServletResponse response)
 		throws IOException {
 
-		List<String> reqModules = _getRequestModules(req);
+		List<String> moduleNames = _getModuleNames(request);
 
-		JSModulesResolution context = _jsModulesResolver.resolve(reqModules);
+		JSModulesResolution context = _jsModulesResolver.resolve(moduleNames);
 
-		_writeResponse(resp, _jsonFactory.looseSerializeDeep(context));
+		response.setCharacterEncoding(StringPool.UTF8);
+		response.setContentType(ContentTypes.APPLICATION_JSON);
+
+		PrintWriter printWriter = new PrintWriter(
+			response.getOutputStream(), true);
+
+		printWriter.write(_jsonFactory.looseSerializeDeep(context));
+
+		printWriter.close();
 	}
 
-	private List<String> _getRequestModules(HttpServletRequest req)
+	private List<String> _getModuleNames(HttpServletRequest request)
 		throws IOException {
 
-		String method = req.getMethod();
+		String method = request.getMethod();
 
 		String[] modules;
 
 		if (method.equals("GET")) {
-			modules = ParamUtil.getStringValues(req, "modules");
+			modules = ParamUtil.getStringValues(request, "modules");
 		}
 		else {
-			String body = StringUtil.read(req.getInputStream());
+			String body = StringUtil.read(request.getInputStream());
 
-			body = URLDecoder.decode(body, req.getCharacterEncoding());
+			body = URLDecoder.decode(body, request.getCharacterEncoding());
 
 			body = body.substring(8);
 
@@ -90,20 +99,6 @@ public class JSResolveModulesServlet extends HttpServlet {
 		}
 
 		return Collections.emptyList();
-	}
-
-	private void _writeResponse(HttpServletResponse response, String content)
-		throws IOException {
-
-		response.setContentType(Details.CONTENT_TYPE);
-
-		ServletOutputStream servletOutputStream = response.getOutputStream();
-
-		PrintWriter printWriter = new PrintWriter(servletOutputStream, true);
-
-		printWriter.write(content);
-
-		printWriter.close();
 	}
 
 	@Reference

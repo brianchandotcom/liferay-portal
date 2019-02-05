@@ -40,7 +40,6 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.Servlet;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -69,9 +68,8 @@ public class JSResolutionInfoServlet extends HttpServlet {
 
 		response.setContentType(ContentTypes.APPLICATION_JSON);
 
-		ServletOutputStream servletOutputStream = response.getOutputStream();
-
-		PrintWriter printWriter = new PrintWriter(servletOutputStream, true);
+		PrintWriter printWriter = new PrintWriter(
+			response.getOutputStream(), true);
 
 		Object jsBundlesObject = _getJSBundlesObject();
 
@@ -129,16 +127,16 @@ public class JSResolutionInfoServlet extends HttpServlet {
 	private Object _getJSBundlesObject() {
 		Map<String, Object> jsBundlesMap = new HashMap<>();
 
-		Set<JSBundle> processedBundles = new HashSet<>();
+		Set<JSBundle> processedJSBundles = new HashSet<>();
 
 		for (JSPackage jsPackage : _npmRegistry.getJSPackages()) {
 			JSBundle jsBundle = jsPackage.getJSBundle();
 
-			if (processedBundles.contains(jsBundle)) {
+			if (processedJSBundles.contains(jsBundle)) {
 				continue;
 			}
 
-			processedBundles.add(jsBundle);
+			processedJSBundles.add(jsBundle);
 
 			jsBundlesMap.put(
 				jsBundle.getName() + StringPool.AT + jsBundle.getVersion(),
@@ -166,6 +164,8 @@ public class JSResolutionInfoServlet extends HttpServlet {
 	}
 
 	private Object _getJSModuleObject(JSModule jsModule) {
+		Map<String, Object> jsModuleObject = new HashMap<>();
+
 		List<String> dependencies = new ArrayList<>();
 
 		for (String dependency : jsModule.getDependencies()) {
@@ -174,7 +174,9 @@ public class JSResolutionInfoServlet extends HttpServlet {
 			}
 		}
 
-		return dependencies;
+		jsModuleObject.put("dependencies", dependencies);
+
+		return jsModuleObject;
 	}
 
 	private Object _getJsPackageObject(JSPackage jsPackage) {

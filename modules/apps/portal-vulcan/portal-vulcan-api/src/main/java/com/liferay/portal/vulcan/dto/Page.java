@@ -30,18 +30,14 @@ import java.util.Collection;
 @JacksonXmlRootElement(localName = "page")
 public class Page<T> {
 
-	public Page(Collection<T> items, int totalCount) {
-		_items = items;
-		_itemsPerPage = items.size();
-		_pageNumber = 1;
-		_totalCount = totalCount;
+	public static <T> Page<T> of(Collection<T> items, int totalCount) {
+		return new Page<>(items, totalCount);
 	}
 
-	public Page(Collection<T> items, Pagination pagination, int totalCount) {
-		_items = items;
-		_itemsPerPage = pagination.getItemsPerPage();
-		_pageNumber = pagination.getPageNumber();
-		_totalCount = totalCount;
+	public static <T> Page<T> of(
+		Collection<T> items, Pagination pagination, int totalCount) {
+
+		return new Page<>(items, pagination, totalCount);
 	}
 
 	@JacksonXmlElementWrapper(localName = "items")
@@ -84,6 +80,20 @@ public class Page<T> {
 		}
 
 		return false;
+	}
+
+	private Page(Collection<T> items, int totalCount) {
+		_items = items;
+		_itemsPerPage = items.size();
+		_pageNumber = 1;
+		_totalCount = totalCount;
+	}
+
+	private Page(Collection<T> items, Pagination pagination, int totalCount) {
+		_items = items;
+		_itemsPerPage = pagination.getItemsPerPage();
+		_pageNumber = pagination.getPageNumber();
+		_totalCount = totalCount;
 	}
 
 	private final Collection<T> _items;

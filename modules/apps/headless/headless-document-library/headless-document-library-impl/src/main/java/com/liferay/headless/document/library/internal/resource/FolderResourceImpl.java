@@ -14,22 +14,16 @@
 
 package com.liferay.headless.document.library.internal.resource;
 
-import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.headless.document.library.dto.Folder;
 import com.liferay.headless.document.library.resource.FolderResource;
-import com.liferay.portal.kernel.exception.NoSuchGroupException;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.vulcan.collector.PageCollectors;
 import com.liferay.portal.vulcan.context.Pagination;
 import com.liferay.portal.vulcan.dto.Page;
 
 import java.util.List;
 import java.util.stream.Stream;
-
-import javax.ws.rs.InternalServerErrorException;
-import javax.ws.rs.NotFoundException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -44,7 +38,8 @@ public class FolderResourceImpl extends BaseFolderResourceImpl {
 
 	@Override
 	public Page<Folder> getDocumentsRepositoryFolderPage(
-		Long parentId, Pagination pagination) {
+			Long parentId, Pagination pagination)
+		throws Exception {
 
 		return _getFolderPage(
 			parentId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, pagination);
@@ -52,51 +47,35 @@ public class FolderResourceImpl extends BaseFolderResourceImpl {
 
 	@Override
 	public Page<Folder> getFolderFolderPage(
-		Long parentId, Pagination pagination) {
+			Long parentId, Pagination pagination)
+		throws Exception {
 
-		try {
-			com.liferay.portal.kernel.repository.model.Folder parentFolder =
-				_dlAppService.getFolder(parentId);
+		com.liferay.portal.kernel.repository.model.Folder parentFolder =
+			_dlAppService.getFolder(parentId);
 
-			return _getFolderPage(
-				parentFolder.getGroupId(), parentFolder.getFolderId(),
-				pagination);
-		}
-		catch (NoSuchFolderException nsfe) {
-			throw new NotFoundException(nsfe);
-		}
-		catch (PortalException pe) {
-			throw new InternalServerErrorException(pe);
-		}
+		return _getFolderPage(
+			parentFolder.getGroupId(), parentFolder.getFolderId(), pagination);
 	}
 
 	private Page<Folder> _getFolderPage(
-		Long groupId, Long parentFolderId, Pagination pagination) {
+			Long groupId, Long parentFolderId, Pagination pagination)
+		throws Exception {
 
-		try {
-			List<com.liferay.portal.kernel.repository.model.Folder> folders =
-				_dlAppService.getFolders(
-					groupId, parentFolderId, pagination.getStartPosition(),
-					pagination.getEndPosition(), null);
+		List<com.liferay.portal.kernel.repository.model.Folder> folders =
+			_dlAppService.getFolders(
+				groupId, parentFolderId, pagination.getStartPosition(),
+				pagination.getEndPosition(), null);
 
-			int totalCount = _dlAppService.getFoldersCount(
-				groupId, parentFolderId);
+		int totalCount = _dlAppService.getFoldersCount(groupId, parentFolderId);
 
-			Stream<com.liferay.portal.kernel.repository.model.Folder> stream =
-				folders.stream();
+		Stream<com.liferay.portal.kernel.repository.model.Folder> stream =
+			folders.stream();
 
-			return stream.map(
-				this::_toFolder
-			).collect(
-				PageCollectors.toPage(pagination, totalCount)
-			);
-		}
-		catch (NoSuchGroupException nsge) {
-			throw new NotFoundException(nsge);
-		}
-		catch (PortalException pe) {
-			throw new InternalServerErrorException(pe);
-		}
+		return stream.map(
+			this::_toFolder
+		).collect(
+			PageCollectors.toPage(pagination, totalCount)
+		);
 	}
 
 	private Folder _toFolder(

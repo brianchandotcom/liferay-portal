@@ -813,14 +813,18 @@ public class JournalContentDisplayContext {
 		long previewArticleId = ParamUtil.getLong(
 			_portletRequest, "previewArticleId");
 
+		if (previewArticleId <= 0) {
+			return false;
+		}
+
 		JournalArticle article = JournalArticleLocalServiceUtil.fetchArticle(
 			previewArticleId);
 
-		if ((previewArticleId > 0) && (article != null)) {
-			return true;
+		if (article == null) {
+			return false;
 		}
 
-		return false;
+		return true;
 	}
 
 	public boolean isShowArticle() throws PortalException {

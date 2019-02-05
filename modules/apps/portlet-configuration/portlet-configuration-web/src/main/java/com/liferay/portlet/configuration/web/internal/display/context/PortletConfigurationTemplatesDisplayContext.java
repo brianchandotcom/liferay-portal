@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.configuration.web.internal.display.context;
 
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.model.Portlet;
@@ -27,6 +28,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.configuration.web.internal.constants.PortletConfigurationWebKeys;
+import com.liferay.portlet.configuration.web.internal.servlet.taglib.util.ArchivedSettingsActionDropdownItemsProvider;
 import com.liferay.portlet.configuration.web.internal.util.comparator.ArchivedSettingsModifiedDateComparator;
 import com.liferay.portlet.configuration.web.internal.util.comparator.ArchivedSettingsNameComparator;
 
@@ -54,6 +56,18 @@ public class PortletConfigurationTemplatesDisplayContext {
 
 		_moduleName = (String)renderRequest.getAttribute(
 			PortletConfigurationWebKeys.MODULE_NAME);
+	}
+
+	public List<DropdownItem> getActionDropdownItems(
+		ArchivedSettings archivedSettings) {
+
+		ArchivedSettingsActionDropdownItemsProvider
+			archivedSettingsActionDropdownItemsProvider =
+				new ArchivedSettingsActionDropdownItemsProvider(
+					archivedSettings, _renderRequest, _renderResponse);
+
+		return archivedSettingsActionDropdownItemsProvider.
+			getActionDropdownItems();
 	}
 
 	public SearchContainer getArchivedSettingsSearchContainer() {

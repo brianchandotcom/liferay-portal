@@ -15,16 +15,22 @@
 package com.liferay.portlet.configuration.web.internal.servlet.taglib.clay;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.VerticalCard;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.settings.ArchivedSettings;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portlet.configuration.web.internal.constants.PortletConfigurationWebKeys;
+import com.liferay.portlet.configuration.web.internal.servlet.taglib.util.ArchivedSettingsActionDropdownItemsProvider;
+
+import java.util.List;
 
 import java.util.Date;
 
 import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -34,13 +40,33 @@ import javax.servlet.http.HttpServletRequest;
 public class ArchivedSettingsVerticalCard implements VerticalCard {
 
 	public ArchivedSettingsVerticalCard(
-		ArchivedSettings archivedSettings, RenderRequest renderRequest) {
+		ArchivedSettings archivedSettings, RenderRequest renderRequest,
+		RenderResponse renderResponse) {
 
 		_archivedSettings = archivedSettings;
+		_renderRequest = renderRequest;
+		_renderResponse = renderResponse;
 
 		_request = PortalUtil.getHttpServletRequest(renderRequest);
 		_themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+	}
+
+	@Override
+	public List<DropdownItem> getActionDropdownItems() {
+		ArchivedSettingsActionDropdownItemsProvider
+			archivedSettingsActionDropdownItemsProvider =
+				new ArchivedSettingsActionDropdownItemsProvider(
+					_archivedSettings, _renderRequest, _renderResponse);
+
+		return archivedSettingsActionDropdownItemsProvider.
+			getActionDropdownItems();
+	}
+
+	@Override
+	public String getDefaultEventHandler() {
+		return PortletConfigurationWebKeys.
+			ARCHIVED_SETUPS_DROPDOWN_DEFAULT_EVENT_HANDLER;
 	}
 
 	@Override
@@ -70,6 +96,8 @@ public class ArchivedSettingsVerticalCard implements VerticalCard {
 	}
 
 	private final ArchivedSettings _archivedSettings;
+	private final RenderRequest _renderRequest;
+	private final RenderResponse _renderResponse;
 	private final HttpServletRequest _request;
 	private final ThemeDisplay _themeDisplay;
 

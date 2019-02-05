@@ -65,6 +65,7 @@ page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.util.PropsValues" %><%@
 page import="com.liferay.portal.util.ResourcePermissionUtil" %><%@
 page import="com.liferay.portlet.configuration.kernel.util.PortletConfigurationUtil" %><%@
+page import="com.liferay.portlet.configuration.web.internal.constants.PortletConfigurationWebKeys" %><%@
 page import="com.liferay.portlet.configuration.web.internal.display.context.PortletConfigurationPermissionsDisplayContext" %><%@
 page import="com.liferay.portlet.configuration.web.internal.display.context.PortletConfigurationTemplatesDisplayContext" %><%@
 page import="com.liferay.portlet.configuration.web.internal.display.context.PortletConfigurationTemplatesManagementToolbarDisplayContext" %><%@

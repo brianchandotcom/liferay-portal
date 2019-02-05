@@ -19,6 +19,9 @@ package com.liferay.portlet.configuration.web.internal.constants;
  */
 public class PortletConfigurationWebKeys {
 
+	public static final String ARCHIVED_SETUPS_DROPDOWN_DEFAULT_EVENT_HANDLER =
+		"ARCHIVED_SETUPS_DROPDOWN_DEFAULT_EVENT_HANDLER";
+
 	public static final String MODULE_NAME = "MODULE_NAME";
 
 }

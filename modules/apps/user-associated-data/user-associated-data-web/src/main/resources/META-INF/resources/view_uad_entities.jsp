@@ -22,17 +22,6 @@ ViewUADEntitiesDisplay viewUADEntitiesDisplay = (ViewUADEntitiesDisplay)request.
 SearchContainer<UADEntity> uadEntitySearchContainer = viewUADEntitiesDisplay.getSearchContainer();
 
 ViewUADEntitiesManagementToolbarDisplayContext viewUADEntitiesManagementToolbarDisplayContext = new ViewUADEntitiesManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, uadEntitySearchContainer);
-
-portletDisplay.setShowBackIcon(true);
-
-PortletURL backURL = renderResponse.createRenderURL();
-
-backURL.setParameter("mvcRenderCommandName", "/view_uad_applications_summary");
-backURL.setParameter("p_u_i_d", String.valueOf(selectedUser.getUserId()));
-
-portletDisplay.setURLBack(backURL.toString());
-
-renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", LanguageUtil.get(request, "personal-data-erasure"), " - ", viewUADEntitiesDisplay.getTypeName()));
 %>
 
 <clay:management-toolbar

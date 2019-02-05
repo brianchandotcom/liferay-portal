@@ -11,7 +11,6 @@ import ${configYAML.apiPackagePath}.resource.${schemaName}Resource;
 import com.liferay.portal.vulcan.context.AcceptLanguage;
 import com.liferay.portal.vulcan.context.Pagination;
 import com.liferay.portal.vulcan.dto.Page;
-import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.Collections;
 import java.util.List;
@@ -70,9 +69,5 @@ public abstract class Base${schemaName}ResourceImpl implements ${schemaName}Reso
 			}
 		</#list>
 	</#list>
-
-	protected <T, R> List<R> transform(List<T> list, Function<T, R> transformFunction) {
-		return TransformUtil.transform(list, transformFunction);
-	}
 
 }

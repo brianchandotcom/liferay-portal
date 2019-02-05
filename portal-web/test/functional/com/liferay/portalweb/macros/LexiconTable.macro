@@ -19,8 +19,8 @@ definition {
 
 	macro delete {
 		LexiconTable.clickEllipsisItem(
-			tableEntry = "${tableEntry}",
-			item = "Delete"
+			item = "Delete",
+			tableEntry = "${tableEntry}"
 		);
 
 		Confirm();

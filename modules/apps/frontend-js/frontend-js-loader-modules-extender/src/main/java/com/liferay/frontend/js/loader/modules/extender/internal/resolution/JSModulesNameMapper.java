@@ -1,3 +1,17 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
 package com.liferay.frontend.js.loader.modules.extender.internal.resolution;
 
 import com.liferay.frontend.js.loader.modules.extender.internal.config.generator.JSConfigGeneratorPackage;
@@ -9,10 +23,6 @@ import com.liferay.frontend.js.loader.modules.extender.npm.JSPackage;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMRegistry;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import org.osgi.framework.Bundle;
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -22,6 +32,11 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import org.osgi.framework.Bundle;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Rodolfo Roza Miranda
@@ -44,17 +59,6 @@ public class JSModulesNameMapper implements JSBundleTracker {
 		_clearCacheState();
 	}
 
-	@Override
-	public void removedJSBundle(
-		JSBundle jsBundle, Bundle bundle, NPMRegistry npmRegistry) {
-
-		_clearCacheState();
-	}
-
-	private void _clearCacheState() {
-		_cacheState.set(new CacheState());
-	}
-
 	public String mapModule(String module) {
 		return mapModule(module, null);
 	}
@@ -63,7 +67,7 @@ public class JSModulesNameMapper implements JSBundleTracker {
 		CacheState cacheState = _cacheState.get();
 
 		if (cacheState.isOlderThan(
-			_jsConfigGeneratorPackagesTracker.getLastModified())) {
+				_jsConfigGeneratorPackagesTracker.getLastModified())) {
 
 			_clearCacheState();
 
@@ -89,6 +93,17 @@ public class JSModulesNameMapper implements JSBundleTracker {
 		cacheState.put(module, resolved);
 
 		return resolved;
+	}
+
+	@Override
+	public void removedJSBundle(
+		JSBundle jsBundle, Bundle bundle, NPMRegistry npmRegistry) {
+
+		_clearCacheState();
+	}
+
+	private void _clearCacheState() {
+		_cacheState.set(new CacheState());
 	}
 
 	private String _map(
@@ -163,20 +178,20 @@ public class JSModulesNameMapper implements JSBundleTracker {
 
 				String mainModulePath =
 					jsPackageResolvedId + StringPool.SLASH +
-					jsPackage.getMainModuleName();
+						jsPackage.getMainModuleName();
 
 				exactMatchContextMap.put(jsPackageResolvedId, mainModulePath);
 
 				for (JSModuleAlias jsModuleAlias :
-					jsPackage.getJSModuleAliases()) {
+						jsPackage.getJSModuleAliases()) {
 
 					String aliasPath =
 						jsPackageResolvedId + StringPool.SLASH +
-						jsModuleAlias.getAlias();
+							jsModuleAlias.getAlias();
 
 					String moduleNamePath =
 						jsPackageResolvedId + StringPool.SLASH +
-						jsModuleAlias.getModuleName();
+							jsModuleAlias.getModuleName();
 
 					exactMatchContextMap.put(aliasPath, moduleNamePath);
 				}
@@ -189,7 +204,8 @@ public class JSModulesNameMapper implements JSBundleTracker {
 			Map<String, String> partialContextMatch = new HashMap<>();
 
 			Collection<JSConfigGeneratorPackage> jsConfigGeneratorPackages =
-				_jsConfigGeneratorPackagesTracker.getJSConfigGeneratorPackages();
+				_jsConfigGeneratorPackagesTracker.
+					getJSConfigGeneratorPackages();
 
 			Function<JSConfigGeneratorPackage, String> valueMapper =
 				m -> m.getName() + StringPool.AT + m.getVersion();
@@ -214,4 +230,5 @@ public class JSModulesNameMapper implements JSBundleTracker {
 		private final Map<String, String> _partialMatchContextMap;
 
 	}
+
 }

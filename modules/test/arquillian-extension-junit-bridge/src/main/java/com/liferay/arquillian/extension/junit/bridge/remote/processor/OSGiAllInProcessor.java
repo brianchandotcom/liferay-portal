@@ -63,15 +63,15 @@ public class OSGiAllInProcessor implements ApplicationArchiveProcessor {
 			_addArquillianDependencies(javaArchive);
 
 			javaArchive.add(EmptyAsset.INSTANCE, "/arquillian.remote.marker");
-			javaArchive.addClasses(
-				LiferayArquillianJUnitBridgeExtension.class,
-				JUnitBridgeObserver.class);
+			javaArchive.addAsServiceProvider(
+				ExtensionLoader.class, RemoteExtensionLoader.class);
 			javaArchive.addAsServiceProvider(
 				RemoteLoadableExtension.class,
 				ContainerTestRemoteExtension.class,
 				LiferayArquillianJUnitBridgeExtension.class);
-			javaArchive.addAsServiceProvider(
-				ExtensionLoader.class, RemoteExtensionLoader.class);
+			javaArchive.addClasses(
+				ArquillianBundleActivator.class, JUnitBridgeObserver.class,
+				LiferayArquillianJUnitBridgeExtension.class);
 
 			Package pkg = Arquillian.class.getPackage();
 
@@ -92,8 +92,6 @@ public class OSGiAllInProcessor implements ApplicationArchiveProcessor {
 				ArquillianBundleActivator.class.getCanonicalName());
 
 			_setManifest(javaArchive, manifest);
-
-			javaArchive.addClass(ArquillianBundleActivator.class);
 		}
 		catch (IOException ioe) {
 			throw new IllegalArgumentException(
@@ -104,13 +102,13 @@ public class OSGiAllInProcessor implements ApplicationArchiveProcessor {
 	private void _addArquillianDependencies(JavaArchive javaArchive) {
 		javaArchive.addPackage(JMXTestRunner.class.getPackage());
 		javaArchive.addPackages(
-			true, "org.jboss.arquillian.core",
-			"org.jboss.arquillian.container.spi",
+			true, "org.jboss.arquillian.config",
 			"org.jboss.arquillian.container.impl",
+			"org.jboss.arquillian.container.spi",
 			"org.jboss.arquillian.container.test.api",
-			"org.jboss.arquillian.container.test.spi",
 			"org.jboss.arquillian.container.test.impl",
-			"org.jboss.arquillian.config", "org.jboss.arquillian.test",
+			"org.jboss.arquillian.container.test.spi",
+			"org.jboss.arquillian.core", "org.jboss.arquillian.test",
 			"org.jboss.shrinkwrap.api", "org.jboss.shrinkwrap.descriptor.api");
 	}
 
@@ -185,14 +183,14 @@ public class OSGiAllInProcessor implements ApplicationArchiveProcessor {
 	}
 
 	private static final String[] _IMPORTS_PACKAGES = {
-		"org.osgi.framework", "org.osgi.framework.wiring", "javax.management",
-		"javax.management.*", "javax.naming", "javax.naming.*",
-		"org.osgi.service.packageadmin", "org.osgi.service.startlevel",
-		"org.osgi.util.tracker", "org.junit.internal",
-		"org.junit.internal.runners", "org.junit.internal.runners.statements",
-		"org.junit.internal.runners.model", "org.junit.rules",
-		"org.junit.runners", "org.junit.runners.model",
-		"org.junit.runner.manipulation", "org.junit.runner.notification"
+		"javax.management", "javax.management.*", "javax.naming",
+		"javax.naming.*", "org.junit.internal", "org.junit.internal.runners",
+		"org.junit.internal.runners.model",
+		"org.junit.internal.runners.statements", "org.junit.rules",
+		"org.junit.runner.manipulation", "org.junit.runner.notification",
+		"org.junit.runners", "org.junit.runners.model", "org.osgi.framework",
+		"org.osgi.framework.wiring", "org.osgi.service.packageadmin",
+		"org.osgi.service.startlevel", "org.osgi.util.tracker"
 	};
 
 	private static final Attributes.Name _bundleActivatorName =

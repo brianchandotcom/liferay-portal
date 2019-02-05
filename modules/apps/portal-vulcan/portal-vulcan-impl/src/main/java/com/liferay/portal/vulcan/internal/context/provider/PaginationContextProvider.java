@@ -16,7 +16,6 @@ package com.liferay.portal.vulcan.internal.context.provider;
 
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.vulcan.context.Pagination;
-import com.liferay.portal.vulcan.internal.context.PaginationImpl;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -52,7 +51,7 @@ public class PaginationContextProvider implements ContextProvider<Pagination> {
 		int itemsPerPage = ParamUtil.getInteger(
 			httpServletRequest, "pageSize", 20);
 
-		return new PaginationImpl(itemsPerPage, pageNumber);
+		return Pagination.of(itemsPerPage, pageNumber);
 	}
 
 }

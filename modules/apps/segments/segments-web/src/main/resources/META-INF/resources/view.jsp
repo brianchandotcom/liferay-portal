@@ -67,12 +67,6 @@ SegmentsDisplayContext segmentsDisplayContext = (SegmentsDisplayContext)request.
 
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-expand-smallest table-cell-minw-150"
-				name="type"
-				value="<%= ResourceActionsUtil.getModelResource(locale, segmentsEntry.getType()) %>"
-			/>
-
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-expand-smallest table-cell-minw-150"
 				name="active"
 				value='<%= LanguageUtil.get(request, segmentsEntry.isActive() ? "yes" : "no") %>'
 			/>

@@ -18,6 +18,7 @@ import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryService;
 import com.liferay.headless.collaboration.dto.BlogPosting;
 import com.liferay.headless.collaboration.resource.BlogPostingResource;
+import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.context.Pagination;
 import com.liferay.portal.vulcan.dto.Page;
@@ -39,7 +40,11 @@ public class BlogPostingResourceImpl extends BaseBlogPostingResourceImpl {
 
 	@Override
 	public Response deleteBlogPosting(Long blogPostingId) throws Exception {
-		_blogsEntryService.deleteEntry(blogPostingId);
+		try {
+			_blogsEntryService.deleteEntry(blogPostingId);
+		}
+		catch (NoSuchModelException nsme) {
+		}
 
 		return null;
 	}

@@ -20,8 +20,11 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.user.associated.data.web.internal.display.UADEntity;
@@ -29,6 +32,7 @@ import com.liferay.user.associated.data.web.internal.display.UADEntity;
 import java.util.List;
 import java.util.Map;
 
+import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -112,6 +116,20 @@ public class ViewUADEntitiesManagementToolbarDisplayContext
 	protected PortletURL getPortletURL() {
 		PortletURL portletURL = searchContainer.getIteratorURL();
 
+		try {
+			portletURL = PortletURLUtil.clone(
+				portletURL, liferayPortletResponse);
+		}
+		catch (PortletException pe) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(pe, pe);
+			}
+
+			portletURL = liferayPortletResponse.createRenderURL();
+
+			portletURL.setParameters(portletURL.getParameterMap());
+		}
+
 		String[] parameterNames = {
 			"keywords", "orderByCol", "orderByType", "cur", "delta"
 		};
@@ -127,5 +145,8 @@ public class ViewUADEntitiesManagementToolbarDisplayContext
 
 		return portletURL;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ViewUADEntitiesManagementToolbarDisplayContext.class);
 
 }

@@ -29,12 +29,13 @@ public class EntityFinder {
 
 	public EntityFinder(
 		String name, String returnType, boolean unique, String where,
-		boolean dbIndex, List<EntityColumn> entityColumns) {
+		String dbWhere, boolean dbIndex, List<EntityColumn> entityColumns) {
 
 		_name = name;
 		_returnType = returnType;
 		_unique = unique;
 		_where = where;
+		_dbWhere = dbWhere;
 		_dbIndex = dbIndex;
 		_entityColumns = entityColumns;
 
@@ -61,6 +62,10 @@ public class EntityFinder {
 
 	public List<EntityColumn> getArrayableColumns() {
 		return _arrayableColumns;
+	}
+
+	public String getDBWhere() {
+		return _dbWhere;
 	}
 
 	public EntityColumn getEntityColumn(String name) {
@@ -168,6 +173,7 @@ public class EntityFinder {
 
 	private final List<EntityColumn> _arrayableColumns;
 	private final boolean _dbIndex;
+	private final String _dbWhere;
 	private final List<EntityColumn> _entityColumns;
 	private final String _name;
 	private final String _returnType;

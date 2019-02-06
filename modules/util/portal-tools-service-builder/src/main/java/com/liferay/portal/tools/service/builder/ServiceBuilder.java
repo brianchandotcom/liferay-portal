@@ -5832,12 +5832,16 @@ public class ServiceBuilder {
 
 			String finderWhere = finderElement.attributeValue("where");
 
+			String finderDBWhere = finderWhere;
+
 			if (Validator.isNotNull(finderWhere)) {
 				for (EntityColumn column : entityColumns) {
 					String name = column.getName();
 
 					finderWhere = StringUtil.replace(
 						finderWhere, name, alias + "." + name);
+					finderDBWhere = StringUtil.replace(
+						finderDBWhere, name, alias + "." + column.getDBName());
 				}
 			}
 
@@ -5884,7 +5888,7 @@ public class ServiceBuilder {
 			entityFinders.add(
 				new EntityFinder(
 					finderName, finderReturn, finderUnique, finderWhere,
-					finderDBIndex, finderEntityColumns));
+					finderDBWhere, finderDBIndex, finderEntityColumns));
 		}
 
 		List<Entity> referenceEntities = new ArrayList<>();

@@ -199,17 +199,7 @@ request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 	</c:otherwise>
 </c:choose>
 
-<aui:script require='<%= npmResolvedPackageName + "/js/SiteDropdownDefaultEventHandler.es as SiteDropdownDefaultEventHandler" %>'>
-	Liferay.component(
-		'<%= SiteAdminWebKeys.SITE_DROPDOWN_DEFAULT_EVENT_HANDLER %>',
-		new SiteDropdownDefaultEventHandler.default(
-			{
-				namespace: '<portlet:namespace />'
-			}
-		),
-		{
-			destroyOnNavigate: true,
-			portletId: '<%= HtmlUtil.escapeJS(portletDisplay.getId()) %>'
-		}
-	);
-</aui:script>
+<liferay-frontend:component
+	componentId="<%= SiteAdminWebKeys.SITE_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
+	module="js/SiteDropdownDefaultEventHandler.es"
+/>

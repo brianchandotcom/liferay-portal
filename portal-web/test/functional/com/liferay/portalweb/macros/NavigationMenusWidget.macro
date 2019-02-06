@@ -8,7 +8,10 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#DIALOG");
 
-		Click(locator1 = "Card#SPECIFIC_FOOTER_TEXT_LINK", key_cardText = "${menuName}");
+		Click(
+			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME",
+			key_rowEntry = "${menuName}"
+		);
 
 		SelectFrame(value1 = "relative=top");
 

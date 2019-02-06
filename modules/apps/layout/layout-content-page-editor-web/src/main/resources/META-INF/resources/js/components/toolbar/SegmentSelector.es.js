@@ -17,17 +17,11 @@ class SegmentSelector extends Component {
 	 * @review
 	 */
 	prepareStateForRender(state) {
-		const {availableSegments} = state;
-
-		const segments = Object.keys(availableSegments)
-			.map(
-				key => ({
-					id: availableSegments[key].segmentId,
-					label: availableSegments[key].segmentLabel
-				})
-			);
-
-		return setIn(state, ['segments'], segments);
+		return setIn(
+			state,
+			['availableSegments'],
+			Object.values(state.availableSegments)
+		);
 	}
 
 	/**

@@ -63,6 +63,17 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--EDIT_TAGS-->
+<tr>
+	<td>EDIT_TAGS_FIELD</td>
+	<td>//div[@class='input-group-item']/div/input[@type='text']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--ICON_DOCUMENT-->
 <tr>
 	<td>ICON_DOCUMENT_GENERIC</td>

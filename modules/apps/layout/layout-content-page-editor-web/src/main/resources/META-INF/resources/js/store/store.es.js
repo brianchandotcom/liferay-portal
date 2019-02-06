@@ -196,15 +196,24 @@ class Store extends State {
 	/**
 	 * Sets the store state to the given state. This function should not be
 	 * called after setting the initialState.
-	 * @param {!object} initialState
+	 * The given initial state is combined with DEFAULT_INITIAL_STATE to provide
+	 * default values for unknown data.
+	 * @param {!Object} initialState
+	 * @return {Object}
 	 * @private
 	 * @review
 	 */
 	_setInitialState(initialState) {
 		this._state = Object.assign(
+		this._state = this._getFrozenState(
+			Object.assign(
+				{},
 			DEFAULT_INITIAL_STATE,
-			this._getFrozenState(initialState)
+				initialState
+			)
 		);
+
+		return this._state;
 	}
 
 }

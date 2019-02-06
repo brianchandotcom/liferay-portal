@@ -57,32 +57,32 @@ public interface ImageObjectResource {
 	@GET
 	@Path("/image-object-repository/{image-object-repository-id}/image-object")
 	@Produces("application/json")
-	@RequiresScope("headless-collaboration-application.read")
+	@RequiresScope("everything.read")
 	public Page<ImageObject> getImageObjectRepositoryImageObjectPage( @PathParam("image-object-repository-id") Long imageObjectRepositoryId , @Context Pagination pagination ) throws Exception;
 
 	@Consumes("application/json")
 	@POST
 	@Path("/image-object-repository/{image-object-repository-id}/image-object")
 	@Produces("application/json")
-	@RequiresScope("headless-collaboration-application.read")
+	@RequiresScope("everything.read")
 	public ImageObject postImageObjectRepositoryImageObject( @PathParam("image-object-repository-id") Long imageObjectRepositoryId ) throws Exception;
 
 	@Consumes("application/json")
 	@POST
 	@Path("/image-object-repository/{image-object-repository-id}/image-object/batch-create")
 	@Produces("application/json")
-	@RequiresScope("headless-collaboration-application.write")
+	@RequiresScope("everything.write")
 	public ImageObject postImageObjectRepositoryImageObjectBatchCreate( @PathParam("image-object-repository-id") Long imageObjectRepositoryId ) throws Exception;
 
 	@DELETE
 	@Path("/image-object/{image-object-id}")
 	@Produces("application/json")
-	@RequiresScope("headless-collaboration-application.read")
+	@RequiresScope("everything.read")
 	public Response deleteImageObject( @PathParam("image-object-id") Long imageObjectId ) throws Exception;
 
 	@GET
 	@Path("/image-object/{image-object-id}")
 	@Produces("application/json")
-	@RequiresScope("headless-collaboration-application.read")
+	@RequiresScope("everything.read")
 	public ImageObject getImageObject( @PathParam("image-object-id") Long imageObjectId ) throws Exception;
 }

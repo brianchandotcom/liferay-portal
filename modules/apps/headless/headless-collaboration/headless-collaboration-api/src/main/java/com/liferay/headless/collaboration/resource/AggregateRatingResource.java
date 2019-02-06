@@ -57,7 +57,7 @@ public interface AggregateRatingResource {
 	@GET
 	@Path("/aggregate-rating/{aggregate-rating-id}")
 	@Produces("application/json")
-	@RequiresScope("headless-collaboration-application.read")
+	@RequiresScope("everything.read")
 	public AggregateRating getAggregateRating( @PathParam("aggregate-rating-id") Long aggregateRatingId ) throws Exception;
 
 }

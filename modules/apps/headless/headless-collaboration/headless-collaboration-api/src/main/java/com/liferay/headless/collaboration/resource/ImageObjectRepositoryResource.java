@@ -57,7 +57,7 @@ public interface ImageObjectRepositoryResource {
 	@GET
 	@Path("/image-object-repository/{image-object-repository-id}")
 	@Produces("application/json")
-	@RequiresScope("headless-collaboration-application.read")
+	@RequiresScope("everything.read")
 	public ImageObjectRepository getImageObjectRepository( @PathParam("image-object-repository-id") Long imageObjectRepositoryId ) throws Exception;
 
 }

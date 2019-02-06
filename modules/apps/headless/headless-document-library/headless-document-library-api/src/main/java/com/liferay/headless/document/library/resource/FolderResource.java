@@ -55,65 +55,65 @@ public interface FolderResource {
 	@GET
 	@Path("/documents-repository/{id}")
 	@Produces("application/json")
-	@RequiresScope("headless-document-library-application.read")
+	@RequiresScope("everything.read")
 	public Folder getDocumentsRepository( @PathParam("id") Long id ) throws Exception;
 
 	@GET
 	@Path("/documents-repository/{documents-repository-id}/folder")
 	@Produces("application/json")
-	@RequiresScope("headless-document-library-application.read")
+	@RequiresScope("everything.read")
 	public Page<Folder> getDocumentsRepositoryFolderPage( @PathParam("documents-repository-id") Long documentsRepositoryId , @Context Pagination pagination ) throws Exception;
 
 	@Consumes("application/json")
 	@POST
 	@Path("/documents-repository/{documents-repository-id}/folder")
 	@Produces("application/json")
-	@RequiresScope("headless-document-library-application.read")
+	@RequiresScope("everything.read")
 	public Folder postDocumentsRepositoryFolder( @PathParam("documents-repository-id") Long documentsRepositoryId ) throws Exception;
 
 	@Consumes("application/json")
 	@POST
 	@Path("/documents-repository/{documents-repository-id}/folder/batch-create")
 	@Produces("application/json")
-	@RequiresScope("headless-document-library-application.write")
+	@RequiresScope("everything.write")
 	public Folder postDocumentsRepositoryFolderBatchCreate( @PathParam("documents-repository-id") Long documentsRepositoryId ) throws Exception;
 
 	@DELETE
 	@Path("/folder/{folder-id}")
 	@Produces("application/json")
-	@RequiresScope("headless-document-library-application.read")
+	@RequiresScope("everything.read")
 	public Response deleteFolder( @PathParam("folder-id") Long folderId ) throws Exception;
 
 	@GET
 	@Path("/folder/{folder-id}")
 	@Produces("application/json")
-	@RequiresScope("headless-document-library-application.read")
+	@RequiresScope("everything.read")
 	public Folder getFolder( @PathParam("folder-id") Long folderId ) throws Exception;
 
 	@Consumes("application/json")
 	@PUT
 	@Path("/folder/{folder-id}")
 	@Produces("application/json")
-	@RequiresScope("headless-document-library-application.read")
+	@RequiresScope("everything.read")
 	public Folder putFolder( @PathParam("folder-id") Long folderId ) throws Exception;
 
 	@GET
 	@Path("/folder/{folder-id}/folder")
 	@Produces("application/json")
-	@RequiresScope("headless-document-library-application.read")
+	@RequiresScope("everything.read")
 	public Page<Folder> getFolderFolderPage( @PathParam("folder-id") Long folderId , @Context Pagination pagination ) throws Exception;
 
 	@Consumes("application/json")
 	@POST
 	@Path("/folder/{folder-id}/folder")
 	@Produces("application/json")
-	@RequiresScope("headless-document-library-application.read")
+	@RequiresScope("everything.read")
 	public Folder postFolderFolder( @PathParam("folder-id") Long folderId ) throws Exception;
 
 	@Consumes("application/json")
 	@POST
 	@Path("/folder/{folder-id}/folder/batch-create")
 	@Produces("application/json")
-	@RequiresScope("headless-document-library-application.write")
+	@RequiresScope("everything.write")
 	public Folder postFolderFolderBatchCreate( @PathParam("folder-id") Long folderId ) throws Exception;
 }

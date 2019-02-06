@@ -57,19 +57,19 @@ public interface CommentResource {
 	@GET
 	@Path("/blog-posting/{blog-posting-id}/comment")
 	@Produces("application/json")
-	@RequiresScope("headless-collaboration-application.read")
+	@RequiresScope("everything.read")
 	public Page<Comment> getBlogPostingCommentPage( @PathParam("blog-posting-id") Long blogPostingId , @Context Pagination pagination ) throws Exception;
 
 	@GET
 	@Path("/comment/{comment-id}")
 	@Produces("application/json")
-	@RequiresScope("headless-collaboration-application.read")
+	@RequiresScope("everything.read")
 	public Comment getComment( @PathParam("comment-id") Long commentId ) throws Exception;
 
 	@GET
 	@Path("/comment/{comment-id}/comment")
 	@Produces("application/json")
-	@RequiresScope("headless-collaboration-application.read")
+	@RequiresScope("everything.read")
 	public Page<Comment> getCommentCommentPage( @PathParam("comment-id") Long commentId , @Context Pagination pagination ) throws Exception;
 
 }

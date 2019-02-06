@@ -57,40 +57,40 @@ public interface BlogPostingResource {
 	@DELETE
 	@Path("/blog-posting/{blog-posting-id}")
 	@Produces("application/json")
-	@RequiresScope("headless-collaboration-application.read")
+	@RequiresScope("everything.read")
 	public Response deleteBlogPosting( @PathParam("blog-posting-id") Long blogPostingId ) throws Exception;
 
 	@GET
 	@Path("/blog-posting/{blog-posting-id}")
 	@Produces("application/json")
-	@RequiresScope("headless-collaboration-application.read")
+	@RequiresScope("everything.read")
 	public BlogPosting getBlogPosting( @PathParam("blog-posting-id") Long blogPostingId ) throws Exception;
 
 	@Consumes("application/json")
 	@PUT
 	@Path("/blog-posting/{blog-posting-id}")
 	@Produces("application/json")
-	@RequiresScope("headless-collaboration-application.read")
+	@RequiresScope("everything.read")
 	public BlogPosting putBlogPosting( @PathParam("blog-posting-id") Long blogPostingId ) throws Exception;
 
 	@GET
 	@Path("/content-space/{content-space-id}/blog-posting")
 	@Produces("application/json")
-	@RequiresScope("headless-collaboration-application.read")
+	@RequiresScope("everything.read")
 	public Page<BlogPosting> getContentSpaceBlogPostingPage( @PathParam("content-space-id") Long contentSpaceId , @Context Pagination pagination ) throws Exception;
 
 	@Consumes("application/json")
 	@POST
 	@Path("/content-space/{content-space-id}/blog-posting")
 	@Produces("application/json")
-	@RequiresScope("headless-collaboration-application.read")
+	@RequiresScope("everything.read")
 	public BlogPosting postContentSpaceBlogPosting( @PathParam("content-space-id") Long contentSpaceId ) throws Exception;
 
 	@Consumes("application/json")
 	@POST
 	@Path("/content-space/{content-space-id}/blog-posting/batch-create")
 	@Produces("application/json")
-	@RequiresScope("headless-collaboration-application.write")
+	@RequiresScope("everything.write")
 	public BlogPosting postContentSpaceBlogPostingBatchCreate( @PathParam("content-space-id") Long contentSpaceId ) throws Exception;
 
 }

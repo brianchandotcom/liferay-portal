@@ -181,6 +181,9 @@ public interface CTProcessLocalService extends BaseLocalService,
 	public CTProcess fetchCTProcess(long ctProcessId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CTProcess fetchLatestCTProcess(long companyId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	/**

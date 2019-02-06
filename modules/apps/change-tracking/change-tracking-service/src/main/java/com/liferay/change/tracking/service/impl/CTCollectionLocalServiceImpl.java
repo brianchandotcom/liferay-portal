@@ -19,6 +19,7 @@ import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.model.CTProcess;
 import com.liferay.change.tracking.service.base.CTCollectionLocalServiceBaseImpl;
+import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -117,8 +118,16 @@ public class CTCollectionLocalServiceImpl
 	}
 
 	@Override
-	public List<CTCollection> getCTCollections(long companyId) {
-		return ctCollectionPersistence.findByCompanyId(companyId);
+	public List<CTCollection> getCTCollections(
+		long companyId, QueryDefinition<CTCollection> queryDefinition) {
+
+		if (queryDefinition == null) {
+			return ctCollectionPersistence.findByCompanyId(companyId);
+		}
+
+		return ctCollectionPersistence.findByCompanyId(
+			companyId, queryDefinition.getStart(), queryDefinition.getEnd(),
+			queryDefinition.getOrderByComparator());
 	}
 
 	@Override

@@ -19,6 +19,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -27,9 +28,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.template.soy.util.SoyContext;
 import com.liferay.portal.template.soy.util.SoyContextFactoryUtil;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 import javax.portlet.PortletURL;
@@ -55,37 +54,21 @@ public class ChangeListsDisplayContext {
 	public SoyContext getChangeListsContext() {
 		SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
 
-		soyContext.put("portletNamespace", _renderResponse.getNamespace());
 		soyContext.put(
 			"spritemap",
 			_themeDisplay.getPathThemeImages() + "/lexicon/icons.svg");
 
-		// Translations
-
-		Map<String, String> translations = new HashMap<>();
-
-		translations.put(
-			"description",
-			LanguageUtil.get(_httpServletRequest, "description"));
-		translations.put(
-			"production-view",
-			LanguageUtil.get(_httpServletRequest, "production-view"));
-		translations.put(
-			"published-by",
-			LanguageUtil.get(_httpServletRequest, "published-by"));
-		translations.put(
-			"published-change-list",
-			LanguageUtil.get(_httpServletRequest, "published-change-list"));
-
-		soyContext.put("translations", translations);
-
-		// URLs
-
 		soyContext.put(
-			"urlProductionCollection",
+			"urlActiveCollection",
 			_themeDisplay.getPortalURL() +
-				"/o/change-tracking/collections/production/" +
-					_themeDisplay.getCompanyId());
+				"/o/change-tracking/collections?type=active&userId=" +
+					_themeDisplay.getUserId());
+		soyContext.put(
+			"urlProductionInformation",
+			StringBundler.concat(
+				_themeDisplay.getPortalURL(),
+				"/o/change-tracking/processes?companyId=",
+				_themeDisplay.getCompanyId(), "&published=true"));
 		soyContext.put("urlProductionView", _themeDisplay.getPortalURL());
 
 		return soyContext;

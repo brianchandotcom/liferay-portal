@@ -53,4 +53,6 @@ public interface CTCollection extends CTCollectionModel, PersistedModel {
 				return CTCollection.class;
 			}
 		};
+
+	public boolean isProduction();
 }

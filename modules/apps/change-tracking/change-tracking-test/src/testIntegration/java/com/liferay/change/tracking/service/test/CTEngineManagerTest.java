@@ -249,13 +249,35 @@ public class CTEngineManagerTest {
 	}
 
 	@Test
+	public void testDeleteProductionCTCollection() throws Exception {
+		_ctEngineManager.enableChangeTracking(
+			TestPropsValues.getCompanyId(), TestPropsValues.getUserId());
+
+		Optional<CTCollection> ctCollectionOptional =
+			_ctEngineManager.getProductionCTCollectionOptional(
+				TestPropsValues.getCompanyId());
+
+		Assert.assertTrue(ctCollectionOptional.isPresent());
+
+		CTCollection ctCollection = ctCollectionOptional.get();
+
+		_ctEngineManager.deleteCTCollection(ctCollection.getCtCollectionId());
+
+		ctCollection = _ctCollectionLocalService.fetchCTCollection(
+			ctCollection.getCtCollectionId());
+
+		Assert.assertNotNull(
+			"Change tracking collection must have a value", ctCollection);
+	}
+
+	@Test
 	public void testDisableChangeTracking() throws PortalException {
 		_ctEngineManager.enableChangeTracking(
 			TestPropsValues.getCompanyId(), TestPropsValues.getUserId());
 
 		List<CTCollection> ctCollections =
 			_ctCollectionLocalService.getCTCollections(
-				TestPropsValues.getCompanyId());
+				TestPropsValues.getCompanyId(), null);
 
 		Assert.assertEquals(
 			"Change tracking collections must have one entry", 1,
@@ -264,7 +286,7 @@ public class CTEngineManagerTest {
 		_ctEngineManager.disableChangeTracking(TestPropsValues.getCompanyId());
 
 		ctCollections = _ctCollectionLocalService.getCTCollections(
-			TestPropsValues.getCompanyId());
+			TestPropsValues.getCompanyId(), null);
 
 		Assert.assertTrue(
 			"Change tracking collection must not exist",
@@ -300,7 +322,7 @@ public class CTEngineManagerTest {
 
 		List<CTCollection> ctCollections =
 			_ctCollectionLocalService.getCTCollections(
-				TestPropsValues.getCompanyId());
+				TestPropsValues.getCompanyId(), null);
 
 		Assert.assertEquals(
 			"Change tracking collections must have one entry", 1,

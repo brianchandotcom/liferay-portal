@@ -16,14 +16,11 @@
 
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
-<%@ taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
+<%@ taglib uri="http://liferay.com/tld/soy" prefix="soy" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.change.tracking.change.lists.web.internal.display.context.ChangeListsDisplayContext" %><%@
-page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.JSPNavigationItemList" %><%@
-page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
-page import="com.liferay.portal.kernel.util.ParamUtil" %>
+<%@ page import="com.liferay.change.tracking.change.lists.web.internal.display.context.ChangeListsDisplayContext" %>
 
 <liferay-theme:defineObjects />
 

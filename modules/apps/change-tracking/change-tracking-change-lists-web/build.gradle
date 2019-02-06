@@ -15,4 +15,7 @@ dependencies {
 	compileOnly project(":apps:portal-template:portal-template-soy-api")
 	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":core:petra:petra-string")
+
+	jsCompile project(":apps:frontend-js:frontend-js-web")
+	jsCompile project(":apps:frontend-taglib:frontend-taglib")
 }

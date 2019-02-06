@@ -14,19 +14,23 @@
 
 package com.liferay.change.tracking.rest.internal.exception;
 
-import com.liferay.portal.kernel.exception.PortalException;
+import javax.ws.rs.core.Response;
 
 /**
  * @author Máté Thurzó
  */
-public class NoSuchProductionCTCollectionException extends PortalException {
+public class NoSuchProductionCTCollectionException extends CTJaxRsException {
 
-	public NoSuchProductionCTCollectionException() {
-		super("Production change tracking collection does not exist");
+	public NoSuchProductionCTCollectionException(long companyId) {
+		super(companyId);
+
+		setResponseStatus(Response.Status.BAD_REQUEST);
 	}
 
-	public NoSuchProductionCTCollectionException(String msg) {
-		super(msg);
+	public NoSuchProductionCTCollectionException(long companyId, String msg) {
+		super(companyId, msg);
+
+		setResponseStatus(Response.Status.BAD_REQUEST);
 	}
 
 }

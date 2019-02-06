@@ -19,10 +19,12 @@ import com.liferay.change.tracking.CTManager;
 import com.liferay.change.tracking.exception.CTEntryException;
 import com.liferay.change.tracking.exception.CTException;
 import com.liferay.change.tracking.exception.DuplicateCTEntryException;
+import com.liferay.change.tracking.internal.util.ChangeTrackingThreadLocal;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.util.comparator.CTEntryCreateDateComparator;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -46,6 +48,29 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true, service = CTManager.class)
 public class CTManagerImpl implements CTManager {
+
+	@Override
+	public <T> T executeModelUpdate(
+			UnsafeSupplier<T, PortalException> modelUpdateSupplier)
+		throws PortalException {
+
+		boolean resetFlag = false;
+
+		try {
+			if (!ChangeTrackingThreadLocal.isModelUpdateInProgress()) {
+				resetFlag = true;
+
+				ChangeTrackingThreadLocal.setModelUpdateInProgress(true);
+			}
+
+			return modelUpdateSupplier.get();
+		}
+		finally {
+			if (resetFlag) {
+				ChangeTrackingThreadLocal.setModelUpdateInProgress(false);
+			}
+		}
+	}
 
 	@Override
 	public Optional<CTEntry> getActiveCTCollectionCTEntryOptional(
@@ -184,9 +209,24 @@ public class CTManagerImpl implements CTManager {
 	}
 
 	@Override
+	public boolean isModelUpdateInProgress() {
+		return ChangeTrackingThreadLocal.isModelUpdateInProgress();
+	}
+
+	@Override
 	public Optional<CTEntry> registerModelChange(
 			long userId, long classNameId, long classPK, long resourcePrimKey,
 			int changeType)
+		throws CTException {
+
+		return registerModelChange(
+			userId, classNameId, classPK, resourcePrimKey, changeType, false);
+	}
+
+	@Override
+	public Optional<CTEntry> registerModelChange(
+			long userId, long classNameId, long classPK, long resourcePrimKey,
+			int changeType, boolean force)
 		throws CTException {
 
 		long companyId = _getCompanyId(userId);
@@ -212,6 +252,10 @@ public class CTManagerImpl implements CTManager {
 		CTCollection ctCollection = ctCollectionOptional.get();
 
 		try {
+			ServiceContext serviceContext = new ServiceContext();
+
+			serviceContext.setAttribute("force", force);
+
 			return Optional.of(
 				_ctEntryLocalService.addCTEntry(
 					userId, classNameId, classPK, resourcePrimKey, changeType,

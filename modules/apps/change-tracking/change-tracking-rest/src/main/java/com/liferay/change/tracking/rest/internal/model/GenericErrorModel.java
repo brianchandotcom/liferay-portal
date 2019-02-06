@@ -14,6 +14,8 @@
 
 package com.liferay.change.tracking.rest.internal.model;
 
+import com.liferay.petra.string.StringPool;
+
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -26,15 +28,30 @@ public class GenericErrorModel {
 	public GenericErrorModel() {
 	}
 
-	public GenericErrorModel(String errorMessage) {
-		_errorMessage = errorMessage;
+	public GenericErrorModel(Exception exception) {
+		Class<?> clazz = exception.getClass();
+
+		_exception = clazz.getName();
+
+		_message = exception.getMessage();
+	}
+
+	public GenericErrorModel(String message) {
+		_exception = StringPool.BLANK;
+		_message = message;
 	}
 
 	@XmlElement
-	public String getErrorMessage() {
-		return _errorMessage;
+	public String getException() {
+		return _exception;
 	}
 
-	private String _errorMessage;
+	@XmlElement
+	public String getMessage() {
+		return _message;
+	}
+
+	private String _exception;
+	private String _message;
 
 }

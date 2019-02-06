@@ -190,6 +190,11 @@ public class CTProcessLocalServiceUtil {
 		return getService().fetchCTProcess(ctProcessId);
 	}
 
+	public static com.liferay.change.tracking.model.CTProcess fetchLatestCTProcess(
+		long companyId) {
+		return getService().fetchLatestCTProcess(companyId);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
 	}

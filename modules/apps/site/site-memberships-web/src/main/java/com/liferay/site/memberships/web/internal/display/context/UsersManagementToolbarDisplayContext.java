@@ -17,6 +17,8 @@ package com.liferay.site.memberships.web.internal.display.context;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.SafeConsumer;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
@@ -29,7 +31,6 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -163,7 +164,9 @@ public class UsersManagementToolbarDisplayContext
 	public String getClearResultsURL() {
 		PortletURL clearResultsURL = getPortletURL();
 
+		clearResultsURL.setParameter("navigation", "all");
 		clearResultsURL.setParameter("keywords", StringPool.BLANK);
+		clearResultsURL.setParameter("roleId", "0");
 
 		return clearResultsURL.toString();
 	}
@@ -189,6 +192,26 @@ public class UsersManagementToolbarDisplayContext
 	@Override
 	public String getDefaultEventHandler() {
 		return "usersManagementToolbarDefaultEventHandler";
+	}
+
+	@Override
+	public List<LabelItem> getFilterLabelItems() {
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Role role = _usersDisplayContext.getRole();
+
+		return new LabelItemList() {
+			{
+				if (role != null) {
+					add(
+						labelItem -> {
+							labelItem.setLabel(
+								role.getTitle(themeDisplay.getLocale()));
+						});
+				}
+			}
+		};
 	}
 
 	@Override
@@ -297,22 +320,8 @@ public class UsersManagementToolbarDisplayContext
 
 							dropdownItem.setActive(
 								Objects.equals(getNavigation(), "roles"));
-
-							String label = LanguageUtil.get(_request, "roles");
-
-							Role role = _usersDisplayContext.getRole();
-
-							if (Objects.equals(getNavigation(), "roles") &&
-								(role != null)) {
-
-								label +=
-									StringPool.COLON + StringPool.SPACE +
-										HtmlUtil.escape(
-											role.getTitle(
-												themeDisplay.getLocale()));
-							}
-
-							dropdownItem.setLabel(label);
+							dropdownItem.setLabel(
+								LanguageUtil.get(_request, "roles"));
 						}
 					)
 				);

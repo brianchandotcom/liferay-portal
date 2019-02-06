@@ -36,6 +36,13 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class BlogPostingResourceImpl extends BaseBlogPostingResourceImpl {
 
 	@Override
+	public BlogPosting getBlogPosting(Long blogPostingId) throws Exception {
+		BlogsEntry blogsEntry = _blogsEntryService.getEntry(blogPostingId);
+
+		return _toBlogPosting(blogsEntry);
+	}
+
+	@Override
 	public Page<BlogPosting> getContentSpaceBlogPostingPage(
 		Long parentId, Pagination pagination) {
 

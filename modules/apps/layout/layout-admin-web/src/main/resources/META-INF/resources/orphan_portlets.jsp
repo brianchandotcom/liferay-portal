@@ -130,17 +130,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "orphan-widgets"));
 	</liferay-ui:search-container>
 </aui:form>
 
-<aui:script require='<%= npmResolvedPackageName + "/js/OrphanPortletsManagementToolbarDefaultEventHandler.es as OrphanPortletsManagementToolbarDefaultEventHandler" %>'>
-	Liferay.component(
-		'<%= orphanPortletsManagementToolbarDisplayContext.getDefaultEventHandler() %>',
-		new OrphanPortletsManagementToolbarDefaultEventHandler.default(
-			{
-				namespace: '<portlet:namespace />'
-			}
-		),
-		{
-			destroyOnNavigate: true,
-			portletId: '<%= HtmlUtil.escapeJS(portletDisplay.getId()) %>'
-		}
-	);
-</aui:script>
+<liferay-frontend:component
+	componentId="<%= orphanPortletsManagementToolbarDisplayContext.getDefaultEventHandler() %>"
+	module="js/OrphanPortletsManagementToolbarDefaultEventHandler.es"
+/>

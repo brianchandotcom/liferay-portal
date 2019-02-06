@@ -19,6 +19,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.layout.admin.web.internal.security.permission.resource.LayoutPageTemplatePermission;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateActionKeys;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -26,8 +27,11 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -76,6 +80,26 @@ public class DisplayPageManagementToolbarDisplayContext
 		clearResultsURL.setParameter("keywords", StringPool.BLANK);
 
 		return clearResultsURL.toString();
+	}
+
+	public Map<String, Object> getComponentContext() {
+		Map<String, Object> componentContext = new HashMap<>();
+
+		PortletURL addDisplayPageURL = liferayPortletResponse.createActionURL();
+
+		addDisplayPageURL.setParameter(
+			ActionRequest.ACTION_NAME,
+			"/layout/add_layout_page_template_entry");
+		addDisplayPageURL.setParameter(
+			"mvcRenderCommandName", "/layout/edit_layout_page_template_entry");
+		addDisplayPageURL.setParameter(
+			"type",
+			String.valueOf(
+				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE));
+
+		componentContext.put("addDisplayPageURL", addDisplayPageURL.toString());
+
+		return componentContext;
 	}
 
 	@Override

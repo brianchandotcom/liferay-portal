@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.context.Pagination;
 import com.liferay.portal.vulcan.dto.Page;
 
+import javax.ws.rs.core.Response;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
@@ -34,6 +36,13 @@ import org.osgi.service.component.annotations.ServiceScope;
 	scope = ServiceScope.PROTOTYPE, service = BlogPostingResource.class
 )
 public class BlogPostingResourceImpl extends BaseBlogPostingResourceImpl {
+
+	@Override
+	public Response deleteBlogPosting(Long blogPostingId) throws Exception {
+		_blogsEntryService.deleteEntry(blogPostingId);
+
+		return Response.noContent().build();
+	}
 
 	@Override
 	public BlogPosting getBlogPosting(Long blogPostingId) throws Exception {

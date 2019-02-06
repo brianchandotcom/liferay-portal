@@ -16,14 +16,13 @@ class SegmentSelector extends Component {
 	 */
 	prepareStateForRender(state) {
 		const {availableSegments} = state;
+
 		const segments = Object.keys(availableSegments)
 			.map(
-				key => (
-					{
+				key => ({
 						id: availableSegments[key].segmentId,
 						label: availableSegments[key].segmentLabel
-					}
-				)
+				})
 			);
 
 		return Object.assign({}, state, {segments});

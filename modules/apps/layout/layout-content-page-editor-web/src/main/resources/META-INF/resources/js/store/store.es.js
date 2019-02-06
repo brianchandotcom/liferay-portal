@@ -215,7 +215,6 @@ class Store extends State {
  * @static
  * @type {!Object}
  */
-
 Store.STATE = {
 
 	/**
@@ -226,7 +225,6 @@ Store.STATE = {
 	 * @review
 	 * @type {Promise}
 	 */
-
 	_dispatchPromise: Config
 		.instanceOf(Promise)
 		.internal()
@@ -240,7 +238,6 @@ Store.STATE = {
 	 * @review
 	 * @type {function[]}
 	 */
-
 	_reducers: Config
 		.arrayOf(Config.func())
 		.internal()
@@ -254,7 +251,6 @@ Store.STATE = {
 	 * @review
 	 * @type {object}
 	 */
-
 	_state: Config
 		.object()
 		.internal()

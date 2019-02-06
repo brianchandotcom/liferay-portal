@@ -95,7 +95,11 @@ TrashManagementToolbarDisplayContext trashManagementToolbarDisplayContext = new 
 			/>
 		</c:if>
 
-		<aui:form name="fm">
+		<portlet:actionURL name="deleteEntries" var="deleteTrashEntriesURL">
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+		</portlet:actionURL>
+
+		<aui:form action="<%= deleteTrashEntriesURL %>" name="fm">
 			<liferay-ui:search-container
 				id="trash"
 				searchContainer="<%= trashDisplayContext.getEntrySearch() %>"
@@ -258,19 +262,8 @@ TrashManagementToolbarDisplayContext trashManagementToolbarDisplayContext = new 
 	</div>
 </div>
 
-<portlet:actionURL name="deleteEntries" var="deleteTrashEntriesURL">
-	<portlet:param name="redirect" value="<%= currentURL %>" />
-</portlet:actionURL>
-
-<%
-Map<String, Object> context = new HashMap<>();
-
-context.put("deleteTrashEntriesURL", deleteTrashEntriesURL);
-%>
-
 <liferay-frontend:component
 	componentId="<%= trashManagementToolbarDisplayContext.getDefaultEventHandler() %>"
-	context="<%= context %>"
 	module="js/ManagementToolbarDefaultEventHandler.es"
 />
 

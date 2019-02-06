@@ -180,8 +180,8 @@ class Store extends State {
 	 * @review
 	 */
 	_getFrozenState(state) {
-		const differentState = Object.entries(state).some(
-			entry => entry[1] !== this._state[entry[0]]
+		const differentState = !this._state || Object.entries(state).some(
+			([key, value]) => this._state[key] !== value
 		);
 
 		if (differentState) {
@@ -204,11 +204,14 @@ class Store extends State {
 	 * @review
 	 */
 	_setInitialState(initialState) {
-		this._state = Object.assign(
+		if (this._state) {
+			throw new Error('State already initialized');
+		}
+
 		this._state = this._getFrozenState(
 			Object.assign(
 				{},
-			DEFAULT_INITIAL_STATE,
+				DEFAULT_INITIAL_STATE,
 				initialState
 			)
 		);
@@ -253,7 +256,7 @@ Store.STATE = {
 		.value([]),
 
 	/**
-	 * @default {}
+	 * @default null
 	 * @instance
 	 * @memberOf Store
 	 * @private
@@ -263,7 +266,7 @@ Store.STATE = {
 	_state: Config
 		.object()
 		.internal()
-		.value({})
+		.value(null)
 };
 
 export {connect, disconnect, createStore, Store};

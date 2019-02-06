@@ -205,20 +205,15 @@ public class SegmentsEntryLocalServiceImpl
 		long groupId, boolean includeAncestorSegmentsEntries, int start,
 		int end, OrderByComparator<SegmentsEntry> orderByComparator) {
 
-		List<SegmentsEntry> segmentsEntries = new ArrayList<>(
-			segmentsEntryPersistence.findByGroupId(
-				groupId, start, end, orderByComparator));
-
 		if (!includeAncestorSegmentsEntries) {
-			return segmentsEntries;
+			return segmentsEntryPersistence.findByGroupId(
+				groupId, start, end, orderByComparator);
 		}
 
-		segmentsEntries.addAll(
-			segmentsEntryPersistence.findByGroupId(
-				PortalUtil.getAncestorSiteGroupIds(groupId), start, end,
-				orderByComparator));
-
-		return segmentsEntries;
+		return segmentsEntryPersistence.findByGroupId(
+			ArrayUtil.append(
+				PortalUtil.getAncestorSiteGroupIds(groupId), groupId),
+			start, end, orderByComparator);
 	}
 
 	@Override
@@ -234,15 +229,13 @@ public class SegmentsEntryLocalServiceImpl
 	public int getSegmentsEntriesCount(
 		long groupId, boolean includeAncestorSegmentsEntries) {
 
-		int count = segmentsEntryPersistence.countByGroupId(groupId);
-
 		if (!includeAncestorSegmentsEntries) {
-			return count;
+			return segmentsEntryPersistence.countByGroupId(groupId);
 		}
 
-		return count +
-			segmentsEntryPersistence.countByGroupId(
-				PortalUtil.getAncestorSiteGroupIds(groupId));
+		return segmentsEntryPersistence.countByGroupId(
+			ArrayUtil.append(
+				PortalUtil.getAncestorSiteGroupIds(groupId), groupId));
 	}
 
 	@Override

@@ -521,8 +521,7 @@ public class CTJournalArticleLocalServiceWrapper
 
 	}
 
-	private void _registerChange(
-			JournalArticle journalArticle, int changeType)
+	private void _registerChange(JournalArticle journalArticle, int changeType)
 		throws CTException {
 
 		_registerChange(journalArticle, changeType, false);

@@ -327,38 +327,32 @@
 	margin-bottom: 0;
 }
 
+.dialog-iframe-popup.task-dialog {
+	background-color: transparent;
+}
+
 .task-action {
-	position: relative;
+	height: 100%;
 
-	&, .task-action > form {
-		height: inherit;
+	> form {
+		display: flex;
+		flex-direction: column;
+		height: 100%;
 	}
+}
 
+.task-action-content {
+	flex-grow: 1;
+}
+
+.modal-footer {
 	.task-action-button {
-		background-color: #FFF;
-		bottom: 0;
-		display: table;
-		margin: 0;
-		padding: 1.5rem;
-		position: absolute;
-		right: 0;
-		text-align: right;
-		width: 100%;
-	}
+		&:not(:first-child) {
+			margin-left: 0.5rem;
+		}
 
-	.task-action-content {
-		background-color: #FFF;
-		height: calc(100% - 88px);
-		left: 0;
-		margin: 0;
-		overflow-y: auto;
-		position: absolute;
-		top: 0;
-		width: 100%;
-	}
-
-	.task-action-content .form-group {
-		margin: 0;
-		padding: 1.5rem 1.5rem 0;
+		&:not(:last-child) {
+			margin-right: 0.5rem;
+		}
 	}
 }

@@ -159,7 +159,10 @@ redirectURL.setParameter("mvcPath", "/view.jsp");
 						destroyOnHide: true,
 						height: 380,
 						resizable: false,
-						width: 720
+						width: 896
+					},
+					dialogIframe: {
+						bodyCssClass: 'dialog-with-footer task-dialog'
 					},
 					id: '<portlet:namespace />assignToDialog',
 					title: '<liferay-ui:message key="assign-to-me" />',
@@ -180,7 +183,10 @@ redirectURL.setParameter("mvcPath", "/view.jsp");
 						destroyOnHide: true,
 						height: 470,
 						resizable: false,
-						width: 720
+						width: 896
+					},
+					dialogIframe: {
+						bodyCssClass: 'dialog-with-footer task-dialog'
 					},
 					id: '<portlet:namespace />assignToDialog',
 					title: '<liferay-ui:message key="assign-to-..." />',

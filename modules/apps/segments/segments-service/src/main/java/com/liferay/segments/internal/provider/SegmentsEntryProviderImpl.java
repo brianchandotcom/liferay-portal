@@ -215,6 +215,10 @@ public class SegmentsEntryProviderImpl implements SegmentsEntryProvider {
 		String className, long classPK, Context context,
 		SegmentsEntry segmentsEntry) {
 
+		if (segmentsEntry.isDefaultSegment()) {
+			return true;
+		}
+
 		if (_segmentsEntryRelLocalService.hasSegmentsEntryRel(
 				segmentsEntry.getSegmentsEntryId(),
 				_portal.getClassNameId(className), classPK)) {

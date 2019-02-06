@@ -18,7 +18,7 @@ export default function postForm(form, url, data) {
 	if (isString(url)) {
 		form = dom.toElement(form);
 
-		if (form && form.nodeName !== 'FORM') {
+		if (form && form.nodeName === 'FORM') {
 			form.setAttribute('method', 'post');
 
 			if (isObject(data)) {

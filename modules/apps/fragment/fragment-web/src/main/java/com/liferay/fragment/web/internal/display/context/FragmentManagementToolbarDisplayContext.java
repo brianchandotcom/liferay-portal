@@ -27,14 +27,18 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Consumer;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
+import javax.portlet.ResourceURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -119,6 +123,71 @@ public class FragmentManagementToolbarDisplayContext
 		clearResultsURL.setParameter("navigation", StringPool.BLANK);
 
 		return clearResultsURL.toString();
+	}
+
+	public Map<String, Object> getComponentContext() throws Exception {
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Map<String, Object> componentContext = new HashMap<>();
+
+		PortletURL copyFragmentEntryURL =
+			liferayPortletResponse.createActionURL();
+
+		copyFragmentEntryURL.setParameter(
+			ActionRequest.ACTION_NAME, "/fragment/copy_fragment_entry");
+
+		copyFragmentEntryURL.setParameter(
+			"redirect", themeDisplay.getURLCurrent());
+
+		componentContext.put(
+			"copyFragmentEntryURL", copyFragmentEntryURL.toString());
+
+		PortletURL deleteFragmentEntriesURL =
+			liferayPortletResponse.createActionURL();
+
+		deleteFragmentEntriesURL.setParameter(
+			ActionRequest.ACTION_NAME, "/fragment/delete_fragment_entries");
+
+		deleteFragmentEntriesURL.setParameter(
+			"redirect", themeDisplay.getURLCurrent());
+
+		componentContext.put(
+			"deleteFragmentEntriesURL", deleteFragmentEntriesURL.toString());
+
+		ResourceURL exportFragmentEntriesURL =
+			liferayPortletResponse.createResourceURL();
+
+		exportFragmentEntriesURL.setResourceID(
+			"/fragment/export_fragment_entries");
+
+		componentContext.put(
+			"exportFragmentEntriesURL", exportFragmentEntriesURL.toString());
+
+		PortletURL moveFragmentEntryURL =
+			liferayPortletResponse.createActionURL();
+
+		moveFragmentEntryURL.setParameter(
+			ActionRequest.ACTION_NAME, "/fragment/move_fragment_entry");
+
+		moveFragmentEntryURL.setParameter(
+			"redirect", themeDisplay.getURLCurrent());
+
+		componentContext.put(
+			"moveFragmentEntryURL", moveFragmentEntryURL.toString());
+
+		PortletURL selectFragmentCollectionURL =
+			liferayPortletResponse.createActionURL();
+
+		selectFragmentCollectionURL.setParameter(
+			"mvcRenderCommandName", "/fragment/select_fragment_collection");
+		selectFragmentCollectionURL.setWindowState(LiferayWindowState.POP_UP);
+
+		componentContext.put(
+			"selectFragmentCollectionURL",
+			selectFragmentCollectionURL.toString());
+
+		return componentContext;
 	}
 
 	@Override

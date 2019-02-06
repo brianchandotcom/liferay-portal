@@ -68,7 +68,9 @@ public interface DLViewFileVersionDisplayContext extends DLDisplayContext {
 
 	public boolean isDownloadLinkVisible() throws PortalException;
 
-	public boolean isSharingLinkVisible() throws PortalException;
+	public default boolean isSharingLinkVisible() throws PortalException {
+		return false;
+	}
 
 	public boolean isVersionInfoVisible() throws PortalException;
 

@@ -78,41 +78,41 @@ $file-icon-text-color-5: #FFF !default;
 $file-icon-text-color-6: #FFF !default;
 $file-icon-text-color-7: #FFF !default;
 
-/* ---------- Fragments colors ---------- */
+/* ---------- palette colors ---------- */
 
-$fragment-blue: $blue !default;
-$fragment-cyan: $cyan !default;
-$fragment-gray-600: $gray-600 !default;
-$fragment-gray-800: $gray-800 !default;
-$fragment-green: $green !default;
-$fragment-indigo: $indigo !default;
-$fragment-orange: $orange !default;
-$fragment-pink: $pink !default;
-$fragment-purple: $purple !default;
-$fragment-red: $red !default;
-$fragment-teal: $teal !default;
-$fragment-white: $white !default;
-$fragment-yellow: $yellow !default;
+$palette-blue: $blue !default;
+$palette-cyan: $cyan !default;
+$palette-gray-600: $gray-600 !default;
+$palette-gray-800: $gray-800 !default;
+$palette-green: $green !default;
+$palette-indigo: $indigo !default;
+$palette-orange: $orange !default;
+$palette-pink: $pink !default;
+$palette-purple: $purple !default;
+$palette-red: $red !default;
+$palette-teal: $teal !default;
+$palette-white: $white !default;
+$palette-yellow: $yellow !default;
 
-$fragments-colors: () !default;
+$palette-colors: () !default;
 
-$fragments-colors: map-merge(
+$palette-colors: map-merge(
 	(
-		"blue": $fragment-blue,
-		"cyan": $fragment-cyan,
-		"gray-dark": $fragment-gray-800,
-		"gray": $fragment-gray-600,
-		"green": $fragment-green,
-		"indigo": $fragment-indigo,
-		"orange": $fragment-orange,
-		"pink": $fragment-pink,
-		"purple": $fragment-purple,
-		"red": $fragment-red,
-		"teal": $fragment-teal,
-		"white": $fragment-white,
-		"yellow": $fragment-yellow
+		"blue": $palette-blue,
+		"cyan": $palette-cyan,
+		"gray-dark": $palette-gray-800,
+		"gray": $palette-gray-600,
+		"green": $palette-green,
+		"indigo": $palette-indigo,
+		"orange": $palette-orange,
+		"pink": $palette-pink,
+		"purple": $palette-purple,
+		"red": $palette-red,
+		"teal": $palette-teal,
+		"white": $palette-white,
+		"yellow": $palette-yellow
 	),
-	$fragments-colors
+	$palette-colors
 );
 
 /* ---------- User icons background colors ---------- */

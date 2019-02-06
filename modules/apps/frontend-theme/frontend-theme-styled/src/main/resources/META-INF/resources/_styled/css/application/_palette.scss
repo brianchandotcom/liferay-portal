@@ -1,0 +1,4 @@
+@each $color, $value in $palette-colors {
+	@include bg-variant(".bg-palette-#{$color}", $value);
+	@include text-emphasis-variant(".text-palette-#{$color}", $value);
+}

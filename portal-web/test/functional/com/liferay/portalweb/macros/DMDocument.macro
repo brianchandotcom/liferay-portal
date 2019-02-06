@@ -943,6 +943,10 @@ definition {
 		KeyPress(locator1 = "DocumentsAndMedia#EDIT_TAGS_FIELD", value1 = "\RETURN");
 
 		Button.clickSave();
+
+		SelectFrame(value1 = "relative=top");
+
+		Alert.viewSuccessMessageText(successMessage = "Changes saved.");
 	}
 
 	macro enableActionsMenuOnPortlet {

@@ -145,6 +145,13 @@ public class YAMLUtil {
 		typeDescription = new TypeDescription(Properties.class);
 
 		typeDescription.substituteProperty(
+			"allOf", List.class, "getAllOfSchemas", "setAllOfSchemas");
+
+		typeDescription.addPropertyParameters("allOf", Schema.class);
+
+		typeDescriptions.add(typeDescription);
+
+		typeDescription.substituteProperty(
 			"$ref", String.class, "getReference", "setReference");
 
 		typeDescriptions.add(typeDescription);

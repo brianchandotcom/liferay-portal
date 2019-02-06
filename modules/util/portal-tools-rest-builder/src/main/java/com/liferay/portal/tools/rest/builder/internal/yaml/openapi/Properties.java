@@ -14,12 +14,17 @@
 
 package com.liferay.portal.tools.rest.builder.internal.yaml.openapi;
 
+import java.util.List;
 import java.util.Map;
 
 /**
  * @author Peter Shin
  */
 public class Properties {
+
+	public List<Schema> getAllOfSchemas() {
+		return _allOfSchemas;
+	}
 
 	public String getDescription() {
 		return _description;
@@ -43,6 +48,10 @@ public class Properties {
 
 	public String getType() {
 		return _type;
+	}
+
+	public void setAllOfSchemas(List<Schema> allOfSchemas) {
+		_allOfSchemas = allOfSchemas;
 	}
 
 	public void setDescription(String description) {
@@ -69,6 +78,7 @@ public class Properties {
 		_type = type;
 	}
 
+	private List<Schema> _allOfSchemas;
 	private String _description;
 	private String _format;
 	private Items _items;

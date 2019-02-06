@@ -72,34 +72,12 @@ LayoutPageTemplateManagementToolbarDisplayContext layoutPageTemplateManagementTo
 	<aui:input name="fileEntryId" type="hidden" />
 </aui:form>
 
-<aui:script require='<%= npmResolvedPackageName + "/js/LayoutPageTemplateEntryDropdownDefaultEventHandler.es as LayoutPageTemplateEntryDropdownDefaultEventHandler" %>'>
-	Liferay.component(
-		'<%= LayoutAdminWebKeys.LAYOUT_PAGE_TEMPLATE_ENTRY_DROPDOWN_DEFAULT_EVENT_HANDLER %>',
-		new LayoutPageTemplateEntryDropdownDefaultEventHandler.default(
-			{
-				namespace: '<portlet:namespace />',
-				spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg'
-			}
-		),
-		{
-			destroyOnNavigate: true,
-			portletId: '<%= HtmlUtil.escapeJS(portletDisplay.getId()) %>'
-		}
-	);
-</aui:script>
+<liferay-frontend:component
+	componentId="<%= LayoutAdminWebKeys.LAYOUT_PAGE_TEMPLATE_ENTRY_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
+	module="js/LayoutPageTemplateEntryDropdownDefaultEventHandler.es"
+/>
 
-<aui:script require='<%= npmResolvedPackageName + "/js/LayoutPageTemplateEntryManagementToolbarDefaultEventHandler.es as LayoutPageTemplateEntryManagementToolbarDefaultEventHandler" %>'>
-	Liferay.component(
-		'<%= layoutPageTemplateManagementToolbarDisplayContext.getDefaultEventHandler() %>',
-		new LayoutPageTemplateEntryManagementToolbarDefaultEventHandler.default(
-			{
-				namespace: '<portlet:namespace />',
-				spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg'
-			}
-		),
-		{
-			destroyOnNavigate: true,
-			portletId: '<%= HtmlUtil.escapeJS(portletDisplay.getId()) %>'
-		}
-	);
-</aui:script>
+<liferay-frontend:component
+	componentId="<%= layoutPageTemplateManagementToolbarDisplayContext.getDefaultEventHandler() %>"
+	module="js/LayoutPageTemplateEntryManagementToolbarDefaultEventHandler.es"
+/>

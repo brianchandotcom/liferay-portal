@@ -63,19 +63,16 @@ public class TestContextHandler {
 			classContext.deactivate();
 
 			if (AfterClass.class.isAssignableFrom(classEvent.getClass())) {
-				synchronized (_activatedTestContexts) {
-					Set<Object> instances = _activatedTestContexts.get(
-						javaClass);
+				Set<Object> instances = _activatedTestContexts.get(javaClass);
 
-					if (instances != null) {
-						TestContext testContext = _testContextInstance.get();
+				if (instances != null) {
+					TestContext testContext = _testContextInstance.get();
 
-						for (Object instance : instances) {
-							testContext.destroy(instance);
-						}
-
-						_activatedTestContexts.remove(javaClass);
+					for (Object instance : instances) {
+						testContext.destroy(instance);
 					}
+
+					_activatedTestContexts.remove(javaClass);
 				}
 
 				classContext.destroy(javaClass);
@@ -119,17 +116,15 @@ public class TestContextHandler {
 		try {
 			testContext.activate(testEvent.getTestInstance());
 
-			synchronized (_activatedTestContexts) {
-				Set<Object> instances = _activatedTestContexts.get(javaClass);
+			Set<Object> instances = _activatedTestContexts.get(javaClass);
 
-				if (instances == null) {
-					instances = new HashSet<>();
+			if (instances == null) {
+				instances = new HashSet<>();
 
-					_activatedTestContexts.put(javaClass, instances);
-				}
-
-				instances.add(testEvent.getTestInstance());
+				_activatedTestContexts.put(javaClass, instances);
 			}
+
+			instances.add(testEvent.getTestInstance());
 
 			testEventContext.proceed();
 		}

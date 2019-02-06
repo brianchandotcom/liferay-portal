@@ -14,6 +14,7 @@
 
 package com.liferay.segments.internal.odata.filter.expression;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
@@ -36,6 +37,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Predicate;
+
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * @author Eduardo García
@@ -101,7 +104,21 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 	public Object visitMethodExpression(
 		List<Object> expressions, MethodExpression.Type type) {
 
-		throw new UnsupportedOperationException();
+		if (type == MethodExpression.Type.CONTAINS) {
+			if (expressions.size() != 2) {
+				throw new UnsupportedOperationException(
+					StringBundler.concat(
+						"Unsupported method visitMethodExpression with method",
+						"type ", type, " and ", expressions.size(), "params"));
+			}
+
+			return _contains(
+				(EntityField)expressions.get(0), expressions.get(1));
+		}
+
+		throw new UnsupportedOperationException(
+			"Unsupported method visitMethodExpression with method type " +
+				type);
 	}
 
 	@Override
@@ -125,6 +142,22 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 		throw new UnsupportedOperationException(
 			"Unsupported method visitUnaryExpressionOperation with operation " +
 				operation);
+	}
+
+	private Predicate<Context> _contains(
+		EntityField entityField, Object fieldValue) {
+
+		if (Objects.equals(entityField.getType(), EntityField.Type.STRING)) {
+			Predicate<Context> predicate = p -> StringUtils.containsIgnoreCase(
+				String.valueOf(p.get(entityField.getName())),
+				String.valueOf(fieldValue));
+
+			return predicate;
+		}
+
+		throw new UnsupportedOperationException(
+			"Unsupported method _contains with entity field type " +
+				entityField.getType());
 	}
 
 	private Predicate<Context> _getANDPredicate(

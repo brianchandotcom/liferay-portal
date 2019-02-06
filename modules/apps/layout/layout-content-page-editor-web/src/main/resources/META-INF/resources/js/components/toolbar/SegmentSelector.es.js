@@ -1,8 +1,10 @@
 import Component from 'metal-component';
 import Soy from 'metal-soy';
-import getConnectedComponent from '../../store/ConnectedComponent.es';
-import templates from './SegmentSelector.soy';
+
 import {CHANGE_SEGMENT_ID} from '../../actions/actions.es';
+import getConnectedComponent from '../../store/ConnectedComponent.es';
+import {setIn} from '../../utils/FragmentsEditorUpdateUtils.es';
+import templates from './SegmentSelector.soy';
 
 /**
  * SegmentSelector
@@ -20,12 +22,12 @@ class SegmentSelector extends Component {
 		const segments = Object.keys(availableSegments)
 			.map(
 				key => ({
-						id: availableSegments[key].segmentId,
-						label: availableSegments[key].segmentLabel
+					id: availableSegments[key].segmentId,
+					label: availableSegments[key].segmentLabel
 				})
 			);
 
-		return Object.assign({}, state, {segments});
+		return setIn(state, ['segments'], segments);
 	}
 
 	/**

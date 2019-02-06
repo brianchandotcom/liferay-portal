@@ -928,6 +928,23 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro editTags {
+		AssertTextEquals(locator1 = "Modal#HEADER", value1 = "Edit Tags");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Modal#BODY",
+			value1 = "These changes will be applied to &quot;${dmDocumentTitle}&quot;."
+		);
+
+		Type(locator1 = "DocumentsAndMedia#EDIT_TAGS_FIELD", value1 = "${tagName}");
+
+		SelectFrame(value1 = "relative=top");
+
+		KeyPress(locator1 = "DocumentsAndMedia#EDIT_TAGS_FIELD", value1 = "\RETURN");
+
+		PortletEntry.save();
+	}
+
 	macro enableActionsMenuOnPortlet {
 		Portlet.gotoPortletOptions(portletOption = "Configuration");
 

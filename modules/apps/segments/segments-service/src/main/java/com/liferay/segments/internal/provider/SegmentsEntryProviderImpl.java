@@ -37,6 +37,7 @@ import com.liferay.segments.provider.SegmentsEntryProvider;
 import com.liferay.segments.service.SegmentsEntryLocalService;
 import com.liferay.segments.service.SegmentsEntryRelLocalService;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.Stream;
@@ -161,6 +162,20 @@ public class SegmentsEntryProviderImpl implements SegmentsEntryProvider {
 		return stream.filter(
 			segmentsEntry -> _isMember(
 				className, classPK, context, segmentsEntry)
+		).sorted(
+			(o1, o2) -> {
+				if (o1.isDefaultSegment()) {
+					return 1;
+				}
+
+				if (o2.isDefaultSegment()) {
+					return -1;
+				}
+
+				Date modifiedDate = o2.getModifiedDate();
+
+				return modifiedDate.compareTo(o1.getModifiedDate());
+			}
 		).mapToLong(
 			SegmentsEntry::getSegmentsEntryId
 		).toArray();

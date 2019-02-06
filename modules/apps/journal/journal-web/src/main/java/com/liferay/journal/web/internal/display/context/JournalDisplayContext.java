@@ -302,6 +302,16 @@ public class JournalDisplayContext {
 		return commentsSearchContainer.getTotal();
 	}
 
+	public Map<String, Object> getComponentContext() throws Exception {
+		Map<String, Object> componentContext = new HashMap<>();
+
+		componentContext.put(
+			"trashEnabled",
+			_trashHelper.isTrashEnabled(_themeDisplay.getScopeGroupId()));
+
+		return componentContext;
+	}
+
 	public String getDDMStructureKey() {
 		if (_ddmStructureKey != null) {
 			return _ddmStructureKey;

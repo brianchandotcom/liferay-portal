@@ -128,6 +128,44 @@ public class ContextODataMatcherTest {
 	}
 
 	@Test
+	public void testMatchesStringNotContains() throws Exception {
+		Context context = new Context() {
+			{
+				put(Context.URL, "http://www.liferay.com");
+			}
+		};
+
+		Assert.assertFalse(
+			_contextODataMatcher.matches(
+				StringBundler.concat(
+					"not (contains(", Context.URL, ", 'liferay'))"),
+				context));
+		Assert.assertTrue(
+			_contextODataMatcher.matches(
+				StringBundler.concat(
+					"not (contains(", Context.URL, ", 'google'))"),
+				context));
+	}
+
+	@Test
+	public void testMatchesStringNotEquals() throws Exception {
+		Context context = new Context() {
+			{
+				put(Context.LANGUAGE_ID, "en");
+			}
+		};
+
+		Assert.assertFalse(
+			_contextODataMatcher.matches(
+				StringBundler.concat("not (", Context.LANGUAGE_ID, " eq 'en')"),
+				context));
+		Assert.assertTrue(
+			_contextODataMatcher.matches(
+				StringBundler.concat("not (", Context.LANGUAGE_ID, " eq 'fr')"),
+				context));
+	}
+
+	@Test
 	public void testMatchesWithAnd() throws Exception {
 		Context context = new Context() {
 			{

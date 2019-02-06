@@ -91,17 +91,7 @@ SiteAdminManagementToolbarDisplayContext siteAdminManagementToolbarDisplayContex
 	</div>
 </div>
 
-<aui:script require='<%= npmResolvedPackageName + "/js/ManagementToolbarDefaultEventHandler.es as ManagementToolbarDefaultEventHandler" %>'>
-	Liferay.component(
-		'<%= siteAdminManagementToolbarDisplayContext.getDefaultEventHandler() %>',
-		new ManagementToolbarDefaultEventHandler.default(
-			{
-				namespace: '<portlet:namespace />'
-			}
-		),
-		{
-			destroyOnNavigate: true,
-			portletId: '<%= HtmlUtil.escapeJS(portletDisplay.getId()) %>'
-		}
-	);
-</aui:script>
+<liferay-frontend:component
+	componentId="<%= siteAdminManagementToolbarDisplayContext.getDefaultEventHandler() %>"
+	module="js/ManagementToolbarDefaultEventHandler.es"
+/>

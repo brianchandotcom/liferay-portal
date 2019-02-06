@@ -92,6 +92,24 @@ public class ContextODataMatcherTest {
 	}
 
 	@Test
+	public void testMatchesStringContains() throws Exception {
+		Context context = new Context() {
+			{
+				put(Context.URL, "http://www.liferay.com");
+			}
+		};
+
+		Assert.assertTrue(
+			_contextODataMatcher.matches(
+				StringBundler.concat("contains(", Context.URL, ", 'liferay')"),
+				context));
+		Assert.assertFalse(
+			_contextODataMatcher.matches(
+				StringBundler.concat("contains(", Context.URL, ", 'google')"),
+				context));
+	}
+
+	@Test
 	public void testMatchesStringEquals() throws Exception {
 		Context context = new Context() {
 			{

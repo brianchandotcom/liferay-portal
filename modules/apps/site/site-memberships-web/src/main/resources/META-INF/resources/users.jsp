@@ -28,22 +28,7 @@ Role role = usersDisplayContext.getRole();
 />
 
 <clay:management-toolbar
-	actionDropdownItems="<%= usersDisplayContext.getActionDropdownItems() %>"
-	clearResultsURL="<%= usersDisplayContext.getClearResultsURL() %>"
-	componentId="usersManagementToolbar"
-	disabled="<%= usersDisplayContext.isDisabledManagementBar() %>"
-	filterDropdownItems="<%= usersDisplayContext.getFilterDropdownItems() %>"
-	infoPanelId="infoPanelId"
-	itemsTotal="<%= usersDisplayContext.getTotalItems() %>"
-	searchActionURL="<%= usersDisplayContext.getSearchActionURL() %>"
-	searchContainerId="users"
-	searchFormName="searchFm"
-	showCreationMenu="<%= GroupPermissionUtil.contains(permissionChecker, siteMembershipsDisplayContext.getGroupId(), ActionKeys.ASSIGN_MEMBERS) %>"
-	showInfoButton="<%= true %>"
-	showSearch="<%= usersDisplayContext.isShowSearch() %>"
-	sortingOrder="<%= usersDisplayContext.getOrderByType() %>"
-	sortingURL="<%= usersDisplayContext.getSortingURL() %>"
-	viewTypeItems="<%= usersDisplayContext.getViewTypeItems() %>"
+	displayContext="<%= new UsersManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, usersDisplayContext) %>"
 />
 
 <liferay-ui:error embed="<%= false %>" exception="<%= RequiredUserException.class %>" message="one-or-more-users-were-not-removed-since-they-belong-to-a-user-group" />

@@ -1,0 +1,15 @@
+{
+	"dependencies": {
+		"metal-state": "^2.16.7"
+	},
+	"devDependencies": {
+		"liferay-npm-scripts": "1.2.0"
+	},
+	"name": "site-membership-web",
+	"scripts": {
+		"build": "liferay-npm-scripts build --bundler",
+		"csf": "liferay-npm-scripts lint",
+		"format": "liferay-npm-scripts format"
+	},
+	"version": "3.0.0"
+}

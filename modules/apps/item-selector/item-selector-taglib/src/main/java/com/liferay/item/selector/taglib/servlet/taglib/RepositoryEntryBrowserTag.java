@@ -20,7 +20,6 @@ import com.liferay.item.selector.ItemSelectorReturnTypeResolver;
 import com.liferay.item.selector.constants.ItemSelectorPortletKeys;
 import com.liferay.item.selector.taglib.ItemSelectorRepositoryEntryBrowserReturnTypeUtil;
 import com.liferay.item.selector.taglib.internal.servlet.ServletContextUtil;
-import com.liferay.item.selector.taglib.internal.util.DLURLHelperProvider;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
@@ -198,9 +197,6 @@ public class RepositoryEntryBrowserTag extends IncludeTag {
 			"liferay-item-selector:repository-entry-browser:" +
 				"dlMimeTypeDisplayContext",
 			_dlMimeTypeDisplayContext);
-		request.setAttribute(
-			"liferay-item-selector:repository-entry-browser:dlurlHelper",
-			DLURLHelperProvider.getDLURLHelper());
 		request.setAttribute(
 			"liferay-item-selector:repository-entry-browser:" +
 				"emptyResultsMessage",

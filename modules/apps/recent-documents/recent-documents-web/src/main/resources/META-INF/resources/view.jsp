@@ -40,7 +40,7 @@ List<DLFileRank> fileRanks = DLFileRankLocalServiceUtil.getFileRanks(scopeGroupI
 							iconCssClass="<%= fileEntry.getIconCssClass() %>"
 							label="<%= true %>"
 							message="<%= fileEntry.getTitle() %>"
-							url="<%= dlurlHelper.getPreviewURL(fileEntry, fileEntry.getFileVersion(), themeDisplay, StringPool.BLANK, false, true) %>"
+							url="<%= DLURLHelperUtil.getPreviewURL(fileEntry, fileEntry.getFileVersion(), themeDisplay, StringPool.BLANK, false, true) %>"
 						/>
 					</li>
 

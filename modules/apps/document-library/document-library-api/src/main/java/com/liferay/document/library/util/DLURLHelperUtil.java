@@ -38,15 +38,7 @@ public class DLURLHelperUtil {
 		return _dlurlHelper;
 	}
 
-	public static void setDLURLHelper(DLURLHelper dlurlHelper) {
-		if (_dlurlHelper != null) {
-			return;
-		}
-
-		_dlurlHelper = dlurlHelper;
-	}
-
-	public String getDownloadURL(
+	public static String getDownloadURL(
 		FileEntry fileEntry, FileVersion fileVersion, ThemeDisplay themeDisplay,
 		String queryString) {
 
@@ -54,7 +46,7 @@ public class DLURLHelperUtil {
 			fileEntry, fileVersion, themeDisplay, queryString);
 	}
 
-	public String getDownloadURL(
+	public static String getDownloadURL(
 		FileEntry fileEntry, FileVersion fileVersion, ThemeDisplay themeDisplay,
 		String queryString, boolean appendVersion, boolean absoluteURL) {
 
@@ -63,7 +55,7 @@ public class DLURLHelperUtil {
 			absoluteURL);
 	}
 
-	public String getFileEntryControlPanelLink(
+	public static String getFileEntryControlPanelLink(
 			PortletRequest portletRequest, long fileEntryId)
 		throws PortalException {
 
@@ -71,7 +63,7 @@ public class DLURLHelperUtil {
 			portletRequest, fileEntryId);
 	}
 
-	public String getFolderControlPanelLink(
+	public static String getFolderControlPanelLink(
 			PortletRequest portletRequest, long folderId)
 		throws PortalException {
 
@@ -79,7 +71,7 @@ public class DLURLHelperUtil {
 			portletRequest, folderId);
 	}
 
-	public String getImagePreviewURL(
+	public static String getImagePreviewURL(
 			FileEntry fileEntry, FileVersion fileVersion,
 			ThemeDisplay themeDisplay)
 		throws Exception {
@@ -88,7 +80,7 @@ public class DLURLHelperUtil {
 			fileEntry, fileVersion, themeDisplay);
 	}
 
-	public String getImagePreviewURL(
+	public static String getImagePreviewURL(
 			FileEntry fileEntry, FileVersion fileVersion,
 			ThemeDisplay themeDisplay, String queryString,
 			boolean appendVersion, boolean absoluteURL)
@@ -99,14 +91,14 @@ public class DLURLHelperUtil {
 			absoluteURL);
 	}
 
-	public String getImagePreviewURL(
+	public static String getImagePreviewURL(
 			FileEntry fileEntry, ThemeDisplay themeDisplay)
 		throws Exception {
 
 		return getDLURLHelper().getImagePreviewURL(fileEntry, themeDisplay);
 	}
 
-	public String getPreviewURL(
+	public static String getPreviewURL(
 		FileEntry fileEntry, FileVersion fileVersion, ThemeDisplay themeDisplay,
 		String queryString) {
 
@@ -114,7 +106,7 @@ public class DLURLHelperUtil {
 			fileEntry, fileVersion, themeDisplay, queryString);
 	}
 
-	public String getPreviewURL(
+	public static String getPreviewURL(
 		FileEntry fileEntry, FileVersion fileVersion, ThemeDisplay themeDisplay,
 		String queryString, boolean appendVersion, boolean absoluteURL) {
 
@@ -123,7 +115,7 @@ public class DLURLHelperUtil {
 			absoluteURL);
 	}
 
-	public String getThumbnailSrc(
+	public static String getThumbnailSrc(
 			FileEntry fileEntry, FileVersion fileVersion,
 			ThemeDisplay themeDisplay)
 		throws Exception {
@@ -132,21 +124,21 @@ public class DLURLHelperUtil {
 			fileEntry, fileVersion, themeDisplay);
 	}
 
-	public String getThumbnailSrc(
+	public static String getThumbnailSrc(
 			FileEntry fileEntry, ThemeDisplay themeDisplay)
 		throws Exception {
 
 		return getDLURLHelper().getThumbnailSrc(fileEntry, themeDisplay);
 	}
 
-	public String getWebDavURL(
+	public static String getWebDavURL(
 			ThemeDisplay themeDisplay, Folder folder, FileEntry fileEntry)
 		throws PortalException {
 
 		return getDLURLHelper().getWebDavURL(themeDisplay, folder, fileEntry);
 	}
 
-	public String getWebDavURL(
+	public static String getWebDavURL(
 			ThemeDisplay themeDisplay, Folder folder, FileEntry fileEntry,
 			boolean manualCheckInRequired)
 		throws PortalException {
@@ -155,7 +147,7 @@ public class DLURLHelperUtil {
 			themeDisplay, folder, fileEntry, manualCheckInRequired);
 	}
 
-	public String getWebDavURL(
+	public static String getWebDavURL(
 			ThemeDisplay themeDisplay, Folder folder, FileEntry fileEntry,
 			boolean manualCheckInRequired, boolean officeExtensionRequired)
 		throws PortalException {
@@ -163,6 +155,14 @@ public class DLURLHelperUtil {
 		return getDLURLHelper().getWebDavURL(
 			themeDisplay, folder, fileEntry, manualCheckInRequired,
 			officeExtensionRequired);
+	}
+
+	public static void setDLURLHelper(DLURLHelper dlurlHelper) {
+		if (_dlurlHelper != null) {
+			return;
+		}
+
+		_dlurlHelper = dlurlHelper;
 	}
 
 	private static DLURLHelper _dlurlHelper;

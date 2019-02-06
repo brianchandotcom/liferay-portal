@@ -15,8 +15,7 @@
 package com.liferay.adaptive.media.image.taglib.servlet.taglib;
 
 import com.liferay.adaptive.media.image.html.AMImageHTMLTagFactory;
-import com.liferay.adaptive.media.image.taglib.util.DLURLHelperProvider;
-import com.liferay.document.library.util.DLURLHelper;
+import com.liferay.document.library.util.DLURLHelperUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -84,9 +83,7 @@ public class AMImageImgTag extends AttributesTagSupport implements BodyTag {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		DLURLHelper dlurlHelper = DLURLHelperProvider.getDLURLHelper();
-
-		String downloadURL = dlurlHelper.getPreviewURL(
+		String downloadURL = DLURLHelperUtil.getPreviewURL(
 			_fileVersion.getFileEntry(), _fileVersion, themeDisplay,
 			StringPool.BLANK);
 

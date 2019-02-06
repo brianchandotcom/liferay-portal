@@ -14,8 +14,7 @@
 
 package com.liferay.blogs.model.impl;
 
-import com.liferay.blogs.internal.util.DLURLHelperProvider;
-import com.liferay.document.library.util.DLURLHelper;
+import com.liferay.document.library.util.DLURLHelperUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -48,9 +47,7 @@ public class BlogsEntryImpl extends BlogsEntryBaseImpl {
 		FileEntry fileEntry = PortletFileRepositoryUtil.getPortletFileEntry(
 			coverImageFileEntryId);
 
-		DLURLHelper dlurlHelper = DLURLHelperProvider.getDLURLHelper();
-
-		return dlurlHelper.getPreviewURL(
+		return DLURLHelperUtil.getPreviewURL(
 			fileEntry, fileEntry.getFileVersion(), themeDisplay,
 			StringPool.BLANK);
 	}
@@ -106,9 +103,7 @@ public class BlogsEntryImpl extends BlogsEntryBaseImpl {
 			FileEntry fileEntry = PortletFileRepositoryUtil.getPortletFileEntry(
 				smallImageFileEntryId);
 
-			DLURLHelper dlurlHelper = DLURLHelperProvider.getDLURLHelper();
-
-			return dlurlHelper.getPreviewURL(
+			return DLURLHelperUtil.getPreviewURL(
 				fileEntry, fileEntry.getFileVersion(), themeDisplay,
 				StringPool.BLANK);
 		}

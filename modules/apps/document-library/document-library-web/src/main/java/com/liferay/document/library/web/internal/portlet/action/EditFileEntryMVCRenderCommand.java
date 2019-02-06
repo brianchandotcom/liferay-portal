@@ -15,11 +15,9 @@
 package com.liferay.document.library.web.internal.portlet.action;
 
 import com.liferay.document.library.constants.DLPortletKeys;
-import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Iván Zaera
@@ -37,16 +35,8 @@ public class EditFileEntryMVCRenderCommand
 	extends GetFileEntryMVCRenderCommand {
 
 	@Override
-	protected DLURLHelper getDLURLHelper() {
-		return _dlurlHelper;
-	}
-
-	@Override
 	protected String getPath() {
 		return "/document_library/edit_file_entry.jsp";
 	}
-
-	@Reference
-	private DLURLHelper _dlurlHelper;
 
 }

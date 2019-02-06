@@ -17,8 +17,6 @@
 <%@ include file="/preview/init.jsp" %>
 
 <%
-DLURLHelper dlurlHelper = (DLURLHelper)request.getAttribute(DLPreviewPDFConstants.DL_URL_HELPER);
-
 String randomNamespace = PortalUtil.generateRandomKey(request, "portlet_document_library_view_file_entry_preview") + StringPool.UNDERLINE;
 
 FileVersion fileVersion = (FileVersion)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FILE_VERSION);
@@ -35,7 +33,7 @@ if (status != WorkflowConstants.STATUS_ANY) {
 
 String[] previewFileURLs = new String[1];
 
-previewFileURLs[0] = dlurlHelper.getPreviewURL(fileVersion.getFileEntry(), fileVersion, themeDisplay, previewQueryString);
+previewFileURLs[0] = DLURLHelperUtil.getPreviewURL(fileVersion.getFileEntry(), fileVersion, themeDisplay, previewQueryString);
 
 String previewFileURL = previewFileURLs[0];
 

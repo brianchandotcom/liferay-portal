@@ -15,15 +15,12 @@
 package com.liferay.blogs.web.internal.portlet.action;
 
 import com.liferay.blogs.constants.BlogsPortletKeys;
-import com.liferay.blogs.web.constants.BlogsWebKeys;
-import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Sergio González
@@ -42,12 +39,7 @@ public class BlogsViewMVCRenderCommand implements MVCRenderCommand {
 	public String render(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		renderRequest.setAttribute(BlogsWebKeys.DL_URL_HELPER, _dlurlHelper);
-
 		return "/blogs/view.jsp";
 	}
-
-	@Reference
-	private DLURLHelper _dlurlHelper;
 
 }

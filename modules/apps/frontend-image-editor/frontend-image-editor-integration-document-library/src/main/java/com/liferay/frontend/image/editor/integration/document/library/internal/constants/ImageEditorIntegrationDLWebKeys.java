@@ -22,7 +22,4 @@ public class ImageEditorIntegrationDLWebKeys {
 	public static final String IMAGE_EDITOR_INTEGRATION_DL_FILE_VERSION =
 		"IMAGE_EDITOR_INTEGRATION_DL_FILE_VERSION";
 
-	public static final String IMAGE_EDITOR_INTEGRATION_DL_URL_HELPER =
-		"IMAGE_EDITOR_INTEGRATION_DL_URL_HELPER";
-
 }

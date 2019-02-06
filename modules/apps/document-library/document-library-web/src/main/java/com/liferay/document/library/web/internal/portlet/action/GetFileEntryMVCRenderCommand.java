@@ -16,8 +16,6 @@ package com.liferay.document.library.web.internal.portlet.action;
 
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.exception.NoSuchFileVersionException;
-import com.liferay.document.library.util.DLURLHelper;
-import com.liferay.document.library.web.internal.constants.DLWebKeys;
 import com.liferay.portal.kernel.exception.NoSuchRepositoryEntryException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -57,9 +55,6 @@ public abstract class GetFileEntryMVCRenderCommand implements MVCRenderCommand {
 				renderRequest.setAttribute(
 					WebKeys.DOCUMENT_LIBRARY_FILE_VERSION, fileVersion);
 			}
-
-			renderRequest.setAttribute(
-				DLWebKeys.DOCUMENT_LIBRARY_URL_HELPER, getDLURLHelper());
 		}
 		catch (Exception e) {
 			if (e instanceof NoSuchFileEntryException ||
@@ -77,8 +72,6 @@ public abstract class GetFileEntryMVCRenderCommand implements MVCRenderCommand {
 
 		return getPath();
 	}
-
-	protected abstract DLURLHelper getDLURLHelper();
 
 	protected abstract String getPath();
 

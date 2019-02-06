@@ -17,8 +17,6 @@
 <%@ include file="/preview/init.jsp" %>
 
 <%
-DLURLHelper dlurlHelper = (DLURLHelper)request.getAttribute(DLPreviewImageConstants.DL_URL_HELPER);
-
 String randomNamespace = PortalUtil.generateRandomKey(request, "portlet_document_library_view_file_entry_preview") + StringPool.UNDERLINE;
 
 FileVersion fileVersion = (FileVersion)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FILE_VERSION);
@@ -33,7 +31,7 @@ if (status != WorkflowConstants.STATUS_ANY) {
 
 Map<String, Object> context = new HashMap<>();
 
-context.put("imageURL", dlurlHelper.getPreviewURL(fileVersion.getFileEntry(), fileVersion, themeDisplay, previewQueryString));
+context.put("imageURL", DLURLHelperUtil.getPreviewURL(fileVersion.getFileEntry(), fileVersion, themeDisplay, previewQueryString));
 context.put("spritemap", themeDisplay.getPathThemeImages() + "/lexicon/icons.svg");
 %>
 

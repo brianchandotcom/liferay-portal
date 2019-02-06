@@ -17,7 +17,6 @@ package com.liferay.blogs.web.internal.portlet.action;
 import com.liferay.blogs.constants.BlogsPortletKeys;
 import com.liferay.blogs.web.constants.BlogsWebKeys;
 import com.liferay.document.library.display.context.DLMimeTypeDisplayContext;
-import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 
 import javax.portlet.RenderRequest;
@@ -49,7 +48,6 @@ public class BlogsAdminViewMVCRenderCommand implements MVCRenderCommand {
 		renderRequest.setAttribute(
 			BlogsWebKeys.DL_MIME_TYPE_DISPLAY_CONTEXT,
 			_dlMimeTypeDisplayContext);
-		renderRequest.setAttribute(BlogsWebKeys.DL_URL_HELPER, _dlurlHelper);
 
 		return "/blogs_admin/view.jsp";
 	}
@@ -60,8 +58,5 @@ public class BlogsAdminViewMVCRenderCommand implements MVCRenderCommand {
 		policyOption = ReferencePolicyOption.GREEDY
 	)
 	private volatile DLMimeTypeDisplayContext _dlMimeTypeDisplayContext;
-
-	@Reference
-	private DLURLHelper _dlurlHelper;
 
 }

@@ -188,17 +188,7 @@
 	</liferay-ui:search-container>
 </aui:form>
 
-<aui:script require='<%= npmResolvedPackageName + "/js/SiteDropdownDefaultEventHandler.es as SiteDropdownDefaultEventHandler" %>'>
-	Liferay.component(
-		'<%= MySitesWebKeys.SITES_DROPDOWN_DEFAULT_EVENT_HANDLER %>',
-		new SiteDropdownDefaultEventHandler.default(
-			{
-				namespace: '<portlet:namespace />'
-			}
-		),
-		{
-			destroyOnNavigate: true,
-			portletId: '<%= HtmlUtil.escapeJS(portletDisplay.getId()) %>'
-		}
-	);
-</aui:script>
+<liferay-frontend:component
+	componentId="<%= MySitesWebKeys.SITES_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
+	module="js/SiteDropdownDefaultEventHandler.es"
+/>

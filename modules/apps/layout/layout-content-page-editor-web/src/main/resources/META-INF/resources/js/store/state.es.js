@@ -1,6 +1,7 @@
 import {Config} from 'metal-state';
 
 import {FRAGMENTS_EDITOR_ITEM_BORDERS} from '../utils/constants';
+import {setIn} from '../utils/FragmentsEditorUpdateUtils.es';
 
 /**
  * Initial state
@@ -653,20 +654,11 @@ const INITIAL_STATE = {
  */
 const DEFAULT_INITIAL_STATE = Object.keys(INITIAL_STATE)
 	.reduce(
-		(accumulatedState, key) => {
-			let newAccumulatgedState = accumulatedState;
-
-			if (INITIAL_STATE[key].config) {
-				newAccumulatgedState = Object.assign(
-					accumulatedState,
-					{
-						[key]: INITIAL_STATE[key].config.value
-					}
-				);
-			}
-
-			return newAccumulatgedState;
-		},
+		(defaultInitialState, key) => setIn(
+			defaultInitialState,
+			[key],
+			INITIAL_STATE[key].config.value
+		),
 		{}
 	);
 

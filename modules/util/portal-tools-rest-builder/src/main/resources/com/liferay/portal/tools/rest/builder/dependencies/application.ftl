@@ -1,7 +1,5 @@
 package ${configYAML.apiPackagePath}.internal.jaxrs.application;
 
-import com.liferay.portal.kernel.model.Company;
-
 import javax.annotation.Generated;
 
 import javax.ws.rs.core.Application;

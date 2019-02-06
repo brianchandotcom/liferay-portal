@@ -2558,11 +2558,18 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		Project project, File portalRootDir, String configurationName,
 		String portalToolName) {
 
-		if ((portalRootDir == null) ||
-			GradleUtil.getProperty(
+		if (GradleUtil.getProperty(
 				project, portalToolName + ".ignore.local", true)) {
 
 			return;
+		}
+
+		String portalRootDirValue = System.getProperty("portal.root.dir");
+
+		if ((portalRootDir == null) &&
+			Validator.isNotNull(portalRootDirValue)) {
+
+			portalRootDir = new File(portalRootDirValue);
 		}
 
 		File dir = new File(

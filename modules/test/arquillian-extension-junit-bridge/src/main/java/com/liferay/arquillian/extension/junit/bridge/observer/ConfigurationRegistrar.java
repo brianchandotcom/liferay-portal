@@ -14,15 +14,23 @@
 
 package com.liferay.arquillian.extension.junit.bridge.observer;
 
+import com.liferay.arquillian.extension.junit.bridge.container.registry.LocalContainerRegistry;
+
 import java.io.IOException;
 
 import org.jboss.arquillian.config.descriptor.api.ArquillianDescriptor;
+import org.jboss.arquillian.config.descriptor.api.ContainerDef;
 import org.jboss.arquillian.config.descriptor.impl.ArquillianDescriptorImpl;
+import org.jboss.arquillian.config.descriptor.impl.ContainerDefImpl;
+import org.jboss.arquillian.container.spi.ContainerRegistry;
+import org.jboss.arquillian.core.api.Injector;
+import org.jboss.arquillian.core.api.Instance;
 import org.jboss.arquillian.core.api.InstanceProducer;
 import org.jboss.arquillian.core.api.annotation.ApplicationScoped;
 import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.arquillian.core.api.annotation.Observes;
 import org.jboss.arquillian.core.api.event.ManagerStarted;
+import org.jboss.arquillian.core.spi.ServiceLoader;
 
 /**
  * @author Matthew Tambara
@@ -33,10 +41,32 @@ public class ConfigurationRegistrar {
 		throws IOException {
 
 		_instanceProducer.set(new ArquillianDescriptorImpl(null));
+
+		ContainerRegistry containerRegistry = new LocalContainerRegistry(
+			_injectorInstance.get());
+
+		ContainerDef containerDef = new ContainerDefImpl("arquillian.xml");
+
+		containerDef.setContainerName("default");
+
+		containerRegistry.create(containerDef, _serviceLoaderInstance.get());
+
+		_containerRegistryInstanceProducer.set(containerRegistry);
 	}
 
 	@ApplicationScoped
 	@Inject
+	private InstanceProducer<ContainerRegistry>
+		_containerRegistryInstanceProducer;
+
+	@Inject
+	private Instance<Injector> _injectorInstance;
+
+	@ApplicationScoped
+	@Inject
 	private InstanceProducer<ArquillianDescriptor> _instanceProducer;
+
+	@Inject
+	private Instance<ServiceLoader> _serviceLoaderInstance;
 
 }

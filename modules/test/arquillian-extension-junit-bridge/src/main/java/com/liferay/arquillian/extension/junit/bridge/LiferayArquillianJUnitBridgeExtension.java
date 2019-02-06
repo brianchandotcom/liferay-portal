@@ -23,7 +23,6 @@ import com.liferay.arquillian.extension.junit.bridge.context.DeploymentContextIm
 import com.liferay.arquillian.extension.junit.bridge.deployment.BndDeploymentScenarioGenerator;
 import com.liferay.arquillian.extension.junit.bridge.observer.ConfigurationRegistrar;
 import com.liferay.arquillian.extension.junit.bridge.observer.JUnitBridgeObserver;
-import com.liferay.arquillian.extension.junit.bridge.observer.RegistryCreator;
 import com.liferay.arquillian.extension.junit.bridge.protocol.osgi.JMXOSGiProtocol;
 import com.liferay.arquillian.extension.junit.bridge.remote.processor.OSGiAllInProcessor;
 
@@ -53,7 +52,6 @@ public class LiferayArquillianJUnitBridgeExtension
 			extensionBuilder.observer(ContainerDeployController.class);
 			extensionBuilder.observer(ContainerDeploymentContextHandler.class);
 			extensionBuilder.observer(ContainerLifecycleController.class);
-			extensionBuilder.observer(RegistryCreator.class);
 			extensionBuilder.service(
 				ApplicationArchiveProcessor.class, OSGiAllInProcessor.class);
 			extensionBuilder.service(

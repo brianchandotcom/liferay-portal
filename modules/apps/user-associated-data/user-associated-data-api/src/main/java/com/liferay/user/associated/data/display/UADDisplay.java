@@ -104,6 +104,22 @@ public interface UADDisplay<T> extends UADComponent<T> {
 	 */
 	public Map<String, Object> getFieldValues(T t, String[] fieldNames);
 
+	/**
+	 * Returns the primary key of the parent container for the given
+	 * entity.
+	 *
+	 * This method is optional and only applies when the implementation
+	 * is returned from
+	 * {@link UADHierarchyDeclaration#getContainerUADDisplays()} or
+	 * {@link UADHierarchyDeclaration#getNoncontainerUADDisplays()}. It is
+	 * required for hierarchy display to function correctly, but not for
+	 * normal usage.
+	 *
+	 * @param t the entity to retrieve the parent container primary key for
+	 * @return the primary key of the parent container of the given entity.
+	 * @review
+	 * @see UADHierarchyDeclaration
+	 */
 	public default Serializable getParentContainerId(T t) {
 		return null;
 	}
@@ -137,6 +153,30 @@ public interface UADDisplay<T> extends UADComponent<T> {
 	 */
 	public String[] getSortingFieldNames();
 
+	/**
+	 * Returns the entity of type {@code T} that satisfies two conditions:
+	 *
+	 * 1. It is an immediate child of the container identified by
+	 * {@code parentContainerType} and {@code parentContainerId}.
+	 * 2. It is an ancestor of the childObject. It does not have to be an
+	 * immediate ancestor.
+	 *
+	 * If neither of these conditions are met, this method should return null.
+	 *
+	 * This method is optional and only applies when the implementation
+	 * is returned from
+	 * {@link UADHierarchyDeclaration#getContainerUADDisplays()}. It is
+	 * required for hierarchy display to function correctly, but not for
+	 * normal usage.
+	 *
+	 * @param parentContainerType
+	 * @param parentContainerId
+	 * @param childObject
+	 * @return the highest level parent of childObject that is also a child of
+	 *         the given container type and primary key
+	 * @review
+	 * @see UADHierarchyDeclaration
+	 */
 	public default T getTopLevelContainer(
 		Class<?> parentContainerType, Serializable parentContainerId,
 		Object childObject) {

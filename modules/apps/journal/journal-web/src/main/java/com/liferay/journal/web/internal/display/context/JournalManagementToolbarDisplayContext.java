@@ -26,6 +26,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalFolder;
+import com.liferay.journal.model.JournalFolderConstants;
 import com.liferay.journal.web.internal.security.permission.resource.JournalFolderPermission;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -36,6 +37,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -48,7 +50,9 @@ import com.liferay.staging.StagingGroupHelperUtil;
 import com.liferay.trash.TrashHelper;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Consumer;
 
 import javax.portlet.PortletURL;
@@ -138,6 +142,65 @@ public class JournalManagementToolbarDisplayContext
 			"status", String.valueOf(WorkflowConstants.STATUS_ANY));
 
 		return clearResultsURL.toString();
+	}
+
+	public Map<String, Object> getComponentContext() throws Exception {
+		Map<String, Object> componentContext = new HashMap<>();
+
+		PortletURL addArticleURL = liferayPortletResponse.createRenderURL();
+
+		addArticleURL.setParameter("mvcPath", "/edit_article.jsp");
+		addArticleURL.setParameter("redirect", _themeDisplay.getURLCurrent());
+		addArticleURL.setParameter(
+			"groupId", String.valueOf(_themeDisplay.getScopeGroupId()));
+		addArticleURL.setParameter(
+			"folderId", String.valueOf(_journalDisplayContext.getFolderId()));
+
+		componentContext.put("addArticleURL", addArticleURL.toString());
+
+		componentContext.put(
+			"folderId",
+			String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID));
+
+		PortletURL openViewMoreStructuresURL =
+			liferayPortletResponse.createRenderURL();
+
+		openViewMoreStructuresURL.setParameter(
+			"mvcPath", "/view_more_menu_items.jsp");
+		openViewMoreStructuresURL.setParameter(
+			"folderId", String.valueOf(_journalDisplayContext.getFolderId()));
+		openViewMoreStructuresURL.setParameter(
+			"eventName",
+			liferayPortletResponse.getNamespace() + "selectAddMenuItem");
+		openViewMoreStructuresURL.setWindowState(LiferayWindowState.POP_UP);
+
+		componentContext.put(
+			"openViewMoreStructuresURL", openViewMoreStructuresURL.toString());
+
+		PortletURL selectEntityURL = liferayPortletResponse.createRenderURL();
+
+		selectEntityURL.setParameter("mvcPath", "/select_ddm_structure.jsp");
+		selectEntityURL.setWindowState(LiferayWindowState.POP_UP);
+
+		componentContext.put("selectEntityURL", selectEntityURL.toString());
+
+		componentContext.put(
+			"trashEnabled",
+			_trashHelper.isTrashEnabled(_themeDisplay.getScopeGroupId()));
+
+		PortletURL viewDDMStructureArticlesURL =
+			liferayPortletResponse.createRenderURL();
+
+		viewDDMStructureArticlesURL.setParameter("navigation", "structure");
+		viewDDMStructureArticlesURL.setParameter(
+			"folderId",
+			String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID));
+
+		componentContext.put(
+			"viewDDMStructureArticlesURL",
+			viewDDMStructureArticlesURL.toString());
+
+		return componentContext;
 	}
 
 	@Override

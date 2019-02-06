@@ -19,8 +19,6 @@
 <%
 ViewAppsManagerManagementToolbarDisplayContext viewAppsManagerManagementToolbarDisplayContext = new ViewAppsManagerManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request);
 
-SearchContainer searchContainer = viewAppsManagerManagementToolbarDisplayContext.getSearchContainer();
-
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "app-manager"), null);
 %>
 
@@ -32,13 +30,16 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "app-man
 />
 
 <clay:management-toolbar
+	clearResultsURL="<%= viewAppsManagerManagementToolbarDisplayContext.getClearResultsURL() %>"
 	filterDropdownItems="<%= viewAppsManagerManagementToolbarDisplayContext.getFilterDropdownItems() %>"
+	filterLabelItems="<%= viewAppsManagerManagementToolbarDisplayContext.getFilterLabelItems() %>"
+	itemsTotal="<%= viewAppsManagerManagementToolbarDisplayContext.getItemsTotal() %>"
 	searchActionURL="<%= viewAppsManagerManagementToolbarDisplayContext.getSearchActionURL() %>"
 	searchContainerId="appDisplays"
 	searchFormName="searchFm"
 	selectable="<%= false %>"
 	showSearch="<%= true %>"
-	sortingOrder="<%= searchContainer.getOrderByType() %>"
+	sortingOrder="<%= viewAppsManagerManagementToolbarDisplayContext.getOrderByType() %>"
 	sortingURL="<%= viewAppsManagerManagementToolbarDisplayContext.getSortingURL() %>"
 />
 
@@ -52,7 +53,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "app-man
 
 	<liferay-ui:search-container
 		id="appDisplays"
-		searchContainer="<%= searchContainer %>"
+		searchContainer="<%= viewAppsManagerManagementToolbarDisplayContext.getSearchContainer() %>"
 		var="appDisplaySearch"
 	>
 		<liferay-ui:search-container-row

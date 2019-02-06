@@ -99,6 +99,11 @@ public abstract class BaseAppManagerManagementToolbarDisplayContext
 	}
 
 	@Override
+	public String getOrderByType() {
+		return ParamUtil.getString(liferayPortletRequest, "orderByType", "asc");
+	}
+
+	@Override
 	public abstract PortletURL getPortletURL();
 
 	@Override

@@ -11,28 +11,29 @@ buildPluginDescriptor {
 	goalPrefix = "rest-builder"
 }
 
-configurations {
-	compile {
-		extendsFrom sourceFormatter
-	}
-
-	sourceFormatter
-}
-
 dependencies {
+	compile group: "com.puppycrawl.tools", name: "checkstyle", version: "8.11"
+	compile group: "com.thoughtworks.qdox", name: "qdox", version: "2.0-M5"
+	compile group: "commons-io", name: "commons-io", version: "2.1"
+	compile group: "dom4j", name: "dom4j", version: "1.6.1"
+	compile group: "org.apache.ant", name: "ant", version: "1.9.4"
 	compile group: "org.freemarker", name: "freemarker", transitive: false, version: "2.3.28"
 	compile group: "org.yaml", name: "snakeyaml", version: "1.23"
+
+	compileInclude group: "com.liferay", name: "com.liferay.source.formatter", version: "1.0.780"
 
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.6.0"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.49.0"
 	compileOnly group: "org.apache.ant", name: "ant", transitive: false, version: "1.9.4"
 	compileOnly group: "org.apache.maven", name: "maven-plugin-api", transitive: false, version: "3.0.4"
-
-	sourceFormatter group: "com.liferay", name: "com.liferay.source.formatter", version: "1.0.780"
 }
 
 deployDependencies {
-	from (configurations.compile - configurations.sourceFormatter)
+	from (configurations.compile) {
+		include "freemarker-*.jar"
+		include "snakeyaml-*.jar"
+	}
+
 	from "../../../tools/sdk/dependencies/com.liferay.source.formatter/lib"
 }
 
@@ -42,6 +43,10 @@ formatSource {
 
 liferay {
 	deployDir = "../../../tools/sdk/dependencies/com.liferay.portal.tools.rest.builder/lib"
+}
+
+liferayOSGi {
+	expandCompileInclude = true
 }
 
 updateFileVersions {

@@ -17,8 +17,6 @@ package com.liferay.blogs.web.internal.portlet;
 import com.liferay.asset.constants.AssetWebKeys;
 import com.liferay.asset.util.AssetHelper;
 import com.liferay.blogs.constants.BlogsPortletKeys;
-import com.liferay.blogs.web.constants.BlogsWebKeys;
-import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.trash.TrashHelper;
 import com.liferay.trash.util.TrashWebKeys;
@@ -69,7 +67,6 @@ public class BlogsAdminPortlet extends BaseBlogsPortlet {
 		throws IOException, PortletException {
 
 		renderRequest.setAttribute(AssetWebKeys.ASSET_HELPER, _assetHelper);
-		renderRequest.setAttribute(BlogsWebKeys.DL_URL_HELPER, _dlurlHelper);
 		renderRequest.setAttribute(TrashWebKeys.TRASH_HELPER, _trashHelper);
 
 		super.render(renderRequest, renderResponse);
@@ -84,9 +81,6 @@ public class BlogsAdminPortlet extends BaseBlogsPortlet {
 
 	@Reference
 	private AssetHelper _assetHelper;
-
-	@Reference
-	private DLURLHelper _dlurlHelper;
 
 	@Reference
 	private TrashHelper _trashHelper;

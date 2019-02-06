@@ -89,10 +89,6 @@ public class EditWithImageEditorPortletConfigurationIcon
 				ImageEditorIntegrationDLWebKeys.
 					IMAGE_EDITOR_INTEGRATION_DL_FILE_VERSION,
 				getFileVersion(request));
-			request.setAttribute(
-				ImageEditorIntegrationDLWebKeys.
-					IMAGE_EDITOR_INTEGRATION_DL_URL_HELPER,
-				_dlurlHelper);
 
 			return super.include(request, response);
 		}

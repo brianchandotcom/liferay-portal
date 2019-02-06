@@ -21,8 +21,7 @@ taglib uri="http://liferay.com/tld/soy" prefix="soy" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.document.library.preview.image.internal.constants.DLPreviewImageConstants" %><%@
-page import="com.liferay.document.library.util.DLURLHelper" %><%@
+<%@ page import="com.liferay.document.library.util.DLURLHelperUtil" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.repository.model.FileVersion" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@

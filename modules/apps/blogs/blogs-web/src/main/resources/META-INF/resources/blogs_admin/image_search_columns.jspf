@@ -15,7 +15,7 @@
 --%>
 
 <%
-String thumbnailSrc = dlurlHelper.getThumbnailSrc(fileEntry, themeDisplay);
+String thumbnailSrc = DLURLHelperUtil.getThumbnailSrc(fileEntry, themeDisplay);
 %>
 
 <c:choose>

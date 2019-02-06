@@ -20,8 +20,6 @@ import com.liferay.document.library.preview.DLPreviewRenderer;
 import com.liferay.document.library.preview.DLPreviewRendererProvider;
 import com.liferay.document.library.preview.exception.DLPreviewGenerationInProcessException;
 import com.liferay.document.library.preview.exception.DLPreviewSizeException;
-import com.liferay.document.library.preview.image.internal.constants.DLPreviewImageConstants;
-import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -71,8 +69,6 @@ public class ImageDLPreviewRendererProvider
 					_servletContext.getRequestDispatcher("/preview/view.jsp");
 
 				request.setAttribute(
-					DLPreviewImageConstants.DL_URL_HELPER, _dlurlHelper);
-				request.setAttribute(
 					WebKeys.DOCUMENT_LIBRARY_FILE_VERSION, fileVersion);
 
 				requestDispatcher.include(request, response);
@@ -106,9 +102,6 @@ public class ImageDLPreviewRendererProvider
 
 	private ServiceRegistration<DLPreviewRendererProvider>
 		_dlPreviewRendererProviderServiceRegistration;
-
-	@Reference
-	private DLURLHelper _dlurlHelper;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.document.library.preview.image)"

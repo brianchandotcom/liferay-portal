@@ -89,7 +89,7 @@ entriesChecker.setRememberCheckBoxStateURLRegex("^(?!.*" + liferayPortletRespons
 							dlSearchContainer.setRowChecker(entriesChecker);
 						}
 
-						String thumbnailSrc = dlurlHelper.getThumbnailSrc(fileEntry, latestFileVersion, themeDisplay);
+						String thumbnailSrc = DLURLHelperUtil.getThumbnailSrc(fileEntry, latestFileVersion, themeDisplay);
 
 						DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = dlDisplayContextProvider.getDLViewFileVersionDisplayContext(request, response, fileEntry.getFileVersion());
 

@@ -15,7 +15,6 @@
 package com.liferay.item.selector.taglib.servlet.taglib;
 
 import com.liferay.item.selector.taglib.internal.servlet.ServletContextUtil;
-import com.liferay.item.selector.taglib.internal.util.DLURLHelperProvider;
 import com.liferay.taglib.util.IncludeTag;
 
 import javax.servlet.http.HttpServletRequest;
@@ -87,9 +86,6 @@ public class ImageSelectorTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute(
-			"liferay-ui:image-selector:dlurlHelper",
-			DLURLHelperProvider.getDLURLHelper());
 		request.setAttribute(
 			"liferay-ui:image-selector:draggableImage", _draggableImage);
 		request.setAttribute(

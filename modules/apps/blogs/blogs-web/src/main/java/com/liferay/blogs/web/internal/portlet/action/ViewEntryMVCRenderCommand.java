@@ -17,8 +17,6 @@ package com.liferay.blogs.web.internal.portlet.action;
 import com.liferay.blogs.constants.BlogsPortletKeys;
 import com.liferay.blogs.exception.NoSuchEntryException;
 import com.liferay.blogs.model.BlogsEntry;
-import com.liferay.blogs.web.constants.BlogsWebKeys;
-import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
@@ -61,8 +59,6 @@ public class ViewEntryMVCRenderCommand implements MVCRenderCommand {
 	public String render(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
-
-		renderRequest.setAttribute(BlogsWebKeys.DL_URL_HELPER, _dlurlHelper);
 
 		long assetCategoryId = ParamUtil.getLong(renderRequest, "categoryId");
 		String assetCategoryName = ParamUtil.getString(renderRequest, "tag");
@@ -139,9 +135,6 @@ public class ViewEntryMVCRenderCommand implements MVCRenderCommand {
 
 		_friendlyURLEntryLocalService = friendlyURLEntryLocalService;
 	}
-
-	@Reference
-	private DLURLHelper _dlurlHelper;
 
 	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
 

@@ -21,12 +21,15 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.portlet.PortletURL;
 
@@ -78,9 +81,30 @@ public class OrganizationsManagementToolbarDisplayContext
 		return clearResultsURL.toString();
 	}
 
+	public Map<String, Object> getComponentContext() throws Exception {
+		Map<String, Object> componentContext = new HashMap<>();
+
+		PortletURL selectOrganizationsURL =
+			liferayPortletResponse.createRenderURL();
+
+		selectOrganizationsURL.setParameter(
+			"mvcPath", "/select_organizations.jsp");
+		selectOrganizationsURL.setWindowState(LiferayWindowState.POP_UP);
+
+		componentContext.put(
+			"selectOrganizationsURL", selectOrganizationsURL.toString());
+
+		return componentContext;
+	}
+
 	@Override
 	public String getComponentId() {
 		return "organizationsManagementToolbar";
+	}
+
+	@Override
+	public String getDefaultEventHandler() {
+		return "organizationsManagementToolbarDefaultEventHandler";
 	}
 
 	@Override

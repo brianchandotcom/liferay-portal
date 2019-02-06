@@ -95,6 +95,26 @@
 		</attribute>
 	</tag>
 	<tag>
+		<name>component</name>
+		<tag-class>com.liferay.frontend.taglib.servlet.taglib.ComponentTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<name>componentId</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>context</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>module</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
 		<description>Creates a contextual sidebar component.</description>
 		<name>contextual-sidebar</name>
 		<tag-class>com.liferay.frontend.taglib.servlet.taglib.soy.ContextualSidebarTag</tag-class>

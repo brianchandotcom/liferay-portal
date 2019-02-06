@@ -14,17 +14,10 @@
 
 package com.liferay.arquillian.extension.junit.bridge.remote.executor;
 
-import java.lang.reflect.Method;
-
-import java.util.Collection;
-
 import org.jboss.arquillian.container.test.impl.execution.event.LocalExecutionEvent;
-import org.jboss.arquillian.core.api.Instance;
 import org.jboss.arquillian.core.api.InstanceProducer;
 import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.arquillian.core.api.annotation.Observes;
-import org.jboss.arquillian.core.spi.ServiceLoader;
-import org.jboss.arquillian.test.spi.TestEnricher;
 import org.jboss.arquillian.test.spi.TestMethodExecutor;
 import org.jboss.arquillian.test.spi.TestResult;
 import org.jboss.arquillian.test.spi.annotation.TestScoped;
@@ -39,13 +32,8 @@ public class LocalTestExecutor {
 
 		TestMethodExecutor testMethodExecutor = event.getExecutor();
 
-		ServiceLoader serviceLoader = _serviceLoaderInstance.get();
-
 		try {
-			testMethodExecutor.invoke(
-				_enrichArguments(
-					testMethodExecutor.getMethod(),
-					serviceLoader.all(TestEnricher.class)));
+			testMethodExecutor.invoke();
 		}
 		catch (Throwable t) {
 			result = TestResult.failed(t);
@@ -56,47 +44,6 @@ public class LocalTestExecutor {
 
 		_testResultInstanceProducer.set(result);
 	}
-
-	private Object[] _enrichArguments(
-		Method method, Collection<TestEnricher> enrichers) {
-
-		Class<?>[] parameterTypes = method.getParameterTypes();
-
-		Object[] values = new Object[parameterTypes.length];
-
-		if (parameterTypes.length == 0) {
-			return values;
-		}
-
-		for (TestEnricher enricher : enrichers) {
-			_mergeValues(values, enricher.resolve(method));
-		}
-
-		return values;
-	}
-
-	private void _mergeValues(Object[] values, Object[] resolvedValues) {
-		if ((resolvedValues == null) || (resolvedValues.length == 0)) {
-			return;
-		}
-
-		if (values.length != resolvedValues.length) {
-			throw new IllegalStateException(
-				"TestEnricher resolved wrong argument count, expected " +
-					values.length + " returned " + resolvedValues.length);
-		}
-
-		for (int i = 0; i < resolvedValues.length; i++) {
-			 Object resolvedValue = resolvedValues[i];
-
-			if ((resolvedValue != null) && (values[i] == null)) {
-				values[i] = resolvedValue;
-			}
-		}
-	}
-
-	@Inject
-	private Instance<ServiceLoader> _serviceLoaderInstance;
 
 	@Inject
 	@TestScoped

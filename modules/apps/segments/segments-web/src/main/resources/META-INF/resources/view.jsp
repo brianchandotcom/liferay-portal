@@ -91,6 +91,23 @@ SegmentsDisplayContext segmentsDisplayContext = (SegmentsDisplayContext)request.
 				</c:choose>
 			</liferay-ui:search-container-column-text>
 
+			<liferay-ui:search-container-column-text
+				cssClass="table-cell-expand-smallest table-cell-minw-150"
+				name="scope"
+			>
+				<c:choose>
+					<c:when test="<%= segmentsEntry.getGroupId() == themeDisplay.getCompanyGroupId() %>">
+						<liferay-ui:message key="global" />
+					</c:when>
+					<c:when test="<%= segmentsEntry.getGroupId() == themeDisplay.getScopeGroupId() %>">
+						<liferay-ui:message key="current-site" />
+					</c:when>
+					<c:otherwise>
+						<liferay-ui:message key="parent-site" />
+					</c:otherwise>
+				</c:choose>
+			</liferay-ui:search-container-column-text>
+
 			<liferay-ui:search-container-column-date
 				cssClass="table-cell-expand-smallest table-cell-minw-150 table-cell-ws-nowrap"
 				name="modified-date"

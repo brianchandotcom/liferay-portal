@@ -90,6 +90,19 @@ public final class DEDataRecordCollectionSaveModelPermissionsRequest {
 
 	/**
 	 * Returns true or false to inform if one of the permissions to grant is
+	 * the one that allows the user to add a {@link DEDataRecord} on the
+	 * {@link DEDataRecordCollection} related to the Data Record Collection ID
+	 * set in the request
+	 *
+	 * @return addDataRecord
+	 * @review
+	 */
+	public boolean isAddDataRecord() {
+		return _addDataRecord;
+	}
+	
+	/**
+	 * Returns true or false to inform if one of the permissions to grant is
 	 * the one that allows the user to delete the
 	 * {@link DEDataRecordCollection} related to the Data Record Collection ID
 	 * set in the request
@@ -174,6 +187,21 @@ public final class DEDataRecordCollectionSaveModelPermissionsRequest {
 			_deDataRecordCollectionSaveModelPermissionsRequest._roleNames =
 				ListUtil.fromArray(roleNames);
 		}
+		
+		/**
+		 * If this method is set on the permission request, it will set the
+		 * permission to allow the user to add a {@link DEDataRecord} on the
+		 * {@link DEDataRecordCollection} included in the request
+		 *
+		 * @return {@link DEDataRecordCollectionSavePermissionsRequest}
+		 * @review
+		 */
+		public Builder allowAddDataRecord() {
+			_deDataRecordCollectionSaveModelPermissionsRequest._addDataRecord =
+				true;
+
+			return this;
+		}
 
 		/**
 		 * If this method is set on the permission request, it will set the
@@ -234,6 +262,7 @@ public final class DEDataRecordCollectionSaveModelPermissionsRequest {
 
 	}
 
+	private boolean _addDataRecord;
 	private long _companyId;
 	private long _deDataRecordCollectionId;
 	private boolean _delete;

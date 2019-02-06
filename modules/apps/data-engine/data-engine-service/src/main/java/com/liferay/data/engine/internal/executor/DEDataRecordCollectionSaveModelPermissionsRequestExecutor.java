@@ -14,6 +14,7 @@
 
 package com.liferay.data.engine.internal.executor;
 
+import com.liferay.data.engine.constants.DEActionKeys;
 import com.liferay.data.engine.constants.DEDataRecordCollectionConstants;
 import com.liferay.data.engine.service.DEDataRecordCollectionSaveModelPermissionsRequest;
 import com.liferay.data.engine.service.DEDataRecordCollectionSaveModelPermissionsResponse;
@@ -48,6 +49,12 @@ public class DEDataRecordCollectionSaveModelPermissionsRequestExecutor {
 			deDataRecordCollectionSaveModelPermissionsRequest.getGroupId();
 
 		List<String> actionIds = new ArrayList<>();
+
+		if (deDataRecordCollectionSaveModelPermissionsRequest.
+				isAddDataRecord()) {
+
+			actionIds.add(DEActionKeys.ADD_DATA_RECORD);
+		}
 
 		if (deDataRecordCollectionSaveModelPermissionsRequest.isDelete()) {
 			actionIds.add(ActionKeys.DELETE);

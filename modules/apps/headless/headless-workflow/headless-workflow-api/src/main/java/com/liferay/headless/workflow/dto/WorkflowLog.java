@@ -68,6 +68,10 @@ public class WorkflowLog {
 		return _task;
 	}
 
+	public Long getTaskId() {
+		return _taskId;
+	}
+
 	public String getType() {
 		return _type;
 	}
@@ -112,6 +116,10 @@ public class WorkflowLog {
 		_task = task;
 	}
 
+	public void setTaskId(Long taskId) {
+		_taskId = taskId;
+	}
+
 	public void setType(String type) {
 		_type = type;
 	}
@@ -126,6 +134,7 @@ public class WorkflowLog {
 	private String _self;
 	private String _state;
 	private WorkflowTask _task;
+	private Long _taskId;
 	private String _type;
 
 }

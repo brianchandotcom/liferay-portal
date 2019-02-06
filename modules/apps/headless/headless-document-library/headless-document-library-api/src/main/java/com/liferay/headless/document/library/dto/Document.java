@@ -32,7 +32,7 @@ public class Document {
 		return _adaptedMedia;
 	}
 
-	public String getCategory() {
+	public Integer[] getCategory() {
 		return _category;
 	}
 
@@ -40,7 +40,7 @@ public class Document {
 		return _contentUrl;
 	}
 
-	public String getCreator() {
+	public Creator getCreator() {
 		return _creator;
 	}
 
@@ -68,6 +68,10 @@ public class Document {
 		return _folder;
 	}
 
+	public Long getFolderId() {
+		return _folderId;
+	}
+
 	public Long getId() {
 		return _id;
 	}
@@ -92,7 +96,7 @@ public class Document {
 		_adaptedMedia = adaptedMedia;
 	}
 
-	public void setCategory(String category) {
+	public void setCategory(Integer[] category) {
 		_category = category;
 	}
 
@@ -100,7 +104,7 @@ public class Document {
 		_contentUrl = contentUrl;
 	}
 
-	public void setCreator(String creator) {
+	public void setCreator(Creator creator) {
 		_creator = creator;
 	}
 
@@ -128,6 +132,10 @@ public class Document {
 		_folder = folder;
 	}
 
+	public void setFolderId(Long folderId) {
+		_folderId = folderId;
+	}
+
 	public void setId(Long id) {
 		_id = id;
 	}
@@ -149,15 +157,16 @@ public class Document {
 	}
 
 	private Object _adaptedMedia;
-	private String _category;
+	private Integer[] _category;
 	private String _contentUrl;
-	private String _creator;
+	private Creator _creator;
 	private Date _dateCreated;
 	private Date _dateModified;
 	private String _description;
 	private String _encodingFormat;
 	private String _fileExtension;
 	private Folder _folder;
+	private Long _folderId;
 	private Long _id;
 	private String[] _keywords;
 	private String _self;

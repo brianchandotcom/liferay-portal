@@ -56,8 +56,12 @@ public class WorkflowTask {
 		return _id;
 	}
 
-	public WorkflowLog getLogs() {
+	public WorkflowLog[] getLogs() {
 		return _logs;
+	}
+
+	public Integer[] getLogsIds() {
+		return _logsIds;
 	}
 
 	public String getName() {
@@ -104,8 +108,12 @@ public class WorkflowTask {
 		_id = id;
 	}
 
-	public void setLogs(WorkflowLog logs) {
+	public void setLogs(WorkflowLog[] logs) {
 		_logs = logs;
+	}
+
+	public void setLogsIds(Integer[] logsIds) {
+		_logsIds = logsIds;
 	}
 
 	public void setName(String name) {
@@ -131,7 +139,8 @@ public class WorkflowTask {
 	private String _description;
 	private Date _dueDate;
 	private Long _id;
-	private WorkflowLog _logs;
+	private WorkflowLog[] _logs;
+	private Integer[] _logsIds;
 	private String _name;
 	private Object _object;
 	private String _self;

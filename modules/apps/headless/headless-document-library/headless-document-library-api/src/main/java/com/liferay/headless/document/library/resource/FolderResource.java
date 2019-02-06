@@ -15,6 +15,7 @@
 package com.liferay.headless.document.library.resource;
 
 import com.liferay.headless.document.library.dto.Comment;
+import com.liferay.headless.document.library.dto.Creator;
 import com.liferay.headless.document.library.dto.Document;
 import com.liferay.headless.document.library.dto.Folder;
 import com.liferay.oauth2.provider.scope.RequiresScope;

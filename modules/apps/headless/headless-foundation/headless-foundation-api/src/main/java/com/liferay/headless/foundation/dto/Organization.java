@@ -46,8 +46,12 @@ public class Organization {
 		return _logo;
 	}
 
-	public UserAccount getMembers() {
+	public UserAccount[] getMembers() {
 		return _members;
+	}
+
+	public Integer[] getMembersIds() {
+		return _membersIds;
 	}
 
 	public String getName() {
@@ -58,6 +62,10 @@ public class Organization {
 		return _parentOrganization;
 	}
 
+	public Long getParentOrganizationId() {
+		return _parentOrganizationId;
+	}
+
 	public String getSelf() {
 		return _self;
 	}
@@ -66,12 +74,12 @@ public class Organization {
 		return _services;
 	}
 
-	public Organization getSubOrganization() {
+	public Organization[] getSubOrganization() {
 		return _subOrganization;
 	}
 
-	public WebSite getWebsite() {
-		return _website;
+	public Integer[] getSubOrganizationIds() {
+		return _subOrganizationIds;
 	}
 
 	public void setComment(String comment) {
@@ -94,8 +102,12 @@ public class Organization {
 		_logo = logo;
 	}
 
-	public void setMembers(UserAccount members) {
+	public void setMembers(UserAccount[] members) {
 		_members = members;
+	}
+
+	public void setMembersIds(Integer[] membersIds) {
+		_membersIds = membersIds;
 	}
 
 	public void setName(String name) {
@@ -106,6 +118,10 @@ public class Organization {
 		_parentOrganization = parentOrganization;
 	}
 
+	public void setParentOrganizationId(Long parentOrganizationId) {
+		_parentOrganizationId = parentOrganizationId;
+	}
+
 	public void setSelf(String self) {
 		_self = self;
 	}
@@ -114,12 +130,12 @@ public class Organization {
 		_services = services;
 	}
 
-	public void setSubOrganization(Organization subOrganization) {
+	public void setSubOrganization(Organization[] subOrganization) {
 		_subOrganization = subOrganization;
 	}
 
-	public void setWebsite(WebSite website) {
-		_website = website;
+	public void setSubOrganizationIds(Integer[] subOrganizationIds) {
+		_subOrganizationIds = subOrganizationIds;
 	}
 
 	private String _comment;
@@ -127,12 +143,14 @@ public class Organization {
 	private Long _id;
 	private Object _location;
 	private String _logo;
-	private UserAccount _members;
+	private UserAccount[] _members;
+	private Integer[] _membersIds;
 	private String _name;
 	private Organization _parentOrganization;
+	private Long _parentOrganizationId;
 	private String _self;
 	private Object _services;
-	private Organization _subOrganization;
-	private WebSite _website;
+	private Organization[] _subOrganization;
+	private Integer[] _subOrganizationIds;
 
 }

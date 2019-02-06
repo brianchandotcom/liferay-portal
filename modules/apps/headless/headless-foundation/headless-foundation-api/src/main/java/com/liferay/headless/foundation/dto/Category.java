@@ -36,8 +36,16 @@ public class Category {
 		return _category;
 	}
 
+	public Long getCategoryId() {
+		return _categoryId;
+	}
+
 	public UserAccount getCreator() {
 		return _creator;
+	}
+
+	public Long getCreatorId() {
+		return _creatorId;
 	}
 
 	public Date getDateCreated() {
@@ -64,12 +72,16 @@ public class Category {
 		return _self;
 	}
 
-	public Category getSubcategories() {
+	public Category[] getSubcategories() {
 		return _subcategories;
 	}
 
 	public Vocabulary getVocabulary() {
 		return _vocabulary;
+	}
+
+	public Long getVocabularyId() {
+		return _vocabularyId;
 	}
 
 	public void setAvailableLanguages(String[] availableLanguages) {
@@ -80,8 +92,16 @@ public class Category {
 		_category = category;
 	}
 
+	public void setCategoryId(Long categoryId) {
+		_categoryId = categoryId;
+	}
+
 	public void setCreator(UserAccount creator) {
 		_creator = creator;
+	}
+
+	public void setCreatorId(Long creatorId) {
+		_creatorId = creatorId;
 	}
 
 	public void setDateCreated(Date dateCreated) {
@@ -108,7 +128,7 @@ public class Category {
 		_self = self;
 	}
 
-	public void setSubcategories(Category subcategories) {
+	public void setSubcategories(Category[] subcategories) {
 		_subcategories = subcategories;
 	}
 
@@ -116,16 +136,23 @@ public class Category {
 		_vocabulary = vocabulary;
 	}
 
+	public void setVocabularyId(Long vocabularyId) {
+		_vocabularyId = vocabularyId;
+	}
+
 	private String[] _availableLanguages;
 	private Category _category;
+	private Long _categoryId;
 	private UserAccount _creator;
+	private Long _creatorId;
 	private Date _dateCreated;
 	private Date _dateModified;
 	private String _description;
 	private Long _id;
 	private String _name;
 	private String _self;
-	private Category _subcategories;
+	private Category[] _subcategories;
 	private Vocabulary _vocabulary;
+	private Long _vocabularyId;
 
 }

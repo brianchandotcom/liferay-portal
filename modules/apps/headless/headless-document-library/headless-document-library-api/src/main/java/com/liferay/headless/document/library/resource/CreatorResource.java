@@ -12,18 +12,12 @@
  * details.
  */
 
-package com.liferay.headless.foundation.resource;
+package com.liferay.headless.document.library.resource;
 
-import com.liferay.headless.foundation.dto.Category;
-import com.liferay.headless.foundation.dto.Email;
-import com.liferay.headless.foundation.dto.Keyword;
-import com.liferay.headless.foundation.dto.Organization;
-import com.liferay.headless.foundation.dto.Phone;
-import com.liferay.headless.foundation.dto.PostalAddress;
-import com.liferay.headless.foundation.dto.Role;
-import com.liferay.headless.foundation.dto.UserAccount;
-import com.liferay.headless.foundation.dto.Vocabulary;
-import com.liferay.headless.foundation.dto.WebUrl;
+import com.liferay.headless.document.library.dto.Comment;
+import com.liferay.headless.document.library.dto.Creator;
+import com.liferay.headless.document.library.dto.Document;
+import com.liferay.headless.document.library.dto.Folder;
 import com.liferay.oauth2.provider.scope.RequiresScope;
 import com.liferay.portal.vulcan.context.Pagination;
 import com.liferay.portal.vulcan.dto.Page;
@@ -50,24 +44,19 @@ import javax.ws.rs.core.Response;
 /**
  * To access this resource, run:
  *
- *     curl -u your@email.com:yourpassword -D - http://localhost:8080/o/headless-foundation/1.0.0
+ *     curl -u your@email.com:yourpassword -D - http://localhost:8080/o/headless-document-library/1.0.0
  *
  * @author Javier Gamarra
  * @generated
  */
 @Generated("")
 @Path("/1.0.0")
-public interface WebUrlResource {
+public interface CreatorResource {
 
 	@GET
-	@Path("/web-urls")
+	@Path("/creator/{creator-id}")
 	@Produces("application/json")
-	@RequiresScope("headless-foundation-application.read")
-	public Page<WebUrl> getWebUrlsPage( @PathParam("generic-parent-id") Object genericParentId , @Context Pagination pagination ) throws Exception;
+	@RequiresScope("headless-document-library-application.read")
+	public Creator getCreator( @PathParam("creator-id") Long creatorId ) throws Exception;
 
-	@GET
-	@Path("/web-urls/{web-urls-id}")
-	@Produces("application/json")
-	@RequiresScope("headless-foundation-application.read")
-	public WebUrl getWebUrl( @PathParam("web-urls-id") Long webUrlsId ) throws Exception;
 }

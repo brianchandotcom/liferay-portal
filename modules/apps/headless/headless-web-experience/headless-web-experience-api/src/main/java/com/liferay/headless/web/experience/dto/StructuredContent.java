@@ -36,15 +36,15 @@ public class StructuredContent {
 		return _availableLanguages;
 	}
 
-	public String getCategory() {
+	public Integer[] getCategory() {
 		return _category;
 	}
 
-	public Comment getComment() {
+	public Comment[] getComment() {
 		return _comment;
 	}
 
-	public String getContentSpace() {
+	public Long getContentSpace() {
 		return _contentSpace;
 	}
 
@@ -52,7 +52,11 @@ public class StructuredContent {
 		return _contentStructure;
 	}
 
-	public String getCreator() {
+	public Long getContentStructureId() {
+		return _contentStructureId;
+	}
+
+	public Creator getCreator() {
 		return _creator;
 	}
 
@@ -108,15 +112,15 @@ public class StructuredContent {
 		_availableLanguages = availableLanguages;
 	}
 
-	public void setCategory(String category) {
+	public void setCategory(Integer[] category) {
 		_category = category;
 	}
 
-	public void setComment(Comment comment) {
+	public void setComment(Comment[] comment) {
 		_comment = comment;
 	}
 
-	public void setContentSpace(String contentSpace) {
+	public void setContentSpace(Long contentSpace) {
 		_contentSpace = contentSpace;
 	}
 
@@ -124,7 +128,11 @@ public class StructuredContent {
 		_contentStructure = contentStructure;
 	}
 
-	public void setCreator(String creator) {
+	public void setContentStructureId(Long contentStructureId) {
+		_contentStructureId = contentStructureId;
+	}
+
+	public void setCreator(Creator creator) {
 		_creator = creator;
 	}
 
@@ -176,11 +184,12 @@ public class StructuredContent {
 
 	private AggregateRating _aggregateRating;
 	private String[] _availableLanguages;
-	private String _category;
-	private Comment _comment;
-	private String _contentSpace;
+	private Integer[] _category;
+	private Comment[] _comment;
+	private Long _contentSpace;
 	private ContentStructure _contentStructure;
-	private String _creator;
+	private Long _contentStructureId;
+	private Creator _creator;
 	private Date _dateCreated;
 	private Date _dateModified;
 	private Date _datePublished;

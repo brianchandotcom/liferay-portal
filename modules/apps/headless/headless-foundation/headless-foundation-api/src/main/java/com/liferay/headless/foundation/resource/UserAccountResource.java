@@ -15,7 +15,6 @@
 package com.liferay.headless.foundation.resource;
 
 import com.liferay.headless.foundation.dto.Category;
-import com.liferay.headless.foundation.dto.ContentSpace;
 import com.liferay.headless.foundation.dto.Email;
 import com.liferay.headless.foundation.dto.Keyword;
 import com.liferay.headless.foundation.dto.Organization;
@@ -24,7 +23,6 @@ import com.liferay.headless.foundation.dto.PostalAddress;
 import com.liferay.headless.foundation.dto.Role;
 import com.liferay.headless.foundation.dto.UserAccount;
 import com.liferay.headless.foundation.dto.Vocabulary;
-import com.liferay.headless.foundation.dto.WebSite;
 import com.liferay.headless.foundation.dto.WebUrl;
 import com.liferay.oauth2.provider.scope.RequiresScope;
 import com.liferay.portal.vulcan.context.Pagination;

@@ -12,9 +12,7 @@
  * details.
  */
 
-package com.liferay.headless.foundation.dto;
-
-import java.util.Date;
+package com.liferay.headless.collaboration.dto;
 
 import javax.annotation.Generated;
 
@@ -25,8 +23,8 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@XmlRootElement(name = "UserAccount")
-public class UserAccount {
+@XmlRootElement(name = "Creator")
+public class Creator {
 
 	public String getAdditionalName() {
 		return _additionalName;
@@ -34,18 +32,6 @@ public class UserAccount {
 
 	public String getAlternateName() {
 		return _alternateName;
-	}
-
-	public Date getBirthDate() {
-		return _birthDate;
-	}
-
-	public Object getContactInformation() {
-		return _contactInformation;
-	}
-
-	public String getDashboardURL() {
-		return _dashboardURL;
 	}
 
 	public String getEmail() {
@@ -60,14 +46,6 @@ public class UserAccount {
 		return _givenName;
 	}
 
-	public String getHonorificPrefix() {
-		return _honorificPrefix;
-	}
-
-	public String getHonorificSuffix() {
-		return _honorificSuffix;
-	}
-
 	public Long getId() {
 		return _id;
 	}
@@ -80,14 +58,6 @@ public class UserAccount {
 		return _jobTitle;
 	}
 
-	public Organization[] getMyOrganizations() {
-		return _myOrganizations;
-	}
-
-	public Integer[] getMyOrganizationsIds() {
-		return _myOrganizationsIds;
-	}
-
 	public String getName() {
 		return _name;
 	}
@@ -96,24 +66,8 @@ public class UserAccount {
 		return _profileURL;
 	}
 
-	public Role[] getRoles() {
-		return _roles;
-	}
-
-	public Integer[] getRolesIds() {
-		return _rolesIds;
-	}
-
 	public String getSelf() {
 		return _self;
-	}
-
-	public String[] getTasksAssignedToMe() {
-		return _tasksAssignedToMe;
-	}
-
-	public String[] getTasksAssignedToMyRoles() {
-		return _tasksAssignedToMyRoles;
 	}
 
 	public void setAdditionalName(String additionalName) {
@@ -122,18 +76,6 @@ public class UserAccount {
 
 	public void setAlternateName(String alternateName) {
 		_alternateName = alternateName;
-	}
-
-	public void setBirthDate(Date birthDate) {
-		_birthDate = birthDate;
-	}
-
-	public void setContactInformation(Object contactInformation) {
-		_contactInformation = contactInformation;
-	}
-
-	public void setDashboardURL(String dashboardURL) {
-		_dashboardURL = dashboardURL;
 	}
 
 	public void setEmail(String email) {
@@ -148,14 +90,6 @@ public class UserAccount {
 		_givenName = givenName;
 	}
 
-	public void setHonorificPrefix(String honorificPrefix) {
-		_honorificPrefix = honorificPrefix;
-	}
-
-	public void setHonorificSuffix(String honorificSuffix) {
-		_honorificSuffix = honorificSuffix;
-	}
-
 	public void setId(Long id) {
 		_id = id;
 	}
@@ -168,14 +102,6 @@ public class UserAccount {
 		_jobTitle = jobTitle;
 	}
 
-	public void setMyOrganizations(Organization[] myOrganizations) {
-		_myOrganizations = myOrganizations;
-	}
-
-	public void setMyOrganizationsIds(Integer[] myOrganizationsIds) {
-		_myOrganizationsIds = myOrganizationsIds;
-	}
-
 	public void setName(String name) {
 		_name = name;
 	}
@@ -184,47 +110,20 @@ public class UserAccount {
 		_profileURL = profileURL;
 	}
 
-	public void setRoles(Role[] roles) {
-		_roles = roles;
-	}
-
-	public void setRolesIds(Integer[] rolesIds) {
-		_rolesIds = rolesIds;
-	}
-
 	public void setSelf(String self) {
 		_self = self;
 	}
 
-	public void setTasksAssignedToMe(String[] tasksAssignedToMe) {
-		_tasksAssignedToMe = tasksAssignedToMe;
-	}
-
-	public void setTasksAssignedToMyRoles(String[] tasksAssignedToMyRoles) {
-		_tasksAssignedToMyRoles = tasksAssignedToMyRoles;
-	}
-
 	private String _additionalName;
 	private String _alternateName;
-	private Date _birthDate;
-	private Object _contactInformation;
-	private String _dashboardURL;
 	private String _email;
 	private String _familyName;
 	private String _givenName;
-	private String _honorificPrefix;
-	private String _honorificSuffix;
 	private Long _id;
 	private String _image;
 	private String _jobTitle;
-	private Organization[] _myOrganizations;
-	private Integer[] _myOrganizationsIds;
 	private String _name;
 	private String _profileURL;
-	private Role[] _roles;
-	private Integer[] _rolesIds;
 	private String _self;
-	private String[] _tasksAssignedToMe;
-	private String[] _tasksAssignedToMyRoles;
 
 }

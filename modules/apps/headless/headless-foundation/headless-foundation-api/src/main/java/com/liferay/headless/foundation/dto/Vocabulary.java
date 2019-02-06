@@ -32,7 +32,7 @@ public class Vocabulary {
 		return _availableLanguages;
 	}
 
-	public ContentSpace getContentSpace() {
+	public Long getContentSpace() {
 		return _contentSpace;
 	}
 
@@ -64,15 +64,19 @@ public class Vocabulary {
 		return _self;
 	}
 
-	public Category getVocabularyCategories() {
+	public Category[] getVocabularyCategories() {
 		return _vocabularyCategories;
+	}
+
+	public Integer[] getVocabularyCategoriesIds() {
+		return _vocabularyCategoriesIds;
 	}
 
 	public void setAvailableLanguages(String[] availableLanguages) {
 		_availableLanguages = availableLanguages;
 	}
 
-	public void setContentSpace(ContentSpace contentSpace) {
+	public void setContentSpace(Long contentSpace) {
 		_contentSpace = contentSpace;
 	}
 
@@ -104,12 +108,16 @@ public class Vocabulary {
 		_self = self;
 	}
 
-	public void setVocabularyCategories(Category vocabularyCategories) {
+	public void setVocabularyCategories(Category[] vocabularyCategories) {
 		_vocabularyCategories = vocabularyCategories;
 	}
 
+	public void setVocabularyCategoriesIds(Integer[] vocabularyCategoriesIds) {
+		_vocabularyCategoriesIds = vocabularyCategoriesIds;
+	}
+
 	private String[] _availableLanguages;
-	private ContentSpace _contentSpace;
+	private Long _contentSpace;
 	private UserAccount _creator;
 	private Date _dateCreated;
 	private Date _dateModified;
@@ -117,6 +125,7 @@ public class Vocabulary {
 	private Long _id;
 	private String _name;
 	private String _self;
-	private Category _vocabularyCategories;
+	private Category[] _vocabularyCategories;
+	private Integer[] _vocabularyCategoriesIds;
 
 }

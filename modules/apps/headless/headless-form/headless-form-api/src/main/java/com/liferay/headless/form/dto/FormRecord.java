@@ -28,7 +28,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "FormRecord")
 public class FormRecord {
 
-	public String getCreator() {
+	public Creator getCreator() {
 		return _creator;
 	}
 
@@ -56,6 +56,10 @@ public class FormRecord {
 		return _form;
 	}
 
+	public Long getFormId() {
+		return _formId;
+	}
+
 	public Long getId() {
 		return _id;
 	}
@@ -64,7 +68,7 @@ public class FormRecord {
 		return _self;
 	}
 
-	public void setCreator(String creator) {
+	public void setCreator(Creator creator) {
 		_creator = creator;
 	}
 
@@ -92,6 +96,10 @@ public class FormRecord {
 		_form = form;
 	}
 
+	public void setFormId(Long formId) {
+		_formId = formId;
+	}
+
 	public void setId(Long id) {
 		_id = id;
 	}
@@ -100,13 +108,14 @@ public class FormRecord {
 		_self = self;
 	}
 
-	private String _creator;
+	private Creator _creator;
 	private Date _dateCreated;
 	private Date _dateModified;
 	private Date _datePublished;
 	private Boolean _draft;
 	private Object _fieldValues;
 	private Form _form;
+	private Long _formId;
 	private Long _id;
 	private String _self;
 

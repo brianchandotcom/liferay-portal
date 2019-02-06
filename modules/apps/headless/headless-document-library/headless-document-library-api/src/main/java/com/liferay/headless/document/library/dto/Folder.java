@@ -40,12 +40,20 @@ public class Folder {
 		return _description;
 	}
 
-	public Document getDocuments() {
+	public Document[] getDocuments() {
 		return _documents;
 	}
 
-	public Folder getFolders() {
-		return _folders;
+	public Integer[] getDocumentsIds() {
+		return _documentsIds;
+	}
+
+	public Folder getDocumentsRepository() {
+		return _documentsRepository;
+	}
+
+	public Long getDocumentsRepositoryId() {
+		return _documentsRepositoryId;
 	}
 
 	public Long getId() {
@@ -60,7 +68,7 @@ public class Folder {
 		return _self;
 	}
 
-	public Folder getSubFolders() {
+	public Folder[] getSubFolders() {
 		return _subFolders;
 	}
 
@@ -76,12 +84,20 @@ public class Folder {
 		_description = description;
 	}
 
-	public void setDocuments(Document documents) {
+	public void setDocuments(Document[] documents) {
 		_documents = documents;
 	}
 
-	public void setFolders(Folder folders) {
-		_folders = folders;
+	public void setDocumentsIds(Integer[] documentsIds) {
+		_documentsIds = documentsIds;
+	}
+
+	public void setDocumentsRepository(Folder documentsRepository) {
+		_documentsRepository = documentsRepository;
+	}
+
+	public void setDocumentsRepositoryId(Long documentsRepositoryId) {
+		_documentsRepositoryId = documentsRepositoryId;
 	}
 
 	public void setId(Long id) {
@@ -96,18 +112,20 @@ public class Folder {
 		_self = self;
 	}
 
-	public void setSubFolders(Folder subFolders) {
+	public void setSubFolders(Folder[] subFolders) {
 		_subFolders = subFolders;
 	}
 
 	private Date _dateCreated;
 	private Date _dateModified;
 	private String _description;
-	private Document _documents;
-	private Folder _folders;
+	private Document[] _documents;
+	private Integer[] _documentsIds;
+	private Folder _documentsRepository;
+	private Long _documentsRepositoryId;
 	private Long _id;
 	private String _name;
 	private String _self;
-	private Folder _subFolders;
+	private Folder[] _subFolders;
 
 }

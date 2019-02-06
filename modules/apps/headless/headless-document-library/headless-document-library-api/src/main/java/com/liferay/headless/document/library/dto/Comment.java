@@ -26,11 +26,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "Comment")
 public class Comment {
 
-	public Comment getComments() {
+	public Comment[] getComments() {
 		return _comments;
 	}
 
-	public String getCreator() {
+	public Creator getCreator() {
 		return _creator;
 	}
 
@@ -46,11 +46,11 @@ public class Comment {
 		return _text;
 	}
 
-	public void setComments(Comment comments) {
+	public void setComments(Comment[] comments) {
 		_comments = comments;
 	}
 
-	public void setCreator(String creator) {
+	public void setCreator(Creator creator) {
 		_creator = creator;
 	}
 
@@ -66,8 +66,8 @@ public class Comment {
 		_text = text;
 	}
 
-	private Comment _comments;
-	private String _creator;
+	private Comment[] _comments;
+	private Creator _creator;
 	private Long _id;
 	private String _self;
 	private String _text;

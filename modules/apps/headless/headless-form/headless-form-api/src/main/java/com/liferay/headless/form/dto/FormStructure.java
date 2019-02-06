@@ -32,11 +32,11 @@ public class FormStructure {
 		return _availableLanguages;
 	}
 
-	public String getContentSpace() {
+	public Long getContentSpace() {
 		return _contentSpace;
 	}
 
-	public String getCreator() {
+	public Creator getCreator() {
 		return _creator;
 	}
 
@@ -76,11 +76,11 @@ public class FormStructure {
 		_availableLanguages = availableLanguages;
 	}
 
-	public void setContentSpace(String contentSpace) {
+	public void setContentSpace(Long contentSpace) {
 		_contentSpace = contentSpace;
 	}
 
-	public void setCreator(String creator) {
+	public void setCreator(Creator creator) {
 		_creator = creator;
 	}
 
@@ -117,8 +117,8 @@ public class FormStructure {
 	}
 
 	private String[] _availableLanguages;
-	private String _contentSpace;
-	private String _creator;
+	private Long _contentSpace;
+	private Creator _creator;
 	private Date _dateCreated;
 	private Date _dateModified;
 	private String _description;

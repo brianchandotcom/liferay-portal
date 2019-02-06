@@ -14,6 +14,7 @@
 
 package com.liferay.headless.form.resource;
 
+import com.liferay.headless.form.dto.Creator;
 import com.liferay.headless.form.dto.Form;
 import com.liferay.headless.form.dto.FormDocument;
 import com.liferay.headless.form.dto.FormRecord;

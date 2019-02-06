@@ -44,19 +44,19 @@ public class BlogPosting {
 		return _caption;
 	}
 
-	public String getCategory() {
+	public Integer[] getCategory() {
 		return _category;
 	}
 
-	public Comment getComment() {
+	public Comment[] getComment() {
 		return _comment;
 	}
 
-	public String getContentSpace() {
+	public Long getContentSpace() {
 		return _contentSpace;
 	}
 
-	public String getCreator() {
+	public Creator getCreator() {
 		return _creator;
 	}
 
@@ -96,12 +96,20 @@ public class BlogPosting {
 		return _image;
 	}
 
+	public Long getImageId() {
+		return _imageId;
+	}
+
 	public String[] getKeywords() {
 		return _keywords;
 	}
 
 	public ImageObjectRepository getRepository() {
 		return _repository;
+	}
+
+	public Long getRepositoryId() {
+		return _repositoryId;
 	}
 
 	public String getSelf() {
@@ -124,19 +132,19 @@ public class BlogPosting {
 		_caption = caption;
 	}
 
-	public void setCategory(String category) {
+	public void setCategory(Integer[] category) {
 		_category = category;
 	}
 
-	public void setComment(Comment comment) {
+	public void setComment(Comment[] comment) {
 		_comment = comment;
 	}
 
-	public void setContentSpace(String contentSpace) {
+	public void setContentSpace(Long contentSpace) {
 		_contentSpace = contentSpace;
 	}
 
-	public void setCreator(String creator) {
+	public void setCreator(Creator creator) {
 		_creator = creator;
 	}
 
@@ -176,12 +184,20 @@ public class BlogPosting {
 		_image = image;
 	}
 
+	public void setImageId(Long imageId) {
+		_imageId = imageId;
+	}
+
 	public void setKeywords(String[] keywords) {
 		_keywords = keywords;
 	}
 
 	public void setRepository(ImageObjectRepository repository) {
 		_repository = repository;
+	}
+
+	public void setRepositoryId(Long repositoryId) {
+		_repositoryId = repositoryId;
 	}
 
 	public void setSelf(String self) {
@@ -192,10 +208,10 @@ public class BlogPosting {
 	private String _alternativeHeadline;
 	private String _articleBody;
 	private String _caption;
-	private String _category;
-	private Comment _comment;
-	private String _contentSpace;
-	private String _creator;
+	private Integer[] _category;
+	private Comment[] _comment;
+	private Long _contentSpace;
+	private Creator _creator;
 	private Date _dateCreated;
 	private Date _dateModified;
 	private Date _datePublished;
@@ -205,8 +221,10 @@ public class BlogPosting {
 	private String _headline;
 	private Long _id;
 	private ImageObject _image;
+	private Long _imageId;
 	private String[] _keywords;
 	private ImageObjectRepository _repository;
+	private Long _repositoryId;
 	private String _self;
 
 }

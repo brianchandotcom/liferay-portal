@@ -18,6 +18,7 @@ import com.liferay.headless.web.experience.dto.AggregateRating;
 import com.liferay.headless.web.experience.dto.Comment;
 import com.liferay.headless.web.experience.dto.ContentDocument;
 import com.liferay.headless.web.experience.dto.ContentStructure;
+import com.liferay.headless.web.experience.dto.Creator;
 import com.liferay.headless.web.experience.dto.StructuredContent;
 import com.liferay.oauth2.provider.scope.RequiresScope;
 import com.liferay.portal.vulcan.context.Pagination;

@@ -28,7 +28,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "Keyword")
 public class Keyword {
 
-	public ContentSpace getContentSpace() {
+	public Long getContentSpace() {
 		return _contentSpace;
 	}
 
@@ -60,7 +60,7 @@ public class Keyword {
 		return _self;
 	}
 
-	public void setContentSpace(ContentSpace contentSpace) {
+	public void setContentSpace(Long contentSpace) {
 		_contentSpace = contentSpace;
 	}
 
@@ -92,7 +92,7 @@ public class Keyword {
 		_self = self;
 	}
 
-	private ContentSpace _contentSpace;
+	private Long _contentSpace;
 	private UserAccount _creator;
 	private Date _dateCreated;
 	private Date _dateModified;

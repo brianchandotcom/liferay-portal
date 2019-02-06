@@ -32,7 +32,7 @@ public class ContentDocument {
 		return _contentUrl;
 	}
 
-	public String getCreator() {
+	public Creator getCreator() {
 		return _creator;
 	}
 
@@ -72,7 +72,7 @@ public class ContentDocument {
 		_contentUrl = contentUrl;
 	}
 
-	public void setCreator(String creator) {
+	public void setCreator(Creator creator) {
 		_creator = creator;
 	}
 
@@ -109,7 +109,7 @@ public class ContentDocument {
 	}
 
 	private String _contentUrl;
-	private String _creator;
+	private Creator _creator;
 	private Date _dateCreated;
 	private Date _dateModified;
 	private String _encodingFormat;

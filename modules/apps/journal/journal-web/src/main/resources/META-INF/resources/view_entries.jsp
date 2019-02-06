@@ -369,18 +369,14 @@ String referringPortletResource = ParamUtil.getString(request, "referringPortlet
 	/>
 </liferay-ui:search-container>
 
-<aui:script require='<%= npmResolvedPackageName + "/js/ElementsDefaultEventHandler.es as ElementsDefaultEventHandler" %>'>
-	Liferay.component(
-		'<%= JournalWebConstants.JOURNAL_ELEMENTS_DEFAULT_EVENT_HANDLER %>',
-		new ElementsDefaultEventHandler.default(
-			{
-				namespace: '<%= renderResponse.getNamespace() %>',
-				trashEnabled: <%= trashHelper.isTrashEnabled(scopeGroupId) %>
-			}
-		),
-		{
-			destroyOnNavigate: true,
-			portletId: '<%= HtmlUtil.escapeJS(portletDisplay.getId()) %>'
-		}
-	);
-</aui:script>
+<%
+Map<String, Object> context = new HashMap<>();
+
+context.put("trashEnabled", trashHelper.isTrashEnabled(scopeGroupId));
+%>
+
+<liferay-frontend:component
+	componentId="<%= JournalWebConstants.JOURNAL_ELEMENTS_DEFAULT_EVENT_HANDLER %>"
+	context="<%= context %>"
+	module="js/ElementsDefaultEventHandler.es"
+/>

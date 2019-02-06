@@ -243,18 +243,14 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(articles)) {
 	</c:otherwise>
 </c:choose>
 
-<aui:script require='<%= npmResolvedPackageName + "/js/ElementsDefaultEventHandler.es as ElementsDefaultEventHandler" %>'>
-	Liferay.component(
-		'<%= JournalWebConstants.JOURNAL_INFO_PANEL_ELEMENTS_DEFAULT_EVENT_HANDLER %>',
-		new ElementsDefaultEventHandler.default(
-			{
-				namespace: '<%= liferayPortletResponse.getNamespace() %>',
-				trashEnabled: <%= trashHelper.isTrashEnabled(scopeGroupId) %>
-			}
-		),
-		{
-			destroyOnNavigate: true,
-			portletId: '<%= HtmlUtil.escapeJS(portletDisplay.getId()) %>'
-		}
-	);
-</aui:script>
+<%
+Map<String, Object> context = new HashMap<>();
+
+context.put("trashEnabled", trashHelper.isTrashEnabled(scopeGroupId));
+%>
+
+<liferay-frontend:component
+	componentId="<%= JournalWebConstants.JOURNAL_INFO_PANEL_ELEMENTS_DEFAULT_EVENT_HANDLER %>"
+	context="<%= context %>"
+	module="js/ElementsDefaultEventHandler.es"
+/>

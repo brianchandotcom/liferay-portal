@@ -7,6 +7,25 @@ definition {
 		Button.clickSave();
 	}
 
+	macro deleteDisplayPage {
+		LexiconCard.delete(
+			card = "${displayPageName}"
+		);
+	}
+
+	macro gotoDisplayPage {
+		LexiconCard.clickCardTitle(
+			card = "${displayPageName}"
+		);
+	}
+
+	macro gotoDisplayPageEllipsisItem {
+		LexiconCard.clickEllipsisItem(
+			card = "${displayPageName}",
+			item = "${item}"
+		);
+	}
+
 	macro markDisplayPageAsDefault {
 		LexiconCard.clickEllipsisItem(
 			card = "${displayPageName}",
@@ -21,6 +40,29 @@ definition {
 	macro openDisplayPagesAdmin {
 		Navigator.openWithAppendToBaseURL(
 			urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_layout_admin_web_portlet_GroupPagesPortlet&amp;_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_tabs1=display-pages"
+		);
+	}
+
+	macro renameDisplayPage {
+		DisplayPagesAdmin.gotoDisplayPageEllipsisItem(
+			displayPageName = "${displayPageName}",
+			item = "Rename"
+		);
+
+		PortletEntry.inputName(name = "${newDisplayPageName}");
+
+		Modal.save();
+	}
+
+	macro viewDisplayPageNotPresent {
+		LexiconCard.viewCardNotPresent(
+			card = "${displayPageName}"
+		);
+	}
+
+	macro viewDisplayPagePresent {
+		LexiconCard.viewCardPresent(
+			card = "${displayPageName}"
 		);
 	}
 

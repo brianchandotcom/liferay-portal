@@ -48,6 +48,13 @@ definition {
 		);
 	}
 
+	macro viewCardPresent {
+		AssertVisible(
+			locator1 = "LexiconCard#CARD",
+			key_card = "${card}"
+		);
+	}
+
 	macro viewCardSubtitle {
 		AssertTextEquals(
 			locator1 = "LexiconCard#CARD_SUBTITLE",

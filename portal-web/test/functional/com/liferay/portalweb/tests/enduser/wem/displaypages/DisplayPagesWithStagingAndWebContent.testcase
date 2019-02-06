@@ -319,9 +319,9 @@ definition {
 		task ("Add a Content fragment to the display page and map it to the Basic Web Content Title") {
 			DisplayPagesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name-staging");
 
-			LexiconEntry.gotoEntryMenuItem(
-				menuItem = "Edit",
-				rowEntry = "Display Page Name"
+			DisplayPagesAdmin.gotoDisplayPageEllipsisItem(
+				displayPageName = "Display Page Name",
+				item = "Edit"
 			);
 
 			PageEditor.addFragment(

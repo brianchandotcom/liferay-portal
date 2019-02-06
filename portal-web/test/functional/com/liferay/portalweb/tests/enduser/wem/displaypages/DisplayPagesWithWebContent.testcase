@@ -126,9 +126,9 @@ definition {
 				siteURLKey = "test-site-name"
 			);
 
-			LexiconEntry.gotoEntryMenuItem(
-				menuItem = "Configure",
-				rowEntry = "Display Page Name"
+			DisplayPagesAdmin.gotoDisplayPageEllipsisItem(
+				displayPageName = "Display Page Name",
+				item = "Configure"
 			);
 
 			Navigator.gotoNavTab(navTab = "Look and Feel");
@@ -219,9 +219,9 @@ definition {
 				siteURLKey = "test-site-name"
 			);
 
-			LexiconEntry.gotoEntryMenuItem(
-				menuItem = "Configure",
-				rowEntry = "Display Page Name"
+			DisplayPagesAdmin.gotoDisplayPageEllipsisItem(
+				displayPageName = "Display Page Name",
+				item = "Configure"
 			);
 
 			Navigator.gotoNavTab(navTab = "Look and Feel");

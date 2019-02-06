@@ -51,7 +51,9 @@ definition {
 		}
 
 		task ("View the display page") {
-			LexiconEntry.viewEntryName(rowEntry = "Display Page Name");
+			DisplayPagesAdmin.viewDisplayPagePresent(
+				displayPageName = "DisplayPage Name"
+			);
 		}
 	}
 
@@ -85,9 +87,9 @@ definition {
 		}
 
 		task ("Assert the fragment was added to the display page") {
-			LexiconEntry.gotoEntryMenuItem(
-				menuItem = "Edit",
-				rowEntry = "Display Page Name"
+			DisplayPagesAdmin.gotoDisplayPageEllipsisItem(
+				displayPageName = "Display Page Name",
+				item = "Edit"
 			);
 
 			AssertVisible(
@@ -217,9 +219,9 @@ definition {
 		}
 
 		task ("Configure the draft status display page") {
-			LexiconEntry.gotoEntryMenuItem(
-				menuItem = "Configure",
-				rowEntry = "Display Page Name"
+			DisplayPagesAdmin.gotoDisplayPageEllipsisItem(
+				displayPageName = "Display Page Name",
+				item = "Configure"
 			);
 
 			Navigator.gotoNavTab(navTab = "Look and Feel");
@@ -235,9 +237,9 @@ definition {
 		}
 
 		task ("Assert the configuration saved properly") {
-			LexiconEntry.gotoEntryMenuItem(
-				menuItem = "Configure",
-				rowEntry = "Display Page Name"
+			DisplayPagesAdmin.gotoDisplayPageEllipsisItem(
+				displayPageName = "Display Page Name",
+				item = "Configure"
 			);
 
 			Navigator.gotoNavTab(navTab = "Look and Feel");
@@ -257,11 +259,15 @@ definition {
 		task ("Delete the display page") {
 			DisplayPagesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
-			LexiconEntry.delete(rowEntry = "Display Page Name");
+			DisplayPagesAdmin.deleteDisplayPage(
+				displayPageName = "Display Page Name"
+			);
 		}
 
 		task ("Assert the display page was deleted") {
-			LexiconEntry.viewNoEntry(rowEntry = "Display Page Name");
+			DisplayPagesAdmin.viewDisplayPageNotPresent(
+				displayPageName = "DisplayPage Name"
+			);
 		}
 	}
 
@@ -292,9 +298,8 @@ definition {
 		}
 
 		task ("Navigate back to the display page") {
-			LexiconEntry.gotoEntryMenuItem(
-				menuItem = "Edit",
-				rowEntry = "Display Page Name"
+			DisplayPagesAdmin.gotoDisplayPage(
+				displayPageName = "Display Page Name"
 			);
 		}
 
@@ -324,9 +329,9 @@ definition {
 		}
 
 		task ("Navigate back to the display page") {
-			LexiconEntry.gotoEntryMenuItem(
-				menuItem = "Edit",
-				rowEntry = "Display Page Name"
+			DisplayPagesAdmin.gotoDisplayPageEllipsisItem(
+				displayPageName = "Display Page Name",
+				item = "Edit"
 			);
 		}
 
@@ -379,14 +384,16 @@ definition {
 		task ("Rename the display page") {
 			DisplayPagesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
-			PageTemplatesAdmin.rename(
-				pageTemplateName = "Display Page Name New",
-				rowEntry = "Display Page Name"
+			DisplayPagesAdmin.renameDisplayPage(
+				displayPageName = "Display Page Name",
+				newDisplayPageName = "Display Page Name New"
 			);
 		}
 
 		task ("Assert the display page was renamed") {
-			LexiconEntry.viewEntryName(rowEntry = "Display Page Name New");
+			DisplayPagesAdmin.viewDisplayPagePresent(
+				displayPageName = "Display Page Name New"
+			);
 		}
 	}
 
@@ -425,12 +432,9 @@ definition {
 		task ("Assert the display page cannot be deleted") {
 			DisplayPagesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
-			LexiconEntry.gotoEntryMenuItemNoError(
-				menuItem = "Delete",
-				rowEntry = "Display Page Name"
+			DisplayPagesAdmin.deleteDisplayPage(
+				displayPageName = "Display Page Name"
 			);
-
-			Confirm();
 
 			AssertTextEquals(
 				locator1 = "Message#ERROR",
@@ -442,7 +446,9 @@ definition {
 				value1 = "Error:You cannot delete asset display pages that are used by one or more assets."
 			);
 
-			LexiconEntry.viewEntryName(rowEntry = "Display Page Name");
+			DisplayPagesAdmin.viewDisplayPagePresent(
+				displayPageName = "Display Page Name"
+			);
 		}
 	}
 }

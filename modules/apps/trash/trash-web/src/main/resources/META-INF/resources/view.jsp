@@ -258,33 +258,23 @@ TrashManagementToolbarDisplayContext trashManagementToolbarDisplayContext = new 
 	</div>
 </div>
 
-<aui:script require='<%= npmResolvedPackageName + "/js/EntriesDefaultEventHandler.es as EntriesDefaultEventHandler" %>'>
-	Liferay.component(
-		'<%= TrashWebKeys.TRASH_ENTRIES_DEFAULT_EVENT_HANDLER %>',
-		new EntriesDefaultEventHandler.default(
-			{
-				namespace: '<%= renderResponse.getNamespace() %>'
-			}
-		),
-		{
-			destroyOnNavigate: true,
-			portletId: '<%= HtmlUtil.escapeJS(portletDisplay.getId()) %>'
-		}
-	);
-</aui:script>
+<portlet:actionURL name="deleteEntries" var="deleteTrashEntriesURL">
+	<portlet:param name="redirect" value="<%= currentURL %>" />
+</portlet:actionURL>
 
-<aui:script require='<%= npmResolvedPackageName + "/js/ManagementToolbarDefaultEventHandler.es as ManagementToolbarDefaultEventHandler" %>'>
-	Liferay.component(
-		'<%= trashManagementToolbarDisplayContext.getDefaultEventHandler() %>',
-		new ManagementToolbarDefaultEventHandler.default(
-			{
-				deleteTrashEntriesURL: '<portlet:actionURL name="deleteEntries"><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>',
-				namespace: '<portlet:namespace />'
-			}
-		),
-		{
-			destroyOnNavigate: true,
-			portletId: '<%= HtmlUtil.escapeJS(portletDisplay.getId()) %>'
-		}
-	);
-</aui:script>
+<%
+Map<String, Object> context = new HashMap<>();
+
+context.put("deleteTrashEntriesURL", deleteTrashEntriesURL);
+%>
+
+<liferay-frontend:component
+	componentId="<%= trashManagementToolbarDisplayContext.getDefaultEventHandler() %>"
+	context="<%= context %>"
+	module="js/ManagementToolbarDefaultEventHandler.es"
+/>
+
+<liferay-frontend:component
+	componentId="<%= TrashWebKeys.TRASH_ENTRIES_DEFAULT_EVENT_HANDLER %>"
+	module="js/EntriesDefaultEventHandler.es"
+/>

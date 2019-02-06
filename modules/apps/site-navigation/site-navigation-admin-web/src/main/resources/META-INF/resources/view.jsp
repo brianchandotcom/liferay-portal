@@ -169,19 +169,8 @@ SiteNavigationAdminManagementToolbarDisplayContext siteNavigationAdminManagement
 	Liferay.on('destroyPortlet', handleDestroyPortlet);
 </aui:script>
 
-<portlet:actionURL name="/navigation_menu/add_site_navigation_menu" var="addSiteNavigationMenuURL">
-	<portlet:param name="mvcPath" value="/edit_site_navigation_menu.jsp" />
-	<portlet:param name="redirect" value="<%= currentURL %>" />
-</portlet:actionURL>
-
-<%
-Map<String, Object> context = new HashMap<>();
-
-context.put("addSiteNavigationMenuURL", addSiteNavigationMenuURL);
-%>
-
 <liferay-frontend:component
 	componentId="<%= siteNavigationAdminManagementToolbarDisplayContext.getDefaultEventHandler() %>"
-	context="<%= context %>"
+	context="<%= siteNavigationAdminManagementToolbarDisplayContext.getComponentContext() %>"
 	module="js/ManagementToolbarDefaultEventHandler.es"
 />

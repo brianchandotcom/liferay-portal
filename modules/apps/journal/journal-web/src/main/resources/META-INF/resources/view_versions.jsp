@@ -136,14 +136,8 @@
 	/>
 </liferay-ui:search-container>
 
-<%
-Map<String, Object> context = new HashMap<>();
-
-context.put("trashEnabled", trashHelper.isTrashEnabled(scopeGroupId));
-%>
-
 <liferay-frontend:component
 	componentId="<%= JournalWebConstants.JOURNAL_ELEMENTS_DEFAULT_EVENT_HANDLER %>"
-	context="<%= context %>"
+	context="<%= journalDisplayContext.getComponentContext() %>"
 	module="js/ElementsDefaultEventHandler.es"
 />

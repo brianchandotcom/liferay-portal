@@ -28,8 +28,11 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.navigation.admin.web.internal.security.permission.resource.SiteNavigationPermission;
 import com.liferay.site.navigation.constants.SiteNavigationActionKeys;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -77,6 +80,30 @@ public class SiteNavigationAdminManagementToolbarDisplayContext
 		clearResultsURL.setParameter("keywords", StringPool.BLANK);
 
 		return clearResultsURL.toString();
+	}
+
+	public Map<String, Object> getComponentContext() {
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Map<String, Object> componentContext = new HashMap<>();
+
+		PortletURL addSiteNavigationMenuURL =
+			liferayPortletResponse.createActionURL();
+
+		addSiteNavigationMenuURL.setParameter(
+			ActionRequest.ACTION_NAME,
+			"/navigation_menu/add_site_navigation_menu");
+
+		addSiteNavigationMenuURL.setParameter(
+			"mvcPath", "/edit_site_navigation_menu.jsp");
+		addSiteNavigationMenuURL.setParameter(
+			"redirect", themeDisplay.getURLCurrent());
+
+		componentContext.put(
+			"addSiteNavigationMenuURL", addSiteNavigationMenuURL.toString());
+
+		return componentContext;
 	}
 
 	@Override

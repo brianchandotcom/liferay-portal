@@ -79,6 +79,7 @@ FragmentManagementToolbarDisplayContext fragmentManagementToolbarDisplayContext 
 </aui:form>
 
 <c:if test="<%= FragmentPermission.contains(permissionChecker, scopeGroupId, FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES) %>">
+
 	<%
 	Map<String, Object> context = new HashMap<>();
 
@@ -92,28 +93,8 @@ FragmentManagementToolbarDisplayContext fragmentManagementToolbarDisplayContext 
 	/>
 </c:if>
 
-<portlet:actionURL name="/fragment/delete_fragment_entries" var="deleteFragmentEntriesURL">
-	<portlet:param name="redirect" value="<%= currentURL %>" />
-</portlet:actionURL>
-
-<portlet:resourceURL id="/fragment/export_fragment_entries" var="exportFragmentEntriesURL" />
-
-<portlet:renderURL var="selectFragmentCollectionURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-	<portlet:param name="mvcRenderCommandName" value="/fragment/select_fragment_collection" />
-</portlet:renderURL>
-
-<%
-Map<String, Object> context = new HashMap<>();
-
-context.put("copyFragmentEntryURL", copyFragmentEntryURL);
-context.put("deleteFragmentEntriesURL", deleteFragmentEntriesURL);
-context.put("exportFragmentEntriesURL", exportFragmentEntriesURL);
-context.put("moveFragmentEntryURL", moveFragmentEntryURL);
-context.put("selectFragmentCollectionURL", selectFragmentCollectionURL);
-%>
-
 <liferay-frontend:component
 	componentId="<%= fragmentManagementToolbarDisplayContext.getDefaultEventHandler() %>"
-	context="<%= context %>"
+	context="<%= fragmentManagementToolbarDisplayContext.getComponentContext() %>"
 	module="js/ManagementToolbarDefaultEventHandler.es"
 />

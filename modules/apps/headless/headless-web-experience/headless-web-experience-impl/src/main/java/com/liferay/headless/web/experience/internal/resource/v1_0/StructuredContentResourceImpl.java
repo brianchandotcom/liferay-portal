@@ -136,7 +136,16 @@ public class StructuredContentResourceImpl
 
 		return new StructuredContent() {
 			{
+				setDateCreated(journalArticle.getCreateDate());
+				setDateModified(journalArticle.getModifiedDate());
+				setDatePublished(journalArticle.getDisplayDate());
+				setDescription(
+					journalArticle.getDescription(
+						acceptLanguage.getPreferredLocale()));
 				setId(journalArticle.getResourcePrimKey());
+				setTitle(
+					journalArticle.getTitle(
+						acceptLanguage.getPreferredLocale()));
 			}
 		};
 	}

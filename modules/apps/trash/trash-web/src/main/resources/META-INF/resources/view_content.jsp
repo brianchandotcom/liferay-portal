@@ -166,17 +166,7 @@ TrashHandler trashHandler = trashDisplayContext.getTrashHandler();
 	</c:otherwise>
 </c:choose>
 
-<aui:script require='<%= npmResolvedPackageName + "/js/EntriesDefaultEventHandler.es as EntriesDefaultEventHandler" %>'>
-	Liferay.component(
-		'<%= TrashWebKeys.TRASH_ENTRIES_DEFAULT_EVENT_HANDLER %>',
-		new EntriesDefaultEventHandler.default(
-			{
-				namespace: '<%= renderResponse.getNamespace() %>'
-			}
-		),
-		{
-			destroyOnNavigate: true,
-			portletId: '<%= HtmlUtil.escapeJS(portletDisplay.getId()) %>'
-		}
-	);
-</aui:script>
+<liferay-frontend:component
+	componentId="<%= TrashWebKeys.TRASH_ENTRIES_DEFAULT_EVENT_HANDLER %>"
+	module="js/EntriesDefaultEventHandler.es"
+/>

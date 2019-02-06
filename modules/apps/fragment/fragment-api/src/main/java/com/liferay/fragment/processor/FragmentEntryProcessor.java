@@ -68,8 +68,7 @@ public interface FragmentEntryProcessor {
 		throws PortalException {
 
 		return processFragmentEntryLinkHTML(
-			fragmentEntryLink, html, mode, LocaleUtil.getMostRelevantLocale(),
-			Collections.emptyList());
+			fragmentEntryLink, html, mode, locale, Collections.emptyList());
 	}
 
 	public String processFragmentEntryLinkHTML(

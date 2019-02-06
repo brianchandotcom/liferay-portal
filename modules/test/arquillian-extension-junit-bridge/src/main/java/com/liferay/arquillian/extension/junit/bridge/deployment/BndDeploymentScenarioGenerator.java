@@ -24,7 +24,6 @@ import com.liferay.arquillian.extension.junit.bridge.LiferayArquillianJUnitBridg
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.arquillian.extension.junit.bridge.protocol.jmx.JMXTestRunner;
 import com.liferay.arquillian.extension.junit.bridge.remote.activator.ArquillianBundleActivator;
-import com.liferay.arquillian.extension.junit.bridge.remote.observer.JUnitBridgeObserver;
 import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -208,9 +207,9 @@ public class BndDeploymentScenarioGenerator
 			javaArchive.addAsServiceProvider(
 				RemoteLoadableExtension.class,
 				LiferayArquillianJUnitBridgeExtension.class);
-			javaArchive.addClasses(
-				ArquillianBundleActivator.class, JUnitBridgeObserver.class,
-				LiferayArquillianJUnitBridgeExtension.class);
+			javaArchive.addClass(LiferayArquillianJUnitBridgeExtension.class);
+			javaArchive.addPackages(
+				true, "com.liferay.arquillian.extension.junit.bridge.remote");
 
 			Package pkg = Arquillian.class.getPackage();
 

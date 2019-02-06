@@ -105,6 +105,11 @@ public class SharingDLViewFileVersionDisplayContext
 		return toolbarItems;
 	}
 
+	@Override
+	public boolean isSharingLinkVisible() {
+		return _sharingConfiguration.isEnabled();
+	}
+
 	private boolean _isShowActions() throws PortalException {
 		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
 

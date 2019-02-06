@@ -257,6 +257,11 @@ public class DefaultDLViewFileVersionDisplayContext
 	}
 
 	@Override
+	public boolean isSharingLinkVisible() {
+		return false;
+	}
+
+	@Override
 	public boolean isVersionInfoVisible() {
 		return true;
 	}

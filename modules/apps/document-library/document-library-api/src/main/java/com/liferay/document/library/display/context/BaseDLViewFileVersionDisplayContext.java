@@ -123,6 +123,11 @@ public class BaseDLViewFileVersionDisplayContext
 	}
 
 	@Override
+	public boolean isSharingLinkVisible() throws PortalException {
+		return parentDisplayContext.isSharingLinkVisible();
+	}
+
+	@Override
 	public boolean isVersionInfoVisible() throws PortalException {
 		return parentDisplayContext.isVersionInfoVisible();
 	}

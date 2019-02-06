@@ -21,19 +21,7 @@ SelectSiteRolesDisplayContext selectSiteRolesDisplayContext = new SelectSiteRole
 %>
 
 <clay:management-toolbar
-	clearResultsURL="<%= selectSiteRolesDisplayContext.getClearResultsURL() %>"
-	componentId="siteRolesManagementToolbar"
-	disabled="<%= selectSiteRolesDisplayContext.isDisabledManagementBar() %>"
-	filterDropdownItems="<%= selectSiteRolesDisplayContext.getFilterDropdownItems() %>"
-	itemsTotal="<%= selectSiteRolesDisplayContext.getTotalItems() %>"
-	searchActionURL="<%= selectSiteRolesDisplayContext.getSearchActionURL() %>"
-	searchContainerId="siteRoles"
-	searchFormName="searchFm"
-	selectable="<%= false %>"
-	showSearch="<%= selectSiteRolesDisplayContext.isShowSearch() %>"
-	sortingOrder="<%= selectSiteRolesDisplayContext.getOrderByType() %>"
-	sortingURL="<%= selectSiteRolesDisplayContext.getSortingURL() %>"
-	viewTypeItems="<%= selectSiteRolesDisplayContext.getViewTypeItems() %>"
+	displayContext="<%= new SelectSiteRolesManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, selectSiteRolesDisplayContext) %>"
 />
 
 <aui:form cssClass="container-fluid-1280 portlet-site-memberships-assign-site-roles" name="fm">

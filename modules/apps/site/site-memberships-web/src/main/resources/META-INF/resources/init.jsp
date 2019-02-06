@@ -76,6 +76,7 @@ page import="com.liferay.site.memberships.web.internal.display.context.Organizat
 page import="com.liferay.site.memberships.web.internal.display.context.SelectOrganizationsDisplayContext" %><%@
 page import="com.liferay.site.memberships.web.internal.display.context.SelectOrganizationsManagementToolbarDisplayContext" %><%@
 page import="com.liferay.site.memberships.web.internal.display.context.SelectSiteRolesDisplayContext" %><%@
+page import="com.liferay.site.memberships.web.internal.display.context.SelectSiteRolesManagementToolbarDisplayContext" %><%@
 page import="com.liferay.site.memberships.web.internal.display.context.SelectUserGroupsDisplayContext" %><%@
 page import="com.liferay.site.memberships.web.internal.display.context.SelectUserGroupsManagementToolbarDisplayContext" %><%@
 page import="com.liferay.site.memberships.web.internal.display.context.SelectUsersDisplayContext" %><%@

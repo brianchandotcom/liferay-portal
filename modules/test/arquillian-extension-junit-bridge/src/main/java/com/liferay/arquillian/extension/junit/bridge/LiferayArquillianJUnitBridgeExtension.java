@@ -23,6 +23,9 @@ import com.liferay.arquillian.extension.junit.bridge.context.DeploymentContextIm
 import com.liferay.arquillian.extension.junit.bridge.deployment.BndDeploymentScenarioGenerator;
 import com.liferay.arquillian.extension.junit.bridge.observer.ConfigurationRegistrar;
 import com.liferay.arquillian.extension.junit.bridge.protocol.osgi.JMXOSGiProtocol;
+import com.liferay.arquillian.extension.junit.bridge.remote.context.ClassContextImpl;
+import com.liferay.arquillian.extension.junit.bridge.remote.context.SuiteContextImpl;
+import com.liferay.arquillian.extension.junit.bridge.remote.context.TestContextImpl;
 import com.liferay.arquillian.extension.junit.bridge.remote.observer.JUnitBridgeObserver;
 
 import java.net.URL;
@@ -34,9 +37,6 @@ import org.jboss.arquillian.container.test.spi.RemoteLoadableExtension;
 import org.jboss.arquillian.container.test.spi.client.deployment.DeploymentScenarioGenerator;
 import org.jboss.arquillian.container.test.spi.client.protocol.Protocol;
 import org.jboss.arquillian.test.impl.TestContextHandler;
-import org.jboss.arquillian.test.impl.context.ClassContextImpl;
-import org.jboss.arquillian.test.impl.context.SuiteContextImpl;
-import org.jboss.arquillian.test.impl.context.TestContextImpl;
 
 /**
  * @author Shuyang Zhou

@@ -21,18 +21,7 @@ UserGroupRolesDisplayContext userGroupRolesDisplayContext = new UserGroupRolesDi
 %>
 
 <clay:management-toolbar
-	clearResultsURL="<%= userGroupRolesDisplayContext.getClearResultsURL() %>"
-	componentId="userGroupGroupRoleRoleManagementToolbar"
-	disabled="<%= userGroupRolesDisplayContext.isDisabledManagementBar() %>"
-	filterDropdownItems="<%= userGroupRolesDisplayContext.getFilterDropdownItems() %>"
-	itemsTotal="<%= userGroupRolesDisplayContext.getTotalItems() %>"
-	searchActionURL="<%= userGroupRolesDisplayContext.getSearchActionURL() %>"
-	searchContainerId="userGroupGroupRoleRole"
-	searchFormName="searchFm"
-	showSearch="<%= userGroupRolesDisplayContext.isShowSearch() %>"
-	sortingOrder="<%= userGroupRolesDisplayContext.getOrderByType() %>"
-	sortingURL="<%= userGroupRolesDisplayContext.getSortingURL() %>"
-	viewTypeItems="<%= userGroupRolesDisplayContext.getViewTypeItems() %>"
+	displayContext="<%= new UserGroupRolesManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, userGroupRolesDisplayContext) %>"
 />
 
 <aui:form cssClass="container-fluid-1280 portlet-site-memberships-assign-site-roles" name="fm">

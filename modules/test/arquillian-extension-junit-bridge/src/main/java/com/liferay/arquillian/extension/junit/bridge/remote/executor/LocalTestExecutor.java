@@ -14,23 +14,23 @@
 
 package com.liferay.arquillian.extension.junit.bridge.remote.executor;
 
-import org.jboss.arquillian.container.test.impl.execution.event.LocalExecutionEvent;
 import org.jboss.arquillian.core.api.InstanceProducer;
 import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.arquillian.core.api.annotation.Observes;
 import org.jboss.arquillian.test.spi.TestMethodExecutor;
 import org.jboss.arquillian.test.spi.TestResult;
 import org.jboss.arquillian.test.spi.annotation.TestScoped;
+import org.jboss.arquillian.test.spi.event.suite.Test;
 
 /**
  * @author Matthew Tambara
  */
 public class LocalTestExecutor {
 
-	public void execute(@Observes LocalExecutionEvent event) throws Exception {
+	public void execute(@Observes Test test) throws Exception {
 		TestResult result = TestResult.passed();
 
-		TestMethodExecutor testMethodExecutor = event.getExecutor();
+		TestMethodExecutor testMethodExecutor = test.getTestMethodExecutor();
 
 		try {
 			testMethodExecutor.invoke();

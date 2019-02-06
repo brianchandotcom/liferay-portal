@@ -217,7 +217,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Mark the display page as default") {
-			DisplayPagesAdmin.markDisplayPageAsDefault(rowEntry = "Display Page Name");
+			DisplayPagesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
 		}
 
 		task ("Add a web content article") {
@@ -294,7 +294,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Mark the display page as default") {
-			DisplayPagesAdmin.markDisplayPageAsDefault(rowEntry = "Display Page Name");
+			DisplayPagesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
 		}
 
 		task ("Add a web content article") {

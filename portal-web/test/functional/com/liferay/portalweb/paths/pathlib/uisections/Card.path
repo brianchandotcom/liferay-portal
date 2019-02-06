@@ -48,11 +48,6 @@
 	<td>//*[@data-qa-id='row'][div[contains(@class,'card')]//*[normalize-space()='${key_cardText}']]//span[contains(@class,'lfr-card-modified-by-text')]//a</td>
 	<td></td>
 </tr>
-<tr>
-	<td>STICKER</td>
-	<td>//*[@data-qa-id='row'][div[contains(@class,'card')]//*[normalize-space()='${key_cardText}']]//*[contains(@class,'sticker')]</td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

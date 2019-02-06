@@ -8,12 +8,14 @@ definition {
 	}
 
 	macro markDisplayPageAsDefault {
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Mark As Default",
-			rowEntry = "${rowEntry}"
+		LexiconCard.clickEllipsisItem(
+			card = "${displayPageName}",
+			item = "Mark As Default"
 		);
 
-		AssertVisible(locator1 = "Card#STICKER", key_cardText = "${rowEntry}");
+		AssertVisible(
+			locator1 = "LexiconCard#CARD_STICKER",
+			key_card = "${displayPageName}");
 	}
 
 	macro openDisplayPagesAdmin {

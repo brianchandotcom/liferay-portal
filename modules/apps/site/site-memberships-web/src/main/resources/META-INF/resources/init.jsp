@@ -91,6 +91,7 @@ page import="com.liferay.site.memberships.web.internal.display.context.UserGroup
 page import="com.liferay.site.memberships.web.internal.display.context.UserRolesDisplayContext" %><%@
 page import="com.liferay.site.memberships.web.internal.display.context.UserRolesManagementToolbarDisplayContext" %><%@
 page import="com.liferay.site.memberships.web.internal.display.context.UsersDisplayContext" %><%@
+page import="com.liferay.site.memberships.web.internal.display.context.UsersManagementToolbarDisplayContext" %><%@
 page import="com.liferay.site.memberships.web.internal.display.context.ViewMembershipRequestsDisplayContext" %><%@
 page import="com.liferay.site.memberships.web.internal.display.context.ViewMembershipRequestsManagementToolbarDisplayContext" %><%@
 page import="com.liferay.sites.kernel.util.SitesUtil" %><%@

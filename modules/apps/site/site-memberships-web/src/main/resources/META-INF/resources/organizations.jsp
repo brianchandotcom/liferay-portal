@@ -26,22 +26,7 @@ OrganizationsDisplayContext organizationsDisplayContext = new OrganizationsDispl
 />
 
 <clay:management-toolbar
-	actionDropdownItems="<%= organizationsDisplayContext.getActionDropdownItems() %>"
-	clearResultsURL="<%= organizationsDisplayContext.getClearResultsURL() %>"
-	componentId="organizationsManagementToolbar"
-	disabled="<%= organizationsDisplayContext.isDisabledManagementBar() %>"
-	filterDropdownItems="<%= organizationsDisplayContext.getFilterDropdownItems() %>"
-	infoPanelId="infoPanelId"
-	itemsTotal="<%= organizationsDisplayContext.getTotalItems() %>"
-	searchActionURL="<%= organizationsDisplayContext.getSearchActionURL() %>"
-	searchContainerId="organizations"
-	searchFormName="searchFm"
-	showCreationMenu="<%= GroupPermissionUtil.contains(permissionChecker, siteMembershipsDisplayContext.getGroupId(), ActionKeys.ASSIGN_MEMBERS) %>"
-	showInfoButton="<%= true %>"
-	showSearch="<%= organizationsDisplayContext.isShowSearch() %>"
-	sortingOrder="<%= organizationsDisplayContext.getOrderByType() %>"
-	sortingURL="<%= organizationsDisplayContext.getSortingURL() %>"
-	viewTypeItems="<%= organizationsDisplayContext.getViewTypeItems() %>"
+	displayContext="<%= new OrganizationsManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, organizationsDisplayContext) %>"
 />
 
 <div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">

@@ -74,5 +74,12 @@ definition {
 		DMNavigator.gotoDocumentPG(dmDocumentTitle = "Document_1.jpeg");
 
 		DMDocument.viewTag(tagName = "newtag");
+
+		SearchPortlets.searchEmbedded(searchTerm = "newtag");
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "Document_1.jpeg",
+			searchAssetType = "Document"
+		);
 	}
 }

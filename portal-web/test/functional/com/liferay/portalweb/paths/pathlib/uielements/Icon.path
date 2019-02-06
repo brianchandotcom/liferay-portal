@@ -94,6 +94,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EDIT_TAGS</td>
+	<td>//*[*[name()='svg'][contains(@class,'icon-tag')]]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EXPIRE</td>
 	<td>//a[@data-title='Expire'] | //a[@title='Expire']</td>
 	<td></td>

@@ -16,13 +16,30 @@ package com.liferay.headless.collaboration.internal.resource;
 
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryService;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.friendly.url.exception.DuplicateFriendlyURLEntryException;
 import com.liferay.headless.collaboration.dto.BlogPosting;
+import com.liferay.headless.collaboration.dto.ImageObject;
 import com.liferay.headless.collaboration.resource.BlogPostingResource;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.context.Pagination;
 import com.liferay.portal.vulcan.dto.Page;
 
+import java.sql.Timestamp;
+
+import java.time.LocalDateTime;
+
+import java.util.Date;
+import java.util.Optional;
+
+import javax.ws.rs.BadRequestException;
+import javax.ws.rs.ClientErrorException;
 import javax.ws.rs.core.Response;
 
 import org.osgi.service.component.annotations.Component;
@@ -71,6 +88,82 @@ public class BlogPostingResourceImpl extends BaseBlogPostingResourceImpl {
 				parentId, WorkflowConstants.STATUS_APPROVED));
 	}
 
+	@Override
+	public BlogPosting postContentSpaceBlogPosting(
+			Long contentSpaceId, BlogPosting blogPosting)
+		throws Exception {
+
+		Date publishedDate = Optional.ofNullable(
+			blogPosting.getDatePublished()
+		).orElseGet(
+			Date::new
+		);
+
+		Timestamp timestamp = new Timestamp(publishedDate.getTime());
+
+		LocalDateTime localDateTime = timestamp.toLocalDateTime();
+
+		try {
+			BlogsEntry blogsEntry = _blogsEntryService.addEntry(
+				blogPosting.getHeadline(), blogPosting.getAlternativeHeadline(),
+				blogPosting.getFriendlyUrlPath(), blogPosting.getDescription(),
+				blogPosting.getArticleBody(), localDateTime.getMonthValue() - 1,
+				localDateTime.getDayOfMonth(), localDateTime.getYear(),
+				localDateTime.getHour(), localDateTime.getMinute(), true, true,
+				new String[0], blogPosting.getCaption(),
+				_getImageSelector(blogPosting), null,
+				_getServiceContext(contentSpaceId, blogPosting));
+
+			return _toBlogPosting(blogsEntry);
+		}
+		catch (DuplicateFriendlyURLEntryException dfurlee) {
+			throw new ClientErrorException(
+				"Duplicate friendly URL", 422, dfurlee);
+		}
+	}
+
+	private ImageSelector _getImageSelector(BlogPosting blogPosting) {
+		ImageObject imageObject = blogPosting.getImage();
+
+		Long imageId = imageObject.getId();
+
+		if ((imageId == null) || imageId.equals(0L)) {
+			return null;
+		}
+
+		try {
+			FileEntry fileEntry = _dlAppLocalService.getFileEntry(imageId);
+
+			return new ImageSelector(
+				FileUtil.getBytes(fileEntry.getContentStream()),
+				fileEntry.getFileName(), fileEntry.getMimeType(),
+				"{\"height\": 0,\"width\": 0,\"x\": 0,\"y\": 0}");
+		}
+		catch (Exception e) {
+			throw new BadRequestException(
+				"Unable to find file entry with id " + imageId, e);
+		}
+	}
+
+	private ServiceContext _getServiceContext(
+		long groupId, BlogPosting blogPosting) {
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
+
+		String[] keywords = blogPosting.getKeywords();
+
+		if (ArrayUtil.isNotEmpty(keywords)) {
+			serviceContext.setAssetTagNames(keywords);
+		}
+
+		serviceContext.setScopeGroupId(groupId);
+
+		return serviceContext;
+	}
+
 	private BlogPosting _toBlogPosting(BlogsEntry blogsEntry) {
 		return new BlogPosting() {
 			{
@@ -87,5 +180,8 @@ public class BlogPostingResourceImpl extends BaseBlogPostingResourceImpl {
 
 	@Reference
 	private BlogsEntryService _blogsEntryService;
+
+	@Reference
+	private DLAppLocalService _dlAppLocalService;
 
 }

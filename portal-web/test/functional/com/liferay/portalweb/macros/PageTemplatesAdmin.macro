@@ -8,7 +8,7 @@ definition {
 		}
 	}
 
-	macro add {
+	macro addPageTemplate {
 		if (isSet(pageTemplateType)) {
 			var menuItem = "${pageTemplateType}";
 		}
@@ -51,7 +51,7 @@ definition {
 		);
 	}
 
-	macro rename {
+	macro renamePageTemplate {
 		LexiconEntry.gotoEntryMenuItem(menuItem = "Rename", rowEntry = "${rowEntry}");
 
 		PortletEntry.inputName(name = "${pageTemplateName}");

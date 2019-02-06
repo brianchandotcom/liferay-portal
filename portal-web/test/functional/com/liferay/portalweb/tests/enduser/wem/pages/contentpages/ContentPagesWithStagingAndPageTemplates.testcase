@@ -36,7 +36,7 @@ definition {
 		}
 
 		task ("Add a page template") {
-			PageTemplatesAdmin.add(pageTemplateName = "Page Template Name");
+			PageTemplatesAdmin.addPageTemplate(pageTemplateName = "Page Template Name");
 		}
 
 		task ("Add a Title fragment to the page template") {

@@ -45,7 +45,7 @@ definition {
 
 			Navigator.gotoNavNested(navNested = "Page Template Collection");
 
-			PageTemplatesAdmin.add(pageTemplateName = "Page Template Name");
+			PageTemplatesAdmin.addPageTemplate(pageTemplateName = "Page Template Name");
 		}
 
 		task ("Add an Image fragment to the content page template") {
@@ -72,7 +72,7 @@ definition {
 
 			Navigator.gotoNavNested(navNested = "Page Template Collection");
 
-			PageTemplatesAdmin.add(pageTemplateName = "Page Template Name");
+			PageTemplatesAdmin.addPageTemplate(pageTemplateName = "Page Template Name");
 		}
 
 		task ("Add a Content fragment to the content page template") {
@@ -125,7 +125,7 @@ definition {
 
 			Navigator.gotoNavNested(navNested = "Page Template Collection");
 
-			PageTemplatesAdmin.add(pageTemplateName = "Page Template Name");
+			PageTemplatesAdmin.addPageTemplate(pageTemplateName = "Page Template Name");
 
 			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
 
@@ -172,7 +172,7 @@ definition {
 
 			Navigator.gotoNavNested(navNested = "Page Template Collection");
 
-			PageTemplatesAdmin.add(pageTemplateName = "Page Template Name");
+			PageTemplatesAdmin.addPageTemplate(pageTemplateName = "Page Template Name");
 		}
 
 		task ("Rename the content page template") {
@@ -180,7 +180,7 @@ definition {
 
 			Navigator.gotoNavNested(navNested = "Page Template Collection");
 
-			PageTemplatesAdmin.rename(
+			PageTemplatesAdmin.renamePageTemplate(
 				pageTemplateName = "Page Template Name New",
 				rowEntry = "Page Template Name"
 			);
@@ -212,7 +212,7 @@ definition {
 
 			Navigator.gotoNavNested(navNested = "Page Template Collection");
 
-			PageTemplatesAdmin.add(pageTemplateName = "Page Template Name");
+			PageTemplatesAdmin.addPageTemplate(pageTemplateName = "Page Template Name");
 
 			PageEditor.viewCollectionNotPresent(collectionName = "New Collection");
 		}

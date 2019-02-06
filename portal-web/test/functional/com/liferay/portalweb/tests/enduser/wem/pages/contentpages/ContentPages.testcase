@@ -127,7 +127,7 @@ definition {
 		}
 
 		task ("Add a page template with a Button fragment") {
-			PageTemplatesAdmin.add(pageTemplateName = "Page Template Name");
+			PageTemplatesAdmin.addPageTemplate(pageTemplateName = "Page Template Name");
 
 			PageEditor.addFragment(
 				collectionName = "Collection Name",

@@ -836,7 +836,7 @@ definition {
 
 		PageTemplatesAdmin.addCollection(collectionName = "Page Template Collection");
 
-		PageTemplatesAdmin.add(
+		PageTemplatesAdmin.addPageTemplate(
 			pageTemplateType = "Widget Page Template",
 			pageTemplateName = "Page Template Name"
 		);

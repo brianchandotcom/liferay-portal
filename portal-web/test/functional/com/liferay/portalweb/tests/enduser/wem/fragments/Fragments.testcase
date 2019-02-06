@@ -135,7 +135,7 @@ definition {
 		}
 
 		task ("Add a page template to the page template collection") {
-			PageTemplatesAdmin.add(pageTemplateName = "Page Template Name");
+			PageTemplatesAdmin.addPageTemplate(pageTemplateName = "Page Template Name");
 		}
 
 		task ("Add the section fragment to the page template") {

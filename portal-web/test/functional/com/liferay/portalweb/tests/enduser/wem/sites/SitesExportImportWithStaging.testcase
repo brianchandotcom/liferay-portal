@@ -48,7 +48,7 @@ definition {
 
 			Navigator.gotoNavNested(navNested = "Page Template Collection");
 
-			PageTemplatesAdmin.add(pageTemplateName = "Page Template Name");
+			PageTemplatesAdmin.addPageTemplate(pageTemplateName = "Page Template Name");
 
 			PageEditor.addFragment(
 				collectionName = "Collection Name",

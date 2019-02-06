@@ -64,7 +64,7 @@ definition {
 
 		Navigator.gotoNavNested(navNested = "Page Template Collection");
 
-		PageTemplatesAdmin.add(pageTemplateName = "Test");
+		PageTemplatesAdmin.addPageTemplate(pageTemplateName = "Test");
 
 		ProductMenu.gotoPortlet(
 			category = "Build",
@@ -76,7 +76,7 @@ definition {
 
 		Navigator.gotoNavNested(navNested = "Page Template Collection");
 
-		PageTemplatesAdmin.add(
+		PageTemplatesAdmin.addPageTemplate(
 			pageTemplateName = "Test",
 			pageTemplateType = "Widget Page Template"
 		);

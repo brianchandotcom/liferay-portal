@@ -232,9 +232,8 @@ definition {
 
 			SelectFrame(locator1 = "IFrame#DIALOG");
 
-			Click(
-				locator1 = "Card#SPECIFIC_LARGE_TEXT",
-				key_cardText = "Fjord"
+			LexiconCard.clickCard(
+				card = "Fjord"
 			);
 
 			SelectFrameTop(value1 = "relative=top");

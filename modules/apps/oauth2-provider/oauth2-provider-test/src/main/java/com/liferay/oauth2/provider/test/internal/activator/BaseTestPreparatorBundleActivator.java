@@ -77,6 +77,15 @@ public abstract class BaseTestPreparatorBundleActivator
 
 		autoCloseables = new ArrayList<>();
 
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
+
+		properties.put("osgi.jaxrs.name", "Default");
+		properties.put("service.ranking", Integer.MAX_VALUE);
+
+		registerPrefixHandler(
+			PrefixHandler.PASSTHROUGH_PREFIXHANDLER, properties);
+		registerScopeMapper(ScopeMapper.PASSTHROUGH_SCOPEMAPPER, properties);
+
 		try {
 			prepareTest();
 		}

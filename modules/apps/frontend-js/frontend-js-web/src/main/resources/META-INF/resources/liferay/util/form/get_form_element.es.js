@@ -18,7 +18,7 @@ export default function getFormElement(form, elementName) {
 	if (isDef(form) && form.nodeName === 'FORM' && isString(elementName)) {
 		const ns = form.dataset.fmNamespace || '';
 
-		formElement = form.elements[ns + elementName];
+		formElement = form.elements[ns + elementName] || null;
 	}
 
 	return formElement;

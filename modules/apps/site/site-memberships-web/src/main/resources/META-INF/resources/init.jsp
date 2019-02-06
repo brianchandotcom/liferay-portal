@@ -82,6 +82,7 @@ page import="com.liferay.site.memberships.web.internal.display.context.SelectUse
 page import="com.liferay.site.memberships.web.internal.display.context.SelectUsersManagementToolbarDisplayContext" %><%@
 page import="com.liferay.site.memberships.web.internal.display.context.SiteMembershipsDisplayContext" %><%@
 page import="com.liferay.site.memberships.web.internal.display.context.SiteRolesDisplayContext" %><%@
+page import="com.liferay.site.memberships.web.internal.display.context.SiteRolesManagementToolbarDisplayContext" %><%@
 page import="com.liferay.site.memberships.web.internal.display.context.UserGroupRolesDisplayContext" %><%@
 page import="com.liferay.site.memberships.web.internal.display.context.UserGroupRolesManagementToolbarDisplayContext" %><%@
 page import="com.liferay.site.memberships.web.internal.display.context.UserGroupsDisplayContext" %><%@

@@ -122,6 +122,43 @@ public class BlogPostingResourceImpl extends BaseBlogPostingResourceImpl {
 		}
 	}
 
+	@Override
+	public BlogPosting putBlogPosting(
+			Long blogPostingId, BlogPosting blogPosting)
+		throws Exception {
+
+		Date publishedDate = Optional.ofNullable(
+			blogPosting.getDatePublished()
+		).orElseGet(
+			Date::new
+		);
+
+		Timestamp timestamp = new Timestamp(publishedDate.getTime());
+
+		LocalDateTime localDateTime = timestamp.toLocalDateTime();
+
+		BlogsEntry blogsEntry = _blogsEntryService.getEntry(blogPostingId);
+
+		try {
+			BlogsEntry updatedBlogsEntry = _blogsEntryService.updateEntry(
+				blogPostingId, blogPosting.getHeadline(),
+				blogPosting.getAlternativeHeadline(),
+				blogPosting.getFriendlyUrlPath(), blogPosting.getDescription(),
+				blogPosting.getArticleBody(), localDateTime.getMonthValue() - 1,
+				localDateTime.getDayOfMonth(), localDateTime.getYear(),
+				localDateTime.getHour(), localDateTime.getMinute(), true, true,
+				new String[0], blogPosting.getCaption(),
+				_getImageSelector(blogPosting), null,
+				_getServiceContext(blogsEntry.getGroupId(), blogPosting));
+
+			return _toBlogPosting(updatedBlogsEntry);
+		}
+		catch (DuplicateFriendlyURLEntryException dfurlee) {
+			throw new ClientErrorException(
+				"Duplicate friendly URL", 422, dfurlee);
+		}
+	}
+
 	private ImageSelector _getImageSelector(BlogPosting blogPosting) {
 		ImageObject imageObject = blogPosting.getImage();
 

@@ -18,6 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -34,7 +35,9 @@ import com.liferay.site.navigation.menu.item.layout.constants.SiteNavigationMenu
 import com.liferay.site.navigation.model.SiteNavigationMenu;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalServiceUtil;
-import com.liferay.site.navigation.service.SiteNavigationMenuLocalServiceUtil;
+import com.liferay.site.navigation.util.SiteNavigationTestUtil;
+
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -58,14 +61,74 @@ public class SiteNavigationMenuItemServiceTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
+		_siteNavigationMenu = SiteNavigationTestUtil.addSiteNavigationMenu(
+			_group);
+	}
 
-		_siteNavigationMenu =
-			SiteNavigationMenuLocalServiceUtil.addSiteNavigationMenu(
-				TestPropsValues.getUserId(), _group.getGroupId(), "Menu",
-				serviceContext);
+	@Test
+	public void testAddSiteNavigationMenuItem() throws PortalException {
+		SiteNavigationMenuItem siteNavigationMenuItemLocal =
+			SiteNavigationTestUtil.addSiteNavigationMenuItem(
+				_siteNavigationMenu);
+
+		SiteNavigationMenuItem siteNavigationMenuItemDatabase =
+			SiteNavigationMenuItemLocalServiceUtil.getSiteNavigationMenuItem(
+				siteNavigationMenuItemLocal.getSiteNavigationMenuItemId());
+
+		Assert.assertEquals(
+			siteNavigationMenuItemDatabase, siteNavigationMenuItemLocal);
+	}
+
+	@Test
+	public void testAddSiteNavigationMenuItemWithOrder()
+		throws PortalException {
+
+		int siteNavigationMenuItemPosition = 1;
+
+		SiteNavigationMenuItem siteNavigationMenuItemLocal =
+			SiteNavigationTestUtil.addSiteNavigationMenuItem(
+				siteNavigationMenuItemPosition, _siteNavigationMenu);
+
+		SiteNavigationMenuItem siteNavigationMenuItemDatabase =
+			SiteNavigationMenuItemLocalServiceUtil.getSiteNavigationMenuItem(
+				siteNavigationMenuItemLocal.getSiteNavigationMenuItemId());
+
+		Assert.assertEquals(
+			siteNavigationMenuItemDatabase, siteNavigationMenuItemLocal);
+	}
+
+	@Test
+	public void testDeleteSiteNavigationMenuItem() throws PortalException {
+		SiteNavigationMenuItem siteNavigationMenuItem =
+			SiteNavigationTestUtil.addSiteNavigationMenuItem(
+				_siteNavigationMenu);
+
+		SiteNavigationMenuItemLocalServiceUtil.deleteSiteNavigationMenuItem(
+			siteNavigationMenuItem);
+
+		SiteNavigationMenuItem siteNavigationMenuItemDeleted =
+			SiteNavigationMenuItemLocalServiceUtil.fetchSiteNavigationMenuItem(
+				siteNavigationMenuItem.getSiteNavigationMenuItemId());
+
+		Assert.assertNull(siteNavigationMenuItemDeleted);
+	}
+
+	@Test
+	public void testDeleteSiteNavigationMenuItemBySiteNavigationMenuItemId()
+		throws PortalException {
+
+		SiteNavigationMenuItem siteNavigationMenuItem =
+			SiteNavigationTestUtil.addSiteNavigationMenuItem(
+				_siteNavigationMenu);
+
+		SiteNavigationMenuItemLocalServiceUtil.deleteSiteNavigationMenuItem(
+			siteNavigationMenuItem.getSiteNavigationMenuItemId());
+
+		SiteNavigationMenuItem siteNavigationMenuItemDeleted =
+			SiteNavigationMenuItemLocalServiceUtil.fetchSiteNavigationMenuItem(
+				siteNavigationMenuItem.getSiteNavigationMenuItemId());
+
+		Assert.assertNull(siteNavigationMenuItemDeleted);
 	}
 
 	@Test
@@ -111,6 +174,139 @@ public class SiteNavigationMenuItemServiceTest {
 				childSiteNavigationMenuItem1.getSiteNavigationMenuItemId());
 
 		Assert.assertEquals(1, childSiteNavigationMenuItem1.getOrder());
+	}
+
+	@Test
+	public void testDeleteSiteNavigationMenuItemsByGroupId()
+		throws Exception, PortalException {
+
+		Group groupDeleted = GroupTestUtil.addGroup();
+
+		SiteNavigationMenu siteNavigationMenuDeleted =
+			SiteNavigationTestUtil.addSiteNavigationMenu(groupDeleted);
+
+		try {
+			SiteNavigationTestUtil.addSiteNavigationMenuItem(
+				_siteNavigationMenu);
+
+			SiteNavigationTestUtil.addSiteNavigationMenuItem(
+				siteNavigationMenuDeleted);
+
+			SiteNavigationTestUtil.addSiteNavigationMenuItem(
+				siteNavigationMenuDeleted);
+
+			int originalCountStaticItems =
+				SiteNavigationMenuItemLocalServiceUtil.
+					getSiteNavigationMenuItemsCount(
+						_siteNavigationMenu.getSiteNavigationMenuId());
+
+			int originalCountDeletedItems =
+				SiteNavigationMenuItemLocalServiceUtil.
+					getSiteNavigationMenuItemsCount(
+						siteNavigationMenuDeleted.getSiteNavigationMenuId());
+
+			SiteNavigationMenuItemLocalServiceUtil.
+				deleteSiteNavigationMenuItemsByGroupId(
+					groupDeleted.getGroupId());
+
+			int endCountStaticItems =
+				SiteNavigationMenuItemLocalServiceUtil.
+					getSiteNavigationMenuItemsCount(
+						_siteNavigationMenu.getSiteNavigationMenuId());
+
+			int endCountDeletedItems =
+				SiteNavigationMenuItemLocalServiceUtil.
+					getSiteNavigationMenuItemsCount(
+						siteNavigationMenuDeleted.getSiteNavigationMenuId());
+
+			Assert.assertEquals(originalCountStaticItems, endCountStaticItems);
+
+			Assert.assertEquals(
+				originalCountDeletedItems - 2, endCountDeletedItems);
+		}
+		finally {
+			GroupLocalServiceUtil.deleteGroup(groupDeleted);
+		}
+	}
+
+	@Test
+	public void testDeleteSiteNavigationMenuItemsBySiteNavigationMenuId()
+		throws PortalException {
+
+		SiteNavigationTestUtil.addSiteNavigationMenuItem(_siteNavigationMenu);
+
+		SiteNavigationTestUtil.addSiteNavigationMenuItem(_siteNavigationMenu);
+
+		int originalCount =
+			SiteNavigationMenuItemLocalServiceUtil.
+				getSiteNavigationMenuItemsCount(
+					_siteNavigationMenu.getSiteNavigationMenuId());
+
+		SiteNavigationMenuItemLocalServiceUtil.deleteSiteNavigationMenuItems(
+			_siteNavigationMenu.getSiteNavigationMenuId());
+
+		int endingCount =
+			SiteNavigationMenuItemLocalServiceUtil.
+				getSiteNavigationMenuItemsCount(
+					_siteNavigationMenu.getSiteNavigationMenuId());
+
+		Assert.assertEquals(originalCount - 2, endingCount);
+	}
+
+	@Test
+	public void testGetSiteNavigationMenuItems() throws PortalException {
+		List<SiteNavigationMenuItem> siteNavigationMenuItems =
+			SiteNavigationMenuItemLocalServiceUtil.getSiteNavigationMenuItems(
+				_siteNavigationMenu.getSiteNavigationMenuId());
+
+		int originalCount = siteNavigationMenuItems.size();
+
+		SiteNavigationTestUtil.addSiteNavigationMenuItem(_siteNavigationMenu);
+
+		SiteNavigationTestUtil.addSiteNavigationMenuItem(_siteNavigationMenu);
+
+		siteNavigationMenuItems =
+			SiteNavigationMenuItemLocalServiceUtil.getSiteNavigationMenuItems(
+				_siteNavigationMenu.getSiteNavigationMenuId());
+
+		int endCount = siteNavigationMenuItems.size();
+
+		Assert.assertEquals(originalCount + 2, endCount);
+	}
+
+	@Test
+	public void testGetSiteNavigationMenuItemsByParentSiteNavigationMenuItemId()
+		throws PortalException {
+
+		SiteNavigationMenuItem parentSiteNavigationMenuItem =
+			SiteNavigationTestUtil.addSiteNavigationMenuItem(
+				_siteNavigationMenu);
+
+		List<SiteNavigationMenuItem> siteNavigationMenuItems =
+			SiteNavigationMenuItemLocalServiceUtil.getSiteNavigationMenuItems(
+				_siteNavigationMenu.getSiteNavigationMenuId(),
+				parentSiteNavigationMenuItem.getSiteNavigationMenuItemId());
+
+		int originalCount = siteNavigationMenuItems.size();
+
+		SiteNavigationMenuItem childSiteNavigationMenuItem =
+			SiteNavigationTestUtil.addSiteNavigationMenuItem(
+				parentSiteNavigationMenuItem.getSiteNavigationMenuItemId(),
+				_siteNavigationMenu);
+
+		SiteNavigationTestUtil.addSiteNavigationMenuItem(_siteNavigationMenu);
+
+		siteNavigationMenuItems =
+			SiteNavigationMenuItemLocalServiceUtil.getSiteNavigationMenuItems(
+				_siteNavigationMenu.getSiteNavigationMenuId(),
+				parentSiteNavigationMenuItem.getSiteNavigationMenuItemId());
+
+		int endCount = siteNavigationMenuItems.size();
+
+		Assert.assertEquals(originalCount + 1, endCount);
+
+		Assert.assertEquals(
+			childSiteNavigationMenuItem, siteNavigationMenuItems.get(0));
 	}
 
 	@Test(expected = InvalidSiteNavigationMenuItemOrderException.class)

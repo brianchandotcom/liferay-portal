@@ -20,24 +20,26 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "${schemaName}")
 public class ${schemaName} {
 
-	<#list schema.properties?keys as propertyName>
-		<#assign javaParameter = javaTool.getJavaParameter(schema.properties[propertyName], propertyName) />
+	<#if schema.properties??>
+		<#list schema.properties?keys as propertyName>
+			<#assign javaParameter = javaTool.getJavaParameter(schema.properties[propertyName], propertyName) />
 
-		<#assign content>
-			public ${javaParameter.parameterType} get${javaParameter.parameterName?cap_first}() {
-				return _${propertyName};
-			}
+			<#assign content>
+				public ${javaParameter.parameterType} get${javaParameter.parameterName?cap_first}() {
+					return _${propertyName};
+				}
 
-			public void set${javaParameter.parameterName?cap_first}(${javaParameter.parameterType} ${javaParameter.parameterName}) {
-				_${propertyName} = ${propertyName};
-			}
+				public void set${javaParameter.parameterName?cap_first}(${javaParameter.parameterType} ${javaParameter.parameterName}) {
+					_${propertyName} = ${propertyName};
+				}
 
-			private ${javaParameter.parameterType} _${propertyName};
-		</#assign>
+				private ${javaParameter.parameterType} _${propertyName};
+			</#assign>
 
-		<#list content?split("\n") as line>
-			${line?replace("^\t\t", "", "r")}<#lt>
+			<#list content?split("\n") as line>
+				${line?replace("^\t\t\t", "", "r")}<#lt>
+			</#list>
 		</#list>
-	</#list>
+	</#if>
 
 }

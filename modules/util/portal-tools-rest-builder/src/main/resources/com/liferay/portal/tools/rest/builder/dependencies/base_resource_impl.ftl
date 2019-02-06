@@ -30,48 +30,50 @@ import javax.ws.rs.core.Response;
 @Generated("")
 public abstract class Base${schemaName}ResourceImpl implements ${schemaName}Resource {
 
-	<#list openAPIYAML.pathItems?keys as path>
-		<#assign pathItem = openAPIYAML.pathItems[path] />
+	<#if openAPIYAML.pathItems??>
+		<#list openAPIYAML.pathItems?keys as path>
+			<#assign pathItem = openAPIYAML.pathItems[path] />
 
-		<#list javaTool.getOperations(pathItem) as operation>
-			<#assign javaSignature = javaTool.getJavaSignature(configYAML, openAPIYAML, operation, path, pathItem, schemaName) />
+			<#list javaTool.getOperations(pathItem) as operation>
+				<#assign javaSignature = javaTool.getJavaSignature(configYAML, openAPIYAML, operation, path, pathItem, schemaName) />
 
-			<#if !stringUtil.equals(javaSignature.returnType, schemaName) && !stringUtil.equals(javaSignature.returnType, "Page<${schemaName}>") && !stringUtil.endsWith(javaSignature.methodName, schemaName)>
-				<#continue>
-			</#if>
-
-			@Override
-			<@compress single_line=true>
-				public ${javaSignature.returnType} ${javaSignature.methodName}(
-					<#list javaSignature.javaParameters as javaParameter>
-						${javaParameter.parameterType} ${javaParameter.parameterName}
-
-						<#if javaParameter_has_next>
-							,
-						</#if>
-					</#list>
-				) throws Exception {
-			</@compress>
-
-			<#assign methodBody>
-				<#if stringUtil.equals(javaSignature.returnType, "Response")>
-					Response.ResponseBuilder responseBuilder = Response.ok();
-
-					return responseBuilder.build();
-				<#elseif stringUtil.equals(javaSignature.returnType, "Page<" + schemaName + ">")>
-					return Page.of(Collections.emptyList());
-				<#else>
-					return new ${javaSignature.returnType}();
+				<#if !stringUtil.equals(javaSignature.returnType, schemaName) && !stringUtil.equals(javaSignature.returnType, "Page<${schemaName}>") && !stringUtil.endsWith(javaSignature.methodName, schemaName)>
+					<#continue>
 				</#if>
-			</#assign>
 
-			<#list methodBody?split("\n") as line>
-				${line?replace("^\t\t\t", "", "r")}<#lt>
+				@Override
+				<@compress single_line=true>
+					public ${javaSignature.returnType} ${javaSignature.methodName}(
+						<#list javaSignature.javaParameters as javaParameter>
+							${javaParameter.parameterType} ${javaParameter.parameterName}
+
+							<#if javaParameter_has_next>
+								,
+							</#if>
+						</#list>
+					) throws Exception {
+				</@compress>
+
+				<#assign methodBody>
+					<#if stringUtil.equals(javaSignature.returnType, "Response")>
+						Response.ResponseBuilder responseBuilder = Response.ok();
+
+						return responseBuilder.build();
+					<#elseif stringUtil.equals(javaSignature.returnType, "Page<" + schemaName + ">")>
+						return Page.of(Collections.emptyList());
+					<#else>
+						return new ${javaSignature.returnType}();
+					</#if>
+				</#assign>
+
+				<#list methodBody?split("\n") as line>
+					${line?replace("^\t\t\t\t", "", "r")}<#lt>
+				</#list>
+
+				}
 			</#list>
-
-			}
 		</#list>
-	</#list>
+	</#if>
 
 	protected <T, R> List<R> transform(List<T> list, Function<T, R> transformFunction) {
 		return TransformUtil.transform(list, transformFunction);

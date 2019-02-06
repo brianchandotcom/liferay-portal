@@ -135,7 +135,7 @@ public class JavaTool {
 
 		String parameterName = CamelCaseUtil.toCamelCase(
 			parameter.getName(), false);
-		String parameterType = getJavaType(
+		String parameterType = _getJavaType(
 			schema.getFormat(), schema.getItems(), schema.getReference(),
 			schema.getType());
 
@@ -147,7 +147,7 @@ public class JavaTool {
 		Properties properties, String propertyName) {
 
 		String parameterName = CamelCaseUtil.toCamelCase(propertyName, false);
-		String parameterType = getJavaType(
+		String parameterType = _getJavaType(
 			properties.getFormat(), properties.getItems(),
 			properties.getReference(), properties.getType());
 
@@ -165,38 +165,6 @@ public class JavaTool {
 			_getMethodAnnotations(configYAML, operation, pathItem, path),
 			_getMethodName(operation, path, returnType, schemaName),
 			returnType);
-	}
-
-	public String getJavaType(
-		String format, Items items, String reference, String type) {
-
-		if (StringUtil.equals(type, "array") && (items != null)) {
-			if (items.getType() != null) {
-				return StringUtil.upperCaseFirstLetter(items.getType()) + "[]";
-			}
-
-			if (items.getReference() != null) {
-				return getComponentType(items.getReference()) + "[]";
-			}
-		}
-
-		if (type != null) {
-			if (StringUtil.equals(format, "date-time") &&
-				StringUtil.equals(type, "string")) {
-
-				return "Date";
-			}
-
-			if (StringUtil.equals(format, "int64") &&
-				StringUtil.equals(type, "integer")) {
-
-				return "Long";
-			}
-
-			return StringUtil.upperCaseFirstLetter(type);
-		}
-
-		return getComponentType(reference);
 	}
 
 	public List<String> getMediaTypes(Map<String, Content> contents) {
@@ -316,6 +284,38 @@ public class JavaTool {
 		}
 
 		return javaParameters;
+	}
+
+	private String _getJavaType(
+		String format, Items items, String reference, String type) {
+
+		if (StringUtil.equals(type, "array") && (items != null)) {
+			if (items.getType() != null) {
+				return StringUtil.upperCaseFirstLetter(items.getType()) + "[]";
+			}
+
+			if (items.getReference() != null) {
+				return getComponentType(items.getReference()) + "[]";
+			}
+		}
+
+		if (type != null) {
+			if (StringUtil.equals(format, "date-time") &&
+				StringUtil.equals(type, "string")) {
+
+				return "Date";
+			}
+
+			if (StringUtil.equals(format, "int64") &&
+				StringUtil.equals(type, "integer")) {
+
+				return "Long";
+			}
+
+			return StringUtil.upperCaseFirstLetter(type);
+		}
+
+		return getComponentType(reference);
 	}
 
 	private String _getMethodAnnotationConsumes(Operation operation) {
@@ -470,7 +470,7 @@ public class JavaTool {
 					continue;
 				}
 
-				String javaType = getJavaType(
+				String javaType = _getJavaType(
 					schema.getFormat(), schema.getItems(),
 					schema.getReference(), schema.getType());
 

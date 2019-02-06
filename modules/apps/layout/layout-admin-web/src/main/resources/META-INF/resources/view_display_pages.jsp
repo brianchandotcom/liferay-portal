@@ -69,35 +69,13 @@ DisplayPageManagementToolbarDisplayContext displayPageManagementToolbarDisplayCo
 	</liferay-ui:search-container>
 </aui:form>
 
-<aui:script require='<%= npmResolvedPackageName + "/js/DisplayPageDropdownDefaultEventHandler.es as DisplayPageDropdownDefaultEventHandler" %>'>
-	Liferay.component(
-		'<%= LayoutAdminWebKeys.DISPLAY_PAGE_DROPDOWN_DEFAULT_EVENT_HANDLER %>',
-		new DisplayPageDropdownDefaultEventHandler.default(
-			{
-				namespace: '<portlet:namespace />',
-				spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg'
-			}
-		),
-		{
-			destroyOnNavigate: true,
-			portletId: '<%= HtmlUtil.escapeJS(portletDisplay.getId()) %>'
-		}
-	);
-</aui:script>
+<liferay-frontend:component
+	componentId="<%= LayoutAdminWebKeys.DISPLAY_PAGE_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
+	module="js/DisplayPageDropdownDefaultEventHandler.es"
+/>
 
-<aui:script require='<%= npmResolvedPackageName + "/js/DisplayPageManagementToolbarDefaultEventHandler.es as DisplayPageManagementToolbarDefaultEventHandler" %>'>
-	Liferay.component(
-		'<%= displayPageManagementToolbarDisplayContext.getDefaultEventHandler() %>',
-		new DisplayPageManagementToolbarDefaultEventHandler.default(
-			{
-				addDisplayPageURL: '<portlet:actionURL name="/layout/add_layout_page_template_entry"><portlet:param name="mvcRenderCommandName" value="/layout/edit_layout_page_template_entry" /><portlet:param name="redirect" value="<%= currentURL %>" /><portlet:param name="type" value="<%= String.valueOf(LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE) %>" /></portlet:actionURL>',
-				namespace: '<portlet:namespace />',
-				spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg'
-			}
-		),
-		{
-			destroyOnNavigate: true,
-			portletId: '<%= HtmlUtil.escapeJS(portletDisplay.getId()) %>'
-		}
-	);
-</aui:script>
+<liferay-frontend:component
+	componentId="<%= displayPageManagementToolbarDisplayContext.getDefaultEventHandler() %>"
+	context="<%= displayPageManagementToolbarDisplayContext.getComponentContext() %>"
+	module="js/DisplayPageManagementToolbarDefaultEventHandler.es"
+/>

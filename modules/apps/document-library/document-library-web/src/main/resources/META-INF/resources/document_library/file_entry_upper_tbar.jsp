@@ -55,12 +55,15 @@ boolean versionSpecific = GetterUtil.getBoolean(request.getAttribute("file_entry
 					label="info"
 				/>
 			</li>
-			<li class="tbar-item">
-				<liferay-sharing:button
-					className="<%= DLFileEntryConstants.getClassName() %>"
-					classPK="<%= fileEntry.getFileEntryId() %>"
-				/>
-			</li>
+
+			<c:if test="<%= dlViewFileVersionDisplayContext.isSharingLinkVisible() %>">
+				<li class="tbar-item">
+					<liferay-sharing:button
+						className="<%= DLFileEntryConstants.getClassName() %>"
+						classPK="<%= fileEntry.getFileEntryId() %>"
+					/>
+				</li>
+			</c:if>
 
 			<c:if test="<%= dlViewFileVersionDisplayContext.isDownloadLinkVisible() %>">
 				<li class="tbar-item">

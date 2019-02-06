@@ -1,0 +1,2 @@
+Liferay-Releng-Suite-Description: The Liferay Change Tracking suite provides features for users to track and publish their changes, manage change lists and publish history.
+Liferay-Releng-Suite-Title: ${liferay.releng.app.title.prefix} Change Tracking

@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -207,8 +208,13 @@ public class ReviewUADDataMVCRenderCommand implements MVCRenderCommand {
 		searchContainer.setId("UADEntities");
 
 		String orderByCol = ParamUtil.getString(
-			renderRequest, SearchContainer.DEFAULT_ORDER_BY_COL_PARAM,
-			"modifiedDate");
+			renderRequest, SearchContainer.DEFAULT_ORDER_BY_COL_PARAM);
+
+		if (!ArrayUtil.contains(
+				uadDisplay.getSortingFieldNames(), orderByCol)) {
+
+			orderByCol = "modifiedDate";
+		}
 
 		searchContainer.setOrderByCol(orderByCol);
 

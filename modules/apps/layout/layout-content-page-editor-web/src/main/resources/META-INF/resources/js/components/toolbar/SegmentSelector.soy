@@ -5,14 +5,14 @@
  */
 {template .render}
 	{@param? _handleSegmentChange: any}
+	{@param? availableSegments: list<[
+		segmentId: string,
+		segmentLabel: string
+	]>}
 	{@param? portletNamespace: string}
 	{@param? segmentId: string}
-	{@param? segments: list<[
-		label: string,
-		id: string
-	]>}
 
-	{if $segments and length($segments) > 0}
+	{if $availableSegments and length($availableSegments) > 0}
 		<div class="form-group mb-0">
 			<label class="sr-only" for="{$portletNamespace}SegmentSelector">
 				{msg desc=""}select-segment{/msg}
@@ -23,11 +23,11 @@
 				data-onchange="{$_handleSegmentChange}"
 				id="{$portletNamespace}SegmentSelector"
 			>
-				{foreach $segment in $segments}
-					{if $segment.id == $segmentId}
-						<option value="{$segment.id}" selected>{$segment.label}</option>
+				{foreach $segment in $availableSegments}
+					{if $segment.segmentId == $segmentId}
+						<option value="{$segment.segmentId}" selected>{$segment.segmentLabel}</option>
 					{else}
-						<option value="{$segment.id}">{$segment.label}</option>
+						<option value="{$segment.segmentId}">{$segment.segmentLabel}</option>
 					{/if}
 				{/foreach}
 			</select>

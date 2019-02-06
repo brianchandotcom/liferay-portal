@@ -28,7 +28,13 @@ components:
         state:
           type: string
         task:
-          $ref: "#/components/schemas/WorkflowTask"
+          allOf:
+            - $ref: "#/components/schemas/WorkflowTask"
+          readOnly: true
+        taskId:
+          format: int64
+          type: integer
+          writeOnly: true
         type:
           type: string
       type: object
@@ -56,7 +62,14 @@ components:
         logs:
           items:
             $ref: "#/components/schemas/WorkflowLog"
+          readOnly: true
           type: array
+        logsIds:
+          items:
+            format: int64
+            type: integer
+          type: array
+          writeOnly: true
         name:
           type: string
         object:

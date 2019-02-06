@@ -94,7 +94,13 @@ components:
         fileExtension:
           type: string
         folder:
-          $ref: "#/components/schemas/Folder"
+          allOf:
+            - $ref: "#/components/schemas/Folder"
+          readOnly: true
+        folderId:
+          format: int64
+          type: integer
+          writeOnly: true
         id:
           format: int64
           type: integer
@@ -124,9 +130,22 @@ components:
         documents:
           items:
             $ref: "#/components/schemas/Document"
+          readOnly: true
           type: array
+        documentsIds:
+          items:
+            format: int64
+            type: integer
+          type: array
+          writeOnly: true
         documentsRepository:
-          $ref: "#/components/schemas/Folder"
+          allOf:
+            - $ref: "#/components/schemas/Folder"
+          readOnly: true
+        documentsRepositoryId:
+          format: int64
+          type: integer
+          writeOnly: true
         id:
           format: int64
           type: integer

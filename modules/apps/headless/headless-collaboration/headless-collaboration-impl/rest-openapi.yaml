@@ -64,13 +64,25 @@ components:
           format: int64
           type: integer
         image:
-          $ref: "#/components/schemas/ImageObject"
+          allOf:
+            - $ref: "#/components/schemas/ImageObject"
+          readOnly: true
+        imageId:
+          format: int64
+          type: integer
+          writeOnly: true
         keywords:
           items:
             type: string
           type: array
         repository:
-          $ref: "#/components/schemas/ImageObjectRepository"
+          allOf:
+            - $ref: "#/components/schemas/ImageObjectRepository"
+          readOnly: true
+        repositoryId:
+          format: int64
+          type: integer
+          writeOnly: true
         self:
           format: uri
           type: string
@@ -157,7 +169,14 @@ components:
         images:
           items:
             $ref: "#/components/schemas/ImageObject"
+          readOnly: true
           type: array
+        imagesIds:
+          items:
+            format: int64
+            type: integer
+          type: array
+          writeOnly: true
         name:
           type: string
         self:

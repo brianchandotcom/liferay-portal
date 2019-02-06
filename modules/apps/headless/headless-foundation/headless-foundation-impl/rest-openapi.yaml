@@ -8,9 +8,21 @@ components:
             type: string
           type: array
         category:
-          $ref: "#/components/schemas/Category"
+          allOf:
+            - $ref: "#/components/schemas/Category"
+          readOnly: true
+        categoryId:
+          format: int64
+          type: integer
+          writeOnly: true
         creator:
-          $ref: "#/components/schemas/UserAccount"
+          allOf:
+            - $ref: "#/components/schemas/UserAccount"
+          readOnly: true
+        creatorId:
+          format: int64
+          type: integer
+          writeOnly: true
         dateCreated:
           format: date-time
           type: string
@@ -32,7 +44,13 @@ components:
             $ref: "#/components/schemas/Category"
           type: array
         vocabulary:
-          $ref: "#/components/schemas/Vocabulary"
+          allOf:
+            - $ref: "#/components/schemas/Vocabulary"
+          readOnly: true
+        vocabularyId:
+          format: int64
+          type: integer
+          writeOnly: true
       type: object
     Email:
       description: https://www.schema.org/Email
@@ -84,11 +102,25 @@ components:
             address:
               items:
                 $ref: "#/components/schemas/PostalAddress"
+              readOnly: true
               type: array
+            addressIds:
+              items:
+                format: int64
+                type: integer
+              type: array
+              writeOnly: true
             email:
               items:
                 $ref: "#/components/schemas/Email"
+              readOnly: true
               type: array
+            emailIds:
+              items:
+                format: int64
+                type: integer
+              type: array
+              writeOnly: true
             id:
               format: int64
               type: integer
@@ -98,11 +130,25 @@ components:
             telephone:
               items:
                 $ref: "#/components/schemas/Phone"
+              readOnly: true
               type: array
+            telephoneIds:
+              items:
+                format: int64
+                type: integer
+              type: array
+              writeOnly: true
             webUrl:
               items:
                 $ref: "#/components/schemas/WebUrl"
+              readOnly: true
               type: array
+            webUrlIds:
+              items:
+                format: int64
+                type: integer
+              type: array
+              writeOnly: true
           type: object
         id:
           format: int64
@@ -127,11 +173,24 @@ components:
         members:
           items:
             $ref: "#/components/schemas/UserAccount"
+          readOnly: true
           type: array
+        membersIds:
+          items:
+            format: int64
+            type: integer
+          type: array
+          writeOnly: true
         name:
           type: string
         parentOrganization:
-          $ref: "#/components/schemas/Organization"
+          allOf:
+            - $ref: "#/components/schemas/Organization"
+          readOnly: true
+        parentOrganizationId:
+          format: int64
+          type: integer
+          writeOnly: true
         self:
           format: uri
           type: string
@@ -166,7 +225,14 @@ components:
         subOrganization:
           items:
             $ref: "#/components/schemas/Organization"
+          readOnly: true
           type: array
+        subOrganizationIds:
+          items:
+            format: int64
+            type: integer
+          type: array
+          writeOnly: true
       type: object
     Phone:
       description: https://www.schema.org/Phone
@@ -254,11 +320,25 @@ components:
             address:
               items:
                 $ref: "#/components/schemas/PostalAddress"
+              readOnly: true
               type: array
+            addressIds:
+              items:
+                format: int64
+                type: integer
+              type: array
+              writeOnly: true
             email:
               items:
                 $ref: "#/components/schemas/Email"
+              readOnly: true
               type: array
+            emailIds:
+              items:
+                format: int64
+                type: integer
+              type: array
+              writeOnly: true
             facebook:
               type: string
             id:
@@ -276,13 +356,27 @@ components:
             telephone:
               items:
                 $ref: "#/components/schemas/Phone"
+              readOnly: true
               type: array
+            telephoneIds:
+              items:
+                format: int64
+                type: integer
+              type: array
+              writeOnly: true
             twitter:
               type: string
             webUrl:
               items:
                 $ref: "#/components/schemas/WebUrl"
+              readOnly: true
               type: array
+            webUrlIds:
+              items:
+                format: int64
+                type: integer
+              type: array
+              writeOnly: true
           type: object
         dashboardURL:
           type: string
@@ -307,7 +401,14 @@ components:
         myOrganizations:
           items:
             $ref: "#/components/schemas/Organization"
+          readOnly: true
           type: array
+        myOrganizationsIds:
+          items:
+            format: int64
+            type: integer
+          type: array
+          writeOnly: true
         name:
           type: string
         profileURL:
@@ -315,7 +416,14 @@ components:
         roles:
           items:
             $ref: "#/components/schemas/Role"
+          readOnly: true
           type: array
+        rolesIds:
+          items:
+            format: int64
+            type: integer
+          type: array
+          writeOnly: true
         self:
           format: uri
           type: string
@@ -361,7 +469,14 @@ components:
         vocabularyCategories:
           items:
             $ref: "#/components/schemas/Category"
+          readOnly: true
           type: array
+        vocabularyCategoriesIds:
+          items:
+            format: int64
+            type: integer
+          type: array
+          writeOnly: true
       type: object
     WebUrl:
       description: https://www.schema.org/WebUrl

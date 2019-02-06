@@ -146,7 +146,13 @@ components:
           format: int64
           type: integer
         contentStructure:
-          $ref: "#/components/schemas/ContentStructure"
+          allOf:
+            - $ref: "#/components/schemas/ContentStructure"
+          readOnly: true
+        contentStructureId:
+          format: int64
+          type: integer
+          writeOnly: true
         creator:
           $ref: "#/components/schemas/Creator"
         dateCreated:
@@ -214,7 +220,12 @@ components:
                       type: string
                 - properties:
                     document:
-                      $ref: "#/components/schemas/ContentDocument"
+                      allOf:
+                        - $ref: "#/components/schemas/ContentDocument"
+                    documentId:
+                      format: int64
+                      type: integer
+                      writeOnly: true
                 - properties:
                     geo:
                       description: https://www.schema.org/GeoCoordinates
@@ -236,7 +247,13 @@ components:
                       type: string
                 - properties:
                     structuredContent:
-                      $ref: "#/components/schemas/StructuredContent"
+                      allOf:
+                        - $ref: "#/components/schemas/StructuredContent"
+                      readOnly: true
+                    structuredContentId:
+                      format: int64
+                      type: integer
+                      writeOnly: true
           type: object
       type: object
 info:

@@ -57,7 +57,14 @@ components:
         formRecords:
           items:
             $ref: "#/components/schemas/FormRecord"
+          readOnly: true
           type: array
+        formRecordsIds:
+          items:
+            format: int64
+            type: integer
+          type: array
+          writeOnly: true
         id:
           format: int64
           type: integer
@@ -67,7 +74,13 @@ components:
           format: uri
           type: string
         structure:
-          $ref: "#/components/schemas/FormStructure"
+          allOf:
+            - $ref: "#/components/schemas/FormStructure"
+          readOnly: true
+        structureId:
+          format: int64
+          type: integer
+          writeOnly: true
       type: object
     FormDocument:
       description: https://www.schema.org/FormDocument
@@ -110,7 +123,13 @@ components:
           description: https://www.schema.org/FormFieldValue
           properties:
             document:
-              $ref: "#/components/schemas/FormDocument"
+              allOf:
+                - $ref: "#/components/schemas/FormDocument"
+              readOnly: true
+            documentId:
+              format: int64
+              type: integer
+              writeOnly: true
             id:
               format: int64
               type: integer
@@ -123,7 +142,13 @@ components:
               type: string
           type: object
         form:
-          $ref: "#/components/schemas/Form"
+          allOf:
+            - $ref: "#/components/schemas/Form"
+          readOnly: true
+        formId:
+          format: int64
+          type: integer
+          writeOnly: true
         id:
           format: int64
           type: integer

@@ -240,7 +240,9 @@ public class CTJournalArticleLocalServiceWrapper
 	public JournalArticle fetchArticle(long id) {
 		JournalArticle journalArticle = super.fetchArticle(id);
 
-		if (_hasChange(journalArticle)) {
+		if (_hasChange(journalArticle) ||
+			_ctManager.isModelUpdateInProgress()) {
+
 			return journalArticle;
 		}
 
@@ -251,7 +253,9 @@ public class CTJournalArticleLocalServiceWrapper
 	public JournalArticle fetchArticle(long groupId, String articleId) {
 		JournalArticle journalArticle = super.fetchArticle(groupId, articleId);
 
-		if (_hasChange(journalArticle)) {
+		if (_hasChange(journalArticle) ||
+			_ctManager.isModelUpdateInProgress()) {
+
 			return journalArticle;
 		}
 
@@ -265,7 +269,9 @@ public class CTJournalArticleLocalServiceWrapper
 		JournalArticle journalArticle = super.fetchArticle(
 			groupId, articleId, version);
 
-		if (_hasChange(journalArticle)) {
+		if (_hasChange(journalArticle) ||
+			_ctManager.isModelUpdateInProgress()) {
+
 			return journalArticle;
 		}
 
@@ -279,7 +285,9 @@ public class CTJournalArticleLocalServiceWrapper
 		JournalArticle journalArticle = super.fetchArticleByUrlTitle(
 			groupId, urlTitle);
 
-		if (_hasChange(journalArticle)) {
+		if (_hasChange(journalArticle) ||
+			_ctManager.isModelUpdateInProgress()) {
+
 			return journalArticle;
 		}
 
@@ -291,7 +299,9 @@ public class CTJournalArticleLocalServiceWrapper
 		JournalArticle journalArticle = super.fetchDisplayArticle(
 			groupId, articleId);
 
-		if (_hasChange(journalArticle)) {
+		if (_hasChange(journalArticle) ||
+			_ctManager.isModelUpdateInProgress()) {
+
 			return journalArticle;
 		}
 
@@ -302,7 +312,9 @@ public class CTJournalArticleLocalServiceWrapper
 	public JournalArticle getArticle(long id) throws PortalException {
 		JournalArticle journalArticle = super.getArticle(id);
 
-		if (_hasChange(journalArticle)) {
+		if (_hasChange(journalArticle) ||
+			_ctManager.isModelUpdateInProgress()) {
+
 			return journalArticle;
 		}
 
@@ -316,7 +328,9 @@ public class CTJournalArticleLocalServiceWrapper
 
 		JournalArticle journalArticle = super.getArticle(groupId, articleId);
 
-		if (_hasChange(journalArticle)) {
+		if (_hasChange(journalArticle) ||
+			_ctManager.isModelUpdateInProgress()) {
+
 			return journalArticle;
 		}
 
@@ -343,7 +357,9 @@ public class CTJournalArticleLocalServiceWrapper
 		JournalArticle journalArticle = super.getArticle(
 			groupId, articleId, version);
 
-		if (_hasChange(journalArticle)) {
+		if (_hasChange(journalArticle) ||
+			_ctManager.isModelUpdateInProgress()) {
+
 			return journalArticle;
 		}
 
@@ -374,7 +390,9 @@ public class CTJournalArticleLocalServiceWrapper
 		JournalArticle journalArticle = super.getArticle(
 			groupId, className, classPK);
 
-		if (_hasChange(journalArticle)) {
+		if (_hasChange(journalArticle) ||
+			_ctManager.isModelUpdateInProgress()) {
+
 			return journalArticle;
 		}
 
@@ -404,7 +422,9 @@ public class CTJournalArticleLocalServiceWrapper
 		JournalArticle journalArticle = super.getArticleByUrlTitle(
 			groupId, urlTitle);
 
-		if (_hasChange(journalArticle)) {
+		if (_hasChange(journalArticle) ||
+			_ctManager.isModelUpdateInProgress()) {
+
 			return journalArticle;
 		}
 

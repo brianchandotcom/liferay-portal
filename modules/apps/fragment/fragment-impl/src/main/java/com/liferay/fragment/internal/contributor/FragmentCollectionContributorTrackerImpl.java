@@ -63,20 +63,6 @@ public class FragmentCollectionContributorTrackerImpl
 
 		_fragmentCollectionContributors.add(fragmentCollectionContributor);
 
-		_addFragmentEntries(fragmentCollectionContributor);
-	}
-
-	protected void unsetFragmentCollectionContributor(
-		FragmentCollectionContributor fragmentCollectionContributor) {
-
-		_removeFragmentEntries(fragmentCollectionContributor);
-
-		_fragmentCollectionContributors.remove(fragmentCollectionContributor);
-	}
-
-	private void _addFragmentEntries(
-		FragmentCollectionContributor fragmentCollectionContributor) {
-
 		for (int type : _SUPPORTED_FRAGMENT_ENTRY_TYPES) {
 			for (FragmentEntry fragmentEntry :
 					fragmentCollectionContributor.getFragmentEntries(type)) {
@@ -87,7 +73,7 @@ public class FragmentCollectionContributorTrackerImpl
 		}
 	}
 
-	private void _removeFragmentEntries(
+	protected void unsetFragmentCollectionContributor(
 		FragmentCollectionContributor fragmentCollectionContributor) {
 
 		for (int type : _SUPPORTED_FRAGMENT_ENTRY_TYPES) {
@@ -98,6 +84,8 @@ public class FragmentCollectionContributorTrackerImpl
 					fragmentEntry.getFragmentEntryKey());
 			}
 		}
+
+		_fragmentCollectionContributors.remove(fragmentCollectionContributor);
 	}
 
 	private static final int[] _SUPPORTED_FRAGMENT_ENTRY_TYPES = {

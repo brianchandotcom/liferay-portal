@@ -18,6 +18,8 @@
 
 <%
 OrganizationsDisplayContext organizationsDisplayContext = new OrganizationsDisplayContext(request, renderRequest, renderResponse);
+
+OrganizationsManagementToolbarDisplayContext organizationsManagementToolbarDisplayContext = new OrganizationsManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, organizationsDisplayContext);
 %>
 
 <clay:navigation-bar
@@ -26,7 +28,7 @@ OrganizationsDisplayContext organizationsDisplayContext = new OrganizationsDispl
 />
 
 <clay:management-toolbar
-	displayContext="<%= new OrganizationsManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, organizationsDisplayContext) %>"
+	displayContext="<%= organizationsManagementToolbarDisplayContext %>"
 />
 
 <div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
@@ -87,59 +89,8 @@ OrganizationsDisplayContext organizationsDisplayContext = new OrganizationsDispl
 	<aui:input name="tabs1" type="hidden" value="organizations" />
 </aui:form>
 
-<aui:script use="liferay-item-selector-dialog">
-	var deleteSelectedOrganizations = function() {
-		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
-			submitForm(document.<portlet:namespace />fm);
-		}
-	};
-
-	function handleAddClick(event) {
-		event.preventDefault();
-
-		var itemSelectorDialog = new A.LiferayItemSelectorDialog(
-			{
-				eventName: '<portlet:namespace />selectOrganizations',
-				on: {
-					selectedItemChange: function(event) {
-						var selectedItem = event.newVal;
-
-						if (selectedItem) {
-							var addGroupOrganizationsFm = $(document.<portlet:namespace />addGroupOrganizationsFm);
-
-							addGroupOrganizationsFm.append(selectedItem);
-
-							submitForm(addGroupOrganizationsFm);
-						}
-					}
-				},
-				'strings.add': '<liferay-ui:message key="done" />',
-				title: '<liferay-ui:message key="assign-organizations-to-this-site" />',
-				url: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/select_organizations.jsp" /></portlet:renderURL>'
-			}
-		);
-
-		itemSelectorDialog.open();
-	}
-
-	var ACTIONS = {
-		'deleteSelectedOrganizations': deleteSelectedOrganizations
-	};
-
-	Liferay.componentReady('organizationsManagementToolbar').then(
-		function(managementToolbar) {
-			managementToolbar.on('creationButtonClicked', handleAddClick);
-
-			managementToolbar.on(
-				'actionItemClicked',
-				function(event) {
-					var itemData = event.data.item.data;
-
-					if (itemData && itemData.action && ACTIONS[itemData.action]) {
-						ACTIONS[itemData.action]();
-					}
-				}
-			);
-		}
-	);
-</aui:script>
+<liferay-frontend:component
+	componentId="<%= organizationsManagementToolbarDisplayContext.getDefaultEventHandler() %>"
+	context="<%= organizationsManagementToolbarDisplayContext.getComponentContext() %>"
+	module="js/OrganizationsManagementToolbarDefaultEventHandler.es"
+/>

@@ -17,13 +17,13 @@ package com.liferay.arquillian.extension.junit.bridge;
 import com.liferay.arquillian.extension.junit.bridge.container.ContainerDeployController;
 import com.liferay.arquillian.extension.junit.bridge.container.ContainerDeploymentContextHandler;
 import com.liferay.arquillian.extension.junit.bridge.container.ContainerLifecycleController;
-import com.liferay.arquillian.extension.junit.bridge.container.remote.LiferayRemoteDeployableContainer;
+import com.liferay.arquillian.extension.junit.bridge.container.LiferayRemoteDeployableContainer;
 import com.liferay.arquillian.extension.junit.bridge.context.ContainerContextImpl;
 import com.liferay.arquillian.extension.junit.bridge.context.DeploymentContextImpl;
 import com.liferay.arquillian.extension.junit.bridge.deployment.BndDeploymentScenarioGenerator;
 import com.liferay.arquillian.extension.junit.bridge.observer.ConfigurationRegistrar;
-import com.liferay.arquillian.extension.junit.bridge.observer.JUnitBridgeObserver;
 import com.liferay.arquillian.extension.junit.bridge.protocol.osgi.JMXOSGiProtocol;
+import com.liferay.arquillian.extension.junit.bridge.remote.observer.JUnitBridgeObserver;
 
 import java.net.URL;
 

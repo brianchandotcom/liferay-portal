@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.arquillian.extension.junit.bridge.observer;
+package com.liferay.arquillian.extension.junit.bridge.remote.observer;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;

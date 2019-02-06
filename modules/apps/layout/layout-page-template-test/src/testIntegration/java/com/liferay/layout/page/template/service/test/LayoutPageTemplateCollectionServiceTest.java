@@ -387,7 +387,7 @@ public class LayoutPageTemplateCollectionServiceTest {
 			layoutPageTemplateCollections =
 				LayoutPageTemplateCollectionServiceUtil.
 					getLayoutPageTemplateCollections(
-						group.getGroupId(), "theme", QueryUtil.ALL_POS,
+						group.getGroupId(), "Theme", QueryUtil.ALL_POS,
 						QueryUtil.ALL_POS, orderByComparator);
 
 			LayoutPageTemplateCollection lastLayoutPageTemplateCollection =

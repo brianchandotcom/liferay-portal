@@ -169,19 +169,19 @@ SiteNavigationAdminManagementToolbarDisplayContext siteNavigationAdminManagement
 	Liferay.on('destroyPortlet', handleDestroyPortlet);
 </aui:script>
 
-<aui:script require='<%= npmResolvedPackageName + "/js/ManagementToolbarDefaultEventHandler.es as ManagementToolbarDefaultEventHandler" %>'>
-	Liferay.component(
-		'<%= siteNavigationAdminManagementToolbarDisplayContext.getDefaultEventHandler() %>',
-		new ManagementToolbarDefaultEventHandler.default(
-			{
-				addSiteNavigationMenuURL: '<portlet:actionURL name="/navigation_menu/add_site_navigation_menu"><portlet:param name="mvcPath" value="/edit_site_navigation_menu.jsp" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>',
-				namespace: '<portlet:namespace />',
-				spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg'
-			}
-		),
-		{
-			destroyOnNavigate: true,
-			portletId: '<%= HtmlUtil.escapeJS(portletDisplay.getId()) %>'
-		}
-	);
-</aui:script>
+<portlet:actionURL name="/navigation_menu/add_site_navigation_menu" var="addSiteNavigationMenuURL">
+	<portlet:param name="mvcPath" value="/edit_site_navigation_menu.jsp" />
+	<portlet:param name="redirect" value="<%= currentURL %>" />
+</portlet:actionURL>
+
+<%
+Map<String, Object> context = new HashMap<>();
+
+context.put("addSiteNavigationMenuURL", addSiteNavigationMenuURL);
+%>
+
+<liferay-frontend:component
+	componentId="<%= siteNavigationAdminManagementToolbarDisplayContext.getDefaultEventHandler() %>"
+	context="<%= context %>"
+	module="js/ManagementToolbarDefaultEventHandler.es"
+/>

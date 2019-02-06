@@ -28,20 +28,7 @@ Role role = userGroupsDisplayContext.getRole();
 />
 
 <clay:management-toolbar
-	actionDropdownItems="<%= userGroupsDisplayContext.getActionDropdownItems() %>"
-	clearResultsURL="<%= userGroupsDisplayContext.getClearResultsURL() %>"
-	componentId="userGroupsManagementToolbar"
-	disabled="<%= userGroupsDisplayContext.isDisabledManagementBar() %>"
-	filterDropdownItems="<%= userGroupsDisplayContext.getFilterDropdownItems() %>"
-	itemsTotal="<%= userGroupsDisplayContext.getTotalItems() %>"
-	searchActionURL="<%= userGroupsDisplayContext.getSearchActionURL() %>"
-	searchContainerId="userGroups"
-	searchFormName="searchFm"
-	showCreationMenu="<%= GroupPermissionUtil.contains(permissionChecker, siteMembershipsDisplayContext.getGroupId(), ActionKeys.ASSIGN_MEMBERS) %>"
-	showSearch="<%= userGroupsDisplayContext.isShowSearch() %>"
-	sortingOrder="<%= userGroupsDisplayContext.getOrderByType() %>"
-	sortingURL="<%= userGroupsDisplayContext.getSortingURL() %>"
-	viewTypeItems="<%= userGroupsDisplayContext.getViewTypeItems() %>"
+	displayContext="<%= new UserGroupsManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, userGroupsDisplayContext) %>"
 />
 
 <portlet:actionURL name="deleteGroupUserGroups" var="deleteGroupUserGroupsURL">

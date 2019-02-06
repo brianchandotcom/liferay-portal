@@ -30,11 +30,12 @@ import java.util.List;
 public class DEDataDefinitionListRequestExecutor {
 
 	public DEDataDefinitionListRequestExecutor(
+		DDMStructureService ddmStructureService,
 		DEDataEngineRequestExecutor deDataEngineRequestExecutor,
-		DDMStructureService ddmStructureService, Portal portal) {
+		Portal portal) {
 
-		_deDataEngineRequestExecutor = deDataEngineRequestExecutor;
 		_ddmStructureService = ddmStructureService;
+		_deDataEngineRequestExecutor = deDataEngineRequestExecutor;
 		_portal = portal;
 	}
 

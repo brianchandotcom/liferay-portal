@@ -25,11 +25,11 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 public class DEDataDefinitionGetRequestExecutor {
 
 	public DEDataDefinitionGetRequestExecutor(
-		DEDataEngineRequestExecutor deDataEngineRequestExecutor,
-		DDMStructureLocalService ddmStructureLocalService) {
+		DDMStructureLocalService ddmStructureLocalService,
+		DEDataEngineRequestExecutor deDataEngineRequestExecutor) {
 
-		_deDataEngineRequestExecutor = deDataEngineRequestExecutor;
 		_ddmStructureLocalService = ddmStructureLocalService;
+		_deDataEngineRequestExecutor = deDataEngineRequestExecutor;
 	}
 
 	public DEDataDefinitionGetResponse execute(

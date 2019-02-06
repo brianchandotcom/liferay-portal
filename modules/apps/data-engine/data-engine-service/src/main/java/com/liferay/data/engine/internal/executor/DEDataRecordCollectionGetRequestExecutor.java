@@ -36,11 +36,8 @@ public class DEDataRecordCollectionGetRequestExecutor {
 			DEDataRecordCollectionGetRequest deDataRecordCollectionGetRequest)
 		throws Exception {
 
-		long deDataRecordCollectionId =
-			deDataRecordCollectionGetRequest.getDEDataRecordCollectionId();
-
 		DDLRecordSet ddlRecordSet = _ddlRecordSetLocalService.getRecordSet(
-			deDataRecordCollectionId);
+			deDataRecordCollectionGetRequest.getDEDataRecordCollectionId());
 
 		return DEDataRecordCollectionGetResponse.Builder.of(
 			_deDataEngineRequestExecutor.map(ddlRecordSet));

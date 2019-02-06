@@ -465,7 +465,7 @@ public class DEDataDefinitionServiceImpl
 		if (_deDataDefinitionGetRequestExecutor == null) {
 			_deDataDefinitionGetRequestExecutor =
 				new DEDataDefinitionGetRequestExecutor(
-					getDEDataEngineRequestExecutor(), ddmStructureLocalService);
+					ddmStructureLocalService, getDEDataEngineRequestExecutor());
 		}
 
 		return _deDataDefinitionGetRequestExecutor;
@@ -477,7 +477,7 @@ public class DEDataDefinitionServiceImpl
 		if (_deDataDefinitionListRequestExecutor == null) {
 			_deDataDefinitionListRequestExecutor =
 				new DEDataDefinitionListRequestExecutor(
-					getDEDataEngineRequestExecutor(), ddmStructureService,
+					ddmStructureService, getDEDataEngineRequestExecutor(),
 					portal);
 		}
 

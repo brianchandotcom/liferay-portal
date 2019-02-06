@@ -19,6 +19,8 @@
 <%
 UsersDisplayContext usersDisplayContext = new UsersDisplayContext(request, renderRequest, renderResponse);
 
+UsersManagementToolbarDisplayContext usersManagementToolbarDisplayContext = new UsersManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, usersDisplayContext);
+
 Role role = usersDisplayContext.getRole();
 %>
 
@@ -28,7 +30,7 @@ Role role = usersDisplayContext.getRole();
 />
 
 <clay:management-toolbar
-	displayContext="<%= new UsersManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, usersDisplayContext) %>"
+	displayContext="<%= usersManagementToolbarDisplayContext %>"
 />
 
 <liferay-ui:error embed="<%= false %>" exception="<%= RequiredUserException.class %>" message="one-or-more-users-were-not-removed-since-they-belong-to-a-user-group" />
@@ -103,135 +105,8 @@ Role role = usersDisplayContext.getRole();
 	<aui:input name="p_u_i_d" type="hidden" />
 </aui:form>
 
-<aui:script use="liferay-item-selector-dialog">
-	var form = $(document.<portlet:namespace />fm);
-
-	var deleteSelectedUsers = function() {
-		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
-			submitForm(form);
-		}
-	};
-
-	var removeUserSiteRole, selectSiteRole;
-
-	<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, scopeGroupId, ActionKeys.ASSIGN_USER_ROLES) %>">
-		<c:if test="<%= role != null %>">
-			removeUserSiteRole = function() {
-				if (confirm('<liferay-ui:message arguments="<%= role.getTitle(themeDisplay.getLocale()) %>" key="are-you-sure-you-want-to-remove-x-role-to-selected-users" translateArguments="<%= false %>" />')) {
-					submitForm(form, '<portlet:actionURL name="removeUserSiteRole" />');
-				}
-			}
-		</c:if>
-
-		<portlet:renderURL var="selectSiteRoleURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-			<portlet:param name="mvcPath" value="/site_roles.jsp" />
-			<portlet:param name="groupId" value="<%= String.valueOf(siteMembershipsDisplayContext.getGroupId()) %>" />
-		</portlet:renderURL>
-
-		selectSiteRole = function() {
-			var itemSelectorDialog = new A.LiferayItemSelectorDialog(
-				{
-					eventName: '<portlet:namespace />selectSiteRole',
-					on: {
-						selectedItemChange: function(event) {
-							var selectedItem = event.newVal;
-
-							if (selectedItem) {
-								form.append(selectedItem);
-
-								submitForm(form, '<portlet:actionURL name="editUsersSiteRoles" />');
-							}
-						}
-					},
-					'strings.add': '<liferay-ui:message key="done" />',
-					title: '<liferay-ui:message key="assign-site-roles" />',
-					url: '<%= selectSiteRoleURL %>'
-				}
-			);
-
-			itemSelectorDialog.open();
-		}
-	</c:if>
-
-	function handleAddClick(event) {
-		event.preventDefault();
-
-		var itemSelectorDialog = new A.LiferayItemSelectorDialog(
-			{
-				eventName: '<portlet:namespace />selectUsers',
-				on: {
-					selectedItemChange: function(event) {
-						var selectedItem = event.newVal;
-
-						if (selectedItem) {
-							var addGroupUsersFm = $(document.<portlet:namespace />addGroupUsersFm);
-
-							addGroupUsersFm.append(selectedItem);
-
-							submitForm(addGroupUsersFm);
-						}
-					}
-				},
-				'strings.add': '<liferay-ui:message key="done" />',
-				title: '<liferay-ui:message key="assign-users-to-this-site" />',
-				url: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/select_users.jsp" /></portlet:renderURL>'
-			}
-		);
-
-		itemSelectorDialog.open();
-	}
-
-	<portlet:renderURL var="viewRoleURL">
-		<portlet:param name="mvcPath" value="/view.jsp" />
-		<portlet:param name="tabs1" value="users" />
-		<portlet:param name="navigation" value="roles" />
-		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="groupId" value="<%= String.valueOf(siteMembershipsDisplayContext.getGroupId()) %>" />
-	</portlet:renderURL>
-
-	var selectRoles = function() {
-		Liferay.Util.selectEntity(
-			{
-				dialog: {
-					constrain: true,
-					destroyOnHide: true,
-					modal: true
-				},
-				eventName: '<portlet:namespace />selectSiteRole',
-				title: '<liferay-ui:message key="select-site-role" />',
-				uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/select_site_role.jsp" /><portlet:param name="groupId" value="<%= String.valueOf(siteMembershipsDisplayContext.getGroupId()) %>" /></portlet:renderURL>'
-			},
-			function(event) {
-				var uri = '<%= viewRoleURL %>';
-
-				uri = Liferay.Util.addParams('<portlet:namespace />roleId=' + event.id, uri);
-
-				location.href = uri;
-			}
-		);
-	};
-
-	var ACTIONS = {
-		'deleteSelectedUsers': deleteSelectedUsers,
-		'removeUserSiteRole': removeUserSiteRole,
-		'selectRoles': selectRoles,
-		'selectSiteRole': selectSiteRole
-	};
-
-	Liferay.componentReady('usersManagementToolbar').then(
-		function(managementToolbar) {
-			managementToolbar.on('creationButtonClicked', handleAddClick);
-
-			managementToolbar.on(
-				['actionItemClicked', 'filterItemClicked'],
-				function(event) {
-					var itemData = event.data.item.data;
-
-					if (itemData && itemData.action && ACTIONS[itemData.action]) {
-						ACTIONS[itemData.action]();
-					}
-				}
-			);
-		}
-	);
-</aui:script>
+<liferay-frontend:component
+	componentId="<%= usersManagementToolbarDisplayContext.getDefaultEventHandler() %>"
+	context="<%= usersManagementToolbarDisplayContext.getComponentContext() %>"
+	module="js/UsersManagementToolbarDefaultEventHandler.es"
+/>

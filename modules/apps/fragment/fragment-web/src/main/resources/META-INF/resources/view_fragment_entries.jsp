@@ -75,38 +75,32 @@ FragmentManagementToolbarDisplayContext fragmentManagementToolbarDisplayContext 
 </aui:form>
 
 <c:if test="<%= FragmentPermission.contains(permissionChecker, scopeGroupId, FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES) %>">
-	<aui:script require='<%= npmResolvedPackageName + "/js/FragmentEntryDropdownDefaultEventHandler.es as FragmentEntryDropdownDefaultEventHandler" %>'>
-		Liferay.component(
-			'<%= FragmentWebKeys.FRAGMENT_ENTRY_DROPDOWN_DEFAULT_EVENT_HANDLER %>',
-			new FragmentEntryDropdownDefaultEventHandler.default(
-				{
-					namespace: '<portlet:namespace />',
-					spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg'
-				}
-			),
-			{
-				destroyOnNavigate: true,
-				portletId: '<%= HtmlUtil.escapeJS(portletDisplay.getId()) %>'
-			}
-		);
-	</aui:script>
+	<liferay-frontend:component
+		componentId="<%= FragmentWebKeys.FRAGMENT_ENTRY_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
+		module="js/FragmentEntryDropdownDefaultEventHandler.es"
+	/>
 </c:if>
 
-<aui:script require='<%= npmResolvedPackageName + "/js/ManagementToolbarDefaultEventHandler.es as ManagementToolbarDefaultEventHandler" %>'>
-	Liferay.component(
-		'<%= fragmentManagementToolbarDisplayContext.getDefaultEventHandler() %>',
-		new ManagementToolbarDefaultEventHandler.default(
-			{
-				deleteFragmentEntriesURL: '<portlet:actionURL name="/fragment/delete_fragment_entries"><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>',
-				exportFragmentEntriesURL: '<portlet:resourceURL id="/fragment/export_fragment_entries" />',
-				namespace: '<portlet:namespace />',
-				selectFragmentCollectionURL: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcRenderCommandName" value="/fragment/select_fragment_collection" /></portlet:renderURL>',
-				spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg'
-			}
-		),
-		{
-			destroyOnNavigate: true,
-			portletId: '<%= HtmlUtil.escapeJS(portletDisplay.getId()) %>'
-		}
-	);
-</aui:script>
+<portlet:actionURL name="/fragment/delete_fragment_entries" var="deleteFragmentEntriesURL">
+	<portlet:param name="redirect" value="<%= currentURL %>" />
+</portlet:actionURL>
+
+<portlet:resourceURL id="/fragment/export_fragment_entries" var="exportFragmentEntriesURL" />
+
+<portlet:renderURL var="selectFragmentCollectionURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+	<portlet:param name="mvcRenderCommandName" value="/fragment/select_fragment_collection" />
+</portlet:renderURL>
+
+<%
+Map<String, Object> context = new HashMap<>();
+
+context.put("deleteFragmentEntriesURL", deleteFragmentEntriesURL);
+context.put("exportFragmentEntriesURL", exportFragmentEntriesURL);
+context.put("selectFragmentCollectionURL", selectFragmentCollectionURL);
+%>
+
+<liferay-frontend:component
+	componentId="<%= fragmentManagementToolbarDisplayContext.getDefaultEventHandler() %>"
+	context="<%= context %>"
+	module="js/ManagementToolbarDefaultEventHandler.es"
+/>

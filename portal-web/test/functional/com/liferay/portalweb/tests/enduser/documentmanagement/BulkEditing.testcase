@@ -70,5 +70,9 @@ definition {
 			dmDocumentTitle = "Document_1.jpeg",
 			tagName = "newtag"
 		);
+
+		DMNavigator.gotoDocumentPG(dmDocumentTitle = "Document_1.jpeg");
+
+		DMDocument.viewTag(tagName = "newtag");
 	}
 }

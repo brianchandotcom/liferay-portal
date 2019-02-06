@@ -1,5 +1,5 @@
 definition {
-	macro add {
+	macro addDisplayPage {
 		LexiconEntry.gotoAdd();
 
 		PortletEntry.inputName(name = "${displayPageName}");

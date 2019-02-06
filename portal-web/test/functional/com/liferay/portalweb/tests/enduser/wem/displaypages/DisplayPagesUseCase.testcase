@@ -56,7 +56,7 @@ definition {
 	@priority = "5"
 	test MapWebContentAuthor {
 		task ("Add a display page with author name and profile fields mapped") {
-			DisplayPagesAdmin.add(displayPageName = "Display Page Name");
+			DisplayPagesAdmin.addDisplayPage(displayPageName = "Display Page Name");
 
 			PageEditor.addFragment(
 				collectionName = "Collection Name",
@@ -139,7 +139,7 @@ definition {
 	@priority = "5"
 	test MapWebContentLastEditor {
 		task ("Add a display page with last editor name and profile fields mapped") {
-			DisplayPagesAdmin.add(displayPageName = "Display Page Name");
+			DisplayPagesAdmin.addDisplayPage(displayPageName = "Display Page Name");
 
 			PageEditor.addFragment(
 				collectionName = "Collection Name",
@@ -292,7 +292,7 @@ definition {
 		property testray.component.names = "Training";
 
 		task ("Add a display page") {
-			DisplayPagesAdmin.add(displayPageName = "Display Page Name");
+			DisplayPagesAdmin.addDisplayPage(displayPageName = "Display Page Name");
 		}
 
 		task ("Add a fragment with multiple editable fields in it and map it to Basic Web Content") {

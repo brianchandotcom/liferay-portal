@@ -26,7 +26,7 @@ definition {
 		task ("Add a display page") {
 			DisplayPagesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
-			DisplayPagesAdmin.add(displayPageName = "Display Page Name");
+			DisplayPagesAdmin.addDisplayPage(displayPageName = "Display Page Name");
 		}
 	}
 

@@ -117,7 +117,7 @@ definition {
 		task ("Add a display page to the first site") {
 			DisplayPagesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name-1-staging");
 
-			DisplayPagesAdmin.add(displayPageName = "Display Page Name");
+			DisplayPagesAdmin.addDisplayPage(displayPageName = "Display Page Name");
 		}
 
 		task ("Add a Title Fragment to the display page") {

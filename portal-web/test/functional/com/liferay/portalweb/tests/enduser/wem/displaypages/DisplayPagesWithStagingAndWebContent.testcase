@@ -32,7 +32,7 @@ definition {
 		task ("Add a display page with fragments mapped to Basic Web Content") {
 			DisplayPagesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name-staging");
 
-			DisplayPagesAdmin.add(displayPageName = "Display Page Name");
+			DisplayPagesAdmin.addDisplayPage(displayPageName = "Display Page Name");
 
 			PageEditor.addFragment(
 				collectionName = "Collection Name",

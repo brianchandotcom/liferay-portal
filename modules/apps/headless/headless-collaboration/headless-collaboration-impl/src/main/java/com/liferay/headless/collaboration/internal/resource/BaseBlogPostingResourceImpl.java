@@ -76,7 +76,10 @@ public abstract class BaseBlogPostingResourceImpl
 	}
 
 	@Override
-	public BlogPosting putBlogPosting(Long blogPostingId) throws Exception {
+	public BlogPosting putBlogPosting(
+			Long blogPostingId, BlogPosting blogPosting)
+		throws Exception {
+
 		return new BlogPosting();
 	}
 

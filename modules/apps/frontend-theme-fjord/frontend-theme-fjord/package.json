@@ -5,8 +5,8 @@
 	},
 	"devDependencies": {
 		"gulp": "3.9.1",
-		"liferay-theme-deps-7.1": "8.0.0-alpha.3",
-		"liferay-theme-tasks": "8.0.0-alpha.3"
+		"liferay-theme-deps-7.1": "8.0.0-rc.2",
+		"liferay-theme-tasks": "8.0.0-rc.2"
 	},
 	"keywords": [
 		"liferay-theme"

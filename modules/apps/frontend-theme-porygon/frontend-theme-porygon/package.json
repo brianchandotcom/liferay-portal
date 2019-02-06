@@ -10,9 +10,9 @@
 	},
 	"devDependencies": {
 		"gulp": "^3.8.10",
-		"liferay-theme-deps-7.1": "8.0.0-beta.1",
-		"liferay-theme-es2015-hook": "8.0.0-beta.1",
-		"liferay-theme-tasks": "8.0.0-beta.1"
+		"liferay-theme-deps-7.1": "8.0.0-rc.2",
+		"liferay-theme-es2015-hook": "8.0.0-rc.2",
+		"liferay-theme-tasks": "8.0.0-rc.2"
 	},
 	"keywords": [
 		"liferay-theme"

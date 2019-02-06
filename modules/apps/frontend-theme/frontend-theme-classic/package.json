@@ -5,8 +5,8 @@
 	},
 	"devDependencies": {
 		"gulp": "^3.8.10",
-		"liferay-theme-deps-7.0": "~1.2.0",
-		"liferay-theme-tasks": "^1.4.0"
+		"liferay-theme-deps-7.1": "8.0.0-rc.2",
+		"liferay-theme-tasks": "8.0.0-rc.2"
 	},
 	"keywords": [
 		"liferay-theme"
@@ -16,7 +16,7 @@
 		"baseTheme": "styled",
 		"distName": "classic-theme",
 		"rubySass": false,
-		"version": "7.0"
+		"version": "7.1"
 	},
 	"main": "package.json",
 	"name": "liferay-classic-theme",

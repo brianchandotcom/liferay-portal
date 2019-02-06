@@ -24,45 +24,41 @@ JournalManagementToolbarDisplayContext journalManagementToolbarlDisplayContext =
 	displayContext="<%= journalManagementToolbarlDisplayContext %>"
 />
 
-<aui:script require='<%= npmResolvedPackageName + "/js/ManagementToolbarDefaultEventHandler.es as ManagementToolbarDefaultEventHandler" %>'>
-	<portlet:renderURL var="addArticleURL">
-		<portlet:param name="mvcPath" value="/edit_article.jsp" />
-		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
-		<portlet:param name="folderId" value="<%= String.valueOf(journalDisplayContext.getFolderId()) %>" />
-	</portlet:renderURL>
+<portlet:renderURL var="addArticleURL">
+	<portlet:param name="mvcPath" value="/edit_article.jsp" />
+	<portlet:param name="redirect" value="<%= currentURL %>" />
+	<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
+	<portlet:param name="folderId" value="<%= String.valueOf(journalDisplayContext.getFolderId()) %>" />
+</portlet:renderURL>
 
-	<portlet:renderURL var="openViewMoreStructuresURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-		<portlet:param name="mvcPath" value="/view_more_menu_items.jsp" />
-		<portlet:param name="folderId" value="<%= String.valueOf(journalDisplayContext.getFolderId()) %>" />
-		<portlet:param name="eventName" value='<%= renderResponse.getNamespace() + "selectAddMenuItem" %>' />
-	</portlet:renderURL>
+<portlet:renderURL var="openViewMoreStructuresURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+	<portlet:param name="mvcPath" value="/view_more_menu_items.jsp" />
+	<portlet:param name="folderId" value="<%= String.valueOf(journalDisplayContext.getFolderId()) %>" />
+	<portlet:param name="eventName" value='<%= renderResponse.getNamespace() + "selectAddMenuItem" %>' />
+</portlet:renderURL>
 
-	<portlet:renderURL var="selectEntityURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-		<portlet:param name="mvcPath" value="/select_ddm_structure.jsp" />
-	</portlet:renderURL>
+<portlet:renderURL var="selectEntityURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+	<portlet:param name="mvcPath" value="/select_ddm_structure.jsp" />
+</portlet:renderURL>
 
-	<portlet:renderURL var="viewDDMStructureArticlesURL">
-		<portlet:param name="navigation" value="structure" />
-		<portlet:param name="folderId" value="<%= String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
-	</portlet:renderURL>
+<portlet:renderURL var="viewDDMStructureArticlesURL">
+	<portlet:param name="navigation" value="structure" />
+	<portlet:param name="folderId" value="<%= String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
+</portlet:renderURL>
 
-	Liferay.component(
-		'<%= journalManagementToolbarlDisplayContext.getDefaultEventHandler() %>',
-		new ManagementToolbarDefaultEventHandler.default(
-			{
-				addArticleURL: '<%= addArticleURL %>',
-				folderId: '<%= String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>',
-				namespace: '<%= renderResponse.getNamespace() %>',
-				openViewMoreStructuresURL: '<%= openViewMoreStructuresURL %>',
-				selectEntityURL: '<%= selectEntityURL %>',
-				trashEnabled: <%= trashHelper.isTrashEnabled(scopeGroupId) %>,
-				viewDDMStructureArticlesURL: '<%= viewDDMStructureArticlesURL %>'
-			}
-		),
-		{
-			destroyOnNavigate: true,
-			portletId: '<%= HtmlUtil.escapeJS(portletDisplay.getId()) %>'
-		}
-	);
-</aui:script>
+<%
+Map<String, Object> context = new HashMap<>();
+
+context.put("addArticleURL", addArticleURL);
+context.put("folderId", String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID));
+context.put("openViewMoreStructuresURL", openViewMoreStructuresURL);
+context.put("selectEntityURL", selectEntityURL);
+context.put("trashEnabled", trashHelper.isTrashEnabled(scopeGroupId));
+context.put("viewDDMStructureArticlesURL", viewDDMStructureArticlesURL);
+%>
+
+<liferay-frontend:component
+	componentId="<%= journalManagementToolbarlDisplayContext.getDefaultEventHandler() %>"
+	context="<%= context %>"
+	module="js/ManagementToolbarDefaultEventHandler.es"
+/>

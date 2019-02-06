@@ -35,7 +35,7 @@ import org.jboss.arquillian.test.spi.annotation.TestScoped;
 public class LocalTestExecutor {
 
 	public void execute(@Observes LocalExecutionEvent event) throws Exception {
-		TestResult result = new TestResult();
+		TestResult result = TestResult.passed();
 
 		TestMethodExecutor testMethodExecutor = event.getExecutor();
 
@@ -46,12 +46,9 @@ public class LocalTestExecutor {
 				_enrichArguments(
 					testMethodExecutor.getMethod(),
 					serviceLoader.all(TestEnricher.class)));
-
-			result.setStatus(TestResult.Status.PASSED);
 		}
-		catch (Throwable e) {
-			result.setStatus(TestResult.Status.FAILED);
-			result.setThrowable(e);
+		catch (Throwable t) {
+			result = TestResult.failed(t);
 		}
 		finally {
 			result.setEnd(System.currentTimeMillis());

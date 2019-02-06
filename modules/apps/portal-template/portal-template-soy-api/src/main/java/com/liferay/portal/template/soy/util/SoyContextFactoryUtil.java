@@ -44,8 +44,6 @@ public class SoyContextFactoryUtil {
 		SoyContextFactory soyContextFactory) {
 
 		if (_soyContextFactory != null) {
-			soyContextFactory = _soyContextFactory;
-
 			return;
 		}
 

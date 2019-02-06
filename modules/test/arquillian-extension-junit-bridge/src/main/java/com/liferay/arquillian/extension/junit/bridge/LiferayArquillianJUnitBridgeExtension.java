@@ -26,7 +26,7 @@ import com.liferay.arquillian.extension.junit.bridge.protocol.osgi.JMXOSGiProtoc
 import com.liferay.arquillian.extension.junit.bridge.remote.context.ClassContextImpl;
 import com.liferay.arquillian.extension.junit.bridge.remote.context.SuiteContextImpl;
 import com.liferay.arquillian.extension.junit.bridge.remote.context.TestContextImpl;
-import com.liferay.arquillian.extension.junit.bridge.remote.executor.LocalTestExecuter;
+import com.liferay.arquillian.extension.junit.bridge.remote.executor.LocalTestExecutor;
 import com.liferay.arquillian.extension.junit.bridge.remote.observer.JUnitBridgeObserver;
 
 import java.net.URL;
@@ -70,7 +70,7 @@ public class LiferayArquillianJUnitBridgeExtension
 			extensionBuilder.context(TestContextImpl.class);
 			extensionBuilder.observer(ContainerTestExecuter.class);
 			extensionBuilder.observer(JUnitBridgeObserver.class);
-			extensionBuilder.observer(LocalTestExecuter.class);
+			extensionBuilder.observer(LocalTestExecutor.class);
 			extensionBuilder.observer(TestContextHandler.class);
 		}
 	}

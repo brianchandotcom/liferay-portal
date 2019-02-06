@@ -32,7 +32,7 @@ import org.jboss.arquillian.test.spi.annotation.TestScoped;
 /**
  * @author Matthew Tambara
  */
-public class LocalTestExecuter {
+public class LocalTestExecutor {
 
 	public void execute(@Observes LocalExecutionEvent event) throws Exception {
 		TestResult result = new TestResult();

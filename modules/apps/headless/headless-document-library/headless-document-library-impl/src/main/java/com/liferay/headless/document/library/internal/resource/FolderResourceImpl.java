@@ -45,24 +45,25 @@ public class FolderResourceImpl extends BaseFolderResourceImpl {
 
 	@Override
 	public Page<Folder> getDocumentsRepositoryFolderPage(
-		Long parentId, Pagination pagination) {
+		Long documentsRepositoryId, Pagination pagination) {
 
 		return _getFolderPage(
-			parentId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, pagination);
+			documentsRepositoryId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			pagination);
 	}
 
 	@Override
-	public Folder getFolder(Long id) {
-		return _toFolder(_getFolder(id));
+	public Folder getFolder(Long folderId) {
+		return _toFolder(_getFolder(folderId));
 	}
 
 	@Override
 	public Page<Folder> getFolderFolderPage(
-		Long parentId, Pagination pagination) {
+		Long folderId, Pagination pagination) {
 
 		try {
 			com.liferay.portal.kernel.repository.model.Folder parentFolder =
-				_dlAppService.getFolder(parentId);
+				_dlAppService.getFolder(folderId);
 
 			return _getFolderPage(
 				parentFolder.getGroupId(), parentFolder.getFolderId(),
@@ -80,25 +81,27 @@ public class FolderResourceImpl extends BaseFolderResourceImpl {
 	}
 
 	@Override
-	public Folder postDocumentsRepositoryFolder(Long parentId, Folder folder) {
-		return _addFolder(parentId, 0L, folder);
+	public Folder postDocumentsRepositoryFolder(
+		Long documentsRepositoryId, Folder folder) {
+
+		return _addFolder(documentsRepositoryId, 0L, folder);
 	}
 
 	@Override
-	public Folder postFolderFolder(Long parentId, Folder folder) {
+	public Folder postFolderFolder(Long folderId, Folder folder) {
 		com.liferay.portal.kernel.repository.model.Folder parentFolder =
-			_getFolder(parentId);
+			_getFolder(folderId);
 
 		return _addFolder(
 			parentFolder.getGroupId(), parentFolder.getFolderId(), folder);
 	}
 
 	@Override
-	public Folder putFolder(Long id, Folder folder) {
+	public Folder putFolder(Long folderId, Folder folder) {
 		try {
 			return _toFolder(
 				_dlAppService.updateFolder(
-					id, folder.getName(), folder.getDescription(),
+					folderId, folder.getName(), folder.getDescription(),
 					new ServiceContext()));
 		}
 		catch (NoSuchFolderException nsfe) {
@@ -113,12 +116,12 @@ public class FolderResourceImpl extends BaseFolderResourceImpl {
 	}
 
 	private Folder _addFolder(
-		Long parentId, Long parentFolderId, Folder folder) {
+		Long documentsRepositoryId, Long parentFolderId, Folder folder) {
 
 		try {
 			return _toFolder(
 				_dlAppService.addFolder(
-					parentId, parentFolderId, folder.getName(),
+					documentsRepositoryId, parentFolderId, folder.getName(),
 					folder.getDescription(), new ServiceContext()));
 		}
 		catch (NoSuchGroupException nsge) {
@@ -133,10 +136,10 @@ public class FolderResourceImpl extends BaseFolderResourceImpl {
 	}
 
 	private com.liferay.portal.kernel.repository.model.Folder _getFolder(
-		Long id) {
+		Long folderId) {
 
 		try {
-			return _dlAppService.getFolder(id);
+			return _dlAppService.getFolder(folderId);
 		}
 		catch (NoSuchFolderException nsfe) {
 			throw new NotFoundException(nsfe);
@@ -147,17 +150,20 @@ public class FolderResourceImpl extends BaseFolderResourceImpl {
 	}
 
 	private Page<Folder> _getFolderPage(
-		Long groupId, Long parentFolderId, Pagination pagination) {
+		Long documentsRepositoryId, Long parentFolderId,
+		Pagination pagination) {
 
 		try {
 			return Page.of(
 				transform(
 					_dlAppService.getFolders(
-						groupId, parentFolderId, pagination.getStartPosition(),
+						documentsRepositoryId, parentFolderId,
+						pagination.getStartPosition(),
 						pagination.getEndPosition(), null),
 					this::_toFolder),
 				pagination,
-				_dlAppService.getFoldersCount(groupId, parentFolderId));
+				_dlAppService.getFoldersCount(
+					documentsRepositoryId, parentFolderId));
 		}
 		catch (NoSuchGroupException nsge) {
 			throw new NotFoundException(nsge);

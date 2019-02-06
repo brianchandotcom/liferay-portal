@@ -942,7 +942,7 @@ definition {
 
 		KeyPress(locator1 = "DocumentsAndMedia#EDIT_TAGS_FIELD", value1 = "\RETURN");
 
-		PortletEntry.save();
+		Button.clickSave();
 	}
 
 	macro enableActionsMenuOnPortlet {

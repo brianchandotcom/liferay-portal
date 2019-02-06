@@ -57,9 +57,9 @@ public class UpgradeBlogsImages extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		try (PreparedStatement ps1 = connection.prepareStatement(
 				SQLTransformer.transform(
-					"select companyId, entryId, groupId, smallImageId, " +
-						"userId from BlogsEntry where smallImage = [$TRUE$] " +
-							"and smallImageId != 0"));
+					"select entryId, groupId, companyId, userId, " +
+						"smallImageId from BlogsEntry where smallImage = " +
+							"[$TRUE$] and smallImageId != 0"));
 			PreparedStatement ps2 = AutoBatchPreparedStatementUtil.autoBatch(
 				connection.prepareStatement(
 					"update BlogsEntry set smallImageFileEntryId = ?, " +
@@ -75,9 +75,10 @@ public class UpgradeBlogsImages extends UpgradeProcess {
 					continue;
 				}
 
-				long companyId = rs.getLong("companyId");
 				long entryId = rs.getLong("entryId");
 				long groupId = rs.getLong("groupId");
+
+				long companyId = rs.getLong("companyId");
 
 				long userId = PortalUtil.getValidUserId(
 					companyId, rs.getLong("userId"));

@@ -17,10 +17,13 @@ package com.liferay.knowledge.base.service.util;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.knowledge.base.constants.KBConstants;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.PortalUtil;
 
 /**
  * @author Sergio González
@@ -38,6 +41,10 @@ public class KBArticleAttachmentsUtil {
 
 		Repository repository = PortletFileRepositoryUtil.addPortletRepository(
 			groupId, KBConstants.SERVICE_NAME, serviceContext);
+
+		Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+		userId = PortalUtil.getValidUserId(group.getCompanyId(), userId);
 
 		Folder folder = PortletFileRepositoryUtil.addPortletFolder(
 			userId, repository.getRepositoryId(),

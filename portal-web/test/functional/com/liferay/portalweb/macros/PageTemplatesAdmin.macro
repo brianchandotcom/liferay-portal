@@ -8,6 +8,17 @@ definition {
 		}
 	}
 
+	macro addCollection {
+		PageTemplatesAdmin._gotoAddCollection();
+
+		Collection.editCollection(
+			collectionDescription = "${collectionDescription}",
+			collectionName = "${collectionName}"
+		);
+
+		Button.clickSave();
+	}
+
 	macro addPageTemplate {
 		if (isSet(pageTemplateType)) {
 			var menuItem = "${pageTemplateType}";
@@ -19,17 +30,6 @@ definition {
 		LexiconEntry.gotoAddMenuItem(menuItem = "${menuItem}");
 
 		PortletEntry.inputName(name = "${pageTemplateName}");
-
-		Button.clickSave();
-	}
-
-	macro addCollection {
-		PageTemplatesAdmin._gotoAddCollection();
-
-		Collection.editCollection(
-			collectionDescription = "${collectionDescription}",
-			collectionName = "${collectionName}"
-		);
 
 		Button.clickSave();
 	}

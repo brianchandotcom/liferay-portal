@@ -16,7 +16,6 @@ package com.liferay.portal.search.internal.facet;
 
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.facet.Facet;
-import com.liferay.portal.kernel.search.facet.MultiValueFacet;
 import com.liferay.portal.kernel.search.facet.RangeFacet;
 import com.liferay.portal.kernel.search.facet.util.RangeParserUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -29,14 +28,6 @@ public class FacetBucketUtil {
 
 	public static boolean isFieldInBucket(
 		Field field, String term, Facet facet) {
-
-		if (facet instanceof MultiValueFacet) {
-			if (ArrayUtil.contains(field.getValues(), term, false)) {
-				return true;
-			}
-
-			return false;
-		}
 
 		if (facet instanceof RangeFacet) {
 			String[] range = RangeParserUtil.parserRange(term);
@@ -53,7 +44,7 @@ public class FacetBucketUtil {
 			return false;
 		}
 
-		if (term.equals(field.getValue())) {
+		if (ArrayUtil.contains(field.getValues(), term, false)) {
 			return true;
 		}
 

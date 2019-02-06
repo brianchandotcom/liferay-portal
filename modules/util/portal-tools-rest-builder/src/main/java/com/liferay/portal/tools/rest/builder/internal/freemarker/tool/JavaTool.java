@@ -136,7 +136,7 @@ public class JavaTool {
 		String parameterName = CamelCaseUtil.toCamelCase(
 			parameter.getName(), false);
 		String parameterType = _getJavaType(
-			schema.getFormat(), schema.getItems(), schema.getReference(),
+			null, schema.getFormat(), schema.getItems(), schema.getReference(),
 			schema.getType());
 
 		return new JavaParameter(
@@ -148,8 +148,9 @@ public class JavaTool {
 
 		String parameterName = CamelCaseUtil.toCamelCase(propertyName, false);
 		String parameterType = _getJavaType(
-			properties.getFormat(), properties.getItems(),
-			properties.getReference(), properties.getType());
+			properties.getAllOfSchemas(), properties.getFormat(),
+			properties.getItems(), properties.getReference(),
+			properties.getType());
 
 		return new JavaParameter(null, parameterName, parameterType);
 	}
@@ -287,7 +288,8 @@ public class JavaTool {
 	}
 
 	private String _getJavaType(
-		String format, Items items, String reference, String type) {
+		List<Schema> allOfSchemas, String format, Items items, String reference,
+		String type) {
 
 		if (StringUtil.equals(type, "array") && (items != null)) {
 			if (items.getType() != null) {
@@ -313,6 +315,14 @@ public class JavaTool {
 			}
 
 			return StringUtil.upperCaseFirstLetter(type);
+		}
+
+		if (allOfSchemas != null) {
+			for (Schema schema : allOfSchemas) {
+				if (Validator.isNotNull(schema.getReference())) {
+					return getComponentType(schema.getReference());
+				}
+			}
 		}
 
 		return getComponentType(reference);
@@ -471,7 +481,7 @@ public class JavaTool {
 				}
 
 				String javaType = _getJavaType(
-					schema.getFormat(), schema.getItems(),
+					null, schema.getFormat(), schema.getItems(),
 					schema.getReference(), schema.getType());
 
 				if (javaType.endsWith("[]")) {

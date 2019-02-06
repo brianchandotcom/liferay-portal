@@ -84,7 +84,7 @@ public interface BlogPostingResource {
 	@Path("/content-space/{content-space-id}/blog-posting")
 	@Produces("application/json")
 	@RequiresScope("headless-collaboration-application.read")
-	public BlogPosting postContentSpaceBlogPosting( @PathParam("content-space-id") Long contentSpaceId ) throws Exception;
+	public BlogPosting postContentSpaceBlogPosting( @PathParam("content-space-id") Long contentSpaceId , BlogPosting blogPosting ) throws Exception;
 
 	@Consumes("application/json")
 	@POST

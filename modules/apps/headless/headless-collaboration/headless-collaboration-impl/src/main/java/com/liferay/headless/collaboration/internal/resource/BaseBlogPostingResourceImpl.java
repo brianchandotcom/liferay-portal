@@ -60,7 +60,8 @@ public abstract class BaseBlogPostingResourceImpl
 	}
 
 	@Override
-	public BlogPosting postContentSpaceBlogPosting(Long contentSpaceId)
+	public BlogPosting postContentSpaceBlogPosting(
+			Long contentSpaceId, BlogPosting blogPosting)
 		throws Exception {
 
 		return new BlogPosting();

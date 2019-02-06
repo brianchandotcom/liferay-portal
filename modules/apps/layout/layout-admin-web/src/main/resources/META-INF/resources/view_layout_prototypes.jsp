@@ -67,32 +67,12 @@ LayoutPrototypeManagementToolbarDisplayContext layoutPrototypeManagementToolbarD
 	</liferay-ui:search-container>
 </aui:form>
 
-<aui:script require='<%= npmResolvedPackageName + "/js/LayoutPrototypeDropdownDefaultEventHandler.es as LayoutPrototypeDropdownDefaultEventHandler" %>'>
-	Liferay.component(
-		'<%= LayoutAdminWebKeys.LAYOUT_PROTOTYPE_DROPDOWN_DEFAULT_EVENT_HANDLER %>',
-		new LayoutPrototypeDropdownDefaultEventHandler.default(
-			{
-				namespace: '<portlet:namespace />'
-			}
-		),
-		{
-			destroyOnNavigate: true,
-			portletId: '<%= HtmlUtil.escapeJS(portletDisplay.getId()) %>'
-		}
-	);
-</aui:script>
+<liferay-frontend:component
+	componentId="<%= LayoutAdminWebKeys.LAYOUT_PROTOTYPE_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
+	module="js/LayoutPrototypeDropdownDefaultEventHandler.es"
+/>
 
-<aui:script require='<%= npmResolvedPackageName + "/js/LayoutPrototypeManagementToolbarDefaultEventHandler.es as LayoutPrototypeManagementToolbarDefaultEventHandler" %>'>
-	Liferay.component(
-		'<%= layoutPrototypeManagementToolbarDisplayContext.getDefaultEventHandler() %>',
-		new LayoutPrototypeManagementToolbarDefaultEventHandler.default(
-			{
-				namespace: '<portlet:namespace />'
-			}
-		),
-		{
-			destroyOnNavigate: true,
-			portletId: '<%= HtmlUtil.escapeJS(portletDisplay.getId()) %>'
-		}
-	);
-</aui:script>
+<liferay-frontend:component
+	componentId="<%= layoutPrototypeManagementToolbarDisplayContext.getDefaultEventHandler() %>"
+	module="js/LayoutPrototypeManagementToolbarDefaultEventHandler.es"
+/>

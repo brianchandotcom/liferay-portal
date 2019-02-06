@@ -68,7 +68,7 @@ definition {
 
 		DMDocument.editTags(
 			dmDocumentTitle = "Document_1.jpeg",
-			tagName = "newtag"	
+			tagName = "newtag"
 		);
 	}
 }

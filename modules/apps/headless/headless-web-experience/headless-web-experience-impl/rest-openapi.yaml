@@ -160,24 +160,8 @@ components:
           properties:
             dataType:
               type: string
-            document:
-              $ref: "#/components/schemas/ContentDocument"
             filterAndSortIdentifier:
               type: string
-            geo:
-              description: https://www.schema.org/GeoCoordinates
-              properties:
-                id:
-                  format: int64
-                  type: integer
-                latitude:
-                  type: number
-                longitude:
-                  type: number
-                self:
-                  format: uri
-                  type: string
-              type: object
             id:
               format: int64
               type: integer
@@ -185,18 +169,41 @@ components:
               type: string
             label:
               type: string
-            link:
-              format: uri
-              type: string
             name:
               type: string
             self:
               format: uri
               type: string
-            structuredContent:
-              $ref: "#/components/schemas/StructuredContent"
             value:
-              type: string
+              anyOf:
+                - properties:
+                    data:
+                      type: string
+                - properties:
+                    document:
+                      $ref: "#/components/schemas/ContentDocument"
+                - properties:
+                    geo:
+                      description: https://www.schema.org/GeoCoordinates
+                      properties:
+                        id:
+                          format: int64
+                          type: integer
+                        latitude:
+                          type: number
+                        longitude:
+                          type: number
+                        self:
+                          format: uri
+                          type: string
+                      type: object
+                - properties:
+                    link:
+                      format: uri
+                      type: string
+                - properties:
+                    structuredContent:
+                      $ref: "#/components/schemas/StructuredContent"
           type: object
       type: object
 info:

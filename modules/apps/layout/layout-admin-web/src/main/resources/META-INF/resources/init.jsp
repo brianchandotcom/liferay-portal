@@ -64,7 +64,6 @@ page import="com.liferay.layout.admin.web.internal.servlet.taglib.clay.SelectLay
 page import="com.liferay.layout.admin.web.internal.servlet.taglib.clay.SelectThemeVerticalCard" %><%@
 page import="com.liferay.layout.constants.LayoutConstants" %><%@
 page import="com.liferay.layout.page.template.constants.LayoutPageTemplateActionKeys" %><%@
-page import="com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants" %><%@
 page import="com.liferay.layout.page.template.exception.DuplicateLayoutPageTemplateCollectionException" %><%@
 page import="com.liferay.layout.page.template.exception.LayoutPageTemplateCollectionNameException" %><%@
 page import="com.liferay.layout.page.template.exception.RequiredLayoutPageTemplateEntryException" %><%@

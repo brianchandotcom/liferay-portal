@@ -12,7 +12,7 @@ class ManagementToolbarDefaultEventHandler extends PortletBase {
 
 	deleteSelectedEntries() {
 		if (confirm(Liferay.Language.get('are-you-sure-you-want-to-delete-this'))) {
-			submitForm(this.one('#fm'), this.deleteTrashEntriesURL);
+			submitForm(this.one('#fm'));
 		}
 	}
 
@@ -23,7 +23,6 @@ class ManagementToolbarDefaultEventHandler extends PortletBase {
 }
 
 ManagementToolbarDefaultEventHandler.STATE = {
-	deleteTrashEntriesURL: Config.string(),
 	namespace: Config.string()
 };
 

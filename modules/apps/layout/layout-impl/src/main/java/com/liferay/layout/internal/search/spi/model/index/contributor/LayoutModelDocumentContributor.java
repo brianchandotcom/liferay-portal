@@ -28,6 +28,9 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
+import com.liferay.segments.constants.SegmentsConstants;
+import com.liferay.segments.model.SegmentsEntry;
+import com.liferay.segments.service.SegmentsEntryLocalService;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -91,6 +94,8 @@ public class LayoutModelDocumentContributor
 			response = serviceContext.getResponse();
 		}
 
+		long[] segmentsIds = _getSegmentIds(layout.getGroupId());
+
 		for (String languageId : layout.getAvailableLanguageIds()) {
 			Locale locale = LocaleUtil.fromLanguageId(languageId);
 
@@ -99,7 +104,7 @@ public class LayoutModelDocumentContributor
 					LayoutPageTemplateStructureRenderUtil.renderLayoutContent(
 						request, response, layoutPageTemplateStructure,
 						FragmentEntryLinkConstants.VIEW, new HashMap<>(),
-						locale);
+						locale, segmentsIds);
 
 				document.addText(
 					Field.getLocalizedName(locale, Field.CONTENT), content);
@@ -110,11 +115,26 @@ public class LayoutModelDocumentContributor
 		}
 	}
 
+	private long[] _getSegmentIds(long groupId) {
+		SegmentsEntry segmentsEntry =
+			_segmentsEntryLocalService.fetchSegmentsEntry(
+				groupId, SegmentsConstants.KEY_DEFAULT, true);
+
+		if (segmentsEntry != null) {
+			return new long[] {segmentsEntry.getSegmentsEntryId()};
+		}
+
+		return new long[0];
+	}
+
 	@Reference
 	private LayoutPageTemplateStructureLocalService
 		_layoutPageTemplateStructureLocalService;
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private SegmentsEntryLocalService _segmentsEntryLocalService;
 
 }

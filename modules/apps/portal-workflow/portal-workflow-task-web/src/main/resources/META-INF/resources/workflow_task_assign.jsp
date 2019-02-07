@@ -72,21 +72,26 @@ String redirect = ParamUtil.getString(request, "redirect");
 </div>
 
 <aui:script use="aui-base,aui-io-request">
-	A.one('#<portlet:namespace />done').on(
-		'click',
-		function(event) {
-			A.io.request(
-				'<%= assignURL.toString() %>',
-				{
-					form: {id: '<portlet:namespace />assignFm'},
-					method: 'POST',
-					on: {
-						success: function() {
-							Liferay.Util.getOpener().<portlet:namespace />refreshPortlet('<%= redirect.toString() %>');
-							Liferay.Util.getWindow('<portlet:namespace />assignToDialog').destroy();
+	var done = A.one('#<portlet:namespace />done');
+
+	if (done) {
+		done.on(
+			'click',
+			function(event) {
+				A.io.request(
+					'<%= assignURL.toString() %>',
+					{
+						form: {id: '<portlet:namespace />assignFm'},
+						method: 'POST',
+						on: {
+							success: function() {
+								Liferay.Util.getOpener().<portlet:namespace />refreshPortlet('<%= redirect.toString() %>');
+								Liferay.Util.getWindow('<portlet:namespace />assignToDialog').destroy();
+							}
 						}
 					}
-				}
-			);
-		});
+				);
+			}
+		);
+	}
 </aui:script>

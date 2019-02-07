@@ -69,15 +69,11 @@ public class LiferayArquillianJUnitBridgeExtension
 				BndDeploymentScenarioGenerator.class);
 			extensionBuilder.service(Protocol.class, JMXOSGiProtocol.class);
 
-			extensionBuilder.context(
-				org.jboss.arquillian.test.impl.context.SuiteContextImpl.class);
-			extensionBuilder.context(
-				org.jboss.arquillian.test.impl.context.ClassContextImpl.class);
-			extensionBuilder.context(
-				org.jboss.arquillian.test.impl.context.TestContextImpl.class);
+			extensionBuilder.context(SuiteContextImpl.class);
+			extensionBuilder.context(ClassContextImpl.class);
+			extensionBuilder.context(TestContextImpl.class);
 
-			extensionBuilder.observer(
-				org.jboss.arquillian.test.impl.TestContextHandler.class);
+			extensionBuilder.observer(TestContextHandler.class);
 
 			extensionBuilder.observer(ContainerEventController.class);
 			extensionBuilder.observer(DeploymentGenerator.class);

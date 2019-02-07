@@ -2,7 +2,7 @@ import core from 'metal';
 import dom from 'metal-dom';
 import Component from 'metal-component';
 
-import objectToFormData from './util/object_to_form_data.es';
+import objectToFormData from './util/form/object_to_form_data.es';
 
 /**
  * PortletBase provides some helper functions that simplify querying the DOM

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.arquillian.extension.junit.bridge.container.remote;
+package com.liferay.arquillian.extension.junit.bridge.container;
 
 import java.io.IOException;
 import java.io.InputStream;

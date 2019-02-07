@@ -14,9 +14,9 @@
 
 package com.liferay.arquillian.extension.junit.bridge.observer;
 
+import com.liferay.arquillian.extension.junit.bridge.container.LiferayRemoteDeployableContainer;
 import com.liferay.arquillian.extension.junit.bridge.container.impl.ContainerImpl;
 import com.liferay.arquillian.extension.junit.bridge.container.registry.SingleContainerRegistry;
-import com.liferay.arquillian.extension.junit.bridge.container.remote.LiferayRemoteDeployableContainer;
 
 import java.io.IOException;
 

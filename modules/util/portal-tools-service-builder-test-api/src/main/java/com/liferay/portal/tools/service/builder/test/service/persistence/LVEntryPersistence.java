@@ -20,11 +20,6 @@ import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.tools.service.builder.test.exception.NoSuchLVEntryException;
 import com.liferay.portal.tools.service.builder.test.model.LVEntry;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
-
 /**
  * The persistence interface for the lv entry service.
  *
@@ -44,9 +39,6 @@ public interface LVEntryPersistence extends BasePersistence<LVEntry> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link LVEntryUtil} to access the lv entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, LVEntry> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the lv entries where uuid = &#63;.
@@ -645,7 +637,4 @@ public interface LVEntryPersistence extends BasePersistence<LVEntry> {
 	* @return the number of lv entries
 	*/
 	public int countAll();
-
-	@Override
-	public Set<String> getBadColumnNames();
 }

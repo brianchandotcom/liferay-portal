@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.workflow.kaleo.exception.NoSuchNotificationException;
 import com.liferay.portal.workflow.kaleo.model.KaleoNotification;
@@ -50,6 +51,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * The persistence implementation for the kaleo notification service.
@@ -2939,6 +2941,11 @@ public class KaleoNotificationPersistenceImpl extends BasePersistenceImpl<KaleoN
 	}
 
 	@Override
+	public Set<String> getBadColumnNames() {
+		return _badColumnNames;
+	}
+
+	@Override
 	protected EntityCache getEntityCache() {
 		return entityCache;
 	}
@@ -3106,4 +3113,7 @@ public class KaleoNotificationPersistenceImpl extends BasePersistenceImpl<KaleoN
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No KaleoNotification exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No KaleoNotification exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(KaleoNotificationPersistenceImpl.class);
+	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
+				"description"
+			});
 }

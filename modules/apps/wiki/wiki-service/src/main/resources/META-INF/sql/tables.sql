@@ -8,7 +8,7 @@ create table WikiNode (
 	createDate DATE null,
 	modifiedDate DATE null,
 	name VARCHAR(75) null,
-	description STRING null,
+	description_ STRING null,
 	lastPostDate DATE null,
 	lastPublishDate DATE null,
 	status INTEGER,

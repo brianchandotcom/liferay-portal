@@ -16,7 +16,7 @@ create table KBArticle (
 	title STRING null,
 	urlTitle VARCHAR(75) null,
 	content TEXT null,
-	description STRING null,
+	description_ STRING null,
 	priority DOUBLE,
 	sections STRING null,
 	viewCount INTEGER,
@@ -59,7 +59,7 @@ create table KBFolder (
 	parentKBFolderId LONG,
 	name VARCHAR(75) null,
 	urlTitle VARCHAR(75) null,
-	description STRING null,
+	description_ STRING null,
 	lastPublishDate DATE null
 );
 

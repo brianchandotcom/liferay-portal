@@ -90,7 +90,7 @@ public class DDMContentModelImpl extends BaseModelImpl<DDMContent>
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "name", Types.VARCHAR },
-			{ "description", Types.VARCHAR },
+			{ "description_", Types.VARCHAR },
 			{ "data_", Types.CLOB }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
@@ -105,11 +105,11 @@ public class DDMContentModelImpl extends BaseModelImpl<DDMContent>
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("description_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("data_", Types.CLOB);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table DDMContent (uuid_ VARCHAR(75) null,contentId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,description STRING null,data_ TEXT null)";
+	public static final String TABLE_SQL_CREATE = "create table DDMContent (uuid_ VARCHAR(75) null,contentId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,description_ STRING null,data_ TEXT null)";
 	public static final String TABLE_SQL_DROP = "drop table DDMContent";
 	public static final String ORDER_BY_JPQL = " ORDER BY ddmContent.contentId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY DDMContent.contentId ASC";

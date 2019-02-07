@@ -21,11 +21,6 @@ import com.liferay.marketplace.model.Module;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
-
 /**
  * The persistence interface for the module service.
  *
@@ -45,9 +40,6 @@ public interface ModulePersistence extends BasePersistence<Module> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ModuleUtil} to access the module persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, Module> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the modules where uuid = &#63;.
@@ -933,7 +925,4 @@ public interface ModulePersistence extends BasePersistence<Module> {
 	* @return the number of modules
 	*/
 	public int countAll();
-
-	@Override
-	public Set<String> getBadColumnNames();
 }

@@ -21,11 +21,6 @@ import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.segments.exception.NoSuchEntryException;
 import com.liferay.segments.model.SegmentsEntry;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
-
 /**
  * The persistence interface for the segments entry service.
  *
@@ -45,9 +40,6 @@ public interface SegmentsEntryPersistence extends BasePersistence<SegmentsEntry>
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SegmentsEntryUtil} to access the segments entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, SegmentsEntry> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the segments entries where groupId = &#63;.
@@ -1646,7 +1638,4 @@ public interface SegmentsEntryPersistence extends BasePersistence<SegmentsEntry>
 	* @return the number of segments entries
 	*/
 	public int countAll();
-
-	@Override
-	public Set<String> getBadColumnNames();
 }

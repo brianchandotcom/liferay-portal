@@ -336,10 +336,6 @@ public class DLOpenerFileEntryReferenceUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static DLOpenerFileEntryReferencePersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

@@ -19,11 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.exception.NoSuchLayoutBranchException;
 import com.liferay.portal.kernel.model.LayoutBranch;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
-
 /**
  * The persistence interface for the layout branch service.
  *
@@ -43,9 +38,6 @@ public interface LayoutBranchPersistence extends BasePersistence<LayoutBranch> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link LayoutBranchUtil} to access the layout branch persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, LayoutBranch> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the layout branchs where layoutSetBranchId = &#63;.

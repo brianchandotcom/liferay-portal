@@ -20,12 +20,7 @@ import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.tools.service.builder.test.exception.NoSuchBigDecimalEntryException;
 import com.liferay.portal.tools.service.builder.test.model.BigDecimalEntry;
 
-import java.io.Serializable;
-
 import java.math.BigDecimal;
-
-import java.util.Map;
-import java.util.Set;
 
 /**
  * The persistence interface for the big decimal entry service.
@@ -46,9 +41,6 @@ public interface BigDecimalEntryPersistence extends BasePersistence<BigDecimalEn
 	 *
 	 * Never modify or reference this interface directly. Always use {@link BigDecimalEntryUtil} to access the big decimal entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, BigDecimalEntry> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the big decimal entries where bigDecimalValue = &#63;.

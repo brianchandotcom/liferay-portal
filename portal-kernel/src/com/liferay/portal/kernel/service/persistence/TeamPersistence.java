@@ -19,11 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.exception.NoSuchTeamException;
 import com.liferay.portal.kernel.model.Team;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
-
 /**
  * The persistence interface for the team service.
  *
@@ -43,9 +38,6 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link TeamUtil} to access the team persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, Team> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the teams where uuid = &#63;.
@@ -1048,7 +1040,4 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	*/
 	public void setUserGroups(long pk,
 		java.util.List<com.liferay.portal.kernel.model.UserGroup> userGroups);
-
-	@Override
-	public Set<String> getBadColumnNames();
 }

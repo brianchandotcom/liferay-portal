@@ -100,7 +100,7 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 			{ "privateLayout", Types.BOOLEAN },
 			{ "name", Types.VARCHAR },
 			{ "title", Types.VARCHAR },
-			{ "description", Types.VARCHAR },
+			{ "description_", Types.VARCHAR },
 			{ "keywords", Types.VARCHAR },
 			{ "robots", Types.VARCHAR },
 			{ "typeSettings", Types.CLOB },
@@ -133,7 +133,7 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 		TABLE_COLUMNS_MAP.put("privateLayout", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("title", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("description_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("keywords", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("robots", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("typeSettings", Types.CLOB);
@@ -147,7 +147,7 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 		TABLE_COLUMNS_MAP.put("statusDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table LayoutRevision (mvccVersion LONG default 0 not null,layoutRevisionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,layoutSetBranchId LONG,layoutBranchId LONG,parentLayoutRevisionId LONG,head BOOLEAN,major BOOLEAN,plid LONG,privateLayout BOOLEAN,name STRING null,title STRING null,description STRING null,keywords STRING null,robots STRING null,typeSettings TEXT null,iconImageId LONG,themeId VARCHAR(75) null,colorSchemeId VARCHAR(75) null,css TEXT null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table LayoutRevision (mvccVersion LONG default 0 not null,layoutRevisionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,layoutSetBranchId LONG,layoutBranchId LONG,parentLayoutRevisionId LONG,head BOOLEAN,major BOOLEAN,plid LONG,privateLayout BOOLEAN,name STRING null,title STRING null,description_ STRING null,keywords STRING null,robots STRING null,typeSettings TEXT null,iconImageId LONG,themeId VARCHAR(75) null,colorSchemeId VARCHAR(75) null,css TEXT null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table LayoutRevision";
 	public static final String ORDER_BY_JPQL = " ORDER BY layoutRevision.modifiedDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY LayoutRevision.modifiedDate DESC";

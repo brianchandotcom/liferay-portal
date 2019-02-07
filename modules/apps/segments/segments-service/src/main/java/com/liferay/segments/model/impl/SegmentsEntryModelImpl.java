@@ -91,7 +91,7 @@ public class SegmentsEntryModelImpl extends BaseModelImpl<SegmentsEntry>
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "name", Types.VARCHAR },
-			{ "description", Types.VARCHAR },
+			{ "description_", Types.VARCHAR },
 			{ "active_", Types.BOOLEAN },
 			{ "criteria", Types.CLOB },
 			{ "key_", Types.VARCHAR },
@@ -109,7 +109,7 @@ public class SegmentsEntryModelImpl extends BaseModelImpl<SegmentsEntry>
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("description_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("active_", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("criteria", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("key_", Types.VARCHAR);
@@ -117,7 +117,7 @@ public class SegmentsEntryModelImpl extends BaseModelImpl<SegmentsEntry>
 		TABLE_COLUMNS_MAP.put("type_", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table SegmentsEntry (segmentsEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,description STRING null,active_ BOOLEAN,criteria TEXT null,key_ VARCHAR(75) null,source VARCHAR(75) null,type_ VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table SegmentsEntry (segmentsEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,description_ STRING null,active_ BOOLEAN,criteria TEXT null,key_ VARCHAR(75) null,source VARCHAR(75) null,type_ VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table SegmentsEntry";
 	public static final String ORDER_BY_JPQL = " ORDER BY segmentsEntry.modifiedDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY SegmentsEntry.modifiedDate DESC";

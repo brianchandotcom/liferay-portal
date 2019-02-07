@@ -19,11 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.exception.NoSuchClusterGroupException;
 import com.liferay.portal.kernel.model.ClusterGroup;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
-
 /**
  * The persistence interface for the cluster group service.
  *
@@ -43,9 +38,6 @@ public interface ClusterGroupPersistence extends BasePersistence<ClusterGroup> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ClusterGroupUtil} to access the cluster group persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, ClusterGroup> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	* Caches the cluster group in the entity cache if it is enabled.

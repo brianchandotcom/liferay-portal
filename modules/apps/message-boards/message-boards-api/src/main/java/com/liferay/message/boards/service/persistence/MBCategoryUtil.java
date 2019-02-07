@@ -3688,10 +3688,6 @@ public class MBCategoryUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static MBCategoryPersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

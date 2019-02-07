@@ -21,11 +21,6 @@ import com.liferay.document.library.file.rank.model.DLFileRank;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
-
 /**
  * The persistence interface for the document library file rank service.
  *
@@ -45,9 +40,6 @@ public interface DLFileRankPersistence extends BasePersistence<DLFileRank> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link DLFileRankUtil} to access the document library file rank persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, DLFileRank> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the document library file ranks where userId = &#63;.
@@ -783,7 +775,4 @@ public interface DLFileRankPersistence extends BasePersistence<DLFileRank> {
 	* @return the number of document library file ranks
 	*/
 	public int countAll();
-
-	@Override
-	public Set<String> getBadColumnNames();
 }

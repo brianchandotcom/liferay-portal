@@ -2327,6 +2327,6 @@ public class KaleoNodePersistenceImpl extends BasePersistenceImpl<KaleoNode>
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No KaleoNode exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(KaleoNodePersistenceImpl.class);
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
-				"type", "initial"
+				"description", "type", "initial"
 			});
 }

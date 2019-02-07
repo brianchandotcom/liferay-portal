@@ -1051,10 +1051,6 @@ public class KBFolderUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static KBFolderPersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

@@ -21,11 +21,6 @@ import com.liferay.adaptive.media.image.model.AMImageEntry;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
-
 /**
  * The persistence interface for the am image entry service.
  *
@@ -45,9 +40,6 @@ public interface AMImageEntryPersistence extends BasePersistence<AMImageEntry> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link AMImageEntryUtil} to access the am image entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, AMImageEntry> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the am image entries where uuid = &#63;.
@@ -1219,7 +1211,4 @@ public interface AMImageEntryPersistence extends BasePersistence<AMImageEntry> {
 	* @return the number of am image entries
 	*/
 	public int countAll();
-
-	@Override
-	public Set<String> getBadColumnNames();
 }

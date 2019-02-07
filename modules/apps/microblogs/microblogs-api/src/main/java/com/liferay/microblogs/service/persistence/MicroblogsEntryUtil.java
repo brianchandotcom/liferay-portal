@@ -2766,10 +2766,6 @@ public class MicroblogsEntryUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static MicroblogsEntryPersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

@@ -21,11 +21,6 @@ import com.liferay.fragment.model.FragmentEntry;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
-
 /**
  * The persistence interface for the fragment entry service.
  *
@@ -45,9 +40,6 @@ public interface FragmentEntryPersistence extends BasePersistence<FragmentEntry>
 	 *
 	 * Never modify or reference this interface directly. Always use {@link FragmentEntryUtil} to access the fragment entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, FragmentEntry> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the fragment entries where uuid = &#63;.
@@ -2301,7 +2293,4 @@ public interface FragmentEntryPersistence extends BasePersistence<FragmentEntry>
 	* @return the number of fragment entries
 	*/
 	public int countAll();
-
-	@Override
-	public Set<String> getBadColumnNames();
 }

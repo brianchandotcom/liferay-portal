@@ -21,11 +21,6 @@ import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.sync.exception.NoSuchDeviceException;
 import com.liferay.sync.model.SyncDevice;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
-
 /**
  * The persistence interface for the sync device service.
  *
@@ -45,9 +40,6 @@ public interface SyncDevicePersistence extends BasePersistence<SyncDevice> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SyncDeviceUtil} to access the sync device persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, SyncDevice> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the sync devices where uuid = &#63;.
@@ -711,7 +703,4 @@ public interface SyncDevicePersistence extends BasePersistence<SyncDevice> {
 	* @return the number of sync devices
 	*/
 	public int countAll();
-
-	@Override
-	public Set<String> getBadColumnNames();
 }

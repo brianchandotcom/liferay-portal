@@ -11,7 +11,7 @@ create table MDRAction (
 	classPK LONG,
 	ruleGroupInstanceId LONG,
 	name STRING null,
-	description STRING null,
+	description_ STRING null,
 	type_ VARCHAR(255) null,
 	typeSettings TEXT null,
 	lastPublishDate DATE null
@@ -28,7 +28,7 @@ create table MDRRule (
 	modifiedDate DATE null,
 	ruleGroupId LONG,
 	name STRING null,
-	description STRING null,
+	description_ STRING null,
 	type_ VARCHAR(255) null,
 	typeSettings TEXT null,
 	lastPublishDate DATE null
@@ -44,7 +44,7 @@ create table MDRRuleGroup (
 	createDate DATE null,
 	modifiedDate DATE null,
 	name STRING null,
-	description STRING null,
+	description_ STRING null,
 	lastPublishDate DATE null
 );
 

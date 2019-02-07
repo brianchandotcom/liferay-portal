@@ -495,10 +495,6 @@ public class PluginSettingUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static PluginSettingPersistence getPersistence() {
 		if (_persistence == null) {
 			_persistence = (PluginSettingPersistence)PortalBeanLocatorUtil.locate(PluginSettingPersistence.class.getName());

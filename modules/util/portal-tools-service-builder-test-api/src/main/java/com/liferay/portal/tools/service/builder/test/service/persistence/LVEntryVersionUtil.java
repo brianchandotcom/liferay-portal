@@ -1663,10 +1663,6 @@ public class LVEntryVersionUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static LVEntryVersionPersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

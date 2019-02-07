@@ -2473,10 +2473,6 @@ public class UserGroupUtil {
 		getPersistence().setUsers(pk, users);
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static UserGroupPersistence getPersistence() {
 		if (_persistence == null) {
 			_persistence = (UserGroupPersistence)PortalBeanLocatorUtil.locate(UserGroupPersistence.class.getName());

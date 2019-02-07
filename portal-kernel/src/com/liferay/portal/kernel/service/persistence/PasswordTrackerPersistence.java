@@ -19,11 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.exception.NoSuchPasswordTrackerException;
 import com.liferay.portal.kernel.model.PasswordTracker;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
-
 /**
  * The persistence interface for the password tracker service.
  *
@@ -43,9 +38,6 @@ public interface PasswordTrackerPersistence extends BasePersistence<PasswordTrac
 	 *
 	 * Never modify or reference this interface directly. Always use {@link PasswordTrackerUtil} to access the password tracker persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, PasswordTracker> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the password trackers where userId = &#63;.
@@ -294,7 +286,4 @@ public interface PasswordTrackerPersistence extends BasePersistence<PasswordTrac
 	* @return the number of password trackers
 	*/
 	public int countAll();
-
-	@Override
-	public Set<String> getBadColumnNames();
 }

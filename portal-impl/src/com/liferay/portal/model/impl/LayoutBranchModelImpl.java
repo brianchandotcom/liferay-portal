@@ -82,7 +82,7 @@ public class LayoutBranchModelImpl extends BaseModelImpl<LayoutBranch>
 			{ "layoutSetBranchId", Types.BIGINT },
 			{ "plid", Types.BIGINT },
 			{ "name", Types.VARCHAR },
-			{ "description", Types.VARCHAR },
+			{ "description_", Types.VARCHAR },
 			{ "master", Types.BOOLEAN }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
@@ -97,11 +97,11 @@ public class LayoutBranchModelImpl extends BaseModelImpl<LayoutBranch>
 		TABLE_COLUMNS_MAP.put("layoutSetBranchId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("plid", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("description_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("master", Types.BOOLEAN);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table LayoutBranch (mvccVersion LONG default 0 not null,layoutBranchId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,layoutSetBranchId LONG,plid LONG,name VARCHAR(75) null,description STRING null,master BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table LayoutBranch (mvccVersion LONG default 0 not null,layoutBranchId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,layoutSetBranchId LONG,plid LONG,name VARCHAR(75) null,description_ STRING null,master BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table LayoutBranch";
 	public static final String ORDER_BY_JPQL = " ORDER BY layoutBranch.layoutBranchId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY LayoutBranch.layoutBranchId ASC";

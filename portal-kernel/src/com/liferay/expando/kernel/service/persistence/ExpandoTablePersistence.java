@@ -21,11 +21,6 @@ import com.liferay.expando.kernel.model.ExpandoTable;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
-
 /**
  * The persistence interface for the expando table service.
  *
@@ -45,9 +40,6 @@ public interface ExpandoTablePersistence extends BasePersistence<ExpandoTable> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ExpandoTableUtil} to access the expando table persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, ExpandoTable> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the expando tables where companyId = &#63; and classNameId = &#63;.

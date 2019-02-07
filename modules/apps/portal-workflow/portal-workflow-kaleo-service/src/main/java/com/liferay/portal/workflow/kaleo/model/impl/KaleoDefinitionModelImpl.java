@@ -91,7 +91,7 @@ public class KaleoDefinitionModelImpl extends BaseModelImpl<KaleoDefinition>
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "name", Types.VARCHAR },
 			{ "title", Types.VARCHAR },
-			{ "description", Types.VARCHAR },
+			{ "description_", Types.VARCHAR },
 			{ "content", Types.CLOB },
 			{ "version", Types.INTEGER },
 			{ "active_", Types.BOOLEAN }
@@ -109,13 +109,13 @@ public class KaleoDefinitionModelImpl extends BaseModelImpl<KaleoDefinition>
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("title", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("description_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("content", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("version", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("active_", Types.BOOLEAN);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table KaleoDefinition (mvccVersion LONG default 0 not null,kaleoDefinitionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(200) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(200) null,title STRING null,description STRING null,content TEXT null,version INTEGER,active_ BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table KaleoDefinition (mvccVersion LONG default 0 not null,kaleoDefinitionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(200) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(200) null,title STRING null,description_ STRING null,content TEXT null,version INTEGER,active_ BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table KaleoDefinition";
 	public static final String ORDER_BY_JPQL = " ORDER BY kaleoDefinition.version DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY KaleoDefinition.version DESC";

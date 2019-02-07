@@ -87,7 +87,7 @@ AUI.add(
 												submitForm(form);
 											}
 										}
-									},
+									}
 								],
 								header: [
 									{

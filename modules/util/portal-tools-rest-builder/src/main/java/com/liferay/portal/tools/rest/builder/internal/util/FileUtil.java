@@ -25,15 +25,23 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
-import java.nio.file.attribute.FileTime;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Peter Shin
  */
 public class FileUtil {
 
-	public static void deleteFiles(String dirName, long startTime)
+	public static void deleteFiles(String dirName, List<File> files)
 		throws Exception {
+
+		List<String> canonicalPaths = new ArrayList<>();
+
+		for (File file : files) {
+			canonicalPaths.add(file.getCanonicalPath());
+		}
 
 		Files.walkFileTree(
 			Paths.get(dirName),
@@ -44,22 +52,10 @@ public class FileUtil {
 						Path path, BasicFileAttributes basicFileAttributes)
 					throws IOException {
 
-					FileTime fileTime = basicFileAttributes.lastModifiedTime();
-
-					if (startTime < fileTime.toMillis()) {
-						return FileVisitResult.CONTINUE;
-					}
-
 					File file = path.toFile();
 
-					String fileName = file.getName();
-
-					if (fileName.endsWith(".java")) {
-						String content = read(file);
-
-						if (!content.contains("@generated")) {
-							return FileVisitResult.CONTINUE;
-						}
+					if (canonicalPaths.contains(file.getCanonicalPath())) {
+						return FileVisitResult.CONTINUE;
 					}
 
 					Files.delete(path);
@@ -129,10 +125,6 @@ public class FileUtil {
 		if (!oldContent.equals(FormatUtil.format(file))) {
 			System.out.println("Writing " + file.getCanonicalPath());
 		}
-	}
-
-	public static void write(String fileName, String content) throws Exception {
-		write(new File(fileName), content);
 	}
 
 }

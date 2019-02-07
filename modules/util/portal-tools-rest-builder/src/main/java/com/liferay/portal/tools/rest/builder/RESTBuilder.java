@@ -33,7 +33,9 @@ import com.liferay.portal.tools.rest.builder.internal.yaml.util.YAMLUtil;
 
 import java.io.File;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -120,10 +122,10 @@ public class RESTBuilder {
 			}
 		}
 
-		/*FileUtil.deleteFiles(_configYAML.getApiDir(), startTime);
-		FileUtil.deleteFiles(_configYAML.getImplDir(), startTime);
+		FileUtil.deleteFiles(_configYAML.getApiDir(), _files);
+		FileUtil.deleteFiles(_configYAML.getImplDir(), _files);
 		FileUtil.deleteFiles(
-			_configYAML.getImplDir() + "/../resources/OSGI-INF/", startTime);*/
+			_configYAML.getImplDir() + "/../resources/OSGI-INF/", _files);
 	}
 
 	private void _createApplicationFile(Map<String, Object> context)
@@ -146,8 +148,12 @@ public class RESTBuilder {
 
 		sb.append(".java");
 
+		File file = new File(sb.toString());
+
+		_files.add(file);
+
 		FileUtil.write(
-			sb.toString(),
+			file,
 			FreeMarkerUtil.processTemplate(
 				_copyrightFileName, "application", context));
 	}
@@ -172,8 +178,12 @@ public class RESTBuilder {
 		sb.append(schemaName);
 		sb.append("ResourceImpl.java");
 
+		File file = new File(sb.toString());
+
+		_files.add(file);
+
 		FileUtil.write(
-			sb.toString(),
+			file,
 			FreeMarkerUtil.processTemplate(
 				_copyrightFileName, "base_resource_impl", context));
 	}
@@ -198,8 +208,12 @@ public class RESTBuilder {
 		sb.append(schemaName);
 		sb.append(".java");
 
+		File file = new File(sb.toString());
+
+		_files.add(file);
+
 		FileUtil.write(
-			sb.toString(),
+			file,
 			FreeMarkerUtil.processTemplate(_copyrightFileName, "dto", context));
 	}
 
@@ -217,9 +231,12 @@ public class RESTBuilder {
 		sb.append(CamelCaseUtil.fromCamelCase(schemaName));
 		sb.append(".properties");
 
+		File file = new File(sb.toString());
+
+		_files.add(file);
+
 		FileUtil.write(
-			sb.toString(),
-			FreeMarkerUtil.processTemplate(null, "properties", context));
+			file, FreeMarkerUtil.processTemplate(null, "properties", context));
 	}
 
 	private void _createResourceFile(
@@ -242,8 +259,12 @@ public class RESTBuilder {
 		sb.append(schemaName);
 		sb.append("Resource.java");
 
+		File file = new File(sb.toString());
+
+		_files.add(file);
+
 		FileUtil.write(
-			sb.toString(),
+			file,
 			FreeMarkerUtil.processTemplate(
 				_copyrightFileName, "resource", context));
 	}
@@ -270,12 +291,14 @@ public class RESTBuilder {
 
 		File file = new File(sb.toString());
 
+		_files.add(file);
+
 		if (file.exists()) {
 			return;
 		}
 
 		FileUtil.write(
-			sb.toString(),
+			file,
 			FreeMarkerUtil.processTemplate(
 				_copyrightFileName, "resource_impl", context));
 	}
@@ -283,5 +306,6 @@ public class RESTBuilder {
 	private final File _configDir;
 	private final ConfigYAML _configYAML;
 	private final String _copyrightFileName;
+	private final List<File> _files = new ArrayList<>();
 
 }

@@ -14,10 +14,6 @@
 
 package com.liferay.arquillian.extension.junit.bridge.container.registry;
 
-import com.liferay.arquillian.extension.junit.bridge.container.impl.ContainerImpl;
-import com.liferay.arquillian.extension.junit.bridge.container.remote.LiferayRemoteDeployableContainer;
-
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -30,27 +26,23 @@ import org.jboss.arquillian.core.spi.ServiceLoader;
 /**
  * @author Matthew Tambara
  */
-public class LocalContainerRegistry implements ContainerRegistry {
+public class SingleContainerRegistry implements ContainerRegistry {
+
+	public SingleContainerRegistry(Container container) {
+		_container = container;
+	}
 
 	@Override
 	public Container create(
 		ContainerDef containerDef, ServiceLoader serviceLoader) {
 
-		Container container = new ContainerImpl(
-			containerDef.getContainerName(),
-			new LiferayRemoteDeployableContainer(), containerDef);
-
-		_containers.add(container);
-
-		return container;
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public Container getContainer(String name) {
-		for (Container container : _containers) {
-			if (name.equals(container.getName())) {
-				return container;
-			}
+		if (name.equals(_container.getName())) {
+			return _container;
 		}
 
 		return null;
@@ -58,26 +50,14 @@ public class LocalContainerRegistry implements ContainerRegistry {
 
 	@Override
 	public Container getContainer(TargetDescription targetDescription) {
-		if (_containers.size() == 1) {
-			return _containers.get(0);
-		}
-
-		for (Container container : _containers) {
-			ContainerDef containerDef = container.getContainerConfiguration();
-
-			if (containerDef.isDefault()) {
-				return container;
-			}
-		}
-
-		return null;
+		return _container;
 	}
 
 	@Override
 	public List<Container> getContainers() {
-		return Collections.unmodifiableList(_containers);
+		return Collections.singletonList(_container);
 	}
 
-	private final List<Container> _containers = new ArrayList<>();
+	private final Container _container;
 
 }

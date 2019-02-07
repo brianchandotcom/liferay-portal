@@ -14,7 +14,9 @@
 
 package com.liferay.arquillian.extension.junit.bridge.observer;
 
-import com.liferay.arquillian.extension.junit.bridge.container.registry.LocalContainerRegistry;
+import com.liferay.arquillian.extension.junit.bridge.container.impl.ContainerImpl;
+import com.liferay.arquillian.extension.junit.bridge.container.registry.SingleContainerRegistry;
+import com.liferay.arquillian.extension.junit.bridge.container.remote.LiferayRemoteDeployableContainer;
 
 import java.io.IOException;
 
@@ -22,6 +24,7 @@ import org.jboss.arquillian.config.descriptor.api.ArquillianDescriptor;
 import org.jboss.arquillian.config.descriptor.api.ContainerDef;
 import org.jboss.arquillian.config.descriptor.impl.ArquillianDescriptorImpl;
 import org.jboss.arquillian.config.descriptor.impl.ContainerDefImpl;
+import org.jboss.arquillian.container.spi.Container;
 import org.jboss.arquillian.container.spi.ContainerRegistry;
 import org.jboss.arquillian.core.api.Injector;
 import org.jboss.arquillian.core.api.Instance;
@@ -30,7 +33,6 @@ import org.jboss.arquillian.core.api.annotation.ApplicationScoped;
 import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.arquillian.core.api.annotation.Observes;
 import org.jboss.arquillian.core.api.event.ManagerStarted;
-import org.jboss.arquillian.core.spi.ServiceLoader;
 
 /**
  * @author Matthew Tambara
@@ -42,19 +44,20 @@ public class ConfigurationRegistrar {
 
 		_instanceProducer.set(new ArquillianDescriptorImpl(null));
 
-		Injector injector = _injectorInstance.get();
-
-		ContainerRegistry containerRegistry = new LocalContainerRegistry();
-
 		ContainerDef containerDef = new ContainerDefImpl("arquillian.xml");
 
 		containerDef.setContainerName("default");
 
-		injector.inject(
-			containerRegistry.create(
-				containerDef, _serviceLoaderInstance.get()));
+		Container container = new ContainerImpl(
+			containerDef.getContainerName(),
+			new LiferayRemoteDeployableContainer(), containerDef);
 
-		_containerRegistryInstanceProducer.set(containerRegistry);
+		Injector injector = _injectorInstance.get();
+
+		injector.inject(container);
+
+		_containerRegistryInstanceProducer.set(
+			new SingleContainerRegistry(container));
 	}
 
 	@ApplicationScoped
@@ -68,8 +71,5 @@ public class ConfigurationRegistrar {
 	@ApplicationScoped
 	@Inject
 	private InstanceProducer<ArquillianDescriptor> _instanceProducer;
-
-	@Inject
-	private Instance<ServiceLoader> _serviceLoaderInstance;
 
 }

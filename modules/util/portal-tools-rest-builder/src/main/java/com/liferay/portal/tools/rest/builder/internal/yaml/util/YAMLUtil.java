@@ -27,7 +27,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.StringWriter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,16 +42,6 @@ import org.yaml.snakeyaml.representer.Representer;
  * @author Peter Shin
  */
 public class YAMLUtil {
-
-	public static <T> String dump(T t) {
-		StringWriter stringWriter = new StringWriter();
-
-		Yaml yaml = new Yaml();
-
-		yaml.dump(t, stringWriter);
-
-		return stringWriter.toString();
-	}
 
 	public static <T> T load(
 		Class<T> clazz, File file, TypeDescription... typeDescriptions) {

@@ -91,4 +91,24 @@ public class StatsDMetricsUtil {
 		return sb.toString();
 	}
 
+	public static String generateTimerMetric(
+		String metricName, long metricValue, Map<String, String> labels) {
+
+		if (metricValue <= 0) {
+			System.out.println("Timer metric values must greater than zero");
+
+			return null;
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(metricName);
+		sb.append(":");
+		sb.append(metricValue);
+		sb.append("|ms");
+		sb.append(generateMetricLabels(labels));
+
+		return sb.toString();
+	}
+
 }

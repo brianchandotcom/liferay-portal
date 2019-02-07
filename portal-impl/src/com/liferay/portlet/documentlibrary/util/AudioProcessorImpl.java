@@ -306,8 +306,9 @@ public class AudioProcessorImpl
 						file = liferayFileVersion.getFile(false);
 					}
 					catch (UnsupportedOperationException uoe) {
-						_fileVersionPreviewEventListener.onFailure(
-							destinationFileVersion);
+						if (_log.isWarnEnabled()) {
+							_log.warn(uoe, uoe);
+						}
 					}
 				}
 

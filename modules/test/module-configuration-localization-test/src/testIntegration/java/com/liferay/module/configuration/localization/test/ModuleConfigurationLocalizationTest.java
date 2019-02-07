@@ -85,8 +85,9 @@ public class ModuleConfigurationLocalizationTest {
 			sb.append(StringPool.NEW_LINE);
 		}
 
-		Assert.assertTrue(
-			"Test failed due to: " + sb.toString(), sb.index() == 0);
+		String message = sb.toString();
+
+		Assert.assertTrue("Test failed due to: " + message, message.isEmpty());
 	}
 
 	private String _collectBundleError(Bundle bundle) {

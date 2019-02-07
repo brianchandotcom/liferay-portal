@@ -92,16 +92,7 @@ public class DeploymentGenerator {
 
 		Archive<?> archive = deploymentDescription.getArchive();
 
-		try {
-			if (ClassContainer.class.isInstance(archive)) {
-				ClassContainer<?> classContainer = ClassContainer.class.cast(
-					archive);
-
-				classContainer.addClass(testClass.getJavaClass());
-			}
-		}
-		catch (UnsupportedOperationException uoe) {
-		}
+		((ClassContainer<?>)archive).addClass(testClass.getJavaClass());
 
 		ServiceLoader serviceLoader = _serviceLoaderInstance.get();
 

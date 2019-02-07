@@ -56,7 +56,7 @@ public interface CommentResource {
 	@GET
 	@Path("/document/{document-id}/comment")
 	@Produces("application/json")
-	@RequiresScope("headless-document-library-application.read")
+	@RequiresScope("everything.read")
 	public Page<Comment> getDocumentCommentPage( @PathParam("document-id") Long documentId , @Context Pagination pagination ) throws Exception;
 
 }

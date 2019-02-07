@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -56,15 +57,13 @@ public class CTEngineManagerImpl implements CTEngineManager {
 
 	@Override
 	public void checkoutCTCollection(long userId, long ctCollectionId) {
-		User user = _userLocalService.fetchUser(userId);
+		long companyId = _getCompanyId(userId);
 
-		if (user == null) {
-			_log.error("Unable to get user " + userId);
-
+		if (companyId <= 0) {
 			return;
 		}
 
-		if (!isChangeTrackingEnabled(user.getCompanyId())) {
+		if (!isChangeTrackingEnabled(companyId)) {
 			return;
 		}
 
@@ -98,16 +97,14 @@ public class CTEngineManagerImpl implements CTEngineManager {
 	public Optional<CTCollection> createCTCollection(
 		long userId, String name, String description) {
 
-		User user = _userLocalService.fetchUser(userId);
+		long companyId = _getCompanyId(userId);
 
-		if (user == null) {
-			_log.error("Unable to get user " + userId);
-
+		if (companyId <= 0) {
 			return Optional.empty();
 		}
 
 		if (CTConstants.CT_COLLECTION_NAME_PRODUCTION.equals(name) ||
-			!isChangeTrackingEnabled(user.getCompanyId())) {
+			!isChangeTrackingEnabled(companyId)) {
 
 			return Optional.empty();
 		}
@@ -168,7 +165,9 @@ public class CTEngineManagerImpl implements CTEngineManager {
 		User user = _userLocalService.fetchUser(userId);
 
 		if (user == null) {
-			_log.error("Unable to get user " + userId);
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unable to get user " + userId);
+			}
 
 			return;
 		}
@@ -205,15 +204,13 @@ public class CTEngineManagerImpl implements CTEngineManager {
 
 	@Override
 	public Optional<CTCollection> getActiveCTCollectionOptional(long userId) {
-		User user = _userLocalService.fetchUser(userId);
+		long companyId = _getCompanyId(userId);
 
-		if (user == null) {
-			_log.error("Unable to get user " + userId);
-
+		if (companyId <= 0) {
 			return Optional.empty();
 		}
 
-		if (!isChangeTrackingEnabled(user.getCompanyId())) {
+		if (!isChangeTrackingEnabled(companyId)) {
 			return Optional.empty();
 		}
 
@@ -221,7 +218,7 @@ public class CTEngineManagerImpl implements CTEngineManager {
 
 		if (recentCTCollectionId == 0L) {
 			Optional<CTCollection> productionCTCollectionOptional =
-				getProductionCTCollectionOptional(user.getCompanyId());
+				getProductionCTCollectionOptional(companyId);
 
 			recentCTCollectionId = productionCTCollectionOptional.map(
 				CTCollection::getCtCollectionId
@@ -301,20 +298,18 @@ public class CTEngineManagerImpl implements CTEngineManager {
 
 	@Override
 	public void publishCTCollection(long userId, long ctCollectionId) {
-		User user = _userLocalService.fetchUser(userId);
+		long companyId = _getCompanyId(userId);
 
-		if (user == null) {
-			_log.error("Unable to get user " + userId);
-
+		if (companyId <= 0) {
 			return;
 		}
 
-		if (!isChangeTrackingEnabled(user.getCompanyId())) {
+		if (!isChangeTrackingEnabled(companyId)) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					"Unable to publish change tracking collection because " +
 						"change tracking is not enabled in company " +
-							user.getCompanyId());
+							companyId);
 			}
 
 			return;
@@ -396,11 +391,34 @@ public class CTEngineManagerImpl implements CTEngineManager {
 		return Optional.ofNullable(ctCollection);
 	}
 
+	private long _getCompanyId(long userId) {
+		long companyId = 0;
+
+		User user = _userLocalService.fetchUser(userId);
+
+		if (user == null) {
+			companyId = CompanyThreadLocal.getCompanyId();
+		}
+		else {
+			companyId = user.getCompanyId();
+		}
+
+		if (companyId <= 0) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unable to get company ID");
+			}
+		}
+
+		return companyId;
+	}
+
 	private long _getRecentCTCollectionId(long userId) {
 		User user = _userLocalService.fetchUser(userId);
 
 		if (user == null) {
-			_log.error("Unable to get user " + userId);
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unable to get user " + userId);
+			}
 
 			return 0L;
 		}

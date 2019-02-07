@@ -44,7 +44,7 @@ public class ImageObjectRepository {
 		return _images;
 	}
 
-	public Integer[] getImagesIds() {
+	public Long[] getImagesIds() {
 		return _imagesIds;
 	}
 
@@ -72,7 +72,7 @@ public class ImageObjectRepository {
 		_images = images;
 	}
 
-	public void setImagesIds(Integer[] imagesIds) {
+	public void setImagesIds(Long[] imagesIds) {
 		_imagesIds = imagesIds;
 	}
 
@@ -88,7 +88,7 @@ public class ImageObjectRepository {
 	private Date _dateModified;
 	private Long _id;
 	private ImageObject[] _images;
-	private Integer[] _imagesIds;
+	private Long[] _imagesIds;
 	private String _name;
 	private String _self;
 

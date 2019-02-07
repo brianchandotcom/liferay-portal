@@ -84,7 +84,7 @@ public class UserAccount {
 		return _myOrganizations;
 	}
 
-	public Integer[] getMyOrganizationsIds() {
+	public Long[] getMyOrganizationsIds() {
 		return _myOrganizationsIds;
 	}
 
@@ -100,7 +100,7 @@ public class UserAccount {
 		return _roles;
 	}
 
-	public Integer[] getRolesIds() {
+	public Long[] getRolesIds() {
 		return _rolesIds;
 	}
 
@@ -172,7 +172,7 @@ public class UserAccount {
 		_myOrganizations = myOrganizations;
 	}
 
-	public void setMyOrganizationsIds(Integer[] myOrganizationsIds) {
+	public void setMyOrganizationsIds(Long[] myOrganizationsIds) {
 		_myOrganizationsIds = myOrganizationsIds;
 	}
 
@@ -188,7 +188,7 @@ public class UserAccount {
 		_roles = roles;
 	}
 
-	public void setRolesIds(Integer[] rolesIds) {
+	public void setRolesIds(Long[] rolesIds) {
 		_rolesIds = rolesIds;
 	}
 
@@ -218,11 +218,11 @@ public class UserAccount {
 	private String _image;
 	private String _jobTitle;
 	private Organization[] _myOrganizations;
-	private Integer[] _myOrganizationsIds;
+	private Long[] _myOrganizationsIds;
 	private String _name;
 	private String _profileURL;
 	private Role[] _roles;
-	private Integer[] _rolesIds;
+	private Long[] _rolesIds;
 	private String _self;
 	private String[] _tasksAssignedToMe;
 	private String[] _tasksAssignedToMyRoles;

@@ -36,7 +36,7 @@ public class StructuredContent {
 		return _availableLanguages;
 	}
 
-	public Integer[] getCategory() {
+	public Long[] getCategory() {
 		return _category;
 	}
 
@@ -112,7 +112,7 @@ public class StructuredContent {
 		_availableLanguages = availableLanguages;
 	}
 
-	public void setCategory(Integer[] category) {
+	public void setCategory(Long[] category) {
 		_category = category;
 	}
 
@@ -184,7 +184,7 @@ public class StructuredContent {
 
 	private AggregateRating _aggregateRating;
 	private String[] _availableLanguages;
-	private Integer[] _category;
+	private Long[] _category;
 	private Comment[] _comment;
 	private Long _contentSpace;
 	private ContentStructure _contentStructure;

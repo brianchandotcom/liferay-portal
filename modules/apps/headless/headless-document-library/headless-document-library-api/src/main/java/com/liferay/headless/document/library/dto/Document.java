@@ -32,7 +32,7 @@ public class Document {
 		return _adaptedMedia;
 	}
 
-	public Integer[] getCategory() {
+	public Long[] getCategory() {
 		return _category;
 	}
 
@@ -96,7 +96,7 @@ public class Document {
 		_adaptedMedia = adaptedMedia;
 	}
 
-	public void setCategory(Integer[] category) {
+	public void setCategory(Long[] category) {
 		_category = category;
 	}
 
@@ -157,7 +157,7 @@ public class Document {
 	}
 
 	private Object _adaptedMedia;
-	private Integer[] _category;
+	private Long[] _category;
 	private String _contentUrl;
 	private Creator _creator;
 	private Date _dateCreated;

@@ -44,7 +44,7 @@ public class Folder {
 		return _documents;
 	}
 
-	public Integer[] getDocumentsIds() {
+	public Long[] getDocumentsIds() {
 		return _documentsIds;
 	}
 
@@ -88,7 +88,7 @@ public class Folder {
 		_documents = documents;
 	}
 
-	public void setDocumentsIds(Integer[] documentsIds) {
+	public void setDocumentsIds(Long[] documentsIds) {
 		_documentsIds = documentsIds;
 	}
 
@@ -120,7 +120,7 @@ public class Folder {
 	private Date _dateModified;
 	private String _description;
 	private Document[] _documents;
-	private Integer[] _documentsIds;
+	private Long[] _documentsIds;
 	private Folder _documentsRepository;
 	private Long _documentsRepositoryId;
 	private Long _id;

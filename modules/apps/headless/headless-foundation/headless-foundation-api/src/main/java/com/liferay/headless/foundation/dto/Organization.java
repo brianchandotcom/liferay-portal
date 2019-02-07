@@ -50,7 +50,7 @@ public class Organization {
 		return _members;
 	}
 
-	public Integer[] getMembersIds() {
+	public Long[] getMembersIds() {
 		return _membersIds;
 	}
 
@@ -78,7 +78,7 @@ public class Organization {
 		return _subOrganization;
 	}
 
-	public Integer[] getSubOrganizationIds() {
+	public Long[] getSubOrganizationIds() {
 		return _subOrganizationIds;
 	}
 
@@ -106,7 +106,7 @@ public class Organization {
 		_members = members;
 	}
 
-	public void setMembersIds(Integer[] membersIds) {
+	public void setMembersIds(Long[] membersIds) {
 		_membersIds = membersIds;
 	}
 
@@ -134,7 +134,7 @@ public class Organization {
 		_subOrganization = subOrganization;
 	}
 
-	public void setSubOrganizationIds(Integer[] subOrganizationIds) {
+	public void setSubOrganizationIds(Long[] subOrganizationIds) {
 		_subOrganizationIds = subOrganizationIds;
 	}
 
@@ -144,13 +144,13 @@ public class Organization {
 	private Object _location;
 	private String _logo;
 	private UserAccount[] _members;
-	private Integer[] _membersIds;
+	private Long[] _membersIds;
 	private String _name;
 	private Organization _parentOrganization;
 	private Long _parentOrganizationId;
 	private String _self;
 	private Object _services;
 	private Organization[] _subOrganization;
-	private Integer[] _subOrganizationIds;
+	private Long[] _subOrganizationIds;
 
 }

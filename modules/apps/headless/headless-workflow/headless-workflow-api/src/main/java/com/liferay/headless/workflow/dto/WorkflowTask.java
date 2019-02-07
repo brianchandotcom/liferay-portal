@@ -60,7 +60,7 @@ public class WorkflowTask {
 		return _logs;
 	}
 
-	public Integer[] getLogsIds() {
+	public Long[] getLogsIds() {
 		return _logsIds;
 	}
 
@@ -112,7 +112,7 @@ public class WorkflowTask {
 		_logs = logs;
 	}
 
-	public void setLogsIds(Integer[] logsIds) {
+	public void setLogsIds(Long[] logsIds) {
 		_logsIds = logsIds;
 	}
 
@@ -140,7 +140,7 @@ public class WorkflowTask {
 	private Date _dueDate;
 	private Long _id;
 	private WorkflowLog[] _logs;
-	private Integer[] _logsIds;
+	private Long[] _logsIds;
 	private String _name;
 	private Object _object;
 	private String _self;

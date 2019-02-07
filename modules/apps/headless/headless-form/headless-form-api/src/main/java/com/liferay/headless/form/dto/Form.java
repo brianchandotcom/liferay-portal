@@ -64,7 +64,7 @@ public class Form {
 		return _formRecords;
 	}
 
-	public Integer[] getFormRecordsIds() {
+	public Long[] getFormRecordsIds() {
 		return _formRecordsIds;
 	}
 
@@ -124,7 +124,7 @@ public class Form {
 		_formRecords = formRecords;
 	}
 
-	public void setFormRecordsIds(Integer[] formRecordsIds) {
+	public void setFormRecordsIds(Long[] formRecordsIds) {
 		_formRecordsIds = formRecordsIds;
 	}
 
@@ -157,7 +157,7 @@ public class Form {
 	private String _defaultLanguage;
 	private String _description;
 	private FormRecord[] _formRecords;
-	private Integer[] _formRecordsIds;
+	private Long[] _formRecordsIds;
 	private Long _id;
 	private String _name;
 	private String _self;

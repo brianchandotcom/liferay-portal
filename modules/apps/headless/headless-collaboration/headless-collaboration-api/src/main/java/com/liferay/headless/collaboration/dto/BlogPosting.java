@@ -44,7 +44,7 @@ public class BlogPosting {
 		return _caption;
 	}
 
-	public Integer[] getCategory() {
+	public Long[] getCategory() {
 		return _category;
 	}
 
@@ -132,7 +132,7 @@ public class BlogPosting {
 		_caption = caption;
 	}
 
-	public void setCategory(Integer[] category) {
+	public void setCategory(Long[] category) {
 		_category = category;
 	}
 
@@ -208,7 +208,7 @@ public class BlogPosting {
 	private String _alternativeHeadline;
 	private String _articleBody;
 	private String _caption;
-	private Integer[] _category;
+	private Long[] _category;
 	private Comment[] _comment;
 	private Long _contentSpace;
 	private Creator _creator;

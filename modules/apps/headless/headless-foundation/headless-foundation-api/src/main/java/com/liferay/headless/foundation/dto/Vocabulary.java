@@ -68,7 +68,7 @@ public class Vocabulary {
 		return _vocabularyCategories;
 	}
 
-	public Integer[] getVocabularyCategoriesIds() {
+	public Long[] getVocabularyCategoriesIds() {
 		return _vocabularyCategoriesIds;
 	}
 
@@ -112,7 +112,7 @@ public class Vocabulary {
 		_vocabularyCategories = vocabularyCategories;
 	}
 
-	public void setVocabularyCategoriesIds(Integer[] vocabularyCategoriesIds) {
+	public void setVocabularyCategoriesIds(Long[] vocabularyCategoriesIds) {
 		_vocabularyCategoriesIds = vocabularyCategoriesIds;
 	}
 
@@ -126,6 +126,6 @@ public class Vocabulary {
 	private String _name;
 	private String _self;
 	private Category[] _vocabularyCategories;
-	private Integer[] _vocabularyCategoriesIds;
+	private Long[] _vocabularyCategoriesIds;
 
 }

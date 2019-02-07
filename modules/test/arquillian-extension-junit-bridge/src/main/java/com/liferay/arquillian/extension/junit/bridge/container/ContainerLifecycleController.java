@@ -15,7 +15,7 @@
 package com.liferay.arquillian.extension.junit.bridge.container;
 
 import org.jboss.arquillian.container.spi.Container;
-import org.jboss.arquillian.container.spi.ContainerRegistry;
+import org.jboss.arquillian.container.spi.client.container.LifecycleException;
 import org.jboss.arquillian.container.spi.event.KillContainer;
 import org.jboss.arquillian.container.spi.event.SetupContainer;
 import org.jboss.arquillian.container.spi.event.SetupContainers;
@@ -47,40 +47,32 @@ public class ContainerLifecycleController {
 		container.setup();
 	}
 
-	public void setupContainers(@Observes SetupContainers setupContainers)
-		throws Exception {
-
-		ContainerRegistry containerRegistry = _containerRegistryInstance.get();
-
-		Container container = containerRegistry.getContainer("default");
+	public void setupContainers(@Observes SetupContainers setupContainers) {
+		Container container = _containerInstance.get();
 
 		_setupContainerEvent.fire(new SetupContainer(container));
 	}
 
 	public void startSuiteContainers(
 			@Observes StartSuiteContainers startSuiteContainers)
-		throws Exception {
+		throws LifecycleException {
 
-		ContainerRegistry containerRegistry = _containerRegistryInstance.get();
-
-		Container container = containerRegistry.getContainer("default");
+		Container container = _containerInstance.get();
 
 		container.start();
 	}
 
 	public void stopSuiteContainers(
 			@Observes StopSuiteContainers stopSuiteContainers)
-		throws Exception {
+		throws LifecycleException {
 
-		ContainerRegistry containerRegistry = _containerRegistryInstance.get();
-
-		Container container = containerRegistry.getContainer("default");
+		Container container = _containerInstance.get();
 
 		container.stop();
 	}
 
 	@Inject
-	private Instance<ContainerRegistry> _containerRegistryInstance;
+	private Instance<Container> _containerInstance;
 
 	@Inject
 	private Event<SetupContainer> _setupContainerEvent;

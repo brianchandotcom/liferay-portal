@@ -15,7 +15,6 @@
 package com.liferay.arquillian.extension.junit.bridge.container;
 
 import org.jboss.arquillian.container.spi.Container;
-import org.jboss.arquillian.container.spi.ContainerRegistry;
 import org.jboss.arquillian.container.spi.client.container.DeployableContainer;
 import org.jboss.arquillian.container.spi.client.container.DeploymentException;
 import org.jboss.arquillian.container.spi.client.deployment.Deployment;
@@ -90,27 +89,18 @@ public class ContainerDeployController {
 	public void deployManaged(
 		@Observes DeployManagedDeployments deployManagedDeployments) {
 
+		Container container = _containerInstance.get();
+
+		if (container.getState() != Container.State.STARTED) {
+			throw new IllegalStateException(
+				"Container " + container.getName() + " is not started");
+		}
+
 		DeploymentScenario deploymentScenario =
 			_deploymentScenarioInstance.get();
 
 		Deployment deployment = deploymentScenario.deployment(
 			DeploymentTargetDescription.DEFAULT);
-
-		ContainerRegistry containerRegistry = _containerRegistryInstance.get();
-
-		DeploymentDescription deploymentDescription =
-			deployment.getDescription();
-
-		Container container = containerRegistry.getContainer(
-			deploymentDescription.getTarget());
-
-		if (container.getState() != Container.State.STARTED) {
-			throw new IllegalStateException(
-				"Trying to deploy a managed deployment " +
-					deploymentDescription.getName() +
-						" to a non started managed contianer " +
-							container.getName());
-		}
 
 		_deploymentEvent.fire(new DeployDeployment(container, deployment));
 	}
@@ -157,30 +147,24 @@ public class ContainerDeployController {
 	public void undeployManaged(
 		@Observes UnDeployManagedDeployments unDeployManagedDeployments) {
 
-		DeploymentScenario deploymentScenario =
-			_deploymentScenarioInstance.get();
+		Container container = _containerInstance.get();
 
-		Deployment deployment = deploymentScenario.deployment(
-			DeploymentTargetDescription.DEFAULT);
+		if (container.getState().equals(Container.State.STARTED)) {
+			DeploymentScenario deploymentScenario =
+				_deploymentScenarioInstance.get();
 
-		ContainerRegistry containerRegistry = _containerRegistryInstance.get();
+			Deployment deployment = deploymentScenario.deployment(
+				DeploymentTargetDescription.DEFAULT);
 
-		DeploymentDescription deploymentDescription =
-			deployment.getDescription();
-
-		Container container = containerRegistry.getContainer(
-			deploymentDescription.getTarget());
-
-		if (container.getState().equals(Container.State.STARTED) &&
-			deployment.isDeployed()) {
-
-			_deploymentEvent.fire(
-				new UnDeployDeployment(container, deployment));
+			if (deployment.isDeployed()) {
+				_deploymentEvent.fire(
+					new UnDeployDeployment(container, deployment));
+			}
 		}
 	}
 
 	@Inject
-	private Instance<ContainerRegistry> _containerRegistryInstance;
+	private Instance<Container> _containerInstance;
 
 	@Inject
 	private Event<DeployerEvent> _deployerEvent;

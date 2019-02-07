@@ -56,9 +56,15 @@ public class ConfigurationRegistrar {
 
 		injector.inject(container);
 
+		_containerInstanceProducer.set(container);
+
 		_containerRegistryInstanceProducer.set(
 			new SingleContainerRegistry(container));
 	}
+
+	@ApplicationScoped
+	@Inject
+	private InstanceProducer<Container> _containerInstanceProducer;
 
 	@ApplicationScoped
 	@Inject

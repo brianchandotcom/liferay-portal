@@ -23,7 +23,6 @@ import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.PathItem;
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Properties;
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Schema;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -39,7 +38,7 @@ import org.yaml.snakeyaml.representer.Representer;
 public class YAMLUtil {
 
 	public static ConfigYAML loadConfigYAML(String yamlString) {
-		List<TypeDescription> typeDescriptions = new ArrayList<>();
+		Constructor constructor = new Constructor(ConfigYAML.class);
 
 		TypeDescription securityTypeDescription = new TypeDescription(
 			Security.class);
@@ -47,23 +46,20 @@ public class YAMLUtil {
 		securityTypeDescription.substituteProperty(
 			"oAuth2", String.class, "getOAuth2", "setOAuth2");
 
-		typeDescriptions.add(securityTypeDescription);
+		constructor.addTypeDescription(securityTypeDescription);
 
-		TypeDescription[] typeDescriptionsArray = typeDescriptions.toArray(
-			new TypeDescription[typeDescriptions.size()]);
-
-		return _load(ConfigYAML.class, yamlString, typeDescriptionsArray);
+		return _load(constructor, ConfigYAML.class, yamlString);
 	}
 
 	public static OpenAPIYAML loadOpenAPIYAML(String yamlString) {
-		List<TypeDescription> typeDescriptions = new ArrayList<>();
+		Constructor constructor = new Constructor(OpenAPIYAML.class);
 
 		TypeDescription itemTypeDescription = new TypeDescription(Items.class);
 
 		itemTypeDescription.substituteProperty(
 			"$ref", String.class, "getReference", "setReference");
 
-		typeDescriptions.add(itemTypeDescription);
+		constructor.addTypeDescription(itemTypeDescription);
 
 		TypeDescription openAPIYAMLTypeDescription = new TypeDescription(
 			OpenAPIYAML.class);
@@ -74,7 +70,7 @@ public class YAMLUtil {
 		openAPIYAMLTypeDescription.addPropertyParameters(
 			"paths", String.class, PathItem.class);
 
-		typeDescriptions.add(openAPIYAMLTypeDescription);
+		constructor.addTypeDescription(openAPIYAMLTypeDescription);
 
 		TypeDescription parameterTypeDescription = new TypeDescription(
 			Parameter.class);
@@ -82,7 +78,7 @@ public class YAMLUtil {
 		parameterTypeDescription.substituteProperty(
 			"$ref", String.class, "getReference", "setReference");
 
-		typeDescriptions.add(parameterTypeDescription);
+		constructor.addTypeDescription(parameterTypeDescription);
 
 		TypeDescription propertyTypeDescription = new TypeDescription(
 			Properties.class);
@@ -95,7 +91,7 @@ public class YAMLUtil {
 		propertyTypeDescription.substituteProperty(
 			"$ref", String.class, "getReference", "setReference");
 
-		typeDescriptions.add(propertyTypeDescription);
+		constructor.addTypeDescription(propertyTypeDescription);
 
 		TypeDescription schemaTypeDescription = new TypeDescription(
 			Schema.class);
@@ -103,23 +99,13 @@ public class YAMLUtil {
 		schemaTypeDescription.substituteProperty(
 			"$ref", String.class, "getReference", "setReference");
 
-		typeDescriptions.add(schemaTypeDescription);
+		constructor.addTypeDescription(schemaTypeDescription);
 
-		TypeDescription[] typeDescriptionsArray = typeDescriptions.toArray(
-			new TypeDescription[typeDescriptions.size()]);
-
-		return _load(OpenAPIYAML.class, yamlString, typeDescriptionsArray);
+		return _load(constructor, OpenAPIYAML.class, yamlString);
 	}
 
 	private static <T> T _load(
-		Class<T> clazz, String yamlString,
-		TypeDescription... typeDescriptions) {
-
-		Constructor constructor = new Constructor(clazz);
-
-		for (TypeDescription typeDescription : typeDescriptions) {
-			constructor.addTypeDescription(typeDescription);
-		}
+		Constructor constructor, Class<T> clazz, String yamlString) {
 
 		Representer representer = new Representer();
 

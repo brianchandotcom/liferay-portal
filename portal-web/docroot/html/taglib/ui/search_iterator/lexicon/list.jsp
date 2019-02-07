@@ -75,7 +75,7 @@ if (!resultRowSplitterEntries.isEmpty()) {
 							cssClass = (normalizedHeaderName.equals("rowChecker")) ? "lfr-checkbox-column" : "lfr-" + normalizedHeaderName + "-column";
 						}
 						else {
-							normalizedHeaderName = String.valueOf(i +1);
+							normalizedHeaderName = String.valueOf(i + 1);
 
 							cssClass = "lfr-entry-action-column";
 						}
@@ -140,6 +140,11 @@ if (!resultRowSplitterEntries.isEmpty()) {
 							%>
 
 							<c:choose>
+								<c:when test="<%= rowChecker != null && i == 0 %>">
+									<span class="sr-only">
+										<%= LanguageUtil.get(request, "selected-item") %>
+									</span>
+								</c:when>
 								<c:when test="<%= truncate %>">
 									<span class="truncate-text">
 										<%= headerNameValue %>

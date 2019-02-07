@@ -32,10 +32,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -190,8 +188,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 				if (Validator.isNull(value)) {
 					value = _getEditableValue(
-						editableValueJSONObject, locale,
-						Collections.emptyList());
+						editableValueJSONObject, locale, new long[0]);
 				}
 
 				properties.put(property.getKey(), value);
@@ -204,7 +201,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 	@Override
 	public String processFragmentEntryLinkHTML(
 			FragmentEntryLink fragmentEntryLink, String html, String mode,
-			Locale locale, List<Long> segmentsIds)
+			Locale locale, long[] segmentsIds)
 		throws PortalException {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
@@ -311,7 +308,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 	}
 
 	private String _getEditableValue(
-		JSONObject jsonObject, Locale locale, List<Long> segmentsIds) {
+		JSONObject jsonObject, Locale locale, long[] segmentsIds) {
 
 		if (_isPersonalizationSupported(jsonObject)) {
 			return _getEditableValueBySegmentsAndLocale(
@@ -341,7 +338,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 	}
 
 	private String _getEditableValueBySegmentsAndLocale(
-		JSONObject jsonObject, Locale locale, List<Long> segmentsIds) {
+		JSONObject jsonObject, Locale locale, long[] segmentsIds) {
 
 		for (long segmentId : segmentsIds) {
 			String value = _getSegmentValue(jsonObject, locale, segmentId);

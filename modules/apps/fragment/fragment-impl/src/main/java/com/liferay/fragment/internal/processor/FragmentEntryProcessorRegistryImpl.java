@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 
 import java.util.Collections;
-import java.util.List;
 import java.util.Locale;
 
 import org.osgi.framework.BundleContext;
@@ -106,7 +105,7 @@ public class FragmentEntryProcessorRegistryImpl
 	@Override
 	public String processFragmentEntryLinkHTML(
 			FragmentEntryLink fragmentEntryLink, String mode, Locale locale,
-			List<Long> segmentsIds)
+			long[] segmentsIds)
 		throws PortalException {
 
 		String html = fragmentEntryLink.getHtml();

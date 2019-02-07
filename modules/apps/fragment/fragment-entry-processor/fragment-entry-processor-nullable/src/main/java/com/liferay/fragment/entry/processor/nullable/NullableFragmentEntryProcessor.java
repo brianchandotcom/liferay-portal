@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -40,7 +39,7 @@ public class NullableFragmentEntryProcessor implements FragmentEntryProcessor {
 	@Override
 	public String processFragmentEntryLinkHTML(
 		FragmentEntryLink fragmentEntryLink, String html, String mode,
-		Locale locale, List<Long> segmentsIds) {
+		Locale locale, long[] segmentsIds) {
 
 		return html;
 	}

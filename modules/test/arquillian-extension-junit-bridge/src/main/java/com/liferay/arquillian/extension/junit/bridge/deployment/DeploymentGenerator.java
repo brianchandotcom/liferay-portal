@@ -76,16 +76,6 @@ public class DeploymentGenerator {
 		ProtocolDefinition protocolDefinition = protocolRegistry.getProtocol(
 			deploymentDescription.getProtocol());
 
-		Container container = _containerInstance.get();
-
-		DeployableContainer deployableContainer =
-			container.getDeployableContainer();
-
-		if (protocolDefinition == null) {
-			protocolDefinition = protocolRegistry.getProtocol(
-				deployableContainer.getDefaultProtocol());
-		}
-
 		Protocol<?> protocol = protocolDefinition.getProtocol();
 
 		DeploymentPackager deploymentPackager = protocol.getPackager();
@@ -112,9 +102,6 @@ public class DeploymentGenerator {
 		_buildTestableDeployments(
 			deploymentScenario, testClass, protocolRegistry);
 	}
-
-	@Inject
-	private Instance<Container> _containerInstance;
 
 	@ClassScoped
 	@Inject

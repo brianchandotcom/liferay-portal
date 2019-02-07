@@ -137,14 +137,21 @@ if (organization != null) {
 
 					<%
 					Organization curOrganization = null;
+					Map<String, Object> rowData = new HashMap<String, Object>();
 					User user2 = null;
 
 					if (result instanceof Organization) {
 						curOrganization = (Organization)result;
+
+						rowData.put("actions", String.join(StringPool.COMMA, viewTreeManagementToolbarDisplayContext.getAvailableActionDropdownItems(curOrganization)));
 					}
 					else {
 						user2 = (User)result;
+
+						rowData.put("actions", String.join(StringPool.COMMA, viewTreeManagementToolbarDisplayContext.getAvailableActionDropdownItems(user2)));
 					}
+
+					row.setData(rowData);
 					%>
 
 					<%@ include file="/organization/organization_user_search_columns.jspf" %>

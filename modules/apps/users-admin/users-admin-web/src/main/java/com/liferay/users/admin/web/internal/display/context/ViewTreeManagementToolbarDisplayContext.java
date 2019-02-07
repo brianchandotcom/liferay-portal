@@ -86,6 +86,7 @@ public class ViewTreeManagementToolbarDisplayContext {
 			{
 				add(
 					dropdownItem -> {
+						dropdownItem.putData("action", "delete");
 						dropdownItem.setHref(
 							StringBundler.concat(
 								"javascript:", _renderResponse.getNamespace(),
@@ -97,6 +98,26 @@ public class ViewTreeManagementToolbarDisplayContext {
 					});
 			}
 		};
+	}
+
+	public List<String> getAvailableActionDropdownItems(
+		Organization organization) {
+
+		List<String> availableActionDropdownItems = new ArrayList<>();
+
+		availableActionDropdownItems.add("delete");
+
+		return availableActionDropdownItems;
+	}
+
+	public List<String> getAvailableActionDropdownItems(User user) {
+		List<String> availableActionDropdownItems = new ArrayList<>();
+
+		if (!user.isActive()) {
+			availableActionDropdownItems.add("delete");
+		}
+
+		return availableActionDropdownItems;
 	}
 
 	public String getClearResultsURL() {

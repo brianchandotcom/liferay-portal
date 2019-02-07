@@ -605,7 +605,7 @@
 </tr>
 <tr>
 	<td>UNPUBLISH</td>
-	<td>//button[contains(@id,'publish') and contains(.,'Unpublish')]</td>
+	<td>//button[contains(@id,'publish') and contains(.,'Unpublish')] | //button[contains(@class,'btn-primary') and contains(.,'Unpublish')]</td>
 	<td></td>
 </tr>
 <tr>

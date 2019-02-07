@@ -153,7 +153,7 @@
 </tr>
 <tr>
 	<td>PUBLISH_FORM_PUBLIC_URL</td>
-	<td>//div[contains(@class,'share-url-popover')]//input[@class='form-control' and @type='text'] | //input[@class='form-control' and @type='text']</td>
+	<td>//div[contains(@class,'share-url-popover')]//input[@class='form-control' and @type='text']</td>
 	<td></td>
 </tr>
 <tr>
@@ -207,7 +207,7 @@
 <!--FIELD-->
 <tr>
 	<td>FIELD_BODY</td>
-	<td>//div[contains(@data-fieldname,'${key_fieldName}')]</td>
+	<td>//div[contains(@data-fieldname,'${key_fieldName}')] | //div[contains(@class,'form-group')]//input[contains(@name,'${key_fieldName}')]/parent::div/parent::div</td>
 	<td></td>
 </tr>
 <tr>

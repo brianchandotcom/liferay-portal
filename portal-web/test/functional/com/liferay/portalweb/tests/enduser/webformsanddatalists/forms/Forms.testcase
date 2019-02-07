@@ -10,7 +10,7 @@ definition {
 
 		User.firstLoginPG();
 
-		TestCase.enableMetal();
+		//TestCase.enableMetal();
 
 	}
 
@@ -4282,7 +4282,7 @@ definition {
 
 		Form.gotoAddField(fieldType = "Text Field");
 
-		FormFields.viewFieldLabel(fieldName = "label", fieldValue = "");
+		FormFields.viewFieldLabel(fieldName = "label", fieldValue = "Text Field");
 	}
 
 	@description = "This is a use case for LPS-69214."

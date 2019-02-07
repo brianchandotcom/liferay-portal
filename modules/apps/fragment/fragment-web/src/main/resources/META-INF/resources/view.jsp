@@ -128,11 +128,9 @@ List<FragmentCollection> fragmentCollections = (List<FragmentCollection>)request
 					</h3>
 
 					<div class="sheet-section">
-						<c:if test="<%= fragmentCollection.hasResources() %>">
-							<clay:navigation-bar
-								navigationItems="<%= fragmentDisplayContext.getNavigationItems() %>"
-							/>
-						</c:if>
+						<clay:navigation-bar
+							navigationItems="<%= fragmentDisplayContext.getNavigationItems() %>"
+						/>
 
 						<c:choose>
 							<c:when test="<%= fragmentDisplayContext.isViewResources() %>">

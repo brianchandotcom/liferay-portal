@@ -1243,10 +1243,6 @@ public class LayoutPageTemplateCollectionUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static LayoutPageTemplateCollectionPersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

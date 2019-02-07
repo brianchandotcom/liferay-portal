@@ -1202,10 +1202,6 @@ public class ModuleUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static ModulePersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

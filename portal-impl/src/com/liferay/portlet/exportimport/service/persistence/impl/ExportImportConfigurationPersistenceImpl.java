@@ -3569,6 +3569,6 @@ public class ExportImportConfigurationPersistenceImpl
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No ExportImportConfiguration exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(ExportImportConfigurationPersistenceImpl.class);
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
-				"type", "settings"
+				"description", "type", "settings"
 			});
 }

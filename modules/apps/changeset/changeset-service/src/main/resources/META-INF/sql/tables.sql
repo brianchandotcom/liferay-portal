@@ -7,7 +7,7 @@ create table ChangesetCollection (
 	createDate DATE null,
 	modifiedDate DATE null,
 	name VARCHAR(75) null,
-	description VARCHAR(75) null
+	description_ VARCHAR(75) null
 );
 
 create table ChangesetEntry (

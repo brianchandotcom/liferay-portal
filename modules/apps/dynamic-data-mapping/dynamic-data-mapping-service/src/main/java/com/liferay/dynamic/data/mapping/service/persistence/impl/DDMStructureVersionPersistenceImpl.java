@@ -2069,6 +2069,6 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No DDMStructureVersion exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(DDMStructureVersionPersistenceImpl.class);
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
-				"type"
+				"description", "definition", "type"
 			});
 }

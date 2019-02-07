@@ -19,11 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.exception.NoSuchEmailAddressException;
 import com.liferay.portal.kernel.model.EmailAddress;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
-
 /**
  * The persistence interface for the email address service.
  *
@@ -43,9 +38,6 @@ public interface EmailAddressPersistence extends BasePersistence<EmailAddress> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link EmailAddressUtil} to access the email address persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, EmailAddress> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the email addresses where uuid = &#63;.
@@ -1176,7 +1168,4 @@ public interface EmailAddressPersistence extends BasePersistence<EmailAddress> {
 	* @return the number of email addresses
 	*/
 	public int countAll();
-
-	@Override
-	public Set<String> getBadColumnNames();
 }

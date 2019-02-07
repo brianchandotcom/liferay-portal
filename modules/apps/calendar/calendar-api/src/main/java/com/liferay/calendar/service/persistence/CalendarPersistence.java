@@ -21,11 +21,6 @@ import com.liferay.calendar.model.Calendar;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
-
 /**
  * The persistence interface for the calendar service.
  *
@@ -45,9 +40,6 @@ public interface CalendarPersistence extends BasePersistence<Calendar> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CalendarUtil} to access the calendar persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, Calendar> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the calendars where uuid = &#63;.
@@ -931,7 +923,4 @@ public interface CalendarPersistence extends BasePersistence<Calendar> {
 	* @return the number of calendars
 	*/
 	public int countAll();
-
-	@Override
-	public Set<String> getBadColumnNames();
 }

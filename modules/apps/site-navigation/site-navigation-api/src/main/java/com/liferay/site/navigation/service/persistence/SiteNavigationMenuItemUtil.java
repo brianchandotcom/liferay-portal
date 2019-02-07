@@ -1410,10 +1410,6 @@ public class SiteNavigationMenuItemUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static SiteNavigationMenuItemPersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

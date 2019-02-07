@@ -21,11 +21,6 @@ import com.liferay.document.library.kernel.model.DLFileShortcut;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
-
 /**
  * The persistence interface for the document library file shortcut service.
  *
@@ -45,9 +40,6 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	 *
 	 * Never modify or reference this interface directly. Always use {@link DLFileShortcutUtil} to access the document library file shortcut persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, DLFileShortcut> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the document library file shortcuts where uuid = &#63;.
@@ -1594,7 +1586,4 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @return the number of document library file shortcuts
 	*/
 	public int countAll();
-
-	@Override
-	public Set<String> getBadColumnNames();
 }

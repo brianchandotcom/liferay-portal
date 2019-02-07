@@ -3070,10 +3070,6 @@ public class OrganizationUtil {
 		getPersistence().setUsers(pk, users);
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static OrganizationPersistence getPersistence() {
 		if (_persistence == null) {
 			_persistence = (OrganizationPersistence)PortalBeanLocatorUtil.locate(OrganizationPersistence.class.getName());

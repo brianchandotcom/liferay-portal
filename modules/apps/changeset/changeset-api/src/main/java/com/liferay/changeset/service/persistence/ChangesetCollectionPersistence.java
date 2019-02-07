@@ -21,11 +21,6 @@ import com.liferay.changeset.model.ChangesetCollection;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
-
 /**
  * The persistence interface for the changeset collection service.
  *
@@ -45,9 +40,6 @@ public interface ChangesetCollectionPersistence extends BasePersistence<Changese
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ChangesetCollectionUtil} to access the changeset collection persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, ChangesetCollection> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the changeset collections where groupId = &#63;.

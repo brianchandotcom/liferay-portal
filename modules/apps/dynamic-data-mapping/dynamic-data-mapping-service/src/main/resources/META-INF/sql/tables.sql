@@ -8,7 +8,7 @@ create table DDMContent (
 	createDate DATE null,
 	modifiedDate DATE null,
 	name STRING null,
-	description STRING null,
+	description_ STRING null,
 	data_ TEXT null
 );
 
@@ -22,8 +22,8 @@ create table DDMDataProviderInstance (
 	createDate DATE null,
 	modifiedDate DATE null,
 	name STRING null,
-	description TEXT null,
-	definition TEXT null,
+	description_ TEXT null,
+	definition_ TEXT null,
 	type_ VARCHAR(75) null
 );
 
@@ -48,7 +48,7 @@ create table DDMFormInstance (
 	structureId LONG,
 	version VARCHAR(75) null,
 	name STRING null,
-	description STRING null,
+	description_ STRING null,
 	settings_ TEXT null,
 	lastPublishDate DATE null
 );
@@ -99,7 +99,7 @@ create table DDMFormInstanceVersion (
 	formInstanceId LONG,
 	structureVersionId LONG,
 	name STRING null,
-	description STRING null,
+	description_ STRING null,
 	settings_ TEXT null,
 	version VARCHAR(75) null,
 	status INTEGER,
@@ -134,8 +134,8 @@ create table DDMStructure (
 	structureKey VARCHAR(75) null,
 	version VARCHAR(75) null,
 	name STRING null,
-	description TEXT null,
-	definition TEXT null,
+	description_ TEXT null,
+	definition_ TEXT null,
 	storageType VARCHAR(75) null,
 	type_ INTEGER,
 	lastPublishDate DATE null
@@ -151,7 +151,7 @@ create table DDMStructureLayout (
 	createDate DATE null,
 	modifiedDate DATE null,
 	structureVersionId LONG,
-	definition TEXT null
+	definition_ TEXT null
 );
 
 create table DDMStructureLink (
@@ -173,8 +173,8 @@ create table DDMStructureVersion (
 	version VARCHAR(75) null,
 	parentStructureId LONG,
 	name STRING null,
-	description TEXT null,
-	definition TEXT null,
+	description_ TEXT null,
+	definition_ TEXT null,
 	storageType VARCHAR(75) null,
 	type_ INTEGER,
 	status INTEGER,
@@ -200,7 +200,7 @@ create table DDMTemplate (
 	templateKey VARCHAR(75) null,
 	version VARCHAR(75) null,
 	name TEXT null,
-	description TEXT null,
+	description_ TEXT null,
 	type_ VARCHAR(75) null,
 	mode_ VARCHAR(75) null,
 	language VARCHAR(75) null,
@@ -232,7 +232,7 @@ create table DDMTemplateVersion (
 	templateId LONG,
 	version VARCHAR(75) null,
 	name TEXT null,
-	description TEXT null,
+	description_ TEXT null,
 	language VARCHAR(75) null,
 	script TEXT null,
 	status INTEGER,

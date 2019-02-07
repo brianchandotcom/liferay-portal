@@ -2039,13 +2039,13 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 			for (int i = 0; i < orderByConditionFields.length; i++) {
 				if (getDB().isSupportsInlineDistinct()) {
-					query.append(_ORDER_BY_ENTITY_ALIAS);
+					query.append(getColumnName(_ORDER_BY_ENTITY_ALIAS,
+							orderByConditionFields[i], true));
 				}
 				else {
-					query.append(_ORDER_BY_ENTITY_TABLE);
+					query.append(getColumnName(_ORDER_BY_ENTITY_TABLE,
+							orderByConditionFields[i], true));
 				}
-
-				query.append(orderByConditionFields[i]);
 
 				if ((i + 1) < orderByConditionFields.length) {
 					if (orderByComparator.isAscending() ^ previous) {
@@ -2071,13 +2071,13 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 			for (int i = 0; i < orderByFields.length; i++) {
 				if (getDB().isSupportsInlineDistinct()) {
-					query.append(_ORDER_BY_ENTITY_ALIAS);
+					query.append(getColumnName(_ORDER_BY_ENTITY_ALIAS,
+							orderByFields[i], true));
 				}
 				else {
-					query.append(_ORDER_BY_ENTITY_TABLE);
+					query.append(getColumnName(_ORDER_BY_ENTITY_TABLE,
+							orderByFields[i], true));
 				}
-
-				query.append(orderByFields[i]);
 
 				if ((i + 1) < orderByFields.length) {
 					if (orderByComparator.isAscending() ^ previous) {
@@ -4904,13 +4904,13 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 			for (int i = 0; i < orderByConditionFields.length; i++) {
 				if (getDB().isSupportsInlineDistinct()) {
-					query.append(_ORDER_BY_ENTITY_ALIAS);
+					query.append(getColumnName(_ORDER_BY_ENTITY_ALIAS,
+							orderByConditionFields[i], true));
 				}
 				else {
-					query.append(_ORDER_BY_ENTITY_TABLE);
+					query.append(getColumnName(_ORDER_BY_ENTITY_TABLE,
+							orderByConditionFields[i], true));
 				}
-
-				query.append(orderByConditionFields[i]);
 
 				if ((i + 1) < orderByConditionFields.length) {
 					if (orderByComparator.isAscending() ^ previous) {
@@ -4936,13 +4936,13 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 			for (int i = 0; i < orderByFields.length; i++) {
 				if (getDB().isSupportsInlineDistinct()) {
-					query.append(_ORDER_BY_ENTITY_ALIAS);
+					query.append(getColumnName(_ORDER_BY_ENTITY_ALIAS,
+							orderByFields[i], true));
 				}
 				else {
-					query.append(_ORDER_BY_ENTITY_TABLE);
+					query.append(getColumnName(_ORDER_BY_ENTITY_TABLE,
+							orderByFields[i], true));
 				}
-
-				query.append(orderByFields[i]);
 
 				if ((i + 1) < orderByFields.length) {
 					if (orderByComparator.isAscending() ^ previous) {
@@ -5805,13 +5805,13 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 			for (int i = 0; i < orderByConditionFields.length; i++) {
 				if (getDB().isSupportsInlineDistinct()) {
-					query.append(_ORDER_BY_ENTITY_ALIAS);
+					query.append(getColumnName(_ORDER_BY_ENTITY_ALIAS,
+							orderByConditionFields[i], true));
 				}
 				else {
-					query.append(_ORDER_BY_ENTITY_TABLE);
+					query.append(getColumnName(_ORDER_BY_ENTITY_TABLE,
+							orderByConditionFields[i], true));
 				}
-
-				query.append(orderByConditionFields[i]);
 
 				if ((i + 1) < orderByConditionFields.length) {
 					if (orderByComparator.isAscending() ^ previous) {
@@ -5837,13 +5837,13 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 			for (int i = 0; i < orderByFields.length; i++) {
 				if (getDB().isSupportsInlineDistinct()) {
-					query.append(_ORDER_BY_ENTITY_ALIAS);
+					query.append(getColumnName(_ORDER_BY_ENTITY_ALIAS,
+							orderByFields[i], true));
 				}
 				else {
-					query.append(_ORDER_BY_ENTITY_TABLE);
+					query.append(getColumnName(_ORDER_BY_ENTITY_TABLE,
+							orderByFields[i], true));
 				}
-
-				query.append(orderByFields[i]);
 
 				if ((i + 1) < orderByFields.length) {
 					if (orderByComparator.isAscending() ^ previous) {
@@ -7951,12 +7951,12 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 		boolean bindDescription = false;
 
 		if (description.isEmpty()) {
-			query.append(_FINDER_COLUMN_G_N_D_DESCRIPTION_3);
+			query.append(_FINDER_COLUMN_G_N_D_DESCRIPTION_3_SQL);
 		}
 		else {
 			bindDescription = true;
 
-			query.append(_FINDER_COLUMN_G_N_D_DESCRIPTION_2);
+			query.append(_FINDER_COLUMN_G_N_D_DESCRIPTION_2_SQL);
 		}
 
 		if (!getDB().isSupportsInlineDistinct()) {
@@ -8112,12 +8112,12 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 		boolean bindDescription = false;
 
 		if (description.isEmpty()) {
-			query.append(_FINDER_COLUMN_G_N_D_DESCRIPTION_3);
+			query.append(_FINDER_COLUMN_G_N_D_DESCRIPTION_3_SQL);
 		}
 		else {
 			bindDescription = true;
 
-			query.append(_FINDER_COLUMN_G_N_D_DESCRIPTION_2);
+			query.append(_FINDER_COLUMN_G_N_D_DESCRIPTION_2_SQL);
 		}
 
 		if (!getDB().isSupportsInlineDistinct()) {
@@ -8133,13 +8133,13 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 			for (int i = 0; i < orderByConditionFields.length; i++) {
 				if (getDB().isSupportsInlineDistinct()) {
-					query.append(_ORDER_BY_ENTITY_ALIAS);
+					query.append(getColumnName(_ORDER_BY_ENTITY_ALIAS,
+							orderByConditionFields[i], true));
 				}
 				else {
-					query.append(_ORDER_BY_ENTITY_TABLE);
+					query.append(getColumnName(_ORDER_BY_ENTITY_TABLE,
+							orderByConditionFields[i], true));
 				}
-
-				query.append(orderByConditionFields[i]);
 
 				if ((i + 1) < orderByConditionFields.length) {
 					if (orderByComparator.isAscending() ^ previous) {
@@ -8165,13 +8165,13 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 			for (int i = 0; i < orderByFields.length; i++) {
 				if (getDB().isSupportsInlineDistinct()) {
-					query.append(_ORDER_BY_ENTITY_ALIAS);
+					query.append(getColumnName(_ORDER_BY_ENTITY_ALIAS,
+							orderByFields[i], true));
 				}
 				else {
-					query.append(_ORDER_BY_ENTITY_TABLE);
+					query.append(getColumnName(_ORDER_BY_ENTITY_TABLE,
+							orderByFields[i], true));
 				}
-
-				query.append(orderByFields[i]);
 
 				if ((i + 1) < orderByFields.length) {
 					if (orderByComparator.isAscending() ^ previous) {
@@ -8383,12 +8383,12 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 		boolean bindDescription = false;
 
 		if (description.isEmpty()) {
-			query.append(_FINDER_COLUMN_G_N_D_DESCRIPTION_3);
+			query.append(_FINDER_COLUMN_G_N_D_DESCRIPTION_3_SQL);
 		}
 		else {
 			bindDescription = true;
 
-			query.append(_FINDER_COLUMN_G_N_D_DESCRIPTION_2);
+			query.append(_FINDER_COLUMN_G_N_D_DESCRIPTION_2_SQL);
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
@@ -8434,6 +8434,8 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	private static final String _FINDER_COLUMN_G_N_D_NAME_3 = "(ddmStructure.name IS NULL OR ddmStructure.name = '') AND ";
 	private static final String _FINDER_COLUMN_G_N_D_DESCRIPTION_2 = "CAST_CLOB_TEXT(ddmStructure.description) = ?";
 	private static final String _FINDER_COLUMN_G_N_D_DESCRIPTION_3 = "(ddmStructure.description IS NULL OR CAST_CLOB_TEXT(ddmStructure.description) = '')";
+	private static final String _FINDER_COLUMN_G_N_D_DESCRIPTION_2_SQL = "CAST_CLOB_TEXT(ddmStructure.description_) = ?";
+	private static final String _FINDER_COLUMN_G_N_D_DESCRIPTION_3_SQL = "(ddmStructure.description_ IS NULL OR CAST_CLOB_TEXT(ddmStructure.description_) = '')";
 	private FinderPath _finderPathWithPaginationFindByG_C_N_D;
 	private FinderPath _finderPathWithoutPaginationFindByG_C_N_D;
 	private FinderPath _finderPathCountByG_C_N_D;
@@ -9096,12 +9098,12 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 		boolean bindDescription = false;
 
 		if (description.isEmpty()) {
-			query.append(_FINDER_COLUMN_G_C_N_D_DESCRIPTION_3);
+			query.append(_FINDER_COLUMN_G_C_N_D_DESCRIPTION_3_SQL);
 		}
 		else {
 			bindDescription = true;
 
-			query.append(_FINDER_COLUMN_G_C_N_D_DESCRIPTION_2);
+			query.append(_FINDER_COLUMN_G_C_N_D_DESCRIPTION_2_SQL);
 		}
 
 		if (!getDB().isSupportsInlineDistinct()) {
@@ -9264,12 +9266,12 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 		boolean bindDescription = false;
 
 		if (description.isEmpty()) {
-			query.append(_FINDER_COLUMN_G_C_N_D_DESCRIPTION_3);
+			query.append(_FINDER_COLUMN_G_C_N_D_DESCRIPTION_3_SQL);
 		}
 		else {
 			bindDescription = true;
 
-			query.append(_FINDER_COLUMN_G_C_N_D_DESCRIPTION_2);
+			query.append(_FINDER_COLUMN_G_C_N_D_DESCRIPTION_2_SQL);
 		}
 
 		if (!getDB().isSupportsInlineDistinct()) {
@@ -9285,13 +9287,13 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 			for (int i = 0; i < orderByConditionFields.length; i++) {
 				if (getDB().isSupportsInlineDistinct()) {
-					query.append(_ORDER_BY_ENTITY_ALIAS);
+					query.append(getColumnName(_ORDER_BY_ENTITY_ALIAS,
+							orderByConditionFields[i], true));
 				}
 				else {
-					query.append(_ORDER_BY_ENTITY_TABLE);
+					query.append(getColumnName(_ORDER_BY_ENTITY_TABLE,
+							orderByConditionFields[i], true));
 				}
-
-				query.append(orderByConditionFields[i]);
 
 				if ((i + 1) < orderByConditionFields.length) {
 					if (orderByComparator.isAscending() ^ previous) {
@@ -9317,13 +9319,13 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 			for (int i = 0; i < orderByFields.length; i++) {
 				if (getDB().isSupportsInlineDistinct()) {
-					query.append(_ORDER_BY_ENTITY_ALIAS);
+					query.append(getColumnName(_ORDER_BY_ENTITY_ALIAS,
+							orderByFields[i], true));
 				}
 				else {
-					query.append(_ORDER_BY_ENTITY_TABLE);
+					query.append(getColumnName(_ORDER_BY_ENTITY_TABLE,
+							orderByFields[i], true));
 				}
-
-				query.append(orderByFields[i]);
 
 				if ((i + 1) < orderByFields.length) {
 					if (orderByComparator.isAscending() ^ previous) {
@@ -9513,12 +9515,12 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 		boolean bindDescription = false;
 
 		if (description.isEmpty()) {
-			query.append(_FINDER_COLUMN_G_C_N_D_DESCRIPTION_3);
+			query.append(_FINDER_COLUMN_G_C_N_D_DESCRIPTION_3_SQL);
 		}
 		else {
 			bindDescription = true;
 
-			query.append(_FINDER_COLUMN_G_C_N_D_DESCRIPTION_2);
+			query.append(_FINDER_COLUMN_G_C_N_D_DESCRIPTION_2_SQL);
 		}
 
 		query.setStringAt(removeConjunction(query.stringAt(query.index() - 1)),
@@ -10108,12 +10110,12 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 		boolean bindDescription = false;
 
 		if (description.isEmpty()) {
-			query.append(_FINDER_COLUMN_G_C_N_D_DESCRIPTION_3);
+			query.append(_FINDER_COLUMN_G_C_N_D_DESCRIPTION_3_SQL);
 		}
 		else {
 			bindDescription = true;
 
-			query.append(_FINDER_COLUMN_G_C_N_D_DESCRIPTION_2);
+			query.append(_FINDER_COLUMN_G_C_N_D_DESCRIPTION_2_SQL);
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
@@ -10218,12 +10220,12 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 		boolean bindDescription = false;
 
 		if (description.isEmpty()) {
-			query.append(_FINDER_COLUMN_G_C_N_D_DESCRIPTION_3);
+			query.append(_FINDER_COLUMN_G_C_N_D_DESCRIPTION_3_SQL);
 		}
 		else {
 			bindDescription = true;
 
-			query.append(_FINDER_COLUMN_G_C_N_D_DESCRIPTION_2);
+			query.append(_FINDER_COLUMN_G_C_N_D_DESCRIPTION_2_SQL);
 		}
 
 		query.setStringAt(removeConjunction(query.stringAt(query.index() - 1)),
@@ -10274,6 +10276,8 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	private static final String _FINDER_COLUMN_G_C_N_D_NAME_3 = "(ddmStructure.name IS NULL OR ddmStructure.name = '') AND ";
 	private static final String _FINDER_COLUMN_G_C_N_D_DESCRIPTION_2 = "CAST_CLOB_TEXT(ddmStructure.description) = ?";
 	private static final String _FINDER_COLUMN_G_C_N_D_DESCRIPTION_3 = "(ddmStructure.description IS NULL OR CAST_CLOB_TEXT(ddmStructure.description) = '')";
+	private static final String _FINDER_COLUMN_G_C_N_D_DESCRIPTION_2_SQL = "CAST_CLOB_TEXT(ddmStructure.description_) = ?";
+	private static final String _FINDER_COLUMN_G_C_N_D_DESCRIPTION_3_SQL = "(ddmStructure.description_ IS NULL OR CAST_CLOB_TEXT(ddmStructure.description_) = '')";
 
 	public DDMStructurePersistenceImpl() {
 		setModelClass(DDMStructure.class);
@@ -11593,6 +11597,6 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No DDMStructure exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(DDMStructurePersistenceImpl.class);
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
-				"uuid", "type"
+				"uuid", "description", "definition", "type"
 			});
 }

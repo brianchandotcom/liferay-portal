@@ -20,11 +20,6 @@ import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.workflow.kaleo.exception.NoSuchNodeException;
 import com.liferay.portal.workflow.kaleo.model.KaleoNode;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
-
 /**
  * The persistence interface for the kaleo node service.
  *
@@ -44,9 +39,6 @@ public interface KaleoNodePersistence extends BasePersistence<KaleoNode> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link KaleoNodeUtil} to access the kaleo node persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, KaleoNode> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the kaleo nodes where companyId = &#63;.
@@ -579,7 +571,4 @@ public interface KaleoNodePersistence extends BasePersistence<KaleoNode> {
 	* @return the number of kaleo nodes
 	*/
 	public int countAll();
-
-	@Override
-	public Set<String> getBadColumnNames();
 }

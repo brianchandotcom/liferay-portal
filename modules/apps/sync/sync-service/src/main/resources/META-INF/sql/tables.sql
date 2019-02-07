@@ -21,7 +21,7 @@ create table SyncDLObject (
 	name VARCHAR(255) null,
 	extension VARCHAR(75) null,
 	mimeType VARCHAR(75) null,
-	description STRING null,
+	description_ STRING null,
 	changeLog VARCHAR(75) null,
 	extraSettings TEXT null,
 	version VARCHAR(75) null,

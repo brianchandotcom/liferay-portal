@@ -22,7 +22,7 @@ create table MBCategory (
 	modifiedDate DATE null,
 	parentCategoryId LONG,
 	name VARCHAR(75) null,
-	description STRING null,
+	description_ STRING null,
 	displayStyle VARCHAR(75) null,
 	threadCount INTEGER,
 	messageCount INTEGER,

@@ -21,11 +21,6 @@ import com.liferay.journal.model.JournalFolder;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
-
 /**
  * The persistence interface for the journal folder service.
  *
@@ -45,9 +40,6 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	 *
 	 * Never modify or reference this interface directly. Always use {@link JournalFolderUtil} to access the journal folder persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, JournalFolder> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the journal folders where uuid = &#63;.
@@ -1895,7 +1887,4 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @return the number of journal folders
 	*/
 	public int countAll();
-
-	@Override
-	public Set<String> getBadColumnNames();
 }

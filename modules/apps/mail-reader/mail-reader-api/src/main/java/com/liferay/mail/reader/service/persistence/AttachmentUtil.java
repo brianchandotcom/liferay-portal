@@ -427,10 +427,6 @@ public class AttachmentUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static AttachmentPersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

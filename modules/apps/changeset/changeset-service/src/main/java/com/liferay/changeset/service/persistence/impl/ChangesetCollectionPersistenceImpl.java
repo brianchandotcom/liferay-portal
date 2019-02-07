@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
@@ -51,6 +52,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * The persistence implementation for the changeset collection service.
@@ -3066,6 +3068,11 @@ public class ChangesetCollectionPersistenceImpl extends BasePersistenceImpl<Chan
 	}
 
 	@Override
+	public Set<String> getBadColumnNames() {
+		return _badColumnNames;
+	}
+
+	@Override
 	protected EntityCache getEntityCache() {
 		return entityCache;
 	}
@@ -3234,4 +3241,7 @@ public class ChangesetCollectionPersistenceImpl extends BasePersistenceImpl<Chan
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No ChangesetCollection exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No ChangesetCollection exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(ChangesetCollectionPersistenceImpl.class);
+	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
+				"description"
+			});
 }

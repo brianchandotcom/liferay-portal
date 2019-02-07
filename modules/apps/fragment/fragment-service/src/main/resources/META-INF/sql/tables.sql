@@ -9,7 +9,7 @@ create table FragmentCollection (
 	modifiedDate DATE null,
 	fragmentCollectionKey VARCHAR(75) null,
 	name VARCHAR(75) null,
-	description STRING null,
+	description_ STRING null,
 	lastPublishDate DATE null
 );
 

@@ -20,11 +20,6 @@ import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.tools.service.builder.test.exception.NoSuchUADPartialEntryException;
 import com.liferay.portal.tools.service.builder.test.model.UADPartialEntry;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
-
 /**
  * The persistence interface for the uad partial entry service.
  *
@@ -44,9 +39,6 @@ public interface UADPartialEntryPersistence extends BasePersistence<UADPartialEn
 	 *
 	 * Never modify or reference this interface directly. Always use {@link UADPartialEntryUtil} to access the uad partial entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, UADPartialEntry> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	* Caches the uad partial entry in the entity cache if it is enabled.

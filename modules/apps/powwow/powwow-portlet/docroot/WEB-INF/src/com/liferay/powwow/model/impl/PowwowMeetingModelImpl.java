@@ -85,7 +85,7 @@ public class PowwowMeetingModelImpl extends BaseModelImpl<PowwowMeeting>
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "powwowServerId", Types.BIGINT },
 			{ "name", Types.VARCHAR },
-			{ "description", Types.VARCHAR },
+			{ "description_", Types.VARCHAR },
 			{ "providerType", Types.VARCHAR },
 			{ "providerTypeMetadata", Types.VARCHAR },
 			{ "languageId", Types.VARCHAR },
@@ -104,7 +104,7 @@ public class PowwowMeetingModelImpl extends BaseModelImpl<PowwowMeeting>
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("powwowServerId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("description_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("providerType", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("providerTypeMetadata", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("languageId", Types.VARCHAR);
@@ -112,7 +112,7 @@ public class PowwowMeetingModelImpl extends BaseModelImpl<PowwowMeeting>
 		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table PowwowMeeting (powwowMeetingId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,powwowServerId LONG,name VARCHAR(75) null,description STRING null,providerType VARCHAR(75) null,providerTypeMetadata STRING null,languageId VARCHAR(75) null,calendarBookingId LONG,status INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table PowwowMeeting (powwowMeetingId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,powwowServerId LONG,name VARCHAR(75) null,description_ STRING null,providerType VARCHAR(75) null,providerTypeMetadata STRING null,languageId VARCHAR(75) null,calendarBookingId LONG,status INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table PowwowMeeting";
 	public static final String ORDER_BY_JPQL = " ORDER BY powwowMeeting.createDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY PowwowMeeting.createDate DESC";

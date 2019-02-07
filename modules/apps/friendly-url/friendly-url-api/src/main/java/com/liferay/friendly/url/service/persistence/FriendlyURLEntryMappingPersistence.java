@@ -21,11 +21,6 @@ import com.liferay.friendly.url.model.FriendlyURLEntryMapping;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
-
 /**
  * The persistence interface for the friendly url entry mapping service.
  *
@@ -45,9 +40,6 @@ public interface FriendlyURLEntryMappingPersistence extends BasePersistence<Frie
 	 *
 	 * Never modify or reference this interface directly. Always use {@link FriendlyURLEntryMappingUtil} to access the friendly url entry mapping persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, FriendlyURLEntryMapping> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns the friendly url entry mapping where classNameId = &#63; and classPK = &#63; or throws a {@link NoSuchFriendlyURLEntryMappingException} if it could not be found.

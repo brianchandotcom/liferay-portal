@@ -19,11 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.model.Layout;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
-
 /**
  * The persistence interface for the layout service.
  *
@@ -43,9 +38,6 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link LayoutUtil} to access the layout persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, Layout> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the layouts where uuid = &#63;.
@@ -3159,9 +3151,6 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	* @return the number of layouts
 	*/
 	public int countAll();
-
-	@Override
-	public Set<String> getBadColumnNames();
 
 	public long countAncestors(Layout layout);
 

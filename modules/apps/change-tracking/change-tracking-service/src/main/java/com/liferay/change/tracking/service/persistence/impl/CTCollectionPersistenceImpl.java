@@ -1700,6 +1700,11 @@ public class CTCollectionPersistenceImpl extends BasePersistenceImpl<CTCollectio
 	}
 
 	@Override
+	public Set<String> getBadColumnNames() {
+		return _badColumnNames;
+	}
+
+	@Override
 	protected EntityCache getEntityCache() {
 		return entityCache;
 	}
@@ -1806,4 +1811,7 @@ public class CTCollectionPersistenceImpl extends BasePersistenceImpl<CTCollectio
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No CTCollection exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No CTCollection exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(CTCollectionPersistenceImpl.class);
+	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
+				"description"
+			});
 }

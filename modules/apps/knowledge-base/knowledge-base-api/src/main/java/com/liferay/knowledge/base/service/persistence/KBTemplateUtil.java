@@ -882,10 +882,6 @@ public class KBTemplateUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static KBTemplatePersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

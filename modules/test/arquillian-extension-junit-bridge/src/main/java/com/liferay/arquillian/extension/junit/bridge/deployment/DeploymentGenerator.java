@@ -40,11 +40,15 @@ public class DeploymentGenerator {
 
 		DeploymentScenario deploymentScenario = new DeploymentScenario();
 
-		for (DeploymentDescription deploymentDescription :
-				deploymentScenarioGenerator.generate(event.getTestClass())) {
+		TestClass testClass = event.getTestClass();
 
-			deploymentScenario.addDeployment(deploymentDescription);
-		}
+		List<DeploymentDescription> deploymentDescriptions =
+			deploymentScenarioGenerator.generate(testClass);
+
+		DeploymentDescription deploymentDescription =
+			deploymentDescriptions.get(0);
+
+		deploymentScenario.addDeployment(deploymentDescription);
 
 		_createTestableDeployments(deploymentScenario, event.getTestClass());
 

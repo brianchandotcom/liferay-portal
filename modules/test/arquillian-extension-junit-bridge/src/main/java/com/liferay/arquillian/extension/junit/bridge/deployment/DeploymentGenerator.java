@@ -14,27 +14,16 @@
 
 package com.liferay.arquillian.extension.junit.bridge.deployment;
 
-import java.util.Collections;
 import java.util.List;
 
-import org.jboss.arquillian.container.spi.Container;
-import org.jboss.arquillian.container.spi.client.container.DeployableContainer;
 import org.jboss.arquillian.container.spi.client.deployment.Deployment;
 import org.jboss.arquillian.container.spi.client.deployment.DeploymentDescription;
 import org.jboss.arquillian.container.spi.client.deployment.DeploymentScenario;
 import org.jboss.arquillian.container.test.impl.client.deployment.event.GenerateDeployment;
-import org.jboss.arquillian.container.test.impl.domain.ProtocolDefinition;
-import org.jboss.arquillian.container.test.impl.domain.ProtocolRegistry;
-import org.jboss.arquillian.container.test.spi.TestDeployment;
-import org.jboss.arquillian.container.test.spi.client.deployment.DeploymentPackager;
 import org.jboss.arquillian.container.test.spi.client.deployment.DeploymentScenarioGenerator;
-import org.jboss.arquillian.container.test.spi.client.deployment.ProtocolArchiveProcessor;
-import org.jboss.arquillian.container.test.spi.client.protocol.Protocol;
-import org.jboss.arquillian.core.api.Instance;
 import org.jboss.arquillian.core.api.InstanceProducer;
 import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.arquillian.core.api.annotation.Observes;
-import org.jboss.arquillian.core.spi.ServiceLoader;
 import org.jboss.arquillian.test.spi.TestClass;
 import org.jboss.arquillian.test.spi.annotation.ClassScoped;
 import org.jboss.shrinkwrap.api.Archive;
@@ -63,8 +52,7 @@ public class DeploymentGenerator {
 	}
 
 	private void _buildTestableDeployments(
-		DeploymentScenario deploymentScenario, TestClass testClass,
-		ProtocolRegistry protocolRegistry) {
+		DeploymentScenario deploymentScenario, TestClass testClass) {
 
 		List<Deployment> deployments = deploymentScenario.deployments();
 
@@ -73,44 +61,21 @@ public class DeploymentGenerator {
 		DeploymentDescription deploymentDescription =
 			deployment.getDescription();
 
-		ProtocolDefinition protocolDefinition = protocolRegistry.getProtocol(
-			deploymentDescription.getProtocol());
-
-		Protocol<?> protocol = protocolDefinition.getProtocol();
-
-		DeploymentPackager deploymentPackager = protocol.getPackager();
-
 		Archive<?> archive = deploymentDescription.getArchive();
 
 		((ClassContainer<?>)archive).addClass(testClass.getJavaClass());
 
-		ServiceLoader serviceLoader = _serviceLoaderInstance.get();
-
-		deploymentDescription.setTestableArchive(
-			deploymentPackager.generateDeployment(
-				new TestDeployment(
-					deployment.getDescription(), archive,
-					Collections.<Archive<?>>emptyList()),
-				serviceLoader.all(ProtocolArchiveProcessor.class)));
+		deploymentDescription.setTestableArchive(archive);
 	}
 
 	private void _createTestableDeployments(
 		DeploymentScenario deploymentScenario, TestClass testClass) {
 
-		ProtocolRegistry protocolRegistry = _protocolRegistryInstance.get();
-
-		_buildTestableDeployments(
-			deploymentScenario, testClass, protocolRegistry);
+		_buildTestableDeployments(deploymentScenario, testClass);
 	}
 
 	@ClassScoped
 	@Inject
 	private InstanceProducer<DeploymentScenario> _deploymentInstanceProducer;
-
-	@Inject
-	private Instance<ProtocolRegistry> _protocolRegistryInstance;
-
-	@Inject
-	private Instance<ServiceLoader> _serviceLoaderInstance;
 
 }

@@ -41,14 +41,13 @@ public class YAMLUtil {
 	public static ConfigYAML loadConfigYAML(String yamlString) {
 		List<TypeDescription> typeDescriptions = new ArrayList<>();
 
-		// Security
+		TypeDescription securityTypeDescription = new TypeDescription(
+			Security.class);
 
-		TypeDescription typeDescription = new TypeDescription(Security.class);
-
-		typeDescription.substituteProperty(
+		securityTypeDescription.substituteProperty(
 			"oAuth2", String.class, "getOAuth2", "setOAuth2");
 
-		typeDescriptions.add(typeDescription);
+		typeDescriptions.add(securityTypeDescription);
 
 		TypeDescription[] typeDescriptionsArray = typeDescriptions.toArray(
 			new TypeDescription[typeDescriptions.size()]);
@@ -59,58 +58,52 @@ public class YAMLUtil {
 	public static OpenAPIYAML loadOpenAPIYAML(String yamlString) {
 		List<TypeDescription> typeDescriptions = new ArrayList<>();
 
-		// Items
+		TypeDescription itemTypeDescription = new TypeDescription(Items.class);
 
-		TypeDescription typeDescription = new TypeDescription(Items.class);
-
-		typeDescription.substituteProperty(
+		itemTypeDescription.substituteProperty(
 			"$ref", String.class, "getReference", "setReference");
 
-		typeDescriptions.add(typeDescription);
+		typeDescriptions.add(itemTypeDescription);
 
-		// Open API YAML
+		TypeDescription openAPIYAMLTypeDescription = new TypeDescription(
+			OpenAPIYAML.class);
 
-		typeDescription = new TypeDescription(OpenAPIYAML.class);
-
-		typeDescription.substituteProperty(
+		openAPIYAMLTypeDescription.substituteProperty(
 			"paths", Map.class, "getPathItems", "setPathItems");
 
-		typeDescription.addPropertyParameters(
+		openAPIYAMLTypeDescription.addPropertyParameters(
 			"paths", String.class, PathItem.class);
 
-		typeDescriptions.add(typeDescription);
+		typeDescriptions.add(openAPIYAMLTypeDescription);
 
-		// Parameter
+		TypeDescription parameterTypeDescription = new TypeDescription(
+			Parameter.class);
 
-		typeDescription = new TypeDescription(Parameter.class);
-
-		typeDescription.substituteProperty(
+		parameterTypeDescription.substituteProperty(
 			"$ref", String.class, "getReference", "setReference");
 
-		typeDescriptions.add(typeDescription);
+		typeDescriptions.add(parameterTypeDescription);
 
-		// Properties
+		TypeDescription propertyTypeDescription = new TypeDescription(
+			Properties.class);
 
-		typeDescription = new TypeDescription(Properties.class);
-
-		typeDescription.substituteProperty(
+		propertyTypeDescription.substituteProperty(
 			"allOf", List.class, "getAllOfSchemas", "setAllOfSchemas");
 
-		typeDescription.addPropertyParameters("allOf", Schema.class);
+		propertyTypeDescription.addPropertyParameters("allOf", Schema.class);
 
-		typeDescription.substituteProperty(
+		propertyTypeDescription.substituteProperty(
 			"$ref", String.class, "getReference", "setReference");
 
-		typeDescriptions.add(typeDescription);
+		typeDescriptions.add(propertyTypeDescription);
 
-		// Schema
+		TypeDescription schemaTypeDescription = new TypeDescription(
+			Schema.class);
 
-		typeDescription = new TypeDescription(Schema.class);
-
-		typeDescription.substituteProperty(
+		schemaTypeDescription.substituteProperty(
 			"$ref", String.class, "getReference", "setReference");
 
-		typeDescriptions.add(typeDescription);
+		typeDescriptions.add(schemaTypeDescription);
 
 		TypeDescription[] typeDescriptionsArray = typeDescriptions.toArray(
 			new TypeDescription[typeDescriptions.size()]);

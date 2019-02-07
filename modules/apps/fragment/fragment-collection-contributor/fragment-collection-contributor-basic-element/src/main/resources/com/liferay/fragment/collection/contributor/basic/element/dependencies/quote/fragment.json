@@ -4,6 +4,5 @@
 	"htmlPath": "index.html",
 	"jsPath": "index.js",
 	"name": "Quote",
-	"thumbnail": "quote.png",
 	"type": "element"
 }

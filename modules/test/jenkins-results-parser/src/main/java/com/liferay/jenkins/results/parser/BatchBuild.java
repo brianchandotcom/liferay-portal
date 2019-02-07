@@ -390,16 +390,27 @@ public class BatchBuild extends BaseBuild {
 
 		String jobVariant = getJobVariant();
 
-		Matcher matcher = _jobVariantPattern.matcher(jobVariant);
+		if ((jobVariant != null) && !jobVariant.isEmpty()) {
+			Matcher matcher = _jobVariantPattern.matcher(jobVariant);
 
-		if (!matcher.matches()) {
-			throw new RuntimeException(
-				"Unable to find batch name of batch build from job variant '" +
-					jobVariant + "'. Job variant must match pattern '" +
-						_jobVariantPattern + "'.");
+			if (!matcher.matches()) {
+				StringBuilder sb = new StringBuilder();
+
+				sb.append("Unable to find batch name of batch build from job ");
+				sb.append("variant '");
+				sb.append(jobVariant);
+				sb.append("'. Job variant must match pattern '");
+				sb.append(_jobVariantPattern);
+				sb.append("'.");
+
+				throw new RuntimeException(sb.toString());
+			}
+
+			batchName = matcher.group("batchName");
 		}
-
-		batchName = matcher.group("batchName");
+		else {
+			batchName = null;
+		}
 	}
 
 	protected AxisBuild getAxisBuild(String axisVariable) {

@@ -65,6 +65,13 @@ public class FileVersionPreviewLocalServiceImpl
 	}
 
 	@Override
+	public List<FileVersionPreview> getFileEntryFileVersionPreviews(
+		long fileEntryId) {
+
+		return fileVersionPreviewPersistence.findByFileEntryId(fileEntryId);
+	}
+
+	@Override
 	public FileVersionPreview getFileVersionPreview(
 			long fileEntryId, long fileVersionId)
 		throws PortalException {
@@ -80,13 +87,6 @@ public class FileVersionPreviewLocalServiceImpl
 
 		return fileVersionPreviewPersistence.findByF_F_P(
 			fileEntryId, fileVersionId, previewStatus);
-	}
-
-	@Override
-	public List<FileVersionPreview> getFileEntryFileVersionPreviews(
-		long fileEntryId) {
-
-		return fileVersionPreviewPersistence.findByFileEntryId(fileEntryId);
 	}
 
 	@Override
@@ -117,6 +117,5 @@ public class FileVersionPreviewLocalServiceImpl
 
 		fileVersionPreviewPersistence.update(fileVersionPreview);
 	}
-
 
 }

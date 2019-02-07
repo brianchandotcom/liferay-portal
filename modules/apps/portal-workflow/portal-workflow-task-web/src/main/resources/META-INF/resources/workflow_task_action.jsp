@@ -148,61 +148,48 @@ redirectURL.setParameter("mvcPath", "/view.jsp");
 	</c:if>
 
 	Liferay.delegateClick('<portlet:namespace /><%= randomId %>taskDueDateLink', onTaskClickFn);
+</aui:script>
 
-	Liferay.provide(
-		window,
-		'<portlet:namespace />taskAssignToMe',
-		function(uri) {
-			Liferay.Util.openWindow(
-				{
-					dialog: {
-						destroyOnHide: true,
-						height: 380,
-						resizable: false,
-						width: 896
-					},
-					dialogIframe: {
-						bodyCssClass: 'dialog-with-footer task-dialog'
-					},
-					id: '<portlet:namespace />assignToDialog',
-					title: '<liferay-ui:message key="assign-to-me" />',
-					uri: uri
-				}
-			);
-		},
-		['liferay-util']
-	);
+<aui:script>
+	function <portlet:namespace />taskAssign(uri) {
+		Liferay.Util.openWindow(
+			{
+				dialog: {
+					destroyOnHide: true,
+					height: 470,
+					resizable: false,
+					width: 896
+				},
+				dialogIframe: {
+					bodyCssClass: 'dialog-with-footer task-dialog'
+				},
+				id: '<portlet:namespace />assignToDialog',
+				title: '<liferay-ui:message key="assign-to-..." />',
+				uri: uri
+			}
+		);
+	}
 
-	Liferay.provide(
-		window,
-		'<portlet:namespace />taskAssign',
-		function(uri) {
-			Liferay.Util.openWindow(
-				{
-					dialog: {
-						destroyOnHide: true,
-						height: 470,
-						resizable: false,
-						width: 896
-					},
-					dialogIframe: {
-						bodyCssClass: 'dialog-with-footer task-dialog'
-					},
-					id: '<portlet:namespace />assignToDialog',
-					title: '<liferay-ui:message key="assign-to-..." />',
-					uri: uri
-				}
-			);
-		},
-		['liferay-util']
-	);
+	function <portlet:namespace />taskAssignToMe(uri) {
+		Liferay.Util.openWindow(
+			{
+				dialog: {
+					destroyOnHide: true,
+					height: 380,
+					resizable: false,
+					width: 896
+				},
+				dialogIframe: {
+					bodyCssClass: 'dialog-with-footer task-dialog'
+				},
+				id: '<portlet:namespace />assignToDialog',
+				title: '<liferay-ui:message key="assign-to-me" />',
+				uri: uri
+			}
+		);
+	}
 
-	Liferay.provide(
-		window,
-		'<portlet:namespace />refreshPortlet',
-		function(uri) {
-			location.href = uri;
-		},
-		['aui-dialog', 'aui-dialog-iframe']
-	);
+	function <portlet:namespace />refreshPortlet(uri) {
+		location.href = uri;
+	}
 </aui:script>

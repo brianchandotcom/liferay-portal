@@ -8,6 +8,7 @@
 	<theme id="fjord" name="Fjord">
 		<template-extension>ftl</template-extension>
 		<settings>
+			<setting configurable="false" key="color-palette" value="blue,cyan,gray,gray-dark,green,indigo,orange,pink,purple,red,teal,white,yellow" />
 			<setting configurable="true" key="facebook-icon" type="checkbox" value="true" />
 			<setting configurable="true" key="facebook-icon-link-url" value="http://www.facebook.com" />
 			<setting configurable="true" key="show-footer" type="checkbox" value="true" />

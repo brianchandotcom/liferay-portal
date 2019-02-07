@@ -2809,13 +2809,15 @@ public class PortalImpl implements Portal {
 
 		Layout browsableLayout = getBrowsableLayout(layout);
 
-		variables.put(
-			"liferay:groupId", String.valueOf(browsableLayout.getGroupId()));
+		String groupIdString = String.valueOf(browsableLayout.getGroupId());
+
+		variables.put("liferay:groupId", groupIdString);
 
 		variables.put(
 			"liferay:layoutId", String.valueOf(browsableLayout.getLayoutId()));
 
 		variables.put("liferay:mainPath", mainPath);
+
 		variables.put(
 			"liferay:plid", String.valueOf(browsableLayout.getPlid()));
 
@@ -2823,19 +2825,15 @@ public class PortalImpl implements Portal {
 			"liferay:privateLayout",
 			String.valueOf(browsableLayout.isPrivateLayout()));
 
+		String pvlsgid = "0";
+
 		if (browsableLayout instanceof VirtualLayout) {
-			variables.put(
-				"liferay:pvlsgid",
-				String.valueOf(browsableLayout.getGroupId()));
-		}
-		else {
-			variables.put("liferay:pvlsgid", "0");
+			pvlsgid = groupIdString;
 		}
 
-		UnicodeProperties typeSettingsProperties =
-			layout.getTypeSettingsProperties();
+		variables.put("liferay:pvlsgid", pvlsgid);
 
-		variables.putAll(typeSettingsProperties);
+		variables.putAll(layout.getTypeSettingsProperties());
 
 		LayoutTypeController layoutTypeController =
 			LayoutTypeControllerTracker.getLayoutTypeController(

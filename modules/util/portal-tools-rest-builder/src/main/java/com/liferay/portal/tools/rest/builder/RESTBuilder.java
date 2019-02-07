@@ -33,6 +33,8 @@ import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Schema;
 import com.liferay.portal.tools.rest.builder.internal.yaml.util.YAMLUtil;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -72,7 +74,9 @@ public class RESTBuilder {
 
 		File configFile = new File(_configDir, "rest-config.yaml");
 
-		_configYAML = YAMLUtil.loadConfigYAML(configFile);
+		try (InputStream is = new FileInputStream(configFile)) {
+			_configYAML = YAMLUtil.loadConfigYAML(StringUtil.read(is));
+		}
 
 		Map<String, Object> context = new HashMap<>();
 
@@ -86,7 +90,11 @@ public class RESTBuilder {
 		File[] files = FileUtil.getFiles(_configDir, "rest-openapi", ".yaml");
 
 		for (File file : files) {
-			OpenAPIYAML openAPIYAML = YAMLUtil.loadOpenAPIYAML(file);
+			OpenAPIYAML openAPIYAML = null;
+
+			try (InputStream is = new FileInputStream(file)) {
+				openAPIYAML = YAMLUtil.loadOpenAPIYAML(StringUtil.read(is));
+			}
 
 			Info info = openAPIYAML.getInfo();
 

@@ -451,7 +451,7 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 		</c:if>
 	</h3>
 
-	<c:if test="<%= organizations.isEmpty() && organizationRoles.isEmpty() %>">
+	<c:if test="<%= groups.isEmpty() && siteRoles.isEmpty() %>">
 		<div class="text-muted"><liferay-ui:message key="this-user-does-not-belong-to-a-site-to-which-a-site-role-can-be-assigned" /></div>
 	</c:if>
 

@@ -30,6 +30,16 @@ import org.junit.Test;
 public class FacetBucketUtilTest {
 
 	@Test
+	public void testFacetImpl() {
+		Field field = new Field(_FIELD_NAME, new String[] {"foo", "bar"});
+
+		Facet facet = new FacetImpl(_FIELD_NAME, null);
+
+		Assert.assertTrue(FacetBucketUtil.isFieldInBucket(field, "foo", facet));
+		Assert.assertTrue(FacetBucketUtil.isFieldInBucket(field, "bar", facet));
+	}
+
+	@Test
 	public void testMultiValueFacet() {
 		Field field = new Field(_FIELD_NAME, new String[] {"foo", "bar"});
 

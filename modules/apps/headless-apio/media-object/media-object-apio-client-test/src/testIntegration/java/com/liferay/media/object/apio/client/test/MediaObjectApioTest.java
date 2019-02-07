@@ -41,6 +41,7 @@ import org.jboss.shrinkwrap.api.Archive;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -149,6 +150,7 @@ public class MediaObjectApioTest {
 		);
 	}
 
+	@Ignore
 	@Test
 	public void testCreateDocumentInFolder() {
 		String folderName = "My folder testCreateDocumentInFolder";
@@ -208,6 +210,7 @@ public class MediaObjectApioTest {
 		);
 	}
 
+	@Ignore
 	@Test
 	public void testCreateImageInDocumentRepository() {
 		_documentHref = ApioClientBuilder.given(
@@ -245,6 +248,7 @@ public class MediaObjectApioTest {
 		);
 	}
 
+	@Ignore
 	@Test
 	public void testDeleteDocument() {
 		String documentHref = MediaObjectTestUtil.createDocumentInRootFolder(

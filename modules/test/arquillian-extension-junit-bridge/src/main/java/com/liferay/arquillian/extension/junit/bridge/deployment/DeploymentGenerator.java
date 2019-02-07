@@ -14,8 +14,8 @@
 
 package com.liferay.arquillian.extension.junit.bridge.deployment;
 
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import org.jboss.arquillian.container.spi.Container;
@@ -28,8 +28,6 @@ import org.jboss.arquillian.container.test.impl.domain.ProtocolDefinition;
 import org.jboss.arquillian.container.test.impl.domain.ProtocolRegistry;
 import org.jboss.arquillian.container.test.spi.TestDeployment;
 import org.jboss.arquillian.container.test.spi.client.deployment.ApplicationArchiveProcessor;
-import org.jboss.arquillian.container.test.spi.client.deployment.AuxiliaryArchiveAppender;
-import org.jboss.arquillian.container.test.spi.client.deployment.AuxiliaryArchiveProcessor;
 import org.jboss.arquillian.container.test.spi.client.deployment.DeploymentPackager;
 import org.jboss.arquillian.container.test.spi.client.deployment.DeploymentScenarioGenerator;
 import org.jboss.arquillian.container.test.spi.client.deployment.ProtocolArchiveProcessor;
@@ -81,21 +79,6 @@ public class DeploymentGenerator {
 		}
 	}
 
-	private void _applyAuxiliaryProcessors(List<Archive<?>> archives) {
-		ServiceLoader serviceLoader = _serviceLoaderInstance.get();
-
-		Collection<AuxiliaryArchiveProcessor> archiveProcessors =
-			serviceLoader.all(AuxiliaryArchiveProcessor.class);
-
-		for (AuxiliaryArchiveProcessor auxiliaryArchiveProcessor :
-				archiveProcessors) {
-
-			for (Archive<?> archive : archives) {
-				auxiliaryArchiveProcessor.process(archive);
-			}
-		}
-	}
-
 	private void _buildTestableDeployments(
 		DeploymentScenario deploymentScenario, TestClass testClass,
 		ProtocolRegistry protocolRegistry) {
@@ -106,8 +89,6 @@ public class DeploymentGenerator {
 
 		DeploymentDescription deploymentDescription =
 			deployment.getDescription();
-
-		List<Archive<?>> auxiliaryArchives = _loadAuxiliaryArchives();
 
 		ProtocolDefinition protocolDefinition = protocolRegistry.getProtocol(
 			deploymentDescription.getProtocol());
@@ -131,8 +112,6 @@ public class DeploymentGenerator {
 		_applyApplicationProcessors(
 			deploymentDescription.getArchive(), testClass);
 
-		_applyAuxiliaryProcessors(auxiliaryArchives);
-
 		try {
 			if (ClassContainer.class.isInstance(archive)) {
 				ClassContainer<?> classContainer = ClassContainer.class.cast(
@@ -149,7 +128,8 @@ public class DeploymentGenerator {
 		deploymentDescription.setTestableArchive(
 			deploymentPackager.generateDeployment(
 				new TestDeployment(
-					deployment.getDescription(), archive, auxiliaryArchives),
+					deployment.getDescription(), archive,
+					Collections.<Archive<?>>emptyList()),
 				serviceLoader.all(ProtocolArchiveProcessor.class)));
 	}
 
@@ -160,28 +140,6 @@ public class DeploymentGenerator {
 
 		_buildTestableDeployments(
 			deploymentScenario, testClass, protocolRegistry);
-	}
-
-	private List<Archive<?>> _loadAuxiliaryArchives() {
-		List<Archive<?>> archives = new ArrayList<>();
-
-		ServiceLoader serviceLoader = _serviceLoaderInstance.get();
-
-		Collection<AuxiliaryArchiveAppender> auxiliaryArchiveAppenders =
-			serviceLoader.all(AuxiliaryArchiveAppender.class);
-
-		for (AuxiliaryArchiveAppender auxiliaryArchiveAppender :
-				auxiliaryArchiveAppenders) {
-
-			Archive<?> auxiliaryArchive =
-				auxiliaryArchiveAppender.createAuxiliaryArchive();
-
-			if (auxiliaryArchive != null) {
-				archives.add(auxiliaryArchive);
-			}
-		}
-
-		return archives;
 	}
 
 	@Inject

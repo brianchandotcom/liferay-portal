@@ -23,6 +23,8 @@ import com.liferay.asset.kernel.model.ClassTypeReader;
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.BaseBaseClayCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.VerticalCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemList;
 import com.liferay.layout.admin.web.internal.constants.LayoutAdminWebKeys;
 import com.liferay.layout.admin.web.internal.servlet.taglib.util.DisplayPageActionDropdownItemsProvider;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
@@ -138,6 +140,19 @@ public class DisplayPageVerticalCard
 	@Override
 	public String getImageSrc() {
 		return _layoutPageTemplateEntry.getImagePreviewURL(_themeDisplay);
+	}
+
+	@Override
+	public List<LabelItem> getLabels() {
+		return new LabelItemList() {
+			{
+				add(
+					labelItem -> {
+						labelItem.setStatus(
+							_layoutPageTemplateEntry.getStatus());
+					});
+			}
+		};
 	}
 
 	@Override

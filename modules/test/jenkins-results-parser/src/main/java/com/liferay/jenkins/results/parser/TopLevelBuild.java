@@ -238,6 +238,7 @@ public class TopLevelBuild extends BaseBuild {
 	public Map<String, String> getMetricLabels() {
 		Map<String, String> metricLabels = new TreeMap<>();
 
+		metricLabels.put("job_type", "top-level");
 		metricLabels.put("top_level_job_name", getJobName());
 
 		return metricLabels;

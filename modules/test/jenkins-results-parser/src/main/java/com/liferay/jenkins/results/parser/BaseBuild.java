@@ -807,6 +807,10 @@ public abstract class BaseBuild implements Build {
 	}
 
 	public Map<String, String> getMetricLabels() {
+		if (_parentBuild != null) {
+			return _parentBuild.getMetricLabels();
+		}
+
 		return new TreeMap<>();
 	}
 

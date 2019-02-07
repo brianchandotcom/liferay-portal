@@ -214,11 +214,9 @@ public class BatchBuild extends BaseBuild {
 
 	@Override
 	public Map<String, String> getMetricLabels() {
-		Build parentBuild = getParentBuild();
+		Map<String, String> metricLabels = super.getMetricLabels();
 
-		Map<String, String> metricLabels = parentBuild.getMetricLabels();
-
-		metricLabels.put("batch_name", batchName);
+		metricLabels.put("job_type", batchName);
 
 		return metricLabels;
 	}

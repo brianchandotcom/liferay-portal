@@ -238,9 +238,8 @@ public class DLURLHelperImpl implements DLURLHelper {
 
 	@Override
 	public String getThumbnailSrc(
-			FileEntry fileEntry, FileVersion fileVersion,
-			ThemeDisplay themeDisplay)
-		throws Exception {
+		FileEntry fileEntry, FileVersion fileVersion,
+		ThemeDisplay themeDisplay) {
 
 		if (_fileVersionPreviewLocalService.hasFileVersionPreview(
 				fileEntry.getFileEntryId(), fileVersion.getFileVersionId(),

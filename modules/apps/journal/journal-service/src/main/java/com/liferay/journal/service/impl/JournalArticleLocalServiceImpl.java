@@ -7151,9 +7151,7 @@ public class JournalArticleLocalServiceImpl
 	protected void checkStructure(JournalArticle article)
 		throws PortalException {
 
-		DDMStructure ddmStructure = article.getDDMStructure();
-
-		checkStructure(article, ddmStructure);
+		checkStructure(article, article.getDDMStructure());
 	}
 
 	protected void checkStructure(

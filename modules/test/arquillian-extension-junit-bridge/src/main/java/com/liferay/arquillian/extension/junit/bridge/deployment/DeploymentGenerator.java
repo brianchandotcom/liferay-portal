@@ -107,12 +107,6 @@ public class DeploymentGenerator {
 		DeploymentDescription deploymentDescription =
 			deployment.getDescription();
 
-		if (!deploymentDescription.testable() ||
-			!deploymentDescription.isArchiveDeployment()) {
-
-			return;
-		}
-
 		List<Archive<?>> auxiliaryArchives = _loadAuxiliaryArchives();
 
 		ProtocolDefinition protocolDefinition = protocolRegistry.getProtocol(

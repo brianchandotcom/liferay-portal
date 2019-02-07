@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- * <p>
+ *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
  * Software Foundation; either version 2.1 of the License, or (at your option)
  * any later version.
- * <p>
+ *
  * This library is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
@@ -14,29 +14,31 @@
 
 package com.liferay.frontend.js.portlet.extender;
 
-import com.liferay.dynamic.data.mapping.model.DDMForm;
-import com.liferay.dynamic.data.mapping.util.DDMUtil;
 import com.liferay.frontend.js.portlet.extender.configuration.PortletExtenderConfigurationAction;
 import com.liferay.frontend.js.portlet.extender.internal.portlet.JSPortlet;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.util.StringUtil;
-import java.io.IOException;
+import com.liferay.portal.kernel.util.Validator;
+
 import java.io.InputStream;
+
 import java.net.URL;
+
 import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
 import javax.portlet.Portlet;
+
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleEvent;
@@ -58,214 +60,229 @@ import org.osgi.util.tracker.BundleTrackerCustomizer;
  * @author Iván Zaera Avellón
  * @author Gustavo Mantuan
  */
-
 @Component(immediate = true, service = JSPortletExtender.class)
 public class JSPortletExtender {
 
-  public static boolean _optIn(Bundle bundle) {
-    BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
+	@Activate
+	public void activate(BundleContext context) {
+		_bundleTracker = new BundleTracker<>(
+			context, Bundle.ACTIVE, _bundleTrackerCustomizer);
 
-    List<BundleWire> bundleWires = bundleWiring.getRequiredWires(
-        ExtenderNamespace.EXTENDER_NAMESPACE);
+		_bundleTracker.open();
+	}
 
-    for (BundleWire bundleWire : bundleWires) {
-      BundleCapability bundleCapability = bundleWire.getCapability();
+	@Deactivate
+	public void deactivate() {
+		_bundleTracker.close();
 
-      Map<String, Object> attributes = bundleCapability.getAttributes();
+		_bundleTracker = null;
+	}
 
-      Object value = attributes.get(ExtenderNamespace.EXTENDER_NAMESPACE);
+	private static boolean _optIn(Bundle bundle) {
+		BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
 
-      if ((value != null) &&
-          value.equals("liferay.frontend.js.portlet")) {
-        return true;
-      }
-    }
+		List<BundleWire> bundleWires = bundleWiring.getRequiredWires(
+			ExtenderNamespace.EXTENDER_NAMESPACE);
 
-    return false;
-  }
+		for (BundleWire bundleWire : bundleWires) {
+			BundleCapability bundleCapability = bundleWire.getCapability();
 
-  @Activate
-  public void activate(BundleContext context) {
-    _bundleTracker = new BundleTracker<>(
-        context, Bundle.ACTIVE, _bundleTrackerCustomizer);
-    _bundleTracker.open();
-  }
+			Map<String, Object> attributes = bundleCapability.getAttributes();
 
-  @Deactivate
-  public void deactivate() {
-    _bundleTracker.close();
-    _bundleTracker = null;
-  }
+			Object value = attributes.get(ExtenderNamespace.EXTENDER_NAMESPACE);
 
-  private void _addServiceProperties(
-      Dictionary<String, Object> properties, JSONObject jsonObject) {
+			if ((value != null) &&
+				value.equals("liferay.frontend.js.portlet")) {
 
-    if (jsonObject == null) {
-      return;
-    }
+				return true;
+			}
+		}
 
-    Iterator<String> keys = jsonObject.keys();
+		return false;
+	}
 
-    while (keys.hasNext()) {
-      String key = keys.next();
+	private void _addServiceProperties(
+		Dictionary<String, Object> properties, JSONObject portletJSONObject) {
 
-      Object value = jsonObject.get(key);
+		if (portletJSONObject == null) {
+			return;
+		}
 
-      if (value instanceof JSONObject) {
-        String stringValue = value.toString();
+		Iterator<String> keys = portletJSONObject.keys();
 
-        properties.put(key, stringValue);
-      } else if (value instanceof JSONArray) {
-        JSONArray jsonArray = (JSONArray) value;
+		while (keys.hasNext()) {
+			String key = keys.next();
 
-        List<String> values = new ArrayList<>();
+			Object value = portletJSONObject.get(key);
 
-        for (int i = 0; i < jsonArray.length(); i++) {
-          Object object = jsonArray.get(i);
+			if (value instanceof JSONObject) {
+				String stringValue = value.toString();
 
-          values.add(object.toString());
-        }
+				properties.put(key, stringValue);
+			}
+			else if (value instanceof JSONArray) {
+				JSONArray jsonArray = (JSONArray)value;
 
-        properties.put(key, values.toArray(new String[0]));
-      } else {
-        properties.put(key, value);
-      }
-    }
-  }
+				List<String> values = new ArrayList<>();
 
-  private void registerConfigurationActionService(
-      BundleContext bundleContext, String name, URL configurationJson) {
-    Dictionary<String, Object> propertiesConfiguration =
-        new Hashtable<>();
+				for (int i = 0; i < jsonArray.length(); i++) {
+					Object object = jsonArray.get(i);
 
-    try (InputStream inputStream = configurationJson.openStream()) {
-      String configurationString = StringUtil.read(inputStream);
-      DDMForm ddmForm = DDMUtil.getDDMForm(configurationString);
+					values.add(object.toString());
+				}
 
-      JSONArray ddmFormObjectKeys =
-          JSONFactoryUtil.createJSONArray(
-              JSONFactoryUtil.createJSONObject(configurationString).getJSONArray("fields")
-                  .toString());
+				properties.put(key, values.toArray(new String[0]));
+			}
+			else {
+				properties.put(key, value);
+			}
+		}
+	}
 
-      propertiesConfiguration.put("javax.portlet.name", name);
+	private String _getPortletName(JSONObject packageJSONObject) {
+		String portletName = packageJSONObject.getString("name");
 
-      bundleContext.registerService(
-          new String[]{
-              ConfigurationAction.class.getName()
-          },
-          new PortletExtenderConfigurationAction(name, ddmForm, ddmFormObjectKeys),
-          propertiesConfiguration
-      );
+		JSONObject portletJSONObject = packageJSONObject.getJSONObject(
+			"portlet");
 
-    } catch (IOException e) {
-      e.printStackTrace();
-      _log.error(
-          "Unable to process package.json of " +
-              bundleContext.getBundle().getSymbolicName(), e
-      );
-    } catch (PortalException e) {
-      e.printStackTrace();
-      _log.error(
-          "Unable to register service for " +
-              name,
-          e);
-    }
-  }
+		String javaxPortletName = portletJSONObject.getString(
+			"javax.portlet.name");
 
-  private ServiceRegistration<?> registerJSPSPortletService(
-      BundleContext bundleContext,
-      JSONObject jsonObject, String name, String version) {
-    Dictionary<String, Object> properties =
-        new Hashtable<>();
+		if (Validator.isNotNull(javaxPortletName)) {
+			portletName = javaxPortletName;
+		}
 
-    properties.put("javax.portlet.name", name);
-    properties.put("service.pid", name);
+		return portletName;
+	}
 
-    _addServiceProperties(
-        properties, jsonObject.getJSONObject("portlet"));
+	/**
+	 * Parse the contents of a URL as a JSON object
+	 * @param url
+	 * @return the {@link JSONObject} or null if it cannot be parsed
+	 */
+	private JSONObject _parse(URL url) {
+		if (url == null) {
+			return null;
+		}
 
-    return bundleContext.registerService(
-        new String[]{
-            ManagedService.class.getName(),
-            Portlet.class.getName()
-        },
-        new JSPortlet(name, version), properties);
-  }
+		try (InputStream inputStream = url.openStream()) {
+			return _jsonFactory.createJSONObject(StringUtil.read(inputStream));
+		}
+		catch (Exception e) {
+			_log.error("Unable to parse " + url, e);
 
-  private static final Log _log = LogFactoryUtil.getLog(
-      JSPortletExtender.class);
+			return null;
+		}
+	}
 
-  private BundleTracker<ServiceRegistration<?>> _bundleTracker;
+	private void _registerConfigurationActionService(
+		BundleContext bundleContext, JSONObject packageJSONObject,
+		JSONObject preferencesJSONObject) {
 
-  @Reference
-  private JSONFactory _jsonFactory;
+		String portletName = _getPortletName(packageJSONObject);
 
-  private BundleTrackerCustomizer<ServiceRegistration<?>>
-      _bundleTrackerCustomizer =
-      new BundleTrackerCustomizer<ServiceRegistration<?>>() {
+		try {
+			ConfigurationAction configurationAction =
+				new PortletExtenderConfigurationAction(preferencesJSONObject);
 
-        @Override
-        public ServiceRegistration<?> addingBundle(
-            Bundle bundle, BundleEvent bundleEvent) {
+			Dictionary<String, Object> properties = new Hashtable<>();
 
-          if (!_optIn(bundle)) {
-            return null;
-          }
+			properties.put("javax.portlet.name", portletName);
 
-          URL jsonURL = bundle.getEntry(
-              "META-INF/resources/package.json");
+			bundleContext.registerService(
+				new String[] {ConfigurationAction.class.getName()},
+				configurationAction, properties);
+		}
+		catch (PortalException pe) {
+			_log.error(
+				"Unable to register configuration action service for portlet" +
+					portletName,
+				pe);
+		}
+	}
 
-          URL configurationJSON = bundle.getEntry(
-              "META-INF/resources/configuration.json");
+	private ServiceRegistration<?> _registerJSPortletService(
+		BundleContext bundleContext, JSONObject packageJSONObject) {
 
-          if (jsonURL == null) {
-            return null;
-          }
+		Dictionary<String, Object> properties = new Hashtable<>();
 
-          try (InputStream inputStream = jsonURL.openStream()) {
-            BundleContext bundleContext = bundle.getBundleContext();
+		_addServiceProperties(
+			properties, packageJSONObject.getJSONObject("portlet"));
 
-            String jsonString = StringUtil.read(inputStream);
+		String packageName = packageJSONObject.getString("name");
 
-            JSONObject jsonObject =
-                _jsonFactory.createJSONObject(jsonString);
+		properties.put(
+			"javax.portlet.name", _getPortletName(packageJSONObject));
+		properties.put("service.pid", packageName);
 
-            String name = jsonObject.getString("name");
-            String version = jsonObject.getString("version");
+		String packageVersion = packageJSONObject.getString("version");
 
-            ServiceRegistration<?> serviceRegistration =
-                registerJSPSPortletService(bundleContext,
-                    jsonObject, name, version);
+		return bundleContext.registerService(
+			new String[] {
+				ManagedService.class.getName(), Portlet.class.getName()
+			},
+			new JSPortlet(packageName, packageVersion), properties);
+	}
 
-            if (configurationJSON != null) {
-              registerConfigurationActionService(bundleContext, name, configurationJSON);
-            }
+	private static final Log _log = LogFactoryUtil.getLog(
+		JSPortletExtender.class);
 
-            return serviceRegistration;
-          } catch (Exception e) {
-            _log.error(
-                "Unable to process package.json of " +
-                    bundle.getSymbolicName(),
-                e);
-          }
+	private BundleTracker<ServiceRegistration<?>> _bundleTracker;
 
-          return null;
-        }
+	private BundleTrackerCustomizer<ServiceRegistration<?>>
+		_bundleTrackerCustomizer =
+			new BundleTrackerCustomizer<ServiceRegistration<?>>() {
 
-        @Override
-        public void modifiedBundle(
-            Bundle bundle, BundleEvent bundleEvent,
-            ServiceRegistration<?> serviceRegistration) {
-        }
+				@Override
+				public ServiceRegistration<?> addingBundle(
+					Bundle bundle, BundleEvent bundleEvent) {
 
-        @Override
-        public void removedBundle(
-            Bundle bundle, BundleEvent bundleEvent,
-            ServiceRegistration<?> serviceRegistration) {
+					if (!_optIn(bundle)) {
+						return null;
+					}
 
-          serviceRegistration.unregister();
-        }
+					JSONObject packageJSONObject = _parse(
+						bundle.getEntry("META-INF/resources/package.json"));
 
-      };
+					if (packageJSONObject == null) {
+						return null;
+					}
+
+					BundleContext bundleContext = bundle.getBundleContext();
+
+					ServiceRegistration<?> serviceRegistration =
+						_registerJSPortletService(
+							bundleContext, packageJSONObject);
+
+					JSONObject preferencesJSONObject = _parse(
+						bundle.getEntry("features/preferences.json"));
+
+					if (preferencesJSONObject != null) {
+						_registerConfigurationActionService(
+							bundleContext, packageJSONObject,
+							preferencesJSONObject);
+					}
+
+					return serviceRegistration;
+				}
+
+				@Override
+				public void modifiedBundle(
+					Bundle bundle, BundleEvent bundleEvent,
+					ServiceRegistration<?> serviceRegistration) {
+				}
+
+				@Override
+				public void removedBundle(
+					Bundle bundle, BundleEvent bundleEvent,
+					ServiceRegistration<?> serviceRegistration) {
+
+					serviceRegistration.unregister();
+				}
+
+			};
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 }

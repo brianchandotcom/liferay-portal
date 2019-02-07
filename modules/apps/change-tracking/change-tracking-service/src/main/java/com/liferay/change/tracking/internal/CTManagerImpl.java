@@ -267,6 +267,19 @@ public class CTManagerImpl implements CTManager {
 	public Optional<CTEntry> unregisterModelChange(
 		long userId, long classNameId, long classPK) {
 
+		long companyId = _getCompanyId(userId);
+
+		if (companyId <= 0) {
+			return Optional.empty();
+		}
+
+		if (!_ctEngineManager.isChangeTrackingEnabled(companyId) ||
+			!_ctEngineManager.isChangeTrackingSupported(
+				companyId, classNameId)) {
+
+			return Optional.empty();
+		}
+
 		Optional<CTEntry> ctEntryOptional = getModelChangeCTEntryOptional(
 			userId, classNameId, classPK);
 

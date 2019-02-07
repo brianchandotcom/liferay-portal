@@ -51,12 +51,9 @@ public class SiteNavigationTestUtil {
 			ServiceContextTestUtil.getServiceContext(
 				siteNavigationMenu.getGroupId());
 
-		long parentSiteNavigationMenuItemId = 0;
-
 		return SiteNavigationMenuItemLocalServiceUtil.addSiteNavigationMenuItem(
 			TestPropsValues.getUserId(), siteNavigationMenu.getGroupId(),
-			siteNavigationMenu.getSiteNavigationMenuId(),
-			parentSiteNavigationMenuItemId,
+			siteNavigationMenu.getSiteNavigationMenuId(), 0,
 			SiteNavigationMenuItemTypeConstants.LAYOUT, position,
 			StringPool.BLANK, serviceContext);
 	}
@@ -82,10 +79,7 @@ public class SiteNavigationTestUtil {
 			SiteNavigationMenu siteNavigationMenu)
 		throws PortalException {
 
-		long parentSiteNavigationMenuItemId = 0;
-
-		return addSiteNavigationMenuItem(
-			parentSiteNavigationMenuItemId, siteNavigationMenu);
+		return addSiteNavigationMenuItem(0, siteNavigationMenu);
 	}
 
 }

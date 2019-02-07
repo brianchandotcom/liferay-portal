@@ -132,6 +132,17 @@ public class FragmentEntryRenderUtil {
 			HttpServletResponse response, Locale locale)
 		throws PortalException {
 
+		return renderFragmentEntryLink(
+			fragmentEntryLink, mode, parameterMap, request, response, locale,
+			new long[0]);
+	}
+
+	public static String renderFragmentEntryLink(
+			FragmentEntryLink fragmentEntryLink, String mode,
+			Map<String, Object> parameterMap, HttpServletRequest request,
+			HttpServletResponse response, Locale locale, long[] segmentsIds)
+		throws PortalException {
+
 		FragmentEntryProcessorRegistry fragmentEntryProcessorRegistry =
 			getService();
 
@@ -140,7 +151,7 @@ public class FragmentEntryRenderUtil {
 
 		String html =
 			fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
-				fragmentEntryLink, mode, locale);
+				fragmentEntryLink, mode, locale, segmentsIds);
 
 		if ((request != null) && Validator.isNotNull(html)) {
 			html = _processTemplate(html, parameterMap, request, response);

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.tools.rest.builder.internal.yaml.openapi;
+package com.liferay.portal.vulcan.yaml.openapi;
 
 /**
  * @author Peter Shin

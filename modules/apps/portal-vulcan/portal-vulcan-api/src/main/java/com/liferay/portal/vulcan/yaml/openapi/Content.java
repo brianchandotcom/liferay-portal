@@ -12,10 +12,21 @@
  * details.
  */
 
-package com.liferay.portal.tools.rest.builder.internal.yaml.openapi;
+package com.liferay.portal.vulcan.yaml.openapi;
 
 /**
  * @author Peter Shin
  */
-public class Delete extends Operation {
+public class Content {
+
+	public Schema getSchema() {
+		return _schema;
+	}
+
+	public void setSchema(Schema schema) {
+		_schema = schema;
+	}
+
+	private Schema _schema;
+
 }

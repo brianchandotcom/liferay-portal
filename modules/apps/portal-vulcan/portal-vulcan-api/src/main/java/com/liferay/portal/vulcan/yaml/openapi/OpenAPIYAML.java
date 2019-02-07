@@ -12,39 +12,41 @@
  * details.
  */
 
-package com.liferay.portal.tools.rest.builder.internal.yaml.config;
+package com.liferay.portal.vulcan.yaml.openapi;
+
+import java.util.Map;
 
 /**
  * @author Peter Shin
  */
-public class Security {
+public class OpenAPIYAML {
 
-	public String getBasicAuth() {
-		return _basicAuth;
+	public Components getComponents() {
+		return _components;
 	}
 
-	public String getGuestAllowed() {
-		return _guestAllowed;
+	public Info getInfo() {
+		return _info;
 	}
 
-	public String getOAuth2() {
-		return _oAuth2;
+	public Map<String, PathItem> getPathItems() {
+		return _pathItems;
 	}
 
-	public void setBasicAuth(String basicAuth) {
-		_basicAuth = basicAuth;
+	public void setComponents(Components components) {
+		_components = components;
 	}
 
-	public void setGuestAllowed(String guestAllowed) {
-		_guestAllowed = guestAllowed;
+	public void setInfo(Info info) {
+		_info = info;
 	}
 
-	public void setOAuth2(String oAuth2) {
-		_oAuth2 = oAuth2;
+	public void setPathItems(Map<String, PathItem> pathItems) {
+		_pathItems = pathItems;
 	}
 
-	private String _basicAuth;
-	private String _guestAllowed;
-	private String _oAuth2;
+	private Components _components;
+	private Info _info;
+	private Map<String, PathItem> _pathItems;
 
 }

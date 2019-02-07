@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.tools.rest.builder.internal.yaml.config;
+package com.liferay.portal.vulcan.yaml.config;
 
 /**
  * @author Peter Shin

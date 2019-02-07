@@ -1,5 +1,6 @@
 dependencies {
 	compileInclude group: "com.fasterxml.jackson.dataformat", name: "jackson-dataformat-xml", version: "2.9.8"
+	compileInclude group: "org.yaml", name: "snakeyaml", version: "1.23"
 
 	testCompile group: "org.hamcrest", name: "hamcrest-all", version: "1.3"
 }

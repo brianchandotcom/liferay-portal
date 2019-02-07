@@ -52,9 +52,7 @@ public class ContainerImpl implements Container {
 	}
 
 	@Override
-	public ContainerConfiguration createDeployableConfiguration()
-		throws Exception {
-
+	public ContainerConfiguration createDeployableConfiguration() {
 		return new DefaultContainerConfiguration();
 	}
 
@@ -114,7 +112,7 @@ public class ContainerImpl implements Container {
 	}
 
 	@Override
-	public void kill() throws Exception {
+	public void kill() {
 		_containerEvent.fire(new BeforeKill(_deployableContainer));
 
 		_containerEvent.fire(new AfterKill(_deployableContainer));
@@ -126,7 +124,7 @@ public class ContainerImpl implements Container {
 	}
 
 	@Override
-	public void setup() throws Exception {
+	public void setup() {
 		_containerEvent.fire(new BeforeSetup(_deployableContainer));
 
 		_containerInstanceProducer.set(this);

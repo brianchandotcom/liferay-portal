@@ -17,6 +17,8 @@ package com.liferay.users.admin.web.internal.display.context;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.petra.string.StringBundler;
@@ -123,6 +125,7 @@ public class ViewUsersManagementToolbarDisplayContext {
 		PortletURL clearResultsURL = getPortletURL();
 
 		clearResultsURL.setParameter("keywords", StringPool.BLANK);
+		clearResultsURL.setParameter("navigation", (String)null);
 
 		return clearResultsURL.toString();
 	}
@@ -160,6 +163,33 @@ public class ViewUsersManagementToolbarDisplayContext {
 						dropdownGroupItem.setLabel(
 							LanguageUtil.get(_request, "order-by"));
 					});
+			}
+		};
+	}
+
+	public List<LabelItem> getFilterLabelItems() {
+		return new LabelItemList() {
+			{
+				if (!_navigation.equals("active")) {
+					add(
+						labelItem -> {
+							PortletURL removeLabelURL = getPortletURL();
+
+							removeLabelURL.setParameter(
+								"navigation", (String)null);
+
+							labelItem.putData(
+								"removeLabelURL", removeLabelURL.toString());
+
+							labelItem.setCloseable(true);
+
+							String label = String.format(
+								"%s: %s", LanguageUtil.get(_request, "status"),
+								LanguageUtil.get(_request, _navigation));
+
+							labelItem.setLabel(label);
+						});
+				}
 			}
 		};
 	}

@@ -66,6 +66,7 @@ boolean showRestoreButton = viewUsersManagementToolbarDisplayContext.isShowResto
 	clearResultsURL="<%= viewUsersManagementToolbarDisplayContext.getClearResultsURL() %>"
 	creationMenu="<%= viewUsersManagementToolbarDisplayContext.getCreationMenu() %>"
 	filterDropdownItems="<%= viewUsersManagementToolbarDisplayContext.getFilterDropdownItems() %>"
+	filterLabelItems="<%= viewUsersManagementToolbarDisplayContext.getFilterLabelItems() %>"
 	itemsTotal="<%= searchContainer.getTotal() %>"
 	searchActionURL="<%= viewUsersManagementToolbarDisplayContext.getSearchActionURL() %>"
 	searchContainerId="users"

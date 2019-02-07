@@ -30,6 +30,9 @@ import com.liferay.portal.tools.rest.builder.internal.yaml.util.YAMLUtil;
 
 import java.io.File;
 
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -64,6 +67,8 @@ public class RESTBuilder {
 		_configYAML = YAMLUtil.loadConfigYAML(restConfigFileName);
 		_openAPIYAML = YAMLUtil.loadOpenAPIYAML(restOpenAPIFileName);
 
+		_copyYAMLFiles(new String[] {restConfigFileName, restOpenAPIFileName});
+
 		Map<String, Object> context = new HashMap<>();
 
 		context.put("configYAML", _configYAML);
@@ -96,6 +101,24 @@ public class RESTBuilder {
 		// FileUtil.format(new File(restConfigFileName));
 		// FileUtil.format(new File(restOpenAPIFileName));
 
+	}
+
+	private void _copyYAMLFiles(String[] yamlFileNames) throws Exception {
+		File destDir = new File("src/main/resources/META-INF/yaml");
+
+		if (!destDir.exists()) {
+			Files.createDirectories(destDir.toPath());
+		}
+
+		for (String yamlFileName : yamlFileNames) {
+			File yamlFile = new File(yamlFileName);
+
+			File destFile = new File(destDir, yamlFile.getName());
+
+			Files.copy(
+				yamlFile.toPath(), destFile.toPath(),
+				StandardCopyOption.REPLACE_EXISTING);
+		}
 	}
 
 	private void _createApplicationFile(Map<String, Object> context)

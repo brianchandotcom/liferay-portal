@@ -27,11 +27,13 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import org.jboss.arquillian.core.impl.loadable.LoadableExtensionLoader;
+import org.jboss.arquillian.core.spi.ManagerBuilder;
+import org.jboss.arquillian.test.impl.EventTestRunnerAdaptor;
 import org.jboss.arquillian.test.spi.LifecycleMethodExecutor;
 import org.jboss.arquillian.test.spi.TestMethodExecutor;
 import org.jboss.arquillian.test.spi.TestResult;
 import org.jboss.arquillian.test.spi.TestRunnerAdaptor;
-import org.jboss.arquillian.test.spi.TestRunnerAdaptorBuilder;
 import org.jboss.arquillian.test.spi.event.suite.AfterTestLifecycleEvent;
 import org.jboss.arquillian.test.spi.event.suite.BeforeTestLifecycleEvent;
 import org.jboss.arquillian.test.spi.execution.SkippedTestExecutionException;
@@ -101,7 +103,11 @@ public class Arquillian extends Runner implements Filterable {
 
 		if (testRunnerAdaptor == null) {
 			try {
-				testRunnerAdaptor = TestRunnerAdaptorBuilder.build();
+				ManagerBuilder managerBuilder = ManagerBuilder.from();
+
+				managerBuilder.extension(LoadableExtensionLoader.class);
+
+				testRunnerAdaptor = new EventTestRunnerAdaptor(managerBuilder);
 
 				testRunnerAdaptor.beforeSuite();
 

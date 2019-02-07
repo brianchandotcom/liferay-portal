@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -100,12 +99,14 @@ public class SelectLayoutPageTemplateEntryVerticalCard implements VerticalCard {
 
 	@Override
 	public String getSubtitle() {
-		Date createDate = _layoutPageTemplateEntry.getCreateDate();
+		if (Objects.equals(
+				_layoutPageTemplateEntry.getType(),
+				LayoutPageTemplateEntryTypeConstants.TYPE_WIDGET_PAGE)) {
 
-		String createDateDescription = LanguageUtil.getTimeDescription(
-			_request, System.currentTimeMillis() - createDate.getTime(), true);
+			return LanguageUtil.get(_request, "widget-page-template");
+		}
 
-		return LanguageUtil.format(_request, "x-ago", createDateDescription);
+		return LanguageUtil.get(_request, "content-page-template");
 	}
 
 	@Override

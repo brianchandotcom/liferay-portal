@@ -1829,8 +1829,6 @@ definition {
 			value1 = "${dmDocumentTitle}"
 		);
 
-		Click(locator1="Button#INFO");
-
 		DMDocument.viewDocumentTitleCmdPG(dmDocumentTitle = "${dmDocumentTitle}");
 
 		if ("${dmRepositoryName}" == "true") {
@@ -1845,8 +1843,6 @@ definition {
 		}
 
 		if (isSet(dmDocumentDescription)) {
-			ScrollWebElementIntoView(locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_DESCRIPTION");
-
 			AssertTextEquals(
 				locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_DESCRIPTION",
 				value1 = "${dmDocumentDescription}"

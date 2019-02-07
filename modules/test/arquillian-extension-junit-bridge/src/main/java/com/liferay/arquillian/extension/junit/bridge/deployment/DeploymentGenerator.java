@@ -16,7 +16,6 @@ package com.liferay.arquillian.extension.junit.bridge.deployment;
 
 import java.util.List;
 
-import org.jboss.arquillian.container.spi.client.deployment.Deployment;
 import org.jboss.arquillian.container.spi.client.deployment.DeploymentDescription;
 import org.jboss.arquillian.container.spi.client.deployment.DeploymentScenario;
 import org.jboss.arquillian.container.test.impl.client.deployment.event.GenerateDeployment;
@@ -50,32 +49,13 @@ public class DeploymentGenerator {
 
 		deploymentScenario.addDeployment(deploymentDescription);
 
-		_createTestableDeployments(deploymentScenario, event.getTestClass());
-
-		_deploymentInstanceProducer.set(deploymentScenario);
-	}
-
-	private void _buildTestableDeployments(
-		DeploymentScenario deploymentScenario, TestClass testClass) {
-
-		List<Deployment> deployments = deploymentScenario.deployments();
-
-		Deployment deployment = deployments.get(0);
-
-		DeploymentDescription deploymentDescription =
-			deployment.getDescription();
-
 		Archive<?> archive = deploymentDescription.getArchive();
 
 		((ClassContainer<?>)archive).addClass(testClass.getJavaClass());
 
 		deploymentDescription.setTestableArchive(archive);
-	}
 
-	private void _createTestableDeployments(
-		DeploymentScenario deploymentScenario, TestClass testClass) {
-
-		_buildTestableDeployments(deploymentScenario, testClass);
+		_deploymentInstanceProducer.set(deploymentScenario);
 	}
 
 	@ClassScoped

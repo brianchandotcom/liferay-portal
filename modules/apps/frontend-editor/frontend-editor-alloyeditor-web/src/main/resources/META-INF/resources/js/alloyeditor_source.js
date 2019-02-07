@@ -57,6 +57,7 @@ AUI.add(
 							instance._editorSwitch.on('blur', instance._onSwitchBlur, instance),
 							instance._editorSwitch.on('click', instance._switchMode, instance),
 							instance._editorSwitch.on('focus', instance._onSwitchFocus, instance),
+							instance._editorSwitch.on('mousedown', instance._onSwitchMouseDown, instance),
 							instance._editorSwitchTheme.on('click', instance._switchTheme, instance),
 							instance.doAfter('getHTML', instance._getHTML, instance),
 							instance.doAfter('setHTML', instance._setHTML, instance)
@@ -150,7 +151,9 @@ AUI.add(
 					_onEditorUpdate: function(event) {
 						var instance = this;
 
-						instance._toggleSourceSwitchFn(event.data.state);
+						if (!instance._isClicked) {
+							instance._toggleSourceSwitchFn(event.data.state);
+						}
 					},
 
 					_onFullScreenBtnClick: function() {
@@ -250,6 +253,12 @@ AUI.add(
 						);
 					},
 
+					_onSwitchMouseDown: function() {
+						var instance = this;
+
+						instance._isClicked = true;
+					},
+
 					_refreshTooltip: function() {
 						if (Liferay.Data.LFR_PORTAL_TOOLTIP) {
 							Liferay.Data.LFR_PORTAL_TOOLTIP.getTooltip().renderUI();
@@ -268,6 +277,8 @@ AUI.add(
 
 					_switchMode: function(event) {
 						var instance = this;
+
+						instance._isClicked = false;
 
 						var host = instance.get(STR_HOST);
 

@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletApp;
 import com.liferay.portal.kernel.model.PortletCategory;
+import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.portlet.PortletConfigFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
@@ -691,6 +692,14 @@ public class ContentPageEditorDisplayContext {
 	}
 
 	private String[] _getThemeColorsCssClasses() {
+		Theme theme = themeDisplay.getTheme();
+
+		String colorPalette = theme.getSetting("color-palette");
+
+		if (Validator.isNotNull(colorPalette)) {
+			return StringUtil.split(colorPalette);
+		}
+
 		return new String[] {
 			"blue", "cyan", "gray", "gray-dark", "green", "indigo", "orange",
 			"pink", "purple", "red", "teal", "white", "yellow"

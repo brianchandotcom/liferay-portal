@@ -35,10 +35,7 @@ public class RESTBuilderTest {
 	public void testCreateRESTBuilder() throws Exception {
 		String dependenciesPath = _getDependenciesPath();
 
-		new RESTBuilder(
-			dependenciesPath + "copyright.txt",
-			dependenciesPath + "rest-config.yaml",
-			dependenciesPath + "rest-openapi.yaml");
+		new RESTBuilder(dependenciesPath + "copyright.txt", dependenciesPath);
 
 		String filesPath = _getFilesPath();
 
@@ -50,31 +47,31 @@ public class RESTBuilderTest {
 
 		File baseResourceImplFile = new File(
 			filesPath + "/sample-impl/src/main/java/com/example/sample" +
-				"/internal/resource/BaseFolderResourceImpl.java");
+				"/internal/resource/v1_0_0/BaseFolderResourceImpl.java");
 
 		Assert.assertTrue(baseResourceImplFile.exists());
 
 		File folderResourceImplFile = new File(
 			filesPath + "/sample-impl/src/main/java/com/example/sample" +
-				"/internal/resource/FolderResourceImpl.java");
+				"/internal/resource/v1_0_0/FolderResourceImpl.java");
 
 		Assert.assertTrue(folderResourceImplFile.exists());
 
 		File propertiesFile = new File(
-			filesPath + "/sample-impl/src/main/resources/OSGI-INF" +
-				"/folder.properties");
+			filesPath + "/sample-impl/src/main/resources/OSGI-INF/liferay" +
+				"/rest/v1_0_0/folder.properties");
 
 		Assert.assertTrue(propertiesFile.exists());
 
 		File dtoFolderFile = new File(
 			filesPath + "/sample-api/src/main/java/com/example/sample/dto" +
-				"/Folder.java");
+				"/v1_0_0/Folder.java");
 
 		Assert.assertTrue(dtoFolderFile.exists());
 
 		File resourceFolderFile = new File(
 			filesPath + "/sample-api/src/main/java/com/example/sample" +
-				"/resource/FolderResource.java");
+				"/resource/v1_0_0/FolderResource.java");
 
 		Assert.assertTrue(resourceFolderFile.exists());
 

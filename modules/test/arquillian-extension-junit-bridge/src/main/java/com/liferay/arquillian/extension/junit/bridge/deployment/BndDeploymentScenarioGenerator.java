@@ -24,6 +24,7 @@ import com.liferay.arquillian.extension.junit.bridge.LiferayArquillianJUnitBridg
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.arquillian.extension.junit.bridge.protocol.jmx.JMXTestRunner;
 import com.liferay.arquillian.extension.junit.bridge.remote.activator.ArquillianBundleActivator;
+import com.liferay.arquillian.extension.junit.bridge.remote.loader.RemoteExtensionLoader;
 import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -46,7 +47,6 @@ import java.util.jar.JarFile;
 import java.util.jar.Manifest;
 
 import org.jboss.arquillian.container.spi.client.deployment.DeploymentDescription;
-import org.jboss.arquillian.container.test.impl.RemoteExtensionLoader;
 import org.jboss.arquillian.container.test.spi.RemoteLoadableExtension;
 import org.jboss.arquillian.container.test.spi.client.deployment.DeploymentScenarioGenerator;
 import org.jboss.arquillian.core.spi.ExtensionLoader;

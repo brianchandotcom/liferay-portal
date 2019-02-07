@@ -27,11 +27,13 @@ import aQute.bnd.annotation.ProviderType;
  */
 @ProviderType
 public class FileVersionPreviewImpl extends FileVersionPreviewBaseImpl {
-	/*
+
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. All methods that expect a file version preview model instance should use the {@link com.liferay.document.library.model.FileVersionPreview} interface instead.
 	 */
 	public FileVersionPreviewImpl() {
 	}
+
 }

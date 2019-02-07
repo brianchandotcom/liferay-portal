@@ -42,7 +42,7 @@
 					</#if>
 
 					<li>
-						<a aria-labelledby="layout_${navItem.getLayoutId()}" class="${nav_item_css_class} btn btn-default" ${nav_item_href_link}><span>${navItem.getName()}</span></a>${nav_item_caret}
+						<a aria-labelledby="layout_${portletDisplay.getId()}_${navItem.getLayoutId()}" class="${nav_item_css_class} btn btn-default" ${nav_item_href_link}><span>${navItem.getName()}</span></a>${nav_item_caret}
 
 						<#if showChildren>
 							<ul class="child-menu dropdown-menu" role="menu">
@@ -57,8 +57,8 @@
 										/>
 									</#if>
 
-									<li class="${nav_child_css_class}" id="layout_${childNavigationItem.getLayoutId()}" role="presentation">
-										<a aria-labelledby="layout_${childNavigationItem.getLayoutId()}" href="${childNavigationItem.getURL()}" ${childNavigationItem.getTarget()} role="menuitem">${childNavigationItem.getName()}</a>
+									<li class="${nav_child_css_class}" id="layout_${portletDisplay.getId()}_${childNavigationItem.getLayoutId()}" role="presentation">
+										<a aria-labelledby="layout_${portletDisplay.getId()}_${childNavigationItem.getLayoutId()}" href="${childNavigationItem.getURL()}" ${childNavigationItem.getTarget()} role="menuitem">${childNavigationItem.getName()}</a>
 									</li>
 								</#list>
 							</ul>

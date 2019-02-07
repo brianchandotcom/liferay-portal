@@ -33,38 +33,15 @@ import com.liferay.arquillian.extension.junit.bridge.remote.observer.JUnitBridge
 import java.net.URL;
 
 import org.jboss.arquillian.container.spi.client.container.DeployableContainer;
-import org.jboss.arquillian.container.test.impl.ClientTestInstanceEnricher;
 import org.jboss.arquillian.container.test.impl.client.ContainerEventController;
-import org.jboss.arquillian.container.test.impl.client.LocalCommandService;
-import org.jboss.arquillian.container.test.impl.client.container.ClientContainerControllerCreator;
-import org.jboss.arquillian.container.test.impl.client.container.ContainerRestarter;
-import org.jboss.arquillian.container.test.impl.client.container.command.ContainerCommandObserver;
-import org.jboss.arquillian.container.test.impl.client.deployment.ClientDeployerCreator;
 import org.jboss.arquillian.container.test.impl.client.deployment.DeploymentGenerator;
-import org.jboss.arquillian.container.test.impl.client.deployment.command.DeploymentCommandObserver;
-import org.jboss.arquillian.container.test.impl.client.deployment.tool.ArchiveDeploymentToolingExporter;
 import org.jboss.arquillian.container.test.impl.client.protocol.ProtocolRegistryCreator;
-import org.jboss.arquillian.container.test.impl.client.protocol.local.LocalProtocol;
-import org.jboss.arquillian.container.test.impl.deployment.ArquillianDeploymentAppender;
-import org.jboss.arquillian.container.test.impl.enricher.resource.ContainerControllerProvider;
-import org.jboss.arquillian.container.test.impl.enricher.resource.DeployerProvider;
-import org.jboss.arquillian.container.test.impl.enricher.resource.InitialContextProvider;
-import org.jboss.arquillian.container.test.impl.enricher.resource.RemoteResourceCommandObserver;
-import org.jboss.arquillian.container.test.impl.enricher.resource.URIResourceProvider;
-import org.jboss.arquillian.container.test.impl.enricher.resource.URLResourceProvider;
-import org.jboss.arquillian.container.test.impl.execution.ClientBeforeAfterLifecycleEventExecuter;
 import org.jboss.arquillian.container.test.impl.execution.ClientTestExecuter;
-import org.jboss.arquillian.container.test.impl.execution.LocalTestExecuter;
 import org.jboss.arquillian.container.test.impl.execution.RemoteTestExecuter;
 import org.jboss.arquillian.container.test.spi.RemoteLoadableExtension;
-import org.jboss.arquillian.container.test.spi.client.deployment.AuxiliaryArchiveAppender;
 import org.jboss.arquillian.container.test.spi.client.deployment.DeploymentScenarioGenerator;
 import org.jboss.arquillian.container.test.spi.client.protocol.Protocol;
-import org.jboss.arquillian.container.test.spi.command.CommandService;
 import org.jboss.arquillian.core.spi.LoadableExtension;
-import org.jboss.arquillian.test.impl.enricher.resource.ArquillianResourceTestEnricher;
-import org.jboss.arquillian.test.spi.TestEnricher;
-import org.jboss.arquillian.test.spi.enricher.resource.ResourceProvider;
 
 /**
  * @author Shuyang Zhou
@@ -101,42 +78,12 @@ public class LiferayArquillianJUnitBridgeExtension
 
 			extensionBuilder.observer(
 				org.jboss.arquillian.test.impl.TestContextHandler.class);
-			extensionBuilder.observer(ClientTestInstanceEnricher.class);
-
-			extensionBuilder.service(
-				AuxiliaryArchiveAppender.class,
-				ArquillianDeploymentAppender.class);
-			extensionBuilder.service(
-				TestEnricher.class, ArquillianResourceTestEnricher.class);
-			extensionBuilder.service(Protocol.class, LocalProtocol.class);
-			extensionBuilder.service(
-				CommandService.class, LocalCommandService.class);
-			extensionBuilder.service(
-				ResourceProvider.class, URLResourceProvider.class);
-			extensionBuilder.service(
-				ResourceProvider.class, URIResourceProvider.class);
-			extensionBuilder.service(
-				ResourceProvider.class, DeployerProvider.class);
-			extensionBuilder.service(
-				ResourceProvider.class, InitialContextProvider.class);
-			extensionBuilder.service(
-				ResourceProvider.class, ContainerControllerProvider.class);
 
 			extensionBuilder.observer(ContainerEventController.class);
-			extensionBuilder.observer(ContainerRestarter.class);
 			extensionBuilder.observer(DeploymentGenerator.class);
-			extensionBuilder.observer(ArchiveDeploymentToolingExporter.class);
 			extensionBuilder.observer(ProtocolRegistryCreator.class);
-			extensionBuilder.observer(ClientContainerControllerCreator.class);
-			extensionBuilder.observer(ClientDeployerCreator.class);
-			extensionBuilder.observer(
-				ClientBeforeAfterLifecycleEventExecuter.class);
 			extensionBuilder.observer(ClientTestExecuter.class);
-			extensionBuilder.observer(LocalTestExecuter.class);
 			extensionBuilder.observer(RemoteTestExecuter.class);
-			extensionBuilder.observer(DeploymentCommandObserver.class);
-			extensionBuilder.observer(ContainerCommandObserver.class);
-			extensionBuilder.observer(RemoteResourceCommandObserver.class);
 		}
 		else {
 			extensionBuilder.context(ClassContextImpl.class);

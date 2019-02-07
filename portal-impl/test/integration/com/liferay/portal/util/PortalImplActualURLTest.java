@@ -138,27 +138,15 @@ public class PortalImplActualURLTest {
 		Map<String, String[]> parameterMap = HttpUtil.getParameterMap(
 			queryString);
 
-		Assert.assertFalse(parameterMap.containsKey("p_l_id"));
-
-		boolean hasGroupId = parameterMap.containsKey("groupId");
-
-		Assert.assertTrue(hasGroupId);
+		Assert.assertNull(parameterMap.get("p_l_id"));
 
 		long groupId = MapUtil.getLong(parameterMap, "groupId");
 
 		Assert.assertEquals(groupId, childLayout.getGroupId());
 
-		boolean hasLayoutId = parameterMap.containsKey("layoutId");
-
-		Assert.assertTrue(hasLayoutId);
-
 		long layoutId = MapUtil.getLong(parameterMap, "layoutId");
 
 		Assert.assertEquals(layoutId, childLayout.getLayoutId());
-
-		boolean hasPrivateLayout = parameterMap.containsKey("privateLayout");
-
-		Assert.assertTrue(hasPrivateLayout);
 
 		boolean privateLayout = MapUtil.getBoolean(
 			parameterMap, "privateLayout");

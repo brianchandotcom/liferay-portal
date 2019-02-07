@@ -14,25 +14,18 @@
 
 package com.liferay.asset.display.page.item.selector.web.internal.servlet.taglib.clay;
 
-import com.liferay.asset.display.contributor.AssetDisplayContributor;
-import com.liferay.asset.display.contributor.AssetDisplayContributorTracker;
-import com.liferay.asset.display.page.item.selector.web.internal.constants.AssetDisplayPageItemSelectorWebKeys;
-import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
-import com.liferay.asset.kernel.model.AssetRendererFactory;
-import com.liferay.asset.kernel.model.ClassType;
-import com.liferay.asset.kernel.model.ClassTypeReader;
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.VerticalCard;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.portlet.RenderRequest;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Eudaldo Alonso
@@ -45,12 +38,7 @@ public class LayoutPageTemplateEntryVerticalCard implements VerticalCard {
 
 		_layoutPageTemplateEntry = layoutPageTemplateEntry;
 
-		_assetDisplayContributorTracker =
-			(AssetDisplayContributorTracker)renderRequest.getAttribute(
-				AssetDisplayPageItemSelectorWebKeys.
-					ASSET_DISPLAY_CONTRIBUTOR_TRACKER);
-		_themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		_request = PortalUtil.getHttpServletRequest(renderRequest);
 	}
 
 	@Override
@@ -79,25 +67,12 @@ public class LayoutPageTemplateEntryVerticalCard implements VerticalCard {
 
 	@Override
 	public String getSubtitle() {
-		String typeLabel = _getTypeLabel();
+		Date createDate = _layoutPageTemplateEntry.getCreateDate();
 
-		if (Validator.isNull(typeLabel)) {
-			return StringPool.DASH;
-		}
+		String createDateDescription = LanguageUtil.getTimeDescription(
+			_request, System.currentTimeMillis() - createDate.getTime(), true);
 
-		String subtypeLabel = StringPool.BLANK;
-
-		try {
-			subtypeLabel = _getSubtypeLabel();
-		}
-		catch (Exception e) {
-		}
-
-		if (Validator.isNull(subtypeLabel)) {
-			return typeLabel;
-		}
-
-		return typeLabel + " - " + subtypeLabel;
+		return LanguageUtil.format(_request, "x-ago", createDateDescription);
 	}
 
 	@Override
@@ -110,42 +85,7 @@ public class LayoutPageTemplateEntryVerticalCard implements VerticalCard {
 		return false;
 	}
 
-	private String _getSubtypeLabel() throws PortalException {
-		AssetRendererFactory assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-				_layoutPageTemplateEntry.getClassName());
-
-		if ((assetRendererFactory == null) ||
-			(_layoutPageTemplateEntry.getClassTypeId() <= 0)) {
-
-			return StringPool.BLANK;
-		}
-
-		ClassTypeReader classTypeReader =
-			assetRendererFactory.getClassTypeReader();
-
-		ClassType classType = classTypeReader.getClassType(
-			_layoutPageTemplateEntry.getClassTypeId(),
-			_themeDisplay.getLocale());
-
-		return classType.getName();
-	}
-
-	private String _getTypeLabel() {
-		AssetDisplayContributor assetDisplayContributor =
-			_assetDisplayContributorTracker.getAssetDisplayContributor(
-				_layoutPageTemplateEntry.getClassName());
-
-		if (assetDisplayContributor == null) {
-			return StringPool.BLANK;
-		}
-
-		return assetDisplayContributor.getLabel(_themeDisplay.getLocale());
-	}
-
-	private final AssetDisplayContributorTracker
-		_assetDisplayContributorTracker;
 	private final LayoutPageTemplateEntry _layoutPageTemplateEntry;
-	private final ThemeDisplay _themeDisplay;
+	private final HttpServletRequest _request;
 
 }

@@ -39,7 +39,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "app-man
 	searchFormName="searchFm"
 	selectable="<%= false %>"
 	showSearch="<%= true %>"
-	sortingOrder="<%= viewAppsManagerManagementToolbarDisplayContext.getOrderByType() %>"
+	sortingOrder="<%= viewAppsManagerManagementToolbarDisplayContext.getSortingOrder() %>"
 	sortingURL="<%= viewAppsManagerManagementToolbarDisplayContext.getSortingURL() %>"
 />
 

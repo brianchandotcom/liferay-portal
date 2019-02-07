@@ -625,7 +625,6 @@ String backURL = PortalUtil.getCurrentURL(request);
 				dateClick: function(event) {
 					<portlet:namespace />scheduler.setAttrs(
 						{
-							activeView: <portlet:namespace />dayView,
 							date: event.date
 						}
 					);

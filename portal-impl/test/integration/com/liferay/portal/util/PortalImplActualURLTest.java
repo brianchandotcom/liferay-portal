@@ -142,16 +142,16 @@ public class PortalImplActualURLTest {
 
 		long groupId = MapUtil.getLong(parameterMap, "groupId");
 
-		Assert.assertEquals(groupId, childLayout.getGroupId());
+		Assert.assertEquals(childLayout.getGroupId(), groupId);
 
 		long layoutId = MapUtil.getLong(parameterMap, "layoutId");
 
-		Assert.assertEquals(layoutId, childLayout.getLayoutId());
+		Assert.assertEquals(childLayout.getLayoutId(), layoutId);
 
 		boolean privateLayout = MapUtil.getBoolean(
 			parameterMap, "privateLayout");
 
-		Assert.assertEquals(privateLayout, childLayout.isPrivateLayout());
+		Assert.assertEquals(childLayout.isPrivateLayout(), privateLayout);
 	}
 
 	protected Map<String, Object> getRequestContext() {

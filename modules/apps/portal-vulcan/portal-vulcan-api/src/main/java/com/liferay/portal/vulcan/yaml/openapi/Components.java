@@ -12,32 +12,32 @@
  * details.
  */
 
-package com.liferay.portal.tools.rest.builder.internal.yaml.openapi;
+package com.liferay.portal.vulcan.yaml.openapi;
 
 import java.util.Map;
 
 /**
  * @author Peter Shin
  */
-public class Response {
+public class Components {
 
-	public Map<String, Content> getContent() {
-		return _content;
+	public Map<String, Parameter> getParameters() {
+		return _parameters;
 	}
 
-	public String getDescription() {
-		return _description;
+	public Map<String, Schema> getSchemas() {
+		return _schemas;
 	}
 
-	public void setContent(Map<String, Content> content) {
-		_content = content;
+	public void setParameters(Map<String, Parameter> parameters) {
+		_parameters = parameters;
 	}
 
-	public void setDescription(String description) {
-		_description = description;
+	public void setSchemas(Map<String, Schema> schemas) {
+		_schemas = schemas;
 	}
 
-	private Map<String, Content> _content;
-	private String _description;
+	private Map<String, Parameter> _parameters;
+	private Map<String, Schema> _schemas;
 
 }

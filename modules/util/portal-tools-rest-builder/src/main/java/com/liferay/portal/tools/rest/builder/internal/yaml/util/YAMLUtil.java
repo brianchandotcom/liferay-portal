@@ -43,38 +43,6 @@ import org.yaml.snakeyaml.representer.Representer;
  */
 public class YAMLUtil {
 
-	public static <T> T load(
-		Class<T> clazz, File file, TypeDescription... typeDescriptions) {
-
-		try (InputStream inputStream = new FileInputStream(file)) {
-			Constructor constructor = new Constructor(clazz);
-
-			for (TypeDescription typeDescription : typeDescriptions) {
-				constructor.addTypeDescription(typeDescription);
-			}
-
-			Representer representer = new Representer();
-
-			PropertyUtils propertyUtils = representer.getPropertyUtils();
-
-			propertyUtils.setSkipMissingProperties(true);
-
-			Yaml yaml = new Yaml(constructor, representer);
-
-			return yaml.loadAs(inputStream, clazz);
-		}
-		catch (FileNotFoundException fnfe) {
-			System.out.println(fnfe.getMessage());
-
-			return null;
-		}
-		catch (IOException ioe) {
-			ioe.printStackTrace();
-
-			return null;
-		}
-	}
-
 	public static ConfigYAML loadConfigYAML(File file) {
 		List<TypeDescription> typeDescriptions = new ArrayList<>();
 
@@ -90,7 +58,7 @@ public class YAMLUtil {
 		TypeDescription[] typeDescriptionsArray = typeDescriptions.toArray(
 			new TypeDescription[typeDescriptions.size()]);
 
-		return load(ConfigYAML.class, file, typeDescriptionsArray);
+		return _load(ConfigYAML.class, file, typeDescriptionsArray);
 	}
 
 	public static OpenAPIYAML loadOpenAPIYAML(File file) {
@@ -160,7 +128,39 @@ public class YAMLUtil {
 		TypeDescription[] typeDescriptionsArray = typeDescriptions.toArray(
 			new TypeDescription[typeDescriptions.size()]);
 
-		return load(OpenAPIYAML.class, file, typeDescriptionsArray);
+		return _load(OpenAPIYAML.class, file, typeDescriptionsArray);
+	}
+
+	private static <T> T _load(
+		Class<T> clazz, File file, TypeDescription... typeDescriptions) {
+
+		try (InputStream inputStream = new FileInputStream(file)) {
+			Constructor constructor = new Constructor(clazz);
+
+			for (TypeDescription typeDescription : typeDescriptions) {
+				constructor.addTypeDescription(typeDescription);
+			}
+
+			Representer representer = new Representer();
+
+			PropertyUtils propertyUtils = representer.getPropertyUtils();
+
+			propertyUtils.setSkipMissingProperties(true);
+
+			Yaml yaml = new Yaml(constructor, representer);
+
+			return yaml.loadAs(inputStream, clazz);
+		}
+		catch (FileNotFoundException fnfe) {
+			System.out.println(fnfe.getMessage());
+
+			return null;
+		}
+		catch (IOException ioe) {
+			ioe.printStackTrace();
+
+			return null;
+		}
 	}
 
 }

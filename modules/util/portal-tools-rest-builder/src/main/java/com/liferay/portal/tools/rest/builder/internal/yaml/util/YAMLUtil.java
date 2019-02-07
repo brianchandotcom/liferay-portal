@@ -98,8 +98,6 @@ public class YAMLUtil {
 
 		typeDescription.addPropertyParameters("allOf", Schema.class);
 
-		typeDescriptions.add(typeDescription);
-
 		typeDescription.substituteProperty(
 			"$ref", String.class, "getReference", "setReference");
 

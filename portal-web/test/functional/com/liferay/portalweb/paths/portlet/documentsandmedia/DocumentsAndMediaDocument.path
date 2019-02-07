@@ -51,7 +51,7 @@
 </tr>
 <tr>
 	<td>DOCUMENT_INFO_DESCRIPTION</td>
-	<td>//dd[contains(@class,'sidebar-dt') and contains (.,'Description')]</td>
+	<td>//dt[contains(@class,'sidebar-dt') and contains (.,'Description')]</td>
 	<td></td>
 </tr>
 <tr>

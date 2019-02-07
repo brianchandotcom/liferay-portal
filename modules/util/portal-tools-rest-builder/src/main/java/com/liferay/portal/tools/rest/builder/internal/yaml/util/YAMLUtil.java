@@ -37,7 +37,25 @@ import org.yaml.snakeyaml.representer.Representer;
 public class YAMLUtil {
 
 	public static ConfigYAML loadConfigYAML(String yamlString) {
-		Constructor constructor = new Constructor(ConfigYAML.class);
+		return _CONFIG_YAML.loadAs(yamlString, ConfigYAML.class);
+	}
+
+	public static OpenAPIYAML loadOpenAPIYAML(String yamlString) {
+		return _OPEN_API_YAML.loadAs(yamlString, OpenAPIYAML.class);
+	}
+
+	private static final Yaml _CONFIG_YAML;
+
+	private static final Yaml _OPEN_API_YAML;
+
+	static {
+		Representer representer = new Representer();
+
+		PropertyUtils propertyUtils = representer.getPropertyUtils();
+
+		propertyUtils.setSkipMissingProperties(true);
+
+		Constructor configYAMLConstructor = new Constructor(ConfigYAML.class);
 
 		TypeDescription securityTypeDescription = new TypeDescription(
 			Security.class);
@@ -45,20 +63,18 @@ public class YAMLUtil {
 		securityTypeDescription.substituteProperty(
 			"oAuth2", String.class, "getOAuth2", "setOAuth2");
 
-		constructor.addTypeDescription(securityTypeDescription);
+		configYAMLConstructor.addTypeDescription(securityTypeDescription);
 
-		return _load(constructor, ConfigYAML.class, yamlString);
-	}
+		_CONFIG_YAML = new Yaml(configYAMLConstructor, representer);
 
-	public static OpenAPIYAML loadOpenAPIYAML(String yamlString) {
-		Constructor constructor = new Constructor(OpenAPIYAML.class);
+		Constructor openAPIYAMLConstructor = new Constructor(OpenAPIYAML.class);
 
 		TypeDescription itemTypeDescription = new TypeDescription(Items.class);
 
 		itemTypeDescription.substituteProperty(
 			"$ref", String.class, "getReference", "setReference");
 
-		constructor.addTypeDescription(itemTypeDescription);
+		openAPIYAMLConstructor.addTypeDescription(itemTypeDescription);
 
 		TypeDescription openAPIYAMLTypeDescription = new TypeDescription(
 			OpenAPIYAML.class);
@@ -69,7 +85,7 @@ public class YAMLUtil {
 		openAPIYAMLTypeDescription.addPropertyParameters(
 			"paths", String.class, PathItem.class);
 
-		constructor.addTypeDescription(openAPIYAMLTypeDescription);
+		openAPIYAMLConstructor.addTypeDescription(openAPIYAMLTypeDescription);
 
 		TypeDescription parameterTypeDescription = new TypeDescription(
 			Parameter.class);
@@ -77,7 +93,7 @@ public class YAMLUtil {
 		parameterTypeDescription.substituteProperty(
 			"$ref", String.class, "getReference", "setReference");
 
-		constructor.addTypeDescription(parameterTypeDescription);
+		openAPIYAMLConstructor.addTypeDescription(parameterTypeDescription);
 
 		// Schema
 
@@ -109,23 +125,9 @@ public class YAMLUtil {
 		schemaTypeDescription.addPropertyParameters(
 			"properties", String.class, Schema.class);
 
-		constructor.addTypeDescription(schemaTypeDescription);
+		openAPIYAMLConstructor.addTypeDescription(schemaTypeDescription);
 
-		return _load(constructor, OpenAPIYAML.class, yamlString);
-	}
-
-	private static <T> T _load(
-		Constructor constructor, Class<T> clazz, String yamlString) {
-
-		Representer representer = new Representer();
-
-		PropertyUtils propertyUtils = representer.getPropertyUtils();
-
-		propertyUtils.setSkipMissingProperties(true);
-
-		Yaml yaml = new Yaml(constructor, representer);
-
-		return yaml.loadAs(yamlString, clazz);
+		_OPEN_API_YAML = new Yaml(openAPIYAMLConstructor, representer);
 	}
 
 }

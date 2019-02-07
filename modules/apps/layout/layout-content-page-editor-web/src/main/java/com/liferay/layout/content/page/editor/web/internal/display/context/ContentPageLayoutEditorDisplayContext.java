@@ -14,13 +14,17 @@
 
 package com.liferay.layout.content.page.editor.web.internal.display.context;
 
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.template.soy.util.SoyContext;
 import com.liferay.portal.template.soy.util.SoyContextFactoryUtil;
+import com.liferay.segments.constants.SegmentsConstants;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.service.SegmentsEntryServiceUtil;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 import javax.portlet.RenderResponse;
 
@@ -47,8 +51,15 @@ public class ContentPageLayoutEditorDisplayContext
 
 		SoyContext soyContext = super.getEditorContext();
 
+		List<SegmentsEntry> segmentsEntries = _getSegmentsEntries();
+
 		soyContext.put(
-			"availableSegments", _getSoyContextAvailableSegmentsEntries());
+			"availableSegments",
+			_getSoyContextAvailableSegmentsEntries(segmentsEntries));
+
+		soyContext.put(
+			"defaultSegmentId", _getDefaultSegmentId(segmentsEntries));
+
 		soyContext.put("sidebarPanels", getSidebarPanelSoyContexts(false));
 
 		_editorSoyContext = soyContext;
@@ -66,29 +77,59 @@ public class ContentPageLayoutEditorDisplayContext
 
 		SoyContext soyContext = super.getFragmentsEditorToolbarContext();
 
+		List<SegmentsEntry> segmentsEntries = _getSegmentsEntries();
+
 		soyContext.put(
-			"availableSegments", _getSoyContextAvailableSegmentsEntries());
+			"availableSegments",
+			_getSoyContextAvailableSegmentsEntries(segmentsEntries));
+
+		soyContext.put(
+			"defaultSegmentId", _getDefaultSegmentId(segmentsEntries));
 
 		_fragmentsEditorToolbarSoyContext = soyContext;
 
 		return _fragmentsEditorToolbarSoyContext;
 	}
 
-	private SoyContext _getSoyContextAvailableSegmentsEntries()
-		throws PortalException {
+	private String _getDefaultSegmentId(List<SegmentsEntry> segmentsEntries) {
+		if ((segmentsEntries == null) || segmentsEntries.isEmpty()) {
+			return StringPool.BLANK;
+		}
+
+		Stream<SegmentsEntry> stream = segmentsEntries.stream();
+
+		return stream.filter(
+			segmentsEntry ->
+				SegmentsConstants.KEY_DEFAULT.equals(segmentsEntry.getKey())
+		).findFirst(
+		).map(
+			segmentsEntry -> String.valueOf(
+				_EDITABLE_VALUES_SEGMENTS_PREFIX +
+					segmentsEntry.getSegmentsEntryId())
+		).orElse(
+			StringPool.BLANK
+		);
+	}
+
+	private List<SegmentsEntry> _getSegmentsEntries() {
+		return SegmentsEntryServiceUtil.getSegmentsEntries(
+			getGroupId(), true, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	private SoyContext _getSoyContextAvailableSegmentsEntries(
+		List<SegmentsEntry> segmentsEntries) {
 
 		SoyContext availableSegmentsEntriesSoyContext =
 			SoyContextFactoryUtil.createSoyContext();
-
-		List<SegmentsEntry> segmentsEntries =
-			SegmentsEntryServiceUtil.getActiveSegmentsEntries(getGroupId());
 
 		for (SegmentsEntry segmentsEntry : segmentsEntries) {
 			SoyContext segmentsSoyContext =
 				SoyContextFactoryUtil.createSoyContext();
 
 			segmentsSoyContext.put(
-				"segmentId", segmentsEntry.getSegmentsEntryId());
+				"segmentId",
+				_EDITABLE_VALUES_SEGMENTS_PREFIX +
+					segmentsEntry.getSegmentsEntryId());
 			segmentsSoyContext.put("segmentKey", segmentsEntry.getKey());
 			segmentsSoyContext.put(
 				"segmentLabel",
@@ -100,6 +141,9 @@ public class ContentPageLayoutEditorDisplayContext
 
 		return availableSegmentsEntriesSoyContext;
 	}
+
+	private static final String _EDITABLE_VALUES_SEGMENTS_PREFIX =
+		"segment-id-";
 
 	private SoyContext _editorSoyContext;
 	private SoyContext _fragmentsEditorToolbarSoyContext;

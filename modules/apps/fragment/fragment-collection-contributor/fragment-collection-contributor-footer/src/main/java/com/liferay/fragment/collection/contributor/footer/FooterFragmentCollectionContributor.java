@@ -17,10 +17,7 @@ package com.liferay.fragment.collection.contributor.footer;
 import com.liferay.fragment.contributor.BaseFragmentCollectionContributor;
 import com.liferay.fragment.contributor.FragmentCollectionContributor;
 
-import javax.servlet.ServletContext;
-
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jürgen Kappler
@@ -33,15 +30,5 @@ public class FooterFragmentCollectionContributor
 	public String getFragmentCollectionKey() {
 		return "FOOTER";
 	}
-
-	@Override
-	public ServletContext getServletContext() {
-		return _servletContext;
-	}
-
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.fragment.collection.contributor.footer)"
-	)
-	private ServletContext _servletContext;
 
 }

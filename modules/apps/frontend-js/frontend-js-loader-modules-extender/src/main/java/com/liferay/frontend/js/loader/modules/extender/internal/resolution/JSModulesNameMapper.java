@@ -41,22 +41,12 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Rodolfo Roza Miranda
  */
-@Component(
-	immediate = true,
-	service = {JSBundleTracker.class, JSModulesNameMapper.class}
-)
-public class JSModulesNameMapper implements JSBundleTracker {
+@Component(immediate = true, service = JSModulesNameMapper.class)
+public class JSModulesNameMapper {
 
 	@Activate
 	public void activate() {
-		_clearCacheState();
-	}
-
-	@Override
-	public void addedJSBundle(
-		JSBundle jsBundle, Bundle bundle, NPMRegistry npmRegistry) {
-
-		_clearCacheState();
+		_clearCacheState(null);
 	}
 
 	public String mapModule(String moduleName) {
@@ -69,7 +59,7 @@ public class JSModulesNameMapper implements JSBundleTracker {
 		if (cacheState.isOlderThan(
 				_jsConfigGeneratorPackagesTracker.getLastModified())) {
 
-			_clearCacheState();
+			_clearCacheState(cacheState.getNPMRegistry());
 
 			cacheState = _cacheState.get();
 		}
@@ -95,15 +85,31 @@ public class JSModulesNameMapper implements JSBundleTracker {
 		return resolvedModuleName;
 	}
 
-	@Override
-	public void removedJSBundle(
-		JSBundle jsBundle, Bundle bundle, NPMRegistry npmRegistry) {
+	@Component(immediate = true, service = JSBundleTracker.class)
+	public static class JSModulesNameMapperJSBundleTracker
+		implements JSBundleTracker {
 
-		_clearCacheState();
+		@Override
+		public void addedJSBundle(
+			JSBundle jsBundle, Bundle bundle, NPMRegistry npmRegistry) {
+
+			_jsModulesNameMapper._clearCacheState(npmRegistry);
+		}
+
+		@Override
+		public void removedJSBundle(
+			JSBundle jsBundle, Bundle bundle, NPMRegistry npmRegistry) {
+
+			_jsModulesNameMapper._clearCacheState(npmRegistry);
+		}
+
+		@Reference
+		private JSModulesNameMapper _jsModulesNameMapper;
+
 	}
 
-	private void _clearCacheState() {
-		_cacheState.set(new CacheState());
+	private void _clearCacheState(NPMRegistry npmRegistry) {
+		_cacheState.set(new CacheState(npmRegistry));
 	}
 
 	private String _map(
@@ -135,16 +141,16 @@ public class JSModulesNameMapper implements JSBundleTracker {
 	@Reference
 	private JSConfigGeneratorPackagesTracker _jsConfigGeneratorPackagesTracker;
 
-	@Reference
-	private NPMRegistry _npmRegistry;
-
 	private class CacheState {
 
-		public CacheState() {
+		public CacheState(NPMRegistry npmRegistry) {
+			_npmRegistry = npmRegistry;
 			_lastModified = System.currentTimeMillis();
 
-			_setExactMatchMappings();
-			_setPartialMatchMappings();
+			if (_npmRegistry != null) {
+				_setExactMatchMappings();
+				_setPartialMatchMappings();
+			}
 		}
 
 		public String get(String key) {
@@ -153,6 +159,10 @@ public class JSModulesNameMapper implements JSBundleTracker {
 
 		public Map<String, String> getExactMatchMappings() {
 			return _exactMatchMappings;
+		}
+
+		public NPMRegistry getNPMRegistry() {
+			return _npmRegistry;
 		}
 
 		public Map<String, String> getPartialMatchMappings() {
@@ -223,6 +233,7 @@ public class JSModulesNameMapper implements JSBundleTracker {
 		private final Map<String, String> _cache = new ConcurrentHashMap<>();
 		private final Map<String, String> _exactMatchMappings = new HashMap<>();
 		private final long _lastModified;
+		private final NPMRegistry _npmRegistry;
 		private final Map<String, String> _partialMatchMappings =
 			new HashMap<>();
 

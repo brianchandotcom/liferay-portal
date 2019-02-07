@@ -17,7 +17,10 @@ package com.liferay.fragment.collection.contributor.basic.element;
 import com.liferay.fragment.contributor.BaseFragmentCollectionContributor;
 import com.liferay.fragment.contributor.FragmentCollectionContributor;
 
+import javax.servlet.ServletContext;
+
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jürgen Kappler
@@ -30,5 +33,15 @@ public class BasicElementFragmentCollectionContributor
 	public String getFragmentCollectionKey() {
 		return "BASIC_ELEMENT";
 	}
+
+	@Override
+	public ServletContext getServletContext() {
+		return _servletContext;
+	}
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.fragment.collection.contributor.basic.element)"
+	)
+	private ServletContext _servletContext;
 
 }

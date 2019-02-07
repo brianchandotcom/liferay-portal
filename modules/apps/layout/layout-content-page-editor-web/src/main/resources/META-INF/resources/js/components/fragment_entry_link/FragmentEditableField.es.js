@@ -93,11 +93,14 @@ class FragmentEditableField extends Component {
 	 * @returns {object}
 	 */
 	prepareStateForRender(state) {
+		const defaultSegmentedContent = this.editableValues[this.defaultSegmentId] ||
+			{};
 		const segmentedContent = this.editableValues[this.segmentId] ||
-			this.editableValues[this.defaultSegmentId] ||
-			this.editableValues;
+			defaultSegmentedContent ||
+			{};
 
 		const translatedContent = segmentedContent[this.languageId] ||
+			defaultSegmentedContent[this.languageId] ||
 			segmentedContent[this.defaultLanguageId] ||
 			this.editableValues.defaultValue;
 

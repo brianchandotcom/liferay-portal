@@ -1,0 +1,13 @@
+apiDir: "../sample-api/src/main/java"
+apiName: "sample"
+apiPackagePath: "com.example.sample"
+application:
+    baseURI: "/sample"
+    className: "SampleApplication"
+    name: "sample-application"
+    security:
+        basicAuth: true
+        guestAllowed: true
+        oAuth2: true
+author: "John Doe"
+implDir: "../sample-impl/src/main/java"

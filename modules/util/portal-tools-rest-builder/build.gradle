@@ -18,9 +18,10 @@ dependencies {
 	compile group: "dom4j", name: "dom4j", version: "1.6.1"
 	compile group: "org.apache.ant", name: "ant", version: "1.9.4"
 	compile group: "org.freemarker", name: "freemarker", transitive: false, version: "2.3.28"
-	compile group: "org.yaml", name: "snakeyaml", version: "1.23"
 
 	compileInclude group: "com.liferay", name: "com.liferay.source.formatter", version: "1.0.780"
+	compileInclude group: "org.yaml", name: "snakeyaml", version: "1.23"
+	compileInclude project(":apps:portal-vulcan:portal-vulcan-api")
 
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.6.0"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.49.0"
@@ -30,7 +31,6 @@ dependencies {
 deployDependencies {
 	from (configurations.compile) {
 		include "freemarker-*.jar"
-		include "snakeyaml-*.jar"
 	}
 
 	from "../../../tools/sdk/dependencies/com.liferay.source.formatter/lib"

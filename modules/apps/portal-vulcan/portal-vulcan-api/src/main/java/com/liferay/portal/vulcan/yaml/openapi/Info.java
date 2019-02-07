@@ -12,10 +12,21 @@
  * details.
  */
 
-package com.liferay.portal.tools.rest.builder.internal.yaml.openapi;
+package com.liferay.portal.vulcan.yaml.openapi;
 
 /**
  * @author Peter Shin
  */
-public class Head extends Operation {
+public class Info {
+
+	public String getVersion() {
+		return _version;
+	}
+
+	public void setVersion(String version) {
+		_version = version;
+	}
+
+	private String _version;
+
 }

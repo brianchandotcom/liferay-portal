@@ -12,23 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.tools.rest.builder.internal.yaml.openapi;
-
-import java.util.Map;
+package com.liferay.portal.vulcan.yaml.openapi;
 
 /**
  * @author Peter Shin
  */
-public class RequestBody {
-
-	public Map<String, Content> getContent() {
-		return _content;
-	}
-
-	public void setContent(Map<String, Content> content) {
-		_content = content;
-	}
-
-	private Map<String, Content> _content;
-
+public class Head extends Operation {
 }

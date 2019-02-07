@@ -12,48 +12,48 @@
  * details.
  */
 
-package com.liferay.portal.tools.rest.builder.internal.yaml.config;
+package com.liferay.portal.vulcan.yaml.openapi;
 
 /**
  * @author Peter Shin
  */
-public class Application {
+public class Parameter {
 
-	public String getBaseURI() {
-		return _baseURI;
-	}
-
-	public String getClassName() {
-		return _className;
+	public String getIn() {
+		return _in;
 	}
 
 	public String getName() {
 		return _name;
 	}
 
-	public Security getSecurity() {
-		return _security;
+	public String getReference() {
+		return _reference;
 	}
 
-	public void setBaseURI(String baseURI) {
-		_baseURI = baseURI;
+	public Schema getSchema() {
+		return _schema;
 	}
 
-	public void setClassName(String className) {
-		_className = className;
+	public void setIn(String in) {
+		_in = in;
 	}
 
 	public void setName(String name) {
 		_name = name;
 	}
 
-	public void setSecurity(Security security) {
-		_security = security;
+	public void setReference(String reference) {
+		_reference = reference;
 	}
 
-	private String _baseURI;
-	private String _className;
+	public void setSchema(Schema schema) {
+		_schema = schema;
+	}
+
+	private String _in;
 	private String _name;
-	private Security _security;
+	private String _reference;
+	private Schema _schema;
 
 }

@@ -12,48 +12,41 @@
  * details.
  */
 
-package com.liferay.portal.tools.rest.builder.internal.yaml.openapi;
+package com.liferay.portal.vulcan.yaml.openapi;
+
+import java.util.Map;
 
 /**
  * @author Peter Shin
  */
-public class Parameter {
+public class OpenAPIYAML {
 
-	public String getIn() {
-		return _in;
+	public Components getComponents() {
+		return _components;
 	}
 
-	public String getName() {
-		return _name;
+	public Info getInfo() {
+		return _info;
 	}
 
-	public String getReference() {
-		return _reference;
+	public Map<String, PathItem> getPathItems() {
+		return _pathItems;
 	}
 
-	public Schema getSchema() {
-		return _schema;
+	public void setComponents(Components components) {
+		_components = components;
 	}
 
-	public void setIn(String in) {
-		_in = in;
+	public void setInfo(Info info) {
+		_info = info;
 	}
 
-	public void setName(String name) {
-		_name = name;
+	public void setPathItems(Map<String, PathItem> pathItems) {
+		_pathItems = pathItems;
 	}
 
-	public void setReference(String reference) {
-		_reference = reference;
-	}
-
-	public void setSchema(Schema schema) {
-		_schema = schema;
-	}
-
-	private String _in;
-	private String _name;
-	private String _reference;
-	private Schema _schema;
+	private Components _components;
+	private Info _info;
+	private Map<String, PathItem> _pathItems;
 
 }

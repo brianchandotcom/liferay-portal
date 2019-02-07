@@ -12,15 +12,15 @@
  * details.
  */
 
-package com.liferay.portal.tools.rest.builder.internal.yaml.util;
+package com.liferay.portal.vulcan.yaml;
 
-import com.liferay.portal.tools.rest.builder.internal.yaml.config.ConfigYAML;
-import com.liferay.portal.tools.rest.builder.internal.yaml.config.Security;
-import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Items;
-import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.OpenAPIYAML;
-import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Parameter;
-import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.PathItem;
-import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Schema;
+import com.liferay.portal.vulcan.yaml.config.ConfigYAML;
+import com.liferay.portal.vulcan.yaml.config.Security;
+import com.liferay.portal.vulcan.yaml.openapi.Items;
+import com.liferay.portal.vulcan.yaml.openapi.OpenAPIYAML;
+import com.liferay.portal.vulcan.yaml.openapi.Parameter;
+import com.liferay.portal.vulcan.yaml.openapi.PathItem;
+import com.liferay.portal.vulcan.yaml.openapi.Schema;
 
 import java.util.List;
 import java.util.Map;

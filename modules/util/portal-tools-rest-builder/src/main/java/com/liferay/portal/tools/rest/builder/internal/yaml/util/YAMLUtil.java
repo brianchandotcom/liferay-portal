@@ -23,12 +23,6 @@ import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.PathItem;
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Properties;
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Schema;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -44,7 +38,7 @@ import org.yaml.snakeyaml.representer.Representer;
  */
 public class YAMLUtil {
 
-	public static ConfigYAML loadConfigYAML(File file) {
+	public static ConfigYAML loadConfigYAML(String yamlString) {
 		List<TypeDescription> typeDescriptions = new ArrayList<>();
 
 		// Security
@@ -59,10 +53,10 @@ public class YAMLUtil {
 		TypeDescription[] typeDescriptionsArray = typeDescriptions.toArray(
 			new TypeDescription[typeDescriptions.size()]);
 
-		return _load(ConfigYAML.class, file, typeDescriptionsArray);
+		return _load(ConfigYAML.class, yamlString, typeDescriptionsArray);
 	}
 
-	public static OpenAPIYAML loadOpenAPIYAML(File file) {
+	public static OpenAPIYAML loadOpenAPIYAML(String yamlString) {
 		List<TypeDescription> typeDescriptions = new ArrayList<>();
 
 		// Items
@@ -123,39 +117,28 @@ public class YAMLUtil {
 		TypeDescription[] typeDescriptionsArray = typeDescriptions.toArray(
 			new TypeDescription[typeDescriptions.size()]);
 
-		return _load(OpenAPIYAML.class, file, typeDescriptionsArray);
+		return _load(OpenAPIYAML.class, yamlString, typeDescriptionsArray);
 	}
 
 	private static <T> T _load(
-		Class<T> clazz, File file, TypeDescription... typeDescriptions) {
+		Class<T> clazz, String yamlString,
+		TypeDescription... typeDescriptions) {
 
-		try (InputStream inputStream = new FileInputStream(file)) {
-			Constructor constructor = new Constructor(clazz);
+		Constructor constructor = new Constructor(clazz);
 
-			for (TypeDescription typeDescription : typeDescriptions) {
-				constructor.addTypeDescription(typeDescription);
-			}
-
-			Representer representer = new Representer();
-
-			PropertyUtils propertyUtils = representer.getPropertyUtils();
-
-			propertyUtils.setSkipMissingProperties(true);
-
-			Yaml yaml = new Yaml(constructor, representer);
-
-			return yaml.loadAs(inputStream, clazz);
+		for (TypeDescription typeDescription : typeDescriptions) {
+			constructor.addTypeDescription(typeDescription);
 		}
-		catch (FileNotFoundException fnfe) {
-			System.out.println(fnfe.getMessage());
 
-			return null;
-		}
-		catch (IOException ioe) {
-			ioe.printStackTrace();
+		Representer representer = new Representer();
 
-			return null;
-		}
+		PropertyUtils propertyUtils = representer.getPropertyUtils();
+
+		propertyUtils.setSkipMissingProperties(true);
+
+		Yaml yaml = new Yaml(constructor, representer);
+
+		return yaml.loadAs(yamlString, clazz);
 	}
 
 }

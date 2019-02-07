@@ -46,8 +46,6 @@ import com.liferay.portal.test.rule.PermissionCheckerTestRule;
 
 import java.io.IOException;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.Locale;
 
 import org.jsoup.Jsoup;
@@ -172,7 +170,7 @@ public class FragmentEntryProcessorEditableTest {
 			_processedHTML,
 			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
 				fragmentEntryLink, FragmentEntryLinkConstants.EDIT,
-				LocaleUtil.CHINESE, Arrays.asList(2L, 0L)));
+				LocaleUtil.CHINESE, new long[] {2L, 0L}));
 	}
 
 	@Test
@@ -194,7 +192,7 @@ public class FragmentEntryProcessorEditableTest {
 			_processedHTML,
 			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
 				fragmentEntryLink, FragmentEntryLinkConstants.EDIT,
-				LocaleUtil.US, Collections.singletonList(0L)));
+				LocaleUtil.US, new long[] {0L}));
 	}
 
 	@Test
@@ -240,7 +238,7 @@ public class FragmentEntryProcessorEditableTest {
 			_processedHTML,
 			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
 				fragmentEntryLink, FragmentEntryLinkConstants.EDIT,
-				LocaleUtil.CHINESE, Arrays.asList(1L, 0L)));
+				LocaleUtil.CHINESE, new long[] {1L, 0L}));
 	}
 
 	@Test
@@ -263,7 +261,7 @@ public class FragmentEntryProcessorEditableTest {
 			_processedHTML,
 			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
 				fragmentEntryLink, FragmentEntryLinkConstants.EDIT,
-				LocaleUtil.US, Arrays.asList(1L, 0L)));
+				LocaleUtil.US, new long[] {1L, 0L}));
 	}
 
 	@Test(expected = FragmentEntryContentException.class)

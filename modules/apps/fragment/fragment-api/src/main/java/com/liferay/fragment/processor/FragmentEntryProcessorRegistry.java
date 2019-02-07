@@ -21,8 +21,6 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.Locale;
 
 /**
@@ -64,12 +62,12 @@ public interface FragmentEntryProcessorRegistry {
 		throws PortalException {
 
 		return processFragmentEntryLinkHTML(
-			fragmentEntryLink, mode, locale, Collections.emptyList());
+			fragmentEntryLink, mode, locale, new long[0]);
 	}
 
 	public String processFragmentEntryLinkHTML(
 			FragmentEntryLink fragmentEntryLink, String mode, Locale locale,
-			List<Long> segmentsIds)
+			long[] segmentsIds)
 		throws PortalException;
 
 	public void validateFragmentEntryHTML(String html) throws PortalException;

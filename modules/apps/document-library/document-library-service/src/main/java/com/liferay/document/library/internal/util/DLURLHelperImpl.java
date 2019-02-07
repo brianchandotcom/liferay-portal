@@ -14,12 +14,14 @@
 
 package com.liferay.document.library.internal.util;
 
+import com.liferay.document.library.constants.FileVersionPreviewConstants;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.util.DL;
 import com.liferay.document.library.kernel.util.ImageProcessorUtil;
 import com.liferay.document.library.kernel.util.PDFProcessorUtil;
 import com.liferay.document.library.kernel.util.VideoProcessorUtil;
+import com.liferay.document.library.service.FileVersionPreviewLocalService;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -130,6 +132,13 @@ public class DLURLHelperImpl implements DLURLHelper {
 		FileEntry fileEntry, FileVersion fileVersion, ThemeDisplay themeDisplay,
 		String queryString, boolean appendVersion, boolean absoluteURL) {
 
+		if (_fileVersionPreviewLocalService.hasFileVersionPreview(
+				fileEntry.getFileEntryId(), fileVersion.getFileVersionId(),
+				FileVersionPreviewConstants.FAILURE)) {
+
+			return StringPool.BLANK;
+		}
+
 		String previewQueryString = queryString;
 
 		if (Validator.isNull(previewQueryString)) {
@@ -232,6 +241,13 @@ public class DLURLHelperImpl implements DLURLHelper {
 			FileEntry fileEntry, FileVersion fileVersion,
 			ThemeDisplay themeDisplay)
 		throws Exception {
+
+		if (_fileVersionPreviewLocalService.hasFileVersionPreview(
+				fileEntry.getFileEntryId(), fileVersion.getFileVersionId(),
+				FileVersionPreviewConstants.FAILURE)) {
+
+			return StringPool.BLANK;
+		}
 
 		String thumbnailQueryString = null;
 
@@ -376,6 +392,9 @@ public class DLURLHelperImpl implements DLURLHelper {
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;
+
+	@Reference
+	private FileVersionPreviewLocalService _fileVersionPreviewLocalService;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

@@ -16,8 +16,10 @@ package com.liferay.blogs.web.internal.servlet.taglib.clay;
 
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.web.internal.security.permission.resource.BlogsEntryPermission;
+import com.liferay.blogs.web.internal.servlet.taglib.util.BlogsEntryActionDropdownItemsProvider;
 import com.liferay.blogs.web.internal.util.BlogsEntryUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.BaseVerticalCard;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -27,11 +29,14 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.trash.TrashHelper;
 
 import java.util.Date;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 /**
  * @author Adolfo Pérez
@@ -40,15 +45,31 @@ public class BlogsEntryVerticalCard extends BaseVerticalCard {
 
 	public BlogsEntryVerticalCard(
 		BlogsEntry blogsEntry, RenderRequest renderRequest,
-		RowChecker rowChecker, String blogsEntryURL,
+		RenderResponse renderResponse, RowChecker rowChecker,
+		TrashHelper trashHelper, String blogsEntryURL,
 		PermissionChecker permissionChecker, ResourceBundle resourceBundle) {
 
 		super(blogsEntry, renderRequest, rowChecker);
 
 		_blogsEntry = blogsEntry;
+		_renderResponse = renderResponse;
+		_trashHelper = trashHelper;
 		_blogsEntryURL = blogsEntryURL;
 		_permissionChecker = permissionChecker;
 		_resourceBundle = resourceBundle;
+	}
+
+	@Override
+	public List<DropdownItem> getActionDropdownItems() {
+		BlogsEntryActionDropdownItemsProvider
+			blogsEntryActionDropdownItemsProvider =
+				new BlogsEntryActionDropdownItemsProvider(
+					_blogsEntry,
+					PortalUtil.getLiferayPortletRequest(renderRequest),
+					PortalUtil.getLiferayPortletResponse(_renderResponse),
+					_permissionChecker, _resourceBundle, _trashHelper);
+
+		return blogsEntryActionDropdownItemsProvider.getActionDropdownItems();
 	}
 
 	@Override
@@ -112,6 +133,8 @@ public class BlogsEntryVerticalCard extends BaseVerticalCard {
 	private final BlogsEntry _blogsEntry;
 	private final String _blogsEntryURL;
 	private final PermissionChecker _permissionChecker;
+	private final RenderResponse _renderResponse;
 	private final ResourceBundle _resourceBundle;
+	private final TrashHelper _trashHelper;
 
 }

@@ -18,6 +18,14 @@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.search.web.internal.search.insights.display.context.SearchInsightsDisplayContext" %>
 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
+
+<%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
+
+<portlet:defineObjects />
+
 <%
 SearchInsightsDisplayContext searchInsightsDisplayContext = (SearchInsightsDisplayContext)java.util.Objects.requireNonNull(request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT));
 %>
@@ -30,14 +38,44 @@ SearchInsightsDisplayContext searchInsightsDisplayContext = (SearchInsightsDispl
 	-->
 </style>
 
-<div class="full-query">
-	<code>
-		<%= HtmlUtil.escape(searchInsightsDisplayContext.getRequestString()) %>
-	</code>
+<c:choose>
+	<c:when test="<%= searchInsightsDisplayContext.isRequestStringPresent() %>">
+	<div class="full-query">
+		<liferay-ui:panel-container
+			extended="<%= true %>"
+			id='<%= renderResponse.getNamespace() + "insightsPanelContainer" %>'
+			markupView="lexicon"
+			persistState="<%= true %>"
+		>
+		<liferay-ui:panel
+			collapsible="<%= true %>"
+			id='<%= renderResponse.getNamespace() + "insightsRequestPanel" %>'
+			markupView="lexicon"
+			persistState="<%= true %>"
+			title="request"
+		>
+			<code>
+				<%= HtmlUtil.escape(searchInsightsDisplayContext.getRequestString()) %>
+			</code>
+		</liferay-ui:panel>
 
-	<hr />
-
-	<code>
-		<%= HtmlUtil.escape(searchInsightsDisplayContext.getResponseString()) %>
-	</code>
-</div>
+		<liferay-ui:panel
+			collapsible="<%= true %>"
+			id='<%= renderResponse.getNamespace() + "insightsResponsePanel" %>'
+			markupView="lexicon"
+			persistState="<%= true %>"
+			title="response"
+		>
+			<code>
+				<%= HtmlUtil.escape(searchInsightsDisplayContext.getResponseString()) %>
+			</code>
+		</liferay-ui:panel>
+		</liferay-ui:panel-container>
+	</div>
+	</c:when>
+	<c:otherwise>
+		<div class="alert alert-info">
+			<%= HtmlUtil.escape(searchInsightsDisplayContext.getRequestString()) %>
+		</div>
+	</c:otherwise>
+</c:choose>

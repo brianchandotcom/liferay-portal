@@ -29,8 +29,16 @@ public class SearchInsightsDisplayContext implements Serializable {
 		return _responseString;
 	}
 
+	public boolean isRequestStringPresent() {
+		return _requestStringPresent;
+	}
+
 	public void setRequestString(String queryString) {
 		_requestString = queryString;
+	}
+
+	public void setRequestStringPresent(boolean requestStringPresent) {
+		_requestStringPresent = requestStringPresent;
 	}
 
 	public void setResponseString(String responseString) {
@@ -38,6 +46,7 @@ public class SearchInsightsDisplayContext implements Serializable {
 	}
 
 	private String _requestString;
+	private boolean _requestStringPresent;
 	private String _responseString;
 
 }

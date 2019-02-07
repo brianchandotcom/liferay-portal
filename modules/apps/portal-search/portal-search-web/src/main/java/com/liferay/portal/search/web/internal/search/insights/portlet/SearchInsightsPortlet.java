@@ -104,6 +104,9 @@ public class SearchInsightsPortlet extends MVCPortlet {
 		SearchResponse searchResponse =
 			portletSharedSearchResponse.getSearchResponse();
 
+		searchInsightsDisplayContext.setRequestStringPresent(
+			isRequestStringPresent(searchResponse));
+
 		searchInsightsDisplayContext.setRequestString(
 			buildRequestString(searchResponse, renderRequest));
 
@@ -136,6 +139,13 @@ public class SearchInsightsPortlet extends MVCPortlet {
 			"content.Language", renderRequest.getLocale(), getClass());
 
 		return language.get(resourceBundle, "search-insights-help");
+	}
+
+	protected boolean isRequestStringPresent(SearchResponse searchResponse) {
+		Optional<String> requestString = SearchStringUtil.maybe(
+			searchResponse.getRequestString());
+
+		return requestString.isPresent();
 	}
 
 	@Reference

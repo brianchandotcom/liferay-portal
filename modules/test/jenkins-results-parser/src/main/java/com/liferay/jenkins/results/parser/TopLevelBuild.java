@@ -1430,6 +1430,26 @@ public class TopLevelBuild extends BaseBuild {
 		if (sb.length() > 0) {
 			sendBuildMetrics(sb.toString());
 		}
+
+		sendBuildMetricsOnModifiedCompletedBuilds();
+	}
+
+	protected void sendBuildMetricsOnModifiedCompletedBuilds() {
+		List<Build> modifiedCompletedBuilds =
+			getModifiedDownstreamBuildsByStatus("completed");
+
+		for (Build modifiedCompletedBuild : modifiedCompletedBuilds) {
+			if (modifiedCompletedBuild instanceof BatchBuild) {
+				continue;
+			}
+
+			long duration = modifiedCompletedBuild.getDuration();
+
+			sendBuildMetrics(
+				StatsDMetricsUtil.generateTimerMetric(
+					"jenkins_job_build_duration", duration,
+					modifiedCompletedBuild.getMetricLabels()));
+		}
 	}
 
 	protected static final Pattern gitRepositoryTempMapNamePattern =

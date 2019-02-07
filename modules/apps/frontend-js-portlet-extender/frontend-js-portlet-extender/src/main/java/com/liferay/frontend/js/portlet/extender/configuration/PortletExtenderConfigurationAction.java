@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
@@ -94,7 +95,7 @@ public class PortletExtenderConfigurationAction
 					"[$PORTLET_NAME$]", "[$ACTION_URL$]",
 					"[$CURRENT_TIME_MILLIS$]", "[$FIELDS_JSON_ARRAY$]",
 					"[$CONSTANTS_CMD$]", "[$CONSTANTS_UPDATE$]",
-					"[$DDM_FORM_HTML$]"
+					"[$DDM_FORM_HTML$]", "[$SAVE$]"
 				},
 				new String[] {
 					portletDisplay.getNamespace(),
@@ -104,7 +105,8 @@ public class PortletExtenderConfigurationAction
 					DDMFormRendererUtil.render(
 						_ddmForm,
 						_getDDMFormFieldRenderingContext(
-							request, response, themeDisplay, portletDisplay))
+							request, response, themeDisplay, portletDisplay)),
+					LanguageUtil.get(themeDisplay.getLocale(), "save")
 				}));
 	}
 

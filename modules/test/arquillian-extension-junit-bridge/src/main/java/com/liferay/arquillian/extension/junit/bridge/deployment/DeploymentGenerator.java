@@ -100,63 +100,63 @@ public class DeploymentGenerator {
 		DeploymentScenario deploymentScenario, TestClass testClass,
 		ProtocolRegistry protocolRegistry) {
 
+		List<Deployment> deployments = deploymentScenario.deployments();
+
+		Deployment deployment = deployments.get(0);
+
+		DeploymentDescription deploymentDescription =
+			deployment.getDescription();
+
+		if (!deploymentDescription.testable() ||
+			!deploymentDescription.isArchiveDeployment()) {
+
+			return;
+		}
+
+		List<Archive<?>> auxiliaryArchives = _loadAuxiliaryArchives();
+
+		ProtocolDefinition protocolDefinition = protocolRegistry.getProtocol(
+			deploymentDescription.getProtocol());
+
+		Container container = _containerInstance.get();
+
+		DeployableContainer deployableContainer =
+			container.getDeployableContainer();
+
+		if (protocolDefinition == null) {
+			protocolDefinition = protocolRegistry.getProtocol(
+				deployableContainer.getDefaultProtocol());
+		}
+
+		Protocol<?> protocol = protocolDefinition.getProtocol();
+
+		DeploymentPackager deploymentPackager = protocol.getPackager();
+
+		Archive<?> archive = deploymentDescription.getArchive();
+
+		_applyApplicationProcessors(
+			deploymentDescription.getArchive(), testClass);
+
+		_applyAuxiliaryProcessors(auxiliaryArchives);
+
+		try {
+			if (ClassContainer.class.isInstance(archive)) {
+				ClassContainer<?> classContainer = ClassContainer.class.cast(
+					archive);
+
+				classContainer.addClass(testClass.getJavaClass());
+			}
+		}
+		catch (UnsupportedOperationException uoe) {
+		}
+
 		ServiceLoader serviceLoader = _serviceLoaderInstance.get();
 
-		for (Deployment deployment : deploymentScenario.deployments()) {
-			DeploymentDescription deploymentDescription =
-				deployment.getDescription();
-
-			if (!deploymentDescription.testable() ||
-				!deploymentDescription.isArchiveDeployment()) {
-
-				continue;
-			}
-
-			List<Archive<?>> auxiliaryArchives = _loadAuxiliaryArchives();
-
-			ProtocolDefinition protocolDefinition =
-				protocolRegistry.getProtocol(
-					deploymentDescription.getProtocol());
-
-			Container container = _containerInstance.get();
-
-			DeployableContainer deployableContainer =
-				container.getDeployableContainer();
-
-			if (protocolDefinition == null) {
-				protocolDefinition = protocolRegistry.getProtocol(
-					deployableContainer.getDefaultProtocol());
-			}
-
-			Protocol<?> protocol = protocolDefinition.getProtocol();
-
-			DeploymentPackager deploymentPackager = protocol.getPackager();
-
-			Archive<?> archive = deploymentDescription.getArchive();
-
-			_applyApplicationProcessors(
-				deploymentDescription.getArchive(), testClass);
-
-			_applyAuxiliaryProcessors(auxiliaryArchives);
-
-			try {
-				if (ClassContainer.class.isInstance(archive)) {
-					ClassContainer<?> classContainer =
-						ClassContainer.class.cast(archive);
-
-					classContainer.addClass(testClass.getJavaClass());
-				}
-			}
-			catch (UnsupportedOperationException uoe) {
-			}
-
-			deploymentDescription.setTestableArchive(
-				deploymentPackager.generateDeployment(
-					new TestDeployment(
-						deployment.getDescription(), archive,
-						auxiliaryArchives),
-					serviceLoader.all(ProtocolArchiveProcessor.class)));
-		}
+		deploymentDescription.setTestableArchive(
+			deploymentPackager.generateDeployment(
+				new TestDeployment(
+					deployment.getDescription(), archive, auxiliaryArchives),
+				serviceLoader.all(ProtocolArchiveProcessor.class)));
 	}
 
 	private void _createTestableDeployments(

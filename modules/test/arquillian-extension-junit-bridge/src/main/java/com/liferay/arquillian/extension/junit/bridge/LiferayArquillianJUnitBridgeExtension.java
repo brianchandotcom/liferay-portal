@@ -55,12 +55,21 @@ public class LiferayArquillianJUnitBridgeExtension
 			"/arquillian.remote.marker");
 
 		if (url == null) {
+			extensionBuilder.context(ClassContextImpl.class);
 			extensionBuilder.context(ContainerContextImpl.class);
 			extensionBuilder.context(DeploymentContextImpl.class);
+			extensionBuilder.context(SuiteContextImpl.class);
+			extensionBuilder.context(TestContextImpl.class);
+			extensionBuilder.observer(ClientTestExecuter.class);
 			extensionBuilder.observer(ConfigurationRegistrar.class);
 			extensionBuilder.observer(ContainerDeployController.class);
 			extensionBuilder.observer(ContainerDeploymentContextHandler.class);
+			extensionBuilder.observer(ContainerEventController.class);
 			extensionBuilder.observer(ContainerLifecycleController.class);
+			extensionBuilder.observer(DeploymentGenerator.class);
+			extensionBuilder.observer(ProtocolRegistryCreator.class);
+			extensionBuilder.observer(RemoteTestExecuter.class);
+			extensionBuilder.observer(TestContextHandler.class);
 			extensionBuilder.service(
 				DeployableContainer.class,
 				LiferayRemoteDeployableContainer.class);
@@ -68,18 +77,6 @@ public class LiferayArquillianJUnitBridgeExtension
 				DeploymentScenarioGenerator.class,
 				BndDeploymentScenarioGenerator.class);
 			extensionBuilder.service(Protocol.class, JMXOSGiProtocol.class);
-
-			extensionBuilder.context(SuiteContextImpl.class);
-			extensionBuilder.context(ClassContextImpl.class);
-			extensionBuilder.context(TestContextImpl.class);
-
-			extensionBuilder.observer(TestContextHandler.class);
-
-			extensionBuilder.observer(ContainerEventController.class);
-			extensionBuilder.observer(DeploymentGenerator.class);
-			extensionBuilder.observer(ProtocolRegistryCreator.class);
-			extensionBuilder.observer(ClientTestExecuter.class);
-			extensionBuilder.observer(RemoteTestExecuter.class);
 		}
 		else {
 			extensionBuilder.context(ClassContextImpl.class);

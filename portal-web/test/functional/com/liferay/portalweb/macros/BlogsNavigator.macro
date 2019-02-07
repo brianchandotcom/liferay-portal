@@ -59,7 +59,10 @@ definition {
 			value1 = "${entryTitle}"
 		);
 
-		Click(locator1 = "Blogs#DESCRIPTIVE_VIEW_ENTRY_OPTIONS_DROPDOWN");
+		Click(
+			locator1 = "LexiconList#LIST_ENTRY_ELLIPSIS",
+			key_listEntry = "${entryTitle}"
+		);
 
 		MenuItem.click(menuItem = "Edit");
 
@@ -161,7 +164,10 @@ definition {
 			value1 = "${entryTitle}"
 		);
 
-		Click(locator1 = "Blogs#DESCRIPTIVE_VIEW_ENTRY_OPTIONS_DROPDOWN");
+		Click(
+			locator1 = "LexiconList#LIST_ENTRY_ELLIPSIS",
+			key_listEntry = "${entryTitle}"
+		);
 
 		PortletEntry.clickMoveToRecycleBin();
 

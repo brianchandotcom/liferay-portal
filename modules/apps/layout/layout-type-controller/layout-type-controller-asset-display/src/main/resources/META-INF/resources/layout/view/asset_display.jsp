@@ -41,6 +41,7 @@ if (assetEntry != null) {
 
 		<%
 		String currentI18nLanguageId = GetterUtil.getString(request.getAttribute(AssetDisplayWebKeys.CURRENT_I18N_LANGUAGE_ID), themeDisplay.getLanguageId());
+		long[] segmentsIds = GetterUtil.getLongValues(request.getAttribute(SegmentsWebKeys.SEGMENTS_ENTRY_IDS), new long[0]);
 
 		try {
 			request.setAttribute(WebKeys.PORTLET_DECORATE, Boolean.FALSE);
@@ -103,7 +104,7 @@ if (assetEntry != null) {
 											}
 										%>
 
-											<%= FragmentEntryRenderUtil.renderFragmentEntryLink(fragmentEntryLink, FragmentEntryLinkConstants.ASSET_DISPLAY_PAGE, assetDisplayLayoutTypeControllerDisplayContext.getAssetDisplayFieldsValues(), request, response, locale) %>
+											<%= FragmentEntryRenderUtil.renderFragmentEntryLink(fragmentEntryLink, FragmentEntryLinkConstants.ASSET_DISPLAY_PAGE, assetDisplayLayoutTypeControllerDisplayContext.getAssetDisplayFieldsValues(), request, response, locale, segmentsIds) %>
 
 										<%
 										}

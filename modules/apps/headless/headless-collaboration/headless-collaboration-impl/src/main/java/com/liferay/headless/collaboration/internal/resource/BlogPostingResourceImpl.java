@@ -115,19 +115,6 @@ public class BlogPostingResourceImpl extends BaseBlogPostingResourceImpl {
 		}
 	}
 
-	private LocalDateTime _getLocalDateTime(Date date) {
-		Timestamp timestamp = null;
-
-		if (date != null) {
-			timestamp = new Timestamp(date.getTime());
-		}
-		else {
-			timestamp = new Timestamp(System.currentTimeMillis());
-		}
-
-		return timestamp.toLocalDateTime();
-	}
-
 	@Override
 	public BlogPosting putBlogPosting(
 			Long blogPostingId, BlogPosting blogPosting)
@@ -158,6 +145,25 @@ public class BlogPostingResourceImpl extends BaseBlogPostingResourceImpl {
 		}
 	}
 
+	private ServiceContext _createServiceContext(
+		long groupId, BlogPosting blogPosting) {
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
+
+		String[] keywords = blogPosting.getKeywords();
+
+		if (ArrayUtil.isNotEmpty(keywords)) {
+			serviceContext.setAssetTagNames(keywords);
+		}
+
+		serviceContext.setScopeGroupId(groupId);
+
+		return serviceContext;
+	}
+
 	private ImageSelector _getImageSelector(BlogPosting blogPosting) {
 		ImageObject imageObject = blogPosting.getImage();
 
@@ -181,23 +187,17 @@ public class BlogPostingResourceImpl extends BaseBlogPostingResourceImpl {
 		}
 	}
 
-	private ServiceContext _createServiceContext(
-		long groupId, BlogPosting blogPosting) {
+	private LocalDateTime _getLocalDateTime(Date date) {
+		Timestamp timestamp = null;
 
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setAddGroupPermissions(true);
-		serviceContext.setAddGuestPermissions(true);
-
-		String[] keywords = blogPosting.getKeywords();
-
-		if (ArrayUtil.isNotEmpty(keywords)) {
-			serviceContext.setAssetTagNames(keywords);
+		if (date != null) {
+			timestamp = new Timestamp(date.getTime());
+		}
+		else {
+			timestamp = new Timestamp(System.currentTimeMillis());
 		}
 
-		serviceContext.setScopeGroupId(groupId);
-
-		return serviceContext;
+		return timestamp.toLocalDateTime();
 	}
 
 	private BlogPosting _toBlogPosting(BlogsEntry blogsEntry) {

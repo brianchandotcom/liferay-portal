@@ -43,6 +43,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author Peter Shin
@@ -161,7 +162,7 @@ public class JavaTool {
 		String returnType = _getReturnType(openAPIYAML, operation);
 
 		return new JavaSignature(
-			_getJavaParameters(operation),
+			_getJavaParameters(operation, returnType, schemaName),
 			_getMethodAnnotations(configYAML, operation, pathItem, path),
 			_getMethodName(operation, path, returnType, schemaName),
 			returnType);
@@ -280,7 +281,9 @@ public class JavaTool {
 	private JavaTool() {
 	}
 
-	private List<JavaParameter> _getJavaParameters(Operation operation) {
+	private List<JavaParameter> _getJavaParameters(
+		Operation operation, String returnType, String schemaName) {
+
 		if ((operation == null) || (operation.getParameters() == null)) {
 			return Collections.emptyList();
 		}
@@ -313,6 +316,18 @@ public class JavaTool {
 				"Pagination");
 
 			javaParameters.add(javaParameter);
+		}
+
+		String httpMethod = getHTTPMethod(operation);
+
+		if ((Objects.equals(httpMethod, "post") ||
+			 Objects.equals(httpMethod, "put")) &&
+			Objects.equals(returnType, schemaName)) {
+
+			String parameterName = StringUtil.lowerCaseFirstLetter(schemaName);
+
+			javaParameters.add(
+				new JavaParameter(null, parameterName, schemaName));
 		}
 
 		return javaParameters;

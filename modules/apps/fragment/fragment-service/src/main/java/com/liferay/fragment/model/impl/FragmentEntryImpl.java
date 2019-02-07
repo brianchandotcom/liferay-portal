@@ -43,10 +43,6 @@ public class FragmentEntryImpl extends FragmentEntryBaseImpl {
 
 	@Override
 	public String getImagePreviewURL(ThemeDisplay themeDisplay) {
-		if (Validator.isNotNull(_imagePreviewURL)) {
-			return _imagePreviewURL;
-		}
-
 		try {
 			FileEntry fileEntry = _getPreviewFileEntry();
 
@@ -117,11 +113,6 @@ public class FragmentEntryImpl extends FragmentEntryBaseImpl {
 		}
 	}
 
-	@Override
-	public void setImagePreviewURL(String imagePreviewURL) {
-		_imagePreviewURL = imagePreviewURL;
-	}
-
 	private FileEntry _getPreviewFileEntry() {
 		if (getPreviewFileEntryId() <= 0) {
 			return null;
@@ -141,7 +132,5 @@ public class FragmentEntryImpl extends FragmentEntryBaseImpl {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FragmentEntryImpl.class);
-
-	private String _imagePreviewURL;
 
 }

@@ -632,11 +632,6 @@ public class FragmentEntryWrapper extends BaseModelWrapper<FragmentEntry>
 		model.setHtml(html);
 	}
 
-	@Override
-	public void setImagePreviewURL(String imagePreviewURL) {
-		model.setImagePreviewURL(imagePreviewURL);
-	}
-
 	/**
 	* Sets the js of this fragment entry.
 	*

@@ -61,8 +61,6 @@ public class RESTBuilder {
 	public RESTBuilder(String copyrightFileName, String restConfigDirName)
 		throws Exception {
 
-		long startTime = System.currentTimeMillis();
-
 		_copyrightFileName = copyrightFileName;
 
 		_configDir = new File(restConfigDirName);
@@ -93,7 +91,9 @@ public class RESTBuilder {
 				continue;
 			}
 
-			String versionDirName = "v" + version.replaceAll("\\D", "_");
+			String versionDirName = version.replaceAll("\\D", "_");
+
+			versionDirName = "v" + versionDirName.replaceFirst("^_+", "");
 
 			context.put("openAPIYAML", openAPIYAML);
 			context.put("versionDirName", versionDirName);

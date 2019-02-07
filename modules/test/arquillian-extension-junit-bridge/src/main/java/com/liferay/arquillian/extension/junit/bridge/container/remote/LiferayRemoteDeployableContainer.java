@@ -37,6 +37,7 @@ import javax.management.remote.JMXConnector;
 import javax.management.remote.JMXConnectorFactory;
 import javax.management.remote.JMXServiceURL;
 
+import org.jboss.arquillian.container.spi.client.container.ContainerConfiguration;
 import org.jboss.arquillian.container.spi.client.container.DeployableContainer;
 import org.jboss.arquillian.container.spi.client.container.DeploymentException;
 import org.jboss.arquillian.container.spi.client.container.LifecycleException;
@@ -54,7 +55,7 @@ import org.osgi.jmx.framework.FrameworkMBean;
  * @author Preston Crary
  */
 public class LiferayRemoteDeployableContainer
-	implements DeployableContainer<DefaultContainerConfiguration> {
+	implements DeployableContainer<ContainerConfiguration> {
 
 	@Override
 	public ProtocolMetaData deploy(Archive<?> archive)
@@ -88,8 +89,8 @@ public class LiferayRemoteDeployableContainer
 	}
 
 	@Override
-	public Class<DefaultContainerConfiguration> getConfigurationClass() {
-		return DefaultContainerConfiguration.class;
+	public Class<ContainerConfiguration> getConfigurationClass() {
+		return ContainerConfiguration.class;
 	}
 
 	@Override
@@ -98,8 +99,7 @@ public class LiferayRemoteDeployableContainer
 	}
 
 	@Override
-	public void setup(
-		DefaultContainerConfiguration defaultContainerConfiguration) {
+	public void setup(ContainerConfiguration containerConfiguration) {
 	}
 
 	@Override

@@ -14,8 +14,6 @@
 
 package com.liferay.arquillian.extension.junit.bridge.container.impl;
 
-import com.liferay.arquillian.extension.junit.bridge.container.remote.DefaultContainerConfiguration;
-
 import org.jboss.arquillian.config.descriptor.api.ContainerDef;
 import org.jboss.arquillian.config.descriptor.api.ProtocolDef;
 import org.jboss.arquillian.container.spi.Container;
@@ -53,7 +51,7 @@ public class ContainerImpl implements Container {
 
 	@Override
 	public ContainerConfiguration createDeployableConfiguration() {
-		return new DefaultContainerConfiguration();
+		return null;
 	}
 
 	@Override

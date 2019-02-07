@@ -25,17 +25,12 @@ import org.jboss.arquillian.config.descriptor.api.ContainerDef;
 import org.jboss.arquillian.container.spi.Container;
 import org.jboss.arquillian.container.spi.ContainerRegistry;
 import org.jboss.arquillian.container.spi.client.deployment.TargetDescription;
-import org.jboss.arquillian.core.api.Injector;
 import org.jboss.arquillian.core.spi.ServiceLoader;
 
 /**
  * @author Matthew Tambara
  */
 public class LocalContainerRegistry implements ContainerRegistry {
-
-	public LocalContainerRegistry(Injector injector) {
-		_injector = injector;
-	}
 
 	@Override
 	public Container create(
@@ -44,8 +39,6 @@ public class LocalContainerRegistry implements ContainerRegistry {
 		Container container = new ContainerImpl(
 			containerDef.getContainerName(),
 			new LiferayRemoteDeployableContainer(), containerDef);
-
-		_injector.inject(container);
 
 		_containers.add(container);
 
@@ -86,6 +79,5 @@ public class LocalContainerRegistry implements ContainerRegistry {
 	}
 
 	private final List<Container> _containers = new ArrayList<>();
-	private final Injector _injector;
 
 }

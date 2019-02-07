@@ -42,14 +42,17 @@ public class ConfigurationRegistrar {
 
 		_instanceProducer.set(new ArquillianDescriptorImpl(null));
 
-		ContainerRegistry containerRegistry = new LocalContainerRegistry(
-			_injectorInstance.get());
+		Injector injector = _injectorInstance.get();
+
+		ContainerRegistry containerRegistry = new LocalContainerRegistry();
 
 		ContainerDef containerDef = new ContainerDefImpl("arquillian.xml");
 
 		containerDef.setContainerName("default");
 
-		containerRegistry.create(containerDef, _serviceLoaderInstance.get());
+		injector.inject(
+			containerRegistry.create(
+				containerDef, _serviceLoaderInstance.get()));
 
 		_containerRegistryInstanceProducer.set(containerRegistry);
 	}

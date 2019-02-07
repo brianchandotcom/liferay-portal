@@ -48,17 +48,6 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 		} %>'
 />
 
-<portlet:renderURL var="reviewUADDataURL">
-	<portlet:param name="mvcRenderCommandName" value="/review_uad_data" />
-</portlet:renderURL>
-
-<aui:form action="<%= reviewUADDataURL %>" method="post" name="reviewUADDataFm">
-	<aui:input name="p_u_i_d" type="hidden" value="<%= String.valueOf(selectedUser.getUserId()) %>" />
-
-	<aui:input name="applicationKey" type="hidden" value="<%= viewUADEntitiesDisplay.getApplicationKey() %>" />
-	<aui:input name="uadRegistryKey" type="hidden" />
-</aui:form>
-
 <div class="container-fluid container-fluid-max-xl container-form-lg">
 	<div class="row">
 		<div class="col-lg-3">
@@ -166,26 +155,49 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 	</div>
 </div>
 
-<aui:script use="aui-base">
-	var form = AUI.$(document.<portlet:namespace />reviewUADDataFm);
+<portlet:renderURL var="reviewUADDataURL">
+	<portlet:param name="mvcRenderCommandName" value="/review_uad_data" />
+	<portlet:param name="p_u_i_d" value="<%= String.valueOf(selectedUser.getUserId()) %>" />
+	<portlet:param name="applicationKey" value="<%= viewUADEntitiesDisplay.getApplicationKey() %>" />
+</portlet:renderURL>
 
-	A.one('#<portlet:namespace />applicationPanelBody').delegate(
+<aui:script require="metal-dom/src/dom as dom,metal-uri/src/Uri">
+	const Uri = metalUriSrcUri.default;
+
+	const baseURL = '<%= reviewUADDataURL %>';
+
+	const applicationPanelBodyClickListener = dom.delegate(
+		<portlet:namespace />applicationPanelBody,
 		'click',
+		'input',
 		function(event) {
-			form.fm('applicationKey').val(event.currentTarget.val());
+			const url = new Uri(baseURL);
 
-			submitForm(form);
-		},
-		'input'
+			url.setParameterValue('<portlet:namespace />applicationKey', event.target.value);
+
+			Liferay.Util.navigate(url.toString());
+		}
 	);
 
-	A.one('#<portlet:namespace />entitiesTypePanelBody').delegate(
+	const entitiesTypePanelBodyClickListener = dom.delegate(
+		<portlet:namespace />entitiesTypePanelBody,
 		'click',
+		'input',
 		function(event) {
-			form.fm('uadRegistryKey').val(event.currentTarget.val());
+			const url = new Uri(baseURL);
 
-			submitForm(form);
-		},
-		'input'
+			url.setParameterValue('<portlet:namespace />uadRegistryKey', event.target.value);
+
+			Liferay.Util.navigate(url.toString());
+		}
 	);
+
+	function handleDestroyPortlet() {
+		applicationPanelBodyClickListener.removeListener();
+		entitiesTypePanelBodyClickListener.removeListener();
+
+		Liferay.detach('destroyPortlet', handleDestroyPortlet);
+	}
+
+	Liferay.on('destroyPortlet', handleDestroyPortlet);
 </aui:script>

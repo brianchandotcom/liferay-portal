@@ -35,7 +35,7 @@ import com.liferay.site.navigation.menu.item.layout.constants.SiteNavigationMenu
 import com.liferay.site.navigation.model.SiteNavigationMenu;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalServiceUtil;
-import com.liferay.site.navigation.util.SiteNavigationTestUtil;
+import com.liferay.site.navigation.util.SiteNavigationMenuTestUtil;
 
 import java.util.List;
 
@@ -61,14 +61,14 @@ public class SiteNavigationMenuItemServiceTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
-		_siteNavigationMenu = SiteNavigationTestUtil.addSiteNavigationMenu(
+		_siteNavigationMenu = SiteNavigationMenuTestUtil.addSiteNavigationMenu(
 			_group);
 	}
 
 	@Test
 	public void testAddSiteNavigationMenuItem() throws PortalException {
 		SiteNavigationMenuItem originalSiteNavigationMenuItem =
-			SiteNavigationTestUtil.addSiteNavigationMenuItem(
+			SiteNavigationMenuTestUtil.addSiteNavigationMenuItem(
 				_siteNavigationMenu);
 
 		SiteNavigationMenuItem actualSiteNavigationMenuItem =
@@ -86,7 +86,7 @@ public class SiteNavigationMenuItemServiceTest {
 		int siteNavigationMenuItemPosition = 1;
 
 		SiteNavigationMenuItem originalSiteNavigationMenuItem =
-			SiteNavigationTestUtil.addSiteNavigationMenuItem(
+			SiteNavigationMenuTestUtil.addSiteNavigationMenuItem(
 				siteNavigationMenuItemPosition, _siteNavigationMenu);
 
 		SiteNavigationMenuItem actualSiteNavigationMenuItem =
@@ -100,7 +100,7 @@ public class SiteNavigationMenuItemServiceTest {
 	@Test
 	public void testDeleteSiteNavigationMenuItem() throws PortalException {
 		SiteNavigationMenuItem siteNavigationMenuItem =
-			SiteNavigationTestUtil.addSiteNavigationMenuItem(
+			SiteNavigationMenuTestUtil.addSiteNavigationMenuItem(
 				_siteNavigationMenu);
 
 		SiteNavigationMenuItemLocalServiceUtil.deleteSiteNavigationMenuItem(
@@ -116,7 +116,7 @@ public class SiteNavigationMenuItemServiceTest {
 		throws PortalException {
 
 		SiteNavigationMenuItem siteNavigationMenuItem =
-			SiteNavigationTestUtil.addSiteNavigationMenuItem(
+			SiteNavigationMenuTestUtil.addSiteNavigationMenuItem(
 				_siteNavigationMenu);
 
 		SiteNavigationMenuItemLocalServiceUtil.deleteSiteNavigationMenuItem(
@@ -177,13 +177,13 @@ public class SiteNavigationMenuItemServiceTest {
 		Group group = GroupTestUtil.addGroup();
 
 		SiteNavigationMenu siteNavigationMenu =
-			SiteNavigationTestUtil.addSiteNavigationMenu(group);
+			SiteNavigationMenuTestUtil.addSiteNavigationMenu(group);
 
 		try {
-			SiteNavigationTestUtil.addSiteNavigationMenuItem(
+			SiteNavigationMenuTestUtil.addSiteNavigationMenuItem(
 				siteNavigationMenu);
 
-			SiteNavigationTestUtil.addSiteNavigationMenuItem(
+			SiteNavigationMenuTestUtil.addSiteNavigationMenuItem(
 				siteNavigationMenu);
 
 			int originalSiteNavigationMenuItemsCount =
@@ -212,9 +212,11 @@ public class SiteNavigationMenuItemServiceTest {
 	public void testDeleteSiteNavigationMenuItemsBySiteNavigationMenuId()
 		throws PortalException {
 
-		SiteNavigationTestUtil.addSiteNavigationMenuItem(_siteNavigationMenu);
+		SiteNavigationMenuTestUtil.addSiteNavigationMenuItem(
+			_siteNavigationMenu);
 
-		SiteNavigationTestUtil.addSiteNavigationMenuItem(_siteNavigationMenu);
+		SiteNavigationMenuTestUtil.addSiteNavigationMenuItem(
+			_siteNavigationMenu);
 
 		int originalSiteNavigationMenuItemsCount =
 			SiteNavigationMenuItemLocalServiceUtil.
@@ -240,9 +242,11 @@ public class SiteNavigationMenuItemServiceTest {
 			SiteNavigationMenuItemLocalServiceUtil.getSiteNavigationMenuItems(
 				_siteNavigationMenu.getSiteNavigationMenuId());
 
-		SiteNavigationTestUtil.addSiteNavigationMenuItem(_siteNavigationMenu);
+		SiteNavigationMenuTestUtil.addSiteNavigationMenuItem(
+			_siteNavigationMenu);
 
-		SiteNavigationTestUtil.addSiteNavigationMenuItem(_siteNavigationMenu);
+		SiteNavigationMenuTestUtil.addSiteNavigationMenuItem(
+			_siteNavigationMenu);
 
 		List<SiteNavigationMenuItem> actualSiteNavigationMenuItems =
 			SiteNavigationMenuItemLocalServiceUtil.getSiteNavigationMenuItems(
@@ -259,7 +263,7 @@ public class SiteNavigationMenuItemServiceTest {
 		throws PortalException {
 
 		SiteNavigationMenuItem parentSiteNavigationMenuItem =
-			SiteNavigationTestUtil.addSiteNavigationMenuItem(
+			SiteNavigationMenuTestUtil.addSiteNavigationMenuItem(
 				_siteNavigationMenu);
 
 		List<SiteNavigationMenuItem> originalSiteNavigationMenuItems =
@@ -268,11 +272,12 @@ public class SiteNavigationMenuItemServiceTest {
 				parentSiteNavigationMenuItem.getSiteNavigationMenuItemId());
 
 		SiteNavigationMenuItem childSiteNavigationMenuItem =
-			SiteNavigationTestUtil.addSiteNavigationMenuItem(
+			SiteNavigationMenuTestUtil.addSiteNavigationMenuItem(
 				parentSiteNavigationMenuItem.getSiteNavigationMenuItemId(),
 				_siteNavigationMenu);
 
-		SiteNavigationTestUtil.addSiteNavigationMenuItem(_siteNavigationMenu);
+		SiteNavigationMenuTestUtil.addSiteNavigationMenuItem(
+			_siteNavigationMenu);
 
 		List<SiteNavigationMenuItem> actualSiteNavigationMenuItems =
 			SiteNavigationMenuItemLocalServiceUtil.getSiteNavigationMenuItems(

@@ -30,7 +30,7 @@ import com.liferay.site.navigation.service.SiteNavigationMenuLocalServiceUtil;
 /**
  * @author Kyle Miho
  */
-public class SiteNavigationTestUtil {
+public class SiteNavigationMenuTestUtil {
 
 	public static SiteNavigationMenu addSiteNavigationMenu(Group group)
 		throws PortalException {

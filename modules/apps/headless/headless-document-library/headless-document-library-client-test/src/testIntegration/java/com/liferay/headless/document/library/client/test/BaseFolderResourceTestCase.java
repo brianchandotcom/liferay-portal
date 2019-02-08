@@ -68,7 +68,7 @@ public abstract class BaseFolderResourceTestCase {
 	@Before
 	public void setUp() throws MalformedURLException {
 		_headlessDocumentLibraryURL = new URL(
-			_url.toExternalForm() + "/o/headless-document-library/1.0.0");
+			_url.toExternalForm() + "/o/headless-document-library/v1.0");
 
 		_groupId = _createGroup();
 	}

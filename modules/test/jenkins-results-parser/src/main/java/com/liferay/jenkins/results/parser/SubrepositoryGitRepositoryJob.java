@@ -38,7 +38,7 @@ public abstract class SubrepositoryGitRepositoryJob extends GitRepositoryJob {
 		Set<String> batchNames = _getRequiredTestBatchNames();
 
 		String testBatchNames = JenkinsResultsParserUtil.getProperty(
-			getSubrepositoryTestProperties(), "test.batch.names");
+			getJobProperties(), "test.batch.names");
 
 		if (!Objects.isNull(testBatchNames)) {
 			Collections.addAll(batchNames, testBatchNames.split(","));
@@ -50,7 +50,7 @@ public abstract class SubrepositoryGitRepositoryJob extends GitRepositoryJob {
 	@Override
 	public Set<String> getDistTypes() {
 		String distTypes = JenkinsResultsParserUtil.getProperty(
-			getSubrepositoryTestProperties(), "subrepo.dist.app.servers");
+			getJobProperties(), "subrepo.dist.app.servers");
 
 		return new TreeSet<>(Arrays.asList(distTypes.split(",")));
 	}
@@ -104,12 +104,12 @@ public abstract class SubrepositoryGitRepositoryJob extends GitRepositoryJob {
 		String jobName, String repositoryName) {
 
 		super(jobName);
-	}
 
-	protected Properties getSubrepositoryTestProperties() {
-		if (subrepositoryTestProperties != null) {
-			return subrepositoryTestProperties;
-		}
+		gitWorkingDirectory =
+			JenkinsResultsParserUtil.getSubrepositoryGitWorkingDirectory(
+				jobName, repositoryName);
+
+		setGitRepositoryDir(gitWorkingDirectory.getWorkingDirectory());
 
 		checkGitRepositoryDir();
 
@@ -122,20 +122,15 @@ public abstract class SubrepositoryGitRepositoryJob extends GitRepositoryJob {
 			throw new RuntimeException("Unable to get build properties", ioe);
 		}
 
-		File defaultPropertiesFile = new File(
-			JenkinsResultsParserUtil.combine(
-				buildProperties.getProperty("base.repository.dir"),
-				"/liferay-jenkins-ee/commands/dependencies",
-				"/test-subrepository-batch.properties"));
+		jobPropertiesFiles.add(
+			new File(
+				JenkinsResultsParserUtil.combine(
+					buildProperties.getProperty("base.repository.dir"),
+					"/liferay-jenkins-ee/commands/dependencies",
+					"/test-subrepository-batch.properties")));
 
-		subrepositoryTestProperties = JenkinsResultsParserUtil.getProperties(
-			defaultPropertiesFile,
-			new File(gitRepositoryDir, "test.properties"));
-
-		return subrepositoryTestProperties;
+		jobPropertiesFiles.add(new File(gitRepositoryDir, "test.properties"));
 	}
-
-	protected Properties subrepositoryTestProperties;
 
 	private boolean _containsIntegrationTest() throws IOException {
 		GitWorkingDirectory gitWorkingDirectory = getGitWorkingDirectory();
@@ -153,7 +148,7 @@ public abstract class SubrepositoryGitRepositoryJob extends GitRepositoryJob {
 
 	private Set<String> _getRequiredTestBatchNames() {
 		String testRequiredBatchNames = JenkinsResultsParserUtil.getProperty(
-			getSubrepositoryTestProperties(), "test.required.batch.names");
+			getJobProperties(), "test.required.batch.names");
 
 		Set<String> testRequiredBatchNamesSet = new HashSet<>();
 

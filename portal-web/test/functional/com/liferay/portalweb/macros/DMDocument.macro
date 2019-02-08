@@ -929,6 +929,8 @@ definition {
 	}
 
 	macro editTags {
+		SelectFrame(value1 = "relative=top");
+		
 		AssertTextEquals(locator1 = "Modal#HEADER", value1 = "Edit Tags");
 
 		AssertTextEquals.assertPartialText(
@@ -937,8 +939,6 @@ definition {
 		);
 
 		Type(locator1 = "DocumentsAndMedia#EDIT_TAGS_FIELD", value1 = "${tagName}");
-
-		SelectFrame(value1 = "relative=top");
 
 		KeyPress(locator1 = "DocumentsAndMedia#EDIT_TAGS_FIELD", value1 = "\RETURN");
 

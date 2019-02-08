@@ -68,9 +68,7 @@ SelectUserGroupsDisplayContext selectUserGroupsDisplayContext = new SelectUserGr
 				};
 			}
 
-			Liferay.Util.getOpener().Liferay.fire(
-				'<%= HtmlUtil.escapeJS(selectUserGroupsDisplayContext.getEventName()) %>',
-				result);
+			Liferay.Util.getOpener().Liferay.fire('<%= HtmlUtil.escapeJS(selectUserGroupsDisplayContext.getEventName()) %>', result);
 		}
 	);
 </aui:script>

@@ -68,9 +68,7 @@ SelectOrganizationsDisplayContext selectOrganizationsDisplayContext = new Select
 				};
 			}
 
-			Liferay.Util.getOpener().Liferay.fire(
-				'<%= HtmlUtil.escapeJS(selectOrganizationsDisplayContext.getEventName()) %>',
-				result);
+			Liferay.Util.getOpener().Liferay.fire('<%= HtmlUtil.escapeJS(selectOrganizationsDisplayContext.getEventName()) %>', result);
 		}
 	);
 </aui:script>

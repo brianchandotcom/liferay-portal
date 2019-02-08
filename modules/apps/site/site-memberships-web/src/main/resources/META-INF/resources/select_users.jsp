@@ -71,9 +71,7 @@ SelectUsersDisplayContext selectUsersDisplayContext = new SelectUsersDisplayCont
 				};
 			}
 
-			Liferay.Util.getOpener().Liferay.fire(
-				'<%= HtmlUtil.escapeJS(selectUsersDisplayContext.getEventName()) %>',
-				result);
+			Liferay.Util.getOpener().Liferay.fire('<%= HtmlUtil.escapeJS(selectUsersDisplayContext.getEventName()) %>', result);
 		}
 	);
 </aui:script>

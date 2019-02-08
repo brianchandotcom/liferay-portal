@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import io.restassured.RestAssured;
 import io.restassured.parsing.Parser;
+import io.restassured.response.Response;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -287,6 +288,16 @@ public abstract class BaseFolderResourceTestCase {
 	}
 
 	private Folder _getFolder(String path) throws MalformedURLException {
+		Response response = _getFolderResponse(path);
+
+		Assert.assertEquals(200, response.statusCode());
+
+		return response.as(Folder.class);
+	}
+
+	private Response _getFolderResponse(String path)
+		throws MalformedURLException {
+
 		return RestAssured.given(
 		).auth(
 		).preemptive(
@@ -298,13 +309,8 @@ public abstract class BaseFolderResourceTestCase {
 		).get(
 			new URL(_headlessDocumentLibraryURL.toExternalForm() + path)
 		).then(
-		).statusCode(
-			200
 		).extract(
-		).response(
-		).as(
-			Folder.class
-		);
+		).response();
 	}
 
 	private Folder _updateFolder(Folder updatedFolder, String path)

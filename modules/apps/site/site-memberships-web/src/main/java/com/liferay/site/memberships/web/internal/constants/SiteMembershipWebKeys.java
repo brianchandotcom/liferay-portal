@@ -21,6 +21,9 @@ public class SiteMembershipWebKeys {
 
 	public static final String ORGANIZATIONS = "ORGANIZATIONS";
 
+	public static final String USER_DROPDOWN_DEFAULT_EVENT_HANDLER =
+		"USER_DROPDOWN_DEFAULT_EVENT_HANDLER";
+
 	public static final String USERS = "USERS";
 
 }

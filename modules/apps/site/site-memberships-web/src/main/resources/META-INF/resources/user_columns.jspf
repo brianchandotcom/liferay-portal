@@ -89,9 +89,17 @@ names.addAll(ListUtil.toList(teams, Team.NAME_ACCESSOR));
 		</liferay-ui:search-container-column-text>
 
 		<c:if test="<%= !selectUsers %>">
-			<liferay-ui:search-container-column-jsp
-				path="/user_action.jsp"
-			/>
+
+			<%
+			UserActionDropdownItemsProvider userActionDropdownItemsProvider = new UserActionDropdownItemsProvider(user2, renderRequest, renderResponse);
+			%>
+
+			<liferay-ui:search-container-column-text>
+				<clay:dropdown-actions
+					defaultEventHandler="<%= SiteMembershipWebKeys.USER_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
+					dropdownItems="<%= userActionDropdownItemsProvider.getActionDropdownItems() %>"
+				/>
+			</liferay-ui:search-container-column-text>
 		</c:if>
 	</c:when>
 	<c:otherwise>
@@ -115,9 +123,16 @@ names.addAll(ListUtil.toList(teams, Team.NAME_ACCESSOR));
 				value="<%= HtmlUtil.escape(StringUtil.merge(names, StringPool.COMMA_AND_SPACE)) %>"
 			/>
 
-			<liferay-ui:search-container-column-jsp
-				path="/user_action.jsp"
-			/>
+			<%
+			UserActionDropdownItemsProvider userActionDropdownItemsProvider = new UserActionDropdownItemsProvider(user2, renderRequest, renderResponse);
+			%>
+
+			<liferay-ui:search-container-column-text>
+				<clay:dropdown-actions
+					defaultEventHandler="<%= SiteMembershipWebKeys.USER_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
+					dropdownItems="<%= userActionDropdownItemsProvider.getActionDropdownItems() %>"
+				/>
+			</liferay-ui:search-container-column-text>
 		</c:if>
 	</c:otherwise>
 </c:choose>

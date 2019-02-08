@@ -178,7 +178,7 @@ renderResponse.setTitle(assetEntryUsagesDisplayContext.getAssetEntryTitle());
 						<c:if test="<%= ListUtil.isNotEmpty(dropdownItems) %>">
 							<liferay-ui:search-container-column-text>
 								<clay:dropdown-actions
-									componentId='<%= renderResponse.getNamespace() + "actionsComponent" %>'
+									componentId='<%= renderResponse.getNamespace() + "actionsComponent_" + assetEntryUsage.getAssetEntryUsageId() %>'
 									dropdownItems="<%= dropdownItems %>"
 								/>
 							</liferay-ui:search-container-column-text>

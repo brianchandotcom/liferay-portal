@@ -100,7 +100,9 @@ public abstract class SubrepositoryGitRepositoryJob extends GitRepositoryJob {
 		super.setGitRepositoryDir(repositoryDir);
 	}
 
-	protected SubrepositoryGitRepositoryJob(String jobName) {
+	protected SubrepositoryGitRepositoryJob(
+		String jobName, String repositoryName) {
+
 		super(jobName);
 	}
 

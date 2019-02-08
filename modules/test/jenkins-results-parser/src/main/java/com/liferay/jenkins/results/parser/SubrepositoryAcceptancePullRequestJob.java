@@ -23,14 +23,16 @@ import java.util.Set;
 public class SubrepositoryAcceptancePullRequestJob
 	extends SubrepositoryGitRepositoryJob implements TestSuiteJob {
 
-	public SubrepositoryAcceptancePullRequestJob(String jobName) {
-		this(jobName, "default");
+	public SubrepositoryAcceptancePullRequestJob(
+		String jobName, String repositoryName) {
+
+		this(jobName, "default", repositoryName);
 	}
 
 	public SubrepositoryAcceptancePullRequestJob(
-		String jobName, String testSuiteName) {
+		String jobName, String testSuiteName, String repositoryName) {
 
-		super(jobName);
+		super(jobName, repositoryName);
 
 		_testSuiteName = testSuiteName;
 	}

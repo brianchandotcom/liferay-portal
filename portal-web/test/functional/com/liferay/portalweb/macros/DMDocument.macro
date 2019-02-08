@@ -930,13 +930,31 @@ definition {
 
 	macro editTags {
 		SelectFrame(value1 = "relative=top");
-		
+
 		AssertTextEquals(locator1 = "Modal#HEADER", value1 = "Edit Tags");
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "Modal#BODY",
-			value1 = "These changes will be applied to &quot;${dmDocumentTitle}&quot;."
-		);
+		if ("${multipleDocuments}" == "true") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "Modal#BODY",
+				value1 = "These changes will be applied to ${itemNumber} items. Select append or replace current tags."
+			);
+
+			Click(locator1 = "Modal#BODY");
+
+			if ("${editAction}" == "Append") {
+				Click(locator1 = "Radio#APPEND");
+			}
+			else if ("${editAction}" == "Replace") {
+				Click(locator1 = "Radio#REPLACE");
+			}
+		}
+
+		else {
+			AssertTextEquals.assertPartialText(
+				locator1 = "Modal#BODY",
+				value1 = "These changes will be applied to &quot;${dmDocumentTitle}&quot;."
+			);
+		}
 
 		Type(locator1 = "DocumentsAndMedia#EDIT_TAGS_FIELD", value1 = "${tagName}");
 

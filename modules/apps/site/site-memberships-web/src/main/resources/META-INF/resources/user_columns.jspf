@@ -38,31 +38,9 @@ names.addAll(ListUtil.toList(teams, Team.NAME_ACCESSOR));
 		%>
 
 		<liferay-ui:search-container-column-text>
-			<liferay-frontend:user-vertical-card
-				actionJsp='<%= !selectUsers ? "/user_action.jsp" : StringPool.BLANK %>'
-				actionJspServletContext="<%= application %>"
-				cssClass="entry-display-style"
-				resultRow="<%= row %>"
-				rowChecker="<%= searchContainer.getRowChecker() %>"
-				subtitle="<%= user2.getScreenName() %>"
-				title="<%= user2.getFullName() %>"
-				userId="<%= user2.getUserId() %>"
-			>
-				<c:if test="<%= !selectUsers %>">
-					<liferay-frontend:vertical-card-footer>
-						<span class="text-default">
-							<c:choose>
-								<c:when test="<%= !SetUtil.isEmpty(names) %>">
-									<%= HtmlUtil.escape(StringUtil.merge(names, StringPool.COMMA_AND_SPACE)) %>
-								</c:when>
-								<c:otherwise>
-									&nbsp;
-								</c:otherwise>
-							</c:choose>
-						</span>
-					</liferay-frontend:vertical-card-footer>
-				</c:if>
-			</liferay-frontend:user-vertical-card>
+			<clay:user-card
+				userCard="<%= new UsersUserCard(user2, !selectUsers, renderRequest, renderResponse, searchContainer.getRowChecker()) %>"
+			/>
 		</liferay-ui:search-container-column-text>
 	</c:when>
 	<c:when test='<%= displayStyle.equals("descriptive") %>'>

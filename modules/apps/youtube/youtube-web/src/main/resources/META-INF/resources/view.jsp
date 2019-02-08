@@ -25,7 +25,7 @@
 				</aui:a>
 			</c:when>
 			<c:otherwise>
-				<iframe allowfullscreen frameborder="0" height="<%= youTubeDisplayContext.getHeight() %>" src="<%= youTubeDisplayContext.getEmbedURL() %>" width="<%= youTubeDisplayContext.getWidth() %>" wmode="Opaque" /></iframe>
+				<iframe allowfullscreen frameborder="0" id="<portlet:namespace />iframe" src="<%= youTubeDisplayContext.getEmbedURL() %>" wmode="Opaque" /></iframe>
 			</c:otherwise>
 		</c:choose>
 	</c:when>
@@ -33,3 +33,67 @@
 		<liferay-util:include page="/html/portal/portlet_not_setup.jsp" />
 	</c:otherwise>
 </c:choose>
+
+<aui:script>
+	function <portlet:namespace />resizeIFrame() {
+		var iFrame = document.getElementById('<portlet:namespace />iframe');
+
+		if (iFrame != null) {
+			var displayContextHeight = <%= youTubeDisplayContext.getHeight() %>;
+			var displayContextWidth = <%= youTubeDisplayContext.getWidth() %>;
+
+			iFrame.setAttribute('height', displayContextHeight);
+
+			var parent = iFrame.parentElement;
+
+			var parentWidth = parent.offsetWidth;
+
+			if (displayContextWidth > parentWidth) {
+				iFrame.setAttribute('width', parentWidth);
+			}
+			else {
+				iFrame.setAttribute('width', displayContextWidth);
+			}
+		}
+	};
+
+	function <portlet:namespace />addDragAndDropListener() {
+		const TIMEOUT_LENGTH = 10;
+
+		if (!Liferay.Layout) {
+			setTimeout(
+				function() {
+					<portlet:namespace />addDragAndDropListener();
+				},
+				TIMEOUT_LENGTH
+			);
+		}
+		else {
+			Liferay.Layout.on(
+				[ 'drag:end', 'drag:start' ],
+				function(event) {
+					setTimeout(
+						function() {
+							$(window).trigger('resize');
+						},
+						TIMEOUT_LENGTH
+					);
+				}
+			);
+		}
+	}
+
+	Liferay.on(
+		'portletReady', function(event) {
+			<portlet:namespace />resizeIFrame();
+		}
+	);
+
+	<portlet:namespace />addDragAndDropListener();
+
+	$(window).on(
+		'resize', function() {
+			<portlet:namespace />resizeIFrame();
+		}
+	);
+</aui:script>

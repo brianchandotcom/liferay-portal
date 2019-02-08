@@ -107,6 +107,8 @@ class EditCategories extends Component {
 					this.commonCategories = response.categories;
 					this.description = response.description;
 					this.multiple = (this.fileEntries.length > 1) || this.selectAll;
+
+					this._initialCategoriesIds = this.commonCategories.map(item => item.value);
 				}
 			}
 		);
@@ -128,13 +130,50 @@ class EditCategories extends Component {
 
 	/**
 	 * Sends request to backend services
-	 * to update the tags.
+	 * to update the categories.
 	 *
 	 * @private
 	 * @review
 	 */
 	_handleSaveBtnClick() {
-		//TODO
+		let finalCategories = this.commonCategories.map(category => category.value);
+
+		let addedCategories = [];
+
+		if (!this.append) {
+			addedCategories = finalCategories;
+		}
+		else {
+			addedCategories = finalCategories.filter(
+				categoryId => this._initialCategoriesIds.indexOf(categoryId) == -1
+			);
+		}
+
+		let removedCategories = this._initialCategoriesIds.filter(
+			category => finalCategories.indexOf(category) == -1
+		);
+
+		let bodyData = {
+			append: this.append,
+			repositoryId: this.repositoryId,
+			selection: this._getSelection(),
+			toAddCategoryIds: addedCategories,
+			toRemoveCategoryIds: removedCategories
+		};
+
+		let instance = this;
+
+		this._fetchCategoriesRequest(
+			this.urlUpdateCategories,
+			bodyData,
+			response => {
+				instance.close();
+
+				if (instance._bulkStatusComponent) {
+					instance._bulkStatusComponent.startWatch();
+				}
+			}
+		);
 	}
 
 	/**

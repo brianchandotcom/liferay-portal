@@ -56,10 +56,8 @@ public class ContentPageLayoutEditorDisplayContext
 		soyContext.put(
 			"availableSegments",
 			_getSoyContextAvailableSegmentsEntries(segmentsEntries));
-
 		soyContext.put(
 			"defaultSegmentId", _getDefaultSegmentId(segmentsEntries));
-
 		soyContext.put("sidebarPanels", getSidebarPanelSoyContexts(false));
 
 		_editorSoyContext = soyContext;
@@ -82,7 +80,6 @@ public class ContentPageLayoutEditorDisplayContext
 		soyContext.put(
 			"availableSegments",
 			_getSoyContextAvailableSegmentsEntries(segmentsEntries));
-
 		soyContext.put(
 			"defaultSegmentId", _getDefaultSegmentId(segmentsEntries));
 

@@ -22,15 +22,8 @@
 		%>
 
 		<liferay-ui:search-container-column-text>
-			<liferay-frontend:vertical-card
-				actionJsp='<%= !selectOrganizations ? "/organization_action.jsp" : StringPool.BLANK %>'
-				actionJspServletContext="<%= application %>"
-				cssClass="entry-display-style"
-				imageUrl='<%= themeDisplay.getPathImage() + "/organization_logo?img_id=" + organization.getLogoId() + "&t=" + WebServerServletTokenUtil.getToken(organization.getLogoId()) %>'
-				resultRow="<%= row %>"
-				rowChecker="<%= searchContainer.getRowChecker() %>"
-				subtitle="<%= LanguageUtil.get(request, organization.getType()) %>"
-				title="<%= organization.getName() %>"
+			<clay:vertical-card
+				verticalCard="<%= new OrganizationsVerticalCard(organization, !selectOrganizations, renderRequest, renderResponse, searchContainer.getRowChecker()) %>"
 			/>
 		</liferay-ui:search-container-column-text>
 	</c:when>

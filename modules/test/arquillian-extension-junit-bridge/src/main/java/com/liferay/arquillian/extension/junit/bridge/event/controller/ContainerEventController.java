@@ -96,17 +96,6 @@ public class ContainerEventController {
 	private void _createContext(
 		EventContext<? extends TestEvent> eventContext) {
 
-		try {
-			_lookup(new Activate());
-
-			eventContext.proceed();
-		}
-		finally {
-			_lookup(new DeActivate());
-		}
-	}
-
-	private void _lookup(ResultCallback resultCallback) {
 		DeploymentScenario deploymentScenario =
 			_deploymentScenarioInstance.get();
 
@@ -115,7 +104,22 @@ public class ContainerEventController {
 
 		Container container = _containerInstance.get();
 
-		resultCallback.call(container, deployment);
+		ContainerContext containerContext = _containerContextInstance.get();
+
+		DeploymentContext deploymentContext = _deploymentContextInstance.get();
+
+		try {
+			containerContext.activate(container.getName());
+
+			deploymentContext.activate(deployment);
+
+			eventContext.proceed();
+		}
+		finally {
+			deploymentContext.deactivate();
+
+			containerContext.deactivate();
+		}
 	}
 
 	@Inject
@@ -135,33 +139,5 @@ public class ContainerEventController {
 
 	@Inject
 	private Event<GenerateDeployment> _generateDeploymentEvent;
-
-	private class Activate extends ResultCallback {
-
-		@Override
-		public void call(Container container, Deployment deployment) {
-			_containerContextInstance.get().activate(container.getName());
-
-			_deploymentContextInstance.get().activate(deployment);
-		}
-
-	}
-
-	private class DeActivate extends ResultCallback {
-
-		@Override
-		public void call(Container container, Deployment deployment) {
-			_containerContextInstance.get().deactivate();
-
-			_deploymentContextInstance.get().deactivate();
-		}
-
-	}
-
-	private abstract class ResultCallback {
-
-		public abstract void call(Container container, Deployment deployment);
-
-	}
 
 }

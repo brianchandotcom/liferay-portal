@@ -15,11 +15,23 @@
 package com.liferay.document.library.uad.display;
 
 import com.liferay.document.library.constants.DLPortletKeys;
+import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolder;
+import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.user.associated.data.display.UADDisplay;
+
+import java.io.Serializable;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -30,7 +42,9 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Brian Wing Shun Chan
  */
-@Component(immediate = true, service = UADDisplay.class)
+@Component(
+	immediate = true, service = {UADDisplay.class, DLFolderUADDisplay.class}
+)
 public class DLFolderUADDisplay extends BaseDLFolderUADDisplay {
 
 	@Override
@@ -55,7 +69,83 @@ public class DLFolderUADDisplay extends BaseDLFolderUADDisplay {
 		return portletURL.toString();
 	}
 
+	@Override
+	public Map<String, Object> getFieldValues(
+		DLFolder dlFolder, String[] fieldNames) {
+
+		Map<String, Object> fieldValues = super.getFieldValues(
+			dlFolder, fieldNames);
+
+		List<String> fieldNamesList = Arrays.asList(fieldNames);
+
+		if (fieldNamesList.contains("type")) {
+			fieldValues.put("type", "--");
+		}
+
+		return fieldValues;
+	}
+
+	@Override
+	public Serializable getParentContainerId(DLFolder dlFolder) {
+		return dlFolder.getParentFolderId();
+	}
+
+	@Override
+	public DLFolder getTopLevelContainer(
+		Class parentContainerType, Serializable parentContainerId,
+		Object childObject) {
+
+		try {
+			DLFolder childFolder;
+
+			if (childObject instanceof DLFileEntry) {
+				DLFileEntry dlFileEntry = (DLFileEntry)childObject;
+
+				childFolder = dlFileEntry.getFolder();
+			}
+			else {
+				childFolder = (DLFolder)childObject;
+			}
+
+			long parentFolderId = (long)parentContainerId;
+
+			if ((childFolder.getFolderId() == parentFolderId) ||
+				((parentFolderId !=
+					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) &&
+				 !StringUtil.contains(
+					 childFolder.getTreePath(), String.valueOf(parentFolderId),
+					 "/"))) {
+
+				return null;
+			}
+
+			if (childFolder.getParentFolderId() == parentFolderId) {
+				return childFolder;
+			}
+
+			List<Long> ancestorFolderIds = childFolder.getAncestorFolderIds();
+
+			if (parentFolderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+				return get(ancestorFolderIds.get(ancestorFolderIds.size() - 1));
+			}
+
+			if (ancestorFolderIds.contains(parentFolderId)) {
+				return get(
+					ancestorFolderIds.get(
+						ancestorFolderIds.indexOf(parentFolderId) - 1));
+			}
+		}
+		catch (PortalException pe) {
+			_log.error(pe, pe);
+		}
+
+		return null;
+	}
+
 	@Reference
 	protected Portal portal;
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DLFolderUADDisplay.class);
 
 }

@@ -22,6 +22,7 @@ import com.liferay.oauth2.provider.scope.liferay.ScopeLocator;
 import com.liferay.oauth2.provider.scope.spi.application.descriptor.ApplicationDescriptor;
 import com.liferay.oauth2.provider.service.OAuth2ApplicationService;
 import com.liferay.oauth2.provider.web.internal.AssignableScopes;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -317,6 +318,13 @@ public class AssignScopesDisplayContext
 		@Override
 		public int hashCode() {
 			return Objects.hash(_globalAssignableScopes, _scopeAliases);
+		}
+
+		@Override
+		public String toString() {
+			return StringBundler.concat(
+				"[", String.join(",", getScopeAliases()), "][",
+				String.join(",", getGlobalScopeAliases()), "]");
 		}
 
 		private Set<AssignableScopes> _globalAssignableScopes = new HashSet<>();

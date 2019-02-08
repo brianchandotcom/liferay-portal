@@ -62,22 +62,10 @@ public class StructuredContentEntityModel implements EntityModel {
 				"datePublished",
 				locale -> Field.getSortableFieldName(Field.DISPLAY_DATE),
 				locale -> Field.DISPLAY_DATE),
-			new IdEntityField(
-				"contentStructure", locale -> Field.CLASS_TYPE_ID,
-				contentStructureLink -> {
-					List<String> parts = StringUtil.split(
-						String.valueOf(contentStructureLink), '/');
-
-					return parts.get(parts.size() - 1);
-				}),
-			new IdEntityField(
-				"creator", locale -> Field.USER_ID,
-				creatorLink -> {
-					List<String> parts = StringUtil.split(
-						String.valueOf(creatorLink), '/');
-
-					return parts.get(parts.size() - 1);
-				}),
+			new StringEntityField(
+				"contentStructureId", locale -> Field.CLASS_TYPE_ID),
+			new StringEntityField(
+				"creatorId", locale -> Field.USER_ID),
 			new StringEntityField(
 				"title",
 				locale -> Field.getSortableFieldName(

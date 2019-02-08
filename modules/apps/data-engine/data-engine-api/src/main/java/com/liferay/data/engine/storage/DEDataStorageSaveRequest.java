@@ -59,6 +59,12 @@ public final class DEDataStorageSaveRequest {
 			return this;
 		}
 
+		public Builder withDataStorage(long deDataStorageId) {
+			_deDataStorageSaveRequest._deDataStorageId = deDataStorageId;
+
+			return this;
+		}
+
 		private final DEDataStorageSaveRequest _deDataStorageSaveRequest =
 			new DEDataStorageSaveRequest();
 

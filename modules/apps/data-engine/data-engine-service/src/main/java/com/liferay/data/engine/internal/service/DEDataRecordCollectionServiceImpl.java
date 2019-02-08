@@ -280,10 +280,18 @@ public class DEDataRecordCollectionServiceImpl
 			deDataRecordCollectionSaveRecordRequest.getDEDataRecord();
 
 		try {
-			_modelResourcePermission.check(
-				getPermissionChecker(),
-				deDataRecord.getDEDataRecordCollectionId(),
-				DEActionKeys.ADD_DATA_RECORD);
+			if (deDataRecord.getDEDataRecordId() == 0) {
+				_modelResourcePermission.check(
+					getPermissionChecker(),
+					deDataRecord.getDEDataRecordCollectionId(),
+					DEActionKeys.ADD_DATA_RECORD);
+			}
+			else {
+				_modelResourcePermission.check(
+					getPermissionChecker(),
+					deDataRecord.getDEDataRecordCollectionId(),
+					DEActionKeys.UPDATE_DATA_RECORD);
+			}
 
 			DEDataRecordCollectionSaveRecordRequestExecutor
 				deDataRecordCollectionSaveRecordRequestExecutor =

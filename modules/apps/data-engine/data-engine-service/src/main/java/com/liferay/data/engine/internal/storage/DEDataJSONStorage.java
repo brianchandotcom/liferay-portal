@@ -38,7 +38,6 @@ import com.liferay.dynamic.data.mapping.service.DDMContentLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 
-import java.util.Date;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -135,19 +134,10 @@ public class DEDataJSONStorage implements DEDataStorage {
 			deDataRecordValuesSerializerApplyResponse =
 				deDataRecordValuesSerializer.apply(builder.build());
 
-		long deDataStorageId = deDataStorageSaveRequest.getDEDataStorageId();
-
-		if (deDataRecord.getDEDataRecordId() == 0) {
-			deDataStorageId = insert(
-				deDataStorageSaveRequest.getUserId(),
-				deDataStorageSaveRequest.getGroupId(),
-				deDataRecordValuesSerializerApplyResponse.getContent());
-		}
-		else {
-			update(
-				deDataStorageId,
-				deDataRecordValuesSerializerApplyResponse.getContent());
-		}
+		long deDataStorageId = insert(
+			deDataStorageSaveRequest.getUserId(),
+			deDataStorageSaveRequest.getGroupId(),
+			deDataRecordValuesSerializerApplyResponse.getContent());
 
 		return DEDataStorageResponseBuilder.saveBuilder(
 			deDataStorageId
@@ -167,21 +157,6 @@ public class DEDataJSONStorage implements DEDataStorage {
 			serviceContext);
 
 		return ddmContent.getPrimaryKey();
-	}
-
-	protected void update(long deDataStorageId, String content)
-		throws PortalException {
-
-		DDMContent ddmContent = ddmContentLocalService.getContent(
-			deDataStorageId);
-
-		ddmContent.setModifiedDate(new Date());
-		ddmContent.setData(content);
-
-		ddmContentLocalService.updateContent(
-			ddmContent.getPrimaryKey(), ddmContent.getName(),
-			ddmContent.getDescription(), ddmContent.getData(),
-			new ServiceContext());
 	}
 
 	@Reference

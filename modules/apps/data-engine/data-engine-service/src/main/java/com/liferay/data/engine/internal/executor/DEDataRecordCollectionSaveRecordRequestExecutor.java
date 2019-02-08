@@ -91,9 +91,9 @@ public class DEDataRecordCollectionSaveRecordRequestExecutor {
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		long deDataRecordId = deDataRecord.getDEDataRecordId();
+		DDLRecord ddlRecord;
 
-		DDLRecord ddlRecord = null;
+		long deDataRecordId = deDataRecord.getDEDataRecordId();
 
 		if (deDataRecordId == 0) {
 			ddlRecord = _ddlRecordLocalService.addRecord(
@@ -105,8 +105,8 @@ public class DEDataRecordCollectionSaveRecordRequestExecutor {
 		else {
 			ddlRecord = _ddlRecordLocalService.updateRecord(
 				deDataRecordCollectionSaveRecordRequest.getUserId(),
-				deDataRecordCollectionSaveRecordRequest.getGroupId(),
-				deDataStorageSaveResponse.getDEDataStorageId(), serviceContext);
+				deDataRecordId, deDataStorageSaveResponse.getDEDataStorageId(),
+				serviceContext);
 		}
 
 		addStorageLink(

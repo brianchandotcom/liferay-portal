@@ -39,8 +39,8 @@ if (selUser != null) {
 	context="<%= selUser %>"
 	headerContainerCssClass="container-fluid container-fluid-max-xl"
 	key="<%= UserFormConstants.SCREEN_NAVIGATION_KEY_USERS %>"
-	menuBarCssClass="menubar menubar-transparent menubar-vertical-expand-lg"
+	menubarCssClass="menubar menubar-transparent menubar-vertical-expand-lg"
 	navCssClass="col-lg-3"
-	parentContainerCssClass="container-fluid container-fluid-max-xl container-form-lg"
+	sectionContainerCssClass="container-fluid container-fluid-max-xl container-form-lg"
 	portletURL="<%= portletURL %>"
 />

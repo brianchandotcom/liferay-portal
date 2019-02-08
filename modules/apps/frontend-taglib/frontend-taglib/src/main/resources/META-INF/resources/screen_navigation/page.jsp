@@ -21,9 +21,9 @@ String containerCssClass = (String)request.getAttribute("liferay-frontend:screen
 String fullContainerCssClass = (String)request.getAttribute("liferay-frontend:screen-navigation:fullContainerCssClass");
 String headerContainerCssClass = (String)request.getAttribute("liferay-frontend:screen-navigation:headerContainerCssClass");
 String id = (String)request.getAttribute("liferay-frontend:screen-navigation:id");
-String menuBarCssClass = (String)request.getAttribute("liferay-frontend:screen-navigation:menuBarCssClass");
+String menubarCssClass = (String)request.getAttribute("liferay-frontend:screen-navigation:menubarCssClass");
 String navCssClass = (String)request.getAttribute("liferay-frontend:screen-navigation:navCssClass");
-String parentContainerCssClass = (String)request.getAttribute("liferay-frontend:screen-navigation:parentContainerCssClass");
+String sectionContainerCssClass = (String)request.getAttribute("liferay-frontend:screen-navigation:sectionContainerCssClass");
 PortletURL portletURL = (PortletURL)request.getAttribute("liferay-frontend:screen-navigation:portletURL");
 ScreenNavigationCategory selectedScreenNavigationCategory = (ScreenNavigationCategory)request.getAttribute("liferay-frontend:screen-navigation:selectedScreenNavigationCategory");
 ScreenNavigationEntry selectedScreenNavigationEntry = (ScreenNavigationEntry)request.getAttribute("liferay-frontend:screen-navigation:selectedScreenNavigationEntry");
@@ -59,11 +59,11 @@ List<ScreenNavigationEntry> screenNavigationEntries = (List<ScreenNavigationEntr
 	</div>
 </c:if>
 
-<div class="<%= parentContainerCssClass %>">
+<div class="<%= sectionContainerCssClass %>">
 	<div class="row">
 		<c:if test="<%= screenNavigationEntries.size() > 1 %>">
 			<div class="<%= navCssClass %>">
-				<nav class="<%= menuBarCssClass %>">
+				<nav class="<%= menubarCssClass %>">
 					<a aria-controls="<%= id %>" aria-expanded="false" class="menubar-toggler" data-toggle="collapse" href="#<%= id %>" role="button">
 						<liferay-ui:message key="<%= selectedScreenNavigationEntry.getEntryKey() %>" />
 

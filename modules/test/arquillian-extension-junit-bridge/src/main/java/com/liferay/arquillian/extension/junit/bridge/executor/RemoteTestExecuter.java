@@ -14,12 +14,10 @@
 
 package com.liferay.arquillian.extension.junit.bridge.executor;
 
-import org.jboss.arquillian.config.descriptor.api.ProtocolDef;
-import org.jboss.arquillian.container.spi.Container;
-import org.jboss.arquillian.container.spi.client.deployment.DeploymentDescription;
+import com.liferay.arquillian.extension.junit.bridge.protocol.osgi.JMXOSGiProtocol;
+
 import org.jboss.arquillian.container.spi.client.protocol.metadata.ProtocolMetaData;
 import org.jboss.arquillian.container.test.impl.domain.ProtocolDefinition;
-import org.jboss.arquillian.container.test.impl.domain.ProtocolRegistry;
 import org.jboss.arquillian.container.test.impl.execution.event.RemoteExecutionEvent;
 import org.jboss.arquillian.container.test.spi.ContainerMethodExecutor;
 import org.jboss.arquillian.container.test.spi.client.protocol.Protocol;
@@ -42,37 +40,8 @@ import org.jboss.arquillian.test.spi.annotation.TestScoped;
 public class RemoteTestExecuter {
 
 	public void execute(@Observes RemoteExecutionEvent event) throws Exception {
-		Container container = _containerInstance.get();
-
-		DeploymentDescription deployment = _deploymentDescriptionInstance.get();
-
-		ProtocolRegistry protocolRegistry = _protocolRegistryInstance.get();
-
-		ProtocolDefinition protocol = protocolRegistry.getProtocol(
-			deployment.getProtocol());
-
-		if (protocol == null) {
-			protocol = protocolRegistry.getProtocol(
-				container.getDeployableContainer().getDefaultProtocol());
-		}
-
-		ProtocolConfiguration protocolConfiguration = null;
-
-		if (container.hasProtocolConfiguration(
-				protocol.getProtocolDescription())) {
-
-			ProtocolDef protocolDef = container.getProtocolConfiguration(
-				protocol.getProtocolDescription());
-
-			protocolConfiguration = protocol.createProtocolConfiguration(
-				protocolDef.getProtocolProperties());
-		}
-		else {
-			protocolConfiguration = protocol.createProtocolConfiguration();
-		}
-
 		ContainerMethodExecutor executor = getContainerMethodExecutor(
-			protocol, protocolConfiguration);
+			new ProtocolDefinition(new JMXOSGiProtocol()), null);
 
 		_testResultInstanceProducer.set(executor.invoke(event.getExecutor()));
 	}
@@ -109,19 +78,10 @@ public class RemoteTestExecuter {
 	}
 
 	@Inject
-	private Instance<Container> _containerInstance;
-
-	@Inject
-	private Instance<DeploymentDescription> _deploymentDescriptionInstance;
-
-	@Inject
 	private Instance<ExecutorService> _executorServiceInstance;
 
 	@Inject
 	private Instance<ProtocolMetaData> _protocolMetadataInstance;
-
-	@Inject
-	private Instance<ProtocolRegistry> _protocolRegistryInstance;
 
 	@Inject
 	private Event<Object> _remoteEvent;

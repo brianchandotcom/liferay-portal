@@ -99,6 +99,11 @@
 </tr>
 <!--RESULTS_PORTLET-->
 <tr>
+	<td>RESULTS_PORTLET_PAGINATION_CONFIG</td>
+	<td>//input[contains(@name,'paginationDelta')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>RESULTS_PORTLET_SEARCH_QUERY</td>
 	<td>//p[contains(@class,'search-total-label')]</td>
 	<td></td>

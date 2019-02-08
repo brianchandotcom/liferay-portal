@@ -24,7 +24,6 @@ import com.liferay.arquillian.extension.junit.bridge.deployment.DeploymentGenera
 import com.liferay.arquillian.extension.junit.bridge.event.controller.ContainerEventController;
 import com.liferay.arquillian.extension.junit.bridge.executor.RemoteTestExecuter;
 import com.liferay.arquillian.extension.junit.bridge.observer.ConfigurationRegistrar;
-import com.liferay.arquillian.extension.junit.bridge.protocol.osgi.JMXOSGiProtocol;
 import com.liferay.arquillian.extension.junit.bridge.remote.context.ClassContextImpl;
 import com.liferay.arquillian.extension.junit.bridge.remote.context.SuiteContextImpl;
 import com.liferay.arquillian.extension.junit.bridge.remote.context.TestContextImpl;
@@ -35,9 +34,7 @@ import com.liferay.arquillian.extension.junit.bridge.remote.observer.JUnitBridge
 import java.net.URL;
 
 import org.jboss.arquillian.container.spi.client.container.DeployableContainer;
-import org.jboss.arquillian.container.test.impl.client.protocol.ProtocolRegistryCreator;
 import org.jboss.arquillian.container.test.spi.RemoteLoadableExtension;
-import org.jboss.arquillian.container.test.spi.client.protocol.Protocol;
 import org.jboss.arquillian.core.spi.LoadableExtension;
 
 /**
@@ -63,13 +60,11 @@ public class LiferayArquillianJUnitBridgeExtension
 			extensionBuilder.observer(ContainerEventController.class);
 			extensionBuilder.observer(ContainerLifecycleController.class);
 			extensionBuilder.observer(DeploymentGenerator.class);
-			extensionBuilder.observer(ProtocolRegistryCreator.class);
 			extensionBuilder.observer(RemoteTestExecuter.class);
 			extensionBuilder.observer(TestContextHandler.class);
 			extensionBuilder.service(
 				DeployableContainer.class,
 				LiferayRemoteDeployableContainer.class);
-			extensionBuilder.service(Protocol.class, JMXOSGiProtocol.class);
 		}
 		else {
 			extensionBuilder.context(ClassContextImpl.class);

@@ -106,6 +106,7 @@ reviewDataURL.setParameter("p_u_i_d", String.valueOf(selectedUser.getUserId()));
 				/>
 
 				<liferay-ui:search-container
+					compactEmptyResultsMessage="<%= true %>"
 					searchContainer="<%= uadApplicationSummarySearchContainer %>"
 				>
 					<liferay-ui:search-container-row

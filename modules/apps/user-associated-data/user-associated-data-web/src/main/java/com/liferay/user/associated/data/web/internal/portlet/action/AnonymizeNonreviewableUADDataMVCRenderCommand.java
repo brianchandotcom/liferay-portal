@@ -116,6 +116,9 @@ public class AnonymizeNonreviewableUADDataMVCRenderCommand
 		SearchContainer<UADApplicationSummaryDisplay> searchContainer =
 			new SearchContainer<>(portletRequest, currentURL, null, null);
 
+		searchContainer.setEmptyResultsMessage(
+			"there-are-no-applications-matching-that-filter");
+
 		searchContainer.setId("uadApplicationSummaryDisplays");
 
 		searchContainer.setOrderByCol(_getOrderByCol(renderRequest));

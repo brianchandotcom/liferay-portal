@@ -26,12 +26,6 @@ import org.jboss.arquillian.container.spi.context.DeploymentContext;
 import org.jboss.arquillian.container.spi.context.annotation.DeploymentScoped;
 import org.jboss.arquillian.container.spi.event.DeployManagedDeployments;
 import org.jboss.arquillian.container.spi.event.UnDeployManagedDeployments;
-import org.jboss.arquillian.container.spi.event.container.AfterDeploy;
-import org.jboss.arquillian.container.spi.event.container.AfterUnDeploy;
-import org.jboss.arquillian.container.spi.event.container.BeforeDeploy;
-import org.jboss.arquillian.container.spi.event.container.BeforeUnDeploy;
-import org.jboss.arquillian.container.spi.event.container.DeployerEvent;
-import org.jboss.arquillian.core.api.Event;
 import org.jboss.arquillian.core.api.Instance;
 import org.jboss.arquillian.core.api.InstanceProducer;
 import org.jboss.arquillian.core.api.annotation.Inject;
@@ -74,18 +68,12 @@ public class ContainerDeployController {
 		_deploymentDescriptionInstanceProducer.set(deploymentDescription);
 
 		try {
-			_deployerEvent.fire(
-				new BeforeDeploy(deployableContainer, deploymentDescription));
-
 			ProtocolMetaData protocolMetaData = deployableContainer.deploy(
 				deploymentDescription.getTestableArchive());
 
 			_protocolMetadataInstanceProducer.set(protocolMetaData);
 
 			deployment.deployed();
-
-			_deployerEvent.fire(
-				new AfterDeploy(deployableContainer, deploymentDescription));
 		}
 		finally {
 			deploymentContext.deactivate();
@@ -117,28 +105,17 @@ public class ContainerDeployController {
 				deployment.getDescription();
 
 			try {
-				_deployerEvent.fire(
-					new BeforeUnDeploy(
-						deployableContainer, deploymentDescription));
-
-				try {
-					deployableContainer.undeploy(
-						deploymentDescription.getTestableArchive());
+				deployableContainer.undeploy(
+					deploymentDescription.getTestableArchive());
+			}
+			catch (DeploymentException de) {
+				if (!deployment.hasDeploymentError()) {
+					throw de;
 				}
-				catch (DeploymentException de) {
-					if (!deployment.hasDeploymentError()) {
-						throw de;
-					}
-				}
-				finally {
-					deployment.undeployed();
-				}
-
-				_deployerEvent.fire(
-					new AfterUnDeploy(
-						deployableContainer, deploymentDescription));
 			}
 			finally {
+				deployment.undeployed();
+
 				deploymentContext.deactivate();
 			}
 		}
@@ -146,9 +123,6 @@ public class ContainerDeployController {
 
 	@Inject
 	private Instance<Container> _containerInstance;
-
-	@Inject
-	private Event<DeployerEvent> _deployerEvent;
 
 	@Inject
 	private Instance<DeploymentContext> _deploymentContextInstance;

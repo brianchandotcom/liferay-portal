@@ -121,7 +121,7 @@ public interface UADDisplay<T> extends UADComponent<T> {
 	 * @see UADHierarchyDeclaration
 	 */
 	public default Serializable getParentContainerId(T t) {
-		return null;
+		throw new UnsupportedOperationException();
 	}
 
 	/**
@@ -181,7 +181,7 @@ public interface UADDisplay<T> extends UADComponent<T> {
 		Class<?> parentContainerType, Serializable parentContainerId,
 		Object childObject) {
 
-		return null;
+		throw new UnsupportedOperationException();
 	}
 
 	/**

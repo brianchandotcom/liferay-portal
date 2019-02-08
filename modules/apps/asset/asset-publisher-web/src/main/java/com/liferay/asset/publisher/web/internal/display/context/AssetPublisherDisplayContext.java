@@ -58,6 +58,7 @@ import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
@@ -457,9 +458,15 @@ public class AssetPublisherDisplayContext {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		_availableClassNameIds =
+		long[] availableClassNameIds =
 			AssetRendererFactoryRegistryUtil.getClassNameIds(
 				themeDisplay.getCompanyId(), true);
+
+		_availableClassNameIds = ArrayUtil.filter(
+			availableClassNameIds,
+			availableClassNameId ->
+				IndexerRegistryUtil.getIndexer(
+					PortalUtil.getClassName(availableClassNameId)) != null);
 
 		return _availableClassNameIds;
 	}

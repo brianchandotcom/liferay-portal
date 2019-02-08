@@ -37,7 +37,7 @@ class UserGroupsManagementToolbarDefaultEventHandler extends PortletBase {
 
 									selectedItem.forEach(
 										item => {
-											dom.append(addGroupUserGroupsFm, item)
+											dom.append(addGroupUserGroupsFm, item);
 										}
 									);
 
@@ -100,7 +100,7 @@ class UserGroupsManagementToolbarDefaultEventHandler extends PortletBase {
 
 									selectedItem.forEach(
 										item => {
-											dom.append(fm, item)
+											dom.append(fm, item);
 										}
 									);
 

@@ -115,9 +115,7 @@ public class UserGroupsManagementToolbarDisplayContext
 										LanguageUtil.get(
 											_request, "assign-site-roles"));
 									dropdownItem.setQuickAction(true);
-								}
-							)
-						);
+								}));
 
 						Role role = _userGroupsDisplayContext.getRole();
 
@@ -318,9 +316,7 @@ public class UserGroupsManagementToolbarDisplayContext
 
 							dropdownItem.setLabel(
 								LanguageUtil.get(_request, "roles"));
-						}
-					)
-				);
+						}));
 			}
 		};
 	}

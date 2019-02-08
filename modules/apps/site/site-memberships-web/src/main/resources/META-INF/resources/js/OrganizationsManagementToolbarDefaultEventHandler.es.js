@@ -37,7 +37,7 @@ class OrganizationsManagementToolbarDefaultEventHandler extends PortletBase {
 
 									selectedItem.forEach(
 										item => {
-											dom.append(addGroupOrganizationsFm, item)
+											dom.append(addGroupOrganizationsFm, item);
 										}
 									);
 

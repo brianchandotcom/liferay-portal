@@ -14,6 +14,8 @@
 
 package com.liferay.user.associated.data.web.internal.portlet.action;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
@@ -21,9 +23,8 @@ import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
 import com.liferay.user.associated.data.web.internal.constants.UADWebKeys;
 import com.liferay.user.associated.data.web.internal.registry.UADRegistry;
 import com.liferay.user.associated.data.web.internal.util.SelectedUserHelper;
-import com.liferay.user.associated.data.web.internal.util.UADApplicationSummaryHelper;
 
-import java.util.Collection;
+import java.util.stream.Stream;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -77,36 +78,29 @@ public class ViewUADSummaryMVCRenderCommand implements MVCRenderCommand {
 			return 2;
 		}
 
-		int reviewableUADEntitiesCount =
-			_uadApplicationSummaryHelper.getReviewableUADEntitiesCount(
-				_uadRegistry.getUADDisplayStream(), selectedUser.getUserId());
+		Stream<UADAnonymizer> uadAnonymizerStream =
+			_uadRegistry.getUADAnonymizerStream();
 
-		if (reviewableUADEntitiesCount > 0) {
+		int uadEntitiesCount = uadAnonymizerStream.mapToInt(
+			uadAnonymizer -> {
+				try {
+					return (int)uadAnonymizer.count(selectedUser.getUserId());
+				}
+				catch (PortalException pe) {
+					throw new SystemException(pe);
+				}
+			}
+		).sum();
+
+		if (uadEntitiesCount > 0) {
 			return 3;
 		}
 
-		Collection<UADAnonymizer> uadAnonymizers =
-			_uadRegistry.getUADAnonymizers();
-
-		int selectedUserEntityCount = 0;
-
-		for (UADAnonymizer uadAnonymizer : uadAnonymizers) {
-			selectedUserEntityCount += uadAnonymizer.count(
-				selectedUser.getUserId());
-		}
-
-		if (selectedUserEntityCount > 0) {
-			return 4;
-		}
-
-		return 5;
+		return 4;
 	}
 
 	@Reference
 	private SelectedUserHelper _selectedUserHelper;
-
-	@Reference
-	private UADApplicationSummaryHelper _uadApplicationSummaryHelper;
 
 	@Reference
 	private UADRegistry _uadRegistry;

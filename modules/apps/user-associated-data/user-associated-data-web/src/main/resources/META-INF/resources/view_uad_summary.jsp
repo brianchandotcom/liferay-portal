@@ -133,28 +133,9 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 			</div>
 
 			<div class="sheet-text">
-				<portlet:actionURL name="/delete_remaining_uad" var="deleteURL" />
-
-				<aui:button cssClass="btn-sm" disabled="<%= step != 4 %>" onClick='<%= renderResponse.getNamespace() + "confirmAction('viewUADSummaryFm', '" + deleteURL.toString() + "', '" + UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-anonymize-the-users-personal-data") + "')" %>' value="anonymize-data" />
-
-				<c:if test="<%= step > 4 %>">
-					<liferay-ui:icon
-						cssClass="text-success"
-						iconCssClass="icon-ok-sign"
-						label="<%= true %>"
-						message="all-data-anonymized"
-					/>
-				</c:if>
-			</div>
-
-			<div class="sheet-text">
-				<liferay-ui:message key="summary-page-step-five-description" />
-			</div>
-
-			<div class="sheet-text">
 				<portlet:actionURL name="/delete_user" var="deleteUserURL" />
 
-				<aui:button cssClass="btn-sm" disabled="<%= step != 5 %>" onClick='<%= renderResponse.getNamespace() + "confirmAction('viewUADSummaryFm', '" + deleteUserURL.toString() + "', '" + UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-user") + "')" %>' value="delete-user" />
+				<aui:button cssClass="btn-sm" disabled="<%= step != 4 %>" onClick='<%= renderResponse.getNamespace() + "confirmAction('viewUADSummaryFm', '" + deleteUserURL.toString() + "', '" + UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-user") + "')" %>' value="delete-user" />
 			</div>
 		</div>
 	</aui:form>

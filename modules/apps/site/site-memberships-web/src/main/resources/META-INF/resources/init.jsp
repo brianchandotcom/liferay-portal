@@ -95,6 +95,7 @@ page import="com.liferay.site.memberships.web.internal.display.context.UsersDisp
 page import="com.liferay.site.memberships.web.internal.display.context.UsersManagementToolbarDisplayContext" %><%@
 page import="com.liferay.site.memberships.web.internal.display.context.ViewMembershipRequestsDisplayContext" %><%@
 page import="com.liferay.site.memberships.web.internal.display.context.ViewMembershipRequestsManagementToolbarDisplayContext" %><%@
+page import="com.liferay.site.memberships.web.internal.servlet.taglib.clay.ViewMembershipRequestsUserCard" %><%@
 page import="com.liferay.sites.kernel.util.SitesUtil" %><%@
 page import="com.liferay.users.admin.kernel.util.UsersAdmin" %>
 

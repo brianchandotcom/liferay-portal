@@ -86,38 +86,39 @@ public class ContainerDeployController {
 
 		Container container = _containerInstance.get();
 
-		if (Container.State.STARTED.equals(container.getState())) {
-			DeploymentScenario deploymentScenario =
-				_deploymentScenarioInstance.get();
+		if (!Container.State.STARTED.equals(container.getState())) {
+			return;
+		}
 
-			Deployment deployment = deploymentScenario.deployment(
-				DeploymentTargetDescription.DEFAULT);
+		DeploymentScenario deploymentScenario =
+			_deploymentScenarioInstance.get();
 
-			DeploymentContext deploymentContext =
-				_deploymentContextInstance.get();
+		Deployment deployment = deploymentScenario.deployment(
+			DeploymentTargetDescription.DEFAULT);
 
-			deploymentContext.activate(deployment);
+		DeploymentContext deploymentContext = _deploymentContextInstance.get();
 
-			DeployableContainer<?> deployableContainer =
-				container.getDeployableContainer();
+		deploymentContext.activate(deployment);
 
-			DeploymentDescription deploymentDescription =
-				deployment.getDescription();
+		DeployableContainer<?> deployableContainer =
+			container.getDeployableContainer();
 
-			try {
-				deployableContainer.undeploy(
-					deploymentDescription.getTestableArchive());
+		DeploymentDescription deploymentDescription =
+			deployment.getDescription();
+
+		try {
+			deployableContainer.undeploy(
+				deploymentDescription.getTestableArchive());
+		}
+		catch (DeploymentException de) {
+			if (!deployment.hasDeploymentError()) {
+				throw de;
 			}
-			catch (DeploymentException de) {
-				if (!deployment.hasDeploymentError()) {
-					throw de;
-				}
-			}
-			finally {
-				deployment.undeployed();
+		}
+		finally {
+			deployment.undeployed();
 
-				deploymentContext.deactivate();
-			}
+			deploymentContext.deactivate();
 		}
 	}
 

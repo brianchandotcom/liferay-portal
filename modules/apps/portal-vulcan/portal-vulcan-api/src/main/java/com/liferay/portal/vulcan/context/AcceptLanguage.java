@@ -20,10 +20,15 @@ import java.util.Locale;
 /**
  * @author Alejandro Hernández
  */
+@FunctionalInterface
 public interface AcceptLanguage {
 
 	public List<Locale> getLocales();
 
-	public Locale getPreferredLocale();
+	public default Locale getPreferredLocale() {
+		List<Locale> locales = getLocales();
+
+		return locales.get(0);
+	}
 
 }

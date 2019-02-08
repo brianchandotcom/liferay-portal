@@ -67,4 +67,6 @@ public interface FragmentEntry extends FragmentEntryModel, PersistedModel {
 	public void populateZipWriter(
 		com.liferay.portal.kernel.zip.ZipWriter zipWriter, String path)
 		throws Exception;
+
+	public void setImagePreviewURL(String imagePreviewURL);
 }

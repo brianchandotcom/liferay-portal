@@ -466,6 +466,11 @@ public class SegmentsEntryWrapper extends BaseModelWrapper<SegmentsEntry>
 	}
 
 	@Override
+	public boolean isDefaultSegment() {
+		return model.isDefaultSegment();
+	}
+
+	@Override
 	public void persist() {
 		model.persist();
 	}

@@ -23,11 +23,11 @@ import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.vulcan.context.Pagination;
 import com.liferay.portal.vulcan.dto.Page;
 
+import java.util.List;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
-
-import java.util.List;
 
 /**
  * @author Javier Gamarra
@@ -41,16 +41,16 @@ public class StructuredContentResourceImpl
 
 	@Override
 	public Page<StructuredContent> getContentSpaceStructuredContentsPage(
-			Long contentSpaceId, Filter filter, String sort, Pagination pagination)
+			Long contentSpaceId, Filter filter, String sort,
+			Pagination pagination)
 		throws Exception {
 
 		List<JournalArticle> journalArticles = _searchHelper.getJournalArticles(
 			_groupService.getGroup(contentSpaceId), pagination, filter);
 
 		return Page.of(
-			transform(
-				journalArticles, this::_toStructuredContent),
-			pagination, journalArticles.size());
+			transform(journalArticles, this::_toStructuredContent), pagination,
+			journalArticles.size());
 	}
 
 	private StructuredContent _toStructuredContent(
@@ -73,9 +73,9 @@ public class StructuredContentResourceImpl
 	}
 
 	@Reference
-	private SearchHelper _searchHelper;
+	private GroupService _groupService;
 
 	@Reference
-	private GroupService _groupService;
+	private SearchHelper _searchHelper;
 
 }

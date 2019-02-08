@@ -15,17 +15,14 @@
 package com.liferay.headless.web.experience.internal.odata.entity.v1_0;
 
 import com.liferay.headless.web.experience.internal.resource.v1_0.BaseStructuredContentResourceImpl;
-import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.odata.entity.CollectionEntityField;
 import com.liferay.portal.odata.entity.DateTimeEntityField;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
-import com.liferay.portal.odata.entity.IdEntityField;
 import com.liferay.portal.odata.entity.StringEntityField;
 
-import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -62,22 +59,9 @@ public class StructuredContentEntityModel implements EntityModel {
 				"datePublished",
 				locale -> Field.getSortableFieldName(Field.DISPLAY_DATE),
 				locale -> Field.DISPLAY_DATE),
-			new IdEntityField(
-				"contentStructure", locale -> Field.CLASS_TYPE_ID,
-				contentStructureLink -> {
-					List<String> parts = StringUtil.split(
-						String.valueOf(contentStructureLink), '/');
-
-					return parts.get(parts.size() - 1);
-				}),
-			new IdEntityField(
-				"creator", locale -> Field.USER_ID,
-				creatorLink -> {
-					List<String> parts = StringUtil.split(
-						String.valueOf(creatorLink), '/');
-
-					return parts.get(parts.size() - 1);
-				}),
+			new StringEntityField(
+				"contentStructureId", locale -> Field.CLASS_TYPE_ID),
+			new StringEntityField("creatorId", locale -> Field.USER_ID),
 			new StringEntityField(
 				"title",
 				locale -> Field.getSortableFieldName(

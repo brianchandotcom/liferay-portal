@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.SearchResultPermissionFilter;
 import com.liferay.portal.kernel.search.SearchResultPermissionFilterFactory;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -50,17 +51,13 @@ import org.osgi.service.component.annotations.Reference;
 public class SearchHelper {
 
 	public List<JournalArticle> getJournalArticles(
-			Group group, Pagination pagination,
-			com.liferay.portal.kernel.search.filter.Filter filter)
+			Group group, Pagination pagination, Filter filter)
 		throws PortalException {
 
-		return _journalHelper.getArticles(
-			getHits(group, pagination, filter));
+		return _journalHelper.getArticles(getHits(group, pagination, filter));
 	}
 
-	protected Hits getHits(
-		Group group, Pagination pagination,
-		com.liferay.portal.kernel.search.filter.Filter filter)
+	protected Hits getHits(Group group, Pagination pagination, Filter filter)
 		throws SearchException {
 
 		PermissionChecker permissionChecker =
@@ -80,8 +77,7 @@ public class SearchHelper {
 		return searchResultPermissionFilter.search(searchContext);
 	}
 
-	protected Query getQuery(
-			SearchContext searchContext, com.liferay.portal.kernel.search.filter.Filter filter)
+	protected Query getQuery(SearchContext searchContext, Filter filter)
 		throws SearchException {
 
 		Indexer<JournalArticle> indexer = _indexerRegistry.nullSafeGetIndexer(
@@ -99,7 +95,8 @@ public class SearchHelper {
 	}
 
 	private SearchContext _createSearchContext(
-		Group group, Pagination pagination, PermissionChecker permissionChecker) {
+		Group group, Pagination pagination,
+		PermissionChecker permissionChecker) {
 
 		SearchContext searchContext = new SearchContext();
 

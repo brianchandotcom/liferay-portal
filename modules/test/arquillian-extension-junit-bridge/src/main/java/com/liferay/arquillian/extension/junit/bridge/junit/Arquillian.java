@@ -26,15 +26,22 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
 
+import org.jboss.arquillian.core.api.Instance;
+import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.arquillian.core.impl.loadable.LoadableExtensionLoader;
+import org.jboss.arquillian.core.spi.Manager;
 import org.jboss.arquillian.core.spi.ManagerBuilder;
-import org.jboss.arquillian.test.impl.EventTestRunnerAdaptor;
+import org.jboss.arquillian.core.spi.NonManagedObserver;
 import org.jboss.arquillian.test.spi.LifecycleMethodExecutor;
 import org.jboss.arquillian.test.spi.TestMethodExecutor;
 import org.jboss.arquillian.test.spi.TestResult;
-import org.jboss.arquillian.test.spi.TestRunnerAdaptor;
+import org.jboss.arquillian.test.spi.event.suite.AfterClass;
+import org.jboss.arquillian.test.spi.event.suite.AfterSuite;
 import org.jboss.arquillian.test.spi.event.suite.AfterTestLifecycleEvent;
+import org.jboss.arquillian.test.spi.event.suite.BeforeClass;
+import org.jboss.arquillian.test.spi.event.suite.BeforeSuite;
 import org.jboss.arquillian.test.spi.event.suite.BeforeTestLifecycleEvent;
 import org.jboss.arquillian.test.spi.execution.SkippedTestExecutionException;
 
@@ -98,20 +105,21 @@ public class Arquillian extends Runner implements Filterable {
 
 	@Override
 	public void run(RunNotifier runNotifier) {
-		TestRunnerAdaptor testRunnerAdaptor =
-			_testRunnerAdaptorThreadLocal.get();
+		Manager manager = _managerThreadLocal.get();
 
-		if (testRunnerAdaptor == null) {
+		if (manager == null) {
 			try {
 				ManagerBuilder managerBuilder = ManagerBuilder.from();
 
 				managerBuilder.extension(LoadableExtensionLoader.class);
 
-				testRunnerAdaptor = new EventTestRunnerAdaptor(managerBuilder);
+				manager = managerBuilder.create();
 
-				testRunnerAdaptor.beforeSuite();
+				manager.start();
 
-				_testRunnerAdaptorThreadLocal.set(testRunnerAdaptor);
+				manager.fire(new BeforeSuite());
+
+				_managerThreadLocal.set(manager);
 			}
 			catch (Exception e) {
 				runNotifier.fireTestFailure(new Failure(getDescription(), e));
@@ -120,7 +128,7 @@ public class Arquillian extends Runner implements Filterable {
 			}
 		}
 
-		final TestRunnerAdaptor finalTestRunnerAdaptor = testRunnerAdaptor;
+		final Manager finalManager = manager;
 
 		runNotifier.addListener(
 			new RunListener() {
@@ -128,12 +136,12 @@ public class Arquillian extends Runner implements Filterable {
 				@Override
 				public void testRunFinished(Result result) throws Exception {
 					try {
-						finalTestRunnerAdaptor.afterSuite();
+						finalManager.fire(new AfterSuite());
 
-						finalTestRunnerAdaptor.shutdown();
+						finalManager.shutdown();
 					}
 					finally {
-						_testRunnerAdaptorThreadLocal.remove();
+						_managerThreadLocal.remove();
 					}
 				}
 
@@ -142,7 +150,7 @@ public class Arquillian extends Runner implements Filterable {
 		Description description = getDescription();
 
 		try {
-			Statement statement = _classBlock(runNotifier, testRunnerAdaptor);
+			Statement statement = _classBlock(runNotifier, manager);
 
 			statement.evaluate();
 		}
@@ -159,15 +167,13 @@ public class Arquillian extends Runner implements Filterable {
 		}
 	}
 
-	private Statement _classBlock(
-		RunNotifier runNotifier, TestRunnerAdaptor testRunnerAdaptor) {
-
+	private Statement _classBlock(RunNotifier runNotifier, Manager manager) {
 		Statement statement = new Statement() {
 
 			@Override
 			public void evaluate() {
 				for (FrameworkMethod frameworkMethod : _getChildren()) {
-					_runChild(frameworkMethod, runNotifier, testRunnerAdaptor);
+					_runChild(frameworkMethod, runNotifier, manager);
 				}
 			}
 
@@ -191,8 +197,9 @@ public class Arquillian extends Runner implements Filterable {
 					Throwable throwable = null;
 
 					try {
-						testRunnerAdaptor.beforeClass(
-							_clazz, LifecycleMethodExecutor.NO_OP);
+						manager.fire(
+							new BeforeClass(
+								_clazz, LifecycleMethodExecutor.NO_OP));
 
 						statement.evaluate();
 					}
@@ -201,8 +208,9 @@ public class Arquillian extends Runner implements Filterable {
 					}
 
 					try {
-						testRunnerAdaptor.afterClass(
-							_clazz, LifecycleMethodExecutor.NO_OP);
+						manager.fire(
+							new AfterClass(
+								_clazz, LifecycleMethodExecutor.NO_OP));
 					}
 					catch (Throwable t) {
 						if (throwable != null) {
@@ -269,7 +277,7 @@ public class Arquillian extends Runner implements Filterable {
 	}
 
 	private Statement _methodBlock(
-		FrameworkMethod frameworkMethod, TestRunnerAdaptor testRunnerAdaptor) {
+		FrameworkMethod frameworkMethod, Manager manager) {
 
 		Object testObject = null;
 
@@ -290,8 +298,7 @@ public class Arquillian extends Runner implements Filterable {
 
 		final Object test = testObject;
 
-		Statement statement = _methodInvoker(
-			frameworkMethod, test, testRunnerAdaptor);
+		Statement statement = _methodInvoker(frameworkMethod, test, manager);
 
 		statement = _possiblyExpectingExceptions(frameworkMethod, statement);
 
@@ -314,7 +321,7 @@ public class Arquillian extends Runner implements Filterable {
 				Throwable throwable = null;
 
 				try {
-					testRunnerAdaptor.fireCustomLifecycle(
+					manager.fire(
 						new BeforeTestLifecycleEvent(
 							test, frameworkMethod.getMethod(),
 							() -> {
@@ -332,7 +339,7 @@ public class Arquillian extends Runner implements Filterable {
 				}
 				finally {
 					try {
-						testRunnerAdaptor.fireCustomLifecycle(
+						manager.fire(
 							new AfterTestLifecycleEvent(
 								test, frameworkMethod.getMethod(),
 								LifecycleMethodExecutor.NO_OP));
@@ -355,14 +362,16 @@ public class Arquillian extends Runner implements Filterable {
 	}
 
 	private Statement _methodInvoker(
-		FrameworkMethod frameworkMethod, Object testObject,
-		TestRunnerAdaptor testRunnerAdaptor) {
+		FrameworkMethod frameworkMethod, Object testObject, Manager manager) {
 
 		return new Statement() {
 
 			@Override
 			public void evaluate() throws Throwable {
-				TestResult testResult = testRunnerAdaptor.test(
+				AtomicReference<TestResult> testResultReference =
+					new AtomicReference<>();
+
+				TestMethodExecutor testMethodExecutor =
 					new TestMethodExecutor() {
 
 						@Override
@@ -390,7 +399,28 @@ public class Arquillian extends Runner implements Filterable {
 							}
 						}
 
+					};
+
+				manager.fire(
+					new org.jboss.arquillian.test.spi.event.suite.Test(
+						testMethodExecutor),
+					new NonManagedObserver
+						<org.jboss.arquillian.test.spi.event.suite.Test>() {
+
+						@Override
+						public void fired(
+							org.jboss.arquillian.test.spi.event.suite.Test
+								test) {
+
+							testResultReference.set(_testResult.get());
+						}
+
+						@Inject
+						private Instance<TestResult> _testResult;
+
 					});
+
+				TestResult testResult = testResultReference.get();
 
 				Throwable throwable = testResult.getThrowable();
 
@@ -426,7 +456,7 @@ public class Arquillian extends Runner implements Filterable {
 
 	private void _runChild(
 		FrameworkMethod frameworkMethod, RunNotifier runNotifier,
-		TestRunnerAdaptor testRunnerAdaptor) {
+		Manager manager) {
 
 		Description description = _describeChild(frameworkMethod);
 
@@ -434,8 +464,7 @@ public class Arquillian extends Runner implements Filterable {
 			runNotifier.fireTestIgnored(description);
 		}
 		else {
-			Statement statement = _methodBlock(
-				frameworkMethod, testRunnerAdaptor);
+			Statement statement = _methodBlock(frameworkMethod, manager);
 
 			runNotifier.fireTestStarted(description);
 
@@ -476,8 +505,8 @@ public class Arquillian extends Runner implements Filterable {
 		return builder.build(statement);
 	}
 
-	private static final ThreadLocal<TestRunnerAdaptor>
-		_testRunnerAdaptorThreadLocal = new ThreadLocal<>();
+	private static final ThreadLocal<Manager> _managerThreadLocal =
+		new ThreadLocal<>();
 
 	private final Class<?> _clazz;
 	private Filter _filter;

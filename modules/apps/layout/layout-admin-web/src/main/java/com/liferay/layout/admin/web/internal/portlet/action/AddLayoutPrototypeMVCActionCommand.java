@@ -138,7 +138,9 @@ public class AddLayoutPrototypeMVCActionCommand extends BaseMVCActionCommand {
 				layoutPrototypeGroup.getDisplayURL(themeDisplay, true));
 		}
 		catch (Throwable t) {
-			_log.error(t, t);
+			if (_log.isDebugEnabled()) {
+				_log.debug(t, t);
+			}
 
 			String errorMessage = "an-unexpected-error-occurred";
 

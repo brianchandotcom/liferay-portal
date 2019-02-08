@@ -32,6 +32,11 @@ backURL.setParameter("p_u_i_d", String.valueOf(selectedUser.getUserId()));
 portletDisplay.setURLBack(backURL.toString());
 
 renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", LanguageUtil.get(request, "personal-data-erasure")));
+
+PortletURL anonymizeNonreviewableDataURL = liferayPortletResponse.createRenderURL();
+
+anonymizeNonreviewableDataURL.setParameter("mvcRenderCommandName", "/anonymize_nonreviewable_uad_data");
+anonymizeNonreviewableDataURL.setParameter("p_u_i_d", String.valueOf(selectedUser.getUserId()));
 %>
 
 <clay:navigation-bar
@@ -43,6 +48,12 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 						navigationItem.setActive(true);
 						navigationItem.setHref(StringPool.BLANK);
 						navigationItem.setLabel(LanguageUtil.get(request, "review-data"));
+					});
+				add(
+					navigationItem -> {
+						navigationItem.setActive(false);
+						navigationItem.setHref(anonymizeNonreviewableDataURL.toString());
+						navigationItem.setLabel(LanguageUtil.get(request, "anonymize-nonreviewable-data"));
 					});
 			}
 		} %>'

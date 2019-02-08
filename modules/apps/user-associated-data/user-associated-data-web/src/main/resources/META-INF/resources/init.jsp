@@ -56,6 +56,7 @@ page import="com.liferay.user.associated.data.web.internal.display.UADApplicatio
 page import="com.liferay.user.associated.data.web.internal.display.UADApplicationSummaryDisplay" %><%@
 page import="com.liferay.user.associated.data.web.internal.display.UADEntity" %><%@
 page import="com.liferay.user.associated.data.web.internal.display.ViewUADEntitiesDisplay" %><%@
+page import="com.liferay.user.associated.data.web.internal.display.context.AnonymizeNonreviewableUADDataManagementToolbarDisplayContext" %><%@
 page import="com.liferay.user.associated.data.web.internal.display.context.UADExportProcessDisplayContext" %><%@
 page import="com.liferay.user.associated.data.web.internal.display.context.UADExportProcessManagementToolbarDisplayContext" %><%@
 page import="com.liferay.user.associated.data.web.internal.display.context.ViewUADEntitiesManagementToolbarDisplayContext" %><%@

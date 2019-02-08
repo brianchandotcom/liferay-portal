@@ -1136,9 +1136,7 @@ public class LayoutsAdminDisplayContext {
 
 		Group selGroup = getSelGroup();
 
-		if (selGroup.isLayoutSetPrototype() ||
-			selGroup.isLayoutSetPrototype()) {
-
+		if (selGroup.isLayoutSetPrototype()) {
 			_privateLayout = true;
 
 			return _privateLayout;

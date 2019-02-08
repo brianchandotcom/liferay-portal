@@ -14,7 +14,6 @@
 
 package com.liferay.arquillian.extension.junit.bridge.deployment;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -27,7 +26,6 @@ import org.jboss.arquillian.container.test.impl.client.deployment.event.Generate
 import org.jboss.arquillian.container.test.impl.domain.ProtocolDefinition;
 import org.jboss.arquillian.container.test.impl.domain.ProtocolRegistry;
 import org.jboss.arquillian.container.test.spi.TestDeployment;
-import org.jboss.arquillian.container.test.spi.client.deployment.ApplicationArchiveProcessor;
 import org.jboss.arquillian.container.test.spi.client.deployment.DeploymentPackager;
 import org.jboss.arquillian.container.test.spi.client.deployment.DeploymentScenarioGenerator;
 import org.jboss.arquillian.container.test.spi.client.deployment.ProtocolArchiveProcessor;
@@ -64,21 +62,6 @@ public class DeploymentGenerator {
 		_deploymentInstanceProducer.set(deploymentScenario);
 	}
 
-	private void _applyApplicationProcessors(
-		Archive<?> archive, TestClass testClass) {
-
-		ServiceLoader serviceLoader = _serviceLoaderInstance.get();
-
-		Collection<ApplicationArchiveProcessor> applicationArchiveProcessors =
-			serviceLoader.all(ApplicationArchiveProcessor.class);
-
-		for (ApplicationArchiveProcessor applicationArchiveProcessor :
-				applicationArchiveProcessors) {
-
-			applicationArchiveProcessor.process(archive, testClass);
-		}
-	}
-
 	private void _buildTestableDeployments(
 		DeploymentScenario deploymentScenario, TestClass testClass,
 		ProtocolRegistry protocolRegistry) {
@@ -108,9 +91,6 @@ public class DeploymentGenerator {
 		DeploymentPackager deploymentPackager = protocol.getPackager();
 
 		Archive<?> archive = deploymentDescription.getArchive();
-
-		_applyApplicationProcessors(
-			deploymentDescription.getArchive(), testClass);
 
 		try {
 			if (ClassContainer.class.isInstance(archive)) {

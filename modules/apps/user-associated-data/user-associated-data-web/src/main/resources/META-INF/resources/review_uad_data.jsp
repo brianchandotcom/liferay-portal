@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String scope = ParamUtil.getString(request, "scope", "personal-site");
+
 int totalReviewableUADEntitiesCount = (int)request.getAttribute(UADWebKeys.TOTAL_UAD_ENTITIES_COUNT);
 List<UADApplicationSummaryDisplay> uadApplicationSummaryDisplays = (List<UADApplicationSummaryDisplay>)request.getAttribute(UADWebKeys.UAD_APPLICATION_SUMMARY_DISPLAY_LIST);
 List<UADDisplay> uadDisplays = (List<UADDisplay>)request.getAttribute(UADWebKeys.APPLICATION_UAD_DISPLAYS);
@@ -39,6 +41,43 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 <div class="container-fluid container-fluid-max-xl container-form-lg">
 	<div class="row">
 		<div class="col-lg-3">
+			<div class="panel panel-secondary">
+				<div class="collapse-icon collapse-icon-middle panel-header" data-target="#<portlet:namespace />scopePanelBody" data-toggle="collapse">
+					<span class="panel-title">
+						<%= StringUtil.toUpperCase(LanguageUtil.get(request, "scope"), locale) %>
+					</span>
+
+					<aui:icon cssClass="collapse-icon-closed" image="angle-right" markupView="lexicon" />
+
+					<aui:icon cssClass="collapse-icon-open" image="angle-down" markupView="lexicon" />
+				</div>
+
+				<div class="collapse panel-collapse show" id="<portlet:namespace />scopePanelBody">
+					<div class="panel-body">
+						<clay:radio
+							checked='<%= scope.equals("personal-site") %>'
+							label='<%= LanguageUtil.get(request, "personal-site") %>'
+							name="scope"
+							value="personal-site"
+						/>
+
+						<clay:radio
+							checked='<%= scope.equals("regular-sites") %>'
+							label='<%= LanguageUtil.get(request, "regular-sites") %>'
+							name="scope"
+							value="regular-sites"
+						/>
+
+						<clay:radio
+							checked='<%= scope.equals("instance") %>'
+							label='<%= LanguageUtil.get(request, "instance") %>'
+							name="scope"
+							value="instance"
+						/>
+					</div>
+				</div>
+			</div>
+
 			<div class="panel panel-secondary">
 				<div class="collapse-icon collapse-icon-middle panel-header" data-target="#<portlet:namespace />applicationPanelBody" data-toggle="collapse">
 					<span class="panel-title">
@@ -175,6 +214,20 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 			const url = new Uri(baseURL);
 
 			url.setParameterValue('<portlet:namespace />uadRegistryKey', event.target.value);
+
+			Liferay.Util.navigate(url.toString());
+		}
+	);
+
+	const scopePanelBodyClickListener = dom.delegate(
+		<portlet:namespace />scopePanelBody,
+		'click',
+		'input',
+		function(event) {
+			const url = new Uri(baseURL);
+
+			url.setParameterValue('<portlet:namespace />applicationKey', '');
+			url.setParameterValue('<portlet:namespace />scope', event.target.value);
 
 			Liferay.Util.navigate(url.toString());
 		}

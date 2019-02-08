@@ -129,7 +129,8 @@ public class CTEngineManagerImpl implements CTEngineManager {
 		if (ctCollection.isProduction()) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Deleting the production change collection is forbidden");
+					"Deleting the production change tracking collection is " +
+						"not allowed");
 			}
 
 			return;

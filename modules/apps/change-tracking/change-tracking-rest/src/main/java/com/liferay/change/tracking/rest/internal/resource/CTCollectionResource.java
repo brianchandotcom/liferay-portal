@@ -132,7 +132,8 @@ public class CTCollectionResource {
 				ctCollectionOptional.map(
 					CTCollection::getCompanyId
 				).get(),
-				"Cannot delete Change Tracking Collection");
+				"Unable to delete change tracking collection with id " +
+					ctCollectionId);
 		}
 
 		return _noContent();

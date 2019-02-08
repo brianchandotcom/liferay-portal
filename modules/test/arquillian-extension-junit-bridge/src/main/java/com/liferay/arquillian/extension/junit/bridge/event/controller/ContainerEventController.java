@@ -27,11 +27,7 @@ import org.jboss.arquillian.container.spi.context.ContainerContext;
 import org.jboss.arquillian.container.spi.context.DeploymentContext;
 import org.jboss.arquillian.container.spi.event.ContainerMultiControlEvent;
 import org.jboss.arquillian.container.spi.event.DeployManagedDeployments;
-import org.jboss.arquillian.container.spi.event.SetupContainers;
-import org.jboss.arquillian.container.spi.event.StartClassContainers;
 import org.jboss.arquillian.container.spi.event.StartSuiteContainers;
-import org.jboss.arquillian.container.spi.event.StopClassContainers;
-import org.jboss.arquillian.container.spi.event.StopManualContainers;
 import org.jboss.arquillian.container.spi.event.StopSuiteContainers;
 import org.jboss.arquillian.container.spi.event.UnDeployManagedDeployments;
 import org.jboss.arquillian.container.test.spi.client.deployment.DeploymentScenarioGenerator;
@@ -63,13 +59,7 @@ public class ContainerEventController {
 	}
 
 	public void execute(@Observes AfterClass afterClass) {
-		try {
-			_containerMultiControlEvent.fire(new UnDeployManagedDeployments());
-		}
-		finally {
-			_containerMultiControlEvent.fire(new StopManualContainers());
-			_containerMultiControlEvent.fire(new StopClassContainers());
-		}
+		_containerMultiControlEvent.fire(new UnDeployManagedDeployments());
 	}
 
 	public void execute(@Observes AfterSuite afterSuite) {
@@ -77,15 +67,12 @@ public class ContainerEventController {
 	}
 
 	public void execute(@Observes BeforeClass beforeClass) {
-		_containerMultiControlEvent.fire(new StartClassContainers());
-
 		_generateDeployment(beforeClass.getTestClass());
 
 		_containerMultiControlEvent.fire(new DeployManagedDeployments());
 	}
 
 	public void execute(@Observes BeforeSuite beforeSuite) {
-		_containerMultiControlEvent.fire(new SetupContainers());
 		_containerMultiControlEvent.fire(new StartSuiteContainers());
 	}
 

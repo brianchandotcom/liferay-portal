@@ -29,11 +29,19 @@ public abstract class BaseBaseClayCard implements BaseClayCard {
 
 	@Override
 	public String getInputName() {
+		if (rowChecker == null) {
+			return null;
+		}
+
 		return rowChecker.getRowIds();
 	}
 
 	@Override
 	public String getInputValue() {
+		if (rowChecker == null) {
+			return null;
+		}
+
 		return String.valueOf(baseModel.getPrimaryKeyObj());
 	}
 
@@ -44,6 +52,15 @@ public abstract class BaseBaseClayCard implements BaseClayCard {
 		}
 
 		return rowChecker.isDisabled(baseModel);
+	}
+
+	@Override
+	public boolean isSelectable() {
+		if (rowChecker == null) {
+			return false;
+		}
+
+		return true;
 	}
 
 	@Override

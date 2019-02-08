@@ -120,32 +120,9 @@
 					%>
 
 					<liferay-ui:search-container-column-text>
-						<c:choose>
-							<c:when test="<%= Validator.isNotNull(assetRenderer.getThumbnailPath(renderRequest)) %>">
-								<liferay-frontend:vertical-card
-									cssClass="<%= cssClass %>"
-									data="<%= assetBrowserDisplayContext.isMultipleSelection() ? null : data %>"
-									imageUrl="<%= assetRenderer.getThumbnailPath(renderRequest) %>"
-									resultRow="<%= row %>"
-									rowChecker="<%= assetEntriesSearchContainer.getRowChecker() %>"
-									showCheckbox="<%= assetBrowserDisplayContext.isMultipleSelection() %>"
-									subtitle="<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>"
-									title="<%= assetRenderer.getTitle(locale) %>"
-								/>
-							</c:when>
-							<c:otherwise>
-								<liferay-frontend:icon-vertical-card
-									cssClass="<%= cssClass %>"
-									data="<%= assetBrowserDisplayContext.isMultipleSelection() ? null : data %>"
-									icon="<%= assetRendererFactory.getIconCssClass() %>"
-									resultRow="<%= row %>"
-									rowChecker="<%= assetEntriesSearchContainer.getRowChecker() %>"
-									showCheckbox="<%= assetBrowserDisplayContext.isMultipleSelection() %>"
-									subtitle="<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>"
-									title="<%= assetRenderer.getTitle(locale) %>"
-								/>
-							</c:otherwise>
-						</c:choose>
+						<clay:vertical-card
+							verticalCard="<%= new AssetEntryVerticalCard(assetEntry, renderRequest, assetBrowserDisplayContext) %>"
+						/>
 					</liferay-ui:search-container-column-text>
 				</c:when>
 				<c:when test='<%= Objects.equals(assetBrowserDisplayContext.getDisplayStyle(), "list") %>'>

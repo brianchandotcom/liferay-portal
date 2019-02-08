@@ -691,6 +691,161 @@ definition {
 		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
 	}
 
+	@description = "This is a test for LPS-86845. A user can preview a draft or pending status Web Content article through the 'View Usages' screen."
+	@priority = "5"
+	test PreviewDraftWebContentInWCD {
+		task ("Add a Web Content article") {
+			JSONWebcontent.addWebContent(
+				content = "WC WebContent Content",
+				groupName = "Test Site Name",
+				title = "WC WebContent Title"
+			);
+		}
+
+		task ("Add a page with a Web Content Display widget and display the Web Content article in the Web Content Display widget") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Web Content Display Page"
+			);
+
+			Navigator.gotoSitePage(
+				pageName = "Web Content Display Page",
+				siteName = "Test Site Name"
+			);
+
+			Portlet.addPG(
+				portletName = "Web Content Display"
+			);
+
+			WebContentDisplayPortlet.selectWebContent(
+				webContentTitle = "WC WebContent Title"
+			);
+		}
+
+		task ("Edit the Web Content article and save it as draft") {
+			WebContent.openWebContentAdmin(
+				siteURLKey = "test-site-name"
+			);
+
+			WebContentNavigator.gotoEditCP(
+				webContentTitle = "WC WebContent Title"
+			);
+
+			WebContent.editCP(
+				saveAsDraft = "true",
+				webContentContentEdit = "WC WebContent Content Edit",
+				webContentTitle = "WC WebContent Title",
+				webContentTitleEdit = "WC WebContent Title Edit"
+			);
+		}
+
+		task ("View the usages of the Web Content article") {
+			WebContent.openWebContentAdmin(
+				siteURLKey = "test-site-name"
+			);
+
+			WebContentNavigator.gotoEntryMenuItem(
+				entry = "WC WebContent Title",
+				menuItem = "View Usages"
+			);
+		}
+
+		task ("Preview the draft article within the context of the Web Content Display widget") {
+			WebContentViewUsages.previewDraftInPage(
+				page = "Web Content Display Page"
+			);
+		}
+
+		task ("Assert the user is taken to the Web Content Display Page and the draft version of the Web Content article displays in the Web Content Display widget") {
+			WebContent.viewPGViaWCD(
+				webContentContent = "WC WebContent Content Edit"
+			);
+		}
+	}
+
+	@description = "This is a test for LPS-86845. A user can preview a draft or pending status Web Content article through the 'View Usages' screen."
+	@priority = "5"
+	test PreviewPendingWebContentInWCD {
+		task ("Add a Web Content article") {
+			JSONWebcontent.addWebContent(
+				content = "WC WebContent Content",
+				groupName = "Test Site Name",
+				title = "WC WebContent Title"
+			);
+		}
+
+		task ("Add a page with a Web Content Display widget and display the Web Content article in the Web Content Display widget") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Web Content Display Page"
+			);
+
+			Navigator.gotoSitePage(
+				pageName = "Web Content Display Page",
+				siteName = "Test Site Name"
+			);
+
+			Portlet.addPG(
+				portletName = "Web Content Display"
+			);
+
+			WebContentDisplayPortlet.selectWebContent(
+				webContentTitle = "WC WebContent Title"
+			);
+		}
+
+		task ("Configure Web Content Article workflow to Single Approver") {
+			Workflow.openWorkflowAdmin(
+				siteURLKey = "test-site-name"
+			);
+
+			Workflow.configureWorkflow(
+				workflowDefinition = "Single Approver",
+				workflowResourceValue = "Web Content Article"
+			);
+		}
+
+		task ("Edit the Web Content article and submit it for publication") {
+			WebContent.openWebContentAdmin(
+				siteURLKey = "test-site-name"
+			);
+
+			WebContentNavigator.gotoEditCP(
+				webContentTitle = "WC WebContent Title"
+			);
+
+			WebContent.addCP(
+				webContentContent = "WC WebContent Content Edit",
+				webContentTitle = "WC WebContent Title Edit"
+			);
+
+			Button.clickSubmitForPublication();
+		}
+
+		task ("View the usages of the Web Content article") {
+			WebContent.openWebContentAdmin(
+				siteURLKey = "test-site-name"
+			);
+
+			WebContentNavigator.gotoEntryMenuItem(
+				entry = "WC WebContent Title",
+				menuItem = "View Usages"
+			);
+		}
+
+		task ("Preview the pending article within the context of the Web Content Display widget") {
+			WebContentViewUsages.previewPendingInPage(
+				page = "Web Content Display Page"
+			);
+		}
+
+		task ("Assert the user is taken to the Web Content Display Page and the pending version of the Web Content article displays in the Web Content Display widget") {
+			WebContent.viewPGViaWCD(
+				webContentContent = "WC WebContent Content Edit"
+			);
+		}
+	}
+
 	@priority = "4"
 	test PublishDraftWebContent {
 		property testray.component.names = "Web Content Administration";

@@ -426,6 +426,12 @@ definition {
 		Workflow.gotoPreviewView();
 	}
 
+	macro openWorkflowAdmin {
+		Navigator.openWithAppendToBaseURL(
+			urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_portal_workflow_web_internal_portlet_SiteAdministrationWorkflowPortlet"
+		);
+	}
+
 	macro publishExistingWorkflowDefinition {
 		var key_workflowDefinitionTitle = "${workflowDefinitionTitle}";
 

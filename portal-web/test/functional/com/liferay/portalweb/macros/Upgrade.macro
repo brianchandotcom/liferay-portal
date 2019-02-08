@@ -1086,14 +1086,14 @@ definition {
 
 		AppManager.viewAppCP(
 			appName = "Liferay Drools", 
-			searchTerm = "Drools", 
-			appStatus = "Active"
+			appStatus = "Active",
+			searchTerm = "Drools"
 		);
 
 		AppManager.viewAppCP(
 			appName = "Liferay Portal Rules Engine Drools",
-			searchTerm = "Drools",
-			appStatus = "Active"
+			appStatus = "Active",
+			searchTerm = "Drools"
 		);
 	}
 

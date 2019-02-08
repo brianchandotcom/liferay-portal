@@ -14,14 +14,91 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.util.Properties;
+import java.util.Set;
+
 /**
  * @author Michael Hashimoto
  */
 public class SubrepositoryAcceptancePullRequestJob
-	extends SubrepositoryGitRepositoryJob {
+	extends SubrepositoryGitRepositoryJob implements TestSuiteJob {
 
 	public SubrepositoryAcceptancePullRequestJob(String jobName) {
-		super(jobName);
+		this(jobName, "default");
 	}
+
+	public SubrepositoryAcceptancePullRequestJob(
+		String jobName, String testSuiteName) {
+
+		super(jobName);
+
+		_testSuiteName = testSuiteName;
+	}
+
+	@Override
+	public Set<String> getBatchNames() {
+		Properties jobProperties = getJobProperties();
+
+		String testBatchNames = JenkinsResultsParserUtil.getProperty(
+			jobProperties, "test.batch.names[" + _testSuiteName + "]");
+
+		if (testBatchNames == null) {
+			testBatchNames = JenkinsResultsParserUtil.getProperty(
+				jobProperties, "test.batch.names");
+		}
+
+		Set<String> testBatchNamesSet = getSetFromString(testBatchNames);
+
+		return testBatchNamesSet;
+	}
+
+	@Override
+	public Set<String> getDistTypes() {
+		Properties jobProperties = getJobProperties();
+
+		String testBatchDistAppServers = JenkinsResultsParserUtil.getProperty(
+			jobProperties, "subrepo.dist.app.servers[" + _testSuiteName + "]");
+
+		if (testBatchDistAppServers == null) {
+			testBatchDistAppServers = JenkinsResultsParserUtil.getProperty(
+				jobProperties, "subrepo.dist.app.servers");
+		}
+
+		return getSetFromString(testBatchDistAppServers);
+	}
+
+	@Override
+	public String getPoshiQuery(String testBatchName) {
+		String[] propertyNames = {
+			JenkinsResultsParserUtil.combine(
+				"test.batch.run.property.query[", testBatchName, "][",
+				_testSuiteName, "]"),
+
+			JenkinsResultsParserUtil.combine(
+				"test.batch.run.property.query[", testBatchName, "]")
+		};
+
+		Properties jobProperties = getJobProperties();
+
+		for (String propertyName : propertyNames) {
+			if (jobProperties.containsKey(propertyName)) {
+				String propertyValue = JenkinsResultsParserUtil.getProperty(
+					jobProperties, propertyName);
+
+				if ((propertyValue != null) && !propertyValue.isEmpty()) {
+					return propertyValue;
+				}
+			}
+		}
+
+		return null;
+	}
+
+	@Override
+	public String getTestSuiteName() {
+		return _testSuiteName;
+	}
+
+	private final String _testSuiteName;
 
 }

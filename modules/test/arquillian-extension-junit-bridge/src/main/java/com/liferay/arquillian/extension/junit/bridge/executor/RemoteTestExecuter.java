@@ -21,7 +21,6 @@ import java.util.Iterator;
 
 import org.jboss.arquillian.container.spi.client.protocol.metadata.JMXContext;
 import org.jboss.arquillian.container.spi.client.protocol.metadata.ProtocolMetaData;
-import org.jboss.arquillian.container.test.impl.execution.event.RemoteExecutionEvent;
 import org.jboss.arquillian.container.test.spi.ContainerMethodExecutor;
 import org.jboss.arquillian.core.api.Instance;
 import org.jboss.arquillian.core.api.InstanceProducer;
@@ -29,13 +28,14 @@ import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.arquillian.core.api.annotation.Observes;
 import org.jboss.arquillian.test.spi.TestResult;
 import org.jboss.arquillian.test.spi.annotation.TestScoped;
+import org.jboss.arquillian.test.spi.event.suite.Test;
 
 /**
  * @author Matthew Tambara
  */
 public class RemoteTestExecuter {
 
-	public void execute(@Observes RemoteExecutionEvent event) throws Exception {
+	public void execute(@Observes Test test) throws Exception {
 		ProtocolMetaData protocolMetaData = _protocolMetadataInstance.get();
 
 		Collection<JMXContext> jmxContexts = protocolMetaData.getContexts(
@@ -49,7 +49,7 @@ public class RemoteTestExecuter {
 			jmxContext.getConnection());
 
 		_testResultInstanceProducer.set(
-			containerMethodExecutor.invoke(event.getExecutor()));
+			containerMethodExecutor.invoke(test.getTestMethodExecutor()));
 	}
 
 	@Inject

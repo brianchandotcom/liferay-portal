@@ -36,7 +36,6 @@ import java.net.URL;
 
 import org.jboss.arquillian.container.spi.client.container.DeployableContainer;
 import org.jboss.arquillian.container.test.impl.client.protocol.ProtocolRegistryCreator;
-import org.jboss.arquillian.container.test.impl.execution.ClientTestExecuter;
 import org.jboss.arquillian.container.test.spi.RemoteLoadableExtension;
 import org.jboss.arquillian.container.test.spi.client.protocol.Protocol;
 import org.jboss.arquillian.core.spi.LoadableExtension;
@@ -58,7 +57,6 @@ public class LiferayArquillianJUnitBridgeExtension
 			extensionBuilder.context(DeploymentContextImpl.class);
 			extensionBuilder.context(SuiteContextImpl.class);
 			extensionBuilder.context(TestContextImpl.class);
-			extensionBuilder.observer(ClientTestExecuter.class);
 			extensionBuilder.observer(ConfigurationRegistrar.class);
 			extensionBuilder.observer(ContainerDeployController.class);
 			extensionBuilder.observer(ContainerDeploymentContextHandler.class);

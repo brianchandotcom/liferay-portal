@@ -19,16 +19,18 @@ import com.liferay.arquillian.extension.junit.bridge.deployment.BndDeploymentSce
 import java.util.List;
 
 import org.jboss.arquillian.container.spi.Container;
+import org.jboss.arquillian.container.spi.client.container.DeployableContainer;
+import org.jboss.arquillian.container.spi.client.container.DeploymentException;
 import org.jboss.arquillian.container.spi.client.container.LifecycleException;
 import org.jboss.arquillian.container.spi.client.deployment.Deployment;
 import org.jboss.arquillian.container.spi.client.deployment.DeploymentDescription;
 import org.jboss.arquillian.container.spi.client.deployment.DeploymentScenario;
 import org.jboss.arquillian.container.spi.client.deployment.DeploymentTargetDescription;
+import org.jboss.arquillian.container.spi.client.protocol.metadata.ProtocolMetaData;
 import org.jboss.arquillian.container.spi.context.ContainerContext;
 import org.jboss.arquillian.container.spi.context.DeploymentContext;
+import org.jboss.arquillian.container.spi.context.annotation.DeploymentScoped;
 import org.jboss.arquillian.container.spi.event.ContainerMultiControlEvent;
-import org.jboss.arquillian.container.spi.event.DeployManagedDeployments;
-import org.jboss.arquillian.container.spi.event.UnDeployManagedDeployments;
 import org.jboss.arquillian.container.test.spi.client.deployment.DeploymentScenarioGenerator;
 import org.jboss.arquillian.core.api.Event;
 import org.jboss.arquillian.core.api.Instance;
@@ -57,8 +59,10 @@ public class ContainerEventController {
 		_createContext(eventContext);
 	}
 
-	public void execute(@Observes AfterClass afterClass) {
-		_containerMultiControlEvent.fire(new UnDeployManagedDeployments());
+	public void execute(@Observes AfterClass afterClass)
+		throws DeploymentException {
+
+		_undeployManaged();
 	}
 
 	public void execute(@Observes AfterSuite afterSuite)
@@ -69,10 +73,12 @@ public class ContainerEventController {
 		container.stop();
 	}
 
-	public void execute(@Observes BeforeClass beforeClass) {
+	public void execute(@Observes BeforeClass beforeClass)
+		throws DeploymentException {
+
 		_generateDeployment(beforeClass.getTestClass());
 
-		_containerMultiControlEvent.fire(new DeployManagedDeployments());
+		_deployManaged();
 	}
 
 	public void execute(@Observes BeforeSuite beforeSuite)
@@ -112,6 +118,47 @@ public class ContainerEventController {
 		}
 	}
 
+	private void _deployManaged() throws DeploymentException {
+		Container container = _containerInstance.get();
+
+		if (container.getState() != Container.State.STARTED) {
+			throw new IllegalStateException(
+				"Container " + container.getName() + " is not started");
+		}
+
+		DeploymentScenario deploymentScenario =
+			_deploymentScenarioInstance.get();
+
+		Deployment deployment = deploymentScenario.deployment(
+			DeploymentTargetDescription.DEFAULT);
+
+		DeploymentContext deploymentContext = _deploymentContextInstance.get();
+
+		deploymentContext.activate(deployment);
+
+		_deploymentInstanceProducer.set(deployment);
+
+		DeployableContainer<?> deployableContainer =
+			container.getDeployableContainer();
+
+		DeploymentDescription deploymentDescription =
+			deployment.getDescription();
+
+		_deploymentDescriptionInstanceProducer.set(deploymentDescription);
+
+		try {
+			ProtocolMetaData protocolMetaData = deployableContainer.deploy(
+				deploymentDescription.getTestableArchive());
+
+			_protocolMetadataInstanceProducer.set(protocolMetaData);
+
+			deployment.deployed();
+		}
+		finally {
+			deploymentContext.deactivate();
+		}
+	}
+
 	private void _generateDeployment(TestClass testClass) {
 		DeploymentScenarioGenerator deploymentScenarioGenerator =
 			new BndDeploymentScenarioGenerator();
@@ -135,6 +182,45 @@ public class ContainerEventController {
 		_deploymentScenarioInstanceProducer.set(deploymentScenario);
 	}
 
+	private void _undeployManaged() throws DeploymentException {
+		Container container = _containerInstance.get();
+
+		if (!Container.State.STARTED.equals(container.getState())) {
+			return;
+		}
+
+		DeploymentScenario deploymentScenario =
+			_deploymentScenarioInstance.get();
+
+		Deployment deployment = deploymentScenario.deployment(
+			DeploymentTargetDescription.DEFAULT);
+
+		DeploymentContext deploymentContext = _deploymentContextInstance.get();
+
+		deploymentContext.activate(deployment);
+
+		DeployableContainer<?> deployableContainer =
+			container.getDeployableContainer();
+
+		DeploymentDescription deploymentDescription =
+			deployment.getDescription();
+
+		try {
+			deployableContainer.undeploy(
+				deploymentDescription.getTestableArchive());
+		}
+		catch (DeploymentException de) {
+			if (!deployment.hasDeploymentError()) {
+				throw de;
+			}
+		}
+		finally {
+			deployment.undeployed();
+
+			deploymentContext.deactivate();
+		}
+	}
+
 	@Inject
 	private Instance<ContainerContext> _containerContextInstance;
 
@@ -142,10 +228,16 @@ public class ContainerEventController {
 	private Instance<Container> _containerInstance;
 
 	@Inject
-	private Event<ContainerMultiControlEvent> _containerMultiControlEvent;
-
-	@Inject
 	private Instance<DeploymentContext> _deploymentContextInstance;
+
+	@DeploymentScoped
+	@Inject
+	private InstanceProducer<DeploymentDescription>
+		_deploymentDescriptionInstanceProducer;
+
+	@DeploymentScoped
+	@Inject
+	private InstanceProducer<Deployment> _deploymentInstanceProducer;
 
 	@Inject
 	private Instance<DeploymentScenario> _deploymentScenarioInstance;
@@ -154,5 +246,10 @@ public class ContainerEventController {
 	@Inject
 	private InstanceProducer<DeploymentScenario>
 		_deploymentScenarioInstanceProducer;
+
+	@DeploymentScoped
+	@Inject
+	private InstanceProducer<ProtocolMetaData>
+		_protocolMetadataInstanceProducer;
 
 }

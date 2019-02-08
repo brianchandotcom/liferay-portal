@@ -15,21 +15,31 @@
 package com.liferay.document.library.uad.display.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolder;
+import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.service.DLFolderLocalService;
+import com.liferay.document.library.uad.test.DLFileEntryUADTestUtil;
 import com.liferay.document.library.uad.test.DLFolderUADTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.user.associated.data.display.UADDisplay;
 import com.liferay.user.associated.data.test.util.BaseUADDisplayTestCase;
 
+import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -43,6 +53,105 @@ public class DLFolderUADDisplayTest extends BaseUADDisplayTestCase<DLFolder> {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
+	@Test
+	public void testGetParentContainerId() throws Exception {
+		assertParentContainerId(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		DLFolder dlFolder = _addFolder(
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		assertParentContainerId(dlFolder.getFolderId());
+	}
+
+	@Test
+	public void testGetTopLevelContainer() throws Exception {
+		DLFileEntry dlFileEntry = _addFileEntry(
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		// A file entry that is an immediate child of the given parent should
+		// return null
+
+		Assert.assertNull(
+			_getTopLevelContainer(
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, dlFileEntry));
+
+		// A folder that is an immediate child of the given parent should return
+		// itself
+
+		DLFolder dlFolderA = _addFolder(
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		Assert.assertEquals(
+			dlFolderA,
+			_getTopLevelContainer(
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, dlFolderA));
+
+		DLFolder dlFolderAA = _addFolder(dlFolderA.getFolderId());
+
+		Assert.assertEquals(
+			dlFolderAA,
+			_getTopLevelContainer(dlFolderA.getFolderId(), dlFolderAA));
+
+		// A folder that is the parent should return null
+
+		Assert.assertNull(
+			_getTopLevelContainer(dlFolderA.getFolderId(), dlFolderA));
+
+		// A file entry whose folder is an immediate child of the given parent
+		// should return its own folder
+
+		DLFileEntry dlFileEntryA = _addFileEntry(dlFolderA.getFolderId());
+
+		Assert.assertEquals(
+			dlFolderA,
+			_getTopLevelContainer(
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, dlFileEntryA));
+
+		// A folder that is not a descendant of the given parent should return
+		// null
+
+		DLFolder dlFolderB = _addFolder(
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		DLFolder dlFolderBA = _addFolder(dlFolderB.getFolderId());
+
+		Assert.assertNull(
+			_getTopLevelContainer(dlFolderA.getFolderId(), dlFolderBA));
+
+		// A file entry that is not a descendant of the given parent should
+		// return null
+
+		DLFileEntry dlFileEntryBA = _addFileEntry(dlFolderBA.getFolderId());
+
+		Assert.assertNull(
+			_getTopLevelContainer(dlFolderA.getFolderId(), dlFileEntryBA));
+
+		// A folder that is a non-immediate descendant of the given parent
+		// should return its highest ancestor below the given parent
+
+		DLFolder dlFolderBAA = _addFolder(dlFolderBA.getFolderId());
+
+		DLFolder dlFolderBAAA = _addFolder(dlFolderBAA.getFolderId());
+
+		Assert.assertEquals(
+			dlFolderBA,
+			_getTopLevelContainer(dlFolderB.getFolderId(), dlFolderBAAA));
+
+		// A file entry that is a non-immediate descendant of the given parent
+		// should return its highest ancestor below the given parent
+
+		DLFileEntry dlFileEntryBAAA = _addFileEntry(dlFolderBAAA.getFolderId());
+
+		Assert.assertEquals(
+			dlFolderB,
+			_getTopLevelContainer(
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, dlFileEntryBAAA));
+
+		Assert.assertEquals(
+			dlFolderBA,
+			_getTopLevelContainer(dlFolderB.getFolderId(), dlFileEntryBAAA));
+	}
+
 	@Override
 	protected DLFolder addBaseModel(long userId) throws Exception {
 		DLFolder dlFolder = DLFolderUADTestUtil.addDLFolder(
@@ -53,10 +162,59 @@ public class DLFolderUADDisplayTest extends BaseUADDisplayTestCase<DLFolder> {
 		return dlFolder;
 	}
 
+	protected void assertParentContainerId(long dlFolderId) throws Exception {
+		DLFolder dlFolder = DLFolderUADTestUtil.addDLFolder(
+			_dlFolderLocalService, TestPropsValues.getUserId(), dlFolderId);
+
+		_dlFolders.add(dlFolder);
+
+		Serializable parentContainerId = _uadDisplay.getParentContainerId(
+			dlFolder);
+
+		long parentContainerIdLong = (long)parentContainerId;
+
+		Assert.assertEquals(dlFolderId, parentContainerIdLong);
+	}
+
 	@Override
-	protected UADDisplay getUADDisplay() {
+	protected UADDisplay<DLFolder> getUADDisplay() {
 		return _uadDisplay;
 	}
+
+	private DLFileEntry _addFileEntry(long dlFolderId) throws Exception {
+		DLFileEntry dlFileEntry = DLFileEntryUADTestUtil.addDLFileEntry(
+			_dlAppLocalService, _dlFileEntryLocalService, dlFolderId,
+			TestPropsValues.getUserId());
+
+		_dlFileEntries.add(dlFileEntry);
+
+		return dlFileEntry;
+	}
+
+	private DLFolder _addFolder(long parentFolderId) throws Exception {
+		DLFolder dlFolder = DLFolderUADTestUtil.addDLFolder(
+			_dlFolderLocalService, TestPropsValues.getUserId(), parentFolderId);
+
+		_dlFolders.add(dlFolder);
+
+		return dlFolder;
+	}
+
+	private DLFolder _getTopLevelContainer(
+		Serializable dlFolderId, Object childObject) {
+
+		return _uadDisplay.getTopLevelContainer(
+			DLFolder.class, dlFolderId, childObject);
+	}
+
+	@Inject
+	private DLAppLocalService _dlAppLocalService;
+
+	@DeleteAfterTestRun
+	private final List<DLFileEntry> _dlFileEntries = new ArrayList<>();
+
+	@Inject
+	private DLFileEntryLocalService _dlFileEntryLocalService;
 
 	@Inject
 	private DLFolderLocalService _dlFolderLocalService;
@@ -65,6 +223,6 @@ public class DLFolderUADDisplayTest extends BaseUADDisplayTestCase<DLFolder> {
 	private final List<DLFolder> _dlFolders = new ArrayList<>();
 
 	@Inject(filter = "component.name=*.DLFolderUADDisplay")
-	private UADDisplay _uadDisplay;
+	private UADDisplay<DLFolder> _uadDisplay;
 
 }

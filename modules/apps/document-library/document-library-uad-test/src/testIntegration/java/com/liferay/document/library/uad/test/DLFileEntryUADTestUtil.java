@@ -16,6 +16,7 @@ package com.liferay.document.library.uad.test;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolder;
+import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.service.DLFolderLocalService;
@@ -52,12 +53,26 @@ public class DLFileEntryUADTestUtil {
 			false, 0L, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), false, serviceContext);
 
+		return addDLFileEntry(
+			dlAppLocalService, dlFileEntryLocalService, dlFolder.getFolderId(),
+			userId);
+	}
+
+	public static DLFileEntry addDLFileEntry(
+			DLAppLocalService dlAppLocalService,
+			DLFileEntryLocalService dlFileEntryLocalService, long dlFolderId,
+			long userId)
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
+
 		byte[] bytes = TestDataConstants.TEST_BYTE_ARRAY;
 
 		InputStream is = new ByteArrayInputStream(bytes);
 
 		FileEntry fileEntry = dlAppLocalService.addFileEntry(
-			userId, dlFolder.getRepositoryId(), dlFolder.getFolderId(),
+			userId, TestPropsValues.getGroupId(), dlFolderId,
 			RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
 			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
 			is, bytes.length, serviceContext);
@@ -79,7 +94,11 @@ public class DLFileEntryUADTestUtil {
 				dlAppLocalService.deleteFileEntry(dlFileEntry.getFileEntryId());
 			}
 
-			dlFolderLocalService.deleteFolder(dlFileEntry.getFolderId());
+			long dlFolderId = dlFileEntry.getFolderId();
+
+			if (dlFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+				dlFolderLocalService.deleteFolder(dlFileEntry.getFolderId());
+			}
 		}
 	}
 

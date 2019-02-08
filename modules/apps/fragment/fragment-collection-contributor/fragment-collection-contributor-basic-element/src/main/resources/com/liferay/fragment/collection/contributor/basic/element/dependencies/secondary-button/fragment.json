@@ -4,6 +4,6 @@
 	"htmlPath": "index.html",
 	"jsPath": "index.js",
 	"name": "Secondary Button",
-	"thumbnail": "secondary-button.png",
+	"thumbnail": "secondary_button.png",
 	"type": "element"
 }

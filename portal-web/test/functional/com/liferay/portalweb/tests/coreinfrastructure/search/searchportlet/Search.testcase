@@ -53,6 +53,48 @@ definition {
 		AssertTextPresent(locator1 = "SearchResults#SEARCH_INSIGHTS_PORTLET_STRING_QUERY", value1 = "bucket");
 	}
 
+	@description = "This is a use case for LPS-90078."
+	@priority = "3"
+	test ModifyPaginationPortalProperties {
+		property custom.properties = "search.container.page.default.delta=10";
+
+		Portlet.addPG(portletName = "Search Results");
+
+		Portlet.gotoPortletOptions(
+			portletName = "Search Results",
+			portletOption = "Configuration"
+		);
+
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
+
+		AssertTextEquals(
+			locator1 = "SearchResults#RESULTS_PORTLET_PAGINATION_CONFIG",
+			value1 = "10"
+		);
+
+		IFrame.closeFrame();
+
+		JSONWebcontent.addWebContent(
+			content = "WC Content",
+			groupName = "Guest",
+			title = "WC Title"
+		);
+
+		SearchPortlets.searchEmbedded(searchTerm = "WC Title");
+
+		Portlet.gotoPortletOptions(
+			portletName = "Search Results",
+			portletOption = "Configuration"
+		);
+
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
+
+		AssertTextEquals(
+			locator1 = "SearchResults#RESULTS_PORTLET_PAGINATION_CONFIG",
+			value1 = "10"
+		);
+	}
+
 	@priority = "4"
 	test NavigateToSearchResultsViaURL {
 		property portal.acceptance = "true";

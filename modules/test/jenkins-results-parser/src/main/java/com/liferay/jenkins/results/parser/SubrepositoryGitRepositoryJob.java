@@ -69,6 +69,24 @@ public abstract class SubrepositoryGitRepositoryJob extends GitRepositoryJob {
 		return gitWorkingDirectory;
 	}
 
+	public String getPoshiQuery(String testBatchName) {
+		Properties jobProperties = getJobProperties();
+
+		String propertyName = JenkinsResultsParserUtil.combine(
+			"test.batch.run.property.query[", testBatchName, "]");
+
+		if (jobProperties.containsKey(propertyName)) {
+			String propertyValue = JenkinsResultsParserUtil.getProperty(
+				jobProperties, propertyName);
+
+			if ((propertyValue != null) && !propertyValue.isEmpty()) {
+				return propertyValue;
+			}
+		}
+
+		return null;
+	}
+
 	@Override
 	public void setGitRepositoryDir(File repositoryDir) {
 		String dirName = repositoryDir.getName();

@@ -82,4 +82,66 @@ definition {
 			searchAssetType = "Document"
 		);
 	}
+
+	@description = "This test edits tags by bulk using Append action."
+	@priority = "4"
+	test EditAndAppendTags {
+		DMDocument.addMultiplePG(
+			dmDocumentFileList = "Document_1.doc,Document_2.jpg,Document_3.xls,Document_4.txt"
+		);
+
+		for (var key_dmDocumentTitle : list "Document_2.jpg,Document_4.txt") {
+			Check(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_CHECKBOX");
+		}
+
+		Click(locator1 = "Icon#EDIT_TAGS");
+
+		DMDocument.editTags(
+			itemNumber = "2",
+			multipleDocuments = "true",
+			tagName = "tagone"
+		);
+
+		for (var key_dmDocumentTitle : list "Document_2.jpg,Document_4.txt") {
+			DMNavigator.gotoDocumentPG(dmDocumentTitle = "${key_dmDocumentTitle}");
+
+			DMDocument.viewTag(tagName = "tagone");
+
+			Navigator.gotoPage(pageName = "Documents and Media Page");
+		}
+
+		for (var key_dmDocumentTitle : list "Document_2.jpg,Document_4.txt") {
+			Check(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_CHECKBOX");
+		}
+
+		Click(locator1 = "Icon#EDIT_TAGS");
+
+		DMDocument.editTags(
+			itemNumber = "2",
+			multipleDocuments = "true",
+			tagName = "tagtwo"
+		);
+
+		for (var key_dmDocumentTitle : list "Document_2.jpg,Document_4.txt") {
+			DMNavigator.gotoDocumentPG(dmDocumentTitle = "${key_dmDocumentTitle}");
+
+			DMDocument.viewTag(tagNameList = "tagone,tagtwo");
+
+			Navigator.gotoPage(pageName = "Documents and Media Page");
+		}
+
+		for (var key_searchTerm : list "tagone,tagtwo") {
+			SearchPortlets.searchEmbedded(searchTerm = "${key_searchTerm}");
+
+			SearchResultPortlet.viewSearchResults(
+				searchAssetTitle = "Document_2.jpg",
+				searchAssetType = "Document"
+			);
+
+			SearchResultPortlet.viewSearchResults(
+				searchAssetTitle = "Document_4.txt",
+				searchAssetType = "Document"
+			);
+		}
+	}
 }

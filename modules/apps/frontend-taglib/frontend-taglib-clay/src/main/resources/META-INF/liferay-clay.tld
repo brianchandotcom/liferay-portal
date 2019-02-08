@@ -2112,6 +2112,12 @@
 		</attribute>
 		<attribute>
 			<description></description>
+			<name>userCard</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
 			<name>userColor</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

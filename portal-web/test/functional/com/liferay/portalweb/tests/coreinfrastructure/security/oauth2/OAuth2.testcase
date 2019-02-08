@@ -115,7 +115,6 @@ definition {
 		OAuth2.deleteApplication(applicationName = "OAuth Application Edited");
 	}
 
-	@ignore = "true"
 	test editApplicationScopes {
 		property prepare.oauth2.global.scopes = "true";
 

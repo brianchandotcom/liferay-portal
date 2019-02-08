@@ -14,6 +14,8 @@
 
 package com.liferay.portal.vulcan.internal.context.provider.test.util;
 
+import java.lang.reflect.Method;
+
 import java.util.Collection;
 import java.util.Map;
 import java.util.Objects;
@@ -33,6 +35,12 @@ import org.apache.cxf.transport.Destination;
 public class MockMessage implements Message {
 
 	public MockMessage(HttpServletRequest httpServletRequest) {
+		_method = null;
+		_httpServletRequest = httpServletRequest;
+	}
+
+	public MockMessage(Method method, HttpServletRequest httpServletRequest) {
+		_method = method;
 		_httpServletRequest = httpServletRequest;
 	}
 
@@ -62,6 +70,10 @@ public class MockMessage implements Message {
 
 	@Override
 	public Object get(Object key) {
+		if ((key != null) && key.equals("org.apache.cxf.resource.method")) {
+			return _method;
+		}
+
 		return null;
 	}
 
@@ -186,5 +198,6 @@ public class MockMessage implements Message {
 	}
 
 	private final HttpServletRequest _httpServletRequest;
+	private final Method _method;
 
 }

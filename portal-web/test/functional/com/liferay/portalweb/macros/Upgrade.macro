@@ -1084,10 +1084,15 @@ definition {
 			portlet = "App Manager"
 		);
 
-		AppManager.viewAppCP(appName = "Liferay Drools", appStatus = "Active");
+		AppManager.viewAppCP(
+			appName = "Liferay Drools", 
+			searchTerm = "Drools", 
+			appStatus = "Active"
+		);
 
 		AppManager.viewAppCP(
 			appName = "Liferay Portal Rules Engine Drools",
+			searchTerm = "Drools",
 			appStatus = "Active"
 		);
 	}

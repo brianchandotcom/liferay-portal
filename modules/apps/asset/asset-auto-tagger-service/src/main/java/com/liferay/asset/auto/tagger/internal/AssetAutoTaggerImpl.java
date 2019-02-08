@@ -20,6 +20,7 @@ import com.liferay.asset.auto.tagger.configuration.AssetAutoTaggerConfiguration;
 import com.liferay.asset.auto.tagger.configuration.AssetAutoTaggerConfigurationFactory;
 import com.liferay.asset.auto.tagger.model.AssetAutoTaggerEntry;
 import com.liferay.asset.auto.tagger.service.AssetAutoTaggerEntryLocalService;
+import com.liferay.asset.kernel.exception.AssetTagException;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetTag;
@@ -127,6 +128,15 @@ public class AssetAutoTaggerImpl implements AssetAutoTagger {
 							_assetTagLocalService.incrementAssetCount(
 								assetTag.getTagId(),
 								assetEntry.getClassNameId());
+						}
+						catch (AssetTagException ate) {
+							if (_log.isWarnEnabled()) {
+								_log.warn(
+									String.format(
+										"Unable to add auto tag: %s",
+										assetTagName),
+									ate);
+							}
 						}
 						catch (PortalException pe) {
 							_log.error(

@@ -19,6 +19,7 @@ import com.liferay.arquillian.extension.junit.bridge.deployment.BndDeploymentSce
 import java.util.List;
 
 import org.jboss.arquillian.container.spi.Container;
+import org.jboss.arquillian.container.spi.client.container.LifecycleException;
 import org.jboss.arquillian.container.spi.client.deployment.Deployment;
 import org.jboss.arquillian.container.spi.client.deployment.DeploymentDescription;
 import org.jboss.arquillian.container.spi.client.deployment.DeploymentScenario;
@@ -27,8 +28,6 @@ import org.jboss.arquillian.container.spi.context.ContainerContext;
 import org.jboss.arquillian.container.spi.context.DeploymentContext;
 import org.jboss.arquillian.container.spi.event.ContainerMultiControlEvent;
 import org.jboss.arquillian.container.spi.event.DeployManagedDeployments;
-import org.jboss.arquillian.container.spi.event.StartSuiteContainers;
-import org.jboss.arquillian.container.spi.event.StopSuiteContainers;
 import org.jboss.arquillian.container.spi.event.UnDeployManagedDeployments;
 import org.jboss.arquillian.container.test.spi.client.deployment.DeploymentScenarioGenerator;
 import org.jboss.arquillian.core.api.Event;
@@ -62,8 +61,12 @@ public class ContainerEventController {
 		_containerMultiControlEvent.fire(new UnDeployManagedDeployments());
 	}
 
-	public void execute(@Observes AfterSuite afterSuite) {
-		_containerMultiControlEvent.fire(new StopSuiteContainers());
+	public void execute(@Observes AfterSuite afterSuite)
+		throws LifecycleException {
+
+		Container container = _containerInstance.get();
+
+		container.stop();
 	}
 
 	public void execute(@Observes BeforeClass beforeClass) {
@@ -72,8 +75,12 @@ public class ContainerEventController {
 		_containerMultiControlEvent.fire(new DeployManagedDeployments());
 	}
 
-	public void execute(@Observes BeforeSuite beforeSuite) {
-		_containerMultiControlEvent.fire(new StartSuiteContainers());
+	public void execute(@Observes BeforeSuite beforeSuite)
+		throws LifecycleException {
+
+		Container container = _containerInstance.get();
+
+		container.start();
 	}
 
 	private void _createContext(

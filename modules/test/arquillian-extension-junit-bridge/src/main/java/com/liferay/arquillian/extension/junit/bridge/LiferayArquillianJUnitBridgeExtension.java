@@ -16,7 +16,6 @@ package com.liferay.arquillian.extension.junit.bridge;
 
 import com.liferay.arquillian.extension.junit.bridge.container.ContainerDeployController;
 import com.liferay.arquillian.extension.junit.bridge.container.ContainerDeploymentContextHandler;
-import com.liferay.arquillian.extension.junit.bridge.container.ContainerLifecycleController;
 import com.liferay.arquillian.extension.junit.bridge.container.LiferayRemoteDeployableContainer;
 import com.liferay.arquillian.extension.junit.bridge.context.ContainerContextImpl;
 import com.liferay.arquillian.extension.junit.bridge.context.DeploymentContextImpl;
@@ -57,7 +56,6 @@ public class LiferayArquillianJUnitBridgeExtension
 			extensionBuilder.observer(ContainerDeployController.class);
 			extensionBuilder.observer(ContainerDeploymentContextHandler.class);
 			extensionBuilder.observer(ContainerEventController.class);
-			extensionBuilder.observer(ContainerLifecycleController.class);
 			extensionBuilder.observer(RemoteTestExecuter.class);
 			extensionBuilder.observer(TestContextHandler.class);
 			extensionBuilder.service(

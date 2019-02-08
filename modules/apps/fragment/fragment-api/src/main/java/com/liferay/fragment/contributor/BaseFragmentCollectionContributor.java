@@ -144,8 +144,8 @@ public abstract class BaseFragmentCollectionContributor
 		fragmentEntry.setCss(css);
 		fragmentEntry.setHtml(html);
 		fragmentEntry.setJs(js);
-		fragmentEntry.setImagePreviewURL(thumbnailURL);
 		fragmentEntry.setType(type);
+		fragmentEntry.setImagePreviewURL(thumbnailURL);
 
 		return fragmentEntry;
 	}

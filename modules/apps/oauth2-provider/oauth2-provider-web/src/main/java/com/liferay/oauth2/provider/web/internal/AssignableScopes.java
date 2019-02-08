@@ -202,6 +202,17 @@ public class AssignableScopes {
 			_scopeDescriptorLocator);
 	}
 
+	@Override
+	public String toString() {
+		Stream<LiferayOAuth2Scope> stream = _liferayOAuth2Scopes.stream();
+
+		return stream.map(
+			LiferayOAuth2Scope::toString
+		).collect(
+			Collectors.joining(" + ")
+		);
+	}
+
 	private final ApplicationDescriptorLocator _applicationDescriptorLocator;
 	private Set<LiferayOAuth2Scope> _liferayOAuth2Scopes = new HashSet<>();
 	private final Locale _locale;

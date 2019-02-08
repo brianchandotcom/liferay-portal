@@ -77,6 +77,11 @@ public class LiferayOAuth2ScopeImpl implements LiferayOAuth2Scope {
 		return Objects.hash(_applicationName, _bundle, _scope);
 	}
 
+	@Override
+	public String toString() {
+		return getScope() + "@" + getApplicationName();
+	}
+
 	private final String _applicationName;
 	private final Bundle _bundle;
 	private final String _scope;

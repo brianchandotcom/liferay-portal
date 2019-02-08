@@ -86,18 +86,18 @@ public class FilterContextProvider implements ContextProvider<Filter> {
 
 			System.out.println("## filterParser " + filterParser);
 
-			com.liferay.portal.odata.filter.Filter filter =
-				new com.liferay.portal.odata.filter.Filter(
-					filterParser.parse(filterString));
-
-			AcceptLanguage acceptLanguage = new AcceptLanguageImpl(
-				httpServletRequest, _portal);
-
 			EntityModel entityModel = _getEntityModel(oDataEntityModelName);
 
 			if (entityModel == null) {
 				return null;
 			}
+
+			AcceptLanguage acceptLanguage = new AcceptLanguageImpl(
+				httpServletRequest, _portal);
+
+			com.liferay.portal.odata.filter.Filter filter =
+				new com.liferay.portal.odata.filter.Filter(
+					filterParser.parse(filterString));
 
 			Filter filter1 = _expressionConvert.convert(
 				filter.getExpression(), acceptLanguage.getPreferredLocale(),

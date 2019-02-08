@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocal;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServiceUtil;
+import com.liferay.portal.kernel.scheduler.JobState;
 import com.liferay.portal.kernel.scheduler.SchedulerEngine;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
 import com.liferay.portal.kernel.scheduler.SchedulerException;
@@ -552,10 +553,11 @@ public class ClusterSchedulerEngine
 		String jobName = schedulerResponse.getJobName();
 		String groupName = schedulerResponse.getGroupName();
 
-		TriggerState triggerState = SchedulerEngineHelperUtil.getJobState(
-			schedulerResponse);
-
 		Message message = schedulerResponse.getMessage();
+
+		JobState jobState = (JobState)message.get(SchedulerEngine.JOB_STATE);
+
+		TriggerState triggerState = jobState.getTriggerState();
 
 		message.remove(JOB_STATE);
 

@@ -26,7 +26,6 @@ import org.jboss.arquillian.container.spi.client.deployment.DeploymentScenario;
 import org.jboss.arquillian.container.spi.client.deployment.TargetDescription;
 import org.jboss.arquillian.container.spi.client.protocol.ProtocolDescription;
 import org.jboss.arquillian.container.test.api.TargetsContainer;
-import org.jboss.arquillian.container.test.impl.client.deployment.AnnotationDeploymentScenarioGenerator;
 import org.jboss.arquillian.container.test.impl.client.deployment.ValidationException;
 import org.jboss.arquillian.container.test.impl.client.deployment.event.GenerateDeployment;
 import org.jboss.arquillian.container.test.impl.domain.ProtocolDefinition;
@@ -55,12 +54,8 @@ import org.jboss.shrinkwrap.api.container.ClassContainer;
 public class DeploymentGenerator {
 
 	public void generateDeployment(@Observes GenerateDeployment event) {
-		ServiceLoader serviceLoader = _serviceLoaderInstance.get();
-
 		DeploymentScenarioGenerator deploymentScenarioGenerator =
-			serviceLoader.onlyOne(
-				DeploymentScenarioGenerator.class,
-				AnnotationDeploymentScenarioGenerator.class);
+			new BndDeploymentScenarioGenerator();
 
 		DeploymentScenario deploymentScenario = new DeploymentScenario();
 

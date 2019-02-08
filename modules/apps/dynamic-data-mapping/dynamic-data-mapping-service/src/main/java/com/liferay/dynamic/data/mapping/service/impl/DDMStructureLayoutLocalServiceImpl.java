@@ -29,9 +29,15 @@ import com.liferay.dynamic.data.mapping.validator.DDMFormLayoutValidator;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.spring.extender.service.ServiceReference;
+
+import java.util.Date;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * @author Marcellus Tavares
@@ -61,6 +67,36 @@ public class DDMStructureLayoutLocalServiceImpl
 		structureLayout.setUserName(user.getFullName());
 		structureLayout.setStructureVersionId(structureVersionId);
 		structureLayout.setDefinition(serialize(ddmFormLayout));
+
+		return ddmStructureLayoutPersistence.update(structureLayout);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public DDMStructureLayout addStructureLayout(
+			long userId, long groupId, long structureVersionId,
+			Map<Locale, String> name, Map<Locale, String> description,
+			String definition, ServiceContext serviceContext)
+		throws PortalException {
+
+		User user = userLocalService.getUser(userId);
+
+		long structureLayoutId = counterLocalService.increment();
+
+		DDMStructureLayout structureLayout =
+			ddmStructureLayoutPersistence.create(structureLayoutId);
+
+		structureLayout.setUuid(serviceContext.getUuid());
+		structureLayout.setGroupId(groupId);
+		structureLayout.setCompanyId(user.getCompanyId());
+		structureLayout.setUserId(user.getUserId());
+		structureLayout.setUserName(user.getFullName());
+		structureLayout.setCreateDate(new Date());
+		structureLayout.setModifiedDate(new Date());
+		structureLayout.setStructureVersionId(structureVersionId);
+		structureLayout.setDefinition(definition);
+		structureLayout.setDescriptionMap(description);
+		structureLayout.setNameMap(name);
 
 		return ddmStructureLayoutPersistence.update(structureLayout);
 	}
@@ -129,6 +165,26 @@ public class DDMStructureLayoutLocalServiceImpl
 		validate(ddmFormLayout);
 
 		structureLayout.setDefinition(serialize(ddmFormLayout));
+
+		return ddmStructureLayoutPersistence.update(structureLayout);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public DDMStructureLayout updateStructureLayout(
+			long structureLayoutId, long structureVersionId,
+			Map<Locale, String> name, Map<Locale, String> description,
+			String definition, ServiceContext serviceContext)
+		throws PortalException {
+
+		DDMStructureLayout structureLayout =
+			ddmStructureLayoutPersistence.findByPrimaryKey(structureLayoutId);
+
+		structureLayout.setModifiedDate(new Date());
+		structureLayout.setStructureVersionId(structureVersionId);
+		structureLayout.setDefinition(definition);
+		structureLayout.setDescriptionMap(description);
+		structureLayout.setNameMap(name);
 
 		return ddmStructureLayoutPersistence.update(structureLayout);
 	}

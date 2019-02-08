@@ -41,7 +41,6 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import uk.co.datumedge.hamcrest.json.SameJSONAs;
@@ -79,7 +78,6 @@ public abstract class BaseFolderResourceTestCase {
 		_deleteGroup(_groupId);
 	}
 
-	@Ignore
 	@Test
 	public void testDeleteFolder()
 		throws JsonProcessingException, MalformedURLException {
@@ -90,7 +88,9 @@ public abstract class BaseFolderResourceTestCase {
 
 		_deleteFolder(path);
 
-		Assert.assertNull(_getFolder(path));
+		Response response = _getFolderResponse(path);
+
+		Assert.assertEquals(404, response.getStatusCode());
 	}
 
 	@Test
@@ -262,7 +262,7 @@ public abstract class BaseFolderResourceTestCase {
 			new URL(_headlessDocumentLibraryURL.toExternalForm() + path)
 		).then(
 		).statusCode(
-			200
+			204
 		);
 	}
 

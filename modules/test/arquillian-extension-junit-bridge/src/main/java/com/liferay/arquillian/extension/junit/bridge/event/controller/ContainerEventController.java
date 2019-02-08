@@ -14,8 +14,13 @@
 
 package com.liferay.arquillian.extension.junit.bridge.event.controller;
 
+import com.liferay.arquillian.extension.junit.bridge.deployment.BndDeploymentScenarioGenerator;
+
+import java.util.List;
+
 import org.jboss.arquillian.container.spi.Container;
 import org.jboss.arquillian.container.spi.client.deployment.Deployment;
+import org.jboss.arquillian.container.spi.client.deployment.DeploymentDescription;
 import org.jboss.arquillian.container.spi.client.deployment.DeploymentScenario;
 import org.jboss.arquillian.container.spi.client.deployment.DeploymentTargetDescription;
 import org.jboss.arquillian.container.spi.context.ContainerContext;
@@ -29,17 +34,22 @@ import org.jboss.arquillian.container.spi.event.StopClassContainers;
 import org.jboss.arquillian.container.spi.event.StopManualContainers;
 import org.jboss.arquillian.container.spi.event.StopSuiteContainers;
 import org.jboss.arquillian.container.spi.event.UnDeployManagedDeployments;
-import org.jboss.arquillian.container.test.impl.client.deployment.event.GenerateDeployment;
+import org.jboss.arquillian.container.test.spi.client.deployment.DeploymentScenarioGenerator;
 import org.jboss.arquillian.core.api.Event;
 import org.jboss.arquillian.core.api.Instance;
+import org.jboss.arquillian.core.api.InstanceProducer;
 import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.arquillian.core.api.annotation.Observes;
 import org.jboss.arquillian.core.spi.EventContext;
+import org.jboss.arquillian.test.spi.TestClass;
+import org.jboss.arquillian.test.spi.annotation.ClassScoped;
 import org.jboss.arquillian.test.spi.event.suite.AfterClass;
 import org.jboss.arquillian.test.spi.event.suite.AfterSuite;
 import org.jboss.arquillian.test.spi.event.suite.BeforeClass;
 import org.jboss.arquillian.test.spi.event.suite.BeforeSuite;
 import org.jboss.arquillian.test.spi.event.suite.TestEvent;
+import org.jboss.shrinkwrap.api.Archive;
+import org.jboss.shrinkwrap.api.container.ClassContainer;
 
 /**
  * @author Matthew Tambara
@@ -69,8 +79,7 @@ public class ContainerEventController {
 	public void execute(@Observes BeforeClass beforeClass) {
 		_containerMultiControlEvent.fire(new StartClassContainers());
 
-		_generateDeploymentEvent.fire(
-			new GenerateDeployment(beforeClass.getTestClass()));
+		_generateDeployment(beforeClass.getTestClass());
 
 		_containerMultiControlEvent.fire(new DeployManagedDeployments());
 	}
@@ -109,6 +118,29 @@ public class ContainerEventController {
 		}
 	}
 
+	private void _generateDeployment(TestClass testClass) {
+		DeploymentScenarioGenerator deploymentScenarioGenerator =
+			new BndDeploymentScenarioGenerator();
+
+		DeploymentScenario deploymentScenario = new DeploymentScenario();
+
+		List<DeploymentDescription> deploymentDescriptions =
+			deploymentScenarioGenerator.generate(testClass);
+
+		DeploymentDescription deploymentDescription =
+			deploymentDescriptions.get(0);
+
+		deploymentScenario.addDeployment(deploymentDescription);
+
+		Archive<?> archive = deploymentDescription.getArchive();
+
+		((ClassContainer<?>)archive).addClass(testClass.getJavaClass());
+
+		deploymentDescription.setTestableArchive(archive);
+
+		_deploymentScenarioInstanceProducer.set(deploymentScenario);
+	}
+
 	@Inject
 	private Instance<ContainerContext> _containerContextInstance;
 
@@ -124,7 +156,9 @@ public class ContainerEventController {
 	@Inject
 	private Instance<DeploymentScenario> _deploymentScenarioInstance;
 
+	@ClassScoped
 	@Inject
-	private Event<GenerateDeployment> _generateDeploymentEvent;
+	private InstanceProducer<DeploymentScenario>
+		_deploymentScenarioInstanceProducer;
 
 }

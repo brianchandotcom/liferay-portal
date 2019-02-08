@@ -20,7 +20,6 @@ import com.liferay.arquillian.extension.junit.bridge.container.ContainerLifecycl
 import com.liferay.arquillian.extension.junit.bridge.container.LiferayRemoteDeployableContainer;
 import com.liferay.arquillian.extension.junit.bridge.context.ContainerContextImpl;
 import com.liferay.arquillian.extension.junit.bridge.context.DeploymentContextImpl;
-import com.liferay.arquillian.extension.junit.bridge.deployment.DeploymentGenerator;
 import com.liferay.arquillian.extension.junit.bridge.event.controller.ContainerEventController;
 import com.liferay.arquillian.extension.junit.bridge.executor.RemoteTestExecuter;
 import com.liferay.arquillian.extension.junit.bridge.observer.ConfigurationRegistrar;
@@ -59,7 +58,6 @@ public class LiferayArquillianJUnitBridgeExtension
 			extensionBuilder.observer(ContainerDeploymentContextHandler.class);
 			extensionBuilder.observer(ContainerEventController.class);
 			extensionBuilder.observer(ContainerLifecycleController.class);
-			extensionBuilder.observer(DeploymentGenerator.class);
 			extensionBuilder.observer(RemoteTestExecuter.class);
 			extensionBuilder.observer(TestContextHandler.class);
 			extensionBuilder.service(

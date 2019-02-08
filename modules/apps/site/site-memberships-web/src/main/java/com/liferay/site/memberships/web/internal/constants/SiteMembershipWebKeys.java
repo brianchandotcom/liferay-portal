@@ -19,6 +19,9 @@ package com.liferay.site.memberships.web.internal.constants;
  */
 public class SiteMembershipWebKeys {
 
+	public static final String ORGANIZATION_DROPDOWN_DEFAULT_EVENT_HANDLER =
+		"ORGANIZATION_DROPDOWN_DEFAULT_EVENT_HANDLER";
+
 	public static final String ORGANIZATIONS = "ORGANIZATIONS";
 
 	public static final String USER_DROPDOWN_DEFAULT_EVENT_HANDLER =

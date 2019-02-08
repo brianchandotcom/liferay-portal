@@ -61,9 +61,17 @@
 		</liferay-ui:search-container-column-text>
 
 		<c:if test="<%= !selectOrganizations %>">
-			<liferay-ui:search-container-column-jsp
-				path="/organization_action.jsp"
-			/>
+
+			<%
+			OrganizationActionDropdownItemsProvider organizationActionDropdownItemsProvider = new OrganizationActionDropdownItemsProvider(organization, renderRequest, renderResponse);
+			%>
+
+			<liferay-ui:search-container-column-text>
+				<clay:dropdown-actions
+					defaultEventHandler="<%= SiteMembershipWebKeys.ORGANIZATION_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
+					dropdownItems="<%= organizationActionDropdownItemsProvider.getActionDropdownItems() %>"
+				/>
+			</liferay-ui:search-container-column-text>
 		</c:if>
 	</c:when>
 	<c:otherwise>
@@ -106,9 +114,17 @@
 		/>
 
 		<c:if test="<%= !selectOrganizations %>">
-			<liferay-ui:search-container-column-jsp
-				path="/organization_action.jsp"
-			/>
+
+			<%
+			OrganizationActionDropdownItemsProvider organizationActionDropdownItemsProvider = new OrganizationActionDropdownItemsProvider(organization, renderRequest, renderResponse);
+			%>
+
+			<liferay-ui:search-container-column-text>
+				<clay:dropdown-actions
+					defaultEventHandler="<%= SiteMembershipWebKeys.ORGANIZATION_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
+					dropdownItems="<%= organizationActionDropdownItemsProvider.getActionDropdownItems() %>"
+				/>
+			</liferay-ui:search-container-column-text>
 		</c:if>
 	</c:otherwise>
 </c:choose>

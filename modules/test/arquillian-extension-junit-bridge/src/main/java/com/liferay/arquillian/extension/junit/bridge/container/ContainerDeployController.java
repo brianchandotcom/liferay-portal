@@ -42,46 +42,9 @@ import org.jboss.arquillian.core.api.annotation.Observes;
  */
 public class ContainerDeployController {
 
-	public void deploy(
-			DeployableContainer<?> deployableContainer, Deployment deployment)
-		throws DeploymentException {
-
-		DeploymentDescription deploymentDescription =
-			deployment.getDescription();
-
-		_deploymentDescriptionInstanceProducer.set(deploymentDescription);
-
-		_deploymentInstanceProducer.set(deployment);
-
-		_deployerEvent.fire(
-			new BeforeDeploy(deployableContainer, deploymentDescription));
-
-		try {
-			if (deploymentDescription.isArchiveDeployment()) {
-				ProtocolMetaData protocolMetaData = deployableContainer.deploy(
-					deploymentDescription.getTestableArchive());
-
-				_protocolMetadataInstanceProducer.set(protocolMetaData);
-			}
-			else {
-				deployableContainer.deploy(
-					deploymentDescription.getDescriptor());
-			}
-
-			deployment.deployed();
-		}
-		catch (DeploymentException de) {
-			deployment.deployedWithError(de);
-
-			throw de;
-		}
-
-		_deployerEvent.fire(
-			new AfterDeploy(deployableContainer, deploymentDescription));
-	}
-
 	public void deployManaged(
-		@Observes DeployManagedDeployments deployManagedDeployments) {
+			@Observes DeployManagedDeployments deployManagedDeployments)
+		throws DeploymentException {
 
 		Container container = _containerInstance.get();
 
@@ -100,29 +63,64 @@ public class ContainerDeployController {
 
 		deploymentContext.activate(deployment);
 
+		_deploymentInstanceProducer.set(deployment);
+
+		DeployableContainer<?> deployableContainer =
+			container.getDeployableContainer();
+
+		DeploymentDescription deploymentDescription =
+			deployment.getDescription();
+
+		_deploymentDescriptionInstanceProducer.set(deploymentDescription);
+
 		try {
-			deploy(container.getDeployableContainer(), deployment);
-		}
-		catch (DeploymentException de) {
-			throw new RuntimeException(de);
+			_deployerEvent.fire(
+				new BeforeDeploy(deployableContainer, deploymentDescription));
+
+			ProtocolMetaData protocolMetaData = deployableContainer.deploy(
+				deploymentDescription.getTestableArchive());
+
+			_protocolMetadataInstanceProducer.set(protocolMetaData);
+
+			deployment.deployed();
+
+			_deployerEvent.fire(
+				new AfterDeploy(deployableContainer, deploymentDescription));
 		}
 		finally {
 			deploymentContext.deactivate();
 		}
 	}
 
-	public void undeploy(
-			DeployableContainer<?> deployableContainer, Deployment deployment)
+	public void undeployManaged(
+			@Observes UnDeployManagedDeployments unDeployManagedDeployments)
 		throws DeploymentException {
 
-		DeploymentDescription deploymentDescription =
-			deployment.getDescription();
+		Container container = _containerInstance.get();
 
-		_deployerEvent.fire(
-			new BeforeUnDeploy(deployableContainer, deploymentDescription));
+		if (Container.State.STARTED.equals(container.getState())) {
+			DeploymentScenario deploymentScenario =
+				_deploymentScenarioInstance.get();
 
-		try {
-			if (deployment.getDescription().isArchiveDeployment()) {
+			Deployment deployment = deploymentScenario.deployment(
+				DeploymentTargetDescription.DEFAULT);
+
+			DeploymentContext deploymentContext =
+				_deploymentContextInstance.get();
+
+			deploymentContext.activate(deployment);
+
+			DeployableContainer<?> deployableContainer =
+				container.getDeployableContainer();
+
+			DeploymentDescription deploymentDescription =
+				deployment.getDescription();
+
+			try {
+				_deployerEvent.fire(
+					new BeforeUnDeploy(
+						deployableContainer, deploymentDescription));
+
 				try {
 					deployableContainer.undeploy(
 						deploymentDescription.getTestableArchive());
@@ -132,47 +130,16 @@ public class ContainerDeployController {
 						throw de;
 					}
 				}
-			}
-			else {
-				deployableContainer.undeploy(
-					deploymentDescription.getDescriptor());
-			}
-		}
-		finally {
-			deployment.undeployed();
-		}
-
-		_deployerEvent.fire(
-			new AfterUnDeploy(deployableContainer, deploymentDescription));
-	}
-
-	public void undeployManaged(
-		@Observes UnDeployManagedDeployments unDeployManagedDeployments) {
-
-		Container container = _containerInstance.get();
-
-		if (container.getState().equals(Container.State.STARTED)) {
-			DeploymentScenario deploymentScenario =
-				_deploymentScenarioInstance.get();
-
-			Deployment deployment = deploymentScenario.deployment(
-				DeploymentTargetDescription.DEFAULT);
-
-			if (deployment.isDeployed()) {
-				DeploymentContext deploymentContext =
-					_deploymentContextInstance.get();
-
-				deploymentContext.activate(deployment);
-
-				try {
-					undeploy(container.getDeployableContainer(), deployment);
-				}
-				catch (DeploymentException de) {
-					throw new RuntimeException(de);
-				}
 				finally {
-					deploymentContext.deactivate();
+					deployment.undeployed();
 				}
+
+				_deployerEvent.fire(
+					new AfterUnDeploy(
+						deployableContainer, deploymentDescription));
+			}
+			finally {
+				deploymentContext.deactivate();
 			}
 		}
 	}

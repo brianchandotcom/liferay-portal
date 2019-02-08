@@ -69,9 +69,37 @@ import org.osgi.service.component.annotations.Reference;
 public class AnonymizeNonreviewableUADDataMVCRenderCommand
 	implements MVCRenderCommand {
 
-	public SearchContainer<UADApplicationSummaryDisplay> createSearchContainer(
-		Locale locale, RenderRequest renderRequest,
-		RenderResponse renderResponse, long userId) {
+	@Override
+	public String render(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws PortletException {
+
+		try {
+			User selectedUser = _portal.getSelectedUser(renderRequest);
+
+			renderRequest.setAttribute(
+				UADWebKeys.TOTAL_NONREVIEWABLE_UAD_ENTITIES_COUNT,
+				_getTotalNonreviewableUADEntitiesCount(
+					selectedUser.getUserId()));
+
+			SearchContainer<UADApplicationSummaryDisplay> searchContainer =
+				_createSearchContainer(
+					LocaleThreadLocal.getThemeDisplayLocale(), renderRequest,
+					selectedUser.getUserId());
+
+			renderRequest.setAttribute(
+				WebKeys.SEARCH_CONTAINER, searchContainer);
+		}
+		catch (PortalException pe) {
+			throw new PortletException(pe);
+		}
+
+		return "/anonymize_nonreviewable_uad_data.jsp";
+	}
+
+	private SearchContainer<UADApplicationSummaryDisplay>
+		_createSearchContainer(
+			Locale locale, RenderRequest renderRequest, long userId) {
 
 		PortletRequest portletRequest =
 			(PortletRequest)renderRequest.getAttribute(
@@ -90,14 +118,14 @@ public class AnonymizeNonreviewableUADDataMVCRenderCommand
 
 		searchContainer.setId("uadApplicationSummaryDisplays");
 
-		searchContainer.setOrderByCol(getOrderByCol(renderRequest));
-		searchContainer.setOrderByType(getOrderByType(renderRequest));
+		searchContainer.setOrderByCol(_getOrderByCol(renderRequest));
+		searchContainer.setOrderByType(_getOrderByType(renderRequest));
 
-		Predicate<UADApplicationSummaryDisplay> predicate = getPredicate(
-			getNavigation(renderRequest));
+		Predicate<UADApplicationSummaryDisplay> predicate = _getPredicate(
+			_getNavigation(renderRequest));
 
 		List<UADApplicationSummaryDisplay> uadApplicationSummaryDisplays =
-			getUADApplicationSummaryDisplays(portletRequest, userId);
+			_getUADApplicationSummaryDisplays(userId);
 
 		Supplier<Stream<UADApplicationSummaryDisplay>> streamSupplier = () -> {
 			Stream<UADApplicationSummaryDisplay> stream =
@@ -111,7 +139,7 @@ public class AnonymizeNonreviewableUADDataMVCRenderCommand
 
 		List<UADApplicationSummaryDisplay> results =
 			summaryDisplayStream.sorted(
-				getComparator(
+				_getComparator(
 					locale, searchContainer.getOrderByCol(),
 					searchContainer.getOrderByType())
 			).skip(
@@ -131,7 +159,7 @@ public class AnonymizeNonreviewableUADDataMVCRenderCommand
 		return searchContainer;
 	}
 
-	public Comparator<UADApplicationSummaryDisplay> getComparator(
+	private Comparator<UADApplicationSummaryDisplay> _getComparator(
 		Locale locale, String orderByColumn, String orderByType) {
 
 		Comparator<UADApplicationSummaryDisplay> comparator =
@@ -153,19 +181,19 @@ public class AnonymizeNonreviewableUADDataMVCRenderCommand
 		return comparator;
 	}
 
-	public String getNavigation(RenderRequest renderRequest) {
+	private String _getNavigation(RenderRequest renderRequest) {
 		return ParamUtil.getString(renderRequest, "navigation", "all");
 	}
 
-	public String getOrderByCol(RenderRequest renderRequest) {
+	private String _getOrderByCol(RenderRequest renderRequest) {
 		return ParamUtil.getString(renderRequest, "orderByCol", "name");
 	}
 
-	public String getOrderByType(RenderRequest renderRequest) {
+	private String _getOrderByType(RenderRequest renderRequest) {
 		return ParamUtil.getString(renderRequest, "orderByType", "asc");
 	}
 
-	public Predicate<UADApplicationSummaryDisplay> getPredicate(
+	private Predicate<UADApplicationSummaryDisplay> _getPredicate(
 		String navigation) {
 
 		if (navigation.equals("pending")) {
@@ -178,7 +206,7 @@ public class AnonymizeNonreviewableUADDataMVCRenderCommand
 		return display -> true;
 	}
 
-	public int getReviewableUADEntitiesCount(
+	private int _getReviewableUADEntitiesCount(
 		Stream<UADAnonymizer> uadAnonymizerStream, long userId) {
 
 		return uadAnonymizerStream.mapToInt(
@@ -193,13 +221,13 @@ public class AnonymizeNonreviewableUADDataMVCRenderCommand
 		).sum();
 	}
 
-	public int getTotalNonreviewableUADEntitiesCount(long userId) {
-		return getReviewableUADEntitiesCount(
+	private int _getTotalNonreviewableUADEntitiesCount(long userId) {
+		return _getReviewableUADEntitiesCount(
 			_uadRegistry.getNonreviewableUADAnonymizerStream(), userId);
 	}
 
-	public UADApplicationSummaryDisplay getUADApplicationSummaryDisplay(
-		PortletRequest portletRequest, String applicationKey, long userId) {
+	private UADApplicationSummaryDisplay _getUADApplicationSummaryDisplay(
+		String applicationKey, long userId) {
 
 		UADApplicationSummaryDisplay uadApplicationSummaryDisplay =
 			new UADApplicationSummaryDisplay();
@@ -208,7 +236,7 @@ public class AnonymizeNonreviewableUADDataMVCRenderCommand
 			_uadRegistry.getNonreviewableApplicationUADAnonymizers(
 				applicationKey);
 
-		int count = getReviewableUADEntitiesCount(
+		int count = _getReviewableUADEntitiesCount(
 			nonreviewableApplicationUADAnonymizers.stream(), userId);
 
 		uadApplicationSummaryDisplay.setCount(count);
@@ -218,8 +246,8 @@ public class AnonymizeNonreviewableUADDataMVCRenderCommand
 		return uadApplicationSummaryDisplay;
 	}
 
-	public List<UADApplicationSummaryDisplay> getUADApplicationSummaryDisplays(
-		PortletRequest portletRequest, long userId) {
+	private List<UADApplicationSummaryDisplay>
+		_getUADApplicationSummaryDisplays(long userId) {
 
 		List<UADApplicationSummaryDisplay> uadApplicationSummaryDisplays =
 			new ArrayList<>();
@@ -233,8 +261,7 @@ public class AnonymizeNonreviewableUADDataMVCRenderCommand
 			String applicationKey = iterator.next();
 
 			uadApplicationSummaryDisplays.add(
-				getUADApplicationSummaryDisplay(
-					portletRequest, applicationKey, userId));
+				_getUADApplicationSummaryDisplay(applicationKey, userId));
 		}
 
 		uadApplicationSummaryDisplays.sort(
@@ -247,34 +274,6 @@ public class AnonymizeNonreviewableUADDataMVCRenderCommand
 			});
 
 		return uadApplicationSummaryDisplays;
-	}
-
-	@Override
-	public String render(
-			RenderRequest renderRequest, RenderResponse renderResponse)
-		throws PortletException {
-
-		try {
-			User selectedUser = _portal.getSelectedUser(renderRequest);
-
-			renderRequest.setAttribute(
-				UADWebKeys.TOTAL_NONREVIEWABLE_UAD_ENTITIES_COUNT,
-				getTotalNonreviewableUADEntitiesCount(
-					selectedUser.getUserId()));
-
-			SearchContainer<UADApplicationSummaryDisplay> searchContainer =
-				createSearchContainer(
-					LocaleThreadLocal.getThemeDisplayLocale(), renderRequest,
-					renderResponse, selectedUser.getUserId());
-
-			renderRequest.setAttribute(
-				WebKeys.SEARCH_CONTAINER, searchContainer);
-		}
-		catch (PortalException pe) {
-			throw new PortletException(pe);
-		}
-
-		return "/anonymize_nonreviewable_uad_data.jsp";
 	}
 
 	@Reference

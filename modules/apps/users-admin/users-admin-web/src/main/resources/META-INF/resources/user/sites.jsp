@@ -285,19 +285,19 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "sites"
 			/>
 
 			<%
-			List<Role> inheritedRoles = new ArrayList<Role>();
+			List<UserGroupRole> inheritedRoles = new ArrayList<UserGroupRole>();
 			int inheritedRolesCount = 0;
 
 			if (selUser != null) {
-				inheritedRoles = RoleLocalServiceUtil.getUserGroupGroupRoles(selUser.getUserId(), inheritedSite.getGroupId(), 0, 50);
-				inheritedRolesCount = RoleLocalServiceUtil.getUserGroupGroupRolesCount(selUser.getUserId(), inheritedSite.getGroupId());
+				inheritedRoles = UserGroupRoleLocalServiceUtil.getUserGroupRoles(selUser.getUserId(), inheritedSite.getGroupId(), 0, PropsValues.USERS_ADMIN_ROLE_COLUMN_LIMIT);
+				inheritedRolesCount = UserGroupRoleLocalServiceUtil.getUserGroupRolesCount(selUser.getUserId(), inheritedSite.getGroupId());
 			}
 			%>
 
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-content"
 				name="roles"
-				value="<%= HtmlUtil.escape(UsersAdminUtil.getUserColumnText(locale, inheritedRoles, Role.TITLE_ACCESSOR, inheritedRolesCount)) %>"
+				value="<%= HtmlUtil.escape(UsersAdminUtil.getUserColumnText(locale, inheritedRoles, UsersAdmin.USER_GROUP_ROLE_TITLE_ACCESSOR, inheritedRolesCount)) %>"
 			/>
 		</liferay-ui:search-container-row>
 

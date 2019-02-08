@@ -14,15 +14,22 @@
 
 package com.liferay.portal.vulcan.internal.context.provider;
 
+import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.vulcan.context.AcceptLanguage;
-import com.liferay.portal.vulcan.internal.context.AcceptLanguageImpl;
 import com.liferay.portal.vulcan.internal.context.provider.base.BaseContextProvider;
 
 import io.vavr.CheckedFunction1;
 
+import java.util.Collections;
+import java.util.Optional;
+
 import javax.servlet.http.HttpServletRequest;
 
+import javax.ws.rs.InternalServerErrorException;
+import javax.ws.rs.NotFoundException;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.ext.Provider;
 
 /**
@@ -40,8 +47,33 @@ public class AcceptLanguageContextProvider
 
 	@Override
 	public AcceptLanguage createContext(HttpServletRequest request) {
-		return new AcceptLanguageImpl(
-			request, () -> _userCheckedFunction1.apply(request));
+		return Optional.ofNullable(
+			request.getHeader(HttpHeaders.ACCEPT_LANGUAGE)
+		).map(
+			__ -> Collections.list(request.getLocales())
+		).filter(
+			ListUtil::isNotEmpty
+		).map(
+			locales -> (AcceptLanguage)() -> locales
+		).orElseGet(
+			() -> _getUserAcceptLanguage(request)
+		);
+	}
+
+	private AcceptLanguage _getUserAcceptLanguage(HttpServletRequest request) {
+		try {
+			User user = _userCheckedFunction1.apply(request);
+
+			return () -> Collections.singletonList(user.getLocale());
+		}
+		catch (NoSuchUserException nsue) {
+			throw new NotFoundException(
+				"Unable to get preferred locale from nonexistent user", nsue);
+		}
+		catch (Throwable t) {
+			throw new InternalServerErrorException(
+				"Unable to get preferred locale: " + t.getMessage(), t);
+		}
 	}
 
 	private final CheckedFunction1<HttpServletRequest, User>

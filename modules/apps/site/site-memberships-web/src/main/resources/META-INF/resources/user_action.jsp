@@ -20,9 +20,6 @@
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 User user2 = (User)row.getObject();
-
-boolean organizationUser = GetterUtil.getBoolean(row.getParameter("organizationUser"));
-boolean userGroupUser = GetterUtil.getBoolean(row.getParameter("userGroupUser"));
 %>
 
 <liferay-ui:icon-menu
@@ -55,7 +52,7 @@ boolean userGroupUser = GetterUtil.getBoolean(row.getParameter("userGroupUser"))
 		/>
 	</c:if>
 
-	<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, siteMembershipsDisplayContext.getGroupId(), ActionKeys.ASSIGN_MEMBERS) && !(organizationUser || userGroupUser) && !SiteMembershipPolicyUtil.isMembershipProtected(permissionChecker, user2.getUserId(), siteMembershipsDisplayContext.getGroupId()) && !SiteMembershipPolicyUtil.isMembershipRequired(user2.getUserId(), siteMembershipsDisplayContext.getGroupId()) %>">
+	<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, siteMembershipsDisplayContext.getGroupId(), ActionKeys.ASSIGN_MEMBERS) && !SiteMembershipPolicyUtil.isMembershipProtected(permissionChecker, user2.getUserId(), siteMembershipsDisplayContext.getGroupId()) && !SiteMembershipPolicyUtil.isMembershipRequired(user2.getUserId(), siteMembershipsDisplayContext.getGroupId()) %>">
 		<portlet:actionURL name="deleteGroupUsers" var="deleteGroupUsersURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="groupId" value="<%= String.valueOf(siteMembershipsDisplayContext.getGroupId()) %>" />

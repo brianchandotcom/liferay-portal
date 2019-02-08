@@ -35,9 +35,9 @@ import org.jboss.arquillian.core.api.event.ManagerStarted;
 /**
  * @author Matthew Tambara
  */
-public class ConfigurationRegistrar {
+public class ContainerRegistrar {
 
-	public void loadConfiguration(@Observes ManagerStarted managerStarted)
+	public void createContainer(@Observes ManagerStarted managerStarted)
 		throws IOException {
 
 		ContainerDef containerDef = new ContainerDefImpl("arquillian.xml");

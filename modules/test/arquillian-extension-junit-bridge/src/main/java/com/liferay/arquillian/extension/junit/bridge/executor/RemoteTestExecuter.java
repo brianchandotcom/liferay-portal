@@ -14,23 +14,22 @@
 
 package com.liferay.arquillian.extension.junit.bridge.executor;
 
+import com.liferay.arquillian.extension.junit.bridge.protocol.jmx.JMXMethodExecutor;
 import com.liferay.arquillian.extension.junit.bridge.protocol.osgi.JMXOSGiProtocol;
 
+import java.util.Collection;
+import java.util.Iterator;
+
+import org.jboss.arquillian.container.spi.client.protocol.metadata.JMXContext;
 import org.jboss.arquillian.container.spi.client.protocol.metadata.ProtocolMetaData;
 import org.jboss.arquillian.container.test.impl.domain.ProtocolDefinition;
 import org.jboss.arquillian.container.test.impl.execution.event.RemoteExecutionEvent;
 import org.jboss.arquillian.container.test.spi.ContainerMethodExecutor;
-import org.jboss.arquillian.container.test.spi.client.protocol.Protocol;
 import org.jboss.arquillian.container.test.spi.client.protocol.ProtocolConfiguration;
-import org.jboss.arquillian.container.test.spi.command.Command;
-import org.jboss.arquillian.container.test.spi.command.CommandCallback;
-import org.jboss.arquillian.core.api.Event;
 import org.jboss.arquillian.core.api.Instance;
 import org.jboss.arquillian.core.api.InstanceProducer;
 import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.arquillian.core.api.annotation.Observes;
-import org.jboss.arquillian.core.api.threading.ContextSnapshot;
-import org.jboss.arquillian.core.api.threading.ExecutorService;
 import org.jboss.arquillian.test.spi.TestResult;
 import org.jboss.arquillian.test.spi.annotation.TestScoped;
 
@@ -50,41 +49,26 @@ public class RemoteTestExecuter {
 		ProtocolDefinition protocol,
 		ProtocolConfiguration protocolConfiguration) {
 
-		ExecutorService executorService = _executorServiceInstance.get();
+		ProtocolMetaData protocolMetaData = _protocolMetadataInstance.get();
 
-		ContextSnapshot contextSnapshot =
-			executorService.createSnapshotContext();
+		Collection<JMXContext> jmxContexts = protocolMetaData.getContexts(
+			JMXContext.class);
 
-		ContainerMethodExecutor executor =
-			((Protocol)protocol.getProtocol()).getExecutor(
-				protocolConfiguration, _protocolMetadataInstance.get(),
-				new CommandCallback() {
+		if (jmxContexts.isEmpty()) {
+			throw new IllegalStateException(
+				"No " + JMXContext.class.getName() + " was found in " +
+					ProtocolMetaData.class.getName());
+		}
 
-					@Override
-					public void fired(Command<?> command) {
-						contextSnapshot.activate();
+		Iterator<JMXContext> iterator = jmxContexts.iterator();
 
-						try {
-							_remoteEvent.fire(command);
-						}
-						finally {
-							contextSnapshot.deactivate();
-						}
-					}
+		JMXContext jmxContext = iterator.next();
 
-				});
-
-		return executor;
+		return new JMXMethodExecutor(jmxContext.getConnection());
 	}
 
 	@Inject
-	private Instance<ExecutorService> _executorServiceInstance;
-
-	@Inject
 	private Instance<ProtocolMetaData> _protocolMetadataInstance;
-
-	@Inject
-	private Event<Object> _remoteEvent;
 
 	@Inject
 	@TestScoped

@@ -394,16 +394,12 @@ public class BatchBuild extends BaseBuild {
 			Matcher matcher = _jobVariantPattern.matcher(jobVariant);
 
 			if (!matcher.matches()) {
-				StringBuilder sb = new StringBuilder();
-
-				sb.append("Unable to find batch name of batch build from job ");
-				sb.append("variant '");
-				sb.append(jobVariant);
-				sb.append("'. Job variant must match pattern '");
-				sb.append(_jobVariantPattern);
-				sb.append("'.");
-
-				throw new RuntimeException(sb.toString());
+				throw new RuntimeException(
+					JenkinsResultsParserUtil.combine(
+						"Unable to find batch name of batch build from ",
+						"job variant '", jobVariant,
+						"'. Job variant must match pattern '",
+						_jobVariantPattern.pattern(), "'."));
 			}
 
 			batchName = matcher.group("batchName");

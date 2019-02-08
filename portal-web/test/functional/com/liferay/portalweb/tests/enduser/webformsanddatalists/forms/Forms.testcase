@@ -38,6 +38,9 @@ definition {
 	@priority = "4"
 	test Add20Forms {
 		property test.name.skip.portal.instance = "Forms#Add20Forms";
+
+		Navigator.openURL();
+
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
@@ -101,6 +104,8 @@ definition {
 	test AddElementSetsWithTranslation {
 		property test.name.skip.portal.instance = "Forms#AddElementSetsWithTranslation";
 		property testray.component.names = "Training";
+
+		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -1391,6 +1396,9 @@ definition {
 	@priority = "3"
 	test DeleteSelectFromListOptionValue {
 		property test.name.skip.portal.instance = "Forms#DeleteSelectFromListOptionValue";
+
+		Navigator.openURL();
+		
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
@@ -1802,6 +1810,8 @@ definition {
 	test EditFormsConfigurationViaSystemSettings {
 		property test.name.skip.portal.instance = "Forms#EditFormsConfigurationViaSystemSettings";
 
+		Navigator.openURL();
+
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
@@ -1953,6 +1963,9 @@ definition {
 	@priority = "4"
 	test EditTranslatedGridField {
 		property test.name.skip.portal.instance = "Forms#EditTranslatedGridField";
+
+		Navigator.openURL();
+
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
@@ -2254,6 +2267,9 @@ definition {
 	@priority = "3"
 	test ReorderFieldOptions {
 		property test.name.skip.portal.instance = "Forms#ReorderFieldOptions";
+
+		Navigator.openURL();
+
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
@@ -2405,6 +2421,9 @@ definition {
 	@priority = "4"
 	test SelectAndRemoveMultipleOptionsInSelectFromListField {
 		property test.name.skip.portal.instance = "Forms#SelectAndRemoveMultipleOptionsInSelectFromListField";
+
+		Navigator.openURL();
+
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
@@ -4117,6 +4136,9 @@ definition {
 	@priority = "4"
 	test SubmitWithRequiredDateField {
 		property test.name.skip.portal.instance = "Forms#SubmitWithRequiredDateField";
+
+		Navigator.openURL();
+
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
@@ -4289,6 +4311,9 @@ definition {
 	@priority = "3"
 	test ViewConfirmationWhenLeavingFormWithoutSaving {
 		property test.name.skip.portal.instance = "Forms#ViewConfirmationWhenLeavingFormWithoutSaving";
+
+		Navigator.openURL();
+
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",

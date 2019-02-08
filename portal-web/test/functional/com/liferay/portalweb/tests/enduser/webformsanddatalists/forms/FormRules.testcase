@@ -677,6 +677,9 @@ definition {
 	@priority = "4"
 	test UseIsNotEmptyRuleToShowField {
 		property test.name.skip.portal.instance = "FormRules#UseIsNotEmptyRuleToShowField";
+
+		Navigator.openURL();
+		
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",

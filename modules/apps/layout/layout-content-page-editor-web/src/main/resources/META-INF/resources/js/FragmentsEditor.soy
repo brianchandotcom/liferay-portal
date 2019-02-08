@@ -8,7 +8,6 @@
 	{@param defaultEditorConfigurations: ?}
 	{@param defaultLanguageId: string}
 	{@param defaultSegmentId: string}
-	{@param? segmentId: string}
 	{@param fragmentEntryLinks: ?}
 	{@param imageSelectorURL: string}
 	{@param languageId: string}
@@ -21,6 +20,7 @@
 	{@param? getAssetDisplayContributorsURL: any}
 	{@param? id: string}
 	{@param? mappingFieldsURL: string}
+	{@param? segmentId: string}
 	{@param? selectMappingDialogEditableId: string}
 	{@param? selectMappingDialogEditableType: string}
 	{@param? selectMappingDialogFragmentEntryLinkId: string}
@@ -50,7 +50,6 @@
 			{param defaultEditorConfigurations: $defaultEditorConfigurations /}
 			{param defaultLanguageId: $defaultLanguageId /}
 			{param defaultSegmentId: $defaultSegmentId /}
-			{param segmentId: $segmentId /}
 			{param fragmentEntryLinks: $fragmentEntryLinks /}
 			{param fragmentsEditorSidebarVisible: $fragmentsEditorSidebarVisible ?: true /}
 			{param imageSelectorURL: $imageSelectorURL /}
@@ -60,6 +59,7 @@
 			{param mappingFieldsURL: $mappingFieldsURL /}
 			{param portletNamespace: $portletNamespace /}
 			{param ref: 'fragmentsEditorRender' /}
+			{param segmentId: $segmentId /}
 			{param store: $store /}
 			{param translating: $languageId != $defaultLanguageId /}
 		{/call}

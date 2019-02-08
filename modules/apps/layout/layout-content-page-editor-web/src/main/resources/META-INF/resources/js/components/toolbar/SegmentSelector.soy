@@ -4,13 +4,13 @@
  * SegmentSelector
  */
 {template .render}
+	{@param defaultSegmentId: string}
 	{@param? _handleSegmentChange: any}
 	{@param? availableSegments: list<[
 		segmentId: string,
 		segmentLabel: string
 	]>}
 	{@param? portletNamespace: string}
-	{@param defaultSegmentId: string}
 	{@param? segmentId: string}
 
 	{if $availableSegments and length($availableSegments) > 0}

@@ -7,7 +7,6 @@
 	{@param defaultEditorConfigurations: ?}
 	{@param defaultLanguageId: string}
 	{@param defaultSegmentId: string}
-	{@param? segmentId: string}
 	{@param fragmentEntryLinks: ?}
 	{@param languageId: string}
 	{@param layoutData: [
@@ -34,6 +33,7 @@
 	{@param? fragmentsEditorSidebarVisible: bool}
 	{@param? highlightMapping: bool}
 	{@param? mappingFieldsURL: string}
+	{@param? segmentId: string}
 	{@param? store: ?}
 
 	{let $entryLinksClasses kind="text"}
@@ -79,10 +79,10 @@
 					{param fragmentEntryLinks: $fragmentEntryLinks /}
 					{param key: $row.rowId /}
 					{param defaultSegmentId: $defaultSegmentId /}
-					{param segmentId: $segmentId /}
 					{param mappingFieldsURL: $mappingFieldsURL /}
 					{param row: $row /}
 					{param rowId: $row.rowId /}
+					{param segmentId: $segmentId /}
 					{param store: $store /}
 				{/call}
 			{/foreach}

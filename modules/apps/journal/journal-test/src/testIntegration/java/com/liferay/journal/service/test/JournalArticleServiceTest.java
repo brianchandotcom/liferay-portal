@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortalPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -205,16 +206,23 @@ public class JournalArticleServiceTest {
 	public void testCheckArticleWithValidStructure() throws Exception {
 		Group group = GroupTestUtil.addGroup();
 
-		JournalFolder parentFolder = JournalTestUtil.addFolder(
-			group.getGroupId(), RandomTestUtil.randomString());
+		try {
+			JournalFolder parentFolder = JournalTestUtil.addFolder(
+				group.getGroupId(), RandomTestUtil.randomString());
 
-		JournalArticle article = JournalTestUtil.addArticle(
-			group.getGroupId(), parentFolder.getFolderId(), "title", "content");
+			JournalArticle article = JournalTestUtil.addArticle(
+				group.getGroupId(), parentFolder.getFolderId(), "title",
+				"content");
 
-		ReflectionTestUtil.invoke(
-			_journalArticleLocalServiceImplInstance, "checkStructure",
-			new Class<?>[] {Long.TYPE, String.class, Double.TYPE},
-			article.getGroupId(), article.getArticleId(), article.getVersion());
+			ReflectionTestUtil.invoke(
+				_journalArticleLocalServiceImplInstance, "checkStructure",
+				new Class<?>[] {Long.TYPE, String.class, Double.TYPE},
+				article.getGroupId(), article.getArticleId(),
+				article.getVersion());
+		}
+		finally {
+			GroupLocalServiceUtil.deleteGroup(group);
+		}
 	}
 
 	@Test

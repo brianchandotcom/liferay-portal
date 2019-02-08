@@ -15,7 +15,6 @@
 package com.liferay.arquillian.extension.junit.bridge.event.controller;
 
 import org.jboss.arquillian.container.spi.Container;
-import org.jboss.arquillian.container.spi.ContainerRegistry;
 import org.jboss.arquillian.container.spi.client.deployment.Deployment;
 import org.jboss.arquillian.container.spi.client.deployment.DeploymentScenario;
 import org.jboss.arquillian.container.spi.client.deployment.DeploymentTargetDescription;
@@ -108,16 +107,13 @@ public class ContainerEventController {
 	}
 
 	private void _lookup(ResultCallback resultCallback) {
-		ContainerRegistry containerRegistry = _containerRegistryInstance.get();
-
 		DeploymentScenario deploymentScenario =
 			_deploymentScenarioInstance.get();
 
 		Deployment deployment = deploymentScenario.deployment(
 			DeploymentTargetDescription.DEFAULT);
 
-		Container container = containerRegistry.getContainer(
-			deployment.getDescription().getTarget());
+		Container container = _containerInstance.get();
 
 		resultCallback.call(container, deployment);
 	}
@@ -126,10 +122,10 @@ public class ContainerEventController {
 	private Instance<ContainerContext> _containerContextInstance;
 
 	@Inject
-	private Event<ContainerMultiControlEvent> _containerMultiControlEvent;
+	private Instance<Container> _containerInstance;
 
 	@Inject
-	private Instance<ContainerRegistry> _containerRegistryInstance;
+	private Event<ContainerMultiControlEvent> _containerMultiControlEvent;
 
 	@Inject
 	private Instance<DeploymentContext> _deploymentContextInstance;

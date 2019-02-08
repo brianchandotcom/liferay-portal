@@ -97,8 +97,8 @@ public class ScreenNavigationTag extends IncludeTag {
 		_key = key;
 	}
 
-	public void setMenuBarCssClass(String menuBarCssClass) {
-		_menuBarCssClass = menuBarCssClass;
+	public void setMenubarCssClass(String menubarCssClass) {
+		_menubarCssClass = menubarCssClass;
 	}
 
 	public void setModelBean(Object modelBean) {
@@ -116,8 +116,8 @@ public class ScreenNavigationTag extends IncludeTag {
 		setServletContext(ServletContextUtil.getServletContext());
 	}
 
-	public void setParentContainerCssClass(String parentContainerCssClass) {
-		_parentContainerCssClass = parentContainerCssClass;
+	public void setSectionContainerCssClass(String sectionContainerCssClass) {
+		_sectionContainerCssClass = sectionContainerCssClass;
 	}
 
 	public void setPortletURL(PortletURL portletURL) {
@@ -134,11 +134,11 @@ public class ScreenNavigationTag extends IncludeTag {
 		_headerContainerCssClass = "container";
 		_id = null;
 		_key = null;
-		_menuBarCssClass =
+		_menubarCssClass =
 			"menubar menubar-transparent menubar-vertical-expand-md";
 		_modelBean = null;
 		_navCssClass = "col-md-3";
-		_parentContainerCssClass = "container";
+		_sectionContainerCssClass = "container";
 		_portletURL = null;
 	}
 
@@ -188,13 +188,13 @@ public class ScreenNavigationTag extends IncludeTag {
 		request.setAttribute("liferay-frontend:screen-navigation:id", id);
 
 		request.setAttribute(
-			"liferay-frontend:screen-navigation:menuBarCssClass",
-			_menuBarCssClass);
+			"liferay-frontend:screen-navigation:menubarCssClass",
+			_menubarCssClass);
 		request.setAttribute(
 			"liferay-frontend:screen-navigation:navCssClass", _navCssClass);
 		request.setAttribute(
-			"liferay-frontend:screen-navigation:parentContainerCssClass",
-			_parentContainerCssClass);
+			"liferay-frontend:screen-navigation:sectionContainerCssClass",
+			_sectionContainerCssClass);
 		request.setAttribute(
 			"liferay-frontend:screen-navigation:portletURL", _portletURL);
 		request.setAttribute(
@@ -298,11 +298,11 @@ public class ScreenNavigationTag extends IncludeTag {
 	private String _headerContainerCssClass = "container";
 	private String _id;
 	private String _key;
-	private String _menuBarCssClass =
+	private String _menubarCssClass =
 		"menubar menubar-transparent menubar-vertical-expand-md";
 	private Object _modelBean;
 	private String _navCssClass = "col-md-3";
-	private String _parentContainerCssClass = "container";
+	private String _sectionContainerCssClass = "container";
 	private PortletURL _portletURL;
 	private List<ScreenNavigationCategory> _screenNavigationCategories;
 

@@ -15,6 +15,7 @@
 --%>
 
 <%@ page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
+page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.search.web.internal.search.insights.display.context.SearchInsightsDisplayContext" %>
 
@@ -39,43 +40,43 @@ SearchInsightsDisplayContext searchInsightsDisplayContext = (SearchInsightsDispl
 </style>
 
 <c:choose>
-	<c:when test="<%= searchInsightsDisplayContext.isRequestStringPresent() %>">
-	<div class="full-query">
-		<liferay-ui:panel-container
-			extended="<%= true %>"
-			id='<%= renderResponse.getNamespace() + "insightsPanelContainer" %>'
-			markupView="lexicon"
-			persistState="<%= true %>"
-		>
-		<liferay-ui:panel
-			collapsible="<%= true %>"
-			id='<%= renderResponse.getNamespace() + "insightsRequestPanel" %>'
-			markupView="lexicon"
-			persistState="<%= true %>"
-			title="request"
-		>
-			<code>
-				<%= HtmlUtil.escape(searchInsightsDisplayContext.getRequestString()) %>
-			</code>
-		</liferay-ui:panel>
-
-		<liferay-ui:panel
-			collapsible="<%= true %>"
-			id='<%= renderResponse.getNamespace() + "insightsResponsePanel" %>'
-			markupView="lexicon"
-			persistState="<%= true %>"
-			title="response"
-		>
-			<code>
-				<%= HtmlUtil.escape(searchInsightsDisplayContext.getResponseString()) %>
-			</code>
-		</liferay-ui:panel>
-		</liferay-ui:panel-container>
-	</div>
+	<c:when test="<%= !Validator.isBlank(searchInsightsDisplayContext.getHelpString()) %>">
+		<div class="alert alert-info">
+			<%= HtmlUtil.escape(searchInsightsDisplayContext.getHelpString()) %>
+		</div>
 	</c:when>
 	<c:otherwise>
-		<div class="alert alert-info">
-			<%= HtmlUtil.escape(searchInsightsDisplayContext.getRequestString()) %>
+		<div class="full-query">
+			<liferay-ui:panel-container
+				extended="<%= true %>"
+				id='<%= renderResponse.getNamespace() + "insightsPanelContainer" %>'
+				markupView="lexicon"
+				persistState="<%= true %>"
+			>
+				<liferay-ui:panel
+					collapsible="<%= true %>"
+					id='<%= renderResponse.getNamespace() + "insightsRequestPanel" %>'
+					markupView="lexicon"
+					persistState="<%= true %>"
+					title="request-string"
+				>
+					<code>
+						<%= HtmlUtil.escape(searchInsightsDisplayContext.getRequestString()) %>
+					</code>
+				</liferay-ui:panel>
+
+				<liferay-ui:panel
+					collapsible="<%= true %>"
+					id='<%= renderResponse.getNamespace() + "insightsResponsePanel" %>'
+					markupView="lexicon"
+					persistState="<%= true %>"
+					title="response-string"
+				>
+					<code>
+						<%= HtmlUtil.escape(searchInsightsDisplayContext.getResponseString()) %>
+					</code>
+				</liferay-ui:panel>
+			</liferay-ui:panel-container>
 		</div>
 	</c:otherwise>
 </c:choose>

@@ -45,7 +45,7 @@ SearchInsightsPortletPreferences searchInsightsPortletPreferences = new com.life
 	<liferay-frontend:edit-form-body>
 		<liferay-frontend:fieldset-group>
 			<aui:fieldset>
-				<aui:input helpMessage="explain-help" label="explain" name="<%= PortletPreferencesJspUtil.getInputName(SearchInsightsPortletPreferences.PREFERENCE_KEY_EXPLAIN) %>" type="checkbox" value="<%= searchInsightsPortletPreferences.isExplain() %>" />
+				<aui:input helpMessage="enable-score-explanation-help" label="enable-score-explanation" name="<%= PortletPreferencesJspUtil.getInputName(SearchInsightsPortletPreferences.PREFERENCE_KEY_EXPLAIN) %>" type="checkbox" value="<%= searchInsightsPortletPreferences.isExplain() %>" />
 			</aui:fieldset>
 		</liferay-frontend:fieldset-group>
 	</liferay-frontend:edit-form-body>

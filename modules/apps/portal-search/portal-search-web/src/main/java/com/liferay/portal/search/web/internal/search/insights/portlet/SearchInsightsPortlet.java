@@ -104,14 +104,17 @@ public class SearchInsightsPortlet extends MVCPortlet {
 		SearchResponse searchResponse =
 			portletSharedSearchResponse.getSearchResponse();
 
-		searchInsightsDisplayContext.setRequestStringPresent(
-			isRequestStringPresent(searchResponse));
+		if (isRequestStringPresent(searchResponse)) {
+			searchInsightsDisplayContext.setRequestString(
+				buildRequestString(searchResponse, renderRequest));
 
-		searchInsightsDisplayContext.setRequestString(
-			buildRequestString(searchResponse, renderRequest));
-
-		searchInsightsDisplayContext.setResponseString(
-			buildResponseString(searchResponse, renderRequest));
+			searchInsightsDisplayContext.setResponseString(
+				buildResponseString(searchResponse, renderRequest));
+		}
+		else {
+			searchInsightsDisplayContext.setHelpString(
+				getHelpString(renderRequest));
+		}
 
 		return searchInsightsDisplayContext;
 	}
@@ -122,7 +125,7 @@ public class SearchInsightsPortlet extends MVCPortlet {
 		Optional<String> requestString = SearchStringUtil.maybe(
 			searchResponse.getRequestString());
 
-		return requestString.orElseGet(() -> getHelp(renderRequest));
+		return requestString.orElse(StringPool.BLANK);
 	}
 
 	protected String buildResponseString(
@@ -134,7 +137,7 @@ public class SearchInsightsPortlet extends MVCPortlet {
 		return responseString.orElse(StringPool.BLANK);
 	}
 
-	protected String getHelp(RenderRequest renderRequest) {
+	protected String getHelpString(RenderRequest renderRequest) {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", renderRequest.getLocale(), getClass());
 

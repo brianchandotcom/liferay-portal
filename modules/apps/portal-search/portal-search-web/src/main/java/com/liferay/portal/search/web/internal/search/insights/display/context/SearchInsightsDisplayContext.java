@@ -21,6 +21,10 @@ import java.io.Serializable;
  */
 public class SearchInsightsDisplayContext implements Serializable {
 
+	public String getHelpString() {
+		return _helpString;
+	}
+
 	public String getRequestString() {
 		return _requestString;
 	}
@@ -29,24 +33,20 @@ public class SearchInsightsDisplayContext implements Serializable {
 		return _responseString;
 	}
 
-	public boolean isRequestStringPresent() {
-		return _requestStringPresent;
+	public void setHelpString(String helpString) {
+		_helpString = helpString;
 	}
 
 	public void setRequestString(String queryString) {
 		_requestString = queryString;
 	}
 
-	public void setRequestStringPresent(boolean requestStringPresent) {
-		_requestStringPresent = requestStringPresent;
-	}
-
 	public void setResponseString(String responseString) {
 		_responseString = responseString;
 	}
 
+	private String _helpString;
 	private String _requestString;
-	private boolean _requestStringPresent;
 	private String _responseString;
 
 }

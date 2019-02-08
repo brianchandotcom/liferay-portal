@@ -30,15 +30,9 @@ public class StatsDMetricsUtil {
 			return null;
 		}
 
-		StringBuilder sb = new StringBuilder();
-
-		sb.append(metricName);
-		sb.append(":");
-		sb.append(metricValue);
-		sb.append("|c");
-		sb.append(generateMetricLabels(labels));
-
-		return sb.toString();
+		return JenkinsResultsParserUtil.combine(
+			metricName, ":", String.valueOf(metricValue), "|c",
+			generateMetricLabels(labels));
 	}
 
 	public static String generateGaugeDeltaMetric(
@@ -100,15 +94,9 @@ public class StatsDMetricsUtil {
 			return null;
 		}
 
-		StringBuilder sb = new StringBuilder();
-
-		sb.append(metricName);
-		sb.append(":");
-		sb.append(metricValue);
-		sb.append("|ms");
-		sb.append(generateMetricLabels(labels));
-
-		return sb.toString();
+		return JenkinsResultsParserUtil.combine(
+			metricName, ":", String.valueOf(metricValue), "|c",
+			generateMetricLabels(labels));
 	}
 
 }

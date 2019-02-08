@@ -84,6 +84,10 @@ public class DropdownMenuTag extends BaseClayTag {
 		putValue("searchable", searchable);
 	}
 
+	public void setShowToggleIcon(Boolean showToggleIcon) {
+		putValue("showToggleIcon", showToggleIcon);
+	}
+
 	public void setStyle(String style) {
 		putValue("style", style);
 	}

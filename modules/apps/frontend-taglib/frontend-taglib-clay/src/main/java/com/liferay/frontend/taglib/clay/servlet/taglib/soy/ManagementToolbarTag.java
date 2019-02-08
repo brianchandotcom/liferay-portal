@@ -161,8 +161,16 @@ public class ManagementToolbarTag extends BaseClayTag {
 		putValue("actionHandler", actionHandler);
 	}
 
+	public void setCheckboxStatus(String checkboxStatus) {
+		putValue("checkboxStatus", checkboxStatus);
+	}
+
 	public void setClearResultsURL(String clearResultsURL) {
 		putValue("clearResultsURL", clearResultsURL);
+	}
+
+	public void setClearSelectionURL(String clearSelectionURL) {
+		putValue("clearSelectionURL", clearSelectionURL);
 	}
 
 	public void setContentRenderer(String contentRenderer) {
@@ -231,6 +239,10 @@ public class ManagementToolbarTag extends BaseClayTag {
 		putValue("selectedItems", selectedItems);
 	}
 
+	public void setSelectAllURL(String selectAllURL) {
+		putValue("selectAllURL", selectAllURL);
+	}
+
 	public void setShowAdvancedSearch(Boolean showAdvancedSearch) {
 		putValue("showAdvancedSearch", showAdvancedSearch);
 	}
@@ -247,8 +259,16 @@ public class ManagementToolbarTag extends BaseClayTag {
 		putValue("showInfoButton", showInfoButton);
 	}
 
+	public void setShowResultsBar(Boolean showResultsBar) {
+		putValue("showResultsBar", showResultsBar);
+	}
+
 	public void setShowSearch(Boolean showSearch) {
 		putValue("showSearch", showSearch);
+	}
+
+	public void setShowSelectAllButton(Boolean showSelectAllButton) {
+		putValue("showSelectAllButton", showSelectAllButton);
 	}
 
 	public void setSortingOrder(String sortingOrder) {

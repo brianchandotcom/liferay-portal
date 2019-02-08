@@ -161,6 +161,13 @@ class ManagementToolbar extends ClayComponent {
 
 		this.selectedItems = elements.allSelectedElements.filter(':enabled').size();
 
+		const currentPageElements = elements.currentPageElements.size();
+		const currentPageSelectedElements = elements.currentPageSelectedElements.size();
+
+		this.checkboxStatus = this.selectedItems === 0 ? 'unchecked' : currentPageElements === currentPageSelectedElements ? 'checked' : 'indeterminate';
+
+		this.showSelectAllButton = this.checkboxStatus === 'checked' && this.selectedItems < this.totalItems;
+
 		if (this.actionItems) {
 			this.actionItems = this.actionItems.map(
 				actionItem => {
@@ -213,6 +220,20 @@ ManagementToolbar.STATE = {
 	actionItems: actionItemsValidator,
 
 	/**
+	 * Satus of the select items checkbox. If checkboxStatus is checked or
+	 * indeterminate the toolbar will be in active state.
+	 * @default unchecked
+	 * @instance
+	 * @memberof ManagementToolbar
+	 * @type {?(string|undefined)}
+	 */
+	checkboxStatus: Config.oneOf([
+		'checked',
+		'indeterminate',
+		'unchecked',
+	]).value('unchecked'),
+
+	/**
 	 * Url for clear results link.
 	 * @default undefined
 	 * @instance
@@ -221,6 +242,15 @@ ManagementToolbar.STATE = {
 	 */
 
 	clearResultsURL: Config.string(),
+
+	/**
+	 * Url for clear selection link.
+	 * @default undefined
+	 * @instance
+	 * @memberof ManagementToolbar
+	 * @type {?(string|undefined)}
+	 */
+	clearSelectionURL: Config.string(),
 
 	/**
 	 * Name of the content renderer to use template variants.
@@ -414,6 +444,15 @@ ManagementToolbar.STATE = {
 	selectable: Config.bool().value(false),
 
 	/**
+	 * Url for select all link.
+	 * @default undefined
+	 * @instance
+	 * @memberof ManagementToolbar
+	 * @type {?(string|undefined)}
+	 */
+	selectAllURL: Config.string(),
+
+	/**
 	 * Number of selected items.
 	 * @default undefined
 	 * @instance
@@ -465,6 +504,15 @@ ManagementToolbar.STATE = {
 	showInfoButton: Config.bool().value(false),
 
 	/**
+	 * Flag to indicate if the results bar should be shown or not.
+	 * @default false
+	 * @instance
+	 * @memberof ManagementToolbar
+	 * @type {?bool}
+	 */
+	showResultsBar: Config.bool().value(false),
+
+	/**
 	 * Flag to indicate if search should be shown or not.
 	 * @default true
 	 * @instance
@@ -473,6 +521,15 @@ ManagementToolbar.STATE = {
 	 */
 
 	showSearch: Config.bool().value(true),
+
+	/**
+	 * Flag to indicate if select all button should be shown or not.
+	 * @default false
+	 * @instance
+	 * @memberof ManagementToolbar
+	 * @type {?bool}
+	 */
+	showSelectAllButton: Config.bool().value(false),
 
 	/**
 	 * Sorting url.

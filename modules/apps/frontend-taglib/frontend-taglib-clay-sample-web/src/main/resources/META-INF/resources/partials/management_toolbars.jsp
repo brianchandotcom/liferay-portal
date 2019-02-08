@@ -35,6 +35,7 @@
 
 <clay:management-toolbar
 	actionDropdownItems="<%= managementToolbarsDisplayContext.getActionDropdownItems() %>"
+	checkboxStatus="checked"
 	itemsTotal="<%= 42 %>"
 	selectable="<%= true %>"
 	selectedItems="<%= 14 %>"
@@ -52,6 +53,7 @@
 	searchInputName="mySearchInputName"
 	searchValue="my search"
 	selectable="<%= true %>"
+	showResultsBar="<%= true %>"
 	sortingOrder="desc"
 	viewTypeItems="<%= managementToolbarsDisplayContext.getViewTypeItems() %>"
 />

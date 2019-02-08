@@ -19,7 +19,9 @@
 		separator: bool,
 		type: string
 	]>}
+	{@param? checkboxStatus: string}
 	{@param? clearResultsURL: string}
+	{@param? clearSelectionURL: string}
 	{@param? contentRenderer: string}
 	{@param? creationMenu: [
 		caption: string,
@@ -85,12 +87,15 @@
 	{@param? searchInputName: string}
 	{@param? searchValue: string}
 	{@param? selectable: bool}
+	{@param? selectAllURL: string}
 	{@param? selectedItems: number}
 	{@param? showAdvancedSearch: bool}
 	{@param? showCreationMenu: bool}
 	{@param? showFiltersDoneButton: bool}
 	{@param? showInfoButton: bool}
+	{@param? showResultsBar: bool}
 	{@param? showSearch: bool}
+	{@param? showSelectAllButton: bool}
 	{@param? sortingOrder: string}
 	{@param? sortingURL: string}
 	{@param? totalItems: number}
@@ -105,7 +110,9 @@
 	{call ClayManagementToolbar.render}
 		{param defaultEventHandler: $defaultEventHandler /}
 		{param actionItems: $actionItems /}
+		{param checkboxStatus: $checkboxStatus /}
 		{param clearResultsURL: $clearResultsURL /}
+		{param clearSelectionURL: $clearSelectionURL /}
 		{param contentRenderer: $contentRenderer /}
 		{param creationMenu: $creationMenu /}
 		{param customData: [
@@ -130,12 +137,15 @@
 		{param searchInputName: $searchInputName /}
 		{param searchValue: $searchValue /}
 		{param selectable: $selectable /}
+		{param selectAllURL: $selectAllURL /}
 		{param selectedItems: $selectedItems /}
 		{param showAdvancedSearch: $showAdvancedSearch /}
 		{param showCreationMenu: $showCreationMenu /}
 		{param showFiltersDoneButton: $showFiltersDoneButton /}
 		{param showInfoButton: $showInfoButton /}
+		{param showResultsBar: $showResultsBar /}
 		{param showSearch: $showSearch /}
+		{param showSelectAllButton: $showSelectAllButton /}
 		{param sortingOrder: $sortingOrder /}
 		{param sortingURL: $sortingURL /}
 		{param spritemap: $spritemap /}

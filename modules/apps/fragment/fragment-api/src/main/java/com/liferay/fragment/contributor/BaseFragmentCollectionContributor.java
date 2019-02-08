@@ -27,6 +27,8 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.net.URL;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -34,6 +36,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletContext;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Reference;
 
@@ -53,8 +59,12 @@ public abstract class BaseFragmentCollectionContributor
 		return _name;
 	}
 
+	public abstract ServletContext getServletContext();
+
 	@Activate
-	protected void activate() {
+	protected void activate(BundleContext bundleContext) {
+		_bundle = bundleContext.getBundle();
+
 		readAndCheckFragmentCollectionStructure();
 	}
 
@@ -121,6 +131,8 @@ public abstract class BaseFragmentCollectionContributor
 		String css = _getFileContent(path, jsonObject.getString("cssPath"));
 		String html = _getFileContent(path, jsonObject.getString("htmlPath"));
 		String js = _getFileContent(path, jsonObject.getString("jsPath"));
+		String thumbnailURL = _getImagePreviewURL(
+			jsonObject.getString("thumbnail"));
 		int type = FragmentEntryTypeConstants.getTypeFromLabel(
 			jsonObject.getString("type"));
 
@@ -132,6 +144,7 @@ public abstract class BaseFragmentCollectionContributor
 		fragmentEntry.setCss(css);
 		fragmentEntry.setHtml(html);
 		fragmentEntry.setJs(js);
+		fragmentEntry.setImagePreviewURL(thumbnailURL);
 		fragmentEntry.setType(type);
 
 		return fragmentEntry;
@@ -142,6 +155,19 @@ public abstract class BaseFragmentCollectionContributor
 
 		return String.join(
 			StringPool.DASH, getFragmentCollectionKey(), fragmentEntryKey);
+	}
+
+	private String _getImagePreviewURL(String fileName) {
+		URL url = _bundle.getResource(
+			"META-INF/resources/thumbnails/" + fileName);
+
+		if (url == null) {
+			return StringPool.BLANK;
+		}
+
+		ServletContext servletContext = getServletContext();
+
+		return servletContext.getContextPath() + "/thumbnails/" + fileName;
 	}
 
 	private JSONObject _getStructure(String path) throws Exception {
@@ -156,6 +182,7 @@ public abstract class BaseFragmentCollectionContributor
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseFragmentCollectionContributor.class);
 
+	private Bundle _bundle;
 	private Map<Integer, List<FragmentEntry>> _fragmentEntries;
 	private String _name;
 

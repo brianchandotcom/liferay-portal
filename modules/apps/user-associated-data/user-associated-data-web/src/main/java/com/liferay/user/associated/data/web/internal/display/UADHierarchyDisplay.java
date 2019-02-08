@@ -27,6 +27,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author Drew Brokke
@@ -105,6 +106,9 @@ public class UADHierarchyDisplay {
 			String orderByType, int start, int end)
 		throws Exception {
 
+		Objects.requireNonNull(parentContainerType);
+		Objects.requireNonNull(parentContainerId);
+
 		List<Object> searchResults = new ArrayList<>();
 
 		List<Object> allUserItems = new ArrayList<>();
@@ -155,6 +159,10 @@ public class UADHierarchyDisplay {
 		Class<T> containerClass = containerUADDisplay.getTypeClass();
 
 		for (Object userItem : allUserItems) {
+			if (userItem == null) {
+				continue;
+			}
+
 			T topLevelContainer = containerUADDisplay.getTopLevelContainer(
 				parentContainerType, parentContainerId, userItem);
 

@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.vulcan.context.Pagination;
 import com.liferay.portal.vulcan.dto.Page;
 
+import javax.ws.rs.core.Response;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
@@ -34,6 +36,15 @@ import org.osgi.service.component.annotations.ServiceScope;
 	scope = ServiceScope.PROTOTYPE, service = FolderResource.class
 )
 public class FolderResourceImpl extends BaseFolderResourceImpl {
+
+	@Override
+	public Response deleteFolder(Long folderId) throws Exception {
+		_dlAppService.deleteFolder(folderId);
+
+		Response.ResponseBuilder responseBuilder = Response.noContent();
+
+		return responseBuilder.build();
+	}
 
 	@Override
 	public Page<Folder> getDocumentsRepositoryFolderPage(

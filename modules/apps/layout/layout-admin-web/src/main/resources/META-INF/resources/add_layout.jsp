@@ -68,8 +68,8 @@ List<SiteNavigationMenu> autoSiteNavigationMenus = layoutsAdminDisplayContext.ge
 		</liferay-frontend:edit-form-body>
 
 		<liferay-frontend:edit-form-footer>
-			<aui:button type="cancel" value="close" />
-			<aui:button type="submit" value="save" />
+			<aui:button type="submit" value="add" />
+			<aui:button type="cancel" value="cancel" />
 		</liferay-frontend:edit-form-footer>
 	</liferay-frontend:edit-form>
 </div>

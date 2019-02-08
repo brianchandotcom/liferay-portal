@@ -4566,7 +4566,7 @@ definition {
 
 		Form.gotoAdvancedTab();
 
-		FormFields.enableSwitcher(fieldName = "repeatable");
+		FormFields.enableSwitcher(fieldName = "Repeatable");
 
 		Form.closeSidebar();
 

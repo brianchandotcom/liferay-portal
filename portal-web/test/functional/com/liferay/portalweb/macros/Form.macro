@@ -130,12 +130,12 @@ definition {
 		);
 
 		FormFields.selectSelectOption(
-			fieldName = "ddmDataProviderInstanceId",
+			fieldName = "Data Provider",
 			selectOption = "${dataProvider}"
 		);
 
 		FormFields.selectSelectOption(
-			fieldName = "ddmDataProviderInstanceOutput",
+			fieldName = "Output Parameter",
 			selectOption = "${dataProviderOutput}"
 		);
 	}

@@ -250,12 +250,12 @@
 <!--SELECT-->
 <tr>
 	<td>SELECT_FIELD</td>
-	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//div[contains(@class,'form-builder-select-field')]//div[contains(@class,'select-field-trigger')]</td>
+	<td>//label[contains(text(),'${key_fieldName}')]/following-sibling::div[contains(@class,'input-group-container')]/div[contains(@class,'select-field-trigger')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SELECT_FIELD_DATA_PROVIDER_LIST</td>
-	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//div[contains(@class,'form-builder-select-field')]//li[contains(.,'${key_selectOption}')]</td>
+	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//div[contains(@class,'form-builder-select-field')]//li[contains(.,'${key_selectOption}')] | //div[contains(@class,'dropdown-menu')]//li[contains(.,'${key_selectOption}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -286,7 +286,7 @@
 <!--SWITCHER-->
 <tr>
 	<td>SWITCHER</td>
-	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//span[@class='toggle-switch-bar'] | //span[contains(text(),'${key_fieldName}')]/preceding-sibling::span[@class='toggle-switch-handle'] | //div[contains(@class,'validation')]//span[@class='toggle-switch-bar']</td>
+	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//span[@class='toggle-switch-bar'] | //span[contains(text(),'${key_fieldName}')]/preceding-sibling::span[@class='toggle-switch-handle'] | //span[contains(text(),'${key_fieldName}')]</td>
 	<td></td>
 </tr>
 <tr>

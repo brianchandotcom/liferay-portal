@@ -20,9 +20,7 @@ import com.liferay.arquillian.extension.junit.bridge.container.registry.SingleCo
 
 import java.io.IOException;
 
-import org.jboss.arquillian.config.descriptor.api.ArquillianDescriptor;
 import org.jboss.arquillian.config.descriptor.api.ContainerDef;
-import org.jboss.arquillian.config.descriptor.impl.ArquillianDescriptorImpl;
 import org.jboss.arquillian.config.descriptor.impl.ContainerDefImpl;
 import org.jboss.arquillian.container.spi.Container;
 import org.jboss.arquillian.container.spi.ContainerRegistry;
@@ -41,8 +39,6 @@ public class ConfigurationRegistrar {
 
 	public void loadConfiguration(@Observes ManagerStarted managerStarted)
 		throws IOException {
-
-		_instanceProducer.set(new ArquillianDescriptorImpl(null));
 
 		ContainerDef containerDef = new ContainerDefImpl("arquillian.xml");
 
@@ -73,9 +69,5 @@ public class ConfigurationRegistrar {
 
 	@Inject
 	private Instance<Injector> _injectorInstance;
-
-	@ApplicationScoped
-	@Inject
-	private InstanceProducer<ArquillianDescriptor> _instanceProducer;
 
 }

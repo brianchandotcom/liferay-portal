@@ -62,7 +62,7 @@ public class TestContextHandler {
 		finally {
 			classContext.deactivate();
 
-			if (AfterClass.class.isAssignableFrom(classEvent.getClass())) {
+			if (classEvent instanceof AfterClass) {
 				Set<Object> instances = _activatedTestContexts.get(javaClass);
 
 				if (instances != null) {
@@ -96,7 +96,7 @@ public class TestContextHandler {
 		finally {
 			suiteContext.deactivate();
 
-			if (AfterSuite.class.isAssignableFrom(suiteEvent.getClass())) {
+			if (suiteEvent instanceof AfterSuite) {
 				suiteContext.destroy();
 			}
 		}

@@ -1481,6 +1481,33 @@ public class JenkinsResultsParserUtil {
 		return subdirectories;
 	}
 
+	public static SubrepositoryGitWorkingDirectory
+		getSubrepositoryGitWorkingDirectory(
+			String upstreamBranchName, String repositoryName) {
+
+		String gitRepositoryDirName = repositoryName;
+		String gitRepositoryName = repositoryName;
+
+		if (!gitRepositoryDirName.endsWith("-private")) {
+			gitRepositoryDirName += "-private";
+		}
+
+		File gitRepositoryDir = new File(
+			getBaseGitRepositoryDir(), gitRepositoryDirName);
+
+		GitWorkingDirectory gitWorkingDirectory =
+			GitWorkingDirectoryFactory.newGitWorkingDirectory(
+				upstreamBranchName, gitRepositoryDir, gitRepositoryName);
+
+		if (!(gitWorkingDirectory instanceof
+				SubrepositoryGitWorkingDirectory)) {
+
+			throw new RuntimeException("Invalid Git working directory");
+		}
+
+		return (SubrepositoryGitWorkingDirectory)gitWorkingDirectory;
+	}
+
 	public static boolean isCINode() {
 		String hostName = getHostName("");
 

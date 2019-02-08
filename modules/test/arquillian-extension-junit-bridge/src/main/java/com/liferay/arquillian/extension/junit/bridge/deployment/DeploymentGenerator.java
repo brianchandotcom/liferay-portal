@@ -55,11 +55,12 @@ public class DeploymentGenerator {
 
 		deploymentDescription.setTestableArchive(archive);
 
-		_deploymentInstanceProducer.set(deploymentScenario);
+		_deploymentScenarioInstanceProducer.set(deploymentScenario);
 	}
 
 	@ClassScoped
 	@Inject
-	private InstanceProducer<DeploymentScenario> _deploymentInstanceProducer;
+	private InstanceProducer<DeploymentScenario>
+		_deploymentScenarioInstanceProducer;
 
 }

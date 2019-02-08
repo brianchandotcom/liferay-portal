@@ -34,13 +34,35 @@ public abstract class BaseUserCard
 
 		super(baseModel, rowChecker);
 
+		user = (User)baseModel;
 		this.renderRequest = renderRequest;
 
 		themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
 
+	@Override
+	public String getImageSrc() {
+		if (user.getPortraitId() <= 0) {
+			return null;
+		}
+
+		try {
+			return user.getPortraitURL(themeDisplay);
+		}
+		catch (Exception e) {
+		}
+
+		return null;
+	}
+
+	@Override
+	public String getInitials() {
+		return user.getInitials();
+	}
+
 	protected final RenderRequest renderRequest;
 	protected final ThemeDisplay themeDisplay;
+	protected final User user;
 
 }

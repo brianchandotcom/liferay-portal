@@ -23,7 +23,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.ext.Provider;
 
 /**
+ * Allows JAX-RS resources to provide {@link Pagination} objects in method
+ * parameters, fields or setters by annotating them with {@code
+ * javax.ws.rs.core.Context}.
+ *
+ * @author Alejandro Hernández
  * @author Zoltán Takács
+ * @review
  */
 @Provider
 public class PaginationContextProvider extends BaseContextProvider<Pagination> {

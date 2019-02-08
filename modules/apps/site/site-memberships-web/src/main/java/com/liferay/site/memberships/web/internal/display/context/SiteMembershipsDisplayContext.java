@@ -16,15 +16,12 @@ package com.liferay.site.memberships.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
-import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
-import com.liferay.portal.kernel.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -49,17 +46,6 @@ public class SiteMembershipsDisplayContext {
 
 		_request = request;
 		_liferayPortletResponse = liferayPortletResponse;
-	}
-
-	public int getCur() {
-		if (_cur != null) {
-			return _cur;
-		}
-
-		_cur = ParamUtil.getInteger(
-			_request, SearchContainer.DEFAULT_CUR_PARAM);
-
-		return _cur;
 	}
 
 	public Group getGroup() {
@@ -151,16 +137,6 @@ public class SiteMembershipsDisplayContext {
 		return _tabs1;
 	}
 
-	public UserGroup getUserGroup() throws PortalException {
-		if (_userGroup != null) {
-			return _userGroup;
-		}
-
-		_userGroup = UserGroupLocalServiceUtil.getUserGroup(getUserGroupId());
-
-		return _userGroup;
-	}
-
 	public long getUserGroupId() {
 		if (_userGroupId != null) {
 			return _userGroupId;
@@ -217,14 +193,12 @@ public class SiteMembershipsDisplayContext {
 		};
 	}
 
-	private Integer _cur;
 	private Group _group;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private String _redirect;
 	private final HttpServletRequest _request;
 	private User _selUser;
 	private String _tabs1;
-	private UserGroup _userGroup;
 	private Long _userGroupId;
 
 }

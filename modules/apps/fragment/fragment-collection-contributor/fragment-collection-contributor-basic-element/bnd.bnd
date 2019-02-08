@@ -1,4 +1,5 @@
 Bundle-Name: Liferay Fragment Collection Contributor Basic Element
 Bundle-SymbolicName: com.liferay.fragment.collection.contributor.basic.element
 Bundle-Version: 1.0.0
+Web-ContextPath: /fragment-collection-contributor-basic-element
 -dsannotations-options: inherit

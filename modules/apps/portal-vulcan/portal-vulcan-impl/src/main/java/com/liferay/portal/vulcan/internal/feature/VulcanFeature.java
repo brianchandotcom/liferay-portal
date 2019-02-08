@@ -15,7 +15,7 @@
 package com.liferay.portal.vulcan.internal.feature;
 
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.vulcan.context.AcceptLanguage;
+import com.liferay.portal.vulcan.internal.context.provider.AcceptLanguageContextProvider;
 import com.liferay.portal.vulcan.internal.context.provider.CompanyContextProvider;
 import com.liferay.portal.vulcan.internal.context.provider.PaginationContextProvider;
 import com.liferay.portal.vulcan.internal.exception.mapper.NoSuchModelExceptionMapper;
@@ -26,8 +26,6 @@ import com.liferay.portal.vulcan.internal.jaxrs.json.JSONMessageBodyWriter;
 
 import javax.ws.rs.core.Feature;
 import javax.ws.rs.core.FeatureContext;
-
-import org.apache.cxf.jaxrs.ext.ContextProvider;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -63,15 +61,11 @@ public class VulcanFeature implements Feature {
 		featureContext.register(
 			new CompanyContextProvider(_portal::getCompany));
 
-		featureContext.register(_acceptLanguageContextProvider);
+		featureContext.register(
+			new AcceptLanguageContextProvider(_portal::initUser));
 
 		return false;
 	}
-
-	@Reference(
-		target = "(osgi.jaxrs.name=Liferay.Vulcan.AcceptLanguageContextProvider)"
-	)
-	private ContextProvider<AcceptLanguage> _acceptLanguageContextProvider;
 
 	@Reference
 	private Portal _portal;

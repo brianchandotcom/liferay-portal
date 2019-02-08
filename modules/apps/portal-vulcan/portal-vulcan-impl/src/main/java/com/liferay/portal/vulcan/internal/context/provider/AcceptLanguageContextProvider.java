@@ -14,42 +14,43 @@
 
 package com.liferay.portal.vulcan.internal.context.provider;
 
-import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.vulcan.context.AcceptLanguage;
 import com.liferay.portal.vulcan.internal.context.AcceptLanguageImpl;
+
+import io.vavr.CheckedFunction1;
+
+import javax.servlet.http.HttpServletRequest;
 
 import javax.ws.rs.ext.Provider;
 
 import org.apache.cxf.jaxrs.ext.ContextProvider;
 import org.apache.cxf.message.Message;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ServiceScope;
-import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
-
 /**
  * @author Cristina González
  */
-@Component(
-	property = {
-		JaxrsWhiteboardConstants.JAX_RS_APPLICATION_SELECT + "=(osgi.jaxrs.extension.select=\\(osgi.jaxrs.name=Liferay.Vulcan.AcceptLanguageContextProvider\\))",
-		JaxrsWhiteboardConstants.JAX_RS_EXTENSION + "=true",
-		JaxrsWhiteboardConstants.JAX_RS_NAME + "=Liferay.Vulcan.AcceptLanguageContextProvider"
-	},
-	scope = ServiceScope.PROTOTYPE, service = ContextProvider.class
-)
 @Provider
 public class AcceptLanguageContextProvider
 	implements ContextProvider<AcceptLanguage> {
 
-	@Override
-	public AcceptLanguage createContext(Message message) {
-		return new AcceptLanguageImpl(
-			ContextProviderUtil.getHttpServletRequest(message), _portal);
+	public AcceptLanguageContextProvider(
+		CheckedFunction1<HttpServletRequest, User> userCheckedFunction1) {
+
+		_userCheckedFunction1 = userCheckedFunction1;
 	}
 
-	@Reference
-	private Portal _portal;
+	@Override
+	public AcceptLanguage createContext(Message message) {
+		HttpServletRequest httpServletRequest =
+			ContextProviderUtil.getHttpServletRequest(message);
+
+		return new AcceptLanguageImpl(
+			httpServletRequest,
+			() -> _userCheckedFunction1.apply(httpServletRequest));
+	}
+
+	private final CheckedFunction1<HttpServletRequest, User>
+		_userCheckedFunction1;
 
 }

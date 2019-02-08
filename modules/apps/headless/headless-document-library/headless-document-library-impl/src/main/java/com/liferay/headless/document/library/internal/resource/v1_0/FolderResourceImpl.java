@@ -14,6 +14,7 @@
 
 package com.liferay.headless.document.library.internal.resource.v1_0;
 
+import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.headless.document.library.dto.v1_0.Folder;
@@ -22,6 +23,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.vulcan.context.Pagination;
 import com.liferay.portal.vulcan.dto.Page;
 
+import javax.ws.rs.NotFoundException;
 import javax.ws.rs.core.Response;
 
 import org.osgi.service.component.annotations.Component;
@@ -58,7 +60,13 @@ public class FolderResourceImpl extends BaseFolderResourceImpl {
 
 	@Override
 	public Folder getFolder(Long folderId) throws Exception {
-		return _toFolder(_dlAppService.getFolder(folderId));
+		try {
+			return _toFolder(_dlAppService.getFolder(folderId));
+		}
+		catch (NoSuchFolderException nsfe) {
+			throw new NotFoundException(
+				"Unable to find folder " + folderId, nsfe);
+		}
 	}
 
 	@Override

@@ -48,7 +48,7 @@ public class GitWorkingDirectoryFactory {
 			GitWorkingDirectory gitWorkingDirectory = null;
 
 			if (gitRepositoryName.startsWith("com-liferay-")) {
-				gitWorkingDirectory = new GitSubrepositoryGitWorkingDirectory(
+				gitWorkingDirectory = new SubrepositoryGitWorkingDirectory(
 					upstreamBranchName, gitRepositoryDirPath,
 					gitRepositoryName);
 			}

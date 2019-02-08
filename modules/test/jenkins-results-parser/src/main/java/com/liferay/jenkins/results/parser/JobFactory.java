@@ -182,7 +182,7 @@ public class JobFactory {
 
 		if (jobName.contains("test-subrepository-acceptance-pullrequest(")) {
 			_jobs.put(
-				jobName, new GitSubrepositoryAcceptancePullRequestJob(jobName));
+				jobName, new SubrepositoryAcceptancePullRequestJob(jobName));
 
 			return _jobs.get(jobName);
 		}

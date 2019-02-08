@@ -17,10 +17,10 @@ package com.liferay.jenkins.results.parser;
 /**
  * @author Michael Hashimoto
  */
-public class GitSubrepositoryAcceptancePullRequestJob
-	extends GitSubrepositoryJob {
+public class SubrepositoryAcceptancePullRequestJob
+	extends SubrepositoryGitRepositoryJob {
 
-	public GitSubrepositoryAcceptancePullRequestJob(String jobName) {
+	public SubrepositoryAcceptancePullRequestJob(String jobName) {
 		super(jobName);
 	}
 

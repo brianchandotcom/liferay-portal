@@ -100,7 +100,7 @@ public final class DEDataRecordCollectionSaveModelPermissionsRequest {
 	public boolean isAddDataRecord() {
 		return _addDataRecord;
 	}
-	
+
 	/**
 	 * Returns true or false to inform if one of the permissions to grant is
 	 * the one that allows the user to delete the
@@ -125,6 +125,19 @@ public final class DEDataRecordCollectionSaveModelPermissionsRequest {
 	 */
 	public boolean isUpdate() {
 		return _update;
+	}
+
+	/**
+	 * Returns true or false to inform if one of the permissions to grant is
+	 * the one that allows the user to update the {@link DEDataRecord} from a
+	 * {@link DEDataRecordCollection} related to the Data Record Collection ID
+	 * set in the request
+	 *
+	 * @return updateDataRecord
+	 * @review
+	 */
+	public boolean isUpdateDataRecord() {
+		return _updateDataRecord;
 	}
 
 	/**
@@ -187,7 +200,7 @@ public final class DEDataRecordCollectionSaveModelPermissionsRequest {
 			_deDataRecordCollectionSaveModelPermissionsRequest._roleNames =
 				ListUtil.fromArray(roleNames);
 		}
-		
+
 		/**
 		 * If this method is set on the permission request, it will set the
 		 * permission to allow the user to add a {@link DEDataRecord} on the
@@ -233,8 +246,23 @@ public final class DEDataRecordCollectionSaveModelPermissionsRequest {
 
 		/**
 		 * If this method is set on the permission request, it will set the
-		 * permission to allow the user to view {@link DEDataRecordCollection}
-		 * included in the request.
+		 * permission to allow the user to update the {@link DEDataRecord} from a
+		 * {@link DEDataRecordCollection} included in the request
+		 *
+		 * @return {@link DEDataRecordCollectionSavePermissionsRequest}
+		 * @review
+		 */
+		public Builder allowUpdateDataRecord() {
+			_deDataRecordCollectionSaveModelPermissionsRequest.
+				_updateDataRecord = true;
+
+			return this;
+		}
+
+		/**
+		 * If this method is set on the permission request, it will set the
+		 * permission to allow the user to view
+		 * {@link DEDataRecordCollection} included in the request
 		 *
 		 * @return {@link Builder}
 		 * @review
@@ -271,6 +299,7 @@ public final class DEDataRecordCollectionSaveModelPermissionsRequest {
 	private long _scopedGroupId;
 	private long _scopedUserId;
 	private boolean _update;
+	private boolean _updateDataRecord;
 	private boolean _view;
 
 }

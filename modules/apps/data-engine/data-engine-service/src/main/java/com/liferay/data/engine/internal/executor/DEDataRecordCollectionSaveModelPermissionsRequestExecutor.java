@@ -64,6 +64,12 @@ public class DEDataRecordCollectionSaveModelPermissionsRequestExecutor {
 			actionIds.add(ActionKeys.UPDATE);
 		}
 
+		if (deDataRecordCollectionSaveModelPermissionsRequest.
+				isUpdateDataRecord()) {
+
+			actionIds.add(DEActionKeys.UPDATE_DATA_RECORD);
+		}
+
 		if (deDataRecordCollectionSaveModelPermissionsRequest.isView()) {
 			actionIds.add(ActionKeys.VIEW);
 		}

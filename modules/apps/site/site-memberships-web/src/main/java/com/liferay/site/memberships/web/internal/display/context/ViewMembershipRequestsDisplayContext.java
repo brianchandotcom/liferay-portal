@@ -14,11 +14,13 @@
 
 package com.liferay.site.memberships.web.internal.display.context;
 
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
 import com.liferay.membership.requests.kernel.util.comparator.MembershipRequestCreateDateComparator;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.MembershipRequest;
 import com.liferay.portal.kernel.model.MembershipRequestConstants;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
@@ -28,6 +30,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.memberships.web.internal.constants.SiteMembershipsPortletKeys;
+import com.liferay.site.memberships.web.internal.servlet.taglib.util.ViewMembershipRequetsPendingActionDropdownItemsProvider;
 
 import java.util.List;
 import java.util.Objects;
@@ -50,6 +53,19 @@ public class ViewMembershipRequestsDisplayContext {
 		_request = request;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
+	}
+
+	public List<DropdownItem> getActionDropdownItems(
+			MembershipRequest membershipRequest)
+		throws Exception {
+
+		ViewMembershipRequetsPendingActionDropdownItemsProvider
+			viewMembershipRequetsPendingActionDropdownItemsProvider =
+				new ViewMembershipRequetsPendingActionDropdownItemsProvider(
+					membershipRequest, _renderRequest, _renderResponse);
+
+		return viewMembershipRequetsPendingActionDropdownItemsProvider.
+			getActionDropdownItems();
 	}
 
 	public String getDisplayStyle() {

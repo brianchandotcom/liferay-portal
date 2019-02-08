@@ -40,9 +40,11 @@ User membershipRequestUser = UserLocalServiceUtil.fetchUserById(membershipReques
 			</h6>
 		</liferay-ui:search-container-column-text>
 
-		<liferay-ui:search-container-column-jsp
-			path="/membership_request_action.jsp"
-		/>
+		<liferay-ui:search-container-column-text>
+			<clay:dropdown-actions
+				dropdownItems="<%= viewMembershipRequestsDisplayContext.getActionDropdownItems(membershipRequest) %>"
+			/>
+		</liferay-ui:search-container-column-text>
 	</c:when>
 	<c:when test='<%= displayStyle.equals("icon") %>'>
 
@@ -89,8 +91,10 @@ User membershipRequestUser = UserLocalServiceUtil.fetchUserById(membershipReques
 			value="<%= membershipRequest.getCreateDate() %>"
 		/>
 
-		<liferay-ui:search-container-column-jsp
-			path="/membership_request_action.jsp"
-		/>
+		<liferay-ui:search-container-column-text>
+			<clay:dropdown-actions
+				dropdownItems="<%= viewMembershipRequestsDisplayContext.getActionDropdownItems(membershipRequest) %>"
+			/>
+		</liferay-ui:search-container-column-text>
 	</c:when>
 </c:choose>

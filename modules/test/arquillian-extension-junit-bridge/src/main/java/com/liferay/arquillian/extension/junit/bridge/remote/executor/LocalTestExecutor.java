@@ -27,7 +27,7 @@ import org.jboss.arquillian.test.spi.event.suite.Test;
  */
 public class LocalTestExecutor {
 
-	public void execute(@Observes Test test) throws Exception {
+	public void execute(@Observes Test test) {
 		TestResult result = TestResult.passed();
 
 		TestMethodExecutor testMethodExecutor = test.getTestMethodExecutor();

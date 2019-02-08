@@ -30,13 +30,12 @@ import java.util.List;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-
-import org.springframework.mock.web.MockHttpServletRequest;
-import org.springframework.mock.web.portlet.MockPortletRequest;
 
 /**
  * @author Philip Jones
@@ -62,11 +61,12 @@ public class PortletToolbarTest {
 
 		serviceDependencyManager.waitForDependencies(1000);
 
-		PortletRequest portletRequest = new MockPortletRequest();
+		PortletRequest portletRequest = ProxyFactory.newDummyInstance(
+			PortletRequest.class);
 
 		portletRequest.setAttribute(
 			PortletServlet.PORTLET_SERVLET_REQUEST,
-			new MockHttpServletRequest());
+			ProxyFactory.newDummyInstance(HttpServletRequest.class));
 
 		List<Menu> menus = portletToolbar.getPortletTitleMenus(
 			RandomTestUtil.randomString(), portletRequest,

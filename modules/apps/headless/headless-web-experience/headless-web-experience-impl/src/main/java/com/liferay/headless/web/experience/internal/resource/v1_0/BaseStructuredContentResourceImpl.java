@@ -21,7 +21,7 @@ import com.liferay.portal.vulcan.context.AcceptLanguage;
 import com.liferay.portal.vulcan.context.Pagination;
 import com.liferay.portal.vulcan.dto.Page;
 import com.liferay.portal.vulcan.util.TransformUtil;
-
+import com.liferay.portal.kernel.search.filter.Filter;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
@@ -38,9 +38,11 @@ import javax.ws.rs.core.Context;
 public abstract class BaseStructuredContentResourceImpl
 	implements StructuredContentResource {
 
+	public static final String ODATA_ENTITY_MODEL_NAME = "yo yo";
+
 	@Override
 	public Page<StructuredContent> getContentSpaceStructuredContentsPage(
-			Long contentSpaceId, String filter, String sort,
+			Long contentSpaceId, Filter filter, String sort,
 			Pagination pagination)
 		throws Exception {
 

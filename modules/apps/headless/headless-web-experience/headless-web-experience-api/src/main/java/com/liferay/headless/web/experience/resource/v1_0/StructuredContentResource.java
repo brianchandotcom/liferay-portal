@@ -42,6 +42,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
+import com.liferay.portal.kernel.search.filter.Filter;
 
 /**
  * To access this resource, run:
@@ -59,7 +60,7 @@ public interface StructuredContentResource {
 	@Path("/content-space/{content-space-id}/structured-contents")
 	@Produces("application/json")
 	@RequiresScope("headless-web-experience-application.read")
-	public Page<StructuredContent> getContentSpaceStructuredContentsPage( @PathParam("content-space-id") Long contentSpaceId , @QueryParam("filter") String filter , @QueryParam("sort") String sort , @Context Pagination pagination ) throws Exception;
+	public Page<StructuredContent> getContentSpaceStructuredContentsPage( @PathParam("content-space-id") Long contentSpaceId , @Context Filter filter , @QueryParam("sort") String sort , @Context Pagination pagination ) throws Exception;
 
 	@Consumes("application/json")
 	@POST

@@ -39,17 +39,25 @@ public class JobFactory {
 	}
 
 	public static Job newJob(String jobName) {
-		return newJob(jobName, null, null);
+		return newJob(jobName, null, null, null);
 	}
 
 	public static Job newJob(String jobName, String testSuiteName) {
-		return newJob(jobName, testSuiteName, null);
+		return newJob(jobName, testSuiteName, null, null);
 	}
 
 	public static Job newJob(
 		String jobName, String testSuiteName, String portalBranchName) {
 
-		Job job = _newJob(jobName, testSuiteName, portalBranchName);
+		return newJob(jobName, testSuiteName, portalBranchName, null);
+	}
+
+	public static Job newJob(
+		String jobName, String testSuiteName, String portalBranchName,
+		String repositoryName) {
+
+		Job job = _newJob(
+			jobName, testSuiteName, portalBranchName, repositoryName);
 
 		job.readJobProperties();
 
@@ -76,7 +84,8 @@ public class JobFactory {
 	}
 
 	private static Job _newJob(
-		String jobName, String testSuiteName, String portalBranchName) {
+		String jobName, String testSuiteName, String portalBranchName,
+		String repositoryName) {
 
 		Job job = _jobs.get(jobName);
 
@@ -182,7 +191,9 @@ public class JobFactory {
 
 		if (jobName.contains("test-subrepository-acceptance-pullrequest(")) {
 			_jobs.put(
-				jobName, new SubrepositoryAcceptancePullRequestJob(jobName));
+				jobName,
+				new SubrepositoryAcceptancePullRequestJob(
+					jobName, testSuiteName, repositoryName));
 
 			return _jobs.get(jobName);
 		}

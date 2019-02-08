@@ -11,7 +11,7 @@ class OrganizationDropdownDefaultEventHandler extends PortletBase {
 	}
 
 	deleteGroupOrganizations(itemData) {
-		submitForm(document.hrefFm, itemData.deleteGroupUsersURL);
+		submitForm(document.hrefFm, itemData.deleteGroupOrganizationsURL);
 	}
 }
 

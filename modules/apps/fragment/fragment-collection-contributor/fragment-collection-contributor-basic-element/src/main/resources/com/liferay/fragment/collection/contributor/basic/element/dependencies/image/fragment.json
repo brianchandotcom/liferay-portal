@@ -4,5 +4,6 @@
 	"htmlPath": "index.html",
 	"jsPath": "index.js",
 	"name": "Image",
+	"thumbnail": "image.png",
 	"type": "element"
 }

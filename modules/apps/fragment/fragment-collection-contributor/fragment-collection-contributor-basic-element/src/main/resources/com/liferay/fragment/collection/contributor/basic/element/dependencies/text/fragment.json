@@ -4,5 +4,6 @@
 	"htmlPath": "index.html",
 	"jsPath": "index.js",
 	"name": "Text",
+	"thumbnail": "text.png",
 	"type": "element"
 }

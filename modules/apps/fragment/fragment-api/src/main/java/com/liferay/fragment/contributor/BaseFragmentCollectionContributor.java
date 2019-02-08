@@ -78,8 +78,6 @@ public abstract class BaseFragmentCollectionContributor
 			if (Validator.isNotNull(name) && (jsonArray.length() > 0)) {
 				_name = name;
 
-				_fragmentEntries = new HashMap<>();
-
 				Iterator<String> iterator = jsonArray.iterator();
 
 				while (iterator.hasNext()) {
@@ -183,7 +181,8 @@ public abstract class BaseFragmentCollectionContributor
 		BaseFragmentCollectionContributor.class);
 
 	private Bundle _bundle;
-	private Map<Integer, List<FragmentEntry>> _fragmentEntries;
+	private final Map<Integer, List<FragmentEntry>> _fragmentEntries =
+		new HashMap<>();
 	private String _name;
 
 }

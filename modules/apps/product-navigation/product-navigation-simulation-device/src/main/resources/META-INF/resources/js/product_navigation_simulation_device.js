@@ -408,6 +408,7 @@ AUI.add(
 									dialogIframe: DIALOG_IFRAME_DEFAULTS,
 									id: instance._dialogId,
 									iframeId: 'simulationDeviceIframe',
+									title: Liferay.Language.get('simulation-peview'),
 									uri: WIN.location.href
 								},
 								function(dialogWindow) {

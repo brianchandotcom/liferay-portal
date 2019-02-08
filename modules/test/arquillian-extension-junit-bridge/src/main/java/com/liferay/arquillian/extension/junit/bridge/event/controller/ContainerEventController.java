@@ -37,11 +37,8 @@ import org.jboss.arquillian.core.api.annotation.Observes;
 import org.jboss.arquillian.core.spi.EventContext;
 import org.jboss.arquillian.test.spi.event.suite.AfterClass;
 import org.jboss.arquillian.test.spi.event.suite.AfterSuite;
-import org.jboss.arquillian.test.spi.event.suite.AfterTestLifecycleEvent;
 import org.jboss.arquillian.test.spi.event.suite.BeforeClass;
 import org.jboss.arquillian.test.spi.event.suite.BeforeSuite;
-import org.jboss.arquillian.test.spi.event.suite.BeforeTestLifecycleEvent;
-import org.jboss.arquillian.test.spi.event.suite.Test;
 import org.jboss.arquillian.test.spi.event.suite.TestEvent;
 
 /**
@@ -50,18 +47,8 @@ import org.jboss.arquillian.test.spi.event.suite.TestEvent;
 public class ContainerEventController {
 
 	public void createAfterContext(
-		@Observes EventContext<AfterTestLifecycleEvent> eventContext) {
+		@Observes EventContext<TestEvent> eventContext) {
 
-		_createContext(eventContext);
-	}
-
-	public void createBeforeContext(
-		@Observes EventContext<BeforeTestLifecycleEvent> eventContext) {
-
-		_createContext(eventContext);
-	}
-
-	public void createTestContext(@Observes EventContext<Test> eventContext) {
 		_createContext(eventContext);
 	}
 

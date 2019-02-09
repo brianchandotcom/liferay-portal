@@ -41,7 +41,6 @@ import org.jboss.arquillian.test.spi.event.suite.BeforeClass;
 import org.jboss.arquillian.test.spi.event.suite.BeforeSuite;
 import org.jboss.arquillian.test.spi.event.suite.TestEvent;
 import org.jboss.shrinkwrap.api.Archive;
-import org.jboss.shrinkwrap.api.container.ClassContainer;
 
 /**
  * @author Matthew Tambara
@@ -151,8 +150,6 @@ public class ContainerEventController {
 			deploymentDescriptions.get(0);
 
 		Archive<?> archive = deploymentDescription.getArchive();
-
-		((ClassContainer<?>)archive).addClass(testClass.getJavaClass());
 
 		deploymentDescription.setTestableArchive(archive);
 

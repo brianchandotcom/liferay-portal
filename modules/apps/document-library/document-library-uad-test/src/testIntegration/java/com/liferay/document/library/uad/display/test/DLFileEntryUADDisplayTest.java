@@ -98,9 +98,7 @@ public class DLFileEntryUADDisplayTest
 		Serializable parentContainerId = _uadDisplay.getParentContainerId(
 			dlFileEntry);
 
-		long parentContainerIdLong = (long)parentContainerId;
-
-		Assert.assertEquals(dlFolderId, parentContainerIdLong);
+		Assert.assertEquals(dlFolderId, (long)parentContainerId);
 	}
 
 	@Override

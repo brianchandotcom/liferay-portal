@@ -171,9 +171,7 @@ public class DLFolderUADDisplayTest extends BaseUADDisplayTestCase<DLFolder> {
 		Serializable parentContainerId = _uadDisplay.getParentContainerId(
 			dlFolder);
 
-		long parentContainerIdLong = (long)parentContainerId;
-
-		Assert.assertEquals(dlFolderId, parentContainerIdLong);
+		Assert.assertEquals(dlFolderId, (long)parentContainerId);
 	}
 
 	@Override

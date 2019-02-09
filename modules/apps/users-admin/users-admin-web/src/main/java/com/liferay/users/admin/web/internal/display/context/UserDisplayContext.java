@@ -18,6 +18,8 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
@@ -305,16 +307,27 @@ public class UserDisplayContext {
 	}
 
 	private boolean _isSiteRole(UserGroupRole userGroupRole) {
-		long roleId = userGroupRole.getRoleId();
+		try {
+			Group group = userGroupRole.getGroup();
+			Role role = userGroupRole.getRole();
 
-		Role role = RoleLocalServiceUtil.fetchRole(roleId);
+			if ((group != null) && group.isSite() && (role != null) &&
+				(role.getType() == RoleConstants.TYPE_SITE)) {
 
-		if ((role != null) && (role.getType() == RoleConstants.TYPE_SITE)) {
-			return true;
+				return true;
+			}
+		}
+		catch (PortalException pe) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(pe, pe);
+			}
 		}
 
 		return false;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		UserDisplayContext.class);
 
 	private final InitDisplayContext _initDisplayContext;
 	private final PermissionChecker _permissionChecker;

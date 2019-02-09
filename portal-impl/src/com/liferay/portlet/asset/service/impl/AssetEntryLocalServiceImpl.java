@@ -216,6 +216,22 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 
 	@Override
 	public List<AssetEntry> getEntries(
+		long[] groupIds, long[] classNameIds, long[] classTypeIds,
+		String keywords, String userName, String title, String description,
+		Boolean listable, boolean advancedSearch, boolean andOperator,
+		int start, int end, String orderByCol1, String orderByCol2,
+		String orderByType1, String orderByType2) {
+
+		AssetEntryQuery assetEntryQuery = getAssetEntryQuery(
+			groupIds, classNameIds, classTypeIds, keywords, userName, title,
+			description, listable, advancedSearch, andOperator, start, end,
+			orderByCol1, orderByCol2, orderByType1, orderByType2);
+
+		return getEntries(assetEntryQuery);
+	}
+
+	@Override
+	public List<AssetEntry> getEntries(
 		long[] groupIds, long[] classNameIds, String keywords, String userName,
 		String title, String description, Boolean listable,
 		boolean advancedSearch, boolean andOperator, int start, int end,
@@ -1239,11 +1255,11 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 	}
 
 	protected AssetEntryQuery getAssetEntryQuery(
-		long[] groupIds, long[] classNameIds, String keywords, String userName,
-		String title, String description, Boolean listable,
-		boolean advancedSearch, boolean andOperator, int start, int end,
-		String orderByCol1, String orderByCol2, String orderByType1,
-		String orderByType2) {
+		long[] groupIds, long[] classNameIds, long[] classTypeIds,
+		String keywords, String userName, String title, String description,
+		Boolean listable, boolean advancedSearch, boolean andOperator,
+		int start, int end, String orderByCol1, String orderByCol2,
+		String orderByType1, String orderByType2) {
 
 		AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
 
@@ -1257,6 +1273,10 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 			assetEntryQuery.setKeywords(keywords);
 		}
 
+		if (ArrayUtil.isNotEmpty(classTypeIds)) {
+			assetEntryQuery.setClassTypeIds(classTypeIds);
+		}
+
 		assetEntryQuery.setClassNameIds(classNameIds);
 		assetEntryQuery.setEnd(end);
 		assetEntryQuery.setGroupIds(groupIds);
@@ -1268,6 +1288,19 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 		assetEntryQuery.setStart(start);
 
 		return assetEntryQuery;
+	}
+
+	protected AssetEntryQuery getAssetEntryQuery(
+		long[] groupIds, long[] classNameIds, String keywords, String userName,
+		String title, String description, Boolean listable,
+		boolean advancedSearch, boolean andOperator, int start, int end,
+		String orderByCol1, String orderByCol2, String orderByType1,
+		String orderByType2) {
+
+		return getAssetEntryQuery(
+			groupIds, classNameIds, new long[0], keywords, userName, title,
+			description, listable, advancedSearch, andOperator, start, end,
+			orderByCol1, orderByCol2, orderByType1, orderByType2);
 	}
 
 	protected long[] getClassNameIds(long companyId, String className) {

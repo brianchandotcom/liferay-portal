@@ -1,7 +1,17 @@
+apply plugin: "com.liferay.lang.merger"
+
 dependencies {
 	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly project(":apps:change-tracking:change-tracking-api")
 	compileOnly project(":apps:user-associated-data:user-associated-data-api")
 	compileOnly project(":core:petra:petra-string")
+}
+
+mergeLang {
+	setting("../change-tracking-lang/src/main/resources/content") {
+		transformKey "javax.portlet.title.com_liferay_change_tracking_change_lists_web_portlet_ChangeListsPortlet", "application.name.com.liferay.change.tracking.uad"
+	}
+
+	sourceDirs = ["../change-tracking-lang/src/main/resources/content"]
 }

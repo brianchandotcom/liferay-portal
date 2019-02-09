@@ -151,11 +151,11 @@ public class AssetBrowserDisplayContext {
 				AssetEntryLocalServiceUtil.getEntries(
 					_getFilterGroupIds(),
 					new long[] {assetRendererFactory.getClassNameId()},
+					new long[] {getSubtypeSelectionId()}, _getKeywords(),
 					_getKeywords(), _getKeywords(), _getKeywords(),
-					_getKeywords(), _getListable(), false, false,
-					assetBrowserSearch.getStart(), assetBrowserSearch.getEnd(),
-					"modifiedDate", StringPool.BLANK, getOrderByType(),
-					StringPool.BLANK);
+					_getListable(), false, false, assetBrowserSearch.getStart(),
+					assetBrowserSearch.getEnd(), "modifiedDate",
+					StringPool.BLANK, getOrderByType(), StringPool.BLANK);
 
 			assetBrowserSearch.setResults(assetEntries);
 		}

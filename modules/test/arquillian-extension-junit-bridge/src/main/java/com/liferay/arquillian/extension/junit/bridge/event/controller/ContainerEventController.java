@@ -24,8 +24,6 @@ import org.jboss.arquillian.container.spi.client.container.DeploymentException;
 import org.jboss.arquillian.container.spi.client.container.LifecycleException;
 import org.jboss.arquillian.container.spi.client.deployment.Deployment;
 import org.jboss.arquillian.container.spi.client.deployment.DeploymentDescription;
-import org.jboss.arquillian.container.spi.client.deployment.DeploymentScenario;
-import org.jboss.arquillian.container.spi.client.deployment.DeploymentTargetDescription;
 import org.jboss.arquillian.container.spi.client.protocol.metadata.ProtocolMetaData;
 import org.jboss.arquillian.container.spi.context.ContainerContext;
 import org.jboss.arquillian.container.spi.context.DeploymentContext;
@@ -146,15 +144,11 @@ public class ContainerEventController {
 		DeploymentScenarioGenerator deploymentScenarioGenerator =
 			new BndDeploymentScenarioGenerator();
 
-		DeploymentScenario deploymentScenario = new DeploymentScenario();
-
 		List<DeploymentDescription> deploymentDescriptions =
 			deploymentScenarioGenerator.generate(testClass);
 
 		DeploymentDescription deploymentDescription =
 			deploymentDescriptions.get(0);
-
-		deploymentScenario.addDeployment(deploymentDescription);
 
 		Archive<?> archive = deploymentDescription.getArchive();
 
@@ -162,8 +156,7 @@ public class ContainerEventController {
 
 		deploymentDescription.setTestableArchive(archive);
 
-		_deployment = deploymentScenario.deployment(
-			DeploymentTargetDescription.DEFAULT);
+		_deployment = new Deployment(deploymentDescription);
 	}
 
 	private void _undeployManaged() throws DeploymentException {

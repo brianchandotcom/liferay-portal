@@ -14,7 +14,7 @@ definition {
 
 		PortletEntry.inputName(name = "${pageName}");
 
-		Button.click(button = "Save");
+		Button.clickAdd();
 
 		SelectFrame.selectFrameTop();
 

@@ -434,6 +434,19 @@ public class AssetEntryLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.asset.kernel.model.AssetEntry> getEntries(
+		long[] groupIds, long[] classNameIds, long[] classTypeIds,
+		String keywords, String userName, String title, String description,
+		Boolean listable, boolean advancedSearch, boolean andOperator,
+		int start, int end, String orderByCol1, String orderByCol2,
+		String orderByType1, String orderByType2) {
+		return getService()
+				   .getEntries(groupIds, classNameIds, classTypeIds, keywords,
+			userName, title, description, listable, advancedSearch,
+			andOperator, start, end, orderByCol1, orderByCol2, orderByType1,
+			orderByType2);
+	}
+
+	public static java.util.List<com.liferay.asset.kernel.model.AssetEntry> getEntries(
 		long[] groupIds, long[] classNameIds, String keywords, String userName,
 		String title, String description, Boolean listable,
 		boolean advancedSearch, boolean andOperator, int start, int end,

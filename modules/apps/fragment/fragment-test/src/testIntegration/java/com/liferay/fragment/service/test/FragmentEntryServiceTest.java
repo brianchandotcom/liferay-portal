@@ -71,8 +71,8 @@ public class FragmentEntryServiceTest {
 
 		FragmentCollection fragmentCollection =
 			FragmentCollectionServiceUtil.addFragmentCollection(
-				_group.getGroupId(), "Fragment Collection", StringPool.BLANK,
-				serviceContext);
+				_group.getGroupId(), RandomTestUtil.randomString(),
+				StringPool.BLANK, serviceContext);
 
 		FragmentEntry fragmentEntry = FragmentEntryServiceUtil.addFragmentEntry(
 			_group.getGroupId(), fragmentCollection.getFragmentCollectionId(),
@@ -90,12 +90,12 @@ public class FragmentEntryServiceTest {
 
 		FragmentCollection fragmentCollection =
 			FragmentCollectionServiceUtil.addFragmentCollection(
-				_group.getGroupId(), "Fragment Collection", StringPool.BLANK,
-				serviceContext);
+				_group.getGroupId(), RandomTestUtil.randomString(),
+				StringPool.BLANK, serviceContext);
 
 		FragmentEntryServiceUtil.addFragmentEntry(
 			_group.getGroupId(), fragmentCollection.getFragmentCollectionId(),
-			"Fragment Entry", null, null, null,
+			RandomTestUtil.randomString(), null, null, null,
 			WorkflowConstants.STATUS_APPROVED, serviceContext);
 	}
 
@@ -107,8 +107,8 @@ public class FragmentEntryServiceTest {
 
 		FragmentCollection fragmentCollection =
 			FragmentCollectionServiceUtil.addFragmentCollection(
-				_group.getGroupId(), "Fragment Collection", StringPool.BLANK,
-				serviceContext);
+				_group.getGroupId(), RandomTestUtil.randomString(),
+				StringPool.BLANK, serviceContext);
 
 		FragmentEntryServiceUtil.addFragmentEntry(
 			_group.getGroupId(), fragmentCollection.getFragmentCollectionId(),
@@ -124,12 +124,12 @@ public class FragmentEntryServiceTest {
 
 		FragmentCollection fragmentCollection =
 			FragmentCollectionServiceUtil.addFragmentCollection(
-				_group.getGroupId(), "Fragment Collection", StringPool.BLANK,
-				serviceContext);
+				_group.getGroupId(), RandomTestUtil.randomString(),
+				StringPool.BLANK, serviceContext);
 
 		FragmentEntryServiceUtil.addFragmentEntry(
 			_group.getGroupId(), fragmentCollection.getFragmentCollectionId(),
-			"Fragment Entry", null, "<div id=\"divId></div>", null,
+			RandomTestUtil.randomString(), null, "<div id=\"divId></div>", null,
 			WorkflowConstants.STATUS_APPROVED, serviceContext);
 	}
 
@@ -141,12 +141,13 @@ public class FragmentEntryServiceTest {
 
 		FragmentCollection fragmentCollection =
 			FragmentCollectionServiceUtil.addFragmentCollection(
-				_group.getGroupId(), "Fragment Collection", StringPool.BLANK,
-				serviceContext);
+				_group.getGroupId(), RandomTestUtil.randomString(),
+				StringPool.BLANK, serviceContext);
 
 		FragmentEntryServiceUtil.addFragmentEntry(
 			_group.getGroupId(), fragmentCollection.getFragmentCollectionId(),
-			"Fragment Entry", null, "<div>Text Inside</div> Text Outside", null,
+			RandomTestUtil.randomString(), null,
+			"<div>Text Inside</div> Text Outside", null,
 			WorkflowConstants.STATUS_APPROVED, serviceContext);
 	}
 
@@ -158,8 +159,8 @@ public class FragmentEntryServiceTest {
 
 		FragmentCollection fragmentCollection =
 			FragmentCollectionServiceUtil.addFragmentCollection(
-				_group.getGroupId(), "Fragment Collection", StringPool.BLANK,
-				serviceContext);
+				_group.getGroupId(), RandomTestUtil.randomString(),
+				StringPool.BLANK, serviceContext);
 
 		FragmentEntryServiceUtil.addFragmentEntry(
 			_group.getGroupId(), fragmentCollection.getFragmentCollectionId(),
@@ -174,12 +175,12 @@ public class FragmentEntryServiceTest {
 
 		FragmentCollection fragmentCollection =
 			FragmentCollectionServiceUtil.addFragmentCollection(
-				_group.getGroupId(), "Fragment Collection", StringPool.BLANK,
-				serviceContext);
+				_group.getGroupId(), RandomTestUtil.randomString(),
+				StringPool.BLANK, serviceContext);
 
 		FragmentEntryServiceUtil.addFragmentEntry(
 			_group.getGroupId(), fragmentCollection.getFragmentCollectionId(),
-			"Fragment Entry", null, "Text only fragment", null,
+			RandomTestUtil.randomString(), null, "Text only fragment", null,
 			WorkflowConstants.STATUS_APPROVED, serviceContext);
 	}
 
@@ -191,8 +192,8 @@ public class FragmentEntryServiceTest {
 
 		FragmentCollection fragmentCollection =
 			FragmentCollectionServiceUtil.addFragmentCollection(
-				_group.getGroupId(), "Fragment Collection", StringPool.BLANK,
-				serviceContext);
+				_group.getGroupId(), RandomTestUtil.randomString(),
+				StringPool.BLANK, serviceContext);
 
 		List<FragmentEntry> originalFragmentEntries =
 			FragmentEntryServiceUtil.getFragmentEntries(
@@ -200,12 +201,12 @@ public class FragmentEntryServiceTest {
 
 		FragmentEntryServiceUtil.addFragmentEntry(
 			_group.getGroupId(), fragmentCollection.getFragmentCollectionId(),
-			"Fragment Entry 1", WorkflowConstants.STATUS_APPROVED,
+			RandomTestUtil.randomString(), WorkflowConstants.STATUS_APPROVED,
 			serviceContext);
 
 		FragmentEntryServiceUtil.addFragmentEntry(
 			_group.getGroupId(), fragmentCollection.getFragmentCollectionId(),
-			"Fragment Entry 2", WorkflowConstants.STATUS_APPROVED,
+			RandomTestUtil.randomString(), WorkflowConstants.STATUS_APPROVED,
 			serviceContext);
 
 		List<FragmentEntry> actualFragmentEntries =
@@ -225,8 +226,8 @@ public class FragmentEntryServiceTest {
 
 		FragmentCollection fragmentCollection =
 			FragmentCollectionServiceUtil.addFragmentCollection(
-				_group.getGroupId(), "Fragment Collection", StringPool.BLANK,
-				serviceContext);
+				_group.getGroupId(), RandomTestUtil.randomString(),
+				StringPool.BLANK, serviceContext);
 
 		FragmentEntry fragmentEntry = FragmentEntryServiceUtil.addFragmentEntry(
 			_group.getGroupId(), fragmentCollection.getFragmentCollectionId(),
@@ -257,12 +258,12 @@ public class FragmentEntryServiceTest {
 
 		FragmentCollection fragmentCollection =
 			FragmentCollectionServiceUtil.addFragmentCollection(
-				_group.getGroupId(), "Fragment Collection", StringPool.BLANK,
-				serviceContext);
+				_group.getGroupId(), RandomTestUtil.randomString(),
+				StringPool.BLANK, serviceContext);
 
 		FragmentCollection fragmentCollectionOther =
 			FragmentCollectionServiceUtil.addFragmentCollection(
-				_group.getGroupId(), "Fragment Collection Other",
+				_group.getGroupId(), RandomTestUtil.randomString(),
 				StringPool.BLANK, serviceContext);
 
 		FragmentEntry fragmentEntry = FragmentEntryServiceUtil.addFragmentEntry(
@@ -295,22 +296,22 @@ public class FragmentEntryServiceTest {
 
 		FragmentCollection fragmentCollection =
 			FragmentCollectionServiceUtil.addFragmentCollection(
-				_group.getGroupId(), "Fragment Collection", StringPool.BLANK,
-				serviceContext);
+				_group.getGroupId(), RandomTestUtil.randomString(),
+				StringPool.BLANK, serviceContext);
 
 		FragmentEntry fragmentEntry1 =
 			FragmentEntryServiceUtil.addFragmentEntry(
 				_group.getGroupId(),
 				fragmentCollection.getFragmentCollectionId(),
-				"Fragment Entry 1", WorkflowConstants.STATUS_APPROVED,
-				serviceContext);
+				RandomTestUtil.randomString(),
+				WorkflowConstants.STATUS_APPROVED, serviceContext);
 
 		FragmentEntry fragmentEntry2 =
 			FragmentEntryServiceUtil.addFragmentEntry(
 				_group.getGroupId(),
 				fragmentCollection.getFragmentCollectionId(),
-				"Fragment Entry 2", WorkflowConstants.STATUS_APPROVED,
-				serviceContext);
+				RandomTestUtil.randomString(),
+				WorkflowConstants.STATUS_APPROVED, serviceContext);
 
 		long[] fragmentEntryIds = {
 			fragmentEntry1.getFragmentEntryId(),
@@ -336,12 +337,12 @@ public class FragmentEntryServiceTest {
 
 		FragmentCollection fragmentCollection =
 			FragmentCollectionServiceUtil.addFragmentCollection(
-				_group.getGroupId(), "Fragment Collection", StringPool.BLANK,
-				serviceContext);
+				_group.getGroupId(), RandomTestUtil.randomString(),
+				StringPool.BLANK, serviceContext);
 
 		FragmentEntry fragmentEntry = FragmentEntryServiceUtil.addFragmentEntry(
 			_group.getGroupId(), fragmentCollection.getFragmentCollectionId(),
-			"Fragment Entry", WorkflowConstants.STATUS_APPROVED,
+			RandomTestUtil.randomString(), WorkflowConstants.STATUS_APPROVED,
 			serviceContext);
 
 		FragmentEntryServiceUtil.deleteFragmentEntry(
@@ -360,8 +361,8 @@ public class FragmentEntryServiceTest {
 
 		FragmentCollection fragmentCollection =
 			FragmentCollectionServiceUtil.addFragmentCollection(
-				_group.getGroupId(), "Fragment Collection", StringPool.BLANK,
-				serviceContext);
+				_group.getGroupId(), RandomTestUtil.randomString(),
+				StringPool.BLANK, serviceContext);
 
 		int originalFragmentCollectionsCount =
 			FragmentEntryServiceUtil.getFragmentCollectionsCount(
@@ -396,8 +397,8 @@ public class FragmentEntryServiceTest {
 
 		FragmentCollection fragmentCollection =
 			FragmentCollectionServiceUtil.addFragmentCollection(
-				_group.getGroupId(), "Fragment Collection", StringPool.BLANK,
-				serviceContext);
+				_group.getGroupId(), RandomTestUtil.randomString(),
+				StringPool.BLANK, serviceContext);
 
 		String fragmentEntryName = RandomTestUtil.randomString();
 
@@ -431,8 +432,8 @@ public class FragmentEntryServiceTest {
 
 		FragmentCollection fragmentCollection =
 			FragmentCollectionServiceUtil.addFragmentCollection(
-				_group.getGroupId(), "Fragment Collection", StringPool.BLANK,
-				serviceContext);
+				_group.getGroupId(), RandomTestUtil.randomString(),
+				StringPool.BLANK, serviceContext);
 
 		String fragmentEntryName = RandomTestUtil.randomString();
 
@@ -464,8 +465,8 @@ public class FragmentEntryServiceTest {
 
 		FragmentCollection fragmentCollection =
 			FragmentCollectionServiceUtil.addFragmentCollection(
-				_group.getGroupId(), "Fragment Collection", StringPool.BLANK,
-				serviceContext);
+				_group.getGroupId(), RandomTestUtil.randomString(),
+				StringPool.BLANK, serviceContext);
 
 		int originalApprovedFragmentEntryCount =
 			FragmentEntryServiceUtil.getFragmentCollectionsCount(
@@ -481,17 +482,18 @@ public class FragmentEntryServiceTest {
 
 		FragmentEntryServiceUtil.addFragmentEntry(
 			_group.getGroupId(), fragmentCollection.getFragmentCollectionId(),
-			"Fragment Entry 1", WorkflowConstants.STATUS_APPROVED,
+			RandomTestUtil.randomString(), WorkflowConstants.STATUS_APPROVED,
 			serviceContext);
 
 		FragmentEntryServiceUtil.addFragmentEntry(
 			_group.getGroupId(), fragmentCollection.getFragmentCollectionId(),
-			"Fragment Entry 2", WorkflowConstants.STATUS_APPROVED,
+			RandomTestUtil.randomString(), WorkflowConstants.STATUS_APPROVED,
 			serviceContext);
 
 		FragmentEntryServiceUtil.addFragmentEntry(
 			_group.getGroupId(), fragmentCollection.getFragmentCollectionId(),
-			"Fragment Entry 3", WorkflowConstants.STATUS_DRAFT, serviceContext);
+			RandomTestUtil.randomString(), WorkflowConstants.STATUS_DRAFT,
+			serviceContext);
 
 		List<FragmentEntry> approvedFragmentEntries =
 			FragmentEntryServiceUtil.getFragmentEntries(
@@ -523,8 +525,8 @@ public class FragmentEntryServiceTest {
 
 		FragmentCollection fragmentCollection =
 			FragmentCollectionServiceUtil.addFragmentCollection(
-				_group.getGroupId(), "Fragment Collection", StringPool.BLANK,
-				serviceContext);
+				_group.getGroupId(), RandomTestUtil.randomString(),
+				StringPool.BLANK, serviceContext);
 
 		FragmentEntry fragmentEntry = FragmentEntryServiceUtil.addFragmentEntry(
 			_group.getGroupId(), fragmentCollection.getFragmentCollectionId(),
@@ -545,8 +547,8 @@ public class FragmentEntryServiceTest {
 
 		FragmentCollection fragmentCollection =
 			FragmentCollectionServiceUtil.addFragmentCollection(
-				_group.getGroupId(), "Fragment Collection", StringPool.BLANK,
-				serviceContext);
+				_group.getGroupId(), RandomTestUtil.randomString(),
+				StringPool.BLANK, serviceContext);
 
 		FragmentEntry fragmentEntry = FragmentEntryServiceUtil.addFragmentEntry(
 			_group.getGroupId(), fragmentCollection.getFragmentCollectionId(),

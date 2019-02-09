@@ -25,17 +25,9 @@
 		<get-database-upgrade-client-paths />
 
 		<parallel failonany="true">
-			<java
-				dir="${db.upgrade.client.home}"
-				failonerror="true"
-				fork="true"
-				jar="${db.upgrade.client.jar}"
-				timeout="900000"
-			>
-				<arg value="-j" />
-				<arg value="&quot;-Dfile.encoding=UTF8 -Duser.country=US -Duser.language=en -Duser.timezone=GMT -Xmx4096m&quot;" />
-			</java>
-
+			<execute dir="${db.upgrade.client.home}" failonerror="true">
+				db_upgrade${file.suffix.bat} -j "-Dfile.encoding=UTF8 -Duser.country=US -Duser.language=en -Duser.timezone=GMT -Xmx4096m"
+			</execute>
 			<sequential>
 				<waitfor maxwait="60000">
 					<available file="${db.upgrade.client.log}" />
@@ -65,17 +57,9 @@
 	<target name="check-upgrade-client-custom-log">
 		<get-database-upgrade-client-paths />
 
-		<java
-			dir="${db.upgrade.client.home}"
-			failonerror="true"
-			fork="true"
-			jar="${db.upgrade.client.jar}"
-			timeout="900000"
-		>
-			<arg value="-l" />
-			<arg value="&quot;log_file.txt&quot;" />
-		</java>
-
+		<execute dir="${db.upgrade.client.home}" failonerror="true">
+			db_upgrade${file.suffix.bat} -l log_file.txt
+		</execute>
 		<if>
 			<not>
 				<available file="${db.upgrade.client.home}/log_file.txt" />
@@ -161,16 +145,14 @@
 
 		<local name="upgrade.help.output" />
 
-		<java
-			dir="${db.upgrade.client.home}"
-			failonerror="true"
-			fork="true"
-			jar="${db.upgrade.client.jar}"
-			outputproperty="upgrade.help.output"
-			timeout="30000"
-		>
-			<arg value="-h" />
-		</java>
+		<execute dir="${db.upgrade.client.home}" failonerror="true">
+			db_upgrade${file.suffix.bat} -h > help.output
+		</execute>
+
+		<loadfile
+			property="upgrade.help.output"
+			srcFile="help.output"
+		/>
 
 		<echo>${upgrade.help.output}</echo>
 
@@ -184,6 +166,7 @@
 			</else>
 		</if>
 
+		<delete file="help.output" />
 		<clean-database-upgrade-client />
 	</target>
 
@@ -191,20 +174,15 @@
 		<get-database-upgrade-client-paths />
 
 		<parallel failonany="true">
-			<java
-				dir="${db.upgrade.client.home}"
-				failonerror="true"
-				fork="true"
-				jar="${db.upgrade.client.jar}"
-				timeout="300000"
-			>
-				<env key="JAVA_HOME" value="${java.jdk.7.x64.home}" />
-			</java>
+			<execute dir="${db.upgrade.client.home}" failonerror="true">
+				JAVA_HOME=${java.jdk.7.x64.home} echo JAVA_HOME=${JAVA_HOME}
+				db_upgrade${file.suffix.bat}
+			</execute>
 
 			<sequential>
-				<local name="java.error.unavailable" />
+				<local name="java.error.available" />
 
-				<waitfor maxwait="15000" timeoutproperty="java.error.unavailable">
+				<waitfor maxwait="15000" timeoutproperty="java.error.available">
 					<resourcecontains
 						resource="${db.upgrade.client.log}"
 						substring="Unsupported major.minor version"
@@ -212,15 +190,18 @@
 				</waitfor>
 
 				<if>
-					<isset property="java.error.unavailable" />
+					<isset property="java.error.available" />
 					<then>
 						<clean-database-upgrade-client />
 
-						<fail message="The upgrade client should not be able to run on versions older than Java SE 8." />
+						<echo message="The upgrade client correctly failed to run on a version older than Java SE 8." />
 					</then>
+					<else>
+						<fail message="The upgrade client should not be able to run on versions older than Java SE 8." />
+					</else>
 				</if>
 
-				<echo message="The upgrade client correctly failed to run on a version older than Java SE 8." />
+				<echo message="${java.error.available}: Unsupported major.minor version" />
 			</sequential>
 		</parallel>
 

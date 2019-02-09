@@ -218,6 +218,76 @@ public class FragmentEntryServiceTest {
 	}
 
 	@Test
+	public void testCopyFragmentEntry() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		FragmentCollection fragmentCollection =
+			FragmentCollectionServiceUtil.addFragmentCollection(
+				_group.getGroupId(), "Fragment Collection", StringPool.BLANK,
+				serviceContext);
+
+		FragmentEntry fragmentEntry = FragmentEntryServiceUtil.addFragmentEntry(
+			_group.getGroupId(), fragmentCollection.getFragmentCollectionId(),
+			"Fragment Entry", "div {\ncolor: red\n}", "<div>Test</div>",
+			"alert(\"test\")", WorkflowConstants.STATUS_APPROVED,
+			serviceContext);
+
+		FragmentEntry fragmentEntryCopy =
+			FragmentEntryServiceUtil.copyFragmentEntry(
+				_group.getGroupId(), fragmentEntry.getFragmentEntryId(),
+				fragmentEntry.getFragmentCollectionId(), serviceContext);
+
+		_assertFragmentIsCopy(fragmentEntry, fragmentEntryCopy);
+
+		Assert.assertEquals(
+			fragmentEntry.getGroupId(), fragmentEntryCopy.getGroupId());
+
+		Assert.assertEquals(
+			fragmentEntry.getFragmentCollectionId(),
+			fragmentEntryCopy.getFragmentCollectionId());
+	}
+
+	@Test
+	public void testCopyFragmentEntryToDifferentCollection() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		FragmentCollection fragmentCollection =
+			FragmentCollectionServiceUtil.addFragmentCollection(
+				_group.getGroupId(), "Fragment Collection", StringPool.BLANK,
+				serviceContext);
+
+		FragmentCollection fragmentCollectionOther =
+			FragmentCollectionServiceUtil.addFragmentCollection(
+				_group.getGroupId(), "Fragment Collection Other",
+				StringPool.BLANK, serviceContext);
+
+		FragmentEntry fragmentEntry = FragmentEntryServiceUtil.addFragmentEntry(
+			_group.getGroupId(), fragmentCollection.getFragmentCollectionId(),
+			"Fragment Entry", "div {\ncolor: red\n}", "<div>Test</div>",
+			"alert(\"test\")", WorkflowConstants.STATUS_APPROVED,
+			serviceContext);
+
+		FragmentEntry fragmentEntryCopy =
+			FragmentEntryServiceUtil.copyFragmentEntry(
+				_group.getGroupId(), fragmentEntry.getFragmentEntryId(),
+				fragmentCollectionOther.getFragmentCollectionId(),
+				serviceContext);
+
+		_assertFragmentIsCopy(fragmentEntry, fragmentEntryCopy);
+
+		Assert.assertEquals(
+			fragmentEntry.getGroupId(), fragmentEntryCopy.getGroupId());
+
+		Assert.assertEquals(
+			fragmentCollectionOther.getFragmentCollectionId(),
+			fragmentEntryCopy.getFragmentCollectionId());
+	}
+
+	@Test
 	public void testDeleteFragmentEntries() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
@@ -499,6 +569,26 @@ public class FragmentEntryServiceTest {
 
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_APPROVED, fragmentEntry.getStatus());
+	}
+
+	private void _assertFragmentIsCopy(
+			FragmentEntry fragmentEntry, FragmentEntry fragmentEntryCopy)
+		throws Exception {
+
+		Assert.assertEquals(fragmentEntry.getCss(), fragmentEntryCopy.getCss());
+
+		Assert.assertEquals(
+			fragmentEntry.getHtml(), fragmentEntryCopy.getHtml());
+		Assert.assertEquals(fragmentEntry.getJs(), fragmentEntryCopy.getJs());
+
+		Assert.assertEquals(
+			fragmentEntry.getStatus(), fragmentEntryCopy.getStatus());
+
+		Assert.assertEquals(
+			fragmentEntry.getType(), fragmentEntryCopy.getType());
+
+		Assert.assertEquals(
+			fragmentEntry.getName() + " (Copy)", fragmentEntryCopy.getName());
 	}
 
 	@DeleteAfterTestRun

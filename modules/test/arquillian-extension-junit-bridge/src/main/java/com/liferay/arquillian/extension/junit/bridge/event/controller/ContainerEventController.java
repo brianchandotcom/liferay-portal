@@ -30,16 +30,13 @@ import org.jboss.arquillian.container.spi.client.protocol.metadata.ProtocolMetaD
 import org.jboss.arquillian.container.spi.context.ContainerContext;
 import org.jboss.arquillian.container.spi.context.DeploymentContext;
 import org.jboss.arquillian.container.spi.context.annotation.DeploymentScoped;
-import org.jboss.arquillian.container.spi.event.ContainerMultiControlEvent;
 import org.jboss.arquillian.container.test.spi.client.deployment.DeploymentScenarioGenerator;
-import org.jboss.arquillian.core.api.Event;
 import org.jboss.arquillian.core.api.Instance;
 import org.jboss.arquillian.core.api.InstanceProducer;
 import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.arquillian.core.api.annotation.Observes;
 import org.jboss.arquillian.core.spi.EventContext;
 import org.jboss.arquillian.test.spi.TestClass;
-import org.jboss.arquillian.test.spi.annotation.ClassScoped;
 import org.jboss.arquillian.test.spi.event.suite.AfterClass;
 import org.jboss.arquillian.test.spi.event.suite.AfterSuite;
 import org.jboss.arquillian.test.spi.event.suite.BeforeClass;
@@ -92,12 +89,6 @@ public class ContainerEventController {
 	private void _createContext(
 		EventContext<? extends TestEvent> eventContext) {
 
-		DeploymentScenario deploymentScenario =
-			_deploymentScenarioInstance.get();
-
-		Deployment deployment = deploymentScenario.deployment(
-			DeploymentTargetDescription.DEFAULT);
-
 		Container container = _containerInstance.get();
 
 		ContainerContext containerContext = _containerContextInstance.get();
@@ -107,7 +98,7 @@ public class ContainerEventController {
 		try {
 			containerContext.activate(container.getName());
 
-			deploymentContext.activate(deployment);
+			deploymentContext.activate(_deployment);
 
 			eventContext.proceed();
 		}
@@ -126,25 +117,17 @@ public class ContainerEventController {
 				"Container " + container.getName() + " is not started");
 		}
 
-		DeploymentScenario deploymentScenario =
-			_deploymentScenarioInstance.get();
-
-		Deployment deployment = deploymentScenario.deployment(
-			DeploymentTargetDescription.DEFAULT);
+		Deployment deployment = _deployment;
 
 		DeploymentContext deploymentContext = _deploymentContextInstance.get();
 
 		deploymentContext.activate(deployment);
-
-		_deploymentInstanceProducer.set(deployment);
 
 		DeployableContainer<?> deployableContainer =
 			container.getDeployableContainer();
 
 		DeploymentDescription deploymentDescription =
 			deployment.getDescription();
-
-		_deploymentDescriptionInstanceProducer.set(deploymentDescription);
 
 		try {
 			ProtocolMetaData protocolMetaData = deployableContainer.deploy(
@@ -179,7 +162,8 @@ public class ContainerEventController {
 
 		deploymentDescription.setTestableArchive(archive);
 
-		_deploymentScenarioInstanceProducer.set(deploymentScenario);
+		_deployment = deploymentScenario.deployment(
+			DeploymentTargetDescription.DEFAULT);
 	}
 
 	private void _undeployManaged() throws DeploymentException {
@@ -189,11 +173,7 @@ public class ContainerEventController {
 			return;
 		}
 
-		DeploymentScenario deploymentScenario =
-			_deploymentScenarioInstance.get();
-
-		Deployment deployment = deploymentScenario.deployment(
-			DeploymentTargetDescription.DEFAULT);
+		Deployment deployment = _deployment;
 
 		DeploymentContext deploymentContext = _deploymentContextInstance.get();
 
@@ -227,25 +207,10 @@ public class ContainerEventController {
 	@Inject
 	private Instance<Container> _containerInstance;
 
+	private Deployment _deployment;
+
 	@Inject
 	private Instance<DeploymentContext> _deploymentContextInstance;
-
-	@DeploymentScoped
-	@Inject
-	private InstanceProducer<DeploymentDescription>
-		_deploymentDescriptionInstanceProducer;
-
-	@DeploymentScoped
-	@Inject
-	private InstanceProducer<Deployment> _deploymentInstanceProducer;
-
-	@Inject
-	private Instance<DeploymentScenario> _deploymentScenarioInstance;
-
-	@ClassScoped
-	@Inject
-	private InstanceProducer<DeploymentScenario>
-		_deploymentScenarioInstanceProducer;
 
 	@DeploymentScoped
 	@Inject

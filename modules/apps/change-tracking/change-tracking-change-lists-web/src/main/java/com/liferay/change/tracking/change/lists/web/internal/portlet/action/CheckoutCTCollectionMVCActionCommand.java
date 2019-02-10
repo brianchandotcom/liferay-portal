@@ -16,17 +16,14 @@ package com.liferay.change.tracking.change.lists.web.internal.portlet.action;
 
 import com.liferay.change.tracking.CTEngineManager;
 import com.liferay.change.tracking.constants.CTPortletKeys;
-import com.liferay.change.tracking.model.CTCollection;
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.Optional;
-
-import javax.portlet.PortletException;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -38,42 +35,26 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + CTPortletKeys.CHANGE_LISTS,
-		"mvc.command.name=/", "mvc.command.name=/change_lists/view"
+		"mvc.command.name=/change_lists/checkout_ct_collection"
 	},
-	service = MVCRenderCommand.class
+	service = MVCActionCommand.class
 )
-public class ViewMVCRenderCommand implements MVCRenderCommand {
+public class CheckoutCTCollectionMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
-	public String render(
-			RenderRequest renderRequest, RenderResponse renderResponse)
-		throws PortletException {
+	protected void doProcessAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
 
-		boolean select = ParamUtil.getBoolean(renderRequest, "select");
-
-		if (select) {
-			return "/view.jsp";
-		}
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		long userId = themeDisplay.getUserId();
 
-		Optional<CTCollection> activeCTCollectionOptional =
-			_ctEngineManager.getActiveCTCollectionOptional(userId);
+		long ctCollectionId = ParamUtil.getLong(
+			actionRequest, "ctCollectionId");
 
-		if (!activeCTCollectionOptional.isPresent()) {
-			return "/view.jsp";
-		}
-
-		CTCollection activeCTCollection = activeCTCollectionOptional.get();
-
-		if (activeCTCollection.isProduction()) {
-			return "/view.jsp";
-		}
-
-		return "/overview.jsp";
+		_ctEngineManager.checkoutCTCollection(userId, ctCollectionId);
 	}
 
 	@Reference

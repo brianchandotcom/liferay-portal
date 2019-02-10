@@ -18,9 +18,7 @@ import com.liferay.change.tracking.CTEngineManager;
 import com.liferay.change.tracking.constants.CTPortletKeys;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Optional;
 
@@ -38,42 +36,29 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + CTPortletKeys.CHANGE_LISTS,
-		"mvc.command.name=/", "mvc.command.name=/change_lists/view"
+		"mvc.command.name=/change_lists/add_ct_collection",
+		"mvc.command.name=/change_lists/edit_ct_collection"
 	},
 	service = MVCRenderCommand.class
 )
-public class ViewMVCRenderCommand implements MVCRenderCommand {
+public class EditCTCollectionMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
 	public String render(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		boolean select = ParamUtil.getBoolean(renderRequest, "select");
+		long ctCollectionId = ParamUtil.getLong(
+			renderRequest, "ctCollectionId");
 
-		if (select) {
-			return "/view.jsp";
-		}
+		Optional<CTCollection> ctCollectionOptional =
+			_ctEngineManager.getCTCollectionOptional(ctCollectionId);
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ctCollectionOptional.ifPresent(
+			ctCollection -> renderRequest.setAttribute(
+				"ctCollection", ctCollection));
 
-		long userId = themeDisplay.getUserId();
-
-		Optional<CTCollection> activeCTCollectionOptional =
-			_ctEngineManager.getActiveCTCollectionOptional(userId);
-
-		if (!activeCTCollectionOptional.isPresent()) {
-			return "/view.jsp";
-		}
-
-		CTCollection activeCTCollection = activeCTCollectionOptional.get();
-
-		if (activeCTCollection.isProduction()) {
-			return "/view.jsp";
-		}
-
-		return "/overview.jsp";
+		return "/edit_collection.jsp";
 	}
 
 	@Reference

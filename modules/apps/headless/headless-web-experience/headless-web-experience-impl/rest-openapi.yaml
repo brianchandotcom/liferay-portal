@@ -430,6 +430,30 @@ paths:
                   $ref: "#/components/schemas/StructuredContent"
                 type: array
           description: ""
+    patch:
+      parameters:
+        - in: path
+          name: content-space-id
+          required: true
+          schema:
+            format: int64
+            type: integer
+        - in: header
+          name: Accept-Language
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StructuredContent"
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StructuredContent"
+          description: ""
     post:
       parameters:
         - in: path

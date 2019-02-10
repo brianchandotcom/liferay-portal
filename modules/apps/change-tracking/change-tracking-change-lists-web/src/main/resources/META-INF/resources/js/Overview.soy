@@ -6,6 +6,7 @@
 {template .render}
 	{@param spritemap: string}
 	{@param urlProductionView: string}
+	{@param urlSelectChangeList: string}
 	{@param? changes: [
 		added: number,
 		deleted: number,
@@ -74,6 +75,7 @@
 						{param changeListsDropdownMenuTitle kind="text"}
 							{msg desc=""}select-change-list{/msg}
 						{/param}
+						{param urlSelectChangeList: $urlSelectChangeList /}
 						{param headerSubTitle kind="text"}
 							{msg desc=""}active-change-list{/msg}
 						{/param}
@@ -145,6 +147,7 @@
 		link: string
 	]>}
 	{@param? changeListsDropdownMenuTitle: string}
+	{@param? urlSelectChangeList: string}
 	{@param? headerSubTitle: string}
 	{@param? headerTitle: string}
 	{@param? publishedBy: [
@@ -160,6 +163,7 @@
 			{param headerButton: $headerButton /}
 			{param changeListsDropdownMenu: $changeListsDropdownMenu /}
 			{param changeListsDropdownMenuTitle: $changeListsDropdownMenuTitle /}
+			{param urlSelectChangeList: $urlSelectChangeList /}
 			{param headerLink: $headerLink /}
 			{param headerSubTitle: $headerSubTitle /}
 			{param headerTitle: $headerTitle /}
@@ -195,6 +199,7 @@
 		link: string
 	]>}
 	{@param? changeListsDropdownMenuTitle: string}
+	{@param? urlSelectChangeList: string}
 	{@param? headerSubTitle: string}
 	{@param? headerTitle: string}
 
@@ -229,7 +234,7 @@
 							{foreach $changeListsDropdownMenuItem in $changeListsDropdownMenu}
 								<a class="dropdown-item" href="{$changeListsDropdownMenuItem.link}">{$changeListsDropdownMenuItem.label}</a>
 							{/foreach}
-							<a class="dropdown-item dropdown-item-last" href="#1">{$changeListsDropdownMenuTitle}</a>
+							<a class="dropdown-item dropdown-item-last" href="{$urlSelectChangeList}">{$changeListsDropdownMenuTitle}</a>
 						</div>
 					</div>
 				{/if}

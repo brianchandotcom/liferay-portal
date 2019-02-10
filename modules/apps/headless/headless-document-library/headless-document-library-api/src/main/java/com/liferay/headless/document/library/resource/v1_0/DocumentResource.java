@@ -34,6 +34,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.HEAD;
 import javax.ws.rs.HeaderParam;
 import javax.ws.rs.OPTIONS;
+import javax.ws.rs.PATCH;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -42,6 +43,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
+
+import org.apache.cxf.jaxrs.ext.multipart.MultipartBody;
 
 /**
  * To access this resource, run:
@@ -93,12 +96,12 @@ public interface DocumentResource {
 	@RequiresScope("everything.read")
 	public Page<Document> getFolderDocumentPage( @PathParam("folder-id") Long folderId , @Context Pagination pagination ) throws Exception;
 
-	@Consumes("application/json")
+	@Consumes("multipart/form-data")
 	@POST
 	@Path("/folder/{folder-id}/document")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Document postFolderDocument( @PathParam("folder-id") Long folderId , Document document ) throws Exception;
+	public Document postFolderDocument( @PathParam("folder-id") Long folderId , MultipartBody multipartBody ) throws Exception;
 
 	@Consumes("application/json")
 	@POST

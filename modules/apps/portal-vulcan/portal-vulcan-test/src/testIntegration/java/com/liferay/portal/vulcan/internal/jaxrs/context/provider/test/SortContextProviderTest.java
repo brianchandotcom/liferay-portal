@@ -16,20 +16,13 @@ package com.liferay.portal.vulcan.internal.jaxrs.context.provider.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.odata.entity.EntityField;
-import com.liferay.portal.odata.entity.EntityModel;
-import com.liferay.portal.odata.entity.StringEntityField;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.internal.jaxrs.context.provider.test.util.MockFeature;
 import com.liferay.portal.vulcan.internal.jaxrs.context.provider.test.util.MockMessage;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
+import com.liferay.portal.vulcan.internal.jaxrs.context.provider.test.util.MockResource;
 
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.ws.rs.core.Feature;
 
@@ -57,34 +50,6 @@ public class SortContextProviderTest {
 
 	@Before
 	public void setUp() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		EntityModel entityModel = new EntityModel() {
-
-			@Override
-			public Map<String, EntityField> getEntityFieldsMap() {
-				return Collections.singletonMap(
-					"title",
-					new StringEntityField("title", locale -> "internalTitle"));
-			}
-
-			@Override
-			public String getName() {
-				return ExampleResource.ODATA_ENTITY_MODEL_NAME;
-			}
-
-		};
-
-		registry.registerService(
-			EntityModel.class, entityModel,
-			new HashMap<String, Object>() {
-				{
-					put(
-						"entity.model.name",
-						ExampleResource.ODATA_ENTITY_MODEL_NAME);
-				}
-			});
-
 		MockFeature mockFeature = new MockFeature(_feature);
 
 		_contextProvider = (ContextProvider<Sort[]>)mockFeature.getObject(
@@ -104,8 +69,8 @@ public class SortContextProviderTest {
 		Sort[] sorts = _contextProvider.createContext(
 			new MockMessage(
 				mockHttpServletRequest,
-				ExampleResource.class.getMethod(
-					"exampleJaxRSMethod", String.class)));
+				MockResource.class.getMethod(
+					MockResource.METHOD_NAME, String.class)));
 
 		Assert.assertEquals(Arrays.toString(sorts), 1, sorts.length);
 
@@ -113,17 +78,6 @@ public class SortContextProviderTest {
 
 		Assert.assertEquals("internalTitle", sort.getFieldName());
 		Assert.assertTrue(sort.isReverse());
-	}
-
-	public class ExampleResource {
-
-		public static final String ODATA_ENTITY_MODEL_NAME =
-			"ExampleResourceEntityModel";
-
-		public String exampleJaxRSMethod(String param) {
-			return "";
-		}
-
 	}
 
 	private ContextProvider<Sort[]> _contextProvider;

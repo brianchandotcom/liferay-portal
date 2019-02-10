@@ -22,6 +22,7 @@ import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.odata.entity.StringEntityField;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.vulcan.internal.jaxrs.context.provider.test.util.MockFeature;
 import com.liferay.portal.vulcan.internal.jaxrs.context.provider.test.util.MockMessage;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
@@ -30,12 +31,13 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.ws.rs.core.Feature;
+
 import org.apache.cxf.jaxrs.ext.ContextProvider;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -45,7 +47,6 @@ import org.springframework.mock.web.MockHttpServletRequest;
 /**
  * @author Cristina González
  */
-@Ignore
 @RunWith(Arquillian.class)
 public class FilterContextProviderTest {
 
@@ -83,6 +84,12 @@ public class FilterContextProviderTest {
 						ExampleResource.ODATA_ENTITY_MODEL_NAME);
 				}
 			});
+
+		MockFeature mockFeature = new MockFeature(_feature);
+
+		_contextProvider = (ContextProvider<Filter>)mockFeature.getObject(
+			"com.liferay.portal.vulcan.internal.jaxrs.context.provider." +
+				"FilterContextProvider");
 	}
 
 	@Test
@@ -119,9 +126,11 @@ public class FilterContextProviderTest {
 
 	}
 
-	@Inject(
-		filter = "component.name=com.liferay.portal.vulcan.internal.jaxrs.context.provider.FilterContextProvider"
-	)
 	private ContextProvider<Filter> _contextProvider;
+
+	@Inject(
+		filter = "component.name=com.liferay.portal.vulcan.internal.jaxrs.feature.VulcanFeature"
+	)
+	private Feature _feature;
 
 }

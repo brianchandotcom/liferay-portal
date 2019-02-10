@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.context.AcceptLanguage;
+import com.liferay.portal.vulcan.internal.jaxrs.context.provider.test.util.MockFeature;
 import com.liferay.portal.vulcan.internal.jaxrs.context.provider.test.util.MockMessage;
 
 import java.util.Arrays;
@@ -40,15 +41,16 @@ import java.util.Collections;
 import java.util.Locale;
 import java.util.Set;
 
+import javax.ws.rs.core.Feature;
 import javax.ws.rs.core.HttpHeaders;
 
 import org.apache.cxf.jaxrs.ext.ContextProvider;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -58,7 +60,6 @@ import org.springframework.mock.web.MockHttpServletRequest;
 /**
  * @author Cristina González
  */
-@Ignore
 @RunWith(Arquillian.class)
 public class AcceptLanguageContextProviderTest {
 
@@ -93,6 +94,16 @@ public class AcceptLanguageContextProviderTest {
 			_defaultLocale);
 
 		CompanyLocalServiceUtil.deleteCompany(_company.getCompanyId());
+	}
+
+	@Before
+	public void setUp() {
+		MockFeature mockFeature = new MockFeature(_feature);
+
+		_contextProvider =
+			(ContextProvider<AcceptLanguage>)mockFeature.getObject(
+				"com.liferay.portal.vulcan.internal.jaxrs.context.provider." +
+					"AcceptLanguageContextProvider");
 	}
 
 	@Test
@@ -147,10 +158,12 @@ public class AcceptLanguageContextProviderTest {
 	private static Group _group;
 	private static User _user;
 
-	@Inject(
-		filter = "component.name=com.liferay.portal.vulcan.internal.jaxrs.context.provider.AcceptLanguageContextProvider"
-	)
 	private ContextProvider<AcceptLanguage> _contextProvider;
+
+	@Inject(
+		filter = "component.name=com.liferay.portal.vulcan.internal.jaxrs.feature.VulcanFeature"
+	)
+	private Feature _feature;
 
 	private class AcceptLanguageMockHttpServletRequest
 		extends MockHttpServletRequest {

@@ -24,13 +24,16 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.vulcan.internal.jaxrs.context.provider.test.util.MockFeature;
 import com.liferay.portal.vulcan.internal.jaxrs.context.provider.test.util.MockMessage;
+
+import javax.ws.rs.core.Feature;
 
 import org.apache.cxf.jaxrs.ext.ContextProvider;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -40,7 +43,6 @@ import org.springframework.mock.web.MockHttpServletRequest;
 /**
  * @author Cristina González
  */
-@Ignore
 @RunWith(Arquillian.class)
 public class CompanyContextProviderTest {
 
@@ -48,6 +50,15 @@ public class CompanyContextProviderTest {
 	@Rule
 	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
 		new LiferayIntegrationTestRule();
+
+	@Before
+	public void setUp() {
+		MockFeature mockFeature = new MockFeature(_feature);
+
+		_contextProvider = (ContextProvider<Company>)mockFeature.getObject(
+			"com.liferay.portal.vulcan.internal.jaxrs.context.provider." +
+				"CompanyContextProvider");
+	}
 
 	@Test
 	public void testCreateContext() throws Exception {
@@ -77,9 +88,11 @@ public class CompanyContextProviderTest {
 		}
 	}
 
-	@Inject(
-		filter = "component.name=com.liferay.portal.vulcan.internal.jaxrs.context.provider.CompanyContextProvider"
-	)
 	private ContextProvider<Company> _contextProvider;
+
+	@Inject(
+		filter = "component.name=com.liferay.portal.vulcan.internal.jaxrs.feature.VulcanFeature"
+	)
+	private Feature _feature;
 
 }

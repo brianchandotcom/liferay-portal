@@ -31,6 +31,8 @@ import javax.annotation.Generated;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 
+import org.apache.cxf.jaxrs.ext.multipart.MultipartBody;
+
 /**
  * @author Javier Gamarra
  * @generated
@@ -86,7 +88,8 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 	}
 
 	@Override
-	public Document postFolderDocument(Long folderId, Document document)
+	public Document postFolderDocument(
+			Long folderId, MultipartBody multipartBody)
 		throws Exception {
 
 		return new Document();

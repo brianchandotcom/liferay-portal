@@ -36,6 +36,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.HEAD;
 import javax.ws.rs.HeaderParam;
 import javax.ws.rs.OPTIONS;
+import javax.ws.rs.PATCH;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -44,6 +45,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
+
+import org.apache.cxf.jaxrs.ext.multipart.MultipartBody;
 
 /**
  * To access this resource, run:
@@ -68,6 +71,13 @@ public interface StructuredContentResource {
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	public Page<StructuredContent> getContentSpaceStructuredContentsPage( @PathParam("content-space-id") Long contentSpaceId , @Context Filter filter , @Context Pagination pagination , @Context Sort[] sorts ) throws Exception;
+
+	@Consumes("application/json")
+	@PATCH
+	@Path("/content-space/{content-space-id}/structured-contents")
+	@Produces("application/json")
+	@RequiresScope("everything.read")
+	public StructuredContent patchContentSpaceStructuredContent( @PathParam("content-space-id") Long contentSpaceId , StructuredContent structuredContent ) throws Exception;
 
 	@Consumes("application/json")
 	@POST

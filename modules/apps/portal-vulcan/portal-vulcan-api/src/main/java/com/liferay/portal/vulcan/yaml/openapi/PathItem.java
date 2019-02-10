@@ -39,6 +39,10 @@ public class PathItem {
 		return _options;
 	}
 
+	public Patch getPatch() {
+		return _patch;
+	}
+
 	public Post getPost() {
 		return _post;
 	}
@@ -67,6 +71,10 @@ public class PathItem {
 		_options = options;
 	}
 
+	public void setPatch(Patch patch) {
+		_patch = patch;
+	}
+
 	public void setPost(Post post) {
 		_post = post;
 	}
@@ -80,6 +88,7 @@ public class PathItem {
 	private Get _get;
 	private Head _head;
 	private Options _options;
+	private Patch _patch;
 	private Post _post;
 	private Put _put;
 

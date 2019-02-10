@@ -30,6 +30,7 @@ import com.liferay.portal.vulcan.yaml.openapi.OpenAPIYAML;
 import com.liferay.portal.vulcan.yaml.openapi.Operation;
 import com.liferay.portal.vulcan.yaml.openapi.Options;
 import com.liferay.portal.vulcan.yaml.openapi.Parameter;
+import com.liferay.portal.vulcan.yaml.openapi.Patch;
 import com.liferay.portal.vulcan.yaml.openapi.PathItem;
 import com.liferay.portal.vulcan.yaml.openapi.Post;
 import com.liferay.portal.vulcan.yaml.openapi.Put;
@@ -106,6 +107,9 @@ public class JavaTool {
 		}
 		else if (Options.class.isInstance(operation)) {
 			return "options";
+		}
+		else if (Patch.class.isInstance(operation)) {
+			return "patch";
 		}
 		else if (Post.class.isInstance(operation)) {
 			return "post";
@@ -195,6 +199,10 @@ public class JavaTool {
 
 		if (pathItem.getOptions() != null) {
 			operations.add(pathItem.getOptions());
+		}
+
+		if (pathItem.getPatch() != null) {
+			operations.add(pathItem.getPatch());
 		}
 
 		if (pathItem.getPost() != null) {

@@ -43,7 +43,6 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -164,7 +163,7 @@ public class JavaTool {
 		String returnType = _getReturnType(openAPIYAML, operation);
 
 		return new JavaSignature(
-			_getJavaParameters(operation, returnType, schemaName),
+			_getJavaParameters(operation),
 			_getMethodAnnotations(operation, pathItem, path),
 			_getMethodName(operation, path, returnType, schemaName),
 			returnType);
@@ -243,9 +242,7 @@ public class JavaTool {
 		return StringUtil.upperCaseFirstLetter(type);
 	}
 
-	private List<JavaParameter> _getJavaParameters(
-		Operation operation, String returnType, String schemaName) {
-
+	private List<JavaParameter> _getJavaParameters(Operation operation) {
 		if ((operation == null) || (operation.getParameters() == null)) {
 			return Collections.emptyList();
 		}
@@ -307,16 +304,21 @@ public class JavaTool {
 			javaParameters.add(javaParameter);
 		}
 
-		String httpMethod = getHTTPMethod(operation);
+		RequestBody requestBody = operation.getRequestBody();
 
-		if ((Objects.equals(httpMethod, "post") ||
-			 Objects.equals(httpMethod, "put")) &&
-			Objects.equals(returnType, schemaName)) {
+		if (requestBody != null) {
+			Map<String, Content> contents = requestBody.getContent();
 
-			String parameterName = StringUtil.lowerCaseFirstLetter(schemaName);
+			for (Content content : contents.values()) {
+				String schemaName = _getJavaParameterType(
+					null, content.getSchema());
 
-			javaParameters.add(
-				new JavaParameter(null, parameterName, schemaName));
+				String parameterName = StringUtil.lowerCaseFirstLetter(
+					schemaName);
+
+				javaParameters.add(
+					new JavaParameter(null, parameterName, schemaName));
+			}
 		}
 
 		return javaParameters;

@@ -54,10 +54,15 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
+import java.util.AbstractMap;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -105,7 +110,7 @@ public class StructuredContentResourceImpl
 		String ddmTemplateKey = _getDDMTemplateKey(ddmStructure);
 
 		LocalDateTime localDateTime = _getLocalDateTime(
-			structuredContent.getDatePublished());
+			structuredContent.getDatePublished(), new Date());
 
 		ServiceContext serviceContext = _getServiceContext(
 			contentSpaceId, structuredContent);
@@ -129,6 +134,58 @@ public class StructuredContentResourceImpl
 			true, null, serviceContext);
 
 		return _toStructuredContent(journalArticle);
+	}
+
+	@Override
+	public StructuredContent putStructuredContent(
+			Long structuredContentsId, StructuredContent structuredContent)
+		throws Exception {
+
+		JournalArticle journalArticle = _journalArticleService.getLatestArticle(
+			structuredContentsId);
+
+		ServiceContext serviceContext = _getServiceContext(
+			journalArticle.getGroupId(), structuredContent);
+
+		DDMStructure ddmStructure = journalArticle.getDDMStructure();
+
+		Locale locale = acceptLanguage.getPreferredLocale();
+
+		String content =
+			_journalArticleContentHelper.createJournalArticleContent(
+				ddmStructure);
+
+		String ddmTemplateKey = _getDDMTemplateKey(ddmStructure);
+
+		LocalDateTime localDateTime = _getLocalDateTime(
+			structuredContent.getDatePublished(),
+			journalArticle.getDisplayDate());
+
+		JournalArticle updatedJournalArticle =
+			_journalArticleService.updateArticle(
+				journalArticle.getGroupId(), journalArticle.getFolderId(),
+				journalArticle.getArticleId(), journalArticle.getVersion(),
+				_merge(
+					journalArticle.getTitleMap(),
+					new AbstractMap.SimpleEntry<>(
+						locale, structuredContent.getTitle())),
+				_merge(
+					journalArticle.getDescriptionMap(),
+					new AbstractMap.SimpleEntry<>(
+						locale, structuredContent.getDescription())),
+				_merge(
+					journalArticle.getFriendlyURLMap(),
+					new AbstractMap.SimpleEntry<>(
+						locale, structuredContent.getTitle())),
+				content, journalArticle.getDDMStructureKey(), ddmTemplateKey,
+				journalArticle.getLayoutUuid(),
+				localDateTime.getMonthValue() - 1,
+				localDateTime.getDayOfMonth(), localDateTime.getYear(),
+				localDateTime.getHour(), localDateTime.getMinute(), 0, 0, 0, 0,
+				0, true, 0, 0, 0, 0, 0, true, true, false, null, null, null,
+				null, serviceContext);
+
+		return _toStructuredContent(updatedJournalArticle);
 	}
 
 	private SearchContext _createSearchContext(
@@ -195,11 +252,11 @@ public class StructuredContentResourceImpl
 		return searchResultPermissionFilter.search(searchContext);
 	}
 
-	private LocalDateTime _getLocalDateTime(Date date) {
+	private LocalDateTime _getLocalDateTime(Date date, Date defaultDate) {
 		Instant instant;
 
 		if (date == null) {
-			instant = Instant.now();
+			instant = defaultDate.toInstant();
 		}
 		else {
 			instant = date.toInstant();
@@ -242,6 +299,38 @@ public class StructuredContentResourceImpl
 		serviceContext.setScopeGroupId(contentSpaceId);
 
 		return serviceContext;
+	}
+
+	private Map<Locale, String> _merge(
+		Map<Locale, String> map, Map.Entry<Locale, String> mapEntry) {
+
+		if (map == null) {
+			return Stream.of(
+				mapEntry
+			).collect(
+				Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)
+			);
+		}
+
+		if (mapEntry == null) {
+			return map;
+		}
+
+		if (mapEntry.getValue() == null) {
+			map.remove(mapEntry.getValue());
+
+			return map;
+		}
+
+		Set<Map.Entry<Locale, String>> mapEntries = map.entrySet();
+
+		return Stream.concat(
+			mapEntries.stream(), Stream.of(mapEntry)
+		).collect(
+			Collectors.toMap(
+				Map.Entry::getKey, Map.Entry::getValue,
+				(value1, value2) -> value2)
+		);
 	}
 
 	private StructuredContent _toStructuredContent(

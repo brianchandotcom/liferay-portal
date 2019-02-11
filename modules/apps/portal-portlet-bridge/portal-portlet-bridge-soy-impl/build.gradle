@@ -1,7 +1,3 @@
-configJSModules {
-	include "**/*.js*"
-}
-
 dependencies {
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
@@ -24,8 +20,4 @@ dependencies {
 	testCompile group: "org.slf4j", name: "slf4j-api", version: "1.7.2"
 	testCompile project(":core:petra:petra-lang")
 	testCompile project(":core:registry-api")
-}
-
-transpileJS {
-	srcIncludes = "**/*.js"
 }

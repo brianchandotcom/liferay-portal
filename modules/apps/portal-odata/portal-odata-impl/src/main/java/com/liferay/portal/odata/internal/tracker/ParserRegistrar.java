@@ -15,13 +15,12 @@
 package com.liferay.portal.odata.internal.tracker;
 
 import com.liferay.osgi.util.ServiceTrackerFactory;
-import com.liferay.osgi.util.service.Reference;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.odata.filter.FilterParser;
 import com.liferay.portal.odata.filter.FilterParserProvider;
-import com.liferay.portal.odata.internal.sort.SortParserImpl;
 import com.liferay.portal.odata.sort.SortParser;
+import com.liferay.portal.odata.sort.SortParserProvider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +32,7 @@ import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 import org.osgi.util.tracker.ServiceTracker;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
@@ -51,7 +51,7 @@ public class ParserRegistrar {
 		_serviceTracker = ServiceTrackerFactory.open(
 			bundleContext, EntityModel.class,
 			new EntityModelTrackerCustomizer(
-				bundleContext, _filterParserProvider));
+				bundleContext, _filterParserProvider, _sortParserProvider));
 	}
 
 	@Deactivate
@@ -63,6 +63,9 @@ public class ParserRegistrar {
 	private FilterParserProvider _filterParserProvider;
 
 	private ServiceTracker<?, ?> _serviceTracker;
+
+	@Reference
+	private SortParserProvider _sortParserProvider;
 
 	private static class EntityModelTrackerCustomizer
 		implements ServiceTrackerCustomizer
@@ -86,7 +89,7 @@ public class ParserRegistrar {
 
 				parserServiceRegistrations.register(
 					_bundleContext, SortParser.class,
-					new SortParserImpl(entityModel));
+					_sortParserProvider.provide(entityModel));
 			}
 			catch (Throwable t) {
 				parserServiceRegistrations.unregister();
@@ -126,14 +129,17 @@ public class ParserRegistrar {
 
 		private EntityModelTrackerCustomizer(
 			BundleContext bundleContext,
-			FilterParserProvider filterParserProvider) {
+			FilterParserProvider filterParserProvider,
+			SortParserProvider sortParserProvider) {
 
 			_bundleContext = bundleContext;
 			_filterParserProvider = filterParserProvider;
+			_sortParserProvider = sortParserProvider;
 		}
 
 		private final BundleContext _bundleContext;
 		private final FilterParserProvider _filterParserProvider;
+		private final SortParserProvider _sortParserProvider;
 
 	}
 

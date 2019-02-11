@@ -35,7 +35,7 @@
 	"name": "frontend-editor-alloyeditor-web",
 	"scripts": {
 		"checkFormat": "npm run csf",
-		"csf": "csf src/**/*.js test/**/*.js",
+		"csf": "csf src/**/*.js",
 		"format": "npm run csf -- -i"
 	},
 	"version": "3.0.0"

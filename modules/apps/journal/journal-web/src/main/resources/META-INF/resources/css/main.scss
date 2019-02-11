@@ -47,6 +47,12 @@
 		}
 	}
 
+	.edit-article-sidebar {
+		height: calc(100vh - 56px) !important;
+		overflow-y: scroll;
+		top: 56px !important;
+	}
+
 	.form-builder {
 		.nav-tabs + .tab-content .tab-pane {
 			padding: 2rem 1rem;

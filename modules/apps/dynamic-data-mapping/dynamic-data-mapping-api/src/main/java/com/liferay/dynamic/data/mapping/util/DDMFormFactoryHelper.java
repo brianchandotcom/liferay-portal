@@ -32,6 +32,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -39,7 +40,6 @@ import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.TreeSet;
 
 /**
  * @author Marcellus Tavares
@@ -113,7 +113,7 @@ public class DDMFormFactoryHelper {
 			return SetUtil.fromArray(new Locale[] {defaultLocale});
 		}
 
-		Set<Locale> availableLocales = new TreeSet<>();
+		Set<Locale> availableLocales = new HashSet<>();
 
 		for (String availableLanguageId :
 				StringUtil.split(_ddmForm.availableLanguageIds())) {

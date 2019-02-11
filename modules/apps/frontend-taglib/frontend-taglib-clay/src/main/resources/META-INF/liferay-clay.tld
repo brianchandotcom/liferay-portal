@@ -16,6 +16,12 @@
 		<body-content>empty</body-content>
 		<attribute>
 			<description></description>
+			<name>attributeProviderKey</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
 			<name>autoClose</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -100,6 +106,12 @@
 		<body-content>empty</body-content>
 		<attribute>
 			<description></description>
+			<name>attributeProviderKey</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
 			<name>componentId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -149,6 +161,12 @@
 		<attribute>
 			<description></description>
 			<name>ariaLabel</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
+			<name>attributeProviderKey</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
@@ -262,6 +280,12 @@
 		<body-content>empty</body-content>
 		<attribute>
 			<description></description>
+			<name>attributeProviderKey</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
 			<name>checked</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -344,6 +368,12 @@
 		<name>dropdown-actions</name>
 		<tag-class>com.liferay.frontend.taglib.clay.servlet.taglib.soy.DropdownActionsTag</tag-class>
 		<body-content>empty</body-content>
+		<attribute>
+			<description></description>
+			<name>attributeProviderKey</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
 		<attribute>
 			<description></description>
 			<name>buttonLabel</name>
@@ -434,6 +464,12 @@
 		<name>dropdown-menu</name>
 		<tag-class>com.liferay.frontend.taglib.clay.servlet.taglib.soy.DropdownMenuTag</tag-class>
 		<body-content>empty</body-content>
+		<attribute>
+			<description></description>
+			<name>attributeProviderKey</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
 		<attribute>
 			<description></description>
 			<name>buttonLabel</name>
@@ -557,6 +593,12 @@
 		<attribute>
 			<description></description>
 			<name>actionDropdownItems</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
+			<name>attributeProviderKey</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
@@ -742,6 +784,12 @@
 		</attribute>
 		<attribute>
 			<description></description>
+			<name>attributeProviderKey</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
 			<name>componentId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -856,6 +904,12 @@
 		<body-content>empty</body-content>
 		<attribute>
 			<description></description>
+			<name>attributeProviderKey</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
 			<name>componentId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -911,6 +965,12 @@
 		<attribute>
 			<description></description>
 			<name>actionDropdownItems</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
+			<name>attributeProviderKey</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
@@ -1102,6 +1162,12 @@
 		<body-content>empty</body-content>
 		<attribute>
 			<description></description>
+			<name>attributeProviderKey</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
 			<name>closeable</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1181,6 +1247,12 @@
 		<attribute>
 			<description></description>
 			<name>ariaLabel</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
+			<name>attributeProviderKey</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
@@ -1291,6 +1363,12 @@
 				@deprecated - Replaced by defaultEventHandler.
 			</description>
 			<name>actionHandler</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
+			<name>attributeProviderKey</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
@@ -1530,6 +1608,12 @@
 		<body-content>empty</body-content>
 		<attribute>
 			<description></description>
+			<name>attributeProviderKey</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
 			<name>componentId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1632,6 +1716,12 @@
 		<body-content>empty</body-content>
 		<attribute>
 			<description></description>
+			<name>attributeProviderKey</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
 			<name>componentId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1684,6 +1774,12 @@
 		<name>progressbar</name>
 		<tag-class>com.liferay.frontend.taglib.clay.servlet.taglib.soy.ProgressBarTag</tag-class>
 		<body-content>empty</body-content>
+		<attribute>
+			<description></description>
+			<name>attributeProviderKey</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
 		<attribute>
 			<description></description>
 			<name>componentId</name>
@@ -1750,6 +1846,12 @@
 		<name>radio</name>
 		<tag-class>com.liferay.frontend.taglib.clay.servlet.taglib.soy.RadioTag</tag-class>
 		<body-content>empty</body-content>
+		<attribute>
+			<description></description>
+			<name>attributeProviderKey</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
 		<attribute>
 			<description></description>
 			<name>checked</name>
@@ -1830,6 +1932,12 @@
 		<body-content>empty</body-content>
 		<attribute>
 			<description></description>
+			<name>attributeProviderKey</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
 			<name>componentId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1900,6 +2008,12 @@
 		<name>sticker</name>
 		<tag-class>com.liferay.frontend.taglib.clay.servlet.taglib.soy.StickerTag</tag-class>
 		<body-content>empty</body-content>
+		<attribute>
+			<description></description>
+			<name>attributeProviderKey</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
 		<attribute>
 			<description></description>
 			<name>componentId</name>
@@ -1986,6 +2100,12 @@
 		<body-content>empty</body-content>
 		<attribute>
 			<description></description>
+			<name>attributeProviderKey</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
 			<name>autoClose</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -2064,6 +2184,12 @@
 		</attribute>
 		<attribute>
 			<description></description>
+			<name>attributeProviderKey</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
 			<name>displayContext</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -2125,6 +2251,12 @@
 		<attribute>
 			<description></description>
 			<name>actionDropdownItems</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
+			<name>attributeProviderKey</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
@@ -2275,6 +2407,12 @@
 		<attribute>
 			<description></description>
 			<name>actionDropdownItems</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
+			<name>attributeProviderKey</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

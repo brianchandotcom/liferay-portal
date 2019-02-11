@@ -15,7 +15,7 @@ String gradleVersion = "4.10.2"
 String pluginsSdkUrl = "https://repository-cdn.liferay.com/nexus/service/local/repositories/liferay-public-releases/content/com/liferay/portal/com.liferay.portal.plugins.sdk/1.0.22/com.liferay.portal.plugins.sdk-1.0.22-withdependencies.zip"
 
 if (System.properties["http.proxyHost"] == "squid.lax.liferay.com") {
-	bundleUrl = "http://mirrors.liferay.com/releases.liferay.com/portal/7.1.1-ga2/liferay-ce-portal-tomcat-7.1.1-ga2-20181112144637000.tar.gz"
+	bundleUrl = "http://mirrors.liferay.com/releases.liferay.com/portal/7.1.2-ga3/liferay-ce-portal-tomcat-7.1.2-ga3-20190107144105508.tar.gz"
 	pluginsSdkUrl = "https://repository-cdn.liferay.com/nexus/service/local/repositories/liferay-public-releases/content/com/liferay/portal/com.liferay.portal.plugins.sdk/1.0.22/com.liferay.portal.plugins.sdk-1.0.22-withdependencies.zip"
 }
 

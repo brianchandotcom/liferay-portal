@@ -78,7 +78,7 @@ public abstract class BaseUpgradeBadColumnNames extends UpgradeProcess {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
 							StringBundler.concat(
-								"Unable to find bad column name ", columnName,
+								"Unable to get bad column name ", columnName,
 								" in table ", tableName));
 					}
 
@@ -92,7 +92,7 @@ public abstract class BaseUpgradeBadColumnNames extends UpgradeProcess {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						StringBundler.concat(
-							"Unable to find SQL for column ", columnName,
+							"Unable to get SQL for column ", columnName,
 							" in table ", tableName));
 				}
 
@@ -120,7 +120,7 @@ public abstract class BaseUpgradeBadColumnNames extends UpgradeProcess {
 
 		if ((startIndex < 0) || (endIndex < 0) || (startIndex >= endIndex)) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to retrieve column SQL from " + createSQL);
+				_log.warn("Unable to get column SQL from " + createSQL);
 			}
 
 			return Collections.emptyMap();
@@ -137,7 +137,7 @@ public abstract class BaseUpgradeBadColumnNames extends UpgradeProcess {
 			if (index <= 0) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
-						"Unable to retrieve column name from " + columnSQL);
+						"Unable to get column name from " + columnSQL);
 				}
 
 				continue;

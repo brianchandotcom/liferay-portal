@@ -18,8 +18,6 @@ import com.liferay.arquillian.extension.junit.bridge.container.LiferayRemoteDepl
 import com.liferay.arquillian.extension.junit.bridge.container.impl.ContainerImpl;
 import com.liferay.arquillian.extension.junit.bridge.container.registry.SingleContainerRegistry;
 
-import java.io.IOException;
-
 import org.jboss.arquillian.config.descriptor.api.ContainerDef;
 import org.jboss.arquillian.config.descriptor.impl.ContainerDefImpl;
 import org.jboss.arquillian.container.spi.Container;
@@ -37,9 +35,7 @@ import org.jboss.arquillian.core.api.event.ManagerStarted;
  */
 public class ContainerRegistrar {
 
-	public void createContainer(@Observes ManagerStarted managerStarted)
-		throws IOException {
-
+	public void createContainer(@Observes ManagerStarted managerStarted) {
 		ContainerDef containerDef = new ContainerDefImpl("arquillian.xml");
 
 		containerDef.setContainerName("default");

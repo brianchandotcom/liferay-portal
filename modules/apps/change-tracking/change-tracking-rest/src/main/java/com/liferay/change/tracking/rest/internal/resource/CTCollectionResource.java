@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -271,16 +272,21 @@ public class CTCollectionResource {
 
 		QueryDefinition<CTCollection> queryDefinition = new QueryDefinition<>();
 
-		queryDefinition.setEnd(CTJaxRsUtil.checkLimit(limit));
+		int end = CTJaxRsUtil.checkLimit(limit);
 
-		OrderByComparator<CTCollection> orderByComparator =
-			OrderByComparatorFactoryUtil.create(
-				"CTCollection",
-				CTJaxRsUtil.checkSortColumns(sort, _orderByColumnNames));
+		if (end > 0) {
+			queryDefinition.setEnd(CTJaxRsUtil.checkLimit(limit));
+			queryDefinition.setStart(0);
+		}
 
-		queryDefinition.setOrderByComparator(orderByComparator);
+		if (Validator.isNotNull(sort)) {
+			OrderByComparator<CTCollection> orderByComparator =
+				OrderByComparatorFactoryUtil.create(
+					"CTCollection",
+					CTJaxRsUtil.checkSortColumns(sort, _orderByColumnNames));
 
-		queryDefinition.setStart(0);
+			queryDefinition.setOrderByComparator(orderByComparator);
+		}
 
 		return queryDefinition;
 	}

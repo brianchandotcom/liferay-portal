@@ -19,7 +19,9 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -28,6 +30,7 @@ import java.util.List;
 import java.util.Objects;
 
 import javax.portlet.PortletURL;
+import javax.portlet.RenderRequest;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -36,8 +39,19 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class SiteBrowserDisplayContext {
 
-	public SiteBrowserDisplayContext(HttpServletRequest request) {
+	public SiteBrowserDisplayContext(
+		HttpServletRequest request, RenderRequest renderRequest) {
+
 		_request = request;
+		_renderRequest = renderRequest;
+
+		_emptyResultsMessage = GetterUtil.getString(
+			request.getAttribute(
+				"liferay-site:site-browser:emptyResultsMessage"));
+		_groups = (List<Group>)request.getAttribute(
+			"liferay-site:site-browser:groups");
+		_groupsCount = GetterUtil.getInteger(
+			request.getAttribute("liferay-site:site-browser:groupsCount"));
 	}
 
 	public String getClearResultsURL() {
@@ -81,6 +95,10 @@ public class SiteBrowserDisplayContext {
 		};
 	}
 
+	public int getItemsTotal() {
+		return _groupsCount;
+	}
+
 	public String getOrderByCol() {
 		if (Validator.isNotNull(_orderByCol)) {
 			return _orderByCol;
@@ -116,6 +134,25 @@ public class SiteBrowserDisplayContext {
 		PortletURL searchActionURL = getPortletURL();
 
 		return searchActionURL.toString();
+	}
+
+	public SearchContainer getSearchContainer() {
+		if (_searchContainer != null) {
+			return _searchContainer;
+		}
+
+		SearchContainer searchContainer = new SearchContainer(
+			_renderRequest, getPortletURL(), null, _emptyResultsMessage);
+
+		searchContainer.setOrderByCol(getOrderByCol());
+		searchContainer.setOrderByType(getOrderByType());
+
+		searchContainer.setTotal(_groupsCount);
+		searchContainer.setResults(_groups);
+
+		_searchContainer = searchContainer;
+
+		return _searchContainer;
 	}
 
 	public String getSortingURL() {
@@ -179,9 +216,14 @@ public class SiteBrowserDisplayContext {
 	}
 
 	private String _displayStyle;
+	private final String _emptyResultsMessage;
+	private final List<Group> _groups;
+	private final int _groupsCount;
 	private String _orderByCol;
 	private String _orderByType;
 	private PortletURL _portletURL;
+	private final RenderRequest _renderRequest;
 	private final HttpServletRequest _request;
+	private SearchContainer _searchContainer;
 
 }

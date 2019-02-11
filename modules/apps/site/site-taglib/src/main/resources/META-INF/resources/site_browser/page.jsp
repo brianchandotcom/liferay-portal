@@ -17,10 +17,7 @@
 <%@ include file="/site_browser/init.jsp" %>
 
 <%
-String emptyResultsMessage = GetterUtil.getString(request.getAttribute("liferay-site:site-browser:emptyResultsMessage"));
 String eventName = GetterUtil.getString(request.getAttribute("liferay-site:site-browser:eventName"));
-List<Group> groups = (List<Group>)request.getAttribute("liferay-site:site-browser:groups");
-int groupsCount = GetterUtil.getInteger(request.getAttribute("liferay-site:site-browser:groupsCount"));
 long[] selectedGroupIds = GetterUtil.getLongValues(request.getAttribute("liferay-site:site-browser:selectedGroupIds"));
 boolean showSearch = GetterUtil.getBoolean(request.getAttribute("liferay-site:site-browser:showSearch"));
 %>
@@ -28,7 +25,7 @@ boolean showSearch = GetterUtil.getBoolean(request.getAttribute("liferay-site:si
 <clay:management-toolbar
 	clearResultsURL="<%= siteBrowserDisplayContext.getClearResultsURL() %>"
 	filterDropdownItems="<%= siteBrowserDisplayContext.getFilterDropdownItems() %>"
-	itemsTotal="<%= groupsCount %>"
+	itemsTotal="<%= siteBrowserDisplayContext.getItemsTotal() %>"
 	searchActionURL="<%= siteBrowserDisplayContext.getSearchActionURL() %>"
 	selectable="<%= false %>"
 	showSearch="<%= showSearch %>"
@@ -39,14 +36,8 @@ boolean showSearch = GetterUtil.getBoolean(request.getAttribute("liferay-site:si
 
 <aui:form action="<%= siteBrowserDisplayContext.getPortletURL() %>" cssClass="container-fluid-1280" method="post" name="selectGroupFm">
 	<liferay-ui:search-container
-		emptyResultsMessage="<%= emptyResultsMessage %>"
-		iteratorURL="<%= siteBrowserDisplayContext.getPortletURL() %>"
-		total="<%= groupsCount %>"
+		searchContainer="<%= siteBrowserDisplayContext.getSearchContainer() %>"
 	>
-		<liferay-ui:search-container-results
-			results="<%= groups %>"
-		/>
-
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.kernel.model.Group"
 			escapedModel="<%= true %>"

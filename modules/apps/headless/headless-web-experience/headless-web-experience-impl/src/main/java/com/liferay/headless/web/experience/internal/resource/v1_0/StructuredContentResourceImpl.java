@@ -14,10 +14,15 @@
 
 package com.liferay.headless.web.experience.internal.resource.v1_0;
 
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.model.DDMTemplate;
+import com.liferay.dynamic.data.mapping.service.DDMStructureService;
 import com.liferay.headless.web.experience.dto.v1_0.StructuredContent;
+import com.liferay.headless.web.experience.internal.util.JournalArticleContentHelper;
 import com.liferay.headless.web.experience.resource.v1_0.StructuredContentResource;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
+import com.liferay.journal.service.JournalArticleService;
 import com.liferay.journal.util.JournalHelper;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
@@ -39,9 +44,20 @@ import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.context.Pagination;
 import com.liferay.portal.vulcan.dto.Page;
+
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -69,6 +85,50 @@ public class StructuredContentResourceImpl
 			transform(
 				_journalHelper.getArticles(hits), this::_toStructuredContent),
 			pagination, hits.getLength());
+	}
+
+	@Override
+	public StructuredContent postContentSpaceStructuredContent(
+			Long contentSpaceId, StructuredContent structuredContent)
+		throws Exception {
+
+		DDMStructure ddmStructure = _ddmStructureService.getStructure(
+			structuredContent.getContentStructureId());
+
+		Locale locale = acceptLanguage.getPreferredLocale();
+
+		String content =
+			_journalArticleContentHelper.createJournalArticleContent(
+				ddmStructure);
+
+		String ddmStructureKey = ddmStructure.getStructureKey();
+		String ddmTemplateKey = _getDDMTemplateKey(ddmStructure);
+
+		LocalDateTime localDateTime = _getLocalDateTime(
+			structuredContent.getDatePublished());
+
+		ServiceContext serviceContext = _getServiceContext(
+			contentSpaceId, structuredContent);
+
+		JournalArticle journalArticle = _journalArticleService.addArticle(
+			contentSpaceId, 0, 0, 0, null, true,
+			new HashMap<Locale, String>() {
+				{
+					put(locale, structuredContent.getTitle());
+				}
+			},
+			new HashMap<Locale, String>() {
+				{
+					put(locale, structuredContent.getDescription());
+				}
+			},
+			content, ddmStructureKey, ddmTemplateKey, null,
+			localDateTime.getMonthValue() - 1, localDateTime.getDayOfMonth(),
+			localDateTime.getYear(), localDateTime.getHour(),
+			localDateTime.getMinute(), 0, 0, 0, 0, 0, true, 0, 0, 0, 0, 0, true,
+			true, null, serviceContext);
+
+		return _toStructuredContent(journalArticle);
 	}
 
 	private SearchContext _createSearchContext(
@@ -99,6 +159,14 @@ public class StructuredContentResourceImpl
 		return searchContext;
 	}
 
+	private String _getDDMTemplateKey(DDMStructure ddmStructure) {
+		List<DDMTemplate> ddmTemplates = ddmStructure.getTemplates();
+
+		DDMTemplate ddmTemplate = ddmTemplates.get(0);
+
+		return ddmTemplate.getTemplateKey();
+	}
+
 	private Hits _getHits(Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
@@ -127,6 +195,21 @@ public class StructuredContentResourceImpl
 		return searchResultPermissionFilter.search(searchContext);
 	}
 
+	private LocalDateTime _getLocalDateTime(Date date) {
+		Instant instant;
+
+		if (date == null) {
+			instant = Instant.now();
+		}
+		else {
+			instant = date.toInstant();
+		}
+
+		ZonedDateTime zonedDateTime = instant.atZone(ZoneId.systemDefault());
+
+		return zonedDateTime.toLocalDateTime();
+	}
+
 	private Query _getQuery(Filter filter, SearchContext searchContext)
 		throws Exception {
 
@@ -144,11 +227,31 @@ public class StructuredContentResourceImpl
 		return booleanQuery;
 	}
 
+	private ServiceContext _getServiceContext(
+		long contentSpaceId, StructuredContent structuredContent) {
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
+
+		if (structuredContent.getKeywords() != null) {
+			serviceContext.setAssetTagNames(structuredContent.getKeywords());
+		}
+
+		serviceContext.setScopeGroupId(contentSpaceId);
+
+		return serviceContext;
+	}
+
 	private StructuredContent _toStructuredContent(
 		JournalArticle journalArticle) {
 
+		DDMStructure ddmStructure = journalArticle.getDDMStructure();
+
 		return new StructuredContent() {
 			{
+				setContentStructureId(ddmStructure.getStructureId());
 				setDateCreated(journalArticle.getCreateDate());
 				setDateModified(journalArticle.getModifiedDate());
 				setDatePublished(journalArticle.getDisplayDate());
@@ -164,7 +267,16 @@ public class StructuredContentResourceImpl
 	}
 
 	@Reference
+	private DDMStructureService _ddmStructureService;
+
+	@Reference
 	private IndexerRegistry _indexerRegistry;
+
+	@Reference
+	private JournalArticleContentHelper _journalArticleContentHelper;
+
+	@Reference
+	private JournalArticleService _journalArticleService;
 
 	@Reference
 	private JournalHelper _journalHelper;

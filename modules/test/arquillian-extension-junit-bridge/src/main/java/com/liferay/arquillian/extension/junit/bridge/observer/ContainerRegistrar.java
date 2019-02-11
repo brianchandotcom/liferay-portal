@@ -16,12 +16,10 @@ package com.liferay.arquillian.extension.junit.bridge.observer;
 
 import com.liferay.arquillian.extension.junit.bridge.container.LiferayRemoteDeployableContainer;
 import com.liferay.arquillian.extension.junit.bridge.container.impl.ContainerImpl;
-import com.liferay.arquillian.extension.junit.bridge.container.registry.SingleContainerRegistry;
 
 import org.jboss.arquillian.config.descriptor.api.ContainerDef;
 import org.jboss.arquillian.config.descriptor.impl.ContainerDefImpl;
 import org.jboss.arquillian.container.spi.Container;
-import org.jboss.arquillian.container.spi.ContainerRegistry;
 import org.jboss.arquillian.core.api.Injector;
 import org.jboss.arquillian.core.api.Instance;
 import org.jboss.arquillian.core.api.InstanceProducer;
@@ -49,19 +47,11 @@ public class ContainerRegistrar {
 		injector.inject(container);
 
 		_containerInstanceProducer.set(container);
-
-		_containerRegistryInstanceProducer.set(
-			new SingleContainerRegistry(container));
 	}
 
 	@ApplicationScoped
 	@Inject
 	private InstanceProducer<Container> _containerInstanceProducer;
-
-	@ApplicationScoped
-	@Inject
-	private InstanceProducer<ContainerRegistry>
-		_containerRegistryInstanceProducer;
 
 	@Inject
 	private Instance<Injector> _injectorInstance;

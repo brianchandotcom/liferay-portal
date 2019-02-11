@@ -43,6 +43,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -308,6 +309,20 @@ public class JavaTool {
 
 		if (requestBody != null) {
 			Map<String, Content> contents = requestBody.getContent();
+
+			for (Map.Entry<String, Content> contentEntry :
+					contents.entrySet()) {
+
+				String key = contentEntry.getKey();
+
+				if (key.equals("multipart/form-data")) {
+					javaParameters.add(
+						new JavaParameter(
+							null, "multipartBody", "MultipartBody"));
+
+					return javaParameters;
+				}
+			}
 
 			for (Content content : contents.values()) {
 				String schemaName = _getJavaParameterType(

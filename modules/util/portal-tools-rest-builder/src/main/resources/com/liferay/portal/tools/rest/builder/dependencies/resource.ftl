@@ -32,6 +32,8 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 
+import org.apache.cxf.jaxrs.ext.multipart.MultipartBody;
+
 /**
  * To access this resource, run:
  *

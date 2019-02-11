@@ -14,17 +14,19 @@
 
 package com.liferay.portal.vulcan.internal.jaxrs.context.provider;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
+import com.liferay.portal.odata.entity.EntityModel;
 
-import java.util.Collection;
-import java.util.Iterator;
+import java.lang.reflect.Method;
 
 import javax.servlet.http.HttpServletRequest;
 
+import javax.ws.rs.core.MultivaluedMap;
+
+import org.apache.cxf.jaxrs.impl.MetadataMap;
 import org.apache.cxf.message.Message;
 
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
 
 /**
@@ -32,12 +34,8 @@ import org.osgi.framework.ServiceReference;
  */
 public class ContextProviderUtil {
 
-	public static HttpServletRequest getHttpServletRequest(Message message) {
-		return (HttpServletRequest)message.getContextualProperty(
-			"HTTP.REQUEST");
-	}
-
-	public static String getODataEntityModelName(Message message)
+	public static EntityModel getEntityModel(
+			BundleContext bundleContext, Message message)
 		throws Exception {
 
 		Method method = (Method)message.get("org.apache.cxf.resource.method");
@@ -48,33 +46,50 @@ public class ContextProviderUtil {
 
 		Class<?> clazz = method.getDeclaringClass();
 
-		Field field = clazz.getField("ODATA_ENTITY_MODEL_NAME");
-
-		if (field == null) {
+		if (clazz == null) {
 			return null;
 		}
 
-		return (String)field.get(null);
+		Method getEntityModelMethod = clazz.getDeclaredMethod(
+			"getEntityModel", MultivaluedMap.class);
+
+		if (getEntityModelMethod == null) {
+			return null;
+		}
+
+		Object resourceService = getResourceService(bundleContext, clazz);
+
+		if (resourceService == null) {
+			return null;
+		}
+
+		MultivaluedMap multivaluedMap =
+			(MetadataMap)message.getContextualProperty(
+				"jaxrs.template.parameters");
+
+		return (EntityModel)getEntityModelMethod.invoke(
+			resourceService, multivaluedMap);
 	}
 
-	public static <T> T getODataEntityModelService(
-			BundleContext bundleContext, Class<T> clazz,
-			String oDataEntityModelName)
-		throws Exception {
+	public static HttpServletRequest getHttpServletRequest(Message message) {
+		return (HttpServletRequest)message.getContextualProperty(
+			"HTTP.REQUEST");
+	}
 
-		Collection<ServiceReference<T>> serviceReferences =
+	public static <T> T getResourceService(
+			BundleContext bundleContext, Class<T> clazz)
+		throws InvalidSyntaxException {
+
+		ServiceReference<?>[] serviceReferences =
 			bundleContext.getServiceReferences(
-				clazz, "(entity.model.name=" + oDataEntityModelName + ")");
+				(String)null,
+				"(component.name=" + clazz.getCanonicalName() + ")");
 
-		if (serviceReferences.isEmpty()) {
+		if ((serviceReferences != null) && (serviceReferences.length == 0)) {
 			return null;
 		}
 
-		Iterator<ServiceReference<T>> iterator = serviceReferences.iterator();
-
-		ServiceReference<T> serviceReference = iterator.next();
-
-		return bundleContext.getService(serviceReference);
+		return (T)bundleContext.getService(serviceReferences[0]);
 	}
 
 }

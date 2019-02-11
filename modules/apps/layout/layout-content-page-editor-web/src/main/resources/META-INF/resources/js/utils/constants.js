@@ -29,8 +29,8 @@ export const CONTAINER_TYPES = [
  * @type {!object}
  */
 export const FRAGMENTS_EDITOR_ITEM_BORDERS = {
-	bottom: 'border-bottom',
-	top: 'border-top'
+	bottom: 'fragments-editor-border-bottom',
+	top: 'fragments-editor-border-top'
 };
 
 /**

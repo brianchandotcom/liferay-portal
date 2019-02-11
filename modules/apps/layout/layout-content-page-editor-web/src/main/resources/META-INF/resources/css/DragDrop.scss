@@ -59,17 +59,25 @@
 }
 
 .fragments-editor__drop-target {
-	&.border-bottom:after,
-	&.border-top:after {
+	&.fragments-editor-border-bottom {
+		border-bottom: none;
+	}
+
+	&.fragments-editor-border-top {
+		border-top: none;
+	}
+
+	&.fragments-editor-border-bottom:after,
+	&.fragments-editor-border-top:after {
 		content: '';
 		display: block;
 	}
 
-	&.border-bottom:after {
+	&.fragments-editor-border-bottom:after {
 		@include lfr-drag-indicator("bottom");
 	}
 
-	&.border-top:after {
+	&.fragments-editor-border-top:after {
 		@include lfr-drag-indicator("top");
 	}
 }

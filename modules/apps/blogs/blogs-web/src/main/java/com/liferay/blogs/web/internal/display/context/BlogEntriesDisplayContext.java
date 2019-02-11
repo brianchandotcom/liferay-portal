@@ -115,37 +115,17 @@ public class BlogEntriesDisplayContext {
 		return displayStyle;
 	}
 
-	public PortletURL getPortletURL() {
-		String entriesNavigation = ParamUtil.getString(
-			_request, "entriesNavigation");
-
-		int delta = ParamUtil.getInteger(
-			_request, SearchContainer.DEFAULT_DELTA_PARAM);
-		String orderByCol = ParamUtil.getString(
-			_request, "orderByCol", "title");
-		String orderByType = ParamUtil.getString(
-			_request, "orderByType", "asc");
+	public SearchContainer getSearchContainer()
+		throws PortalException, PortletException {
 
 		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
 
 		portletURL.setParameter("mvcRenderCommandName", "/blogs/view");
 
-		if (delta > 0) {
-			portletURL.setParameter("delta", String.valueOf(delta));
-		}
-
-		portletURL.setParameter("orderBycol", orderByCol);
-		portletURL.setParameter("orderByType", orderByType);
+		String entriesNavigation = ParamUtil.getString(
+			_request, "entriesNavigation");
 
 		portletURL.setParameter("entriesNavigation", entriesNavigation);
-
-		return portletURL;
-	}
-
-	public SearchContainer getSearchContainer()
-		throws PortalException, PortletException {
-
-		PortletURL portletURL = getPortletURL();
 
 		SearchContainer<BlogsEntry> entriesSearchContainer =
 			new SearchContainer<>(
@@ -153,10 +133,21 @@ public class BlogEntriesDisplayContext {
 				PortletURLUtil.clone(portletURL, _liferayPortletResponse), null,
 				"no-entries-were-found");
 
+		String orderByCol = ParamUtil.getString(
+			_request, "orderByCol", "title");
+
+		entriesSearchContainer.setOrderByCol(orderByCol);
+
+		String orderByType = ParamUtil.getString(
+			_request, "orderByType", "asc");
+
+		entriesSearchContainer.setOrderByType(orderByType);
+
 		entriesSearchContainer.setOrderByComparator(
 			BlogsUtil.getOrderByComparator(
 				entriesSearchContainer.getOrderByCol(),
 				entriesSearchContainer.getOrderByType()));
+
 		entriesSearchContainer.setRowChecker(
 			new EmptyOnClickRowChecker(_liferayPortletResponse));
 

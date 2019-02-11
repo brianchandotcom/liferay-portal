@@ -5,11 +5,11 @@
 */
 {template .render}
 	{@param spritemap: string}
-	{@param? _handleSelectPageCheckboxChanged: any}
+	{@param? _handleClearSelectionButtonClicked: any}
 	{@param? _handleFilterLabelCloseClicked: any }
 	{@param? _handleInfoButtonClicked: any }
-	{@param? _handleDeselectAllClicked: any}
-	{@param? _handleSelectAllClicked: any}
+	{@param? _handleSelectAllButtonClicked: any}
+	{@param? _handleSelectPageCheckboxChanged: any}
 	{@param? actionItems: list<[
 		disabled: bool,
 		href: string,
@@ -101,6 +101,7 @@
 	{@param? showSelectAllButton: bool}
 	{@param? sortingOrder: string}
 	{@param? sortingURL: string}
+	{@param? supportsBulkActions: bool}
 	{@param? totalItems: number}
 	{@param? viewTypes: list<[
 		active: bool,
@@ -124,11 +125,11 @@
 		{param disabled: $disabled /}
 		{param elementClasses: $elementClasses /}
 		{param events: [
-			'deselectAllClicked': $_handleDeselectAllClicked,
+			'clearSelectionButtonClicked': $_handleClearSelectionButtonClicked,
 			'filterLabelCloseClicked': $_handleFilterLabelCloseClicked,
 			'infoButtonClicked': $_handleInfoButtonClicked,
 			'selectPageCheckboxChanged': $_handleSelectPageCheckboxChanged,
-			'selectAllClicked': $_handleSelectAllClicked
+			'selectAllButtonClicked': $_handleSelectAllButtonClicked
 		 ] /}
 		{param filterItems: $filterItems /}
 		{param filterLabels: $filterLabels /}
@@ -152,6 +153,7 @@
 		{param sortingOrder: $sortingOrder /}
 		{param sortingURL: $sortingURL /}
 		{param spritemap: $spritemap /}
+		{param supportsBulkActions: $supportsBulkActions /}
 		{param totalItems: $totalItems /}
 		{param viewTypes: $viewTypes /}
 	{/call}

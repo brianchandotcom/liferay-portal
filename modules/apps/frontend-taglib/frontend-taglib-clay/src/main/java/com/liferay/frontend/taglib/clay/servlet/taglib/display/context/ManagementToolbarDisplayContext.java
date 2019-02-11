@@ -126,6 +126,10 @@ public interface ManagementToolbarDisplayContext {
 		return null;
 	}
 
+	public default Boolean getSupportsBulkActions() {
+		return false;
+	}
+
 	public default List<ViewTypeItem> getViewTypeItems() {
 		return null;
 	}

@@ -31,6 +31,11 @@ AUI.add(
 		var SearchContainerSelect = A.Component.create(
 			{
 				ATTRS: {
+					bulkSelection: {
+						validator: Lang.isBoolean,
+						value: false
+					},
+
 					keepSelection: {
 						setter: function(keepSelection) {
 							if (Lang.isString(keepSelection)) {
@@ -112,12 +117,16 @@ AUI.add(
 						return element.one(STR_CHECKBOX_SELECTOR).attr(STR_CHECKED);
 					},
 
-					toggleAllRows: function(selected) {
+					toggleAllRows: function(selected, bulkSelection) {
 						var instance = this;
 
-						instance._getCurrentPageElements().attr(STR_CHECKED, selected);
+						var elements = bulkSelection ? instance._getAllElements() : instance._getCurrentPageElements();
+
+						elements.attr(STR_CHECKED, selected);
 
 						instance.get(STR_HOST).get(STR_CONTENT_BOX).all(instance.get(STR_ROW_SELECTOR)).toggleClass(instance.get(STR_ROW_CLASS_NAME_ACTIVE), selected);
+
+						instance.set('bulkSelection', selected && bulkSelection);
 
 						instance._notifyRowToggle();
 					},
@@ -130,6 +139,8 @@ AUI.add(
 
 							checkbox.attr(STR_CHECKED, !checkbox.attr(STR_CHECKED));
 						}
+
+						instance.set('bulkSelection', false);
 
 						row.toggleClass(instance.get(STR_ROW_CLASS_NAME_ACTIVE));
 

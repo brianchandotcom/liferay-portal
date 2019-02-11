@@ -279,6 +279,10 @@ public class ManagementToolbarTag extends BaseClayTag {
 		putValue("sortingURL", sortingURL);
 	}
 
+	public void setSupportsBulkActions(Boolean supportsBulkActions) {
+		putValue("supportsBulkActions", supportsBulkActions);
+	}
+
 	public void setViewTypeItems(List<ViewTypeItem> viewTypeItems) {
 		putValue("viewTypes", viewTypeItems);
 	}
@@ -420,6 +424,11 @@ public class ManagementToolbarTag extends BaseClayTag {
 			setSortingURL(managementToolbarDisplayContext.getSortingURL());
 		}
 
+		if (context.get("supportsBulkActions") == null) {
+			setSupportsBulkActions(
+				managementToolbarDisplayContext.getSupportsBulkActions());
+		}
+
 		if (context.get("viewTypes") == null) {
 			setViewTypeItems(
 				managementToolbarDisplayContext.getViewTypeItems());
@@ -462,7 +471,7 @@ public class ManagementToolbarTag extends BaseClayTag {
 	}
 
 	private static final String[] _CACHE_STATE = {
-		"selectedItems", "totalItems"
+		"checkboxStatus", "showSelectAllButton", "selectedItems", "totalItems",
 	};
 
 	private static final String[] _NAMESPACED_PARAMS = {

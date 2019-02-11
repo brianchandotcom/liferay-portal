@@ -107,10 +107,11 @@ public class BlogEntriesDisplayContext {
 
 		PortletURL portletURL = getPortletURL();
 
-		SearchContainer entriesSearchContainer = new SearchContainer(
-			_liferayPortletRequest,
-			PortletURLUtil.clone(portletURL, _liferayPortletResponse), null,
-			"no-entries-were-found");
+		SearchContainer<BlogsEntry> entriesSearchContainer =
+			new SearchContainer<>(
+				_liferayPortletRequest,
+				PortletURLUtil.clone(portletURL, _liferayPortletResponse), null,
+				"no-entries-were-found");
 
 		entriesSearchContainer.setOrderByComparator(
 			BlogsUtil.getOrderByComparator(

@@ -144,4 +144,75 @@ definition {
 			);
 		}
 	}
+
+	@description = "This test edits tags by bulk using Replace action."
+	@priority = "4"
+	test EditAndReplaceTags {
+		DMDocument.addMultiplePG(
+			dmDocumentFileList = "Document_1.doc,Document_2.jpg,Document_3.xls,Document_4.txt"
+		);
+
+		var key_dmDocumentTitle = "Document_1.doc";
+
+		Check(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_CHECKBOX");
+
+		Click(locator1 = "Icon#EDIT_TAGS");
+
+		DMDocument.editTags(
+			dmDocumentTitle = "Document_1.doc",
+			tagName = "one"
+		);
+
+		Uncheck(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_CHECKBOX");
+
+		var key_dmDocumentTitle = "Document_3.xls";
+
+		Check(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_CHECKBOX");
+
+		Click(locator1 = "Icon#EDIT_TAGS");
+
+		DMDocument.editTags(
+			dmDocumentTitle = "Document_3.xls",
+			tagName = "two"
+		);
+
+		for (var key_dmDocumentTitle : list "Document_1.doc,Document_3.xls") {
+			Check(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_CHECKBOX");
+		}
+
+		Click(locator1 = "Icon#EDIT_TAGS");
+
+		DMDocument.editTags(
+			editAction = "Replace",
+			itemNumber = "2",
+			multipleDocuments = "true",
+			tagName = "three"
+		);
+
+		for (var key_dmDocumentTitle : list "Document_1.doc,Document_3.xls") {
+			DMNavigator.gotoDocumentPG(dmDocumentTitle = "${key_dmDocumentTitle}");
+
+			DMDocument.viewTag(tagNameList = "three");
+
+			Navigator.gotoPage(pageName = "Documents and Media Page");
+		}
+
+		SearchPortlets.searchEmbedded(searchTerm = "three");
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "Document_1.doc",
+			searchAssetType = "Document"
+		);
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "Document_3.xls",
+			searchAssetType = "Document"
+		);
+
+		for (var key_searchTerm : list "one,two") {
+			SearchPortlets.searchEmbedded(searchTerm = "${key_searchTerm}");
+
+			SearchResultPortlet.viewNoSearchResults(searchTerm = "${key_searchTerm}");
+		}
+	}
 }

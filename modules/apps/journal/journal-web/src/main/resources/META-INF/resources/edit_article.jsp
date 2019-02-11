@@ -35,6 +35,7 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 
 <liferay-frontend:edit-form
 	action="<%= editArticleActionURL %>"
+	cssClass="contextual-sidebar-content"
 	enctype="multipart/form-data"
 	method="post"
 	name="fm1"
@@ -61,6 +62,14 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 	<aui:input name="workflowAction" type="hidden" value="<%= String.valueOf(WorkflowConstants.ACTION_SAVE_DRAFT) %>" />
 
 	<liferay-frontend:edit-form-body>
+		<c:if test="<%= journalWebConfiguration.changeableDefaultLanguage() %>">
+			<soy:component-renderer
+				context="<%= journalEditArticleDisplayContext.getChangeDefaultLanguageSoyContext() %>"
+				module="js/ChangeDefaultLanguage.es"
+				templateNamespace="com.liferay.journal.web.ChangeDefaultLanguage.render"
+			/>
+		</c:if>
+
 		<liferay-ui:error exception="<%= ArticleContentSizeException.class %>" message="you-have-exceeded-the-maximum-web-content-size-allowed" />
 		<liferay-ui:error exception="<%= ArticleFriendlyURLException.class %>" message="you-must-define-a-friendly-url-for-default-language" />
 		<liferay-ui:error exception="<%= DuplicateFileEntryException.class %>" message="a-file-with-that-name-already-exists" />
@@ -121,19 +130,17 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 			</c:if>
 		</c:if>
 
-		<c:if test="<%= journalWebConfiguration.changeableDefaultLanguage() %>">
-			<soy:component-renderer
-				context="<%= journalEditArticleDisplayContext.getChangeDefaultLanguageSoyContext() %>"
-				module="js/ChangeDefaultLanguage.es"
-				templateNamespace="com.liferay.journal.web.ChangeDefaultLanguage.render"
-			/>
-		</c:if>
+		<liferay-util:include page="/article/content.jsp" servletContext="<%= application %>" />
 
-		<liferay-frontend:form-navigator
-			formModelBean="<%= article %>"
-			id="<%= FormNavigatorConstants.FORM_NAVIGATOR_ID_JOURNAL %>"
-			showButtons="<%= false %>"
-		/>
+		<div class="contextual-sidebar contextual-sidebar-visible edit-article-sidebar sidebar-light">
+			<div class="sidebar-body">
+				<liferay-frontend:form-navigator
+					formModelBean="<%= article %>"
+					id="<%= FormNavigatorConstants.FORM_NAVIGATOR_ID_JOURNAL %>"
+					showButtons="<%= false %>"
+				/>
+			</div>
+		</div>
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>

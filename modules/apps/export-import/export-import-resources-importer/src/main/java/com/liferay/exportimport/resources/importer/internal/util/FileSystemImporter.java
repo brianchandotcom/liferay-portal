@@ -1776,7 +1776,7 @@ public class FileSystemImporter extends BaseImporter {
 		return content;
 	}
 
-	protected void resetLayoutColumns(Layout layout) {
+	protected void resetLayoutColumns(Layout layout) throws PortalException {
 		UnicodeProperties typeSettings = layout.getTypeSettingsProperties();
 
 		Set<Map.Entry<String, String>> set = typeSettings.entrySet();

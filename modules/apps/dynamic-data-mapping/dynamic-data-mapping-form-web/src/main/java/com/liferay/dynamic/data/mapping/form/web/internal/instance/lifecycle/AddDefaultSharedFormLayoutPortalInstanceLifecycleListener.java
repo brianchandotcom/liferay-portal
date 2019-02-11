@@ -229,7 +229,7 @@ public class AddDefaultSharedFormLayoutPortalInstanceLifecycleListener
 			role.getRoleId(), ActionKeys.VIEW);
 	}
 
-	protected void verifyLayout(Layout layout) {
+	protected void verifyLayout(Layout layout) throws PortalException {
 		if (StringUtil.equals(
 				layout.getType(),
 				DDMFormPortletLayoutTypeConstants.LAYOUT_TYPE)) {

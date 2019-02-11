@@ -247,7 +247,6 @@ class FragmentEntryLinkContent extends Component {
 						fragmentEntryLinkId: this.fragmentEntryLinkId,
 						languageId: this.languageId,
 						portletNamespace: this.portletNamespace,
-						segmentId: this.segmentId,
 
 						processorsOptions: {
 							defaultEditorConfiguration,

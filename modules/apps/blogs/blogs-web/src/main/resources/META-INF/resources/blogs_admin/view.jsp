@@ -18,11 +18,6 @@
 
 <%
 final String navigation = ParamUtil.getString(request, "navigation", "entries");
-
-PortletURL portletURL = renderResponse.createRenderURL();
-
-portletURL.setParameter("mvcRenderCommandName", "/blogs/view");
-portletURL.setParameter("navigation", navigation);
 %>
 
 <clay:navigation-bar

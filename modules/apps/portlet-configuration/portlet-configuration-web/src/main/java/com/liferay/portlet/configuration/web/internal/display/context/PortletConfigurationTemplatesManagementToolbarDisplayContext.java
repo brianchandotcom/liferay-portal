@@ -45,7 +45,6 @@ public class PortletConfigurationTemplatesManagementToolbarDisplayContext
 			portletConfigurationTemplatesDisplayContext.
 				getArchivedSettingsSearchContainer());
 
-		_request = request;
 		_portletConfigurationTemplatesDisplayContext =
 			portletConfigurationTemplatesDisplayContext;
 	}
@@ -60,7 +59,7 @@ public class PortletConfigurationTemplatesManagementToolbarDisplayContext
 							"action", "deleteArchivedSettings");
 						dropdownItem.setIcon("trash");
 						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "delete"));
+							LanguageUtil.get(request, "delete"));
 						dropdownItem.setQuickAction(true);
 					});
 			}
@@ -110,6 +109,5 @@ public class PortletConfigurationTemplatesManagementToolbarDisplayContext
 
 	private final PortletConfigurationTemplatesDisplayContext
 		_portletConfigurationTemplatesDisplayContext;
-	private final HttpServletRequest _request;
 
 }

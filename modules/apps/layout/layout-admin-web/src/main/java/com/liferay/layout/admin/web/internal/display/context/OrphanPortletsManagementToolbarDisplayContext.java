@@ -43,7 +43,6 @@ public class OrphanPortletsManagementToolbarDisplayContext
 			liferayPortletRequest, liferayPortletResponse, request,
 			orphanPortletsDisplayContext.getOrphanPortletsSearchContainer());
 
-		_request = request;
 		_orphanPortletsDisplayContext = orphanPortletsDisplayContext;
 	}
 
@@ -56,7 +55,7 @@ public class OrphanPortletsManagementToolbarDisplayContext
 						dropdownItem.putData("action", "deleteOrphanPortlets");
 						dropdownItem.setIcon("times-circle");
 						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "delete"));
+							LanguageUtil.get(request, "delete"));
 						dropdownItem.setQuickAction(true);
 					});
 			}
@@ -97,6 +96,5 @@ public class OrphanPortletsManagementToolbarDisplayContext
 	}
 
 	private final OrphanPortletsDisplayContext _orphanPortletsDisplayContext;
-	private final HttpServletRequest _request;
 
 }

@@ -60,13 +60,12 @@ public class UserGroupsManagementToolbarDisplayContext
 			liferayPortletRequest, liferayPortletResponse, request,
 			userGroupsDisplayContext.getUserGroupSearchContainer());
 
-		_request = request;
 		_userGroupsDisplayContext = userGroupsDisplayContext;
 	}
 
 	@Override
 	public List<DropdownItem> getActionDropdownItems() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		return new DropdownItemList() {
@@ -77,7 +76,7 @@ public class UserGroupsManagementToolbarDisplayContext
 							"action", "deleteSelectedUserGroups");
 						dropdownItem.setIcon("times-circle");
 						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "delete"));
+							LanguageUtil.get(request, "delete"));
 						dropdownItem.setQuickAction(true);
 					});
 
@@ -113,7 +112,7 @@ public class UserGroupsManagementToolbarDisplayContext
 									dropdownItem.setIcon("add-role");
 									dropdownItem.setLabel(
 										LanguageUtil.get(
-											_request, "assign-site-roles"));
+											request, "assign-site-roles"));
 									dropdownItem.setQuickAction(true);
 								}));
 
@@ -121,7 +120,7 @@ public class UserGroupsManagementToolbarDisplayContext
 
 						if (role != null) {
 							String label = LanguageUtil.format(
-								_request, "remove-site-role-x",
+								request, "remove-site-role-x",
 								role.getTitle(themeDisplay.getLocale()), false);
 
 							add(
@@ -131,7 +130,7 @@ public class UserGroupsManagementToolbarDisplayContext
 									dropdownItem.putData(
 										"message",
 										LanguageUtil.format(
-											_request,
+											request,
 											"are-you-sure-you-want-to-remove-" +
 												"x-role-to-selected-user-" +
 													"groups",
@@ -201,7 +200,7 @@ public class UserGroupsManagementToolbarDisplayContext
 
 	@Override
 	public List<LabelItem> getFilterLabelItems() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		Role role = _userGroupsDisplayContext.getRole();
@@ -237,7 +236,7 @@ public class UserGroupsManagementToolbarDisplayContext
 
 		portletURL.setParameter(
 			ActionRequest.ACTION_NAME, "changeDisplayStyle");
-		portletURL.setParameter("redirect", PortalUtil.getCurrentURL(_request));
+		portletURL.setParameter("redirect", PortalUtil.getCurrentURL(request));
 
 		return new ViewTypeItemList(
 			portletURL, _userGroupsDisplayContext.getDisplayStyle()) {
@@ -252,7 +251,7 @@ public class UserGroupsManagementToolbarDisplayContext
 
 	@Override
 	public Boolean isShowCreationMenu() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		try {
@@ -272,7 +271,7 @@ public class UserGroupsManagementToolbarDisplayContext
 
 	@Override
 	protected List<DropdownItem> getFilterNavigationDropdownItems() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		return new DropdownItemList() {
@@ -284,8 +283,7 @@ public class UserGroupsManagementToolbarDisplayContext
 						dropdownItem.setHref(
 							getPortletURL(), "navigation", "all", "roleId",
 							"0");
-						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "all"));
+						dropdownItem.setLabel(LanguageUtil.get(request, "all"));
 					});
 
 				add(
@@ -315,7 +313,7 @@ public class UserGroupsManagementToolbarDisplayContext
 								"viewRoleURL", viewRoleURL.toString());
 
 							dropdownItem.setLabel(
-								LanguageUtil.get(_request, "roles"));
+								LanguageUtil.get(request, "roles"));
 						}));
 			}
 		};
@@ -337,7 +335,6 @@ public class UserGroupsManagementToolbarDisplayContext
 		return selectURL.toString();
 	}
 
-	private final HttpServletRequest _request;
 	private final UserGroupsDisplayContext _userGroupsDisplayContext;
 
 }

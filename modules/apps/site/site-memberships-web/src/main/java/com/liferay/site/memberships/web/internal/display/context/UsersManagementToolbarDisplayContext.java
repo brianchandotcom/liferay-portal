@@ -59,13 +59,12 @@ public class UsersManagementToolbarDisplayContext
 			liferayPortletRequest, liferayPortletResponse, request,
 			usersDisplayContext.getUserSearchContainer());
 
-		_request = request;
 		_usersDisplayContext = usersDisplayContext;
 	}
 
 	@Override
 	public List<DropdownItem> getActionDropdownItems() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		return new DropdownItemList() {
@@ -75,7 +74,7 @@ public class UsersManagementToolbarDisplayContext
 						dropdownItem.putData("action", "deleteSelectedUsers");
 						dropdownItem.setIcon("times-circle");
 						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "delete"));
+							LanguageUtil.get(request, "delete"));
 						dropdownItem.setQuickAction(true);
 					});
 
@@ -109,7 +108,7 @@ public class UsersManagementToolbarDisplayContext
 									dropdownItem.setIcon("add-role");
 									dropdownItem.setLabel(
 										LanguageUtil.get(
-											_request, "assign-site-roles"));
+											request, "assign-site-roles"));
 									dropdownItem.setQuickAction(true);
 								}));
 
@@ -117,7 +116,7 @@ public class UsersManagementToolbarDisplayContext
 
 						if (role != null) {
 							String label = LanguageUtil.format(
-								_request, "remove-site-role-x",
+								request, "remove-site-role-x",
 								role.getTitle(themeDisplay.getLocale()), false);
 
 							add(
@@ -127,7 +126,7 @@ public class UsersManagementToolbarDisplayContext
 									dropdownItem.putData(
 										"message",
 										LanguageUtil.format(
-											_request,
+											request,
 											"are-you-sure-you-want-to-remove-" +
 												"x-role-to-selected-users",
 											role.getTitle(
@@ -194,7 +193,7 @@ public class UsersManagementToolbarDisplayContext
 
 	@Override
 	public List<LabelItem> getFilterLabelItems() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		Role role = _usersDisplayContext.getRole();
@@ -235,7 +234,7 @@ public class UsersManagementToolbarDisplayContext
 
 		portletURL.setParameter(
 			ActionRequest.ACTION_NAME, "changeDisplayStyle");
-		portletURL.setParameter("redirect", PortalUtil.getCurrentURL(_request));
+		portletURL.setParameter("redirect", PortalUtil.getCurrentURL(request));
 
 		return new ViewTypeItemList(
 			portletURL, _usersDisplayContext.getDisplayStyle()) {
@@ -251,7 +250,7 @@ public class UsersManagementToolbarDisplayContext
 
 	@Override
 	public Boolean isShowCreationMenu() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		try {
@@ -276,7 +275,7 @@ public class UsersManagementToolbarDisplayContext
 
 	@Override
 	protected List<DropdownItem> getFilterNavigationDropdownItems() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		return new DropdownItemList() {
@@ -288,8 +287,7 @@ public class UsersManagementToolbarDisplayContext
 						dropdownItem.setHref(
 							getPortletURL(), "navigation", "all", "roleId",
 							"0");
-						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "all"));
+						dropdownItem.setLabel(LanguageUtil.get(request, "all"));
 					});
 
 				add(
@@ -319,7 +317,7 @@ public class UsersManagementToolbarDisplayContext
 							dropdownItem.setActive(
 								Objects.equals(getNavigation(), "roles"));
 							dropdownItem.setLabel(
-								LanguageUtil.get(_request, "roles"));
+								LanguageUtil.get(request, "roles"));
 						}));
 			}
 		};
@@ -341,7 +339,6 @@ public class UsersManagementToolbarDisplayContext
 		return selectURL.toString();
 	}
 
-	private final HttpServletRequest _request;
 	private final UsersDisplayContext _usersDisplayContext;
 
 }

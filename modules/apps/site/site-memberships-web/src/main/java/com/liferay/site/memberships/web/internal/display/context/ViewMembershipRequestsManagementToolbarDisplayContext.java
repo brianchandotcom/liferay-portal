@@ -46,7 +46,6 @@ public class ViewMembershipRequestsManagementToolbarDisplayContext
 			viewMembershipRequestsDisplayContext.
 				getSiteMembershipSearchContainer());
 
-		_request = request;
 		_viewMembershipRequestsDisplayContext =
 			viewMembershipRequestsDisplayContext;
 	}
@@ -67,7 +66,7 @@ public class ViewMembershipRequestsManagementToolbarDisplayContext
 
 		portletURL.setParameter(
 			ActionRequest.ACTION_NAME, "changeDisplayStyle");
-		portletURL.setParameter("redirect", PortalUtil.getCurrentURL(_request));
+		portletURL.setParameter("redirect", PortalUtil.getCurrentURL(request));
 
 		return new ViewTypeItemList(
 			portletURL,
@@ -97,7 +96,6 @@ public class ViewMembershipRequestsManagementToolbarDisplayContext
 		return new String[] {"date"};
 	}
 
-	private final HttpServletRequest _request;
 	private final ViewMembershipRequestsDisplayContext
 		_viewMembershipRequestsDisplayContext;
 

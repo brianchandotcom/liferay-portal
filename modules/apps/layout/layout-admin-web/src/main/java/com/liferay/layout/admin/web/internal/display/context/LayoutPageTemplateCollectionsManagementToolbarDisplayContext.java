@@ -41,8 +41,6 @@ public class LayoutPageTemplateCollectionsManagementToolbarDisplayContext
 		super(
 			liferayPortletRequest, liferayPortletResponse, request,
 			layoutPageTemplateCollectionsDisplayContext.getSearchContainer());
-
-		_request = request;
 	}
 
 	@Override
@@ -56,7 +54,7 @@ public class LayoutPageTemplateCollectionsManagementToolbarDisplayContext
 
 	@Override
 	public String getSearchActionURL() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		PortletURL searchActionURL = liferayPortletResponse.createRenderURL();
@@ -83,7 +81,5 @@ public class LayoutPageTemplateCollectionsManagementToolbarDisplayContext
 	protected String[] getOrderByKeys() {
 		return new String[] {"create-date", "name"};
 	}
-
-	private final HttpServletRequest _request;
 
 }

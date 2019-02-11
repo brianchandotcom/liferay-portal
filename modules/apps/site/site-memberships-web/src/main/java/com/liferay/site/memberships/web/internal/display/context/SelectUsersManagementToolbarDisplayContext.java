@@ -45,7 +45,6 @@ public class SelectUsersManagementToolbarDisplayContext
 			liferayPortletRequest, liferayPortletResponse, request,
 			selectUsersDisplayContext.getUserSearchContainer());
 
-		_request = request;
 		_selectUsersDisplayContext = selectUsersDisplayContext;
 	}
 
@@ -81,7 +80,7 @@ public class SelectUsersManagementToolbarDisplayContext
 
 		portletURL.setParameter(
 			ActionRequest.ACTION_NAME, "changeDisplayStyle");
-		portletURL.setParameter("redirect", PortalUtil.getCurrentURL(_request));
+		portletURL.setParameter("redirect", PortalUtil.getCurrentURL(request));
 
 		return new ViewTypeItemList(
 			portletURL, _selectUsersDisplayContext.getDisplayStyle()) {
@@ -105,7 +104,6 @@ public class SelectUsersManagementToolbarDisplayContext
 		return new String[] {"first-name", "screen-name"};
 	}
 
-	private final HttpServletRequest _request;
 	private final SelectUsersDisplayContext _selectUsersDisplayContext;
 
 }

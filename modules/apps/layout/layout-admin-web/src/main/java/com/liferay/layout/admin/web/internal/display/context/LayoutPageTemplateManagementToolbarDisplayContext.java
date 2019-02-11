@@ -50,7 +50,6 @@ public class LayoutPageTemplateManagementToolbarDisplayContext
 			layoutPageTemplateDisplayContext.
 				getLayoutPageTemplateEntriesSearchContainer());
 
-		_request = request;
 		_layoutPageTemplateDisplayContext = layoutPageTemplateDisplayContext;
 
 		_themeDisplay = (ThemeDisplay)request.getAttribute(
@@ -67,7 +66,7 @@ public class LayoutPageTemplateManagementToolbarDisplayContext
 							"action", "deleteLayoutPageTemplateEntries");
 						dropdownItem.setIcon("times-circle");
 						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "delete"));
+							LanguageUtil.get(request, "delete"));
 						dropdownItem.setQuickAction(true);
 					});
 			}
@@ -101,8 +100,7 @@ public class LayoutPageTemplateManagementToolbarDisplayContext
 							_getAddLayoutPageTemplateEntryURL());
 						dropdownItem.setHref("#");
 						dropdownItem.setLabel(
-							LanguageUtil.get(
-								_request, "content-page-template"));
+							LanguageUtil.get(request, "content-page-template"));
 					});
 
 				addPrimaryDropdownItem(
@@ -113,7 +111,7 @@ public class LayoutPageTemplateManagementToolbarDisplayContext
 							"addPageTemplateURL", _getAddLayoutPrototypeURL());
 						dropdownItem.setHref("#");
 						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "widget-page-template"));
+							LanguageUtil.get(request, "widget-page-template"));
 					});
 			}
 		};
@@ -188,7 +186,6 @@ public class LayoutPageTemplateManagementToolbarDisplayContext
 
 	private final LayoutPageTemplateDisplayContext
 		_layoutPageTemplateDisplayContext;
-	private final HttpServletRequest _request;
 	private final ThemeDisplay _themeDisplay;
 
 }

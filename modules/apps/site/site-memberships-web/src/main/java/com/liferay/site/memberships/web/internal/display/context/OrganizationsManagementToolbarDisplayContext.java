@@ -55,7 +55,6 @@ public class OrganizationsManagementToolbarDisplayContext
 			liferayPortletRequest, liferayPortletResponse, request,
 			organizationsDisplayContext.getOrganizationSearchContainer());
 
-		_request = request;
 		_organizationsDisplayContext = organizationsDisplayContext;
 	}
 
@@ -69,7 +68,7 @@ public class OrganizationsManagementToolbarDisplayContext
 							"action", "deleteSelectedOrganizations");
 						dropdownItem.setIcon("times-circle");
 						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "delete"));
+							LanguageUtil.get(request, "delete"));
 						dropdownItem.setQuickAction(true);
 					});
 			}
@@ -134,7 +133,7 @@ public class OrganizationsManagementToolbarDisplayContext
 
 		portletURL.setParameter(
 			ActionRequest.ACTION_NAME, "changeDisplayStyle");
-		portletURL.setParameter("redirect", PortalUtil.getCurrentURL(_request));
+		portletURL.setParameter("redirect", PortalUtil.getCurrentURL(request));
 
 		return new ViewTypeItemList(
 			portletURL, _organizationsDisplayContext.getDisplayStyle()) {
@@ -150,7 +149,7 @@ public class OrganizationsManagementToolbarDisplayContext
 
 	@Override
 	public Boolean isShowCreationMenu() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		try {
@@ -184,6 +183,5 @@ public class OrganizationsManagementToolbarDisplayContext
 	}
 
 	private final OrganizationsDisplayContext _organizationsDisplayContext;
-	private final HttpServletRequest _request;
 
 }

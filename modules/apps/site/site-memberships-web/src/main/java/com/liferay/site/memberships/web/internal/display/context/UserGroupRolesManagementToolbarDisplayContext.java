@@ -47,8 +47,6 @@ public class UserGroupRolesManagementToolbarDisplayContext
 			liferayPortletRequest, liferayPortletResponse, request,
 			userGroupRolesDisplayContext.getRoleSearchSearchContainer());
 
-		_request = request;
-
 		_userGroupRolesDisplayContext = userGroupRolesDisplayContext;
 	}
 
@@ -84,7 +82,7 @@ public class UserGroupRolesManagementToolbarDisplayContext
 
 		portletURL.setParameter(
 			ActionRequest.ACTION_NAME, "changeDisplayStyle");
-		portletURL.setParameter("redirect", PortalUtil.getCurrentURL(_request));
+		portletURL.setParameter("redirect", PortalUtil.getCurrentURL(request));
 
 		return new ViewTypeItemList(
 			portletURL, _userGroupRolesDisplayContext.getDisplayStyle()) {
@@ -108,7 +106,6 @@ public class UserGroupRolesManagementToolbarDisplayContext
 		return new String[] {"title"};
 	}
 
-	private final HttpServletRequest _request;
 	private final UserGroupRolesDisplayContext _userGroupRolesDisplayContext;
 
 }

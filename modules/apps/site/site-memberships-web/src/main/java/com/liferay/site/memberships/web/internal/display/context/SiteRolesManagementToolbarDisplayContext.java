@@ -47,7 +47,6 @@ public class SiteRolesManagementToolbarDisplayContext
 			liferayPortletRequest, liferayPortletResponse, request,
 			siteRolesDisplayContext.getRoleSearchSearchContainer());
 
-		_request = request;
 		_siteRolesDisplayContext = siteRolesDisplayContext;
 	}
 
@@ -83,7 +82,7 @@ public class SiteRolesManagementToolbarDisplayContext
 
 		portletURL.setParameter(
 			ActionRequest.ACTION_NAME, "changeDisplayStyle");
-		portletURL.setParameter("redirect", PortalUtil.getCurrentURL(_request));
+		portletURL.setParameter("redirect", PortalUtil.getCurrentURL(request));
 
 		return new ViewTypeItemList(
 			portletURL, _siteRolesDisplayContext.getDisplayStyle()) {
@@ -107,7 +106,6 @@ public class SiteRolesManagementToolbarDisplayContext
 		return new String[] {"title"};
 	}
 
-	private final HttpServletRequest _request;
 	private final SiteRolesDisplayContext _siteRolesDisplayContext;
 
 }

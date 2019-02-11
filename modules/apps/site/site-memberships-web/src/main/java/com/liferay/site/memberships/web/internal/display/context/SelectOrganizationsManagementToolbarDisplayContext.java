@@ -46,7 +46,6 @@ public class SelectOrganizationsManagementToolbarDisplayContext
 			liferayPortletRequest, liferayPortletResponse, request,
 			selectOrganizationsDisplayContext.getOrganizationSearchContainer());
 
-		_request = request;
 		_selectOrganizationsDisplayContext = selectOrganizationsDisplayContext;
 	}
 
@@ -82,7 +81,7 @@ public class SelectOrganizationsManagementToolbarDisplayContext
 
 		portletURL.setParameter(
 			ActionRequest.ACTION_NAME, "changeDisplayStyle");
-		portletURL.setParameter("redirect", PortalUtil.getCurrentURL(_request));
+		portletURL.setParameter("redirect", PortalUtil.getCurrentURL(request));
 
 		return new ViewTypeItemList(
 			portletURL, _selectOrganizationsDisplayContext.getDisplayStyle()) {
@@ -106,7 +105,6 @@ public class SelectOrganizationsManagementToolbarDisplayContext
 		return new String[] {"name", "type"};
 	}
 
-	private final HttpServletRequest _request;
 	private final SelectOrganizationsDisplayContext
 		_selectOrganizationsDisplayContext;
 

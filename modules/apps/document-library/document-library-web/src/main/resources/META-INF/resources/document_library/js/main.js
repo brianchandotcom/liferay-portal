@@ -92,12 +92,6 @@ AUI.add(
 							eventHandles.push(A.getDoc().once('dragenter', instance._plugUpload, instance, config));
 						}
 
-						Liferay.componentReady('entriesManagementToolbar').then(
-							function(managementToolbar) {
-								eventHandles.push(managementToolbar.on(['selectPageCheckboxChanged'], instance._handleSelectPageCheckboxChanged.bind(instance)));
-							}
-						);
-
 						instance._eventHandles = eventHandles;
 					},
 
@@ -196,21 +190,6 @@ AUI.add(
 						else {
 							instance._selectedFileEntries = [];
 						}
-
-						instance._isSelectAllChecked = false;
-					},
-
-					_handleSelectPageCheckboxChanged: function(event) {
-						var instance = this;
-
-						var checked = event.data.checked;
-
-						setTimeout(
-							function() {
-								instance._isSelectAllChecked = checked;
-							},
-							100
-						);
 					},
 
 					_moveToFolder: function(obj) {
@@ -273,6 +252,8 @@ AUI.add(
 						var form = instance.get('form').node;
 						var namespace = instance.NS;
 
+						var bulkSelection = instance._searchContainer.select && instance._searchContainer.select.get('bulkSelection');
+
 						if (!editTagsComponent) {
 							var urlTags = themeDisplay.getPortalURL() + '/o/bulk/asset/tags/' + instance.get('classNameId') + '/common';
 							var urlUpdateTags = themeDisplay.getPortalURL() + '/o/bulk/asset/tags/' + instance.get('classNameId');
@@ -286,7 +267,7 @@ AUI.add(
 											folderId: instance.getFolderId(),
 											portletNamespace: namespace,
 											repositoryId: parseFloat(form.get(namespace + 'repositoryId').val()),
-											selectAll: instance._isSelectAllChecked,
+											selectAll: bulkSelection,
 											spritemap: themeDisplay.getPathThemeImages() + '/lexicon/icons.svg',
 											urlTags: urlTags,
 											urlUpdateTags: urlUpdateTags
@@ -298,7 +279,7 @@ AUI.add(
 						}
 						else {
 							editTagsComponent.fileEntries = instance._selectedFileEntries;
-							editTagsComponent.selectAll = instance._isSelectAllChecked;
+							editTagsComponent.selectAll = bulkSelection;
 							editTagsComponent.folderId = instance.getFolderId();
 							editTagsComponent.open();
 						}

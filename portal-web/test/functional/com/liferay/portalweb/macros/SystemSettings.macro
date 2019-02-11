@@ -16,6 +16,14 @@ definition {
 		SystemSettings.saveConfiguration();
 	}
 
+	macro deleteConfiguration {
+		Click.waitForMenuToggleJSClick(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
+
+		MenuItem.click(menuItem = "Delete");
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro editSecurityCredential {
 		Type(
 			locator1 = "SystemSettings#SECURITY_CREDENTIAL_FIELD",
@@ -74,6 +82,13 @@ definition {
 		AssertElementPresent(
 			locator1 = "Header#H2_TITLE",
 			key_title = "${configurationName}"
+		);
+	}
+
+	macro gotoConfigurationEntry {
+		Click(
+			locator1 = "SystemSettings#CONFIGURATION_ENTRY",
+			key_configurationEntry = "${configurationEntry}"
 		);
 	}
 

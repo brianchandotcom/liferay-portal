@@ -237,7 +237,7 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 			<span class="heading-text"><liferay-ui:message key="organization-roles" /></span>
 		</span>
 
-		<c:if test="<%= !portletName.equals(myAccountPortletId) %>">
+		<c:if test="<%= !portletName.equals(myAccountPortletId) && (!organizations.isEmpty() || !organizationRoles.isEmpty()) %>">
 			<span class="autofit-col">
 				<span class="heading-end">
 					<liferay-ui:icon
@@ -435,7 +435,7 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 			<span class="heading-text"><liferay-ui:message key="site-roles" /></span>
 		</span>
 
-		<c:if test="<%= !portletName.equals(myAccountPortletId) %>">
+		<c:if test="<%= !portletName.equals(myAccountPortletId) && (!groups.isEmpty() || !siteRoles.isEmpty()) %>">
 			<span class="autofit-col">
 				<span class="heading-end">
 					<liferay-ui:icon

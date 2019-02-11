@@ -37,12 +37,10 @@ import org.jboss.arquillian.core.api.annotation.Inject;
 public class ContainerImpl implements Container {
 
 	public ContainerImpl(
-		String name, DeployableContainer<?> deployableContainer,
-		ContainerDef containerDef) {
+		String name, DeployableContainer<?> deployableContainer) {
 
 		_name = name;
 		_deployableContainer = deployableContainer;
-		_containerDef = containerDef;
 	}
 
 	@Override
@@ -52,7 +50,7 @@ public class ContainerImpl implements Container {
 
 	@Override
 	public ContainerDef getContainerConfiguration() {
-		return _containerDef;
+		return null;
 	}
 
 	@Override
@@ -74,14 +72,6 @@ public class ContainerImpl implements Container {
 	public ProtocolDef getProtocolConfiguration(
 		ProtocolDescription protocolDescription) {
 
-		for (ProtocolDef protocol : _containerDef.getProtocols()) {
-			String name = protocolDescription.getName();
-
-			if (name.equals(protocol.getType())) {
-				return protocol;
-			}
-		}
-
 		return null;
 	}
 
@@ -93,14 +83,6 @@ public class ContainerImpl implements Container {
 	@Override
 	public boolean hasProtocolConfiguration(
 		ProtocolDescription protocolDescription) {
-
-		for (ProtocolDef protocol : _containerDef.getProtocols()) {
-			String name = protocolDescription.getName();
-
-			if (name.equals(protocol.getType())) {
-				return true;
-			}
-		}
 
 		return false;
 	}
@@ -149,8 +131,6 @@ public class ContainerImpl implements Container {
 	@Override
 	public void stop() {
 	}
-
-	private final ContainerDef _containerDef;
 
 	@Inject
 	private Event<ContainerEvent> _containerEvent;

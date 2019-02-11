@@ -20,8 +20,6 @@ import com.liferay.arquillian.extension.junit.bridge.deployment.BndDeploymentDes
 
 import javax.management.MBeanServerConnection;
 
-import org.jboss.arquillian.config.descriptor.api.ContainerDef;
-import org.jboss.arquillian.config.descriptor.impl.ContainerDefImpl;
 import org.jboss.arquillian.container.spi.Container;
 import org.jboss.arquillian.container.spi.client.container.DeployableContainer;
 import org.jboss.arquillian.container.spi.client.container.DeploymentException;
@@ -126,15 +124,10 @@ public class ContainerEventController {
 	public void execute(@Observes BeforeSuite beforeSuite)
 		throws LifecycleException {
 
-		ContainerDef containerDef = new ContainerDefImpl("arquillian.xml");
-
-		containerDef.setContainerName("default");
-
 		_container = new ContainerImpl(
-			containerDef.getContainerName(),
+			"default",
 			new LiferayRemoteDeployableContainer(
-				_mBeanServerConnectionInstanceProducer),
-			containerDef);
+				_mBeanServerConnectionInstanceProducer));
 
 		Injector injector = _injectorInstance.get();
 

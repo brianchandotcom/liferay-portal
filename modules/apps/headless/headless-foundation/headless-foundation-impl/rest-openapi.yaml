@@ -36,9 +36,6 @@ components:
           type: integer
         name:
           type: string
-        self:
-          format: uri
-          type: string
         subcategories:
           items:
             $ref: "#/components/schemas/Category"
@@ -60,9 +57,6 @@ components:
         id:
           format: int64
           type: integer
-        self:
-          format: uri
-          type: string
         type:
           type: string
       type: object
@@ -86,9 +80,6 @@ components:
         keywordUsageCount:
           type: number
         name:
-          type: string
-        self:
-          format: uri
           type: string
       type: object
     Organization:
@@ -124,9 +115,6 @@ components:
             id:
               format: int64
               type: integer
-            self:
-              format: uri
-              type: string
             telephone:
               items:
                 $ref: "#/components/schemas/Phone"
@@ -163,9 +151,6 @@ components:
             id:
               format: int64
               type: integer
-            self:
-              format: uri
-              type: string
           type: object
         logo:
           format: uri
@@ -191,9 +176,6 @@ components:
           format: int64
           type: integer
           writeOnly: true
-        self:
-          format: uri
-          type: string
         services:
           description: https://www.schema.org/Service
           properties:
@@ -209,16 +191,10 @@ components:
                   type: integer
                 opens:
                   type: string
-                self:
-                  format: uri
-                  type: string
               type: object
             id:
               format: int64
               type: integer
-            self:
-              format: uri
-              type: string
             serviceType:
               type: string
           type: object
@@ -246,9 +222,6 @@ components:
           type: string
         phoneType:
           type: string
-        self:
-          format: uri
-          type: string
       type: object
     PostalAddress:
       description: https://www.schema.org/PostalAddress
@@ -265,9 +238,6 @@ components:
           format: int64
           type: integer
         postalCode:
-          type: string
-        self:
-          format: uri
           type: string
         streetAddressLine1:
           type: string
@@ -299,9 +269,6 @@ components:
         name:
           type: string
         roleType:
-          type: string
-        self:
-          format: uri
           type: string
       type: object
     UserAccount:
@@ -345,9 +312,6 @@ components:
               format: int64
               type: integer
             jabber:
-              type: string
-            self:
-              format: uri
               type: string
             skype:
               type: string
@@ -424,9 +388,6 @@ components:
             type: integer
           type: array
           writeOnly: true
-        self:
-          format: uri
-          type: string
         tasksAssignedToMe:
           items:
             format: uri
@@ -463,9 +424,6 @@ components:
           type: integer
         name:
           type: string
-        self:
-          format: uri
-          type: string
         vocabularyCategories:
           items:
             $ref: "#/components/schemas/Category"
@@ -484,9 +442,6 @@ components:
         id:
           format: int64
           type: integer
-        self:
-          format: uri
-          type: string
         url:
           type: string
         urlType:

@@ -25,9 +25,6 @@ components:
           type: string
         profileURL:
           type: string
-        self:
-          format: uri
-          type: string
       type: object
     Form:
       description: https://www.schema.org/Form
@@ -70,9 +67,6 @@ components:
           type: integer
         name:
           type: string
-        self:
-          format: uri
-          type: string
         structure:
           allOf:
             - $ref: "#/components/schemas/FormStructure"
@@ -95,9 +89,6 @@ components:
         id:
           format: int64
           type: integer
-        self:
-          format: uri
-          type: string
         sizeInBytes:
           type: number
         title:
@@ -135,9 +126,6 @@ components:
               type: integer
             name:
               type: string
-            self:
-              format: uri
-              type: string
             value:
               type: string
           type: object
@@ -152,9 +140,6 @@ components:
         id:
           format: int64
           type: integer
-        self:
-          format: uri
-          type: string
       type: object
     FormStructure:
       description: https://www.schema.org/FormStructure
@@ -201,9 +186,6 @@ components:
                           type: integer
                         label:
                           type: string
-                        self:
-                          format: uri
-                          type: string
                         value:
                           type: string
                       type: object
@@ -218,15 +200,9 @@ components:
                           type: integer
                         label:
                           type: string
-                        self:
-                          format: uri
-                          type: string
                         value:
                           type: string
                       type: object
-                    self:
-                      format: uri
-                      type: string
                   type: object
                 hasFormRules:
                   type: boolean
@@ -255,9 +231,6 @@ components:
                       type: integer
                     label:
                       type: string
-                    self:
-                      format: uri
-                      type: string
                     value:
                       type: string
                   type: object
@@ -271,9 +244,6 @@ components:
                   type: boolean
                 required:
                   type: boolean
-                self:
-                  format: uri
-                  type: string
                 showAsSwitcher:
                   type: boolean
                 showLabel:
@@ -294,9 +264,6 @@ components:
                     id:
                       format: int64
                       type: integer
-                    self:
-                      format: uri
-                      type: string
                   type: object
               type: object
             headline:
@@ -304,9 +271,6 @@ components:
             id:
               format: int64
               type: integer
-            self:
-              format: uri
-              type: string
             text:
               type: string
           type: object
@@ -314,9 +278,6 @@ components:
           format: int64
           type: integer
         name:
-          type: string
-        self:
-          format: uri
           type: string
         successPage:
           description: https://www.schema.org/FormSuccessPageSettings
@@ -328,9 +289,6 @@ components:
             id:
               format: int64
               type: integer
-            self:
-              format: uri
-              type: string
           type: object
       type: object
 info:

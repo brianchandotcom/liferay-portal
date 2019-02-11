@@ -12,9 +12,6 @@ components:
         id:
           format: int64
           type: integer
-        self:
-          format: uri
-          type: string
         text:
           type: string
       type: object
@@ -43,9 +40,6 @@ components:
           type: string
         profileURL:
           type: string
-        self:
-          format: uri
-          type: string
       type: object
     Document:
       description: https://www.schema.org/Document
@@ -62,9 +56,6 @@ components:
               format: int64
               type: integer
             resolutionName:
-              type: string
-            self:
-              format: uri
               type: string
             sizeInBytes:
               type: number
@@ -108,9 +99,6 @@ components:
           items:
             type: string
           type: array
-        self:
-          format: uri
-          type: string
         sizeInBytes:
           type: number
         title:
@@ -150,9 +138,6 @@ components:
           format: int64
           type: integer
         name:
-          type: string
-        self:
-          format: uri
           type: string
         subFolders:
           items:

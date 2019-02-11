@@ -22,9 +22,6 @@ components:
           type: string
         previousState:
           type: string
-        self:
-          format: uri
-          type: string
         state:
           type: string
         task:
@@ -83,13 +80,7 @@ components:
               type: string
             resourceType:
               type: string
-            self:
-              format: uri
-              type: string
           type: object
-        self:
-          format: uri
-          type: string
         transitions:
           items:
             type: string

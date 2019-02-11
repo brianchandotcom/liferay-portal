@@ -308,31 +308,31 @@ public class JavaTool {
 		RequestBody requestBody = operation.getRequestBody();
 
 		if (requestBody != null) {
+			JavaParameter multipartBodyJavaParameter = null;
+
 			Map<String, Content> contents = requestBody.getContent();
 
-			for (Map.Entry<String, Content> contentEntry :
-					contents.entrySet()) {
-
-				String key = contentEntry.getKey();
-
-				if (key.equals("multipart/form-data")) {
-					javaParameters.add(
-						new JavaParameter(
-							null, "multipartBody", "MultipartBody"));
-
-					return javaParameters;
+			for (Map.Entry<String, Content> entry : contents.entrySet()) {
+				if (Objects.equals(entry.getKey(), "multipart/form-data")) {
+					multipartBodyJavaParameter = new JavaParameter(
+						null, "multipartBody", "MultipartBody");
 				}
 			}
 
-			for (Content content : contents.values()) {
-				String schemaName = _getJavaParameterType(
-					null, content.getSchema());
+			if (multipartBodyJavaParameter == null) {
+				for (Content content : contents.values()) {
+					String schemaName = _getJavaParameterType(
+						null, content.getSchema());
 
-				String parameterName = StringUtil.lowerCaseFirstLetter(
-					schemaName);
+					String parameterName = StringUtil.lowerCaseFirstLetter(
+						schemaName);
 
-				javaParameters.add(
-					new JavaParameter(null, parameterName, schemaName));
+					javaParameters.add(
+						new JavaParameter(null, parameterName, schemaName));
+				}
+			}
+			else {
+				javaParameters.add(multipartBodyJavaParameter);
 			}
 		}
 

@@ -25,6 +25,8 @@ import javax.annotation.Generated;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 
+import org.apache.cxf.jaxrs.ext.multipart.MultipartBody;
+
 /**
  * @author ${configYAML.author}
  * @generated

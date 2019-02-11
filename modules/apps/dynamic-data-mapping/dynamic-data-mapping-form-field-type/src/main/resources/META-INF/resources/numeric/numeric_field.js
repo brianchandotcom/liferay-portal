@@ -135,6 +135,13 @@ AUI.add(
 						);
 					},
 
+					setValue: function(value) {
+						var instance = this;
+
+						instance.set('value', value);
+						instance._afterNumericFieldRender();
+					},
+
 					showErrorMessage: function() {
 						var instance = this;
 

@@ -125,6 +125,9 @@ public class RESTBuilder {
 				context.put("schemaName", schemaName);
 				context.put(
 					"schemaPath", CamelCaseUtil.fromCamelCase(schemaName));
+				context.put(
+					"schemaVarName",
+					StringUtil.lowerCaseFirstLetter(schemaName));
 
 				_createBaseResourceImplFile(
 					context, schemaName, versionDirName);
@@ -154,6 +157,9 @@ public class RESTBuilder {
 					context.put("schemaName", schemaName);
 					context.put(
 						"schemaPath", CamelCaseUtil.fromCamelCase(schemaName));
+					context.put(
+						"schemaVarName",
+						StringUtil.lowerCaseFirstLetter(schemaName));
 
 					_createDTOFile(context, schemaName, versionDirName);
 

@@ -17,19 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <clay:management-toolbar
-	clearResultsURL="<%= assetBrowserDisplayContext.getClearResultsURL() %>"
-	componentId="assetBrowserManagementToolbar"
-	creationMenu="<%= Validator.isNotNull(assetBrowserDisplayContext.getAddButtonURL()) ? assetBrowserDisplayContext.getCreationMenu() : null %>"
-	disabled="<%= assetBrowserDisplayContext.isDisabledManagementBar() %>"
-	filterDropdownItems="<%= assetBrowserDisplayContext.getFilterItemsDropdownItems() %>"
-	itemsTotal="<%= assetBrowserDisplayContext.getTotalItems() %>"
-	searchActionURL="<%= assetBrowserDisplayContext.getSearchActionURL() %>"
-	searchContainerId="selectAssetEntries"
-	searchFormName="searchFm"
-	selectable="<%= assetBrowserDisplayContext.isMultipleSelection() %>"
-	sortingOrder="<%= assetBrowserDisplayContext.getOrderByType() %>"
-	sortingURL="<%= assetBrowserDisplayContext.getSortingURL() %>"
-	viewTypeItems="<%= assetBrowserDisplayContext.getViewTypeItems() %>"
+	displayContext="<%= new AssetBrowserManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, assetBrowserDisplayContext) %>"
 />
 
 <aui:form action="<%= assetBrowserDisplayContext.getPortletURL() %>" cssClass="container-fluid-1280" method="post" name="selectAssetFm">

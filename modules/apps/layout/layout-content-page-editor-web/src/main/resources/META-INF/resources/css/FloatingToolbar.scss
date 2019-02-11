@@ -14,10 +14,10 @@
 
 	&-buttons {
 		display: inline-block;
+		padding: $fragmentsEditorSpacing;
 
 		& .btn {
-			margin: $fragmentsEditorSpacing / 2;
-			opacity: 0.6;
+			margin: 0 ($fragmentsEditorSpacing / 2) 0 ($fragmentsEditorSpacing / 2);
 
 			&.active {
 				background-color: rgba(0, 0, 0, 0.1);

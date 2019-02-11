@@ -123,8 +123,13 @@
 		margin-top: 1em;
 	}
 
-	.modal .edit-categories, .modal .edit-tags{
+	.modal .edit-categories, .modal .edit-tags {
+		.modal-content {
+			height: 445px;
+		}
+
 		small {
+			color: #6B6C7E;
 			padding-left: 25px;
 		}
 	}

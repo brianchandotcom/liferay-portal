@@ -375,6 +375,44 @@ paths:
                   $ref: "#/components/schemas/ContentStructure"
                 type: array
           description: ""
+  "/content-space/{content-space-id}/content-structure/{content-structure-id}/structured-contents":
+    get:
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+        - in: query
+          name: per_page
+          schema:
+            type: integer
+        - in: path
+          name: content-space-id
+          required: true
+          schema:
+            format: int64
+            type: integer
+        - in: header
+          name: Accept-Language
+          schema:
+            type: string
+        - in: query
+          name: filter
+          schema:
+            type: string
+        - in: query
+          name: sort
+          schema:
+            type: string
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: "#/components/schemas/StructuredContent"
+                type: array
+          description: ""
   "/content-space/{content-space-id}/structured-contents":
     get:
       parameters:

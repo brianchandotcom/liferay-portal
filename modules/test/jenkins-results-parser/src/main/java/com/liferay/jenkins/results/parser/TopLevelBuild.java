@@ -360,7 +360,9 @@ public class TopLevelBuild extends BaseBuild {
 
 		_updateDuration = System.currentTimeMillis() - start;
 
-		sendBuildMetricsOnModifiedBuilds();
+		if (_sendBuildMetrics) {
+			sendBuildMetricsOnModifiedBuilds();
+		}
 	}
 
 	protected TopLevelBuild(String url) {

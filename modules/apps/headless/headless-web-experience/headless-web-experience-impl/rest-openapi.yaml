@@ -511,7 +511,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/Creator"
           description: ""
-  "/structured-contents/{structured-contents-id}":
+  "/structured-content/{structured-contents-id}":
     delete:
       parameters:
         - in: path

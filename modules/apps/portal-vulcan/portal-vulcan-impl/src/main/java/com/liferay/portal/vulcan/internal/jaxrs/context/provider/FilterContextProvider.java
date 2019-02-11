@@ -23,11 +23,14 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParser;
+import com.liferay.portal.odata.filter.FilterParserProvider;
+import com.liferay.portal.odata.filter.expression.ExpressionVisitException;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.internal.accept.language.AcceptLanguageImpl;
 
 import javax.servlet.http.HttpServletRequest;
 
+import javax.ws.rs.BadRequestException;
 import javax.ws.rs.ServerErrorException;
 import javax.ws.rs.ext.Provider;
 
@@ -44,17 +47,22 @@ public class FilterContextProvider implements ContextProvider<Filter> {
 
 	public FilterContextProvider(
 		BundleContext bundleContext,
-		ExpressionConvert<Filter> expressionConvert, Portal portal) {
+		ExpressionConvert<Filter> expressionConvert, Portal portal,
+		FilterParserProvider filterParserProvider) {
 
 		_bundleContext = bundleContext;
 		_expressionConvert = expressionConvert;
 		_portal = portal;
+		_filterParserProvider = filterParserProvider;
 	}
 
 	@Override
 	public Filter createContext(Message message) {
 		try {
 			return _createContext(message);
+		}
+		catch (ExpressionVisitException eve) {
+			throw new BadRequestException(eve.getMessage(), eve);
 		}
 		catch (Exception e) {
 			throw new ServerErrorException(500, e);
@@ -75,24 +83,18 @@ public class FilterContextProvider implements ContextProvider<Filter> {
 			return null;
 		}
 
-		String oDataEntityModelName =
-			ContextProviderUtil.getODataEntityModelName(message);
+		EntityModel entityModel = ContextProviderUtil.getEntityModel(
+			_bundleContext, message);
+
+		if (entityModel == null) {
+			return null;
+		}
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("OData entity model name: " + oDataEntityModelName);
+			_log.debug("OData entity model name: " + entityModel.getName());
 		}
 
-		if (oDataEntityModelName == null) {
-			return null;
-		}
-
-		FilterParser filterParser =
-			ContextProviderUtil.getODataEntityModelService(
-				_bundleContext, FilterParser.class, oDataEntityModelName);
-
-		if (filterParser == null) {
-			return null;
-		}
+		FilterParser filterParser = _filterParserProvider.provide(entityModel);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("OData filter parser: " + filterParser);
@@ -106,16 +108,8 @@ public class FilterContextProvider implements ContextProvider<Filter> {
 			_log.debug("OData filter: " + oDataFilter);
 		}
 
-		EntityModel entityModel =
-			ContextProviderUtil.getODataEntityModelService(
-				_bundleContext, EntityModel.class, oDataEntityModelName);
-
 		if (_log.isDebugEnabled()) {
 			_log.debug("Entity model: " + entityModel);
-		}
-
-		if (entityModel == null) {
-			return null;
 		}
 
 		AcceptLanguage acceptLanguage = new AcceptLanguageImpl(
@@ -137,6 +131,7 @@ public class FilterContextProvider implements ContextProvider<Filter> {
 
 	private final BundleContext _bundleContext;
 	private final ExpressionConvert<Filter> _expressionConvert;
+	private final FilterParserProvider _filterParserProvider;
 	private final Portal _portal;
 
 }

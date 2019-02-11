@@ -20,8 +20,10 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.odata.sort.SortField;
 import com.liferay.portal.odata.sort.SortParser;
+import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.internal.accept.language.AcceptLanguageImpl;
 
@@ -43,9 +45,13 @@ import org.osgi.framework.BundleContext;
 @Provider
 public class SortContextProvider implements ContextProvider<Sort[]> {
 
-	public SortContextProvider(BundleContext bundleContext, Portal portal) {
+	public SortContextProvider(
+		BundleContext bundleContext, Portal portal,
+		SortParserProvider sortParserProvider) {
+
 		_bundleContext = bundleContext;
 		_portal = portal;
+		_sortParserProvider = sortParserProvider;
 	}
 
 	@Override
@@ -72,19 +78,18 @@ public class SortContextProvider implements ContextProvider<Sort[]> {
 			return null;
 		}
 
-		String oDataEntityModelName =
-			ContextProviderUtil.getODataEntityModelName(message);
+		EntityModel entityModel = ContextProviderUtil.getEntityModel(
+			_bundleContext, message);
 
-		if (_log.isDebugEnabled()) {
-			_log.debug("OData entity model name: " + oDataEntityModelName);
-		}
-
-		if (oDataEntityModelName == null) {
+		if (entityModel == null) {
 			return null;
 		}
 
-		SortParser sortParser = ContextProviderUtil.getODataEntityModelService(
-			_bundleContext, SortParser.class, oDataEntityModelName);
+		if (_log.isDebugEnabled()) {
+			_log.debug("OData entity model name: " + entityModel.getName());
+		}
+
+		SortParser sortParser = _sortParserProvider.provide(entityModel);
 
 		if (sortParser == null) {
 			return null;
@@ -126,5 +131,6 @@ public class SortContextProvider implements ContextProvider<Sort[]> {
 
 	private final BundleContext _bundleContext;
 	private final Portal _portal;
+	private final SortParserProvider _sortParserProvider;
 
 }

@@ -17,6 +17,8 @@ package com.liferay.portal.vulcan.internal.jaxrs.feature;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.odata.filter.ExpressionConvert;
+import com.liferay.portal.odata.filter.FilterParserProvider;
+import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.vulcan.internal.jaxrs.context.provider.AcceptLanguageContextProvider;
 import com.liferay.portal.vulcan.internal.jaxrs.context.provider.CompanyContextProvider;
 import com.liferay.portal.vulcan.internal.jaxrs.context.provider.FilterContextProvider;
@@ -70,9 +72,11 @@ public class VulcanFeature implements Feature {
 		featureContext.register(new CompanyContextProvider(_portal));
 		featureContext.register(
 			new FilterContextProvider(
-				_bundleContext, _expressionConvert, _portal));
+				_bundleContext, _expressionConvert, _portal,
+				_filterParserProvider));
 		featureContext.register(
-			new SortContextProvider(_bundleContext, _portal));
+			new SortContextProvider(
+				_bundleContext, _portal, _sortParserProvider));
 
 		return false;
 	}
@@ -90,6 +94,12 @@ public class VulcanFeature implements Feature {
 	private ExpressionConvert<Filter> _expressionConvert;
 
 	@Reference
+	private FilterParserProvider _filterParserProvider;
+
+	@Reference
 	private Portal _portal;
+
+	@Reference
+	private SortParserProvider _sortParserProvider;
 
 }

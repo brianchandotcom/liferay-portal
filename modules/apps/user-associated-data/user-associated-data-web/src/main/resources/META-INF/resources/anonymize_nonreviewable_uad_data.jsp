@@ -33,32 +33,9 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 
 String statusLabelDone = StringUtil.toUpperCase(LanguageUtil.get(request, "done"), locale);
 String statusLabelPending = StringUtil.toUpperCase(LanguageUtil.get(request, "pending"), locale);
-
-PortletURL reviewDataURL = liferayPortletResponse.createRenderURL();
-
-reviewDataURL.setParameter("mvcRenderCommandName", "/review_uad_data");
-reviewDataURL.setParameter("p_u_i_d", String.valueOf(selectedUser.getUserId()));
 %>
 
-<clay:navigation-bar
-	navigationItems='<%=
-		new JSPNavigationItemList(pageContext) {
-			{
-				add(
-					navigationItem -> {
-						navigationItem.setActive(false);
-						navigationItem.setHref(reviewDataURL.toString());
-						navigationItem.setLabel(LanguageUtil.get(request, "review-data"));
-					});
-				add(
-					navigationItem -> {
-						navigationItem.setActive(true);
-						navigationItem.setHref(StringPool.BLANK);
-						navigationItem.setLabel(LanguageUtil.get(request, "anonymize-nonreviewable-data"));
-					});
-			}
-		} %>'
-/>
+<liferay-util:include page="/uad_data_navigation_bar.jsp" servletContext="<%= application %>" />
 
 <div class="container-fluid container-fluid-max-xl container-form-lg">
 	<aui:form method="post" name="nonreviewableUADDataForm">

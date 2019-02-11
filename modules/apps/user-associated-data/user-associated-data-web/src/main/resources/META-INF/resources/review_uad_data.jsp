@@ -32,32 +32,9 @@ backURL.setParameter("p_u_i_d", String.valueOf(selectedUser.getUserId()));
 portletDisplay.setURLBack(backURL.toString());
 
 renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", LanguageUtil.get(request, "personal-data-erasure")));
-
-PortletURL anonymizeNonreviewableDataURL = liferayPortletResponse.createRenderURL();
-
-anonymizeNonreviewableDataURL.setParameter("mvcRenderCommandName", "/anonymize_nonreviewable_uad_data");
-anonymizeNonreviewableDataURL.setParameter("p_u_i_d", String.valueOf(selectedUser.getUserId()));
 %>
 
-<clay:navigation-bar
-	navigationItems='<%=
-		new JSPNavigationItemList(pageContext) {
-			{
-				add(
-					navigationItem -> {
-						navigationItem.setActive(true);
-						navigationItem.setHref(StringPool.BLANK);
-						navigationItem.setLabel(LanguageUtil.get(request, "review-data"));
-					});
-				add(
-					navigationItem -> {
-						navigationItem.setActive(false);
-						navigationItem.setHref(anonymizeNonreviewableDataURL.toString());
-						navigationItem.setLabel(LanguageUtil.get(request, "anonymize-nonreviewable-data"));
-					});
-			}
-		} %>'
-/>
+<liferay-util:include page="/uad_data_navigation_bar.jsp" servletContext="<%= application %>" />
 
 <div class="container-fluid container-fluid-max-xl container-form-lg">
 	<div class="row">
@@ -107,7 +84,7 @@ anonymizeNonreviewableDataURL.setParameter("p_u_i_d", String.valueOf(selectedUse
 						<span class="panel-title">
 
 							<%
-								String applicationName = UADLanguageUtil.getApplicationName(viewUADEntitiesDisplay.getApplicationKey(), locale);
+							String applicationName = UADLanguageUtil.getApplicationName(viewUADEntitiesDisplay.getApplicationKey(), locale);
 							%>
 
 							<%= StringUtil.toUpperCase(applicationName, locale) %>

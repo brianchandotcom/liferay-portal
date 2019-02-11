@@ -33,5 +33,6 @@
 	showSearch="<%= dlAdminManagementToolbarDisplayContext.isShowSearch() %>"
 	sortingOrder="<%= dlAdminManagementToolbarDisplayContext.getSortingOrder() %>"
 	sortingURL="<%= String.valueOf(dlAdminManagementToolbarDisplayContext.getSortingURL()) %>"
+	supportsBulkActions="<%= true %>"
 	viewTypeItems="<%= dlAdminManagementToolbarDisplayContext.getViewTypes() %>"
 />

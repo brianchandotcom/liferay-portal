@@ -35,7 +35,7 @@ definition {
 
 		Portlet.addPG(portletName = "Language Selector");
 
-		LanguagePortlet.selectLanguagePG(locale = "iw_IL", textIcon = "עברית-ישראל");
+		LanguagePortlet.selectLanguagePG(locale = "ar_SA", textIcon = "العربية-السعودية");
 
 		ProductMenuHelper.openProductMenu();
 
@@ -54,9 +54,9 @@ definition {
 
 		WebContentNavigator.gotoAddCP();
 
-		Navigator.ensureLocaleURL(locale = "iw");
+		Navigator.ensureLocaleURL(locale = "ar");
 
-		PortletEntry.changeLocale(fieldName = "כותרת", locale = "iw_IL");
+		PortletEntry.changeLocale(fieldName = "العنوان", locale = "ar_SA");
 
 		WebContent.addCP(webContentTitle = "WC Title");
 

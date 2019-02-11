@@ -21,7 +21,8 @@ BlogEntriesDisplayContext blogEntriesDisplayContext = new BlogEntriesDisplayCont
 
 String displayStyle = blogEntriesDisplayContext.getDisplayStyle();
 SearchContainer entriesSearchContainer = blogEntriesDisplayContext.getSearchContainer();
-PortletURL portletURL = blogEntriesDisplayContext.getPortletURL();
+
+PortletURL portletURL = entriesSearchContainer.getIteratorURL();
 
 BlogEntriesManagementToolbarDisplayContext blogEntriesManagementToolbarDisplayContext = new BlogEntriesManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, entriesSearchContainer, trashHelper, displayStyle);
 %>
@@ -61,7 +62,7 @@ BlogEntriesManagementToolbarDisplayContext blogEntriesManagementToolbarDisplayCo
 			>
 				<liferay-portlet:renderURL varImpl="rowURL">
 					<portlet:param name="mvcRenderCommandName" value="/blogs/edit_entry" />
-					<portlet:param name="redirect" value="<%= entriesSearchContainer.getIteratorURL().toString() %>" />
+					<portlet:param name="redirect" value="<%= portletURL.toString() %>" />
 					<portlet:param name="entryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
 				</liferay-portlet:renderURL>
 

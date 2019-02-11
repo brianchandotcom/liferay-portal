@@ -64,16 +64,14 @@ public class BlogEntriesManagementToolbarDisplayContext
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
 		HttpServletRequest request, SearchContainer searchContainer,
-		TrashHelper trashHelper) {
+		TrashHelper trashHelper, String displayStyle) {
 
 		super(
 			liferayPortletRequest, liferayPortletResponse, request,
 			searchContainer);
 
 		_trashHelper = trashHelper;
-
-		_portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
-			liferayPortletRequest);
+		_displayStyle = displayStyle;
 	}
 
 	@Override
@@ -109,26 +107,6 @@ public class BlogEntriesManagementToolbarDisplayContext
 		};
 	}
 
-	public List<String> getAvailableActionDropdownItems(BlogsEntry blogsEntry)
-		throws PortalException {
-
-		List<String> availableActionDropdownItems = new ArrayList<>();
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		PermissionChecker permissionChecker =
-			themeDisplay.getPermissionChecker();
-
-		if (BlogsEntryPermission.contains(
-				permissionChecker, blogsEntry, ActionKeys.DELETE)) {
-
-			availableActionDropdownItems.add("deleteEntries");
-		}
-
-		return availableActionDropdownItems;
-	}
-
 	@Override
 	public CreationMenu getCreationMenu() {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
@@ -154,25 +132,6 @@ public class BlogEntriesManagementToolbarDisplayContext
 			});
 
 		return creationMenu;
-	}
-
-	public String getDisplayStyle() {
-		String displayStyle = ParamUtil.getString(request, "displayStyle");
-
-		if (Validator.isNull(displayStyle)) {
-			displayStyle = _portalPreferences.getValue(
-				BlogsPortletKeys.BLOGS_ADMIN, "entries-display-style", "icon");
-		}
-		else {
-			_portalPreferences.setValue(
-				BlogsPortletKeys.BLOGS_ADMIN, "entries-display-style",
-				displayStyle);
-
-			request.setAttribute(
-				WebKeys.SINGLE_PAGE_APPLICATION_CLEAR_CACHE, Boolean.TRUE);
-		}
-
-		return displayStyle;
 	}
 
 	@Override
@@ -255,7 +214,7 @@ public class BlogEntriesManagementToolbarDisplayContext
 				"cur", String.valueOf(searchContainer.getCur()));
 		}
 
-		return new ViewTypeItemList(portletURL, getDisplayStyle()) {
+		return new ViewTypeItemList(portletURL, _displayStyle) {
 			{
 				addCardViewTypeItem();
 
@@ -361,7 +320,7 @@ public class BlogEntriesManagementToolbarDisplayContext
 		};
 	}
 
-	private final PortalPreferences _portalPreferences;
+	private final String _displayStyle;
 	private final TrashHelper _trashHelper;
 
 }

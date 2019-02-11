@@ -14,14 +14,10 @@
 
 package com.liferay.site.item.selector.web.internal.display.context;
 
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portlet.usersadmin.search.GroupSearch;
 import com.liferay.site.item.selector.criterion.SiteItemSelectorCriterion;
-
-import java.util.List;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
@@ -33,11 +29,7 @@ import javax.portlet.PortletURL;
  */
 public interface SitesItemSelectorViewDisplayContext {
 
-	public String getClearResultsURL() throws PortletException;
-
 	public String getDisplayStyle();
-
-	public List<DropdownItem> getFilterDropdownItems();
 
 	public String getGroupName(Group group) throws PortalException;
 
@@ -45,23 +37,13 @@ public interface SitesItemSelectorViewDisplayContext {
 
 	public String getItemSelectedEventName();
 
-	public String getOrderByType();
-
 	public PortletRequest getPortletRequest();
 
 	public PortletResponse getPortletResponse();
 
 	public PortletURL getPortletURL() throws PortletException;
 
-	public String getSearchActionURL() throws PortletException;
-
 	public SiteItemSelectorCriterion getSiteItemSelectorCriterion();
-
-	public String getSortingURL() throws PortletException;
-
-	public int getTotalItems() throws Exception;
-
-	public List<ViewTypeItem> getViewTypeItems() throws PortletException;
 
 	public boolean isShowChildSitesLink();
 

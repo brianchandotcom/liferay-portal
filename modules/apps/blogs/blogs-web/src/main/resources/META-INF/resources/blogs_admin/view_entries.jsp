@@ -44,27 +44,13 @@ BlogEntriesDisplayContext blogEntriesDisplayContext = new BlogEntriesDisplayCont
 
 blogEntriesDisplayContext.populateResults(entriesSearchContainer);
 
-BlogEntriesManagementToolbarDisplayContext blogEntriesManagementToolbarDisplayContext = new BlogEntriesManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, currentURLObj, trashHelper);
+BlogEntriesManagementToolbarDisplayContext blogEntriesManagementToolbarDisplayContext = new BlogEntriesManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, entriesSearchContainer, trashHelper);
 
 String displayStyle = blogEntriesManagementToolbarDisplayContext.getDisplayStyle();
 %>
 
 <clay:management-toolbar
-	actionDropdownItems="<%= blogEntriesManagementToolbarDisplayContext.getActionDropdownItems() %>"
-	clearResultsURL="<%= blogEntriesManagementToolbarDisplayContext.getSearchActionURL() %>"
-	componentId="blogEntriesManagementToolbar"
-	creationMenu="<%= blogEntriesManagementToolbarDisplayContext.getCreationMenu() %>"
-	disabled="<%= entriesSearchContainer.getTotal() <= 0 %>"
-	filterDropdownItems="<%= blogEntriesManagementToolbarDisplayContext.getFilterDropdownItems() %>"
-	filterLabelItems="<%= blogEntriesManagementToolbarDisplayContext.getFilterLabelItems() %>"
-	itemsTotal="<%= entriesSearchContainer.getTotal() %>"
-	searchActionURL="<%= blogEntriesManagementToolbarDisplayContext.getSearchActionURL() %>"
-	searchContainerId="blogEntries"
-	searchFormName="searchFm"
-	showInfoButton="<%= false %>"
-	sortingOrder="<%= blogEntriesManagementToolbarDisplayContext.getOrderByType() %>"
-	sortingURL="<%= String.valueOf(blogEntriesManagementToolbarDisplayContext.getSortingURL()) %>"
-	viewTypeItems="<%= blogEntriesManagementToolbarDisplayContext.getViewTypes() %>"
+	displayContext="<%= blogEntriesManagementToolbarDisplayContext %>"
 />
 
 <portlet:actionURL name="/blogs/edit_entry" var="restoreTrashEntriesURL">

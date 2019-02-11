@@ -44,9 +44,9 @@ BlogEntriesDisplayContext blogEntriesDisplayContext = new BlogEntriesDisplayCont
 
 blogEntriesDisplayContext.populateResults(entriesSearchContainer);
 
-BlogEntriesManagementToolbarDisplayContext blogEntriesManagementToolbarDisplayContext = new BlogEntriesManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, entriesSearchContainer, trashHelper);
+String displayStyle = blogEntriesDisplayContext.getDisplayStyle();
 
-String displayStyle = blogEntriesManagementToolbarDisplayContext.getDisplayStyle();
+BlogEntriesManagementToolbarDisplayContext blogEntriesManagementToolbarDisplayContext = new BlogEntriesManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, entriesSearchContainer, trashHelper, displayStyle);
 %>
 
 <clay:management-toolbar
@@ -92,7 +92,7 @@ String displayStyle = blogEntriesManagementToolbarDisplayContext.getDisplayStyle
 				<%
 				Map<String, Object> rowData = new HashMap<>();
 
-				rowData.put("actions", String.join(StringPool.COMMA, blogEntriesManagementToolbarDisplayContext.getAvailableActionDropdownItems(entry)));
+				rowData.put("actions", String.join(StringPool.COMMA, blogEntriesDisplayContext.getAvailableActionDropdownItems(entry)));
 
 				row.setData(rowData);
 				%>

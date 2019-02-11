@@ -121,11 +121,13 @@ public class AnonymizeNonreviewableUADDataMVCRenderCommand
 
 		searchContainer.setId("uadApplicationSummaryDisplays");
 
-		searchContainer.setOrderByCol(_getOrderByCol(renderRequest));
-		searchContainer.setOrderByType(_getOrderByType(renderRequest));
+		searchContainer.setOrderByCol(
+			ParamUtil.getString(renderRequest, "orderByCol", "name"));
+		searchContainer.setOrderByType(
+			ParamUtil.getString(renderRequest, "orderByType", "asc"));
 
 		Predicate<UADApplicationSummaryDisplay> predicate = _getPredicate(
-			_getNavigation(renderRequest));
+			ParamUtil.getString(renderRequest, "navigation", "all"));
 
 		List<UADApplicationSummaryDisplay> uadApplicationSummaryDisplays =
 			_getUADApplicationSummaryDisplays(userId);
@@ -182,18 +184,6 @@ public class AnonymizeNonreviewableUADDataMVCRenderCommand
 		}
 
 		return comparator;
-	}
-
-	private String _getNavigation(RenderRequest renderRequest) {
-		return ParamUtil.getString(renderRequest, "navigation", "all");
-	}
-
-	private String _getOrderByCol(RenderRequest renderRequest) {
-		return ParamUtil.getString(renderRequest, "orderByCol", "name");
-	}
-
-	private String _getOrderByType(RenderRequest renderRequest) {
-		return ParamUtil.getString(renderRequest, "orderByType", "asc");
 	}
 
 	private Predicate<UADApplicationSummaryDisplay> _getPredicate(

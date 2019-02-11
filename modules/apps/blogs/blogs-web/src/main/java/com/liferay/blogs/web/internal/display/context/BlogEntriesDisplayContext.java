@@ -116,7 +116,7 @@ public class BlogEntriesDisplayContext {
 				entriesSearchContainer.getOrderByCol(),
 				entriesSearchContainer.getOrderByType()));
 
-		populateResults(entriesSearchContainer);
+		_populateResults(entriesSearchContainer);
 
 		return entriesSearchContainer;
 	}
@@ -160,7 +160,7 @@ public class BlogEntriesDisplayContext {
 		return displayStyle;
 	}
 
-	public void populateResults(SearchContainer searchContainer)
+	private void _populateResults(SearchContainer searchContainer)
 		throws PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(

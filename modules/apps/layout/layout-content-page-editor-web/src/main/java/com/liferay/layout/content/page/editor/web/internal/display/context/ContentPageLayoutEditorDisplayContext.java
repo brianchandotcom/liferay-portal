@@ -17,6 +17,7 @@ package com.liferay.layout.content.page.editor.web.internal.display.context;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.template.soy.util.SoyContext;
 import com.liferay.portal.template.soy.util.SoyContextFactoryUtil;
 import com.liferay.segments.constants.SegmentsConstants;
@@ -24,7 +25,7 @@ import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.service.SegmentsEntryServiceUtil;
 
 import java.util.List;
-import java.util.stream.Stream;
+import java.util.Objects;
 
 import javax.portlet.RenderResponse;
 
@@ -89,23 +90,20 @@ public class ContentPageLayoutEditorDisplayContext
 	}
 
 	private String _getDefaultSegmentId(List<SegmentsEntry> segmentsEntries) {
-		if ((segmentsEntries == null) || segmentsEntries.isEmpty()) {
+		if (ListUtil.isEmpty(segmentsEntries)) {
 			return StringPool.BLANK;
 		}
 
-		Stream<SegmentsEntry> stream = segmentsEntries.stream();
+		for (SegmentsEntry segmentsEntry : segmentsEntries) {
+			if (Objects.equals(
+					SegmentsConstants.KEY_DEFAULT, segmentsEntry.getKey())) {
 
-		return stream.filter(
-			segmentsEntry ->
-				SegmentsConstants.KEY_DEFAULT.equals(segmentsEntry.getKey())
-		).findFirst(
-		).map(
-			segmentsEntry -> String.valueOf(
-				_EDITABLE_VALUES_SEGMENTS_PREFIX +
-					segmentsEntry.getSegmentsEntryId())
-		).orElse(
-			StringPool.BLANK
-		);
+				return _EDITABLE_VALUES_SEGMENTS_PREFIX +
+					segmentsEntry.getSegmentsEntryId();
+			}
+		}
+
+		return StringPool.BLANK;
 	}
 
 	private List<SegmentsEntry> _getSegmentsEntries() {

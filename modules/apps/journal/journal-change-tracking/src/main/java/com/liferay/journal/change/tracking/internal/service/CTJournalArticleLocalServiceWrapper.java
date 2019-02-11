@@ -1216,16 +1216,18 @@ public class CTJournalArticleLocalServiceWrapper
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		JournalArticle journalArticle = super.updateArticle(
-			userId, groupId, folderId, articleId, version, titleMap,
-			descriptionMap, friendlyURLMap, content, ddmStructureKey,
-			ddmTemplateKey, layoutUuid, displayDateMonth, displayDateDay,
-			displayDateYear, displayDateHour, displayDateMinute,
-			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, neverExpire,
-			reviewDateMonth, reviewDateDay, reviewDateYear, reviewDateHour,
-			reviewDateMinute, neverReview, indexable, smallImage, smallImageURL,
-			smallImageFile, images, articleURL, serviceContext);
+		JournalArticle journalArticle = _ctManager.executeModelUpdate(
+			() -> super.updateArticle(
+				userId, groupId, folderId, articleId, version, titleMap,
+				descriptionMap, friendlyURLMap, content, ddmStructureKey,
+				ddmTemplateKey, layoutUuid, displayDateMonth, displayDateDay,
+				displayDateYear, displayDateHour, displayDateMinute,
+				expirationDateMonth, expirationDateDay, expirationDateYear,
+				expirationDateHour, expirationDateMinute, neverExpire,
+				reviewDateMonth, reviewDateDay, reviewDateYear, reviewDateHour,
+				reviewDateMinute, neverReview, indexable, smallImage,
+				smallImageURL, smallImageFile, images, articleURL,
+				serviceContext));
 
 		_registerChange(
 			journalArticle, CTConstants.CT_CHANGE_TYPE_MODIFICATION);
@@ -1241,9 +1243,10 @@ public class CTJournalArticleLocalServiceWrapper
 			String layoutUuid, ServiceContext serviceContext)
 		throws PortalException {
 
-		JournalArticle journalArticle = super.updateArticle(
-			userId, groupId, folderId, articleId, version, titleMap,
-			descriptionMap, content, layoutUuid, serviceContext);
+		JournalArticle journalArticle = _ctManager.executeModelUpdate(
+			() -> super.updateArticle(
+				userId, groupId, folderId, articleId, version, titleMap,
+				descriptionMap, content, layoutUuid, serviceContext));
 
 		_registerChange(
 			journalArticle, CTConstants.CT_CHANGE_TYPE_MODIFICATION);
@@ -1269,16 +1272,17 @@ public class CTJournalArticleLocalServiceWrapper
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		JournalArticle journalArticle = super.updateArticle(
-			userId, groupId, folderId, articleId, version, titleMap,
-			descriptionMap, content, ddmStructureKey, ddmTemplateKey,
-			layoutUuid, displayDateMonth, displayDateDay, displayDateYear,
-			displayDateHour, displayDateMinute, expirationDateMonth,
-			expirationDateDay, expirationDateYear, expirationDateHour,
-			expirationDateMinute, neverExpire, reviewDateMonth, reviewDateDay,
-			reviewDateYear, reviewDateHour, reviewDateMinute, neverReview,
-			indexable, smallImage, smallImageURL, smallImageFile, images,
-			articleURL, serviceContext);
+		JournalArticle journalArticle = _ctManager.executeModelUpdate(
+			() -> super.updateArticle(
+				userId, groupId, folderId, articleId, version, titleMap,
+				descriptionMap, content, ddmStructureKey, ddmTemplateKey,
+				layoutUuid, displayDateMonth, displayDateDay, displayDateYear,
+				displayDateHour, displayDateMinute, expirationDateMonth,
+				expirationDateDay, expirationDateYear, expirationDateHour,
+				expirationDateMinute, neverExpire, reviewDateMonth,
+				reviewDateDay, reviewDateYear, reviewDateHour, reviewDateMinute,
+				neverReview, indexable, smallImage, smallImageURL,
+				smallImageFile, images, articleURL, serviceContext));
 
 		_registerChange(
 			journalArticle, CTConstants.CT_CHANGE_TYPE_MODIFICATION);
@@ -1292,9 +1296,10 @@ public class CTJournalArticleLocalServiceWrapper
 			double version, String content, ServiceContext serviceContext)
 		throws PortalException {
 
-		JournalArticle journalArticle = super.updateArticle(
-			userId, groupId, folderId, articleId, version, content,
-			serviceContext);
+		JournalArticle journalArticle = _ctManager.executeModelUpdate(
+			() -> super.updateArticle(
+				userId, groupId, folderId, articleId, version, content,
+				serviceContext));
 
 		_registerChange(
 			journalArticle, CTConstants.CT_CHANGE_TYPE_MODIFICATION);
@@ -1306,7 +1311,8 @@ public class CTJournalArticleLocalServiceWrapper
 	public JournalArticle updateArticle(long id, String urlTitle)
 		throws PortalException {
 
-		JournalArticle journalArticle = super.updateArticle(id, urlTitle);
+		JournalArticle journalArticle = _ctManager.executeModelUpdate(
+			() -> super.updateArticle(id, urlTitle));
 
 		_registerChange(
 			journalArticle, CTConstants.CT_CHANGE_TYPE_MODIFICATION);

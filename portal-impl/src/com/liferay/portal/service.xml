@@ -583,7 +583,7 @@
 			<finder-column comparator="&lt;" name="size" />
 		</finder>
 	</entity>
-	<entity local-service="true" name="Layout" remote-service="true" uad-application-name="Layout" uad-dir-path="../modules/apps/layout/layout-uad/src/main/java" uad-package-path="com.liferay.layout" uuid="true">
+	<entity local-service="true" name="Layout" remote-service="true" uad-application-name="Layout" uad-dir-path="../modules/apps/layout/layout-uad/src/main/java" uad-package-path="com.liferay.layout" uuid="true" versioned="true">
 
 		<!-- PK fields -->
 

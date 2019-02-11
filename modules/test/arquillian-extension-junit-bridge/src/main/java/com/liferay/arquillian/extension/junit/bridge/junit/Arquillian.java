@@ -14,6 +14,8 @@
 
 package com.liferay.arquillian.extension.junit.bridge.junit;
 
+import com.liferay.arquillian.extension.junit.bridge.remote.extension.LoadableExtensionLoader;
+
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -30,7 +32,6 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import org.jboss.arquillian.core.api.Instance;
 import org.jboss.arquillian.core.api.annotation.Inject;
-import org.jboss.arquillian.core.impl.loadable.LoadableExtensionLoader;
 import org.jboss.arquillian.core.spi.Manager;
 import org.jboss.arquillian.core.spi.ManagerBuilder;
 import org.jboss.arquillian.core.spi.NonManagedObserver;

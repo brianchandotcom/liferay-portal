@@ -42,7 +42,6 @@ import org.jboss.arquillian.container.spi.client.container.DeployableContainer;
 import org.jboss.arquillian.container.spi.client.container.DeploymentException;
 import org.jboss.arquillian.container.spi.client.container.LifecycleException;
 import org.jboss.arquillian.container.spi.client.protocol.ProtocolDescription;
-import org.jboss.arquillian.container.spi.client.protocol.metadata.HTTPContext;
 import org.jboss.arquillian.container.spi.client.protocol.metadata.JMXContext;
 import org.jboss.arquillian.container.spi.client.protocol.metadata.ProtocolMetaData;
 import org.jboss.shrinkwrap.api.Archive;
@@ -76,10 +75,6 @@ public class LiferayRemoteDeployableContainer
 		ProtocolMetaData protocolMetaData = new ProtocolMetaData();
 
 		protocolMetaData.addContext(new JMXContext(_mBeanServerConnection));
-
-		protocolMetaData.addContext(
-			new HTTPContext(
-				_LIFERAY_DEFAULT_HTTP_HOST, _LIFERAY_DEFAULT_HTTP_PORT));
 
 		return protocolMetaData;
 	}
@@ -171,10 +166,6 @@ public class LiferayRemoteDeployableContainer
 			Files.delete(tempFilePath);
 		}
 	}
-
-	private static final String _LIFERAY_DEFAULT_HTTP_HOST = "localhost";
-
-	private static final int _LIFERAY_DEFAULT_HTTP_PORT = 8080;
 
 	private static final ObjectName _frameworkObjectName;
 	private static final Map<String, String[]> _liferayEnv =

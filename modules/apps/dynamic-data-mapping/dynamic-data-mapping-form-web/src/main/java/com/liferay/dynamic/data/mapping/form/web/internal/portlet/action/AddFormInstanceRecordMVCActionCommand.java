@@ -92,7 +92,12 @@ public class AddFormInstanceRecordMVCActionCommand
 		DDMFormInstance ddmFormInstance =
 			_ddmFormInstanceService.getFormInstance(formInstanceId);
 
-		validateCaptcha(actionRequest, ddmFormInstance);
+		try {
+			validateCaptcha(actionRequest, ddmFormInstance);
+		}
+		catch (CaptchaTextException cte) {
+			return;
+		}
 
 		DDMForm ddmForm = getDDMForm(ddmFormInstance);
 

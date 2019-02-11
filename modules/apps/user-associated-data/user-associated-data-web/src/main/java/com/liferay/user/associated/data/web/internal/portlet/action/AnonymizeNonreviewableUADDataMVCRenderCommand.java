@@ -90,7 +90,7 @@ public class AnonymizeNonreviewableUADDataMVCRenderCommand
 			}
 
 			renderRequest.setAttribute(
-				UADWebKeys.TOTAL_NONREVIEWABLE_UAD_ENTITIES_COUNT, totalCount);
+				UADWebKeys.TOTAL_UAD_ENTITIES_COUNT, totalCount);
 
 			renderRequest.setAttribute(
 				WebKeys.SEARCH_CONTAINER, searchContainer);

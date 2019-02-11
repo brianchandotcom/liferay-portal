@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-int totalReviewableUADEntitiesCount = (int)request.getAttribute(UADWebKeys.TOTAL_NONREVIEWABLE_UAD_ENTITIES_COUNT);
+int totalReviewableUADEntitiesCount = (int)request.getAttribute(UADWebKeys.TOTAL_UAD_ENTITIES_COUNT);
 SearchContainer<UADApplicationSummaryDisplay> uadApplicationSummarySearchContainer = (SearchContainer<UADApplicationSummaryDisplay>)request.getAttribute(WebKeys.SEARCH_CONTAINER);
 
 portletDisplay.setShowBackIcon(true);

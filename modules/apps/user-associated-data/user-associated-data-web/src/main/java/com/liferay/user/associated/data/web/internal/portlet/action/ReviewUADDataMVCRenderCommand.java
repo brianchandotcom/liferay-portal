@@ -143,7 +143,7 @@ public class ReviewUADDataMVCRenderCommand implements MVCRenderCommand {
 			renderRequest.setAttribute(
 				UADWebKeys.INFO_PANEL_UAD_DISPLAY, uadDisplay);
 			renderRequest.setAttribute(
-				UADWebKeys.TOTAL_REVIEWABLE_UAD_ENTITIES_COUNT,
+				UADWebKeys.TOTAL_UAD_ENTITIES_COUNT,
 				_uadApplicationSummaryHelper.getTotalReviewableUADEntitiesCount(
 					selectedUser.getUserId()));
 			renderRequest.setAttribute(

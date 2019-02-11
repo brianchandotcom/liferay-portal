@@ -112,68 +112,84 @@ GroupSearch groupSearch = siteItemSelectorViewDisplayContext.getGroupSearch();
 					<%
 					row.setCssClass("entry-card lfr-asset-item " + row.getCssClass());
 
-					Map<String, Object> linkData = new HashMap<String, Object>();
+					Map<String, Object> linkData = new HashMap<>();
 
 					linkData.put("prevent-selection", true);
+
+					SiteVerticalCard siteVerticalCard = new SiteVerticalCard(group, liferayPortletRequest);
 					%>
 
 					<liferay-ui:search-container-column-text>
 						<c:choose>
-							<c:when test="<%= Validator.isNotNull(group.getLogoURL(themeDisplay, false)) %>">
-								<liferay-frontend:vertical-card
-									imageUrl="<%= group.getLogoURL(themeDisplay, false) %>"
-									resultRow="<%= row %>"
-									rowChecker="<%= searchContainer.getRowChecker() %>"
-									showCheckbox="<%= false %>"
-								>
-									<liferay-frontend:vertical-card-header>
-										<div class="row">
-											<h5 class="col text-truncate">
-												<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
-													<%= HtmlUtil.escape(siteItemSelectorViewDisplayContext.getGroupName(group)) %>
-												</aui:a>
-											</h5>
+							<c:when test="<%= Validator.isNotNull(siteVerticalCard.getImageSrc()) %>">
+								<div class="card card-type-asset">
+									<div class="aspect-ratio bg-checkered card-item-first">
+										<img alt="thumbnail" class="aspect-ratio-item-center-middle aspect-ratio-item-fluid" src="<%= siteVerticalCard.getImageSrc() %>" />
+									</div>
 
-											<aui:a cssClass="col-auto" href="<%= groupURLProvider.getGroupURL(group, liferayPortletRequest) %>" target="_blank" />
+									<div class="card-body">
+										<div class="card-row">
+											<div class="autofit-col autofit-col-expand">
+												<div class="card-title text-truncate">
+													<div class="row">
+														<h5 class="col text-truncate">
+															<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
+																<%= siteVerticalCard.getTitle() %>
+															</aui:a>
+														</h5>
+
+														<aui:a cssClass="col-auto" href="<%= siteVerticalCard.getHref() %>" target="_blank" />
+													</div>
+												</div>
+
+												<c:if test="<%= siteItemSelectorViewDisplayContext.isShowChildSitesLink() %>">
+													<div class="card-subtitle text-truncate">
+														<aui:a cssClass='<%= !childGroups.isEmpty() ? "text-default" : "disabled text-muted" %>' data="<%= linkData %>" href="<%= childGroupsHREF %>">
+															<%= siteVerticalCard.getSubtitle() %>
+														</aui:a>
+													</div>
+												</c:if>
+											</div>
 										</div>
-									</liferay-frontend:vertical-card-header>
-
-									<c:if test="<%= siteItemSelectorViewDisplayContext.isShowChildSitesLink() %>">
-										<liferay-frontend:vertical-card-footer>
-											<aui:a cssClass='<%= !childGroups.isEmpty() ? "text-default" : "disabled text-muted" %>' data="<%= linkData %>" href="<%= childGroupsHREF %>">
-												<liferay-ui:message arguments="<%= String.valueOf(childGroups.size()) %>" key="x-child-sites" />
-											</aui:a>
-										</liferay-frontend:vertical-card-footer>
-									</c:if>
-								</liferay-frontend:vertical-card>
+									</div>
+								</div>
 							</c:when>
 							<c:otherwise>
-								<liferay-frontend:icon-vertical-card
-									icon="sites"
-									resultRow="<%= row %>"
-									rowChecker="<%= searchContainer.getRowChecker() %>"
-									showCheckbox="<%= false %>"
-								>
-									<liferay-frontend:vertical-card-header>
-										<div class="row">
-											<h5 class="col text-truncate">
-												<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
-													<%= HtmlUtil.escape(siteItemSelectorViewDisplayContext.getGroupName(group)) %>
-												</aui:a>
-											</h5>
-
-											<aui:a cssClass="col-auto" href="<%= groupURLProvider.getGroupURL(group, liferayPortletRequest) %>" target="_blank" />
+								<div class="card card-type-asset file-card">
+									<div class="aspect-ratio card-item-first">
+										<div class="aspect-ratio-item-center-middle aspect-ratio-item-fluid card-type-asset-icon">
+											<svg class="lexicon-icon" focusable="false" role="presentation">
+												<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg#sites" />
+											</svg>
 										</div>
-									</liferay-frontend:vertical-card-header>
+									</div>
 
-									<liferay-frontend:vertical-card-footer>
-										<c:if test="<%= siteItemSelectorViewDisplayContext.isShowChildSitesLink() %>">
-											<aui:a cssClass='<%= !childGroups.isEmpty() ? "text-default" : "disabled text-muted" %>' data="<%= linkData %>" href="<%= childGroupsHREF %>">
-												<liferay-ui:message arguments="<%= String.valueOf(childGroups.size()) %>" key="x-child-sites" />
-											</aui:a>
-										</c:if>
-									</liferay-frontend:vertical-card-footer>
-								</liferay-frontend:icon-vertical-card>
+									<div class="card-body">
+										<div class="card-row">
+											<div class="autofit-col autofit-col-expand">
+												<div class="card-title text-truncate">
+													<div class="row">
+														<h5 class="col text-truncate">
+															<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
+																<%= siteVerticalCard.getTitle() %>
+															</aui:a>
+														</h5>
+
+														<aui:a cssClass="col-auto" href="<%= siteVerticalCard.getHref() %>" target="_blank" />
+													</div>
+												</div>
+
+												<c:if test="<%= siteItemSelectorViewDisplayContext.isShowChildSitesLink() %>">
+													<div class="card-subtitle text-truncate">
+														<aui:a cssClass='<%= !childGroups.isEmpty() ? "text-default" : "disabled text-muted" %>' data="<%= linkData %>" href="<%= childGroupsHREF %>">
+															<%= siteVerticalCard.getSubtitle() %>
+														</aui:a>
+													</div>
+												</c:if>
+											</div>
+										</div>
+									</div>
+								</div>
 							</c:otherwise>
 						</c:choose>
 					</liferay-ui:search-container-column-text>

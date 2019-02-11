@@ -14,7 +14,11 @@
 
 package com.liferay.document.library.web.internal.display.context;
 
+import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.service.AssetCategoryServiceUtil;
+import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
 import com.liferay.document.library.constants.DLPortletKeys;
+import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
@@ -48,12 +52,14 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -66,6 +72,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 import javax.portlet.PortletURL;
 
@@ -100,6 +107,8 @@ public class DLAdminManagementToolbarDisplayContext {
 
 		_themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
+		_hasValidVocabularies = _hasValidVocabularies();
 	}
 
 	public List<DropdownItem> getActionDropdownItems() {
@@ -155,16 +164,20 @@ public class DLAdminManagementToolbarDisplayContext {
 									LanguageUtil.get(_request, "edit-tags"));
 								dropdownItem.setQuickAction(true);
 							}));
-					add(
-						SafeConsumer.ignore(
-							dropdownItem -> {
-								dropdownItem.putData("action", "editCategories");
-								dropdownItem.setIcon("categories");
-								dropdownItem.setLabel(
-									LanguageUtil.get(
-										_request, "edit-categories"));
-								dropdownItem.setQuickAction(true);
-							}));
+
+					if (_hasValidVocabularies) {
+						add(
+							SafeConsumer.ignore(
+								dropdownItem -> {
+									dropdownItem.putData(
+										"action", "editCategories");
+									dropdownItem.setIcon("categories");
+									dropdownItem.setLabel(
+										LanguageUtil.get(
+											_request, "edit-categories"));
+									dropdownItem.setQuickAction(true);
+								}));
+					}
 				}
 
 				if (!user.isDefaultUser()) {
@@ -244,7 +257,10 @@ public class DLAdminManagementToolbarDisplayContext {
 				availableActionDropdownItems.add("checkout");
 			}
 
-			availableActionDropdownItems.add("editCategories");
+			if (_hasValidVocabularies) {
+				availableActionDropdownItems.add("editCategories");
+			}
+
 			availableActionDropdownItems.add("editTags");
 		}
 
@@ -823,6 +839,40 @@ public class DLAdminManagementToolbarDisplayContext {
 		return _dlAdminDisplayContext.getRepositoryId();
 	}
 
+	private boolean _hasValidVocabularies() {
+		try {
+			List<AssetVocabulary> vocabularies =
+				AssetVocabularyServiceUtil.getGroupVocabularies(
+					PortalUtil.getCurrentAndAncestorSiteGroupIds(
+						_themeDisplay.getScopeGroupId()));
+
+			Stream<AssetVocabulary> vocabularyStream = vocabularies.stream();
+
+			return vocabularyStream.anyMatch(
+				vocabulary -> {
+					if (vocabulary.isAssociatedToClassNameId(
+							ClassNameLocalServiceUtil.getClassNameId(
+								DLFileEntry.class.getName()))) {
+
+						int vocabularyCategoriesCount =
+							AssetCategoryServiceUtil.
+								getVocabularyCategoriesCount(
+									vocabulary.getGroupId(),
+									vocabulary.getVocabularyId());
+
+						if (vocabularyCategoriesCount > 0) {
+							return true;
+						}
+					}
+
+					return false;
+				});
+		}
+		catch (PortalException pe) {
+			throw new SystemException(pe);
+		}
+	}
+
 	private boolean _isNavigationRecent() {
 		if (Objects.equals(_getNavigation(), "recent")) {
 			return true;
@@ -841,6 +891,7 @@ public class DLAdminManagementToolbarDisplayContext {
 		_dlPortletInstanceSettingsHelper;
 	private final DLRequestHelper _dlRequestHelper;
 	private final DLTrashUtil _dlTrashUtil;
+	private final boolean _hasValidVocabularies;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private final HttpServletRequest _request;

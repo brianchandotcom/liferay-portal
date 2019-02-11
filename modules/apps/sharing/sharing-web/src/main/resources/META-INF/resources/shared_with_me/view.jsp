@@ -94,22 +94,24 @@ sharedWithMeViewDisplayContext.populateResults(sharingEntriesSearchContainer);
 	</liferay-ui:search-container>
 </div>
 
-<aui:script require="sharing-web/SharedWithMe.es">
+<portlet:renderURL var="selectAssetTypeURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+	<portlet:param name="mvcRenderCommandName" value="/shared_with_me/select_asset_type" />
+	<portlet:param name="className" value="<%= sharedWithMeViewDisplayContext.getClassName() %>" />
+</portlet:renderURL>
 
-	<%
-	PortletURL viewAssetTypeURL = PortletURLUtil.clone(currentURLObj, liferayPortletResponse);
+<%
+PortletURL viewAssetTypeURL = PortletURLUtil.clone(currentURLObj, liferayPortletResponse);
 
-	viewAssetTypeURL.setParameter("className", (String)null);
-	%>
+viewAssetTypeURL.setParameter("className", (String)null);
 
-	var component = Liferay.component(
-		'<portlet:namespace />SharedWithMe',
-		new sharingWebSharedWithMeEs.default(
-			{
-				namespace: '<portlet:namespace />',
-				selectAssetTypeURL: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcRenderCommandName" value="/shared_with_me/select_asset_type" /><portlet:param name="className" value="<%= sharedWithMeViewDisplayContext.getClassName() %>" /></portlet:renderURL>',
-				viewAssetTypeURL: '<%= viewAssetTypeURL %>'
-			}
-		)
-	);
-</aui:script>
+Map<String, Object> context = new HashMap<>();
+
+context.put("selectAssetTypeURL", selectAssetTypeURL.toString());
+context.put("viewAssetTypeURL", viewAssetTypeURL.toString());
+%>
+
+<liferay-frontend:component
+	componentId='<%= renderResponse.getNamespace() + "SharedWithMe" %>'
+	context="<%= context %>"
+	module="sharing-web/SharedWithMe.es"
+/>

@@ -8,15 +8,13 @@
 		"metal-soy": "^2.13.2"
 	},
 	"devDependencies": {
-		"check-source-formatting": "^2.0.12",
-		"liferay-module-config-generator": "^1.2.1",
-		"metal-cli": "^4.0.1"
+		"liferay-npm-scripts": "1.2.0"
 	},
 	"name": "sharing-web",
 	"scripts": {
-		"checkFormat": "npm run csf",
-		"csf": "csf src/**/*.js",
-		"format": "npm run csf -- -i"
+		"build": "liferay-npm-scripts build --soy --bundler",
+		"csf": "liferay-npm-scripts lint",
+		"format": "liferay-npm-scripts format"
 	},
 	"version": "1.0.0"
 }

@@ -54,39 +54,29 @@
 		}
 	};
 
-	function <portlet:namespace />addDragAndDropListener() {
-		const TIMEOUT_LENGTH = 10;
-
-		if (!Liferay.Layout) {
-			setTimeout(
-				function() {
-					<portlet:namespace />addDragAndDropListener();
-				},
-				TIMEOUT_LENGTH
-			);
+	Liferay.on(
+		'allPortletsReady', function(event) {
+			if (Liferay.Layout) {
+				Liferay.Layout.on(
+					[ 'drag:end', 'drag:start' ],
+					function(event) {
+						setTimeout(
+							function() {
+								<portlet:namespace />resizeIFrame();
+							},
+							10
+						);
+					}
+				);
+			}
 		}
-		else {
-			Liferay.Layout.on(
-				[ 'drag:end', 'drag:start' ],
-				function(event) {
-					setTimeout(
-						function() {
-							$(window).trigger('resize');
-						},
-						TIMEOUT_LENGTH
-					);
-				}
-			);
-		}
-	}
+	);
 
 	Liferay.on(
 		'portletReady', function(event) {
 			<portlet:namespace />resizeIFrame();
 		}
 	);
-
-	<portlet:namespace />addDragAndDropListener();
 
 	$(window).on(
 		'resize', function() {

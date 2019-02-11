@@ -68,6 +68,7 @@ AUI.add(
 
 						var dataType = instance.get('dataType');
 						var maskController = fieldNode.getData('mask-controller');
+						var value = instance.get('value');
 
 						if (maskController) {
 							maskController.destroy();
@@ -89,6 +90,18 @@ AUI.add(
 						);
 
 						fieldNode.setData('mask-controller', instance.maskedInputController);
+
+						if (value && dataType == 'integer') {
+							value = Math.round(value);
+						}
+
+						instance.maskedInputController.textMaskInputElement.update(
+							value,
+							{
+								inputElement: fieldNode.getDOM(),
+								mask: numberMask
+							}
+						);
 					},
 
 					getChangeEventName: function() {

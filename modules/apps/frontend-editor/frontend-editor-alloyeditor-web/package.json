@@ -20,6 +20,7 @@
 	},
 	"name": "frontend-editor-alloyeditor-web",
 	"scripts": {
+		"checkFormat": "npm run csf",
 		"csf": "liferay-npm-scripts lint",
 		"format": "liferay-npm-scripts format"
 	},

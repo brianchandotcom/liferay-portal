@@ -38,10 +38,6 @@ public class Comment {
 		return _id;
 	}
 
-	public String getSelf() {
-		return _self;
-	}
-
 	public String getText() {
 		return _text;
 	}
@@ -58,10 +54,6 @@ public class Comment {
 		_id = id;
 	}
 
-	public void setSelf(String self) {
-		_self = self;
-	}
-
 	public void setText(String text) {
 		_text = text;
 	}
@@ -69,7 +61,6 @@ public class Comment {
 	private Comment[] _comments;
 	private Creator _creator;
 	private Long _id;
-	private String _self;
 	private String _text;
 
 }

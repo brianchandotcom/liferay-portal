@@ -66,10 +66,6 @@ public class Creator {
 		return _profileURL;
 	}
 
-	public String getSelf() {
-		return _self;
-	}
-
 	public void setAdditionalName(String additionalName) {
 		_additionalName = additionalName;
 	}
@@ -110,10 +106,6 @@ public class Creator {
 		_profileURL = profileURL;
 	}
 
-	public void setSelf(String self) {
-		_self = self;
-	}
-
 	private String _additionalName;
 	private String _alternateName;
 	private String _email;
@@ -124,6 +116,5 @@ public class Creator {
 	private String _jobTitle;
 	private String _name;
 	private String _profileURL;
-	private String _self;
 
 }

@@ -92,10 +92,6 @@ public class StructuredContent {
 		return _renderedContentsByTemplate;
 	}
 
-	public String getSelf() {
-		return _self;
-	}
-
 	public String getTitle() {
 		return _title;
 	}
@@ -170,10 +166,6 @@ public class StructuredContent {
 		_renderedContentsByTemplate = renderedContentsByTemplate;
 	}
 
-	public void setSelf(String self) {
-		_self = self;
-	}
-
 	public void setTitle(String title) {
 		_title = title;
 	}
@@ -198,7 +190,6 @@ public class StructuredContent {
 	private String[] _keywords;
 	private String _lastReviewed;
 	private RenderedContentsByTemplate _renderedContentsByTemplate;
-	private String _self;
 	private String _title;
 	private Values _values;
 

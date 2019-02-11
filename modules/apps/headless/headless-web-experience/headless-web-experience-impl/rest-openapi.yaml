@@ -12,9 +12,6 @@ components:
           type: number
         ratingValue:
           type: number
-        self:
-          format: uri
-          type: string
         worstRating:
           type: number
       type: object
@@ -30,9 +27,6 @@ components:
         id:
           format: int64
           type: integer
-        self:
-          format: uri
-          type: string
         text:
           type: string
       type: object
@@ -57,9 +51,6 @@ components:
         id:
           format: int64
           type: integer
-        self:
-          format: uri
-          type: string
         sizeInBytes:
           type: number
         title:
@@ -90,9 +81,6 @@ components:
           type: integer
         name:
           type: string
-        self:
-          format: uri
-          type: string
       type: object
     Creator:
       description: https://www.schema.org/Creator
@@ -118,9 +106,6 @@ components:
         name:
           type: string
         profileURL:
-          format: uri
-          type: string
-        self:
           format: uri
           type: string
       type: object
@@ -183,15 +168,9 @@ components:
               type: integer
             renderedContent:
               type: string
-            self:
-              format: uri
-              type: string
             template:
               type: string
           type: object
-        self:
-          format: uri
-          type: string
         title:
           type: string
         values:
@@ -209,9 +188,6 @@ components:
             label:
               type: string
             name:
-              type: string
-            self:
-              format: uri
               type: string
             value:
               anyOf:
@@ -237,9 +213,6 @@ components:
                           type: number
                         longitude:
                           type: number
-                        self:
-                          format: uri
-                          type: string
                       type: object
                 - properties:
                     link:

@@ -34,10 +34,6 @@ public class RenderedContentsByTemplate {
 		return _renderedContent;
 	}
 
-	public String getSelf() {
-		return _self;
-	}
-
 	public String getTemplate() {
 		return _template;
 	}
@@ -50,17 +46,12 @@ public class RenderedContentsByTemplate {
 		_renderedContent = renderedContent;
 	}
 
-	public void setSelf(String self) {
-		_self = self;
-	}
-
 	public void setTemplate(String template) {
 		_template = template;
 	}
 
 	private Long _id;
 	private String _renderedContent;
-	private String _self;
 	private String _template;
 
 }

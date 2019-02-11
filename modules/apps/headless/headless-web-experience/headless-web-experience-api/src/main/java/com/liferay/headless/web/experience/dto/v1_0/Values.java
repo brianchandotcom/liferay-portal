@@ -50,10 +50,6 @@ public class Values {
 		return _name;
 	}
 
-	public String getSelf() {
-		return _self;
-	}
-
 	public Object getValue() {
 		return _value;
 	}
@@ -82,10 +78,6 @@ public class Values {
 		_name = name;
 	}
 
-	public void setSelf(String self) {
-		_self = self;
-	}
-
 	public void setValue(Object value) {
 		_value = value;
 	}
@@ -96,7 +88,6 @@ public class Values {
 	private String _inputControl;
 	private String _label;
 	private String _name;
-	private String _self;
 	private Object _value;
 
 }

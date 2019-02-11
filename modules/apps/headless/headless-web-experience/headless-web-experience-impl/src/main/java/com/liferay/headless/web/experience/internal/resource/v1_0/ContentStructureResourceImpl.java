@@ -14,9 +14,21 @@
 
 package com.liferay.headless.web.experience.internal.resource.v1_0;
 
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.service.DDMStructureService;
+import com.liferay.headless.web.experience.dto.v1_0.ContentStructure;
 import com.liferay.headless.web.experience.resource.v1_0.ContentStructureResource;
+import com.liferay.journal.model.JournalArticle;
+import com.liferay.portal.kernel.model.ClassName;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.ClassNameService;
+import com.liferay.portal.kernel.service.GroupService;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.vulcan.context.Pagination;
+import com.liferay.portal.vulcan.dto.Page;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
 
 /**
@@ -28,4 +40,56 @@ import org.osgi.service.component.annotations.ServiceScope;
 )
 public class ContentStructureResourceImpl
 	extends BaseContentStructureResourceImpl {
+
+	@Override
+	public Page<ContentStructure> getContentSpaceContentStructuresPage(
+			Long contentSpaceId, Pagination pagination)
+		throws Exception {
+
+		Group group = _groupService.getGroup(contentSpaceId);
+
+		ClassName className = _classNameService.fetchClassName(
+			JournalArticle.class.getName());
+
+		return Page.of(
+			transform(
+				_ddmStructureService.getStructures(
+					company.getCompanyId(), new long[] {group.getGroupId()},
+					className.getClassNameId(), pagination.getStartPosition(),
+					pagination.getEndPosition(), null),
+				this::_toContentStructure),
+			pagination,
+			_ddmStructureService.getStructuresCount(
+				group.getGroupId(), new long[] {className.getClassNameId()},
+				className.getClassNameId()));
+	}
+
+	private ContentStructure _toContentStructure(DDMStructure ddmStructure) {
+		return new ContentStructure() {
+			{
+				setAvailableLanguages(
+					LocaleUtil.toW3cLanguageIds(
+						ddmStructure.getAvailableLanguageIds()));
+				setContentSpace(ddmStructure.getGroupId());
+				setDateCreated(ddmStructure.getCreateDate());
+				setDateModified(ddmStructure.getModifiedDate());
+				setDescription(
+					ddmStructure.getDescription(
+						acceptLanguage.getPreferredLocale()));
+				setId(ddmStructure.getStructureId());
+				setName(
+					ddmStructure.getName(acceptLanguage.getPreferredLocale()));
+			}
+		};
+	}
+
+	@Reference
+	private ClassNameService _classNameService;
+
+	@Reference
+	private DDMStructureService _ddmStructureService;
+
+	@Reference
+	private GroupService _groupService;
+
 }

@@ -42,10 +42,6 @@ public class AggregateRating {
 		return _ratingValue;
 	}
 
-	public String getSelf() {
-		return _self;
-	}
-
 	public Number getWorstRating() {
 		return _worstRating;
 	}
@@ -66,10 +62,6 @@ public class AggregateRating {
 		_ratingValue = ratingValue;
 	}
 
-	public void setSelf(String self) {
-		_self = self;
-	}
-
 	public void setWorstRating(Number worstRating) {
 		_worstRating = worstRating;
 	}
@@ -78,7 +70,6 @@ public class AggregateRating {
 	private Long _id;
 	private Number _ratingCount;
 	private Number _ratingValue;
-	private String _self;
 	private Number _worstRating;
 
 }

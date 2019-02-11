@@ -60,10 +60,6 @@ public class ContentStructure {
 		return _name;
 	}
 
-	public String getSelf() {
-		return _self;
-	}
-
 	public void setAvailableLanguages(String[] availableLanguages) {
 		_availableLanguages = availableLanguages;
 	}
@@ -96,10 +92,6 @@ public class ContentStructure {
 		_name = name;
 	}
 
-	public void setSelf(String self) {
-		_self = self;
-	}
-
 	private String[] _availableLanguages;
 	private Long _contentSpace;
 	private Creator _creator;
@@ -108,6 +100,5 @@ public class ContentStructure {
 	private String _description;
 	private Long _id;
 	private String _name;
-	private String _self;
 
 }

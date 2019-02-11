@@ -258,12 +258,12 @@ function _addSection(layoutColumns, layoutData, position) {
 	const columns = [];
 
 	layoutColumns.forEach(
-		() => {
+		columnSize => {
 			columns.push(
 				{
 					columnId: `${nextColumnId}`,
 					fragmentEntryLinkIds: [],
-					size: ''
+					size: columnSize
 				}
 			);
 

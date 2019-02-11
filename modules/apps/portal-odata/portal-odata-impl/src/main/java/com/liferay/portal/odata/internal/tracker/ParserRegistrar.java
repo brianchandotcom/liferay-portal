@@ -15,10 +15,11 @@
 package com.liferay.portal.odata.internal.tracker;
 
 import com.liferay.osgi.util.ServiceTrackerFactory;
+import com.liferay.osgi.util.service.Reference;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.odata.filter.FilterParser;
-import com.liferay.portal.odata.internal.filter.FilterParserImpl;
+import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.odata.internal.sort.SortParserImpl;
 import com.liferay.portal.odata.sort.SortParser;
 
@@ -49,13 +50,17 @@ public class ParserRegistrar {
 	public void activate(BundleContext bundleContext) {
 		_serviceTracker = ServiceTrackerFactory.open(
 			bundleContext, EntityModel.class,
-			new EntityModelTrackerCustomizer(bundleContext));
+			new EntityModelTrackerCustomizer(
+				bundleContext, _filterParserProvider));
 	}
 
 	@Deactivate
 	protected void deactivate() {
 		_serviceTracker.close();
 	}
+
+	@Reference
+	private FilterParserProvider _filterParserProvider;
 
 	private ServiceTracker<?, ?> _serviceTracker;
 
@@ -77,7 +82,7 @@ public class ParserRegistrar {
 			try {
 				parserServiceRegistrations.register(
 					_bundleContext, FilterParser.class,
-					new FilterParserImpl(entityModel));
+					_filterParserProvider.provide(entityModel));
 
 				parserServiceRegistrations.register(
 					_bundleContext, SortParser.class,
@@ -119,11 +124,16 @@ public class ParserRegistrar {
 			parserServiceRegistrations.unregister();
 		}
 
-		private EntityModelTrackerCustomizer(BundleContext bundleContext) {
+		private EntityModelTrackerCustomizer(
+			BundleContext bundleContext,
+			FilterParserProvider filterParserProvider) {
+
 			_bundleContext = bundleContext;
+			_filterParserProvider = filterParserProvider;
 		}
 
 		private final BundleContext _bundleContext;
+		private final FilterParserProvider _filterParserProvider;
 
 	}
 

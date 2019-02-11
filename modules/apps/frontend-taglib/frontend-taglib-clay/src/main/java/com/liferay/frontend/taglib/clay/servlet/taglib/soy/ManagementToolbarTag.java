@@ -130,6 +130,17 @@ public class ManagementToolbarTag extends BaseClayTag {
 
 		setShowInfoButton(showInfoButton);
 
+		if (Validator.isNotNull(context.get("searchValue"))) {
+			setShowResultsBar(true);
+		}
+		else {
+			List filterLabels = (List)context.get("filterLabels");
+
+			if ((filterLabels != null) && !filterLabels.isEmpty()) {
+				setShowResultsBar(true);
+			}
+		}
+
 		return super.doStartTag();
 	}
 
@@ -235,12 +246,12 @@ public class ManagementToolbarTag extends BaseClayTag {
 		putValue("selectable", selectable);
 	}
 
-	public void setSelectedItems(int selectedItems) {
-		putValue("selectedItems", selectedItems);
-	}
-
 	public void setSelectAllURL(String selectAllURL) {
 		putValue("selectAllURL", selectAllURL);
+	}
+
+	public void setSelectedItems(int selectedItems) {
+		putValue("selectedItems", selectedItems);
 	}
 
 	public void setShowAdvancedSearch(Boolean showAdvancedSearch) {
@@ -277,6 +288,10 @@ public class ManagementToolbarTag extends BaseClayTag {
 
 	public void setSortingURL(String sortingURL) {
 		putValue("sortingURL", sortingURL);
+	}
+
+	public void setSupportsBulkActions(Boolean supportsBulkActions) {
+		putValue("supportsBulkActions", supportsBulkActions);
 	}
 
 	public void setViewTypeItems(List<ViewTypeItem> viewTypeItems) {
@@ -420,6 +435,11 @@ public class ManagementToolbarTag extends BaseClayTag {
 			setSortingURL(managementToolbarDisplayContext.getSortingURL());
 		}
 
+		if (context.get("supportsBulkActions") == null) {
+			setSupportsBulkActions(
+				managementToolbarDisplayContext.getSupportsBulkActions());
+		}
+
 		if (context.get("viewTypes") == null) {
 			setViewTypeItems(
 				managementToolbarDisplayContext.getViewTypeItems());
@@ -462,7 +482,7 @@ public class ManagementToolbarTag extends BaseClayTag {
 	}
 
 	private static final String[] _CACHE_STATE = {
-		"selectedItems", "totalItems"
+		"checkboxStatus", "showSelectAllButton", "selectedItems", "totalItems"
 	};
 
 	private static final String[] _NAMESPACED_PARAMS = {

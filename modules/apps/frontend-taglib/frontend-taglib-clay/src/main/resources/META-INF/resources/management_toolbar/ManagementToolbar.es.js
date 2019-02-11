@@ -88,9 +88,9 @@ class ManagementToolbar extends ClayComponent {
 	 * @private
 	 */
 
-	_handleDeselectAllClicked() {
+	_handleClearSelectionButtonClicked() {
 		if (this._searchContainer) {
-			this._searchContainer.select.toggleAllRows(false);
+			this._searchContainer.select.toggleAllRows(false, true);
 		}
 	}
 
@@ -142,9 +142,9 @@ class ManagementToolbar extends ClayComponent {
 	 * @private
 	 */
 
-	_handleSelectAllClicked(event) {
+	_handleSelectAllButtonClicked() {
 		if (this._searchContainer) {
-			this._searchContainer.select.toggleAllRows(true);
+			this._searchContainer.select.toggleAllRows(true, true);
 		}
 	}
 
@@ -159,14 +159,24 @@ class ManagementToolbar extends ClayComponent {
 	_handleSearchContainerRowToggled(event) {
 		var elements = event.elements;
 
-		this.selectedItems = elements.allSelectedElements.filter(':enabled').size();
-
 		const currentPageElements = elements.currentPageElements.size();
 		const currentPageSelectedElements = elements.currentPageSelectedElements.size();
 
-		this.checkboxStatus = this.selectedItems === 0 ? 'unchecked' : currentPageElements === currentPageSelectedElements ? 'checked' : 'indeterminate';
+		const currentPageSelected = currentPageElements === currentPageSelectedElements;
 
-		this.showSelectAllButton = this.checkboxStatus === 'checked' && this.selectedItems < this.totalItems;
+		const bulkSelection = this.supportsBulkActions && this._searchContainer.select.get('bulkSelection');
+
+		this.selectedItems = bulkSelection ? this.totalItems : elements.allSelectedElements.filter(':enabled').size();
+
+		this.checkboxStatus = 'unchecked';
+
+		if (this.selectedItems !== 0) {
+			this.checkboxStatus = currentPageSelected ? 'checked' : 'indeterminate';
+		}
+
+		if (this.supportsBulkActions) {
+			this.showSelectAllButton = currentPageSelected && !this._searchContainer.select.get('bulkSelection');
+		}
 
 		if (this.actionItems) {
 			this.actionItems = this.actionItems.map(
@@ -227,11 +237,13 @@ ManagementToolbar.STATE = {
 	 * @memberof ManagementToolbar
 	 * @type {?(string|undefined)}
 	 */
-	checkboxStatus: Config.oneOf([
-		'checked',
-		'indeterminate',
-		'unchecked',
-	]).value('unchecked'),
+	checkboxStatus: Config.oneOf(
+		[
+			'checked',
+			'indeterminate',
+			'unchecked'
+		]
+	).value('unchecked'),
 
 	/**
 	 * Url for clear results link.
@@ -560,6 +572,17 @@ ManagementToolbar.STATE = {
 	 */
 
 	spritemap: Config.string().required(),
+
+	/**
+	 * Flag to indicate that the toolbar supports bulk selection.
+	 * @default false
+	 * @instance
+	 * @memberof ManagementToolbar
+	 * @review
+	 * @type {boolean}
+	 */
+
+	supportsBulkActions: Config.bool().value(false),
 
 	/**
 	 * Total number of items. If totalItems is 0 most of the elements in the bar

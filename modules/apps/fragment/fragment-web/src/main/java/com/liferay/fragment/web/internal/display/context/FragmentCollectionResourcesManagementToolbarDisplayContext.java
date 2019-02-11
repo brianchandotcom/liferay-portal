@@ -15,18 +15,36 @@
 package com.liferay.fragment.web.internal.display.context;
 
 import com.liferay.fragment.constants.FragmentActionKeys;
+import com.liferay.fragment.constants.FragmentPortletKeys;
+import com.liferay.fragment.web.internal.configuration.FragmentPortletConfiguration;
+import com.liferay.fragment.web.internal.constants.FragmentWebKeys;
 import com.liferay.fragment.web.internal.security.permission.resource.FragmentPermission;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.item.selector.ItemSelector;
+import com.liferay.item.selector.ItemSelectorCriterion;
+import com.liferay.item.selector.ItemSelectorReturnType;
+import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
+import com.liferay.item.selector.criteria.upload.criterion.UploadItemSelectorCriterion;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.upload.UploadServletRequestConfigurationHelperUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -47,6 +65,12 @@ public class FragmentCollectionResourcesManagementToolbarDisplayContext
 		super(
 			liferayPortletRequest, liferayPortletResponse, request,
 			fragmentCollectionResourcesDisplayContext.getSearchContainer());
+
+		_fragmentPortletConfiguration =
+			(FragmentPortletConfiguration)request.getAttribute(
+				FragmentPortletConfiguration.class.getName());
+		_itemSelector = (ItemSelector)request.getAttribute(
+			FragmentWebKeys.ITEM_SELECTOR);
 	}
 
 	public List<DropdownItem> getActionDropdownItems() {
@@ -75,9 +99,105 @@ public class FragmentCollectionResourcesManagementToolbarDisplayContext
 		};
 	}
 
+	public Map<String, Object> getComponentContext() {
+		Map<String, Object> componentContext = new HashMap<>();
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletURL deleteFragmentCollectionResourcesURL =
+			liferayPortletResponse.createActionURL();
+
+		deleteFragmentCollectionResourcesURL.setParameter(
+			ActionRequest.ACTION_NAME,
+			"/fragment/delete_fragment_collection_resources");
+		deleteFragmentCollectionResourcesURL.setParameter(
+			"redirect", themeDisplay.getURLCurrent());
+
+		componentContext.put(
+			"deleteFragmentCollectionResourcesURL",
+			deleteFragmentCollectionResourcesURL.toString());
+
+		componentContext.put("itemSelectorURL", _getItemSelectorURL());
+
+		return componentContext;
+	}
+
 	@Override
 	public String getComponentId() {
 		return "fragmentCollectionResourcesManagementToolbar";
 	}
+
+	@Override
+	public String getDefaultEventHandler() {
+		return "FRAGMENT_COLLECTION_RESOURCES_MANAGEMENT_TOOLBAR_DEFAULT_" +
+			"EVENT_HANDLER";
+	}
+
+	public long getFragmentCollectionId() {
+		if (Validator.isNotNull(_fragmentCollectionId)) {
+			return _fragmentCollectionId;
+		}
+
+		_fragmentCollectionId = ParamUtil.getLong(
+			request, "fragmentCollectionId");
+
+		return _fragmentCollectionId;
+	}
+
+	@Override
+	public Boolean isShowCreationMenu() {
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		if (FragmentPermission.contains(
+				themeDisplay.getPermissionChecker(),
+				themeDisplay.getScopeGroupId(),
+				FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private String _getItemSelectorURL() {
+		PortletURL uploadURL = liferayPortletResponse.createActionURL();
+
+		uploadURL.setParameter(
+			ActionRequest.ACTION_NAME,
+			"/fragment/upload_fragment_collection_resource");
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		ItemSelectorCriterion uploadItemSelectorCriterion =
+			new UploadItemSelectorCriterion(
+				FragmentPortletKeys.FRAGMENT, uploadURL.toString(),
+				LanguageUtil.get(themeDisplay.getLocale(), "resources"),
+				UploadServletRequestConfigurationHelperUtil.getMaxSize(),
+				_fragmentPortletConfiguration.thumbnailExtensions());
+
+		List<ItemSelectorReturnType> uploadDesiredItemSelectorReturnTypes =
+			new ArrayList<>();
+
+		uploadDesiredItemSelectorReturnTypes.add(
+			new FileEntryItemSelectorReturnType());
+
+		uploadItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			uploadDesiredItemSelectorReturnTypes);
+
+		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
+			RequestBackedPortletURLFactoryUtil.create(request),
+			liferayPortletResponse.getNamespace() +
+				"uploadFragmentCollectionResource",
+			uploadItemSelectorCriterion);
+
+		return itemSelectorURL.toString();
+	}
+
+	private Long _fragmentCollectionId;
+	private final FragmentPortletConfiguration _fragmentPortletConfiguration;
+	private final ItemSelector _itemSelector;
 
 }

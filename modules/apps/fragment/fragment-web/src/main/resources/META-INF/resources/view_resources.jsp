@@ -18,17 +18,27 @@
 
 <%
 FragmentCollectionResourcesDisplayContext fragmentCollectionResourcesDisplayContext = new FragmentCollectionResourcesDisplayContext(renderRequest, renderResponse, request, fragmentDisplayContext);
+FragmentCollectionResourcesManagementToolbarDisplayContext fragmentCollectionResourcesManagementToolbarDisplayContext = new FragmentCollectionResourcesManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, fragmentCollectionResourcesDisplayContext);
 %>
 
 <clay:management-toolbar
-	displayContext="<%= new FragmentCollectionResourcesManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, fragmentCollectionResourcesDisplayContext) %>"
+	displayContext="<%= fragmentCollectionResourcesManagementToolbarDisplayContext %>"
 />
 
 <portlet:actionURL name="/fragment/delete_fragment_collection_resources" var="deleteFragmentCollectionResourcesURL">
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 </portlet:actionURL>
 
-<aui:form action="<%= deleteFragmentCollectionResourcesURL %>" name="fm">
+<portlet:actionURL name="/fragment/add_fragment_collection_resource" var="addFragmentCollectionResourceURL">
+	<portlet:param name="redirect" value="<%= currentURL %>" />
+</portlet:actionURL>
+
+<aui:form action="<%= addFragmentCollectionResourceURL %>" name="fragmentCollectionResourceFm">
+	<aui:input name="fragmentCollectionId" type="hidden" value="<%= String.valueOf(fragmentDisplayContext.getFragmentCollectionId()) %>" />
+	<aui:input name="fileEntryId" type="hidden" />
+</aui:form>
+
+<aui:form name="fm">
 	<liferay-ui:search-container
 		searchContainer="<%= fragmentCollectionResourcesDisplayContext.getSearchContainer() %>"
 	>
@@ -62,29 +72,8 @@ FragmentCollectionResourcesDisplayContext fragmentCollectionResourcesDisplayCont
 	</liferay-ui:search-container>
 </aui:form>
 
-<aui:script>
-	var deleteSelectedFragmentCollectionResources = function() {
-		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
-			submitForm(document.querySelector('#<portlet:namespace />fm'));
-		}
-	}
-
-	var ACTIONS = {
-		'deleteSelectedFragmentCollectionResources': deleteSelectedFragmentCollectionResources
-	};
-
-	Liferay.componentReady('fragmentCollectionResourcesManagementToolbar').then(
-		function(managementToolbar) {
-			managementToolbar.on(
-				['actionItemClicked'],
-				function(event) {
-					var itemData = event.data.item.data;
-
-					if (itemData && itemData.action && ACTIONS[itemData.action]) {
-						ACTIONS[itemData.action]();
-					}
-				}
-			);
-		}
-	);
-</aui:script>
+<liferay-frontend:component
+	componentId="<%= fragmentCollectionResourcesManagementToolbarDisplayContext.getDefaultEventHandler() %>"
+	context="<%= fragmentCollectionResourcesManagementToolbarDisplayContext.getComponentContext() %>"
+	module="js/FragmentCollectionResourcesManagementToolbarDefaultEventHandler.es"
+/>

@@ -14,7 +14,8 @@
 
 package com.liferay.portal.vulcan.internal.jaxrs.context.provider;
 
-import java.lang.reflect.AnnotatedType;
+import com.liferay.portal.odata.entity.EntityModel;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
@@ -23,7 +24,6 @@ import java.util.Iterator;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.liferay.portal.odata.entity.EntityModel;
 import org.apache.cxf.message.Message;
 
 import org.osgi.framework.BundleContext;
@@ -34,17 +34,11 @@ import org.osgi.framework.ServiceReference;
  */
 public class ContextProviderUtil {
 
-	public static HttpServletRequest getHttpServletRequest(Message message) {
-		return (HttpServletRequest)message.getContextualProperty(
-			"HTTP.REQUEST");
-	}
-
-	public static EntityModel getEntityModel(BundleContext bundleContext, Message message)
+	public static EntityModel getEntityModel(
+			BundleContext bundleContext, Message message)
 		throws Exception {
 
 		HttpServletRequest httpServletRequest = getHttpServletRequest(message);
-
-		httpServletRequest.getParameterMap();
 
 		Method method = (Method)message.get("org.apache.cxf.resource.method");
 
@@ -54,22 +48,38 @@ public class ContextProviderUtil {
 
 		Class<?> clazz = method.getDeclaringClass();
 
+		if (clazz == null) {
+			return null;
+		}
+
 		Class<?> superclass = clazz.getSuperclass();
 
+		if (superclass == null) {
+			return null;
+		}
 
 		Class<?>[] interfaces = superclass.getInterfaces();
 
-		Class<?> anInterface = interfaces[0];
+		if (interfaces.length == 0) {
+			return null;
+		}
 
-
-		Method getEntityModelMethod = clazz.getMethod("getEntityModel");
+		Method getEntityModelMethod = clazz.getMethod(
+			"getEntityModel", HttpServletRequest.class);
 
 		if (getEntityModelMethod == null) {
 			return null;
 		}
 
+		Class<?> resourceClass = interfaces[0];
+
 		return (EntityModel)getEntityModelMethod.invoke(
-			getResourceClass(bundleContext, anInterface), null);
+			getResourceClass(bundleContext, resourceClass), httpServletRequest);
+	}
+
+	public static HttpServletRequest getHttpServletRequest(Message message) {
+		return (HttpServletRequest)message.getContextualProperty(
+			"HTTP.REQUEST");
 	}
 
 	public static String getODataEntityModelName(Message message)
@@ -92,16 +102,6 @@ public class ContextProviderUtil {
 		return (String)field.get(null);
 	}
 
-	public static <T> T getResourceClass(
-			BundleContext bundleContext, Class<T> clazz)
-		throws Exception {
-
-		ServiceReference<?> serviceReference =
-			bundleContext.getServiceReference(clazz.getCanonicalName());
-
-		return (T)bundleContext.getService(serviceReference);
-	}
-
 	public static <T> T getODataEntityModelService(
 			BundleContext bundleContext, Class<T> clazz,
 			String oDataEntityModelName)
@@ -120,6 +120,16 @@ public class ContextProviderUtil {
 		ServiceReference<T> serviceReference = iterator.next();
 
 		return bundleContext.getService(serviceReference);
+	}
+
+	public static <T> T getResourceClass(
+			BundleContext bundleContext, Class<T> clazz)
+		throws Exception {
+
+		ServiceReference<?> serviceReference =
+			bundleContext.getServiceReference(clazz.getCanonicalName());
+
+		return (T)bundleContext.getService(serviceReference);
 	}
 
 }

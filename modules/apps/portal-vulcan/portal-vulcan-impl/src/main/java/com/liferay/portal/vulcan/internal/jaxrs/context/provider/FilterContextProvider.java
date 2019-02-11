@@ -25,11 +25,13 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParser;
+import com.liferay.portal.odata.filter.expression.ExpressionVisitException;
 import com.liferay.portal.vulcan.context.AcceptLanguage;
 import com.liferay.portal.vulcan.internal.context.AcceptLanguageImpl;
 
 import javax.servlet.http.HttpServletRequest;
 
+import javax.ws.rs.BadRequestException;
 import javax.ws.rs.ServerErrorException;
 import javax.ws.rs.ext.Provider;
 
@@ -59,6 +61,9 @@ public class FilterContextProvider implements ContextProvider<Filter> {
 		try {
 			return _createContext(message);
 		}
+		catch (ExpressionVisitException eve) {
+			throw new BadRequestException(eve.getMessage(), eve);
+		}
 		catch (Exception e) {
 			throw new ServerErrorException(500, e);
 		}
@@ -78,10 +83,11 @@ public class FilterContextProvider implements ContextProvider<Filter> {
 			return null;
 		}
 
-		EntityModel entityModel =
-			ContextProviderUtil.getEntityModel(_bundleContext, message);
+		EntityModel entityModel = ContextProviderUtil.getEntityModel(
+			_bundleContext, message);
 
-		String entityName = "_" + RandomUtil.nextInt(20) + "_" + entityModel.getName();
+		String entityName =
+			"_" + RandomUtil.nextInt(20) + "_" + entityModel.getName();
 
 		ServiceRegistration<EntityModel> entityModelServiceRegistration =
 			_bundleContext.registerService(
@@ -95,9 +101,8 @@ public class FilterContextProvider implements ContextProvider<Filter> {
 		FilterParser filterParser = null;
 
 		while (filterParser == null) {
-			filterParser =
-				ContextProviderUtil.getODataEntityModelService(
-					_bundleContext, FilterParser.class, entityName);
+			filterParser = ContextProviderUtil.getODataEntityModelService(
+				_bundleContext, FilterParser.class, entityName);
 		}
 
 		if (_log.isDebugEnabled()) {

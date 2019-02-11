@@ -14,10 +14,6 @@
 
 package com.liferay.portal.vulcan.internal.jaxrs.context.provider.test.util;
 
-import com.liferay.portal.odata.entity.EntityModel;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,18 +27,6 @@ import javax.ws.rs.core.FeatureContext;
 public class MockFeature {
 
 	public MockFeature(Feature feature) {
-		Registry registry = RegistryUtil.getRegistry();
-
-		registry.registerService(
-			EntityModel.class, MockResource.ENTITY_MODEL,
-			new HashMap<String, Object>() {
-				{
-					put(
-						"entity.model.name",
-						MockResource.ODATA_ENTITY_MODEL_NAME);
-				}
-			});
-
 		FeatureContext featureContext = new FeatureContext() {
 
 			@Override

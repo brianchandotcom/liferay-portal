@@ -927,20 +927,43 @@
 		<field name="parentLayoutId" type="long" />
 		<field name="classNameId" type="long" />
 		<field name="classPK" type="long" />
-		<field localized="true" name="name" type="String" />
-		<field localized="true" name="title" type="String" />
-		<field localized="true" name="description" type="String" />
-		<field localized="true" name="keywords" type="String" />
-		<field localized="true" name="robots" type="String" />
+		<field localized="true" name="name" type="String">
+			<hint name="display-width">210</hint>
+			<hint name="max-length">4000</hint>
+			<validator name="required" />
+		</field>
+		<field localized="true" name="title" type="String">
+			<hint name="display-width">210</hint>
+			<hint name="max-length">4000</hint>
+		</field>
+		<field localized="true" name="description" type="String">
+			<hint-collection name="TEXTAREA" />
+			<hint name="display-width">300</hint>
+		</field>
+		<field localized="true" name="keywords" type="String">
+			<hint-collection name="TEXTAREA" />
+			<hint name="display-width">300</hint>
+		</field>
+		<field localized="true" name="robots" type="String">
+			<hint-collection name="TEXTAREA" />
+			<hint name="display-width">300</hint>
+		</field>
 		<field name="type" type="String" />
-		<field name="typeSettings" type="String" />
+		<field name="typeSettings" type="String">
+			<hint-collection name="CLOB" />
+		</field>
 		<field name="hidden" type="boolean" />
 		<field name="system" type="boolean" />
-		<field name="friendlyURL" type="String" />
+		<field name="friendlyURL" type="String">
+			<hint name="display-width">210</hint>
+			<hint name="max-length">255</hint>
+		</field>
 		<field name="iconImageId" type="long" />
 		<field name="themeId" type="String" />
 		<field name="colorSchemeId" type="String" />
-		<field name="css" type="String" />
+		<field name="css" type="String">
+			<hint-collection name="CLOB" />
+		</field>
 		<field name="priority" type="int" />
 		<field name="layoutPrototypeUuid" type="String" />
 		<field name="layoutPrototypeLinkEnabled" type="boolean" />

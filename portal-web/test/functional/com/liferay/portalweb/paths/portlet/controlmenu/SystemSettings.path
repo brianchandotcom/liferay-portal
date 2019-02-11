@@ -9,6 +9,11 @@
 </thead>
 <tbody>
 <tr>
+	<td>CONFIGURATION_ENTRY</td>
+	<td>//tr[@data-qa-id="row"]//strong[contains(.,'${key_configurationEntry}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DROPDOWN_MENU</td>
 	<td>//label[contains(.,'${key_fieldLabel}')]/parent::div//div[contains(@class,'option-selected')]</td>
 	<td></td>

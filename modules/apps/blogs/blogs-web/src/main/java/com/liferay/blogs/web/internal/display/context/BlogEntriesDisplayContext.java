@@ -27,8 +27,10 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
@@ -50,6 +52,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import javax.portlet.PortletException;
+import javax.portlet.PortletURL;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -58,14 +62,63 @@ import javax.servlet.http.HttpServletRequest;
 public class BlogEntriesDisplayContext {
 
 	public BlogEntriesDisplayContext(
-		LiferayPortletRequest liferayPortletRequest) {
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse) {
 
 		_liferayPortletRequest = liferayPortletRequest;
+		_liferayPortletResponse = liferayPortletResponse;
 
 		_portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
 			liferayPortletRequest);
 
 		_request = _liferayPortletRequest.getHttpServletRequest();
+	}
+
+	public PortletURL getPortletURL() {
+		String entriesNavigation = ParamUtil.getString(
+			_request, "entriesNavigation");
+
+		int delta = ParamUtil.getInteger(
+			_request, SearchContainer.DEFAULT_DELTA_PARAM);
+		String orderByCol = ParamUtil.getString(
+			_request, "orderByCol", "title");
+		String orderByType = ParamUtil.getString(
+			_request, "orderByType", "asc");
+
+		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
+
+		portletURL.setParameter("mvcRenderCommandName", "/blogs/view");
+
+		if (delta > 0) {
+			portletURL.setParameter("delta", String.valueOf(delta));
+		}
+
+		portletURL.setParameter("orderBycol", orderByCol);
+		portletURL.setParameter("orderByType", orderByType);
+
+		portletURL.setParameter("entriesNavigation", entriesNavigation);
+
+		return portletURL;
+	}
+
+	public SearchContainer getSearchContainer()
+		throws PortalException, PortletException {
+
+		PortletURL portletURL = getPortletURL();
+
+		SearchContainer entriesSearchContainer = new SearchContainer(
+			_liferayPortletRequest,
+			PortletURLUtil.clone(portletURL, _liferayPortletResponse), null,
+			"no-entries-were-found");
+
+		entriesSearchContainer.setOrderByComparator(
+			BlogsUtil.getOrderByComparator(
+				entriesSearchContainer.getOrderByCol(),
+				entriesSearchContainer.getOrderByType()));
+
+		populateResults(entriesSearchContainer);
+
+		return entriesSearchContainer;
 	}
 
 	public List<String> getAvailableActionDropdownItems(BlogsEntry blogsEntry)
@@ -274,6 +327,7 @@ public class BlogEntriesDisplayContext {
 		BlogEntriesDisplayContext.class);
 
 	private final LiferayPortletRequest _liferayPortletRequest;
+	private final LiferayPortletResponse _liferayPortletResponse;
 	private final PortalPreferences _portalPreferences;
 	private final HttpServletRequest _request;
 	private Integer _status;

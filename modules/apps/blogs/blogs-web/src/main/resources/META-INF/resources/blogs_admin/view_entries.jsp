@@ -17,34 +17,11 @@
 <%@ include file="/blogs_admin/init.jsp" %>
 
 <%
-String entriesNavigation = ParamUtil.getString(request, "entriesNavigation");
-
-int delta = ParamUtil.getInteger(request, SearchContainer.DEFAULT_DELTA_PARAM);
-String orderByCol = ParamUtil.getString(request, "orderByCol", "title");
-String orderByType = ParamUtil.getString(request, "orderByType", "asc");
-
-PortletURL portletURL = renderResponse.createRenderURL();
-
-portletURL.setParameter("mvcRenderCommandName", "/blogs/view");
-
-if (delta > 0) {
-	portletURL.setParameter("delta", String.valueOf(delta));
-}
-
-portletURL.setParameter("orderBycol", orderByCol);
-portletURL.setParameter("orderByType", orderByType);
-
-portletURL.setParameter("entriesNavigation", entriesNavigation);
-
-SearchContainer entriesSearchContainer = new SearchContainer(renderRequest, PortletURLUtil.clone(portletURL, liferayPortletResponse), null, "no-entries-were-found");
-
-entriesSearchContainer.setOrderByComparator(BlogsUtil.getOrderByComparator(orderByCol, orderByType));
-
-BlogEntriesDisplayContext blogEntriesDisplayContext = new BlogEntriesDisplayContext(liferayPortletRequest);
-
-blogEntriesDisplayContext.populateResults(entriesSearchContainer);
+BlogEntriesDisplayContext blogEntriesDisplayContext = new BlogEntriesDisplayContext(liferayPortletRequest, liferayPortletResponse);
 
 String displayStyle = blogEntriesDisplayContext.getDisplayStyle();
+SearchContainer entriesSearchContainer = blogEntriesDisplayContext.getSearchContainer();
+PortletURL portletURL = blogEntriesDisplayContext.getPortletURL();
 
 BlogEntriesManagementToolbarDisplayContext blogEntriesManagementToolbarDisplayContext = new BlogEntriesManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, entriesSearchContainer, trashHelper, displayStyle);
 %>

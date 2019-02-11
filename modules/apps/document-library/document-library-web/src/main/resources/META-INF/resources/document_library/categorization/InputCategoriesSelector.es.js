@@ -35,6 +35,7 @@ class InputCategoriesSelector extends Component {
 
 				const itemSelectorDialog = new A.LiferayItemSelectorDialog(
 					{
+						dialogClasses: this.dialogClasses,
 						eventName: this.eventName,
 						'strings.add': Liferay.Language.get('save'),
 						title: Liferay.Language.get('select-categories'),
@@ -104,6 +105,12 @@ InputCategoriesSelector.STATE = {
 	 * @type {List<String>}
 	 */
 	commonCategories: Config.array().value([]),
+
+	/**
+	 * Classes to add to the categories selector dialog
+	 * @type {String}
+	 */
+	dialogClasses: Config.string(),
 
 	/**
 	 * Name of the event that will be dispatched when the

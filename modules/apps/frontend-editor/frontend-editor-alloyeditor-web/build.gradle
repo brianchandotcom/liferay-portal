@@ -29,6 +29,10 @@ clean {
 	delete "tmp"
 }
 
+configJSModules {
+	enabled = false
+}
+
 dependencies {
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.util.java", version: "default"

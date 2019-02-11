@@ -98,6 +98,11 @@ public class BlogEntriesManagementToolbarDisplayContext
 	}
 
 	@Override
+	public String getClearResultsURL() {
+		return getSearchActionURL();
+	}
+
+	@Override
 	public CreationMenu getCreationMenu() {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);

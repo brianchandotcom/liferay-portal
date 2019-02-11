@@ -28,14 +28,14 @@ public class CTEntryModel {
 	public static CTEntryModel forCTEntry(CTEntry ctEntry) {
 		Builder builder = new Builder();
 
-		return builder.setCTEntryId(
-			ctEntry.getCtEntryId()
-		).setChangeType(
+		return builder.setChangeType(
 			ctEntry.getChangeType()
 		).setClassNameId(
 			ctEntry.getClassNameId()
 		).setClassPK(
 			ctEntry.getClassPK()
+		).setCTEntryId(
+			ctEntry.getCtEntryId()
 		).setResourcePrimKey(
 			ctEntry.getResourcePrimKey()
 		).build();

@@ -1,13 +1,12 @@
 import Alert from 'frontend-js-web/liferay/compat/alert/Alert.es';
-import async from 'metal';
 import Component from 'metal-component';
 import dom from 'metal-dom';
 import Router from 'metal-router';
 import State from 'metal-state';
 import Uri from 'metal-uri';
-import { CancellablePromise } from 'metal-promise';
-import { RequestScreen, utils } from 'senna';
-import { toRegex } from 'metal-path-parser';
+import {CancellablePromise} from 'metal-promise';
+import {RequestScreen, utils} from 'senna';
+import {toRegex} from 'metal-path-parser';
 
 /**
  * Specific Router implementation on top of metal-router to target the specific
@@ -20,6 +19,7 @@ import { toRegex } from 'metal-path-parser';
  *  - Global server error management
  */
 class SoyPortletRouter extends State {
+
 	/**
 	 * @inheritDoc
 	 */
@@ -33,18 +33,24 @@ class SoyPortletRouter extends State {
 		router.on('endNavigate', this.onEndNavigate_.bind(this));
 		router.dispatch();
 
-		var handler = Liferay.once('beforeScreenFlip', () => {
-			router.dispose();
-			Router.routerInstance = null;
-			Router.activeRouter = null;
-		});
+		var handler = Liferay.once(
+			'beforeScreenFlip',
+			() => {
+				router.dispose();
+				Router.routerInstance = null;
+				Router.activeRouter = null;
+			}
+		);
 
-		Liferay.once(`${this.portletId}:portletRefreshed`, () => {
-			handler.detach();
-			router.dispose();
-			Router.routerInstance = null;
-			Router.activeRouter = null;
-		});
+		Liferay.once(
+			`${this.portletId}:portletRefreshed`,
+			() => {
+				handler.detach();
+				router.dispose();
+				Router.routerInstance = null;
+				Router.activeRouter = null;
+			}
+		);
 	}
 
 	/**
@@ -88,6 +94,7 @@ class SoyPortletRouter extends State {
 		 * way after retrieving the new renderState.
 		 */
 		class DeferredComponentScreen extends Router.defaultScreen {
+
 			/**
 			 * @inheritDoc
 			 */
@@ -146,7 +153,7 @@ class SoyPortletRouter extends State {
 							resolve();
 						},
 						error => reject(error)
-					)
+					);
 				});
 
 				return deferred.then(() => super.flip());
@@ -168,23 +175,27 @@ class SoyPortletRouter extends State {
 	 * @return {Router}
 	 */
 	createRouter_(route, pathFn) {
-		const config = Object.assign({
-			cacheable: false,
-			element: this.element,
-			fetch: true,
-			fetchUrl: this.getFetchUrl_.bind(this),
-			path:
-				pathFn ||
-				this.matchPath_.bind(this, route.mvcRenderCommandName),
-			portletNamespace: this.portletNamespace,
-			route
-		});
+		const config = Object.assign(
+			{
+				cacheable: false,
+				element: this.element,
+				fetch: true,
+				fetchUrl: this.getFetchUrl_.bind(this),
+				path:
+					pathFn ||
+					this.matchPath_.bind(this, route.mvcRenderCommandName),
+				portletNamespace: this.portletNamespace,
+				route
+			}
+		);
 
 		try {
 			if (config.path(utils.getCurrentBrowserPath())) {
 				config.data = this.context;
 			}
-		} catch (e) {}
+		}
+		catch (e) {
+		}
 
 		return new Router(config, this.portletWrapper);
 	}
@@ -230,14 +241,19 @@ class SoyPortletRouter extends State {
 	getPathFunctionForFriendlyURLPattern_(pattern, mapping) {
 		return (url) => {
 			let mappingPrefix = `/${mapping}`;
+
 			if (this.friendlyURLPrefix) {
 				mappingPrefix = `/-${mappingPrefix}`;
 			}
+
 			const uri = new Uri(url);
+
 			const pathname = uri.getPathname();
+
 			const currentPath = pathname.substring(
 				pathname.lastIndexOf(mappingPrefix),
 			);
+
 			return currentPath === `${mappingPrefix}${pattern}`;
 		};
 	}
@@ -269,13 +285,19 @@ class SoyPortletRouter extends State {
 	 * @return {Function} A matcher function
 	 */
 	getPathFunctionForOverriddenParameters_(overriddenParameters) {
+		let pathFunctionForOverriddenParameters_;
+
 		if (overriddenParameters['pattern-metal-router']) {
 			const url = `(.*)/${this.friendlyURLMapping}${overriddenParameters[
 				'pattern-metal-router'
 			]}`;
+
 			const regex = toRegex(url);
-			return regex.test.bind(regex);
+
+			pathFunctionForOverriddenParameters_ = regex.test.bind(regex);
 		}
+
+		return pathFunctionForOverriddenParameters_;
 	}
 
 	/**
@@ -309,8 +331,8 @@ class SoyPortletRouter extends State {
 		const pathFn = url => {
 			const uri = new Uri(url);
 
-			const portletIdParam = uri.getParameterValue('p_p_id');
 			const lifecycleParam = uri.getParameterValue('p_p_lifecycle');
+			const portletIdParam = uri.getParameterValue('p_p_id');
 
 			return lifecycleParam === '1' && portletIdParam === this.portletId;
 		};
@@ -338,17 +360,22 @@ class SoyPortletRouter extends State {
 	 * @protected
 	 */
 	initializeFriendlyURLRouters_() {
-		const routes = this.friendlyURLRoutes.reduce((routes, route) => {
-			routes[route.pattern] = route;
+		const routes = this.friendlyURLRoutes.reduce(
+			(routes, route) => {
+				routes[route.pattern] = route;
 
-			return routes;
-		}, {});
+				return routes;
+			},
+			{}
+		);
 
 		const keys = Object.keys(routes);
 
 		for (let i = 0, l = keys.length; i < l; i++) {
 			const pattern = keys[i];
+
 			const friendlyURLRoute = routes[pattern];
+
 			const implicitParameters = friendlyURLRoute.implicitParameters;
 			const mvcRenderCommandName = implicitParameters.mvcRenderCommandName;
 
@@ -362,7 +389,7 @@ class SoyPortletRouter extends State {
 
 			const pathFn = this.getPathFunctionForFriendlyURLRoute_(friendlyURLRoute);
 
-			this.createRouter_({ mvcRenderCommandName }, pathFn);
+			this.createRouter_({mvcRenderCommandName}, pathFn);
 		}
 	}
 
@@ -371,7 +398,7 @@ class SoyPortletRouter extends State {
 	 * @protected
 	 */
 	initializeRouters_() {
-		this.mvcRenderCommandNames.forEach(mvcRenderCommandName => this.createRouter_({ mvcRenderCommandName }));
+		this.mvcRenderCommandNames.forEach(mvcRenderCommandName => this.createRouter_({mvcRenderCommandName}));
 	}
 
 	/**
@@ -471,7 +498,7 @@ class SoyPortletRouter extends State {
 					dismissible: true,
 					elementClasses: 'alert-' + type,
 					hideDelay: 30000,
-					visible: true,
+					visible: true
 				},
 				this.portletWrapper,
 			);
@@ -493,22 +520,24 @@ class SoyPortletRouter extends State {
 			(event.error.requestError || event.error.invalidStatus)
 		) {
 			window.location.href = event.path;
-		} else {
+		}
+		else {
 			const activeState = Router.getActiveState();
-			if (activeState) {
-				const { _INJECTED_DATA_ } = activeState;
 
-				const { sessionErrors, sessionMessages } = _INJECTED_DATA_;
+			if (activeState) {
+				const {_INJECTED_DATA_} = activeState;
+
+				const {sessionErrors, sessionMessages} = _INJECTED_DATA_;
 
 				if (sessionMessages) {
-					Object.keys(sessionMessages).forEach(key =>
-						this.maybeShowAlert_(sessionMessages[key], 'success'),
+					Object.keys(sessionMessages).forEach(
+						key => this.maybeShowAlert_(sessionMessages[key], 'success')
 					);
 				}
 
 				if (sessionErrors) {
-					Object.keys(sessionErrors).forEach(key =>
-						this.maybeShowAlert_(sessionErrors[key]),
+					Object.keys(sessionErrors).forEach(
+						key => this.maybeShowAlert_(sessionErrors[key])
 					);
 				}
 			}
@@ -523,6 +552,7 @@ class SoyPortletRouter extends State {
  * @static
  */
 SoyPortletRouter.STATE = {
+
 	/**
 	 * @instance
 	 * @memberof SoyPortletRouter
@@ -587,7 +617,7 @@ SoyPortletRouter.STATE = {
 	 * @type {string}
 	 */
 	portletWrapper: {
-		setter: dom.toElement,
+		setter: dom.toElement
 	}
 };
 

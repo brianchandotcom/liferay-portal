@@ -125,6 +125,12 @@ definition {
 		);
 	}
 
+	macro viewFragmentPresent {
+		LexiconCard.viewCardPresent(
+			card = "${fragmentName}"
+		);
+	}
+
 	macro viewFragmentWorkflowStatus {
 		LexiconCard.viewCardLabel(
 			card = "${fragmentName}",

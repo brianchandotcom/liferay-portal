@@ -65,7 +65,9 @@ definition {
 		}
 
 		task ("Assert the copied section fragment is present") {
-			LexiconEntry.viewEntryName(rowEntry = "Fragment Name (Copy)");
+			FragmentsAdmin.viewFragmentPresent(
+				fragmentName = "Fragment Name (Copy)"
+			);
 		}
 	}
 

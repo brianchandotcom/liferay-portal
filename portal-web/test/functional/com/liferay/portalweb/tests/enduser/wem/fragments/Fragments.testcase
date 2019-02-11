@@ -46,6 +46,30 @@ definition {
 		}
 	}
 
+	@description = "Fragments can be copied. Usecase for LPS-90064 and
+	supplementary frontend test for LPS-90307"
+	@priority = "5"
+	test CopyFragment {
+		task ("Navigate to the fragment collection") {
+			Navigator.gotoNavNested(navNested = "Collection Name");
+		}
+
+		task ("Copy the section fragment") {
+			FragmentsAdmin.gotoFragmentEllipsisItem(
+				fragmentName = "Fragment Name",
+				item = "Make a Copy"
+			);
+		}
+
+		task ("Navigate to fragments admin") {
+			FragmentsAdmin.openFragmentsAdmin(siteURLKey = "test-site-name");
+		}
+
+		task ("Assert the copied section fragment is present") {
+			LexiconEntry.viewEntryName(rowEntry = "Fragment Name (Copy)");
+		}
+	}
+
 	@description = "Fragments can be deleted."
 	@priority = "5"
 	test DeleteFragment {

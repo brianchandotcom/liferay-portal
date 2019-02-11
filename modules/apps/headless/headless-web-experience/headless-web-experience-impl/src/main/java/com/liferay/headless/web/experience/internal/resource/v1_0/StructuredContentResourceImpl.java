@@ -93,6 +93,16 @@ public class StructuredContentResourceImpl
 	}
 
 	@Override
+	public StructuredContent getStructuredContent(Long structuredContentsId)
+		throws Exception {
+
+		JournalArticle journalArticle = _journalArticleService.getLatestArticle(
+			structuredContentsId);
+
+		return _toStructuredContent(journalArticle);
+	}
+
+	@Override
 	public StructuredContent postContentSpaceStructuredContent(
 			Long contentSpaceId, StructuredContent structuredContent)
 		throws Exception {

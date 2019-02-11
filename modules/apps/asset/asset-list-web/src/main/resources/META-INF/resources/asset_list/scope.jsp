@@ -138,29 +138,13 @@ PortletURL portletURL = editAssetListDisplayContext.getPortletURL();
 		function(event) {
 			event.preventDefault();
 
-			var currentTarget = $(event.currentTarget);
-
-			var searchContainerName = '<portlet:namespace />groupsSearchContainer';
-
-			var searchContainer = Liferay.SearchContainer.get(searchContainerName);
-
-			var searchContainerData = searchContainer.getData();
-
-			if (!searchContainerData.length) {
-				searchContainerData = [];
-			}
-			else {
-				searchContainerData = searchContainerData.split(',');
-			}
-
 			Liferay.Util.selectEntity(
 				{
 					dialog: {
 						destroyOnHide: true
 					},
 					eventName: '<%= editAssetListDisplayContext.getSelectGroupEventName() %>',
-					id: '<%= editAssetListDisplayContext.getSelectGroupEventName() %>' + currentTarget.attr('id'),
-					selectedData: searchContainerData,
+					id: '<%= editAssetListDisplayContext.getSelectGroupEventName() %>',
 					title: '<liferay-ui:message key="scopes" />',
 					uri: '<%= editAssetListDisplayContext.getGroupItemSelectorURL() %>'
 				},

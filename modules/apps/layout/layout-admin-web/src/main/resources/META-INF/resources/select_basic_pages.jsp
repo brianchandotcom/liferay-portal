@@ -30,12 +30,37 @@ SelectLayoutPageTemplateEntryDisplayContext selectLayoutPageTemplateEntryDisplay
 
 			<%
 			for (String primaryType : selectLayoutPageTemplateEntryDisplayContext.getPrimaryTypes()) {
+				SelectBasicPagesVerticalCard selectBasicPagesVerticalCard = new SelectBasicPagesVerticalCard(primaryType, renderRequest, renderResponse);
 			%>
 
 				<div class="col-md-4">
-					<clay:vertical-card
-						verticalCard="<%= new SelectBasicPagesVerticalCard(primaryType, renderRequest, renderResponse) %>"
-					/>
+					<div class="card card-type-asset">
+						<div class="aspect-ratio">
+							<div class="aspect-ratio-item-center-middle aspect-ratio-item-fluid layout-type-img">
+								<img src="<%= selectBasicPagesVerticalCard.getImageSrc() %>" />
+							</div>
+						</div>
+
+						<div class="card-body">
+							<div class="card-row">
+								<div class="autofit-col autofit-col-expand">
+									<section class="autofit-section">
+										<h3 class="card-title">
+											<span class="text-truncate-inline">
+												<a class="add-layout-action-option" data-add-layout-url="<%= selectBasicPagesVerticalCard.getHref() %>" href="javascript:;"><%= selectBasicPagesVerticalCard.getTitle() %></a>
+											</span>
+										</h3>
+
+										<p class="card-subtitle">
+											<span class="text-truncate-inline">
+												<%= selectBasicPagesVerticalCard.getSubtitle() %>
+											</span>
+										</p>
+									</section>
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
 
 			<%

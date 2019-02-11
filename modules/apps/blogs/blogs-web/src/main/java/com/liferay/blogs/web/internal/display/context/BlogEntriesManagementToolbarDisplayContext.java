@@ -14,9 +14,6 @@
 
 package com.liferay.blogs.web.internal.display.context;
 
-import com.liferay.blogs.constants.BlogsPortletKeys;
-import com.liferay.blogs.model.BlogsEntry;
-import com.liferay.blogs.web.internal.security.permission.resource.BlogsEntryPermission;
 import com.liferay.blogs.web.internal.security.permission.resource.BlogsPermission;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
@@ -27,27 +24,20 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.SafeConsumer;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
-import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.portlet.PortalPreferences;
-import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.trash.TrashHelper;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
@@ -146,8 +136,7 @@ public class BlogEntriesManagementToolbarDisplayContext
 							labelItem -> {
 								PortletURL removeLabelURL =
 									PortletURLUtil.clone(
-										currentURLObj,
-										liferayPortletResponse);
+										currentURLObj, liferayPortletResponse);
 
 								removeLabelURL.setParameter(
 									"entriesNavigation", (String)null);
@@ -205,7 +194,8 @@ public class BlogEntriesManagementToolbarDisplayContext
 		}
 
 		portletURL.setParameter("orderBycol", searchContainer.getOrderByCol());
-		portletURL.setParameter("orderByType", searchContainer.getOrderByType());
+		portletURL.setParameter(
+			"orderByType", searchContainer.getOrderByType());
 
 		portletURL.setParameter("entriesNavigation", _getEntriesNavigation());
 
@@ -223,27 +213,6 @@ public class BlogEntriesManagementToolbarDisplayContext
 				addTableViewTypeItem();
 			}
 		};
-	}
-
-	private PortletURL _getCurrentSortingURL() throws PortletException {
-		PortletURL sortingURL = PortletURLUtil.clone(
-			currentURLObj, liferayPortletResponse);
-
-		sortingURL.setParameter("mvcRenderCommandName", "/blogs/view");
-
-		sortingURL.setParameter(SearchContainer.DEFAULT_CUR_PARAM, "0");
-
-		String keywords = ParamUtil.getString(request, "keywords");
-
-		if (Validator.isNotNull(keywords)) {
-			sortingURL.setParameter("keywords", keywords);
-		}
-
-		return sortingURL;
-	}
-
-	private String _getEntriesNavigation() {
-		return ParamUtil.getString(request, "entriesNavigation", "all");
 	}
 
 	@Override
@@ -318,6 +287,27 @@ public class BlogEntriesManagementToolbarDisplayContext
 						}));
 			}
 		};
+	}
+
+	private PortletURL _getCurrentSortingURL() throws PortletException {
+		PortletURL sortingURL = PortletURLUtil.clone(
+			currentURLObj, liferayPortletResponse);
+
+		sortingURL.setParameter("mvcRenderCommandName", "/blogs/view");
+
+		sortingURL.setParameter(SearchContainer.DEFAULT_CUR_PARAM, "0");
+
+		String keywords = ParamUtil.getString(request, "keywords");
+
+		if (Validator.isNotNull(keywords)) {
+			sortingURL.setParameter("keywords", keywords);
+		}
+
+		return sortingURL;
+	}
+
+	private String _getEntriesNavigation() {
+		return ParamUtil.getString(request, "entriesNavigation", "all");
 	}
 
 	private final String _displayStyle;

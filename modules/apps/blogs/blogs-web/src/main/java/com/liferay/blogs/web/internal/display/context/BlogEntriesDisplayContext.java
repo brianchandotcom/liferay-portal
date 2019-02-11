@@ -55,6 +55,7 @@ import java.util.Objects;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -73,6 +74,45 @@ public class BlogEntriesDisplayContext {
 			liferayPortletRequest);
 
 		_request = _liferayPortletRequest.getHttpServletRequest();
+	}
+
+	public List<String> getAvailableActionDropdownItems(BlogsEntry blogsEntry)
+		throws PortalException {
+
+		List<String> availableActionDropdownItems = new ArrayList<>();
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PermissionChecker permissionChecker =
+			themeDisplay.getPermissionChecker();
+
+		if (BlogsEntryPermission.contains(
+				permissionChecker, blogsEntry, ActionKeys.DELETE)) {
+
+			availableActionDropdownItems.add("deleteEntries");
+		}
+
+		return availableActionDropdownItems;
+	}
+
+	public String getDisplayStyle() {
+		String displayStyle = ParamUtil.getString(_request, "displayStyle");
+
+		if (Validator.isNull(displayStyle)) {
+			displayStyle = _portalPreferences.getValue(
+				BlogsPortletKeys.BLOGS_ADMIN, "entries-display-style", "icon");
+		}
+		else {
+			_portalPreferences.setValue(
+				BlogsPortletKeys.BLOGS_ADMIN, "entries-display-style",
+				displayStyle);
+
+			_request.setAttribute(
+				WebKeys.SINGLE_PAGE_APPLICATION_CLEAR_CACHE, Boolean.TRUE);
+		}
+
+		return displayStyle;
 	}
 
 	public PortletURL getPortletURL() {
@@ -125,10 +165,10 @@ public class BlogEntriesDisplayContext {
 		return entriesSearchContainer;
 	}
 
-	public List<String> getAvailableActionDropdownItems(BlogsEntry blogsEntry)
-		throws PortalException {
-
-		List<String> availableActionDropdownItems = new ArrayList<>();
+	private int _getStatus() {
+		if (_status != null) {
+			return _status;
+		}
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -136,32 +176,16 @@ public class BlogEntriesDisplayContext {
 		PermissionChecker permissionChecker =
 			themeDisplay.getPermissionChecker();
 
-		if (BlogsEntryPermission.contains(
-			permissionChecker, blogsEntry, ActionKeys.DELETE)) {
+		if (permissionChecker.isContentReviewer(
+				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId())) {
 
-			availableActionDropdownItems.add("deleteEntries");
-		}
-
-		return availableActionDropdownItems;
-	}
-
-	public String getDisplayStyle() {
-		String displayStyle = ParamUtil.getString(_request, "displayStyle");
-
-		if (Validator.isNull(displayStyle)) {
-			displayStyle = _portalPreferences.getValue(
-				BlogsPortletKeys.BLOGS_ADMIN, "entries-display-style", "icon");
+			_status = WorkflowConstants.STATUS_ANY;
 		}
 		else {
-			_portalPreferences.setValue(
-				BlogsPortletKeys.BLOGS_ADMIN, "entries-display-style",
-				displayStyle);
-
-			_request.setAttribute(
-				WebKeys.SINGLE_PAGE_APPLICATION_CLEAR_CACHE, Boolean.TRUE);
+			_status = WorkflowConstants.STATUS_APPROVED;
 		}
 
-		return displayStyle;
+		return _status;
 	}
 
 	private void _populateResults(SearchContainer searchContainer)
@@ -302,29 +326,6 @@ public class BlogEntriesDisplayContext {
 		}
 
 		searchContainer.setResults(entriesResults);
-	}
-
-	private int _getStatus() {
-		if (_status != null) {
-			return _status;
-		}
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		PermissionChecker permissionChecker =
-			themeDisplay.getPermissionChecker();
-
-		if (permissionChecker.isContentReviewer(
-				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId())) {
-
-			_status = WorkflowConstants.STATUS_ANY;
-		}
-		else {
-			_status = WorkflowConstants.STATUS_APPROVED;
-		}
-
-		return _status;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

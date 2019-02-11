@@ -17,6 +17,8 @@ package com.liferay.portal.vulcan.internal.jaxrs.context.provider;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.security.RandomUtil;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -35,6 +37,7 @@ import org.apache.cxf.jaxrs.ext.ContextProvider;
 import org.apache.cxf.message.Message;
 
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Brian Wing Shun Chan
@@ -75,23 +78,26 @@ public class FilterContextProvider implements ContextProvider<Filter> {
 			return null;
 		}
 
-		String oDataEntityModelName =
-			ContextProviderUtil.getODataEntityModelName(message);
+		EntityModel entityModel =
+			ContextProviderUtil.getEntityModel(_bundleContext, message);
 
-		if (_log.isDebugEnabled()) {
-			_log.debug("OData entity model name: " + oDataEntityModelName);
-		}
+		String entityName = "_" + RandomUtil.nextInt(20) + "_" + entityModel.getName();
 
-		if (oDataEntityModelName == null) {
-			return null;
-		}
+		ServiceRegistration<EntityModel> entityModelServiceRegistration =
+			_bundleContext.registerService(
+				EntityModel.class, entityModel,
+				new HashMapDictionary<String, Object>() {
+					{
+						put("entity.model.name", entityName);
+					}
+				});
 
-		FilterParser filterParser =
-			ContextProviderUtil.getODataEntityModelService(
-				_bundleContext, FilterParser.class, oDataEntityModelName);
+		FilterParser filterParser = null;
 
-		if (filterParser == null) {
-			return null;
+		while (filterParser == null) {
+			filterParser =
+				ContextProviderUtil.getODataEntityModelService(
+					_bundleContext, FilterParser.class, entityName);
 		}
 
 		if (_log.isDebugEnabled()) {
@@ -105,10 +111,6 @@ public class FilterContextProvider implements ContextProvider<Filter> {
 		if (_log.isDebugEnabled()) {
 			_log.debug("OData filter: " + oDataFilter);
 		}
-
-		EntityModel entityModel =
-			ContextProviderUtil.getODataEntityModelService(
-				_bundleContext, EntityModel.class, oDataEntityModelName);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Entity model: " + entityModel);
@@ -128,6 +130,9 @@ public class FilterContextProvider implements ContextProvider<Filter> {
 		if (_log.isDebugEnabled()) {
 			_log.debug("Search filter: " + filter);
 		}
+
+		_bundleContext.ungetService(
+			entityModelServiceRegistration.getReference());
 
 		return filter;
 	}

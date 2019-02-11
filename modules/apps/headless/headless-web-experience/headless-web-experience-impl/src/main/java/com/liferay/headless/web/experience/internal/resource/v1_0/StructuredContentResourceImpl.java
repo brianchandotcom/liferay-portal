@@ -27,6 +27,8 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.headless.web.experience.dto.v1_0.StructuredContent;
+import com.liferay.headless.web.experience.internal.odata.entity.v1_0.EntityFieldHelper;
+import com.liferay.headless.web.experience.internal.odata.entity.v1_0.StructuredContentEntityModel;
 import com.liferay.headless.web.experience.resource.v1_0.StructuredContentResource;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
@@ -34,6 +36,7 @@ import com.liferay.journal.service.JournalArticleService;
 import com.liferay.journal.util.JournalConverter;
 import com.liferay.journal.util.JournalHelper;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Field;
@@ -57,13 +60,15 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.odata.entity.EntityField;
+import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.time.LocalDateTime;
 
 import java.util.AbstractMap;
-import java.util.Date;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -71,6 +76,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import javax.ws.rs.core.MultivaluedMap;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -87,6 +94,17 @@ public class StructuredContentResourceImpl
 	extends BaseStructuredContentResourceImpl {
 
 	@Override
+	public Page<StructuredContent>
+			getContentSpaceContentStructureStructuredContentPage(
+				Long contentSpaceId, Long contentStructureId, Filter filter,
+				Pagination pagination, Sort[] sorts)
+		throws Exception {
+
+		return getContentSpaceStructuredContentPage(
+			contentSpaceId, filter, pagination, sorts);
+	}
+
+	@Override
 	public Page<StructuredContent> getContentSpaceStructuredContentPage(
 			Long contentSpaceId, Filter filter, Pagination pagination,
 			Sort[] sorts)
@@ -98,6 +116,27 @@ public class StructuredContentResourceImpl
 			transform(
 				_journalHelper.getArticles(hits), this::_toStructuredContent),
 			pagination, hits.getLength());
+	}
+
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws PortalException {
+
+		Long contentStructureId = Long.valueOf(
+			(String)multivaluedMap.getFirst("content-structure-id"));
+
+		List<EntityField> entityFields;
+
+		if (contentStructureId > 0) {
+			DDMStructure ddmStructure = _ddmStructureService.getStructure(
+				contentStructureId);
+
+			entityFields = _entityFieldHelper.getEntityFields(ddmStructure);
+		}
+		else {
+			entityFields = Collections.emptyList();
+		}
+
+		return new StructuredContentEntityModel(entityFields);
 	}
 
 	@Override
@@ -403,6 +442,9 @@ public class StructuredContentResourceImpl
 
 	@Reference
 	private DDMStructureService _ddmStructureService;
+
+	@Reference
+	private EntityFieldHelper _entityFieldHelper;
 
 	@Reference
 	private IndexerRegistry _indexerRegistry;

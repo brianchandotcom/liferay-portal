@@ -30,7 +30,8 @@ page import="com.liferay.portal.kernel.util.ArrayUtil" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
-page import="com.liferay.site.taglib.internal.display.context.SiteBrowserDisplayContext" %>
+page import="com.liferay.site.taglib.internal.display.context.SiteBrowserDisplayContext" %><%@
+page import="com.liferay.site.taglib.internal.display.context.SiteBrowserManagementToolbarDisplayContext" %>
 
 <%@ page import="java.util.HashMap" %><%@
 page import="java.util.Map" %><%@

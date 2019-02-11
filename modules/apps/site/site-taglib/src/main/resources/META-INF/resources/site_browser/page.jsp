@@ -19,19 +19,10 @@
 <%
 String eventName = GetterUtil.getString(request.getAttribute("liferay-site:site-browser:eventName"));
 long[] selectedGroupIds = GetterUtil.getLongValues(request.getAttribute("liferay-site:site-browser:selectedGroupIds"));
-boolean showSearch = GetterUtil.getBoolean(request.getAttribute("liferay-site:site-browser:showSearch"));
 %>
 
 <clay:management-toolbar
-	clearResultsURL="<%= siteBrowserDisplayContext.getClearResultsURL() %>"
-	filterDropdownItems="<%= siteBrowserDisplayContext.getFilterDropdownItems() %>"
-	itemsTotal="<%= siteBrowserDisplayContext.getItemsTotal() %>"
-	searchActionURL="<%= siteBrowserDisplayContext.getSearchActionURL() %>"
-	selectable="<%= false %>"
-	showSearch="<%= showSearch %>"
-	sortingOrder="<%= siteBrowserDisplayContext.getOrderByType() %>"
-	sortingURL="<%= siteBrowserDisplayContext.getSortingURL() %>"
-	viewTypeItems="<%= siteBrowserDisplayContext.getViewTypeItems() %>"
+	displayContext="<%= new SiteBrowserManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, siteBrowserDisplayContext) %>"
 />
 
 <aui:form action="<%= siteBrowserDisplayContext.getPortletURL() %>" cssClass="container-fluid-1280" method="post" name="selectGroupFm">

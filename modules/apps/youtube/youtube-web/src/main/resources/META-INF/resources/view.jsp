@@ -36,24 +36,21 @@
 
 <aui:script>
 	function <portlet:namespace />resizeIFrame() {
-		var iFrame = document.getElementById('<portlet:namespace />iframe');
+		var iframe = document.getElementById('<portlet:namespace />iframe');
 
-		if (iFrame != null) {
+		if (iframe != null) {
 			var displayContextHeight = <%= youTubeDisplayContext.getHeight() %>;
 			var displayContextWidth = <%= youTubeDisplayContext.getWidth() %>;
 
-			iFrame.setAttribute('height', displayContextHeight);
-
-			var parent = iFrame.parentElement;
-
+			var parent = iframe.parentElement;
 			var parentWidth = parent.offsetWidth;
 
 			if (displayContextWidth > parentWidth) {
-				iFrame.setAttribute('width', parentWidth);
+				displayContextWidth = parentWidth;
 			}
-			else {
-				iFrame.setAttribute('width', displayContextWidth);
-			}
+
+			iframe.setAttribute('height', displayContextHeight);
+			iframe.setAttribute('width', displayContextWidth);
 		}
 	};
 

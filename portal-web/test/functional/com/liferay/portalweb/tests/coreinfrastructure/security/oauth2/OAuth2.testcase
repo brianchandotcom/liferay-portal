@@ -122,6 +122,24 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
+			portlet = "System Settings"
+		);
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "OAuth 2",
+			configurationName = "Bundle PrefixHandlerFactory",
+			configurationScope = "System Scope"
+		);
+
+		SystemSettings.gotoConfigurationEntry(
+			configurationEntry = "Default"
+		);
+
+		SystemSettings.deleteConfiguration();
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
 			portlet = "OAuth 2 Administration"
 		);
 

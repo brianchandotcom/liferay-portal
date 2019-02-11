@@ -19,7 +19,6 @@ import com.liferay.headless.web.experience.resource.v1_0.StructuredContentResour
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
 import com.liferay.journal.util.JournalHelper;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Field;
@@ -63,7 +62,7 @@ public class StructuredContentResourceImpl
 			Sort[] sorts)
 		throws Exception {
 
-		Hits hits = _getHits(filter, pagination, sorts);
+		Hits hits = _getHits(contentSpaceId, filter, pagination, sorts);
 
 		return Page.of(
 			transform(
@@ -72,8 +71,8 @@ public class StructuredContentResourceImpl
 	}
 
 	private SearchContext _createSearchContext(
-		Group group, Pagination pagination, PermissionChecker permissionChecker,
-		Sort[] sorts) {
+		Long groupId, Pagination pagination,
+		PermissionChecker permissionChecker, Sort[] sorts) {
 
 		SearchContext searchContext = new SearchContext();
 
@@ -84,7 +83,7 @@ public class StructuredContentResourceImpl
 		searchContext.setAttribute("head", Boolean.TRUE);
 		searchContext.setCompanyId(company.getCompanyId());
 		searchContext.setEnd(pagination.getEndPosition());
-		searchContext.setGroupIds(new long[] {group.getGroupId()});
+		searchContext.setGroupIds(new long[] {groupId});
 		searchContext.setSorts(sorts);
 		searchContext.setStart(pagination.getStartPosition());
 		searchContext.setUserId(permissionChecker.getUserId());
@@ -99,14 +98,15 @@ public class StructuredContentResourceImpl
 		return searchContext;
 	}
 
-	private Hits _getHits(Filter filter, Pagination pagination, Sort[] sorts)
+	private Hits _getHits(
+			long groupId, Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
 		SearchContext searchContext = _createSearchContext(
-			company.getGroup(), pagination, permissionChecker, sorts);
+			groupId, pagination, permissionChecker, sorts);
 
 		Query query = _getQuery(filter, searchContext);
 

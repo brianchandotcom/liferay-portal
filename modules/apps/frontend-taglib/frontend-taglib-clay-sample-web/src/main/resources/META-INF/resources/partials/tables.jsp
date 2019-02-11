@@ -21,3 +21,9 @@
 <clay:table
 	displayContext="<%= tablesDisplayContext %>"
 />
+
+<blockquote><p>Table with attributes set by the service layer</p></blockquote>
+
+<clay:table
+	attributeProviderKey="SampleTableAttributeProvider"
+/>

@@ -51,7 +51,6 @@ BlogEntriesManagementToolbarDisplayContext blogEntriesManagementToolbarDisplayCo
 
 		<liferay-ui:search-container
 			id="blogEntries"
-			rowChecker="<%= new EmptyOnClickRowChecker(renderResponse) %>"
 			searchContainer="<%= entriesSearchContainer %>"
 		>
 			<liferay-ui:search-container-row

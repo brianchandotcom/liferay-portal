@@ -173,6 +173,10 @@ definition {
 			checkGlobalScope = "Everything"
 		);
 
+		/*
+
+		Workaround for OAUTH2-243
+
 		AssertTextEquals.assertPartialText(
 			locator1 = "OAuth2#ADMIN_TABLE_APP_SCOPES_COUNT",
 			value1 = "7",
@@ -185,6 +189,8 @@ definition {
 			resourceCheckedList = "example-scope-1,example-scope-2,everything.read,everything.write,everything.read.userprofile",
 			resourcePanels = "Portal Services,Sample QA app"
 		);
+
+		*/
 
 		OAuth2.editScopes(
 			applicationName = "OAuth Application",

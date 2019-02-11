@@ -34,6 +34,15 @@ public class WorkflowMetricsSLADefinitionLocalServiceWrapper
 		_workflowMetricsSLADefinitionLocalService = workflowMetricsSLADefinitionLocalService;
 	}
 
+	@Override
+	public com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition addWorkflowMetricsSLADefinition(
+		String name, String description, long duration, long processId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _workflowMetricsSLADefinitionLocalService.addWorkflowMetricsSLADefinition(name,
+			description, duration, processId, serviceContext);
+	}
+
 	/**
 	* Adds the workflow metrics sla definition to the database. Also notifies the appropriate model listeners.
 	*
@@ -321,6 +330,16 @@ public class WorkflowMetricsSLADefinitionLocalServiceWrapper
 	@Override
 	public int getWorkflowMetricsSLADefinitionsCount() {
 		return _workflowMetricsSLADefinitionLocalService.getWorkflowMetricsSLADefinitionsCount();
+	}
+
+	@Override
+	public com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition updateWorkflowMetricsSLADefinition(
+		long workflowMetricsSLADefinitiontId, String name, String description,
+		long duration,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _workflowMetricsSLADefinitionLocalService.updateWorkflowMetricsSLADefinition(workflowMetricsSLADefinitiontId,
+			name, description, duration, serviceContext);
 	}
 
 	/**

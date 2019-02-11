@@ -42,6 +42,14 @@ public class WorkflowMetricsSLADefinitionLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.workflow.metrics.service.impl.WorkflowMetricsSLADefinitionLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition addWorkflowMetricsSLADefinition(
+		String name, String description, long duration, long processId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addWorkflowMetricsSLADefinition(name, description,
+			duration, processId, serviceContext);
+	}
 
 	/**
 	* Adds the workflow metrics sla definition to the database. Also notifies the appropriate model listeners.
@@ -313,6 +321,16 @@ public class WorkflowMetricsSLADefinitionLocalServiceUtil {
 	*/
 	public static int getWorkflowMetricsSLADefinitionsCount() {
 		return getService().getWorkflowMetricsSLADefinitionsCount();
+	}
+
+	public static com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition updateWorkflowMetricsSLADefinition(
+		long workflowMetricsSLADefinitiontId, String name, String description,
+		long duration,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateWorkflowMetricsSLADefinition(workflowMetricsSLADefinitiontId,
+			name, description, duration, serviceContext);
 	}
 
 	/**

@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -62,6 +63,9 @@ public interface WorkflowMetricsSLADefinitionLocalService
 	 *
 	 * Never modify or reference this interface directly. Always use {@link WorkflowMetricsSLADefinitionLocalServiceUtil} to access the workflow metrics sla definition local service. Add custom service methods to {@link com.liferay.portal.workflow.metrics.service.impl.WorkflowMetricsSLADefinitionLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public WorkflowMetricsSLADefinition addWorkflowMetricsSLADefinition(
+		String name, String description, long duration, long processId,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Adds the workflow metrics sla definition to the database. Also notifies the appropriate model listeners.
@@ -284,6 +288,10 @@ public interface WorkflowMetricsSLADefinitionLocalService
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getWorkflowMetricsSLADefinitionsCount();
+
+	public WorkflowMetricsSLADefinition updateWorkflowMetricsSLADefinition(
+		long workflowMetricsSLADefinitiontId, String name, String description,
+		long duration, ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Updates the workflow metrics sla definition in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

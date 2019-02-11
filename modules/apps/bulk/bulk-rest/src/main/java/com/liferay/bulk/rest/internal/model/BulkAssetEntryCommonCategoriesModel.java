@@ -15,9 +15,13 @@
 package com.liferay.bulk.rest.internal.model;
 
 import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetCategoryModel;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -31,17 +35,20 @@ public class BulkAssetEntryCommonCategoriesModel {
 	}
 
 	public BulkAssetEntryCommonCategoriesModel(
-		String description, List<AssetCategory> assetCategories) {
+		String description, Map<Long, List<AssetCategory>> assetCategoriesMap) {
 
 		_description = description;
 
-		_categories = new ArrayList<>();
+		Set<Map.Entry<Long, List<AssetCategory>>> entries =
+			assetCategoriesMap.entrySet();
 
-		for (AssetCategory assetCategory : assetCategories) {
-			_categories.add(
-				new AssetCategoryModel(
-					assetCategory.getCategoryId(), assetCategory.getName()));
-		}
+		Stream<Map.Entry<Long, List<AssetCategory>>> entryStream =
+			entries.stream();
+
+		_categories = entryStream.collect(
+			Collectors.toMap(
+				Map.Entry::getKey,
+				entry -> _toAssetCategoryModel(entry.getValue())));
 
 		_status = "success";
 	}
@@ -52,7 +59,7 @@ public class BulkAssetEntryCommonCategoriesModel {
 		_categories = null;
 	}
 
-	public List<AssetCategoryModel> getCategories() {
+	public Map<Long, List<AssetCategoryModel>> getCategories() {
 		return _categories;
 	}
 
@@ -64,7 +71,7 @@ public class BulkAssetEntryCommonCategoriesModel {
 		return _status;
 	}
 
-	public void setCategories(List<AssetCategoryModel> categories) {
+	public void setCategories(Map<Long, List<AssetCategoryModel>> categories) {
 		_categories = categories;
 	}
 
@@ -104,7 +111,20 @@ public class BulkAssetEntryCommonCategoriesModel {
 
 	}
 
-	private List<AssetCategoryModel> _categories;
+	private List<AssetCategoryModel> _toAssetCategoryModel(
+		List<AssetCategory> assetCategories) {
+
+		Stream<AssetCategory> assetCategoryStream = assetCategories.stream();
+
+		return assetCategoryStream.map(
+			assetCategory -> new AssetCategoryModel(
+				assetCategory.getCategoryId(), assetCategory.getName())
+		).collect(
+			Collectors.toList()
+		);
+	}
+
+	private Map<Long, List<AssetCategoryModel>> _categories;
 	private String _description;
 	private String _status;
 

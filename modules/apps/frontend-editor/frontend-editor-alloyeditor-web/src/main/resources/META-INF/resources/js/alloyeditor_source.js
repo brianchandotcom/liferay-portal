@@ -151,9 +151,7 @@ AUI.add(
 					_onEditorUpdate: function(event) {
 						var instance = this;
 
-						if (!instance._isClicked) {
-							instance._toggleSourceSwitchFn(event.data.state);
-						}
+						instance._toggleSourceSwitchFn(event.data.state);
 					},
 
 					_onFullScreenBtnClick: function() {
@@ -344,7 +342,11 @@ AUI.add(
 					_toggleSourceSwitch: function(editorState) {
 						var instance = this;
 
-						var showSourceSwitch = instance._isVisible || instance._isFocused || !editorState.hidden;
+						var showSourceSwitch = true;
+
+						if (!instance._isClicked) {
+							showSourceSwitch = instance._isVisible || instance._isFocused || !editorState.hidden;
+						}
 
 						instance._editorSwitch.ancestor().toggleClass('hide', !showSourceSwitch);
 					}

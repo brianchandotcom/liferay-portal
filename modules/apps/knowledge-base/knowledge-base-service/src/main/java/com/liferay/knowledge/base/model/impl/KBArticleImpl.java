@@ -94,10 +94,9 @@ public class KBArticleImpl extends KBArticleBaseImpl {
 		Repository repository = PortletFileRepositoryUtil.addPortletRepository(
 			getGroupId(), KBConstants.SERVICE_NAME, serviceContext);
 
-		long userId = PortalUtil.getValidUserId(getCompanyId(), getUserId());
-
 		Folder folder = PortletFileRepositoryUtil.addPortletFolder(
-			userId, repository.getRepositoryId(),
+			PortalUtil.getValidUserId(getCompanyId(), getUserId()),
+			repository.getRepositoryId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			String.valueOf(getResourcePrimKey()), serviceContext);
 

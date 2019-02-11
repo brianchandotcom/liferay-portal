@@ -14,6 +14,10 @@ AUI.add(
 		var LiferayItemSelectorDialog = A.Component.create(
 			{
 				ATTRS: {
+					dialogClasses: {
+						validator: Lang.isString,
+					},
+
 					eventName: {
 						validator: Lang.isString
 					},
@@ -75,6 +79,7 @@ AUI.add(
 						Util.selectEntity(
 							{
 								dialog: {
+									cssClass: instance.get('dialogClasses'),
 									constrain: true,
 									destroyOnHide: true,
 									modal: true,

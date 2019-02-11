@@ -5,19 +5,13 @@
 		"metal-soy": "^2.14.0"
 	},
 	"devDependencies": {
-		"babel-cli": "6.26.0",
-		"babel-preset-es2015": "6.24.1",
-		"babel-preset-liferay-project": "^1.6.1",
-		"liferay-module-config-generator": "^1.2.1",
-		"liferay-npm-bundler": "^1.8.0",
-		"liferay-npm-bundler-preset-amd": "^1.6.1",
-		"liferay-npm-bundler-preset-standard": "^1.3.0",
-		"metal-tools-soy": "^4.2.1",
-		"rimraf": "^2.6.2"
+		"liferay-npm-scripts": "1.2.0"
 	},
 	"name": "dynamic-data-mapping-form-renderer",
 	"scripts": {
-		"build": "metalsoy && babel -d classes/META-INF/resources src/main/resources/META-INF/resources --ignore src/main/resources/META-INF/resources/js && liferay-npm-bundler && rimraf src/**/*.soy.js"
+		"build": "liferay-npm-scripts build --soy --bundler",
+		"csf": "liferay-npm-scripts lint",
+		"format": "liferay-npm-scripts format"
 	},
 	"version": "4.0.0"
 }

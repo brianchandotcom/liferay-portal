@@ -371,21 +371,15 @@ definition {
 		SelectFrame(locator1 = "IFrame#DIALOG");
 
 		if (isSet(userMiddleName)) {
-			AssertTextEquals(
-				locator1 = "Card#SPECIFIC_LARGE_TEXT",
-				value1 = "${userFirstName} ${userMiddleName} ${userLastName}"
+			LexiconCard.checkCardCheckbox(
+				card = "${userFirstName} ${userMiddleName} ${userLastName}"
 			);
 		}
 		else {
-			AssertTextEquals(
-				locator1 = "Card#SPECIFIC_LARGE_TEXT",
-				value1 = "${userFirstName} ${userLastName}"
+			LexiconCard.checkCardCheckbox(
+				card = "${userFirstName} ${userLastName}"
 			);
 		}
-
-		AssertTextEquals(locator1 = "Card#SPECIFIC_TEXT", value1 = "${userScreenName}");
-
-		Check(locator1 = "Card#SPECIFIC_CHECKBOX");
 
 		SelectFrameTop();
 
@@ -1238,18 +1232,23 @@ definition {
 	}
 
 	macro viewMemberCP {
-		var key_cardText = "${userScreenName}";
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "Card#SPECIFIC_LARGE_TEXT",
-			value1 = "${userFirstName} ${userLastName}"
+		LexiconCard.viewCardPresent(
+			card = "${userFirstName} ${userLastName}"
 		);
 
-		AssertTextEquals(locator1 = "Card#SPECIFIC_TEXT", value1 = "${userScreenName}");
+		LexiconCard.viewCardTitle(
+			card = "${userFirstName} ${userLastName}"
+		);
 
-		var key_rowEntry = "${key_cardText}";
+		LexiconCard.viewCardSubtitle(
+			card = "${userFirstName} ${userLastName}",
+			cardSubtitle = "${userScreenName}"
+		);
 
-		AssertVisible(locator1 = "Icon#ROW_VERTICAL_ELLIPSIS");
+		AssertVisible(
+			locator1 = "LexiconCard#CARD_ELLIPSIS",
+			key_card = "${userFirstName} ${userLastName}"
+		);
 	}
 
 	macro viewMemberListCP {

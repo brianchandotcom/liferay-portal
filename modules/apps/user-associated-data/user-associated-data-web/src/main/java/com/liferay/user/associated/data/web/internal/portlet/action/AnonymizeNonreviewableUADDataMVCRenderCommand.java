@@ -16,7 +16,6 @@ package com.liferay.user.associated.data.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
@@ -77,15 +76,21 @@ public class AnonymizeNonreviewableUADDataMVCRenderCommand
 		try {
 			User selectedUser = _portal.getSelectedUser(renderRequest);
 
-			renderRequest.setAttribute(
-				UADWebKeys.TOTAL_NONREVIEWABLE_UAD_ENTITIES_COUNT,
-				_getTotalNonreviewableUADEntitiesCount(
-					selectedUser.getUserId()));
-
 			SearchContainer<UADApplicationSummaryDisplay> searchContainer =
 				_createSearchContainer(
 					LocaleThreadLocal.getThemeDisplayLocale(), renderRequest,
 					selectedUser.getUserId());
+
+			int totalCount = 0;
+
+			for (UADApplicationSummaryDisplay uadApplicationSummaryDisplay :
+					searchContainer.getResults()) {
+
+				totalCount += uadApplicationSummaryDisplay.getCount();
+			}
+
+			renderRequest.setAttribute(
+				UADWebKeys.TOTAL_NONREVIEWABLE_UAD_ENTITIES_COUNT, totalCount);
 
 			renderRequest.setAttribute(
 				WebKeys.SEARCH_CONTAINER, searchContainer);
@@ -98,8 +103,9 @@ public class AnonymizeNonreviewableUADDataMVCRenderCommand
 	}
 
 	private SearchContainer<UADApplicationSummaryDisplay>
-		_createSearchContainer(
-			Locale locale, RenderRequest renderRequest, long userId) {
+			_createSearchContainer(
+				Locale locale, RenderRequest renderRequest, long userId)
+		throws PortalException {
 
 		PortletRequest portletRequest =
 			(PortletRequest)renderRequest.getAttribute(
@@ -199,28 +205,9 @@ public class AnonymizeNonreviewableUADDataMVCRenderCommand
 		return display -> true;
 	}
 
-	private int _getReviewableUADEntitiesCount(
-		Stream<UADAnonymizer> uadAnonymizerStream, long userId) {
-
-		return uadAnonymizerStream.mapToInt(
-			uadAnonymizer -> {
-				try {
-					return (int)uadAnonymizer.count(userId);
-				}
-				catch (PortalException pe) {
-					throw new SystemException(pe);
-				}
-			}
-		).sum();
-	}
-
-	private int _getTotalNonreviewableUADEntitiesCount(long userId) {
-		return _getReviewableUADEntitiesCount(
-			_uadRegistry.getNonreviewableUADAnonymizerStream(), userId);
-	}
-
 	private UADApplicationSummaryDisplay _getUADApplicationSummaryDisplay(
-		String applicationKey, long userId) {
+			String applicationKey, long userId)
+		throws PortalException {
 
 		UADApplicationSummaryDisplay uadApplicationSummaryDisplay =
 			new UADApplicationSummaryDisplay();
@@ -229,8 +216,13 @@ public class AnonymizeNonreviewableUADDataMVCRenderCommand
 			_uadRegistry.getNonreviewableApplicationUADAnonymizers(
 				applicationKey);
 
-		int count = _getReviewableUADEntitiesCount(
-			nonreviewableApplicationUADAnonymizers.stream(), userId);
+		int count = 0;
+
+		for (UADAnonymizer uadAnonymizer :
+				nonreviewableApplicationUADAnonymizers) {
+
+			count += uadAnonymizer.count(userId);
+		}
 
 		uadApplicationSummaryDisplay.setCount(count);
 
@@ -240,7 +232,8 @@ public class AnonymizeNonreviewableUADDataMVCRenderCommand
 	}
 
 	private List<UADApplicationSummaryDisplay>
-		_getUADApplicationSummaryDisplays(long userId) {
+			_getUADApplicationSummaryDisplays(long userId)
+		throws PortalException {
 
 		List<UADApplicationSummaryDisplay> uadApplicationSummaryDisplays =
 			new ArrayList<>();

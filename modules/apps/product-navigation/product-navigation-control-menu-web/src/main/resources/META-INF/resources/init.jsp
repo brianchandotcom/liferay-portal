@@ -20,6 +20,7 @@
 
 <%@ taglib uri="http://liferay.com/tld/asset" prefix="liferay-asset" %><%@
 taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
+taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/product-navigation" prefix="liferay-product-navigation" %><%@
@@ -77,6 +78,7 @@ page import="com.liferay.portal.util.PropsValues" %><%@
 page import="com.liferay.portal.util.WebAppPool" %><%@
 page import="com.liferay.product.navigation.control.menu.web.internal.constants.ProductNavigationControlMenuPortletKeys" %><%@
 page import="com.liferay.product.navigation.control.menu.web.internal.constants.ProductNavigationControlMenuWebKeys" %><%@
+page import="com.liferay.product.navigation.control.menu.web.internal.servlet.taglib.clay.AssetRendererVerticalCard" %><%@
 page import="com.liferay.taglib.aui.AUIUtil" %>
 
 <%@ page import="java.util.ArrayList" %><%@

@@ -181,30 +181,22 @@ if (Validator.isNotNull(keywords)) {
 					itemData.put("instanceable", true);
 					itemData.put("portlet-id", portletId);
 					itemData.put("title", title);
-
-					String thumbnailPath = HtmlUtil.escapeAttribute(assetRenderer.getThumbnailPath(liferayPortletRequest));
 				%>
 
 					<c:choose>
 						<c:when test='<%= displayStyle.equals("icon") %>'>
 							<li class="col-md-6 col-sm-6 col-xs-6 drag-content-item lfr-content-item" <%= AUIUtil.buildData(itemData) %>>
-								<c:choose>
-									<c:when test="<%= Validator.isNotNull(thumbnailPath) %>">
-										<liferay-frontend:vertical-card
-											imageUrl="<%= thumbnailPath %>"
-											title="<%= title %>"
-										/>
-									</c:when>
-									<c:otherwise>
-										<liferay-frontend:icon-vertical-card
-											icon="<%= assetRenderer.getIconCssClass() %>"
-											title="<%= title %>"
-										/>
-									</c:otherwise>
-								</c:choose>
+								<clay:vertical-card
+									verticalCard="<%= new AssetRendererVerticalCard(assetRenderer, liferayPortletRequest) %>"
+								/>
 							</li>
 						</c:when>
 						<c:otherwise>
+
+							<%
+							String thumbnailPath = HtmlUtil.escapeAttribute(assetRenderer.getThumbnailPath(liferayPortletRequest));
+							%>
+
 							<li class="drag-content-item entry-display-style lfr-content-item list-group-item" <%= AUIUtil.buildData(itemData) %>>
 								<div class=" list-group-item-field">
 									<c:choose>

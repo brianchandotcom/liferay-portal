@@ -17,9 +17,11 @@ package com.liferay.bulk.rest.internal.resource;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetTag;
+import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.kernel.service.AssetTagService;
+import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.bulk.rest.internal.model.BulkActionResponseModel;
 import com.liferay.bulk.rest.internal.model.BulkAssetEntryActionModel;
 import com.liferay.bulk.rest.internal.model.BulkAssetEntryCommonCategoriesModel;
@@ -106,19 +108,19 @@ public class BulkAssetEntryResource {
 
 			Stream<AssetEntry> stream = assetEntryBulkSelection.stream();
 
-			Stream<AssetCategory> commonCategoriesStream = stream.map(
+			Set<AssetCategory> commonCategories = stream.map(
 				_getAssetEntryCategoriesFunction(
 					PermissionCheckerFactoryUtil.create(user))
 			).reduce(
 				SetUtil::intersect
 			).orElse(
 				Collections.emptySet()
-			).stream();
+			);
 
 			return new BulkAssetEntryCommonCategoriesModel(
 				bulkSelection.describe(locale),
-				commonCategoriesStream.collect(
-					Collectors.groupingBy(AssetCategory::getVocabularyId)));
+				_groupByAssetVocabulary(commonCategories),
+				_getAssetVocabularies(commonCategories));
 		}
 		catch (Exception e) {
 			return new BulkAssetEntryCommonCategoriesModel(e);
@@ -313,6 +315,30 @@ public class BulkAssetEntryResource {
 		};
 	}
 
+	private List<AssetVocabulary> _getAssetVocabularies(
+		Set<AssetCategory> assetCategories) {
+
+		Stream<AssetCategory> assetCategoryStream = assetCategories.stream();
+
+		return assetCategoryStream.map(
+			AssetCategory::getVocabularyId
+		).distinct(
+		).map(
+			_assetVocabularyLocalService::fetchAssetVocabulary
+		).collect(
+			Collectors.toList()
+		);
+	}
+
+	private Map<Long, List<AssetCategory>> _groupByAssetVocabulary(
+		Set<AssetCategory> assetCategories) {
+
+		Stream<AssetCategory> assetCategoryStream = assetCategories.stream();
+
+		return assetCategoryStream.collect(
+			Collectors.groupingBy(AssetCategory::getVocabularyId));
+	}
+
 	@Reference
 	private AssetCategoryLocalService _assetCategoryLocalService;
 
@@ -321,6 +347,9 @@ public class BulkAssetEntryResource {
 
 	@Reference
 	private AssetTagService _assetTagService;
+
+	@Reference
+	private AssetVocabularyLocalService _assetVocabularyLocalService;
 
 	@Reference
 	private BulkSelectionFactoryRegistry _bulkSelectionFactoryRegistry;

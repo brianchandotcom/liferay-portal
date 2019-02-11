@@ -15,7 +15,7 @@
 package com.liferay.bulk.rest.internal.model;
 
 import com.liferay.asset.kernel.model.AssetCategory;
-import com.liferay.asset.kernel.model.AssetCategoryModel;
+import com.liferay.asset.kernel.model.AssetVocabulary;
 
 import java.util.List;
 import java.util.Map;
@@ -35,7 +35,8 @@ public class BulkAssetEntryCommonCategoriesModel {
 	}
 
 	public BulkAssetEntryCommonCategoriesModel(
-		String description, Map<Long, List<AssetCategory>> assetCategoriesMap) {
+		String description, Map<Long, List<AssetCategory>> assetCategoriesMap,
+		List<AssetVocabulary> assetVocabularies) {
 
 		_description = description;
 
@@ -49,6 +50,8 @@ public class BulkAssetEntryCommonCategoriesModel {
 			Collectors.toMap(
 				Map.Entry::getKey,
 				entry -> _toAssetCategoryModel(entry.getValue())));
+
+		_vocabularies = _toAssetVocabularyModel(assetVocabularies);
 
 		_status = "success";
 	}
@@ -71,6 +74,10 @@ public class BulkAssetEntryCommonCategoriesModel {
 		return _status;
 	}
 
+	public List<AssetVocabularyModel> getVocabularies() {
+		return _vocabularies;
+	}
+
 	public void setCategories(Map<Long, List<AssetCategoryModel>> categories) {
 		_categories = categories;
 	}
@@ -81,6 +88,10 @@ public class BulkAssetEntryCommonCategoriesModel {
 
 	public void setStatus(String status) {
 		_status = status;
+	}
+
+	public void setVocabularies(List<AssetVocabularyModel> vocabularies) {
+		_vocabularies = vocabularies;
 	}
 
 	public class AssetCategoryModel {
@@ -111,6 +122,34 @@ public class BulkAssetEntryCommonCategoriesModel {
 
 	}
 
+	public class AssetVocabularyModel {
+
+		public AssetVocabularyModel(long vocabularyId, String name) {
+			_vocabularyId = vocabularyId;
+			_name = name;
+		}
+
+		public String getName() {
+			return _name;
+		}
+
+		public long getVocabularyId() {
+			return _vocabularyId;
+		}
+
+		public void setName(String name) {
+			_name = name;
+		}
+
+		public void setVocabularyId(long vocabularyId) {
+			_vocabularyId = vocabularyId;
+		}
+
+		private String _name;
+		private long _vocabularyId;
+
+	}
+
 	private List<AssetCategoryModel> _toAssetCategoryModel(
 		List<AssetCategory> assetCategories) {
 
@@ -124,8 +163,23 @@ public class BulkAssetEntryCommonCategoriesModel {
 		);
 	}
 
+	private List<AssetVocabularyModel> _toAssetVocabularyModel(
+		List<AssetVocabulary> assetVocabularies) {
+
+		Stream<AssetVocabulary> assetVocabularyStream =
+			assetVocabularies.stream();
+
+		return assetVocabularyStream.map(
+			assetVocabulary -> new AssetVocabularyModel(
+				assetVocabulary.getVocabularyId(), assetVocabulary.getName())
+		).collect(
+			Collectors.toList()
+		);
+	}
+
 	private Map<Long, List<AssetCategoryModel>> _categories;
 	private String _description;
 	private String _status;
+	private List<AssetVocabularyModel> _vocabularies;
 
 }

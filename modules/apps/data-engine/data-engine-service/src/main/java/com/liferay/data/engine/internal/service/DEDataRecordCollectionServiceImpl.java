@@ -28,6 +28,8 @@ import com.liferay.data.engine.internal.executor.DEDataRecordCollectionSaveReque
 import com.liferay.data.engine.internal.io.DEDataDefinitionFieldsDeserializerTracker;
 import com.liferay.data.engine.internal.security.permission.DEDataEnginePermissionSupport;
 import com.liferay.data.engine.internal.storage.DEDataStorageTracker;
+import com.liferay.data.engine.model.DEDataDefinition;
+import com.liferay.data.engine.model.DEDataDefinitionField;
 import com.liferay.data.engine.model.DEDataRecord;
 import com.liferay.data.engine.model.DEDataRecordCollection;
 import com.liferay.data.engine.service.DEDataRecordCollectionDeleteModelPermissionsRequest;
@@ -58,7 +60,15 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Portal;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -293,6 +303,8 @@ public class DEDataRecordCollectionServiceImpl
 					DEActionKeys.UPDATE_DATA_RECORD);
 			}
 
+			verifyDataDefinitionFields(deDataRecordCollectionSaveRecordRequest);
+
 			DEDataRecordCollectionSaveRecordRequestExecutor
 				deDataRecordCollectionSaveRecordRequestExecutor =
 					getDEDataRecordCollectionSaveRecordRequestExecutor();
@@ -369,6 +381,18 @@ public class DEDataRecordCollectionServiceImpl
 		catch (Exception e) {
 			throw new DEDataRecordCollectionException(e);
 		}
+	}
+
+	protected Map<String, DEDataDefinitionField> getDEDataDefinitionFieldsMap(
+		DEDataDefinition deDataDefinition) {
+
+		List<DEDataDefinitionField> deDataDefinitionFields =
+			deDataDefinition.getDEDataDefinitionFields();
+
+		Stream<DEDataDefinitionField> stream = deDataDefinitionFields.stream();
+
+		return stream.collect(
+			Collectors.toMap(field -> field.getName(), Function.identity()));
 	}
 
 	@Override
@@ -496,6 +520,33 @@ public class DEDataRecordCollectionServiceImpl
 			modelResourcePermission) {
 
 		_modelResourcePermission = modelResourcePermission;
+	}
+
+	protected void verifyDataDefinitionFields(
+			DEDataRecordCollectionSaveRecordRequest deDataRecordCollectionSaveRecordRequest)
+		throws DEDataRecordCollectionException {
+
+		DEDataRecord dataRecord = deDataRecordCollectionSaveRecordRequest.getDEDataRecord();
+
+		DEDataDefinition deDataDefinition = dataRecord.getDEDataDefinition();
+
+		Map<String, Object> values = dataRecord.getValues();
+
+		Map<String, DEDataDefinitionField> deDataDefinitionFields =
+			getDEDataDefinitionFieldsMap(deDataDefinition);
+
+		List<String> fieldNames = new ArrayList<>();
+
+		for (Map.Entry<String, Object> entry : values.entrySet()) {
+			if (!deDataDefinitionFields.containsKey(entry.getKey())) {
+				fieldNames.add(entry.getKey());
+			}
+		}
+
+		if (!fieldNames.isEmpty()) {
+			throw new DEDataRecordCollectionException.NoSuchFields(
+				ArrayUtil.toStringArray(fieldNames));
+		}
 	}
 
 	@Reference

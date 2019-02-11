@@ -95,6 +95,20 @@ public class DEDataRecordCollectionException extends PortalException {
 
 	}
 
+	public static class NoSuchFields extends DEDataRecordCollectionException {
+
+		public NoSuchFields(String[] fieldNames) {
+			_fieldNames = fieldNames;
+		}
+
+		public String[] getFieldNames() {
+			return _fieldNames;
+		}
+
+		private final String[] _fieldNames;
+
+	}
+
 	public static class NoSuchRoles extends DEDataRecordCollectionException {
 
 		public NoSuchRoles(String[] roleNames) {

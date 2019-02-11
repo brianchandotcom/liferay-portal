@@ -134,6 +134,13 @@ public class RESTBuilder {
 				_createPropertiesFile(context, schemaName, versionDirName);
 				_createResourceFile(context, schemaName, versionDirName);
 				_createResourceImplFile(context, schemaName, versionDirName);
+
+				if (Validator.isNull(_configYAML.getTestDir())) {
+					continue;
+				}
+
+				_createBaseTestCaseFile(context, schemaName, versionDirName);
+				_createTestFile(context, schemaName, versionDirName);
 			}
 
 			Queue<Map<String, Schema>> schemasMapsQueue = new LinkedList<>();
@@ -172,6 +179,10 @@ public class RESTBuilder {
 		FileUtil.deleteFiles(_configYAML.getImplDir(), _files);
 		FileUtil.deleteFiles(
 			_configYAML.getImplDir() + "/../resources/OSGI-INF/", _files);
+
+		if (Validator.isNotNull(_configYAML.getTestDir())) {
+			FileUtil.deleteFiles(_configYAML.getTestDir(), _files);
+		}
 	}
 
 	private void _createApplicationFile(Map<String, Object> context)
@@ -232,6 +243,36 @@ public class RESTBuilder {
 			file,
 			FreeMarkerUtil.processTemplate(
 				_copyrightFileName, "base_resource_impl", context));
+	}
+
+	private void _createBaseTestCaseFile(
+			Map<String, Object> context, String schemaName,
+			String versionDirName)
+		throws Exception {
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(_configYAML.getTestDir());
+		sb.append("/");
+
+		String apiPackagePath = _configYAML.getApiPackagePath();
+
+		sb.append(apiPackagePath.replace('.', '/'));
+
+		sb.append("/test/");
+		sb.append(versionDirName);
+		sb.append("/Base");
+		sb.append(schemaName);
+		sb.append("TestCase.java");
+
+		File file = new File(sb.toString());
+
+		_files.add(file);
+
+		FileUtil.write(
+			file,
+			FreeMarkerUtil.processTemplate(
+				_copyrightFileName, "base_test_case", context));
 	}
 
 	private void _createDTOFile(
@@ -347,6 +388,40 @@ public class RESTBuilder {
 			file,
 			FreeMarkerUtil.processTemplate(
 				_copyrightFileName, "resource_impl", context));
+	}
+
+	private void _createTestFile(
+			Map<String, Object> context, String schemaName,
+			String versionDirName)
+		throws Exception {
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(_configYAML.getTestDir());
+		sb.append("/");
+
+		String apiPackagePath = _configYAML.getApiPackagePath();
+
+		sb.append(apiPackagePath.replace('.', '/'));
+
+		sb.append("/test/");
+		sb.append(versionDirName);
+		sb.append("/");
+		sb.append(schemaName);
+		sb.append("Test.java");
+
+		File file = new File(sb.toString());
+
+		_files.add(file);
+
+		if (file.exists()) {
+			return;
+		}
+
+		FileUtil.write(
+			file,
+			FreeMarkerUtil.processTemplate(
+				_copyrightFileName, "test", context));
 	}
 
 	private final File _configDir;

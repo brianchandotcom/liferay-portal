@@ -15,11 +15,15 @@
 package com.liferay.frontend.taglib.clay.servlet.taglib.soy.base;
 
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
+import com.liferay.frontend.taglib.clay.attribute.provider.ClayComponentAttributeProvider;
+import com.liferay.frontend.taglib.clay.attribute.provider.ClayComponentAttributeProviderRegistry;
+import com.liferay.frontend.taglib.clay.internal.ClayComponentAttributeProviderRegistryHelper;
 import com.liferay.frontend.taglib.clay.internal.js.loader.modules.extender.npm.NPMResolverProvider;
 import com.liferay.frontend.taglib.soy.servlet.taglib.TemplateRendererTag;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.Validator;
@@ -27,6 +31,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Map;
 
+import java.util.Map.Entry;
 import javax.portlet.PortletResponse;
 
 /**
@@ -60,6 +65,12 @@ public abstract class BaseClayTag extends TemplateRendererTag {
 			}
 		}
 
+		String attributeProviderKey = GetterUtil.getString(context.get("attributeProviderKey"));
+
+		if (Validator.isNotNull(attributeProviderKey)) {
+			_setAttributeProviderAttributes(attributeProviderKey);
+		}
+
 		setTemplateNamespace(_componentBaseName + ".render");
 
 		return super.doStartTag();
@@ -91,6 +102,10 @@ public abstract class BaseClayTag extends TemplateRendererTag {
 		}
 
 		return _namespace;
+	}
+
+	public void setAttributeProviderKey(String attributeProviderKey) {
+		putValue("attributeProviderKey", attributeProviderKey);
 	}
 
 	public void setComponentBaseName(String componentBaseName) {
@@ -138,6 +153,29 @@ public abstract class BaseClayTag extends TemplateRendererTag {
 
 	protected String[] getNamespacedParams() {
 		return null;
+	}
+
+	private void _setAttributeProviderAttributes(String attributeProviderKey) {
+		ClayComponentAttributeProviderRegistry registry = ClayComponentAttributeProviderRegistryHelper
+			.getRegistry();
+
+		if (registry == null) {
+			return;
+		}
+
+		ClayComponentAttributeProvider attributeProvider = registry.get(attributeProviderKey);
+
+		if (attributeProvider == null) {
+			return;
+		}
+
+		Map<String, Object> attributes = attributeProvider.getAttributes();
+
+		for (Entry<String, Object> entry : attributes.entrySet()) {
+			if (Validator.isNull(getContext().get(entry.getKey()))) {
+				putValue(entry.getKey(), entry.getValue());
+			}
+		}
 	}
 
 	private String _componentBaseName;

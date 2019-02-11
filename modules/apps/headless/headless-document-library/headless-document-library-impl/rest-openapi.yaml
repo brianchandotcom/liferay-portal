@@ -68,7 +68,7 @@ components:
             type: integer
           type: array
         contentUrl:
-          format: uri
+          format: binary
           type: string
         creator:
           $ref: "#/components/schemas/Creator"
@@ -549,9 +549,15 @@ paths:
             type: integer
       requestBody:
         content:
-          application/json:
+          multipart/form-data:
             schema:
-              $ref: "#/components/schemas/Document"
+              type: object
+              properties:
+                document:
+                  $ref: "#/components/schemas/Document"
+                file:
+                  type: string
+                  format: binary
       responses:
         200:
           content:

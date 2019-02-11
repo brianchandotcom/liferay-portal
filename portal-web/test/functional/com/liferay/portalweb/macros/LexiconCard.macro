@@ -1,4 +1,15 @@
 definition {
+	macro checkCardCheckbox {
+		LexiconCard.clickCard(
+			card = "${card}"
+		);
+
+		AssertChecked.assertCheckedNotVisible(
+			locator1 = "LexiconCard#CARD_CHECKBOX",
+			key_card = "${card}"
+		);
+	}
+
 	macro clickCard {
 		Click(
 			locator1 = "LexiconCard#CARD",

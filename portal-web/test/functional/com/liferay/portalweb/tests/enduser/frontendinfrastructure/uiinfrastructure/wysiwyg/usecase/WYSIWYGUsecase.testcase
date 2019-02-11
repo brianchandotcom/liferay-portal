@@ -181,20 +181,20 @@ definition {
 
 		Portlet.addPG(portletName = "Wiki");
 
-		LanguagePortlet.selectLanguagePG(locale = "iw_IL", textIcon = "עברית-ישראל");
+		LanguagePortlet.selectLanguagePG(locale = "ar_SA", textIcon = "العربية-السعودية");
 
 		WikiPage.addLocalizedFrontPagePG(
-			emptyPageMessage = "דף זה ריק. ערוך אותו על מנת להוסיף טקסט",
+			emptyPageMessage = "هذه الصفحة فارغة. قم بتحريرها لإضافة نص.",
 			rtl = "true",
-			successMessage = "בקשתך עברה בהצלחה",
-			wikiPageContent = "Wiki Right to Left תוֹכֶן"
+			successMessage = "نجاح:تم تنفيذ طلبك بنجاح",
+			wikiPageContent = "Wiki Right to Left يحتوى"
 		);
 
 		Navigator.gotoPage(pageName = "${pageName}");
 
 		WikiPage.viewLocalizedFrontPagePG(
 			rightToLeft = "true",
-			wikiPageContent = "Wiki Right to Left תוֹכֶן"
+			wikiPageContent = "Wiki Right to Left يحتوى"
 		);
 
 		LanguagePortlet.selectLanguagePG(

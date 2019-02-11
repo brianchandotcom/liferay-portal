@@ -81,24 +81,9 @@
 					%>
 
 					<liferay-ui:search-container-column-text>
-						<c:choose>
-							<c:when test="<%= siteBrowserDisplayContext.isShowLink(group) %>">
-
-								<%
-								Map<String, Object> urlData = data;
-								%>
-
-								<%@ include file="/site_vertical_card.jspf" %>
-							</c:when>
-							<c:otherwise>
-
-								<%
-								Map<String, Object> urlData = null;
-								%>
-
-								<%@ include file="/site_vertical_card.jspf" %>
-							</c:otherwise>
-						</c:choose>
+						<clay:vertical-card
+							verticalCard="<%= new SiteVerticalCard(group, renderRequest, siteBrowserDisplayContext) %>"
+						/>
 					</liferay-ui:search-container-column-text>
 				</c:when>
 				<c:when test='<%= Objects.equals(siteBrowserDisplayContext.getDisplayStyle(), "list") %>'>

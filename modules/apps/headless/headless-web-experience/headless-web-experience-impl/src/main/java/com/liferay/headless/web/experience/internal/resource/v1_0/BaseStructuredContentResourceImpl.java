@@ -31,6 +31,7 @@ import java.util.function.Function;
 import javax.annotation.Generated;
 
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.Response;
 
 /**
  * @author Javier Gamarra
@@ -42,6 +43,15 @@ public abstract class BaseStructuredContentResourceImpl
 
 	public static final String ODATA_ENTITY_MODEL_NAME =
 		"com_liferay_headless_web_experience_dto_v1_0_StructuredContentEntityModel";
+
+	@Override
+	public Response deleteStructuredContent(Long structuredContentsId)
+		throws Exception {
+
+		Response.ResponseBuilder responseBuilder = Response.ok();
+
+		return responseBuilder.build();
+	}
 
 	@Override
 	public Page<StructuredContent> getContentSpaceContentStructureStructuredContentsPage(

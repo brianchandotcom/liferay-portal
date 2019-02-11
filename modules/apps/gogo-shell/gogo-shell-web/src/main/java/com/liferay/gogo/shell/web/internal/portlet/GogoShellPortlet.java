@@ -52,6 +52,7 @@ import javax.portlet.RenderResponse;
 
 import org.apache.felix.service.command.CommandProcessor;
 import org.apache.felix.service.command.CommandSession;
+import org.apache.felix.service.command.Converter;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -128,7 +129,12 @@ public class GogoShellPortlet extends MVCPortlet {
 
 			checkCommand(command, themeDisplay);
 
-			commandSession.execute(command);
+			Object result = commandSession.execute(command);
+
+			if (result != null) {
+				outputPrintStream.print(
+					commandSession.format(result, Converter.INSPECT));
+			}
 
 			outputPrintStream.flush();
 			errorPrintStream.flush();

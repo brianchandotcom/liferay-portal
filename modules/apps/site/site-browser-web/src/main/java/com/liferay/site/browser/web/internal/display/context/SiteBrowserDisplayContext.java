@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.security.membershippolicy.SiteMembershipPolicyUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
@@ -63,12 +64,16 @@ import javax.servlet.http.HttpServletRequest;
 public class SiteBrowserDisplayContext {
 
 	public SiteBrowserDisplayContext(
-		HttpServletRequest request, LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse) {
+			HttpServletRequest request,
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse)
+		throws PortalException {
 
 		_request = request;
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
+
+		_selUser = PortalUtil.getSelectedUser(_request);
 	}
 
 	public String getDisplayStyle() {
@@ -83,6 +88,18 @@ public class SiteBrowserDisplayContext {
 			SiteBrowserPortletKeys.SITE_BROWSER, "display-style", "list");
 
 		return _displayStyle;
+	}
+
+	public String getEventName() {
+		if (_eventName != null) {
+			return _eventName;
+		}
+
+		_eventName = ParamUtil.getString(
+			_request, "eventName",
+			_liferayPortletResponse.getNamespace() + "selectSite");
+
+		return _eventName;
 	}
 
 	public GroupSearch getGroupSearch() throws Exception {
@@ -309,6 +326,20 @@ public class SiteBrowserDisplayContext {
 		return portletURL;
 	}
 
+	public User getSelUser() {
+		return _selUser;
+	}
+
+	public String getTarget() {
+		if (_target != null) {
+			return _target;
+		}
+
+		_target = ParamUtil.getString(_request, "target");
+
+		return _target;
+	}
+
 	public String getType() {
 		if (_type != null) {
 			return _type;
@@ -323,6 +354,27 @@ public class SiteBrowserDisplayContext {
 		}
 
 		return _type;
+	}
+
+	public boolean isShowLink(Group group) {
+		try {
+			long userId = 0;
+
+			if (_selUser != null) {
+				userId = _selUser.getUserId();
+			}
+
+			if (Validator.isNull(_getPuid()) ||
+				SiteMembershipPolicyUtil.isMembershipAllowed(
+					userId, group.getGroupId())) {
+
+				return true;
+			}
+		}
+		catch (Exception e) {
+		}
+
+		return false;
 	}
 
 	private List<Group> _filterGroups(
@@ -487,6 +539,16 @@ public class SiteBrowserDisplayContext {
 		return _orderByCol;
 	}
 
+	private String _getPuid() {
+		if (_puid != null) {
+			return _puid;
+		}
+
+		_puid = ParamUtil.getString(_request, "p_u_i_d");
+
+		return _puid;
+	}
+
 	private String[] _getTypes() {
 		if (_types != null) {
 			return _types;
@@ -530,6 +592,7 @@ public class SiteBrowserDisplayContext {
 		SiteBrowserDisplayContext.class);
 
 	private String _displayStyle;
+	private String _eventName;
 	private String _filter;
 	private Long _groupId;
 	private LinkedHashMap<String, Object> _groupParams;
@@ -540,7 +603,10 @@ public class SiteBrowserDisplayContext {
 	private String _orderByCol;
 	private String _orderByType;
 	private Boolean _privateLayout;
+	private String _puid;
 	private final HttpServletRequest _request;
+	private final User _selUser;
+	private String _target;
 	private String _type;
 	private String[] _types;
 

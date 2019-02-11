@@ -16,15 +16,6 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-String p_u_i_d = ParamUtil.getString(request, "p_u_i_d");
-String displayStyle = siteBrowserDisplayContext.getDisplayStyle();
-String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectSite");
-String target = ParamUtil.getString(request, "target");
-
-User selUser = PortalUtil.getSelectedUser(request);
-%>
-
 <clay:navigation-bar
 	navigationItems="<%= siteBrowserDisplayContext.getNavigationItems() %>"
 />
@@ -51,13 +42,13 @@ User selUser = PortalUtil.getSelectedUser(request);
 
 			data.put("entityid", group.getGroupId());
 			data.put("entityname", group.getDescriptiveName(locale));
-			data.put("grouptarget", target);
+			data.put("grouptarget", siteBrowserDisplayContext.getTarget());
 			data.put("grouptype", LanguageUtil.get(request, group.getTypeLabel()));
 			data.put("url", group.getDisplayURL(themeDisplay));
 			%>
 
 			<c:choose>
-				<c:when test='<%= displayStyle.equals("descriptive") %>'>
+				<c:when test='<%= Objects.equals(siteBrowserDisplayContext.getDisplayStyle(), "descriptive") %>'>
 					<liferay-ui:search-container-column-icon
 						icon="sites"
 					/>
@@ -67,7 +58,7 @@ User selUser = PortalUtil.getSelectedUser(request);
 					>
 						<h5>
 							<c:choose>
-								<c:when test="<%= Validator.isNull(p_u_i_d) || SiteMembershipPolicyUtil.isMembershipAllowed((selUser != null) ? selUser.getUserId() : 0, group.getGroupId()) %>">
+								<c:when test="<%= siteBrowserDisplayContext.isShowLink(group) %>">
 									<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
 										<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>
 									</aui:a>
@@ -83,7 +74,7 @@ User selUser = PortalUtil.getSelectedUser(request);
 						</h6>
 					</liferay-ui:search-container-column-text>
 				</c:when>
-				<c:when test='<%= displayStyle.equals("icon") %>'>
+				<c:when test='<%= Objects.equals(siteBrowserDisplayContext.getDisplayStyle(), "icon") %>'>
 
 					<%
 					row.setCssClass("entry-card lfr-asset-item " + row.getCssClass());
@@ -91,7 +82,7 @@ User selUser = PortalUtil.getSelectedUser(request);
 
 					<liferay-ui:search-container-column-text>
 						<c:choose>
-							<c:when test="<%= Validator.isNull(p_u_i_d) || SiteMembershipPolicyUtil.isMembershipAllowed((selUser != null) ? selUser.getUserId() : 0, group.getGroupId()) %>">
+							<c:when test="<%= siteBrowserDisplayContext.isShowLink(group) %>">
 
 								<%
 								Map<String, Object> urlData = data;
@@ -110,13 +101,13 @@ User selUser = PortalUtil.getSelectedUser(request);
 						</c:choose>
 					</liferay-ui:search-container-column-text>
 				</c:when>
-				<c:when test='<%= displayStyle.equals("list") %>'>
+				<c:when test='<%= Objects.equals(siteBrowserDisplayContext.getDisplayStyle(), "list") %>'>
 					<liferay-ui:search-container-column-text
 						name="name"
 						truncate="<%= true %>"
 					>
 						<c:choose>
-							<c:when test="<%= Validator.isNull(p_u_i_d) || SiteMembershipPolicyUtil.isMembershipAllowed((selUser != null) ? selUser.getUserId() : 0, group.getGroupId()) %>">
+							<c:when test="<%= siteBrowserDisplayContext.isShowLink(group) %>">
 								<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
 									<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>
 								</aui:a>
@@ -136,7 +127,7 @@ User selUser = PortalUtil.getSelectedUser(request);
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator
-			displayStyle="<%= displayStyle %>"
+			displayStyle="<%= siteBrowserDisplayContext.getDisplayStyle() %>"
 			markupView="lexicon"
 		/>
 	</liferay-ui:search-container>
@@ -154,5 +145,5 @@ User selUser = PortalUtil.getSelectedUser(request);
 		}
 	);
 
-	Util.selectEntityHandler('#<portlet:namespace />selectGroupFm', '<%= HtmlUtil.escapeJS(eventName) %>', <%= selUser != null %>);
+	Util.selectEntityHandler('#<portlet:namespace />selectGroupFm', '<%= HtmlUtil.escapeJS(siteBrowserDisplayContext.getEventName()) %>', <%= siteBrowserDisplayContext.getSelUser() != null %>);
 </aui:script>

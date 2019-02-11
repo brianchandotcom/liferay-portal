@@ -72,7 +72,7 @@ components:
           writeOnly: true
         name:
           type: string
-        object:
+        objectReviewed:
           description: https://www.schema.org/Object
           properties:
             id:

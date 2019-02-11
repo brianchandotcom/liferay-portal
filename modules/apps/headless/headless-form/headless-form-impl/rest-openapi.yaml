@@ -233,6 +233,8 @@ components:
                 id:
                   format: int64
                   type: integer
+                immutable:
+                  type: boolean
                 inline:
                   type: boolean
                 inputControl:

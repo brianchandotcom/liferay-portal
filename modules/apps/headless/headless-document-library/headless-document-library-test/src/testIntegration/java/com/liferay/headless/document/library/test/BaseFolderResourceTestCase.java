@@ -31,6 +31,8 @@ import io.restassured.response.Response;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import java.util.Date;
+
 import javax.annotation.Generated;
 
 import org.hamcrest.core.IsNull;
@@ -60,7 +62,7 @@ public abstract class BaseFolderResourceTestCase {
 
 		_outputObjectMapper = new ObjectMapper();
 
-		_outputObjectMapper.addMixIn(Folder.class, IgnoreIdFieldMixin.class);
+		_outputObjectMapper.addMixIn(Folder.class, IgnoreFieldsMixin.class);
 
 		RestAssured.defaultParser = Parser.JSON;
 	}
@@ -97,11 +99,15 @@ public abstract class BaseFolderResourceTestCase {
 	public void testGetFolder()
 		throws JsonProcessingException, MalformedURLException {
 
-		Folder folder = _createFolder(getFolder());
+		Folder inputFolder = _createFolder(getFolder());
 
-		assertThat(
-			_toJSON(_getFolder("/folder/" + folder.getId())),
-			_sameJSONAs(folder));
+		Folder folder = _getFolder("/folder/" + inputFolder.getId());
+
+		assertThat(_toJSON(folder), _sameJSONAs(inputFolder));
+
+		assertThat(folder.getDateCreated(), IsNull.notNullValue());
+		assertThat(folder.getDateModified(), IsNull.notNullValue());
+		assertThat(folder.getId(), IsNull.notNullValue());
 	}
 
 	@Test
@@ -194,6 +200,10 @@ public abstract class BaseFolderResourceTestCase {
 		).then(
 		).statusCode(
 			200
+		).body(
+			"dateCreated", IsNull.notNullValue()
+		).body(
+			"dateModified", IsNull.notNullValue()
 		).body(
 			"id", IsNull.notNullValue()
 		).extract(
@@ -334,6 +344,10 @@ public abstract class BaseFolderResourceTestCase {
 		).statusCode(
 			200
 		).body(
+			"dateCreated", IsNull.notNullValue()
+		).body(
+			"dateModified", IsNull.notNullValue()
+		).body(
 			"id", IsNull.notNullValue()
 		).extract(
 		).response(
@@ -351,7 +365,13 @@ public abstract class BaseFolderResourceTestCase {
 	@ArquillianResource
 	private URL _url;
 
-	private abstract class IgnoreIdFieldMixin {
+	private abstract class IgnoreFieldsMixin {
+
+		@JsonIgnore
+		public abstract Date getDateCreated();
+
+		@JsonIgnore
+		public abstract Date getDateModified();
 
 		@JsonIgnore
 		public abstract Long getId();

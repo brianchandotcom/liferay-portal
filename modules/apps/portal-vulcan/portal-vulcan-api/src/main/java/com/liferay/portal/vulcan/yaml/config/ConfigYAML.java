@@ -39,6 +39,10 @@ public class ConfigYAML {
 		return _implDir;
 	}
 
+	public String getTestDir() {
+		return _testDir;
+	}
+
 	public void setApiDir(String apiDir) {
 		_apiDir = apiDir;
 	}
@@ -59,10 +63,15 @@ public class ConfigYAML {
 		_implDir = implDir;
 	}
 
+	public void setTestDir(String testDir) {
+		_testDir = testDir;
+	}
+
 	private String _apiDir;
 	private String _apiPackagePath;
 	private Application _application;
 	private String _author;
 	private String _implDir = "src/main/java";
+	private String _testDir;
 
 }

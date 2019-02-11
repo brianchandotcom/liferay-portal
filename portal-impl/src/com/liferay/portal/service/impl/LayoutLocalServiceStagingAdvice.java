@@ -177,7 +177,7 @@ public class LayoutLocalServiceStagingAdvice implements BeanFactoryAware {
 			groupId, privateLayout, layoutId, parentLayoutId);
 
 		Layout layout = LayoutUtil.findByG_P_L(
-			groupId, privateLayout, layoutId);
+			groupId, privateLayout, layoutId, true);
 
 		if (LayoutStagingUtil.isBranchingLayout(layout)) {
 			layout = getProxiedLayout(layout);
@@ -274,7 +274,7 @@ public class LayoutLocalServiceStagingAdvice implements BeanFactoryAware {
 		throws PortalException {
 
 		Layout layout = LayoutUtil.findByG_P_L(
-			groupId, privateLayout, layoutId);
+			groupId, privateLayout, layoutId, true);
 
 		if (LayoutStagingUtil.isBranchingLayout(layout)) {
 			layout = getProxiedLayout(layout);
@@ -323,7 +323,7 @@ public class LayoutLocalServiceStagingAdvice implements BeanFactoryAware {
 		throws PortalException {
 
 		Layout layout = LayoutUtil.findByG_P_L(
-			groupId, privateLayout, layoutId);
+			groupId, privateLayout, layoutId, true);
 
 		if (LayoutStagingUtil.isBranchingLayout(layout)) {
 			layout = getProxiedLayout(layout);

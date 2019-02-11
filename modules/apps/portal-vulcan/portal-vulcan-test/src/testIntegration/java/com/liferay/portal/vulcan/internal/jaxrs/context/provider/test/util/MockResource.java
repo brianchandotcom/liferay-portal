@@ -21,6 +21,8 @@ import com.liferay.portal.odata.entity.StringEntityField;
 import java.util.Collections;
 import java.util.Map;
 
+import javax.ws.rs.core.MultivaluedMap;
+
 /**
  * @author Cristina González
  */
@@ -37,18 +39,19 @@ public class MockResource {
 
 		@Override
 		public String getName() {
-			return ODATA_ENTITY_MODEL_NAME;
+			return "Example";
 		}
 
 	};
 
 	public static final String METHOD_NAME = "exampleJaxRSMethod";
 
-	public static final String ODATA_ENTITY_MODEL_NAME =
-		"ExampleResourceEntityModel";
-
 	public String exampleJaxRSMethod(String param) {
 		return "";
+	}
+
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
+		return ENTITY_MODEL;
 	}
 
 }

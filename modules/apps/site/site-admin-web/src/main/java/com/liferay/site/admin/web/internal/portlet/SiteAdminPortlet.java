@@ -680,9 +680,14 @@ public class SiteAdminPortlet extends MVCPortlet {
 
 		long liveGroupId = ParamUtil.getLong(actionRequest, "liveGroupId");
 
+		long defaultParentGroupId = ParamUtil.getLong(
+			actionRequest, "parentGroupId",
+			GroupConstants.DEFAULT_PARENT_GROUP_ID);
+
 		long parentGroupId = ParamUtil.getLong(
 			actionRequest, "parentGroupSearchContainerPrimaryKeys",
-			GroupConstants.DEFAULT_PARENT_GROUP_ID);
+			defaultParentGroupId);
+
 		Map<Locale, String> nameMap = null;
 		Map<Locale, String> descriptionMap = null;
 		int type = 0;

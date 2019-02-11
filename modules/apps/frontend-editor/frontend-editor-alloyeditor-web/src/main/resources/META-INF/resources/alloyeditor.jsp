@@ -160,17 +160,19 @@ name = HtmlUtil.escapeJS(name);
 						on: {
 							selectedItemChange: function(event) {
 								var selectedItem = event.newVal;
+
 								if (selectedItem) {
 									callback(selectedItem);
 								}
 							}
 						},
-						title: Liferay.Language.get('select-item'),
+						title: '<liferay-ui:message key="select-item" />',
 						url: linkHref
 					});
 
 				itemSelectorDialog.open();
-			});
+			}
+		);
 	};
 
 	var getInitialContent = function() {

@@ -53,7 +53,7 @@ String editorName = (String)request.getAttribute(AlloyEditorConstants.ATTRIBUTE_
 				alloyEditorInstances = 0;
 				alloyEditorDisposeResources = false;
 			}
-		}
+		};
 
 		Liferay.namespace('EDITORS').alloyEditor = {
 			addInstance: function() {
@@ -64,7 +64,7 @@ String editorName = (String)request.getAttribute(AlloyEditorConstants.ATTRIBUTE_
 
 				cleanupAlloyEditorResources();
 			}
-		}
+		};
 
 		CKEDITOR.scriptLoader.loadScripts = function(scripts, success, failure) {
 			CKEDITOR.scriptLoader.load(scripts, success, failure);

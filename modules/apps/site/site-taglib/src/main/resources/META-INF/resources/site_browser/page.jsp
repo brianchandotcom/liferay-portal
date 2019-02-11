@@ -81,39 +81,12 @@ long[] selectedGroupIds = GetterUtil.getLongValues(request.getAttribute("liferay
 
 					<%
 					row.setCssClass("entry-card lfr-asset-item " + row.getCssClass());
-
-					Map<String, Object> linkData = new HashMap<String, Object>();
-
-					linkData.put("prevent-selection", true);
 					%>
 
 					<liferay-ui:search-container-column-text>
-						<div <%= !ArrayUtil.contains(selectedGroupIds, group.getGroupId()) ? "role='button'" : StringPool.BLANK %>>
-							<c:choose>
-								<c:when test="<%= Validator.isNotNull(group.getLogoURL(themeDisplay, false)) %>">
-									<liferay-frontend:vertical-card
-										cssClass='<%= ArrayUtil.contains(selectedGroupIds, group.getGroupId()) ? "text-muted" : "selector-button" %>'
-										data="<%= data %>"
-										imageUrl="<%= group.getLogoURL(themeDisplay, false) %>"
-										resultRow="<%= row %>"
-										rowChecker="<%= searchContainer.getRowChecker() %>"
-										showCheckbox="<%= false %>"
-										title="<%= group.getDescriptiveName(locale) %>"
-									/>
-								</c:when>
-								<c:otherwise>
-									<liferay-frontend:icon-vertical-card
-										cssClass='<%= ArrayUtil.contains(selectedGroupIds, group.getGroupId()) ? "text-muted" : "selector-button" %>'
-										data="<%= data %>"
-										icon="sites"
-										resultRow="<%= row %>"
-										rowChecker="<%= searchContainer.getRowChecker() %>"
-										showCheckbox="<%= false %>"
-										title="<%= group.getDescriptiveName(locale) %>"
-									/>
-								</c:otherwise>
-							</c:choose>
-						</div>
+						<clay:vertical-card
+							verticalCard="<%= new SiteVerticalCard(group, renderRequest, selectedGroupIds) %>"
+						/>
 					</liferay-ui:search-container-column-text>
 				</c:when>
 				<c:when test='<%= Objects.equals(siteBrowserDisplayContext.getDisplayStyle(), "list") %>'>

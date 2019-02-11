@@ -1,15 +1,11 @@
 {
-	"dependencies": {
-		"liferay-module-config-generator": "^1.3.3"
-	},
 	"devDependencies": {
-		"check-source-formatting": "^2.0.12"
+		"liferay-npm-scripts": "1.2.0"
 	},
 	"name": "asset-taglib",
 	"scripts": {
-		"checkFormat": "npm run csf",
-		"csf": "csf src/**/*.js src/**/*.jsp",
-		"format": "npm run csf -- -i"
+		"csf": "liferay-npm-scripts lint",
+		"format": "liferay-npm-scripts format"
 	},
 	"version": "4.0.0"
 }

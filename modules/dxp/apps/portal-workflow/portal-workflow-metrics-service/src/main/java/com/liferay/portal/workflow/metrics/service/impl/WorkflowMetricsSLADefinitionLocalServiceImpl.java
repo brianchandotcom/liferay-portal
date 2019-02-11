@@ -14,7 +14,13 @@
 
 package com.liferay.portal.workflow.metrics.service.impl;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition;
 import com.liferay.portal.workflow.metrics.service.base.WorkflowMetricsSLADefinitionLocalServiceBaseImpl;
+
+import java.util.Date;
 
 /**
  * The implementation of the workflow metrics sla definition local service.
@@ -33,10 +39,55 @@ import com.liferay.portal.workflow.metrics.service.base.WorkflowMetricsSLADefini
 public class WorkflowMetricsSLADefinitionLocalServiceImpl
 	extends WorkflowMetricsSLADefinitionLocalServiceBaseImpl {
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use {@link com.liferay.portal.workflow.metrics.service.WorkflowMetricsSLADefinitionLocalServiceUtil} to access the workflow metrics sla definition local service.
-	 */
+	public WorkflowMetricsSLADefinition addWorkflowMetricsSLADefinition(
+			String name, String description, long duration, long processId,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		User user = userLocalService.getUser(serviceContext.getGuestOrUserId());
+		Date now = new Date();
+
+		WorkflowMetricsSLADefinition workflowMetricsSLADefinition =
+			workflowMetricsSLADefinitionPersistence.create(
+				counterLocalService.increment());
+
+		workflowMetricsSLADefinition.setGroupId(
+			serviceContext.getScopeGroupId());
+		workflowMetricsSLADefinition.setCompanyId(user.getCompanyId());
+		workflowMetricsSLADefinition.setUserId(user.getUserId());
+		workflowMetricsSLADefinition.setUserName(user.getFullName());
+		workflowMetricsSLADefinition.setCreateDate(now);
+		workflowMetricsSLADefinition.setModifiedDate(now);
+		workflowMetricsSLADefinition.setName(name);
+		workflowMetricsSLADefinition.setDescription(description);
+		workflowMetricsSLADefinition.setDuration(duration);
+		workflowMetricsSLADefinition.setProcessId(processId);
+
+		workflowMetricsSLADefinitionPersistence.update(
+			workflowMetricsSLADefinition);
+
+		resourceLocalService.addModelResources(
+			workflowMetricsSLADefinition, serviceContext);
+
+		return workflowMetricsSLADefinition;
+	}
+
+	public WorkflowMetricsSLADefinition updateWorkflowMetricsSLADefinition(
+			long workflowMetricsSLADefinitiontId, String name,
+			String description, long duration, ServiceContext serviceContext)
+		throws PortalException {
+
+		WorkflowMetricsSLADefinition workflowMetricsSLADefinition =
+			workflowMetricsSLADefinitionPersistence.findByPrimaryKey(
+				workflowMetricsSLADefinitiontId);
+
+		workflowMetricsSLADefinition.setModifiedDate(new Date());
+		workflowMetricsSLADefinition.setName(name);
+		workflowMetricsSLADefinition.setDescription(description);
+		workflowMetricsSLADefinition.setDuration(duration);
+
+		return workflowMetricsSLADefinitionPersistence.update(
+			workflowMetricsSLADefinition);
+	}
 
 }

@@ -942,10 +942,10 @@ definition {
 			Click(locator1 = "Modal#BODY");
 
 			if ("${editAction}" == "Append") {
-				Click(locator1 = "Radio#APPEND");
+				FormFields.selectRadioOption(fieldName = "add", radioOption = "Add");
 			}
 			else if ("${editAction}" == "Replace") {
-				Click(locator1 = "Radio#REPLACE");
+				FormFields.selectRadioOption(fieldName = "replace", radioOption = "Replace");
 			}
 		}
 

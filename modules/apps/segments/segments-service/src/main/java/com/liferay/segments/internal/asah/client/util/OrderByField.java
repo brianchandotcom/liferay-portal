@@ -21,7 +21,7 @@ package com.liferay.segments.internal.asah.client.util;
 public class OrderByField {
 
 	public static OrderByField asc(String fieldName) {
-		return new OrderByField(fieldName, "asc", false);
+		return new OrderByField(fieldName, "asc", true);
 	}
 
 	public static OrderByField asc(String fieldName, boolean system) {
@@ -29,7 +29,7 @@ public class OrderByField {
 	}
 
 	public static OrderByField desc(String fieldName) {
-		return new OrderByField(fieldName, "desc", false);
+		return new OrderByField(fieldName, "desc", true);
 	}
 
 	public static OrderByField desc(String fieldName, boolean system) {

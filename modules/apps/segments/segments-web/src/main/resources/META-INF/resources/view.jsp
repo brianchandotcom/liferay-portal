@@ -76,7 +76,7 @@ SegmentsDisplayContext segmentsDisplayContext = (SegmentsDisplayContext)request.
 				name="source"
 			>
 				<c:choose>
-					<c:when test="<%= segmentsEntry.getSource() == SegmentsConstants.SOURCE_ASAH_FARO_BACKEND %>">
+					<c:when test="<%= Objects.equals(segmentsEntry.getSource(), SegmentsConstants.SOURCE_ASAH_FARO_BACKEND) %>">
 						<liferay-ui:icon
 							message="source.analytics-cloud"
 							src='<%= PortalUtil.getPathContext(request) + "/assets/ac-icon.svg" %>'

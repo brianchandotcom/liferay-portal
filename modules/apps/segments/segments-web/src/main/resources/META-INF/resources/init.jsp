@@ -48,6 +48,8 @@ page import="com.liferay.segments.web.internal.display.context.SegmentsDisplayCo
 page import="com.liferay.segments.web.internal.display.context.SelectOrganizationsDisplayContext" %><%@
 page import="com.liferay.segments.web.internal.display.context.SelectUsersDisplayContext" %>
 
+<%@ page import="java.util.Objects" %>
+
 <liferay-frontend:defineObjects />
 
 <liferay-theme:defineObjects />

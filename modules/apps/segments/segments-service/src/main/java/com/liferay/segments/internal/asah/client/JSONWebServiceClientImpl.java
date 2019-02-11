@@ -91,7 +91,7 @@ public class JSONWebServiceClientImpl implements JSONWebServiceClient {
 	private void _validateResponse(Response response) {
 		int status = response.getStatus();
 
-		if ((status < HttpServletResponse.SC_OK) &&
+		if ((status < HttpServletResponse.SC_OK) ||
 			(status >= HttpServletResponse.SC_MULTIPLE_CHOICES)) {
 
 			throw new ClientErrorException(

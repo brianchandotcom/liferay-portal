@@ -23,8 +23,6 @@ String eventName = ParamUtil.getString(request, "eventName", liferayPortletRespo
 String target = ParamUtil.getString(request, "target");
 
 User selUser = PortalUtil.getSelectedUser(request);
-
-GroupSearch groupSearch = siteBrowserDisplayContext.getGroupSearch();
 %>
 
 <clay:navigation-bar
@@ -32,22 +30,12 @@ GroupSearch groupSearch = siteBrowserDisplayContext.getGroupSearch();
 />
 
 <clay:management-toolbar
-	clearResultsURL="<%= siteBrowserDisplayContext.getClearResultsURL() %>"
-	componentId="siteBrowserWebManagementToolbar"
-	filterDropdownItems="<%= siteBrowserDisplayContext.getFilterDropdownItems() %>"
-	itemsTotal="<%= siteBrowserDisplayContext.getTotalItems() %>"
-	searchActionURL="<%= siteBrowserDisplayContext.getSearchActionURL() %>"
-	searchFormName="searchFm"
-	selectable="<%= false %>"
-	showSearch='<%= !Objects.equals(siteBrowserDisplayContext.getType(), "parent-sites") %>'
-	sortingOrder="<%= siteBrowserDisplayContext.getOrderByType() %>"
-	sortingURL="<%= siteBrowserDisplayContext.getSortingURL() %>"
-	viewTypeItems="<%= siteBrowserDisplayContext.getViewTypeItems() %>"
+	displayContext="<%= new SiteBrowserManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, siteBrowserDisplayContext) %>"
 />
 
 <aui:form action="<%= siteBrowserDisplayContext.getPortletURL() %>" cssClass="container-fluid-1280" method="post" name="selectGroupFm">
 	<liferay-ui:search-container
-		searchContainer="<%= groupSearch %>"
+		searchContainer="<%= siteBrowserDisplayContext.getGroupSearch() %>"
 	>
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.kernel.model.Group"

@@ -63,7 +63,6 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import java.time.LocalDateTime;
 
 import java.util.AbstractMap;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -71,6 +70,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import javax.ws.rs.core.Response;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -85,6 +86,20 @@ import org.osgi.service.component.annotations.ServiceScope;
 )
 public class StructuredContentResourceImpl
 	extends BaseStructuredContentResourceImpl {
+
+	@Override
+	public Response deleteStructuredContent(Long structuredContentId)
+		throws Exception {
+
+		JournalArticle journalArticle = _journalArticleService.getLatestArticle(
+			structuredContentId);
+
+		_journalArticleService.deleteArticle(
+			journalArticle.getGroupId(), journalArticle.getArticleId(),
+			journalArticle.getArticleResourceUuid(), new ServiceContext());
+
+		return buildNoContentResponse();
+	}
 
 	@Override
 	public Page<StructuredContent> getContentSpaceStructuredContentPage(

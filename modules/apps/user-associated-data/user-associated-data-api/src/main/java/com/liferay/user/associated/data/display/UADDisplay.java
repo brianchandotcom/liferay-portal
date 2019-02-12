@@ -194,6 +194,17 @@ public interface UADDisplay<T> extends UADComponent<T> {
 	public String getTypeName(Locale locale);
 
 	/**
+	 * Returns <code>true</code> if entities of type {@code T} are scoped by
+	 * site.
+	 *
+	 * @return <code>true</code> if entities of type {@code T} are scoped by
+	 * 		   site; <code>false</code> otherwise
+	 */
+	public default boolean isSiteScoped() {
+		return false;
+	}
+
+	/**
 	 * Returns paginated sorted entities of type {@code T} related to a user,
 	 * optionally filtered by groups and/or keywords.
 	 *

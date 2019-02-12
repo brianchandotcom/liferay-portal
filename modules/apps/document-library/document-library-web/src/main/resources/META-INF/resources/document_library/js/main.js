@@ -255,8 +255,8 @@ AUI.add(
 						var bulkSelection = instance._searchContainer.select && instance._searchContainer.select.get('bulkSelection');
 
 						if (!editTagsComponent) {
-							var urlTags = themeDisplay.getPortalURL() + '/o/bulk/asset/tags/' + instance.get('classNameId') + '/common';
 							var urlSearchTags = themeDisplay.getPortalURL() + '/o/bulk/asset/tags/' + instance._config.scopeGroupId + '/search';
+							var urlTags = themeDisplay.getPortalURL() + '/o/bulk/asset/tags/' + instance.get('classNameId') + '/common';
 							var urlUpdateTags = themeDisplay.getPortalURL() + '/o/bulk/asset/tags/' + instance.get('classNameId');
 
 							Liferay.Loader.require(
@@ -270,8 +270,8 @@ AUI.add(
 											repositoryId: parseFloat(form.get(namespace + 'repositoryId').val()),
 											selectAll: bulkSelection,
 											spritemap: themeDisplay.getPathThemeImages() + '/lexicon/icons.svg',
-											urlTags: urlTags,
 											urlSearchTags: urlSearchTags,
+											urlTags: urlTags,
 											urlUpdateTags: urlUpdateTags
 										},
 										'#' + instance.NS + 'documentLibraryModal'

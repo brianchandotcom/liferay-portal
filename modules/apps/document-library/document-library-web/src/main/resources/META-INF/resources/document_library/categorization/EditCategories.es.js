@@ -104,11 +104,9 @@ class EditCategories extends Component {
 			response => {
 				if (response) {
 					this.loading = false;
-					this.commonCategories = response.categories;
 					this.description = response.description;
 					this.multiple = (this.fileEntries.length > 1) || this.selectAll;
-
-					this._initialCategoriesIds = this.commonCategories.map(item => item.value);
+					this.vocabularies = this._parseVocabularies(response.vocabularies);
 				}
 			}
 		);
@@ -176,6 +174,25 @@ class EditCategories extends Component {
 		);
 	}
 
+	_parseVocabularies(vocabularies) {
+		let vocabulariesList = [];
+
+		vocabularies.forEach(
+			vocabulary => {
+				let obj = {
+					categories: this._parseCategories(vocabulary.categories),
+					id: vocabulary.vocabularyId,
+					multiValued: vocabulary.multiValued,
+					name: vocabulary.name
+				};
+
+				vocabulariesList.push(obj);
+			}
+		);
+
+		return vocabulariesList;
+	}
+
 	/**
 	 * Transforms the categories list in the object needed
 	 * for the ClayMultiSelect component.
@@ -183,7 +200,7 @@ class EditCategories extends Component {
 	 * @param {List<Long, String>} categories
 	 * @return {List<{label, value}>} new commonItems object list
 	 */
-	_setCommonCategories(categories) {
+	_parseCategories(categories) {
 		let categoriesObjList = [];
 
 		if (categories.length > 0) {
@@ -210,16 +227,6 @@ class EditCategories extends Component {
  * @type {!Object}
  */
 EditCategories.STATE = {
-
-	/**
-	 * Categories of the selected fileEntries.
-	 *
-	 * @instance
-	 * @memberof EditCategories
-	 * @review
-	 * @type {List<String>}
-	 */
-	commonCategories: Config.array().setter('_setCommonCategories').value([]),
 
 	/**
 	 * Description
@@ -342,7 +349,14 @@ EditCategories.STATE = {
 	 * @review
 	 * @type {String}
 	 */
-	urlUpdateCategories: Config.string().required()
+	urlUpdateCategories: Config.string().required(),
+
+	/**
+	 * List of vocabularies
+	 *
+	 * @type {Array}
+	 */
+	vocabularies: Config.array().value([])
 };
 
 // Register component

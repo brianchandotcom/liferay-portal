@@ -1,10 +1,10 @@
 {namespace EditCategories}
 
 {template .render}
-	{@param commonCategories: list<?>}
 	{@param dataSource: string|[]|list<?>}
 	{@param loading: bool}
 	{@param spritemap: string}
+	{@param? vocabularies: list<?>}
 	{@param? description: string}
 	{@param? multiple: bool}
 	{@param? portletNamespace: string}
@@ -18,13 +18,13 @@
 				{call .loading /}
 			{else}
 				{call .categories}
-					{param commonCategories: $commonCategories /}
 					{param description: $description /}
 					{param dataSource: $dataSource /}
 					{param multiple: $multiple /}
 					{param portletNamespace: $portletNamespace /}
 					{param selectCategoriesUrl: $selectCategoriesUrl /}
 					{param spritemap: $spritemap /}
+					{param vocabularies: $vocabularies /}
 					{param _handleRadioChange: $_handleRadioChange /}
 				{/call}
 			{/if}
@@ -56,8 +56,8 @@
 {/template}
 
 {template .categories}
-	{@param commonCategories: list<?>}
 	{@param dataSource: string|[]|list<?>}
+	{@param? vocabularies: list<?>}
 	{@param? portletNamespace: string}
 	{@param? selectCategoriesUrl: string}
 	{@param spritemap: string}
@@ -96,12 +96,41 @@
 		</p>
 	{/if}
 
+	{if $vocabularies and length($vocabularies) > 0}
+		{foreach $vocabulary in $vocabularies}
+			{call .categorySelector}
+				{param vocabularyId: $vocabulary.id /}
+				{param vocabularyName: $vocabulary.name /}
+				{param isMultiValued: $vocabulary.multiValued /}
+				{param categories: $vocabulary.categories /}
+				{param dataSource: $dataSource /}
+				{param portletNamespace: $portletNamespace /}
+				{param selectCategoriesUrl: $selectCategoriesUrl /}
+				{param spritemap: $spritemap /}
+			{/call}
+		{/foreach}
+	{/if}
+{/template}
+
+{template .categorySelector}
+	{@param categories: list<?>}
+	{@param dataSource: string|[]|list<?>}
+	{@param isMultiValued: bool}
+	{@param spritemap: string}
+	{@param vocabularyId: number}
+	{@param vocabularyName: string}
+	{@param? portletNamespace: string}
+	{@param? selectCategoriesUrl: string}
+
 	{call InputCategoriesSelector.render}
-		{param commonCategories: $commonCategories /}
+		{param commonCategories: $categories /}
 		{param dataSource: $dataSource /}
 		{param dialogClasses: 'modal-dialog-sm' /}
 		{param eventName: $portletNamespace + 'selectCategories' /}
+		{param isMultiValued: $isMultiValued /}
 		{param selectCategoriesUrl: $selectCategoriesUrl /}
 		{param spritemap: $spritemap /}
+		{param vocabularyId: $vocabularyId /}
+		{param vocabularyName: $vocabularyName /}
 	{/call}
 {/template}

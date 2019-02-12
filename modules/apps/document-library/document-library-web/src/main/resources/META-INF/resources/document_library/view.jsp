@@ -176,7 +176,7 @@ String navigation = ParamUtil.getString(request, "navigation");
 		selectCategoriesURL.setParameter("eventName", liferayPortletResponse.getNamespace() + "selectCategories");
         selectCategoriesURL.setParameter(
 			"selectedCategories", "{selectedCategories}");
-		selectCategoriesURL.setParameter("singleSelect", "false");
+		selectCategoriesURL.setParameter("singleSelect", "{singleSelect}");
 		selectCategoriesURL.setParameter("vocabularyIds", "{vocabularyIds}");
 
 		selectCategoriesURL.setWindowState(LiferayWindowState.POP_UP);

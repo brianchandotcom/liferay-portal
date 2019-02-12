@@ -23,13 +23,13 @@ class InputCategoriesSelector extends Component {
 			A => {
 				let commonCategories = this.commonCategories;
 				const selectedCategoriesIds = commonCategories.map(category => category.value);
-				const vocabularyId = 38406; //TODO
 
 				const uri = A.Lang.sub(
 					decodeURIComponent(this.selectCategoriesUrl),
 					{
 						selectedCategories: selectedCategoriesIds,
-						vocabularyIds: vocabularyId
+						singleSelect: !this.isMultiValued,
+						vocabularyIds: this.vocabularyId
 					}
 				);
 
@@ -104,7 +104,7 @@ InputCategoriesSelector.STATE = {
 	 * @review
 	 * @type {List<String>}
 	 */
-	commonCategories: Config.array().value([]),
+	commonCategories: Config.array(),
 
 	/**
 	 * Classes to add to the categories selector dialog
@@ -117,6 +117,8 @@ InputCategoriesSelector.STATE = {
 	 * category selector dialog is closed
 	 */
 	eventName: Config.string().required,
+
+	isMultiValued: Config.bool().value(true),
 
 	/**
 	 * Url to the categories selector page
@@ -132,7 +134,11 @@ InputCategoriesSelector.STATE = {
 	 * @review
 	 * @type {String}
 	 */
-	spritemap: Config.string().required()
+	spritemap: Config.string().required(),
+
+	vocabularyId: Config.number().required(),
+
+	vocabularyName: Config.string().required()
 };
 
 // Register component

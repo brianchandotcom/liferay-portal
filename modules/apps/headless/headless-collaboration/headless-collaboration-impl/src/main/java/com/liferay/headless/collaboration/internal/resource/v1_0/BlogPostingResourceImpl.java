@@ -18,11 +18,14 @@ import static com.liferay.portal.vulcan.util.LocalDateTimeUtil.toLocalDateTime;
 
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryService;
-import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.document.library.kernel.service.DLAppService;
+import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.headless.collaboration.dto.v1_0.BlogPosting;
 import com.liferay.headless.collaboration.dto.v1_0.ImageObject;
 import com.liferay.headless.collaboration.resource.v1_0.BlogPostingResource;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -142,6 +145,26 @@ public class BlogPostingResourceImpl extends BaseBlogPostingResourceImpl {
 		return serviceContext;
 	}
 
+	private ImageObject _getImageObject(long imageId) throws PortalException {
+		FileEntry fileEntry = _dlAppService.getFileEntry(imageId);
+
+		FileVersion fileVersion = _dlAppService.getFileVersion(
+			fileEntry.getFileEntryId());
+
+		return new ImageObject() {
+			{
+				setContentUrl(
+					_dlurlHelper.getPreviewURL(
+						fileEntry, fileVersion, null, "", false, false));
+				setEncodingFormat(fileEntry.getMimeType());
+				setFileExtension(fileEntry.getExtension());
+				setId(fileEntry.getFileEntryId());
+				setSizeInBytes(fileEntry.getSize());
+				setTitle(fileEntry.getTitle());
+			}
+		};
+	}
+
 	private ImageSelector _getImageSelector(BlogPosting blogPosting) {
 		ImageObject imageObject = blogPosting.getImage();
 
@@ -152,7 +175,7 @@ public class BlogPostingResourceImpl extends BaseBlogPostingResourceImpl {
 		}
 
 		try {
-			FileEntry fileEntry = _dlAppLocalService.getFileEntry(imageId);
+			FileEntry fileEntry = _dlAppService.getFileEntry(imageId);
 
 			return new ImageSelector(
 				FileUtil.getBytes(fileEntry.getContentStream()),
@@ -165,13 +188,24 @@ public class BlogPostingResourceImpl extends BaseBlogPostingResourceImpl {
 		}
 	}
 
-	private BlogPosting _toBlogPosting(BlogsEntry blogsEntry) {
+	private BlogPosting _toBlogPosting(BlogsEntry blogsEntry)
+		throws PortalException {
+
+		ImageObject imageObject = _getImageObject(
+			blogsEntry.getCoverImageFileEntryId());
+
 		return new BlogPosting() {
 			{
+				setImage(imageObject);
 				setAlternativeHeadline(blogsEntry.getSubtitle());
 				setArticleBody(blogsEntry.getContent());
 				setCaption(blogsEntry.getCoverImageCaption());
+				setContentSpace(blogsEntry.getGroupId());
+				setDateCreated(blogsEntry.getCreateDate());
+				setDateModified(blogsEntry.getModifiedDate());
+				setDatePublished(blogsEntry.getDisplayDate());
 				setDescription(blogsEntry.getDescription());
+				setEncodingFormat("text/html");
 				setFriendlyUrlPath(blogsEntry.getUrlTitle());
 				setHeadline(blogsEntry.getTitle());
 				setId(blogsEntry.getEntryId());
@@ -183,6 +217,9 @@ public class BlogPostingResourceImpl extends BaseBlogPostingResourceImpl {
 	private BlogsEntryService _blogsEntryService;
 
 	@Reference
-	private DLAppLocalService _dlAppLocalService;
+	private DLAppService _dlAppService;
+
+	@Reference
+	private DLURLHelper _dlurlHelper;
 
 }

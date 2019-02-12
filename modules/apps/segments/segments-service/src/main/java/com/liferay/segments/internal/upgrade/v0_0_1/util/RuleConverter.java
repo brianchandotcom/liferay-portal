@@ -21,6 +21,6 @@ import com.liferay.segments.criteria.Criteria;
  */
 public interface RuleConverter {
 
-	public void convert(Criteria criteria, String typeSettings);
+	public void convert(long companyId, Criteria criteria, String typeSettings);
 
 }

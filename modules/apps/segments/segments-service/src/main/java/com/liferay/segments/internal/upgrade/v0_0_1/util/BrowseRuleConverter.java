@@ -31,7 +31,9 @@ import org.osgi.service.component.annotations.Reference;
 public class BrowseRuleConverter implements RuleConverter {
 
 	@Override
-	public void convert(Criteria criteria, String typeSettings) {
+	public void convert(
+		long companyId, Criteria criteria, String typeSettings) {
+
 		_contextSegmentsCriteriaContributor.contribute(
 			criteria, "(browser eq '" + typeSettings + "')",
 			Criteria.Conjunction.AND);

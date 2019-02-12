@@ -98,8 +98,8 @@ public class UpgradeContentTargeting extends UpgradeProcess {
 		Criteria criteria = new Criteria();
 
 		try (PreparedStatement ps = connection.prepareStatement(
-				"select ruleKey, typeSettings from CT_RuleInstance where " +
-					"userSegmentId = ?")) {
+				"select companyId, ruleKey, typeSettings from " +
+					"CT_RuleInstance where userSegmentId = ?")) {
 
 			ps.setLong(1, userSegmentId);
 
@@ -111,7 +111,9 @@ public class UpgradeContentTargeting extends UpgradeProcess {
 					RuleConverter ruleConverter =
 						_ruleConverterRegistry.getRuleConverter(ruleKey);
 
-					ruleConverter.convert(criteria, typeSettings);
+					long companyId = rs.getLong("companyId");
+
+					ruleConverter.convert(companyId, criteria, typeSettings);
 				}
 			}
 		}

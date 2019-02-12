@@ -18,8 +18,14 @@ import com.liferay.change.tracking.configuration.CTConfigurationRegistrar;
 import com.liferay.change.tracking.configuration.builder.CTConfigurationBuilder;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleResource;
-import com.liferay.journal.service.persistence.JournalArticleResourceUtil;
-import com.liferay.journal.service.persistence.JournalArticleUtil;
+import com.liferay.journal.service.JournalArticleLocalService;
+import com.liferay.journal.service.JournalArticleResourceLocalService;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import org.osgi.service.component.annotations.Activate;
@@ -43,12 +49,15 @@ public class JournalCTConfigurationRegistrar {
 			).setEntityClasses(
 				JournalArticleResource.class, JournalArticle.class
 			).setResourceEntityByResourceEntityIdFunction(
-				JournalArticleResourceUtil::fetchByPrimaryKey
+				_journalArticleResourceLocalService::fetchJournalArticleResource
 			).setEntityIdsFromResourceEntityFunctions(
 				JournalArticleResource::getResourcePrimKey,
 				JournalArticleResource::getLatestArticlePK
 			).setVersionEntityByVersionEntityIdFunction(
-				JournalArticleUtil::fetchByPrimaryKey
+				_journalArticleLocalService::fetchJournalArticle
+			).setVersionEntityDetails(
+				this::_fetchGroupName, JournalArticle::getTitle,
+				JournalArticle::getVersion
 			).setEntityIdsFromVersionEntityFunctions(
 				JournalArticle::getResourcePrimKey, JournalArticle::getId
 			).setVersionEntityStatusInfo(
@@ -60,11 +69,40 @@ public class JournalCTConfigurationRegistrar {
 			).build());
 	}
 
+	private String _fetchGroupName(JournalArticle journalArticle) {
+		Group group = _groupLocalService.fetchGroup(
+			journalArticle.getGroupId());
+
+		try {
+			return group.getDescriptiveName();
+		}
+		catch (PortalException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
+
+			return StringPool.BLANK;
+		}
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		JournalCTConfigurationRegistrar.class);
+
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private CTConfigurationBuilder<JournalArticleResource, JournalArticle>
 		_builder;
 
 	@Reference
 	private CTConfigurationRegistrar _ctConfigurationRegistrar;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private JournalArticleLocalService _journalArticleLocalService;
+
+	@Reference
+	private JournalArticleResourceLocalService
+		_journalArticleResourceLocalService;
 
 }

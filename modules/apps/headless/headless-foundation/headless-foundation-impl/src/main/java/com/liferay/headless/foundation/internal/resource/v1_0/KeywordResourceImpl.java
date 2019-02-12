@@ -65,6 +65,16 @@ public class KeywordResourceImpl extends BaseKeywordResourceImpl {
 		return _toKeyword(assetTag);
 	}
 
+	@Override
+	public Keyword putKeyword(Long keywordsId, Keyword keyword)
+		throws Exception {
+
+		AssetTag assetTag = _assetTagService.updateTag(
+			keywordsId, keyword.getName(), null);
+
+		return _toKeyword(assetTag);
+	}
+
 	private static Keyword _toKeyword(AssetTag assetTag) {
 		return new Keyword() {
 			{

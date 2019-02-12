@@ -3,7 +3,7 @@ package ${entity.UADPackagePath}.uad.exporter;
 import ${apiPackagePath}.model.${entity.name};
 import ${apiPackagePath}.service.${entity.name}LocalService;
 import ${entity.UADPackagePath}.uad.constants.${entity.UADApplicationName}UADConstants;
-import ${serviceBuilder.getCompatProperty("StringBundler")};
+import ${serviceBuilder.getCompatJavaClassName("StringBundler")};
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.user.associated.data.exporter.DynamicQueryUADExporter;

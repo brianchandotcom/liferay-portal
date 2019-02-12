@@ -1,7 +1,7 @@
 package ${apiPackagePath}.service.persistence;
 
-import ${serviceBuilder.getCompatProperty("HashUtil")};
-import ${serviceBuilder.getCompatProperty("StringBundler")};
+import ${serviceBuilder.getCompatJavaClassName("HashUtil")};
+import ${serviceBuilder.getCompatJavaClassName("StringBundler")};
 
 import aQute.bnd.annotation.ProviderType;
 

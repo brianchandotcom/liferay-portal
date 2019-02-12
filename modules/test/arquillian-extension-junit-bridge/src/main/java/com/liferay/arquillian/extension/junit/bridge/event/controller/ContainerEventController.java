@@ -14,10 +14,14 @@
 
 package com.liferay.arquillian.extension.junit.bridge.event.controller;
 
+import com.liferay.arquillian.extension.junit.bridge.container.LiferayRemoteDeployableContainer;
+import com.liferay.arquillian.extension.junit.bridge.container.impl.ContainerImpl;
 import com.liferay.arquillian.extension.junit.bridge.deployment.BndDeploymentScenarioGenerator;
 
 import java.util.List;
 
+import org.jboss.arquillian.config.descriptor.api.ContainerDef;
+import org.jboss.arquillian.config.descriptor.impl.ContainerDefImpl;
 import org.jboss.arquillian.container.spi.Container;
 import org.jboss.arquillian.container.spi.client.container.DeployableContainer;
 import org.jboss.arquillian.container.spi.client.container.DeploymentException;
@@ -29,6 +33,7 @@ import org.jboss.arquillian.container.spi.context.ContainerContext;
 import org.jboss.arquillian.container.spi.context.DeploymentContext;
 import org.jboss.arquillian.container.spi.context.annotation.DeploymentScoped;
 import org.jboss.arquillian.container.test.spi.client.deployment.DeploymentScenarioGenerator;
+import org.jboss.arquillian.core.api.Injector;
 import org.jboss.arquillian.core.api.Instance;
 import org.jboss.arquillian.core.api.InstanceProducer;
 import org.jboss.arquillian.core.api.annotation.Inject;
@@ -62,7 +67,7 @@ public class ContainerEventController {
 	public void execute(@Observes AfterSuite afterSuite)
 		throws LifecycleException {
 
-		Container container = _containerInstance.get();
+		Container container = _getContainer();
 
 		container.stop();
 	}
@@ -78,7 +83,7 @@ public class ContainerEventController {
 	public void execute(@Observes BeforeSuite beforeSuite)
 		throws LifecycleException {
 
-		Container container = _containerInstance.get();
+		Container container = _getContainer();
 
 		container.start();
 	}
@@ -86,7 +91,7 @@ public class ContainerEventController {
 	private void _createContext(
 		EventContext<? extends TestEvent> eventContext) {
 
-		Container container = _containerInstance.get();
+		Container container = _getContainer();
 
 		ContainerContext containerContext = _containerContextInstance.get();
 
@@ -107,7 +112,7 @@ public class ContainerEventController {
 	}
 
 	private void _deployManaged() throws DeploymentException {
-		Container container = _containerInstance.get();
+		Container container = _getContainer();
 
 		if (container.getState() != Container.State.STARTED) {
 			throw new IllegalStateException(
@@ -156,8 +161,28 @@ public class ContainerEventController {
 		_deployment = new Deployment(deploymentDescription);
 	}
 
+	private Container _getContainer() {
+		if (_container == null) {
+			ContainerDef containerDef = new ContainerDefImpl("arquillian.xml");
+
+			containerDef.setContainerName("default");
+
+			Container container = new ContainerImpl(
+				containerDef.getContainerName(),
+				new LiferayRemoteDeployableContainer(), containerDef);
+
+			Injector injector = _injectorInstance.get();
+
+			injector.inject(container);
+
+			_container = container;
+		}
+
+		return _container;
+	}
+
 	private void _undeployManaged() throws DeploymentException {
-		Container container = _containerInstance.get();
+		Container container = _getContainer();
 
 		if (!Container.State.STARTED.equals(container.getState())) {
 			return;
@@ -191,16 +216,18 @@ public class ContainerEventController {
 		}
 	}
 
-	@Inject
-	private Instance<ContainerContext> _containerContextInstance;
+	private Container _container;
 
 	@Inject
-	private Instance<Container> _containerInstance;
+	private Instance<ContainerContext> _containerContextInstance;
 
 	private Deployment _deployment;
 
 	@Inject
 	private Instance<DeploymentContext> _deploymentContextInstance;
+
+	@Inject
+	private Instance<Injector> _injectorInstance;
 
 	@DeploymentScoped
 	@Inject

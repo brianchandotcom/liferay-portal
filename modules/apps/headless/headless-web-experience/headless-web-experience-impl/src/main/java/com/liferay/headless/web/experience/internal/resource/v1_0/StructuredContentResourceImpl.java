@@ -63,7 +63,6 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import java.time.LocalDateTime;
 
 import java.util.AbstractMap;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;

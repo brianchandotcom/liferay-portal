@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Map;
 
-import java.util.Map.Entry;
 import javax.portlet.PortletResponse;
 
 /**
@@ -65,7 +64,8 @@ public abstract class BaseClayTag extends TemplateRendererTag {
 			}
 		}
 
-		String attributeProviderKey = GetterUtil.getString(context.get("attributeProviderKey"));
+		String attributeProviderKey = GetterUtil.getString(
+			context.get("attributeProviderKey"));
 
 		if (Validator.isNotNull(attributeProviderKey)) {
 			_setAttributeProviderAttributes(attributeProviderKey);
@@ -156,14 +156,15 @@ public abstract class BaseClayTag extends TemplateRendererTag {
 	}
 
 	private void _setAttributeProviderAttributes(String attributeProviderKey) {
-		ClayComponentAttributeProviderRegistry registry = ClayComponentAttributeProviderRegistryHelper
-			.getRegistry();
+		ClayComponentAttributeProviderRegistry registry =
+			ClayComponentAttributeProviderRegistryHelper.getRegistry();
 
 		if (registry == null) {
 			return;
 		}
 
-		ClayComponentAttributeProvider attributeProvider = registry.get(attributeProviderKey);
+		ClayComponentAttributeProvider attributeProvider = registry.get(
+			attributeProviderKey);
 
 		if (attributeProvider == null) {
 			return;
@@ -171,7 +172,7 @@ public abstract class BaseClayTag extends TemplateRendererTag {
 
 		Map<String, Object> attributes = attributeProvider.getAttributes();
 
-		for (Entry<String, Object> entry : attributes.entrySet()) {
+		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
 			if (Validator.isNull(getContext().get(entry.getKey()))) {
 				putValue(entry.getKey(), entry.getValue());
 			}

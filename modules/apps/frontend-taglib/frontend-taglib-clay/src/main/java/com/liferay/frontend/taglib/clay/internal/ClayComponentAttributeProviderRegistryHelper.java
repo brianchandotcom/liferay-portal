@@ -1,6 +1,7 @@
 package com.liferay.frontend.taglib.clay.internal;
 
 import com.liferay.frontend.taglib.clay.attribute.provider.ClayComponentAttributeProviderRegistry;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -10,10 +11,6 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = {})
 public class ClayComponentAttributeProviderRegistryHelper {
 
-	public ClayComponentAttributeProviderRegistryHelper() {
-		_helper = this;
-	}
-
 	public static ClayComponentAttributeProviderRegistry getRegistry() {
 		if (_helper == null) {
 			return null;
@@ -22,8 +19,13 @@ public class ClayComponentAttributeProviderRegistryHelper {
 		return _helper._registry;
 	}
 
+	public ClayComponentAttributeProviderRegistryHelper() {
+		_helper = this;
+	}
+
 	private static ClayComponentAttributeProviderRegistryHelper _helper;
 
 	@Reference
 	private ClayComponentAttributeProviderRegistry _registry;
+
 }

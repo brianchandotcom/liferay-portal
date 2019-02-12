@@ -40,7 +40,6 @@ import org.jboss.arquillian.core.api.InstanceProducer;
 import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.arquillian.core.api.annotation.Observes;
 import org.jboss.arquillian.core.spi.EventContext;
-import org.jboss.arquillian.test.spi.TestClass;
 import org.jboss.arquillian.test.spi.event.suite.AfterClass;
 import org.jboss.arquillian.test.spi.event.suite.AfterSuite;
 import org.jboss.arquillian.test.spi.event.suite.BeforeClass;
@@ -55,42 +54,6 @@ public class ContainerEventController {
 
 	public void createAfterContext(
 		@Observes EventContext<TestEvent> eventContext) {
-
-		_createContext(eventContext);
-	}
-
-	public void execute(@Observes AfterClass afterClass)
-		throws DeploymentException {
-
-		_undeployManaged();
-	}
-
-	public void execute(@Observes AfterSuite afterSuite)
-		throws LifecycleException {
-
-		Container container = _getContainer();
-
-		container.stop();
-	}
-
-	public void execute(@Observes BeforeClass beforeClass)
-		throws DeploymentException {
-
-		_generateDeployment(beforeClass.getTestClass());
-
-		_deployManaged();
-	}
-
-	public void execute(@Observes BeforeSuite beforeSuite)
-		throws LifecycleException {
-
-		Container container = _getContainer();
-
-		container.start();
-	}
-
-	private void _createContext(
-		EventContext<? extends TestEvent> eventContext) {
 
 		Container container = _getContainer();
 
@@ -112,77 +75,9 @@ public class ContainerEventController {
 		}
 	}
 
-	private void _deployManaged() throws DeploymentException {
-		Container container = _getContainer();
+	public void execute(@Observes AfterClass afterClass)
+		throws DeploymentException {
 
-		if (container.getState() != Container.State.STARTED) {
-			throw new IllegalStateException(
-				"Container " + container.getName() + " is not started");
-		}
-
-		Deployment deployment = _deployment;
-
-		DeploymentContext deploymentContext = _deploymentContextInstance.get();
-
-		deploymentContext.activate(deployment);
-
-		DeployableContainer<?> deployableContainer =
-			container.getDeployableContainer();
-
-		DeploymentDescription deploymentDescription =
-			deployment.getDescription();
-
-		try {
-			deployableContainer.deploy(
-				deploymentDescription.getTestableArchive());
-
-			deployment.deployed();
-		}
-		finally {
-			deploymentContext.deactivate();
-		}
-	}
-
-	private void _generateDeployment(TestClass testClass) {
-		DeploymentScenarioGenerator deploymentScenarioGenerator =
-			new BndDeploymentScenarioGenerator();
-
-		List<DeploymentDescription> deploymentDescriptions =
-			deploymentScenarioGenerator.generate(testClass);
-
-		DeploymentDescription deploymentDescription =
-			deploymentDescriptions.get(0);
-
-		Archive<?> archive = deploymentDescription.getArchive();
-
-		deploymentDescription.setTestableArchive(archive);
-
-		_deployment = new Deployment(deploymentDescription);
-	}
-
-	private Container _getContainer() {
-		if (_container == null) {
-			ContainerDef containerDef = new ContainerDefImpl("arquillian.xml");
-
-			containerDef.setContainerName("default");
-
-			Container container = new ContainerImpl(
-				containerDef.getContainerName(),
-				new LiferayRemoteDeployableContainer(
-					_mBeanServerConnectionInstanceProducer),
-				containerDef);
-
-			Injector injector = _injectorInstance.get();
-
-			injector.inject(container);
-
-			_container = container;
-		}
-
-		return _container;
-	}
-
-	private void _undeployManaged() throws DeploymentException {
 		Container container = _getContainer();
 
 		if (!Container.State.STARTED.equals(container.getState())) {
@@ -215,6 +110,89 @@ public class ContainerEventController {
 
 			deploymentContext.deactivate();
 		}
+	}
+
+	public void execute(@Observes AfterSuite afterSuite)
+		throws LifecycleException {
+
+		Container container = _getContainer();
+
+		container.stop();
+	}
+
+	public void execute(@Observes BeforeClass beforeClass)
+		throws DeploymentException {
+
+		DeploymentScenarioGenerator deploymentScenarioGenerator =
+			new BndDeploymentScenarioGenerator();
+
+		List<DeploymentDescription> deploymentDescriptions =
+			deploymentScenarioGenerator.generate(beforeClass.getTestClass());
+
+		DeploymentDescription deploymentDescription =
+			deploymentDescriptions.get(0);
+
+		Archive<?> archive = deploymentDescription.getArchive();
+
+		deploymentDescription.setTestableArchive(archive);
+
+		_deployment = new Deployment(deploymentDescription);
+
+		Container container = _getContainer();
+
+		if (container.getState() != Container.State.STARTED) {
+			throw new IllegalStateException(
+				"Container " + container.getName() + " is not started");
+		}
+
+		Deployment deployment = _deployment;
+
+		DeploymentContext deploymentContext = _deploymentContextInstance.get();
+
+		deploymentContext.activate(deployment);
+
+		DeployableContainer<?> deployableContainer =
+			container.getDeployableContainer();
+
+		try {
+			deployableContainer.deploy(
+				deploymentDescription.getTestableArchive());
+
+			deployment.deployed();
+		}
+		finally {
+			deploymentContext.deactivate();
+		}
+	}
+
+	public void execute(@Observes BeforeSuite beforeSuite)
+		throws LifecycleException {
+
+		Container container = _getContainer();
+
+		container.start();
+	}
+
+	private Container _getContainer() {
+		if (_container == null) {
+			ContainerDef containerDef = new ContainerDefImpl("arquillian.xml");
+
+			containerDef.setContainerName("default");
+
+			Container container = new ContainerImpl(
+				containerDef.getContainerName(),
+				new LiferayRemoteDeployableContainer(
+					_mBeanServerConnectionInstanceProducer),
+				containerDef);
+
+			Injector injector = _injectorInstance.get();
+
+			injector.inject(container);
+
+			_container = container;
+		}
+
+		return _container;
 	}
 
 	private Container _container;

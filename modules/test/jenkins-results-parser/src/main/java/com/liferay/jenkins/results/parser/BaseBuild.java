@@ -1175,7 +1175,7 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public boolean isBuildModified() {
-		return _status.equals(_previousStatus);
+		return !_status.equals(_previousStatus);
 	}
 
 	@Override

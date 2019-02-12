@@ -1,45 +1,30 @@
 {
 	"mappings": {
-		"WorkflowEventsType": {
+		"WorkflowMetricsTokenType": {
 			"properties": {
-				"active": {
-					"type": "boolean"
-				},
 				"companyId": {
 					"type": "keyword"
 				},
 				"date": {
 					"type": "date"
 				},
-				"description": {
-					"type": "text"
-				},
-				"eventId": {
-					"type": "keyword"
+				"deleted": {
+					"type": "boolean"
 				},
 				"id": {
+					"type": "keyword"
+				},
+				"instanceId": {
 					"type": "keyword"
 				},
 				"name": {
 					"type": "keyword"
 				},
-				"processId": {
-					"type": "keyword"
-				},
 				"taskId": {
-					"type": "keyword"
-				},
-				"title": {
-					"type": "text"
-				},
-				"uid": {
 					"type": "keyword"
 				},
 				"userId": {
 					"type": "keyword"
-				},
-				"version": {
-					"type": "float"
 				}
 			}
 		}

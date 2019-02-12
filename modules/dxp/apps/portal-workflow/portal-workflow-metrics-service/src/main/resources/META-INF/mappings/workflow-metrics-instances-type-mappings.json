@@ -1,6 +1,6 @@
 {
 	"mappings": {
-		"WorkflowInstancesType": {
+		"WorkflowMetricsInstanceType": {
 			"properties": {
 				"companyId": {
 					"store": true,

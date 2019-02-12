@@ -1,6 +1,6 @@
 {
 	"mappings": {
-		"WorkflowTasksType": {
+		"WorkflowMetricsTaskType": {
 			"properties": {
 				"companyId": {
 					"type": "keyword"

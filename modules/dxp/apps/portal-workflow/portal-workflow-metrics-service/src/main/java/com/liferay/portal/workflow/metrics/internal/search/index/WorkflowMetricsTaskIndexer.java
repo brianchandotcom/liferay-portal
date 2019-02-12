@@ -27,12 +27,12 @@ public class WorkflowMetricsTaskIndexer extends BaseWorkflowMetricsIndexer {
 
 	@Override
 	public String getIndexName() {
-		return "workflow-metrics-tokens";
+		return "workflow-metrics-tasks";
 	}
 
 	@Override
 	public String getIndexType() {
-		return "WorkflowMetricsTokenType";
+		return "WorkflowMetricsTaskType";
 	}
 
 }

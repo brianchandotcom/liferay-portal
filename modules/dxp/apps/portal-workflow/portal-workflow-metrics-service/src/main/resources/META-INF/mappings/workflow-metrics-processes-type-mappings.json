@@ -1,6 +1,6 @@
 {
 	"mappings": {
-		"WorkflowProcessesType": {
+		"WorkflowMetricsProcessType": {
 			"properties": {
 				"active": {
 					"store": true,

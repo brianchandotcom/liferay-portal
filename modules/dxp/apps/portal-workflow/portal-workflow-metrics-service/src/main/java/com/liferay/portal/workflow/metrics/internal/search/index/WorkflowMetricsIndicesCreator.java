@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.portal.workflow.reports.internal.search.index;
+package com.liferay.portal.workflow.metrics.internal.search.index;
 
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -20,7 +20,6 @@ import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.index.CreateIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.IndicesExistsIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.IndicesExistsIndexResponse;
-import com.liferay.portal.workflow.reports.internal.constants.WorkflowIndexConstants;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -29,23 +28,23 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Inácio Nery
  */
-@Component(immediate = true, service = WorkflowIndicesCreator.class)
-public class WorkflowIndicesCreator {
+@Component(immediate = true, service = WorkflowMetricsIndicesCreator.class)
+public class WorkflowMetricsIndicesCreator {
 
 	@Activate
 	protected void activate() throws Exception {
 		createIndex(
-			WorkflowIndexConstants.INDEX_NAME_WORKFLOW_EVENTS,
-			WorkflowIndexConstants.TYPE_MAPPING_FILE_NAME_WORKFLOW_EVENTS);
+			"workflow-metrics-instances",
+			"workflow-metrics-instances-type-mappings.json");
 		createIndex(
-			WorkflowIndexConstants.INDEX_NAME_WORKFLOW_INSTANCES,
-			WorkflowIndexConstants.TYPE_MAPPING_FILE_NAME_WORKFLOW_INSTANCES);
+			"workflow-metrics-processes",
+			"workflow-metrics-processes-type-mappings.json");
 		createIndex(
-			WorkflowIndexConstants.INDEX_NAME_WORKFLOW_PROCESSES,
-			WorkflowIndexConstants.TYPE_MAPPING_FILE_NAME_WORKFLOW_PROCESSES);
+			"workflow-metrics-tasks",
+			"workflow-metrics-tasks-type-mappings.json");
 		createIndex(
-			WorkflowIndexConstants.INDEX_NAME_WORKFLOW_TASKS,
-			WorkflowIndexConstants.TYPE_MAPPING_FILE_NAME_WORKFLOW_TASKS);
+			"workflow-metrics-tokens",
+			"workflow-metrics-tokens-type-mappings.json");
 	}
 
 	protected void createIndex(String indexName, String typeMappingFileName) {
@@ -59,7 +58,8 @@ public class WorkflowIndicesCreator {
 			CreateIndexRequest createIndexRequest = new CreateIndexRequest(
 				indexName);
 
-			String source = StringUtil.read(getClass(), typeMappingFileName);
+			String source = StringUtil.read(
+				getClass(), "/META-INF/mappings/" + typeMappingFileName);
 
 			createIndexRequest.setSource(source);
 

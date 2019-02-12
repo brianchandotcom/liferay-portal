@@ -14,9 +14,13 @@
 
 package com.liferay.headless.foundation.internal.resource.v1_0;
 
+import com.liferay.asset.kernel.model.AssetTag;
+import com.liferay.asset.kernel.service.AssetTagService;
+import com.liferay.headless.foundation.dto.v1_0.Keyword;
 import com.liferay.headless.foundation.resource.v1_0.KeywordResource;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
 
 /**
@@ -27,4 +31,28 @@ import org.osgi.service.component.annotations.ServiceScope;
 	scope = ServiceScope.PROTOTYPE, service = KeywordResource.class
 )
 public class KeywordResourceImpl extends BaseKeywordResourceImpl {
+
+	@Override
+	public Keyword getKeyword(Long keywordId) throws Exception {
+		AssetTag assetTag = _assetTagService.getTag(keywordId);
+
+		return _toKeyword(assetTag);
+	}
+
+	private static Keyword _toKeyword(AssetTag assetTag) {
+		return new Keyword() {
+			{
+				setContentSpace(assetTag.getGroupId());
+				setDateCreated(assetTag.getCreateDate());
+				setDateModified(assetTag.getModifiedDate());
+				setId(assetTag.getTagId());
+				setKeywordUsageCount(assetTag.getAssetCount());
+				setName(assetTag.getName());
+			}
+		};
+	}
+
+	@Reference
+	private AssetTagService _assetTagService;
+
 }

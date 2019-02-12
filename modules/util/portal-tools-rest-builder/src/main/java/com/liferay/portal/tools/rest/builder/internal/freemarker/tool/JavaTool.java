@@ -108,7 +108,7 @@ public class JavaTool {
 					String returnType = _getReturnType(openAPIYAML, operation);
 
 					String methodName = _getMethodName(
-						operation, path, returnType, schemaName);
+						operation, path, returnType);
 
 					if (_isSchemaMethod(
 							schemaName, operation.getTags(), returnType)) {
@@ -475,8 +475,7 @@ public class JavaTool {
 	}
 
 	private String _getMethodName(
-		Operation operation, String path, String returnType,
-		String schemaName) {
+		Operation operation, String path, String returnType) {
 
 		String httpMethod = _getHTTPMethod(operation);
 

@@ -1847,7 +1847,7 @@ public class ProjectTemplatesTest {
 		_testContains(
 			gradleProjectDir, "build.gradle",
 			"compileOnly group: \"javax.ws.rs\", name: \"javax.ws.rs-api\", " +
-				"version: \"2.0.1\"");
+				"version: \"2.1\"");
 		_testContains(
 			gradleProjectDir,
 			"src/main/java/my/rest/application/MyRestApplication.java",
@@ -3470,7 +3470,7 @@ public class ProjectTemplatesTest {
 
 		_testContains(
 			gradleWorkspaceProjectDir, "gradle.properties", true,
-			".*liferay.workspace.bundle.url=.*liferay.com/portal/7.1.1-.*");
+			".*liferay.workspace.bundle.url=.*liferay.com/portal/7.1.2-.*");
 
 		File gradlePropertiesFile = new File(
 			gradleWorkspaceProjectDir, "gradle.properties");
@@ -3484,7 +3484,7 @@ public class ProjectTemplatesTest {
 
 		_testContains(
 			mavenWorkspaceProjectDir, "pom.xml",
-			"<liferay.workspace.bundle.url>", "liferay.com/portal/7.1.1-");
+			"<liferay.workspace.bundle.url>", "liferay.com/portal/7.1.2-");
 	}
 
 	@Test

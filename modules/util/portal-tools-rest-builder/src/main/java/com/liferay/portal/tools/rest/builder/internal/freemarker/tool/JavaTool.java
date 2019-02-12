@@ -492,12 +492,6 @@ public class JavaTool {
 			return name + "Page";
 		}
 
-		if (StringUtil.equals(returnType, schemaName) &&
-			StringUtil.endsWith(name, schemaName + "s")) {
-
-			return name.substring(0, name.length() - 1);
-		}
-
 		return name;
 	}
 

@@ -90,7 +90,7 @@ public class UpgradeContentTargetingTest {
 		long contentTargetingUserSegmentId = -1L;
 
 		insertContentTargetingRuleInstance(
-			contentTargetingUserSegmentId, "Browser", "Chrome");
+			contentTargetingUserSegmentId, "BrowserRule", "Chrome");
 
 		Map<Locale, String> nameMap = RandomTestUtil.randomLocaleStringMap();
 		Map<Locale, String> descriptionMap =

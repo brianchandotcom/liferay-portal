@@ -63,15 +63,6 @@ public class ConcurrentReferenceKeyHashMap<K, V>
 			referenceFactory);
 	}
 
-	public ConcurrentReferenceKeyHashMap(
-		Map<? extends K, ? extends V> map,
-		FinalizeManager.ReferenceFactory referenceFactory) {
-
-		this(new ConcurrentHashMap<Reference<K>, V>(), referenceFactory);
-
-		putAll(map);
-	}
-
 	@Override
 	protected Reference<K> mapKey(K key) {
 		return FinalizeManager.register(

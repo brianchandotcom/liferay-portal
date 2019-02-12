@@ -19,7 +19,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.dynamic.data.mapping.render.DDMFormRendererUtil;
-import com.liferay.dynamic.data.mapping.util.DDMUtil;
+import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -61,10 +61,11 @@ import javax.servlet.http.HttpServletResponse;
 public class PortletExtenderConfigurationAction
 	extends DefaultConfigurationAction {
 
-	public PortletExtenderConfigurationAction(JSONObject preferencesJSONObject)
+	public PortletExtenderConfigurationAction(
+			DDM ddm, JSONObject preferencesJSONObject)
 		throws PortalException {
 
-		_ddmForm = DDMUtil.getDDMForm(preferencesJSONObject.toJSONString());
+		_ddmForm = ddm.getDDMForm(preferencesJSONObject.toJSONString());
 		_preferencesJSONObject = preferencesJSONObject;
 
 		_populateFieldNames();

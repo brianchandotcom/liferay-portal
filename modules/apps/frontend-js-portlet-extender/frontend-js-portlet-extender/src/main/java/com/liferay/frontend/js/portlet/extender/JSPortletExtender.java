@@ -14,6 +14,7 @@
 
 package com.liferay.frontend.js.portlet.extender;
 
+import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.frontend.js.portlet.extender.configuration.PortletExtenderConfigurationAction;
 import com.liferay.frontend.js.portlet.extender.internal.portlet.JSPortlet;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -183,7 +184,8 @@ public class JSPortletExtender {
 
 		try {
 			ConfigurationAction configurationAction =
-				new PortletExtenderConfigurationAction(preferencesJSONObject);
+				new PortletExtenderConfigurationAction(
+					_ddm, preferencesJSONObject);
 
 			Dictionary<String, Object> properties = new Hashtable<>();
 
@@ -281,6 +283,9 @@ public class JSPortletExtender {
 				}
 
 			};
+
+	@Reference
+	private DDM _ddm;
 
 	@Reference
 	private JSONFactory _jsonFactory;

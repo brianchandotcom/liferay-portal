@@ -256,6 +256,7 @@ AUI.add(
 
 						if (!editTagsComponent) {
 							var urlTags = themeDisplay.getPortalURL() + '/o/bulk/asset/tags/' + instance.get('classNameId') + '/common';
+							var urlSearchTags = themeDisplay.getPortalURL() + '/o/bulk/asset/tags/' + instance._config.scopeGroupId + '/search';
 							var urlUpdateTags = themeDisplay.getPortalURL() + '/o/bulk/asset/tags/' + instance.get('classNameId');
 
 							Liferay.Loader.require(
@@ -267,10 +268,10 @@ AUI.add(
 											folderId: instance.getFolderId(),
 											portletNamespace: namespace,
 											repositoryId: parseFloat(form.get(namespace + 'repositoryId').val()),
-											scopeGroupId: instance._config.scopeGroupId,
 											selectAll: bulkSelection,
 											spritemap: themeDisplay.getPathThemeImages() + '/lexicon/icons.svg',
 											urlTags: urlTags,
+											urlSearchTags: urlSearchTags,
 											urlUpdateTags: urlUpdateTags
 										},
 										'#' + instance.NS + 'documentLibraryModal'

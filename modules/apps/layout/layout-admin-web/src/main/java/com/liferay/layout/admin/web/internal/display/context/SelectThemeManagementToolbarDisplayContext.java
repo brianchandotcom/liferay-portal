@@ -15,12 +15,8 @@
 package com.liferay.layout.admin.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -39,8 +35,6 @@ public class SelectThemeManagementToolbarDisplayContext
 		super(
 			liferayPortletRequest, liferayPortletResponse, request,
 			selectThemeDisplayContext.getThemesSearchContainer());
-
-		_selectThemeDisplayContext = selectThemeDisplayContext;
 	}
 
 	@Override
@@ -49,22 +43,13 @@ public class SelectThemeManagementToolbarDisplayContext
 	}
 
 	@Override
-	public List<ViewTypeItem> getViewTypeItems() {
-		return new ViewTypeItemList(
-			getPortletURL(), _selectThemeDisplayContext.getDisplayStyle()) {
-
-			{
-				addCardViewTypeItem();
-				addListViewTypeItem();
-				addTableViewTypeItem();
-			}
-
-		};
+	public Boolean isSelectable() {
+		return false;
 	}
 
 	@Override
-	public Boolean isSelectable() {
-		return false;
+	protected String[] getDisplayViews() {
+		return new String[] {"list", "descriptive", "icon"};
 	}
 
 	@Override
@@ -76,7 +61,5 @@ public class SelectThemeManagementToolbarDisplayContext
 	protected String[] getOrderByKeys() {
 		return new String[] {"name"};
 	}
-
-	private final SelectThemeDisplayContext _selectThemeDisplayContext;
 
 }

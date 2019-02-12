@@ -20,8 +20,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.SafeConsumer;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Role;
@@ -31,7 +29,6 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.HashMap;
@@ -231,25 +228,6 @@ public class UserGroupsManagementToolbarDisplayContext
 	}
 
 	@Override
-	public List<ViewTypeItem> getViewTypeItems() {
-		PortletURL portletURL = liferayPortletResponse.createActionURL();
-
-		portletURL.setParameter(
-			ActionRequest.ACTION_NAME, "changeDisplayStyle");
-		portletURL.setParameter("redirect", PortalUtil.getCurrentURL(request));
-
-		return new ViewTypeItemList(
-			portletURL, _userGroupsDisplayContext.getDisplayStyle()) {
-
-			{
-				addListViewTypeItem();
-				addTableViewTypeItem();
-			}
-
-		};
-	}
-
-	@Override
 	public Boolean isShowCreationMenu() {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -267,6 +245,11 @@ public class UserGroupsManagementToolbarDisplayContext
 		}
 
 		return false;
+	}
+
+	@Override
+	protected String[] getDisplayViews() {
+		return new String[] {"list", "descriptive"};
 	}
 
 	@Override

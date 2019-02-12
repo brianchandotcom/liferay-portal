@@ -15,16 +15,10 @@
 package com.liferay.site.memberships.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.util.PortalUtil;
 
-import java.util.List;
-
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -45,8 +39,6 @@ public class SelectSiteRolesManagementToolbarDisplayContext
 		super(
 			liferayPortletRequest, liferayPortletResponse, request,
 			selectSiteRolesDisplayContext.getRoleSearchSearchContainer());
-
-		_selectSiteRolesDisplayContext = selectSiteRolesDisplayContext;
 	}
 
 	@Override
@@ -76,28 +68,13 @@ public class SelectSiteRolesManagementToolbarDisplayContext
 	}
 
 	@Override
-	public List<ViewTypeItem> getViewTypeItems() {
-		PortletURL portletURL = liferayPortletResponse.createActionURL();
-
-		portletURL.setParameter(
-			ActionRequest.ACTION_NAME, "changeDisplayStyle");
-		portletURL.setParameter("redirect", PortalUtil.getCurrentURL(request));
-
-		return new ViewTypeItemList(
-			portletURL, _selectSiteRolesDisplayContext.getDisplayStyle()) {
-
-			{
-				addCardViewTypeItem();
-				addListViewTypeItem();
-				addTableViewTypeItem();
-			}
-
-		};
+	public Boolean isSelectable() {
+		return false;
 	}
 
 	@Override
-	public Boolean isSelectable() {
-		return false;
+	protected String[] getDisplayViews() {
+		return new String[] {"list", "descriptive", "icon"};
 	}
 
 	@Override
@@ -109,7 +86,5 @@ public class SelectSiteRolesManagementToolbarDisplayContext
 	protected String[] getOrderByKeys() {
 		return new String[] {"title"};
 	}
-
-	private final SelectSiteRolesDisplayContext _selectSiteRolesDisplayContext;
 
 }

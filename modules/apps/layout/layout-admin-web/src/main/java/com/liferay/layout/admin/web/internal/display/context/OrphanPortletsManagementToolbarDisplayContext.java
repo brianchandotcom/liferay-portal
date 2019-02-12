@@ -17,8 +17,6 @@ package com.liferay.layout.admin.web.internal.display.context;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -42,8 +40,6 @@ public class OrphanPortletsManagementToolbarDisplayContext
 		super(
 			liferayPortletRequest, liferayPortletResponse, request,
 			orphanPortletsDisplayContext.getOrphanPortletsSearchContainer());
-
-		_orphanPortletsDisplayContext = orphanPortletsDisplayContext;
 	}
 
 	@Override
@@ -73,16 +69,8 @@ public class OrphanPortletsManagementToolbarDisplayContext
 	}
 
 	@Override
-	public List<ViewTypeItem> getViewTypeItems() {
-		return new ViewTypeItemList(
-			getPortletURL(), _orphanPortletsDisplayContext.getDisplayStyle()) {
-
-			{
-				addListViewTypeItem();
-				addTableViewTypeItem();
-			}
-
-		};
+	protected String[] getDisplayViews() {
+		return new String[] {"list", "descriptive"};
 	}
 
 	@Override
@@ -94,7 +82,5 @@ public class OrphanPortletsManagementToolbarDisplayContext
 	protected String[] getOrderByKeys() {
 		return new String[] {"name"};
 	}
-
-	private final OrphanPortletsDisplayContext _orphanPortletsDisplayContext;
 
 }

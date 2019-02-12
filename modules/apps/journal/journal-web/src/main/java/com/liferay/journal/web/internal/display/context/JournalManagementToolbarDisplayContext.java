@@ -22,11 +22,10 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.SafeConsumer;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.model.JournalFolderConstants;
+import com.liferay.journal.web.configuration.JournalWebConfiguration;
 import com.liferay.journal.web.internal.security.permission.resource.JournalFolderPermission;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -80,6 +79,9 @@ public class JournalManagementToolbarDisplayContext
 		_journalDisplayContext = journalDisplayContext;
 		_trashHelper = trashHelper;
 
+		_journalWebConfiguration =
+			(JournalWebConfiguration)request.getAttribute(
+				JournalWebConfiguration.class.getName());
 		_themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
@@ -430,35 +432,6 @@ public class JournalManagementToolbarDisplayContext
 	}
 
 	@Override
-	public List<ViewTypeItem> getViewTypeItems() {
-		return new ViewTypeItemList(
-			getPortletURL(), _journalDisplayContext.getDisplayStyle()) {
-
-			{
-				if (ArrayUtil.contains(
-						_journalDisplayContext.getDisplayViews(), "icon")) {
-
-					addCardViewTypeItem();
-				}
-
-				if (ArrayUtil.contains(
-						_journalDisplayContext.getDisplayViews(),
-						"descriptive")) {
-
-					addListViewTypeItem();
-				}
-
-				if (ArrayUtil.contains(
-						_journalDisplayContext.getDisplayViews(), "list")) {
-
-					addTableViewTypeItem();
-				}
-			}
-
-		};
-	}
-
-	@Override
 	public Boolean isDisabled() {
 		if (getItemsTotal() > 0) {
 			return false;
@@ -495,6 +468,16 @@ public class JournalManagementToolbarDisplayContext
 	@Override
 	public Boolean isShowInfoButton() {
 		return _journalDisplayContext.isShowInfoButton();
+	}
+
+	@Override
+	protected String getDefaultDisplayStyle() {
+		return _journalWebConfiguration.defaultDisplayView();
+	}
+
+	@Override
+	protected String[] getDisplayViews() {
+		return _journalDisplayContext.getDisplayViews();
 	}
 
 	@Override
@@ -606,6 +589,7 @@ public class JournalManagementToolbarDisplayContext
 		JournalManagementToolbarDisplayContext.class);
 
 	private final JournalDisplayContext _journalDisplayContext;
+	private final JournalWebConfiguration _journalWebConfiguration;
 	private final ThemeDisplay _themeDisplay;
 	private final TrashHelper _trashHelper;
 

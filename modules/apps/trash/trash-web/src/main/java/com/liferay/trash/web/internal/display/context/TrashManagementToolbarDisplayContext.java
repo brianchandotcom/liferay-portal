@@ -19,7 +19,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemList;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -54,8 +53,6 @@ public class TrashManagementToolbarDisplayContext
 		super(
 			liferayPortletRequest, liferayPortletResponse, request,
 			trashDisplayContext.getEntrySearch());
-
-		_trashDisplayContext = trashDisplayContext;
 	}
 
 	@Override
@@ -133,8 +130,8 @@ public class TrashManagementToolbarDisplayContext
 	}
 
 	@Override
-	public List<ViewTypeItem> getViewTypeItems() {
-		return _trashDisplayContext.getViewTypeItems();
+	protected String[] getDisplayViews() {
+		return new String[] {"list", "descriptive", "icon"};
 	}
 
 	@Override
@@ -179,7 +176,5 @@ public class TrashManagementToolbarDisplayContext
 	protected String[] getOrderByKeys() {
 		return new String[] {"removed-date"};
 	}
-
-	private final TrashDisplayContext _trashDisplayContext;
 
 }

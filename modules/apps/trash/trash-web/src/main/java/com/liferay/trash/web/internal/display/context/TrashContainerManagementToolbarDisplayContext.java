@@ -15,13 +15,10 @@
 package com.liferay.trash.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-
-import java.util.List;
 
 import javax.portlet.PortletURL;
 
@@ -42,8 +39,6 @@ public class TrashContainerManagementToolbarDisplayContext
 		super(
 			liferayPortletRequest, liferayPortletResponse, request,
 			trashDisplayContext.getTrashContainerSearchContainer());
-
-		_trashDisplayContext = trashDisplayContext;
 	}
 
 	@Override
@@ -73,20 +68,18 @@ public class TrashContainerManagementToolbarDisplayContext
 	}
 
 	@Override
-	public List<ViewTypeItem> getViewTypeItems() {
-		return _trashDisplayContext.getViewTypeItems();
+	public Boolean isSelectable() {
+		return false;
 	}
 
 	@Override
-	public Boolean isSelectable() {
-		return false;
+	protected String[] getDisplayViews() {
+		return new String[] {"list", "descriptive", "icon"};
 	}
 
 	@Override
 	protected String[] getNavigationKeys() {
 		return new String[] {"all"};
 	}
-
-	private final TrashDisplayContext _trashDisplayContext;
 
 }

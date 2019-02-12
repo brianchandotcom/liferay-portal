@@ -15,17 +15,11 @@
 package com.liferay.site.memberships.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.util.PortalUtil;
 
-import java.util.List;
-
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -46,8 +40,6 @@ public class UserGroupRolesManagementToolbarDisplayContext
 		super(
 			liferayPortletRequest, liferayPortletResponse, request,
 			userGroupRolesDisplayContext.getRoleSearchSearchContainer());
-
-		_userGroupRolesDisplayContext = userGroupRolesDisplayContext;
 	}
 
 	@Override
@@ -77,23 +69,8 @@ public class UserGroupRolesManagementToolbarDisplayContext
 	}
 
 	@Override
-	public List<ViewTypeItem> getViewTypeItems() {
-		PortletURL portletURL = liferayPortletResponse.createActionURL();
-
-		portletURL.setParameter(
-			ActionRequest.ACTION_NAME, "changeDisplayStyle");
-		portletURL.setParameter("redirect", PortalUtil.getCurrentURL(request));
-
-		return new ViewTypeItemList(
-			portletURL, _userGroupRolesDisplayContext.getDisplayStyle()) {
-
-			{
-				addCardViewTypeItem();
-				addListViewTypeItem();
-				addTableViewTypeItem();
-			}
-
-		};
+	protected String[] getDisplayViews() {
+		return new String[] {"list", "descriptive", "icon"};
 	}
 
 	@Override
@@ -105,7 +82,5 @@ public class UserGroupRolesManagementToolbarDisplayContext
 	protected String[] getOrderByKeys() {
 		return new String[] {"title"};
 	}
-
-	private final UserGroupRolesDisplayContext _userGroupRolesDisplayContext;
 
 }

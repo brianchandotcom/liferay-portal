@@ -17,8 +17,6 @@ package com.liferay.trash.web.internal.display.context;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -63,7 +61,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -601,22 +598,6 @@ public class TrashDisplayContext {
 		}
 
 		return redirect;
-	}
-
-	public List<ViewTypeItem> getViewTypeItems() {
-		PortletURL portletURL = _liferayPortletResponse.createActionURL();
-
-		portletURL.setParameter(
-			ActionRequest.ACTION_NAME, "changeDisplayStyle");
-		portletURL.setParameter("redirect", PortalUtil.getCurrentURL(_request));
-
-		return new ViewTypeItemList(portletURL, getDisplayStyle()) {
-			{
-				addCardViewTypeItem();
-				addListViewTypeItem();
-				addTableViewTypeItem();
-			}
-		};
 	}
 
 	public boolean isApproximate() {

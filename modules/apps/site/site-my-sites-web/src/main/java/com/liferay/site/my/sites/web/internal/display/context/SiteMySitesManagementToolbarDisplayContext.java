@@ -15,13 +15,9 @@
 package com.liferay.site.my.sites.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-
-import java.util.List;
 
 import javax.portlet.PortletURL;
 
@@ -42,8 +38,6 @@ public class SiteMySitesManagementToolbarDisplayContext
 		super(
 			liferayPortletRequest, liferayPortletResponse, request,
 			siteMySitesDisplayContext.getGroupSearchContainer());
-
-		_siteMySitesDisplayContext = siteMySitesDisplayContext;
 	}
 
 	@Override
@@ -68,22 +62,18 @@ public class SiteMySitesManagementToolbarDisplayContext
 	}
 
 	@Override
-	public List<ViewTypeItem> getViewTypeItems() {
-		return new ViewTypeItemList(
-			getPortletURL(), _siteMySitesDisplayContext.getDisplayStyle()) {
-
-			{
-				addCardViewTypeItem();
-				addListViewTypeItem();
-				addTableViewTypeItem();
-			}
-
-		};
+	public Boolean isSelectable() {
+		return false;
 	}
 
 	@Override
-	public Boolean isSelectable() {
-		return false;
+	protected String getDefaultDisplayStyle() {
+		return "descriptive";
+	}
+
+	@Override
+	protected String[] getDisplayViews() {
+		return new String[] {"list", "descriptive", "icon"};
 	}
 
 	@Override
@@ -95,7 +85,5 @@ public class SiteMySitesManagementToolbarDisplayContext
 	protected String[] getOrderByKeys() {
 		return new String[] {"name"};
 	}
-
-	private final SiteMySitesDisplayContext _siteMySitesDisplayContext;
 
 }

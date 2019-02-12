@@ -15,13 +15,9 @@
 package com.liferay.site.memberships.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-
-import java.util.List;
 
 import javax.portlet.PortletURL;
 
@@ -42,8 +38,6 @@ public class SelectUserGroupsManagementToolbarDisplayContext
 		super(
 			liferayPortletRequest, liferayPortletResponse, request,
 			selectUserGroupsDisplayContext.getUserGroupSearchContainer());
-
-		_selectUserGroupsDisplayContext = selectUserGroupsDisplayContext;
 	}
 
 	@Override
@@ -73,17 +67,8 @@ public class SelectUserGroupsManagementToolbarDisplayContext
 	}
 
 	@Override
-	public List<ViewTypeItem> getViewTypeItems() {
-		return new ViewTypeItemList(
-			getPortletURL(),
-			_selectUserGroupsDisplayContext.getDisplayStyle()) {
-
-			{
-				addListViewTypeItem();
-				addTableViewTypeItem();
-			}
-
-		};
+	protected String[] getDisplayViews() {
+		return new String[] {"list", "descriptive"};
 	}
 
 	@Override
@@ -95,8 +80,5 @@ public class SelectUserGroupsManagementToolbarDisplayContext
 	protected String[] getOrderByKeys() {
 		return new String[] {"name", "description"};
 	}
-
-	private final SelectUserGroupsDisplayContext
-		_selectUserGroupsDisplayContext;
 
 }

@@ -38,7 +38,6 @@ import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.arquillian.core.api.annotation.Observes;
 import org.jboss.arquillian.core.spi.EventContext;
 import org.jboss.arquillian.test.spi.event.suite.AfterClass;
-import org.jboss.arquillian.test.spi.event.suite.AfterSuite;
 import org.jboss.arquillian.test.spi.event.suite.BeforeClass;
 import org.jboss.arquillian.test.spi.event.suite.BeforeSuite;
 import org.jboss.arquillian.test.spi.event.suite.TestEvent;
@@ -97,12 +96,6 @@ public class ContainerEventController {
 
 			deploymentContext.deactivate();
 		}
-	}
-
-	public void execute(@Observes AfterSuite afterSuite)
-		throws LifecycleException {
-
-		_container.stop();
 	}
 
 	public void execute(@Observes BeforeClass beforeClass)

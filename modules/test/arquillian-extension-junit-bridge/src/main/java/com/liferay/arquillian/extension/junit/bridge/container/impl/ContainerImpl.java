@@ -24,11 +24,9 @@ import org.jboss.arquillian.container.spi.client.protocol.ProtocolDescription;
 import org.jboss.arquillian.container.spi.event.container.AfterKill;
 import org.jboss.arquillian.container.spi.event.container.AfterSetup;
 import org.jboss.arquillian.container.spi.event.container.AfterStart;
-import org.jboss.arquillian.container.spi.event.container.AfterStop;
 import org.jboss.arquillian.container.spi.event.container.BeforeKill;
 import org.jboss.arquillian.container.spi.event.container.BeforeSetup;
 import org.jboss.arquillian.container.spi.event.container.BeforeStart;
-import org.jboss.arquillian.container.spi.event.container.BeforeStop;
 import org.jboss.arquillian.container.spi.event.container.ContainerEvent;
 import org.jboss.arquillian.core.api.Event;
 import org.jboss.arquillian.core.api.annotation.Inject;
@@ -149,23 +147,7 @@ public class ContainerImpl implements Container {
 	}
 
 	@Override
-	public void stop() throws LifecycleException {
-		_containerEvent.fire(new BeforeStop(_deployableContainer));
-
-		try {
-			_deployableContainer.stop();
-
-			setState(Container.State.STOPPED);
-		}
-		catch (LifecycleException le) {
-			setState(Container.State.STOPPED_FAILED);
-
-			_failureCause = le;
-
-			throw le;
-		}
-
-		_containerEvent.fire(new AfterStop(_deployableContainer));
+	public void stop() {
 	}
 
 	private final ContainerDef _containerDef;

@@ -20,6 +20,7 @@ import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.memory.FinalizeManager;
 import com.liferay.petra.reflect.ReflectionUtil;
 
+import java.lang.ref.Reference;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
@@ -152,8 +153,9 @@ public class ProxyUtil {
 				FinalizeManager.WEAK_REFERENCE_FACTORY);
 	private static final ConcurrentMap<Class<?>, Constructor<?>> _constructors =
 		new ConcurrentReferenceKeyHashMap<>(
-			new ConcurrentReferenceValueHashMap<Class<?>, Constructor<?>>(
-				FinalizeManager.WEAK_REFERENCE_FACTORY),
+			new ConcurrentReferenceValueHashMap
+				<Reference<Class<?>>, Constructor<?>>(
+					FinalizeManager.WEAK_REFERENCE_FACTORY),
 			FinalizeManager.WEAK_REFERENCE_FACTORY);
 	private static final Field _invocationHandlerField;
 

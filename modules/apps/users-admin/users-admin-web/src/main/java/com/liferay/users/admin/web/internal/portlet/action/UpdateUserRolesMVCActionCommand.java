@@ -15,17 +15,23 @@
 package com.liferay.users.admin.web.internal.portlet.action;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.NoSuchUserException;
+import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.membershippolicy.MembershipPolicyException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
-import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.service.permission.OrganizationPermissionUtil;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
@@ -71,53 +77,80 @@ public class UpdateUserRolesMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		User user = _portal.getSelectedUser(actionRequest);
+		try {
+			User user = _portal.getSelectedUser(actionRequest);
 
-		Calendar birthdayCal = CalendarFactoryUtil.getCalendar();
+			Contact contact = user.getContact();
 
-		birthdayCal.setTime(user.getBirthday());
+			Calendar birthdayCal = CalendarFactoryUtil.getCalendar();
 
-		List<UserGroupRole> userGroupRoles = null;
+			birthdayCal.setTime(user.getBirthday());
 
-		String addGroupRolesGroupIds = actionRequest.getParameter(
-			"addGroupRolesGroupIds");
-		String addGroupRolesRoleIds = actionRequest.getParameter(
-			"addGroupRolesRoleIds");
-		String deleteGroupRolesGroupIds = actionRequest.getParameter(
-			"deleteGroupRolesGroupIds");
-		String deleteGroupRolesRoleIds = actionRequest.getParameter(
-			"deleteGroupRolesRoleIds");
+			long[] roleIds = _usersAdmin.getRoleIds(actionRequest);
 
-		if ((addGroupRolesGroupIds != null) || (addGroupRolesRoleIds != null) ||
-			(deleteGroupRolesGroupIds != null) ||
-			(deleteGroupRolesRoleIds != null)) {
+			List<UserGroupRole> userGroupRoles = null;
 
-			userGroupRoles = _usersAdmin.getUserGroupRoles(actionRequest);
+			String addGroupRolesGroupIds = actionRequest.getParameter(
+				"addGroupRolesGroupIds");
+			String addGroupRolesRoleIds = actionRequest.getParameter(
+				"addGroupRolesRoleIds");
+			String deleteGroupRolesGroupIds = actionRequest.getParameter(
+				"deleteGroupRolesGroupIds");
+			String deleteGroupRolesRoleIds = actionRequest.getParameter(
+				"deleteGroupRolesRoleIds");
+
+			if ((addGroupRolesGroupIds != null) ||
+				(addGroupRolesRoleIds != null) ||
+				(deleteGroupRolesGroupIds != null) ||
+				(deleteGroupRolesRoleIds != null)) {
+
+				userGroupRoles = _usersAdmin.getUserGroupRoles(actionRequest);
+			}
+
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+				User.class.getName(), actionRequest);
+
+			user = _userService.updateUser(
+				user.getUserId(), user.getPassword(), null, null,
+				user.isPasswordReset(), null, null, user.getScreenName(),
+				user.getEmailAddress(), user.getFacebookId(), user.getOpenId(),
+				user.getLanguageId(), user.getTimeZoneId(), user.getGreeting(),
+				user.getComments(), user.getFirstName(), user.getMiddleName(),
+				user.getLastName(), contact.getPrefixId(),
+				contact.getSuffixId(), user.isMale(),
+				birthdayCal.get(Calendar.MONTH), birthdayCal.get(Calendar.DATE),
+				birthdayCal.get(Calendar.YEAR), contact.getSmsSn(),
+				contact.getFacebookSn(), contact.getJabberSn(),
+				contact.getSkypeSn(), contact.getTwitterSn(),
+				user.getJobTitle(), user.getGroupIds(),
+				user.getOrganizationIds(), roleIds, userGroupRoles,
+				user.getUserGroupIds(), serviceContext);
+
+			User currentUser = _userService.getCurrentUser();
+
+			if (currentUser.getUserId() == user.getUserId()) {
+				String redirect = _getRedirect(actionRequest, currentUser);
+
+				if (Validator.isNotNull(redirect)) {
+					sendRedirect(actionRequest, actionResponse, redirect);
+				}
+			}
 		}
+		catch (Exception e) {
+			if (e instanceof NoSuchUserException ||
+				e instanceof PrincipalException) {
 
-		List<UserGroupRole> previousUserGroupRoles =
-			_userGroupRoleLocalService.getUserGroupRoles(user.getUserId());
+				SessionErrors.add(actionRequest, e.getClass());
 
-		for (UserGroupRole userGroupRole : previousUserGroupRoles) {
-			if (userGroupRoles.contains(userGroupRole)) {
-				userGroupRoles.remove(userGroupRole);
+				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
+			}
+			else if (e instanceof MembershipPolicyException) {
+				SessionErrors.add(actionRequest, e.getClass(), e);
+
+				actionResponse.setRenderParameter("mvcPath", "/edit_user.jsp");
 			}
 			else {
-				_userGroupRoleLocalService.deleteUserGroupRole(userGroupRole);
-			}
-		}
-
-		for (UserGroupRole userGroupRole : userGroupRoles) {
-			_userGroupRoleLocalService.addUserGroupRole(userGroupRole);
-		}
-
-		User currentUser = _userService.getCurrentUser();
-
-		if (currentUser.getUserId() == user.getUserId()) {
-			String redirect = _getRedirect(actionRequest, currentUser);
-
-			if (Validator.isNotNull(redirect)) {
-				sendRedirect(actionRequest, actionResponse, redirect);
+				throw e;
 			}
 		}
 	}
@@ -187,9 +220,6 @@ public class UpdateUserRolesMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private UserGroupRoleLocalService _userGroupRoleLocalService;
 
 	@Reference
 	private UsersAdmin _usersAdmin;

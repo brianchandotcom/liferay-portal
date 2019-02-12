@@ -86,6 +86,9 @@ public class DDMStructureModelDocumentContributor
 				LocalizationUtil.getLocalizedName(Field.NAME, nameLanguageId),
 				ddmStructure.getName(nameLanguageId));
 		}
+
+		document.addLocalizedKeyword(
+			"localized_name", ddmStructure.getNameMap(), true, true);
 	}
 
 	protected String[] getLanguageIds(

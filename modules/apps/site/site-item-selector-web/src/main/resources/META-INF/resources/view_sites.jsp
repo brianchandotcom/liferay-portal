@@ -144,7 +144,7 @@ GroupSearch groupSearch = siteItemSelectorViewDisplayContext.getGroupSearch();
 
 												<c:if test="<%= siteItemSelectorViewDisplayContext.isShowChildSitesLink() %>">
 													<div class="card-subtitle text-truncate">
-														<aui:a cssClass='<%= !childGroups.isEmpty() ? "text-default" : "disabled text-muted" %>' data="<%= linkData %>" href="<%= childGroupsHREF %>">
+														<aui:a cssClass='<%= childGroups.isEmpty() ? "disabled" : StringPool.BLANK %>' data="<%= linkData %>" href="<%= childGroupsHREF %>">
 															<%= siteVerticalCard.getSubtitle() %>
 														</aui:a>
 													</div>

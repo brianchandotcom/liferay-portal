@@ -115,12 +115,13 @@ public class BulkAssetEntryCommonCategoriesModel {
 	public class AssetVocabularyModel {
 
 		public AssetVocabularyModel(
-			long vocabularyId, String name,
+			AssetVocabulary assetVocabulary,
 			List<AssetCategoryModel> categories) {
 
-			_vocabularyId = vocabularyId;
-			_name = name;
 			_categories = categories;
+			_multiValued = assetVocabulary.isMultiValued();
+			_name = assetVocabulary.getName();
+			_vocabularyId = assetVocabulary.getVocabularyId();
 		}
 
 		public List<AssetCategoryModel> getCategories() {
@@ -133,6 +134,10 @@ public class BulkAssetEntryCommonCategoriesModel {
 
 		public long getVocabularyId() {
 			return _vocabularyId;
+		}
+
+		public boolean isMultiValued() {
+			return _multiValued;
 		}
 
 		public void setCategories(List<AssetCategoryModel> categories) {
@@ -148,6 +153,7 @@ public class BulkAssetEntryCommonCategoriesModel {
 		}
 
 		private List<AssetCategoryModel> _categories;
+		private final boolean _multiValued;
 		private String _name;
 		private long _vocabularyId;
 
@@ -166,7 +172,7 @@ public class BulkAssetEntryCommonCategoriesModel {
 		Stream<AssetCategory> assetCategoryStream = assetCategories.stream();
 
 		return new AssetVocabularyModel(
-			assetVocabulary.getVocabularyId(), assetVocabulary.getName(),
+			assetVocabulary,
 			assetCategoryStream.map(
 				this::_toAssetCategoryModel
 			).collect(

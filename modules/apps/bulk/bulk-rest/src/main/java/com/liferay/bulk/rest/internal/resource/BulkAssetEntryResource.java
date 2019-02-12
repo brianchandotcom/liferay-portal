@@ -16,8 +16,10 @@ package com.liferay.bulk.rest.internal.resource;
 
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
+import com.liferay.asset.kernel.service.AssetTagService;
 import com.liferay.bulk.rest.internal.model.BulkActionResponseModel;
 import com.liferay.bulk.rest.internal.model.BulkAssetEntryActionModel;
 import com.liferay.bulk.rest.internal.model.BulkAssetEntryCommonCategoriesModel;
@@ -31,12 +33,14 @@ import com.liferay.bulk.selection.BulkSelectionInputParameters;
 import com.liferay.bulk.selection.BulkSelectionRunner;
 import com.liferay.document.library.bulk.selection.EditCategoriesBulkSelectionAction;
 import com.liferay.document.library.bulk.selection.EditTagsBulkSelectionAction;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.BaseModelPermissionCheckerUtil;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.SetUtil;
 
 import java.io.Serializable;
@@ -45,17 +49,21 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 
 import org.osgi.service.component.annotations.Component;
@@ -154,6 +162,26 @@ public class BulkAssetEntryResource {
 		catch (Exception e) {
 			return new BulkAssetEntryCommonTagsModel(e);
 		}
+	}
+
+	@GET
+	@Path("/tags/{groupId}/search")
+	@Produces(ContentTypes.APPLICATION_JSON)
+	public List<String> searchTags(
+			@PathParam("groupId") long groupId, @QueryParam("name") String name)
+		throws PortalException {
+
+		List<AssetTag> assetTags = _assetTagService.getTags(
+			_portal.getCurrentAndAncestorSiteGroupIds(groupId),
+			"%" + name + "%", 0, 20);
+
+		Stream<AssetTag> assetTagStream = assetTags.stream();
+
+		return assetTagStream.map(
+			AssetTag::getName
+		).collect(
+			Collectors.toList()
+		);
 	}
 
 	@Consumes(ContentTypes.APPLICATION_JSON)
@@ -291,6 +319,9 @@ public class BulkAssetEntryResource {
 	private AssetTagLocalService _assetTagLocalService;
 
 	@Reference
+	private AssetTagService _assetTagService;
+
+	@Reference
 	private BulkSelectionFactoryRegistry _bulkSelectionFactoryRegistry;
 
 	@Reference
@@ -302,5 +333,8 @@ public class BulkAssetEntryResource {
 
 	@Reference
 	private EditTagsBulkSelectionAction _editTagsBulkSelectionAction;
+
+	@Reference
+	private Portal _portal;
 
 }

@@ -255,6 +255,7 @@ AUI.add(
 						var bulkSelection = instance._searchContainer.select && instance._searchContainer.select.get('bulkSelection');
 
 						if (!editTagsComponent) {
+							var urlSearchTags = themeDisplay.getPortalURL() + '/o/bulk/asset/tags/' + instance._config.scopeGroupId + '/search';
 							var urlTags = themeDisplay.getPortalURL() + '/o/bulk/asset/tags/' + instance.get('classNameId') + '/common';
 							var urlUpdateTags = themeDisplay.getPortalURL() + '/o/bulk/asset/tags/' + instance.get('classNameId');
 
@@ -267,9 +268,9 @@ AUI.add(
 											folderId: instance.getFolderId(),
 											portletNamespace: namespace,
 											repositoryId: parseFloat(form.get(namespace + 'repositoryId').val()),
-											scopeGroupId: instance._config.scopeGroupId,
 											selectAll: bulkSelection,
 											spritemap: themeDisplay.getPathThemeImages() + '/lexicon/icons.svg',
+											urlSearchTags: urlSearchTags,
 											urlTags: urlTags,
 											urlUpdateTags: urlUpdateTags
 										},

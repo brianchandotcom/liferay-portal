@@ -35,19 +35,18 @@ class EditTags extends Component {
 	created() {
 		this.append = true;
 
-		this.dataSource = query => new Promise((resolve, reject) => {
-			Liferay.Service(
-				'/assettag/search',
+		this.dataSource = query => (
+			fetch(
+				this.urlSearchTags + '?name=' + query,
 				{
-					end: 20,
-					groupIds: [this.scopeGroupId],
-					name: `%${query === '*' ? '' : query}%`,
-					start: 0,
-					tagProperties: ''
-				},
-				tags => resolve(tags.map(tag => tag.value))
-			);
-		});
+					credentials: 'include',
+					method: 'GET'
+				}
+			)
+				.then(
+					response => response.json()
+				)
+		);
 	}
 
 	/**
@@ -264,16 +263,6 @@ EditTags.STATE = {
 	folderId: Config.string().required(),
 
 	/**
-	 * Scope Group Id
-	 *
-	 * @instance
-	 * @memberof EditTags
-	 * @review
-	 * @type {Number}
-	 */
-	scopeGroupId: Config.number().required(),
-
-	/**
 	 * Flag that indicate if loading icon must
 	 * be shown.
 	 *
@@ -335,6 +324,17 @@ EditTags.STATE = {
 	 * @type {String}
 	 */
 	spritemap: Config.string().required(),
+
+	/**
+	 * Url to backend service that provides
+	 * tags search.
+	 *
+	 * @instance
+	 * @memberof EditTags
+	 * @review
+	 * @type {String}
+	 */
+	urlSearchTags: Config.string().required(),
 
 	/**
 	 * Url to backend service that provides

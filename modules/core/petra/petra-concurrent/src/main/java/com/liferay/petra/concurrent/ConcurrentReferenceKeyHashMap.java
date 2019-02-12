@@ -19,7 +19,6 @@ import com.liferay.petra.memory.FinalizeManager;
 
 import java.lang.ref.Reference;
 
-import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -41,16 +40,14 @@ public class ConcurrentReferenceKeyHashMap<K, V>
 	public ConcurrentReferenceKeyHashMap(
 		FinalizeManager.ReferenceFactory referenceFactory) {
 
-		this(new ConcurrentHashMap<Reference<K>, V>(), referenceFactory);
+		this(new ConcurrentHashMap<>(), referenceFactory);
 	}
 
 	public ConcurrentReferenceKeyHashMap(
 		int initialCapacity,
 		FinalizeManager.ReferenceFactory referenceFactory) {
 
-		this(
-			new ConcurrentHashMap<Reference<K>, V>(initialCapacity),
-			referenceFactory);
+		this(new ConcurrentHashMap<>(initialCapacity), referenceFactory);
 	}
 
 	public ConcurrentReferenceKeyHashMap(
@@ -58,7 +55,7 @@ public class ConcurrentReferenceKeyHashMap<K, V>
 		FinalizeManager.ReferenceFactory referenceFactory) {
 
 		this(
-			new ConcurrentHashMap<Reference<K>, V>(
+			new ConcurrentHashMap<>(
 				initialCapacity, loadFactor, concurrencyLevel),
 			referenceFactory);
 	}

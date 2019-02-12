@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 
 import java.lang.ref.Reference;
 
-import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 

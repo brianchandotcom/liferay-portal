@@ -407,6 +407,7 @@ public class StructuredContentResourceImpl
 					journalArticle.getDescription(
 						acceptLanguage.getPreferredLocale()));
 				setId(journalArticle.getResourcePrimKey());
+				setLastReviewed(journalArticle.getReviewDate());
 				setTitle(
 					journalArticle.getTitle(
 						acceptLanguage.getPreferredLocale()));

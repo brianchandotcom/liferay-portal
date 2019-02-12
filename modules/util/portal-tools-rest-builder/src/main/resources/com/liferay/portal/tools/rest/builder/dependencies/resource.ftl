@@ -46,10 +46,6 @@ import javax.ws.rs.core.Response;
 public interface ${schemaName}Resource {
 
 	<#list javaTool.getJavaSignatures(openAPIYAML, schemaName) as javaSignature>
-		<#if !stringUtil.equals(javaSignature.returnType, schemaName) && !stringUtil.equals(javaSignature.returnType, "Page<${schemaName}>") && !stringUtil.endsWith(javaSignature.methodName, schemaName)>
-			<#continue>
-		</#if>
-
 		<#compress>
 			<#list javaSignature.methodAnnotations as methodAnnotation>
 				${methodAnnotation}

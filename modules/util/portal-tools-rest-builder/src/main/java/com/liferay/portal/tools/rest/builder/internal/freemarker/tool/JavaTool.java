@@ -81,13 +81,17 @@ public class JavaTool {
 				operation -> {
 					String returnType = _getReturnType(openAPIYAML, operation);
 
-					JavaSignature javaSignature = new JavaSignature(
-						_getJavaParameters(operation),
-						_getMethodAnnotations(operation, pathItem, path),
-						_getMethodName(operation, path, returnType, schemaName),
-						returnType);
+					String methodName = _getMethodName(
+						operation, path, returnType, schemaName);
 
-					javaSignatures.add(javaSignature);
+					if (_isSchemaMethod(schemaName, methodName, returnType)) {
+						JavaSignature javaSignature = new JavaSignature(
+							_getJavaParameters(operation),
+							_getMethodAnnotations(operation, pathItem, path),
+							methodName, returnType);
+
+						javaSignatures.add(javaSignature);
+					}
 				});
 		}
 
@@ -511,6 +515,20 @@ public class JavaTool {
 		}
 
 		return "Response";
+	}
+
+	private boolean _isSchemaMethod(
+		String schemaName, String methodName, String returnType) {
+
+		if (returnType.equals(schemaName) || methodName.endsWith(schemaName) ||
+			((returnType.length() == schemaName.length() + 6) &&
+			 returnType.startsWith("Page<") && returnType.endsWith(">") &&
+			 returnType.regionMatches(5, schemaName, 0, schemaName.length()))) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private void _visitOperations(

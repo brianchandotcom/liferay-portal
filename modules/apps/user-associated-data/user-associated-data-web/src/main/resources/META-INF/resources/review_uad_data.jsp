@@ -85,9 +85,15 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 
 						<%
 						String applicationPanelTitle = StringUtil.toUpperCase(LanguageUtil.get(request, "applications"), locale);
+
+						int totalApplicationItemCount = 0;
+
+						for (UADApplicationSummaryDisplay uadApplicationSummaryDisplay : uadApplicationSummaryDisplays) {
+							totalApplicationItemCount += uadApplicationSummaryDisplay.getCount();
+						}
 						%>
 
-						<%= StringUtil.appendParentheticalSuffix(applicationPanelTitle, totalReviewableUADEntitiesCount) %>
+						<%= StringUtil.appendParentheticalSuffix(applicationPanelTitle, totalApplicationItemCount) %>
 					</span>
 
 					<aui:icon cssClass="collapse-icon-closed" image="angle-right" markupView="lexicon" />

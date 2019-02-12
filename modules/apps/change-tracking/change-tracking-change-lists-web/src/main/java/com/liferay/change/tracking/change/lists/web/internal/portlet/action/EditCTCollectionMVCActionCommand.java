@@ -55,7 +55,7 @@ public class EditCTCollectionMVCActionCommand extends BaseMVCActionCommand {
 			WebKeys.THEME_DISPLAY);
 
 		long ctCollectionId = ParamUtil.getLong(
-		actionRequest, "ctCollectionId");
+			actionRequest, "ctCollectionId");
 		String description = ParamUtil.getString(actionRequest, "description");
 		String name = ParamUtil.getString(actionRequest, "name");
 

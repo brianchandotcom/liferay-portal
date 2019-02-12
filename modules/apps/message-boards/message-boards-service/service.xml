@@ -476,7 +476,7 @@
 		<column name="categoryId" parent-container-model="true" type="long" />
 		<column name="rootMessageId" type="long" />
 		<column name="rootMessageUserId" type="long" />
-		<column name="title" type="String" />
+		<column name="title" type="String" uad-nonanonymizable="true" />
 		<column name="messageCount" type="int" />
 		<column name="viewCount" type="int" />
 		<column name="lastPostByUserId" type="long" />

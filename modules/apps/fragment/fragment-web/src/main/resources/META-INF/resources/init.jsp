@@ -27,8 +27,7 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.document.library.kernel.util.DLUtil" %><%@
-page import="com.liferay.fragment.constants.FragmentActionKeys" %><%@
+<%@ page import="com.liferay.fragment.constants.FragmentActionKeys" %><%@
 page import="com.liferay.fragment.constants.FragmentEntryLinkConstants" %><%@
 page import="com.liferay.fragment.exception.DuplicateFragmentCollectionException" %><%@
 page import="com.liferay.fragment.exception.DuplicateFragmentCollectionKeyException" %><%@
@@ -56,6 +55,7 @@ page import="com.liferay.fragment.web.internal.display.context.SelectFragmentCol
 page import="com.liferay.fragment.web.internal.display.context.SelectFragmentCollectionManagementToolbarDisplayContext" %><%@
 page import="com.liferay.fragment.web.internal.security.permission.resource.FragmentPermission" %><%@
 page import="com.liferay.fragment.web.internal.servlet.taglib.clay.FragmentCollectionHorizontalCard" %><%@
+page import="com.liferay.fragment.web.internal.servlet.taglib.clay.FragmentCollectionResourceVerticalCard" %><%@
 page import="com.liferay.fragment.web.internal.servlet.taglib.clay.FragmentEntryVerticalCard" %><%@
 page import="com.liferay.frontend.taglib.servlet.taglib.util.EmptyResultMessageKeys" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@

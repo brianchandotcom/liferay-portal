@@ -53,14 +53,8 @@ FragmentCollectionResourcesManagementToolbarDisplayContext fragmentCollectionRes
 			%>
 
 			<liferay-ui:search-container-column-text>
-				<liferay-frontend:vertical-card
-					actionJsp="/fragment_collection_resources_action.jsp"
-					actionJspServletContext="<%= application %>"
-					cssClass="entry-display-style"
-					imageUrl="<%= DLUtil.getPreviewURL(fileEntry, fileEntry.getFileVersion(), null, StringPool.BLANK, false, false) %>"
-					resultRow="<%= row %>"
-					rowChecker="<%= searchContainer.getRowChecker() %>"
-					title="<%= fileEntry.getFileName() %>"
+				<clay:vertical-card
+					verticalCard="<%= new FragmentCollectionResourceVerticalCard(fileEntry, renderRequest, renderResponse, searchContainer.getRowChecker()) %>"
 				/>
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
@@ -71,6 +65,13 @@ FragmentCollectionResourcesManagementToolbarDisplayContext fragmentCollectionRes
 		/>
 	</liferay-ui:search-container>
 </aui:form>
+
+<c:if test="<%= FragmentPermission.contains(permissionChecker, scopeGroupId, FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES) %>">
+	<liferay-frontend:component
+		componentId="<%= FragmentWebKeys.FRAGMENT_COLLECTION_RESOURCE_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
+		module="js/FragmentCollectionResourceDropdownDefaultEventHandler.es"
+	/>
+</c:if>
 
 <liferay-frontend:component
 	componentId="<%= fragmentCollectionResourcesManagementToolbarDisplayContext.getDefaultEventHandler() %>"

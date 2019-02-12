@@ -19,6 +19,10 @@ package com.liferay.fragment.web.internal.constants;
  */
 public class FragmentWebKeys {
 
+	public static final String
+		FRAGMENT_COLLECTION_RESOURCE_DROPDOWN_DEFAULT_EVENT_HANDLER =
+			"FRAGMENT_COLLECTION_RESOURCE_DROPDOWN_DEFAULT_EVENT_HANDLER";
+
 	public static final String FRAGMENT_COLLECTIONS = "FRAGMENT_COLLECTIONS";
 
 	public static final String FRAGMENT_ENTRY_DROPDOWN_DEFAULT_EVENT_HANDLER =

@@ -37,6 +37,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.function.Consumer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -406,10 +407,10 @@ public class JavaTool {
 		return "@Produces(" + sb.toString() + ")";
 	}
 
-	private List<String> _getMethodAnnotations(
+	private Set<String> _getMethodAnnotations(
 		Operation operation, PathItem pathItem, String path) {
 
-		List<String> methodAnnotations = new ArrayList<>();
+		Set<String> methodAnnotations = new TreeSet<>();
 
 		methodAnnotations.add("@Path(\"" + path + "\")");
 

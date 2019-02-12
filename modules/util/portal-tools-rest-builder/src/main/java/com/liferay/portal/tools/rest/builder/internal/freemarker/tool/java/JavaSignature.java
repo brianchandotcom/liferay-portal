@@ -17,7 +17,6 @@ package com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import java.util.TreeSet;
 
 /**
  * @author Peter Shin
@@ -25,7 +24,7 @@ import java.util.TreeSet;
 public class JavaSignature {
 
 	public JavaSignature(
-		List<JavaParameter> javaParameters, List<String> methodAnnotations,
+		List<JavaParameter> javaParameters, Set<String> methodAnnotations,
 		String methodName, String returnType) {
 
 		_methodName = methodName;
@@ -35,9 +34,7 @@ public class JavaSignature {
 			_javaParameters.addAll(javaParameters);
 		}
 
-		if (methodAnnotations != null) {
-			_methodAnnotations.addAll(methodAnnotations);
-		}
+		_methodAnnotations = methodAnnotations;
 	}
 
 	public List<JavaParameter> getJavaParameters() {
@@ -57,7 +54,7 @@ public class JavaSignature {
 	}
 
 	private final List<JavaParameter> _javaParameters = new ArrayList<>();
-	private final Set<String> _methodAnnotations = new TreeSet<>();
+	private final Set<String> _methodAnnotations;
 	private final String _methodName;
 	private final String _returnType;
 

@@ -67,6 +67,13 @@ public class NodeDefaultsPlugin extends BaseDefaultsPlugin<NodePlugin> {
 			nodeExtension.setGlobal(false);
 			nodeExtension.setNodeVersion("6.6.0");
 		}
+		else if (PortalTools.PORTAL_VERSION_7_1_X.equals(portalVersion)) {
+			NodeExtension nodeExtension = GradleUtil.getExtension(
+				project, NodeExtension.class);
+
+			nodeExtension.setNodeVersion("8.10.0");
+			nodeExtension.setNpmVersion("5.7.1");
+		}
 	}
 
 	private void _configureTaskNpmInstall(

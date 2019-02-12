@@ -36,6 +36,8 @@ public class PortalTools {
 
 	public static final String PORTAL_VERSION_7_0_X = "7.0.x";
 
+	public static final String PORTAL_VERSION_7_1_X = "7.1.x";
+
 	public static final String PORTAL_VERSION_PROPERTY_NAME = "portal.version";
 
 	public static String getPortalVersion(Project project) {

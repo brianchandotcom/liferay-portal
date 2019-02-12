@@ -15,12 +15,18 @@
 package com.liferay.segments.upgrade.v_0_0_1.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.expando.kernel.model.ExpandoColumn;
+import com.liferay.expando.kernel.model.ExpandoColumnConstants;
+import com.liferay.expando.kernel.model.ExpandoTable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -29,11 +35,14 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
+import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
+import com.liferay.portlet.expando.util.test.ExpandoTestUtil;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.segments.criteria.Criteria;
@@ -72,6 +81,9 @@ public class UpgradeContentTargetingTest {
 
 	@Before
 	public void setUp() throws Exception {
+		_expandoTable = ExpandoTestUtil.addTable(
+			PortalUtil.getClassNameId(User.class), "CUSTOM_FIELDS");
+
 		_group = GroupTestUtil.addGroup();
 
 		_db = DBManagerUtil.getDB();
@@ -145,6 +157,52 @@ public class UpgradeContentTargetingTest {
 			Criteria.Conjunction.parse(criterion.getConjunction()));
 		Assert.assertEquals(
 			"(browser eq 'Chrome')", criterion.getFilterString());
+	}
+
+	@Test
+	public void testUpgradeContentTargetingUserSegmentsWithCustomFieldRule()
+		throws Exception {
+
+		long contentTargetingUserSegmentId = -1L;
+
+		ExpandoColumn expandoColumn = ExpandoTestUtil.addColumn(
+			_expandoTable, RandomTestUtil.randomString(),
+			ExpandoColumnConstants.STRING);
+
+		String expandoValue = RandomTestUtil.randomString();
+
+		insertContentTargetingRuleInstance(
+			contentTargetingUserSegmentId, "CustomFieldRule",
+			_getCustomFieldRuleTypeSettings(expandoColumn, expandoValue));
+
+		insertContentTargetingUserSegment(
+			contentTargetingUserSegmentId,
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomLocaleStringMap());
+
+		_upgradeContentTargeting.upgrade();
+
+		SegmentsEntry segmentsEntry =
+			_segmentsEntryLocalService.fetchSegmentsEntry(
+				_group.getGroupId(), "CT." + contentTargetingUserSegmentId,
+				false);
+
+		Assert.assertNotNull(segmentsEntry);
+
+		Criteria criteriaObj = segmentsEntry.getCriteriaObj();
+
+		Assert.assertNotNull(criteriaObj);
+
+		Criteria.Criterion criterion = criteriaObj.getCriterion("user");
+
+		Assert.assertNotNull(criterion);
+
+		Assert.assertEquals(
+			Criteria.Conjunction.AND,
+			Criteria.Conjunction.parse(criterion.getConjunction()));
+		Assert.assertEquals(
+			_getCustomFieldFilterString(expandoColumn, expandoValue),
+			criterion.getFilterString());
 	}
 
 	protected void createContentTargetingTables()
@@ -296,6 +354,33 @@ public class UpgradeContentTargetingTest {
 			});
 	}
 
+	private String _getCustomFieldFilterString(
+		ExpandoColumn expandoColumn, String expandoValue) {
+
+		StringBundler sb = new StringBundler(7);
+
+		sb.append("(customField/_");
+		sb.append(expandoColumn.getColumnId());
+		sb.append("_");
+		sb.append(FriendlyURLNormalizerUtil.normalize(expandoColumn.getName()));
+		sb.append(" eq '");
+		sb.append(expandoValue);
+		sb.append("')");
+
+		return sb.toString();
+	}
+
+	private String _getCustomFieldRuleTypeSettings(
+		ExpandoColumn expandoColumn, String expandoValue) {
+
+		JSONObject jsonObj = JSONFactoryUtil.createJSONObject();
+
+		jsonObj.put("attributeName", expandoColumn.getName());
+		jsonObj.put("value", expandoValue);
+
+		return jsonObj.toString();
+	}
+
 	private static final String _CLASS_NAME =
 		"com.liferay.segments.internal.upgrade.v0_0_1.UpgradeContentTargeting";
 
@@ -303,6 +388,9 @@ public class UpgradeContentTargetingTest {
 
 	@Inject
 	private static SegmentsEntryLocalService _segmentsEntryLocalService;
+
+	@DeleteAfterTestRun
+	private ExpandoTable _expandoTable;
 
 	@DeleteAfterTestRun
 	private Group _group;

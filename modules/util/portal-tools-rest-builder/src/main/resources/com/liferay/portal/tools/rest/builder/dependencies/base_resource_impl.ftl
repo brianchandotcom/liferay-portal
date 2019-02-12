@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.vulcan.context.AcceptLanguage;
 import com.liferay.portal.vulcan.context.Pagination;
 import com.liferay.portal.vulcan.dto.Page;
+import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.Collections;
@@ -24,8 +25,6 @@ import javax.annotation.Generated;
 
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
-
-import org.apache.cxf.jaxrs.ext.multipart.MultipartBody;
 
 /**
  * @author ${configYAML.author}

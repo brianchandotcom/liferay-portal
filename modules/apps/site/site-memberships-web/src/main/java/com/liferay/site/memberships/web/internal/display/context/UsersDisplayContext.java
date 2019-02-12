@@ -200,6 +200,8 @@ public class UsersDisplayContext {
 
 		userSearch.setEmptyResultsMessage(
 			"no-user-was-found-that-is-a-direct-member-of-this-site");
+		userSearch.setOrderByCol(getOrderByCol());
+		userSearch.setOrderByType(getOrderByType());
 		userSearch.setRowChecker(new EmptyOnClickRowChecker(_renderResponse));
 
 		UserSearchTerms searchTerms =

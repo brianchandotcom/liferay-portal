@@ -125,14 +125,8 @@ public class LazyWorkflowTaskAssigneeListTest {
 			KaleoRuntimeTestUtil.mockKaleoTaskInstanceToken(
 				kaleoTaskAssignmentInstances);
 
-		KaleoTaskAssignmentInstanceLocalService
-			kaleoTaskAssignmentInstanceLocalService = Mockito.mock(
-				KaleoTaskAssignmentInstanceLocalService.class);
-
 		LazyWorkflowTaskAssigneeList lazyWorkflowTaskAssigneeList =
-			new LazyWorkflowTaskAssigneeList(
-				kaleoTaskInstanceToken,
-				kaleoTaskAssignmentInstanceLocalService);
+			new LazyWorkflowTaskAssigneeList(kaleoTaskInstanceToken, null);
 
 		WorkflowTaskAssignee workflowTaskAssignee =
 			lazyWorkflowTaskAssigneeList.get(1);
@@ -161,14 +155,8 @@ public class LazyWorkflowTaskAssigneeListTest {
 			KaleoRuntimeTestUtil.mockKaleoTaskInstanceToken(
 				kaleoTaskAssignmentInstance);
 
-		KaleoTaskAssignmentInstanceLocalService
-			kaleoTaskAssignmentInstanceLocalService = Mockito.mock(
-				KaleoTaskAssignmentInstanceLocalService.class);
-
 		LazyWorkflowTaskAssigneeList lazyWorkflowTaskAssigneeList =
-			new LazyWorkflowTaskAssigneeList(
-				kaleoTaskInstanceToken,
-				kaleoTaskAssignmentInstanceLocalService);
+			new LazyWorkflowTaskAssigneeList(kaleoTaskInstanceToken, null);
 
 		WorkflowTaskAssignee workflowTaskAssignee =
 			lazyWorkflowTaskAssigneeList.get(0);
@@ -189,14 +177,8 @@ public class LazyWorkflowTaskAssigneeListTest {
 		KaleoTaskInstanceToken kaleoTaskInstanceToken =
 			KaleoRuntimeTestUtil.mockKaleoTaskInstanceToken();
 
-		KaleoTaskAssignmentInstanceLocalService
-			kaleoTaskAssignmentInstanceLocalService = Mockito.mock(
-				KaleoTaskAssignmentInstanceLocalService.class);
-
 		LazyWorkflowTaskAssigneeList lazyWorkflowTaskAssigneeList =
-			new LazyWorkflowTaskAssigneeList(
-				kaleoTaskInstanceToken,
-				kaleoTaskAssignmentInstanceLocalService);
+			new LazyWorkflowTaskAssigneeList(kaleoTaskInstanceToken, null);
 
 		lazyWorkflowTaskAssigneeList.get(0);
 	}

@@ -54,11 +54,30 @@ for (int assetEntryIndex = 0; assetEntryIndex < assetEntries.size(); assetEntryI
 	request.setAttribute("view.jsp-print", Boolean.FALSE);
 
 	try {
+		if (StringUtil.startsWith(assetPublisherDisplayContext.getDisplayStyle(), PortletDisplayTemplateManager.DISPLAY_STYLE_PREFIX)) {
+			assetPublisherDisplayContext.setDisplayStyle(assetPublisherDisplayContext.getDefaultDisplayStyle());
+		}
+
+		if (!ArrayUtil.contains(assetPublisherDisplayContext.getDisplayStyles(), assetPublisherDisplayContext.getDisplayStyle())) {
 %>
 
-		<%@ include file="/view_display.jspf" %>
+			<%= HtmlUtil.escape(LanguageUtil.format(request, "x-is-not-a-display-type", assetPublisherDisplayContext.getDisplayStyle())) %>
+
+		<%
+		}
+		else {
+			for (String curDisplayStyle : assetPublisherDisplayContext.getDisplayStyles()) {
+				if (assetPublisherDisplayContext.getDisplayStyle().equals(curDisplayStyle)) {
+					String displayStyleJsp = "/display/" + TextFormatter.format(curDisplayStyle, TextFormatter.N) + ".jsp";
+		%>
+
+					<liferay-util:include page="<%= displayStyleJsp %>" servletContext="<%= application %>" />
 
 <%
+					break;
+				}
+			}
+		}
 	}
 	catch (Exception e) {
 		_log.error(e.getMessage());

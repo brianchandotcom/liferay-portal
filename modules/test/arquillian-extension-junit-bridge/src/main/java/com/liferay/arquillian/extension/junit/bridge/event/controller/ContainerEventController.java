@@ -20,6 +20,8 @@ import com.liferay.arquillian.extension.junit.bridge.deployment.BndDeploymentSce
 
 import java.util.List;
 
+import javax.management.MBeanServerConnection;
+
 import org.jboss.arquillian.config.descriptor.api.ContainerDef;
 import org.jboss.arquillian.config.descriptor.impl.ContainerDefImpl;
 import org.jboss.arquillian.container.spi.Container;
@@ -28,7 +30,6 @@ import org.jboss.arquillian.container.spi.client.container.DeploymentException;
 import org.jboss.arquillian.container.spi.client.container.LifecycleException;
 import org.jboss.arquillian.container.spi.client.deployment.Deployment;
 import org.jboss.arquillian.container.spi.client.deployment.DeploymentDescription;
-import org.jboss.arquillian.container.spi.client.protocol.metadata.ProtocolMetaData;
 import org.jboss.arquillian.container.spi.context.ContainerContext;
 import org.jboss.arquillian.container.spi.context.DeploymentContext;
 import org.jboss.arquillian.container.spi.context.annotation.DeploymentScoped;
@@ -132,10 +133,8 @@ public class ContainerEventController {
 			deployment.getDescription();
 
 		try {
-			ProtocolMetaData protocolMetaData = deployableContainer.deploy(
+			deployableContainer.deploy(
 				deploymentDescription.getTestableArchive());
-
-			_protocolMetadataInstanceProducer.set(protocolMetaData);
 
 			deployment.deployed();
 		}
@@ -169,7 +168,9 @@ public class ContainerEventController {
 
 			Container container = new ContainerImpl(
 				containerDef.getContainerName(),
-				new LiferayRemoteDeployableContainer(), containerDef);
+				new LiferayRemoteDeployableContainer(
+					_mBeanServerConnectionInstanceProducer),
+				containerDef);
 
 			Injector injector = _injectorInstance.get();
 
@@ -231,7 +232,7 @@ public class ContainerEventController {
 
 	@DeploymentScoped
 	@Inject
-	private InstanceProducer<ProtocolMetaData>
-		_protocolMetadataInstanceProducer;
+	private InstanceProducer<MBeanServerConnection>
+		_mBeanServerConnectionInstanceProducer;
 
 }

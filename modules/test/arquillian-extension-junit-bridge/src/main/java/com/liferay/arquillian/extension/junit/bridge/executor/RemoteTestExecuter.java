@@ -16,11 +16,8 @@ package com.liferay.arquillian.extension.junit.bridge.executor;
 
 import com.liferay.arquillian.extension.junit.bridge.protocol.jmx.JMXMethodExecutor;
 
-import java.util.Collection;
-import java.util.Iterator;
+import javax.management.MBeanServerConnection;
 
-import org.jboss.arquillian.container.spi.client.protocol.metadata.JMXContext;
-import org.jboss.arquillian.container.spi.client.protocol.metadata.ProtocolMetaData;
 import org.jboss.arquillian.container.test.spi.ContainerMethodExecutor;
 import org.jboss.arquillian.core.api.Instance;
 import org.jboss.arquillian.core.api.InstanceProducer;
@@ -35,25 +32,16 @@ import org.jboss.arquillian.test.spi.event.suite.Test;
  */
 public class RemoteTestExecuter {
 
-	public void execute(@Observes Test test) throws Exception {
-		ProtocolMetaData protocolMetaData = _protocolMetadataInstance.get();
-
-		Collection<JMXContext> jmxContexts = protocolMetaData.getContexts(
-			JMXContext.class);
-
-		Iterator<JMXContext> iterator = jmxContexts.iterator();
-
-		JMXContext jmxContext = iterator.next();
-
+	public void execute(@Observes Test test) {
 		ContainerMethodExecutor containerMethodExecutor = new JMXMethodExecutor(
-			jmxContext.getConnection());
+			_mBeanServerConnectionInstance.get());
 
 		_testResultInstanceProducer.set(
 			containerMethodExecutor.invoke(test.getTestMethodExecutor()));
 	}
 
 	@Inject
-	private Instance<ProtocolMetaData> _protocolMetadataInstance;
+	private Instance<MBeanServerConnection> _mBeanServerConnectionInstance;
 
 	@Inject
 	@TestScoped

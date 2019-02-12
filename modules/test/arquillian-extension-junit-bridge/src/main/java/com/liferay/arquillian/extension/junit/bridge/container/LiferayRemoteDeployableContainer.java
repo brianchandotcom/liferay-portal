@@ -42,8 +42,8 @@ import org.jboss.arquillian.container.spi.client.container.DeployableContainer;
 import org.jboss.arquillian.container.spi.client.container.DeploymentException;
 import org.jboss.arquillian.container.spi.client.container.LifecycleException;
 import org.jboss.arquillian.container.spi.client.protocol.ProtocolDescription;
-import org.jboss.arquillian.container.spi.client.protocol.metadata.JMXContext;
 import org.jboss.arquillian.container.spi.client.protocol.metadata.ProtocolMetaData;
+import org.jboss.arquillian.core.api.InstanceProducer;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.exporter.ZipExporter;
 import org.jboss.shrinkwrap.descriptor.api.Descriptor;
@@ -55,6 +55,14 @@ import org.osgi.jmx.framework.FrameworkMBean;
  */
 public class LiferayRemoteDeployableContainer
 	implements DeployableContainer<ContainerConfiguration> {
+
+	public LiferayRemoteDeployableContainer(
+		InstanceProducer<MBeanServerConnection>
+			mBeanServerConnectionInstanceProducer) {
+
+		_mBeanServerConnectionInstanceProducer =
+			mBeanServerConnectionInstanceProducer;
+	}
 
 	@Override
 	public ProtocolMetaData deploy(Archive<?> archive)
@@ -72,11 +80,9 @@ public class LiferayRemoteDeployableContainer
 				"Unable to deploy " + archive.getName(), e);
 		}
 
-		ProtocolMetaData protocolMetaData = new ProtocolMetaData();
+		_mBeanServerConnectionInstanceProducer.set(_mBeanServerConnection);
 
-		protocolMetaData.addContext(new JMXContext(_mBeanServerConnection));
-
-		return protocolMetaData;
+		return null;
 	}
 
 	@Override
@@ -190,5 +196,7 @@ public class LiferayRemoteDeployableContainer
 	private final Map<String, Long> _deployedBundleIds = new HashMap<>();
 	private FrameworkMBean _frameworkMBean;
 	private MBeanServerConnection _mBeanServerConnection;
+	private final InstanceProducer<MBeanServerConnection>
+		_mBeanServerConnectionInstanceProducer;
 
 }

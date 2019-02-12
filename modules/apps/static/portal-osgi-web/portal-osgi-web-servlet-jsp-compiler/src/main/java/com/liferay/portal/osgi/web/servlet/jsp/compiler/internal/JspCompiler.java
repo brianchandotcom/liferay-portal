@@ -28,7 +28,6 @@ import com.liferay.portal.osgi.web.servlet.jsp.compiler.internal.util.ClassPathU
 import java.io.File;
 import java.io.IOException;
 
-import java.lang.ref.Reference;
 import java.net.URI;
 import java.net.URL;
 

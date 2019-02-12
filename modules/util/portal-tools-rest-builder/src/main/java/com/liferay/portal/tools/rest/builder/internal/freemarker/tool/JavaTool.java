@@ -97,7 +97,9 @@ public class JavaTool {
 	private JavaTool() {
 	}
 
-	private Object _getComponent(OpenAPIYAML openAPIYAML, String reference) {
+	private Schema _getComponentSchema(
+		OpenAPIYAML openAPIYAML, String reference) {
+
 		if (reference == null) {
 			return null;
 		}
@@ -105,16 +107,7 @@ public class JavaTool {
 		Components components = openAPIYAML.getComponents();
 		String referenceType = _getComponentType(reference);
 
-		if (reference.startsWith("#/components/parameters/")) {
-			Map<String, Parameter> parameters = components.getParameters();
-
-			for (Map.Entry<String, Parameter> entry : parameters.entrySet()) {
-				if (referenceType.equals(entry.getKey())) {
-					return entry.getValue();
-				}
-			}
-		}
-		else if (reference.startsWith("#/components/schemas/")) {
+		if (reference.startsWith("#/components/schemas/")) {
 			Map<String, Schema> schemas = components.getSchemas();
 
 			for (Map.Entry<String, Schema> entry : schemas.entrySet()) {
@@ -508,10 +501,10 @@ public class JavaTool {
 					return "Page<" + s + ">";
 				}
 
-				Object component = _getComponent(
+				Schema componentSchema = _getComponentSchema(
 					openAPIYAML, schema.getReference());
 
-				if (component instanceof Schema) {
+				if (componentSchema != null) {
 					return _getComponentType(schema.getReference());
 				}
 			}

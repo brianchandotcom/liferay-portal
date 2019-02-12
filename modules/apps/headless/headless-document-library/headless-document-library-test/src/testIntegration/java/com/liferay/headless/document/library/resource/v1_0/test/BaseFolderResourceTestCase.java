@@ -24,7 +24,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.liferay.headless.document.library.dto.v1_0.Folder;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 
 import io.restassured.RestAssured;
 import io.restassured.parsing.Parser;
@@ -39,7 +39,6 @@ import org.hamcrest.core.IsNull;
 
 import org.jboss.arquillian.test.api.ArquillianResource;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -69,16 +68,13 @@ public abstract class BaseFolderResourceTestCase {
 	}
 
 	@Before
-	public void setUp() throws MalformedURLException {
+	public void setUp() throws MalformedURLException, PortalException {
 		_headlessDocumentLibraryURL = new URL(
 			_url.toExternalForm() + "/o/headless-document-library/v1.0");
 
-		_groupId = _createGroup();
-	}
+		long companyId = _getCompanyId();
 
-	@After
-	public void tearDown() throws MalformedURLException {
-		_deleteGroup(_groupId);
+		_groupId = _getGroupId(companyId);
 	}
 
 	@Test
@@ -194,7 +190,33 @@ public abstract class BaseFolderResourceTestCase {
 		);
 	}
 
-	private Long _createGroup() throws MalformedURLException {
+	private Long _getCompanyId()
+		throws MalformedURLException {
+		return Long.valueOf(
+	        RestAssured.given(
+			).auth(
+			).preemptive(
+			).basic(
+				"test@liferay.com", "test"
+			).header(
+				"Accept", "application/json"
+			).when(
+			).param(
+				"virtualHost", "localhost"
+			).get(
+				new URL(_url, "/api/jsonws/company/get-company-by-virtual-host")
+			).then(
+			).statusCode(
+				200
+			).extract(
+			).path(
+				"companyId"
+			)
+		);
+	}
+
+	private Long _getGroupId(long companyId)
+		throws MalformedURLException {
 		return Long.valueOf(
 			RestAssured.given(
 			).auth(
@@ -205,29 +227,11 @@ public abstract class BaseFolderResourceTestCase {
 				"Accept", "application/json"
 			).when(
 			).param(
-				"virtualHost", "localhost"
+				"companyId", companyId
 			).param(
-				"parentGroupId", 0
-			).param(
-				"liveGroupId", 0
-			).param(
-				"name", StringUtil.randomString(10)
-			).param(
-				"description", ""
-			).param(
-				"type", 1
-			).param(
-				"manualMembership", true
-			).param(
-				"membershipRestriction", 0
-			).param(
-				"friendlyURL", "/" + StringUtil.randomString(10)
-			).param(
-				"site", true
-			).param(
-				"active", true
+				"groupKey", "Guest"
 			).get(
-				new URL(_url, "/api/jsonws/group/add-group")
+				new URL(_url, "/api/jsonws/group/get-group")
 			).then(
 			).statusCode(
 				200
@@ -254,27 +258,6 @@ public abstract class BaseFolderResourceTestCase {
 		).then(
 		).statusCode(
 			204
-		);
-	}
-
-	private void _deleteGroup(long groupId) throws MalformedURLException {
-		RestAssured.given(
-		).auth(
-		).preemptive(
-		).basic(
-			"test@liferay.com", "test"
-		).header(
-			"Accept", "application/json"
-		).when(
-		).param(
-			"groupId", groupId
-		).param(
-			"active", true
-		).get(
-			new URL(_url, "/api/jsonws/group/delete-group")
-		).then(
-		).statusCode(
-			200
 		);
 	}
 

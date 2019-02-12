@@ -18,6 +18,7 @@ import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetTagService;
 import com.liferay.headless.foundation.dto.v1_0.Keyword;
 import com.liferay.headless.foundation.resource.v1_0.KeywordResource;
+import com.liferay.portal.kernel.service.ServiceContext;
 
 import javax.ws.rs.core.Response;
 
@@ -44,6 +45,22 @@ public class KeywordResourceImpl extends BaseKeywordResourceImpl {
 	@Override
 	public Keyword getKeyword(Long keywordId) throws Exception {
 		AssetTag assetTag = _assetTagService.getTag(keywordId);
+
+		return _toKeyword(assetTag);
+	}
+
+	@Override
+	public Keyword postContentSpaceKeyword(Long contentSpaceId, Keyword keyword)
+		throws Exception {
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
+		serviceContext.setScopeGroupId(contentSpaceId);
+
+		AssetTag assetTag = _assetTagService.addTag(
+			contentSpaceId, keyword.getName(), serviceContext);
 
 		return _toKeyword(assetTag);
 	}

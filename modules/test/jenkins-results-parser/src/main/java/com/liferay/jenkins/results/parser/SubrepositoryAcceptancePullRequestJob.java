@@ -46,6 +46,11 @@ public class SubrepositoryAcceptancePullRequestJob
 
 		if (testBatchNames == null) {
 			testBatchNames = JenkinsResultsParserUtil.getProperty(
+				jobProperties, "test.batch.names[" + getBranchName() + "]");
+		}
+
+		if (testBatchNames == null) {
+			testBatchNames = JenkinsResultsParserUtil.getProperty(
 				jobProperties, "test.batch.names");
 		}
 

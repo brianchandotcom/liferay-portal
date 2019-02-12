@@ -45,40 +45,32 @@ import javax.ws.rs.core.Response;
 @Path("/${openAPIYAML.info.version}")
 public interface ${schemaName}Resource {
 
-	<#if openAPIYAML.pathItems??>
-		<#list openAPIYAML.pathItems?keys as path>
-			<#assign pathItem = openAPIYAML.pathItems[path] />
+	<#list javaTool.getJavaSignatures(openAPIYAML, schemaName) as javaSignature>
+		<#if !stringUtil.equals(javaSignature.returnType, schemaName) && !stringUtil.equals(javaSignature.returnType, "Page<${schemaName}>") && !stringUtil.endsWith(javaSignature.methodName, schemaName)>
+			<#continue>
+		</#if>
 
-			<#list javaTool.getOperations(pathItem) as operation>
-				<#assign javaSignature = javaTool.getJavaSignature(configYAML, openAPIYAML, operation, path, pathItem, schemaName) />
-
-				<#if !stringUtil.equals(javaSignature.returnType, schemaName) && !stringUtil.equals(javaSignature.returnType, "Page<${schemaName}>") && !stringUtil.endsWith(javaSignature.methodName, schemaName)>
-					<#continue>
-				</#if>
-
-				<#compress>
-					<#list javaSignature.methodAnnotations as methodAnnotation>
-						${methodAnnotation}
-					</#list>
-
-					<@compress single_line=true>
-						public ${javaSignature.returnType} ${javaSignature.methodName}(
-							<#list javaSignature.javaParameters as javaParameter>
-								<#list javaParameter.parameterAnnotations as parameterAnnotation>
-									${parameterAnnotation}
-								</#list>
-
-								${javaParameter.parameterType} ${javaParameter.parameterName}
-
-								<#if javaParameter_has_next>
-									,
-								</#if>
-							</#list>
-						) throws Exception;
-					</@compress>
-				</#compress>
+		<#compress>
+			<#list javaSignature.methodAnnotations as methodAnnotation>
+				${methodAnnotation}
 			</#list>
-		</#list>
-	</#if>
+
+			<@compress single_line=true>
+				public ${javaSignature.returnType} ${javaSignature.methodName}(
+					<#list javaSignature.javaParameters as javaParameter>
+						<#list javaParameter.parameterAnnotations as parameterAnnotation>
+							${parameterAnnotation}
+						</#list>
+
+						${javaParameter.parameterType} ${javaParameter.parameterName}
+
+						<#if javaParameter_has_next>
+							,
+						</#if>
+					</#list>
+				) throws Exception;
+			</@compress>
+		</#compress>
+	</#list>
 
 }

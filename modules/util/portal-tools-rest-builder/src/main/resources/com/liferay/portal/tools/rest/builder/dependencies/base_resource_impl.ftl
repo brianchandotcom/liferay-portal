@@ -34,50 +34,42 @@ import javax.ws.rs.core.Response;
 @Generated("")
 public abstract class Base${schemaName}ResourceImpl implements ${schemaName}Resource {
 
-	<#if openAPIYAML.pathItems??>
-		<#list openAPIYAML.pathItems?keys as path>
-			<#assign pathItem = openAPIYAML.pathItems[path] />
+	<#list javaTool.getJavaSignatures(openAPIYAML, schemaName) as javaSignature>
+		<#if !stringUtil.equals(javaSignature.returnType, schemaName) && !stringUtil.equals(javaSignature.returnType, "Page<${schemaName}>") && !stringUtil.endsWith(javaSignature.methodName, schemaName)>
+			<#continue>
+		</#if>
 
-			<#list javaTool.getOperations(pathItem) as operation>
-				<#assign javaSignature = javaTool.getJavaSignature(configYAML, openAPIYAML, operation, path, pathItem, schemaName) />
+		@Override
+		<@compress single_line=true>
+			public ${javaSignature.returnType} ${javaSignature.methodName}(
+				<#list javaSignature.javaParameters as javaParameter>
+					${javaParameter.parameterType} ${javaParameter.parameterName}
 
-				<#if !stringUtil.equals(javaSignature.returnType, schemaName) && !stringUtil.equals(javaSignature.returnType, "Page<${schemaName}>") && !stringUtil.endsWith(javaSignature.methodName, schemaName)>
-					<#continue>
-				</#if>
-
-				@Override
-				<@compress single_line=true>
-					public ${javaSignature.returnType} ${javaSignature.methodName}(
-						<#list javaSignature.javaParameters as javaParameter>
-							${javaParameter.parameterType} ${javaParameter.parameterName}
-
-							<#if javaParameter_has_next>
-								,
-							</#if>
-						</#list>
-					) throws Exception {
-				</@compress>
-
-				<#assign methodBody>
-					<#if stringUtil.equals(javaSignature.returnType, "Response")>
-						Response.ResponseBuilder responseBuilder = Response.ok();
-
-						return responseBuilder.build();
-					<#elseif stringUtil.equals(javaSignature.returnType, "Page<" + schemaName + ">")>
-						return Page.of(Collections.emptyList());
-					<#else>
-						return new ${javaSignature.returnType}();
+					<#if javaParameter_has_next>
+						,
 					</#if>
-				</#assign>
-
-				<#list methodBody?split("\n") as line>
-					${line?replace("^\t\t\t\t", "", "r")}<#lt>
 				</#list>
+			) throws Exception {
+		</@compress>
 
-				}
-			</#list>
+		<#assign methodBody>
+			<#if stringUtil.equals(javaSignature.returnType, "Response")>
+				Response.ResponseBuilder responseBuilder = Response.ok();
+
+				return responseBuilder.build();
+			<#elseif stringUtil.equals(javaSignature.returnType, "Page<" + schemaName + ">")>
+				return Page.of(Collections.emptyList());
+			<#else>
+				return new ${javaSignature.returnType}();
+			</#if>
+		</#assign>
+
+		<#list methodBody?split("\n") as line>
+			${line?replace("^\t\t", "", "r")}<#lt>
 		</#list>
-	</#if>
+
+		}
+	</#list>
 
 	protected Response buildNoContentResponse() {
 		Response.ResponseBuilder responseBuilder = Response.noContent();

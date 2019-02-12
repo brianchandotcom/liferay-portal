@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaParameter;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaSignature;
 import com.liferay.portal.tools.rest.builder.internal.util.CamelCaseUtil;
-import com.liferay.portal.vulcan.yaml.config.ConfigYAML;
 import com.liferay.portal.vulcan.yaml.openapi.Components;
 import com.liferay.portal.vulcan.yaml.openapi.Content;
 import com.liferay.portal.vulcan.yaml.openapi.Items;
@@ -130,17 +129,35 @@ public class JavaTool {
 		return new JavaParameter(null, parameterName, parameterType);
 	}
 
-	public JavaSignature getJavaSignature(
-		ConfigYAML configYAML, OpenAPIYAML openAPIYAML, Operation operation,
-		String path, PathItem pathItem, String schemaName) {
+	public List<JavaSignature> getJavaSignatures(
+		OpenAPIYAML openAPIYAML, String schemaName) {
 
-		String returnType = _getReturnType(openAPIYAML, operation);
+		Map<String, PathItem> pathItems = openAPIYAML.getPathItems();
 
-		return new JavaSignature(
-			_getJavaParameters(operation),
-			_getMethodAnnotations(operation, pathItem, path),
-			_getMethodName(operation, path, returnType, schemaName),
-			returnType);
+		if (pathItems == null) {
+			return Collections.emptyList();
+		}
+
+		List<JavaSignature> javaSignatures = new ArrayList<>();
+
+		for (Map.Entry<String, PathItem> entry : pathItems.entrySet()) {
+			String path = entry.getKey();
+			PathItem pathItem = entry.getValue();
+
+			for (Operation operation : getOperations(pathItem)) {
+				String returnType = _getReturnType(openAPIYAML, operation);
+
+				JavaSignature javaSignature = new JavaSignature(
+					_getJavaParameters(operation),
+					_getMethodAnnotations(operation, pathItem, path),
+					_getMethodName(operation, path, returnType, schemaName),
+					returnType);
+
+				javaSignatures.add(javaSignature);
+			}
+		}
+
+		return javaSignatures;
 	}
 
 	public List<String> getMediaTypes(Map<String, Content> contents) {

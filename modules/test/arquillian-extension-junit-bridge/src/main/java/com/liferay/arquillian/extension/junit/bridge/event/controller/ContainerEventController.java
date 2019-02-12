@@ -55,14 +55,12 @@ public class ContainerEventController {
 	public void createAfterContext(
 		@Observes EventContext<TestEvent> eventContext) {
 
-		Container container = _getContainer();
-
 		ContainerContext containerContext = _containerContextInstance.get();
 
 		DeploymentContext deploymentContext = _deploymentContextInstance.get();
 
 		try {
-			containerContext.activate(container.getName());
+			containerContext.activate(_container.getName());
 
 			deploymentContext.activate(_deployment);
 
@@ -78,9 +76,7 @@ public class ContainerEventController {
 	public void execute(@Observes AfterClass afterClass)
 		throws DeploymentException {
 
-		Container container = _getContainer();
-
-		if (!Container.State.STARTED.equals(container.getState())) {
+		if (!Container.State.STARTED.equals(_container.getState())) {
 			return;
 		}
 
@@ -89,7 +85,7 @@ public class ContainerEventController {
 		deploymentContext.activate(_deployment);
 
 		DeployableContainer<?> deployableContainer =
-			container.getDeployableContainer();
+			_container.getDeployableContainer();
 
 		DeploymentDescription deploymentDescription =
 			_deployment.getDescription();
@@ -113,9 +109,7 @@ public class ContainerEventController {
 	public void execute(@Observes AfterSuite afterSuite)
 		throws LifecycleException {
 
-		Container container = _getContainer();
-
-		container.stop();
+		_container.stop();
 	}
 
 	public void execute(@Observes BeforeClass beforeClass)
@@ -136,11 +130,9 @@ public class ContainerEventController {
 
 		_deployment = new Deployment(deploymentDescription);
 
-		Container container = _getContainer();
-
-		if (container.getState() != Container.State.STARTED) {
+		if (_container.getState() != Container.State.STARTED) {
 			throw new IllegalStateException(
-				"Container " + container.getName() + " is not started");
+				"Container " + _container.getName() + " is not started");
 		}
 
 		DeploymentContext deploymentContext = _deploymentContextInstance.get();
@@ -148,7 +140,7 @@ public class ContainerEventController {
 		deploymentContext.activate(_deployment);
 
 		DeployableContainer<?> deployableContainer =
-			container.getDeployableContainer();
+			_container.getDeployableContainer();
 
 		try {
 			deployableContainer.deploy(
@@ -164,31 +156,21 @@ public class ContainerEventController {
 	public void execute(@Observes BeforeSuite beforeSuite)
 		throws LifecycleException {
 
-		Container container = _getContainer();
+		ContainerDef containerDef = new ContainerDefImpl("arquillian.xml");
 
-		container.start();
-	}
+		containerDef.setContainerName("default");
 
-	private Container _getContainer() {
-		if (_container == null) {
-			ContainerDef containerDef = new ContainerDefImpl("arquillian.xml");
+		_container = new ContainerImpl(
+			containerDef.getContainerName(),
+			new LiferayRemoteDeployableContainer(
+				_mBeanServerConnectionInstanceProducer),
+			containerDef);
 
-			containerDef.setContainerName("default");
+		Injector injector = _injectorInstance.get();
 
-			Container container = new ContainerImpl(
-				containerDef.getContainerName(),
-				new LiferayRemoteDeployableContainer(
-					_mBeanServerConnectionInstanceProducer),
-				containerDef);
+		injector.inject(_container);
 
-			Injector injector = _injectorInstance.get();
-
-			injector.inject(container);
-
-			_container = container;
-		}
-
-		return _container;
+		_container.start();
 	}
 
 	private Container _container;

@@ -29,6 +29,7 @@ BlogEntriesManagementToolbarDisplayContext blogEntriesManagementToolbarDisplayCo
 
 <clay:management-toolbar
 	displayContext="<%= blogEntriesManagementToolbarDisplayContext %>"
+	searchContainerId="blogEntries"
 />
 
 <portlet:actionURL name="/blogs/edit_entry" var="restoreTrashEntriesURL">

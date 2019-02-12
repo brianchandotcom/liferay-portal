@@ -52,7 +52,16 @@ public class JavaTool {
 	}
 
 	public List<JavaParameter> getJavaParameters(Schema schema) {
-		Map<String, Schema> propertySchemas = schema.getPropertySchemas();
+		Map<String, Schema> propertySchemas = null;
+
+		Items items = schema.getItems();
+
+		if (items != null) {
+			propertySchemas = items.getPropertySchemas();
+		}
+		else {
+			propertySchemas = schema.getPropertySchemas();
+		}
 
 		if (propertySchemas == null) {
 			return Collections.emptyList();

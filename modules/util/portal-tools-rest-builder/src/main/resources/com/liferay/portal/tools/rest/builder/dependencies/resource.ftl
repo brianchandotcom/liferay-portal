@@ -47,7 +47,7 @@ public interface ${schemaName}Resource {
 
 	<#list javaTool.getJavaSignatures(openAPIYAML, schemaName) as javaSignature>
 		<#compress>
-			<#list javaSignature.methodAnnotations as methodAnnotation>
+			<#list javaTool.getMethodAnnotations(javaSignature) as methodAnnotation>
 				${methodAnnotation}
 			</#list>
 

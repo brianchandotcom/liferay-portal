@@ -103,9 +103,9 @@ public class JavaTool {
 
 					if (_isSchemaMethod(schemaName, methodName, returnType)) {
 						JavaSignature javaSignature = new JavaSignature(
-							_getJavaParameters(operation),
-							_getMethodAnnotations(path, pathItem, operation),
-							methodName, returnType);
+							path, pathItem, operation,
+							_getJavaParameters(operation), methodName,
+							returnType);
 
 						javaSignatures.add(javaSignature);
 					}
@@ -424,8 +424,10 @@ public class JavaTool {
 		return "@Produces(" + sb.toString() + ")";
 	}
 
-	private Set<String> _getMethodAnnotations(
-		String path, PathItem pathItem, Operation operation) {
+	public Set<String> getMethodAnnotations(JavaSignature javaSignature) {
+		String path = javaSignature.getPath();
+		PathItem pathItem = javaSignature.getPathItem();
+		Operation operation = javaSignature.getOperation();
 
 		Set<String> methodAnnotations = new TreeSet<>();
 

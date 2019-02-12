@@ -14,8 +14,10 @@
 
 package com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java;
 
+import com.liferay.portal.vulcan.yaml.openapi.Operation;
+import com.liferay.portal.vulcan.yaml.openapi.PathItem;
+
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author Peter Shin
@@ -23,11 +25,14 @@ import java.util.Set;
 public class JavaSignature {
 
 	public JavaSignature(
-		List<JavaParameter> javaParameters, Set<String> methodAnnotations,
-		String methodName, String returnType) {
+		String path, PathItem pathItem, Operation operation,
+		List<JavaParameter> javaParameters, String methodName,
+		String returnType) {
 
+		_path = path;
+		_pathItem = pathItem;
+		_operation = operation;
 		_javaParameters = javaParameters;
-		_methodAnnotations = methodAnnotations;
 		_methodName = methodName;
 		_returnType = returnType;
 	}
@@ -36,12 +41,20 @@ public class JavaSignature {
 		return _javaParameters;
 	}
 
-	public Set<String> getMethodAnnotations() {
-		return _methodAnnotations;
-	}
-
 	public String getMethodName() {
 		return _methodName;
+	}
+
+	public Operation getOperation() {
+		return _operation;
+	}
+
+	public String getPath() {
+		return _path;
+	}
+
+	public PathItem getPathItem() {
+		return _pathItem;
 	}
 
 	public String getReturnType() {
@@ -49,8 +62,10 @@ public class JavaSignature {
 	}
 
 	private final List<JavaParameter> _javaParameters;
-	private final Set<String> _methodAnnotations;
 	private final String _methodName;
+	private final Operation _operation;
+	private final String _path;
+	private final PathItem _pathItem;
 	private final String _returnType;
 
 }

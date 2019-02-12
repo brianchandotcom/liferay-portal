@@ -126,8 +126,8 @@ public class UpgradeContentTargeting extends UpgradeProcess {
 
 		sb.append("insert into SegmentsEntry (segmentsEntryId, groupId, ");
 		sb.append("companyId, userId, userName, createDate, modifiedDate, ");
-		sb.append("name, description, active_, criteria, key_, type_) values ");
-		sb.append("(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+		sb.append("name, description_, active_, criteria, key_, type_) ");
+		sb.append("values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
 		try (LoggingTimer loggingTimer = new LoggingTimer();
 			PreparedStatement ps1 = connection.prepareStatement(

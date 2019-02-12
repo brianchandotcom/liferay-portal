@@ -249,9 +249,7 @@ public class CTJournalArticleLocalServiceWrapper
 	public JournalArticle fetchArticle(long id) {
 		JournalArticle journalArticle = super.fetchArticle(id);
 
-		if (_hasChange(journalArticle) ||
-			_ctManager.isModelUpdateInProgress()) {
-
+		if (_isRetrievable(journalArticle)) {
 			return journalArticle;
 		}
 
@@ -262,9 +260,7 @@ public class CTJournalArticleLocalServiceWrapper
 	public JournalArticle fetchArticle(long groupId, String articleId) {
 		JournalArticle journalArticle = super.fetchArticle(groupId, articleId);
 
-		if (_hasChange(journalArticle) ||
-			_ctManager.isModelUpdateInProgress()) {
-
+		if (_isRetrievable(journalArticle)) {
 			return journalArticle;
 		}
 
@@ -278,9 +274,7 @@ public class CTJournalArticleLocalServiceWrapper
 		JournalArticle journalArticle = super.fetchArticle(
 			groupId, articleId, version);
 
-		if (_hasChange(journalArticle) ||
-			_ctManager.isModelUpdateInProgress()) {
-
+		if (_isRetrievable(journalArticle)) {
 			return journalArticle;
 		}
 
@@ -294,9 +288,7 @@ public class CTJournalArticleLocalServiceWrapper
 		JournalArticle journalArticle = super.fetchArticleByUrlTitle(
 			groupId, urlTitle);
 
-		if (_hasChange(journalArticle) ||
-			_ctManager.isModelUpdateInProgress()) {
-
+		if (_isRetrievable(journalArticle)) {
 			return journalArticle;
 		}
 
@@ -308,9 +300,7 @@ public class CTJournalArticleLocalServiceWrapper
 		JournalArticle journalArticle = super.fetchDisplayArticle(
 			groupId, articleId);
 
-		if (_hasChange(journalArticle) ||
-			_ctManager.isModelUpdateInProgress()) {
-
+		if (_isRetrievable(journalArticle)) {
 			return journalArticle;
 		}
 
@@ -321,9 +311,7 @@ public class CTJournalArticleLocalServiceWrapper
 	public JournalArticle getArticle(long id) throws PortalException {
 		JournalArticle journalArticle = super.getArticle(id);
 
-		if (_hasChange(journalArticle) ||
-			_ctManager.isModelUpdateInProgress()) {
-
+		if (_isRetrievable(journalArticle)) {
 			return journalArticle;
 		}
 
@@ -337,9 +325,7 @@ public class CTJournalArticleLocalServiceWrapper
 
 		JournalArticle journalArticle = super.getArticle(groupId, articleId);
 
-		if (_hasChange(journalArticle) ||
-			_ctManager.isModelUpdateInProgress()) {
-
+		if (_isRetrievable(journalArticle)) {
 			return journalArticle;
 		}
 
@@ -362,9 +348,7 @@ public class CTJournalArticleLocalServiceWrapper
 		JournalArticle journalArticle = super.getArticle(
 			groupId, articleId, version);
 
-		if (_hasChange(journalArticle) ||
-			_ctManager.isModelUpdateInProgress()) {
-
+		if (_isRetrievable(journalArticle)) {
 			return journalArticle;
 		}
 
@@ -389,9 +373,7 @@ public class CTJournalArticleLocalServiceWrapper
 		JournalArticle journalArticle = super.getArticle(
 			groupId, className, classPK);
 
-		if (_hasChange(journalArticle) ||
-			_ctManager.isModelUpdateInProgress()) {
-
+		if (_isRetrievable(journalArticle)) {
 			return journalArticle;
 		}
 
@@ -415,9 +397,7 @@ public class CTJournalArticleLocalServiceWrapper
 		JournalArticle journalArticle = super.getArticleByUrlTitle(
 			groupId, urlTitle);
 
-		if (_hasChange(journalArticle) ||
-			_ctManager.isModelUpdateInProgress()) {
-
+		if (_isRetrievable(journalArticle)) {
 			return journalArticle;
 		}
 
@@ -437,7 +417,8 @@ public class CTJournalArticleLocalServiceWrapper
 		List<JournalArticle> journalArticles = new ArrayList<>(
 			super.getArticles());
 
-		journalArticles.removeIf(journalArticle -> !_hasChange(journalArticle));
+		journalArticles.removeIf(
+			journalArticle -> !_isRetrievable(journalArticle));
 
 		return journalArticles;
 	}
@@ -447,7 +428,8 @@ public class CTJournalArticleLocalServiceWrapper
 		List<JournalArticle> journalArticles = new ArrayList<>(
 			super.getArticles(groupId));
 
-		journalArticles.removeIf(journalArticle -> !_hasChange(journalArticle));
+		journalArticles.removeIf(
+			journalArticle -> !_isRetrievable(journalArticle));
 
 		return journalArticles;
 	}
@@ -457,7 +439,8 @@ public class CTJournalArticleLocalServiceWrapper
 		List<JournalArticle> journalArticles = new ArrayList<>(
 			super.getArticles(groupId, start, end));
 
-		journalArticles.removeIf(journalArticle -> !_hasChange(journalArticle));
+		journalArticles.removeIf(
+			journalArticle -> !_isRetrievable(journalArticle));
 
 		return journalArticles;
 	}
@@ -470,7 +453,8 @@ public class CTJournalArticleLocalServiceWrapper
 		List<JournalArticle> journalArticles = new ArrayList<>(
 			super.getArticles(groupId, start, end, obc));
 
-		journalArticles.removeIf(journalArticle -> !_hasChange(journalArticle));
+		journalArticles.removeIf(
+			journalArticle -> !_isRetrievable(journalArticle));
 
 		return journalArticles;
 	}
@@ -480,7 +464,8 @@ public class CTJournalArticleLocalServiceWrapper
 		List<JournalArticle> journalArticles = new ArrayList<>(
 			super.getArticles(groupId, folderId));
 
-		journalArticles.removeIf(journalArticle -> !_hasChange(journalArticle));
+		journalArticles.removeIf(
+			journalArticle -> !_isRetrievable(journalArticle));
 
 		return journalArticles;
 	}
@@ -492,7 +477,8 @@ public class CTJournalArticleLocalServiceWrapper
 		List<JournalArticle> journalArticles = new ArrayList<>(
 			super.getArticles(groupId, folderId, start, end));
 
-		journalArticles.removeIf(journalArticle -> !_hasChange(journalArticle));
+		journalArticles.removeIf(
+			journalArticle -> !_isRetrievable(journalArticle));
 
 		return journalArticles;
 	}
@@ -504,7 +490,8 @@ public class CTJournalArticleLocalServiceWrapper
 		List<JournalArticle> journalArticles = new ArrayList<>(
 			super.getArticles(groupId, folderId, status, start, end));
 
-		journalArticles.removeIf(journalArticle -> !_hasChange(journalArticle));
+		journalArticles.removeIf(
+			journalArticle -> !_isRetrievable(journalArticle));
 
 		return journalArticles;
 	}
@@ -518,7 +505,8 @@ public class CTJournalArticleLocalServiceWrapper
 			super.getArticles(
 				groupId, folderId, start, end, orderByComparator));
 
-		journalArticles.removeIf(journalArticle -> !_hasChange(journalArticle));
+		journalArticles.removeIf(
+			journalArticle -> !_isRetrievable(journalArticle));
 
 		return journalArticles;
 	}
@@ -528,7 +516,8 @@ public class CTJournalArticleLocalServiceWrapper
 		List<JournalArticle> journalArticles = new ArrayList<>(
 			super.getArticles(groupId, articleId));
 
-		journalArticles.removeIf(journalArticle -> !_hasChange(journalArticle));
+		journalArticles.removeIf(
+			journalArticle -> !_isRetrievable(journalArticle));
 
 		return journalArticles;
 	}
@@ -542,7 +531,8 @@ public class CTJournalArticleLocalServiceWrapper
 			super.getArticles(
 				groupId, articleId, start, end, orderByComparator));
 
-		journalArticles.removeIf(journalArticle -> !_hasChange(journalArticle));
+		journalArticles.removeIf(
+			journalArticle -> !_isRetrievable(journalArticle));
 
 		return journalArticles;
 	}
@@ -554,7 +544,8 @@ public class CTJournalArticleLocalServiceWrapper
 		List<JournalArticle> journalArticles = new ArrayList<>(
 			super.getArticlesByResourcePrimKey(resourcePrimKey));
 
-		journalArticles.removeIf(journalArticle -> !_hasChange(journalArticle));
+		journalArticles.removeIf(
+			journalArticle -> !_isRetrievable(journalArticle));
 
 		return journalArticles;
 	}
@@ -564,7 +555,8 @@ public class CTJournalArticleLocalServiceWrapper
 		List<JournalArticle> journalArticles = new ArrayList<>(
 			super.getArticlesBySmallImageId(smallImageId));
 
-		journalArticles.removeIf(journalArticle -> !_hasChange(journalArticle));
+		journalArticles.removeIf(
+			journalArticle -> !_isRetrievable(journalArticle));
 
 		return journalArticles;
 	}
@@ -579,7 +571,8 @@ public class CTJournalArticleLocalServiceWrapper
 				groupId, classNameId, ddmStructureKey, status, start, end,
 				obc));
 
-		journalArticles.removeIf(journalArticle -> !_hasChange(journalArticle));
+		journalArticles.removeIf(
+			journalArticle -> !_isRetrievable(journalArticle));
 
 		return journalArticles;
 	}
@@ -593,7 +586,8 @@ public class CTJournalArticleLocalServiceWrapper
 			super.getArticlesByStructureId(
 				groupId, ddmStructureKey, status, start, end, obc));
 
-		journalArticles.removeIf(journalArticle -> !_hasChange(journalArticle));
+		journalArticles.removeIf(
+			journalArticle -> !_isRetrievable(journalArticle));
 
 		return journalArticles;
 	}
@@ -607,7 +601,8 @@ public class CTJournalArticleLocalServiceWrapper
 			super.getArticlesByStructureId(
 				groupId, ddmStructureKey, start, end, obc));
 
-		journalArticles.removeIf(journalArticle -> !_hasChange(journalArticle));
+		journalArticles.removeIf(
+			journalArticle -> !_isRetrievable(journalArticle));
 
 		return journalArticles;
 	}
@@ -656,7 +651,8 @@ public class CTJournalArticleLocalServiceWrapper
 		List<JournalArticle> journalArticles = new ArrayList<>(
 			super.getCompanyArticles(companyId, version, status, start, end));
 
-		journalArticles.removeIf(journalArticle -> !_hasChange(journalArticle));
+		journalArticles.removeIf(
+			journalArticle -> !_isRetrievable(journalArticle));
 
 		return journalArticles;
 	}
@@ -668,7 +664,8 @@ public class CTJournalArticleLocalServiceWrapper
 		List<JournalArticle> journalArticles = new ArrayList<>(
 			super.getCompanyArticles(companyId, status, start, end));
 
-		journalArticles.removeIf(journalArticle -> !_hasChange(journalArticle));
+		journalArticles.removeIf(
+			journalArticle -> !_isRetrievable(journalArticle));
 
 		return journalArticles;
 	}
@@ -702,7 +699,7 @@ public class CTJournalArticleLocalServiceWrapper
 		JournalArticle journalArticle = super.getDisplayArticle(
 			groupId, articleId);
 
-		if (_hasChange(journalArticle)) {
+		if (_isRetrievable(journalArticle)) {
 			return journalArticle;
 		}
 
@@ -725,7 +722,7 @@ public class CTJournalArticleLocalServiceWrapper
 		JournalArticle journalArticle = super.getDisplayArticleByUrlTitle(
 			groupId, urlTitle);
 
-		if (_hasChange(journalArticle)) {
+		if (_isRetrievable(journalArticle)) {
 			return journalArticle;
 		}
 
@@ -747,7 +744,8 @@ public class CTJournalArticleLocalServiceWrapper
 		List<JournalArticle> journalArticles = new ArrayList<>(
 			super.getIndexableArticlesByDDMStructureKey(ddmStructureKeys));
 
-		journalArticles.removeIf(journalArticle -> !_hasChange(journalArticle));
+		journalArticles.removeIf(
+			journalArticle -> !_isRetrievable(journalArticle));
 
 		return journalArticles;
 	}
@@ -759,7 +757,8 @@ public class CTJournalArticleLocalServiceWrapper
 		List<JournalArticle> journalArticles = new ArrayList<>(
 			super.getIndexableArticlesByResourcePrimKey(resourcePrimKey));
 
-		journalArticles.removeIf(journalArticle -> !_hasChange(journalArticle));
+		journalArticles.removeIf(
+			journalArticle -> !_isRetrievable(journalArticle));
 
 		return journalArticles;
 	}
@@ -769,7 +768,8 @@ public class CTJournalArticleLocalServiceWrapper
 		List<JournalArticle> journalArticles = new ArrayList<>(
 			super.getNoAssetArticles());
 
-		journalArticles.removeIf(journalArticle -> !_hasChange(journalArticle));
+		journalArticles.removeIf(
+			journalArticle -> !_isRetrievable(journalArticle));
 
 		return journalArticles;
 	}
@@ -779,7 +779,8 @@ public class CTJournalArticleLocalServiceWrapper
 		List<JournalArticle> journalArticles = new ArrayList<>(
 			super.getNoPermissionArticles());
 
-		journalArticles.removeIf(journalArticle -> !_hasChange(journalArticle));
+		journalArticles.removeIf(
+			journalArticle -> !_isRetrievable(journalArticle));
 
 		return journalArticles;
 	}
@@ -791,7 +792,8 @@ public class CTJournalArticleLocalServiceWrapper
 		List<JournalArticle> journalArticles = new ArrayList<>(
 			super.getStructureArticles(groupId, ddmStructureKey));
 
-		journalArticles.removeIf(journalArticle -> !_hasChange(journalArticle));
+		journalArticles.removeIf(
+			journalArticle -> !_isRetrievable(journalArticle));
 
 		return journalArticles;
 	}
@@ -805,7 +807,8 @@ public class CTJournalArticleLocalServiceWrapper
 			super.getStructureArticles(
 				groupId, ddmStructureKey, start, end, obc));
 
-		journalArticles.removeIf(journalArticle -> !_hasChange(journalArticle));
+		journalArticles.removeIf(
+			journalArticle -> !_isRetrievable(journalArticle));
 
 		return journalArticles;
 	}
@@ -817,7 +820,8 @@ public class CTJournalArticleLocalServiceWrapper
 		List<JournalArticle> journalArticles = new ArrayList<>(
 			super.getStructureArticles(ddmStructureKeys));
 
-		journalArticles.removeIf(journalArticle -> !_hasChange(journalArticle));
+		journalArticles.removeIf(
+			journalArticle -> !_isRetrievable(journalArticle));
 
 		return journalArticles;
 	}
@@ -839,7 +843,8 @@ public class CTJournalArticleLocalServiceWrapper
 		List<JournalArticle> journalArticles = new ArrayList<>(
 			super.getTemplateArticles(groupId, ddmTemplateKey));
 
-		journalArticles.removeIf(journalArticle -> !_hasChange(journalArticle));
+		journalArticles.removeIf(
+			journalArticle -> !_isRetrievable(journalArticle));
 
 		return journalArticles;
 	}
@@ -853,7 +858,8 @@ public class CTJournalArticleLocalServiceWrapper
 			super.getTemplateArticles(
 				groupId, ddmTemplateKey, start, end, obc));
 
-		journalArticles.removeIf(journalArticle -> !_hasChange(journalArticle));
+		journalArticles.removeIf(
+			journalArticle -> !_isRetrievable(journalArticle));
 
 		return journalArticles;
 	}
@@ -962,7 +968,8 @@ public class CTJournalArticleLocalServiceWrapper
 		List<JournalArticle> journalArticles = new ArrayList<>(
 			super.search(groupId, folderIds, locale, status, start, end));
 
-		journalArticles.removeIf(journalArticle -> !_hasChange(journalArticle));
+		journalArticles.removeIf(
+			journalArticle -> !_isRetrievable(journalArticle));
 
 		return journalArticles;
 	}
@@ -974,7 +981,8 @@ public class CTJournalArticleLocalServiceWrapper
 		List<JournalArticle> journalArticles = new ArrayList<>(
 			super.search(groupId, folderId, status, start, end));
 
-		journalArticles.removeIf(journalArticle -> !_hasChange(journalArticle));
+		journalArticles.removeIf(
+			journalArticle -> !_isRetrievable(journalArticle));
 
 		return journalArticles;
 	}
@@ -993,7 +1001,8 @@ public class CTJournalArticleLocalServiceWrapper
 				ddmStructureKey, ddmTemplateKey, displayDateGT, displayDateLT,
 				status, reviewDate, start, end, obc));
 
-		journalArticles.removeIf(journalArticle -> !_hasChange(journalArticle));
+		journalArticles.removeIf(
+			journalArticle -> !_isRetrievable(journalArticle));
 
 		return journalArticles;
 	}
@@ -1014,7 +1023,8 @@ public class CTJournalArticleLocalServiceWrapper
 				displayDateGT, displayDateLT, status, reviewDate, andOperator,
 				start, end, obc));
 
-		journalArticles.removeIf(journalArticle -> !_hasChange(journalArticle));
+		journalArticles.removeIf(
+			journalArticle -> !_isRetrievable(journalArticle));
 
 		return journalArticles;
 	}
@@ -1035,7 +1045,8 @@ public class CTJournalArticleLocalServiceWrapper
 				displayDateGT, displayDateLT, status, reviewDate, andOperator,
 				start, end, obc));
 
-		journalArticles.removeIf(journalArticle -> !_hasChange(journalArticle));
+		journalArticles.removeIf(
+			journalArticle -> !_isRetrievable(journalArticle));
 
 		return journalArticles;
 	}
@@ -1120,7 +1131,8 @@ public class CTJournalArticleLocalServiceWrapper
 		List<JournalArticle> journalArticles = new ArrayList<>(
 			baseModelSearchResult.getBaseModels());
 
-		journalArticles.removeIf(journalArticle -> !_hasChange(journalArticle));
+		journalArticles.removeIf(
+			journalArticle -> !_isRetrievable(journalArticle));
 
 		return new BaseModelSearchResult<>(
 			journalArticles, journalArticles.size());
@@ -1145,7 +1157,8 @@ public class CTJournalArticleLocalServiceWrapper
 		List<JournalArticle> journalArticles = new ArrayList<>(
 			baseModelSearchResult.getBaseModels());
 
-		journalArticles.removeIf(journalArticle -> !_hasChange(journalArticle));
+		journalArticles.removeIf(
+			journalArticle -> !_isRetrievable(journalArticle));
 
 		return new BaseModelSearchResult<>(
 			journalArticles, journalArticles.size());
@@ -1164,7 +1177,8 @@ public class CTJournalArticleLocalServiceWrapper
 		List<JournalArticle> journalArticles = new ArrayList<>(
 			baseModelSearchResult.getBaseModels());
 
-		journalArticles.removeIf(journalArticle -> !_hasChange(journalArticle));
+		journalArticles.removeIf(
+			journalArticle -> !_isRetrievable(journalArticle));
 
 		return new BaseModelSearchResult<>(
 			journalArticles, journalArticles.size());
@@ -1381,20 +1395,6 @@ public class CTJournalArticleLocalServiceWrapper
 
 		// this is needed because of synchronisation
 
-	}
-
-	private boolean _hasChange(JournalArticle journalArticle) {
-		if (journalArticle == null) {
-			return false;
-		}
-
-		Optional<CTEntry> ctEntryOptional =
-			_ctManager.getModelChangeCTEntryOptional(
-				PrincipalThreadLocal.getUserId(),
-				_portal.getClassNameId(JournalArticle.class.getName()),
-				journalArticle.getId());
-
-		return ctEntryOptional.isPresent();
 	}
 
 	private boolean _isRetrievable(JournalArticle journalArticle) {

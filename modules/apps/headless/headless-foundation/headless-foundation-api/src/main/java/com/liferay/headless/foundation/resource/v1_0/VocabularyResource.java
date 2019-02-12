@@ -83,6 +83,12 @@ public interface VocabularyResource {
 	@RequiresScope("everything.write")
 	public Vocabulary postContentSpaceVocabulariesBatchCreate( @PathParam("content-space-id") Long contentSpaceId , Vocabulary vocabulary ) throws Exception;
 
+	@DELETE
+	@Path("/vocabularies/{vocabularies-id}")
+	@Produces("application/json")
+	@RequiresScope("everything.read")
+	public Response deleteVocabularies( @PathParam("vocabularies-id") Long vocabulariesId ) throws Exception;
+
 	@GET
 	@Path("/vocabularies/{vocabularies-id}")
 	@Produces("application/json")

@@ -39,6 +39,13 @@ import javax.ws.rs.core.Response;
 public abstract class BaseCategoryResourceImpl implements CategoryResource {
 
 	@Override
+	public Response deleteCategories(Long categoriesId) throws Exception {
+		Response.ResponseBuilder responseBuilder = Response.ok();
+
+		return responseBuilder.build();
+	}
+
+	@Override
 	public Category getCategories(Long categoriesId) throws Exception {
 		return new Category();
 	}

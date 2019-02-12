@@ -52,11 +52,39 @@ public abstract class BaseBlogPostingResourceImpl
 	}
 
 	@Override
+	public Page<Long> getBlogPostingCategoriesPage(
+			Long blogPostingId, Pagination pagination)
+		throws Exception {
+
+		return new Page<>();
+	}
+
+	@Override
 	public Page<BlogPosting> getContentSpaceBlogPostingPage(
 			Long contentSpaceId, Pagination pagination)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
+	}
+
+	@Override
+	public Response postBlogPostingCategories(
+			Long blogPostingId, Long referenceId)
+		throws Exception {
+
+		Response.ResponseBuilder responseBuilder = Response.ok();
+
+		return responseBuilder.build();
+	}
+
+	@Override
+	public Response postBlogPostingCategoriesBatchCreate(
+			Long blogPostingId, Long referenceId)
+		throws Exception {
+
+		Response.ResponseBuilder responseBuilder = Response.ok();
+
+		return responseBuilder.build();
 	}
 
 	@Override

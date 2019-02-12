@@ -92,6 +92,12 @@ public interface StructuredContentResource {
 	@RequiresScope("everything.write")
 	public StructuredContent postContentSpaceStructuredContentBatchCreate( @PathParam("content-space-id") Long contentSpaceId , StructuredContent structuredContent ) throws Exception;
 
+	@GET
+	@Path("/content-structures/{content-structures-id}")
+	@Produces("application/json")
+	@RequiresScope("everything.read")
+	public ContentStructure getContentStructures( @PathParam("content-structures-id") Long contentStructuresId ) throws Exception;
+
 	@DELETE
 	@Path("/structured-content/{structured-content-id}")
 	@Produces("application/json")
@@ -110,5 +116,25 @@ public interface StructuredContentResource {
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	public StructuredContent putStructuredContent( @PathParam("structured-content-id") Long structuredContentId , StructuredContent structuredContent ) throws Exception;
+
+	@GET
+	@Path("/structured-content/{structured-content-id}/categories")
+	@Produces("application/json")
+	@RequiresScope("everything.read")
+	public Page<Long> getStructuredContentCategoriesPage( @PathParam("structured-content-id") Long structuredContentId , @Context Pagination pagination ) throws Exception;
+
+	@Consumes("application/json")
+	@POST
+	@Path("/structured-content/{structured-content-id}/categories")
+	@Produces("application/json")
+	@RequiresScope("everything.read")
+	public Response postStructuredContentCategories( @PathParam("structured-content-id") Long structuredContentId , Long referenceId ) throws Exception;
+
+	@Consumes("application/json")
+	@POST
+	@Path("/structured-content/{structured-content-id}/categories/batch-create")
+	@Produces("application/json")
+	@RequiresScope("everything.write")
+	public Response postStructuredContentCategoriesBatchCreate( @PathParam("structured-content-id") Long structuredContentId , Long referenceId ) throws Exception;
 
 }

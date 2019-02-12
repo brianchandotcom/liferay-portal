@@ -39,6 +39,13 @@ import javax.ws.rs.core.Response;
 public abstract class BaseVocabularyResourceImpl implements VocabularyResource {
 
 	@Override
+	public Response deleteVocabularies(Long vocabulariesId) throws Exception {
+		Response.ResponseBuilder responseBuilder = Response.ok();
+
+		return responseBuilder.build();
+	}
+
+	@Override
 	public Page<Vocabulary> getContentSpaceVocabulariesPage(
 			Long contentSpaceId, Pagination pagination)
 		throws Exception {

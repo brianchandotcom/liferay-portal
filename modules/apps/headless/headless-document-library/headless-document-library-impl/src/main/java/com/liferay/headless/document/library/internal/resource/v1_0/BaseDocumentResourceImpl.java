@@ -52,6 +52,14 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 	}
 
 	@Override
+	public Page<Long> getDocumentCategoriesPage(
+			Long documentId, Pagination pagination)
+		throws Exception {
+
+		return new Page<>();
+	}
+
+	@Override
 	public Page<Document> getDocumentsRepositoryDocumentPage(
 			Long documentsRepositoryId, Pagination pagination)
 		throws Exception {
@@ -65,6 +73,25 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
+	}
+
+	@Override
+	public Response postDocumentCategories(Long documentId, Long referenceId)
+		throws Exception {
+
+		Response.ResponseBuilder responseBuilder = Response.ok();
+
+		return responseBuilder.build();
+	}
+
+	@Override
+	public Response postDocumentCategoriesBatchCreate(
+			Long documentId, Long referenceId)
+		throws Exception {
+
+		Response.ResponseBuilder responseBuilder = Response.ok();
+
+		return responseBuilder.build();
 	}
 
 	@Override

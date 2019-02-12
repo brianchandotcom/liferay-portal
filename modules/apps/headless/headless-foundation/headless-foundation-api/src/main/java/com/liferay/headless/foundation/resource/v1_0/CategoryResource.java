@@ -63,6 +63,12 @@ import javax.ws.rs.core.Response;
 @Path("/v1.0")
 public interface CategoryResource {
 
+	@DELETE
+	@Path("/categories/{categories-id}")
+	@Produces("application/json")
+	@RequiresScope("everything.read")
+	public Response deleteCategories( @PathParam("categories-id") Long categoriesId ) throws Exception;
+
 	@GET
 	@Path("/categories/{categories-id}")
 	@Produces("application/json")

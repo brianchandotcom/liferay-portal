@@ -70,6 +70,26 @@ public interface DocumentResource {
 	public Document getDocument( @PathParam("document-id") Long documentId ) throws Exception;
 
 	@GET
+	@Path("/document/{document-id}/categories")
+	@Produces("application/json")
+	@RequiresScope("everything.read")
+	public Page<Long> getDocumentCategoriesPage( @PathParam("document-id") Long documentId , @Context Pagination pagination ) throws Exception;
+
+	@Consumes("application/json")
+	@POST
+	@Path("/document/{document-id}/categories")
+	@Produces("application/json")
+	@RequiresScope("everything.read")
+	public Response postDocumentCategories( @PathParam("document-id") Long documentId , Long referenceId ) throws Exception;
+
+	@Consumes("application/json")
+	@POST
+	@Path("/document/{document-id}/categories/batch-create")
+	@Produces("application/json")
+	@RequiresScope("everything.write")
+	public Response postDocumentCategoriesBatchCreate( @PathParam("document-id") Long documentId , Long referenceId ) throws Exception;
+
+	@GET
 	@Path("/documents-repository/{documents-repository-id}/document")
 	@Produces("application/json")
 	@RequiresScope("everything.read")

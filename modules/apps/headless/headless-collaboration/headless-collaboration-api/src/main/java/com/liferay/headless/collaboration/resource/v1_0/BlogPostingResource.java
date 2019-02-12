@@ -79,6 +79,26 @@ public interface BlogPostingResource {
 	public BlogPosting putBlogPosting( @PathParam("blog-posting-id") Long blogPostingId , BlogPosting blogPosting ) throws Exception;
 
 	@GET
+	@Path("/blog-posting/{blog-posting-id}/categories")
+	@Produces("application/json")
+	@RequiresScope("everything.read")
+	public Page<Long> getBlogPostingCategoriesPage( @PathParam("blog-posting-id") Long blogPostingId , @Context Pagination pagination ) throws Exception;
+
+	@Consumes("application/json")
+	@POST
+	@Path("/blog-posting/{blog-posting-id}/categories")
+	@Produces("application/json")
+	@RequiresScope("everything.read")
+	public Response postBlogPostingCategories( @PathParam("blog-posting-id") Long blogPostingId , Long referenceId ) throws Exception;
+
+	@Consumes("application/json")
+	@POST
+	@Path("/blog-posting/{blog-posting-id}/categories/batch-create")
+	@Produces("application/json")
+	@RequiresScope("everything.write")
+	public Response postBlogPostingCategoriesBatchCreate( @PathParam("blog-posting-id") Long blogPostingId , Long referenceId ) throws Exception;
+
+	@GET
 	@Path("/content-space/{content-space-id}/blog-posting")
 	@Produces("application/json")
 	@RequiresScope("everything.read")

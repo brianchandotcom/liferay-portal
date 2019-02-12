@@ -39,6 +39,13 @@ import javax.ws.rs.core.Response;
 public abstract class BaseKeywordResourceImpl implements KeywordResource {
 
 	@Override
+	public Response deleteKeywords(Long keywordsId) throws Exception {
+		Response.ResponseBuilder responseBuilder = Response.ok();
+
+		return responseBuilder.build();
+	}
+
+	@Override
 	public Page<Keyword> getContentSpaceKeywordsPage(
 			Long contentSpaceId, Pagination pagination)
 		throws Exception {

@@ -122,6 +122,8 @@ public abstract class SubrepositoryGitRepositoryJob extends GitRepositoryJob {
 			throw new RuntimeException("Unable to get build properties", ioe);
 		}
 
+		jobPropertiesFiles.add(new File(gitRepositoryDir, "test.properties"));
+
 		jobPropertiesFiles.add(
 			new File(
 				JenkinsResultsParserUtil.combine(
@@ -129,7 +131,7 @@ public abstract class SubrepositoryGitRepositoryJob extends GitRepositoryJob {
 					"/liferay-jenkins-ee/commands/dependencies",
 					"/test-subrepository-batch.properties")));
 
-		jobPropertiesFiles.add(new File(gitRepositoryDir, "test.properties"));
+		readJobProperties();
 	}
 
 	private boolean _containsIntegrationTest() throws IOException {

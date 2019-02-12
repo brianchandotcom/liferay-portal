@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowTaskAssignee;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignmentInstance;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
+import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceTokenWrapper;
 import com.liferay.portal.workflow.kaleo.service.KaleoTaskAssignmentInstanceLocalService;
 
 import org.junit.Assert;
@@ -74,11 +75,15 @@ public class LazyWorkflowTaskAssigneeListTest {
 
 		long kaleoTaskInstanceTokenId = RandomTestUtil.randomLong();
 
-		Mockito.when(
-			kaleoTaskInstanceToken.getKaleoTaskInstanceTokenId()
-		).thenReturn(
-			kaleoTaskInstanceTokenId
-		);
+		kaleoTaskInstanceToken =
+			new KaleoTaskInstanceTokenWrapper(kaleoTaskInstanceToken) {
+
+				@Override
+				public long getKaleoTaskInstanceTokenId() {
+					return kaleoTaskInstanceTokenId;
+				}
+
+			};
 
 		KaleoTaskAssignmentInstanceLocalService
 			kaleoTaskAssignmentInstanceLocalService = Mockito.mock(

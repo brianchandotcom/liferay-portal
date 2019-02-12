@@ -14,9 +14,7 @@
 
 package com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java;
 
-import java.util.List;
 import java.util.Set;
-import java.util.TreeSet;
 
 /**
  * @author Peter Shin
@@ -24,15 +22,12 @@ import java.util.TreeSet;
 public class JavaParameter {
 
 	public JavaParameter(
-		List<String> parameterAnnotations, String parameterName,
+		Set<String> parameterAnnotations, String parameterName,
 		String parameterType) {
 
+		_parameterAnnotations = parameterAnnotations;
 		_parameterName = parameterName;
 		_parameterType = parameterType;
-
-		if (parameterAnnotations != null) {
-			_parameterAnnotations.addAll(parameterAnnotations);
-		}
 	}
 
 	public Set<String> getParameterAnnotations() {
@@ -47,7 +42,7 @@ public class JavaParameter {
 		return _parameterType;
 	}
 
-	private final Set<String> _parameterAnnotations = new TreeSet<>();
+	private final Set<String> _parameterAnnotations;
 	private final String _parameterName;
 	private final String _parameterType;
 

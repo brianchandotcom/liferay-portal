@@ -59,7 +59,8 @@ public class JavaTool {
 		String parameterType = _getJavaParameterType(
 			propertySchemaName, schema);
 
-		return new JavaParameter(null, parameterName, parameterType);
+		return new JavaParameter(
+			Collections.emptySet(), parameterName, parameterType);
 	}
 
 	public List<JavaSignature> getJavaSignatures(
@@ -159,7 +160,7 @@ public class JavaTool {
 	}
 
 	private JavaParameter _getJavaParameter(Parameter parameter) {
-		List<String> parameterAnnotations = new ArrayList<>();
+		Set<String> parameterAnnotations = new TreeSet<>();
 
 		Schema schema = parameter.getSchema();
 
@@ -223,7 +224,7 @@ public class JavaTool {
 
 		if (parameterNames.contains("filter")) {
 			JavaParameter javaParameter = new JavaParameter(
-				Collections.singletonList("@Context"), "filter", "Filter");
+				Collections.singleton("@Context"), "filter", "Filter");
 
 			javaParameters.add(javaParameter);
 		}
@@ -232,15 +233,14 @@ public class JavaTool {
 			parameterNames.contains("per_page")) {
 
 			JavaParameter javaParameter = new JavaParameter(
-				Collections.singletonList("@Context"), "pagination",
-				"Pagination");
+				Collections.singleton("@Context"), "pagination", "Pagination");
 
 			javaParameters.add(javaParameter);
 		}
 
 		if (parameterNames.contains("sort")) {
 			JavaParameter javaParameter = new JavaParameter(
-				Collections.singletonList("@Context"), "sorts", "Sort[]");
+				Collections.singleton("@Context"), "sorts", "Sort[]");
 
 			javaParameters.add(javaParameter);
 		}
@@ -255,7 +255,8 @@ public class JavaTool {
 			for (Map.Entry<String, Content> entry : contents.entrySet()) {
 				if (Objects.equals(entry.getKey(), "multipart/form-data")) {
 					multipartBodyJavaParameter = new JavaParameter(
-						null, "multipartBody", "MultipartBody");
+						Collections.emptySet(), "multipartBody",
+						"MultipartBody");
 				}
 			}
 
@@ -268,7 +269,8 @@ public class JavaTool {
 						schemaName);
 
 					javaParameters.add(
-						new JavaParameter(null, parameterName, schemaName));
+						new JavaParameter(
+							Collections.emptySet(), parameterName, schemaName));
 				}
 			}
 			else {

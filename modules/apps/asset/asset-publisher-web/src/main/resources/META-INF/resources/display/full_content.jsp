@@ -83,13 +83,98 @@ request.setAttribute("view.jsp-showIconLabel", true);
 		<div class="asset-user-actions">
 			<c:if test="<%= assetPublisherDisplayContext.isEnablePrint() %>">
 				<div class="print-action">
-					<%@ include file="/asset_print.jspf" %>
+
+					<%
+					PortletURL printAssetURL = renderResponse.createRenderURL();
+
+					printAssetURL.setParameter("mvcPath", "/view_content.jsp");
+					printAssetURL.setParameter("assetEntryId", String.valueOf(assetEntry.getEntryId()));
+					printAssetURL.setParameter("viewMode", Constants.PRINT);
+					printAssetURL.setParameter("type", assetRendererFactory.getType());
+					printAssetURL.setParameter("languageId", languageId);
+
+					String urlTitle = assetRenderer.getUrlTitle(locale);
+
+					if (Validator.isNotNull(urlTitle)) {
+						if (assetRenderer.getGroupId() != scopeGroupId) {
+							printAssetURL.setParameter("groupId", String.valueOf(assetRenderer.getGroupId()));
+						}
+
+						printAssetURL.setParameter("urlTitle", urlTitle);
+					}
+
+					printAssetURL.setWindowState(LiferayWindowState.POP_UP);
+					%>
+
+					<c:choose>
+						<c:when test="<%= print %>">
+							<liferay-ui:icon
+								icon="print"
+								label="<%= true %>"
+								markupView="lexicon"
+								message='<%= LanguageUtil.format(request, "print-x-x", new Object[] {"hide-accessible", HtmlUtil.escape(assetRenderer.getTitle(locale))}, false) %>'
+								url="javascript:print();"
+							/>
+
+							<aui:script>
+								print();
+							</aui:script>
+						</c:when>
+						<c:otherwise>
+							<liferay-ui:icon
+								icon="print"
+								label="<%= true %>"
+								markupView="lexicon"
+								message='<%= LanguageUtil.format(request, "print-x-x", new Object[] {"hide-accessible", HtmlUtil.escape(assetRenderer.getTitle(locale))}, false) %>'
+								url='<%= "javascript:" + renderResponse.getNamespace() + "printPage_" + assetEntryIndex + "();" %>'
+							/>
+
+							<aui:script>
+								function <portlet:namespace />printPage_<%= assetEntryIndex %>() {
+								window.open('<%= printAssetURL %>', '', 'directories=0,height=480,left=80,location=1,menubar=1,resizable=1,scrollbars=yes,status=0,toolbar=0,top=180,width=640');
+								}
+							</aui:script>
+						</c:otherwise>
+					</c:choose>
 				</div>
 			</c:if>
 
 			<c:if test="<%= assetPublisherDisplayContext.isEnableConversions() && assetRenderer.isConvertible() && !print %>">
 				<div class="export-actions">
-					<%@ include file="/asset_export.jspf" %>
+
+					<%
+					PortletURL exportAssetURL = assetRenderer.getURLExport(liferayPortletRequest, liferayPortletResponse);
+
+					exportAssetURL.setParameter("plid", String.valueOf(themeDisplay.getPlid()));
+					exportAssetURL.setParameter("portletResource", portletDisplay.getId());
+					exportAssetURL.setWindowState(LiferayWindowState.EXCLUSIVE);
+					%>
+
+					<liferay-ui:icon-list>
+
+						<%
+						for (String extension : assetPublisherDisplayContext.getExtensions(assetRenderer)) {
+							Map<String, Object> data = new HashMap<String, Object>();
+
+							exportAssetURL.setParameter("targetExtension", extension);
+
+							data.put("resource-href", exportAssetURL.toString());
+						%>
+
+							<liferay-ui:icon
+								data="<%= data %>"
+								iconCssClass="<%= DLUtil.getFileIconCssClass(extension) %>"
+								label="<%= true %>"
+								message='<%= LanguageUtil.format(request, "x-convert-x-to-x", new Object[] {"hide-accessible", assetRenderer.getTitle(locale), StringUtil.toUpperCase(HtmlUtil.escape(extension))}, false) %>'
+								method="get"
+								url="<%= exportAssetURL.toString() %>"
+							/>
+
+						<%
+						}
+						%>
+
+					</liferay-ui:icon-list>
 				</div>
 			</c:if>
 

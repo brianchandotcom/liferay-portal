@@ -20,9 +20,15 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "${schemaName}")
 public class ${schemaName} {
 
-	<#if schema.properties??>
-		<#list schema.properties?keys as propertySchemaName>
-			<#assign javaParameter = javaTool.getJavaParameter(propertySchemaName, schema.properties[propertySchemaName]) />
+	<#if schema.items??>
+		<#assign propertySchemas = schema.items.propertySchemas />
+	<#elseif schema.propertySchemas??>
+		<#assign propertySchemas = schema.propertySchemas />
+	</#if>
+
+	<#if propertySchemas??>
+		<#list propertySchemas?keys as propertySchemaName>
+			<#assign javaParameter = javaTool.getJavaParameter(propertySchemaName, propertySchemas[propertySchemaName]) />
 
 			<#assign content>
 				public ${javaParameter.parameterType} get${javaParameter.parameterName?cap_first}() {

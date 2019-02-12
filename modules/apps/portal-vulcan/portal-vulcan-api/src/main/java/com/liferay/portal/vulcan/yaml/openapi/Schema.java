@@ -46,14 +46,6 @@ public class Schema {
 		return _oneOfSchemas;
 	}
 
-	public Map<String, Schema> getProperties() {
-		if (_items != null) {
-			return _items.getPropertySchemas();
-		}
-
-		return _propertySchemas;
-	}
-
 	public Map<String, Schema> getPropertySchemas() {
 		return _propertySchemas;
 	}

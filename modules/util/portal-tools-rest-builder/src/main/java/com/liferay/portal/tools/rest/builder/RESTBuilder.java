@@ -29,6 +29,7 @@ import com.liferay.portal.vulcan.yaml.config.Application;
 import com.liferay.portal.vulcan.yaml.config.ConfigYAML;
 import com.liferay.portal.vulcan.yaml.openapi.Components;
 import com.liferay.portal.vulcan.yaml.openapi.Info;
+import com.liferay.portal.vulcan.yaml.openapi.Items;
 import com.liferay.portal.vulcan.yaml.openapi.OpenAPIYAML;
 import com.liferay.portal.vulcan.yaml.openapi.Schema;
 
@@ -153,7 +154,18 @@ public class RESTBuilder {
 				for (Map.Entry<String, Schema> entry : schemasMap.entrySet()) {
 					Schema schema = entry.getValue();
 
-					if (schema.getProperties() == null) {
+					Map<String, Schema> propertySchemas = null;
+
+					Items items = schema.getItems();
+
+					if (items != null) {
+						propertySchemas = items.getPropertySchemas();
+					}
+					else {
+						propertySchemas = schema.getPropertySchemas();
+					}
+
+					if (propertySchemas == null) {
 						continue;
 					}
 
@@ -170,7 +182,7 @@ public class RESTBuilder {
 
 					_createDTOFile(context, schemaName, versionDirName);
 
-					schemasMapsQueue.add(schema.getProperties());
+					schemasMapsQueue.add(propertySchemas);
 				}
 			}
 		}

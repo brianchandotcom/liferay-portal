@@ -4908,7 +4908,7 @@
 			</library>
 			<library>
 				<file-name>lib/development/mysql.jar</file-name>
-				<version>5.1.23</version>
+				<version>8.0.15</version>
 				<project-name>MySQL Connector/J</project-name>
 				<project-url>http://www.mysql.com/products/connector/j</project-url>
 				<licenses>

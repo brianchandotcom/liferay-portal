@@ -57,18 +57,18 @@ buildArrayFind {
 }
 
 buildArrayFrom {
-	eachFile new StripPathSegmentsAction(7)
+	eachFile new StripPathSegmentsAction(5)
 
 	from {
 		zipTree(configurations.arrayFrom.singleFile)
 	}
 
-	include "META-INF/resources/webjars/mdn-polyfills/5.8.0/src/Array.from/index.js"
+	include "META-INF/resources/webjars/mdn-polyfills/5.8.0/Array.from.js"
 	includeEmptyDirs = false
 	into "classes/META-INF/resources"
 
 	rename {
-		it.replace "index", "array.from"
+		it.replace "Array.from", "array.from"
 	}
 }
 
@@ -149,18 +149,18 @@ buildObjectValues {
 }
 
 buildStringEndsWith{
-	eachFile new StripPathSegmentsAction(7)
+	eachFile new StripPathSegmentsAction(5)
 
 	from {
 		zipTree(configurations.stringEndsWith.singleFile)
 	}
 
-	include "META-INF/resources/webjars/mdn-polyfills/5.8.0/src/String.prototype.endsWith/index.js"
+	include "META-INF/resources/webjars/mdn-polyfills/5.8.0/String.prototype.endsWith.js"
 	includeEmptyDirs = false
 	into "classes/META-INF/resources"
 
 	rename {
-		it.replace "index", "string.endswith"
+		it.replace "String.prototype.endsWith", "string.endswith"
 	}
 }
 

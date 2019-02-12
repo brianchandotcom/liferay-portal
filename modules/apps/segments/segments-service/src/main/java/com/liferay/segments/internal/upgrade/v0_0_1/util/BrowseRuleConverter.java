@@ -33,7 +33,7 @@ public class BrowseRuleConverter implements RuleConverter {
 	@Override
 	public void convert(Criteria criteria, String typeSettings) {
 		_contextSegmentsCriteriaContributor.contribute(
-			criteria, "(browser eq " + typeSettings + ")",
+			criteria, "(browser eq '" + typeSettings + "')",
 			Criteria.Conjunction.AND);
 	}
 

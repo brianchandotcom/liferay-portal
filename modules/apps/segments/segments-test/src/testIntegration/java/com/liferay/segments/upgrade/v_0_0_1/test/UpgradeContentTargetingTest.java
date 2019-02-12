@@ -122,7 +122,8 @@ public class UpgradeContentTargetingTest {
 		Assert.assertEquals(
 			Criteria.Conjunction.AND,
 			Criteria.Conjunction.parse(criterion.getConjunction()));
-		Assert.assertEquals("(browser eq Chrome)", criterion.getFilterString());
+		Assert.assertEquals(
+			"(browser eq 'Chrome')", criterion.getFilterString());
 	}
 
 	protected void createContentTargetingTables()

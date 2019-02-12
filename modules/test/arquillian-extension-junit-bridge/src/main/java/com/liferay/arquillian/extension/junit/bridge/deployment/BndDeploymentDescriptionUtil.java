@@ -88,8 +88,12 @@ public class BndDeploymentDescriptionUtil {
 
 			_process(javaArchive, testClass);
 
-			return new DeploymentDescription(
-				javaArchive.getName(), javaArchive);
+			DeploymentDescription deploymentDescription =
+				new DeploymentDescription(javaArchive.getName(), javaArchive);
+
+			deploymentDescription.setTestableArchive(javaArchive);
+
+			return deploymentDescription;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);

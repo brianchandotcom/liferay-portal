@@ -41,7 +41,6 @@ import org.jboss.arquillian.test.spi.event.suite.AfterClass;
 import org.jboss.arquillian.test.spi.event.suite.BeforeClass;
 import org.jboss.arquillian.test.spi.event.suite.BeforeSuite;
 import org.jboss.arquillian.test.spi.event.suite.TestEvent;
-import org.jboss.shrinkwrap.api.Archive;
 
 /**
  * @author Matthew Tambara
@@ -103,10 +102,6 @@ public class ContainerEventController {
 
 		DeploymentDescription deploymentDescription =
 			BndDeploymentDescriptionUtil.create(beforeClass.getTestClass());
-
-		Archive<?> archive = deploymentDescription.getArchive();
-
-		deploymentDescription.setTestableArchive(archive);
 
 		_deployment = new Deployment(deploymentDescription);
 

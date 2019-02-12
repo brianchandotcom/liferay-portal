@@ -7,6 +7,7 @@ package ${configYAML.apiPackagePath}.dto.${versionDirName};
 </#compress>
 
 import java.util.Date;
+import java.util.List;
 
 import javax.annotation.Generated;
 
@@ -28,6 +29,14 @@ public class ${schemaName} {
 	public void set${javaParameter.parameterName?cap_first}(${javaParameter.parameterType} ${javaParameter.parameterName}) {
 		_${javaParameter.parameterName} = ${javaParameter.parameterName};
 	}
+
+	<#if stringUtil.endsWith(javaParameter.parameterType, "[]")>
+		<#assign javaDataType = stringUtil.replaceLast(javaParameter.parameterType, "[]", "") />
+
+	public void set${javaParameter.parameterName?cap_first}(List<${javaDataType}> ${javaParameter.parameterName}) {
+		set${javaParameter.parameterName?cap_first}(${javaParameter.parameterName}.toArray(new ${javaDataType}[${javaParameter.parameterName}.size()]));
+	}
+	</#if>
 
 	private ${javaParameter.parameterType} _${javaParameter.parameterName};
 

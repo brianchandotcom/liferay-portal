@@ -17,6 +17,7 @@ package com.liferay.frontend.js.loader.modules.extender.internal;
 import aQute.lib.converter.Converter;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.util.PortalImpl;
@@ -81,7 +82,8 @@ public class JSLoaderConfigServletTest extends PowerMockito {
 
 		Assert.assertNotNull(mockHttpServletResponse.getContentAsString());
 		Assert.assertEquals(
-			Details.CONTENT_TYPE, mockHttpServletResponse.getContentType());
+			ContentTypes.TEXT_JAVASCRIPT_UTF8,
+			mockHttpServletResponse.getContentType());
 	}
 
 	private JSLoaderConfigServlet _buildJSLoaderModulesServlet()

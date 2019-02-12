@@ -84,6 +84,10 @@ public abstract class SubrepositoryGitRepositoryJob extends GitRepositoryJob {
 		return null;
 	}
 
+	public boolean getTestRunValidation() {
+		return testRunValidation;
+	}
+
 	@Override
 	public void setGitRepositoryDir(File repositoryDir) {
 		String dirName = repositoryDir.getName();
@@ -130,5 +134,7 @@ public abstract class SubrepositoryGitRepositoryJob extends GitRepositoryJob {
 
 		readJobProperties();
 	}
+
+	protected boolean testRunValidation;
 
 }

@@ -28,7 +28,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "Document")
 public class Document {
 
-	public AdaptedMedia getAdaptedMedia() {
+	public AdaptedMedia[] getAdaptedMedia() {
 		return _adaptedMedia;
 	}
 
@@ -88,7 +88,7 @@ public class Document {
 		return _title;
 	}
 
-	public void setAdaptedMedia(AdaptedMedia adaptedMedia) {
+	public void setAdaptedMedia(AdaptedMedia[] adaptedMedia) {
 		_adaptedMedia = adaptedMedia;
 	}
 
@@ -148,7 +148,7 @@ public class Document {
 		_title = title;
 	}
 
-	private AdaptedMedia _adaptedMedia;
+	private AdaptedMedia[] _adaptedMedia;
 	private Long[] _category;
 	private String _contentUrl;
 	private Creator _creator;

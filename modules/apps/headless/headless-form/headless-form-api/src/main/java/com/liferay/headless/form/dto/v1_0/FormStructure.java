@@ -52,7 +52,7 @@ public class FormStructure {
 		return _description;
 	}
 
-	public FormPages getFormPages() {
+	public FormPages[] getFormPages() {
 		return _formPages;
 	}
 
@@ -92,7 +92,7 @@ public class FormStructure {
 		_description = description;
 	}
 
-	public void setFormPages(FormPages formPages) {
+	public void setFormPages(FormPages[] formPages) {
 		_formPages = formPages;
 	}
 
@@ -114,7 +114,7 @@ public class FormStructure {
 	private Date _dateCreated;
 	private Date _dateModified;
 	private String _description;
-	private FormPages _formPages;
+	private FormPages[] _formPages;
 	private Long _id;
 	private String _name;
 	private SuccessPage _successPage;

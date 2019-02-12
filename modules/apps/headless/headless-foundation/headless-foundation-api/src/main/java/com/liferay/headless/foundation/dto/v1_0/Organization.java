@@ -66,7 +66,7 @@ public class Organization {
 		return _parentOrganizationId;
 	}
 
-	public Services getServices() {
+	public Services[] getServices() {
 		return _services;
 	}
 
@@ -118,7 +118,7 @@ public class Organization {
 		_parentOrganizationId = parentOrganizationId;
 	}
 
-	public void setServices(Services services) {
+	public void setServices(Services[] services) {
 		_services = services;
 	}
 
@@ -140,7 +140,7 @@ public class Organization {
 	private String _name;
 	private Organization _parentOrganization;
 	private Long _parentOrganizationId;
-	private Services _services;
+	private Services[] _services;
 	private Organization[] _subOrganization;
 	private Long[] _subOrganizationIds;
 

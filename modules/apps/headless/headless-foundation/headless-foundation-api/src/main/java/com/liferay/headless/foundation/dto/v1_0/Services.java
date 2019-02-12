@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "Services")
 public class Services {
 
-	public HoursAvailable getHoursAvailable() {
+	public HoursAvailable[] getHoursAvailable() {
 		return _hoursAvailable;
 	}
 
@@ -38,7 +38,7 @@ public class Services {
 		return _serviceType;
 	}
 
-	public void setHoursAvailable(HoursAvailable hoursAvailable) {
+	public void setHoursAvailable(HoursAvailable[] hoursAvailable) {
 		_hoursAvailable = hoursAvailable;
 	}
 
@@ -50,7 +50,7 @@ public class Services {
 		_serviceType = serviceType;
 	}
 
-	private HoursAvailable _hoursAvailable;
+	private HoursAvailable[] _hoursAvailable;
 	private Long _id;
 	private String _serviceType;
 

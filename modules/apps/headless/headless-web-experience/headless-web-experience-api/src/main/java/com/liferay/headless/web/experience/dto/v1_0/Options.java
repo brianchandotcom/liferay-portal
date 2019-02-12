@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.headless.form.dto.v1_0;
+package com.liferay.headless.web.experience.dto.v1_0;
 
 import javax.annotation.Generated;
 
@@ -23,35 +23,26 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@XmlRootElement(name = "Grid")
-public class Grid {
+@XmlRootElement(name = "Options")
+public class Options {
 
-	public Columns[] getColumns() {
-		return _columns;
+	public String getLabel() {
+		return _label;
 	}
 
-	public Long getId() {
-		return _id;
+	public String getValue() {
+		return _value;
 	}
 
-	public Rows[] getRows() {
-		return _rows;
+	public void setLabel(String label) {
+		_label = label;
 	}
 
-	public void setColumns(Columns[] columns) {
-		_columns = columns;
+	public void setValue(String value) {
+		_value = value;
 	}
 
-	public void setId(Long id) {
-		_id = id;
-	}
-
-	public void setRows(Rows[] rows) {
-		_rows = rows;
-	}
-
-	private Columns[] _columns;
-	private Long _id;
-	private Rows[] _rows;
+	private String _label;
+	private String _value;
 
 }

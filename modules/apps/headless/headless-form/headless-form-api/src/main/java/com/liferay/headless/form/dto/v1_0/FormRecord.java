@@ -48,7 +48,7 @@ public class FormRecord {
 		return _draft;
 	}
 
-	public FieldValues getFieldValues() {
+	public FieldValues[] getFieldValues() {
 		return _fieldValues;
 	}
 
@@ -84,7 +84,7 @@ public class FormRecord {
 		_draft = draft;
 	}
 
-	public void setFieldValues(FieldValues fieldValues) {
+	public void setFieldValues(FieldValues[] fieldValues) {
 		_fieldValues = fieldValues;
 	}
 
@@ -105,7 +105,7 @@ public class FormRecord {
 	private Date _dateModified;
 	private Date _datePublished;
 	private Boolean _draft;
-	private FieldValues _fieldValues;
+	private FieldValues[] _fieldValues;
 	private Form _form;
 	private Long _formId;
 	private Long _id;

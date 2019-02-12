@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "FormPages")
 public class FormPages {
 
-	public Fields getFields() {
+	public Fields[] getFields() {
 		return _fields;
 	}
 
@@ -42,7 +42,7 @@ public class FormPages {
 		return _text;
 	}
 
-	public void setFields(Fields fields) {
+	public void setFields(Fields[] fields) {
 		_fields = fields;
 	}
 
@@ -58,7 +58,7 @@ public class FormPages {
 		_text = text;
 	}
 
-	private Fields _fields;
+	private Fields[] _fields;
 	private String _headline;
 	private Long _id;
 	private String _text;

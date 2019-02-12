@@ -76,6 +76,10 @@ public class StructuredContent {
 		return _description;
 	}
 
+	public Fields[] getFields() {
+		return _fields;
+	}
+
 	public Long getId() {
 		return _id;
 	}
@@ -88,7 +92,7 @@ public class StructuredContent {
 		return _lastReviewed;
 	}
 
-	public RenderedContentsByTemplate getRenderedContentsByTemplate() {
+	public RenderedContentsByTemplate[] getRenderedContentsByTemplate() {
 		return _renderedContentsByTemplate;
 	}
 
@@ -96,7 +100,7 @@ public class StructuredContent {
 		return _title;
 	}
 
-	public Values getValues() {
+	public Values[] getValues() {
 		return _values;
 	}
 
@@ -148,6 +152,10 @@ public class StructuredContent {
 		_description = description;
 	}
 
+	public void setFields(Fields[] fields) {
+		_fields = fields;
+	}
+
 	public void setId(Long id) {
 		_id = id;
 	}
@@ -161,7 +169,7 @@ public class StructuredContent {
 	}
 
 	public void setRenderedContentsByTemplate(
-		RenderedContentsByTemplate renderedContentsByTemplate) {
+		RenderedContentsByTemplate[] renderedContentsByTemplate) {
 
 		_renderedContentsByTemplate = renderedContentsByTemplate;
 	}
@@ -170,7 +178,7 @@ public class StructuredContent {
 		_title = title;
 	}
 
-	public void setValues(Values values) {
+	public void setValues(Values[] values) {
 		_values = values;
 	}
 
@@ -186,11 +194,12 @@ public class StructuredContent {
 	private Date _dateModified;
 	private Date _datePublished;
 	private String _description;
+	private Fields[] _fields;
 	private Long _id;
 	private String[] _keywords;
 	private Date _lastReviewed;
-	private RenderedContentsByTemplate _renderedContentsByTemplate;
+	private RenderedContentsByTemplate[] _renderedContentsByTemplate;
 	private String _title;
-	private Values _values;
+	private Values[] _values;
 
 }

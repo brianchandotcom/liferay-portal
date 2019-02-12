@@ -1433,6 +1433,10 @@ public class CTJournalArticleLocalServiceWrapper
 			JournalArticle journalArticle, int changeType, boolean force)
 		throws CTException {
 
+		if (journalArticle == null) {
+			return;
+		}
+
 		try {
 			_ctManager.registerModelChange(
 				PrincipalThreadLocal.getUserId(),
@@ -1453,6 +1457,10 @@ public class CTJournalArticleLocalServiceWrapper
 	}
 
 	private void _unregisterChange(JournalArticle journalArticle) {
+		if (journalArticle == null) {
+			return;
+		}
+
 		_ctManager.unregisterModelChange(
 			PrincipalThreadLocal.getUserId(),
 			_portal.getClassNameId(JournalArticle.class.getName()),

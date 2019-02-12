@@ -14,7 +14,6 @@
 
 package com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -27,14 +26,10 @@ public class JavaSignature {
 		List<JavaParameter> javaParameters, Set<String> methodAnnotations,
 		String methodName, String returnType) {
 
+		_javaParameters = javaParameters;
+		_methodAnnotations = methodAnnotations;
 		_methodName = methodName;
 		_returnType = returnType;
-
-		if (javaParameters != null) {
-			_javaParameters.addAll(javaParameters);
-		}
-
-		_methodAnnotations = methodAnnotations;
 	}
 
 	public List<JavaParameter> getJavaParameters() {
@@ -53,7 +48,7 @@ public class JavaSignature {
 		return _returnType;
 	}
 
-	private final List<JavaParameter> _javaParameters = new ArrayList<>();
+	private final List<JavaParameter> _javaParameters;
 	private final Set<String> _methodAnnotations;
 	private final String _methodName;
 	private final String _returnType;

@@ -348,7 +348,7 @@ paths:
                   $ref: "#/components/schemas/ContentStructure"
                 type: array
           description: ""
-  "/content-space/{content-space-id}/content-structure/{content-structure-id}/structured-contents":
+  "/content-space/{content-space-id}/content-structure/{content-structure-id}/structured-content":
     get:
       parameters:
         - in: query
@@ -392,7 +392,7 @@ paths:
                   $ref: "#/components/schemas/StructuredContent"
                 type: array
           description: ""
-  "/content-space/{content-space-id}/structured-contents":
+  "/content-space/{content-space-id}/structured-content":
     get:
       parameters:
         - in: query
@@ -478,7 +478,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/StructuredContent"
           description: ""
-  "/content-space/{content-space-id}/structured-contents/batch-create":
+  "/content-space/{content-space-id}/structured-content/batch-create":
     post:
       parameters:
         - in: path
@@ -535,11 +535,11 @@ paths:
               schema:
                 $ref: "#/components/schemas/Creator"
           description: ""
-  "/structured-content/{structured-contents-id}":
+  "/structured-content/{structured-content-id}":
     delete:
       parameters:
         - in: path
-          name: structured-contents-id
+          name: structured-content-id
           required: true
           schema:
             format: int64
@@ -552,7 +552,7 @@ paths:
     get:
       parameters:
         - in: path
-          name: structured-contents-id
+          name: structured-content-id
           required: true
           schema:
             format: int64
@@ -571,7 +571,7 @@ paths:
     put:
       parameters:
         - in: path
-          name: structured-contents-id
+          name: structured-content-id
           required: true
           schema:
             format: int64
@@ -592,7 +592,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/StructuredContent"
           description: ""
-  "/structured-contents/{structured-contents-id}/categories":
+  "/structured-content/{structured-content-id}/categories":
     get:
       parameters:
         - in: query
@@ -604,7 +604,7 @@ paths:
           schema:
             type: integer
         - in: path
-          name: structured-contents-id
+          name: structured-content-id
           required: true
           schema:
             format: int64
@@ -622,7 +622,7 @@ paths:
     post:
       parameters:
         - in: path
-          name: structured-contents-id
+          name: structured-content-id
           required: true
           schema:
             format: int64
@@ -641,11 +641,11 @@ paths:
                 format: int64
                 type: integer
           description: ""
-  "/structured-contents/{structured-contents-id}/categories/batch-create":
+  "/structured-content/{structured-content-id}/categories/batch-create":
     post:
       parameters:
         - in: path
-          name: structured-contents-id
+          name: structured-content-id
           required: true
           schema:
             format: int64
@@ -664,7 +664,7 @@ paths:
                 format: int64
                 type: integer
           description: ""
-  "/structured-contents/{structured-contents-id}/comment":
+  "/structured-content/{structured-content-id}/comment":
     get:
       parameters:
         - in: query
@@ -676,7 +676,7 @@ paths:
           schema:
             type: integer
         - in: path
-          name: structured-contents-id
+          name: structured-content-id
           required: true
           schema:
             format: int64

@@ -1,5 +1,4 @@
 @component-name = "portal-util-misc"
-@ignore = "true"
 definition {
 	property osgi.app.includes = "currency-converter";
 	property portal.release = "true";

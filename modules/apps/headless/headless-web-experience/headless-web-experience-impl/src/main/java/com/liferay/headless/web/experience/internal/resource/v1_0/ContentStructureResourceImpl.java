@@ -66,6 +66,16 @@ public class ContentStructureResourceImpl
 				className.getClassNameId()));
 	}
 
+	@Override
+	public ContentStructure getContentStructure(Long contentStructuresId)
+		throws Exception {
+
+		DDMStructure ddmStructure = _ddmStructureService.getStructure(
+			contentStructuresId);
+
+		return _toContentStructure(ddmStructure);
+	}
+
 	private Creator _getCreator(long userId) throws Exception {
 		User user = _userService.getUserById(userId);
 

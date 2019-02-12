@@ -28,6 +28,7 @@ import com.liferay.portal.osgi.web.servlet.jsp.compiler.internal.util.ClassPathU
 import java.io.File;
 import java.io.IOException;
 
+import java.lang.ref.Reference;
 import java.net.URI;
 import java.net.URL;
 
@@ -473,8 +474,9 @@ public class JspCompiler extends Jsr199JavaCompiler {
 
 	private static final Map<BundleWiring, Set<String>>
 		_bundleWiringPackageNamesCache = new ConcurrentReferenceKeyHashMap<>(
-			new ConcurrentReferenceValueHashMap<BundleWiring, Set<String>>(
-				FinalizeManager.SOFT_REFERENCE_FACTORY),
+			new ConcurrentReferenceValueHashMap
+				<Reference<BundleWiring>, Set<String>>(
+					FinalizeManager.SOFT_REFERENCE_FACTORY),
 			FinalizeManager.WEAK_REFERENCE_FACTORY);
 	private static final BundleWiring _jspBundleWiring;
 	private static final Map<BundleWiring, Set<String>>

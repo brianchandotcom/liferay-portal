@@ -250,10 +250,10 @@ AUI.add(
 					_removeRepeatedOperatorKey: function(key) {
 						var instance = this;
 
-						if (OPERATORS_MAP.includes(key) && instance._getCalculateKeyActions().length >= 1) {
+						if (OPERATORS_MAP.indexOf(key) > -1 && instance._getCalculateKeyActions().length >= 1) {
 							var lastKey = instance._getCalculateKeyActions()[instance._getCalculateKeyActions().length - 1];
 
-							if (OPERATORS_MAP.includes(lastKey)) {
+							if (OPERATORS_MAP.indexOf(lastKey) > -1) {
 								instance._getCalculateKeyActions().pop();
 							}
 						}

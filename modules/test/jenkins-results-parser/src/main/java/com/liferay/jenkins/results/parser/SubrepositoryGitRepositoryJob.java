@@ -17,13 +17,7 @@ package com.liferay.jenkins.results.parser;
 import java.io.File;
 import java.io.IOException;
 
-import java.net.URL;
-
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Objects;
 import java.util.Properties;
 import java.util.Set;
 import java.util.TreeSet;
@@ -35,16 +29,19 @@ public abstract class SubrepositoryGitRepositoryJob extends GitRepositoryJob {
 
 	@Override
 	public Set<String> getBatchNames() {
-		Set<String> batchNames = _getRequiredTestBatchNames();
+		Properties jobProperties = getJobProperties();
 
 		String testBatchNames = JenkinsResultsParserUtil.getProperty(
-			getJobProperties(), "test.batch.names");
+			jobProperties, "test.batch.names[" + getBranchName() + "]");
 
-		if (!Objects.isNull(testBatchNames)) {
-			Collections.addAll(batchNames, testBatchNames.split(","));
+		if (testBatchNames == null) {
+			testBatchNames = JenkinsResultsParserUtil.getProperty(
+				jobProperties, "test.batch.names");
 		}
 
-		return batchNames;
+		Set<String> testBatchNamesSet = getSetFromString(testBatchNames);
+
+		return testBatchNamesSet;
 	}
 
 	@Override
@@ -132,47 +129,6 @@ public abstract class SubrepositoryGitRepositoryJob extends GitRepositoryJob {
 					"/test-subrepository-batch.properties")));
 
 		readJobProperties();
-	}
-
-	private boolean _containsIntegrationTest() throws IOException {
-		GitWorkingDirectory gitWorkingDirectory = getGitWorkingDirectory();
-
-		List<URL> urls = JenkinsResultsParserUtil.getIncludedResourceURLs(
-			new String[] {"**/src/testIntegration"},
-			gitWorkingDirectory.getWorkingDirectory());
-
-		if (urls.isEmpty()) {
-			return false;
-		}
-
-		return true;
-	}
-
-	private Set<String> _getRequiredTestBatchNames() {
-		String testRequiredBatchNames = JenkinsResultsParserUtil.getProperty(
-			getJobProperties(), "test.required.batch.names");
-
-		Set<String> testRequiredBatchNamesSet = new HashSet<>();
-
-		try {
-			if (!_containsIntegrationTest()) {
-				for (String testBatchName : testRequiredBatchNames.split(",")) {
-					if (!testBatchName.contains("integration")) {
-						testRequiredBatchNamesSet.add(testBatchName);
-					}
-				}
-			}
-			else {
-				testRequiredBatchNamesSet = new HashSet<>(
-					Arrays.asList(testRequiredBatchNames.split(",")));
-			}
-		}
-		catch (IOException ioe) {
-			throw new RuntimeException(
-				"Unable to search for integration tests");
-		}
-
-		return testRequiredBatchNamesSet;
 	}
 
 }

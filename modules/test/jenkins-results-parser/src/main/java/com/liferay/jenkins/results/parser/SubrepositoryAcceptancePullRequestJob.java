@@ -45,18 +45,10 @@ public class SubrepositoryAcceptancePullRequestJob
 			jobProperties, "test.batch.names[" + _testSuiteName + "]");
 
 		if (testBatchNames == null) {
-			testBatchNames = JenkinsResultsParserUtil.getProperty(
-				jobProperties, "test.batch.names[" + getBranchName() + "]");
+			return super.getBatchNames();
 		}
 
-		if (testBatchNames == null) {
-			testBatchNames = JenkinsResultsParserUtil.getProperty(
-				jobProperties, "test.batch.names");
-		}
-
-		Set<String> testBatchNamesSet = getSetFromString(testBatchNames);
-
-		return testBatchNamesSet;
+		return getSetFromString(testBatchNames);
 	}
 
 	@Override

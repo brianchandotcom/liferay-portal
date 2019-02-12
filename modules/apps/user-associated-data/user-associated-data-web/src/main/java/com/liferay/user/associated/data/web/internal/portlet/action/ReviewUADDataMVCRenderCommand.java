@@ -155,6 +155,8 @@ public class ReviewUADDataMVCRenderCommand implements MVCRenderCommand {
 				UADWebKeys.APPLICATION_UAD_DISPLAYS,
 				_uadRegistry.getApplicationUADDisplays(applicationKey));
 			renderRequest.setAttribute(
+				UADWebKeys.GROUP_IDS, _getGroupIds(selectedUser, scope));
+			renderRequest.setAttribute(
 				UADWebKeys.INFO_PANEL_UAD_DISPLAY, uadDisplay);
 			renderRequest.setAttribute(
 				UADWebKeys.TOTAL_UAD_ENTITIES_COUNT,

@@ -16,9 +16,7 @@ package com.liferay.arquillian.extension.junit.bridge.event.controller;
 
 import com.liferay.arquillian.extension.junit.bridge.container.LiferayRemoteDeployableContainer;
 import com.liferay.arquillian.extension.junit.bridge.container.impl.ContainerImpl;
-import com.liferay.arquillian.extension.junit.bridge.deployment.BndDeploymentScenarioGenerator;
-
-import java.util.List;
+import com.liferay.arquillian.extension.junit.bridge.deployment.BndDeploymentDescriptionUtil;
 
 import javax.management.MBeanServerConnection;
 
@@ -33,7 +31,6 @@ import org.jboss.arquillian.container.spi.client.deployment.DeploymentDescriptio
 import org.jboss.arquillian.container.spi.context.ContainerContext;
 import org.jboss.arquillian.container.spi.context.DeploymentContext;
 import org.jboss.arquillian.container.spi.context.annotation.DeploymentScoped;
-import org.jboss.arquillian.container.test.spi.client.deployment.DeploymentScenarioGenerator;
 import org.jboss.arquillian.core.api.Injector;
 import org.jboss.arquillian.core.api.Instance;
 import org.jboss.arquillian.core.api.InstanceProducer;
@@ -115,14 +112,8 @@ public class ContainerEventController {
 	public void execute(@Observes BeforeClass beforeClass)
 		throws DeploymentException {
 
-		DeploymentScenarioGenerator deploymentScenarioGenerator =
-			new BndDeploymentScenarioGenerator();
-
-		List<DeploymentDescription> deploymentDescriptions =
-			deploymentScenarioGenerator.generate(beforeClass.getTestClass());
-
 		DeploymentDescription deploymentDescription =
-			deploymentDescriptions.get(0);
+			BndDeploymentDescriptionUtil.create(beforeClass.getTestClass());
 
 		Archive<?> archive = deploymentDescription.getArchive();
 

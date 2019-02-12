@@ -48,7 +48,6 @@ import java.util.jar.Manifest;
 
 import org.jboss.arquillian.container.spi.client.deployment.DeploymentDescription;
 import org.jboss.arquillian.container.test.spi.RemoteLoadableExtension;
-import org.jboss.arquillian.container.test.spi.client.deployment.DeploymentScenarioGenerator;
 import org.jboss.arquillian.core.spi.ExtensionLoader;
 import org.jboss.arquillian.test.spi.TestClass;
 import org.jboss.shrinkwrap.api.Archive;
@@ -63,11 +62,9 @@ import org.jboss.shrinkwrap.api.spec.JavaArchive;
 /**
  * @author Preston Crary
  */
-public class BndDeploymentScenarioGenerator
-	implements DeploymentScenarioGenerator {
+public class BndDeploymentDescriptionUtil {
 
-	@Override
-	public List<DeploymentDescription> generate(TestClass testClass) {
+	public static DeploymentDescription create(TestClass testClass) {
 		try (Workspace workspace = new Workspace(_buildDir);
 			Project project = new Project(workspace, _buildDir);
 
@@ -91,15 +88,15 @@ public class BndDeploymentScenarioGenerator
 
 			_process(javaArchive, testClass);
 
-			return Collections.singletonList(
-				new DeploymentDescription(javaArchive.getName(), javaArchive));
+			return new DeploymentDescription(
+				javaArchive.getName(), javaArchive);
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	private void _addArquillianDependencies(JavaArchive javaArchive) {
+	private static void _addArquillianDependencies(JavaArchive javaArchive) {
 		javaArchive.addPackage(JMXTestRunner.class.getPackage());
 		javaArchive.addPackages(
 			true, "org.jboss.arquillian.config",
@@ -112,7 +109,9 @@ public class BndDeploymentScenarioGenerator
 			"org.jboss.shrinkwrap.api", "org.jboss.shrinkwrap.descriptor.api");
 	}
 
-	private void _addTestClass(JavaArchive javaArchive, TestClass testClass) {
+	private static void _addTestClass(
+		JavaArchive javaArchive, TestClass testClass) {
+
 		Class<?> javaClass = testClass.getJavaClass();
 
 		while (javaClass != Object.class) {
@@ -122,7 +121,7 @@ public class BndDeploymentScenarioGenerator
 		}
 	}
 
-	private Set<String> _createImportPackages(Manifest manifest) {
+	private static Set<String> _createImportPackages(Manifest manifest) {
 		Set<String> importPackages = new HashSet<>();
 
 		Collections.addAll(importPackages, _IMPORTS_PACKAGES);
@@ -135,7 +134,7 @@ public class BndDeploymentScenarioGenerator
 		return importPackages;
 	}
 
-	private Jar _createJar(
+	private static Jar _createJar(
 			Project project, ProjectBuilder projectBuilder, Analyzer analyzer)
 		throws Exception {
 
@@ -149,7 +148,7 @@ public class BndDeploymentScenarioGenerator
 		return jar;
 	}
 
-	private ProjectBuilder _createProjectBuilder(Project project)
+	private static ProjectBuilder _createProjectBuilder(Project project)
 		throws IOException {
 
 		ProjectBuilder projectBuilder = new ProjectBuilder(project);
@@ -159,7 +158,7 @@ public class BndDeploymentScenarioGenerator
 		return projectBuilder;
 	}
 
-	private List<File> _getClassPathFiles() {
+	private static List<File> _getClassPathFiles() {
 		List<File> files = new ArrayList<>();
 
 		List<String> fileNames = StringUtil.split(
@@ -181,7 +180,9 @@ public class BndDeploymentScenarioGenerator
 		return files;
 	}
 
-	private Manifest _getManifest(Archive<?> archive) throws IOException {
+	private static Manifest _getManifest(Archive<?> archive)
+		throws IOException {
+
 		Node manifestNode = archive.get(JarFile.MANIFEST_NAME);
 
 		if (manifestNode == null) {
@@ -195,7 +196,7 @@ public class BndDeploymentScenarioGenerator
 		}
 	}
 
-	private void _process(JavaArchive javaArchive, TestClass testClass) {
+	private static void _process(JavaArchive javaArchive, TestClass testClass) {
 		try {
 			_addTestClass(javaArchive, testClass);
 
@@ -237,7 +238,7 @@ public class BndDeploymentScenarioGenerator
 		}
 	}
 
-	private void _setManifest(Archive<?> archive, Manifest manifest)
+	private static void _setManifest(Archive<?> archive, Manifest manifest)
 		throws IOException {
 
 		archive.delete(JarFile.MANIFEST_NAME);
@@ -252,7 +253,7 @@ public class BndDeploymentScenarioGenerator
 			JarFile.MANIFEST_NAME);
 	}
 
-	private void _setManifestValues(
+	private static void _setManifestValues(
 		Manifest manifest, Attributes.Name attributeName,
 		Collection<String> attributeValues) {
 

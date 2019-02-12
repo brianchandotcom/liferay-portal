@@ -73,10 +73,6 @@ public class ContainerEventController {
 	public void execute(@Observes AfterClass afterClass)
 		throws DeploymentException {
 
-		if (!Container.State.STARTED.equals(_container.getState())) {
-			return;
-		}
-
 		DeploymentContext deploymentContext = _deploymentContextInstance.get();
 
 		deploymentContext.activate(_deployment);
@@ -120,11 +116,6 @@ public class ContainerEventController {
 		deploymentDescription.setTestableArchive(archive);
 
 		_deployment = new Deployment(deploymentDescription);
-
-		if (_container.getState() != Container.State.STARTED) {
-			throw new IllegalStateException(
-				"Container " + _container.getName() + " is not started");
-		}
 
 		DeploymentContext deploymentContext = _deploymentContextInstance.get();
 

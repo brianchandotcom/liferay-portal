@@ -71,6 +71,8 @@ public interface ${schemaName}Resource {
 				) throws Exception;
 			</@compress>
 		</#compress>
+
+		${"\n"}<#lt>
 	</#list>
 
 }

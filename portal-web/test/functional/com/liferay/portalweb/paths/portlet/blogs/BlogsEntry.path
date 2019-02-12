@@ -80,12 +80,12 @@
 </tr>
 <tr>
 	<td>CONTENT_HTML_BOLD</td>
-	<td>//div[contains(@class,'content')]//b</td>
+	<td>//div[contains(@class,'widget-mode-detail-text')]/b</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CONTENT_HTML_ITALICS</td>
-	<td>//div[contains(@class,'content')]//i</td>
+	<td>//div[contains(@class,'widget-mode-detail-text')]/i</td>
 	<td></td>
 </tr>
 <tr>

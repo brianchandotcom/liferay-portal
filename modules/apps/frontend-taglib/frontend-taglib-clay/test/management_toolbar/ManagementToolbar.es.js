@@ -62,18 +62,18 @@ describe(
 		it(
 			'should deselect all searchContainer rows',
 			() => {
-				managementToolbar._handleDeselectAllClicked();
+				managementToolbar._handleClearSelectionButtonClicked();
 
-				expect(searchContainer.select.toggleAllRows).toHaveBeenCalledWith(false);
+				expect(searchContainer.select.toggleAllRows).toHaveBeenCalledWith(false, true);
 			}
 		);
 
 		it(
 			'should select all searchContainer rows',
 			() => {
-				managementToolbar._handleSelectAllClicked();
+				managementToolbar._handleSelectAllButtonClicked();
 
-				expect(searchContainer.select.toggleAllRows).toHaveBeenCalledWith(true);
+				expect(searchContainer.select.toggleAllRows).toHaveBeenCalledWith(true, true);
 			}
 		);
 

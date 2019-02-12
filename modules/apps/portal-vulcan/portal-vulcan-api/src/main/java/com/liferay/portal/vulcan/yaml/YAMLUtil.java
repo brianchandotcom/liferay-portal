@@ -69,12 +69,19 @@ public class YAMLUtil {
 
 		Constructor openAPIYAMLConstructor = new Constructor(OpenAPIYAML.class);
 
-		TypeDescription itemTypeDescription = new TypeDescription(Items.class);
+		TypeDescription itemsTypeDescription = new TypeDescription(Items.class);
 
-		itemTypeDescription.substituteProperty(
+		itemsTypeDescription.substituteProperty(
 			"$ref", String.class, "getReference", "setReference");
 
-		openAPIYAMLConstructor.addTypeDescription(itemTypeDescription);
+		itemsTypeDescription.substituteProperty(
+			"properties", Map.class, "getPropertySchemas",
+			"setPropertySchemas");
+
+		itemsTypeDescription.addPropertyParameters(
+			"properties", String.class, Schema.class);
+
+		openAPIYAMLConstructor.addTypeDescription(itemsTypeDescription);
 
 		TypeDescription openAPIYAMLTypeDescription = new TypeDescription(
 			OpenAPIYAML.class);

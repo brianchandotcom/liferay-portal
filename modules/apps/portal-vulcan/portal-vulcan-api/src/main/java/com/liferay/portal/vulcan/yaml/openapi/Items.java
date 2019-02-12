@@ -14,6 +14,8 @@
 
 package com.liferay.portal.vulcan.yaml.openapi;
 
+import java.util.Map;
+
 /**
  * @author Peter Shin
  */
@@ -21,6 +23,10 @@ public class Items {
 
 	public String getFormat() {
 		return _format;
+	}
+
+	public Map<String, Schema> getPropertySchemas() {
+		return _propertySchemas;
 	}
 
 	public String getReference() {
@@ -35,6 +41,10 @@ public class Items {
 		_format = format;
 	}
 
+	public void setPropertySchemas(Map<String, Schema> propertySchemas) {
+		_propertySchemas = propertySchemas;
+	}
+
 	public void setReference(String reference) {
 		_reference = reference;
 	}
@@ -44,6 +54,7 @@ public class Items {
 	}
 
 	private String _format;
+	private Map<String, Schema> _propertySchemas;
 	private String _reference;
 	private String _type;
 

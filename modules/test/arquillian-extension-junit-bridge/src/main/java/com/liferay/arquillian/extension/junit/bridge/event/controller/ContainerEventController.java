@@ -84,29 +84,27 @@ public class ContainerEventController {
 			return;
 		}
 
-		Deployment deployment = _deployment;
-
 		DeploymentContext deploymentContext = _deploymentContextInstance.get();
 
-		deploymentContext.activate(deployment);
+		deploymentContext.activate(_deployment);
 
 		DeployableContainer<?> deployableContainer =
 			container.getDeployableContainer();
 
 		DeploymentDescription deploymentDescription =
-			deployment.getDescription();
+			_deployment.getDescription();
 
 		try {
 			deployableContainer.undeploy(
 				deploymentDescription.getTestableArchive());
 		}
 		catch (DeploymentException de) {
-			if (!deployment.hasDeploymentError()) {
+			if (!_deployment.hasDeploymentError()) {
 				throw de;
 			}
 		}
 		finally {
-			deployment.undeployed();
+			_deployment.undeployed();
 
 			deploymentContext.deactivate();
 		}
@@ -145,11 +143,9 @@ public class ContainerEventController {
 				"Container " + container.getName() + " is not started");
 		}
 
-		Deployment deployment = _deployment;
-
 		DeploymentContext deploymentContext = _deploymentContextInstance.get();
 
-		deploymentContext.activate(deployment);
+		deploymentContext.activate(_deployment);
 
 		DeployableContainer<?> deployableContainer =
 			container.getDeployableContainer();
@@ -158,7 +154,7 @@ public class ContainerEventController {
 			deployableContainer.deploy(
 				deploymentDescription.getTestableArchive());
 
-			deployment.deployed();
+			_deployment.deployed();
 		}
 		finally {
 			deploymentContext.deactivate();

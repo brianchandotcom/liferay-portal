@@ -6,7 +6,7 @@ create table OAuth_OAuthApplication (
 	createDate DATE null,
 	modifiedDate DATE null,
 	name VARCHAR(75) null,
-	description STRING null,
+	description_ STRING null,
 	consumerKey VARCHAR(75) null,
 	consumerSecret VARCHAR(75) null,
 	accessLevel INTEGER,

@@ -20,11 +20,6 @@ import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.reports.engine.console.exception.NoSuchSourceException;
 import com.liferay.portal.reports.engine.console.model.Source;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
-
 /**
  * The persistence interface for the source service.
  *
@@ -44,9 +39,6 @@ public interface SourcePersistence extends BasePersistence<Source> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SourceUtil} to access the source persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, Source> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the sources where uuid = &#63;.
@@ -805,7 +797,4 @@ public interface SourcePersistence extends BasePersistence<Source> {
 	* @return the number of sources
 	*/
 	public int countAll();
-
-	@Override
-	public Set<String> getBadColumnNames();
 }

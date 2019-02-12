@@ -82,7 +82,7 @@ public class OAuthApplicationModelImpl extends BaseModelImpl<OAuthApplication>
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "name", Types.VARCHAR },
-			{ "description", Types.VARCHAR },
+			{ "description_", Types.VARCHAR },
 			{ "consumerKey", Types.VARCHAR },
 			{ "consumerSecret", Types.VARCHAR },
 			{ "accessLevel", Types.INTEGER },
@@ -101,7 +101,7 @@ public class OAuthApplicationModelImpl extends BaseModelImpl<OAuthApplication>
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("description_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("consumerKey", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("consumerSecret", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("accessLevel", Types.INTEGER);
@@ -111,7 +111,7 @@ public class OAuthApplicationModelImpl extends BaseModelImpl<OAuthApplication>
 		TABLE_COLUMNS_MAP.put("websiteURL", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table OAuth_OAuthApplication (oAuthApplicationId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,description STRING null,consumerKey VARCHAR(75) null,consumerSecret VARCHAR(75) null,accessLevel INTEGER,logoId LONG,shareableAccessToken BOOLEAN,callbackURI STRING null,websiteURL STRING null)";
+	public static final String TABLE_SQL_CREATE = "create table OAuth_OAuthApplication (oAuthApplicationId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,description_ STRING null,consumerKey VARCHAR(75) null,consumerSecret VARCHAR(75) null,accessLevel INTEGER,logoId LONG,shareableAccessToken BOOLEAN,callbackURI STRING null,websiteURL STRING null)";
 	public static final String TABLE_SQL_DROP = "drop table OAuth_OAuthApplication";
 	public static final String ORDER_BY_JPQL = " ORDER BY oAuthApplication.oAuthApplicationId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY OAuth_OAuthApplication.oAuthApplicationId ASC";

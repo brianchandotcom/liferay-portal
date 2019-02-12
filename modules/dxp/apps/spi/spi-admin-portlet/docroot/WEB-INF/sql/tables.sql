@@ -8,7 +8,7 @@ create table SPIDefinition (
 	name VARCHAR(200) null,
 	connectorAddress VARCHAR(200) null,
 	connectorPort INTEGER,
-	description STRING null,
+	description_ STRING null,
 	jvmArguments STRING null,
 	portletIds STRING null,
 	servletContextNames STRING null,

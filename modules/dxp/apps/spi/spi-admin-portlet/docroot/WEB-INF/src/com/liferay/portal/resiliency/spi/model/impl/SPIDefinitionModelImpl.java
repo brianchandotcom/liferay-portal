@@ -83,7 +83,7 @@ public class SPIDefinitionModelImpl extends BaseModelImpl<SPIDefinition>
 			{ "name", Types.VARCHAR },
 			{ "connectorAddress", Types.VARCHAR },
 			{ "connectorPort", Types.INTEGER },
-			{ "description", Types.VARCHAR },
+			{ "description_", Types.VARCHAR },
 			{ "jvmArguments", Types.VARCHAR },
 			{ "portletIds", Types.VARCHAR },
 			{ "servletContextNames", Types.VARCHAR },
@@ -103,7 +103,7 @@ public class SPIDefinitionModelImpl extends BaseModelImpl<SPIDefinition>
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("connectorAddress", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("connectorPort", Types.INTEGER);
-		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("description_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("jvmArguments", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("portletIds", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("servletContextNames", Types.VARCHAR);
@@ -112,7 +112,7 @@ public class SPIDefinitionModelImpl extends BaseModelImpl<SPIDefinition>
 		TABLE_COLUMNS_MAP.put("statusMessage", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table SPIDefinition (spiDefinitionId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(200) null,connectorAddress VARCHAR(200) null,connectorPort INTEGER,description STRING null,jvmArguments STRING null,portletIds STRING null,servletContextNames STRING null,typeSettings TEXT null,status INTEGER,statusMessage STRING null)";
+	public static final String TABLE_SQL_CREATE = "create table SPIDefinition (spiDefinitionId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(200) null,connectorAddress VARCHAR(200) null,connectorPort INTEGER,description_ STRING null,jvmArguments STRING null,portletIds STRING null,servletContextNames STRING null,typeSettings TEXT null,status INTEGER,statusMessage STRING null)";
 	public static final String TABLE_SQL_DROP = "drop table SPIDefinition";
 	public static final String ORDER_BY_JPQL = " ORDER BY spiDefinition.spiDefinitionId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY SPIDefinition.spiDefinitionId ASC";

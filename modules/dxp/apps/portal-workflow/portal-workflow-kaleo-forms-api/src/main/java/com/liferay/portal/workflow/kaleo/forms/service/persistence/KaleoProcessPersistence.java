@@ -20,11 +20,6 @@ import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.workflow.kaleo.forms.exception.NoSuchKaleoProcessException;
 import com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
-
 /**
  * The persistence interface for the kaleo process service.
  *
@@ -44,9 +39,6 @@ public interface KaleoProcessPersistence extends BasePersistence<KaleoProcess> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link KaleoProcessUtil} to access the kaleo process persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, KaleoProcess> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the kaleo processes where uuid = &#63;.
@@ -727,7 +719,4 @@ public interface KaleoProcessPersistence extends BasePersistence<KaleoProcess> {
 	* @return the number of kaleo processes
 	*/
 	public int countAll();
-
-	@Override
-	public Set<String> getBadColumnNames();
 }

@@ -1032,10 +1032,6 @@ public class SourceUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static SourcePersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

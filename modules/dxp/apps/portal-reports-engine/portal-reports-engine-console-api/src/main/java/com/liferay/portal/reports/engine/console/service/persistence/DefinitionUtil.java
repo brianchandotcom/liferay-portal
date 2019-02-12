@@ -1041,10 +1041,6 @@ public class DefinitionUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static DefinitionPersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

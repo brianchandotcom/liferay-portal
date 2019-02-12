@@ -21,11 +21,6 @@ import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.saml.persistence.exception.NoSuchIdpSpConnectionException;
 import com.liferay.saml.persistence.model.SamlIdpSpConnection;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
-
 /**
  * The persistence interface for the saml idp sp connection service.
  *
@@ -45,9 +40,6 @@ public interface SamlIdpSpConnectionPersistence extends BasePersistence<SamlIdpS
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SamlIdpSpConnectionUtil} to access the saml idp sp connection persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, SamlIdpSpConnection> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the saml idp sp connections where companyId = &#63;.

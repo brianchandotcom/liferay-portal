@@ -110,7 +110,9 @@ public class JavaTool {
 					String methodName = _getMethodName(
 						operation, path, returnType, schemaName);
 
-					if (_isSchemaMethod(schemaName, methodName, returnType)) {
+					if (_isSchemaMethod(
+							schemaName, operation.getTags(), returnType)) {
+
 						JavaSignature javaSignature = new JavaSignature(
 							path, pathItem, operation,
 							_getJavaParameters(operation), methodName,
@@ -327,6 +329,10 @@ public class JavaTool {
 					String parameterName = StringUtil.lowerCaseFirstLetter(
 						schemaName);
 
+					if (StringUtil.equals(schemaName, "Long")) {
+						parameterName = "referenceId";
+					}
+
 					javaParameters.add(
 						new JavaParameter(
 							Collections.emptySet(), parameterName, schemaName));
@@ -540,9 +546,9 @@ public class JavaTool {
 	}
 
 	private boolean _isSchemaMethod(
-		String schemaName, String methodName, String returnType) {
+		String schemaName, List<String> tags, String returnType) {
 
-		if (returnType.equals(schemaName) || methodName.endsWith(schemaName) ||
+		if (returnType.equals(schemaName) || tags.contains(schemaName) ||
 			((returnType.length() == schemaName.length() + 6) &&
 			 returnType.startsWith("Page<") && returnType.endsWith(">") &&
 			 returnType.regionMatches(5, schemaName, 0, schemaName.length()))) {

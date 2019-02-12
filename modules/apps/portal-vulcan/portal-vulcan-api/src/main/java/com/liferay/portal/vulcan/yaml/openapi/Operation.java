@@ -14,6 +14,7 @@
 
 package com.liferay.portal.vulcan.yaml.openapi;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -38,6 +39,10 @@ public class Operation {
 		return _responses;
 	}
 
+	public List<String> getTags() {
+		return _tags;
+	}
+
 	public void setOperationId(String operationId) {
 		_operationId = operationId;
 	}
@@ -54,9 +59,14 @@ public class Operation {
 		_responses = responses;
 	}
 
+	public void setTags(List<String> tags) {
+		_tags = tags;
+	}
+
 	private String _operationId;
 	private List<Parameter> _parameters;
 	private RequestBody _requestBody;
 	private Map<String, Response> _responses;
+	private List<String> _tags = new ArrayList<>();
 
 }

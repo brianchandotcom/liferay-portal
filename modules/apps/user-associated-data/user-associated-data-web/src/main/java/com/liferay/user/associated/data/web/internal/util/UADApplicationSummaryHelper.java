@@ -14,6 +14,7 @@
 
 package com.liferay.user.associated.data.web.internal.util;
 
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
 import com.liferay.user.associated.data.display.UADDisplay;
@@ -21,7 +22,6 @@ import com.liferay.user.associated.data.web.internal.display.UADApplicationSumma
 import com.liferay.user.associated.data.web.internal.registry.UADRegistry;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -83,13 +83,11 @@ public class UADApplicationSummaryHelper {
 	}
 
 	public UADApplicationSummaryDisplay getUADApplicationSummaryDisplay(
-		String applicationKey, long userId) {
+		String applicationKey, long userId,
+		List<UADDisplay> applicationUADDisplays) {
 
 		UADApplicationSummaryDisplay uadApplicationSummaryDisplay =
 			new UADApplicationSummaryDisplay();
-
-		Collection<UADDisplay> applicationUADDisplays =
-			_uadRegistry.getApplicationUADDisplays(applicationKey);
 
 		int count = getReviewableUADEntitiesCount(
 			applicationUADDisplays.stream(), userId);
@@ -102,7 +100,7 @@ public class UADApplicationSummaryHelper {
 	}
 
 	public List<UADApplicationSummaryDisplay> getUADApplicationSummaryDisplays(
-		long userId) {
+		long userId, boolean siteScope) {
 
 		List<UADApplicationSummaryDisplay> uadApplicationSummaryDisplays =
 			new ArrayList<>();
@@ -115,8 +113,20 @@ public class UADApplicationSummaryHelper {
 		while (iterator.hasNext()) {
 			String applicationKey = iterator.next();
 
-			uadApplicationSummaryDisplays.add(
-				getUADApplicationSummaryDisplay(applicationKey, userId));
+			Stream<UADDisplay> uadDisplayStream =
+				_uadRegistry.getApplicationUADDisplayStream(applicationKey);
+
+			List<UADDisplay> applicationUADDisplays = uadDisplayStream.filter(
+				uadDisplay -> siteScope == uadDisplay.isSiteScoped()
+			).collect(
+				Collectors.toList()
+			);
+
+			if (!ListUtil.isEmpty(applicationUADDisplays)) {
+				uadApplicationSummaryDisplays.add(
+					getUADApplicationSummaryDisplay(
+						applicationKey, userId, applicationUADDisplays));
+			}
 		}
 
 		uadApplicationSummaryDisplays.sort(

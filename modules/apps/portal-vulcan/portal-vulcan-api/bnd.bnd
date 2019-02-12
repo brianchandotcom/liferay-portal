@@ -4,6 +4,7 @@ Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.portal.vulcan.context,\
 	com.liferay.portal.vulcan.dto,\
+	com.liferay.portal.vulcan.multipart,\
 	com.liferay.portal.vulcan.util,\
 	com.liferay.portal.vulcan.yaml,\
 	com.liferay.portal.vulcan.yaml.config,\

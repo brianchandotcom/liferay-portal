@@ -19,7 +19,7 @@ import com.liferay.arquillian.extension.junit.bridge.container.LiferayRemoteDepl
 import com.liferay.arquillian.extension.junit.bridge.context.ContainerContextImpl;
 import com.liferay.arquillian.extension.junit.bridge.context.DeploymentContextImpl;
 import com.liferay.arquillian.extension.junit.bridge.event.controller.ContainerEventController;
-import com.liferay.arquillian.extension.junit.bridge.executor.RemoteTestExecuter;
+import com.liferay.arquillian.extension.junit.bridge.protocol.jmx.JMXMethodExecutor;
 import com.liferay.arquillian.extension.junit.bridge.remote.context.ClassContextImpl;
 import com.liferay.arquillian.extension.junit.bridge.remote.context.SuiteContextImpl;
 import com.liferay.arquillian.extension.junit.bridge.remote.context.TestContextImpl;
@@ -52,7 +52,7 @@ public class LiferayArquillianJUnitBridgeExtension
 			extensionBuilder.context(TestContextImpl.class);
 			extensionBuilder.observer(ContainerDeploymentContextHandler.class);
 			extensionBuilder.observer(ContainerEventController.class);
-			extensionBuilder.observer(RemoteTestExecuter.class);
+			extensionBuilder.observer(JMXMethodExecutor.class);
 			extensionBuilder.observer(TestContextHandler.class);
 			extensionBuilder.service(
 				DeployableContainer.class,

@@ -22,18 +22,11 @@ import com.liferay.portal.tools.rest.builder.internal.util.CamelCaseUtil;
 import com.liferay.portal.vulcan.yaml.config.ConfigYAML;
 import com.liferay.portal.vulcan.yaml.openapi.Components;
 import com.liferay.portal.vulcan.yaml.openapi.Content;
-import com.liferay.portal.vulcan.yaml.openapi.Delete;
-import com.liferay.portal.vulcan.yaml.openapi.Get;
-import com.liferay.portal.vulcan.yaml.openapi.Head;
 import com.liferay.portal.vulcan.yaml.openapi.Items;
 import com.liferay.portal.vulcan.yaml.openapi.OpenAPIYAML;
 import com.liferay.portal.vulcan.yaml.openapi.Operation;
-import com.liferay.portal.vulcan.yaml.openapi.Options;
 import com.liferay.portal.vulcan.yaml.openapi.Parameter;
-import com.liferay.portal.vulcan.yaml.openapi.Patch;
 import com.liferay.portal.vulcan.yaml.openapi.PathItem;
-import com.liferay.portal.vulcan.yaml.openapi.Post;
-import com.liferay.portal.vulcan.yaml.openapi.Put;
 import com.liferay.portal.vulcan.yaml.openapi.RequestBody;
 import com.liferay.portal.vulcan.yaml.openapi.Response;
 import com.liferay.portal.vulcan.yaml.openapi.Schema;
@@ -96,29 +89,9 @@ public class JavaTool {
 	}
 
 	public String getHTTPMethod(Operation operation) {
-		if (Delete.class.isInstance(operation)) {
-			return "delete";
-		}
-		else if (Get.class.isInstance(operation)) {
-			return "get";
-		}
-		else if (Head.class.isInstance(operation)) {
-			return "head";
-		}
-		else if (Options.class.isInstance(operation)) {
-			return "options";
-		}
-		else if (Patch.class.isInstance(operation)) {
-			return "patch";
-		}
-		else if (Post.class.isInstance(operation)) {
-			return "post";
-		}
-		else if (Put.class.isInstance(operation)) {
-			return "put";
-		}
+		Class<? extends Operation> clazz = operation.getClass();
 
-		return null;
+		return StringUtil.lowerCase(clazz.getSimpleName());
 	}
 
 	public JavaParameter getJavaParameter(Parameter parameter) {

@@ -55,9 +55,8 @@ public class SelectBasicPagesVerticalCard implements VerticalCard {
 			WebKeys.THEME_DISPLAY);
 	}
 
-	@Override
-	public Map<String, String> getData() {
-		Map<String, String> data = new HashMap<>();
+	public Map<String, Object> getDataLink() {
+		Map<String, Object> data = new HashMap<>();
 
 		String redirect = ParamUtil.getString(_request, "redirect");
 

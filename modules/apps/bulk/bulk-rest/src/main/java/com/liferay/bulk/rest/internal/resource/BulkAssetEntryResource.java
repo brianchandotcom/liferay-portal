@@ -24,7 +24,6 @@ import com.liferay.bulk.rest.internal.model.BulkActionResponseModel;
 import com.liferay.bulk.rest.internal.model.BulkAssetEntryActionModel;
 import com.liferay.bulk.rest.internal.model.BulkAssetEntryCommonCategoriesModel;
 import com.liferay.bulk.rest.internal.model.BulkAssetEntryCommonTagsModel;
-import com.liferay.bulk.rest.internal.model.BulkAssetEntrySearchTagsModel;
 import com.liferay.bulk.rest.internal.model.BulkAssetEntryUpdateCategoriesActionModel;
 import com.liferay.bulk.rest.internal.model.BulkAssetEntryUpdateTagsActionModel;
 import com.liferay.bulk.selection.BulkSelection;
@@ -168,7 +167,7 @@ public class BulkAssetEntryResource {
 	@GET
 	@Path("/tags/{groupId}/search")
 	@Produces(ContentTypes.APPLICATION_JSON)
-	public BulkAssetEntrySearchTagsModel searchTags(
+	public List<String> searchTags(
 			@PathParam("groupId") long groupId, @QueryParam("name") String name)
 		throws PortalException {
 
@@ -178,12 +177,11 @@ public class BulkAssetEntryResource {
 
 		Stream<AssetTag> assetTagStream = assetTags.stream();
 
-		return new BulkAssetEntrySearchTagsModel(
-			assetTagStream.map(
-				AssetTag::getName
-			).collect(
-				Collectors.toList()
-			));
+		return assetTagStream.map(
+			AssetTag::getName
+		).collect(
+			Collectors.toList()
+		);
 	}
 
 	@Consumes(ContentTypes.APPLICATION_JSON)

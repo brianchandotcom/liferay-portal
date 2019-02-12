@@ -46,9 +46,6 @@ class EditTags extends Component {
 			.then(
 				response => response.json()
 			)
-			.then(
-				({tagNames}) => tagNames
-			)
 		);
 	}
 

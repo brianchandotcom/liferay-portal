@@ -151,6 +151,40 @@ components:
           type: string
         description:
           type: string
+        fields:
+          items:
+            properties:
+              dataType:
+                type: string
+              label:
+                type: string
+              localizable:
+                type: boolean
+              multiple:
+                type: boolean
+              inputControl:
+                type: string
+              predefinedValue:
+                type: string
+              name:
+                type: string
+              repeatable:
+                type: boolean
+              required:
+                type: boolean
+              showLabel:
+                type: boolean
+              options:
+                items:
+                  type: object
+                  properties:
+                    label:
+                      type: string
+                    value:
+                      type: string
+                type: array
+            type: object
+          type: array
         id:
           format: int64
           type: integer
@@ -163,73 +197,76 @@ components:
           type: string
         renderedContentsByTemplate:
           description: https://www.schema.org/templates
-          properties:
-            id:
-              format: int64
-              type: integer
-            renderedContent:
-              type: string
-            template:
-              type: string
-          type: object
+          items:
+            properties:
+              id:
+                format: int64
+                type: integer
+              renderedContent:
+                type: string
+              template:
+                type: string
+            type: object
+          type: array
         title:
           type: string
         values:
           description: https://www.schema.org/ContentFieldValue
-          properties:
-            dataType:
-              type: string
-            filterAndSortIdentifier:
-              type: string
-            id:
-              format: int64
-              type: integer
-            inputControl:
-              type: string
-            label:
-              type: string
-            name:
-              type: string
-            value:
-              anyOf:
-                - properties:
-                    data:
-                      type: string
-                - properties:
-                    document:
-                      allOf:
-                        - $ref: "#/components/schemas/ContentDocument"
-                    documentId:
-                      format: int64
-                      type: integer
-                      writeOnly: true
-                - properties:
-                    geo:
-                      description: https://www.schema.org/GeoCoordinates
-                      properties:
-                        id:
-                          format: int64
-                          type: integer
-                        latitude:
-                          type: number
-                        longitude:
-                          type: number
-                      type: object
-                - properties:
-                    link:
-                      format: uri
-                      type: string
-                - properties:
-                    structuredContent:
-                      allOf:
-                        - $ref: "#/components/schemas/StructuredContent"
-                      readOnly: true
-                    structuredContentId:
-                      format: int64
-                      type: integer
-                      writeOnly: true
-          type: object
-      type: object
+          items:
+            properties:
+              dataType:
+                type: string
+              filterAndSortIdentifier:
+                type: string
+              id:
+                format: int64
+                type: integer
+              inputControl:
+                type: string
+              label:
+                type: string
+              name:
+                type: string
+              value:
+                anyOf:
+                  - properties:
+                      data:
+                        type: string
+                  - properties:
+                      document:
+                        allOf:
+                          - $ref: "#/components/schemas/ContentDocument"
+                      documentId:
+                        format: int64
+                        type: integer
+                        writeOnly: true
+                  - properties:
+                      geo:
+                        description: https://www.schema.org/GeoCoordinates
+                        properties:
+                          id:
+                            format: int64
+                            type: integer
+                          latitude:
+                            type: number
+                          longitude:
+                            type: number
+                        type: object
+                  - properties:
+                      link:
+                        format: uri
+                        type: string
+                  - properties:
+                      structuredContent:
+                        allOf:
+                          - $ref: "#/components/schemas/StructuredContent"
+                        readOnly: true
+                      structuredContentId:
+                        format: int64
+                        type: integer
+                        writeOnly: true
+            type: object
+          type: array
 info:
   description: ""
   title: ""

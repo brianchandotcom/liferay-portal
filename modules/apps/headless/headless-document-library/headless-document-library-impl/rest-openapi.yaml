@@ -46,22 +46,24 @@ components:
       properties:
         adaptedMedia:
           description: https://www.schema.org/ImageObject
-          properties:
-            contentUrl:
-              format: uri
-              type: string
-            height:
-              type: number
-            id:
-              format: int64
-              type: integer
-            resolutionName:
-              type: string
-            sizeInBytes:
-              type: number
-            width:
-              type: number
-          type: object
+          items:
+            properties:
+              contentUrl:
+                format: uri
+                type: string
+              height:
+                type: number
+              id:
+                format: int64
+                type: integer
+              resolutionName:
+                type: string
+              sizeInBytes:
+                type: number
+              width:
+                type: number
+            type: object
+          type: array
         category:
           items:
             format: int64

@@ -178,26 +178,30 @@ components:
           writeOnly: true
         services:
           description: https://www.schema.org/Service
-          properties:
-            hoursAvailable:
-              description: https://www.schema.org/OpeningHoursSpecification
-              properties:
-                closes:
-                  type: string
-                dayOfWeek:
-                  type: string
-                id:
-                  format: int64
-                  type: integer
-                opens:
-                  type: string
-              type: object
-            id:
-              format: int64
-              type: integer
-            serviceType:
-              type: string
-          type: object
+          items:
+            properties:
+              hoursAvailable:
+                description: https://www.schema.org/OpeningHoursSpecification
+                items:
+                  properties:
+                    closes:
+                      type: string
+                    dayOfWeek:
+                      type: string
+                    id:
+                      format: int64
+                      type: integer
+                    opens:
+                      type: string
+                  type: object
+                type: array
+              id:
+                format: int64
+                type: integer
+              serviceType:
+                type: string
+            type: object
+          type: array
         subOrganization:
           items:
             $ref: "#/components/schemas/Organization"

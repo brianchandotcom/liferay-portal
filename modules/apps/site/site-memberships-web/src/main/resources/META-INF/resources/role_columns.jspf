@@ -22,13 +22,8 @@
 		%>
 
 		<liferay-ui:search-container-column-text>
-			<liferay-frontend:icon-vertical-card
-				cssClass="entry-display-style"
-				icon="users"
-				resultRow="<%= row %>"
-				rowChecker="<%= searchContainer.getRowChecker() %>"
-				subtitle="<%= LanguageUtil.get(request, role.getTypeLabel()) %>"
-				title="<%= HtmlUtil.escape(role.getTitle(locale)) %>"
+			<clay:vertical-card
+				verticalCard="<%= new RoleVerticalCard(role, renderRequest, searchContainer.getRowChecker()) %>"
 			/>
 		</liferay-ui:search-container-column-text>
 	</c:when>

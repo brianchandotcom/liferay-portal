@@ -40,19 +40,19 @@ public abstract class BaseBlogPostingResourceImpl
 	implements BlogPostingResource {
 
 	@Override
-	public Response deleteBlogPosting(Long blogPostingId) throws Exception {
+	public Response deleteBlogPostings(Long blogPostingId) throws Exception {
 		Response.ResponseBuilder responseBuilder = Response.ok();
 
 		return responseBuilder.build();
 	}
 
 	@Override
-	public BlogPosting getBlogPosting(Long blogPostingId) throws Exception {
+	public BlogPosting getBlogPostings(Long blogPostingId) throws Exception {
 		return new BlogPosting();
 	}
 
 	@Override
-	public Page<Long> getBlogPostingCategoriesPage(
+	public Page<Long> getBlogPostingsCategoriesPage(
 			Long blogPostingId, Pagination pagination)
 		throws Exception {
 
@@ -60,7 +60,7 @@ public abstract class BaseBlogPostingResourceImpl
 	}
 
 	@Override
-	public Page<BlogPosting> getContentSpaceBlogPostingPage(
+	public Page<BlogPosting> getContentSpacesBlogPostingsPage(
 			Long contentSpaceId, Pagination pagination)
 		throws Exception {
 
@@ -68,7 +68,7 @@ public abstract class BaseBlogPostingResourceImpl
 	}
 
 	@Override
-	public Response postBlogPostingCategories(
+	public Response postBlogPostingsCategories(
 			Long blogPostingId, Long referenceId)
 		throws Exception {
 
@@ -78,7 +78,7 @@ public abstract class BaseBlogPostingResourceImpl
 	}
 
 	@Override
-	public Response postBlogPostingCategoriesBatchCreate(
+	public Response postBlogPostingsCategoriesBatchCreate(
 			Long blogPostingId, Long referenceId)
 		throws Exception {
 
@@ -88,7 +88,7 @@ public abstract class BaseBlogPostingResourceImpl
 	}
 
 	@Override
-	public BlogPosting postContentSpaceBlogPosting(
+	public BlogPosting postContentSpacesBlogPostings(
 			Long contentSpaceId, BlogPosting blogPosting)
 		throws Exception {
 
@@ -96,7 +96,7 @@ public abstract class BaseBlogPostingResourceImpl
 	}
 
 	@Override
-	public BlogPosting postContentSpaceBlogPostingBatchCreate(
+	public BlogPosting postContentSpacesBlogPostingsBatchCreate(
 			Long contentSpaceId, BlogPosting blogPosting)
 		throws Exception {
 
@@ -104,7 +104,7 @@ public abstract class BaseBlogPostingResourceImpl
 	}
 
 	@Override
-	public BlogPosting putBlogPosting(
+	public BlogPosting putBlogPostings(
 			Long blogPostingId, BlogPosting blogPosting)
 		throws Exception {
 

@@ -39,7 +39,7 @@ import javax.ws.rs.core.Response;
 public abstract class BasePhoneResourceImpl implements PhoneResource {
 
 	@Override
-	public Phone getPhone(Long phonesId) throws Exception {
+	public Phone getPhones(Long phoneId) throws Exception {
 		return new Phone();
 	}
 

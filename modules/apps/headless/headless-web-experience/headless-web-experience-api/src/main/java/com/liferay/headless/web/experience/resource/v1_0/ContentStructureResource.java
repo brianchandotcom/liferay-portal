@@ -60,15 +60,15 @@ import javax.ws.rs.core.Response;
 public interface ContentStructureResource {
 
 	@GET
-	@Path("/content-space/{content-space-id}/content-structures")
+	@Path("/content-spaces/{content-space-id}/content-structures")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Page<ContentStructure> getContentSpaceContentStructuresPage( @PathParam("content-space-id") Long contentSpaceId , @Context Pagination pagination ) throws Exception;
+	public Page<ContentStructure> getContentSpacesContentStructuresPage( @PathParam("content-space-id") Long contentSpaceId , @Context Pagination pagination ) throws Exception;
 
 	@GET
-	@Path("/content-structures/{content-structures-id}")
+	@Path("/content-structures/{content-structure-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public ContentStructure getContentStructure( @PathParam("content-structures-id") Long contentStructuresId ) throws Exception;
+	public ContentStructure getContentStructures( @PathParam("content-structure-id") Long contentStructureId ) throws Exception;
 
 }

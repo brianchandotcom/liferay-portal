@@ -40,7 +40,7 @@ public abstract class BasePostalAddressResourceImpl
 	implements PostalAddressResource {
 
 	@Override
-	public PostalAddress getAddresses(Long addressesId) throws Exception {
+	public PostalAddress getAddresses(Long addressId) throws Exception {
 		return new PostalAddress();
 	}
 

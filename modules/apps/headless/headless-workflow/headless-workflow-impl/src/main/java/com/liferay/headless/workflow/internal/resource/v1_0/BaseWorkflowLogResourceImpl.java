@@ -40,13 +40,13 @@ public abstract class BaseWorkflowLogResourceImpl
 	implements WorkflowLogResource {
 
 	@Override
-	public WorkflowLog getWorkflowLog(Long workflowLogsId) throws Exception {
+	public WorkflowLog getWorkflowLogs(Long workflowLogId) throws Exception {
 		return new WorkflowLog();
 	}
 
 	@Override
 	public Page<WorkflowLog> getWorkflowTasksWorkflowLogsPage(
-			Long workflowTasksId, Pagination pagination)
+			Long workflowTaskId, Pagination pagination)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());

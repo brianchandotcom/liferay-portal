@@ -39,19 +39,21 @@ import javax.ws.rs.core.Response;
 public abstract class BaseFolderResourceImpl implements FolderResource {
 
 	@Override
-	public Response deleteFolder(Long folderId) throws Exception {
+	public Response deleteFolders(Long folderId) throws Exception {
 		Response.ResponseBuilder responseBuilder = Response.ok();
 
 		return responseBuilder.build();
 	}
 
 	@Override
-	public Folder getDocumentsRepository(Long id) throws Exception {
+	public Folder getDocumentsRepositories(Long documentsRepositoryId)
+		throws Exception {
+
 		return new Folder();
 	}
 
 	@Override
-	public Page<Folder> getDocumentsRepositoryFolderPage(
+	public Page<Folder> getDocumentsRepositoriesFoldersPage(
 			Long documentsRepositoryId, Pagination pagination)
 		throws Exception {
 
@@ -59,12 +61,12 @@ public abstract class BaseFolderResourceImpl implements FolderResource {
 	}
 
 	@Override
-	public Folder getFolder(Long folderId) throws Exception {
+	public Folder getFolders(Long folderId) throws Exception {
 		return new Folder();
 	}
 
 	@Override
-	public Page<Folder> getFolderFolderPage(
+	public Page<Folder> getFoldersFoldersPage(
 			Long folderId, Pagination pagination)
 		throws Exception {
 
@@ -72,7 +74,7 @@ public abstract class BaseFolderResourceImpl implements FolderResource {
 	}
 
 	@Override
-	public Folder postDocumentsRepositoryFolder(
+	public Folder postDocumentsRepositoriesFolders(
 			Long documentsRepositoryId, Folder folder)
 		throws Exception {
 
@@ -80,7 +82,7 @@ public abstract class BaseFolderResourceImpl implements FolderResource {
 	}
 
 	@Override
-	public Folder postDocumentsRepositoryFolderBatchCreate(
+	public Folder postDocumentsRepositoriesFoldersBatchCreate(
 			Long documentsRepositoryId, Folder folder)
 		throws Exception {
 
@@ -88,21 +90,21 @@ public abstract class BaseFolderResourceImpl implements FolderResource {
 	}
 
 	@Override
-	public Folder postFolderFolder(Long folderId, Folder folder)
+	public Folder postFoldersFolders(Long folderId, Folder folder)
 		throws Exception {
 
 		return new Folder();
 	}
 
 	@Override
-	public Folder postFolderFolderBatchCreate(Long folderId, Folder folder)
+	public Folder postFoldersFoldersBatchCreate(Long folderId, Folder folder)
 		throws Exception {
 
 		return new Folder();
 	}
 
 	@Override
-	public Folder putFolder(Long folderId, Folder folder) throws Exception {
+	public Folder putFolders(Long folderId, Folder folder) throws Exception {
 		return new Folder();
 	}
 

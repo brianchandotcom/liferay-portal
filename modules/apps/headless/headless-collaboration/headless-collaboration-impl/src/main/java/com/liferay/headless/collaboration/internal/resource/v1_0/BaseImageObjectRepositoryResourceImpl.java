@@ -37,7 +37,7 @@ public abstract class BaseImageObjectRepositoryResourceImpl
 	implements ImageObjectRepositoryResource {
 
 	@Override
-	public ImageObjectRepository getImageObjectRepository(
+	public ImageObjectRepository getImageObjectRepositories(
 			Long imageObjectRepositoryId)
 		throws Exception {
 

@@ -39,7 +39,7 @@ import javax.ws.rs.core.Response;
 public abstract class BaseEmailResourceImpl implements EmailResource {
 
 	@Override
-	public Email getEmail(Long emailsId) throws Exception {
+	public Email getEmails(Long emailId) throws Exception {
 		return new Email();
 	}
 

@@ -59,15 +59,15 @@ import javax.ws.rs.core.Response;
 public interface FormDocumentResource {
 
 	@DELETE
-	@Path("/form-document/{form-document-id}")
+	@Path("/form-documents/{form-document-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Response deleteFormDocument( @PathParam("form-document-id") Long formDocumentId ) throws Exception;
+	public Response deleteFormDocuments( @PathParam("form-document-id") Long formDocumentId ) throws Exception;
 
 	@GET
-	@Path("/form-document/{form-document-id}")
+	@Path("/form-documents/{form-document-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public FormDocument getFormDocument( @PathParam("form-document-id") Long formDocumentId ) throws Exception;
+	public FormDocument getFormDocuments( @PathParam("form-document-id") Long formDocumentId ) throws Exception;
 
 }

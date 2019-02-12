@@ -70,9 +70,9 @@ public interface PhoneResource {
 	public Page<Phone> getPhonesPage( @PathParam("generic-parent-id") Object genericParentId , @Context Pagination pagination ) throws Exception;
 
 	@GET
-	@Path("/phones/{phones-id}")
+	@Path("/phones/{phone-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Phone getPhone( @PathParam("phones-id") Long phonesId ) throws Exception;
+	public Phone getPhones( @PathParam("phone-id") Long phoneId ) throws Exception;
 
 }

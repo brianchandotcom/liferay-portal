@@ -60,9 +60,9 @@ import javax.ws.rs.core.Response;
 public interface ImageObjectRepositoryResource {
 
 	@GET
-	@Path("/image-object-repository/{image-object-repository-id}")
+	@Path("/image-object-repositories/{image-object-repository-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public ImageObjectRepository getImageObjectRepository( @PathParam("image-object-repository-id") Long imageObjectRepositoryId ) throws Exception;
+	public ImageObjectRepository getImageObjectRepositories( @PathParam("image-object-repository-id") Long imageObjectRepositoryId ) throws Exception;
 
 }

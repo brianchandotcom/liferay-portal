@@ -64,33 +64,33 @@ import javax.ws.rs.core.Response;
 public interface OrganizationResource {
 
 	@GET
-	@Path("/my-user-account/{my-user-account-id}/organization")
+	@Path("/my-user-accounts/{my-user-account-id}/organizations")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Page<Organization> getMyUserAccountOrganizationPage( @PathParam("my-user-account-id") Long myUserAccountId , @Context Pagination pagination ) throws Exception;
+	public Page<Organization> getMyUserAccountsOrganizationsPage( @PathParam("my-user-account-id") Long myUserAccountId , @Context Pagination pagination ) throws Exception;
 
 	@GET
-	@Path("/organization")
+	@Path("/organizations")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Page<Organization> getOrganizationPage( @Context Pagination pagination ) throws Exception;
+	public Page<Organization> getOrganizationsPage( @Context Pagination pagination ) throws Exception;
 
 	@GET
-	@Path("/organization/{organization-id}")
+	@Path("/organizations/{organization-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Organization getOrganization( @PathParam("organization-id") Long organizationId ) throws Exception;
+	public Organization getOrganizations( @PathParam("organization-id") Long organizationId ) throws Exception;
 
 	@GET
-	@Path("/organization/{organization-id}/organization")
+	@Path("/organizations/{organization-id}/organizations")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Page<Organization> getOrganizationOrganizationPage( @PathParam("organization-id") Long organizationId , @Context Pagination pagination ) throws Exception;
+	public Page<Organization> getOrganizationsOrganizationsPage( @PathParam("organization-id") Long organizationId , @Context Pagination pagination ) throws Exception;
 
 	@GET
-	@Path("/user-account/{user-account-id}/organization")
+	@Path("/user-accounts/{user-account-id}/organizations")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Page<Organization> getUserAccountOrganizationPage( @PathParam("user-account-id") Long userAccountId , @Context Pagination pagination ) throws Exception;
+	public Page<Organization> getUserAccountsOrganizationsPage( @PathParam("user-account-id") Long userAccountId , @Context Pagination pagination ) throws Exception;
 
 }

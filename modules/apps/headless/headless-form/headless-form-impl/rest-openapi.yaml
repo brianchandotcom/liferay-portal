@@ -453,11 +453,11 @@ paths:
                 $ref: "#/components/schemas/FormRecord"
           description: ""
       tags: ["FormRecord"]
-  "/form-structures/{form-structures-id}":
+  "/form-structures/{form-structure-id}":
     get:
       parameters:
         - in: path
-          name: form-structures-id
+          name: form-structure-id
           required: true
           schema:
             format: int64

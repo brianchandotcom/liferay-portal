@@ -39,7 +39,7 @@ import javax.ws.rs.core.Response;
 public abstract class BaseWebUrlResourceImpl implements WebUrlResource {
 
 	@Override
-	public WebUrl getWebUrl(Long webUrlsId) throws Exception {
+	public WebUrl getWebUrls(Long webUrlId) throws Exception {
 		return new WebUrl();
 	}
 

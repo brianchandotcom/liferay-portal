@@ -59,35 +59,35 @@ import javax.ws.rs.core.Response;
 public interface FormResource {
 
 	@GET
-	@Path("/content-space/{content-space-id}/form")
+	@Path("/content-spaces/{content-space-id}/form")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Page<Form> getContentSpaceFormPage( @PathParam("content-space-id") Long contentSpaceId , @Context Pagination pagination ) throws Exception;
+	public Page<Form> getContentSpacesFormPage( @PathParam("content-space-id") Long contentSpaceId , @Context Pagination pagination ) throws Exception;
 
 	@GET
-	@Path("/form/{form-id}")
+	@Path("/forms/{form-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Form getForm( @PathParam("form-id") Long formId ) throws Exception;
+	public Form getForms( @PathParam("form-id") Long formId ) throws Exception;
 
 	@Consumes("application/json")
 	@POST
-	@Path("/form/{form-id}/evaluate-context")
+	@Path("/forms/{form-id}/evaluate-context")
 	@Produces("application/json")
 	@RequiresScope("everything.write")
-	public Form postFormEvaluateContext( @PathParam("form-id") Long formId , Form form ) throws Exception;
+	public Form postFormsEvaluateContext( @PathParam("form-id") Long formId , Form form ) throws Exception;
 
 	@GET
-	@Path("/form/{form-id}/fetch-latest-draft")
+	@Path("/forms/{form-id}/fetch-latest-draft")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Form getFormFetchLatestDraft( @PathParam("form-id") Long formId ) throws Exception;
+	public Form getFormsFetchLatestDraft( @PathParam("form-id") Long formId ) throws Exception;
 
 	@Consumes("application/json")
 	@POST
-	@Path("/form/{form-id}/upload-file")
+	@Path("/forms/{form-id}/upload-file")
 	@Produces("application/json")
 	@RequiresScope("everything.write")
-	public Form postFormUploadFile( @PathParam("form-id") Long formId , Form form ) throws Exception;
+	public Form postFormsUploadFile( @PathParam("form-id") Long formId , Form form ) throws Exception;
 
 }

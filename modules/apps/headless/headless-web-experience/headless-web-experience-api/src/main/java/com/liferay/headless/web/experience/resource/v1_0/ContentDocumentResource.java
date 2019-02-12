@@ -60,15 +60,15 @@ import javax.ws.rs.core.Response;
 public interface ContentDocumentResource {
 
 	@DELETE
-	@Path("/content-document/{content-document-id}")
+	@Path("/content-documents/{content-document-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Response deleteContentDocument( @PathParam("content-document-id") Long contentDocumentId ) throws Exception;
+	public Response deleteContentDocuments( @PathParam("content-document-id") Long contentDocumentId ) throws Exception;
 
 	@GET
-	@Path("/content-document/{content-document-id}")
+	@Path("/content-documents/{content-document-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public ContentDocument getContentDocument( @PathParam("content-document-id") Long contentDocumentId ) throws Exception;
+	public ContentDocument getContentDocuments( @PathParam("content-document-id") Long contentDocumentId ) throws Exception;
 
 }

@@ -39,20 +39,20 @@ import javax.ws.rs.core.Response;
 public abstract class BaseCategoryResourceImpl implements CategoryResource {
 
 	@Override
-	public Response deleteCategories(Long categoriesId) throws Exception {
+	public Response deleteCategories(Long categoryId) throws Exception {
 		Response.ResponseBuilder responseBuilder = Response.ok();
 
 		return responseBuilder.build();
 	}
 
 	@Override
-	public Category getCategories(Long categoriesId) throws Exception {
+	public Category getCategories(Long categoryId) throws Exception {
 		return new Category();
 	}
 
 	@Override
 	public Page<Category> getCategoriesCategoriesPage(
-			Long categoriesId, Pagination pagination)
+			Long categoryId, Pagination pagination)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -60,15 +60,14 @@ public abstract class BaseCategoryResourceImpl implements CategoryResource {
 
 	@Override
 	public Page<Category> getVocabulariesCategoriesPage(
-			Long vocabulariesId, Pagination pagination)
+			Long vocabularyId, Pagination pagination)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
 	}
 
 	@Override
-	public Category postCategoriesCategories(
-			Long categoriesId, Category category)
+	public Category postCategoriesCategories(Long categoryId, Category category)
 		throws Exception {
 
 		return new Category();
@@ -76,7 +75,7 @@ public abstract class BaseCategoryResourceImpl implements CategoryResource {
 
 	@Override
 	public Category postCategoriesCategoriesBatchCreate(
-			Long categoriesId, Category category)
+			Long categoryId, Category category)
 		throws Exception {
 
 		return new Category();
@@ -84,7 +83,7 @@ public abstract class BaseCategoryResourceImpl implements CategoryResource {
 
 	@Override
 	public Category postVocabulariesCategories(
-			Long vocabulariesId, Category category)
+			Long vocabularyId, Category category)
 		throws Exception {
 
 		return new Category();
@@ -92,14 +91,14 @@ public abstract class BaseCategoryResourceImpl implements CategoryResource {
 
 	@Override
 	public Category postVocabulariesCategoriesBatchCreate(
-			Long vocabulariesId, Category category)
+			Long vocabularyId, Category category)
 		throws Exception {
 
 		return new Category();
 	}
 
 	@Override
-	public Category putCategories(Long categoriesId, Category category)
+	public Category putCategories(Long categoryId, Category category)
 		throws Exception {
 
 		return new Category();

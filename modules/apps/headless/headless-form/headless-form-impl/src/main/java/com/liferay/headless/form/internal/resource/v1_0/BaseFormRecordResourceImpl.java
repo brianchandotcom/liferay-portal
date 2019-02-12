@@ -39,7 +39,12 @@ import javax.ws.rs.core.Response;
 public abstract class BaseFormRecordResourceImpl implements FormRecordResource {
 
 	@Override
-	public Page<FormRecord> getFormFormRecordPage(
+	public FormRecord getFormRecords(Long formRecordId) throws Exception {
+		return new FormRecord();
+	}
+
+	@Override
+	public Page<FormRecord> getFormsFormRecordsPage(
 			Long formId, Pagination pagination)
 		throws Exception {
 
@@ -47,19 +52,14 @@ public abstract class BaseFormRecordResourceImpl implements FormRecordResource {
 	}
 
 	@Override
-	public FormRecord getFormRecord(Long formRecordId) throws Exception {
-		return new FormRecord();
-	}
-
-	@Override
-	public FormRecord postFormFormRecord(Long formId, FormRecord formRecord)
+	public FormRecord postFormsFormRecords(Long formId, FormRecord formRecord)
 		throws Exception {
 
 		return new FormRecord();
 	}
 
 	@Override
-	public FormRecord postFormFormRecordBatchCreate(
+	public FormRecord postFormsFormRecordsBatchCreate(
 			Long formId, FormRecord formRecord)
 		throws Exception {
 
@@ -67,7 +67,7 @@ public abstract class BaseFormRecordResourceImpl implements FormRecordResource {
 	}
 
 	@Override
-	public FormRecord putFormRecord(Long formRecordId, FormRecord formRecord)
+	public FormRecord putFormRecords(Long formRecordId, FormRecord formRecord)
 		throws Exception {
 
 		return new FormRecord();

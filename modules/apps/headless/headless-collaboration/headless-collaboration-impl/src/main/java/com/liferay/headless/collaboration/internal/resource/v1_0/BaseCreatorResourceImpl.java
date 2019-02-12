@@ -36,7 +36,7 @@ import javax.ws.rs.core.Response;
 public abstract class BaseCreatorResourceImpl implements CreatorResource {
 
 	@Override
-	public Creator getCreator(Long creatorId) throws Exception {
+	public Creator getCreators(Long creatorId) throws Exception {
 		return new Creator();
 	}
 

@@ -59,15 +59,15 @@ import javax.ws.rs.core.Response;
 public interface FormStructureResource {
 
 	@GET
-	@Path("/content-space/{content-space-id}/form-structures")
+	@Path("/content-spaces/{content-space-id}/form-structures")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Page<FormStructure> getContentSpaceFormStructuresPage( @PathParam("content-space-id") Long contentSpaceId , @Context Pagination pagination ) throws Exception;
+	public Page<FormStructure> getContentSpacesFormStructuresPage( @PathParam("content-space-id") Long contentSpaceId , @Context Pagination pagination ) throws Exception;
 
 	@GET
-	@Path("/form-structures/{form-structures-id}")
+	@Path("/form-structures/{form-structure-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public FormStructure getFormStructure( @PathParam("form-structures-id") Long formStructuresId ) throws Exception;
+	public FormStructure getFormStructures( @PathParam("form-structure-id") Long formStructureId ) throws Exception;
 
 }

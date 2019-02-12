@@ -40,19 +40,14 @@ public abstract class BaseImageObjectResourceImpl
 	implements ImageObjectResource {
 
 	@Override
-	public Response deleteImageObject(Long imageObjectId) throws Exception {
+	public Response deleteImageObjects(Long imageObjectId) throws Exception {
 		Response.ResponseBuilder responseBuilder = Response.ok();
 
 		return responseBuilder.build();
 	}
 
 	@Override
-	public ImageObject getImageObject(Long imageObjectId) throws Exception {
-		return new ImageObject();
-	}
-
-	@Override
-	public Page<ImageObject> getImageObjectRepositoryImageObjectPage(
+	public Page<ImageObject> getImageObjectRepositoriesImageObjectsPage(
 			Long imageObjectRepositoryId, Pagination pagination)
 		throws Exception {
 
@@ -60,7 +55,12 @@ public abstract class BaseImageObjectResourceImpl
 	}
 
 	@Override
-	public ImageObject postImageObjectRepositoryImageObject(
+	public ImageObject getImageObjects(Long imageObjectId) throws Exception {
+		return new ImageObject();
+	}
+
+	@Override
+	public ImageObject postImageObjectRepositoriesImageObjects(
 			Long imageObjectRepositoryId, ImageObject imageObject)
 		throws Exception {
 
@@ -68,7 +68,7 @@ public abstract class BaseImageObjectResourceImpl
 	}
 
 	@Override
-	public ImageObject postImageObjectRepositoryImageObjectBatchCreate(
+	public ImageObject postImageObjectRepositoriesImageObjectsBatchCreate(
 			Long imageObjectRepositoryId, ImageObject imageObject)
 		throws Exception {
 

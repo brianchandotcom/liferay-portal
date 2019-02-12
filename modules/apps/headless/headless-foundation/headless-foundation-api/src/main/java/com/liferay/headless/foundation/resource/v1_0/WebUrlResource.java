@@ -70,9 +70,9 @@ public interface WebUrlResource {
 	public Page<WebUrl> getWebUrlsPage( @PathParam("generic-parent-id") Object genericParentId , @Context Pagination pagination ) throws Exception;
 
 	@GET
-	@Path("/web-urls/{web-urls-id}")
+	@Path("/web-urls/{web-url-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public WebUrl getWebUrl( @PathParam("web-urls-id") Long webUrlsId ) throws Exception;
+	public WebUrl getWebUrls( @PathParam("web-url-id") Long webUrlId ) throws Exception;
 
 }

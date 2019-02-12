@@ -58,9 +58,9 @@ import javax.ws.rs.core.Response;
 public interface CreatorResource {
 
 	@GET
-	@Path("/creator/{creator-id}")
+	@Path("/creators/{creator-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Creator getCreator( @PathParam("creator-id") Long creatorId ) throws Exception;
+	public Creator getCreators( @PathParam("creator-id") Long creatorId ) throws Exception;
 
 }

@@ -60,9 +60,9 @@ import javax.ws.rs.core.Response;
 public interface AggregateRatingResource {
 
 	@GET
-	@Path("/aggregate-rating/{aggregate-rating-id}")
+	@Path("/aggregate-ratings/{aggregate-rating-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public AggregateRating getAggregateRating( @PathParam("aggregate-rating-id") Long aggregateRatingId ) throws Exception;
+	public AggregateRating getAggregateRatings( @PathParam("aggregate-rating-id") Long aggregateRatingId ) throws Exception;
 
 }

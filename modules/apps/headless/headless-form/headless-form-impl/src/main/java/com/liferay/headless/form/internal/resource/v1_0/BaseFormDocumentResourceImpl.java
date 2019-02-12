@@ -37,14 +37,14 @@ public abstract class BaseFormDocumentResourceImpl
 	implements FormDocumentResource {
 
 	@Override
-	public Response deleteFormDocument(Long formDocumentId) throws Exception {
+	public Response deleteFormDocuments(Long formDocumentId) throws Exception {
 		Response.ResponseBuilder responseBuilder = Response.ok();
 
 		return responseBuilder.build();
 	}
 
 	@Override
-	public FormDocument getFormDocument(Long formDocumentId) throws Exception {
+	public FormDocument getFormDocuments(Long formDocumentId) throws Exception {
 		return new FormDocument();
 	}
 

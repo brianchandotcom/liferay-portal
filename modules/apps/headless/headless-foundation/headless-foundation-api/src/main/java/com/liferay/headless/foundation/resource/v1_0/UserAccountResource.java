@@ -64,66 +64,66 @@ import javax.ws.rs.core.Response;
 public interface UserAccountResource {
 
 	@GET
-	@Path("/my-user-account")
+	@Path("/my-user-accounts")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Page<UserAccount> getMyUserAccountPage( @Context Pagination pagination ) throws Exception;
+	public Page<UserAccount> getMyUserAccountsPage( @Context Pagination pagination ) throws Exception;
 
 	@GET
-	@Path("/my-user-account/{my-user-account-id}")
+	@Path("/my-user-accounts/{my-user-account-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public UserAccount getMyUserAccount( @PathParam("my-user-account-id") Long myUserAccountId ) throws Exception;
+	public UserAccount getMyUserAccounts( @PathParam("my-user-account-id") Long myUserAccountId ) throws Exception;
 
 	@GET
-	@Path("/organization/{organization-id}/user-account")
+	@Path("/organizations/{organization-id}/user-accounts")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Page<UserAccount> getOrganizationUserAccountPage( @PathParam("organization-id") Long organizationId , @Context Pagination pagination ) throws Exception;
+	public Page<UserAccount> getOrganizationsUserAccountsPage( @PathParam("organization-id") Long organizationId , @Context Pagination pagination ) throws Exception;
 
 	@GET
-	@Path("/user-account")
+	@Path("/user-accounts")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Page<UserAccount> getUserAccountPage( @QueryParam("fullnamequery") String fullnamequery , @Context Pagination pagination ) throws Exception;
+	public Page<UserAccount> getUserAccountsPage( @QueryParam("fullnamequery") String fullnamequery , @Context Pagination pagination ) throws Exception;
 
 	@Consumes("application/json")
 	@POST
-	@Path("/user-account")
+	@Path("/user-accounts")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public UserAccount postUserAccount( UserAccount userAccount ) throws Exception;
+	public UserAccount postUserAccounts( UserAccount userAccount ) throws Exception;
 
 	@Consumes("application/json")
 	@POST
-	@Path("/user-account/batch-create")
+	@Path("/user-accounts/batch-create")
 	@Produces("application/json")
 	@RequiresScope("everything.write")
-	public UserAccount postUserAccountBatchCreate( UserAccount userAccount ) throws Exception;
+	public UserAccount postUserAccountsBatchCreate( UserAccount userAccount ) throws Exception;
 
 	@DELETE
-	@Path("/user-account/{user-account-id}")
+	@Path("/user-accounts/{user-account-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Response deleteUserAccount( @PathParam("user-account-id") Long userAccountId ) throws Exception;
+	public Response deleteUserAccounts( @PathParam("user-account-id") Long userAccountId ) throws Exception;
 
 	@GET
-	@Path("/user-account/{user-account-id}")
+	@Path("/user-accounts/{user-account-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public UserAccount getUserAccount( @PathParam("user-account-id") Long userAccountId ) throws Exception;
+	public UserAccount getUserAccounts( @PathParam("user-account-id") Long userAccountId ) throws Exception;
 
 	@Consumes("application/json")
 	@PUT
-	@Path("/user-account/{user-account-id}")
+	@Path("/user-accounts/{user-account-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public UserAccount putUserAccount( @PathParam("user-account-id") Long userAccountId , UserAccount userAccount ) throws Exception;
+	public UserAccount putUserAccounts( @PathParam("user-account-id") Long userAccountId , UserAccount userAccount ) throws Exception;
 
 	@GET
-	@Path("/web-site/{web-site-id}/user-account")
+	@Path("/web-sites/{web-site-id}/user-accounts")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Page<UserAccount> getWebSiteUserAccountPage( @PathParam("web-site-id") Long webSiteId , @Context Pagination pagination ) throws Exception;
+	public Page<UserAccount> getWebSitesUserAccountsPage( @PathParam("web-site-id") Long webSiteId , @Context Pagination pagination ) throws Exception;
 
 }

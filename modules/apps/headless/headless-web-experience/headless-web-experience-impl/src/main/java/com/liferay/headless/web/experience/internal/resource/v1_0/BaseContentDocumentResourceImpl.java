@@ -37,7 +37,7 @@ public abstract class BaseContentDocumentResourceImpl
 	implements ContentDocumentResource {
 
 	@Override
-	public Response deleteContentDocument(Long contentDocumentId)
+	public Response deleteContentDocuments(Long contentDocumentId)
 		throws Exception {
 
 		Response.ResponseBuilder responseBuilder = Response.ok();
@@ -46,7 +46,7 @@ public abstract class BaseContentDocumentResourceImpl
 	}
 
 	@Override
-	public ContentDocument getContentDocument(Long contentDocumentId)
+	public ContentDocument getContentDocuments(Long contentDocumentId)
 		throws Exception {
 
 		return new ContentDocument();

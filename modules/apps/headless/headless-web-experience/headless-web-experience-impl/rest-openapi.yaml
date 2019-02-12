@@ -159,6 +159,7 @@ components:
             type: string
           type: array
         lastReviewed:
+          format: date-time
           type: string
         renderedContentsByTemplate:
           description: https://www.schema.org/templates

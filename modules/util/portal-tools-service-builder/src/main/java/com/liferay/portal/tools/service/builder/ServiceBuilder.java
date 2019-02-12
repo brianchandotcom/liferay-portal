@@ -1612,10 +1612,12 @@ public class ServiceBuilder {
 
 		if (methodName.equals("clearCache") ||
 			methodName.equals("fetchByPrimaryKeys") ||
-			methodName.equals("findWithDynamicQuery") ||
-			methodName.equals("getBadColumnNames")) {
+			methodName.equals("findWithDynamicQuery")) {
 
 			return true;
+		}
+		else if (methodName.equals("getBadColumnNames")) {
+			return !isVersionLTE_7_1_0();
 		}
 		else if (methodName.equals("findByPrimaryKey") ||
 				 methodName.equals("fetchByPrimaryKey") ||

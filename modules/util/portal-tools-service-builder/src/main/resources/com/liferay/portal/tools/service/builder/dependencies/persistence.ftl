@@ -49,6 +49,11 @@ public interface ${entity.name}Persistence extends BasePersistence<${entity.name
 	 * Never modify or reference this interface directly. Always use {@link ${entity.name}Util} to access the ${entity.humanName} persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
 
+	<#if serviceBuilder.isVersionLTE_7_1_0()>
+		@Override
+		public Map<Serializable, ${entity.name}> fetchByPrimaryKeys(Set<Serializable> primaryKeys);
+	</#if>
+
 	<#list methods as method>
 		<#if method.isPublic() && serviceBuilder.isCustomMethod(method) && !serviceBuilder.isBasePersistenceMethod(method) && !stringUtil.equals(method.name, "fetchByPrimaryKeys")>
 			${serviceBuilder.getJavadocComment(method)}

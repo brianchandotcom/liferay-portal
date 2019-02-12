@@ -1,8 +1,6 @@
 package com.liferay.frontend.taglib.clay.sample.web.internal.attribute.provider;
 
 import com.liferay.frontend.taglib.clay.attribute.provider.ClayComponentAttributeProvider;
-import com.liferay.frontend.taglib.clay.sample.web.internal.display.context.TablesDisplayContext;
-import com.liferay.frontend.taglib.clay.sample.web.internal.display.context.TablesDisplayContext.Item;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.table.Field;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.table.Schema;
 import java.util.Arrays;
@@ -34,14 +32,14 @@ public class SampleTableAttributeProvider implements ClayComponentAttributeProvi
 		return attributes;
 	}
 
-	private Schema _getSchema() {
-		Schema schema = new Schema();
+	private Map<String, Object> _getItem(String name, int calories, int portion) {
+		Map<String, Object> item = new HashMap<>();
 
-		schema.addField(new Field("name", "Name"));
-		schema.addField(new Field("calories", "Calories", "number"));
-		schema.addField(new Field("portion", "Portion", "number"));
+		item.put("name", name);
+		item.put("calories", calories);
+		item.put("portion", portion);
 
-		return schema;
+		return item;
 	}
 
 	private Collection<?> _getItems() {
@@ -52,13 +50,13 @@ public class SampleTableAttributeProvider implements ClayComponentAttributeProvi
 		);
 	}
 
-	private Map<String, Object> _getItem(String name, int calories, int portion) {
-		Map<String, Object> item = new HashMap<>();
+	private Schema _getSchema() {
+		Schema schema = new Schema();
 
-		item.put("name", name);
-		item.put("calories", calories);
-		item.put("portion", portion);
+		schema.addField(new Field("name", "Name"));
+		schema.addField(new Field("calories", "Calories", "number"));
+		schema.addField(new Field("portion", "Portion", "number"));
 
-		return item;
+		return schema;
 	}
 }

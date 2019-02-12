@@ -21,7 +21,6 @@ import org.jboss.arquillian.container.spi.client.container.ContainerConfiguratio
 import org.jboss.arquillian.container.spi.client.container.DeployableContainer;
 import org.jboss.arquillian.container.spi.client.container.LifecycleException;
 import org.jboss.arquillian.container.spi.client.protocol.ProtocolDescription;
-import org.jboss.arquillian.container.spi.context.annotation.ContainerScoped;
 import org.jboss.arquillian.container.spi.event.container.AfterKill;
 import org.jboss.arquillian.container.spi.event.container.AfterSetup;
 import org.jboss.arquillian.container.spi.event.container.AfterStart;
@@ -32,7 +31,6 @@ import org.jboss.arquillian.container.spi.event.container.BeforeStart;
 import org.jboss.arquillian.container.spi.event.container.BeforeStop;
 import org.jboss.arquillian.container.spi.event.container.ContainerEvent;
 import org.jboss.arquillian.core.api.Event;
-import org.jboss.arquillian.core.api.InstanceProducer;
 import org.jboss.arquillian.core.api.annotation.Inject;
 
 /**
@@ -125,8 +123,6 @@ public class ContainerImpl implements Container {
 	public void setup() {
 		_containerEvent.fire(new BeforeSetup(_deployableContainer));
 
-		_containerInstanceProducer.set(this);
-
 		setState(Container.State.SETUP);
 
 		_containerEvent.fire(new AfterSetup(_deployableContainer));
@@ -176,9 +172,6 @@ public class ContainerImpl implements Container {
 
 	@Inject
 	private Event<ContainerEvent> _containerEvent;
-
-	@Inject @ContainerScoped
-	private InstanceProducer<Container> _containerInstanceProducer;
 
 	private final DeployableContainer<?> _deployableContainer;
 	private Throwable _failureCause;

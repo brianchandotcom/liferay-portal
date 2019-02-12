@@ -68,11 +68,7 @@ if (assetPublisherDisplayContext.isEnableTagBasedNavigation() && !assetPublisher
 		</c:choose>
 	</c:if>
 
-	<%
-	boolean enableRSS = !PortalUtil.isRSSFeedsEnabled() ? false : assetPublisherDisplayContext.isEnableRSS();
-	%>
-
-	<c:if test="<%= enableRSS %>">
+	<c:if test="<%= PortalUtil.isRSSFeedsEnabled() && assetPublisherDisplayContext.isEnableRSS() %>">
 		<liferay-portlet:resourceURL id="getRSS" varImpl="rssURL" />
 
 		<liferay-rss:rss

@@ -16,10 +16,6 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-String redirect = ParamUtil.getString(request, "redirect");
-%>
-
 <div class="container-fluid-1280">
 	<aui:fieldset-group markupView="lexicon">
 		<aui:fieldset>

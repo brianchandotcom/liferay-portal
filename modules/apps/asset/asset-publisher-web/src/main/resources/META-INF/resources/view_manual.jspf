@@ -43,21 +43,13 @@ request.setAttribute("view.jsp-results", assetEntries);
 
 				AssetRenderer<?> assetRenderer = assetRendererFactory.getAssetRenderer(assetEntry.getClassPK());
 
-				String title = assetRenderer.getTitle(locale);
-
-				boolean show = true;
-				boolean print = false;
-
-				request.setAttribute("view.jsp-assetEntryIndex", Integer.valueOf(assetEntryIndex));
-
 				request.setAttribute("view.jsp-assetEntry", assetEntry);
+				request.setAttribute("view.jsp-assetEntryIndex", assetEntryIndex);
 				request.setAttribute("view.jsp-assetRenderer", assetRenderer);
 				request.setAttribute("view.jsp-assetRendererFactory", assetRendererFactory);
-
-				request.setAttribute("view.jsp-title", title);
-
-				request.setAttribute("view.jsp-print", Boolean.valueOf(print));
-				request.setAttribute("view.jsp-show", Boolean.valueOf(show));
+				request.setAttribute("view.jsp-print", false);
+				request.setAttribute("view.jsp-show", true);
+				request.setAttribute("view.jsp-title", assetRenderer.getTitle(locale));
 
 				try {
 					if (StringUtil.startsWith(assetPublisherDisplayContext.getDisplayStyle(), PortletDisplayTemplateManager.DISPLAY_STYLE_PREFIX)) {

@@ -30,7 +30,13 @@ String type = ParamUtil.getString(request, "type");
 long groupId = ParamUtil.getLong(request, "groupId", scopeGroupId);
 String urlTitle = ParamUtil.getString(request, "urlTitle");
 
-boolean print = ParamUtil.getString(request, "viewMode").equals(Constants.PRINT);
+boolean print = false;
+
+String viewMode = ParamUtil.getString(request, "viewMode");
+
+if (Objects.equals(viewMode, Constants.PRINT)) {
+	print = true;
+}
 
 AssetEntry assetEntry = null;
 
@@ -47,73 +53,51 @@ else {
 
 	assetRenderer = assetRendererFactory.getAssetRenderer(assetEntry.getClassPK());
 }
+
+if ((assetEntry.isVisible() && !assetPublisherDisplayContext.isEnablePermissions()) || (assetRenderer.hasViewPermission(permissionChecker) && assetRenderer.isDisplayable())) {
+	request.setAttribute("view.jsp-assetEntry", assetEntry);
+	request.setAttribute("view.jsp-assetEntryIndex", 0);
+	request.setAttribute("view.jsp-assetRenderer", assetRenderer);
+	request.setAttribute("view.jsp-assetRendererFactory", assetRendererFactory);
+	request.setAttribute("view.jsp-print", print);
+	request.setAttribute("view.jsp-results", new ArrayList());
+	request.setAttribute("view.jsp-showBackURL", !print);
+	request.setAttribute("view.jsp-title", assetRenderer.getTitle(locale));
+	request.setAttribute("view.jsp-viewInContext", assetPublisherDisplayContext.isAssetLinkBehaviorViewInPortlet());
+
+	PortalUtil.addPortletBreadcrumbEntry(request, assetRenderer.getTitle(locale), currentURL);
 %>
 
-<c:choose>
-	<c:when test="<%= (assetEntry.isVisible() && !assetPublisherDisplayContext.isEnablePermissions()) || (assetRenderer.hasViewPermission(permissionChecker) && assetRenderer.isDisplayable()) %>">
+	<liferay-util:include page="/display/full_content.jsp" servletContext="<%= application %>" />
 
-		<%
-		String title = assetRenderer.getTitle(locale);
+<%
+	String summary = StringUtil.shorten(assetRenderer.getSummary(liferayPortletRequest, liferayPortletResponse), assetPublisherDisplayContext.getAbstractLength());
 
-		request.setAttribute("view.jsp-showBackURL", Boolean.valueOf(!print));
+	PortalUtil.setPageDescription(summary, request);
 
-		request.setAttribute("view.jsp-results", new ArrayList());
+	PortalUtil.setPageKeywords(assetHelper.getAssetKeywords(assetEntry.getClassName(), assetEntry.getClassPK()), request);
+	PortalUtil.setPageTitle(assetRenderer.getTitle(locale), request);
+}
+else {
+	if (!assetEntry.isVisible()) {
+		SessionErrors.add(renderRequest, NoSuchModelException.class.getName());
+	}
+	else {
+		SessionErrors.add(renderRequest, PrincipalException.MustHavePermission.class.getName());
+	}
+%>
 
-		request.setAttribute("view.jsp-assetEntryIndex", Integer.valueOf(0));
+	<liferay-util:include page="/error.jsp" servletContext="<%= application %>" />
 
-		request.setAttribute("view.jsp-assetEntry", assetEntry);
-		request.setAttribute("view.jsp-assetRenderer", assetRenderer);
-		request.setAttribute("view.jsp-assetRendererFactory", assetRendererFactory);
-
-		request.setAttribute("view.jsp-title", title);
-
-		request.setAttribute("view.jsp-print", Boolean.valueOf(print));
-		request.setAttribute("view.jsp-viewInContext", assetPublisherDisplayContext.isAssetLinkBehaviorViewInPortlet());
-
-		PortalUtil.addPortletBreadcrumbEntry(request, title, currentURL);
-		%>
-
-		<div>
-			<liferay-util:include page="/display/full_content.jsp" servletContext="<%= application %>">
-				<liferay-util:param name="languageId" value="<%= LanguageUtil.getLanguageId(request) %>" />
-			</liferay-util:include>
-		</div>
-
-		<%
-		if (Validator.isNull(title)) {
-			title = assetRenderer.getTitle(locale);
-		}
-
-		String summary = StringUtil.shorten(assetRenderer.getSummary(liferayPortletRequest, liferayPortletResponse), assetPublisherDisplayContext.getAbstractLength());
-
-		PortalUtil.setPageTitle(title, request);
-		PortalUtil.setPageDescription(summary, request);
-		PortalUtil.setPageKeywords(assetHelper.getAssetKeywords(assetEntry.getClassName(), assetEntry.getClassPK()), request);
-		%>
-
-	</c:when>
-	<c:otherwise>
-
-		<%
-		if (!assetEntry.isVisible()) {
-			SessionErrors.add(renderRequest, NoSuchModelException.class.getName());
-		}
-		else {
-			SessionErrors.add(renderRequest, PrincipalException.MustHavePermission.class.getName());
-		}
-		%>
-
-		<liferay-util:include page="/error.jsp" servletContext="<%= application %>" />
-	</c:otherwise>
-</c:choose>
+<%
+}
+%>
 
 <aui:script use="aui-base">
-	var portletId = '<%= portletDisplay.getId() %>';
-
 	Liferay.once(
 		'allPortletsReady',
 		function() {
-			A.one('#p_p_id_' + portletId + '_').scrollIntoView();
+			A.one('#p_p_id_<%= portletDisplay.getId() %>_').scrollIntoView();
 		}
 	);
 </aui:script>

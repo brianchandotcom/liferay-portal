@@ -18,13 +18,17 @@ import com.liferay.portal.kernel.dao.search.DisplayTerms;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -78,9 +82,18 @@ public class ReviewUADDataMVCRenderCommand implements MVCRenderCommand {
 			User selectedUser = _selectedUserHelper.getSelectedUser(
 				renderRequest);
 
+			String scope = ParamUtil.getString(
+				renderRequest, "scope", "personal-site");
+
+			boolean siteScoped = false;
+
+			if (!scope.equals("instance")) {
+				siteScoped = true;
+			}
+
 			List<UADApplicationSummaryDisplay> uadApplicationSummaryDisplays =
 				_uadApplicationSummaryHelper.getUADApplicationSummaryDisplays(
-					selectedUser.getUserId());
+					selectedUser.getUserId(), siteScoped);
 
 			UADApplicationSummaryDisplay uadApplicationSummaryDisplay =
 				uadApplicationSummaryDisplays.get(0);
@@ -129,8 +142,8 @@ public class ReviewUADDataMVCRenderCommand implements MVCRenderCommand {
 
 			viewUADEntitiesDisplay.setSearchContainer(
 				_getSearchContainer(
-					renderRequest, currentURL, uadDisplay,
-					selectedUser.getUserId(), liferayPortletResponse));
+					renderRequest, currentURL, uadDisplay, selectedUser,
+					_getGroupIds(selectedUser, scope), liferayPortletResponse));
 			viewUADEntitiesDisplay.setTypeName(
 				uadDisplay.getTypeName(
 					LocaleThreadLocal.getThemeDisplayLocale()));
@@ -183,9 +196,37 @@ public class ReviewUADDataMVCRenderCommand implements MVCRenderCommand {
 		return uadEntity;
 	}
 
+	private long[] _getGroupIds(User user, String scope) {
+		try {
+			if (scope.equals("personal-site")) {
+				Group userGroup = _groupLocalService.getUserGroup(
+					user.getCompanyId(), user.getUserId());
+
+				return new long[] {userGroup.getGroupId()};
+			}
+
+			if (scope.equals("regular-sites")) {
+				List<Group> groups = _groupLocalService.getGroups(
+					user.getCompanyId(), GroupConstants.ANY_PARENT_GROUP_ID,
+					true);
+
+				List<Long> groupIds = new ArrayList<>(groups.size());
+
+				groups.forEach(group -> groupIds.add(group.getGroupId()));
+
+				return ArrayUtil.toLongArray(groupIds);
+			}
+		}
+		catch (PortalException pe) {
+			_log.error(pe, pe);
+		}
+
+		return null;
+	}
+
 	private SearchContainer<UADEntity> _getSearchContainer(
 			RenderRequest renderRequest, PortletURL currentURL,
-			UADDisplay uadDisplay, long selectedUserId,
+			UADDisplay uadDisplay, User selectedUser, long[] groupIds,
 			LiferayPortletResponse liferayPortletResponse)
 		throws Exception {
 
@@ -234,7 +275,7 @@ public class ReviewUADDataMVCRenderCommand implements MVCRenderCommand {
 
 		try {
 			List entities = uadDisplay.search(
-				selectedUserId, null, displayTerms.getKeywords(),
+				selectedUser.getUserId(), groupIds, displayTerms.getKeywords(),
 				searchContainer.getOrderByCol(),
 				searchContainer.getOrderByType(), searchContainer.getStart(),
 				searchContainer.getEnd());
@@ -252,7 +293,8 @@ public class ReviewUADDataMVCRenderCommand implements MVCRenderCommand {
 
 			searchContainer.setTotal(
 				(int)uadDisplay.searchCount(
-					selectedUserId, null, displayTerms.getKeywords()));
+					selectedUser.getUserId(), groupIds,
+					displayTerms.getKeywords()));
 		}
 		catch (Exception e) {
 			if (_log.isWarnEnabled()) {
@@ -278,6 +320,9 @@ public class ReviewUADDataMVCRenderCommand implements MVCRenderCommand {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ReviewUADDataMVCRenderCommand.class);
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private Portal _portal;

@@ -14,7 +14,12 @@
 
 package com.liferay.change.tracking.rest.internal.model.entry;
 
+import com.liferay.change.tracking.configuration.CTConfigurationRegistryUtil;
 import com.liferay.change.tracking.model.CTEntry;
+
+import java.io.Serializable;
+
+import java.util.Date;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -36,8 +41,21 @@ public class CTEntryModel {
 			ctEntry.getClassPK()
 		).setCTEntryId(
 			ctEntry.getCtEntryId()
+		).setModifiedDate(
+			ctEntry.getModifiedDate()
 		).setResourcePrimKey(
 			ctEntry.getResourcePrimKey()
+		).setSiteName(
+			CTConfigurationRegistryUtil.getVersionEntitySiteName(
+				ctEntry.getClassNameId(), ctEntry.getClassPK())
+		).setTitle(
+			CTConfigurationRegistryUtil.getVersionEntityTitle(
+				ctEntry.getClassNameId(), ctEntry.getClassPK())
+		).setUserName(
+			ctEntry.getUserName()
+		).setVersion(
+			CTConfigurationRegistryUtil.getVersionEntityVersion(
+				ctEntry.getClassNameId(), ctEntry.getClassPK())
 		).build();
 	}
 
@@ -57,13 +75,43 @@ public class CTEntryModel {
 	}
 
 	@XmlElement
+	public String getContentType() {
+		return "Web Content";
+	}
+
+	@XmlElement
 	public long getCtEntryId() {
 		return _ctEntryId;
 	}
 
 	@XmlElement
+	public Date getModifiedDate() {
+		return _modifiedDate;
+	}
+
+	@XmlElement
 	public long getResourcePrimKey() {
 		return _resourcePrimKey;
+	}
+
+	@XmlElement
+	public String getSiteName() {
+		return _siteName;
+	}
+
+	@XmlElement
+	public String getTitle() {
+		return _title;
+	}
+
+	@XmlElement
+	public String getUserName() {
+		return "Test Mokka";
+	}
+
+	@XmlElement
+	public Serializable getVersion() {
+		return _version;
 	}
 
 	public static class Builder {
@@ -96,8 +144,38 @@ public class CTEntryModel {
 			return this;
 		}
 
+		public CTEntryModel.Builder setModifiedDate(Date modifiedDate) {
+			_ctEntryModel._modifiedDate = modifiedDate;
+
+			return this;
+		}
+
 		public CTEntryModel.Builder setResourcePrimKey(long resourcePrimKey) {
 			_ctEntryModel._resourcePrimKey = resourcePrimKey;
+
+			return this;
+		}
+
+		public CTEntryModel.Builder setSiteName(String siteName) {
+			_ctEntryModel._siteName = siteName;
+
+			return this;
+		}
+
+		public CTEntryModel.Builder setTitle(String title) {
+			_ctEntryModel._title = title;
+
+			return this;
+		}
+
+		public CTEntryModel.Builder setUserName(String userName) {
+			_ctEntryModel._userName = userName;
+
+			return this;
+		}
+
+		public CTEntryModel.Builder setVersion(Serializable version) {
+			_ctEntryModel._version = version;
 
 			return this;
 		}
@@ -117,6 +195,11 @@ public class CTEntryModel {
 	private long _classNameId;
 	private long _classPK;
 	private long _ctEntryId;
+	private Date _modifiedDate;
 	private long _resourcePrimKey;
+	private String _siteName;
+	private String _title;
+	private String _userName;
+	private Serializable _version;
 
 }

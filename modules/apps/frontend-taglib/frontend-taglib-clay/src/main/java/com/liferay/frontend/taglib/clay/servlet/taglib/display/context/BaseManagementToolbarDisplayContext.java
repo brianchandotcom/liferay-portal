@@ -17,12 +17,15 @@ package com.liferay.frontend.taglib.clay.servlet.taglib.display.context;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.SafeConsumer;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 
 import java.util.LinkedHashMap;
@@ -116,6 +119,29 @@ public class BaseManagementToolbarDisplayContext
 		return sortingURL.toString();
 	}
 
+	@Override
+	public List<ViewTypeItem> getViewTypeItems() {
+		return new ViewTypeItemList(getPortletURL(), getDisplayStyle()) {
+			{
+				if (ArrayUtil.contains(getDisplayViews(), "icon")) {
+					addCardViewTypeItem();
+				}
+
+				if (ArrayUtil.contains(getDisplayViews(), "descriptive")) {
+					addListViewTypeItem();
+				}
+
+				if (ArrayUtil.contains(getDisplayViews(), "list")) {
+					addTableViewTypeItem();
+				}
+			}
+		};
+	}
+
+	protected String getDefaultDisplayStyle() {
+		return "list";
+	}
+
 	protected Map<String, String> getDefaultEntriesMap(String[] entryKeys) {
 		if ((entryKeys == null) || (entryKeys.length == 0)) {
 			return null;
@@ -128,6 +154,15 @@ public class BaseManagementToolbarDisplayContext
 		}
 
 		return entriesMap;
+	}
+
+	protected String getDisplayStyle() {
+		return ParamUtil.getString(
+			request, "displayStyle", getDefaultDisplayStyle());
+	}
+
+	protected String[] getDisplayViews() {
+		return new String[0];
 	}
 
 	protected List<DropdownItem> getDropdownItems(

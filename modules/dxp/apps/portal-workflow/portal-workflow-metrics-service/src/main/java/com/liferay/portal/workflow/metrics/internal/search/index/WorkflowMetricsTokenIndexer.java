@@ -12,15 +12,27 @@
  *
  */
 
-package com.liferay.portal.workflow.reports.internal.search.index;
+package com.liferay.portal.workflow.metrics.internal.search.index;
 
-import com.liferay.portal.workflow.reports.messaging.WorkflowReportsMessage;
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Rafael Praxedes
  */
-public interface WorkflowReportsMessageIndexer {
+@Component(
+	immediate = true,
+	service = {WorkflowMetricsIndexer.class, WorkflowMetricsTokenIndexer.class}
+)
+public class WorkflowMetricsTokenIndexer extends BaseWorkflowMetricsIndexer {
 
-	public void index(WorkflowReportsMessage workflowReportsMessage);
+	@Override
+	public String getIndexName() {
+		return "workflow-metrics-tasks";
+	}
+
+	@Override
+	public String getIndexType() {
+		return "WorkflowMetricsTaskType";
+	}
 
 }

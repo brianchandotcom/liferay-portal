@@ -482,6 +482,7 @@ paths:
                   $ref: "#/components/schemas/PostalAddress"
                 type: array
           description: ""
+      tags: ["Address"]
   "/addresses/{addresses-id}":
     get:
       parameters:
@@ -498,6 +499,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/PostalAddress"
           description: ""
+      tags: ["Address"]
   "/categories/{categories-id}":
     delete:
       parameters:
@@ -512,6 +514,7 @@ paths:
           content:
             application/json: {}
           description: ""
+      tags: ["Category"]
     get:
       parameters:
         - in: path
@@ -527,6 +530,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/Category"
           description: ""
+      tags: ["Category"]
     put:
       parameters:
         - in: path
@@ -547,6 +551,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/Category"
           description: ""
+      tags: ["Category"]
   "/categories/{categories-id}/categories":
     get:
       parameters:
@@ -573,6 +578,7 @@ paths:
                   $ref: "#/components/schemas/Category"
                 type: array
           description: ""
+      tags: ["Category"]
     post:
       parameters:
         - in: path
@@ -593,6 +599,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/Category"
           description: ""
+      tags: ["Category"]
   "/categories/{categories-id}/categories/batch-create":
     post:
       parameters:
@@ -614,6 +621,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/Category"
           description: ""
+      tags: ["Category"]
   "/content-space/{content-space-id}/keywords":
     get:
       parameters:
@@ -640,6 +648,7 @@ paths:
                   $ref: "#/components/schemas/Keyword"
                 type: array
           description: ""
+      tags: ["Keyword"]
     post:
       parameters:
         - in: path
@@ -681,6 +690,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/Keyword"
           description: ""
+      tags: ["Keyword"]
   "/content-space/{content-space-id}/vocabularies":
     get:
       parameters:
@@ -707,6 +717,7 @@ paths:
                   $ref: "#/components/schemas/Vocabulary"
                 type: array
           description: ""
+      tags: ["Vocabulary"]
     post:
       parameters:
         - in: path
@@ -727,6 +738,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/Vocabulary"
           description: ""
+      tags: ["Vocabulary"]
   "/content-space/{content-space-id}/vocabularies/batch-create":
     post:
       parameters:
@@ -748,6 +760,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/Vocabulary"
           description: ""
+      tags: ["Vocabulary"]
   "/emails":
     get:
       parameters:
@@ -773,6 +786,7 @@ paths:
                   $ref: "#/components/schemas/Email"
                 type: array
           description: ""
+      tags: ["Email"]
   "/emails/{emails-id}":
     get:
       parameters:
@@ -789,6 +803,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/Email"
           description: ""
+      tags: ["Email"]
   "/keywords/{keywords-id}":
     delete:
       parameters:
@@ -803,6 +818,7 @@ paths:
           content:
             application/json: {}
           description: ""
+      tags: ["Keyword"]
     get:
       parameters:
         - in: path
@@ -818,6 +834,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/Keyword"
           description: ""
+      tags: ["Keyword"]
     put:
       parameters:
         - in: path
@@ -838,6 +855,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/Keyword"
           description: ""
+      tags: ["Keyword"]
   "/my-user-account":
     get:
       parameters:
@@ -858,6 +876,7 @@ paths:
                   $ref: "#/components/schemas/UserAccount"
                 type: array
           description: ""
+      tags: ["UserAccount"]
   "/my-user-account/{my-user-account-id}":
     get:
       parameters:
@@ -874,6 +893,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/UserAccount"
           description: ""
+      tags: ["UserAccount"]
   "/my-user-account/{my-user-account-id}/organization":
     get:
       parameters:
@@ -900,6 +920,7 @@ paths:
                   $ref: "#/components/schemas/Organization"
                 type: array
           description: ""
+      tags: ["Organization"]
   "/my-user-account/{my-user-account-id}/roles":
     get:
       parameters:
@@ -926,6 +947,7 @@ paths:
                   $ref: "#/components/schemas/Role"
                 type: array
           description: ""
+      tags: ["Role"]
   "/organization":
     get:
       parameters:
@@ -946,6 +968,7 @@ paths:
                   $ref: "#/components/schemas/Organization"
                 type: array
           description: ""
+      tags: ["Organization"]
   "/organization/{organization-id}":
     get:
       parameters:
@@ -962,6 +985,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/Organization"
           description: ""
+      tags: ["Organization"]
   "/organization/{organization-id}/organization":
     get:
       parameters:
@@ -988,6 +1012,7 @@ paths:
                   $ref: "#/components/schemas/Organization"
                 type: array
           description: ""
+      tags: ["Organization"]
   "/organization/{organization-id}/user-account":
     get:
       parameters:
@@ -1014,6 +1039,7 @@ paths:
                   $ref: "#/components/schemas/UserAccount"
                 type: array
           description: ""
+      tags: ["UserAccount"]
   "/phones":
     get:
       parameters:
@@ -1039,6 +1065,7 @@ paths:
                   $ref: "#/components/schemas/Phone"
                 type: array
           description: ""
+      tags: ["Phone"]
   "/phones/{phones-id}":
     get:
       parameters:
@@ -1055,6 +1082,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/Phone"
           description: ""
+      tags: ["Phone"]
   "/roles":
     get:
       parameters:
@@ -1075,6 +1103,7 @@ paths:
                   $ref: "#/components/schemas/Role"
                 type: array
           description: ""
+      tags: ["Role"]
   "/roles/{roles-id}":
     get:
       parameters:
@@ -1091,6 +1120,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/Role"
           description: ""
+      tags: ["Role"]
   "/user-account":
     get:
       parameters:
@@ -1115,6 +1145,7 @@ paths:
                   $ref: "#/components/schemas/UserAccount"
                 type: array
           description: ""
+      tags: ["UserAccount"]
     post:
       parameters: []
       requestBody:
@@ -1129,6 +1160,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/UserAccount"
           description: ""
+      tags: ["UserAccount"]
   "/user-account/batch-create":
     post:
       parameters: []
@@ -1144,6 +1176,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/UserAccount"
           description: ""
+      tags: ["UserAccount"]
   "/user-account/{user-account-id}":
     delete:
       parameters:
@@ -1158,6 +1191,7 @@ paths:
           content:
             application/json: {}
           description: ""
+      tags: ["UserAccount"]
     get:
       parameters:
         - in: path
@@ -1173,6 +1207,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/UserAccount"
           description: ""
+      tags: ["UserAccount"]
     put:
       parameters:
         - in: path
@@ -1193,6 +1228,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/UserAccount"
           description: ""
+      tags: ["UserAccount"]
   "/user-account/{user-account-id}/organization":
     get:
       parameters:
@@ -1219,6 +1255,7 @@ paths:
                   $ref: "#/components/schemas/Organization"
                 type: array
           description: ""
+      tags: ["Organization"]
   "/user-account/{user-account-id}/roles":
     get:
       parameters:
@@ -1245,6 +1282,7 @@ paths:
                   $ref: "#/components/schemas/Role"
                 type: array
           description: ""
+      tags: ["Role"]
   "/vocabularies/{vocabularies-id}":
     delete:
       parameters:
@@ -1259,6 +1297,7 @@ paths:
           content:
             application/json: {}
           description: ""
+      tags: ["Vocabulary"]
     get:
       parameters:
         - in: path
@@ -1274,6 +1313,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/Vocabulary"
           description: ""
+      tags: ["Vocabulary"]
     put:
       parameters:
         - in: path
@@ -1294,6 +1334,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/Vocabulary"
           description: ""
+      tags: ["Vocabulary"]
   "/vocabularies/{vocabularies-id}/categories":
     get:
       parameters:
@@ -1320,6 +1361,7 @@ paths:
                   $ref: "#/components/schemas/Category"
                 type: array
           description: ""
+      tags: ["Category"]
     post:
       parameters:
         - in: path
@@ -1340,6 +1382,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/Category"
           description: ""
+      tags: ["Category"]
   "/vocabularies/{vocabularies-id}/categories/batch-create":
     post:
       parameters:
@@ -1361,6 +1404,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/Category"
           description: ""
+      tags: ["Category"]
   "/web-site/{web-site-id}/user-account":
     get:
       parameters:
@@ -1387,6 +1431,7 @@ paths:
                   $ref: "#/components/schemas/UserAccount"
                 type: array
           description: ""
+      tags: ["UserAccount"]
   "/web-urls":
     get:
       parameters:
@@ -1412,6 +1457,7 @@ paths:
                   $ref: "#/components/schemas/WebUrl"
                 type: array
           description: ""
+      tags: ["WebUrl"]
   "/web-urls/{web-urls-id}":
     get:
       parameters:
@@ -1428,3 +1474,4 @@ paths:
               schema:
                 $ref: "#/components/schemas/WebUrl"
           description: ""
+      tags: ["WebUrl"]

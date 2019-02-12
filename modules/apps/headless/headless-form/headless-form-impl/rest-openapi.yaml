@@ -335,6 +335,7 @@ paths:
                   $ref: "#/components/schemas/Form"
                 type: array
           description: ""
+      tags: ["Form"]
   "/content-space/{content-space-id}/form-structures":
     get:
       parameters:
@@ -361,6 +362,7 @@ paths:
                   $ref: "#/components/schemas/FormStructure"
                 type: array
           description: ""
+      tags: ["FormStructure"]
   "/creator/{creator-id}":
     get:
       parameters:
@@ -377,6 +379,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/Creator"
           description: ""
+      tags: ["Creator"]
   "/form-document/{form-document-id}":
     delete:
       parameters:
@@ -391,6 +394,7 @@ paths:
           content:
             application/json: {}
           description: ""
+      tags: ["FormDocument"]
     get:
       parameters:
         - in: path
@@ -406,6 +410,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/FormDocument"
           description: ""
+      tags: ["FormDocument"]
   "/form-record/{form-record-id}":
     get:
       parameters:
@@ -422,6 +427,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/FormRecord"
           description: ""
+      tags: ["FormRecord"]
     put:
       parameters:
         - in: path
@@ -446,6 +452,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/FormRecord"
           description: ""
+      tags: ["FormRecord"]
   "/form-structures/{form-structures-id}":
     get:
       parameters:
@@ -462,6 +469,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/FormStructure"
           description: ""
+      tags: ["FormStructure"]
   "/form/{form-id}":
     get:
       parameters:
@@ -478,6 +486,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/Form"
           description: ""
+      tags: ["Form"]
   "/form/{form-id}/evaluate-context":
     post:
       parameters:
@@ -503,6 +512,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/Form"
           description: ""
+      tags: ["Form"]
   "/form/{form-id}/fetch-latest-draft":
     get:
       parameters:
@@ -519,6 +529,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/Form"
           description: ""
+      tags: ["Form"]
   "/form/{form-id}/form-record":
     get:
       parameters:
@@ -545,6 +556,7 @@ paths:
                   $ref: "#/components/schemas/FormRecord"
                 type: array
           description: ""
+      tags: ["FormRecord"]
     post:
       parameters:
         - in: path
@@ -569,6 +581,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/FormRecord"
           description: ""
+      tags: ["FormRecord"]
   "/form/{form-id}/form-record/batch-create":
     post:
       parameters:
@@ -594,6 +607,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/FormRecord"
           description: ""
+      tags: ["FormRecord"]
   "/form/{form-id}/upload-file":
     post:
       parameters:
@@ -615,3 +629,4 @@ paths:
               schema:
                 $ref: "#/components/schemas/Form"
           description: ""
+      tags: ["Form"]

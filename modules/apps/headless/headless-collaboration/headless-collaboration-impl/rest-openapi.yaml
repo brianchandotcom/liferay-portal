@@ -187,6 +187,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/AggregateRating"
           description: ""
+      tags: ["AggregateRating"]
   "/blog-posting/{blog-posting-id}":
     delete:
       parameters:
@@ -201,6 +202,7 @@ paths:
           content:
             application/json: {}
           description: ""
+      tags: ["BlogPosting"]
     get:
       parameters:
         - in: path
@@ -216,6 +218,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/BlogPosting"
           description: ""
+      tags: ["BlogPosting"]
     put:
       parameters:
         - in: path
@@ -236,6 +239,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/BlogPosting"
           description: ""
+      tags: ["BlogPosting"]
   "/blog-posting/{blog-posting-id}/categories":
     get:
       parameters:
@@ -263,6 +267,7 @@ paths:
                   type: integer
                 type: array
           description: ""
+      tags: ["BlogPosting"]
     post:
       parameters:
         - in: path
@@ -285,6 +290,7 @@ paths:
                 format: int64
                 type: integer
           description: ""
+      tags: ["BlogPosting"]
   "/blog-posting/{blog-posting-id}/categories/batch-create":
     post:
       parameters:
@@ -308,6 +314,7 @@ paths:
                 format: int64
                 type: integer
           description: ""
+      tags: ["BlogPosting"]
   "/blog-posting/{blog-posting-id}/comment":
     get:
       parameters:
@@ -334,6 +341,7 @@ paths:
                   $ref: "#/components/schemas/Comment"
                 type: array
           description: ""
+      tags: ["Comment"]
   "/comment/{comment-id}":
     get:
       parameters:
@@ -350,6 +358,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/Comment"
           description: ""
+      tags: ["Comment"]
   "/comment/{comment-id}/comment":
     get:
       parameters:
@@ -376,6 +385,7 @@ paths:
                   $ref: "#/components/schemas/Comment"
                 type: array
           description: ""
+      tags: ["Comment"]
   "/content-space/{content-space-id}/blog-posting":
     get:
       parameters:
@@ -402,6 +412,7 @@ paths:
                   $ref: "#/components/schemas/BlogPosting"
                 type: array
           description: ""
+      tags: ["BlogPosting"]
     post:
       parameters:
         - in: path
@@ -422,6 +433,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/BlogPosting"
           description: ""
+      tags: ["BlogPosting"]
   "/content-space/{content-space-id}/blog-posting/batch-create":
     post:
       parameters:
@@ -443,6 +455,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/BlogPosting"
           description: ""
+      tags: ["BlogPosting"]
   "/creator/{creator-id}":
     get:
       parameters:
@@ -459,6 +472,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/Creator"
           description: ""
+      tags: ["Creator"]
   "/image-object-repository/{image-object-repository-id}":
     get:
       parameters:
@@ -475,6 +489,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/ImageObjectRepository"
           description: ""
+      tags: ["ImageObjectRepository"]
   "/image-object-repository/{image-object-repository-id}/image-object":
     get:
       parameters:
@@ -501,6 +516,7 @@ paths:
                   $ref: "#/components/schemas/ImageObject"
                 type: array
           description: ""
+      tags: ["ImageObject"]
     post:
       parameters:
         - in: path
@@ -521,6 +537,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/ImageObject"
           description: ""
+      tags: ["ImageObject"]
   "/image-object-repository/{image-object-repository-id}/image-object/batch-create":
     post:
       parameters:
@@ -542,6 +559,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/ImageObject"
           description: ""
+      tags: ["ImageObject"]
   "/image-object/{image-object-id}":
     delete:
       parameters:
@@ -556,6 +574,7 @@ paths:
           content:
             application/json: {}
           description: ""
+      tags: ["ImageObject"]
     get:
       parameters:
         - in: path
@@ -571,3 +590,4 @@ paths:
               schema:
                 $ref: "#/components/schemas/ImageObject"
           description: ""
+      tags: ["ImageObject"]

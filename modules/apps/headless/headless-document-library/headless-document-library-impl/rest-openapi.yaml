@@ -168,6 +168,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/Creator"
           description: ""
+      tags: ["Creator"]
   "/document/{document-id}":
     delete:
       parameters:
@@ -182,6 +183,7 @@ paths:
           content:
             application/json: {}
           description: ""
+      tags: ["Document"]
     get:
       parameters:
         - in: path
@@ -197,6 +199,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/Document"
           description: ""
+      tags: ["Document"]
   "/document/{document-id}/categories":
     get:
       parameters:
@@ -224,6 +227,7 @@ paths:
                   type: integer
                 type: array
           description: ""
+      tags: ["Document"]
     post:
       parameters:
         - in: path
@@ -246,6 +250,7 @@ paths:
                 format: int64
                 type: integer
           description: ""
+      tags: ["Document"]
   "/document/{document-id}/categories/batch-create":
     post:
       parameters:
@@ -269,6 +274,7 @@ paths:
                 format: int64
                 type: integer
           description: ""
+      tags: ["Document"]
   "/document/{document-id}/comment":
     get:
       parameters:
@@ -295,6 +301,7 @@ paths:
                   $ref: "#/components/schemas/Comment"
                 type: array
           description: ""
+      tags: ["Comment"]
   "/documents-repository/{id}":
     get:
       parameters:
@@ -311,6 +318,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/Folder"
           description: ""
+      tags: ["Folder"]
   "/documents-repository/{documents-repository-id}/document":
     get:
       parameters:
@@ -337,6 +345,7 @@ paths:
                   $ref: "#/components/schemas/Document"
                 type: array
           description: ""
+      tags: ["Document"]
     post:
       parameters:
         - in: path
@@ -357,6 +366,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/Document"
           description: ""
+      tags: ["Document"]
   "/documents-repository/{documents-repository-id}/document/batch-create":
     post:
       parameters:
@@ -378,6 +388,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/Document"
           description: ""
+      tags: ["Document"]
   "/documents-repository/{documents-repository-id}/folder":
     get:
       parameters:
@@ -404,6 +415,7 @@ paths:
                   $ref: "#/components/schemas/Folder"
                 type: array
           description: ""
+      tags: ["Folder"]
     post:
       parameters:
         - in: path
@@ -424,6 +436,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/Folder"
           description: ""
+      tags: ["Folder"]
   "/documents-repository/{documents-repository-id}/folder/batch-create":
     post:
       parameters:
@@ -445,6 +458,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/Folder"
           description: ""
+      tags: ["Folder"]
   "/folder/{folder-id}":
     delete:
       parameters:
@@ -459,6 +473,7 @@ paths:
           content:
             application/json: {}
           description: ""
+      tags: ["Folder"]
     get:
       parameters:
         - in: path
@@ -474,6 +489,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/Folder"
           description: ""
+      tags: ["Folder"]
     put:
       parameters:
         - in: path
@@ -494,6 +510,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/Folder"
           description: ""
+      tags: ["Folder"]
   "/folder/{folder-id}/document":
     get:
       parameters:
@@ -520,6 +537,7 @@ paths:
                   $ref: "#/components/schemas/Document"
                 type: array
           description: ""
+      tags: ["Document"]
     post:
       parameters:
         - in: path
@@ -546,6 +564,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/Document"
           description: ""
+      tags: ["Document"]
   "/folder/{folder-id}/document/batch-create":
     post:
       parameters:
@@ -573,6 +592,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/Document"
           description: ""
+      tags: ["Document"]
   "/folder/{folder-id}/folder":
     get:
       parameters:
@@ -599,6 +619,7 @@ paths:
                   $ref: "#/components/schemas/Folder"
                 type: array
           description: ""
+      tags: ["Folder"]
     post:
       parameters:
         - in: path
@@ -619,6 +640,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/Folder"
           description: ""
+      tags: ["Folder"]
   "/folder/{folder-id}/folder/batch-create":
     post:
       parameters:
@@ -640,3 +662,4 @@ paths:
               schema:
                 $ref: "#/components/schemas/Folder"
           description: ""
+      tags: ["Folder"]

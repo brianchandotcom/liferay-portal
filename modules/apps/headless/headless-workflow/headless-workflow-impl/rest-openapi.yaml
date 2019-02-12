@@ -118,6 +118,7 @@ paths:
                   $ref: "#/components/schemas/WorkflowTask"
                 type: array
           description: ""
+      tags: ["WorkflowTask"]
   "/workflow-logs/{workflow-logs-id}":
     get:
       parameters:
@@ -134,6 +135,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/WorkflowLog"
           description: ""
+      tags: ["WorkflowLog"]
   "/workflow-tasks":
     get:
       parameters:
@@ -159,6 +161,7 @@ paths:
                   $ref: "#/components/schemas/WorkflowTask"
                 type: array
           description: ""
+      tags: ["WorkflowTask"]
   "/workflow-tasks/{workflow-tasks-id}":
     get:
       parameters:
@@ -175,6 +178,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/WorkflowTask"
           description: ""
+      tags: ["WorkflowTask"]
   "/workflow-tasks/{workflow-tasks-id}/assign-to-me":
     post:
       parameters:
@@ -196,6 +200,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/WorkflowTask"
           description: ""
+      tags: ["WorkflowTask"]
   "/workflow-tasks/{workflow-tasks-id}/assign-to-user":
     post:
       parameters:
@@ -217,6 +222,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/WorkflowTask"
           description: ""
+      tags: ["WorkflowTask"]
   "/workflow-tasks/{workflow-tasks-id}/change-transition":
     post:
       parameters:
@@ -238,6 +244,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/WorkflowTask"
           description: ""
+      tags: ["WorkflowTask"]
   "/workflow-tasks/{workflow-tasks-id}/update-due-date":
     post:
       parameters:
@@ -259,6 +266,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/WorkflowTask"
           description: ""
+      tags: ["WorkflowTask"]
   "/workflow-tasks/{workflow-tasks-id}/workflow-logs":
     get:
       parameters:
@@ -285,3 +293,4 @@ paths:
                   $ref: "#/components/schemas/WorkflowLog"
                 type: array
           description: ""
+      tags: ["WorkflowLog"]

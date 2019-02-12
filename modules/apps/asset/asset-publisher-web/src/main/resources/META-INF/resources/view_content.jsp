@@ -79,7 +79,18 @@ else {
 			</liferay-util:include>
 		</div>
 
-		<liferay-util:include page="/asset_html_metadata.jsp" servletContext="<%= application %>" />
+		<%
+		if (Validator.isNull(title)) {
+			title = assetRenderer.getTitle(locale);
+		}
+
+		String summary = StringUtil.shorten(assetRenderer.getSummary(liferayPortletRequest, liferayPortletResponse), assetPublisherDisplayContext.getAbstractLength());
+
+		PortalUtil.setPageTitle(title, request);
+		PortalUtil.setPageDescription(summary, request);
+		PortalUtil.setPageKeywords(assetHelper.getAssetKeywords(assetEntry.getClassName(), assetEntry.getClassPK()), request);
+		%>
+
 	</c:when>
 	<c:otherwise>
 

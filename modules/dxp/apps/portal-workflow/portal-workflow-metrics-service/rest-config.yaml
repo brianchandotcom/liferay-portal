@@ -1,0 +1,8 @@
+apiDir: "../portal-workflow-metrics-api/src/main/java"
+apiPackagePath: "com.liferay.portal.workflow.metrics"
+application:
+    baseURI: "/portal-workflow-metrics"
+    className: "PortalWorkflowMetricsApplication"
+    name: "portal-workflow-metrics-application"
+author: "Rafael Praxedes"
+testDir: "../portal-workflow-metrics-test/src/testIntegration/java"

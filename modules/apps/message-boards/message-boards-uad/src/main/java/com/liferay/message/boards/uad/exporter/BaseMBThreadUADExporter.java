@@ -56,7 +56,7 @@ public abstract class BaseMBThreadUADExporter extends DynamicQueryUADExporter<MB
 
 	@Override
 	protected String toXmlString(MBThread mbThread) {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(28);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.message.boards.model.MBThread");
@@ -89,6 +89,10 @@ public abstract class BaseMBThreadUADExporter extends DynamicQueryUADExporter<MB
 		sb.append(
 			"<column><column-name>userName</column-name><column-value><![CDATA[");
 		sb.append(mbThread.getUserName());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>title</column-name><column-value><![CDATA[");
+		sb.append(mbThread.getTitle());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");

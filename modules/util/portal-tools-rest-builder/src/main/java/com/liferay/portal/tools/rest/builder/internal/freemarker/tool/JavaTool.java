@@ -555,6 +555,6 @@ public class JavaTool {
 	private static JavaTool _instance = new JavaTool();
 
 	private static final Pattern _methodNamePattern = Pattern.compile(
-		"(?s)\\{.*?\\}");
+		"\\{.*?\\}", Pattern.DOTALL);
 
 }

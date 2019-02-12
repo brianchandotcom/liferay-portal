@@ -91,12 +91,12 @@ public class FormatUtil {
 	}
 
 	private static final Pattern _componentPropertyPattern = Pattern.compile(
-		"(?m)^\".+\",$");
+		"^\".+\",$", Pattern.MULTILINE);
 	private static final Pattern _methodClosingBracePattern = Pattern.compile(
-		"(?m)^\t*}$");
+		"^\t*}$", Pattern.MULTILINE);
 	private static final Pattern _methodHeaderPattern = Pattern.compile(
-		"(?m)^\t*(@|public|protected|private)");
+		"^\t*(@|public|protected|private)", Pattern.MULTILINE);
 	private static final Pattern _multiNewLinePattern = Pattern.compile(
-		"(?m)^\n+");
+		"^\n+", Pattern.MULTILINE);
 
 }

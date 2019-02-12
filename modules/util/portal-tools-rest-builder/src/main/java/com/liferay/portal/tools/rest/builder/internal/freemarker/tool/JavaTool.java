@@ -115,6 +115,41 @@ public class JavaTool {
 		return javaSignatures;
 	}
 
+	public Set<String> getMethodAnnotations(JavaSignature javaSignature) {
+		String path = javaSignature.getPath();
+		PathItem pathItem = javaSignature.getPathItem();
+		Operation operation = javaSignature.getOperation();
+
+		Set<String> methodAnnotations = new TreeSet<>();
+
+		methodAnnotations.add("@Path(\"" + path + "\")");
+
+		String httpMethod = _getHTTPMethod(operation);
+
+		methodAnnotations.add("@" + StringUtil.toUpperCase(httpMethod));
+
+		if (pathItem.getGet() != null) {
+			methodAnnotations.add("@RequiresScope(\"everything.read\")");
+		}
+		else {
+			methodAnnotations.add("@RequiresScope(\"everything.write\")");
+		}
+
+		String methodAnnotation = _getMethodAnnotationConsumes(operation);
+
+		if (Validator.isNotNull(methodAnnotation)) {
+			methodAnnotations.add(methodAnnotation);
+		}
+
+		methodAnnotation = _getMethodAnnotationProduces(operation);
+
+		if (Validator.isNotNull(methodAnnotation)) {
+			methodAnnotations.add(methodAnnotation);
+		}
+
+		return methodAnnotations;
+	}
+
 	private JavaTool() {
 	}
 
@@ -422,41 +457,6 @@ public class JavaTool {
 		}
 
 		return "@Produces(" + sb.toString() + ")";
-	}
-
-	public Set<String> getMethodAnnotations(JavaSignature javaSignature) {
-		String path = javaSignature.getPath();
-		PathItem pathItem = javaSignature.getPathItem();
-		Operation operation = javaSignature.getOperation();
-
-		Set<String> methodAnnotations = new TreeSet<>();
-
-		methodAnnotations.add("@Path(\"" + path + "\")");
-
-		String httpMethod = _getHTTPMethod(operation);
-
-		methodAnnotations.add("@" + StringUtil.toUpperCase(httpMethod));
-
-		if (pathItem.getGet() != null) {
-			methodAnnotations.add("@RequiresScope(\"everything.read\")");
-		}
-		else {
-			methodAnnotations.add("@RequiresScope(\"everything.write\")");
-		}
-
-		String methodAnnotation = _getMethodAnnotationConsumes(operation);
-
-		if (Validator.isNotNull(methodAnnotation)) {
-			methodAnnotations.add(methodAnnotation);
-		}
-
-		methodAnnotation = _getMethodAnnotationProduces(operation);
-
-		if (Validator.isNotNull(methodAnnotation)) {
-			methodAnnotations.add(methodAnnotation);
-		}
-
-		return methodAnnotations;
 	}
 
 	private String _getMethodName(

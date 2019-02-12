@@ -309,7 +309,7 @@ info:
   version: v1.0
 openapi: 3.0.1
 paths:
-  "/content-space/{content-space-id}/form":
+  "/content-spaces/{content-space-id}/form":
     get:
       parameters:
         - in: query
@@ -336,7 +336,7 @@ paths:
                 type: array
           description: ""
       tags: ["Form"]
-  "/content-space/{content-space-id}/form-structures":
+  "/content-spaces/{content-space-id}/form-structures":
     get:
       parameters:
         - in: query
@@ -363,7 +363,7 @@ paths:
                 type: array
           description: ""
       tags: ["FormStructure"]
-  "/creator/{creator-id}":
+  "/creators/{creator-id}":
     get:
       parameters:
         - in: path
@@ -380,7 +380,7 @@ paths:
                 $ref: "#/components/schemas/Creator"
           description: ""
       tags: ["Creator"]
-  "/form-document/{form-document-id}":
+  "/form-documents/{form-document-id}":
     delete:
       parameters:
         - in: path
@@ -411,7 +411,7 @@ paths:
                 $ref: "#/components/schemas/FormDocument"
           description: ""
       tags: ["FormDocument"]
-  "/form-record/{form-record-id}":
+  "/form-records/{form-record-id}":
     get:
       parameters:
         - in: path
@@ -470,7 +470,7 @@ paths:
                 $ref: "#/components/schemas/FormStructure"
           description: ""
       tags: ["FormStructure"]
-  "/form/{form-id}":
+  "/forms/{form-id}":
     get:
       parameters:
         - in: path
@@ -487,7 +487,7 @@ paths:
                 $ref: "#/components/schemas/Form"
           description: ""
       tags: ["Form"]
-  "/form/{form-id}/evaluate-context":
+  "/forms/{form-id}/evaluate-context":
     post:
       parameters:
         - in: path
@@ -513,7 +513,7 @@ paths:
                 $ref: "#/components/schemas/Form"
           description: ""
       tags: ["Form"]
-  "/form/{form-id}/fetch-latest-draft":
+  "/forms/{form-id}/fetch-latest-draft":
     get:
       parameters:
         - in: path
@@ -530,7 +530,7 @@ paths:
                 $ref: "#/components/schemas/Form"
           description: ""
       tags: ["Form"]
-  "/form/{form-id}/form-record":
+  "/forms/{form-id}/form-records":
     get:
       parameters:
         - in: query
@@ -582,7 +582,7 @@ paths:
                 $ref: "#/components/schemas/FormRecord"
           description: ""
       tags: ["FormRecord"]
-  "/form/{form-id}/form-record/batch-create":
+  "/forms/{form-id}/form-records/batch-create":
     post:
       parameters:
         - in: path
@@ -608,7 +608,7 @@ paths:
                 $ref: "#/components/schemas/FormRecord"
           description: ""
       tags: ["FormRecord"]
-  "/form/{form-id}/upload-file":
+  "/forms/{form-id}/upload-file":
     post:
       parameters:
         - in: path

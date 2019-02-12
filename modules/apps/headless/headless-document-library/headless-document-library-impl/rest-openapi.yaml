@@ -152,7 +152,7 @@ info:
   version: v1.0
 openapi: 3.0.1
 paths:
-  "/creator/{creator-id}":
+  "/creators/{creator-id}":
     get:
       parameters:
         - in: path
@@ -169,7 +169,7 @@ paths:
                 $ref: "#/components/schemas/Creator"
           description: ""
       tags: ["Creator"]
-  "/document/{document-id}":
+  "/documents/{document-id}":
     delete:
       parameters:
         - in: path
@@ -200,7 +200,7 @@ paths:
                 $ref: "#/components/schemas/Document"
           description: ""
       tags: ["Document"]
-  "/document/{document-id}/categories":
+  "/documents/{document-id}/categories":
     get:
       parameters:
         - in: query
@@ -251,7 +251,7 @@ paths:
                 type: integer
           description: ""
       tags: ["Document"]
-  "/document/{document-id}/categories/batch-create":
+  "/documents/{document-id}/categories/batch-create":
     post:
       parameters:
         - in: path
@@ -275,7 +275,7 @@ paths:
                 type: integer
           description: ""
       tags: ["Document"]
-  "/document/{document-id}/comment":
+  "/documents/{document-id}/comments":
     get:
       parameters:
         - in: query
@@ -302,11 +302,11 @@ paths:
                 type: array
           description: ""
       tags: ["Comment"]
-  "/documents-repository/{id}":
+  "/documents-repositories/{documents-repository-id}":
     get:
       parameters:
         - in: path
-          name: id
+          name: documents-repository-id
           required: true
           schema:
             format: int64
@@ -319,7 +319,7 @@ paths:
                 $ref: "#/components/schemas/Folder"
           description: ""
       tags: ["Folder"]
-  "/documents-repository/{documents-repository-id}/document":
+  "/documents-repositories/{documents-repository-id}/documents":
     get:
       parameters:
         - in: query
@@ -367,7 +367,7 @@ paths:
                 $ref: "#/components/schemas/Document"
           description: ""
       tags: ["Document"]
-  "/documents-repository/{documents-repository-id}/document/batch-create":
+  "/documents-repositories/{documents-repository-id}/documents/batch-create":
     post:
       parameters:
         - in: path
@@ -389,7 +389,7 @@ paths:
                 $ref: "#/components/schemas/Document"
           description: ""
       tags: ["Document"]
-  "/documents-repository/{documents-repository-id}/folder":
+  "/documents-repositories/{documents-repository-id}/folders":
     get:
       parameters:
         - in: query
@@ -437,7 +437,7 @@ paths:
                 $ref: "#/components/schemas/Folder"
           description: ""
       tags: ["Folder"]
-  "/documents-repository/{documents-repository-id}/folder/batch-create":
+  "/documents-repositories/{documents-repository-id}/folders/batch-create":
     post:
       parameters:
         - in: path
@@ -459,7 +459,7 @@ paths:
                 $ref: "#/components/schemas/Folder"
           description: ""
       tags: ["Folder"]
-  "/folder/{folder-id}":
+  "/folders/{folder-id}":
     delete:
       parameters:
         - in: path
@@ -511,7 +511,7 @@ paths:
                 $ref: "#/components/schemas/Folder"
           description: ""
       tags: ["Folder"]
-  "/folder/{folder-id}/document":
+  "/folders/{folder-id}/documents":
     get:
       parameters:
         - in: query
@@ -565,7 +565,7 @@ paths:
                 $ref: "#/components/schemas/Document"
           description: ""
       tags: ["Document"]
-  "/folder/{folder-id}/document/batch-create":
+  "/folders/{folder-id}/documents/batch-create":
     post:
       parameters:
         - in: path
@@ -593,7 +593,7 @@ paths:
                 $ref: "#/components/schemas/Document"
           description: ""
       tags: ["Document"]
-  "/folder/{folder-id}/folder":
+  "/folders/{folder-id}/folders":
     get:
       parameters:
         - in: query
@@ -641,7 +641,7 @@ paths:
                 $ref: "#/components/schemas/Folder"
           description: ""
       tags: ["Folder"]
-  "/folder/{folder-id}/folder/batch-create":
+  "/folders/{folder-id}/folders/batch-create":
     post:
       parameters:
         - in: path

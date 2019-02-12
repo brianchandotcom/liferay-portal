@@ -171,7 +171,7 @@ info:
   version: v1.0
 openapi: 3.0.1
 paths:
-  "/aggregate-rating/{aggregate-rating-id}":
+  "/aggregate-ratings/{aggregate-rating-id}":
     get:
       parameters:
         - in: path
@@ -188,7 +188,7 @@ paths:
                 $ref: "#/components/schemas/AggregateRating"
           description: ""
       tags: ["AggregateRating"]
-  "/blog-posting/{blog-posting-id}":
+  "/blog-postings/{blog-posting-id}":
     delete:
       parameters:
         - in: path
@@ -240,7 +240,7 @@ paths:
                 $ref: "#/components/schemas/BlogPosting"
           description: ""
       tags: ["BlogPosting"]
-  "/blog-posting/{blog-posting-id}/categories":
+  "/blog-postings/{blog-posting-id}/categories":
     get:
       parameters:
         - in: query
@@ -291,7 +291,7 @@ paths:
                 type: integer
           description: ""
       tags: ["BlogPosting"]
-  "/blog-posting/{blog-posting-id}/categories/batch-create":
+  "/blog-postings/{blog-posting-id}/categories/batch-create":
     post:
       parameters:
         - in: path
@@ -315,7 +315,7 @@ paths:
                 type: integer
           description: ""
       tags: ["BlogPosting"]
-  "/blog-posting/{blog-posting-id}/comment":
+  "/blog-postings/{blog-posting-id}/comments":
     get:
       parameters:
         - in: query
@@ -342,7 +342,7 @@ paths:
                 type: array
           description: ""
       tags: ["Comment"]
-  "/comment/{comment-id}":
+  "/comments/{comment-id}":
     get:
       parameters:
         - in: path
@@ -359,7 +359,7 @@ paths:
                 $ref: "#/components/schemas/Comment"
           description: ""
       tags: ["Comment"]
-  "/comment/{comment-id}/comment":
+  "/comments/{comment-id}/comments":
     get:
       parameters:
         - in: query
@@ -386,7 +386,7 @@ paths:
                 type: array
           description: ""
       tags: ["Comment"]
-  "/content-space/{content-space-id}/blog-posting":
+  "/content-spaces/{content-space-id}/blog-postings":
     get:
       parameters:
         - in: query
@@ -434,7 +434,7 @@ paths:
                 $ref: "#/components/schemas/BlogPosting"
           description: ""
       tags: ["BlogPosting"]
-  "/content-space/{content-space-id}/blog-posting/batch-create":
+  "/content-spaces/{content-space-id}/blog-postings/batch-create":
     post:
       parameters:
         - in: path
@@ -456,7 +456,7 @@ paths:
                 $ref: "#/components/schemas/BlogPosting"
           description: ""
       tags: ["BlogPosting"]
-  "/creator/{creator-id}":
+  "/creators/{creator-id}":
     get:
       parameters:
         - in: path
@@ -473,7 +473,7 @@ paths:
                 $ref: "#/components/schemas/Creator"
           description: ""
       tags: ["Creator"]
-  "/image-object-repository/{image-object-repository-id}":
+  "/image-object-repositories/{image-object-repository-id}":
     get:
       parameters:
         - in: path
@@ -490,7 +490,7 @@ paths:
                 $ref: "#/components/schemas/ImageObjectRepository"
           description: ""
       tags: ["ImageObjectRepository"]
-  "/image-object-repository/{image-object-repository-id}/image-object":
+  "/image-object-repositories/{image-object-repository-id}/image-objects":
     get:
       parameters:
         - in: query
@@ -538,7 +538,7 @@ paths:
                 $ref: "#/components/schemas/ImageObject"
           description: ""
       tags: ["ImageObject"]
-  "/image-object-repository/{image-object-repository-id}/image-object/batch-create":
+  "/image-object-repositories/{image-object-repository-id}/image-objects/batch-create":
     post:
       parameters:
         - in: path
@@ -560,7 +560,7 @@ paths:
                 $ref: "#/components/schemas/ImageObject"
           description: ""
       tags: ["ImageObject"]
-  "/image-object/{image-object-id}":
+  "/image-objects/{image-object-id}":
     delete:
       parameters:
         - in: path

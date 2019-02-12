@@ -51,16 +51,31 @@ public class JavaTool {
 		return _instance;
 	}
 
-	public JavaParameter getJavaParameter(
-		String propertySchemaName, Schema schema) {
+	public List<JavaParameter> getJavaParameters(Schema schema) {
+		Map<String, Schema> propertySchemas = schema.getPropertySchemas();
 
-		String parameterName = CamelCaseUtil.toCamelCase(
-			propertySchemaName, false);
-		String parameterType = _getJavaParameterType(
-			propertySchemaName, schema);
+		if (propertySchemas == null) {
+			return Collections.emptyList();
+		}
 
-		return new JavaParameter(
-			Collections.emptySet(), parameterName, parameterType);
+		List<JavaParameter> javaParameters = new ArrayList<>(
+			propertySchemas.size());
+
+		for (Map.Entry<String, Schema> entry : propertySchemas.entrySet()) {
+			String propertySchemaName = entry.getKey();
+			Schema propertySchema = entry.getValue();
+
+			String parameterName = CamelCaseUtil.toCamelCase(
+				propertySchemaName, false);
+			String parameterType = _getJavaParameterType(
+				propertySchemaName, propertySchema);
+
+			javaParameters.add(
+				new JavaParameter(
+					Collections.emptySet(), parameterName, parameterType));
+		}
+
+		return javaParameters;
 	}
 
 	public List<JavaSignature> getJavaSignatures(

@@ -20,32 +20,16 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "${schemaName}")
 public class ${schemaName} {
 
-	<#if schema.items??>
-		<#assign propertySchemas = schema.items.propertySchemas />
-	<#elseif schema.propertySchemas??>
-		<#assign propertySchemas = schema.propertySchemas />
-	</#if>
+<#list javaTool.getJavaParameters(schema) as javaParameter>
+	public ${javaParameter.parameterType} get${javaParameter.parameterName?cap_first}() {
+		return _${javaParameter.parameterName};
+	}
 
-	<#if propertySchemas??>
-		<#list propertySchemas?keys as propertySchemaName>
-			<#assign javaParameter = javaTool.getJavaParameter(propertySchemaName, propertySchemas[propertySchemaName]) />
+	public void set${javaParameter.parameterName?cap_first}(${javaParameter.parameterType} ${javaParameter.parameterName}) {
+		_${javaParameter.parameterName} = ${javaParameter.parameterName};
+	}
 
-			<#assign content>
-				public ${javaParameter.parameterType} get${javaParameter.parameterName?cap_first}() {
-					return _${propertySchemaName};
-				}
+	private ${javaParameter.parameterType} _${javaParameter.parameterName};
 
-				public void set${javaParameter.parameterName?cap_first}(${javaParameter.parameterType} ${javaParameter.parameterName}) {
-					_${propertySchemaName} = ${propertySchemaName};
-				}
-
-				private ${javaParameter.parameterType} _${propertySchemaName};
-			</#assign>
-
-			<#list content?split("\n") as line>
-				${line?replace("^\t\t\t", "", "r")}<#lt>
-			</#list>
-		</#list>
-	</#if>
-
+</#list>
 }

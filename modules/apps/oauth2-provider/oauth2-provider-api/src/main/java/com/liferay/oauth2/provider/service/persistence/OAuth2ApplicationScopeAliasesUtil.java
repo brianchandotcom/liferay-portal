@@ -800,10 +800,6 @@ public class OAuth2ApplicationScopeAliasesUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static OAuth2ApplicationScopeAliasesPersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

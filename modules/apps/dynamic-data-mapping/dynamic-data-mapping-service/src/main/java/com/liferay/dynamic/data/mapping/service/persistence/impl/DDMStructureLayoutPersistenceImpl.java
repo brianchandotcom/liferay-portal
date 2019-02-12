@@ -2408,6 +2408,6 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No DDMStructureLayout exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(DDMStructureLayoutPersistenceImpl.class);
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
-				"uuid"
+				"uuid", "definition"
 			});
 }

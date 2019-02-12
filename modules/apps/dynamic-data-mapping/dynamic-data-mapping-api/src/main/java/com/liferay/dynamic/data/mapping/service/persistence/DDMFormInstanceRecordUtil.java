@@ -1370,10 +1370,6 @@ public class DDMFormInstanceRecordUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static DDMFormInstanceRecordPersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

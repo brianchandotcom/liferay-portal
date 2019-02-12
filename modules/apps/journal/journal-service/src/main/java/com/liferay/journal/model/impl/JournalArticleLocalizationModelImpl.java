@@ -70,7 +70,7 @@ public class JournalArticleLocalizationModelImpl extends BaseModelImpl<JournalAr
 			{ "companyId", Types.BIGINT },
 			{ "articlePK", Types.BIGINT },
 			{ "title", Types.VARCHAR },
-			{ "description", Types.VARCHAR },
+			{ "description_", Types.VARCHAR },
 			{ "languageId", Types.VARCHAR }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
@@ -80,11 +80,11 @@ public class JournalArticleLocalizationModelImpl extends BaseModelImpl<JournalAr
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("articlePK", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("title", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("description_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("languageId", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table JournalArticleLocalization (articleLocalizationId LONG not null primary key,companyId LONG,articlePK LONG,title VARCHAR(400) null,description STRING null,languageId VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table JournalArticleLocalization (articleLocalizationId LONG not null primary key,companyId LONG,articlePK LONG,title VARCHAR(400) null,description_ STRING null,languageId VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table JournalArticleLocalization";
 	public static final String ORDER_BY_JPQL = " ORDER BY journalArticleLocalization.articleLocalizationId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY JournalArticleLocalization.articleLocalizationId ASC";

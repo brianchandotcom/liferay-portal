@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
@@ -48,6 +49,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * The persistence implementation for the ddm template version service.
@@ -1932,6 +1934,11 @@ public class DDMTemplateVersionPersistenceImpl extends BasePersistenceImpl<DDMTe
 	}
 
 	@Override
+	public Set<String> getBadColumnNames() {
+		return _badColumnNames;
+	}
+
+	@Override
 	protected EntityCache getEntityCache() {
 		return entityCache;
 	}
@@ -2053,4 +2060,7 @@ public class DDMTemplateVersionPersistenceImpl extends BasePersistenceImpl<DDMTe
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No DDMTemplateVersion exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No DDMTemplateVersion exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(DDMTemplateVersionPersistenceImpl.class);
+	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
+				"description"
+			});
 }

@@ -9392,10 +9392,6 @@ public class JournalArticleUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static JournalArticlePersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

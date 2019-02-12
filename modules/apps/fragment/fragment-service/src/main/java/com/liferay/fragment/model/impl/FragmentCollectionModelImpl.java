@@ -88,7 +88,7 @@ public class FragmentCollectionModelImpl extends BaseModelImpl<FragmentCollectio
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "fragmentCollectionKey", Types.VARCHAR },
 			{ "name", Types.VARCHAR },
-			{ "description", Types.VARCHAR },
+			{ "description_", Types.VARCHAR },
 			{ "lastPublishDate", Types.TIMESTAMP }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
@@ -104,11 +104,11 @@ public class FragmentCollectionModelImpl extends BaseModelImpl<FragmentCollectio
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("fragmentCollectionKey", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("description_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table FragmentCollection (uuid_ VARCHAR(75) null,fragmentCollectionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,fragmentCollectionKey VARCHAR(75) null,name VARCHAR(75) null,description STRING null,lastPublishDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table FragmentCollection (uuid_ VARCHAR(75) null,fragmentCollectionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,fragmentCollectionKey VARCHAR(75) null,name VARCHAR(75) null,description_ STRING null,lastPublishDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table FragmentCollection";
 	public static final String ORDER_BY_JPQL = " ORDER BY fragmentCollection.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY FragmentCollection.name ASC";

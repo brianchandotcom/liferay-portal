@@ -86,7 +86,7 @@ public class OAuth2ApplicationModelImpl extends BaseModelImpl<OAuth2Application>
 			{ "clientId", Types.VARCHAR },
 			{ "clientProfile", Types.INTEGER },
 			{ "clientSecret", Types.VARCHAR },
-			{ "description", Types.VARCHAR },
+			{ "description_", Types.VARCHAR },
 			{ "features", Types.VARCHAR },
 			{ "homePageURL", Types.VARCHAR },
 			{ "iconFileEntryId", Types.BIGINT },
@@ -108,7 +108,7 @@ public class OAuth2ApplicationModelImpl extends BaseModelImpl<OAuth2Application>
 		TABLE_COLUMNS_MAP.put("clientId", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("clientProfile", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("clientSecret", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("description_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("features", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("homePageURL", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("iconFileEntryId", Types.BIGINT);
@@ -117,7 +117,7 @@ public class OAuth2ApplicationModelImpl extends BaseModelImpl<OAuth2Application>
 		TABLE_COLUMNS_MAP.put("redirectURIs", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table OAuth2Application (oAuth2ApplicationId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,oA2AScopeAliasesId LONG,allowedGrantTypes VARCHAR(75) null,clientId VARCHAR(75) null,clientProfile INTEGER,clientSecret VARCHAR(75) null,description STRING null,features STRING null,homePageURL STRING null,iconFileEntryId LONG,name VARCHAR(75) null,privacyPolicyURL STRING null,redirectURIs STRING null)";
+	public static final String TABLE_SQL_CREATE = "create table OAuth2Application (oAuth2ApplicationId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,oA2AScopeAliasesId LONG,allowedGrantTypes VARCHAR(75) null,clientId VARCHAR(75) null,clientProfile INTEGER,clientSecret VARCHAR(75) null,description_ STRING null,features STRING null,homePageURL STRING null,iconFileEntryId LONG,name VARCHAR(75) null,privacyPolicyURL STRING null,redirectURIs STRING null)";
 	public static final String TABLE_SQL_DROP = "drop table OAuth2Application";
 	public static final String ORDER_BY_JPQL = " ORDER BY oAuth2Application.oAuth2ApplicationId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY OAuth2Application.oAuth2ApplicationId ASC";

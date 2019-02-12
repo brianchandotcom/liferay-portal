@@ -21,11 +21,6 @@ import com.liferay.dynamic.data.mapping.model.DDMTemplateVersion;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
-
 /**
  * The persistence interface for the ddm template version service.
  *
@@ -45,9 +40,6 @@ public interface DDMTemplateVersionPersistence extends BasePersistence<DDMTempla
 	 *
 	 * Never modify or reference this interface directly. Always use {@link DDMTemplateVersionUtil} to access the ddm template version persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, DDMTemplateVersion> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the ddm template versions where templateId = &#63;.

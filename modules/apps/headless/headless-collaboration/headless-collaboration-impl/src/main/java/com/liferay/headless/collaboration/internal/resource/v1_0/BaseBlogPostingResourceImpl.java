@@ -56,7 +56,7 @@ public abstract class BaseBlogPostingResourceImpl
 			Long blogPostingId, Pagination pagination)
 		throws Exception {
 
-		return new Page<>();
+		return null;
 	}
 
 	@Override

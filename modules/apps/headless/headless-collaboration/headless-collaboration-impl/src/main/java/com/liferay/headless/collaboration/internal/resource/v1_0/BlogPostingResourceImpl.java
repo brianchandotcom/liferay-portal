@@ -54,21 +54,21 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class BlogPostingResourceImpl extends BaseBlogPostingResourceImpl {
 
 	@Override
-	public Response deleteBlogPosting(Long blogPostingId) throws Exception {
+	public Response deleteBlogPostings(Long blogPostingId) throws Exception {
 		_blogsEntryService.deleteEntry(blogPostingId);
 
 		return buildNoContentResponse();
 	}
 
 	@Override
-	public BlogPosting getBlogPosting(Long blogPostingId) throws Exception {
+	public BlogPosting getBlogPostings(Long blogPostingId) throws Exception {
 		BlogsEntry blogsEntry = _blogsEntryService.getEntry(blogPostingId);
 
 		return _toBlogPosting(blogsEntry);
 	}
 
 	@Override
-	public Page<BlogPosting> getContentSpaceBlogPostingPage(
+	public Page<BlogPosting> getContentSpacesBlogPostingsPage(
 		Long parentId, Pagination pagination) {
 
 		return Page.of(
@@ -83,7 +83,7 @@ public class BlogPostingResourceImpl extends BaseBlogPostingResourceImpl {
 	}
 
 	@Override
-	public BlogPosting postContentSpaceBlogPosting(
+	public BlogPosting postContentSpacesBlogPostings(
 			Long contentSpaceId, BlogPosting blogPosting)
 		throws Exception {
 
@@ -103,7 +103,7 @@ public class BlogPostingResourceImpl extends BaseBlogPostingResourceImpl {
 	}
 
 	@Override
-	public BlogPosting putBlogPosting(
+	public BlogPosting putBlogPostings(
 			Long blogPostingId, BlogPosting blogPosting)
 		throws Exception {
 

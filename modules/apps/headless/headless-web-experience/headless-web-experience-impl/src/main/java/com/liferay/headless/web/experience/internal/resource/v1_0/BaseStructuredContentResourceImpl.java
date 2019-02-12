@@ -88,7 +88,7 @@ public abstract class BaseStructuredContentResourceImpl
 			Long structuredContentId, Pagination pagination)
 		throws Exception {
 
-		return new Page<>();
+		return null;
 	}
 
 	@Override

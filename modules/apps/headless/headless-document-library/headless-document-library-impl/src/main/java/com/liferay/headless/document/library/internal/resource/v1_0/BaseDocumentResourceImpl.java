@@ -56,7 +56,7 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 			Long documentId, Pagination pagination)
 		throws Exception {
 
-		return new Page<>();
+		return null;
 	}
 
 	@Override

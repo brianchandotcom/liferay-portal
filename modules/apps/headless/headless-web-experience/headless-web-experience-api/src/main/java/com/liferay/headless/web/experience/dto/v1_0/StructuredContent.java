@@ -84,7 +84,7 @@ public class StructuredContent {
 		return _keywords;
 	}
 
-	public String getLastReviewed() {
+	public Date getLastReviewed() {
 		return _lastReviewed;
 	}
 
@@ -156,7 +156,7 @@ public class StructuredContent {
 		_keywords = keywords;
 	}
 
-	public void setLastReviewed(String lastReviewed) {
+	public void setLastReviewed(Date lastReviewed) {
 		_lastReviewed = lastReviewed;
 	}
 
@@ -188,7 +188,7 @@ public class StructuredContent {
 	private String _description;
 	private Long _id;
 	private String[] _keywords;
-	private String _lastReviewed;
+	private Date _lastReviewed;
 	private RenderedContentsByTemplate _renderedContentsByTemplate;
 	private String _title;
 	private Values _values;

@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -216,6 +217,10 @@ public class ReviewUADDataMVCRenderCommand implements MVCRenderCommand {
 				List<Long> groupIds = new ArrayList<>(groups.size());
 
 				groups.forEach(group -> groupIds.add(group.getGroupId()));
+
+				if (ListUtil.isEmpty(groupIds)) {
+					groupIds.add(GroupConstants.DEFAULT_PARENT_GROUP_ID);
+				}
 
 				return ArrayUtil.toLongArray(groupIds);
 			}

@@ -125,7 +125,6 @@ public class RESTBuilder {
 
 			_createMutationFile(context);
 			_createQueryFile(context);
-			_createServletFile(context);
 
 			Components components = openAPIYAML.getComponents();
 
@@ -504,30 +503,6 @@ public class RESTBuilder {
 			file,
 			FreeMarkerUtil.processTemplate(
 				_copyrightFileName, "resource_test", context));
-	}
-
-	private void _createServletFile(Map<String, Object> context)
-		throws Exception {
-
-		StringBuilder sb = new StringBuilder();
-
-		sb.append(_configYAML.getImplDir());
-		sb.append("/");
-
-		String apiPackagePath = _configYAML.getApiPackagePath();
-
-		sb.append(apiPackagePath.replace('.', '/'));
-
-		sb.append("/internal/servlet/GraphQLServlet.java");
-
-		File file = new File(sb.toString());
-
-		_files.add(file);
-
-		FileUtil.write(
-			file,
-			FreeMarkerUtil.processTemplate(
-				_copyrightFileName, "servlet", context));
 	}
 
 	private static final Pattern _leadingUnderscorePattern = Pattern.compile(

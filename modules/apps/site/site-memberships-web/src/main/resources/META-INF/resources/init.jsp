@@ -92,6 +92,7 @@ page import="com.liferay.site.memberships.web.internal.display.context.UsersMana
 page import="com.liferay.site.memberships.web.internal.display.context.ViewMembershipRequestsDisplayContext" %><%@
 page import="com.liferay.site.memberships.web.internal.display.context.ViewMembershipRequestsManagementToolbarDisplayContext" %><%@
 page import="com.liferay.site.memberships.web.internal.servlet.taglib.clay.OrganizationsVerticalCard" %><%@
+page import="com.liferay.site.memberships.web.internal.servlet.taglib.clay.RoleVerticalCard" %><%@
 page import="com.liferay.site.memberships.web.internal.servlet.taglib.clay.UsersUserCard" %><%@
 page import="com.liferay.site.memberships.web.internal.servlet.taglib.clay.ViewMembershipRequestsPendingUserCard" %><%@
 page import="com.liferay.site.memberships.web.internal.servlet.taglib.clay.ViewMembershipRequestsUserCard" %><%@

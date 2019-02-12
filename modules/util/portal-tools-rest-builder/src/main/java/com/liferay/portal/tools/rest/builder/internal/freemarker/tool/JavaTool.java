@@ -50,13 +50,13 @@ public class JavaTool {
 		return _instance;
 	}
 
-	public Object getComponent(OpenAPIYAML openAPIYAML, String reference) {
+	private Object _getComponent(OpenAPIYAML openAPIYAML, String reference) {
 		if (reference == null) {
 			return null;
 		}
 
 		Components components = openAPIYAML.getComponents();
-		String referenceType = getComponentType(reference);
+		String referenceType = _getComponentType(reference);
 
 		if (reference.startsWith("#/components/parameters/")) {
 			Map<String, Parameter> parameters = components.getParameters();
@@ -80,7 +80,7 @@ public class JavaTool {
 		return null;
 	}
 
-	public String getComponentType(String reference) {
+	private String _getComponentType(String reference) {
 		int index = reference.lastIndexOf('/');
 
 		if (index == -1) {
@@ -90,13 +90,13 @@ public class JavaTool {
 		return reference.substring(index + 1);
 	}
 
-	public String getHTTPMethod(Operation operation) {
+	private String _getHTTPMethod(Operation operation) {
 		Class<? extends Operation> clazz = operation.getClass();
 
 		return StringUtil.lowerCase(clazz.getSimpleName());
 	}
 
-	public JavaParameter getJavaParameter(Parameter parameter) {
+	private JavaParameter _getJavaParameter(Parameter parameter) {
 		List<String> parameterAnnotations = new ArrayList<>();
 
 		Schema schema = parameter.getSchema();
@@ -165,7 +165,7 @@ public class JavaTool {
 		return javaSignatures;
 	}
 
-	public List<String> getMediaTypes(Map<String, Content> contents) {
+	private List<String> _getMediaTypes(Map<String, Content> contents) {
 		if ((contents == null) || contents.isEmpty()) {
 			return Collections.emptyList();
 		}
@@ -239,7 +239,7 @@ public class JavaTool {
 				}
 			}
 
-			javaParameters.add(getJavaParameter(parameter));
+			javaParameters.add(_getJavaParameter(parameter));
 		}
 
 		if (parameterNames.contains("filter")) {
@@ -318,7 +318,7 @@ public class JavaTool {
 			}
 
 			if (items.getReference() != null) {
-				return getComponentType(items.getReference()) + "[]";
+				return _getComponentType(items.getReference()) + "[]";
 			}
 
 			if (items.getPropertySchemas() != null) {
@@ -336,7 +336,7 @@ public class JavaTool {
 		if (allOfSchemas != null) {
 			for (Schema allOfSchema : allOfSchemas) {
 				if (Validator.isNotNull(allOfSchema.getReference())) {
-					return getComponentType(allOfSchema.getReference());
+					return _getComponentType(allOfSchema.getReference());
 				}
 			}
 		}
@@ -347,7 +347,7 @@ public class JavaTool {
 			return "Object";
 		}
 
-		return getComponentType(schema.getReference());
+		return _getComponentType(schema.getReference());
 	}
 
 	private String _getMethodAnnotationConsumes(Operation operation) {
@@ -359,7 +359,7 @@ public class JavaTool {
 
 		Map<String, Content> contents = requestBody.getContent();
 
-		List<String> mediaTypes = getMediaTypes(contents);
+		List<String> mediaTypes = _getMediaTypes(contents);
 
 		if (mediaTypes.isEmpty()) {
 			return null;
@@ -392,7 +392,7 @@ public class JavaTool {
 		List<String> mediaTypes = new ArrayList<>();
 
 		for (Response response : responses.values()) {
-			mediaTypes.addAll(getMediaTypes(response.getContent()));
+			mediaTypes.addAll(_getMediaTypes(response.getContent()));
 		}
 
 		if (mediaTypes.isEmpty()) {
@@ -423,7 +423,7 @@ public class JavaTool {
 
 		methodAnnotations.add("@Path(\"" + path + "\")");
 
-		String httpMethod = getHTTPMethod(operation);
+		String httpMethod = _getHTTPMethod(operation);
 
 		methodAnnotations.add("@" + StringUtil.toUpperCase(httpMethod));
 
@@ -453,7 +453,7 @@ public class JavaTool {
 		Operation operation, String path, String returnType,
 		String schemaName) {
 
-		String httpMethod = getHTTPMethod(operation);
+		String httpMethod = _getHTTPMethod(operation);
 
 		Matcher matcher = _methodNamePattern.matcher(path);
 
@@ -508,11 +508,11 @@ public class JavaTool {
 					return "Page<" + s + ">";
 				}
 
-				Object component = getComponent(
+				Object component = _getComponent(
 					openAPIYAML, schema.getReference());
 
 				if (component instanceof Schema) {
-					return getComponentType(schema.getReference());
+					return _getComponentType(schema.getReference());
 				}
 			}
 		}

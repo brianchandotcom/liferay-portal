@@ -18,7 +18,11 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.persistence.AssetEntryPersistence;
 
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+
+import java.util.Set;
 
 /**
  * @author Brian Wing Shun Chan
@@ -27,6 +31,11 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 public class AssetEntryFinderBaseImpl extends BasePersistenceImpl<AssetEntry> {
 	public AssetEntryFinderBaseImpl() {
 		setModelClass(AssetEntry.class);
+	}
+
+	@Override
+	public Set<String> getBadColumnNames() {
+		return getAssetEntryPersistence().getBadColumnNames();
 	}
 
 	/**
@@ -50,4 +59,5 @@ public class AssetEntryFinderBaseImpl extends BasePersistenceImpl<AssetEntry> {
 
 	@BeanReference(type = AssetEntryPersistence.class)
 	protected AssetEntryPersistence assetEntryPersistence;
+	private static final Log _log = LogFactoryUtil.getLog(AssetEntryFinderBaseImpl.class);
 }

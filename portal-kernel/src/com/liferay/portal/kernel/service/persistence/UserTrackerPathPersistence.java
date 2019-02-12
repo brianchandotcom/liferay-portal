@@ -19,11 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.exception.NoSuchUserTrackerPathException;
 import com.liferay.portal.kernel.model.UserTrackerPath;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
-
 /**
  * The persistence interface for the user tracker path service.
  *
@@ -43,9 +38,6 @@ public interface UserTrackerPathPersistence extends BasePersistence<UserTrackerP
 	 *
 	 * Never modify or reference this interface directly. Always use {@link UserTrackerPathUtil} to access the user tracker path persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, UserTrackerPath> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the user tracker paths where userTrackerId = &#63;.
@@ -295,7 +287,4 @@ public interface UserTrackerPathPersistence extends BasePersistence<UserTrackerP
 	* @return the number of user tracker paths
 	*/
 	public int countAll();
-
-	@Override
-	public Set<String> getBadColumnNames();
 }

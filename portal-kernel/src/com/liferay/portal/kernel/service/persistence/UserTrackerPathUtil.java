@@ -427,10 +427,6 @@ public class UserTrackerPathUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static UserTrackerPathPersistence getPersistence() {
 		if (_persistence == null) {
 			_persistence = (UserTrackerPathPersistence)PortalBeanLocatorUtil.locate(UserTrackerPathPersistence.class.getName());

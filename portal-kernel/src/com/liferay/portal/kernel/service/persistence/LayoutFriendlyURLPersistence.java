@@ -19,11 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.exception.NoSuchLayoutFriendlyURLException;
 import com.liferay.portal.kernel.model.LayoutFriendlyURL;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
-
 /**
  * The persistence interface for the layout friendly url service.
  *
@@ -43,9 +38,6 @@ public interface LayoutFriendlyURLPersistence extends BasePersistence<LayoutFrie
 	 *
 	 * Never modify or reference this interface directly. Always use {@link LayoutFriendlyURLUtil} to access the layout friendly url persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, LayoutFriendlyURL> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the layout friendly urls where uuid = &#63;.
@@ -1383,7 +1375,4 @@ public interface LayoutFriendlyURLPersistence extends BasePersistence<LayoutFrie
 	* @return the number of layout friendly urls
 	*/
 	public int countAll();
-
-	@Override
-	public Set<String> getBadColumnNames();
 }

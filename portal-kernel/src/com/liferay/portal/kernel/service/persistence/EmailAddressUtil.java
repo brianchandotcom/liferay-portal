@@ -1492,10 +1492,6 @@ public class EmailAddressUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static EmailAddressPersistence getPersistence() {
 		if (_persistence == null) {
 			_persistence = (EmailAddressPersistence)PortalBeanLocatorUtil.locate(EmailAddressPersistence.class.getName());

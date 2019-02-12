@@ -15,10 +15,14 @@
 package com.liferay.powwow.service.persistence.impl;
 
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 
 import com.liferay.powwow.model.PowwowMeeting;
 import com.liferay.powwow.service.persistence.PowwowMeetingPersistence;
+
+import java.util.Set;
 
 /**
  * @author Shinn Lok
@@ -27,6 +31,11 @@ import com.liferay.powwow.service.persistence.PowwowMeetingPersistence;
 public class PowwowMeetingFinderBaseImpl extends BasePersistenceImpl<PowwowMeeting> {
 	public PowwowMeetingFinderBaseImpl() {
 		setModelClass(PowwowMeeting.class);
+	}
+
+	@Override
+	public Set<String> getBadColumnNames() {
+		return getPowwowMeetingPersistence().getBadColumnNames();
 	}
 
 	/**
@@ -50,4 +59,5 @@ public class PowwowMeetingFinderBaseImpl extends BasePersistenceImpl<PowwowMeeti
 
 	@BeanReference(type = PowwowMeetingPersistence.class)
 	protected PowwowMeetingPersistence powwowMeetingPersistence;
+	private static final Log _log = LogFactoryUtil.getLog(PowwowMeetingFinderBaseImpl.class);
 }

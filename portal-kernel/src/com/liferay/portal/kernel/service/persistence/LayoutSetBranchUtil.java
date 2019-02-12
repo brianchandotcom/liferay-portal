@@ -1115,10 +1115,6 @@ public class LayoutSetBranchUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static LayoutSetBranchPersistence getPersistence() {
 		if (_persistence == null) {
 			_persistence = (LayoutSetBranchPersistence)PortalBeanLocatorUtil.locate(LayoutSetBranchPersistence.class.getName());

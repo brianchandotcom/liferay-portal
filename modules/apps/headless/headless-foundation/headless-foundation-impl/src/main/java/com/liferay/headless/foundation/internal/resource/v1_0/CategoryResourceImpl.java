@@ -24,7 +24,6 @@ import com.liferay.headless.foundation.internal.util.UserAccountUtil;
 import com.liferay.headless.foundation.resource.v1_0.CategoryResource;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserService;
@@ -33,7 +32,6 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.Collections;
-import java.util.List;
 import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
@@ -51,10 +49,7 @@ public class CategoryResourceImpl extends BaseCategoryResourceImpl {
 
 	@Override
 	public Category getCategories(Long categoriesId) throws Exception {
-		AssetCategory category = _assetCategoryService.getCategory(
-			categoriesId);
-
-		return _toCategory(category);
+		return _toCategory(_assetCategoryService.getCategory(categoriesId));
 	}
 
 	@Override
@@ -62,14 +57,14 @@ public class CategoryResourceImpl extends BaseCategoryResourceImpl {
 			Long categoriesId, Pagination pagination)
 		throws Exception {
 
-		List<AssetCategory> assetCategories =
-			_assetCategoryService.getChildCategories(
-				categoriesId, pagination.getStartPosition(),
-				pagination.getEndPosition(), null);
-		int count = _assetCategoryService.getChildCategoriesCount(categoriesId);
-
 		return Page.of(
-			transform(assetCategories, this::_toCategory), pagination, count);
+			transform(
+				_assetCategoryService.getChildCategories(
+					categoriesId, pagination.getStartPosition(),
+					pagination.getEndPosition(), null),
+				this::_toCategory),
+			pagination,
+			_assetCategoryService.getChildCategoriesCount(categoriesId));
 	}
 
 	public Page<Category> getVocabulariesCategoriesPage(
@@ -79,16 +74,16 @@ public class CategoryResourceImpl extends BaseCategoryResourceImpl {
 		AssetVocabulary assetVocabulary = _assetVocabularyService.getVocabulary(
 			vocabulariesId);
 
-		List<AssetCategory> categories =
-			_assetCategoryService.getVocabularyRootCategories(
-				assetVocabulary.getGroupId(), vocabulariesId,
-				pagination.getStartPosition(), pagination.getEndPosition(),
-				null);
-		int count = _assetCategoryService.getVocabularyRootCategoriesCount(
-			assetVocabulary.getGroupId(), vocabulariesId);
-
 		return Page.of(
-			transform(categories, this::_toCategory), pagination, count);
+			transform(
+				_assetCategoryService.getVocabularyRootCategories(
+					assetVocabulary.getGroupId(), vocabulariesId,
+					pagination.getStartPosition(), pagination.getEndPosition(),
+					null),
+				this::_toCategory),
+			pagination,
+			_assetCategoryService.getVocabularyRootCategoriesCount(
+				assetVocabulary.getGroupId(), vocabulariesId));
 	}
 
 	public Category postCategoriesCategories(
@@ -102,14 +97,12 @@ public class CategoryResourceImpl extends BaseCategoryResourceImpl {
 
 		Locale locale = LocaleUtil.fromLanguageId(group.getDefaultLanguageId());
 
-		ServiceContext serviceContext = new ServiceContext();
-
 		return _toCategory(
 			_assetCategoryService.addCategory(
 				group.getGroupId(), categoriesId,
 				Collections.singletonMap(locale, category.getName()),
 				Collections.singletonMap(locale, category.getDescription()),
-				assetCategory.getVocabularyId(), null, serviceContext));
+				assetCategory.getVocabularyId(), null, new ServiceContext()));
 	}
 
 	public Category postVocabulariesCategories(
@@ -123,20 +116,16 @@ public class CategoryResourceImpl extends BaseCategoryResourceImpl {
 
 		Locale locale = LocaleUtil.fromLanguageId(group.getDefaultLanguageId());
 
-		ServiceContext serviceContext = new ServiceContext();
-
 		return _toCategory(
 			_assetCategoryService.addCategory(
 				assetVocabulary.getGroupId(), 0,
 				Collections.singletonMap(locale, category.getName()),
 				Collections.singletonMap(locale, category.getDescription()),
-				vocabulariesId, null, serviceContext));
+				vocabulariesId, null, new ServiceContext()));
 	}
 
 	private UserAccount _getCreator(long userId) throws PortalException {
-		User userById = _userService.getUserById(userId);
-
-		return UserAccountUtil.toUserAccount(userById);
+		return UserAccountUtil.toUserAccount(_userService.getUserById(userId));
 	}
 
 	private Category[] _toCategories(AssetCategory assetCategory)

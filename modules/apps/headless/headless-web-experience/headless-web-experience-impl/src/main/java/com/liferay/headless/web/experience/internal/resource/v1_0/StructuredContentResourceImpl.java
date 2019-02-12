@@ -395,6 +395,10 @@ public class StructuredContentResourceImpl
 
 		return new StructuredContent() {
 			{
+				setAvailableLanguages(
+					LocaleUtil.toW3cLanguageIds(
+						journalArticle.getAvailableLanguageIds()));
+				setContentSpace(journalArticle.getGroupId());
 				setContentStructureId(ddmStructure.getStructureId());
 				setDateCreated(journalArticle.getCreateDate());
 				setDateModified(journalArticle.getModifiedDate());

@@ -21,6 +21,8 @@ import com.liferay.source.formatter.SourceFormatterArgs;
 import java.io.File;
 
 import java.util.Collections;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Peter Shin
@@ -28,7 +30,9 @@ import java.util.Collections;
 public class FormatUtil {
 
 	public static String fixWhitespace(File file, String content) {
-		String newContent = content.replaceAll("(?m)^\n+", "\n");
+		Matcher matcher = _multiNewLinePattern.matcher(content);
+
+		String newContent = matcher.replaceAll("\n");
 
 		newContent = newContent.trim();
 
@@ -44,7 +48,9 @@ public class FormatUtil {
 
 		String oldSub = newContent.substring(0, index);
 
-		String newSub = oldSub.replaceAll("(?m)^\".+\",$", "\t\t$0");
+		matcher = _componentPropertyPattern.matcher(oldSub);
+
+		String newSub = matcher.replaceAll("\t\t$0");
 
 		newContent = newContent.replace(oldSub, newSub);
 
@@ -53,10 +59,13 @@ public class FormatUtil {
 		oldSub = newContent.substring(
 			newContent.indexOf("\n", index + 2), newContent.lastIndexOf("}"));
 
-		newSub = oldSub.replaceAll(
-			"(?m)^\t*(@|public|protected|private)", "\t$1");
+		matcher = _methodHeaderPattern.matcher(oldSub);
 
-		newSub = newSub.replaceAll("(?m)^\t*}$", "\t}");
+		newSub = matcher.replaceAll("\t$1");
+
+		matcher = _methodClosingBracePattern.matcher(newSub);
+
+		newSub = matcher.replaceAll("\t}");
 
 		return newContent.replace(oldSub, newSub);
 	}
@@ -80,5 +89,14 @@ public class FormatUtil {
 
 		return FileUtil.read(file);
 	}
+
+	private static final Pattern _componentPropertyPattern = Pattern.compile(
+		"(?m)^\".+\",$");
+	private static final Pattern _methodClosingBracePattern = Pattern.compile(
+		"(?m)^\t*}$");
+	private static final Pattern _methodHeaderPattern = Pattern.compile(
+		"(?m)^\t*(@|public|protected|private)");
+	private static final Pattern _multiNewLinePattern = Pattern.compile(
+		"(?m)^\n+");
 
 }

@@ -38,6 +38,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.function.Consumer;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Peter Shin
@@ -453,7 +455,9 @@ public class JavaTool {
 
 		String httpMethod = getHTTPMethod(operation);
 
-		String s = path.replaceAll("(?s)\\{.*?\\}", "");
+		Matcher matcher = _methodNamePattern.matcher(path);
+
+		String s = matcher.replaceAll("");
 
 		String name = httpMethod + CamelCaseUtil.toCamelCase(s, true);
 
@@ -549,5 +553,8 @@ public class JavaTool {
 	}
 
 	private static JavaTool _instance = new JavaTool();
+
+	private static final Pattern _methodNamePattern = Pattern.compile(
+		"(?s)\\{.*?\\}");
 
 }

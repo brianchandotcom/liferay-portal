@@ -92,6 +92,32 @@ public abstract class BaseModelUADDisplay<T extends BaseModel>
 	}
 
 	@Override
+	public boolean isSiteScoped() {
+		Class<?> clazz = getTypeClass();
+
+		String modelClassName = clazz.getName() + "Model";
+
+		Class<?>[] interfaces = clazz.getInterfaces();
+
+		for (Class curInterface : interfaces) {
+			if (modelClassName.equals(curInterface.getName())) {
+				clazz = curInterface;
+
+				break;
+			}
+		}
+
+		try {
+			clazz.getMethod("getGroupId");
+
+			return true;
+		}
+		catch (NoSuchMethodException nsme) {
+			return false;
+		}
+	}
+
+	@Override
 	public List<T> search(
 		long userId, long[] groupIds, String keywords, String orderByField,
 		String orderByType, int start, int end) {

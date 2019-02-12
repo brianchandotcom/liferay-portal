@@ -17,7 +17,7 @@
 	-->
 
 	<!--<FileSystem class="org.apache.jackrabbit.core.fs.db.DbFileSystem">
-		<param name="driver" value="com.mysql.jdbc.Driver" />
+		<param name="driver" value="com.mysql.cj.jdbc.Driver" />
 		<param name="url" value="jdbc:mysql://localhost/jcr" />
 		<param name="user" value="" />
 		<param name="password" value="" />
@@ -47,7 +47,7 @@
 		-->
 
 		<!--<PersistenceManager class="org.apache.jackrabbit.core.state.db.SimpleDbPersistenceManager">
-			<param name="driver" value="com.mysql.jdbc.Driver" />
+			<param name="driver" value="com.mysql.cj.jdbc.Driver" />
 			<param name="url" value="jdbc:mysql://localhost/jcr" />
 			<param name="user" value="" />
 			<param name="password" value="" />
@@ -56,7 +56,7 @@
 			<param name="externalBLOBs" value="false" />
 		</PersistenceManager>
 		<FileSystem class="org.apache.jackrabbit.core.fs.db.DbFileSystem">
-			<param name="driver" value="com.mysql.jdbc.Driver" />
+			<param name="driver" value="com.mysql.cj.jdbc.Driver" />
 			<param name="url" value="jdbc:mysql://localhost/jcr" />
 			<param name="user" value="" />
 			<param name="password" value="" />
@@ -79,7 +79,7 @@
 		-->
 
 		<!--<FileSystem class="org.apache.jackrabbit.core.fs.db.DbFileSystem">
-			<param name="driver" value="com.mysql.jdbc.Driver" />
+			<param name="driver" value="com.mysql.cj.jdbc.Driver" />
 			<param name="url" value="jdbc:mysql://localhost/jcr" />
 			<param name="user" value="" />
 			<param name="password" value="" />
@@ -87,7 +87,7 @@
 			<param name="schemaObjectPrefix" value="J_V_FS_" />
 		</FileSystem>
 		<PersistenceManager class="org.apache.jackrabbit.core.state.db.SimpleDbPersistenceManager">
-			<param name="driver" value="com.mysql.jdbc.Driver" />
+			<param name="driver" value="com.mysql.cj.jdbc.Driver" />
 			<param name="url" value="jdbc:mysql://localhost/jcr" />
 			<param name="user" value="" />
 			<param name="password" value="" />
@@ -108,7 +108,7 @@
 	<!--<Cluster id="node_1" syncDelay="5">
 		<Journal class="org.apache.jackrabbit.core.journal.DatabaseJournal">
 			<param name="revision" value="${rep.home}/revision" />
-			<param name="driver" value="com.mysql.jdbc.Driver" />
+			<param name="driver" value="com.mysql.cj.jdbc.Driver" />
 			<param name="url" value="jdbc:mysql://localhost/jcr" />
 			<param name="user" value="" />
 			<param name="password" value="" />

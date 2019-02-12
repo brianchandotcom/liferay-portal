@@ -91,7 +91,7 @@ public class ConfigurationImplTest {
 			"mysql.jar",
 			configurationImpl.get(
 				"setup.database.jar.name",
-				new Filter("com.mysql.jdbc.Driver")));
+				new Filter("com.mysql.cj.jdbc.Driver")));
 		Assert.assertEquals(
 			"6",
 			configurationImpl.get(

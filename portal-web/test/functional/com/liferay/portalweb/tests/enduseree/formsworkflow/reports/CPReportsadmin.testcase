@@ -610,7 +610,7 @@ definition {
 		ReportsAdmin.gotoSources();
 
 		ReportsAdmin.addSource(
-			reportsDataSourceClass = "com.mysql.jdbc.Driver",
+			reportsDataSourceClass = "com.mysql.cj.jdbc.Driver",
 			reportsDataSourceName = "Reports Data Source Name",
 			reportsDataSourcePassword = "${databasePassword}",
 			reportsDataSourceURL = "${databaseURL}",

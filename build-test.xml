@@ -1641,7 +1641,7 @@ sendPasswordCaptchaEnabled=&quot;false&quot;</echo>
 									<Resource
 										auth="Container"
 										description="Global Address Database"
-										driverClassName="com.mysql.jdbc.Driver"
+										driverClassName="com.mysql.cj.jdbc.Driver"
 										maxActive="40"
 										maxIdle="20"
 										maxWait="1000"

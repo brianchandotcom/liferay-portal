@@ -15,13 +15,9 @@
 package com.liferay.site.item.selector.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-
-import java.util.List;
 
 import javax.portlet.PortletURL;
 
@@ -84,21 +80,6 @@ public class SitesItemSelectorViewManagementToolbarDisplayContext
 	}
 
 	@Override
-	public List<ViewTypeItem> getViewTypeItems() {
-		return new ViewTypeItemList(
-			getPortletURL(),
-			_sitesItemSelectorViewDisplayContext.getDisplayStyle()) {
-
-			{
-				addCardViewTypeItem();
-				addListViewTypeItem();
-				addTableViewTypeItem();
-			}
-
-		};
-	}
-
-	@Override
 	public Boolean isSelectable() {
 		return false;
 	}
@@ -106,6 +87,11 @@ public class SitesItemSelectorViewManagementToolbarDisplayContext
 	@Override
 	public Boolean isShowSearch() {
 		return _sitesItemSelectorViewDisplayContext.isShowSearch();
+	}
+
+	@Override
+	protected String[] getDisplayViews() {
+		return new String[] {"list", "descriptive", "icon"};
 	}
 
 	@Override

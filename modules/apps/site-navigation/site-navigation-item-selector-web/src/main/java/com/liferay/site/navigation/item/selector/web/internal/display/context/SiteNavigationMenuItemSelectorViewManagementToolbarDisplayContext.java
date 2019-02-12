@@ -15,13 +15,9 @@
 package com.liferay.site.navigation.item.selector.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-
-import java.util.List;
 
 import javax.portlet.PortletURL;
 
@@ -44,9 +40,6 @@ public class SiteNavigationMenuItemSelectorViewManagementToolbarDisplayContext
 			liferayPortletRequest, liferayPortletResponse, request,
 			siteNavigationMenuItemSelectorViewDisplayContext.
 				getSearchContainer());
-
-		_siteNavigationMenuItemSelectorViewDisplayContext =
-			siteNavigationMenuItemSelectorViewDisplayContext;
 	}
 
 	@Override
@@ -71,23 +64,13 @@ public class SiteNavigationMenuItemSelectorViewManagementToolbarDisplayContext
 	}
 
 	@Override
-	public List<ViewTypeItem> getViewTypeItems() {
-		return new ViewTypeItemList(
-			getPortletURL(),
-			_siteNavigationMenuItemSelectorViewDisplayContext.
-				getDisplayStyle()) {
-
-			{
-				addListViewTypeItem();
-				addTableViewTypeItem();
-			}
-
-		};
+	public Boolean isSelectable() {
+		return false;
 	}
 
 	@Override
-	public Boolean isSelectable() {
-		return false;
+	protected String[] getDisplayViews() {
+		return new String[] {"list", "descriptive"};
 	}
 
 	@Override
@@ -99,8 +82,5 @@ public class SiteNavigationMenuItemSelectorViewManagementToolbarDisplayContext
 	protected String[] getOrderByKeys() {
 		return new String[] {"create-date", "name"};
 	}
-
-	private final SiteNavigationMenuItemSelectorViewDisplayContext
-		_siteNavigationMenuItemSelectorViewDisplayContext;
 
 }

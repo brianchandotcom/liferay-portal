@@ -17,8 +17,6 @@ package com.liferay.portlet.configuration.web.internal.display.context;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -44,9 +42,6 @@ public class PortletConfigurationTemplatesManagementToolbarDisplayContext
 			liferayPortletRequest, liferayPortletResponse, request,
 			portletConfigurationTemplatesDisplayContext.
 				getArchivedSettingsSearchContainer());
-
-		_portletConfigurationTemplatesDisplayContext =
-			portletConfigurationTemplatesDisplayContext;
 	}
 
 	@Override
@@ -83,18 +78,8 @@ public class PortletConfigurationTemplatesManagementToolbarDisplayContext
 	}
 
 	@Override
-	public List<ViewTypeItem> getViewTypeItems() {
-		return new ViewTypeItemList(
-			getPortletURL(),
-			_portletConfigurationTemplatesDisplayContext.getDisplayStyle()) {
-
-			{
-				addCardViewTypeItem();
-				addListViewTypeItem();
-				addTableViewTypeItem();
-			}
-
-		};
+	protected String[] getDisplayViews() {
+		return new String[] {"list", "descriptive", "icon"};
 	}
 
 	@Override
@@ -106,8 +91,5 @@ public class PortletConfigurationTemplatesManagementToolbarDisplayContext
 	protected String[] getOrderByKeys() {
 		return new String[] {"name", "modified-date"};
 	}
-
-	private final PortletConfigurationTemplatesDisplayContext
-		_portletConfigurationTemplatesDisplayContext;
 
 }

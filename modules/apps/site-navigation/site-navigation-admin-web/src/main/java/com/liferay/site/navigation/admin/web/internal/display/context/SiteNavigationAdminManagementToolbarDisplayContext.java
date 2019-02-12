@@ -17,8 +17,6 @@ package com.liferay.site.navigation.admin.web.internal.display.context;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -129,20 +127,6 @@ public class SiteNavigationAdminManagementToolbarDisplayContext
 	}
 
 	@Override
-	public List<ViewTypeItem> getViewTypeItems() {
-		return new ViewTypeItemList(
-			getPortletURL(),
-			_siteNavigationAdminDisplayContext.getDisplayStyle()) {
-
-			{
-				addListViewTypeItem();
-				addTableViewTypeItem();
-			}
-
-		};
-	}
-
-	@Override
 	public Boolean isShowCreationMenu() {
 		if (!_siteNavigationAdminDisplayContext.hasEditPermission()) {
 			return false;
@@ -160,6 +144,11 @@ public class SiteNavigationAdminManagementToolbarDisplayContext
 		}
 
 		return false;
+	}
+
+	@Override
+	protected String[] getDisplayViews() {
+		return new String[] {"list", "descriptive"};
 	}
 
 	@Override

@@ -15,14 +15,10 @@
 package com.liferay.site.taglib.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.GetterUtil;
-
-import java.util.List;
 
 import javax.portlet.PortletURL;
 
@@ -64,20 +60,6 @@ public class SiteBrowserManagementToolbarDisplayContext
 	}
 
 	@Override
-	public List<ViewTypeItem> getViewTypeItems() {
-		return new ViewTypeItemList(
-			getPortletURL(), _siteBrowserDisplayContext.getDisplayStyle()) {
-
-			{
-				addCardViewTypeItem();
-				addListViewTypeItem();
-				addTableViewTypeItem();
-			}
-
-		};
-	}
-
-	@Override
 	public Boolean isSelectable() {
 		return false;
 	}
@@ -86,6 +68,16 @@ public class SiteBrowserManagementToolbarDisplayContext
 	public Boolean isShowSearch() {
 		return GetterUtil.getBoolean(
 			request.getAttribute("liferay-site:site-browser:showSearch"));
+	}
+
+	@Override
+	protected String getDisplayStyle() {
+		return _siteBrowserDisplayContext.getDisplayStyle();
+	}
+
+	@Override
+	protected String[] getDisplayViews() {
+		return new String[] {"list", "descriptive", "icon"};
 	}
 
 	@Override

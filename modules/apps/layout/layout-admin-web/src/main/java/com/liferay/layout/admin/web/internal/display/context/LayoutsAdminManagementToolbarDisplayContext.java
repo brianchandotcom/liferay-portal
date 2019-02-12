@@ -166,9 +166,7 @@ public class LayoutsAdminManagementToolbarDisplayContext
 
 	@Override
 	public List<ViewTypeItem> getViewTypeItems() {
-		return new ViewTypeItemList(
-			getPortletURL(), _layoutsAdminDisplayContext.getDisplayStyle()) {
-
+		return new ViewTypeItemList(getPortletURL(), getDisplayStyle()) {
 			{
 				addTableViewTypeItem();
 
@@ -187,7 +185,6 @@ public class LayoutsAdminManagementToolbarDisplayContext
 
 				add(viewTypeItem);
 			}
-
 		};
 	}
 

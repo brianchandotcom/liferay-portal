@@ -14,6 +14,7 @@
 
 package com.liferay.journal.change.tracking.internal.service;
 
+import com.liferay.change.tracking.CTEngineManager;
 import com.liferay.change.tracking.CTManager;
 import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.exception.CTEntryException;
@@ -1396,6 +1397,32 @@ public class CTJournalArticleLocalServiceWrapper
 		return ctEntryOptional.isPresent();
 	}
 
+	private boolean _isRetrievable(JournalArticle journalArticle) {
+		if (journalArticle == null) {
+			return false;
+		}
+
+		if (!_ctEngineManager.isChangeTrackingEnabled(
+				journalArticle.getCompanyId()) ||
+			!_ctEngineManager.isChangeTrackingSupported(
+				journalArticle.getCompanyId(), JournalArticle.class)) {
+
+			return true;
+		}
+
+		if (_ctManager.isModelUpdateInProgress()) {
+			return true;
+		}
+
+		Optional<CTEntry> ctEntryOptional =
+			_ctManager.getModelChangeCTEntryOptional(
+				PrincipalThreadLocal.getUserId(),
+				_portal.getClassNameId(JournalArticle.class.getName()),
+				journalArticle.getId());
+
+		return ctEntryOptional.isPresent();
+	}
+
 	private void _registerChange(JournalArticle journalArticle, int changeType)
 		throws CTException {
 
@@ -1438,6 +1465,9 @@ public class CTJournalArticleLocalServiceWrapper
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CTJournalArticleLocalServiceWrapper.class);
+
+	@Reference
+	private CTEngineManager _ctEngineManager;
 
 	@Reference
 	private CTManager _ctManager;

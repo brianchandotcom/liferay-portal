@@ -71,7 +71,7 @@
 					showWhenSingleIcon="<%= true %>"
 				>
 					<liferay-portlet:renderURL var="editCollectionURL">
-						<portlet:param name="mvcRenderCommandName" value="/change_lists/edit" />
+						<portlet:param name="mvcRenderCommandName" value="/change_lists/edit_ct_collection" />
 						<portlet:param name="backURL" value="<%= themeDisplay.getURLCurrent() %>" />
 						<portlet:param name="ctCollectionId" value="<%= String.valueOf(curCTCollection.getCtCollectionId()) %>" />
 					</liferay-portlet:renderURL>

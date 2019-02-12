@@ -1632,6 +1632,12 @@
 		<body-content>empty</body-content>
 		<attribute>
 			<description></description>
+			<name>attributeProviderKey</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
 			<name>componentId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

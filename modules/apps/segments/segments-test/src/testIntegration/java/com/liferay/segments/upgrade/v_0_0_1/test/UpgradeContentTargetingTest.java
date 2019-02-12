@@ -89,9 +89,6 @@ public class UpgradeContentTargetingTest {
 	public void testUpgradeContentTargetingUserSegments() throws Exception {
 		long contentTargetingUserSegmentId = -1L;
 
-		insertContentTargetingRuleInstance(
-			contentTargetingUserSegmentId, "BrowserRule", "Chrome");
-
 		Map<Locale, String> nameMap = RandomTestUtil.randomLocaleStringMap();
 		Map<Locale, String> descriptionMap =
 			RandomTestUtil.randomLocaleStringMap();
@@ -110,6 +107,30 @@ public class UpgradeContentTargetingTest {
 
 		Assert.assertEquals(nameMap, segmentsEntry.getNameMap());
 		Assert.assertEquals(descriptionMap, segmentsEntry.getDescriptionMap());
+	}
+
+	@Test
+	public void testUpgradeContentTargetingUserSegmentsWithBrowserRule()
+		throws Exception {
+
+		long contentTargetingUserSegmentId = -1L;
+
+		insertContentTargetingRuleInstance(
+			contentTargetingUserSegmentId, "BrowserRule", "Chrome");
+
+		insertContentTargetingUserSegment(
+			contentTargetingUserSegmentId,
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomLocaleStringMap());
+
+		_upgradeContentTargeting.upgrade();
+
+		SegmentsEntry segmentsEntry =
+			_segmentsEntryLocalService.fetchSegmentsEntry(
+				_group.getGroupId(), "CT." + contentTargetingUserSegmentId,
+				false);
+
+		Assert.assertNotNull(segmentsEntry);
 
 		Criteria criteriaObj = segmentsEntry.getCriteriaObj();
 

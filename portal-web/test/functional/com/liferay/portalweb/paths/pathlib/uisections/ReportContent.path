@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>REPORT_BUTTON</td>
-	<td>//*[contains(@class,'footer')]//button[contains(.,'report')]</td>
+	<td>//*[contains(@class,'footer')]//button[contains(.,'Report')]</td>
 	<td></td>
 </tr>
 <tr>

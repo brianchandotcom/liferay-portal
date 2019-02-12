@@ -37,7 +37,7 @@ definition {
 	}
 
 	macro gotoDocumentDetails {
-		Click(locator1 = "Button#INFO");
+		DMDocument.expandInfo();
 
 		AssertClick(locator1 = "NavBar#DETAILS", value1 = "Details");
 	}

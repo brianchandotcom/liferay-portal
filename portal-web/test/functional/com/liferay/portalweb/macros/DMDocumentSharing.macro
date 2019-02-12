@@ -1,6 +1,6 @@
 definition {
 	macro _manageCollaborators {
-		Click(locator1 = "Button#INFO");
+		DMDocument.expandInfo();
 
 		var key_text = "Manage Collaborators";
 
@@ -86,7 +86,7 @@ definition {
 	}
 
 	macro viewCollaborators {
-		Click(locator1 = "Button#INFO");
+		DMDocument.expandInfo();
 
 		for (var collaborator : list "${collaboratorList}") {
 			var key_collaborator = "${collaborator}";

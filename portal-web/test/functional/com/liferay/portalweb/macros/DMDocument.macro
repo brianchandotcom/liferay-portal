@@ -1608,7 +1608,7 @@ definition {
 			value1 = "${dmDocumentTitle}"
 		);
 
-		Click(locator1 = "Button#INFO");
+		DMDocument.expandInfo();
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Link#DOWNLOAD",
@@ -1650,9 +1650,7 @@ definition {
 			Refresh();
 		}
 
-		if (IsElementNotPresent(locator1 = "Icon#INFO_ACTIVE")) {
-			Click(locator1 = "Button#INFO");
-		}
+		DMDocument.expandInfo();
 
 		if (isSet(booleanValue)) {
 			var key_booleanValue = "${booleanValue}";
@@ -1710,7 +1708,7 @@ definition {
 	}
 
 	macro viewDocumentVersionNumberCmdPG {
-		Click(locator1 = "Button#INFO");
+		DMDocument.expandInfo();
 
 		if (!(contains("${dmDocumentVersionNumber}", "{dmDocumentVersionNumber}"))) {
 			AssertTextEquals(
@@ -1849,7 +1847,7 @@ definition {
 			value1 = "${dmDocumentTitle}"
 		);
 
-		Click(locator1="Button#INFO");
+		DMDocument.expandInfo();
 
 		DMDocument.viewDocumentTitleCmdPG(dmDocumentTitle = "${dmDocumentTitle}");
 
@@ -1936,7 +1934,7 @@ definition {
 
 		AssertTextEquals(locator1 = "Button#SUBSCRIBE", value1 = "Subscribe");
 
-		Click(locator1 = "Button#INFO");
+		DMDocument.expandInfo();
 
 		var key_dmDocumentSize = "${dmDocumentSize}";
 		var key_dmDocumentUploader = "${dmDocumentUploader}";
@@ -2173,7 +2171,7 @@ definition {
 	}
 
 	macro viewTag {
-		Click(locator1 = "Button#INFO");
+		DMDocument.expandInfo();
 
 		if (isSet(tagNameList)) {
 			for (var tagName : list "${tagNameList}") {

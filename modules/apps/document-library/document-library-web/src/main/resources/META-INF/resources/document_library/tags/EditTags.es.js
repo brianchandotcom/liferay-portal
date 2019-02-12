@@ -34,7 +34,20 @@ class EditTags extends Component {
 	 */
 	created() {
 		this.append = true;
-		this.dataSource = [];
+
+		this.dataSource = query => new Promise((resolve, reject) => {
+			Liferay.Service(
+				'/assettag/search',
+				{
+					end: 20,
+					groupIds: [this.scopeGroupId],
+					name: `%${query === '*' ? '' : query}%`,
+					start: 0,
+					tagProperties: ''
+				},
+				tags => resolve(tags.map(tag => tag.value))
+			);
+		});
 	}
 
 	/**
@@ -249,6 +262,16 @@ EditTags.STATE = {
 	 * @type {String}
 	 */
 	folderId: Config.string().required(),
+
+	/**
+	 * Scope Group Id
+	 *
+	 * @instance
+	 * @memberof EditTags
+	 * @review
+	 * @type {Number}
+	 */
+	scopeGroupId: Config.number().required(),
 
 	/**
 	 * Flag that indicate if loading icon must

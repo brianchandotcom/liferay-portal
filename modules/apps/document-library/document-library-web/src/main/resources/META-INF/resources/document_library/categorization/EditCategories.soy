@@ -101,7 +101,7 @@
 			{call .categorySelector}
 				{param vocabularyId: $vocabulary.id /}
 				{param vocabularyName: $vocabulary.name /}
-				{param isMultiValued: $vocabulary.multiValued /}
+				{param multiValued: $vocabulary.multiValued /}
 				{param categories: $vocabulary.categories /}
 				{param dataSource: $dataSource /}
 				{param portletNamespace: $portletNamespace /}
@@ -115,7 +115,7 @@
 {template .categorySelector}
 	{@param categories: list<?>}
 	{@param dataSource: string|[]|list<?>}
-	{@param isMultiValued: bool}
+	{@param multiValued: bool}
 	{@param spritemap: string}
 	{@param vocabularyId: number}
 	{@param vocabularyName: string}
@@ -123,11 +123,11 @@
 	{@param? selectCategoriesUrl: string}
 
 	{call InputCategoriesSelector.render}
-		{param commonCategories: $categories /}
+		{param categories: $categories /}
 		{param dataSource: $dataSource /}
 		{param dialogClasses: 'modal-dialog-sm' /}
 		{param eventName: $portletNamespace + 'selectCategories' /}
-		{param isMultiValued: $isMultiValued /}
+		{param multiValued: $multiValued /}
 		{param selectCategoriesUrl: $selectCategoriesUrl /}
 		{param spritemap: $spritemap /}
 		{param vocabularyId: $vocabularyId /}

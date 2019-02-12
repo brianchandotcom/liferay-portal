@@ -21,14 +21,14 @@ class InputCategoriesSelector extends Component {
 		AUI().use(
 			'liferay-item-selector-dialog',
 			A => {
-				let commonCategories = this.commonCategories;
-				const selectedCategoriesIds = commonCategories.map(category => category.value);
+				let categories = this.categories;
+				const selectedCategoriesIds = categories.map(category => category.value);
 
 				const uri = A.Lang.sub(
 					decodeURIComponent(this.selectCategoriesUrl),
 					{
 						selectedCategories: selectedCategoriesIds,
-						singleSelect: !this.isMultiValued,
+						singleSelect: !this.multiValued,
 						vocabularyIds: this.vocabularyId
 					}
 				);
@@ -56,31 +56,31 @@ class InputCategoriesSelector extends Component {
 	 * @param  {Event} event
 	 */
 	_onSelectedItemChange(event) {
-		let commonCategories = this.commonCategories;
+		let categories = this.categories;
 
 		const data = event.newVal;
 
 		if (data) {
 			for (const key in data) {
-				const existingCategory = commonCategories.find(
+				const existingCategory = categories.find(
 					item => item.label === key
 				);
 
 				if (existingCategory && data[key].unchecked) {
-					this.commonCategories = commonCategories.filter(
+					this.categories = categories.filter(
 						item => item.label !== existingCategory.label
 					);
 				}
 
 				if (!existingCategory) {
-					commonCategories.push(
+					categories.push(
 						{
 							label: data[key].value,
 							value: parseFloat(data[key].categoryId)
 						}
 					);
 
-					this.commonCategories = commonCategories;
+					this.categories = categories;
 				}
 			}
 		}
@@ -104,7 +104,7 @@ InputCategoriesSelector.STATE = {
 	 * @review
 	 * @type {List<String>}
 	 */
-	commonCategories: Config.array(),
+	categories: Config.array(),
 
 	/**
 	 * Classes to add to the categories selector dialog
@@ -118,7 +118,13 @@ InputCategoriesSelector.STATE = {
 	 */
 	eventName: Config.string().required,
 
-	isMultiValued: Config.bool().value(true),
+	/**
+	 * Wether vocabulary can have several
+	 * categories or not.
+	 *
+	 * @type {Boolean}
+	 */
+	multiValued: Config.bool().value(true),
 
 	/**
 	 * Url to the categories selector page
@@ -136,8 +142,16 @@ InputCategoriesSelector.STATE = {
 	 */
 	spritemap: Config.string().required(),
 
+	/**
+	 * Vocabulary Id
+	 * @type {Number}
+	 */
 	vocabularyId: Config.number().required(),
 
+	/**
+	 * Vocabulary name
+	 * @type {String}
+	 */
 	vocabularyName: Config.string().required()
 };
 

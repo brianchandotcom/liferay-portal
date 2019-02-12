@@ -153,7 +153,7 @@ public class RESTBuilder {
 				for (Map.Entry<String, Schema> entry : schemasMap.entrySet()) {
 					Schema schema = entry.getValue();
 
-					if (schema.getPropertySchemas() == null) {
+					if (schema.getProperties() == null) {
 						continue;
 					}
 
@@ -170,7 +170,7 @@ public class RESTBuilder {
 
 					_createDTOFile(context, schemaName, versionDirName);
 
-					schemasMapsQueue.add(schema.getPropertySchemas());
+					schemasMapsQueue.add(schema.getProperties());
 				}
 			}
 		}

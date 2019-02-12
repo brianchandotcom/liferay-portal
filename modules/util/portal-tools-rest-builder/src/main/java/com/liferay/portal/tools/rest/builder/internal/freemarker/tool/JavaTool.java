@@ -359,6 +359,10 @@ public class JavaTool {
 			if (items.getReference() != null) {
 				return getComponentType(items.getReference()) + "[]";
 			}
+
+			if (items.getPropertySchemas() != null) {
+				return StringUtil.upperCaseFirstLetter(propertySchemaName);
+			}
 		}
 
 		if (type != null) {

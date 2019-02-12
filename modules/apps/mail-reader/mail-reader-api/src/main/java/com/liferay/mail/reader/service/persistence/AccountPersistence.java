@@ -21,11 +21,6 @@ import com.liferay.mail.reader.model.Account;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
-
 /**
  * The persistence interface for the account service.
  *
@@ -45,9 +40,6 @@ public interface AccountPersistence extends BasePersistence<Account> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link AccountUtil} to access the account persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, Account> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the accounts where userId = &#63;.
@@ -343,7 +335,4 @@ public interface AccountPersistence extends BasePersistence<Account> {
 	* @return the number of accounts
 	*/
 	public int countAll();
-
-	@Override
-	public Set<String> getBadColumnNames();
 }

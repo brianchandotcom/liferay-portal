@@ -21,11 +21,7 @@ import com.liferay.microblogs.model.MicroblogsEntry;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
 import java.util.Date;
-import java.util.Map;
-import java.util.Set;
 
 /**
  * The persistence interface for the microblogs entry service.
@@ -46,9 +42,6 @@ public interface MicroblogsEntryPersistence extends BasePersistence<MicroblogsEn
 	 *
 	 * Never modify or reference this interface directly. Always use {@link MicroblogsEntryUtil} to access the microblogs entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, MicroblogsEntry> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the microblogs entries where companyId = &#63;.
@@ -2188,7 +2181,4 @@ public interface MicroblogsEntryPersistence extends BasePersistence<MicroblogsEn
 	* @return the number of microblogs entries
 	*/
 	public int countAll();
-
-	@Override
-	public Set<String> getBadColumnNames();
 }

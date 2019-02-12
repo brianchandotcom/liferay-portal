@@ -20,11 +20,6 @@ import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.security.audit.storage.exception.NoSuchEventException;
 import com.liferay.portal.security.audit.storage.model.AuditEvent;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
-
 /**
  * The persistence interface for the audit event service.
  *
@@ -44,9 +39,6 @@ public interface AuditEventPersistence extends BasePersistence<AuditEvent> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link AuditEventUtil} to access the audit event persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, AuditEvent> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the audit events where companyId = &#63;.

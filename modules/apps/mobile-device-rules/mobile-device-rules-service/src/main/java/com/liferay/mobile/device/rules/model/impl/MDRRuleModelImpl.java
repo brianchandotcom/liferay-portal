@@ -96,7 +96,7 @@ public class MDRRuleModelImpl extends BaseModelImpl<MDRRule>
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "ruleGroupId", Types.BIGINT },
 			{ "name", Types.VARCHAR },
-			{ "description", Types.VARCHAR },
+			{ "description_", Types.VARCHAR },
 			{ "type_", Types.VARCHAR },
 			{ "typeSettings", Types.CLOB },
 			{ "lastPublishDate", Types.TIMESTAMP }
@@ -114,13 +114,13 @@ public class MDRRuleModelImpl extends BaseModelImpl<MDRRule>
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("ruleGroupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("description_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("type_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("typeSettings", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table MDRRule (uuid_ VARCHAR(75) null,ruleId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,ruleGroupId LONG,name STRING null,description STRING null,type_ VARCHAR(255) null,typeSettings TEXT null,lastPublishDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table MDRRule (uuid_ VARCHAR(75) null,ruleId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,ruleGroupId LONG,name STRING null,description_ STRING null,type_ VARCHAR(255) null,typeSettings TEXT null,lastPublishDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table MDRRule";
 	public static final String ORDER_BY_JPQL = " ORDER BY mdrRule.createDate ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY MDRRule.createDate ASC";

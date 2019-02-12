@@ -97,7 +97,7 @@ public class KBArticleModelImpl extends BaseModelImpl<KBArticle>
 			{ "title", Types.VARCHAR },
 			{ "urlTitle", Types.VARCHAR },
 			{ "content", Types.CLOB },
-			{ "description", Types.VARCHAR },
+			{ "description_", Types.VARCHAR },
 			{ "priority", Types.DOUBLE },
 			{ "sections", Types.VARCHAR },
 			{ "viewCount", Types.INTEGER },
@@ -130,7 +130,7 @@ public class KBArticleModelImpl extends BaseModelImpl<KBArticle>
 		TABLE_COLUMNS_MAP.put("title", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("urlTitle", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("content", Types.CLOB);
-		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("description_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("priority", Types.DOUBLE);
 		TABLE_COLUMNS_MAP.put("sections", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("viewCount", Types.INTEGER);
@@ -144,7 +144,7 @@ public class KBArticleModelImpl extends BaseModelImpl<KBArticle>
 		TABLE_COLUMNS_MAP.put("statusDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table KBArticle (uuid_ VARCHAR(75) null,kbArticleId LONG not null primary key,resourcePrimKey LONG,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,rootResourcePrimKey LONG,parentResourceClassNameId LONG,parentResourcePrimKey LONG,kbFolderId LONG,version INTEGER,title STRING null,urlTitle VARCHAR(75) null,content TEXT null,description STRING null,priority DOUBLE,sections STRING null,viewCount INTEGER,latest BOOLEAN,main BOOLEAN,sourceURL STRING null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table KBArticle (uuid_ VARCHAR(75) null,kbArticleId LONG not null primary key,resourcePrimKey LONG,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,rootResourcePrimKey LONG,parentResourceClassNameId LONG,parentResourcePrimKey LONG,kbFolderId LONG,version INTEGER,title STRING null,urlTitle VARCHAR(75) null,content TEXT null,description_ STRING null,priority DOUBLE,sections STRING null,viewCount INTEGER,latest BOOLEAN,main BOOLEAN,sourceURL STRING null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table KBArticle";
 	public static final String ORDER_BY_JPQL = " ORDER BY kbArticle.modifiedDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY KBArticle.modifiedDate DESC";

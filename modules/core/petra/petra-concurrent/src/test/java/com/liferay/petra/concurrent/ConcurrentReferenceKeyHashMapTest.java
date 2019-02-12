@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 
 import java.lang.ref.Reference;
 
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -67,6 +68,19 @@ public class ConcurrentReferenceKeyHashMapTest
 			10, FinalizeManager.WEAK_REFERENCE_FACTORY);
 		new ConcurrentReferenceKeyHashMap<String, Object>(
 			10, 0.75F, 4, FinalizeManager.WEAK_REFERENCE_FACTORY);
+	}
+
+	@Test
+	public void testPutAll() {
+		ConcurrentReferenceKeyHashMap<String, Object>
+			concurrentReferenceKeyHashMap = new ConcurrentReferenceKeyHashMap<>(
+				FinalizeManager.WEAK_REFERENCE_FACTORY);
+
+		Map<String, Object> dataMap = createDataMap();
+
+		concurrentReferenceKeyHashMap.putAll(dataMap);
+
+		Assert.assertEquals(dataMap, concurrentReferenceKeyHashMap);
 	}
 
 }

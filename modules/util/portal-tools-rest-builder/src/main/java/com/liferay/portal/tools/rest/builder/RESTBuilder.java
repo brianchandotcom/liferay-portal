@@ -415,7 +415,9 @@ public class RESTBuilder {
 		_files.add(file);
 
 		if (file.exists()) {
-			return;
+
+			// return;
+
 		}
 
 		FileUtil.write(

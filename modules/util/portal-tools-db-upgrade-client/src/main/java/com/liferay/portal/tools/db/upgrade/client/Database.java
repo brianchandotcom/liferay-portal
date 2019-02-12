@@ -38,7 +38,8 @@ public class Database {
 
 	public static Database getMySQLDatabase() {
 		return new Database(
-			"com.mysql.cj.jdbc.Driver", "jdbc:mysql://", "localhost", 0, "lportal",
+			"com.mysql.cj.jdbc.Driver", "jdbc:mysql://", "localhost", 0,
+			"lportal",
 			"?characterEncoding=UTF-8&dontTrackOpenResources=true" +
 				"&holdResultsOpenOverStatementClose=true" +
 					"&useFastDateParsing=false&useUnicode=true");

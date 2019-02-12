@@ -153,9 +153,8 @@ public class ProxyUtil {
 				FinalizeManager.WEAK_REFERENCE_FACTORY);
 	private static final ConcurrentMap<Class<?>, Constructor<?>> _constructors =
 		new ConcurrentReferenceKeyHashMap<>(
-			new ConcurrentReferenceValueHashMap
-				<Reference<Class<?>>, Constructor<?>>(
-					FinalizeManager.WEAK_REFERENCE_FACTORY),
+			new ConcurrentReferenceValueHashMap<>(
+				FinalizeManager.WEAK_REFERENCE_FACTORY),
 			FinalizeManager.WEAK_REFERENCE_FACTORY);
 	private static final Field _invocationHandlerField;
 

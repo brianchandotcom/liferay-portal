@@ -474,9 +474,8 @@ public class JspCompiler extends Jsr199JavaCompiler {
 
 	private static final Map<BundleWiring, Set<String>>
 		_bundleWiringPackageNamesCache = new ConcurrentReferenceKeyHashMap<>(
-			new ConcurrentReferenceValueHashMap
-				<Reference<BundleWiring>, Set<String>>(
-					FinalizeManager.SOFT_REFERENCE_FACTORY),
+			new ConcurrentReferenceValueHashMap<>(
+				FinalizeManager.SOFT_REFERENCE_FACTORY),
 			FinalizeManager.WEAK_REFERENCE_FACTORY);
 	private static final BundleWiring _jspBundleWiring;
 	private static final Map<BundleWiring, Set<String>>

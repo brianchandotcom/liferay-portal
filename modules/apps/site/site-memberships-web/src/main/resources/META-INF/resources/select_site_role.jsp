@@ -50,13 +50,8 @@ SelectSiteRolesDisplayContext selectSiteRolesDisplayContext = new SelectSiteRole
 					%>
 
 					<liferay-ui:search-container-column-text>
-						<liferay-frontend:icon-vertical-card
-							cssClass="selector-button"
-							data="<%= data %>"
-							icon="users"
-							resultRow="<%= row %>"
-							subtitle="<%= LanguageUtil.get(request, role.getTypeLabel()) %>"
-							title="<%= HtmlUtil.escape(role.getTitle(locale)) %>"
+						<clay:vertical-card
+							verticalCard="<%= new SelectSiteRoleVerticalCard(role, renderRequest) %>"
 						/>
 					</liferay-ui:search-container-column-text>
 				</c:when>

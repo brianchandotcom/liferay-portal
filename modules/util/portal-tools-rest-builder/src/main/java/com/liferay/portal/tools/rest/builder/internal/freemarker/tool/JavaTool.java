@@ -50,6 +50,53 @@ public class JavaTool {
 		return _instance;
 	}
 
+	public JavaParameter getJavaParameter(
+		String propertySchemaName, Schema schema) {
+
+		String parameterName = CamelCaseUtil.toCamelCase(
+			propertySchemaName, false);
+		String parameterType = _getJavaParameterType(
+			propertySchemaName, schema);
+
+		return new JavaParameter(null, parameterName, parameterType);
+	}
+
+	public List<JavaSignature> getJavaSignatures(
+		OpenAPIYAML openAPIYAML, String schemaName) {
+
+		Map<String, PathItem> pathItems = openAPIYAML.getPathItems();
+
+		if (pathItems == null) {
+			return Collections.emptyList();
+		}
+
+		List<JavaSignature> javaSignatures = new ArrayList<>();
+
+		for (Map.Entry<String, PathItem> entry : pathItems.entrySet()) {
+			String path = entry.getKey();
+			PathItem pathItem = entry.getValue();
+
+			_visitOperations(
+				pathItem,
+				operation -> {
+					String returnType = _getReturnType(openAPIYAML, operation);
+
+					JavaSignature javaSignature = new JavaSignature(
+						_getJavaParameters(operation),
+						_getMethodAnnotations(operation, pathItem, path),
+						_getMethodName(operation, path, returnType, schemaName),
+						returnType);
+
+					javaSignatures.add(javaSignature);
+				});
+		}
+
+		return javaSignatures;
+	}
+
+	private JavaTool() {
+	}
+
 	private Object _getComponent(OpenAPIYAML openAPIYAML, String reference) {
 		if (reference == null) {
 			return null;
@@ -96,6 +143,30 @@ public class JavaTool {
 		return StringUtil.lowerCase(clazz.getSimpleName());
 	}
 
+	private String _getJavaDataType(
+		String type, String format, String propertySchemaName) {
+
+		if (StringUtil.equals(format, "date-time") &&
+			StringUtil.equals(type, "string")) {
+
+			return "Date";
+		}
+
+		if (StringUtil.equals(format, "int64") &&
+			StringUtil.equals(type, "integer")) {
+
+			return "Long";
+		}
+
+		if (StringUtil.equalsIgnoreCase(type, "object") &&
+			(propertySchemaName != null)) {
+
+			return StringUtil.upperCaseFirstLetter(propertySchemaName);
+		}
+
+		return StringUtil.upperCaseFirstLetter(type);
+	}
+
 	private JavaParameter _getJavaParameter(Parameter parameter) {
 		List<String> parameterAnnotations = new ArrayList<>();
 
@@ -119,89 +190,6 @@ public class JavaTool {
 
 		return new JavaParameter(
 			parameterAnnotations, parameterName, parameterType);
-	}
-
-	public JavaParameter getJavaParameter(
-		String propertySchemaName, Schema schema) {
-
-		String parameterName = CamelCaseUtil.toCamelCase(
-			propertySchemaName, false);
-		String parameterType = _getJavaParameterType(
-			propertySchemaName, schema);
-
-		return new JavaParameter(null, parameterName, parameterType);
-	}
-
-	public List<JavaSignature> getJavaSignatures(
-		OpenAPIYAML openAPIYAML, String schemaName) {
-
-		Map<String, PathItem> pathItems = openAPIYAML.getPathItems();
-
-		if (pathItems == null) {
-			return Collections.emptyList();
-		}
-
-		List<JavaSignature> javaSignatures = new ArrayList<>();
-
-		for (Map.Entry<String, PathItem> entry : pathItems.entrySet()) {
-			String path = entry.getKey();
-			PathItem pathItem = entry.getValue();
-
-			_visitOperations(
-				pathItem,
-				operation -> {
-					String returnType = _getReturnType(openAPIYAML, operation);
-
-					JavaSignature javaSignature = new JavaSignature(
-						_getJavaParameters(operation),
-						_getMethodAnnotations(operation, pathItem, path),
-						_getMethodName(operation, path, returnType, schemaName),
-						returnType);
-
-					javaSignatures.add(javaSignature);
-				});
-		}
-
-		return javaSignatures;
-	}
-
-	private List<String> _getMediaTypes(Map<String, Content> contents) {
-		if ((contents == null) || contents.isEmpty()) {
-			return Collections.emptyList();
-		}
-
-		List<String> mediaTypes = new ArrayList<>(contents.keySet());
-
-		Collections.sort(mediaTypes);
-
-		return mediaTypes;
-	}
-
-	private JavaTool() {
-	}
-
-	private String _getJavaDataType(
-		String type, String format, String propertySchemaName) {
-
-		if (StringUtil.equals(format, "date-time") &&
-			StringUtil.equals(type, "string")) {
-
-			return "Date";
-		}
-
-		if (StringUtil.equals(format, "int64") &&
-			StringUtil.equals(type, "integer")) {
-
-			return "Long";
-		}
-
-		if (StringUtil.equalsIgnoreCase(type, "object") &&
-			(propertySchemaName != null)) {
-
-			return StringUtil.upperCaseFirstLetter(propertySchemaName);
-		}
-
-		return StringUtil.upperCaseFirstLetter(type);
 	}
 
 	private List<JavaParameter> _getJavaParameters(Operation operation) {
@@ -348,6 +336,18 @@ public class JavaTool {
 		}
 
 		return _getComponentType(schema.getReference());
+	}
+
+	private List<String> _getMediaTypes(Map<String, Content> contents) {
+		if ((contents == null) || contents.isEmpty()) {
+			return Collections.emptyList();
+		}
+
+		List<String> mediaTypes = new ArrayList<>(contents.keySet());
+
+		Collections.sort(mediaTypes);
+
+		return mediaTypes;
 	}
 
 	private String _getMethodAnnotationConsumes(Operation operation) {

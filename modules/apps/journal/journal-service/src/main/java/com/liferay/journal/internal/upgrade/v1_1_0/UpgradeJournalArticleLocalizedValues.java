@@ -97,7 +97,7 @@ public class UpgradeJournalArticleLocalizedValues extends UpgradeProcess {
 
 		try (LoggingTimer loggingTimer = new LoggingTimer();
 			PreparedStatement ps1 = connection.prepareStatement(
-				"select id_, title from JournalArticle" + whereClause);
+				"select id_, content from JournalArticle" + whereClause);
 			PreparedStatement ps2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,

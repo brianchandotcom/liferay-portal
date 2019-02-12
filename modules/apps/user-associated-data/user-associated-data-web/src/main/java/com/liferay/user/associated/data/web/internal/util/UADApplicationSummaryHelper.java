@@ -77,6 +77,14 @@ public class UADApplicationSummaryHelper {
 		).sum();
 	}
 
+	public int getReviewableUADEntitiesCount(
+		Stream<UADDisplay> uadDisplayStream, long userId, long[] groupIds) {
+
+		return uadDisplayStream.mapToInt(
+			uadDisplay -> (int)uadDisplay.searchCount(userId, groupIds, null)
+		).sum();
+	}
+
 	public int getTotalReviewableUADEntitiesCount(long userId) {
 		return getReviewableUADEntitiesCount(
 			_uadRegistry.getUADDisplayStream(), userId);
@@ -84,13 +92,13 @@ public class UADApplicationSummaryHelper {
 
 	public UADApplicationSummaryDisplay getUADApplicationSummaryDisplay(
 		String applicationKey, long userId,
-		List<UADDisplay> applicationUADDisplays) {
+		List<UADDisplay> applicationUADDisplays, long[] groupIds) {
 
 		UADApplicationSummaryDisplay uadApplicationSummaryDisplay =
 			new UADApplicationSummaryDisplay();
 
 		int count = getReviewableUADEntitiesCount(
-			applicationUADDisplays.stream(), userId);
+			applicationUADDisplays.stream(), userId, groupIds);
 
 		uadApplicationSummaryDisplay.setCount(count);
 
@@ -100,7 +108,7 @@ public class UADApplicationSummaryHelper {
 	}
 
 	public List<UADApplicationSummaryDisplay> getUADApplicationSummaryDisplays(
-		long userId, boolean siteScope) {
+		long userId, boolean siteScope, long[] groupIds) {
 
 		List<UADApplicationSummaryDisplay> uadApplicationSummaryDisplays =
 			new ArrayList<>();
@@ -125,7 +133,8 @@ public class UADApplicationSummaryHelper {
 			if (!ListUtil.isEmpty(applicationUADDisplays)) {
 				uadApplicationSummaryDisplays.add(
 					getUADApplicationSummaryDisplay(
-						applicationKey, userId, applicationUADDisplays));
+						applicationKey, userId, applicationUADDisplays,
+						groupIds));
 			}
 		}
 

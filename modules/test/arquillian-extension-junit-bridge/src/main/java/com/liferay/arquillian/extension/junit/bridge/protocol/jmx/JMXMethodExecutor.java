@@ -26,14 +26,13 @@ import javax.management.MBeanServerInvocationHandler;
 import javax.management.MalformedObjectNameException;
 import javax.management.ObjectName;
 
-import org.jboss.arquillian.container.test.spi.ContainerMethodExecutor;
 import org.jboss.arquillian.test.spi.TestMethodExecutor;
 import org.jboss.arquillian.test.spi.TestResult;
 
 /**
  * @author Matthew Tambara
  */
-public class JMXMethodExecutor implements ContainerMethodExecutor {
+public class JMXMethodExecutor {
 
 	public JMXMethodExecutor(MBeanServerConnection mBeanServerConnection) {
 		_jmxTestRunnerMBean = MBeanServerInvocationHandler.newProxyInstance(
@@ -41,7 +40,6 @@ public class JMXMethodExecutor implements ContainerMethodExecutor {
 			false);
 	}
 
-	@Override
 	public TestResult invoke(TestMethodExecutor testMethodExecutor) {
 		Object instance = testMethodExecutor.getInstance();
 

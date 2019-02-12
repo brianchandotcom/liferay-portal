@@ -18,7 +18,6 @@ import com.liferay.arquillian.extension.junit.bridge.protocol.jmx.JMXMethodExecu
 
 import javax.management.MBeanServerConnection;
 
-import org.jboss.arquillian.container.test.spi.ContainerMethodExecutor;
 import org.jboss.arquillian.core.api.Instance;
 import org.jboss.arquillian.core.api.InstanceProducer;
 import org.jboss.arquillian.core.api.annotation.Inject;
@@ -33,11 +32,11 @@ import org.jboss.arquillian.test.spi.event.suite.Test;
 public class RemoteTestExecuter {
 
 	public void execute(@Observes Test test) {
-		ContainerMethodExecutor containerMethodExecutor = new JMXMethodExecutor(
+		JMXMethodExecutor jmxMethodExecutor = new JMXMethodExecutor(
 			_mBeanServerConnectionInstance.get());
 
 		_testResultInstanceProducer.set(
-			containerMethodExecutor.invoke(test.getTestMethodExecutor()));
+			jmxMethodExecutor.invoke(test.getTestMethodExecutor()));
 	}
 
 	@Inject

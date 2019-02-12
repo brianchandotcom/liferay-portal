@@ -83,6 +83,12 @@ public interface KeywordResource {
 	@RequiresScope("everything.write")
 	public Keyword postContentSpaceKeywordsBatchCreate( @PathParam("content-space-id") Long contentSpaceId , Keyword keyword ) throws Exception;
 
+	@DELETE
+	@Path("/keywords/{keywords-id}")
+	@Produces("application/json")
+	@RequiresScope("everything.read")
+	public Response deleteKeyword( @PathParam("keywords-id") Long keywordsId ) throws Exception;
+
 	@GET
 	@Path("/keywords/{keywords-id}")
 	@Produces("application/json")

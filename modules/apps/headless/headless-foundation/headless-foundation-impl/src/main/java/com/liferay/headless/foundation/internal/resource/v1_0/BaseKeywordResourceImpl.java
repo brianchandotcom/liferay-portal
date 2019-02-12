@@ -55,6 +55,11 @@ public abstract class BaseKeywordResourceImpl implements KeywordResource {
 	}
 
 	@Override
+	public Response deleteKeyword(Long keywordsId) throws Exception {
+		return buildNoContentResponse();
+	}
+
+	@Override
 	public Keyword postContentSpaceKeyword(Long contentSpaceId, Keyword keyword)
 		throws Exception {
 

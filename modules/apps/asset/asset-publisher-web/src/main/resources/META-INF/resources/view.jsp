@@ -99,10 +99,6 @@ if (!assetPublisherDisplayContext.isPaginationTypeNone()) {
 	/>
 </c:if>
 
-<%
-request.setAttribute("view.jsp-viewInContext", assetPublisherDisplayContext.isAssetLinkBehaviorViewInPortlet());
-%>
-
 <c:choose>
 	<c:when test="<%= assetPublisherDisplayContext.isSelectionStyleDynamic() %>">
 		<%@ include file="/view_dynamic_list.jspf" %>

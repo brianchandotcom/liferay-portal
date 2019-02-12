@@ -63,7 +63,6 @@ if ((assetEntry.isVisible() && !assetPublisherDisplayContext.isEnablePermissions
 	request.setAttribute("view.jsp-results", new ArrayList());
 	request.setAttribute("view.jsp-showBackURL", !print);
 	request.setAttribute("view.jsp-title", assetRenderer.getTitle(locale));
-	request.setAttribute("view.jsp-viewInContext", assetPublisherDisplayContext.isAssetLinkBehaviorViewInPortlet());
 
 	PortalUtil.addPortletBreadcrumbEntry(request, assetRenderer.getTitle(locale), currentURL);
 %>

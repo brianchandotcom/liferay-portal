@@ -38,9 +38,7 @@ if (Validator.isNull(title)) {
 
 PortletURL editPortletURL = assetRenderer.getURLEdit(liferayPortletRequest, liferayPortletResponse);
 
-boolean viewInContext = ((Boolean)request.getAttribute("view.jsp-viewInContext")).booleanValue();
-
-String viewURL = assetPublisherHelper.getAssetViewURL(liferayPortletRequest, liferayPortletResponse, assetRenderer, assetEntry, viewInContext);
+String viewURL = assetPublisherHelper.getAssetViewURL(liferayPortletRequest, liferayPortletResponse, assetRenderer, assetEntry, assetPublisherDisplayContext.isAssetLinkBehaviorViewInPortlet());
 
 request.setAttribute("view.jsp-showIconLabel", false);
 %>

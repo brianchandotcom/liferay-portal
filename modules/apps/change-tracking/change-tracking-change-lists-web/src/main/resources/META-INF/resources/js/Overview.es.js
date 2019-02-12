@@ -45,9 +45,112 @@ class Overview extends PortletBase {
 			);
 	}
 
+	_fetchAll(urls, init) {
+		return Promise.all(
+			urls.map(
+				url => fetch(url, init)
+					.then(r => r.json())
+					.then(data => data[0])
+					.catch(
+						error => {
+							const message = typeof error === 'string' ?
+								error :
+								Liferay.Util.sub(Liferay.Language.get('an-error-occured-while-getting-data-from-x'), url);
+
+							openToast(
+								{
+									message,
+									title: Liferay.Language.get('error'),
+									type: 'danger'
+								}
+							);
+						}
+					)
+			)
+		);
+	}
+
+	_fetchChangeEntries(url) {
+		let headers = new Headers();
+		headers.append('Content-Type', 'application/json');
+
+		let init = {
+			credentials: 'include',
+			headers,
+			method: 'GET'
+		};
+
+		fetch(url, init)
+			.then(r => r.json())
+			.then(response => this._populateChangeEntries(response))
+			.catch(
+				error => {
+					const message = typeof error === 'string' ?
+						error :
+						Liferay.Util.sub(Liferay.Language.get('an-error-occured-while-getting-data-from-x'), url);
+
+					openToast(
+						{
+							message,
+							title: Liferay.Language.get('error'),
+							type: 'danger'
+						}
+					);
+				}
+			);
+	}
+
+	_populateChangeEntries(changeEntriesResult) {
+		this.changeEntries = [];
+
+		changeEntriesResult.forEach(
+			changeEntry => {
+				let changeTypeStr = Liferay.Language.get('added');
+
+				if (changeEntry.changeType === 2) {
+					changeTypeStr = Liferay.Language.get('deleted');
+				}
+				else if (changeEntry.changeType === 3) {
+					changeTypeStr = Liferay.Language.get('modified');
+				}
+
+				this.changeEntries.push(
+					{
+						changeType: changeTypeStr,
+						conflict: false,
+						contentType: changeEntry.contentType,
+						lastEdited: new Intl.DateTimeFormat(
+							Liferay.ThemeDisplay.getBCP47LanguageId(),
+							{
+								day: 'numeric',
+								hour: 'numeric',
+								minute: 'numeric',
+								month: 'numeric',
+								year: 'numeric'
+							}).format(changeEntry.modifiedDate),
+						site: changeEntry.siteName,
+						title: changeEntry.title,
+						userName: changeEntry.userName,
+						version: String(changeEntry.version)
+					}
+				);
+			}
+		);
+	}
+
 	_populateFields(requestResult) {
 		let activeCollection = requestResult[0];
 		let productionInformation = requestResult[1];
+
+		let foundLink = activeCollection.links.find(
+			function(link) {
+				return link.rel === 'entries';
+			}
+		);
+
+		if (foundLink) {
+			this._fetchChangeEntries(foundLink.href);
+		}
 
 		// Changes
 
@@ -97,45 +200,21 @@ class Overview extends PortletBase {
 		// Production Information Published By
 
 		let publishDate = new Date(productionInformation.date);
-		let publishDateFormatOptions = {
-			day: 'numeric',
-			hour: 'numeric',
-			minute: 'numeric',
-			month: 'numeric',
-			year: 'numeric'
-		};
 
 		this.publishedBy = {
-			dateTime: new Intl.DateTimeFormat(Liferay.ThemeDisplay.getBCP47LanguageId(), publishDateFormatOptions).format(publishDate),
+			dateTime: new Intl.DateTimeFormat(
+				Liferay.ThemeDisplay.getBCP47LanguageId(),
+				{
+					day: 'numeric',
+					hour: 'numeric',
+					minute: 'numeric',
+					month: 'numeric',
+					year: 'numeric'
+				}).format(publishDate),
 			userInitials: productionInformation.userInitials,
 			userName: productionInformation.userName,
 			userPortraitURL: productionInformation.userPortraitURL
 		};
-	}
-
-	_fetchAll(urls, init) {
-		return Promise.all(
-			urls.map(
-				url => fetch(url, init)
-					.then(r => r.json())
-					.then(data => data[0])
-					.catch(
-						error => {
-							const message = typeof error === 'string' ?
-								error :
-								Lang.sub(Liferay.Language.get('an-error-occured-while-getting-data-from-x'), [url]);
-
-							openToast(
-								{
-									message,
-									title: Liferay.Language.get('error'),
-									type: 'danger'
-								}
-							);
-						}
-					)
-			)
-		);
 	}
 
 }
@@ -149,6 +228,17 @@ class Overview extends PortletBase {
 Overview.STATE = {
 
 	/**
+	 * Contains the active CT Collection id retrieved from the REST service.
+	 * @default 0
+	 * @instance
+	 * @memberOf Overview
+	 * @review
+	 * @type {number}
+	 */
+
+	activeCTCollectionId: Config.number().value(0),
+
+	/**
 	 * Contains the number of changes for the active change list
 	 * @default
 	 * @instance
@@ -156,6 +246,7 @@ Overview.STATE = {
 	 * @review
 	 * @type {object}
 	 */
+
 	changes: Config.shapeOf(
 		{
 			added: Config.number().value(0),
@@ -180,9 +271,34 @@ Overview.STATE = {
 	 * @instance
 	 * @memberOf Overview
 	 * @review
-	 * @type {String}
+	 * @type {string}
 	 */
+
 	descriptionProductionInformation: Config.string(),
+
+	/**
+	 * Contains the change entries for the currently selected CT Collection.
+	 * @default undefined
+	 * @instance
+	 * @memberOf Overview
+	 * @review
+	 * @type {object}
+	 */
+
+	changeEntries: Config.arrayOf(
+		Config.shapeOf(
+			{
+				changeType: Config.string(),
+				conflict: Config.bool(),
+				contentType: Config.string(),
+				lastEdited: Config.string(),
+				site: Config.string(),
+				title: Config.string(),
+				userName: Config.string(),
+				version: Config.string()
+			}
+		)
+	),
 
 	/**
 	 * List of drop down menu items
@@ -190,8 +306,9 @@ Overview.STATE = {
 	 * @instance
 	 * @memberOf Overview
 	 * @review
-	 * @type {Array}
+	 * @type {array}
 	 */
+
 	changeListsDropdownMenu: Config.arrayOf(
 		Config.shapeOf(
 			{
@@ -217,8 +334,9 @@ Overview.STATE = {
 	 * @instance
 	 * @memberOf Overview
 	 * @review
-	 * @type {String}
+	 * @type {string}
 	 */
+
 	headerTitleProductionInformation: Config.string(),
 
 	/**
@@ -250,14 +368,26 @@ Overview.STATE = {
 	),
 
 	/**
-	 * Api url
+	 * REST API URL to the active CT Collection
 	 * @default
 	 * @instance
 	 * @memberOf Overview
 	 * @review
-	 * @type {!String}
+	 * @type {!string}
 	 */
+
 	urlActiveCollection: Config.string().required(),
+
+	/**
+	 * The URL for the REST service to the change entries
+	 * @default
+	 * @instance
+	 * @memberOf Overview
+	 * @review
+	 * @type {string}
+	 */
+
+	urlChangeEntries: Config.string(),
 
 	/**
 	 * Property that contains the url for the REST service to the change

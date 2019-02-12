@@ -21,15 +21,12 @@ import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.fragment.util.comparator.FragmentEntryLinkLastPropagationDateComparator;
 import com.liferay.fragment.web.internal.security.permission.resource.FragmentPermission;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -46,8 +43,6 @@ import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import javax.servlet.http.HttpServletRequest;
-
 /**
  * @author Pavel Savinov
  */
@@ -58,23 +53,6 @@ public class FragmentEntryLinkDisplayContext {
 
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
-
-		_request = PortalUtil.getHttpServletRequest(renderRequest);
-	}
-
-	public List<DropdownItem> getActionItemsDropdownItemList() {
-		return new DropdownItemList() {
-			{
-				add(
-					dropdownItem -> {
-						dropdownItem.putData("action", "propagate");
-						dropdownItem.setIcon("propagation");
-						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "propagate"));
-						dropdownItem.setQuickAction(true);
-					});
-			}
-		};
 	}
 
 	public int getAllUsageCount() throws PortalException {
@@ -91,20 +69,6 @@ public class FragmentEntryLinkDisplayContext {
 			fragmentEntry.getGroupId(), getFragmentEntryId(),
 			PortalUtil.getClassNameId(LayoutPageTemplateEntry.class),
 			LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE);
-	}
-
-	public List<DropdownItem> getFilterItemsDropdownItems() {
-		return new DropdownItemList() {
-			{
-				addGroup(
-					dropdownGroupItem -> {
-						dropdownGroupItem.setDropdownItems(
-							_getOrderByDropdownItems());
-						dropdownGroupItem.setLabel(
-							LanguageUtil.get(_request, "order-by"));
-					});
-			}
-		};
 	}
 
 	public long getFragmentCollectionId() {
@@ -279,6 +243,9 @@ public class FragmentEntryLinkDisplayContext {
 			_renderRequest, _renderResponse.createRenderURL(), null,
 			"there-are-no-fragment-usages");
 
+		fragmentEntryLinksSearchContainer.setId(
+			"fragmentEntryLinks" + getFragmentCollectionId());
+
 		if (FragmentPermission.contains(
 				themeDisplay.getPermissionChecker(),
 				themeDisplay.getScopeGroupId(),
@@ -376,31 +343,6 @@ public class FragmentEntryLinkDisplayContext {
 		return _searchContainer;
 	}
 
-	public String getSortingURL() {
-		PortletURL sortingURL = getPortletURL();
-
-		sortingURL.setParameter(
-			"orderByType",
-			Objects.equals(getOrderByType(), "asc") ? "desc" : "asc");
-
-		return sortingURL.toString();
-	}
-
-	private List<DropdownItem> _getOrderByDropdownItems() {
-		return new DropdownItemList() {
-			{
-				add(
-					dropdownItem -> {
-						dropdownItem.setActive(true);
-						dropdownItem.setHref(
-							getPortletURL(), "orderByCol", "last-propagation");
-						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "last-propagation"));
-					});
-			}
-		};
-	}
-
 	private Long _fragmentCollectionId;
 	private FragmentEntry _fragmentEntry;
 	private Long _fragmentEntryId;
@@ -411,7 +353,6 @@ public class FragmentEntryLinkDisplayContext {
 	private String _redirect;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _request;
 	private SearchContainer _searchContainer;
 
 }

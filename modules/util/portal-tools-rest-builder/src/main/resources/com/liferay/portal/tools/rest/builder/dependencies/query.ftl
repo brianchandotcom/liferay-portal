@@ -1,4 +1,4 @@
-package ${configYAML.apiPackagePath}.internal.query;
+package ${configYAML.apiPackagePath}.internal.query.${versionDirName};
 
 <#compress>
 	<#list openAPIYAML.components.schemas?keys as schemaName>
@@ -6,8 +6,6 @@ package ${configYAML.apiPackagePath}.internal.query;
 		import ${configYAML.apiPackagePath}.resource.${versionDirName}.${schemaName}Resource;
 	</#list>
 </#compress>
-
-import ${configYAML.apiPackagePath}.query.Query;
 
 import com.liferay.portal.vulcan.context.Pagination;
 import com.liferay.portal.vulcan.dto.Page;

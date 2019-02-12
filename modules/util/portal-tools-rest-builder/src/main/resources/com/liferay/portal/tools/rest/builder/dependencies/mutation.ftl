@@ -1,4 +1,4 @@
-package ${configYAML.apiPackagePath}.internal.mutation;
+package ${configYAML.apiPackagePath}.internal.mutation.${versionDirName};
 
 <#compress>
 	<#list openAPIYAML.components.schemas?keys as schemaName>
@@ -6,8 +6,6 @@ package ${configYAML.apiPackagePath}.internal.mutation;
 		import ${configYAML.apiPackagePath}.resource.${versionDirName}.${schemaName}Resource;
 	</#list>
 </#compress>
-
-import ${configYAML.apiPackagePath}.mutation.Mutation;
 
 import com.liferay.portal.vulcan.context.Pagination;
 import com.liferay.portal.vulcan.dto.Page;

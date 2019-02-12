@@ -123,8 +123,8 @@ public class RESTBuilder {
 			context.put("openAPIYAML", openAPIYAML);
 			context.put("versionDirName", versionDirName);
 
-			_createMutationFile(context);
-			_createQueryFile(context);
+			_createMutationFile(context, versionDirName);
+			_createQueryFile(context, versionDirName);
 
 			Components components = openAPIYAML.getComponents();
 
@@ -337,7 +337,8 @@ public class RESTBuilder {
 			FreeMarkerUtil.processTemplate(_copyrightFileName, "dto", context));
 	}
 
-	private void _createMutationFile(Map<String, Object> context)
+	private void _createMutationFile(
+			Map<String, Object> context, String versionDirName)
 		throws Exception {
 
 		StringBuilder sb = new StringBuilder();
@@ -349,7 +350,9 @@ public class RESTBuilder {
 
 		sb.append(apiPackagePath.replace('.', '/'));
 
-		sb.append("/internal/mutation/Mutation.java");
+		sb.append("/internal/mutation/");
+		sb.append(versionDirName);
+		sb.append("/Mutation.java");
 
 		File file = new File(sb.toString());
 
@@ -383,7 +386,8 @@ public class RESTBuilder {
 			file, FreeMarkerUtil.processTemplate(null, "properties", context));
 	}
 
-	private void _createQueryFile(Map<String, Object> context)
+	private void _createQueryFile(
+			Map<String, Object> context, String versionDirName)
 		throws Exception {
 
 		StringBuilder sb = new StringBuilder();
@@ -395,7 +399,9 @@ public class RESTBuilder {
 
 		sb.append(apiPackagePath.replace('.', '/'));
 
-		sb.append("/internal/query/Query.java");
+		sb.append("/internal/query/");
+		sb.append(versionDirName);
+		sb.append("/Query.java");
 
 		File file = new File(sb.toString());
 

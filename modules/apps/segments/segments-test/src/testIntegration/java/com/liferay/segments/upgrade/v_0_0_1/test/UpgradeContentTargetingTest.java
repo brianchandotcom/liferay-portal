@@ -243,6 +243,45 @@ public class UpgradeContentTargetingTest {
 			"(languageId eq 'es_ES')", criterion.getFilterString());
 	}
 
+	@Test
+	public void testUpgradeContentTargetingUserSegmentsWithOrganizationMemberRule()
+		throws Exception {
+
+		long contentTargetingUserSegmentId = -1L;
+
+		insertContentTargetingRuleInstance(
+			contentTargetingUserSegmentId, "OrganizationMemberRule", "12345");
+
+		insertContentTargetingUserSegment(
+			contentTargetingUserSegmentId,
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomLocaleStringMap());
+
+		_upgradeContentTargeting.upgrade();
+
+		SegmentsEntry segmentsEntry =
+			_segmentsEntryLocalService.fetchSegmentsEntry(
+				_group.getGroupId(), "CT." + contentTargetingUserSegmentId,
+				false);
+
+		Assert.assertNotNull(segmentsEntry);
+
+		Criteria criteriaObj = segmentsEntry.getCriteriaObj();
+
+		Assert.assertNotNull(criteriaObj);
+
+		Criteria.Criterion criterion = criteriaObj.getCriterion(
+			"user-organization");
+
+		Assert.assertNotNull(criterion);
+
+		Assert.assertEquals(
+			Criteria.Conjunction.AND,
+			Criteria.Conjunction.parse(criterion.getConjunction()));
+		Assert.assertEquals(
+			"(organizationId eq '12345')", criterion.getFilterString());
+	}
+
 	protected void createContentTargetingTables()
 		throws IOException, SQLException {
 

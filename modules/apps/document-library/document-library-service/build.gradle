@@ -38,6 +38,5 @@ dependencies {
 	compileOnly project(":core:petra:petra-string")
 
 	testCompile project(":apps:portal-search:portal-search")
-	testCompile project(":core:petra:petra-lang")
 	testCompile project(":core:registry-api")
 }

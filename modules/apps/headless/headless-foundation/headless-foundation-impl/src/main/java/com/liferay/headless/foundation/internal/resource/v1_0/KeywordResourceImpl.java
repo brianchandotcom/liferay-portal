@@ -14,12 +14,15 @@
 
 package com.liferay.headless.foundation.internal.resource.v1_0;
 
+import com.liferay.asset.kernel.exception.AssetTagNameException;
+import com.liferay.asset.kernel.exception.DuplicateTagException;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetTagService;
 import com.liferay.headless.foundation.dto.v1_0.Keyword;
 import com.liferay.headless.foundation.resource.v1_0.KeywordResource;
 import com.liferay.portal.kernel.service.ServiceContext;
 
+import javax.ws.rs.ClientErrorException;
 import javax.ws.rs.core.Response;
 
 import org.osgi.service.component.annotations.Component;
@@ -59,20 +62,42 @@ public class KeywordResourceImpl extends BaseKeywordResourceImpl {
 		serviceContext.setAddGuestPermissions(true);
 		serviceContext.setScopeGroupId(contentSpaceId);
 
-		AssetTag assetTag = _assetTagService.addTag(
-			contentSpaceId, keyword.getName(), serviceContext);
+		try {
+			AssetTag assetTag = _assetTagService.addTag(
+				contentSpaceId, keyword.getName(), serviceContext);
 
-		return _toKeyword(assetTag);
+			return _toKeyword(assetTag);
+		}
+		catch (DuplicateTagException dte) {
+			throw new ClientErrorException(
+				"A tag with the name " + keyword.getName() + " already exists",
+				422, dte);
+		}
+		catch (AssetTagNameException atne) {
+			throw new ClientErrorException(
+				"Name contains invalid characters", 422, atne);
+		}
 	}
 
 	@Override
 	public Keyword putKeyword(Long keywordsId, Keyword keyword)
 		throws Exception {
 
-		AssetTag assetTag = _assetTagService.updateTag(
-			keywordsId, keyword.getName(), null);
+		try {
+			AssetTag assetTag = _assetTagService.updateTag(
+				keywordsId, keyword.getName(), null);
 
-		return _toKeyword(assetTag);
+			return _toKeyword(assetTag);
+		}
+		catch (DuplicateTagException dte) {
+			throw new ClientErrorException(
+				"A tag with the name " + keyword.getName() + " already exists",
+				422, dte);
+		}
+		catch (AssetTagNameException atne) {
+			throw new ClientErrorException(
+				"Name contains invalid characters", 422, atne);
+		}
 	}
 
 	private static Keyword _toKeyword(AssetTag assetTag) {

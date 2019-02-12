@@ -34,9 +34,72 @@ for (AssetEntryResult assetEntryResult : assetEntryResults) {
 
 		<%
 		request.setAttribute("view.jsp-results", assetEntries);
+
+		for (int assetEntryIndex = 0; assetEntryIndex < assetEntries.size(); assetEntryIndex++) {
+			AssetEntry assetEntry = assetEntries.get(assetEntryIndex);
+
+			long classPK = assetEntry.getClassPK();
+
+			AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassNameId(assetEntry.getClassNameId());
+
+			if (assetRendererFactory == null) {
+				continue;
+			}
+
+			AssetRenderer<?> assetRenderer = null;
+
+			try {
+				assetRenderer = assetRendererFactory.getAssetRenderer(classPK);
+			}
+			catch (Exception e) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(e, e);
+				}
+			}
+
+			if ((assetRenderer == null) || !assetRenderer.isDisplayable()) {
+				continue;
+			}
+
+			request.setAttribute("view.jsp-assetEntry", assetEntry);
+			request.setAttribute("view.jsp-assetEntryIndex", Integer.valueOf(assetEntryIndex));
+			request.setAttribute("view.jsp-assetRenderer", assetRenderer);
+			request.setAttribute("view.jsp-assetRendererFactory", assetRendererFactory);
+			request.setAttribute("view.jsp-print", Boolean.FALSE);
+			request.setAttribute("view.jsp-title", assetRenderer.getTitle(locale));
+
+			try {
+				if (StringUtil.startsWith(assetPublisherDisplayContext.getDisplayStyle(), PortletDisplayTemplateManager.DISPLAY_STYLE_PREFIX)) {
+					assetPublisherDisplayContext.setDisplayStyle(assetPublisherDisplayContext.getDefaultDisplayStyle());
+				}
+
+				if (!ArrayUtil.contains(assetPublisherDisplayContext.getDisplayStyles(), assetPublisherDisplayContext.getDisplayStyle())) {
 		%>
 
-		<%@ include file="/view_dynamic_list_asset.jspf" %>
+					<%= HtmlUtil.escape(LanguageUtil.format(request, "x-is-not-a-display-type", assetPublisherDisplayContext.getDisplayStyle())) %>
+
+				<%
+				}
+				else {
+					for (String curDisplayStyle : assetPublisherDisplayContext.getDisplayStyles()) {
+						if (assetPublisherDisplayContext.getDisplayStyle().equals(curDisplayStyle)) {
+							String displayStyleJsp = "/display/" + TextFormatter.format(curDisplayStyle, TextFormatter.N) + ".jsp";
+				%>
+
+							<liferay-util:include page="<%= displayStyleJsp %>" servletContext="<%= application %>" />
+
+		<%
+							break;
+						}
+					}
+				}
+			}
+			catch (Exception e) {
+				_log.error(e.getMessage());
+			}
+		}
+		%>
+
 	</liferay-ddm:template-renderer>
 
 <%

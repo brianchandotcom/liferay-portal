@@ -50,6 +50,7 @@ page import="com.liferay.fragment.web.internal.display.context.FragmentCollectio
 page import="com.liferay.fragment.web.internal.display.context.FragmentCollectionsDisplayContext" %><%@
 page import="com.liferay.fragment.web.internal.display.context.FragmentDisplayContext" %><%@
 page import="com.liferay.fragment.web.internal.display.context.FragmentEntryLinkDisplayContext" %><%@
+page import="com.liferay.fragment.web.internal.display.context.FragmentEntryUsageManagementToolbarDisplayContext" %><%@
 page import="com.liferay.fragment.web.internal.display.context.FragmentManagementToolbarDisplayContext" %><%@
 page import="com.liferay.fragment.web.internal.display.context.SelectFragmentCollectionDisplayContext" %><%@
 page import="com.liferay.fragment.web.internal.display.context.SelectFragmentCollectionManagementToolbarDisplayContext" %><%@

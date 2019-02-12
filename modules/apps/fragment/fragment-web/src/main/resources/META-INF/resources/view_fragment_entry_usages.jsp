@@ -111,17 +111,12 @@ renderResponse.setTitle(LanguageUtil.format(request, "usages-and-propagation-x",
 					</c:choose>
 				</h3>
 
+				<%
+				FragmentEntryUsageManagementToolbarDisplayContext fragmentEntryUsageManagementToolbarDisplayContext = new FragmentEntryUsageManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, fragmentEntryLinkDisplayContext.getSearchContainer());
+				%>
+
 				<clay:management-toolbar
-					actionDropdownItems="<%= FragmentPermission.contains(permissionChecker, scopeGroupId, FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES) ? fragmentEntryLinkDisplayContext.getActionItemsDropdownItemList() : null %>"
-					componentId="fragmentEntryLinksManagementToolbar"
-					disabled="<%= fragmentEntry.getUsageCount() <= 0 %>"
-					filterDropdownItems="<%= fragmentEntryLinkDisplayContext.getFilterItemsDropdownItems() %>"
-					itemsTotal="<%= fragmentEntry.getUsageCount() %>"
-					searchContainerId="fragmentEntryLinks"
-					selectable="<%= FragmentPermission.contains(permissionChecker, scopeGroupId, FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES) %>"
-					showSearch="<%= false %>"
-					sortingOrder="<%= fragmentEntryLinkDisplayContext.getOrderByType() %>"
-					sortingURL="<%= fragmentEntryLinkDisplayContext.getSortingURL() %>"
+					displayContext="<%= fragmentEntryUsageManagementToolbarDisplayContext %>"
 				/>
 
 				<portlet:actionURL name="/fragment/propagate_fragment_entry_changes" var="propagateFragmentEntryChangesURL">
@@ -130,7 +125,6 @@ renderResponse.setTitle(LanguageUtil.format(request, "usages-and-propagation-x",
 
 				<aui:form action="<%= propagateFragmentEntryChangesURL %>" name="fm">
 					<liferay-ui:search-container
-						id="fragmentEntryLinks"
 						searchContainer="<%= fragmentEntryLinkDisplayContext.getSearchContainer() %>"
 					>
 						<liferay-ui:search-container-row
@@ -175,27 +169,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "usages-and-propagation-x",
 	</div>
 </div>
 
-<aui:script>
-	var propagate = function() {
-		submitForm(document.querySelector('#<portlet:namespace />fm'));
-	};
-
-	var ACTIONS = {
-		'propagate': propagate
-	};
-
-	Liferay.componentReady('fragmentEntryLinksManagementToolbar').then(
-		function(managementToolbar) {
-			managementToolbar.on(
-				'actionItemClicked',
-				function(event) {
-					var itemData = event.data.item.data;
-
-					if (itemData && itemData.action && ACTIONS[itemData.action]) {
-						ACTIONS[itemData.action]();
-					}
-				}
-			);
-		}
-	);
-</aui:script>
+<liferay-frontend:component
+	componentId="<%= fragmentEntryUsageManagementToolbarDisplayContext.getDefaultEventHandler() %>"
+	module="js/FragmentEntryUsageManagementToolbarDefaultEventHandler.es"
+/>

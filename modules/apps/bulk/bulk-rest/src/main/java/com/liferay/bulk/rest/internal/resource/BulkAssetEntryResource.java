@@ -119,8 +119,7 @@ public class BulkAssetEntryResource {
 
 			return new BulkAssetEntryCommonCategoriesModel(
 				bulkSelection.describe(locale),
-				_groupByAssetVocabulary(commonCategories),
-				_getAssetVocabularies(commonCategories));
+				_groupByAssetVocabulary(commonCategories));
 		}
 		catch (Exception e) {
 			return new BulkAssetEntryCommonCategoriesModel(e);
@@ -315,28 +314,16 @@ public class BulkAssetEntryResource {
 		};
 	}
 
-	private List<AssetVocabulary> _getAssetVocabularies(
-		Set<AssetCategory> assetCategories) {
+	private Map<AssetVocabulary, List<AssetCategory>> _groupByAssetVocabulary(
+		Set<AssetCategory> commonCategories) {
 
-		Stream<AssetCategory> assetCategoryStream = assetCategories.stream();
-
-		return assetCategoryStream.map(
-			AssetCategory::getVocabularyId
-		).distinct(
-		).map(
-			_assetVocabularyLocalService::fetchAssetVocabulary
-		).collect(
-			Collectors.toList()
-		);
-	}
-
-	private Map<Long, List<AssetCategory>> _groupByAssetVocabulary(
-		Set<AssetCategory> assetCategories) {
-
-		Stream<AssetCategory> assetCategoryStream = assetCategories.stream();
+		Stream<AssetCategory> assetCategoryStream = commonCategories.stream();
 
 		return assetCategoryStream.collect(
-			Collectors.groupingBy(AssetCategory::getVocabularyId));
+			Collectors.groupingBy(
+				assetCategory ->
+					_assetVocabularyLocalService.fetchAssetVocabulary(
+						assetCategory.getVocabularyId())));
 	}
 
 	@Reference

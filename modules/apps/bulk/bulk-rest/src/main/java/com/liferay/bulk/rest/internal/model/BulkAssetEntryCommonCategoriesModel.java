@@ -35,23 +35,22 @@ public class BulkAssetEntryCommonCategoriesModel {
 	}
 
 	public BulkAssetEntryCommonCategoriesModel(
-		String description, Map<Long, List<AssetCategory>> assetCategoriesMap,
-		List<AssetVocabulary> assetVocabularies) {
+		String description,
+		Map<AssetVocabulary, List<AssetCategory>> assetVocabularyMap) {
 
 		_description = description;
 
-		Set<Map.Entry<Long, List<AssetCategory>>> entries =
-			assetCategoriesMap.entrySet();
+		Set<Map.Entry<AssetVocabulary, List<AssetCategory>>> entries =
+			assetVocabularyMap.entrySet();
 
-		Stream<Map.Entry<Long, List<AssetCategory>>> entryStream =
+		Stream<Map.Entry<AssetVocabulary, List<AssetCategory>>> entryStream =
 			entries.stream();
 
-		_categories = entryStream.collect(
-			Collectors.toMap(
-				Map.Entry::getKey,
-				entry -> _toAssetCategoryModel(entry.getValue())));
-
-		_vocabularies = _toAssetVocabularyModel(assetVocabularies);
+		_vocabularies = entryStream.map(
+			entry -> _toAssetVocabularyModel(entry.getKey(), entry.getValue())
+		).collect(
+			Collectors.toList()
+		);
 
 		_status = "success";
 	}
@@ -59,11 +58,6 @@ public class BulkAssetEntryCommonCategoriesModel {
 	public BulkAssetEntryCommonCategoriesModel(Throwable throwable) {
 		_description = throwable.getMessage();
 		_status = "error";
-		_categories = null;
-	}
-
-	public Map<Long, List<AssetCategoryModel>> getCategories() {
-		return _categories;
 	}
 
 	public String getDescription() {
@@ -76,10 +70,6 @@ public class BulkAssetEntryCommonCategoriesModel {
 
 	public List<AssetVocabularyModel> getVocabularies() {
 		return _vocabularies;
-	}
-
-	public void setCategories(Map<Long, List<AssetCategoryModel>> categories) {
-		_categories = categories;
 	}
 
 	public void setDescription(String description) {
@@ -124,9 +114,17 @@ public class BulkAssetEntryCommonCategoriesModel {
 
 	public class AssetVocabularyModel {
 
-		public AssetVocabularyModel(long vocabularyId, String name) {
+		public AssetVocabularyModel(
+			long vocabularyId, String name,
+			List<AssetCategoryModel> categories) {
+
 			_vocabularyId = vocabularyId;
 			_name = name;
+			_categories = categories;
+		}
+
+		public List<AssetCategoryModel> getCategories() {
+			return _categories;
 		}
 
 		public String getName() {
@@ -137,6 +135,10 @@ public class BulkAssetEntryCommonCategoriesModel {
 			return _vocabularyId;
 		}
 
+		public void setCategories(List<AssetCategoryModel> categories) {
+			_categories = categories;
+		}
+
 		public void setName(String name) {
 			_name = name;
 		}
@@ -145,39 +147,33 @@ public class BulkAssetEntryCommonCategoriesModel {
 			_vocabularyId = vocabularyId;
 		}
 
+		private List<AssetCategoryModel> _categories;
 		private String _name;
 		private long _vocabularyId;
 
 	}
 
-	private List<AssetCategoryModel> _toAssetCategoryModel(
-		List<AssetCategory> assetCategories) {
+	private AssetCategoryModel _toAssetCategoryModel(
+		AssetCategory assetCategory) {
+
+		return new AssetCategoryModel(
+			assetCategory.getCategoryId(), assetCategory.getName());
+	}
+
+	private AssetVocabularyModel _toAssetVocabularyModel(
+		AssetVocabulary assetVocabulary, List<AssetCategory> assetCategories) {
 
 		Stream<AssetCategory> assetCategoryStream = assetCategories.stream();
 
-		return assetCategoryStream.map(
-			assetCategory -> new AssetCategoryModel(
-				assetCategory.getCategoryId(), assetCategory.getName())
-		).collect(
-			Collectors.toList()
-		);
+		return new AssetVocabularyModel(
+			assetVocabulary.getVocabularyId(), assetVocabulary.getName(),
+			assetCategoryStream.map(
+				this::_toAssetCategoryModel
+			).collect(
+				Collectors.toList()
+			));
 	}
 
-	private List<AssetVocabularyModel> _toAssetVocabularyModel(
-		List<AssetVocabulary> assetVocabularies) {
-
-		Stream<AssetVocabulary> assetVocabularyStream =
-			assetVocabularies.stream();
-
-		return assetVocabularyStream.map(
-			assetVocabulary -> new AssetVocabularyModel(
-				assetVocabulary.getVocabularyId(), assetVocabulary.getName())
-		).collect(
-			Collectors.toList()
-		);
-	}
-
-	private Map<Long, List<AssetCategoryModel>> _categories;
 	private String _description;
 	private String _status;
 	private List<AssetVocabularyModel> _vocabularies;

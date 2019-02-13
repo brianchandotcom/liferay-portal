@@ -34,6 +34,10 @@ AUI.add(
 						validator: Lang.isString
 					},
 
+					pathModule: {
+						validator: Lang.isString
+					},
+
 					searchContainerId: {
 						validator: Lang.isString
 					},
@@ -263,8 +267,9 @@ AUI.add(
 						var namespace = instance.NS;
 
 						if (!editCategories) {
-							var urlCategories = themeDisplay.getPortalURL() + '/o/bulk/asset/categories/' + instance._config.scopeGroupId + '/' + instance.get('classNameId') + '/common';
-							var urlUpdateCategories = themeDisplay.getPortalURL() + '/o/bulk/asset/categories/' + instance.get('classNameId');
+							var pathModule = instance.get('pathModule');
+							var urlCategories = pathModule + '/bulk/asset/categories/' + instance._config.scopeGroupId + '/' + instance.get('classNameId') + '/common';
+							var urlUpdateCategories = pathModule + '/bulk/asset/categories/' + instance.get('classNameId');
 
 							Liferay.Loader.require(
 								instance.get('npmResolvedPackageName') + '/document_library/categorization/EditCategories.es',
@@ -304,9 +309,10 @@ AUI.add(
 						var bulkSelection = instance._searchContainer.select && instance._searchContainer.select.get('bulkSelection');
 
 						if (!editTagsComponent) {
-							var urlSearchTags = themeDisplay.getPortalURL() + '/o/bulk/asset/tags/' + instance._config.scopeGroupId + '/search';
-							var urlTags = themeDisplay.getPortalURL() + '/o/bulk/asset/tags/' + instance.get('classNameId') + '/common';
-							var urlUpdateTags = themeDisplay.getPortalURL() + '/o/bulk/asset/tags/' + instance.get('classNameId');
+							var pathModule = instance.get('pathModule');
+							var urlSearchTags = pathModule +'/bulk/asset/tags/' + instance._config.scopeGroupId + '/search';
+							var urlTags = pathModule + '/bulk/asset/tags/' + instance.get('classNameId') + '/common';
+							var urlUpdateTags = pathModule + '/bulk/asset/tags/' + instance.get('classNameId');
 
 							Liferay.Loader.require(
 								instance.get('npmResolvedPackageName') + '/document_library/categorization/EditTags.es',

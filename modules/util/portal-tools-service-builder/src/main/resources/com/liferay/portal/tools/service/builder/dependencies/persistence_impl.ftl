@@ -36,7 +36,7 @@ import ${apiPackagePath}.service.persistence.${entity.name}Persistence;
 	import ${apiPackagePath}.service.persistence.${entity.PKClassName};
 </#if>
 
-import ${serviceBuilder.getCompatJavaClassName("StringBundler")};
+import ${serviceBuilder.getCompatProperty("StringBundler")};
 
 import aQute.bnd.annotation.ProviderType;
 

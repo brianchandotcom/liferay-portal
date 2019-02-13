@@ -49,7 +49,7 @@ import ${apiPackagePath}.model.${entity.name}Soap;
 </#if>
 
 import ${apiPackagePath}.service.${entity.name}LocalServiceUtil;
-import ${serviceBuilder.getCompatJavaClassName("StringBundler")};
+import ${serviceBuilder.getCompatProperty("StringBundler")};
 
 import aQute.bnd.annotation.ProviderType;
 

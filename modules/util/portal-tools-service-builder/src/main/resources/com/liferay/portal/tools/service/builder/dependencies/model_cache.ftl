@@ -6,8 +6,8 @@ import ${apiPackagePath}.model.${entity.name};
 	import ${apiPackagePath}.service.persistence.${entity.name}PK;
 </#if>
 
-import ${serviceBuilder.getCompatJavaClassName("HashUtil")};
-import ${serviceBuilder.getCompatJavaClassName("StringBundler")};
+import ${serviceBuilder.getCompatProperty("HashUtil")};
+import ${serviceBuilder.getCompatProperty("StringBundler")};
 
 import aQute.bnd.annotation.ProviderType;
 

@@ -15,12 +15,15 @@
 package com.liferay.arquillian.extension.junit.bridge.junit;
 
 import com.liferay.arquillian.extension.junit.bridge.remote.extension.LoadableExtensionLoader;
+import com.liferay.arquillian.extension.junit.bridge.remote.manager.ManagerImpl;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
@@ -33,7 +36,6 @@ import java.util.concurrent.atomic.AtomicReference;
 import org.jboss.arquillian.core.api.Instance;
 import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.arquillian.core.spi.Manager;
-import org.jboss.arquillian.core.spi.ManagerBuilder;
 import org.jboss.arquillian.core.spi.NonManagedObserver;
 import org.jboss.arquillian.test.spi.LifecycleMethodExecutor;
 import org.jboss.arquillian.test.spi.TestMethodExecutor;
@@ -110,11 +112,9 @@ public class Arquillian extends Runner implements Filterable {
 
 		if (manager == null) {
 			try {
-				ManagerBuilder managerBuilder = ManagerBuilder.from();
-
-				managerBuilder.extension(LoadableExtensionLoader.class);
-
-				manager = managerBuilder.create();
+				manager = new ManagerImpl(
+					new ArrayList<>(),
+					Collections.singleton(LoadableExtensionLoader.class));
 
 				manager.start();
 

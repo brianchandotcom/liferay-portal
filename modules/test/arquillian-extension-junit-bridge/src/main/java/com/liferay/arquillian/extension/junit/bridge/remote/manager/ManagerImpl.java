@@ -1,0 +1,571 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.arquillian.extension.junit.bridge.remote.manager;
+
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Type;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.Stack;
+import java.util.concurrent.Callable;
+
+import org.jboss.arquillian.core.api.Injector;
+import org.jboss.arquillian.core.api.annotation.ApplicationScoped;
+import org.jboss.arquillian.core.api.event.ManagerStarted;
+import org.jboss.arquillian.core.api.event.ManagerStopping;
+import org.jboss.arquillian.core.api.threading.ExecutorService;
+import org.jboss.arquillian.core.impl.EventContextImpl;
+import org.jboss.arquillian.core.impl.EventImpl;
+import org.jboss.arquillian.core.impl.ExtensionImpl;
+import org.jboss.arquillian.core.impl.InjectorImpl;
+import org.jboss.arquillian.core.impl.InstanceImpl;
+import org.jboss.arquillian.core.impl.Reflections;
+import org.jboss.arquillian.core.impl.UncheckedThrow;
+import org.jboss.arquillian.core.impl.context.ApplicationContextImpl;
+import org.jboss.arquillian.core.impl.threading.ThreadedExecutorService;
+import org.jboss.arquillian.core.spi.EventContext;
+import org.jboss.arquillian.core.spi.EventPoint;
+import org.jboss.arquillian.core.spi.Extension;
+import org.jboss.arquillian.core.spi.InjectionPoint;
+import org.jboss.arquillian.core.spi.InvocationException;
+import org.jboss.arquillian.core.spi.Manager;
+import org.jboss.arquillian.core.spi.NonManagedObserver;
+import org.jboss.arquillian.core.spi.ObserverMethod;
+import org.jboss.arquillian.core.spi.Validate;
+import org.jboss.arquillian.core.spi.context.ApplicationContext;
+import org.jboss.arquillian.core.spi.context.Context;
+import org.jboss.arquillian.core.spi.context.ObjectStore;
+import org.jboss.arquillian.core.spi.event.ManagerProcessing;
+
+/**
+ * @author Matthew Tambara
+ */
+public class ManagerImpl implements Manager {
+
+	public ManagerImpl(
+		Collection<Class<? extends Context>> contextClasses,
+		Collection<Class<?>> extensionClasses) {
+
+		try {
+			List<Extension> createdExtensions = _createExtensions(
+				extensionClasses);
+
+			List<Context> createdContexts = _createContexts(contextClasses);
+
+			_createBuiltInServices();
+
+			_contexts.addAll(createdContexts);
+
+			_extensions.addAll(createdExtensions);
+
+			_addContextsToApplicationScope();
+
+			fireProcessing();
+
+			_addContextsToApplicationScope();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(
+				"Could not create and process manager", e);
+		}
+	}
+
+	@Override
+	public <T> void bind(
+		Class<? extends Annotation> scope, Class<T> type, T instance) {
+
+		Validate.notNull(scope, "Scope must be specified");
+		Validate.notNull(type, "Type must be specified");
+		Validate.notNull(instance, "Instance must be specified");
+
+		Context scopedContext = _getScopedContext(scope);
+
+		if (scopedContext == null) {
+			throw new IllegalArgumentException(
+				"No Context registered with support for scope: " + scope);
+		}
+
+		if (!scopedContext.isActive()) {
+			throw new IllegalArgumentException(
+				"No active " + scope.getSimpleName() + " Context to bind to");
+		}
+
+		ObjectStore objectStore = scopedContext.getObjectStore();
+
+		objectStore.add(type, instance);
+	}
+
+	public <T> void bindAndFire(
+		Class<? extends Annotation> scope, Class<T> type, T instance) {
+
+		bind(scope, type, instance);
+
+		fire(instance);
+	}
+
+	public <T> T executeInApplicationContext(Callable<T> callable)
+		throws Exception {
+
+		ApplicationContext context = (ApplicationContext)_getScopedContext(
+			ApplicationScoped.class);
+
+		boolean activatedByUs = false;
+
+		try {
+			if (!context.isActive()) {
+				context.activate();
+
+				activatedByUs = true;
+			}
+
+			return callable.call();
+		}
+		finally {
+			if (activatedByUs && context.isActive()) {
+				context.deactivate();
+			}
+		}
+	}
+
+	@Override
+	public void fire(Object event) {
+		fire(event, null);
+	}
+
+	@Override
+	public <T> void fire(T event, NonManagedObserver<T> nonManagedObserver) {
+		Validate.notNull(event, "Event must be specified");
+
+		Set<Class<? extends Throwable>> handledThrowables =
+			_handledThrowables.get();
+
+		handledThrowables.clear();
+
+		List<ObserverMethod> observers = _resolveObservers(event.getClass());
+
+		List<ObserverMethod> interceptorObservers =
+			_resolveInterceptorObservers(event.getClass());
+
+		ApplicationContext context = (ApplicationContext)_getScopedContext(
+			ApplicationScoped.class);
+
+		boolean activatedApplicationContext = false;
+
+		try {
+			if (!context.isActive()) {
+				context.activate();
+
+				activatedApplicationContext = true;
+			}
+
+			EventContext<T> eventContext = new EventContextImpl<>(
+				this, interceptorObservers, observers, nonManagedObserver,
+				event);
+
+			eventContext.proceed();
+		}
+		catch (Exception e) {
+			Throwable fireException = e;
+
+			if (fireException instanceof InvocationException) {
+				fireException = fireException.getCause();
+			}
+
+			if (handledThrowables.contains(fireException.getClass())) {
+				UncheckedThrow.throwUnchecked(fireException);
+			}
+			else {
+				fireException(fireException);
+			}
+		}
+		finally {
+			if (activatedApplicationContext && context.isActive()) {
+				context.deactivate();
+			}
+		}
+	}
+
+	public void fireException(Throwable throwable) {
+		List<ObserverMethod> observers = _resolveObservers(
+			throwable.getClass());
+
+		if (observers.isEmpty()) {
+			UncheckedThrow.throwUnchecked(throwable);
+		}
+
+		for (int i = 0; i < observers.size(); i++) {
+			ObserverMethod observer = observers.get(i);
+
+			try {
+				observer.invoke(this, throwable);
+			}
+			catch (Exception e) {
+				Throwable toBeFired = e.getCause();
+
+				if (toBeFired.getClass() == throwable.getClass()) {
+					if (i == observers.size() - 1) {
+						_handledThrowables.get().add(toBeFired.getClass());
+
+						UncheckedThrow.throwUnchecked(toBeFired);
+					}
+				}
+				else {
+					fireException(toBeFired);
+				}
+			}
+		}
+	}
+
+	public void fireProcessing() throws Exception {
+		Set<Class<?>> extensions = new HashSet<>();
+
+		Set<Class<? extends Context>> contexts = new HashSet<>();
+
+		fire(
+			new ManagerProcessing() {
+
+				@Override
+				public ManagerProcessing context(
+					Class<? extends Context> context) {
+
+					if (contexts.contains(context)) {
+						throw new IllegalArgumentException(
+							"Attempted to register the same " +
+								Context.class.getSimpleName() + " : " +
+									context.getName() + " multiple times, " +
+										"please check classpath for " +
+											"conflicting jar versions");
+					}
+
+					contexts.add(context);
+
+					return this;
+				}
+
+				@Override
+				public ManagerProcessing observer(Class<?> observer) {
+					if (extensions.contains(observer)) {
+						throw new IllegalArgumentException(
+							"Attempted to register the same Observer: " +
+								observer.getName() + " multiple times, " +
+									"please check classpath for conflicting " +
+										"jar versions");
+					}
+
+					extensions.add(observer);
+
+					return this;
+				}
+
+			});
+
+		_extensions.addAll(_createExtensions(extensions));
+		_contexts.addAll(_createContexts(contexts));
+	}
+
+	@Override
+	public <T> T getContext(Class<T> type) {
+		for (Context context : _contexts) {
+			if (type.isInstance(context)) {
+				return type.cast(context);
+			}
+		}
+
+		return null;
+	}
+
+	public List<Context> getContexts() {
+		return Collections.unmodifiableList(_contexts);
+	}
+
+	public <T> T getExtension(Class<T> type) {
+		for (Extension extension : _extensions) {
+			Object target = ((ExtensionImpl)extension).getTarget();
+
+			if (type.isInstance(target)) {
+				return type.cast(target);
+			}
+		}
+
+		return null;
+	}
+
+	@Override
+	public void inject(Object obj) {
+		_inject(ExtensionImpl.of(obj));
+	}
+
+	public boolean isExceptionHandled(Throwable throwable) {
+		Set<Class<? extends Throwable>> handledThrowables =
+			_handledThrowables.get();
+
+		return handledThrowables.contains(throwable.getClass());
+	}
+
+	@Override
+	public <T> T resolve(Class<T> type) {
+		Validate.notNull(type, "Type must be specified");
+
+		List<Context> activeContexts = _resolveActiveContexts();
+
+		for (int i = activeContexts.size() - 1; i >= 0; i--) {
+			Context context = activeContexts.get(i);
+
+			ObjectStore objectStore = context.getObjectStore();
+
+			T object = objectStore.get(type);
+
+			if (object != null) {
+				return object;
+			}
+		}
+
+		return null;
+	}
+
+	@Override
+	public void shutdown() {
+		Throwable shutdownException = null;
+
+		try {
+			fire(new ManagerStopping());
+		}
+		catch (Exception e) {
+			try {
+				fireException(e);
+			}
+			catch (Exception e2) {
+				shutdownException = e2;
+			}
+		}
+
+		synchronized (this) {
+			for (Context context : _contexts) {
+				context.clearAll();
+			}
+
+			_contexts.clear();
+
+			_extensions.clear();
+
+			if (_eventStack != null) {
+				_eventStack.remove();
+			}
+
+			_handledThrowables.remove();
+		}
+
+		if (shutdownException != null) {
+			UncheckedThrow.throwUnchecked(shutdownException);
+		}
+	}
+
+	@Override
+	public void start() {
+		fire(new ManagerStarted());
+
+		getContext(ApplicationContext.class).activate();
+	}
+
+	private void _addContextsToApplicationScope() throws Exception {
+		executeInApplicationContext(
+			new Callable<Void>() {
+
+				@Override
+				public Void call() throws Exception {
+					ApplicationContext applicationContext = getContext(
+						ApplicationContext.class);
+
+					ObjectStore store = applicationContext.getObjectStore();
+
+					for (Context context : _contexts) {
+						Class<?> clazz = context.getClass();
+
+						Class<?>[] interfaces = clazz.getInterfaces();
+
+						store.add((Class<Context>)interfaces[0], context);
+					}
+
+					return null;
+				}
+
+			});
+	}
+
+	private void _createBuiltInServices() throws Exception {
+		ApplicationContext applicationContext = new ApplicationContextImpl();
+
+		_contexts.add(applicationContext);
+
+		executeInApplicationContext(
+			new Callable<Object>() {
+
+				@Override
+				public Object call() throws Exception {
+					bind(
+						ApplicationScoped.class, Injector.class,
+						InjectorImpl.of(ManagerImpl.this));
+
+					bind(
+						ApplicationScoped.class, ExecutorService.class,
+						new ThreadedExecutorService(ManagerImpl.this));
+
+					return null;
+				}
+
+			});
+	}
+
+	private List<Context> _createContexts(
+			Collection<Class<? extends Context>> contextClasses)
+		throws Exception {
+
+		List<Context> created = new ArrayList<>();
+
+		for (Class<? extends Context> contextClass : contextClasses) {
+			created.add(Reflections.createInstance(contextClass));
+		}
+
+		return created;
+	}
+
+	private List<Extension> _createExtensions(
+			Collection<Class<?>> extensionClasses)
+		throws Exception {
+
+		List<Extension> created = new ArrayList<>();
+
+		for (Class<?> extensionClass : extensionClasses) {
+			Extension extension = ExtensionImpl.of(
+				Reflections.createInstance(extensionClass));
+
+			_inject(extension);
+
+			created.add(extension);
+		}
+
+		return created;
+	}
+
+	private Context _getScopedContext(Class<? extends Annotation> scope) {
+		for (Context context : _contexts) {
+			if (context.getScope() == scope) {
+				return context;
+			}
+		}
+
+		return null;
+	}
+
+	private void _inject(Extension extension) {
+		_injectInstances(extension);
+
+		_injectEvents(extension);
+	}
+
+	private void _injectEvents(Extension extension) {
+		for (EventPoint eventPoint : extension.getEventPoints()) {
+			eventPoint.set(
+				EventImpl.of(Reflections.getType(eventPoint.getType()), this));
+		}
+	}
+
+	private void _injectInstances(Extension extension) {
+		for (InjectionPoint injectionPoint : extension.getInjectionPoints()) {
+			injectionPoint.set(
+				InstanceImpl.of(
+					Reflections.getType(injectionPoint.getType()),
+					injectionPoint.getScope(), this));
+		}
+	}
+
+	private List<Context> _resolveActiveContexts() {
+		List<Context> activeContexts = new ArrayList<>();
+
+		for (Context context : _contexts) {
+			if (context.isActive()) {
+				activeContexts.add(context);
+			}
+		}
+
+		return activeContexts;
+	}
+
+	private List<ObserverMethod> _resolveInterceptorObservers(
+		Class<?> eventClass) {
+
+		List<ObserverMethod> observers = new ArrayList<>();
+
+		for (Extension extension : _extensions) {
+			for (ObserverMethod observer : extension.getObservers()) {
+				Type type = observer.getType();
+
+				Class<?> clazz = Reflections.getType(type);
+
+				if (clazz.isAssignableFrom(eventClass) &&
+					Reflections.isType(type, EventContext.class)) {
+
+					observers.add(observer);
+				}
+			}
+		}
+
+		Collections.sort(observers);
+
+		return observers;
+	}
+
+	private List<ObserverMethod> _resolveObservers(Class<?> eventClass) {
+		List<ObserverMethod> observers = new ArrayList<>();
+
+		for (Extension extension : _extensions) {
+			for (ObserverMethod observer : extension.getObservers()) {
+				Type type = observer.getType();
+
+				Class<?> clazz = Reflections.getType(type);
+
+				if (clazz.isAssignableFrom(eventClass) &&
+					!Reflections.isType(type, EventContext.class)) {
+
+					observers.add(observer);
+				}
+			}
+		}
+
+		Collections.sort(observers);
+
+		return observers;
+	}
+
+	private final List<Context> _contexts = new ArrayList<>();
+	private ThreadLocal<Stack<Object>> _eventStack;
+	private final List<Extension> _extensions = new ArrayList<>();
+
+	private ThreadLocal<Set<Class<? extends Throwable>>> _handledThrowables =
+		new ThreadLocal<Set<Class<? extends Throwable>>>() {
+
+			@Override
+			protected Set<Class<? extends Throwable>> initialValue() {
+				return new HashSet<>();
+			}
+
+		};
+
+}

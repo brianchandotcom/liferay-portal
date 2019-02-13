@@ -1,0 +1,3 @@
+Bundle-Name: Liferay Portal Remote SOAP Extender Test API Handler
+Bundle-SymbolicName: com.liferay.portal.remote.soap.extender.test.api.handler
+Include-Resource: src/main/resources

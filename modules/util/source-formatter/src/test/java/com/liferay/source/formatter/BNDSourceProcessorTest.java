@@ -36,4 +36,15 @@ public class BNDSourceProcessorTest extends BaseSourceProcessorTestCase {
 				"'Bundle-SymbolicName'");
 	}
 
+	@Test
+	public void testRemoveInternalPrivatePackages() throws Exception {
+		test("RemoveInternalPrivatePackages.testbnd");
+	}
+
+	@Test
+	public void testRemoveNoValueDefinitionKey() throws Exception {
+		test("RemoveNoValueDefinitionKey1.testbnd");
+		test("RemoveNoValueDefinitionKey2.testbnd");
+	}
+
 }

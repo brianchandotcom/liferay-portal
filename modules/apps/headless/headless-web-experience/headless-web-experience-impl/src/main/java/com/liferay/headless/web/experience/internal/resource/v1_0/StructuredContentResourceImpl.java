@@ -30,6 +30,7 @@ import com.liferay.headless.web.experience.dto.v1_0.StructuredContent;
 import com.liferay.headless.web.experience.internal.dto.v1_0.CreatorUtil;
 import com.liferay.headless.web.experience.internal.odata.entity.v1_0.EntityFieldsProvider;
 import com.liferay.headless.web.experience.internal.odata.entity.v1_0.StructuredContentEntityModel;
+import com.liferay.headless.web.experience.internal.util.v1_0.AggregateRatingUtil;
 import com.liferay.headless.web.experience.resource.v1_0.StructuredContentResource;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
@@ -68,6 +69,8 @@ import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
+import com.liferay.ratings.kernel.model.RatingsStats;
+import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
 
 import java.time.LocalDateTime;
 
@@ -443,6 +446,16 @@ public class StructuredContentResourceImpl
 				setAvailableLanguages(
 					LocaleUtil.toW3cLanguageIds(
 						journalArticle.getAvailableLanguageIds()));
+				RatingsStats ratingsStats =
+					_ratingsStatsLocalService.fetchStats(
+						JournalArticle.class.getName(),
+						journalArticle.getResourcePrimKey());
+
+				if (ratingsStats != null) {
+					setAggregateRating(
+						AggregateRatingUtil.toAggregateRating(ratingsStats));
+				}
+
 				setContentSpace(journalArticle.getGroupId());
 				setContentStructureId(ddmStructure.getStructureId());
 				setCreator(
@@ -486,6 +499,9 @@ public class StructuredContentResourceImpl
 
 	@Reference
 	private JournalHelper _journalHelper;
+
+	@Reference
+	private RatingsStatsLocalService _ratingsStatsLocalService;
 
 	@Reference
 	private SearchResultPermissionFilterFactory

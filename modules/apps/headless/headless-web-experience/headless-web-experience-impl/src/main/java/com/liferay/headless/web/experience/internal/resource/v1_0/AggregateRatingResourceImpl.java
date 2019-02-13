@@ -14,9 +14,14 @@
 
 package com.liferay.headless.web.experience.internal.resource.v1_0;
 
+import com.liferay.headless.web.experience.dto.v1_0.AggregateRating;
 import com.liferay.headless.web.experience.resource.v1_0.AggregateRatingResource;
+import com.liferay.journal.model.JournalArticle;
+import com.liferay.ratings.kernel.model.RatingsStats;
+import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
 
 /**
@@ -28,4 +33,29 @@ import org.osgi.service.component.annotations.ServiceScope;
 )
 public class AggregateRatingResourceImpl
 	extends BaseAggregateRatingResourceImpl {
+
+	@Override
+	public AggregateRating getAggregateRatings(Long aggregateRatingId)
+		throws Exception {
+
+		return _toAggregateRating(
+			_ratingsStatsLocalService.fetchStats(
+				JournalArticle.class.getName(), aggregateRatingId));
+	}
+
+	private AggregateRating _toAggregateRating(RatingsStats ratingsStats) {
+		return new AggregateRating() {
+			{
+				setBestRating(1);
+				setId(ratingsStats.getStatsId());
+				setRatingCount(ratingsStats.getTotalEntries());
+				setRatingValue(ratingsStats.getAverageScore());
+				setWorstRating(0);
+			}
+		};
+	}
+
+	@Reference
+	private RatingsStatsLocalService _ratingsStatsLocalService;
+
 }

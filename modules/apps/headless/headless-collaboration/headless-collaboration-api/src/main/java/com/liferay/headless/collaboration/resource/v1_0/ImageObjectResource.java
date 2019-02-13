@@ -63,7 +63,7 @@ public interface ImageObjectResource {
 	@Path("/image-object-repositories/{image-object-repository-id}/image-objects")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Page<ImageObject> getImageObjectRepositoryImageObjectPage( @PathParam("image-object-repository-id") Long imageObjectRepositoryId , @Context Pagination pagination ) throws Exception;
+	public Page<ImageObject> getImageObjectRepositoryImageObjectsPage( @PathParam("image-object-repository-id") Long imageObjectRepositoryId , @Context Pagination pagination ) throws Exception;
 
 	@Consumes("application/json")
 	@POST

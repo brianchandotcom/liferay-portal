@@ -59,7 +59,7 @@ public abstract class BaseKeywordResourceTestCase {
 	}
 
 	@Test
-	public void testGetContentSpaceKeywordPage() throws Exception {
+	public void testGetContentSpaceKeywordsPage() throws Exception {
 		Assert.assertTrue(true);
 	}
 
@@ -89,7 +89,7 @@ public abstract class BaseKeywordResourceTestCase {
 			requestSender.post("/keywords/{keyword-id}");
 	}
 
-	protected void invokeGetContentSpaceKeywordPage(
+	protected void invokeGetContentSpaceKeywordsPage(
 			Long contentSpaceId, Pagination pagination)
 		throws Exception {
 

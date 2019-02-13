@@ -53,7 +53,7 @@ public abstract class BaseWebUrlResourceTestCase {
 	}
 
 	@Test
-	public void testGetGenericParentWebUrlPage() throws Exception {
+	public void testGetGenericParentWebUrlsPage() throws Exception {
 		Assert.assertTrue(true);
 	}
 
@@ -62,7 +62,7 @@ public abstract class BaseWebUrlResourceTestCase {
 		Assert.assertTrue(true);
 	}
 
-	protected void invokeGetGenericParentWebUrlPage(
+	protected void invokeGetGenericParentWebUrlsPage(
 			Object genericParentId, Pagination pagination)
 		throws Exception {
 

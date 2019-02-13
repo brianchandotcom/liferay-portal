@@ -53,7 +53,7 @@ public abstract class BaseFormResourceTestCase {
 	}
 
 	@Test
-	public void testGetContentSpaceFormPage() throws Exception {
+	public void testGetContentSpaceFormsPage() throws Exception {
 		Assert.assertTrue(true);
 	}
 
@@ -77,7 +77,7 @@ public abstract class BaseFormResourceTestCase {
 		Assert.assertTrue(true);
 	}
 
-	protected void invokeGetContentSpaceFormPage(
+	protected void invokeGetContentSpaceFormsPage(
 			Long contentSpaceId, Pagination pagination)
 		throws Exception {
 

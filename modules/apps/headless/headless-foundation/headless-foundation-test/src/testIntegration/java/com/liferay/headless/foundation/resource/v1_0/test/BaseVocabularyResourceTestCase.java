@@ -59,7 +59,7 @@ public abstract class BaseVocabularyResourceTestCase {
 	}
 
 	@Test
-	public void testGetContentSpaceVocabularyPage() throws Exception {
+	public void testGetContentSpaceVocabulariesPage() throws Exception {
 		Assert.assertTrue(true);
 	}
 
@@ -89,7 +89,7 @@ public abstract class BaseVocabularyResourceTestCase {
 			requestSender.post("/vocabularies/{vocabulary-id}");
 	}
 
-	protected void invokeGetContentSpaceVocabularyPage(
+	protected void invokeGetContentSpaceVocabulariesPage(
 			Long contentSpaceId, Pagination pagination)
 		throws Exception {
 

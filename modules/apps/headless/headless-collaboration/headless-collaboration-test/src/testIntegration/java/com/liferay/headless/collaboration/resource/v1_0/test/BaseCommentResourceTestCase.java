@@ -53,7 +53,7 @@ public abstract class BaseCommentResourceTestCase {
 	}
 
 	@Test
-	public void testGetBlogPostingCommentPage() throws Exception {
+	public void testGetBlogPostingCommentsPage() throws Exception {
 		Assert.assertTrue(true);
 	}
 
@@ -63,11 +63,11 @@ public abstract class BaseCommentResourceTestCase {
 	}
 
 	@Test
-	public void testGetCommentCommentPage() throws Exception {
+	public void testGetCommentCommentsPage() throws Exception {
 		Assert.assertTrue(true);
 	}
 
-	protected void invokeGetBlogPostingCommentPage(
+	protected void invokeGetBlogPostingCommentsPage(
 			Long blogPostingId, Pagination pagination)
 		throws Exception {
 
@@ -82,7 +82,7 @@ public abstract class BaseCommentResourceTestCase {
 			requestSender.post("/comments/{comment-id}");
 	}
 
-	protected void invokeGetCommentCommentPage(
+	protected void invokeGetCommentCommentsPage(
 			Long commentId, Pagination pagination)
 		throws Exception {
 

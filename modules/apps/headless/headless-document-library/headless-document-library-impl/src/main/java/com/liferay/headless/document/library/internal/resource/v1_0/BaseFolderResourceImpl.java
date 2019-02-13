@@ -53,7 +53,7 @@ public abstract class BaseFolderResourceImpl implements FolderResource {
 	}
 
 	@Override
-	public Page<Folder> getDocumentsRepositoryFolderPage(
+	public Page<Folder> getDocumentsRepositoryFoldersPage(
 			Long documentsRepositoryId, Pagination pagination)
 		throws Exception {
 
@@ -66,7 +66,7 @@ public abstract class BaseFolderResourceImpl implements FolderResource {
 	}
 
 	@Override
-	public Page<Folder> getFolderFolderPage(
+	public Page<Folder> getFolderFoldersPage(
 			Long folderId, Pagination pagination)
 		throws Exception {
 

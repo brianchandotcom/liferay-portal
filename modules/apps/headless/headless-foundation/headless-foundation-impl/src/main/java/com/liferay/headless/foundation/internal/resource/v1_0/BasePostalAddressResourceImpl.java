@@ -45,7 +45,7 @@ public abstract class BasePostalAddressResourceImpl
 	}
 
 	@Override
-	public Page<PostalAddress> getGenericParentPostalAddressPage(
+	public Page<PostalAddress> getGenericParentPostalAddressesPage(
 			Object genericParentId, Pagination pagination)
 		throws Exception {
 

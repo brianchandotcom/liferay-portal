@@ -54,12 +54,12 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 	}
 
 	@Test
-	public void testGetGenericParentWorkflowTaskPage() throws Exception {
+	public void testGetGenericParentWorkflowTasksPage() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testGetRoleWorkflowTaskPage() throws Exception {
+	public void testGetRoleWorkflowTasksPage() throws Exception {
 		Assert.assertTrue(true);
 	}
 
@@ -88,7 +88,7 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 		Assert.assertTrue(true);
 	}
 
-	protected void invokeGetGenericParentWorkflowTaskPage(
+	protected void invokeGetGenericParentWorkflowTasksPage(
 			Object genericParentId, Pagination pagination)
 		throws Exception {
 
@@ -97,7 +97,7 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 			requestSender.post("/workflow-tasks");
 	}
 
-	protected void invokeGetRoleWorkflowTaskPage(
+	protected void invokeGetRoleWorkflowTasksPage(
 			Long roleId, Pagination pagination)
 		throws Exception {
 

@@ -86,7 +86,7 @@ public interface CategoryResource {
 	@Path("/categories/{category-id}/categories")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Page<Category> getCategoryCategoryPage( @PathParam("category-id") Long categoryId , @Context Pagination pagination ) throws Exception;
+	public Page<Category> getCategoryCategoriesPage( @PathParam("category-id") Long categoryId , @Context Pagination pagination ) throws Exception;
 
 	@Consumes("application/json")
 	@POST
@@ -106,7 +106,7 @@ public interface CategoryResource {
 	@Path("/vocabularies/{vocabulary-id}/categories")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Page<Category> getVocabularyCategoryPage( @PathParam("vocabulary-id") Long vocabularyId , @Context Pagination pagination ) throws Exception;
+	public Page<Category> getVocabularyCategoriesPage( @PathParam("vocabulary-id") Long vocabularyId , @Context Pagination pagination ) throws Exception;
 
 	@Consumes("application/json")
 	@POST

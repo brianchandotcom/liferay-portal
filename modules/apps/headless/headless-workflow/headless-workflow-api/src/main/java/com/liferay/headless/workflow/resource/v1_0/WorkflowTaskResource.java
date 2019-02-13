@@ -59,13 +59,13 @@ public interface WorkflowTaskResource {
 	@Path("/roles/{role-id}/workflow-tasks")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Page<WorkflowTask> getRoleWorkflowTaskPage( @PathParam("role-id") Long roleId , @Context Pagination pagination ) throws Exception;
+	public Page<WorkflowTask> getRoleWorkflowTasksPage( @PathParam("role-id") Long roleId , @Context Pagination pagination ) throws Exception;
 
 	@GET
 	@Path("/workflow-tasks")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Page<WorkflowTask> getGenericParentWorkflowTaskPage( @PathParam("generic-parent-id") Object genericParentId , @Context Pagination pagination ) throws Exception;
+	public Page<WorkflowTask> getGenericParentWorkflowTasksPage( @PathParam("generic-parent-id") Object genericParentId , @Context Pagination pagination ) throws Exception;
 
 	@GET
 	@Path("/workflow-tasks/{workflow-task-id}")

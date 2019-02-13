@@ -58,7 +58,7 @@ public abstract class BaseEmailResourceTestCase {
 	}
 
 	@Test
-	public void testGetGenericParentEmailPage() throws Exception {
+	public void testGetGenericParentEmailsPage() throws Exception {
 		Assert.assertTrue(true);
 	}
 
@@ -68,7 +68,7 @@ public abstract class BaseEmailResourceTestCase {
 			requestSender.post("/emails/{email-id}");
 	}
 
-	protected void invokeGetGenericParentEmailPage(
+	protected void invokeGetGenericParentEmailsPage(
 			Object genericParentId, Pagination pagination)
 		throws Exception {
 

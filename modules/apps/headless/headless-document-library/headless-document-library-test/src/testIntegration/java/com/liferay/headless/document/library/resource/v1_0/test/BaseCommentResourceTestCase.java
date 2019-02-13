@@ -53,11 +53,11 @@ public abstract class BaseCommentResourceTestCase {
 	}
 
 	@Test
-	public void testGetDocumentCommentPage() throws Exception {
+	public void testGetDocumentCommentsPage() throws Exception {
 		Assert.assertTrue(true);
 	}
 
-	protected void invokeGetDocumentCommentPage(
+	protected void invokeGetDocumentCommentsPage(
 			Long documentId, Pagination pagination)
 		throws Exception {
 

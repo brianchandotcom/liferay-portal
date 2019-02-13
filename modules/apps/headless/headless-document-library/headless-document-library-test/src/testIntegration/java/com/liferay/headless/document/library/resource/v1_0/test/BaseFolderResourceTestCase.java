@@ -64,7 +64,7 @@ public abstract class BaseFolderResourceTestCase {
 	}
 
 	@Test
-	public void testGetDocumentsRepositoryFolderPage() throws Exception {
+	public void testGetDocumentsRepositoryFoldersPage() throws Exception {
 		Assert.assertTrue(true);
 	}
 
@@ -74,7 +74,7 @@ public abstract class BaseFolderResourceTestCase {
 	}
 
 	@Test
-	public void testGetFolderFolderPage() throws Exception {
+	public void testGetFolderFoldersPage() throws Exception {
 		Assert.assertTrue(true);
 	}
 
@@ -120,7 +120,7 @@ public abstract class BaseFolderResourceTestCase {
 				"/documents-repositories/{documents-repository-id}");
 	}
 
-	protected void invokeGetDocumentsRepositoryFolderPage(
+	protected void invokeGetDocumentsRepositoryFoldersPage(
 			Long documentsRepositoryId, Pagination pagination)
 		throws Exception {
 
@@ -136,7 +136,7 @@ public abstract class BaseFolderResourceTestCase {
 			requestSender.post("/folders/{folder-id}");
 	}
 
-	protected void invokeGetFolderFolderPage(
+	protected void invokeGetFolderFoldersPage(
 			Long folderId, Pagination pagination)
 		throws Exception {
 

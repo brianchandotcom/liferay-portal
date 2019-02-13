@@ -39,7 +39,7 @@ import javax.ws.rs.core.Response;
 public abstract class BaseRoleResourceImpl implements RoleResource {
 
 	@Override
-	public Page<Role> getMyUserAccountRolePage(
+	public Page<Role> getMyUserAccountRolesPage(
 			Long myUserAccountId, Pagination pagination)
 		throws Exception {
 
@@ -52,12 +52,12 @@ public abstract class BaseRoleResourceImpl implements RoleResource {
 	}
 
 	@Override
-	public Page<Role> getRolePage(Pagination pagination) throws Exception {
+	public Page<Role> getRolesPage(Pagination pagination) throws Exception {
 		return Page.of(Collections.emptyList());
 	}
 
 	@Override
-	public Page<Role> getUserAccountRolePage(
+	public Page<Role> getUserAccountRolesPage(
 			Long userAccountId, Pagination pagination)
 		throws Exception {
 

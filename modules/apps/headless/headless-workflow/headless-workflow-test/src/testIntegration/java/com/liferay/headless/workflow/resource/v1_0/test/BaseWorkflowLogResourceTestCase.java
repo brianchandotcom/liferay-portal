@@ -58,7 +58,7 @@ public abstract class BaseWorkflowLogResourceTestCase {
 	}
 
 	@Test
-	public void testGetWorkflowTaskWorkflowLogPage() throws Exception {
+	public void testGetWorkflowTaskWorkflowLogsPage() throws Exception {
 		Assert.assertTrue(true);
 	}
 
@@ -68,7 +68,7 @@ public abstract class BaseWorkflowLogResourceTestCase {
 			requestSender.post("/workflow-logs/{workflow-log-id}");
 	}
 
-	protected void invokeGetWorkflowTaskWorkflowLogPage(
+	protected void invokeGetWorkflowTaskWorkflowLogsPage(
 			Long workflowTaskId, Pagination pagination)
 		throws Exception {
 

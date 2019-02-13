@@ -53,7 +53,7 @@ public abstract class BaseOrganizationResourceTestCase {
 	}
 
 	@Test
-	public void testGetMyUserAccountOrganizationPage() throws Exception {
+	public void testGetMyUserAccountOrganizationsPage() throws Exception {
 		Assert.assertTrue(true);
 	}
 
@@ -63,21 +63,21 @@ public abstract class BaseOrganizationResourceTestCase {
 	}
 
 	@Test
-	public void testGetOrganizationOrganizationPage() throws Exception {
+	public void testGetOrganizationOrganizationsPage() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testGetOrganizationPage() throws Exception {
+	public void testGetOrganizationsPage() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testGetUserAccountOrganizationPage() throws Exception {
+	public void testGetUserAccountOrganizationsPage() throws Exception {
 		Assert.assertTrue(true);
 	}
 
-	protected void invokeGetMyUserAccountOrganizationPage(
+	protected void invokeGetMyUserAccountOrganizationsPage(
 			Long myUserAccountId, Pagination pagination)
 		throws Exception {
 
@@ -93,7 +93,7 @@ public abstract class BaseOrganizationResourceTestCase {
 			requestSender.post("/organizations/{organization-id}");
 	}
 
-	protected void invokeGetOrganizationOrganizationPage(
+	protected void invokeGetOrganizationOrganizationsPage(
 			Long organizationId, Pagination pagination)
 		throws Exception {
 
@@ -103,7 +103,7 @@ public abstract class BaseOrganizationResourceTestCase {
 				"/organizations/{organization-id}/organizations");
 	}
 
-	protected void invokeGetOrganizationPage(Pagination pagination)
+	protected void invokeGetOrganizationsPage(Pagination pagination)
 		throws Exception {
 
 			RequestSender requestSender = _createRequestSender();
@@ -111,7 +111,7 @@ public abstract class BaseOrganizationResourceTestCase {
 			requestSender.post("/organizations");
 	}
 
-	protected void invokeGetUserAccountOrganizationPage(
+	protected void invokeGetUserAccountOrganizationsPage(
 			Long userAccountId, Pagination pagination)
 		throws Exception {
 

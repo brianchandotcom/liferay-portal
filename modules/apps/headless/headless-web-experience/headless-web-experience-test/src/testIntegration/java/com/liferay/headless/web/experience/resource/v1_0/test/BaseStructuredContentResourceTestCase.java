@@ -61,14 +61,14 @@ public abstract class BaseStructuredContentResourceTestCase {
 	}
 
 	@Test
-	public void testGetContentSpaceContentStructureStructuredContentPage()
+	public void testGetContentSpaceContentStructureStructuredContentsPage()
 		throws Exception {
 
 			Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testGetContentSpaceStructuredContentPage() throws Exception {
+	public void testGetContentSpaceStructuredContentsPage() throws Exception {
 		Assert.assertTrue(true);
 	}
 
@@ -129,7 +129,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 			requestSender.post("/structured-contents/{structured-content-id}");
 	}
 
-	protected void invokeGetContentSpaceContentStructureStructuredContentPage(
+	protected void invokeGetContentSpaceContentStructureStructuredContentsPage(
 			Long contentSpaceId, Long contentStructureId, Filter filter,
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
@@ -140,7 +140,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 				"/content-spaces/{content-space-id}/content-structures/{content-structure-id}/structured-contents");
 	}
 
-	protected void invokeGetContentSpaceStructuredContentPage(
+	protected void invokeGetContentSpaceStructuredContentsPage(
 			Long contentSpaceId, Filter filter, Pagination pagination,
 			Sort[] sorts)
 		throws Exception {

@@ -67,7 +67,7 @@ public interface KeywordResource {
 	@Path("/content-spaces/{content-space-id}/keywords")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Page<Keyword> getContentSpaceKeywordPage( @PathParam("content-space-id") Long contentSpaceId , @Context Pagination pagination ) throws Exception;
+	public Page<Keyword> getContentSpaceKeywordsPage( @PathParam("content-space-id") Long contentSpaceId , @Context Pagination pagination ) throws Exception;
 
 	@Consumes("application/json")
 	@POST

@@ -45,7 +45,7 @@ public abstract class BaseWorkflowLogResourceImpl
 	}
 
 	@Override
-	public Page<WorkflowLog> getWorkflowTaskWorkflowLogPage(
+	public Page<WorkflowLog> getWorkflowTaskWorkflowLogsPage(
 			Long workflowTaskId, Pagination pagination)
 		throws Exception {
 

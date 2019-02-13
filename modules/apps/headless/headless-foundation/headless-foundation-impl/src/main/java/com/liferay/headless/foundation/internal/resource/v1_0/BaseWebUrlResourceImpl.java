@@ -39,7 +39,7 @@ import javax.ws.rs.core.Response;
 public abstract class BaseWebUrlResourceImpl implements WebUrlResource {
 
 	@Override
-	public Page<WebUrl> getGenericParentWebUrlPage(
+	public Page<WebUrl> getGenericParentWebUrlsPage(
 			Object genericParentId, Pagination pagination)
 		throws Exception {
 

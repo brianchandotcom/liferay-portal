@@ -46,7 +46,7 @@ public abstract class BaseVocabularyResourceImpl implements VocabularyResource {
 	}
 
 	@Override
-	public Page<Vocabulary> getContentSpaceVocabularyPage(
+	public Page<Vocabulary> getContentSpaceVocabulariesPage(
 			Long contentSpaceId, Pagination pagination)
 		throws Exception {
 

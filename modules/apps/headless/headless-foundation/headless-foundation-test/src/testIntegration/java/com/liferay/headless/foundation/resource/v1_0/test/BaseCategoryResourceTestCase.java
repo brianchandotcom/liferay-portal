@@ -64,12 +64,12 @@ public abstract class BaseCategoryResourceTestCase {
 	}
 
 	@Test
-	public void testGetCategoryCategoryPage() throws Exception {
+	public void testGetCategoryCategoriesPage() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testGetVocabularyCategoryPage() throws Exception {
+	public void testGetVocabularyCategoriesPage() throws Exception {
 		Assert.assertTrue(true);
 	}
 
@@ -110,7 +110,7 @@ public abstract class BaseCategoryResourceTestCase {
 			requestSender.post("/categories/{category-id}");
 	}
 
-	protected void invokeGetCategoryCategoryPage(
+	protected void invokeGetCategoryCategoriesPage(
 			Long categoryId, Pagination pagination)
 		throws Exception {
 
@@ -119,7 +119,7 @@ public abstract class BaseCategoryResourceTestCase {
 			requestSender.post("/categories/{category-id}/categories");
 	}
 
-	protected void invokeGetVocabularyCategoryPage(
+	protected void invokeGetVocabularyCategoriesPage(
 			Long vocabularyId, Pagination pagination)
 		throws Exception {
 

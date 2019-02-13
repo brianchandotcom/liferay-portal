@@ -53,7 +53,7 @@ public abstract class BaseRoleResourceTestCase {
 	}
 
 	@Test
-	public void testGetMyUserAccountRolePage() throws Exception {
+	public void testGetMyUserAccountRolesPage() throws Exception {
 		Assert.assertTrue(true);
 	}
 
@@ -63,16 +63,16 @@ public abstract class BaseRoleResourceTestCase {
 	}
 
 	@Test
-	public void testGetRolePage() throws Exception {
+	public void testGetRolesPage() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testGetUserAccountRolePage() throws Exception {
+	public void testGetUserAccountRolesPage() throws Exception {
 		Assert.assertTrue(true);
 	}
 
-	protected void invokeGetMyUserAccountRolePage(
+	protected void invokeGetMyUserAccountRolesPage(
 			Long myUserAccountId, Pagination pagination)
 		throws Exception {
 
@@ -87,13 +87,13 @@ public abstract class BaseRoleResourceTestCase {
 			requestSender.post("/roles/{role-id}");
 	}
 
-	protected void invokeGetRolePage(Pagination pagination) throws Exception {
+	protected void invokeGetRolesPage(Pagination pagination) throws Exception {
 		RequestSender requestSender = _createRequestSender();
 
 			requestSender.post("/roles");
 	}
 
-	protected void invokeGetUserAccountRolePage(
+	protected void invokeGetUserAccountRolesPage(
 			Long userAccountId, Pagination pagination)
 		throws Exception {
 

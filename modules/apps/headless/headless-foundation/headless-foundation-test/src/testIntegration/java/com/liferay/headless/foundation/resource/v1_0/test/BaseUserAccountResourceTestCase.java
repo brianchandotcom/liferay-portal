@@ -64,7 +64,7 @@ public abstract class BaseUserAccountResourceTestCase {
 	}
 
 	@Test
-	public void testGetOrganizationUserAccountPage() throws Exception {
+	public void testGetOrganizationUserAccountsPage() throws Exception {
 		Assert.assertTrue(true);
 	}
 
@@ -74,12 +74,12 @@ public abstract class BaseUserAccountResourceTestCase {
 	}
 
 	@Test
-	public void testGetUserAccountPage() throws Exception {
+	public void testGetUserAccountsPage() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testGetWebSiteUserAccountPage() throws Exception {
+	public void testGetWebSiteUserAccountsPage() throws Exception {
 		Assert.assertTrue(true);
 	}
 
@@ -114,7 +114,7 @@ public abstract class BaseUserAccountResourceTestCase {
 			requestSender.post("/my-user-accounts/{my-user-account-id}");
 	}
 
-	protected void invokeGetOrganizationUserAccountPage(
+	protected void invokeGetOrganizationUserAccountsPage(
 			Long organizationId, Pagination pagination)
 		throws Exception {
 
@@ -130,7 +130,7 @@ public abstract class BaseUserAccountResourceTestCase {
 			requestSender.post("/user-accounts/{user-account-id}");
 	}
 
-	protected void invokeGetUserAccountPage(
+	protected void invokeGetUserAccountsPage(
 			String fullnamequery, Pagination pagination)
 		throws Exception {
 
@@ -139,7 +139,7 @@ public abstract class BaseUserAccountResourceTestCase {
 			requestSender.post("/user-accounts");
 	}
 
-	protected void invokeGetWebSiteUserAccountPage(
+	protected void invokeGetWebSiteUserAccountsPage(
 			Long webSiteId, Pagination pagination)
 		throws Exception {
 

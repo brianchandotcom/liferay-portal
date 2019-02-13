@@ -65,6 +65,6 @@ public interface WorkflowLogResource {
 	@Path("/workflow-tasks/{workflow-task-id}/workflow-logs")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Page<WorkflowLog> getWorkflowTaskWorkflowLogPage( @PathParam("workflow-task-id") Long workflowTaskId , @Context Pagination pagination ) throws Exception;
+	public Page<WorkflowLog> getWorkflowTaskWorkflowLogsPage( @PathParam("workflow-task-id") Long workflowTaskId , @Context Pagination pagination ) throws Exception;
 
 }

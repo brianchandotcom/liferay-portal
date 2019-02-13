@@ -53,7 +53,7 @@ public abstract class BaseFormRecordResourceTestCase {
 	}
 
 	@Test
-	public void testGetFormFormRecordPage() throws Exception {
+	public void testGetFormFormRecordsPage() throws Exception {
 		Assert.assertTrue(true);
 	}
 
@@ -77,7 +77,7 @@ public abstract class BaseFormRecordResourceTestCase {
 		Assert.assertTrue(true);
 	}
 
-	protected void invokeGetFormFormRecordPage(
+	protected void invokeGetFormFormRecordsPage(
 			Long formId, Pagination pagination)
 		throws Exception {
 

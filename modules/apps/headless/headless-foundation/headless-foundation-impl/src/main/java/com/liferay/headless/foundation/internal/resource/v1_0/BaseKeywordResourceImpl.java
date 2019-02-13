@@ -46,7 +46,7 @@ public abstract class BaseKeywordResourceImpl implements KeywordResource {
 	}
 
 	@Override
-	public Page<Keyword> getContentSpaceKeywordPage(
+	public Page<Keyword> getContentSpaceKeywordsPage(
 			Long contentSpaceId, Pagination pagination)
 		throws Exception {
 

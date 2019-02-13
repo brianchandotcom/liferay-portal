@@ -75,7 +75,7 @@ public interface FormRecordResource {
 	@Path("/forms/{form-id}/form-records")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Page<FormRecord> getFormFormRecordPage( @PathParam("form-id") Long formId , @Context Pagination pagination ) throws Exception;
+	public Page<FormRecord> getFormFormRecordsPage( @PathParam("form-id") Long formId , @Context Pagination pagination ) throws Exception;
 
 	@Consumes("application/json")
 	@POST

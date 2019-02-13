@@ -67,13 +67,13 @@ public interface OrganizationResource {
 	@Path("/my-user-accounts/{my-user-account-id}/organizations")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Page<Organization> getMyUserAccountOrganizationPage( @PathParam("my-user-account-id") Long myUserAccountId , @Context Pagination pagination ) throws Exception;
+	public Page<Organization> getMyUserAccountOrganizationsPage( @PathParam("my-user-account-id") Long myUserAccountId , @Context Pagination pagination ) throws Exception;
 
 	@GET
 	@Path("/organizations")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Page<Organization> getOrganizationPage( @Context Pagination pagination ) throws Exception;
+	public Page<Organization> getOrganizationsPage( @Context Pagination pagination ) throws Exception;
 
 	@GET
 	@Path("/organizations/{organization-id}")
@@ -85,12 +85,12 @@ public interface OrganizationResource {
 	@Path("/organizations/{organization-id}/organizations")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Page<Organization> getOrganizationOrganizationPage( @PathParam("organization-id") Long organizationId , @Context Pagination pagination ) throws Exception;
+	public Page<Organization> getOrganizationOrganizationsPage( @PathParam("organization-id") Long organizationId , @Context Pagination pagination ) throws Exception;
 
 	@GET
 	@Path("/user-accounts/{user-account-id}/organizations")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Page<Organization> getUserAccountOrganizationPage( @PathParam("user-account-id") Long userAccountId , @Context Pagination pagination ) throws Exception;
+	public Page<Organization> getUserAccountOrganizationsPage( @PathParam("user-account-id") Long userAccountId , @Context Pagination pagination ) throws Exception;
 
 }

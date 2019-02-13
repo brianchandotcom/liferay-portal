@@ -67,7 +67,7 @@ public interface PostalAddressResource {
 	@Path("/addresses")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Page<PostalAddress> getGenericParentPostalAddressPage( @PathParam("generic-parent-id") Object genericParentId , @Context Pagination pagination ) throws Exception;
+	public Page<PostalAddress> getGenericParentPostalAddressesPage( @PathParam("generic-parent-id") Object genericParentId , @Context Pagination pagination ) throws Exception;
 
 	@GET
 	@Path("/addresses/{address-id}")

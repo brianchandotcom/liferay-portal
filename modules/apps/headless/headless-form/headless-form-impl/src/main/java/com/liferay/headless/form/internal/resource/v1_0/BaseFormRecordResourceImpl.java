@@ -39,7 +39,7 @@ import javax.ws.rs.core.Response;
 public abstract class BaseFormRecordResourceImpl implements FormRecordResource {
 
 	@Override
-	public Page<FormRecord> getFormFormRecordPage(
+	public Page<FormRecord> getFormFormRecordsPage(
 			Long formId, Pagination pagination)
 		throws Exception {
 

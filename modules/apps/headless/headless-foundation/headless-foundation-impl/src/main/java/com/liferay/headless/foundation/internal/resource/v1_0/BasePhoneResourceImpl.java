@@ -39,7 +39,7 @@ import javax.ws.rs.core.Response;
 public abstract class BasePhoneResourceImpl implements PhoneResource {
 
 	@Override
-	public Page<Phone> getGenericParentPhonePage(
+	public Page<Phone> getGenericParentPhonesPage(
 			Object genericParentId, Pagination pagination)
 		throws Exception {
 

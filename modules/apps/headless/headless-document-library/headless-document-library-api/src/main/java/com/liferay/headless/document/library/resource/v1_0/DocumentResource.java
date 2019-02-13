@@ -93,7 +93,7 @@ public interface DocumentResource {
 	@Path("/documents-repositories/{documents-repository-id}/documents")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Page<Document> getDocumentsRepositoryDocumentPage( @PathParam("documents-repository-id") Long documentsRepositoryId , @Context Pagination pagination ) throws Exception;
+	public Page<Document> getDocumentsRepositoryDocumentsPage( @PathParam("documents-repository-id") Long documentsRepositoryId , @Context Pagination pagination ) throws Exception;
 
 	@Consumes("application/json")
 	@POST
@@ -113,7 +113,7 @@ public interface DocumentResource {
 	@Path("/folders/{folder-id}/documents")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Page<Document> getFolderDocumentPage( @PathParam("folder-id") Long folderId , @Context Pagination pagination ) throws Exception;
+	public Page<Document> getFolderDocumentsPage( @PathParam("folder-id") Long folderId , @Context Pagination pagination ) throws Exception;
 
 	@Consumes("multipart/form-data")
 	@POST

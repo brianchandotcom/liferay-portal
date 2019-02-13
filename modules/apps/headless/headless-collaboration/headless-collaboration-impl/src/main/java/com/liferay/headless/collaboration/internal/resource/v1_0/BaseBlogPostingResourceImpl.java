@@ -60,7 +60,7 @@ public abstract class BaseBlogPostingResourceImpl
 	}
 
 	@Override
-	public Page<BlogPosting> getContentSpaceBlogPostingPage(
+	public Page<BlogPosting> getContentSpaceBlogPostingsPage(
 			Long contentSpaceId, Pagination pagination)
 		throws Exception {
 

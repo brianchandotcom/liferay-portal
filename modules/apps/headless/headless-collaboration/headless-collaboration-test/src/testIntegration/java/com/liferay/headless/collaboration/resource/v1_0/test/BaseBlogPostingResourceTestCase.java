@@ -69,7 +69,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 	}
 
 	@Test
-	public void testGetContentSpaceBlogPostingPage() throws Exception {
+	public void testGetContentSpaceBlogPostingsPage() throws Exception {
 		Assert.assertTrue(true);
 	}
 
@@ -121,7 +121,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 			requestSender.post("/blog-postings/{blog-posting-id}/categories");
 	}
 
-	protected void invokeGetContentSpaceBlogPostingPage(
+	protected void invokeGetContentSpaceBlogPostingsPage(
 			Long contentSpaceId, Pagination pagination)
 		throws Exception {
 

@@ -44,7 +44,7 @@ public abstract class BaseCommentResourceImpl implements CommentResource {
 	}
 
 	@Override
-	public Page<Comment> getCommentCommentPage(
+	public Page<Comment> getCommentCommentsPage(
 			Long commentId, Pagination pagination)
 		throws Exception {
 
@@ -52,7 +52,7 @@ public abstract class BaseCommentResourceImpl implements CommentResource {
 	}
 
 	@Override
-	public Page<Comment> getStructuredContentCommentPage(
+	public Page<Comment> getStructuredContentCommentsPage(
 			Long structuredContentId, Pagination pagination)
 		throws Exception {
 

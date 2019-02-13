@@ -53,7 +53,7 @@ public abstract class BasePhoneResourceTestCase {
 	}
 
 	@Test
-	public void testGetGenericParentPhonePage() throws Exception {
+	public void testGetGenericParentPhonesPage() throws Exception {
 		Assert.assertTrue(true);
 	}
 
@@ -62,7 +62,7 @@ public abstract class BasePhoneResourceTestCase {
 		Assert.assertTrue(true);
 	}
 
-	protected void invokeGetGenericParentPhonePage(
+	protected void invokeGetGenericParentPhonesPage(
 			Object genericParentId, Pagination pagination)
 		throws Exception {
 

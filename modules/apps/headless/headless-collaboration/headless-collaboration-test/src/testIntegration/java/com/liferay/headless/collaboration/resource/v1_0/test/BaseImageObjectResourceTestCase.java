@@ -64,8 +64,10 @@ public abstract class BaseImageObjectResourceTestCase {
 	}
 
 	@Test
-	public void testGetImageObjectRepositoryImageObjectPage() throws Exception {
-		Assert.assertTrue(true);
+	public void testGetImageObjectRepositoryImageObjectsPage()
+		throws Exception {
+
+			Assert.assertTrue(true);
 	}
 
 	@Test
@@ -94,7 +96,7 @@ public abstract class BaseImageObjectResourceTestCase {
 			requestSender.post("/image-objects/{image-object-id}");
 	}
 
-	protected void invokeGetImageObjectRepositoryImageObjectPage(
+	protected void invokeGetImageObjectRepositoryImageObjectsPage(
 			Long imageObjectRepositoryId, Pagination pagination)
 		throws Exception {
 

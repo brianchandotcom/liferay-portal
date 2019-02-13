@@ -40,7 +40,7 @@ public abstract class BaseFormStructureResourceImpl
 	implements FormStructureResource {
 
 	@Override
-	public Page<FormStructure> getContentSpaceFormStructurePage(
+	public Page<FormStructure> getContentSpaceFormStructuresPage(
 			Long contentSpaceId, Pagination pagination)
 		throws Exception {
 

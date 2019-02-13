@@ -40,7 +40,7 @@ public abstract class BaseOrganizationResourceImpl
 	implements OrganizationResource {
 
 	@Override
-	public Page<Organization> getMyUserAccountOrganizationPage(
+	public Page<Organization> getMyUserAccountOrganizationsPage(
 			Long myUserAccountId, Pagination pagination)
 		throws Exception {
 
@@ -53,7 +53,7 @@ public abstract class BaseOrganizationResourceImpl
 	}
 
 	@Override
-	public Page<Organization> getOrganizationOrganizationPage(
+	public Page<Organization> getOrganizationOrganizationsPage(
 			Long organizationId, Pagination pagination)
 		throws Exception {
 
@@ -61,14 +61,14 @@ public abstract class BaseOrganizationResourceImpl
 	}
 
 	@Override
-	public Page<Organization> getOrganizationPage(Pagination pagination)
+	public Page<Organization> getOrganizationsPage(Pagination pagination)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
 	}
 
 	@Override
-	public Page<Organization> getUserAccountOrganizationPage(
+	public Page<Organization> getUserAccountOrganizationsPage(
 			Long userAccountId, Pagination pagination)
 		throws Exception {
 

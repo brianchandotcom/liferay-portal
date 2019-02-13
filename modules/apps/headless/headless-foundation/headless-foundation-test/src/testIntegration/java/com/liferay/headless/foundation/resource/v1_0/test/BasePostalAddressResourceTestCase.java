@@ -58,7 +58,7 @@ public abstract class BasePostalAddressResourceTestCase {
 	}
 
 	@Test
-	public void testGetGenericParentPostalAddressPage() throws Exception {
+	public void testGetGenericParentPostalAddressesPage() throws Exception {
 		Assert.assertTrue(true);
 	}
 
@@ -68,7 +68,7 @@ public abstract class BasePostalAddressResourceTestCase {
 			requestSender.post("/addresses/{address-id}");
 	}
 
-	protected void invokeGetGenericParentPostalAddressPage(
+	protected void invokeGetGenericParentPostalAddressesPage(
 			Object genericParentId, Pagination pagination)
 		throws Exception {
 

@@ -70,12 +70,12 @@ public abstract class BaseDocumentResourceTestCase {
 	}
 
 	@Test
-	public void testGetDocumentsRepositoryDocumentPage() throws Exception {
+	public void testGetDocumentsRepositoryDocumentsPage() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testGetFolderDocumentPage() throws Exception {
+	public void testGetFolderDocumentsPage() throws Exception {
 		Assert.assertTrue(true);
 	}
 
@@ -132,7 +132,7 @@ public abstract class BaseDocumentResourceTestCase {
 			requestSender.post("/documents/{document-id}/categories");
 	}
 
-	protected void invokeGetDocumentsRepositoryDocumentPage(
+	protected void invokeGetDocumentsRepositoryDocumentsPage(
 			Long documentsRepositoryId, Pagination pagination)
 		throws Exception {
 
@@ -142,7 +142,7 @@ public abstract class BaseDocumentResourceTestCase {
 				"/documents-repositories/{documents-repository-id}/documents");
 	}
 
-	protected void invokeGetFolderDocumentPage(
+	protected void invokeGetFolderDocumentsPage(
 			Long folderId, Pagination pagination)
 		throws Exception {
 

@@ -52,7 +52,7 @@ public abstract class BaseUserAccountResourceImpl
 	}
 
 	@Override
-	public Page<UserAccount> getOrganizationUserAccountPage(
+	public Page<UserAccount> getOrganizationUserAccountsPage(
 			Long organizationId, Pagination pagination)
 		throws Exception {
 
@@ -65,7 +65,7 @@ public abstract class BaseUserAccountResourceImpl
 	}
 
 	@Override
-	public Page<UserAccount> getUserAccountPage(
+	public Page<UserAccount> getUserAccountsPage(
 			String fullnamequery, Pagination pagination)
 		throws Exception {
 
@@ -73,7 +73,7 @@ public abstract class BaseUserAccountResourceImpl
 	}
 
 	@Override
-	public Page<UserAccount> getWebSiteUserAccountPage(
+	public Page<UserAccount> getWebSiteUserAccountsPage(
 			Long webSiteId, Pagination pagination)
 		throws Exception {
 

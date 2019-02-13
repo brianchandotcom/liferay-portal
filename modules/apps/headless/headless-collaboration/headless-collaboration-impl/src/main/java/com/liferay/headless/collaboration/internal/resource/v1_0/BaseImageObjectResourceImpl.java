@@ -52,7 +52,7 @@ public abstract class BaseImageObjectResourceImpl
 	}
 
 	@Override
-	public Page<ImageObject> getImageObjectRepositoryImageObjectPage(
+	public Page<ImageObject> getImageObjectRepositoryImageObjectsPage(
 			Long imageObjectRepositoryId, Pagination pagination)
 		throws Exception {
 

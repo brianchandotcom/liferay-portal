@@ -40,7 +40,7 @@ public abstract class BaseWorkflowTaskResourceImpl
 	implements WorkflowTaskResource {
 
 	@Override
-	public Page<WorkflowTask> getGenericParentWorkflowTaskPage(
+	public Page<WorkflowTask> getGenericParentWorkflowTasksPage(
 			Object genericParentId, Pagination pagination)
 		throws Exception {
 
@@ -48,7 +48,7 @@ public abstract class BaseWorkflowTaskResourceImpl
 	}
 
 	@Override
-	public Page<WorkflowTask> getRoleWorkflowTaskPage(
+	public Page<WorkflowTask> getRoleWorkflowTasksPage(
 			Long roleId, Pagination pagination)
 		throws Exception {
 

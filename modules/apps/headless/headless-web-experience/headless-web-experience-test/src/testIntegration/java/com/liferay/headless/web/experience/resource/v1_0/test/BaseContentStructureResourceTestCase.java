@@ -53,7 +53,7 @@ public abstract class BaseContentStructureResourceTestCase {
 	}
 
 	@Test
-	public void testGetContentSpaceContentStructurePage() throws Exception {
+	public void testGetContentSpaceContentStructuresPage() throws Exception {
 		Assert.assertTrue(true);
 	}
 
@@ -62,7 +62,7 @@ public abstract class BaseContentStructureResourceTestCase {
 		Assert.assertTrue(true);
 	}
 
-	protected void invokeGetContentSpaceContentStructurePage(
+	protected void invokeGetContentSpaceContentStructuresPage(
 			Long contentSpaceId, Pagination pagination)
 		throws Exception {
 

@@ -67,7 +67,7 @@ public interface WebUrlResource {
 	@Path("/web-urls")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Page<WebUrl> getGenericParentWebUrlPage( @PathParam("generic-parent-id") Object genericParentId , @Context Pagination pagination ) throws Exception;
+	public Page<WebUrl> getGenericParentWebUrlsPage( @PathParam("generic-parent-id") Object genericParentId , @Context Pagination pagination ) throws Exception;
 
 	@GET
 	@Path("/web-urls/{web-url-id}")

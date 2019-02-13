@@ -69,12 +69,12 @@ public interface CommentResource {
 	@Path("/comments/{comment-id}/comments")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Page<Comment> getCommentCommentPage( @PathParam("comment-id") Long commentId , @Context Pagination pagination ) throws Exception;
+	public Page<Comment> getCommentCommentsPage( @PathParam("comment-id") Long commentId , @Context Pagination pagination ) throws Exception;
 
 	@GET
 	@Path("/structured-contents/{structured-content-id}/comments")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Page<Comment> getStructuredContentCommentPage( @PathParam("structured-content-id") Long structuredContentId , @Context Pagination pagination ) throws Exception;
+	public Page<Comment> getStructuredContentCommentsPage( @PathParam("structured-content-id") Long structuredContentId , @Context Pagination pagination ) throws Exception;
 
 }

@@ -60,7 +60,7 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 	}
 
 	@Override
-	public Page<Document> getDocumentsRepositoryDocumentPage(
+	public Page<Document> getDocumentsRepositoryDocumentsPage(
 			Long documentsRepositoryId, Pagination pagination)
 		throws Exception {
 
@@ -68,7 +68,7 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 	}
 
 	@Override
-	public Page<Document> getFolderDocumentPage(
+	public Page<Document> getFolderDocumentsPage(
 			Long folderId, Pagination pagination)
 		throws Exception {
 

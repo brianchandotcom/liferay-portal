@@ -3940,10 +3940,6 @@ public class MBThreadUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static MBThreadPersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

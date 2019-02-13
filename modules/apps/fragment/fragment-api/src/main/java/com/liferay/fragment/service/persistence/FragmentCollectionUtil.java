@@ -1217,10 +1217,6 @@ public class FragmentCollectionUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static FragmentCollectionPersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

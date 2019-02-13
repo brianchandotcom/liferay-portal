@@ -21,11 +21,6 @@ import com.liferay.bookmarks.model.BookmarksFolder;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
-
 /**
  * The persistence interface for the bookmarks folder service.
  *
@@ -45,9 +40,6 @@ public interface BookmarksFolderPersistence extends BasePersistence<BookmarksFol
 	 *
 	 * Never modify or reference this interface directly. Always use {@link BookmarksFolderUtil} to access the bookmarks folder persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, BookmarksFolder> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the bookmarks folders where uuid = &#63;.
@@ -1790,7 +1782,4 @@ public interface BookmarksFolderPersistence extends BasePersistence<BookmarksFol
 	* @return the number of bookmarks folders
 	*/
 	public int countAll();
-
-	@Override
-	public Set<String> getBadColumnNames();
 }

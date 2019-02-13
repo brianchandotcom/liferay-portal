@@ -21,11 +21,6 @@ import com.liferay.dynamic.data.mapping.model.DDMStructureLink;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
-
 /**
  * The persistence interface for the ddm structure link service.
  *
@@ -45,9 +40,6 @@ public interface DDMStructureLinkPersistence extends BasePersistence<DDMStructur
 	 *
 	 * Never modify or reference this interface directly. Always use {@link DDMStructureLinkUtil} to access the ddm structure link persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, DDMStructureLink> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the ddm structure links where classNameId = &#63;.

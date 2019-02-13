@@ -39,7 +39,7 @@ public class UserGroupTable {
 		{"modifiedDate", Types.TIMESTAMP},
 		{"parentUserGroupId", Types.BIGINT},
 		{"name", Types.VARCHAR},
-		{"description_", Types.VARCHAR},
+		{"description", Types.VARCHAR},
 		{"addedByLDAPImport", Types.BOOLEAN}
 	};
 
@@ -68,12 +68,12 @@ TABLE_COLUMNS_MAP.put("parentUserGroupId", Types.BIGINT);
 
 TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 
-TABLE_COLUMNS_MAP.put("description_", Types.VARCHAR);
+TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
 
 TABLE_COLUMNS_MAP.put("addedByLDAPImport", Types.BOOLEAN);
 
 }
-	public static final String TABLE_SQL_CREATE = "create table UserGroup (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,userGroupId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentUserGroupId LONG,name VARCHAR(75) null,description_ STRING null,addedByLDAPImport BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table UserGroup (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,userGroupId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentUserGroupId LONG,name VARCHAR(75) null,description STRING null,addedByLDAPImport BOOLEAN)";
 
 	public static final String TABLE_SQL_DROP = "drop table UserGroup";
 

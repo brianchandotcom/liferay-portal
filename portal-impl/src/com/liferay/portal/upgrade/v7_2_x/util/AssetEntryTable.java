@@ -40,14 +40,14 @@ public class AssetEntryTable {
 		{"classUuid", Types.VARCHAR},
 		{"classTypeId", Types.BIGINT},
 		{"listable", Types.BOOLEAN},
-		{"visible_", Types.BOOLEAN},
+		{"visible", Types.BOOLEAN},
 		{"startDate", Types.TIMESTAMP},
 		{"endDate", Types.TIMESTAMP},
 		{"publishDate", Types.TIMESTAMP},
 		{"expirationDate", Types.TIMESTAMP},
 		{"mimeType", Types.VARCHAR},
 		{"title", Types.VARCHAR},
-		{"description_", Types.CLOB},
+		{"description", Types.CLOB},
 		{"summary", Types.CLOB},
 		{"url", Types.VARCHAR},
 		{"layoutUuid", Types.VARCHAR},
@@ -84,7 +84,7 @@ TABLE_COLUMNS_MAP.put("classTypeId", Types.BIGINT);
 
 TABLE_COLUMNS_MAP.put("listable", Types.BOOLEAN);
 
-TABLE_COLUMNS_MAP.put("visible_", Types.BOOLEAN);
+TABLE_COLUMNS_MAP.put("visible", Types.BOOLEAN);
 
 TABLE_COLUMNS_MAP.put("startDate", Types.TIMESTAMP);
 
@@ -98,7 +98,7 @@ TABLE_COLUMNS_MAP.put("mimeType", Types.VARCHAR);
 
 TABLE_COLUMNS_MAP.put("title", Types.VARCHAR);
 
-TABLE_COLUMNS_MAP.put("description_", Types.CLOB);
+TABLE_COLUMNS_MAP.put("description", Types.CLOB);
 
 TABLE_COLUMNS_MAP.put("summary", Types.CLOB);
 
@@ -115,7 +115,7 @@ TABLE_COLUMNS_MAP.put("priority", Types.DOUBLE);
 TABLE_COLUMNS_MAP.put("viewCount", Types.INTEGER);
 
 }
-	public static final String TABLE_SQL_CREATE = "create table AssetEntry (entryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,classUuid VARCHAR(75) null,classTypeId LONG,listable BOOLEAN,visible_ BOOLEAN,startDate DATE null,endDate DATE null,publishDate DATE null,expirationDate DATE null,mimeType VARCHAR(75) null,title STRING null,description_ TEXT null,summary TEXT null,url STRING null,layoutUuid VARCHAR(75) null,height INTEGER,width INTEGER,priority DOUBLE,viewCount INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table AssetEntry (entryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,classUuid VARCHAR(75) null,classTypeId LONG,listable BOOLEAN,visible BOOLEAN,startDate DATE null,endDate DATE null,publishDate DATE null,expirationDate DATE null,mimeType VARCHAR(75) null,title STRING null,description TEXT null,summary TEXT null,url STRING null,layoutUuid VARCHAR(75) null,height INTEGER,width INTEGER,priority DOUBLE,viewCount INTEGER)";
 
 	public static final String TABLE_SQL_DROP = "drop table AssetEntry";
 
@@ -124,11 +124,11 @@ TABLE_COLUMNS_MAP.put("viewCount", Types.INTEGER);
 		"create index IX_7306C60 on AssetEntry (companyId)",
 		"create index IX_75D42FF9 on AssetEntry (expirationDate)",
 		"create index IX_6418BB52 on AssetEntry (groupId, classNameId, publishDate, expirationDate)",
-		"create index IX_D5D3E88D on AssetEntry (groupId, classNameId, visible_)",
+		"create index IX_82C4BEF6 on AssetEntry (groupId, classNameId, visible)",
 		"create index IX_1EBA6821 on AssetEntry (groupId, classUuid[$COLUMN_LENGTH:75$])",
 		"create index IX_FEC4A201 on AssetEntry (layoutUuid[$COLUMN_LENGTH:75$])",
 		"create index IX_2E4E3885 on AssetEntry (publishDate)",
-		"create index IX_751312A9 on AssetEntry (visible_)"
+		"create index IX_9029E15A on AssetEntry (visible)"
 	};
 
 }

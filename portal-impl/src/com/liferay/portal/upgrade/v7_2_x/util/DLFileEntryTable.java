@@ -46,7 +46,7 @@ public class DLFileEntryTable {
 		{"extension", Types.VARCHAR},
 		{"mimeType", Types.VARCHAR},
 		{"title", Types.VARCHAR},
-		{"description_", Types.VARCHAR},
+		{"description", Types.VARCHAR},
 		{"extraSettings", Types.CLOB},
 		{"fileEntryTypeId", Types.BIGINT},
 		{"version", Types.VARCHAR},
@@ -99,7 +99,7 @@ TABLE_COLUMNS_MAP.put("mimeType", Types.VARCHAR);
 
 TABLE_COLUMNS_MAP.put("title", Types.VARCHAR);
 
-TABLE_COLUMNS_MAP.put("description_", Types.VARCHAR);
+TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
 
 TABLE_COLUMNS_MAP.put("extraSettings", Types.CLOB);
 
@@ -124,7 +124,7 @@ TABLE_COLUMNS_MAP.put("manualCheckInRequired", Types.BOOLEAN);
 TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 
 }
-	public static final String TABLE_SQL_CREATE = "create table DLFileEntry (uuid_ VARCHAR(75) null,fileEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,repositoryId LONG,folderId LONG,treePath STRING null,name VARCHAR(255) null,fileName VARCHAR(255) null,extension VARCHAR(75) null,mimeType VARCHAR(75) null,title VARCHAR(255) null,description_ STRING null,extraSettings TEXT null,fileEntryTypeId LONG,version VARCHAR(75) null,size_ LONG,readCount INTEGER,smallImageId LONG,largeImageId LONG,custom1ImageId LONG,custom2ImageId LONG,manualCheckInRequired BOOLEAN,lastPublishDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table DLFileEntry (uuid_ VARCHAR(75) null,fileEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,repositoryId LONG,folderId LONG,treePath STRING null,name VARCHAR(255) null,fileName VARCHAR(255) null,extension VARCHAR(75) null,mimeType VARCHAR(75) null,title VARCHAR(255) null,description STRING null,extraSettings TEXT null,fileEntryTypeId LONG,version VARCHAR(75) null,size_ LONG,readCount INTEGER,smallImageId LONG,largeImageId LONG,custom1ImageId LONG,custom2ImageId LONG,manualCheckInRequired BOOLEAN,lastPublishDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table DLFileEntry";
 

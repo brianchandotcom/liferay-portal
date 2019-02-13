@@ -21,16 +21,13 @@ definition {
 
 		Navigator.gotoNavNested(navNested = "${collectionName}");
 
-		if (isSet(pageTemplateName)) {
-			LexiconCard.clickCard(
-				card = "${pageTemplateName}"
-			);
+		if (!(isSet(pageTemplateName))) {
+			var pageTemplateName = "Content Page";
 		}
-		else {
-			LexiconCard.clickCard(
-				card = "Content Page"
-			);
-		}
+
+		LexiconCard.clickCard(
+			card = "${pageTemplateName}"
+		);
 
 		SelectFrame(locator1 = "IFrame#DIALOG");
 

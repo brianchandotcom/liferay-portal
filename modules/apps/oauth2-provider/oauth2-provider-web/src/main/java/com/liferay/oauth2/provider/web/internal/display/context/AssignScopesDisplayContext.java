@@ -17,6 +17,7 @@ package com.liferay.oauth2.provider.web.internal.display.context;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.oauth2.provider.configuration.OAuth2ProviderConfiguration;
 import com.liferay.oauth2.provider.scope.liferay.ApplicationDescriptorLocator;
+import com.liferay.oauth2.provider.scope.liferay.LiferayOAuth2Scope;
 import com.liferay.oauth2.provider.scope.liferay.ScopeDescriptorLocator;
 import com.liferay.oauth2.provider.scope.liferay.ScopeLocator;
 import com.liferay.oauth2.provider.scope.spi.application.descriptor.ApplicationDescriptor;
@@ -203,6 +204,8 @@ public class AssignScopesDisplayContext
 				assignableScopes.getApplicationAssignableScopes(
 					applicationName);
 
+			boolean applicationUnassignableScopes = true;
+
 			for (Map.Entry<AssignableScopes, Relations> entry :
 					localRelations.entrySet()) {
 
@@ -214,6 +217,19 @@ public class AssignScopesDisplayContext
 
 				applicationAssignableScopes =
 					applicationAssignableScopes.subtract(entry.getKey());
+
+				Set<LiferayOAuth2Scope> liferayOAuth2Scopes =
+					applicationAssignableScopes.getLiferayOAuth2Scopes();
+
+				if (liferayOAuth2Scopes.isEmpty()) {
+					applicationUnassignableScopes = false;
+
+					break;
+				}
+			}
+
+			if (!applicationUnassignableScopes) {
+				continue;
 			}
 
 			Relations relations = assignableScopesRelations.computeIfAbsent(

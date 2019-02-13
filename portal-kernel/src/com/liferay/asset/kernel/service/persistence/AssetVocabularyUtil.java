@@ -1565,6 +1565,10 @@ public class AssetVocabularyUtil {
 		return getPersistence().countAll();
 	}
 
+	public static Set<String> getBadColumnNames() {
+		return getPersistence().getBadColumnNames();
+	}
+
 	public static AssetVocabularyPersistence getPersistence() {
 		if (_persistence == null) {
 			_persistence = (AssetVocabularyPersistence)PortalBeanLocatorUtil.locate(AssetVocabularyPersistence.class.getName());

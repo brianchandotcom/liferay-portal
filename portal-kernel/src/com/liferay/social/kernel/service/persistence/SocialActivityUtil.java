@@ -2204,6 +2204,10 @@ public class SocialActivityUtil {
 		return getPersistence().countAll();
 	}
 
+	public static Set<String> getBadColumnNames() {
+		return getPersistence().getBadColumnNames();
+	}
+
 	public static SocialActivityPersistence getPersistence() {
 		if (_persistence == null) {
 			_persistence = (SocialActivityPersistence)PortalBeanLocatorUtil.locate(SocialActivityPersistence.class.getName());

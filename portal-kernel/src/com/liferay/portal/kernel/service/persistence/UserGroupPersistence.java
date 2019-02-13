@@ -19,6 +19,11 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.exception.NoSuchUserGroupException;
 import com.liferay.portal.kernel.model.UserGroup;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the user group service.
  *
@@ -38,6 +43,9 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link UserGroupUtil} to access the user group persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, UserGroup> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the user groups where uuid = &#63;.
@@ -1968,4 +1976,7 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	*/
 	public void setUsers(long pk,
 		java.util.List<com.liferay.portal.kernel.model.User> users);
+
+	@Override
+	public Set<String> getBadColumnNames();
 }

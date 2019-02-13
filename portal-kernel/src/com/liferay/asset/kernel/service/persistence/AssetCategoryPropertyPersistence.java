@@ -21,6 +21,11 @@ import com.liferay.asset.kernel.model.AssetCategoryProperty;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the asset category property service.
  *
@@ -42,6 +47,9 @@ public interface AssetCategoryPropertyPersistence extends BasePersistence<AssetC
 	 *
 	 * Never modify or reference this interface directly. Always use {@link AssetCategoryPropertyUtil} to access the asset category property persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, AssetCategoryProperty> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the asset category properties where companyId = &#63;.
@@ -619,4 +627,7 @@ public interface AssetCategoryPropertyPersistence extends BasePersistence<AssetC
 	* @return the number of asset category properties
 	*/
 	public int countAll();
+
+	@Override
+	public Set<String> getBadColumnNames();
 }

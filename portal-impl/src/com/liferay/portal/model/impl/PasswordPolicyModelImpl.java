@@ -87,7 +87,7 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "defaultPolicy", Types.BOOLEAN },
 			{ "name", Types.VARCHAR },
-			{ "description_", Types.VARCHAR },
+			{ "description", Types.VARCHAR },
 			{ "changeable", Types.BOOLEAN },
 			{ "changeRequired", Types.BOOLEAN },
 			{ "minAge", Types.BIGINT },
@@ -100,7 +100,7 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 			{ "minSymbols", Types.INTEGER },
 			{ "minUpperCase", Types.INTEGER },
 			{ "regex", Types.VARCHAR },
-			{ "history_", Types.BOOLEAN },
+			{ "history", Types.BOOLEAN },
 			{ "historyCount", Types.INTEGER },
 			{ "expireable", Types.BOOLEAN },
 			{ "maxAge", Types.BIGINT },
@@ -126,7 +126,7 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("defaultPolicy", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("description_", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("changeable", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("changeRequired", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("minAge", Types.BIGINT);
@@ -139,7 +139,7 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 		TABLE_COLUMNS_MAP.put("minSymbols", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("minUpperCase", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("regex", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("history_", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("history", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("historyCount", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("expireable", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("maxAge", Types.BIGINT);
@@ -153,7 +153,7 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 		TABLE_COLUMNS_MAP.put("resetTicketMaxAge", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table PasswordPolicy (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,passwordPolicyId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,defaultPolicy BOOLEAN,name VARCHAR(75) null,description_ STRING null,changeable BOOLEAN,changeRequired BOOLEAN,minAge LONG,checkSyntax BOOLEAN,allowDictionaryWords BOOLEAN,minAlphanumeric INTEGER,minLength INTEGER,minLowerCase INTEGER,minNumbers INTEGER,minSymbols INTEGER,minUpperCase INTEGER,regex STRING null,history_ BOOLEAN,historyCount INTEGER,expireable BOOLEAN,maxAge LONG,warningTime LONG,graceLimit INTEGER,lockout BOOLEAN,maxFailure INTEGER,lockoutDuration LONG,requireUnlock BOOLEAN,resetFailureCount LONG,resetTicketMaxAge LONG)";
+	public static final String TABLE_SQL_CREATE = "create table PasswordPolicy (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,passwordPolicyId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,defaultPolicy BOOLEAN,name VARCHAR(75) null,description STRING null,changeable BOOLEAN,changeRequired BOOLEAN,minAge LONG,checkSyntax BOOLEAN,allowDictionaryWords BOOLEAN,minAlphanumeric INTEGER,minLength INTEGER,minLowerCase INTEGER,minNumbers INTEGER,minSymbols INTEGER,minUpperCase INTEGER,regex STRING null,history BOOLEAN,historyCount INTEGER,expireable BOOLEAN,maxAge LONG,warningTime LONG,graceLimit INTEGER,lockout BOOLEAN,maxFailure INTEGER,lockoutDuration LONG,requireUnlock BOOLEAN,resetFailureCount LONG,resetTicketMaxAge LONG)";
 	public static final String TABLE_SQL_DROP = "drop table PasswordPolicy";
 	public static final String ORDER_BY_JPQL = " ORDER BY passwordPolicy.passwordPolicyId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY PasswordPolicy.passwordPolicyId ASC";

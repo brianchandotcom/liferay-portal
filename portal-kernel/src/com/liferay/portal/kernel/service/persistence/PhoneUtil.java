@@ -1471,6 +1471,10 @@ public class PhoneUtil {
 		return getPersistence().countAll();
 	}
 
+	public static Set<String> getBadColumnNames() {
+		return getPersistence().getBadColumnNames();
+	}
+
 	public static PhonePersistence getPersistence() {
 		if (_persistence == null) {
 			_persistence = (PhonePersistence)PortalBeanLocatorUtil.locate(PhonePersistence.class.getName());

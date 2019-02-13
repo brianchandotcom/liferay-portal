@@ -21,6 +21,11 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the document library file entry service.
  *
@@ -40,6 +45,9 @@ public interface DLFileEntryPersistence extends BasePersistence<DLFileEntry> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link DLFileEntryUtil} to access the document library file entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, DLFileEntry> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the document library file entries where uuid = &#63;.
@@ -3653,4 +3661,7 @@ public interface DLFileEntryPersistence extends BasePersistence<DLFileEntry> {
 	* @return the number of document library file entries
 	*/
 	public int countAll();
+
+	@Override
+	public Set<String> getBadColumnNames();
 }

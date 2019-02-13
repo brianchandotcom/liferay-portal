@@ -1995,6 +1995,10 @@ public class DLFileShortcutUtil {
 		return getPersistence().countAll();
 	}
 
+	public static Set<String> getBadColumnNames() {
+		return getPersistence().getBadColumnNames();
+	}
+
 	public static DLFileShortcutPersistence getPersistence() {
 		if (_persistence == null) {
 			_persistence = (DLFileShortcutPersistence)PortalBeanLocatorUtil.locate(DLFileShortcutPersistence.class.getName());

@@ -1476,6 +1476,10 @@ public class WebsiteUtil {
 		return getPersistence().countAll();
 	}
 
+	public static Set<String> getBadColumnNames() {
+		return getPersistence().getBadColumnNames();
+	}
+
 	public static WebsitePersistence getPersistence() {
 		if (_persistence == null) {
 			_persistence = (WebsitePersistence)PortalBeanLocatorUtil.locate(WebsitePersistence.class.getName());

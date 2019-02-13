@@ -8,7 +8,7 @@ create table PowwowMeeting (
 	modifiedDate DATE null,
 	powwowServerId LONG,
 	name VARCHAR(75) null,
-	description_ STRING null,
+	description STRING null,
 	providerType VARCHAR(75) null,
 	providerTypeMetadata STRING null,
 	languageId VARCHAR(75) null,

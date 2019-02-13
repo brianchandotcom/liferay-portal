@@ -1633,6 +1633,10 @@ public class AssetTagUtil {
 		getPersistence().setAssetEntries(pk, assetEntries);
 	}
 
+	public static Set<String> getBadColumnNames() {
+		return getPersistence().getBadColumnNames();
+	}
+
 	public static AssetTagPersistence getPersistence() {
 		if (_persistence == null) {
 			_persistence = (AssetTagPersistence)PortalBeanLocatorUtil.locate(AssetTagPersistence.class.getName());

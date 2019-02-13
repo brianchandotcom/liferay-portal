@@ -95,7 +95,7 @@ create table AssetCategory (
 	rightCategoryId LONG,
 	name VARCHAR(75) null,
 	title STRING null,
-	description_ STRING null,
+	description STRING null,
 	vocabularyId LONG,
 	lastPublishDate DATE null
 );
@@ -127,14 +127,14 @@ create table AssetEntry (
 	classUuid VARCHAR(75) null,
 	classTypeId LONG,
 	listable BOOLEAN,
-	visible_ BOOLEAN,
+	visible BOOLEAN,
 	startDate DATE null,
 	endDate DATE null,
 	publishDate DATE null,
 	expirationDate DATE null,
 	mimeType VARCHAR(75) null,
 	title STRING null,
-	description_ TEXT null,
+	description TEXT null,
 	summary TEXT null,
 	url STRING null,
 	layoutUuid VARCHAR(75) null,
@@ -182,7 +182,7 @@ create table AssetVocabulary (
 	modifiedDate DATE null,
 	name VARCHAR(75) null,
 	title STRING null,
-	description_ STRING null,
+	description STRING null,
 	settings_ STRING null,
 	lastPublishDate DATE null
 );
@@ -218,7 +218,7 @@ create table Company (
 	mx VARCHAR(200) null,
 	homeURL STRING null,
 	logoId LONG,
-	system_ BOOLEAN,
+	system BOOLEAN,
 	maxUsers INTEGER,
 	active_ BOOLEAN
 );
@@ -291,7 +291,7 @@ create table DLFileEntry (
 	extension VARCHAR(75) null,
 	mimeType VARCHAR(75) null,
 	title VARCHAR(255) null,
-	description_ STRING null,
+	description STRING null,
 	extraSettings TEXT null,
 	fileEntryTypeId LONG,
 	version VARCHAR(75) null,
@@ -326,7 +326,7 @@ create table DLFileEntryType (
 	modifiedDate DATE null,
 	fileEntryTypeKey VARCHAR(75) null,
 	name STRING null,
-	description_ STRING null,
+	description STRING null,
 	lastPublishDate DATE null
 );
 
@@ -375,7 +375,7 @@ create table DLFileVersion (
 	extension VARCHAR(75) null,
 	mimeType VARCHAR(75) null,
 	title VARCHAR(255) null,
-	description_ STRING null,
+	description STRING null,
 	changeLog VARCHAR(75) null,
 	extraSettings TEXT null,
 	fileEntryTypeId LONG,
@@ -403,7 +403,7 @@ create table DLFolder (
 	parentFolderId LONG,
 	treePath STRING null,
 	name VARCHAR(255) null,
-	description_ STRING null,
+	description STRING null,
 	lastPostDate DATE null,
 	defaultFileEntryTypeId LONG,
 	hidden_ BOOLEAN,
@@ -477,7 +477,7 @@ create table ExportImportConfiguration (
 	createDate DATE null,
 	modifiedDate DATE null,
 	name VARCHAR(200) null,
-	description_ STRING null,
+	description STRING null,
 	type_ INTEGER,
 	settings_ TEXT null,
 	status INTEGER,
@@ -499,7 +499,7 @@ create table Group_ (
 	treePath STRING null,
 	groupKey VARCHAR(150) null,
 	name STRING null,
-	description_ STRING null,
+	description STRING null,
 	type_ INTEGER,
 	typeSettings TEXT null,
 	manualMembership BOOLEAN,
@@ -561,13 +561,13 @@ create table Layout (
 	parentLayoutId LONG,
 	name STRING null,
 	title STRING null,
-	description_ STRING null,
+	description STRING null,
 	keywords STRING null,
 	robots STRING null,
 	type_ VARCHAR(75) null,
 	typeSettings TEXT null,
 	hidden_ BOOLEAN,
-	system_ BOOLEAN,
+	system BOOLEAN,
 	friendlyURL VARCHAR(255) null,
 	iconImageId LONG,
 	themeId VARCHAR(75) null,
@@ -590,7 +590,7 @@ create table LayoutBranch (
 	layoutSetBranchId LONG,
 	plid LONG,
 	name VARCHAR(75) null,
-	description_ STRING null,
+	description STRING null,
 	master BOOLEAN
 );
 
@@ -621,7 +621,7 @@ create table LayoutPrototype (
 	createDate DATE null,
 	modifiedDate DATE null,
 	name TEXT null,
-	description_ TEXT null,
+	description TEXT null,
 	settings_ STRING null,
 	active_ BOOLEAN
 );
@@ -644,7 +644,7 @@ create table LayoutRevision (
 	privateLayout BOOLEAN,
 	name STRING null,
 	title STRING null,
-	description_ STRING null,
+	description STRING null,
 	keywords STRING null,
 	robots STRING null,
 	typeSettings TEXT null,
@@ -687,7 +687,7 @@ create table LayoutSetBranch (
 	modifiedDate DATE null,
 	privateLayout BOOLEAN,
 	name VARCHAR(75) null,
-	description_ STRING null,
+	description STRING null,
 	master BOOLEAN,
 	logoId LONG,
 	themeId VARCHAR(75) null,
@@ -708,7 +708,7 @@ create table LayoutSetPrototype (
 	createDate DATE null,
 	modifiedDate DATE null,
 	name TEXT null,
-	description_ TEXT null,
+	description TEXT null,
 	settings_ STRING null,
 	active_ BOOLEAN
 );
@@ -798,7 +798,7 @@ create table PasswordPolicy (
 	modifiedDate DATE null,
 	defaultPolicy BOOLEAN,
 	name VARCHAR(75) null,
-	description_ STRING null,
+	description STRING null,
 	changeable BOOLEAN,
 	changeRequired BOOLEAN,
 	minAge LONG,
@@ -811,7 +811,7 @@ create table PasswordPolicy (
 	minSymbols INTEGER,
 	minUpperCase INTEGER,
 	regex STRING null,
-	history_ BOOLEAN,
+	history BOOLEAN,
 	historyCount INTEGER,
 	expireable BOOLEAN,
 	maxAge LONG,
@@ -1002,7 +1002,7 @@ create table Repository (
 	modifiedDate DATE null,
 	classNameId LONG,
 	name VARCHAR(200) null,
-	description_ STRING null,
+	description STRING null,
 	portletId VARCHAR(200) null,
 	typeSettings TEXT null,
 	dlFolderId LONG,
@@ -1089,7 +1089,7 @@ create table Role_ (
 	classPK LONG,
 	name VARCHAR(75) null,
 	title STRING null,
-	description_ STRING null,
+	description STRING null,
 	type_ INTEGER,
 	subtype VARCHAR(75) null
 );
@@ -1237,7 +1237,7 @@ create table Team (
 	modifiedDate DATE null,
 	groupId LONG,
 	name VARCHAR(75) null,
-	description_ STRING null,
+	description STRING null,
 	lastPublishDate DATE null
 );
 
@@ -1324,7 +1324,7 @@ create table UserGroup (
 	modifiedDate DATE null,
 	parentUserGroupId LONG,
 	name VARCHAR(75) null,
-	description_ STRING null,
+	description STRING null,
 	addedByLDAPImport BOOLEAN
 );
 
@@ -1359,7 +1359,7 @@ create table UserIdMapper (
 	companyId LONG,
 	userId LONG,
 	type_ VARCHAR(75) null,
-	description_ VARCHAR(75) null,
+	description VARCHAR(75) null,
 	externalUserId VARCHAR(75) null
 );
 

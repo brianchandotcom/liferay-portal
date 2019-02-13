@@ -95,14 +95,14 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 			{ "classUuid", Types.VARCHAR },
 			{ "classTypeId", Types.BIGINT },
 			{ "listable", Types.BOOLEAN },
-			{ "visible_", Types.BOOLEAN },
+			{ "visible", Types.BOOLEAN },
 			{ "startDate", Types.TIMESTAMP },
 			{ "endDate", Types.TIMESTAMP },
 			{ "publishDate", Types.TIMESTAMP },
 			{ "expirationDate", Types.TIMESTAMP },
 			{ "mimeType", Types.VARCHAR },
 			{ "title", Types.VARCHAR },
-			{ "description_", Types.CLOB },
+			{ "description", Types.CLOB },
 			{ "summary", Types.CLOB },
 			{ "url", Types.VARCHAR },
 			{ "layoutUuid", Types.VARCHAR },
@@ -126,14 +126,14 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 		TABLE_COLUMNS_MAP.put("classUuid", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("classTypeId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("listable", Types.BOOLEAN);
-		TABLE_COLUMNS_MAP.put("visible_", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("visible", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("startDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("endDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("publishDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("expirationDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("mimeType", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("title", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("description_", Types.CLOB);
+		TABLE_COLUMNS_MAP.put("description", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("summary", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("url", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("layoutUuid", Types.VARCHAR);
@@ -143,7 +143,7 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 		TABLE_COLUMNS_MAP.put("viewCount", Types.INTEGER);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table AssetEntry (entryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,classUuid VARCHAR(75) null,classTypeId LONG,listable BOOLEAN,visible_ BOOLEAN,startDate DATE null,endDate DATE null,publishDate DATE null,expirationDate DATE null,mimeType VARCHAR(75) null,title STRING null,description_ TEXT null,summary TEXT null,url STRING null,layoutUuid VARCHAR(75) null,height INTEGER,width INTEGER,priority DOUBLE,viewCount INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table AssetEntry (entryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,classUuid VARCHAR(75) null,classTypeId LONG,listable BOOLEAN,visible BOOLEAN,startDate DATE null,endDate DATE null,publishDate DATE null,expirationDate DATE null,mimeType VARCHAR(75) null,title STRING null,description TEXT null,summary TEXT null,url STRING null,layoutUuid VARCHAR(75) null,height INTEGER,width INTEGER,priority DOUBLE,viewCount INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table AssetEntry";
 	public static final String ORDER_BY_JPQL = " ORDER BY assetEntry.entryId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY AssetEntry.entryId ASC";

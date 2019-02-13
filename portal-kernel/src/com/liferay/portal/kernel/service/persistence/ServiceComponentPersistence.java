@@ -19,6 +19,11 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.exception.NoSuchServiceComponentException;
 import com.liferay.portal.kernel.model.ServiceComponent;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the service component service.
  *
@@ -38,6 +43,9 @@ public interface ServiceComponentPersistence extends BasePersistence<ServiceComp
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ServiceComponentUtil} to access the service component persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, ServiceComponent> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the service components where buildNamespace = &#63;.
@@ -338,4 +346,7 @@ public interface ServiceComponentPersistence extends BasePersistence<ServiceComp
 	* @return the number of service components
 	*/
 	public int countAll();
+
+	@Override
+	public Set<String> getBadColumnNames();
 }

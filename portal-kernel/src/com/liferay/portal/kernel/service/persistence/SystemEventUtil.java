@@ -1004,6 +1004,10 @@ public class SystemEventUtil {
 		return getPersistence().countAll();
 	}
 
+	public static Set<String> getBadColumnNames() {
+		return getPersistence().getBadColumnNames();
+	}
+
 	public static SystemEventPersistence getPersistence() {
 		if (_persistence == null) {
 			_persistence = (SystemEventPersistence)PortalBeanLocatorUtil.locate(SystemEventPersistence.class.getName());

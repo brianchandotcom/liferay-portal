@@ -1921,7 +1921,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 			query.append(_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_1);
 		}
 
-		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2_SQL);
+		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
 		if (!getDB().isSupportsInlineDistinct()) {
 			query.append(_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_2);
@@ -2043,7 +2043,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 			query.append(_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_1);
 		}
 
-		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2_SQL);
+		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
 		if (!getDB().isSupportsInlineDistinct()) {
 			query.append(_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_2);
@@ -2058,13 +2058,13 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 			for (int i = 0; i < orderByConditionFields.length; i++) {
 				if (getDB().isSupportsInlineDistinct()) {
-					query.append(getColumnName(_ORDER_BY_ENTITY_ALIAS,
-							orderByConditionFields[i], true));
+					query.append(_ORDER_BY_ENTITY_ALIAS);
 				}
 				else {
-					query.append(getColumnName(_ORDER_BY_ENTITY_TABLE,
-							orderByConditionFields[i], true));
+					query.append(_ORDER_BY_ENTITY_TABLE);
 				}
+
+				query.append(orderByConditionFields[i]);
 
 				if ((i + 1) < orderByConditionFields.length) {
 					if (orderByComparator.isAscending() ^ previous) {
@@ -2090,13 +2090,13 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 			for (int i = 0; i < orderByFields.length; i++) {
 				if (getDB().isSupportsInlineDistinct()) {
-					query.append(getColumnName(_ORDER_BY_ENTITY_ALIAS,
-							orderByFields[i], true));
+					query.append(_ORDER_BY_ENTITY_ALIAS);
 				}
 				else {
-					query.append(getColumnName(_ORDER_BY_ENTITY_TABLE,
-							orderByFields[i], true));
+					query.append(_ORDER_BY_ENTITY_TABLE);
 				}
+
+				query.append(orderByFields[i]);
 
 				if ((i + 1) < orderByFields.length) {
 					if (orderByComparator.isAscending() ^ previous) {
@@ -2243,7 +2243,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 		query.append(_FILTER_SQL_COUNT_LAYOUT_WHERE);
 
-		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2_SQL);
+		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
 				Layout.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
@@ -2276,7 +2276,6 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	}
 
 	private static final String _FINDER_COLUMN_GROUPID_GROUPID_2 = "layout.groupId = ? AND layout.system = [$FALSE$]";
-	private static final String _FINDER_COLUMN_GROUPID_GROUPID_2_SQL = "layout.groupId = ? AND layout.system_ = [$FALSE$]";
 	private FinderPath _finderPathWithPaginationFindByCompanyId;
 	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
 	private FinderPath _finderPathCountByCompanyId;
@@ -5059,9 +5058,9 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 			query.append(_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_1);
 		}
 
-		query.append(_FINDER_COLUMN_G_P_GROUPID_2_SQL);
+		query.append(_FINDER_COLUMN_G_P_GROUPID_2);
 
-		query.append(_FINDER_COLUMN_G_P_PRIVATELAYOUT_2_SQL);
+		query.append(_FINDER_COLUMN_G_P_PRIVATELAYOUT_2);
 
 		if (!getDB().isSupportsInlineDistinct()) {
 			query.append(_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_2);
@@ -5187,9 +5186,9 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 			query.append(_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_1);
 		}
 
-		query.append(_FINDER_COLUMN_G_P_GROUPID_2_SQL);
+		query.append(_FINDER_COLUMN_G_P_GROUPID_2);
 
-		query.append(_FINDER_COLUMN_G_P_PRIVATELAYOUT_2_SQL);
+		query.append(_FINDER_COLUMN_G_P_PRIVATELAYOUT_2);
 
 		if (!getDB().isSupportsInlineDistinct()) {
 			query.append(_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_2);
@@ -5204,13 +5203,13 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 			for (int i = 0; i < orderByConditionFields.length; i++) {
 				if (getDB().isSupportsInlineDistinct()) {
-					query.append(getColumnName(_ORDER_BY_ENTITY_ALIAS,
-							orderByConditionFields[i], true));
+					query.append(_ORDER_BY_ENTITY_ALIAS);
 				}
 				else {
-					query.append(getColumnName(_ORDER_BY_ENTITY_TABLE,
-							orderByConditionFields[i], true));
+					query.append(_ORDER_BY_ENTITY_TABLE);
 				}
+
+				query.append(orderByConditionFields[i]);
 
 				if ((i + 1) < orderByConditionFields.length) {
 					if (orderByComparator.isAscending() ^ previous) {
@@ -5236,13 +5235,13 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 			for (int i = 0; i < orderByFields.length; i++) {
 				if (getDB().isSupportsInlineDistinct()) {
-					query.append(getColumnName(_ORDER_BY_ENTITY_ALIAS,
-							orderByFields[i], true));
+					query.append(_ORDER_BY_ENTITY_ALIAS);
 				}
 				else {
-					query.append(getColumnName(_ORDER_BY_ENTITY_TABLE,
-							orderByFields[i], true));
+					query.append(_ORDER_BY_ENTITY_TABLE);
 				}
+
+				query.append(orderByFields[i]);
 
 				if ((i + 1) < orderByFields.length) {
 					if (orderByComparator.isAscending() ^ previous) {
@@ -5398,9 +5397,9 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 		query.append(_FILTER_SQL_COUNT_LAYOUT_WHERE);
 
-		query.append(_FINDER_COLUMN_G_P_GROUPID_2_SQL);
+		query.append(_FINDER_COLUMN_G_P_GROUPID_2);
 
-		query.append(_FINDER_COLUMN_G_P_PRIVATELAYOUT_2_SQL);
+		query.append(_FINDER_COLUMN_G_P_PRIVATELAYOUT_2);
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
 				Layout.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
@@ -5435,9 +5434,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	}
 
 	private static final String _FINDER_COLUMN_G_P_GROUPID_2 = "layout.groupId = ? AND ";
-	private static final String _FINDER_COLUMN_G_P_GROUPID_2_SQL = "layout.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_P_PRIVATELAYOUT_2 = "layout.privateLayout = ? AND layout.system = [$FALSE$]";
-	private static final String _FINDER_COLUMN_G_P_PRIVATELAYOUT_2_SQL = "layout.privateLayout = ? AND layout.system_ = [$FALSE$]";
 	private FinderPath _finderPathWithPaginationFindByG_T;
 	private FinderPath _finderPathWithoutPaginationFindByG_T;
 	private FinderPath _finderPathCountByG_T;
@@ -5983,7 +5980,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 			query.append(_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_1);
 		}
 
-		query.append(_FINDER_COLUMN_G_T_GROUPID_2_SQL);
+		query.append(_FINDER_COLUMN_G_T_GROUPID_2);
 
 		boolean bindType = false;
 
@@ -6123,7 +6120,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 			query.append(_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_1);
 		}
 
-		query.append(_FINDER_COLUMN_G_T_GROUPID_2_SQL);
+		query.append(_FINDER_COLUMN_G_T_GROUPID_2);
 
 		boolean bindType = false;
 
@@ -6149,13 +6146,13 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 			for (int i = 0; i < orderByConditionFields.length; i++) {
 				if (getDB().isSupportsInlineDistinct()) {
-					query.append(getColumnName(_ORDER_BY_ENTITY_ALIAS,
-							orderByConditionFields[i], true));
+					query.append(_ORDER_BY_ENTITY_ALIAS);
 				}
 				else {
-					query.append(getColumnName(_ORDER_BY_ENTITY_TABLE,
-							orderByConditionFields[i], true));
+					query.append(_ORDER_BY_ENTITY_TABLE);
 				}
+
+				query.append(orderByConditionFields[i]);
 
 				if ((i + 1) < orderByConditionFields.length) {
 					if (orderByComparator.isAscending() ^ previous) {
@@ -6181,13 +6178,13 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 			for (int i = 0; i < orderByFields.length; i++) {
 				if (getDB().isSupportsInlineDistinct()) {
-					query.append(getColumnName(_ORDER_BY_ENTITY_ALIAS,
-							orderByFields[i], true));
+					query.append(_ORDER_BY_ENTITY_ALIAS);
 				}
 				else {
-					query.append(getColumnName(_ORDER_BY_ENTITY_TABLE,
-							orderByFields[i], true));
+					query.append(_ORDER_BY_ENTITY_TABLE);
 				}
+
+				query.append(orderByFields[i]);
 
 				if ((i + 1) < orderByFields.length) {
 					if (orderByComparator.isAscending() ^ previous) {
@@ -6360,7 +6357,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 		query.append(_FILTER_SQL_COUNT_LAYOUT_WHERE);
 
-		query.append(_FINDER_COLUMN_G_T_GROUPID_2_SQL);
+		query.append(_FINDER_COLUMN_G_T_GROUPID_2);
 
 		boolean bindType = false;
 
@@ -6408,11 +6405,10 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	}
 
 	private static final String _FINDER_COLUMN_G_T_GROUPID_2 = "layout.groupId = ? AND ";
-	private static final String _FINDER_COLUMN_G_T_GROUPID_2_SQL = "layout.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_T_TYPE_2 = "layout.type = ? AND layout.system = [$FALSE$]";
 	private static final String _FINDER_COLUMN_G_T_TYPE_3 = "(layout.type IS NULL OR layout.type = '') AND layout.system = [$FALSE$]";
-	private static final String _FINDER_COLUMN_G_T_TYPE_2_SQL = "layout.type_ = ? AND layout.system_ = [$FALSE$]";
-	private static final String _FINDER_COLUMN_G_T_TYPE_3_SQL = "(layout.type_ IS NULL OR layout.type_ = '') AND layout.system_ = [$FALSE$]";
+	private static final String _FINDER_COLUMN_G_T_TYPE_2_SQL = "layout.type_ = ? AND layout.system = [$FALSE$]";
+	private static final String _FINDER_COLUMN_G_T_TYPE_3_SQL = "(layout.type_ IS NULL OR layout.type_ = '') AND layout.system = [$FALSE$]";
 	private FinderPath _finderPathWithPaginationFindByC_L;
 	private FinderPath _finderPathWithoutPaginationFindByC_L;
 	private FinderPath _finderPathCountByC_L;
@@ -7987,11 +7983,11 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 			query.append(_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_1);
 		}
 
-		query.append(_FINDER_COLUMN_G_P_P_GROUPID_2_SQL);
+		query.append(_FINDER_COLUMN_G_P_P_GROUPID_2);
 
-		query.append(_FINDER_COLUMN_G_P_P_PRIVATELAYOUT_2_SQL);
+		query.append(_FINDER_COLUMN_G_P_P_PRIVATELAYOUT_2);
 
-		query.append(_FINDER_COLUMN_G_P_P_PARENTLAYOUTID_2_SQL);
+		query.append(_FINDER_COLUMN_G_P_P_PARENTLAYOUTID_2);
 
 		if (!getDB().isSupportsInlineDistinct()) {
 			query.append(_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_2);
@@ -8122,11 +8118,11 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 			query.append(_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_1);
 		}
 
-		query.append(_FINDER_COLUMN_G_P_P_GROUPID_2_SQL);
+		query.append(_FINDER_COLUMN_G_P_P_GROUPID_2);
 
-		query.append(_FINDER_COLUMN_G_P_P_PRIVATELAYOUT_2_SQL);
+		query.append(_FINDER_COLUMN_G_P_P_PRIVATELAYOUT_2);
 
-		query.append(_FINDER_COLUMN_G_P_P_PARENTLAYOUTID_2_SQL);
+		query.append(_FINDER_COLUMN_G_P_P_PARENTLAYOUTID_2);
 
 		if (!getDB().isSupportsInlineDistinct()) {
 			query.append(_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_2);
@@ -8141,13 +8137,13 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 			for (int i = 0; i < orderByConditionFields.length; i++) {
 				if (getDB().isSupportsInlineDistinct()) {
-					query.append(getColumnName(_ORDER_BY_ENTITY_ALIAS,
-							orderByConditionFields[i], true));
+					query.append(_ORDER_BY_ENTITY_ALIAS);
 				}
 				else {
-					query.append(getColumnName(_ORDER_BY_ENTITY_TABLE,
-							orderByConditionFields[i], true));
+					query.append(_ORDER_BY_ENTITY_TABLE);
 				}
+
+				query.append(orderByConditionFields[i]);
 
 				if ((i + 1) < orderByConditionFields.length) {
 					if (orderByComparator.isAscending() ^ previous) {
@@ -8173,13 +8169,13 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 			for (int i = 0; i < orderByFields.length; i++) {
 				if (getDB().isSupportsInlineDistinct()) {
-					query.append(getColumnName(_ORDER_BY_ENTITY_ALIAS,
-							orderByFields[i], true));
+					query.append(_ORDER_BY_ENTITY_ALIAS);
 				}
 				else {
-					query.append(getColumnName(_ORDER_BY_ENTITY_TABLE,
-							orderByFields[i], true));
+					query.append(_ORDER_BY_ENTITY_TABLE);
 				}
+
+				query.append(orderByFields[i]);
 
 				if ((i + 1) < orderByFields.length) {
 					if (orderByComparator.isAscending() ^ previous) {
@@ -8327,14 +8323,14 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 			query.append(_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_1);
 		}
 
-		query.append(_FINDER_COLUMN_G_P_P_GROUPID_2_SQL);
+		query.append(_FINDER_COLUMN_G_P_P_GROUPID_2);
 
-		query.append(_FINDER_COLUMN_G_P_P_PRIVATELAYOUT_2_SQL);
+		query.append(_FINDER_COLUMN_G_P_P_PRIVATELAYOUT_2);
 
 		if (parentLayoutIds.length > 0) {
 			query.append("(");
 
-			query.append(_FINDER_COLUMN_G_P_P_PARENTLAYOUTID_7_SQL);
+			query.append(_FINDER_COLUMN_G_P_P_PARENTLAYOUTID_7);
 
 			query.append(StringUtil.merge(parentLayoutIds));
 
@@ -8346,7 +8342,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		query.setStringAt(removeConjunction(query.stringAt(query.index() - 1)),
 			query.index() - 1);
 
-		query.append(" AND layout.system_ = [$FALSE$]");
+		query.append(" AND layout.system = [$FALSE$]");
 
 		if (!getDB().isSupportsInlineDistinct()) {
 			query.append(_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_2);
@@ -8874,11 +8870,11 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 		query.append(_FILTER_SQL_COUNT_LAYOUT_WHERE);
 
-		query.append(_FINDER_COLUMN_G_P_P_GROUPID_2_SQL);
+		query.append(_FINDER_COLUMN_G_P_P_GROUPID_2);
 
-		query.append(_FINDER_COLUMN_G_P_P_PRIVATELAYOUT_2_SQL);
+		query.append(_FINDER_COLUMN_G_P_P_PRIVATELAYOUT_2);
 
-		query.append(_FINDER_COLUMN_G_P_P_PARENTLAYOUTID_2_SQL);
+		query.append(_FINDER_COLUMN_G_P_P_PARENTLAYOUTID_2);
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
 				Layout.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
@@ -8942,14 +8938,14 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 		query.append(_FILTER_SQL_COUNT_LAYOUT_WHERE);
 
-		query.append(_FINDER_COLUMN_G_P_P_GROUPID_2_SQL);
+		query.append(_FINDER_COLUMN_G_P_P_GROUPID_2);
 
-		query.append(_FINDER_COLUMN_G_P_P_PRIVATELAYOUT_2_SQL);
+		query.append(_FINDER_COLUMN_G_P_P_PRIVATELAYOUT_2);
 
 		if (parentLayoutIds.length > 0) {
 			query.append("(");
 
-			query.append(_FINDER_COLUMN_G_P_P_PARENTLAYOUTID_7_SQL);
+			query.append(_FINDER_COLUMN_G_P_P_PARENTLAYOUTID_7);
 
 			query.append(StringUtil.merge(parentLayoutIds));
 
@@ -8961,7 +8957,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		query.setStringAt(removeConjunction(query.stringAt(query.index() - 1)),
 			query.index() - 1);
 
-		query.append(" AND layout.system_ = [$FALSE$]");
+		query.append(" AND layout.system = [$FALSE$]");
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
 				Layout.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
@@ -8996,13 +8992,9 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	}
 
 	private static final String _FINDER_COLUMN_G_P_P_GROUPID_2 = "layout.groupId = ? AND ";
-	private static final String _FINDER_COLUMN_G_P_P_GROUPID_2_SQL = "layout.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_P_P_PRIVATELAYOUT_2 = "layout.privateLayout = ? AND ";
-	private static final String _FINDER_COLUMN_G_P_P_PRIVATELAYOUT_2_SQL = "layout.privateLayout = ? AND ";
 	private static final String _FINDER_COLUMN_G_P_P_PARENTLAYOUTID_2 = "layout.parentLayoutId = ? AND layout.system = [$FALSE$]";
 	private static final String _FINDER_COLUMN_G_P_P_PARENTLAYOUTID_7 = "layout.parentLayoutId IN (";
-	private static final String _FINDER_COLUMN_G_P_P_PARENTLAYOUTID_2_SQL = "layout.parentLayoutId = ? AND layout.system_ = [$FALSE$]";
-	private static final String _FINDER_COLUMN_G_P_P_PARENTLAYOUTID_7_SQL = "layout.parentLayoutId IN (";
 	private FinderPath _finderPathWithPaginationFindByG_P_T;
 	private FinderPath _finderPathWithoutPaginationFindByG_P_T;
 	private FinderPath _finderPathCountByG_P_T;
@@ -9586,9 +9578,9 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 			query.append(_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_1);
 		}
 
-		query.append(_FINDER_COLUMN_G_P_T_GROUPID_2_SQL);
+		query.append(_FINDER_COLUMN_G_P_T_GROUPID_2);
 
-		query.append(_FINDER_COLUMN_G_P_T_PRIVATELAYOUT_2_SQL);
+		query.append(_FINDER_COLUMN_G_P_T_PRIVATELAYOUT_2);
 
 		boolean bindType = false;
 
@@ -9733,9 +9725,9 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 			query.append(_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_1);
 		}
 
-		query.append(_FINDER_COLUMN_G_P_T_GROUPID_2_SQL);
+		query.append(_FINDER_COLUMN_G_P_T_GROUPID_2);
 
-		query.append(_FINDER_COLUMN_G_P_T_PRIVATELAYOUT_2_SQL);
+		query.append(_FINDER_COLUMN_G_P_T_PRIVATELAYOUT_2);
 
 		boolean bindType = false;
 
@@ -9761,13 +9753,13 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 			for (int i = 0; i < orderByConditionFields.length; i++) {
 				if (getDB().isSupportsInlineDistinct()) {
-					query.append(getColumnName(_ORDER_BY_ENTITY_ALIAS,
-							orderByConditionFields[i], true));
+					query.append(_ORDER_BY_ENTITY_ALIAS);
 				}
 				else {
-					query.append(getColumnName(_ORDER_BY_ENTITY_TABLE,
-							orderByConditionFields[i], true));
+					query.append(_ORDER_BY_ENTITY_TABLE);
 				}
+
+				query.append(orderByConditionFields[i]);
 
 				if ((i + 1) < orderByConditionFields.length) {
 					if (orderByComparator.isAscending() ^ previous) {
@@ -9793,13 +9785,13 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 			for (int i = 0; i < orderByFields.length; i++) {
 				if (getDB().isSupportsInlineDistinct()) {
-					query.append(getColumnName(_ORDER_BY_ENTITY_ALIAS,
-							orderByFields[i], true));
+					query.append(_ORDER_BY_ENTITY_ALIAS);
 				}
 				else {
-					query.append(getColumnName(_ORDER_BY_ENTITY_TABLE,
-							orderByFields[i], true));
+					query.append(_ORDER_BY_ENTITY_TABLE);
 				}
+
+				query.append(orderByFields[i]);
 
 				if ((i + 1) < orderByFields.length) {
 					if (orderByComparator.isAscending() ^ previous) {
@@ -9982,9 +9974,9 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 		query.append(_FILTER_SQL_COUNT_LAYOUT_WHERE);
 
-		query.append(_FINDER_COLUMN_G_P_T_GROUPID_2_SQL);
+		query.append(_FINDER_COLUMN_G_P_T_GROUPID_2);
 
-		query.append(_FINDER_COLUMN_G_P_T_PRIVATELAYOUT_2_SQL);
+		query.append(_FINDER_COLUMN_G_P_T_PRIVATELAYOUT_2);
 
 		boolean bindType = false;
 
@@ -10034,13 +10026,11 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	}
 
 	private static final String _FINDER_COLUMN_G_P_T_GROUPID_2 = "layout.groupId = ? AND ";
-	private static final String _FINDER_COLUMN_G_P_T_GROUPID_2_SQL = "layout.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_P_T_PRIVATELAYOUT_2 = "layout.privateLayout = ? AND ";
-	private static final String _FINDER_COLUMN_G_P_T_PRIVATELAYOUT_2_SQL = "layout.privateLayout = ? AND ";
 	private static final String _FINDER_COLUMN_G_P_T_TYPE_2 = "layout.type = ? AND layout.system = [$FALSE$]";
 	private static final String _FINDER_COLUMN_G_P_T_TYPE_3 = "(layout.type IS NULL OR layout.type = '') AND layout.system = [$FALSE$]";
-	private static final String _FINDER_COLUMN_G_P_T_TYPE_2_SQL = "layout.type_ = ? AND layout.system_ = [$FALSE$]";
-	private static final String _FINDER_COLUMN_G_P_T_TYPE_3_SQL = "(layout.type_ IS NULL OR layout.type_ = '') AND layout.system_ = [$FALSE$]";
+	private static final String _FINDER_COLUMN_G_P_T_TYPE_2_SQL = "layout.type_ = ? AND layout.system = [$FALSE$]";
+	private static final String _FINDER_COLUMN_G_P_T_TYPE_3_SQL = "(layout.type_ IS NULL OR layout.type_ = '') AND layout.system = [$FALSE$]";
 	private FinderPath _finderPathFetchByG_P_F;
 	private FinderPath _finderPathCountByG_P_F;
 
@@ -11160,13 +11150,13 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 			query.append(_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_1);
 		}
 
-		query.append(_FINDER_COLUMN_G_P_GTLP_LTRP_GROUPID_2_SQL);
+		query.append(_FINDER_COLUMN_G_P_GTLP_LTRP_GROUPID_2);
 
-		query.append(_FINDER_COLUMN_G_P_GTLP_LTRP_LEFTPLID_2_SQL);
+		query.append(_FINDER_COLUMN_G_P_GTLP_LTRP_LEFTPLID_2);
 
-		query.append(_FINDER_COLUMN_G_P_GTLP_LTRP_RIGHTPLID_2_SQL);
+		query.append(_FINDER_COLUMN_G_P_GTLP_LTRP_RIGHTPLID_2);
 
-		query.append(_FINDER_COLUMN_G_P_GTLP_LTRP_PRIVATELAYOUT_2_SQL);
+		query.append(_FINDER_COLUMN_G_P_GTLP_LTRP_PRIVATELAYOUT_2);
 
 		if (!getDB().isSupportsInlineDistinct()) {
 			query.append(_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_2);
@@ -11302,13 +11292,13 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 			query.append(_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_1);
 		}
 
-		query.append(_FINDER_COLUMN_G_P_GTLP_LTRP_GROUPID_2_SQL);
+		query.append(_FINDER_COLUMN_G_P_GTLP_LTRP_GROUPID_2);
 
-		query.append(_FINDER_COLUMN_G_P_GTLP_LTRP_LEFTPLID_2_SQL);
+		query.append(_FINDER_COLUMN_G_P_GTLP_LTRP_LEFTPLID_2);
 
-		query.append(_FINDER_COLUMN_G_P_GTLP_LTRP_RIGHTPLID_2_SQL);
+		query.append(_FINDER_COLUMN_G_P_GTLP_LTRP_RIGHTPLID_2);
 
-		query.append(_FINDER_COLUMN_G_P_GTLP_LTRP_PRIVATELAYOUT_2_SQL);
+		query.append(_FINDER_COLUMN_G_P_GTLP_LTRP_PRIVATELAYOUT_2);
 
 		if (!getDB().isSupportsInlineDistinct()) {
 			query.append(_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_2);
@@ -11323,13 +11313,13 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 			for (int i = 0; i < orderByConditionFields.length; i++) {
 				if (getDB().isSupportsInlineDistinct()) {
-					query.append(getColumnName(_ORDER_BY_ENTITY_ALIAS,
-							orderByConditionFields[i], true));
+					query.append(_ORDER_BY_ENTITY_ALIAS);
 				}
 				else {
-					query.append(getColumnName(_ORDER_BY_ENTITY_TABLE,
-							orderByConditionFields[i], true));
+					query.append(_ORDER_BY_ENTITY_TABLE);
 				}
+
+				query.append(orderByConditionFields[i]);
 
 				if ((i + 1) < orderByConditionFields.length) {
 					if (orderByComparator.isAscending() ^ previous) {
@@ -11355,13 +11345,13 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 			for (int i = 0; i < orderByFields.length; i++) {
 				if (getDB().isSupportsInlineDistinct()) {
-					query.append(getColumnName(_ORDER_BY_ENTITY_ALIAS,
-							orderByFields[i], true));
+					query.append(_ORDER_BY_ENTITY_ALIAS);
 				}
 				else {
-					query.append(getColumnName(_ORDER_BY_ENTITY_TABLE,
-							orderByFields[i], true));
+					query.append(_ORDER_BY_ENTITY_TABLE);
 				}
+
+				query.append(orderByFields[i]);
 
 				if ((i + 1) < orderByFields.length) {
 					if (orderByComparator.isAscending() ^ previous) {
@@ -11541,13 +11531,13 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 		query.append(_FILTER_SQL_COUNT_LAYOUT_WHERE);
 
-		query.append(_FINDER_COLUMN_G_P_GTLP_LTRP_GROUPID_2_SQL);
+		query.append(_FINDER_COLUMN_G_P_GTLP_LTRP_GROUPID_2);
 
-		query.append(_FINDER_COLUMN_G_P_GTLP_LTRP_LEFTPLID_2_SQL);
+		query.append(_FINDER_COLUMN_G_P_GTLP_LTRP_LEFTPLID_2);
 
-		query.append(_FINDER_COLUMN_G_P_GTLP_LTRP_RIGHTPLID_2_SQL);
+		query.append(_FINDER_COLUMN_G_P_GTLP_LTRP_RIGHTPLID_2);
 
-		query.append(_FINDER_COLUMN_G_P_GTLP_LTRP_PRIVATELAYOUT_2_SQL);
+		query.append(_FINDER_COLUMN_G_P_GTLP_LTRP_PRIVATELAYOUT_2);
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
 				Layout.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
@@ -11586,14 +11576,9 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	}
 
 	private static final String _FINDER_COLUMN_G_P_GTLP_LTRP_GROUPID_2 = "layout.groupId = ? AND ";
-	private static final String _FINDER_COLUMN_G_P_GTLP_LTRP_GROUPID_2_SQL = "layout.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_P_GTLP_LTRP_LEFTPLID_2 = "layout.leftPlid > ? AND ";
-	private static final String _FINDER_COLUMN_G_P_GTLP_LTRP_LEFTPLID_2_SQL = "layout.leftPlid > ? AND ";
 	private static final String _FINDER_COLUMN_G_P_GTLP_LTRP_RIGHTPLID_2 = "layout.rightPlid < ? AND ";
-	private static final String _FINDER_COLUMN_G_P_GTLP_LTRP_RIGHTPLID_2_SQL = "layout.rightPlid < ? AND ";
 	private static final String _FINDER_COLUMN_G_P_GTLP_LTRP_PRIVATELAYOUT_2 = "layout.privateLayout = ? AND layout.system = [$FALSE$]";
-	private static final String _FINDER_COLUMN_G_P_GTLP_LTRP_PRIVATELAYOUT_2_SQL =
-		"layout.privateLayout = ? AND layout.system_ = [$FALSE$]";
 	private FinderPath _finderPathWithPaginationFindByG_P_P_LtP;
 	private FinderPath _finderPathWithPaginationCountByG_P_P_LtP;
 
@@ -12177,13 +12162,13 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 			query.append(_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_1);
 		}
 
-		query.append(_FINDER_COLUMN_G_P_P_LTP_GROUPID_2_SQL);
+		query.append(_FINDER_COLUMN_G_P_P_LTP_GROUPID_2);
 
-		query.append(_FINDER_COLUMN_G_P_P_LTP_PRIVATELAYOUT_2_SQL);
+		query.append(_FINDER_COLUMN_G_P_P_LTP_PRIVATELAYOUT_2);
 
-		query.append(_FINDER_COLUMN_G_P_P_LTP_PARENTLAYOUTID_2_SQL);
+		query.append(_FINDER_COLUMN_G_P_P_LTP_PARENTLAYOUTID_2);
 
-		query.append(_FINDER_COLUMN_G_P_P_LTP_PRIORITY_2_SQL);
+		query.append(_FINDER_COLUMN_G_P_P_LTP_PRIORITY_2);
 
 		if (!getDB().isSupportsInlineDistinct()) {
 			query.append(_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_2);
@@ -12319,13 +12304,13 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 			query.append(_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_1);
 		}
 
-		query.append(_FINDER_COLUMN_G_P_P_LTP_GROUPID_2_SQL);
+		query.append(_FINDER_COLUMN_G_P_P_LTP_GROUPID_2);
 
-		query.append(_FINDER_COLUMN_G_P_P_LTP_PRIVATELAYOUT_2_SQL);
+		query.append(_FINDER_COLUMN_G_P_P_LTP_PRIVATELAYOUT_2);
 
-		query.append(_FINDER_COLUMN_G_P_P_LTP_PARENTLAYOUTID_2_SQL);
+		query.append(_FINDER_COLUMN_G_P_P_LTP_PARENTLAYOUTID_2);
 
-		query.append(_FINDER_COLUMN_G_P_P_LTP_PRIORITY_2_SQL);
+		query.append(_FINDER_COLUMN_G_P_P_LTP_PRIORITY_2);
 
 		if (!getDB().isSupportsInlineDistinct()) {
 			query.append(_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_2);
@@ -12340,13 +12325,13 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 			for (int i = 0; i < orderByConditionFields.length; i++) {
 				if (getDB().isSupportsInlineDistinct()) {
-					query.append(getColumnName(_ORDER_BY_ENTITY_ALIAS,
-							orderByConditionFields[i], true));
+					query.append(_ORDER_BY_ENTITY_ALIAS);
 				}
 				else {
-					query.append(getColumnName(_ORDER_BY_ENTITY_TABLE,
-							orderByConditionFields[i], true));
+					query.append(_ORDER_BY_ENTITY_TABLE);
 				}
+
+				query.append(orderByConditionFields[i]);
 
 				if ((i + 1) < orderByConditionFields.length) {
 					if (orderByComparator.isAscending() ^ previous) {
@@ -12372,13 +12357,13 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 			for (int i = 0; i < orderByFields.length; i++) {
 				if (getDB().isSupportsInlineDistinct()) {
-					query.append(getColumnName(_ORDER_BY_ENTITY_ALIAS,
-							orderByFields[i], true));
+					query.append(_ORDER_BY_ENTITY_ALIAS);
 				}
 				else {
-					query.append(getColumnName(_ORDER_BY_ENTITY_TABLE,
-							orderByFields[i], true));
+					query.append(_ORDER_BY_ENTITY_TABLE);
 				}
+
+				query.append(orderByFields[i]);
 
 				if ((i + 1) < orderByFields.length) {
 					if (orderByComparator.isAscending() ^ previous) {
@@ -12559,13 +12544,13 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 		query.append(_FILTER_SQL_COUNT_LAYOUT_WHERE);
 
-		query.append(_FINDER_COLUMN_G_P_P_LTP_GROUPID_2_SQL);
+		query.append(_FINDER_COLUMN_G_P_P_LTP_GROUPID_2);
 
-		query.append(_FINDER_COLUMN_G_P_P_LTP_PRIVATELAYOUT_2_SQL);
+		query.append(_FINDER_COLUMN_G_P_P_LTP_PRIVATELAYOUT_2);
 
-		query.append(_FINDER_COLUMN_G_P_P_LTP_PARENTLAYOUTID_2_SQL);
+		query.append(_FINDER_COLUMN_G_P_P_LTP_PARENTLAYOUTID_2);
 
-		query.append(_FINDER_COLUMN_G_P_P_LTP_PRIORITY_2_SQL);
+		query.append(_FINDER_COLUMN_G_P_P_LTP_PRIORITY_2);
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
 				Layout.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
@@ -12604,13 +12589,9 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	}
 
 	private static final String _FINDER_COLUMN_G_P_P_LTP_GROUPID_2 = "layout.groupId = ? AND ";
-	private static final String _FINDER_COLUMN_G_P_P_LTP_GROUPID_2_SQL = "layout.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_P_P_LTP_PRIVATELAYOUT_2 = "layout.privateLayout = ? AND ";
-	private static final String _FINDER_COLUMN_G_P_P_LTP_PRIVATELAYOUT_2_SQL = "layout.privateLayout = ? AND ";
 	private static final String _FINDER_COLUMN_G_P_P_LTP_PARENTLAYOUTID_2 = "layout.parentLayoutId = ? AND ";
-	private static final String _FINDER_COLUMN_G_P_P_LTP_PARENTLAYOUTID_2_SQL = "layout.parentLayoutId = ? AND ";
 	private static final String _FINDER_COLUMN_G_P_P_LTP_PRIORITY_2 = "layout.priority <= ? AND layout.system = [$FALSE$]";
-	private static final String _FINDER_COLUMN_G_P_P_LTP_PRIORITY_2_SQL = "layout.priority <= ? AND layout.system_ = [$FALSE$]";
 
 	public LayoutPersistenceImpl() {
 		setModelClass(Layout.class);
@@ -14512,6 +14493,6 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No Layout exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(LayoutPersistenceImpl.class);
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
-				"uuid", "description", "type", "hidden", "system"
+				"uuid", "type", "hidden"
 			});
 }

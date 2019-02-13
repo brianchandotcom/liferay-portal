@@ -19,6 +19,11 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.exception.NoSuchWebsiteException;
 import com.liferay.portal.kernel.model.Website;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the website service.
  *
@@ -38,6 +43,9 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link WebsiteUtil} to access the website persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, Website> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the websites where uuid = &#63;.
@@ -1160,4 +1168,7 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	* @return the number of websites
 	*/
 	public int countAll();
+
+	@Override
+	public Set<String> getBadColumnNames();
 }

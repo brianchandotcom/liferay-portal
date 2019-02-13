@@ -440,6 +440,10 @@ public class PowwowServerUtil {
 		return getPersistence().countAll();
 	}
 
+	public static Set<String> getBadColumnNames() {
+		return getPersistence().getBadColumnNames();
+	}
+
 	public static PowwowServerPersistence getPersistence() {
 		if (_persistence == null) {
 			_persistence = (PowwowServerPersistence)PortletBeanLocatorUtil.locate(com.liferay.powwow.service.ServletContextUtil.getServletContextName(),

@@ -21,6 +21,11 @@ import com.liferay.document.library.kernel.model.DLFolder;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the document library folder service.
  *
@@ -40,6 +45,9 @@ public interface DLFolderPersistence extends BasePersistence<DLFolder> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link DLFolderUtil} to access the document library folder persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, DLFolder> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the document library folders where uuid = &#63;.
@@ -3269,4 +3277,7 @@ public interface DLFolderPersistence extends BasePersistence<DLFolder> {
 	*/
 	public void setDLFileEntryTypes(long pk,
 		java.util.List<com.liferay.document.library.kernel.model.DLFileEntryType> dlFileEntryTypes);
+
+	@Override
+	public Set<String> getBadColumnNames();
 }

@@ -19,6 +19,11 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.exception.NoSuchReleaseException;
 import com.liferay.portal.kernel.model.Release;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the release service.
  *
@@ -38,6 +43,9 @@ public interface ReleasePersistence extends BasePersistence<Release> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ReleaseUtil} to access the release persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, Release> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns the release where servletContextName = &#63; or throws a {@link NoSuchReleaseException} if it could not be found.
@@ -198,4 +206,7 @@ public interface ReleasePersistence extends BasePersistence<Release> {
 	* @return the number of releases
 	*/
 	public int countAll();
+
+	@Override
+	public Set<String> getBadColumnNames();
 }

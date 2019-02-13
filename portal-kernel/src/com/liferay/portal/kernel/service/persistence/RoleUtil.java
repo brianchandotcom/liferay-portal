@@ -2939,6 +2939,10 @@ public class RoleUtil {
 		getPersistence().setUsers(pk, users);
 	}
 
+	public static Set<String> getBadColumnNames() {
+		return getPersistence().getBadColumnNames();
+	}
+
 	public static RolePersistence getPersistence() {
 		if (_persistence == null) {
 			_persistence = (RolePersistence)PortalBeanLocatorUtil.locate(RolePersistence.class.getName());

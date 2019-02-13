@@ -749,6 +749,10 @@ public class PowwowParticipantUtil {
 		return getPersistence().countAll();
 	}
 
+	public static Set<String> getBadColumnNames() {
+		return getPersistence().getBadColumnNames();
+	}
+
 	public static PowwowParticipantPersistence getPersistence() {
 		if (_persistence == null) {
 			_persistence = (PowwowParticipantPersistence)PortletBeanLocatorUtil.locate(com.liferay.powwow.service.ServletContextUtil.getServletContextName(),

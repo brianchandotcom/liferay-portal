@@ -21,6 +21,11 @@ import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.social.kernel.exception.NoSuchActivityException;
 import com.liferay.social.kernel.model.SocialActivity;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the social activity service.
  *
@@ -40,6 +45,9 @@ public interface SocialActivityPersistence extends BasePersistence<SocialActivit
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SocialActivityUtil} to access the social activity persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, SocialActivity> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the social activities where groupId = &#63;.
@@ -1740,4 +1748,7 @@ public interface SocialActivityPersistence extends BasePersistence<SocialActivit
 	* @return the number of social activities
 	*/
 	public int countAll();
+
+	@Override
+	public Set<String> getBadColumnNames();
 }

@@ -21,6 +21,11 @@ import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.social.kernel.exception.NoSuchRelationException;
 import com.liferay.social.kernel.model.SocialRelation;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the social relation service.
  *
@@ -40,6 +45,9 @@ public interface SocialRelationPersistence extends BasePersistence<SocialRelatio
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SocialRelationUtil} to access the social relation persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, SocialRelation> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the social relations where uuid = &#63;.
@@ -1586,4 +1594,7 @@ public interface SocialRelationPersistence extends BasePersistence<SocialRelatio
 	* @return the number of social relations
 	*/
 	public int countAll();
+
+	@Override
+	public Set<String> getBadColumnNames();
 }

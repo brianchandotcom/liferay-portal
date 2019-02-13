@@ -19,6 +19,11 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.exception.NoSuchPortletException;
 import com.liferay.portal.kernel.model.Portlet;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the portlet service.
  *
@@ -38,6 +43,9 @@ public interface PortletPersistence extends BasePersistence<Portlet> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link PortletUtil} to access the portlet persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, Portlet> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the portlets where companyId = &#63;.
@@ -333,4 +341,7 @@ public interface PortletPersistence extends BasePersistence<Portlet> {
 	* @return the number of portlets
 	*/
 	public int countAll();
+
+	@Override
+	public Set<String> getBadColumnNames();
 }

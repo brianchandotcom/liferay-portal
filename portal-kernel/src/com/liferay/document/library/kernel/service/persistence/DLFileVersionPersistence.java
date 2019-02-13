@@ -21,6 +21,11 @@ import com.liferay.document.library.kernel.model.DLFileVersion;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the document library file version service.
  *
@@ -40,6 +45,9 @@ public interface DLFileVersionPersistence extends BasePersistence<DLFileVersion>
 	 *
 	 * Never modify or reference this interface directly. Always use {@link DLFileVersionUtil} to access the document library file version persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, DLFileVersion> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the document library file versions where uuid = &#63;.
@@ -1545,4 +1553,7 @@ public interface DLFileVersionPersistence extends BasePersistence<DLFileVersion>
 	* @return the number of document library file versions
 	*/
 	public int countAll();
+
+	@Override
+	public Set<String> getBadColumnNames();
 }

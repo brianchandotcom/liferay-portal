@@ -121,6 +121,10 @@ public class BaseManagementToolbarDisplayContext
 
 	@Override
 	public List<ViewTypeItem> getViewTypeItems() {
+		if (ArrayUtil.isEmpty(getDisplayViews())) {
+			return null;
+		}
+
 		return new ViewTypeItemList(getPortletURL(), getDisplayStyle()) {
 			{
 				if (ArrayUtil.contains(getDisplayViews(), "icon")) {

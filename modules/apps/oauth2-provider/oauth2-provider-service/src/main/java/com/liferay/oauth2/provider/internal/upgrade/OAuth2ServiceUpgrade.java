@@ -15,7 +15,6 @@
 package com.liferay.oauth2.provider.internal.upgrade;
 
 import com.liferay.oauth2.provider.internal.upgrade.v1_1_0.UpgradeOAuth2ScopeGrant;
-import com.liferay.oauth2.provider.internal.upgrade.v2_0_0.UpgradeBadColumnNames;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -29,8 +28,6 @@ public class OAuth2ServiceUpgrade implements UpgradeStepRegistrator {
 	@Override
 	public void register(Registry registry) {
 		registry.register("1.0.0", "1.1.0", new UpgradeOAuth2ScopeGrant());
-
-		registry.register("1.1.0", "2.0.0", new UpgradeBadColumnNames());
 	}
 
 }

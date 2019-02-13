@@ -1,0 +1,11 @@
+{
+	"build": {
+		"dependencies": [
+			"clay-checkbox",
+			"clay-portal",
+			"metal-modal",
+			"com.liferay.frontend.js.web",
+			"com.liferay.frontend.taglib"
+		]
+	}
+}

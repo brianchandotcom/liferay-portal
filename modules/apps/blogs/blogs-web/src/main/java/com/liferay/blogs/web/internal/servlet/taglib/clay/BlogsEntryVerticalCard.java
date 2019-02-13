@@ -15,6 +15,7 @@
 package com.liferay.blogs.web.internal.servlet.taglib.clay;
 
 import com.liferay.blogs.model.BlogsEntry;
+import com.liferay.blogs.web.constants.BlogsWebConstants;
 import com.liferay.blogs.web.internal.security.permission.resource.BlogsEntryPermission;
 import com.liferay.blogs.web.internal.servlet.taglib.util.BlogsEntryActionDropdownItemsProvider;
 import com.liferay.blogs.web.internal.util.BlogsEntryUtil;
@@ -70,6 +71,11 @@ public class BlogsEntryVerticalCard extends BaseVerticalCard {
 					_permissionChecker, _resourceBundle, _trashHelper);
 
 		return blogsEntryActionDropdownItemsProvider.getActionDropdownItems();
+	}
+
+	@Override
+	public String getDefaultEventHandler() {
+		return BlogsWebConstants.BLOGS_ELEMENTS_DEFAULT_EVENT_HANDLER;
 	}
 
 	@Override

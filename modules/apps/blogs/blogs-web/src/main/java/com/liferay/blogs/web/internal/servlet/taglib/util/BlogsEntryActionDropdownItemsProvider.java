@@ -53,6 +53,7 @@ import java.util.ResourceBundle;
 import java.util.function.Consumer;
 
 import javax.portlet.ActionRequest;
+import javax.portlet.ActionURL;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
@@ -169,12 +170,17 @@ public class BlogsEntryActionDropdownItemsProvider {
 	}
 
 	private Consumer<DropdownItem> _getDeleteEntryActionConsumer() {
+		ActionURL deleteURL = _liferayPortletResponse.createActionURL();
+
+		deleteURL.setParameter(ActionRequest.ACTION_NAME, "/blogs/edit_entry");
+		deleteURL.setParameter(Constants.CMD, Constants.DELETE);
+		deleteURL.setParameter("redirect", _getRedirectURL());
+		deleteURL.setParameter(
+			"entryId", String.valueOf(_blogsEntry.getEntryId()));
+
 		return dropdownItem -> {
-			dropdownItem.setHref(
-				_liferayPortletResponse.createRenderURL(),
-				ActionRequest.ACTION_NAME, "/blogs/edit_entry", Constants.CMD,
-				Constants.DELETE, "redirect", _getRedirectURL(), "entryId",
-				String.valueOf(_blogsEntry.getEntryId()));
+			dropdownItem.putData("action", "delete");
+			dropdownItem.putData("deleteURL", deleteURL.toString());
 			dropdownItem.setLabel(LanguageUtil.get(_request, "delete"));
 		};
 	}
@@ -193,12 +199,18 @@ public class BlogsEntryActionDropdownItemsProvider {
 	}
 
 	private Consumer<DropdownItem> _getMoveEntryToTrashActionConsumer() {
+		ActionURL moveToTrashURL = _liferayPortletResponse.createActionURL();
+
+		moveToTrashURL.setParameter(
+			ActionRequest.ACTION_NAME, "/blogs/edit_entry");
+		moveToTrashURL.setParameter(Constants.CMD, Constants.MOVE_TO_TRASH);
+		moveToTrashURL.setParameter("redirect", _getRedirectURL());
+		moveToTrashURL.setParameter(
+			"entryId", String.valueOf(_blogsEntry.getEntryId()));
+
 		return dropdownItem -> {
-			dropdownItem.setHref(
-				_liferayPortletResponse.createRenderURL(),
-				ActionRequest.ACTION_NAME, "/blogs/edit_entry", Constants.CMD,
-				Constants.MOVE_TO_TRASH, "redirect", _getRedirectURL(),
-				"entryId", String.valueOf(_blogsEntry.getEntryId()));
+			dropdownItem.putData("action", "delete");
+			dropdownItem.putData("deleteURL", moveToTrashURL.toString());
 			dropdownItem.setLabel(
 				LanguageUtil.get(_request, "move-to-recycle-bin"));
 		};
@@ -259,7 +271,8 @@ public class BlogsEntryActionDropdownItemsProvider {
 		portletURL.setParameter("portletId", BlogsPortletKeys.BLOGS_ADMIN);
 
 		return dropdownItem -> {
-			dropdownItem.setHref(portletURL);
+			dropdownItem.putData("action", "publishToLive");
+			dropdownItem.putData("permissionsURL", portletURL.toString());
 			dropdownItem.setLabel("publish-to-live");
 		};
 	}

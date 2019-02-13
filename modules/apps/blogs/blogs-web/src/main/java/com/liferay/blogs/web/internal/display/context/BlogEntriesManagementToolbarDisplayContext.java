@@ -107,6 +107,9 @@ public class BlogEntriesManagementToolbarDisplayContext
 	}
 
 	public Map<String, Object> getComponentContext() throws PortalException {
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		Map<String, Object> context = new HashMap<>();
 
 		PortletURL deleteEntriesURL = liferayPortletResponse.createActionURL();
@@ -115,9 +118,6 @@ public class BlogEntriesManagementToolbarDisplayContext
 			ActionRequest.ACTION_NAME, "/blogs/edit_entry");
 
 		context.put("deleteEntriesURL", deleteEntriesURL.toString());
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
 
 		context.put(
 			"trashEnabled",

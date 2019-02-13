@@ -47,7 +47,7 @@ public class FaviconServlet extends HttpServlet {
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException, ServletException {
 
-		Object contextPathObject = request.getAttribute(WebKeys.CURRENT_URL);
+		Object contextPathObject = request.getAttribute("CURRENT_URL");
 
 		String contextPath = contextPathObject.toString();
 

@@ -351,6 +351,25 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 	}
 
 	/**
+	 * Returns the structure with the primary key.
+	 *
+	 * @param classPK the primary key of the structure
+	 * @return the matching structure
+	 */
+	@Override
+	public DDMStructure fetchStructureByClassPK(long classPK)
+		throws PortalException {
+
+		DDMStructure structure =
+			ddmStructureLocalService.fetchStructureByClassPK(classPK);
+
+		_ddmStructureModelResourcePermission.check(
+			getPermissionChecker(), structure, ActionKeys.VIEW);
+
+		return structure;
+	}
+
+	/**
 	 * Returns the structure with the ID.
 	 *
 	 * @param  structureId the primary key of the structure

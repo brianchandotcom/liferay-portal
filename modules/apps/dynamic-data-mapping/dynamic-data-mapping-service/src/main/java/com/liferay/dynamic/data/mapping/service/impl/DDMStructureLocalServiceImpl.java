@@ -777,6 +777,19 @@ public class DDMStructureLocalServiceImpl
 		return null;
 	}
 
+	/**
+	 * Returns the structure with the primary key.
+	 *
+	 * @param classPK the primary key of the structure
+	 * @return the matching structure
+	 */
+	@Override
+	public DDMStructure fetchStructureByClassPK(long classPK)
+		throws PortalException {
+
+		return ddmStructurePersistence.findByPrimaryKey(classPK);
+	}
+
 	@Override
 	public DDMStructure fetchStructureByUuidAndGroupId(
 		String uuid, long groupId, boolean includeAncestorStructures) {

@@ -112,12 +112,12 @@ AUI.add(
 						var form = Liferay.Form.get(instance.ns('fm'));
 
 						if (!instance._shortenDescription) {
-							descriptionLabelNode.removeClass("disabled");
+							descriptionLabelNode.removeClass('disabled');
 
 							form.addRule(instance.ns('description'), 'required');
 						}
 						else {
-							descriptionLabelNode.addClass("disabled");
+							descriptionLabelNode.addClass('disabled');
 
 							form.removeRule(instance.ns('description'), 'required');
 						}

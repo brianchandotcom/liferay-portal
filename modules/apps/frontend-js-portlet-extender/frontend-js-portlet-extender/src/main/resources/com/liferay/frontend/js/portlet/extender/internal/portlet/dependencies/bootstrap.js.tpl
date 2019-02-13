@@ -18,7 +18,7 @@
 						contextPath: "[$CONTEXT_PATH$]",
 						portletElementId: "[$PORTLET_ELEMENT_ID$]",
 						portletNamespace: "[$PORTLET_NAMESPACE$]",
-						preferences: [$PREFERENCES$]
+						portletPreferences: [$PORTLET_PREFERENCES$]
 					});
 			}
 			else {

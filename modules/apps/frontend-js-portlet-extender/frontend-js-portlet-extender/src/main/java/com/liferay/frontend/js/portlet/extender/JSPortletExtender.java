@@ -178,14 +178,14 @@ public class JSPortletExtender {
 
 	private void _registerConfigurationActionService(
 		BundleContext bundleContext, JSONObject packageJSONObject,
-		JSONObject preferencesJSONObject) {
+		JSONObject portletPreferencesJSONObject) {
 
 		String portletName = _getPortletName(packageJSONObject);
 
 		try {
 			ConfigurationAction configurationAction =
 				new PortletExtenderConfigurationAction(
-					_ddm, preferencesJSONObject);
+					_ddm, portletPreferencesJSONObject);
 
 			Dictionary<String, Object> properties = new Hashtable<>();
 
@@ -256,13 +256,13 @@ public class JSPortletExtender {
 						_registerJSPortletService(
 							bundleContext, packageJSONObject);
 
-					JSONObject preferencesJSONObject = _parse(
+					JSONObject portletPreferencesJSONObject = _parse(
 						bundle.getEntry("features/preferences.json"));
 
-					if (preferencesJSONObject != null) {
+					if (portletPreferencesJSONObject != null) {
 						_registerConfigurationActionService(
 							bundleContext, packageJSONObject,
-							preferencesJSONObject);
+							portletPreferencesJSONObject);
 					}
 
 					return serviceRegistration;

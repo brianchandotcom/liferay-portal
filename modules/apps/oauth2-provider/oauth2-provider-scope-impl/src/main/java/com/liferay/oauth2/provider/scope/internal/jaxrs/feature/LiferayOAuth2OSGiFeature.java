@@ -28,17 +28,12 @@ import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.servlet.filters.authverifier.AuthVerifierFilter;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Dictionary;
-import java.util.Hashtable;
 import java.util.Locale;
 import java.util.Map;
-
-import javax.servlet.Filter;
 
 import javax.ws.rs.Priorities;
 import javax.ws.rs.container.ContainerRequestContext;
@@ -52,7 +47,6 @@ import javax.ws.rs.ext.Provider;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
@@ -62,7 +56,6 @@ import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferencePolicy;
 import org.osgi.service.component.annotations.ReferencePolicyOption;
 import org.osgi.service.component.annotations.ServiceScope;
-import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
 import org.osgi.util.tracker.ServiceTracker;
 
 /**
@@ -70,7 +63,6 @@ import org.osgi.util.tracker.ServiceTracker;
  */
 @Component(
 	property = {
-		"auth.verifier.application.select=(!(osgi.jaxrs.name=*))",
 		"liferay.extension=OAuth2",
 		"osgi.jaxrs.application.select=(!(liferay.oauth2=false))",
 		"osgi.jaxrs.extension=true", "osgi.jaxrs.name=Liferay.OAuth2"
@@ -111,19 +103,6 @@ public class LiferayOAuth2OSGiFeature implements Feature {
 			(ContainerResponseFilter)(a, b) -> _scopeContext.clear(),
 			Priorities.AUTHORIZATION - 9);
 
-		if ((_authVerifierApplicationSelectFilter != null) &&
-			_authVerifierApplicationSelectFilter.matches(
-				applicationProperties)) {
-
-			registerAuthVerifierFilter(
-				MapUtil.getString(
-					applicationProperties,
-					HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT,
-					StringBundler.concat(
-						"(",
-						HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_NAME,
-						"=context.for", osgiJAXRSName, ")")));
-		}
 
 		registerDescriptors(osgiJAXRSName);
 
@@ -137,28 +116,6 @@ public class LiferayOAuth2OSGiFeature implements Feature {
 		_bundle = componentContext.getUsingBundle();
 
 		_bundleContext = componentContext.getBundleContext();
-
-		String authVerifierApplicationSelectFilterString = MapUtil.getString(
-			properties, "auth.verifier.application.select");
-
-		if (Validator.isNotNull(authVerifierApplicationSelectFilterString)) {
-			try {
-				_authVerifierApplicationSelectFilter =
-					_bundleContext.createFilter(
-						authVerifierApplicationSelectFilterString);
-			}
-			catch (InvalidSyntaxException ise) {
-				_log.error(
-					"Invalid filter: " +
-						authVerifierApplicationSelectFilterString,
-					ise);
-			}
-		}
-		else {
-			if (_log.isInfoEnabled()) {
-				_log.info("auth.verifier.application.select is empty");
-			}
-		}
 	}
 
 	@Deactivate
@@ -176,28 +133,6 @@ public class LiferayOAuth2OSGiFeature implements Feature {
 		for (ServiceTracker<?, ?> serviceTracker : _serviceTrackers) {
 			serviceTracker.close();
 		}
-	}
-
-	protected void registerAuthVerifierFilter(String contextSelect) {
-		Dictionary<String, Object> properties = new Hashtable<>();
-
-		properties.put(
-			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT,
-			contextSelect);
-		properties.put(
-			HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_INIT_PARAM_PREFIX +
-				"auth.verifier.OAuth2RestAuthVerifier.urls.includes",
-			"*");
-		properties.put(
-			HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_NAME,
-			AuthVerifierFilter.class.getName());
-		properties.put(
-			HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_SERVLET,
-			"cxf-servlet");
-
-		_serviceRegistrations.add(
-			_bundleContext.registerService(
-				Filter.class, new AuthVerifierFilter(), properties));
 	}
 
 	protected void registerDescriptors(String osgiJAXRSName) {
@@ -238,7 +173,6 @@ public class LiferayOAuth2OSGiFeature implements Feature {
 	@Context
 	private Application _application;
 
-	private org.osgi.framework.Filter _authVerifierApplicationSelectFilter;
 	private Bundle _bundle;
 	private BundleContext _bundleContext;
 

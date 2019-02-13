@@ -463,9 +463,18 @@ class FormRenderer extends Component {
 	 */
 
 	_handleUpdatePage({page, pageId}) {
-		this.pages[pageId] = page;
+		this.emit(
+			'pagesUpdated',
+			this.pages.map(
+				currentPage => {
+					if (currentPage.pageId === pageId) {
+						currentPage = page;
+					}
 
-		this.emit('pagesUpdated', this.pages);
+					return currentPage;
+				}
+			)
+		);
 	}
 
 	/**

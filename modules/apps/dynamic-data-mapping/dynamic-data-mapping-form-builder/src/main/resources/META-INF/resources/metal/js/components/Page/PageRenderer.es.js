@@ -4,7 +4,6 @@ import 'clay-modal';
 import {Config} from 'metal-state';
 import {dom} from 'metal-dom';
 import {pageStructure} from '../../util/config.es';
-import {setLocalizedValue} from '../../util/i18n.es';
 import {sub} from '../../util/strings.es';
 import Component from 'metal-component';
 import core from 'metal';
@@ -116,23 +115,6 @@ class PageRenderer extends Component {
 	}
 
 	/**
-	 * @param {Object} event
-	 * @param {String} pageProperty
-	 * @private
-	 */
-
-	_changePageForm({delegateTarget}, pageProperty) {
-		const {value} = delegateTarget;
-
-		const languageId = themeDisplay.getLanguageId();
-		const page = {...this.page};
-
-		setLocalizedValue(page, languageId, pageProperty, value);
-
-		return page;
-	}
-
-	/**
 	 * @param {number} pageId
 	 * @private
 	 */
@@ -201,16 +183,21 @@ class PageRenderer extends Component {
 	 */
 
 	_handlePageDescriptionChanged(event) {
-		const page = this._changePageForm(event, 'description');
-		const {delegateTarget: {dataset}} = event;
-		let {pageId} = dataset;
-
-		pageId = parseInt(pageId, 10);
+		const {page} = this;
+		const {delegateTarget: {dataset, value}} = event;
+		const pageId = parseInt(dataset.pageId, 10);
 
 		this.emit(
 			'updatePage',
 			{
-				page,
+				page: {
+					...page,
+					description: value,
+					localizedDescription: {
+						...page.localizedDescription,
+						[themeDisplay.getLanguageId()]: value
+					}
+				},
 				pageId
 			}
 		);
@@ -222,16 +209,21 @@ class PageRenderer extends Component {
 	 */
 
 	_handlePageTitleChanged(event) {
-		const page = this._changePageForm(event, 'title');
-		const {delegateTarget: {dataset}} = event;
-		let {pageId} = dataset;
-
-		pageId = parseInt(pageId, 10);
+		const {page} = this;
+		const {delegateTarget: {dataset, value}} = event;
+		const pageId = parseInt(dataset.pageId, 10);
 
 		this.emit(
 			'updatePage',
 			{
-				page,
+				page: {
+					...page,
+					localizedTitle: {
+						...page.localizedTitle,
+						[themeDisplay.getLanguageId()]: value
+					},
+					title: value
+				},
 				pageId
 			}
 		);
@@ -291,6 +283,7 @@ class PageRenderer extends Component {
 				title: page.title[themeDisplay.getLanguageId()]
 			};
 		}
+
 		return page;
 	}
 }

@@ -835,19 +835,20 @@ class Form extends Component {
 			...context,
 			pages: context.pages.map(
 				page => {
-					let description = '';
-					let localizedDescription = emptyLocalizableValue;
-					let localizedTitle = emptyLocalizableValue;
-					let title = '';
+					let {description, localizedDescription, localizedTitle, title} = page;
 
-					if (!core.isString(page.description)) {
-						description = page.description[themeDisplay.getLanguageId()];
-						localizedDescription = page.description;
+					if (!core.isString(description)) {
+						description = description[themeDisplay.getLanguageId()];
+						localizedDescription = {
+							[themeDisplay.getLanguageId()]: description
+						};
 					}
 
-					if (!core.isString(page.title)) {
-						title = page.title[themeDisplay.getLanguageId()];
-						localizedTitle = page.title;
+					if (!core.isString(title)) {
+						title = title[themeDisplay.getLanguageId()];
+						localizedTitle = {
+							[themeDisplay.getLanguageId()]: title
+						};
 					}
 
 					return {

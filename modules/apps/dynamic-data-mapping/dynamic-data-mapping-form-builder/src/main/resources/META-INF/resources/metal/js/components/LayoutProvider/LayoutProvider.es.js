@@ -476,6 +476,14 @@ class LayoutProvider extends Component {
 		);
 	}
 
+	_handlePagesUpdated(pages) {
+		this.setState(
+			{
+				pages
+			}
+		);
+	}
+
 	_handlePaginationModeUpdated() {
 		const {paginationMode} = this.state;
 		let newMode = 'pagination';
@@ -661,6 +669,7 @@ class LayoutProvider extends Component {
 				pageAdded: this._handlePageAdded.bind(this),
 				pageDeleted: this._handlePageDeleted.bind(this),
 				pageReset: this._handlePageReset.bind(this),
+				pagesUpdated: this._handlePagesUpdated.bind(this),
 				paginationModeUpdated: this._handlePaginationModeUpdated.bind(this),
 				ruleAdded: this._handleRuleAdded.bind(this),
 				ruleDeleted: this._handleRuleDeleted.bind(this),

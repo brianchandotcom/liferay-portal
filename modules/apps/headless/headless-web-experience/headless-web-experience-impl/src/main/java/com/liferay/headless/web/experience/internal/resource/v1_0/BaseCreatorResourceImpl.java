@@ -14,7 +14,6 @@
 
 package com.liferay.headless.web.experience.internal.resource.v1_0;
 
-import com.liferay.headless.web.experience.dto.v1_0.Creator;
 import com.liferay.headless.web.experience.resource.v1_0.CreatorResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.Company;
@@ -34,11 +33,6 @@ import javax.ws.rs.core.Response;
  */
 @Generated("")
 public abstract class BaseCreatorResourceImpl implements CreatorResource {
-
-	@Override
-	public Creator getCreators(Long creatorId) throws Exception {
-		return new Creator();
-	}
 
 	protected Response buildNoContentResponse() {
 		Response.ResponseBuilder responseBuilder = Response.noContent();

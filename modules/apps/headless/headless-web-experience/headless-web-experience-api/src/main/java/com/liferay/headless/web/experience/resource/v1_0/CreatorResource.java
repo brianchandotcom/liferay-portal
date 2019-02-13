@@ -59,10 +59,4 @@ import javax.ws.rs.core.Response;
 @Path("/v1.0")
 public interface CreatorResource {
 
-	@GET
-	@Path("/creators/{creator-id}")
-	@Produces("application/json")
-	@RequiresScope("everything.read")
-	public Creator getCreators( @PathParam("creator-id") Long creatorId ) throws Exception;
-
 }

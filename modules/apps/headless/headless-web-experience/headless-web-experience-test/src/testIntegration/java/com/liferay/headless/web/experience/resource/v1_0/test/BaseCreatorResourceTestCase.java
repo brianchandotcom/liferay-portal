@@ -27,10 +27,8 @@ import javax.annotation.Generated;
 
 import org.jboss.arquillian.test.api.ArquillianResource;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
-import org.junit.Test;
 
 /**
  * @author Javier Gamarra
@@ -48,17 +46,6 @@ public abstract class BaseCreatorResourceTestCase {
 	public void setUp() throws Exception {
 		_resourceURL = new URL(
 			_url.toExternalForm() + "/o/headless-web-experience/v1.0");
-	}
-
-	@Test
-	public void testGetCreators() throws Exception {
-		Assert.assertTrue(true);
-	}
-
-	protected void invokeGetCreators(Long creatorId) throws Exception {
-		RequestSender requestSender = _createRequestSender();
-
-			requestSender.post("/creators/{creator-id}");
 	}
 
 	private RequestSender _createRequestSender() {

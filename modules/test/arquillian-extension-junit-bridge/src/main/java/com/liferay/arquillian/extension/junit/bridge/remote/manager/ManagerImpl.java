@@ -32,7 +32,6 @@ import org.jboss.arquillian.core.api.Injector;
 import org.jboss.arquillian.core.api.annotation.ApplicationScoped;
 import org.jboss.arquillian.core.api.event.ManagerStarted;
 import org.jboss.arquillian.core.api.event.ManagerStopping;
-import org.jboss.arquillian.core.api.threading.ExecutorService;
 import org.jboss.arquillian.core.impl.EventContextImpl;
 import org.jboss.arquillian.core.impl.EventImpl;
 import org.jboss.arquillian.core.impl.ExtensionImpl;
@@ -40,7 +39,6 @@ import org.jboss.arquillian.core.impl.InjectorImpl;
 import org.jboss.arquillian.core.impl.InstanceImpl;
 import org.jboss.arquillian.core.impl.UncheckedThrow;
 import org.jboss.arquillian.core.impl.context.ApplicationContextImpl;
-import org.jboss.arquillian.core.impl.threading.ThreadedExecutorService;
 import org.jboss.arquillian.core.spi.EventContext;
 import org.jboss.arquillian.core.spi.EventPoint;
 import org.jboss.arquillian.core.spi.Extension;
@@ -423,10 +421,6 @@ public class ManagerImpl implements Manager {
 					bind(
 						ApplicationScoped.class, Injector.class,
 						InjectorImpl.of(ManagerImpl.this));
-
-					bind(
-						ApplicationScoped.class, ExecutorService.class,
-						new ThreadedExecutorService(ManagerImpl.this));
 
 					return null;
 				}

@@ -51,8 +51,7 @@ public class KeywordResourceImpl extends BaseKeywordResourceImpl {
 	}
 
 	@Override
-	public Keyword postContentSpaceKeyword(
-			Long contentSpaceId, Keyword keyword)
+	public Keyword postContentSpaceKeyword(Long contentSpaceId, Keyword keyword)
 		throws Exception {
 
 		ServiceContext serviceContext = new ServiceContext();

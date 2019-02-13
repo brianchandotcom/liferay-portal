@@ -106,8 +106,7 @@ public class CategoryResourceImpl extends BaseCategoryResourceImpl {
 	}
 
 	@Override
-	public Category postVocabularyCategory(
-			Long vocabularyId, Category category)
+	public Category postVocabularyCategory(Long vocabularyId, Category category)
 		throws Exception {
 
 		AssetVocabulary assetVocabulary = _assetVocabularyService.getVocabulary(

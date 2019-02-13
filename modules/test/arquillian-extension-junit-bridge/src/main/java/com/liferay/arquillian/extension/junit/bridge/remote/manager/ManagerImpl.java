@@ -58,8 +58,6 @@ public class ManagerImpl implements Manager {
 			_createBuiltInServices();
 
 			_registerExtension();
-
-			_addContextsToApplicationScope();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(
@@ -194,31 +192,6 @@ public class ManagerImpl implements Manager {
 		throws E {
 
 		throw (E)throwable;
-	}
-
-	private void _addContextsToApplicationScope() throws Exception {
-		_executeInApplicationContext(
-			new Callable<Void>() {
-
-				@Override
-				public Void call() throws Exception {
-					ApplicationContext applicationContext = getContext(
-						ApplicationContext.class);
-
-					ObjectStore store = applicationContext.getObjectStore();
-
-					for (Context context : _contexts) {
-						Class<?> clazz = context.getClass();
-
-						Class<?>[] interfaces = clazz.getInterfaces();
-
-						store.add((Class<Context>)interfaces[0], context);
-					}
-
-					return null;
-				}
-
-			});
 	}
 
 	private void _createBuiltInServices() throws Exception {
@@ -370,6 +343,26 @@ public class ManagerImpl implements Manager {
 		_contexts.addAll(
 			_createContexts(
 				LiferayArquillianJUnitBridgeExtension.getContexts()));
+
+		ApplicationContext applicationContext =
+			(ApplicationContext)_getScopedContext(ApplicationScoped.class);
+
+		applicationContext.activate();
+
+		try {
+			ObjectStore objectStore = applicationContext.getObjectStore();
+
+			for (Context context : _contexts) {
+				Class<?> clazz = context.getClass();
+
+				Class<?>[] interfaces = clazz.getInterfaces();
+
+				objectStore.add((Class<Context>)interfaces[0], context);
+			}
+		}
+		finally {
+			applicationContext.deactivate();
+		}
 	}
 
 	private List<Context> _resolveActiveContexts() {

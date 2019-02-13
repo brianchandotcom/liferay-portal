@@ -108,7 +108,7 @@ public class DLAdminManagementToolbarDisplayContext {
 		_themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		_hasValidVocabularies = _hasValidVocabularies();
+		_hasValidAssetVocabularies = _hasValidAssetVocabularies();
 	}
 
 	public List<DropdownItem> getActionDropdownItems() {
@@ -165,7 +165,7 @@ public class DLAdminManagementToolbarDisplayContext {
 								dropdownItem.setQuickAction(true);
 							}));
 
-					if (_hasValidVocabularies) {
+					if (_hasValidAssetVocabularies) {
 						add(
 							SafeConsumer.ignore(
 								dropdownItem -> {
@@ -257,7 +257,7 @@ public class DLAdminManagementToolbarDisplayContext {
 				availableActionDropdownItems.add("checkout");
 			}
 
-			if (_hasValidVocabularies) {
+			if (_hasValidAssetVocabularies) {
 				availableActionDropdownItems.add("editCategories");
 			}
 
@@ -839,26 +839,27 @@ public class DLAdminManagementToolbarDisplayContext {
 		return _dlAdminDisplayContext.getRepositoryId();
 	}
 
-	private boolean _hasValidVocabularies() {
+	private boolean _hasValidAssetVocabularies() {
 		try {
-			List<AssetVocabulary> vocabularies =
+			List<AssetVocabulary> assetVocabularies =
 				AssetVocabularyServiceUtil.getGroupVocabularies(
 					PortalUtil.getCurrentAndAncestorSiteGroupIds(
 						_themeDisplay.getScopeGroupId()));
 
-			Stream<AssetVocabulary> vocabularyStream = vocabularies.stream();
+			Stream<AssetVocabulary> assetVocabularyStream =
+				assetVocabularies.stream();
 
-			return vocabularyStream.anyMatch(
-				vocabulary -> {
-					if (vocabulary.isAssociatedToClassNameId(
+			return assetVocabularyStream.anyMatch(
+				assetVocabulary -> {
+					if (assetVocabulary.isAssociatedToClassNameId(
 							ClassNameLocalServiceUtil.getClassNameId(
 								DLFileEntry.class.getName()))) {
 
 						int vocabularyCategoriesCount =
 							AssetCategoryServiceUtil.
 								getVocabularyCategoriesCount(
-									vocabulary.getGroupId(),
-									vocabulary.getVocabularyId());
+									assetVocabulary.getGroupId(),
+									assetVocabulary.getVocabularyId());
 
 						if (vocabularyCategoriesCount > 0) {
 							return true;
@@ -891,7 +892,7 @@ public class DLAdminManagementToolbarDisplayContext {
 		_dlPortletInstanceSettingsHelper;
 	private final DLRequestHelper _dlRequestHelper;
 	private final DLTrashUtil _dlTrashUtil;
-	private final boolean _hasValidVocabularies;
+	private final boolean _hasValidAssetVocabularies;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private final HttpServletRequest _request;

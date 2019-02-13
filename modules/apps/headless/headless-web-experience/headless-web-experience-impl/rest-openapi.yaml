@@ -76,6 +76,40 @@ components:
           type: string
         description:
           type: string
+        fields:
+          items:
+            properties:
+              dataType:
+                type: string
+              label:
+                type: string
+              localizable:
+                type: boolean
+              multiple:
+                type: boolean
+              inputControl:
+                type: string
+              predefinedValue:
+                type: string
+              name:
+                type: string
+              repeatable:
+                type: boolean
+              required:
+                type: boolean
+              showLabel:
+                type: boolean
+              options:
+                items:
+                  type: object
+                  properties:
+                    label:
+                      type: string
+                    value:
+                      type: string
+                type: array
+            type: object
+          type: array
         id:
           format: int64
           type: integer
@@ -151,40 +185,6 @@ components:
           type: string
         description:
           type: string
-        fields:
-          items:
-            properties:
-              dataType:
-                type: string
-              label:
-                type: string
-              localizable:
-                type: boolean
-              multiple:
-                type: boolean
-              inputControl:
-                type: string
-              predefinedValue:
-                type: string
-              name:
-                type: string
-              repeatable:
-                type: boolean
-              required:
-                type: boolean
-              showLabel:
-                type: boolean
-              options:
-                items:
-                  type: object
-                  properties:
-                    label:
-                      type: string
-                    value:
-                      type: string
-                type: array
-            type: object
-          type: array
         id:
           format: int64
           type: integer

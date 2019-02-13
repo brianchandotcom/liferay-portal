@@ -491,7 +491,7 @@ public class DEDataRecordCollectionServiceImpl
 		if (_deDataRecordCollectionSaveRecordRequestExecutor == null) {
 			_deDataRecordCollectionSaveRecordRequestExecutor =
 				new DEDataRecordCollectionSaveRecordRequestExecutor(
-					deDataStorageTracker, ddlRecordLocalService,
+					ddlRecordLocalService, deDataStorageTracker,
 					ddmStorageLinkLocalService, portal);
 		}
 

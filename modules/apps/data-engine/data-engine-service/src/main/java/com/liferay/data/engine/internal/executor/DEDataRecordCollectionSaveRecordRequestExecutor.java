@@ -40,12 +40,12 @@ import com.liferay.portal.kernel.util.Portal;
 public class DEDataRecordCollectionSaveRecordRequestExecutor {
 
 	public DEDataRecordCollectionSaveRecordRequestExecutor(
-		DEDataStorageTracker deDataStorageTracker,
 		DDLRecordLocalService ddlRecordLocalService,
+		DEDataStorageTracker deDataStorageTracker,
 		DDMStorageLinkLocalService ddmStorageLinkLocalService, Portal portal) {
 
-		_deDataStorageTracker = deDataStorageTracker;
 		_ddlRecordLocalService = ddlRecordLocalService;
+		_deDataStorageTracker = deDataStorageTracker;
 		_ddmStorageLinkLocalService = ddmStorageLinkLocalService;
 		_portal = portal;
 	}

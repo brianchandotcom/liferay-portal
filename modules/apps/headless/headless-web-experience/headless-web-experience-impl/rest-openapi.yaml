@@ -569,23 +569,6 @@ paths:
                 $ref: "#/components/schemas/ContentStructure"
           description: ""
       tags: ["StructuredContent"]
-  "/creators/{creator-id}":
-    get:
-      parameters:
-        - in: path
-          name: creator-id
-          required: true
-          schema:
-            format: int64
-            type: integer
-      responses:
-        200:
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Creator"
-          description: ""
-      tags: ["Creator"]
   "/structured-contents/{structured-content-id}":
     delete:
       parameters:

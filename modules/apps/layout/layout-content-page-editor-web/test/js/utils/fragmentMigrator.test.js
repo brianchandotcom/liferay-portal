@@ -8,6 +8,7 @@ describe(
 			'should migrate single editable fragment',
 			() => {
 				const inputData = JSON.stringify(singleEditableFragmentInput);
+
 				expect(
 					editableValuesMigrator(inputData, DEFAULT_SEGMENT_ID)
 				).toEqual(
@@ -20,6 +21,7 @@ describe(
 			'should migrate double editable fragment',
 			() => {
 				const inputData = JSON.stringify(doubleEditableFragmentInput);
+
 				expect(
 					editableValuesMigrator(inputData, DEFAULT_SEGMENT_ID)
 				).toEqual(
@@ -31,18 +33,19 @@ describe(
 		test(
 			'should leave already migrated segments as they are',
 			() => {
-				const inputData1 = JSON.stringify(singleEditableFragmentExpected);
-				const inputData2 = JSON.stringify(doubleEditableFragmentExpected);
+				const doubleInputData = JSON.stringify(doubleEditableFragmentExpected);
+				const singleInputData = JSON.stringify(singleEditableFragmentExpected);
+
 				expect(
-					editableValuesMigrator(inputData1)
+					editableValuesMigrator(doubleInputData)
 				).toEqual(
-					singleEditableFragmentExpected
+					doubleEditableFragmentExpected
 				);
 
 				expect(
-					editableValuesMigrator(inputData2)
+					editableValuesMigrator(singleInputData)
 				).toEqual(
-					doubleEditableFragmentExpected
+					singleEditableFragmentExpected
 				);
 			}
 		);

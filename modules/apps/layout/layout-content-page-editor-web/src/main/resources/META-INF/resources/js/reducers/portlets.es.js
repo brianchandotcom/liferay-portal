@@ -114,6 +114,7 @@ function addPortletReducer(state, actionType, payload) {
  * @param {string} classNameId
  * @param {string} classPK
  * @param {string} portletNamespace
+ * @param {string} defaultSegmentId
  * @return {object}
  * @review
  */

@@ -399,7 +399,7 @@ class FragmentEntryLinkContent extends Component {
 
 				const defaultSegmentedEditableValue = editableValue[defaultSegmentId];
 
-				const defaultValue = (defaultSegmentedEditableValue && segmentedEditableValue[defaultLanguageId]) ||
+				const defaultValue = (segmentedEditableValue && segmentedEditableValue[defaultLanguageId]) ||
 					defaultSegmentedEditableValue && defaultSegmentedEditableValue[defaultLanguageId] ||
 					editableValue.defaultValue;
 				const mappedField = editableValue.mappedField || '';

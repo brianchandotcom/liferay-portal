@@ -116,11 +116,13 @@ else {
 
 			Liferay.Util.postForm(
 				form,
-				'<portlet:actionURL name="/users_admin/edit_user" />',
 				{
-					'<%= Constants.CMD %>': cmd,
-					'redirect': Liferay.Util.getFormElement(form, 'usersRedirect').value,
-					'deleteUserIds': Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds', '<portlet:namespace />rowIdsUser')
+					data: {
+						'<%= Constants.CMD %>': cmd,
+						'redirect': Liferay.Util.getFormElement(form, 'usersRedirect').value,
+						'deleteUserIds': Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds', '<portlet:namespace />rowIdsUser')
+					},
+					url: '<portlet:actionURL name="/users_admin/edit_user" />'
 				}
 			);
 		}

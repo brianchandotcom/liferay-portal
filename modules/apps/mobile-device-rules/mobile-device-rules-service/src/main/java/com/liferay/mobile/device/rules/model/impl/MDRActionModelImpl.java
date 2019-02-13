@@ -97,7 +97,7 @@ public class MDRActionModelImpl extends BaseModelImpl<MDRAction>
 			{ "classPK", Types.BIGINT },
 			{ "ruleGroupInstanceId", Types.BIGINT },
 			{ "name", Types.VARCHAR },
-			{ "description_", Types.VARCHAR },
+			{ "description", Types.VARCHAR },
 			{ "type_", Types.VARCHAR },
 			{ "typeSettings", Types.CLOB },
 			{ "lastPublishDate", Types.TIMESTAMP }
@@ -117,13 +117,13 @@ public class MDRActionModelImpl extends BaseModelImpl<MDRAction>
 		TABLE_COLUMNS_MAP.put("classPK", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("ruleGroupInstanceId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("description_", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("type_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("typeSettings", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table MDRAction (uuid_ VARCHAR(75) null,actionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,ruleGroupInstanceId LONG,name STRING null,description_ STRING null,type_ VARCHAR(255) null,typeSettings TEXT null,lastPublishDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table MDRAction (uuid_ VARCHAR(75) null,actionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,ruleGroupInstanceId LONG,name STRING null,description STRING null,type_ VARCHAR(255) null,typeSettings TEXT null,lastPublishDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table MDRAction";
 	public static final String ORDER_BY_JPQL = " ORDER BY mdrAction.actionId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY MDRAction.actionId ASC";

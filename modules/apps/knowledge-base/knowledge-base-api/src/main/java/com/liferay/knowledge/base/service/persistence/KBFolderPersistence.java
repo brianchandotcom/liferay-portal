@@ -21,6 +21,11 @@ import com.liferay.knowledge.base.model.KBFolder;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the kb folder service.
  *
@@ -40,6 +45,9 @@ public interface KBFolderPersistence extends BasePersistence<KBFolder> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link KBFolderUtil} to access the kb folder persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, KBFolder> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the kb folders where uuid = &#63;.
@@ -801,4 +809,7 @@ public interface KBFolderPersistence extends BasePersistence<KBFolder> {
 	* @return the number of kb folders
 	*/
 	public int countAll();
+
+	@Override
+	public Set<String> getBadColumnNames();
 }

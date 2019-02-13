@@ -1012,6 +1012,10 @@ public class DLFileRankUtil {
 		return getPersistence().countAll();
 	}
 
+	public static Set<String> getBadColumnNames() {
+		return getPersistence().getBadColumnNames();
+	}
+
 	public static DLFileRankPersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

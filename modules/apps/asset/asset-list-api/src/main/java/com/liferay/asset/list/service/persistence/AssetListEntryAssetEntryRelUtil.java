@@ -1102,6 +1102,10 @@ public class AssetListEntryAssetEntryRelUtil {
 		return getPersistence().countAll();
 	}
 
+	public static Set<String> getBadColumnNames() {
+		return getPersistence().getBadColumnNames();
+	}
+
 	public static AssetListEntryAssetEntryRelPersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

@@ -20,6 +20,11 @@ import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.security.wedeploy.auth.exception.NoSuchTokenException;
 import com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthToken;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the we deploy auth token service.
  *
@@ -39,6 +44,9 @@ public interface WeDeployAuthTokenPersistence extends BasePersistence<WeDeployAu
 	 *
 	 * Never modify or reference this interface directly. Always use {@link WeDeployAuthTokenUtil} to access the we deploy auth token persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, WeDeployAuthToken> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns the we deploy auth token where token = &#63; and type = &#63; or throws a {@link NoSuchTokenException} if it could not be found.
@@ -262,4 +270,7 @@ public interface WeDeployAuthTokenPersistence extends BasePersistence<WeDeployAu
 	* @return the number of we deploy auth tokens
 	*/
 	public int countAll();
+
+	@Override
+	public Set<String> getBadColumnNames();
 }

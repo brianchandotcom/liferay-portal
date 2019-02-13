@@ -9,7 +9,7 @@ create table PollsChoice (
 	modifiedDate DATE null,
 	questionId LONG,
 	name VARCHAR(75) null,
-	description_ STRING null,
+	description STRING null,
 	lastPublishDate DATE null
 );
 
@@ -23,7 +23,7 @@ create table PollsQuestion (
 	createDate DATE null,
 	modifiedDate DATE null,
 	title STRING null,
-	description_ STRING null,
+	description STRING null,
 	expirationDate DATE null,
 	lastPublishDate DATE null,
 	lastVoteDate DATE null

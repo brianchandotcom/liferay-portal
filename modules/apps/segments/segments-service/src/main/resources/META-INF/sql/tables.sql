@@ -7,7 +7,7 @@ create table SegmentsEntry (
 	createDate DATE null,
 	modifiedDate DATE null,
 	name STRING null,
-	description_ STRING null,
+	description STRING null,
 	active_ BOOLEAN,
 	criteria TEXT null,
 	key_ VARCHAR(75) null,

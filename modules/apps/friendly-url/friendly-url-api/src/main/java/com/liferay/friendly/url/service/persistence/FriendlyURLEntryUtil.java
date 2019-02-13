@@ -855,6 +855,10 @@ public class FriendlyURLEntryUtil {
 		return getPersistence().countAll();
 	}
 
+	public static Set<String> getBadColumnNames() {
+		return getPersistence().getBadColumnNames();
+	}
+
 	public static FriendlyURLEntryPersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

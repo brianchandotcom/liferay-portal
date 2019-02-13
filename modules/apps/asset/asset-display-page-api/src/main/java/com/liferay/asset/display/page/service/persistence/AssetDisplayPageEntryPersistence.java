@@ -21,6 +21,11 @@ import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the asset display page entry service.
  *
@@ -40,6 +45,9 @@ public interface AssetDisplayPageEntryPersistence extends BasePersistence<AssetD
 	 *
 	 * Never modify or reference this interface directly. Always use {@link AssetDisplayPageEntryUtil} to access the asset display page entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, AssetDisplayPageEntry> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the asset display page entries where uuid = &#63;.
@@ -813,4 +821,7 @@ public interface AssetDisplayPageEntryPersistence extends BasePersistence<AssetD
 	* @return the number of asset display page entries
 	*/
 	public int countAll();
+
+	@Override
+	public Set<String> getBadColumnNames();
 }

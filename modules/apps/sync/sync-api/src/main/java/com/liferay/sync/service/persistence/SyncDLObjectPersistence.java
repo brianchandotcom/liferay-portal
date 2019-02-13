@@ -21,6 +21,11 @@ import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.sync.exception.NoSuchDLObjectException;
 import com.liferay.sync.model.SyncDLObject;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the sync dl object service.
  *
@@ -40,6 +45,9 @@ public interface SyncDLObjectPersistence extends BasePersistence<SyncDLObject> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SyncDLObjectUtil} to access the sync dl object persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, SyncDLObject> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the sync dl objects where treePath LIKE &#63;.
@@ -1688,4 +1696,7 @@ public interface SyncDLObjectPersistence extends BasePersistence<SyncDLObject> {
 	* @return the number of sync dl objects
 	*/
 	public int countAll();
+
+	@Override
+	public Set<String> getBadColumnNames();
 }

@@ -1453,6 +1453,10 @@ public class AssetEntryUsageUtil {
 		return getPersistence().countAll();
 	}
 
+	public static Set<String> getBadColumnNames() {
+		return getPersistence().getBadColumnNames();
+	}
+
 	public static AssetEntryUsagePersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

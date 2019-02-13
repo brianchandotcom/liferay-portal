@@ -21,6 +21,11 @@ import com.liferay.chat.model.Entry;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the entry service.
  *
@@ -40,6 +45,9 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link EntryUtil} to access the entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, Entry> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the entries where createDate = &#63;.

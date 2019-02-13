@@ -89,7 +89,7 @@ public class KBFolderModelImpl extends BaseModelImpl<KBFolder>
 			{ "parentKBFolderId", Types.BIGINT },
 			{ "name", Types.VARCHAR },
 			{ "urlTitle", Types.VARCHAR },
-			{ "description_", Types.VARCHAR },
+			{ "description", Types.VARCHAR },
 			{ "lastPublishDate", Types.TIMESTAMP }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
@@ -106,11 +106,11 @@ public class KBFolderModelImpl extends BaseModelImpl<KBFolder>
 		TABLE_COLUMNS_MAP.put("parentKBFolderId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("urlTitle", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("description_", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table KBFolder (uuid_ VARCHAR(75) null,kbFolderId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentKBFolderId LONG,name VARCHAR(75) null,urlTitle VARCHAR(75) null,description_ STRING null,lastPublishDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table KBFolder (uuid_ VARCHAR(75) null,kbFolderId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentKBFolderId LONG,name VARCHAR(75) null,urlTitle VARCHAR(75) null,description STRING null,lastPublishDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table KBFolder";
 	public static final String ORDER_BY_JPQL = " ORDER BY kbFolder.kbFolderId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY KBFolder.kbFolderId ASC";

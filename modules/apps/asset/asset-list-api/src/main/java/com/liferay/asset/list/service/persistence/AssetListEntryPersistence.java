@@ -21,6 +21,11 @@ import com.liferay.asset.list.model.AssetListEntry;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the asset list entry service.
  *
@@ -40,6 +45,9 @@ public interface AssetListEntryPersistence extends BasePersistence<AssetListEntr
 	 *
 	 * Never modify or reference this interface directly. Always use {@link AssetListEntryUtil} to access the asset list entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, AssetListEntry> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the asset list entries where uuid = &#63;.
@@ -1149,4 +1157,7 @@ public interface AssetListEntryPersistence extends BasePersistence<AssetListEntr
 	* @return the number of asset list entries
 	*/
 	public int countAll();
+
+	@Override
+	public Set<String> getBadColumnNames();
 }

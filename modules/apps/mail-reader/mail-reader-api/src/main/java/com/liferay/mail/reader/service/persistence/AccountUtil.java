@@ -478,6 +478,10 @@ public class AccountUtil {
 		return getPersistence().countAll();
 	}
 
+	public static Set<String> getBadColumnNames() {
+		return getPersistence().getBadColumnNames();
+	}
+
 	public static AccountPersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

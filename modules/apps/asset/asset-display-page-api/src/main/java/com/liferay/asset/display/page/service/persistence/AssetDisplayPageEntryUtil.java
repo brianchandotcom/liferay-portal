@@ -1079,6 +1079,10 @@ public class AssetDisplayPageEntryUtil {
 		return getPersistence().countAll();
 	}
 
+	public static Set<String> getBadColumnNames() {
+		return getPersistence().getBadColumnNames();
+	}
+
 	public static AssetDisplayPageEntryPersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

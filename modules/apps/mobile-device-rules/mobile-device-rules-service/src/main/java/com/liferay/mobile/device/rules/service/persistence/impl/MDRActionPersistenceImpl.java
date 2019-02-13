@@ -2688,6 +2688,6 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No MDRAction exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(MDRActionPersistenceImpl.class);
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
-				"uuid", "description", "type"
+				"uuid", "type"
 			});
 }

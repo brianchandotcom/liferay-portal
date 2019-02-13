@@ -728,6 +728,10 @@ public class ReadingTimeEntryUtil {
 		return getPersistence().countAll();
 	}
 
+	public static Set<String> getBadColumnNames() {
+		return getPersistence().getBadColumnNames();
+	}
+
 	public static ReadingTimeEntryPersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

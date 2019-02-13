@@ -44,6 +44,21 @@ public class ContextODataMatcherTest {
 		new LiferayIntegrationTestRule();
 
 	@Test
+	public void testMatchesBooleanEquals() throws Exception {
+		Context context = new Context() {
+			{
+				put(Context.SIGNED_IN, true);
+			}
+		};
+
+		Assert.assertTrue(
+			_contextODataMatcher.matches(
+				StringBundler.concat(
+					"(", Context.SIGNED_IN, " eq ", Boolean.TRUE, ")"),
+				context));
+	}
+
+	@Test
 	public void testMatchesDateEquals() throws Exception {
 		LocalDate localDate = LocalDate.of(2019, Month.JANUARY, 1);
 

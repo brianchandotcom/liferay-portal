@@ -23,6 +23,9 @@ import com.liferay.headless.foundation.internal.dto.v1_0.UserAccountUtil;
 import com.liferay.headless.foundation.resource.v1_0.KeywordResource;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserService;
+import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portlet.asset.util.comparator.AssetTagNameComparator;
 
 import javax.ws.rs.ClientErrorException;
 import javax.ws.rs.core.Response;
@@ -45,6 +48,19 @@ public class KeywordResourceImpl extends BaseKeywordResourceImpl {
 		_assetTagService.deleteTag(keywordId);
 
 		return buildNoContentResponse();
+	}
+
+	@Override
+	public Page<Keyword> getContentSpacesKeywordsPage(
+		Long contentSpaceId, Pagination pagination) {
+
+		return Page.of(
+			transform(
+				_assetTagService.getGroupTags(
+					contentSpaceId, pagination.getStartPosition(),
+					pagination.getEndPosition(), new AssetTagNameComparator()),
+				this::_toKeyword),
+			pagination, _assetTagService.getGroupTagsCount(contentSpaceId));
 	}
 
 	@Override

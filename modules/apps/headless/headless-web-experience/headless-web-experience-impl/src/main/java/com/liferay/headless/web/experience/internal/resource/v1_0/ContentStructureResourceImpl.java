@@ -17,7 +17,7 @@ package com.liferay.headless.web.experience.internal.resource.v1_0;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
 import com.liferay.headless.web.experience.dto.v1_0.ContentStructure;
-import com.liferay.headless.web.experience.dto.v1_0.Creator;
+import com.liferay.headless.web.experience.internal.dto.v1_0.CreatorUtil;
 import com.liferay.headless.web.experience.resource.v1_0.ContentStructureResource;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.portal.kernel.model.ClassName;
@@ -74,25 +74,10 @@ public class ContentStructureResourceImpl
 			_ddmStructureService.getStructure(contentStructuresId));
 	}
 
-	private Creator _getCreator(long userId) throws Exception {
-		User user = _userService.getUserById(userId);
-
-		return new Creator() {
-			{
-				setAdditionalName(user.getMiddleName());
-				setAlternateName(user.getScreenName());
-				setEmail(user.getEmailAddress());
-				setFamilyName(user.getLastName());
-				setGivenName(user.getFirstName());
-				setId(user.getUserId());
-				setJobTitle(user.getJobTitle());
-				setName(user.getFullName());
-			}
-		};
-	}
-
 	private ContentStructure _toContentStructure(DDMStructure ddmStructure)
 		throws Exception {
+
+		User user = _userService.getUserById(ddmStructure.getUserId());
 
 		return new ContentStructure() {
 			{
@@ -100,7 +85,7 @@ public class ContentStructureResourceImpl
 					LocaleUtil.toW3cLanguageIds(
 						ddmStructure.getAvailableLanguageIds()));
 				setContentSpace(ddmStructure.getGroupId());
-				setCreator(_getCreator(ddmStructure.getUserId()));
+				setCreator(CreatorUtil.toCreator(user));
 				setDateCreated(ddmStructure.getCreateDate());
 				setDateModified(ddmStructure.getModifiedDate());
 				setDescription(

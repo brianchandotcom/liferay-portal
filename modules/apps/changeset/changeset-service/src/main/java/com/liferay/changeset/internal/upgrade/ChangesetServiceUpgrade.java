@@ -16,7 +16,6 @@ package com.liferay.changeset.internal.upgrade;
 
 import com.liferay.changeset.internal.upgrade.v2_0_0.util.ChangesetCollectionTable;
 import com.liferay.changeset.internal.upgrade.v2_0_0.util.ChangesetEntryTable;
-import com.liferay.changeset.internal.upgrade.v3_0_0.UpgradeBadColumnNames;
 import com.liferay.portal.kernel.upgrade.BaseUpgradeSQLServerDatetime;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
@@ -36,8 +35,6 @@ public class ChangesetServiceUpgrade implements UpgradeStepRegistrator {
 				new Class<?>[] {
 					ChangesetCollectionTable.class, ChangesetEntryTable.class
 				}));
-
-		registry.register("2.0.0", "3.0.0", new UpgradeBadColumnNames());
 	}
 
 }

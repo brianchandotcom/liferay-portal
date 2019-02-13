@@ -17,7 +17,6 @@ package com.liferay.change.tracking.rest.internal.model.collection;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.rest.internal.model.links.ModelLinkModel;
 
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -84,15 +83,13 @@ public class CTCollectionModel {
 	public List<ModelLinkModel> getLinks() {
 		ModelLinkModel.Builder builder = new ModelLinkModel.Builder();
 
-		ModelLinkModel modelLinkModel = builder.setHref(
-			"/o/change-tracking/collections/" + _ctCollectionId + "/entries"
-		).setRel(
-			"entries"
-		).setType(
-			"GET"
+		return builder.addModelLinkModel(
+			"/o/change-tracking/collections/" + _ctCollectionId + "/entries",
+			"entries", "GET"
+		).addModelLinkModel(
+			"/o/change-tracking/collections/" + _ctCollectionId + "/publish",
+			"publish", "POST"
 		).build();
-
-		return Collections.singletonList(modelLinkModel);
 	}
 
 	@XmlElement

@@ -17,6 +17,8 @@ package com.liferay.change.tracking.rest.internal.model.links;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import javax.xml.bind.annotation.XmlElement;
@@ -44,42 +46,41 @@ public class ModelLinkModel {
 	public static class Builder {
 
 		public Builder() {
-			_modelLinkModel = new ModelLinkModel();
+			_modelLinkModels = new ArrayList<>();
 		}
 
-		public ModelLinkModel build() {
-			return _modelLinkModel;
-		}
-
-		public Builder setHref(String href) {
+		public Builder addModelLinkModel(String href, String rel, String type) {
 			if (!Validator.isUrl(href, true)) {
 				throw new IllegalArgumentException(
 					"Href should be a valid URL");
 			}
 
-			_modelLinkModel._href = href;
-
-			return this;
-		}
-
-		public Builder setRel(String rel) {
-			_modelLinkModel._rel = rel;
-
-			return this;
-		}
-
-		public Builder setType(String type) {
 			if (!_httpMethods.contains(type)) {
 				throw new IllegalArgumentException(
 					"Type should be a valid HTTP method");
 			}
 
-			_modelLinkModel._type = type;
+			if (Validator.isNull(rel)) {
+				throw new IllegalArgumentException(
+					"Link relationship cannot be empty");
+			}
+
+			ModelLinkModel modelLinkModel = new ModelLinkModel();
+
+			modelLinkModel._href = href;
+			modelLinkModel._rel = rel;
+			modelLinkModel._type = type;
+
+			_modelLinkModels.add(modelLinkModel);
 
 			return this;
 		}
 
-		private final ModelLinkModel _modelLinkModel;
+		public List<ModelLinkModel> build() {
+			return _modelLinkModels;
+		}
+
+		private final List<ModelLinkModel> _modelLinkModels;
 
 	}
 

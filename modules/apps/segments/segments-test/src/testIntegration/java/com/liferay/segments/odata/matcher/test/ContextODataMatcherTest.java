@@ -72,6 +72,98 @@ public class ContextODataMatcherTest {
 	}
 
 	@Test
+	public void testMatchesDateGreater() throws Exception {
+		LocalDate localDate = LocalDate.of(2018, Month.JANUARY, 1);
+
+		Context context = new Context() {
+			{
+				put(Context.LOCAL_DATE, LocalDate.of(2019, Month.JANUARY, 1));
+			}
+		};
+
+		Assert.assertTrue(
+			_contextODataMatcher.matches(
+				StringBundler.concat(
+					"(", Context.LOCAL_DATE, " gt ",
+					localDate.format(DateTimeFormatter.ISO_LOCAL_DATE), ")"),
+				context));
+	}
+
+	@Test
+	public void testMatchesDateGreaterOrEquals() throws Exception {
+		LocalDate localDate = LocalDate.of(2019, Month.JANUARY, 1);
+
+		Context context = new Context() {
+			{
+				put(Context.LOCAL_DATE, localDate);
+			}
+		};
+
+		Assert.assertTrue(
+			_contextODataMatcher.matches(
+				StringBundler.concat(
+					"(", Context.LOCAL_DATE, " ge ",
+					localDate.format(DateTimeFormatter.ISO_LOCAL_DATE), ")"),
+				context));
+
+		LocalDate yesterdayLocalDate = localDate.minusDays(1);
+
+		Assert.assertTrue(
+			_contextODataMatcher.matches(
+				StringBundler.concat(
+					"(", Context.LOCAL_DATE, " ge ",
+					yesterdayLocalDate.format(DateTimeFormatter.ISO_LOCAL_DATE),
+					")"),
+				context));
+	}
+
+	@Test
+	public void testMatchesDateLower() throws Exception {
+		LocalDate localDate = LocalDate.of(2019, Month.JANUARY, 1);
+
+		Context context = new Context() {
+			{
+				put(Context.LOCAL_DATE, LocalDate.of(2018, Month.JANUARY, 1));
+			}
+		};
+
+		Assert.assertTrue(
+			_contextODataMatcher.matches(
+				StringBundler.concat(
+					"(", Context.LOCAL_DATE, " lt ",
+					localDate.format(DateTimeFormatter.ISO_LOCAL_DATE), ")"),
+				context));
+	}
+
+	@Test
+	public void testMatchesDateLowerOrEquals() throws Exception {
+		LocalDate localDate = LocalDate.of(2019, Month.JANUARY, 1);
+
+		Context context = new Context() {
+			{
+				put(Context.LOCAL_DATE, localDate);
+			}
+		};
+
+		Assert.assertTrue(
+			_contextODataMatcher.matches(
+				StringBundler.concat(
+					"(", Context.LOCAL_DATE, " le ",
+					localDate.format(DateTimeFormatter.ISO_LOCAL_DATE), ")"),
+				context));
+
+		LocalDate tomorrowLocalDate = localDate.plusDays(1);
+
+		Assert.assertTrue(
+			_contextODataMatcher.matches(
+				StringBundler.concat(
+					"(", Context.LOCAL_DATE, " le ",
+					tomorrowLocalDate.format(DateTimeFormatter.ISO_LOCAL_DATE),
+					")"),
+				context));
+	}
+
+	@Test
 	public void testMatchesIntegerEquals() throws Exception {
 		Context context = new Context() {
 			{
@@ -88,6 +180,76 @@ public class ContextODataMatcherTest {
 			_contextODataMatcher.matches(
 				StringBundler.concat(
 					"(", Context.DEVICE_SCREEN_RESOLUTION_WIDTH, " eq 1001)"),
+				context));
+	}
+
+	@Test
+	public void testMatchesIntegerGreater() throws Exception {
+		Context context = new Context() {
+			{
+				put(Context.DEVICE_SCREEN_RESOLUTION_WIDTH, 1000);
+			}
+		};
+
+		Assert.assertTrue(
+			_contextODataMatcher.matches(
+				StringBundler.concat(
+					"(", Context.DEVICE_SCREEN_RESOLUTION_WIDTH, " gt 900)"),
+				context));
+	}
+
+	@Test
+	public void testMatchesIntegerGreaterOrEquals() throws Exception {
+		Context context = new Context() {
+			{
+				put(Context.DEVICE_SCREEN_RESOLUTION_WIDTH, 1000);
+			}
+		};
+
+		Assert.assertTrue(
+			_contextODataMatcher.matches(
+				StringBundler.concat(
+					"(", Context.DEVICE_SCREEN_RESOLUTION_WIDTH, " ge 900)"),
+				context));
+		Assert.assertTrue(
+			_contextODataMatcher.matches(
+				StringBundler.concat(
+					"(", Context.DEVICE_SCREEN_RESOLUTION_WIDTH, " ge 1000)"),
+				context));
+	}
+
+	@Test
+	public void testMatchesIntegerLower() throws Exception {
+		Context context = new Context() {
+			{
+				put(Context.DEVICE_SCREEN_RESOLUTION_WIDTH, 1000);
+			}
+		};
+
+		Assert.assertTrue(
+			_contextODataMatcher.matches(
+				StringBundler.concat(
+					"(", Context.DEVICE_SCREEN_RESOLUTION_WIDTH, " lt 1100)"),
+				context));
+	}
+
+	@Test
+	public void testMatchesIntegerLowerOrEquals() throws Exception {
+		Context context = new Context() {
+			{
+				put(Context.DEVICE_SCREEN_RESOLUTION_WIDTH, 1000);
+			}
+		};
+
+		Assert.assertTrue(
+			_contextODataMatcher.matches(
+				StringBundler.concat(
+					"(", Context.DEVICE_SCREEN_RESOLUTION_WIDTH, " le 1100)"),
+				context));
+		Assert.assertTrue(
+			_contextODataMatcher.matches(
+				StringBundler.concat(
+					"(", Context.DEVICE_SCREEN_RESOLUTION_WIDTH, " le 1000)"),
 				context));
 	}
 

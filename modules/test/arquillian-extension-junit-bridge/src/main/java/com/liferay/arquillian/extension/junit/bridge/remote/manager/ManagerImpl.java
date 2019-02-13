@@ -36,7 +36,6 @@ import org.jboss.arquillian.core.impl.EventContextImpl;
 import org.jboss.arquillian.core.impl.EventImpl;
 import org.jboss.arquillian.core.impl.ExtensionImpl;
 import org.jboss.arquillian.core.impl.InjectorImpl;
-import org.jboss.arquillian.core.impl.InstanceImpl;
 import org.jboss.arquillian.core.impl.UncheckedThrow;
 import org.jboss.arquillian.core.impl.context.ApplicationContextImpl;
 import org.jboss.arquillian.core.spi.EventContext;

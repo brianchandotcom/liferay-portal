@@ -21,6 +21,7 @@ import com.liferay.frontend.js.loader.modules.extender.npm.JSBundleTracker;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSModuleAlias;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSPackage;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMRegistry;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -64,7 +65,7 @@ public class JSModulesNameMapper {
 			cacheState = _cacheState.get();
 		}
 
-		String resolvedModuleName = cacheState.get(moduleName);
+		String resolvedModuleName = cacheState.get(moduleName, mappings);
 
 		if (resolvedModuleName != null) {
 			return resolvedModuleName;
@@ -80,7 +81,7 @@ public class JSModulesNameMapper {
 			resolvedModuleName, cacheState.getExactMatchMappings(),
 			cacheState.getPartialMatchMappings());
 
-		cacheState.put(moduleName, resolvedModuleName);
+		cacheState.put(moduleName, mappings, resolvedModuleName);
 
 		return resolvedModuleName;
 	}
@@ -153,8 +154,8 @@ public class JSModulesNameMapper {
 			}
 		}
 
-		public String get(String key) {
-			return _cache.get(key);
+		public String get(String moduleName, Map<String, String> mappings) {
+			return _cache.get(_buildKey(moduleName, mappings));
 		}
 
 		public Map<String, String> getExactMatchMappings() {
@@ -177,8 +178,31 @@ public class JSModulesNameMapper {
 			return false;
 		}
 
-		public void put(String key, String value) {
-			_cache.put(key, value);
+		public void put(
+			String moduleName, Map<String, String> mappings, String value) {
+
+			_cache.put(_buildKey(moduleName, mappings), value);
+		}
+
+		private String _buildKey(
+			String moduleName, Map<String, String> mappings) {
+
+			if (mappings == null) {
+				return moduleName;
+			}
+
+			StringBundler sb = new StringBundler();
+
+			sb.append(moduleName);
+
+			for (Map.Entry<String, String> entry : mappings.entrySet()) {
+				sb.append(StringPool.PIPE);
+				sb.append(entry.getKey());
+				sb.append(StringPool.PIPE);
+				sb.append(entry.getValue());
+			}
+
+			return sb.toString();
 		}
 
 		private void _setExactMatchMappings() {

@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.auth.AuthTokenUtil;
@@ -48,6 +49,7 @@ import java.util.Set;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
+import javax.portlet.PortletMode;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -151,23 +153,24 @@ public class PortletExtenderConfigurationAction
 	}
 
 	private String _getActionURL(
-		HttpServletRequest request, PortletDisplay portletDisplay) {
+			HttpServletRequest request, PortletDisplay portletDisplay)
+		throws Exception {
 
 		PortletURL actionURL = PortletURLFactoryUtil.create(
 			request, portletDisplay.getPortletName(),
 			PortletRequest.ACTION_PHASE);
 
-		actionURL.setParameter("p_p_state", "pop_up");
-		actionURL.setParameter("p_p_mode", "view");
-		actionURL.setParameter("portletConfiguration", "true");
-		actionURL.setParameter("javax.portlet.action", "editConfiguration");
-		actionURL.setParameter("returnToFullPageURL", "/");
-		actionURL.setParameter("previewWidth", "");
+		actionURL.setParameter(ActionRequest.ACTION_NAME, "editConfiguration");
 		actionURL.setParameter("mvcPath", "/edit_configuration.jsp");
-		actionURL.setParameter("settingsScope", "portletInstance");
+		actionURL.setParameter("p_auth", AuthTokenUtil.getToken(request));
+		actionURL.setParameter("p_p_mode", PortletMode.VIEW.toString());
+		actionURL.setParameter("portletConfiguration", Boolean.TRUE.toString());
 		actionURL.setParameter(
 			"portletResource", portletDisplay.getPortletResource());
-		actionURL.setParameter("p_auth", AuthTokenUtil.getToken(request));
+		actionURL.setParameter("previewWidth", StringPool.BLANK);
+		actionURL.setParameter("returnToFullPageURL", "/");
+		actionURL.setParameter("settingsScope", "portletInstance");
+		actionURL.setWindowState(LiferayWindowState.POP_UP);
 
 		return actionURL.toString();
 	}
@@ -182,10 +185,10 @@ public class PortletExtenderConfigurationAction
 		ddmFormFieldRenderingContext.setHttpServletRequest(request);
 		ddmFormFieldRenderingContext.setHttpServletResponse(response);
 		ddmFormFieldRenderingContext.setLocale(themeDisplay.getLocale());
-		ddmFormFieldRenderingContext.setReadOnly(false);
+		ddmFormFieldRenderingContext.setMode("edit");
 		ddmFormFieldRenderingContext.setPortletNamespace(
 			portletDisplay.getNamespace());
-		ddmFormFieldRenderingContext.setMode("edit");
+		ddmFormFieldRenderingContext.setReadOnly(false);
 		ddmFormFieldRenderingContext.setShowEmptyFieldLabel(true);
 		ddmFormFieldRenderingContext.setViewMode(true);
 

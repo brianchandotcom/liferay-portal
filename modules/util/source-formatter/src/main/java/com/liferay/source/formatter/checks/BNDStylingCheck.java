@@ -43,6 +43,8 @@ public class BNDStylingCheck extends BaseFileCheck {
 		content = _formatMultipleValuesOnSingleLine(content);
 		content = _formatSingleValueOnMultipleLines(content);
 
+		content = _removeNoValueDefinitionKey(content);
+
 		return content;
 	}
 
@@ -127,12 +129,24 @@ public class BNDStylingCheck extends BaseFileCheck {
 		return content;
 	}
 
+	private String _removeNoValueDefinitionKey(String content) {
+		Matcher matcher = _noValueDefinitionKeyPattern.matcher(content);
+
+		if (matcher.find()) {
+			content = StringUtil.removeSubstring(content, matcher.group(2));
+		}
+
+		return content;
+	}
+
 	private static final Pattern _incorrectIndentPattern = Pattern.compile(
 		"\n[^\t].*:\\\\\n(\t{2,})[^\t]");
 	private static final Pattern _incorrectLineBreakPattern = Pattern.compile(
 		"(\\A|[^\\\\]\n)(\t*)([-\\w]+:)\\s*(.*,\\\\(\n|\\Z))");
 	private static final Pattern _multipleValuesOnSingleLinePattern =
 		Pattern.compile(",(?!\\\\(\n|\\Z)).");
+	private static final Pattern _noValueDefinitionKeyPattern = Pattern.compile(
+		"(\\A|\n)(.*:\\s*(\n|\\Z))");
 	private static final Pattern _singleValueOnMultipleLinesPattern =
 		Pattern.compile("\n.*:(\\\\\n\t).*(\n[^\t]|\\Z)");
 	private static final Pattern _trailingSemiColonPattern = Pattern.compile(

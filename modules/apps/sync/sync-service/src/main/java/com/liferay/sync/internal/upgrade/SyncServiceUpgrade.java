@@ -18,7 +18,6 @@ import com.liferay.document.library.sync.service.DLSyncEventLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
-import com.liferay.sync.internal.upgrade.v2_0_0.UpgradeBadColumnNames;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -48,8 +47,6 @@ public class SyncServiceUpgrade implements UpgradeStepRegistrator {
 		registry.register(
 			"1.0.3", "1.0.4",
 			new com.liferay.sync.internal.upgrade.v1_0_4.UpgradeSchema());
-
-		registry.register("1.0.4", "2.0.0", new UpgradeBadColumnNames());
 	}
 
 	@Reference(unbind = "-")

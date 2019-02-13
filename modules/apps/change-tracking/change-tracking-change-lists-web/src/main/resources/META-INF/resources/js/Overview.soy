@@ -28,6 +28,7 @@
 		label: string,
 		link: string
 	]>}
+	{@param? headerButtonDisabled: bool}
 	{@param? headerTitleActiveChangeList: string}
 	{@param? headerTitleProductionInformation: string}
 	{@param? initialFetch: bool}
@@ -37,6 +38,7 @@
 		userPortraitURL: string,
 		userName: string
 	]}
+	{@param? _handleClickPublish: any}
 
 	{let $headerButtonLabel kind="text"}
 		{msg desc=""}publish{/msg}
@@ -81,6 +83,7 @@
 							{msg desc=""}description{/msg}
 						{/param}
 						{param headerButton: ['label': $headerButtonLabel] /}
+						{param headerButtonDisabled: $headerButtonDisabled /}
 						{param changeListsDropdownMenu: $changeListsDropdownMenu /}
 						{param changeListsDropdownMenuTitle kind="text"}
 							{msg desc=""}select-change-list{/msg}
@@ -91,6 +94,7 @@
 						{/param}
 						{param headerTitle: $headerTitleActiveChangeList /}
 						{param spritemap: $spritemap /}
+						{param _handleClickPublish: $_handleClickPublish /}
 					{/call}
 				</div>
 
@@ -170,6 +174,7 @@
 	{@param? headerButton: [
 		label: string
 	]}
+	{@param? headerButtonDisabled: bool}
 	{@param? headerLink: [
 		link: string,
 		label: string
@@ -184,10 +189,12 @@
 	]}
 	{@param? publishedByTitle: string}
 	{@param? urlSelectChangeList: string}
+	{@param? _handleClickPublish: any}
 
 	<div class="overview-card-sheet {$cardState}">
 		{call .overviewCardHeader}
 			{param headerButton: $headerButton /}
+			{param headerButtonDisabled: $headerButtonDisabled /}
 			{param changeListsDropdownMenu: $changeListsDropdownMenu /}
 			{param changeListsDropdownMenuTitle: $changeListsDropdownMenuTitle /}
 			{param urlSelectChangeList: $urlSelectChangeList /}
@@ -195,6 +202,7 @@
 			{param headerSubTitle: $headerSubTitle /}
 			{param headerTitle: $headerTitle /}
 			{param spritemap: $spritemap /}
+			{param _handleClickPublish: $_handleClickPublish /}
 		{/call}
 
 		<div class="overview-card-sheet-divider"></div>
@@ -223,6 +231,7 @@
 	{@param? headerButton: [
 		label: string
 	]}
+	{@param? headerButtonDisabled: bool}
 	{@param? headerLink: [
 		link: string,
 		label: string
@@ -230,6 +239,7 @@
 	{@param? headerSubTitle: string}
 	{@param? headerTitle: string}
 	{@param? urlSelectChangeList: string}
+	{@param? _handleClickPublish: any}
 
 	{let $twoColumns: $headerButton /}
 
@@ -280,7 +290,7 @@
 							{if $headerButton}
 								<div class="btn-group-item">
 									<div class="flex-col">
-										<button class="btn btn-default btn-primary" data-qa-id="headerButton" id="" type="button">
+										<button class="btn btn-default btn-primary" {if $headerButtonDisabled} disabled {/if} onclick="{$_handleClickPublish}" data-qa-id="headerButton" id="" type="button">
 											<span class="lfr-btn-label">{$headerButton.label}</span>
 										</button>
 									</div>

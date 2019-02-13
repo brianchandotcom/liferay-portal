@@ -2,6 +2,7 @@ import Soy from 'metal-soy';
 import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
 import {Config} from 'metal-state';
 import {openToast} from 'frontend-js-web/liferay/toast/commands/OpenToast.es';
+import {PublishChangeList} from './PublishChangeList.es';
 
 import templates from './Overview.soy';
 
@@ -70,14 +71,14 @@ class Overview extends PortletBase {
 		);
 	}
 
-	_fetchChangeEntries(url) {
+	_fetchChangeEntries(url, type) {
 		let headers = new Headers();
 		headers.append('Content-Type', 'application/json');
 
 		let init = {
 			credentials: 'include',
 			headers,
-			method: 'GET'
+			method: type
 		};
 
 		fetch(url, init)
@@ -98,6 +99,17 @@ class Overview extends PortletBase {
 					);
 				}
 			);
+	}
+
+	_handleClickPublish(event) {
+		new PublishChangeList(
+			{
+				changeListDescription: this.descriptionActiveChangeList,
+				changeListName: this.headerTitleActiveChangeList,
+				spritemap: themeDisplay.getPathThemeImages() + '/lexicon/icons.svg',
+				urlPublishChangeList: this.urlActiveCollectionPublish
+			}
+		);
 	}
 
 	_populateChangeEntries(changeEntriesResult) {
@@ -136,21 +148,31 @@ class Overview extends PortletBase {
 				);
 			}
 		);
+
+		if (this.changeEntries.length === 0) {
+			this.headerButtonDisabled = true;
+		}
 	}
 
 	_populateFields(requestResult) {
 		let activeCollection = requestResult[0];
 		let productionInformation = requestResult[1];
 
-		let foundLink = activeCollection.links.find(
+		let foundEntriesLink = activeCollection.links.find(
 			function(link) {
 				return link.rel === 'entries';
 			}
 		);
 
-		if (foundLink) {
-			this._fetchChangeEntries(foundLink.href);
+		if (foundEntriesLink) {
+			this._fetchChangeEntries(foundEntriesLink.href, foundEntriesLink.type);
 		}
+
+		this.urlActiveCollectionPublish = activeCollection.links.find(
+			function(link) {
+				return link.rel === 'publish';
+			}
+		);
 
 		// Changes
 
@@ -319,6 +341,17 @@ Overview.STATE = {
 	),
 
 	/**
+	 * Stores if the head button is disabled or not.
+	 * @default false
+	 * @instance
+	 * @memberOf Overview
+	 * @review
+	 * @type {boolean}
+	 */
+
+	headerButtonDisabled: Config.bool().value(false),
+
+	/**
 	 * Contains the card header title
 	 * @default undefined
 	 * @instance
@@ -377,6 +410,8 @@ Overview.STATE = {
 	 */
 
 	urlActiveCollection: Config.string().required(),
+
+	urlActiveCollectionPublish: Config.object(),
 
 	/**
 	 * The URL for the REST service to the change entries

@@ -1,0 +1,28 @@
+{namespace com.liferay.asset.taglib.TagSelector}
+
+/**
+ * TagSelector
+ */
+{template .render}
+	{@param spritemap: string}
+	{@param? inputName: string}
+	{@param? selectedItems: list<?>}
+	{@param? _handleButtonClicked: any}
+	{@param? _handleItemAdded: any}
+	{@param? _handleItemRemoved: any}
+
+	{call ClayMultiSelect.render}
+		{param dataSource: [] /}
+		{param events: [
+			'buttonClicked': $_handleButtonClicked,
+			'itemAdded': $_handleItemAdded,
+			'itemRemoved': $_handleItemRemoved
+		] /}
+		{param helpText: '' /}
+		{param inputName: $inputName /}
+		{param labelLocator: 'name' /}
+		{param ref: 'multiSelect' /}
+		{param selectedItems: $selectedItems /}
+		{param spritemap: $spritemap /}
+	{/call}
+{/template}

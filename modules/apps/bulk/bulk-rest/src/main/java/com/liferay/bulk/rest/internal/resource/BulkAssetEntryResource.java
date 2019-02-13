@@ -15,6 +15,7 @@
 package com.liferay.bulk.rest.internal.resource;
 
 import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetCategoryConstants;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.model.AssetVocabulary;
@@ -86,12 +87,13 @@ import org.osgi.service.component.annotations.Reference;
 public class BulkAssetEntryResource {
 
 	@Consumes(ContentTypes.APPLICATION_JSON)
-	@Path("/categories/{classNameId}/common")
+	@Path("/categories/{groupId}/{classNameId}/common")
 	@POST
 	@Produces(ContentTypes.APPLICATION_JSON)
 	public BulkAssetEntryCommonCategoriesModel
 		getBulkAssetEntryCommonCategoriesModel(
 			@Context User user, @Context Locale locale,
+			@PathParam("groupId") long groupId,
 			@PathParam("classNameId") long classNameId,
 			BulkAssetEntryActionModel bulkAssetEntryActionModel) {
 
@@ -119,7 +121,8 @@ public class BulkAssetEntryResource {
 
 			return new BulkAssetEntryCommonCategoriesModel(
 				bulkSelection.describe(locale),
-				_groupByAssetVocabulary(commonCategories));
+				_groupByAssetVocabulary(
+					groupId, classNameId, commonCategories));
 		}
 		catch (Exception e) {
 			return new BulkAssetEntryCommonCategoriesModel(e);
@@ -314,16 +317,52 @@ public class BulkAssetEntryResource {
 		};
 	}
 
+	private List<AssetVocabulary> _getAssetVocabularies(
+			long groupId, long classNameId)
+		throws PortalException {
+
+		List<AssetVocabulary> assetVocabularies =
+			_assetVocabularyLocalService.getGroupVocabularies(
+				_portal.getCurrentAndAncestorSiteGroupIds(groupId));
+
+		Stream<AssetVocabulary> assetVocabularyStream =
+			assetVocabularies.stream();
+
+		return assetVocabularyStream.filter(
+			assetVocabulary -> assetVocabulary.
+				isAssociatedToClassNameIdAndClassTypePK(
+					classNameId, AssetCategoryConstants.ALL_CLASS_TYPE_PK)
+		).filter(
+			assetVocabulary -> _assetCategoryLocalService.
+				getVocabularyCategoriesCount(
+					assetVocabulary.getVocabularyId()) > 0
+		).collect(
+			Collectors.toList()
+		);
+	}
+
 	private Map<AssetVocabulary, List<AssetCategory>> _groupByAssetVocabulary(
-		Set<AssetCategory> commonCategories) {
+			long groupId, long classNameId, Set<AssetCategory> commonCategories)
+		throws PortalException {
+
+		List<AssetVocabulary> assetVocabularies = _getAssetVocabularies(
+			groupId, classNameId);
 
 		Stream<AssetCategory> assetCategoryStream = commonCategories.stream();
 
-		return assetCategoryStream.collect(
-			Collectors.groupingBy(
-				assetCategory ->
-					_assetVocabularyLocalService.fetchAssetVocabulary(
-						assetCategory.getVocabularyId())));
+		Map<Long, List<AssetCategory>> assetVocabularyIdMap =
+			assetCategoryStream.collect(
+				Collectors.groupingBy(
+					assetCategory -> assetCategory.getVocabularyId()));
+
+		Stream<AssetVocabulary> assetVocabularyStream =
+			assetVocabularies.stream();
+
+		return assetVocabularyStream.collect(
+			Collectors.toMap(
+				Function.identity(),
+				assetVocabulary -> assetVocabularyIdMap.get(
+					assetVocabulary.getVocabularyId())));
 	}
 
 	@Reference

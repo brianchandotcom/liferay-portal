@@ -47,12 +47,12 @@ public class FaviconServlet extends HttpServlet {
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException, ServletException {
 
-		String currentURL = (String)request.getAttribute(WebKeys.CURRENT_URL);
+		String contextPath = (String)request.getAttribute(WebKeys.CURRENT_URL);
 
-		if (!currentURL.equals("/o/favicon.ico")) {
-			currentURL = redirect.replace("/favicon", "");
+		if (!contextPath.equals("/o/favicon.ico")) {
+			contextPath = contextPath.replace("/favicon", "");
 
-			response.sendRedirect(currentURL + "/images/favicon.ico");
+			response.sendRedirect(contextPath + "/images/favicon.ico");
 
 			return;
 		}

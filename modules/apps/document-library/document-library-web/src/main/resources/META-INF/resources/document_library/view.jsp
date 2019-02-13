@@ -169,13 +169,10 @@ String navigation = ParamUtil.getString(request, "navigation");
 			}
 		}
 
-		PortletURL selectCategoriesURL = PortletProviderUtil.getPortletURL(
-			request, AssetCategory.class.getName(),
-			PortletProvider.Action.BROWSE);
+		PortletURL selectCategoriesURL = PortletProviderUtil.getPortletURL(request, AssetCategory.class.getName(), PortletProvider.Action.BROWSE);
 
 		selectCategoriesURL.setParameter("eventName", liferayPortletResponse.getNamespace() + "selectCategories");
-        selectCategoriesURL.setParameter(
-			"selectedCategories", "{selectedCategories}");
+		selectCategoriesURL.setParameter("selectedCategories", "{selectedCategories}");
 		selectCategoriesURL.setParameter("singleSelect", "{singleSelect}");
 		selectCategoriesURL.setParameter("vocabularyIds", "{vocabularyIds}");
 

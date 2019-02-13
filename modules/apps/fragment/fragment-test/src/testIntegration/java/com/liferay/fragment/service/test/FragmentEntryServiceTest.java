@@ -243,9 +243,6 @@ public class FragmentEntryServiceTest {
 		_assertFragmentIsCopy(fragmentEntry, fragmentEntryCopy);
 
 		Assert.assertEquals(
-			fragmentEntry.getGroupId(), fragmentEntryCopy.getGroupId());
-
-		Assert.assertEquals(
 			fragmentEntry.getFragmentCollectionId(),
 			fragmentEntryCopy.getFragmentCollectionId());
 	}
@@ -261,7 +258,7 @@ public class FragmentEntryServiceTest {
 				_group.getGroupId(), RandomTestUtil.randomString(),
 				StringPool.BLANK, serviceContext);
 
-		FragmentCollection fragmentCollectionOther =
+		FragmentCollection targetFragmentCollection =
 			FragmentCollectionServiceUtil.addFragmentCollection(
 				_group.getGroupId(), RandomTestUtil.randomString(),
 				StringPool.BLANK, serviceContext);
@@ -275,16 +272,13 @@ public class FragmentEntryServiceTest {
 		FragmentEntry fragmentEntryCopy =
 			FragmentEntryServiceUtil.copyFragmentEntry(
 				_group.getGroupId(), fragmentEntry.getFragmentEntryId(),
-				fragmentCollectionOther.getFragmentCollectionId(),
+				targetFragmentCollection.getFragmentCollectionId(),
 				serviceContext);
 
 		_assertFragmentIsCopy(fragmentEntry, fragmentEntryCopy);
 
 		Assert.assertEquals(
-			fragmentEntry.getGroupId(), fragmentEntryCopy.getGroupId());
-
-		Assert.assertEquals(
-			fragmentCollectionOther.getFragmentCollectionId(),
+			targetFragmentCollection.getFragmentCollectionId(),
 			fragmentEntryCopy.getFragmentCollectionId());
 	}
 
@@ -574,13 +568,19 @@ public class FragmentEntryServiceTest {
 	}
 
 	private void _assertFragmentIsCopy(
-			FragmentEntry fragmentEntry, FragmentEntry fragmentEntryCopy)
-		throws Exception {
+		FragmentEntry fragmentEntry, FragmentEntry fragmentEntryCopy) {
+
+		Assert.assertEquals(
+			fragmentEntry.getGroupId(), fragmentEntryCopy.getGroupId());
+
+		Assert.assertEquals(
+			fragmentEntry.getName() + " (Copy)", fragmentEntryCopy.getName());
 
 		Assert.assertEquals(fragmentEntry.getCss(), fragmentEntryCopy.getCss());
 
 		Assert.assertEquals(
 			fragmentEntry.getHtml(), fragmentEntryCopy.getHtml());
+
 		Assert.assertEquals(fragmentEntry.getJs(), fragmentEntryCopy.getJs());
 
 		Assert.assertEquals(
@@ -588,9 +588,6 @@ public class FragmentEntryServiceTest {
 
 		Assert.assertEquals(
 			fragmentEntry.getType(), fragmentEntryCopy.getType());
-
-		Assert.assertEquals(
-			fragmentEntry.getName() + " (Copy)", fragmentEntryCopy.getName());
 	}
 
 	@DeleteAfterTestRun

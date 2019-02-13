@@ -14,9 +14,14 @@
 
 package com.liferay.headless.web.experience.internal.resource.v1_0;
 
+import com.liferay.headless.web.experience.dto.v1_0.Creator;
+import com.liferay.headless.web.experience.internal.dto.v1_0.CreatorUtil;
 import com.liferay.headless.web.experience.resource.v1_0.CreatorResource;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.UserService;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
 
 /**
@@ -27,4 +32,15 @@ import org.osgi.service.component.annotations.ServiceScope;
 	scope = ServiceScope.PROTOTYPE, service = CreatorResource.class
 )
 public class CreatorResourceImpl extends BaseCreatorResourceImpl {
+
+	@Override
+	public Creator getCreators(Long creatorId) throws Exception {
+		User userId = _userService.getUserById(creatorId);
+
+		return CreatorUtil.toCreator(userId);
+	}
+
+	@Reference
+	private UserService _userService;
+
 }

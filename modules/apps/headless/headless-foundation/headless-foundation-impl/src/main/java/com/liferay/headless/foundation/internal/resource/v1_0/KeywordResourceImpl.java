@@ -51,7 +51,7 @@ public class KeywordResourceImpl extends BaseKeywordResourceImpl {
 	}
 
 	@Override
-	public Page<Keyword> getContentSpaceKeywordPage(
+	public Page<Keyword> getContentSpaceKeywordsPage(
 		Long contentSpaceId, Pagination pagination) {
 
 		return Page.of(

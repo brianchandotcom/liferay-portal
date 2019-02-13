@@ -14,6 +14,8 @@
 
 package com.liferay.arquillian.extension.junit.bridge.remote.manager;
 
+import com.liferay.arquillian.extension.junit.bridge.remote.extension.LoadableExtensionLoader;
+
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.ParameterizedType;
@@ -54,14 +56,16 @@ import org.jboss.arquillian.core.spi.event.ManagerProcessing;
  */
 public class ManagerImpl implements Manager {
 
-	public ManagerImpl(Collection<Class<?>> extensionClasses) {
+	public ManagerImpl() {
 		try {
-			List<Extension> createdExtensions = _createExtensions(
-				extensionClasses);
+			Extension extension = ExtensionImpl.of(
+				_createInstance(LoadableExtensionLoader.class));
+
+			_inject(extension);
 
 			_createBuiltInServices();
 
-			_extensions.addAll(createdExtensions);
+			_extensions.add(extension);
 
 			_addContextsToApplicationScope();
 

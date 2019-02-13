@@ -14,7 +14,6 @@
 
 package com.liferay.arquillian.extension.junit.bridge.junit;
 
-import com.liferay.arquillian.extension.junit.bridge.remote.extension.LoadableExtensionLoader;
 import com.liferay.arquillian.extension.junit.bridge.remote.manager.ManagerImpl;
 
 import java.lang.annotation.Annotation;
@@ -22,7 +21,6 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
@@ -111,8 +109,7 @@ public class Arquillian extends Runner implements Filterable {
 
 		if (manager == null) {
 			try {
-				manager = new ManagerImpl(
-					Collections.singleton(LoadableExtensionLoader.class));
+				manager = new ManagerImpl();
 
 				manager.start();
 

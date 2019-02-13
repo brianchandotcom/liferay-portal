@@ -52,6 +52,10 @@ public class ContentStructure {
 		return _description;
 	}
 
+	public Fields[] getFields() {
+		return _fields;
+	}
+
 	public Long getId() {
 		return _id;
 	}
@@ -84,6 +88,10 @@ public class ContentStructure {
 		_description = description;
 	}
 
+	public void setFields(Fields[] fields) {
+		_fields = fields;
+	}
+
 	public void setId(Long id) {
 		_id = id;
 	}
@@ -98,6 +106,7 @@ public class ContentStructure {
 	private Date _dateCreated;
 	private Date _dateModified;
 	private String _description;
+	private Fields[] _fields;
 	private Long _id;
 	private String _name;
 

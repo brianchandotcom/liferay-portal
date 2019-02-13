@@ -76,10 +76,6 @@ public class StructuredContent {
 		return _description;
 	}
 
-	public Fields[] getFields() {
-		return _fields;
-	}
-
 	public Long getId() {
 		return _id;
 	}
@@ -152,10 +148,6 @@ public class StructuredContent {
 		_description = description;
 	}
 
-	public void setFields(Fields[] fields) {
-		_fields = fields;
-	}
-
 	public void setId(Long id) {
 		_id = id;
 	}
@@ -194,7 +186,6 @@ public class StructuredContent {
 	private Date _dateModified;
 	private Date _datePublished;
 	private String _description;
-	private Fields[] _fields;
 	private Long _id;
 	private String[] _keywords;
 	private Date _lastReviewed;

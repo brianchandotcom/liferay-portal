@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaParameter;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaSignature;
 import com.liferay.portal.tools.rest.builder.internal.util.CamelCaseUtil;
+import com.liferay.portal.tools.rest.builder.internal.util.PathUtil;
 import com.liferay.portal.vulcan.yaml.openapi.Components;
 import com.liferay.portal.vulcan.yaml.openapi.Content;
 import com.liferay.portal.vulcan.yaml.openapi.Items;
@@ -39,8 +40,8 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.function.Consumer;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @author Peter Shin
@@ -107,11 +108,11 @@ public class JavaTool {
 				operation -> {
 					String returnType = _getReturnType(openAPIYAML, operation);
 
-					String methodName = _getMethodName(
-						operation, path, returnType);
-
 					if (_isSchemaMethod(
 							schemaName, operation.getTags(), returnType)) {
+
+						String methodName = _getMethodName(
+							operation, path, returnType, schemaName);
 
 						JavaSignature javaSignature = new JavaSignature(
 							path, pathItem, operation,
@@ -475,29 +476,49 @@ public class JavaTool {
 	}
 
 	private String _getMethodName(
-		Operation operation, String path, String returnType) {
+		Operation operation, String path, String returnType,
+		String schemaName) {
+
+		List<String> urls = new ArrayList<>();
 
 		String httpMethod = _getHTTPMethod(operation);
 
-		Matcher matcher = _methodNamePattern.matcher(path);
+		urls.add(httpMethod);
 
-		String s = matcher.replaceAll("");
+		List<Parameter> parameters = _getPathParameter(
+			operation.getParameters());
 
-		String name = httpMethod + CamelCaseUtil.toCamelCase(s, true);
+		for (Parameter parameter : parameters) {
+			String name = parameter.getName();
 
-		if (StringUtil.startsWith(returnType, "Page<") &&
-			!StringUtil.endsWith(name, "Page")) {
+			urls.add(CamelCaseUtil.toCamelCase(name.replace("-id", ""), true));
 
-			return name + "Page";
+			urls.add("");
 		}
 
-		if (StringUtil.equals(returnType, schemaName) &&
-			StringUtil.endsWith(name, schemaName + "s")) {
+		if (returnType.startsWith("Page<" + schemaName) ||
+			_isPostToSameSchema(httpMethod, path, schemaName, urls.size())) {
 
-			return name.substring(0, name.length() - 1);
+			urls.add(schemaName);
 		}
 
-		return name;
+		urls.add(PathUtil.getLastSegmentFromPath(path, urls.size()));
+
+		if (StringUtil.startsWith(returnType, "Page<")) {
+			urls.add("Page");
+		}
+
+		return String.join("", urls);
+	}
+
+	private List<Parameter> _getPathParameter(List<Parameter> parameters) {
+		Stream<Parameter> stream = parameters.stream();
+
+		return stream.filter(
+			parameter -> StringUtil.equals(parameter.getIn(), "path")
+		).collect(
+			Collectors.toList()
+		);
 	}
 
 	private String _getReturnType(
@@ -542,6 +563,24 @@ public class JavaTool {
 		}
 
 		return "Response";
+	}
+
+	private boolean _isPostToSameSchema(
+		String httpMethod, String path, String schemaName, int segmentNumber) {
+
+		String lastSegment = PathUtil.getLastSegmentFromPath(
+			path, segmentNumber);
+
+		String schemaNameWithoutIrregularPlural = schemaName.substring(
+			0, schemaName.length() - 3);
+
+		if (httpMethod.equals("post") &&
+			lastSegment.startsWith(schemaNameWithoutIrregularPlural)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private boolean _isSchemaMethod(
@@ -591,8 +630,5 @@ public class JavaTool {
 	}
 
 	private static JavaTool _instance = new JavaTool();
-
-	private static final Pattern _methodNamePattern = Pattern.compile(
-		"\\{.*?\\}", Pattern.DOTALL);
 
 }

@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jboss.arquillian.core.spi.EventContext;
+import org.jboss.arquillian.core.spi.Manager;
 import org.jboss.arquillian.core.spi.NonManagedObserver;
 import org.jboss.arquillian.core.spi.ObserverMethod;
 import org.jboss.arquillian.core.spi.Validate;
@@ -28,7 +29,7 @@ import org.jboss.arquillian.core.spi.Validate;
 public class EventContextImpl<T> implements EventContext<T> {
 
 	public EventContextImpl(
-		ManagerImpl manager, List<ObserverMethod> interceptors,
+		Manager manager, List<ObserverMethod> interceptors,
 		List<ObserverMethod> observers,
 		NonManagedObserver<T> nonManagedObserver, T event) {
 
@@ -78,7 +79,7 @@ public class EventContextImpl<T> implements EventContext<T> {
 	private int _currentInterceptor;
 	private final T _event;
 	private final List<ObserverMethod> _interceptors = new ArrayList<>();
-	private final ManagerImpl _manager;
+	private final Manager _manager;
 	private final NonManagedObserver<T> _nonManagedObserver;
 	private final List<ObserverMethod> _observers = new ArrayList<>();
 

@@ -69,7 +69,7 @@ public class ManagerImpl implements Manager {
 
 			_addContextsToApplicationScope();
 
-			fireProcessing();
+			_fireProcessing();
 
 			_addContextsToApplicationScope();
 		}
@@ -98,38 +98,6 @@ public class ManagerImpl implements Manager {
 		ObjectStore objectStore = scopedContext.getObjectStore();
 
 		objectStore.add(type, instance);
-	}
-
-	public <T> void bindAndFire(
-		Class<? extends Annotation> scope, Class<T> type, T instance) {
-
-		bind(scope, type, instance);
-
-		fire(instance);
-	}
-
-	public <T> T executeInApplicationContext(Callable<T> callable)
-		throws Exception {
-
-		ApplicationContext context = (ApplicationContext)_getScopedContext(
-			ApplicationScoped.class);
-
-		boolean activatedByUs = false;
-
-		try {
-			if (!context.isActive()) {
-				context.activate();
-
-				activatedByUs = true;
-			}
-
-			return callable.call();
-		}
-		finally {
-			if (activatedByUs && context.isActive()) {
-				context.deactivate();
-			}
-		}
 	}
 
 	@Override
@@ -172,57 +140,11 @@ public class ManagerImpl implements Manager {
 		}
 	}
 
-	public void fireProcessing() {
-		Set<Class<?>> extensions = new HashSet<>();
-
-		Set<Class<? extends Context>> contexts = new HashSet<>();
-
-		fire(
-			new ManagerProcessing() {
-
-				@Override
-				public ManagerProcessing context(
-					Class<? extends Context> context) {
-
-					contexts.add(context);
-
-					return this;
-				}
-
-				@Override
-				public ManagerProcessing observer(Class<?> observer) {
-					extensions.add(observer);
-
-					return this;
-				}
-
-			});
-
-		_extensions.addAll(_createExtensions(extensions));
-		_contexts.addAll(_createContexts(contexts));
-	}
-
 	@Override
 	public <T> T getContext(Class<T> type) {
 		for (Context context : _contexts) {
 			if (type.isInstance(context)) {
 				return type.cast(context);
-			}
-		}
-
-		return null;
-	}
-
-	public List<Context> getContexts() {
-		return Collections.unmodifiableList(_contexts);
-	}
-
-	public <T> T getExtension(Class<T> type) {
-		for (Extension extension : _extensions) {
-			Object target = ((ExtensionImpl)extension).getTarget();
-
-			if (type.isInstance(target)) {
-				return type.cast(target);
 			}
 		}
 
@@ -287,7 +209,7 @@ public class ManagerImpl implements Manager {
 	}
 
 	private void _addContextsToApplicationScope() throws Exception {
-		executeInApplicationContext(
+		_executeInApplicationContext(
 			new Callable<Void>() {
 
 				@Override
@@ -316,7 +238,7 @@ public class ManagerImpl implements Manager {
 
 		_contexts.add(applicationContext);
 
-		executeInApplicationContext(
+		_executeInApplicationContext(
 			new Callable<Object>() {
 
 				@Override
@@ -371,6 +293,60 @@ public class ManagerImpl implements Manager {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	private <T> T _executeInApplicationContext(Callable<T> callable)
+		throws Exception {
+
+		ApplicationContext context = (ApplicationContext)_getScopedContext(
+			ApplicationScoped.class);
+
+		boolean activatedByUs = false;
+
+		try {
+			if (!context.isActive()) {
+				context.activate();
+
+				activatedByUs = true;
+			}
+
+			return callable.call();
+		}
+		finally {
+			if (activatedByUs && context.isActive()) {
+				context.deactivate();
+			}
+		}
+	}
+
+	private void _fireProcessing() {
+		Set<Class<?>> extensions = new HashSet<>();
+
+		Set<Class<? extends Context>> contexts = new HashSet<>();
+
+		fire(
+			new ManagerProcessing() {
+
+				@Override
+				public ManagerProcessing context(
+					Class<? extends Context> context) {
+
+					contexts.add(context);
+
+					return this;
+				}
+
+				@Override
+				public ManagerProcessing observer(Class<?> observer) {
+					extensions.add(observer);
+
+					return this;
+				}
+
+			});
+
+		_extensions.addAll(_createExtensions(extensions));
+		_contexts.addAll(_createContexts(contexts));
 	}
 
 	private Context _getScopedContext(Class<? extends Annotation> scope) {

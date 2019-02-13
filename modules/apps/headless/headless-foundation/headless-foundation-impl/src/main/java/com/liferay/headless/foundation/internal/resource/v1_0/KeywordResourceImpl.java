@@ -19,8 +19,11 @@ import com.liferay.asset.kernel.exception.DuplicateTagException;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetTagService;
 import com.liferay.headless.foundation.dto.v1_0.Keyword;
+import com.liferay.headless.foundation.internal.dto.v1_0.UserAccountUtil;
 import com.liferay.headless.foundation.resource.v1_0.KeywordResource;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserService;
 
 import javax.ws.rs.ClientErrorException;
 import javax.ws.rs.core.Response;
@@ -96,10 +99,13 @@ public class KeywordResourceImpl extends BaseKeywordResourceImpl {
 		}
 	}
 
-	private static Keyword _toKeyword(AssetTag assetTag) {
+	private Keyword _toKeyword(AssetTag assetTag) throws PortalException {
 		return new Keyword() {
 			{
 				setContentSpace(assetTag.getGroupId());
+				setCreator(
+					UserAccountUtil.toUserAccount(
+						_userService.getUserById(assetTag.getUserId())));
 				setDateCreated(assetTag.getCreateDate());
 				setDateModified(assetTag.getModifiedDate());
 				setId(assetTag.getTagId());
@@ -111,5 +117,8 @@ public class KeywordResourceImpl extends BaseKeywordResourceImpl {
 
 	@Reference
 	private AssetTagService _assetTagService;
+
+	@Reference
+	private UserService _userService;
 
 }

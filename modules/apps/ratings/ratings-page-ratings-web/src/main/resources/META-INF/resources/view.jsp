@@ -16,8 +16,20 @@
 
 <%@ include file="/init.jsp" %>
 
+<%
+String className = Layout.class.getName();
+long classPK = layout.getPlid();
+
+AssetEntry assetEntry = (AssetEntry)request.getAttribute(WebKeys.LAYOUT_ASSET_ENTRY);
+
+	if ((assetEntry != null) && Objects.equals(layout.getType(), LayoutConstants.LAYOUT_TYPE_ASSET_DISPLAY)) {
+	className = assetEntry.getClassName();
+	classPK = assetEntry.getClassPK();
+}
+%>
+
 <liferay-ui:ratings
-	className="<%= Layout.class.getName() %>"
-	classPK="<%= layout.getPlid() %>"
+	className="<%= className %>"
+	classPK="<%= classPK %>"
 	inTrash="<%= false %>"
 />

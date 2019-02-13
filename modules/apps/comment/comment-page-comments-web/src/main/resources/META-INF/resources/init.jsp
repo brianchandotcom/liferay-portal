@@ -21,9 +21,15 @@ taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.portal.kernel.model.Layout" %><%@
+<%@ page import="com.liferay.asset.kernel.model.AssetEntry" %><%@
+page import="com.liferay.layout.constants.LayoutConstants" %><%@
+page import="com.liferay.portal.kernel.model.Layout" %><%@
 page import="com.liferay.portal.kernel.security.permission.ActionKeys" %><%@
-page import="com.liferay.portal.kernel.service.permission.LayoutPermissionUtil" %>
+page import="com.liferay.portal.kernel.service.permission.LayoutPermissionUtil" %><%@
+page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
+page import="com.liferay.portal.kernel.util.WebKeys" %>
+
+<%@ page import="java.util.Objects" %>
 
 <liferay-frontend:defineObjects />
 

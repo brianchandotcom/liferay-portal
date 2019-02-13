@@ -21,7 +21,6 @@ import org.jboss.arquillian.core.spi.EventContext;
 import org.jboss.arquillian.core.spi.Manager;
 import org.jboss.arquillian.core.spi.NonManagedObserver;
 import org.jboss.arquillian.core.spi.ObserverMethod;
-import org.jboss.arquillian.core.spi.Validate;
 
 /**
  * @author Matthew Tambara
@@ -33,12 +32,12 @@ public class EventContextImpl<T> implements EventContext<T> {
 		List<ObserverMethod> observers,
 		NonManagedObserver<T> nonManagedObserver, T event) {
 
-		Validate.notNull(manager, "Manager must be specified");
-		Validate.notNull(event, "Event must be specified");
-
 		_manager = manager;
+
 		_interceptors.addAll(interceptors);
+
 		_observers.addAll(observers);
+
 		_nonManagedObserver = nonManagedObserver;
 		_event = event;
 	}

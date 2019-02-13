@@ -44,7 +44,6 @@ import org.jboss.arquillian.core.spi.InvocationException;
 import org.jboss.arquillian.core.spi.Manager;
 import org.jboss.arquillian.core.spi.NonManagedObserver;
 import org.jboss.arquillian.core.spi.ObserverMethod;
-import org.jboss.arquillian.core.spi.Validate;
 import org.jboss.arquillian.core.spi.context.ApplicationContext;
 import org.jboss.arquillian.core.spi.context.Context;
 import org.jboss.arquillian.core.spi.context.ObjectStore;
@@ -86,10 +85,6 @@ public class ManagerImpl implements Manager {
 	@Override
 	public <T> void bind(
 		Class<? extends Annotation> scope, Class<T> type, T instance) {
-
-		Validate.notNull(scope, "Scope must be specified");
-		Validate.notNull(type, "Type must be specified");
-		Validate.notNull(instance, "Instance must be specified");
 
 		Context scopedContext = _getScopedContext(scope);
 
@@ -147,8 +142,6 @@ public class ManagerImpl implements Manager {
 
 	@Override
 	public <T> void fire(T event, NonManagedObserver<T> nonManagedObserver) {
-		Validate.notNull(event, "Event must be specified");
-
 		List<ObserverMethod> observers = _resolveObservers(event.getClass());
 
 		List<ObserverMethod> interceptorObservers =
@@ -263,8 +256,6 @@ public class ManagerImpl implements Manager {
 
 	@Override
 	public <T> T resolve(Class<T> type) {
-		Validate.notNull(type, "Type must be specified");
-
 		List<Context> activeContexts = _resolveActiveContexts();
 
 		for (int i = activeContexts.size() - 1; i >= 0; i--) {

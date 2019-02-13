@@ -77,8 +77,8 @@ public class CTJaxRsUtil {
 		return sortColumnsStream.map(
 			sortColumn -> sortColumn.split(":")
 		).flatMap(
-			sortElements ->
-				_getSortElementsStream(sortElements, validSortColumnNames)
+			sortElements -> _getSortElementsStream(
+				sortElements, validSortColumnNames)
 		).toArray();
 	}
 

@@ -183,8 +183,8 @@ public class AssetEntryUsagesDisplayContext {
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
 			_renderRequest);
 
-		if (assetEntryUsage.getClassNameId() !=
-				PortalUtil.getClassNameId(FragmentEntryLink.class)) {
+		if (assetEntryUsage.getClassNameId() != PortalUtil.getClassNameId(
+				FragmentEntryLink.class)) {
 
 			String portletTitle = PortalUtil.getPortletTitle(
 				PortletIdCodec.decodePortletName(

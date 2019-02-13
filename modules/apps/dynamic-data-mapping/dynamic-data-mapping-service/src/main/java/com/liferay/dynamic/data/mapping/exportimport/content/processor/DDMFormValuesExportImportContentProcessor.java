@@ -381,9 +381,8 @@ public class DDMFormValuesExportImportContentProcessor
 					return _dlAppLocalService.getFileEntry(newClassPK);
 				}
 				catch (NoSuchFileEntryException nsfee) {
-					if (PortletDataContext.
-							REFERENCE_TYPE_DEPENDENCY_DISPOSABLE.equals(
-								disposableElement.attribute("type"))) {
+					if (PortletDataContext.REFERENCE_TYPE_DEPENDENCY_DISPOSABLE.
+							equals(disposableElement.attribute("type"))) {
 
 						if (_log.isWarnEnabled()) {
 							_log.warn(

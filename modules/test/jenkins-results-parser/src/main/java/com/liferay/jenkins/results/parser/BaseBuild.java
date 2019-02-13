@@ -1124,9 +1124,8 @@ public abstract class BaseBuild implements Build {
 		}
 
 		for (Build downstreamBuild : downstreamBuilds) {
-			totalSlavesUsedCount +=
-				downstreamBuild.getTotalSlavesUsedCount(
-					status, modifiedBuildsOnly);
+			totalSlavesUsedCount += downstreamBuild.getTotalSlavesUsedCount(
+				status, modifiedBuildsOnly);
 		}
 
 		return totalSlavesUsedCount;

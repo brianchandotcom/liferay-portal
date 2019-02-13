@@ -146,8 +146,7 @@ public class CTEngineManagerImpl implements CTEngineManager {
 		}
 		catch (PortalException pe) {
 			_log.error(
-				"Unable to delete change tracking collection " +
-					ctCollectionId,
+				"Unable to delete change tracking collection " + ctCollectionId,
 				pe);
 		}
 	}
@@ -258,8 +257,8 @@ public class CTEngineManagerImpl implements CTEngineManager {
 		return productionCTCollectionOptional.map(
 			CTCollection::getCtCollectionId
 		).map(
-			productionCTCollectionID ->
-				getCollidingCTEntries(ctCollectionId, productionCTCollectionID)
+			productionCTCollectionID -> getCollidingCTEntries(
+				ctCollectionId, productionCTCollectionID)
 		).orElse(
 			Collections.emptyList()
 		);
@@ -287,8 +286,8 @@ public class CTEngineManagerImpl implements CTEngineManager {
 			}
 
 			latestTargetCTEntryOptional.filter(
-				latestTargetCTEntry ->
-					_isColliding(ctEntry, latestTargetCTEntry)
+				latestTargetCTEntry -> _isColliding(
+					ctEntry, latestTargetCTEntry)
 			).ifPresent(
 				latestTargetCTEntry -> collidingCTEntries.add(ctEntry)
 			);

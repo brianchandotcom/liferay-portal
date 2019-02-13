@@ -64,16 +64,15 @@ public class FilterContextProviderTest {
 
 		Registry registry = RegistryUtil.getRegistry();
 
-		_serviceRegistration =
-			registry.registerService(
-				MockResource.class, new MockResource(),
-				new HashMap<String, Object>() {
-					{
-						put(
-							"component.name",
-							MockResource.class.getCanonicalName());
-					}
-				});
+		_serviceRegistration = registry.registerService(
+			MockResource.class, new MockResource(),
+			new HashMap<String, Object>() {
+				{
+					put(
+						"component.name",
+						MockResource.class.getCanonicalName());
+				}
+			});
 
 		ServiceReference<MockResource> serviceReference =
 			_serviceRegistration.getServiceReference();

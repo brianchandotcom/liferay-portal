@@ -40,11 +40,10 @@ public class DocumentRequestExecutorFixture {
 	}
 
 	protected static BulkableDocumentRequestTranslator
-		<DeleteRequestBuilder, IndexRequestBuilder,
-		 UpdateRequestBuilder, BulkRequestBuilder>
-			createBulkableDocumentRequestTranslator(
-				ElasticsearchClientResolver elasticsearchClientResolver,
-				ElasticsearchDocumentFactory elasticsearchDocumentFactory) {
+		<DeleteRequestBuilder, IndexRequestBuilder, UpdateRequestBuilder,
+		 BulkRequestBuilder> createBulkableDocumentRequestTranslator(
+			ElasticsearchClientResolver elasticsearchClientResolver,
+			ElasticsearchDocumentFactory elasticsearchDocumentFactory) {
 
 		return new ElasticsearchBulkableDocumentRequestTranslator() {
 			{
@@ -83,8 +82,9 @@ public class DocumentRequestExecutorFixture {
 					elasticsearchQueryTranslatorFixture =
 						new ElasticsearchQueryTranslatorFixture();
 
-				setQueryTranslator(elasticsearchQueryTranslatorFixture.
-					getElasticsearchQueryTranslator());
+				setQueryTranslator(
+					elasticsearchQueryTranslatorFixture.
+						getElasticsearchQueryTranslator());
 			}
 		};
 	}
@@ -109,12 +109,10 @@ public class DocumentRequestExecutorFixture {
 		ElasticsearchDocumentFactory elasticsearchDocumentFactory) {
 
 		BulkableDocumentRequestTranslator
-			<DeleteRequestBuilder, IndexRequestBuilder,
-			 UpdateRequestBuilder, BulkRequestBuilder>
-				bulkableDocumentRequestTranslator =
-					createBulkableDocumentRequestTranslator(
-						elasticsearchClientResolver,
-						elasticsearchDocumentFactory);
+			<DeleteRequestBuilder, IndexRequestBuilder, UpdateRequestBuilder,
+			 BulkRequestBuilder> bulkableDocumentRequestTranslator =
+				createBulkableDocumentRequestTranslator(
+					elasticsearchClientResolver, elasticsearchDocumentFactory);
 
 		return new ElasticsearchDocumentRequestExecutor() {
 			{

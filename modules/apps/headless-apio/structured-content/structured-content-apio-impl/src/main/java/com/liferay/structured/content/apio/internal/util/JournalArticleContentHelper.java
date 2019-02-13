@@ -293,9 +293,8 @@ public class JournalArticleContentHelper {
 		return Optional.ofNullable(
 			structuredContentValuesMap.get(ddmForm.getDefaultLocale())
 		).map(
-			structuredContentValues ->
-				new UnlocalizedValue(
-					_getData(ddmFormField, structuredContentValues))
+			structuredContentValues -> new UnlocalizedValue(
+				_getData(ddmFormField, structuredContentValues))
 		).orElseGet(
 			() -> new UnlocalizedValue(StringPool.BLANK)
 		);

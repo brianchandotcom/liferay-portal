@@ -108,9 +108,8 @@ public class CTCollectionResource {
 		return ctCollectionOptional.map(
 			this::_getCTCollectionModel
 		).orElseThrow(
-			() ->
-				new CannotCreateCTCollectionException(
-					companyId, "Cannot create Change Tracking Collection")
+			() -> new CannotCreateCTCollectionException(
+				companyId, "Cannot create Change Tracking Collection")
 		);
 	}
 

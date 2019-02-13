@@ -75,9 +75,8 @@ public class EditCTCollectionMVCActionCommand extends BaseMVCActionCommand {
 			_ctEngineManager.createCTCollection(userId, name, description);
 
 		ctCollectionOptional.ifPresent(
-			ctCollection ->
-				_ctEngineManager.checkoutCTCollection(
-					userId, ctCollection.getCtCollectionId()));
+			ctCollection -> _ctEngineManager.checkoutCTCollection(
+				userId, ctCollection.getCtCollectionId()));
 	}
 
 	private void _updateCTCollection(

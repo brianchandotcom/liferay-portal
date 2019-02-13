@@ -78,8 +78,8 @@ public class LayoutPrototypeVerticalCard
 
 	@Override
 	public String getDefaultEventHandler() {
-		return
-			LayoutAdminWebKeys.LAYOUT_PROTOTYPE_DROPDOWN_DEFAULT_EVENT_HANDLER;
+		return LayoutAdminWebKeys.
+			LAYOUT_PROTOTYPE_DROPDOWN_DEFAULT_EVENT_HANDLER;
 	}
 
 	@Override

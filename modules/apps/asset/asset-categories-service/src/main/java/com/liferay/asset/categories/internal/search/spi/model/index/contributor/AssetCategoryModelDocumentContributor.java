@@ -125,7 +125,11 @@ public class AssetCategoryModelDocumentContributor
 			}
 
 			document.addText(
-				field.concat(StringPool.UNDERLINE).concat(locale.toString()),
+				field.concat(
+					StringPool.UNDERLINE
+				).concat(
+					locale.toString()
+				),
 				titlesArray);
 		}
 	}

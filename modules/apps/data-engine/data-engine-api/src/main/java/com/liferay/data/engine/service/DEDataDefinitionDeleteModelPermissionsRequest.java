@@ -108,10 +108,10 @@ public class DEDataDefinitionDeleteModelPermissionsRequest {
 
 			_deDataDefinitionDeleteModelPermissionsRequest._companyId =
 				companyId;
-			_deDataDefinitionDeleteModelPermissionsRequest.
-				_scopedGroupId = scopedGroupId;
-			_deDataDefinitionDeleteModelPermissionsRequest.
-				_deDataDefinitionId = deDataDefinitionId;
+			_deDataDefinitionDeleteModelPermissionsRequest._scopedGroupId =
+				scopedGroupId;
+			_deDataDefinitionDeleteModelPermissionsRequest._deDataDefinitionId =
+				deDataDefinitionId;
 			_deDataDefinitionDeleteModelPermissionsRequest._actionIds =
 				ListUtil.fromArray(actionIds);
 			_deDataDefinitionDeleteModelPermissionsRequest._roleNames =

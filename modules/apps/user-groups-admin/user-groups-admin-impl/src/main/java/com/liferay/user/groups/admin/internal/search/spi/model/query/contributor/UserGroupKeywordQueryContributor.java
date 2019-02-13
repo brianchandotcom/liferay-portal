@@ -64,8 +64,7 @@ public class UserGroupKeywordQueryContributor
 		}
 
 		LinkedHashMap<String, Object> params =
-			(LinkedHashMap<String, Object>)
-				searchContext.getAttribute("params");
+			(LinkedHashMap<String, Object>)searchContext.getAttribute("params");
 
 		if (params != null) {
 			String expandoAttributes = (String)params.get("expandoAttributes");

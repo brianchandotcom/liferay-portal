@@ -92,7 +92,6 @@ definition {
 			);
 		}
 		else {
-
 			LexiconCard.clickCard(
 				card = "${sitePageType}"
 			);

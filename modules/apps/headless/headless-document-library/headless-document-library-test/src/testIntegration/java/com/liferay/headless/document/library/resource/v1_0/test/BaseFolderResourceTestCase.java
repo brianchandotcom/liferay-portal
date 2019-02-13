@@ -87,7 +87,7 @@ public abstract class BaseFolderResourceTestCase {
 	public void testPostDocumentsRepositoriesFoldersBatchCreate()
 		throws Exception {
 
-			Assert.assertTrue(true);
+		Assert.assertTrue(true);
 	}
 
 	@Test
@@ -108,86 +108,87 @@ public abstract class BaseFolderResourceTestCase {
 	protected void invokeDeleteFolders(Long folderId) throws Exception {
 		RequestSender requestSender = _createRequestSender();
 
-			requestSender.post("/folders/{folder-id}");
+		requestSender.post("/folders/{folder-id}");
 	}
 
 	protected void invokeGetDocumentsRepositories(Long documentsRepositoryId)
 		throws Exception {
 
-			RequestSender requestSender = _createRequestSender();
+		RequestSender requestSender = _createRequestSender();
 
-			requestSender.post(
-				"/documents-repositories/{documents-repository-id}");
+		requestSender.post(
+			"/documents-repositories/{documents-repository-id}");
 	}
 
 	protected void invokeGetDocumentsRepositoriesFoldersPage(
 			Long documentsRepositoryId, Pagination pagination)
 		throws Exception {
 
-			RequestSender requestSender = _createRequestSender();
+		RequestSender requestSender = _createRequestSender();
 
-			requestSender.post(
-				"/documents-repositories/{documents-repository-id}/folders");
+		requestSender.post(
+			"/documents-repositories/{documents-repository-id}/folders");
 	}
 
 	protected void invokeGetFolders(Long folderId) throws Exception {
 		RequestSender requestSender = _createRequestSender();
 
-			requestSender.post("/folders/{folder-id}");
+		requestSender.post("/folders/{folder-id}");
 	}
 
 	protected void invokeGetFoldersFoldersPage(
 			Long folderId, Pagination pagination)
 		throws Exception {
 
-			RequestSender requestSender = _createRequestSender();
+		RequestSender requestSender = _createRequestSender();
 
-			requestSender.post("/folders/{folder-id}/folders");
+		requestSender.post("/folders/{folder-id}/folders");
 	}
 
 	protected void invokePostDocumentsRepositoriesFolders(
 			Long documentsRepositoryId, Folder folder)
 		throws Exception {
 
-			RequestSender requestSender = _createRequestSender();
+		RequestSender requestSender = _createRequestSender();
 
-			requestSender.post(
-				"/documents-repositories/{documents-repository-id}/folders");
+		requestSender.post(
+			"/documents-repositories/{documents-repository-id}/folders");
 	}
 
 	protected void invokePostDocumentsRepositoriesFoldersBatchCreate(
 			Long documentsRepositoryId, Folder folder)
 		throws Exception {
 
-			RequestSender requestSender = _createRequestSender();
+		RequestSender requestSender = _createRequestSender();
 
-			requestSender.post(
-				"/documents-repositories/{documents-repository-id}/folders/batch-create");
+		requestSender.post(
+			"/documents-repositories/{documents-repository-id}/folders/" +
+				"batch-create");
 	}
 
 	protected void invokePostFoldersFolders(Long folderId, Folder folder)
 		throws Exception {
 
-			RequestSender requestSender = _createRequestSender();
+		RequestSender requestSender = _createRequestSender();
 
-			requestSender.post("/folders/{folder-id}/folders");
+		requestSender.post("/folders/{folder-id}/folders");
 	}
 
 	protected void invokePostFoldersFoldersBatchCreate(
 			Long folderId, Folder folder)
 		throws Exception {
 
-			RequestSender requestSender = _createRequestSender();
+		RequestSender requestSender = _createRequestSender();
 
-			requestSender.post("/folders/{folder-id}/folders/batch-create");
+		requestSender.post("/folders/{folder-id}/folders/batch-create");
 	}
 
 	protected void invokePutFolders(Long folderId, Folder folder)
 		throws Exception {
 
-			RequestSender requestSender = _createRequestSender();
+		RequestSender requestSender = _createRequestSender();
 
-			requestSender.post("/folders/{folder-id}");
+		requestSender.post("/folders/{folder-id}");
 	}
 
 	private RequestSender _createRequestSender() {
@@ -206,8 +207,9 @@ public abstract class BaseFolderResourceTestCase {
 	private static final ObjectMapper _inputObjectMapper = new ObjectMapper() {
 		{
 			setSerializationInclusion(JsonInclude.Include.NON_NULL);
-	}
+		}
 	};
+
 	private static final ObjectMapper _outputObjectMapper = new ObjectMapper();
 
 	private URL _resourceURL;

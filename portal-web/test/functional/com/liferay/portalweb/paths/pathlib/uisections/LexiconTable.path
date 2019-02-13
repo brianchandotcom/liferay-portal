@@ -35,7 +35,7 @@
 </tr>
 <tr>
 	<td>TABLE_ENTRY_ELLIPSIS</td>
-	<td>//tr[@data-qa-id='row'][contains(.,'${key_tableEntry}')]//button[@title='Actions']</td>
+	<td>//tr[@data-qa-id='row'][contains(.,'${key_tableEntry}')]//button[contains(@class,'dropdown-toggle')]</td>
 	<td></td>
 </tr>
 </tbody>

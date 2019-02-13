@@ -35,7 +35,7 @@
 </tr>
 <tr>
 	<td>CARD_ELLIPSIS</td>
-	<td>//div[contains(@class,'card')][contains(.,'${key_card}')]//button[@title='Actions']</td>
+	<td>//div[contains(@class,'card')][contains(.,'${key_card}')]//button[contains(@class,'dropdown-toggle')]</td>
 	<td></td>
 </tr>
 <tr>

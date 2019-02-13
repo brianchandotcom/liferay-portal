@@ -361,8 +361,9 @@ public class BulkAssetEntryResource {
 		return assetVocabularyStream.collect(
 			Collectors.toMap(
 				Function.identity(),
-				assetVocabulary -> assetVocabularyIdMap.get(
-					assetVocabulary.getVocabularyId())));
+				assetVocabulary -> assetVocabularyIdMap.computeIfAbsent(
+					assetVocabulary.getVocabularyId(),
+					key -> new ArrayList<>())));
 	}
 
 	@Reference

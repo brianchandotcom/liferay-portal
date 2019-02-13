@@ -57,6 +57,17 @@ public class JavaForStatement extends JavaLoopStatement {
 
 		indent = "\t" + indent;
 
+		if ((_conditionJavaExpression == null) &&
+			_initializationJavaTerms.isEmpty() &&
+			_iteratorJavaExpressions.isEmpty()) {
+
+			sb.append(prefix);
+			sb.append("for (;;)");
+			sb.append(suffix);
+
+			return sb.toString();
+		}
+
 		if (_initializationJavaTerms.size() == 1) {
 			append(
 				sb, _initializationJavaTerms.get(0), indent, prefix + "for (",

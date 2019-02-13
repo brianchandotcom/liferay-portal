@@ -263,7 +263,7 @@ AUI.add(
 						var namespace = instance.NS;
 
 						if (!editCategories) {
-							var urlCategories = themeDisplay.getPortalURL() + '/o/bulk/asset/categories/' + instance.get('classNameId') + '/common';
+							var urlCategories = themeDisplay.getPortalURL() + '/o/bulk/asset/categories/' + instance._config.scopeGroupId + '/' + instance.get('classNameId') + '/common';
 							var urlUpdateCategories = themeDisplay.getPortalURL() + '/o/bulk/asset/categories/' + instance.get('classNameId');
 
 							Liferay.Loader.require(

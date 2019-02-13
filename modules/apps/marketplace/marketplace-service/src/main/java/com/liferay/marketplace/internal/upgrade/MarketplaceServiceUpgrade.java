@@ -17,7 +17,6 @@ package com.liferay.marketplace.internal.upgrade;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.expando.kernel.service.ExpandoValueLocalService;
-import com.liferay.marketplace.internal.upgrade.v3_0_0.UpgradeBadColumnNames;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
@@ -59,8 +58,6 @@ public class MarketplaceServiceUpgrade implements UpgradeStepRegistrator {
 		registry.register(
 			"2.0.1", "2.0.2",
 			new com.liferay.marketplace.internal.upgrade.v2_0_2.UpgradeApp());
-
-		registry.register("2.0.2", "3.0.0", new UpgradeBadColumnNames());
 	}
 
 	@Reference(unbind = "-")

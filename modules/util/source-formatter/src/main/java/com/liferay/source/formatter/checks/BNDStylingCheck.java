@@ -43,7 +43,9 @@ public class BNDStylingCheck extends BaseFileCheck {
 		content = _formatMultipleValuesOnSingleLine(content);
 		content = _formatSingleValueOnMultipleLines(content);
 
-		content = _removeNoValueDefinitionKey(content);
+		if (!absolutePath.endsWith("/app.bnd")) {
+			content = _removeNoValueDefinitionKey(content);
+		}
 
 		return content;
 	}

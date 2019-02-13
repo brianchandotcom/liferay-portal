@@ -849,7 +849,7 @@ public class DDMStructureLocalServiceTest extends BaseDDMServiceTestCase {
 
 		DDMFormField textField = ddmFormField.get(0);
 
-		Assert.assertEquals("keyword", textField.getIndexType());
+		Assert.assertEquals(StringPool.BLANK, textField.getIndexType());
 	}
 
 	@Test

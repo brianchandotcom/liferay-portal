@@ -22,6 +22,7 @@ import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.headless.collaboration.dto.v1_0.BlogPosting;
 import com.liferay.headless.collaboration.dto.v1_0.ImageObject;
+import com.liferay.headless.collaboration.internal.util.v1_0.AggregateRatingUtil;
 import com.liferay.headless.collaboration.resource.v1_0.BlogPostingResource;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
@@ -32,6 +33,8 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.ratings.kernel.model.RatingsStats;
+import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
 
 import java.time.LocalDateTime;
 
@@ -194,6 +197,15 @@ public class BlogPostingResourceImpl extends BaseBlogPostingResourceImpl {
 		return new BlogPosting() {
 			{
 				setAlternativeHeadline(blogsEntry.getSubtitle());
+				RatingsStats ratingsStats =
+					_ratingsStatsLocalService.fetchStats(
+						BlogsEntry.class.getName(), blogsEntry.getEntryId());
+
+				if (ratingsStats != null) {
+					setAggregateRating(
+						AggregateRatingUtil.toAggregateRating(ratingsStats));
+				}
+
 				setArticleBody(blogsEntry.getContent());
 				setCaption(blogsEntry.getCoverImageCaption());
 				setContentSpace(blogsEntry.getGroupId());
@@ -218,5 +230,8 @@ public class BlogPostingResourceImpl extends BaseBlogPostingResourceImpl {
 
 	@Reference
 	private DLURLHelper _dlurlHelper;
+
+	@Reference
+	private RatingsStatsLocalService _ratingsStatsLocalService;
 
 }

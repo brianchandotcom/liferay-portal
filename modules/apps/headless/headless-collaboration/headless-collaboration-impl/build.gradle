@@ -6,6 +6,7 @@ dependencies {
 	compileOnly project(":apps:blogs:blogs-api")
 	compileOnly project(":apps:document-library:document-library-api")
 	compileOnly project(":apps:friendly-url:friendly-url-api")
+	compileOnly project(":apps:headless-apio:aggregate-rating:aggregate-rating-apio-api")
 	compileOnly project(":apps:headless:headless-collaboration:headless-collaboration-api")
 	compileOnly project(":apps:portal-vulcan:portal-vulcan-api")
 	compileOnly project(":core:petra:petra-function")

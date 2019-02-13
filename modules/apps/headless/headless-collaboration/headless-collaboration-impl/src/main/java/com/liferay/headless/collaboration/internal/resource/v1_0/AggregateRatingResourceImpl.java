@@ -14,9 +14,14 @@
 
 package com.liferay.headless.collaboration.internal.resource.v1_0;
 
+import com.liferay.blogs.model.BlogsEntry;
+import com.liferay.headless.collaboration.dto.v1_0.AggregateRating;
+import com.liferay.headless.collaboration.internal.util.v1_0.AggregateRatingUtil;
 import com.liferay.headless.collaboration.resource.v1_0.AggregateRatingResource;
+import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
 
 /**
@@ -28,4 +33,17 @@ import org.osgi.service.component.annotations.ServiceScope;
 )
 public class AggregateRatingResourceImpl
 	extends BaseAggregateRatingResourceImpl {
+
+	@Override
+	public AggregateRating getAggregateRatings(Long aggregateRatingId)
+		throws Exception {
+
+		return AggregateRatingUtil.toAggregateRating(
+			_ratingsStatsLocalService.fetchStats(
+				BlogsEntry.class.getName(), aggregateRatingId));
+	}
+
+	@Reference
+	private RatingsStatsLocalService _ratingsStatsLocalService;
+
 }

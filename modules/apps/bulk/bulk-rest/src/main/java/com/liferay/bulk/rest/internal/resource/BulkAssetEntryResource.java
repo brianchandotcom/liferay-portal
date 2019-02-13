@@ -15,7 +15,6 @@
 package com.liferay.bulk.rest.internal.resource;
 
 import com.liferay.asset.kernel.model.AssetCategory;
-import com.liferay.asset.kernel.model.AssetCategoryConstants;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.model.AssetVocabulary;
@@ -329,9 +328,8 @@ public class BulkAssetEntryResource {
 			assetVocabularies.stream();
 
 		return assetVocabularyStream.filter(
-			assetVocabulary -> assetVocabulary.
-				isAssociatedToClassNameIdAndClassTypePK(
-					classNameId, AssetCategoryConstants.ALL_CLASS_TYPE_PK)
+			assetVocabulary -> assetVocabulary.isAssociatedToClassNameId(
+				classNameId)
 		).filter(
 			assetVocabulary -> _assetCategoryLocalService.
 				getVocabularyCategoriesCount(

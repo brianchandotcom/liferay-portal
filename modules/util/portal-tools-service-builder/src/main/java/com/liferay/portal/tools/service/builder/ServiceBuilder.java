@@ -3787,20 +3787,15 @@ public class ServiceBuilder {
 			if (Validator.isNotNull(createTableSQL)) {
 				_createSQLTables(sqlFile, createTableSQL, entity, true);
 
-				if (GetterUtil.getBoolean(
-						_compatProperties.getProperty(
-							"update.sql.file.auto.update"))) {
+				List<Path> updateSQLFilePaths = _getUpdateSQLFilePaths();
 
-					List<Path> updateSQLFilePaths = _getUpdateSQLFilePaths();
+				for (Path updateSQLFilePath : updateSQLFilePaths) {
+					if ((updateSQLFilePath != null) &&
+						Files.exists(updateSQLFilePath)) {
 
-					for (Path updateSQLFilePath : updateSQLFilePaths) {
-						if ((updateSQLFilePath != null) &&
-							Files.exists(updateSQLFilePath)) {
-
-							_createSQLTables(
-								updateSQLFilePath.toFile(), createTableSQL,
-								entity, false);
-						}
+						_createSQLTables(
+							updateSQLFilePath.toFile(), createTableSQL, entity,
+							false);
 					}
 				}
 			}

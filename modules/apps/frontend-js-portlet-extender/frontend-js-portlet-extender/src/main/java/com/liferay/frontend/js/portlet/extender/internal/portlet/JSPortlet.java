@@ -75,7 +75,7 @@ public class JSPortlet extends MVCPortlet implements ManagedService {
 						"[$CONFIGURATION]", "[$CONTEXT_PATH$]",
 						"[$PORTLET_ELEMENT_ID$]", "[$PORTLET_NAMESPACE$]",
 						"[$PACKAGE_NAME$]", "[$PACKAGE_VERSION$]",
-						"[$PREFERENCES$]"
+						"[$PORTLET_PREFERENCES$]"
 					},
 					new String[] {
 						_getConfiguration(), renderRequest.getContextPath(),
@@ -163,24 +163,26 @@ public class JSPortlet extends MVCPortlet implements ManagedService {
 	private String _getPortletPreferences(
 		PortletPreferences portletPreferences) {
 
-		Enumeration<String> preferencesNames = portletPreferences.getNames();
-		JSONObject preferencesJSONObject = JSONFactoryUtil.createJSONObject();
+		Enumeration<String> portletPreferencesNames =
+			portletPreferences.getNames();
+		JSONObject portletPreferencesJSONObject =
+			JSONFactoryUtil.createJSONObject();
 
-		while (preferencesNames.hasMoreElements()) {
-			String key = preferencesNames.nextElement();
+		while (portletPreferencesNames.hasMoreElements()) {
+			String key = portletPreferencesNames.nextElement();
 
 			String[] values = portletPreferences.getValues(
 				key, StringPool.EMPTY_ARRAY);
 
 			if (values.length > 1) {
-				preferencesJSONObject.put(key, values);
+				portletPreferencesJSONObject.put(key, values);
 			}
 			else {
-				preferencesJSONObject.put(key, values[0]);
+				portletPreferencesJSONObject.put(key, values[0]);
 			}
 		}
 
-		return preferencesJSONObject.toJSONString();
+		return portletPreferencesJSONObject.toJSONString();
 	}
 
 	private static final String _HTML_TPL;

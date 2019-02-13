@@ -37,8 +37,6 @@ import javax.ws.rs.ext.Provider;
 import org.apache.cxf.jaxrs.ext.ContextProvider;
 import org.apache.cxf.message.Message;
 
-import org.osgi.framework.BundleContext;
-
 /**
  * @author Brian Wing Shun Chan
  */
@@ -46,11 +44,11 @@ import org.osgi.framework.BundleContext;
 public class FilterContextProvider implements ContextProvider<Filter> {
 
 	public FilterContextProvider(
-		BundleContext bundleContext,
+		EntityModelResourceRegistrar entityModelResourceRegistrar,
 		ExpressionConvert<Filter> expressionConvert,
 		FilterParserProvider filterParserProvider, Portal portal) {
 
-		_bundleContext = bundleContext;
+		_entityModelResourceRegistrar = entityModelResourceRegistrar;
 		_expressionConvert = expressionConvert;
 		_filterParserProvider = filterParserProvider;
 		_portal = portal;
@@ -83,8 +81,8 @@ public class FilterContextProvider implements ContextProvider<Filter> {
 			return null;
 		}
 
-		EntityModel entityModel = ContextProviderUtil.getEntityModel(
-			_bundleContext, message);
+		EntityModel entityModel = _entityModelResourceRegistrar.getEntityModel(
+			message);
 
 		if (entityModel == null) {
 			return null;
@@ -129,7 +127,7 @@ public class FilterContextProvider implements ContextProvider<Filter> {
 	private static final Log _log = LogFactoryUtil.getLog(
 		FilterContextProvider.class);
 
-	private final BundleContext _bundleContext;
+	private final EntityModelResourceRegistrar _entityModelResourceRegistrar;
 	private final ExpressionConvert<Filter> _expressionConvert;
 	private final FilterParserProvider _filterParserProvider;
 	private final Portal _portal;

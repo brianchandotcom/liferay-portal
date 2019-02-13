@@ -37,8 +37,6 @@ import javax.ws.rs.ext.Provider;
 import org.apache.cxf.jaxrs.ext.ContextProvider;
 import org.apache.cxf.message.Message;
 
-import org.osgi.framework.BundleContext;
-
 /**
  * @author Brian Wing Shun Chan
  */
@@ -46,10 +44,10 @@ import org.osgi.framework.BundleContext;
 public class SortContextProvider implements ContextProvider<Sort[]> {
 
 	public SortContextProvider(
-		BundleContext bundleContext, Portal portal,
-		SortParserProvider sortParserProvider) {
+		EntityModelResourceRegistrar entityModelResourceRegistrar,
+		Portal portal, SortParserProvider sortParserProvider) {
 
-		_bundleContext = bundleContext;
+		_entityModelResourceRegistrar = entityModelResourceRegistrar;
 		_portal = portal;
 		_sortParserProvider = sortParserProvider;
 	}
@@ -78,8 +76,8 @@ public class SortContextProvider implements ContextProvider<Sort[]> {
 			return null;
 		}
 
-		EntityModel entityModel = ContextProviderUtil.getEntityModel(
-			_bundleContext, message);
+		EntityModel entityModel = _entityModelResourceRegistrar.getEntityModel(
+			message);
 
 		if (entityModel == null) {
 			return null;
@@ -129,7 +127,7 @@ public class SortContextProvider implements ContextProvider<Sort[]> {
 	private static final Log _log = LogFactoryUtil.getLog(
 		SortContextProvider.class);
 
-	private final BundleContext _bundleContext;
+	private final EntityModelResourceRegistrar _entityModelResourceRegistrar;
 	private final Portal _portal;
 	private final SortParserProvider _sortParserProvider;
 

@@ -21,6 +21,7 @@ import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.vulcan.internal.jaxrs.context.provider.AcceptLanguageContextProvider;
 import com.liferay.portal.vulcan.internal.jaxrs.context.provider.CompanyContextProvider;
+import com.liferay.portal.vulcan.internal.jaxrs.context.provider.EntityModelResourceRegistrar;
 import com.liferay.portal.vulcan.internal.jaxrs.context.provider.FilterContextProvider;
 import com.liferay.portal.vulcan.internal.jaxrs.context.provider.PaginationContextProvider;
 import com.liferay.portal.vulcan.internal.jaxrs.context.provider.SortContextProvider;
@@ -72,11 +73,11 @@ public class VulcanFeature implements Feature {
 		featureContext.register(new CompanyContextProvider(_portal));
 		featureContext.register(
 			new FilterContextProvider(
-				_bundleContext, _expressionConvert, _filterParserProvider,
-				_portal));
+				_entityModelResourceRegistrar, _expressionConvert,
+				_filterParserProvider, _portal));
 		featureContext.register(
 			new SortContextProvider(
-				_bundleContext, _portal, _sortParserProvider));
+				_entityModelResourceRegistrar, _portal, _sortParserProvider));
 
 		return false;
 	}
@@ -87,6 +88,9 @@ public class VulcanFeature implements Feature {
 	}
 
 	private BundleContext _bundleContext;
+
+	@Reference
+	private EntityModelResourceRegistrar _entityModelResourceRegistrar;
 
 	@Reference(
 		target = "(result.class.name=com.liferay.portal.kernel.search.filter.Filter)"

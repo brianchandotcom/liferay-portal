@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -111,6 +112,14 @@ public class BlogEntriesManagementToolbarDisplayContext
 			WebKeys.THEME_DISPLAY);
 
 		Map<String, Object> context = new HashMap<>();
+
+		String cmd = Constants.DELETE;
+
+		if (_trashHelper.isTrashEnabled(themeDisplay.getScopeGroup())) {
+			cmd = Constants.MOVE_TO_TRASH;
+		}
+
+		context.put("deleteEntriesCmd", cmd);
 
 		PortletURL deleteEntriesURL = liferayPortletResponse.createActionURL();
 

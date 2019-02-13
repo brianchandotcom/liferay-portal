@@ -54,21 +54,33 @@
 		}
 	};
 
+	function <portlet:namespace />addDragAndDropListener() {
+		if (!Liferay.Layout) {
+			setTimeout(
+				function() {
+					<portlet:namespace />addDragAndDropListener();
+				},
+				10
+			);
+		}
+		else {
+			Liferay.Layout.on(
+				[ 'drag:end', 'drag:start' ],
+				function(event) {
+					setTimeout(
+						function() {
+							<portlet:namespace />resizeIFrame();
+						},
+						10
+					);
+				}
+			);
+		}
+	}
+
 	Liferay.on(
 		'allPortletsReady', function(event) {
-			if (Liferay.Layout) {
-				Liferay.Layout.on(
-					[ 'drag:end', 'drag:start' ],
-					function(event) {
-						setTimeout(
-							function() {
-								<portlet:namespace />resizeIFrame();
-							},
-							10
-						);
-					}
-				);
-			}
+			<portlet:namespace />addDragAndDropListener();
 		}
 	);
 

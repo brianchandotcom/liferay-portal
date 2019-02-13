@@ -16,8 +16,9 @@ class ManagementToolbarDefaultEventHandler extends PortletBase {
 
 			Liferay.Util.postForm(
 				form,
-				this.deleteEntriesURL, {
-					cmd: this.trashEnabled ? 'move_to_trash' : 'delete',
+				this.deleteEntriesURL,
+				{
+					cmd: this.deleteEntriesCmd,
 					deleteEntryIds: Liferay.Util.listCheckedExcept(form, this.ns('allRowIds'))
 				}
 			);
@@ -30,6 +31,7 @@ class ManagementToolbarDefaultEventHandler extends PortletBase {
 }
 
 ManagementToolbarDefaultEventHandler.STATE = {
+	deleteEntriesCmd: Config.string(),
 	deleteEntriesURL: Config.string(),
 	namespace: Config.string(),
 	trashEnabled: Config.bool()

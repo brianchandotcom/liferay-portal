@@ -117,6 +117,25 @@ class EditCategories extends Component {
 	}
 
 	/**
+	 * Get all the categoryIds selected for all
+	 * the vocabularies.
+	 *
+	 * @return {List<Long>} List of categoryIds.
+	 */
+	_getFinalCategories() {
+		let finalCategories = [];
+
+		this.vocabularies.forEach(
+			vocabulary => {
+				let categoryIds = vocabulary.categories.map(item => item.value);
+				finalCategories = finalCategories.concat(categoryIds);
+			}
+		);
+
+		return finalCategories;
+	}
+
+	/**
 	 * Sync the input radio with the state
 	 * @param {!Event} event
 	 * @private
@@ -134,7 +153,7 @@ class EditCategories extends Component {
 	 * @review
 	 */
 	_handleSaveBtnClick() {
-		let finalCategories = this.commonCategories.map(category => category.value);
+		let finalCategories = this._getFinalCategories();
 
 		let addedCategories = [];
 
@@ -143,11 +162,11 @@ class EditCategories extends Component {
 		}
 		else {
 			addedCategories = finalCategories.filter(
-				categoryId => this._initialCategoriesIds.indexOf(categoryId) == -1
+				categoryId => this.initialCategories.indexOf(categoryId) == -1
 			);
 		}
 
-		let removedCategories = this._initialCategoriesIds.filter(
+		let removedCategories = this.initialCategories.filter(
 			category => finalCategories.indexOf(category) == -1
 		);
 
@@ -175,20 +194,29 @@ class EditCategories extends Component {
 	}
 
 	_parseVocabularies(vocabularies) {
+		let initialCategories = [];
 		let vocabulariesList = [];
 
 		vocabularies.forEach(
 			vocabulary => {
+				let categories = this._parseCategories(vocabulary.categories);
+
 				let obj = {
-					categories: this._parseCategories(vocabulary.categories),
+					categories: categories,
 					id: vocabulary.vocabularyId,
 					multiValued: vocabulary.multiValued,
 					name: vocabulary.name
 				};
 
 				vocabulariesList.push(obj);
+
+				let categoryIds = categories.map(item => item.value);
+
+				initialCategories = initialCategories.concat(categoryIds);
 			}
 		);
+
+		this.initialCategories = initialCategories;
 
 		return vocabulariesList;
 	}
@@ -259,6 +287,13 @@ EditCategories.STATE = {
 	folderId: Config.string().required(),
 
 	/**
+	 * Original categoryIds
+	 *
+	 * @type {List<Long>}
+	 */
+	initialCategories: Config.array().internal(),
+
+	/**
 	 * Flag that indicate if loading icon must
 	 * be shown.
 	 *
@@ -310,8 +345,6 @@ EditCategories.STATE = {
 	 * @type {Boolean}
 	 */
 	selectAll: Config.bool(),
-
-	selectCategoriesEventName: Config.string().internal(),
 
 	/**
 	 * Url to the categories selector page

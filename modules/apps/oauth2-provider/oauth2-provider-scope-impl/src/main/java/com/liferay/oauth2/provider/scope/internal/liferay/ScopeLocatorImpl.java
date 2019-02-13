@@ -31,12 +31,16 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory
 import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -98,8 +102,6 @@ public class ScopeLocatorImpl implements ScopeLocator {
 
 		Bundle bundle = getBundle(serviceReference);
 
-		Collection<LiferayOAuth2Scope> locatedScopes = new HashSet<>(
-			scopes.size());
 		Map<String, Boolean> matchCache = new HashMap<>();
 		PrefixHandler prefixHandler = prefixHandlerFactory.create(
 			serviceReference::getProperty);
@@ -107,6 +109,9 @@ public class ScopeLocatorImpl implements ScopeLocator {
 			companyId, applicationName);
 		ScopeMatcherFactory scopeMatcherFactory = getScopeMatcherFactory(
 			companyId);
+		List<String> matchedScopesUnmapped = new ArrayList<>(scopes.size());
+
+		Map<String, Set<String>> mappedScopesScopes = new HashMap<>();
 
 		for (String scope : scopes) {
 			for (String mappedScope : scopeMapper.map(scope)) {
@@ -117,14 +122,49 @@ public class ScopeLocatorImpl implements ScopeLocator {
 						scopesAlias));
 
 				if (matched) {
-					locatedScopes.add(
-						new LiferayOAuth2ScopeImpl(
-							applicationName, bundle, scope));
+					matchedScopesUnmapped.add(scope);
 				}
+
+				mappedScopesScopes.computeIfPresent(
+					mappedScope,
+					(k, v) -> {
+						v.add(scope);
+
+						return v;
+					});
+
+				mappedScopesScopes.computeIfAbsent(
+					mappedScope,
+					k -> new HashSet<String>(Arrays.asList(scope)));
 			}
 		}
 
-		return locatedScopes;
+		for (int i = 0; i < matchedScopesUnmapped.size(); i++) {
+			ScopeMatcher scopeMatcher = scopeMatcherFactory.create(
+				matchedScopesUnmapped.get(i));
+
+			mappedScopesScopes.forEach(
+				(mappedScope, unmappedScopes) -> {
+					if (!scopeMatcher.match(mappedScope)) {
+						return;
+					}
+
+					for (String unmappedScope : unmappedScopes) {
+						if (!matchedScopesUnmapped.contains(unmappedScope)) {
+							matchedScopesUnmapped.add(unmappedScope);
+						}
+					}
+				});
+		}
+
+		Stream<String> stream = matchedScopesUnmapped.stream();
+
+		return stream.map(
+			scope ->
+				new LiferayOAuth2ScopeImpl(applicationName, bundle, scope)
+		).collect(
+			Collectors.toSet()
+		);
 	}
 
 	@Override

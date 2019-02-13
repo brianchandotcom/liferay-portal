@@ -6,7 +6,8 @@ definition {
 			SitePages.gotoAddFirstPage(
 				pageType = "Public Page"
 			);
-		} else {
+		}
+		else {
 			AssertClick(
 				locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
 				value1="Pages"

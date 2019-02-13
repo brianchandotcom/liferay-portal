@@ -280,10 +280,8 @@ public class BeanPortletExtension implements Extension {
 
 	@SuppressWarnings({"serial", "unchecked"})
 	public void step4ApplicationScopedInitializedAsync(
-		@ObservesAsync ServletContextEvent servletContextEvent,
-		BeanManager beanManager, BundleContext bundleContext) {
-
-		ServletContext servletContext = servletContextEvent.getServletContext();
+		@ObservesAsync ServletContext servletContext, BeanManager beanManager,
+		BundleContext bundleContext) {
 
 		Bundle bundle = bundleContext.getBundle();
 
@@ -484,9 +482,9 @@ public class BeanPortletExtension implements Extension {
 		@Initialized(ApplicationScoped.class) @Observes ServletContext
 			servletContext,
 		BeanManager beanManager,
-		javax.enterprise.event.Event<ServletContextEvent> servletContextEvent) {
+		javax.enterprise.event.Event<ServletContext> servletContextEvent) {
 
-		servletContextEvent.fireAsync(new ServletContextEvent(servletContext));
+		servletContextEvent.fireAsync(servletContext);
 	}
 
 	public void step5SessionScopeBeforeDestroyed(
@@ -537,20 +535,6 @@ public class BeanPortletExtension implements Extension {
 					" bean filters for ",
 					servletContext.getServletContextName()));
 		}
-	}
-
-	public static class ServletContextEvent {
-
-		public ServletContextEvent(ServletContext servletContext) {
-			_servletContext = servletContext;
-		}
-
-		public ServletContext getServletContext() {
-			return _servletContext;
-		}
-
-		private final ServletContext _servletContext;
-
 	}
 
 	private void _addBeanFiltersFromAnnotatedClasses() {

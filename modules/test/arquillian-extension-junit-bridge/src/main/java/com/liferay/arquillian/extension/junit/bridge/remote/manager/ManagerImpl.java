@@ -57,8 +57,6 @@ public class ManagerImpl implements Manager {
 		try {
 			_createBuiltInServices();
 
-			_addContextsToApplicationScope();
-
 			_registerExtension();
 
 			_addContextsToApplicationScope();

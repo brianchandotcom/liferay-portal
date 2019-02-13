@@ -75,7 +75,6 @@ public class FragmentCollectionResourceActionDropdownItemsProvider {
 		deleteFragmentCollectionResourceURL.setParameter(
 			ActionRequest.ACTION_NAME,
 			"/fragment/delete_fragment_collection_resources");
-
 		deleteFragmentCollectionResourceURL.setParameter(
 			"redirect", _themeDisplay.getURLCurrent());
 		deleteFragmentCollectionResourceURL.setParameter(

@@ -34,8 +34,6 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadServletRequestConfigurationHelperUtil;
-import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
@@ -71,17 +69,16 @@ public class FragmentCollectionResourcesManagementToolbarDisplayContext
 				FragmentPortletConfiguration.class.getName());
 		_itemSelector = (ItemSelector)request.getAttribute(
 			FragmentWebKeys.ITEM_SELECTOR);
+		_themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
 	}
 
 	public List<DropdownItem> getActionDropdownItems() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		return new DropdownItemList() {
 			{
 				if (FragmentPermission.contains(
-						themeDisplay.getPermissionChecker(),
-						themeDisplay.getScopeGroupId(),
+						_themeDisplay.getPermissionChecker(),
+						_themeDisplay.getScopeGroupId(),
 						FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES)) {
 
 					add(
@@ -102,9 +99,6 @@ public class FragmentCollectionResourcesManagementToolbarDisplayContext
 	public Map<String, Object> getComponentContext() {
 		Map<String, Object> componentContext = new HashMap<>();
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		PortletURL deleteFragmentCollectionResourcesURL =
 			liferayPortletResponse.createActionURL();
 
@@ -112,7 +106,7 @@ public class FragmentCollectionResourcesManagementToolbarDisplayContext
 			ActionRequest.ACTION_NAME,
 			"/fragment/delete_fragment_collection_resources");
 		deleteFragmentCollectionResourcesURL.setParameter(
-			"redirect", themeDisplay.getURLCurrent());
+			"redirect", _themeDisplay.getURLCurrent());
 
 		componentContext.put(
 			"deleteFragmentCollectionResourcesURL",
@@ -134,25 +128,11 @@ public class FragmentCollectionResourcesManagementToolbarDisplayContext
 			"EVENT_HANDLER";
 	}
 
-	public long getFragmentCollectionId() {
-		if (Validator.isNotNull(_fragmentCollectionId)) {
-			return _fragmentCollectionId;
-		}
-
-		_fragmentCollectionId = ParamUtil.getLong(
-			request, "fragmentCollectionId");
-
-		return _fragmentCollectionId;
-	}
-
 	@Override
 	public Boolean isShowCreationMenu() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		if (FragmentPermission.contains(
-				themeDisplay.getPermissionChecker(),
-				themeDisplay.getScopeGroupId(),
+				_themeDisplay.getPermissionChecker(),
+				_themeDisplay.getScopeGroupId(),
 				FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES)) {
 
 			return true;
@@ -168,13 +148,10 @@ public class FragmentCollectionResourcesManagementToolbarDisplayContext
 			ActionRequest.ACTION_NAME,
 			"/fragment/upload_fragment_collection_resource");
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		ItemSelectorCriterion uploadItemSelectorCriterion =
 			new UploadItemSelectorCriterion(
 				FragmentPortletKeys.FRAGMENT, uploadURL.toString(),
-				LanguageUtil.get(themeDisplay.getLocale(), "resources"),
+				LanguageUtil.get(_themeDisplay.getLocale(), "resources"),
 				UploadServletRequestConfigurationHelperUtil.getMaxSize(),
 				_fragmentPortletConfiguration.thumbnailExtensions());
 
@@ -196,8 +173,8 @@ public class FragmentCollectionResourcesManagementToolbarDisplayContext
 		return itemSelectorURL.toString();
 	}
 
-	private Long _fragmentCollectionId;
 	private final FragmentPortletConfiguration _fragmentPortletConfiguration;
 	private final ItemSelector _itemSelector;
+	private final ThemeDisplay _themeDisplay;
 
 }

@@ -70,20 +70,18 @@ public class AddFragmentCollectionResourceMVCActionCommand
 			return;
 		}
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			actionRequest);
-
 		long fileEntryId = ParamUtil.getLong(actionRequest, "fileEntryId");
 
 		FileEntry fileEntry = _dlAppLocalService.getFileEntry(fileEntryId);
 
-		FileEntry tempFileEntry = fileEntry;
-
 		byte[] bytes = null;
 
-		try (InputStream is = tempFileEntry.getContentStream()) {
+		try (InputStream is = fileEntry.getContentStream()) {
 			bytes = FileUtil.getBytes(is);
 		}
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			actionRequest);
 
 		String uniqueFileName = _uniqueFileNameProvider.provide(
 			fileEntry.getFileName(),
@@ -96,7 +94,7 @@ public class AddFragmentCollectionResourceMVCActionCommand
 			uniqueFileName, StringPool.BLANK, StringPool.BLANK, bytes,
 			serviceContext);
 
-		TempFileEntryUtil.deleteTempFileEntry(tempFileEntry.getFileEntryId());
+		TempFileEntryUtil.deleteTempFileEntry(fileEntry.getFileEntryId());
 
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
 

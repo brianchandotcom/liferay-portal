@@ -13,7 +13,6 @@ class FragmentCollectionResourceDropdownDefaultEventHandler extends PortletBase 
 	deleteFragmentCollectionResource(itemData) {
 		if (confirm(Liferay.Language.get('are-you-sure-you-want-to-delete-this'))) {
 			submitForm(document.hrefFm, itemData.deleteFragmentCollectionResourceURL);
-			this._send();
 		}
 	}
 }

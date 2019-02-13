@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.repository.model.RepositoryModel;
 import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.util.Date;
@@ -43,15 +42,13 @@ import javax.servlet.http.HttpServletRequest;
 public class FragmentCollectionResourceVerticalCard implements VerticalCard {
 
 	public FragmentCollectionResourceVerticalCard(
-		RepositoryModel<?> repositoryModel, RenderRequest renderRequest,
+		FileEntry fileEntry, RenderRequest renderRequest,
 		RenderResponse renderResponse, RowChecker rowChecker) {
 
-		_repositoryModel = repositoryModel;
+		_fileEntry = fileEntry;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 		_rowChecker = rowChecker;
-
-		_fileEntry = (FileEntry)repositoryModel;
 	}
 
 	@Override
@@ -102,20 +99,12 @@ public class FragmentCollectionResourceVerticalCard implements VerticalCard {
 
 	@Override
 	public String getInputName() {
-		if (_rowChecker == null) {
-			return null;
-		}
-
 		return _rowChecker.getRowIds();
 	}
 
 	@Override
 	public String getInputValue() {
-		if (_rowChecker == null) {
-			return null;
-		}
-
-		return String.valueOf(_repositoryModel.getPrimaryKeyObj());
+		return String.valueOf(_fileEntry.getPrimaryKeyObj());
 	}
 
 	@Override
@@ -136,40 +125,12 @@ public class FragmentCollectionResourceVerticalCard implements VerticalCard {
 		return _fileEntry.getTitle();
 	}
 
-	@Override
-	public boolean isDisabled() {
-		if (_rowChecker == null) {
-			return false;
-		}
-
-		return _rowChecker.isDisabled(_repositoryModel);
-	}
-
-	@Override
-	public boolean isSelectable() {
-		if (_rowChecker == null) {
-			return false;
-		}
-
-		return true;
-	}
-
-	@Override
-	public boolean isSelected() {
-		if (_rowChecker == null) {
-			return false;
-		}
-
-		return _rowChecker.isChecked(_repositoryModel);
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		FragmentCollectionResourceVerticalCard.class);
 
 	private final FileEntry _fileEntry;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private final RepositoryModel<?> _repositoryModel;
 	private final RowChecker _rowChecker;
 
 }

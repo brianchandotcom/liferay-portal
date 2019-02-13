@@ -93,6 +93,6 @@ FragmentCollection fragmentCollection = fragmentDisplayContext.getFragmentCollec
 					uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcRenderCommandName" value="/fragment/view_import" /><portlet:param name="fragmentCollectionId" value="<%= String.valueOf(fragmentCollection.getFragmentCollectionId()) %>" /></portlet:renderURL>'
 				}
 			);
-		}
+		};
 	</aui:script>
 </c:if>

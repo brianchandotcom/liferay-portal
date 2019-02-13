@@ -18,6 +18,7 @@
 
 <%
 FragmentCollectionResourcesDisplayContext fragmentCollectionResourcesDisplayContext = new FragmentCollectionResourcesDisplayContext(renderRequest, renderResponse, request, fragmentDisplayContext);
+
 FragmentCollectionResourcesManagementToolbarDisplayContext fragmentCollectionResourcesManagementToolbarDisplayContext = new FragmentCollectionResourcesManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, fragmentCollectionResourcesDisplayContext);
 %>
 

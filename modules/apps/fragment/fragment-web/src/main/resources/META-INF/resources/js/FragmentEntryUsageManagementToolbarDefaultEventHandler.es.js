@@ -14,7 +14,6 @@ class FragmentEntryUsageManagementToolbarDefaultEventHandler extends PortletBase
 		submitForm(this.one('#fm'));
 	}
 
-
 	handleActionItemClicked(event) {
 		this.callAction(event);
 	}

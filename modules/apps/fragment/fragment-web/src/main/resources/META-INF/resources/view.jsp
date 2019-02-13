@@ -204,7 +204,7 @@ List<FragmentCollection> fragmentCollections = (List<FragmentCollection>)request
 										function(item) {
 											dom.append(fragmentCollectionsFm, item);
 										}
-									)
+									);
 
 									submitForm(
 										fragmentCollectionsFm,

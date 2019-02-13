@@ -3,7 +3,7 @@ import {Config} from 'metal-state';
 
 class FragmentCollectionResourcesManagementToolbarDefaultEventHandler extends PortletBase {
 	callAction(event) {
-		var itemData = event.data.item.data;
+		const itemData = event.data.item.data;
 
 		if (itemData && itemData.action && this[itemData.action]) {
 			this[itemData.action](itemData);
@@ -15,7 +15,6 @@ class FragmentCollectionResourcesManagementToolbarDefaultEventHandler extends Po
 			submitForm(this.one('#fm'), this.deleteFragmentCollectionResourcesURL);
 		}
 	}
-
 
 	handleActionItemClicked(event) {
 		this.callAction(event);

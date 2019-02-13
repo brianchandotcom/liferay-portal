@@ -7,8 +7,8 @@
 		<to type="redirect">%{context-path}/webdav$1</to>
 	</rule>
 	<rule>
-		<from>^/favicon.ico(.*)$</from>
-		<to type="redirect">/o/favicon$1</to>
+		<from>^/favicon.ico$</from>
+		<to type="redirect">/o/favicon/</to>
 	</rule>
 	<rule>
 		<from>^/(.{1,1000}/)?blog/blogs/rss(.{0,1000})</from>

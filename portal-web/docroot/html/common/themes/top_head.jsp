@@ -20,13 +20,7 @@
 
 <liferay-util:dynamic-include key="/html/common/themes/top_head.jsp#pre" />
 
-<c:if test="<%= BrowserSnifferUtil.isIe(request) %>">
-	<link href="/<%= PropsValues.THEME_SHORTCUT_ICON %>/<%= themeDisplay.getTheme().getServletContextName() %>" rel="icon" />
-</c:if>
-
-<c:if test="<%= !BrowserSnifferUtil.isIe(request) %>">
-	<link href="<%= themeDisplay.getPathThemeImages() %>/<%= PropsValues.THEME_SHORTCUT_ICON %>" rel="icon" />
-</c:if>
+<link href="<%= BrowserSnifferUtil.isIe(request) ? StringPool.BLANK : themeDisplay.getPathThemeImages() %>/<%= PropsValues.THEME_SHORTCUT_ICON %>" rel="icon" />
 
 <%-- Available Translations --%>
 

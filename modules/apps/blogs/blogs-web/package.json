@@ -1,0 +1,26 @@
+{
+	"csfConfig": {
+		"path:**/*.js": {
+			"js": {
+				"lint": {
+					"globals": {
+						"MODULE_PATH": true
+					}
+				}
+			}
+		}
+	},
+	"dependencies": {
+		"metal-state": "^2.6.4"
+	},
+	"devDependencies": {
+		"liferay-npm-scripts": "1.2.0"
+	},
+	"name": "blogs-web",
+	"scripts": {
+		"build": "liferay-npm-scripts build --bundler",
+		"csf": "liferay-npm-scripts lint",
+		"format": "liferay-npm-scripts format"
+	},
+	"version": "4.0.0"
+}

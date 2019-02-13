@@ -27,6 +27,7 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.headless.web.experience.dto.v1_0.StructuredContent;
+import com.liferay.headless.web.experience.internal.dto.v1_0.CreatorUtil;
 import com.liferay.headless.web.experience.internal.odata.entity.v1_0.EntityFieldsProvider;
 import com.liferay.headless.web.experience.internal.odata.entity.v1_0.StructuredContentEntityModel;
 import com.liferay.headless.web.experience.resource.v1_0.StructuredContentResource;
@@ -37,6 +38,7 @@ import com.liferay.journal.util.JournalConverter;
 import com.liferay.journal.util.JournalHelper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Field;
@@ -57,6 +59,7 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -431,9 +434,12 @@ public class StructuredContentResourceImpl
 	}
 
 	private StructuredContent _toStructuredContent(
-		JournalArticle journalArticle) {
+			JournalArticle journalArticle)
+		throws PortalException {
 
 		DDMStructure ddmStructure = journalArticle.getDDMStructure();
+
+		User user = _userService.getUserById(journalArticle.getUserId());
 
 		return new StructuredContent() {
 			{
@@ -442,6 +448,7 @@ public class StructuredContentResourceImpl
 						journalArticle.getAvailableLanguageIds()));
 				setContentSpace(journalArticle.getGroupId());
 				setContentStructureId(ddmStructure.getStructureId());
+				setCreator(CreatorUtil.toCreator(user));
 				setDateCreated(journalArticle.getCreateDate());
 				setDateModified(journalArticle.getModifiedDate());
 				setDatePublished(journalArticle.getDisplayDate());
@@ -484,5 +491,8 @@ public class StructuredContentResourceImpl
 	@Reference
 	private SearchResultPermissionFilterFactory
 		_searchResultPermissionFilterFactory;
+
+	@Reference
+	private UserService _userService;
 
 }

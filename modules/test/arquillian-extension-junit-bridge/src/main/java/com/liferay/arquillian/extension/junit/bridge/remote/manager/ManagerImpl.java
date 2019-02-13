@@ -32,7 +32,6 @@ import org.jboss.arquillian.core.api.Injector;
 import org.jboss.arquillian.core.api.annotation.ApplicationScoped;
 import org.jboss.arquillian.core.api.event.ManagerStarted;
 import org.jboss.arquillian.core.api.event.ManagerStopping;
-import org.jboss.arquillian.core.impl.EventContextImpl;
 import org.jboss.arquillian.core.impl.EventImpl;
 import org.jboss.arquillian.core.impl.ExtensionImpl;
 import org.jboss.arquillian.core.impl.InjectorImpl;

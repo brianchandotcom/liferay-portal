@@ -23,10 +23,6 @@ import com.liferay.user.associated.data.display.UADDisplay;
 
 import java.io.Serializable;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 

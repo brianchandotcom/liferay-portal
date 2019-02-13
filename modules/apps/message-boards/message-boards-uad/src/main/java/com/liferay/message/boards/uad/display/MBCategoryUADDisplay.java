@@ -29,9 +29,7 @@ import com.liferay.user.associated.data.display.UADDisplay;
 
 import java.io.Serializable;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -77,7 +75,7 @@ public class MBCategoryUADDisplay extends BaseMBCategoryUADDisplay {
 		Class parentContainerType, Serializable parentContainerId,
 		Object childObject) {
 
-		if (parentContainerType.equals(MBThread.class)) {
+		if (!parentContainerType.equals(MBCategory.class)) {
 			return null;
 		}
 

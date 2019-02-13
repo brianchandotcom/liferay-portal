@@ -1,5 +1,5 @@
 Bundle-Name: Liferay Bookmarks Service
 Bundle-SymbolicName: com.liferay.bookmarks.service
 Bundle-Version: 3.0.0
-Liferay-Require-SchemaVersion: 3.0.0
+Liferay-Require-SchemaVersion: 2.0.0
 Liferay-Service: true

@@ -38,7 +38,6 @@ import com.liferay.journal.util.JournalConverter;
 import com.liferay.journal.util.JournalHelper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Field;
@@ -435,11 +434,9 @@ public class StructuredContentResourceImpl
 
 	private StructuredContent _toStructuredContent(
 			JournalArticle journalArticle)
-		throws PortalException {
+		throws Exception {
 
 		DDMStructure ddmStructure = journalArticle.getDDMStructure();
-
-		User user = _userService.getUserById(journalArticle.getUserId());
 
 		return new StructuredContent() {
 			{
@@ -448,7 +445,9 @@ public class StructuredContentResourceImpl
 						journalArticle.getAvailableLanguageIds()));
 				setContentSpace(journalArticle.getGroupId());
 				setContentStructureId(ddmStructure.getStructureId());
-				setCreator(CreatorUtil.toCreator(user));
+				setCreator(
+					CreatorUtil.toCreator(
+						_userService.getUserById(journalArticle.getUserId())));
 				setDateCreated(journalArticle.getCreateDate());
 				setDateModified(journalArticle.getModifiedDate());
 				setDatePublished(journalArticle.getDisplayDate());

@@ -72,6 +72,7 @@ public class FilterContextProviderTest {
 						put(
 							"component.name",
 							MockResource.class.getCanonicalName());
+						put("osgi.jaxrs.resource", "true");
 					}
 				});
 

@@ -22,7 +22,6 @@ import com.liferay.headless.web.experience.resource.v1_0.ContentStructureResourc
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ClassNameService;
 import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.service.UserService;
@@ -77,15 +76,15 @@ public class ContentStructureResourceImpl
 	private ContentStructure _toContentStructure(DDMStructure ddmStructure)
 		throws Exception {
 
-		User user = _userService.getUserById(ddmStructure.getUserId());
-
 		return new ContentStructure() {
 			{
 				setAvailableLanguages(
 					LocaleUtil.toW3cLanguageIds(
 						ddmStructure.getAvailableLanguageIds()));
 				setContentSpace(ddmStructure.getGroupId());
-				setCreator(CreatorUtil.toCreator(user));
+				setCreator(
+					CreatorUtil.toCreator(
+						_userService.getUserById(ddmStructure.getUserId())));
 				setDateCreated(ddmStructure.getCreateDate());
 				setDateModified(ddmStructure.getModifiedDate());
 				setDescription(

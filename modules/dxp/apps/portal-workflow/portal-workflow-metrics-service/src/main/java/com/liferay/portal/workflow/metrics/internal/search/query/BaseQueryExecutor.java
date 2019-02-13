@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.portal.workflow.reports.internal.search.query;
+package com.liferay.portal.workflow.metrics.internal.search.query;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class BaseQueryExecutor {
 
-	public BooleanQuery createBooleanQuery(BooleanFilter preBooleanFilter) {
+	protected BooleanQuery createBooleanQuery(BooleanFilter preBooleanFilter) {
 		BooleanQuery booleanQuery = new BooleanQueryImpl();
 
 		booleanQuery.setPreBooleanFilter(preBooleanFilter);
@@ -52,7 +52,7 @@ public abstract class BaseQueryExecutor {
 		return booleanQuery;
 	}
 
-	public Facet createFacet(String fieldName) {
+	protected Facet createFacet(String fieldName) {
 		com.liferay.portal.search.facet.Facet facet =
 			customFacetFactory.newInstance(null);
 
@@ -61,9 +61,9 @@ public abstract class BaseQueryExecutor {
 		return facet;
 	}
 
-	public abstract String getIndexName();
+	protected abstract String getIndexName();
 
-	public Hits search(
+	protected Hits search(
 		Query query, Facet facet, int start, int size, Sort... sorts) {
 
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
@@ -88,7 +88,7 @@ public abstract class BaseQueryExecutor {
 		return searchSearchResponse.getHits();
 	}
 
-	public Map<String, Hits> search(
+	protected Map<String, Hits> search(
 		Query query, GroupBy groupBy, int start, int size, Sort... sorts) {
 
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
@@ -115,29 +115,7 @@ public abstract class BaseQueryExecutor {
 		return hits.getGroupedHits();
 	}
 
-	public Hits search(Query query, int start, int size, Sort... sorts) {
-		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
-
-		searchSearchRequest.setIndexNames(new String[] {getIndexName()});
-		searchSearchRequest.setQuery(query);
-		searchSearchRequest.setSize(size);
-		searchSearchRequest.setStart(start);
-		searchSearchRequest.setSorts(sorts);
-		searchSearchRequest.setStats(Collections.emptyMap());
-
-		SearchSearchResponse searchSearchResponse =
-			searchRequestExecutor.executeSearchRequest(searchSearchRequest);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Search request string: " +
-					searchSearchResponse.getSearchRequestString());
-		}
-
-		return searchSearchResponse.getHits();
-	}
-
-	public long searchCount(Query query) {
+	protected int searchCount(Query query) {
 		CountSearchRequest countSearchRequest = new CountSearchRequest();
 
 		countSearchRequest.setIndexNames(new String[] {getIndexName()});
@@ -152,10 +130,10 @@ public abstract class BaseQueryExecutor {
 					countSearchResponse.getSearchRequestString());
 		}
 
-		return countSearchResponse.getCount();
+		return (int)countSearchResponse.getCount();
 	}
 
-	public long searchCount(Query query, Facet facet) {
+	protected int searchCount(Query query, Facet facet) {
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
 		searchSearchRequest.putFacet(facet.getFieldName(), facet);

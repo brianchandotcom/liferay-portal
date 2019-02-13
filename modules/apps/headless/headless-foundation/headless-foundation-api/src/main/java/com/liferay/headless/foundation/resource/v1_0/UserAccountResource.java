@@ -64,12 +64,6 @@ import javax.ws.rs.core.Response;
 public interface UserAccountResource {
 
 	@GET
-	@Path("/my-user-accounts")
-	@Produces("application/json")
-	@RequiresScope("everything.read")
-	public Page<UserAccount> getUserAccountPage( @Context Pagination pagination ) throws Exception;
-
-	@GET
 	@Path("/my-user-accounts/{my-user-account-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")

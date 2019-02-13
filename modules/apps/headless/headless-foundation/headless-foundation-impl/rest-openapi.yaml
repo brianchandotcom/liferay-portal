@@ -857,27 +857,6 @@ paths:
                 $ref: "#/components/schemas/Keyword"
           description: ""
       tags: ["Keyword"]
-  "/my-user-accounts":
-    get:
-      parameters:
-        - in: query
-          name: page
-          schema:
-            type: integer
-        - in: query
-          name: per_page
-          schema:
-            type: integer
-      responses:
-        200:
-          content:
-            application/json:
-              schema:
-                items:
-                  $ref: "#/components/schemas/UserAccount"
-                type: array
-          description: ""
-      tags: ["UserAccount"]
   "/my-user-accounts/{my-user-account-id}":
     get:
       parameters:

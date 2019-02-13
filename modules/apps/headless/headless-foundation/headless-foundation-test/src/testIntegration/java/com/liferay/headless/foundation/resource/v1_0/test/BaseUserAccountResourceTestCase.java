@@ -130,14 +130,6 @@ public abstract class BaseUserAccountResourceTestCase {
 			requestSender.post("/user-accounts/{user-account-id}");
 	}
 
-	protected void invokeGetUserAccountPage(Pagination pagination)
-		throws Exception {
-
-			RequestSender requestSender = _createRequestSender();
-
-			requestSender.post("/my-user-accounts");
-	}
-
 	protected void invokeGetUserAccountPage(
 			String fullnamequery, Pagination pagination)
 		throws Exception {

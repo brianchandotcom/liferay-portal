@@ -65,13 +65,6 @@ public abstract class BaseUserAccountResourceImpl
 	}
 
 	@Override
-	public Page<UserAccount> getUserAccountPage(Pagination pagination)
-		throws Exception {
-
-		return Page.of(Collections.emptyList());
-	}
-
-	@Override
 	public Page<UserAccount> getUserAccountPage(
 			String fullnamequery, Pagination pagination)
 		throws Exception {

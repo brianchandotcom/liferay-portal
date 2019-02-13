@@ -101,10 +101,30 @@ if (!assetPublisherDisplayContext.isPaginationTypeNone()) {
 
 <c:choose>
 	<c:when test="<%= assetPublisherDisplayContext.isSelectionStyleDynamic() %>">
-		<%@ include file="/view_dynamic_list.jspf" %>
+
+		<%
+		List<AssetEntryResult> assetEntryResults = assetPublisherHelper.getAssetEntryResults(searchContainer, assetPublisherDisplayContext.getAssetEntryQuery(), assetPublisherDisplayContext.getLayout(), portletPreferences, assetPublisherDisplayContext.getPortletName(), assetPublisherDisplayContext.getLocale(), assetPublisherDisplayContext.getTimeZone(), assetPublisherDisplayContext.getCompanyId(), assetPublisherDisplayContext.getScopeGroupId(), assetPublisherDisplayContext.getUserId(), assetPublisherDisplayContext.getClassNameIds(), null);
+		%>
+
+		<%@ include file="/view_asset_entry_list.jspf" %>
 	</c:when>
 	<c:when test="<%= assetPublisherDisplayContext.isSelectionStyleManual() %>">
-		<%@ include file="/view_manual.jspf" %>
+
+		<%
+		List<AssetEntry> assetEntries = assetPublisherDisplayContext.getAssetEntries();
+
+		searchContainer.setTotal(assetEntries.size());
+
+		assetEntries = assetEntries.subList(searchContainer.getStart(), searchContainer.getResultEnd());
+
+		searchContainer.setResults(assetEntries);
+
+		List<AssetEntryResult> assetEntryResults = new ArrayList<>();
+
+		assetEntryResults.add(new AssetEntryResult(assetEntries));
+		%>
+
+		<%@ include file="/view_asset_entry_list.jspf" %>
 	</c:when>
 	<c:otherwise>
 

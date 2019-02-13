@@ -15,8 +15,6 @@
 --%>
 
 <%
-List<AssetEntryResult> assetEntryResults = assetPublisherHelper.getAssetEntryResults(searchContainer, assetPublisherDisplayContext.getAssetEntryQuery(), assetPublisherDisplayContext.getLayout(), portletPreferences, assetPublisherDisplayContext.getPortletName(), assetPublisherDisplayContext.getLocale(), assetPublisherDisplayContext.getTimeZone(), assetPublisherDisplayContext.getCompanyId(), assetPublisherDisplayContext.getScopeGroupId(), assetPublisherDisplayContext.getUserId(), assetPublisherDisplayContext.getClassNameIds(), null);
-
 for (AssetEntryResult assetEntryResult : assetEntryResults) {
 	List<AssetEntry> assetEntries = assetEntryResult.getAssetEntries();
 %>

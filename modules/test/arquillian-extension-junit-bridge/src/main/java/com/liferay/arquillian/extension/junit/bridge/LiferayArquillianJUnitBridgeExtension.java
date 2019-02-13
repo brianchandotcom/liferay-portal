@@ -28,39 +28,55 @@ import com.liferay.arquillian.extension.junit.bridge.remote.observer.JUnitBridge
 
 import java.net.URL;
 
-import org.jboss.arquillian.container.test.spi.RemoteLoadableExtension;
-import org.jboss.arquillian.core.spi.LoadableExtension;
+import java.util.Arrays;
+import java.util.List;
+
+import org.jboss.arquillian.core.spi.context.Context;
 
 /**
  * @author Shuyang Zhou
  */
-public class LiferayArquillianJUnitBridgeExtension
-	implements RemoteLoadableExtension {
+public class LiferayArquillianJUnitBridgeExtension {
 
-	@Override
-	public void register(LoadableExtension.ExtensionBuilder extensionBuilder) {
+	public static List<Class<? extends Context>> getContexts() {
+		if (_isClient()) {
+			return Arrays.asList(
+				ClassContextImpl.class, ContainerContextImpl.class,
+				DeploymentContextImpl.class, SuiteContextImpl.class,
+				TestContextImpl.class
+			);
+		}
+
+		return Arrays.asList(
+			ClassContextImpl.class, SuiteContextImpl.class,
+			TestContextImpl.class
+		);
+	}
+
+	public static List<Class<?>> getObservers() {
+		if (_isClient()) {
+			return Arrays.asList(
+				ContainerDeploymentContextHandler.class,
+				ContainerEventController.class, JMXMethodExecutor.class,
+				TestContextHandler.class
+			);
+		}
+
+		return Arrays.asList(
+			JUnitBridgeObserver.class, LocalTestExecutor.class,
+			TestContextHandler.class
+		);
+	}
+
+	private static boolean _isClient() {
 		URL url = LiferayArquillianJUnitBridgeExtension.class.getResource(
 			"/arquillian.remote.marker");
 
 		if (url == null) {
-			extensionBuilder.context(ClassContextImpl.class);
-			extensionBuilder.context(ContainerContextImpl.class);
-			extensionBuilder.context(DeploymentContextImpl.class);
-			extensionBuilder.context(SuiteContextImpl.class);
-			extensionBuilder.context(TestContextImpl.class);
-			extensionBuilder.observer(ContainerDeploymentContextHandler.class);
-			extensionBuilder.observer(ContainerEventController.class);
-			extensionBuilder.observer(JMXMethodExecutor.class);
-			extensionBuilder.observer(TestContextHandler.class);
+			return true;
 		}
-		else {
-			extensionBuilder.context(ClassContextImpl.class);
-			extensionBuilder.context(SuiteContextImpl.class);
-			extensionBuilder.context(TestContextImpl.class);
-			extensionBuilder.observer(JUnitBridgeObserver.class);
-			extensionBuilder.observer(LocalTestExecutor.class);
-			extensionBuilder.observer(TestContextHandler.class);
-		}
+
+		return false;
 	}
 
 }

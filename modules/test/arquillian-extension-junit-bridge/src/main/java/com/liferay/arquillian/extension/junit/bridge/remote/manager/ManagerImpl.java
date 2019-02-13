@@ -14,7 +14,7 @@
 
 package com.liferay.arquillian.extension.junit.bridge.remote.manager;
 
-import com.liferay.arquillian.extension.junit.bridge.remote.extension.LoadableExtensionLoader;
+import com.liferay.arquillian.extension.junit.bridge.LiferayArquillianJUnitBridgeExtension;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
@@ -24,9 +24,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.Stack;
 import java.util.concurrent.Callable;
 
@@ -49,7 +47,6 @@ import org.jboss.arquillian.core.spi.ObserverMethod;
 import org.jboss.arquillian.core.spi.context.ApplicationContext;
 import org.jboss.arquillian.core.spi.context.Context;
 import org.jboss.arquillian.core.spi.context.ObjectStore;
-import org.jboss.arquillian.core.spi.event.ManagerProcessing;
 
 /**
  * @author Matthew Tambara
@@ -58,18 +55,11 @@ public class ManagerImpl implements Manager {
 
 	public ManagerImpl() {
 		try {
-			Extension extension = ExtensionImpl.of(
-				_createInstance(LoadableExtensionLoader.class));
-
-			_inject(extension);
-
 			_createBuiltInServices();
-
-			_extensions.add(extension);
 
 			_addContextsToApplicationScope();
 
-			_fireProcessing();
+			_registerExtension();
 
 			_addContextsToApplicationScope();
 		}
@@ -319,36 +309,6 @@ public class ManagerImpl implements Manager {
 		}
 	}
 
-	private void _fireProcessing() {
-		Set<Class<?>> extensions = new HashSet<>();
-
-		Set<Class<? extends Context>> contexts = new HashSet<>();
-
-		fire(
-			new ManagerProcessing() {
-
-				@Override
-				public ManagerProcessing context(
-					Class<? extends Context> context) {
-
-					contexts.add(context);
-
-					return this;
-				}
-
-				@Override
-				public ManagerProcessing observer(Class<?> observer) {
-					extensions.add(observer);
-
-					return this;
-				}
-
-			});
-
-		_extensions.addAll(_createExtensions(extensions));
-		_contexts.addAll(_createContexts(contexts));
-	}
-
 	private Context _getScopedContext(Class<? extends Annotation> scope) {
 		for (Context context : _contexts) {
 			if (context.getScope() == scope) {
@@ -403,6 +363,15 @@ public class ManagerImpl implements Manager {
 		}
 
 		return false;
+	}
+
+	private void _registerExtension() {
+		_extensions.addAll(
+			_createExtensions(
+				LiferayArquillianJUnitBridgeExtension.getObservers()));
+		_contexts.addAll(
+			_createContexts(
+				LiferayArquillianJUnitBridgeExtension.getContexts()));
 	}
 
 	private List<Context> _resolveActiveContexts() {

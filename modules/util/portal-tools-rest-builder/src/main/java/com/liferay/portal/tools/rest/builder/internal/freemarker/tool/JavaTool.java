@@ -15,6 +15,7 @@
 package com.liferay.portal.tools.rest.builder.internal.freemarker.tool;
 
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaParameter;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaSignature;
@@ -496,9 +497,11 @@ public class JavaTool {
 			urls.add("");
 		}
 
-		if (returnType.startsWith("Page<" + schemaName) ||
-			_isPostToSameSchema(httpMethod, path, schemaName, urls.size())) {
+		if (returnType.startsWith("Page<" + schemaName)) {
+			urls.add(TextFormatter.formatPlural(schemaName));
+		}
 
+		if (_isPostToSameSchema(httpMethod, path, schemaName, urls.size())) {
 			urls.add(schemaName);
 		}
 

@@ -10,4 +10,6 @@ Export-Package:\
 	com.liferay.portal.vulcan.util,\
 	com.liferay.portal.vulcan.yaml,\
 	com.liferay.portal.vulcan.yaml.config,\
-	com.liferay.portal.vulcan.yaml.openapi
+	com.liferay.portal.vulcan.yaml.openapi,\
+	\
+	graphql.annotations.annotationTypes;version="5.4"

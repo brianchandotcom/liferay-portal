@@ -1,5 +1,6 @@
 dependencies {
 	compileInclude group: "com.fasterxml.jackson.dataformat", name: "jackson-dataformat-xml", version: "2.9.8"
+	compileInclude group: "io.github.graphql-java", name: "graphql-java-annotations", version: "5.4"
 	compileInclude group: "org.yaml", name: "snakeyaml", version: "1.23"
 
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"

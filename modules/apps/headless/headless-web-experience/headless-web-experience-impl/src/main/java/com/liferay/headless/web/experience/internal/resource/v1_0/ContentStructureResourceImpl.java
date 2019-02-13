@@ -67,11 +67,11 @@ public class ContentStructureResourceImpl
 	}
 
 	@Override
-	public ContentStructure getContentStructures(Long contentStructuresId)
+	public ContentStructure getContentStructures(Long contentStructureId)
 		throws Exception {
 
 		return _toContentStructure(
-			_ddmStructureService.getStructure(contentStructuresId));
+			_ddmStructureService.getStructure(contentStructureId));
 	}
 
 	private Creator _getCreator(long userId) throws Exception {

@@ -1439,7 +1439,6 @@ Array [
               Object {
                 "fieldName": "radio",
                 "label": "Radio Field",
-                "localizedValue": Object {},
                 "options": Array [
                   Object {
                     "label": "Option 1",
@@ -1450,7 +1449,6 @@ Array [
                     "value": "option2",
                   },
                 ],
-                "readOnly": true,
                 "settingsContext": Object {
                   "pages": Array [
                     Object {
@@ -1493,8 +1491,6 @@ Array [
                   ],
                 },
                 "type": "radio",
-                "value": undefined,
-                "visible": true,
               },
             ],
             "size": 3,
@@ -1512,28 +1508,20 @@ Array [
               Object {
                 "fieldName": "text1",
                 "label": "Text Field 1",
-                "localizedValue": Object {},
-                "readOnly": true,
                 "required": true,
                 "settingsContext": Object {
                   "pages": Array [],
                 },
                 "type": "text",
-                "value": undefined,
-                "visible": true,
               },
               Object {
                 "fieldName": "text2",
                 "label": "Text Field 2",
-                "localizedValue": Object {},
-                "readOnly": true,
                 "required": true,
                 "settingsContext": Object {
                   "pages": Array [],
                 },
                 "type": "text",
-                "value": undefined,
-                "visible": true,
               },
             ],
             "size": 4,
@@ -1543,7 +1531,6 @@ Array [
               Object {
                 "fieldName": "select",
                 "label": "Select Field",
-                "localizedValue": Object {},
                 "options": Array [
                   Object {
                     "label": "Option 1",
@@ -1554,14 +1541,11 @@ Array [
                     "value": "option2",
                   },
                 ],
-                "readOnly": true,
                 "required": true,
                 "settingsContext": Object {
                   "pages": Array [],
                 },
                 "type": "select",
-                "value": undefined,
-                "visible": true,
               },
             ],
             "size": 6,
@@ -1579,15 +1563,11 @@ Array [
               Object {
                 "fieldName": "date",
                 "label": "Date Field",
-                "localizedValue": Object {},
-                "readOnly": true,
                 "required": true,
                 "settingsContext": Object {
                   "pages": Array [],
                 },
                 "type": "date",
-                "value": undefined,
-                "visible": true,
               },
             ],
             "size": 12,
@@ -1601,15 +1581,11 @@ Array [
               Object {
                 "fieldName": "numeric",
                 "label": "Numeric Field",
-                "localizedValue": Object {},
-                "readOnly": true,
                 "required": true,
                 "settingsContext": Object {
                   "pages": Array [],
                 },
                 "type": "numeric",
-                "value": undefined,
-                "visible": true,
               },
             ],
             "size": 12,

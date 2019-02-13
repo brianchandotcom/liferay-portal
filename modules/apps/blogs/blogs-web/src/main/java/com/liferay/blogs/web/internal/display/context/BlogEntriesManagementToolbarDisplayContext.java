@@ -25,6 +25,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.SafeConsumer;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -37,8 +38,11 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.trash.TrashHelper;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import javax.portlet.ActionRequest;
 import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
 
@@ -102,6 +106,26 @@ public class BlogEntriesManagementToolbarDisplayContext
 		return getSearchActionURL();
 	}
 
+	public Map<String, Object> getComponentContext() throws PortalException {
+		Map<String, Object> context = new HashMap<>();
+
+		PortletURL deleteEntriesURL = liferayPortletResponse.createActionURL();
+
+		deleteEntriesURL.setParameter(
+			ActionRequest.ACTION_NAME, "/blogs/edit_entry");
+
+		context.put("deleteEntriesURL", deleteEntriesURL.toString());
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		context.put(
+			"trashEnabled",
+			_trashHelper.isTrashEnabled(themeDisplay.getScopeGroupId()));
+
+		return context;
+	}
+
 	@Override
 	public CreationMenu getCreationMenu() {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
@@ -127,6 +151,11 @@ public class BlogEntriesManagementToolbarDisplayContext
 			});
 
 		return creationMenu;
+	}
+
+	@Override
+	public String getDefaultEventHandler() {
+		return "BLOG_ENTRIES_MANAGEMENT_TOOLBAR_DEFAULT_EVENT_HANDLER";
 	}
 
 	@Override

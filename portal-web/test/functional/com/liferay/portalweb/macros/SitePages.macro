@@ -87,8 +87,8 @@ definition {
 		if (!(contains("${pageTemplateName}", "{pageTemplateName}"))) {
 			Navigator.gotoNavNested(navNested = "Global Templates");
 
-			Card.clickSitePagesCardLink(
-				cardName = "${pageTemplateName}"
+			LexiconCard.clickCard(
+				card = "${pageTemplateName}"
 			);
 		}
 		else {

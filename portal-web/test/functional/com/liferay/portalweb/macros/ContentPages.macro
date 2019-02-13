@@ -16,19 +16,20 @@ definition {
 			LexiconEntry.gotoAddMenuItem(menuItem = "Public Page");
 		}
 
-		if (!(isSet(collectionName))) {
-			var collectionName = "Basic Pages";
+		if (isSet(collectionName)) {
+			Navigator.gotoNavNested(navNested = "${collectionName}");
+
+			LexiconCard.clickCard(
+				card = "${pageTemplateName}"
+			);
 		}
+		else {
+			Navigator.gotoNavNested(navNested = "Basic Pages");
 
-		Navigator.gotoNavNested(navNested = "${collectionName}");
-
-		if (!(isSet(pageTemplateName))) {
-			var pageTemplateName = "Content Page";
+			Card.clickSitePagesCardLink(
+				cardName = "Content Pages"
+			);
 		}
-
-		Card.clickSitePagesCardLink(
-			cardName = "${pageTemplateName}"
-		);
 
 		SelectFrame(locator1 = "IFrame#DIALOG");
 

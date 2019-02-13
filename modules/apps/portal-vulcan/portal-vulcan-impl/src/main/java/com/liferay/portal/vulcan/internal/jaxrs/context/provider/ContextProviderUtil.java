@@ -65,7 +65,7 @@ public class ContextProviderUtil {
 		}
 
 		EntityModelResource entityModelResource =
-			(EntityModelResource)_getEntityModelResource(bundleContext, clazz);
+			_getEntityModelResource(bundleContext, clazz);
 
 		MultivaluedMap multivaluedMap =
 			(MetadataMap)message.getContextualProperty(

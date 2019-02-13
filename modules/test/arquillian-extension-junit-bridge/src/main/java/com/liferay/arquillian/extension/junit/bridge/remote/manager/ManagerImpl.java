@@ -15,6 +15,8 @@
 package com.liferay.arquillian.extension.junit.bridge.remote.manager;
 
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
 import java.util.ArrayList;
@@ -36,7 +38,6 @@ import org.jboss.arquillian.core.impl.EventImpl;
 import org.jboss.arquillian.core.impl.ExtensionImpl;
 import org.jboss.arquillian.core.impl.InjectorImpl;
 import org.jboss.arquillian.core.impl.InstanceImpl;
-import org.jboss.arquillian.core.impl.Reflections;
 import org.jboss.arquillian.core.impl.UncheckedThrow;
 import org.jboss.arquillian.core.impl.context.ApplicationContextImpl;
 import org.jboss.arquillian.core.impl.threading.ThreadedExecutorService;
@@ -440,7 +441,7 @@ public class ManagerImpl implements Manager {
 		List<Context> created = new ArrayList<>();
 
 		for (Class<? extends Context> contextClass : contextClasses) {
-			created.add(Reflections.createInstance(contextClass));
+			created.add(_createInstance(contextClass));
 		}
 
 		return created;
@@ -454,7 +455,7 @@ public class ManagerImpl implements Manager {
 
 		for (Class<?> extensionClass : extensionClasses) {
 			Extension extension = ExtensionImpl.of(
-				Reflections.createInstance(extensionClass));
+				_createInstance(extensionClass));
 
 			_inject(extension);
 
@@ -464,11 +465,36 @@ public class ManagerImpl implements Manager {
 		return created;
 	}
 
+	private <T>T _createInstance(Class<T> clazz) {
+		try {
+			Constructor<T> constructor = clazz.getDeclaredConstructor();
+
+			constructor.setAccessible(true);
+
+			return constructor.newInstance();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
 	private Context _getScopedContext(Class<? extends Annotation> scope) {
 		for (Context context : _contexts) {
 			if (context.getScope() == scope) {
 				return context;
 			}
+		}
+
+		return null;
+	}
+
+	private Class<?> _getType(Type type) {
+		if (type instanceof Class<?>) {
+			return (Class<?>)type;
+		}
+		else if (type instanceof ParameterizedType) {
+			return _getType(
+				((ParameterizedType)type).getActualTypeArguments()[0]);
 		}
 
 		return null;
@@ -482,8 +508,7 @@ public class ManagerImpl implements Manager {
 
 	private void _injectEvents(Extension extension) {
 		for (EventPoint eventPoint : extension.getEventPoints()) {
-			eventPoint.set(
-				EventImpl.of(Reflections.getType(eventPoint.getType()), this));
+			eventPoint.set(EventImpl.of(_getType(eventPoint.getType()), this));
 		}
 	}
 
@@ -491,9 +516,22 @@ public class ManagerImpl implements Manager {
 		for (InjectionPoint injectionPoint : extension.getInjectionPoints()) {
 			injectionPoint.set(
 				InstanceImpl.of(
-					Reflections.getType(injectionPoint.getType()),
+					_getType(injectionPoint.getType()),
 					injectionPoint.getScope(), this));
 		}
+	}
+
+	private boolean _isType(Type type, Class<?> clazz) {
+		if (type instanceof Class<?> && ((Class<?>)type == clazz)) {
+			return true;
+		}
+		else if (type instanceof ParameterizedType &&
+				 (((ParameterizedType)type).getRawType() == clazz)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private List<Context> _resolveActiveContexts() {
@@ -517,10 +555,10 @@ public class ManagerImpl implements Manager {
 			for (ObserverMethod observer : extension.getObservers()) {
 				Type type = observer.getType();
 
-				Class<?> clazz = Reflections.getType(type);
+				Class<?> clazz = _getType(type);
 
 				if (clazz.isAssignableFrom(eventClass) &&
-					Reflections.isType(type, EventContext.class)) {
+					_isType(type, EventContext.class)) {
 
 					observers.add(observer);
 				}
@@ -539,10 +577,10 @@ public class ManagerImpl implements Manager {
 			for (ObserverMethod observer : extension.getObservers()) {
 				Type type = observer.getType();
 
-				Class<?> clazz = Reflections.getType(type);
+				Class<?> clazz = _getType(type);
 
 				if (clazz.isAssignableFrom(eventClass) &&
-					!Reflections.isType(type, EventContext.class)) {
+					!_isType(type, EventContext.class)) {
 
 					observers.add(observer);
 				}

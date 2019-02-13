@@ -62,6 +62,7 @@ page import="com.liferay.blogs.service.BlogsEntryLocalServiceUtil" %><%@
 page import="com.liferay.blogs.service.BlogsEntryServiceUtil" %><%@
 page import="com.liferay.blogs.settings.BlogsGroupServiceSettings" %><%@
 page import="com.liferay.blogs.util.comparator.EntryModifiedDateComparator" %><%@
+page import="com.liferay.blogs.web.constants.BlogsWebConstants" %><%@
 page import="com.liferay.blogs.web.constants.BlogsWebKeys" %><%@
 page import="com.liferay.blogs.web.internal.BlogsItemSelectorHelper" %><%@
 page import="com.liferay.blogs.web.internal.configuration.BlogsPortletInstanceConfiguration" %><%@

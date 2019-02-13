@@ -17,7 +17,7 @@
 <%@ include file="/blogs_admin/init.jsp" %>
 
 <%
-BlogEntriesDisplayContext blogEntriesDisplayContext = new BlogEntriesDisplayContext(liferayPortletRequest, liferayPortletResponse);
+BlogEntriesDisplayContext blogEntriesDisplayContext = new BlogEntriesDisplayContext(liferayPortletRequest, liferayPortletResponse, trashHelper);
 
 String displayStyle = blogEntriesDisplayContext.getDisplayStyle();
 SearchContainer entriesSearchContainer = blogEntriesDisplayContext.getSearchContainer();
@@ -90,4 +90,10 @@ BlogEntriesManagementToolbarDisplayContext blogEntriesManagementToolbarDisplayCo
 	componentId="<%= blogEntriesManagementToolbarDisplayContext.getDefaultEventHandler() %>"
 	context="<%= blogEntriesManagementToolbarDisplayContext.getComponentContext() %>"
 	module="blogs_admin/js/ManagementToolbarDefaultEventHandler.es"
+/>
+
+<liferay-frontend:component
+	componentId="<%= BlogsWebConstants.BLOGS_ELEMENTS_DEFAULT_EVENT_HANDLER %>"
+	context="<%= blogEntriesDisplayContext.getComponentContext() %>"
+	module="blogs_admin/js/ElementsDefaultEventHandler.es"
 />

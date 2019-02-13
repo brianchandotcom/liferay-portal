@@ -48,9 +48,12 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.trash.TrashHelper;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.portlet.PortletException;
@@ -65,10 +68,12 @@ public class BlogEntriesDisplayContext {
 
 	public BlogEntriesDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse) {
+		LiferayPortletResponse liferayPortletResponse,
+		TrashHelper trashHelper) {
 
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
+		_trashHelper = trashHelper;
 
 		_portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
 			liferayPortletRequest);
@@ -94,6 +99,19 @@ public class BlogEntriesDisplayContext {
 		}
 
 		return availableActionDropdownItems;
+	}
+
+	public Map<String, Object> getComponentContext() throws PortalException {
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Map<String, Object> context = new HashMap<>();
+
+		context.put(
+			"trashEnabled",
+			_trashHelper.isTrashEnabled(themeDisplay.getScopeGroupId()));
+
+		return context;
 	}
 
 	public String getDisplayStyle() {
@@ -327,5 +345,6 @@ public class BlogEntriesDisplayContext {
 	private final PortalPreferences _portalPreferences;
 	private final HttpServletRequest _request;
 	private Integer _status;
+	private final TrashHelper _trashHelper;
 
 }

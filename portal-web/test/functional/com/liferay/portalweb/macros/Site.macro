@@ -919,23 +919,24 @@ definition {
 		Search.searchCP(searchTerm = "${userScreenName}");
 
 		if (isSet(userMiddleName)) {
-			AssertTextEquals.assertPartialText(
-				locator1 = "Card#SPECIFIC_LARGE_TEXT",
-				value1 = "${userFirstName} ${userMiddleName} ${userLastName}"
+			LexiconCard.viewCardTitle(
+				card = "${userFirstName} ${userMiddleName} ${userLastName}"
 			);
 		}
 		else {
-			AssertTextEquals.assertPartialText(
-				locator1 = "Card#SPECIFIC_LARGE_TEXT",
-				value1 = "${userFirstName} ${userLastName}"
+			LexiconCard.viewCardTitle(
+				card = "${userFirstName} ${userLastName}"
 			);
 		}
 
-		AssertTextEquals(locator1 = "Card#SPECIFIC_TEXT", value1 = "${userScreenName}");
+		LexiconCard.viewCardSubtitle(
+			card = "${userFirstName} ${userLastName}",
+			cardSubtitle = "${userScreenName}"
+		);
 
-		LexiconEntry.gotoEntryMenuItemNoError(
-			menuItem = "Remove Membership",
-			rowEntry = "${userScreenName}"
+		LexiconCard.clickEllipsisItem(
+			card = "${userScreenName}",
+			item = "Remove Membership"
 		);
 
 		AssertConfirm.waitForConfirmation(

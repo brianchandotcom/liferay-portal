@@ -39,19 +39,19 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class KeywordResourceImpl extends BaseKeywordResourceImpl {
 
 	@Override
-	public Response deleteKeywords(Long keywordId) throws Exception {
+	public Response deleteKeyword(Long keywordId) throws Exception {
 		_assetTagService.deleteTag(keywordId);
 
 		return buildNoContentResponse();
 	}
 
 	@Override
-	public Keyword getKeywords(Long keywordId) throws Exception {
+	public Keyword getKeyword(Long keywordId) throws Exception {
 		return _toKeyword(_assetTagService.getTag(keywordId));
 	}
 
 	@Override
-	public Keyword postContentSpacesKeywords(
+	public Keyword postContentSpaceKeyword(
 			Long contentSpaceId, Keyword keyword)
 		throws Exception {
 
@@ -78,7 +78,7 @@ public class KeywordResourceImpl extends BaseKeywordResourceImpl {
 	}
 
 	@Override
-	public Keyword putKeywords(Long keywordId, Keyword keyword)
+	public Keyword putKeyword(Long keywordId, Keyword keyword)
 		throws Exception {
 
 		try {

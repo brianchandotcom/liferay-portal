@@ -38,14 +38,14 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class FolderResourceImpl extends BaseFolderResourceImpl {
 
 	@Override
-	public Response deleteFolders(Long folderId) throws Exception {
+	public Response deleteFolder(Long folderId) throws Exception {
 		_dlAppService.deleteFolder(folderId);
 
 		return buildNoContentResponse();
 	}
 
 	@Override
-	public Page<Folder> getDocumentsRepositoriesFoldersPage(
+	public Page<Folder> getDocumentsRepositoryFolderPage(
 			Long documentsRepositoryId, Pagination pagination)
 		throws Exception {
 
@@ -55,12 +55,12 @@ public class FolderResourceImpl extends BaseFolderResourceImpl {
 	}
 
 	@Override
-	public Folder getFolders(Long folderId) throws Exception {
+	public Folder getFolder(Long folderId) throws Exception {
 		return _toFolder(_dlAppService.getFolder(folderId));
 	}
 
 	@Override
-	public Page<Folder> getFoldersFoldersPage(
+	public Page<Folder> getFolderFolderPage(
 			Long folderId, Pagination pagination)
 		throws Exception {
 
@@ -72,7 +72,7 @@ public class FolderResourceImpl extends BaseFolderResourceImpl {
 	}
 
 	@Override
-	public Folder postDocumentsRepositoriesFolders(
+	public Folder postDocumentsRepositoryFolder(
 			Long documentsRepositoryId, Folder folder)
 		throws Exception {
 
@@ -80,7 +80,7 @@ public class FolderResourceImpl extends BaseFolderResourceImpl {
 	}
 
 	@Override
-	public Folder postFoldersFolders(Long folderId, Folder folder)
+	public Folder postFolderFolder(Long folderId, Folder folder)
 		throws Exception {
 
 		Folder parentFolder = _toFolder(_dlAppService.getFolder(folderId));
@@ -91,7 +91,7 @@ public class FolderResourceImpl extends BaseFolderResourceImpl {
 	}
 
 	@Override
-	public Folder putFolders(Long folderId, Folder folder) throws Exception {
+	public Folder putFolder(Long folderId, Folder folder) throws Exception {
 		return _toFolder(
 			_dlAppService.updateFolder(
 				folderId, folder.getName(), folder.getDescription(),

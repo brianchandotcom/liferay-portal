@@ -47,12 +47,12 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class CategoryResourceImpl extends BaseCategoryResourceImpl {
 
 	@Override
-	public Category getCategories(Long categoryId) throws Exception {
+	public Category getCategory(Long categoryId) throws Exception {
 		return _toCategory(_assetCategoryService.getCategory(categoryId));
 	}
 
 	@Override
-	public Page<Category> getCategoriesCategoriesPage(
+	public Page<Category> getCategoryCategoryPage(
 			Long categoryId, Pagination pagination)
 		throws Exception {
 
@@ -67,7 +67,7 @@ public class CategoryResourceImpl extends BaseCategoryResourceImpl {
 	}
 
 	@Override
-	public Page<Category> getVocabulariesCategoriesPage(
+	public Page<Category> getVocabularyCategoryPage(
 			Long vocabularyId, Pagination pagination)
 		throws Exception {
 
@@ -87,7 +87,7 @@ public class CategoryResourceImpl extends BaseCategoryResourceImpl {
 	}
 
 	@Override
-	public Category postCategoriesCategories(Long categoryId, Category category)
+	public Category postCategoryCategory(Long categoryId, Category category)
 		throws Exception {
 
 		AssetCategory assetCategory = _assetCategoryService.getCategory(
@@ -106,7 +106,7 @@ public class CategoryResourceImpl extends BaseCategoryResourceImpl {
 	}
 
 	@Override
-	public Category postVocabulariesCategories(
+	public Category postVocabularyCategory(
 			Long vocabularyId, Category category)
 		throws Exception {
 

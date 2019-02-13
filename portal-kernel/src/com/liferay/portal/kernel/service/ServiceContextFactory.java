@@ -323,11 +323,10 @@ public class ServiceContextFactory {
 		serviceContext.setAssetPriority(
 			ParamUtil.getDouble(request, "assetPriority"));
 
-		String assetTagNamesString = request.getParameter("assetTagNames");
+		String[] assetTagNames = request.getParameterValues("assetTagNames");
 
-		if (assetTagNamesString != null) {
-			serviceContext.setAssetTagNames(
-				StringUtil.split(assetTagNamesString));
+		if (assetTagNames != null) {
+			serviceContext.setAssetTagNames(assetTagNames);
 		}
 
 		// Workflow
@@ -483,11 +482,10 @@ public class ServiceContextFactory {
 		serviceContext.setAssetPriority(
 			ParamUtil.getDouble(request, "assetPriority"));
 
-		String assetTagNamesString = request.getParameter("assetTagNames");
+		String[] assetTagNames = request.getParameterValues("assetTagNames");
 
-		if (assetTagNamesString != null) {
-			serviceContext.setAssetTagNames(
-				StringUtil.split(assetTagNamesString));
+		if (assetTagNames != null) {
+			serviceContext.setAssetTagNames(assetTagNames);
 		}
 
 		// Workflow

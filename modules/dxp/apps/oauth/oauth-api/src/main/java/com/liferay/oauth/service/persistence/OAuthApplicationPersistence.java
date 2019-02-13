@@ -21,6 +21,11 @@ import com.liferay.oauth.model.OAuthApplication;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the o auth application service.
  *
@@ -40,6 +45,9 @@ public interface OAuthApplicationPersistence extends BasePersistence<OAuthApplic
 	 *
 	 * Never modify or reference this interface directly. Always use {@link OAuthApplicationUtil} to access the o auth application persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, OAuthApplication> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the o auth applications where companyId = &#63;.

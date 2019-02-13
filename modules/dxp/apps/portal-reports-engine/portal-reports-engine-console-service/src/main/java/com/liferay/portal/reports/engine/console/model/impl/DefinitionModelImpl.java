@@ -94,7 +94,7 @@ public class DefinitionModelImpl extends BaseModelImpl<Definition>
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "name", Types.VARCHAR },
-			{ "description_", Types.VARCHAR },
+			{ "description", Types.VARCHAR },
 			{ "sourceId", Types.BIGINT },
 			{ "reportName", Types.VARCHAR },
 			{ "reportParameters", Types.CLOB },
@@ -112,14 +112,14 @@ public class DefinitionModelImpl extends BaseModelImpl<Definition>
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("description_", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("sourceId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("reportName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("reportParameters", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table Reports_Definition (uuid_ VARCHAR(75) null,definitionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,description_ STRING null,sourceId LONG,reportName VARCHAR(75) null,reportParameters TEXT null,lastPublishDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table Reports_Definition (uuid_ VARCHAR(75) null,definitionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,description STRING null,sourceId LONG,reportName VARCHAR(75) null,reportParameters TEXT null,lastPublishDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table Reports_Definition";
 	public static final String ORDER_BY_JPQL = " ORDER BY definition.modifiedDate ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY Reports_Definition.modifiedDate ASC";

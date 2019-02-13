@@ -492,7 +492,7 @@ public abstract class BaseJavaTerm implements JavaTerm {
 		String lastLine = getLastLine(sb);
 
 		if (javaTerm instanceof JavaNewClassInstantiation) {
-			indent = getIndent(lastLine);
+			indent = StringUtil.removeChar(getIndent(lastLine), CharPool.SPACE);
 
 			String javaTermContent = javaTerm.toString(
 				indent, StringUtil.replaceFirst(lastLine, indent, "") + prefix,

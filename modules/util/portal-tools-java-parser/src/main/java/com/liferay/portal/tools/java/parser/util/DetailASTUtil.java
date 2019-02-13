@@ -104,7 +104,8 @@ public class DetailASTUtil {
 			return emptyStatDetailAST;
 		}
 
-		if ((detailAST.getType() == TokenTypes.LITERAL_IF) ||
+		if ((detailAST.getType() == TokenTypes.LITERAL_FOR) ||
+			(detailAST.getType() == TokenTypes.LITERAL_IF) ||
 			(detailAST.getType() == TokenTypes.LITERAL_WHILE)) {
 
 			return null;
@@ -163,7 +164,8 @@ public class DetailASTUtil {
 			rparenDetailAST = firstChildDetailAST.findFirstToken(
 				TokenTypes.RPAREN);
 		}
-		else if ((detailAST.getType() == TokenTypes.LITERAL_IF) ||
+		else if ((detailAST.getType() == TokenTypes.LITERAL_FOR) ||
+				 (detailAST.getType() == TokenTypes.LITERAL_IF) ||
 				 (detailAST.getType() == TokenTypes.LITERAL_WHILE)) {
 
 			rparenDetailAST = detailAST.findFirstToken(TokenTypes.RPAREN);

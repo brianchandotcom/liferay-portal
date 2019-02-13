@@ -1160,18 +1160,9 @@ public class JavaParserUtil {
 						_parseJavaExpression(exprDetailAST));
 				}
 			}
-			else {
-				List<DetailAST> variableDefinitionASTList =
-					DetailASTUtil.getAllChildTokens(
-						forInitDetailAST, false, TokenTypes.VARIABLE_DEF);
-
-				for (DetailAST variableDefinitionDetailAST :
-						variableDefinitionASTList) {
-
-					initializationJavaTerms.add(
-						_parseJavaVariableDefinition(
-							variableDefinitionDetailAST));
-				}
+			else if (firstChildDetailAST.getType() == TokenTypes.VARIABLE_DEF) {
+				initializationJavaTerms.add(
+					_parseJavaVariableDefinition(firstChildDetailAST));
 			}
 		}
 
@@ -1715,20 +1706,37 @@ public class JavaParserUtil {
 
 		JavaVariableDefinition javaVariableDefinition =
 			new JavaVariableDefinition(
-				_getName(detailAST), _parseJavaAnnotations(modifiersDetailAST),
+				_parseJavaAnnotations(modifiersDetailAST),
 				_parseModifiers(modifiersDetailAST));
 
 		javaVariableDefinition.setJavaType(
 			_parseJavaType(detailAST.findFirstToken(TokenTypes.TYPE)));
 
-		DetailAST assignDetailAST = detailAST.findFirstToken(TokenTypes.ASSIGN);
+		while (true) {
+			String name = _getName(detailAST);
 
-		if (assignDetailAST != null) {
-			javaVariableDefinition.setAssignValueJavaExpression(
-				_parseJavaExpression(assignDetailAST.getFirstChild()));
+			DetailAST assignDetailAST = detailAST.findFirstToken(
+				TokenTypes.ASSIGN);
+
+			if (assignDetailAST == null) {
+				javaVariableDefinition.addVariable(name);
+			}
+			else {
+				javaVariableDefinition.addVariable(
+					name,
+					_parseJavaExpression(assignDetailAST.getFirstChild()));
+			}
+
+			detailAST = detailAST.getNextSibling();
+
+			if ((detailAST == null) ||
+				(detailAST.getType() != TokenTypes.COMMA)) {
+
+				return javaVariableDefinition;
+			}
+
+			detailAST = detailAST.getNextSibling();
 		}
-
-		return javaVariableDefinition;
 	}
 
 	private static JavaWhileStatement _parseJavaWhileStatement(

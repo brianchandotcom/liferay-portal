@@ -17,7 +17,11 @@ package com.liferay.portal.tools.java.parser;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 
+import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Hugo Huijser
@@ -25,22 +29,32 @@ import java.util.List;
 public class JavaVariableDefinition extends BaseJavaTerm {
 
 	public JavaVariableDefinition(
-		String name, List<JavaAnnotation> javaAnnotations,
-		List<JavaSimpleValue> modifiers) {
+		List<JavaAnnotation> javaAnnotations, List<JavaSimpleValue> modifiers) {
 
-		_name = new JavaSimpleValue(name);
 		_javaAnnotations = javaAnnotations;
 		_modifiers = modifiers;
 	}
 
-	public JavaExpression getAssignValueJavaExpression() {
-		return _assignValueJavaExpression;
+	public void addVariable(String name) {
+		addVariable(name, null);
 	}
 
-	public void setAssignValueJavaExpression(
-		JavaExpression assignValueJavaExpression) {
+	public void addVariable(
+		String name, JavaExpression assignValueJavaExpression) {
 
-		_assignValueJavaExpression = assignValueJavaExpression;
+		_variableMap.put(new JavaSimpleValue(name), assignValueJavaExpression);
+	}
+
+	public JavaExpression getAssignValueJavaExpression() {
+		Set<Map.Entry<JavaSimpleValue, JavaExpression>> set =
+			_variableMap.entrySet();
+
+		Iterator<Map.Entry<JavaSimpleValue, JavaExpression>> iterator =
+			set.iterator();
+
+		Map.Entry<JavaSimpleValue, JavaExpression> entry = iterator.next();
+
+		return entry.getValue();
 	}
 
 	public void setJavaType(JavaType javaType) {
@@ -89,24 +103,56 @@ public class JavaVariableDefinition extends BaseJavaTerm {
 			prefix = StringPool.BLANK;
 		}
 
-		if (_assignValueJavaExpression != null) {
-			indent = append(sb, _name, indent, prefix, " = ", maxLineLength);
+		String startIndent = indent;
 
-			appendAssignValue(
-				sb, _assignValueJavaExpression, indent, suffix, maxLineLength,
-				false);
-		}
-		else {
-			append(sb, _name, indent, "", suffix, maxLineLength);
+		Set<Map.Entry<JavaSimpleValue, JavaExpression>> set =
+			_variableMap.entrySet();
+
+		Iterator<Map.Entry<JavaSimpleValue, JavaExpression>> iterator =
+			set.iterator();
+
+		while (true) {
+			Map.Entry<JavaSimpleValue, JavaExpression> entry = iterator.next();
+
+			JavaExpression assignValueJavaExpression = entry.getValue();
+			JavaSimpleValue name = entry.getKey();
+
+			if (!iterator.hasNext()) {
+				if (assignValueJavaExpression != null) {
+					indent = append(
+						sb, name, startIndent, prefix, " = ", maxLineLength);
+
+					appendAssignValue(
+						sb, assignValueJavaExpression, indent, suffix,
+						maxLineLength, false);
+				}
+				else {
+					append(sb, name, startIndent, "", suffix, maxLineLength);
+				}
+
+				break;
+			}
+
+			if (assignValueJavaExpression != null) {
+				indent = append(
+					sb, name, startIndent, prefix, " = ", maxLineLength);
+
+				appendAssignValue(
+					sb, assignValueJavaExpression, indent, ", ", maxLineLength,
+					false);
+			}
+			else {
+				append(sb, name, startIndent, "", ", ", maxLineLength);
+			}
 		}
 
 		return sb.toString();
 	}
 
-	private JavaExpression _assignValueJavaExpression;
 	private final List<JavaAnnotation> _javaAnnotations;
 	private JavaType _javaType;
 	private final List<JavaSimpleValue> _modifiers;
-	private final JavaSimpleValue _name;
+	private Map<JavaSimpleValue, JavaExpression> _variableMap =
+		new LinkedHashMap<>();
 
 }

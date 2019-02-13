@@ -24,13 +24,11 @@ import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParser;
 import com.liferay.portal.odata.filter.FilterParserProvider;
-import com.liferay.portal.odata.filter.expression.ExpressionVisitException;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.internal.accept.language.AcceptLanguageImpl;
 
 import javax.servlet.http.HttpServletRequest;
 
-import javax.ws.rs.BadRequestException;
 import javax.ws.rs.ServerErrorException;
 import javax.ws.rs.ext.Provider;
 
@@ -60,9 +58,6 @@ public class FilterContextProvider implements ContextProvider<Filter> {
 	public Filter createContext(Message message) {
 		try {
 			return _createContext(message);
-		}
-		catch (ExpressionVisitException eve) {
-			throw new BadRequestException(eve.getMessage(), eve);
 		}
 		catch (Exception e) {
 			throw new ServerErrorException(500, e);

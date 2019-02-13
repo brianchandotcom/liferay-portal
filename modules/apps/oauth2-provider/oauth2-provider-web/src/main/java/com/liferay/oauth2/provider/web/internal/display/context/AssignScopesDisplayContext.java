@@ -215,6 +215,10 @@ public class AssignScopesDisplayContext
 					relations._globalAssignableScopes.add(assignableScopes);
 				}
 
+				if (!applicationUnassignableScopes) {
+					continue;
+				}
+
 				applicationAssignableScopes =
 					applicationAssignableScopes.subtract(entry.getKey());
 
@@ -223,8 +227,6 @@ public class AssignScopesDisplayContext
 
 				if (liferayOAuth2Scopes.isEmpty()) {
 					applicationUnassignableScopes = false;
-
-					break;
 				}
 			}
 

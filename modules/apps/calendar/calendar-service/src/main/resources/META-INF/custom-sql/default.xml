@@ -15,7 +15,7 @@
 				(parentCalendarBookingId = ?) AND
 				(
 					(LOWER(title) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(description_ LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(description LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(LOWER(location) LIKE ? [$AND_OR_NULL_CHECK$])
 				) AND
 				(
@@ -70,7 +70,7 @@
 				(parentCalendarBookingId = ?) AND
 				(
 					(LOWER(title) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(description_ LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(description LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(LOWER(location) LIKE ? [$AND_OR_NULL_CHECK$])
 				) AND
 				(
@@ -112,7 +112,7 @@
 				[$CALENDAR_RESOURCE_ID$]
 				(
 					(LOWER(name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(description_ LIKE ? [$AND_OR_NULL_CHECK$])
+					(description LIKE ? [$AND_OR_NULL_CHECK$])
 				)
 		]]>
 	</sql>
@@ -128,7 +128,7 @@
 				[$CALENDAR_RESOURCE_ID$]
 				(
 					(LOWER(name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(description_ LIKE ? [$AND_OR_NULL_CHECK$])
+					(description LIKE ? [$AND_OR_NULL_CHECK$])
 				)
 				[$ORDER_BY$]
 		]]>
@@ -146,7 +146,7 @@
 				(
 					(LOWER(code_) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(LOWER(name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(description_ LIKE ? [$AND_OR_NULL_CHECK$])
+					(description LIKE ? [$AND_OR_NULL_CHECK$])
 				) AND
 				(active_ = ?)
 		]]>
@@ -164,7 +164,7 @@
 				(
 					(LOWER(code_) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(LOWER(name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(description_ LIKE ? [$AND_OR_NULL_CHECK$])
+					(description LIKE ? [$AND_OR_NULL_CHECK$])
 				) AND
 				(active_ = ?)
 				[$ORDER_BY$]

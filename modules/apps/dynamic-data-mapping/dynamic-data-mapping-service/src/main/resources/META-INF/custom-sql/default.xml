@@ -12,7 +12,7 @@
 				[$GROUP_ID$]
 				(
 					(LOWER(DDMDataProviderInstance.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(DDMDataProviderInstance.description_ LIKE ? [$AND_OR_NULL_CHECK$])
+					(DDMDataProviderInstance.description LIKE ? [$AND_OR_NULL_CHECK$])
 				)
 		]]>
 	</sql>
@@ -31,7 +31,7 @@
 						[$GROUP_ID$]
 						(
 							(LOWER(DDMDataProviderInstance.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-							(DDMDataProviderInstance.description_ LIKE ? [$AND_OR_NULL_CHECK$])
+							(DDMDataProviderInstance.description LIKE ? [$AND_OR_NULL_CHECK$])
 						)
 				)
 				TEMP_TABLE
@@ -53,7 +53,7 @@
 				(DDMFormInstance.groupId = ?) AND
 				(
 					(LOWER(DDMFormInstance.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(DDMFormInstance.description_ LIKE ? [$AND_OR_NULL_CHECK$])
+					(DDMFormInstance.description LIKE ? [$AND_OR_NULL_CHECK$])
 				)
 		]]>
 	</sql>
@@ -72,7 +72,7 @@
 						(DDMFormInstance.groupId = ?) AND
 						(
 							(LOWER(DDMFormInstance.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-							(DDMFormInstance.description_ LIKE ? [$AND_OR_NULL_CHECK$])
+							(DDMFormInstance.description LIKE ? [$AND_OR_NULL_CHECK$])
 						)
 				)
 				TEMP_TABLE
@@ -129,7 +129,7 @@
 				(DDMStructureLink.classPK = ?) AND
 				(
 					(LOWER(CAST_TEXT(DDMStructure.name)) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(DDMStructure.description_ LIKE ? [$AND_OR_NULL_CHECK$])
+					(DDMStructure.description LIKE ? [$AND_OR_NULL_CHECK$])
 				)
 		]]>
 	</sql>
@@ -145,7 +145,7 @@
 				(DDMStructure.classNameId = ?) AND
 				(
 					(LOWER(CAST_TEXT(DDMStructure.name)) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(DDMStructure.description_ LIKE ? [$AND_OR_NULL_CHECK$])
+					(DDMStructure.description LIKE ? [$AND_OR_NULL_CHECK$])
 				) AND
 				(
 					(storageType = ?) OR
@@ -171,7 +171,7 @@
 				(DDMStructureLink.classPK = ?) AND
 				(
 					(LOWER(CAST_TEXT(DDMStructure.name)) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(DDMStructure.description_ LIKE ? [$AND_OR_NULL_CHECK$])
+					(DDMStructure.description LIKE ? [$AND_OR_NULL_CHECK$])
 				)
 			ORDER BY
 				DDMStructure.structureId DESC
@@ -193,7 +193,7 @@
 						(DDMStructure.classNameId = ?) AND
 						(
 							(LOWER(CAST_TEXT(DDMStructure.name)) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-							(DDMStructure.description_ LIKE ? [$AND_OR_NULL_CHECK$])
+							(DDMStructure.description LIKE ? [$AND_OR_NULL_CHECK$])
 						) AND
 						(
 							(DDMStructure.storageType = ?) OR
@@ -224,7 +224,7 @@
 				(DDMStructureLink.classPK = ?) AND
 				(
 					(LOWER(CAST_TEXT(DDMStructure.name)) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(DDMStructure.description_ LIKE ? [$AND_OR_NULL_CHECK$])
+					(DDMStructure.description LIKE ? [$AND_OR_NULL_CHECK$])
 				)
 		]]>
 	</sql>
@@ -242,7 +242,7 @@
 				(DDMStructureLink.classPK = ?) AND
 				(
 					(LOWER(CAST_TEXT(DDMStructure.name)) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(DDMStructure.description_ LIKE ? [$AND_OR_NULL_CHECK$])
+					(DDMStructure.description LIKE ? [$AND_OR_NULL_CHECK$])
 				)
 			ORDER BY
 				DDMStructureLink.structureLinkId DESC
@@ -288,7 +288,7 @@
 				(DDMTemplate.resourceClassNameId = ?) AND
 				(
 					(LOWER(CAST_TEXT(DDMTemplate.name)) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(DDMTemplate.description_ LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(DDMTemplate.description LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(DDMTemplate.type_ LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(DDMTemplate.mode_ LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(DDMTemplate.language LIKE ? [$AND_OR_NULL_CHECK$])
@@ -342,7 +342,7 @@
 						(DDMTemplate.resourceClassNameId = ?) AND
 						(
 							(LOWER(CAST_TEXT(DDMTemplate.name)) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-							(DDMTemplate.description_ LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+							(DDMTemplate.description LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 							(DDMTemplate.type_ LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 							(DDMTemplate.mode_ LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 							(DDMTemplate.language LIKE ? [$AND_OR_NULL_CHECK$])

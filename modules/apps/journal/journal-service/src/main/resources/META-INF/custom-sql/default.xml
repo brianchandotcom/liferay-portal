@@ -105,7 +105,7 @@
 					(JournalArticle.articleId LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(JournalArticle.version = ?) [$AND_OR_CONNECTOR$]
 					(LOWER(JournalArticleLocalization.title) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(JournalArticleLocalization.description_ LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(JournalArticleLocalization.description LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(JournalArticle.content LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(JournalArticle.displayDate >= ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(JournalArticle.displayDate <= ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
@@ -378,14 +378,14 @@
 			LEFT JOIN
 				(
 					SELECT
-						JournalArticleLocalization.companyId, JournalArticleLocalization.articlePK, JournalArticleLocalization.title, JournalArticleLocalization.description_
+						JournalArticleLocalization.companyId, JournalArticleLocalization.articlePK, JournalArticleLocalization.title, JournalArticleLocalization.description
 					FROM
 						JournalArticleLocalization
 					WHERE
 						(LOWER(JournalArticleLocalization.title) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-						(JournalArticleLocalization.description_ LIKE ? [$AND_OR_NULL_CHECK$])
+						(JournalArticleLocalization.description LIKE ? [$AND_OR_NULL_CHECK$])
 					GROUP BY
-						JournalArticleLocalization.companyId, JournalArticleLocalization.articlePK, JournalArticleLocalization.title, JournalArticleLocalization.description_
+						JournalArticleLocalization.companyId, JournalArticleLocalization.articlePK, JournalArticleLocalization.title, JournalArticleLocalization.description
 				) JournalArticleLocalization ON
 					(JournalArticle.companyId = JournalArticleLocalization.companyId) AND
 					(JournalArticle.id_ = JournalArticleLocalization.articlePK)
@@ -402,7 +402,7 @@
 					(JournalArticle.version = ?) [$AND_OR_CONNECTOR$]
 					(JournalArticle.content LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(LOWER(JournalArticleLocalization.title) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(JournalArticleLocalization.description_ LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(JournalArticleLocalization.description LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(JournalArticle.displayDate >= ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(JournalArticle.displayDate <= ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(JournalArticle.reviewDate <= ? [$AND_OR_NULL_CHECK$])
@@ -423,7 +423,7 @@
 				(
 					(feedId LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(LOWER(name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(LOWER(description_) LIKE ? [$AND_OR_NULL_CHECK$])
+					(LOWER(description) LIKE ? [$AND_OR_NULL_CHECK$])
 				)
 		]]>
 	</sql>
@@ -439,7 +439,7 @@
 				(
 					(feedId LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(LOWER(name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(LOWER(description_) LIKE ? [$AND_OR_NULL_CHECK$])
+					(LOWER(description) LIKE ? [$AND_OR_NULL_CHECK$])
 				)
 			ORDER BY
 				feedId ASC

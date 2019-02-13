@@ -12,7 +12,7 @@
 				(groupId = ?) AND
 				(
 					(LOWER(name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(description_ LIKE ? [$AND_OR_NULL_CHECK$])
+					(description LIKE ? [$AND_OR_NULL_CHECK$])
 				) AND
 				(type_ = ?)
 		]]>
@@ -28,7 +28,7 @@
 				(groupId = ?) AND
 				(
 					(LOWER(name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(description_ LIKE ? [$AND_OR_NULL_CHECK$])
+					(description LIKE ? [$AND_OR_NULL_CHECK$])
 				) AND
 				(type_ = ?)
 			ORDER BY

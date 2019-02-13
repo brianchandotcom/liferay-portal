@@ -53,7 +53,7 @@
 				(Group_.liveGroupId = 0) AND
 				(Group_.groupKey != 'Control Panel') AND
 				(LOWER(Group_.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-				(LOWER(Group_.description_) LIKE ? [$AND_OR_NULL_CHECK$]) AND
+				(LOWER(Group_.description) LIKE ? [$AND_OR_NULL_CHECK$]) AND
 				(Group_.type_ != 4)
 		]]>
 	</sql>
@@ -232,7 +232,7 @@
 				(Group_.liveGroupId = 0) AND
 				(Group_.groupKey != 'Control Panel') AND
 				(LOWER(Group_.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-				(LOWER(Group_.description_) LIKE ? [$AND_OR_NULL_CHECK$]) AND
+				(LOWER(Group_.description) LIKE ? [$AND_OR_NULL_CHECK$]) AND
 				(Group_.type_ != 4)
 		]]>
 	</sql>
@@ -981,7 +981,7 @@
 				(
 					(
 						(LOWER(Role_.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-						(LOWER(Role_.description_) LIKE ? [$AND_OR_NULL_CHECK$])
+						(LOWER(Role_.description) LIKE ? [$AND_OR_NULL_CHECK$])
 					)
 					[$EXCLUDED_NAMES$]
 					[$TYPE$]
@@ -1000,7 +1000,7 @@
 									(groupId = ?) AND
 									(
 										(LOWER(Team.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-										(LOWER(Team.description_) LIKE ? [$AND_OR_NULL_CHECK$])
+										(LOWER(Team.description) LIKE ? [$AND_OR_NULL_CHECK$])
 									)
 							)
 					)
@@ -1148,7 +1148,7 @@
 				(Role_.classNameId = [$CLASS_NAME_ID_COM.LIFERAY.PORTAL.MODEL.ROLE$]) AND
 				(
 					(LOWER(Role_.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(LOWER(Role_.description_) LIKE ? [$AND_OR_NULL_CHECK$])
+					(LOWER(Role_.description) LIKE ? [$AND_OR_NULL_CHECK$])
 				)
 				[$TYPE$]
 		]]>
@@ -1164,7 +1164,7 @@
 				(
 					(
 						(LOWER(Role_.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-						(LOWER(Role_.description_) LIKE ? [$AND_OR_NULL_CHECK$])
+						(LOWER(Role_.description) LIKE ? [$AND_OR_NULL_CHECK$])
 					)
 					[$EXCLUDED_NAMES$]
 					[$TYPE$]
@@ -1183,7 +1183,7 @@
 									(groupId = ?) AND
 									(
 										(LOWER(Team.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-										(LOWER(Team.description_) LIKE ? [$AND_OR_NULL_CHECK$])
+										(LOWER(Team.description) LIKE ? [$AND_OR_NULL_CHECK$])
 									)
 							)
 					)
@@ -1357,7 +1357,7 @@
 				(Role_.classNameId = [$CLASS_NAME_ID_COM.LIFERAY.PORTAL.MODEL.ROLE$]) AND
 				(
 					(LOWER(Role_.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(LOWER(Role_.description_) LIKE ? [$AND_OR_NULL_CHECK$])
+					(LOWER(Role_.description) LIKE ? [$AND_OR_NULL_CHECK$])
 				)
 				[$TYPE$]
 			ORDER BY
@@ -1447,7 +1447,7 @@
 					(? IS NULL)
 				) AND
 				(
-					(LOWER(Team.description_) LIKE ?) OR
+					(LOWER(Team.description) LIKE ?) OR
 					(? IS NULL)
 				)
 		]]>
@@ -1499,7 +1499,7 @@
 					(? IS NULL)
 				) AND
 				(
-					(LOWER(Team.description_) LIKE ?) OR
+					(LOWER(Team.description) LIKE ?) OR
 					(? IS NULL)
 				)
 			ORDER BY
@@ -1959,7 +1959,7 @@
 				(UserGroup.companyId = ?) AND
 				(
 					(LOWER(UserGroup.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(LOWER(UserGroup.description_) LIKE ? [$AND_OR_NULL_CHECK$])
+					(LOWER(UserGroup.description) LIKE ? [$AND_OR_NULL_CHECK$])
 				)
 		]]>
 	</sql>
@@ -1975,7 +1975,7 @@
 				(UserGroup.companyId = ?) AND
 				(
 					(LOWER(UserGroup.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(LOWER(UserGroup.description_) LIKE ? [$AND_OR_NULL_CHECK$])
+					(LOWER(UserGroup.description) LIKE ? [$AND_OR_NULL_CHECK$])
 				)
 			ORDER BY
 				UserGroup.name ASC

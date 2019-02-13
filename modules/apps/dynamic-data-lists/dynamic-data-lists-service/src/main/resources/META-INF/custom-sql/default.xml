@@ -92,7 +92,7 @@
 				(DDLRecordSet.scope = ?) AND
 				(
 					(LOWER(DDLRecordSet.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(DDLRecordSet.description_ LIKE ? [$AND_OR_NULL_CHECK$])
+					(DDLRecordSet.description LIKE ? [$AND_OR_NULL_CHECK$])
 				)
 		]]>
 	</sql>
@@ -112,7 +112,7 @@
 						(DDLRecordSet.scope = ?) AND
 						(
 							(LOWER(DDLRecordSet.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-							(DDLRecordSet.description_ LIKE ? [$AND_OR_NULL_CHECK$])
+							(DDLRecordSet.description LIKE ? [$AND_OR_NULL_CHECK$])
 						)
 				)
 				TEMP_TABLE

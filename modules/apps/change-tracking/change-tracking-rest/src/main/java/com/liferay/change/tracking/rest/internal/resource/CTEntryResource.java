@@ -50,12 +50,12 @@ public class CTEntryResource {
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<CTEntryModel> getCTCollectionModels(
+	public List<CTEntryModel> getCollectionCTEntryModels(
 		@PathParam("collectionId") long ctCollectionId,
 		@QueryParam("collision") boolean collision,
 		@QueryParam("compareTo") long compareToCTCollectionId) {
 
-		List<CTEntry> ctEntries;
+		List<CTEntry> ctEntries = null;
 
 		Optional<CTCollection> ctCollectionOptional =
 			_ctEngineManager.getCTCollectionOptional(ctCollectionId);

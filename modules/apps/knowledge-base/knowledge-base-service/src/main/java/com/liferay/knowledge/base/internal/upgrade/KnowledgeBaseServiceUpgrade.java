@@ -20,7 +20,6 @@ import com.liferay.knowledge.base.internal.upgrade.v3_0_0.util.KBArticleTable;
 import com.liferay.knowledge.base.internal.upgrade.v3_0_0.util.KBCommentTable;
 import com.liferay.knowledge.base.internal.upgrade.v3_0_0.util.KBFolderTable;
 import com.liferay.knowledge.base.internal.upgrade.v3_0_0.util.KBTemplateTable;
-import com.liferay.knowledge.base.internal.upgrade.v4_0_0.UpgradeBadColumnNames;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.upgrade.BaseUpgradeSQLServerDatetime;
@@ -137,8 +136,6 @@ public class KnowledgeBaseServiceUpgrade implements UpgradeStepRegistrator {
 					KBArticleTable.class, KBCommentTable.class,
 					KBFolderTable.class, KBTemplateTable.class
 				}));
-
-		registry.register("3.0.0", "4.0.0", new UpgradeBadColumnNames());
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")

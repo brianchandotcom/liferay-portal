@@ -18,18 +18,6 @@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
-page import="com.liferay.portal.kernel.util.JavaConstants" %><%@
-page import="com.liferay.portal.kernel.util.StringUtil" %><%@
-page import="com.liferay.taglib.aui.AUIUtil" %>
-
-<%@ page import="java.util.ArrayList" %><%@
-page import="java.util.Arrays" %><%@
-page import="java.util.HashMap" %><%@
-page import="java.util.List" %>
-
-<%@ page import="javax.portlet.PortletRequest" %><%@
-page import="javax.portlet.PortletResponse" %><%@
-page import="javax.portlet.PortletURL" %>
+<%@ page import="java.util.Map" %>
 
 <liferay-theme:defineObjects />

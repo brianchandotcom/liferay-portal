@@ -20,10 +20,13 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.access.control.AccessControlThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.servlet.filters.authverifier.AuthVerifierFilter;
+
+import java.io.IOException;
 
 import java.util.Dictionary;
 import java.util.Enumeration;
@@ -31,6 +34,11 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -131,6 +139,36 @@ public class AuthVerifierFilterTracker {
 	private Dictionary<String, Object> _defaultRegistrationProperties;
 	private Dictionary<String, Object> _defaultWhiteboardProperties;
 	private ServiceTracker<?, ?> _serviceTracker;
+
+	private static class RemoteAccessFilter implements Filter {
+
+		@Override
+		public void destroy() {
+		}
+
+		@Override
+		public void doFilter(
+				ServletRequest servletRequest, ServletResponse servletResponse,
+				FilterChain filterChain)
+			throws IOException, ServletException {
+
+			boolean remoteAccess = AccessControlThreadLocal.isRemoteAccess();
+
+			AccessControlThreadLocal.setRemoteAccess(true);
+
+			try {
+				filterChain.doFilter(servletRequest, servletResponse);
+			}
+			finally {
+				AccessControlThreadLocal.setRemoteAccess(remoteAccess);
+			}
+		}
+
+		@Override
+		public void init(FilterConfig filterConfig) {
+		}
+
+	}
 
 	private class ServletContextHelperServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer

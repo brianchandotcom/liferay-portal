@@ -19,13 +19,13 @@ import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.storage.FieldConstants;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.BooleanEntityField;
 import com.liferay.portal.odata.entity.DateEntityField;
@@ -71,12 +71,6 @@ public class EntityFieldsProvider {
 		return entityFields;
 	}
 
-	private static String _toFieldName(DDMStructure ddmStructure, String name) {
-		return StringBundler.concat(
-			StringPool.UNDERLINE, ddmStructure.getStructureId(),
-			StringPool.UNDERLINE, name);
-	}
-
 	private EntityField _createEntityField(
 			DDMStructure ddmStructure, DDMFormField ddmFormField)
 		throws PortalException {
@@ -90,7 +84,7 @@ public class EntityFieldsProvider {
 
 		if (Objects.equals(ddmFormField.getType(), DDMFormFieldType.CHECKBOX)) {
 			return new BooleanEntityField(
-				_toFieldName(ddmStructure, ddmFormField.getName()),
+				ddmFormField.getName(),
 				locale -> _toFilterableOrSortableFieldName(
 					ddmStructure.getStructureId(), ddmFormField.getName(),
 					locale, "String"));
@@ -99,7 +93,7 @@ public class EntityFieldsProvider {
 					ddmFormField.getDataType(), FieldConstants.DATE)) {
 
 			return new DateEntityField(
-				_toFieldName(ddmStructure, ddmFormField.getName()),
+				ddmFormField.getName(),
 				locale -> _toFilterableOrSortableFieldName(
 					ddmStructure.getStructureId(), ddmFormField.getName(),
 					locale, "String"),
@@ -114,7 +108,7 @@ public class EntityFieldsProvider {
 					 ddmFormField.getDataType(), FieldConstants.NUMBER)) {
 
 			return new DoubleEntityField(
-				_toFieldName(ddmStructure, ddmFormField.getName()),
+				ddmFormField.getName(),
 				locale -> _toFilterableOrSortableFieldName(
 					ddmStructure.getStructureId(), ddmFormField.getName(),
 					locale, "Number"));
@@ -125,7 +119,7 @@ public class EntityFieldsProvider {
 					 ddmFormField.getDataType(), FieldConstants.LONG)) {
 
 			return new IntegerEntityField(
-				_toFieldName(ddmStructure, ddmFormField.getName()),
+				ddmFormField.getName(),
 				locale -> _toFilterableOrSortableFieldName(
 					ddmStructure.getStructureId(), ddmFormField.getName(),
 					locale, "Number"));
@@ -137,7 +131,7 @@ public class EntityFieldsProvider {
 				  Objects.equals(ddmFormField.getIndexType(), "keyword"))) {
 
 			return new StringEntityField(
-				_toFieldName(ddmStructure, ddmFormField.getName()),
+				ddmFormField.getName(),
 				locale -> _toFilterableOrSortableFieldName(
 					ddmStructure.getStructureId(), ddmFormField.getName(),
 					locale, "String"));
@@ -167,7 +161,7 @@ public class EntityFieldsProvider {
 		long ddmStructureId, String fieldName, Locale locale, String type) {
 
 		return Field.getSortableFieldName(
-			com.liferay.portal.kernel.util.StringBundler.concat(
+			StringBundler.concat(
 				_ddmIndexer.encodeName(ddmStructureId, fieldName, locale),
 				StringPool.UNDERLINE, type));
 	}

@@ -471,6 +471,16 @@ public interface DDMStructureLocalService extends BaseLocalService,
 	public DDMStructure fetchStructure(long groupId, long classNameId,
 		String structureKey, boolean includeAncestorStructures);
 
+	/**
+	* Returns the structure with the primary key.
+	*
+	* @param classPK the primary key of the structure
+	* @return the matching structure
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DDMStructure fetchStructureByClassPK(long classPK)
+		throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DDMStructure fetchStructureByUuidAndGroupId(String uuid,
 		long groupId, boolean includeAncestorStructures);

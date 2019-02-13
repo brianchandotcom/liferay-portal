@@ -275,6 +275,19 @@ public class DDMStructureServiceWrapper implements DDMStructureService,
 	}
 
 	/**
+	* Returns the structure with the primary key.
+	*
+	* @param classPK the primary key of the structure
+	* @return the matching structure
+	*/
+	@Override
+	public com.liferay.dynamic.data.mapping.model.DDMStructure fetchStructureByClassPK(
+		long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ddmStructureService.fetchStructureByClassPK(classPK);
+	}
+
+	/**
 	* Returns the OSGi service identifier.
 	*
 	* @return the OSGi service identifier

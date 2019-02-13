@@ -580,6 +580,19 @@ public class DDMStructureLocalServiceWrapper implements DDMStructureLocalService
 			structureKey, includeAncestorStructures);
 	}
 
+	/**
+	* Returns the structure with the primary key.
+	*
+	* @param classPK the primary key of the structure
+	* @return the matching structure
+	*/
+	@Override
+	public com.liferay.dynamic.data.mapping.model.DDMStructure fetchStructureByClassPK(
+		long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ddmStructureLocalService.fetchStructureByClassPK(classPK);
+	}
+
 	@Override
 	public com.liferay.dynamic.data.mapping.model.DDMStructure fetchStructureByUuidAndGroupId(
 		String uuid, long groupId, boolean includeAncestorStructures) {

@@ -279,6 +279,18 @@ public class DDMStructureServiceUtil {
 	}
 
 	/**
+	* Returns the structure with the primary key.
+	*
+	* @param classPK the primary key of the structure
+	* @return the matching structure
+	*/
+	public static com.liferay.dynamic.data.mapping.model.DDMStructure fetchStructureByClassPK(
+		long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().fetchStructureByClassPK(classPK);
+	}
+
+	/**
 	* Returns the OSGi service identifier.
 	*
 	* @return the OSGi service identifier

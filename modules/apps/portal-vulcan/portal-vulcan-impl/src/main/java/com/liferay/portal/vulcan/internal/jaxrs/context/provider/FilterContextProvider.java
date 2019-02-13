@@ -65,9 +65,6 @@ public class FilterContextProvider implements ContextProvider<Filter> {
 		catch (ExpressionVisitException eve) {
 			throw new BadRequestException(eve.getMessage(), eve);
 		}
-		catch (InvalidFilterException ife) {
-			throw new BadRequestException(ife.getMessage(), ife);
-		}
 		catch (Exception e) {
 			throw new ServerErrorException(500, e);
 		}

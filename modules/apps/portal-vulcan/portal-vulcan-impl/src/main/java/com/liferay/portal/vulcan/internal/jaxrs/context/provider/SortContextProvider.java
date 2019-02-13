@@ -61,9 +61,6 @@ public class SortContextProvider implements ContextProvider<Sort[]> {
 		try {
 			return _createContext(message);
 		}
-		catch (InvalidSortException ise) {
-			throw new BadRequestException(ise.getMessage(), ise);
-		}
 		catch (Exception e) {
 			throw new ServerErrorException(500, e);
 		}

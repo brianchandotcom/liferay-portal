@@ -23,7 +23,6 @@ import com.liferay.dynamic.data.lists.internal.upgrade.v2_0_0.util.DDLRecordSetT
 import com.liferay.dynamic.data.lists.internal.upgrade.v2_0_0.util.DDLRecordSetVersionTable;
 import com.liferay.dynamic.data.lists.internal.upgrade.v2_0_0.util.DDLRecordTable;
 import com.liferay.dynamic.data.lists.internal.upgrade.v2_0_0.util.DDLRecordVersionTable;
-import com.liferay.dynamic.data.lists.internal.upgrade.v3_0_0.UpgradeBadColumnNames;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.portal.kernel.upgrade.BaseUpgradeSQLServerDatetime;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
@@ -76,8 +75,6 @@ public class DDLServiceUpgrade implements UpgradeStepRegistrator {
 			"2.0.0", "2.1.0",
 			new com.liferay.dynamic.data.lists.internal.upgrade.v2_1_0.
 				UpgradeSchema());
-
-		registry.register("2.1.0", "3.0.0", new UpgradeBadColumnNames());
 	}
 
 	@Reference

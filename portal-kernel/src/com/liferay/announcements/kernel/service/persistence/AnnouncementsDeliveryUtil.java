@@ -487,10 +487,6 @@ public class AnnouncementsDeliveryUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static AnnouncementsDeliveryPersistence getPersistence() {
 		if (_persistence == null) {
 			_persistence = (AnnouncementsDeliveryPersistence)PortalBeanLocatorUtil.locate(AnnouncementsDeliveryPersistence.class.getName());

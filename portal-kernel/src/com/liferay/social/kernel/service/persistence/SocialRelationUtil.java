@@ -1978,10 +1978,6 @@ public class SocialRelationUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static SocialRelationPersistence getPersistence() {
 		if (_persistence == null) {
 			_persistence = (SocialRelationPersistence)PortalBeanLocatorUtil.locate(SocialRelationPersistence.class.getName());

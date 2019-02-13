@@ -2023,10 +2023,6 @@ public class SegmentsEntryUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static SegmentsEntryPersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

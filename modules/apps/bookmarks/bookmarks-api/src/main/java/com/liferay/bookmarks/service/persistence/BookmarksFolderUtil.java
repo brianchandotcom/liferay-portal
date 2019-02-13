@@ -2256,10 +2256,6 @@ public class BookmarksFolderUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static BookmarksFolderPersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

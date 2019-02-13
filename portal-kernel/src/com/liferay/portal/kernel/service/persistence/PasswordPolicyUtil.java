@@ -1110,10 +1110,6 @@ public class PasswordPolicyUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static PasswordPolicyPersistence getPersistence() {
 		if (_persistence == null) {
 			_persistence = (PasswordPolicyPersistence)PortalBeanLocatorUtil.locate(PasswordPolicyPersistence.class.getName());

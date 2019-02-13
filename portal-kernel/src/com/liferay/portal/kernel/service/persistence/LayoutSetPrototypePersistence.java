@@ -19,11 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.exception.NoSuchLayoutSetPrototypeException;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
-
 /**
  * The persistence interface for the layout set prototype service.
  *
@@ -43,9 +38,6 @@ public interface LayoutSetPrototypePersistence extends BasePersistence<LayoutSet
 	 *
 	 * Never modify or reference this interface directly. Always use {@link LayoutSetPrototypeUtil} to access the layout set prototype persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, LayoutSetPrototype> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the layout set prototypes where uuid = &#63;.
@@ -976,7 +968,4 @@ public interface LayoutSetPrototypePersistence extends BasePersistence<LayoutSet
 	* @return the number of layout set prototypes
 	*/
 	public int countAll();
-
-	@Override
-	public Set<String> getBadColumnNames();
 }

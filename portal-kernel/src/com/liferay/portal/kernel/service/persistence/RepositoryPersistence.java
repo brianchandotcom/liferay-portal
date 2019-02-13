@@ -19,11 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.exception.NoSuchRepositoryException;
 import com.liferay.portal.kernel.model.Repository;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
-
 /**
  * The persistence interface for the repository service.
  *
@@ -43,9 +38,6 @@ public interface RepositoryPersistence extends BasePersistence<Repository> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link RepositoryUtil} to access the repository persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, Repository> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the repositories where uuid = &#63;.
@@ -672,7 +664,4 @@ public interface RepositoryPersistence extends BasePersistence<Repository> {
 	* @return the number of repositories
 	*/
 	public int countAll();
-
-	@Override
-	public Set<String> getBadColumnNames();
 }

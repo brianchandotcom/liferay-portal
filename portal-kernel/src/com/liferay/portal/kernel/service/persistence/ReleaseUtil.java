@@ -317,10 +317,6 @@ public class ReleaseUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static ReleasePersistence getPersistence() {
 		if (_persistence == null) {
 			_persistence = (ReleasePersistence)PortalBeanLocatorUtil.locate(ReleasePersistence.class.getName());

@@ -1025,10 +1025,6 @@ public class MBThreadFlagUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static MBThreadFlagPersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

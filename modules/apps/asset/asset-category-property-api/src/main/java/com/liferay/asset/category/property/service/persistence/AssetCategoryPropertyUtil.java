@@ -836,10 +836,6 @@ public class AssetCategoryPropertyUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static AssetCategoryPropertyPersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

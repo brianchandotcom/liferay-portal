@@ -30,6 +30,7 @@ import java.io.IOException;
 
 import java.util.Dictionary;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -200,10 +201,10 @@ public class AuthVerifierFilterTracker {
 			serviceRegistration.unregister();
 		}
 
-		private Dictionary<String, ?> _buildProperties(
+		private Map<String, Object> _buildProperties(
 			ServiceReference<ServletContextHelper> serviceReference) {
 
-			Dictionary<String, Object> properties = new HashMapDictionary<>();
+			Map<String, Object> properties = new HashMap<>();
 
 			Enumeration<String> enumeration =
 				_defaultRegistrationProperties.keys();
@@ -214,7 +215,27 @@ public class AuthVerifierFilterTracker {
 				properties.put(key, _defaultRegistrationProperties.get(key));
 			}
 
-			enumeration = _defaultWhiteboardProperties.keys();
+			for (String key : serviceReference.getPropertyKeys()) {
+				if (key.startsWith(AUTH_VERIFIER_PROPERTY_PREFIX)) {
+					properties.put(
+						"filter.init." +
+							key.substring(AUTH_VERIFIER_PROPERTY_PREFIX_LENGTH),
+						serviceReference.getProperty(key));
+				}
+			}
+
+			properties.putAll(_getWhiteboardProperties(serviceReference));
+
+			return properties;
+		}
+
+		private Map<String, Object> _getWhiteboardProperties(
+			ServiceReference<ServletContextHelper> serviceReference) {
+
+			Map<String, Object> properties = new HashMap<>();
+
+			Enumeration<String> enumeration =
+				_defaultWhiteboardProperties.keys();
 
 			while (enumeration.hasMoreElements()) {
 				String key = enumeration.nextElement();
@@ -223,13 +244,6 @@ public class AuthVerifierFilterTracker {
 			}
 
 			for (String key : serviceReference.getPropertyKeys()) {
-				if (key.startsWith(AUTH_VERIFIER_PROPERTY_PREFIX)) {
-					properties.put(
-						"filter.init." +
-							key.substring(AUTH_VERIFIER_PROPERTY_PREFIX_LENGTH),
-						serviceReference.getProperty(key));
-				}
-
 				if (key.startsWith("osgi.http.whiteboard")) {
 					properties.put(key, serviceReference.getProperty(key));
 				}

@@ -35,6 +35,8 @@ public class SubrepositoryAcceptancePullRequestJob
 		super(jobName, repositoryName);
 
 		_testSuiteName = testSuiteName;
+
+		_setTestRunValidation();
 	}
 
 	@Override
@@ -96,6 +98,20 @@ public class SubrepositoryAcceptancePullRequestJob
 	@Override
 	public String getTestSuiteName() {
 		return _testSuiteName;
+	}
+
+	private void _setTestRunValidation() {
+		Properties jobProperties = getJobProperties();
+
+		String testRunValidationProperty = JenkinsResultsParserUtil.getProperty(
+			jobProperties, "test.run.validation[" + _testSuiteName + "]");
+
+		if (testRunValidationProperty == null) {
+			testRunValidationProperty = JenkinsResultsParserUtil.getProperty(
+				jobProperties, "test.run.validation");
+		}
+
+		testRunValidation = Boolean.parseBoolean(testRunValidationProperty);
 	}
 
 	private final String _testSuiteName;

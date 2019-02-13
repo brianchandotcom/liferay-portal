@@ -35,6 +35,16 @@ import java.util.Set;
  */
 public class FileUtil {
 
+	public static void delete(File file) throws IOException {
+		if (!file.exists()) {
+			return;
+		}
+
+		Files.delete(file.toPath());
+
+		System.out.println("Deleting " + file.getCanonicalPath());
+	}
+
 	public static void deleteFiles(String dirName, List<File> files)
 		throws Exception {
 
@@ -65,9 +75,7 @@ public class FileUtil {
 						return FileVisitResult.CONTINUE;
 					}
 
-					Files.delete(path);
-
-					System.out.println("Deleting " + file.getCanonicalPath());
+					delete(file);
 
 					return FileVisitResult.CONTINUE;
 				}

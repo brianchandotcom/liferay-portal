@@ -396,6 +396,25 @@ public class RESTBuilder {
 
 		File file = new File(sb.toString());
 
+		sb.setLength(0);
+
+		sb.append(_configYAML.getApiDir());
+		sb.append("/");
+		sb.append(apiPackagePath.replace('.', '/'));
+		sb.append("/resource/");
+		sb.append(versionDirName);
+		sb.append("/");
+		sb.append(schemaName);
+		sb.append("Resource.java");
+
+		String resourceContent = FileUtil.read(new File(sb.toString()));
+
+		if (!resourceContent.contains("\tpublic")) {
+			FileUtil.delete(file);
+
+			return;
+		}
+
 		_files.add(file);
 
 		if (file.exists()) {

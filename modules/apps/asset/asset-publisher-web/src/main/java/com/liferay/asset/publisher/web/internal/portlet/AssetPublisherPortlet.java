@@ -90,7 +90,6 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.display-category=category.cms",
 		"com.liferay.portlet.display-category=category.highlighted",
 		"com.liferay.portlet.header-portlet-css=/css/main.css",
-		"com.liferay.portlet.icon=/icons/asset_publisher.png",
 		"com.liferay.portlet.instanceable=true",
 		"com.liferay.portlet.preferences-owned-by-group=true",
 		"com.liferay.portlet.private-request-attributes=false",

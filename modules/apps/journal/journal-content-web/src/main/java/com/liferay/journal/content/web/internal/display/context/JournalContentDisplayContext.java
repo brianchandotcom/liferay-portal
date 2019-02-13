@@ -441,7 +441,7 @@ public class JournalContentDisplayContext {
 
 		Group scopeGroup = themeDisplay.getScopeGroup();
 
-		if (!scopeGroup.isStaged() ||
+		if (scopeGroup.isStaged() &&
 			!scopeGroup.isInStagingPortlet(JournalPortletKeys.JOURNAL)) {
 
 			groupId = scopeGroup.getLiveGroupId();

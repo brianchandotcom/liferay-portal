@@ -14,6 +14,7 @@
 
 package com.liferay.segments.internal.odata.entity;
 
+import com.liferay.portal.odata.entity.BooleanEntityField;
 import com.liferay.portal.odata.entity.DateEntityField;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
@@ -55,6 +56,8 @@ public class ContextEntityModel implements EntityModel {
 			new DateEntityField(
 				Context.LOCAL_DATE, locale -> Context.LOCAL_DATE,
 				locale -> Context.LOCAL_DATE),
+			new BooleanEntityField(
+				Context.SIGNED_IN, locale -> Context.SIGNED_IN),
 			new StringEntityField(Context.URL, locale -> Context.URL)
 		).collect(
 			Collectors.toMap(EntityField::getName, Function.identity())

@@ -74,6 +74,7 @@ public class RequestContextMapper {
 
 		context.put(Context.LANGUAGE_ID, themeDisplay.getLanguageId());
 		context.put(Context.LOCAL_DATE, LocalDate.from(now));
+		context.put(Context.SIGNED_IN, themeDisplay.isSignedIn());
 		context.put(Context.URL, GetterUtil.getString(request.getRequestURL()));
 
 		return context;

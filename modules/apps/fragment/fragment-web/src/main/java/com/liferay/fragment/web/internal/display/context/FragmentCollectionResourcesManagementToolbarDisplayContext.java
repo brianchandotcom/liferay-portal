@@ -20,6 +20,7 @@ import com.liferay.fragment.web.internal.configuration.FragmentPortletConfigurat
 import com.liferay.fragment.web.internal.constants.FragmentWebKeys;
 import com.liferay.fragment.web.internal.security.permission.resource.FragmentPermission;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.item.selector.ItemSelector;
@@ -37,9 +38,7 @@ import com.liferay.portal.kernel.upload.UploadServletRequestConfigurationHelperU
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
@@ -81,11 +80,24 @@ public class FragmentCollectionResourcesManagementToolbarDisplayContext
 						_themeDisplay.getScopeGroupId(),
 						FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES)) {
 
+					PortletURL deleteFragmentCollectionResourcesURL =
+						liferayPortletResponse.createActionURL();
+
+					deleteFragmentCollectionResourcesURL.setParameter(
+						ActionRequest.ACTION_NAME,
+						"/fragment/delete_fragment_collection_resources");
+					deleteFragmentCollectionResourcesURL.setParameter(
+						"redirect", _themeDisplay.getURLCurrent());
+
 					add(
 						dropdownItem -> {
 							dropdownItem.putData(
 								"action",
 								"deleteSelectedFragmentCollectionResources");
+							dropdownItem.putData(
+								"deleteFragmentCollectionResourcesURL",
+								deleteFragmentCollectionResourcesURL.
+									toString());
 							dropdownItem.setIcon("times-circle");
 							dropdownItem.setLabel(
 								LanguageUtil.get(request, "delete"));
@@ -96,30 +108,25 @@ public class FragmentCollectionResourcesManagementToolbarDisplayContext
 		};
 	}
 
-	public Map<String, Object> getComponentContext() {
-		Map<String, Object> componentContext = new HashMap<>();
-
-		PortletURL deleteFragmentCollectionResourcesURL =
-			liferayPortletResponse.createActionURL();
-
-		deleteFragmentCollectionResourcesURL.setParameter(
-			ActionRequest.ACTION_NAME,
-			"/fragment/delete_fragment_collection_resources");
-		deleteFragmentCollectionResourcesURL.setParameter(
-			"redirect", _themeDisplay.getURLCurrent());
-
-		componentContext.put(
-			"deleteFragmentCollectionResourcesURL",
-			deleteFragmentCollectionResourcesURL.toString());
-
-		componentContext.put("itemSelectorURL", _getItemSelectorURL());
-
-		return componentContext;
-	}
-
 	@Override
 	public String getComponentId() {
 		return "fragmentCollectionResourcesManagementToolbar";
+	}
+
+	@Override
+	public CreationMenu getCreationMenu() {
+		return new CreationMenu() {
+			{
+				addDropdownItem(
+					dropdownItem -> {
+						dropdownItem.putData(
+							"action", "addFragmentCollectionResource");
+						dropdownItem.putData(
+							"itemSelectorURL", _getItemSelectorURL());
+						dropdownItem.setLabel(LanguageUtil.get(request, "add"));
+					});
+			}
+		};
 	}
 
 	@Override

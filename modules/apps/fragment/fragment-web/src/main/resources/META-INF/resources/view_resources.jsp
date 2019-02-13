@@ -76,6 +76,5 @@ FragmentCollectionResourcesManagementToolbarDisplayContext fragmentCollectionRes
 
 <liferay-frontend:component
 	componentId="<%= fragmentCollectionResourcesManagementToolbarDisplayContext.getDefaultEventHandler() %>"
-	context="<%= fragmentCollectionResourcesManagementToolbarDisplayContext.getComponentContext() %>"
 	module="js/FragmentCollectionResourcesManagementToolbarDefaultEventHandler.es"
 />

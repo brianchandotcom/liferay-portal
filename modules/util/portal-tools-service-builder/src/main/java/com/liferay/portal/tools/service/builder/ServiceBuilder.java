@@ -614,6 +614,21 @@ public class ServiceBuilder {
 
 			_compatProperties = _getCompatProperties(matcher.group(1));
 
+			Collections.addAll(
+				_badAliasNames,
+				StringUtil.split(
+					_compatProperties.getProperty("bad.alias.names.extra")));
+
+			Collections.addAll(
+				_badColumnNames,
+				StringUtil.split(
+					_compatProperties.getProperty("bad.column.names.extra")));
+
+			Collections.addAll(
+				_badTableNames,
+				StringUtil.split(
+					_compatProperties.getProperty("bad.table.names.extra")));
+
 			Element rootElement = document.getRootElement();
 
 			String packagePath = rootElement.attributeValue("package-path");

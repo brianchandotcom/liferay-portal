@@ -218,7 +218,7 @@ public class DDMDataProviderInstanceFinderImpl
 				sql, "LOWER(DDMDataProviderInstance.name)", StringPool.LIKE,
 				false, names);
 			sql = _customSQL.replaceKeywords(
-				sql, "DDMDataProviderInstance.description_", StringPool.LIKE,
+				sql, "DDMDataProviderInstance.description", StringPool.LIKE,
 				true, descriptions);
 			sql = _customSQL.replaceAndOperator(sql, andOperator);
 
@@ -285,7 +285,7 @@ public class DDMDataProviderInstanceFinderImpl
 				sql, "LOWER(DDMDataProviderInstance.name)", StringPool.LIKE,
 				false, names);
 			sql = _customSQL.replaceKeywords(
-				sql, "DDMDataProviderInstance.description_", StringPool.LIKE,
+				sql, "DDMDataProviderInstance.description", StringPool.LIKE,
 				true, descriptions);
 			sql = _customSQL.replaceAndOperator(sql, andOperator);
 			sql = _customSQL.replaceOrderBy(sql, orderByComparator);

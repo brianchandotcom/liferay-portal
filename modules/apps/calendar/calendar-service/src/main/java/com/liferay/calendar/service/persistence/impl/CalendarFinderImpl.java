@@ -270,7 +270,7 @@ public class CalendarFinderImpl
 			sql = _customSQL.replaceKeywords(
 				sql, "LOWER(name)", StringPool.LIKE, false, names);
 			sql = _customSQL.replaceKeywords(
-				sql, "description_", StringPool.LIKE, false, descriptions);
+				sql, "description", StringPool.LIKE, false, descriptions);
 			sql = _customSQL.replaceAndOperator(sql, andOperator);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
@@ -343,7 +343,7 @@ public class CalendarFinderImpl
 			sql = _customSQL.replaceKeywords(
 				sql, "LOWER(name)", StringPool.LIKE, false, names);
 			sql = _customSQL.replaceKeywords(
-				sql, "description_", StringPool.LIKE, false, descriptions);
+				sql, "description", StringPool.LIKE, false, descriptions);
 			sql = _customSQL.replaceAndOperator(sql, andOperator);
 
 			StringBundler sb = new StringBundler();

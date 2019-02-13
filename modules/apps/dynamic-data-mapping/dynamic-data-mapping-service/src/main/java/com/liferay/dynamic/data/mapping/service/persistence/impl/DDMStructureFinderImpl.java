@@ -394,7 +394,7 @@ public class DDMStructureFinderImpl
 				false, names);
 
 			sql = _customSQL.replaceKeywords(
-				sql, "DDMStructure.description_", StringPool.LIKE, true,
+				sql, "DDMStructure.description", StringPool.LIKE, true,
 				descriptions);
 
 			sql = _customSQL.replaceAndOperator(sql, andOperator);
@@ -467,7 +467,7 @@ public class DDMStructureFinderImpl
 				false, names);
 
 			sql = _customSQL.replaceKeywords(
-				sql, "DDMStructure.description_", StringPool.LIKE, true,
+				sql, "DDMStructure.description", StringPool.LIKE, true,
 				descriptions);
 
 			sql = _customSQL.replaceAndOperator(sql, andOperator);
@@ -536,7 +536,7 @@ public class DDMStructureFinderImpl
 				sql, "LOWER(CAST_TEXT(DDMStructure.name))", StringPool.LIKE,
 				false, names);
 			sql = _customSQL.replaceKeywords(
-				sql, "DDMStructure.description_", StringPool.LIKE, true,
+				sql, "DDMStructure.description", StringPool.LIKE, true,
 				descriptions);
 			sql = _customSQL.replaceAndOperator(sql, andOperator);
 
@@ -604,7 +604,7 @@ public class DDMStructureFinderImpl
 				sql, "LOWER(CAST_TEXT(DDMStructure.name))", StringPool.LIKE,
 				false, names);
 			sql = _customSQL.replaceKeywords(
-				sql, "DDMStructure.description_", StringPool.LIKE, true,
+				sql, "DDMStructure.description", StringPool.LIKE, true,
 				descriptions);
 			sql = _customSQL.replaceAndOperator(sql, andOperator);
 

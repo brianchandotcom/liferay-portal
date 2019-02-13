@@ -363,7 +363,7 @@ public class CalendarBookingFinderImpl
 			sql = _customSQL.replaceKeywords(
 				sql, "LOWER(title)", StringPool.LIKE, false, titles);
 			sql = _customSQL.replaceKeywords(
-				sql, "description_", StringPool.LIKE, false, descriptions);
+				sql, "description", StringPool.LIKE, false, descriptions);
 			sql = _customSQL.replaceKeywords(
 				sql, "LOWER(location)", StringPool.LIKE, true, locations);
 			sql = _customSQL.replaceAndOperator(sql, andOperator);
@@ -473,7 +473,7 @@ public class CalendarBookingFinderImpl
 			sql = _customSQL.replaceKeywords(
 				sql, "LOWER(title)", StringPool.LIKE, false, titles);
 			sql = _customSQL.replaceKeywords(
-				sql, "description_", StringPool.LIKE, false, descriptions);
+				sql, "description", StringPool.LIKE, false, descriptions);
 			sql = _customSQL.replaceKeywords(
 				sql, "LOWER(location)", StringPool.LIKE, true, locations);
 			sql = _customSQL.replaceAndOperator(sql, andOperator);

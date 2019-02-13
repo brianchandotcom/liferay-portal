@@ -841,12 +841,12 @@ public class RoleFinderImpl extends RoleFinderBaseImpl implements RoleFinder {
 				sql, "LOWER(Role_.name)", StringPool.LIKE, false,
 				keywordsArray);
 			sql = CustomSQLUtil.replaceKeywords(
-				sql, "LOWER(Role_.description_)", StringPool.LIKE, true,
+				sql, "LOWER(Role_.description)", StringPool.LIKE, true,
 				keywordsArray);
 			sql = CustomSQLUtil.replaceKeywords(
 				sql, "LOWER(Team.name)", StringPool.LIKE, false, keywordsArray);
 			sql = CustomSQLUtil.replaceKeywords(
-				sql, "LOWER(Team.description_)", StringPool.LIKE, true,
+				sql, "LOWER(Team.description)", StringPool.LIKE, true,
 				keywordsArray);
 			sql = StringUtil.replace(
 				sql, "[$EXCLUDED_NAMES$]", getExcludedNames(excludedNames));
@@ -922,7 +922,7 @@ public class RoleFinderImpl extends RoleFinderBaseImpl implements RoleFinder {
 			sql = CustomSQLUtil.replaceKeywords(
 				sql, "LOWER(Role_.name)", StringPool.LIKE, false, names);
 			sql = CustomSQLUtil.replaceKeywords(
-				sql, "LOWER(Role_.description_)", StringPool.LIKE, true,
+				sql, "LOWER(Role_.description)", StringPool.LIKE, true,
 				descriptions);
 			sql = StringUtil.replace(sql, "[$TYPE$]", getTypes(types.length));
 			sql = StringUtil.replace(sql, "[$JOIN$]", getJoin(params));
@@ -998,12 +998,12 @@ public class RoleFinderImpl extends RoleFinderBaseImpl implements RoleFinder {
 				sql, "LOWER(Role_.name)", StringPool.LIKE, false,
 				keywordsArray);
 			sql = CustomSQLUtil.replaceKeywords(
-				sql, "LOWER(Role_.description_)", StringPool.LIKE, true,
+				sql, "LOWER(Role_.description)", StringPool.LIKE, true,
 				keywordsArray);
 			sql = CustomSQLUtil.replaceKeywords(
 				sql, "LOWER(Team.name)", StringPool.LIKE, false, keywordsArray);
 			sql = CustomSQLUtil.replaceKeywords(
-				sql, "LOWER(Team.description_)", StringPool.LIKE, true,
+				sql, "LOWER(Team.description)", StringPool.LIKE, true,
 				keywordsArray);
 			sql = StringUtil.replace(
 				sql, "[$EXCLUDED_NAMES$]", getExcludedNames(excludedNames));
@@ -1069,7 +1069,7 @@ public class RoleFinderImpl extends RoleFinderBaseImpl implements RoleFinder {
 			sql = CustomSQLUtil.replaceKeywords(
 				sql, "LOWER(Role_.name)", StringPool.LIKE, false, names);
 			sql = CustomSQLUtil.replaceKeywords(
-				sql, "LOWER(Role_.description_)", StringPool.LIKE, true,
+				sql, "LOWER(Role_.description)", StringPool.LIKE, true,
 				descriptions);
 			sql = StringUtil.replace(sql, "[$TYPE$]", getTypes(types.length));
 			sql = StringUtil.replace(sql, "[$JOIN$]", getJoin(params));

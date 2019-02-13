@@ -414,7 +414,7 @@ public class AssetEntryFinderImpl
 		}
 
 		if (entryQuery.isVisible() != null) {
-			sb.append(" AND (visible_ = ?)");
+			sb.append(" AND (visible = ?)");
 		}
 
 		if (entryQuery.isExcludeZeroViewCount()) {
@@ -425,7 +425,7 @@ public class AssetEntryFinderImpl
 
 		if (Validator.isNotNull(entryQuery.getKeywords())) {
 			sb.append(" AND ((AssetEntry.userName LIKE ?) OR ");
-			sb.append("(AssetEntry.title LIKE ?) OR (AssetEntry.description_ ");
+			sb.append("(AssetEntry.title LIKE ?) OR (AssetEntry.description ");
 			sb.append("LIKE ?))");
 		}
 		else if (Validator.isNotNull(entryQuery.getUserName()) ||
@@ -457,7 +457,7 @@ public class AssetEntryFinderImpl
 					sb.append(entryQuery.isAndOperator() ? " AND " : " OR ");
 				}
 
-				sb.append("(AssetEntry.description_ LIKE ?)");
+				sb.append("(AssetEntry.description LIKE ?)");
 			}
 
 			sb.append(")");

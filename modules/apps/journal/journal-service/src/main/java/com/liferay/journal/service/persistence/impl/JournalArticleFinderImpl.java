@@ -1164,7 +1164,7 @@ public class JournalArticleFinderImpl
 				sql, "LOWER(JournalArticleLocalization.title)", StringPool.LIKE,
 				false, titles);
 			sql = _customSQL.replaceKeywords(
-				sql, "JournalArticleLocalization.description_", StringPool.LIKE,
+				sql, "JournalArticleLocalization.description", StringPool.LIKE,
 				false, descriptions);
 			sql = _customSQL.replaceKeywords(
 				sql, "JournalArticle.content", StringPool.LIKE, false,
@@ -1649,7 +1649,7 @@ public class JournalArticleFinderImpl
 				false, titles);
 
 			sql = _customSQL.replaceKeywords(
-				sql, "JournalArticleLocalization.description_", StringPool.LIKE,
+				sql, "JournalArticleLocalization.description", StringPool.LIKE,
 				true, descriptions);
 
 			sql = _customSQL.replaceKeywords(
@@ -1661,7 +1661,7 @@ public class JournalArticleFinderImpl
 				StringPool.LIKE, false, titles);
 
 			sql = _customSQL.replaceKeywords(
-				sql, "tempJournalArticleLocalization.description_",
+				sql, "tempJournalArticleLocalization.description",
 				StringPool.LIKE, false, descriptions);
 
 			sql = replaceStructureTemplate(

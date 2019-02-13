@@ -908,7 +908,7 @@ public class GroupFinderImpl
 		sql = CustomSQLUtil.replaceKeywords(
 			sql, "LOWER(Group_.name)", StringPool.LIKE, false, names);
 		sql = CustomSQLUtil.replaceKeywords(
-			sql, "LOWER(Group_.description_)", StringPool.LIKE, true,
+			sql, "LOWER(Group_.description)", StringPool.LIKE, true,
 			descriptions);
 		sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
 
@@ -1026,7 +1026,7 @@ public class GroupFinderImpl
 		sql = CustomSQLUtil.replaceKeywords(
 			sql, "LOWER(Group_.name)", StringPool.LIKE, false, names);
 		sql = CustomSQLUtil.replaceKeywords(
-			sql, "LOWER(Group_.description_)", StringPool.LIKE, true,
+			sql, "LOWER(Group_.description)", StringPool.LIKE, true,
 			descriptions);
 
 		sql = replaceJoinAndWhere(sql, params);

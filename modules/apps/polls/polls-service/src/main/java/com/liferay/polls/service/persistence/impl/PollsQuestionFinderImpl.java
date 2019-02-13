@@ -142,7 +142,7 @@ public class PollsQuestionFinderImpl
 				sql, "LOWER(PollsQuestion.title)", StringPool.LIKE, false,
 				titles);
 			sql = _customSQL.replaceKeywords(
-				sql, "PollsQuestion.description_", StringPool.LIKE, true,
+				sql, "PollsQuestion.description", StringPool.LIKE, true,
 				descriptions);
 			sql = _customSQL.replaceAndOperator(sql, andOperator);
 
@@ -209,7 +209,7 @@ public class PollsQuestionFinderImpl
 				sql, "LOWER(PollsQuestion.title)", StringPool.LIKE, false,
 				titles);
 			sql = _customSQL.replaceKeywords(
-				sql, "PollsQuestion.description_", StringPool.LIKE, true,
+				sql, "PollsQuestion.description", StringPool.LIKE, true,
 				descriptions);
 			sql = _customSQL.replaceAndOperator(sql, andOperator);
 			sql = _customSQL.replaceOrderBy(sql, orderByComparator);

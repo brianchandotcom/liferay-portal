@@ -139,7 +139,7 @@ public class ScopeLocatorImpl implements ScopeLocator {
 			}
 		}
 
-		for (int i = 0; i < matchedScopesUnmapped.size(); i++) {
+		for (int i = 0; i < matchedScopesUnmapped.size();) {
 			ScopeMatcher scopeMatcher = scopeMatcherFactory.create(
 				matchedScopesUnmapped.get(i));
 
@@ -155,6 +155,8 @@ public class ScopeLocatorImpl implements ScopeLocator {
 						}
 					}
 				});
+
+			i++;
 		}
 
 		Stream<String> stream = matchedScopesUnmapped.stream();

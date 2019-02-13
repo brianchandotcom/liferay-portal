@@ -7,8 +7,6 @@ import getFormElement from '../../../../src/main/resources/META-INF/resources/li
 describe(
 	'Liferay.Util.postForm',
 	() => {
-		let sampleUrl = 'http://sampleurl.com';
-
 		afterEach(
 			() => {
 				global.submitForm.mockRestore();
@@ -26,42 +24,56 @@ describe(
 			() => {
 				let fragment = dom.buildFragment('<div />');
 
-				postForm(undefined, sampleUrl);
-				postForm(fragment.firstElementChild, sampleUrl);
+				postForm(undefined);
+				postForm(fragment.firstElementChild);
 
 				expect(global.submitForm.mock.calls.length).toBe(0);
 			}
 		);
 
 		it(
-			'should do nothing if the url parameter is not a string',
+			'should submit form even if options parameter is not set',
 			() => {
 				let fragment = dom.buildFragment('<form />');
 
 				let form = fragment.firstElementChild;
 
-				postForm(form, undefined);
-				postForm(form, {});
-
-				expect(global.submitForm.mock.calls.length).toBe(0);
-			}
-		);
-
-		it(
-			'should submit form if the form and url parameters are set, even if the data parameter is not set',
-			() => {
-				let fragment = dom.buildFragment('<form />');
-
-				let form = fragment.firstElementChild;
-
-				postForm(form, sampleUrl);
+				postForm(form);
 
 				expect(global.submitForm.mock.calls.length).toBe(1);
 			}
 		);
 
 		it(
-			'should set given element values in data parameter, and submit form',
+			'should do nothing if the url optional parameter is not a string',
+			() => {
+				let fragment = dom.buildFragment('<form />');
+
+				let form = fragment.firstElementChild;
+
+				postForm(form, {url: undefined});
+				postForm(form, {url: {}});
+
+				expect(global.submitForm.mock.calls.length).toBe(0);
+			}
+		);
+
+		it(
+			'should do nothing if the data optional parameter is not an object',
+			() => {
+				let fragment = dom.buildFragment('<form />');
+
+				let form = fragment.firstElementChild;
+
+				postForm(form, {data: undefined});
+				postForm(form, {data: 'abc'});
+
+				expect(global.submitForm.mock.calls.length).toBe(0);
+			}
+		);
+
+		it(
+			'should set given element values in data parameter, and submit form to a given url',
 			() => {
 				let fragment = dom.buildFragment(`
 					<form data-fm-namespace="_com_liferay_test_portlet_" id="fm">
@@ -74,11 +86,14 @@ describe(
 
 				postForm(
 					form,
-					sampleUrl,
 					{
-						foo: 'def',
-						bar: '456'
+						data: {
+							foo: 'def',
+							bar: '456'
+						},
+						url: 'http://sampleurl.com'
 					}
+
 				);
 
 				const fooElement = getFormElement(form, 'foo');

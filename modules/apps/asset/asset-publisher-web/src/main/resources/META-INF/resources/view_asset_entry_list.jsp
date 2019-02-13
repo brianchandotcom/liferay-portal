@@ -14,7 +14,14 @@
  */
 --%>
 
+<%@ include file="/init.jsp" %>
+
 <%
+long assetCategoryId = ParamUtil.getLong(request, "categoryId");
+String assetTagName = ParamUtil.getString(request, "tag");
+
+List<AssetEntryResult> assetEntryResults = (List<AssetEntryResult>)request.getAttribute("view.jsp-assetEntryResults");
+
 for (AssetEntryResult assetEntryResult : assetEntryResults) {
 	List<AssetEntry> assetEntries = assetEntryResult.getAssetEntries();
 %>
@@ -136,3 +143,7 @@ for (AssetEntryResult assetEntryResult : assetEntryResults) {
 		</div>
 	</liferay-ddm:template-renderer>
 </c:if>
+
+<%!
+private static Log _log = LogFactoryUtil.getLog("com_liferay_asset_publisher_web.view_asset_entry_list_jsp");
+%>

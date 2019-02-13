@@ -104,9 +104,11 @@ if (!assetPublisherDisplayContext.isPaginationTypeNone()) {
 
 		<%
 		List<AssetEntryResult> assetEntryResults = assetPublisherHelper.getAssetEntryResults(searchContainer, assetPublisherDisplayContext.getAssetEntryQuery(), assetPublisherDisplayContext.getLayout(), portletPreferences, assetPublisherDisplayContext.getPortletName(), assetPublisherDisplayContext.getLocale(), assetPublisherDisplayContext.getTimeZone(), assetPublisherDisplayContext.getCompanyId(), assetPublisherDisplayContext.getScopeGroupId(), assetPublisherDisplayContext.getUserId(), assetPublisherDisplayContext.getClassNameIds(), null);
+
+		request.setAttribute("view.jsp-assetEntryResults", assetEntryResults);
 		%>
 
-		<%@ include file="/view_asset_entry_list.jspf" %>
+		<liferay-util:include page="/view_asset_entry_list.jsp" servletContext="<%= application %>" />
 	</c:when>
 	<c:when test="<%= assetPublisherDisplayContext.isSelectionStyleManual() %>">
 
@@ -122,9 +124,11 @@ if (!assetPublisherDisplayContext.isPaginationTypeNone()) {
 		List<AssetEntryResult> assetEntryResults = new ArrayList<>();
 
 		assetEntryResults.add(new AssetEntryResult(assetEntries));
+
+		request.setAttribute("view.jsp-assetEntryResults", assetEntryResults);
 		%>
 
-		<%@ include file="/view_asset_entry_list.jspf" %>
+		<liferay-util:include page="/view_asset_entry_list.jsp" servletContext="<%= application %>" />
 	</c:when>
 	<c:otherwise>
 
@@ -170,7 +174,3 @@ if (!assetPublisherDisplayContext.isPaginationTypeNone()) {
 		window.location.hash = assetEntryId;
 	}
 </aui:script>
-
-<%!
-private static Log _log = LogFactoryUtil.getLog("com_liferay_asset_publisher_web.view_jsp");
-%>

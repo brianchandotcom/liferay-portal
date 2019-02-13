@@ -27,7 +27,7 @@ definition {
 			Navigator.gotoNavNested(navNested = "Basic Pages");
 
 			Card.clickSitePagesCardLink(
-				cardName = "Content Pages"
+				cardName = "Content Page"
 			);
 		}
 

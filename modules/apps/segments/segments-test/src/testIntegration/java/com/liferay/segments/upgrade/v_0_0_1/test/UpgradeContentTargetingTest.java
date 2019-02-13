@@ -396,6 +396,43 @@ public class UpgradeContentTargetingTest {
 			"(userGroupIds eq '12345')", criterion.getFilterString());
 	}
 
+	@Test
+	public void testUpgradeContentTargetingUserSegmentsWithUserLoggedRule()
+		throws Exception {
+
+		long contentTargetingUserSegmentId = -1L;
+
+		insertContentTargetingRuleInstance(
+			contentTargetingUserSegmentId, "UserLoggedRule", StringPool.BLANK);
+
+		insertContentTargetingUserSegment(
+			contentTargetingUserSegmentId,
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomLocaleStringMap());
+
+		_upgradeContentTargeting.upgrade();
+
+		SegmentsEntry segmentsEntry =
+			_segmentsEntryLocalService.fetchSegmentsEntry(
+				_group.getGroupId(), "CT." + contentTargetingUserSegmentId,
+				false);
+
+		Assert.assertNotNull(segmentsEntry);
+
+		Criteria criteriaObj = segmentsEntry.getCriteriaObj();
+
+		Assert.assertNotNull(criteriaObj);
+
+		Criteria.Criterion criterion = criteriaObj.getCriterion("context");
+
+		Assert.assertNotNull(criterion);
+
+		Assert.assertEquals(
+			Criteria.Conjunction.AND,
+			Criteria.Conjunction.parse(criterion.getConjunction()));
+		Assert.assertEquals("(signedIn eq true)", criterion.getFilterString());
+	}
+
 	protected void createContentTargetingTables()
 		throws IOException, SQLException {
 

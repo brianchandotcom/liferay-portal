@@ -80,7 +80,7 @@ public class EditDiscussionStrutsAction implements StrutsAction {
 
 		try {
 			String redirect = _portal.escapeRedirect(
-				ParamUtil.getString(request, "redirect"));
+				ParamUtil.getString(namespacedRequest, "redirect"));
 
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
 				long commentId = updateComment(namespacedRequest);

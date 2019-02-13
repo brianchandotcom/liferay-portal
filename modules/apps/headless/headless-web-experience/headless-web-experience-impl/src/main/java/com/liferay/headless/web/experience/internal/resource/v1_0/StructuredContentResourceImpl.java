@@ -114,17 +114,17 @@ public class StructuredContentResourceImpl
 
 	@Override
 	public Page<StructuredContent>
-			getContentSpaceContentStructureStructuredContentPage(
+			getContentSpaceContentStructureStructuredContentsPage(
 				Long contentSpaceId, Long contentStructureId, Filter filter,
 				Pagination pagination, Sort[] sorts)
 		throws Exception {
 
-		return getContentSpaceStructuredContentPage(
+		return getContentSpaceStructuredContentsPage(
 			contentSpaceId, filter, pagination, sorts);
 	}
 
 	@Override
-	public Page<StructuredContent> getContentSpaceStructuredContentPage(
+	public Page<StructuredContent> getContentSpaceStructuredContentsPage(
 			Long contentSpaceId, Filter filter, Pagination pagination,
 			Sort[] sorts)
 		throws Exception {

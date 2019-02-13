@@ -44,7 +44,7 @@ public class ContentStructureResourceImpl
 	extends BaseContentStructureResourceImpl {
 
 	@Override
-	public Page<ContentStructure> getContentSpaceContentStructurePage(
+	public Page<ContentStructure> getContentSpaceContentStructuresPage(
 			Long contentSpaceId, Pagination pagination)
 		throws Exception {
 

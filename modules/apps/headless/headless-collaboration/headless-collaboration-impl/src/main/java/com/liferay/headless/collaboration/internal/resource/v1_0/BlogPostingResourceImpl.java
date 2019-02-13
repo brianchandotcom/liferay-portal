@@ -68,7 +68,7 @@ public class BlogPostingResourceImpl extends BaseBlogPostingResourceImpl {
 	}
 
 	@Override
-	public Page<BlogPosting> getContentSpaceBlogPostingPage(
+	public Page<BlogPosting> getContentSpaceBlogPostingsPage(
 		Long parentId, Pagination pagination) {
 
 		return Page.of(

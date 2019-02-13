@@ -52,7 +52,7 @@ public class CategoryResourceImpl extends BaseCategoryResourceImpl {
 	}
 
 	@Override
-	public Page<Category> getCategoryCategoryPage(
+	public Page<Category> getCategoryCategoriesPage(
 			Long categoryId, Pagination pagination)
 		throws Exception {
 
@@ -67,7 +67,7 @@ public class CategoryResourceImpl extends BaseCategoryResourceImpl {
 	}
 
 	@Override
-	public Page<Category> getVocabularyCategoryPage(
+	public Page<Category> getVocabularyCategoriesPage(
 			Long vocabularyId, Pagination pagination)
 		throws Exception {
 

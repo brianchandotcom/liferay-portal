@@ -45,7 +45,7 @@ public class FolderResourceImpl extends BaseFolderResourceImpl {
 	}
 
 	@Override
-	public Page<Folder> getDocumentsRepositoryFolderPage(
+	public Page<Folder> getDocumentsRepositoryFoldersPage(
 			Long documentsRepositoryId, Pagination pagination)
 		throws Exception {
 
@@ -60,7 +60,7 @@ public class FolderResourceImpl extends BaseFolderResourceImpl {
 	}
 
 	@Override
-	public Page<Folder> getFolderFolderPage(
+	public Page<Folder> getFolderFoldersPage(
 			Long folderId, Pagination pagination)
 		throws Exception {
 

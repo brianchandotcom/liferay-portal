@@ -87,13 +87,13 @@ definition {
 		if (!(contains("${pageTemplateName}", "{pageTemplateName}"))) {
 			Navigator.gotoNavNested(navNested = "Global Templates");
 
-			LexiconCard.clickCard(
-				card = "${pageTemplateName}"
+			Card.clickSitePagesCardLink(
+				cardName = "${pageTemplateName}"
 			);
 		}
 		else {
-			LexiconCard.clickCard(
-				card = "${sitePageType}"
+			Card.clickSitePagesCardLink(
+				cardName = "${sitePageType}"
 			);
 		}
 	}

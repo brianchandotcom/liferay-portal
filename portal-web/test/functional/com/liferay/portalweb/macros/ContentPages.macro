@@ -25,8 +25,8 @@ definition {
 			var pageTemplateName = "Content Page";
 		}
 
-		LexiconCard.clickCard(
-			card = "${pageTemplateName}"
+		Card.clickSitePagesCardLink(
+			cardName = "${pageTemplateName}"
 		);
 
 		SelectFrame(locator1 = "IFrame#DIALOG");

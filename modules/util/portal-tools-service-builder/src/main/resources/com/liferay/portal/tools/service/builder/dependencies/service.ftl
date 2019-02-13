@@ -35,8 +35,6 @@ import ${import};
  *
  * @author ${author}
  * @see ${entity.name}LocalServiceUtil
- * @see ${packagePath}.service.base.${entity.name}LocalServiceBaseImpl
- * @see ${packagePath}.service.impl.${entity.name}LocalServiceImpl
 <#if classDeprecated>
  * @deprecated ${classDeprecatedComment}
 </#if>
@@ -50,8 +48,6 @@ import ${import};
  *
  * @author ${author}
  * @see ${entity.name}ServiceUtil
- * @see ${packagePath}.service.base.${entity.name}ServiceBaseImpl
- * @see ${packagePath}.service.impl.${entity.name}ServiceImpl
 <#if classDeprecated>
  * @deprecated ${classDeprecatedComment}
 </#if>
@@ -120,9 +116,9 @@ public interface ${entity.name}${sessionTypeName}Service
 	 * NOTE FOR DEVELOPERS:
 	 *
 <#if stringUtil.equals(sessionTypeName, "Local")>
-	 * Never modify or reference this interface directly. Always use {@link ${entity.name}LocalServiceUtil} to access the ${entity.humanName} local service. Add custom service methods to {@link ${packagePath}.service.impl.${entity.name}LocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify or reference this interface directly. Always use {@link ${entity.name}LocalServiceUtil} to access the ${entity.humanName} local service. Add custom service methods to <code>${packagePath}.service.impl.${entity.name}LocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 <#else>
-	 * Never modify or reference this interface directly. Always use {@link ${entity.name}ServiceUtil} to access the ${entity.humanName} remote service. Add custom service methods to {@link ${packagePath}.service.impl.${entity.name}ServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify or reference this interface directly. Always use {@link ${entity.name}ServiceUtil} to access the ${entity.humanName} remote service. Add custom service methods to <code>${packagePath}.service.impl.${entity.name}ServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 </#if>
 	 */
 

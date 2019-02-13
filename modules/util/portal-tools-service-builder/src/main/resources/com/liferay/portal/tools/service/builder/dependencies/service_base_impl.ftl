@@ -123,7 +123,6 @@ import ${apiPackagePath}.service.${entity.name}${sessionTypeName}Service;
  *
  * @author ${author}
  * @see ${packagePath}.service.impl.${entity.name}LocalServiceImpl
- * @see ${apiPackagePath}.service.${entity.name}LocalServiceUtil
 <#if classDeprecated>
  * @deprecated ${classDeprecatedComment}
 </#if>
@@ -147,7 +146,7 @@ import ${apiPackagePath}.service.${entity.name}${sessionTypeName}Service;
 		/*
 		 * NOTE FOR DEVELOPERS:
 		 *
-		 * Never modify or reference this class directly. Always use {@link ${apiPackagePath}.service.${entity.name}LocalServiceUtil} to access the ${entity.humanName} local service.
+		 * Never modify or reference this class directly. Use <code>${apiPackagePath}.service.${entity.name}LocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>${apiPackagePath}.service.${entity.name}LocalServiceUtil</code>.
 		 */
 <#else>
 /**
@@ -159,7 +158,6 @@ import ${apiPackagePath}.service.${entity.name}${sessionTypeName}Service;
  *
  * @author ${author}
  * @see ${packagePath}.service.impl.${entity.name}ServiceImpl
- * @see ${apiPackagePath}.service.${entity.name}ServiceUtil
 <#if classDeprecated>
  * @deprecated ${classDeprecatedComment}
 </#if>
@@ -175,7 +173,7 @@ import ${apiPackagePath}.service.${entity.name}${sessionTypeName}Service;
 		/*
 		 * NOTE FOR DEVELOPERS:
 		 *
-		 * Never modify or reference this class directly. Always use {@link ${apiPackagePath}.service.${entity.name}ServiceUtil} to access the ${entity.humanName} remote service.
+		 * Never modify or reference this class directly. Use <code>${apiPackagePath}.service.${entity.name}Service</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>${apiPackagePath}.service.${entity.name}ServiceUtil</code>.
 		 */
 </#if>
 

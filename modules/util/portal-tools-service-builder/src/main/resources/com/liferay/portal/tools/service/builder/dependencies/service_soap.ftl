@@ -17,20 +17,21 @@ import java.util.Map;
 
 /**
  * Provides the SOAP utility for the
- * {@link ${apiPackagePath}.service.${entity.name}ServiceUtil} service utility. The
- * static methods of this class calls the same methods of the service utility.
- * However, the signatures are different because it is difficult for SOAP to
- * support certain types.
+ * <code>${apiPackagePath}.service.${entity.name}ServiceUtil</code> service
+ * utility. The static methods of this class call the same methods of the
+ * service utility. However, the signatures are different because it is
+ * difficult for SOAP to support certain types.
 <#if entity.hasEntityColumns()>
  *
  * <p>
  * ServiceBuilder follows certain rules in translating the methods. For example,
- * if the method in the service utility returns a {@link java.util.List}, that
- * is translated to an array of {@link ${apiPackagePath}.model.${entity.name}Soap}.
- * If the method in the service utility returns a
- * {@link ${apiPackagePath}.model.${entity.name}}, that is translated to a
- * {@link ${apiPackagePath}.model.${entity.name}Soap}. Methods that SOAP cannot
- * safely wire are skipped.
+ * if the method in the service utility returns a <code>java.util.List</code>,
+ * that is translated to an array of
+ * <code>${apiPackagePath}.model.${entity.name}Soap</code>. If the method in the
+ * service utility returns a
+ * <code>${apiPackagePath}.model.${entity.name}</code>, that is translated to a
+ * <code>${apiPackagePath}.model.${entity.name}Soap</code>. Methods that SOAP
+ * cannot safely wire are skipped.
  * </p>
 </#if>
  *
@@ -53,10 +54,6 @@ import java.util.Map;
  *
  * @author ${author}
  * @see ${entity.name}ServiceHttp
-<#if entity.hasEntityColumns()>
- * @see ${apiPackagePath}.model.${entity.name}Soap
-</#if>
- * @see ${apiPackagePath}.service.${entity.name}ServiceUtil
 <#if classDeprecated>
  * @deprecated ${classDeprecatedComment}
 </#if>

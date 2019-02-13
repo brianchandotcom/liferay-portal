@@ -28,7 +28,6 @@ import java.util.Set;
  * </p>
  *
  * @author ${author}
- * @see ${packagePath}.service.persistence.impl.${entity.name}PersistenceImpl
  * @see ${entity.name}Util
 <#if classDeprecated>
  * @deprecated ${classDeprecatedComment}

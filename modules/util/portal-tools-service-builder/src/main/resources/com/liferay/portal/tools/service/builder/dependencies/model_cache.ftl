@@ -29,7 +29,6 @@ import java.util.Map;
  * The cache model class for representing ${entity.name} in entity cache.
  *
  * @author ${author}
- * @see ${entity.name}
 <#if classDeprecated>
  * @deprecated ${classDeprecatedComment}
 </#if>

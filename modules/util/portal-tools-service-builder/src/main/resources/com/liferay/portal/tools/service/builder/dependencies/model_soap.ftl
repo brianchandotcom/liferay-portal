@@ -21,9 +21,6 @@ import java.util.Map;
  * This class is used by SOAP remote services<#if entity.hasRemoteService()>, specifically {@link ${packagePath}.service.http.${entity.name}ServiceSoap}</#if>.
  *
  * @author ${author}
-<#if entity.hasRemoteService()>
- * @see ${packagePath}.service.http.${entity.name}ServiceSoap
-</#if>
 <#if classDeprecated>
  * @deprecated ${classDeprecatedComment}
 </#if>

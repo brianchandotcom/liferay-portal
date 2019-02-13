@@ -15,8 +15,6 @@ import com.liferay.portal.kernel.util.LocaleThreadLocal;
  *
  * @author ${author}
  * @see ${entity.name}Model
- * @see ${packagePath}.model.impl.${entity.name}Impl
- * @see ${packagePath}.model.impl.${entity.name}ModelImpl
 <#if classDeprecated>
  * @deprecated ${classDeprecatedComment}
 </#if>
@@ -57,7 +55,7 @@ public interface ${entity.name} extends
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this interface directly. Add methods to {@link ${packagePath}.model.impl.${entity.name}Impl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add methods to <code>${packagePath}.model.impl.${entity.name}Impl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 
 	<#if entity.hasUuidAccessor()>

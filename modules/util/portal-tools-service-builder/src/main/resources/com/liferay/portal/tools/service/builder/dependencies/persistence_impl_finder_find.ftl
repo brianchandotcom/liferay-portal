@@ -2160,7 +2160,7 @@ that may or may not be enforced with a unique index at the database level. Case
 
 <#if !entityFinder.isCollection() || entityFinder.isUnique()>
 	/**
-	 * Returns the ${entity.humanName} where ${entityFinder.getHumanConditions(false)} or throws a {@link ${noSuchEntity}Exception} if it could not be found.
+	 * Returns the ${entity.humanName} where ${entityFinder.getHumanConditions(false)} or throws a <code>${noSuchEntity}Exception</code> if it could not be found.
 	 *
 	<#list entityColumns as entityColumn>
 	 * @param ${entityColumn.name} the ${entityColumn.humanName}

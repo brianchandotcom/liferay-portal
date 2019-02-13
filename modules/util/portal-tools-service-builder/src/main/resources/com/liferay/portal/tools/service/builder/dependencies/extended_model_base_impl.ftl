@@ -42,7 +42,7 @@ public abstract class ${entity.name}BaseImpl extends ${entity.name}ModelImpl imp
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. All methods that expect a ${entity.humanName} model instance should use the {@link ${entity.name}} interface instead.
+	 * Never modify or reference this class directly. All methods that expect a ${entity.humanName} model instance should use the <code>${entity.name}</code> interface instead.
 	 */
 
 	<#if entity.hasLocalService() && entity.hasEntityColumns() && entity.hasPersistence()>

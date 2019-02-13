@@ -126,8 +126,6 @@ import java.util.Set;
  * </p>
  *
  * @author ${author}
- * @see ${entity.name}Persistence
- * @see ${apiPackagePath}.service.persistence.${entity.name}Util
 <#if classDeprecated>
  * @deprecated ${classDeprecatedComment}
 </#if>
@@ -144,7 +142,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Always use {@link ${entity.name}Util} to access the ${entity.humanName} persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.
+	 * Never modify or reference this class directly. Always use <code>${entity.name}Util</code> to access the ${entity.humanName} persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 
 	public static final String FINDER_CLASS_NAME_ENTITY = ${entity.name}Impl.class.getName();
@@ -261,7 +259,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 	 * Clears the cache for all ${entity.humanNames}.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The <code>com.liferay.portal.kernel.dao.orm.EntityCache</code> and <code>com.liferay.portal.kernel.dao.orm.FinderCache</code> are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -277,7 +275,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 	 * Clears the cache for the ${entity.humanName}.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The <code>com.liferay.portal.kernel.dao.orm.EntityCache</code> and <code>com.liferay.portal.kernel.dao.orm.FinderCache</code> are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -791,7 +789,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 	}
 
 	/**
-	 * Returns the ${entity.humanName} with the primary key or throws a {@link com.liferay.portal.kernel.exception.NoSuchModelException} if it could not be found.
+	 * Returns the ${entity.humanName} with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
 	 *
 	 * @param primaryKey the primary key of the ${entity.humanName}
 	 * @return the ${entity.humanName}
@@ -813,7 +811,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 	}
 
 	/**
-	 * Returns the ${entity.humanName} with the primary key or throws a {@link ${noSuchEntity}Exception} if it could not be found.
+	 * Returns the ${entity.humanName} with the primary key or throws a <code>${noSuchEntity}Exception</code> if it could not be found.
 	 *
 	 * @param ${entity.PKVarName} the primary key of the ${entity.humanName}
 	 * @return the ${entity.humanName}

@@ -17,6 +17,7 @@ package com.liferay.arquillian.extension.junit.bridge.remote.manager;
 import java.lang.annotation.Annotation;
 
 import org.jboss.arquillian.core.api.InstanceProducer;
+import org.jboss.arquillian.core.spi.Manager;
 
 /**
  * @author Matthew Tambara
@@ -42,7 +43,9 @@ public class InstanceImpl<T> implements InstanceProducer<T> {
 					value);
 		}
 
-		_manager.bindAndFire(_scope, _type, value);
+		_manager.bind(_scope, _type, value);
+
+		_manager.fire(value);
 	}
 
 	private InstanceImpl(
@@ -53,7 +56,7 @@ public class InstanceImpl<T> implements InstanceProducer<T> {
 		_manager = manager;
 	}
 
-	private final ManagerImpl _manager;
+	private final Manager _manager;
 	private final Class<? extends Annotation> _scope;
 	private final Class<T> _type;
 

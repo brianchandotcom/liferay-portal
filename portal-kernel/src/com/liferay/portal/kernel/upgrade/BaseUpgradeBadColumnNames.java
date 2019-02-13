@@ -109,7 +109,7 @@ public abstract class BaseUpgradeBadColumnNames extends UpgradeProcess {
 	}
 
 	private Map<String, String> _getTableColumnSQLs(Class<?> tableClass)
-		throws ReflectiveOperationException {
+		throws Exception {
 
 		Field tableSQLCreateField = tableClass.getField("TABLE_SQL_CREATE");
 

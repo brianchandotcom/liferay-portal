@@ -1,10 +1,10 @@
 dependencies {
 	compileInclude group: "com.fasterxml.jackson.dataformat", name: "jackson-dataformat-xml", version: "2.9.8"
-	compileInclude group: "io.github.graphql-java", name: "graphql-java-annotations", version: "5.4"
 	compileInclude group: "org.yaml", name: "snakeyaml", version: "1.23"
 
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "javax.ws.rs", name: "javax.ws.rs-api", version: "2.1"
+	compileOnly group: "io.github.graphql-java", name: "graphql-java-annotations", version: "5.4"
 	compileOnly project(":apps:portal-odata:portal-odata-api")
 	compileOnly project(":core:petra:petra-function")
 

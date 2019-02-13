@@ -229,8 +229,7 @@ public class JournalCTConfigurationTest {
 		Registry registry = RegistryUtil.getRegistry();
 
 		Object[] objects = registry.getServices(
-			"com.liferay.change.tracking.internal.configuration." +
-				"CTConfigurationRegistry",
+			"com.liferay.change.tracking.configuration.CTConfigurationRegistry",
 			null);
 
 		Object ctConfigurationRegistry = objects[0];

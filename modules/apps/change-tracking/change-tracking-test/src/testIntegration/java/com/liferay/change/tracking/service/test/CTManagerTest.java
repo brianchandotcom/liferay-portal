@@ -87,6 +87,9 @@ public class CTManagerTest {
 			testResource -> _TEST_VERSION_CLASS_ENTITY_ID
 		).setVersionEntityByVersionEntityIdFunction(
 			id -> new Object()
+		).setVersionEntityDetails(
+			o -> RandomTestUtil.randomString(),
+			o -> RandomTestUtil.randomString(), o -> 1L
 		).setEntityIdsFromVersionEntityFunctions(
 			testVersion -> _TEST_RESOURCE_CLASS_ENTITY_ID,
 			testVersion -> _TEST_VERSION_CLASS_ENTITY_ID

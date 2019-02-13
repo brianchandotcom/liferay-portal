@@ -14,6 +14,8 @@
 
 package com.liferay.portal.odata.filter.expression;
 
+import javax.ws.rs.BadRequestException;
+
 /**
  * Defines an exception for {@link ExpressionVisitor} to throw if an error
  * occurs while traversing the expression tree.
@@ -21,7 +23,7 @@ package com.liferay.portal.odata.filter.expression;
  * @author Cristina González
  * @review
  */
-public class ExpressionVisitException extends Exception {
+public class ExpressionVisitException extends BadRequestException {
 
 	/**
 	 * Creates a new {@code ExpressionVisitException} with a message.

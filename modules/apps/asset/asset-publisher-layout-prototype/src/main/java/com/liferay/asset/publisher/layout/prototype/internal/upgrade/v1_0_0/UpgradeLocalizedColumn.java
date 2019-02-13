@@ -16,7 +16,7 @@ package com.liferay.asset.publisher.layout.prototype.internal.upgrade.v1_0_0;
 
 import com.liferay.portal.kernel.upgrade.BaseUpgradeLocalizedColumn;
 import com.liferay.portal.language.LanguageResources;
-import com.liferay.portal.upgrade.v7_2_x.util.LayoutPrototypeTable;
+import com.liferay.portal.upgrade.v7_0_5.util.LayoutPrototypeTable;
 import com.liferay.portal.util.PortalInstances;
 
 /**
@@ -35,7 +35,7 @@ public class UpgradeLocalizedColumn extends BaseUpgradeLocalizedColumn {
 
 		upgradeLocalizedColumn(
 			LanguageResources.RESOURCE_BUNDLE_LOADER,
-			LayoutPrototypeTable.class, "description_", _DESCRIPTION,
+			LayoutPrototypeTable.class, "description", _DESCRIPTION,
 			"layout-prototype-web-content-description", "Description",
 			companyIds);
 	}

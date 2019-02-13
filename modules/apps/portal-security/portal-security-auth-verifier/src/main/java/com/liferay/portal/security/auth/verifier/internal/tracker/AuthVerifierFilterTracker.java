@@ -62,6 +62,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 		"default.registration.property=filter.init.auth.verifier.OAuth2RestAuthVerifier.urls.includes=*",
 		"default.registration.property=filter.init.auth.verifier.PortalSessionAuthVerifier.urls.includes=/*",
 		"default.registration.property=filter.init.guest.allowed=true",
+		"default.remote.access.filter.service.ranking:Integer=-10",
 		"default.whiteboard.property=" + HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_SERVLET + "=cxf-servlet",
 		"servlet.context.helper.select.filter=(&(!(liferay.auth.verifier=false))(osgi.jaxrs.name=*))"
 	},
@@ -82,6 +83,8 @@ public class AuthVerifierFilterTracker {
 
 		_defaultRegistrationProperties = toDictionary(
 			StringPlus.asList(properties.get("default.registration.property")));
+		_defaultRemoteAccessFilterServiceRanking = MapUtil.getInteger(
+			properties, "default.remote.access.filter.service.ranking", -10);
 		_defaultWhiteboardProperties = toDictionary(
 			StringPlus.asList(properties.get("default.whiteboard.property")));
 
@@ -138,6 +141,7 @@ public class AuthVerifierFilterTracker {
 
 	private BundleContext _bundleContext;
 	private Dictionary<String, Object> _defaultRegistrationProperties;
+	private int _defaultRemoteAccessFilterServiceRanking;
 	private Dictionary<String, Object> _defaultWhiteboardProperties;
 	private ServiceTracker<?, ?> _serviceTracker;
 
@@ -171,34 +175,105 @@ public class AuthVerifierFilterTracker {
 
 	}
 
+	private static class ServiceRegistrations {
+
+		public ServiceRegistrations(
+			ServiceRegistration<Filter> authVerifierFilterServiceRegistration,
+			ServiceRegistration<Filter> remoteAccessFilterServiceRegistration) {
+
+			_authVerifierFilterServiceRegistration =
+				authVerifierFilterServiceRegistration;
+			_remoteAccessFilterServiceRegistration =
+				remoteAccessFilterServiceRegistration;
+		}
+
+		public ServiceRegistration<Filter>
+			getAuthVerifierFilterServiceRegistration() {
+
+			return _authVerifierFilterServiceRegistration;
+		}
+
+		public ServiceRegistration<Filter>
+			getRemoteAccessFilterServiceRegistration() {
+
+			return _remoteAccessFilterServiceRegistration;
+		}
+
+		private final ServiceRegistration<Filter>
+			_authVerifierFilterServiceRegistration;
+		private final ServiceRegistration<Filter>
+			_remoteAccessFilterServiceRegistration;
+
+	}
+
 	private class ServletContextHelperServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer
-			<ServletContextHelper, ServiceRegistration<?>> {
+			<ServletContextHelper, ServiceRegistrations> {
 
 		@Override
-		public ServiceRegistration<?> addingService(
+		public ServiceRegistrations addingService(
 			ServiceReference<ServletContextHelper> serviceReference) {
 
-			return _bundleContext.registerService(
-				Filter.class, new AuthVerifierFilter(),
-				_buildProperties(serviceReference));
+			Map<String, Object> properties = new HashMap<>(
+				_getWhiteboardProperties(serviceReference));
+
+			properties.put(
+				"service.ranking",
+				MapUtil.getInteger(
+					properties, "remote.access.filter.service.ranking",
+					_defaultRemoteAccessFilterServiceRanking));
+
+			return new ServiceRegistrations(
+				_bundleContext.registerService(
+					Filter.class, new AuthVerifierFilter(),
+					new HashMapDictionary<>(
+						_buildProperties(serviceReference))),
+				_bundleContext.registerService(
+					Filter.class, new RemoteAccessFilter(),
+					new HashMapDictionary<>(properties)));
 		}
 
 		@Override
 		public void modifiedService(
 			ServiceReference<ServletContextHelper> serviceReference,
-			ServiceRegistration<?> serviceRegistration) {
+			ServiceRegistrations serviceRegistrations) {
 
-			serviceRegistration.setProperties(
-				_buildProperties(serviceReference));
+			ServiceRegistration<Filter> authVerifierFilterServiceRegistration =
+				serviceRegistrations.getAuthVerifierFilterServiceRegistration();
+
+			authVerifierFilterServiceRegistration.setProperties(
+				new HashMapDictionary<>(_buildProperties(serviceReference)));
+
+			ServiceRegistration<Filter> remoteAccessFilterServiceRegistration =
+				serviceRegistrations.getRemoteAccessFilterServiceRegistration();
+
+			Map<String, Object> properties = new HashMap<>(
+				_getWhiteboardProperties(serviceReference));
+
+			properties.put(
+				"service.ranking",
+				MapUtil.getInteger(
+					properties, "remote.access.filter.service.ranking",
+					_defaultRemoteAccessFilterServiceRanking));
+
+			remoteAccessFilterServiceRegistration.setProperties(
+				new HashMapDictionary<>(properties));
 		}
 
 		@Override
 		public void removedService(
 			ServiceReference<ServletContextHelper> serviceReference,
-			ServiceRegistration<?> serviceRegistration) {
+			ServiceRegistrations serviceRegistrations) {
 
-			serviceRegistration.unregister();
+			ServiceRegistration<Filter> authVerifierFilterServiceRegistration =
+				serviceRegistrations.getAuthVerifierFilterServiceRegistration();
+
+			authVerifierFilterServiceRegistration.unregister();
+
+			ServiceRegistration<Filter> remoteAccessFilterServiceRegistration =
+				serviceRegistrations.getRemoteAccessFilterServiceRegistration();
+
+			remoteAccessFilterServiceRegistration.unregister();
 		}
 
 		private Map<String, Object> _buildProperties(

@@ -38,6 +38,17 @@ import org.junit.runner.RunWith;
 public class TrackerAuthVerifierTest {
 
 	@Test
+	public void testRemoteAccess() throws Exception {
+		URL url = new URL(
+			_url,
+			"/o/auth-verifier-filter-tracker-remote-access-test/remoteAccess");
+
+		try (InputStream inputStream = url.openStream()) {
+			Assert.assertEquals("true", StringUtil.read(inputStream));
+		}
+	}
+
+	@Test
 	public void testRemoteUser() throws Exception {
 		URL url = new URL(
 			_url, "/o/auth-verifier-filter-tracker-enabled-test/remoteUser");

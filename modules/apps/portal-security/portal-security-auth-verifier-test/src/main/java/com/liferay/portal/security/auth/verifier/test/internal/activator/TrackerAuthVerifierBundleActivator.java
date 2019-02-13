@@ -14,6 +14,7 @@
 
 package com.liferay.portal.security.auth.verifier.test.internal.activator;
 
+import com.liferay.portal.kernel.security.access.control.AccessControlThreadLocal;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -69,6 +70,42 @@ public class TrackerAuthVerifierBundleActivator
 			"(auth-verifier-tracker-test-servlet-context-helper=true)");
 
 		registerServlet(properties, RemoteUserHttpServlet::new);
+
+		properties = new HashMapDictionary<>();
+
+		properties.put(JaxrsWhiteboardConstants.JAX_RS_NAME, "filter-enabled");
+
+		registerServletContextHelper(
+			"auth-verifier-filter-tracker-remote-access-test", properties);
+
+		properties = new HashMapDictionary<>();
+
+		properties.put(
+			HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_NAME,
+			"cxf-servlet");
+		properties.put(
+			HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_PATTERN,
+			"/remoteAccess");
+		properties.put(
+			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT,
+			"auth-verifier-filter-tracker-remote-access-test");
+
+		registerServlet(properties, RemoteAccessHttpServlet::new);
+	}
+
+	public class RemoteAccessHttpServlet extends HttpServlet {
+
+		@Override
+		protected void doGet(
+				HttpServletRequest request, HttpServletResponse response)
+			throws IOException {
+
+			PrintWriter printWriter = response.getWriter();
+
+			printWriter.write(
+				String.valueOf(AccessControlThreadLocal.isRemoteAccess()));
+		}
+
 	}
 
 	public class RemoteUserHttpServlet extends HttpServlet {

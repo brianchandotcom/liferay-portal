@@ -22,7 +22,6 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -113,7 +112,6 @@ public class Arquillian extends Runner implements Filterable {
 		if (manager == null) {
 			try {
 				manager = new ManagerImpl(
-					new ArrayList<>(),
 					Collections.singleton(LoadableExtensionLoader.class));
 
 				manager.start();

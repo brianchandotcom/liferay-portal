@@ -54,19 +54,12 @@ import org.jboss.arquillian.core.spi.event.ManagerProcessing;
  */
 public class ManagerImpl implements Manager {
 
-	public ManagerImpl(
-		Collection<Class<? extends Context>> contextClasses,
-		Collection<Class<?>> extensionClasses) {
-
+	public ManagerImpl(Collection<Class<?>> extensionClasses) {
 		try {
 			List<Extension> createdExtensions = _createExtensions(
 				extensionClasses);
 
-			List<Context> createdContexts = _createContexts(contextClasses);
-
 			_createBuiltInServices();
-
-			_contexts.addAll(createdContexts);
 
 			_extensions.addAll(createdExtensions);
 

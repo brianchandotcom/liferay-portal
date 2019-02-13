@@ -1598,6 +1598,9 @@ public class ServiceBuilder {
 
 			return true;
 		}
+		else if (methodName.equals("getBadColumnNames")) {
+			return !isVersionLTE_7_1_0();
+		}
 		else if (methodName.equals("findByPrimaryKey") ||
 				 methodName.equals("fetchByPrimaryKey") ||
 				 methodName.equals("remove")) {

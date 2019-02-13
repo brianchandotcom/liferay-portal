@@ -176,6 +176,98 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 		return predicate;
 	}
 
+	private Predicate<Context> _getGEPredicate(
+		EntityField entityField, Object fieldValue) {
+
+		if (fieldValue instanceof Comparable &&
+			(Objects.equals(entityField.getType(), EntityField.Type.DATE) ||
+			 Objects.equals(
+				 entityField.getType(), EntityField.Type.DATE_TIME) ||
+			 Objects.equals(entityField.getType(), EntityField.Type.DOUBLE) ||
+			 Objects.equals(entityField.getType(), EntityField.Type.INTEGER) ||
+			 Objects.equals(entityField.getType(), EntityField.Type.STRING))) {
+
+			Predicate<Context> predicate = p ->
+				((Comparable)fieldValue).compareTo(
+					p.get(entityField.getName())) <= 0;
+
+			return predicate;
+		}
+
+		throw new UnsupportedOperationException(
+			"Unsupported method _getGEPredicate with entity field type " +
+				entityField.getType());
+	}
+
+	private Predicate<Context> _getGTPredicate(
+		EntityField entityField, Object fieldValue) {
+
+		if (fieldValue instanceof Comparable &&
+			(Objects.equals(entityField.getType(), EntityField.Type.DATE) ||
+			 Objects.equals(
+				 entityField.getType(), EntityField.Type.DATE_TIME) ||
+			 Objects.equals(entityField.getType(), EntityField.Type.DOUBLE) ||
+			 Objects.equals(entityField.getType(), EntityField.Type.INTEGER) ||
+			 Objects.equals(entityField.getType(), EntityField.Type.STRING))) {
+
+			Predicate<Context> predicate = p ->
+				((Comparable)fieldValue).compareTo(
+					p.get(entityField.getName())) < 0;
+
+			return predicate;
+		}
+
+		throw new UnsupportedOperationException(
+			"Unsupported method _getGTPredicate with entity field type " +
+				entityField.getType());
+	}
+
+	private Predicate<Context> _getLEPredicate(
+		EntityField entityField, Object fieldValue) {
+
+		if (fieldValue instanceof Comparable &&
+			(Objects.equals(entityField.getType(), EntityField.Type.DATE) ||
+			 Objects.equals(
+				 entityField.getType(), EntityField.Type.DATE_TIME) ||
+			 Objects.equals(entityField.getType(), EntityField.Type.DOUBLE) ||
+			 Objects.equals(entityField.getType(), EntityField.Type.INTEGER) ||
+			 Objects.equals(entityField.getType(), EntityField.Type.STRING))) {
+
+			Predicate<Context> predicate = p ->
+				((Comparable)fieldValue).compareTo(
+					p.get(entityField.getName())) >= 0;
+
+			return predicate;
+		}
+
+		throw new UnsupportedOperationException(
+			"Unsupported method _getLEPredicate with entity field type " +
+				entityField.getType());
+	}
+
+	private Predicate<Context> _getLTPredicate(
+		EntityField entityField, Object fieldValue) {
+
+		if (fieldValue instanceof Comparable &&
+			(Objects.equals(entityField.getType(), EntityField.Type.DATE) ||
+			 Objects.equals(
+				 entityField.getType(), EntityField.Type.DATE_TIME) ||
+			 Objects.equals(entityField.getType(), EntityField.Type.DOUBLE) ||
+			 Objects.equals(entityField.getType(), EntityField.Type.INTEGER) ||
+			 Objects.equals(entityField.getType(), EntityField.Type.STRING))) {
+
+			Predicate<Context> predicate = p ->
+				((Comparable)fieldValue).compareTo(
+					p.get(entityField.getName())) > 0;
+
+			return predicate;
+		}
+
+		throw new UnsupportedOperationException(
+			"Unsupported method _getLTPredicate with entity field type " +
+				entityField.getType());
+	}
+
 	private Predicate<Context> _getNotPredicate(Predicate<Context> predicate) {
 		return predicate.negate();
 	}
@@ -197,6 +289,18 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 		}
 		else if (Objects.equals(BinaryExpression.Operation.EQ, operation)) {
 			predicate = _getEQPredicate((EntityField)left, right);
+		}
+		else if (Objects.equals(BinaryExpression.Operation.GE, operation)) {
+			predicate = _getGEPredicate((EntityField)left, right);
+		}
+		else if (Objects.equals(BinaryExpression.Operation.GT, operation)) {
+			predicate = _getGTPredicate((EntityField)left, right);
+		}
+		else if (Objects.equals(BinaryExpression.Operation.LE, operation)) {
+			predicate = _getLEPredicate((EntityField)left, right);
+		}
+		else if (Objects.equals(BinaryExpression.Operation.LT, operation)) {
+			predicate = _getLTPredicate((EntityField)left, right);
 		}
 		else if (Objects.equals(BinaryExpression.Operation.OR, operation)) {
 			predicate = _getORPredicate(

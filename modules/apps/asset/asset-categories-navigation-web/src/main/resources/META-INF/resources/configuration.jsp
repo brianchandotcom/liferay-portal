@@ -73,11 +73,16 @@
 
 <aui:script>
 	function <portlet:namespace />saveConfiguration() {
-		var form = AUI.$(document.<portlet:namespace />fm);
+		var form = document.<portlet:namespace />fm;
 
-		form.fm('assetVocabularyIds').val(Liferay.Util.listSelect(form.fm('currentAssetVocabularyIds')));
-
-		submitForm(form);
+		Liferay.Util.postForm(
+			form,
+			{
+				data: {
+					assetVocabularyIds: Liferay.Util.listSelect(Liferay.Util.getFormElement(form, 'currentAssetVocabularyIds'))
+				}
+			}
+		);
 	}
 
 	Liferay.Util.toggleSelectBox('<portlet:namespace />allAssetVocabularies', 'false', '<portlet:namespace />assetVocabulariesBoxes');

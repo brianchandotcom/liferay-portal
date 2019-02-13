@@ -82,8 +82,7 @@ public class JavaTool {
 				propertySchemaName, propertySchema);
 
 			javaParameters.add(
-				new JavaParameter(
-					Collections.emptySet(), parameterName, parameterType));
+				new JavaParameter(null, parameterName, parameterType));
 		}
 
 		return javaParameters;
@@ -163,6 +162,66 @@ public class JavaTool {
 		return methodAnnotations;
 	}
 
+	public String getParameterAnnotation(JavaParameter javaParameter) {
+		Operation operation = javaParameter.getOperation();
+
+		List<Parameter> parameters = operation.getParameters();
+
+		Set<String> parameterNames = new HashSet<>();
+
+		for (Parameter parameter : parameters) {
+			parameterNames.add(parameter.getName());
+		}
+
+		String parameterType = javaParameter.getParameterType();
+
+		if (Objects.equals(parameterType, "Filter") &&
+			parameterNames.contains("filter")) {
+
+			return "@Context";
+		}
+
+		if (Objects.equals(parameterType, "Pagination") &&
+			parameterNames.contains("page") &&
+			parameterNames.contains("per_page")) {
+
+			return "@Context";
+		}
+
+		if (Objects.equals(parameterType, "Sort[]") &&
+			parameterNames.contains("sort")) {
+
+			return "@Context";
+		}
+
+		for (Parameter parameter : operation.getParameters()) {
+			String parameterName = CamelCaseUtil.toCamelCase(
+				parameter.getName(), false);
+
+			if (!Objects.equals(
+					parameterName, javaParameter.getParameterName())) {
+
+				continue;
+			}
+
+			Schema schema = parameter.getSchema();
+
+			if (schema.getType() != null) {
+				StringBuilder sb = new StringBuilder();
+
+				sb.append("@");
+				sb.append(StringUtil.upperCaseFirstLetter(parameter.getIn()));
+				sb.append("Param(\"");
+				sb.append(parameter.getName());
+				sb.append("\")");
+
+				return sb.toString();
+			}
+		}
+
+		return "";
+	}
+
 	private JavaTool() {
 	}
 
@@ -222,29 +281,15 @@ public class JavaTool {
 		return StringUtil.upperCaseFirstLetter(type);
 	}
 
-	private JavaParameter _getJavaParameter(Parameter parameter) {
-		Set<String> parameterAnnotations = new TreeSet<>();
-
-		Schema schema = parameter.getSchema();
-
-		if (schema.getType() != null) {
-			StringBuilder sb = new StringBuilder();
-
-			sb.append("@");
-			sb.append(StringUtil.upperCaseFirstLetter(parameter.getIn()));
-			sb.append("Param(\"");
-			sb.append(parameter.getName());
-			sb.append("\")");
-
-			parameterAnnotations.add(sb.toString());
-		}
+	private JavaParameter _getJavaParameter(
+		Operation operation, Parameter parameter) {
 
 		String parameterName = CamelCaseUtil.toCamelCase(
 			parameter.getName(), false);
-		String parameterType = _getJavaParameterType(null, schema);
+		String parameterType = _getJavaParameterType(
+			null, parameter.getSchema());
 
-		return new JavaParameter(
-			parameterAnnotations, parameterName, parameterType);
+		return new JavaParameter(operation, parameterName, parameterType);
 	}
 
 	private List<JavaParameter> _getJavaParameters(Operation operation) {
@@ -282,12 +327,12 @@ public class JavaTool {
 				}
 			}
 
-			javaParameters.add(_getJavaParameter(parameter));
+			javaParameters.add(_getJavaParameter(operation, parameter));
 		}
 
 		if (parameterNames.contains("filter")) {
 			JavaParameter javaParameter = new JavaParameter(
-				Collections.singleton("@Context"), "filter", "Filter");
+				operation, "filter", "Filter");
 
 			javaParameters.add(javaParameter);
 		}
@@ -296,14 +341,14 @@ public class JavaTool {
 			parameterNames.contains("per_page")) {
 
 			JavaParameter javaParameter = new JavaParameter(
-				Collections.singleton("@Context"), "pagination", "Pagination");
+				operation, "pagination", "Pagination");
 
 			javaParameters.add(javaParameter);
 		}
 
 		if (parameterNames.contains("sort")) {
 			JavaParameter javaParameter = new JavaParameter(
-				Collections.singleton("@Context"), "sorts", "Sort[]");
+				operation, "sorts", "Sort[]");
 
 			javaParameters.add(javaParameter);
 		}
@@ -318,8 +363,7 @@ public class JavaTool {
 			for (Map.Entry<String, Content> entry : contents.entrySet()) {
 				if (Objects.equals(entry.getKey(), "multipart/form-data")) {
 					multipartBodyJavaParameter = new JavaParameter(
-						Collections.emptySet(), "multipartBody",
-						"MultipartBody");
+						operation, "multipartBody", "MultipartBody");
 				}
 			}
 
@@ -337,7 +381,7 @@ public class JavaTool {
 
 					javaParameters.add(
 						new JavaParameter(
-							Collections.emptySet(), parameterName, schemaName));
+							operation, parameterName, schemaName));
 				}
 			}
 			else {

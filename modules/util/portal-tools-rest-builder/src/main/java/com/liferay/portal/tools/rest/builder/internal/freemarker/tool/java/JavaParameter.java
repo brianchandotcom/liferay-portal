@@ -14,7 +14,7 @@
 
 package com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java;
 
-import java.util.Set;
+import com.liferay.portal.vulcan.yaml.openapi.Operation;
 
 /**
  * @author Peter Shin
@@ -22,16 +22,15 @@ import java.util.Set;
 public class JavaParameter {
 
 	public JavaParameter(
-		Set<String> parameterAnnotations, String parameterName,
-		String parameterType) {
+		Operation operation, String parameterName, String parameterType) {
 
-		_parameterAnnotations = parameterAnnotations;
+		_operation = operation;
 		_parameterName = parameterName;
 		_parameterType = parameterType;
 	}
 
-	public Set<String> getParameterAnnotations() {
-		return _parameterAnnotations;
+	public Operation getOperation() {
+		return _operation;
 	}
 
 	public String getParameterName() {
@@ -42,7 +41,7 @@ public class JavaParameter {
 		return _parameterType;
 	}
 
-	private final Set<String> _parameterAnnotations;
+	private final Operation _operation;
 	private final String _parameterName;
 	private final String _parameterType;
 

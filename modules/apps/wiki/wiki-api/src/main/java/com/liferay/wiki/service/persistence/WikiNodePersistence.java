@@ -21,6 +21,11 @@ import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.wiki.exception.NoSuchNodeException;
 import com.liferay.wiki.model.WikiNode;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the wiki node service.
  *
@@ -40,6 +45,9 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link WikiNodeUtil} to access the wiki node persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, WikiNode> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the wiki nodes where uuid = &#63;.
@@ -1202,4 +1210,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	* @return the number of wiki nodes
 	*/
 	public int countAll();
+
+	@Override
+	public Set<String> getBadColumnNames();
 }

@@ -3212,6 +3212,10 @@ public class DDMStructureUtil {
 		return getPersistence().countAll();
 	}
 
+	public static Set<String> getBadColumnNames() {
+		return getPersistence().getBadColumnNames();
+	}
+
 	public static DDMStructurePersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

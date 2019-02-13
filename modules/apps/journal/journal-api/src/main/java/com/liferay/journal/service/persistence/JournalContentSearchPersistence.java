@@ -21,6 +21,11 @@ import com.liferay.journal.model.JournalContentSearch;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the journal content search service.
  *
@@ -40,6 +45,9 @@ public interface JournalContentSearchPersistence extends BasePersistence<Journal
 	 *
 	 * Never modify or reference this interface directly. Always use {@link JournalContentSearchUtil} to access the journal content search persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, JournalContentSearch> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the journal content searchs where portletId = &#63;.

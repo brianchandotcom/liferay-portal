@@ -39,7 +39,7 @@ create table JournalArticleLocalization (
 	companyId LONG,
 	articlePK LONG,
 	title VARCHAR(400) null,
-	description_ STRING null,
+	description STRING null,
 	languageId VARCHAR(75) null
 );
 
@@ -72,7 +72,7 @@ create table JournalFeed (
 	modifiedDate DATE null,
 	feedId VARCHAR(75) null,
 	name VARCHAR(75) null,
-	description_ STRING null,
+	description STRING null,
 	DDMStructureKey VARCHAR(75) null,
 	DDMTemplateKey VARCHAR(75) null,
 	DDMRendererTemplateKey VARCHAR(75) null,
@@ -99,7 +99,7 @@ create table JournalFolder (
 	parentFolderId LONG,
 	treePath STRING null,
 	name VARCHAR(100) null,
-	description_ STRING null,
+	description STRING null,
 	restrictionType INTEGER,
 	lastPublishDate DATE null,
 	status INTEGER,

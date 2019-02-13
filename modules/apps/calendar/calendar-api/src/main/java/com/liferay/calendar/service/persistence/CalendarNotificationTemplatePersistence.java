@@ -21,6 +21,11 @@ import com.liferay.calendar.model.CalendarNotificationTemplate;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the calendar notification template service.
  *
@@ -40,6 +45,9 @@ public interface CalendarNotificationTemplatePersistence extends BasePersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CalendarNotificationTemplateUtil} to access the calendar notification template persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, CalendarNotificationTemplate> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the calendar notification templates where uuid = &#63;.
@@ -692,4 +700,7 @@ public interface CalendarNotificationTemplatePersistence extends BasePersistence
 	* @return the number of calendar notification templates
 	*/
 	public int countAll();
+
+	@Override
+	public Set<String> getBadColumnNames();
 }

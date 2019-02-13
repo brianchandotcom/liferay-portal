@@ -718,6 +718,10 @@ public class WikiPageResourceUtil {
 		return getPersistence().countAll();
 	}
 
+	public static Set<String> getBadColumnNames() {
+		return getPersistence().getBadColumnNames();
+	}
+
 	public static WikiPageResourcePersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

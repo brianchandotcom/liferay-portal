@@ -2740,6 +2740,6 @@ public class KaleoDefinitionPersistenceImpl extends BasePersistenceImpl<KaleoDef
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No KaleoDefinition exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(KaleoDefinitionPersistenceImpl.class);
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
-				"description", "active"
+				"active"
 			});
 }

@@ -930,6 +930,10 @@ public class CalendarNotificationTemplateUtil {
 		return getPersistence().countAll();
 	}
 
+	public static Set<String> getBadColumnNames() {
+		return getPersistence().getBadColumnNames();
+	}
+
 	public static CalendarNotificationTemplatePersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

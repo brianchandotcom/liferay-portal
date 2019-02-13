@@ -10,7 +10,7 @@ create table BlogsEntry (
 	title VARCHAR(150) null,
 	subtitle STRING null,
 	urlTitle VARCHAR(255) null,
-	description_ STRING null,
+	description STRING null,
 	content TEXT null,
 	displayDate DATE null,
 	allowPingbacks BOOLEAN,

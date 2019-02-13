@@ -12,7 +12,7 @@ create table KaleoAction (
 	kaleoDefinitionVersionId LONG,
 	kaleoNodeName VARCHAR(200) null,
 	name VARCHAR(200) null,
-	description_ STRING null,
+	description STRING null,
 	executionType VARCHAR(20) null,
 	script TEXT null,
 	scriptLanguage VARCHAR(75) null,
@@ -47,7 +47,7 @@ create table KaleoDefinition (
 	modifiedDate DATE null,
 	name VARCHAR(200) null,
 	title STRING null,
-	description_ STRING null,
+	description STRING null,
 	content TEXT null,
 	version INTEGER,
 	active_ BOOLEAN
@@ -67,7 +67,7 @@ create table KaleoDefinitionVersion (
 	modifiedDate DATE null,
 	name VARCHAR(200) null,
 	title STRING null,
-	description_ STRING null,
+	description STRING null,
 	content TEXT null,
 	version VARCHAR(75) null,
 	startKaleoNodeId LONG,
@@ -160,7 +160,7 @@ create table KaleoNode (
 	kaleoDefinitionVersionId LONG,
 	name VARCHAR(200) null,
 	metadata STRING null,
-	description_ STRING null,
+	description STRING null,
 	type_ VARCHAR(20) null,
 	initial_ BOOLEAN,
 	terminal BOOLEAN
@@ -180,7 +180,7 @@ create table KaleoNotification (
 	kaleoDefinitionVersionId LONG,
 	kaleoNodeName VARCHAR(200) null,
 	name VARCHAR(200) null,
-	description_ STRING null,
+	description STRING null,
 	executionType VARCHAR(20) null,
 	template TEXT null,
 	templateLanguage VARCHAR(75) null,
@@ -220,7 +220,7 @@ create table KaleoTask (
 	kaleoDefinitionVersionId LONG,
 	kaleoNodeId LONG,
 	name VARCHAR(200) null,
-	description_ STRING null
+	description STRING null
 );
 
 create table KaleoTaskAssignment (
@@ -279,7 +279,7 @@ create table KaleoTaskForm (
 	kaleoTaskId LONG,
 	kaleoTaskName VARCHAR(200) null,
 	name VARCHAR(200) null,
-	description_ STRING null,
+	description STRING null,
 	formCompanyId LONG,
 	formDefinition STRING null,
 	formGroupId LONG,
@@ -347,7 +347,7 @@ create table KaleoTimer (
 	kaleoDefinitionVersionId LONG,
 	name VARCHAR(75) null,
 	blocking BOOLEAN,
-	description_ STRING null,
+	description STRING null,
 	duration DOUBLE,
 	scale VARCHAR(75) null,
 	recurrenceDuration DOUBLE,
@@ -390,7 +390,7 @@ create table KaleoTransition (
 	kaleoDefinitionVersionId LONG,
 	kaleoNodeId LONG,
 	name VARCHAR(200) null,
-	description_ STRING null,
+	description STRING null,
 	sourceKaleoNodeId LONG,
 	sourceKaleoNodeName VARCHAR(200) null,
 	targetKaleoNodeId LONG,

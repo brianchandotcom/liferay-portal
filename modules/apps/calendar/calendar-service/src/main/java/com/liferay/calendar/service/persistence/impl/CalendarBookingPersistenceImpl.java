@@ -6399,6 +6399,6 @@ public class CalendarBookingPersistenceImpl extends BasePersistenceImpl<Calendar
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No CalendarBooking exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(CalendarBookingPersistenceImpl.class);
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
-				"uuid", "description"
+				"uuid"
 			});
 }

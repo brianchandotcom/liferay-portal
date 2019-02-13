@@ -21,7 +21,11 @@ import com.liferay.message.boards.model.MBThread;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
+import java.io.Serializable;
+
 import java.util.Date;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * The persistence interface for the message boards thread service.
@@ -42,6 +46,9 @@ public interface MBThreadPersistence extends BasePersistence<MBThread> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link MBThreadUtil} to access the message boards thread persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, MBThread> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the message boards threads where uuid = &#63;.
@@ -3203,4 +3210,7 @@ public interface MBThreadPersistence extends BasePersistence<MBThread> {
 	* @return the number of message boards threads
 	*/
 	public int countAll();
+
+	@Override
+	public Set<String> getBadColumnNames();
 }

@@ -21,6 +21,11 @@ import com.liferay.message.boards.model.MBMessage;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the message-boards message service.
  *
@@ -40,6 +45,9 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link MBMessageUtil} to access the message-boards message persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, MBMessage> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the message-boards messages where uuid = &#63;.
@@ -5118,4 +5126,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	* @return the number of message-boards messages
 	*/
 	public int countAll();
+
+	@Override
+	public Set<String> getBadColumnNames();
 }

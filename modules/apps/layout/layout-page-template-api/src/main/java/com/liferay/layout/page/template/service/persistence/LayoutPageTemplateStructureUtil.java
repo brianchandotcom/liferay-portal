@@ -910,6 +910,10 @@ public class LayoutPageTemplateStructureUtil {
 		return getPersistence().countAll();
 	}
 
+	public static Set<String> getBadColumnNames() {
+		return getPersistence().getBadColumnNames();
+	}
+
 	public static LayoutPageTemplateStructurePersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

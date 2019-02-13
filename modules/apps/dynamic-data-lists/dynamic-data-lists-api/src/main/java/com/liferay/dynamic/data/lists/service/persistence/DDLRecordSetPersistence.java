@@ -21,6 +21,11 @@ import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the ddl record set service.
  *
@@ -40,6 +45,9 @@ public interface DDLRecordSetPersistence extends BasePersistence<DDLRecordSet> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link DDLRecordSetUtil} to access the ddl record set persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, DDLRecordSet> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the ddl record sets where uuid = &#63;.
@@ -843,4 +851,7 @@ public interface DDLRecordSetPersistence extends BasePersistence<DDLRecordSet> {
 	* @return the number of ddl record sets
 	*/
 	public int countAll();
+
+	@Override
+	public Set<String> getBadColumnNames();
 }

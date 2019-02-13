@@ -1206,6 +1206,10 @@ public class CalendarUtil {
 		return getPersistence().countAll();
 	}
 
+	public static Set<String> getBadColumnNames() {
+		return getPersistence().getBadColumnNames();
+	}
+
 	public static CalendarPersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

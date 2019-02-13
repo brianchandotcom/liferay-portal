@@ -21,6 +21,11 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the layout page template structure service.
  *
@@ -40,6 +45,9 @@ public interface LayoutPageTemplateStructurePersistence extends BasePersistence<
 	 *
 	 * Never modify or reference this interface directly. Always use {@link LayoutPageTemplateStructureUtil} to access the layout page template structure persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, LayoutPageTemplateStructure> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the layout page template structures where uuid = &#63;.
@@ -687,4 +695,7 @@ public interface LayoutPageTemplateStructurePersistence extends BasePersistence<
 	* @return the number of layout page template structures
 	*/
 	public int countAll();
+
+	@Override
+	public Set<String> getBadColumnNames();
 }

@@ -9,7 +9,7 @@ create table Calendar (
 	modifiedDate DATE null,
 	calendarResourceId LONG,
 	name STRING null,
-	description_ STRING null,
+	description STRING null,
 	timeZoneId VARCHAR(75) null,
 	color INTEGER,
 	defaultCalendar BOOLEAN,
@@ -33,7 +33,7 @@ create table CalendarBooking (
 	recurringCalendarBookingId LONG,
 	vEventUid VARCHAR(255) null,
 	title STRING null,
-	description_ TEXT null,
+	description TEXT null,
 	location STRING null,
 	startTime LONG,
 	endTime LONG,
@@ -82,7 +82,7 @@ create table CalendarResource (
 	classUuid VARCHAR(75) null,
 	code_ VARCHAR(75) null,
 	name STRING null,
-	description_ STRING null,
+	description STRING null,
 	active_ BOOLEAN,
 	lastPublishDate DATE null
 );

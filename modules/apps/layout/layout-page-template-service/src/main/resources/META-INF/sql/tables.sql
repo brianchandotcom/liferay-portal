@@ -8,7 +8,7 @@ create table LayoutPageTemplateCollection (
 	createDate DATE null,
 	modifiedDate DATE null,
 	name VARCHAR(75) null,
-	description_ STRING null,
+	description STRING null,
 	lastPublishDate DATE null
 );
 

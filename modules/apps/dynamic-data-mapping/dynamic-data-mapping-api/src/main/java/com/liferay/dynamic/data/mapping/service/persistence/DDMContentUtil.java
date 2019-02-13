@@ -968,6 +968,10 @@ public class DDMContentUtil {
 		return getPersistence().countAll();
 	}
 
+	public static Set<String> getBadColumnNames() {
+		return getPersistence().getBadColumnNames();
+	}
+
 	public static DDMContentPersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

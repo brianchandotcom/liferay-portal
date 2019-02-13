@@ -21,7 +21,11 @@ import com.liferay.blogs.model.BlogsStatsUser;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
+import java.io.Serializable;
+
 import java.util.Date;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * The persistence interface for the blogs stats user service.
@@ -42,6 +46,9 @@ public interface BlogsStatsUserPersistence extends BasePersistence<BlogsStatsUse
 	 *
 	 * Never modify or reference this interface directly. Always use {@link BlogsStatsUserUtil} to access the blogs stats user persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, BlogsStatsUser> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the blogs stats users where groupId = &#63;.

@@ -1557,6 +1557,10 @@ public class AMImageEntryUtil {
 		return getPersistence().countAll();
 	}
 
+	public static Set<String> getBadColumnNames() {
+		return getPersistence().getBadColumnNames();
+	}
+
 	public static AMImageEntryPersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

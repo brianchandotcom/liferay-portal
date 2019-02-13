@@ -21,6 +21,11 @@ import com.liferay.dynamic.data.mapping.model.DDMContent;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the ddm content service.
  *
@@ -40,6 +45,9 @@ public interface DDMContentPersistence extends BasePersistence<DDMContent> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link DDMContentUtil} to access the ddm content persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, DDMContent> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the ddm contents where uuid = &#63;.
@@ -741,4 +749,7 @@ public interface DDMContentPersistence extends BasePersistence<DDMContent> {
 	* @return the number of ddm contents
 	*/
 	public int countAll();
+
+	@Override
+	public Set<String> getBadColumnNames();
 }

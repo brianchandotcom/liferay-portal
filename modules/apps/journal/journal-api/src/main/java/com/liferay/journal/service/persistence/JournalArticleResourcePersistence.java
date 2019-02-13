@@ -21,6 +21,11 @@ import com.liferay.journal.model.JournalArticleResource;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the journal article resource service.
  *
@@ -40,6 +45,9 @@ public interface JournalArticleResourcePersistence extends BasePersistence<Journ
 	 *
 	 * Never modify or reference this interface directly. Always use {@link JournalArticleResourceUtil} to access the journal article resource persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, JournalArticleResource> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the journal article resources where uuid = &#63;.
@@ -670,4 +678,7 @@ public interface JournalArticleResourcePersistence extends BasePersistence<Journ
 	* @return the number of journal article resources
 	*/
 	public int countAll();
+
+	@Override
+	public Set<String> getBadColumnNames();
 }

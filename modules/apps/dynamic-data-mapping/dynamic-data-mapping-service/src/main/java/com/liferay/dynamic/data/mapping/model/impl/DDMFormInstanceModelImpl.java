@@ -98,7 +98,7 @@ public class DDMFormInstanceModelImpl extends BaseModelImpl<DDMFormInstance>
 			{ "structureId", Types.BIGINT },
 			{ "version", Types.VARCHAR },
 			{ "name", Types.VARCHAR },
-			{ "description_", Types.VARCHAR },
+			{ "description", Types.VARCHAR },
 			{ "settings_", Types.CLOB },
 			{ "lastPublishDate", Types.TIMESTAMP }
 		};
@@ -118,12 +118,12 @@ public class DDMFormInstanceModelImpl extends BaseModelImpl<DDMFormInstance>
 		TABLE_COLUMNS_MAP.put("structureId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("version", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("description_", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("settings_", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table DDMFormInstance (uuid_ VARCHAR(75) null,formInstanceId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,versionUserId LONG,versionUserName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,structureId LONG,version VARCHAR(75) null,name STRING null,description_ STRING null,settings_ TEXT null,lastPublishDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table DDMFormInstance (uuid_ VARCHAR(75) null,formInstanceId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,versionUserId LONG,versionUserName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,structureId LONG,version VARCHAR(75) null,name STRING null,description STRING null,settings_ TEXT null,lastPublishDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table DDMFormInstance";
 	public static final String ORDER_BY_JPQL = " ORDER BY ddmFormInstance.formInstanceId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY DDMFormInstance.formInstanceId ASC";

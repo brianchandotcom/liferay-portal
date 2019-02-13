@@ -21,6 +21,11 @@ import com.liferay.oauth2.provider.model.OAuth2Authorization;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the o auth2 authorization service.
  *
@@ -40,6 +45,9 @@ public interface OAuth2AuthorizationPersistence extends BasePersistence<OAuth2Au
 	 *
 	 * Never modify or reference this interface directly. Always use {@link OAuth2AuthorizationUtil} to access the o auth2 authorization persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, OAuth2Authorization> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the o auth2 authorizations where userId = &#63;.
@@ -867,4 +875,7 @@ public interface OAuth2AuthorizationPersistence extends BasePersistence<OAuth2Au
 	*/
 	public void setOAuth2ScopeGrants(long pk,
 		java.util.List<com.liferay.oauth2.provider.model.OAuth2ScopeGrant> oAuth2ScopeGrants);
+
+	@Override
+	public Set<String> getBadColumnNames();
 }

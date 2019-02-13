@@ -21,6 +21,11 @@ import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.wiki.exception.NoSuchPageException;
 import com.liferay.wiki.model.WikiPage;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the wiki page service.
  *
@@ -40,6 +45,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link WikiPageUtil} to access the wiki page persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, WikiPage> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the wiki pages where resourcePrimKey = &#63;.
@@ -5558,4 +5566,7 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the number of wiki pages
 	*/
 	public int countAll();
+
+	@Override
+	public Set<String> getBadColumnNames();
 }

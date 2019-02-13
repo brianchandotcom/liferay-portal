@@ -21,6 +21,11 @@ import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the ddm data provider instance service.
  *
@@ -40,6 +45,9 @@ public interface DDMDataProviderInstancePersistence extends BasePersistence<DDMD
 	 *
 	 * Never modify or reference this interface directly. Always use {@link DDMDataProviderInstanceUtil} to access the ddm data provider instance persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, DDMDataProviderInstance> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the ddm data provider instances where uuid = &#63;.
@@ -938,4 +946,7 @@ public interface DDMDataProviderInstancePersistence extends BasePersistence<DDMD
 	* @return the number of ddm data provider instances
 	*/
 	public int countAll();
+
+	@Override
+	public Set<String> getBadColumnNames();
 }

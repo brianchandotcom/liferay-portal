@@ -21,6 +21,11 @@ import com.liferay.message.boards.model.MBBan;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the message boards ban service.
  *
@@ -40,6 +45,9 @@ public interface MBBanPersistence extends BasePersistence<MBBan> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link MBBanUtil} to access the message boards ban persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, MBBan> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the message boards bans where uuid = &#63;.
@@ -914,4 +922,7 @@ public interface MBBanPersistence extends BasePersistence<MBBan> {
 	* @return the number of message boards bans
 	*/
 	public int countAll();
+
+	@Override
+	public Set<String> getBadColumnNames();
 }

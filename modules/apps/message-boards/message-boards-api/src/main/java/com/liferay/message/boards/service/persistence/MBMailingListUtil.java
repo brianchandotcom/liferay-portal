@@ -870,6 +870,10 @@ public class MBMailingListUtil {
 		return getPersistence().countAll();
 	}
 
+	public static Set<String> getBadColumnNames() {
+		return getPersistence().getBadColumnNames();
+	}
+
 	public static MBMailingListPersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

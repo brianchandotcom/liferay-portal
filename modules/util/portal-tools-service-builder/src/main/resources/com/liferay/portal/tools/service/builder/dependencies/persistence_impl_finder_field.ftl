@@ -2,10 +2,8 @@
 
 <#if entityColumn_has_next>
 	<#assign finderColConjunction = " AND " />
-<#elseif validator.isNull(finderFieldSuffix) && entityFinder.where?? && validator.isNotNull(entityFinder.getWhere())>
+<#elseif entityFinder.where?? && validator.isNotNull(entityFinder.getWhere())>
 	<#assign finderColConjunction = " AND " + entityFinder.where />
-<#elseif validator.isNotNull(finderFieldSuffix) && entityFinder.DBWhere?? && validator.isNotNull(entityFinder.getDBWhere())>
-	<#assign finderColConjunction = " AND " + entityFinder.DBWhere />
 </#if>
 
 <#if entity.hasCompoundPK() && entityColumn.isPrimary()>

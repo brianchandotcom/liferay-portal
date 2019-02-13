@@ -37,9 +37,11 @@ create unique index IX_1E9D371D on AssetEntry (classNameId, classPK);
 create index IX_7306C60 on AssetEntry (companyId);
 create index IX_75D42FF9 on AssetEntry (expirationDate);
 create index IX_6418BB52 on AssetEntry (groupId, classNameId, publishDate, expirationDate);
+create index IX_82C4BEF6 on AssetEntry (groupId, classNameId, visible);
 create index IX_1EBA6821 on AssetEntry (groupId, classUuid[$COLUMN_LENGTH:75$]);
 create index IX_FEC4A201 on AssetEntry (layoutUuid[$COLUMN_LENGTH:75$]);
 create index IX_2E4E3885 on AssetEntry (publishDate);
+create index IX_9029E15A on AssetEntry (visible);
 
 create unique index IX_8F542794 on AssetLink (entryId1, entryId2, type_);
 create index IX_14D5A20D on AssetLink (entryId1, type_);
@@ -61,6 +63,7 @@ create unique index IX_B27A301F on ClassName_ (value[$COLUMN_LENGTH:200$]);
 
 create index IX_38EFE3FD on Company (logoId);
 create index IX_12566EC2 on Company (mx[$COLUMN_LENGTH:200$]);
+create index IX_35E3E7C6 on Company (system);
 create unique index IX_EC00543C on Company (webId[$COLUMN_LENGTH:75$]);
 
 create index IX_B8C28C53 on Contact_ (accountId);

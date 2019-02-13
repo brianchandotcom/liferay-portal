@@ -17,6 +17,10 @@
 <%@ include file="/asset_tags_selector/init.jsp" %>
 
 <%
+PortletRequest portletRequest = (PortletRequest)request.getAttribute(JavaConstants.JAVAX_PORTLET_REQUEST);
+PortletResponse portletResponse = (PortletResponse)request.getAttribute(JavaConstants.JAVAX_PORTLET_RESPONSE);
+String namespace = AUIUtil.getNamespace(portletRequest, portletResponse);
+
 String addCallback = GetterUtil.getString((String)request.getAttribute("liferay-asset:asset-tags-selector:addCallback"));
 boolean allowAddEntry = GetterUtil.getBoolean((String)request.getAttribute("liferay-asset:asset-tags-selector:allowAddEntry"));
 boolean autoFocus = GetterUtil.getBoolean((String)request.getAttribute("liferay-asset:asset-tags-selector:autoFocus"));
@@ -26,72 +30,42 @@ String hiddenInput = (String)request.getAttribute("liferay-asset:asset-tags-sele
 String id = GetterUtil.getString((String)request.getAttribute("liferay-asset:asset-tags-selector:id"));
 PortletURL portletURL = (PortletURL)request.getAttribute("liferay-asset:asset-tags-selector:portletURL");
 String removeCallback = GetterUtil.getString((String)request.getAttribute("liferay-asset:asset-tags-selector:removeCallback"));
-String tagNames = GetterUtil.getString((String)request.getAttribute("liferay-asset:asset-tags-selector:tagNames"));
+String tagNamesSeparatedWithCommas = GetterUtil.getString((String)request.getAttribute("liferay-asset:asset-tags-selector:tagNames"));
+
+List<String> tagNames = Arrays.asList(StringUtil.split(tagNamesSeparatedWithCommas));
+
+List<Object> selectedItems = new ArrayList<>();
+
+for (String tagName : tagNames) {
+	HashMap<String, String> item = new HashMap<>();
+
+	selectedItems.add(item);
+
+	item.put("label", tagName);
+	item.put("value", tagName);
+}
 %>
 
 <h4>
 	<liferay-ui:message key="tags" />
 </h4>
 
-<div class="lfr-tags-selector-content" id="<portlet:namespace /><%= id %>assetTagsSelector">
-	<aui:input name="<%= hiddenInput %>" type="hidden" />
+<%
+HashMap<String, Object> context = new HashMap<>();
 
-	<c:if test="<%= allowAddEntry %>">
-		<input class="form-control lfr-tag-selector-input" id="<%= id %>assetTagNames" size="15" title="<liferay-ui:message key="add-tags" />" type="text" />
-	</c:if>
-</div>
+context.put("addCallback", namespace + addCallback);
+context.put("eventName", eventName);
+context.put("inputName", namespace + hiddenInput);
+context.put("portletURL", portletURL.toString());
+context.put("removeCallback", namespace + removeCallback);
+context.put("selectedItems", selectedItems);
+context.put("spritemap", themeDisplay.getPathThemeImages() + "/lexicon/icons.svg");
+%>
 
-<aui:script use="liferay-asset-taglib-tags-selector">
-	var assetTaglibTagsSelector = new Liferay.AssetTaglibTagsSelector(
-		{
-			allowAddEntry: <%= allowAddEntry %>,
-			contentBox: '#<portlet:namespace /><%= id %>assetTagsSelector',
+<input id="<%= namespace + hiddenInput %>" type="hidden" value="<%= tagNamesSeparatedWithCommas %>" />
 
-			<c:if test="<%= groupIds != null %>">
-				groupIds: '<%= StringUtil.merge(groupIds) %>',
-			</c:if>
-
-			hiddenInput: '#<portlet:namespace /><%= hiddenInput %>',
-
-			<c:if test="<%= allowAddEntry %>">
-				input: '#<%= id %>assetTagNames',
-			</c:if>
-
-			<c:if test="<%= Validator.isNotNull(eventName) %>">
-				eventName: '<%= eventName %>',
-			</c:if>
-
-			maxLength: <%= ModelHintsConstants.TEXT_MAX_LENGTH %>,
-
-			<c:if test="<%= portletURL != null %>">
-				portletURL: '<%= portletURL.toString() %>',
-			</c:if>
-
-			tagNames: '<%= HtmlUtil.escapeJS(tagNames) %>'
-		}
-	).render();
-
-	Liferay.component('<portlet:namespace />tagsSelector', assetTaglibTagsSelector);
-
-	<c:if test="<%= Validator.isNotNull(addCallback) %>">
-		assetTaglibTagsSelector.entries.on(
-			'add',
-			function(event) {
-				window['<portlet:namespace /><%= addCallback %>'](event.item);
-			}
-		);
-	</c:if>
-
-	<c:if test="<%= Validator.isNotNull(removeCallback) %>">
-		assetTaglibTagsSelector.entries.on(
-			'remove',
-			function(event) {
-				window['<portlet:namespace /><%= removeCallback %>'](event.item);
-			}
-		);
-	</c:if>
-
-	<c:if test="<%= autoFocus %>">
-		Liferay.Util.focusFormField('#<%= id %>assetTagNames');
-	</c:if>
-</aui:script>
+<soy:component-renderer
+	context="<%= context %>"
+	module="asset_tags_selector/js/TagSelector.es"
+	templateNamespace="com.liferay.asset.taglib.TagSelector.render"
+/>

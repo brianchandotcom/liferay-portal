@@ -59,46 +59,46 @@ public interface WorkflowTaskResource {
 	@Path("/roles/{role-id}/workflow-tasks")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Page<WorkflowTask> getRolesWorkflowTasksPage( @PathParam("role-id") Long roleId , @Context Pagination pagination ) throws Exception;
+	public Page<WorkflowTask> getRoleWorkflowTaskPage( @PathParam("role-id") Long roleId , @Context Pagination pagination ) throws Exception;
 
 	@GET
 	@Path("/workflow-tasks")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Page<WorkflowTask> getWorkflowTasksPage( @PathParam("generic-parent-id") Object genericParentId , @Context Pagination pagination ) throws Exception;
+	public Page<WorkflowTask> getGenericParentWorkflowTaskPage( @PathParam("generic-parent-id") Object genericParentId , @Context Pagination pagination ) throws Exception;
 
 	@GET
 	@Path("/workflow-tasks/{workflow-task-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public WorkflowTask getWorkflowTasks( @PathParam("workflow-task-id") Long workflowTaskId ) throws Exception;
+	public WorkflowTask getWorkflowTask( @PathParam("workflow-task-id") Long workflowTaskId ) throws Exception;
 
 	@Consumes("application/json")
 	@POST
 	@Path("/workflow-tasks/{workflow-task-id}/assign-to-me")
 	@Produces("application/json")
 	@RequiresScope("everything.write")
-	public WorkflowTask postWorkflowTasksAssignToMe( @PathParam("workflow-task-id") Long workflowTaskId , WorkflowTask workflowTask ) throws Exception;
+	public WorkflowTask postWorkflowTaskAssignToMe( @PathParam("workflow-task-id") Long workflowTaskId , WorkflowTask workflowTask ) throws Exception;
 
 	@Consumes("application/json")
 	@POST
 	@Path("/workflow-tasks/{workflow-task-id}/assign-to-user")
 	@Produces("application/json")
 	@RequiresScope("everything.write")
-	public WorkflowTask postWorkflowTasksAssignToUser( @PathParam("workflow-task-id") Long workflowTaskId , WorkflowTask workflowTask ) throws Exception;
+	public WorkflowTask postWorkflowTaskAssignToUser( @PathParam("workflow-task-id") Long workflowTaskId , WorkflowTask workflowTask ) throws Exception;
 
 	@Consumes("application/json")
 	@POST
 	@Path("/workflow-tasks/{workflow-task-id}/change-transition")
 	@Produces("application/json")
 	@RequiresScope("everything.write")
-	public WorkflowTask postWorkflowTasksChangeTransition( @PathParam("workflow-task-id") Long workflowTaskId , WorkflowTask workflowTask ) throws Exception;
+	public WorkflowTask postWorkflowTaskChangeTransition( @PathParam("workflow-task-id") Long workflowTaskId , WorkflowTask workflowTask ) throws Exception;
 
 	@Consumes("application/json")
 	@POST
 	@Path("/workflow-tasks/{workflow-task-id}/update-due-date")
 	@Produces("application/json")
 	@RequiresScope("everything.write")
-	public WorkflowTask postWorkflowTasksUpdateDueDate( @PathParam("workflow-task-id") Long workflowTaskId , WorkflowTask workflowTask ) throws Exception;
+	public WorkflowTask postWorkflowTaskUpdateDueDate( @PathParam("workflow-task-id") Long workflowTaskId , WorkflowTask workflowTask ) throws Exception;
 
 }

@@ -40,12 +40,12 @@ public abstract class BasePostalAddressResourceImpl
 	implements PostalAddressResource {
 
 	@Override
-	public PostalAddress getAddresses(Long addressId) throws Exception {
+	public PostalAddress getAddress(Long addressId) throws Exception {
 		return new PostalAddress();
 	}
 
 	@Override
-	public Page<PostalAddress> getAddressesPage(
+	public Page<PostalAddress> getGenericParentPostalAddressPage(
 			Object genericParentId, Pagination pagination)
 		throws Exception {
 

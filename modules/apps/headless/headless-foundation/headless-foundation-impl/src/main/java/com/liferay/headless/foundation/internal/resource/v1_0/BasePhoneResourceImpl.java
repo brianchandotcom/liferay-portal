@@ -39,16 +39,16 @@ import javax.ws.rs.core.Response;
 public abstract class BasePhoneResourceImpl implements PhoneResource {
 
 	@Override
-	public Phone getPhones(Long phoneId) throws Exception {
-		return new Phone();
-	}
-
-	@Override
-	public Page<Phone> getPhonesPage(
+	public Page<Phone> getGenericParentPhonePage(
 			Object genericParentId, Pagination pagination)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
+	}
+
+	@Override
+	public Phone getPhone(Long phoneId) throws Exception {
+		return new Phone();
 	}
 
 	protected Response buildNoContentResponse() {

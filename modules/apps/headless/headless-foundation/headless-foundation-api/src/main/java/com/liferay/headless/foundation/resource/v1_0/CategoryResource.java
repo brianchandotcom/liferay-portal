@@ -67,59 +67,59 @@ public interface CategoryResource {
 	@Path("/categories/{category-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Response deleteCategories( @PathParam("category-id") Long categoryId ) throws Exception;
+	public Response deleteCategory( @PathParam("category-id") Long categoryId ) throws Exception;
 
 	@GET
 	@Path("/categories/{category-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Category getCategories( @PathParam("category-id") Long categoryId ) throws Exception;
+	public Category getCategory( @PathParam("category-id") Long categoryId ) throws Exception;
 
 	@Consumes("application/json")
 	@PUT
 	@Path("/categories/{category-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Category putCategories( @PathParam("category-id") Long categoryId , Category category ) throws Exception;
+	public Category putCategory( @PathParam("category-id") Long categoryId , Category category ) throws Exception;
 
 	@GET
 	@Path("/categories/{category-id}/categories")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Page<Category> getCategoriesCategoriesPage( @PathParam("category-id") Long categoryId , @Context Pagination pagination ) throws Exception;
+	public Page<Category> getCategoryCategoryPage( @PathParam("category-id") Long categoryId , @Context Pagination pagination ) throws Exception;
 
 	@Consumes("application/json")
 	@POST
 	@Path("/categories/{category-id}/categories")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Category postCategoriesCategories( @PathParam("category-id") Long categoryId , Category category ) throws Exception;
+	public Category postCategoryCategory( @PathParam("category-id") Long categoryId , Category category ) throws Exception;
 
 	@Consumes("application/json")
 	@POST
 	@Path("/categories/{category-id}/categories/batch-create")
 	@Produces("application/json")
 	@RequiresScope("everything.write")
-	public Category postCategoriesCategoriesBatchCreate( @PathParam("category-id") Long categoryId , Category category ) throws Exception;
+	public Category postCategoryCategoryBatchCreate( @PathParam("category-id") Long categoryId , Category category ) throws Exception;
 
 	@GET
 	@Path("/vocabularies/{vocabulary-id}/categories")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Page<Category> getVocabulariesCategoriesPage( @PathParam("vocabulary-id") Long vocabularyId , @Context Pagination pagination ) throws Exception;
+	public Page<Category> getVocabularyCategoryPage( @PathParam("vocabulary-id") Long vocabularyId , @Context Pagination pagination ) throws Exception;
 
 	@Consumes("application/json")
 	@POST
 	@Path("/vocabularies/{vocabulary-id}/categories")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Category postVocabulariesCategories( @PathParam("vocabulary-id") Long vocabularyId , Category category ) throws Exception;
+	public Category postVocabularyCategory( @PathParam("vocabulary-id") Long vocabularyId , Category category ) throws Exception;
 
 	@Consumes("application/json")
 	@POST
 	@Path("/vocabularies/{vocabulary-id}/categories/batch-create")
 	@Produces("application/json")
 	@RequiresScope("everything.write")
-	public Category postVocabulariesCategoriesBatchCreate( @PathParam("vocabulary-id") Long vocabularyId , Category category ) throws Exception;
+	public Category postVocabularyCategoryBatchCreate( @PathParam("vocabulary-id") Long vocabularyId , Category category ) throws Exception;
 
 }

@@ -54,42 +54,42 @@ public abstract class BaseKeywordResourceTestCase {
 	}
 
 	@Test
-	public void testDeleteKeywords() throws Exception {
+	public void testDeleteKeyword() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testGetContentSpacesKeywordsPage() throws Exception {
+	public void testGetContentSpaceKeywordPage() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testGetKeywords() throws Exception {
+	public void testGetKeyword() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testPostContentSpacesKeywords() throws Exception {
+	public void testPostContentSpaceKeyword() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testPostContentSpacesKeywordsBatchCreate() throws Exception {
+	public void testPostContentSpaceKeywordBatchCreate() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testPutKeywords() throws Exception {
+	public void testPutKeyword() throws Exception {
 		Assert.assertTrue(true);
 	}
 
-	protected void invokeDeleteKeywords(Long keywordId) throws Exception {
+	protected void invokeDeleteKeyword(Long keywordId) throws Exception {
 		RequestSender requestSender = _createRequestSender();
 
 			requestSender.post("/keywords/{keyword-id}");
 	}
 
-	protected void invokeGetContentSpacesKeywordsPage(
+	protected void invokeGetContentSpaceKeywordPage(
 			Long contentSpaceId, Pagination pagination)
 		throws Exception {
 
@@ -98,13 +98,13 @@ public abstract class BaseKeywordResourceTestCase {
 			requestSender.post("/content-spaces/{content-space-id}/keywords");
 	}
 
-	protected void invokeGetKeywords(Long keywordId) throws Exception {
+	protected void invokeGetKeyword(Long keywordId) throws Exception {
 		RequestSender requestSender = _createRequestSender();
 
 			requestSender.post("/keywords/{keyword-id}");
 	}
 
-	protected void invokePostContentSpacesKeywords(
+	protected void invokePostContentSpaceKeyword(
 			Long contentSpaceId, Keyword keyword)
 		throws Exception {
 
@@ -113,7 +113,7 @@ public abstract class BaseKeywordResourceTestCase {
 			requestSender.post("/content-spaces/{content-space-id}/keywords");
 	}
 
-	protected void invokePostContentSpacesKeywordsBatchCreate(
+	protected void invokePostContentSpaceKeywordBatchCreate(
 			Long contentSpaceId, Keyword keyword)
 		throws Exception {
 
@@ -123,7 +123,7 @@ public abstract class BaseKeywordResourceTestCase {
 				"/content-spaces/{content-space-id}/keywords/batch-create");
 	}
 
-	protected void invokePutKeywords(Long keywordId, Keyword keyword)
+	protected void invokePutKeyword(Long keywordId, Keyword keyword)
 		throws Exception {
 
 			RequestSender requestSender = _createRequestSender();

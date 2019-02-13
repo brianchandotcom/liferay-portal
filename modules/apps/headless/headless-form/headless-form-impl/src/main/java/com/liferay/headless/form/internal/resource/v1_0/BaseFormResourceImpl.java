@@ -39,7 +39,7 @@ import javax.ws.rs.core.Response;
 public abstract class BaseFormResourceImpl implements FormResource {
 
 	@Override
-	public Page<Form> getContentSpacesFormPage(
+	public Page<Form> getContentSpaceFormPage(
 			Long contentSpaceId, Pagination pagination)
 		throws Exception {
 
@@ -47,24 +47,24 @@ public abstract class BaseFormResourceImpl implements FormResource {
 	}
 
 	@Override
-	public Form getForms(Long formId) throws Exception {
+	public Form getForm(Long formId) throws Exception {
 		return new Form();
 	}
 
 	@Override
-	public Form getFormsFetchLatestDraft(Long formId) throws Exception {
+	public Form getFormFetchLatestDraft(Long formId) throws Exception {
 		return new Form();
 	}
 
 	@Override
-	public Form postFormsEvaluateContext(Long formId, Form form)
+	public Form postFormEvaluateContext(Long formId, Form form)
 		throws Exception {
 
 		return new Form();
 	}
 
 	@Override
-	public Form postFormsUploadFile(Long formId, Form form) throws Exception {
+	public Form postFormUploadFile(Long formId, Form form) throws Exception {
 		return new Form();
 	}
 

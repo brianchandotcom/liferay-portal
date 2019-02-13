@@ -51,11 +51,11 @@ public abstract class BaseAggregateRatingResourceTestCase {
 	}
 
 	@Test
-	public void testGetAggregateRatings() throws Exception {
+	public void testGetAggregateRating() throws Exception {
 		Assert.assertTrue(true);
 	}
 
-	protected void invokeGetAggregateRatings(Long aggregateRatingId)
+	protected void invokeGetAggregateRating(Long aggregateRatingId)
 		throws Exception {
 
 			RequestSender requestSender = _createRequestSender();

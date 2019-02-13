@@ -40,19 +40,19 @@ import javax.ws.rs.core.Response;
 public abstract class BaseDocumentResourceImpl implements DocumentResource {
 
 	@Override
-	public Response deleteDocuments(Long documentId) throws Exception {
+	public Response deleteDocument(Long documentId) throws Exception {
 		Response.ResponseBuilder responseBuilder = Response.ok();
 
 		return responseBuilder.build();
 	}
 
 	@Override
-	public Document getDocuments(Long documentId) throws Exception {
+	public Document getDocument(Long documentId) throws Exception {
 		return new Document();
 	}
 
 	@Override
-	public Page<Long> getDocumentsCategoriesPage(
+	public Page<Long> getDocumentCategoriesPage(
 			Long documentId, Pagination pagination)
 		throws Exception {
 
@@ -60,7 +60,7 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 	}
 
 	@Override
-	public Page<Document> getDocumentsRepositoriesDocumentsPage(
+	public Page<Document> getDocumentsRepositoryDocumentPage(
 			Long documentsRepositoryId, Pagination pagination)
 		throws Exception {
 
@@ -68,7 +68,7 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 	}
 
 	@Override
-	public Page<Document> getFoldersDocumentsPage(
+	public Page<Document> getFolderDocumentPage(
 			Long folderId, Pagination pagination)
 		throws Exception {
 
@@ -76,7 +76,7 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 	}
 
 	@Override
-	public Response postDocumentsCategories(Long documentId, Long referenceId)
+	public Response postDocumentCategories(Long documentId, Long referenceId)
 		throws Exception {
 
 		Response.ResponseBuilder responseBuilder = Response.ok();
@@ -85,7 +85,7 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 	}
 
 	@Override
-	public Response postDocumentsCategoriesBatchCreate(
+	public Response postDocumentCategoriesBatchCreate(
 			Long documentId, Long referenceId)
 		throws Exception {
 
@@ -95,7 +95,7 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 	}
 
 	@Override
-	public Document postDocumentsRepositoriesDocuments(
+	public Document postDocumentsRepositoryDocument(
 			Long documentsRepositoryId, Document document)
 		throws Exception {
 
@@ -103,7 +103,7 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 	}
 
 	@Override
-	public Document postDocumentsRepositoriesDocumentsBatchCreate(
+	public Document postDocumentsRepositoryDocumentBatchCreate(
 			Long documentsRepositoryId, Document document)
 		throws Exception {
 
@@ -111,7 +111,7 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 	}
 
 	@Override
-	public Document postFoldersDocuments(
+	public Document postFolderDocument(
 			Long folderId, MultipartBody multipartBody)
 		throws Exception {
 
@@ -119,7 +119,7 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 	}
 
 	@Override
-	public Document postFoldersDocumentsBatchCreate(
+	public Document postFolderDocumentBatchCreate(
 			Long folderId, MultipartBody multipartBody)
 		throws Exception {
 

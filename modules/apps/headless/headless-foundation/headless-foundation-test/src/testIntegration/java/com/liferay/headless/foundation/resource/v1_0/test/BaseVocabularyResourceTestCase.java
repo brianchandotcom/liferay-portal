@@ -54,46 +54,42 @@ public abstract class BaseVocabularyResourceTestCase {
 	}
 
 	@Test
-	public void testDeleteVocabularies() throws Exception {
+	public void testDeleteVocabulary() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testGetContentSpacesVocabulariesPage() throws Exception {
+	public void testGetContentSpaceVocabularyPage() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testGetVocabularies() throws Exception {
+	public void testGetVocabulary() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testPostContentSpacesVocabularies() throws Exception {
+	public void testPostContentSpaceVocabulary() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testPostContentSpacesVocabulariesBatchCreate()
-		throws Exception {
-
-			Assert.assertTrue(true);
-	}
-
-	@Test
-	public void testPutVocabularies() throws Exception {
+	public void testPostContentSpaceVocabularyBatchCreate() throws Exception {
 		Assert.assertTrue(true);
 	}
 
-	protected void invokeDeleteVocabularies(Long vocabularyId)
-		throws Exception {
+	@Test
+	public void testPutVocabulary() throws Exception {
+		Assert.assertTrue(true);
+	}
 
-			RequestSender requestSender = _createRequestSender();
+	protected void invokeDeleteVocabulary(Long vocabularyId) throws Exception {
+		RequestSender requestSender = _createRequestSender();
 
 			requestSender.post("/vocabularies/{vocabulary-id}");
 	}
 
-	protected void invokeGetContentSpacesVocabulariesPage(
+	protected void invokeGetContentSpaceVocabularyPage(
 			Long contentSpaceId, Pagination pagination)
 		throws Exception {
 
@@ -103,13 +99,13 @@ public abstract class BaseVocabularyResourceTestCase {
 				"/content-spaces/{content-space-id}/vocabularies");
 	}
 
-	protected void invokeGetVocabularies(Long vocabularyId) throws Exception {
+	protected void invokeGetVocabulary(Long vocabularyId) throws Exception {
 		RequestSender requestSender = _createRequestSender();
 
 			requestSender.post("/vocabularies/{vocabulary-id}");
 	}
 
-	protected void invokePostContentSpacesVocabularies(
+	protected void invokePostContentSpaceVocabulary(
 			Long contentSpaceId, Vocabulary vocabulary)
 		throws Exception {
 
@@ -119,7 +115,7 @@ public abstract class BaseVocabularyResourceTestCase {
 				"/content-spaces/{content-space-id}/vocabularies");
 	}
 
-	protected void invokePostContentSpacesVocabulariesBatchCreate(
+	protected void invokePostContentSpaceVocabularyBatchCreate(
 			Long contentSpaceId, Vocabulary vocabulary)
 		throws Exception {
 
@@ -129,8 +125,7 @@ public abstract class BaseVocabularyResourceTestCase {
 				"/content-spaces/{content-space-id}/vocabularies/batch-create");
 	}
 
-	protected void invokePutVocabularies(
-			Long vocabularyId, Vocabulary vocabulary)
+	protected void invokePutVocabulary(Long vocabularyId, Vocabulary vocabulary)
 		throws Exception {
 
 			RequestSender requestSender = _createRequestSender();

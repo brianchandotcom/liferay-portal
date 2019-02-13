@@ -63,18 +63,18 @@ public interface CommentResource {
 	@Path("/blog-postings/{blog-posting-id}/comments")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Page<Comment> getBlogPostingsCommentsPage( @PathParam("blog-posting-id") Long blogPostingId , @Context Pagination pagination ) throws Exception;
+	public Page<Comment> getBlogPostingCommentPage( @PathParam("blog-posting-id") Long blogPostingId , @Context Pagination pagination ) throws Exception;
 
 	@GET
 	@Path("/comments/{comment-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Comment getComments( @PathParam("comment-id") Long commentId ) throws Exception;
+	public Comment getComment( @PathParam("comment-id") Long commentId ) throws Exception;
 
 	@GET
 	@Path("/comments/{comment-id}/comments")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Page<Comment> getCommentsCommentsPage( @PathParam("comment-id") Long commentId , @Context Pagination pagination ) throws Exception;
+	public Page<Comment> getCommentCommentPage( @PathParam("comment-id") Long commentId , @Context Pagination pagination ) throws Exception;
 
 }

@@ -52,16 +52,16 @@ public abstract class BaseFormStructureResourceTestCase {
 	}
 
 	@Test
-	public void testGetContentSpacesFormStructuresPage() throws Exception {
+	public void testGetContentSpaceFormStructurePage() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testGetFormStructures() throws Exception {
+	public void testGetFormStructure() throws Exception {
 		Assert.assertTrue(true);
 	}
 
-	protected void invokeGetContentSpacesFormStructuresPage(
+	protected void invokeGetContentSpaceFormStructurePage(
 			Long contentSpaceId, Pagination pagination)
 		throws Exception {
 
@@ -71,7 +71,7 @@ public abstract class BaseFormStructureResourceTestCase {
 				"/content-spaces/{content-space-id}/form-structures");
 	}
 
-	protected void invokeGetFormStructures(Long formStructureId)
+	protected void invokeGetFormStructure(Long formStructureId)
 		throws Exception {
 
 			RequestSender requestSender = _createRequestSender();

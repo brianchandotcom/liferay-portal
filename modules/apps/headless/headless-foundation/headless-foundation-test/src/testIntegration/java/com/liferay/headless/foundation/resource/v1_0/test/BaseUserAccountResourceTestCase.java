@@ -54,56 +54,51 @@ public abstract class BaseUserAccountResourceTestCase {
 	}
 
 	@Test
-	public void testDeleteUserAccounts() throws Exception {
+	public void testDeleteUserAccount() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testGetMyUserAccounts() throws Exception {
+	public void testGetMyUserAccount() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testGetMyUserAccountsPage() throws Exception {
+	public void testGetOrganizationUserAccountPage() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testGetOrganizationsUserAccountsPage() throws Exception {
+	public void testGetUserAccount() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testGetUserAccounts() throws Exception {
+	public void testGetUserAccountPage() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testGetUserAccountsPage() throws Exception {
+	public void testGetWebSiteUserAccountPage() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testGetWebSitesUserAccountsPage() throws Exception {
+	public void testPostUserAccount() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testPostUserAccounts() throws Exception {
+	public void testPostUserAccountBatchCreate() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testPostUserAccountsBatchCreate() throws Exception {
+	public void testPutUserAccount() throws Exception {
 		Assert.assertTrue(true);
 	}
 
-	@Test
-	public void testPutUserAccounts() throws Exception {
-		Assert.assertTrue(true);
-	}
-
-	protected void invokeDeleteUserAccounts(Long userAccountId)
+	protected void invokeDeleteUserAccount(Long userAccountId)
 		throws Exception {
 
 			RequestSender requestSender = _createRequestSender();
@@ -111,7 +106,7 @@ public abstract class BaseUserAccountResourceTestCase {
 			requestSender.post("/user-accounts/{user-account-id}");
 	}
 
-	protected void invokeGetMyUserAccounts(Long myUserAccountId)
+	protected void invokeGetMyUserAccount(Long myUserAccountId)
 		throws Exception {
 
 			RequestSender requestSender = _createRequestSender();
@@ -119,15 +114,7 @@ public abstract class BaseUserAccountResourceTestCase {
 			requestSender.post("/my-user-accounts/{my-user-account-id}");
 	}
 
-	protected void invokeGetMyUserAccountsPage(Pagination pagination)
-		throws Exception {
-
-			RequestSender requestSender = _createRequestSender();
-
-			requestSender.post("/my-user-accounts");
-	}
-
-	protected void invokeGetOrganizationsUserAccountsPage(
+	protected void invokeGetOrganizationUserAccountPage(
 			Long organizationId, Pagination pagination)
 		throws Exception {
 
@@ -137,13 +124,21 @@ public abstract class BaseUserAccountResourceTestCase {
 				"/organizations/{organization-id}/user-accounts");
 	}
 
-	protected void invokeGetUserAccounts(Long userAccountId) throws Exception {
+	protected void invokeGetUserAccount(Long userAccountId) throws Exception {
 		RequestSender requestSender = _createRequestSender();
 
 			requestSender.post("/user-accounts/{user-account-id}");
 	}
 
-	protected void invokeGetUserAccountsPage(
+	protected void invokeGetUserAccountPage(Pagination pagination)
+		throws Exception {
+
+			RequestSender requestSender = _createRequestSender();
+
+			requestSender.post("/my-user-accounts");
+	}
+
+	protected void invokeGetUserAccountPage(
 			String fullnamequery, Pagination pagination)
 		throws Exception {
 
@@ -152,7 +147,7 @@ public abstract class BaseUserAccountResourceTestCase {
 			requestSender.post("/user-accounts");
 	}
 
-	protected void invokeGetWebSitesUserAccountsPage(
+	protected void invokeGetWebSiteUserAccountPage(
 			Long webSiteId, Pagination pagination)
 		throws Exception {
 
@@ -161,7 +156,7 @@ public abstract class BaseUserAccountResourceTestCase {
 			requestSender.post("/web-sites/{web-site-id}/user-accounts");
 	}
 
-	protected void invokePostUserAccounts(UserAccount userAccount)
+	protected void invokePostUserAccount(UserAccount userAccount)
 		throws Exception {
 
 			RequestSender requestSender = _createRequestSender();
@@ -169,7 +164,7 @@ public abstract class BaseUserAccountResourceTestCase {
 			requestSender.post("/user-accounts");
 	}
 
-	protected void invokePostUserAccountsBatchCreate(UserAccount userAccount)
+	protected void invokePostUserAccountBatchCreate(UserAccount userAccount)
 		throws Exception {
 
 			RequestSender requestSender = _createRequestSender();
@@ -177,7 +172,7 @@ public abstract class BaseUserAccountResourceTestCase {
 			requestSender.post("/user-accounts/batch-create");
 	}
 
-	protected void invokePutUserAccounts(
+	protected void invokePutUserAccount(
 			Long userAccountId, UserAccount userAccount)
 		throws Exception {
 

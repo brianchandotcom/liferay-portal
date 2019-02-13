@@ -56,72 +56,72 @@ public abstract class BaseStructuredContentResourceTestCase {
 	}
 
 	@Test
-	public void testDeleteStructuredContents() throws Exception {
+	public void testDeleteStructuredContent() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testGetContentSpacesContentStructuresStructuredContentsPage()
+	public void testGetContentSpaceContentStructureStructuredContentPage()
 		throws Exception {
 
 			Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testGetContentSpacesStructuredContentsPage() throws Exception {
+	public void testGetContentSpaceStructuredContentPage() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testGetContentStructures() throws Exception {
+	public void testGetContentStructure() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testGetStructuredContents() throws Exception {
+	public void testGetStructuredContent() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testGetStructuredContentsCategoriesPage() throws Exception {
+	public void testGetStructuredContentCategoriesPage() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testPatchContentSpacesStructuredContents() throws Exception {
+	public void testPatchContentSpaceStructuredContents() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testPostContentSpacesStructuredContents() throws Exception {
+	public void testPostContentSpaceStructuredContent() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testPostContentSpacesStructuredContentsBatchCreate()
+	public void testPostContentSpaceStructuredContentBatchCreate()
 		throws Exception {
 
 			Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testPostStructuredContentsCategories() throws Exception {
+	public void testPostStructuredContentCategories() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testPostStructuredContentsCategoriesBatchCreate()
+	public void testPostStructuredContentCategoriesBatchCreate()
 		throws Exception {
 
 			Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testPutStructuredContents() throws Exception {
+	public void testPutStructuredContent() throws Exception {
 		Assert.assertTrue(true);
 	}
 
-	protected void invokeDeleteStructuredContents(Long structuredContentId)
+	protected void invokeDeleteStructuredContent(Long structuredContentId)
 		throws Exception {
 
 			RequestSender requestSender = _createRequestSender();
@@ -129,7 +129,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 			requestSender.post("/structured-contents/{structured-content-id}");
 	}
 
-	protected void invokeGetContentSpacesContentStructuresStructuredContentsPage(
+	protected void invokeGetContentSpaceContentStructureStructuredContentPage(
 			Long contentSpaceId, Long contentStructureId, Filter filter,
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
@@ -140,7 +140,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 				"/content-spaces/{content-space-id}/content-structures/{content-structure-id}/structured-contents");
 	}
 
-	protected void invokeGetContentSpacesStructuredContentsPage(
+	protected void invokeGetContentSpaceStructuredContentPage(
 			Long contentSpaceId, Filter filter, Pagination pagination,
 			Sort[] sorts)
 		throws Exception {
@@ -151,7 +151,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 				"/content-spaces/{content-space-id}/structured-contents");
 	}
 
-	protected void invokeGetContentStructures(Long contentStructureId)
+	protected void invokeGetContentStructure(Long contentStructureId)
 		throws Exception {
 
 			RequestSender requestSender = _createRequestSender();
@@ -159,7 +159,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 			requestSender.post("/content-structures/{content-structure-id}");
 	}
 
-	protected void invokeGetStructuredContents(Long structuredContentId)
+	protected void invokeGetStructuredContent(Long structuredContentId)
 		throws Exception {
 
 			RequestSender requestSender = _createRequestSender();
@@ -167,7 +167,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 			requestSender.post("/structured-contents/{structured-content-id}");
 	}
 
-	protected void invokeGetStructuredContentsCategoriesPage(
+	protected void invokeGetStructuredContentCategoriesPage(
 			Long structuredContentId, Pagination pagination)
 		throws Exception {
 
@@ -177,7 +177,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 				"/structured-contents/{structured-content-id}/categories");
 	}
 
-	protected void invokePatchContentSpacesStructuredContents(
+	protected void invokePatchContentSpaceStructuredContents(
 			Long contentSpaceId, StructuredContent structuredContent)
 		throws Exception {
 
@@ -187,7 +187,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 				"/content-spaces/{content-space-id}/structured-contents");
 	}
 
-	protected void invokePostContentSpacesStructuredContents(
+	protected void invokePostContentSpaceStructuredContent(
 			Long contentSpaceId, StructuredContent structuredContent)
 		throws Exception {
 
@@ -197,7 +197,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 				"/content-spaces/{content-space-id}/structured-contents");
 	}
 
-	protected void invokePostContentSpacesStructuredContentsBatchCreate(
+	protected void invokePostContentSpaceStructuredContentBatchCreate(
 			Long contentSpaceId, StructuredContent structuredContent)
 		throws Exception {
 
@@ -207,7 +207,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 				"/content-spaces/{content-space-id}/structured-contents/batch-create");
 	}
 
-	protected void invokePostStructuredContentsCategories(
+	protected void invokePostStructuredContentCategories(
 			Long structuredContentId, Long referenceId)
 		throws Exception {
 
@@ -217,7 +217,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 				"/structured-contents/{structured-content-id}/categories");
 	}
 
-	protected void invokePostStructuredContentsCategoriesBatchCreate(
+	protected void invokePostStructuredContentCategoriesBatchCreate(
 			Long structuredContentId, Long referenceId)
 		throws Exception {
 
@@ -227,7 +227,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 				"/structured-contents/{structured-content-id}/categories/batch-create");
 	}
 
-	protected void invokePutStructuredContents(
+	protected void invokePutStructuredContent(
 			Long structuredContentId, StructuredContent structuredContent)
 		throws Exception {
 

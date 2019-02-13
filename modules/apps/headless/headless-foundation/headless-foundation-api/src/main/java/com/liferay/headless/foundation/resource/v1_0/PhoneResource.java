@@ -67,12 +67,12 @@ public interface PhoneResource {
 	@Path("/phones")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Page<Phone> getPhonesPage( @PathParam("generic-parent-id") Object genericParentId , @Context Pagination pagination ) throws Exception;
+	public Page<Phone> getGenericParentPhonePage( @PathParam("generic-parent-id") Object genericParentId , @Context Pagination pagination ) throws Exception;
 
 	@GET
 	@Path("/phones/{phone-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Phone getPhones( @PathParam("phone-id") Long phoneId ) throws Exception;
+	public Phone getPhone( @PathParam("phone-id") Long phoneId ) throws Exception;
 
 }

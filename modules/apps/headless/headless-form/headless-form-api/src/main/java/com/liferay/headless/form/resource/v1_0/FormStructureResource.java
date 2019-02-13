@@ -62,12 +62,12 @@ public interface FormStructureResource {
 	@Path("/content-spaces/{content-space-id}/form-structures")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Page<FormStructure> getContentSpacesFormStructuresPage( @PathParam("content-space-id") Long contentSpaceId , @Context Pagination pagination ) throws Exception;
+	public Page<FormStructure> getContentSpaceFormStructurePage( @PathParam("content-space-id") Long contentSpaceId , @Context Pagination pagination ) throws Exception;
 
 	@GET
 	@Path("/form-structures/{form-structure-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public FormStructure getFormStructures( @PathParam("form-structure-id") Long formStructureId ) throws Exception;
+	public FormStructure getFormStructure( @PathParam("form-structure-id") Long formStructureId ) throws Exception;
 
 }

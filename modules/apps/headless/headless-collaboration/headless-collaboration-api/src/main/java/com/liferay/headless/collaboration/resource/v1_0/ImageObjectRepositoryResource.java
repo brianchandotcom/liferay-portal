@@ -63,6 +63,6 @@ public interface ImageObjectRepositoryResource {
 	@Path("/image-object-repositories/{image-object-repository-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public ImageObjectRepository getImageObjectRepositories( @PathParam("image-object-repository-id") Long imageObjectRepositoryId ) throws Exception;
+	public ImageObjectRepository getImageObjectRepository( @PathParam("image-object-repository-id") Long imageObjectRepositoryId ) throws Exception;
 
 }

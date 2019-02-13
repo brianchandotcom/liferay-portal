@@ -40,20 +40,7 @@ public abstract class BaseWorkflowTaskResourceImpl
 	implements WorkflowTaskResource {
 
 	@Override
-	public Page<WorkflowTask> getRolesWorkflowTasksPage(
-			Long roleId, Pagination pagination)
-		throws Exception {
-
-		return Page.of(Collections.emptyList());
-	}
-
-	@Override
-	public WorkflowTask getWorkflowTasks(Long workflowTaskId) throws Exception {
-		return new WorkflowTask();
-	}
-
-	@Override
-	public Page<WorkflowTask> getWorkflowTasksPage(
+	public Page<WorkflowTask> getGenericParentWorkflowTaskPage(
 			Object genericParentId, Pagination pagination)
 		throws Exception {
 
@@ -61,7 +48,20 @@ public abstract class BaseWorkflowTaskResourceImpl
 	}
 
 	@Override
-	public WorkflowTask postWorkflowTasksAssignToMe(
+	public Page<WorkflowTask> getRoleWorkflowTaskPage(
+			Long roleId, Pagination pagination)
+		throws Exception {
+
+		return Page.of(Collections.emptyList());
+	}
+
+	@Override
+	public WorkflowTask getWorkflowTask(Long workflowTaskId) throws Exception {
+		return new WorkflowTask();
+	}
+
+	@Override
+	public WorkflowTask postWorkflowTaskAssignToMe(
 			Long workflowTaskId, WorkflowTask workflowTask)
 		throws Exception {
 
@@ -69,7 +69,7 @@ public abstract class BaseWorkflowTaskResourceImpl
 	}
 
 	@Override
-	public WorkflowTask postWorkflowTasksAssignToUser(
+	public WorkflowTask postWorkflowTaskAssignToUser(
 			Long workflowTaskId, WorkflowTask workflowTask)
 		throws Exception {
 
@@ -77,7 +77,7 @@ public abstract class BaseWorkflowTaskResourceImpl
 	}
 
 	@Override
-	public WorkflowTask postWorkflowTasksChangeTransition(
+	public WorkflowTask postWorkflowTaskChangeTransition(
 			Long workflowTaskId, WorkflowTask workflowTask)
 		throws Exception {
 
@@ -85,7 +85,7 @@ public abstract class BaseWorkflowTaskResourceImpl
 	}
 
 	@Override
-	public WorkflowTask postWorkflowTasksUpdateDueDate(
+	public WorkflowTask postWorkflowTaskUpdateDueDate(
 			Long workflowTaskId, WorkflowTask workflowTask)
 		throws Exception {
 

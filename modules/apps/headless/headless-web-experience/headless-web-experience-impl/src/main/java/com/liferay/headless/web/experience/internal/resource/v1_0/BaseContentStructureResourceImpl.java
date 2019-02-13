@@ -40,7 +40,7 @@ public abstract class BaseContentStructureResourceImpl
 	implements ContentStructureResource {
 
 	@Override
-	public Page<ContentStructure> getContentSpacesContentStructuresPage(
+	public Page<ContentStructure> getContentSpaceContentStructurePage(
 			Long contentSpaceId, Pagination pagination)
 		throws Exception {
 
@@ -48,7 +48,7 @@ public abstract class BaseContentStructureResourceImpl
 	}
 
 	@Override
-	public ContentStructure getContentStructures(Long contentStructureId)
+	public ContentStructure getContentStructure(Long contentStructureId)
 		throws Exception {
 
 		return new ContentStructure();

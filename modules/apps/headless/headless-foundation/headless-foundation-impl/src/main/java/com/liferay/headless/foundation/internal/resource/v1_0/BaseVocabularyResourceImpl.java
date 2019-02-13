@@ -39,14 +39,14 @@ import javax.ws.rs.core.Response;
 public abstract class BaseVocabularyResourceImpl implements VocabularyResource {
 
 	@Override
-	public Response deleteVocabularies(Long vocabularyId) throws Exception {
+	public Response deleteVocabulary(Long vocabularyId) throws Exception {
 		Response.ResponseBuilder responseBuilder = Response.ok();
 
 		return responseBuilder.build();
 	}
 
 	@Override
-	public Page<Vocabulary> getContentSpacesVocabulariesPage(
+	public Page<Vocabulary> getContentSpaceVocabularyPage(
 			Long contentSpaceId, Pagination pagination)
 		throws Exception {
 
@@ -54,12 +54,12 @@ public abstract class BaseVocabularyResourceImpl implements VocabularyResource {
 	}
 
 	@Override
-	public Vocabulary getVocabularies(Long vocabularyId) throws Exception {
+	public Vocabulary getVocabulary(Long vocabularyId) throws Exception {
 		return new Vocabulary();
 	}
 
 	@Override
-	public Vocabulary postContentSpacesVocabularies(
+	public Vocabulary postContentSpaceVocabulary(
 			Long contentSpaceId, Vocabulary vocabulary)
 		throws Exception {
 
@@ -67,7 +67,7 @@ public abstract class BaseVocabularyResourceImpl implements VocabularyResource {
 	}
 
 	@Override
-	public Vocabulary postContentSpacesVocabulariesBatchCreate(
+	public Vocabulary postContentSpaceVocabularyBatchCreate(
 			Long contentSpaceId, Vocabulary vocabulary)
 		throws Exception {
 
@@ -75,7 +75,7 @@ public abstract class BaseVocabularyResourceImpl implements VocabularyResource {
 	}
 
 	@Override
-	public Vocabulary putVocabularies(Long vocabularyId, Vocabulary vocabulary)
+	public Vocabulary putVocabulary(Long vocabularyId, Vocabulary vocabulary)
 		throws Exception {
 
 		return new Vocabulary();

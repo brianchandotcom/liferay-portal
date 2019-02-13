@@ -62,32 +62,32 @@ public interface FormResource {
 	@Path("/content-spaces/{content-space-id}/form")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Page<Form> getContentSpacesFormPage( @PathParam("content-space-id") Long contentSpaceId , @Context Pagination pagination ) throws Exception;
+	public Page<Form> getContentSpaceFormPage( @PathParam("content-space-id") Long contentSpaceId , @Context Pagination pagination ) throws Exception;
 
 	@GET
 	@Path("/forms/{form-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Form getForms( @PathParam("form-id") Long formId ) throws Exception;
+	public Form getForm( @PathParam("form-id") Long formId ) throws Exception;
 
 	@Consumes("application/json")
 	@POST
 	@Path("/forms/{form-id}/evaluate-context")
 	@Produces("application/json")
 	@RequiresScope("everything.write")
-	public Form postFormsEvaluateContext( @PathParam("form-id") Long formId , Form form ) throws Exception;
+	public Form postFormEvaluateContext( @PathParam("form-id") Long formId , Form form ) throws Exception;
 
 	@GET
 	@Path("/forms/{form-id}/fetch-latest-draft")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Form getFormsFetchLatestDraft( @PathParam("form-id") Long formId ) throws Exception;
+	public Form getFormFetchLatestDraft( @PathParam("form-id") Long formId ) throws Exception;
 
 	@Consumes("application/json")
 	@POST
 	@Path("/forms/{form-id}/upload-file")
 	@Produces("application/json")
 	@RequiresScope("everything.write")
-	public Form postFormsUploadFile( @PathParam("form-id") Long formId , Form form ) throws Exception;
+	public Form postFormUploadFile( @PathParam("form-id") Long formId , Form form ) throws Exception;
 
 }

@@ -39,12 +39,12 @@ import javax.ws.rs.core.Response;
 public abstract class BaseEmailResourceImpl implements EmailResource {
 
 	@Override
-	public Email getEmails(Long emailId) throws Exception {
+	public Email getEmail(Long emailId) throws Exception {
 		return new Email();
 	}
 
 	@Override
-	public Page<Email> getEmailsPage(
+	public Page<Email> getGenericParentEmailPage(
 			Object genericParentId, Pagination pagination)
 		throws Exception {
 

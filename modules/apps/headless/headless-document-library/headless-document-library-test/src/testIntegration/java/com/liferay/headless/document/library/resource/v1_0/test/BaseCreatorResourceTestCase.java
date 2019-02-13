@@ -51,11 +51,11 @@ public abstract class BaseCreatorResourceTestCase {
 	}
 
 	@Test
-	public void testGetCreators() throws Exception {
+	public void testGetCreator() throws Exception {
 		Assert.assertTrue(true);
 	}
 
-	protected void invokeGetCreators(Long creatorId) throws Exception {
+	protected void invokeGetCreator(Long creatorId) throws Exception {
 		RequestSender requestSender = _createRequestSender();
 
 			requestSender.post("/creators/{creator-id}");

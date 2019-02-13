@@ -54,53 +54,51 @@ public abstract class BaseBlogPostingResourceTestCase {
 	}
 
 	@Test
-	public void testDeleteBlogPostings() throws Exception {
+	public void testDeleteBlogPosting() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testGetBlogPostings() throws Exception {
+	public void testGetBlogPosting() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testGetBlogPostingsCategoriesPage() throws Exception {
+	public void testGetBlogPostingCategoriesPage() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testGetContentSpacesBlogPostingsPage() throws Exception {
+	public void testGetContentSpaceBlogPostingPage() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testPostBlogPostingsCategories() throws Exception {
+	public void testPostBlogPostingCategories() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testPostBlogPostingsCategoriesBatchCreate() throws Exception {
+	public void testPostBlogPostingCategoriesBatchCreate() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testPostContentSpacesBlogPostings() throws Exception {
+	public void testPostContentSpaceBlogPosting() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testPostContentSpacesBlogPostingsBatchCreate()
-		throws Exception {
-
-			Assert.assertTrue(true);
-	}
-
-	@Test
-	public void testPutBlogPostings() throws Exception {
+	public void testPostContentSpaceBlogPostingBatchCreate() throws Exception {
 		Assert.assertTrue(true);
 	}
 
-	protected void invokeDeleteBlogPostings(Long blogPostingId)
+	@Test
+	public void testPutBlogPosting() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	protected void invokeDeleteBlogPosting(Long blogPostingId)
 		throws Exception {
 
 			RequestSender requestSender = _createRequestSender();
@@ -108,13 +106,13 @@ public abstract class BaseBlogPostingResourceTestCase {
 			requestSender.post("/blog-postings/{blog-posting-id}");
 	}
 
-	protected void invokeGetBlogPostings(Long blogPostingId) throws Exception {
+	protected void invokeGetBlogPosting(Long blogPostingId) throws Exception {
 		RequestSender requestSender = _createRequestSender();
 
 			requestSender.post("/blog-postings/{blog-posting-id}");
 	}
 
-	protected void invokeGetBlogPostingsCategoriesPage(
+	protected void invokeGetBlogPostingCategoriesPage(
 			Long blogPostingId, Pagination pagination)
 		throws Exception {
 
@@ -123,7 +121,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 			requestSender.post("/blog-postings/{blog-posting-id}/categories");
 	}
 
-	protected void invokeGetContentSpacesBlogPostingsPage(
+	protected void invokeGetContentSpaceBlogPostingPage(
 			Long contentSpaceId, Pagination pagination)
 		throws Exception {
 
@@ -133,7 +131,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 				"/content-spaces/{content-space-id}/blog-postings");
 	}
 
-	protected void invokePostBlogPostingsCategories(
+	protected void invokePostBlogPostingCategories(
 			Long blogPostingId, Long referenceId)
 		throws Exception {
 
@@ -142,7 +140,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 			requestSender.post("/blog-postings/{blog-posting-id}/categories");
 	}
 
-	protected void invokePostBlogPostingsCategoriesBatchCreate(
+	protected void invokePostBlogPostingCategoriesBatchCreate(
 			Long blogPostingId, Long referenceId)
 		throws Exception {
 
@@ -152,7 +150,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 				"/blog-postings/{blog-posting-id}/categories/batch-create");
 	}
 
-	protected void invokePostContentSpacesBlogPostings(
+	protected void invokePostContentSpaceBlogPosting(
 			Long contentSpaceId, BlogPosting blogPosting)
 		throws Exception {
 
@@ -162,7 +160,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 				"/content-spaces/{content-space-id}/blog-postings");
 	}
 
-	protected void invokePostContentSpacesBlogPostingsBatchCreate(
+	protected void invokePostContentSpaceBlogPostingBatchCreate(
 			Long contentSpaceId, BlogPosting blogPosting)
 		throws Exception {
 
@@ -172,7 +170,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 				"/content-spaces/{content-space-id}/blog-postings/batch-create");
 	}
 
-	protected void invokePutBlogPostings(
+	protected void invokePutBlogPosting(
 			Long blogPostingId, BlogPosting blogPosting)
 		throws Exception {
 

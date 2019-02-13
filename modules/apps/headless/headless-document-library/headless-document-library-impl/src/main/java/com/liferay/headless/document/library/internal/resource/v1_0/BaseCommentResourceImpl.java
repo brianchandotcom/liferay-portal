@@ -39,7 +39,7 @@ import javax.ws.rs.core.Response;
 public abstract class BaseCommentResourceImpl implements CommentResource {
 
 	@Override
-	public Page<Comment> getDocumentsCommentsPage(
+	public Page<Comment> getDocumentCommentPage(
 			Long documentId, Pagination pagination)
 		throws Exception {
 

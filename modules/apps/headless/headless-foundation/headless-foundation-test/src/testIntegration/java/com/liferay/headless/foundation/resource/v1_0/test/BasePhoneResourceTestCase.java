@@ -53,28 +53,28 @@ public abstract class BasePhoneResourceTestCase {
 	}
 
 	@Test
-	public void testGetPhones() throws Exception {
+	public void testGetGenericParentPhonePage() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testGetPhonesPage() throws Exception {
+	public void testGetPhone() throws Exception {
 		Assert.assertTrue(true);
 	}
 
-	protected void invokeGetPhones(Long phoneId) throws Exception {
-		RequestSender requestSender = _createRequestSender();
-
-			requestSender.post("/phones/{phone-id}");
-	}
-
-	protected void invokeGetPhonesPage(
+	protected void invokeGetGenericParentPhonePage(
 			Object genericParentId, Pagination pagination)
 		throws Exception {
 
 			RequestSender requestSender = _createRequestSender();
 
 			requestSender.post("/phones");
+	}
+
+	protected void invokeGetPhone(Long phoneId) throws Exception {
+		RequestSender requestSender = _createRequestSender();
+
+			requestSender.post("/phones/{phone-id}");
 	}
 
 	private RequestSender _createRequestSender() {

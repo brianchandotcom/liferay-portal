@@ -61,6 +61,6 @@ public interface CreatorResource {
 	@Path("/creators/{creator-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Creator getCreators( @PathParam("creator-id") Long creatorId ) throws Exception;
+	public Creator getCreator( @PathParam("creator-id") Long creatorId ) throws Exception;
 
 }

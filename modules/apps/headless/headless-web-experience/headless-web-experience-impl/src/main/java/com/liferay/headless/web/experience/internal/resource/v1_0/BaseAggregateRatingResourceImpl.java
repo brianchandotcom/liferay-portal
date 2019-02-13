@@ -37,7 +37,7 @@ public abstract class BaseAggregateRatingResourceImpl
 	implements AggregateRatingResource {
 
 	@Override
-	public AggregateRating getAggregateRatings(Long aggregateRatingId)
+	public AggregateRating getAggregateRating(Long aggregateRatingId)
 		throws Exception {
 
 		return new AggregateRating();

@@ -61,6 +61,6 @@ public interface CommentResource {
 	@Path("/documents/{document-id}/comments")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Page<Comment> getDocumentsCommentsPage( @PathParam("document-id") Long documentId , @Context Pagination pagination ) throws Exception;
+	public Page<Comment> getDocumentCommentPage( @PathParam("document-id") Long documentId , @Context Pagination pagination ) throws Exception;
 
 }

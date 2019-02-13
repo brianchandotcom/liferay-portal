@@ -67,39 +67,39 @@ public interface KeywordResource {
 	@Path("/content-spaces/{content-space-id}/keywords")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Page<Keyword> getContentSpacesKeywordsPage( @PathParam("content-space-id") Long contentSpaceId , @Context Pagination pagination ) throws Exception;
+	public Page<Keyword> getContentSpaceKeywordPage( @PathParam("content-space-id") Long contentSpaceId , @Context Pagination pagination ) throws Exception;
 
 	@Consumes("application/json")
 	@POST
 	@Path("/content-spaces/{content-space-id}/keywords")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Keyword postContentSpacesKeywords( @PathParam("content-space-id") Long contentSpaceId , Keyword keyword ) throws Exception;
+	public Keyword postContentSpaceKeyword( @PathParam("content-space-id") Long contentSpaceId , Keyword keyword ) throws Exception;
 
 	@Consumes("application/json")
 	@POST
 	@Path("/content-spaces/{content-space-id}/keywords/batch-create")
 	@Produces("application/json")
 	@RequiresScope("everything.write")
-	public Keyword postContentSpacesKeywordsBatchCreate( @PathParam("content-space-id") Long contentSpaceId , Keyword keyword ) throws Exception;
+	public Keyword postContentSpaceKeywordBatchCreate( @PathParam("content-space-id") Long contentSpaceId , Keyword keyword ) throws Exception;
 
 	@DELETE
 	@Path("/keywords/{keyword-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Response deleteKeywords( @PathParam("keyword-id") Long keywordId ) throws Exception;
+	public Response deleteKeyword( @PathParam("keyword-id") Long keywordId ) throws Exception;
 
 	@GET
 	@Path("/keywords/{keyword-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Keyword getKeywords( @PathParam("keyword-id") Long keywordId ) throws Exception;
+	public Keyword getKeyword( @PathParam("keyword-id") Long keywordId ) throws Exception;
 
 	@Consumes("application/json")
 	@PUT
 	@Path("/keywords/{keyword-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Keyword putKeywords( @PathParam("keyword-id") Long keywordId , Keyword keyword ) throws Exception;
+	public Keyword putKeyword( @PathParam("keyword-id") Long keywordId , Keyword keyword ) throws Exception;
 
 }

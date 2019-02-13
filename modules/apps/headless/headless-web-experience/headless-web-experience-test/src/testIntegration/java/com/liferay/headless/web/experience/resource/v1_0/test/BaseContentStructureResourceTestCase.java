@@ -53,16 +53,16 @@ public abstract class BaseContentStructureResourceTestCase {
 	}
 
 	@Test
-	public void testGetContentSpacesContentStructuresPage() throws Exception {
+	public void testGetContentSpaceContentStructurePage() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testGetContentStructures() throws Exception {
+	public void testGetContentStructure() throws Exception {
 		Assert.assertTrue(true);
 	}
 
-	protected void invokeGetContentSpacesContentStructuresPage(
+	protected void invokeGetContentSpaceContentStructurePage(
 			Long contentSpaceId, Pagination pagination)
 		throws Exception {
 
@@ -72,7 +72,7 @@ public abstract class BaseContentStructureResourceTestCase {
 				"/content-spaces/{content-space-id}/content-structures");
 	}
 
-	protected void invokeGetContentStructures(Long contentStructureId)
+	protected void invokeGetContentStructure(Long contentStructureId)
 		throws Exception {
 
 			RequestSender requestSender = _createRequestSender();

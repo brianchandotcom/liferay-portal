@@ -67,30 +67,30 @@ public interface OrganizationResource {
 	@Path("/my-user-accounts/{my-user-account-id}/organizations")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Page<Organization> getMyUserAccountsOrganizationsPage( @PathParam("my-user-account-id") Long myUserAccountId , @Context Pagination pagination ) throws Exception;
+	public Page<Organization> getMyUserAccountOrganizationPage( @PathParam("my-user-account-id") Long myUserAccountId , @Context Pagination pagination ) throws Exception;
 
 	@GET
 	@Path("/organizations")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Page<Organization> getOrganizationsPage( @Context Pagination pagination ) throws Exception;
+	public Page<Organization> getOrganizationPage( @Context Pagination pagination ) throws Exception;
 
 	@GET
 	@Path("/organizations/{organization-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Organization getOrganizations( @PathParam("organization-id") Long organizationId ) throws Exception;
+	public Organization getOrganization( @PathParam("organization-id") Long organizationId ) throws Exception;
 
 	@GET
 	@Path("/organizations/{organization-id}/organizations")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Page<Organization> getOrganizationsOrganizationsPage( @PathParam("organization-id") Long organizationId , @Context Pagination pagination ) throws Exception;
+	public Page<Organization> getOrganizationOrganizationPage( @PathParam("organization-id") Long organizationId , @Context Pagination pagination ) throws Exception;
 
 	@GET
 	@Path("/user-accounts/{user-account-id}/organizations")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Page<Organization> getUserAccountsOrganizationsPage( @PathParam("user-account-id") Long userAccountId , @Context Pagination pagination ) throws Exception;
+	public Page<Organization> getUserAccountOrganizationPage( @PathParam("user-account-id") Long userAccountId , @Context Pagination pagination ) throws Exception;
 
 }

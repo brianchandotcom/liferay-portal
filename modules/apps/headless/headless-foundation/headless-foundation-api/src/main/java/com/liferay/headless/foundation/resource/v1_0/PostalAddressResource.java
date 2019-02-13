@@ -67,12 +67,12 @@ public interface PostalAddressResource {
 	@Path("/addresses")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Page<PostalAddress> getAddressesPage( @PathParam("generic-parent-id") Object genericParentId , @Context Pagination pagination ) throws Exception;
+	public Page<PostalAddress> getGenericParentPostalAddressPage( @PathParam("generic-parent-id") Object genericParentId , @Context Pagination pagination ) throws Exception;
 
 	@GET
 	@Path("/addresses/{address-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public PostalAddress getAddresses( @PathParam("address-id") Long addressId ) throws Exception;
+	public PostalAddress getAddress( @PathParam("address-id") Long addressId ) throws Exception;
 
 }

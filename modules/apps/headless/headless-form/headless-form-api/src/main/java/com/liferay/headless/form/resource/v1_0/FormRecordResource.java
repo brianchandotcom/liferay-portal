@@ -62,33 +62,33 @@ public interface FormRecordResource {
 	@Path("/form-records/{form-record-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public FormRecord getFormRecords( @PathParam("form-record-id") Long formRecordId ) throws Exception;
+	public FormRecord getFormRecord( @PathParam("form-record-id") Long formRecordId ) throws Exception;
 
 	@Consumes("application/json")
 	@PUT
 	@Path("/form-records/{form-record-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public FormRecord putFormRecords( @PathParam("form-record-id") Long formRecordId , FormRecord formRecord ) throws Exception;
+	public FormRecord putFormRecord( @PathParam("form-record-id") Long formRecordId , FormRecord formRecord ) throws Exception;
 
 	@GET
 	@Path("/forms/{form-id}/form-records")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Page<FormRecord> getFormsFormRecordsPage( @PathParam("form-id") Long formId , @Context Pagination pagination ) throws Exception;
+	public Page<FormRecord> getFormFormRecordPage( @PathParam("form-id") Long formId , @Context Pagination pagination ) throws Exception;
 
 	@Consumes("application/json")
 	@POST
 	@Path("/forms/{form-id}/form-records")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public FormRecord postFormsFormRecords( @PathParam("form-id") Long formId , FormRecord formRecord ) throws Exception;
+	public FormRecord postFormFormRecord( @PathParam("form-id") Long formId , FormRecord formRecord ) throws Exception;
 
 	@Consumes("application/json")
 	@POST
 	@Path("/forms/{form-id}/form-records/batch-create")
 	@Produces("application/json")
 	@RequiresScope("everything.write")
-	public FormRecord postFormsFormRecordsBatchCreate( @PathParam("form-id") Long formId , FormRecord formRecord ) throws Exception;
+	public FormRecord postFormFormRecordBatchCreate( @PathParam("form-id") Long formId , FormRecord formRecord ) throws Exception;
 
 }

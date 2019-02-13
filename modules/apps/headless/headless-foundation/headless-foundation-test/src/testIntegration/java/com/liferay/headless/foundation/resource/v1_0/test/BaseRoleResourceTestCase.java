@@ -53,26 +53,26 @@ public abstract class BaseRoleResourceTestCase {
 	}
 
 	@Test
-	public void testGetMyUserAccountsRolesPage() throws Exception {
+	public void testGetMyUserAccountRolePage() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testGetRoles() throws Exception {
+	public void testGetRole() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testGetRolesPage() throws Exception {
+	public void testGetRolePage() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testGetUserAccountsRolesPage() throws Exception {
+	public void testGetUserAccountRolePage() throws Exception {
 		Assert.assertTrue(true);
 	}
 
-	protected void invokeGetMyUserAccountsRolesPage(
+	protected void invokeGetMyUserAccountRolePage(
 			Long myUserAccountId, Pagination pagination)
 		throws Exception {
 
@@ -81,19 +81,19 @@ public abstract class BaseRoleResourceTestCase {
 			requestSender.post("/my-user-accounts/{my-user-account-id}/roles");
 	}
 
-	protected void invokeGetRoles(Long roleId) throws Exception {
+	protected void invokeGetRole(Long roleId) throws Exception {
 		RequestSender requestSender = _createRequestSender();
 
 			requestSender.post("/roles/{role-id}");
 	}
 
-	protected void invokeGetRolesPage(Pagination pagination) throws Exception {
+	protected void invokeGetRolePage(Pagination pagination) throws Exception {
 		RequestSender requestSender = _createRequestSender();
 
 			requestSender.post("/roles");
 	}
 
-	protected void invokeGetUserAccountsRolesPage(
+	protected void invokeGetUserAccountRolePage(
 			Long userAccountId, Pagination pagination)
 		throws Exception {
 

@@ -39,16 +39,16 @@ import javax.ws.rs.core.Response;
 public abstract class BaseWebUrlResourceImpl implements WebUrlResource {
 
 	@Override
-	public WebUrl getWebUrls(Long webUrlId) throws Exception {
-		return new WebUrl();
-	}
-
-	@Override
-	public Page<WebUrl> getWebUrlsPage(
+	public Page<WebUrl> getGenericParentWebUrlPage(
 			Object genericParentId, Pagination pagination)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
+	}
+
+	@Override
+	public WebUrl getWebUrl(Long webUrlId) throws Exception {
+		return new WebUrl();
 	}
 
 	protected Response buildNoContentResponse() {

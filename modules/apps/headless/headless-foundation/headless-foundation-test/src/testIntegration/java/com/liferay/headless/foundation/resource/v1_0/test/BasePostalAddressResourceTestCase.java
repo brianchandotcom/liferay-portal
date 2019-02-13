@@ -53,22 +53,22 @@ public abstract class BasePostalAddressResourceTestCase {
 	}
 
 	@Test
-	public void testGetAddresses() throws Exception {
+	public void testGetAddress() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testGetAddressesPage() throws Exception {
+	public void testGetGenericParentPostalAddressPage() throws Exception {
 		Assert.assertTrue(true);
 	}
 
-	protected void invokeGetAddresses(Long addressId) throws Exception {
+	protected void invokeGetAddress(Long addressId) throws Exception {
 		RequestSender requestSender = _createRequestSender();
 
 			requestSender.post("/addresses/{address-id}");
 	}
 
-	protected void invokeGetAddressesPage(
+	protected void invokeGetGenericParentPostalAddressPage(
 			Object genericParentId, Pagination pagination)
 		throws Exception {
 

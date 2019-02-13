@@ -40,28 +40,19 @@ public abstract class BaseUserAccountResourceImpl
 	implements UserAccountResource {
 
 	@Override
-	public Response deleteUserAccounts(Long userAccountId) throws Exception {
+	public Response deleteUserAccount(Long userAccountId) throws Exception {
 		Response.ResponseBuilder responseBuilder = Response.ok();
 
 		return responseBuilder.build();
 	}
 
 	@Override
-	public UserAccount getMyUserAccounts(Long myUserAccountId)
-		throws Exception {
-
+	public UserAccount getMyUserAccount(Long myUserAccountId) throws Exception {
 		return new UserAccount();
 	}
 
 	@Override
-	public Page<UserAccount> getMyUserAccountsPage(Pagination pagination)
-		throws Exception {
-
-		return Page.of(Collections.emptyList());
-	}
-
-	@Override
-	public Page<UserAccount> getOrganizationsUserAccountsPage(
+	public Page<UserAccount> getOrganizationUserAccountPage(
 			Long organizationId, Pagination pagination)
 		throws Exception {
 
@@ -69,12 +60,19 @@ public abstract class BaseUserAccountResourceImpl
 	}
 
 	@Override
-	public UserAccount getUserAccounts(Long userAccountId) throws Exception {
+	public UserAccount getUserAccount(Long userAccountId) throws Exception {
 		return new UserAccount();
 	}
 
 	@Override
-	public Page<UserAccount> getUserAccountsPage(
+	public Page<UserAccount> getUserAccountPage(Pagination pagination)
+		throws Exception {
+
+		return Page.of(Collections.emptyList());
+	}
+
+	@Override
+	public Page<UserAccount> getUserAccountPage(
 			String fullnamequery, Pagination pagination)
 		throws Exception {
 
@@ -82,7 +80,7 @@ public abstract class BaseUserAccountResourceImpl
 	}
 
 	@Override
-	public Page<UserAccount> getWebSitesUserAccountsPage(
+	public Page<UserAccount> getWebSiteUserAccountPage(
 			Long webSiteId, Pagination pagination)
 		throws Exception {
 
@@ -90,21 +88,21 @@ public abstract class BaseUserAccountResourceImpl
 	}
 
 	@Override
-	public UserAccount postUserAccounts(UserAccount userAccount)
+	public UserAccount postUserAccount(UserAccount userAccount)
 		throws Exception {
 
 		return new UserAccount();
 	}
 
 	@Override
-	public UserAccount postUserAccountsBatchCreate(UserAccount userAccount)
+	public UserAccount postUserAccountBatchCreate(UserAccount userAccount)
 		throws Exception {
 
 		return new UserAccount();
 	}
 
 	@Override
-	public UserAccount putUserAccounts(
+	public UserAccount putUserAccount(
 			Long userAccountId, UserAccount userAccount)
 		throws Exception {
 

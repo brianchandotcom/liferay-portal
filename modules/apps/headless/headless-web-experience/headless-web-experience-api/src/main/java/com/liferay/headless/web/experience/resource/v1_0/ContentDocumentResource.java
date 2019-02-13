@@ -63,12 +63,12 @@ public interface ContentDocumentResource {
 	@Path("/content-documents/{content-document-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Response deleteContentDocuments( @PathParam("content-document-id") Long contentDocumentId ) throws Exception;
+	public Response deleteContentDocument( @PathParam("content-document-id") Long contentDocumentId ) throws Exception;
 
 	@GET
 	@Path("/content-documents/{content-document-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public ContentDocument getContentDocuments( @PathParam("content-document-id") Long contentDocumentId ) throws Exception;
+	public ContentDocument getContentDocument( @PathParam("content-document-id") Long contentDocumentId ) throws Exception;
 
 }

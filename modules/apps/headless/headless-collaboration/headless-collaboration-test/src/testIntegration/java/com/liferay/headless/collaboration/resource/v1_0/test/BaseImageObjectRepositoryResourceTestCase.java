@@ -51,12 +51,11 @@ public abstract class BaseImageObjectRepositoryResourceTestCase {
 	}
 
 	@Test
-	public void testGetImageObjectRepositories() throws Exception {
+	public void testGetImageObjectRepository() throws Exception {
 		Assert.assertTrue(true);
 	}
 
-	protected void invokeGetImageObjectRepositories(
-			Long imageObjectRepositoryId)
+	protected void invokeGetImageObjectRepository(Long imageObjectRepositoryId)
 		throws Exception {
 
 			RequestSender requestSender = _createRequestSender();

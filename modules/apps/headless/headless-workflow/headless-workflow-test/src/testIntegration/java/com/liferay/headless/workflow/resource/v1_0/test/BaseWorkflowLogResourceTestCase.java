@@ -53,22 +53,22 @@ public abstract class BaseWorkflowLogResourceTestCase {
 	}
 
 	@Test
-	public void testGetWorkflowLogs() throws Exception {
+	public void testGetWorkflowLog() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testGetWorkflowTasksWorkflowLogsPage() throws Exception {
+	public void testGetWorkflowTaskWorkflowLogPage() throws Exception {
 		Assert.assertTrue(true);
 	}
 
-	protected void invokeGetWorkflowLogs(Long workflowLogId) throws Exception {
+	protected void invokeGetWorkflowLog(Long workflowLogId) throws Exception {
 		RequestSender requestSender = _createRequestSender();
 
 			requestSender.post("/workflow-logs/{workflow-log-id}");
 	}
 
-	protected void invokeGetWorkflowTasksWorkflowLogsPage(
+	protected void invokeGetWorkflowTaskWorkflowLogPage(
 			Long workflowTaskId, Pagination pagination)
 		throws Exception {
 

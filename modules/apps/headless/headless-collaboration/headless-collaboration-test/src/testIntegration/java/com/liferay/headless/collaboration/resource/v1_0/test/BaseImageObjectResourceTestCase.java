@@ -54,35 +54,33 @@ public abstract class BaseImageObjectResourceTestCase {
 	}
 
 	@Test
-	public void testDeleteImageObjects() throws Exception {
+	public void testDeleteImageObject() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testGetImageObjectRepositoriesImageObjectsPage()
+	public void testGetImageObject() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	@Test
+	public void testGetImageObjectRepositoryImageObjectPage() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	@Test
+	public void testPostImageObjectRepositoryImageObject() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	@Test
+	public void testPostImageObjectRepositoryImageObjectBatchCreate()
 		throws Exception {
 
 			Assert.assertTrue(true);
 	}
 
-	@Test
-	public void testGetImageObjects() throws Exception {
-		Assert.assertTrue(true);
-	}
-
-	@Test
-	public void testPostImageObjectRepositoriesImageObjects() throws Exception {
-		Assert.assertTrue(true);
-	}
-
-	@Test
-	public void testPostImageObjectRepositoriesImageObjectsBatchCreate()
-		throws Exception {
-
-			Assert.assertTrue(true);
-	}
-
-	protected void invokeDeleteImageObjects(Long imageObjectId)
+	protected void invokeDeleteImageObject(Long imageObjectId)
 		throws Exception {
 
 			RequestSender requestSender = _createRequestSender();
@@ -90,7 +88,13 @@ public abstract class BaseImageObjectResourceTestCase {
 			requestSender.post("/image-objects/{image-object-id}");
 	}
 
-	protected void invokeGetImageObjectRepositoriesImageObjectsPage(
+	protected void invokeGetImageObject(Long imageObjectId) throws Exception {
+		RequestSender requestSender = _createRequestSender();
+
+			requestSender.post("/image-objects/{image-object-id}");
+	}
+
+	protected void invokeGetImageObjectRepositoryImageObjectPage(
 			Long imageObjectRepositoryId, Pagination pagination)
 		throws Exception {
 
@@ -100,13 +104,7 @@ public abstract class BaseImageObjectResourceTestCase {
 				"/image-object-repositories/{image-object-repository-id}/image-objects");
 	}
 
-	protected void invokeGetImageObjects(Long imageObjectId) throws Exception {
-		RequestSender requestSender = _createRequestSender();
-
-			requestSender.post("/image-objects/{image-object-id}");
-	}
-
-	protected void invokePostImageObjectRepositoriesImageObjects(
+	protected void invokePostImageObjectRepositoryImageObject(
 			Long imageObjectRepositoryId, ImageObject imageObject)
 		throws Exception {
 
@@ -116,7 +114,7 @@ public abstract class BaseImageObjectResourceTestCase {
 				"/image-object-repositories/{image-object-repository-id}/image-objects");
 	}
 
-	protected void invokePostImageObjectRepositoriesImageObjectsBatchCreate(
+	protected void invokePostImageObjectRepositoryImageObjectBatchCreate(
 			Long imageObjectRepositoryId, ImageObject imageObject)
 		throws Exception {
 

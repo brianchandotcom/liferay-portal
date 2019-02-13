@@ -53,31 +53,31 @@ public abstract class BaseOrganizationResourceTestCase {
 	}
 
 	@Test
-	public void testGetMyUserAccountsOrganizationsPage() throws Exception {
+	public void testGetMyUserAccountOrganizationPage() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testGetOrganizations() throws Exception {
+	public void testGetOrganization() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testGetOrganizationsOrganizationsPage() throws Exception {
+	public void testGetOrganizationOrganizationPage() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testGetOrganizationsPage() throws Exception {
+	public void testGetOrganizationPage() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testGetUserAccountsOrganizationsPage() throws Exception {
+	public void testGetUserAccountOrganizationPage() throws Exception {
 		Assert.assertTrue(true);
 	}
 
-	protected void invokeGetMyUserAccountsOrganizationsPage(
+	protected void invokeGetMyUserAccountOrganizationPage(
 			Long myUserAccountId, Pagination pagination)
 		throws Exception {
 
@@ -87,15 +87,13 @@ public abstract class BaseOrganizationResourceTestCase {
 				"/my-user-accounts/{my-user-account-id}/organizations");
 	}
 
-	protected void invokeGetOrganizations(Long organizationId)
-		throws Exception {
-
-			RequestSender requestSender = _createRequestSender();
+	protected void invokeGetOrganization(Long organizationId) throws Exception {
+		RequestSender requestSender = _createRequestSender();
 
 			requestSender.post("/organizations/{organization-id}");
 	}
 
-	protected void invokeGetOrganizationsOrganizationsPage(
+	protected void invokeGetOrganizationOrganizationPage(
 			Long organizationId, Pagination pagination)
 		throws Exception {
 
@@ -105,7 +103,7 @@ public abstract class BaseOrganizationResourceTestCase {
 				"/organizations/{organization-id}/organizations");
 	}
 
-	protected void invokeGetOrganizationsPage(Pagination pagination)
+	protected void invokeGetOrganizationPage(Pagination pagination)
 		throws Exception {
 
 			RequestSender requestSender = _createRequestSender();
@@ -113,7 +111,7 @@ public abstract class BaseOrganizationResourceTestCase {
 			requestSender.post("/organizations");
 	}
 
-	protected void invokeGetUserAccountsOrganizationsPage(
+	protected void invokeGetUserAccountOrganizationPage(
 			Long userAccountId, Pagination pagination)
 		throws Exception {
 

@@ -55,75 +55,75 @@ public abstract class BaseDocumentResourceTestCase {
 	}
 
 	@Test
-	public void testDeleteDocuments() throws Exception {
+	public void testDeleteDocument() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testGetDocuments() throws Exception {
+	public void testGetDocument() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testGetDocumentsCategoriesPage() throws Exception {
+	public void testGetDocumentCategoriesPage() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testGetDocumentsRepositoriesDocumentsPage() throws Exception {
+	public void testGetDocumentsRepositoryDocumentPage() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testGetFoldersDocumentsPage() throws Exception {
+	public void testGetFolderDocumentPage() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testPostDocumentsCategories() throws Exception {
+	public void testPostDocumentCategories() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testPostDocumentsCategoriesBatchCreate() throws Exception {
+	public void testPostDocumentCategoriesBatchCreate() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testPostDocumentsRepositoriesDocuments() throws Exception {
+	public void testPostDocumentsRepositoryDocument() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testPostDocumentsRepositoriesDocumentsBatchCreate()
+	public void testPostDocumentsRepositoryDocumentBatchCreate()
 		throws Exception {
 
 			Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testPostFoldersDocuments() throws Exception {
+	public void testPostFolderDocument() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testPostFoldersDocumentsBatchCreate() throws Exception {
+	public void testPostFolderDocumentBatchCreate() throws Exception {
 		Assert.assertTrue(true);
 	}
 
-	protected void invokeDeleteDocuments(Long documentId) throws Exception {
+	protected void invokeDeleteDocument(Long documentId) throws Exception {
 		RequestSender requestSender = _createRequestSender();
 
 			requestSender.post("/documents/{document-id}");
 	}
 
-	protected void invokeGetDocuments(Long documentId) throws Exception {
+	protected void invokeGetDocument(Long documentId) throws Exception {
 		RequestSender requestSender = _createRequestSender();
 
 			requestSender.post("/documents/{document-id}");
 	}
 
-	protected void invokeGetDocumentsCategoriesPage(
+	protected void invokeGetDocumentCategoriesPage(
 			Long documentId, Pagination pagination)
 		throws Exception {
 
@@ -132,7 +132,7 @@ public abstract class BaseDocumentResourceTestCase {
 			requestSender.post("/documents/{document-id}/categories");
 	}
 
-	protected void invokeGetDocumentsRepositoriesDocumentsPage(
+	protected void invokeGetDocumentsRepositoryDocumentPage(
 			Long documentsRepositoryId, Pagination pagination)
 		throws Exception {
 
@@ -142,7 +142,7 @@ public abstract class BaseDocumentResourceTestCase {
 				"/documents-repositories/{documents-repository-id}/documents");
 	}
 
-	protected void invokeGetFoldersDocumentsPage(
+	protected void invokeGetFolderDocumentPage(
 			Long folderId, Pagination pagination)
 		throws Exception {
 
@@ -151,7 +151,7 @@ public abstract class BaseDocumentResourceTestCase {
 			requestSender.post("/folders/{folder-id}/documents");
 	}
 
-	protected void invokePostDocumentsCategories(
+	protected void invokePostDocumentCategories(
 			Long documentId, Long referenceId)
 		throws Exception {
 
@@ -160,7 +160,7 @@ public abstract class BaseDocumentResourceTestCase {
 			requestSender.post("/documents/{document-id}/categories");
 	}
 
-	protected void invokePostDocumentsCategoriesBatchCreate(
+	protected void invokePostDocumentCategoriesBatchCreate(
 			Long documentId, Long referenceId)
 		throws Exception {
 
@@ -170,7 +170,7 @@ public abstract class BaseDocumentResourceTestCase {
 				"/documents/{document-id}/categories/batch-create");
 	}
 
-	protected void invokePostDocumentsRepositoriesDocuments(
+	protected void invokePostDocumentsRepositoryDocument(
 			Long documentsRepositoryId, Document document)
 		throws Exception {
 
@@ -180,7 +180,7 @@ public abstract class BaseDocumentResourceTestCase {
 				"/documents-repositories/{documents-repository-id}/documents");
 	}
 
-	protected void invokePostDocumentsRepositoriesDocumentsBatchCreate(
+	protected void invokePostDocumentsRepositoryDocumentBatchCreate(
 			Long documentsRepositoryId, Document document)
 		throws Exception {
 
@@ -190,7 +190,7 @@ public abstract class BaseDocumentResourceTestCase {
 				"/documents-repositories/{documents-repository-id}/documents/batch-create");
 	}
 
-	protected void invokePostFoldersDocuments(
+	protected void invokePostFolderDocument(
 			Long folderId, MultipartBody multipartBody)
 		throws Exception {
 
@@ -199,7 +199,7 @@ public abstract class BaseDocumentResourceTestCase {
 			requestSender.post("/folders/{folder-id}/documents");
 	}
 
-	protected void invokePostFoldersDocumentsBatchCreate(
+	protected void invokePostFolderDocumentBatchCreate(
 			Long folderId, MultipartBody multipartBody)
 		throws Exception {
 

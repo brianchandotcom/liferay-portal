@@ -53,22 +53,22 @@ public abstract class BaseEmailResourceTestCase {
 	}
 
 	@Test
-	public void testGetEmails() throws Exception {
+	public void testGetEmail() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testGetEmailsPage() throws Exception {
+	public void testGetGenericParentEmailPage() throws Exception {
 		Assert.assertTrue(true);
 	}
 
-	protected void invokeGetEmails(Long emailId) throws Exception {
+	protected void invokeGetEmail(Long emailId) throws Exception {
 		RequestSender requestSender = _createRequestSender();
 
 			requestSender.post("/emails/{email-id}");
 	}
 
-	protected void invokeGetEmailsPage(
+	protected void invokeGetGenericParentEmailPage(
 			Object genericParentId, Pagination pagination)
 		throws Exception {
 

@@ -54,64 +54,64 @@ public abstract class BaseFolderResourceTestCase {
 	}
 
 	@Test
-	public void testDeleteFolders() throws Exception {
+	public void testDeleteFolder() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testGetDocumentsRepositories() throws Exception {
+	public void testGetDocumentsRepository() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testGetDocumentsRepositoriesFoldersPage() throws Exception {
+	public void testGetDocumentsRepositoryFolderPage() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testGetFolders() throws Exception {
+	public void testGetFolder() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testGetFoldersFoldersPage() throws Exception {
+	public void testGetFolderFolderPage() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testPostDocumentsRepositoriesFolders() throws Exception {
+	public void testPostDocumentsRepositoryFolder() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testPostDocumentsRepositoriesFoldersBatchCreate()
+	public void testPostDocumentsRepositoryFolderBatchCreate()
 		throws Exception {
 
 			Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testPostFoldersFolders() throws Exception {
+	public void testPostFolderFolder() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testPostFoldersFoldersBatchCreate() throws Exception {
+	public void testPostFolderFolderBatchCreate() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testPutFolders() throws Exception {
+	public void testPutFolder() throws Exception {
 		Assert.assertTrue(true);
 	}
 
-	protected void invokeDeleteFolders(Long folderId) throws Exception {
+	protected void invokeDeleteFolder(Long folderId) throws Exception {
 		RequestSender requestSender = _createRequestSender();
 
 			requestSender.post("/folders/{folder-id}");
 	}
 
-	protected void invokeGetDocumentsRepositories(Long documentsRepositoryId)
+	protected void invokeGetDocumentsRepository(Long documentsRepositoryId)
 		throws Exception {
 
 			RequestSender requestSender = _createRequestSender();
@@ -120,7 +120,7 @@ public abstract class BaseFolderResourceTestCase {
 				"/documents-repositories/{documents-repository-id}");
 	}
 
-	protected void invokeGetDocumentsRepositoriesFoldersPage(
+	protected void invokeGetDocumentsRepositoryFolderPage(
 			Long documentsRepositoryId, Pagination pagination)
 		throws Exception {
 
@@ -130,13 +130,13 @@ public abstract class BaseFolderResourceTestCase {
 				"/documents-repositories/{documents-repository-id}/folders");
 	}
 
-	protected void invokeGetFolders(Long folderId) throws Exception {
+	protected void invokeGetFolder(Long folderId) throws Exception {
 		RequestSender requestSender = _createRequestSender();
 
 			requestSender.post("/folders/{folder-id}");
 	}
 
-	protected void invokeGetFoldersFoldersPage(
+	protected void invokeGetFolderFolderPage(
 			Long folderId, Pagination pagination)
 		throws Exception {
 
@@ -145,7 +145,7 @@ public abstract class BaseFolderResourceTestCase {
 			requestSender.post("/folders/{folder-id}/folders");
 	}
 
-	protected void invokePostDocumentsRepositoriesFolders(
+	protected void invokePostDocumentsRepositoryFolder(
 			Long documentsRepositoryId, Folder folder)
 		throws Exception {
 
@@ -155,7 +155,7 @@ public abstract class BaseFolderResourceTestCase {
 				"/documents-repositories/{documents-repository-id}/folders");
 	}
 
-	protected void invokePostDocumentsRepositoriesFoldersBatchCreate(
+	protected void invokePostDocumentsRepositoryFolderBatchCreate(
 			Long documentsRepositoryId, Folder folder)
 		throws Exception {
 
@@ -165,7 +165,7 @@ public abstract class BaseFolderResourceTestCase {
 				"/documents-repositories/{documents-repository-id}/folders/batch-create");
 	}
 
-	protected void invokePostFoldersFolders(Long folderId, Folder folder)
+	protected void invokePostFolderFolder(Long folderId, Folder folder)
 		throws Exception {
 
 			RequestSender requestSender = _createRequestSender();
@@ -173,7 +173,7 @@ public abstract class BaseFolderResourceTestCase {
 			requestSender.post("/folders/{folder-id}/folders");
 	}
 
-	protected void invokePostFoldersFoldersBatchCreate(
+	protected void invokePostFolderFolderBatchCreate(
 			Long folderId, Folder folder)
 		throws Exception {
 
@@ -182,7 +182,7 @@ public abstract class BaseFolderResourceTestCase {
 			requestSender.post("/folders/{folder-id}/folders/batch-create");
 	}
 
-	protected void invokePutFolders(Long folderId, Folder folder)
+	protected void invokePutFolder(Long folderId, Folder folder)
 		throws Exception {
 
 			RequestSender requestSender = _createRequestSender();

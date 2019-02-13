@@ -43,7 +43,7 @@ public abstract class BaseStructuredContentResourceImpl
 	implements StructuredContentResource {
 
 	@Override
-	public Response deleteStructuredContents(Long structuredContentId)
+	public Response deleteStructuredContent(Long structuredContentId)
 		throws Exception {
 
 		Response.ResponseBuilder responseBuilder = Response.ok();
@@ -52,7 +52,7 @@ public abstract class BaseStructuredContentResourceImpl
 	}
 
 	@Override
-	public Page<StructuredContent> getContentSpacesContentStructuresStructuredContentsPage(
+	public Page<StructuredContent> getContentSpaceContentStructureStructuredContentPage(
 			Long contentSpaceId, Long contentStructureId, Filter filter,
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
@@ -61,7 +61,7 @@ public abstract class BaseStructuredContentResourceImpl
 	}
 
 	@Override
-	public Page<StructuredContent> getContentSpacesStructuredContentsPage(
+	public Page<StructuredContent> getContentSpaceStructuredContentPage(
 			Long contentSpaceId, Filter filter, Pagination pagination,
 			Sort[] sorts)
 		throws Exception {
@@ -70,21 +70,21 @@ public abstract class BaseStructuredContentResourceImpl
 	}
 
 	@Override
-	public ContentStructure getContentStructures(Long contentStructureId)
+	public ContentStructure getContentStructure(Long contentStructureId)
 		throws Exception {
 
 		return new ContentStructure();
 	}
 
 	@Override
-	public StructuredContent getStructuredContents(Long structuredContentId)
+	public StructuredContent getStructuredContent(Long structuredContentId)
 		throws Exception {
 
 		return new StructuredContent();
 	}
 
 	@Override
-	public Page<Long> getStructuredContentsCategoriesPage(
+	public Page<Long> getStructuredContentCategoriesPage(
 			Long structuredContentId, Pagination pagination)
 		throws Exception {
 
@@ -92,7 +92,7 @@ public abstract class BaseStructuredContentResourceImpl
 	}
 
 	@Override
-	public StructuredContent patchContentSpacesStructuredContents(
+	public StructuredContent patchContentSpaceStructuredContents(
 			Long contentSpaceId, StructuredContent structuredContent)
 		throws Exception {
 
@@ -100,7 +100,7 @@ public abstract class BaseStructuredContentResourceImpl
 	}
 
 	@Override
-	public StructuredContent postContentSpacesStructuredContents(
+	public StructuredContent postContentSpaceStructuredContent(
 			Long contentSpaceId, StructuredContent structuredContent)
 		throws Exception {
 
@@ -108,7 +108,7 @@ public abstract class BaseStructuredContentResourceImpl
 	}
 
 	@Override
-	public StructuredContent postContentSpacesStructuredContentsBatchCreate(
+	public StructuredContent postContentSpaceStructuredContentBatchCreate(
 			Long contentSpaceId, StructuredContent structuredContent)
 		throws Exception {
 
@@ -116,7 +116,7 @@ public abstract class BaseStructuredContentResourceImpl
 	}
 
 	@Override
-	public Response postStructuredContentsCategories(
+	public Response postStructuredContentCategories(
 			Long structuredContentId, Long referenceId)
 		throws Exception {
 
@@ -126,7 +126,7 @@ public abstract class BaseStructuredContentResourceImpl
 	}
 
 	@Override
-	public Response postStructuredContentsCategoriesBatchCreate(
+	public Response postStructuredContentCategoriesBatchCreate(
 			Long structuredContentId, Long referenceId)
 		throws Exception {
 
@@ -136,7 +136,7 @@ public abstract class BaseStructuredContentResourceImpl
 	}
 
 	@Override
-	public StructuredContent putStructuredContents(
+	public StructuredContent putStructuredContent(
 			Long structuredContentId, StructuredContent structuredContent)
 		throws Exception {
 

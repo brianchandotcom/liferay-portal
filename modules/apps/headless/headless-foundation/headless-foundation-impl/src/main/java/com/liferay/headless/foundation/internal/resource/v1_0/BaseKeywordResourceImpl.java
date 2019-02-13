@@ -39,14 +39,14 @@ import javax.ws.rs.core.Response;
 public abstract class BaseKeywordResourceImpl implements KeywordResource {
 
 	@Override
-	public Response deleteKeywords(Long keywordId) throws Exception {
+	public Response deleteKeyword(Long keywordId) throws Exception {
 		Response.ResponseBuilder responseBuilder = Response.ok();
 
 		return responseBuilder.build();
 	}
 
 	@Override
-	public Page<Keyword> getContentSpacesKeywordsPage(
+	public Page<Keyword> getContentSpaceKeywordPage(
 			Long contentSpaceId, Pagination pagination)
 		throws Exception {
 
@@ -54,12 +54,19 @@ public abstract class BaseKeywordResourceImpl implements KeywordResource {
 	}
 
 	@Override
-	public Keyword getKeywords(Long keywordId) throws Exception {
+	public Keyword getKeyword(Long keywordId) throws Exception {
 		return new Keyword();
 	}
 
 	@Override
-	public Keyword postContentSpacesKeywords(
+	public Keyword postContentSpaceKeyword(Long contentSpaceId, Keyword keyword)
+		throws Exception {
+
+		return new Keyword();
+	}
+
+	@Override
+	public Keyword postContentSpaceKeywordBatchCreate(
 			Long contentSpaceId, Keyword keyword)
 		throws Exception {
 
@@ -67,15 +74,7 @@ public abstract class BaseKeywordResourceImpl implements KeywordResource {
 	}
 
 	@Override
-	public Keyword postContentSpacesKeywordsBatchCreate(
-			Long contentSpaceId, Keyword keyword)
-		throws Exception {
-
-		return new Keyword();
-	}
-
-	@Override
-	public Keyword putKeywords(Long keywordId, Keyword keyword)
+	public Keyword putKeyword(Long keywordId, Keyword keyword)
 		throws Exception {
 
 		return new Keyword();

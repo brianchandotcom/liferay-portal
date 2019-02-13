@@ -50,16 +50,16 @@ public abstract class BaseFormDocumentResourceTestCase {
 	}
 
 	@Test
-	public void testDeleteFormDocuments() throws Exception {
+	public void testDeleteFormDocument() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testGetFormDocuments() throws Exception {
+	public void testGetFormDocument() throws Exception {
 		Assert.assertTrue(true);
 	}
 
-	protected void invokeDeleteFormDocuments(Long formDocumentId)
+	protected void invokeDeleteFormDocument(Long formDocumentId)
 		throws Exception {
 
 			RequestSender requestSender = _createRequestSender();
@@ -67,10 +67,8 @@ public abstract class BaseFormDocumentResourceTestCase {
 			requestSender.post("/form-documents/{form-document-id}");
 	}
 
-	protected void invokeGetFormDocuments(Long formDocumentId)
-		throws Exception {
-
-			RequestSender requestSender = _createRequestSender();
+	protected void invokeGetFormDocument(Long formDocumentId) throws Exception {
+		RequestSender requestSender = _createRequestSender();
 
 			requestSender.post("/form-documents/{form-document-id}");
 	}

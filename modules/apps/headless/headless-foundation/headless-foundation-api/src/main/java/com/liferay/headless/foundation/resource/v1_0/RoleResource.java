@@ -67,24 +67,24 @@ public interface RoleResource {
 	@Path("/my-user-accounts/{my-user-account-id}/roles")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Page<Role> getMyUserAccountsRolesPage( @PathParam("my-user-account-id") Long myUserAccountId , @Context Pagination pagination ) throws Exception;
+	public Page<Role> getMyUserAccountRolePage( @PathParam("my-user-account-id") Long myUserAccountId , @Context Pagination pagination ) throws Exception;
 
 	@GET
 	@Path("/roles")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Page<Role> getRolesPage( @Context Pagination pagination ) throws Exception;
+	public Page<Role> getRolePage( @Context Pagination pagination ) throws Exception;
 
 	@GET
 	@Path("/roles/{role-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Role getRoles( @PathParam("role-id") Long roleId ) throws Exception;
+	public Role getRole( @PathParam("role-id") Long roleId ) throws Exception;
 
 	@GET
 	@Path("/user-accounts/{user-account-id}/roles")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Page<Role> getUserAccountsRolesPage( @PathParam("user-account-id") Long userAccountId , @Context Pagination pagination ) throws Exception;
+	public Page<Role> getUserAccountRolePage( @PathParam("user-account-id") Long userAccountId , @Context Pagination pagination ) throws Exception;
 
 }

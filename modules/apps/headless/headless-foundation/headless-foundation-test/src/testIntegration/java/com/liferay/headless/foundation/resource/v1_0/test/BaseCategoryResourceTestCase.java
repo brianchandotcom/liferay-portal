@@ -54,63 +54,63 @@ public abstract class BaseCategoryResourceTestCase {
 	}
 
 	@Test
-	public void testDeleteCategories() throws Exception {
+	public void testDeleteCategory() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testGetCategories() throws Exception {
+	public void testGetCategory() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testGetCategoriesCategoriesPage() throws Exception {
+	public void testGetCategoryCategoryPage() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testGetVocabulariesCategoriesPage() throws Exception {
+	public void testGetVocabularyCategoryPage() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testPostCategoriesCategories() throws Exception {
+	public void testPostCategoryCategory() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testPostCategoriesCategoriesBatchCreate() throws Exception {
+	public void testPostCategoryCategoryBatchCreate() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testPostVocabulariesCategories() throws Exception {
+	public void testPostVocabularyCategory() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testPostVocabulariesCategoriesBatchCreate() throws Exception {
+	public void testPostVocabularyCategoryBatchCreate() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testPutCategories() throws Exception {
+	public void testPutCategory() throws Exception {
 		Assert.assertTrue(true);
 	}
 
-	protected void invokeDeleteCategories(Long categoryId) throws Exception {
+	protected void invokeDeleteCategory(Long categoryId) throws Exception {
 		RequestSender requestSender = _createRequestSender();
 
 			requestSender.post("/categories/{category-id}");
 	}
 
-	protected void invokeGetCategories(Long categoryId) throws Exception {
+	protected void invokeGetCategory(Long categoryId) throws Exception {
 		RequestSender requestSender = _createRequestSender();
 
 			requestSender.post("/categories/{category-id}");
 	}
 
-	protected void invokeGetCategoriesCategoriesPage(
+	protected void invokeGetCategoryCategoryPage(
 			Long categoryId, Pagination pagination)
 		throws Exception {
 
@@ -119,7 +119,7 @@ public abstract class BaseCategoryResourceTestCase {
 			requestSender.post("/categories/{category-id}/categories");
 	}
 
-	protected void invokeGetVocabulariesCategoriesPage(
+	protected void invokeGetVocabularyCategoryPage(
 			Long vocabularyId, Pagination pagination)
 		throws Exception {
 
@@ -128,7 +128,7 @@ public abstract class BaseCategoryResourceTestCase {
 			requestSender.post("/vocabularies/{vocabulary-id}/categories");
 	}
 
-	protected void invokePostCategoriesCategories(
+	protected void invokePostCategoryCategory(
 			Long categoryId, Category category)
 		throws Exception {
 
@@ -137,7 +137,7 @@ public abstract class BaseCategoryResourceTestCase {
 			requestSender.post("/categories/{category-id}/categories");
 	}
 
-	protected void invokePostCategoriesCategoriesBatchCreate(
+	protected void invokePostCategoryCategoryBatchCreate(
 			Long categoryId, Category category)
 		throws Exception {
 
@@ -147,7 +147,7 @@ public abstract class BaseCategoryResourceTestCase {
 				"/categories/{category-id}/categories/batch-create");
 	}
 
-	protected void invokePostVocabulariesCategories(
+	protected void invokePostVocabularyCategory(
 			Long vocabularyId, Category category)
 		throws Exception {
 
@@ -156,7 +156,7 @@ public abstract class BaseCategoryResourceTestCase {
 			requestSender.post("/vocabularies/{vocabulary-id}/categories");
 	}
 
-	protected void invokePostVocabulariesCategoriesBatchCreate(
+	protected void invokePostVocabularyCategoryBatchCreate(
 			Long vocabularyId, Category category)
 		throws Exception {
 
@@ -166,7 +166,7 @@ public abstract class BaseCategoryResourceTestCase {
 				"/vocabularies/{vocabulary-id}/categories/batch-create");
 	}
 
-	protected void invokePutCategories(Long categoryId, Category category)
+	protected void invokePutCategory(Long categoryId, Category category)
 		throws Exception {
 
 			RequestSender requestSender = _createRequestSender();

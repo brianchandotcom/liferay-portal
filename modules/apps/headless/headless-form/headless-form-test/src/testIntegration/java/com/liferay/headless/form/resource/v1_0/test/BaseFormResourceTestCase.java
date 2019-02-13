@@ -53,31 +53,31 @@ public abstract class BaseFormResourceTestCase {
 	}
 
 	@Test
-	public void testGetContentSpacesFormPage() throws Exception {
+	public void testGetContentSpaceFormPage() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testGetForms() throws Exception {
+	public void testGetForm() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testGetFormsFetchLatestDraft() throws Exception {
+	public void testGetFormFetchLatestDraft() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testPostFormsEvaluateContext() throws Exception {
+	public void testPostFormEvaluateContext() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testPostFormsUploadFile() throws Exception {
+	public void testPostFormUploadFile() throws Exception {
 		Assert.assertTrue(true);
 	}
 
-	protected void invokeGetContentSpacesFormPage(
+	protected void invokeGetContentSpaceFormPage(
 			Long contentSpaceId, Pagination pagination)
 		throws Exception {
 
@@ -86,21 +86,19 @@ public abstract class BaseFormResourceTestCase {
 			requestSender.post("/content-spaces/{content-space-id}/form");
 	}
 
-	protected void invokeGetForms(Long formId) throws Exception {
+	protected void invokeGetForm(Long formId) throws Exception {
 		RequestSender requestSender = _createRequestSender();
 
 			requestSender.post("/forms/{form-id}");
 	}
 
-	protected void invokeGetFormsFetchLatestDraft(Long formId)
-		throws Exception {
-
-			RequestSender requestSender = _createRequestSender();
+	protected void invokeGetFormFetchLatestDraft(Long formId) throws Exception {
+		RequestSender requestSender = _createRequestSender();
 
 			requestSender.post("/forms/{form-id}/fetch-latest-draft");
 	}
 
-	protected void invokePostFormsEvaluateContext(Long formId, Form form)
+	protected void invokePostFormEvaluateContext(Long formId, Form form)
 		throws Exception {
 
 			RequestSender requestSender = _createRequestSender();
@@ -108,7 +106,7 @@ public abstract class BaseFormResourceTestCase {
 			requestSender.post("/forms/{form-id}/evaluate-context");
 	}
 
-	protected void invokePostFormsUploadFile(Long formId, Form form)
+	protected void invokePostFormUploadFile(Long formId, Form form)
 		throws Exception {
 
 			RequestSender requestSender = _createRequestSender();

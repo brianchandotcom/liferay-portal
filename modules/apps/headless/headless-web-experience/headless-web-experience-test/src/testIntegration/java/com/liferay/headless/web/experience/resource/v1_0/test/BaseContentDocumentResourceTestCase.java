@@ -51,16 +51,16 @@ public abstract class BaseContentDocumentResourceTestCase {
 	}
 
 	@Test
-	public void testDeleteContentDocuments() throws Exception {
+	public void testDeleteContentDocument() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testGetContentDocuments() throws Exception {
+	public void testGetContentDocument() throws Exception {
 		Assert.assertTrue(true);
 	}
 
-	protected void invokeDeleteContentDocuments(Long contentDocumentId)
+	protected void invokeDeleteContentDocument(Long contentDocumentId)
 		throws Exception {
 
 			RequestSender requestSender = _createRequestSender();
@@ -68,7 +68,7 @@ public abstract class BaseContentDocumentResourceTestCase {
 			requestSender.post("/content-documents/{content-document-id}");
 	}
 
-	protected void invokeGetContentDocuments(Long contentDocumentId)
+	protected void invokeGetContentDocument(Long contentDocumentId)
 		throws Exception {
 
 			RequestSender requestSender = _createRequestSender();

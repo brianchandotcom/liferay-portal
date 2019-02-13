@@ -63,59 +63,59 @@ public interface BlogPostingResource {
 	@Path("/blog-postings/{blog-posting-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Response deleteBlogPostings( @PathParam("blog-posting-id") Long blogPostingId ) throws Exception;
+	public Response deleteBlogPosting( @PathParam("blog-posting-id") Long blogPostingId ) throws Exception;
 
 	@GET
 	@Path("/blog-postings/{blog-posting-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public BlogPosting getBlogPostings( @PathParam("blog-posting-id") Long blogPostingId ) throws Exception;
+	public BlogPosting getBlogPosting( @PathParam("blog-posting-id") Long blogPostingId ) throws Exception;
 
 	@Consumes("application/json")
 	@PUT
 	@Path("/blog-postings/{blog-posting-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public BlogPosting putBlogPostings( @PathParam("blog-posting-id") Long blogPostingId , BlogPosting blogPosting ) throws Exception;
+	public BlogPosting putBlogPosting( @PathParam("blog-posting-id") Long blogPostingId , BlogPosting blogPosting ) throws Exception;
 
 	@GET
 	@Path("/blog-postings/{blog-posting-id}/categories")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Page<Long> getBlogPostingsCategoriesPage( @PathParam("blog-posting-id") Long blogPostingId , @Context Pagination pagination ) throws Exception;
+	public Page<Long> getBlogPostingCategoriesPage( @PathParam("blog-posting-id") Long blogPostingId , @Context Pagination pagination ) throws Exception;
 
 	@Consumes("application/json")
 	@POST
 	@Path("/blog-postings/{blog-posting-id}/categories")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Response postBlogPostingsCategories( @PathParam("blog-posting-id") Long blogPostingId , Long referenceId ) throws Exception;
+	public Response postBlogPostingCategories( @PathParam("blog-posting-id") Long blogPostingId , Long referenceId ) throws Exception;
 
 	@Consumes("application/json")
 	@POST
 	@Path("/blog-postings/{blog-posting-id}/categories/batch-create")
 	@Produces("application/json")
 	@RequiresScope("everything.write")
-	public Response postBlogPostingsCategoriesBatchCreate( @PathParam("blog-posting-id") Long blogPostingId , Long referenceId ) throws Exception;
+	public Response postBlogPostingCategoriesBatchCreate( @PathParam("blog-posting-id") Long blogPostingId , Long referenceId ) throws Exception;
 
 	@GET
 	@Path("/content-spaces/{content-space-id}/blog-postings")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Page<BlogPosting> getContentSpacesBlogPostingsPage( @PathParam("content-space-id") Long contentSpaceId , @Context Pagination pagination ) throws Exception;
+	public Page<BlogPosting> getContentSpaceBlogPostingPage( @PathParam("content-space-id") Long contentSpaceId , @Context Pagination pagination ) throws Exception;
 
 	@Consumes("application/json")
 	@POST
 	@Path("/content-spaces/{content-space-id}/blog-postings")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public BlogPosting postContentSpacesBlogPostings( @PathParam("content-space-id") Long contentSpaceId , BlogPosting blogPosting ) throws Exception;
+	public BlogPosting postContentSpaceBlogPosting( @PathParam("content-space-id") Long contentSpaceId , BlogPosting blogPosting ) throws Exception;
 
 	@Consumes("application/json")
 	@POST
 	@Path("/content-spaces/{content-space-id}/blog-postings/batch-create")
 	@Produces("application/json")
 	@RequiresScope("everything.write")
-	public BlogPosting postContentSpacesBlogPostingsBatchCreate( @PathParam("content-space-id") Long contentSpaceId , BlogPosting blogPosting ) throws Exception;
+	public BlogPosting postContentSpaceBlogPostingBatchCreate( @PathParam("content-space-id") Long contentSpaceId , BlogPosting blogPosting ) throws Exception;
 
 }

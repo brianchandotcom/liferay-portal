@@ -53,37 +53,31 @@ public abstract class BaseFormRecordResourceTestCase {
 	}
 
 	@Test
-	public void testGetFormRecords() throws Exception {
+	public void testGetFormFormRecordPage() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testGetFormsFormRecordsPage() throws Exception {
+	public void testGetFormRecord() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testPostFormsFormRecords() throws Exception {
+	public void testPostFormFormRecord() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testPostFormsFormRecordsBatchCreate() throws Exception {
+	public void testPostFormFormRecordBatchCreate() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testPutFormRecords() throws Exception {
+	public void testPutFormRecord() throws Exception {
 		Assert.assertTrue(true);
 	}
 
-	protected void invokeGetFormRecords(Long formRecordId) throws Exception {
-		RequestSender requestSender = _createRequestSender();
-
-			requestSender.post("/form-records/{form-record-id}");
-	}
-
-	protected void invokeGetFormsFormRecordsPage(
+	protected void invokeGetFormFormRecordPage(
 			Long formId, Pagination pagination)
 		throws Exception {
 
@@ -92,8 +86,13 @@ public abstract class BaseFormRecordResourceTestCase {
 			requestSender.post("/forms/{form-id}/form-records");
 	}
 
-	protected void invokePostFormsFormRecords(
-			Long formId, FormRecord formRecord)
+	protected void invokeGetFormRecord(Long formRecordId) throws Exception {
+		RequestSender requestSender = _createRequestSender();
+
+			requestSender.post("/form-records/{form-record-id}");
+	}
+
+	protected void invokePostFormFormRecord(Long formId, FormRecord formRecord)
 		throws Exception {
 
 			RequestSender requestSender = _createRequestSender();
@@ -101,7 +100,7 @@ public abstract class BaseFormRecordResourceTestCase {
 			requestSender.post("/forms/{form-id}/form-records");
 	}
 
-	protected void invokePostFormsFormRecordsBatchCreate(
+	protected void invokePostFormFormRecordBatchCreate(
 			Long formId, FormRecord formRecord)
 		throws Exception {
 
@@ -110,8 +109,7 @@ public abstract class BaseFormRecordResourceTestCase {
 			requestSender.post("/forms/{form-id}/form-records/batch-create");
 	}
 
-	protected void invokePutFormRecords(
-			Long formRecordId, FormRecord formRecord)
+	protected void invokePutFormRecord(Long formRecordId, FormRecord formRecord)
 		throws Exception {
 
 			RequestSender requestSender = _createRequestSender();

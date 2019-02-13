@@ -54,58 +54,41 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 	}
 
 	@Test
-	public void testGetRolesWorkflowTasksPage() throws Exception {
+	public void testGetGenericParentWorkflowTaskPage() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testGetWorkflowTasks() throws Exception {
+	public void testGetRoleWorkflowTaskPage() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testGetWorkflowTasksPage() throws Exception {
+	public void testGetWorkflowTask() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testPostWorkflowTasksAssignToMe() throws Exception {
+	public void testPostWorkflowTaskAssignToMe() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testPostWorkflowTasksAssignToUser() throws Exception {
+	public void testPostWorkflowTaskAssignToUser() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testPostWorkflowTasksChangeTransition() throws Exception {
+	public void testPostWorkflowTaskChangeTransition() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testPostWorkflowTasksUpdateDueDate() throws Exception {
+	public void testPostWorkflowTaskUpdateDueDate() throws Exception {
 		Assert.assertTrue(true);
 	}
 
-	protected void invokeGetRolesWorkflowTasksPage(
-			Long roleId, Pagination pagination)
-		throws Exception {
-
-			RequestSender requestSender = _createRequestSender();
-
-			requestSender.post("/roles/{role-id}/workflow-tasks");
-	}
-
-	protected void invokeGetWorkflowTasks(Long workflowTaskId)
-		throws Exception {
-
-			RequestSender requestSender = _createRequestSender();
-
-			requestSender.post("/workflow-tasks/{workflow-task-id}");
-	}
-
-	protected void invokeGetWorkflowTasksPage(
+	protected void invokeGetGenericParentWorkflowTaskPage(
 			Object genericParentId, Pagination pagination)
 		throws Exception {
 
@@ -114,7 +97,22 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 			requestSender.post("/workflow-tasks");
 	}
 
-	protected void invokePostWorkflowTasksAssignToMe(
+	protected void invokeGetRoleWorkflowTaskPage(
+			Long roleId, Pagination pagination)
+		throws Exception {
+
+			RequestSender requestSender = _createRequestSender();
+
+			requestSender.post("/roles/{role-id}/workflow-tasks");
+	}
+
+	protected void invokeGetWorkflowTask(Long workflowTaskId) throws Exception {
+		RequestSender requestSender = _createRequestSender();
+
+			requestSender.post("/workflow-tasks/{workflow-task-id}");
+	}
+
+	protected void invokePostWorkflowTaskAssignToMe(
 			Long workflowTaskId, WorkflowTask workflowTask)
 		throws Exception {
 
@@ -124,7 +122,7 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 				"/workflow-tasks/{workflow-task-id}/assign-to-me");
 	}
 
-	protected void invokePostWorkflowTasksAssignToUser(
+	protected void invokePostWorkflowTaskAssignToUser(
 			Long workflowTaskId, WorkflowTask workflowTask)
 		throws Exception {
 
@@ -134,7 +132,7 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 				"/workflow-tasks/{workflow-task-id}/assign-to-user");
 	}
 
-	protected void invokePostWorkflowTasksChangeTransition(
+	protected void invokePostWorkflowTaskChangeTransition(
 			Long workflowTaskId, WorkflowTask workflowTask)
 		throws Exception {
 
@@ -144,7 +142,7 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 				"/workflow-tasks/{workflow-task-id}/change-transition");
 	}
 
-	protected void invokePostWorkflowTasksUpdateDueDate(
+	protected void invokePostWorkflowTaskUpdateDueDate(
 			Long workflowTaskId, WorkflowTask workflowTask)
 		throws Exception {
 

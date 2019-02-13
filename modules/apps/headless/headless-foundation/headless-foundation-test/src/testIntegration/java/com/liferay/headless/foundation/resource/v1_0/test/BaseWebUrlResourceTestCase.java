@@ -53,28 +53,28 @@ public abstract class BaseWebUrlResourceTestCase {
 	}
 
 	@Test
-	public void testGetWebUrls() throws Exception {
+	public void testGetGenericParentWebUrlPage() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testGetWebUrlsPage() throws Exception {
+	public void testGetWebUrl() throws Exception {
 		Assert.assertTrue(true);
 	}
 
-	protected void invokeGetWebUrls(Long webUrlId) throws Exception {
-		RequestSender requestSender = _createRequestSender();
-
-			requestSender.post("/web-urls/{web-url-id}");
-	}
-
-	protected void invokeGetWebUrlsPage(
+	protected void invokeGetGenericParentWebUrlPage(
 			Object genericParentId, Pagination pagination)
 		throws Exception {
 
 			RequestSender requestSender = _createRequestSender();
 
 			requestSender.post("/web-urls");
+	}
+
+	protected void invokeGetWebUrl(Long webUrlId) throws Exception {
+		RequestSender requestSender = _createRequestSender();
+
+			requestSender.post("/web-urls/{web-url-id}");
 	}
 
 	private RequestSender _createRequestSender() {

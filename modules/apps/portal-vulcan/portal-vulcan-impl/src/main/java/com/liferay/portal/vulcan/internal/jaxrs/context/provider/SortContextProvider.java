@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.odata.sort.InvalidSortException;
 import com.liferay.portal.odata.sort.SortField;
 import com.liferay.portal.odata.sort.SortParser;
 import com.liferay.portal.odata.sort.SortParserProvider;
@@ -56,6 +57,9 @@ public class SortContextProvider implements ContextProvider<Sort[]> {
 	public Sort[] createContext(Message message) {
 		try {
 			return _createContext(message);
+		}
+		catch (InvalidSortException ise) {
+			throw ise;
 		}
 		catch (Exception e) {
 			throw new ServerErrorException(500, e);

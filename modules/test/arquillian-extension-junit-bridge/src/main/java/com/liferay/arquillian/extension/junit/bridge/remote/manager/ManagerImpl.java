@@ -53,32 +53,20 @@ import org.jboss.arquillian.core.spi.context.ObjectStore;
 public class ManagerImpl implements Manager {
 
 	public ManagerImpl() {
-		ApplicationContext applicationContext = new ApplicationContextImpl();
-
-		_contexts.add(applicationContext);
+		_applicationContext = new ApplicationContextImpl();
 
 		_extensions.addAll(
 			_createExtensions(
 				LiferayArquillianJUnitBridgeExtension.getObservers()));
 
-		applicationContext.activate();
+		_applicationContext.activate();
 
 		try {
 			bind(
 				ApplicationScoped.class, Injector.class, InjectorImpl.of(this));
-
-			ObjectStore objectStore = applicationContext.getObjectStore();
-
-			for (Context context : _contexts) {
-				Class<?> clazz = context.getClass();
-
-				Class<?>[] interfaces = clazz.getInterfaces();
-
-				objectStore.add((Class<Context>)interfaces[0], context);
-			}
 		}
 		finally {
-			applicationContext.deactivate();
+			_applicationContext.deactivate();
 		}
 	}
 
@@ -145,10 +133,8 @@ public class ManagerImpl implements Manager {
 
 	@Override
 	public <T> T getContext(Class<T> type) {
-		for (Context context : _contexts) {
-			if (type.isInstance(context)) {
-				return type.cast(context);
-			}
+		if (type.equals(ApplicationContext.class)) {
+			return type.cast(_applicationContext);
 		}
 
 		return null;
@@ -161,18 +147,16 @@ public class ManagerImpl implements Manager {
 
 	@Override
 	public <T> T resolve(Class<T> type) {
-		List<Context> activeContexts = _resolveActiveContexts();
+		if (!_applicationContext.isActive()) {
+			return null;
+		}
 
-		for (int i = activeContexts.size() - 1; i >= 0; i--) {
-			Context context = activeContexts.get(i);
+		ObjectStore objectStore = _applicationContext.getObjectStore();
 
-			ObjectStore objectStore = context.getObjectStore();
+		T object = objectStore.get(type);
 
-			T object = objectStore.get(type);
-
-			if (object != null) {
-				return object;
-			}
+		if (object != null) {
+			return object;
 		}
 
 		return null;
@@ -183,11 +167,7 @@ public class ManagerImpl implements Manager {
 		fire(new ManagerStopping());
 
 		synchronized (this) {
-			for (Context context : _contexts) {
-				context.clearAll();
-			}
-
-			_contexts.clear();
+			_applicationContext.clearAll();
 
 			_extensions.clear();
 
@@ -201,7 +181,7 @@ public class ManagerImpl implements Manager {
 	public void start() {
 		fire(new ManagerStarted());
 
-		getContext(ApplicationContext.class).activate();
+		_applicationContext.activate();
 	}
 
 	private static <T, E extends Throwable> T _throwException(
@@ -242,10 +222,8 @@ public class ManagerImpl implements Manager {
 	}
 
 	private Context _getScopedContext(Class<? extends Annotation> scope) {
-		for (Context context : _contexts) {
-			if (context.getScope() == scope) {
-				return context;
-			}
+		if (scope.equals(ApplicationScoped.class)) {
+			return _applicationContext;
 		}
 
 		return null;
@@ -297,18 +275,6 @@ public class ManagerImpl implements Manager {
 		return false;
 	}
 
-	private List<Context> _resolveActiveContexts() {
-		List<Context> activeContexts = new ArrayList<>();
-
-		for (Context context : _contexts) {
-			if (context.isActive()) {
-				activeContexts.add(context);
-			}
-		}
-
-		return activeContexts;
-	}
-
 	private List<ObserverMethod> _resolveInterceptorObservers(
 		Class<?> eventClass) {
 
@@ -355,7 +321,7 @@ public class ManagerImpl implements Manager {
 		return observers;
 	}
 
-	private final List<Context> _contexts = new ArrayList<>();
+	private final ApplicationContext _applicationContext;
 	private ThreadLocal<Stack<Object>> _eventStack;
 	private final List<Extension> _extensions = new ArrayList<>();
 

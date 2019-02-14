@@ -111,6 +111,14 @@ class FloatingToolbarSpacingPanel extends Component {
 	}
 
 	/**
+	 * Handle container spacing checkbox mousedown
+	 * @param {Event} event
+	 */
+	_handleColumnSpacingOptionMousedown(event) {
+		event.preventDefault();
+	}
+
+	/**
 	 * Handle container option change
 	 * @param {Event} event
 	 */

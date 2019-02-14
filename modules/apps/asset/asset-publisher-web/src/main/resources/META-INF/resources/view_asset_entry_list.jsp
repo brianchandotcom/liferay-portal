@@ -17,9 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-long assetCategoryId = ParamUtil.getLong(request, "categoryId");
-String assetTagName = ParamUtil.getString(request, "tag");
-
 List<AssetEntryResult> assetEntryResults = (List<AssetEntryResult>)request.getAttribute("view.jsp-assetEntryResults");
 
 for (AssetEntryResult assetEntryResult : assetEntryResults) {
@@ -110,39 +107,6 @@ for (AssetEntryResult assetEntryResult : assetEntryResults) {
 <%
 }
 %>
-
-<c:if test="<%= assetEntryResults.isEmpty() %>">
-	<liferay-ddm:template-renderer
-		className="<%= AssetEntry.class.getName() %>"
-		displayStyle="<%= assetPublisherDisplayContext.getDisplayStyle() %>"
-		displayStyleGroupId="<%= assetPublisherDisplayContext.getDisplayStyleGroupId() %>"
-		entries="<%= new ArrayList<AssetEntry>() %>"
-	>
-
-		<%
-		Map<Long, List<AssetPublisherAddItemHolder>> scopeAssetPublisherAddItemHolders = assetPublisherDisplayContext.getScopeAssetPublisherAddItemHolders(1);
-		%>
-
-		<c:if test="<%= MapUtil.isEmpty(scopeAssetPublisherAddItemHolders) && !((assetCategoryId > 0) || Validator.isNotNull(assetTagName)) %>">
-
-			<%
-			renderRequest.setAttribute(WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);
-			%>
-
-		</c:if>
-
-		<div class="alert alert-info">
-			<c:choose>
-				<c:when test="<%= !portletName.equals(AssetPublisherPortletKeys.RELATED_ASSETS) %>">
-					<liferay-ui:message key="there-are-no-results" />
-				</c:when>
-				<c:otherwise>
-					<liferay-ui:message key="there-are-no-related-assets" />
-				</c:otherwise>
-			</c:choose>
-		</div>
-	</liferay-ddm:template-renderer>
-</c:if>
 
 <%!
 private static Log _log = LogFactoryUtil.getLog("com_liferay_asset_publisher_web.view_asset_entry_list_jsp");

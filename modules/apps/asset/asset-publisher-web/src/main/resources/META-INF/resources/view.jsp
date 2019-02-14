@@ -100,35 +100,71 @@ if (!assetPublisherDisplayContext.isPaginationTypeNone()) {
 </c:if>
 
 <c:choose>
-	<c:when test="<%= assetPublisherDisplayContext.isSelectionStyleDynamic() %>">
+	<c:when test="<%= assetPublisherDisplayContext.isSelectionStyleDynamic() || assetPublisherDisplayContext.isSelectionStyleManual() %>">
 
 		<%
-		List<AssetEntryResult> assetEntryResults = assetPublisherHelper.getAssetEntryResults(searchContainer, assetPublisherDisplayContext.getAssetEntryQuery(), assetPublisherDisplayContext.getLayout(), portletPreferences, assetPublisherDisplayContext.getPortletName(), assetPublisherDisplayContext.getLocale(), assetPublisherDisplayContext.getTimeZone(), assetPublisherDisplayContext.getCompanyId(), assetPublisherDisplayContext.getScopeGroupId(), assetPublisherDisplayContext.getUserId(), assetPublisherDisplayContext.getClassNameIds(), null);
+		List<AssetEntryResult> assetEntryResults = null;
 
-		request.setAttribute("view.jsp-assetEntryResults", assetEntryResults);
+		if (assetPublisherDisplayContext.isSelectionStyleDynamic()) {
+			assetEntryResults = assetPublisherHelper.getAssetEntryResults(searchContainer, assetPublisherDisplayContext.getAssetEntryQuery(), assetPublisherDisplayContext.getLayout(), portletPreferences, assetPublisherDisplayContext.getPortletName(), assetPublisherDisplayContext.getLocale(), assetPublisherDisplayContext.getTimeZone(), assetPublisherDisplayContext.getCompanyId(), assetPublisherDisplayContext.getScopeGroupId(), assetPublisherDisplayContext.getUserId(), assetPublisherDisplayContext.getClassNameIds(), null);
+		}
+		else {
+			List<AssetEntry> assetEntries = assetPublisherDisplayContext.getAssetEntries();
+
+			searchContainer.setTotal(assetEntries.size());
+
+			assetEntries = assetEntries.subList(searchContainer.getStart(), searchContainer.getResultEnd());
+
+			searchContainer.setResults(assetEntries);
+
+			assetEntryResults = new ArrayList<>();
+
+			assetEntryResults.add(new AssetEntryResult(assetEntries));
+		}
 		%>
 
-		<liferay-util:include page="/view_asset_entry_list.jsp" servletContext="<%= application %>" />
-	</c:when>
-	<c:when test="<%= assetPublisherDisplayContext.isSelectionStyleManual() %>">
+		<c:choose>
+			<c:when test="<%= !assetEntryResults.isEmpty() %>">
 
-		<%
-		List<AssetEntry> assetEntries = assetPublisherDisplayContext.getAssetEntries();
+				<%
+				request.setAttribute("view.jsp-assetEntryResults", assetEntryResults);
+				%>
 
-		searchContainer.setTotal(assetEntries.size());
+				<liferay-util:include page="/view_asset_entry_list.jsp" servletContext="<%= application %>" />
+			</c:when>
+			<c:otherwise>
+				<liferay-ddm:template-renderer
+					className="<%= AssetEntry.class.getName() %>"
+					displayStyle="<%= assetPublisherDisplayContext.getDisplayStyle() %>"
+					displayStyleGroupId="<%= assetPublisherDisplayContext.getDisplayStyleGroupId() %>"
+					entries="<%= new ArrayList<AssetEntry>() %>"
+				>
 
-		assetEntries = assetEntries.subList(searchContainer.getStart(), searchContainer.getResultEnd());
+					<%
+					Map<Long, List<AssetPublisherAddItemHolder>> scopeAssetPublisherAddItemHolders = assetPublisherDisplayContext.getScopeAssetPublisherAddItemHolders(1);
+					%>
 
-		searchContainer.setResults(assetEntries);
+					<c:if test="<%= MapUtil.isEmpty(scopeAssetPublisherAddItemHolders) && !((assetCategoryId > 0) || Validator.isNotNull(assetTagName)) %>">
 
-		List<AssetEntryResult> assetEntryResults = new ArrayList<>();
+						<%
+						renderRequest.setAttribute(WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);
+						%>
 
-		assetEntryResults.add(new AssetEntryResult(assetEntries));
+					</c:if>
 
-		request.setAttribute("view.jsp-assetEntryResults", assetEntryResults);
-		%>
-
-		<liferay-util:include page="/view_asset_entry_list.jsp" servletContext="<%= application %>" />
+					<div class="alert alert-info">
+						<c:choose>
+							<c:when test="<%= !portletName.equals(AssetPublisherPortletKeys.RELATED_ASSETS) %>">
+								<liferay-ui:message key="there-are-no-results" />
+							</c:when>
+							<c:otherwise>
+								<liferay-ui:message key="there-are-no-related-assets" />
+							</c:otherwise>
+						</c:choose>
+					</div>
+				</liferay-ddm:template-renderer>
+			</c:otherwise>
+		</c:choose>
 	</c:when>
 	<c:otherwise>
 

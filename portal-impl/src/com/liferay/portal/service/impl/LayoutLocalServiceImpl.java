@@ -1430,8 +1430,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		for (Layout childLayout : childLayouts) {
 			List<Layout> layoutChildLayouts =
 				layoutChildLayoutsMap.computeIfAbsent(
-					childLayout.getParentLayoutId(),
-					parentLayoutId -> new ArrayList<>());
+					childLayout.getParentPlid(),
+					parentPlid -> new ArrayList<>());
 
 			layoutChildLayouts.add(childLayout);
 		}

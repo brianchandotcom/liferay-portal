@@ -123,7 +123,7 @@ public class NavItem implements Serializable {
 
 		for (Layout parentLayout : parentLayouts) {
 			List<Layout> childLayouts = layoutChildLayouts.get(
-				parentLayout.getLayoutId());
+				parentLayout.getPlid());
 
 			navItems.add(
 				new NavItem(

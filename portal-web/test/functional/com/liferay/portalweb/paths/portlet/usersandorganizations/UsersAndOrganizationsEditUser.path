@@ -242,6 +242,11 @@
 	<td>//label[contains(@id,'uploadImage')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--CONTACT-->
 <tr>
 	<td>CONTACT_ADD_BUTTON</td>

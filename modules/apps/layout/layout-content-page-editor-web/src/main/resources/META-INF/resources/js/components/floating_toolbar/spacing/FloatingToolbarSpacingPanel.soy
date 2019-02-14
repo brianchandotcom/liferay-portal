@@ -11,6 +11,7 @@
 	{@param? _handleContainerPaddingOptionChange: any}
 	{@param? _handleContainerTypeOptionChange: any}
 	{@param? _paddingSizes: list<string>}
+	{@param? _sectionColumnsCount: number}
 	{@param? _selectedPaddingSizes: [
 		horizontal: string,
 		vertical: string
@@ -53,13 +54,15 @@
 			</div>
 		{/if}
 
-		<div class="form-group">
-			{call .columnSpacingOptions}
-				{param handleColumnSpacingOptionChange: $_handleColumnSpacingOptionChange /}
-				{param handleColumnSpacingOptionMousedown: $_handleColumnSpacingOptionMousedown /}
-				{param item: $item /}
-			{/call}
-		</div>
+		{if $_sectionColumnsCount > 1}
+			<div class="form-group">
+				{call .columnSpacingOptions}
+					{param handleColumnSpacingOptionChange: $_handleColumnSpacingOptionChange /}
+					{param handleColumnSpacingOptionMousedown: $_handleColumnSpacingOptionMousedown /}
+					{param item: $item /}
+				{/call}
+			</div>
+		{/if}
 	</div>
 {/template}
 

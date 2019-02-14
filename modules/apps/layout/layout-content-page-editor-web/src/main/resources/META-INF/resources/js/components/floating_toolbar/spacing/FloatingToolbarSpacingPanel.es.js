@@ -57,6 +57,12 @@ class FloatingToolbarSpacingPanel extends Component {
 			selectedPaddingSizes
 		);
 
+		nextState = setIn(
+			nextState,
+			['_sectionColumnsCount'],
+			this.item.columns.length
+		);
+
 		return nextState;
 	}
 

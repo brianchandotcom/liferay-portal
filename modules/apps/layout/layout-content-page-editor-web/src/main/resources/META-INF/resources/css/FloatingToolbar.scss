@@ -28,6 +28,7 @@
 
 	&-panel {
 		margin-top: $fragmentsEditorSpacing;
+		min-width: $floatingToolbarPanelMinWidth;
 		padding: $fragmentsEditorSpacing * 2;
 
 		.form-group:last-child {

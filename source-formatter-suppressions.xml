@@ -183,7 +183,7 @@
 		<suppress checks="XMLLookAndFeelCompatibilityVersionCheck" files="modules/private/commerce/.*" />
 		<suppress checks="XMLServiceReferenceCheck" files="modules/private/.*" />
 
-		<!-- Temporary suppressions for test subdirectory -->
+		<!-- Temporary suppressions. Chema, please fix -->
 
 		<suppress checks="JSONDeprecatedPackagesCheck" files="modules/apps/asset/asset-taglib/package\.json" />
 		<suppress checks="JSONDeprecatedPackagesCheck" files="modules/apps/dynamic-data-mapping/dynamic-data-mapping-form-renderer/package\.json" />

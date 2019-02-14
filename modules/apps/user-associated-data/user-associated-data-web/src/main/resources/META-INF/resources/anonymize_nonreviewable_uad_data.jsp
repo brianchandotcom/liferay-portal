@@ -71,14 +71,6 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 			<div class="sheet-section">
 				<h3 class="sheet-subtitle"><liferay-ui:message key="applications" /></h3>
 
-				<%
-				AnonymizeNonreviewableUADDataManagementToolbarDisplayContext anonymizeNonreviewableUADDataManagementToolbarDisplayContext = new AnonymizeNonreviewableUADDataManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, uadApplicationSummarySearchContainer);
-				%>
-
-				<clay:management-toolbar
-					displayContext="<%= anonymizeNonreviewableUADDataManagementToolbarDisplayContext %>"
-				/>
-
 				<liferay-ui:search-container
 					compactEmptyResultsMessage="<%= true %>"
 					searchContainer="<%= uadApplicationSummarySearchContainer %>"

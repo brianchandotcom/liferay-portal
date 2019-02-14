@@ -1,6 +1,6 @@
 .portlet-journal-content {
 	.journal-content-article {
-		img {
+		img, .cke_widget_image {
 			max-width: 100%;
 
 			&[style*="float: left;"], &[style*="float:left;"] {

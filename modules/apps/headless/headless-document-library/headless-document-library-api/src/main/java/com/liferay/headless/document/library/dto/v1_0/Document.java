@@ -64,10 +64,6 @@ public class Document {
 		return _fileExtension;
 	}
 
-	public Folder getFolder() {
-		return _folder;
-	}
-
 	public Long getFolderId() {
 		return _folderId;
 	}
@@ -124,10 +120,6 @@ public class Document {
 		_fileExtension = fileExtension;
 	}
 
-	public void setFolder(Folder folder) {
-		_folder = folder;
-	}
-
 	public void setFolderId(Long folderId) {
 		_folderId = folderId;
 	}
@@ -157,7 +149,6 @@ public class Document {
 	private String _description;
 	private String _encodingFormat;
 	private String _fileExtension;
-	private Folder _folder;
 	private Long _folderId;
 	private Long _id;
 	private String[] _keywords;

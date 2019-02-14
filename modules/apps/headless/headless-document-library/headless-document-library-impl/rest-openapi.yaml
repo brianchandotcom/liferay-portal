@@ -86,14 +86,9 @@ components:
           type: string
         fileExtension:
           type: string
-        folder:
-          allOf:
-            - $ref: "#/components/schemas/Folder"
-          readOnly: true
         folderId:
           format: int64
           type: integer
-          writeOnly: true
         id:
           format: int64
           type: integer

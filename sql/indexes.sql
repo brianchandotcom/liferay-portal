@@ -63,7 +63,6 @@ create unique index IX_B27A301F on ClassName_ (value[$COLUMN_LENGTH:200$]);
 
 create index IX_38EFE3FD on Company (logoId);
 create index IX_12566EC2 on Company (mx[$COLUMN_LENGTH:200$]);
-create index IX_35E3E7C6 on Company (system);
 create unique index IX_EC00543C on Company (webId[$COLUMN_LENGTH:75$]);
 
 create index IX_B8C28C53 on Contact_ (accountId);

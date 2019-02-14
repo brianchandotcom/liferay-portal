@@ -131,29 +131,36 @@ PortletURL portletURL = editAssetListDisplayContext.getPortletURL();
 </liferay-frontend:edit-form>
 
 <aui:script>
-	var form = document.<portlet:namespace />fm;
+	var selectManageableGroupIcon = document.querySelector('#<portlet:namespace />selectManageableGroup');
 
-	$('#<portlet:namespace />selectManageableGroup').on(
-		'click',
-		function(event) {
-			event.preventDefault();
+	if (selectManageableGroupIcon) {
+		selectManageableGroupIcon.addEventListener(
+			'click',
+			function(event) {
+				event.preventDefault();
 
-			Liferay.Util.selectEntity(
-				{
-					dialog: {
-						destroyOnHide: true
+				Liferay.Util.selectEntity(
+					{
+						dialog: {
+							destroyOnHide: true
+						},
+						eventName: '<%= editAssetListDisplayContext.getSelectGroupEventName() %>',
+						id: '<%= editAssetListDisplayContext.getSelectGroupEventName() %>',
+						title: '<liferay-ui:message key="scopes" />',
+						uri: '<%= editAssetListDisplayContext.getGroupItemSelectorURL() %>'
 					},
-					eventName: '<%= editAssetListDisplayContext.getSelectGroupEventName() %>',
-					id: '<%= editAssetListDisplayContext.getSelectGroupEventName() %>',
-					title: '<liferay-ui:message key="scopes" />',
-					uri: '<%= editAssetListDisplayContext.getGroupItemSelectorURL() %>'
-				},
-				function(event) {
-					form.<portlet:namespace />groupId.value = event.groupid;
-
-					submitForm(form);
-				}
-			);
-		}
-	);
+					function(event) {
+						Liferay.Util.postForm(
+							document.<portlet:namespace />fm,
+							{
+								data: {
+									groupId: event.groupid
+								}
+							}
+						);
+					}
+				);
+			}
+		);
+	}
 </aui:script>

@@ -249,19 +249,18 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList()
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>
-		<aui:button onClick='<%= renderResponse.getNamespace() + "saveSelectBoxes();" %>' type="submit" />
+		<aui:button name="save" type="submit" />
 
 		<aui:button href="<%= editAssetListDisplayContext.getRedirectURL() %>" type="cancel" />
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>
 
-<aui:script>
+<aui:script require="metal-dom/src/dom as dom">
 	var Util = Liferay.Util;
 
-	var assetMultipleSelector = $('#<portlet:namespace />currentClassNameIds');
-	var assetSelector = $('#<portlet:namespace />anyAssetType');
-	var ddmStructureFieldName = $('#<portlet:namespace />ddmStructureFieldName');
-	var sourcePanel = $('.source-container');
+	var assetMultipleSelector = document.querySelector('#<portlet:namespace />currentClassNameIds');
+	var assetSelector = document.querySelector('#<portlet:namespace />anyAssetType');
+	var sourcePanel = document.querySelector('.source-container');
 
 	<%
 	for (AssetRendererFactory<?> curRendererFactory : classTypesAssetRendererFactories) {
@@ -270,15 +269,20 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList()
 
 		Util.toggleSelectBox('<portlet:namespace />anyClassType<%= className %>', 'false', '<portlet:namespace /><%= className %>Boxes');
 
-		var <%= className %>Options = $('#<portlet:namespace /><%= className %>Options');
+		var <%= className %>Options = document.querySelector('#<portlet:namespace /><%= className %>Options');
 
 		function <portlet:namespace />toggle<%= className %>() {
-			var assetOptions = assetMultipleSelector.find('option');
+			var assetOptions = assetMultipleSelector.options;
 
-			var showOptions = ((assetSelector.val() == '<%= curRendererFactory.getClassNameId() %>') ||
-				((assetSelector.val() == 'false') && (assetOptions.length == 1) && (assetOptions.eq(0).val() == '<%= curRendererFactory.getClassNameId() %>')));
+			var showOptions = ((assetSelector.value == '<%= curRendererFactory.getClassNameId() %>') ||
+				((assetSelector.value == 'false') && (assetOptions.length == 1) && (assetOptions[0].value == '<%= curRendererFactory.getClassNameId() %>')));
 
-			<%= className %>Options.toggleClass('hide', !showOptions);
+			if (showOptions) {
+				<%= className %>Options.classList.remove('hide');
+			}
+			else {
+				<%= className %>Options.classList.add('hide');
+			}
 
 			<c:if test="<%= editAssetListDisplayContext.isShowSubtypeFieldsFilter() %>">
 				<%= className %>toggleSubclassesFields(true);
@@ -295,42 +299,61 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList()
 		}
 		%>
 
-		var <%= className %>SubtypeSelector = $('#<portlet:namespace />anyClassType<%= className %>');
+		var <%= className %>SubtypeSelector = document.querySelector('#<portlet:namespace />anyClassType<%= className %>');
 
 		function <%= className %>toggleSubclassesFields(hideSubtypeFilterEnableWrapper) {
-			var subtypeFieldsWrapper = $('#<portlet:namespace /><%= className %>subtypeFieldsWrapper, #<portlet:namespace /><%= className %>subtypeFieldsFilterEnableWrapper');
+			var selectedSubtype = <%= className %>SubtypeSelector.value;
 
-			var selectedSubtype = <%= className %>SubtypeSelector.val();
+			var structureOptions = document.querySelectorAll('#<portlet:namespace />' + selectedSubtype + '_<%= className %>Options');
 
-			var structureOptions = $('#<portlet:namespace />' + selectedSubtype + '_<%= className %>Options');
-
-			structureOptions.removeClass('hide');
-
-			if ((selectedSubtype != 'false') && (selectedSubtype != 'true')) {
-				if (structureOptions.length) {
-					subtypeFieldsWrapper.removeClass('hide');
+			Array.prototype.forEach.call(
+				structureOptions,
+				function(structureOption) {
+					structureOption.classList.remove('hide');
 				}
-				else if (hideSubtypeFilterEnableWrapper) {
-					subtypeFieldsWrapper.addClass('hide');
+			);
+
+			var subtypeFieldsWrappers = document.querySelectorAll('#<portlet:namespace /><%= className %>subtypeFieldsWrapper, #<portlet:namespace /><%= className %>subtypeFieldsFilterEnableWrapper');
+
+			Array.prototype.forEach.call(
+				subtypeFieldsWrappers,
+				function(subtypeFieldsWrapper) {
+					if ((selectedSubtype != 'false') && (selectedSubtype != 'true')) {
+						if (structureOptions.length) {
+							subtypeFieldsWrapper.classList.remove('hide');
+						}
+						else if (hideSubtypeFilterEnableWrapper) {
+							subtypeFieldsWrapper.classList.add('hide');
+						}
+					}
+					else if (hideSubtypeFilterEnableWrapper) {
+						subtypeFieldsWrapper.classList.add('hide');
+					}
 				}
-			}
-			else if (hideSubtypeFilterEnableWrapper) {
-				subtypeFieldsWrapper.addClass('hide');
-			}
+			);
 		}
 
 		<%= className %>toggleSubclassesFields(false);
 
-		<%= className %>SubtypeSelector.on(
+		<%= className %>SubtypeSelector.addEventListener(
 			'change',
 			function(event) {
 				setDDMFields('<%= className %>', '', '', '', '');
 
-				var subtypeFieldsFilterEnabled = $('#<portlet:namespace />subtypeFieldsFilterEnabled<%= className %>');
+				var subtypeFieldsFilterEnabledCheckbox = document.querySelector('#<portlet:namespace />subtypeFieldsFilterEnabled<%= className %>');
 
-				subtypeFieldsFilterEnabled.prop('checked', false);
+				if (subtypeFieldsFilterEnabledCheckbox) {
+					subtypeFieldsFilterEnabledCheckbox.checked = false;
+				}
 
-				sourcePanel.find('.asset-subtypefields').addClass('hide');
+				var assetSubtypeFields = sourcePanel.querySelectorAll('.asset-subtypefields');
+
+				Array.prototype.forEach.call(
+					assetSubtypeFields,
+					function(assetSubtypeField) {
+						assetSubtypeField.classList.add('hide');
+					}
+				);
 
 				<%= className %>toggleSubclassesFields(true);
 			}
@@ -357,24 +380,38 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList()
 
 	<portlet:namespace />toggleSubclasses();
 
-	assetSelector.on(
-		'change',
-		function(event) {
-			ddmStructureFieldName.val('');
+	var ddmStructureFieldNameInput = document.querySelector('#<portlet:namespace />ddmStructureFieldName');
+	var ddmStructureFieldValueInput = document.querySelector('#<portlet:namespace />ddmStructureFieldValue');
 
-			$('#<portlet:namespace />ddmStructureFieldValue').val('');
+	if (assetSelector && ddmStructureFieldNameInput && ddmStructureFieldValueInput) {
+		assetSelector.addEventListener(
+			'change',
+			function(event) {
+				ddmStructureFieldNameInput.value = '';
+				ddmStructureFieldValueInput.value = '';
 
-			<portlet:namespace />toggleSubclasses();
-		}
-	);
+				<portlet:namespace />toggleSubclasses();
+			}
+		);
+	}
 
-	sourcePanel.on(
+	dom.delegate(
+		sourcePanel,
 		'click',
 		'.asset-subtypefields-wrapper-enable label',
 		function(event) {
-			var assetSubtypeFieldsPopupNodes = $('.asset-subtypefields-popup .btn');
+			var subtypeFieldsFilterEnabledInput = event.delegateTarget.querySelector('input');
 
-			Util.toggleDisabled(assetSubtypeFieldsPopupNodes, !$(event.target).prop('checked'));
+			var assetSubtypefieldsPopupButtons = document.querySelectorAll('.asset-subtypefields-popup .btn');
+
+			if (subtypeFieldsFilterEnabledInput) {
+				Array.prototype.forEach.call(
+					assetSubtypefieldsPopupButtons,
+					function (assetSubtypefieldsPopupButton){
+						Util.toggleDisabled(assetSubtypefieldsPopupButton, !subtypeFieldsFilterEnabledInput.checked);
+					}
+				);
+			}
 		}
 	);
 
@@ -387,19 +424,22 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList()
 		}
 	);
 
-	sourcePanel.on(
+	var ddmStructureDisplayFieldValueInput = document.querySelector('#<portlet:namespace />ddmStructureDisplayFieldValue');
+
+	dom.delegate(
+		sourcePanel,
 		'click',
 		'.asset-subtypefields-popup',
 		function(event) {
-			var currentTarget = $(event.currentTarget);
+			var delegateTarget = event.delegateTarget;
 
-			var btn = $('.btn', currentTarget);
+			var btn = delegateTarget.querySelector('.btn');
 
-			var uri = btn.data('href');
+			var uri = btn.dataset.href;
 
-			uri = Util.addParams('<portlet:namespace />ddmStructureDisplayFieldValue=' + encodeURIComponent($('#<portlet:namespace />ddmStructureDisplayFieldValue').val()), uri);
-			uri = Util.addParams('<portlet:namespace />ddmStructureFieldName=' + encodeURIComponent($('#<portlet:namespace />ddmStructureFieldName').val()), uri);
-			uri = Util.addParams('<portlet:namespace />ddmStructureFieldValue=' + encodeURIComponent($('#<portlet:namespace />ddmStructureFieldValue').val()), uri);
+			uri = Util.addParams('<portlet:namespace />ddmStructureDisplayFieldValue=' + encodeURIComponent(ddmStructureDisplayFieldValueInput.value), uri);
+			uri = Util.addParams('<portlet:namespace />ddmStructureFieldName=' + encodeURIComponent(ddmStructureFieldNameInput.value), uri);
+			uri = Util.addParams('<portlet:namespace />ddmStructureFieldValue=' + encodeURIComponent(ddmStructureFieldValueInput.value), uri);
 
 			Util.selectEntity(
 				{
@@ -408,7 +448,7 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList()
 						modal: true
 					},
 					eventName: '<portlet:namespace />selectDDMStructureField',
-					id: '<portlet:namespace />selectDDMStructure' + currentTarget.attr('id'),
+					id: '<portlet:namespace />selectDDMStructure' + delegateTarget.id,
 					title: '<liferay-ui:message arguments="structure-field" key="select-x" />',
 					uri: uri
 				},
@@ -420,31 +460,52 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList()
 	);
 
 	function setDDMFields(className, name, value, displayValue, message) {
-		$('#<portlet:namespace />ddmStructureFieldName').val(name);
-		$('#<portlet:namespace />ddmStructureFieldValue').val(value);
-		$('#<portlet:namespace />ddmStructureDisplayFieldValue').val(displayValue);
+		ddmStructureFieldNameInput.value = name;
+		ddmStructureFieldValueInput.value = value;
+		ddmStructureDisplayFieldValueInput.value = displayValue;
 
-		$('#<portlet:namespace />' + className + 'ddmStructureFieldMessage').html(Liferay.Util.escape(message));
+		var ddmStructureFieldMessageContainer = document.querySelector('#<portlet:namespace />' + className + 'ddmStructureFieldMessage');
+
+		if (ddmStructureFieldMessageContainer) {
+			ddmStructureFieldMessageContainer.innerHTML = Liferay.Util.escape(message);
+		}
 	}
 
-	Liferay.Util.toggleSelectBox('<portlet:namespace />anyAssetType', 'false', '<portlet:namespace />classNamesBoxes');
+	Util.toggleSelectBox('<portlet:namespace />anyAssetType', 'false', '<portlet:namespace />classNamesBoxes');
 
-	function <portlet:namespace />saveSelectBoxes() {
-		var form = $(document.<portlet:namespace />fm);
+	var saveButton = document.querySelector('#<portlet:namespace />save');
 
-		form.fm('classNameIds').val(Util.listSelect(form.fm('currentClassNameIds')));
+	if (saveButton) {
+		saveButton.addEventListener(
+			'click',
+			function(event) {
+				var form = document.<portlet:namespace />fm;
 
-		<%
-		for (AssetRendererFactory<?> curRendererFactory : classTypesAssetRendererFactories) {
-			String className = editAssetListDisplayContext.getClassName(curRendererFactory);
-		%>
+				<%
+				for (AssetRendererFactory<?> curRendererFactory : classTypesAssetRendererFactories) {
+					String className = editAssetListDisplayContext.getClassName(curRendererFactory);
+				%>
 
-			form.fm('classTypeIds<%= className %>').val(Util.listSelect(form.fm('<%= className %>currentClassTypeIds')));
+					Util.setFormValues(
+						form,
+						{
+							classTypeIds<%= className %>: Util.listSelect(Util.getFormElement(form, '<%= className %>currentClassTypeIds'))
+						}
+					);
 
-		<%
-		}
-		%>
+				<%
+				}
+				%>
 
-		submitForm(form);
+				Util.postForm(
+					form,
+					{
+						data: {
+							classNameIds: Util.listSelect(Util.getFormElement(form, 'currentClassNameIds'))
+						}
+					}
+				)
+			}
+		);
 	}
 </aui:script>

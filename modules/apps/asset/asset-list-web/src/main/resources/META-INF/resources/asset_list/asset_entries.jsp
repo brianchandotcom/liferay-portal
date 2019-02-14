@@ -134,44 +134,63 @@
 	</liferay-frontend:edit-form-body>
 </liferay-frontend:edit-form>
 
-<aui:script use="liferay-item-selector-dialog">
-	$('body').on(
-		'click',
-		'.asset-selector a',
-		function(event) {
-			event.preventDefault();
+<aui:script require="metal-dom/src/dom as dom">
+	AUI().use(
+		'liferay-item-selector-dialog',
+		function(A) {
+			var delegateHandler = dom.delegate(
+				document.body,
+				'click',
+				'.asset-selector a',
+				function(event) {
+					event.preventDefault();
 
-			var currentTarget = $(event.currentTarget);
+					var delegateTarget = event.delegateTarget;
 
-			var itemSelectorDialog = new A.LiferayItemSelectorDialog(
-				{
-					eventName: '<portlet:namespace />selectAsset',
-					id: '<portlet:namespace />selectAsset' + currentTarget.attr('id'),
-					on: {
-						selectedItemChange: function(event) {
-							var selectedItems = event.newVal;
+					var itemSelectorDialog = new A.LiferayItemSelectorDialog(
+						{
+							eventName: '<portlet:namespace />selectAsset',
+							id: '<portlet:namespace />selectAsset' + delegateTarget.id,
+							on: {
+								selectedItemChange: function(event) {
+									var selectedItems = event.newVal;
 
-							if (selectedItems) {
-								var assetEntryIds = [];
+									if (selectedItems) {
+										var assetEntryIds = [];
 
-								selectedItems.forEach(
-									function(assetEntry) {
-										assetEntryIds.push(assetEntry.entityid);
+										selectedItems.forEach(
+											function(assetEntry) {
+												assetEntryIds.push(assetEntry.entityid);
+											}
+										);
+
+										Liferay.Util.postForm(
+											document.<portlet:namespace />fm,
+											{
+												data: {
+													assetEntryIds: assetEntryIds.join(',')
+												}
+											}
+										);
 									}
-								);
-
-								<portlet:namespace />fm.<portlet:namespace />assetEntryIds.value = assetEntryIds.join(',');
-
-								submitForm(document.<portlet:namespace />fm);
-							}
+								}
+							},
+							title: delegateTarget.dataset.title,
+							url: delegateTarget.dataset.href
 						}
-					},
-					title: currentTarget.data('title'),
-					url: currentTarget.data('href')
+					);
+
+					itemSelectorDialog.open();
 				}
 			);
 
-			itemSelectorDialog.open();
+			var onDestroyPortlet = function() {
+				delegateHandler.removeListener();
+
+				Liferay.detach('destroyPortlet', onDestroyPortlet);
+			}
+
+			Liferay.on('destroyPortlet', onDestroyPortlet);
 		}
 	);
 </aui:script>

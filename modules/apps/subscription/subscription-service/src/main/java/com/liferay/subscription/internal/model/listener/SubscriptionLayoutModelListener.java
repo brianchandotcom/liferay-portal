@@ -32,6 +32,10 @@ public class SubscriptionLayoutModelListener extends BaseModelListener<Layout> {
 
 	@Override
 	public void onAfterRemove(Layout layout) {
+		if (layout == null) {
+			return;
+		}
+
 		try {
 			_subscriptionLocalService.deleteSubscriptions(
 				layout.getCompanyId(), Layout.class.getName(),

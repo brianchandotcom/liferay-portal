@@ -19,6 +19,7 @@ import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.layout.constants.LayoutConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -68,7 +69,7 @@ public class UpgradeLayoutPageTemplateStructure extends UpgradeProcess {
 		long classNameId = PortalUtil.getClassNameId(
 			LayoutPageTemplateEntry.class.getName());
 
-		StringBuilder sb = new StringBuilder(7);
+		StringBundler sb = new StringBundler(7);
 
 		sb.append("select layoutPageTemplateEntryId, groupId, companyId, ");
 		sb.append("userId, userName, createDate from LayoutPageTemplateEntry ");
@@ -196,7 +197,7 @@ public class UpgradeLayoutPageTemplateStructure extends UpgradeProcess {
 		JSONObject jsonObject = _generateLayoutPageTemplateStructureData(
 			groupId, classNameId, classPK);
 
-		StringBuilder sb = new StringBuilder(4);
+		StringBundler sb = new StringBundler(4);
 
 		sb.append("insert into LayoutPageTemplateStructure (uuid_, ");
 		sb.append("layoutPageTemplateStructureId, groupId, companyId, ");

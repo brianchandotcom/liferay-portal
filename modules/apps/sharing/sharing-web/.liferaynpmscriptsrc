@@ -1,0 +1,11 @@
+{
+	"build": {
+		"dependencies": [
+			"clay-alert",
+			"clay-button",
+			"clay-icon",
+			"clay-select",
+			"clay-sticker"
+		]
+	}
+}

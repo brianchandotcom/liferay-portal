@@ -18,10 +18,13 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.message.boards.constants.MBCategoryConstants;
 import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.model.MBMessage;
+import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.service.MBCategoryLocalService;
 import com.liferay.message.boards.service.MBMessageLocalService;
+import com.liferay.message.boards.service.MBThreadLocalService;
 import com.liferay.message.boards.uad.test.MBCategoryUADTestUtil;
 import com.liferay.message.boards.uad.test.MBMessageUADTestUtil;
+import com.liferay.message.boards.uad.test.MBThreadUADTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -106,6 +109,16 @@ public class MBCategoryUADDisplayTest
 			mbCategoryA,
 			_getTopLevelContainer(
 				MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, mbMessageA));
+
+		// A thread whose category is an immediate child of the given parent
+		// should return its own category
+
+		MBThread mbThread = _addThread(mbCategoryA.getCategoryId());
+
+		Assert.assertEquals(
+			mbCategoryA,
+			_getTopLevelContainer(
+				MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, mbThread));
 
 		// A category that is not a descendant of the given parent should return
 		// null
@@ -199,6 +212,16 @@ public class MBCategoryUADDisplayTest
 		return mbMessage;
 	}
 
+	private MBThread _addThread(long mbCategoryId) throws Exception {
+		MBThread mbThread = MBThreadUADTestUtil.addMBThread(
+			_mbCategoryLocalService, _mbMessageLocalService,
+			_mbThreadLocalService, TestPropsValues.getUserId(), mbCategoryId);
+
+		_mbThreads.add(mbThread);
+
+		return mbThread;
+	}
+
 	private MBCategory _getTopLevelContainer(
 		Serializable mbCategoryId, Object childObject) {
 
@@ -217,6 +240,12 @@ public class MBCategoryUADDisplayTest
 
 	@DeleteAfterTestRun
 	private final List<MBMessage> _mbMessages = new ArrayList<>();
+
+	@Inject
+	private MBThreadLocalService _mbThreadLocalService;
+
+	@DeleteAfterTestRun
+	private final List<MBThread> _mbThreads = new ArrayList<>();
 
 	@Inject(filter = "component.name=*.MBCategoryUADDisplay")
 	private UADDisplay<MBCategory> _uadDisplay;

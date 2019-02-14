@@ -43,8 +43,8 @@ public class DLAdminDisplayContextProvider {
 	}
 
 	public DLAdminManagementToolbarDisplayContext
-		getDLAdminManagementToolbarDisplayContext(
-			HttpServletRequest request, HttpServletResponse response)
+			getDLAdminManagementToolbarDisplayContext(
+				HttpServletRequest request, HttpServletResponse response)
 		throws PortalException {
 
 		DLRequestHelper dlRequestHelper = new DLRequestHelper(request);

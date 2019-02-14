@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.kernel.service.ThemeLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.CookieKeys;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -133,6 +134,17 @@ public class LayoutRevisionImpl extends LayoutRevisionBaseImpl {
 		}
 
 		return url;
+	}
+
+	@Override
+	public String getTarget() {
+		String target = getTypeSettingsProperty("target", StringPool.BLANK);
+
+		if (!Validator.isBlank(target)) {
+			target = "target=\"" + HtmlUtil.escapeAttribute(target) + "\"";
+		}
+
+		return target;
 	}
 
 	@Override

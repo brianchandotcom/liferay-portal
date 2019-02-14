@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<checkstyle>
+		<suppress checks="ArquillianCheck" files="modules/apps/headless/.*" />
+	</checkstyle>
+</suppressions>

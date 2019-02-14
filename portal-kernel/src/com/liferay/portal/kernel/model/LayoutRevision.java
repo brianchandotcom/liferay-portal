@@ -75,6 +75,8 @@ public interface LayoutRevision extends LayoutRevisionModel, PersistedModel {
 	public String getRegularURL(javax.servlet.http.HttpServletRequest request)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	public String getTarget();
+
 	public Theme getTheme()
 		throws com.liferay.portal.kernel.exception.PortalException;
 

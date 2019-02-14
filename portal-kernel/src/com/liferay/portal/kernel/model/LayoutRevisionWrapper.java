@@ -838,6 +838,11 @@ public class LayoutRevisionWrapper extends BaseModelWrapper<LayoutRevision>
 	}
 
 	@Override
+	public String getTarget() {
+		return model.getTarget();
+	}
+
+	@Override
 	public Theme getTheme()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return model.getTheme();

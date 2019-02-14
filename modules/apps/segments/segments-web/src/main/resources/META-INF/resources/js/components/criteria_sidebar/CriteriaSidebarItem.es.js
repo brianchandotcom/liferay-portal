@@ -53,7 +53,7 @@ class CriteriaSidebarItem extends Component {
 			returnValue = 'decimal';
 			break;
 		case 'id':
-			returnValue = 'select';
+			returnValue = 'diagram';
 			break;
 		case 'integer':
 			returnValue = 'integer';

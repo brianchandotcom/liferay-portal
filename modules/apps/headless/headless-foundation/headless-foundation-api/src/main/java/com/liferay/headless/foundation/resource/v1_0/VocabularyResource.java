@@ -67,7 +67,7 @@ public interface VocabularyResource {
 	@Path("/content-spaces/{content-space-id}/vocabularies")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Page<Vocabulary> getContentSpaceVocabulariesPage( @PathParam("content-space-id") Long contentSpaceId , @Context Pagination pagination ) throws Exception;
+	public Page<Vocabulary> getContentSpaceVocabulariesPage( @PathParam("content-space-id") Long contentSpaceId , @Context Filter filter , @Context Pagination pagination , @Context Sort[] sorts ) throws Exception;
 
 	@Consumes("application/json")
 	@POST

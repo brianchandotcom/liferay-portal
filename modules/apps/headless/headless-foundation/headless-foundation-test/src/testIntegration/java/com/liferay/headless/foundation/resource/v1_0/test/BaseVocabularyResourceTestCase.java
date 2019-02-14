@@ -19,6 +19,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.liferay.headless.foundation.dto.v1_0.Vocabulary;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -101,7 +103,8 @@ public abstract class BaseVocabularyResourceTestCase {
 	}
 
 	protected void invokeGetContentSpaceVocabulariesPage(
-			Long contentSpaceId, Pagination pagination)
+			Long contentSpaceId, Filter filter, Pagination pagination,
+			Sort[] sorts)
 		throws Exception {
 
 			RequestSpecification requestSpecification =

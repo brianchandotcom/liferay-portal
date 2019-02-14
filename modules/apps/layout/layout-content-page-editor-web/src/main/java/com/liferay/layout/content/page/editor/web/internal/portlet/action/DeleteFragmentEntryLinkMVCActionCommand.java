@@ -29,8 +29,6 @@ import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
@@ -77,15 +75,12 @@ public class DeleteFragmentEntryLinkMVCActionCommand
 		long classPK = ParamUtil.getLong(actionRequest, "classPK");
 		String data = ParamUtil.getString(actionRequest, "data");
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			actionRequest);
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		_layoutPageTemplateStructureLocalService.
 			updateLayoutPageTemplateStructure(
-				serviceContext.getScopeGroupId(), classNameId, classPK, data);
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+				themeDisplay.getScopeGroupId(), classNameId, classPK, data);
 
 		if (fragmentEntryLink.getFragmentEntryId() == 0) {
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(

@@ -82,10 +82,14 @@
 
 		{if $row and $row.config}
 			{sp}px-{$row.config.paddingHorizontal ?: '3'}
+		{else}
+			{sp}px-3
 		{/if}
 
 		{if $row and $row.config}
 			{sp}py-{$row.config.paddingVertical ?: '3'}
+		{else}
+			{sp}py-3
 		{/if}
 	{/let}
 

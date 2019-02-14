@@ -18,6 +18,7 @@ import com.liferay.osgi.util.service.OSGiServiceUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Dictionary;
 import java.util.concurrent.CountDownLatch;
@@ -37,6 +38,17 @@ import org.osgi.service.cm.ManagedService;
  */
 public class ConfigurationTestUtil {
 
+	public static String createFactoryConfiguration(
+			String factoryPid, Dictionary<String, Object> properties)
+		throws Exception {
+
+		Configuration configuration = _createFactoryConfiguration(factoryPid);
+
+		_updateProperties(configuration, properties);
+
+		return configuration.getPid();
+	}
+
 	public static void deleteConfiguration(Configuration configuration)
 		throws Exception {
 
@@ -45,6 +57,16 @@ public class ConfigurationTestUtil {
 
 	public static void deleteConfiguration(String pid) throws Exception {
 		_updateProperties(_getConfiguration(pid), null);
+	}
+
+	public static void deleteFactoryConfiguration(String pid, String factoryPid)
+		throws Exception {
+
+		Configuration configuration = _getFactoryConfiguration(pid, factoryPid);
+
+		if (configuration != null) {
+			_updateProperties(configuration, null);
+		}
 	}
 
 	public static void saveConfiguration(
@@ -61,13 +83,56 @@ public class ConfigurationTestUtil {
 		_updateProperties(_getConfiguration(pid), properties);
 	}
 
+	private static Configuration _createFactoryConfiguration(String factoryPid)
+		throws Exception {
+
+		return OSGiServiceUtil.callService(
+			_bundleContext, ConfigurationAdmin.class,
+			(ConfigurationAdmin configurationAdmin) ->
+				configurationAdmin.createFactoryConfiguration(
+					factoryPid, StringPool.QUESTION));
+	}
+
 	private static Configuration _getConfiguration(String pid)
 		throws Exception {
 
 		return OSGiServiceUtil.callService(
 			_bundleContext, ConfigurationAdmin.class,
-			configurationAdmin -> configurationAdmin.getConfiguration(
-				pid, StringPool.QUESTION));
+			(ConfigurationAdmin configurationAdmin) ->
+				configurationAdmin.getConfiguration(pid, StringPool.QUESTION));
+	}
+
+	private static Configuration _getFactoryConfiguration(
+			String pid, String factoryPid)
+		throws Exception {
+
+		String filterString;
+
+		String pidFilterString = "(service.pid=" + pid + ")";
+
+		if (Validator.isNotNull(factoryPid)) {
+			String factoryPidFilterString =
+				"(service.factoryPid=" + factoryPid + ")";
+
+			filterString =
+				"(&" + pidFilterString + factoryPidFilterString + ")";
+		}
+		else {
+			filterString = pidFilterString;
+		}
+
+		return OSGiServiceUtil.callService(
+			_bundleContext, ConfigurationAdmin.class,
+			(ConfigurationAdmin configurationAdmin) -> {
+				Configuration[] configurations =
+					configurationAdmin.listConfigurations(filterString);
+
+				if (configurations != null) {
+					return configurations[0];
+				}
+
+				return null;
+			});
 	}
 
 	private static void _updateProperties(

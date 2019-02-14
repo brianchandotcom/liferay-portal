@@ -176,8 +176,13 @@ public class MBCommentManagerImpl implements CommentManager {
 
 	@Override
 	public Comment fetchComment(long commentId) {
-		return new MBCommentImpl(
-			_mbMessageLocalService.fetchMBMessage(commentId));
+		MBMessage mbMessage = _mbMessageLocalService.fetchMBMessage(commentId);
+
+		if (mbMessage == null) {
+			return null;
+		}
+
+		return new MBCommentImpl(mbMessage);
 	}
 
 	@Override

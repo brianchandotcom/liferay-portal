@@ -36,11 +36,11 @@ if (selUser != null) {
 
 <liferay-frontend:screen-navigation
 	containerCssClass="col-lg-8"
+	containerWrapperCssClass="container-fluid container-fluid-max-xl container-form-lg"
 	context="<%= selUser %>"
 	headerContainerCssClass="container-fluid container-fluid-max-xl"
 	key="<%= UserFormConstants.SCREEN_NAVIGATION_KEY_USERS %>"
 	menubarCssClass="menubar menubar-transparent menubar-vertical-expand-lg"
 	navCssClass="col-lg-3"
-	sectionContainerCssClass="container-fluid container-fluid-max-xl container-form-lg"
 	portletURL="<%= portletURL %>"
 />

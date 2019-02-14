@@ -105,7 +105,7 @@ if (organizationId > 0) {
 											var organizationName = form.querySelector('#<portlet:namespace />organizationName');
 
 											if (organizationName) {
-												organizationName.setAttribute('value' ,event.entityname);
+												organizationName.setAttribute('value', event.entityname);
 											}
 										}
 
@@ -129,7 +129,7 @@ if (organizationId > 0) {
 								var usersSelectionOptions = document.getElementById('<portlet:namespace />usersSelectionOptions');
 
 								if (usersSelectionOptions) {
-									var showUsersSelectionOptions = !(selectionMethod.val() === 'users');
+									var showUsersSelectionOptions = !(<portlet:namespace />selectionMethod.val() === 'users');
 
 									if (showUsersSelectionOptions) {
 										dom.addClasses(usersSelectionOptions, 'hide');

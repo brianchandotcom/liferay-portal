@@ -82,6 +82,7 @@ public class DocumentResourceImpl extends BaseDocumentResourceImpl {
 				setDescription(fileEntry.getDescription());
 				setEncodingFormat(fileEntry.getMimeType());
 				setFileExtension(fileEntry.getExtension());
+				setFolderId(fileEntry.getFolderId());
 				setId(fileEntry.getFileEntryId());
 				setKeywords(keywords);
 				setSizeInBytes(fileEntry.getSize());

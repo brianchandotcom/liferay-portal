@@ -38,9 +38,11 @@ import com.liferay.portal.search.engine.adapter.search.SearchRequestExecutor;
 import com.liferay.portal.search.internal.aggregation.AggregationResultsImpl;
 import com.liferay.portal.search.internal.document.DocumentBuilderFactoryImpl;
 import com.liferay.portal.search.internal.geolocation.GeoBuildersImpl;
+import com.liferay.portal.search.internal.groupby.GroupByResponseFactoryImpl;
 import com.liferay.portal.search.internal.highlight.HighlightFieldBuilderFactoryImpl;
 import com.liferay.portal.search.internal.hits.SearchHitBuilderFactoryImpl;
 import com.liferay.portal.search.internal.hits.SearchHitsBuilderFactoryImpl;
+import com.liferay.portal.search.internal.legacy.groupby.GroupByRequestFactoryImpl;
 import com.liferay.portal.search.internal.legacy.stats.StatsRequestBuilderFactoryImpl;
 import com.liferay.portal.search.internal.legacy.stats.StatsResultsTranslatorImpl;
 import com.liferay.portal.search.internal.stats.StatsResponseBuilderFactoryImpl;
@@ -255,6 +257,7 @@ public class SearchRequestExecutorFixture {
 			{
 				setCommonSearchRequestBuilderAssembler(
 					commonSearchRequestBuilderAssembler);
+				setGroupByRequestFactory(new GroupByRequestFactoryImpl());
 				setGroupByTranslator(new DefaultGroupByTranslator());
 				setHighlighterTranslator(new DefaultHighlighterTranslator());
 				setQueryToQueryBuilderTranslator(elasticsearchQueryTranslator);
@@ -304,6 +307,8 @@ public class SearchRequestExecutorFixture {
 				setSearchResponseTranslator(
 					new DefaultSearchResponseTranslator() {
 						{
+							setGroupByResponseFactory(
+								new GroupByResponseFactoryImpl());
 							setSearchHitDocumentTranslator(
 								new SearchHitDocumentTranslatorImpl());
 							setStatsRequestBuilderFactory(

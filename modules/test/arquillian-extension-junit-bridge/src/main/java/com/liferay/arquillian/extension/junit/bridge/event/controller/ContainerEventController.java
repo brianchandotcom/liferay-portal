@@ -28,10 +28,10 @@ import org.jboss.arquillian.container.spi.client.deployment.Deployment;
 import org.jboss.arquillian.container.spi.client.deployment.DeploymentDescription;
 import org.jboss.arquillian.container.spi.context.ContainerContext;
 import org.jboss.arquillian.container.spi.context.DeploymentContext;
-import org.jboss.arquillian.container.spi.context.annotation.DeploymentScoped;
 import org.jboss.arquillian.core.api.Injector;
 import org.jboss.arquillian.core.api.Instance;
 import org.jboss.arquillian.core.api.InstanceProducer;
+import org.jboss.arquillian.core.api.annotation.ApplicationScoped;
 import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.arquillian.core.api.annotation.Observes;
 import org.jboss.arquillian.core.spi.EventContext;
@@ -149,7 +149,7 @@ public class ContainerEventController {
 	@Inject
 	private Instance<Injector> _injectorInstance;
 
-	@DeploymentScoped
+	@ApplicationScoped
 	@Inject
 	private InstanceProducer<MBeanServerConnection>
 		_mBeanServerConnectionInstanceProducer;

@@ -25,6 +25,14 @@ public interface PipelineAggregationVisitor<T> {
 	public T visit(AvgBucketPipelineAggregation avgBucketPipelineAggregation);
 
 	public T visit(
+		BucketScriptPipelineAggregation bucketScriptPipelineAggregation);
+
+	public T visit(
+		BucketSelectorPipelineAggregation bucketSelectorPipelineAggregation);
+
+	public T visit(BucketSortPipelineAggregation bucketSortPipelineAggregation);
+
+	public T visit(
 		CumulativeSumPipelineAggregation cumulativeSumPipelineAggregation);
 
 	public T visit(DerivativePipelineAggregation derivativePipelineAggregation);
@@ -36,6 +44,9 @@ public interface PipelineAggregationVisitor<T> {
 	public T visit(MaxBucketPipelineAggregation maxBucketPipelineAggregation);
 
 	public T visit(MinBucketPipelineAggregation minBucketPipelineAggregation);
+
+	public T visit(
+		MovingFunctionPipelineAggregation movingFunctionPipelineAggregation);
 
 	public T visit(
 		PercentilesBucketPipelineAggregation

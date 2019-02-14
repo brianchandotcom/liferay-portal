@@ -16,6 +16,9 @@ package com.liferay.headless.foundation.dto.v1_0;
 
 import com.liferay.petra.function.UnsafeSupplier;
 
+import graphql.annotations.annotationTypes.GraphQLField;
+import graphql.annotations.annotationTypes.GraphQLName;
+
 import javax.annotation.Generated;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -25,30 +28,31 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
+@GraphQLName("Location")
 @XmlRootElement(name = "Location")
 public class Location {
 
 	public String getAddressCountry() {
-		return _addressCountry;
+		return addressCountry;
 	}
 
 	public String getAddressRegion() {
-		return _addressRegion;
+		return addressRegion;
 	}
 
 	public Long getId() {
-		return _id;
+		return id;
 	}
 
 	public void setAddressCountry(String addressCountry) {
-		_addressCountry = addressCountry;
+		this.addressCountry = addressCountry;
 	}
 
 	public void setAddressCountry(
 		UnsafeSupplier<String, Throwable> addressCountryUnsafeSupplier) {
 
 		try {
-			_addressCountry = addressCountryUnsafeSupplier.get();
+			addressCountry = addressCountryUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -56,14 +60,14 @@ public class Location {
 	}
 
 	public void setAddressRegion(String addressRegion) {
-		_addressRegion = addressRegion;
+		this.addressRegion = addressRegion;
 	}
 
 	public void setAddressRegion(
 		UnsafeSupplier<String, Throwable> addressRegionUnsafeSupplier) {
 
 		try {
-			_addressRegion = addressRegionUnsafeSupplier.get();
+			addressRegion = addressRegionUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -71,20 +75,25 @@ public class Location {
 	}
 
 	public void setId(Long id) {
-		_id = id;
+		this.id = id;
 	}
 
 	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 		try {
-			_id = idUnsafeSupplier.get();
+			id = idUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 	}
 	}
 
-	private String _addressCountry;
-	private String _addressRegion;
-	private Long _id;
+	@GraphQLField
+	protected String addressCountry;
+
+	@GraphQLField
+	protected String addressRegion;
+
+	@GraphQLField
+	protected Long id;
 
 }

@@ -16,6 +16,9 @@ package com.liferay.headless.web.experience.dto.v1_0;
 
 import com.liferay.petra.function.UnsafeSupplier;
 
+import graphql.annotations.annotationTypes.GraphQLField;
+import graphql.annotations.annotationTypes.GraphQLName;
+
 import javax.annotation.Generated;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -25,38 +28,39 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
+@GraphQLName("AggregateRating")
 @XmlRootElement(name = "AggregateRating")
 public class AggregateRating {
 
 	public Number getBestRating() {
-		return _bestRating;
+		return bestRating;
 	}
 
 	public Long getId() {
-		return _id;
+		return id;
 	}
 
 	public Number getRatingCount() {
-		return _ratingCount;
+		return ratingCount;
 	}
 
 	public Number getRatingValue() {
-		return _ratingValue;
+		return ratingValue;
 	}
 
 	public Number getWorstRating() {
-		return _worstRating;
+		return worstRating;
 	}
 
 	public void setBestRating(Number bestRating) {
-		_bestRating = bestRating;
+		this.bestRating = bestRating;
 	}
 
 	public void setBestRating(
 		UnsafeSupplier<Number, Throwable> bestRatingUnsafeSupplier) {
 
 		try {
-			_bestRating = bestRatingUnsafeSupplier.get();
+			bestRating = bestRatingUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -64,12 +68,12 @@ public class AggregateRating {
 	}
 
 	public void setId(Long id) {
-		_id = id;
+		this.id = id;
 	}
 
 	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 		try {
-			_id = idUnsafeSupplier.get();
+			id = idUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -77,14 +81,14 @@ public class AggregateRating {
 	}
 
 	public void setRatingCount(Number ratingCount) {
-		_ratingCount = ratingCount;
+		this.ratingCount = ratingCount;
 	}
 
 	public void setRatingCount(
 		UnsafeSupplier<Number, Throwable> ratingCountUnsafeSupplier) {
 
 		try {
-			_ratingCount = ratingCountUnsafeSupplier.get();
+			ratingCount = ratingCountUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -92,14 +96,14 @@ public class AggregateRating {
 	}
 
 	public void setRatingValue(Number ratingValue) {
-		_ratingValue = ratingValue;
+		this.ratingValue = ratingValue;
 	}
 
 	public void setRatingValue(
 		UnsafeSupplier<Number, Throwable> ratingValueUnsafeSupplier) {
 
 		try {
-			_ratingValue = ratingValueUnsafeSupplier.get();
+			ratingValue = ratingValueUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -107,24 +111,33 @@ public class AggregateRating {
 	}
 
 	public void setWorstRating(Number worstRating) {
-		_worstRating = worstRating;
+		this.worstRating = worstRating;
 	}
 
 	public void setWorstRating(
 		UnsafeSupplier<Number, Throwable> worstRatingUnsafeSupplier) {
 
 		try {
-			_worstRating = worstRatingUnsafeSupplier.get();
+			worstRating = worstRatingUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 	}
 	}
 
-	private Number _bestRating;
-	private Long _id;
-	private Number _ratingCount;
-	private Number _ratingValue;
-	private Number _worstRating;
+	@GraphQLField
+	protected Number bestRating;
+
+	@GraphQLField
+	protected Long id;
+
+	@GraphQLField
+	protected Number ratingCount;
+
+	@GraphQLField
+	protected Number ratingValue;
+
+	@GraphQLField
+	protected Number worstRating;
 
 }

@@ -16,6 +16,9 @@ package com.liferay.headless.web.experience.dto.v1_0;
 
 import com.liferay.petra.function.UnsafeSupplier;
 
+import graphql.annotations.annotationTypes.GraphQLField;
+import graphql.annotations.annotationTypes.GraphQLName;
+
 import javax.annotation.Generated;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -25,46 +28,47 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
+@GraphQLName("Values")
 @XmlRootElement(name = "Values")
 public class Values {
 
 	public String getDataType() {
-		return _dataType;
+		return dataType;
 	}
 
 	public String getFilterAndSortIdentifier() {
-		return _filterAndSortIdentifier;
+		return filterAndSortIdentifier;
 	}
 
 	public Long getId() {
-		return _id;
+		return id;
 	}
 
 	public String getInputControl() {
-		return _inputControl;
+		return inputControl;
 	}
 
 	public String getLabel() {
-		return _label;
+		return label;
 	}
 
 	public String getName() {
-		return _name;
+		return name;
 	}
 
 	public Object getValue() {
-		return _value;
+		return value;
 	}
 
 	public void setDataType(String dataType) {
-		_dataType = dataType;
+		this.dataType = dataType;
 	}
 
 	public void setDataType(
 		UnsafeSupplier<String, Throwable> dataTypeUnsafeSupplier) {
 
 		try {
-			_dataType = dataTypeUnsafeSupplier.get();
+			dataType = dataTypeUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -72,7 +76,7 @@ public class Values {
 	}
 
 	public void setFilterAndSortIdentifier(String filterAndSortIdentifier) {
-		_filterAndSortIdentifier = filterAndSortIdentifier;
+		this.filterAndSortIdentifier = filterAndSortIdentifier;
 	}
 
 	public void setFilterAndSortIdentifier(
@@ -80,7 +84,7 @@ public class Values {
 			filterAndSortIdentifierUnsafeSupplier) {
 
 		try {
-			_filterAndSortIdentifier =
+			filterAndSortIdentifier =
 				filterAndSortIdentifierUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
@@ -89,12 +93,12 @@ public class Values {
 	}
 
 	public void setId(Long id) {
-		_id = id;
+		this.id = id;
 	}
 
 	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 		try {
-			_id = idUnsafeSupplier.get();
+			id = idUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -102,14 +106,14 @@ public class Values {
 	}
 
 	public void setInputControl(String inputControl) {
-		_inputControl = inputControl;
+		this.inputControl = inputControl;
 	}
 
 	public void setInputControl(
 		UnsafeSupplier<String, Throwable> inputControlUnsafeSupplier) {
 
 		try {
-			_inputControl = inputControlUnsafeSupplier.get();
+			inputControl = inputControlUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -117,14 +121,14 @@ public class Values {
 	}
 
 	public void setLabel(String label) {
-		_label = label;
+		this.label = label;
 	}
 
 	public void setLabel(
 		UnsafeSupplier<String, Throwable> labelUnsafeSupplier) {
 
 		try {
-			_label = labelUnsafeSupplier.get();
+			label = labelUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -132,12 +136,12 @@ public class Values {
 	}
 
 	public void setName(String name) {
-		_name = name;
+		this.name = name;
 	}
 
 	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
 		try {
-			_name = nameUnsafeSupplier.get();
+			name = nameUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -145,26 +149,39 @@ public class Values {
 	}
 
 	public void setValue(Object value) {
-		_value = value;
+		this.value = value;
 	}
 
 	public void setValue(
 		UnsafeSupplier<Object, Throwable> valueUnsafeSupplier) {
 
 		try {
-			_value = valueUnsafeSupplier.get();
+			value = valueUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 	}
 	}
 
-	private String _dataType;
-	private String _filterAndSortIdentifier;
-	private Long _id;
-	private String _inputControl;
-	private String _label;
-	private String _name;
-	private Object _value;
+	@GraphQLField
+	protected String dataType;
+
+	@GraphQLField
+	protected String filterAndSortIdentifier;
+
+	@GraphQLField
+	protected Long id;
+
+	@GraphQLField
+	protected String inputControl;
+
+	@GraphQLField
+	protected String label;
+
+	@GraphQLField
+	protected String name;
+
+	@GraphQLField
+	protected Object value;
 
 }

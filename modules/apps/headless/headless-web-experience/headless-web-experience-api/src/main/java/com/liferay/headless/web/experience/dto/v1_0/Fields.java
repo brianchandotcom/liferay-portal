@@ -16,6 +16,9 @@ package com.liferay.headless.web.experience.dto.v1_0;
 
 import com.liferay.petra.function.UnsafeSupplier;
 
+import graphql.annotations.annotationTypes.GraphQLField;
+import graphql.annotations.annotationTypes.GraphQLName;
+
 import javax.annotation.Generated;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -25,62 +28,63 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
+@GraphQLName("Fields")
 @XmlRootElement(name = "Fields")
 public class Fields {
 
 	public String getDataType() {
-		return _dataType;
+		return dataType;
 	}
 
 	public String getInputControl() {
-		return _inputControl;
+		return inputControl;
 	}
 
 	public String getLabel() {
-		return _label;
+		return label;
 	}
 
 	public Boolean getLocalizable() {
-		return _localizable;
+		return localizable;
 	}
 
 	public Boolean getMultiple() {
-		return _multiple;
+		return multiple;
 	}
 
 	public String getName() {
-		return _name;
+		return name;
 	}
 
 	public Options[] getOptions() {
-		return _options;
+		return options;
 	}
 
 	public String getPredefinedValue() {
-		return _predefinedValue;
+		return predefinedValue;
 	}
 
 	public Boolean getRepeatable() {
-		return _repeatable;
+		return repeatable;
 	}
 
 	public Boolean getRequired() {
-		return _required;
+		return required;
 	}
 
 	public Boolean getShowLabel() {
-		return _showLabel;
+		return showLabel;
 	}
 
 	public void setDataType(String dataType) {
-		_dataType = dataType;
+		this.dataType = dataType;
 	}
 
 	public void setDataType(
 		UnsafeSupplier<String, Throwable> dataTypeUnsafeSupplier) {
 
 		try {
-			_dataType = dataTypeUnsafeSupplier.get();
+			dataType = dataTypeUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -88,14 +92,14 @@ public class Fields {
 	}
 
 	public void setInputControl(String inputControl) {
-		_inputControl = inputControl;
+		this.inputControl = inputControl;
 	}
 
 	public void setInputControl(
 		UnsafeSupplier<String, Throwable> inputControlUnsafeSupplier) {
 
 		try {
-			_inputControl = inputControlUnsafeSupplier.get();
+			inputControl = inputControlUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -103,14 +107,14 @@ public class Fields {
 	}
 
 	public void setLabel(String label) {
-		_label = label;
+		this.label = label;
 	}
 
 	public void setLabel(
 		UnsafeSupplier<String, Throwable> labelUnsafeSupplier) {
 
 		try {
-			_label = labelUnsafeSupplier.get();
+			label = labelUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -118,14 +122,14 @@ public class Fields {
 	}
 
 	public void setLocalizable(Boolean localizable) {
-		_localizable = localizable;
+		this.localizable = localizable;
 	}
 
 	public void setLocalizable(
 		UnsafeSupplier<Boolean, Throwable> localizableUnsafeSupplier) {
 
 		try {
-			_localizable = localizableUnsafeSupplier.get();
+			localizable = localizableUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -133,14 +137,14 @@ public class Fields {
 	}
 
 	public void setMultiple(Boolean multiple) {
-		_multiple = multiple;
+		this.multiple = multiple;
 	}
 
 	public void setMultiple(
 		UnsafeSupplier<Boolean, Throwable> multipleUnsafeSupplier) {
 
 		try {
-			_multiple = multipleUnsafeSupplier.get();
+			multiple = multipleUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -148,12 +152,12 @@ public class Fields {
 	}
 
 	public void setName(String name) {
-		_name = name;
+		this.name = name;
 	}
 
 	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
 		try {
-			_name = nameUnsafeSupplier.get();
+			name = nameUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -161,14 +165,14 @@ public class Fields {
 	}
 
 	public void setOptions(Options[] options) {
-		_options = options;
+		this.options = options;
 	}
 
 	public void setOptions(
 		UnsafeSupplier<Options[], Throwable> optionsUnsafeSupplier) {
 
 		try {
-			_options = optionsUnsafeSupplier.get();
+			options = optionsUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -176,14 +180,14 @@ public class Fields {
 	}
 
 	public void setPredefinedValue(String predefinedValue) {
-		_predefinedValue = predefinedValue;
+		this.predefinedValue = predefinedValue;
 	}
 
 	public void setPredefinedValue(
 		UnsafeSupplier<String, Throwable> predefinedValueUnsafeSupplier) {
 
 		try {
-			_predefinedValue = predefinedValueUnsafeSupplier.get();
+			predefinedValue = predefinedValueUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -191,14 +195,14 @@ public class Fields {
 	}
 
 	public void setRepeatable(Boolean repeatable) {
-		_repeatable = repeatable;
+		this.repeatable = repeatable;
 	}
 
 	public void setRepeatable(
 		UnsafeSupplier<Boolean, Throwable> repeatableUnsafeSupplier) {
 
 		try {
-			_repeatable = repeatableUnsafeSupplier.get();
+			repeatable = repeatableUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -206,14 +210,14 @@ public class Fields {
 	}
 
 	public void setRequired(Boolean required) {
-		_required = required;
+		this.required = required;
 	}
 
 	public void setRequired(
 		UnsafeSupplier<Boolean, Throwable> requiredUnsafeSupplier) {
 
 		try {
-			_required = requiredUnsafeSupplier.get();
+			required = requiredUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -221,30 +225,51 @@ public class Fields {
 	}
 
 	public void setShowLabel(Boolean showLabel) {
-		_showLabel = showLabel;
+		this.showLabel = showLabel;
 	}
 
 	public void setShowLabel(
 		UnsafeSupplier<Boolean, Throwable> showLabelUnsafeSupplier) {
 
 		try {
-			_showLabel = showLabelUnsafeSupplier.get();
+			showLabel = showLabelUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 	}
 	}
 
-	private String _dataType;
-	private String _inputControl;
-	private String _label;
-	private Boolean _localizable;
-	private Boolean _multiple;
-	private String _name;
-	private Options[] _options;
-	private String _predefinedValue;
-	private Boolean _repeatable;
-	private Boolean _required;
-	private Boolean _showLabel;
+	@GraphQLField
+	protected String dataType;
+
+	@GraphQLField
+	protected String inputControl;
+
+	@GraphQLField
+	protected String label;
+
+	@GraphQLField
+	protected Boolean localizable;
+
+	@GraphQLField
+	protected Boolean multiple;
+
+	@GraphQLField
+	protected String name;
+
+	@GraphQLField
+	protected Options[] options;
+
+	@GraphQLField
+	protected String predefinedValue;
+
+	@GraphQLField
+	protected Boolean repeatable;
+
+	@GraphQLField
+	protected Boolean required;
+
+	@GraphQLField
+	protected Boolean showLabel;
 
 }

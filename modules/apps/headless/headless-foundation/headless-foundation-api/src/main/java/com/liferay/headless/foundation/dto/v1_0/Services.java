@@ -16,6 +16,9 @@ package com.liferay.headless.foundation.dto.v1_0;
 
 import com.liferay.petra.function.UnsafeSupplier;
 
+import graphql.annotations.annotationTypes.GraphQLField;
+import graphql.annotations.annotationTypes.GraphQLName;
+
 import javax.annotation.Generated;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -25,23 +28,24 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
+@GraphQLName("Services")
 @XmlRootElement(name = "Services")
 public class Services {
 
 	public HoursAvailable[] getHoursAvailable() {
-		return _hoursAvailable;
+		return hoursAvailable;
 	}
 
 	public Long getId() {
-		return _id;
+		return id;
 	}
 
 	public String getServiceType() {
-		return _serviceType;
+		return serviceType;
 	}
 
 	public void setHoursAvailable(HoursAvailable[] hoursAvailable) {
-		_hoursAvailable = hoursAvailable;
+		this.hoursAvailable = hoursAvailable;
 	}
 
 	public void setHoursAvailable(
@@ -49,7 +53,7 @@ public class Services {
 			hoursAvailableUnsafeSupplier) {
 
 		try {
-			_hoursAvailable = hoursAvailableUnsafeSupplier.get();
+			hoursAvailable = hoursAvailableUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -57,12 +61,12 @@ public class Services {
 	}
 
 	public void setId(Long id) {
-		_id = id;
+		this.id = id;
 	}
 
 	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 		try {
-			_id = idUnsafeSupplier.get();
+			id = idUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -70,22 +74,27 @@ public class Services {
 	}
 
 	public void setServiceType(String serviceType) {
-		_serviceType = serviceType;
+		this.serviceType = serviceType;
 	}
 
 	public void setServiceType(
 		UnsafeSupplier<String, Throwable> serviceTypeUnsafeSupplier) {
 
 		try {
-			_serviceType = serviceTypeUnsafeSupplier.get();
+			serviceType = serviceTypeUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 	}
 	}
 
-	private HoursAvailable[] _hoursAvailable;
-	private Long _id;
-	private String _serviceType;
+	@GraphQLField
+	protected HoursAvailable[] hoursAvailable;
+
+	@GraphQLField
+	protected Long id;
+
+	@GraphQLField
+	protected String serviceType;
 
 }

@@ -16,6 +16,9 @@ package com.liferay.headless.form.dto.v1_0;
 
 import com.liferay.petra.function.UnsafeSupplier;
 
+import graphql.annotations.annotationTypes.GraphQLField;
+import graphql.annotations.annotationTypes.GraphQLName;
+
 import javax.annotation.Generated;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -25,28 +28,29 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
+@GraphQLName("Rows")
 @XmlRootElement(name = "Rows")
 public class Rows {
 
 	public Long getId() {
-		return _id;
+		return id;
 	}
 
 	public String getLabel() {
-		return _label;
+		return label;
 	}
 
 	public String getValue() {
-		return _value;
+		return value;
 	}
 
 	public void setId(Long id) {
-		_id = id;
+		this.id = id;
 	}
 
 	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 		try {
-			_id = idUnsafeSupplier.get();
+			id = idUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -54,14 +58,14 @@ public class Rows {
 	}
 
 	public void setLabel(String label) {
-		_label = label;
+		this.label = label;
 	}
 
 	public void setLabel(
 		UnsafeSupplier<String, Throwable> labelUnsafeSupplier) {
 
 		try {
-			_label = labelUnsafeSupplier.get();
+			label = labelUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -69,22 +73,27 @@ public class Rows {
 	}
 
 	public void setValue(String value) {
-		_value = value;
+		this.value = value;
 	}
 
 	public void setValue(
 		UnsafeSupplier<String, Throwable> valueUnsafeSupplier) {
 
 		try {
-			_value = valueUnsafeSupplier.get();
+			value = valueUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 	}
 	}
 
-	private Long _id;
-	private String _label;
-	private String _value;
+	@GraphQLField
+	protected Long id;
+
+	@GraphQLField
+	protected String label;
+
+	@GraphQLField
+	protected String value;
 
 }

@@ -16,6 +16,9 @@ package com.liferay.headless.collaboration.dto.v1_0;
 
 import com.liferay.petra.function.UnsafeSupplier;
 
+import graphql.annotations.annotationTypes.GraphQLField;
+import graphql.annotations.annotationTypes.GraphQLName;
+
 import java.util.Date;
 
 import javax.annotation.Generated;
@@ -27,42 +30,43 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
+@GraphQLName("ImageObjectRepository")
 @XmlRootElement(name = "ImageObjectRepository")
 public class ImageObjectRepository {
 
 	public Date getDateCreated() {
-		return _dateCreated;
+		return dateCreated;
 	}
 
 	public Date getDateModified() {
-		return _dateModified;
+		return dateModified;
 	}
 
 	public Long getId() {
-		return _id;
+		return id;
 	}
 
 	public ImageObject[] getImages() {
-		return _images;
+		return images;
 	}
 
 	public Long[] getImagesIds() {
-		return _imagesIds;
+		return imagesIds;
 	}
 
 	public String getName() {
-		return _name;
+		return name;
 	}
 
 	public void setDateCreated(Date dateCreated) {
-		_dateCreated = dateCreated;
+		this.dateCreated = dateCreated;
 	}
 
 	public void setDateCreated(
 		UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
 
 		try {
-			_dateCreated = dateCreatedUnsafeSupplier.get();
+			dateCreated = dateCreatedUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -70,14 +74,14 @@ public class ImageObjectRepository {
 	}
 
 	public void setDateModified(Date dateModified) {
-		_dateModified = dateModified;
+		this.dateModified = dateModified;
 	}
 
 	public void setDateModified(
 		UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
 
 		try {
-			_dateModified = dateModifiedUnsafeSupplier.get();
+			dateModified = dateModifiedUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -85,12 +89,12 @@ public class ImageObjectRepository {
 	}
 
 	public void setId(Long id) {
-		_id = id;
+		this.id = id;
 	}
 
 	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 		try {
-			_id = idUnsafeSupplier.get();
+			id = idUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -98,14 +102,14 @@ public class ImageObjectRepository {
 	}
 
 	public void setImages(ImageObject[] images) {
-		_images = images;
+		this.images = images;
 	}
 
 	public void setImages(
 		UnsafeSupplier<ImageObject[], Throwable> imagesUnsafeSupplier) {
 
 		try {
-			_images = imagesUnsafeSupplier.get();
+			images = imagesUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -113,14 +117,14 @@ public class ImageObjectRepository {
 	}
 
 	public void setImagesIds(Long[] imagesIds) {
-		_imagesIds = imagesIds;
+		this.imagesIds = imagesIds;
 	}
 
 	public void setImagesIds(
 		UnsafeSupplier<Long[], Throwable> imagesIdsUnsafeSupplier) {
 
 		try {
-			_imagesIds = imagesIdsUnsafeSupplier.get();
+			imagesIds = imagesIdsUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -128,23 +132,34 @@ public class ImageObjectRepository {
 	}
 
 	public void setName(String name) {
-		_name = name;
+		this.name = name;
 	}
 
 	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
 		try {
-			_name = nameUnsafeSupplier.get();
+			name = nameUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 	}
 	}
 
-	private Date _dateCreated;
-	private Date _dateModified;
-	private Long _id;
-	private ImageObject[] _images;
-	private Long[] _imagesIds;
-	private String _name;
+	@GraphQLField
+	protected Date dateCreated;
+
+	@GraphQLField
+	protected Date dateModified;
+
+	@GraphQLField
+	protected Long id;
+
+	@GraphQLField
+	protected ImageObject[] images;
+
+	@GraphQLField
+	protected Long[] imagesIds;
+
+	@GraphQLField
+	protected String name;
 
 }

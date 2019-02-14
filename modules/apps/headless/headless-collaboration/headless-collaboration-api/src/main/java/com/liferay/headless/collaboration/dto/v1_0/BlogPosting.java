@@ -16,6 +16,9 @@ package com.liferay.headless.collaboration.dto.v1_0;
 
 import com.liferay.petra.function.UnsafeSupplier;
 
+import graphql.annotations.annotationTypes.GraphQLField;
+import graphql.annotations.annotationTypes.GraphQLName;
+
 import java.util.Date;
 
 import javax.annotation.Generated;
@@ -27,95 +30,96 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
+@GraphQLName("BlogPosting")
 @XmlRootElement(name = "BlogPosting")
 public class BlogPosting {
 
 	public AggregateRating getAggregateRating() {
-		return _aggregateRating;
+		return aggregateRating;
 	}
 
 	public String getAlternativeHeadline() {
-		return _alternativeHeadline;
+		return alternativeHeadline;
 	}
 
 	public String getArticleBody() {
-		return _articleBody;
+		return articleBody;
 	}
 
 	public String getCaption() {
-		return _caption;
+		return caption;
 	}
 
 	public Long[] getCategory() {
-		return _category;
+		return category;
 	}
 
 	public Comment[] getComment() {
-		return _comment;
+		return comment;
 	}
 
 	public Long getContentSpace() {
-		return _contentSpace;
+		return contentSpace;
 	}
 
 	public Creator getCreator() {
-		return _creator;
+		return creator;
 	}
 
 	public Date getDateCreated() {
-		return _dateCreated;
+		return dateCreated;
 	}
 
 	public Date getDateModified() {
-		return _dateModified;
+		return dateModified;
 	}
 
 	public Date getDatePublished() {
-		return _datePublished;
+		return datePublished;
 	}
 
 	public String getDescription() {
-		return _description;
+		return description;
 	}
 
 	public String getEncodingFormat() {
-		return _encodingFormat;
+		return encodingFormat;
 	}
 
 	public String getFriendlyUrlPath() {
-		return _friendlyUrlPath;
+		return friendlyUrlPath;
 	}
 
 	public String getHeadline() {
-		return _headline;
+		return headline;
 	}
 
 	public Long getId() {
-		return _id;
+		return id;
 	}
 
 	public ImageObject getImage() {
-		return _image;
+		return image;
 	}
 
 	public Long getImageId() {
-		return _imageId;
+		return imageId;
 	}
 
 	public String[] getKeywords() {
-		return _keywords;
+		return keywords;
 	}
 
 	public ImageObjectRepository getRepository() {
-		return _repository;
+		return repository;
 	}
 
 	public Long getRepositoryId() {
-		return _repositoryId;
+		return repositoryId;
 	}
 
 	public void setAggregateRating(AggregateRating aggregateRating) {
-		_aggregateRating = aggregateRating;
+		this.aggregateRating = aggregateRating;
 	}
 
 	public void setAggregateRating(
@@ -123,7 +127,7 @@ public class BlogPosting {
 			aggregateRatingUnsafeSupplier) {
 
 		try {
-			_aggregateRating = aggregateRatingUnsafeSupplier.get();
+			aggregateRating = aggregateRatingUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -131,14 +135,14 @@ public class BlogPosting {
 	}
 
 	public void setAlternativeHeadline(String alternativeHeadline) {
-		_alternativeHeadline = alternativeHeadline;
+		this.alternativeHeadline = alternativeHeadline;
 	}
 
 	public void setAlternativeHeadline(
 		UnsafeSupplier<String, Throwable> alternativeHeadlineUnsafeSupplier) {
 
 		try {
-			_alternativeHeadline = alternativeHeadlineUnsafeSupplier.get();
+			alternativeHeadline = alternativeHeadlineUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -146,14 +150,14 @@ public class BlogPosting {
 	}
 
 	public void setArticleBody(String articleBody) {
-		_articleBody = articleBody;
+		this.articleBody = articleBody;
 	}
 
 	public void setArticleBody(
 		UnsafeSupplier<String, Throwable> articleBodyUnsafeSupplier) {
 
 		try {
-			_articleBody = articleBodyUnsafeSupplier.get();
+			articleBody = articleBodyUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -161,14 +165,14 @@ public class BlogPosting {
 	}
 
 	public void setCaption(String caption) {
-		_caption = caption;
+		this.caption = caption;
 	}
 
 	public void setCaption(
 		UnsafeSupplier<String, Throwable> captionUnsafeSupplier) {
 
 		try {
-			_caption = captionUnsafeSupplier.get();
+			caption = captionUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -176,14 +180,14 @@ public class BlogPosting {
 	}
 
 	public void setCategory(Long[] category) {
-		_category = category;
+		this.category = category;
 	}
 
 	public void setCategory(
 		UnsafeSupplier<Long[], Throwable> categoryUnsafeSupplier) {
 
 		try {
-			_category = categoryUnsafeSupplier.get();
+			category = categoryUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -191,14 +195,14 @@ public class BlogPosting {
 	}
 
 	public void setComment(Comment[] comment) {
-		_comment = comment;
+		this.comment = comment;
 	}
 
 	public void setComment(
 		UnsafeSupplier<Comment[], Throwable> commentUnsafeSupplier) {
 
 		try {
-			_comment = commentUnsafeSupplier.get();
+			comment = commentUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -206,14 +210,14 @@ public class BlogPosting {
 	}
 
 	public void setContentSpace(Long contentSpace) {
-		_contentSpace = contentSpace;
+		this.contentSpace = contentSpace;
 	}
 
 	public void setContentSpace(
 		UnsafeSupplier<Long, Throwable> contentSpaceUnsafeSupplier) {
 
 		try {
-			_contentSpace = contentSpaceUnsafeSupplier.get();
+			contentSpace = contentSpaceUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -221,14 +225,14 @@ public class BlogPosting {
 	}
 
 	public void setCreator(Creator creator) {
-		_creator = creator;
+		this.creator = creator;
 	}
 
 	public void setCreator(
 		UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier) {
 
 		try {
-			_creator = creatorUnsafeSupplier.get();
+			creator = creatorUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -236,14 +240,14 @@ public class BlogPosting {
 	}
 
 	public void setDateCreated(Date dateCreated) {
-		_dateCreated = dateCreated;
+		this.dateCreated = dateCreated;
 	}
 
 	public void setDateCreated(
 		UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
 
 		try {
-			_dateCreated = dateCreatedUnsafeSupplier.get();
+			dateCreated = dateCreatedUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -251,14 +255,14 @@ public class BlogPosting {
 	}
 
 	public void setDateModified(Date dateModified) {
-		_dateModified = dateModified;
+		this.dateModified = dateModified;
 	}
 
 	public void setDateModified(
 		UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
 
 		try {
-			_dateModified = dateModifiedUnsafeSupplier.get();
+			dateModified = dateModifiedUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -266,14 +270,14 @@ public class BlogPosting {
 	}
 
 	public void setDatePublished(Date datePublished) {
-		_datePublished = datePublished;
+		this.datePublished = datePublished;
 	}
 
 	public void setDatePublished(
 		UnsafeSupplier<Date, Throwable> datePublishedUnsafeSupplier) {
 
 		try {
-			_datePublished = datePublishedUnsafeSupplier.get();
+			datePublished = datePublishedUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -281,14 +285,14 @@ public class BlogPosting {
 	}
 
 	public void setDescription(String description) {
-		_description = description;
+		this.description = description;
 	}
 
 	public void setDescription(
 		UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier) {
 
 		try {
-			_description = descriptionUnsafeSupplier.get();
+			description = descriptionUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -296,14 +300,14 @@ public class BlogPosting {
 	}
 
 	public void setEncodingFormat(String encodingFormat) {
-		_encodingFormat = encodingFormat;
+		this.encodingFormat = encodingFormat;
 	}
 
 	public void setEncodingFormat(
 		UnsafeSupplier<String, Throwable> encodingFormatUnsafeSupplier) {
 
 		try {
-			_encodingFormat = encodingFormatUnsafeSupplier.get();
+			encodingFormat = encodingFormatUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -311,14 +315,14 @@ public class BlogPosting {
 	}
 
 	public void setFriendlyUrlPath(String friendlyUrlPath) {
-		_friendlyUrlPath = friendlyUrlPath;
+		this.friendlyUrlPath = friendlyUrlPath;
 	}
 
 	public void setFriendlyUrlPath(
 		UnsafeSupplier<String, Throwable> friendlyUrlPathUnsafeSupplier) {
 
 		try {
-			_friendlyUrlPath = friendlyUrlPathUnsafeSupplier.get();
+			friendlyUrlPath = friendlyUrlPathUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -326,14 +330,14 @@ public class BlogPosting {
 	}
 
 	public void setHeadline(String headline) {
-		_headline = headline;
+		this.headline = headline;
 	}
 
 	public void setHeadline(
 		UnsafeSupplier<String, Throwable> headlineUnsafeSupplier) {
 
 		try {
-			_headline = headlineUnsafeSupplier.get();
+			headline = headlineUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -341,12 +345,12 @@ public class BlogPosting {
 	}
 
 	public void setId(Long id) {
-		_id = id;
+		this.id = id;
 	}
 
 	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 		try {
-			_id = idUnsafeSupplier.get();
+			id = idUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -354,14 +358,14 @@ public class BlogPosting {
 	}
 
 	public void setImage(ImageObject image) {
-		_image = image;
+		this.image = image;
 	}
 
 	public void setImage(
 		UnsafeSupplier<ImageObject, Throwable> imageUnsafeSupplier) {
 
 		try {
-			_image = imageUnsafeSupplier.get();
+			image = imageUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -369,14 +373,14 @@ public class BlogPosting {
 	}
 
 	public void setImageId(Long imageId) {
-		_imageId = imageId;
+		this.imageId = imageId;
 	}
 
 	public void setImageId(
 		UnsafeSupplier<Long, Throwable> imageIdUnsafeSupplier) {
 
 		try {
-			_imageId = imageIdUnsafeSupplier.get();
+			imageId = imageIdUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -384,14 +388,14 @@ public class BlogPosting {
 	}
 
 	public void setKeywords(String[] keywords) {
-		_keywords = keywords;
+		this.keywords = keywords;
 	}
 
 	public void setKeywords(
 		UnsafeSupplier<String[], Throwable> keywordsUnsafeSupplier) {
 
 		try {
-			_keywords = keywordsUnsafeSupplier.get();
+			keywords = keywordsUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -399,7 +403,7 @@ public class BlogPosting {
 	}
 
 	public void setRepository(ImageObjectRepository repository) {
-		_repository = repository;
+		this.repository = repository;
 	}
 
 	public void setRepository(
@@ -407,7 +411,7 @@ public class BlogPosting {
 			repositoryUnsafeSupplier) {
 
 		try {
-			_repository = repositoryUnsafeSupplier.get();
+			repository = repositoryUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -415,40 +419,81 @@ public class BlogPosting {
 	}
 
 	public void setRepositoryId(Long repositoryId) {
-		_repositoryId = repositoryId;
+		this.repositoryId = repositoryId;
 	}
 
 	public void setRepositoryId(
 		UnsafeSupplier<Long, Throwable> repositoryIdUnsafeSupplier) {
 
 		try {
-			_repositoryId = repositoryIdUnsafeSupplier.get();
+			repositoryId = repositoryIdUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 	}
 	}
 
-	private AggregateRating _aggregateRating;
-	private String _alternativeHeadline;
-	private String _articleBody;
-	private String _caption;
-	private Long[] _category;
-	private Comment[] _comment;
-	private Long _contentSpace;
-	private Creator _creator;
-	private Date _dateCreated;
-	private Date _dateModified;
-	private Date _datePublished;
-	private String _description;
-	private String _encodingFormat;
-	private String _friendlyUrlPath;
-	private String _headline;
-	private Long _id;
-	private ImageObject _image;
-	private Long _imageId;
-	private String[] _keywords;
-	private ImageObjectRepository _repository;
-	private Long _repositoryId;
+	@GraphQLField
+	protected AggregateRating aggregateRating;
+
+	@GraphQLField
+	protected String alternativeHeadline;
+
+	@GraphQLField
+	protected String articleBody;
+
+	@GraphQLField
+	protected String caption;
+
+	@GraphQLField
+	protected Long[] category;
+
+	@GraphQLField
+	protected Comment[] comment;
+
+	@GraphQLField
+	protected Long contentSpace;
+
+	@GraphQLField
+	protected Creator creator;
+
+	@GraphQLField
+	protected Date dateCreated;
+
+	@GraphQLField
+	protected Date dateModified;
+
+	@GraphQLField
+	protected Date datePublished;
+
+	@GraphQLField
+	protected String description;
+
+	@GraphQLField
+	protected String encodingFormat;
+
+	@GraphQLField
+	protected String friendlyUrlPath;
+
+	@GraphQLField
+	protected String headline;
+
+	@GraphQLField
+	protected Long id;
+
+	@GraphQLField
+	protected ImageObject image;
+
+	@GraphQLField
+	protected Long imageId;
+
+	@GraphQLField
+	protected String[] keywords;
+
+	@GraphQLField
+	protected ImageObjectRepository repository;
+
+	@GraphQLField
+	protected Long repositoryId;
 
 }

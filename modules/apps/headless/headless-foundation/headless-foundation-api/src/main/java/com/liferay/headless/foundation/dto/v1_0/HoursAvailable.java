@@ -16,6 +16,9 @@ package com.liferay.headless.foundation.dto.v1_0;
 
 import com.liferay.petra.function.UnsafeSupplier;
 
+import graphql.annotations.annotationTypes.GraphQLField;
+import graphql.annotations.annotationTypes.GraphQLName;
+
 import javax.annotation.Generated;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -25,34 +28,35 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
+@GraphQLName("HoursAvailable")
 @XmlRootElement(name = "HoursAvailable")
 public class HoursAvailable {
 
 	public String getCloses() {
-		return _closes;
+		return closes;
 	}
 
 	public String getDayOfWeek() {
-		return _dayOfWeek;
+		return dayOfWeek;
 	}
 
 	public Long getId() {
-		return _id;
+		return id;
 	}
 
 	public String getOpens() {
-		return _opens;
+		return opens;
 	}
 
 	public void setCloses(String closes) {
-		_closes = closes;
+		this.closes = closes;
 	}
 
 	public void setCloses(
 		UnsafeSupplier<String, Throwable> closesUnsafeSupplier) {
 
 		try {
-			_closes = closesUnsafeSupplier.get();
+			closes = closesUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -60,14 +64,14 @@ public class HoursAvailable {
 	}
 
 	public void setDayOfWeek(String dayOfWeek) {
-		_dayOfWeek = dayOfWeek;
+		this.dayOfWeek = dayOfWeek;
 	}
 
 	public void setDayOfWeek(
 		UnsafeSupplier<String, Throwable> dayOfWeekUnsafeSupplier) {
 
 		try {
-			_dayOfWeek = dayOfWeekUnsafeSupplier.get();
+			dayOfWeek = dayOfWeekUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -75,12 +79,12 @@ public class HoursAvailable {
 	}
 
 	public void setId(Long id) {
-		_id = id;
+		this.id = id;
 	}
 
 	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 		try {
-			_id = idUnsafeSupplier.get();
+			id = idUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -88,23 +92,30 @@ public class HoursAvailable {
 	}
 
 	public void setOpens(String opens) {
-		_opens = opens;
+		this.opens = opens;
 	}
 
 	public void setOpens(
 		UnsafeSupplier<String, Throwable> opensUnsafeSupplier) {
 
 		try {
-			_opens = opensUnsafeSupplier.get();
+			opens = opensUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 	}
 	}
 
-	private String _closes;
-	private String _dayOfWeek;
-	private Long _id;
-	private String _opens;
+	@GraphQLField
+	protected String closes;
+
+	@GraphQLField
+	protected String dayOfWeek;
+
+	@GraphQLField
+	protected Long id;
+
+	@GraphQLField
+	protected String opens;
 
 }

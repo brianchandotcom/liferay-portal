@@ -16,6 +16,9 @@ package com.liferay.headless.web.experience.dto.v1_0;
 
 import com.liferay.petra.function.UnsafeSupplier;
 
+import graphql.annotations.annotationTypes.GraphQLField;
+import graphql.annotations.annotationTypes.GraphQLName;
+
 import java.util.Date;
 
 import javax.annotation.Generated;
@@ -27,54 +30,55 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
+@GraphQLName("ContentStructure")
 @XmlRootElement(name = "ContentStructure")
 public class ContentStructure {
 
 	public String[] getAvailableLanguages() {
-		return _availableLanguages;
+		return availableLanguages;
 	}
 
 	public Long getContentSpace() {
-		return _contentSpace;
+		return contentSpace;
 	}
 
 	public Creator getCreator() {
-		return _creator;
+		return creator;
 	}
 
 	public Date getDateCreated() {
-		return _dateCreated;
+		return dateCreated;
 	}
 
 	public Date getDateModified() {
-		return _dateModified;
+		return dateModified;
 	}
 
 	public String getDescription() {
-		return _description;
+		return description;
 	}
 
 	public Fields[] getFields() {
-		return _fields;
+		return fields;
 	}
 
 	public Long getId() {
-		return _id;
+		return id;
 	}
 
 	public String getName() {
-		return _name;
+		return name;
 	}
 
 	public void setAvailableLanguages(String[] availableLanguages) {
-		_availableLanguages = availableLanguages;
+		this.availableLanguages = availableLanguages;
 	}
 
 	public void setAvailableLanguages(
 		UnsafeSupplier<String[], Throwable> availableLanguagesUnsafeSupplier) {
 
 		try {
-			_availableLanguages = availableLanguagesUnsafeSupplier.get();
+			availableLanguages = availableLanguagesUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -82,14 +86,14 @@ public class ContentStructure {
 	}
 
 	public void setContentSpace(Long contentSpace) {
-		_contentSpace = contentSpace;
+		this.contentSpace = contentSpace;
 	}
 
 	public void setContentSpace(
 		UnsafeSupplier<Long, Throwable> contentSpaceUnsafeSupplier) {
 
 		try {
-			_contentSpace = contentSpaceUnsafeSupplier.get();
+			contentSpace = contentSpaceUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -97,14 +101,14 @@ public class ContentStructure {
 	}
 
 	public void setCreator(Creator creator) {
-		_creator = creator;
+		this.creator = creator;
 	}
 
 	public void setCreator(
 		UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier) {
 
 		try {
-			_creator = creatorUnsafeSupplier.get();
+			creator = creatorUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -112,14 +116,14 @@ public class ContentStructure {
 	}
 
 	public void setDateCreated(Date dateCreated) {
-		_dateCreated = dateCreated;
+		this.dateCreated = dateCreated;
 	}
 
 	public void setDateCreated(
 		UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
 
 		try {
-			_dateCreated = dateCreatedUnsafeSupplier.get();
+			dateCreated = dateCreatedUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -127,14 +131,14 @@ public class ContentStructure {
 	}
 
 	public void setDateModified(Date dateModified) {
-		_dateModified = dateModified;
+		this.dateModified = dateModified;
 	}
 
 	public void setDateModified(
 		UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
 
 		try {
-			_dateModified = dateModifiedUnsafeSupplier.get();
+			dateModified = dateModifiedUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -142,14 +146,14 @@ public class ContentStructure {
 	}
 
 	public void setDescription(String description) {
-		_description = description;
+		this.description = description;
 	}
 
 	public void setDescription(
 		UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier) {
 
 		try {
-			_description = descriptionUnsafeSupplier.get();
+			description = descriptionUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -157,14 +161,14 @@ public class ContentStructure {
 	}
 
 	public void setFields(Fields[] fields) {
-		_fields = fields;
+		this.fields = fields;
 	}
 
 	public void setFields(
 		UnsafeSupplier<Fields[], Throwable> fieldsUnsafeSupplier) {
 
 		try {
-			_fields = fieldsUnsafeSupplier.get();
+			fields = fieldsUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -172,12 +176,12 @@ public class ContentStructure {
 	}
 
 	public void setId(Long id) {
-		_id = id;
+		this.id = id;
 	}
 
 	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 		try {
-			_id = idUnsafeSupplier.get();
+			id = idUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -185,26 +189,43 @@ public class ContentStructure {
 	}
 
 	public void setName(String name) {
-		_name = name;
+		this.name = name;
 	}
 
 	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
 		try {
-			_name = nameUnsafeSupplier.get();
+			name = nameUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 	}
 	}
 
-	private String[] _availableLanguages;
-	private Long _contentSpace;
-	private Creator _creator;
-	private Date _dateCreated;
-	private Date _dateModified;
-	private String _description;
-	private Fields[] _fields;
-	private Long _id;
-	private String _name;
+	@GraphQLField
+	protected String[] availableLanguages;
+
+	@GraphQLField
+	protected Long contentSpace;
+
+	@GraphQLField
+	protected Creator creator;
+
+	@GraphQLField
+	protected Date dateCreated;
+
+	@GraphQLField
+	protected Date dateModified;
+
+	@GraphQLField
+	protected String description;
+
+	@GraphQLField
+	protected Fields[] fields;
+
+	@GraphQLField
+	protected Long id;
+
+	@GraphQLField
+	protected String name;
 
 }

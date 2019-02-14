@@ -16,6 +16,9 @@ package com.liferay.headless.foundation.dto.v1_0;
 
 import com.liferay.petra.function.UnsafeSupplier;
 
+import graphql.annotations.annotationTypes.GraphQLField;
+import graphql.annotations.annotationTypes.GraphQLName;
+
 import java.util.Date;
 
 import javax.annotation.Generated;
@@ -27,46 +30,47 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
+@GraphQLName("Keyword")
 @XmlRootElement(name = "Keyword")
 public class Keyword {
 
 	public Long getContentSpace() {
-		return _contentSpace;
+		return contentSpace;
 	}
 
 	public UserAccount getCreator() {
-		return _creator;
+		return creator;
 	}
 
 	public Date getDateCreated() {
-		return _dateCreated;
+		return dateCreated;
 	}
 
 	public Date getDateModified() {
-		return _dateModified;
+		return dateModified;
 	}
 
 	public Long getId() {
-		return _id;
+		return id;
 	}
 
 	public Number getKeywordUsageCount() {
-		return _keywordUsageCount;
+		return keywordUsageCount;
 	}
 
 	public String getName() {
-		return _name;
+		return name;
 	}
 
 	public void setContentSpace(Long contentSpace) {
-		_contentSpace = contentSpace;
+		this.contentSpace = contentSpace;
 	}
 
 	public void setContentSpace(
 		UnsafeSupplier<Long, Throwable> contentSpaceUnsafeSupplier) {
 
 		try {
-			_contentSpace = contentSpaceUnsafeSupplier.get();
+			contentSpace = contentSpaceUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -77,7 +81,7 @@ public class Keyword {
 		UnsafeSupplier<UserAccount, Throwable> creatorUnsafeSupplier) {
 
 		try {
-			_creator = creatorUnsafeSupplier.get();
+			creator = creatorUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -85,18 +89,18 @@ public class Keyword {
 	}
 
 	public void setCreator(UserAccount creator) {
-		_creator = creator;
+		this.creator = creator;
 	}
 
 	public void setDateCreated(Date dateCreated) {
-		_dateCreated = dateCreated;
+		this.dateCreated = dateCreated;
 	}
 
 	public void setDateCreated(
 		UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
 
 		try {
-			_dateCreated = dateCreatedUnsafeSupplier.get();
+			dateCreated = dateCreatedUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -104,14 +108,14 @@ public class Keyword {
 	}
 
 	public void setDateModified(Date dateModified) {
-		_dateModified = dateModified;
+		this.dateModified = dateModified;
 	}
 
 	public void setDateModified(
 		UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
 
 		try {
-			_dateModified = dateModifiedUnsafeSupplier.get();
+			dateModified = dateModifiedUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -119,12 +123,12 @@ public class Keyword {
 	}
 
 	public void setId(Long id) {
-		_id = id;
+		this.id = id;
 	}
 
 	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 		try {
-			_id = idUnsafeSupplier.get();
+			id = idUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -132,14 +136,14 @@ public class Keyword {
 	}
 
 	public void setKeywordUsageCount(Number keywordUsageCount) {
-		_keywordUsageCount = keywordUsageCount;
+		this.keywordUsageCount = keywordUsageCount;
 	}
 
 	public void setKeywordUsageCount(
 		UnsafeSupplier<Number, Throwable> keywordUsageCountUnsafeSupplier) {
 
 		try {
-			_keywordUsageCount = keywordUsageCountUnsafeSupplier.get();
+			keywordUsageCount = keywordUsageCountUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -147,24 +151,37 @@ public class Keyword {
 	}
 
 	public void setName(String name) {
-		_name = name;
+		this.name = name;
 	}
 
 	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
 		try {
-			_name = nameUnsafeSupplier.get();
+			name = nameUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 	}
 	}
 
-	private Long _contentSpace;
-	private UserAccount _creator;
-	private Date _dateCreated;
-	private Date _dateModified;
-	private Long _id;
-	private Number _keywordUsageCount;
-	private String _name;
+	@GraphQLField
+	protected Long contentSpace;
+
+	@GraphQLField
+	protected UserAccount creator;
+
+	@GraphQLField
+	protected Date dateCreated;
+
+	@GraphQLField
+	protected Date dateModified;
+
+	@GraphQLField
+	protected Long id;
+
+	@GraphQLField
+	protected Number keywordUsageCount;
+
+	@GraphQLField
+	protected String name;
 
 }

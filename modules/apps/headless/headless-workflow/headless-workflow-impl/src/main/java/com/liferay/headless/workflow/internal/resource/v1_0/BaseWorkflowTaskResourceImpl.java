@@ -40,14 +40,6 @@ public abstract class BaseWorkflowTaskResourceImpl
 	implements WorkflowTaskResource {
 
 	@Override
-	public Page<WorkflowTask> getGenericParentWorkflowTasksPage(
-			Object genericParentId, Pagination pagination)
-		throws Exception {
-
-		return Page.of(Collections.emptyList());
-	}
-
-	@Override
 	public Page<WorkflowTask> getRoleWorkflowTasksPage(
 			Long roleId, Pagination pagination)
 		throws Exception {
@@ -58,6 +50,13 @@ public abstract class BaseWorkflowTaskResourceImpl
 	@Override
 	public WorkflowTask getWorkflowTask(Long workflowTaskId) throws Exception {
 		return new WorkflowTask();
+	}
+
+	@Override
+	public Page<WorkflowTask> getWorkflowTasksPage(Pagination pagination)
+		throws Exception {
+
+		return Page.of(Collections.emptyList());
 	}
 
 	@Override

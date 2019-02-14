@@ -16,6 +16,9 @@ package com.liferay.headless.foundation.dto.v1_0;
 
 import com.liferay.petra.function.UnsafeSupplier;
 
+import graphql.annotations.annotationTypes.GraphQLField;
+import graphql.annotations.annotationTypes.GraphQLName;
+
 import javax.annotation.Generated;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -25,70 +28,71 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
+@GraphQLName("Organization")
 @XmlRootElement(name = "Organization")
 public class Organization {
 
 	public String getComment() {
-		return _comment;
+		return comment;
 	}
 
 	public ContactInformation getContactInformation() {
-		return _contactInformation;
+		return contactInformation;
 	}
 
 	public Long getId() {
-		return _id;
+		return id;
 	}
 
 	public Location getLocation() {
-		return _location;
+		return location;
 	}
 
 	public String getLogo() {
-		return _logo;
+		return logo;
 	}
 
 	public UserAccount[] getMembers() {
-		return _members;
+		return members;
 	}
 
 	public Long[] getMembersIds() {
-		return _membersIds;
+		return membersIds;
 	}
 
 	public String getName() {
-		return _name;
+		return name;
 	}
 
 	public Organization getParentOrganization() {
-		return _parentOrganization;
+		return parentOrganization;
 	}
 
 	public Long getParentOrganizationId() {
-		return _parentOrganizationId;
+		return parentOrganizationId;
 	}
 
 	public Services[] getServices() {
-		return _services;
+		return services;
 	}
 
 	public Organization[] getSubOrganization() {
-		return _subOrganization;
+		return subOrganization;
 	}
 
 	public Long[] getSubOrganizationIds() {
-		return _subOrganizationIds;
+		return subOrganizationIds;
 	}
 
 	public void setComment(String comment) {
-		_comment = comment;
+		this.comment = comment;
 	}
 
 	public void setComment(
 		UnsafeSupplier<String, Throwable> commentUnsafeSupplier) {
 
 		try {
-			_comment = commentUnsafeSupplier.get();
+			comment = commentUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -96,7 +100,7 @@ public class Organization {
 	}
 
 	public void setContactInformation(ContactInformation contactInformation) {
-		_contactInformation = contactInformation;
+		this.contactInformation = contactInformation;
 	}
 
 	public void setContactInformation(
@@ -104,7 +108,7 @@ public class Organization {
 			contactInformationUnsafeSupplier) {
 
 		try {
-			_contactInformation = contactInformationUnsafeSupplier.get();
+			contactInformation = contactInformationUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -112,12 +116,12 @@ public class Organization {
 	}
 
 	public void setId(Long id) {
-		_id = id;
+		this.id = id;
 	}
 
 	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 		try {
-			_id = idUnsafeSupplier.get();
+			id = idUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -125,14 +129,14 @@ public class Organization {
 	}
 
 	public void setLocation(Location location) {
-		_location = location;
+		this.location = location;
 	}
 
 	public void setLocation(
 		UnsafeSupplier<Location, Throwable> locationUnsafeSupplier) {
 
 		try {
-			_location = locationUnsafeSupplier.get();
+			location = locationUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -140,12 +144,12 @@ public class Organization {
 	}
 
 	public void setLogo(String logo) {
-		_logo = logo;
+		this.logo = logo;
 	}
 
 	public void setLogo(UnsafeSupplier<String, Throwable> logoUnsafeSupplier) {
 		try {
-			_logo = logoUnsafeSupplier.get();
+			logo = logoUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -156,7 +160,7 @@ public class Organization {
 		UnsafeSupplier<UserAccount[], Throwable> membersUnsafeSupplier) {
 
 		try {
-			_members = membersUnsafeSupplier.get();
+			members = membersUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -164,18 +168,18 @@ public class Organization {
 	}
 
 	public void setMembers(UserAccount[] members) {
-		_members = members;
+		this.members = members;
 	}
 
 	public void setMembersIds(Long[] membersIds) {
-		_membersIds = membersIds;
+		this.membersIds = membersIds;
 	}
 
 	public void setMembersIds(
 		UnsafeSupplier<Long[], Throwable> membersIdsUnsafeSupplier) {
 
 		try {
-			_membersIds = membersIdsUnsafeSupplier.get();
+			membersIds = membersIdsUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -183,12 +187,12 @@ public class Organization {
 	}
 
 	public void setName(String name) {
-		_name = name;
+		this.name = name;
 	}
 
 	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
 		try {
-			_name = nameUnsafeSupplier.get();
+			name = nameUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -196,7 +200,7 @@ public class Organization {
 	}
 
 	public void setParentOrganization(Organization parentOrganization) {
-		_parentOrganization = parentOrganization;
+		this.parentOrganization = parentOrganization;
 	}
 
 	public void setParentOrganization(
@@ -204,7 +208,7 @@ public class Organization {
 			parentOrganizationUnsafeSupplier) {
 
 		try {
-			_parentOrganization = parentOrganizationUnsafeSupplier.get();
+			parentOrganization = parentOrganizationUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -212,14 +216,14 @@ public class Organization {
 	}
 
 	public void setParentOrganizationId(Long parentOrganizationId) {
-		_parentOrganizationId = parentOrganizationId;
+		this.parentOrganizationId = parentOrganizationId;
 	}
 
 	public void setParentOrganizationId(
 		UnsafeSupplier<Long, Throwable> parentOrganizationIdUnsafeSupplier) {
 
 		try {
-			_parentOrganizationId = parentOrganizationIdUnsafeSupplier.get();
+			parentOrganizationId = parentOrganizationIdUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -227,14 +231,14 @@ public class Organization {
 	}
 
 	public void setServices(Services[] services) {
-		_services = services;
+		this.services = services;
 	}
 
 	public void setServices(
 		UnsafeSupplier<Services[], Throwable> servicesUnsafeSupplier) {
 
 		try {
-			_services = servicesUnsafeSupplier.get();
+			services = servicesUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -242,7 +246,7 @@ public class Organization {
 	}
 
 	public void setSubOrganization(Organization[] subOrganization) {
-		_subOrganization = subOrganization;
+		this.subOrganization = subOrganization;
 	}
 
 	public void setSubOrganization(
@@ -250,7 +254,7 @@ public class Organization {
 			subOrganizationUnsafeSupplier) {
 
 		try {
-			_subOrganization = subOrganizationUnsafeSupplier.get();
+			subOrganization = subOrganizationUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -258,32 +262,57 @@ public class Organization {
 	}
 
 	public void setSubOrganizationIds(Long[] subOrganizationIds) {
-		_subOrganizationIds = subOrganizationIds;
+		this.subOrganizationIds = subOrganizationIds;
 	}
 
 	public void setSubOrganizationIds(
 		UnsafeSupplier<Long[], Throwable> subOrganizationIdsUnsafeSupplier) {
 
 		try {
-			_subOrganizationIds = subOrganizationIdsUnsafeSupplier.get();
+			subOrganizationIds = subOrganizationIdsUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 	}
 	}
 
-	private String _comment;
-	private ContactInformation _contactInformation;
-	private Long _id;
-	private Location _location;
-	private String _logo;
-	private UserAccount[] _members;
-	private Long[] _membersIds;
-	private String _name;
-	private Organization _parentOrganization;
-	private Long _parentOrganizationId;
-	private Services[] _services;
-	private Organization[] _subOrganization;
-	private Long[] _subOrganizationIds;
+	@GraphQLField
+	protected String comment;
+
+	@GraphQLField
+	protected ContactInformation contactInformation;
+
+	@GraphQLField
+	protected Long id;
+
+	@GraphQLField
+	protected Location location;
+
+	@GraphQLField
+	protected String logo;
+
+	@GraphQLField
+	protected UserAccount[] members;
+
+	@GraphQLField
+	protected Long[] membersIds;
+
+	@GraphQLField
+	protected String name;
+
+	@GraphQLField
+	protected Organization parentOrganization;
+
+	@GraphQLField
+	protected Long parentOrganizationId;
+
+	@GraphQLField
+	protected Services[] services;
+
+	@GraphQLField
+	protected Organization[] subOrganization;
+
+	@GraphQLField
+	protected Long[] subOrganizationIds;
 
 }

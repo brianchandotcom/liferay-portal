@@ -16,6 +16,9 @@ package com.liferay.headless.workflow.dto.v1_0;
 
 import com.liferay.petra.function.UnsafeSupplier;
 
+import graphql.annotations.annotationTypes.GraphQLField;
+import graphql.annotations.annotationTypes.GraphQLName;
+
 import javax.annotation.Generated;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -25,28 +28,29 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
+@GraphQLName("ObjectReviewed")
 @XmlRootElement(name = "ObjectReviewed")
 public class ObjectReviewed {
 
 	public Long getId() {
-		return _id;
+		return id;
 	}
 
 	public String getIdentifier() {
-		return _identifier;
+		return identifier;
 	}
 
 	public String getResourceType() {
-		return _resourceType;
+		return resourceType;
 	}
 
 	public void setId(Long id) {
-		_id = id;
+		this.id = id;
 	}
 
 	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 		try {
-			_id = idUnsafeSupplier.get();
+			id = idUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -54,14 +58,14 @@ public class ObjectReviewed {
 	}
 
 	public void setIdentifier(String identifier) {
-		_identifier = identifier;
+		this.identifier = identifier;
 	}
 
 	public void setIdentifier(
 		UnsafeSupplier<String, Throwable> identifierUnsafeSupplier) {
 
 		try {
-			_identifier = identifierUnsafeSupplier.get();
+			identifier = identifierUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -69,22 +73,27 @@ public class ObjectReviewed {
 	}
 
 	public void setResourceType(String resourceType) {
-		_resourceType = resourceType;
+		this.resourceType = resourceType;
 	}
 
 	public void setResourceType(
 		UnsafeSupplier<String, Throwable> resourceTypeUnsafeSupplier) {
 
 		try {
-			_resourceType = resourceTypeUnsafeSupplier.get();
+			resourceType = resourceTypeUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 	}
 	}
 
-	private Long _id;
-	private String _identifier;
-	private String _resourceType;
+	@GraphQLField
+	protected Long id;
+
+	@GraphQLField
+	protected String identifier;
+
+	@GraphQLField
+	protected String resourceType;
 
 }

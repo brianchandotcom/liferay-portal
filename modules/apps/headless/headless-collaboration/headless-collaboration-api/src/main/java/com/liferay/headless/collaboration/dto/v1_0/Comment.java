@@ -16,6 +16,9 @@ package com.liferay.headless.collaboration.dto.v1_0;
 
 import com.liferay.petra.function.UnsafeSupplier;
 
+import graphql.annotations.annotationTypes.GraphQLField;
+import graphql.annotations.annotationTypes.GraphQLName;
+
 import javax.annotation.Generated;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -25,34 +28,35 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
+@GraphQLName("Comment")
 @XmlRootElement(name = "Comment")
 public class Comment {
 
 	public Comment[] getComments() {
-		return _comments;
+		return comments;
 	}
 
 	public Creator getCreator() {
-		return _creator;
+		return creator;
 	}
 
 	public Long getId() {
-		return _id;
+		return id;
 	}
 
 	public String getText() {
-		return _text;
+		return text;
 	}
 
 	public void setComments(Comment[] comments) {
-		_comments = comments;
+		this.comments = comments;
 	}
 
 	public void setComments(
 		UnsafeSupplier<Comment[], Throwable> commentsUnsafeSupplier) {
 
 		try {
-			_comments = commentsUnsafeSupplier.get();
+			comments = commentsUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -60,14 +64,14 @@ public class Comment {
 	}
 
 	public void setCreator(Creator creator) {
-		_creator = creator;
+		this.creator = creator;
 	}
 
 	public void setCreator(
 		UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier) {
 
 		try {
-			_creator = creatorUnsafeSupplier.get();
+			creator = creatorUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -75,12 +79,12 @@ public class Comment {
 	}
 
 	public void setId(Long id) {
-		_id = id;
+		this.id = id;
 	}
 
 	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 		try {
-			_id = idUnsafeSupplier.get();
+			id = idUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -88,21 +92,28 @@ public class Comment {
 	}
 
 	public void setText(String text) {
-		_text = text;
+		this.text = text;
 	}
 
 	public void setText(UnsafeSupplier<String, Throwable> textUnsafeSupplier) {
 		try {
-			_text = textUnsafeSupplier.get();
+			text = textUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 	}
 	}
 
-	private Comment[] _comments;
-	private Creator _creator;
-	private Long _id;
-	private String _text;
+	@GraphQLField
+	protected Comment[] comments;
+
+	@GraphQLField
+	protected Creator creator;
+
+	@GraphQLField
+	protected Long id;
+
+	@GraphQLField
+	protected String text;
 
 }

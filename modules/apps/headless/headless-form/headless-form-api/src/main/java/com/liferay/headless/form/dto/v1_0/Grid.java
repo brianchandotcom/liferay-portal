@@ -16,6 +16,9 @@ package com.liferay.headless.form.dto.v1_0;
 
 import com.liferay.petra.function.UnsafeSupplier;
 
+import graphql.annotations.annotationTypes.GraphQLField;
+import graphql.annotations.annotationTypes.GraphQLName;
+
 import javax.annotation.Generated;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -25,30 +28,31 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
+@GraphQLName("Grid")
 @XmlRootElement(name = "Grid")
 public class Grid {
 
 	public Columns[] getColumns() {
-		return _columns;
+		return columns;
 	}
 
 	public Long getId() {
-		return _id;
+		return id;
 	}
 
 	public Rows[] getRows() {
-		return _rows;
+		return rows;
 	}
 
 	public void setColumns(Columns[] columns) {
-		_columns = columns;
+		this.columns = columns;
 	}
 
 	public void setColumns(
 		UnsafeSupplier<Columns[], Throwable> columnsUnsafeSupplier) {
 
 		try {
-			_columns = columnsUnsafeSupplier.get();
+			columns = columnsUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -56,12 +60,12 @@ public class Grid {
 	}
 
 	public void setId(Long id) {
-		_id = id;
+		this.id = id;
 	}
 
 	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 		try {
-			_id = idUnsafeSupplier.get();
+			id = idUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -69,20 +73,25 @@ public class Grid {
 	}
 
 	public void setRows(Rows[] rows) {
-		_rows = rows;
+		this.rows = rows;
 	}
 
 	public void setRows(UnsafeSupplier<Rows[], Throwable> rowsUnsafeSupplier) {
 		try {
-			_rows = rowsUnsafeSupplier.get();
+			rows = rowsUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 	}
 	}
 
-	private Columns[] _columns;
-	private Long _id;
-	private Rows[] _rows;
+	@GraphQLField
+	protected Columns[] columns;
+
+	@GraphQLField
+	protected Long id;
+
+	@GraphQLField
+	protected Rows[] rows;
 
 }

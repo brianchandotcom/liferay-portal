@@ -16,6 +16,9 @@ package com.liferay.headless.collaboration.dto.v1_0;
 
 import com.liferay.petra.function.UnsafeSupplier;
 
+import graphql.annotations.annotationTypes.GraphQLField;
+import graphql.annotations.annotationTypes.GraphQLName;
+
 import javax.annotation.Generated;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -25,42 +28,43 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
+@GraphQLName("ImageObject")
 @XmlRootElement(name = "ImageObject")
 public class ImageObject {
 
 	public String getContentUrl() {
-		return _contentUrl;
+		return contentUrl;
 	}
 
 	public String getEncodingFormat() {
-		return _encodingFormat;
+		return encodingFormat;
 	}
 
 	public String getFileExtension() {
-		return _fileExtension;
+		return fileExtension;
 	}
 
 	public Long getId() {
-		return _id;
+		return id;
 	}
 
 	public Number getSizeInBytes() {
-		return _sizeInBytes;
+		return sizeInBytes;
 	}
 
 	public String getTitle() {
-		return _title;
+		return title;
 	}
 
 	public void setContentUrl(String contentUrl) {
-		_contentUrl = contentUrl;
+		this.contentUrl = contentUrl;
 	}
 
 	public void setContentUrl(
 		UnsafeSupplier<String, Throwable> contentUrlUnsafeSupplier) {
 
 		try {
-			_contentUrl = contentUrlUnsafeSupplier.get();
+			contentUrl = contentUrlUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -68,14 +72,14 @@ public class ImageObject {
 	}
 
 	public void setEncodingFormat(String encodingFormat) {
-		_encodingFormat = encodingFormat;
+		this.encodingFormat = encodingFormat;
 	}
 
 	public void setEncodingFormat(
 		UnsafeSupplier<String, Throwable> encodingFormatUnsafeSupplier) {
 
 		try {
-			_encodingFormat = encodingFormatUnsafeSupplier.get();
+			encodingFormat = encodingFormatUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -83,14 +87,14 @@ public class ImageObject {
 	}
 
 	public void setFileExtension(String fileExtension) {
-		_fileExtension = fileExtension;
+		this.fileExtension = fileExtension;
 	}
 
 	public void setFileExtension(
 		UnsafeSupplier<String, Throwable> fileExtensionUnsafeSupplier) {
 
 		try {
-			_fileExtension = fileExtensionUnsafeSupplier.get();
+			fileExtension = fileExtensionUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -98,12 +102,12 @@ public class ImageObject {
 	}
 
 	public void setId(Long id) {
-		_id = id;
+		this.id = id;
 	}
 
 	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 		try {
-			_id = idUnsafeSupplier.get();
+			id = idUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -111,14 +115,14 @@ public class ImageObject {
 	}
 
 	public void setSizeInBytes(Number sizeInBytes) {
-		_sizeInBytes = sizeInBytes;
+		this.sizeInBytes = sizeInBytes;
 	}
 
 	public void setSizeInBytes(
 		UnsafeSupplier<Number, Throwable> sizeInBytesUnsafeSupplier) {
 
 		try {
-			_sizeInBytes = sizeInBytesUnsafeSupplier.get();
+			sizeInBytes = sizeInBytesUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -126,25 +130,36 @@ public class ImageObject {
 	}
 
 	public void setTitle(String title) {
-		_title = title;
+		this.title = title;
 	}
 
 	public void setTitle(
 		UnsafeSupplier<String, Throwable> titleUnsafeSupplier) {
 
 		try {
-			_title = titleUnsafeSupplier.get();
+			title = titleUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 	}
 	}
 
-	private String _contentUrl;
-	private String _encodingFormat;
-	private String _fileExtension;
-	private Long _id;
-	private Number _sizeInBytes;
-	private String _title;
+	@GraphQLField
+	protected String contentUrl;
+
+	@GraphQLField
+	protected String encodingFormat;
+
+	@GraphQLField
+	protected String fileExtension;
+
+	@GraphQLField
+	protected Long id;
+
+	@GraphQLField
+	protected Number sizeInBytes;
+
+	@GraphQLField
+	protected String title;
 
 }

@@ -16,6 +16,9 @@ package com.liferay.headless.document.library.dto.v1_0;
 
 import com.liferay.petra.function.UnsafeSupplier;
 
+import graphql.annotations.annotationTypes.GraphQLField;
+import graphql.annotations.annotationTypes.GraphQLName;
+
 import javax.annotation.Generated;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -25,42 +28,43 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
+@GraphQLName("AdaptedMedia")
 @XmlRootElement(name = "AdaptedMedia")
 public class AdaptedMedia {
 
 	public String getContentUrl() {
-		return _contentUrl;
+		return contentUrl;
 	}
 
 	public Number getHeight() {
-		return _height;
+		return height;
 	}
 
 	public Long getId() {
-		return _id;
+		return id;
 	}
 
 	public String getResolutionName() {
-		return _resolutionName;
+		return resolutionName;
 	}
 
 	public Number getSizeInBytes() {
-		return _sizeInBytes;
+		return sizeInBytes;
 	}
 
 	public Number getWidth() {
-		return _width;
+		return width;
 	}
 
 	public void setContentUrl(String contentUrl) {
-		_contentUrl = contentUrl;
+		this.contentUrl = contentUrl;
 	}
 
 	public void setContentUrl(
 		UnsafeSupplier<String, Throwable> contentUrlUnsafeSupplier) {
 
 		try {
-			_contentUrl = contentUrlUnsafeSupplier.get();
+			contentUrl = contentUrlUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -68,14 +72,14 @@ public class AdaptedMedia {
 	}
 
 	public void setHeight(Number height) {
-		_height = height;
+		this.height = height;
 	}
 
 	public void setHeight(
 		UnsafeSupplier<Number, Throwable> heightUnsafeSupplier) {
 
 		try {
-			_height = heightUnsafeSupplier.get();
+			height = heightUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -83,12 +87,12 @@ public class AdaptedMedia {
 	}
 
 	public void setId(Long id) {
-		_id = id;
+		this.id = id;
 	}
 
 	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 		try {
-			_id = idUnsafeSupplier.get();
+			id = idUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -96,14 +100,14 @@ public class AdaptedMedia {
 	}
 
 	public void setResolutionName(String resolutionName) {
-		_resolutionName = resolutionName;
+		this.resolutionName = resolutionName;
 	}
 
 	public void setResolutionName(
 		UnsafeSupplier<String, Throwable> resolutionNameUnsafeSupplier) {
 
 		try {
-			_resolutionName = resolutionNameUnsafeSupplier.get();
+			resolutionName = resolutionNameUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -111,14 +115,14 @@ public class AdaptedMedia {
 	}
 
 	public void setSizeInBytes(Number sizeInBytes) {
-		_sizeInBytes = sizeInBytes;
+		this.sizeInBytes = sizeInBytes;
 	}
 
 	public void setSizeInBytes(
 		UnsafeSupplier<Number, Throwable> sizeInBytesUnsafeSupplier) {
 
 		try {
-			_sizeInBytes = sizeInBytesUnsafeSupplier.get();
+			sizeInBytes = sizeInBytesUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -126,25 +130,36 @@ public class AdaptedMedia {
 	}
 
 	public void setWidth(Number width) {
-		_width = width;
+		this.width = width;
 	}
 
 	public void setWidth(
 		UnsafeSupplier<Number, Throwable> widthUnsafeSupplier) {
 
 		try {
-			_width = widthUnsafeSupplier.get();
+			width = widthUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 	}
 	}
 
-	private String _contentUrl;
-	private Number _height;
-	private Long _id;
-	private String _resolutionName;
-	private Number _sizeInBytes;
-	private Number _width;
+	@GraphQLField
+	protected String contentUrl;
+
+	@GraphQLField
+	protected Number height;
+
+	@GraphQLField
+	protected Long id;
+
+	@GraphQLField
+	protected String resolutionName;
+
+	@GraphQLField
+	protected Number sizeInBytes;
+
+	@GraphQLField
+	protected Number width;
 
 }

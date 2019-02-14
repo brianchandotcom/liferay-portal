@@ -16,6 +16,9 @@ package com.liferay.headless.foundation.dto.v1_0;
 
 import com.liferay.petra.function.UnsafeSupplier;
 
+import graphql.annotations.annotationTypes.GraphQLField;
+import graphql.annotations.annotationTypes.GraphQLName;
+
 import java.util.Date;
 
 import javax.annotation.Generated;
@@ -27,70 +30,71 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
+@GraphQLName("Category")
 @XmlRootElement(name = "Category")
 public class Category {
 
 	public String[] getAvailableLanguages() {
-		return _availableLanguages;
+		return availableLanguages;
 	}
 
 	public Category getCategory() {
-		return _category;
+		return category;
 	}
 
 	public Long getCategoryId() {
-		return _categoryId;
+		return categoryId;
 	}
 
 	public UserAccount getCreator() {
-		return _creator;
+		return creator;
 	}
 
 	public Long getCreatorId() {
-		return _creatorId;
+		return creatorId;
 	}
 
 	public Date getDateCreated() {
-		return _dateCreated;
+		return dateCreated;
 	}
 
 	public Date getDateModified() {
-		return _dateModified;
+		return dateModified;
 	}
 
 	public String getDescription() {
-		return _description;
+		return description;
 	}
 
 	public Long getId() {
-		return _id;
+		return id;
 	}
 
 	public String getName() {
-		return _name;
+		return name;
 	}
 
 	public Category[] getSubcategories() {
-		return _subcategories;
+		return subcategories;
 	}
 
 	public Vocabulary getVocabulary() {
-		return _vocabulary;
+		return vocabulary;
 	}
 
 	public Long getVocabularyId() {
-		return _vocabularyId;
+		return vocabularyId;
 	}
 
 	public void setAvailableLanguages(String[] availableLanguages) {
-		_availableLanguages = availableLanguages;
+		this.availableLanguages = availableLanguages;
 	}
 
 	public void setAvailableLanguages(
 		UnsafeSupplier<String[], Throwable> availableLanguagesUnsafeSupplier) {
 
 		try {
-			_availableLanguages = availableLanguagesUnsafeSupplier.get();
+			availableLanguages = availableLanguagesUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -98,14 +102,14 @@ public class Category {
 	}
 
 	public void setCategory(Category category) {
-		_category = category;
+		this.category = category;
 	}
 
 	public void setCategory(
 		UnsafeSupplier<Category, Throwable> categoryUnsafeSupplier) {
 
 		try {
-			_category = categoryUnsafeSupplier.get();
+			category = categoryUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -113,14 +117,14 @@ public class Category {
 	}
 
 	public void setCategoryId(Long categoryId) {
-		_categoryId = categoryId;
+		this.categoryId = categoryId;
 	}
 
 	public void setCategoryId(
 		UnsafeSupplier<Long, Throwable> categoryIdUnsafeSupplier) {
 
 		try {
-			_categoryId = categoryIdUnsafeSupplier.get();
+			categoryId = categoryIdUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -131,7 +135,7 @@ public class Category {
 		UnsafeSupplier<UserAccount, Throwable> creatorUnsafeSupplier) {
 
 		try {
-			_creator = creatorUnsafeSupplier.get();
+			creator = creatorUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -139,18 +143,18 @@ public class Category {
 	}
 
 	public void setCreator(UserAccount creator) {
-		_creator = creator;
+		this.creator = creator;
 	}
 
 	public void setCreatorId(Long creatorId) {
-		_creatorId = creatorId;
+		this.creatorId = creatorId;
 	}
 
 	public void setCreatorId(
 		UnsafeSupplier<Long, Throwable> creatorIdUnsafeSupplier) {
 
 		try {
-			_creatorId = creatorIdUnsafeSupplier.get();
+			creatorId = creatorIdUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -158,14 +162,14 @@ public class Category {
 	}
 
 	public void setDateCreated(Date dateCreated) {
-		_dateCreated = dateCreated;
+		this.dateCreated = dateCreated;
 	}
 
 	public void setDateCreated(
 		UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
 
 		try {
-			_dateCreated = dateCreatedUnsafeSupplier.get();
+			dateCreated = dateCreatedUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -173,14 +177,14 @@ public class Category {
 	}
 
 	public void setDateModified(Date dateModified) {
-		_dateModified = dateModified;
+		this.dateModified = dateModified;
 	}
 
 	public void setDateModified(
 		UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
 
 		try {
-			_dateModified = dateModifiedUnsafeSupplier.get();
+			dateModified = dateModifiedUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -188,14 +192,14 @@ public class Category {
 	}
 
 	public void setDescription(String description) {
-		_description = description;
+		this.description = description;
 	}
 
 	public void setDescription(
 		UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier) {
 
 		try {
-			_description = descriptionUnsafeSupplier.get();
+			description = descriptionUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -203,12 +207,12 @@ public class Category {
 	}
 
 	public void setId(Long id) {
-		_id = id;
+		this.id = id;
 	}
 
 	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 		try {
-			_id = idUnsafeSupplier.get();
+			id = idUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -216,12 +220,12 @@ public class Category {
 	}
 
 	public void setName(String name) {
-		_name = name;
+		this.name = name;
 	}
 
 	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
 		try {
-			_name = nameUnsafeSupplier.get();
+			name = nameUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -229,14 +233,14 @@ public class Category {
 	}
 
 	public void setSubcategories(Category[] subcategories) {
-		_subcategories = subcategories;
+		this.subcategories = subcategories;
 	}
 
 	public void setSubcategories(
 		UnsafeSupplier<Category[], Throwable> subcategoriesUnsafeSupplier) {
 
 		try {
-			_subcategories = subcategoriesUnsafeSupplier.get();
+			subcategories = subcategoriesUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -247,7 +251,7 @@ public class Category {
 		UnsafeSupplier<Vocabulary, Throwable> vocabularyUnsafeSupplier) {
 
 		try {
-			_vocabulary = vocabularyUnsafeSupplier.get();
+			vocabulary = vocabularyUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -255,36 +259,61 @@ public class Category {
 	}
 
 	public void setVocabulary(Vocabulary vocabulary) {
-		_vocabulary = vocabulary;
+		this.vocabulary = vocabulary;
 	}
 
 	public void setVocabularyId(Long vocabularyId) {
-		_vocabularyId = vocabularyId;
+		this.vocabularyId = vocabularyId;
 	}
 
 	public void setVocabularyId(
 		UnsafeSupplier<Long, Throwable> vocabularyIdUnsafeSupplier) {
 
 		try {
-			_vocabularyId = vocabularyIdUnsafeSupplier.get();
+			vocabularyId = vocabularyIdUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 	}
 	}
 
-	private String[] _availableLanguages;
-	private Category _category;
-	private Long _categoryId;
-	private UserAccount _creator;
-	private Long _creatorId;
-	private Date _dateCreated;
-	private Date _dateModified;
-	private String _description;
-	private Long _id;
-	private String _name;
-	private Category[] _subcategories;
-	private Vocabulary _vocabulary;
-	private Long _vocabularyId;
+	@GraphQLField
+	protected String[] availableLanguages;
+
+	@GraphQLField
+	protected Category category;
+
+	@GraphQLField
+	protected Long categoryId;
+
+	@GraphQLField
+	protected UserAccount creator;
+
+	@GraphQLField
+	protected Long creatorId;
+
+	@GraphQLField
+	protected Date dateCreated;
+
+	@GraphQLField
+	protected Date dateModified;
+
+	@GraphQLField
+	protected String description;
+
+	@GraphQLField
+	protected Long id;
+
+	@GraphQLField
+	protected String name;
+
+	@GraphQLField
+	protected Category[] subcategories;
+
+	@GraphQLField
+	protected Vocabulary vocabulary;
+
+	@GraphQLField
+	protected Long vocabularyId;
 
 }

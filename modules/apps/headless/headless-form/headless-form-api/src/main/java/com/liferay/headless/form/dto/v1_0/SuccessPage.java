@@ -16,6 +16,9 @@ package com.liferay.headless.form.dto.v1_0;
 
 import com.liferay.petra.function.UnsafeSupplier;
 
+import graphql.annotations.annotationTypes.GraphQLField;
+import graphql.annotations.annotationTypes.GraphQLName;
+
 import javax.annotation.Generated;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -25,30 +28,31 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
+@GraphQLName("SuccessPage")
 @XmlRootElement(name = "SuccessPage")
 public class SuccessPage {
 
 	public String getDescription() {
-		return _description;
+		return description;
 	}
 
 	public String getHeadline() {
-		return _headline;
+		return headline;
 	}
 
 	public Long getId() {
-		return _id;
+		return id;
 	}
 
 	public void setDescription(String description) {
-		_description = description;
+		this.description = description;
 	}
 
 	public void setDescription(
 		UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier) {
 
 		try {
-			_description = descriptionUnsafeSupplier.get();
+			description = descriptionUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -56,14 +60,14 @@ public class SuccessPage {
 	}
 
 	public void setHeadline(String headline) {
-		_headline = headline;
+		this.headline = headline;
 	}
 
 	public void setHeadline(
 		UnsafeSupplier<String, Throwable> headlineUnsafeSupplier) {
 
 		try {
-			_headline = headlineUnsafeSupplier.get();
+			headline = headlineUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -71,20 +75,25 @@ public class SuccessPage {
 	}
 
 	public void setId(Long id) {
-		_id = id;
+		this.id = id;
 	}
 
 	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 		try {
-			_id = idUnsafeSupplier.get();
+			id = idUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 	}
 	}
 
-	private String _description;
-	private String _headline;
-	private Long _id;
+	@GraphQLField
+	protected String description;
+
+	@GraphQLField
+	protected String headline;
+
+	@GraphQLField
+	protected Long id;
 
 }

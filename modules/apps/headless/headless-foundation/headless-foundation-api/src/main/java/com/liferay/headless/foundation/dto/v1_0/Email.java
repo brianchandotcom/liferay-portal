@@ -16,6 +16,9 @@ package com.liferay.headless.foundation.dto.v1_0;
 
 import com.liferay.petra.function.UnsafeSupplier;
 
+import graphql.annotations.annotationTypes.GraphQLField;
+import graphql.annotations.annotationTypes.GraphQLName;
+
 import javax.annotation.Generated;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -25,30 +28,31 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
+@GraphQLName("Email")
 @XmlRootElement(name = "Email")
 public class Email {
 
 	public String getEmail() {
-		return _email;
+		return email;
 	}
 
 	public Long getId() {
-		return _id;
+		return id;
 	}
 
 	public String getType() {
-		return _type;
+		return type;
 	}
 
 	public void setEmail(String email) {
-		_email = email;
+		this.email = email;
 	}
 
 	public void setEmail(
 		UnsafeSupplier<String, Throwable> emailUnsafeSupplier) {
 
 		try {
-			_email = emailUnsafeSupplier.get();
+			email = emailUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -56,12 +60,12 @@ public class Email {
 	}
 
 	public void setId(Long id) {
-		_id = id;
+		this.id = id;
 	}
 
 	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 		try {
-			_id = idUnsafeSupplier.get();
+			id = idUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -69,20 +73,25 @@ public class Email {
 	}
 
 	public void setType(String type) {
-		_type = type;
+		this.type = type;
 	}
 
 	public void setType(UnsafeSupplier<String, Throwable> typeUnsafeSupplier) {
 		try {
-			_type = typeUnsafeSupplier.get();
+			type = typeUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 	}
 	}
 
-	private String _email;
-	private Long _id;
-	private String _type;
+	@GraphQLField
+	protected String email;
+
+	@GraphQLField
+	protected Long id;
+
+	@GraphQLField
+	protected String type;
 
 }

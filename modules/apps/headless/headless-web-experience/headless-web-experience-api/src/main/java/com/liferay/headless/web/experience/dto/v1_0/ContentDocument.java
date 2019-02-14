@@ -16,6 +16,9 @@ package com.liferay.headless.web.experience.dto.v1_0;
 
 import com.liferay.petra.function.UnsafeSupplier;
 
+import graphql.annotations.annotationTypes.GraphQLField;
+import graphql.annotations.annotationTypes.GraphQLName;
+
 import java.util.Date;
 
 import javax.annotation.Generated;
@@ -27,54 +30,55 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
+@GraphQLName("ContentDocument")
 @XmlRootElement(name = "ContentDocument")
 public class ContentDocument {
 
 	public String getContentUrl() {
-		return _contentUrl;
+		return contentUrl;
 	}
 
 	public Creator getCreator() {
-		return _creator;
+		return creator;
 	}
 
 	public Date getDateCreated() {
-		return _dateCreated;
+		return dateCreated;
 	}
 
 	public Date getDateModified() {
-		return _dateModified;
+		return dateModified;
 	}
 
 	public String getEncodingFormat() {
-		return _encodingFormat;
+		return encodingFormat;
 	}
 
 	public String getFileExtension() {
-		return _fileExtension;
+		return fileExtension;
 	}
 
 	public Long getId() {
-		return _id;
+		return id;
 	}
 
 	public Number getSizeInBytes() {
-		return _sizeInBytes;
+		return sizeInBytes;
 	}
 
 	public String getTitle() {
-		return _title;
+		return title;
 	}
 
 	public void setContentUrl(String contentUrl) {
-		_contentUrl = contentUrl;
+		this.contentUrl = contentUrl;
 	}
 
 	public void setContentUrl(
 		UnsafeSupplier<String, Throwable> contentUrlUnsafeSupplier) {
 
 		try {
-			_contentUrl = contentUrlUnsafeSupplier.get();
+			contentUrl = contentUrlUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -82,14 +86,14 @@ public class ContentDocument {
 	}
 
 	public void setCreator(Creator creator) {
-		_creator = creator;
+		this.creator = creator;
 	}
 
 	public void setCreator(
 		UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier) {
 
 		try {
-			_creator = creatorUnsafeSupplier.get();
+			creator = creatorUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -97,14 +101,14 @@ public class ContentDocument {
 	}
 
 	public void setDateCreated(Date dateCreated) {
-		_dateCreated = dateCreated;
+		this.dateCreated = dateCreated;
 	}
 
 	public void setDateCreated(
 		UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
 
 		try {
-			_dateCreated = dateCreatedUnsafeSupplier.get();
+			dateCreated = dateCreatedUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -112,14 +116,14 @@ public class ContentDocument {
 	}
 
 	public void setDateModified(Date dateModified) {
-		_dateModified = dateModified;
+		this.dateModified = dateModified;
 	}
 
 	public void setDateModified(
 		UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
 
 		try {
-			_dateModified = dateModifiedUnsafeSupplier.get();
+			dateModified = dateModifiedUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -127,14 +131,14 @@ public class ContentDocument {
 	}
 
 	public void setEncodingFormat(String encodingFormat) {
-		_encodingFormat = encodingFormat;
+		this.encodingFormat = encodingFormat;
 	}
 
 	public void setEncodingFormat(
 		UnsafeSupplier<String, Throwable> encodingFormatUnsafeSupplier) {
 
 		try {
-			_encodingFormat = encodingFormatUnsafeSupplier.get();
+			encodingFormat = encodingFormatUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -142,14 +146,14 @@ public class ContentDocument {
 	}
 
 	public void setFileExtension(String fileExtension) {
-		_fileExtension = fileExtension;
+		this.fileExtension = fileExtension;
 	}
 
 	public void setFileExtension(
 		UnsafeSupplier<String, Throwable> fileExtensionUnsafeSupplier) {
 
 		try {
-			_fileExtension = fileExtensionUnsafeSupplier.get();
+			fileExtension = fileExtensionUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -157,12 +161,12 @@ public class ContentDocument {
 	}
 
 	public void setId(Long id) {
-		_id = id;
+		this.id = id;
 	}
 
 	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 		try {
-			_id = idUnsafeSupplier.get();
+			id = idUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -170,14 +174,14 @@ public class ContentDocument {
 	}
 
 	public void setSizeInBytes(Number sizeInBytes) {
-		_sizeInBytes = sizeInBytes;
+		this.sizeInBytes = sizeInBytes;
 	}
 
 	public void setSizeInBytes(
 		UnsafeSupplier<Number, Throwable> sizeInBytesUnsafeSupplier) {
 
 		try {
-			_sizeInBytes = sizeInBytesUnsafeSupplier.get();
+			sizeInBytes = sizeInBytesUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -185,28 +189,45 @@ public class ContentDocument {
 	}
 
 	public void setTitle(String title) {
-		_title = title;
+		this.title = title;
 	}
 
 	public void setTitle(
 		UnsafeSupplier<String, Throwable> titleUnsafeSupplier) {
 
 		try {
-			_title = titleUnsafeSupplier.get();
+			title = titleUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 	}
 	}
 
-	private String _contentUrl;
-	private Creator _creator;
-	private Date _dateCreated;
-	private Date _dateModified;
-	private String _encodingFormat;
-	private String _fileExtension;
-	private Long _id;
-	private Number _sizeInBytes;
-	private String _title;
+	@GraphQLField
+	protected String contentUrl;
+
+	@GraphQLField
+	protected Creator creator;
+
+	@GraphQLField
+	protected Date dateCreated;
+
+	@GraphQLField
+	protected Date dateModified;
+
+	@GraphQLField
+	protected String encodingFormat;
+
+	@GraphQLField
+	protected String fileExtension;
+
+	@GraphQLField
+	protected Long id;
+
+	@GraphQLField
+	protected Number sizeInBytes;
+
+	@GraphQLField
+	protected String title;
 
 }

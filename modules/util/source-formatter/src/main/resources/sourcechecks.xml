@@ -16,7 +16,9 @@
 		<check name="BNDBundleCheck" />
 		<check name="BNDCapabilityCheck" />
 		<check name="BNDDefinitionKeysCheck" />
-		<check name="BNDImportsCheck" />
+		<check name="BNDImportsCheck">
+			<property name="enabled" value="false" />
+		</check>
 		<check name="BNDLineBreaksCheck" />
 		<check name="BNDRangeCheck" />
 		<check name="BNDSchemaVersionCheck" />

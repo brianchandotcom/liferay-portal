@@ -291,6 +291,9 @@
 		<check name="SubstringCheck" />
 	</source-processor>
 	<source-processor name="JSONSourceProcessor">
+		<check name="JSONDeprecatedPackagesCheck">
+			<property name="enabled" value="false" />
+		</check>
 		<check name="JSONIndentationCheck" />
 		<check name="JSONLineBreakCheck">
 			<property name="enabled" value="false" />

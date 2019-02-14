@@ -63,7 +63,7 @@ public interface ContentStructureResource {
 	@Path("/content-spaces/{content-space-id}/content-structures")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Page<ContentStructure> getContentSpaceContentStructuresPage( @PathParam("content-space-id") Long contentSpaceId , @Context Pagination pagination ) throws Exception;
+	public Page<ContentStructure> getContentSpaceContentStructuresPage( @PathParam("content-space-id") Long contentSpaceId , @Context Filter filter , @Context Pagination pagination , @Context Sort[] sorts ) throws Exception;
 
 	@GET
 	@Path("/content-structures/{content-structure-id}")

@@ -143,46 +143,45 @@ public class UpgradeLayoutPageTemplateStructure extends UpgradeProcess {
 
 		JSONArray structureJSONArray = JSONFactoryUtil.createJSONArray();
 
-		int fragmentLinkEntryCount = 0;
+		for (int i = 0; i < fragmentEntryLinks.size(); i++) {
+			FragmentEntryLink fragmentEntryLink = fragmentEntryLinks.get(i);
 
-		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
+			JSONObject structureJSONObject = JSONFactoryUtil.createJSONObject();
+
+			JSONArray columnJSONArray = JSONFactoryUtil.createJSONArray();
+
+			JSONObject columnJSONObject = JSONFactoryUtil.createJSONObject();
+
+			columnJSONObject.put("columnId", String.valueOf(i));
+
 			JSONArray fragmentEntryLinksJSONArray =
 				JSONFactoryUtil.createJSONArray();
 
 			fragmentEntryLinksJSONArray.put(
 				fragmentEntryLink.getFragmentEntryLinkId());
 
-			JSONObject columnJSONObject = JSONFactoryUtil.createJSONObject();
-
-			columnJSONObject.put(
-				"columnId", String.valueOf(fragmentLinkEntryCount));
 			columnJSONObject.put(
 				"fragmentEntryLinkIds", fragmentEntryLinksJSONArray);
-			columnJSONObject.put("size", StringPool.BLANK);
 
-			JSONArray columnJSONArray = JSONFactoryUtil.createJSONArray();
+			columnJSONObject.put("size", StringPool.BLANK);
 
 			columnJSONArray.put(columnJSONObject);
 
-			JSONObject structureJSONObject = JSONFactoryUtil.createJSONObject();
-
 			structureJSONObject.put("columns", columnJSONArray);
-			structureJSONObject.put(
-				"rowId", String.valueOf(fragmentLinkEntryCount));
+
+			structureJSONObject.put("rowId", String.valueOf(i));
 
 			structureJSONArray.put(structureJSONObject);
-
-			fragmentLinkEntryCount++;
 		}
 
 		jsonObject.put("config", JSONFactoryUtil.createJSONObject());
-		jsonObject.put("nextColumnId", String.valueOf(fragmentLinkEntryCount));
-		jsonObject.put("nextRowId", String.valueOf(fragmentLinkEntryCount));
+		jsonObject.put(
+			"nextColumnId", String.valueOf(fragmentEntryLinks.size()));
+		jsonObject.put("nextRowId", String.valueOf(fragmentEntryLinks.size()));
 
-		if (fragmentLinkEntryCount > 0) {
-			int rowId = fragmentLinkEntryCount - 1;
-
-			jsonObject.put("rowId", String.valueOf(rowId));
+		if (!fragmentEntryLinks.isEmpty()) {
+			jsonObject.put(
+				"rowId", String.valueOf(fragmentEntryLinks.size() - 1));
 		}
 
 		jsonObject.put("structure", structureJSONArray);

@@ -31,12 +31,20 @@ public class MBCategoryUADTestUtil {
 			MBCategoryLocalService mbCategoryLocalService, long userId)
 		throws Exception {
 
+		return addMBCategory(mbCategoryLocalService, userId, 0L);
+	}
+
+	public static MBCategory addMBCategory(
+			MBCategoryLocalService mbCategoryLocalService, long userId,
+			long parentMBCategoryId)
+		throws Exception {
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				TestPropsValues.getGroupId());
 
 		return mbCategoryLocalService.addCategory(
-			userId, 0, RandomTestUtil.randomString(),
+			userId, parentMBCategoryId, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), serviceContext);
 	}
 

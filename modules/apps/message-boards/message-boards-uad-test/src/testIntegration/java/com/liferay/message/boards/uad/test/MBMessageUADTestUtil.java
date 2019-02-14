@@ -14,6 +14,7 @@
 
 package com.liferay.message.boards.uad.test;
 
+import com.liferay.message.boards.constants.MBCategoryConstants;
 import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.service.MBCategoryLocalService;
@@ -48,9 +49,24 @@ public class MBMessageUADTestUtil {
 			userId, 0, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), serviceContext);
 
+		return addMBMessage(
+			mbCategoryLocalService, mbMessageLocalService, userId,
+			mbCategory.getCategoryId());
+	}
+
+	public static MBMessage addMBMessage(
+			MBCategoryLocalService mbCategoryLocalService,
+			MBMessageLocalService mbMessageLocalService, long userId,
+			long mbCategoryId)
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				TestPropsValues.getGroupId());
+
 		return mbMessageLocalService.addMessage(
 			userId, RandomTestUtil.randomString(), TestPropsValues.getGroupId(),
-			mbCategory.getCategoryId(), RandomTestUtil.randomString(),
+			mbCategoryId, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), serviceContext);
 	}
 
@@ -82,7 +98,13 @@ public class MBMessageUADTestUtil {
 		throws Exception {
 
 		for (MBMessage mbMessage : mbMessages) {
-			mbCategoryLocalService.deleteCategory(mbMessage.getCategoryId());
+			long mbCategoryId = mbMessage.getCategoryId();
+
+			if (mbCategoryId !=
+					MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
+
+				mbCategoryLocalService.deleteCategory(mbCategoryId);
+			}
 		}
 	}
 

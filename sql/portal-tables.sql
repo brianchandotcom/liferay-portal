@@ -218,7 +218,7 @@ create table Company (
 	mx VARCHAR(200) null,
 	homeURL STRING null,
 	logoId LONG,
-	system BOOLEAN,
+	system_ BOOLEAN,
 	maxUsers INTEGER,
 	active_ BOOLEAN
 );
@@ -567,7 +567,7 @@ create table Layout (
 	type_ VARCHAR(75) null,
 	typeSettings TEXT null,
 	hidden_ BOOLEAN,
-	system BOOLEAN,
+	system_ BOOLEAN,
 	friendlyURL VARCHAR(255) null,
 	iconImageId LONG,
 	themeId VARCHAR(75) null,

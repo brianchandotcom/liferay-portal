@@ -1910,6 +1910,6 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No Company exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(CompanyPersistenceImpl.class);
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
-				"key", "active"
+				"key", "system", "active"
 			});
 }

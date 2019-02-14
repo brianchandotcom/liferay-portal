@@ -157,7 +157,7 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 		if (result == null) {
 			StringBundler query = new StringBundler(3);
 
-			query.append(_SQL_SELECT_RELEASE_WHERE);
+			query.append(_SQL_SELECT_RELEASE__WHERE);
 
 			boolean bindServletContextName = false;
 
@@ -252,7 +252,7 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
 
-			query.append(_SQL_COUNT_RELEASE_WHERE);
+			query.append(_SQL_COUNT_RELEASE__WHERE);
 
 			boolean bindServletContextName = false;
 
@@ -298,9 +298,9 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 	}
 
 	private static final String _FINDER_COLUMN_SERVLETCONTEXTNAME_SERVLETCONTEXTNAME_2 =
-		"lower(release.servletContextName) = ?";
+		"lower(release_.servletContextName) = ?";
 	private static final String _FINDER_COLUMN_SERVLETCONTEXTNAME_SERVLETCONTEXTNAME_3 =
-		"(release.servletContextName IS NULL OR release.servletContextName = '')";
+		"(release_.servletContextName IS NULL OR release_.servletContextName = '')";
 
 	public ReleasePersistenceImpl() {
 		setModelClass(Release.class);
@@ -750,7 +750,7 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 				query = new StringBundler(2 +
 						(orderByComparator.getOrderByFields().length * 2));
 
-				query.append(_SQL_SELECT_RELEASE);
+				query.append(_SQL_SELECT_RELEASE_);
 
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
 					orderByComparator);
@@ -758,7 +758,7 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 				sql = query.toString();
 			}
 			else {
-				sql = _SQL_SELECT_RELEASE;
+				sql = _SQL_SELECT_RELEASE_;
 
 				if (pagination) {
 					sql = sql.concat(ReleaseModelImpl.ORDER_BY_JPQL);
@@ -829,7 +829,7 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 			try {
 				session = openSession();
 
-				Query q = session.createQuery(_SQL_COUNT_RELEASE);
+				Query q = session.createQuery(_SQL_COUNT_RELEASE_);
 
 				count = (Long)q.uniqueResult();
 
@@ -867,7 +867,7 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 
 	@Override
 	protected String getSelectSQL() {
-		return _SQL_SELECT_RELEASE;
+		return _SQL_SELECT_RELEASE_;
 	}
 
 	@Override
@@ -913,11 +913,11 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
-	private static final String _SQL_SELECT_RELEASE = "SELECT release FROM Release release";
-	private static final String _SQL_SELECT_RELEASE_WHERE = "SELECT release FROM Release release WHERE ";
-	private static final String _SQL_COUNT_RELEASE = "SELECT COUNT(release) FROM Release release";
-	private static final String _SQL_COUNT_RELEASE_WHERE = "SELECT COUNT(release) FROM Release release WHERE ";
-	private static final String _ORDER_BY_ENTITY_ALIAS = "release.";
+	private static final String _SQL_SELECT_RELEASE_ = "SELECT release_ FROM Release release_";
+	private static final String _SQL_SELECT_RELEASE__WHERE = "SELECT release_ FROM Release release_ WHERE ";
+	private static final String _SQL_COUNT_RELEASE_ = "SELECT COUNT(release_) FROM Release release_";
+	private static final String _SQL_COUNT_RELEASE__WHERE = "SELECT COUNT(release_) FROM Release release_ WHERE ";
+	private static final String _ORDER_BY_ENTITY_ALIAS = "release_.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No Release exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No Release exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(ReleasePersistenceImpl.class);

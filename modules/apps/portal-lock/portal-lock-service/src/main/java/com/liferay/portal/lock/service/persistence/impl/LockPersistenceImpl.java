@@ -194,7 +194,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 				query = new StringBundler(3);
 			}
 
-			query.append(_SQL_SELECT_LOCK_WHERE);
+			query.append(_SQL_SELECT_LOCK__WHERE);
 
 			boolean bindUuid = false;
 
@@ -417,7 +417,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 			query = new StringBundler(3);
 		}
 
-		query.append(_SQL_SELECT_LOCK_WHERE);
+		query.append(_SQL_SELECT_LOCK__WHERE);
 
 		boolean bindUuid = false;
 
@@ -551,7 +551,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
 
-			query.append(_SQL_COUNT_LOCK_WHERE);
+			query.append(_SQL_COUNT_LOCK__WHERE);
 
 			boolean bindUuid = false;
 
@@ -596,8 +596,8 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_UUID_2 = "lock.uuid = ?";
-	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(lock.uuid IS NULL OR lock.uuid = '')";
+	private static final String _FINDER_COLUMN_UUID_UUID_2 = "lock_.uuid = ?";
+	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(lock_.uuid IS NULL OR lock_.uuid = '')";
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
 	private FinderPath _finderPathCountByUuid_C;
@@ -723,7 +723,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 				query = new StringBundler(4);
 			}
 
-			query.append(_SQL_SELECT_LOCK_WHERE);
+			query.append(_SQL_SELECT_LOCK__WHERE);
 
 			boolean bindUuid = false;
 
@@ -964,7 +964,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 			query = new StringBundler(4);
 		}
 
-		query.append(_SQL_SELECT_LOCK_WHERE);
+		query.append(_SQL_SELECT_LOCK__WHERE);
 
 		boolean bindUuid = false;
 
@@ -1104,7 +1104,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
 
-			query.append(_SQL_COUNT_LOCK_WHERE);
+			query.append(_SQL_COUNT_LOCK__WHERE);
 
 			boolean bindUuid = false;
 
@@ -1153,9 +1153,9 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "lock.uuid = ? AND ";
-	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(lock.uuid IS NULL OR lock.uuid = '') AND ";
-	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "lock.companyId = ?";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "lock_.uuid = ? AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(lock_.uuid IS NULL OR lock_.uuid = '') AND ";
+	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "lock_.companyId = ?";
 	private FinderPath _finderPathWithPaginationFindByLtExpirationDate;
 	private FinderPath _finderPathWithPaginationCountByLtExpirationDate;
 
@@ -1267,7 +1267,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 				query = new StringBundler(3);
 			}
 
-			query.append(_SQL_SELECT_LOCK_WHERE);
+			query.append(_SQL_SELECT_LOCK__WHERE);
 
 			boolean bindExpirationDate = false;
 
@@ -1494,7 +1494,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 			query = new StringBundler(3);
 		}
 
-		query.append(_SQL_SELECT_LOCK_WHERE);
+		query.append(_SQL_SELECT_LOCK__WHERE);
 
 		boolean bindExpirationDate = false;
 
@@ -1626,7 +1626,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
 
-			query.append(_SQL_COUNT_LOCK_WHERE);
+			query.append(_SQL_COUNT_LOCK__WHERE);
 
 			boolean bindExpirationDate = false;
 
@@ -1672,9 +1672,9 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 	}
 
 	private static final String _FINDER_COLUMN_LTEXPIRATIONDATE_EXPIRATIONDATE_1 =
-		"lock.expirationDate IS NULL";
+		"lock_.expirationDate IS NULL";
 	private static final String _FINDER_COLUMN_LTEXPIRATIONDATE_EXPIRATIONDATE_2 =
-		"lock.expirationDate < ?";
+		"lock_.expirationDate < ?";
 	private FinderPath _finderPathFetchByC_K;
 	private FinderPath _finderPathCountByC_K;
 
@@ -1761,7 +1761,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 		if (result == null) {
 			StringBundler query = new StringBundler(4);
 
-			query.append(_SQL_SELECT_LOCK_WHERE);
+			query.append(_SQL_SELECT_LOCK__WHERE);
 
 			boolean bindClassName = false;
 
@@ -1872,7 +1872,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
 
-			query.append(_SQL_COUNT_LOCK_WHERE);
+			query.append(_SQL_COUNT_LOCK__WHERE);
 
 			boolean bindClassName = false;
 
@@ -1932,10 +1932,10 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_C_K_CLASSNAME_2 = "lock.className = ? AND ";
-	private static final String _FINDER_COLUMN_C_K_CLASSNAME_3 = "(lock.className IS NULL OR lock.className = '') AND ";
-	private static final String _FINDER_COLUMN_C_K_KEY_2 = "lock.key = ?";
-	private static final String _FINDER_COLUMN_C_K_KEY_3 = "(lock.key IS NULL OR lock.key = '')";
+	private static final String _FINDER_COLUMN_C_K_CLASSNAME_2 = "lock_.className = ? AND ";
+	private static final String _FINDER_COLUMN_C_K_CLASSNAME_3 = "(lock_.className IS NULL OR lock_.className = '') AND ";
+	private static final String _FINDER_COLUMN_C_K_KEY_2 = "lock_.key = ?";
+	private static final String _FINDER_COLUMN_C_K_KEY_3 = "(lock_.key IS NULL OR lock_.key = '')";
 
 	public LockPersistenceImpl() {
 		setModelClass(Lock.class);
@@ -2420,7 +2420,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 				query = new StringBundler(2 +
 						(orderByComparator.getOrderByFields().length * 2));
 
-				query.append(_SQL_SELECT_LOCK);
+				query.append(_SQL_SELECT_LOCK_);
 
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
 					orderByComparator);
@@ -2428,7 +2428,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 				sql = query.toString();
 			}
 			else {
-				sql = _SQL_SELECT_LOCK;
+				sql = _SQL_SELECT_LOCK_;
 
 				if (pagination) {
 					sql = sql.concat(LockModelImpl.ORDER_BY_JPQL);
@@ -2499,7 +2499,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 			try {
 				session = openSession();
 
-				Query q = session.createQuery(_SQL_COUNT_LOCK);
+				Query q = session.createQuery(_SQL_COUNT_LOCK_);
 
 				count = (Long)q.uniqueResult();
 
@@ -2536,7 +2536,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 
 	@Override
 	protected String getSelectSQL() {
-		return _SQL_SELECT_LOCK;
+		return _SQL_SELECT_LOCK_;
 	}
 
 	@Override
@@ -2656,11 +2656,11 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 		return date.getTime();
 	}
 
-	private static final String _SQL_SELECT_LOCK = "SELECT lock FROM Lock lock";
-	private static final String _SQL_SELECT_LOCK_WHERE = "SELECT lock FROM Lock lock WHERE ";
-	private static final String _SQL_COUNT_LOCK = "SELECT COUNT(lock) FROM Lock lock";
-	private static final String _SQL_COUNT_LOCK_WHERE = "SELECT COUNT(lock) FROM Lock lock WHERE ";
-	private static final String _ORDER_BY_ENTITY_ALIAS = "lock.";
+	private static final String _SQL_SELECT_LOCK_ = "SELECT lock_ FROM Lock lock_";
+	private static final String _SQL_SELECT_LOCK__WHERE = "SELECT lock_ FROM Lock lock_ WHERE ";
+	private static final String _SQL_COUNT_LOCK_ = "SELECT COUNT(lock_) FROM Lock lock_";
+	private static final String _SQL_COUNT_LOCK__WHERE = "SELECT COUNT(lock_) FROM Lock lock_ WHERE ";
+	private static final String _ORDER_BY_ENTITY_ALIAS = "lock_.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No Lock exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No Lock exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(LockPersistenceImpl.class);

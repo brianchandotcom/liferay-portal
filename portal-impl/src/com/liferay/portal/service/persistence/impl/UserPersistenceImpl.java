@@ -10667,6 +10667,6 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No User exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(UserPersistenceImpl.class);
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
-				"uuid", "password"
+				"uuid", "password", "groups"
 			});
 }

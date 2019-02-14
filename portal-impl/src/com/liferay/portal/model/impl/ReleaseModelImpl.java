@@ -94,7 +94,7 @@ public class ReleaseModelImpl extends BaseModelImpl<Release>
 
 	public static final String TABLE_SQL_CREATE = "create table Release_ (mvccVersion LONG default 0 not null,releaseId LONG not null primary key,createDate DATE null,modifiedDate DATE null,servletContextName VARCHAR(75) null,schemaVersion VARCHAR(75) null,buildNumber INTEGER,buildDate DATE null,verified BOOLEAN,state_ INTEGER,testString VARCHAR(1024) null)";
 	public static final String TABLE_SQL_DROP = "drop table Release_";
-	public static final String ORDER_BY_JPQL = " ORDER BY release.releaseId ASC";
+	public static final String ORDER_BY_JPQL = " ORDER BY release_.releaseId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY Release_.releaseId ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";

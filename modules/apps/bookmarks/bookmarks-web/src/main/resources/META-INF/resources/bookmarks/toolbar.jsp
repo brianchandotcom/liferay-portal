@@ -27,6 +27,7 @@ BookmarksManagementToolbarDisplayContext bookmarksManagementToolbarDisplayContex
 	creationMenu="<%= bookmarksManagementToolbarDisplayContext.getCreationMenu() %>"
 	disabled="<%= bookmarksManagementToolbarDisplayContext.isDisabled() %>"
 	filterDropdownItems="<%= bookmarksManagementToolbarDisplayContext.getFilterDropdownItems() %>"
+	filterLabelItems="<%= bookmarksManagementToolbarDisplayContext.getFilterLabelItems() %>"
 	infoPanelId="infoPanelId"
 	itemsTotal="<%= bookmarksManagementToolbarDisplayContext.getTotalItems() %>"
 	searchActionURL="<%= String.valueOf(bookmarksManagementToolbarDisplayContext.getSearchActionURL()) %>"

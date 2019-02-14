@@ -21,20 +21,18 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	service = {
-		WorkflowMetricsIndexer.class, WorkflowMetricsInstanceIndexer.class
-	}
+	service = {TaskWorkflowMetricsIndexer.class, WorkflowMetricsIndexer.class}
 )
-public class WorkflowMetricsInstanceIndexer extends BaseWorkflowMetricsIndexer {
+public class TaskWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 
 	@Override
 	public String getIndexName() {
-		return "workflow-metrics-instances";
+		return "workflow-metrics-tasks";
 	}
 
 	@Override
 	public String getIndexType() {
-		return "WorkflowMetricsInstanceType";
+		return "WorkflowMetricsTaskType";
 	}
 
 }

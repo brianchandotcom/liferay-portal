@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
-import com.liferay.portal.workflow.metrics.internal.search.index.WorkflowMetricsProcessIndexer;
+import com.liferay.portal.workflow.metrics.internal.search.index.ProcessWorkflowMetricsIndexer;
 
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
@@ -53,7 +53,7 @@ public class KaleoDefinitionVersionModelListener
 			document.addKeyword(
 				Field.getSortableFieldName("date"), offsetDateTime.toString());
 
-			_workflowMetricsProcessIndexer.index(document);
+			_processWorkflowMetricsIndexer.index(document);
 		}
 		catch (Exception e) {
 			throw new ModelListenerException(e);
@@ -74,7 +74,7 @@ public class KaleoDefinitionVersionModelListener
 
 			document.addKeyword("deleted", true);
 
-			_workflowMetricsProcessIndexer.update(document);
+			_processWorkflowMetricsIndexer.update(document);
 		}
 		catch (Exception e) {
 			throw new ModelListenerException(e);
@@ -96,7 +96,7 @@ public class KaleoDefinitionVersionModelListener
 			document.addKeyword(
 				Field.getSortableFieldName("date"), offsetDateTime.toString());
 
-			_workflowMetricsProcessIndexer.update(document);
+			_processWorkflowMetricsIndexer.update(document);
 		}
 		catch (Exception e) {
 			throw new ModelListenerException(e);
@@ -139,6 +139,6 @@ public class KaleoDefinitionVersionModelListener
 	}
 
 	@Reference
-	private WorkflowMetricsProcessIndexer _workflowMetricsProcessIndexer;
+	private ProcessWorkflowMetricsIndexer _processWorkflowMetricsIndexer;
 
 }

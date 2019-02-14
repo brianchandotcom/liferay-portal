@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.workflow.kaleo.model.KaleoTask;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalService;
-import com.liferay.portal.workflow.metrics.internal.search.index.WorkflowMetricsTaskIndexer;
+import com.liferay.portal.workflow.metrics.internal.search.index.TaskWorkflowMetricsIndexer;
 
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
@@ -52,7 +52,7 @@ public class KaleoTaskModelListener extends BaseKaleoModelListener<KaleoTask> {
 			document.addKeyword(
 				Field.getSortableFieldName("date"), offsetDateTime.toString());
 
-			_workflowMetricsTaskIndexer.index(document);
+			_taskWorkflowMetricsIndexer.index(document);
 		}
 		catch (Exception e) {
 			throw new ModelListenerException(e);
@@ -73,7 +73,7 @@ public class KaleoTaskModelListener extends BaseKaleoModelListener<KaleoTask> {
 
 			document.addKeyword("deleted", true);
 
-			_workflowMetricsTaskIndexer.update(document);
+			_taskWorkflowMetricsIndexer.update(document);
 		}
 		catch (Exception e) {
 			throw new ModelListenerException(e);
@@ -90,7 +90,7 @@ public class KaleoTaskModelListener extends BaseKaleoModelListener<KaleoTask> {
 			"processId", kaleoTask.getKaleoDefinitionVersionId());
 
 		document.addUID(
-			"WorkflowMetricsTask",
+			"TaskWorkflowMetrics",
 			digest(
 				kaleoTask.getCompanyId(), kaleoTask.getKaleoTaskId(),
 				kaleoTask.getKaleoDefinitionVersionId()));
@@ -103,6 +103,6 @@ public class KaleoTaskModelListener extends BaseKaleoModelListener<KaleoTask> {
 		_kaleoDefinitionVersionLocalService;
 
 	@Reference
-	private WorkflowMetricsTaskIndexer _workflowMetricsTaskIndexer;
+	private TaskWorkflowMetricsIndexer _taskWorkflowMetricsIndexer;
 
 }

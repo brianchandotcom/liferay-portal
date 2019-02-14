@@ -22,10 +22,10 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	service = {
-		WorkflowMetricsIndexer.class, WorkflowMetricsProcessIndexer.class
+		ProcessWorkflowMetricsIndexer.class, WorkflowMetricsIndexer.class
 	}
 )
-public class WorkflowMetricsProcessIndexer extends BaseWorkflowMetricsIndexer {
+public class ProcessWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 
 	@Override
 	public String getIndexName() {

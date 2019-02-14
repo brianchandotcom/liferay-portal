@@ -69,30 +69,11 @@ for (AssetEntryResult assetEntryResult : assetPublisherDisplayContext.getAssetEn
 			request.setAttribute("view.jsp-title", assetRenderer.getTitle(locale));
 
 			try {
-				if (StringUtil.startsWith(assetPublisherDisplayContext.getDisplayStyle(), PortletDisplayTemplateManager.DISPLAY_STYLE_PREFIX)) {
-					assetPublisherDisplayContext.setDisplayStyle(assetPublisherDisplayContext.getDefaultDisplayStyle());
-				}
-
-				if (!ArrayUtil.contains(assetPublisherDisplayContext.getDisplayStyles(), assetPublisherDisplayContext.getDisplayStyle())) {
 		%>
 
-					<%= HtmlUtil.escape(LanguageUtil.format(request, "x-is-not-a-display-type", assetPublisherDisplayContext.getDisplayStyle())) %>
-
-				<%
-				}
-				else {
-					for (String curDisplayStyle : assetPublisherDisplayContext.getDisplayStyles()) {
-						if (assetPublisherDisplayContext.getDisplayStyle().equals(curDisplayStyle)) {
-							String displayStyleJsp = "/display/" + TextFormatter.format(curDisplayStyle, TextFormatter.N) + ".jsp";
-				%>
-
-							<liferay-util:include page="<%= displayStyleJsp %>" servletContext="<%= application %>" />
+				<liferay-util:include page='<%= "/display/" + TextFormatter.format(assetPublisherDisplayContext.getDisplayStyle(), TextFormatter.N) + ".jsp" %>' servletContext="<%= application %>" />
 
 		<%
-							break;
-						}
-					}
-				}
 			}
 			catch (Exception e) {
 				_log.error(e.getMessage());

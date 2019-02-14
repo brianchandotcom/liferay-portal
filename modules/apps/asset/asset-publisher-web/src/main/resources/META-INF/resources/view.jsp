@@ -74,7 +74,21 @@ if (assetPublisherDisplayContext.isEnableTagBasedNavigation() && !assetPublisher
 
 <c:choose>
 	<c:when test="<%= ListUtil.isNotEmpty(assetPublisherDisplayContext.getAssetEntryResults()) %>">
-		<liferay-util:include page="/view_asset_entry_list.jsp" servletContext="<%= application %>" />
+
+		<%
+		if (StringUtil.startsWith(assetPublisherDisplayContext.getDisplayStyle(), PortletDisplayTemplateManager.DISPLAY_STYLE_PREFIX)) {
+			assetPublisherDisplayContext.setDisplayStyle(assetPublisherDisplayContext.getDefaultDisplayStyle());
+		}
+		%>
+
+		<c:choose>
+			<c:when test="<%= ArrayUtil.contains(assetPublisherDisplayContext.getDisplayStyles(), assetPublisherDisplayContext.getDisplayStyle()) %>">
+				<liferay-util:include page="/view_asset_entry_list.jsp" servletContext="<%= application %>" />
+			</c:when>
+			<c:otherwise>
+				<liferay-ui:message arguments="<%= assetPublisherDisplayContext.getDisplayStyle() %>" escape="<%= true %>" key="x-is-not-a-display-type" />
+			</c:otherwise>
+		</c:choose>
 	</c:when>
 	<c:otherwise>
 		<liferay-ddm:template-renderer

@@ -632,7 +632,15 @@ public class JavaTool {
 	private boolean _isSchemaMethod(
 		String schemaName, List<String> tags, String returnType) {
 
-		if (returnType.equals(schemaName) || tags.contains(schemaName) ||
+		if (!tags.isEmpty()) {
+			if (tags.contains(schemaName)) {
+				return true;
+			}
+
+			return false;
+		}
+
+		if (returnType.equals(schemaName) ||
 			((returnType.length() == schemaName.length() + 6) &&
 			 returnType.startsWith("Page<") && returnType.endsWith(">") &&
 			 returnType.regionMatches(5, schemaName, 0, schemaName.length()))) {

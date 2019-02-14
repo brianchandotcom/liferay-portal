@@ -2155,10 +2155,13 @@ public class DataFactory {
 			_layoutCounters.put(groupId, simpleCounter);
 		}
 
+		long plid = _counter.get();
+
 		LayoutModel layoutModel = new LayoutModelImpl();
 
 		layoutModel.setUuid(SequentialUUID.generate());
-		layoutModel.setPlid(_counter.get());
+		layoutModel.setPlid(plid);
+		layoutModel.setHeadId(-plid);
 		layoutModel.setGroupId(groupId);
 		layoutModel.setCompanyId(_companyId);
 		layoutModel.setUserId(_sampleUserId);

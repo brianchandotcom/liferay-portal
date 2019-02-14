@@ -37,6 +37,9 @@ public class LayoutTable {
 		{"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP},
 		{"modifiedDate", Types.TIMESTAMP},
+		{"parentPlid", Types.BIGINT},
+		{"leftPlid", Types.BIGINT},
+		{"rightPlid", Types.BIGINT},
 		{"privateLayout", Types.BOOLEAN},
 		{"layoutId", Types.BIGINT},
 		{"parentLayoutId", Types.BIGINT},
@@ -48,6 +51,7 @@ public class LayoutTable {
 		{"type_", Types.VARCHAR},
 		{"typeSettings", Types.CLOB},
 		{"hidden_", Types.BOOLEAN},
+		{"system_", Types.BOOLEAN},
 		{"friendlyURL", Types.VARCHAR},
 		{"iconImageId", Types.BIGINT},
 		{"themeId", Types.VARCHAR},
@@ -81,6 +85,12 @@ TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 
 TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 
+TABLE_COLUMNS_MAP.put("parentPlid", Types.BIGINT);
+
+TABLE_COLUMNS_MAP.put("leftPlid", Types.BIGINT);
+
+TABLE_COLUMNS_MAP.put("rightPlid", Types.BIGINT);
+
 TABLE_COLUMNS_MAP.put("privateLayout", Types.BOOLEAN);
 
 TABLE_COLUMNS_MAP.put("layoutId", Types.BIGINT);
@@ -103,6 +113,8 @@ TABLE_COLUMNS_MAP.put("typeSettings", Types.CLOB);
 
 TABLE_COLUMNS_MAP.put("hidden_", Types.BOOLEAN);
 
+TABLE_COLUMNS_MAP.put("system_", Types.BOOLEAN);
+
 TABLE_COLUMNS_MAP.put("friendlyURL", Types.VARCHAR);
 
 TABLE_COLUMNS_MAP.put("iconImageId", Types.BIGINT);
@@ -124,20 +136,23 @@ TABLE_COLUMNS_MAP.put("sourcePrototypeLayoutUuid", Types.VARCHAR);
 TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 
 }
-	public static final String TABLE_SQL_CREATE = "create table Layout (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,plid LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,privateLayout BOOLEAN,layoutId LONG,parentLayoutId LONG,name STRING null,title STRING null,description STRING null,keywords STRING null,robots STRING null,type_ VARCHAR(75) null,typeSettings TEXT null,hidden_ BOOLEAN,friendlyURL VARCHAR(255) null,iconImageId LONG,themeId VARCHAR(75) null,colorSchemeId VARCHAR(75) null,css TEXT null,priority INTEGER,layoutPrototypeUuid VARCHAR(75) null,layoutPrototypeLinkEnabled BOOLEAN,sourcePrototypeLayoutUuid VARCHAR(75) null,lastPublishDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table Layout (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,plid LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentPlid LONG,leftPlid LONG,rightPlid LONG,privateLayout BOOLEAN,layoutId LONG,parentLayoutId LONG,name STRING null,title STRING null,description STRING null,keywords STRING null,robots STRING null,type_ VARCHAR(75) null,typeSettings TEXT null,hidden_ BOOLEAN,system_ BOOLEAN,friendlyURL VARCHAR(255) null,iconImageId LONG,themeId VARCHAR(75) null,colorSchemeId VARCHAR(75) null,css TEXT null,priority INTEGER,layoutPrototypeUuid VARCHAR(75) null,layoutPrototypeLinkEnabled BOOLEAN,sourcePrototypeLayoutUuid VARCHAR(75) null,lastPublishDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table Layout";
 
 	public static final String[] TABLE_SQL_ADD_INDEXES = {
 		"create index IX_881EABCB on Layout (companyId, layoutPrototypeUuid[$COLUMN_LENGTH:75$])",
+		"create index IX_D4B8A526 on Layout (groupId, leftPlid, rightPlid, privateLayout)",
 		"create unique index IX_BC2C4231 on Layout (groupId, privateLayout, friendlyURL[$COLUMN_LENGTH:255$])",
 		"create unique index IX_7162C27C on Layout (groupId, privateLayout, layoutId)",
+		"create index IX_2C89110E on Layout (groupId, privateLayout, leftPlid, rightPlid)",
 		"create index IX_7399B71E on Layout (groupId, privateLayout, parentLayoutId, priority)",
 		"create index IX_8CE8C0D9 on Layout (groupId, privateLayout, sourcePrototypeLayoutUuid[$COLUMN_LENGTH:75$])",
 		"create index IX_1A1B61D2 on Layout (groupId, privateLayout, type_[$COLUMN_LENGTH:75$])",
 		"create index IX_6EDC627B on Layout (groupId, type_[$COLUMN_LENGTH:75$])",
 		"create index IX_23922F7D on Layout (iconImageId)",
 		"create index IX_B529BFD3 on Layout (layoutPrototypeUuid[$COLUMN_LENGTH:75$])",
+		"create index IX_1D4DCAA5 on Layout (parentPlid)",
 		"create index IX_3BC009C0 on Layout (privateLayout, iconImageId)",
 		"create index IX_39A18ECC on Layout (sourcePrototypeLayoutUuid[$COLUMN_LENGTH:75$])",
 		"create index IX_2CE4BE84 on Layout (uuid_[$COLUMN_LENGTH:75$], companyId)",

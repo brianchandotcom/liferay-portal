@@ -115,7 +115,7 @@ TABLE_COLUMNS_MAP.put("active_", Types.BOOLEAN);
 		"create unique index IX_ACD2B296 on Group_ (companyId, groupKey[$COLUMN_LENGTH:150$])",
 		"create unique index IX_AACD15F0 on Group_ (companyId, liveGroupId, groupKey[$COLUMN_LENGTH:150$])",
 		"create index IX_D4BFF38B on Group_ (companyId, parentGroupId, site, inheritContent)",
-		"create index IX_63A2AABD on Group_ (companyId, site)",
+		"create index IX_B91488EC on Group_ (companyId, site, active_)",
 		"create index IX_16218A38 on Group_ (liveGroupId)",
 		"create index IX_7B590A7A on Group_ (type_, active_)",
 		"create index IX_26CC761A on Group_ (uuid_[$COLUMN_LENGTH:75$], companyId)",

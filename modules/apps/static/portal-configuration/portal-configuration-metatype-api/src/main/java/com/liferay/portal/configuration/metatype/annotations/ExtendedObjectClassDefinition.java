@@ -56,8 +56,9 @@ public @interface ExtendedObjectClassDefinition {
 
 	public enum Scope {
 
-		COMPANY("company"), GROUP("group"),
-		PORTLET_INSTANCE("portlet-instance"), SYSTEM("system");
+		COMPANY("company", "companyId"), GROUP("group", "groupId"),
+		PORTLET_INSTANCE("portlet-instance", "portletInstanceId"),
+		SYSTEM("system", null);
 
 		public boolean equals(String value) {
 			return _value.equals(value);
@@ -65,6 +66,10 @@ public @interface ExtendedObjectClassDefinition {
 
 		public String getDelimiterString() {
 			return StringBundler.concat(_SEPARATOR, name(), _SEPARATOR);
+		}
+
+		public String getPropertyKey() {
+			return _propertyKey;
 		}
 
 		public String getValue() {
@@ -76,12 +81,14 @@ public @interface ExtendedObjectClassDefinition {
 			return _value;
 		}
 
-		private Scope(String value) {
+		private Scope(String value, String propertyKey) {
 			_value = value;
+			_propertyKey = propertyKey;
 		}
 
 		private static final String _SEPARATOR = StringPool.DOUBLE_UNDERLINE;
 
+		private final String _propertyKey;
 		private final String _value;
 
 	}

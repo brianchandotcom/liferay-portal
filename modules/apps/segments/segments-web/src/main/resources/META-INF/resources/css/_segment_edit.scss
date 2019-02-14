@@ -35,27 +35,12 @@
 			align-items: center;
 			display: flex;
 
-			.active-toggle,
-			.members-count {
+			.members-count-button {
 				margin-right: 16px;
-			}
-
-			.active-toggle {
-				margin-bottom: 0;
-
-				.toggle-switch-text {
-					font-size: 14px;
-				}
 			}
 
 			.loading-animation {
 				margin: 0 8px 0 0;
-			}
-
-			.members-count {
-				color: #2E5AAC;
-				font-size: 0.875rem;
-				font-weight: 600;
 			}
 		}
 

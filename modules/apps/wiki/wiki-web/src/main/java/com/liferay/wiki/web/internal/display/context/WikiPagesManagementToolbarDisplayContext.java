@@ -17,6 +17,8 @@ package com.liferay.wiki.web.internal.display.context;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.SafeConsumer;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -130,8 +132,7 @@ public class WikiPagesManagementToolbarDisplayContext {
 		portletURL.setParameter("mvcRenderCommandName", "/wiki/view_pages");
 		portletURL.setParameter("redirect", _currentURLObj.toString());
 
-		String navigation = ParamUtil.getString(
-			_request, "navigation", "all-pages");
+		String navigation = _getNavigation();
 
 		portletURL.setParameter("navigation", navigation);
 
@@ -208,6 +209,37 @@ public class WikiPagesManagementToolbarDisplayContext {
 		};
 	}
 
+	public List<LabelItem> getFilterLabelItems() {
+		return new LabelItemList() {
+			{
+				String navigation = _getNavigation();
+
+				if (!navigation.equals("all-pages")) {
+					add(
+						SafeConsumer.ignore(
+							labelItem -> {
+								PortletURL removeLabelURL =
+									PortletURLUtil.clone(
+										_getPortletURL(),
+										_liferayPortletResponse);
+
+								removeLabelURL.setParameter(
+									"navigation", (String)null);
+
+								labelItem.putData(
+									"removeLabelURL",
+									removeLabelURL.toString());
+
+								labelItem.setCloseable(true);
+
+								labelItem.setLabel(
+									LanguageUtil.get(_request, navigation));
+							}));
+				}
+			}
+		};
+	}
+
 	public PortletURL getSearchActionURL() {
 		PortletURL searchActionURL = _wikiURLHelper.getSearchURL();
 
@@ -251,8 +283,7 @@ public class WikiPagesManagementToolbarDisplayContext {
 	}
 
 	public boolean isDisabled() {
-		String navigation = ParamUtil.getString(
-			_request, "navigation", "all-pages");
+		String navigation = _getNavigation();
 
 		if (navigation.equals("all-pages") && !_searchContainer.hasResults()) {
 			return true;
@@ -280,8 +311,7 @@ public class WikiPagesManagementToolbarDisplayContext {
 
 		return new DropdownItemList() {
 			{
-				String navigation = ParamUtil.getString(
-					_request, "navigation", "all-pages");
+				String navigation = _getNavigation();
 
 				String[] navigationKeys = {
 					"all-pages", "draft-pages", "frontpage", "orphan-pages",
@@ -311,6 +341,10 @@ public class WikiPagesManagementToolbarDisplayContext {
 				}
 			}
 		};
+	}
+
+	private String _getNavigation() {
+		return ParamUtil.getString(_request, "navigation", "all-pages");
 	}
 
 	private String _getOrderByCol() {

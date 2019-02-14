@@ -776,46 +776,45 @@ String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestPro
 
 									var dialog = Liferay.Util.getWindow();
 
-									if (dialog) {
-										dialog.on(
-											'visibleChange',
-											function(event) {
-												if (!event.newVal) {
-													<c:choose>
-														<c:when test="<%= (kaleoDefinition != null) && !kaleoDefinition.isActive() %>">
-															if (confirm('<liferay-ui:message key="do-you-want-to-publish-this-draft" />')) {
-																event.halt();
+									if (dialog && !dialog._dialogAction) {
+										dialog._dialogAction = function(event) {
+											if (!event.newVal) {
+												<c:choose>
+													<c:when test="<%= (kaleoDefinition != null) && !kaleoDefinition.isActive() %>">
+														if (confirm('<liferay-ui:message key="do-you-want-to-publish-this-draft" />')) {
+															event.halt();
 
-																<portlet:namespace />publishKaleoDefinitionVersion();
-															}
-														</c:when>
-														<c:otherwise>
+															<portlet:namespace />publishKaleoDefinitionVersion();
+														}
+													</c:when>
+													<c:otherwise>
+
+														<%
+														boolean refreshOpenerOnClose = ParamUtil.getBoolean(request, "refreshOpenerOnClose");
+														%>
+
+														<c:if test="<%= Validator.isNotNull(portletResourceNamespace) && refreshOpenerOnClose %>">
 
 															<%
-															boolean refreshOpenerOnClose = ParamUtil.getBoolean(request, "refreshOpenerOnClose");
+															String openerWindowName = ParamUtil.getString(request, "openerWindowName");
 															%>
 
-															<c:if test="<%= Validator.isNotNull(portletResourceNamespace) && refreshOpenerOnClose %>">
+															var openerWindow = Liferay.Util.getTop();
 
-																<%
-																String openerWindowName = ParamUtil.getString(request, "openerWindowName");
-																%>
+															<c:if test="<%= Validator.isNotNull(openerWindowName) %>">
+																var openerDialog = Liferay.Util.getWindow('<%= HtmlUtil.escapeJS(openerWindowName) %>');
 
-																var openerWindow = Liferay.Util.getTop();
-
-																<c:if test="<%= Validator.isNotNull(openerWindowName) %>">
-																	var openerDialog = Liferay.Util.getWindow('<%= HtmlUtil.escapeJS(openerWindowName) %>');
-
-																	openerWindow = openerDialog.iframe.node.get('contentWindow').getDOM();
-																</c:if>
-
-																openerWindow.Liferay.Portlet.refresh('#p_p_id<%= HtmlUtil.escapeJS(portletResourceNamespace) %>');
+																openerWindow = openerDialog.iframe.node.get('contentWindow').getDOM();
 															</c:if>
-														</c:otherwise>
-													</c:choose>
-												}
+
+															openerWindow.Liferay.Portlet.refresh('#p_p_id<%= HtmlUtil.escapeJS(portletResourceNamespace) %>');
+														</c:if>
+													</c:otherwise>
+												</c:choose>
 											}
-										);
+										}
+
+										dialog.on('visibleChange', dialog._dialogAction);
 									}
 								</aui:script>
 							</aui:fieldset>

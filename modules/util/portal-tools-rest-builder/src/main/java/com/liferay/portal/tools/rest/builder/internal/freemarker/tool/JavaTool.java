@@ -93,8 +93,8 @@ public class JavaTool {
 
 				String returnType = javaSignature.getReturnType();
 
-				if (StringUtil.startsWith(returnType, "Page<")) {
-					returnType = "Collection<" + schemaName + ">";
+				if (returnType.startsWith("Page<")) {
+					returnType = "Collection<".concat(returnType.substring(5));
 				}
 
 				javaSignatures.add(

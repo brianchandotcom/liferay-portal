@@ -148,9 +148,9 @@ export default class ProcessListCard extends React.Component {
 					) : requestOriginType === REQUEST_ORIGIN_TYPE_FETCH && total === 0 ? (
 						<EmptyContent
 							message={Liferay.Language.get(
-								'once-there-are-active-processes-reports-will-appear-here'
+								'once-there-are-active-processes-metrics-will-appear-here'
 							)}
-							title={Liferay.Language.get('no-current-reports')}
+							title={Liferay.Language.get('no-current-metrics')}
 						/>
 					) : total > 0 ? (
 						<div>

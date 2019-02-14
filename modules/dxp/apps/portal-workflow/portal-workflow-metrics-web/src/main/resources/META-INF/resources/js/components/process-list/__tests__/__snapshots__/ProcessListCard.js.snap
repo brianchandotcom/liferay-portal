@@ -66,7 +66,7 @@ exports[`Should render component 1`] = `
       <h3
         className="text-center"
       >
-        No Current Reports
+        No Current Metrics
       </h3>
       <div
         className="sheet-text text-center"
@@ -146,7 +146,7 @@ exports[`Should render component with 4 records 1`] = `
       <h3
         className="text-center"
       >
-        No Current Reports
+        No Current Metrics
       </h3>
       <div
         className="sheet-text text-center"
@@ -226,7 +226,7 @@ exports[`Should render component with 10 records 1`] = `
       <h3
         className="text-center"
       >
-        No Current Reports
+        No Current Metrics
       </h3>
       <div
         className="sheet-text text-center"

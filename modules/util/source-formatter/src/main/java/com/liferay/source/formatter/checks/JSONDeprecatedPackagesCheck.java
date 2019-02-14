@@ -29,11 +29,12 @@ public class JSONDeprecatedPackagesCheck extends BaseFileCheck {
 			return content;
 		}
 
-		for (String s : _DEPRECATED_PACKAGES) {
+		for (String deprecatedPackageName : _DEPRECATED_PACKAGE_NAMES) {
 			int x = -1;
 
 			while (true) {
-				x = content.indexOf("\"" + s + "\":", x + 1);
+				x = content.indexOf(
+					"\"" + deprecatedPackageName + "\":", x + 1);
 
 				if (x == -1) {
 					break;
@@ -42,7 +43,9 @@ public class JSONDeprecatedPackagesCheck extends BaseFileCheck {
 				int lineNumber = SourceUtil.getLineNumber(content, x);
 
 				addMessage(
-					fileName, "Do not use deprecated packages '" + s + "'",
+					fileName,
+					"Do not use deprecated packages '" + deprecatedPackageName +
+						"'",
 					lineNumber);
 			}
 		}
@@ -50,7 +53,7 @@ public class JSONDeprecatedPackagesCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private static final String[] _DEPRECATED_PACKAGES = {
+	private static final String[] _DEPRECATED_PACKAGE_NAMES = {
 		"liferay-module-config-generator", "metal-cli"
 	};
 

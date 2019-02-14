@@ -43,7 +43,6 @@ import javax.sql.DataSource;
  *
  * @author Ivica Cardic
  * @see com.liferay.oauth.service.impl.OAuthUserServiceImpl
- * @see com.liferay.oauth.service.OAuthUserServiceUtil
  * @generated
  */
 public abstract class OAuthUserServiceBaseImpl extends BaseServiceImpl
@@ -51,7 +50,7 @@ public abstract class OAuthUserServiceBaseImpl extends BaseServiceImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Always use {@link com.liferay.oauth.service.OAuthUserServiceUtil} to access the o auth user remote service.
+	 * Never modify or reference this class directly. Use <code>OAuthUserService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.oauth.service.OAuthUserServiceUtil</code>.
 	 */
 
 	/**

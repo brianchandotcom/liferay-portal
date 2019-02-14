@@ -48,7 +48,6 @@ import javax.sql.DataSource;
  *
  * @author Marcellus Tavares
  * @see com.liferay.portal.workflow.kaleo.forms.service.impl.KaleoProcessServiceImpl
- * @see com.liferay.portal.workflow.kaleo.forms.service.KaleoProcessServiceUtil
  * @generated
  */
 public abstract class KaleoProcessServiceBaseImpl extends BaseServiceImpl
@@ -56,7 +55,7 @@ public abstract class KaleoProcessServiceBaseImpl extends BaseServiceImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Always use {@link com.liferay.portal.workflow.kaleo.forms.service.KaleoProcessServiceUtil} to access the kaleo process remote service.
+	 * Never modify or reference this class directly. Use <code>KaleoProcessService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.portal.workflow.kaleo.forms.service.KaleoProcessServiceUtil</code>.
 	 */
 
 	/**

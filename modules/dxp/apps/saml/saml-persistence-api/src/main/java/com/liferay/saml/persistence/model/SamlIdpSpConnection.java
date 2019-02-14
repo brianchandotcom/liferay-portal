@@ -25,8 +25,6 @@ import com.liferay.portal.kernel.util.Accessor;
  *
  * @author Mika Koivisto
  * @see SamlIdpSpConnectionModel
- * @see com.liferay.saml.persistence.model.impl.SamlIdpSpConnectionImpl
- * @see com.liferay.saml.persistence.model.impl.SamlIdpSpConnectionModelImpl
  * @generated
  */
 @ImplementationClassName("com.liferay.saml.persistence.model.impl.SamlIdpSpConnectionImpl")
@@ -36,7 +34,7 @@ public interface SamlIdpSpConnection extends SamlIdpSpConnectionModel,
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this interface directly. Add methods to {@link com.liferay.saml.persistence.model.impl.SamlIdpSpConnectionImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add methods to <code>com.liferay.saml.persistence.model.impl.SamlIdpSpConnectionImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public static final Accessor<SamlIdpSpConnection, Long> SAML_IDP_SP_CONNECTION_ID_ACCESSOR =
 		new Accessor<SamlIdpSpConnection, Long>() {

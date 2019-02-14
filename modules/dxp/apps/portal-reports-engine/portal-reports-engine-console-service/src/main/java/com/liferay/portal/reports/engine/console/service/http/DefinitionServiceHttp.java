@@ -26,10 +26,11 @@ import com.liferay.portal.reports.engine.console.service.DefinitionServiceUtil;
 
 /**
  * Provides the HTTP utility for the
- * {@link DefinitionServiceUtil} service utility. The
+ * <code>DefinitionServiceUtil</code> service
+ * utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it requires an additional
- * {@link HttpPrincipal} parameter.
+ * <code>HttpPrincipal</code> parameter.
  *
  * <p>
  * The benefits of using the HTTP utility is that it is fast and allows for
@@ -48,8 +49,6 @@ import com.liferay.portal.reports.engine.console.service.DefinitionServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see DefinitionServiceSoap
- * @see HttpPrincipal
- * @see DefinitionServiceUtil
  * @generated
  */
 @ProviderType

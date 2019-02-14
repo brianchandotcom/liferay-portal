@@ -23,16 +23,14 @@ import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * Provides the remote service utility for KaleoProcess. This utility wraps
- * {@link com.liferay.portal.workflow.kaleo.forms.service.impl.KaleoProcessServiceImpl} and is the
- * primary access point for service operations in application layer code running
- * on a remote server. Methods of this service are expected to have security
- * checks based on the propagated JAAS credentials because this service can be
+ * <code>com.liferay.portal.workflow.kaleo.forms.service.impl.KaleoProcessServiceImpl</code> and is an
+ * access point for service operations in application layer code running on a
+ * remote server. Methods of this service are expected to have security checks
+ * based on the propagated JAAS credentials because this service can be
  * accessed remotely.
  *
  * @author Marcellus Tavares
  * @see KaleoProcessService
- * @see com.liferay.portal.workflow.kaleo.forms.service.base.KaleoProcessServiceBaseImpl
- * @see com.liferay.portal.workflow.kaleo.forms.service.impl.KaleoProcessServiceImpl
  * @generated
  */
 @ProviderType
@@ -40,7 +38,7 @@ public class KaleoProcessServiceUtil {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.workflow.kaleo.forms.service.impl.KaleoProcessServiceImpl} and rerun ServiceBuilder to regenerate this class.
+	 * Never modify this class directly. Add custom service methods to <code>com.liferay.portal.workflow.kaleo.forms.service.impl.KaleoProcessServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 
 	/**

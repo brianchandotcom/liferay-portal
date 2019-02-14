@@ -26,10 +26,11 @@ import com.liferay.portal.reports.engine.console.service.EntryServiceUtil;
 
 /**
  * Provides the HTTP utility for the
- * {@link EntryServiceUtil} service utility. The
+ * <code>EntryServiceUtil</code> service
+ * utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it requires an additional
- * {@link HttpPrincipal} parameter.
+ * <code>HttpPrincipal</code> parameter.
  *
  * <p>
  * The benefits of using the HTTP utility is that it is fast and allows for
@@ -48,8 +49,6 @@ import com.liferay.portal.reports.engine.console.service.EntryServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see EntryServiceSoap
- * @see HttpPrincipal
- * @see EntryServiceUtil
  * @generated
  */
 @ProviderType

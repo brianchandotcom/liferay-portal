@@ -25,8 +25,6 @@ import com.liferay.portal.kernel.util.Accessor;
  *
  * @author Adolfo Pérez
  * @see SharepointOAuth2TokenEntryModel
- * @see com.liferay.sharepoint.rest.oauth2.model.impl.SharepointOAuth2TokenEntryImpl
- * @see com.liferay.sharepoint.rest.oauth2.model.impl.SharepointOAuth2TokenEntryModelImpl
  * @generated
  */
 @ImplementationClassName("com.liferay.sharepoint.rest.oauth2.model.impl.SharepointOAuth2TokenEntryImpl")
@@ -36,7 +34,7 @@ public interface SharepointOAuth2TokenEntry
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this interface directly. Add methods to {@link com.liferay.sharepoint.rest.oauth2.model.impl.SharepointOAuth2TokenEntryImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add methods to <code>com.liferay.sharepoint.rest.oauth2.model.impl.SharepointOAuth2TokenEntryImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public static final Accessor<SharepointOAuth2TokenEntry, Long> SHAREPOINT_O_AUTH2_TOKEN_ENTRY_ID_ACCESSOR =
 		new Accessor<SharepointOAuth2TokenEntry, Long>() {

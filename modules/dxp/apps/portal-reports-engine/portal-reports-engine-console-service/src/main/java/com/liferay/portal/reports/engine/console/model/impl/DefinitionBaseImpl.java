@@ -37,7 +37,7 @@ public abstract class DefinitionBaseImpl extends DefinitionModelImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. All methods that expect a definition model instance should use the {@link Definition} interface instead.
+	 * Never modify or reference this class directly. All methods that expect a definition model instance should use the <code>Definition</code> interface instead.
 	 */
 	@Override
 	public void persist() {

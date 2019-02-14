@@ -25,8 +25,6 @@ import com.liferay.portal.kernel.util.Accessor;
  *
  * @author Brian Wing Shun Chan
  * @see SourceModel
- * @see com.liferay.portal.reports.engine.console.model.impl.SourceImpl
- * @see com.liferay.portal.reports.engine.console.model.impl.SourceModelImpl
  * @generated
  */
 @ImplementationClassName("com.liferay.portal.reports.engine.console.model.impl.SourceImpl")
@@ -35,7 +33,7 @@ public interface Source extends SourceModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this interface directly. Add methods to {@link com.liferay.portal.reports.engine.console.model.impl.SourceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.reports.engine.console.model.impl.SourceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public static final Accessor<Source, Long> SOURCE_ID_ACCESSOR = new Accessor<Source, Long>() {
 			@Override

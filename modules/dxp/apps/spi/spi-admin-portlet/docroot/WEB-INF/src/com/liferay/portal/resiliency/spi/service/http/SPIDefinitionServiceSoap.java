@@ -24,19 +24,20 @@ import java.rmi.RemoteException;
 
 /**
  * Provides the SOAP utility for the
- * {@link SPIDefinitionServiceUtil} service utility. The
- * static methods of this class calls the same methods of the service utility.
- * However, the signatures are different because it is difficult for SOAP to
- * support certain types.
+ * <code>SPIDefinitionServiceUtil</code> service
+ * utility. The static methods of this class call the same methods of the
+ * service utility. However, the signatures are different because it is
+ * difficult for SOAP to support certain types.
  *
  * <p>
  * ServiceBuilder follows certain rules in translating the methods. For example,
- * if the method in the service utility returns a {@link java.util.List}, that
- * is translated to an array of {@link com.liferay.portal.resiliency.spi.model.SPIDefinitionSoap}.
- * If the method in the service utility returns a
- * {@link com.liferay.portal.resiliency.spi.model.SPIDefinition}, that is translated to a
- * {@link com.liferay.portal.resiliency.spi.model.SPIDefinitionSoap}. Methods that SOAP cannot
- * safely wire are skipped.
+ * if the method in the service utility returns a <code>java.util.List</code>,
+ * that is translated to an array of
+ * <code>com.liferay.portal.resiliency.spi.model.SPIDefinitionSoap</code>. If the method in the
+ * service utility returns a
+ * <code>com.liferay.portal.resiliency.spi.model.SPIDefinition</code>, that is translated to a
+ * <code>com.liferay.portal.resiliency.spi.model.SPIDefinitionSoap</code>. Methods that SOAP
+ * cannot safely wire are skipped.
  * </p>
  *
  * <p>
@@ -58,8 +59,6 @@ import java.rmi.RemoteException;
  *
  * @author Michael C. Han
  * @see SPIDefinitionServiceHttp
- * @see com.liferay.portal.resiliency.spi.model.SPIDefinitionSoap
- * @see SPIDefinitionServiceUtil
  * @generated
  */
 @ProviderType

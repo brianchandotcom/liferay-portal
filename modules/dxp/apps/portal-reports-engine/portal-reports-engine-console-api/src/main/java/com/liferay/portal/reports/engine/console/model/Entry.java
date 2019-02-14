@@ -25,8 +25,6 @@ import com.liferay.portal.kernel.util.Accessor;
  *
  * @author Brian Wing Shun Chan
  * @see EntryModel
- * @see com.liferay.portal.reports.engine.console.model.impl.EntryImpl
- * @see com.liferay.portal.reports.engine.console.model.impl.EntryModelImpl
  * @generated
  */
 @ImplementationClassName("com.liferay.portal.reports.engine.console.model.impl.EntryImpl")
@@ -35,7 +33,7 @@ public interface Entry extends EntryModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this interface directly. Add methods to {@link com.liferay.portal.reports.engine.console.model.impl.EntryImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.reports.engine.console.model.impl.EntryImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public static final Accessor<Entry, Long> ENTRY_ID_ACCESSOR = new Accessor<Entry, Long>() {
 			@Override

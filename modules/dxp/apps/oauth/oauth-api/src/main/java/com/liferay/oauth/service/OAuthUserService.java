@@ -35,8 +35,6 @@ import com.liferay.portal.kernel.transaction.Transactional;
  *
  * @author Ivica Cardic
  * @see OAuthUserServiceUtil
- * @see com.liferay.oauth.service.base.OAuthUserServiceBaseImpl
- * @see com.liferay.oauth.service.impl.OAuthUserServiceImpl
  * @generated
  */
 @AccessControlled
@@ -50,7 +48,7 @@ public interface OAuthUserService extends BaseService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link OAuthUserServiceUtil} to access the o auth user remote service. Add custom service methods to {@link com.liferay.oauth.service.impl.OAuthUserServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify or reference this interface directly. Always use {@link OAuthUserServiceUtil} to access the o auth user remote service. Add custom service methods to <code>com.liferay.oauth.service.impl.OAuthUserServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public OAuthUser addOAuthUser(String consumerKey,
 		ServiceContext serviceContext) throws PortalException;

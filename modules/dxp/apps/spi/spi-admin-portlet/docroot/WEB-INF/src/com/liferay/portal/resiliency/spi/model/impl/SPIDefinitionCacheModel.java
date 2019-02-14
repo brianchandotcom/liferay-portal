@@ -33,7 +33,6 @@ import java.util.Date;
  * The cache model class for representing SPIDefinition in entity cache.
  *
  * @author Michael C. Han
- * @see SPIDefinition
  * @generated
  */
 @ProviderType

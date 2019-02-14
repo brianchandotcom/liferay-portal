@@ -42,8 +42,6 @@ import java.util.Map;
  *
  * @author Brian Wing Shun Chan
  * @see DefinitionServiceUtil
- * @see com.liferay.portal.reports.engine.console.service.base.DefinitionServiceBaseImpl
- * @see com.liferay.portal.reports.engine.console.service.impl.DefinitionServiceImpl
  * @generated
  */
 @AccessControlled
@@ -57,7 +55,7 @@ public interface DefinitionService extends BaseService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link DefinitionServiceUtil} to access the definition remote service. Add custom service methods to {@link com.liferay.portal.reports.engine.console.service.impl.DefinitionServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify or reference this interface directly. Always use {@link DefinitionServiceUtil} to access the definition remote service. Add custom service methods to <code>com.liferay.portal.reports.engine.console.service.impl.DefinitionServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public Definition addDefinition(long groupId, Map<Locale, String> nameMap,
 		Map<Locale, String> descriptionMap, long sourceId,

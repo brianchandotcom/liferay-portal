@@ -25,8 +25,6 @@ import com.liferay.portal.kernel.util.Accessor;
  *
  * @author Mika Koivisto
  * @see SamlIdpSsoSessionModel
- * @see com.liferay.saml.persistence.model.impl.SamlIdpSsoSessionImpl
- * @see com.liferay.saml.persistence.model.impl.SamlIdpSsoSessionModelImpl
  * @generated
  */
 @ImplementationClassName("com.liferay.saml.persistence.model.impl.SamlIdpSsoSessionImpl")
@@ -35,7 +33,7 @@ public interface SamlIdpSsoSession extends SamlIdpSsoSessionModel, PersistedMode
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this interface directly. Add methods to {@link com.liferay.saml.persistence.model.impl.SamlIdpSsoSessionImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add methods to <code>com.liferay.saml.persistence.model.impl.SamlIdpSsoSessionImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public static final Accessor<SamlIdpSsoSession, Long> SAML_IDP_SSO_SESSION_ID_ACCESSOR =
 		new Accessor<SamlIdpSsoSession, Long>() {

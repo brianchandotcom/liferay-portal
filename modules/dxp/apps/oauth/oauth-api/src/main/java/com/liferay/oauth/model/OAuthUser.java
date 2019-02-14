@@ -25,8 +25,6 @@ import com.liferay.portal.kernel.util.Accessor;
  *
  * @author Ivica Cardic
  * @see OAuthUserModel
- * @see com.liferay.oauth.model.impl.OAuthUserImpl
- * @see com.liferay.oauth.model.impl.OAuthUserModelImpl
  * @generated
  */
 @ImplementationClassName("com.liferay.oauth.model.impl.OAuthUserImpl")
@@ -35,7 +33,7 @@ public interface OAuthUser extends OAuthUserModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this interface directly. Add methods to {@link com.liferay.oauth.model.impl.OAuthUserImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add methods to <code>com.liferay.oauth.model.impl.OAuthUserImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public static final Accessor<OAuthUser, Long> O_AUTH_USER_ID_ACCESSOR = new Accessor<OAuthUser, Long>() {
 			@Override

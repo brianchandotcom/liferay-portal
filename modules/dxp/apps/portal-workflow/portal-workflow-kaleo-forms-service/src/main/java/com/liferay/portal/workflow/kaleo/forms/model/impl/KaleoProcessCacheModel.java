@@ -33,7 +33,6 @@ import java.util.Date;
  * The cache model class for representing KaleoProcess in entity cache.
  *
  * @author Marcellus Tavares
- * @see KaleoProcess
  * @generated
  */
 @ProviderType

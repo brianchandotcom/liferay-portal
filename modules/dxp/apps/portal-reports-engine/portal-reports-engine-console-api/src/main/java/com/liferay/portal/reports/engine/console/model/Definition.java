@@ -25,8 +25,6 @@ import com.liferay.portal.kernel.util.Accessor;
  *
  * @author Brian Wing Shun Chan
  * @see DefinitionModel
- * @see com.liferay.portal.reports.engine.console.model.impl.DefinitionImpl
- * @see com.liferay.portal.reports.engine.console.model.impl.DefinitionModelImpl
  * @generated
  */
 @ImplementationClassName("com.liferay.portal.reports.engine.console.model.impl.DefinitionImpl")
@@ -35,7 +33,7 @@ public interface Definition extends DefinitionModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this interface directly. Add methods to {@link com.liferay.portal.reports.engine.console.model.impl.DefinitionImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.reports.engine.console.model.impl.DefinitionImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public static final Accessor<Definition, Long> DEFINITION_ID_ACCESSOR = new Accessor<Definition, Long>() {
 			@Override

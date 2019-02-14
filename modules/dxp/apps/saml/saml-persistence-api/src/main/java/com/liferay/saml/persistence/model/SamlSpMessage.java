@@ -25,8 +25,6 @@ import com.liferay.portal.kernel.util.Accessor;
  *
  * @author Mika Koivisto
  * @see SamlSpMessageModel
- * @see com.liferay.saml.persistence.model.impl.SamlSpMessageImpl
- * @see com.liferay.saml.persistence.model.impl.SamlSpMessageModelImpl
  * @generated
  */
 @ImplementationClassName("com.liferay.saml.persistence.model.impl.SamlSpMessageImpl")
@@ -35,7 +33,7 @@ public interface SamlSpMessage extends SamlSpMessageModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this interface directly. Add methods to {@link com.liferay.saml.persistence.model.impl.SamlSpMessageImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add methods to <code>com.liferay.saml.persistence.model.impl.SamlSpMessageImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public static final Accessor<SamlSpMessage, Long> SAML_SP_MESSAGE_ID_ACCESSOR =
 		new Accessor<SamlSpMessage, Long>() {

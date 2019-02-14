@@ -37,8 +37,6 @@ import java.util.List;
  *
  * @author Michael C. Han
  * @see SPIDefinitionServiceUtil
- * @see com.liferay.portal.resiliency.spi.service.base.SPIDefinitionServiceBaseImpl
- * @see com.liferay.portal.resiliency.spi.service.impl.SPIDefinitionServiceImpl
  * @generated
  */
 @AccessControlled
@@ -50,7 +48,7 @@ public interface SPIDefinitionService extends BaseService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link SPIDefinitionServiceUtil} to access the spi definition remote service. Add custom service methods to {@link com.liferay.portal.resiliency.spi.service.impl.SPIDefinitionServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify or reference this interface directly. Always use {@link SPIDefinitionServiceUtil} to access the spi definition remote service. Add custom service methods to <code>com.liferay.portal.resiliency.spi.service.impl.SPIDefinitionServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public SPIDefinition addSPIDefinition(String name, String connectorAddress,
 		int connectorPort, String description, String jvmArguments,

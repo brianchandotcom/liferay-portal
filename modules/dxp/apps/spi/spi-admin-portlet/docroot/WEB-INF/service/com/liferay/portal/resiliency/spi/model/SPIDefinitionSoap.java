@@ -26,7 +26,6 @@ import java.util.List;
  * This class is used by SOAP remote services, specifically {@link com.liferay.portal.resiliency.spi.service.http.SPIDefinitionServiceSoap}.
  *
  * @author Michael C. Han
- * @see com.liferay.portal.resiliency.spi.service.http.SPIDefinitionServiceSoap
  * @generated
  */
 @ProviderType

@@ -37,7 +37,7 @@ public abstract class SamlSpIdpConnectionBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. All methods that expect a saml sp idp connection model instance should use the {@link SamlSpIdpConnection} interface instead.
+	 * Never modify or reference this class directly. All methods that expect a saml sp idp connection model instance should use the <code>SamlSpIdpConnection</code> interface instead.
 	 */
 	@Override
 	public void persist() {

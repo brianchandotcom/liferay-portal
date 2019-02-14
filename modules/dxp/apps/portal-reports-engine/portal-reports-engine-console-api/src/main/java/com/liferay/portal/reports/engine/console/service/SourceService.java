@@ -40,8 +40,6 @@ import java.util.Map;
  *
  * @author Brian Wing Shun Chan
  * @see SourceServiceUtil
- * @see com.liferay.portal.reports.engine.console.service.base.SourceServiceBaseImpl
- * @see com.liferay.portal.reports.engine.console.service.impl.SourceServiceImpl
  * @generated
  */
 @AccessControlled
@@ -55,7 +53,7 @@ public interface SourceService extends BaseService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link SourceServiceUtil} to access the source remote service. Add custom service methods to {@link com.liferay.portal.reports.engine.console.service.impl.SourceServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify or reference this interface directly. Always use {@link SourceServiceUtil} to access the source remote service. Add custom service methods to <code>com.liferay.portal.reports.engine.console.service.impl.SourceServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public Source addSource(long groupId, Map<Locale, String> nameMap,
 		String driverClassName, String driverUrl, String driverUserName,

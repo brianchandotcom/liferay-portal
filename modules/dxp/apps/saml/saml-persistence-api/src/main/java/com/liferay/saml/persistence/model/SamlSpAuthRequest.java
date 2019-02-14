@@ -25,8 +25,6 @@ import com.liferay.portal.kernel.util.Accessor;
  *
  * @author Mika Koivisto
  * @see SamlSpAuthRequestModel
- * @see com.liferay.saml.persistence.model.impl.SamlSpAuthRequestImpl
- * @see com.liferay.saml.persistence.model.impl.SamlSpAuthRequestModelImpl
  * @generated
  */
 @ImplementationClassName("com.liferay.saml.persistence.model.impl.SamlSpAuthRequestImpl")
@@ -35,7 +33,7 @@ public interface SamlSpAuthRequest extends SamlSpAuthRequestModel, PersistedMode
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this interface directly. Add methods to {@link com.liferay.saml.persistence.model.impl.SamlSpAuthRequestImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add methods to <code>com.liferay.saml.persistence.model.impl.SamlSpAuthRequestImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public static final Accessor<SamlSpAuthRequest, Long> SAML_SP_AUTHN_REQUEST_ID_ACCESSOR =
 		new Accessor<SamlSpAuthRequest, Long>() {

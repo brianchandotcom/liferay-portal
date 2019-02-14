@@ -37,7 +37,7 @@ public abstract class OAuthUserBaseImpl extends OAuthUserModelImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. All methods that expect a o auth user model instance should use the {@link OAuthUser} interface instead.
+	 * Never modify or reference this class directly. All methods that expect a o auth user model instance should use the <code>OAuthUser</code> interface instead.
 	 */
 	@Override
 	public void persist() {

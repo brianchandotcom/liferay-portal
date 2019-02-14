@@ -23,16 +23,14 @@ import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * Provides the remote service utility for OAuthUser. This utility wraps
- * {@link com.liferay.oauth.service.impl.OAuthUserServiceImpl} and is the
- * primary access point for service operations in application layer code running
- * on a remote server. Methods of this service are expected to have security
- * checks based on the propagated JAAS credentials because this service can be
+ * <code>com.liferay.oauth.service.impl.OAuthUserServiceImpl</code> and is an
+ * access point for service operations in application layer code running on a
+ * remote server. Methods of this service are expected to have security checks
+ * based on the propagated JAAS credentials because this service can be
  * accessed remotely.
  *
  * @author Ivica Cardic
  * @see OAuthUserService
- * @see com.liferay.oauth.service.base.OAuthUserServiceBaseImpl
- * @see com.liferay.oauth.service.impl.OAuthUserServiceImpl
  * @generated
  */
 @ProviderType
@@ -40,7 +38,7 @@ public class OAuthUserServiceUtil {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this class directly. Add custom service methods to {@link com.liferay.oauth.service.impl.OAuthUserServiceImpl} and rerun ServiceBuilder to regenerate this class.
+	 * Never modify this class directly. Add custom service methods to <code>com.liferay.oauth.service.impl.OAuthUserServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.oauth.model.OAuthUser addOAuthUser(
 		String consumerKey,

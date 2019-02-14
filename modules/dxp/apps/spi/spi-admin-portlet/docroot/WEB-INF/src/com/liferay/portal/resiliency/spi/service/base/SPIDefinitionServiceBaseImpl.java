@@ -42,7 +42,6 @@ import javax.sql.DataSource;
  *
  * @author Michael C. Han
  * @see com.liferay.portal.resiliency.spi.service.impl.SPIDefinitionServiceImpl
- * @see com.liferay.portal.resiliency.spi.service.SPIDefinitionServiceUtil
  * @generated
  */
 public abstract class SPIDefinitionServiceBaseImpl extends BaseServiceImpl
@@ -50,7 +49,7 @@ public abstract class SPIDefinitionServiceBaseImpl extends BaseServiceImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Always use {@link com.liferay.portal.resiliency.spi.service.SPIDefinitionServiceUtil} to access the spi definition remote service.
+	 * Never modify or reference this class directly. Use <code>SPIDefinitionService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.portal.resiliency.spi.service.SPIDefinitionServiceUtil</code>.
 	 */
 
 	/**

@@ -37,7 +37,7 @@ public abstract class SPIDefinitionBaseImpl extends SPIDefinitionModelImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. All methods that expect a spi definition model instance should use the {@link SPIDefinition} interface instead.
+	 * Never modify or reference this class directly. All methods that expect a spi definition model instance should use the <code>SPIDefinition</code> interface instead.
 	 */
 	@Override
 	public void persist() {

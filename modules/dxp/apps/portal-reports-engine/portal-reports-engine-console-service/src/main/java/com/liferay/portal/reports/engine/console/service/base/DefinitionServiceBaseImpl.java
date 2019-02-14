@@ -46,7 +46,6 @@ import javax.sql.DataSource;
  *
  * @author Brian Wing Shun Chan
  * @see com.liferay.portal.reports.engine.console.service.impl.DefinitionServiceImpl
- * @see com.liferay.portal.reports.engine.console.service.DefinitionServiceUtil
  * @generated
  */
 public abstract class DefinitionServiceBaseImpl extends BaseServiceImpl
@@ -54,7 +53,7 @@ public abstract class DefinitionServiceBaseImpl extends BaseServiceImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Always use {@link com.liferay.portal.reports.engine.console.service.DefinitionServiceUtil} to access the definition remote service.
+	 * Never modify or reference this class directly. Use <code>DefinitionService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.portal.reports.engine.console.service.DefinitionServiceUtil</code>.
 	 */
 
 	/**

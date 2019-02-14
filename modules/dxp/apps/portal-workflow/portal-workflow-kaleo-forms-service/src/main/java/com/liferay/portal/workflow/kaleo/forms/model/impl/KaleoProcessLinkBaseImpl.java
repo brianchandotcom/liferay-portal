@@ -37,7 +37,7 @@ public abstract class KaleoProcessLinkBaseImpl extends KaleoProcessLinkModelImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. All methods that expect a kaleo process link model instance should use the {@link KaleoProcessLink} interface instead.
+	 * Never modify or reference this class directly. All methods that expect a kaleo process link model instance should use the <code>KaleoProcessLink</code> interface instead.
 	 */
 	@Override
 	public void persist() {

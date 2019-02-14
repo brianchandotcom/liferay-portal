@@ -25,8 +25,6 @@ import com.liferay.portal.kernel.util.Accessor;
  *
  * @author Marcellus Tavares
  * @see KaleoProcessModel
- * @see com.liferay.portal.workflow.kaleo.forms.model.impl.KaleoProcessImpl
- * @see com.liferay.portal.workflow.kaleo.forms.model.impl.KaleoProcessModelImpl
  * @generated
  */
 @ImplementationClassName("com.liferay.portal.workflow.kaleo.forms.model.impl.KaleoProcessImpl")
@@ -35,7 +33,7 @@ public interface KaleoProcess extends KaleoProcessModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this interface directly. Add methods to {@link com.liferay.portal.workflow.kaleo.forms.model.impl.KaleoProcessImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.workflow.kaleo.forms.model.impl.KaleoProcessImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public static final Accessor<KaleoProcess, Long> KALEO_PROCESS_ID_ACCESSOR = new Accessor<KaleoProcess, Long>() {
 			@Override

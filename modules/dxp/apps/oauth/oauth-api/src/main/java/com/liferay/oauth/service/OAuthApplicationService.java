@@ -37,8 +37,6 @@ import java.io.InputStream;
  *
  * @author Ivica Cardic
  * @see OAuthApplicationServiceUtil
- * @see com.liferay.oauth.service.base.OAuthApplicationServiceBaseImpl
- * @see com.liferay.oauth.service.impl.OAuthApplicationServiceImpl
  * @generated
  */
 @AccessControlled
@@ -52,7 +50,7 @@ public interface OAuthApplicationService extends BaseService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link OAuthApplicationServiceUtil} to access the o auth application remote service. Add custom service methods to {@link com.liferay.oauth.service.impl.OAuthApplicationServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify or reference this interface directly. Always use {@link OAuthApplicationServiceUtil} to access the o auth application remote service. Add custom service methods to <code>com.liferay.oauth.service.impl.OAuthApplicationServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public OAuthApplication addOAuthApplication(String name,
 		String description, int accessLevel, boolean shareableAccessToken,

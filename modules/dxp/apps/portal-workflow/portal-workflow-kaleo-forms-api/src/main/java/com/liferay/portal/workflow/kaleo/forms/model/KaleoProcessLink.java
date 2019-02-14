@@ -25,8 +25,6 @@ import com.liferay.portal.kernel.util.Accessor;
  *
  * @author Marcellus Tavares
  * @see KaleoProcessLinkModel
- * @see com.liferay.portal.workflow.kaleo.forms.model.impl.KaleoProcessLinkImpl
- * @see com.liferay.portal.workflow.kaleo.forms.model.impl.KaleoProcessLinkModelImpl
  * @generated
  */
 @ImplementationClassName("com.liferay.portal.workflow.kaleo.forms.model.impl.KaleoProcessLinkImpl")
@@ -35,7 +33,7 @@ public interface KaleoProcessLink extends KaleoProcessLinkModel, PersistedModel 
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this interface directly. Add methods to {@link com.liferay.portal.workflow.kaleo.forms.model.impl.KaleoProcessLinkImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.workflow.kaleo.forms.model.impl.KaleoProcessLinkImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public static final Accessor<KaleoProcessLink, Long> KALEO_PROCESS_LINK_ID_ACCESSOR =
 		new Accessor<KaleoProcessLink, Long>() {

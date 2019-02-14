@@ -34,7 +34,6 @@ import java.util.Date;
  * The cache model class for representing SamlIdpSsoSession in entity cache.
  *
  * @author Mika Koivisto
- * @see SamlIdpSsoSession
  * @generated
  */
 @ProviderType

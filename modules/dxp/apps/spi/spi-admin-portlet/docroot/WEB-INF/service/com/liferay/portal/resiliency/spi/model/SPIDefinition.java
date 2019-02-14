@@ -25,8 +25,6 @@ import com.liferay.portal.kernel.util.Accessor;
  *
  * @author Michael C. Han
  * @see SPIDefinitionModel
- * @see com.liferay.portal.resiliency.spi.model.impl.SPIDefinitionImpl
- * @see com.liferay.portal.resiliency.spi.model.impl.SPIDefinitionModelImpl
  * @generated
  */
 @ImplementationClassName("com.liferay.portal.resiliency.spi.model.impl.SPIDefinitionImpl")
@@ -35,7 +33,7 @@ public interface SPIDefinition extends SPIDefinitionModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this interface directly. Add methods to {@link com.liferay.portal.resiliency.spi.model.impl.SPIDefinitionImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.resiliency.spi.model.impl.SPIDefinitionImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public static final Accessor<SPIDefinition, Long> SPI_DEFINITION_ID_ACCESSOR =
 		new Accessor<SPIDefinition, Long>() {

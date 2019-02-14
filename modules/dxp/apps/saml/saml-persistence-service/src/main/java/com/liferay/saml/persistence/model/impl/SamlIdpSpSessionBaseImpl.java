@@ -37,7 +37,7 @@ public abstract class SamlIdpSpSessionBaseImpl extends SamlIdpSpSessionModelImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. All methods that expect a saml idp sp session model instance should use the {@link SamlIdpSpSession} interface instead.
+	 * Never modify or reference this class directly. All methods that expect a saml idp sp session model instance should use the <code>SamlIdpSpSession</code> interface instead.
 	 */
 	@Override
 	public void persist() {

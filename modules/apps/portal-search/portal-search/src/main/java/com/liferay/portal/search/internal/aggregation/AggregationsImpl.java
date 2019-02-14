@@ -17,6 +17,8 @@ package com.liferay.portal.search.internal.aggregation;
 import com.liferay.portal.search.aggregation.Aggregations;
 import com.liferay.portal.search.aggregation.bucket.DateHistogramAggregation;
 import com.liferay.portal.search.aggregation.bucket.DateRangeAggregation;
+import com.liferay.portal.search.aggregation.bucket.FilterAggregation;
+import com.liferay.portal.search.aggregation.bucket.FiltersAggregation;
 import com.liferay.portal.search.aggregation.bucket.GeoHashGridAggregation;
 import com.liferay.portal.search.aggregation.bucket.GlobalAggregation;
 import com.liferay.portal.search.aggregation.bucket.HistogramAggregation;
@@ -26,12 +28,14 @@ import com.liferay.portal.search.aggregation.bucket.TermsAggregation;
 import com.liferay.portal.search.aggregation.metrics.AvgAggregation;
 import com.liferay.portal.search.aggregation.metrics.CardinalityAggregation;
 import com.liferay.portal.search.aggregation.metrics.ExtendedStatsAggregation;
+import com.liferay.portal.search.aggregation.metrics.GeoBoundsAggregation;
 import com.liferay.portal.search.aggregation.metrics.MaxAggregation;
 import com.liferay.portal.search.aggregation.metrics.MinAggregation;
 import com.liferay.portal.search.aggregation.metrics.PercentileRanksAggregation;
 import com.liferay.portal.search.aggregation.metrics.PercentilesAggregation;
 import com.liferay.portal.search.aggregation.metrics.StatsAggregation;
 import com.liferay.portal.search.aggregation.metrics.SumAggregation;
+import com.liferay.portal.search.aggregation.metrics.TopHitsAggregation;
 import com.liferay.portal.search.aggregation.metrics.ValueCountAggregation;
 import com.liferay.portal.search.aggregation.pipeline.AvgBucketPipelineAggregation;
 import com.liferay.portal.search.aggregation.pipeline.CumulativeSumPipelineAggregation;
@@ -45,6 +49,8 @@ import com.liferay.portal.search.aggregation.pipeline.StatsBucketPipelineAggrega
 import com.liferay.portal.search.aggregation.pipeline.SumBucketPipelineAggregation;
 import com.liferay.portal.search.internal.aggregation.bucket.DateHistogramAggregationImpl;
 import com.liferay.portal.search.internal.aggregation.bucket.DateRangeAggregationImpl;
+import com.liferay.portal.search.internal.aggregation.bucket.FilterAggregationImpl;
+import com.liferay.portal.search.internal.aggregation.bucket.FiltersAggregationImpl;
 import com.liferay.portal.search.internal.aggregation.bucket.GeoHashGridAggregationImpl;
 import com.liferay.portal.search.internal.aggregation.bucket.GlobalAggregationImpl;
 import com.liferay.portal.search.internal.aggregation.bucket.HistogramAggregationImpl;
@@ -54,12 +60,14 @@ import com.liferay.portal.search.internal.aggregation.bucket.TermsAggregationImp
 import com.liferay.portal.search.internal.aggregation.metrics.AvgAggregationImpl;
 import com.liferay.portal.search.internal.aggregation.metrics.CardinalityAggregationImpl;
 import com.liferay.portal.search.internal.aggregation.metrics.ExtendedStatsAggregationImpl;
+import com.liferay.portal.search.internal.aggregation.metrics.GeoBoundsAggregationImpl;
 import com.liferay.portal.search.internal.aggregation.metrics.MaxAggregationImpl;
 import com.liferay.portal.search.internal.aggregation.metrics.MinAggregationImpl;
 import com.liferay.portal.search.internal.aggregation.metrics.PercentileRanksAggregationImpl;
 import com.liferay.portal.search.internal.aggregation.metrics.PercentilesAggregationImpl;
 import com.liferay.portal.search.internal.aggregation.metrics.StatsAggregationImpl;
 import com.liferay.portal.search.internal.aggregation.metrics.SumAggregationImpl;
+import com.liferay.portal.search.internal.aggregation.metrics.TopHitsAggregationImpl;
 import com.liferay.portal.search.internal.aggregation.metrics.ValueCountAggregationImpl;
 import com.liferay.portal.search.internal.aggregation.pipeline.AvgBucketPipelineAggregationImpl;
 import com.liferay.portal.search.internal.aggregation.pipeline.CumulativeSumPipelineAggregationImpl;
@@ -71,6 +79,7 @@ import com.liferay.portal.search.internal.aggregation.pipeline.PercentilesBucket
 import com.liferay.portal.search.internal.aggregation.pipeline.SerialDiffPipelineAggregationImpl;
 import com.liferay.portal.search.internal.aggregation.pipeline.StatsBucketPipelineAggregationImpl;
 import com.liferay.portal.search.internal.aggregation.pipeline.SumBucketPipelineAggregationImpl;
+import com.liferay.portal.search.query.Query;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -132,6 +141,21 @@ public class AggregationsImpl implements Aggregations {
 
 		return new ExtendedStatsBucketPipelineAggregationImpl(
 			name, bucketsPath);
+	}
+
+	@Override
+	public FilterAggregation filter(String name, Query query) {
+		return new FilterAggregationImpl(name, query);
+	}
+
+	@Override
+	public FiltersAggregation filters(String name, String field) {
+		return new FiltersAggregationImpl(name, field);
+	}
+
+	@Override
+	public GeoBoundsAggregation geoBounds(String name, String field) {
+		return new GeoBoundsAggregationImpl(name, field);
 	}
 
 	@Override
@@ -236,6 +260,11 @@ public class AggregationsImpl implements Aggregations {
 	@Override
 	public TermsAggregation terms(String name, String field) {
 		return new TermsAggregationImpl(name, field);
+	}
+
+	@Override
+	public TopHitsAggregation topHits(String name) {
+		return new TopHitsAggregationImpl(name);
 	}
 
 	@Override

@@ -953,8 +953,10 @@ public class AssetPublisherDisplayContext {
 			return _socialBookmarksDisplayStyle;
 		}
 
-		return _portletPreferences.getValue(
+		_socialBookmarksDisplayStyle = _portletPreferences.getValue(
 			"socialBookmarksDisplayStyle", null);
+
+		return _socialBookmarksDisplayStyle;
 	}
 
 	public String getSocialBookmarksTypes() {

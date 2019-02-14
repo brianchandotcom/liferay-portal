@@ -1,0 +1,7 @@
+{
+	"devDependencies": {
+		"check-source-formatting": "^2.0.12",
+		"liferay-module-config-generator": "^1.2.1",
+		"metal-cli": "^4.0.1"
+	},
+}

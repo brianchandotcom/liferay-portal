@@ -65,10 +65,6 @@ if (assetPublisherDisplayContext.isEnableTagBasedNavigation() && !assetPublisher
 	</c:if>
 </div>
 
-<%
-SearchContainer searchContainer = assetPublisherDisplayContext.getSearchContainer();
-%>
-
 <c:if test="<%= assetPublisherDisplayContext.isShowMetadataDescriptions() %>">
 	<liferay-asset:categorization-filter
 		assetType="content"
@@ -76,96 +72,80 @@ SearchContainer searchContainer = assetPublisherDisplayContext.getSearchContaine
 	/>
 </c:if>
 
+<%
+SearchContainer searchContainer = assetPublisherDisplayContext.getSearchContainer();
+
+List<AssetEntryResult> assetEntryResults = null;
+
+if (assetPublisherDisplayContext.isSelectionStyleDynamic()) {
+	assetEntryResults = assetPublisherHelper.getAssetEntryResults(searchContainer, assetPublisherDisplayContext.getAssetEntryQuery(), layout, portletPreferences, assetPublisherDisplayContext.getPortletName(), themeDisplay.getLocale(), themeDisplay.getTimeZone(), themeDisplay.getCompanyId(), scopeGroupId, themeDisplay.getUserId(), assetPublisherDisplayContext.getClassNameIds(), null);
+}
+else {
+	List<AssetEntry> assetEntries = assetPublisherDisplayContext.getAssetEntries();
+
+	if (ListUtil.isNotEmpty(assetEntries)) {
+		searchContainer.setTotal(assetEntries.size());
+
+		assetEntries = assetEntries.subList(searchContainer.getStart(), searchContainer.getResultEnd());
+
+		searchContainer.setResults(assetEntries);
+
+		assetEntryResults = new ArrayList<>();
+
+		assetEntryResults.add(new AssetEntryResult(assetEntries));
+	}
+}
+%>
+
 <c:choose>
-	<c:when test="<%= assetPublisherDisplayContext.isSelectionStyleDynamic() || assetPublisherDisplayContext.isSelectionStyleManual() %>">
+	<c:when test="<%= ListUtil.isNotEmpty(assetEntryResults) %>">
 
 		<%
-		List<AssetEntryResult> assetEntryResults = null;
-
-		if (assetPublisherDisplayContext.isSelectionStyleDynamic()) {
-			assetEntryResults = assetPublisherHelper.getAssetEntryResults(searchContainer, assetPublisherDisplayContext.getAssetEntryQuery(), layout, portletPreferences, assetPublisherDisplayContext.getPortletName(), themeDisplay.getLocale(), themeDisplay.getTimeZone(), themeDisplay.getCompanyId(), scopeGroupId, themeDisplay.getUserId(), assetPublisherDisplayContext.getClassNameIds(), null);
-		}
-		else {
-			List<AssetEntry> assetEntries = assetPublisherDisplayContext.getAssetEntries();
-
-			searchContainer.setTotal(assetEntries.size());
-
-			assetEntries = assetEntries.subList(searchContainer.getStart(), searchContainer.getResultEnd());
-
-			searchContainer.setResults(assetEntries);
-
-			assetEntryResults = new ArrayList<>();
-
-			assetEntryResults.add(new AssetEntryResult(assetEntries));
-		}
+		request.setAttribute("view.jsp-assetEntryResults", assetEntryResults);
 		%>
 
-		<c:choose>
-			<c:when test="<%= !assetEntryResults.isEmpty() %>">
-
-				<%
-				request.setAttribute("view.jsp-assetEntryResults", assetEntryResults);
-				%>
-
-				<liferay-util:include page="/view_asset_entry_list.jsp" servletContext="<%= application %>" />
-			</c:when>
-			<c:otherwise>
-				<liferay-ddm:template-renderer
-					className="<%= AssetEntry.class.getName() %>"
-					displayStyle="<%= assetPublisherDisplayContext.getDisplayStyle() %>"
-					displayStyleGroupId="<%= assetPublisherDisplayContext.getDisplayStyleGroupId() %>"
-					entries="<%= new ArrayList<AssetEntry>() %>"
-				>
-
-					<%
-					Map<Long, List<AssetPublisherAddItemHolder>> scopeAssetPublisherAddItemHolders = assetPublisherDisplayContext.getScopeAssetPublisherAddItemHolders(1);
-					%>
-
-					<c:if test="<%= MapUtil.isEmpty(scopeAssetPublisherAddItemHolders) && !((assetPublisherDisplayContext.getAssetCategoryId() > 0) || Validator.isNotNull(assetPublisherDisplayContext.getAssetTagName())) %>">
-
-						<%
-						renderRequest.setAttribute(WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);
-						%>
-
-					</c:if>
-
-					<div class="alert alert-info">
-						<c:choose>
-							<c:when test="<%= !portletName.equals(AssetPublisherPortletKeys.RELATED_ASSETS) %>">
-								<liferay-ui:message key="there-are-no-results" />
-							</c:when>
-							<c:otherwise>
-								<liferay-ui:message key="there-are-no-related-assets" />
-							</c:otherwise>
-						</c:choose>
-					</div>
-				</liferay-ddm:template-renderer>
-			</c:otherwise>
-		</c:choose>
+		<liferay-util:include page="/view_asset_entry_list.jsp" servletContext="<%= application %>" />
 	</c:when>
 	<c:otherwise>
-
-		<%
-		Map<Long, List<AssetPublisherAddItemHolder>> scopeAssetPublisherAddItemHolders = assetPublisherDisplayContext.getScopeAssetPublisherAddItemHolders(1);
-		%>
-
-		<c:if test="<%= MapUtil.isEmpty(scopeAssetPublisherAddItemHolders) && !((assetPublisherDisplayContext.getAssetCategoryId() > 0) || Validator.isNotNull(assetPublisherDisplayContext.getAssetTagName())) %>">
+		<liferay-ddm:template-renderer
+			className="<%= AssetEntry.class.getName() %>"
+			displayStyle="<%= assetPublisherDisplayContext.getDisplayStyle() %>"
+			displayStyleGroupId="<%= assetPublisherDisplayContext.getDisplayStyleGroupId() %>"
+			entries="<%= new ArrayList<AssetEntry>() %>"
+		>
 
 			<%
-			renderRequest.setAttribute(WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);
+			Map<Long, List<AssetPublisherAddItemHolder>> scopeAssetPublisherAddItemHolders = assetPublisherDisplayContext.getScopeAssetPublisherAddItemHolders(1);
 			%>
 
-		</c:if>
+			<c:if test="<%= MapUtil.isEmpty(scopeAssetPublisherAddItemHolders) && !((assetPublisherDisplayContext.getAssetCategoryId() > 0) || Validator.isNotNull(assetPublisherDisplayContext.getAssetTagName())) %>">
 
-		<div class="alert alert-info text-center">
-			<div>
-				<liferay-ui:message key="this-application-is-not-visible-to-users-yet" />
-			</div>
+				<%
+				renderRequest.setAttribute(WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);
+				%>
 
-			<div>
-				<aui:a href="javascript:;" onClick="<%= portletDisplay.getURLConfigurationJS() %>"><liferay-ui:message key="select-an-asset-list-to-make-it-visible" /></aui:a>
+			</c:if>
+
+			<div class="alert alert-info text-center">
+				<c:choose>
+					<c:when test="<%= assetPublisherDisplayContext.isSelectionStyleAssetList() && !portletName.equals(AssetPublisherPortletKeys.RELATED_ASSETS) %>">
+						<div>
+							<liferay-ui:message key="this-application-is-not-visible-to-users-yet" />
+						</div>
+
+						<div>
+							<aui:a href="javascript:;" onClick="<%= portletDisplay.getURLConfigurationJS() %>"><liferay-ui:message key="select-an-asset-list-to-make-it-visible" /></aui:a>
+						</div>
+					</c:when>
+					<c:when test="<%= !portletName.equals(AssetPublisherPortletKeys.RELATED_ASSETS) %>">
+						<liferay-ui:message key="there-are-no-results" />
+					</c:when>
+					<c:otherwise>
+						<liferay-ui:message key="there-are-no-related-assets" />
+					</c:otherwise>
+				</c:choose>
 			</div>
-		</div>
+		</liferay-ddm:template-renderer>
 	</c:otherwise>
 </c:choose>
 

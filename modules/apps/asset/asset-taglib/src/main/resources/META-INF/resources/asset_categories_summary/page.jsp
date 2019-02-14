@@ -49,7 +49,7 @@ for (AssetVocabulary vocabulary : vocabularies) {
 								portletURL.setParameter(paramName, String.valueOf(category.getCategoryId()));
 							%>
 
-								<a class="label label-dark label-lg" href="<%= HtmlUtil.escape(portletURL.toString()) %>"><%= HtmlUtil.escape(category.getTitle(themeDisplay.getLocale())) %></a>
+								<a class="label label-dark label-lg text-uppercase" href="<%= HtmlUtil.escape(portletURL.toString()) %>"><%= HtmlUtil.escape(category.getTitle(themeDisplay.getLocale())) %></a>
 
 							<%
 							}
@@ -62,7 +62,7 @@ for (AssetVocabulary vocabulary : vocabularies) {
 							for (AssetCategory category : curCategories) {
 							%>
 
-								<span class="label label-dark label-lg">
+								<span class="label label-dark label-lg text-uppercase">
 									<%= HtmlUtil.escape(category.getTitle(themeDisplay.getLocale())) %>
 								</span>
 
@@ -86,7 +86,7 @@ for (AssetVocabulary vocabulary : vocabularies) {
 								portletURL.setParameter(paramName, String.valueOf(category.getCategoryId()));
 							%>
 
-								<a class="asset-category" href="<%= HtmlUtil.escape(portletURL.toString()) %>"><%= _buildCategoryPath(category, themeDisplay) %></a>
+								<a class="asset-category text-uppercase" href="<%= HtmlUtil.escape(portletURL.toString()) %>"><%= _buildCategoryPath(category, themeDisplay) %></a>
 
 							<%
 							}
@@ -99,7 +99,7 @@ for (AssetVocabulary vocabulary : vocabularies) {
 							for (AssetCategory category : curCategories) {
 							%>
 
-								<span class="asset-category">
+								<span class="asset-category text-uppercase">
 									<%= _buildCategoryPath(category, themeDisplay) %>
 								</span>
 

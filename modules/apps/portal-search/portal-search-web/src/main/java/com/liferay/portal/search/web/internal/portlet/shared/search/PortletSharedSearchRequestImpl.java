@@ -19,12 +19,17 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory
 import com.liferay.portal.kernel.dao.search.DisplayTerms;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.service.PortletLocalService;
+import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.legacy.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.portal.search.web.internal.display.context.PortletRequestThemeDisplaySupplier;
@@ -43,6 +48,7 @@ import com.liferay.portal.search.web.search.request.SearchSettings;
 import com.liferay.portal.search.web.search.request.SearchSettingsContributor;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -177,15 +183,19 @@ public class PortletSharedSearchRequestImpl
 			searchResponseImpl, portletSharedRequestHelper);
 	}
 
-	protected Stream<Portlet> getPortlets(ThemeDisplay themeDisplay) {
-		Layout layout = themeDisplay.getLayout();
-
+	protected Stream<Portlet> getPortletsStream(Layout layout, long companyId) {
 		LayoutTypePortlet layoutTypePortlet =
 			(LayoutTypePortlet)layout.getLayoutType();
 
 		List<Portlet> portlets = layoutTypePortlet.getAllPortlets(false);
 
-		return portlets.stream();
+		if (Objects.equals(layout.getType(), LayoutConstants.TYPE_PORTLET)) {
+			return portlets.stream();
+		}
+
+		return Stream.concat(
+			portlets.stream(), _getInstantiatedPortletsStream(layout, companyId)
+		).distinct();
 	}
 
 	protected SearchSettingsContributor getSearchSettingsContributor(
@@ -222,7 +232,8 @@ public class PortletSharedSearchRequestImpl
 		getSearchSettingsContributorsStream(
 			ThemeDisplay themeDisplay, RenderRequest renderRequest) {
 
-		Stream<Portlet> portletsStream = getPortlets(themeDisplay);
+		Stream<Portlet> portletsStream = getPortletsStream(
+			themeDisplay.getLayout(), themeDisplay.getCompanyId());
 
 		return portletsStream.map(
 			portlet -> getSearchSettingsContributorOptional(
@@ -242,6 +253,12 @@ public class PortletSharedSearchRequestImpl
 	}
 
 	@Reference
+	protected PortletLocalService portletLocalService;
+
+	@Reference
+	protected PortletPreferencesLocalService portletPreferencesLocalService;
+
+	@Reference
 	protected PortletPreferencesLookup portletPreferencesLookup;
 
 	@Reference
@@ -255,6 +272,26 @@ public class PortletSharedSearchRequestImpl
 
 	@Reference
 	protected SearchRequestBuilderFactory searchRequestBuilderFactory;
+
+	private Stream<Portlet> _getInstantiatedPortletsStream(
+		Layout layout, long companyId) {
+
+		List<com.liferay.portal.kernel.model.PortletPreferences>
+			portletPreferencesList =
+				portletPreferencesLocalService.getPortletPreferences(
+					PortletKeys.PREFS_OWNER_ID_DEFAULT,
+					PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid());
+
+		return portletPreferencesList.stream(
+		).map(
+			portletPreferences -> portletLocalService.getPortletById(
+				companyId, portletPreferences.getPortletId())
+		).filter(
+			portlet ->
+				portlet.isInstanceable() &&
+				Validator.isNotNull(portlet.getInstanceId())
+		);
+	}
 
 	private ServiceTrackerMap<String, PortletSharedSearchContributor>
 		_portletSharedSearchContributors;

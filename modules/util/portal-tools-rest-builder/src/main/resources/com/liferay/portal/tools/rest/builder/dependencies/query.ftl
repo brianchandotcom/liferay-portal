@@ -7,6 +7,10 @@ package ${configYAML.apiPackagePath}.internal.query.${versionDirName};
 	</#list>
 </#compress>
 
+import com.liferay.oauth2.provider.scope.RequiresScope;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -14,11 +18,12 @@ import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLInvokeDetached;
 import graphql.annotations.annotationTypes.GraphQLName;
 
-import graphql.schema.DataFetchingEnvironment;
-
 import java.util.Collection;
+import java.util.Date;
 
 import javax.annotation.Generated;
+
+import javax.ws.rs.core.Response;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;

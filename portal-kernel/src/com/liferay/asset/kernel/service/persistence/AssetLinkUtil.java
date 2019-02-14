@@ -1148,10 +1148,6 @@ public class AssetLinkUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static AssetLinkPersistence getPersistence() {
 		if (_persistence == null) {
 			_persistence = (AssetLinkPersistence)PortalBeanLocatorUtil.locate(AssetLinkPersistence.class.getName());

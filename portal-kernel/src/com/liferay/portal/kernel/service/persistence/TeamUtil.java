@@ -1330,10 +1330,6 @@ public class TeamUtil {
 		getPersistence().setUserGroups(pk, userGroups);
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static TeamPersistence getPersistence() {
 		if (_persistence == null) {
 			_persistence = (TeamPersistence)PortalBeanLocatorUtil.locate(TeamPersistence.class.getName());

@@ -559,10 +559,6 @@ public class OAuth2ApplicationUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static OAuth2ApplicationPersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

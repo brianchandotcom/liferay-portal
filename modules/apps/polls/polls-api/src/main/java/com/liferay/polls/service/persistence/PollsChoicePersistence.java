@@ -21,11 +21,6 @@ import com.liferay.polls.model.PollsChoice;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
-
 /**
  * The persistence interface for the polls choice service.
  *
@@ -44,9 +39,6 @@ public interface PollsChoicePersistence extends BasePersistence<PollsChoice> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link PollsChoiceUtil} to access the polls choice persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, PollsChoice> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the polls choices where uuid = &#63;.
@@ -668,7 +660,4 @@ public interface PollsChoicePersistence extends BasePersistence<PollsChoice> {
 	* @return the number of polls choices
 	*/
 	public int countAll();
-
-	@Override
-	public Set<String> getBadColumnNames();
 }

@@ -1936,10 +1936,6 @@ public class DLFileVersionUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static DLFileVersionPersistence getPersistence() {
 		if (_persistence == null) {
 			_persistence = (DLFileVersionPersistence)PortalBeanLocatorUtil.locate(DLFileVersionPersistence.class.getName());

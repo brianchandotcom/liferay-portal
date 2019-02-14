@@ -483,10 +483,6 @@ public class DLSyncEventUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static DLSyncEventPersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

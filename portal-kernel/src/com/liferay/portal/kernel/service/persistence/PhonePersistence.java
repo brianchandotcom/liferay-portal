@@ -19,11 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.exception.NoSuchPhoneException;
 import com.liferay.portal.kernel.model.Phone;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
-
 /**
  * The persistence interface for the phone service.
  *
@@ -42,9 +37,6 @@ public interface PhonePersistence extends BasePersistence<Phone> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link PhoneUtil} to access the phone persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, Phone> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the phones where uuid = &#63;.
@@ -1163,7 +1155,4 @@ public interface PhonePersistence extends BasePersistence<Phone> {
 	* @return the number of phones
 	*/
 	public int countAll();
-
-	@Override
-	public Set<String> getBadColumnNames();
 }

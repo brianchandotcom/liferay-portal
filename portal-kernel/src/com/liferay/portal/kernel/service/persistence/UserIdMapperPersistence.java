@@ -19,11 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.exception.NoSuchUserIdMapperException;
 import com.liferay.portal.kernel.model.UserIdMapper;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
-
 /**
  * The persistence interface for the user ID mapper service.
  *
@@ -42,9 +37,6 @@ public interface UserIdMapperPersistence extends BasePersistence<UserIdMapper> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link UserIdMapperUtil} to access the user ID mapper persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, UserIdMapper> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the user ID mappers where userId = &#63;.
@@ -393,7 +385,4 @@ public interface UserIdMapperPersistence extends BasePersistence<UserIdMapper> {
 	* @return the number of user ID mappers
 	*/
 	public int countAll();
-
-	@Override
-	public Set<String> getBadColumnNames();
 }

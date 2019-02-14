@@ -1032,10 +1032,6 @@ public class SiteFriendlyURLUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static SiteFriendlyURLPersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

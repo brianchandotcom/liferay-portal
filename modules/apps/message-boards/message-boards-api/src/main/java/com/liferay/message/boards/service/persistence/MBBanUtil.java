@@ -1170,10 +1170,6 @@ public class MBBanUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static MBBanPersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

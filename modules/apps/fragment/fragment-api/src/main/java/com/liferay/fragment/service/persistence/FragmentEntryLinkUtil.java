@@ -1610,10 +1610,6 @@ public class FragmentEntryLinkUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static FragmentEntryLinkPersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

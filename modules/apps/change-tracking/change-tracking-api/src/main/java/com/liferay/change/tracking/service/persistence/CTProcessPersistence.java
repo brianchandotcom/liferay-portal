@@ -21,11 +21,6 @@ import com.liferay.change.tracking.model.CTProcess;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
-
 /**
  * The persistence interface for the ct process service.
  *
@@ -44,9 +39,6 @@ public interface CTProcessPersistence extends BasePersistence<CTProcess> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CTProcessUtil} to access the ct process persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, CTProcess> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the ct processes where companyId = &#63;.

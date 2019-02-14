@@ -21,11 +21,6 @@ import com.liferay.asset.entry.rel.model.AssetEntryAssetCategoryRel;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
-
 /**
  * The persistence interface for the asset entry asset category rel service.
  *
@@ -44,9 +39,6 @@ public interface AssetEntryAssetCategoryRelPersistence extends BasePersistence<A
 	 *
 	 * Never modify or reference this interface directly. Always use {@link AssetEntryAssetCategoryRelUtil} to access the asset entry asset category rel persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, AssetEntryAssetCategoryRel> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the asset entry asset category rels where assetEntryId = &#63;.

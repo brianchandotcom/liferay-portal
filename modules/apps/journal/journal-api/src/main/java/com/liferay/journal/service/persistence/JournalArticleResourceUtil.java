@@ -891,10 +891,6 @@ public class JournalArticleResourceUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static JournalArticleResourcePersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

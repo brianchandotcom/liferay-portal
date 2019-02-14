@@ -21,11 +21,6 @@ import com.liferay.message.boards.model.MBMailingList;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
-
 /**
  * The persistence interface for the message boards mailing list service.
  *
@@ -44,9 +39,6 @@ public interface MBMailingListPersistence extends BasePersistence<MBMailingList>
 	 *
 	 * Never modify or reference this interface directly. Always use {@link MBMailingListUtil} to access the message boards mailing list persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, MBMailingList> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the message boards mailing lists where uuid = &#63;.
@@ -671,7 +663,4 @@ public interface MBMailingListPersistence extends BasePersistence<MBMailingList>
 	* @return the number of message boards mailing lists
 	*/
 	public int countAll();
-
-	@Override
-	public Set<String> getBadColumnNames();
 }

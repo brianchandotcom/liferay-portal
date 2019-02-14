@@ -799,10 +799,6 @@ public class KaleoDefinitionUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static KaleoDefinitionPersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

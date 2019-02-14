@@ -21,11 +21,6 @@ import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
-
 /**
  * The persistence interface for the ddm template service.
  *
@@ -44,9 +39,6 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link DDMTemplateUtil} to access the ddm template persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, DDMTemplate> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the ddm templates where uuid = &#63;.
@@ -2913,7 +2905,4 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	* @return the number of ddm templates
 	*/
 	public int countAll();
-
-	@Override
-	public Set<String> getBadColumnNames();
 }

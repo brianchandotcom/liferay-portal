@@ -21,11 +21,6 @@ import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
-
 /**
  * The persistence interface for the export import configuration service.
  *
@@ -44,9 +39,6 @@ public interface ExportImportConfigurationPersistence extends BasePersistence<Ex
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ExportImportConfigurationUtil} to access the export import configuration persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, ExportImportConfiguration> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the export import configurations where groupId = &#63;.
@@ -880,7 +872,4 @@ public interface ExportImportConfigurationPersistence extends BasePersistence<Ex
 	* @return the number of export import configurations
 	*/
 	public int countAll();
-
-	@Override
-	public Set<String> getBadColumnNames();
 }

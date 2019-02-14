@@ -6147,10 +6147,6 @@ public class LayoutPageTemplateEntryUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static LayoutPageTemplateEntryPersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

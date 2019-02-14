@@ -21,11 +21,6 @@ import com.liferay.journal.model.JournalArticleLocalization;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
-
 /**
  * The persistence interface for the journal article localization service.
  *
@@ -44,9 +39,6 @@ public interface JournalArticleLocalizationPersistence extends BasePersistence<J
 	 *
 	 * Never modify or reference this interface directly. Always use {@link JournalArticleLocalizationUtil} to access the journal article localization persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, JournalArticleLocalization> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the journal article localizations where articlePK = &#63;.

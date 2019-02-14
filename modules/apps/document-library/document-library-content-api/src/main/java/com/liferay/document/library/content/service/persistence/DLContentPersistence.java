@@ -21,11 +21,6 @@ import com.liferay.document.library.content.model.DLContent;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
-
 /**
  * The persistence interface for the document library content service.
  *
@@ -44,9 +39,6 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link DLContentUtil} to access the document library content persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, DLContent> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the document library contents where companyId = &#63; and repositoryId = &#63;.
@@ -685,7 +677,4 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 	* @return the number of document library contents
 	*/
 	public int countAll();
-
-	@Override
-	public Set<String> getBadColumnNames();
 }

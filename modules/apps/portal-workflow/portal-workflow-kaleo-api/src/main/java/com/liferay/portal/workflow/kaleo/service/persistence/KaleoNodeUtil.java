@@ -793,10 +793,6 @@ public class KaleoNodeUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static KaleoNodePersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

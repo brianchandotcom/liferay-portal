@@ -21,11 +21,6 @@ import com.liferay.asset.kernel.model.AssetCategory;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
-
 /**
  * The persistence interface for the asset category service.
  *
@@ -44,9 +39,6 @@ public interface AssetCategoryPersistence extends BasePersistence<AssetCategory>
 	 *
 	 * Never modify or reference this interface directly. Always use {@link AssetCategoryUtil} to access the asset category persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, AssetCategory> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the asset categories where uuid = &#63;.
@@ -3074,9 +3066,6 @@ public interface AssetCategoryPersistence extends BasePersistence<AssetCategory>
 	*/
 	public void setAssetEntries(long pk,
 		java.util.List<com.liferay.asset.kernel.model.AssetEntry> assetEntries);
-
-	@Override
-	public Set<String> getBadColumnNames();
 
 	public long countAncestors(AssetCategory assetCategory);
 

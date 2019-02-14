@@ -3849,10 +3849,6 @@ public class BookmarksEntryUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static BookmarksEntryPersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

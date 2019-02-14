@@ -6246,10 +6246,6 @@ public class MBMessageUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static MBMessagePersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

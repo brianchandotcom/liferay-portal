@@ -914,10 +914,6 @@ public class DLContentUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static DLContentPersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

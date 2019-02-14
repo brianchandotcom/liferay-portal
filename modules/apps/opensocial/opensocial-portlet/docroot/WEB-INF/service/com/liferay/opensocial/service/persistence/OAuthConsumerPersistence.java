@@ -21,11 +21,6 @@ import com.liferay.opensocial.model.OAuthConsumer;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
-
 /**
  * The persistence interface for the o auth consumer service.
  *
@@ -44,9 +39,6 @@ public interface OAuthConsumerPersistence extends BasePersistence<OAuthConsumer>
 	 *
 	 * Never modify or reference this interface directly. Always use {@link OAuthConsumerUtil} to access the o auth consumer persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, OAuthConsumer> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the o auth consumers where gadgetKey = &#63;.

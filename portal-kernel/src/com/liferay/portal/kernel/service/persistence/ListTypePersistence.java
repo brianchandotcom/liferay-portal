@@ -19,11 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.exception.NoSuchListTypeException;
 import com.liferay.portal.kernel.model.ListType;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
-
 /**
  * The persistence interface for the list type service.
  *
@@ -42,9 +37,6 @@ public interface ListTypePersistence extends BasePersistence<ListType> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ListTypeUtil} to access the list type persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, ListType> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the list types where type = &#63;.
@@ -338,7 +330,4 @@ public interface ListTypePersistence extends BasePersistence<ListType> {
 	* @return the number of list types
 	*/
 	public int countAll();
-
-	@Override
-	public Set<String> getBadColumnNames();
 }

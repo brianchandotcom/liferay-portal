@@ -21,11 +21,6 @@ import com.liferay.calendar.model.CalendarBooking;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
-
 /**
  * The persistence interface for the calendar booking service.
  *
@@ -44,9 +39,6 @@ public interface CalendarBookingPersistence extends BasePersistence<CalendarBook
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CalendarBookingUtil} to access the calendar booking persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, CalendarBooking> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the calendar bookings where uuid = &#63;.
@@ -1503,7 +1495,4 @@ public interface CalendarBookingPersistence extends BasePersistence<CalendarBook
 	* @return the number of calendar bookings
 	*/
 	public int countAll();
-
-	@Override
-	public Set<String> getBadColumnNames();
 }

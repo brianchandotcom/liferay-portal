@@ -21,11 +21,6 @@ import com.liferay.opensocial.model.OAuthToken;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
-
 /**
  * The persistence interface for the o auth token service.
  *
@@ -44,9 +39,6 @@ public interface OAuthTokenPersistence extends BasePersistence<OAuthToken> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link OAuthTokenUtil} to access the o auth token persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, OAuthToken> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the o auth tokens where gadgetKey = &#63; and serviceName = &#63;.

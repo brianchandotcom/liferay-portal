@@ -20,11 +20,7 @@ import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.lock.exception.NoSuchLockException;
 import com.liferay.portal.lock.model.Lock;
 
-import java.io.Serializable;
-
 import java.util.Date;
-import java.util.Map;
-import java.util.Set;
 
 /**
  * The persistence interface for the lock service.
@@ -44,9 +40,6 @@ public interface LockPersistence extends BasePersistence<Lock> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link LockUtil} to access the lock persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, Lock> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the locks where uuid = &#63;.
@@ -614,7 +607,4 @@ public interface LockPersistence extends BasePersistence<Lock> {
 	* @return the number of locks
 	*/
 	public int countAll();
-
-	@Override
-	public Set<String> getBadColumnNames();
 }

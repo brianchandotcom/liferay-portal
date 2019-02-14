@@ -1961,10 +1961,6 @@ public class CalendarResourceUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static CalendarResourcePersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

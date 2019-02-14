@@ -2125,10 +2125,6 @@ public class AnnouncementsEntryUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static AnnouncementsEntryPersistence getPersistence() {
 		if (_persistence == null) {
 			_persistence = (AnnouncementsEntryPersistence)PortalBeanLocatorUtil.locate(AnnouncementsEntryPersistence.class.getName());

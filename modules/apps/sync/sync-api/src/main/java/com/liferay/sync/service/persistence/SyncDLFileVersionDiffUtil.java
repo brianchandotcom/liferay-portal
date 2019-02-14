@@ -691,10 +691,6 @@ public class SyncDLFileVersionDiffUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static SyncDLFileVersionDiffPersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

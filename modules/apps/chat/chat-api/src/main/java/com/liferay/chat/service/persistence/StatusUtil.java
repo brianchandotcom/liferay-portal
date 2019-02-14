@@ -803,10 +803,6 @@ public class StatusUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static StatusPersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

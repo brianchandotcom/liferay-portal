@@ -21,11 +21,6 @@ import com.liferay.marketplace.model.App;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
-
 /**
  * The persistence interface for the app service.
  *
@@ -44,9 +39,6 @@ public interface AppPersistence extends BasePersistence<App> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link AppUtil} to access the app persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, App> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the apps where uuid = &#63;.
@@ -736,7 +728,4 @@ public interface AppPersistence extends BasePersistence<App> {
 	* @return the number of apps
 	*/
 	public int countAll();
-
-	@Override
-	public Set<String> getBadColumnNames();
 }

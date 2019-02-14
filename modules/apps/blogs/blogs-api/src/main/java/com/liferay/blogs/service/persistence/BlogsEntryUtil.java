@@ -6276,10 +6276,6 @@ public class BlogsEntryUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static BlogsEntryPersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

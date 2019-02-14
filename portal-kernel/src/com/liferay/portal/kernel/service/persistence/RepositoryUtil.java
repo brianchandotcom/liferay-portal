@@ -872,10 +872,6 @@ public class RepositoryUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static RepositoryPersistence getPersistence() {
 		if (_persistence == null) {
 			_persistence = (RepositoryPersistence)PortalBeanLocatorUtil.locate(RepositoryPersistence.class.getName());

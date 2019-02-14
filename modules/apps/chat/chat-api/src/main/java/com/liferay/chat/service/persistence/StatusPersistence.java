@@ -21,11 +21,6 @@ import com.liferay.chat.model.Status;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
-
 /**
  * The persistence interface for the status service.
  *
@@ -44,9 +39,6 @@ public interface StatusPersistence extends BasePersistence<Status> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link StatusUtil} to access the status persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, Status> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns the status where userId = &#63; or throws a <code>NoSuchStatusException</code> if it could not be found.
@@ -609,7 +601,4 @@ public interface StatusPersistence extends BasePersistence<Status> {
 	* @return the number of statuses
 	*/
 	public int countAll();
-
-	@Override
-	public Set<String> getBadColumnNames();
 }

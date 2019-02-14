@@ -1166,10 +1166,6 @@ public class OAuth2AuthorizationUtil {
 		getPersistence().setOAuth2ScopeGrants(pk, oAuth2ScopeGrants);
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static OAuth2AuthorizationPersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

@@ -21,11 +21,6 @@ import com.liferay.journal.model.JournalFeed;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
-
 /**
  * The persistence interface for the journal feed service.
  *
@@ -44,9 +39,6 @@ public interface JournalFeedPersistence extends BasePersistence<JournalFeed> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link JournalFeedUtil} to access the journal feed persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, JournalFeed> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the journal feeds where uuid = &#63;.
@@ -727,7 +719,4 @@ public interface JournalFeedPersistence extends BasePersistence<JournalFeed> {
 	* @return the number of journal feeds
 	*/
 	public int countAll();
-
-	@Override
-	public Set<String> getBadColumnNames();
 }

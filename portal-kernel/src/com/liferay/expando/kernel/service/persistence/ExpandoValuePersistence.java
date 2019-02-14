@@ -21,11 +21,6 @@ import com.liferay.expando.kernel.model.ExpandoValue;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
-
 /**
  * The persistence interface for the expando value service.
  *
@@ -44,9 +39,6 @@ public interface ExpandoValuePersistence extends BasePersistence<ExpandoValue> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ExpandoValueUtil} to access the expando value persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, ExpandoValue> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the expando values where tableId = &#63;.
@@ -1392,7 +1384,4 @@ public interface ExpandoValuePersistence extends BasePersistence<ExpandoValue> {
 	* @return the number of expando values
 	*/
 	public int countAll();
-
-	@Override
-	public Set<String> getBadColumnNames();
 }

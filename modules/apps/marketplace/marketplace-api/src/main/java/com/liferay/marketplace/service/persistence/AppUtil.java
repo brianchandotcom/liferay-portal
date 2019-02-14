@@ -954,10 +954,6 @@ public class AppUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static AppPersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

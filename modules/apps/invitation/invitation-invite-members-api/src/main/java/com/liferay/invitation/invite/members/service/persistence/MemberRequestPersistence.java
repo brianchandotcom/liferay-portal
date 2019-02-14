@@ -21,11 +21,6 @@ import com.liferay.invitation.invite.members.model.MemberRequest;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
-
 /**
  * The persistence interface for the member request service.
  *
@@ -44,9 +39,6 @@ public interface MemberRequestPersistence extends BasePersistence<MemberRequest>
 	 *
 	 * Never modify or reference this interface directly. Always use {@link MemberRequestUtil} to access the member request persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, MemberRequest> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns the member request where key = &#63; or throws a <code>NoSuchMemberRequestException</code> if it could not be found.
@@ -540,7 +532,4 @@ public interface MemberRequestPersistence extends BasePersistence<MemberRequest>
 	* @return the number of member requests
 	*/
 	public int countAll();
-
-	@Override
-	public Set<String> getBadColumnNames();
 }

@@ -811,10 +811,6 @@ public class LockUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static LockPersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

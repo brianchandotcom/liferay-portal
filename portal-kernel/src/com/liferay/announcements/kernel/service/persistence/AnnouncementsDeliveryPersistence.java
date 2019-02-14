@@ -21,11 +21,6 @@ import com.liferay.announcements.kernel.model.AnnouncementsDelivery;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
-
 /**
  * The persistence interface for the announcements delivery service.
  *
@@ -44,9 +39,6 @@ public interface AnnouncementsDeliveryPersistence extends BasePersistence<Announ
 	 *
 	 * Never modify or reference this interface directly. Always use {@link AnnouncementsDeliveryUtil} to access the announcements delivery persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, AnnouncementsDelivery> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the announcements deliveries where userId = &#63;.
@@ -347,7 +339,4 @@ public interface AnnouncementsDeliveryPersistence extends BasePersistence<Announ
 	* @return the number of announcements deliveries
 	*/
 	public int countAll();
-
-	@Override
-	public Set<String> getBadColumnNames();
 }

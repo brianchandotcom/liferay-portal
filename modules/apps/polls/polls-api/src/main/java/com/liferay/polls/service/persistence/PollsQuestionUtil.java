@@ -881,10 +881,6 @@ public class PollsQuestionUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static PollsQuestionPersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

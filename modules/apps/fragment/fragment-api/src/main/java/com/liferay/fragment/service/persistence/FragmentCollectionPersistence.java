@@ -21,11 +21,6 @@ import com.liferay.fragment.model.FragmentCollection;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
-
 /**
  * The persistence interface for the fragment collection service.
  *
@@ -44,9 +39,6 @@ public interface FragmentCollectionPersistence extends BasePersistence<FragmentC
 	 *
 	 * Never modify or reference this interface directly. Always use {@link FragmentCollectionUtil} to access the fragment collection persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, FragmentCollection> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the fragment collections where uuid = &#63;.
@@ -947,7 +939,4 @@ public interface FragmentCollectionPersistence extends BasePersistence<FragmentC
 	* @return the number of fragment collections
 	*/
 	public int countAll();
-
-	@Override
-	public Set<String> getBadColumnNames();
 }

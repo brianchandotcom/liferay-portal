@@ -821,10 +821,6 @@ public class MDRActionUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static MDRActionPersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

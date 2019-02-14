@@ -19,11 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.exception.NoSuchCompanyException;
 import com.liferay.portal.kernel.model.Company;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
-
 /**
  * The persistence interface for the company service.
  *
@@ -42,9 +37,6 @@ public interface CompanyPersistence extends BasePersistence<Company> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CompanyUtil} to access the company persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, Company> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns the company where webId = &#63; or throws a <code>NoSuchCompanyException</code> if it could not be found.
@@ -417,7 +409,4 @@ public interface CompanyPersistence extends BasePersistence<Company> {
 	* @return the number of companies
 	*/
 	public int countAll();
-
-	@Override
-	public Set<String> getBadColumnNames();
 }

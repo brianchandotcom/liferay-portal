@@ -21,11 +21,6 @@ import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.wiki.exception.NoSuchPageResourceException;
 import com.liferay.wiki.model.WikiPageResource;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
-
 /**
  * The persistence interface for the wiki page resource service.
  *
@@ -44,9 +39,6 @@ public interface WikiPageResourcePersistence extends BasePersistence<WikiPageRes
 	 *
 	 * Never modify or reference this interface directly. Always use {@link WikiPageResourceUtil} to access the wiki page resource persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, WikiPageResource> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the wiki page resources where uuid = &#63;.
@@ -539,7 +531,4 @@ public interface WikiPageResourcePersistence extends BasePersistence<WikiPageRes
 	* @return the number of wiki page resources
 	*/
 	public int countAll();
-
-	@Override
-	public Set<String> getBadColumnNames();
 }

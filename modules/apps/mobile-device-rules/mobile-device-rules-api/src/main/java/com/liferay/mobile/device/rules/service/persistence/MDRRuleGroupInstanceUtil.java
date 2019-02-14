@@ -1600,10 +1600,6 @@ public class MDRRuleGroupInstanceUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static MDRRuleGroupInstancePersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

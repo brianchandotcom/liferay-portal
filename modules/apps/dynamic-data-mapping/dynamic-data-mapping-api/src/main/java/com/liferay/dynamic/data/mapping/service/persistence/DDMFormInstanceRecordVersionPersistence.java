@@ -21,11 +21,6 @@ import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
-
 /**
  * The persistence interface for the ddm form instance record version service.
  *
@@ -44,9 +39,6 @@ public interface DDMFormInstanceRecordVersionPersistence extends BasePersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link DDMFormInstanceRecordVersionUtil} to access the ddm form instance record version persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, DDMFormInstanceRecordVersion> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the ddm form instance record versions where formInstanceRecordId = &#63;.

@@ -640,10 +640,6 @@ public class MessageUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static MessagePersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

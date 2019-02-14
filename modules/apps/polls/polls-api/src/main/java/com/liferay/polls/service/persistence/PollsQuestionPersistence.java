@@ -21,11 +21,6 @@ import com.liferay.polls.model.PollsQuestion;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
-
 /**
  * The persistence interface for the polls question service.
  *
@@ -44,9 +39,6 @@ public interface PollsQuestionPersistence extends BasePersistence<PollsQuestion>
 	 *
 	 * Never modify or reference this interface directly. Always use {@link PollsQuestionUtil} to access the polls question persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, PollsQuestion> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the polls questions where uuid = &#63;.
@@ -681,7 +673,4 @@ public interface PollsQuestionPersistence extends BasePersistence<PollsQuestion>
 	* @return the number of polls questions
 	*/
 	public int countAll();
-
-	@Override
-	public Set<String> getBadColumnNames();
 }

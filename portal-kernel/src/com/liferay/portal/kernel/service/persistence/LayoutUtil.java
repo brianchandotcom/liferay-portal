@@ -3935,10 +3935,6 @@ public class LayoutUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static long countAncestors(Layout layout) {
 		return getPersistence().countAncestors(layout);
 	}

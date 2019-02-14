@@ -2116,10 +2116,6 @@ public class SharingEntryUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static SharingEntryPersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

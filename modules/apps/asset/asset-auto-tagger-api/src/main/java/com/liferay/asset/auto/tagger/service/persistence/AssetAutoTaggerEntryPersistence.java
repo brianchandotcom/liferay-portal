@@ -21,11 +21,6 @@ import com.liferay.asset.auto.tagger.model.AssetAutoTaggerEntry;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
-
 /**
  * The persistence interface for the asset auto tagger entry service.
  *
@@ -44,9 +39,6 @@ public interface AssetAutoTaggerEntryPersistence extends BasePersistence<AssetAu
 	 *
 	 * Never modify or reference this interface directly. Always use {@link AssetAutoTaggerEntryUtil} to access the asset auto tagger entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, AssetAutoTaggerEntry> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the asset auto tagger entries where assetEntryId = &#63;.

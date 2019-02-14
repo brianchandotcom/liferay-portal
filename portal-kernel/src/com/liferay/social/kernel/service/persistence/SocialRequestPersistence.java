@@ -21,11 +21,6 @@ import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.social.kernel.exception.NoSuchRequestException;
 import com.liferay.social.kernel.model.SocialRequest;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
-
 /**
  * The persistence interface for the social request service.
  *
@@ -44,9 +39,6 @@ public interface SocialRequestPersistence extends BasePersistence<SocialRequest>
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SocialRequestUtil} to access the social request persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, SocialRequest> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the social requests where uuid = &#63;.
@@ -1756,7 +1748,4 @@ public interface SocialRequestPersistence extends BasePersistence<SocialRequest>
 	* @return the number of social requests
 	*/
 	public int countAll();
-
-	@Override
-	public Set<String> getBadColumnNames();
 }

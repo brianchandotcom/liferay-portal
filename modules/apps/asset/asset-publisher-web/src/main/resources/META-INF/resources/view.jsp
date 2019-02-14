@@ -106,7 +106,7 @@ if (!assetPublisherDisplayContext.isPaginationTypeNone()) {
 		List<AssetEntryResult> assetEntryResults = null;
 
 		if (assetPublisherDisplayContext.isSelectionStyleDynamic()) {
-			assetEntryResults = assetPublisherHelper.getAssetEntryResults(searchContainer, assetPublisherDisplayContext.getAssetEntryQuery(), assetPublisherDisplayContext.getLayout(), portletPreferences, assetPublisherDisplayContext.getPortletName(), assetPublisherDisplayContext.getLocale(), assetPublisherDisplayContext.getTimeZone(), assetPublisherDisplayContext.getCompanyId(), assetPublisherDisplayContext.getScopeGroupId(), assetPublisherDisplayContext.getUserId(), assetPublisherDisplayContext.getClassNameIds(), null);
+			assetEntryResults = assetPublisherHelper.getAssetEntryResults(searchContainer, assetPublisherDisplayContext.getAssetEntryQuery(), layout, portletPreferences, assetPublisherDisplayContext.getPortletName(), themeDisplay.getLocale(), themeDisplay.getTimeZone(), themeDisplay.getCompanyId(), scopeGroupId, themeDisplay.getUserId(), assetPublisherDisplayContext.getClassNameIds(), null);
 		}
 		else {
 			List<AssetEntry> assetEntries = assetPublisherDisplayContext.getAssetEntries();

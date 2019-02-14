@@ -92,8 +92,7 @@ public class AssetRSSUtil {
 		String rss = exportToRSS(
 			portletRequest, portletResponse, rssName, format, version,
 			rssDisplayStyle, assetLinkBehavior,
-			getAssetEntries(
-				portletRequest, portletResponse, portletPreferences));
+			getAssetEntries(portletRequest, portletPreferences));
 
 		return rss.getBytes(StringPool.UTF8);
 	}
@@ -185,9 +184,12 @@ public class AssetRSSUtil {
 	}
 
 	protected List<AssetEntry> getAssetEntries(
-			PortletRequest portletRequest, PortletResponse portletResponse,
+			PortletRequest portletRequest,
 			PortletPreferences portletPreferences)
 		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		List<AssetEntry> assetEntries = new ArrayList<>();
 
@@ -208,13 +210,11 @@ public class AssetRSSUtil {
 			_assetPublisherHelper.getAssetEntryResults(
 				searchContainer,
 				assetPublisherDisplayContext.getAssetEntryQuery(),
-				assetPublisherDisplayContext.getLayout(), portletPreferences,
+				themeDisplay.getLayout(), portletPreferences,
 				assetPublisherDisplayContext.getPortletName(),
-				assetPublisherDisplayContext.getLocale(),
-				assetPublisherDisplayContext.getTimeZone(),
-				assetPublisherDisplayContext.getCompanyId(),
-				assetPublisherDisplayContext.getScopeGroupId(),
-				assetPublisherDisplayContext.getUserId(),
+				themeDisplay.getLocale(), themeDisplay.getTimeZone(),
+				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
+				themeDisplay.getUserId(),
 				assetPublisherDisplayContext.getClassNameIds(), attributes);
 
 		for (AssetEntryResult assetEntryResult : assetEntryResults) {

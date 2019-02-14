@@ -14,29 +14,19 @@
 
 package com.liferay.portal.upgrade.v7_2_x;
 
-import aQute.bnd.version.Version;
-
-import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.upgrade.util.PortalUpgradeProcessRegistry;
-
-import java.util.TreeMap;
+import com.liferay.portal.kernel.upgrade.BaseUpgradeBadColumnNames;
+import com.liferay.portal.upgrade.v7_2_x.util.CompanyTable;
+import com.liferay.portal.upgrade.v7_2_x.util.LayoutTable;
 
 /**
- * @author José Ángel Jiménez
+ * @author Tina Tian
  */
-public class PortalUpgradeProcessRegistryImpl
-	implements PortalUpgradeProcessRegistry {
+public class UpgradeBadColumnNames extends BaseUpgradeBadColumnNames {
 
 	@Override
-	public void registerUpgradeProcesses(
-		TreeMap<Version, UpgradeProcess> upgradeProcesses) {
-
-		upgradeProcesses.put(
-			new Version("3.0.0"), new UpgradeSQLServerDatetime());
-
-		upgradeProcesses.put(new Version("4.0.0"), new UpgradeSchema());
-
-		upgradeProcesses.put(new Version("5.0.0"), new UpgradeBadColumnNames());
+	protected void doUpgrade() throws Exception {
+		upgradeBadColumnNames(CompanyTable.class, "system");
+		upgradeBadColumnNames(LayoutTable.class, "system");
 	}
 
 }

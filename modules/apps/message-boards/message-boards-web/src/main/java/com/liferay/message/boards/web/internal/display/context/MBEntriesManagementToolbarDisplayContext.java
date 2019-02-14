@@ -17,6 +17,8 @@ package com.liferay.message.boards.web.internal.display.context;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.SafeConsumer;
 import com.liferay.message.boards.constants.MBCategoryConstants;
 import com.liferay.message.boards.constants.MBPortletKeys;
@@ -263,6 +265,40 @@ public class MBEntriesManagementToolbarDisplayContext {
 						dropdownGroupItem.setLabel(
 							LanguageUtil.get(_request, "order-by"));
 					});
+			}
+		};
+	}
+
+	public List<LabelItem> getFilterLabelItems() {
+		return new LabelItemList() {
+			{
+				final String entriesNavigation = ParamUtil.getString(
+					_request, "entriesNavigation", "all");
+
+				if (entriesNavigation.equals("threads") ||
+					entriesNavigation.equals("categories")) {
+
+					add(
+						SafeConsumer.ignore(
+							labelItem -> {
+								PortletURL removeLabelURL =
+									PortletURLUtil.clone(
+										_currentURLObj,
+										_liferayPortletResponse);
+
+								removeLabelURL.setParameter(
+									"entriesNavigation", (String)null);
+
+								labelItem.putData(
+									"removeLabelURL",
+									removeLabelURL.toString());
+
+								labelItem.setCloseable(true);
+								labelItem.setLabel(
+									LanguageUtil.get(
+										_request, entriesNavigation));
+							}));
+				}
 			}
 		};
 	}

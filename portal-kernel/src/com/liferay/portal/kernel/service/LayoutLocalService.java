@@ -824,8 +824,17 @@ public interface LayoutLocalService extends BaseLocalService,
 	public Layout getLayoutByUuidAndGroupId(String uuid, long groupId,
 		boolean privateLayout) throws PortalException;
 
+	/**
+	* @deprecated As of Judson (7.1.x), replaced by {@link
+	#getLayoutChildLayouts(long)}
+	*/
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Map<Long, List<Layout>> getLayoutChildLayouts(LayoutSet layoutSet,
+		List<Layout> parentLayouts);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Map<Long, List<Layout>> getLayoutChildLayouts(
 		List<Layout> parentLayouts);
 
 	/**

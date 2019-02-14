@@ -15,6 +15,7 @@
 package com.liferay.segments.upgrade.v_0_0_1.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.expando.kernel.model.ExpandoColumnConstants;
 import com.liferay.expando.kernel.model.ExpandoTable;
@@ -35,6 +36,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
+import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -56,6 +58,14 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 
+import java.text.DateFormat;
+
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+
+import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -241,6 +251,61 @@ public class UpgradeContentTargetingTest {
 			Criteria.Conjunction.parse(criterion.getConjunction()));
 		Assert.assertEquals(
 			"(languageId eq 'es_ES')", criterion.getFilterString());
+	}
+
+	@Test
+	public void testUpgradeContentTargetingUserSegmentsWithLastLoginDateRule()
+		throws Exception {
+
+		long contentTargetingUserSegmentId = -1L;
+
+		ZoneId zoneId = ZoneOffset.UTC;
+
+		ZonedDateTime startZonedDateTime = ZonedDateTime.of(
+			2018, 1, 1, 10, 0, 0, 0, zoneId);
+		ZonedDateTime endZonedDateTime = ZonedDateTime.of(
+			2019, 1, 1, 10, 0, 0, 0, zoneId);
+
+		insertContentTargetingRuleInstance(
+			contentTargetingUserSegmentId, "LastLoginDateRule",
+			_getDateRangeTypeSettings(
+				startZonedDateTime, endZonedDateTime, zoneId.getId(),
+				"between"));
+
+		insertContentTargetingUserSegment(
+			contentTargetingUserSegmentId,
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomLocaleStringMap());
+
+		_upgradeContentTargeting.upgrade();
+
+		SegmentsEntry segmentsEntry =
+			_segmentsEntryLocalService.fetchSegmentsEntry(
+				_group.getGroupId(), "CT." + contentTargetingUserSegmentId,
+				false);
+
+		Assert.assertNotNull(segmentsEntry);
+
+		Criteria criteriaObj = segmentsEntry.getCriteriaObj();
+
+		Assert.assertNotNull(criteriaObj);
+
+		Criteria.Criterion criterion = criteriaObj.getCriterion("context");
+
+		Assert.assertNotNull(criterion);
+
+		Assert.assertEquals(
+			Criteria.Conjunction.AND,
+			Criteria.Conjunction.parse(criterion.getConjunction()));
+		Assert.assertEquals(
+			StringBundler.concat(
+				"(lastSignInDateTime gt ",
+				startZonedDateTime.format(
+					DateTimeFormatter.ISO_OFFSET_DATE_TIME),
+				") and (lastSignInDateTime lt ",
+				endZonedDateTime.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME),
+				")"),
+			criterion.getFilterString());
 	}
 
 	@Test
@@ -490,7 +555,7 @@ public class UpgradeContentTargetingTest {
 		try (Connection con = DataAccess.getConnection();
 			PreparedStatement ps = con.prepareStatement(sql)) {
 
-			ps.setLong(1, -1L);
+			ps.setLong(1, _counterLocalService.increment());
 			ps.setLong(2, _group.getGroupId());
 			ps.setLong(3, _group.getCompanyId());
 			ps.setLong(4, TestPropsValues.getUserId());
@@ -609,19 +674,49 @@ public class UpgradeContentTargetingTest {
 		return jsonObj.toString();
 	}
 
+	private String _getDateRangeTypeSettings(
+		ZonedDateTime startZonedDateTime, ZonedDateTime endZonedDateTime,
+		String timeZoneId, String type) {
+
+		JSONObject jsonObj = JSONFactoryUtil.createJSONObject();
+
+		DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
+			"yyyy-MM-dd HH:mm", Locale.ENGLISH);
+
+		jsonObj.put(
+			"startDate",
+			dateFormat.format(Date.from(startZonedDateTime.toInstant())));
+
+		jsonObj.put("startDateTimeZoneId", timeZoneId);
+		jsonObj.put("type", type);
+
+		if (type.equals("between")) {
+			jsonObj.put(
+				"endDate",
+				dateFormat.format(Date.from(endZonedDateTime.toInstant())));
+
+			jsonObj.put("endDateTimeZoneId", timeZoneId);
+		}
+
+		return jsonObj.toString();
+	}
+
 	private static final String _CLASS_NAME =
 		"com.liferay.segments.internal.upgrade.v0_0_1.UpgradeContentTargeting";
 
 	private static DB _db;
 
 	@Inject
-	private static SegmentsEntryLocalService _segmentsEntryLocalService;
+	private CounterLocalService _counterLocalService;
 
 	@DeleteAfterTestRun
 	private ExpandoTable _expandoTable;
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private SegmentsEntryLocalService _segmentsEntryLocalService;
 
 	private UpgradeProcess _upgradeContentTargeting;
 

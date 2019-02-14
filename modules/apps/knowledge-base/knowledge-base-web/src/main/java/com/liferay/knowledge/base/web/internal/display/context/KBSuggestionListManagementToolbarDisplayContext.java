@@ -98,6 +98,14 @@ public class KBSuggestionListManagementToolbarDisplayContext {
 		return availableActionDropdownItems;
 	}
 
+	public String getClearResultsURL() {
+		PortletURL clearResultsURL = _liferayPortletResponse.createRenderURL();
+
+		clearResultsURL.setParameter("mvcPath", "/admin/view_suggestions.jsp");
+
+		return clearResultsURL.toString();
+	}
+
 	public List<DropdownItem> getFilterDropdownItems() {
 		return new DropdownItemList() {
 			{

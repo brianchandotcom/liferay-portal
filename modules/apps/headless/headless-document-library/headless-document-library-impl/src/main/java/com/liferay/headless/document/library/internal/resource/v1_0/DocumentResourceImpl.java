@@ -21,10 +21,14 @@ import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.util.DLURLHelper;
+import com.liferay.headless.document.library.dto.v1_0.Creator;
 import com.liferay.headless.document.library.dto.v1_0.Document;
+import com.liferay.headless.document.library.internal.dto.v1_0.CreatorUtil;
 import com.liferay.headless.document.library.resource.v1_0.DocumentResource;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.List;
@@ -46,7 +50,9 @@ public class DocumentResourceImpl extends BaseDocumentResourceImpl {
 	public Document getDocument(Long documentId) throws Exception {
 		FileEntry fileEntry = _dlAppService.getFileEntry(documentId);
 
-		return _toDocument(fileEntry, fileEntry.getFileVersion());
+		User user = _userService.getUserById(fileEntry.getUserId());
+
+		return _toDocument(fileEntry, fileEntry.getFileVersion(), user);
 	}
 
 	private String[] _getAssetTagNames(FileEntry fileEntry) {
@@ -65,7 +71,9 @@ public class DocumentResourceImpl extends BaseDocumentResourceImpl {
 			assetCategories, AssetCategory.CATEGORY_ID_ACCESSOR);
 	}
 
-	private Document _toDocument(FileEntry fileEntry, FileVersion fileVersion) {
+	private Document _toDocument(
+		FileEntry fileEntry, FileVersion fileVersion, User user) {
+
 		String previewURL = _dlURLHelper.getPreviewURL(
 			fileEntry, fileVersion, null, "");
 
@@ -73,10 +81,13 @@ public class DocumentResourceImpl extends BaseDocumentResourceImpl {
 
 		String[] keywords = _getAssetTagNames(fileEntry);
 
+		Creator creator = CreatorUtil.toCreator(user);
+
 		return new Document() {
 			{
 				setCategory(categoryIds);
 				setContentUrl(previewURL);
+				setCreator(creator);
 				setDateCreated(fileEntry.getCreateDate());
 				setDateModified(fileEntry.getModifiedDate());
 				setDescription(fileEntry.getDescription());
@@ -102,5 +113,8 @@ public class DocumentResourceImpl extends BaseDocumentResourceImpl {
 
 	@Reference
 	private DLURLHelper _dlURLHelper;
+
+	@Reference
+	private UserService _userService;
 
 }

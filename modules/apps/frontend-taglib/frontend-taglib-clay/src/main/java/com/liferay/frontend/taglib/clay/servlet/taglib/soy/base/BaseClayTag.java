@@ -173,9 +173,7 @@ public abstract class BaseClayTag extends TemplateRendererTag {
 		Map<String, Object> attributes = attributeProvider.getAttributes();
 
 		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
-			if (Validator.isNull(getContext().get(entry.getKey()))) {
-				putValue(entry.getKey(), entry.getValue());
-			}
+			putValue(entry.getKey(), entry.getValue());
 		}
 	}
 

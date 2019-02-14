@@ -37,8 +37,8 @@ if (Validator.isNotNull(backURL)) {
 renderResponse.setTitle(editSegmentsEntryDisplayContext.getTitle(locale));
 %>
 
-<liferay-ui:error exception="<%= SegmentsEntryCriteriaException.class %>" message="invalid-criteria" />
-<liferay-ui:error exception="<%= SegmentsEntryKeyException.class %>" message="key-is-already-used" />
+<liferay-ui:error embed="<%= false %>" exception="<%= SegmentsEntryCriteriaException.class %>" message="invalid-criteria" />
+<liferay-ui:error embed="<%= false %>" exception="<%= SegmentsEntryKeyException.class %>" message="key-is-already-used" />
 
 <portlet:actionURL name="updateSegmentsEntry" var="updateSegmentsEntryActionURL" />
 

@@ -19,6 +19,7 @@ import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.layout.constants.LayoutConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
@@ -130,23 +131,70 @@ public class UpgradeLayoutPageTemplateStructure extends UpgradeProcess {
 		runSQLTemplateString(template, false, false);
 	}
 
-	private void _updateLayoutPageTemplateStructure(
-		long groupId, long companyId, long userId, String userName,
-		Timestamp createDate, long classNameId, long classPK) {
+	private JSONObject _generateLayoutPageTemplateStructureData(
+		long groupId, long classNameId, long classPK) {
 
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		List<FragmentEntryLink> fragmentEntryLinks =
 			_fragmentEntryLinkLocalService.getFragmentEntryLinks(
 				groupId, classNameId, classPK);
 
+		JSONArray structureJSONArray = JSONFactoryUtil.createJSONArray();
+
+		int fragmentLinkEntryCount = 0;
+
 		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
-			jsonArray.put(fragmentEntryLink.getFragmentEntryLinkId());
+			JSONArray fragmentEntryLinksJSONArray =
+				JSONFactoryUtil.createJSONArray();
+
+			fragmentEntryLinksJSONArray.put(
+				fragmentEntryLink.getFragmentEntryLinkId());
+
+			JSONObject columnJSONObject = JSONFactoryUtil.createJSONObject();
+
+			columnJSONObject.put(
+				"columnId", String.valueOf(fragmentLinkEntryCount));
+			columnJSONObject.put(
+				"fragmentEntryLinkIds", fragmentEntryLinksJSONArray);
+			columnJSONObject.put("size", StringPool.BLANK);
+
+			JSONArray columnJSONArray = JSONFactoryUtil.createJSONArray();
+
+			columnJSONArray.put(columnJSONObject);
+
+			JSONObject structureJSONObject = JSONFactoryUtil.createJSONObject();
+
+			structureJSONObject.put("columns", columnJSONArray);
+			structureJSONObject.put(
+				"rowId", String.valueOf(fragmentLinkEntryCount));
+
+			structureJSONArray.put(structureJSONObject);
+
+			fragmentLinkEntryCount++;
 		}
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+		jsonObject.put("config", JSONFactoryUtil.createJSONObject());
+		jsonObject.put("nextColumnId", String.valueOf(fragmentLinkEntryCount));
+		jsonObject.put("nextRowId", String.valueOf(fragmentLinkEntryCount));
 
-		jsonObject.put("structure", jsonArray);
+		if (fragmentLinkEntryCount > 0) {
+			int rowId = fragmentLinkEntryCount - 1;
+
+			jsonObject.put("rowId", String.valueOf(rowId));
+		}
+
+		jsonObject.put("structure", structureJSONArray);
+
+		return jsonObject;
+	}
+
+	private void _updateLayoutPageTemplateStructure(
+		long groupId, long companyId, long userId, String userName,
+		Timestamp createDate, long classNameId, long classPK) {
+
+		JSONObject jsonObject = _generateLayoutPageTemplateStructureData(
+			groupId, classNameId, classPK);
 
 		StringBuilder sb = new StringBuilder(4);
 

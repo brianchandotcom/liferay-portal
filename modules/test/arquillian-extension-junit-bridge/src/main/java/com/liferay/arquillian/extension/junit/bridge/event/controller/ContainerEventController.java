@@ -26,8 +26,6 @@ import org.jboss.arquillian.container.spi.client.container.DeploymentException;
 import org.jboss.arquillian.container.spi.client.container.LifecycleException;
 import org.jboss.arquillian.container.spi.client.deployment.Deployment;
 import org.jboss.arquillian.container.spi.client.deployment.DeploymentDescription;
-import org.jboss.arquillian.core.api.Injector;
-import org.jboss.arquillian.core.api.Instance;
 import org.jboss.arquillian.core.api.InstanceProducer;
 import org.jboss.arquillian.core.api.annotation.ApplicationScoped;
 import org.jboss.arquillian.core.api.annotation.Inject;
@@ -88,18 +86,11 @@ public class ContainerEventController {
 			new LiferayRemoteDeployableContainer(
 				_mBeanServerConnectionInstanceProducer));
 
-		Injector injector = _injectorInstance.get();
-
-		injector.inject(_container);
-
 		_container.start();
 	}
 
 	private Container _container;
 	private Deployment _deployment;
-
-	@Inject
-	private Instance<Injector> _injectorInstance;
 
 	@ApplicationScoped
 	@Inject

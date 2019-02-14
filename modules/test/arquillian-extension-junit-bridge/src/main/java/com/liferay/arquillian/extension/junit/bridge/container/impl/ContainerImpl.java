@@ -21,15 +21,6 @@ import org.jboss.arquillian.container.spi.client.container.ContainerConfiguratio
 import org.jboss.arquillian.container.spi.client.container.DeployableContainer;
 import org.jboss.arquillian.container.spi.client.container.LifecycleException;
 import org.jboss.arquillian.container.spi.client.protocol.ProtocolDescription;
-import org.jboss.arquillian.container.spi.event.container.AfterKill;
-import org.jboss.arquillian.container.spi.event.container.AfterSetup;
-import org.jboss.arquillian.container.spi.event.container.AfterStart;
-import org.jboss.arquillian.container.spi.event.container.BeforeKill;
-import org.jboss.arquillian.container.spi.event.container.BeforeSetup;
-import org.jboss.arquillian.container.spi.event.container.BeforeStart;
-import org.jboss.arquillian.container.spi.event.container.ContainerEvent;
-import org.jboss.arquillian.core.api.Event;
-import org.jboss.arquillian.core.api.annotation.Inject;
 
 /**
  * @author Matthew Tambara
@@ -89,9 +80,6 @@ public class ContainerImpl implements Container {
 
 	@Override
 	public void kill() {
-		_containerEvent.fire(new BeforeKill(_deployableContainer));
-
-		_containerEvent.fire(new AfterKill(_deployableContainer));
 	}
 
 	@Override
@@ -101,17 +89,11 @@ public class ContainerImpl implements Container {
 
 	@Override
 	public void setup() {
-		_containerEvent.fire(new BeforeSetup(_deployableContainer));
-
 		setState(Container.State.SETUP);
-
-		_containerEvent.fire(new AfterSetup(_deployableContainer));
 	}
 
 	@Override
 	public void start() throws LifecycleException {
-		_containerEvent.fire(new BeforeStart(_deployableContainer));
-
 		try {
 			_deployableContainer.start();
 
@@ -124,16 +106,11 @@ public class ContainerImpl implements Container {
 
 			throw le;
 		}
-
-		_containerEvent.fire(new AfterStart(_deployableContainer));
 	}
 
 	@Override
 	public void stop() {
 	}
-
-	@Inject
-	private Event<ContainerEvent> _containerEvent;
 
 	private final DeployableContainer<?> _deployableContainer;
 	private Throwable _failureCause;

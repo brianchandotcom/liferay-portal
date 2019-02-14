@@ -324,8 +324,7 @@ public class BulkAssetEntryResource {
 			_assetVocabularyLocalService.getGroupVocabularies(
 				_portal.getCurrentAndAncestorSiteGroupIds(groupId));
 
-		Stream<AssetVocabulary> stream =
-			assetVocabularies.stream();
+		Stream<AssetVocabulary> stream = assetVocabularies.stream();
 
 		return stream.filter(
 			assetVocabulary -> assetVocabulary.isAssociatedToClassNameId(

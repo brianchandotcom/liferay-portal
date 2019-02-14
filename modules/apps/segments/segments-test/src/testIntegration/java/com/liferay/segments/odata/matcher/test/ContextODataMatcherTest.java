@@ -24,6 +24,8 @@ import com.liferay.segments.odata.matcher.ODataMatcher;
 
 import java.time.LocalDate;
 import java.time.Month;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
 import org.junit.Assert;
@@ -174,6 +176,148 @@ public class ContextODataMatcherTest {
 				StringBundler.concat(
 					"(", Context.LOCAL_DATE, " le ",
 					tomorrowLocalDate.format(DateTimeFormatter.ISO_LOCAL_DATE),
+					")"),
+				context));
+	}
+
+	@Test
+	public void testMatchesDateTimeEquals() throws Exception {
+		ZonedDateTime zonedDateTime = ZonedDateTime.of(
+			2019, 1, 1, 10, 30, 0, 0, ZoneOffset.UTC);
+
+		Context context = new Context() {
+			{
+				put(Context.LAST_SIGN_IN_DATE_TIME, zonedDateTime);
+			}
+		};
+
+		Assert.assertTrue(
+			_contextODataMatcher.matches(
+				StringBundler.concat(
+					"(", Context.LAST_SIGN_IN_DATE_TIME, " eq ",
+					zonedDateTime.format(
+						DateTimeFormatter.ISO_OFFSET_DATE_TIME),
+					")"),
+				context));
+
+		ZonedDateTime nextHourZonedDateTime = zonedDateTime.plusHours(1);
+
+		Assert.assertFalse(
+			_contextODataMatcher.matches(
+				StringBundler.concat(
+					"(", Context.LAST_SIGN_IN_DATE_TIME, " eq ",
+					nextHourZonedDateTime.format(
+						DateTimeFormatter.ISO_OFFSET_DATE_TIME),
+					")"),
+				context));
+	}
+
+	@Test
+	public void testMatchesDateTimeGreater() throws Exception {
+		ZonedDateTime zonedDateTime = ZonedDateTime.of(
+			2019, 1, 1, 10, 30, 0, 0, ZoneOffset.UTC);
+
+		Context context = new Context() {
+			{
+				put(
+					Context.LAST_SIGN_IN_DATE_TIME,
+					ZonedDateTime.of(2019, 1, 1, 11, 30, 0, 0, ZoneOffset.UTC));
+			}
+		};
+
+		Assert.assertTrue(
+			_contextODataMatcher.matches(
+				StringBundler.concat(
+					"(", Context.LAST_SIGN_IN_DATE_TIME, " gt ",
+					zonedDateTime.format(
+						DateTimeFormatter.ISO_OFFSET_DATE_TIME),
+					")"),
+				context));
+	}
+
+	@Test
+	public void testMatchesDateTimeGreaterOrEquals() throws Exception {
+		ZonedDateTime zonedDateTime = ZonedDateTime.of(
+			2019, 1, 1, 10, 30, 0, 0, ZoneOffset.UTC);
+
+		Context context = new Context() {
+			{
+				put(Context.LAST_SIGN_IN_DATE_TIME, zonedDateTime);
+			}
+		};
+
+		Assert.assertTrue(
+			_contextODataMatcher.matches(
+				StringBundler.concat(
+					"(", Context.LAST_SIGN_IN_DATE_TIME, " ge ",
+					zonedDateTime.format(
+						DateTimeFormatter.ISO_OFFSET_DATE_TIME),
+					")"),
+				context));
+
+		ZonedDateTime pastHourZonedDateTime = zonedDateTime.minusHours(1);
+
+		Assert.assertTrue(
+			_contextODataMatcher.matches(
+				StringBundler.concat(
+					"(", Context.LAST_SIGN_IN_DATE_TIME, " ge ",
+					pastHourZonedDateTime.format(
+						DateTimeFormatter.ISO_OFFSET_DATE_TIME),
+					")"),
+				context));
+	}
+
+	@Test
+	public void testMatchesDateTimeLesser() throws Exception {
+		ZonedDateTime zonedDateTime = ZonedDateTime.of(
+			2019, 1, 1, 10, 30, 0, 0, ZoneOffset.UTC);
+
+		Context context = new Context() {
+			{
+				put(
+					Context.LAST_SIGN_IN_DATE_TIME,
+					ZonedDateTime.of(2019, 1, 1, 9, 30, 0, 0, ZoneOffset.UTC));
+			}
+		};
+
+		Assert.assertTrue(
+			_contextODataMatcher.matches(
+				StringBundler.concat(
+					"(", Context.LAST_SIGN_IN_DATE_TIME, " lt ",
+					zonedDateTime.format(
+						DateTimeFormatter.ISO_OFFSET_DATE_TIME),
+					")"),
+				context));
+	}
+
+	@Test
+	public void testMatchesDateTimeLesserOrEquals() throws Exception {
+		ZonedDateTime zonedDateTime = ZonedDateTime.of(
+			2019, 1, 1, 10, 30, 0, 0, ZoneOffset.UTC);
+
+		Context context = new Context() {
+			{
+				put(Context.LAST_SIGN_IN_DATE_TIME, zonedDateTime);
+			}
+		};
+
+		Assert.assertTrue(
+			_contextODataMatcher.matches(
+				StringBundler.concat(
+					"(", Context.LAST_SIGN_IN_DATE_TIME, " le ",
+					zonedDateTime.format(
+						DateTimeFormatter.ISO_OFFSET_DATE_TIME),
+					")"),
+				context));
+
+		ZonedDateTime nextHourZonedDateTime = zonedDateTime.plusHours(1);
+
+		Assert.assertTrue(
+			_contextODataMatcher.matches(
+				StringBundler.concat(
+					"(", Context.LAST_SIGN_IN_DATE_TIME, " le ",
+					nextHourZonedDateTime.format(
+						DateTimeFormatter.ISO_OFFSET_DATE_TIME),
 					")"),
 				context));
 	}

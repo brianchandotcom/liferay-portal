@@ -114,7 +114,7 @@ public class StructuredContentResourceImpl
 		throws Exception {
 
 		Hits hits = SearchUtil.getHits(
-			filter, _indexerRegistry.nullSafeGetIndexer(DDMStructure.class),
+			filter, _indexerRegistry.nullSafeGetIndexer(JournalArticle.class),
 			pagination,
 			booleanQuery -> {
 				if (contentStructureId != null) {

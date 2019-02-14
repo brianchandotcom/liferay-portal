@@ -14,11 +14,11 @@
 
 package com.liferay.portal.vulcan.internal.jaxrs.exception.mapper;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
-
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
 
 /**
  * Converts any {@code DuplicateFriendlyURLEntryException} to a {@code 422}
@@ -36,8 +36,7 @@ import javax.ws.rs.core.Response;
 	service = javax.ws.rs.ext.ExceptionMapper.class
 )
 public class ExceptionMapper
-	implements
-	javax.ws.rs.ext.ExceptionMapper<Exception> {
+	implements javax.ws.rs.ext.ExceptionMapper<Exception> {
 
 	@Override
 	public Response toResponse(Exception e) {

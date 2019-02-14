@@ -35,7 +35,6 @@ import org.jboss.arquillian.core.api.event.ManagerStopping;
 import org.jboss.arquillian.core.impl.EventImpl;
 import org.jboss.arquillian.core.impl.ExtensionImpl;
 import org.jboss.arquillian.core.impl.InjectorImpl;
-import org.jboss.arquillian.core.impl.UncheckedThrow;
 import org.jboss.arquillian.core.impl.context.ApplicationContextImpl;
 import org.jboss.arquillian.core.spi.EventContext;
 import org.jboss.arquillian.core.spi.EventPoint;
@@ -150,11 +149,6 @@ public class ManagerImpl implements Manager {
 	public <T> void fire(T event, NonManagedObserver<T> nonManagedObserver) {
 		Validate.notNull(event, "Event must be specified");
 
-		Set<Class<? extends Throwable>> handledThrowables =
-			_handledThrowables.get();
-
-		handledThrowables.clear();
-
 		List<ObserverMethod> observers = _resolveObservers(event.getClass());
 
 		List<ObserverMethod> interceptorObservers =
@@ -178,19 +172,8 @@ public class ManagerImpl implements Manager {
 
 			eventContext.proceed();
 		}
-		catch (Exception e) {
-			Throwable fireException = e;
-
-			if (fireException instanceof InvocationException) {
-				fireException = fireException.getCause();
-			}
-
-			if (handledThrowables.contains(fireException.getClass())) {
-				UncheckedThrow.throwUnchecked(fireException);
-			}
-			else {
-				fireException(fireException);
-			}
+		catch (InvocationException ie) {
+			_throwException(ie.getCause());
 		}
 		finally {
 			if (activatedApplicationContext && context.isActive()) {
@@ -199,38 +182,7 @@ public class ManagerImpl implements Manager {
 		}
 	}
 
-	public void fireException(Throwable throwable) {
-		List<ObserverMethod> observers = _resolveObservers(
-			throwable.getClass());
-
-		if (observers.isEmpty()) {
-			UncheckedThrow.throwUnchecked(throwable);
-		}
-
-		for (int i = 0; i < observers.size(); i++) {
-			ObserverMethod observer = observers.get(i);
-
-			try {
-				observer.invoke(this, throwable);
-			}
-			catch (Exception e) {
-				Throwable toBeFired = e.getCause();
-
-				if (toBeFired.getClass() == throwable.getClass()) {
-					if (i == observers.size() - 1) {
-						_handledThrowables.get().add(toBeFired.getClass());
-
-						UncheckedThrow.throwUnchecked(toBeFired);
-					}
-				}
-				else {
-					fireException(toBeFired);
-				}
-			}
-		}
-	}
-
-	public void fireProcessing() throws Exception {
+	public void fireProcessing() {
 		Set<Class<?>> extensions = new HashSet<>();
 
 		Set<Class<? extends Context>> contexts = new HashSet<>();
@@ -309,13 +261,6 @@ public class ManagerImpl implements Manager {
 		_inject(ExtensionImpl.of(obj));
 	}
 
-	public boolean isExceptionHandled(Throwable throwable) {
-		Set<Class<? extends Throwable>> handledThrowables =
-			_handledThrowables.get();
-
-		return handledThrowables.contains(throwable.getClass());
-	}
-
 	@Override
 	public <T> T resolve(Class<T> type) {
 		Validate.notNull(type, "Type must be specified");
@@ -339,19 +284,7 @@ public class ManagerImpl implements Manager {
 
 	@Override
 	public void shutdown() {
-		Throwable shutdownException = null;
-
-		try {
-			fire(new ManagerStopping());
-		}
-		catch (Exception e) {
-			try {
-				fireException(e);
-			}
-			catch (Exception e2) {
-				shutdownException = e2;
-			}
-		}
+		fire(new ManagerStopping());
 
 		synchronized (this) {
 			for (Context context : _contexts) {
@@ -365,12 +298,6 @@ public class ManagerImpl implements Manager {
 			if (_eventStack != null) {
 				_eventStack.remove();
 			}
-
-			_handledThrowables.remove();
-		}
-
-		if (shutdownException != null) {
-			UncheckedThrow.throwUnchecked(shutdownException);
 		}
 	}
 
@@ -379,6 +306,13 @@ public class ManagerImpl implements Manager {
 		fire(new ManagerStarted());
 
 		getContext(ApplicationContext.class).activate();
+	}
+
+	private static <T, E extends Throwable> T _throwException(
+			Throwable throwable)
+		throws E {
+
+		throw (E)throwable;
 	}
 
 	private void _addContextsToApplicationScope() throws Exception {
@@ -427,8 +361,7 @@ public class ManagerImpl implements Manager {
 	}
 
 	private List<Context> _createContexts(
-			Collection<Class<? extends Context>> contextClasses)
-		throws Exception {
+		Collection<Class<? extends Context>> contextClasses) {
 
 		List<Context> created = new ArrayList<>();
 
@@ -440,8 +373,7 @@ public class ManagerImpl implements Manager {
 	}
 
 	private List<Extension> _createExtensions(
-			Collection<Class<?>> extensionClasses)
-		throws Exception {
+		Collection<Class<?>> extensionClasses) {
 
 		List<Extension> created = new ArrayList<>();
 
@@ -587,15 +519,5 @@ public class ManagerImpl implements Manager {
 	private final List<Context> _contexts = new ArrayList<>();
 	private ThreadLocal<Stack<Object>> _eventStack;
 	private final List<Extension> _extensions = new ArrayList<>();
-
-	private ThreadLocal<Set<Class<? extends Throwable>>> _handledThrowables =
-		new ThreadLocal<Set<Class<? extends Throwable>>>() {
-
-			@Override
-			protected Set<Class<? extends Throwable>> initialValue() {
-				return new HashSet<>();
-			}
-
-		};
 
 }

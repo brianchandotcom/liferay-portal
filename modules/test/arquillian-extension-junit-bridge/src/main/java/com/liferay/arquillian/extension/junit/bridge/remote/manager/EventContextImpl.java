@@ -17,9 +17,7 @@ package com.liferay.arquillian.extension.junit.bridge.remote.manager;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jboss.arquillian.core.impl.UncheckedThrow;
 import org.jboss.arquillian.core.spi.EventContext;
-import org.jboss.arquillian.core.spi.InvocationException;
 import org.jboss.arquillian.core.spi.NonManagedObserver;
 import org.jboss.arquillian.core.spi.ObserverMethod;
 import org.jboss.arquillian.core.spi.Validate;
@@ -73,19 +71,7 @@ public class EventContextImpl<T> implements EventContext<T> {
 
 	private void _invokeObservers() {
 		for (ObserverMethod observer : _observers) {
-			try {
-				observer.invoke(_manager, _event);
-			}
-			catch (InvocationException ie) {
-				Throwable cause = ie.getCause();
-
-				if (_manager.isExceptionHandled(cause)) {
-					UncheckedThrow.throwUnchecked(cause);
-				}
-				else {
-					_manager.fireException(cause);
-				}
-			}
+			observer.invoke(_manager, _event);
 		}
 	}
 

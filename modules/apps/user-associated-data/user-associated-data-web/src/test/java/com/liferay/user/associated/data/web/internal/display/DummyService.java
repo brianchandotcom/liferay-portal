@@ -36,7 +36,9 @@ public class DummyService<T extends UserAssociatedEntity> {
 	}
 
 	public int count(long userId) {
-		return getEntities(userId).size();
+		List<T> entities = getEntities(userId);
+
+		return entities.size();
 	}
 
 	public T create(String name, long userId) {

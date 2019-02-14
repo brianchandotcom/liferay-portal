@@ -282,9 +282,10 @@ public class DefaultBlogPostingNestedCollectionResourceTest
 		blogsEntry = updateBlogsEntry(
 			blogsEntry.getEntryId(), updatedBlogPosting);
 
-		ZoneId zone = ZoneId.systemDefault();
+		ZonedDateTime zonedDateTime = localDateTime.atZone(
+			ZoneId.systemDefault());
 
-		Date date = Date.from(localDateTime.atZone(zone).toInstant());
+		Date date = Date.from(zonedDateTime.toInstant());
 
 		Assert.assertEquals(
 			updatedBlogPosting.getArticleBody(), blogsEntry.getContent());

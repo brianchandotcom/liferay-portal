@@ -16,12 +16,13 @@ package com.liferay.message.boards.uad.display.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.message.boards.constants.MBCategoryConstants;
-import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.model.MBMessage;
+import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.service.MBCategoryLocalService;
 import com.liferay.message.boards.service.MBMessageLocalService;
-import com.liferay.message.boards.uad.test.MBCategoryUADTestUtil;
+import com.liferay.message.boards.service.MBThreadLocalService;
 import com.liferay.message.boards.uad.test.MBMessageUADTestUtil;
+import com.liferay.message.boards.uad.test.MBThreadUADTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -61,12 +62,22 @@ public class MBMessageUADDisplayTest extends BaseUADDisplayTestCase<MBMessage> {
 
 	@Test
 	public void testGetParentContainerId() throws Exception {
-		assertParentContainerId(MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID);
+		_mbThread = MBThreadUADTestUtil.addMBThread(
+			_mbMessageLocalService, _mbThreadLocalService,
+			TestPropsValues.getUserId(),
+			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID);
 
-		_mbCategory = MBCategoryUADTestUtil.addMBCategory(
-			_mbCategoryLocalService, TestPropsValues.getUserId());
+		MBMessage mbMessage = MBMessageUADTestUtil.addMBMessage(
+			_mbMessageLocalService, TestPropsValues.getUserId(),
+			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+			_mbThread.getThreadId());
 
-		assertParentContainerId(_mbCategory.getCategoryId());
+		_mbMessages.add(mbMessage);
+
+		Serializable parentContainerId = _uadDisplay.getParentContainerId(
+			mbMessage);
+
+		Assert.assertEquals(_mbThread.getThreadId(), (long)parentContainerId);
 	}
 
 	@Test(expected = UnsupportedOperationException.class)
@@ -84,26 +95,10 @@ public class MBMessageUADDisplayTest extends BaseUADDisplayTestCase<MBMessage> {
 		return mbMessage;
 	}
 
-	protected void assertParentContainerId(long mbCategoryId) throws Exception {
-		MBMessage mbMessage = MBMessageUADTestUtil.addMBMessage(
-			_mbCategoryLocalService, _mbMessageLocalService,
-			TestPropsValues.getUserId(), mbCategoryId);
-
-		_mbMessages.add(mbMessage);
-
-		Serializable parentContainerId = _uadDisplay.getParentContainerId(
-			mbMessage);
-
-		Assert.assertEquals(mbCategoryId, (long)parentContainerId);
-	}
-
 	@Override
 	protected UADDisplay getUADDisplay() {
 		return _uadDisplay;
 	}
-
-	@DeleteAfterTestRun
-	private MBCategory _mbCategory;
 
 	@Inject
 	private MBCategoryLocalService _mbCategoryLocalService;
@@ -113,6 +108,12 @@ public class MBMessageUADDisplayTest extends BaseUADDisplayTestCase<MBMessage> {
 
 	@DeleteAfterTestRun
 	private final List<MBMessage> _mbMessages = new ArrayList<>();
+
+	@DeleteAfterTestRun
+	private MBThread _mbThread;
+
+	@Inject
+	private MBThreadLocalService _mbThreadLocalService;
 
 	@Inject(filter = "component.name=*.MBMessageUADDisplay")
 	private UADDisplay<MBMessage> _uadDisplay;

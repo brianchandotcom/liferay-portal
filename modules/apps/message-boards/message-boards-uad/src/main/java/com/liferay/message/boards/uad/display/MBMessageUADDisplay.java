@@ -72,7 +72,7 @@ public class MBMessageUADDisplay extends BaseMBMessageUADDisplay {
 
 	@Override
 	public Serializable getParentContainerId(MBMessage mbMessage) {
-		return mbMessage.getCategoryId();
+		return mbMessage.getThreadId();
 	}
 
 	@Reference

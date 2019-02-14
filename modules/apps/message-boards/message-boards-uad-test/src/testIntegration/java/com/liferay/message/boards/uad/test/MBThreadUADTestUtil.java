@@ -49,12 +49,11 @@ public class MBThreadUADTestUtil {
 			RandomTestUtil.randomString(), serviceContext);
 
 		return addMBThread(
-			mbCategoryLocalService, mbMessageLocalService, mbThreadLocalService,
-			userId, mbCategory.getCategoryId());
+			mbMessageLocalService, mbThreadLocalService, userId,
+			mbCategory.getCategoryId());
 	}
 
 	public static MBThread addMBThread(
-			MBCategoryLocalService mbCategoryLocalService,
 			MBMessageLocalService mbMessageLocalService,
 			MBThreadLocalService mbThreadLocalService, long userId,
 			long parentMBCategoryId)

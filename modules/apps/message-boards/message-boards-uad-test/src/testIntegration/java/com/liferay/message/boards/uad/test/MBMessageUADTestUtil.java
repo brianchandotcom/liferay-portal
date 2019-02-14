@@ -54,12 +54,10 @@ public class MBMessageUADTestUtil {
 			RandomTestUtil.randomString(), serviceContext);
 
 		return addMBMessage(
-			mbCategoryLocalService, mbMessageLocalService, userId,
-			mbCategory.getCategoryId());
+			mbMessageLocalService, userId, mbCategory.getCategoryId());
 	}
 
 	public static MBMessage addMBMessage(
-			MBCategoryLocalService mbCategoryLocalService,
 			MBMessageLocalService mbMessageLocalService, long userId,
 			long mbCategoryId)
 		throws Exception {
@@ -75,7 +73,6 @@ public class MBMessageUADTestUtil {
 	}
 
 	public static MBMessage addMBMessage(
-			MBCategoryLocalService mbCategoryLocalService,
 			MBMessageLocalService mbMessageLocalService, long userId,
 			long mbCategoryId, long mbThreadId)
 		throws Exception {

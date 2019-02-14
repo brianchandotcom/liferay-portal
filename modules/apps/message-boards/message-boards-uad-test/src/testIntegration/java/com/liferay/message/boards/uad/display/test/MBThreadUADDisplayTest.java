@@ -166,8 +166,8 @@ public class MBThreadUADDisplayTest extends BaseUADDisplayTestCase<MBThread> {
 
 	protected void assertParentContainerId(long mbCategoryId) throws Exception {
 		MBThread mbThread = MBThreadUADTestUtil.addMBThread(
-			_mbCategoryLocalService, _mbMessageLocalService,
-			_mbThreadLocalService, TestPropsValues.getUserId(), mbCategoryId);
+			_mbMessageLocalService, _mbThreadLocalService,
+			TestPropsValues.getUserId(), mbCategoryId);
 
 		_mbThreads.add(mbThread);
 
@@ -194,8 +194,7 @@ public class MBThreadUADDisplayTest extends BaseUADDisplayTestCase<MBThread> {
 
 	private MBMessage _addMessage(long mbCategoryId) throws Exception {
 		MBMessage mbMessage = MBMessageUADTestUtil.addMBMessage(
-			_mbCategoryLocalService, _mbMessageLocalService,
-			TestPropsValues.getUserId(), mbCategoryId);
+			_mbMessageLocalService, TestPropsValues.getUserId(), mbCategoryId);
 
 		_mbMessages.add(mbMessage);
 
@@ -206,8 +205,8 @@ public class MBThreadUADDisplayTest extends BaseUADDisplayTestCase<MBThread> {
 		throws Exception {
 
 		MBMessage mbMessage = MBMessageUADTestUtil.addMBMessage(
-			_mbCategoryLocalService, _mbMessageLocalService,
-			TestPropsValues.getUserId(), mbCategoryId, mbThreadId);
+			_mbMessageLocalService, TestPropsValues.getUserId(), mbCategoryId,
+			mbThreadId);
 
 		_mbMessages.add(mbMessage);
 
@@ -216,8 +215,8 @@ public class MBThreadUADDisplayTest extends BaseUADDisplayTestCase<MBThread> {
 
 	private MBThread _addThread(long mbCategoryId) throws Exception {
 		MBThread mbThread = MBThreadUADTestUtil.addMBThread(
-			_mbCategoryLocalService, _mbMessageLocalService,
-			_mbThreadLocalService, TestPropsValues.getUserId(), mbCategoryId);
+			_mbMessageLocalService, _mbThreadLocalService,
+			TestPropsValues.getUserId(), mbCategoryId);
 
 		_mbThreads.add(mbThread);
 

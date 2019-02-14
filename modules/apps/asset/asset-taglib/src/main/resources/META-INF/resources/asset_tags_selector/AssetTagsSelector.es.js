@@ -3,13 +3,13 @@ import {Config} from 'metal-state';
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 
-import templates from './TagSelector.soy';
+import templates from './AssetTagsSelector.soy';
 
 /**
- * TagSelector is a component wrapping the existing Clay's MultiSelect component
+ * AssetTagSelector is a component wrapping the existing Clay's MultiSelect component
  * that offers the user a tag selection input
  */
-class TagSelector extends Component {
+class AssetTagSelector extends Component {
 
 	/**
 	 * @inheritDoc
@@ -29,17 +29,13 @@ class TagSelector extends Component {
 	 */
 
 	_handleButtonClicked() {
-		const selectedTagNames = this.selectedItems.map(
-			item => item.value
-		).join();
-
 		AUI().use(
 			'liferay-item-selector-dialog',
 			function(A) {
 				const uri = A.Lang.sub(
 					decodeURIComponent(this.portletURL),
 					{
-						selectedTagNames: selectedTagNames
+						selectedTagNames: this._getTagNames()
 					}
 				);
 
@@ -74,6 +70,17 @@ class TagSelector extends Component {
 	}
 
 	/**
+	 * Converts the list of selected tags into a comma-separated serialized
+	 * version to be used as a fallback for old services and implementations
+	 * @private
+	 * @return {string} The serialized, comma-separated version of the selected items
+	 * @review
+	 */
+	_getTagNames() {
+		return this.selectedItems.map(selectedItem => selectedItem.value).join();
+	}
+
+	/**
 	 * Updates tags fallback and notifies that a new tag has been added
 	 * @param {!Event} event
 	 * @private
@@ -81,7 +88,7 @@ class TagSelector extends Component {
 	 */
 
 	_handleItemAdded(event) {
-		this._updateSelectedItemsFallback();
+		this.tagNames = this._getTagNames();
 
 		if (this.addCallback) {
 			window[this.addCallback](event.data.item);
@@ -96,7 +103,7 @@ class TagSelector extends Component {
 	 */
 
 	_handleItemRemoved(event) {
-		this._updateSelectedItemsFallback();
+		this.tagNames = this._getTagNames();
 
 		if (this.removeCallback) {
 			window[this.removeCallback](event.data.item);
@@ -118,7 +125,7 @@ class TagSelector extends Component {
 					'/assettag/search',
 					{
 						end: 20,
-						groupIds: [themeDisplay.getScopeGroupId()],
+						groupIds: this.groupIds,
 						name: `%${query === '*' ? '' : query}%`,
 						start: 0,
 						tagProperties: ''
@@ -130,30 +137,15 @@ class TagSelector extends Component {
 			}
 		);
 	}
-
-	/**
-	 * Updates the fallback element with a serialized version of the currently
-	 * selected tags in case calling code expects a single input tag with the
-	 * comma-separated version of the selected items
-	 * @private
-	 * @review
-	 */
-
-	_updateSelectedItemsFallback() {
-		document.getElementById(this.inputName).setAttribute(
-			'value',
-			this.selectedItems.map(selectedItem => selectedItem.value)
-		);
-	}
 }
 
-TagSelector.STATE = {
+AssetTagSelector.STATE = {
 
 	/**
 	 * A function to call when a tag is added
 	 * @default undefined
 	 * @instance
-	 * @memberof TagSelector
+	 * @memberof AssetTagSelector
 	 * @review
 	 * @type {?string}
 	 */
@@ -164,7 +156,7 @@ TagSelector.STATE = {
 	 * Event name which fires when user selects a display page using item selector
 	 * @default undefined
 	 * @instance
-	 * @memberof TagSelector
+	 * @memberof AssetTagSelector
 	 * @review
 	 * @type {?string}
 	 */
@@ -172,10 +164,21 @@ TagSelector.STATE = {
 	eventName: Config.string(),
 
 	/**
+	 * List of groupIds where tags should be located
+	 * @default undefined
+	 * @instance
+	 * @memberof AssetTagSelector
+	 * @review
+	 * @type {?string}
+	 */
+
+	groupIds: Config.array(),
+
+	/**
 	 * The URL of a portlet to display the tags
 	 * @default undefined
 	 * @instance
-	 * @memberof TagSelector
+	 * @memberof AssetTagSelector
 	 * @review
 	 * @type {?string}
 	 */
@@ -186,15 +189,26 @@ TagSelector.STATE = {
 	 * A function to call when a tag is removed
 	 * @default undefined
 	 * @instance
-	 * @memberof TagSelector
+	 * @memberof AssetTagSelector
 	 * @review
 	 * @type {?string}
 	 */
 
-	removeCallback: Config.string()
+	removeCallback: Config.string(),
+
+	/**
+	 * A comma separated version of the list of selected items
+	 * @default undefined
+	 * @instance
+	 * @memberof AssetTagSelector
+	 * @review
+	 * @type {?string}
+	 */
+
+	tagNames: Config.string()
 };
 
-Soy.register(TagSelector, templates);
+Soy.register(AssetTagSelector, templates);
 
-export {TagSelector};
-export default TagSelector;
+export {AssetTagSelector};
+export default AssetTagSelector;

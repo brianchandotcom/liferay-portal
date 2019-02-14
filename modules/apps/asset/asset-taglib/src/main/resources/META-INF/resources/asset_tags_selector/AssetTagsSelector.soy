@@ -1,0 +1,35 @@
+{namespace com.liferay.asset.taglib.AssetTagsSelector}
+
+/**
+ * AssetTagsSelector
+ */
+{template .render}
+	{@param id: string}
+	{@param inputName: string}
+	{@param spritemap: string}
+	{@param? tagNames: string}
+	{@param? selectedItems: list<?>}
+	{@param? _handleButtonClicked: any}
+	{@param? _handleItemAdded: any}
+	{@param? _handleItemRemoved: any}
+
+	<div class="lfr-tags-selector-content" id="{$id}">
+		<input id="{$inputName}" type="hidden" value="{$tagNames}" />
+
+		{call ClayMultiSelect.render}
+			{param dataSource: [] /}
+			{param events: [
+				'buttonClicked': $_handleButtonClicked,
+				'itemAdded': $_handleItemAdded,
+				'itemRemoved': $_handleItemRemoved,
+				'itemSelected': $_handleItemAdded
+			] /}
+			{param helpText: '' /}
+			{param inputName: $inputName /}
+			{param labelLocator: 'name' /}
+			{param ref: 'multiSelect' /}
+			{param selectedItems: $selectedItems /}
+			{param spritemap: $spritemap /}
+		{/call}
+	</div>
+{/template}

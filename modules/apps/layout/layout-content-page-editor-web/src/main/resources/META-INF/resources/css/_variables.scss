@@ -30,12 +30,13 @@ $fragmentEditableFieldGridAccentColor: #80ACFF;
 $fragmentEditableFieldGridDefaultColor: #A7A9BC;
 $fragmentEditableFieldGridSize: $fragmentsEditorSpacing;
 $fragmentEditableFieldGridTranslatedColor: #3DC513;
+$fragmentEditableFieldHoverBorderColor: rgba(11, 95, 255, 0.2);
 
 $fragmentEntryLinkListPadding: 28px;
 $sectionMinimumHeight: $fragmentsEditorSpacing * 20;
 
-$fragmentEntryLinkSectionBorderColor: #CDCED9;
-$fragmentEntryLinkColumnBorderColor: rgba(38, 38, 52, 0.06);
+$fragmentEntryLinkSectionBorderColor: rgba(11, 95, 255, 0.2);
+$fragmentEntryLinkColumnBorderColor: rgba(11, 95, 255, 0.2);
 
 $dragSourceBackgroundColor: #E1EBFF;
 $dragSourceColor: #0B5FFF;

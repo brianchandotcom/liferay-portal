@@ -17,7 +17,7 @@ lfr-editable {
 	}
 
 	&:hover {
-		box-shadow: 0 0 0 1px fade_out($fragmentEditableFieldGridAccentColor, 0.6);
+		box-shadow: 0 0 0 1px $fragmentEditableFieldHoverBorderColor;
 	}
 
 	&:focus {

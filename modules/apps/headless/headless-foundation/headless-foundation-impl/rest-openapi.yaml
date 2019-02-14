@@ -695,6 +695,12 @@ paths:
   "/content-spaces/{content-space-id}/vocabularies":
     get:
       parameters:
+        - in: path
+          name: content-space-id
+          required: true
+          schema:
+            format: int64
+            type: integer
         - in: query
           name: page
           schema:
@@ -703,12 +709,14 @@ paths:
           name: per_page
           schema:
             type: integer
-        - in: path
-          name: content-space-id
-          required: true
+        - in: query
+          name: filter
           schema:
-            format: int64
-            type: integer
+            type: string
+        - in: query
+          name: sort
+          schema:
+            type: string
       responses:
         200:
           content:

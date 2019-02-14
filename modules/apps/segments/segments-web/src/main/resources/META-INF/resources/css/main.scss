@@ -1,11 +1,12 @@
+@import "mixins";
+@import "variables";
+
+@import "globals";
+
 .segments-root {
-	@import "mixins";
-	@import "variables";
-
-	/* ---------- Components ---------- */
-
 	@import "clay_button";
 	@import "conjunction";
+	@import "contributor_builder";
 	@import "criteria_builder";
 	@import "criteria_group";
 	@import "criteria_row";

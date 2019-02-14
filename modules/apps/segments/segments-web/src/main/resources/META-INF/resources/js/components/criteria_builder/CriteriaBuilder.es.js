@@ -274,7 +274,7 @@ class CriteriaBuilder extends Component {
 		} = this.props;
 
 		return (
-			<div className="sheet">
+			<div className="criteria-builder-root sheet">
 				<div className="criteria-builder-toolbar">
 					<div className="criteria-model-label">
 						{sub(

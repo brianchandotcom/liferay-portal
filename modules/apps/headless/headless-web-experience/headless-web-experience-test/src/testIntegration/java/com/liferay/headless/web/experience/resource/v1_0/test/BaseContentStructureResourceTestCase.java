@@ -70,11 +70,6 @@ public abstract class BaseContentStructureResourceTestCase {
 		Assert.assertTrue(true);
 	}
 
-	@Test
-	public void testGetContentStructure() throws Exception {
-		Assert.assertTrue(true);
-	}
-
 	protected void invokeGetContentSpaceContentStructuresPage(
 			Long contentSpaceId, Filter filter, Pagination pagination,
 			Sort[] sorts)
@@ -85,16 +80,6 @@ public abstract class BaseContentStructureResourceTestCase {
 
 			requestSpecification.post(
 				"/content-spaces/{content-space-id}/content-structures");
-	}
-
-	protected void invokeGetContentStructure(Long contentStructureId)
-		throws Exception {
-
-			RequestSpecification requestSpecification =
-				_createRequestRequestSpecification();
-
-			requestSpecification.post(
-				"/content-structures/{content-structure-id}");
 	}
 
 	protected ContentStructure randomContentStructure() {

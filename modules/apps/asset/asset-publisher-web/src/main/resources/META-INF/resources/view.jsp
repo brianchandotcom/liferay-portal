@@ -17,19 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-long assetCategoryId = ParamUtil.getLong(request, "categoryId");
-
-if (assetCategoryId > 0) {
-	AssetCategory assetCategory = AssetCategoryLocalServiceUtil.getCategory(assetCategoryId);
-
-	PortalUtil.setPageKeywords(HtmlUtil.escape(assetCategory.getTitle(locale)), request);
-}
-
-String assetTagName = ParamUtil.getString(request, "tag");
-
-if (Validator.isNotNull(assetTagName)) {
-	PortalUtil.setPageKeywords(assetTagName, request);
-}
+assetPublisherDisplayContext.setPageKeywords();
 
 if (assetPublisherDisplayContext.isEnableTagBasedNavigation() && !assetPublisherDisplayContext.isSelectionStyleAssetList() && assetPublisherDisplayContext.isSelectionStyleManual() && ((assetPublisherDisplayContext.getAllAssetCategoryIds().length > 0) || (assetPublisherDisplayContext.getAllAssetTagNames().length > 0))) {
 	assetPublisherDisplayContext.setSelectionStyle("dynamic");
@@ -37,7 +25,7 @@ if (assetPublisherDisplayContext.isEnableTagBasedNavigation() && !assetPublisher
 %>
 
 <div class="subscribe-action">
-	<c:if test="<%= !portletName.equals(AssetPublisherPortletKeys.HIGHEST_RATED_ASSETS) && !portletName.equals(AssetPublisherPortletKeys.MOST_VIEWED_ASSETS) && !portletName.equals(AssetPublisherPortletKeys.RECENT_CONTENT) && !portletName.equals(AssetPublisherPortletKeys.RELATED_ASSETS) && PortletPermissionUtil.contains(permissionChecker, 0, layout, portletDisplay.getId(), ActionKeys.SUBSCRIBE, false, false) && assetPublisherWebUtil.getEmailAssetEntryAddedEnabled(portletPreferences) %>">
+	<c:if test="<%= assetPublisherDisplayContext.isSubscriptionEnabled() %>">
 		<c:choose>
 			<c:when test="<%= assetPublisherWebUtil.isSubscribed(themeDisplay.getCompanyId(), user.getUserId(), themeDisplay.getPlid(), portletDisplay.getId()) %>">
 				<portlet:actionURL name="unsubscribe" var="unsubscribeURL">
@@ -78,24 +66,13 @@ if (assetPublisherDisplayContext.isEnableTagBasedNavigation() && !assetPublisher
 </div>
 
 <%
-PortletURL portletURL = renderResponse.createRenderURL();
-
-if (assetCategoryId > 0) {
-	portletURL.setParameter("categoryId", String.valueOf(assetCategoryId));
-}
-
-SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, assetPublisherDisplayContext.getDelta(), portletURL, null, null);
-
-if (!assetPublisherDisplayContext.isPaginationTypeNone()) {
-	searchContainer.setDelta(assetPublisherDisplayContext.getDelta());
-	searchContainer.setDeltaConfigurable(false);
-}
+SearchContainer searchContainer = assetPublisherDisplayContext.getSearchContainer();
 %>
 
 <c:if test="<%= assetPublisherDisplayContext.isShowMetadataDescriptions() %>">
 	<liferay-asset:categorization-filter
 		assetType="content"
-		portletURL="<%= portletURL %>"
+		portletURL="<%= assetPublisherDisplayContext.getPortletURL() %>"
 	/>
 </c:if>
 
@@ -144,7 +121,7 @@ if (!assetPublisherDisplayContext.isPaginationTypeNone()) {
 					Map<Long, List<AssetPublisherAddItemHolder>> scopeAssetPublisherAddItemHolders = assetPublisherDisplayContext.getScopeAssetPublisherAddItemHolders(1);
 					%>
 
-					<c:if test="<%= MapUtil.isEmpty(scopeAssetPublisherAddItemHolders) && !((assetCategoryId > 0) || Validator.isNotNull(assetTagName)) %>">
+					<c:if test="<%= MapUtil.isEmpty(scopeAssetPublisherAddItemHolders) && !((assetPublisherDisplayContext.getAssetCategoryId() > 0) || Validator.isNotNull(assetPublisherDisplayContext.getAssetTagName())) %>">
 
 						<%
 						renderRequest.setAttribute(WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);
@@ -172,7 +149,7 @@ if (!assetPublisherDisplayContext.isPaginationTypeNone()) {
 		Map<Long, List<AssetPublisherAddItemHolder>> scopeAssetPublisherAddItemHolders = assetPublisherDisplayContext.getScopeAssetPublisherAddItemHolders(1);
 		%>
 
-		<c:if test="<%= MapUtil.isEmpty(scopeAssetPublisherAddItemHolders) && !((assetCategoryId > 0) || Validator.isNotNull(assetTagName)) %>">
+		<c:if test="<%= MapUtil.isEmpty(scopeAssetPublisherAddItemHolders) && !((assetPublisherDisplayContext.getAssetCategoryId() > 0) || Validator.isNotNull(assetPublisherDisplayContext.getAssetTagName())) %>">
 
 			<%
 			renderRequest.setAttribute(WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);

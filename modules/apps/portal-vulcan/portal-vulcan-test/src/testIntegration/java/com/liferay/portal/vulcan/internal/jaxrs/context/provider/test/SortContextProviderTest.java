@@ -64,17 +64,16 @@ public class SortContextProviderTest {
 
 		Registry registry = RegistryUtil.getRegistry();
 
-		_serviceRegistration =
-			registry.registerService(
-				MockResource.class, new MockResource(),
-				new HashMap<String, Object>() {
-					{
-						put(
-							"component.name",
-							MockResource.class.getCanonicalName());
-						put("osgi.jaxrs.resource", "true");
-					}
-				});
+		_serviceRegistration = registry.registerService(
+			MockResource.class, new MockResource(),
+			new HashMap<String, Object>() {
+				{
+					put(
+						"component.name",
+						MockResource.class.getCanonicalName());
+					put("osgi.jaxrs.resource", "true");
+				}
+			});
 
 		ServiceReference<MockResource> serviceReference =
 			_serviceRegistration.getServiceReference();

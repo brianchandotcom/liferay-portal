@@ -41,8 +41,8 @@ import org.jboss.arquillian.test.spi.event.suite.TestEvent;
 public class TestContextHandler {
 
 	public void createClassContext(
-		@Observes(precedence = 100)
-			EventContext<ClassEvent> classEventContext) {
+		@Observes(precedence = 100) EventContext<ClassEvent>
+			classEventContext) {
 
 		ClassContext classContext = _classContextInstance.get();
 
@@ -81,8 +81,8 @@ public class TestContextHandler {
 	}
 
 	public void createSuiteContext(
-		@Observes(precedence = 100)
-			EventContext<SuiteEvent> suiteEventContext) {
+		@Observes(precedence = 100) EventContext<SuiteEvent>
+			suiteEventContext) {
 
 		SuiteContext suiteContext = _suiteContextInstance.get();
 

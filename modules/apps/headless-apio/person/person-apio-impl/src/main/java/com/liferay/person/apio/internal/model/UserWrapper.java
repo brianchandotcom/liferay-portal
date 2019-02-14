@@ -76,8 +76,9 @@ public class UserWrapper extends com.liferay.portal.kernel.model.UserWrapper {
 		return Try.of(
 			this::getGroup
 		).filterTry(
-			__ -> (isPrivate && (getPrivateLayoutsPageCount() > 0)) ||
-			  (!isPrivate && (getPublicLayoutsPageCount() > 0))
+			__ ->
+				(isPrivate && (getPrivateLayoutsPageCount() > 0)) ||
+				(!isPrivate && (getPublicLayoutsPageCount() > 0))
 		).map(
 			group -> group.getDisplayURL(_themeDisplay, isPrivate)
 		).getOrNull();

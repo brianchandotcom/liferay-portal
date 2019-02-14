@@ -103,8 +103,7 @@ public class DEDataEngineTestUtil {
 		try {
 			DEDataDefinitionDeletePermissionsRequest.Builder builder =
 				DEDataDefinitionRequestBuilder.deletePermissionsBuilder(
-					companyId, groupId, roleNames
-				);
+					companyId, groupId, roleNames);
 
 			DEDataDefinitionDeletePermissionsRequest
 				deDataDefinitionDeletePermissionsRequest = builder.build();
@@ -197,8 +196,7 @@ public class DEDataEngineTestUtil {
 		try {
 			DEDataRecordCollectionDeletePermissionsRequest.Builder builder =
 				DEDataRecordCollectionRequestBuilder.deletePermissionsBuilder(
-					companyId, groupId, roleNames
-				);
+					companyId, groupId, roleNames);
 
 			DEDataRecordCollectionDeletePermissionsRequest
 				deDataRecordCollectionDeletePermissionsRequest =

@@ -56,9 +56,8 @@ public class DeleteDocumentRequestExecutorImpl
 	@Reference(target = "(search.engine.impl=Elasticsearch)", unbind = "-")
 	protected void setBulkableDocumentRequestTranslator(
 		BulkableDocumentRequestTranslator
-			<DeleteRequestBuilder, IndexRequestBuilder,
-			 UpdateRequestBuilder, BulkRequestBuilder>
-				bulkableDocumentRequestTranslator) {
+			<DeleteRequestBuilder, IndexRequestBuilder, UpdateRequestBuilder,
+			 BulkRequestBuilder> bulkableDocumentRequestTranslator) {
 
 		_bulkableDocumentRequestTranslator = bulkableDocumentRequestTranslator;
 	}

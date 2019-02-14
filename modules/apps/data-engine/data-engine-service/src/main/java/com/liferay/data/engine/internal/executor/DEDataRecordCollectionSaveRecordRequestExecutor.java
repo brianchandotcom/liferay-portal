@@ -61,9 +61,7 @@ public class DEDataRecordCollectionSaveRecordRequestExecutor {
 		DEDataDefinition deDataDefinition = deDataRecord.getDEDataDefinition();
 
 		if (deDataDefinition == null) {
-			return DEDataRecordCollectionSaveRecordResponse.Builder.of(
-				null
-			);
+			return DEDataRecordCollectionSaveRecordResponse.Builder.of(null);
 		}
 
 		String storageType = deDataDefinition.getStorageType();
@@ -116,8 +114,7 @@ public class DEDataRecordCollectionSaveRecordRequestExecutor {
 		deDataRecord.setDEDataRecordId(ddlRecord.getRecordId());
 
 		return DEDataRecordCollectionSaveRecordResponse.Builder.of(
-			deDataRecord
-		);
+			deDataRecord);
 	}
 
 	protected void addStorageLink(

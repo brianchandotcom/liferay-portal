@@ -119,8 +119,8 @@ public class JSPortlet extends MVCPortlet implements ManagedService {
 	}
 
 	private static String _loadTemplate(String name) {
-		try (InputStream inputStream =
-				JSPortlet.class.getResourceAsStream("dependencies/" + name)) {
+		try (InputStream inputStream = JSPortlet.class.getResourceAsStream(
+				"dependencies/" + name)) {
 
 			return StringUtil.read(inputStream);
 		}

@@ -523,10 +523,12 @@ public class DEDataRecordCollectionServiceImpl
 	}
 
 	protected void verifyDataDefinitionFields(
-			DEDataRecordCollectionSaveRecordRequest deDataRecordCollectionSaveRecordRequest)
+			DEDataRecordCollectionSaveRecordRequest
+				deDataRecordCollectionSaveRecordRequest)
 		throws DEDataRecordCollectionException {
 
-		DEDataRecord dataRecord = deDataRecordCollectionSaveRecordRequest.getDEDataRecord();
+		DEDataRecord dataRecord =
+			deDataRecordCollectionSaveRecordRequest.getDEDataRecord();
 
 		DEDataDefinition deDataDefinition = dataRecord.getDEDataDefinition();
 

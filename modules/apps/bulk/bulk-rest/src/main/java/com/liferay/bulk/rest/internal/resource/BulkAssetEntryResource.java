@@ -330,8 +330,8 @@ public class BulkAssetEntryResource {
 			assetVocabulary -> assetVocabulary.isAssociatedToClassNameId(
 				classNameId)
 		).filter(
-			assetVocabulary -> _assetCategoryLocalService.
-				getVocabularyCategoriesCount(
+			assetVocabulary ->
+				_assetCategoryLocalService.getVocabularyCategoriesCount(
 					assetVocabulary.getVocabularyId()) > 0
 		).collect(
 			Collectors.toList()

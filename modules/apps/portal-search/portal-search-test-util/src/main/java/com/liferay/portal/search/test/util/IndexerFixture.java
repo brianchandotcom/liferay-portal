@@ -58,7 +58,10 @@ public class IndexerFixture<T> {
 			Stream<Document> stream = Arrays.stream(docs);
 
 			List<String> uids = stream.map(
-				document -> document.getUID()).collect(Collectors.toList());
+				document -> document.getUID()
+			).collect(
+				Collectors.toList()
+			);
 
 			IndexWriterHelperUtil.deleteDocuments(
 				_indexer.getSearchEngineId(), TestPropsValues.getCompanyId(),

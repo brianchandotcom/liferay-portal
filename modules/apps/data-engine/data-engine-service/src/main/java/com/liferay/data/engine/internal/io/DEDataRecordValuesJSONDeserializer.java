@@ -54,8 +54,7 @@ public class DEDataRecordValuesJSONDeserializer
 			jsonObject = jsonFactory.createJSONObject(
 				deDataRecordDeserializerApplyRequest.getContent());
 		}
-		catch (JSONException jsone)
-		{
+		catch (JSONException jsone) {
 			return DEDataRecordValuesResponseBuilder.deserializeBuilder(
 				null
 			).build();

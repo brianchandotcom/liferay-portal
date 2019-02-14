@@ -79,8 +79,8 @@ public class OrganizationsVerticalCard
 
 	@Override
 	public String getDefaultEventHandler() {
-		return
-			SiteMembershipWebKeys.ORGANIZATION_DROPDOWN_DEFAULT_EVENT_HANDLER;
+		return SiteMembershipWebKeys.
+			ORGANIZATION_DROPDOWN_DEFAULT_EVENT_HANDLER;
 	}
 
 	@Override

@@ -149,9 +149,7 @@ public class AddLayoutPrototypeMVCActionCommand extends BaseMVCActionCommand {
 
 				errorMessage = "please-enter-a-valid-name";
 			}
-			else if (t instanceof
-						DuplicateLayoutPageTemplateEntryException) {
-
+			else if (t instanceof DuplicateLayoutPageTemplateEntryException) {
 				errorMessage =
 					"a-page-template-entry-with-that-name-already-exists";
 			}

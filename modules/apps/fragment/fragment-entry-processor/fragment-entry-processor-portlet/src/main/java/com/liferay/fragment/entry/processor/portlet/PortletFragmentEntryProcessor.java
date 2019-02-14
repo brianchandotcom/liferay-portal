@@ -280,13 +280,13 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 
 		long plid = PortletKeys.PREFS_PLID_SHARED;
 
-		if (fragmentEntryLink.getClassNameId() ==
-				_portal.getClassNameId(Layout.class)) {
+		if (fragmentEntryLink.getClassNameId() == _portal.getClassNameId(
+				Layout.class)) {
 
 			plid = fragmentEntryLink.getClassPK();
 		}
-		else if (fragmentEntryLink.getClassNameId() ==
-					_portal.getClassNameId(LayoutPageTemplateEntry.class)) {
+		else if (fragmentEntryLink.getClassNameId() == _portal.getClassNameId(
+					LayoutPageTemplateEntry.class)) {
 
 			LayoutPageTemplateEntry layoutPageTemplateEntry =
 				_layoutPageTemplateEntryLocalService.getLayoutPageTemplateEntry(

@@ -204,8 +204,7 @@ public class CTPublishBackgroundTaskExecutor
 		CTCollection ctCollection = ctCollectionOptional.orElseThrow(
 			() -> new CTException(
 				user.getCompanyId(),
-				"Unable to find change tracking collection " + ctCollectionId)
-		);
+				"Unable to find change tracking collection " + ctCollectionId));
 
 		try {
 			CTCollectionLocalServiceUtil.updateStatus(

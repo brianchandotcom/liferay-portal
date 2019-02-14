@@ -86,8 +86,7 @@ public class DEDataJSONStorage implements DEDataStorage {
 		DEDataRecordValuesDeserializerApplyRequest.Builder builder =
 			DEDataRecordValuesRequestBuilder.deserializeBuilder(
 				ddmContent.getData(),
-				deDataStorageGetRequest.getDEDataDefinition()
-			);
+				deDataStorageGetRequest.getDEDataDefinition());
 
 		DEDataRecordValuesDeserializerApplyResponse
 			deDataRecordValuesDeserializerApplyResponse =
@@ -127,8 +126,7 @@ public class DEDataJSONStorage implements DEDataStorage {
 
 		DEDataRecordValuesSerializerApplyRequest.Builder builder =
 			DEDataRecordValuesRequestBuilder.serializeBuilder(
-				values, deDataDefinition
-			);
+				values, deDataDefinition);
 
 		DEDataRecordValuesSerializerApplyResponse
 			deDataRecordValuesSerializerApplyResponse =

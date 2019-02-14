@@ -24,9 +24,16 @@ public class CSSClassNamesTest {
 
 	@Test
 	public void testBasicOutput() {
-		Assert.assertEquals("hello", CSSClassNames.builder("hello").build());
 		Assert.assertEquals(
-			"hello world", CSSClassNames.builder("hello", "world").build());
+			"hello",
+			CSSClassNames.builder(
+				"hello"
+			).build());
+		Assert.assertEquals(
+			"hello world",
+			CSSClassNames.builder(
+				"hello", "world"
+			).build());
 	}
 
 	@Test

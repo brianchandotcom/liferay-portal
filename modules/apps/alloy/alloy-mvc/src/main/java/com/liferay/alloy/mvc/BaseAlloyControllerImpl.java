@@ -1201,8 +1201,8 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 				data = toJSONArray(documents);
 			}
 			else if (object instanceof Collection) {
-				Object[] objects =
-					((Collection)object).toArray(new BaseModel[0]);
+				Object[] objects = ((Collection)object).toArray(
+					new BaseModel[0]);
 
 				data = toJSONArray(objects);
 			}

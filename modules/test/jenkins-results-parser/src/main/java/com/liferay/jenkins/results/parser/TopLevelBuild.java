@@ -1473,12 +1473,10 @@ public class TopLevelBuild extends BaseBuild {
 				slaveUsage = 0;
 			}
 
-			slaveUsage +=
-				modifiedDownstreamBuild.getTotalSlavesUsedCount(
-					"running", true);
-			slaveUsage -=
-				modifiedDownstreamBuild.getTotalSlavesUsedCount(
-					"completed", true);
+			slaveUsage += modifiedDownstreamBuild.getTotalSlavesUsedCount(
+				"running", true);
+			slaveUsage -= modifiedDownstreamBuild.getTotalSlavesUsedCount(
+				"completed", true);
 
 			slaveUsages.put(metricLabels, slaveUsage);
 		}

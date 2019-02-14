@@ -14,6 +14,9 @@
 
 package com.liferay.layout.uad.anonymizer;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
 
 import org.osgi.service.component.annotations.Component;
@@ -23,4 +26,12 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(immediate = true, service = UADAnonymizer.class)
 public class LayoutUADAnonymizer extends BaseLayoutUADAnonymizer {
+
+	@Override
+	public void autoAnonymize(Layout layout, long userId, User anonymousUser)
+		throws PortalException {
+
+		layoutLocalService.anonymizeLayout(layout, userId, anonymousUser);
+	}
+
 }

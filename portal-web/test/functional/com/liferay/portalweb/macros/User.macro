@@ -1042,7 +1042,7 @@ definition {
 
 		AssertVisible(
 			locator1 = "UsersAndOrganizationsEditUser#DETAILS_PROFILE_IMAGE",
-			key_imageName = "user_male_portrait"
+			key_imageName = "user_portrait"
 		);
 	}
 

@@ -72,38 +72,8 @@ if (assetPublisherDisplayContext.isEnableTagBasedNavigation() && !assetPublisher
 	/>
 </c:if>
 
-<%
-SearchContainer searchContainer = assetPublisherDisplayContext.getSearchContainer();
-
-List<AssetEntryResult> assetEntryResults = null;
-
-if (assetPublisherDisplayContext.isSelectionStyleDynamic()) {
-	assetEntryResults = assetPublisherHelper.getAssetEntryResults(searchContainer, assetPublisherDisplayContext.getAssetEntryQuery(), layout, portletPreferences, assetPublisherDisplayContext.getPortletName(), themeDisplay.getLocale(), themeDisplay.getTimeZone(), themeDisplay.getCompanyId(), scopeGroupId, themeDisplay.getUserId(), assetPublisherDisplayContext.getClassNameIds(), null);
-}
-else {
-	List<AssetEntry> assetEntries = assetPublisherDisplayContext.getAssetEntries();
-
-	if (ListUtil.isNotEmpty(assetEntries)) {
-		searchContainer.setTotal(assetEntries.size());
-
-		assetEntries = assetEntries.subList(searchContainer.getStart(), searchContainer.getResultEnd());
-
-		searchContainer.setResults(assetEntries);
-
-		assetEntryResults = new ArrayList<>();
-
-		assetEntryResults.add(new AssetEntryResult(assetEntries));
-	}
-}
-%>
-
 <c:choose>
-	<c:when test="<%= ListUtil.isNotEmpty(assetEntryResults) %>">
-
-		<%
-		request.setAttribute("view.jsp-assetEntryResults", assetEntryResults);
-		%>
-
+	<c:when test="<%= ListUtil.isNotEmpty(assetPublisherDisplayContext.getAssetEntryResults()) %>">
 		<liferay-util:include page="/view_asset_entry_list.jsp" servletContext="<%= application %>" />
 	</c:when>
 	<c:otherwise>
@@ -148,6 +118,10 @@ else {
 		</liferay-ddm:template-renderer>
 	</c:otherwise>
 </c:choose>
+
+<%
+SearchContainer searchContainer = assetPublisherDisplayContext.getSearchContainer();
+%>
 
 <c:if test="<%= !assetPublisherDisplayContext.isPaginationTypeNone() && (searchContainer.getTotal() > searchContainer.getResults().size()) %>">
 	<liferay-ui:search-paginator

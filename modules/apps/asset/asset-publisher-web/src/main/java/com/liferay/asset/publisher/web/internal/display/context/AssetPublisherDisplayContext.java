@@ -34,6 +34,7 @@ import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryServiceUtil;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
+import com.liferay.asset.publisher.util.AssetEntryResult;
 import com.liferay.asset.publisher.util.AssetPublisherHelper;
 import com.liferay.asset.publisher.web.internal.action.AssetEntryActionRegistry;
 import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherPortletInstanceConfiguration;
@@ -295,6 +296,49 @@ public class AssetPublisherDisplayContext {
 			_assetEntryQuery, _request);
 
 		return _assetEntryQuery;
+	}
+
+	public List<AssetEntryResult> getAssetEntryResults() throws Exception {
+		if (_assetEntryResults != null) {
+			return _assetEntryResults;
+		}
+
+		if (isSelectionStyleDynamic()) {
+			_assetEntryResults = _assetPublisherHelper.getAssetEntryResults(
+				getSearchContainer(), getAssetEntryQuery(),
+				_themeDisplay.getLayout(), _portletPreferences,
+				getPortletName(), _themeDisplay.getLocale(),
+				_themeDisplay.getTimeZone(), _themeDisplay.getCompanyId(),
+				_themeDisplay.getScopeGroupId(), _themeDisplay.getUserId(),
+				getClassNameIds(), null);
+
+			return _assetEntryResults;
+		}
+
+		List<AssetEntry> assetEntries = getAssetEntries();
+
+		if (ListUtil.isEmpty(assetEntries)) {
+			return Collections.emptyList();
+		}
+
+		List<AssetEntryResult> assetEntryResults = null;
+
+		SearchContainer searchContainer = getSearchContainer();
+
+		searchContainer.setTotal(assetEntries.size());
+
+		assetEntries = assetEntries.subList(
+			searchContainer.getStart(), searchContainer.getResultEnd());
+
+		searchContainer.setResults(assetEntries);
+
+		assetEntryResults = new ArrayList<>();
+
+		assetEntryResults.add(new AssetEntryResult(assetEntries));
+
+		_assetEntryResults = assetEntryResults;
+
+		return _assetEntryResults;
 	}
 
 	public String getAssetLinkBehavior() {
@@ -1592,6 +1636,7 @@ public class AssetPublisherDisplayContext {
 	private Long _assetCategoryId;
 	private final AssetEntryActionRegistry _assetEntryActionRegistry;
 	private AssetEntryQuery _assetEntryQuery;
+	private List<AssetEntryResult> _assetEntryResults;
 	private final AssetHelper _assetHelper;
 	private String _assetLinkBehavior;
 	private AssetListEntry _assetListEntry;

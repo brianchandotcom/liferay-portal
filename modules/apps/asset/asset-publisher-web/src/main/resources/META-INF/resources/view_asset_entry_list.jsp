@@ -17,9 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-List<AssetEntryResult> assetEntryResults = (List<AssetEntryResult>)request.getAttribute("view.jsp-assetEntryResults");
-
-for (AssetEntryResult assetEntryResult : assetEntryResults) {
+for (AssetEntryResult assetEntryResult : assetPublisherDisplayContext.getAssetEntryResults()) {
 	List<AssetEntry> assetEntries = assetEntryResult.getAssetEntries();
 %>
 

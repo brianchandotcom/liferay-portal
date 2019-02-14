@@ -62,8 +62,7 @@ public class CTEntryResource {
 
 		if (!ctCollectionOptional.isPresent()) {
 			throw new IllegalArgumentException(
-				"Unable to get change tacking collection " +
-					ctCollectionId);
+				"Unable to get change tacking collection " + ctCollectionId);
 		}
 
 		if (collision) {

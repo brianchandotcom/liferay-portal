@@ -48,7 +48,7 @@ public class JavaTypeCast extends JavaExpression {
 		indent = append(
 			sb, _javaTypes, " & ", indent, prefix + "(", ")", maxLineLength);
 
-		if (forceLineBreak) {
+		if (forceLineBreak && (getChainedJavaExpression() == null)) {
 			appendWithLineBreak(
 				sb, _valueJavaExpression, indent, "", suffix, maxLineLength);
 		}

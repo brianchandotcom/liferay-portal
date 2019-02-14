@@ -76,6 +76,10 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 
 	@Override
 	public void onAfterRemove(Layout layout) throws ModelListenerException {
+		if (layout == null) {
+			return;
+		}
+
 		List<SiteNavigationMenu> siteNavigationMenus =
 			_siteNavigationMenuLocalService.getSiteNavigationMenus(
 				layout.getGroupId());

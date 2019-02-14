@@ -35,5 +35,4 @@ Import-Package:\
 	!sun.reflect.*,\
 	\
 	*
-Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Liferay Drools

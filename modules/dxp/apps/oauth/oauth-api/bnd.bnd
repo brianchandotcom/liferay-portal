@@ -14,5 +14,4 @@ Export-Package:\
 	net.oauth.server,\
 	net.oauth.signature,\
 	net.oauth.signature.pem
-Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: OAuth Provider

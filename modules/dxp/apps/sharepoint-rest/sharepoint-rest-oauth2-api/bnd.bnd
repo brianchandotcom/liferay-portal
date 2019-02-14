@@ -6,5 +6,4 @@ Export-Package:\
 	com.liferay.sharepoint.rest.oauth2.model,\
 	com.liferay.sharepoint.rest.oauth2.service,\
 	com.liferay.sharepoint.rest.oauth2.service.persistence
-Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Sharepoint

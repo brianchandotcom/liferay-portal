@@ -5,8 +5,6 @@ Import-Package:\
 	javax.net.ssl;resolution:=optional,\
 	\
 	*
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title:
 Provide-Capability:\
 	liferay.resource.bundle;\
 		aggregate=saml-web;\

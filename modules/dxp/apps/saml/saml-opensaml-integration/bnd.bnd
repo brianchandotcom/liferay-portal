@@ -49,8 +49,6 @@ Import-Package:\
 	!sun.io,\
 	\
 	*
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title:
 -includeresource:\
 	opensaml-core-*;lib:=true,\
 	opensaml-messaging-api-*;lib:=true,\

@@ -27,7 +27,6 @@ Import-Package:\
 	!org.owasp.validator.html,\
 	\
 	*
-Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: SAML
 Liferay-Require-SchemaVersion: 2.0.0
 Liferay-Service: true

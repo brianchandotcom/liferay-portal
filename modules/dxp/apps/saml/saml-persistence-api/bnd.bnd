@@ -6,5 +6,3 @@ Export-Package:\
 	com.liferay.saml.persistence.model,\
 	com.liferay.saml.persistence.service,\
 	com.liferay.saml.persistence.service.persistence
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title:

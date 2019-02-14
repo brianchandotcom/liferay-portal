@@ -14,7 +14,6 @@
 
 package com.liferay.message.boards.uad.display;
 
-import com.liferay.message.boards.constants.MBCategoryConstants;
 import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBThread;

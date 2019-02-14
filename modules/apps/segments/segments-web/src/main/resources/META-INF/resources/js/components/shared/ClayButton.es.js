@@ -74,14 +74,14 @@ class ClayButton extends Component {
 				type={type}
 				{...otherProps}
 			>
-				{label}
-
 				{iconName && (
 					<ClayIcon
-						className={label ? 'text-icon' : 'icon'}
+						className={label ? 'inline-item inline-item-before' : 'icon'}
 						iconName={iconName}
 					/>
 				)}
+
+				{label}
 			</button>
 		);
 	}

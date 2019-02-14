@@ -18,6 +18,7 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -27,6 +28,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -34,6 +36,8 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.concurrent.Callable;
@@ -79,6 +83,24 @@ public class DeleteFragmentEntryLinkMVCActionCommand
 		_layoutPageTemplateStructureLocalService.
 			updateLayoutPageTemplateStructure(
 				serviceContext.getScopeGroupId(), classNameId, classPK, data);
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		if (fragmentEntryLink.getFragmentEntryId() == 0) {
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+				fragmentEntryLink.getEditableValues());
+
+			String portletId = jsonObject.getString(
+				"portletId", StringPool.BLANK);
+
+			if (Validator.isNotNull(portletId)) {
+				_portletPreferencesLocalService.deletePortletPreferences(
+					PortletKeys.PREFS_OWNER_ID_DEFAULT,
+					PortletKeys.PREFS_OWNER_TYPE_LAYOUT, themeDisplay.getPlid(),
+					portletId);
+			}
+		}
 
 		return fragmentEntryLink;
 	}
@@ -127,6 +149,9 @@ public class DeleteFragmentEntryLinkMVCActionCommand
 	@Reference
 	private LayoutPageTemplateStructureLocalService
 		_layoutPageTemplateStructureLocalService;
+
+	@Reference
+	private PortletPreferencesLocalService _portletPreferencesLocalService;
 
 	private class DeleteFragmentEntryLinkCallable
 		implements Callable<FragmentEntryLink> {

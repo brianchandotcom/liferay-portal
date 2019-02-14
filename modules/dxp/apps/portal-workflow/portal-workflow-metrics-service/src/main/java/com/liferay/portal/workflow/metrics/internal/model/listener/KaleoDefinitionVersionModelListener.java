@@ -51,7 +51,7 @@ public class KaleoDefinitionVersionModelListener
 			document.addKeyword(
 				Field.getSortableFieldName("date"), offsetDateTime.toString());
 
-			indexDocument(document);
+			addDocument(document);
 		}
 		catch (Exception e) {
 			throw new ModelListenerException(e);

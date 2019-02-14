@@ -48,7 +48,7 @@ public abstract class BaseKaleoModelListener<T extends BaseModel<T>>
 
 	protected abstract String getIndexType();
 
-	protected void indexDocument(Document document) {
+	protected void addDocument(Document document) {
 		IndexDocumentRequest indexDocumentRequest = new IndexDocumentRequest(
 			getIndexName(), document);
 

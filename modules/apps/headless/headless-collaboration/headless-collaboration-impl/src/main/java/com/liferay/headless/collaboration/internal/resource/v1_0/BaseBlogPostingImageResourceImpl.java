@@ -14,8 +14,8 @@
 
 package com.liferay.headless.collaboration.internal.resource.v1_0;
 
-import com.liferay.headless.collaboration.dto.v1_0.ImageObject;
-import com.liferay.headless.collaboration.resource.v1_0.ImageObjectResource;
+import com.liferay.headless.collaboration.dto.v1_0.BlogPostingImage;
+import com.liferay.headless.collaboration.resource.v1_0.BlogPostingImageResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
@@ -36,8 +36,8 @@ import javax.ws.rs.core.Response;
  * @generated
  */
 @Generated("")
-public abstract class BaseImageObjectResourceImpl
-	implements ImageObjectResource {
+public abstract class BaseBlogPostingImageResourceImpl
+	implements BlogPostingImageResource {
 
 	@Override
 	public Response deleteImageObject(Long imageObjectId) throws Exception {
@@ -47,12 +47,14 @@ public abstract class BaseImageObjectResourceImpl
 	}
 
 	@Override
-	public ImageObject getImageObject(Long imageObjectId) throws Exception {
-		return new ImageObject();
+	public BlogPostingImage getImageObject(Long imageObjectId)
+		throws Exception {
+
+			return new BlogPostingImage();
 	}
 
 	@Override
-	public Page<ImageObject> getImageObjectRepositoryImageObjectsPage(
+	public Page<BlogPostingImage> getImageObjectRepositoryBlogPostingImagesPage(
 			Long imageObjectRepositoryId, Pagination pagination)
 		throws Exception {
 
@@ -60,19 +62,19 @@ public abstract class BaseImageObjectResourceImpl
 	}
 
 	@Override
-	public ImageObject postImageObjectRepositoryImageObject(
-			Long imageObjectRepositoryId, ImageObject imageObject)
+	public BlogPostingImage postImageObjectRepositoryBlogPostingImage(
+			Long imageObjectRepositoryId, BlogPostingImage blogPostingImage)
 		throws Exception {
 
-			return new ImageObject();
+			return new BlogPostingImage();
 	}
 
 	@Override
-	public ImageObject postImageObjectRepositoryImageObjectBatchCreate(
-			Long imageObjectRepositoryId, ImageObject imageObject)
+	public BlogPostingImage postImageObjectRepositoryBlogPostingImageBatchCreate(
+			Long imageObjectRepositoryId, BlogPostingImage blogPostingImage)
 		throws Exception {
 
-			return new ImageObject();
+			return new BlogPostingImage();
 	}
 
 	protected Response buildNoContentResponse() {

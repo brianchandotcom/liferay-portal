@@ -12,19 +12,18 @@
  * details.
  */
 
-package com.liferay.headless.collaboration.internal.resource.v1_0;
+package com.liferay.headless.collaboration.resource.v1_0.test;
 
-import com.liferay.headless.collaboration.resource.v1_0.ImageObjectResource;
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.ServiceScope;
+import org.junit.Ignore;
+import org.junit.runner.RunWith;
 
 /**
  * @author Javier Gamarra
  */
-@Component(
-	properties = "OSGI-INF/liferay/rest/v1_0/image-object.properties",
-	scope = ServiceScope.PROTOTYPE, service = ImageObjectResource.class
-)
-public class ImageObjectResourceImpl extends BaseImageObjectResourceImpl {
+@Ignore
+@RunWith(Arquillian.class)
+public class BlogPostingImageResourceTest
+	extends BaseBlogPostingImageResourceTestCase {
 }

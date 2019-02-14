@@ -46,7 +46,7 @@ public class ImageObjectRepository {
 		return id;
 	}
 
-	public ImageObject[] getImages() {
+	public BlogPostingImage[] getImages() {
 		return images;
 	}
 
@@ -101,12 +101,12 @@ public class ImageObjectRepository {
 	}
 	}
 
-	public void setImages(ImageObject[] images) {
+	public void setImages(BlogPostingImage[] images) {
 		this.images = images;
 	}
 
 	public void setImages(
-		UnsafeSupplier<ImageObject[], Throwable> imagesUnsafeSupplier) {
+		UnsafeSupplier<BlogPostingImage[], Throwable> imagesUnsafeSupplier) {
 
 			try {
 				images = imagesUnsafeSupplier.get();
@@ -154,7 +154,7 @@ public class ImageObjectRepository {
 	protected Long id;
 
 	@GraphQLField
-	protected ImageObject[] images;
+	protected BlogPostingImage[] images;
 
 	@GraphQLField
 	protected Long[] imagesIds;

@@ -15,9 +15,9 @@
 package com.liferay.headless.collaboration.internal.graphql.mutation.v1_0;
 
 import com.liferay.headless.collaboration.dto.v1_0.BlogPosting;
-import com.liferay.headless.collaboration.dto.v1_0.ImageObject;
+import com.liferay.headless.collaboration.dto.v1_0.BlogPostingImage;
+import com.liferay.headless.collaboration.resource.v1_0.BlogPostingImageResource;
 import com.liferay.headless.collaboration.resource.v1_0.BlogPostingResource;
-import com.liferay.headless.collaboration.resource.v1_0.ImageObjectResource;
 
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLInvokeDetached;
@@ -83,14 +83,14 @@ return _getBlogPostingResource().postContentSpaceBlogPostingBatchCreate( content
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public ImageObject postImageObjectRepositoryImageObject( @GraphQLName("image-object-repository-id") Long imageObjectRepositoryId , @GraphQLName("ImageObject") ImageObject imageObject ) throws Exception {
-return _getImageObjectResource().postImageObjectRepositoryImageObject( imageObjectRepositoryId , imageObject );
+	public BlogPostingImage postImageObjectRepositoryBlogPostingImage( @GraphQLName("image-object-repository-id") Long imageObjectRepositoryId , @GraphQLName("BlogPostingImage") BlogPostingImage blogPostingImage ) throws Exception {
+return _getBlogPostingImageResource().postImageObjectRepositoryBlogPostingImage( imageObjectRepositoryId , blogPostingImage );
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public ImageObject postImageObjectRepositoryImageObjectBatchCreate( @GraphQLName("image-object-repository-id") Long imageObjectRepositoryId , @GraphQLName("ImageObject") ImageObject imageObject ) throws Exception {
-return _getImageObjectResource().postImageObjectRepositoryImageObjectBatchCreate( imageObjectRepositoryId , imageObject );
+	public BlogPostingImage postImageObjectRepositoryBlogPostingImageBatchCreate( @GraphQLName("image-object-repository-id") Long imageObjectRepositoryId , @GraphQLName("BlogPostingImage") BlogPostingImage blogPostingImage ) throws Exception {
+return _getBlogPostingImageResource().postImageObjectRepositoryBlogPostingImageBatchCreate( imageObjectRepositoryId , blogPostingImage );
 	}
 
 	@GraphQLInvokeDetached
@@ -106,11 +106,11 @@ return _getImageObjectResource().postImageObjectRepositoryImageObjectBatchCreate
 	}
 
 	private static final ServiceTracker<BlogPostingResource, BlogPostingResource> _blogPostingResourceServiceTracker;
-	private static ImageObjectResource _getImageObjectResource() {
-			return _imageObjectResourceServiceTracker.getService();
+	private static BlogPostingImageResource _getBlogPostingImageResource() {
+			return _blogPostingImageResourceServiceTracker.getService();
 	}
 
-	private static final ServiceTracker<ImageObjectResource, ImageObjectResource> _imageObjectResourceServiceTracker;
+	private static final ServiceTracker<BlogPostingImageResource, BlogPostingImageResource> _blogPostingImageResourceServiceTracker;
 
 	static {
 		Bundle bundle = FrameworkUtil.getBundle(Mutation.class);
@@ -121,12 +121,12 @@ return _getImageObjectResource().postImageObjectRepositoryImageObjectBatchCreate
 			blogPostingResourceServiceTracker.open();
 
 			_blogPostingResourceServiceTracker = blogPostingResourceServiceTracker;
-			ServiceTracker<ImageObjectResource, ImageObjectResource> imageObjectResourceServiceTracker =
-				new ServiceTracker<>(bundle.getBundleContext(), ImageObjectResource.class, null);
+			ServiceTracker<BlogPostingImageResource, BlogPostingImageResource> blogPostingImageResourceServiceTracker =
+				new ServiceTracker<>(bundle.getBundleContext(), BlogPostingImageResource.class, null);
 
-			imageObjectResourceServiceTracker.open();
+			blogPostingImageResourceServiceTracker.open();
 
-			_imageObjectResourceServiceTracker = imageObjectResourceServiceTracker;
+			_blogPostingImageResourceServiceTracker = blogPostingImageResourceServiceTracker;
 	}
 
 }

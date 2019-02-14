@@ -14,7 +14,7 @@
 
 package com.liferay.headless.collaboration.resource.v1_0;
 
-import com.liferay.headless.collaboration.dto.v1_0.ImageObject;
+import com.liferay.headless.collaboration.dto.v1_0.BlogPostingImage;
 import com.liferay.oauth2.provider.scope.RequiresScope;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -41,38 +41,38 @@ import javax.ws.rs.core.Response;
  */
 @Generated("")
 @Path("/v1.0")
-public interface ImageObjectResource {
+public interface BlogPostingImageResource {
 
 	@GET
-	@Path("/image-object-repositories/{image-object-repository-id}/image-objects")
+	@Path("/image-object-repositories/{image-object-repository-id}/blog-posting-images")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Page<ImageObject> getImageObjectRepositoryImageObjectsPage( @PathParam("image-object-repository-id") Long imageObjectRepositoryId , @Context Pagination pagination ) throws Exception;
+	public Page<BlogPostingImage> getImageObjectRepositoryBlogPostingImagesPage( @PathParam("image-object-repository-id") Long imageObjectRepositoryId , @Context Pagination pagination ) throws Exception;
 
 	@Consumes("application/json")
 	@POST
-	@Path("/image-object-repositories/{image-object-repository-id}/image-objects")
+	@Path("/image-object-repositories/{image-object-repository-id}/blog-posting-images")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public ImageObject postImageObjectRepositoryImageObject( @PathParam("image-object-repository-id") Long imageObjectRepositoryId , ImageObject imageObject ) throws Exception;
+	public BlogPostingImage postImageObjectRepositoryBlogPostingImage( @PathParam("image-object-repository-id") Long imageObjectRepositoryId , BlogPostingImage blogPostingImage ) throws Exception;
 
 	@Consumes("application/json")
 	@POST
-	@Path("/image-object-repositories/{image-object-repository-id}/image-objects/batch-create")
+	@Path("/image-object-repositories/{image-object-repository-id}/blog-posting-images/batch-create")
 	@Produces("application/json")
 	@RequiresScope("everything.write")
-	public ImageObject postImageObjectRepositoryImageObjectBatchCreate( @PathParam("image-object-repository-id") Long imageObjectRepositoryId , ImageObject imageObject ) throws Exception;
+	public BlogPostingImage postImageObjectRepositoryBlogPostingImageBatchCreate( @PathParam("image-object-repository-id") Long imageObjectRepositoryId , BlogPostingImage blogPostingImage ) throws Exception;
 
 	@DELETE
-	@Path("/image-objects/{image-object-id}")
+	@Path("/blog-posting-images/{image-object-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	public Response deleteImageObject( @PathParam("image-object-id") Long imageObjectId ) throws Exception;
 
 	@GET
-	@Path("/image-objects/{image-object-id}")
+	@Path("/blog-posting-images/{image-object-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public ImageObject getImageObject( @PathParam("image-object-id") Long imageObjectId ) throws Exception;
+	public BlogPostingImage getImageObject( @PathParam("image-object-id") Long imageObjectId ) throws Exception;
 
 }

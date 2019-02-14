@@ -28,9 +28,9 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("ImageObject")
-@XmlRootElement(name = "ImageObject")
-public class ImageObject {
+@GraphQLName("BlogPostingImage")
+@XmlRootElement(name = "BlogPostingImage")
+public class BlogPostingImage {
 
 	public String getContentUrl() {
 		return contentUrl;

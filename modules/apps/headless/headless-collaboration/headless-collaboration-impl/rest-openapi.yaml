@@ -62,7 +62,7 @@ components:
           type: integer
         image:
           allOf:
-            - $ref: "#/components/schemas/ImageObject"
+            - $ref: "#/components/schemas/BlogPostingImage"
           readOnly: true
         imageId:
           format: int64
@@ -122,8 +122,8 @@ components:
         profileURL:
           type: string
       type: object
-    ImageObject:
-      description: https://www.schema.org/ImageObject
+    BlogPostingImage:
+      description: https://www.schema.org/BlogPostingImage
       properties:
         contentUrl:
           type: string
@@ -153,7 +153,7 @@ components:
           type: integer
         images:
           items:
-            $ref: "#/components/schemas/ImageObject"
+            $ref: "#/components/schemas/BlogPostingImage"
           readOnly: true
           type: array
         imagesIds:
@@ -490,7 +490,7 @@ paths:
                 $ref: "#/components/schemas/ImageObjectRepository"
           description: ""
       tags: ["ImageObjectRepository"]
-  "/image-object-repositories/{image-object-repository-id}/image-objects":
+  "/image-object-repositories/{image-object-repository-id}/blog-posting-images":
     get:
       parameters:
         - in: query
@@ -513,10 +513,10 @@ paths:
             application/json:
               schema:
                 items:
-                  $ref: "#/components/schemas/ImageObject"
+                  $ref: "#/components/schemas/BlogPostingImage"
                 type: array
           description: ""
-      tags: ["ImageObject"]
+      tags: ["BlogPostingImage"]
     post:
       parameters:
         - in: path
@@ -529,16 +529,16 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/ImageObject"
+              $ref: "#/components/schemas/BlogPostingImage"
       responses:
         200:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ImageObject"
+                $ref: "#/components/schemas/BlogPostingImage"
           description: ""
-      tags: ["ImageObject"]
-  "/image-object-repositories/{image-object-repository-id}/image-objects/batch-create":
+      tags: ["BlogPostingImage"]
+  "/image-object-repositories/{image-object-repository-id}/blog-posting-images/batch-create":
     post:
       parameters:
         - in: path
@@ -551,16 +551,16 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/ImageObject"
+              $ref: "#/components/schemas/BlogPostingImage"
       responses:
         200:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ImageObject"
+                $ref: "#/components/schemas/BlogPostingImage"
           description: ""
-      tags: ["ImageObject"]
-  "/image-objects/{image-object-id}":
+      tags: ["BlogPostingImage"]
+  "/blog-posting-images/{image-object-id}":
     delete:
       parameters:
         - in: path
@@ -574,7 +574,7 @@ paths:
           content:
             application/json: {}
           description: ""
-      tags: ["ImageObject"]
+      tags: ["BlogPostingImage"]
     get:
       parameters:
         - in: path
@@ -588,6 +588,6 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ImageObject"
+                $ref: "#/components/schemas/BlogPostingImage"
           description: ""
-      tags: ["ImageObject"]
+      tags: ["BlogPostingImage"]

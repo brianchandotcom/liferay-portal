@@ -22,6 +22,12 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -38,11 +44,11 @@ public class ClayComponentAttributeProviderRegistryImpl
 	implements ClayComponentAttributeProviderRegistry {
 
 	@Override
-	public ClayComponentAttributeProvider get(String key) {
-		ServiceWrapper<ClayComponentAttributeProvider> service =
+	public List<ClayComponentAttributeProvider> get(String key) {
+		List<ServiceWrapper<ClayComponentAttributeProvider>> serviceWrappers =
 			_serviceTrackerMap.getService(key);
 
-		if (service == null) {
+		if (serviceWrappers == null) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					"No ClayComponentAttributeProvider registered with key " +
@@ -52,12 +58,14 @@ public class ClayComponentAttributeProviderRegistryImpl
 			return null;
 		}
 
-		return service.getService();
+		serviceWrappers.sort(Comparator.comparingInt(this::_getServiceRanking));
+
+		return _extractServices(serviceWrappers);
 	}
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
 			bundleContext, ClayComponentAttributeProvider.class,
 			"clay.component.attribute.provider.key",
 			ServiceTrackerCustomizerFactory.serviceWrapper(bundleContext));
@@ -68,10 +76,33 @@ public class ClayComponentAttributeProviderRegistryImpl
 		_serviceTrackerMap.close();
 	}
 
+	private List<ClayComponentAttributeProvider> _extractServices(
+		List<ServiceWrapper<ClayComponentAttributeProvider>> serviceWrappers) {
+
+		ArrayList<ClayComponentAttributeProvider> services = new ArrayList<>();
+
+		for (ServiceWrapper<ClayComponentAttributeProvider> wrapper :
+				serviceWrappers) {
+
+			services.add(wrapper.getService());
+		}
+
+		return services;
+	}
+
+	private int _getServiceRanking(
+		ServiceWrapper<ClayComponentAttributeProvider> service) {
+
+		Map<String, Object> properties = service.getProperties();
+
+		return GetterUtil.getInteger(
+			properties.get("service.ranking"), Integer.MIN_VALUE);
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		ClayComponentAttributeProviderRegistryImpl.class);
 
-	private ServiceTrackerMap<String, ServiceWrapper<ClayComponentAttributeProvider>>
+	private ServiceTrackerMap<String, List<ServiceWrapper<ClayComponentAttributeProvider>>>
 		_serviceTrackerMap;
 
 }

@@ -14,11 +14,13 @@
 
 package com.liferay.frontend.taglib.clay.attribute.provider;
 
+import java.util.List;
+
 /**
  * @author Rodolfo Roza Miranda
  */
 public interface ClayComponentAttributeProviderRegistry {
 
-	public ClayComponentAttributeProvider get(String key);
+	public List<ClayComponentAttributeProvider> get(String key);
 
 }

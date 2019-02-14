@@ -272,8 +272,7 @@ public class MBEntriesManagementToolbarDisplayContext {
 	public List<LabelItem> getFilterLabelItems() {
 		return new LabelItemList() {
 			{
-				final String entriesNavigation = ParamUtil.getString(
-					_request, "entriesNavigation", "all");
+				final String entriesNavigation = _getEntriesNavigation();
 
 				if (entriesNavigation.equals("threads") ||
 					entriesNavigation.equals("categories")) {
@@ -428,8 +427,7 @@ public class MBEntriesManagementToolbarDisplayContext {
 			orderByAsc = true;
 		}
 
-		String entriesNavigation = ParamUtil.getString(
-			_request, "entriesNavigation", "all");
+		String entriesNavigation = _getEntriesNavigation();
 
 		if (entriesNavigation.equals("all")) {
 			if (orderByCol.equals("modified-date")) {
@@ -494,9 +492,12 @@ public class MBEntriesManagementToolbarDisplayContext {
 		return sortingURL;
 	}
 
+	private String _getEntriesNavigation() {
+		return ParamUtil.getString(_request, "entriesNavigation", "all");
+	}
+
 	private List<DropdownItem> _getFilterNavigationDropdownItems() {
-		final String entriesNavigation = ParamUtil.getString(
-			_request, "entriesNavigation", "all");
+		final String entriesNavigation = _getEntriesNavigation();
 
 		return new DropdownItemList() {
 			{

@@ -26,10 +26,13 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.segments.constants.SegmentsConstants;
 import com.liferay.segments.constants.SegmentsWebKeys;
 import com.liferay.segments.context.Context;
 import com.liferay.segments.internal.context.RequestContextMapper;
+import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.provider.SegmentsEntryProvider;
+import com.liferay.segments.service.SegmentsEntryLocalService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -58,34 +61,40 @@ public class SegmentsServicePreAction extends Action {
 	}
 
 	protected void doRun(HttpServletRequest request) {
-		if (!_SEGMENTS_SEGMENTATION_ENABLED) {
-			return;
-		}
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		if (!themeDisplay.isLifecycleRender() ||
-			(themeDisplay.getUserId() == 0)) {
-
+		if (!themeDisplay.isLifecycleRender()) {
 			return;
 		}
 
-		try {
-			Context context = _requestContextMapper.map(request);
+		long[] segmentsEntryIds = null;
 
-			long[] segmentsEntryIds =
-				_segmentsEntryProvider.getSegmentsEntryIds(
+		if (_SEGMENTS_SEGMENTATION_ENABLED) {
+			try {
+				Context context = _requestContextMapper.map(request);
+
+				segmentsEntryIds = _segmentsEntryProvider.getSegmentsEntryIds(
 					User.class.getName(), themeDisplay.getUserId(), context);
-
-			request.setAttribute(
-				SegmentsWebKeys.SEGMENTS_ENTRY_IDS, segmentsEntryIds);
-		}
-		catch (PortalException pe) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(pe.getMessage());
+			}
+			catch (PortalException pe) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(pe.getMessage());
+				}
 			}
 		}
+
+		if (segmentsEntryIds == null) {
+			SegmentsEntry segmentsEntry =
+				_segmentsEntryLocalService.fetchSegmentsEntry(
+					themeDisplay.getCompanyGroupId(),
+					SegmentsConstants.KEY_DEFAULT, true);
+
+			segmentsEntryIds = new long[] {segmentsEntry.getSegmentsEntryId()};
+		}
+
+		request.setAttribute(
+			SegmentsWebKeys.SEGMENTS_ENTRY_IDS, segmentsEntryIds);
 	}
 
 	private static final boolean _SEGMENTS_SEGMENTATION_ENABLED =
@@ -97,6 +106,9 @@ public class SegmentsServicePreAction extends Action {
 
 	@Reference
 	private RequestContextMapper _requestContextMapper;
+
+	@Reference
+	private SegmentsEntryLocalService _segmentsEntryLocalService;
 
 	@Reference
 	private SegmentsEntryProvider _segmentsEntryProvider;

@@ -16,7 +16,6 @@ package com.liferay.portal.configuration.settings.internal.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
-import com.liferay.portal.configuration.metatype.util.ConfigurationScopedPidUtil;
 import com.liferay.portal.configuration.settings.internal.constants.SettingsLocatorTestConstants;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.model.PortletPreferences;
@@ -68,6 +67,14 @@ public abstract class BaseSettingsLocatorTestCase {
 		}
 
 		_configurationPids.clear();
+
+		for (String configurationPid : _factoryConfigurationPids) {
+			ConfigurationTestUtil.deleteFactoryConfiguration(
+				configurationPid,
+				SettingsLocatorTestConstants.TEST_CONFIGURATION_PID);
+		}
+
+		_factoryConfigurationPids.clear();
 	}
 
 	protected String getSettingsValue() throws Exception {
@@ -97,6 +104,27 @@ public abstract class BaseSettingsLocatorTestCase {
 		ConfigurationTestUtil.saveConfiguration(configurationPid, properties);
 
 		_configurationPids.add(configurationPid);
+
+		return value;
+	}
+
+	protected String saveFactoryConfiguration(
+			String factoryPid, ExtendedObjectClassDefinition.Scope scope,
+			String scopePrimKey)
+		throws Exception {
+
+		String value = RandomTestUtil.randomString();
+
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
+
+		properties.put(scope.getPropertyKey(), scopePrimKey);
+
+		properties.put(SettingsLocatorTestConstants.TEST_KEY, value);
+
+		String pid = ConfigurationTestUtil.createFactoryConfiguration(
+			factoryPid, properties);
+
+		_factoryConfigurationPids.add(pid);
 
 		return value;
 	}
@@ -135,10 +163,9 @@ public abstract class BaseSettingsLocatorTestCase {
 			ExtendedObjectClassDefinition.Scope scope, String scopePrimKey)
 		throws Exception {
 
-		return saveConfiguration(
-			ConfigurationScopedPidUtil.buildConfigurationScopedPid(
-				SettingsLocatorTestConstants.TEST_CONFIGURATION_PID, scope,
-				scopePrimKey));
+		return saveFactoryConfiguration(
+			SettingsLocatorTestConstants.TEST_CONFIGURATION_PID, scope,
+			scopePrimKey);
 	}
 
 	protected static long companyId;
@@ -148,6 +175,8 @@ public abstract class BaseSettingsLocatorTestCase {
 	protected SettingsLocator settingsLocator;
 
 	private static final Set<String> _configurationPids = new HashSet<>();
+	private static final Set<String> _factoryConfigurationPids =
+		new HashSet<>();
 
 	@Inject
 	private static PortletPreferencesLocalService

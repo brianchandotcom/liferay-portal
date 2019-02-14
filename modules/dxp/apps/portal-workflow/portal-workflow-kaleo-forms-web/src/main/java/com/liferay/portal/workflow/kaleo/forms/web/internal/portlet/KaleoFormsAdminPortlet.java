@@ -850,8 +850,6 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 	 * KaleoDraftDefinition.getVersion()</code>.
 	 *
 	 * @param actionRequest the request from which to get the request parameters
-	 * @param kaleoDraftDefinition the object instance to bound to the portlet
-	 *        session
 	 */
 	protected void saveInPortletSession(
 		ActionRequest actionRequest,

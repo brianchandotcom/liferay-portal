@@ -22,8 +22,8 @@ package com.liferay.portal.workflow.kaleo.designer.web.internal.constants;
 public class KaleoDesignerActionKeys {
 
 	/**
-	 * {@value #ADD_NEW_WORKFLOW} is used to check permissions for adding a workflow
-	 * definition.
+	 * {@value #ADD_NEW_WORKFLOW} is used to check permissions for adding a
+	 * workflow definition.
 	 */
 	public static final String ADD_NEW_WORKFLOW = "ADD_NEW_WORKFLOW";
 

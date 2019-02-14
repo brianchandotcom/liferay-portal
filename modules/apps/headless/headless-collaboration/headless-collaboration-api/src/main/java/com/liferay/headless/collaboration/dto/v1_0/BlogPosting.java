@@ -110,14 +110,6 @@ public class BlogPosting {
 		return keywords;
 	}
 
-	public ImageObjectRepository getRepository() {
-		return repository;
-	}
-
-	public Long getRepositoryId() {
-		return repositoryId;
-	}
-
 	public void setAggregateRating(AggregateRating aggregateRating) {
 		this.aggregateRating = aggregateRating;
 	}
@@ -402,37 +394,6 @@ public class BlogPosting {
 	}
 	}
 
-	public void setRepository(ImageObjectRepository repository) {
-		this.repository = repository;
-	}
-
-	public void setRepository(
-		UnsafeSupplier<ImageObjectRepository, Throwable>
-			repositoryUnsafeSupplier) {
-
-			try {
-				repository = repositoryUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
-
-	public void setRepositoryId(Long repositoryId) {
-		this.repositoryId = repositoryId;
-	}
-
-	public void setRepositoryId(
-		UnsafeSupplier<Long, Throwable> repositoryIdUnsafeSupplier) {
-
-			try {
-				repositoryId = repositoryIdUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
-
 	@GraphQLField
 	protected AggregateRating aggregateRating;
 
@@ -489,11 +450,5 @@ public class BlogPosting {
 
 	@GraphQLField
 	protected String[] keywords;
-
-	@GraphQLField
-	protected ImageObjectRepository repository;
-
-	@GraphQLField
-	protected Long repositoryId;
 
 }

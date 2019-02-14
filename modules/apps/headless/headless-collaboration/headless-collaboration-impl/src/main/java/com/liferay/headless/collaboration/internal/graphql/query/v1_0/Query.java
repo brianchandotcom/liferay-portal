@@ -19,13 +19,11 @@ import com.liferay.headless.collaboration.dto.v1_0.BlogPosting;
 import com.liferay.headless.collaboration.dto.v1_0.BlogPostingImage;
 import com.liferay.headless.collaboration.dto.v1_0.Comment;
 import com.liferay.headless.collaboration.dto.v1_0.Creator;
-import com.liferay.headless.collaboration.dto.v1_0.ImageObjectRepository;
 import com.liferay.headless.collaboration.resource.v1_0.AggregateRatingResource;
 import com.liferay.headless.collaboration.resource.v1_0.BlogPostingImageResource;
 import com.liferay.headless.collaboration.resource.v1_0.BlogPostingResource;
 import com.liferay.headless.collaboration.resource.v1_0.CommentResource;
 import com.liferay.headless.collaboration.resource.v1_0.CreatorResource;
-import com.liferay.headless.collaboration.resource.v1_0.ImageObjectRepositoryResource;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -86,10 +84,10 @@ return _getBlogPostingResource().getBlogPosting( blogPostingId );
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<BlogPostingImage> getImageObjectRepositoryBlogPostingImagesPage( @GraphQLName("image-object-repository-id") Long imageObjectRepositoryId , @GraphQLName("per_page") int perPage , @GraphQLName("page") int page ) throws Exception {
-				Page paginationPage = _getBlogPostingImageResource().getImageObjectRepositoryBlogPostingImagesPage(
+	public Collection<BlogPostingImage> getContentSpaceBlogPostingImagesPage( @GraphQLName("content-space-id") Long contentSpaceId , @GraphQLName("per_page") int perPage , @GraphQLName("page") int page ) throws Exception {
+				Page paginationPage = _getBlogPostingImageResource().getContentSpaceBlogPostingImagesPage(
 
-					imageObjectRepositoryId , Pagination.of(perPage, page)
+					contentSpaceId , Pagination.of(perPage, page)
 				);
 
 				return paginationPage.getItems();
@@ -138,12 +136,6 @@ return _getCommentResource().getComment( commentId );
 return _getCreatorResource().getCreator( creatorId );
 	}
 
-	@GraphQLField
-	@GraphQLInvokeDetached
-	public ImageObjectRepository getImageObjectRepository( @GraphQLName("image-object-repository-id") Long imageObjectRepositoryId ) throws Exception {
-return _getImageObjectRepositoryResource().getImageObjectRepository( imageObjectRepositoryId );
-	}
-
 	private static AggregateRatingResource _getAggregateRatingResource() {
 			return _aggregateRatingResourceServiceTracker.getService();
 	}
@@ -169,11 +161,6 @@ return _getImageObjectRepositoryResource().getImageObjectRepository( imageObject
 	}
 
 	private static final ServiceTracker<CreatorResource, CreatorResource> _creatorResourceServiceTracker;
-	private static ImageObjectRepositoryResource _getImageObjectRepositoryResource() {
-			return _imageObjectRepositoryResourceServiceTracker.getService();
-	}
-
-	private static final ServiceTracker<ImageObjectRepositoryResource, ImageObjectRepositoryResource> _imageObjectRepositoryResourceServiceTracker;
 
 	static {
 		Bundle bundle = FrameworkUtil.getBundle(Query.class);
@@ -208,12 +195,6 @@ return _getImageObjectRepositoryResource().getImageObjectRepository( imageObject
 			creatorResourceServiceTracker.open();
 
 			_creatorResourceServiceTracker = creatorResourceServiceTracker;
-			ServiceTracker<ImageObjectRepositoryResource, ImageObjectRepositoryResource> imageObjectRepositoryResourceServiceTracker =
-				new ServiceTracker<>(bundle.getBundleContext(), ImageObjectRepositoryResource.class, null);
-
-			imageObjectRepositoryResourceServiceTracker.open();
-
-			_imageObjectRepositoryResourceServiceTracker = imageObjectRepositoryResourceServiceTracker;
 	}
 
 }

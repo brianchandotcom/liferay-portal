@@ -47,6 +47,14 @@ public abstract class BaseBlogPostingImageResourceImpl
 	}
 
 	@Override
+	public Page<BlogPostingImage> getContentSpaceBlogPostingImagesPage(
+			Long contentSpaceId, Pagination pagination)
+		throws Exception {
+
+			return Page.of(Collections.emptyList());
+	}
+
+	@Override
 	public BlogPostingImage getImageObject(Long imageObjectId)
 		throws Exception {
 
@@ -54,16 +62,8 @@ public abstract class BaseBlogPostingImageResourceImpl
 	}
 
 	@Override
-	public Page<BlogPostingImage> getImageObjectRepositoryBlogPostingImagesPage(
-			Long imageObjectRepositoryId, Pagination pagination)
-		throws Exception {
-
-			return Page.of(Collections.emptyList());
-	}
-
-	@Override
-	public BlogPostingImage postImageObjectRepositoryBlogPostingImage(
-			Long imageObjectRepositoryId, BlogPostingImage blogPostingImage)
+	public BlogPostingImage postContentSpaceBlogPostingImage(
+			Long contentSpaceId, BlogPostingImage blogPostingImage)
 		throws Exception {
 
 			return new BlogPostingImage();

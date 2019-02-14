@@ -69,22 +69,18 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 	}
 
 	@Test
+	public void testGetContentSpaceBlogPostingImagesPage() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	@Test
 	public void testGetImageObject() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testGetImageObjectRepositoryBlogPostingImagesPage()
-		throws Exception {
-
-			Assert.assertTrue(true);
-	}
-
-	@Test
-	public void testPostImageObjectRepositoryBlogPostingImage()
-		throws Exception {
-
-			Assert.assertTrue(true);
+	public void testPostContentSpaceBlogPostingImage() throws Exception {
+		Assert.assertTrue(true);
 	}
 
 	@Test
@@ -107,6 +103,20 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 			);
 	}
 
+	protected Response invokeGetContentSpaceBlogPostingImagesPage(
+			Long contentSpaceId, Pagination pagination)
+		throws Exception {
+
+		RequestSpecification requestSpecification =
+			_createRequestSpecification();
+
+			return requestSpecification.when(
+			).get(
+				_resourceURL + "/content-spaces/{content-space-id}/blog-posting-images",
+				contentSpaceId
+			);
+	}
+
 	protected Response invokeGetImageObject(Long imageObjectId)
 		throws Exception {
 
@@ -120,22 +130,8 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 			);
 	}
 
-	protected Response invokeGetImageObjectRepositoryBlogPostingImagesPage(
-			Long imageObjectRepositoryId, Pagination pagination)
-		throws Exception {
-
-		RequestSpecification requestSpecification =
-			_createRequestSpecification();
-
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/image-object-repositories/{image-object-repository-id}/blog-posting-images",
-				imageObjectRepositoryId
-			);
-	}
-
-	protected Response invokePostImageObjectRepositoryBlogPostingImage(
-			Long imageObjectRepositoryId, BlogPostingImage blogPostingImage)
+	protected Response invokePostContentSpaceBlogPostingImage(
+			Long contentSpaceId, BlogPostingImage blogPostingImage)
 		throws Exception {
 
 		RequestSpecification requestSpecification =
@@ -145,8 +141,8 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 				blogPostingImage
 			).when(
 			).post(
-				_resourceURL + "/image-object-repositories/{image-object-repository-id}/blog-posting-images",
-				imageObjectRepositoryId
+				_resourceURL + "/content-spaces/{content-space-id}/blog-posting-images",
+				contentSpaceId
 			);
 	}
 

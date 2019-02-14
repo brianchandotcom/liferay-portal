@@ -72,14 +72,6 @@ components:
           items:
             type: string
           type: array
-        repository:
-          allOf:
-            - $ref: "#/components/schemas/ImageObjectRepository"
-          readOnly: true
-        repositoryId:
-          format: int64
-          type: integer
-          writeOnly: true
       type: object
     Comment:
       description: https://www.schema.org/Comment
@@ -137,32 +129,6 @@ components:
         sizeInBytes:
           type: number
         title:
-          type: string
-      type: object
-    ImageObjectRepository:
-      description: https://www.schema.org/ImageObjectRepository
-      properties:
-        dateCreated:
-          format: date-time
-          type: string
-        dateModified:
-          format: date-time
-          type: string
-        id:
-          format: int64
-          type: integer
-        images:
-          items:
-            $ref: "#/components/schemas/BlogPostingImage"
-          readOnly: true
-          type: array
-        imagesIds:
-          items:
-            format: int64
-            type: integer
-          type: array
-          writeOnly: true
-        name:
           type: string
       type: object
 info:
@@ -473,24 +439,7 @@ paths:
                 $ref: "#/components/schemas/Creator"
           description: ""
       tags: ["Creator"]
-  "/image-object-repositories/{image-object-repository-id}":
-    get:
-      parameters:
-        - in: path
-          name: image-object-repository-id
-          required: true
-          schema:
-            format: int64
-            type: integer
-      responses:
-        200:
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ImageObjectRepository"
-          description: ""
-      tags: ["ImageObjectRepository"]
-  "/image-object-repositories/{image-object-repository-id}/blog-posting-images":
+  "/content-spaces/{content-space-id}/blog-posting-images":
     get:
       parameters:
         - in: query
@@ -502,7 +451,7 @@ paths:
           schema:
             type: integer
         - in: path
-          name: image-object-repository-id
+          name: content-space-id
           required: true
           schema:
             format: int64
@@ -520,7 +469,7 @@ paths:
     post:
       parameters:
         - in: path
-          name: image-object-repository-id
+          name: content-space-id
           required: true
           schema:
             format: int64

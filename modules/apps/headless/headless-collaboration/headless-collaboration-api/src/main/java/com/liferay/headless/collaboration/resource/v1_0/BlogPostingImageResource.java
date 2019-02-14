@@ -44,17 +44,17 @@ import javax.ws.rs.core.Response;
 public interface BlogPostingImageResource {
 
 	@GET
-	@Path("/image-object-repositories/{image-object-repository-id}/blog-posting-images")
+	@Path("/content-spaces/{content-space-id}/blog-posting-images")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Page<BlogPostingImage> getImageObjectRepositoryBlogPostingImagesPage( @PathParam("image-object-repository-id") Long imageObjectRepositoryId , @Context Pagination pagination ) throws Exception;
+	public Page<BlogPostingImage> getContentSpaceBlogPostingImagesPage( @PathParam("content-space-id") Long contentSpaceId , @Context Pagination pagination ) throws Exception;
 
 	@Consumes("application/json")
 	@POST
-	@Path("/image-object-repositories/{image-object-repository-id}/blog-posting-images")
+	@Path("/content-spaces/{content-space-id}/blog-posting-images")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public BlogPostingImage postImageObjectRepositoryBlogPostingImage( @PathParam("image-object-repository-id") Long imageObjectRepositoryId , BlogPostingImage blogPostingImage ) throws Exception;
+	public BlogPostingImage postContentSpaceBlogPostingImage( @PathParam("content-space-id") Long contentSpaceId , BlogPostingImage blogPostingImage ) throws Exception;
 
 	@Consumes("application/json")
 	@POST

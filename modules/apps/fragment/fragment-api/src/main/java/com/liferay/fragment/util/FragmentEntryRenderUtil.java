@@ -111,8 +111,7 @@ public class FragmentEntryRenderUtil {
 		throws PortalException {
 
 		return renderFragmentEntryLink(
-			fragmentEntryLink, mode, new HashMap<String, Object>(), request,
-			response);
+			fragmentEntryLink, mode, new HashMap<>(), request, response);
 	}
 
 	public static String renderFragmentEntryLink(
@@ -122,25 +121,25 @@ public class FragmentEntryRenderUtil {
 		throws PortalException {
 
 		return renderFragmentEntryLink(
-			fragmentEntryLink, mode, parameterMap, request, response,
-			LocaleUtil.getMostRelevantLocale());
+			fragmentEntryLink, mode, parameterMap,
+			LocaleUtil.getMostRelevantLocale(), request, response);
 	}
 
 	public static String renderFragmentEntryLink(
 			FragmentEntryLink fragmentEntryLink, String mode,
-			Map<String, Object> parameterMap, HttpServletRequest request,
-			HttpServletResponse response, Locale locale)
+			Map<String, Object> parameterMap, Locale locale,
+			HttpServletRequest request, HttpServletResponse response)
 		throws PortalException {
 
 		return renderFragmentEntryLink(
-			fragmentEntryLink, mode, parameterMap, request, response, locale,
-			new long[0]);
+			fragmentEntryLink, mode, parameterMap, locale, new long[0], request,
+			response);
 	}
 
 	public static String renderFragmentEntryLink(
 			FragmentEntryLink fragmentEntryLink, String mode,
-			Map<String, Object> parameterMap, HttpServletRequest request,
-			HttpServletResponse response, Locale locale, long[] segmentsIds)
+			Map<String, Object> parameterMap, Locale locale, long[] segmentsIds,
+			HttpServletRequest request, HttpServletResponse response)
 		throws PortalException {
 
 		FragmentEntryProcessorRegistry fragmentEntryProcessorRegistry =

@@ -96,14 +96,14 @@ public class LayoutPageTemplateStructureRenderUtil {
 					if (parameterMap != null) {
 						renderFragmentEntryLink =
 							FragmentEntryRenderUtil.renderFragmentEntryLink(
-								fragmentEntryLink, mode, parameterMap, request,
-								response, locale, segmentsIds);
+								fragmentEntryLink, mode, parameterMap, locale,
+								segmentsIds, request, response);
 					}
 					else {
 						renderFragmentEntryLink =
 							FragmentEntryRenderUtil.renderFragmentEntryLink(
 								fragmentEntryLink, mode, Collections.emptyMap(),
-								request, response, locale, segmentsIds);
+								locale, segmentsIds, request, response);
 					}
 
 					sb.append(renderFragmentEntryLink);

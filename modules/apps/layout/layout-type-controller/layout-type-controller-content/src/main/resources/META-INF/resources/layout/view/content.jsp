@@ -126,7 +126,7 @@ String ppid = ParamUtil.getString(request, "p_p_id");
 													}
 												%>
 
-													<%= FragmentEntryRenderUtil.renderFragmentEntryLink(fragmentEntryLink, FragmentEntryLinkConstants.VIEW, Collections.emptyMap(), request, response, locale, segmentsIds) %>
+													<%= FragmentEntryRenderUtil.renderFragmentEntryLink(fragmentEntryLink, FragmentEntryLinkConstants.VIEW, Collections.emptyMap(), locale, segmentsIds, request, response) %>
 
 												<%
 												}

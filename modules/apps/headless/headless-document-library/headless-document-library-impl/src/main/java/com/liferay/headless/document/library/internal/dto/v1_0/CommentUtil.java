@@ -14,26 +14,26 @@
 
 package com.liferay.headless.document.library.internal.dto.v1_0;
 
-import com.liferay.headless.document.library.dto.v1_0.Creator;
-import com.liferay.portal.kernel.model.User;
+import com.liferay.headless.document.library.dto.v1_0.Comment;
 
 /**
- * @author Cristina González
+ * @author Javier Gamarra
  */
-public class CreatorUtil {
+public class CommentUtil {
 
-	public static Creator toCreator(User user) {
-		if (user == null) {
+	public static Comment toComment(
+			com.liferay.portal.kernel.comment.Comment comment)
+		throws Exception {
+
+		if (comment == null) {
 			return null;
 		}
 
-		return new Creator() {
+		return new Comment() {
 			{
-				setAdditionalName(user.getMiddleName());
-				setFamilyName(user.getLastName());
-				setGivenName(user.getFirstName());
-				setId(user.getUserId());
-				setName(user.getFullName());
+				setCreator(CreatorUtil.toCreator(comment.getUser()));
+				setId(comment.getCommentId());
+				setText(comment.getBody());
 			}
 		};
 	}

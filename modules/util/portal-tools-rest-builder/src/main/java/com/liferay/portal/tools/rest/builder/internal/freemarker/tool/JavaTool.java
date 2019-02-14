@@ -39,6 +39,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
@@ -51,6 +52,115 @@ public class JavaTool {
 
 	public static JavaTool getInstance() {
 		return _instance;
+	}
+
+	public Map<String, List<JavaSignature>> getGraphQLJavaSignatures(
+		OpenAPIYAML openAPIYAML) {
+
+		Map<String, List<JavaSignature>> javaSignaturesMap = new TreeMap<>();
+
+		Components components = openAPIYAML.getComponents();
+
+		Map<String, Schema> schemas = components.getSchemas();
+
+		for (String schemaName : schemas.keySet()) {
+			List<JavaSignature> javaSignatures = new ArrayList<>();
+
+			for (JavaSignature javaSignature :
+					getJavaSignatures(openAPIYAML, schemaName)) {
+
+				List<JavaParameter> javaParameters = new ArrayList<>();
+
+				for (JavaParameter javaParameter :
+						javaSignature.getJavaParameters()) {
+
+					String parameterType = javaParameter.getParameterType();
+
+					if (StringUtil.equals(parameterType, "Pagination")) {
+						javaParameters.add(
+							new JavaParameter(
+								javaParameter.getOperation(), "perPage",
+								"int"));
+
+						javaParameters.add(
+							new JavaParameter(
+								javaParameter.getOperation(), "page", "int"));
+					}
+					else {
+						javaParameters.add(javaParameter);
+					}
+				}
+
+				String returnType = javaSignature.getReturnType();
+
+				if (StringUtil.startsWith(returnType, "Page<")) {
+					returnType = "Collection<" + schemaName + ">";
+				}
+
+				javaSignatures.add(
+					new JavaSignature(
+						javaSignature.getPath(), javaSignature.getPathItem(),
+						javaSignature.getOperation(), javaParameters,
+						javaSignature.getMethodName(), returnType));
+			}
+
+			javaSignaturesMap.put(schemaName, javaSignatures);
+		}
+
+		return javaSignaturesMap;
+	}
+
+	public Set<String> getGraphQLMethodAnnotations(
+		JavaSignature javaSignature) {
+
+		Set<String> methodAnnotations = new TreeSet<>();
+
+		methodAnnotations.add("@GraphQLInvokeDetached");
+
+		String httpMethod = _getHTTPMethod(javaSignature.getOperation());
+
+		if (Objects.equals(httpMethod, "get") ||
+			Objects.equals(httpMethod, "post")) {
+
+			methodAnnotations.add("@GraphQLField");
+		}
+
+		return methodAnnotations;
+	}
+
+	public String getGraphQLParameterAnnotation(JavaParameter javaParameter) {
+		Operation operation = javaParameter.getOperation();
+
+		for (Parameter parameter : operation.getParameters()) {
+			String parameterName = CamelCaseUtil.toCamelCase(
+				parameter.getName(), false);
+
+			if (!Objects.equals(
+					parameterName, javaParameter.getParameterName())) {
+
+				continue;
+			}
+
+			Schema schema = parameter.getSchema();
+
+			if (schema.getType() != null) {
+				StringBuilder sb = new StringBuilder();
+
+				sb.append("@GraphQLName(\"");
+				sb.append(parameter.getName());
+				sb.append("\")");
+
+				return sb.toString();
+			}
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("@GraphQLName(\"");
+		sb.append(javaParameter.getParameterType());
+		sb.append("\")");
+
+		return sb.toString();
 	}
 
 	public List<JavaParameter> getJavaParameters(Schema schema) {

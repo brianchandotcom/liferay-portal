@@ -8,6 +8,9 @@ package ${configYAML.apiPackagePath}.dto.${versionDirName};
 
 import com.liferay.petra.function.UnsafeSupplier;
 
+import graphql.annotations.annotationTypes.GraphQLField;
+import graphql.annotations.annotationTypes.GraphQLName;
+
 import java.util.Date;
 
 import javax.annotation.Generated;
@@ -19,28 +22,30 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
+@GraphQLName("${schemaName}")
 @XmlRootElement(name = "${schemaName}")
 public class ${schemaName} {
 
 <#list javaTool.getJavaParameters(schema) as javaParameter>
 	public ${javaParameter.parameterType} get${javaParameter.parameterName?cap_first}() {
-		return _${javaParameter.parameterName};
+		return ${javaParameter.parameterName};
 	}
 
 	public void set${javaParameter.parameterName?cap_first}(${javaParameter.parameterType} ${javaParameter.parameterName}) {
-		_${javaParameter.parameterName} = ${javaParameter.parameterName};
+		this.${javaParameter.parameterName} = ${javaParameter.parameterName};
 	}
 
 	public void set${javaParameter.parameterName?cap_first}(UnsafeSupplier<${javaParameter.parameterType}, Throwable> ${javaParameter.parameterName}UnsafeSupplier) {
 		try {
-			_${javaParameter.parameterName} = ${javaParameter.parameterName}UnsafeSupplier.get();
+			${javaParameter.parameterName} = ${javaParameter.parameterName}UnsafeSupplier.get();
 		}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
 	}
 
-	private ${javaParameter.parameterType} _${javaParameter.parameterName};
+	@GraphQLField
+	protected ${javaParameter.parameterType} ${javaParameter.parameterName};
 
 </#list>
 }

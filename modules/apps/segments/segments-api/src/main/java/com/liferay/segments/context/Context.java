@@ -44,6 +44,8 @@ public class Context {
 
 	public static final String LANGUAGE_ID = "languageId";
 
+	public static final String LAST_SIGN_IN_DATE_TIME = "lastSignInDateTime";
+
 	public static final String LOCAL_DATE = "localDate";
 
 	public static final String SIGNED_IN = "signedIn";

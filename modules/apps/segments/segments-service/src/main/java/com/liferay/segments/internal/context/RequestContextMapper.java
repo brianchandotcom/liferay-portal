@@ -17,6 +17,7 @@ package com.liferay.segments.internal.context;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.mobile.device.Device;
 import com.liferay.portal.kernel.mobile.device.Dimensions;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.servlet.BrowserSniffer;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -25,7 +26,11 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.context.Context;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
+
+import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -73,6 +78,23 @@ public class RequestContextMapper {
 		ZonedDateTime now = ZonedDateTime.now();
 
 		context.put(Context.LANGUAGE_ID, themeDisplay.getLanguageId());
+
+		User user = themeDisplay.getUser();
+
+		if ((user != null) && (user.getLastLoginDate() != null)) {
+			Date lastLoginDate = user.getLastLoginDate();
+
+			context.put(
+				Context.LAST_SIGN_IN_DATE_TIME,
+				ZonedDateTime.ofInstant(
+					lastLoginDate.toInstant(), ZoneOffset.UTC));
+		}
+		else {
+			context.put(
+				Context.LAST_SIGN_IN_DATE_TIME,
+				ZonedDateTime.of(LocalDateTime.MIN, ZoneOffset.UTC));
+		}
+
 		context.put(Context.LOCAL_DATE, LocalDate.from(now));
 		context.put(Context.SIGNED_IN, themeDisplay.isSignedIn());
 		context.put(Context.URL, GetterUtil.getString(request.getRequestURL()));

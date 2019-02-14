@@ -15,6 +15,7 @@
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
 import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.util.FragmentEntryRenderUtil;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
@@ -79,13 +80,20 @@ public class AddPortletMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest);
 
 		try {
+			String html = _getPortletFragmentEntryLinkHTML(portletId);
+
+			JSONObject editableValueJSONObject =
+				_fragmentEntryProcessorRegistry.
+					getDefaultEditableValuesJSONObject(html);
+
+			editableValueJSONObject.put("portletId", portletId);
+
 			FragmentEntryLink fragmentEntryLink =
 				_fragmentEntryLinkLocalService.addFragmentEntryLink(
 					serviceContext.getUserId(),
 					serviceContext.getScopeGroupId(), 0, classNameId, classPK,
-					StringPool.BLANK,
-					_getPortletFragmentEntryLinkHTML(portletId),
-					StringPool.BLANK, null, 0, serviceContext);
+					StringPool.BLANK, html, StringPool.BLANK,
+					editableValueJSONObject.toString(), 0, serviceContext);
 
 			jsonObject.put(
 				"content",
@@ -146,6 +154,9 @@ public class AddPortletMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
+
+	@Reference
+	private FragmentEntryProcessorRegistry _fragmentEntryProcessorRegistry;
 
 	@Reference
 	private Portal _portal;

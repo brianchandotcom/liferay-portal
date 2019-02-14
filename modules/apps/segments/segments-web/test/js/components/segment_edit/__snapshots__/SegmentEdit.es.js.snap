@@ -84,18 +84,9 @@ exports[`SegmentEdit should render 1`] = `
               class="btn-group-item"
             >
               <button
-                class="btn btn-outline-secondary btn-sm btn-outline-borderless members-count-button"
+                class="btn btn-secondary btn-sm members-count-button"
                 type="button"
               >
-                <svg
-                  aria-hidden="true"
-                  class="lexicon-icon lexicon-icon-users inline-item inline-item-before"
-                  viewBox="0 0 512 512"
-                >
-                  <use
-                    xlink:href="#users"
-                  />
-                </svg>
                 x-members
               </button>
             </div>

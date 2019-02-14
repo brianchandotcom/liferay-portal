@@ -256,9 +256,7 @@ class SegmentEdit extends Component {
 									/>
 
 									<ClayButton
-										borderless
 										className="members-count-button"
-										iconName="users"
 										label={getPluralMessage(
 											Liferay.Language.get('x-member'),
 											Liferay.Language.get('x-members'),

@@ -14,12 +14,14 @@
 
 package com.liferay.site.navigation.menu.item.layout.internal.type;
 
+import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.staging.LayoutStaging;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -273,7 +275,18 @@ public class LayoutSiteNavigationMenuItemType
 			SiteNavigationMenuItem importedSiteNavigationMenuItem)
 		throws PortalException {
 
-		Layout layout = _getLayout(importedSiteNavigationMenuItem);
+		Layout layout;
+
+		try {
+			layout = _getLayout(importedSiteNavigationMenuItem);
+		}
+		catch (NoSuchLayoutException nsle) {
+			if (ExportImportThreadLocal.isPortletImportInProcess()) {
+				throw nsle;
+			}
+
+			return false;
+		}
 
 		LayoutRevision layoutRevision = _layoutStaging.getLayoutRevision(
 			layout);

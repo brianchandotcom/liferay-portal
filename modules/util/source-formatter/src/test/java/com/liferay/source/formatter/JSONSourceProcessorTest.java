@@ -26,9 +26,9 @@ public class JSONSourceProcessorTest extends BaseSourceProcessorTestCase {
 		test(
 			"JSONDeprecatedPackages/package.testjson",
 			new String[] {
-				"Do not use deprecated packages " +
+				"Do not use deprecated package " +
 					"'liferay-module-config-generator'",
-				"Do not use deprecated packages 'metal-cli'"
+				"Do not use deprecated package 'metal-cli'"
 			},
 			new Integer[] {4, 5});
 	}

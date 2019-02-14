@@ -83,9 +83,14 @@ public class FormatUtil {
 		SourceFormatter sourceFormatter = new SourceFormatter(
 			sourceFormatterArgs);
 
-		if (!StringUtil.endsWith(file.getName(), "Resource.java")) {
-			sourceFormatter.format();
+		if (StringUtil.endsWith(file.getName(), "Mutation.java") ||
+			StringUtil.endsWith(file.getName(), "Query.java") ||
+			StringUtil.endsWith(file.getName(), "Resource.java")) {
+
+			sourceFormatterArgs.setCheckName("JavaImportsCheck");
 		}
+
+		sourceFormatter.format();
 
 		return FileUtil.read(file);
 	}

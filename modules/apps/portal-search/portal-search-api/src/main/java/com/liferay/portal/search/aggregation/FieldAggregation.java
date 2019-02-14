@@ -16,6 +16,8 @@ package com.liferay.portal.search.aggregation;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.search.script.Script;
+
 /**
  * @author André de Oliveira
  */
@@ -26,8 +28,12 @@ public interface FieldAggregation extends Aggregation {
 
 	public Object getMissing();
 
+	public Script getScript();
+
 	public void setField(String field);
 
 	public void setMissing(Object missing);
+
+	public void setScript(Script script);
 
 }

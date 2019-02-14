@@ -15,11 +15,11 @@
 package com.liferay.arquillian.extension.junit.bridge.remote.executor;
 
 import org.jboss.arquillian.core.api.InstanceProducer;
+import org.jboss.arquillian.core.api.annotation.ApplicationScoped;
 import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.arquillian.core.api.annotation.Observes;
 import org.jboss.arquillian.test.spi.TestMethodExecutor;
 import org.jboss.arquillian.test.spi.TestResult;
-import org.jboss.arquillian.test.spi.annotation.TestScoped;
 import org.jboss.arquillian.test.spi.event.suite.Test;
 
 /**
@@ -45,8 +45,8 @@ public class LocalTestExecutor {
 		_testResultInstanceProducer.set(result);
 	}
 
+	@ApplicationScoped
 	@Inject
-	@TestScoped
 	private InstanceProducer<TestResult> _testResultInstanceProducer;
 
 }

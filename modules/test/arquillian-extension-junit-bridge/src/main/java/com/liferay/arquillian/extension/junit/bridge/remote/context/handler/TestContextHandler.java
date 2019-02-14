@@ -21,11 +21,11 @@ import java.util.Set;
 
 import org.jboss.arquillian.core.api.Instance;
 import org.jboss.arquillian.core.api.InstanceProducer;
+import org.jboss.arquillian.core.api.annotation.ApplicationScoped;
 import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.arquillian.core.api.annotation.Observes;
 import org.jboss.arquillian.core.spi.EventContext;
 import org.jboss.arquillian.test.spi.TestClass;
-import org.jboss.arquillian.test.spi.annotation.ClassScoped;
 import org.jboss.arquillian.test.spi.context.ClassContext;
 import org.jboss.arquillian.test.spi.context.SuiteContext;
 import org.jboss.arquillian.test.spi.context.TestContext;
@@ -142,7 +142,7 @@ public class TestContextHandler {
 	@Inject
 	private Instance<SuiteContext> _suiteContextInstance;
 
-	@ClassScoped
+	@ApplicationScoped
 	@Inject
 	private InstanceProducer<TestClass> _testClassInstanceProducer;
 

@@ -3,7 +3,7 @@
 exports[`CriteriaBuilder should render 1`] = `
 <DocumentFragment>
   <div
-    class="sheet sheet-lg"
+    class="criteria-builder-root sheet"
   >
     <div
       class="criteria-builder-toolbar"

@@ -3,127 +3,8 @@
 exports[`ContributorBuilder should render: initialRender 1`] = `
 <DocumentFragment>
   <div
-    class="criteria-builder-root"
+    class="contributor-builder-root"
   >
-    <div
-      class="criteria-builder-section-main"
-    >
-      <div
-        class="sheet-lg"
-      />
-      <div
-        class="sheet sheet-lg"
-      >
-        <div
-          class="criteria-builder-toolbar"
-        >
-          <div
-            class="criteria-model-label"
-          >
-            x-properties
-          </div>
-          <label
-            class="toggle-switch ml-auto"
-          >
-            <input
-              class="toggle-switch-check"
-              type="checkbox"
-            />
-            <span
-              aria-hidden="true"
-              class="toggle-switch-bar"
-            >
-              <span
-                class="toggle-switch-handle"
-                data-label-off=""
-                data-label-on=""
-              >
-                <span
-                  class="button-icon button-icon-off toggle-switch-icon"
-                >
-                  <svg
-                    aria-hidden="true"
-                    class="lexicon-icon lexicon-icon-pencil"
-                    viewBox="0 0 512 512"
-                  >
-                    <use
-                      xlink:href="#pencil"
-                    />
-                  </svg>
-                </span>
-                <span
-                  class="button-icon button-icon-on toggle-switch-icon"
-                >
-                  <svg
-                    aria-hidden="true"
-                    class="lexicon-icon lexicon-icon-pencil"
-                    viewBox="0 0 512 512"
-                  >
-                    <use
-                      xlink:href="#pencil"
-                    />
-                  </svg>
-                </span>
-              </span>
-            </span>
-          </label>
-        </div>
-        <div
-          class="criteria-group-root criteria-group-item-root color--user"
-        >
-          <div
-            class="empty-drop-zone-root"
-          >
-            <div
-              class="empty-drop-zone-target"
-            >
-              <div
-                class="empty-drop-zone-indicator"
-              />
-              <div
-                class="empty-drop-zone-help-message"
-              >
-                <div
-                  class="message-item"
-                >
-                  <img
-                    class="message-icon"
-                    src="/drag-and-drop.svg"
-                  />
-                  <span>
-                    drag-and-drop-criterion-from-the-right-to-add-rules
-                  </span>
-                </div>
-                <div
-                  class="message-item"
-                >
-                  <img
-                    class="message-icon"
-                    src="/drag-over.svg"
-                  />
-                  <span>
-                    drag-and-drop-over-an-existing-criteria-to-form-groups
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div
-        class="form-group"
-      >
-        <input
-          class="field form-control"
-          data-testid="input_test_id"
-          id="input_test_id"
-          name="input_test_id"
-          readonly=""
-          type="hidden"
-          value=""
-        />
-      </div>
-    </div>
     <div
       class="criteria-builder-section-sidebar"
     >
@@ -182,6 +63,130 @@ exports[`ContributorBuilder should render: initialRender 1`] = `
             no-results-were-found
           </li>
         </ul>
+      </div>
+    </div>
+    <div
+      class="criteria-builder-section-main"
+    >
+      <div
+        class="contributor-container"
+      >
+        <div
+          class="container-fluid container-fluid-max-xl"
+        >
+          <div
+            class="content-wrapper"
+          >
+            <div
+              class="criteria-builder-root sheet"
+            >
+              <div
+                class="criteria-builder-toolbar"
+              >
+                <div
+                  class="criteria-model-label"
+                >
+                  x-properties
+                </div>
+                <label
+                  class="toggle-switch ml-auto"
+                >
+                  <input
+                    class="toggle-switch-check"
+                    type="checkbox"
+                  />
+                  <span
+                    aria-hidden="true"
+                    class="toggle-switch-bar"
+                  >
+                    <span
+                      class="toggle-switch-handle"
+                      data-label-off=""
+                      data-label-on=""
+                    >
+                      <span
+                        class="button-icon button-icon-off toggle-switch-icon"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          class="lexicon-icon lexicon-icon-pencil"
+                          viewBox="0 0 512 512"
+                        >
+                          <use
+                            xlink:href="#pencil"
+                          />
+                        </svg>
+                      </span>
+                      <span
+                        class="button-icon button-icon-on toggle-switch-icon"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          class="lexicon-icon lexicon-icon-pencil"
+                          viewBox="0 0 512 512"
+                        >
+                          <use
+                            xlink:href="#pencil"
+                          />
+                        </svg>
+                      </span>
+                    </span>
+                  </span>
+                </label>
+              </div>
+              <div
+                class="criteria-group-root criteria-group-item-root color--user"
+              >
+                <div
+                  class="empty-drop-zone-root"
+                >
+                  <div
+                    class="empty-drop-zone-target"
+                  >
+                    <div
+                      class="empty-drop-zone-indicator"
+                    />
+                    <div
+                      class="empty-drop-zone-help-message"
+                    >
+                      <div
+                        class="message-item"
+                      >
+                        <img
+                          class="message-icon"
+                          src="/drag-and-drop.svg"
+                        />
+                        <span>
+                          drag-and-drop-criterion-from-the-right-to-add-rules
+                        </span>
+                      </div>
+                      <div
+                        class="message-item"
+                      >
+                        <img
+                          class="message-icon"
+                          src="/drag-over.svg"
+                        />
+                        <span>
+                          drag-and-drop-over-an-existing-criteria-to-form-groups
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <input
+              class="field form-control"
+              data-testid="input_test_id"
+              id="input_test_id"
+              name="input_test_id"
+              readonly=""
+              type="hidden"
+              value=""
+            />
+          </div>
+        </div>
       </div>
     </div>
   </div>

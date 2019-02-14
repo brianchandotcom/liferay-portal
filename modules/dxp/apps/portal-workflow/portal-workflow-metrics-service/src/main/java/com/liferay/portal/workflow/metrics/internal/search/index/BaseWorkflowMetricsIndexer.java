@@ -47,6 +47,11 @@ public abstract class BaseWorkflowMetricsIndexer
 		searchEngineAdapter.execute(updateDocumentRequest);
 	}
 
+	@Reference(unbind = "-")
+	protected void setWorkflowMetricsIndicesCreator(
+		WorkflowMetricsIndicesCreator workflowMetricsIndicesCreator) {
+	}
+
 	@Reference
 	protected SearchEngineAdapter searchEngineAdapter;
 

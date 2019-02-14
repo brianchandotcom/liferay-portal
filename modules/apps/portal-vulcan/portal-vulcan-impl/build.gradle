@@ -1,3 +1,9 @@
+import aQute.bnd.osgi.Constants
+import aQute.bnd.osgi.Jar
+import aQute.bnd.osgi.Resource
+
+import java.util.jar.Manifest
+
 task deployConfigs(type: Copy)
 
 dependencies {
@@ -42,4 +48,28 @@ deployConfigs {
 
 	from "configs"
 	into new File(liferay.liferayHome, "osgi/configs")
+}
+
+jar {
+	doLast {
+		ant.jar(destfile: jar.archivePath, update: true) {
+			Jar jar = new Jar(jar.archivePath)
+
+			Resource resource = jar.getResource("META-INF/MANIFEST.MF")
+
+			Manifest manifest = new Manifest(resource.openInputStream())
+
+			List<String> serviceComponents = []
+
+			manifest.getMainAttributes().getValue(Constants.SERVICE_COMPONENT).split(",").each {
+				if (!it.startsWith("OSGI-INF/graphql.")) {
+					serviceComponents.add(it)
+				}
+			}
+
+			delegate.manifest {
+				attribute(name: Constants.SERVICE_COMPONENT, value: serviceComponents.join(","))
+			}
+		}
+	}
 }

@@ -12,14 +12,16 @@
  *
  */
 
-package com.liferay.portal.workflow.metrics.resource.v1_0;
+package com.liferay.portal.workflow.metrics.rest.resource.v1_0;
 
-import com.liferay.oauth2.provider.scope.RequiresScope;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-import com.liferay.portal.workflow.metrics.dto.v1_0.Process;
+import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Process;
+import com.liferay.oauth2.provider.scope.RequiresScope;
+
 
 import javax.annotation.Generated;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -29,7 +31,7 @@ import javax.ws.rs.core.Context;
 /**
  * To access this resource, run:
  *
- *     curl -u your@email.com:yourpassword -D - http://localhost:8080/o/portal-workflow-metrics/v1.0
+ *     curl -u your@email.com:yourpassword -D - http://localhost:8080/o/portal-workflow-metrics-rest/v1.0
  *
  * @author Rafael Praxedes
  * @generated

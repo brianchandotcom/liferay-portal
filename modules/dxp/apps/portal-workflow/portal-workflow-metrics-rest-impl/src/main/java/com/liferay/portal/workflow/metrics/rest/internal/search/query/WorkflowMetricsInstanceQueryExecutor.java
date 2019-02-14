@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.portal.workflow.metrics.internal.search.query;
+package com.liferay.portal.workflow.metrics.rest.internal.search.query;
 
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;

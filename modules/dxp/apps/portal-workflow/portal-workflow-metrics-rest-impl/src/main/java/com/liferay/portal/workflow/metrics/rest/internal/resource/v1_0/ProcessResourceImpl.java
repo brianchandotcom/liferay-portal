@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.portal.workflow.metrics.internal.resource.v1_0;
+package com.liferay.portal.workflow.metrics.rest.internal.resource.v1_0;
 
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
@@ -21,10 +21,10 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-import com.liferay.portal.workflow.metrics.dto.v1_0.Process;
-import com.liferay.portal.workflow.metrics.internal.search.query.WorkflowMetricsInstanceQueryExecutor;
-import com.liferay.portal.workflow.metrics.internal.search.query.WorkflowMetricsProcessQueryExecutor;
-import com.liferay.portal.workflow.metrics.resource.v1_0.ProcessResource;
+import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Process;
+import com.liferay.portal.workflow.metrics.rest.internal.search.query.WorkflowMetricsInstanceQueryExecutor;
+import com.liferay.portal.workflow.metrics.rest.internal.search.query.WorkflowMetricsProcessQueryExecutor;
+import com.liferay.portal.workflow.metrics.rest.resource.v1_0.ProcessResource;
 
 import java.util.ArrayList;
 import java.util.Collection;

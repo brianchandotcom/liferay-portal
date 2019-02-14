@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.portal.workflow.metrics.dto.v1_0;
+package com.liferay.portal.workflow.metrics.rest.dto.v1_0;
 
 import javax.annotation.Generated;
 

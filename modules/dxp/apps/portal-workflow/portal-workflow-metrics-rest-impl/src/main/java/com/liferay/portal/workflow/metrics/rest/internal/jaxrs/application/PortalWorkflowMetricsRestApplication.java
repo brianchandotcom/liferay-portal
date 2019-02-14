@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.portal.workflow.metrics.internal.jaxrs.application;
+package com.liferay.portal.workflow.metrics.rest.internal.jaxrs.application;
 
 import javax.annotation.Generated;
 
@@ -27,12 +27,12 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	property = {
 		"oauth2.scope.checker.type=annotations",
-		"osgi.jaxrs.application.base=/portal-workflow-metrics",
+		"osgi.jaxrs.application.base=/portal-workflow-metrics-rest",
 		"osgi.jaxrs.extension.select=(osgi.jaxrs.name=Liferay.Vulcan)",
-		"osgi.jaxrs.name=portal-workflow-metrics-application"
+		"osgi.jaxrs.name=portal-workflow-metrics-rest-application"
 	},
 	service = Application.class
 )
 @Generated("")
-public class PortalWorkflowMetricsApplication extends Application {
+public class PortalWorkflowMetricsRestApplication extends Application {
 }

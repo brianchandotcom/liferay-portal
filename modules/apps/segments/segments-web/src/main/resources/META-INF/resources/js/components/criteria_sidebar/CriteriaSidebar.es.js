@@ -5,9 +5,8 @@ import CriteriaSidebarItem from './CriteriaSidebarItem.es';
 import {PROPERTY_TYPES} from '../../utils/constants.es';
 
 /**
- * Returns a default value for a property provided
- *
- * @param {*} property
+ * Returns a default value for a property provided.
+ * @param {Object} property
  * @returns
  */
 function getDefaultValue(property) {

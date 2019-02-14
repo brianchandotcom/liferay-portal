@@ -1,22 +1,4 @@
 .criteria-builder-root {
-	display: flex;
-	height: 100%;
-
-	.criteria-builder-section-main {
-		flex: 1;
-		overflow: auto;
-		padding-right: 16px;
-
-		.sheet {
-			margin-top: 24px;
-			padding-bottom: 1.5rem;
-		}
-	}
-
-	.criteria-builder-section-sidebar {
-		width: 380px;
-	}
-
 	.criteria-builder-toolbar {
 		align-items: center;
 		display: flex;
@@ -27,32 +9,5 @@
 		.criteria-model-label {
 			font-weight: 600;
 		}
-	}
-
-	.drag-icon {
-		color: $mainLighten52;
-
-		&:active {
-			cursor: grabbing;
-		}
-
-		&:hover {
-			cursor: grab;
-		}
-	}
-
-	.empty-state {
-		background-color: $lightBackground;
-		border: 1px solid $mainLighten74;
-		border-left: 3px solid $chartBlue;
-		border-radius: 4px;
-		color: $mainLighten28;
-		cursor: pointer;
-		font-weight: 600;
-		padding: 16px 32px;
-	}
-
-	&.read-only .criteria-group-root.criteria-group-item {
-		padding: 8px;
 	}
 }

@@ -123,7 +123,7 @@ public class AnonymizeNonreviewableUADDataMVCRenderCommand
 			new SearchContainer<>(portletRequest, currentURL, null, null);
 
 		searchContainer.setEmptyResultsMessage(
-			"there-are-no-applications-matching-that-filter");
+			"there-are-no-remaining-applications-to-anonymize");
 
 		searchContainer.setId("uadApplicationSummaryDisplays");
 

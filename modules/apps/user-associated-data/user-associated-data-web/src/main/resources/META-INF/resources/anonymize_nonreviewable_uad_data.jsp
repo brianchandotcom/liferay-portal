@@ -41,7 +41,7 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 
 		<div class="sheet sheet-lg">
 			<div class="sheet-header">
-				<h2 class="sheet-title"><liferay-ui:message key="process-automatically-anonymizable-data" /></h2>
+				<h2 class="sheet-title"><liferay-ui:message key="auto-anonymize-data" /></h2>
 			</div>
 
 			<div class="sheet-section">
@@ -63,7 +63,7 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 					<div class="autofit-col">
 						<portlet:actionURL name="/anonymize_nonreviewable_uad_data" var="anonymizeURL" />
 
-						<aui:button cssClass="btn-sm" disabled="<%= totalReviewableUADEntitiesCount == 0 %>" onClick='<%= renderResponse.getNamespace() + "confirmAction('nonreviewableUADDataForm', '" + anonymizeURL.toString() + "', '" + UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-anonymize-the-users-personal-data") + "')" %>' primary="true" value="delete" />
+						<aui:button cssClass="btn-sm" disabled="<%= totalReviewableUADEntitiesCount == 0 %>" onClick='<%= renderResponse.getNamespace() + "confirmAction('nonreviewableUADDataForm', '" + anonymizeURL.toString() + "', '" + UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-anonymize-the-users-personal-data") + "')" %>' primary="true" value="anonymize" />
 					</div>
 				</div>
 			</div>

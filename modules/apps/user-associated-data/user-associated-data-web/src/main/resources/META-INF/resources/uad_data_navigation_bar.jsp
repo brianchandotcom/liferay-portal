@@ -56,7 +56,7 @@ baseURL.setParameter("p_u_i_d", String.valueOf(selectedUser.getUserId()));
 
 						navigationItem.setActive(active);
 						navigationItem.setHref(href);
-						navigationItem.setLabel(LanguageUtil.get(request, "anonymize-nonreviewable-data"));
+						navigationItem.setLabel(LanguageUtil.get(request, "auto-anonymize-data"));
 					});
 			}
 		} %>'

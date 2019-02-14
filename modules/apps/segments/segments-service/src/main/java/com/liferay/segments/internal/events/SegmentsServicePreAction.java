@@ -14,6 +14,7 @@
 
 package com.liferay.segments.internal.events;
 
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.events.Action;
 import com.liferay.portal.kernel.events.ActionException;
 import com.liferay.portal.kernel.events.LifecycleAction;
@@ -22,28 +23,31 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.constants.SegmentsConstants;
 import com.liferay.segments.constants.SegmentsWebKeys;
 import com.liferay.segments.context.Context;
+import com.liferay.segments.internal.configuration.SegmentsServiceConfiguration;
 import com.liferay.segments.internal.context.RequestContextMapper;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.provider.SegmentsEntryProvider;
 import com.liferay.segments.service.SegmentsEntryLocalService;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eduardo García
  */
 @Component(
+	configurationPid = "com.liferay.segments.internal.configuration.SegmentsServiceConfiguration",
 	property = "key=servlet.service.events.pre", service = LifecycleAction.class
 )
 public class SegmentsServicePreAction extends Action {
@@ -60,6 +64,13 @@ public class SegmentsServicePreAction extends Action {
 		}
 	}
 
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_segmentsServiceConfiguration = ConfigurableUtil.createConfigurable(
+			SegmentsServiceConfiguration.class, properties);
+	}
+
 	protected void doRun(HttpServletRequest request) {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -70,7 +81,7 @@ public class SegmentsServicePreAction extends Action {
 
 		long[] segmentsEntryIds = null;
 
-		if (_SEGMENTS_SEGMENTATION_ENABLED) {
+		if (_segmentsServiceConfiguration.segmentationEnabled()) {
 			try {
 				Context context = _requestContextMapper.map(request);
 
@@ -97,10 +108,6 @@ public class SegmentsServicePreAction extends Action {
 			SegmentsWebKeys.SEGMENTS_ENTRY_IDS, segmentsEntryIds);
 	}
 
-	private static final boolean _SEGMENTS_SEGMENTATION_ENABLED =
-		GetterUtil.getBoolean(
-			PropsUtil.get(PropsKeys.SEGMENTS_SEGMENTATION_ENABLED));
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		SegmentsServicePreAction.class);
 
@@ -112,5 +119,7 @@ public class SegmentsServicePreAction extends Action {
 
 	@Reference
 	private SegmentsEntryProvider _segmentsEntryProvider;
+
+	private SegmentsServiceConfiguration _segmentsServiceConfiguration;
 
 }

@@ -34,4 +34,7 @@ public interface SegmentsServiceConfiguration {
 	@Meta.AD(deflt = "15", name = "check-interval", required = false)
 	public int checkInterval();
 
+	@Meta.AD(deflt = "true", name = "segmentation-enabled", required = false)
+	public boolean segmentationEnabled();
+
 }

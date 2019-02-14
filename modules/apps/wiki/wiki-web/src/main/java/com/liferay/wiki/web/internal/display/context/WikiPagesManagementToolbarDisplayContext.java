@@ -132,10 +132,6 @@ public class WikiPagesManagementToolbarDisplayContext {
 		portletURL.setParameter("mvcRenderCommandName", "/wiki/view_pages");
 		portletURL.setParameter("redirect", _currentURLObj.toString());
 
-		String navigation = _getNavigation();
-
-		portletURL.setParameter("navigation", navigation);
-
 		WikiNode node = (WikiNode)_request.getAttribute(WikiWebKeys.WIKI_NODE);
 
 		portletURL.setParameter("nodeId", String.valueOf(node.getNodeId()));

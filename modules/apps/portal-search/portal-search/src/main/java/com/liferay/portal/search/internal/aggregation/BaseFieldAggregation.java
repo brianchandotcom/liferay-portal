@@ -15,6 +15,7 @@
 package com.liferay.portal.search.internal.aggregation;
 
 import com.liferay.portal.search.aggregation.FieldAggregation;
+import com.liferay.portal.search.script.Script;
 
 /**
  * @author Michael C. Han
@@ -39,6 +40,11 @@ public abstract class BaseFieldAggregation
 	}
 
 	@Override
+	public Script getScript() {
+		return _script;
+	}
+
+	@Override
 	public void setField(String field) {
 		_field = field;
 	}
@@ -48,7 +54,13 @@ public abstract class BaseFieldAggregation
 		_missing = missing;
 	}
 
+	@Override
+	public void setScript(Script script) {
+		_script = script;
+	}
+
 	private String _field;
 	private Object _missing;
+	private Script _script;
 
 }

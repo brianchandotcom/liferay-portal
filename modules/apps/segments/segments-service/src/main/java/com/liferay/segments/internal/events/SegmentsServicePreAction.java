@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.events.LifecycleAction;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -81,7 +82,11 @@ public class SegmentsServicePreAction extends Action {
 
 		long[] segmentsEntryIds = null;
 
-		if (_segmentsServiceConfiguration.segmentationEnabled()) {
+		Layout layout = themeDisplay.getLayout();
+
+		if (_segmentsServiceConfiguration.segmentationEnabled() &&
+			!layout.isTypeControlPanel()) {
+
 			try {
 				Context context = _requestContextMapper.map(request);
 

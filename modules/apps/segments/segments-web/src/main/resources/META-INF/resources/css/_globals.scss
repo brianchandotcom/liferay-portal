@@ -1,0 +1,9 @@
+/* ---------- Product menu open size adjustments ---------- */
+
+@media (max-width: $pageContentMaxWidth + $productMenuWidth) {
+	body.open .segments-root {
+		.contributor-builder-root.editing .criteria-builder-section-main .contributor-container .container-fluid {
+			padding-right: $sidebarWidth;
+		}
+	}
+}

@@ -20,6 +20,15 @@
 
 <liferay-ui:error exception="<%= WorkflowDefinitionTitleException.class %>" message="name-workflow-before-publish" />
 
+<liferay-ui:error exception="<%= KaleoDefinitionValidationException.EmptyNotificationTemplate.class %>">
+
+	<%
+	KaleoDefinitionValidationException.EmptyNotificationTemplate ent = (KaleoDefinitionValidationException.EmptyNotificationTemplate)errorException;
+	%>
+
+	<liferay-ui:message arguments="<%= ent.getNode() %>" key="the-x-node-has-an-empty-notification-template" translateArguments="<%= false %>" />
+</liferay-ui:error>
+
 <liferay-ui:error exception="<%= KaleoDefinitionValidationException.MultipleInitialStateNodes.class %>">
 
 	<%

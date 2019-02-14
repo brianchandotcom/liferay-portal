@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalService;
-import com.liferay.portal.workflow.metrics.internal.search.index.TokenWorkflowMetricsIndexer;
 
 import java.time.Duration;
 import java.time.OffsetDateTime;
@@ -54,7 +53,7 @@ public class KaleoTaskInstanceTokenModelListener
 			document.addKeyword(
 				Field.getSortableFieldName("date"), offsetDateTime.toString());
 
-			_tokenWorkflowMetricsIndexer.index(document);
+			indexDocument(document);
 		}
 		catch (Exception e) {
 			throw new ModelListenerException(e);
@@ -79,7 +78,7 @@ public class KaleoTaskInstanceTokenModelListener
 
 			document.addKeyword("deleted", true);
 
-			_tokenWorkflowMetricsIndexer.update(document);
+			updateDocument(document);
 		}
 		catch (Exception e) {
 			throw new ModelListenerException(e);
@@ -112,7 +111,7 @@ public class KaleoTaskInstanceTokenModelListener
 			document.addKeyword(
 				Field.getSortableFieldName("date"), offsetDateTime.toString());
 
-			_tokenWorkflowMetricsIndexer.update(document);
+			updateDocument(document);
 		}
 		catch (Exception e) {
 			throw new ModelListenerException(e);
@@ -146,11 +145,18 @@ public class KaleoTaskInstanceTokenModelListener
 		return document;
 	}
 
+	@Override
+	protected String getIndexName() {
+		return "workflow-metrics-tokens";
+	}
+
+	@Override
+	protected String getIndexType() {
+		return "WorkflowMetricsTokenType";
+	}
+
 	@Reference
 	private KaleoDefinitionVersionLocalService
 		_kaleoDefinitionVersionLocalService;
-
-	@Reference
-	private TokenWorkflowMetricsIndexer _tokenWorkflowMetricsIndexer;
 
 }

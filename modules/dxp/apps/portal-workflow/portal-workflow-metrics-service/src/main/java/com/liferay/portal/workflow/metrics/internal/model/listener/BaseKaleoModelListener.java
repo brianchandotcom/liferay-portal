@@ -16,10 +16,17 @@ package com.liferay.portal.workflow.metrics.internal.model.listener;
 
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.BaseModelListener;
+import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
+import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
+import com.liferay.portal.search.engine.adapter.document.UpdateDocumentRequest;
+import com.liferay.portal.workflow.metrics.internal.search.index.WorkflowMetricsIndicesCreator;
 
 import java.io.Serializable;
 
 import org.apache.commons.codec.digest.DigestUtils;
+
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Rafael Praxedes
@@ -36,5 +43,35 @@ public abstract class BaseKaleoModelListener<T extends BaseModel<T>>
 
 		return DigestUtils.sha256Hex(sb.toString());
 	}
+
+	protected abstract String getIndexName();
+
+	protected abstract String getIndexType();
+
+	protected void indexDocument(Document document) {
+		IndexDocumentRequest indexDocumentRequest = new IndexDocumentRequest(
+			getIndexName(), document);
+
+		indexDocumentRequest.setType(getIndexType());
+
+		searchEngineAdapter.execute(indexDocumentRequest);
+	}
+
+	@Reference(unbind = "-")
+	protected void setWorkflowMetricsIndicesCreator(
+		WorkflowMetricsIndicesCreator workflowMetricsIndicesCreator) {
+	}
+
+	protected void updateDocument(Document document) {
+		UpdateDocumentRequest updateDocumentRequest = new UpdateDocumentRequest(
+			getIndexName(), document.getUID(), document);
+
+		updateDocumentRequest.setType(getIndexType());
+
+		searchEngineAdapter.execute(updateDocumentRequest);
+	}
+
+	@Reference
+	protected SearchEngineAdapter searchEngineAdapter;
 
 }

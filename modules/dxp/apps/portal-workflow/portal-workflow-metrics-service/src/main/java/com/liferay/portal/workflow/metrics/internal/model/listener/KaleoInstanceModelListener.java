@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstance;
-import com.liferay.portal.workflow.metrics.internal.search.index.InstanceWorkflowMetricsIndexer;
 
 import java.time.Duration;
 import java.time.OffsetDateTime;
@@ -29,7 +28,6 @@ import java.time.ZoneId;
 import java.util.Date;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Inácio Nery
@@ -53,7 +51,7 @@ public class KaleoInstanceModelListener
 			document.addKeyword(
 				Field.getSortableFieldName("date"), offsetDateTime.toString());
 
-			_instanceWorkflowMetricsIndexer.index(document);
+			indexDocument(document);
 		}
 		catch (Exception e) {
 			throw new ModelListenerException(e);
@@ -78,7 +76,7 @@ public class KaleoInstanceModelListener
 
 			document.addKeyword("deleted", true);
 
-			_instanceWorkflowMetricsIndexer.update(document);
+			updateDocument(document);
 		}
 		catch (Exception e) {
 			throw new ModelListenerException(e);
@@ -113,7 +111,7 @@ public class KaleoInstanceModelListener
 			document.addKeyword(
 				Field.getSortableFieldName("date"), offsetDateTime.toString());
 
-			_instanceWorkflowMetricsIndexer.update(document);
+			updateDocument(document);
 		}
 		catch (Exception e) {
 			throw new ModelListenerException(e);
@@ -140,7 +138,14 @@ public class KaleoInstanceModelListener
 		return document;
 	}
 
-	@Reference
-	private InstanceWorkflowMetricsIndexer _instanceWorkflowMetricsIndexer;
+	@Override
+	protected String getIndexName() {
+		return "workflow-metrics-instances";
+	}
+
+	@Override
+	protected String getIndexType() {
+		return "WorkflowMetricsInstanceType";
+	}
 
 }

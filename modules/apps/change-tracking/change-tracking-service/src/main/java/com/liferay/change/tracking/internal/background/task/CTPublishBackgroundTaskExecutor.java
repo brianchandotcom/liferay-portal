@@ -100,8 +100,6 @@ public class CTPublishBackgroundTaskExecutor
 
 		_publishCTCollection(backgroundTask, ctProcessId, ctCollectionId);
 
-		_attachLogs(backgroundTask);
-
 		return BackgroundTaskResult.SUCCESS;
 	}
 
@@ -155,6 +153,8 @@ public class CTPublishBackgroundTaskExecutor
 
 			_publishCTEntries(
 				backgroundTask.getUserId(), ctCollectionId, ctEntries);
+
+			_attachLogs(backgroundTask);
 		}
 		catch (Exception e) {
 			CTProcessMessageSenderUtil.logCTProcessFailed();

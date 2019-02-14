@@ -147,6 +147,10 @@ public class BlogPostingResourceImpl extends BaseBlogPostingResourceImpl {
 	}
 
 	private ImageObject _getImageObject(long imageId) throws Exception {
+		if (imageId == 0) {
+			return null;
+		}
+
 		FileEntry fileEntry = _dlAppService.getFileEntry(imageId);
 
 		FileVersion fileVersion = _dlAppService.getFileVersion(

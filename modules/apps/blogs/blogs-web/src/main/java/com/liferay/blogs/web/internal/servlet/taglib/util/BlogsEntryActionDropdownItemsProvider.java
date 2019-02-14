@@ -33,8 +33,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.model.WorkflowedModel;
-import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -56,6 +54,8 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionURL;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -65,18 +65,17 @@ import javax.servlet.http.HttpServletRequest;
 public class BlogsEntryActionDropdownItemsProvider {
 
 	public BlogsEntryActionDropdownItemsProvider(
-		BlogsEntry blogsEntry, LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse,
-		PermissionChecker permissionChecker, ResourceBundle resourceBundle,
-		TrashHelper trashHelper) {
+		BlogsEntry blogsEntry, RenderRequest renderRequest,
+		RenderResponse renderResponse, PermissionChecker permissionChecker,
+		ResourceBundle resourceBundle, TrashHelper trashHelper) {
 
 		_blogsEntry = blogsEntry;
-		_liferayPortletResponse = liferayPortletResponse;
+		_renderResponse = renderResponse;
 		_permissionChecker = permissionChecker;
 		_resourceBundle = resourceBundle;
 		_trashHelper = trashHelper;
 
-		_request = PortalUtil.getHttpServletRequest(liferayPortletRequest);
+		_request = PortalUtil.getHttpServletRequest(renderRequest);
 	}
 
 	public List<DropdownItem> getActionDropdownItems() {
@@ -170,7 +169,7 @@ public class BlogsEntryActionDropdownItemsProvider {
 	}
 
 	private Consumer<DropdownItem> _getDeleteEntryActionConsumer() {
-		ActionURL deleteURL = _liferayPortletResponse.createActionURL();
+		ActionURL deleteURL = _renderResponse.createActionURL();
 
 		deleteURL.setParameter(ActionRequest.ACTION_NAME, "/blogs/edit_entry");
 		deleteURL.setParameter(Constants.CMD, Constants.DELETE);
@@ -188,9 +187,9 @@ public class BlogsEntryActionDropdownItemsProvider {
 	private Consumer<DropdownItem> _getEditEntryActionConsumer() {
 		return dropdownItem -> {
 			dropdownItem.setHref(
-				_liferayPortletResponse.createRenderURL(),
-				"mvcRenderCommandName", "/blogs/edit_entry", Constants.CMD,
-				Constants.UPDATE, "redirect", _getRedirectURL(), "entryId",
+				_renderResponse.createRenderURL(), "mvcRenderCommandName",
+				"/blogs/edit_entry", Constants.CMD, Constants.UPDATE,
+				"redirect", _getRedirectURL(), "entryId",
 				_blogsEntry.getEntryId());
 
 			dropdownItem.setIcon("edit");
@@ -199,7 +198,7 @@ public class BlogsEntryActionDropdownItemsProvider {
 	}
 
 	private Consumer<DropdownItem> _getMoveEntryToTrashActionConsumer() {
-		ActionURL moveToTrashURL = _liferayPortletResponse.createActionURL();
+		ActionURL moveToTrashURL = _renderResponse.createActionURL();
 
 		moveToTrashURL.setParameter(
 			ActionRequest.ACTION_NAME, "/blogs/edit_entry");
@@ -278,7 +277,7 @@ public class BlogsEntryActionDropdownItemsProvider {
 	}
 
 	private String _getRedirectURL() {
-		PortletURL redirectURL = _liferayPortletResponse.createRenderURL();
+		PortletURL redirectURL = _renderResponse.createRenderURL();
 
 		redirectURL.setParameter("mvcRenderCommandName", "/blogs/view");
 
@@ -346,8 +345,8 @@ public class BlogsEntryActionDropdownItemsProvider {
 	}
 
 	private final BlogsEntry _blogsEntry;
-	private final LiferayPortletResponse _liferayPortletResponse;
 	private final PermissionChecker _permissionChecker;
+	private final RenderResponse _renderResponse;
 	private final HttpServletRequest _request;
 	private final ResourceBundle _resourceBundle;
 	private final TrashHelper _trashHelper;

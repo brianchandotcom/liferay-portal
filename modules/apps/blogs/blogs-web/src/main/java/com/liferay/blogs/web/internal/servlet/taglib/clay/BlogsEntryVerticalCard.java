@@ -65,9 +65,7 @@ public class BlogsEntryVerticalCard extends BaseVerticalCard {
 		BlogsEntryActionDropdownItemsProvider
 			blogsEntryActionDropdownItemsProvider =
 				new BlogsEntryActionDropdownItemsProvider(
-					_blogsEntry,
-					PortalUtil.getLiferayPortletRequest(renderRequest),
-					PortalUtil.getLiferayPortletResponse(_renderResponse),
+					_blogsEntry, renderRequest, _renderResponse,
 					_permissionChecker, _resourceBundle, _trashHelper);
 
 		return blogsEntryActionDropdownItemsProvider.getActionDropdownItems();

@@ -14,21 +14,12 @@
 
 package com.liferay.portal.workflow.metrics.web.internal.portlet;
 
-import com.liferay.frontend.js.loader.modules.extender.npm.JSPackage;
-import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.workflow.metrics.web.internal.constants.WorkflowMetricsPortletKeys;
-import com.liferay.portal.workflow.metrics.web.internal.constants.WorkflowMetricsWebKeys;
-
-import java.io.IOException;
 
 import javax.portlet.Portlet;
-import javax.portlet.PortletException;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Rafael Praxedes
@@ -59,22 +50,4 @@ import org.osgi.service.component.annotations.Reference;
 	service = Portlet.class
 )
 public class WorkflowMetricsPortlet extends MVCPortlet {
-
-	@Override
-	public void doView(
-			RenderRequest renderRequest, RenderResponse renderResponse)
-		throws IOException, PortletException {
-
-		JSPackage jsPackage = _npmResolver.getJSPackage();
-
-		renderRequest.setAttribute(
-			WorkflowMetricsWebKeys.WORKFLOW_METRICS_BOOTSTRAP_REQUIRE,
-			jsPackage.getResolvedId() + " as bootstrapRequire");
-
-		super.doView(renderRequest, renderResponse);
-	}
-
-	@Reference
-	private NPMResolver _npmResolver;
-
 }

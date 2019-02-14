@@ -18,6 +18,6 @@
 
 <div id="<portlet:namespace />-root"></div>
 
-<aui:script require="<%= (String)renderRequest.getAttribute(WorkflowMetricsWebKeys.WORKFLOW_METRICS_BOOTSTRAP_REQUIRE) %>">
+<aui:script require='<%= npmResolvedPackageName + " as bootstrapRequire" %>'>
 	bootstrapRequire.default('<portlet:namespace />-root');
 </aui:script>

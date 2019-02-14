@@ -1,3 +1,35 @@
 Bundle-Name: Liferay Headless Document Library Test
 Bundle-SymbolicName: com.liferay.headless.document.library.test
 Bundle-Version: 1.0.0
+Import-Package:\
+	!com.github.scribejava.core.*,\
+	\
+	!com.google.gson.*,\
+	\
+	!org.apache.commons.lang3.text.translate.*,\
+	!org.apache.ivy.*,\
+	\
+	!org.codehaus.jackson.*,\
+	!org.codehaus.jackson.map.*,\
+	!org.codehaus.jackson.type.*,\
+	\
+	!org.fusesource.jansi.*,\
+	\
+	!org.jboss.arquillian.test.api.*,\
+	\
+	*
+-includeresource:\
+	test-classes/integration,\
+	@lib/commons-lang3.jar,\
+	@lib/groovy-json.jar,\
+	@lib/groovy-xml.jar,\
+	@lib/groovy.jar,\
+	@lib/hamcrest-core.jar,\
+	@lib/hamcrest-json.jar,\
+	@lib/hamcrest-library.jar,\
+	@lib/httpclient.jar,\
+	@lib/httpcore.jar,\
+	@lib/httpmime.jar,\
+	@lib/jsonassert.jar,\
+	@lib/rest-assured.jar,\
+	@lib/tagsoup.jar

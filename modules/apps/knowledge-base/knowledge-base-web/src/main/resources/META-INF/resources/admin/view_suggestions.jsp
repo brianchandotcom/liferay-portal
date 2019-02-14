@@ -66,6 +66,7 @@ List<KBComment> kbComments = kbCommentsSearchContainer.getResults();
 
 <clay:management-toolbar
 	actionDropdownItems="<%= kbSuggestionListManagementToolbarDisplayContext.getActionDropdownItems() %>"
+	clearResultsURL="<%= kbSuggestionListManagementToolbarDisplayContext.getClearResultsURL() %>"
 	componentId="kbSuggestionListManagementToolbar"
 	disabled="<%= kbSuggestionListManagementToolbarDisplayContext.isDisabled() %>"
 	filterDropdownItems="<%= kbSuggestionListManagementToolbarDisplayContext.getFilterDropdownItems() %>"

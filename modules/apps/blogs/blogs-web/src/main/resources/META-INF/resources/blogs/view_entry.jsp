@@ -146,7 +146,6 @@ if (portletTitleBasedNavigation) {
 
 <%
 PortalUtil.setPageTitle(BlogsEntryUtil.getDisplayTitle(resourceBundle, entry), request);
-PortalUtil.setPageSubtitle(entry.getSubtitle(), request);
 
 String description = entry.getDescription();
 

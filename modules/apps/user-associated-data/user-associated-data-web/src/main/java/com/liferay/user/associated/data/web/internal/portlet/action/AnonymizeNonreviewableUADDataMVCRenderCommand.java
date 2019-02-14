@@ -132,8 +132,8 @@ public class AnonymizeNonreviewableUADDataMVCRenderCommand
 		searchContainer.setOrderByType(
 			ParamUtil.getString(renderRequest, "orderByType", "asc"));
 
-		Predicate<UADApplicationSummaryDisplay> predicate = _getPredicate(
-			ParamUtil.getString(renderRequest, "navigation", "all"));
+		Predicate<UADApplicationSummaryDisplay> predicate =
+			display -> display.getCount() > 0;
 
 		List<UADApplicationSummaryDisplay> uadApplicationSummaryDisplays =
 			_getUADApplicationSummaryDisplays(userId);
@@ -190,19 +190,6 @@ public class AnonymizeNonreviewableUADDataMVCRenderCommand
 		}
 
 		return comparator;
-	}
-
-	private Predicate<UADApplicationSummaryDisplay> _getPredicate(
-		String navigation) {
-
-		if (navigation.equals("pending")) {
-			return display -> display.getCount() > 0;
-		}
-		else if (navigation.equals("done")) {
-			return display -> display.getCount() <= 0;
-		}
-
-		return display -> true;
 	}
 
 	private UADApplicationSummaryDisplay _getUADApplicationSummaryDisplay(

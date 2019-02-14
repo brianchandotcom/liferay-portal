@@ -16,10 +16,12 @@ class ManagementToolbarDefaultEventHandler extends PortletBase {
 
 			Liferay.Util.postForm(
 				form,
-				this.deleteEntriesURL,
 				{
-					cmd: this.deleteEntriesCmd,
-					deleteEntryIds: Liferay.Util.listCheckedExcept(form, this.ns('allRowIds'))
+					data: {
+						cmd: this.deleteEntriesCmd,
+						deleteEntryIds: Liferay.Util.listCheckedExcept(form, this.ns('allRowIds'))
+					},
+					url: this.deleteEntriesURL
 				}
 			);
 		}

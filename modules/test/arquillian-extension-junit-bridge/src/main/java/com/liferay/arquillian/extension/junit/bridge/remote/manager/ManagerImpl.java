@@ -61,10 +61,6 @@ public class ManagerImpl implements Manager {
 			_createExtensions(
 				LiferayArquillianJUnitBridgeExtension.getObservers()));
 
-		_contexts.addAll(
-			_createContexts(
-				LiferayArquillianJUnitBridgeExtension.getContexts()));
-
 		applicationContext.activate();
 
 		try {
@@ -213,18 +209,6 @@ public class ManagerImpl implements Manager {
 		throws E {
 
 		throw (E)throwable;
-	}
-
-	private List<Context> _createContexts(
-		Collection<Class<? extends Context>> contextClasses) {
-
-		List<Context> created = new ArrayList<>();
-
-		for (Class<? extends Context> contextClass : contextClasses) {
-			created.add(_createInstance(contextClass));
-		}
-
-		return created;
 	}
 
 	private List<Extension> _createExtensions(

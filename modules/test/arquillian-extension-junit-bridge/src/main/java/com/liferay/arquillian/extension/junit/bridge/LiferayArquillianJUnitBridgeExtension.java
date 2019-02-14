@@ -16,10 +16,6 @@ package com.liferay.arquillian.extension.junit.bridge;
 
 import com.liferay.arquillian.extension.junit.bridge.event.controller.ContainerEventController;
 import com.liferay.arquillian.extension.junit.bridge.protocol.jmx.JMXMethodExecutor;
-import com.liferay.arquillian.extension.junit.bridge.remote.context.ClassContextImpl;
-import com.liferay.arquillian.extension.junit.bridge.remote.context.SuiteContextImpl;
-import com.liferay.arquillian.extension.junit.bridge.remote.context.TestContextImpl;
-import com.liferay.arquillian.extension.junit.bridge.remote.context.handler.TestContextHandler;
 import com.liferay.arquillian.extension.junit.bridge.remote.executor.LocalTestExecutor;
 import com.liferay.arquillian.extension.junit.bridge.remote.observer.JUnitBridgeObserver;
 
@@ -28,38 +24,20 @@ import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
 
-import org.jboss.arquillian.core.spi.context.Context;
-
 /**
  * @author Shuyang Zhou
  */
 public class LiferayArquillianJUnitBridgeExtension {
 
-	public static List<Class<? extends Context>> getContexts() {
-		if (_isClient()) {
-			return Arrays.asList(
-				ClassContextImpl.class, SuiteContextImpl.class,
-				TestContextImpl.class
-			);
-		}
-
-		return Arrays.asList(
-			ClassContextImpl.class, SuiteContextImpl.class,
-			TestContextImpl.class
-		);
-	}
-
 	public static List<Class<?>> getObservers() {
 		if (_isClient()) {
 			return Arrays.asList(
-				ContainerEventController.class, JMXMethodExecutor.class,
-				TestContextHandler.class
+				ContainerEventController.class, JMXMethodExecutor.class
 			);
 		}
 
 		return Arrays.asList(
-			JUnitBridgeObserver.class, LocalTestExecutor.class,
-			TestContextHandler.class
+			JUnitBridgeObserver.class, LocalTestExecutor.class
 		);
 	}
 

@@ -26,7 +26,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
-import java.util.concurrent.Callable;
 
 import org.jboss.arquillian.core.api.Injector;
 import org.jboss.arquillian.core.api.annotation.ApplicationScoped;
@@ -54,14 +53,36 @@ import org.jboss.arquillian.core.spi.context.ObjectStore;
 public class ManagerImpl implements Manager {
 
 	public ManagerImpl() {
-		try {
-			_createBuiltInServices();
+		ApplicationContext applicationContext = new ApplicationContextImpl();
 
-			_registerExtension();
+		_contexts.add(applicationContext);
+
+		_extensions.addAll(
+			_createExtensions(
+				LiferayArquillianJUnitBridgeExtension.getObservers()));
+
+		_contexts.addAll(
+			_createContexts(
+				LiferayArquillianJUnitBridgeExtension.getContexts()));
+
+		applicationContext.activate();
+
+		try {
+			bind(
+				ApplicationScoped.class, Injector.class, InjectorImpl.of(this));
+
+			ObjectStore objectStore = applicationContext.getObjectStore();
+
+			for (Context context : _contexts) {
+				Class<?> clazz = context.getClass();
+
+				Class<?>[] interfaces = clazz.getInterfaces();
+
+				objectStore.add((Class<Context>)interfaces[0], context);
+			}
 		}
-		catch (Exception e) {
-			throw new RuntimeException(
-				"Could not create and process manager", e);
+		finally {
+			applicationContext.deactivate();
 		}
 	}
 
@@ -194,26 +215,6 @@ public class ManagerImpl implements Manager {
 		throw (E)throwable;
 	}
 
-	private void _createBuiltInServices() throws Exception {
-		ApplicationContext applicationContext = new ApplicationContextImpl();
-
-		_contexts.add(applicationContext);
-
-		_executeInApplicationContext(
-			new Callable<Object>() {
-
-				@Override
-				public Object call() throws Exception {
-					bind(
-						ApplicationScoped.class, Injector.class,
-						InjectorImpl.of(ManagerImpl.this));
-
-					return null;
-				}
-
-			});
-	}
-
 	private List<Context> _createContexts(
 		Collection<Class<? extends Context>> contextClasses) {
 
@@ -253,30 +254,6 @@ public class ManagerImpl implements Manager {
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
-		}
-	}
-
-	private <T> T _executeInApplicationContext(Callable<T> callable)
-		throws Exception {
-
-		ApplicationContext context = (ApplicationContext)_getScopedContext(
-			ApplicationScoped.class);
-
-		boolean activatedByUs = false;
-
-		try {
-			if (!context.isActive()) {
-				context.activate();
-
-				activatedByUs = true;
-			}
-
-			return callable.call();
-		}
-		finally {
-			if (activatedByUs && context.isActive()) {
-				context.deactivate();
-			}
 		}
 	}
 
@@ -334,35 +311,6 @@ public class ManagerImpl implements Manager {
 		}
 
 		return false;
-	}
-
-	private void _registerExtension() {
-		_extensions.addAll(
-			_createExtensions(
-				LiferayArquillianJUnitBridgeExtension.getObservers()));
-		_contexts.addAll(
-			_createContexts(
-				LiferayArquillianJUnitBridgeExtension.getContexts()));
-
-		ApplicationContext applicationContext =
-			(ApplicationContext)_getScopedContext(ApplicationScoped.class);
-
-		applicationContext.activate();
-
-		try {
-			ObjectStore objectStore = applicationContext.getObjectStore();
-
-			for (Context context : _contexts) {
-				Class<?> clazz = context.getClass();
-
-				Class<?>[] interfaces = clazz.getInterfaces();
-
-				objectStore.add((Class<Context>)interfaces[0], context);
-			}
-		}
-		finally {
-			applicationContext.deactivate();
-		}
 	}
 
 	private List<Context> _resolveActiveContexts() {

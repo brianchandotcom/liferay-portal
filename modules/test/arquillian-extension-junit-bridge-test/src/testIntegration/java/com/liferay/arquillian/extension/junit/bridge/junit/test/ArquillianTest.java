@@ -14,6 +14,7 @@
 
 package com.liferay.arquillian.extension.junit.bridge.junit.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.test.item.AssumeClassRuleTestItem;
 import com.liferay.arquillian.extension.junit.bridge.junit.test.item.AssumeTestItem;
 import com.liferay.arquillian.extension.junit.bridge.junit.test.item.BeforeAfterClassTestItem;
 import com.liferay.arquillian.extension.junit.bridge.junit.test.item.BeforeAfterTestItem;
@@ -45,6 +46,15 @@ public class ArquillianTest {
 			AssumeTestItem.class);
 
 		assertResult(result, AssumeTestItem.class);
+	}
+
+	@Test
+	public void testAssumeClassRule() {
+		Result result = BridgeJUnitTestRunner.runBridgeTests(
+			new BridgeJUnitTestRunner.BridgeRunListener(ArquillianTest.class),
+			AssumeClassRuleTestItem.class);
+
+		assertResult(result, AssumeClassRuleTestItem.class);
 	}
 
 	@Test

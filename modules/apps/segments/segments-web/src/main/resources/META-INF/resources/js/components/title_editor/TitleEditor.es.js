@@ -47,7 +47,7 @@ class TitleEditor extends Component {
 	};
 
 	render() {
-		const {errors, inputName, onChange, placeholder, value} = this.props;
+		const {inputName, onChange, placeholder, value} = this.props;
 
 		const {editing} = this.state;
 

@@ -39,7 +39,6 @@ class SegmentEdit extends Component {
 		initialMembersCount: PropTypes.number,
 		initialSegmentActive: PropTypes.bool,
 		initialSegmentName: PropTypes.string,
-		isValid: PropTypes.bool,
 		locale: PropTypes.string.isRequired,
 		portletNamespace: PropTypes.string,
 		previewMembersURL: PropTypes.string,
@@ -197,7 +196,7 @@ class SegmentEdit extends Component {
 				if (errorMessages.length) {
 					event.preventDefault();
 
-					errorMessages.map(
+					errorMessages.forEach(
 						message => {
 							Liferay.Util.openToast(
 								{

@@ -676,12 +676,12 @@ mariadb.executable=${mariadb.executable}]]></echo>
 						<equals arg1="@{setup.testable.tomcat}" arg2="true" />
 					</and>
 					<then>
-						<setup-testable-tomcat />
-
 						<setup-test-batch-testable-tomcat
 							setup.proxy="@{setup.proxy}"
 							test.portal.bundle.version="${test.portal.bundle.version}"
 						/>
+
+						<setup-testable-tomcat />
 					</then>
 				</elseif>
 			</if>
@@ -800,9 +800,9 @@ app.server.type=@{app.server.type}]]></echo>
 			<if>
 				<equals arg1="@{app.server.type}" arg2="tomcat" />
 				<then>
-					<setup-testable-tomcat />
-
 					<setup-test-batch-testable-tomcat />
+
+					<setup-testable-tomcat />
 				</then>
 			</if>
 
@@ -919,12 +919,12 @@ app.server.type=@{app.server.type}]]></echo>
 						/>
 					</copy>
 
-					<setup-testable-tomcat />
-
 					<setup-test-batch-testable-tomcat
 						setup.proxy="@{setup.proxy}"
 						test.portal.bundle.version="${test.portal.bundle.version}"
 					/>
+
+					<setup-testable-tomcat />
 				</then>
 			</if>
 		</sequential>
@@ -1348,9 +1348,9 @@ app.server.type=@{app.server.type}]]></echo>
 										<equals arg1="@{setup.testable.tomcat}" arg2="true" />
 									</and>
 									<then>
-										<setup-testable-tomcat />
-
 										<setup-test-batch-testable-tomcat setup.proxy="@{setup.proxy}" />
+
+										<setup-testable-tomcat />
 									</then>
 								</elseif>
 							</if>
@@ -4452,9 +4452,9 @@ log.sanitizer.enabled=false</echo>
 
 						<antcall inheritAll="false" target="setup-sdk" />
 
-						<setup-testable-tomcat />
-
 						<setup-test-batch-testable-tomcat test.portal.bundle.version="${test.portal.bundle.version}" />
+
+						<setup-testable-tomcat />
 					</then>
 					<elseif>
 						<and>

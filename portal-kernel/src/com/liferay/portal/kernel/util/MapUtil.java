@@ -14,15 +14,20 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.lang.reflect.Constructor;
 
+import java.util.Collections;
+import java.util.Dictionary;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.Predicate;
 
 /**
@@ -341,6 +346,10 @@ public class MapUtil {
 		copy.putAll(master);
 	}
 
+	public static <K, V> Dictionary<K, V> singletonDictionary(K key, V value) {
+		return new SingletonDictionary<>(key, value);
+	}
+
 	public static <T> LinkedHashMap<String, T> toLinkedHashMap(
 		String[] params) {
 
@@ -475,5 +484,63 @@ public class MapUtil {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(MapUtil.class);
+
+	private static class SingletonDictionary<K, V> extends Dictionary<K, V> {
+
+		@Override
+		public Enumeration<V> elements() {
+			return Collections.enumeration(Collections.singleton(_value));
+		}
+
+		@Override
+		public V get(Object key) {
+			if (Objects.equals(_key, key)) {
+				return _value;
+			}
+
+			return null;
+		}
+
+		@Override
+		public boolean isEmpty() {
+			return false;
+		}
+
+		@Override
+		public Enumeration<K> keys() {
+			return Collections.enumeration(Collections.singleton(_key));
+		}
+
+		@Override
+		public V put(K key, V value) {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public V remove(Object key) {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public int size() {
+			return 1;
+		}
+
+		@Override
+		public String toString() {
+			return StringBundler.concat(
+				StringPool.OPEN_CURLY_BRACE, _key, StringPool.EQUAL, _value,
+				StringPool.CLOSE_CURLY_BRACE);
+		}
+
+		private SingletonDictionary(K key, V value) {
+			_key = key;
+			_value = value;
+		}
+
+		private final K _key;
+		private final V _value;
+
+	}
 
 }

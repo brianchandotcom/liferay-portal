@@ -96,15 +96,18 @@ public class MBCategoryUADDisplay extends BaseMBCategoryUADDisplay {
 				childCategory = (MBCategory)childObject;
 			}
 
+			long parentCategoryId = (long)parentContainerId;
+
+			if (childCategory.getCategoryId() == parentCategoryId) {
+				return null;
+			}
+
 			List<Long> ancestorCategoryIds =
 				childCategory.getAncestorCategoryIds();
 
-			long parentCategoryId = (long)parentContainerId;
-
-			if ((childCategory.getCategoryId() == parentCategoryId) ||
-				((parentCategoryId !=
+			if ((parentCategoryId !=
 					MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) &&
-				 !ancestorCategoryIds.contains(parentCategoryId))) {
+				!ancestorCategoryIds.contains(parentCategoryId)) {
 
 				return null;
 			}

@@ -20,16 +20,16 @@
 	width: 50%;
 	word-wrap: break-word;
 
-	@include media-breakpoint-up(sm) {
-		width: 33.33%
-	}
-
 	@include media-breakpoint-up(md) {
 		width: 25%
 	}
 
 	@include media-breakpoint-up(lg) {
 		width: 16.6%
+	}
+
+	@include media-breakpoint-up(sm) {
+		width: 33.33%
 	}
 
 	@include media-breakpoint-up(xl) {

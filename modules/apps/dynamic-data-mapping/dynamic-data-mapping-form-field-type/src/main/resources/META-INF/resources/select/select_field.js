@@ -169,6 +169,14 @@ AUI.add(
 
 							instance._open = false;
 
+							var required = instance.get('required');
+
+							var valid = instance.get('valid');
+
+							if (required && !valid) {
+								instance.showErrorMessage();
+							}
+
 							instance.fire('closeList');
 						}
 					},

@@ -93,10 +93,11 @@ public class ReviewUADDataMVCRenderCommand implements MVCRenderCommand {
 				siteScoped = true;
 			}
 
+			long[] groupIds = _getGroupIds(selectedUser, scope);
+
 			List<UADApplicationSummaryDisplay> uadApplicationSummaryDisplays =
 				_uadApplicationSummaryHelper.getUADApplicationSummaryDisplays(
-					selectedUser.getUserId(), siteScoped,
-					_getGroupIds(selectedUser, scope));
+					selectedUser.getUserId(), siteScoped, groupIds);
 
 			UADApplicationSummaryDisplay uadApplicationSummaryDisplay =
 				uadApplicationSummaryDisplays.get(0);
@@ -146,7 +147,7 @@ public class ReviewUADDataMVCRenderCommand implements MVCRenderCommand {
 			viewUADEntitiesDisplay.setSearchContainer(
 				_getSearchContainer(
 					renderRequest, currentURL, uadDisplay, selectedUser,
-					_getGroupIds(selectedUser, scope), liferayPortletResponse));
+					groupIds, liferayPortletResponse));
 			viewUADEntitiesDisplay.setTypeName(
 				uadDisplay.getTypeName(
 					LocaleThreadLocal.getThemeDisplayLocale()));
@@ -156,8 +157,7 @@ public class ReviewUADDataMVCRenderCommand implements MVCRenderCommand {
 			renderRequest.setAttribute(
 				UADWebKeys.APPLICATION_UAD_DISPLAYS,
 				_uadRegistry.getApplicationUADDisplays(applicationKey));
-			renderRequest.setAttribute(
-				UADWebKeys.GROUP_IDS, _getGroupIds(selectedUser, scope));
+			renderRequest.setAttribute(UADWebKeys.GROUP_IDS, groupIds);
 			renderRequest.setAttribute(
 				UADWebKeys.INFO_PANEL_UAD_DISPLAY, uadDisplay);
 			renderRequest.setAttribute(

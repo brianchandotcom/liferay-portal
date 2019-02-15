@@ -222,43 +222,40 @@ components:
               name:
                 type: string
               value:
-                anyOf:
-                  - properties:
-                      data:
-                        type: string
-                  - properties:
-                      document:
-                        allOf:
-                          - $ref: "#/components/schemas/ContentDocument"
-                      documentId:
+                properties:
+                  data:
+                    type: string
+                  document:
+                    allOf:
+                      - $ref: "#/components/schemas/ContentDocument"
+                    readOnly: true
+                  documentId:
+                    format: int64
+                    type: integer
+                    writeOnly: true
+                  geo:
+                    description: https://www.schema.org/GeoCoordinates
+                    properties:
+                      id:
                         format: int64
                         type: integer
-                        writeOnly: true
-                  - properties:
-                      geo:
-                        description: https://www.schema.org/GeoCoordinates
-                        properties:
-                          id:
-                            format: int64
-                            type: integer
-                          latitude:
-                            type: number
-                          longitude:
-                            type: number
-                        type: object
-                  - properties:
-                      link:
-                        format: uri
-                        type: string
-                  - properties:
-                      structuredContent:
-                        allOf:
-                          - $ref: "#/components/schemas/StructuredContent"
-                        readOnly: true
-                      structuredContentId:
-                        format: int64
-                        type: integer
-                        writeOnly: true
+                      latitude:
+                        type: number
+                      longitude:
+                        type: number
+                    type: object
+                  link:
+                    format: uri
+                    type: string
+                  structuredContent:
+                    allOf:
+                      - $ref: "#/components/schemas/StructuredContent"
+                    readOnly: true
+                  structuredContentId:
+                    format: int64
+                    type: integer
+                    writeOnly: true
+                type: object
             type: object
           type: array
 info:

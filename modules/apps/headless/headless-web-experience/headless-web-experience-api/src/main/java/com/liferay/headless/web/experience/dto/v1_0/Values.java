@@ -55,10 +55,10 @@ public interface Values {
 	public void setName(String name);
 
 	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier);
-	public Object getValue();
+	public Value getValue();
 
-	public void setValue(Object value);
+	public void setValue(Value value);
 
-	public void setValue(UnsafeSupplier<Object, Throwable> valueUnsafeSupplier);
+	public void setValue(UnsafeSupplier<Value, Throwable> valueUnsafeSupplier);
 
 }

@@ -23,9 +23,11 @@ import com.liferay.headless.web.experience.dto.v1_0.ContentDocument;
 import com.liferay.headless.web.experience.dto.v1_0.ContentStructure;
 import com.liferay.headless.web.experience.dto.v1_0.Creator;
 import com.liferay.headless.web.experience.dto.v1_0.Fields;
+import com.liferay.headless.web.experience.dto.v1_0.Geo;
 import com.liferay.headless.web.experience.dto.v1_0.Options;
 import com.liferay.headless.web.experience.dto.v1_0.RenderedContentsByTemplate;
 import com.liferay.headless.web.experience.dto.v1_0.StructuredContent;
+import com.liferay.headless.web.experience.dto.v1_0.Value;
 import com.liferay.headless.web.experience.dto.v1_0.Values;
 import com.liferay.headless.web.experience.internal.dto.v1_0.AggregateRatingImpl;
 import com.liferay.headless.web.experience.internal.dto.v1_0.CommentImpl;
@@ -33,9 +35,11 @@ import com.liferay.headless.web.experience.internal.dto.v1_0.ContentDocumentImpl
 import com.liferay.headless.web.experience.internal.dto.v1_0.ContentStructureImpl;
 import com.liferay.headless.web.experience.internal.dto.v1_0.CreatorImpl;
 import com.liferay.headless.web.experience.internal.dto.v1_0.FieldsImpl;
+import com.liferay.headless.web.experience.internal.dto.v1_0.GeoImpl;
 import com.liferay.headless.web.experience.internal.dto.v1_0.OptionsImpl;
 import com.liferay.headless.web.experience.internal.dto.v1_0.RenderedContentsByTemplateImpl;
 import com.liferay.headless.web.experience.internal.dto.v1_0.StructuredContentImpl;
+import com.liferay.headless.web.experience.internal.dto.v1_0.ValueImpl;
 import com.liferay.headless.web.experience.internal.dto.v1_0.ValuesImpl;
 
 import java.io.IOException;
@@ -95,6 +99,9 @@ public class JSONMessageBodyReader implements MessageBodyReader<Object> {
 			if (clazz.equals(Fields.class)) {
 				return true;
 	}
+			if (clazz.equals(Geo.class)) {
+				return true;
+	}
 			if (clazz.equals(Options.class)) {
 				return true;
 	}
@@ -102,6 +109,9 @@ public class JSONMessageBodyReader implements MessageBodyReader<Object> {
 				return true;
 	}
 			if (clazz.equals(StructuredContent.class)) {
+				return true;
+	}
+			if (clazz.equals(Value.class)) {
 				return true;
 	}
 			if (clazz.equals(Values.class)) {
@@ -136,6 +146,9 @@ public class JSONMessageBodyReader implements MessageBodyReader<Object> {
 			if (clazz.equals(Fields.class)) {
 				return _objectMapper.readValue(inputStream, FieldsImpl.class);
 	}
+			if (clazz.equals(Geo.class)) {
+				return _objectMapper.readValue(inputStream, GeoImpl.class);
+	}
 			if (clazz.equals(Options.class)) {
 				return _objectMapper.readValue(inputStream, OptionsImpl.class);
 	}
@@ -144,6 +157,9 @@ public class JSONMessageBodyReader implements MessageBodyReader<Object> {
 	}
 			if (clazz.equals(StructuredContent.class)) {
 				return _objectMapper.readValue(inputStream, StructuredContentImpl.class);
+	}
+			if (clazz.equals(Value.class)) {
+				return _objectMapper.readValue(inputStream, ValueImpl.class);
 	}
 			if (clazz.equals(Values.class)) {
 				return _objectMapper.readValue(inputStream, ValuesImpl.class);

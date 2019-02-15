@@ -16,6 +16,7 @@ package com.liferay.headless.web.experience.internal.dto.v1_0;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import com.liferay.headless.web.experience.dto.v1_0.Value;
 import com.liferay.headless.web.experience.dto.v1_0.Values;
 import com.liferay.petra.function.UnsafeSupplier;
 
@@ -155,15 +156,15 @@ public class ValuesImpl implements Values {
 	@GraphQLField
 	@JsonProperty
 	protected String name;
-	public Object getValue() {
+	public Value getValue() {
 			return value;
 	}
 
-	public void setValue(Object value) {
+	public void setValue(Value value) {
 			this.value = value;
 	}
 
-	public void setValue(UnsafeSupplier<Object, Throwable> valueUnsafeSupplier) {
+	public void setValue(UnsafeSupplier<Value, Throwable> valueUnsafeSupplier) {
 			try {
 				value = valueUnsafeSupplier.get();
 	}
@@ -174,6 +175,6 @@ public class ValuesImpl implements Values {
 
 	@GraphQLField
 	@JsonProperty
-	protected Object value;
+	protected Value value;
 
 }

@@ -62,6 +62,8 @@ public class WikiAttachmentsHelper {
 		List<ObjectValuePair<String, InputStream>> inputStreamOVPs =
 			new ArrayList<>();
 
+		List<FileEntry> tempFileEntries = new ArrayList<>();
+
 		try {
 			if (numOfFiles == 0) {
 				InputStream inputStream = uploadPortletRequest.getFileAsStream(
@@ -104,6 +106,8 @@ public class WikiAttachmentsHelper {
 							uniqueFileName, tempFileEntry.getContentStream());
 
 					inputStreamOVPs.add(inputStreamOVP);
+
+					tempFileEntries.add(tempFileEntry);
 				}
 			}
 
@@ -123,6 +127,11 @@ public class WikiAttachmentsHelper {
 						_log.warn(ioe, ioe);
 					}
 				}
+			}
+
+			for (FileEntry tempFileEntry : tempFileEntries) {
+				TempFileEntryUtil.deleteTempFileEntry(
+					tempFileEntry.getFileEntryId());
 			}
 		}
 	}

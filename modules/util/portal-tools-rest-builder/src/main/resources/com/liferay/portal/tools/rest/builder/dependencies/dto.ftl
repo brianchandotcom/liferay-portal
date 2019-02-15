@@ -26,26 +26,26 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "${schemaName}")
 public class ${schemaName} {
 
-<#list javaTool.getJavaParameters(schema) as javaParameter>
-	public ${javaParameter.parameterType} get${javaParameter.parameterName?cap_first}() {
-		return ${javaParameter.parameterName};
-	}
-
-	public void set${javaParameter.parameterName?cap_first}(${javaParameter.parameterType} ${javaParameter.parameterName}) {
-		this.${javaParameter.parameterName} = ${javaParameter.parameterName};
-	}
-
-	public void set${javaParameter.parameterName?cap_first}(UnsafeSupplier<${javaParameter.parameterType}, Throwable> ${javaParameter.parameterName}UnsafeSupplier) {
-		try {
-			${javaParameter.parameterName} = ${javaParameter.parameterName}UnsafeSupplier.get();
+	<#list javaTool.getJavaParameters(schema) as javaParameter>
+		public ${javaParameter.parameterType} get${javaParameter.parameterName?cap_first}() {
+			return ${javaParameter.parameterName};
 		}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+
+		public void set${javaParameter.parameterName?cap_first}(${javaParameter.parameterType} ${javaParameter.parameterName}) {
+			this.${javaParameter.parameterName} = ${javaParameter.parameterName};
 		}
-	}
 
-	@GraphQLField
-	protected ${javaParameter.parameterType} ${javaParameter.parameterName};
+		public void set${javaParameter.parameterName?cap_first}(UnsafeSupplier<${javaParameter.parameterType}, Throwable> ${javaParameter.parameterName}UnsafeSupplier) {
+			try {
+				${javaParameter.parameterName} = ${javaParameter.parameterName}UnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-</#list>
+		@GraphQLField
+		protected ${javaParameter.parameterType} ${javaParameter.parameterName};
+	</#list>
+
 }

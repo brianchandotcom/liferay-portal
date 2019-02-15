@@ -36,19 +36,10 @@ import org.osgi.util.tracker.ServiceTracker;
 @Generated("")
 public class Mutation {
 
-	<#assign
-		javaSignatures = javaTool.getGraphQLJavaSignatures(openAPIYAML)
-		schemaNames = ""
-	/>
+	<#assign javaSignatures = javaTool.getGraphQLJavaSignatures(openAPIYAML, false) />
 
 	<#list javaSignatures?keys as schemaName>
 		<#list javaSignatures[schemaName] as javaSignature>
-			<#if stringUtil.startsWith(javaSignature.methodName, "get")>
-				<#continue>
-			</#if>
-
-			<#assign schemaNames = stringUtil.add(schemaNames, schemaName) />
-
 			<#compress>
 				<#list javaTool.getGraphQLMethodAnnotations(javaSignature) as methodAnnotation>
 					${methodAnnotation}
@@ -67,9 +58,13 @@ public class Mutation {
 				</@compress>
 			</#compress>
 
-			<#assign getResourceMethodContent>
+			<#if stringUtil.equals(javaSignature.returnType, "Response")>
+				Response.ResponseBuilder responseBuilder = Response.ok();
+
+				return responseBuilder.build();
+			<#else>
 				<@compress single_line=true>
-					_get${schemaName}Resource().${javaSignature.methodName}(
+					return _get${schemaName}Resource().${javaSignature.methodName}(
 						<#list javaSignature.javaParameters as javaParameter>
 							${javaParameter.parameterName}
 
@@ -77,53 +72,33 @@ public class Mutation {
 								,
 							</#if>
 						</#list>
-					)
+					);
 				</@compress>
-			</#assign>
-
-			<#assign getResourceMethodContent = getResourceMethodContent?replace("perPage , page", "Pagination.of(perPage, page)") />
-
-			<#assign methodBody>
-				<#if stringUtil.equals(javaSignature.returnType, "Response")>
-					Response.ResponseBuilder responseBuilder = Response.ok();
-
-					return responseBuilder.build();
-				<#elseif javaSignature.returnType?contains("Collection<")>
-					return ${getResourceMethodContent}.getItems();
-				<#else>
-					return ${getResourceMethodContent};
-				</#if>
-			</#assign>
-
-			<#list methodBody?split("\n") as line>
-				${line?replace("^\t\t\t", "", "r")}<#lt>
-			</#list>
+			</#if>
 
 			}
 
 		</#list>
 	</#list>
 
-	<#list stringUtil.split(schemaNames) as schemaName>
+	<#list javaSignatures?keys as schemaName>
 		private static ${schemaName}Resource _get${schemaName}Resource() {
 			return _${schemaName?uncap_first}ResourceServiceTracker.getService();
 		}
 
 		private static final ServiceTracker<${schemaName}Resource, ${schemaName}Resource> _${schemaName?uncap_first}ResourceServiceTracker;
-
 	</#list>
 
 	static {
 		Bundle bundle = FrameworkUtil.getBundle(Mutation.class);
 
-		<#list stringUtil.split(schemaNames) as schemaName>
-		ServiceTracker<${schemaName}Resource, ${schemaName}Resource> ${schemaName?uncap_first}ResourceServiceTracker =
-			new ServiceTracker<${schemaName}Resource, ${schemaName}Resource>(bundle.getBundleContext(), ${schemaName}Resource.class, null);
+		<#list javaSignatures?keys as schemaName>
+			ServiceTracker<${schemaName}Resource, ${schemaName}Resource> ${schemaName?uncap_first}ResourceServiceTracker =
+				new ServiceTracker<>(bundle.getBundleContext(), ${schemaName}Resource.class, null);
 
-		${schemaName?uncap_first}ResourceServiceTracker.open();
+			${schemaName?uncap_first}ResourceServiceTracker.open();
 
-		_${schemaName?uncap_first}ResourceServiceTracker = ${schemaName?uncap_first}ResourceServiceTracker;
-
+			_${schemaName?uncap_first}ResourceServiceTracker = ${schemaName?uncap_first}ResourceServiceTracker;
 		</#list>
 	}
 

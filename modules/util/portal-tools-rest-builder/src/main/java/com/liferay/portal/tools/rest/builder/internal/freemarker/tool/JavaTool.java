@@ -55,7 +55,7 @@ public class JavaTool {
 	}
 
 	public Map<String, List<JavaSignature>> getGraphQLJavaSignatures(
-		OpenAPIYAML openAPIYAML) {
+		OpenAPIYAML openAPIYAML, boolean graphQLQuery) {
 
 		Map<String, List<JavaSignature>> javaSignaturesMap = new TreeMap<>();
 
@@ -68,6 +68,19 @@ public class JavaTool {
 
 			for (JavaSignature javaSignature :
 					getJavaSignatures(openAPIYAML, schemaName)) {
+
+				Operation operation = javaSignature.getOperation();
+
+				String httpMethod = _getHTTPMethod(operation);
+
+				if (graphQLQuery) {
+					if (!Objects.equals(httpMethod, "get")) {
+						continue;
+					}
+				}
+				else if (Objects.equals(httpMethod, "get")) {
+					continue;
+				}
 
 				List<JavaParameter> javaParameters = new ArrayList<>();
 
@@ -104,7 +117,9 @@ public class JavaTool {
 						javaSignature.getMethodName(), returnType));
 			}
 
-			javaSignaturesMap.put(schemaName, javaSignatures);
+			if (!javaSignatures.isEmpty()) {
+				javaSignaturesMap.put(schemaName, javaSignatures);
+			}
 		}
 
 		return javaSignaturesMap;

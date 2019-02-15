@@ -48,21 +48,15 @@ public abstract class Base${schemaName}ResourceImpl implements ${schemaName}Reso
 			) throws Exception {
 		</@compress>
 
-		<#assign methodBody>
-			<#if stringUtil.equals(javaSignature.returnType, "Response")>
-				Response.ResponseBuilder responseBuilder = Response.ok();
+		<#if stringUtil.equals(javaSignature.returnType, "Response")>
+			Response.ResponseBuilder responseBuilder = Response.ok();
 
-				return responseBuilder.build();
-			<#elseif javaSignature.returnType?contains("Page<")>
-				return Page.of(Collections.emptyList());
-			<#else>
-				return new ${javaSignature.returnType}();
-			</#if>
-		</#assign>
-
-		<#list methodBody?split("\n") as line>
-			${line?replace("^\t\t", "", "r")}<#lt>
-		</#list>
+			return responseBuilder.build();
+		<#elseif javaSignature.returnType?contains("Page<")>
+			return Page.of(Collections.emptyList());
+		<#else>
+			return new ${javaSignature.returnType}();
+		</#if>
 
 		}
 	</#list>

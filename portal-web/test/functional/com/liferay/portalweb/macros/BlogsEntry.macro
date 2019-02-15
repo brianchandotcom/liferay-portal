@@ -426,10 +426,12 @@ definition {
 
 		Portlet.mouseOverPortletTitle(portletTitleName = "Blogs");
 
-		LexiconList.clickEllipsisItem(
-			item = "Move to Recycle Bin",
-			listEntry = "${entryTitle}"
+		Blogs.clickEllipsisItemPG(
+			entryTitle = "${entryTitle}",
+			item = "Move to Recycle Bin"
 		);
+
+		Confirm();
 
 		AssertElementPresent(locator1 = "Message#SUCCESS");
 

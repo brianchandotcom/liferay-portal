@@ -30,9 +30,9 @@ definition {
 	macro gotoBlogsEntryPermissionsPG {
 		Portlet.mouseOverPortletTitle(portletTitleName = "Blogs");
 
-		LexiconList.clickEllipsisItem(
-			item = "Permissions",
-			listEntry = "${entryTitle}"
+		Blogs.clickEllipsisItemPG(
+			entryTitle = "${entryTitle}",
+			item = "Permissions"
 		);
 
 		SelectFrame(locator1 = "IFrame#DIALOG");
@@ -85,10 +85,11 @@ definition {
 		else {
 			Portlet.mouseOverPortletTitle(portletTitleName = "Blogs");
 
-			LexiconList.clickEllipsisItem(
-				item = "Edit",
-				listEntry = "${entryTitle}"
+			Blogs.clickEllipsisItemPG(
+				entryTitle = "${entryTitle}",
+				item = "Edit"
 			);
+
 		}
 
 		AssertVisible(locator1 = "BlogsEntry#ENTRY_COVER_IMAGE_SELECT_FILE");

@@ -38,7 +38,7 @@ BlogsEntry entry = (BlogsEntry)request.getAttribute(WebKeys.BLOGS_ENTRY);
 				%>
 
 				<liferay-ui:user-portrait
-					cssClass="user-icon-lg"
+					cssClass="sticker-lg"
 					user="<%= entryUser %>"
 				/>
 			</div>

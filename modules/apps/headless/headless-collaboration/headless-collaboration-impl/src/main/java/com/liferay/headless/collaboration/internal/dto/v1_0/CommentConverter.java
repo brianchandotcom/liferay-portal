@@ -12,18 +12,20 @@
  * details.
  */
 
-package com.liferay.headless.web.experience.internal.dto.v1_0;
+package com.liferay.headless.collaboration.internal.dto.v1_0;
 
-import com.liferay.headless.web.experience.dto.v1_0.Comment;
-import com.liferay.portal.kernel.util.Portal;
+import com.liferay.headless.collaboration.dto.v1_0.Comment;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Javier Gamarra
  */
-public class CommentUtil {
+@Component(service = CommentConverter.class)
+public class CommentConverter {
 
-	public static Comment toComment(
-			com.liferay.portal.kernel.comment.Comment comment, Portal portal)
+	public Comment toComment(com.liferay.portal.kernel.comment.Comment comment)
 		throws Exception {
 
 		if (comment == null) {
@@ -32,11 +34,15 @@ public class CommentUtil {
 
 		return new Comment() {
 			{
-				setCreator(CreatorUtil.toCreator(portal, comment.getUser()));
+				setCreator(_creatorConverter.toCreator(comment.getUser()));
 				setId(comment.getCommentId());
 				setText(comment.getBody());
+				setCreator(_creatorConverter.toCreator(comment.getUser()));
 			}
 		};
 	}
+
+	@Reference
+	private CreatorConverter _creatorConverter;
 
 }

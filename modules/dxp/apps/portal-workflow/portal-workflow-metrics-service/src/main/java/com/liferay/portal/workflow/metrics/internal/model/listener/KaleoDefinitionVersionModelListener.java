@@ -65,14 +65,7 @@ public class KaleoDefinitionVersionModelListener
 		try {
 			Document document = createDocument(kaleoDefinitionVersion);
 
-			OffsetDateTime offsetDateTime = OffsetDateTime.now();
-
-			document.addKeyword(
-				Field.getSortableFieldName("date"), offsetDateTime.toString());
-
-			document.addKeyword("deleted", true);
-
-			updateDocument(document);
+			deleteDocument(document);
 		}
 		catch (Exception e) {
 			throw new ModelListenerException(e);

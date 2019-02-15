@@ -160,7 +160,7 @@
 </tr>
 <tr>
 	<td>FILE</td>
-	<td>//input[contains(@id,'file') and @type='file']</td>
+	<td>//input[contains(@id,'file') and @type='file'] | //input[contains(@id,'File') and @type='file']</td>
 	<td></td>
 </tr>
 <tr>

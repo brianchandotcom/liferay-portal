@@ -37,6 +37,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 
 import java.nio.file.FileSystem;
@@ -157,7 +158,19 @@ public class LPKGBundleTrackerCustomizer
 
 		List<Bundle> bundles = new ArrayList<>();
 
-		File file = new File(bundle.getLocation());
+		File file = null;
+
+		try {
+			URI uri = new URI(bundle.getLocation());
+
+			uri = uri.normalize();
+
+			file = new File(uri.getPath());
+		}
+		catch (URISyntaxException urise) {
+			throw new IllegalArgumentException(
+				"Unable to parse LPKG location " + bundle.getLocation(), urise);
+		}
 
 		try (ZipFile zipFile = new ZipFile(file)) {
 			List<Bundle> installedBundles = new ArrayList<>();

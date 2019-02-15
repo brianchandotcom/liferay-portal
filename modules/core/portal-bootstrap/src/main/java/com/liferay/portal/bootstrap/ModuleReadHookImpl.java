@@ -22,7 +22,8 @@ import com.liferay.portal.util.PropsValues;
 import java.io.IOException;
 import java.io.InputStream;
 
-import java.net.URL;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -61,15 +62,14 @@ public class ModuleReadHookImpl implements ModuleReadHook {
 
 		try {
 			if (location.startsWith("file")) {
-				URL url = new URL(location);
-
-				Files.copy(Paths.get(url.getPath()), path);
+				Files.copy(Paths.get(_getSourceJarLocation(location)), path);
 			}
 			else {
 				Matcher matcher = _pattern.matcher(location);
 
 				if (matcher.find()) {
-					try (ZipFile zipFile = new ZipFile(matcher.group(2));
+					try (ZipFile zipFile = new ZipFile(
+							_getSourceJarLocation(matcher.group(2)));
 						InputStream inputStream = zipFile.getInputStream(
 							zipFile.getEntry(matcher.group(1)))) {
 
@@ -86,6 +86,20 @@ public class ModuleReadHookImpl implements ModuleReadHook {
 				StringBundler.concat(
 					"Unable to copy from ", location, " to ", path),
 				ioe);
+		}
+	}
+
+	private String _getSourceJarLocation(String location) {
+		try {
+			URI uri = new URI(location);
+
+			uri = uri.normalize();
+
+			return uri.getPath();
+		}
+		catch (URISyntaxException urise) {
+			throw new IllegalArgumentException(
+				"Unable to parse location " + location, urise);
 		}
 	}
 

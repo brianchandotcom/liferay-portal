@@ -47,11 +47,6 @@ definition {
 
 		var key_structureName = "${structureName}";
 
-		AssertVisible(
-			locator1 = "WCD#ADD_STRUCTURED_WEB_CONTENT",
-			value1 = "${structureName}"
-		);
-
 		AssertClick(
 			locator1 = "WCD#ADD_STRUCTURED_WEB_CONTENT",
 			value1 = "${structureName}"

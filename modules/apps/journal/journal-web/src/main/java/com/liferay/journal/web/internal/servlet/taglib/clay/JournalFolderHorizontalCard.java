@@ -83,7 +83,6 @@ public class JournalFolderHorizontalCard extends BaseHorizontalCard {
 	public String getHref() {
 		PortletURL rowURL = _renderResponse.createRenderURL();
 
-		rowURL.setParameter("redirect", themeDisplay.getURLCurrent());
 		rowURL.setParameter("groupId", String.valueOf(_folder.getGroupId()));
 		rowURL.setParameter("folderId", String.valueOf(_folder.getFolderId()));
 		rowURL.setParameter("displayStyle", _displayStyle);

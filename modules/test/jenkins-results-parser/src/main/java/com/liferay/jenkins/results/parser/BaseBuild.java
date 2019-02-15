@@ -1343,11 +1343,13 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public void update() {
-		_previousStatus = _status;
-
 		String status = getStatus();
 
-		if (!status.equals("completed")) {
+		if ((status.equals("completed") && isBuildModified()) ||
+			!status.equals("completed")) {
+
+			_previousStatus = _status;
+
 			try {
 				if (status.equals("missing") || status.equals("queued") ||
 					status.equals("starting")) {
@@ -1374,8 +1376,6 @@ public abstract class BaseBuild implements Build {
 						}
 					}
 				}
-
-				status = getStatus();
 
 				if (downstreamBuilds != null) {
 					List<Callable<Object>> callables = new ArrayList<>();

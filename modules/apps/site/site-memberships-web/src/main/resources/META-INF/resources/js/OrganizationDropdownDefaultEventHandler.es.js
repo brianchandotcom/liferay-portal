@@ -11,7 +11,9 @@ class OrganizationDropdownDefaultEventHandler extends PortletBase {
 	}
 
 	deleteGroupOrganizations(itemData) {
-		submitForm(document.hrefFm, itemData.deleteGroupOrganizationsURL);
+		if (confirm(Liferay.Language.get('are-you-sure-you-want-to-delete-this'))) {
+			submitForm(document.hrefFm, itemData.deleteGroupOrganizationsURL);
+		}
 	}
 }
 

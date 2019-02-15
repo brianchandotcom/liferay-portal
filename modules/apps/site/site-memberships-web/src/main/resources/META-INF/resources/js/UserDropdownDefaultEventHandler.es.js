@@ -12,7 +12,9 @@ class UserDropdownDefaultEventHandler extends PortletBase {
 	}
 
 	deleteGroupUsers(itemData) {
-		submitForm(document.hrefFm, itemData.deleteGroupUsersURL);
+		if (confirm(Liferay.Language.get('are-you-sure-you-want-to-delete-this'))) {
+			submitForm(document.hrefFm, itemData.deleteGroupUsersURL);
+		}
 	}
 
 	assignSiteRoles(itemData) {

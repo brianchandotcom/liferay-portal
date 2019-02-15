@@ -29,7 +29,6 @@ import org.jboss.arquillian.core.spi.EventContext;
 import org.jboss.arquillian.test.spi.TestClass;
 import org.jboss.arquillian.test.spi.TestMethodExecutor;
 import org.jboss.arquillian.test.spi.TestResult;
-import org.jboss.arquillian.test.spi.event.suite.SuiteEvent;
 import org.jboss.arquillian.test.spi.event.suite.Test;
 
 import org.junit.After;
@@ -67,6 +66,16 @@ public class JUnitBridgeObserver {
 				TestMethodExecutor testMethodExecutor =
 					test.getTestMethodExecutor();
 
+				Thread currentThread = Thread.currentThread();
+
+				ClassLoader classLoader = currentThread.getContextClassLoader();
+
+				Test test = eventContext.getEvent();
+
+				Class<?> clazz = test.getClass();
+
+				currentThread.setContextClassLoader(clazz.getClassLoader());
+
 				try {
 					testMethodExecutor.invoke();
 				}
@@ -75,6 +84,8 @@ public class JUnitBridgeObserver {
 				}
 				finally {
 					result.setEnd(System.currentTimeMillis());
+
+					currentThread.setContextClassLoader(classLoader);
 				}
 
 				_testResultInstanceProducer.set(result);
@@ -139,26 +150,6 @@ public class JUnitBridgeObserver {
 		evaluateWithClassRule(
 			statement, junitTestClass, target,
 			Description.createSuiteDescription(clazz), firstMethod, lastMethod);
-	}
-
-	public void suiteEvent(@Observes EventContext<SuiteEvent> eventContext) {
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
-		SuiteEvent suiteEvent = eventContext.getEvent();
-
-		Class<? extends SuiteEvent> suiteEventClass = suiteEvent.getClass();
-
-		try {
-			currentThread.setContextClassLoader(
-				suiteEventClass.getClassLoader());
-
-			eventContext.proceed();
-		}
-		finally {
-			currentThread.setContextClassLoader(contextClassLoader);
-		}
 	}
 
 	protected void evaluateWithClassRule(

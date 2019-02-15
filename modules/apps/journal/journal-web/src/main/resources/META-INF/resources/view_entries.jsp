@@ -240,7 +240,6 @@ String referringPortletResource = ParamUtil.getString(request, "referringPortlet
 
 				PortletURL rowURL = liferayPortletResponse.createRenderURL();
 
-				rowURL.setParameter("redirect", currentURL);
 				rowURL.setParameter("groupId", String.valueOf(curFolder.getGroupId()));
 				rowURL.setParameter("folderId", String.valueOf(curFolder.getFolderId()));
 				rowURL.setParameter("displayStyle", journalDisplayContext.getDisplayStyle());

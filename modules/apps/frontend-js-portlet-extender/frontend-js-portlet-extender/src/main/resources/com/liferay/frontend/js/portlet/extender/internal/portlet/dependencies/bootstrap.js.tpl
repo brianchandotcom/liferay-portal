@@ -14,11 +14,12 @@
 			if (initializer) {
 				initializer(
 					{
-						configuration: [$CONFIGURATION],
+						configuration: [$SETTINGS$],
 						contextPath: "[$CONTEXT_PATH$]",
 						portletElementId: "[$PORTLET_ELEMENT_ID$]",
 						portletNamespace: "[$PORTLET_NAMESPACE$]",
-						portletPreferences: [$PORTLET_PREFERENCES$]
+						portletPreferences: [$PORTLET_PREFERENCES$],
+						settings: [$SETTINGS$]
 					});
 			}
 			else {

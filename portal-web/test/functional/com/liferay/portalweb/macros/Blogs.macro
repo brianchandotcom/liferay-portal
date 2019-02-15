@@ -363,6 +363,17 @@ definition {
 		MenuItem.viewNotPresent(menuItem = "Publish to Live");
 	}
 
+	macro clickEllipsisItemPG {
+		Click(
+			locator1 = "Blogs#WIDGET_VIEW_ENTRY_ELLIPSIS",
+			key_entryTitle = "${entryTitle}"
+		);
+
+		MenuItem.clickNoError(
+			menuItem = "${item}"
+		);
+	}
+
 	macro disableSocialBookmarkSites {
 		Navigator.gotoPage(pageName = "Blogs Page");
 

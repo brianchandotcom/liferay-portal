@@ -98,6 +98,33 @@ public class GitWorkingDirectoryFactory {
 			gitRepositoryName);
 	}
 
+	public static SubrepositoryGitWorkingDirectory
+		newSubrepositoryGitWorkingDirectory(
+			String upstreamBranchName, String repositoryName) {
+
+		String gitRepositoryDirName = repositoryName;
+		String gitRepositoryName = repositoryName;
+
+		if (!gitRepositoryDirName.endsWith("-private")) {
+			gitRepositoryDirName += "-private";
+		}
+
+		File gitRepositoryDir = new File(
+			JenkinsResultsParserUtil.getBaseGitRepositoryDir(),
+			gitRepositoryDirName);
+
+		GitWorkingDirectory gitWorkingDirectory = newGitWorkingDirectory(
+			upstreamBranchName, gitRepositoryDir, gitRepositoryName);
+
+		if (!(gitWorkingDirectory instanceof
+				SubrepositoryGitWorkingDirectory)) {
+
+			throw new RuntimeException("Invalid Git working directory");
+		}
+
+		return (SubrepositoryGitWorkingDirectory)gitWorkingDirectory;
+	}
+
 	private static final Map<String, GitWorkingDirectory>
 		_gitWorkingDirectories = new HashMap<>();
 

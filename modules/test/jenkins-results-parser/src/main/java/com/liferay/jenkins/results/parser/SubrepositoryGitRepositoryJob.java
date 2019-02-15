@@ -107,7 +107,7 @@ public abstract class SubrepositoryGitRepositoryJob extends GitRepositoryJob {
 		super(jobName);
 
 		gitWorkingDirectory =
-			JenkinsResultsParserUtil.getSubrepositoryGitWorkingDirectory(
+			GitWorkingDirectoryFactory.newSubrepositoryGitWorkingDirectory(
 				jobName, repositoryName);
 
 		setGitRepositoryDir(gitWorkingDirectory.getWorkingDirectory());

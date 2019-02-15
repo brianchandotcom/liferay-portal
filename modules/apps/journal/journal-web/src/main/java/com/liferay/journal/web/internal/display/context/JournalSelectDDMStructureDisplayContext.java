@@ -98,11 +98,16 @@ public class JournalSelectDDMStructureDisplayContext {
 				_getSearchRestrictionClassNameId(),
 				_getSearchRestrictionClassPK());
 		}
-		else {
+		else if (Validator.isNotNull(_getKeywords())) {
 			total = DDMStructureServiceUtil.searchCount(
 				themeDisplay.getCompanyId(), groupIds,
 				PortalUtil.getClassNameId(JournalArticle.class.getName()),
 				_getKeywords(), WorkflowConstants.STATUS_ANY);
+		}
+		else {
+			total = DDMStructureServiceUtil.getStructuresCount(
+				themeDisplay.getCompanyId(), groupIds,
+				PortalUtil.getClassNameId(JournalArticle.class.getName()));
 		}
 
 		ddmStructureSearch.setTotal(total);
@@ -116,11 +121,18 @@ public class JournalSelectDDMStructureDisplayContext {
 					_getSearchRestrictionClassPK(),
 					ddmStructureSearch.getStart(), ddmStructureSearch.getEnd());
 		}
-		else {
+		else if (Validator.isNotNull(_getKeywords())) {
 			results = DDMStructureServiceUtil.search(
 				themeDisplay.getCompanyId(), groupIds,
 				PortalUtil.getClassNameId(JournalArticle.class.getName()),
 				_getKeywords(), WorkflowConstants.STATUS_ANY,
+				ddmStructureSearch.getStart(), ddmStructureSearch.getEnd(),
+				ddmStructureSearch.getOrderByComparator());
+		}
+		else {
+			results = DDMStructureServiceUtil.getStructures(
+				themeDisplay.getCompanyId(), groupIds,
+				PortalUtil.getClassNameId(JournalArticle.class.getName()),
 				ddmStructureSearch.getStart(), ddmStructureSearch.getEnd(),
 				ddmStructureSearch.getOrderByComparator());
 		}

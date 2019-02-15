@@ -12,15 +12,15 @@
  * details.
  */
 
-package com.liferay.headless.collaboration.internal.dto.v1_0;
+package com.liferay.headless.web.experience.internal.dto.v1_0;
 
-import com.liferay.headless.collaboration.dto.v1_0.AggregateRating;
+import com.liferay.headless.web.experience.dto.v1_0.AggregateRating;
 import com.liferay.ratings.kernel.model.RatingsStats;
 
 /**
  * @author Javier Gamarra
  */
-public class AggregateRatingUtil {
+public class AggregateRatingConverter {
 
 	public static AggregateRating toAggregateRating(RatingsStats ratingsStats) {
 		if (ratingsStats == null) {

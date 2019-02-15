@@ -27,7 +27,7 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.headless.web.experience.dto.v1_0.StructuredContent;
-import com.liferay.headless.web.experience.internal.dto.v1_0.AggregateRatingUtil;
+import com.liferay.headless.web.experience.internal.dto.v1_0.AggregateRatingConverter;
 import com.liferay.headless.web.experience.internal.dto.v1_0.ContentStructureConverter;
 import com.liferay.headless.web.experience.internal.dto.v1_0.CreatorConverter;
 import com.liferay.headless.web.experience.internal.odata.entity.v1_0.EntityFieldsProvider;
@@ -390,7 +390,7 @@ public class StructuredContentResourceImpl
 					LocaleUtil.toW3cLanguageIds(
 						journalArticle.getAvailableLanguageIds()));
 				setAggregateRating(
-					AggregateRatingUtil.toAggregateRating(
+					AggregateRatingConverter.toAggregateRating(
 						_ratingsStatsLocalService.fetchStats(
 							JournalArticle.class.getName(),
 							journalArticle.getResourcePrimKey())));

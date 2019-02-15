@@ -12,17 +12,20 @@
  * details.
  */
 
-package com.liferay.headless.web.experience.internal.dto.v1_0;
+package com.liferay.headless.collaboration.internal.dto.v1_0;
 
-import com.liferay.headless.web.experience.dto.v1_0.AggregateRating;
+import com.liferay.headless.collaboration.dto.v1_0.AggregateRating;
 import com.liferay.ratings.kernel.model.RatingsStats;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Javier Gamarra
  */
-public class AggregateRatingUtil {
+@Component(service = AggregateRatingConverter.class)
+public class AggregateRatingConverter {
 
-	public static AggregateRating toAggregateRating(RatingsStats ratingsStats) {
+	public AggregateRating toAggregateRating(RatingsStats ratingsStats) {
 		if (ratingsStats == null) {
 			return null;
 		}

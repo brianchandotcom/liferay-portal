@@ -1106,9 +1106,16 @@ public abstract class BaseBuild implements Build {
 	public int getTotalSlavesUsedCount(
 		String status, boolean modifiedBuildsOnly) {
 
+		return getTotalSlavesUsedCount(status, modifiedBuildsOnly, false);
+	}
+
+	@Override
+	public int getTotalSlavesUsedCount(
+		String status, boolean modifiedBuildsOnly, boolean ignoreCurrentBuild) {
+
 		int totalSlavesUsedCount = 1;
 
-		if ((modifiedBuildsOnly && !isBuildModified()) ||
+		if (ignoreCurrentBuild || (modifiedBuildsOnly && !isBuildModified()) ||
 			((status != null) && !_status.equals(status))) {
 
 			totalSlavesUsedCount = 0;

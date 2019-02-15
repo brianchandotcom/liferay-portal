@@ -323,12 +323,8 @@ public class BatchBuild extends BaseBuild {
 	public int getTotalSlavesUsedCount(
 		String status, boolean modifiedBuildsOnly) {
 
-		int totalSlavesUsedCount = super.getTotalSlavesUsedCount(
-			status, modifiedBuildsOnly);
-
-		if (modifiedBuildsOnly && isBuildModified()) {
-			totalSlavesUsedCount--;
-		}
+		int totalSlavesUsedCount = getTotalSlavesUsedCount(
+			status, modifiedBuildsOnly, true);
 
 		return totalSlavesUsedCount;
 	}

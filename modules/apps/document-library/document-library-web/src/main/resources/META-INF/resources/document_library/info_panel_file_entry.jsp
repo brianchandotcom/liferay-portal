@@ -97,7 +97,7 @@ if (dlViewFileVersionDisplayContext.isVersionInfoVisible()) {
 						%>
 
 						<liferay-ui:user-portrait
-							cssClass="user-icon-lg"
+							cssClass="sticker-lg"
 							user="<%= owner %>"
 						/>
 					</div>

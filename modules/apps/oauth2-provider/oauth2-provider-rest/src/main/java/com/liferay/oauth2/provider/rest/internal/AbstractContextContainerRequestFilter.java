@@ -12,9 +12,8 @@
  * details.
  */
 
-package com.liferay.oauth2.provider.scope.internal.jaxrs.filter;
+package com.liferay.oauth2.provider.rest.internal;
 
-import com.liferay.oauth2.provider.scope.internal.constants.OAuth2ProviderScopeConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -33,6 +32,7 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
+import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
 
 /**
  * @author Tomas Polesovsky
@@ -77,7 +77,7 @@ public abstract class AbstractContextContainerRequestFilter
 
 				return GetterUtil.getString(
 					serviceReference.getProperty(
-						OAuth2ProviderScopeConstants.OSGI_JAXRS_NAME),
+						JaxrsWhiteboardConstants.JAX_RS_NAME),
 					applicationClassName);
 			}
 		}

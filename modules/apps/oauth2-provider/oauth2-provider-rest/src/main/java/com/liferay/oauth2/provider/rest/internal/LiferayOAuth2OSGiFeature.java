@@ -12,10 +12,9 @@
  * details.
  */
 
-package com.liferay.oauth2.provider.scope.internal.jaxrs.feature;
+package com.liferay.oauth2.provider.rest.internal;
 
-import com.liferay.oauth2.provider.scope.internal.constants.OAuth2ProviderScopeConstants;
-import com.liferay.oauth2.provider.scope.internal.jaxrs.filter.AbstractContextContainerRequestFilter;
+import com.liferay.oauth2.provider.rest.spi.scope.checker.container.request.filter.BaseScopeCheckerContainerRequestFilter;
 import com.liferay.oauth2.provider.scope.liferay.ScopeContext;
 import com.liferay.oauth2.provider.scope.spi.application.descriptor.ApplicationDescriptor;
 import com.liferay.oauth2.provider.scope.spi.scope.descriptor.ScopeDescriptor;
@@ -56,6 +55,7 @@ import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferencePolicy;
 import org.osgi.service.component.annotations.ReferencePolicyOption;
 import org.osgi.service.component.annotations.ServiceScope;
+import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
 import org.osgi.util.tracker.ServiceTracker;
 
 /**
@@ -154,8 +154,7 @@ public class LiferayOAuth2OSGiFeature implements Feature {
 
 		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
-		properties.put(
-			OAuth2ProviderScopeConstants.OSGI_JAXRS_NAME, osgiJAXRSName);
+		properties.put(JaxrsWhiteboardConstants.JAX_RS_NAME, osgiJAXRSName);
 
 		_serviceRegistrations.add(
 			_bundleContext.registerService(

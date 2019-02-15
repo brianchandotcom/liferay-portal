@@ -301,6 +301,9 @@
 			<property name="enabled" value="false" />
 		</check>
 		<check name="JSONPropertyOrderCheck" />
+		<check name="JSONScriptsCheck">
+			<property name="enabled" value="false" />
+		</check>
 		<check name="JSONValidationCheck" />
 		<check name="JSONWhitespaceCheck">
 			<property name="allowLeadingSpaces" value="true" />

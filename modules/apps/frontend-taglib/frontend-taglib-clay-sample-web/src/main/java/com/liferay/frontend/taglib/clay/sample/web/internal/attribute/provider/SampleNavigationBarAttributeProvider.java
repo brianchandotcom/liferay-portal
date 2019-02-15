@@ -1,8 +1,10 @@
 package com.liferay.frontend.taglib.clay.sample.web.internal.attribute.provider;
 
 import com.liferay.frontend.taglib.clay.attribute.provider.ClayComponentAttributeProvider;
+
 import java.util.HashMap;
 import java.util.Map;
+
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -10,12 +12,11 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {
-		"clay.component.attribute.provider.key=SampleNavigationBarAttributeProvider"
-	},
+	property = "clay.component.attribute.provider.key=SampleNavigationBarAttributeProvider",
 	service = ClayComponentAttributeProvider.class
 )
-public class SampleNavigationBarAttributeProvider implements ClayComponentAttributeProvider {
+public class SampleNavigationBarAttributeProvider
+	implements ClayComponentAttributeProvider {
 
 	@Override
 	public Map<String, Object> getAttributes() {
@@ -25,4 +26,5 @@ public class SampleNavigationBarAttributeProvider implements ClayComponentAttrib
 
 		return attributes;
 	}
+
 }

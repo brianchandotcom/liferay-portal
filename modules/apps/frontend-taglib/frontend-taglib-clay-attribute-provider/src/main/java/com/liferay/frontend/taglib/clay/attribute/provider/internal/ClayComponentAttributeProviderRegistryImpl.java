@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 
+import com.liferay.portal.kernel.util.ListUtil;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -46,7 +47,7 @@ public class ClayComponentAttributeProviderRegistryImpl
 	@Override
 	public List<ClayComponentAttributeProvider> get(String key) {
 		List<ServiceWrapper<ClayComponentAttributeProvider>> serviceWrappers =
-			_serviceTrackerMap.getService(key);
+			ListUtil.copy(_serviceTrackerMap.getService(key));
 
 		if (serviceWrappers == null) {
 			if (_log.isDebugEnabled()) {

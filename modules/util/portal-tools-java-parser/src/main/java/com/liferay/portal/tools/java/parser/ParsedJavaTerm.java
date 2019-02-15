@@ -14,10 +14,19 @@
 
 package com.liferay.portal.tools.java.parser;
 
+import antlr.CommonHiddenStreamToken;
+
 /**
  * @author Hugo Huijser
  */
 public class ParsedJavaTerm implements Comparable<ParsedJavaTerm> {
+
+	public ParsedJavaTerm(
+		CommonHiddenStreamToken precedingCommentToken, Position startPosition) {
+
+		_precedingCommentToken = precedingCommentToken;
+		_startPosition = startPosition;
+	}
 
 	public ParsedJavaTerm(
 		String content, Position startPosition, Position endPosition) {
@@ -40,12 +49,31 @@ public class ParsedJavaTerm implements Comparable<ParsedJavaTerm> {
 		return _endPosition;
 	}
 
+	public CommonHiddenStreamToken getPrecedingCommentToken() {
+		return _precedingCommentToken;
+	}
+
 	public Position getStartPosition() {
 		return _startPosition;
 	}
 
-	private final String _content;
-	private final Position _endPosition;
+	public void setContent(String content) {
+		_content = content;
+	}
+
+	public void setEndPosition(Position endPosition) {
+		_endPosition = endPosition;
+	}
+
+	public void setPrecedingCommentToken(
+		CommonHiddenStreamToken precedingCommentToken) {
+
+		_precedingCommentToken = precedingCommentToken;
+	}
+
+	private String _content;
+	private Position _endPosition;
+	private CommonHiddenStreamToken _precedingCommentToken;
 	private final Position _startPosition;
 
 }

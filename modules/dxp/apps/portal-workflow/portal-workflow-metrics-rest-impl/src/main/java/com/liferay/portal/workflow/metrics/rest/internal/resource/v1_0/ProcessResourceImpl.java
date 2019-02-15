@@ -43,6 +43,7 @@ import com.liferay.portal.workflow.metrics.rest.resource.v1_0.ProcessResource;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -160,6 +161,7 @@ public class ProcessResourceImpl extends BaseProcessResourceImpl {
 		searchSearchRequest.setSize(pagination.getItemsPerPage());
 		searchSearchRequest.setSorts(sorts);
 		searchSearchRequest.setStart(pagination.getStartPosition());
+		searchSearchRequest.setStats(Collections.emptyMap());
 
 		SearchSearchResponse searchSearchResponse =
 			_searchRequestExecutor.executeSearchRequest(searchSearchRequest);
@@ -203,6 +205,7 @@ public class ProcessResourceImpl extends BaseProcessResourceImpl {
 					setPreBooleanFilter(_createProcessBooleanFilter());
 				}
 			});
+		searchSearchRequest.setStats(Collections.emptyMap());
 
 		_searchRequestExecutor.executeSearchRequest(searchSearchRequest);
 
@@ -232,6 +235,8 @@ public class ProcessResourceImpl extends BaseProcessResourceImpl {
 					setPreBooleanFilter(booleanFilter);
 				}
 			});
+
+		searchSearchRequest.setStats(Collections.emptyMap());
 
 		_searchRequestExecutor.executeSearchRequest(searchSearchRequest);
 

@@ -6734,12 +6734,15 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			List<Group> userGroups = groupLocalService.getUserGroups(
 				user.getUserId(), true);
 
-			List<Long> userGroupIds = new ArrayList<>(userGroups.size());
+			int size = userGroups.size();
 
-			userGroups.forEach(
-				userSiteGroup -> userGroupIds.add(userSiteGroup.getGroupId()));
+			validGroupIds = new long[size];
 
-			validGroupIds = ArrayUtil.toLongArray(userGroupIds);
+			for (int i = 0; i < size; i++) {
+				Group userGroup = userGroups.get(i);
+
+				validGroupIds[i] = userGroup.getGroupId();
+			}
 		}
 
 		if (organizationIds == null) {

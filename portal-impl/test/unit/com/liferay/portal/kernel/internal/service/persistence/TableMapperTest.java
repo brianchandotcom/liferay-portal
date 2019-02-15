@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.internal.service.persistence;
 
-import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
@@ -84,18 +83,11 @@ public class TableMapperTest {
 
 				assertClasses.add(ReverseTableMapper.class);
 				assertClasses.add(TableMapperFactory.class);
-
-				try {
-					assertClasses.add(
-						Class.forName(
-							TableMapperFactory.class.getName() +
-								"$RejectingBasePersistenceImpl"));
-				}
-				catch (ClassNotFoundException cnfe) {
-					ReflectionUtil.throwException(cnfe);
-				}
-
 				assertClasses.add(TableMapperImpl.class);
+
+				Collections.addAll(
+					assertClasses,
+					TableMapperFactory.class.getDeclaredClasses());
 			}
 
 		};

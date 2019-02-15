@@ -14,6 +14,13 @@
 
 package com.liferay.portal.lpkg.deployer.internal;
 
+import com.liferay.petra.string.CharPool;
+import com.liferay.portal.kernel.util.StringUtil;
+
+import java.io.File;
+
+import java.net.URI;
+
 import org.osgi.framework.Bundle;
 
 /**
@@ -27,6 +34,15 @@ public class LPKGInnerBundleLocationUtil {
 		String location = path.concat("?lpkgPath=");
 
 		return location.concat(lpkgBundle.getLocation());
+	}
+
+	public static String getLPKGLocation(File lpkgfile) {
+		URI uri = lpkgfile.toURI();
+
+		String uriString = uri.toString();
+
+		return StringUtil.replace(
+			uriString, CharPool.BACK_SLASH, CharPool.FORWARD_SLASH);
 	}
 
 }

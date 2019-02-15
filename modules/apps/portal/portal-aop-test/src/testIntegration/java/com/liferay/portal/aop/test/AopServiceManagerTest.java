@@ -36,6 +36,7 @@ import org.junit.runner.RunWith;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.Constants;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
@@ -62,12 +63,11 @@ public class AopServiceManagerTest {
 		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
 		properties.put("key", "value");
+		properties.put(Constants.SERVICE_RANKING, 1);
 
 		ServiceRegistration<AopService> aopServiceServiceRegistration =
 			bundleContext.registerService(
 				AopService.class, new TestServiceImpl(), properties);
-
-		Assert.assertNull(bundleContext.getServiceReference(TestService.class));
 
 		TestTransactionExecutor testTransactionExecutor =
 			new TestTransactionExecutor();
@@ -75,7 +75,8 @@ public class AopServiceManagerTest {
 		ServiceRegistration<TransactionExecutor>
 			transactionExecutorServiceRegistration =
 				bundleContext.registerService(
-					TransactionExecutor.class, testTransactionExecutor, null);
+					TransactionExecutor.class, testTransactionExecutor,
+					properties);
 
 		ServiceReference<TestService> testServiceServiceReference =
 			bundleContext.getServiceReference(TestService.class);
@@ -109,8 +110,6 @@ public class AopServiceManagerTest {
 		}
 
 		transactionExecutorServiceRegistration.unregister();
-
-		Assert.assertNull(bundleContext.getServiceReference(TestService.class));
 
 		aopServiceServiceRegistration.unregister();
 	}

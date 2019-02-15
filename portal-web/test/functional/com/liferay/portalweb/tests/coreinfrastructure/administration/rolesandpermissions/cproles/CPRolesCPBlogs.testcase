@@ -151,7 +151,9 @@ definition {
 
 		AssertElementNotPresent(locator1 = "BlogsEntry#TITLE_LINK");
 
-		AssertElementPresent(locator1 = "Blogs#ICON_VIEW_ENTRY_TITLE");
+		LexiconCard.viewCardTitle(
+			card = "Blogs Entry Title"
+		);
 	}
 
 	@priority = "4"

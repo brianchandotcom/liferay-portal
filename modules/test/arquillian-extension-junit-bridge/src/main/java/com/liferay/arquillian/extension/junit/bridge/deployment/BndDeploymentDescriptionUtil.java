@@ -45,7 +45,6 @@ import java.util.jar.Attributes;
 import java.util.jar.JarFile;
 import java.util.jar.Manifest;
 
-import org.jboss.arquillian.container.spi.client.deployment.DeploymentDescription;
 import org.jboss.arquillian.test.spi.TestClass;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.Node;
@@ -61,7 +60,7 @@ import org.jboss.shrinkwrap.api.spec.JavaArchive;
  */
 public class BndDeploymentDescriptionUtil {
 
-	public static DeploymentDescription create(TestClass testClass) {
+	public static Archive<?> create(TestClass testClass) {
 		try (Workspace workspace = new Workspace(_buildDir);
 			Project project = new Project(workspace, _buildDir);
 
@@ -85,12 +84,7 @@ public class BndDeploymentDescriptionUtil {
 
 			_process(javaArchive, testClass);
 
-			DeploymentDescription deploymentDescription =
-				new DeploymentDescription(javaArchive.getName(), javaArchive);
-
-			deploymentDescription.setTestableArchive(javaArchive);
-
-			return deploymentDescription;
+			return javaArchive;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);

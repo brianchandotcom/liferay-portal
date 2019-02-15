@@ -15,22 +15,19 @@
 package com.liferay.arquillian.extension.junit.bridge.event.controller;
 
 import com.liferay.arquillian.extension.junit.bridge.container.LiferayRemoteDeployableContainer;
-import com.liferay.arquillian.extension.junit.bridge.container.impl.ContainerImpl;
 import com.liferay.arquillian.extension.junit.bridge.deployment.BndDeploymentDescriptionUtil;
 
 import javax.management.MBeanServerConnection;
 
-import org.jboss.arquillian.container.spi.Container;
 import org.jboss.arquillian.container.spi.client.container.DeployableContainer;
 import org.jboss.arquillian.container.spi.client.container.DeploymentException;
-import org.jboss.arquillian.container.spi.client.deployment.Deployment;
-import org.jboss.arquillian.container.spi.client.deployment.DeploymentDescription;
 import org.jboss.arquillian.core.api.InstanceProducer;
 import org.jboss.arquillian.core.api.annotation.ApplicationScoped;
 import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.arquillian.core.api.annotation.Observes;
 import org.jboss.arquillian.test.spi.event.suite.AfterClass;
 import org.jboss.arquillian.test.spi.event.suite.BeforeClass;
+import org.jboss.shrinkwrap.api.Archive;
 
 /**
  * @author Matthew Tambara
@@ -40,49 +37,23 @@ public class ContainerEventController {
 	public void execute(@Observes AfterClass afterClass)
 		throws DeploymentException {
 
-		DeployableContainer<?> deployableContainer =
-			_container.getDeployableContainer();
-
-		DeploymentDescription deploymentDescription =
-			_deployment.getDescription();
-
-		try {
-			deployableContainer.undeploy(
-				deploymentDescription.getTestableArchive());
-		}
-		catch (DeploymentException de) {
-			if (!_deployment.hasDeploymentError()) {
-				throw de;
-			}
-		}
-		finally {
-			_deployment.undeployed();
-		}
+		_deployableContainer.undeploy(_archive);
 	}
 
 	public void execute(@Observes BeforeClass beforeClass) throws Exception {
-		_container = new ContainerImpl(
-			"default",
-			new LiferayRemoteDeployableContainer(
-				_mBeanServerConnectionInstanceProducer));
+		_deployableContainer = new LiferayRemoteDeployableContainer(
+			_mBeanServerConnectionInstanceProducer);
 
-		_container.start();
+		_deployableContainer.start();
 
-		DeploymentDescription deploymentDescription =
-			BndDeploymentDescriptionUtil.create(beforeClass.getTestClass());
+		_archive = BndDeploymentDescriptionUtil.create(
+			beforeClass.getTestClass());
 
-		_deployment = new Deployment(deploymentDescription);
-
-		DeployableContainer<?> deployableContainer =
-			_container.getDeployableContainer();
-
-		deployableContainer.deploy(deploymentDescription.getTestableArchive());
-
-		_deployment.deployed();
+		_deployableContainer.deploy(_archive);
 	}
 
-	private Container _container;
-	private Deployment _deployment;
+	private Archive<?> _archive;
+	private DeployableContainer _deployableContainer;
 
 	@ApplicationScoped
 	@Inject

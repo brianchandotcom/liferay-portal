@@ -275,7 +275,7 @@ public class LayoutSiteNavigationMenuItemType
 			SiteNavigationMenuItem importedSiteNavigationMenuItem)
 		throws PortalException {
 
-		Layout layout;
+		Layout layout = null;
 
 		try {
 			layout = _getLayout(importedSiteNavigationMenuItem);

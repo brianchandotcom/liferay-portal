@@ -21,15 +21,7 @@ JournalSelectDDMTemplateDisplayContext journalSelectDDMTemplateDisplayContext = 
 %>
 
 <clay:management-toolbar
-	clearResultsURL="<%= journalSelectDDMTemplateDisplayContext.getClearResultsURL() %>"
-	disabled="<%= journalSelectDDMTemplateDisplayContext.isDisabledManagementBar() %>"
-	filterDropdownItems="<%= journalSelectDDMTemplateDisplayContext.getFilterItemsDropdownItems() %>"
-	itemsTotal="<%= journalSelectDDMTemplateDisplayContext.getTotalItems() %>"
-	searchActionURL="<%= journalSelectDDMTemplateDisplayContext.getSearchActionURL() %>"
-	searchFormName="searchForm"
-	selectable="<%= false %>"
-	sortingOrder="<%= journalSelectDDMTemplateDisplayContext.getOrderByType() %>"
-	sortingURL="<%= journalSelectDDMTemplateDisplayContext.getSortingURL() %>"
+	displayContext="<%= new JournalSelectDDMTemplateManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, journalSelectDDMTemplateDisplayContext) %>"
 />
 
 <aui:form cssClass="container-fluid-1280" method="post" name="selectDDMTemplateFm">

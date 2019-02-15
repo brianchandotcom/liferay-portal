@@ -16,22 +16,14 @@ package com.liferay.journal.web.internal.display.context;
 
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
-import com.liferay.dynamic.data.mapping.model.DDMTemplateConstants;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateServiceUtil;
 import com.liferay.dynamic.data.mapping.util.DDMUtil;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.web.configuration.JournalWebConfiguration;
-import com.liferay.journal.web.internal.security.permission.resource.DDMTemplatePermission;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -39,11 +31,8 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.staging.StagingGroupHelper;
-import com.liferay.staging.StagingGroupHelperUtil;
 
 import java.util.List;
-import java.util.Objects;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -69,21 +58,6 @@ public class JournalDDMTemplateDisplayContext {
 				JournalWebConfiguration.class.getName());
 	}
 
-	public List<DropdownItem> getActionItemsDropdownItems() {
-		return new DropdownItemList() {
-			{
-				add(
-					dropdownItem -> {
-						dropdownItem.putData("action", "deleteDDMTemplates");
-						dropdownItem.setIcon("times-circle");
-						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "delete"));
-						dropdownItem.setQuickAction(true);
-					});
-			}
-		};
-	}
-
 	public long getClassPK() {
 		if (_classPK != null) {
 			return _classPK;
@@ -92,43 +66,6 @@ public class JournalDDMTemplateDisplayContext {
 		_classPK = ParamUtil.getLong(_request, "classPK");
 
 		return _classPK;
-	}
-
-	public String getClearResultsURL() {
-		PortletURL clearResultsURL = _getPortletURL();
-
-		clearResultsURL.setParameter("keywords", StringPool.BLANK);
-
-		return clearResultsURL.toString();
-	}
-
-	public CreationMenu getCreationMenu() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		return new CreationMenu() {
-			{
-				addPrimaryDropdownItem(
-					dropdownItem -> {
-						dropdownItem.setHref(
-							_renderResponse.createRenderURL(), "mvcPath",
-							"/edit_ddm_template.jsp", "redirect",
-							themeDisplay.getURLCurrent(), "groupId",
-							String.valueOf(themeDisplay.getScopeGroupId()),
-							"classNameId",
-							String.valueOf(
-								PortalUtil.getClassNameId(DDMStructure.class)),
-							"classPK", String.valueOf(getClassPK()),
-							"resourceClassNameId",
-							String.valueOf(
-								PortalUtil.getClassNameId(
-									JournalArticle.class)),
-							"type", DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY);
-						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "add"));
-					});
-			}
-		};
 	}
 
 	public DDMStructure getDDMStructure() {
@@ -206,28 +143,6 @@ public class JournalDDMTemplateDisplayContext {
 		return ddmTemplateSearch;
 	}
 
-	public List<DropdownItem> getFilterItemsDropdownItems() {
-		return new DropdownItemList() {
-			{
-				addGroup(
-					dropdownGroupItem -> {
-						dropdownGroupItem.setDropdownItems(
-							_getFilterNavigationDropdownItems());
-						dropdownGroupItem.setLabel(
-							LanguageUtil.get(_request, "filter-by-navigation"));
-					});
-
-				addGroup(
-					dropdownGroupItem -> {
-						dropdownGroupItem.setDropdownItems(
-							_getOrderByDropdownItems());
-						dropdownGroupItem.setLabel(
-							LanguageUtil.get(_request, "order-by"));
-					});
-			}
-		};
-	}
-
 	public String getOrderByCol() {
 		if (_orderByCol != null) {
 			return _orderByCol;
@@ -250,69 +165,8 @@ public class JournalDDMTemplateDisplayContext {
 		return _orderByType;
 	}
 
-	public String getSearchActionURL() {
-		PortletURL searchActionURL = _getPortletURL();
-
-		return searchActionURL.toString();
-	}
-
-	public String getSortingURL() {
-		PortletURL sortingURL = _getPortletURL();
-
-		sortingURL.setParameter(
-			"orderByType",
-			Objects.equals(getOrderByType(), "asc") ? "desc" : "asc");
-
-		return sortingURL.toString();
-	}
-
-	public int getTotalItems() throws Exception {
-		SearchContainer<?> searchContainer = getDDMTemplateSearch();
-
-		return searchContainer.getTotal();
-	}
-
-	public boolean isDisabledManagementBar() throws Exception {
-		if (isSearch()) {
-			return false;
-		}
-
-		if (getTotalItems() > 0) {
-			return false;
-		}
-
-		return true;
-	}
-
 	public boolean isSearch() {
 		if (Validator.isNotNull(_getKeywords())) {
-			return true;
-		}
-
-		return false;
-	}
-
-	public boolean isShowAddButton() throws PortalException {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		Group group = themeDisplay.getScopeGroup();
-
-		StagingGroupHelper stagingGroupHelper =
-			StagingGroupHelperUtil.getStagingGroupHelper();
-
-		if (stagingGroupHelper.isLocalLiveGroup(group) ||
-			stagingGroupHelper.isRemoteLiveGroup(group)) {
-
-			return false;
-		}
-
-		if (DDMTemplatePermission.containsAddTemplatePermission(
-				themeDisplay.getPermissionChecker(),
-				themeDisplay.getScopeGroupId(),
-				PortalUtil.getClassNameId(DDMStructure.class),
-				PortalUtil.getClassNameId(JournalArticle.class))) {
-
 			return true;
 		}
 
@@ -327,21 +181,6 @@ public class JournalDDMTemplateDisplayContext {
 		return null;
 	}
 
-	private List<DropdownItem> _getFilterNavigationDropdownItems() {
-		return new DropdownItemList() {
-			{
-				add(
-					dropdownItem -> {
-						dropdownItem.setActive(true);
-						dropdownItem.setHref(
-							_getPortletURL(), "navigation", "all");
-						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "all"));
-					});
-			}
-		};
-	}
-
 	private String _getKeywords() {
 		if (_keywords != null) {
 			return _keywords;
@@ -350,31 +189,6 @@ public class JournalDDMTemplateDisplayContext {
 		_keywords = ParamUtil.getString(_renderRequest, "keywords");
 
 		return _keywords;
-	}
-
-	private List<DropdownItem> _getOrderByDropdownItems() {
-		return new DropdownItemList() {
-			{
-				add(
-					dropdownItem -> {
-						dropdownItem.setActive(
-							Objects.equals(getOrderByCol(), "modified-date"));
-						dropdownItem.setHref(
-							_getPortletURL(), "orderByCol", "modified-date");
-						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "modified-date"));
-					});
-
-				add(
-					dropdownItem -> {
-						dropdownItem.setActive(
-							Objects.equals(getOrderByCol(), "id"));
-						dropdownItem.setHref(
-							_getPortletURL(), "orderByCol", "id");
-						dropdownItem.setLabel(LanguageUtil.get(_request, "id"));
-					});
-			}
-		};
 	}
 
 	private PortletURL _getPortletURL() {

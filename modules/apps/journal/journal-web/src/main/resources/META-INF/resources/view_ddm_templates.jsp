@@ -32,18 +32,7 @@ if (ddmStructure != null) {
 />
 
 <clay:management-toolbar
-	actionDropdownItems="<%= journalDDMTemplateDisplayContext.getActionItemsDropdownItems() %>"
-	clearResultsURL="<%= journalDDMTemplateDisplayContext.getClearResultsURL() %>"
-	componentId="ddmTemplateManagementToolbar"
-	creationMenu="<%= journalDDMTemplateDisplayContext.isShowAddButton() ? journalDDMTemplateDisplayContext.getCreationMenu() : null %>"
-	disabled="<%= journalDDMTemplateDisplayContext.isDisabledManagementBar() %>"
-	filterDropdownItems="<%= journalDDMTemplateDisplayContext.getFilterItemsDropdownItems() %>"
-	itemsTotal="<%= journalDDMTemplateDisplayContext.getTotalItems() %>"
-	searchActionURL="<%= journalDDMTemplateDisplayContext.getSearchActionURL() %>"
-	searchContainerId="ddmTemplates"
-	selectable="<%= !user.isDefaultUser() %>"
-	sortingOrder="<%= journalDDMTemplateDisplayContext.getOrderByType() %>"
-	sortingURL="<%= journalDDMTemplateDisplayContext.getSortingURL() %>"
+	displayContext="<%= new JournalDDMTemplateManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, journalDDMTemplateDisplayContext) %>"
 />
 
 <portlet:actionURL name="/journal/delete_ddm_template" var="deleteDDMTemplateURL">

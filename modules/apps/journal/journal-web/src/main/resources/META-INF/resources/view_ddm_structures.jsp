@@ -26,17 +26,7 @@ JournalDDMStructuresDisplayContext journalDDMStructuresDisplayContext = new Jour
 />
 
 <clay:management-toolbar
-	actionDropdownItems="<%= journalDDMStructuresDisplayContext.getActionItemsDropdownItems() %>"
-	clearResultsURL="<%= journalDDMStructuresDisplayContext.getClearResultsURL() %>"
-	componentId="ddmStructureManagementToolbar"
-	creationMenu="<%= journalDDMStructuresDisplayContext.isShowAddButton() ? journalDDMStructuresDisplayContext.getCreationMenu() : null %>"
-	disabled="<%= journalDDMStructuresDisplayContext.isDisabledManagementBar() %>"
-	filterDropdownItems="<%= journalDDMStructuresDisplayContext.getFilterItemsDropdownItems() %>"
-	itemsTotal="<%= journalDDMStructuresDisplayContext.getTotalItems() %>"
-	searchActionURL="<%= journalDDMStructuresDisplayContext.getSearchActionURL() %>"
-	searchContainerId="ddmStructures"
-	sortingOrder="<%= journalDDMStructuresDisplayContext.getOrderByType() %>"
-	sortingURL="<%= journalDDMStructuresDisplayContext.getSortingURL() %>"
+	displayContext="<%= new JournalDDMStructuresManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, journalDDMStructuresDisplayContext) %>"
 />
 
 <portlet:actionURL name="/journal/delete_ddm_structure" var="deleteDDMStructureURL">

@@ -99,7 +99,7 @@ if (ddmForm != null) {
 				},
 				duration: 500,
 				message: message,
-				title: Liferay.Language.get('warning'),
+				title: '<liferay-ui:message key="warning" />',
 				type: 'warning'
 			}
 		).render('body');
@@ -139,13 +139,15 @@ if (ddmForm != null) {
 	var isViewTabActive = function() {
 		var formBuilderTab = A.one('#<portlet:namespace />formBuilderTab');
 
-		if (!formBuilderTab) {
-			return false;
+		var isViewTabActive = false;
+
+		if (formBuilderTab) {
+			var ancestor = formBuilderTab.ancestor();
+
+			isViewTabActive = !ancestor.hasClass('hide');
 		}
 
-		var ancestor = formBuilderTab.ancestor();
-
-		return !ancestor.hasClass('hide');
+		return isViewTabActive;
 	};
 
 	var reloadFormBuilderData = function(content) {
@@ -278,9 +280,9 @@ if (ddmForm != null) {
 
 	Liferay.on('destroyPortlet', onDestroyPortlet);
 
-	window['<portlet:namespace />formBuilder'] = formBuilder;
+	window.<portlet:namespace />formBuilder = formBuilder;
 
-	window['<portlet:namespace />getContentValue'] = getContentValue;
+	window.<portlet:namespace />getContentValue = getContentValue;
 
 	Liferay.on(
 		'<portlet:namespace />saveTemplate',

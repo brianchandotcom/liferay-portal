@@ -49,22 +49,6 @@ public class JobFactory {
 			return job;
 		}
 
-		if (jobName.equals("root-cause-analysis-tool")) {
-			_jobs.put(
-				jobName,
-				new RootCauseAnalysisToolJob(jobName, portalBranchName));
-
-			return _jobs.get(jobName);
-		}
-
-		if (jobName.equals("root-cause-analysis-tool-batch")) {
-			_jobs.put(
-				jobName,
-				new RootCauseAnalysisToolBatchJob(jobName, portalBranchName));
-
-			return _jobs.get(jobName);
-		}
-
 		if (jobName.equals("js-test-csv-report") ||
 			jobName.equals("junit-test-csv-report")) {
 
@@ -82,6 +66,22 @@ public class JobFactory {
 				};
 
 			_jobs.put(jobName, portalGitRepositoryJob);
+
+			return _jobs.get(jobName);
+		}
+
+		if (jobName.equals("root-cause-analysis-tool")) {
+			_jobs.put(
+				jobName,
+				new RootCauseAnalysisToolJob(jobName, portalBranchName));
+
+			return _jobs.get(jobName);
+		}
+
+		if (jobName.equals("root-cause-analysis-tool-batch")) {
+			_jobs.put(
+				jobName,
+				new RootCauseAnalysisToolBatchJob(jobName, portalBranchName));
 
 			return _jobs.get(jobName);
 		}

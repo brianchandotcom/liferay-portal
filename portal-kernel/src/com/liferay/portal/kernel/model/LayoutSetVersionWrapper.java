@@ -32,8 +32,10 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public class LayoutSetVersionWrapper extends BaseModelWrapper<LayoutSetVersion>
+public class LayoutSetVersionWrapper
+	extends BaseModelWrapper<LayoutSetVersion>
 	implements LayoutSetVersion, ModelWrapper<LayoutSetVersion> {
+
 	public LayoutSetVersionWrapper(LayoutSetVersion layoutSetVersion) {
 		super(layoutSetVersion);
 	}
@@ -57,8 +59,8 @@ public class LayoutSetVersionWrapper extends BaseModelWrapper<LayoutSetVersion>
 		attributes.put("pageCount", getPageCount());
 		attributes.put("settings", getSettings());
 		attributes.put("layoutSetPrototypeUuid", getLayoutSetPrototypeUuid());
-		attributes.put("layoutSetPrototypeLinkEnabled",
-			isLayoutSetPrototypeLinkEnabled());
+		attributes.put(
+			"layoutSetPrototypeLinkEnabled", isLayoutSetPrototypeLinkEnabled());
 
 		return attributes;
 	}
@@ -150,14 +152,14 @@ public class LayoutSetVersionWrapper extends BaseModelWrapper<LayoutSetVersion>
 		}
 
 		String layoutSetPrototypeUuid = (String)attributes.get(
-				"layoutSetPrototypeUuid");
+			"layoutSetPrototypeUuid");
 
 		if (layoutSetPrototypeUuid != null) {
 			setLayoutSetPrototypeUuid(layoutSetPrototypeUuid);
 		}
 
 		Boolean layoutSetPrototypeLinkEnabled = (Boolean)attributes.get(
-				"layoutSetPrototypeLinkEnabled");
+			"layoutSetPrototypeLinkEnabled");
 
 		if (layoutSetPrototypeLinkEnabled != null) {
 			setLayoutSetPrototypeLinkEnabled(layoutSetPrototypeLinkEnabled);
@@ -165,361 +167,362 @@ public class LayoutSetVersionWrapper extends BaseModelWrapper<LayoutSetVersion>
 	}
 
 	/**
-	* Returns the color scheme ID of this layout set version.
-	*
-	* @return the color scheme ID of this layout set version
-	*/
+	 * Returns the color scheme ID of this layout set version.
+	 *
+	 * @return the color scheme ID of this layout set version
+	 */
 	@Override
 	public String getColorSchemeId() {
 		return model.getColorSchemeId();
 	}
 
 	/**
-	* Returns the company ID of this layout set version.
-	*
-	* @return the company ID of this layout set version
-	*/
+	 * Returns the company ID of this layout set version.
+	 *
+	 * @return the company ID of this layout set version
+	 */
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
 	}
 
 	/**
-	* Returns the create date of this layout set version.
-	*
-	* @return the create date of this layout set version
-	*/
+	 * Returns the create date of this layout set version.
+	 *
+	 * @return the create date of this layout set version
+	 */
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
 	}
 
 	/**
-	* Returns the css of this layout set version.
-	*
-	* @return the css of this layout set version
-	*/
+	 * Returns the css of this layout set version.
+	 *
+	 * @return the css of this layout set version
+	 */
 	@Override
 	public String getCss() {
 		return model.getCss();
 	}
 
 	/**
-	* Returns the group ID of this layout set version.
-	*
-	* @return the group ID of this layout set version
-	*/
+	 * Returns the group ID of this layout set version.
+	 *
+	 * @return the group ID of this layout set version
+	 */
 	@Override
 	public long getGroupId() {
 		return model.getGroupId();
 	}
 
 	/**
-	* Returns the layout set ID of this layout set version.
-	*
-	* @return the layout set ID of this layout set version
-	*/
+	 * Returns the layout set ID of this layout set version.
+	 *
+	 * @return the layout set ID of this layout set version
+	 */
 	@Override
 	public long getLayoutSetId() {
 		return model.getLayoutSetId();
 	}
 
 	/**
-	* Returns the layout set prototype link enabled of this layout set version.
-	*
-	* @return the layout set prototype link enabled of this layout set version
-	*/
+	 * Returns the layout set prototype link enabled of this layout set version.
+	 *
+	 * @return the layout set prototype link enabled of this layout set version
+	 */
 	@Override
 	public boolean getLayoutSetPrototypeLinkEnabled() {
 		return model.getLayoutSetPrototypeLinkEnabled();
 	}
 
 	/**
-	* Returns the layout set prototype uuid of this layout set version.
-	*
-	* @return the layout set prototype uuid of this layout set version
-	*/
+	 * Returns the layout set prototype uuid of this layout set version.
+	 *
+	 * @return the layout set prototype uuid of this layout set version
+	 */
 	@Override
 	public String getLayoutSetPrototypeUuid() {
 		return model.getLayoutSetPrototypeUuid();
 	}
 
 	/**
-	* Returns the layout set version ID of this layout set version.
-	*
-	* @return the layout set version ID of this layout set version
-	*/
+	 * Returns the layout set version ID of this layout set version.
+	 *
+	 * @return the layout set version ID of this layout set version
+	 */
 	@Override
 	public long getLayoutSetVersionId() {
 		return model.getLayoutSetVersionId();
 	}
 
 	/**
-	* Returns the logo ID of this layout set version.
-	*
-	* @return the logo ID of this layout set version
-	*/
+	 * Returns the logo ID of this layout set version.
+	 *
+	 * @return the logo ID of this layout set version
+	 */
 	@Override
 	public long getLogoId() {
 		return model.getLogoId();
 	}
 
 	/**
-	* Returns the modified date of this layout set version.
-	*
-	* @return the modified date of this layout set version
-	*/
+	 * Returns the modified date of this layout set version.
+	 *
+	 * @return the modified date of this layout set version
+	 */
 	@Override
 	public Date getModifiedDate() {
 		return model.getModifiedDate();
 	}
 
 	/**
-	* Returns the page count of this layout set version.
-	*
-	* @return the page count of this layout set version
-	*/
+	 * Returns the page count of this layout set version.
+	 *
+	 * @return the page count of this layout set version
+	 */
 	@Override
 	public int getPageCount() {
 		return model.getPageCount();
 	}
 
 	/**
-	* Returns the primary key of this layout set version.
-	*
-	* @return the primary key of this layout set version
-	*/
+	 * Returns the primary key of this layout set version.
+	 *
+	 * @return the primary key of this layout set version
+	 */
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
 	}
 
 	/**
-	* Returns the private layout of this layout set version.
-	*
-	* @return the private layout of this layout set version
-	*/
+	 * Returns the private layout of this layout set version.
+	 *
+	 * @return the private layout of this layout set version
+	 */
 	@Override
 	public boolean getPrivateLayout() {
 		return model.getPrivateLayout();
 	}
 
 	/**
-	* Returns the settings of this layout set version.
-	*
-	* @return the settings of this layout set version
-	*/
+	 * Returns the settings of this layout set version.
+	 *
+	 * @return the settings of this layout set version
+	 */
 	@Override
 	public String getSettings() {
 		return model.getSettings();
 	}
 
 	/**
-	* Returns the theme ID of this layout set version.
-	*
-	* @return the theme ID of this layout set version
-	*/
+	 * Returns the theme ID of this layout set version.
+	 *
+	 * @return the theme ID of this layout set version
+	 */
 	@Override
 	public String getThemeId() {
 		return model.getThemeId();
 	}
 
 	/**
-	* Returns the version of this layout set version.
-	*
-	* @return the version of this layout set version
-	*/
+	 * Returns the version of this layout set version.
+	 *
+	 * @return the version of this layout set version
+	 */
 	@Override
 	public int getVersion() {
 		return model.getVersion();
 	}
 
 	/**
-	* Returns <code>true</code> if this layout set version is layout set prototype link enabled.
-	*
-	* @return <code>true</code> if this layout set version is layout set prototype link enabled; <code>false</code> otherwise
-	*/
+	 * Returns <code>true</code> if this layout set version is layout set prototype link enabled.
+	 *
+	 * @return <code>true</code> if this layout set version is layout set prototype link enabled; <code>false</code> otherwise
+	 */
 	@Override
 	public boolean isLayoutSetPrototypeLinkEnabled() {
 		return model.isLayoutSetPrototypeLinkEnabled();
 	}
 
 	/**
-	* Returns <code>true</code> if this layout set version is private layout.
-	*
-	* @return <code>true</code> if this layout set version is private layout; <code>false</code> otherwise
-	*/
+	 * Returns <code>true</code> if this layout set version is private layout.
+	 *
+	 * @return <code>true</code> if this layout set version is private layout; <code>false</code> otherwise
+	 */
 	@Override
 	public boolean isPrivateLayout() {
 		return model.isPrivateLayout();
 	}
 
 	/**
-	* Sets the color scheme ID of this layout set version.
-	*
-	* @param colorSchemeId the color scheme ID of this layout set version
-	*/
+	 * Sets the color scheme ID of this layout set version.
+	 *
+	 * @param colorSchemeId the color scheme ID of this layout set version
+	 */
 	@Override
 	public void setColorSchemeId(String colorSchemeId) {
 		model.setColorSchemeId(colorSchemeId);
 	}
 
 	/**
-	* Sets the company ID of this layout set version.
-	*
-	* @param companyId the company ID of this layout set version
-	*/
+	 * Sets the company ID of this layout set version.
+	 *
+	 * @param companyId the company ID of this layout set version
+	 */
 	@Override
 	public void setCompanyId(long companyId) {
 		model.setCompanyId(companyId);
 	}
 
 	/**
-	* Sets the create date of this layout set version.
-	*
-	* @param createDate the create date of this layout set version
-	*/
+	 * Sets the create date of this layout set version.
+	 *
+	 * @param createDate the create date of this layout set version
+	 */
 	@Override
 	public void setCreateDate(Date createDate) {
 		model.setCreateDate(createDate);
 	}
 
 	/**
-	* Sets the css of this layout set version.
-	*
-	* @param css the css of this layout set version
-	*/
+	 * Sets the css of this layout set version.
+	 *
+	 * @param css the css of this layout set version
+	 */
 	@Override
 	public void setCss(String css) {
 		model.setCss(css);
 	}
 
 	/**
-	* Sets the group ID of this layout set version.
-	*
-	* @param groupId the group ID of this layout set version
-	*/
+	 * Sets the group ID of this layout set version.
+	 *
+	 * @param groupId the group ID of this layout set version
+	 */
 	@Override
 	public void setGroupId(long groupId) {
 		model.setGroupId(groupId);
 	}
 
 	/**
-	* Sets the layout set ID of this layout set version.
-	*
-	* @param layoutSetId the layout set ID of this layout set version
-	*/
+	 * Sets the layout set ID of this layout set version.
+	 *
+	 * @param layoutSetId the layout set ID of this layout set version
+	 */
 	@Override
 	public void setLayoutSetId(long layoutSetId) {
 		model.setLayoutSetId(layoutSetId);
 	}
 
 	/**
-	* Sets whether this layout set version is layout set prototype link enabled.
-	*
-	* @param layoutSetPrototypeLinkEnabled the layout set prototype link enabled of this layout set version
-	*/
+	 * Sets whether this layout set version is layout set prototype link enabled.
+	 *
+	 * @param layoutSetPrototypeLinkEnabled the layout set prototype link enabled of this layout set version
+	 */
 	@Override
 	public void setLayoutSetPrototypeLinkEnabled(
 		boolean layoutSetPrototypeLinkEnabled) {
+
 		model.setLayoutSetPrototypeLinkEnabled(layoutSetPrototypeLinkEnabled);
 	}
 
 	/**
-	* Sets the layout set prototype uuid of this layout set version.
-	*
-	* @param layoutSetPrototypeUuid the layout set prototype uuid of this layout set version
-	*/
+	 * Sets the layout set prototype uuid of this layout set version.
+	 *
+	 * @param layoutSetPrototypeUuid the layout set prototype uuid of this layout set version
+	 */
 	@Override
 	public void setLayoutSetPrototypeUuid(String layoutSetPrototypeUuid) {
 		model.setLayoutSetPrototypeUuid(layoutSetPrototypeUuid);
 	}
 
 	/**
-	* Sets the layout set version ID of this layout set version.
-	*
-	* @param layoutSetVersionId the layout set version ID of this layout set version
-	*/
+	 * Sets the layout set version ID of this layout set version.
+	 *
+	 * @param layoutSetVersionId the layout set version ID of this layout set version
+	 */
 	@Override
 	public void setLayoutSetVersionId(long layoutSetVersionId) {
 		model.setLayoutSetVersionId(layoutSetVersionId);
 	}
 
 	/**
-	* Sets the logo ID of this layout set version.
-	*
-	* @param logoId the logo ID of this layout set version
-	*/
+	 * Sets the logo ID of this layout set version.
+	 *
+	 * @param logoId the logo ID of this layout set version
+	 */
 	@Override
 	public void setLogoId(long logoId) {
 		model.setLogoId(logoId);
 	}
 
 	/**
-	* Sets the modified date of this layout set version.
-	*
-	* @param modifiedDate the modified date of this layout set version
-	*/
+	 * Sets the modified date of this layout set version.
+	 *
+	 * @param modifiedDate the modified date of this layout set version
+	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
-	* Sets the page count of this layout set version.
-	*
-	* @param pageCount the page count of this layout set version
-	*/
+	 * Sets the page count of this layout set version.
+	 *
+	 * @param pageCount the page count of this layout set version
+	 */
 	@Override
 	public void setPageCount(int pageCount) {
 		model.setPageCount(pageCount);
 	}
 
 	/**
-	* Sets the primary key of this layout set version.
-	*
-	* @param primaryKey the primary key of this layout set version
-	*/
+	 * Sets the primary key of this layout set version.
+	 *
+	 * @param primaryKey the primary key of this layout set version
+	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
-	* Sets whether this layout set version is private layout.
-	*
-	* @param privateLayout the private layout of this layout set version
-	*/
+	 * Sets whether this layout set version is private layout.
+	 *
+	 * @param privateLayout the private layout of this layout set version
+	 */
 	@Override
 	public void setPrivateLayout(boolean privateLayout) {
 		model.setPrivateLayout(privateLayout);
 	}
 
 	/**
-	* Sets the settings of this layout set version.
-	*
-	* @param settings the settings of this layout set version
-	*/
+	 * Sets the settings of this layout set version.
+	 *
+	 * @param settings the settings of this layout set version
+	 */
 	@Override
 	public void setSettings(String settings) {
 		model.setSettings(settings);
 	}
 
 	/**
-	* Sets the theme ID of this layout set version.
-	*
-	* @param themeId the theme ID of this layout set version
-	*/
+	 * Sets the theme ID of this layout set version.
+	 *
+	 * @param themeId the theme ID of this layout set version
+	 */
 	@Override
 	public void setThemeId(String themeId) {
 		model.setThemeId(themeId);
 	}
 
 	/**
-	* Sets the version of this layout set version.
-	*
-	* @param version the version of this layout set version
-	*/
+	 * Sets the version of this layout set version.
+	 *
+	 * @param version the version of this layout set version
+	 */
 	@Override
 	public void setVersion(int version) {
 		model.setVersion(version);
@@ -549,4 +552,5 @@ public class LayoutSetVersionWrapper extends BaseModelWrapper<LayoutSetVersion>
 	protected LayoutSetVersionWrapper wrap(LayoutSetVersion layoutSetVersion) {
 		return new LayoutSetVersionWrapper(layoutSetVersion);
 	}
+
 }

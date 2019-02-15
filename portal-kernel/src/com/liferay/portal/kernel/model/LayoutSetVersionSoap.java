@@ -30,6 +30,7 @@ import java.util.List;
  */
 @ProviderType
 public class LayoutSetVersionSoap implements Serializable {
+
 	public static LayoutSetVersionSoap toSoapModel(LayoutSetVersion model) {
 		LayoutSetVersionSoap soapModel = new LayoutSetVersionSoap();
 
@@ -48,13 +49,17 @@ public class LayoutSetVersionSoap implements Serializable {
 		soapModel.setPageCount(model.getPageCount());
 		soapModel.setSettings(model.getSettings());
 		soapModel.setLayoutSetPrototypeUuid(model.getLayoutSetPrototypeUuid());
-		soapModel.setLayoutSetPrototypeLinkEnabled(model.isLayoutSetPrototypeLinkEnabled());
+		soapModel.setLayoutSetPrototypeLinkEnabled(
+			model.isLayoutSetPrototypeLinkEnabled());
 
 		return soapModel;
 	}
 
-	public static LayoutSetVersionSoap[] toSoapModels(LayoutSetVersion[] models) {
-		LayoutSetVersionSoap[] soapModels = new LayoutSetVersionSoap[models.length];
+	public static LayoutSetVersionSoap[] toSoapModels(
+		LayoutSetVersion[] models) {
+
+		LayoutSetVersionSoap[] soapModels =
+			new LayoutSetVersionSoap[models.length];
 
 		for (int i = 0; i < models.length; i++) {
 			soapModels[i] = toSoapModel(models[i]);
@@ -65,10 +70,12 @@ public class LayoutSetVersionSoap implements Serializable {
 
 	public static LayoutSetVersionSoap[][] toSoapModels(
 		LayoutSetVersion[][] models) {
+
 		LayoutSetVersionSoap[][] soapModels = null;
 
 		if (models.length > 0) {
-			soapModels = new LayoutSetVersionSoap[models.length][models[0].length];
+			soapModels =
+				new LayoutSetVersionSoap[models.length][models[0].length];
 		}
 		else {
 			soapModels = new LayoutSetVersionSoap[0][0];
@@ -83,7 +90,9 @@ public class LayoutSetVersionSoap implements Serializable {
 
 	public static LayoutSetVersionSoap[] toSoapModels(
 		List<LayoutSetVersion> models) {
-		List<LayoutSetVersionSoap> soapModels = new ArrayList<LayoutSetVersionSoap>(models.size());
+
+		List<LayoutSetVersionSoap> soapModels =
+			new ArrayList<LayoutSetVersionSoap>(models.size());
 
 		for (LayoutSetVersion model : models) {
 			soapModels.add(toSoapModel(model));
@@ -237,6 +246,7 @@ public class LayoutSetVersionSoap implements Serializable {
 
 	public void setLayoutSetPrototypeLinkEnabled(
 		boolean layoutSetPrototypeLinkEnabled) {
+
 		_layoutSetPrototypeLinkEnabled = layoutSetPrototypeLinkEnabled;
 	}
 
@@ -256,4 +266,5 @@ public class LayoutSetVersionSoap implements Serializable {
 	private String _settings;
 	private String _layoutSetPrototypeUuid;
 	private boolean _layoutSetPrototypeLinkEnabled;
+
 }

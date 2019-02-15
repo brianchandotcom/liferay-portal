@@ -23,20 +23,20 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * This class is used by SOAP remote services, specifically {@link com.liferay.portal.service.http.LayoutServiceSoap}.
+ * This class is used by SOAP remote services.
  *
  * @author Brian Wing Shun Chan
  * @generated
  */
 @ProviderType
-public class LayoutSoap implements Serializable {
+public class LayoutVersionSoap implements Serializable {
 
-	public static LayoutSoap toSoapModel(Layout model) {
-		LayoutSoap soapModel = new LayoutSoap();
+	public static LayoutVersionSoap toSoapModel(LayoutVersion model) {
+		LayoutVersionSoap soapModel = new LayoutVersionSoap();
 
-		soapModel.setMvccVersion(model.getMvccVersion());
+		soapModel.setLayoutVersionId(model.getLayoutVersionId());
+		soapModel.setVersion(model.getVersion());
 		soapModel.setUuid(model.getUuid());
-		soapModel.setHeadId(model.getHeadId());
 		soapModel.setPlid(model.getPlid());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
@@ -78,8 +78,8 @@ public class LayoutSoap implements Serializable {
 		return soapModel;
 	}
 
-	public static LayoutSoap[] toSoapModels(Layout[] models) {
-		LayoutSoap[] soapModels = new LayoutSoap[models.length];
+	public static LayoutVersionSoap[] toSoapModels(LayoutVersion[] models) {
+		LayoutVersionSoap[] soapModels = new LayoutVersionSoap[models.length];
 
 		for (int i = 0; i < models.length; i++) {
 			soapModels[i] = toSoapModel(models[i]);
@@ -88,14 +88,14 @@ public class LayoutSoap implements Serializable {
 		return soapModels;
 	}
 
-	public static LayoutSoap[][] toSoapModels(Layout[][] models) {
-		LayoutSoap[][] soapModels = null;
+	public static LayoutVersionSoap[][] toSoapModels(LayoutVersion[][] models) {
+		LayoutVersionSoap[][] soapModels = null;
 
 		if (models.length > 0) {
-			soapModels = new LayoutSoap[models.length][models[0].length];
+			soapModels = new LayoutVersionSoap[models.length][models[0].length];
 		}
 		else {
-			soapModels = new LayoutSoap[0][0];
+			soapModels = new LayoutVersionSoap[0][0];
 		}
 
 		for (int i = 0; i < models.length; i++) {
@@ -105,33 +105,42 @@ public class LayoutSoap implements Serializable {
 		return soapModels;
 	}
 
-	public static LayoutSoap[] toSoapModels(List<Layout> models) {
-		List<LayoutSoap> soapModels = new ArrayList<LayoutSoap>(models.size());
+	public static LayoutVersionSoap[] toSoapModels(List<LayoutVersion> models) {
+		List<LayoutVersionSoap> soapModels = new ArrayList<LayoutVersionSoap>(
+			models.size());
 
-		for (Layout model : models) {
+		for (LayoutVersion model : models) {
 			soapModels.add(toSoapModel(model));
 		}
 
-		return soapModels.toArray(new LayoutSoap[soapModels.size()]);
+		return soapModels.toArray(new LayoutVersionSoap[soapModels.size()]);
 	}
 
-	public LayoutSoap() {
+	public LayoutVersionSoap() {
 	}
 
 	public long getPrimaryKey() {
-		return _plid;
+		return _layoutVersionId;
 	}
 
 	public void setPrimaryKey(long pk) {
-		setPlid(pk);
+		setLayoutVersionId(pk);
 	}
 
-	public long getMvccVersion() {
-		return _mvccVersion;
+	public long getLayoutVersionId() {
+		return _layoutVersionId;
 	}
 
-	public void setMvccVersion(long mvccVersion) {
-		_mvccVersion = mvccVersion;
+	public void setLayoutVersionId(long layoutVersionId) {
+		_layoutVersionId = layoutVersionId;
+	}
+
+	public int getVersion() {
+		return _version;
+	}
+
+	public void setVersion(int version) {
+		_version = version;
 	}
 
 	public String getUuid() {
@@ -140,14 +149,6 @@ public class LayoutSoap implements Serializable {
 
 	public void setUuid(String uuid) {
 		_uuid = uuid;
-	}
-
-	public long getHeadId() {
-		return _headId;
-	}
-
-	public void setHeadId(long headId) {
-		_headId = headId;
 	}
 
 	public long getPlid() {
@@ -448,9 +449,9 @@ public class LayoutSoap implements Serializable {
 		_lastPublishDate = lastPublishDate;
 	}
 
-	private long _mvccVersion;
+	private long _layoutVersionId;
+	private int _version;
 	private String _uuid;
-	private long _headId;
 	private long _plid;
 	private long _groupId;
 	private long _companyId;

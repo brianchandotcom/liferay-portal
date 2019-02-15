@@ -19,8 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
-import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.MVCCModel;
+import com.liferay.portal.kernel.model.LayoutVersion;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -30,14 +29,14 @@ import java.io.ObjectOutput;
 import java.util.Date;
 
 /**
- * The cache model class for representing Layout in entity cache.
+ * The cache model class for representing LayoutVersion in entity cache.
  *
  * @author Brian Wing Shun Chan
  * @generated
  */
 @ProviderType
-public class LayoutCacheModel
-	implements CacheModel<Layout>, Externalizable, MVCCModel {
+public class LayoutVersionCacheModel
+	implements CacheModel<LayoutVersion>, Externalizable {
 
 	@Override
 	public boolean equals(Object obj) {
@@ -45,15 +44,14 @@ public class LayoutCacheModel
 			return true;
 		}
 
-		if (!(obj instanceof LayoutCacheModel)) {
+		if (!(obj instanceof LayoutVersionCacheModel)) {
 			return false;
 		}
 
-		LayoutCacheModel layoutCacheModel = (LayoutCacheModel)obj;
+		LayoutVersionCacheModel layoutVersionCacheModel =
+			(LayoutVersionCacheModel)obj;
 
-		if ((plid == layoutCacheModel.plid) &&
-			(mvccVersion == layoutCacheModel.mvccVersion)) {
-
+		if (layoutVersionId == layoutVersionCacheModel.layoutVersionId) {
 			return true;
 		}
 
@@ -62,31 +60,19 @@ public class LayoutCacheModel
 
 	@Override
 	public int hashCode() {
-		int hashCode = HashUtil.hash(0, plid);
-
-		return HashUtil.hash(hashCode, mvccVersion);
-	}
-
-	@Override
-	public long getMvccVersion() {
-		return mvccVersion;
-	}
-
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		this.mvccVersion = mvccVersion;
+		return HashUtil.hash(0, layoutVersionId);
 	}
 
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(77);
 
-		sb.append("{mvccVersion=");
-		sb.append(mvccVersion);
+		sb.append("{layoutVersionId=");
+		sb.append(layoutVersionId);
+		sb.append(", version=");
+		sb.append(version);
 		sb.append(", uuid=");
 		sb.append(uuid);
-		sb.append(", headId=");
-		sb.append(headId);
 		sb.append(", plid=");
 		sb.append(plid);
 		sb.append(", groupId=");
@@ -163,181 +149,181 @@ public class LayoutCacheModel
 	}
 
 	@Override
-	public Layout toEntityModel() {
-		LayoutImpl layoutImpl = new LayoutImpl();
+	public LayoutVersion toEntityModel() {
+		LayoutVersionImpl layoutVersionImpl = new LayoutVersionImpl();
 
-		layoutImpl.setMvccVersion(mvccVersion);
+		layoutVersionImpl.setLayoutVersionId(layoutVersionId);
+		layoutVersionImpl.setVersion(version);
 
 		if (uuid == null) {
-			layoutImpl.setUuid("");
+			layoutVersionImpl.setUuid("");
 		}
 		else {
-			layoutImpl.setUuid(uuid);
+			layoutVersionImpl.setUuid(uuid);
 		}
 
-		layoutImpl.setHeadId(headId);
-		layoutImpl.setPlid(plid);
-		layoutImpl.setGroupId(groupId);
-		layoutImpl.setCompanyId(companyId);
-		layoutImpl.setUserId(userId);
+		layoutVersionImpl.setPlid(plid);
+		layoutVersionImpl.setGroupId(groupId);
+		layoutVersionImpl.setCompanyId(companyId);
+		layoutVersionImpl.setUserId(userId);
 
 		if (userName == null) {
-			layoutImpl.setUserName("");
+			layoutVersionImpl.setUserName("");
 		}
 		else {
-			layoutImpl.setUserName(userName);
+			layoutVersionImpl.setUserName(userName);
 		}
 
 		if (createDate == Long.MIN_VALUE) {
-			layoutImpl.setCreateDate(null);
+			layoutVersionImpl.setCreateDate(null);
 		}
 		else {
-			layoutImpl.setCreateDate(new Date(createDate));
+			layoutVersionImpl.setCreateDate(new Date(createDate));
 		}
 
 		if (modifiedDate == Long.MIN_VALUE) {
-			layoutImpl.setModifiedDate(null);
+			layoutVersionImpl.setModifiedDate(null);
 		}
 		else {
-			layoutImpl.setModifiedDate(new Date(modifiedDate));
+			layoutVersionImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
-		layoutImpl.setParentPlid(parentPlid);
-		layoutImpl.setLeftPlid(leftPlid);
-		layoutImpl.setRightPlid(rightPlid);
-		layoutImpl.setPrivateLayout(privateLayout);
-		layoutImpl.setLayoutId(layoutId);
-		layoutImpl.setParentLayoutId(parentLayoutId);
-		layoutImpl.setClassNameId(classNameId);
-		layoutImpl.setClassPK(classPK);
+		layoutVersionImpl.setParentPlid(parentPlid);
+		layoutVersionImpl.setLeftPlid(leftPlid);
+		layoutVersionImpl.setRightPlid(rightPlid);
+		layoutVersionImpl.setPrivateLayout(privateLayout);
+		layoutVersionImpl.setLayoutId(layoutId);
+		layoutVersionImpl.setParentLayoutId(parentLayoutId);
+		layoutVersionImpl.setClassNameId(classNameId);
+		layoutVersionImpl.setClassPK(classPK);
 
 		if (name == null) {
-			layoutImpl.setName("");
+			layoutVersionImpl.setName("");
 		}
 		else {
-			layoutImpl.setName(name);
+			layoutVersionImpl.setName(name);
 		}
 
 		if (title == null) {
-			layoutImpl.setTitle("");
+			layoutVersionImpl.setTitle("");
 		}
 		else {
-			layoutImpl.setTitle(title);
+			layoutVersionImpl.setTitle(title);
 		}
 
 		if (description == null) {
-			layoutImpl.setDescription("");
+			layoutVersionImpl.setDescription("");
 		}
 		else {
-			layoutImpl.setDescription(description);
+			layoutVersionImpl.setDescription(description);
 		}
 
 		if (keywords == null) {
-			layoutImpl.setKeywords("");
+			layoutVersionImpl.setKeywords("");
 		}
 		else {
-			layoutImpl.setKeywords(keywords);
+			layoutVersionImpl.setKeywords(keywords);
 		}
 
 		if (robots == null) {
-			layoutImpl.setRobots("");
+			layoutVersionImpl.setRobots("");
 		}
 		else {
-			layoutImpl.setRobots(robots);
+			layoutVersionImpl.setRobots(robots);
 		}
 
 		if (type == null) {
-			layoutImpl.setType("");
+			layoutVersionImpl.setType("");
 		}
 		else {
-			layoutImpl.setType(type);
+			layoutVersionImpl.setType(type);
 		}
 
 		if (typeSettings == null) {
-			layoutImpl.setTypeSettings("");
+			layoutVersionImpl.setTypeSettings("");
 		}
 		else {
-			layoutImpl.setTypeSettings(typeSettings);
+			layoutVersionImpl.setTypeSettings(typeSettings);
 		}
 
-		layoutImpl.setHidden(hidden);
-		layoutImpl.setSystem(system);
+		layoutVersionImpl.setHidden(hidden);
+		layoutVersionImpl.setSystem(system);
 
 		if (friendlyURL == null) {
-			layoutImpl.setFriendlyURL("");
+			layoutVersionImpl.setFriendlyURL("");
 		}
 		else {
-			layoutImpl.setFriendlyURL(friendlyURL);
+			layoutVersionImpl.setFriendlyURL(friendlyURL);
 		}
 
-		layoutImpl.setIconImageId(iconImageId);
+		layoutVersionImpl.setIconImageId(iconImageId);
 
 		if (themeId == null) {
-			layoutImpl.setThemeId("");
+			layoutVersionImpl.setThemeId("");
 		}
 		else {
-			layoutImpl.setThemeId(themeId);
+			layoutVersionImpl.setThemeId(themeId);
 		}
 
 		if (colorSchemeId == null) {
-			layoutImpl.setColorSchemeId("");
+			layoutVersionImpl.setColorSchemeId("");
 		}
 		else {
-			layoutImpl.setColorSchemeId(colorSchemeId);
+			layoutVersionImpl.setColorSchemeId(colorSchemeId);
 		}
 
 		if (css == null) {
-			layoutImpl.setCss("");
+			layoutVersionImpl.setCss("");
 		}
 		else {
-			layoutImpl.setCss(css);
+			layoutVersionImpl.setCss(css);
 		}
 
-		layoutImpl.setPriority(priority);
+		layoutVersionImpl.setPriority(priority);
 
 		if (layoutPrototypeUuid == null) {
-			layoutImpl.setLayoutPrototypeUuid("");
+			layoutVersionImpl.setLayoutPrototypeUuid("");
 		}
 		else {
-			layoutImpl.setLayoutPrototypeUuid(layoutPrototypeUuid);
+			layoutVersionImpl.setLayoutPrototypeUuid(layoutPrototypeUuid);
 		}
 
-		layoutImpl.setLayoutPrototypeLinkEnabled(layoutPrototypeLinkEnabled);
+		layoutVersionImpl.setLayoutPrototypeLinkEnabled(
+			layoutPrototypeLinkEnabled);
 
 		if (sourcePrototypeLayoutUuid == null) {
-			layoutImpl.setSourcePrototypeLayoutUuid("");
+			layoutVersionImpl.setSourcePrototypeLayoutUuid("");
 		}
 		else {
-			layoutImpl.setSourcePrototypeLayoutUuid(sourcePrototypeLayoutUuid);
+			layoutVersionImpl.setSourcePrototypeLayoutUuid(
+				sourcePrototypeLayoutUuid);
 		}
 
 		if (publishDate == Long.MIN_VALUE) {
-			layoutImpl.setPublishDate(null);
+			layoutVersionImpl.setPublishDate(null);
 		}
 		else {
-			layoutImpl.setPublishDate(new Date(publishDate));
+			layoutVersionImpl.setPublishDate(new Date(publishDate));
 		}
 
 		if (lastPublishDate == Long.MIN_VALUE) {
-			layoutImpl.setLastPublishDate(null);
+			layoutVersionImpl.setLastPublishDate(null);
 		}
 		else {
-			layoutImpl.setLastPublishDate(new Date(lastPublishDate));
+			layoutVersionImpl.setLastPublishDate(new Date(lastPublishDate));
 		}
 
-		layoutImpl.setHead(head);
+		layoutVersionImpl.resetOriginalValues();
 
-		layoutImpl.resetOriginalValues();
-
-		return layoutImpl;
+		return layoutVersionImpl;
 	}
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
-		mvccVersion = objectInput.readLong();
-		uuid = objectInput.readUTF();
+		layoutVersionId = objectInput.readLong();
 
-		headId = objectInput.readLong();
+		version = objectInput.readInt();
+		uuid = objectInput.readUTF();
 
 		plid = objectInput.readLong();
 
@@ -390,13 +376,13 @@ public class LayoutCacheModel
 		sourcePrototypeLayoutUuid = objectInput.readUTF();
 		publishDate = objectInput.readLong();
 		lastPublishDate = objectInput.readLong();
-
-		head = objectInput.readBoolean();
 	}
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
-		objectOutput.writeLong(mvccVersion);
+		objectOutput.writeLong(layoutVersionId);
+
+		objectOutput.writeInt(version);
 
 		if (uuid == null) {
 			objectOutput.writeUTF("");
@@ -404,8 +390,6 @@ public class LayoutCacheModel
 		else {
 			objectOutput.writeUTF(uuid);
 		}
-
-		objectOutput.writeLong(headId);
 
 		objectOutput.writeLong(plid);
 
@@ -544,13 +528,11 @@ public class LayoutCacheModel
 
 		objectOutput.writeLong(publishDate);
 		objectOutput.writeLong(lastPublishDate);
-
-		objectOutput.writeBoolean(head);
 	}
 
-	public long mvccVersion;
+	public long layoutVersionId;
+	public int version;
 	public String uuid;
-	public long headId;
 	public long plid;
 	public long groupId;
 	public long companyId;
@@ -586,6 +568,5 @@ public class LayoutCacheModel
 	public String sourcePrototypeLayoutUuid;
 	public long publishDate;
 	public long lastPublishDate;
-	public boolean head;
 
 }

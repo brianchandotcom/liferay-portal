@@ -18,7 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.LayoutSetVersion;
 
@@ -36,8 +35,9 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public class LayoutSetVersionCacheModel implements CacheModel<LayoutSetVersion>,
-	Externalizable {
+public class LayoutSetVersionCacheModel
+	implements CacheModel<LayoutSetVersion>, Externalizable {
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -48,9 +48,12 @@ public class LayoutSetVersionCacheModel implements CacheModel<LayoutSetVersion>,
 			return false;
 		}
 
-		LayoutSetVersionCacheModel layoutSetVersionCacheModel = (LayoutSetVersionCacheModel)obj;
+		LayoutSetVersionCacheModel layoutSetVersionCacheModel =
+			(LayoutSetVersionCacheModel)obj;
 
-		if (layoutSetVersionId == layoutSetVersionCacheModel.layoutSetVersionId) {
+		if (layoutSetVersionId ==
+				layoutSetVersionCacheModel.layoutSetVersionId) {
+
 			return true;
 		}
 
@@ -164,10 +167,12 @@ public class LayoutSetVersionCacheModel implements CacheModel<LayoutSetVersion>,
 			layoutSetVersionImpl.setLayoutSetPrototypeUuid("");
 		}
 		else {
-			layoutSetVersionImpl.setLayoutSetPrototypeUuid(layoutSetPrototypeUuid);
+			layoutSetVersionImpl.setLayoutSetPrototypeUuid(
+				layoutSetPrototypeUuid);
 		}
 
-		layoutSetVersionImpl.setLayoutSetPrototypeLinkEnabled(layoutSetPrototypeLinkEnabled);
+		layoutSetVersionImpl.setLayoutSetPrototypeLinkEnabled(
+			layoutSetPrototypeLinkEnabled);
 
 		layoutSetVersionImpl.resetOriginalValues();
 
@@ -203,8 +208,7 @@ public class LayoutSetVersionCacheModel implements CacheModel<LayoutSetVersion>,
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput)
-		throws IOException {
+	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(layoutSetVersionId);
 
 		objectOutput.writeInt(version);
@@ -277,4 +281,5 @@ public class LayoutSetVersionCacheModel implements CacheModel<LayoutSetVersion>,
 	public String settings;
 	public String layoutSetPrototypeUuid;
 	public boolean layoutSetPrototypeLinkEnabled;
+
 }

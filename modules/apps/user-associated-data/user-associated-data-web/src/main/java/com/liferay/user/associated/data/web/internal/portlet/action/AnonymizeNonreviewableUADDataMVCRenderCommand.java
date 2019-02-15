@@ -39,7 +39,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
-import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -132,9 +131,6 @@ public class AnonymizeNonreviewableUADDataMVCRenderCommand
 		searchContainer.setOrderByType(
 			ParamUtil.getString(renderRequest, "orderByType", "asc"));
 
-		Predicate<UADApplicationSummaryDisplay> predicate =
-			display -> display.getCount() > 0;
-
 		List<UADApplicationSummaryDisplay> uadApplicationSummaryDisplays =
 			_getUADApplicationSummaryDisplays(userId);
 
@@ -142,7 +138,7 @@ public class AnonymizeNonreviewableUADDataMVCRenderCommand
 			Stream<UADApplicationSummaryDisplay> stream =
 				uadApplicationSummaryDisplays.stream();
 
-			return stream.filter(predicate);
+			return stream.filter(display -> display.getCount() > 0);
 		};
 
 		Stream<UADApplicationSummaryDisplay> summaryDisplayStream =

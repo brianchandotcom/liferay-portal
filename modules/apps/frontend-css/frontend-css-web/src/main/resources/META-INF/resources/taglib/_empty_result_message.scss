@@ -1,4 +1,8 @@
 .taglib-empty-result-message {
+	&.sheet {
+		margin-bottom: 24px;
+	}
+
 	&.taglib-empty-result-message-compact {
 		min-height: auto;
 

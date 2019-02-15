@@ -5,13 +5,52 @@ import {openToast} from 'frontend-js-web/liferay/toast/commands/OpenToast.es';
 
 import templates from './ChangeListsConfiguration.soy';
 
+import CTConfigurationLoader from 'frontend-js-web/liferay/change/tracking/CTConfigurationLoader.es';
+import CTConfigurationModel from 'frontend-js-web/liferay/change/tracking/CTConfigurationModel.es';
+
 /**
  * Component for the Change Tracking Change Lists configuration screen
  * @review
  */
 class ChangeListsConfiguration extends PortletBase {
 
+	_handleFetchError(responseStatus, responseStatusText) {
+		console.log('Error: ' + responseStatus + ', ' + responseStatusText);
+	}
+
+	_handleParseError(error) {
+		openToast(
+			{
+				message: error,
+				title: Liferay.Language.get('error'),
+				type: 'danger'
+			}
+		);
+	}
+
 	created() {
+		let headers = new Headers();
+		headers.append('Content-Type', 'application/json');
+
+		let ctConfigurationLoader = new CTConfigurationLoader(
+			{
+				urlEndpoint: Liferay.ThemeDisplay.getPortalURL() + '/o/change-tracking/configurations',
+				method: 'GET',
+				headers: headers
+			}
+		);
+
+		let ctConfigurationModelPromise = ctConfigurationLoader.fetchSingleton(
+			[20099],
+			null,
+			this._handleFetchError,
+			this._handleParseError
+		);
+
+		ctConfigurationModelPromise.then(
+			ctConfigurationModel => console.log(ctConfigurationModel.getTranslatedSupportedContentTypes())
+		);
+
 		this._getDataRequest(
 			this.urlChangeTrackingConfiguration,
 			response => {

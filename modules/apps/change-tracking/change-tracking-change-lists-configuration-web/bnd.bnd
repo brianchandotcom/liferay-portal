@@ -10,6 +10,8 @@ Require-Capability:\
 	liferay.resource.bundle;\
 		filter:="(bundle.symbolic.name=com.liferay.change.tracking.lang)",\
 	osgi.extender;\
-		filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/soy))"
+		filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/soy))",\
+	osgi.extender;\
+		filter:="(osgi.extender=change.tracking.js)"
 Web-ContextPath: /change-tracking-change-lists-configuration-web
 -dsannotations-options: inherit

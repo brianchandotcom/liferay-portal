@@ -14,30 +14,20 @@
 
 package com.liferay.journal.web.internal.display.context;
 
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleServiceUtil;
-import com.liferay.journal.web.internal.security.permission.resource.JournalArticlePermission;
 import com.liferay.journal.web.util.JournalPortletUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
-import java.util.Objects;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -59,45 +49,6 @@ public class JournalHistoryDisplayContext {
 		_article = article;
 
 		_request = PortalUtil.getHttpServletRequest(renderRequest);
-	}
-
-	public List<DropdownItem> getActionItemsDropdownItems()
-		throws PortalException {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		return new DropdownItemList() {
-			{
-				if (JournalArticlePermission.contains(
-						themeDisplay.getPermissionChecker(), _article,
-						ActionKeys.DELETE)) {
-
-					add(
-						dropdownItem -> {
-							dropdownItem.putData("action", "deleteArticles");
-							dropdownItem.setIcon("trash");
-							dropdownItem.setLabel(
-								LanguageUtil.get(_request, "delete"));
-							dropdownItem.setQuickAction(true);
-						});
-				}
-
-				if (JournalArticlePermission.contains(
-						themeDisplay.getPermissionChecker(), _article,
-						ActionKeys.EXPIRE)) {
-
-					add(
-						dropdownItem -> {
-							dropdownItem.putData("action", "expireArticles");
-							dropdownItem.setIcon("time");
-							dropdownItem.setLabel(
-								LanguageUtil.get(_request, "expire"));
-							dropdownItem.setQuickAction(true);
-						});
-				}
-			}
-		};
 	}
 
 	public SearchContainer getArticleSearchContainer() {
@@ -147,28 +98,6 @@ public class JournalHistoryDisplayContext {
 			_renderRequest, "displayStyle", "list");
 
 		return _displayStyle;
-	}
-
-	public List<DropdownItem> getFilterItemsDropdownItems() {
-		return new DropdownItemList() {
-			{
-				addGroup(
-					dropdownGroupItem -> {
-						dropdownGroupItem.setDropdownItems(
-							_getFilterNavigationDropdownItems());
-						dropdownGroupItem.setLabel(
-							LanguageUtil.get(_request, "filter-by-navigation"));
-					});
-
-				addGroup(
-					dropdownGroupItem -> {
-						dropdownGroupItem.setDropdownItems(
-							_getOrderByDropdownItems());
-						dropdownGroupItem.setLabel(
-							LanguageUtil.get(_request, "order-by"));
-					});
-			}
-		};
 	}
 
 	public List<NavigationItem> getNavigationItems() {
@@ -234,81 +163,6 @@ public class JournalHistoryDisplayContext {
 			_renderRequest, "referringPortletResource");
 
 		return _referringPortletResource;
-	}
-
-	public String getSortingURL() {
-		PortletURL sortingURL = getPortletURL();
-
-		sortingURL.setParameter(
-			"orderByType",
-			Objects.equals(getOrderByType(), "asc") ? "desc" : "asc");
-
-		return sortingURL.toString();
-	}
-
-	public int getTotalItems() {
-		return JournalArticleServiceUtil.getArticlesCountByArticleId(
-			_article.getGroupId(), _article.getArticleId());
-	}
-
-	public List<ViewTypeItem> getViewTypeItems() {
-		return new ViewTypeItemList(getPortletURL(), getDisplayStyle()) {
-			{
-				addCardViewTypeItem();
-				addListViewTypeItem();
-				addTableViewTypeItem();
-			}
-		};
-	}
-
-	private List<DropdownItem> _getFilterNavigationDropdownItems() {
-		return new DropdownItemList() {
-			{
-				add(
-					dropdownItem -> {
-						dropdownItem.setActive(true);
-						dropdownItem.setHref(_renderResponse.createRenderURL());
-						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "all"));
-					});
-			}
-		};
-	}
-
-	private List<DropdownItem> _getOrderByDropdownItems() {
-		return new DropdownItemList() {
-			{
-				add(
-					dropdownItem -> {
-						dropdownItem.setActive(
-							Objects.equals(getOrderByCol(), "version"));
-						dropdownItem.setHref(
-							getPortletURL(), "orderByCol", "version");
-						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "version"));
-					});
-
-				add(
-					dropdownItem -> {
-						dropdownItem.setActive(
-							Objects.equals(getOrderByCol(), "display-date"));
-						dropdownItem.setHref(
-							getPortletURL(), "orderByCol", "display-date");
-						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "display-date"));
-					});
-
-				add(
-					dropdownItem -> {
-						dropdownItem.setActive(
-							Objects.equals(getOrderByCol(), "modified-date"));
-						dropdownItem.setHref(
-							getPortletURL(), "orderByCol", "modified-date");
-						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "modified-date"));
-					});
-			}
-		};
 	}
 
 	private String _getRedirect() {

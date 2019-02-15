@@ -23,15 +23,7 @@ SearchContainer<DDMStructure> ddmStructureSearch = journalSelectDDMStructureDisp
 %>
 
 <clay:management-toolbar
-	clearResultsURL="<%= journalSelectDDMStructureDisplayContext.getClearResultsURL() %>"
-	disabled="<%= journalSelectDDMStructureDisplayContext.isDisabledManagementBar() %>"
-	filterDropdownItems="<%= journalSelectDDMStructureDisplayContext.getFilterItemsDropdownItems() %>"
-	itemsTotal="<%= journalSelectDDMStructureDisplayContext.getTotalItems() %>"
-	searchActionURL="<%= journalSelectDDMStructureDisplayContext.getSearchActionURL() %>"
-	searchFormName="searchForm"
-	selectable="<%= false %>"
-	sortingOrder="<%= journalSelectDDMStructureDisplayContext.getOrderByType() %>"
-	sortingURL="<%= journalSelectDDMStructureDisplayContext.getSortingURL() %>"
+	displayContext="<%= new JournalSelectDDMStructureManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, journalSelectDDMStructureDisplayContext) %>"
 />
 
 <aui:form cssClass="container-fluid-1280" method="post" name="selectDDMStructureFm">

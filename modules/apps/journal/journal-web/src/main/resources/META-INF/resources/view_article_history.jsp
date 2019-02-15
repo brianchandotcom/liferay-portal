@@ -43,15 +43,7 @@ JournalArticle article = journalDisplayContext.getArticle();
 		/>
 
 		<clay:management-toolbar
-			actionDropdownItems="<%= journalHistoryDisplayContext.getActionItemsDropdownItems() %>"
-			componentId="journalHistoryManagementToolbar"
-			filterDropdownItems="<%= journalHistoryDisplayContext.getFilterItemsDropdownItems() %>"
-			itemsTotal="<%= journalHistoryDisplayContext.getTotalItems() %>"
-			searchContainerId="articleVersions"
-			showSearch="<%= false %>"
-			sortingOrder="<%= journalHistoryDisplayContext.getOrderByType() %>"
-			sortingURL="<%= journalHistoryDisplayContext.getSortingURL() %>"
-			viewTypeItems="<%= journalHistoryDisplayContext.getViewTypeItems() %>"
+			displayContext="<%= new JournalHistoryManagementToolbarDisplayContext(article, liferayPortletRequest, liferayPortletResponse, request, journalHistoryDisplayContext) %>"
 		/>
 
 		<%

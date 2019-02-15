@@ -43,15 +43,7 @@ JournalViewMoreMenuItemsDisplayContext journalViewMoreMenuItemsDisplayContext = 
 />
 
 <clay:management-toolbar
-	clearResultsURL="<%= journalViewMoreMenuItemsDisplayContext.getClearResultsURL() %>"
-	componentId="journalViewMoreMenuItemsManagementToolbar"
-	filterDropdownItems="<%= journalViewMoreMenuItemsDisplayContext.getFilterItemsDropdownItems() %>"
-	itemsTotal="<%= journalViewMoreMenuItemsDisplayContext.getTotalItems() %>"
-	searchActionURL="<%= journalViewMoreMenuItemsDisplayContext.getSearchActionURL() %>"
-	searchFormName="searchFm"
-	selectable="<%= false %>"
-	sortingOrder="<%= journalViewMoreMenuItemsDisplayContext.getOrderByType() %>"
-	sortingURL="<%= journalViewMoreMenuItemsDisplayContext.getSortingURL() %>"
+	displayContext="<%= new JournalViewMoreMenuItemsManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, journalViewMoreMenuItemsDisplayContext) %>"
 />
 
 <aui:form cssClass="container-fluid-1280" name="addMenuItemFm">

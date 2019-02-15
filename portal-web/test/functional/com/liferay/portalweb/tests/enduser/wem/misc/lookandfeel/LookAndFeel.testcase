@@ -50,14 +50,14 @@ definition {
 		IFrame.selectConfigurationFrame();
 
 		Portlet.configureApplicationDecoratorViaLookandfeelPG(
-			applicationDecorator = "Borderless"
+			applicationDecorator = "Decorate"
 		);
 
 		Button.clickCancel();
 
 		Navigator.openURL();
 
-		Portlet.viewApplicationDecorator(decorator = "decorate");
+		Portlet.viewApplicationDecorator(decorator = "Borderless");
 
 		Portlet.gotoPortletOptions(
 			portletName = "Web Content Display",
@@ -66,13 +66,13 @@ definition {
 
 		IFrame.selectConfigurationFrame();
 
-		Portlet.selectApplicationDecorator(decorator = "Borderless");
+		Portlet.selectApplicationDecorator(decorator = "Decorate");
 
 		PortletEntry.save();
 
 		Navigator.openURL();
 
-		Portlet.viewApplicationDecorator(decorator = "Borderless");
+		Portlet.viewApplicationDecorator(decorator = "Decorate");
 
 		Portlet.gotoPortletOptions(
 			portletName = "Web Content Display",

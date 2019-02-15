@@ -17,7 +17,7 @@ components:
           writeOnly: true
         creator:
           allOf:
-            - $ref: "#/components/schemas/UserAccount"
+            - $ref: "#/components/schemas/Creator"
           readOnly: true
         creatorId:
           format: int64
@@ -49,6 +49,27 @@ components:
           type: integer
           writeOnly: true
       type: object
+    Creator:
+      description: https://www.schema.org/Creator
+      properties:
+        additionalName:
+          type: string
+        familyName:
+          type: string
+        givenName:
+          type: string
+        id:
+          format: int64
+          type: integer
+        image:
+          format: uri
+          type: string
+        name:
+          type: string
+        profileURL:
+          format: uri
+          type: string
+      type: object
     Email:
       description: https://www.schema.org/Email
       properties:
@@ -67,7 +88,7 @@ components:
           format: int64
           type: integer
         creator:
-          $ref: "#/components/schemas/UserAccount"
+          $ref: "#/components/schemas/Creator"
         dateCreated:
           format: date-time
           type: string
@@ -258,7 +279,7 @@ components:
             type: string
           type: array
         creator:
-          $ref: "#/components/schemas/UserAccount"
+          $ref: "#/components/schemas/Creator"
         dateCreated:
           format: date-time
           type: string
@@ -414,7 +435,7 @@ components:
           format: int64
           type: integer
         creator:
-          $ref: "#/components/schemas/UserAccount"
+          $ref: "#/components/schemas/Creator"
         dateCreated:
           format: date-time
           type: string

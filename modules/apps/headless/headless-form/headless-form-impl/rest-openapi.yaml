@@ -5,10 +5,6 @@ components:
       properties:
         additionalName:
           type: string
-        alternateName:
-          type: string
-        email:
-          type: string
         familyName:
           type: string
         givenName:
@@ -19,11 +15,10 @@ components:
         image:
           format: uri
           type: string
-        jobTitle:
-          type: string
         name:
           type: string
         profileURL:
+          format: uri
           type: string
       type: object
     Form:
@@ -363,23 +358,6 @@ paths:
                 type: array
           description: ""
       tags: ["FormStructure"]
-  "/creators/{creator-id}":
-    get:
-      parameters:
-        - in: path
-          name: creator-id
-          required: true
-          schema:
-            format: int64
-            type: integer
-      responses:
-        200:
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Creator"
-          description: ""
-      tags: ["Creator"]
   "/form-documents/{form-document-id}":
     delete:
       parameters:

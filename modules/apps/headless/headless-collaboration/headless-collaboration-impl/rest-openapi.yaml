@@ -101,10 +101,6 @@ components:
       properties:
         additionalName:
           type: string
-        alternateName:
-          type: string
-        email:
-          type: string
         familyName:
           type: string
         givenName:
@@ -115,11 +111,10 @@ components:
         image:
           format: uri
           type: string
-        jobTitle:
-          type: string
         name:
           type: string
         profileURL:
+          format: uri
           type: string
       type: object
     ImageObject:
@@ -456,23 +451,6 @@ paths:
                 $ref: "#/components/schemas/BlogPosting"
           description: ""
       tags: ["BlogPosting"]
-  "/creators/{creator-id}":
-    get:
-      parameters:
-        - in: path
-          name: creator-id
-          required: true
-          schema:
-            format: int64
-            type: integer
-      responses:
-        200:
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Creator"
-          description: ""
-      tags: ["Creator"]
   "/image-object-repositories/{image-object-repository-id}":
     get:
       parameters:

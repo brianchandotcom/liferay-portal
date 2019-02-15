@@ -155,6 +155,14 @@ public class JournalArticleVerticalCard extends BaseVerticalCard {
 		return new LabelItemList() {
 			{
 
+				add(
+					labelItem -> {
+						labelItem.setLabel(
+							LanguageUtil.format(
+								_request, "version-x",
+								String.valueOf(_article.getVersion()), false));
+					});
+
 				if (!_article.isApproved() && _article.hasApprovedVersion()) {
 					add(
 						labelItem -> {

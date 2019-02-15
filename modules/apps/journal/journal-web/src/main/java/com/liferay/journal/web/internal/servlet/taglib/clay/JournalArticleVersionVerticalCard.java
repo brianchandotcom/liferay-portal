@@ -16,6 +16,8 @@ package com.liferay.journal.web.internal.servlet.taglib.clay;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.BaseVerticalCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemList;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.web.internal.constants.JournalWebConstants;
 import com.liferay.journal.web.internal.servlet.taglib.util.JournalArticleActionDropdownItemsProvider;
@@ -92,6 +94,26 @@ public class JournalArticleVersionVerticalCard extends BaseVerticalCard {
 	@Override
 	public String getImageSrc() {
 		return HtmlUtil.escape(_article.getArticleImageURL(themeDisplay));
+	}
+
+	@Override
+	public List<LabelItem> getLabels() {
+		return new LabelItemList() {
+			{
+				add(
+					labelItem -> {
+						labelItem.setLabel(
+							LanguageUtil.format(
+								_request, "version-x",
+								String.valueOf(_article.getVersion()), false));
+					});
+
+				add(
+					labelItem -> {
+						labelItem.setStatus(_article.getStatus());
+					});
+			}
+		};
 	}
 
 	@Override

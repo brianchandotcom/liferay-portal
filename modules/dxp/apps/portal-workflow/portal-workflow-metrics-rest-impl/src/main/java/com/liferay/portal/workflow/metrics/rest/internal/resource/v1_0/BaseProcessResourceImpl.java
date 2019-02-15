@@ -39,8 +39,7 @@ import javax.ws.rs.core.Response;
 public abstract class BaseProcessResourceImpl implements ProcessResource {
 
 	@Override
-	public Page<Process> getProcessesPage(
-			Long companyId, String title, Pagination pagination)
+	public Page<Process> getProcessesPage(String title, Pagination pagination)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());

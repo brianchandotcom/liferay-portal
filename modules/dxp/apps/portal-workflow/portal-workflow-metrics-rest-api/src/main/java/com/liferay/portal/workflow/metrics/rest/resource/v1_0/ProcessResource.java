@@ -58,6 +58,6 @@ public interface ProcessResource {
 	@Path("/process")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Page<Process> getProcessesPage( @QueryParam("companyId") Long companyId , @QueryParam("title") String title , @Context Pagination pagination ) throws Exception;
+	public Page<Process> getProcessesPage( @QueryParam("title") String title , @Context Pagination pagination ) throws Exception;
 
 }

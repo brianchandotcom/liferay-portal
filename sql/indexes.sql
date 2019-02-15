@@ -244,7 +244,7 @@ create index IX_1D356397 on LayoutSetVersion (privateLayout, logoId, version);
 create index IX_FBF6F939 on LayoutVersion (companyId, layoutPrototypeUuid[$COLUMN_LENGTH:75$], version);
 create index IX_DEFEF354 on LayoutVersion (companyId, version);
 create index IX_D0513E86 on LayoutVersion (groupId, leftPlid, rightPlid, privateLayout, version);
-create unique index IX_6A5941DB on LayoutVersion (groupId, privateLayout, friendlyURL[$COLUMN_LENGTH:75$], version);
+create unique index IX_6A5941DB on LayoutVersion (groupId, privateLayout, friendlyURL[$COLUMN_LENGTH:255$], version);
 create unique index IX_B816A2A8 on LayoutVersion (groupId, privateLayout, layoutId, version);
 create index IX_1A490C46 on LayoutVersion (groupId, privateLayout, parentLayoutId, priority, version);
 create index IX_23BEB05E on LayoutVersion (groupId, privateLayout, parentLayoutId, version);

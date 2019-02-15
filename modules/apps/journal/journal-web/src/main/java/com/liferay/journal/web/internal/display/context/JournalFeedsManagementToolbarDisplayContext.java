@@ -134,7 +134,7 @@ public class JournalFeedsManagementToolbarDisplayContext
 
 	@Override
 	protected String[] getDisplayViews() {
-		return new String[] {"list", "descriptive", "icon"};
+		return new String[] {"list", "descriptive"};
 	}
 
 	@Override

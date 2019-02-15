@@ -29,7 +29,6 @@ import graphql.annotations.processor.retrievers.GraphQLTypeRetriever;
 import graphql.annotations.processor.searchAlgorithms.BreadthFirstSearch;
 import graphql.annotations.processor.searchAlgorithms.ParentalSearch;
 import graphql.annotations.processor.typeFunctions.DefaultTypeFunction;
-import graphql.annotations.processor.util.DataFetcherConstructor;
 
 import graphql.schema.GraphQLSchema;
 
@@ -56,13 +55,8 @@ public class GraphQLServletExtender {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		DataFetcherConstructor dataFetcherConstructor =
-			new DataFetcherConstructor();
-
 		GraphQLFieldRetriever graphQLFieldRetriever =
 			new GraphQLFieldRetriever();
-
-		graphQLFieldRetriever.setDataFetcherConstructor(dataFetcherConstructor);
 
 		GraphQLObjectInfoRetriever graphQLObjectInfoRetriever =
 			new GraphQLObjectInfoRetriever();

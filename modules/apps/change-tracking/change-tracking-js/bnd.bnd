@@ -1,0 +1,11 @@
+Bundle-Name: Liferay Change Tracking JS
+Bundle-SymbolicName: com.liferay.change.tracking.js
+Bundle-Version: 1.0.0
+Provide-Capability:\
+	osgi.extender;\
+		osgi.extender="change.tracking.js";\
+		version:Version="${Bundle-Version}",\
+	soy;\
+		type="change-tracking-js";\
+		version:Version="${Bundle-Version}"
+Web-ContextPath: /change-tracking-js

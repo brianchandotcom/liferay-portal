@@ -80,8 +80,6 @@ public class LiferayRemoteDeployableContainer
 				"Unable to deploy " + archive.getName(), e);
 		}
 
-		_mBeanServerConnectionInstanceProducer.set(_mBeanServerConnection);
-
 		return null;
 	}
 
@@ -109,15 +107,18 @@ public class LiferayRemoteDeployableContainer
 			JMXConnector jmxConnector = JMXConnectorFactory.connect(
 				_liferayJMXServiceURL, _liferayEnv);
 
-			_mBeanServerConnection = jmxConnector.getMBeanServerConnection();
+			MBeanServerConnection mBeanServerConnection =
+				jmxConnector.getMBeanServerConnection();
 
-			Set<ObjectName> names = _mBeanServerConnection.queryNames(
+			_mBeanServerConnectionInstanceProducer.set(mBeanServerConnection);
+
+			Set<ObjectName> names = mBeanServerConnection.queryNames(
 				_frameworkObjectName, null);
 
 			Iterator<ObjectName> iterator = names.iterator();
 
 			_frameworkMBean = MBeanServerInvocationHandler.newProxyInstance(
-				_mBeanServerConnection, iterator.next(), FrameworkMBean.class,
+				mBeanServerConnection, iterator.next(), FrameworkMBean.class,
 				false);
 		}
 		catch (IOException ioe) {
@@ -195,7 +196,6 @@ public class LiferayRemoteDeployableContainer
 
 	private final Map<String, Long> _deployedBundleIds = new HashMap<>();
 	private FrameworkMBean _frameworkMBean;
-	private MBeanServerConnection _mBeanServerConnection;
 	private final InstanceProducer<MBeanServerConnection>
 		_mBeanServerConnectionInstanceProducer;
 

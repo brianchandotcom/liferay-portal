@@ -98,8 +98,8 @@ public class ProcessResourceImpl extends BaseProcessResourceImpl {
 	private int _getInstanceCount(String name) {
 		BooleanFilter booleanFilter = new BooleanFilter() {
 			{
-				addRequiredTerm("complete", false);
 				addRequiredTerm("companyId", _getCompanyId());
+				addRequiredTerm("completed", false);
 				addRequiredTerm("deleted", false);
 
 				TermsFilter termsFilter = new TermsFilter("processId");

@@ -1,17 +1,37 @@
 {
 	"WorkflowMetricsInstanceType": {
 		"properties": {
+			"className": {
+				"store": true,
+				"type": "keyword"
+			},
+			"classPK": {
+				"store": true,
+				"type": "keyword"
+			},
 			"companyId": {
 				"store": true,
 				"type": "keyword"
 			},
-			"date": {
+			"completed": {
+				"store": true,
+				"type": "boolean"
+			},
+			"completionDate": {
+				"store": true,
+				"type": "date"
+			},
+			"createDate": {
 				"store": true,
 				"type": "date"
 			},
 			"deleted": {
 				"store": true,
 				"type": "boolean"
+			},
+			"duration": {
+				"store": true,
+				"type": "long"
 			},
 			"id": {
 				"store": true,
@@ -20,6 +40,10 @@
 			"instanceId": {
 				"store": true,
 				"type": "keyword"
+			},
+			"modifiedDate": {
+				"store": true,
+				"type": "date"
 			},
 			"processId": {
 				"store": true,
@@ -41,7 +65,7 @@
 				"store": true,
 				"type": "keyword"
 			},
-			"date_sortable": {
+			"createDate": {
 				"store": true,
 				"type": "date"
 			},
@@ -49,9 +73,17 @@
 				"store": true,
 				"type": "boolean"
 			},
+			"description": {
+				"store": true,
+				"type": "text"
+			},
 			"id": {
 				"store": true,
 				"type": "keyword"
+			},
+			"modifiedDate": {
+				"store": true,
+				"type": "date"
 			},
 			"name": {
 				"store": true,
@@ -68,61 +100,113 @@
 			"userId": {
 				"store": true,
 				"type": "keyword"
+			},
+			"version": {
+				"store": true,
+				"type": "keyword"
 			}
 		}
 	},
 	"WorkflowMetricsTaskType": {
 		"properties": {
 			"companyId": {
+				"store": true,
 				"type": "keyword"
 			},
-			"date": {
+			"createDate": {
+				"store": true,
 				"type": "date"
 			},
 			"deleted": {
+				"store": true,
 				"type": "boolean"
 			},
 			"id": {
+				"store": true,
 				"type": "keyword"
 			},
-			"instanceId": {
-				"type": "keyword"
+			"modifiedDate": {
+				"store": true,
+				"type": "date"
 			},
 			"name": {
+				"store": true,
+				"type": "keyword"
+			},
+			"processId": {
+				"store": true,
 				"type": "keyword"
 			},
 			"taskId": {
+				"store": true,
 				"type": "keyword"
 			},
 			"userId": {
+				"store": true,
 				"type": "keyword"
 			}
 		}
 	},
 	"WorkflowMetricsTokenType": {
 		"properties": {
-			"companyId": {
+			"className": {
+				"store": true,
 				"type": "keyword"
 			},
-			"date": {
+			"classPK": {
+				"store": true,
+				"type": "keyword"
+			},
+			"companyId": {
+				"store": true,
+				"type": "keyword"
+			},
+			"completed": {
+				"store": true,
+				"type": "boolean"
+			},
+			"completionDate": {
+				"store": true,
+				"type": "date"
+			},
+			"createDate": {
+				"store": true,
 				"type": "date"
 			},
 			"deleted": {
+				"store": true,
 				"type": "boolean"
 			},
+			"duration": {
+				"store": true,
+				"type": "long"
+			},
 			"id": {
+				"store": true,
 				"type": "keyword"
 			},
 			"instanceId": {
+				"store": true,
 				"type": "keyword"
 			},
-			"name": {
+			"modifiedDate": {
+				"store": true,
+				"type": "date"
+			},
+			"processId": {
+				"store": true,
 				"type": "keyword"
 			},
 			"taskId": {
+				"store": true,
+				"type": "keyword"
+			},
+			"tokenId": {
+				"store": true,
 				"type": "keyword"
 			},
 			"userId": {
+				"store": true,
 				"type": "keyword"
 			}
 		}

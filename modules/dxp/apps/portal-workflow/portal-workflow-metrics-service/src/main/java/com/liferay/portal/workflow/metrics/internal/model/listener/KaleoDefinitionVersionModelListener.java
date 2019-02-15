@@ -15,6 +15,8 @@
 package com.liferay.portal.workflow.metrics.internal.model.listener;
 
 import com.liferay.portal.kernel.exception.ModelListenerException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
@@ -35,12 +37,10 @@ public class KaleoDefinitionVersionModelListener
 		throws ModelListenerException {
 
 		try {
-			Document document = createDocument(kaleoDefinitionVersion);
-
-			addDocument(document, kaleoDefinitionVersion.getCreateDate());
+			addDocument(kaleoDefinitionVersion);
 		}
 		catch (Exception e) {
-			throw new ModelListenerException(e);
+			_log.error(e, e);
 		}
 	}
 
@@ -49,12 +49,10 @@ public class KaleoDefinitionVersionModelListener
 		throws ModelListenerException {
 
 		try {
-			Document document = createDocument(kaleoDefinitionVersion);
-
-			deleteDocument(document);
+			deleteDocument(kaleoDefinitionVersion);
 		}
 		catch (Exception e) {
-			throw new ModelListenerException(e);
+			_log.error(e, e);
 		}
 	}
 
@@ -63,21 +61,25 @@ public class KaleoDefinitionVersionModelListener
 		throws ModelListenerException {
 
 		try {
-			Document document = createDocument(kaleoDefinitionVersion);
-
-			updateDocument(document, kaleoDefinitionVersion.getModifiedDate());
+			updateDocument(kaleoDefinitionVersion);
 		}
 		catch (Exception e) {
-			throw new ModelListenerException(e);
+			_log.error(e, e);
 		}
 	}
 
+	@Override
 	protected Document createDocument(
 		KaleoDefinitionVersion kaleoDefinitionVersion) {
 
 		Document document = new DocumentImpl();
 
-		boolean active = false;
+		document.addDateSortable(
+			"createDate", kaleoDefinitionVersion.getCreateDate());
+		document.addDateSortable(
+			"modifiedDate", kaleoDefinitionVersion.getModifiedDate());
+
+		Boolean active = false;
 
 		KaleoDefinition kaleoDefinition =
 			kaleoDefinitionVersion.fetchKaleoDefinition();
@@ -88,9 +90,10 @@ public class KaleoDefinitionVersionModelListener
 
 		document.addKeyword("active", active);
 		document.addKeyword("companyId", kaleoDefinitionVersion.getCompanyId());
+		document.addKeyword("deleted", false);
 		document.addText(
 			"description", kaleoDefinitionVersion.getDescription());
-		document.addText("name", kaleoDefinitionVersion.getName());
+		document.addKeyword("name", kaleoDefinitionVersion.getName());
 		document.addKeyword(
 			"processId", kaleoDefinitionVersion.getKaleoDefinitionVersionId());
 		document.addLocalizedText(
@@ -115,5 +118,8 @@ public class KaleoDefinitionVersionModelListener
 	protected String getIndexType() {
 		return "WorkflowMetricsProcessType";
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		KaleoDefinitionVersionModelListener.class);
 
 }

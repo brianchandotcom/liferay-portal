@@ -15,14 +15,14 @@
 package com.liferay.portal.workflow.metrics.internal.model.listener;
 
 import com.liferay.portal.kernel.exception.ModelListenerException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.workflow.kaleo.model.KaleoTask;
-import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalService;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Inácio Nery
@@ -35,12 +35,10 @@ public class KaleoTaskModelListener extends BaseKaleoModelListener<KaleoTask> {
 		throws ModelListenerException {
 
 		try {
-			Document document = createDocument(kaleoTask);
-
-			addDocument(document, kaleoTask.getCreateDate());
+			addDocument(kaleoTask);
 		}
 		catch (Exception e) {
-			throw new ModelListenerException(e);
+			_log.error(e, e);
 		}
 	}
 
@@ -49,17 +47,19 @@ public class KaleoTaskModelListener extends BaseKaleoModelListener<KaleoTask> {
 		throws ModelListenerException {
 
 		try {
-			Document document = createDocument(kaleoTask);
-
-			deleteDocument(document);
+			deleteDocument(kaleoTask);
 		}
 		catch (Exception e) {
-			throw new ModelListenerException(e);
+			_log.error(e, e);
 		}
 	}
 
+	@Override
 	protected Document createDocument(KaleoTask kaleoTask) {
 		Document document = new DocumentImpl();
+
+		document.addDateSortable("createDate", kaleoTask.getCreateDate());
+		document.addDateSortable("modifiedDate", kaleoTask.getModifiedDate());
 
 		document.addKeyword("companyId", kaleoTask.getCompanyId());
 		document.addKeyword("name", kaleoTask.getName());
@@ -85,8 +85,7 @@ public class KaleoTaskModelListener extends BaseKaleoModelListener<KaleoTask> {
 		return "WorkflowMetricsTaskType";
 	}
 
-	@Reference
-	private KaleoDefinitionVersionLocalService
-		_kaleoDefinitionVersionLocalService;
+	private static final Log _log = LogFactoryUtil.getLog(
+		KaleoTaskModelListener.class);
 
 }

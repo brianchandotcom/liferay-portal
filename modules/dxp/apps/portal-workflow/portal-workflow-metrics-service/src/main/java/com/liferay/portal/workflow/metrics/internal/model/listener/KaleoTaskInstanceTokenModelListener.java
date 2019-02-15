@@ -15,18 +15,18 @@
 package com.liferay.portal.workflow.metrics.internal.model.listener;
 
 import com.liferay.portal.kernel.exception.ModelListenerException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
-import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalService;
 
 import java.time.Duration;
 
 import java.util.Date;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Inácio Nery
@@ -40,12 +40,10 @@ public class KaleoTaskInstanceTokenModelListener
 		throws ModelListenerException {
 
 		try {
-			Document document = createDocument(kaleoTaskInstanceToken);
-
-			addDocument(document, kaleoTaskInstanceToken.getCreateDate());
+			addDocument(kaleoTaskInstanceToken);
 		}
 		catch (Exception e) {
-			throw new ModelListenerException(e);
+			_log.error(e, e);
 		}
 	}
 
@@ -54,16 +52,10 @@ public class KaleoTaskInstanceTokenModelListener
 		throws ModelListenerException {
 
 		try {
-			if (kaleoTaskInstanceToken.isCompleted()) {
-				return;
-			}
-
-			Document document = createDocument(kaleoTaskInstanceToken);
-
-			deleteDocument(document);
+			deleteDocument(kaleoTaskInstanceToken);
 		}
 		catch (Exception e) {
-			throw new ModelListenerException(e);
+			_log.error(e, e);
 		}
 	}
 
@@ -72,35 +64,42 @@ public class KaleoTaskInstanceTokenModelListener
 		throws ModelListenerException {
 
 		try {
-			Document document = createDocument(kaleoTaskInstanceToken);
-
-			Date date = kaleoTaskInstanceToken.getModifiedDate();
-
-			if (kaleoTaskInstanceToken.isCompleted()) {
-				Date createDate = kaleoTaskInstanceToken.getCreateDate();
-
-				date = kaleoTaskInstanceToken.getCompletionDate();
-
-				Duration duration = Duration.between(
-					createDate.toInstant(), date.toInstant());
-
-				document.addNumber("duration", duration.toMillis());
-			}
-
-			updateDocument(document, date);
+			updateDocument(kaleoTaskInstanceToken);
 		}
 		catch (Exception e) {
-			throw new ModelListenerException(e);
+			_log.error(e, e);
 		}
 	}
 
+	@Override
 	protected Document createDocument(
 		KaleoTaskInstanceToken kaleoTaskInstanceToken) {
 
 		Document document = new DocumentImpl();
 
+		Date createDate = kaleoTaskInstanceToken.getCreateDate();
+
+		document.addDateSortable("createDate", createDate);
+
+		if (kaleoTaskInstanceToken.isCompleted()) {
+			Date completionDate = kaleoTaskInstanceToken.getCompletionDate();
+
+			document.addDateSortable("completionDate", completionDate);
+
+			Duration duration = Duration.between(
+				createDate.toInstant(), completionDate.toInstant());
+
+			document.addNumber("duration", duration.toMillis());
+		}
+
+		document.addDateSortable(
+			"modifiedDate", kaleoTaskInstanceToken.getModifiedDate());
+
 		document.addKeyword("className", kaleoTaskInstanceToken.getClassName());
 		document.addKeyword("classPK", kaleoTaskInstanceToken.getClassPK());
+		document.addKeyword("companyId", kaleoTaskInstanceToken.getCompanyId());
+		document.addKeyword("completed", kaleoTaskInstanceToken.isCompleted());
+		document.addKeyword("deleted", false);
 		document.addKeyword(
 			"instanceId", kaleoTaskInstanceToken.getKaleoInstanceId());
 		document.addKeyword(
@@ -108,6 +107,7 @@ public class KaleoTaskInstanceTokenModelListener
 		document.addKeyword("taskId", kaleoTaskInstanceToken.getKaleoTaskId());
 		document.addKeyword(
 			"tokenId", kaleoTaskInstanceToken.getKaleoInstanceTokenId());
+		document.addKeyword("userId", kaleoTaskInstanceToken.getUserId());
 		document.addUID(
 			"WorkflowMetricsToken",
 			digest(
@@ -130,8 +130,7 @@ public class KaleoTaskInstanceTokenModelListener
 		return "WorkflowMetricsTokenType";
 	}
 
-	@Reference
-	private KaleoDefinitionVersionLocalService
-		_kaleoDefinitionVersionLocalService;
+	private static final Log _log = LogFactoryUtil.getLog(
+		KaleoTaskInstanceTokenModelListener.class);
 
 }

@@ -15,6 +15,8 @@
 package com.liferay.portal.workflow.metrics.internal.model.listener;
 
 import com.liferay.portal.kernel.exception.ModelListenerException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
@@ -38,12 +40,10 @@ public class KaleoInstanceModelListener
 		throws ModelListenerException {
 
 		try {
-			Document document = createDocument(kaleoInstance);
-
-			addDocument(document, kaleoInstance.getCreateDate());
+			addDocument(kaleoInstance);
 		}
 		catch (Exception e) {
-			throw new ModelListenerException(e);
+			_log.error(e, e);
 		}
 	}
 
@@ -52,16 +52,10 @@ public class KaleoInstanceModelListener
 		throws ModelListenerException {
 
 		try {
-			if (kaleoInstance.isCompleted()) {
-				return;
-			}
-
-			Document document = createDocument(kaleoInstance);
-
-			deleteDocument(document);
+			deleteDocument(kaleoInstance);
 		}
 		catch (Exception e) {
-			throw new ModelListenerException(e);
+			_log.error(e, e);
 		}
 	}
 
@@ -70,39 +64,44 @@ public class KaleoInstanceModelListener
 		throws ModelListenerException {
 
 		try {
-			Document document = createDocument(kaleoInstance);
-
-			Date date = kaleoInstance.getModifiedDate();
-
-			if (kaleoInstance.isCompleted()) {
-				Date createDate = kaleoInstance.getCreateDate();
-
-				date = kaleoInstance.getCompletionDate();
-
-				Duration duration = Duration.between(
-					createDate.toInstant(), date.toInstant());
-
-				document.addNumber("duration", duration.toMillis());
-			}
-
-			document.addKeyword("complete", kaleoInstance.isCompleted());
-
-			updateDocument(document, date);
+			updateDocument(kaleoInstance);
 		}
 		catch (Exception e) {
-			throw new ModelListenerException(e);
+			_log.error(e, e);
 		}
 	}
 
+	@Override
 	protected Document createDocument(KaleoInstance kaleoInstance) {
 		Document document = new DocumentImpl();
+
+		Date createDate = kaleoInstance.getCreateDate();
+
+		document.addDateSortable("createDate", createDate);
+
+		if (kaleoInstance.isCompleted()) {
+			Date completionDate = kaleoInstance.getCompletionDate();
+
+			document.addDateSortable("completionDate", completionDate);
+
+			Duration duration = Duration.between(
+				createDate.toInstant(), completionDate.toInstant());
+
+			document.addNumber("duration", duration.toMillis());
+		}
+
+		document.addDateSortable(
+			"modifiedDate", kaleoInstance.getModifiedDate());
 
 		document.addKeyword("className", kaleoInstance.getClassName());
 		document.addKeyword("classPK", kaleoInstance.getClassPK());
 		document.addKeyword("companyId", kaleoInstance.getCompanyId());
+		document.addKeyword("completed", kaleoInstance.isCompleted());
+		document.addKeyword("deleted", false);
 		document.addKeyword("instanceId", kaleoInstance.getKaleoInstanceId());
 		document.addKeyword(
 			"processId", kaleoInstance.getKaleoDefinitionVersionId());
+		document.addKeyword("userId", kaleoInstance.getUserId());
 		document.addUID(
 			"InstanceWorkflowMetrics",
 			digest(
@@ -122,5 +121,8 @@ public class KaleoInstanceModelListener
 	protected String getIndexType() {
 		return "WorkflowMetricsInstanceType";
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		KaleoInstanceModelListener.class);
 
 }

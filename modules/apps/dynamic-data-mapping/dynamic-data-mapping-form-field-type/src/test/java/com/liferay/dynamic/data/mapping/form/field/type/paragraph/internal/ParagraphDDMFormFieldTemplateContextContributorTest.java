@@ -21,7 +21,9 @@ import com.liferay.dynamic.data.mapping.form.field.type.BaseDDMFormFieldTypeSett
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.template.soy.util.SoyHTMLSanitizer;
+import com.liferay.portal.util.HtmlImpl;
 
 import java.util.Map;
 
@@ -68,6 +70,33 @@ public class ParagraphDDMFormFieldTemplateContextContributorTest
 			sanitizedContent.getContent());
 	}
 
+	@Test
+	public void testGetParametersWhenInViewMode() {
+		DDMFormField ddmFormField = new DDMFormField("field", "paragraph");
+
+		LocalizedValue text = new LocalizedValue();
+
+		text.addString(text.getDefaultLocale(), "<p>This is a paragraph</p>\n");
+
+		ddmFormField.setProperty("text", text);
+
+		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
+			new DDMFormFieldRenderingContext();
+
+		ddmFormFieldRenderingContext.setViewMode(true);
+
+		Map<String, Object> parameters =
+			_paragraphDDMFormFieldTemplateContextContributor.getParameters(
+				ddmFormField, ddmFormFieldRenderingContext);
+
+		SanitizedContent sanitizedContent = (SanitizedContent)parameters.get(
+			"text");
+
+		Assert.assertEquals(
+			text.getString(text.getDefaultLocale()),
+			sanitizedContent.getContent());
+	}
+
 	protected void setUpSoyHTMLSanitizer() throws Exception {
 		MemberMatcher.field(
 			ParagraphDDMFormFieldTemplateContextContributor.class,
@@ -78,6 +107,10 @@ public class ParagraphDDMFormFieldTemplateContextContributorTest
 				value -> UnsafeSanitizedContentOrdainer.ordainAsSafe(
 					value, SanitizedContent.ContentKind.HTML)
 		);
+
+		HtmlUtil htmlUtil = new HtmlUtil();
+
+		htmlUtil.setHtml(new HtmlImpl());
 	}
 
 	private final ParagraphDDMFormFieldTemplateContextContributor

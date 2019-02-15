@@ -1,15 +1,7 @@
-import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
+import DefaultEventHandler from 'frontend-js-web/liferay/DefaultEventHandler.es';
 import {Config} from 'metal-state';
 
-class ManagementToolbarDefaultEventHandler extends PortletBase {
-	callAction(event) {
-		var itemData = event.data.item.data;
-
-		if (itemData && itemData.action && this[itemData.action]) {
-			this[itemData.action](itemData);
-		}
-	}
-
+class ManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 	deleteEntries() {
 		if (this.trashEnabled || confirm(Liferay.Language.get('are-you-sure-you-want-to-delete-this'))) {
 			const form = this.one('#fm');
@@ -26,16 +18,11 @@ class ManagementToolbarDefaultEventHandler extends PortletBase {
 			);
 		}
 	}
-
-	handleActionItemClicked(event) {
-		this.callAction(event);
-	}
 }
 
 ManagementToolbarDefaultEventHandler.STATE = {
 	deleteEntriesCmd: Config.string(),
 	deleteEntriesURL: Config.string(),
-	namespace: Config.string(),
 	trashEnabled: Config.bool()
 };
 

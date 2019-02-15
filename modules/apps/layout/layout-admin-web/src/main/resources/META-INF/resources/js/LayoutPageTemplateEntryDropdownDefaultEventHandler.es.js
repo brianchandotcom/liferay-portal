@@ -1,16 +1,8 @@
 import OpenSimpleInputModal from 'frontend-js-web/liferay/modal/commands/OpenSimpleInputModal.es';
-import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
+import DefaultEventHandler from 'frontend-js-web/liferay/DefaultEventHandler.es';
 import {Config} from 'metal-state';
 
-class LayoutPageTemplateEntryDropdownDefaultEventHandler extends PortletBase {
-	handleItemClicked(event) {
-		const itemData = event.data.item.data;
-
-		if (itemData && itemData.action && this[itemData.action]) {
-			this[itemData.action](itemData);
-		}
-	}
-
+class LayoutPageTemplateEntryDropdownDefaultEventHandler extends DefaultEventHandler {
 	deleteLayoutPageTemplateEntry(itemData) {
 		if (confirm(Liferay.Language.get('are-you-sure-you-want-to-delete-this'))) {
 			this._send(itemData.deleteLayoutPageTemplateEntryURL);
@@ -49,7 +41,7 @@ class LayoutPageTemplateEntryDropdownDefaultEventHandler extends PortletBase {
 			}
 		);
 	}
-	
+
 	updateLayoutPageTemplateEntryPreview(itemData) {
 		AUI().use(
 			'liferay-item-selector-dialog',
@@ -88,7 +80,6 @@ class LayoutPageTemplateEntryDropdownDefaultEventHandler extends PortletBase {
 }
 
 LayoutPageTemplateEntryDropdownDefaultEventHandler.STATE = {
-	namespace: Config.string(),
 	spritemap: Config.string()
 };
 

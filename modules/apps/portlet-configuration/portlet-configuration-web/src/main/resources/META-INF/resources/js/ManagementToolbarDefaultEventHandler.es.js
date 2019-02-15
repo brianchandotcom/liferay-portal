@@ -1,28 +1,11 @@
-import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
-import {Config} from 'metal-state';
+import DefaultEventHandler from 'frontend-js-web/liferay/DefaultEventHandler.es';
 
-class ManagementToolbarDefaultEventHandler extends PortletBase {
-	callAction(event) {
-		const itemData = event.data.item.data;
-
-		if (itemData && itemData.action && this[itemData.action]) {
-			this[itemData.action](itemData);
-		}
-	}
-
+class ManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 	deleteArchivedSettings() {
 		if (confirm(Liferay.Language.get('are-you-sure-you-want-to-delete-this'))) {
 			submitForm(this.one('#fm'));
 		}
 	}
-
-	handleActionItemClicked(event) {
-		this.callAction(event);
-	}
 }
-
-ManagementToolbarDefaultEventHandler.STATE = {
-	namespace: Config.string()
-};
 
 export default ManagementToolbarDefaultEventHandler;

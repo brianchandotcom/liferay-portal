@@ -1,16 +1,7 @@
 import dom from 'metal-dom';
-import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
-import {Config} from 'metal-state';
+import DefaultEventHandler from 'frontend-js-web/liferay/DefaultEventHandler.es';
 
-class UserDropdownDefaultEventHandler extends PortletBase {
-	handleItemClicked(event) {
-		const itemData = event.data.item.data;
-
-		if (itemData && itemData.action && this[itemData.action]) {
-			this[itemData.action](itemData);
-		}
-	}
-
+class UserDropdownDefaultEventHandler extends DefaultEventHandler {
 	deleteGroupUsers(itemData) {
 		if (confirm(Liferay.Language.get('are-you-sure-you-want-to-delete-this'))) {
 			submitForm(document.hrefFm, itemData.deleteGroupUsersURL);
@@ -52,9 +43,5 @@ class UserDropdownDefaultEventHandler extends PortletBase {
 		);
 	}
 }
-
-UserDropdownDefaultEventHandler.STATE = {
-	namespace: Config.string()
-};
 
 export default UserDropdownDefaultEventHandler;

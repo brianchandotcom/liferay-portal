@@ -1,24 +1,12 @@
 import OpenSimpleInputModal from 'frontend-js-web/liferay/modal/commands/OpenSimpleInputModal.es';
-import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
+import DefaultEventHandler from 'frontend-js-web/liferay/DefaultEventHandler.es';
 import {Config} from 'metal-state';
 
-class DisplayPageManagementToolbarDefaultEventHandler extends PortletBase {
-	callAction(event) {
-		const itemData = event.data.item.data;
-
-		if (itemData && itemData.action && this[itemData.action]) {
-			this[itemData.action](itemData);
-		}
-	}
-
+class DisplayPageManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 	deleteSelectedDisplayPages() {
 		if (confirm(Liferay.Language.get('are-you-sure-you-want-to-delete-this'))) {
 			submitForm(this.one('#fm'));
 		}
-	}
-
-	handleActionItemClicked(event) {
-		this.callAction(event);
 	}
 
 	handleCreationButtonClicked() {
@@ -38,7 +26,6 @@ class DisplayPageManagementToolbarDefaultEventHandler extends PortletBase {
 
 DisplayPageManagementToolbarDefaultEventHandler.STATE = {
 	addDisplayPageURL: Config.string(),
-	namespace: Config.string(),
 	spritemap: Config.string()
 };
 

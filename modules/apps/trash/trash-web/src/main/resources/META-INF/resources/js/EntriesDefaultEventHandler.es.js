@@ -1,15 +1,6 @@
-import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
-import {Config} from 'metal-state';
+import DefaultEventHandler from 'frontend-js-web/liferay/DefaultEventHandler.es';
 
-class EntriesDefaultEventHandler extends PortletBase {
-	handleItemClicked(event) {
-		var itemData = event.data.item.data;
-
-		if (itemData && itemData.action && this[itemData.action]) {
-			this[itemData.action](itemData);
-		}
-	}
-
+class EntriesDefaultEventHandler extends DefaultEventHandler {
 	restoreEntry(itemData) {
 		const instance = this;
 
@@ -72,9 +63,5 @@ class EntriesDefaultEventHandler extends PortletBase {
 	}
 
 }
-
-EntriesDefaultEventHandler.STATE = {
-	namespace: Config.string()
-};
 
 export default EntriesDefaultEventHandler;

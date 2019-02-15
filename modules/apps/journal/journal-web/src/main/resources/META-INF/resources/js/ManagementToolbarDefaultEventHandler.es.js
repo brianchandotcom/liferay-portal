@@ -1,7 +1,7 @@
-import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
+import DefaultEventHandler from 'frontend-js-web/liferay/DefaultEventHandler.es';
 import {Config} from 'metal-state';
 
-class ManagementToolbarDefaultEventHandler extends PortletBase {
+class ManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 	created() {
 		Liferay.on(
 			this.ns('selectAddMenuItem'),
@@ -9,14 +9,6 @@ class ManagementToolbarDefaultEventHandler extends PortletBase {
 				location.href = Liferay.Util.addParams(this.ns('ddmStructureKey') + '=' + event.ddmStructureKey, this.addArticleURL);
 			}
 		);
-	}
-
-	callAction(event) {
-		var itemData = event.data.item.data;
-
-		if (itemData && itemData.action && this[itemData.action]) {
-			this[itemData.action]();
-		}
 	}
 
 	deleteEntries() {
@@ -45,10 +37,6 @@ class ManagementToolbarDefaultEventHandler extends PortletBase {
 		);
 	}
 
-	handleActionItemClicked(event) {
-		this.callAction(event);
-	}
-
 	handleCreationMenuMoreButtonClicked() {
 		Liferay.Util.openWindow(
 			{
@@ -61,10 +49,6 @@ class ManagementToolbarDefaultEventHandler extends PortletBase {
 				uri: this.openViewMoreStructuresURL
 			}
 		);
-	}
-
-	handleFilterItemClicked(event) {
-		this.callAction(event);
 	}
 
 	moveEntries() {

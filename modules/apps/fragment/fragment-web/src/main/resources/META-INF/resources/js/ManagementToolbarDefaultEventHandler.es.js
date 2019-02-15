@@ -1,8 +1,8 @@
 import OpenSimpleInputModal from 'frontend-js-web/liferay/modal/commands/OpenSimpleInputModal.es';
-import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
+import DefaultEventHandler from 'frontend-js-web/liferay/DefaultEventHandler.es';
 import {Config} from 'metal-state';
 
-class ManagementToolbarDefaultEventHandler extends PortletBase {
+class ManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 	addFragmentEntry(itemData) {
 		OpenSimpleInputModal(
 			{
@@ -15,14 +15,6 @@ class ManagementToolbarDefaultEventHandler extends PortletBase {
 				spritemap: this.spritemap
 			}
 		);
-	}
-
-	callAction(event) {
-		var itemData = event.data.item.data;
-
-		if (itemData && itemData.action && this[itemData.action]) {
-			this[itemData.action](itemData);
-		}
 	}
 
 	copySelectedFragmentEntries() {
@@ -45,14 +37,6 @@ class ManagementToolbarDefaultEventHandler extends PortletBase {
 
 	exportSelectedFragmentEntries() {
 		submitForm(this.one('#fm'), this.exportFragmentEntriesURL);
-	}
-
-	handleActionItemClicked(event) {
-		this.callAction(event);
-	}
-
-	handleCreationMenuItemClicked(event) {
-		this.callAction(event);
 	}
 
 	moveSelectedFragmentEntries() {
@@ -91,7 +75,6 @@ ManagementToolbarDefaultEventHandler.STATE = {
 	exportFragmentEntriesURL: Config.string(),
 	fragmentCollectionId: Config.string(),
 	moveFragmentEntryURL: Config.string(),
-	namespace: Config.string(),
 	selectFragmentCollectionURL: Config.string(),
 	spritemap: Config.string()
 };

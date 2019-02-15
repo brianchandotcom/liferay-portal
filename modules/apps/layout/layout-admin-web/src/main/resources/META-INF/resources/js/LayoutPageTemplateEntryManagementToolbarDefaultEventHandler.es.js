@@ -1,8 +1,8 @@
 import OpenSimpleInputModal from 'frontend-js-web/liferay/modal/commands/OpenSimpleInputModal.es';
-import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
+import DefaultEventHandler from 'frontend-js-web/liferay/DefaultEventHandler.es';
 import {Config} from 'metal-state';
 
-class LayoutPageTemplateEntryManagementToolbarDefaultEventHandler extends PortletBase {
+class LayoutPageTemplateEntryManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 	addLayoutPageTemplateEntry(itemData) {
 		OpenSimpleInputModal(
 			{
@@ -17,32 +17,14 @@ class LayoutPageTemplateEntryManagementToolbarDefaultEventHandler extends Portle
 		);
 	}
 
-	callAction(event) {
-		const itemData = event.data.item.data;
-
-		if (itemData && itemData.action && this[itemData.action]) {
-			this[itemData.action](itemData);
-		}
-	}
-
 	deleteLayoutPageTemplateEntries() {
 		if (confirm(Liferay.Language.get('are-you-sure-you-want-to-delete-this'))) {
 			submitForm(this.one('#fm'));
 		}
 	}
-
-	handleActionItemClicked(event) {
-		this.callAction(event);
-	}
-
-	handleCreationMenuItemClicked(event) {
-		this.callAction(event);
-	}
-
 }
 
 LayoutPageTemplateEntryManagementToolbarDefaultEventHandler.STATE = {
-	namespace: Config.string(),
 	spritemap: Config.string()
 };
 

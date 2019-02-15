@@ -1,16 +1,8 @@
 import OpenSimpleInputModal from 'frontend-js-web/liferay/modal/commands/OpenSimpleInputModal.es';
-import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
+import DefaultEventHandler from 'frontend-js-web/liferay/DefaultEventHandler.es';
 import {Config} from 'metal-state';
 
-class FragmentEntryDropdownDefaultEventHandler extends PortletBase {
-	handleItemClicked(event) {
-		const itemData = event.data.item.data;
-
-		if (itemData && itemData.action && this[itemData.action]) {
-			this[itemData.action](itemData);
-		}
-	}
-
+class FragmentEntryDropdownDefaultEventHandler extends DefaultEventHandler {
 	copyFragmentEntry(itemData) {
 		this.one('#fragmentCollectionId').value = itemData.fragmentCollectionId;
 		this.one('#fragmentEntryIds').value = itemData.fragmentEntryId;
@@ -106,7 +98,6 @@ FragmentEntryDropdownDefaultEventHandler.STATE = {
 	copyFragmentEntryURL: Config.string(),
 	fragmentCollectionId: Config.string(),
 	moveFragmentEntryURL: Config.string(),
-	namespace: Config.string(),
 	spritemap: Config.string()
 };
 

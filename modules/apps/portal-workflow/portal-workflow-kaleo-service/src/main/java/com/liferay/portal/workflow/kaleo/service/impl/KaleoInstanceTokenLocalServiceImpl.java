@@ -17,6 +17,8 @@ package com.liferay.portal.workflow.kaleo.service.impl;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -249,6 +251,16 @@ public class KaleoInstanceTokenLocalServiceImpl
 		setCurrentKaleoNode(kaleoInstanceToken, currentKaleoNodeId);
 
 		kaleoInstanceTokenPersistence.update(kaleoInstanceToken);
+
+		// Reindex KaleoInstance
+
+		KaleoInstance kaleoInstance = kaleoInstancePersistence.findByPrimaryKey(
+			kaleoInstanceToken.getKaleoInstanceId());
+
+		Indexer<KaleoInstance> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			KaleoInstance.class);
+
+		indexer.reindex(kaleoInstance);
 
 		return kaleoInstanceToken;
 	}

@@ -15,11 +15,7 @@
 package com.liferay.frontend.taglib.clay.sample.web.internal.attribute.provider;
 
 import com.liferay.frontend.taglib.clay.attribute.provider.ClayComponentAttributeProvider;
-import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.table.Field;
-import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.table.Schema;
 
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,50 +28,20 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {
 		"clay.component.attribute.provider.key=SampleTableAttributeProvider",
-		"service.ranking:Integer=2"
+		"service.ranking:Integer=1"
 	},
 	service = ClayComponentAttributeProvider.class
 )
-public class SampleTableAttributeProvider
+public class SampleTableStyleAttributeProvider
 	implements ClayComponentAttributeProvider {
 
 	@Override
 	public Map<String, Object> getAttributes() {
 		HashMap<String, Object> attributes = new HashMap<>();
 
-		attributes.put("items", _getItems());
-		attributes.put("schema", _getSchema().toMap());
-		attributes.put("selectable", true);
+		attributes.put("tableClasses", "sample-table");
 
 		return attributes;
-	}
-
-	private Map<String, Object> _getItem(
-		String name, int calories, int portion) {
-
-		Map<String, Object> item = new HashMap<>();
-
-		item.put("calories", calories);
-		item.put("name", name);
-		item.put("portion", portion);
-
-		return item;
-	}
-
-	private Collection<?> _getItems() {
-		return Arrays.asList(
-			_getItem("Blueberry", 57, 100), _getItem("Strawberry", 33, 100),
-			_getItem("Raspberry", 53, 100));
-	}
-
-	private Schema _getSchema() {
-		Schema schema = new Schema();
-
-		schema.addField(new Field("name", "Name"));
-		schema.addField(new Field("calories", "Calories", "number"));
-		schema.addField(new Field("portion", "Portion", "number"));
-
-		return schema;
 	}
 
 }

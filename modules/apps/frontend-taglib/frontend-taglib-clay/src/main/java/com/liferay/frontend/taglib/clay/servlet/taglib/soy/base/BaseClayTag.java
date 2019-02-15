@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.portlet.PortletResponse;
@@ -155,7 +156,7 @@ public abstract class BaseClayTag extends TemplateRendererTag {
 		return null;
 	}
 
-	private void _setAttributeProviderAttributes(String attributeProviderKey) {
+	private void _setAttributeProviderAttributes(String key) {
 		ClayComponentAttributeProviderRegistry registry =
 			ClayComponentAttributeProviderRegistryHelper.getRegistry();
 
@@ -163,17 +164,18 @@ public abstract class BaseClayTag extends TemplateRendererTag {
 			return;
 		}
 
-		ClayComponentAttributeProvider attributeProvider = registry.get(
-			attributeProviderKey);
+		List<ClayComponentAttributeProvider> providers = registry.get(key);
 
-		if (attributeProvider == null) {
+		if (providers == null) {
 			return;
 		}
 
-		Map<String, Object> attributes = attributeProvider.getAttributes();
+		for (ClayComponentAttributeProvider provider : providers) {
+			Map<String, Object> attributes = provider.getAttributes();
 
-		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
-			putValue(entry.getKey(), entry.getValue());
+			for (Map.Entry<String, Object> entry : attributes.entrySet()) {
+				putValue(entry.getKey(), entry.getValue());
+			}
 		}
 	}
 

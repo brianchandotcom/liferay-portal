@@ -14,9 +14,8 @@
 
 package com.liferay.frontend.js.portlet.extender.internal.portlet;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -47,7 +46,10 @@ import org.osgi.service.cm.ManagedService;
  */
 public class JSPortlet extends MVCPortlet implements ManagedService {
 
-	public JSPortlet(String packageName, String packageVersion) {
+	public JSPortlet(
+		JSONFactory jsonFactory, String packageName, String packageVersion) {
+
+		_jsonFactory = jsonFactory;
 		_packageName = packageName;
 		_packageVersion = packageVersion;
 	}
@@ -129,38 +131,13 @@ public class JSPortlet extends MVCPortlet implements ManagedService {
 		return StringPool.BLANK;
 	}
 
-	private String _escapeQuotes(String value) {
-		return value.replaceAll("'", "\\'");
-	}
-
 	private String _getSettings() {
-		Map<String, String> settings = _settings.get();
-
-		StringBundler sb = new StringBundler();
-
-		sb.append("{");
-
-		String delimiter = "";
-
-		for (Map.Entry<String, String> entry : settings.entrySet()) {
-			sb.append(delimiter);
-			sb.append("'");
-			sb.append(_escapeQuotes(entry.getKey()));
-			sb.append("':'");
-			sb.append(_escapeQuotes(entry.getValue()));
-			sb.append("'");
-
-			delimiter = ", ";
-		}
-
-		sb.append("}");
-
-		return sb.toString();
+		return _jsonFactory.looseSerialize(_settings.get());
 	}
 
 	private String _toJSON(PortletPreferences portletPreferences) {
 		JSONObject portletPreferencesJSONObject =
-			JSONFactoryUtil.createJSONObject();
+			_jsonFactory.createJSONObject();
 
 		Enumeration<String> portletPreferencesNames =
 			portletPreferences.getNames();
@@ -193,6 +170,7 @@ public class JSPortlet extends MVCPortlet implements ManagedService {
 		_TPL_JAVA_SCRIPT = _loadTemplate("bootstrap.js.tpl");
 	}
 
+	private final JSONFactory _jsonFactory;
 	private final String _packageName;
 	private final String _packageVersion;
 	private final AtomicReference<Map<String, String>> _settings =

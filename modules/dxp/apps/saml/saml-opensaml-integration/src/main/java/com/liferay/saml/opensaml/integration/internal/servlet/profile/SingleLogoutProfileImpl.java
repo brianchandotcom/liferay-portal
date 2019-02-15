@@ -46,7 +46,7 @@ import com.liferay.saml.runtime.SamlException;
 import com.liferay.saml.runtime.configuration.SamlProviderConfigurationHelper;
 import com.liferay.saml.runtime.exception.UnsolicitedLogoutResponseException;
 import com.liferay.saml.runtime.exception.UnsupportedBindingException;
-import com.liferay.saml.runtime.profile.SingleLogoutProfile;
+import com.liferay.saml.runtime.servlet.profile.SingleLogoutProfile;
 import com.liferay.saml.util.JspUtil;
 import com.liferay.saml.util.SamlHttpRequestUtil;
 

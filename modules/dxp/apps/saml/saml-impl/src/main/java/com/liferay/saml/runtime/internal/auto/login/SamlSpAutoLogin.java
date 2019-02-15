@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.security.auto.login.BaseAutoLogin;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.saml.persistence.model.SamlSpSession;
 import com.liferay.saml.runtime.configuration.SamlProviderConfigurationHelper;
-import com.liferay.saml.runtime.profile.WebSsoProfile;
+import com.liferay.saml.runtime.servlet.profile.WebSsoProfile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

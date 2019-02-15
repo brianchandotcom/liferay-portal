@@ -74,7 +74,7 @@ import com.liferay.saml.runtime.exception.ReplayException;
 import com.liferay.saml.runtime.exception.SignatureException;
 import com.liferay.saml.runtime.exception.StatusException;
 import com.liferay.saml.runtime.exception.SubjectException;
-import com.liferay.saml.runtime.profile.WebSsoProfile;
+import com.liferay.saml.runtime.servlet.profile.WebSsoProfile;
 
 import java.io.IOException;
 

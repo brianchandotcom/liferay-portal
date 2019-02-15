@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.saml.constants.SamlWebKeys;
 import com.liferay.saml.runtime.configuration.SamlProviderConfigurationHelper;
-import com.liferay.saml.runtime.profile.SingleLogoutProfile;
+import com.liferay.saml.runtime.servlet.profile.SingleLogoutProfile;
 import com.liferay.saml.util.SamlHttpRequestUtil;
 
 import javax.servlet.Filter;

@@ -10,7 +10,7 @@ Export-Package:\
 	com.liferay.saml.runtime.credential,\
 	com.liferay.saml.runtime.exception,\
 	com.liferay.saml.runtime.metadata,\
-	com.liferay.saml.runtime.profile,\
+	com.liferay.saml.runtime.servlet.profile,\
 	com.liferay.saml.util
 Import-Package:\
 	!bsh,\

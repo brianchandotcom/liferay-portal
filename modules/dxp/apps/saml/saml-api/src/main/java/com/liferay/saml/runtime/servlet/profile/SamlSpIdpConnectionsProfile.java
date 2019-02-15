@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.saml.runtime.profile;
+package com.liferay.saml.runtime.servlet.profile;
 
 import com.liferay.saml.persistence.model.SamlSpIdpConnection;
 

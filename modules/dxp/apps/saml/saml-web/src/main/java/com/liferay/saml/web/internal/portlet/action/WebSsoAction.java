@@ -16,7 +16,7 @@ package com.liferay.saml.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.saml.runtime.configuration.SamlProviderConfigurationHelper;
-import com.liferay.saml.runtime.profile.WebSsoProfile;
+import com.liferay.saml.runtime.servlet.profile.WebSsoProfile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

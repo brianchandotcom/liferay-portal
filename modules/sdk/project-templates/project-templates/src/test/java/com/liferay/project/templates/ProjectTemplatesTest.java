@@ -255,7 +255,7 @@ public class ProjectTemplatesTest {
 
 			Domain domain = Domain.domain(jarFile);
 
-			Parameters parameters = domain.getExportContents();
+			Parameters parameters = domain.getExportPackage();
 
 			Assert.assertNotNull(parameters);
 

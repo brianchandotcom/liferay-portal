@@ -95,6 +95,9 @@ definition {
 		if (IsElementPresent(locator1 = "Button#ADD")) {
 			AssertClick(locator1 = "Button#ADD", value1 = "Add");
 		}
+		else if (IsElementPresent(locator1 = "Button#DONE")) {
+			AssertClick(locator1 = "Button#DONE", value1 = "Done");
+		}
 		else {
 			Click(locator1 = "Icon#CLOSE");
 		}

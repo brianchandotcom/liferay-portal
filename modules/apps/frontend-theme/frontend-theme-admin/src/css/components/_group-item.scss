@@ -8,31 +8,59 @@
 
 	.list-group {
 		flex-flow: row wrap;
+		margin-top: 16px;
 	}
 }
 
 .list-group-card-item {
 	display: block;
-	margin-bottom: 8px;
-	margin-top: 32px;
-	max-width: 10%;
-	min-width: 120px;
+	margin-top: 16px;
 	position: relative;
 	text-align: center;
-	width: 100%;
+	width: 50%;
 	word-wrap: break-word;
 
+	@include media-breakpoint-up(sm) {
+		width: 33.33%
+	}
+
+	@include media-breakpoint-up(md) {
+		width: 25%
+	}
+
+	@include media-breakpoint-up(lg) {
+		width: 16.6%
+	}
+
+	@include media-breakpoint-up(xl) {
+		width: 12.5%
+	}
+
+	.controls-visible.open & {
+		@include media-breakpoint-up(md) {
+			width: 50%
+		}
+
+		@include media-breakpoint-up(lg) {
+			width: 25%
+		}
+
+		@include media-breakpoint-up(xl) {
+			width: 16.6%
+		}
+	}
+
 	a {
-		color: #000;
+		color: $secondary;
 		display: block;
 		padding: 0.5rem;
 
 		&:hover, &:active {
-			color: $primary;
+			color: $dark;
 			text-decoration: none;
 
 			.list-group-card-item-text {
-				color: $primary;
+				color: $dark;
 			}
 		}
 	}

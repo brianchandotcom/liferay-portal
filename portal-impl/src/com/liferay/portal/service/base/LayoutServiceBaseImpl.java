@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.service.persistence.LayoutPersistence;
 import com.liferay.portal.kernel.service.persistence.LayoutPrototypePersistence;
 import com.liferay.portal.kernel.service.persistence.LayoutSetPersistence;
 import com.liferay.portal.kernel.service.persistence.LayoutSetPrototypePersistence;
+import com.liferay.portal.kernel.service.persistence.LayoutVersionPersistence;
 import com.liferay.portal.kernel.service.persistence.PluginSettingPersistence;
 import com.liferay.portal.kernel.service.persistence.PortletPreferencesFinder;
 import com.liferay.portal.kernel.service.persistence.PortletPreferencesPersistence;
@@ -659,6 +660,26 @@ public abstract class LayoutServiceBaseImpl
 	 */
 	public void setRatingsStatsFinder(RatingsStatsFinder ratingsStatsFinder) {
 		this.ratingsStatsFinder = ratingsStatsFinder;
+	}
+
+	/**
+	 * Returns the layout version persistence.
+	 *
+	 * @return the layout version persistence
+	 */
+	public LayoutVersionPersistence getLayoutVersionPersistence() {
+		return layoutVersionPersistence;
+	}
+
+	/**
+	 * Sets the layout version persistence.
+	 *
+	 * @param layoutVersionPersistence the layout version persistence
+	 */
+	public void setLayoutVersionPersistence(
+		LayoutVersionPersistence layoutVersionPersistence) {
+
+		this.layoutVersionPersistence = layoutVersionPersistence;
 	}
 
 	/**
@@ -1493,6 +1514,9 @@ public abstract class LayoutServiceBaseImpl
 
 	@BeanReference(type = RatingsStatsFinder.class)
 	protected RatingsStatsFinder ratingsStatsFinder;
+
+	@BeanReference(type = LayoutVersionPersistence.class)
+	protected LayoutVersionPersistence layoutVersionPersistence;
 
 	@BeanReference(
 		type = com.liferay.portal.kernel.service.LayoutFriendlyURLLocalService.class

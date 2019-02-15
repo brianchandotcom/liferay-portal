@@ -368,14 +368,54 @@ public class LayoutLocalServiceWrapper
 	}
 
 	/**
-	 * Creates a new layout with the primary key. Does not add the layout to the database.
+	 * Anonymize user information of the specific layout
 	 *
-	 * @param plid the primary key for the new layout
+	 * @param layout the layout that need to anonymized
+	 * @param userId the primary key of the owner user
+	 * @param anonymousUser the anonymized user information
+	 * @return the anonymized layout
+	 */
+	@Override
+	public void anonymizeLayout(
+			com.liferay.portal.kernel.model.Layout layout, long userId,
+			com.liferay.portal.kernel.model.User anonymousUser)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_layoutLocalService.anonymizeLayout(layout, userId, anonymousUser);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.Layout checkout(
+			com.liferay.portal.kernel.model.Layout publishedLayout, int version)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _layoutLocalService.checkout(publishedLayout, version);
+	}
+
+	/**
+	 * Creates a new layout. Does not add the layout to the database.
+	 *
 	 * @return the new layout
 	 */
 	@Override
-	public com.liferay.portal.kernel.model.Layout createLayout(long plid) {
-		return _layoutLocalService.createLayout(plid);
+	public com.liferay.portal.kernel.model.Layout create() {
+		return _layoutLocalService.create();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.Layout delete(
+			com.liferay.portal.kernel.model.Layout publishedLayout)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _layoutLocalService.delete(publishedLayout);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.Layout deleteDraft(
+			com.liferay.portal.kernel.model.Layout draftLayout)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _layoutLocalService.deleteDraft(draftLayout);
 	}
 
 	/**
@@ -491,6 +531,14 @@ public class LayoutLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _layoutLocalService.deletePersistedModel(persistedModel);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.LayoutVersion deleteVersion(
+			com.liferay.portal.kernel.model.LayoutVersion layoutVersion)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _layoutLocalService.deleteVersion(layoutVersion);
 	}
 
 	@Override
@@ -936,11 +984,30 @@ public class LayoutLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.model.Layout fetchDraft(
+		com.liferay.portal.kernel.model.Layout layout) {
+
+		return _layoutLocalService.fetchDraft(layout);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.Layout fetchDraft(long primaryKey) {
+		return _layoutLocalService.fetchDraft(primaryKey);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.model.Layout fetchFirstLayout(
 		long groupId, boolean privateLayout, long parentLayoutId) {
 
 		return _layoutLocalService.fetchFirstLayout(
 			groupId, privateLayout, parentLayoutId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.LayoutVersion fetchLatestVersion(
+		com.liferay.portal.kernel.model.Layout layout) {
+
+		return _layoutLocalService.fetchLatestVersion(layout);
 	}
 
 	@Override
@@ -997,6 +1064,20 @@ public class LayoutLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.model.Layout fetchPublished(
+		com.liferay.portal.kernel.model.Layout layout) {
+
+		return _layoutLocalService.fetchPublished(layout);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.Layout fetchPublished(
+		long primaryKey) {
+
+		return _layoutLocalService.fetchPublished(primaryKey);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -1045,6 +1126,21 @@ public class LayoutLocalServiceWrapper
 
 		return _layoutLocalService.getDefaultPlid(
 			groupId, privateLayout, portletId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.Layout getDraft(
+			com.liferay.portal.kernel.model.Layout layout)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _layoutLocalService.getDraft(layout);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.Layout getDraft(long primaryKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _layoutLocalService.getDraft(primaryKey);
 	}
 
 	@Override
@@ -1691,6 +1787,21 @@ public class LayoutLocalServiceWrapper
 			parentGroupId, privateLayout);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.model.LayoutVersion getVersion(
+			com.liferay.portal.kernel.model.Layout layout, int version)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _layoutLocalService.getVersion(layout, version);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.kernel.model.LayoutVersion>
+		getVersions(com.liferay.portal.kernel.model.Layout layout) {
+
+		return _layoutLocalService.getVersions(layout);
+	}
+
 	/**
 	 * Returns <code>true</code> if there is a matching layout with the UUID,
 	 * group, and privacy.
@@ -2221,6 +2332,24 @@ public class LayoutLocalServiceWrapper
 			userId, taskName, portletId, parameterMap, is);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.model.Layout publishDraft(
+			com.liferay.portal.kernel.model.Layout draftLayout)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _layoutLocalService.publishDraft(draftLayout);
+	}
+
+	@Override
+	public void registerListener(
+		com.liferay.portal.kernel.service.version.VersionServiceListener
+			<com.liferay.portal.kernel.model.Layout,
+			 com.liferay.portal.kernel.model.LayoutVersion>
+				versionServiceListener) {
+
+		_layoutLocalService.registerListener(versionServiceListener);
+	}
+
 	/**
 	 * Sets the layouts for the group, replacing and prioritizing all layouts of
 	 * the parent layout.
@@ -2243,6 +2372,16 @@ public class LayoutLocalServiceWrapper
 	}
 
 	@Override
+	public void unregisterListener(
+		com.liferay.portal.kernel.service.version.VersionServiceListener
+			<com.liferay.portal.kernel.model.Layout,
+			 com.liferay.portal.kernel.model.LayoutVersion>
+				versionServiceListener) {
+
+		_layoutLocalService.unregisterListener(versionServiceListener);
+	}
+
+	@Override
 	public void updateAsset(
 			long userId, com.liferay.portal.kernel.model.Layout layout,
 			long[] assetCategoryIds, String[] assetTagNames)
@@ -2250,6 +2389,14 @@ public class LayoutLocalServiceWrapper
 
 		_layoutLocalService.updateAsset(
 			userId, layout, assetCategoryIds, assetTagNames);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.Layout updateDraft(
+			com.liferay.portal.kernel.model.Layout draftLayout)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _layoutLocalService.updateDraft(draftLayout);
 	}
 
 	/**
@@ -2308,9 +2455,10 @@ public class LayoutLocalServiceWrapper
 	 */
 	@Override
 	public com.liferay.portal.kernel.model.Layout updateLayout(
-		com.liferay.portal.kernel.model.Layout layout) {
+			com.liferay.portal.kernel.model.Layout draftLayout)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _layoutLocalService.updateLayout(layout);
+		return _layoutLocalService.updateLayout(draftLayout);
 	}
 
 	@Override

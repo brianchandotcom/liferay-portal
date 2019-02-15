@@ -282,79 +282,88 @@ public class LayoutUtil {
 	}
 
 	/**
-	 * Returns the layout where uuid = &#63; and groupId = &#63; and privateLayout = &#63; or throws a <code>NoSuchLayoutException</code> if it could not be found.
+	 * Returns the layout where uuid = &#63; and groupId = &#63; and privateLayout = &#63; and head = &#63; or throws a <code>NoSuchLayoutException</code> if it could not be found.
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
+	 * @param head the head
 	 * @return the matching layout
 	 * @throws NoSuchLayoutException if a matching layout could not be found
 	 */
 	public static Layout findByUUID_G_P(
-			String uuid, long groupId, boolean privateLayout)
+			String uuid, long groupId, boolean privateLayout, boolean head)
 		throws com.liferay.portal.kernel.exception.NoSuchLayoutException {
 
-		return getPersistence().findByUUID_G_P(uuid, groupId, privateLayout);
+		return getPersistence().findByUUID_G_P(
+			uuid, groupId, privateLayout, head);
 	}
 
 	/**
-	 * Returns the layout where uuid = &#63; and groupId = &#63; and privateLayout = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the layout where uuid = &#63; and groupId = &#63; and privateLayout = &#63; and head = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
+	 * @param head the head
 	 * @return the matching layout, or <code>null</code> if a matching layout could not be found
 	 */
 	public static Layout fetchByUUID_G_P(
-		String uuid, long groupId, boolean privateLayout) {
+		String uuid, long groupId, boolean privateLayout, boolean head) {
 
-		return getPersistence().fetchByUUID_G_P(uuid, groupId, privateLayout);
+		return getPersistence().fetchByUUID_G_P(
+			uuid, groupId, privateLayout, head);
 	}
 
 	/**
-	 * Returns the layout where uuid = &#63; and groupId = &#63; and privateLayout = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the layout where uuid = &#63; and groupId = &#63; and privateLayout = &#63; and head = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
+	 * @param head the head
 	 * @param retrieveFromCache whether to retrieve from the finder cache
 	 * @return the matching layout, or <code>null</code> if a matching layout could not be found
 	 */
 	public static Layout fetchByUUID_G_P(
-		String uuid, long groupId, boolean privateLayout,
+		String uuid, long groupId, boolean privateLayout, boolean head,
 		boolean retrieveFromCache) {
 
 		return getPersistence().fetchByUUID_G_P(
-			uuid, groupId, privateLayout, retrieveFromCache);
+			uuid, groupId, privateLayout, head, retrieveFromCache);
 	}
 
 	/**
-	 * Removes the layout where uuid = &#63; and groupId = &#63; and privateLayout = &#63; from the database.
+	 * Removes the layout where uuid = &#63; and groupId = &#63; and privateLayout = &#63; and head = &#63; from the database.
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
+	 * @param head the head
 	 * @return the layout that was removed
 	 */
 	public static Layout removeByUUID_G_P(
-			String uuid, long groupId, boolean privateLayout)
+			String uuid, long groupId, boolean privateLayout, boolean head)
 		throws com.liferay.portal.kernel.exception.NoSuchLayoutException {
 
-		return getPersistence().removeByUUID_G_P(uuid, groupId, privateLayout);
+		return getPersistence().removeByUUID_G_P(
+			uuid, groupId, privateLayout, head);
 	}
 
 	/**
-	 * Returns the number of layouts where uuid = &#63; and groupId = &#63; and privateLayout = &#63;.
+	 * Returns the number of layouts where uuid = &#63; and groupId = &#63; and privateLayout = &#63; and head = &#63;.
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
+	 * @param head the head
 	 * @return the number of matching layouts
 	 */
 	public static int countByUUID_G_P(
-		String uuid, long groupId, boolean privateLayout) {
+		String uuid, long groupId, boolean privateLayout, boolean head) {
 
-		return getPersistence().countByUUID_G_P(uuid, groupId, privateLayout);
+		return getPersistence().countByUUID_G_P(
+			uuid, groupId, privateLayout, head);
 	}
 
 	/**
@@ -2329,79 +2338,88 @@ public class LayoutUtil {
 	}
 
 	/**
-	 * Returns the layout where groupId = &#63; and privateLayout = &#63; and layoutId = &#63; or throws a <code>NoSuchLayoutException</code> if it could not be found.
+	 * Returns the layout where groupId = &#63; and privateLayout = &#63; and layoutId = &#63; and head = &#63; or throws a <code>NoSuchLayoutException</code> if it could not be found.
 	 *
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
 	 * @param layoutId the layout ID
+	 * @param head the head
 	 * @return the matching layout
 	 * @throws NoSuchLayoutException if a matching layout could not be found
 	 */
 	public static Layout findByG_P_L(
-			long groupId, boolean privateLayout, long layoutId)
+			long groupId, boolean privateLayout, long layoutId, boolean head)
 		throws com.liferay.portal.kernel.exception.NoSuchLayoutException {
 
-		return getPersistence().findByG_P_L(groupId, privateLayout, layoutId);
+		return getPersistence().findByG_P_L(
+			groupId, privateLayout, layoutId, head);
 	}
 
 	/**
-	 * Returns the layout where groupId = &#63; and privateLayout = &#63; and layoutId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the layout where groupId = &#63; and privateLayout = &#63; and layoutId = &#63; and head = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
 	 * @param layoutId the layout ID
+	 * @param head the head
 	 * @return the matching layout, or <code>null</code> if a matching layout could not be found
 	 */
 	public static Layout fetchByG_P_L(
-		long groupId, boolean privateLayout, long layoutId) {
+		long groupId, boolean privateLayout, long layoutId, boolean head) {
 
-		return getPersistence().fetchByG_P_L(groupId, privateLayout, layoutId);
+		return getPersistence().fetchByG_P_L(
+			groupId, privateLayout, layoutId, head);
 	}
 
 	/**
-	 * Returns the layout where groupId = &#63; and privateLayout = &#63; and layoutId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the layout where groupId = &#63; and privateLayout = &#63; and layoutId = &#63; and head = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
 	 * @param layoutId the layout ID
+	 * @param head the head
 	 * @param retrieveFromCache whether to retrieve from the finder cache
 	 * @return the matching layout, or <code>null</code> if a matching layout could not be found
 	 */
 	public static Layout fetchByG_P_L(
-		long groupId, boolean privateLayout, long layoutId,
+		long groupId, boolean privateLayout, long layoutId, boolean head,
 		boolean retrieveFromCache) {
 
 		return getPersistence().fetchByG_P_L(
-			groupId, privateLayout, layoutId, retrieveFromCache);
+			groupId, privateLayout, layoutId, head, retrieveFromCache);
 	}
 
 	/**
-	 * Removes the layout where groupId = &#63; and privateLayout = &#63; and layoutId = &#63; from the database.
+	 * Removes the layout where groupId = &#63; and privateLayout = &#63; and layoutId = &#63; and head = &#63; from the database.
 	 *
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
 	 * @param layoutId the layout ID
+	 * @param head the head
 	 * @return the layout that was removed
 	 */
 	public static Layout removeByG_P_L(
-			long groupId, boolean privateLayout, long layoutId)
+			long groupId, boolean privateLayout, long layoutId, boolean head)
 		throws com.liferay.portal.kernel.exception.NoSuchLayoutException {
 
-		return getPersistence().removeByG_P_L(groupId, privateLayout, layoutId);
+		return getPersistence().removeByG_P_L(
+			groupId, privateLayout, layoutId, head);
 	}
 
 	/**
-	 * Returns the number of layouts where groupId = &#63; and privateLayout = &#63; and layoutId = &#63;.
+	 * Returns the number of layouts where groupId = &#63; and privateLayout = &#63; and layoutId = &#63; and head = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
 	 * @param layoutId the layout ID
+	 * @param head the head
 	 * @return the number of matching layouts
 	 */
 	public static int countByG_P_L(
-		long groupId, boolean privateLayout, long layoutId) {
+		long groupId, boolean privateLayout, long layoutId, boolean head) {
 
-		return getPersistence().countByG_P_L(groupId, privateLayout, layoutId);
+		return getPersistence().countByG_P_L(
+			groupId, privateLayout, layoutId, head);
 	}
 
 	/**
@@ -3186,83 +3204,90 @@ public class LayoutUtil {
 	}
 
 	/**
-	 * Returns the layout where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63; or throws a <code>NoSuchLayoutException</code> if it could not be found.
+	 * Returns the layout where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63; and head = &#63; or throws a <code>NoSuchLayoutException</code> if it could not be found.
 	 *
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
 	 * @param friendlyURL the friendly url
+	 * @param head the head
 	 * @return the matching layout
 	 * @throws NoSuchLayoutException if a matching layout could not be found
 	 */
 	public static Layout findByG_P_F(
-			long groupId, boolean privateLayout, String friendlyURL)
+			long groupId, boolean privateLayout, String friendlyURL,
+			boolean head)
 		throws com.liferay.portal.kernel.exception.NoSuchLayoutException {
 
 		return getPersistence().findByG_P_F(
-			groupId, privateLayout, friendlyURL);
+			groupId, privateLayout, friendlyURL, head);
 	}
 
 	/**
-	 * Returns the layout where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the layout where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63; and head = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
 	 * @param friendlyURL the friendly url
+	 * @param head the head
 	 * @return the matching layout, or <code>null</code> if a matching layout could not be found
 	 */
 	public static Layout fetchByG_P_F(
-		long groupId, boolean privateLayout, String friendlyURL) {
+		long groupId, boolean privateLayout, String friendlyURL, boolean head) {
 
 		return getPersistence().fetchByG_P_F(
-			groupId, privateLayout, friendlyURL);
+			groupId, privateLayout, friendlyURL, head);
 	}
 
 	/**
-	 * Returns the layout where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the layout where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63; and head = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
 	 * @param friendlyURL the friendly url
+	 * @param head the head
 	 * @param retrieveFromCache whether to retrieve from the finder cache
 	 * @return the matching layout, or <code>null</code> if a matching layout could not be found
 	 */
 	public static Layout fetchByG_P_F(
-		long groupId, boolean privateLayout, String friendlyURL,
+		long groupId, boolean privateLayout, String friendlyURL, boolean head,
 		boolean retrieveFromCache) {
 
 		return getPersistence().fetchByG_P_F(
-			groupId, privateLayout, friendlyURL, retrieveFromCache);
+			groupId, privateLayout, friendlyURL, head, retrieveFromCache);
 	}
 
 	/**
-	 * Removes the layout where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63; from the database.
+	 * Removes the layout where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63; and head = &#63; from the database.
 	 *
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
 	 * @param friendlyURL the friendly url
+	 * @param head the head
 	 * @return the layout that was removed
 	 */
 	public static Layout removeByG_P_F(
-			long groupId, boolean privateLayout, String friendlyURL)
+			long groupId, boolean privateLayout, String friendlyURL,
+			boolean head)
 		throws com.liferay.portal.kernel.exception.NoSuchLayoutException {
 
 		return getPersistence().removeByG_P_F(
-			groupId, privateLayout, friendlyURL);
+			groupId, privateLayout, friendlyURL, head);
 	}
 
 	/**
-	 * Returns the number of layouts where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63;.
+	 * Returns the number of layouts where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63; and head = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
 	 * @param friendlyURL the friendly url
+	 * @param head the head
 	 * @return the number of matching layouts
 	 */
 	public static int countByG_P_F(
-		long groupId, boolean privateLayout, String friendlyURL) {
+		long groupId, boolean privateLayout, String friendlyURL, boolean head) {
 
 		return getPersistence().countByG_P_F(
-			groupId, privateLayout, friendlyURL);
+			groupId, privateLayout, friendlyURL, head);
 	}
 
 	/**
@@ -3999,6 +4024,62 @@ public class LayoutUtil {
 
 		return getPersistence().filterCountByG_P_P_LtP(
 			groupId, privateLayout, parentLayoutId, priority);
+	}
+
+	/**
+	 * Returns the layout where headId = &#63; or throws a <code>NoSuchLayoutException</code> if it could not be found.
+	 *
+	 * @param headId the head ID
+	 * @return the matching layout
+	 * @throws NoSuchLayoutException if a matching layout could not be found
+	 */
+	public static Layout findByHeadId(long headId)
+		throws com.liferay.portal.kernel.exception.NoSuchLayoutException {
+
+		return getPersistence().findByHeadId(headId);
+	}
+
+	/**
+	 * Returns the layout where headId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param headId the head ID
+	 * @return the matching layout, or <code>null</code> if a matching layout could not be found
+	 */
+	public static Layout fetchByHeadId(long headId) {
+		return getPersistence().fetchByHeadId(headId);
+	}
+
+	/**
+	 * Returns the layout where headId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param headId the head ID
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the matching layout, or <code>null</code> if a matching layout could not be found
+	 */
+	public static Layout fetchByHeadId(long headId, boolean retrieveFromCache) {
+		return getPersistence().fetchByHeadId(headId, retrieveFromCache);
+	}
+
+	/**
+	 * Removes the layout where headId = &#63; from the database.
+	 *
+	 * @param headId the head ID
+	 * @return the layout that was removed
+	 */
+	public static Layout removeByHeadId(long headId)
+		throws com.liferay.portal.kernel.exception.NoSuchLayoutException {
+
+		return getPersistence().removeByHeadId(headId);
+	}
+
+	/**
+	 * Returns the number of layouts where headId = &#63;.
+	 *
+	 * @param headId the head ID
+	 * @return the number of matching layouts
+	 */
+	public static int countByHeadId(long headId) {
+		return getPersistence().countByHeadId(headId);
 	}
 
 	/**

@@ -29,26 +29,31 @@ import com.liferay.portal.kernel.util.Accessor;
 @ImplementationClassName("com.liferay.portal.model.impl.LayoutSetVersionImpl")
 @ProviderType
 public interface LayoutSetVersion extends LayoutSetVersionModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.LayoutSetVersionImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<LayoutSetVersion, Long> LAYOUT_SET_VERSION_ID_ACCESSOR =
-		new Accessor<LayoutSetVersion, Long>() {
-			@Override
-			public Long get(LayoutSetVersion layoutSetVersion) {
-				return layoutSetVersion.getLayoutSetVersionId();
-			}
+	public static final Accessor<LayoutSetVersion, Long>
+		LAYOUT_SET_VERSION_ID_ACCESSOR =
+			new Accessor<LayoutSetVersion, Long>() {
 
-			@Override
-			public Class<Long> getAttributeClass() {
-				return Long.class;
-			}
+				@Override
+				public Long get(LayoutSetVersion layoutSetVersion) {
+					return layoutSetVersion.getLayoutSetVersionId();
+				}
 
-			@Override
-			public Class<LayoutSetVersion> getTypeClass() {
-				return LayoutSetVersion.class;
-			}
-		};
+				@Override
+				public Class<Long> getAttributeClass() {
+					return Long.class;
+				}
+
+				@Override
+				public Class<LayoutSetVersion> getTypeClass() {
+					return LayoutSetVersion.class;
+				}
+
+			};
+
 }

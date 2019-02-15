@@ -182,64 +182,69 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	public int countByUuid(String uuid);
 
 	/**
-	 * Returns the layout where uuid = &#63; and groupId = &#63; and privateLayout = &#63; or throws a <code>NoSuchLayoutException</code> if it could not be found.
+	 * Returns the layout where uuid = &#63; and groupId = &#63; and privateLayout = &#63; and head = &#63; or throws a <code>NoSuchLayoutException</code> if it could not be found.
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
+	 * @param head the head
 	 * @return the matching layout
 	 * @throws NoSuchLayoutException if a matching layout could not be found
 	 */
 	public Layout findByUUID_G_P(
-			String uuid, long groupId, boolean privateLayout)
+			String uuid, long groupId, boolean privateLayout, boolean head)
 		throws NoSuchLayoutException;
 
 	/**
-	 * Returns the layout where uuid = &#63; and groupId = &#63; and privateLayout = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the layout where uuid = &#63; and groupId = &#63; and privateLayout = &#63; and head = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
+	 * @param head the head
 	 * @return the matching layout, or <code>null</code> if a matching layout could not be found
 	 */
 	public Layout fetchByUUID_G_P(
-		String uuid, long groupId, boolean privateLayout);
+		String uuid, long groupId, boolean privateLayout, boolean head);
 
 	/**
-	 * Returns the layout where uuid = &#63; and groupId = &#63; and privateLayout = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the layout where uuid = &#63; and groupId = &#63; and privateLayout = &#63; and head = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
+	 * @param head the head
 	 * @param retrieveFromCache whether to retrieve from the finder cache
 	 * @return the matching layout, or <code>null</code> if a matching layout could not be found
 	 */
 	public Layout fetchByUUID_G_P(
-		String uuid, long groupId, boolean privateLayout,
+		String uuid, long groupId, boolean privateLayout, boolean head,
 		boolean retrieveFromCache);
 
 	/**
-	 * Removes the layout where uuid = &#63; and groupId = &#63; and privateLayout = &#63; from the database.
+	 * Removes the layout where uuid = &#63; and groupId = &#63; and privateLayout = &#63; and head = &#63; from the database.
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
+	 * @param head the head
 	 * @return the layout that was removed
 	 */
 	public Layout removeByUUID_G_P(
-			String uuid, long groupId, boolean privateLayout)
+			String uuid, long groupId, boolean privateLayout, boolean head)
 		throws NoSuchLayoutException;
 
 	/**
-	 * Returns the number of layouts where uuid = &#63; and groupId = &#63; and privateLayout = &#63;.
+	 * Returns the number of layouts where uuid = &#63; and groupId = &#63; and privateLayout = &#63; and head = &#63;.
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
+	 * @param head the head
 	 * @return the number of matching layouts
 	 */
 	public int countByUUID_G_P(
-		String uuid, long groupId, boolean privateLayout);
+		String uuid, long groupId, boolean privateLayout, boolean head);
 
 	/**
 	 * Returns all the layouts where uuid = &#63; and companyId = &#63;.
@@ -1877,63 +1882,69 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	public int countByP_I(boolean privateLayout, long iconImageId);
 
 	/**
-	 * Returns the layout where groupId = &#63; and privateLayout = &#63; and layoutId = &#63; or throws a <code>NoSuchLayoutException</code> if it could not be found.
+	 * Returns the layout where groupId = &#63; and privateLayout = &#63; and layoutId = &#63; and head = &#63; or throws a <code>NoSuchLayoutException</code> if it could not be found.
 	 *
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
 	 * @param layoutId the layout ID
+	 * @param head the head
 	 * @return the matching layout
 	 * @throws NoSuchLayoutException if a matching layout could not be found
 	 */
 	public Layout findByG_P_L(
-			long groupId, boolean privateLayout, long layoutId)
+			long groupId, boolean privateLayout, long layoutId, boolean head)
 		throws NoSuchLayoutException;
 
 	/**
-	 * Returns the layout where groupId = &#63; and privateLayout = &#63; and layoutId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the layout where groupId = &#63; and privateLayout = &#63; and layoutId = &#63; and head = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
 	 * @param layoutId the layout ID
+	 * @param head the head
 	 * @return the matching layout, or <code>null</code> if a matching layout could not be found
 	 */
 	public Layout fetchByG_P_L(
-		long groupId, boolean privateLayout, long layoutId);
+		long groupId, boolean privateLayout, long layoutId, boolean head);
 
 	/**
-	 * Returns the layout where groupId = &#63; and privateLayout = &#63; and layoutId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the layout where groupId = &#63; and privateLayout = &#63; and layoutId = &#63; and head = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
 	 * @param layoutId the layout ID
+	 * @param head the head
 	 * @param retrieveFromCache whether to retrieve from the finder cache
 	 * @return the matching layout, or <code>null</code> if a matching layout could not be found
 	 */
 	public Layout fetchByG_P_L(
-		long groupId, boolean privateLayout, long layoutId,
+		long groupId, boolean privateLayout, long layoutId, boolean head,
 		boolean retrieveFromCache);
 
 	/**
-	 * Removes the layout where groupId = &#63; and privateLayout = &#63; and layoutId = &#63; from the database.
+	 * Removes the layout where groupId = &#63; and privateLayout = &#63; and layoutId = &#63; and head = &#63; from the database.
 	 *
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
 	 * @param layoutId the layout ID
+	 * @param head the head
 	 * @return the layout that was removed
 	 */
 	public Layout removeByG_P_L(
-			long groupId, boolean privateLayout, long layoutId)
+			long groupId, boolean privateLayout, long layoutId, boolean head)
 		throws NoSuchLayoutException;
 
 	/**
-	 * Returns the number of layouts where groupId = &#63; and privateLayout = &#63; and layoutId = &#63;.
+	 * Returns the number of layouts where groupId = &#63; and privateLayout = &#63; and layoutId = &#63; and head = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
 	 * @param layoutId the layout ID
+	 * @param head the head
 	 * @return the number of matching layouts
 	 */
-	public int countByG_P_L(long groupId, boolean privateLayout, long layoutId);
+	public int countByG_P_L(
+		long groupId, boolean privateLayout, long layoutId, boolean head);
 
 	/**
 	 * Returns all the layouts where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63;.
@@ -2576,64 +2587,71 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 		long groupId, boolean privateLayout, String type);
 
 	/**
-	 * Returns the layout where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63; or throws a <code>NoSuchLayoutException</code> if it could not be found.
+	 * Returns the layout where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63; and head = &#63; or throws a <code>NoSuchLayoutException</code> if it could not be found.
 	 *
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
 	 * @param friendlyURL the friendly url
+	 * @param head the head
 	 * @return the matching layout
 	 * @throws NoSuchLayoutException if a matching layout could not be found
 	 */
 	public Layout findByG_P_F(
-			long groupId, boolean privateLayout, String friendlyURL)
+			long groupId, boolean privateLayout, String friendlyURL,
+			boolean head)
 		throws NoSuchLayoutException;
 
 	/**
-	 * Returns the layout where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the layout where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63; and head = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
 	 * @param friendlyURL the friendly url
+	 * @param head the head
 	 * @return the matching layout, or <code>null</code> if a matching layout could not be found
 	 */
 	public Layout fetchByG_P_F(
-		long groupId, boolean privateLayout, String friendlyURL);
+		long groupId, boolean privateLayout, String friendlyURL, boolean head);
 
 	/**
-	 * Returns the layout where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the layout where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63; and head = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
 	 * @param friendlyURL the friendly url
+	 * @param head the head
 	 * @param retrieveFromCache whether to retrieve from the finder cache
 	 * @return the matching layout, or <code>null</code> if a matching layout could not be found
 	 */
 	public Layout fetchByG_P_F(
-		long groupId, boolean privateLayout, String friendlyURL,
+		long groupId, boolean privateLayout, String friendlyURL, boolean head,
 		boolean retrieveFromCache);
 
 	/**
-	 * Removes the layout where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63; from the database.
+	 * Removes the layout where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63; and head = &#63; from the database.
 	 *
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
 	 * @param friendlyURL the friendly url
+	 * @param head the head
 	 * @return the layout that was removed
 	 */
 	public Layout removeByG_P_F(
-			long groupId, boolean privateLayout, String friendlyURL)
+			long groupId, boolean privateLayout, String friendlyURL,
+			boolean head)
 		throws NoSuchLayoutException;
 
 	/**
-	 * Returns the number of layouts where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63;.
+	 * Returns the number of layouts where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63; and head = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
 	 * @param friendlyURL the friendly url
+	 * @param head the head
 	 * @return the number of matching layouts
 	 */
 	public int countByG_P_F(
-		long groupId, boolean privateLayout, String friendlyURL);
+		long groupId, boolean privateLayout, String friendlyURL, boolean head);
 
 	/**
 	 * Returns the layout where groupId = &#63; and privateLayout = &#63; and sourcePrototypeLayoutUuid = &#63; or throws a <code>NoSuchLayoutException</code> if it could not be found.
@@ -3232,6 +3250,48 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 */
 	public int filterCountByG_P_P_LtP(
 		long groupId, boolean privateLayout, long parentLayoutId, int priority);
+
+	/**
+	 * Returns the layout where headId = &#63; or throws a <code>NoSuchLayoutException</code> if it could not be found.
+	 *
+	 * @param headId the head ID
+	 * @return the matching layout
+	 * @throws NoSuchLayoutException if a matching layout could not be found
+	 */
+	public Layout findByHeadId(long headId) throws NoSuchLayoutException;
+
+	/**
+	 * Returns the layout where headId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param headId the head ID
+	 * @return the matching layout, or <code>null</code> if a matching layout could not be found
+	 */
+	public Layout fetchByHeadId(long headId);
+
+	/**
+	 * Returns the layout where headId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param headId the head ID
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the matching layout, or <code>null</code> if a matching layout could not be found
+	 */
+	public Layout fetchByHeadId(long headId, boolean retrieveFromCache);
+
+	/**
+	 * Removes the layout where headId = &#63; from the database.
+	 *
+	 * @param headId the head ID
+	 * @return the layout that was removed
+	 */
+	public Layout removeByHeadId(long headId) throws NoSuchLayoutException;
+
+	/**
+	 * Returns the number of layouts where headId = &#63;.
+	 *
+	 * @param headId the head ID
+	 * @return the number of matching layouts
+	 */
+	public int countByHeadId(long headId);
 
 	/**
 	 * Caches the layout in the entity cache if it is enabled.

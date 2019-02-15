@@ -20,7 +20,8 @@ import com.liferay.ratings.kernel.model.RatingsStats;
 /**
  * @author Javier Gamarra
  */
-public class AggregateRatingUtil {
+@Component(service = AggregateRatingConverter.class)
+public class AggregateRatingConverter {
 
 	public static AggregateRating toAggregateRating(RatingsStats ratingsStats) {
 		if (ratingsStats == null) {

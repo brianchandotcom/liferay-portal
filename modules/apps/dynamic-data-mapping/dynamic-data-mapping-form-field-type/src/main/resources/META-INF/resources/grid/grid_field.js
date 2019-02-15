@@ -118,6 +118,7 @@ AUI.add(
 					_onBlurItem: function() {
 						var instance = this;
 
+						instance.showErrorMessage();
 						instance._fireBlurEvent();
 					},
 

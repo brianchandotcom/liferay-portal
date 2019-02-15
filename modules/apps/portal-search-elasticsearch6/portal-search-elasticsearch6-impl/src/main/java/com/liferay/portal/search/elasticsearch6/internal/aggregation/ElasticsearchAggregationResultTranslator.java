@@ -27,6 +27,12 @@ import com.liferay.portal.search.aggregation.bucket.DateHistogramAggregationResu
 import com.liferay.portal.search.aggregation.bucket.DateRangeAggregation;
 import com.liferay.portal.search.aggregation.bucket.DiversifiedSamplerAggregation;
 import com.liferay.portal.search.aggregation.bucket.DiversifiedSamplerAggregationResult;
+import com.liferay.portal.search.aggregation.bucket.FilterAggregation;
+import com.liferay.portal.search.aggregation.bucket.FilterAggregationResult;
+import com.liferay.portal.search.aggregation.bucket.FiltersAggregation;
+import com.liferay.portal.search.aggregation.bucket.FiltersAggregationResult;
+import com.liferay.portal.search.aggregation.bucket.GeoDistanceAggregation;
+import com.liferay.portal.search.aggregation.bucket.GeoDistanceAggregationResult;
 import com.liferay.portal.search.aggregation.bucket.GeoHashGridAggregation;
 import com.liferay.portal.search.aggregation.bucket.GeoHashGridAggregationResult;
 import com.liferay.portal.search.aggregation.bucket.GlobalAggregation;
@@ -43,6 +49,10 @@ import com.liferay.portal.search.aggregation.bucket.ReverseNestedAggregation;
 import com.liferay.portal.search.aggregation.bucket.ReverseNestedAggregationResult;
 import com.liferay.portal.search.aggregation.bucket.SamplerAggregation;
 import com.liferay.portal.search.aggregation.bucket.SamplerAggregationResult;
+import com.liferay.portal.search.aggregation.bucket.SignificantTermsAggregation;
+import com.liferay.portal.search.aggregation.bucket.SignificantTermsAggregationResult;
+import com.liferay.portal.search.aggregation.bucket.SignificantTextAggregation;
+import com.liferay.portal.search.aggregation.bucket.SignificantTextAggregationResult;
 import com.liferay.portal.search.aggregation.bucket.TermsAggregation;
 import com.liferay.portal.search.aggregation.bucket.TermsAggregationResult;
 import com.liferay.portal.search.aggregation.metrics.AvgAggregation;
@@ -51,6 +61,10 @@ import com.liferay.portal.search.aggregation.metrics.CardinalityAggregation;
 import com.liferay.portal.search.aggregation.metrics.CardinalityAggregationResult;
 import com.liferay.portal.search.aggregation.metrics.ExtendedStatsAggregation;
 import com.liferay.portal.search.aggregation.metrics.ExtendedStatsAggregationResult;
+import com.liferay.portal.search.aggregation.metrics.GeoBoundsAggregation;
+import com.liferay.portal.search.aggregation.metrics.GeoBoundsAggregationResult;
+import com.liferay.portal.search.aggregation.metrics.GeoCentroidAggregation;
+import com.liferay.portal.search.aggregation.metrics.GeoCentroidAggregationResult;
 import com.liferay.portal.search.aggregation.metrics.MaxAggregation;
 import com.liferay.portal.search.aggregation.metrics.MaxAggregationResult;
 import com.liferay.portal.search.aggregation.metrics.MinAggregation;
@@ -59,23 +73,35 @@ import com.liferay.portal.search.aggregation.metrics.PercentileRanksAggregation;
 import com.liferay.portal.search.aggregation.metrics.PercentileRanksAggregationResult;
 import com.liferay.portal.search.aggregation.metrics.PercentilesAggregation;
 import com.liferay.portal.search.aggregation.metrics.PercentilesAggregationResult;
+import com.liferay.portal.search.aggregation.metrics.ScriptedMetricAggregation;
+import com.liferay.portal.search.aggregation.metrics.ScriptedMetricAggregationResult;
 import com.liferay.portal.search.aggregation.metrics.StatsAggregation;
 import com.liferay.portal.search.aggregation.metrics.StatsAggregationResult;
 import com.liferay.portal.search.aggregation.metrics.SumAggregation;
 import com.liferay.portal.search.aggregation.metrics.SumAggregationResult;
+import com.liferay.portal.search.aggregation.metrics.TopHitsAggregation;
+import com.liferay.portal.search.aggregation.metrics.TopHitsAggregationResult;
 import com.liferay.portal.search.aggregation.metrics.ValueCountAggregation;
 import com.liferay.portal.search.aggregation.metrics.ValueCountAggregationResult;
+import com.liferay.portal.search.aggregation.metrics.WeightedAvgAggregation;
+import com.liferay.portal.search.aggregation.metrics.WeightedAvgAggregationResult;
 import com.liferay.portal.search.aggregation.pipeline.PercentilesBucketPipelineAggregationResult;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationResultTranslator;
 import com.liferay.portal.search.elasticsearch6.internal.aggregation.pipeline.ElasticsearchPipelineAggregationResultTranslator;
+import com.liferay.portal.search.elasticsearch6.internal.hits.SearchHitsTranslator;
+import com.liferay.portal.search.geolocation.GeoLocationPoint;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
+import org.elasticsearch.common.geo.GeoPoint;
 import org.elasticsearch.join.aggregations.Children;
+import org.elasticsearch.search.SearchHits;
 import org.elasticsearch.search.aggregations.Aggregations;
 import org.elasticsearch.search.aggregations.bucket.MultiBucketsAggregation;
+import org.elasticsearch.search.aggregations.bucket.filter.Filter;
+import org.elasticsearch.search.aggregations.bucket.filter.Filters;
 import org.elasticsearch.search.aggregations.bucket.geogrid.GeoHashGrid;
 import org.elasticsearch.search.aggregations.bucket.global.Global;
 import org.elasticsearch.search.aggregations.bucket.histogram.Histogram;
@@ -87,14 +113,19 @@ import org.elasticsearch.search.aggregations.bucket.sampler.Sampler;
 import org.elasticsearch.search.aggregations.bucket.terms.Terms;
 import org.elasticsearch.search.aggregations.metrics.avg.Avg;
 import org.elasticsearch.search.aggregations.metrics.cardinality.Cardinality;
+import org.elasticsearch.search.aggregations.metrics.geobounds.GeoBounds;
+import org.elasticsearch.search.aggregations.metrics.geocentroid.GeoCentroid;
 import org.elasticsearch.search.aggregations.metrics.max.Max;
 import org.elasticsearch.search.aggregations.metrics.min.Min;
 import org.elasticsearch.search.aggregations.metrics.percentiles.PercentileRanks;
 import org.elasticsearch.search.aggregations.metrics.percentiles.Percentiles;
+import org.elasticsearch.search.aggregations.metrics.scripted.ScriptedMetric;
 import org.elasticsearch.search.aggregations.metrics.stats.Stats;
 import org.elasticsearch.search.aggregations.metrics.stats.extended.ExtendedStats;
 import org.elasticsearch.search.aggregations.metrics.sum.Sum;
+import org.elasticsearch.search.aggregations.metrics.tophits.TopHits;
 import org.elasticsearch.search.aggregations.metrics.valuecount.ValueCount;
+import org.elasticsearch.search.aggregations.metrics.weighted_avg.WeightedAvg;
 
 /**
  * @author Michael C. Han
@@ -216,6 +247,66 @@ public class ElasticsearchAggregationResultTranslator
 			extendedStats.getMax(), extendedStats.getSum(),
 			extendedStats.getSumOfSquares(), extendedStats.getVariance(),
 			extendedStats.getStdDeviation());
+	}
+
+	@Override
+	public FilterAggregationResult visit(FilterAggregation filterAggregation) {
+		Filter filter = (Filter)_elasticsearchAggregation;
+
+		FilterAggregationResult filterAggregationResult =
+			_aggregationResults.filter(filter.getName(), filter.getDocCount());
+
+		filterAggregationResult.addChildrenAggregationResults(
+			translateAggregationResults(
+				filter.getAggregations(), filterAggregation));
+
+		return filterAggregationResult;
+	}
+
+	@Override
+	public FiltersAggregationResult visit(
+		FiltersAggregation filtersAggregation) {
+
+		Filters filters = (Filters)_elasticsearchAggregation;
+
+		return translateBuckets(
+			filters, _aggregationResults.filters(filters.getName()),
+			filtersAggregation);
+	}
+
+	@Override
+	public GeoBoundsAggregationResult visit(
+		GeoBoundsAggregation geoBoundsAggregation) {
+
+		GeoBounds geoBounds = (GeoBounds)_elasticsearchAggregation;
+
+		return _aggregationResults.geoBounds(
+			geoBounds.getName(), translateGeoPoint(geoBounds.topLeft()),
+			translateGeoPoint(geoBounds.bottomRight()));
+	}
+
+	@Override
+	public GeoCentroidAggregationResult visit(
+		GeoCentroidAggregation geoCentroidAggregation) {
+
+		GeoCentroid geoCentroid = (GeoCentroid)_elasticsearchAggregation;
+
+		GeoPoint geoPoint = geoCentroid.centroid();
+
+		return _aggregationResults.geoCentroid(
+			geoCentroid.getName(), translateGeoPoint(geoPoint),
+			geoCentroid.count());
+	}
+
+	@Override
+	public GeoDistanceAggregationResult visit(
+		GeoDistanceAggregation geoDistanceAggregation) {
+
+		return translateBuckets(
+			(Range)_elasticsearchAggregation,
+			_aggregationResults.geoDistance(
+				_elasticsearchAggregation.getName()),
+			geoDistanceAggregation);
 	}
 
 	@Override
@@ -381,6 +472,45 @@ public class ElasticsearchAggregationResultTranslator
 	}
 
 	@Override
+	public ScriptedMetricAggregationResult visit(
+		ScriptedMetricAggregation scriptedMetricAggregation) {
+
+		ScriptedMetric scriptedMetric =
+			(ScriptedMetric)_elasticsearchAggregation;
+
+		return _aggregationResults.scriptedMetric(
+			scriptedMetric.getName(), scriptedMetric.aggregation());
+	}
+
+	@Override
+	public SignificantTermsAggregationResult visit(
+		SignificantTermsAggregation significantTermsAggregation) {
+
+		Terms terms = (Terms)_elasticsearchAggregation;
+
+		return translateBuckets(
+			terms,
+			_aggregationResults.significantTerms(
+				terms.getName(), terms.getDocCountError(),
+				terms.getSumOfOtherDocCounts()),
+			significantTermsAggregation);
+	}
+
+	@Override
+	public SignificantTextAggregationResult visit(
+		SignificantTextAggregation significantTextAggregation) {
+
+		Terms terms = (Terms)_elasticsearchAggregation;
+
+		return translateBuckets(
+			terms,
+			_aggregationResults.significantText(
+				terms.getName(), terms.getDocCountError(),
+				terms.getSumOfOtherDocCounts()),
+			significantTextAggregation);
+	}
+
+	@Override
 	public StatsAggregationResult visit(StatsAggregation statsAggregation) {
 		Stats stats = (Stats)_elasticsearchAggregation;
 
@@ -409,6 +539,18 @@ public class ElasticsearchAggregationResultTranslator
 	}
 
 	@Override
+	public TopHitsAggregationResult visit(
+		TopHitsAggregation topHitsAggregation) {
+
+		TopHits topHits = (TopHits)_elasticsearchAggregation;
+
+		SearchHits searchHits = topHits.getHits();
+
+		return _aggregationResults.topHits(
+			topHits.getName(), _searchHitsTranslator.translate(searchHits));
+	}
+
+	@Override
 	public ValueCountAggregationResult visit(
 		ValueCountAggregation valueCountAggregation) {
 
@@ -416,6 +558,16 @@ public class ElasticsearchAggregationResultTranslator
 
 		return _aggregationResults.valueCount(
 			valueCount.getName(), valueCount.getValue());
+	}
+
+	@Override
+	public WeightedAvgAggregationResult visit(
+		WeightedAvgAggregation weightedAvgAggregation) {
+
+		WeightedAvg weightedAvg = (WeightedAvg)_elasticsearchAggregation;
+
+		return _aggregationResults.weightedAvg(
+			weightedAvg.getName(), weightedAvg.getValue());
 	}
 
 	protected Stream<AggregationResult> translate(
@@ -468,8 +620,18 @@ public class ElasticsearchAggregationResultTranslator
 		return bucketAggregationResult;
 	}
 
+	protected GeoLocationPoint translateGeoPoint(GeoPoint geoPoint) {
+		if (geoPoint == null) {
+			return null;
+		}
+
+		return new GeoLocationPoint(geoPoint.getLat(), geoPoint.getLon());
+	}
+
 	private final AggregationResults _aggregationResults;
 	private final org.elasticsearch.search.aggregations.Aggregation
 		_elasticsearchAggregation;
+	private final SearchHitsTranslator _searchHitsTranslator =
+		new SearchHitsTranslator();
 
 }

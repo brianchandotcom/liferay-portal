@@ -22,6 +22,7 @@ import com.liferay.data.engine.service.DEDataDefinitionCountRequest;
 import com.liferay.data.engine.service.DEDataDefinitionCountResponse;
 import com.liferay.data.engine.service.DEDataDefinitionDeleteRequest;
 import com.liferay.data.engine.service.DEDataDefinitionGetRequest;
+import com.liferay.data.engine.service.DEDataDefinitionGetResponse;
 import com.liferay.data.engine.service.DEDataDefinitionListRequest;
 import com.liferay.data.engine.service.DEDataDefinitionListResponse;
 import com.liferay.data.engine.service.DEDataDefinitionRequestBuilder;
@@ -888,7 +889,8 @@ public class DEDataDefinitionServiceTest {
 			ServiceContextThreadLocal.popServiceContext();
 		}
 
-		User user = UserTestUtil.addGroupUser(_group, RoleConstants.GUEST);
+		User user = UserTestUtil.addGroupUser(
+			_group, RoleConstants.SITE_MEMBER);
 
 		PermissionThreadLocal.setPermissionChecker(
 			PermissionCheckerFactoryUtil.create(user));
@@ -2163,6 +2165,36 @@ public class DEDataDefinitionServiceTest {
 				).build();
 
 			_deDataDefinitionService.execute(deDataDefinitionDeleteRequest);
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
+	}
+
+	protected DEDataDefinition getDEDataDefinition(
+			User user, Group group, long deDataDefinitionId)
+		throws Exception {
+
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(user));
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), user.getUserId());
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+		try {
+			DEDataDefinitionGetRequest deDataDefinitionGetRequest =
+				DEDataDefinitionRequestBuilder.getBuilder(
+				).byId(
+					deDataDefinitionId
+				).build();
+
+			DEDataDefinitionGetResponse deDataDefinitionGetResponse =
+				_deDataDefinitionService.execute(deDataDefinitionGetRequest);
+
+			return deDataDefinitionGetResponse.getDEDataDefinition();
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();

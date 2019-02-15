@@ -29,7 +29,11 @@ import com.liferay.data.engine.service.DEDataDefinitionSaveResponse;
 import com.liferay.data.engine.service.DEDataDefinitionService;
 import com.liferay.data.engine.service.DEDataRecordCollectionDeleteModelPermissionsRequest;
 import com.liferay.data.engine.service.DEDataRecordCollectionDeletePermissionsRequest;
+import com.liferay.data.engine.service.DEDataRecordCollectionDeleteRecordRequest;
+import com.liferay.data.engine.service.DEDataRecordCollectionDeleteRecordResponse;
 import com.liferay.data.engine.service.DEDataRecordCollectionDeleteRequest;
+import com.liferay.data.engine.service.DEDataRecordCollectionGetRecordRequest;
+import com.liferay.data.engine.service.DEDataRecordCollectionGetRecordResponse;
 import com.liferay.data.engine.service.DEDataRecordCollectionGetRequest;
 import com.liferay.data.engine.service.DEDataRecordCollectionGetResponse;
 import com.liferay.data.engine.service.DEDataRecordCollectionRequestBuilder;
@@ -110,6 +114,40 @@ public class DEDataEngineTestUtil {
 
 			deDataDefinitionService.execute(
 				deDataDefinitionDeletePermissionsRequest);
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
+	}
+
+	public static long deleteDEDataRecord(
+			User user, Group group, long deDataRecordId,
+			DEDataRecordCollectionService deDataRecordCollectionService)
+		throws Exception {
+
+		try {
+			ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext(
+					group, user.getUserId());
+
+			ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+			PermissionThreadLocal.setPermissionChecker(
+				PermissionCheckerFactoryUtil.create(user));
+
+			DEDataRecordCollectionDeleteRecordRequest
+				deDataRecordCollectionDeleteRecordRequest =
+					DEDataRecordCollectionRequestBuilder.deleteRecordBuilder(
+						deDataRecordId
+					).build();
+
+			DEDataRecordCollectionDeleteRecordResponse
+				deDataRecordCollectionDeleteRecordResponse =
+					deDataRecordCollectionService.execute(
+						deDataRecordCollectionDeleteRecordRequest);
+
+			return deDataRecordCollectionDeleteRecordResponse.
+				getDEDataRecordId();
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();
@@ -228,6 +266,39 @@ public class DEDataEngineTestUtil {
 			deDataDefinitionService.execute(deDataDefinitionGetRequest);
 
 		return deDataDefinitionGetResponse.getDEDataDefinition();
+	}
+
+	public static DEDataRecord getDEDataRecord(
+			User user, Group group, long deDataRecordId,
+			DEDataRecordCollectionService deDataRecordCollectionService)
+		throws Exception {
+
+		try {
+			ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext(
+					group, user.getUserId());
+
+			ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+			PermissionThreadLocal.setPermissionChecker(
+				PermissionCheckerFactoryUtil.create(user));
+
+			DEDataRecordCollectionGetRecordRequest
+				deDataRecordCollectionGetRecordRequest =
+					DEDataRecordCollectionRequestBuilder.getRecordBuilder(
+						deDataRecordId
+					).build();
+
+			DEDataRecordCollectionGetRecordResponse
+				deDataRecordCollectionGetRecordResponse =
+					deDataRecordCollectionService.execute(
+						deDataRecordCollectionGetRecordRequest);
+
+			return deDataRecordCollectionGetRecordResponse.getDEDataRecord();
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
 	}
 
 	public static DEDataRecordCollection getDEDataRecordCollection(

@@ -65,6 +65,17 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--WIDGET_VIEW-->
+<tr>
+	<td>WIDGET_VIEW_ENTRY_ELLIPSIS</td>
+	<td>//div[contains(@class,'widget-mode-simple')][contains(.,'${key_entryTitle}')]//button[contains(@class,'dropdown-toggle')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--ENTRY_TABLE-->
 <tr>
 	<td>ENTRY_TABLE_ALL_CHECKBOX</td>

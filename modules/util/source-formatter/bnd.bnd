@@ -83,7 +83,7 @@ Main-Class: com.liferay.source.formatter.SourceFormatter
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/util/ListUtil.class,\
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/util/LocaleThreadLocal.class,\
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/util/LocaleUtil.class,\
-	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/util/MapUtil.class,\
+	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/util/MapUtil*,\
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/util/NaturalOrderStringComparator.class,\
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/util/PropertiesUtil.class,\
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/util/PropsKeys.class,\

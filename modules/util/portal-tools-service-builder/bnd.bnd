@@ -128,7 +128,7 @@ Main-Class: com.liferay.portal.tools.service.builder.ServiceBuilder
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/util/HashUtil.class,\
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/util/KeyValuePair.class,\
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/util/ListUtil.class,\
-	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/util/MapUtil.class,\
+	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/util/MapUtil*,\
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/util/PropertiesUtil.class,\
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/util/ReflectionUtil.class,\
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/util/StreamUtil*,\

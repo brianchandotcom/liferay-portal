@@ -14,7 +14,9 @@
 
 package com.liferay.source.formatter.checks;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -49,14 +51,18 @@ public class JSONScriptsCheck extends BaseFileCheck {
 			JSONObject devDependenciesJSONObject = jsonObject.getJSONObject(
 				"devDependencies");
 
-			for (String packageName : _DEV_DEPENDENCIES_PACKAGE_NAMES) {
+			for (Map.Entry<String, String> entry :
+					_missingScriptsMap.entrySet()) {
+
+				String packageName = entry.getKey();
+
 				if (devDependenciesJSONObject.isNull(packageName)) {
 					continue;
 				}
 
-				String[] missingScripts = _missingScriptsMap.get(packageName);
+				for (String missingScript :
+						StringUtil.split(entry.getValue())) {
 
-				for (String missingScript : missingScripts) {
 					String message = StringBundler.concat(
 						"For Using '" + packageName + "', '", missingScript,
 						"' should be enforced");
@@ -79,7 +85,7 @@ public class JSONScriptsCheck extends BaseFileCheck {
 					String scriptValue = scriptsJSONObject.getString(
 						missingScript);
 
-					if (!scriptValue.startsWith(packageName)) {
+					if (!scriptValue.startsWith(packageName + CharPool.SPACE)) {
 						addMessage(fileName, message);
 					}
 				}
@@ -90,14 +96,10 @@ public class JSONScriptsCheck extends BaseFileCheck {
 		}
 	}
 
-	private static final String[] _DEV_DEPENDENCIES_PACKAGE_NAMES = {
-		"liferay-npm-scripts"
-	};
-
-	private static final Map<String, String[]> _missingScriptsMap =
-		new HashMap<String, String[]>() {
+	private static final Map<String, String> _missingScriptsMap =
+		new HashMap<String, String>() {
 			{
-				put("liferay-npm-scripts", new String[] {"csf", "format"});
+				put("liferay-npm-scripts", "csf,format");
 			}
 		};
 

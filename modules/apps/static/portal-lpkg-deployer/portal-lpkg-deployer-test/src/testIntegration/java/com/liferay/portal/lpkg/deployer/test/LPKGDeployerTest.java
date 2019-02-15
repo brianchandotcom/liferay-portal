@@ -133,18 +133,22 @@ public class LPKGDeployerTest {
 		Method method = clazz.getDeclaredMethod(
 			"generateInnerBundleLocation", Bundle.class, String.class);
 
+		Method lpkgLocationmethod = clazz.getDeclaredMethod(
+			"getLPKGLocation", File.class);
+
 		serviceTracker.close();
 
 		Map<Bundle, List<Bundle>> deployedLPKGBundles =
 			lpkgDeployer.getDeployedLPKGBundles();
 
 		for (File lpkgFile : lpkgFiles) {
-			Bundle lpkgBundle = bundleContext.getBundle(
-				lpkgFile.getCanonicalPath());
+			String lpkgLocation = (String)lpkgLocationmethod.invoke(
+				null, lpkgFile);
+
+			Bundle lpkgBundle = bundleContext.getBundle(lpkgLocation);
 
 			Assert.assertNotNull(
-				"No matching LPKG bundle for " + lpkgFile.getCanonicalPath(),
-				lpkgBundle);
+				"No matching LPKG bundle for " + lpkgLocation, lpkgBundle);
 
 			List<Bundle> expectedAppBundles = new ArrayList<>(
 				deployedLPKGBundles.get(lpkgBundle));

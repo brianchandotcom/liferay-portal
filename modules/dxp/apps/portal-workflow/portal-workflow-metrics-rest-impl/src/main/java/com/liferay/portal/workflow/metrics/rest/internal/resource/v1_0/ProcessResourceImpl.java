@@ -14,16 +14,30 @@
 
 package com.liferay.portal.workflow.metrics.rest.internal.resource.v1_0;
 
+import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.GroupBy;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.facet.Facet;
+import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
+import com.liferay.portal.kernel.search.facet.collector.TermCollector;
+import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import com.liferay.portal.kernel.search.filter.TermsFilter;
+import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.search.engine.adapter.search.CountSearchRequest;
+import com.liferay.portal.search.engine.adapter.search.CountSearchResponse;
+import com.liferay.portal.search.engine.adapter.search.SearchRequestExecutor;
+import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
+import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
+import com.liferay.portal.search.facet.custom.CustomFacetFactory;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Process;
-import com.liferay.portal.workflow.metrics.rest.internal.search.query.WorkflowMetricsInstanceQueryExecutor;
-import com.liferay.portal.workflow.metrics.rest.internal.search.query.WorkflowMetricsProcessQueryExecutor;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.ProcessResource;
 
 import java.util.ArrayList;
@@ -50,39 +64,112 @@ public class ProcessResourceImpl extends BaseProcessResourceImpl {
 		throws Exception {
 
 		return Page.of(
-			getProcesses(
-				companyId, title, true, pagination.getStartPosition(),
-				pagination.getItemsPerPage()),
-			pagination,
-			_workflowMetricsProcessQueryExecutor.searchCount(
-				companyId, title, true));
+			_getProcesses(companyId, title, pagination), pagination,
+			_getProcessesCount(companyId, title));
 	}
 
-	protected Collection<Process> getProcesses(
-		long companyId, String title, boolean active, int start, int size) {
+	private Facet _createFacet(String fieldName) {
+		Facet facet = _customFacetFactory.newInstance(null);
+
+		facet.setFieldName(fieldName);
+
+		return facet;
+	}
+
+	private BooleanFilter _createProcessBooleanFilter(long companyId) {
+		return new BooleanFilter() {
+			{
+				addRequiredTerm("active", true);
+				addRequiredTerm("companyId", companyId);
+				addRequiredTerm("deleted", false);
+			}
+		};
+	}
+
+	private int _getInstanceCount(long companyId, String name) {
+		BooleanFilter booleanFilter = new BooleanFilter() {
+			{
+				addRequiredTerm("companyId", companyId);
+				addRequiredTerm("complete", false);
+				addRequiredTerm("deleted", false);
+
+				TermsFilter termsFilter = new TermsFilter("processId");
+
+				for (long processId : _getProcessIds(companyId, name)) {
+					termsFilter.addValue(String.valueOf(processId));
+				}
+
+				add(termsFilter, BooleanClauseOccur.MUST);
+			}
+		};
+
+		CountSearchResponse countSearchResponse =
+			_searchRequestExecutor.executeSearchRequest(
+				new CountSearchRequest() {
+					{
+						setIndexNames("workflow-metrics-instances");
+						setQuery(
+							new BooleanQueryImpl() {
+								{
+									setPreBooleanFilter(booleanFilter);
+								}
+							});
+					}
+				});
+
+		return (int)countSearchResponse.getCount();
+	}
+
+	private Collection<Process> _getProcesses(
+			long companyId, String title, Pagination pagination)
+		throws Exception {
 
 		List<Process> processes = new ArrayList<>();
 
-		Map<String, Hits> map = _workflowMetricsProcessQueryExecutor.search(
-			companyId, title, active, 0, 1, "name", 1,
-			new Sort(Field.getSortableFieldName("date"), true));
+		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
+
+		Sort[] sorts = {new Sort(Field.getSortableFieldName("date"), true)};
+
+		searchSearchRequest.setGroupBy(
+			new GroupBy("name") {
+				{
+					setSize(1);
+					setSorts(sorts);
+				}
+			});
+
+		searchSearchRequest.setIndexNames("workflow-metrics-processes");
+		searchSearchRequest.setQuery(
+			new BooleanQueryImpl() {
+				{
+					if (Validator.isNotNull(title)) {
+						addTerm("title", title);
+					}
+
+					setPreBooleanFilter(_createProcessBooleanFilter(companyId));
+				}
+			});
+		searchSearchRequest.setSize(pagination.getItemsPerPage());
+		searchSearchRequest.setSorts(sorts);
+		searchSearchRequest.setStart(pagination.getStartPosition());
+
+		SearchSearchResponse searchSearchResponse =
+			_searchRequestExecutor.executeSearchRequest(searchSearchRequest);
+
+		Hits searchSearchResponseHits = searchSearchResponse.getHits();
+
+		Map<String, Hits> hitsMap = searchSearchResponseHits.getGroupedHits();
 
 		List<Hits> hitsList = ListUtil.subList(
-			new ArrayList<>(map.values()), start, start + size);
+			new ArrayList<>(hitsMap.values()), pagination.getStartPosition(),
+			pagination.getStartPosition() + pagination.getItemsPerPage());
 
 		for (Hits hits : hitsList) {
-			Process process = new Process();
-
 			Document[] documents = hits.getDocs();
 
 			Document document = documents[0];
 
-			process.setInstanceCount(
-				_workflowMetricsInstanceQueryExecutor.searchCount(
-					companyId,
-					_workflowMetricsProcessQueryExecutor.getProcessIds(
-						companyId, document.get("name"))));
-			process.setTitle(document.get("title"));
+			Process process = _toProcess(companyId, document);
 
 			processes.add(process);
 		}
@@ -90,12 +177,89 @@ public class ProcessResourceImpl extends BaseProcessResourceImpl {
 		return processes;
 	}
 
-	@Reference
-	private WorkflowMetricsInstanceQueryExecutor
-		_workflowMetricsInstanceQueryExecutor;
+	private int _getProcessesCount(long companyId, String title)
+		throws Exception {
+
+		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
+
+		Facet facet = _createFacet("name");
+
+		searchSearchRequest.putFacet(facet.getFieldName(), facet);
+
+		searchSearchRequest.setIndexNames("workflow-metrics-processes");
+		searchSearchRequest.setQuery(
+			new BooleanQueryImpl() {
+				{
+					if (Validator.isNotNull(title)) {
+						addTerm("title", title);
+					}
+
+					setPreBooleanFilter(_createProcessBooleanFilter(companyId));
+				}
+			});
+
+		_searchRequestExecutor.executeSearchRequest(searchSearchRequest);
+
+		FacetCollector facetCollector = facet.getFacetCollector();
+
+		List<TermCollector> termCollectors = facetCollector.getTermCollectors();
+
+		return termCollectors.size();
+	}
+
+	private long[] _getProcessIds(long companyId, String name) {
+		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
+
+		Facet facet = _createFacet("processId");
+
+		searchSearchRequest.putFacet(facet.getFieldName(), facet);
+
+		searchSearchRequest.setIndexNames("workflow-metrics-processes");
+
+		BooleanFilter booleanFilter = _createProcessBooleanFilter(companyId);
+
+		booleanFilter.addRequiredTerm("name", name);
+
+		searchSearchRequest.setQuery(
+			new BooleanQueryImpl() {
+				{
+					setPreBooleanFilter(booleanFilter);
+				}
+			});
+
+		_searchRequestExecutor.executeSearchRequest(searchSearchRequest);
+
+		FacetCollector facetCollector = facet.getFacetCollector();
+
+		List<TermCollector> termCollectors = facetCollector.getTermCollectors();
+
+		long[] processIds = new long[termCollectors.size()];
+
+		for (int i = 0; i < termCollectors.size(); i++) {
+			TermCollector termCollector = termCollectors.get(i);
+
+			long processId = GetterUtil.getLong(termCollector.getTerm());
+
+			processIds[i] = processId;
+		}
+
+		return processIds;
+	}
+
+	private Process _toProcess(long companyId, Document document) {
+		Process process = new Process();
+
+		process.setInstanceCount(
+			_getInstanceCount(companyId, document.get("name")));
+		process.setTitle(document.get("title"));
+
+		return process;
+	}
 
 	@Reference
-	private WorkflowMetricsProcessQueryExecutor
-		_workflowMetricsProcessQueryExecutor;
+	private CustomFacetFactory _customFacetFactory;
+
+	@Reference
+	private SearchRequestExecutor _searchRequestExecutor;
 
 }

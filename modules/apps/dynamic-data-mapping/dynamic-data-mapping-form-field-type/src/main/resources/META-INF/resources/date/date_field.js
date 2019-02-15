@@ -146,9 +146,7 @@ AUI.add(
 
 							var calendar = datePicker.getCalendar();
 
-							var popover = datePicker.getPopover();
-
-							if (calendar.get('boundingBox').contains(node) || popover.get('visible')) {
+							if (calendar.get('boundingBox').contains(node)) {
 								hasFocus = true;
 							}
 						}

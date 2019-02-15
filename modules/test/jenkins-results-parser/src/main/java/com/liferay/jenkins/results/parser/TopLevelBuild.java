@@ -1407,7 +1407,7 @@ public class TopLevelBuild extends BaseBuild {
 	protected void sendBuildMetrics(String message) {
 		if (_sendBuildMetrics) {
 			DatagramRequestUtil.send(
-				message, _metricsHostName, _metricsHostPort);
+				message.trim(), _metricsHostName, _metricsHostPort);
 		}
 	}
 

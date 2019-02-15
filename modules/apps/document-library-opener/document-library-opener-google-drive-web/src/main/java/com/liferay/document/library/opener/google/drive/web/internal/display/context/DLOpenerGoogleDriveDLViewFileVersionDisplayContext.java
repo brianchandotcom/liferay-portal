@@ -116,11 +116,13 @@ public class DLOpenerGoogleDriveDLViewFileVersionDisplayContext
 			return menu;
 		}
 
-		List<MenuItem> menuItems = menu.getMenuItems();
+		if (!_isCheckedOutByOther()) {
+			List<MenuItem> menuItems = menu.getMenuItems();
 
-		menuItems.add(
-			_createEditInGoogleDocsMenuItem(
-				DLOpenerGoogleDriveWebConstants.GOOGLE_DRIVE_CHECKOUT));
+			menuItems.add(
+				_createEditInGoogleDocsMenuItem(
+					DLOpenerGoogleDriveWebConstants.GOOGLE_DRIVE_CHECKOUT));
+		}
 
 		return menu;
 	}
@@ -187,10 +189,20 @@ public class DLOpenerGoogleDriveDLViewFileVersionDisplayContext
 		return liferayPortletResponse.getNamespace();
 	}
 
+	private boolean _isCheckedOutByOther() throws PortalException {
+		FileEntry fileEntry = fileVersion.getFileEntry();
+
+		if (fileEntry.isCheckedOut() && !fileEntry.hasLock()) {
+			return true;
+		}
+
+		return false;
+	}
+
 	private boolean _isCheckedOutInGoogleDrive() throws PortalException {
 		FileEntry fileEntry = fileVersion.getFileEntry();
 
-		if (fileEntry.isCheckedOut() &&
+		if (fileEntry.isCheckedOut() && fileEntry.hasLock() &&
 			_dlOpenerGoogleDriveManager.isGoogleDriveFile(fileEntry)) {
 
 			return true;

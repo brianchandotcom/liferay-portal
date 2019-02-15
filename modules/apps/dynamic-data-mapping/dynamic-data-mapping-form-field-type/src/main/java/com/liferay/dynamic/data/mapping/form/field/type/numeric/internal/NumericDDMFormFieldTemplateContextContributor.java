@@ -31,6 +31,7 @@ import java.text.DecimalFormatSymbols;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -86,7 +87,12 @@ public class NumericDDMFormFieldTemplateContextContributor
 		String value = HtmlUtil.extractText(
 			ddmFormFieldRenderingContext.getValue());
 
-		parameters.put("value", getFormattedValue(value, locale));
+		if (Objects.equals(value, "NaN")) {
+			parameters.put("value", "");
+		}
+		else {
+			parameters.put("value", getFormattedValue(value, locale));
+		}
 
 		return parameters;
 	}

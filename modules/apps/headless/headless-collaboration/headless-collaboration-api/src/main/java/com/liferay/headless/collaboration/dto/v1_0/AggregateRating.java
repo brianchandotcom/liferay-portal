@@ -36,10 +36,6 @@ public class AggregateRating {
 		return bestRating;
 	}
 
-	public Long getId() {
-		return id;
-	}
-
 	public Number getRatingCount() {
 		return ratingCount;
 	}
@@ -61,19 +57,6 @@ public class AggregateRating {
 
 			try {
 				bestRating = bestRatingUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
-			try {
-				id = idUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -127,9 +110,6 @@ public class AggregateRating {
 
 	@GraphQLField
 	protected Number bestRating;
-
-	@GraphQLField
-	protected Long id;
 
 	@GraphQLField
 	protected Number ratingCount;

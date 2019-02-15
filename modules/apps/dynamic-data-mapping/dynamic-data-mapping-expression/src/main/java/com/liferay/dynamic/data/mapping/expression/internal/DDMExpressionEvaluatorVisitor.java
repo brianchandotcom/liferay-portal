@@ -50,6 +50,7 @@ import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpression
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -106,9 +107,14 @@ public class DDMExpressionEvaluatorVisitor
 		@NotNull DivisionExpressionContext context) {
 
 		BigDecimal bigDecimal1 = visitChild(context, 0);
+
 		BigDecimal bigDecimal2 = visitChild(context, 2);
 
-		return bigDecimal1.divide(bigDecimal2);
+		if (bigDecimal2.compareTo(BigDecimal.ZERO) == 0) {
+			return "NaN";
+		}
+
+		return bigDecimal1.divide(bigDecimal2, 2, RoundingMode.FLOOR);
 	}
 
 	@Override

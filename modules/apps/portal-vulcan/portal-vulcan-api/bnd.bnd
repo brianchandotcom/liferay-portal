@@ -16,6 +16,7 @@ Export-Package:\
 Import-Package:\
 	!graphql.annotations.processor.typeFunctions.*,\
 	!graphql.annotations.typeResolvers.*,\
+	\
 	!graphql.schema.*,\
 	\
 	*

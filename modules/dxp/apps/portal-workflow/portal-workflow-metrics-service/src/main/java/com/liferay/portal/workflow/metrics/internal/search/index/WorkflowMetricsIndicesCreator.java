@@ -45,7 +45,9 @@ public class WorkflowMetricsIndicesCreator {
 		Iterator<String> iterator = jsonObject.keys();
 
 		while (iterator.hasNext()) {
-			String indexName = _getIndexName(iterator.next());
+			String indexType = iterator.next();
+
+			String indexName = _getIndexName(indexType);
 
 			IndicesExistsIndexRequest indicesExistsIndexRequest =
 				new IndicesExistsIndexRequest(indexName);
@@ -64,7 +66,7 @@ public class WorkflowMetricsIndicesCreator {
 				JSONUtil.put(
 					"mappings",
 					JSONUtil.put(
-						indexName, jsonObject.getJSONObject(indexName)
+						indexType, jsonObject.getJSONObject(indexType)
 					)
 				).toString());
 
@@ -81,7 +83,7 @@ public class WorkflowMetricsIndicesCreator {
 
 		// WorkflowMetricsInstanceType to WorkflowMetricsInstance
 
-		String indexName = key.substring(0, 4);
+		String indexName = key.substring(0, key.length() - 4);
 
 		// WorkflowMetricsInstance to WorkflowMetricsInstances
 

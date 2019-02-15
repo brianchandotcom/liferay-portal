@@ -40,12 +40,16 @@
 						<menu class="portlet-topper-toolbar" id="portlet-topper-toolbar_${portlet_id}" type="toolbar">
 							<#assign portletConfigurationIcon = portlet_configuration_icons[0] />
 
-							<@liferay_ui["icon"]
-								icon="${portletConfigurationIcon.getIconCssClass()}"
-								markupView="lexicon"
-								onClick="${portletConfigurationIcon.getOnClick(renderRequest, renderResponse)}"
-								url="javascript:;"
-							/>
+							<#if portletConfigurationIcon.getIconCssClass()??>
+								<@liferay_ui["icon"]
+									icon="${portletConfigurationIcon.getIconCssClass()}"
+									markupView="lexicon"
+									onClick="${portletConfigurationIcon.getOnClick(renderRequest, renderResponse)}"
+									url="javascript:;"
+								/>
+							<#else>
+								<@liferay_portlet["icon-options"] portletConfigurationIcons=portlet_configuration_icons />
+							</#if>
 						</menu>
 					</#if>
 				</#if>

@@ -16,7 +16,7 @@ package com.liferay.headless.collaboration.internal.resource.v1_0;
 
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.headless.collaboration.dto.v1_0.AggregateRating;
-import com.liferay.headless.collaboration.internal.dto.v1_0.AggregateRatingUtil;
+import com.liferay.headless.collaboration.internal.dto.v1_0.AggregateRatingConverter;
 import com.liferay.headless.collaboration.resource.v1_0.AggregateRatingResource;
 import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
 
@@ -38,12 +38,15 @@ public class AggregateRatingResourceImpl
 	public AggregateRating getAggregateRating(Long aggregateRatingId)
 		throws Exception {
 
-		return AggregateRatingUtil.toAggregateRating(
+		return _aggregateRatingConverter.toAggregateRating(
 			_ratingsStatsLocalService.fetchStats(
 				BlogsEntry.class.getName(), aggregateRatingId));
 	}
 
 	@Reference
 	private RatingsStatsLocalService _ratingsStatsLocalService;
+
+	@Reference
+	private AggregateRatingConverter _aggregateRatingConverter;
 
 }

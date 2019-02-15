@@ -8,17 +8,17 @@ exports[`SegmentEdit should render 1`] = `
     <input
       name="name"
       type="hidden"
-      value="unnamed-segment"
+      value=""
     />
     <input
       name="name_en_US"
       type="hidden"
-      value="unnamed-segment"
+      value=""
     />
     <input
       name="key"
       type="hidden"
-      value="unnamed-segment"
+      value=""
     />
     <input
       name="active"
@@ -42,8 +42,9 @@ exports[`SegmentEdit should render 1`] = `
               data-testid="title-input"
               name="name"
               placeholder="unnamed-segment"
+              required=""
               type="text"
-              value="unnamed-segment"
+              value=""
             />
             <div
               class="title-display placeholder-display"

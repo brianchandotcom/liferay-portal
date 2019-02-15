@@ -47,7 +47,7 @@ class TitleEditor extends Component {
 	};
 
 	render() {
-		const {inputName, onChange, placeholder, value} = this.props;
+		const {errors, inputName, onChange, placeholder, value} = this.props;
 
 		const {editing} = this.state;
 
@@ -67,7 +67,7 @@ class TitleEditor extends Component {
 			'title-display',
 			{
 				'hide': editing,
-				'placeholder-display': value === placeholder
+				'placeholder-display': !value
 			}
 		);
 
@@ -83,13 +83,14 @@ class TitleEditor extends Component {
 					onKeyDown={this._handleKeyDown}
 					placeholder={placeholder}
 					ref={this.titleInput}
+					required
 					type="text"
 					value={value}
 				/>
 
 				<div className={displayClasses}>
 					<span onClick={this._handleEdit}>
-						{value}
+						{value || placeholder}
 					</span>
 
 					<ClayButton

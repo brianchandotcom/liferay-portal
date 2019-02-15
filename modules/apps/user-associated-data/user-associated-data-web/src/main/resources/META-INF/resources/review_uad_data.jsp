@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String scope = ParamUtil.getString(request, "scope", "personal-site");
+String scope = ParamUtil.getString(request, "scope", UADConstants.SCOPE_PERSONAL_SITE);
 
 long[] groupIds = (long[])request.getAttribute(UADWebKeys.GROUP_IDS);
 int totalReviewableUADEntitiesCount = (int)request.getAttribute(UADWebKeys.TOTAL_UAD_ENTITIES_COUNT);
@@ -56,22 +56,22 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 				<div class="collapse panel-collapse show" id="<portlet:namespace />scopePanelBody">
 					<div class="panel-body">
 						<clay:radio
-							checked='<%= scope.equals("personal-site") %>'
-							label='<%= LanguageUtil.get(request, "personal-site") %>'
+							checked="<%= scope.equals(UADConstants.SCOPE_PERSONAL_SITE) %>"
+							label="<%= LanguageUtil.get(request, UADConstants.SCOPE_PERSONAL_SITE) %>"
 							name="scope"
 							value="personal-site"
 						/>
 
 						<clay:radio
-							checked='<%= scope.equals("regular-sites") %>'
-							label='<%= LanguageUtil.get(request, "regular-sites") %>'
+							checked="<%= scope.equals(UADConstants.SCOPE_REGULAR_SITES) %>"
+							label="<%= LanguageUtil.get(request, UADConstants.SCOPE_REGULAR_SITES) %>"
 							name="scope"
 							value="regular-sites"
 						/>
 
 						<clay:radio
-							checked='<%= scope.equals("instance") %>'
-							label='<%= LanguageUtil.get(request, "instance") %>'
+							checked="<%= scope.equals(UADConstants.SCOPE_INSTANCE) %>"
+							label="<%= LanguageUtil.get(request, UADConstants.SCOPE_INSTANCE) %>"
 							name="scope"
 							value="instance"
 						/>

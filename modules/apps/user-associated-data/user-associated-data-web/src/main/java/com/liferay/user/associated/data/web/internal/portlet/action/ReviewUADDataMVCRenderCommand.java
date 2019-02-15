@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
 import com.liferay.user.associated.data.display.UADDisplay;
+import com.liferay.user.associated.data.web.internal.constants.UADConstants;
 import com.liferay.user.associated.data.web.internal.constants.UADWebKeys;
 import com.liferay.user.associated.data.web.internal.display.UADApplicationSummaryDisplay;
 import com.liferay.user.associated.data.web.internal.display.UADEntity;
@@ -84,11 +85,11 @@ public class ReviewUADDataMVCRenderCommand implements MVCRenderCommand {
 				renderRequest);
 
 			String scope = ParamUtil.getString(
-				renderRequest, "scope", "personal-site");
+				renderRequest, "scope", UADConstants.SCOPE_PERSONAL_SITE);
 
 			boolean siteScoped = false;
 
-			if (!scope.equals("instance")) {
+			if (!scope.equals(UADConstants.SCOPE_INSTANCE)) {
 				siteScoped = true;
 			}
 
@@ -202,14 +203,14 @@ public class ReviewUADDataMVCRenderCommand implements MVCRenderCommand {
 
 	private long[] _getGroupIds(User user, String scope) {
 		try {
-			if (scope.equals("personal-site")) {
+			if (scope.equals(UADConstants.SCOPE_PERSONAL_SITE)) {
 				Group userGroup = _groupLocalService.getUserGroup(
 					user.getCompanyId(), user.getUserId());
 
 				return new long[] {userGroup.getGroupId()};
 			}
 
-			if (scope.equals("regular-sites")) {
+			if (scope.equals(UADConstants.SCOPE_REGULAR_SITES)) {
 				List<Group> groups = _groupLocalService.getGroups(
 					user.getCompanyId(), GroupConstants.ANY_PARENT_GROUP_ID,
 					true);

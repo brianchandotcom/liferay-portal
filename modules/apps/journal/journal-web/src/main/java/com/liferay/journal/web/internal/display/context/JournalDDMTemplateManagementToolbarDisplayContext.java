@@ -122,6 +122,11 @@ public class JournalDDMTemplateManagementToolbarDisplayContext
 	}
 
 	@Override
+	public String getDefaultEventHandler() {
+		return "journalDDMTemplatesManagementToolbarDefaultEventHandler";
+	}
+
+	@Override
 	public String getSearchActionURL() {
 		PortletURL searchActionURL = getPortletURL();
 

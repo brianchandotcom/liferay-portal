@@ -19,6 +19,8 @@
 <%
 JournalDDMTemplateDisplayContext journalDDMTemplateDisplayContext = new JournalDDMTemplateDisplayContext(renderRequest, renderResponse);
 
+JournalDDMTemplateManagementToolbarDisplayContext journalDDMTemplateManagementToolbarDisplayContext = new JournalDDMTemplateManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, journalDDMTemplateDisplayContext);
+
 DDMStructure ddmStructure = journalDDMTemplateDisplayContext.getDDMStructure();
 
 if (ddmStructure != null) {
@@ -32,7 +34,7 @@ if (ddmStructure != null) {
 />
 
 <clay:management-toolbar
-	displayContext="<%= new JournalDDMTemplateManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, journalDDMTemplateDisplayContext) %>"
+	displayContext="<%= journalDDMTemplateManagementToolbarDisplayContext %>"
 />
 
 <portlet:actionURL name="/journal/delete_ddm_template" var="deleteDDMTemplateURL">
@@ -144,29 +146,7 @@ if (ddmStructure != null) {
 	</liferay-ui:search-container>
 </aui:form>
 
-<aui:script sandbox="<%= true %>">
-	var deleteDDMTemplates = function() {
-		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this") %>')) {
-			submitForm(document.querySelector('#<portlet:namespace />fm'));
-		}
-	};
-
-	var ACTIONS = {
-		'deleteDDMTemplates': deleteDDMTemplates
-	};
-
-	Liferay.componentReady('ddmTemplateManagementToolbar').then(
-		function(managementToolbar) {
-			managementToolbar.on(
-				'actionItemClicked',
-					function(event) {
-						var itemData = event.data.item.data;
-
-						if (itemData && itemData.action && ACTIONS[itemData.action]) {
-							ACTIONS[itemData.action]();
-						}
-				}
-			);
-		}
-	);
-</aui:script>
+<liferay-frontend:component
+	componentId="<%= journalDDMTemplateManagementToolbarDisplayContext.getDefaultEventHandler() %>"
+	module="js/DDMTemplatesManagementToolbarDefaultEventHandler.es"
+/>

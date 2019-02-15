@@ -101,6 +101,11 @@ public class JournalFeedsManagementToolbarDisplayContext
 	}
 
 	@Override
+	public String getDefaultEventHandler() {
+		return "journalFeedsManagementToolbarDefaultEventHandler";
+	}
+
+	@Override
 	public String getSearchActionURL() {
 		PortletURL searchActionURL = getPortletURL();
 

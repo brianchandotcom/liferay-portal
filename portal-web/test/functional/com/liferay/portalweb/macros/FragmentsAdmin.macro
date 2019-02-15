@@ -21,6 +21,18 @@ definition {
 		Button.clickSave();
 	}
 
+	macro addResource {
+		LexiconEntry.gotoAdd();
+
+		IFrame.selectConfigurationFrame();
+
+		UploadCommonFile.uploadCommonFileHiddenNoMouseOver(locator1 = "TextInput#FILE", value1 = "${resourceFile}");
+
+		IFrame.selectTopFrame();
+
+		AssertClick(locator1 = "Button#OK", value1 = "OK");
+	}
+
 	macro addSection {
 		LexiconEntry.gotoAddMenuItem(menuItem = "Section");
 

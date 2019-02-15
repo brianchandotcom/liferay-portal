@@ -17,7 +17,9 @@ package com.liferay.portal.search.elasticsearch6.internal.aggregation;
 import com.liferay.portal.search.aggregation.AggregationTranslator;
 import com.liferay.portal.search.aggregation.FieldAggregation;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationTranslator;
+import com.liferay.portal.search.elasticsearch6.internal.script.ScriptTranslator;
 
+import org.elasticsearch.script.Script;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.PipelineAggregationBuilder;
 import org.elasticsearch.search.aggregations.support.ValuesSourceAggregationBuilder;
@@ -40,6 +42,7 @@ public class BaseFieldAggregationTranslator {
 
 		setField(valuesSourceAggregationBuilder, baseFieldAggregation);
 		setMissing(valuesSourceAggregationBuilder, baseFieldAggregation);
+		setScript(valuesSourceAggregationBuilder, baseFieldAggregation);
 
 		_baseAggregationTranslator.translate(
 			valuesSourceAggregationBuilder, baseFieldAggregation,
@@ -72,7 +75,20 @@ public class BaseFieldAggregationTranslator {
 		}
 	}
 
+	protected <T extends ValuesSourceAggregationBuilder> void setScript(
+		T valuesSourceAggregationBuilder,
+		FieldAggregation baseFieldAggregation) {
+
+		if (baseFieldAggregation.getScript() != null) {
+			Script elasticsearchScript = _scriptTranslator.translate(
+				baseFieldAggregation.getScript());
+
+			valuesSourceAggregationBuilder.script(elasticsearchScript);
+		}
+	}
+
 	private final BaseAggregationTranslator _baseAggregationTranslator =
 		new BaseAggregationTranslator();
+	private final ScriptTranslator _scriptTranslator = new ScriptTranslator();
 
 }

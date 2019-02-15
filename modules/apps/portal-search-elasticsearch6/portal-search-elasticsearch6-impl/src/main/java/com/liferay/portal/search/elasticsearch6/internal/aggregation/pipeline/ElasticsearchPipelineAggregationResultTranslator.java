@@ -14,9 +14,14 @@
 
 package com.liferay.portal.search.elasticsearch6.internal.aggregation.pipeline;
 
+import com.liferay.portal.search.aggregation.AggregationResult;
 import com.liferay.portal.search.aggregation.AggregationResults;
 import com.liferay.portal.search.aggregation.pipeline.AvgBucketPipelineAggregation;
 import com.liferay.portal.search.aggregation.pipeline.AvgBucketPipelineAggregationResult;
+import com.liferay.portal.search.aggregation.pipeline.BucketScriptPipelineAggregation;
+import com.liferay.portal.search.aggregation.pipeline.BucketScriptPipelineAggregationResult;
+import com.liferay.portal.search.aggregation.pipeline.BucketSelectorPipelineAggregation;
+import com.liferay.portal.search.aggregation.pipeline.BucketSortPipelineAggregation;
 import com.liferay.portal.search.aggregation.pipeline.CumulativeSumPipelineAggregation;
 import com.liferay.portal.search.aggregation.pipeline.CumulativeSumPipelineAggregationResult;
 import com.liferay.portal.search.aggregation.pipeline.DerivativePipelineAggregation;
@@ -27,6 +32,8 @@ import com.liferay.portal.search.aggregation.pipeline.MaxBucketPipelineAggregati
 import com.liferay.portal.search.aggregation.pipeline.MaxBucketPipelineAggregationResult;
 import com.liferay.portal.search.aggregation.pipeline.MinBucketPipelineAggregation;
 import com.liferay.portal.search.aggregation.pipeline.MinBucketPipelineAggregationResult;
+import com.liferay.portal.search.aggregation.pipeline.MovingFunctionPipelineAggregation;
+import com.liferay.portal.search.aggregation.pipeline.MovingFunctionPipelineAggregationResult;
 import com.liferay.portal.search.aggregation.pipeline.PercentilesBucketPipelineAggregation;
 import com.liferay.portal.search.aggregation.pipeline.PercentilesBucketPipelineAggregationResult;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationResultTranslator;
@@ -67,6 +74,32 @@ public class ElasticsearchPipelineAggregationResultTranslator
 
 		return _aggregationResults.avgBucket(
 			simpleValue.getName(), simpleValue.value());
+	}
+
+	@Override
+	public BucketScriptPipelineAggregationResult visit(
+		BucketScriptPipelineAggregation bucketScriptPipelineAggregation) {
+
+		SimpleValue simpleValue = (SimpleValue)_elasticsearchAggregation;
+
+		return _aggregationResults.bucketScript(
+			simpleValue.getName(), simpleValue.value());
+	}
+
+	@Override
+	public AggregationResult visit(
+		BucketSelectorPipelineAggregation bucketSelectorPipelineAggregation) {
+
+		throw new UnsupportedOperationException(
+			"BucketSelector does not return a separate AggregationResult");
+	}
+
+	@Override
+	public AggregationResult visit(
+		BucketSortPipelineAggregation bucketSortPipelineAggregation) {
+
+		throw new UnsupportedOperationException(
+			"BucketSort does not return a separate AggregationResult");
 	}
 
 	@Override
@@ -136,6 +169,16 @@ public class ElasticsearchPipelineAggregationResultTranslator
 		minBucketPipelineAggregationResult.setKeys(bucketMetricValue.keys());
 
 		return minBucketPipelineAggregationResult;
+	}
+
+	@Override
+	public MovingFunctionPipelineAggregationResult visit(
+		MovingFunctionPipelineAggregation movingFunctionPipelineAggregation) {
+
+		SimpleValue simpleValue = (SimpleValue)_elasticsearchAggregation;
+
+		return _aggregationResults.movingFunction(
+			simpleValue.getName(), simpleValue.value());
 	}
 
 	@Override

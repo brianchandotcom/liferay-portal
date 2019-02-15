@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.PortletLocalService;
@@ -42,6 +43,9 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletPreferences;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.jsoup.nodes.Element;
 
@@ -80,7 +84,8 @@ public class AddPortletMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest);
 
 		try {
-			String html = _getPortletFragmentEntryLinkHTML(portletId);
+			String html = _getPortletFragmentEntryLinkHTML(
+				serviceContext.getRequest(), portletId);
 
 			JSONObject editableValueJSONObject =
 				_fragmentEntryProcessorRegistry.
@@ -129,14 +134,22 @@ public class AddPortletMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, actionResponse, jsonObject);
 	}
 
-	private String _getPortletFragmentEntryLinkHTML(String portletId) {
+	private String _getPortletFragmentEntryLinkHTML(
+			HttpServletRequest request, String portletId)
+		throws PortalException {
+
 		Element runtimeTagElement = new Element(
 			"@liferay_portlet.runtime", true);
 
 		Portlet portlet = _portletLocalService.getPortletById(portletId);
 
+		PortletPreferences portletPreferences =
+			PortletPreferencesFactoryUtil.getPortletPreferences(
+				request, portletId);
+
 		runtimeTagElement.attr(
-			"defaultPreferences", portlet.getDefaultPreferences());
+			"defaultPreferences",
+			PortletPreferencesFactoryUtil.toXML(portletPreferences));
 
 		if (portlet.isInstanceable()) {
 			runtimeTagElement.attr(

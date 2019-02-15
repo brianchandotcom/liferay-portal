@@ -22,6 +22,7 @@ import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.service.access.policy.ServiceAccessPolicyThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -64,6 +65,7 @@ import org.osgi.util.tracker.ServiceTracker;
 @Component(
 	property = {
 		"liferay.extension=OAuth2",
+		"oauth2.service.access.policy.name=AUTHORIZED_OAUTH2_SAP",
 		"osgi.jaxrs.application.select=(!(liferay.oauth2=false))",
 		"osgi.jaxrs.extension=true", "osgi.jaxrs.name=Liferay.OAuth2"
 	},
@@ -103,6 +105,33 @@ public class LiferayOAuth2OSGiFeature implements Feature {
 			(ContainerResponseFilter)(a, b) -> _scopeContext.clear(),
 			Priorities.AUTHORIZATION - 9);
 
+		String oauth2ServiceAccessPolicyName = MapUtil.getString(
+			applicationProperties, "oauth2.service.access.policy.name",
+			_oauth2ServiceAccessPolicyName);
+
+		featureContext.register(
+			new BaseScopeCheckerContainerRequestFilter() {
+
+				@Override
+				protected boolean isContainerRequestContextAllowed(
+					ContainerRequestContext containerRequestContext) {
+
+					if (_log.isDebugEnabled()) {
+						_log.debug(
+							StringBundler.concat(
+								"Enabling SAP ", oauth2ServiceAccessPolicyName,
+								" for ", osgiJAXRSName));
+					}
+
+					ServiceAccessPolicyThreadLocal.
+						addActiveServiceAccessPolicyName(
+							oauth2ServiceAccessPolicyName);
+
+					return true;
+				}
+
+			},
+			Priorities.AUTHORIZATION - 9);
 
 		registerDescriptors(osgiJAXRSName);
 
@@ -116,6 +145,9 @@ public class LiferayOAuth2OSGiFeature implements Feature {
 		_bundle = componentContext.getUsingBundle();
 
 		_bundleContext = componentContext.getBundleContext();
+
+		_oauth2ServiceAccessPolicyName = MapUtil.getString(
+			properties, "oauth2.service.access.policy.name");
 	}
 
 	@Deactivate
@@ -180,6 +212,8 @@ public class LiferayOAuth2OSGiFeature implements Feature {
 		policyOption = ReferencePolicyOption.GREEDY, target = "(default=true)"
 	)
 	private volatile ScopeDescriptor _defaultScopeDescriptor;
+
+	private String _oauth2ServiceAccessPolicyName;
 
 	@Reference(
 		policy = ReferencePolicy.DYNAMIC,

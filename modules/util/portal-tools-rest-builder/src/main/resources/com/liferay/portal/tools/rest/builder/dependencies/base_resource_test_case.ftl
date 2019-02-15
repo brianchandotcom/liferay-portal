@@ -20,6 +20,7 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 
 import io.restassured.RestAssured;
 import io.restassured.parsing.Parser;
+import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 
 import java.net.URL;
@@ -67,7 +68,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 	<#list javaTool.getJavaSignatures(openAPIYAML, schemaName) as javaSignature>
 		<@compress single_line=true>
-			protected void invoke${javaSignature.methodName?cap_first}(
+			protected Response invoke${javaSignature.methodName?cap_first}(
 				<#list javaSignature.javaParameters as javaParameter>
 					${javaParameter.parameterType} ${javaParameter.parameterName}
 
@@ -78,23 +79,60 @@ public abstract class Base${schemaName}ResourceTestCase {
 			) throws Exception {
 		</@compress>
 
-			RequestSpecification requestSpecification = _createRequestRequestSpecification();
+		RequestSpecification requestSpecification = _createRequestSpecification();
 
-			requestSpecification.post(
-				"${javaSignature.path}"
+		<#assign parametersContent>
+			<@compress single_line=true>
+				<#list javaSignature.javaParameters as javaParameter>
+					${javaParameter.parameterName}
+
+					<#if javaParameter_has_next>
+						,
+					</#if>
+				</#list>
+			</@compress>
+		</#assign>
+
+		<#if javaTool.hasHTTPMethod(javaSignature, "post", "put") && parametersContent?ends_with(", ${schemaName?uncap_first}")>
+			return requestSpecification.body(
+				${schemaName?uncap_first}
+			).when(
+			).${javaTool.getHTTPMethod(javaSignature.operation)}(
+				_resourceURL + "${javaSignature.path}",
+				${stringUtil.replaceLast(parametersContent, ", ${schemaName?uncap_first}", "")}
 			);
+		<#else>
+			return requestSpecification.when(
+			).${javaTool.getHTTPMethod(javaSignature.operation)}(
+				_resourceURL + "${javaSignature.path}",
+				${stringUtil.replaceLast(parametersContent, ", pagination", "")}
+			);
+		</#if>
+
 		}
 	</#list>
 
 	protected ${schemaName} random${schemaName}() {
 		${schemaName} ${schemaVarName} = new ${schemaName}();
 
+		<#compress>
+			<#list javaTool.getJavaParameters(schema) as javaParameter>
+				<#assign randomDataTypes = ["Boolean", "Double", "Long", "String"] />
+
+				<#if randomDataTypes?seq_contains(javaParameter.parameterType)>
+					${schemaVarName}.set${javaParameter.parameterName?cap_first}(RandomTestUtil.random${javaParameter.parameterType}());
+				<#elseif stringUtil.equals(javaParameter.parameterType, "Date")>
+					${schemaVarName}.set${javaParameter.parameterName?cap_first}(RandomTestUtil.nextDate());
+				</#if>
+			</#list>
+		</#compress>
+
 		return ${schemaVarName};
 	}
 
 	protected Group testGroup;
 
-	private RequestSpecification _createRequestRequestSpecification() {
+	private RequestSpecification _createRequestSpecification() {
 		return RestAssured.given(
 		).auth(
 		).preemptive(
@@ -107,12 +145,12 @@ public abstract class Base${schemaName}ResourceTestCase {
 		);
 	}
 
-	private static ObjectMapper _inputObjectMapper = new ObjectMapper() {
+	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {
 		{
 			setSerializationInclusion(JsonInclude.Include.NON_NULL);
 		}
 	};
-	private static ObjectMapper _outputObjectMapper = new ObjectMapper();
+	private final static ObjectMapper _outputObjectMapper = new ObjectMapper();
 
 	private URL _resourceURL;
 

@@ -71,7 +71,7 @@ public class JavaTool {
 
 				Operation operation = javaSignature.getOperation();
 
-				String httpMethod = _getHTTPMethod(operation);
+				String httpMethod = getHTTPMethod(operation);
 
 				if (graphQLQuery) {
 					if (!Objects.equals(httpMethod, "get")) {
@@ -132,7 +132,7 @@ public class JavaTool {
 
 		methodAnnotations.add("@GraphQLInvokeDetached");
 
-		String httpMethod = _getHTTPMethod(javaSignature.getOperation());
+		String httpMethod = getHTTPMethod(javaSignature.getOperation());
 
 		if (Objects.equals(httpMethod, "get") ||
 			Objects.equals(httpMethod, "post")) {
@@ -176,6 +176,12 @@ public class JavaTool {
 		sb.append("\")");
 
 		return sb.toString();
+	}
+
+	public String getHTTPMethod(Operation operation) {
+		Class<? extends Operation> clazz = operation.getClass();
+
+		return StringUtil.lowerCase(clazz.getSimpleName());
 	}
 
 	public List<JavaParameter> getJavaParameters(Schema schema) {
@@ -261,7 +267,7 @@ public class JavaTool {
 
 		methodAnnotations.add("@Path(\"" + path + "\")");
 
-		String httpMethod = _getHTTPMethod(operation);
+		String httpMethod = getHTTPMethod(operation);
 
 		methodAnnotations.add("@" + StringUtil.toUpperCase(httpMethod));
 
@@ -347,6 +353,20 @@ public class JavaTool {
 		return "";
 	}
 
+	public boolean hasHTTPMethod(
+		JavaSignature javaSignature, String... httpMethods) {
+
+		Operation operation = javaSignature.getOperation();
+
+		for (String httpMethod : httpMethods) {
+			if (Objects.equals(httpMethod, getHTTPMethod(operation))) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	private JavaTool() {
 	}
 
@@ -374,12 +394,6 @@ public class JavaTool {
 		}
 
 		return reference.substring(index + 1);
-	}
-
-	private String _getHTTPMethod(Operation operation) {
-		Class<? extends Operation> clazz = operation.getClass();
-
-		return StringUtil.lowerCase(clazz.getSimpleName());
 	}
 
 	private String _getJavaDataType(
@@ -651,7 +665,7 @@ public class JavaTool {
 
 		List<String> urls = new ArrayList<>();
 
-		String httpMethod = _getHTTPMethod(operation);
+		String httpMethod = getHTTPMethod(operation);
 
 		urls.add(httpMethod);
 

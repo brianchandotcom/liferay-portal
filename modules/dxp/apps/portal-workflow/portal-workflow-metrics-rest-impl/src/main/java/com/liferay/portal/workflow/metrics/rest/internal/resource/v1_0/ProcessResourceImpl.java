@@ -81,24 +81,16 @@ public class ProcessResourceImpl extends BaseProcessResourceImpl {
 		return new BooleanFilter() {
 			{
 				addRequiredTerm("active", true);
-				addRequiredTerm("companyId", _getCompanyId());
+				addRequiredTerm("companyId", company.getCompanyId());
 				addRequiredTerm("deleted", false);
 			}
 		};
 	}
 
-	private long _getCompanyId() {
-		if (company != null) {
-			return company.getCompanyId();
-		}
-
-		return CompanyThreadLocal.getCompanyId();
-	}
-
 	private int _getInstanceCount(String name) {
 		BooleanFilter booleanFilter = new BooleanFilter() {
 			{
-				addRequiredTerm("companyId", _getCompanyId());
+				addRequiredTerm("companyId", company.getCompanyId());
 				addRequiredTerm("completed", false);
 				addRequiredTerm("deleted", false);
 

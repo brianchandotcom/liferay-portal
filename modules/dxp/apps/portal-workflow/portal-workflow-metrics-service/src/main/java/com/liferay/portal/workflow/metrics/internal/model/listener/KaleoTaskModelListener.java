@@ -58,19 +58,18 @@ public class KaleoTaskModelListener extends BaseKaleoModelListener<KaleoTask> {
 	protected Document createDocument(KaleoTask kaleoTask) {
 		Document document = new DocumentImpl();
 
-		document.addDateSortable("createDate", kaleoTask.getCreateDate());
-		document.addDateSortable("modifiedDate", kaleoTask.getModifiedDate());
-
-		document.addKeyword("companyId", kaleoTask.getCompanyId());
-		document.addKeyword("name", kaleoTask.getName());
-		document.addKeyword(
-			"processId", kaleoTask.getKaleoDefinitionVersionId());
-		document.addKeyword("taskId", kaleoTask.getKaleoTaskId());
 		document.addUID(
 			"TaskWorkflowMetrics",
 			digest(
 				kaleoTask.getCompanyId(), kaleoTask.getKaleoTaskId(),
 				kaleoTask.getKaleoDefinitionVersionId()));
+		document.addKeyword("companyId", kaleoTask.getCompanyId());
+		document.addDateSortable("createDate", kaleoTask.getCreateDate());
+		document.addDateSortable("modifiedDate", kaleoTask.getModifiedDate());
+		document.addKeyword("name", kaleoTask.getName());
+		document.addKeyword(
+			"processId", kaleoTask.getKaleoDefinitionVersionId());
+		document.addKeyword("taskId", kaleoTask.getKaleoTaskId());
 
 		return document;
 	}

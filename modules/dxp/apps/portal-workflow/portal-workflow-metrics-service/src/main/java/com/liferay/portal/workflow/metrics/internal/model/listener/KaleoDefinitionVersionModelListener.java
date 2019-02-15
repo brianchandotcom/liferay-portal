@@ -74,10 +74,11 @@ public class KaleoDefinitionVersionModelListener
 
 		Document document = new DocumentImpl();
 
-		document.addDateSortable(
-			"createDate", kaleoDefinitionVersion.getCreateDate());
-		document.addDateSortable(
-			"modifiedDate", kaleoDefinitionVersion.getModifiedDate());
+		document.addUID(
+			"WorkflowMetricsProcess",
+			digest(
+				kaleoDefinitionVersion.getCompanyId(),
+				kaleoDefinitionVersion.getKaleoDefinitionVersionId()));
 
 		Boolean active = false;
 
@@ -89,10 +90,15 @@ public class KaleoDefinitionVersionModelListener
 		}
 
 		document.addKeyword("active", active);
+
 		document.addKeyword("companyId", kaleoDefinitionVersion.getCompanyId());
+		document.addDateSortable(
+			"createDate", kaleoDefinitionVersion.getCreateDate());
 		document.addKeyword("deleted", false);
 		document.addText(
 			"description", kaleoDefinitionVersion.getDescription());
+		document.addDateSortable(
+			"modifiedDate", kaleoDefinitionVersion.getModifiedDate());
 		document.addKeyword("name", kaleoDefinitionVersion.getName());
 		document.addKeyword(
 			"processId", kaleoDefinitionVersion.getKaleoDefinitionVersionId());
@@ -100,11 +106,6 @@ public class KaleoDefinitionVersionModelListener
 			"title", kaleoDefinitionVersion.getTitleMap());
 		document.addKeyword("userId", kaleoDefinitionVersion.getUserId());
 		document.addKeyword("version", kaleoDefinitionVersion.getVersion());
-		document.addUID(
-			"WorkflowMetricsProcess",
-			digest(
-				kaleoDefinitionVersion.getCompanyId(),
-				kaleoDefinitionVersion.getKaleoDefinitionVersionId()));
 
 		return document;
 	}

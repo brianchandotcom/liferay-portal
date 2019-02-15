@@ -77,7 +77,24 @@ public class KaleoInstanceModelListener
 
 		Date createDate = kaleoInstance.getCreateDate();
 
+		document.addUID(
+			"InstanceWorkflowMetrics",
+			digest(
+				kaleoInstance.getCompanyId(),
+				kaleoInstance.getKaleoInstanceId(),
+				kaleoInstance.getKaleoDefinitionVersionId()));
+		document.addKeyword("className", kaleoInstance.getClassName());
+		document.addKeyword("classPK", kaleoInstance.getClassPK());
+		document.addKeyword("companyId", kaleoInstance.getCompanyId());
+		document.addKeyword("completed", kaleoInstance.isCompleted());
 		document.addDateSortable("createDate", createDate);
+		document.addKeyword("deleted", false);
+		document.addKeyword("instanceId", kaleoInstance.getKaleoInstanceId());
+		document.addDateSortable(
+			"modifiedDate", kaleoInstance.getModifiedDate());
+		document.addKeyword(
+			"processId", kaleoInstance.getKaleoDefinitionVersionId());
+		document.addKeyword("userId", kaleoInstance.getUserId());
 
 		if (kaleoInstance.isCompleted()) {
 			Date completionDate = kaleoInstance.getCompletionDate();
@@ -89,25 +106,6 @@ public class KaleoInstanceModelListener
 
 			document.addNumber("duration", duration.toMillis());
 		}
-
-		document.addDateSortable(
-			"modifiedDate", kaleoInstance.getModifiedDate());
-
-		document.addKeyword("className", kaleoInstance.getClassName());
-		document.addKeyword("classPK", kaleoInstance.getClassPK());
-		document.addKeyword("companyId", kaleoInstance.getCompanyId());
-		document.addKeyword("completed", kaleoInstance.isCompleted());
-		document.addKeyword("deleted", false);
-		document.addKeyword("instanceId", kaleoInstance.getKaleoInstanceId());
-		document.addKeyword(
-			"processId", kaleoInstance.getKaleoDefinitionVersionId());
-		document.addKeyword("userId", kaleoInstance.getUserId());
-		document.addUID(
-			"InstanceWorkflowMetrics",
-			digest(
-				kaleoInstance.getCompanyId(),
-				kaleoInstance.getKaleoInstanceId(),
-				kaleoInstance.getKaleoDefinitionVersionId()));
 
 		return document;
 	}

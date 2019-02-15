@@ -52,18 +52,6 @@ return _getBlogPostingResource().getBlogPosting( blogPostingId );
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<Long> getBlogPostingCategoriesPage( @GraphQLName("blog-posting-id") Long blogPostingId , @GraphQLName("per_page") int perPage , @GraphQLName("page") int page ) throws Exception {
-				Page paginationPage = _getBlogPostingResource().getBlogPostingCategoriesPage(
-
-					blogPostingId , Pagination.of(perPage, page)
-				);
-
-				return paginationPage.getItems();
-
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
 	public Collection<BlogPosting> getContentSpaceBlogPostingsPage( @GraphQLName("content-space-id") Long contentSpaceId , @GraphQLName("per_page") int perPage , @GraphQLName("page") int page ) throws Exception {
 				Page paginationPage = _getBlogPostingResource().getContentSpaceBlogPostingsPage(
 

@@ -52,29 +52,11 @@ public abstract class BaseBlogPostingResourceImpl
 	}
 
 	@Override
-	public Page<Long> getBlogPostingCategoriesPage(
-			Long blogPostingId, Pagination pagination)
-		throws Exception {
-
-			return Page.of(Collections.emptyList());
-	}
-
-	@Override
 	public Page<BlogPosting> getContentSpaceBlogPostingsPage(
 			Long contentSpaceId, Pagination pagination)
 		throws Exception {
 
 			return Page.of(Collections.emptyList());
-	}
-
-	@Override
-	public Response postBlogPostingCategories(
-			Long blogPostingId, Long referenceId)
-		throws Exception {
-
-			Response.ResponseBuilder responseBuilder = Response.ok();
-
-			return responseBuilder.build();
 	}
 
 	@Override

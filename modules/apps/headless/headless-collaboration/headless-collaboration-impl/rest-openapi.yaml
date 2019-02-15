@@ -199,57 +199,6 @@ paths:
                 $ref: "#/components/schemas/BlogPosting"
           description: ""
       tags: ["BlogPosting"]
-  "/blog-postings/{blog-posting-id}/categories":
-    get:
-      parameters:
-        - in: query
-          name: page
-          schema:
-            type: integer
-        - in: query
-          name: per_page
-          schema:
-            type: integer
-        - in: path
-          name: blog-posting-id
-          required: true
-          schema:
-            format: int64
-            type: integer
-      responses:
-        200:
-          content:
-            application/json:
-              schema:
-                items:
-                  format: int64
-                  type: integer
-                type: array
-          description: ""
-      tags: ["BlogPosting"]
-    post:
-      parameters:
-        - in: path
-          name: blog-posting-id
-          required: true
-          schema:
-            format: int64
-            type: integer
-      requestBody:
-        content:
-          application/json:
-            schema:
-              format: int64
-              type: integer
-      responses:
-        200:
-          content:
-            application/json:
-              schema:
-                format: int64
-                type: integer
-          description: ""
-      tags: ["BlogPosting"]
   "/blog-postings/{blog-posting-id}/comments":
     get:
       parameters:

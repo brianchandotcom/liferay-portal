@@ -128,8 +128,7 @@ public class LPKGDeployerTest {
 			lpkgDeployer.getClass());
 
 		Class<?> clazz = lpkgDeployerBundle.loadClass(
-			"com.liferay.portal.lpkg.deployer.internal." +
-				"LPKGInnerBundleLocationUtil");
+			"com.liferay.portal.lpkg.deployer.internal.LPKGLocationUtil");
 
 		Method method = clazz.getDeclaredMethod(
 			"generateInnerBundleLocation", Bundle.class, String.class);

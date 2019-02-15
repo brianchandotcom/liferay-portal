@@ -26,7 +26,7 @@ import org.osgi.framework.Bundle;
 /**
  * @author Matthew Tambara
  */
-public class LPKGInnerBundleLocationUtil {
+public class LPKGLocationUtil {
 
 	public static String generateInnerBundleLocation(
 		Bundle lpkgBundle, String path) {

@@ -186,9 +186,8 @@ public class LPKGBundleTrackerCustomizer
 					continue;
 				}
 
-				String location =
-					LPKGInnerBundleLocationUtil.generateInnerBundleLocation(
-						bundle, name);
+				String location = LPKGLocationUtil.generateInnerBundleLocation(
+					bundle, name);
 
 				StringBundler sb = new StringBundler(4);
 

@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.exception.LocaleException;
+import com.liferay.portal.kernel.model.version.VersionedModel;
 
 import java.util.Date;
 import java.util.Locale;
@@ -37,7 +38,7 @@ import java.util.Map;
 @ProviderType
 public interface LayoutModel
 	extends AttachedModel, BaseModel<Layout>, LocalizedModel, MVCCModel,
-			ShardedModel, StagedGroupedModel {
+			ShardedModel, StagedGroupedModel, VersionedModel<LayoutVersion> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -50,6 +51,7 @@ public interface LayoutModel
 	 *
 	 * @return the primary key of this layout
 	 */
+	@Override
 	public long getPrimaryKey();
 
 	/**
@@ -57,6 +59,7 @@ public interface LayoutModel
 	 *
 	 * @param primaryKey the primary key of this layout
 	 */
+	@Override
 	public void setPrimaryKey(long primaryKey);
 
 	/**
@@ -91,6 +94,22 @@ public interface LayoutModel
 	 */
 	@Override
 	public void setUuid(String uuid);
+
+	/**
+	 * Returns the head ID of this layout.
+	 *
+	 * @return the head ID of this layout
+	 */
+	@Override
+	public long getHeadId();
+
+	/**
+	 * Sets the head ID of this layout.
+	 *
+	 * @param headId the head ID of this layout
+	 */
+	@Override
+	public void setHeadId(long headId);
 
 	/**
 	 * Returns the plid of this layout.

@@ -34,13 +34,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -50,14 +43,23 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
 /**
  * @generated
  */
 public class LayoutSetVersionPersistenceTest {
+
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
-			PersistenceTestRule.INSTANCE,
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
 
 	@Before
@@ -97,7 +99,8 @@ public class LayoutSetVersionPersistenceTest {
 
 		_persistence.remove(newLayoutSetVersion);
 
-		LayoutSetVersion existingLayoutSetVersion = _persistence.fetchByPrimaryKey(newLayoutSetVersion.getPrimaryKey());
+		LayoutSetVersion existingLayoutSetVersion =
+			_persistence.fetchByPrimaryKey(newLayoutSetVersion.getPrimaryKey());
 
 		Assert.assertNull(existingLayoutSetVersion);
 	}
@@ -139,47 +142,63 @@ public class LayoutSetVersionPersistenceTest {
 
 		newLayoutSetVersion.setSettings(RandomTestUtil.randomString());
 
-		newLayoutSetVersion.setLayoutSetPrototypeUuid(RandomTestUtil.randomString());
+		newLayoutSetVersion.setLayoutSetPrototypeUuid(
+			RandomTestUtil.randomString());
 
-		newLayoutSetVersion.setLayoutSetPrototypeLinkEnabled(RandomTestUtil.randomBoolean());
+		newLayoutSetVersion.setLayoutSetPrototypeLinkEnabled(
+			RandomTestUtil.randomBoolean());
 
 		_layoutSetVersions.add(_persistence.update(newLayoutSetVersion));
 
-		LayoutSetVersion existingLayoutSetVersion = _persistence.findByPrimaryKey(newLayoutSetVersion.getPrimaryKey());
+		LayoutSetVersion existingLayoutSetVersion =
+			_persistence.findByPrimaryKey(newLayoutSetVersion.getPrimaryKey());
 
-		Assert.assertEquals(existingLayoutSetVersion.getLayoutSetVersionId(),
+		Assert.assertEquals(
+			existingLayoutSetVersion.getLayoutSetVersionId(),
 			newLayoutSetVersion.getLayoutSetVersionId());
-		Assert.assertEquals(existingLayoutSetVersion.getVersion(),
+		Assert.assertEquals(
+			existingLayoutSetVersion.getVersion(),
 			newLayoutSetVersion.getVersion());
-		Assert.assertEquals(existingLayoutSetVersion.getLayoutSetId(),
+		Assert.assertEquals(
+			existingLayoutSetVersion.getLayoutSetId(),
 			newLayoutSetVersion.getLayoutSetId());
-		Assert.assertEquals(existingLayoutSetVersion.getGroupId(),
+		Assert.assertEquals(
+			existingLayoutSetVersion.getGroupId(),
 			newLayoutSetVersion.getGroupId());
-		Assert.assertEquals(existingLayoutSetVersion.getCompanyId(),
+		Assert.assertEquals(
+			existingLayoutSetVersion.getCompanyId(),
 			newLayoutSetVersion.getCompanyId());
-		Assert.assertEquals(Time.getShortTimestamp(
-				existingLayoutSetVersion.getCreateDate()),
+		Assert.assertEquals(
+			Time.getShortTimestamp(existingLayoutSetVersion.getCreateDate()),
 			Time.getShortTimestamp(newLayoutSetVersion.getCreateDate()));
-		Assert.assertEquals(Time.getShortTimestamp(
-				existingLayoutSetVersion.getModifiedDate()),
+		Assert.assertEquals(
+			Time.getShortTimestamp(existingLayoutSetVersion.getModifiedDate()),
 			Time.getShortTimestamp(newLayoutSetVersion.getModifiedDate()));
-		Assert.assertEquals(existingLayoutSetVersion.isPrivateLayout(),
+		Assert.assertEquals(
+			existingLayoutSetVersion.isPrivateLayout(),
 			newLayoutSetVersion.isPrivateLayout());
-		Assert.assertEquals(existingLayoutSetVersion.getLogoId(),
+		Assert.assertEquals(
+			existingLayoutSetVersion.getLogoId(),
 			newLayoutSetVersion.getLogoId());
-		Assert.assertEquals(existingLayoutSetVersion.getThemeId(),
+		Assert.assertEquals(
+			existingLayoutSetVersion.getThemeId(),
 			newLayoutSetVersion.getThemeId());
-		Assert.assertEquals(existingLayoutSetVersion.getColorSchemeId(),
+		Assert.assertEquals(
+			existingLayoutSetVersion.getColorSchemeId(),
 			newLayoutSetVersion.getColorSchemeId());
-		Assert.assertEquals(existingLayoutSetVersion.getCss(),
-			newLayoutSetVersion.getCss());
-		Assert.assertEquals(existingLayoutSetVersion.getPageCount(),
+		Assert.assertEquals(
+			existingLayoutSetVersion.getCss(), newLayoutSetVersion.getCss());
+		Assert.assertEquals(
+			existingLayoutSetVersion.getPageCount(),
 			newLayoutSetVersion.getPageCount());
-		Assert.assertEquals(existingLayoutSetVersion.getSettings(),
+		Assert.assertEquals(
+			existingLayoutSetVersion.getSettings(),
 			newLayoutSetVersion.getSettings());
-		Assert.assertEquals(existingLayoutSetVersion.getLayoutSetPrototypeUuid(),
+		Assert.assertEquals(
+			existingLayoutSetVersion.getLayoutSetPrototypeUuid(),
 			newLayoutSetVersion.getLayoutSetPrototypeUuid());
-		Assert.assertEquals(existingLayoutSetVersion.isLayoutSetPrototypeLinkEnabled(),
+		Assert.assertEquals(
+			existingLayoutSetVersion.isLayoutSetPrototypeLinkEnabled(),
 			newLayoutSetVersion.isLayoutSetPrototypeLinkEnabled());
 	}
 
@@ -192,8 +211,8 @@ public class LayoutSetVersionPersistenceTest {
 
 	@Test
 	public void testCountByLayoutSetId_Version() throws Exception {
-		_persistence.countByLayoutSetId_Version(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextInt());
+		_persistence.countByLayoutSetId_Version(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
 
 		_persistence.countByLayoutSetId_Version(0L, 0);
 	}
@@ -207,8 +226,8 @@ public class LayoutSetVersionPersistenceTest {
 
 	@Test
 	public void testCountByGroupId_Version() throws Exception {
-		_persistence.countByGroupId_Version(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextInt());
+		_persistence.countByGroupId_Version(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
 
 		_persistence.countByGroupId_Version(0L, 0);
 	}
@@ -223,10 +242,9 @@ public class LayoutSetVersionPersistenceTest {
 	}
 
 	@Test
-	public void testCountByLayoutSetPrototypeUuid_Version()
-		throws Exception {
-		_persistence.countByLayoutSetPrototypeUuid_Version("",
-			RandomTestUtil.nextInt());
+	public void testCountByLayoutSetPrototypeUuid_Version() throws Exception {
+		_persistence.countByLayoutSetPrototypeUuid_Version(
+			"", RandomTestUtil.nextInt());
 
 		_persistence.countByLayoutSetPrototypeUuid_Version("null", 0);
 
@@ -235,32 +253,34 @@ public class LayoutSetVersionPersistenceTest {
 
 	@Test
 	public void testCountByG_P() throws Exception {
-		_persistence.countByG_P(RandomTestUtil.nextLong(),
-			RandomTestUtil.randomBoolean());
+		_persistence.countByG_P(
+			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean());
 
 		_persistence.countByG_P(0L, RandomTestUtil.randomBoolean());
 	}
 
 	@Test
 	public void testCountByG_P_Version() throws Exception {
-		_persistence.countByG_P_Version(RandomTestUtil.nextLong(),
-			RandomTestUtil.randomBoolean(), RandomTestUtil.nextInt());
+		_persistence.countByG_P_Version(
+			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean(),
+			RandomTestUtil.nextInt());
 
 		_persistence.countByG_P_Version(0L, RandomTestUtil.randomBoolean(), 0);
 	}
 
 	@Test
 	public void testCountByP_L() throws Exception {
-		_persistence.countByP_L(RandomTestUtil.randomBoolean(),
-			RandomTestUtil.nextLong());
+		_persistence.countByP_L(
+			RandomTestUtil.randomBoolean(), RandomTestUtil.nextLong());
 
 		_persistence.countByP_L(RandomTestUtil.randomBoolean(), 0L);
 	}
 
 	@Test
 	public void testCountByP_L_Version() throws Exception {
-		_persistence.countByP_L_Version(RandomTestUtil.randomBoolean(),
-			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
+		_persistence.countByP_L_Version(
+			RandomTestUtil.randomBoolean(), RandomTestUtil.nextLong(),
+			RandomTestUtil.nextInt());
 
 		_persistence.countByP_L_Version(RandomTestUtil.randomBoolean(), 0L, 0);
 	}
@@ -269,7 +289,8 @@ public class LayoutSetVersionPersistenceTest {
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		LayoutSetVersion newLayoutSetVersion = addLayoutSetVersion();
 
-		LayoutSetVersion existingLayoutSetVersion = _persistence.findByPrimaryKey(newLayoutSetVersion.getPrimaryKey());
+		LayoutSetVersion existingLayoutSetVersion =
+			_persistence.findByPrimaryKey(newLayoutSetVersion.getPrimaryKey());
 
 		Assert.assertEquals(existingLayoutSetVersion, newLayoutSetVersion);
 	}
@@ -283,25 +304,26 @@ public class LayoutSetVersionPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			getOrderByComparator());
+		_persistence.findAll(
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
 	}
 
 	protected OrderByComparator<LayoutSetVersion> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("LayoutSetVersion",
-			"layoutSetVersionId", true, "version", true, "layoutSetId", true,
-			"groupId", true, "companyId", true, "createDate", true,
-			"modifiedDate", true, "privateLayout", true, "logoId", true,
-			"themeId", true, "colorSchemeId", true, "pageCount", true,
-			"layoutSetPrototypeUuid", true, "layoutSetPrototypeLinkEnabled",
-			true);
+		return OrderByComparatorFactoryUtil.create(
+			"LayoutSetVersion", "layoutSetVersionId", true, "version", true,
+			"layoutSetId", true, "groupId", true, "companyId", true,
+			"createDate", true, "modifiedDate", true, "privateLayout", true,
+			"logoId", true, "themeId", true, "colorSchemeId", true, "pageCount",
+			true, "layoutSetPrototypeUuid", true,
+			"layoutSetPrototypeLinkEnabled", true);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		LayoutSetVersion newLayoutSetVersion = addLayoutSetVersion();
 
-		LayoutSetVersion existingLayoutSetVersion = _persistence.fetchByPrimaryKey(newLayoutSetVersion.getPrimaryKey());
+		LayoutSetVersion existingLayoutSetVersion =
+			_persistence.fetchByPrimaryKey(newLayoutSetVersion.getPrimaryKey());
 
 		Assert.assertEquals(existingLayoutSetVersion, newLayoutSetVersion);
 	}
@@ -310,7 +332,8 @@ public class LayoutSetVersionPersistenceTest {
 	public void testFetchByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		LayoutSetVersion missingLayoutSetVersion = _persistence.fetchByPrimaryKey(pk);
+		LayoutSetVersion missingLayoutSetVersion =
+			_persistence.fetchByPrimaryKey(pk);
 
 		Assert.assertNull(missingLayoutSetVersion);
 	}
@@ -318,6 +341,7 @@ public class LayoutSetVersionPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
+
 		LayoutSetVersion newLayoutSetVersion1 = addLayoutSetVersion();
 		LayoutSetVersion newLayoutSetVersion2 = addLayoutSetVersion();
 
@@ -326,18 +350,22 @@ public class LayoutSetVersionPersistenceTest {
 		primaryKeys.add(newLayoutSetVersion1.getPrimaryKey());
 		primaryKeys.add(newLayoutSetVersion2.getPrimaryKey());
 
-		Map<Serializable, LayoutSetVersion> layoutSetVersions = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, LayoutSetVersion> layoutSetVersions =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(2, layoutSetVersions.size());
-		Assert.assertEquals(newLayoutSetVersion1,
+		Assert.assertEquals(
+			newLayoutSetVersion1,
 			layoutSetVersions.get(newLayoutSetVersion1.getPrimaryKey()));
-		Assert.assertEquals(newLayoutSetVersion2,
+		Assert.assertEquals(
+			newLayoutSetVersion2,
 			layoutSetVersions.get(newLayoutSetVersion2.getPrimaryKey()));
 	}
 
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
+
 		long pk1 = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
@@ -347,7 +375,8 @@ public class LayoutSetVersionPersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, LayoutSetVersion> layoutSetVersions = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, LayoutSetVersion> layoutSetVersions =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(layoutSetVersions.isEmpty());
 	}
@@ -355,6 +384,7 @@ public class LayoutSetVersionPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
+
 		LayoutSetVersion newLayoutSetVersion = addLayoutSetVersion();
 
 		long pk = RandomTestUtil.nextLong();
@@ -364,51 +394,56 @@ public class LayoutSetVersionPersistenceTest {
 		primaryKeys.add(newLayoutSetVersion.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, LayoutSetVersion> layoutSetVersions = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, LayoutSetVersion> layoutSetVersions =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, layoutSetVersions.size());
-		Assert.assertEquals(newLayoutSetVersion,
+		Assert.assertEquals(
+			newLayoutSetVersion,
 			layoutSetVersions.get(newLayoutSetVersion.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
-		throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, LayoutSetVersion> layoutSetVersions = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, LayoutSetVersion> layoutSetVersions =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(layoutSetVersions.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey()
-		throws Exception {
+	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
 		LayoutSetVersion newLayoutSetVersion = addLayoutSetVersion();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newLayoutSetVersion.getPrimaryKey());
 
-		Map<Serializable, LayoutSetVersion> layoutSetVersions = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, LayoutSetVersion> layoutSetVersions =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, layoutSetVersions.size());
-		Assert.assertEquals(newLayoutSetVersion,
+		Assert.assertEquals(
+			newLayoutSetVersion,
 			layoutSetVersions.get(newLayoutSetVersion.getPrimaryKey()));
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting()
-		throws Exception {
+	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
 		LayoutSetVersion newLayoutSetVersion = addLayoutSetVersion();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(LayoutSetVersion.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			LayoutSetVersion.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("layoutSetVersionId",
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"layoutSetVersionId",
 				newLayoutSetVersion.getLayoutSetVersionId()));
 
-		List<LayoutSetVersion> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<LayoutSetVersion> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -419,32 +454,35 @@ public class LayoutSetVersionPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(LayoutSetVersion.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			LayoutSetVersion.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("layoutSetVersionId",
-				RandomTestUtil.nextLong()));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"layoutSetVersionId", RandomTestUtil.nextLong()));
 
-		List<LayoutSetVersion> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<LayoutSetVersion> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting()
-		throws Exception {
+	public void testDynamicQueryByProjectionExisting() throws Exception {
 		LayoutSetVersion newLayoutSetVersion = addLayoutSetVersion();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(LayoutSetVersion.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			LayoutSetVersion.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
-				"layoutSetVersionId"));
+		dynamicQuery.setProjection(
+			ProjectionFactoryUtil.property("layoutSetVersionId"));
 
-		Object newLayoutSetVersionId = newLayoutSetVersion.getLayoutSetVersionId();
+		Object newLayoutSetVersionId =
+			newLayoutSetVersion.getLayoutSetVersionId();
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("layoutSetVersionId",
-				new Object[] { newLayoutSetVersionId }));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.in(
+				"layoutSetVersionId", new Object[] {newLayoutSetVersionId}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -457,14 +495,16 @@ public class LayoutSetVersionPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(LayoutSetVersion.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			LayoutSetVersion.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
-				"layoutSetVersionId"));
+		dynamicQuery.setProjection(
+			ProjectionFactoryUtil.property("layoutSetVersionId"));
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("layoutSetVersionId",
-				new Object[] { RandomTestUtil.nextLong() }));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.in(
+				"layoutSetVersionId",
+				new Object[] {RandomTestUtil.nextLong()}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -477,28 +517,35 @@ public class LayoutSetVersionPersistenceTest {
 
 		_persistence.clearCache();
 
-		LayoutSetVersion existingLayoutSetVersion = _persistence.findByPrimaryKey(newLayoutSetVersion.getPrimaryKey());
+		LayoutSetVersion existingLayoutSetVersion =
+			_persistence.findByPrimaryKey(newLayoutSetVersion.getPrimaryKey());
 
-		Assert.assertEquals(Long.valueOf(
-				existingLayoutSetVersion.getLayoutSetId()),
-			ReflectionTestUtil.<Long>invoke(existingLayoutSetVersion,
-				"getOriginalLayoutSetId", new Class<?>[0]));
-		Assert.assertEquals(Integer.valueOf(
-				existingLayoutSetVersion.getVersion()),
-			ReflectionTestUtil.<Integer>invoke(existingLayoutSetVersion,
-				"getOriginalVersion", new Class<?>[0]));
+		Assert.assertEquals(
+			Long.valueOf(existingLayoutSetVersion.getLayoutSetId()),
+			ReflectionTestUtil.<Long>invoke(
+				existingLayoutSetVersion, "getOriginalLayoutSetId",
+				new Class<?>[0]));
+		Assert.assertEquals(
+			Integer.valueOf(existingLayoutSetVersion.getVersion()),
+			ReflectionTestUtil.<Integer>invoke(
+				existingLayoutSetVersion, "getOriginalVersion",
+				new Class<?>[0]));
 
-		Assert.assertEquals(Long.valueOf(existingLayoutSetVersion.getGroupId()),
-			ReflectionTestUtil.<Long>invoke(existingLayoutSetVersion,
-				"getOriginalGroupId", new Class<?>[0]));
-		Assert.assertEquals(Boolean.valueOf(
-				existingLayoutSetVersion.getPrivateLayout()),
-			ReflectionTestUtil.<Boolean>invoke(existingLayoutSetVersion,
-				"getOriginalPrivateLayout", new Class<?>[0]));
-		Assert.assertEquals(Integer.valueOf(
-				existingLayoutSetVersion.getVersion()),
-			ReflectionTestUtil.<Integer>invoke(existingLayoutSetVersion,
-				"getOriginalVersion", new Class<?>[0]));
+		Assert.assertEquals(
+			Long.valueOf(existingLayoutSetVersion.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(
+				existingLayoutSetVersion, "getOriginalGroupId",
+				new Class<?>[0]));
+		Assert.assertEquals(
+			Boolean.valueOf(existingLayoutSetVersion.getPrivateLayout()),
+			ReflectionTestUtil.<Boolean>invoke(
+				existingLayoutSetVersion, "getOriginalPrivateLayout",
+				new Class<?>[0]));
+		Assert.assertEquals(
+			Integer.valueOf(existingLayoutSetVersion.getVersion()),
+			ReflectionTestUtil.<Integer>invoke(
+				existingLayoutSetVersion, "getOriginalVersion",
+				new Class<?>[0]));
 	}
 
 	protected LayoutSetVersion addLayoutSetVersion() throws Exception {
@@ -532,16 +579,20 @@ public class LayoutSetVersionPersistenceTest {
 
 		layoutSetVersion.setSettings(RandomTestUtil.randomString());
 
-		layoutSetVersion.setLayoutSetPrototypeUuid(RandomTestUtil.randomString());
+		layoutSetVersion.setLayoutSetPrototypeUuid(
+			RandomTestUtil.randomString());
 
-		layoutSetVersion.setLayoutSetPrototypeLinkEnabled(RandomTestUtil.randomBoolean());
+		layoutSetVersion.setLayoutSetPrototypeLinkEnabled(
+			RandomTestUtil.randomBoolean());
 
 		_layoutSetVersions.add(_persistence.update(layoutSetVersion));
 
 		return layoutSetVersion;
 	}
 
-	private List<LayoutSetVersion> _layoutSetVersions = new ArrayList<LayoutSetVersion>();
+	private List<LayoutSetVersion> _layoutSetVersions =
+		new ArrayList<LayoutSetVersion>();
 	private LayoutSetVersionPersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
+
 }

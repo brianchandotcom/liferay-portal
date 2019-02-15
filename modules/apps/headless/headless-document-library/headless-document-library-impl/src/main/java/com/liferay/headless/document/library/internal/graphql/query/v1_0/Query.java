@@ -15,11 +15,9 @@
 package com.liferay.headless.document.library.internal.graphql.query.v1_0;
 
 import com.liferay.headless.document.library.dto.v1_0.Comment;
-import com.liferay.headless.document.library.dto.v1_0.Creator;
 import com.liferay.headless.document.library.dto.v1_0.Document;
 import com.liferay.headless.document.library.dto.v1_0.Folder;
 import com.liferay.headless.document.library.resource.v1_0.CommentResource;
-import com.liferay.headless.document.library.resource.v1_0.CreatorResource;
 import com.liferay.headless.document.library.resource.v1_0.DocumentResource;
 import com.liferay.headless.document.library.resource.v1_0.FolderResource;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -48,14 +46,6 @@ public class Query {
 	public Collection<Comment> getDocumentCommentsPage( @GraphQLName("document-id") Long documentId , @GraphQLName("per_page") int perPage , @GraphQLName("page") int page ) throws Exception {
 
 		return _getCommentResource().getDocumentCommentsPage( documentId , Pagination.of(perPage, page) ).getItems();
-
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
-	public Creator getCreator( @GraphQLName("creator-id") Long creatorId ) throws Exception {
-
-		return _getCreatorResource().getCreator( creatorId );
 
 	}
 
@@ -129,12 +119,6 @@ public class Query {
 
 	private static final ServiceTracker<CommentResource, CommentResource> _commentResourceServiceTracker;
 
-	private static CreatorResource _getCreatorResource() {
-			return _creatorResourceServiceTracker.getService();
-	}
-
-	private static final ServiceTracker<CreatorResource, CreatorResource> _creatorResourceServiceTracker;
-
 	private static DocumentResource _getDocumentResource() {
 			return _documentResourceServiceTracker.getService();
 	}
@@ -156,13 +140,6 @@ public class Query {
 		commentResourceServiceTracker.open();
 
 		_commentResourceServiceTracker = commentResourceServiceTracker;
-
-		ServiceTracker<CreatorResource, CreatorResource> creatorResourceServiceTracker =
-			new ServiceTracker<CreatorResource, CreatorResource>(bundle.getBundleContext(), CreatorResource.class, null);
-
-		creatorResourceServiceTracker.open();
-
-		_creatorResourceServiceTracker = creatorResourceServiceTracker;
 
 		ServiceTracker<DocumentResource, DocumentResource> documentResourceServiceTracker =
 			new ServiceTracker<DocumentResource, DocumentResource>(bundle.getBundleContext(), DocumentResource.class, null);

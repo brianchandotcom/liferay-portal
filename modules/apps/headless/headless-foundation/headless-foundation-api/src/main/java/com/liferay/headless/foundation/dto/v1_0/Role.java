@@ -38,7 +38,7 @@ public class Role {
 		return availableLanguages;
 	}
 
-	public UserAccount getCreator() {
+	public Creator getCreator() {
 		return creator;
 	}
 
@@ -81,8 +81,12 @@ public class Role {
 	}
 	}
 
+	public void setCreator(Creator creator) {
+		this.creator = creator;
+	}
+
 	public void setCreator(
-		UnsafeSupplier<UserAccount, Throwable> creatorUnsafeSupplier) {
+		UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier) {
 
 		try {
 			creator = creatorUnsafeSupplier.get();
@@ -90,10 +94,6 @@ public class Role {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 	}
-	}
-
-	public void setCreator(UserAccount creator) {
-		this.creator = creator;
 	}
 
 	public void setDateCreated(Date dateCreated) {
@@ -186,7 +186,7 @@ public class Role {
 	protected String[] availableLanguages;
 
 	@GraphQLField
-	protected UserAccount creator;
+	protected Creator creator;
 
 	@GraphQLField
 	protected Date dateCreated;

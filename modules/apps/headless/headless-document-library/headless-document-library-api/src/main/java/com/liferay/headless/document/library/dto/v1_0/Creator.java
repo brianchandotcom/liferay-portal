@@ -36,14 +36,6 @@ public class Creator {
 		return additionalName;
 	}
 
-	public String getAlternateName() {
-		return alternateName;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
 	public String getFamilyName() {
 		return familyName;
 	}
@@ -58,10 +50,6 @@ public class Creator {
 
 	public String getImage() {
 		return image;
-	}
-
-	public String getJobTitle() {
-		return jobTitle;
 	}
 
 	public String getName() {
@@ -81,36 +69,6 @@ public class Creator {
 
 		try {
 			additionalName = additionalNameUnsafeSupplier.get();
-	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
-	}
-	}
-
-	public void setAlternateName(String alternateName) {
-		this.alternateName = alternateName;
-	}
-
-	public void setAlternateName(
-		UnsafeSupplier<String, Throwable> alternateNameUnsafeSupplier) {
-
-		try {
-			alternateName = alternateNameUnsafeSupplier.get();
-	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
-	}
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public void setEmail(
-		UnsafeSupplier<String, Throwable> emailUnsafeSupplier) {
-
-		try {
-			email = emailUnsafeSupplier.get();
 	}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -175,21 +133,6 @@ public class Creator {
 	}
 	}
 
-	public void setJobTitle(String jobTitle) {
-		this.jobTitle = jobTitle;
-	}
-
-	public void setJobTitle(
-		UnsafeSupplier<String, Throwable> jobTitleUnsafeSupplier) {
-
-		try {
-			jobTitle = jobTitleUnsafeSupplier.get();
-	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
-	}
-	}
-
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -222,12 +165,6 @@ public class Creator {
 	protected String additionalName;
 
 	@GraphQLField
-	protected String alternateName;
-
-	@GraphQLField
-	protected String email;
-
-	@GraphQLField
 	protected String familyName;
 
 	@GraphQLField
@@ -238,9 +175,6 @@ public class Creator {
 
 	@GraphQLField
 	protected String image;
-
-	@GraphQLField
-	protected String jobTitle;
 
 	@GraphQLField
 	protected String name;

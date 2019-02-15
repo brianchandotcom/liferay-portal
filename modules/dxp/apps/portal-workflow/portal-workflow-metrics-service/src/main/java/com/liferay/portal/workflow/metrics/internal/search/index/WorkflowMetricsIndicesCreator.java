@@ -14,12 +14,18 @@
 
 package com.liferay.portal.workflow.metrics.internal.search.index;
 
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.index.CreateIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.IndicesExistsIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.IndicesExistsIndexResponse;
+
+import java.util.Iterator;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -33,35 +39,34 @@ public class WorkflowMetricsIndicesCreator {
 
 	@Activate
 	protected void activate() throws Exception {
-		createIndex(
-			"workflow-metrics-instances",
-			"workflow-metrics-instances-type-mappings.json");
-		createIndex(
-			"workflow-metrics-processes",
-			"workflow-metrics-processes-type-mappings.json");
-		createIndex(
-			"workflow-metrics-tasks",
-			"workflow-metrics-tasks-type-mappings.json");
-		createIndex(
-			"workflow-metrics-tokens",
-			"workflow-metrics-tokens-type-mappings.json");
-	}
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			StringUtil.read(getClass(), "/META-INF/search/mappings.json"));
 
-	protected void createIndex(String indexName, String typeMappingFileName) {
-		IndicesExistsIndexRequest indicesExistsIndexRequest =
-			new IndicesExistsIndexRequest(indexName);
+		Iterator<String> iterator = jsonObject.keys();
 
-		IndicesExistsIndexResponse indicesExistsIndexResponse =
-			_searchEngineAdapter.execute(indicesExistsIndexRequest);
+		while (iterator.hasNext()) {
+			String indexName = _getIndexName(iterator.next());
 
-		if (!indicesExistsIndexResponse.isExists()) {
+			IndicesExistsIndexRequest indicesExistsIndexRequest =
+				new IndicesExistsIndexRequest(indexName);
+
+			IndicesExistsIndexResponse indicesExistsIndexResponse =
+				_searchEngineAdapter.execute(indicesExistsIndexRequest);
+
+			if (indicesExistsIndexResponse.isExists()) {
+				continue;
+			}
+
 			CreateIndexRequest createIndexRequest = new CreateIndexRequest(
 				indexName);
 
-			String source = StringUtil.read(
-				getClass(), "/META-INF/mappings/" + typeMappingFileName);
-
-			createIndexRequest.setSource(source);
+			createIndexRequest.setSource(
+				JSONUtil.put(
+					"mappings",
+					JSONUtil.put(
+						indexName, jsonObject.getJSONObject(indexName)
+					)
+				).toString());
 
 			_searchEngineAdapter.execute(createIndexRequest);
 		}
@@ -70,6 +75,21 @@ public class WorkflowMetricsIndicesCreator {
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
 	protected void setModuleServiceLifecycle(
 		ModuleServiceLifecycle moduleServiceLifecycle) {
+	}
+
+	private String _getIndexName(String key) {
+
+		// WorkflowMetricsInstanceType to WorkflowMetricsInstance
+
+		String indexName = key.substring(0, 4);
+
+		// WorkflowMetricsInstance to WorkflowMetricsInstances
+
+		indexName = TextFormatter.formatPlural(indexName);
+
+		// WorkflowMetricsInstances to workflow-metrics-instances
+
+		return TextFormatter.format(indexName, TextFormatter.K);
 	}
 
 	@Reference

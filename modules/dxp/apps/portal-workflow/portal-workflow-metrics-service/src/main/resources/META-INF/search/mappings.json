@@ -1,0 +1,130 @@
+{
+	"WorkflowMetricsInstanceType": {
+		"properties": {
+			"companyId": {
+				"store": true,
+				"type": "keyword"
+			},
+			"date": {
+				"store": true,
+				"type": "date"
+			},
+			"deleted": {
+				"store": true,
+				"type": "boolean"
+			},
+			"id": {
+				"store": true,
+				"type": "keyword"
+			},
+			"instanceId": {
+				"store": true,
+				"type": "keyword"
+			},
+			"processId": {
+				"store": true,
+				"type": "keyword"
+			},
+			"userId": {
+				"store": true,
+				"type": "keyword"
+			}
+		}
+	},
+	"WorkflowMetricsProcessType": {
+		"properties": {
+			"active": {
+				"store": true,
+				"type": "boolean"
+			},
+			"companyId": {
+				"store": true,
+				"type": "keyword"
+			},
+			"date_sortable": {
+				"store": true,
+				"type": "date"
+			},
+			"deleted": {
+				"store": true,
+				"type": "boolean"
+			},
+			"id": {
+				"store": true,
+				"type": "keyword"
+			},
+			"name": {
+				"store": true,
+				"type": "keyword"
+			},
+			"processId": {
+				"store": true,
+				"type": "keyword"
+			},
+			"title": {
+				"store": true,
+				"type": "text"
+			},
+			"userId": {
+				"store": true,
+				"type": "keyword"
+			}
+		}
+	},
+	"WorkflowMetricsTaskType": {
+		"properties": {
+			"companyId": {
+				"type": "keyword"
+			},
+			"date": {
+				"type": "date"
+			},
+			"deleted": {
+				"type": "boolean"
+			},
+			"id": {
+				"type": "keyword"
+			},
+			"instanceId": {
+				"type": "keyword"
+			},
+			"name": {
+				"type": "keyword"
+			},
+			"taskId": {
+				"type": "keyword"
+			},
+			"userId": {
+				"type": "keyword"
+			}
+		}
+	},
+	"WorkflowMetricsTokenType": {
+		"properties": {
+			"companyId": {
+				"type": "keyword"
+			},
+			"date": {
+				"type": "date"
+			},
+			"deleted": {
+				"type": "boolean"
+			},
+			"id": {
+				"type": "keyword"
+			},
+			"instanceId": {
+				"type": "keyword"
+			},
+			"name": {
+				"type": "keyword"
+			},
+			"taskId": {
+				"type": "keyword"
+			},
+			"userId": {
+				"type": "keyword"
+			}
+		}
+	}
+}

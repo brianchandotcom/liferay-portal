@@ -12,15 +12,15 @@
  * details.
  */
 
-package com.liferay.document.library.service.impl;
+package com.liferay.document.library.internal.repository.event;
 
 import com.liferay.document.library.constants.DLFileVersionPreviewConstants;
-import com.liferay.document.library.kernel.service.FileVersionPreviewEventListener;
 import com.liferay.document.library.model.DLFileVersionPreview;
 import com.liferay.document.library.service.DLFileVersionPreviewLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.repository.event.FileVersionPreviewEventListener;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 
 import org.osgi.service.component.annotations.Component;

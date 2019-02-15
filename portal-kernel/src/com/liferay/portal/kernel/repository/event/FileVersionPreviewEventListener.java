@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.document.library.kernel.service;
+package com.liferay.portal.kernel.repository.event;
 
 import com.liferay.portal.kernel.repository.model.FileVersion;
 

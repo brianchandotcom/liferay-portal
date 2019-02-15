@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.LayoutSet;
+import com.liferay.portal.kernel.model.LayoutSetVersion;
 import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.search.Indexable;
@@ -44,15 +45,21 @@ import com.liferay.portal.kernel.service.persistence.LayoutFinder;
 import com.liferay.portal.kernel.service.persistence.LayoutPersistence;
 import com.liferay.portal.kernel.service.persistence.LayoutSetBranchPersistence;
 import com.liferay.portal.kernel.service.persistence.LayoutSetPersistence;
+import com.liferay.portal.kernel.service.persistence.LayoutSetVersionPersistence;
 import com.liferay.portal.kernel.service.persistence.PluginSettingPersistence;
 import com.liferay.portal.kernel.service.persistence.VirtualHostPersistence;
+import com.liferay.portal.kernel.service.version.VersionService;
+import com.liferay.portal.kernel.service.version.VersionServiceListener;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.Serializable;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.sql.DataSource;
 
@@ -69,7 +76,8 @@ import javax.sql.DataSource;
  */
 @ProviderType
 public abstract class LayoutSetLocalServiceBaseImpl extends BaseLocalServiceImpl
-	implements LayoutSetLocalService, IdentifiableOSGiService {
+	implements LayoutSetLocalService, IdentifiableOSGiService,
+		VersionService<LayoutSet, LayoutSetVersion> {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -91,15 +99,20 @@ public abstract class LayoutSetLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * Creates a new layout set with the primary key. Does not add the layout set to the database.
+	 * Creates a new layout set. Does not add the layout set to the database.
 	 *
-	 * @param layoutSetId the primary key for the new layout set
 	 * @return the new layout set
 	 */
 	@Override
 	@Transactional(enabled = false)
-	public LayoutSet createLayoutSet(long layoutSetId) {
-		return layoutSetPersistence.create(layoutSetId);
+	public LayoutSet create() {
+		long primaryKey = counterLocalService.increment(LayoutSet.class.getName());
+
+		LayoutSet draftLayoutSet = layoutSetPersistence.create(primaryKey);
+
+		draftLayoutSet.setHeadId(primaryKey);
+
+		return draftLayoutSet;
 	}
 
 	/**
@@ -113,7 +126,13 @@ public abstract class LayoutSetLocalServiceBaseImpl extends BaseLocalServiceImpl
 	@Override
 	public LayoutSet deleteLayoutSet(long layoutSetId)
 		throws PortalException {
-		return layoutSetPersistence.remove(layoutSetId);
+		LayoutSet layoutSet = layoutSetPersistence.fetchByPrimaryKey(layoutSetId);
+
+		if (layoutSet != null) {
+			delete(layoutSet);
+		}
+
+		return layoutSet;
 	}
 
 	/**
@@ -125,7 +144,14 @@ public abstract class LayoutSetLocalServiceBaseImpl extends BaseLocalServiceImpl
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public LayoutSet deleteLayoutSet(LayoutSet layoutSet) {
-		return layoutSetPersistence.remove(layoutSet);
+		try {
+			delete(layoutSet);
+
+			return layoutSet;
+		}
+		catch (PortalException pe) {
+			throw new SystemException(pe);
+		}
 	}
 
 	@Override
@@ -309,11 +335,13 @@ public abstract class LayoutSetLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param layoutSet the layout set
 	 * @return the layout set that was updated
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public LayoutSet updateLayoutSet(LayoutSet layoutSet) {
-		return layoutSetPersistence.update(layoutSet);
+	public LayoutSet updateLayoutSet(LayoutSet draftLayoutSet)
+		throws PortalException {
+		return updateDraft(draftLayoutSet);
 	}
 
 	/**
@@ -521,6 +549,25 @@ public abstract class LayoutSetLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
+	 * Returns the layout set version persistence.
+	 *
+	 * @return the layout set version persistence
+	 */
+	public LayoutSetVersionPersistence getLayoutSetVersionPersistence() {
+		return layoutSetVersionPersistence;
+	}
+
+	/**
+	 * Sets the layout set version persistence.
+	 *
+	 * @param layoutSetVersionPersistence the layout set version persistence
+	 */
+	public void setLayoutSetVersionPersistence(
+		LayoutSetVersionPersistence layoutSetVersionPersistence) {
+		this.layoutSetVersionPersistence = layoutSetVersionPersistence;
+	}
+
+	/**
 	 * Returns the layout set branch local service.
 	 *
 	 * @return the layout set branch local service
@@ -644,6 +691,334 @@ public abstract class LayoutSetLocalServiceBaseImpl extends BaseLocalServiceImpl
 			"com.liferay.portal.kernel.model.LayoutSet");
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public LayoutSet checkout(LayoutSet publishedLayoutSet, int version)
+		throws PortalException {
+		if (!publishedLayoutSet.isHead()) {
+			throw new IllegalArgumentException(
+				"Unable to checkout with unpublished changes " +
+				publishedLayoutSet.getHeadId());
+		}
+
+		LayoutSet draftLayoutSet = layoutSetPersistence.fetchByHeadId(publishedLayoutSet.getPrimaryKey());
+
+		if (draftLayoutSet != null) {
+			throw new IllegalArgumentException(
+				"Unable to checkout with unpublished changes " +
+				publishedLayoutSet.getPrimaryKey());
+		}
+
+		LayoutSetVersion layoutSetVersion = getVersion(publishedLayoutSet,
+				version);
+
+		draftLayoutSet = _createDraft(publishedLayoutSet);
+
+		layoutSetVersion.populateVersionedModel(draftLayoutSet);
+
+		draftLayoutSet = layoutSetPersistence.update(draftLayoutSet);
+
+		for (VersionServiceListener<LayoutSet, LayoutSetVersion> versionServiceListener : _versionServiceListeners) {
+			versionServiceListener.afterCheckout(draftLayoutSet, version);
+		}
+
+		return draftLayoutSet;
+	}
+
+	@Indexable(type = IndexableType.DELETE)
+	@Override
+	public LayoutSet delete(LayoutSet publishedLayoutSet)
+		throws PortalException {
+		if (!publishedLayoutSet.isHead()) {
+			throw new IllegalArgumentException("LayoutSet is a draft " +
+				publishedLayoutSet.getPrimaryKey());
+		}
+
+		LayoutSet draftLayoutSet = layoutSetPersistence.fetchByHeadId(publishedLayoutSet.getPrimaryKey());
+
+		if (draftLayoutSet != null) {
+			deleteDraft(draftLayoutSet);
+		}
+
+		for (LayoutSetVersion layoutSetVersion : getVersions(publishedLayoutSet)) {
+			layoutSetVersionPersistence.remove(layoutSetVersion);
+		}
+
+		layoutSetPersistence.remove(publishedLayoutSet);
+
+		for (VersionServiceListener<LayoutSet, LayoutSetVersion> versionServiceListener : _versionServiceListeners) {
+			versionServiceListener.afterDelete(publishedLayoutSet);
+		}
+
+		return publishedLayoutSet;
+	}
+
+	@Indexable(type = IndexableType.DELETE)
+	@Override
+	public LayoutSet deleteDraft(LayoutSet draftLayoutSet)
+		throws PortalException {
+		if (draftLayoutSet.isHead()) {
+			throw new IllegalArgumentException("LayoutSet is not a draft " +
+				draftLayoutSet.getPrimaryKey());
+		}
+
+		layoutSetPersistence.remove(draftLayoutSet);
+
+		for (VersionServiceListener<LayoutSet, LayoutSetVersion> versionServiceListener : _versionServiceListeners) {
+			versionServiceListener.afterDeleteDraft(draftLayoutSet);
+		}
+
+		return draftLayoutSet;
+	}
+
+	@Override
+	public LayoutSetVersion deleteVersion(LayoutSetVersion layoutSetVersion)
+		throws PortalException {
+		LayoutSetVersion latestLayoutSetVersion = layoutSetVersionPersistence.findByLayoutSetId_First(layoutSetVersion.getVersionedModelId(),
+				null);
+
+		if (latestLayoutSetVersion.getVersion() == layoutSetVersion.getVersion()) {
+			throw new IllegalArgumentException(
+				"Unable to delete latest version " +
+				layoutSetVersion.getVersion());
+		}
+
+		layoutSetVersion = layoutSetVersionPersistence.remove(layoutSetVersion);
+
+		for (VersionServiceListener<LayoutSet, LayoutSetVersion> versionServiceListener : _versionServiceListeners) {
+			versionServiceListener.afterDeleteVersion(layoutSetVersion);
+		}
+
+		return layoutSetVersion;
+	}
+
+	@Override
+	public LayoutSet fetchDraft(LayoutSet layoutSet) {
+		if (layoutSet.isHead()) {
+			return layoutSetPersistence.fetchByHeadId(layoutSet.getPrimaryKey());
+		}
+
+		return layoutSet;
+	}
+
+	@Override
+	public LayoutSet fetchDraft(long primaryKey) {
+		return layoutSetPersistence.fetchByHeadId(primaryKey);
+	}
+
+	@Override
+	public LayoutSetVersion fetchLatestVersion(LayoutSet layoutSet) {
+		long primaryKey = layoutSet.getHeadId();
+
+		if (layoutSet.isHead()) {
+			primaryKey = layoutSet.getPrimaryKey();
+		}
+
+		return layoutSetVersionPersistence.fetchByLayoutSetId_First(primaryKey,
+			null);
+	}
+
+	@Override
+	public LayoutSet fetchPublished(LayoutSet layoutSet) {
+		if (layoutSet.isHead()) {
+			return layoutSet;
+		}
+
+		if (layoutSet.getHeadId() == layoutSet.getPrimaryKey()) {
+			return null;
+		}
+
+		return layoutSetPersistence.fetchByPrimaryKey(layoutSet.getHeadId());
+	}
+
+	@Override
+	public LayoutSet fetchPublished(long primaryKey) {
+		LayoutSet layoutSet = layoutSetPersistence.fetchByPrimaryKey(primaryKey);
+
+		if ((layoutSet == null) ||
+				(layoutSet.getHeadId() == layoutSet.getPrimaryKey())) {
+			return null;
+		}
+
+		return layoutSet;
+	}
+
+	@Override
+	public LayoutSet getDraft(LayoutSet layoutSet) throws PortalException {
+		if (!layoutSet.isHead()) {
+			return layoutSet;
+		}
+
+		LayoutSet draftLayoutSet = layoutSetPersistence.fetchByHeadId(layoutSet.getPrimaryKey());
+
+		if (draftLayoutSet == null) {
+			draftLayoutSet = layoutSetLocalService.updateDraft(_createDraft(
+						layoutSet));
+		}
+
+		return draftLayoutSet;
+	}
+
+	@Override
+	public LayoutSet getDraft(long primaryKey) throws PortalException {
+		LayoutSet draftLayoutSet = layoutSetPersistence.fetchByHeadId(primaryKey);
+
+		if (draftLayoutSet == null) {
+			LayoutSet layoutSet = layoutSetPersistence.findByPrimaryKey(primaryKey);
+
+			draftLayoutSet = layoutSetLocalService.updateDraft(_createDraft(
+						layoutSet));
+		}
+
+		return draftLayoutSet;
+	}
+
+	@Override
+	public LayoutSetVersion getVersion(LayoutSet layoutSet, int version)
+		throws PortalException {
+		long primaryKey = layoutSet.getHeadId();
+
+		if (layoutSet.isHead()) {
+			primaryKey = layoutSet.getPrimaryKey();
+		}
+
+		return layoutSetVersionPersistence.findByLayoutSetId_Version(primaryKey,
+			version);
+	}
+
+	@Override
+	public List<LayoutSetVersion> getVersions(LayoutSet layoutSet) {
+		long primaryKey = layoutSet.getPrimaryKey();
+
+		if (!layoutSet.isHead()) {
+			if (layoutSet.getHeadId() == layoutSet.getPrimaryKey()) {
+				return Collections.emptyList();
+			}
+
+			primaryKey = layoutSet.getHeadId();
+		}
+
+		return layoutSetVersionPersistence.findByLayoutSetId(primaryKey);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public LayoutSet publishDraft(LayoutSet draftLayoutSet)
+		throws PortalException {
+		if (draftLayoutSet.isHead()) {
+			throw new IllegalArgumentException("Can only publish drafts " +
+				draftLayoutSet.getPrimaryKey());
+		}
+
+		LayoutSet headLayoutSet = null;
+
+		int version = 1;
+
+		if (draftLayoutSet.getHeadId() == draftLayoutSet.getPrimaryKey()) {
+			headLayoutSet = create();
+
+			draftLayoutSet.setHeadId(headLayoutSet.getPrimaryKey());
+		}
+		else {
+			headLayoutSet = layoutSetPersistence.findByPrimaryKey(draftLayoutSet.getHeadId());
+
+			LayoutSetVersion latestLayoutSetVersion = layoutSetVersionPersistence.findByLayoutSetId_First(draftLayoutSet.getHeadId(),
+					null);
+
+			version = latestLayoutSetVersion.getVersion() + 1;
+		}
+
+		LayoutSetVersion layoutSetVersion = layoutSetVersionPersistence.create(counterLocalService.increment(
+					LayoutSetVersion.class.getName()));
+
+		layoutSetVersion.setVersion(version);
+		layoutSetVersion.setVersionedModelId(headLayoutSet.getPrimaryKey());
+
+		draftLayoutSet.populateVersionModel(layoutSetVersion);
+
+		layoutSetVersionPersistence.update(layoutSetVersion);
+
+		layoutSetVersion.populateVersionedModel(headLayoutSet);
+
+		headLayoutSet.setHeadId(-headLayoutSet.getPrimaryKey());
+
+		headLayoutSet = layoutSetPersistence.update(headLayoutSet);
+
+		for (VersionServiceListener<LayoutSet, LayoutSetVersion> versionServiceListener : _versionServiceListeners) {
+			versionServiceListener.afterPublishDraft(draftLayoutSet, version);
+		}
+
+		deleteDraft(draftLayoutSet);
+
+		return headLayoutSet;
+	}
+
+	@Override
+	public void registerListener(
+		VersionServiceListener<LayoutSet, LayoutSetVersion> versionServiceListener) {
+		_versionServiceListeners.add(versionServiceListener);
+	}
+
+	@Override
+	public void unregisterListener(
+		VersionServiceListener<LayoutSet, LayoutSetVersion> versionServiceListener) {
+		_versionServiceListeners.remove(versionServiceListener);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public LayoutSet updateDraft(LayoutSet draftLayoutSet)
+		throws PortalException {
+		if (draftLayoutSet.isHead()) {
+			throw new IllegalArgumentException("Can only update draft entries " +
+				draftLayoutSet.getPrimaryKey());
+		}
+
+		LayoutSet previousLayoutSet = layoutSetPersistence.fetchByPrimaryKey(draftLayoutSet.getPrimaryKey());
+
+		draftLayoutSet = layoutSetPersistence.update(draftLayoutSet);
+
+		if (previousLayoutSet == null) {
+			for (VersionServiceListener<LayoutSet, LayoutSetVersion> versionServiceListener : _versionServiceListeners) {
+				versionServiceListener.afterCreateDraft(draftLayoutSet);
+			}
+		}
+		else {
+			for (VersionServiceListener<LayoutSet, LayoutSetVersion> versionServiceListener : _versionServiceListeners) {
+				versionServiceListener.afterUpdateDraft(draftLayoutSet);
+			}
+		}
+
+		return draftLayoutSet;
+	}
+
+	private LayoutSet _createDraft(LayoutSet publishedLayoutSet)
+		throws PortalException {
+		LayoutSet draftLayoutSet = create();
+
+		draftLayoutSet.setHeadId(publishedLayoutSet.getPrimaryKey());
+		draftLayoutSet.setGroupId(publishedLayoutSet.getGroupId());
+		draftLayoutSet.setCompanyId(publishedLayoutSet.getCompanyId());
+		draftLayoutSet.setCreateDate(publishedLayoutSet.getCreateDate());
+		draftLayoutSet.setModifiedDate(publishedLayoutSet.getModifiedDate());
+		draftLayoutSet.setPrivateLayout(publishedLayoutSet.getPrivateLayout());
+		draftLayoutSet.setLogoId(publishedLayoutSet.getLogoId());
+		draftLayoutSet.setThemeId(publishedLayoutSet.getThemeId());
+		draftLayoutSet.setColorSchemeId(publishedLayoutSet.getColorSchemeId());
+		draftLayoutSet.setCss(publishedLayoutSet.getCss());
+		draftLayoutSet.setPageCount(publishedLayoutSet.getPageCount());
+		draftLayoutSet.setSettings(publishedLayoutSet.getSettings());
+		draftLayoutSet.setLayoutSetPrototypeUuid(publishedLayoutSet.getLayoutSetPrototypeUuid());
+		draftLayoutSet.setLayoutSetPrototypeLinkEnabled(publishedLayoutSet.getLayoutSetPrototypeLinkEnabled());
+
+		draftLayoutSet.resetOriginalValues();
+
+		return draftLayoutSet;
+	}
+
+	private final Set<VersionServiceListener<LayoutSet, LayoutSetVersion>> _versionServiceListeners =
+		Collections.newSetFromMap(new ConcurrentHashMap<VersionServiceListener<LayoutSet, LayoutSetVersion>, Boolean>());
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -708,6 +1083,8 @@ public abstract class LayoutSetLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected LayoutPersistence layoutPersistence;
 	@BeanReference(type = LayoutFinder.class)
 	protected LayoutFinder layoutFinder;
+	@BeanReference(type = LayoutSetVersionPersistence.class)
+	protected LayoutSetVersionPersistence layoutSetVersionPersistence;
 	@BeanReference(type = com.liferay.portal.kernel.service.LayoutSetBranchLocalService.class)
 	protected com.liferay.portal.kernel.service.LayoutSetBranchLocalService layoutSetBranchLocalService;
 	@BeanReference(type = LayoutSetBranchPersistence.class)

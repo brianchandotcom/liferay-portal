@@ -20,8 +20,7 @@ import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 
 import com.liferay.portal.kernel.model.CacheModel;
-import com.liferay.portal.kernel.model.LayoutSet;
-import com.liferay.portal.kernel.model.MVCCModel;
+import com.liferay.portal.kernel.model.LayoutSetVersion;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -31,28 +30,27 @@ import java.io.ObjectOutput;
 import java.util.Date;
 
 /**
- * The cache model class for representing LayoutSet in entity cache.
+ * The cache model class for representing LayoutSetVersion in entity cache.
  *
  * @author Brian Wing Shun Chan
  * @generated
  */
 @ProviderType
-public class LayoutSetCacheModel implements CacheModel<LayoutSet>,
-	Externalizable, MVCCModel {
+public class LayoutSetVersionCacheModel implements CacheModel<LayoutSetVersion>,
+	Externalizable {
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
 			return true;
 		}
 
-		if (!(obj instanceof LayoutSetCacheModel)) {
+		if (!(obj instanceof LayoutSetVersionCacheModel)) {
 			return false;
 		}
 
-		LayoutSetCacheModel layoutSetCacheModel = (LayoutSetCacheModel)obj;
+		LayoutSetVersionCacheModel layoutSetVersionCacheModel = (LayoutSetVersionCacheModel)obj;
 
-		if ((layoutSetId == layoutSetCacheModel.layoutSetId) &&
-				(mvccVersion == layoutSetCacheModel.mvccVersion)) {
+		if (layoutSetVersionId == layoutSetVersionCacheModel.layoutSetVersionId) {
 			return true;
 		}
 
@@ -61,29 +59,17 @@ public class LayoutSetCacheModel implements CacheModel<LayoutSet>,
 
 	@Override
 	public int hashCode() {
-		int hashCode = HashUtil.hash(0, layoutSetId);
-
-		return HashUtil.hash(hashCode, mvccVersion);
-	}
-
-	@Override
-	public long getMvccVersion() {
-		return mvccVersion;
-	}
-
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		this.mvccVersion = mvccVersion;
+		return HashUtil.hash(0, layoutSetVersionId);
 	}
 
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(33);
 
-		sb.append("{mvccVersion=");
-		sb.append(mvccVersion);
-		sb.append(", headId=");
-		sb.append(headId);
+		sb.append("{layoutSetVersionId=");
+		sb.append(layoutSetVersionId);
+		sb.append(", version=");
+		sb.append(version);
 		sb.append(", layoutSetId=");
 		sb.append(layoutSetId);
 		sb.append(", groupId=");
@@ -118,87 +104,81 @@ public class LayoutSetCacheModel implements CacheModel<LayoutSet>,
 	}
 
 	@Override
-	public LayoutSet toEntityModel() {
-		LayoutSetImpl layoutSetImpl = new LayoutSetImpl();
+	public LayoutSetVersion toEntityModel() {
+		LayoutSetVersionImpl layoutSetVersionImpl = new LayoutSetVersionImpl();
 
-		layoutSetImpl.setMvccVersion(mvccVersion);
-		layoutSetImpl.setHeadId(headId);
-		layoutSetImpl.setLayoutSetId(layoutSetId);
-		layoutSetImpl.setGroupId(groupId);
-		layoutSetImpl.setCompanyId(companyId);
+		layoutSetVersionImpl.setLayoutSetVersionId(layoutSetVersionId);
+		layoutSetVersionImpl.setVersion(version);
+		layoutSetVersionImpl.setLayoutSetId(layoutSetId);
+		layoutSetVersionImpl.setGroupId(groupId);
+		layoutSetVersionImpl.setCompanyId(companyId);
 
 		if (createDate == Long.MIN_VALUE) {
-			layoutSetImpl.setCreateDate(null);
+			layoutSetVersionImpl.setCreateDate(null);
 		}
 		else {
-			layoutSetImpl.setCreateDate(new Date(createDate));
+			layoutSetVersionImpl.setCreateDate(new Date(createDate));
 		}
 
 		if (modifiedDate == Long.MIN_VALUE) {
-			layoutSetImpl.setModifiedDate(null);
+			layoutSetVersionImpl.setModifiedDate(null);
 		}
 		else {
-			layoutSetImpl.setModifiedDate(new Date(modifiedDate));
+			layoutSetVersionImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
-		layoutSetImpl.setPrivateLayout(privateLayout);
-		layoutSetImpl.setLogoId(logoId);
+		layoutSetVersionImpl.setPrivateLayout(privateLayout);
+		layoutSetVersionImpl.setLogoId(logoId);
 
 		if (themeId == null) {
-			layoutSetImpl.setThemeId("");
+			layoutSetVersionImpl.setThemeId("");
 		}
 		else {
-			layoutSetImpl.setThemeId(themeId);
+			layoutSetVersionImpl.setThemeId(themeId);
 		}
 
 		if (colorSchemeId == null) {
-			layoutSetImpl.setColorSchemeId("");
+			layoutSetVersionImpl.setColorSchemeId("");
 		}
 		else {
-			layoutSetImpl.setColorSchemeId(colorSchemeId);
+			layoutSetVersionImpl.setColorSchemeId(colorSchemeId);
 		}
 
 		if (css == null) {
-			layoutSetImpl.setCss("");
+			layoutSetVersionImpl.setCss("");
 		}
 		else {
-			layoutSetImpl.setCss(css);
+			layoutSetVersionImpl.setCss(css);
 		}
 
-		layoutSetImpl.setPageCount(pageCount);
+		layoutSetVersionImpl.setPageCount(pageCount);
 
 		if (settings == null) {
-			layoutSetImpl.setSettings("");
+			layoutSetVersionImpl.setSettings("");
 		}
 		else {
-			layoutSetImpl.setSettings(settings);
+			layoutSetVersionImpl.setSettings(settings);
 		}
 
 		if (layoutSetPrototypeUuid == null) {
-			layoutSetImpl.setLayoutSetPrototypeUuid("");
+			layoutSetVersionImpl.setLayoutSetPrototypeUuid("");
 		}
 		else {
-			layoutSetImpl.setLayoutSetPrototypeUuid(layoutSetPrototypeUuid);
+			layoutSetVersionImpl.setLayoutSetPrototypeUuid(layoutSetPrototypeUuid);
 		}
 
-		layoutSetImpl.setLayoutSetPrototypeLinkEnabled(layoutSetPrototypeLinkEnabled);
-		layoutSetImpl.setHead(head);
+		layoutSetVersionImpl.setLayoutSetPrototypeLinkEnabled(layoutSetPrototypeLinkEnabled);
 
-		layoutSetImpl.resetOriginalValues();
+		layoutSetVersionImpl.resetOriginalValues();
 
-		layoutSetImpl.setCompanyFallbackVirtualHostname(_companyFallbackVirtualHostname);
-
-		layoutSetImpl.setVirtualHostname(_virtualHostname);
-
-		return layoutSetImpl;
+		return layoutSetVersionImpl;
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput)
-		throws ClassNotFoundException, IOException {
-		mvccVersion = objectInput.readLong();
+	public void readExternal(ObjectInput objectInput) throws IOException {
+		layoutSetVersionId = objectInput.readLong();
 
-		headId = objectInput.readLong();
+		version = objectInput.readInt();
 
 		layoutSetId = objectInput.readLong();
 
@@ -220,19 +200,14 @@ public class LayoutSetCacheModel implements CacheModel<LayoutSet>,
 		layoutSetPrototypeUuid = objectInput.readUTF();
 
 		layoutSetPrototypeLinkEnabled = objectInput.readBoolean();
-
-		head = objectInput.readBoolean();
-
-		_companyFallbackVirtualHostname = (String)objectInput.readObject();
-		_virtualHostname = (String)objectInput.readObject();
 	}
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
-		objectOutput.writeLong(mvccVersion);
+		objectOutput.writeLong(layoutSetVersionId);
 
-		objectOutput.writeLong(headId);
+		objectOutput.writeInt(version);
 
 		objectOutput.writeLong(layoutSetId);
 
@@ -284,15 +259,10 @@ public class LayoutSetCacheModel implements CacheModel<LayoutSet>,
 		}
 
 		objectOutput.writeBoolean(layoutSetPrototypeLinkEnabled);
-
-		objectOutput.writeBoolean(head);
-
-		objectOutput.writeObject(_companyFallbackVirtualHostname);
-		objectOutput.writeObject(_virtualHostname);
 	}
 
-	public long mvccVersion;
-	public long headId;
+	public long layoutSetVersionId;
+	public int version;
 	public long layoutSetId;
 	public long groupId;
 	public long companyId;
@@ -307,7 +277,4 @@ public class LayoutSetCacheModel implements CacheModel<LayoutSet>,
 	public String settings;
 	public String layoutSetPrototypeUuid;
 	public boolean layoutSetPrototypeLinkEnabled;
-	public boolean head;
-	public String _companyFallbackVirtualHostname;
-	public String _virtualHostname;
 }

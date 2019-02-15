@@ -42,7 +42,7 @@ public class Vocabulary {
 		return contentSpace;
 	}
 
-	public UserAccount getCreator() {
+	public Creator getCreator() {
 		return creator;
 	}
 
@@ -104,8 +104,12 @@ public class Vocabulary {
 	}
 	}
 
+	public void setCreator(Creator creator) {
+		this.creator = creator;
+	}
+
 	public void setCreator(
-		UnsafeSupplier<UserAccount, Throwable> creatorUnsafeSupplier) {
+		UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier) {
 
 		try {
 			creator = creatorUnsafeSupplier.get();
@@ -113,10 +117,6 @@ public class Vocabulary {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 	}
-	}
-
-	public void setCreator(UserAccount creator) {
-		this.creator = creator;
 	}
 
 	public void setDateCreated(Date dateCreated) {
@@ -230,7 +230,7 @@ public class Vocabulary {
 	protected Long contentSpace;
 
 	@GraphQLField
-	protected UserAccount creator;
+	protected Creator creator;
 
 	@GraphQLField
 	protected Date dateCreated;

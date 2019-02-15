@@ -46,7 +46,7 @@ public class Category {
 		return categoryId;
 	}
 
-	public UserAccount getCreator() {
+	public Creator getCreator() {
 		return creator;
 	}
 
@@ -131,8 +131,12 @@ public class Category {
 	}
 	}
 
+	public void setCreator(Creator creator) {
+		this.creator = creator;
+	}
+
 	public void setCreator(
-		UnsafeSupplier<UserAccount, Throwable> creatorUnsafeSupplier) {
+		UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier) {
 
 		try {
 			creator = creatorUnsafeSupplier.get();
@@ -140,10 +144,6 @@ public class Category {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 	}
-	}
-
-	public void setCreator(UserAccount creator) {
-		this.creator = creator;
 	}
 
 	public void setCreatorId(Long creatorId) {
@@ -287,7 +287,7 @@ public class Category {
 	protected Long categoryId;
 
 	@GraphQLField
-	protected UserAccount creator;
+	protected Creator creator;
 
 	@GraphQLField
 	protected Long creatorId;

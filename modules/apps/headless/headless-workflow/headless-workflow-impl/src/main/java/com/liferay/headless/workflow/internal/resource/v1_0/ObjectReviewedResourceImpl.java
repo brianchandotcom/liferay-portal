@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.headless.form.internal.resource.v1_0;
+package com.liferay.headless.workflow.internal.resource.v1_0;
 
-import com.liferay.headless.form.resource.v1_0.CreatorResource;
+import com.liferay.headless.workflow.resource.v1_0.ObjectReviewedResource;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ServiceScope;
@@ -23,8 +23,8 @@ import org.osgi.service.component.annotations.ServiceScope;
  * @author Javier Gamarra
  */
 @Component(
-	properties = "OSGI-INF/liferay/rest/v1_0/creator.properties",
-	scope = ServiceScope.PROTOTYPE, service = CreatorResource.class
+	properties = "OSGI-INF/liferay/rest/v1_0/object-reviewed.properties",
+	scope = ServiceScope.PROTOTYPE, service = ObjectReviewedResource.class
 )
-public class CreatorResourceImpl extends BaseCreatorResourceImpl {
+public class ObjectReviewedResourceImpl extends BaseObjectReviewedResourceImpl {
 }

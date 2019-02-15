@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.headless.document.library.dto.v1_0;
+package com.liferay.headless.foundation.dto.v1_0;
 
 import com.liferay.petra.function.UnsafeSupplier;
 

@@ -61,9 +61,17 @@ components:
           format: int64
           type: integer
         image:
-          allOf:
-            - $ref: "#/components/schemas/BlogPostingImage"
+          properties:
+            contentUrl:
+              format: uri
+              type: string
+            imageId:
+              format: int64
+              type: integer
+            name:
+              type: string
           readOnly: true
+          type: object
         imageId:
           format: int64
           type: integer

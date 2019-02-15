@@ -98,7 +98,7 @@ public class BlogPosting {
 		return id;
 	}
 
-	public BlogPostingImage getImage() {
+	public Image getImage() {
 		return image;
 	}
 
@@ -349,13 +349,11 @@ public class BlogPosting {
 	}
 	}
 
-	public void setImage(BlogPostingImage image) {
+	public void setImage(Image image) {
 		this.image = image;
 	}
 
-	public void setImage(
-		UnsafeSupplier<BlogPostingImage, Throwable> imageUnsafeSupplier) {
-
+	public void setImage(UnsafeSupplier<Image, Throwable> imageUnsafeSupplier) {
 			try {
 				image = imageUnsafeSupplier.get();
 	}
@@ -443,7 +441,7 @@ public class BlogPosting {
 	protected Long id;
 
 	@GraphQLField
-	protected BlogPostingImage image;
+	protected Image image;
 
 	@GraphQLField
 	protected Long imageId;

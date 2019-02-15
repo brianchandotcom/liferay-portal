@@ -191,7 +191,7 @@ definition {
 
 		PageTemplatesAdminGlobalSite.gotoPageTemplateEllipsisItem(
 			item = "Configure",
-			pageTEmplateName = "${pageTemplateName}"
+			pageTemplateName = "${pageTemplateName}"
 		);
 
 		AssertTextEquals.assertValue(

@@ -44,7 +44,6 @@ import org.jboss.arquillian.core.spi.Manager;
 import org.jboss.arquillian.core.spi.NonManagedObserver;
 import org.jboss.arquillian.core.spi.ObserverMethod;
 import org.jboss.arquillian.core.spi.context.ApplicationContext;
-import org.jboss.arquillian.core.spi.context.Context;
 import org.jboss.arquillian.core.spi.context.ObjectStore;
 
 /**
@@ -74,19 +73,7 @@ public class ManagerImpl implements Manager {
 	public <T> void bind(
 		Class<? extends Annotation> scope, Class<T> type, T instance) {
 
-		Context scopedContext = _getScopedContext(scope);
-
-		if (scopedContext == null) {
-			throw new IllegalArgumentException(
-				"No Context registered with support for scope: " + scope);
-		}
-
-		if (!scopedContext.isActive()) {
-			throw new IllegalArgumentException(
-				"No active " + scope.getSimpleName() + " Context to bind to");
-		}
-
-		ObjectStore objectStore = scopedContext.getObjectStore();
+		ObjectStore objectStore = _applicationContext.getObjectStore();
 
 		objectStore.add(type, instance);
 	}
@@ -103,14 +90,11 @@ public class ManagerImpl implements Manager {
 		List<ObserverMethod> interceptorObservers =
 			_resolveInterceptorObservers(event.getClass());
 
-		ApplicationContext context = (ApplicationContext)_getScopedContext(
-			ApplicationScoped.class);
-
 		boolean activatedApplicationContext = false;
 
 		try {
-			if (!context.isActive()) {
-				context.activate();
+			if (!_applicationContext.isActive()) {
+				_applicationContext.activate();
 
 				activatedApplicationContext = true;
 			}
@@ -125,8 +109,8 @@ public class ManagerImpl implements Manager {
 			_throwException(ie.getCause());
 		}
 		finally {
-			if (activatedApplicationContext && context.isActive()) {
-				context.deactivate();
+			if (activatedApplicationContext && _applicationContext.isActive()) {
+				_applicationContext.deactivate();
 			}
 		}
 	}
@@ -219,14 +203,6 @@ public class ManagerImpl implements Manager {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-	}
-
-	private Context _getScopedContext(Class<? extends Annotation> scope) {
-		if (scope.equals(ApplicationScoped.class)) {
-			return _applicationContext;
-		}
-
-		return null;
 	}
 
 	private Class<?> _getType(Type type) {

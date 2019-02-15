@@ -39,7 +39,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import java.net.URI;
 import java.net.URL;
 
 import java.nio.file.DirectoryStream;
@@ -128,8 +127,7 @@ public class DefaultLPKGDeployer implements LPKGDeployer {
 							String.valueOf(lpkgFile)));
 				}
 
-				String location = LPKGInnerBundleLocationUtil.getLPKGLocation(
-					lpkgFile);
+				String location = LPKGLocationUtil.getLPKGLocation(lpkgFile);
 
 				if (!location.equals(bundle.getLocation()) &&
 					Files.deleteIfExists(Paths.get(bundle.getLocation())) &&
@@ -149,8 +147,7 @@ public class DefaultLPKGDeployer implements LPKGDeployer {
 		}
 
 		try {
-			String location = LPKGInnerBundleLocationUtil.getLPKGLocation(
-				lpkgFile);
+			String location = LPKGLocationUtil.getLPKGLocation(lpkgFile);
 
 			Bundle lpkgBundle = bundleContext.getBundle(location);
 

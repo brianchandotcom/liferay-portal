@@ -28,6 +28,9 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
 
+import javax.portlet.ActionRequest;
+import javax.portlet.PortletURL;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -61,10 +64,21 @@ public class JournalHistoryManagementToolbarDisplayContext
 							themeDisplay.getPermissionChecker(), _article,
 							ActionKeys.DELETE)) {
 
+						PortletURL deleteArticlesURL =
+							liferayPortletResponse.createActionURL();
+
+						deleteArticlesURL.setParameter(
+							ActionRequest.ACTION_NAME, "deleteArticles");
+						deleteArticlesURL.setParameter(
+							"redirect", themeDisplay.getURLCurrent());
+
 						add(
 							dropdownItem -> {
 								dropdownItem.putData(
 									"action", "deleteArticles");
+								dropdownItem.putData(
+									"deleteArticlesURL",
+									deleteArticlesURL.toString());
 								dropdownItem.setIcon("trash");
 								dropdownItem.setLabel(
 									LanguageUtil.get(request, "delete"));
@@ -80,10 +94,21 @@ public class JournalHistoryManagementToolbarDisplayContext
 							themeDisplay.getPermissionChecker(), _article,
 							ActionKeys.EXPIRE)) {
 
+						PortletURL expireArticlesURL =
+							liferayPortletResponse.createActionURL();
+
+						expireArticlesURL.setParameter(
+							ActionRequest.ACTION_NAME, "expireArticles");
+						expireArticlesURL.setParameter(
+							"redirect", themeDisplay.getURLCurrent());
+
 						add(
 							dropdownItem -> {
 								dropdownItem.putData(
 									"action", "expireArticles");
+								dropdownItem.putData(
+									"expireArticlesURL",
+									expireArticlesURL.toString());
 								dropdownItem.setIcon("time");
 								dropdownItem.setLabel(
 									LanguageUtil.get(request, "expire"));
@@ -100,6 +125,11 @@ public class JournalHistoryManagementToolbarDisplayContext
 	@Override
 	public String getComponentId() {
 		return "journalHistoryManagementToolbar";
+	}
+
+	@Override
+	public String getDefaultEventHandler() {
+		return "journalArticleHistoryManagementToolbarDefaultEventHandler";
 	}
 
 	@Override

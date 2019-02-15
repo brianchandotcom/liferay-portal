@@ -14,6 +14,10 @@
 
 package com.liferay.portal.osgi.web.servlet.jsp.compiler.internal;
 
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.xml.Document;
+import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.osgi.web.servlet.JSPTaglibHelper;
 
 import java.io.InputStream;
@@ -21,13 +25,9 @@ import java.io.InputStream;
 import java.net.URL;
 
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.ServletContext;
-
-import org.apache.jasper.xmlparser.ParserUtils;
-import org.apache.jasper.xmlparser.TreeNode;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.wiring.BundleWiring;
@@ -70,26 +70,17 @@ public class JSPTaglibHelperImpl implements JSPTaglibHelper {
 			}
 
 			try (InputStream inputStream = url.openStream()) {
-				ParserUtils parserUtils = new ParserUtils(true);
+				Document document = SAXReaderUtil.read(inputStream);
 
-				TreeNode treeNode = parserUtils.parseXMLDocument(
-					url.getPath(), inputStream, false);
+				Element rootElement = document.getRootElement();
 
-				Iterator<TreeNode> iterator = treeNode.findChildren("listener");
+				for (Element listenerElement :
+						rootElement.elements("listener")) {
 
-				while (iterator.hasNext()) {
-					TreeNode listenerTreeNode = iterator.next();
-
-					TreeNode listenerClassTreeNode = listenerTreeNode.findChild(
+					String listenerClassName = listenerElement.elementText(
 						"listener-class");
 
-					if (listenerClassTreeNode == null) {
-						continue;
-					}
-
-					String listenerClassName = listenerClassTreeNode.getBody();
-
-					if (listenerClassName == null) {
+					if (Validator.isNull(listenerClassName)) {
 						continue;
 					}
 

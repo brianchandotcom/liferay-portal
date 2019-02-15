@@ -551,7 +551,7 @@ public class JavaParser {
 			!astDetailContent.contains("\n\n")) {
 
 			int startPos = _getLineStartPos(content, startLineNumber);
-			int endPos = _getLineStartPos(content, endLineNumber + 1) + 1;
+			int endPos = _getLineStartPos(content, endLineNumber + 1) - 1;
 
 			return StringUtil.replaceFirst(
 				content, content.substring(startPos, endPos), javaTermContent,

@@ -34,7 +34,6 @@ import org.jboss.arquillian.core.api.Instance;
 import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.arquillian.core.spi.Manager;
 import org.jboss.arquillian.core.spi.NonManagedObserver;
-import org.jboss.arquillian.test.spi.LifecycleMethodExecutor;
 import org.jboss.arquillian.test.spi.TestMethodExecutor;
 import org.jboss.arquillian.test.spi.TestResult;
 import org.jboss.arquillian.test.spi.event.suite.AfterClass;
@@ -193,9 +192,7 @@ public class Arquillian extends Runner implements Filterable {
 					Throwable throwable = null;
 
 					try {
-						manager.fire(
-							new BeforeClass(
-								_clazz, LifecycleMethodExecutor.NO_OP));
+						manager.fire(new BeforeClass(_clazz));
 
 						statement.evaluate();
 					}
@@ -204,9 +201,7 @@ public class Arquillian extends Runner implements Filterable {
 					}
 
 					try {
-						manager.fire(
-							new AfterClass(
-								_clazz, LifecycleMethodExecutor.NO_OP));
+						manager.fire(new AfterClass(_clazz));
 					}
 					catch (Throwable t) {
 						if (throwable != null) {
@@ -337,8 +332,7 @@ public class Arquillian extends Runner implements Filterable {
 					try {
 						manager.fire(
 							new AfterTestLifecycleEvent(
-								test, frameworkMethod.getMethod(),
-								LifecycleMethodExecutor.NO_OP));
+								test, frameworkMethod.getMethod()));
 					}
 					catch (Throwable t) {
 						if (throwable != null) {

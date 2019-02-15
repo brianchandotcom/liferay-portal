@@ -196,19 +196,19 @@ class SegmentEdit extends Component {
 
 				if (errorMessages.length) {
 					event.preventDefault();
-				}
 
-				errorMessages.map(
-					message => {
-						Liferay.Util.openToast(
-							{
-								message,
-								title: Liferay.Language.get('error'),
-								type: 'danger'
-							}
-						);
-					}
-				);
+					errorMessages.map(
+						message => {
+							Liferay.Util.openToast(
+								{
+									message,
+									title: Liferay.Language.get('error'),
+									type: 'danger'
+								}
+							);
+						}
+					);
+				}
 			}
 		);
 	};

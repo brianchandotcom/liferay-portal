@@ -16,6 +16,8 @@ package com.liferay.portal.workflow.kaleo.designer.web.internal.portlet.action;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -74,6 +76,14 @@ public abstract class BaseKaleoDesignerMVCActionCommand
 			hideDefaultErrorMessage(actionRequest);
 
 			SessionErrors.add(actionRequest, we.getClass(), we);
+
+			Throwable cause = we.getCause();
+
+			if (cause != null) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(cause.getMessage());
+				}
+			}
 
 			return false;
 		}
@@ -192,5 +202,8 @@ public abstract class BaseKaleoDesignerMVCActionCommand
 
 	@Reference
 	protected WorkflowModelParser workflowModelParser;
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		BaseKaleoDesignerMVCActionCommand.class);
 
 }

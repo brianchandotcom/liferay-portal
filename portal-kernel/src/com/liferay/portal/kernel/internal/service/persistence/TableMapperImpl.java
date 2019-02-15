@@ -107,11 +107,13 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 		leftToRightPortalCache = PortalCacheHelperUtil.getPortalCache(
 			PortalCacheManagerNames.MULTI_VM,
 			StringBundler.concat(
-				TableMapper.class.getName(), "-", tableName, "-LeftToRight"));
+				TableMapper.class.getName(), "-", tableName, "-",
+				leftColumnName, "-To-", rightColumnName));
 		rightToLeftPortalCache = PortalCacheHelperUtil.getPortalCache(
 			PortalCacheManagerNames.MULTI_VM,
 			StringBundler.concat(
-				TableMapper.class.getName(), "-", tableName, "-RightToLeft"));
+				TableMapper.class.getName(), "-", tableName, "-",
+				rightColumnName, "-To-", leftColumnName));
 	}
 
 	@Override

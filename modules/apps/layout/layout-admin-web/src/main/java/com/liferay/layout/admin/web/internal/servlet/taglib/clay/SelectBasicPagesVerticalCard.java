@@ -68,6 +68,10 @@ public class SelectBasicPagesVerticalCard implements VerticalCard {
 			addLayoutURL.setParameter("backURL", redirect);
 			addLayoutURL.setParameter("type", _type);
 
+			long selPlid = ParamUtil.getLong(_request, "selPlid");
+
+			addLayoutURL.setParameter("selPlid", String.valueOf(selPlid));
+
 			addLayoutURL.setWindowState(LiferayWindowState.POP_UP);
 
 			data.put("add-layout-url", addLayoutURL.toString());

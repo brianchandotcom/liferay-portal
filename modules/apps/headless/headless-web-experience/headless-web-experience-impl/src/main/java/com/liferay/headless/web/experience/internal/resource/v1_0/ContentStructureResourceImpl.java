@@ -17,7 +17,7 @@ package com.liferay.headless.web.experience.internal.resource.v1_0;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
 import com.liferay.headless.web.experience.dto.v1_0.ContentStructure;
-import com.liferay.headless.web.experience.internal.dto.v1_0.ContentStructureUtil;
+import com.liferay.headless.web.experience.internal.dto.v1_0.ContentStructureConverter;
 import com.liferay.headless.web.experience.internal.odata.entity.v1_0.ContentStructureEntityModel;
 import com.liferay.headless.web.experience.resource.v1_0.ContentStructureResource;
 import com.liferay.journal.model.JournalArticle;
@@ -30,9 +30,7 @@ import com.liferay.portal.kernel.search.SearchResultPermissionFilterFactory;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.ClassNameService;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -114,9 +112,8 @@ public class ContentStructureResourceImpl
 	private ContentStructure _toContentStructure(DDMStructure ddmStructure)
 		throws Exception {
 
-		return ContentStructureUtil.toContentStructure(
-			ddmStructure, acceptLanguage.getPreferredLocale(), _portal,
-			_userLocalService);
+		return _contentStructureConverter.toContentStructure(
+			ddmStructure, acceptLanguage.getPreferredLocale());
 	}
 
 	private static final ContentStructureEntityModel
@@ -126,19 +123,16 @@ public class ContentStructureResourceImpl
 	private ClassNameService _classNameService;
 
 	@Reference
+	private ContentStructureConverter _contentStructureConverter;
+
+	@Reference
 	private DDMStructureService _ddmStructureService;
 
 	@Reference
 	private IndexerRegistry _indexerRegistry;
 
 	@Reference
-	private Portal _portal;
-
-	@Reference
 	private SearchResultPermissionFilterFactory
 		_searchResultPermissionFilterFactory;
-
-	@Reference
-	private UserLocalService _userLocalService;
 
 }

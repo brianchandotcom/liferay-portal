@@ -17,7 +17,7 @@ package com.liferay.headless.collaboration.internal.resource.v1_0;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryService;
 import com.liferay.headless.collaboration.dto.v1_0.Comment;
-import com.liferay.headless.collaboration.internal.dto.v1_0.CommentUtil;
+import com.liferay.headless.collaboration.internal.dto.v1_0.CommentConverter;
 import com.liferay.headless.collaboration.resource.v1_0.CommentResource;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.comment.DiscussionPermission;
@@ -69,7 +69,7 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 					blogsEntry.getModelClassName(), blogPostingId,
 					WorkflowConstants.STATUS_APPROVED,
 					pagination.getStartPosition(), pagination.getEndPosition()),
-				CommentUtil::toComment),
+				_commentConverter::toComment),
 			pagination, count);
 	}
 
@@ -80,7 +80,7 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 
 		_checkViewPermission(comment);
 
-		return CommentUtil.toComment(comment);
+		return _commentConverter.toComment(comment);
 	}
 
 	@Override
@@ -95,7 +95,7 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 				_commentManager.getChildComments(
 					commentId, WorkflowConstants.STATUS_APPROVED,
 					pagination.getStartPosition(), pagination.getEndPosition()),
-				CommentUtil::toComment),
+				_commentConverter::toComment),
 			pagination,
 			_commentManager.getChildCommentsCount(
 				commentId, WorkflowConstants.STATUS_APPROVED));
@@ -136,6 +136,9 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 
 	@Reference
 	private BlogsEntryService _blogsEntryService;
+
+	@Reference
+	private CommentConverter _commentConverter;
 
 	@Reference
 	private CommentManager _commentManager;

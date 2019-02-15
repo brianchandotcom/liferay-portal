@@ -15,7 +15,7 @@
 package com.liferay.headless.web.experience.internal.resource.v1_0;
 
 import com.liferay.headless.web.experience.dto.v1_0.Comment;
-import com.liferay.headless.web.experience.internal.dto.v1_0.CommentUtil;
+import com.liferay.headless.web.experience.internal.dto.v1_0.CommentConverter;
 import com.liferay.headless.web.experience.resource.v1_0.CommentResource;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleService;
@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.comment.DiscussionPermission;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -52,7 +51,7 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 
 		_checkViewPermission(comment);
 
-		return CommentUtil.toComment(comment, _portal);
+		return _commentConverter.toComment(comment);
 	}
 
 	@Override
@@ -67,7 +66,7 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 				_commentManager.getChildComments(
 					commentId, WorkflowConstants.STATUS_APPROVED,
 					pagination.getStartPosition(), pagination.getEndPosition()),
-				comment -> CommentUtil.toComment(comment, _portal)),
+				_commentConverter::toComment),
 			pagination,
 			_commentManager.getChildCommentsCount(
 				commentId, WorkflowConstants.STATUS_APPROVED));
@@ -99,7 +98,7 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 					journalArticle.getModelClassName(), structuredContentId,
 					WorkflowConstants.STATUS_APPROVED,
 					pagination.getStartPosition(), pagination.getEndPosition()),
-				comment -> CommentUtil.toComment(comment, _portal)),
+				_commentConverter::toComment),
 			pagination, count);
 	}
 
@@ -137,12 +136,12 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 	}
 
 	@Reference
+	private CommentConverter _commentConverter;
+
+	@Reference
 	private CommentManager _commentManager;
 
 	@Reference
 	private JournalArticleService _journalArticleService;
-
-	@Reference
-	private Portal _portal;
 
 }

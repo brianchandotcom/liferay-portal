@@ -24,7 +24,6 @@ import com.liferay.headless.web.experience.dto.v1_0.Fields;
 import com.liferay.headless.web.experience.dto.v1_0.Options;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.Portal;
 
 import java.util.List;
 import java.util.Locale;
@@ -33,14 +32,17 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Stream;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Cristina González
  */
-public class ContentStructureUtil {
+@Component(service = ContentStructureConverter.class)
+public class ContentStructureConverter {
 
-	public static ContentStructure toContentStructure(
-			DDMStructure ddmStructure, Locale locale, Portal portal,
-			UserLocalService userLocalService)
+	public ContentStructure toContentStructure(
+			DDMStructure ddmStructure, Locale locale)
 		throws Exception {
 
 		if (ddmStructure == null) {
@@ -54,9 +56,8 @@ public class ContentStructureUtil {
 						ddmStructure.getAvailableLanguageIds()));
 				setContentSpace(ddmStructure.getGroupId());
 				setCreator(
-					CreatorUtil.toCreator(
-						portal,
-						userLocalService.getUserById(
+					_creatorConverter.toCreator(
+						_userLocalService.getUserById(
 							ddmStructure.getUserId())));
 				setDateCreated(ddmStructure.getCreateDate());
 				setDateModified(ddmStructure.getModifiedDate());
@@ -80,7 +81,7 @@ public class ContentStructureUtil {
 		};
 	}
 
-	private static Fields _toFields(DDMFormField ddmFormField, Locale locale) {
+	private Fields _toFields(DDMFormField ddmFormField, Locale locale) {
 		return new Fields() {
 			{
 				setDataType(
@@ -156,14 +157,18 @@ public class ContentStructureUtil {
 		};
 	}
 
-	private static String _toString(
-		LocalizedValue localizedValue, Locale locale) {
-
+	private String _toString(LocalizedValue localizedValue, Locale locale) {
 		if (localizedValue == null) {
 			return null;
 		}
 
 		return localizedValue.getString(locale);
 	}
+
+	@Reference
+	private CreatorConverter _creatorConverter;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

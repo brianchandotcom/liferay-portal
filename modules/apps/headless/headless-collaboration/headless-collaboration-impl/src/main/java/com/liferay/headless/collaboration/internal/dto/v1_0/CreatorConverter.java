@@ -12,35 +12,53 @@
  * details.
  */
 
-package com.liferay.headless.foundation.internal.dto.v1_0;
+package com.liferay.headless.collaboration.internal.dto.v1_0;
 
-import com.liferay.headless.foundation.dto.v1_0.UserAccount;
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.headless.collaboration.dto.v1_0.Creator;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Portal;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Javier Gamarra
+ * @author Cristina González
  */
-public class UserAccountUtil {
+@Component(service = CreatorConverter.class)
+public class CreatorConverter {
 
-	public static UserAccount toUserAccount(User user) throws PortalException {
+	public Creator toCreator(User user) throws Exception {
 		if (user == null) {
 			return null;
 		}
 
-		return new UserAccount() {
+		return new Creator() {
 			{
 				setAdditionalName(user.getMiddleName());
-				setAlternateName(user.getScreenName());
-				setBirthDate(user.getBirthday());
-				setEmail(user.getEmailAddress());
 				setFamilyName(user.getLastName());
 				setGivenName(user.getFirstName());
 				setId(user.getUserId());
-				setJobTitle(user.getJobTitle());
 				setName(user.getFullName());
+				setProfileURL(
+					() -> {
+						if (user.getPortraitId() == 0) {
+							return null;
+						}
+
+						ThemeDisplay themeDisplay = new ThemeDisplay() {
+							{
+								setPathImage(_portal.getPathImage());
+							}
+						};
+
+						return user.getPortraitURL(themeDisplay);
+					});
 			}
 		};
 	}
+
+	@Reference
+	private Portal _portal;
 
 }

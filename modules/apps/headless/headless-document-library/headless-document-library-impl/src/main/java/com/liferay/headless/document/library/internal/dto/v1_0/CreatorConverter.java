@@ -16,13 +16,19 @@ package com.liferay.headless.document.library.internal.dto.v1_0;
 
 import com.liferay.headless.document.library.dto.v1_0.Creator;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Portal;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Cristina González
  */
-public class CreatorUtil {
+@Component(service = CreatorConverter.class)
+public class CreatorConverter {
 
-	public static Creator toCreator(User user) {
+	public Creator toCreator(User user) throws Exception {
 		if (user == null) {
 			return null;
 		}
@@ -34,8 +40,25 @@ public class CreatorUtil {
 				setGivenName(user.getFirstName());
 				setId(user.getUserId());
 				setName(user.getFullName());
+				setProfileURL(
+					() -> {
+						if (user.getPortraitId() == 0) {
+							return null;
+						}
+
+						ThemeDisplay themeDisplay = new ThemeDisplay() {
+							{
+								setPathImage(_portal.getPathImage());
+							}
+						};
+
+						return user.getPortraitURL(themeDisplay);
+					});
 			}
 		};
 	}
+
+	@Reference
+	private Portal _portal;
 
 }

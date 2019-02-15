@@ -23,10 +23,12 @@ import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.headless.collaboration.dto.v1_0.BlogPosting;
 import com.liferay.headless.collaboration.dto.v1_0.ImageObject;
 import com.liferay.headless.collaboration.internal.dto.v1_0.AggregateRatingUtil;
+import com.liferay.headless.collaboration.internal.dto.v1_0.CreatorConverter;
 import com.liferay.headless.collaboration.resource.v1_0.BlogPostingResource;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -208,6 +210,9 @@ public class BlogPostingResourceImpl extends BaseBlogPostingResourceImpl {
 				setArticleBody(blogsEntry.getContent());
 				setCaption(blogsEntry.getCoverImageCaption());
 				setContentSpace(blogsEntry.getGroupId());
+				setCreator(
+					_creatorConverter.toCreator(
+						_userLocalService.getUser(blogsEntry.getUserId())));
 				setDateCreated(blogsEntry.getCreateDate());
 				setDateModified(blogsEntry.getModifiedDate());
 				setDatePublished(blogsEntry.getDisplayDate());
@@ -225,6 +230,9 @@ public class BlogPostingResourceImpl extends BaseBlogPostingResourceImpl {
 	private BlogsEntryService _blogsEntryService;
 
 	@Reference
+	private CreatorConverter _creatorConverter;
+
+	@Reference
 	private DLAppService _dlAppService;
 
 	@Reference
@@ -232,5 +240,8 @@ public class BlogPostingResourceImpl extends BaseBlogPostingResourceImpl {
 
 	@Reference
 	private RatingsStatsLocalService _ratingsStatsLocalService;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

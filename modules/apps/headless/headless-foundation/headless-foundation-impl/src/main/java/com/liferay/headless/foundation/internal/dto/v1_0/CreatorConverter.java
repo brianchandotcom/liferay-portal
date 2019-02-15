@@ -12,19 +12,23 @@
  * details.
  */
 
-package com.liferay.headless.web.experience.internal.dto.v1_0;
+package com.liferay.headless.foundation.internal.dto.v1_0;
 
-import com.liferay.headless.web.experience.dto.v1_0.Creator;
+import com.liferay.headless.foundation.dto.v1_0.Creator;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 
-/**
- * @author Cristina González
- */
-public class CreatorUtil {
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
-	public static Creator toCreator(Portal portal, User user) throws Exception {
+/**
+ * @author Javier Gamarra
+ */
+@Component(service = CreatorConverter.class)
+public class CreatorConverter {
+
+	public Creator toCreator(User user) throws Exception {
 		if (user == null) {
 			return null;
 		}
@@ -44,7 +48,7 @@ public class CreatorUtil {
 
 						ThemeDisplay themeDisplay = new ThemeDisplay() {
 							{
-								setPathImage(portal.getPathImage());
+								setPathImage(_portal.getPathImage());
 							}
 						};
 
@@ -53,5 +57,8 @@ public class CreatorUtil {
 			}
 		};
 	}
+
+	@Reference
+	private Portal _portal;
 
 }

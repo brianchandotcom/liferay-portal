@@ -23,19 +23,18 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * This class is used by SOAP remote services, specifically {@link com.liferay.portal.service.http.LayoutSetServiceSoap}.
+ * This class is used by SOAP remote services.
  *
  * @author Brian Wing Shun Chan
  * @generated
  */
 @ProviderType
-public class LayoutSetSoap implements Serializable {
+public class LayoutSetVersionSoap implements Serializable {
+	public static LayoutSetVersionSoap toSoapModel(LayoutSetVersion model) {
+		LayoutSetVersionSoap soapModel = new LayoutSetVersionSoap();
 
-	public static LayoutSetSoap toSoapModel(LayoutSet model) {
-		LayoutSetSoap soapModel = new LayoutSetSoap();
-
-		soapModel.setMvccVersion(model.getMvccVersion());
-		soapModel.setHeadId(model.getHeadId());
+		soapModel.setLayoutSetVersionId(model.getLayoutSetVersionId());
+		soapModel.setVersion(model.getVersion());
 		soapModel.setLayoutSetId(model.getLayoutSetId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
@@ -49,14 +48,13 @@ public class LayoutSetSoap implements Serializable {
 		soapModel.setPageCount(model.getPageCount());
 		soapModel.setSettings(model.getSettings());
 		soapModel.setLayoutSetPrototypeUuid(model.getLayoutSetPrototypeUuid());
-		soapModel.setLayoutSetPrototypeLinkEnabled(
-			model.isLayoutSetPrototypeLinkEnabled());
+		soapModel.setLayoutSetPrototypeLinkEnabled(model.isLayoutSetPrototypeLinkEnabled());
 
 		return soapModel;
 	}
 
-	public static LayoutSetSoap[] toSoapModels(LayoutSet[] models) {
-		LayoutSetSoap[] soapModels = new LayoutSetSoap[models.length];
+	public static LayoutSetVersionSoap[] toSoapModels(LayoutSetVersion[] models) {
+		LayoutSetVersionSoap[] soapModels = new LayoutSetVersionSoap[models.length];
 
 		for (int i = 0; i < models.length; i++) {
 			soapModels[i] = toSoapModel(models[i]);
@@ -65,14 +63,15 @@ public class LayoutSetSoap implements Serializable {
 		return soapModels;
 	}
 
-	public static LayoutSetSoap[][] toSoapModels(LayoutSet[][] models) {
-		LayoutSetSoap[][] soapModels = null;
+	public static LayoutSetVersionSoap[][] toSoapModels(
+		LayoutSetVersion[][] models) {
+		LayoutSetVersionSoap[][] soapModels = null;
 
 		if (models.length > 0) {
-			soapModels = new LayoutSetSoap[models.length][models[0].length];
+			soapModels = new LayoutSetVersionSoap[models.length][models[0].length];
 		}
 		else {
-			soapModels = new LayoutSetSoap[0][0];
+			soapModels = new LayoutSetVersionSoap[0][0];
 		}
 
 		for (int i = 0; i < models.length; i++) {
@@ -82,42 +81,42 @@ public class LayoutSetSoap implements Serializable {
 		return soapModels;
 	}
 
-	public static LayoutSetSoap[] toSoapModels(List<LayoutSet> models) {
-		List<LayoutSetSoap> soapModels = new ArrayList<LayoutSetSoap>(
-			models.size());
+	public static LayoutSetVersionSoap[] toSoapModels(
+		List<LayoutSetVersion> models) {
+		List<LayoutSetVersionSoap> soapModels = new ArrayList<LayoutSetVersionSoap>(models.size());
 
-		for (LayoutSet model : models) {
+		for (LayoutSetVersion model : models) {
 			soapModels.add(toSoapModel(model));
 		}
 
-		return soapModels.toArray(new LayoutSetSoap[soapModels.size()]);
+		return soapModels.toArray(new LayoutSetVersionSoap[soapModels.size()]);
 	}
 
-	public LayoutSetSoap() {
+	public LayoutSetVersionSoap() {
 	}
 
 	public long getPrimaryKey() {
-		return _layoutSetId;
+		return _layoutSetVersionId;
 	}
 
 	public void setPrimaryKey(long pk) {
-		setLayoutSetId(pk);
+		setLayoutSetVersionId(pk);
 	}
 
-	public long getMvccVersion() {
-		return _mvccVersion;
+	public long getLayoutSetVersionId() {
+		return _layoutSetVersionId;
 	}
 
-	public void setMvccVersion(long mvccVersion) {
-		_mvccVersion = mvccVersion;
+	public void setLayoutSetVersionId(long layoutSetVersionId) {
+		_layoutSetVersionId = layoutSetVersionId;
 	}
 
-	public long getHeadId() {
-		return _headId;
+	public int getVersion() {
+		return _version;
 	}
 
-	public void setHeadId(long headId) {
-		_headId = headId;
+	public void setVersion(int version) {
+		_version = version;
 	}
 
 	public long getLayoutSetId() {
@@ -238,12 +237,11 @@ public class LayoutSetSoap implements Serializable {
 
 	public void setLayoutSetPrototypeLinkEnabled(
 		boolean layoutSetPrototypeLinkEnabled) {
-
 		_layoutSetPrototypeLinkEnabled = layoutSetPrototypeLinkEnabled;
 	}
 
-	private long _mvccVersion;
-	private long _headId;
+	private long _layoutSetVersionId;
+	private int _version;
 	private long _layoutSetId;
 	private long _groupId;
 	private long _companyId;
@@ -258,5 +256,4 @@ public class LayoutSetSoap implements Serializable {
 	private String _settings;
 	private String _layoutSetPrototypeUuid;
 	private boolean _layoutSetPrototypeLinkEnabled;
-
 }

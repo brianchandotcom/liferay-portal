@@ -76,13 +76,6 @@ public interface BlogPostingResource {
 	@RequiresScope("everything.read")
 	public Response postBlogPostingCategories( @PathParam("blog-posting-id") Long blogPostingId , Long referenceId ) throws Exception;
 
-	@Consumes("application/json")
-	@POST
-	@Path("/blog-postings/{blog-posting-id}/categories/batch-create")
-	@Produces("application/json")
-	@RequiresScope("everything.write")
-	public Response postBlogPostingCategoriesBatchCreate( @PathParam("blog-posting-id") Long blogPostingId , Long referenceId ) throws Exception;
-
 	@GET
 	@Path("/content-spaces/{content-space-id}/blog-postings")
 	@Produces("application/json")
@@ -95,12 +88,5 @@ public interface BlogPostingResource {
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	public BlogPosting postContentSpaceBlogPosting( @PathParam("content-space-id") Long contentSpaceId , BlogPosting blogPosting ) throws Exception;
-
-	@Consumes("application/json")
-	@POST
-	@Path("/content-spaces/{content-space-id}/blog-postings/batch-create")
-	@Produces("application/json")
-	@RequiresScope("everything.write")
-	public BlogPosting postContentSpaceBlogPostingBatchCreate( @PathParam("content-space-id") Long contentSpaceId , BlogPosting blogPosting ) throws Exception;
 
 }

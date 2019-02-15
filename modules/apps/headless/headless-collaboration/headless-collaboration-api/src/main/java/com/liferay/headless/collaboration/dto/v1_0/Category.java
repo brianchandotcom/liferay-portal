@@ -47,11 +47,11 @@ public class Category {
 	public void setCategoryId(
 		UnsafeSupplier<Long, Throwable> categoryIdUnsafeSupplier) {
 
-		try {
-			categoryId = categoryIdUnsafeSupplier.get();
+			try {
+				categoryId = categoryIdUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -62,11 +62,11 @@ public class Category {
 	public void setCategoryName(
 		UnsafeSupplier<String, Throwable> categoryNameUnsafeSupplier) {
 
-		try {
-			categoryName = categoryNameUnsafeSupplier.get();
+			try {
+				categoryName = categoryNameUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 

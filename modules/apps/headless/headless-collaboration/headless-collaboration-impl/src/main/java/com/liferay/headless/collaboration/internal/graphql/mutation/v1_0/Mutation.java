@@ -62,35 +62,14 @@ return _getBlogPostingResource().putBlogPosting( blogPostingId , blogPosting );
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Response postBlogPostingCategoriesBatchCreate( @GraphQLName("blog-posting-id") Long blogPostingId , @GraphQLName("Long") Long referenceId ) throws Exception {
-				Response.ResponseBuilder responseBuilder = Response.ok();
-
-				return responseBuilder.build();
-
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
 	public BlogPosting postContentSpaceBlogPosting( @GraphQLName("content-space-id") Long contentSpaceId , @GraphQLName("BlogPosting") BlogPosting blogPosting ) throws Exception {
 return _getBlogPostingResource().postContentSpaceBlogPosting( contentSpaceId , blogPosting );
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public BlogPosting postContentSpaceBlogPostingBatchCreate( @GraphQLName("content-space-id") Long contentSpaceId , @GraphQLName("BlogPosting") BlogPosting blogPosting ) throws Exception {
-return _getBlogPostingResource().postContentSpaceBlogPostingBatchCreate( contentSpaceId , blogPosting );
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
 	public BlogPostingImage postContentSpaceBlogPostingImage( @GraphQLName("content-space-id") Long contentSpaceId , @GraphQLName("BlogPostingImage") BlogPostingImage blogPostingImage ) throws Exception {
 return _getBlogPostingImageResource().postContentSpaceBlogPostingImage( contentSpaceId , blogPostingImage );
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
-	public BlogPostingImage postImageObjectRepositoryBlogPostingImageBatchCreate( @GraphQLName("image-object-repository-id") Long imageObjectRepositoryId , @GraphQLName("BlogPostingImage") BlogPostingImage blogPostingImage ) throws Exception {
-return _getBlogPostingImageResource().postImageObjectRepositoryBlogPostingImageBatchCreate( imageObjectRepositoryId , blogPostingImage );
 	}
 
 	@GraphQLInvokeDetached

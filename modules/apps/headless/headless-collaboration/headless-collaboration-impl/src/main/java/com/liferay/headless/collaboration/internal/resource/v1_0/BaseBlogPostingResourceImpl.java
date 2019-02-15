@@ -78,25 +78,7 @@ public abstract class BaseBlogPostingResourceImpl
 	}
 
 	@Override
-	public Response postBlogPostingCategoriesBatchCreate(
-			Long blogPostingId, Long referenceId)
-		throws Exception {
-
-			Response.ResponseBuilder responseBuilder = Response.ok();
-
-			return responseBuilder.build();
-	}
-
-	@Override
 	public BlogPosting postContentSpaceBlogPosting(
-			Long contentSpaceId, BlogPosting blogPosting)
-		throws Exception {
-
-			return new BlogPosting();
-	}
-
-	@Override
-	public BlogPosting postContentSpaceBlogPostingBatchCreate(
 			Long contentSpaceId, BlogPosting blogPosting)
 		throws Exception {
 

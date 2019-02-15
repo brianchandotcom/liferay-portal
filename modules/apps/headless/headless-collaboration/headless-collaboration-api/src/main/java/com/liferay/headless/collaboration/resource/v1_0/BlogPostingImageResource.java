@@ -56,13 +56,6 @@ public interface BlogPostingImageResource {
 	@RequiresScope("everything.read")
 	public BlogPostingImage postContentSpaceBlogPostingImage( @PathParam("content-space-id") Long contentSpaceId , BlogPostingImage blogPostingImage ) throws Exception;
 
-	@Consumes("application/json")
-	@POST
-	@Path("/image-object-repositories/{image-object-repository-id}/blog-posting-images/batch-create")
-	@Produces("application/json")
-	@RequiresScope("everything.write")
-	public BlogPostingImage postImageObjectRepositoryBlogPostingImageBatchCreate( @PathParam("image-object-repository-id") Long imageObjectRepositoryId , BlogPostingImage blogPostingImage ) throws Exception;
-
 	@DELETE
 	@Path("/blog-posting-images/{image-object-id}")
 	@Produces("application/json")

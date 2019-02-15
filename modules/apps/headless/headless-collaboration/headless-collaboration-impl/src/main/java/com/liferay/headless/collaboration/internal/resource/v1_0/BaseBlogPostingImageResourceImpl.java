@@ -69,14 +69,6 @@ public abstract class BaseBlogPostingImageResourceImpl
 			return new BlogPostingImage();
 	}
 
-	@Override
-	public BlogPostingImage postImageObjectRepositoryBlogPostingImageBatchCreate(
-			Long imageObjectRepositoryId, BlogPostingImage blogPostingImage)
-		throws Exception {
-
-			return new BlogPostingImage();
-	}
-
 	protected Response buildNoContentResponse() {
 		Response.ResponseBuilder responseBuilder = Response.noContent();
 

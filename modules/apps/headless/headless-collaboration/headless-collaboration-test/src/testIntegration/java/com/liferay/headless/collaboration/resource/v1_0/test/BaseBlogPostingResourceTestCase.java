@@ -89,17 +89,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 	}
 
 	@Test
-	public void testPostBlogPostingCategoriesBatchCreate() throws Exception {
-		Assert.assertTrue(true);
-	}
-
-	@Test
 	public void testPostContentSpaceBlogPosting() throws Exception {
-		Assert.assertTrue(true);
-	}
-
-	@Test
-	public void testPostContentSpaceBlogPostingBatchCreate() throws Exception {
 		Assert.assertTrue(true);
 	}
 
@@ -174,20 +164,6 @@ public abstract class BaseBlogPostingResourceTestCase {
 			);
 	}
 
-	protected Response invokePostBlogPostingCategoriesBatchCreate(
-			Long blogPostingId, Long referenceId)
-		throws Exception {
-
-		RequestSpecification requestSpecification =
-			_createRequestSpecification();
-
-			return requestSpecification.when(
-			).post(
-				_resourceURL + "/blog-postings/{blog-posting-id}/categories/batch-create",
-				blogPostingId, referenceId
-			);
-	}
-
 	protected Response invokePostContentSpaceBlogPosting(
 			Long contentSpaceId, BlogPosting blogPosting)
 		throws Exception {
@@ -200,22 +176,6 @@ public abstract class BaseBlogPostingResourceTestCase {
 			).when(
 			).post(
 				_resourceURL + "/content-spaces/{content-space-id}/blog-postings",
-				contentSpaceId
-			);
-	}
-
-	protected Response invokePostContentSpaceBlogPostingBatchCreate(
-			Long contentSpaceId, BlogPosting blogPosting)
-		throws Exception {
-
-		RequestSpecification requestSpecification =
-			_createRequestSpecification();
-
-			return requestSpecification.body(
-				blogPosting
-			).when(
-			).post(
-				_resourceURL + "/content-spaces/{content-space-id}/blog-postings/batch-create",
 				contentSpaceId
 			);
 	}

@@ -15,11 +15,9 @@
 package com.liferay.headless.document.library.internal.graphql.query.v1_0;
 
 import com.liferay.headless.document.library.dto.v1_0.Comment;
-import com.liferay.headless.document.library.dto.v1_0.Creator;
 import com.liferay.headless.document.library.dto.v1_0.Document;
 import com.liferay.headless.document.library.dto.v1_0.Folder;
 import com.liferay.headless.document.library.resource.v1_0.CommentResource;
-import com.liferay.headless.document.library.resource.v1_0.CreatorResource;
 import com.liferay.headless.document.library.resource.v1_0.DocumentResource;
 import com.liferay.headless.document.library.resource.v1_0.FolderResource;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -54,12 +52,6 @@ public class Query {
 
 				return paginationPage.getItems();
 
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
-	public Creator getCreator( @GraphQLName("creator-id") Long creatorId ) throws Exception {
-return _getCreatorResource().getCreator( creatorId );
 	}
 
 	@GraphQLField
@@ -145,11 +137,6 @@ return _getFolderResource().getFolder( folderId );
 	}
 
 	private static final ServiceTracker<CommentResource, CommentResource> _commentResourceServiceTracker;
-	private static CreatorResource _getCreatorResource() {
-			return _creatorResourceServiceTracker.getService();
-	}
-
-	private static final ServiceTracker<CreatorResource, CreatorResource> _creatorResourceServiceTracker;
 	private static DocumentResource _getDocumentResource() {
 			return _documentResourceServiceTracker.getService();
 	}
@@ -170,12 +157,6 @@ return _getFolderResource().getFolder( folderId );
 			commentResourceServiceTracker.open();
 
 			_commentResourceServiceTracker = commentResourceServiceTracker;
-			ServiceTracker<CreatorResource, CreatorResource> creatorResourceServiceTracker =
-				new ServiceTracker<>(bundle.getBundleContext(), CreatorResource.class, null);
-
-			creatorResourceServiceTracker.open();
-
-			_creatorResourceServiceTracker = creatorResourceServiceTracker;
 			ServiceTracker<DocumentResource, DocumentResource> documentResourceServiceTracker =
 				new ServiceTracker<>(bundle.getBundleContext(), DocumentResource.class, null);
 

@@ -17,13 +17,11 @@ package com.liferay.headless.collaboration.internal.graphql.query.v1_0;
 import com.liferay.headless.collaboration.dto.v1_0.AggregateRating;
 import com.liferay.headless.collaboration.dto.v1_0.BlogPosting;
 import com.liferay.headless.collaboration.dto.v1_0.Comment;
-import com.liferay.headless.collaboration.dto.v1_0.Creator;
 import com.liferay.headless.collaboration.dto.v1_0.ImageObject;
 import com.liferay.headless.collaboration.dto.v1_0.ImageObjectRepository;
 import com.liferay.headless.collaboration.resource.v1_0.AggregateRatingResource;
 import com.liferay.headless.collaboration.resource.v1_0.BlogPostingResource;
 import com.liferay.headless.collaboration.resource.v1_0.CommentResource;
-import com.liferay.headless.collaboration.resource.v1_0.CreatorResource;
 import com.liferay.headless.collaboration.resource.v1_0.ImageObjectRepositoryResource;
 import com.liferay.headless.collaboration.resource.v1_0.ImageObjectResource;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -116,12 +114,6 @@ return _getCommentResource().getComment( commentId );
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Creator getCreator( @GraphQLName("creator-id") Long creatorId ) throws Exception {
-return _getCreatorResource().getCreator( creatorId );
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
 	public Collection<ImageObject> getImageObjectRepositoryImageObjectsPage( @GraphQLName("image-object-repository-id") Long imageObjectRepositoryId , @GraphQLName("per_page") int perPage , @GraphQLName("page") int page ) throws Exception {
 				Page paginationPage = _getImageObjectResource().getImageObjectRepositoryImageObjectsPage(
 
@@ -159,11 +151,6 @@ return _getImageObjectRepositoryResource().getImageObjectRepository( imageObject
 	}
 
 	private static final ServiceTracker<CommentResource, CommentResource> _commentResourceServiceTracker;
-	private static CreatorResource _getCreatorResource() {
-			return _creatorResourceServiceTracker.getService();
-	}
-
-	private static final ServiceTracker<CreatorResource, CreatorResource> _creatorResourceServiceTracker;
 	private static ImageObjectResource _getImageObjectResource() {
 			return _imageObjectResourceServiceTracker.getService();
 	}
@@ -196,12 +183,6 @@ return _getImageObjectRepositoryResource().getImageObjectRepository( imageObject
 			commentResourceServiceTracker.open();
 
 			_commentResourceServiceTracker = commentResourceServiceTracker;
-			ServiceTracker<CreatorResource, CreatorResource> creatorResourceServiceTracker =
-				new ServiceTracker<>(bundle.getBundleContext(), CreatorResource.class, null);
-
-			creatorResourceServiceTracker.open();
-
-			_creatorResourceServiceTracker = creatorResourceServiceTracker;
 			ServiceTracker<ImageObjectResource, ImageObjectResource> imageObjectResourceServiceTracker =
 				new ServiceTracker<>(bundle.getBundleContext(), ImageObjectResource.class, null);
 

@@ -14,12 +14,10 @@
 
 package com.liferay.headless.form.internal.graphql.query.v1_0;
 
-import com.liferay.headless.form.dto.v1_0.Creator;
 import com.liferay.headless.form.dto.v1_0.Form;
 import com.liferay.headless.form.dto.v1_0.FormDocument;
 import com.liferay.headless.form.dto.v1_0.FormRecord;
 import com.liferay.headless.form.dto.v1_0.FormStructure;
-import com.liferay.headless.form.resource.v1_0.CreatorResource;
 import com.liferay.headless.form.resource.v1_0.FormDocumentResource;
 import com.liferay.headless.form.resource.v1_0.FormRecordResource;
 import com.liferay.headless.form.resource.v1_0.FormResource;
@@ -45,12 +43,6 @@ import org.osgi.util.tracker.ServiceTracker;
  */
 @Generated("")
 public class Query {
-
-	@GraphQLField
-	@GraphQLInvokeDetached
-	public Creator getCreator( @GraphQLName("creator-id") Long creatorId ) throws Exception {
-return _getCreatorResource().getCreator( creatorId );
-	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
@@ -118,11 +110,6 @@ return _getFormRecordResource().getFormRecord( formRecordId );
 return _getFormStructureResource().getFormStructure( formStructureId );
 	}
 
-	private static CreatorResource _getCreatorResource() {
-			return _creatorResourceServiceTracker.getService();
-	}
-
-	private static final ServiceTracker<CreatorResource, CreatorResource> _creatorResourceServiceTracker;
 	private static FormResource _getFormResource() {
 			return _formResourceServiceTracker.getService();
 	}
@@ -147,12 +134,6 @@ return _getFormStructureResource().getFormStructure( formStructureId );
 	static {
 		Bundle bundle = FrameworkUtil.getBundle(Query.class);
 
-			ServiceTracker<CreatorResource, CreatorResource> creatorResourceServiceTracker =
-				new ServiceTracker<>(bundle.getBundleContext(), CreatorResource.class, null);
-
-			creatorResourceServiceTracker.open();
-
-			_creatorResourceServiceTracker = creatorResourceServiceTracker;
 			ServiceTracker<FormResource, FormResource> formResourceServiceTracker =
 				new ServiceTracker<>(bundle.getBundleContext(), FormResource.class, null);
 

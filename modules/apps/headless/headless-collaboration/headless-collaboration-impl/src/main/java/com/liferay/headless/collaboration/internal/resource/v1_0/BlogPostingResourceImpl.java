@@ -228,8 +228,6 @@ public class BlogPostingResourceImpl extends BaseBlogPostingResourceImpl {
 	}
 
 	private BlogPosting _toBlogPosting(BlogsEntry blogsEntry) throws Exception {
-		Image image = _getBlogPostingImage(blogsEntry);
-
 		Category[] categories = _getBlogPostingCategories(blogsEntry);
 
 		return new BlogPosting() {
@@ -252,7 +250,7 @@ public class BlogPostingResourceImpl extends BaseBlogPostingResourceImpl {
 				setFriendlyUrlPath(blogsEntry.getUrlTitle());
 				setHeadline(blogsEntry.getTitle());
 				setId(blogsEntry.getEntryId());
-				setImage(image);
+				setImage(_getBlogPostingImage(blogsEntry));
 			}
 		};
 	}

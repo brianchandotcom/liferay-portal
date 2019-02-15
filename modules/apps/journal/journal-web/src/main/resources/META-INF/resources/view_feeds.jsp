@@ -96,25 +96,6 @@ renderResponse.setTitle(LanguageUtil.get(request, "feeds"));
 						path="/feed_action.jsp"
 					/>
 				</c:when>
-				<c:when test='<%= Objects.equals(journalFeedsDisplayContext.getDisplayStyle(), "icon") %>'>
-
-					<%
-					row.setCssClass("entry-card lfr-asset-item");
-					%>
-
-					<liferay-ui:search-container-column-text>
-						<liferay-frontend:icon-vertical-card
-							actionJsp="/feed_action.jsp"
-							actionJspServletContext="<%= application %>"
-							icon="rss"
-							resultRow="<%= row %>"
-							rowChecker="<%= searchContainer.getRowChecker() %>"
-							subtitle="<%= feed.getDescription() %>"
-							title="<%= feed.getName() %>"
-							url="<%= editURL %>"
-						/>
-					</liferay-ui:search-container-column-text>
-				</c:when>
 				<c:when test='<%= Objects.equals(journalFeedsDisplayContext.getDisplayStyle(), "list") %>'>
 					<liferay-ui:search-container-column-text
 						name="id"

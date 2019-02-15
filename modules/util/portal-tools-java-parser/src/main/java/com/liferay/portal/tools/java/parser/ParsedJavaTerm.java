@@ -19,7 +19,7 @@ import antlr.CommonHiddenStreamToken;
 /**
  * @author Hugo Huijser
  */
-public class ParsedJavaTerm implements Comparable<ParsedJavaTerm> {
+public class ParsedJavaTerm {
 
 	public ParsedJavaTerm(
 		CommonHiddenStreamToken precedingCommentToken, Position startPosition) {
@@ -34,11 +34,6 @@ public class ParsedJavaTerm implements Comparable<ParsedJavaTerm> {
 		_content = content;
 		_startPosition = startPosition;
 		_endPosition = endPosition;
-	}
-
-	@Override
-	public int compareTo(ParsedJavaTerm parsedJavaTerm) {
-		return _startPosition.compareTo(parsedJavaTerm.getStartPosition());
 	}
 
 	public String getContent() {

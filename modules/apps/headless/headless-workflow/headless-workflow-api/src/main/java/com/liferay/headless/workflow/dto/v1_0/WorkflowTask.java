@@ -89,11 +89,11 @@ public class WorkflowTask {
 	public void setCompleted(
 		UnsafeSupplier<Boolean, Throwable> completedUnsafeSupplier) {
 
-		try {
-			completed = completedUnsafeSupplier.get();
+			try {
+				completed = completedUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -104,11 +104,11 @@ public class WorkflowTask {
 	public void setDateCompleted(
 		UnsafeSupplier<Date, Throwable> dateCompletedUnsafeSupplier) {
 
-		try {
-			dateCompleted = dateCompletedUnsafeSupplier.get();
+			try {
+				dateCompleted = dateCompletedUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -119,11 +119,11 @@ public class WorkflowTask {
 	public void setDateCreated(
 		UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
 
-		try {
-			dateCreated = dateCreatedUnsafeSupplier.get();
+			try {
+				dateCreated = dateCreatedUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -134,11 +134,11 @@ public class WorkflowTask {
 	public void setDefinitionName(
 		UnsafeSupplier<String, Throwable> definitionNameUnsafeSupplier) {
 
-		try {
-			definitionName = definitionNameUnsafeSupplier.get();
+			try {
+				definitionName = definitionNameUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -149,11 +149,11 @@ public class WorkflowTask {
 	public void setDescription(
 		UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier) {
 
-		try {
-			description = descriptionUnsafeSupplier.get();
+			try {
+				description = descriptionUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -164,11 +164,11 @@ public class WorkflowTask {
 	public void setDueDate(
 		UnsafeSupplier<Date, Throwable> dueDateUnsafeSupplier) {
 
-		try {
-			dueDate = dueDateUnsafeSupplier.get();
+			try {
+				dueDate = dueDateUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -177,22 +177,22 @@ public class WorkflowTask {
 	}
 
 	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
+			try {
+				id = idUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
 	public void setLogs(
 		UnsafeSupplier<WorkflowLog[], Throwable> logsUnsafeSupplier) {
 
-		try {
-			logs = logsUnsafeSupplier.get();
+			try {
+				logs = logsUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -207,11 +207,11 @@ public class WorkflowTask {
 	public void setLogsIds(
 		UnsafeSupplier<Long[], Throwable> logsIdsUnsafeSupplier) {
 
-		try {
-			logsIds = logsIdsUnsafeSupplier.get();
+			try {
+				logsIds = logsIdsUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -220,11 +220,11 @@ public class WorkflowTask {
 	}
 
 	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
-		try {
-			name = nameUnsafeSupplier.get();
+			try {
+				name = nameUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -236,11 +236,11 @@ public class WorkflowTask {
 		UnsafeSupplier<ObjectReviewed, Throwable>
 			objectReviewedUnsafeSupplier) {
 
-		try {
-			objectReviewed = objectReviewedUnsafeSupplier.get();
+			try {
+				objectReviewed = objectReviewedUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -251,11 +251,11 @@ public class WorkflowTask {
 	public void setTransitions(
 		UnsafeSupplier<String[], Throwable> transitionsUnsafeSupplier) {
 
-		try {
-			transitions = transitionsUnsafeSupplier.get();
+			try {
+				transitions = transitionsUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 

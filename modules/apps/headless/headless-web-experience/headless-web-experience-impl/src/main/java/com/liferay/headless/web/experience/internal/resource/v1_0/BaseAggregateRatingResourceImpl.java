@@ -40,7 +40,7 @@ public abstract class BaseAggregateRatingResourceImpl
 	public AggregateRating getAggregateRating(Long aggregateRatingId)
 		throws Exception {
 
-		return new AggregateRating();
+			return new AggregateRating();
 	}
 
 	protected Response buildNoContentResponse() {

@@ -47,14 +47,14 @@ public abstract class BaseContentStructureResourceImpl
 			Sort[] sorts)
 		throws Exception {
 
-		return Page.of(Collections.emptyList());
+			return Page.of(Collections.emptyList());
 	}
 
 	@Override
 	public ContentStructure getContentStructure(Long contentStructureId)
 		throws Exception {
 
-		return new ContentStructure();
+			return new ContentStructure();
 	}
 
 	protected Response buildNoContentResponse() {

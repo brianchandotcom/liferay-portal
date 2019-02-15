@@ -81,11 +81,11 @@ public class Folder {
 	public void setDateCreated(
 		UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
 
-		try {
-			dateCreated = dateCreatedUnsafeSupplier.get();
+			try {
+				dateCreated = dateCreatedUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -96,11 +96,11 @@ public class Folder {
 	public void setDateModified(
 		UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
 
-		try {
-			dateModified = dateModifiedUnsafeSupplier.get();
+			try {
+				dateModified = dateModifiedUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -111,11 +111,11 @@ public class Folder {
 	public void setDescription(
 		UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier) {
 
-		try {
-			description = descriptionUnsafeSupplier.get();
+			try {
+				description = descriptionUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -126,11 +126,11 @@ public class Folder {
 	public void setDocuments(
 		UnsafeSupplier<Document[], Throwable> documentsUnsafeSupplier) {
 
-		try {
-			documents = documentsUnsafeSupplier.get();
+			try {
+				documents = documentsUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -141,11 +141,11 @@ public class Folder {
 	public void setDocumentsIds(
 		UnsafeSupplier<Long[], Throwable> documentsIdsUnsafeSupplier) {
 
-		try {
-			documentsIds = documentsIdsUnsafeSupplier.get();
+			try {
+				documentsIds = documentsIdsUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -156,11 +156,11 @@ public class Folder {
 	public void setDocumentsRepository(
 		UnsafeSupplier<Folder, Throwable> documentsRepositoryUnsafeSupplier) {
 
-		try {
-			documentsRepository = documentsRepositoryUnsafeSupplier.get();
+			try {
+				documentsRepository = documentsRepositoryUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -171,11 +171,12 @@ public class Folder {
 	public void setDocumentsRepositoryId(
 		UnsafeSupplier<Long, Throwable> documentsRepositoryIdUnsafeSupplier) {
 
-		try {
-			documentsRepositoryId = documentsRepositoryIdUnsafeSupplier.get();
+			try {
+				documentsRepositoryId =
+					documentsRepositoryIdUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -184,11 +185,11 @@ public class Folder {
 	}
 
 	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
+			try {
+				id = idUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -197,11 +198,11 @@ public class Folder {
 	}
 
 	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
-		try {
-			name = nameUnsafeSupplier.get();
+			try {
+				name = nameUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -212,11 +213,11 @@ public class Folder {
 	public void setSubFolders(
 		UnsafeSupplier<Folder[], Throwable> subFoldersUnsafeSupplier) {
 
-		try {
-			subFolders = subFoldersUnsafeSupplier.get();
+			try {
+				subFolders = subFoldersUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 

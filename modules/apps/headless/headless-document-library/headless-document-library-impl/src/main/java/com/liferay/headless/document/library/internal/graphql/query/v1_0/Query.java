@@ -22,6 +22,7 @@ import com.liferay.headless.document.library.resource.v1_0.CommentResource;
 import com.liferay.headless.document.library.resource.v1_0.CreatorResource;
 import com.liferay.headless.document.library.resource.v1_0.DocumentResource;
 import com.liferay.headless.document.library.resource.v1_0.FolderResource;
+import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
 import graphql.annotations.annotationTypes.GraphQLField;
@@ -46,80 +47,96 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<Comment> getDocumentCommentsPage( @GraphQLName("document-id") Long documentId , @GraphQLName("per_page") int perPage , @GraphQLName("page") int page ) throws Exception {
+				Page paginationPage = _getCommentResource().getDocumentCommentsPage(
 
-		return _getCommentResource().getDocumentCommentsPage( documentId , Pagination.of(perPage, page) ).getItems();
+					documentId , Pagination.of(perPage, page)
+				);
+
+				return paginationPage.getItems();
 
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Creator getCreator( @GraphQLName("creator-id") Long creatorId ) throws Exception {
-
-		return _getCreatorResource().getCreator( creatorId );
-
+return _getCreatorResource().getCreator( creatorId );
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Document getDocument( @GraphQLName("document-id") Long documentId ) throws Exception {
-
-		return _getDocumentResource().getDocument( documentId );
-
+return _getDocumentResource().getDocument( documentId );
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<Long> getDocumentCategoriesPage( @GraphQLName("document-id") Long documentId , @GraphQLName("per_page") int perPage , @GraphQLName("page") int page ) throws Exception {
+				Page paginationPage = _getDocumentResource().getDocumentCategoriesPage(
 
-		return _getDocumentResource().getDocumentCategoriesPage( documentId , Pagination.of(perPage, page) ).getItems();
+					documentId , Pagination.of(perPage, page)
+				);
+
+				return paginationPage.getItems();
 
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<Document> getDocumentsRepositoryDocumentsPage( @GraphQLName("documents-repository-id") Long documentsRepositoryId , @GraphQLName("per_page") int perPage , @GraphQLName("page") int page ) throws Exception {
+				Page paginationPage = _getDocumentResource().getDocumentsRepositoryDocumentsPage(
 
-		return _getDocumentResource().getDocumentsRepositoryDocumentsPage( documentsRepositoryId , Pagination.of(perPage, page) ).getItems();
+					documentsRepositoryId , Pagination.of(perPage, page)
+				);
+
+				return paginationPage.getItems();
 
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<Document> getFolderDocumentsPage( @GraphQLName("folder-id") Long folderId , @GraphQLName("per_page") int perPage , @GraphQLName("page") int page ) throws Exception {
+				Page paginationPage = _getDocumentResource().getFolderDocumentsPage(
 
-		return _getDocumentResource().getFolderDocumentsPage( folderId , Pagination.of(perPage, page) ).getItems();
+					folderId , Pagination.of(perPage, page)
+				);
+
+				return paginationPage.getItems();
 
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Folder getDocumentsRepository( @GraphQLName("documents-repository-id") Long documentsRepositoryId ) throws Exception {
-
-		return _getFolderResource().getDocumentsRepository( documentsRepositoryId );
-
+return _getFolderResource().getDocumentsRepository( documentsRepositoryId );
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<Folder> getDocumentsRepositoryFoldersPage( @GraphQLName("documents-repository-id") Long documentsRepositoryId , @GraphQLName("per_page") int perPage , @GraphQLName("page") int page ) throws Exception {
+				Page paginationPage = _getFolderResource().getDocumentsRepositoryFoldersPage(
 
-		return _getFolderResource().getDocumentsRepositoryFoldersPage( documentsRepositoryId , Pagination.of(perPage, page) ).getItems();
+					documentsRepositoryId , Pagination.of(perPage, page)
+				);
+
+				return paginationPage.getItems();
 
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Folder getFolder( @GraphQLName("folder-id") Long folderId ) throws Exception {
-
-		return _getFolderResource().getFolder( folderId );
-
+return _getFolderResource().getFolder( folderId );
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<Folder> getFolderFoldersPage( @GraphQLName("folder-id") Long folderId , @GraphQLName("per_page") int perPage , @GraphQLName("page") int page ) throws Exception {
+				Page paginationPage = _getFolderResource().getFolderFoldersPage(
 
-		return _getFolderResource().getFolderFoldersPage( folderId , Pagination.of(perPage, page) ).getItems();
+					folderId , Pagination.of(perPage, page)
+				);
+
+				return paginationPage.getItems();
 
 	}
 
@@ -128,19 +145,16 @@ public class Query {
 	}
 
 	private static final ServiceTracker<CommentResource, CommentResource> _commentResourceServiceTracker;
-
 	private static CreatorResource _getCreatorResource() {
 			return _creatorResourceServiceTracker.getService();
 	}
 
 	private static final ServiceTracker<CreatorResource, CreatorResource> _creatorResourceServiceTracker;
-
 	private static DocumentResource _getDocumentResource() {
 			return _documentResourceServiceTracker.getService();
 	}
 
 	private static final ServiceTracker<DocumentResource, DocumentResource> _documentResourceServiceTracker;
-
 	private static FolderResource _getFolderResource() {
 			return _folderResourceServiceTracker.getService();
 	}
@@ -150,34 +164,30 @@ public class Query {
 	static {
 		Bundle bundle = FrameworkUtil.getBundle(Query.class);
 
-		ServiceTracker<CommentResource, CommentResource> commentResourceServiceTracker =
-			new ServiceTracker<CommentResource, CommentResource>(bundle.getBundleContext(), CommentResource.class, null);
+			ServiceTracker<CommentResource, CommentResource> commentResourceServiceTracker =
+				new ServiceTracker<>(bundle.getBundleContext(), CommentResource.class, null);
 
-		commentResourceServiceTracker.open();
+			commentResourceServiceTracker.open();
 
-		_commentResourceServiceTracker = commentResourceServiceTracker;
+			_commentResourceServiceTracker = commentResourceServiceTracker;
+			ServiceTracker<CreatorResource, CreatorResource> creatorResourceServiceTracker =
+				new ServiceTracker<>(bundle.getBundleContext(), CreatorResource.class, null);
 
-		ServiceTracker<CreatorResource, CreatorResource> creatorResourceServiceTracker =
-			new ServiceTracker<CreatorResource, CreatorResource>(bundle.getBundleContext(), CreatorResource.class, null);
+			creatorResourceServiceTracker.open();
 
-		creatorResourceServiceTracker.open();
+			_creatorResourceServiceTracker = creatorResourceServiceTracker;
+			ServiceTracker<DocumentResource, DocumentResource> documentResourceServiceTracker =
+				new ServiceTracker<>(bundle.getBundleContext(), DocumentResource.class, null);
 
-		_creatorResourceServiceTracker = creatorResourceServiceTracker;
+			documentResourceServiceTracker.open();
 
-		ServiceTracker<DocumentResource, DocumentResource> documentResourceServiceTracker =
-			new ServiceTracker<DocumentResource, DocumentResource>(bundle.getBundleContext(), DocumentResource.class, null);
+			_documentResourceServiceTracker = documentResourceServiceTracker;
+			ServiceTracker<FolderResource, FolderResource> folderResourceServiceTracker =
+				new ServiceTracker<>(bundle.getBundleContext(), FolderResource.class, null);
 
-		documentResourceServiceTracker.open();
+			folderResourceServiceTracker.open();
 
-		_documentResourceServiceTracker = documentResourceServiceTracker;
-
-		ServiceTracker<FolderResource, FolderResource> folderResourceServiceTracker =
-			new ServiceTracker<FolderResource, FolderResource>(bundle.getBundleContext(), FolderResource.class, null);
-
-		folderResourceServiceTracker.open();
-
-		_folderResourceServiceTracker = folderResourceServiceTracker;
-
+			_folderResourceServiceTracker = folderResourceServiceTracker;
 	}
 
 }

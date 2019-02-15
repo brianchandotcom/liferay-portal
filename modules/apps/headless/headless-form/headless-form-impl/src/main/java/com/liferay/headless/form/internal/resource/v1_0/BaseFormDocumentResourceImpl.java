@@ -40,7 +40,7 @@ public abstract class BaseFormDocumentResourceImpl
 	public Response deleteFormDocument(Long formDocumentId) throws Exception {
 		Response.ResponseBuilder responseBuilder = Response.ok();
 
-		return responseBuilder.build();
+			return responseBuilder.build();
 	}
 
 	@Override

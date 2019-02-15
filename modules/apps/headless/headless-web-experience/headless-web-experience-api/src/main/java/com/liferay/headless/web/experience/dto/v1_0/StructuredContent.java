@@ -114,11 +114,11 @@ public class StructuredContent {
 		UnsafeSupplier<AggregateRating, Throwable>
 			aggregateRatingUnsafeSupplier) {
 
-		try {
-			aggregateRating = aggregateRatingUnsafeSupplier.get();
+			try {
+				aggregateRating = aggregateRatingUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -129,11 +129,11 @@ public class StructuredContent {
 	public void setAvailableLanguages(
 		UnsafeSupplier<String[], Throwable> availableLanguagesUnsafeSupplier) {
 
-		try {
-			availableLanguages = availableLanguagesUnsafeSupplier.get();
+			try {
+				availableLanguages = availableLanguagesUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -144,11 +144,11 @@ public class StructuredContent {
 	public void setCategory(
 		UnsafeSupplier<Long[], Throwable> categoryUnsafeSupplier) {
 
-		try {
-			category = categoryUnsafeSupplier.get();
+			try {
+				category = categoryUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -159,11 +159,11 @@ public class StructuredContent {
 	public void setComment(
 		UnsafeSupplier<Comment[], Throwable> commentUnsafeSupplier) {
 
-		try {
-			comment = commentUnsafeSupplier.get();
+			try {
+				comment = commentUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -174,11 +174,11 @@ public class StructuredContent {
 	public void setContentSpace(
 		UnsafeSupplier<Long, Throwable> contentSpaceUnsafeSupplier) {
 
-		try {
-			contentSpace = contentSpaceUnsafeSupplier.get();
+			try {
+				contentSpace = contentSpaceUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -190,11 +190,11 @@ public class StructuredContent {
 		UnsafeSupplier<ContentStructure, Throwable>
 			contentStructureUnsafeSupplier) {
 
-		try {
-			contentStructure = contentStructureUnsafeSupplier.get();
+			try {
+				contentStructure = contentStructureUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -205,11 +205,11 @@ public class StructuredContent {
 	public void setContentStructureId(
 		UnsafeSupplier<Long, Throwable> contentStructureIdUnsafeSupplier) {
 
-		try {
-			contentStructureId = contentStructureIdUnsafeSupplier.get();
+			try {
+				contentStructureId = contentStructureIdUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -220,11 +220,11 @@ public class StructuredContent {
 	public void setCreator(
 		UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier) {
 
-		try {
-			creator = creatorUnsafeSupplier.get();
+			try {
+				creator = creatorUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -235,11 +235,11 @@ public class StructuredContent {
 	public void setDateCreated(
 		UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
 
-		try {
-			dateCreated = dateCreatedUnsafeSupplier.get();
+			try {
+				dateCreated = dateCreatedUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -250,11 +250,11 @@ public class StructuredContent {
 	public void setDateModified(
 		UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
 
-		try {
-			dateModified = dateModifiedUnsafeSupplier.get();
+			try {
+				dateModified = dateModifiedUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -265,11 +265,11 @@ public class StructuredContent {
 	public void setDatePublished(
 		UnsafeSupplier<Date, Throwable> datePublishedUnsafeSupplier) {
 
-		try {
-			datePublished = datePublishedUnsafeSupplier.get();
+			try {
+				datePublished = datePublishedUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -280,11 +280,11 @@ public class StructuredContent {
 	public void setDescription(
 		UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier) {
 
-		try {
-			description = descriptionUnsafeSupplier.get();
+			try {
+				description = descriptionUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -293,11 +293,11 @@ public class StructuredContent {
 	}
 
 	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
+			try {
+				id = idUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -308,11 +308,11 @@ public class StructuredContent {
 	public void setKeywords(
 		UnsafeSupplier<String[], Throwable> keywordsUnsafeSupplier) {
 
-		try {
-			keywords = keywordsUnsafeSupplier.get();
+			try {
+				keywords = keywordsUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -323,30 +323,30 @@ public class StructuredContent {
 	public void setLastReviewed(
 		UnsafeSupplier<Date, Throwable> lastReviewedUnsafeSupplier) {
 
-		try {
-			lastReviewed = lastReviewedUnsafeSupplier.get();
+			try {
+				lastReviewed = lastReviewedUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
 	public void setRenderedContentsByTemplate(
 		RenderedContentsByTemplate[] renderedContentsByTemplate) {
 
-		this.renderedContentsByTemplate = renderedContentsByTemplate;
+			this.renderedContentsByTemplate = renderedContentsByTemplate;
 	}
 
 	public void setRenderedContentsByTemplate(
 		UnsafeSupplier<RenderedContentsByTemplate[], Throwable>
 			renderedContentsByTemplateUnsafeSupplier) {
 
-		try {
-			renderedContentsByTemplate =
-				renderedContentsByTemplateUnsafeSupplier.get();
+			try {
+				renderedContentsByTemplate =
+					renderedContentsByTemplateUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -357,22 +357,22 @@ public class StructuredContent {
 	public void setTitle(
 		UnsafeSupplier<String, Throwable> titleUnsafeSupplier) {
 
-		try {
-			title = titleUnsafeSupplier.get();
+			try {
+				title = titleUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
 	public void setValues(
 		UnsafeSupplier<Values[], Throwable> valuesUnsafeSupplier) {
 
-		try {
-			values = valuesUnsafeSupplier.get();
+			try {
+				values = valuesUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 

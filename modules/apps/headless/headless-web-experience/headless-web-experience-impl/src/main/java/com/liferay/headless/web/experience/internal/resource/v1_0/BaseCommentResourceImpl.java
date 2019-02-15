@@ -48,7 +48,7 @@ public abstract class BaseCommentResourceImpl implements CommentResource {
 			Long commentId, Pagination pagination)
 		throws Exception {
 
-		return Page.of(Collections.emptyList());
+			return Page.of(Collections.emptyList());
 	}
 
 	@Override
@@ -56,7 +56,7 @@ public abstract class BaseCommentResourceImpl implements CommentResource {
 			Long structuredContentId, Pagination pagination)
 		throws Exception {
 
-		return Page.of(Collections.emptyList());
+			return Page.of(Collections.emptyList());
 	}
 
 	protected Response buildNoContentResponse() {

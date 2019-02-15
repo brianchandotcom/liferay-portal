@@ -143,11 +143,11 @@ public class Fields {
 	public void setAutocomplete(
 		UnsafeSupplier<Boolean, Throwable> autocompleteUnsafeSupplier) {
 
-		try {
-			autocomplete = autocompleteUnsafeSupplier.get();
+			try {
+				autocomplete = autocompleteUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -158,11 +158,11 @@ public class Fields {
 	public void setDataSourceType(
 		UnsafeSupplier<String, Throwable> dataSourceTypeUnsafeSupplier) {
 
-		try {
-			dataSourceType = dataSourceTypeUnsafeSupplier.get();
+			try {
+				dataSourceType = dataSourceTypeUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -173,11 +173,11 @@ public class Fields {
 	public void setDataType(
 		UnsafeSupplier<String, Throwable> dataTypeUnsafeSupplier) {
 
-		try {
-			dataType = dataTypeUnsafeSupplier.get();
+			try {
+				dataType = dataTypeUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -188,11 +188,11 @@ public class Fields {
 	public void setDisplayStyle(
 		UnsafeSupplier<String, Throwable> displayStyleUnsafeSupplier) {
 
-		try {
-			displayStyle = displayStyleUnsafeSupplier.get();
+			try {
+				displayStyle = displayStyleUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -201,11 +201,11 @@ public class Fields {
 	}
 
 	public void setGrid(UnsafeSupplier<Grid, Throwable> gridUnsafeSupplier) {
-		try {
-			grid = gridUnsafeSupplier.get();
+			try {
+				grid = gridUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -216,11 +216,11 @@ public class Fields {
 	public void setHasFormRules(
 		UnsafeSupplier<Boolean, Throwable> hasFormRulesUnsafeSupplier) {
 
-		try {
-			hasFormRules = hasFormRulesUnsafeSupplier.get();
+			try {
+				hasFormRules = hasFormRulesUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -229,11 +229,11 @@ public class Fields {
 	}
 
 	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
+			try {
+				id = idUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -244,11 +244,11 @@ public class Fields {
 	public void setImmutable(
 		UnsafeSupplier<Boolean, Throwable> immutableUnsafeSupplier) {
 
-		try {
-			immutable = immutableUnsafeSupplier.get();
+			try {
+				immutable = immutableUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -259,11 +259,11 @@ public class Fields {
 	public void setInline(
 		UnsafeSupplier<Boolean, Throwable> inlineUnsafeSupplier) {
 
-		try {
-			inline = inlineUnsafeSupplier.get();
+			try {
+				inline = inlineUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -274,11 +274,11 @@ public class Fields {
 	public void setInputControl(
 		UnsafeSupplier<String, Throwable> inputControlUnsafeSupplier) {
 
-		try {
-			inputControl = inputControlUnsafeSupplier.get();
+			try {
+				inputControl = inputControlUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -289,11 +289,11 @@ public class Fields {
 	public void setLabel(
 		UnsafeSupplier<String, Throwable> labelUnsafeSupplier) {
 
-		try {
-			label = labelUnsafeSupplier.get();
+			try {
+				label = labelUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -304,11 +304,11 @@ public class Fields {
 	public void setLocalizable(
 		UnsafeSupplier<Boolean, Throwable> localizableUnsafeSupplier) {
 
-		try {
-			localizable = localizableUnsafeSupplier.get();
+			try {
+				localizable = localizableUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -319,11 +319,11 @@ public class Fields {
 	public void setMultiple(
 		UnsafeSupplier<Boolean, Throwable> multipleUnsafeSupplier) {
 
-		try {
-			multiple = multipleUnsafeSupplier.get();
+			try {
+				multiple = multipleUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -332,11 +332,11 @@ public class Fields {
 	}
 
 	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
-		try {
-			name = nameUnsafeSupplier.get();
+			try {
+				name = nameUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -347,11 +347,11 @@ public class Fields {
 	public void setOptions(
 		UnsafeSupplier<Options, Throwable> optionsUnsafeSupplier) {
 
-		try {
-			options = optionsUnsafeSupplier.get();
+			try {
+				options = optionsUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -362,11 +362,11 @@ public class Fields {
 	public void setPlaceholder(
 		UnsafeSupplier<String, Throwable> placeholderUnsafeSupplier) {
 
-		try {
-			placeholder = placeholderUnsafeSupplier.get();
+			try {
+				placeholder = placeholderUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -377,11 +377,11 @@ public class Fields {
 	public void setPredefinedValue(
 		UnsafeSupplier<String, Throwable> predefinedValueUnsafeSupplier) {
 
-		try {
-			predefinedValue = predefinedValueUnsafeSupplier.get();
+			try {
+				predefinedValue = predefinedValueUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -392,11 +392,11 @@ public class Fields {
 	public void setReadOnly(
 		UnsafeSupplier<Boolean, Throwable> readOnlyUnsafeSupplier) {
 
-		try {
-			readOnly = readOnlyUnsafeSupplier.get();
+			try {
+				readOnly = readOnlyUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -407,11 +407,11 @@ public class Fields {
 	public void setRepeatable(
 		UnsafeSupplier<Boolean, Throwable> repeatableUnsafeSupplier) {
 
-		try {
-			repeatable = repeatableUnsafeSupplier.get();
+			try {
+				repeatable = repeatableUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -422,11 +422,11 @@ public class Fields {
 	public void setRequired(
 		UnsafeSupplier<Boolean, Throwable> requiredUnsafeSupplier) {
 
-		try {
-			required = requiredUnsafeSupplier.get();
+			try {
+				required = requiredUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -437,11 +437,11 @@ public class Fields {
 	public void setShowAsSwitcher(
 		UnsafeSupplier<Boolean, Throwable> showAsSwitcherUnsafeSupplier) {
 
-		try {
-			showAsSwitcher = showAsSwitcherUnsafeSupplier.get();
+			try {
+				showAsSwitcher = showAsSwitcherUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -452,11 +452,11 @@ public class Fields {
 	public void setShowLabel(
 		UnsafeSupplier<Boolean, Throwable> showLabelUnsafeSupplier) {
 
-		try {
-			showLabel = showLabelUnsafeSupplier.get();
+			try {
+				showLabel = showLabelUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -467,11 +467,11 @@ public class Fields {
 	public void setStyle(
 		UnsafeSupplier<String, Throwable> styleUnsafeSupplier) {
 
-		try {
-			style = styleUnsafeSupplier.get();
+			try {
+				style = styleUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -480,11 +480,11 @@ public class Fields {
 	}
 
 	public void setText(UnsafeSupplier<String, Throwable> textUnsafeSupplier) {
-		try {
-			text = textUnsafeSupplier.get();
+			try {
+				text = textUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -495,22 +495,22 @@ public class Fields {
 	public void setTooltip(
 		UnsafeSupplier<String, Throwable> tooltipUnsafeSupplier) {
 
-		try {
-			tooltip = tooltipUnsafeSupplier.get();
+			try {
+				tooltip = tooltipUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
 	public void setValidation(
 		UnsafeSupplier<Validation, Throwable> validationUnsafeSupplier) {
 
-		try {
-			validation = validationUnsafeSupplier.get();
+			try {
+				validation = validationUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 

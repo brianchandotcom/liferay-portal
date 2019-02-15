@@ -43,7 +43,7 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 	public Response deleteDocument(Long documentId) throws Exception {
 		Response.ResponseBuilder responseBuilder = Response.ok();
 
-		return responseBuilder.build();
+			return responseBuilder.build();
 	}
 
 	@Override
@@ -56,7 +56,7 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 			Long documentId, Pagination pagination)
 		throws Exception {
 
-		return Page.of(Collections.emptyList());
+			return Page.of(Collections.emptyList());
 	}
 
 	@Override
@@ -64,7 +64,7 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 			Long documentsRepositoryId, Pagination pagination)
 		throws Exception {
 
-		return Page.of(Collections.emptyList());
+			return Page.of(Collections.emptyList());
 	}
 
 	@Override
@@ -72,16 +72,16 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 			Long folderId, Pagination pagination)
 		throws Exception {
 
-		return Page.of(Collections.emptyList());
+			return Page.of(Collections.emptyList());
 	}
 
 	@Override
 	public Response postDocumentCategories(Long documentId, Long referenceId)
 		throws Exception {
 
-		Response.ResponseBuilder responseBuilder = Response.ok();
+			Response.ResponseBuilder responseBuilder = Response.ok();
 
-		return responseBuilder.build();
+			return responseBuilder.build();
 	}
 
 	@Override
@@ -89,9 +89,9 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 			Long documentId, Long referenceId)
 		throws Exception {
 
-		Response.ResponseBuilder responseBuilder = Response.ok();
+			Response.ResponseBuilder responseBuilder = Response.ok();
 
-		return responseBuilder.build();
+			return responseBuilder.build();
 	}
 
 	@Override
@@ -99,7 +99,7 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 			Long documentsRepositoryId, Document document)
 		throws Exception {
 
-		return new Document();
+			return new Document();
 	}
 
 	@Override
@@ -107,7 +107,7 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 			Long documentsRepositoryId, Document document)
 		throws Exception {
 
-		return new Document();
+			return new Document();
 	}
 
 	@Override
@@ -115,7 +115,7 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 			Long folderId, MultipartBody multipartBody)
 		throws Exception {
 
-		return new Document();
+			return new Document();
 	}
 
 	@Override
@@ -123,7 +123,7 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 			Long folderId, MultipartBody multipartBody)
 		throws Exception {
 
-		return new Document();
+			return new Document();
 	}
 
 	protected Response buildNoContentResponse() {

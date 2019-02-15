@@ -85,11 +85,11 @@ public class WorkflowLog {
 	public void setAuditPerson(
 		UnsafeSupplier<String, Throwable> auditPersonUnsafeSupplier) {
 
-		try {
-			auditPerson = auditPersonUnsafeSupplier.get();
+			try {
+				auditPerson = auditPersonUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -100,11 +100,11 @@ public class WorkflowLog {
 	public void setCommentLog(
 		UnsafeSupplier<String, Throwable> commentLogUnsafeSupplier) {
 
-		try {
-			commentLog = commentLogUnsafeSupplier.get();
+			try {
+				commentLog = commentLogUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -115,11 +115,11 @@ public class WorkflowLog {
 	public void setDateCreated(
 		UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
 
-		try {
-			dateCreated = dateCreatedUnsafeSupplier.get();
+			try {
+				dateCreated = dateCreatedUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -128,11 +128,11 @@ public class WorkflowLog {
 	}
 
 	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
+			try {
+				id = idUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -143,11 +143,11 @@ public class WorkflowLog {
 	public void setPerson(
 		UnsafeSupplier<String, Throwable> personUnsafeSupplier) {
 
-		try {
-			person = personUnsafeSupplier.get();
+			try {
+				person = personUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -158,11 +158,11 @@ public class WorkflowLog {
 	public void setPreviousPerson(
 		UnsafeSupplier<String, Throwable> previousPersonUnsafeSupplier) {
 
-		try {
-			previousPerson = previousPersonUnsafeSupplier.get();
+			try {
+				previousPerson = previousPersonUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -173,11 +173,11 @@ public class WorkflowLog {
 	public void setPreviousState(
 		UnsafeSupplier<String, Throwable> previousStateUnsafeSupplier) {
 
-		try {
-			previousState = previousStateUnsafeSupplier.get();
+			try {
+				previousState = previousStateUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -188,22 +188,22 @@ public class WorkflowLog {
 	public void setState(
 		UnsafeSupplier<String, Throwable> stateUnsafeSupplier) {
 
-		try {
-			state = stateUnsafeSupplier.get();
+			try {
+				state = stateUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
 	public void setTask(
 		UnsafeSupplier<WorkflowTask, Throwable> taskUnsafeSupplier) {
 
-		try {
-			task = taskUnsafeSupplier.get();
+			try {
+				task = taskUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -218,11 +218,11 @@ public class WorkflowLog {
 	public void setTaskId(
 		UnsafeSupplier<Long, Throwable> taskIdUnsafeSupplier) {
 
-		try {
-			taskId = taskIdUnsafeSupplier.get();
+			try {
+				taskId = taskIdUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -231,11 +231,11 @@ public class WorkflowLog {
 	}
 
 	public void setType(UnsafeSupplier<String, Throwable> typeUnsafeSupplier) {
-		try {
-			type = typeUnsafeSupplier.get();
+			try {
+				type = typeUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 

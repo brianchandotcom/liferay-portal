@@ -47,11 +47,11 @@ public class Options {
 	public void setLabel(
 		UnsafeSupplier<String, Throwable> labelUnsafeSupplier) {
 
-		try {
-			label = labelUnsafeSupplier.get();
+			try {
+				label = labelUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -62,11 +62,11 @@ public class Options {
 	public void setValue(
 		UnsafeSupplier<String, Throwable> valueUnsafeSupplier) {
 
-		try {
-			value = valueUnsafeSupplier.get();
+			try {
+				value = valueUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 

@@ -43,7 +43,7 @@ public abstract class BaseBlogPostingResourceImpl
 	public Response deleteBlogPosting(Long blogPostingId) throws Exception {
 		Response.ResponseBuilder responseBuilder = Response.ok();
 
-		return responseBuilder.build();
+			return responseBuilder.build();
 	}
 
 	@Override
@@ -56,7 +56,7 @@ public abstract class BaseBlogPostingResourceImpl
 			Long blogPostingId, Pagination pagination)
 		throws Exception {
 
-		return Page.of(Collections.emptyList());
+			return Page.of(Collections.emptyList());
 	}
 
 	@Override
@@ -64,7 +64,7 @@ public abstract class BaseBlogPostingResourceImpl
 			Long contentSpaceId, Pagination pagination)
 		throws Exception {
 
-		return Page.of(Collections.emptyList());
+			return Page.of(Collections.emptyList());
 	}
 
 	@Override
@@ -72,9 +72,9 @@ public abstract class BaseBlogPostingResourceImpl
 			Long blogPostingId, Long referenceId)
 		throws Exception {
 
-		Response.ResponseBuilder responseBuilder = Response.ok();
+			Response.ResponseBuilder responseBuilder = Response.ok();
 
-		return responseBuilder.build();
+			return responseBuilder.build();
 	}
 
 	@Override
@@ -82,9 +82,9 @@ public abstract class BaseBlogPostingResourceImpl
 			Long blogPostingId, Long referenceId)
 		throws Exception {
 
-		Response.ResponseBuilder responseBuilder = Response.ok();
+			Response.ResponseBuilder responseBuilder = Response.ok();
 
-		return responseBuilder.build();
+			return responseBuilder.build();
 	}
 
 	@Override
@@ -92,7 +92,7 @@ public abstract class BaseBlogPostingResourceImpl
 			Long contentSpaceId, BlogPosting blogPosting)
 		throws Exception {
 
-		return new BlogPosting();
+			return new BlogPosting();
 	}
 
 	@Override
@@ -100,7 +100,7 @@ public abstract class BaseBlogPostingResourceImpl
 			Long contentSpaceId, BlogPosting blogPosting)
 		throws Exception {
 
-		return new BlogPosting();
+			return new BlogPosting();
 	}
 
 	@Override
@@ -108,7 +108,7 @@ public abstract class BaseBlogPostingResourceImpl
 			Long blogPostingId, BlogPosting blogPosting)
 		throws Exception {
 
-		return new BlogPosting();
+			return new BlogPosting();
 	}
 
 	protected Response buildNoContentResponse() {

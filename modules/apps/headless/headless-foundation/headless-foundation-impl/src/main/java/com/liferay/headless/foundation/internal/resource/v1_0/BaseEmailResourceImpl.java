@@ -48,7 +48,7 @@ public abstract class BaseEmailResourceImpl implements EmailResource {
 			Object genericParentId, Pagination pagination)
 		throws Exception {
 
-		return Page.of(Collections.emptyList());
+			return Page.of(Collections.emptyList());
 	}
 
 	protected Response buildNoContentResponse() {

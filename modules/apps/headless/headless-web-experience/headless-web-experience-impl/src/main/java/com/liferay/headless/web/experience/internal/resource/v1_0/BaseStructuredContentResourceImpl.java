@@ -45,9 +45,9 @@ public abstract class BaseStructuredContentResourceImpl
 	public Response deleteStructuredContent(Long structuredContentId)
 		throws Exception {
 
-		Response.ResponseBuilder responseBuilder = Response.ok();
+			Response.ResponseBuilder responseBuilder = Response.ok();
 
-		return responseBuilder.build();
+			return responseBuilder.build();
 	}
 
 	@Override
@@ -56,7 +56,7 @@ public abstract class BaseStructuredContentResourceImpl
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
-		return Page.of(Collections.emptyList());
+			return Page.of(Collections.emptyList());
 	}
 
 	@Override
@@ -65,14 +65,14 @@ public abstract class BaseStructuredContentResourceImpl
 			Sort[] sorts)
 		throws Exception {
 
-		return Page.of(Collections.emptyList());
+			return Page.of(Collections.emptyList());
 	}
 
 	@Override
 	public StructuredContent getStructuredContent(Long structuredContentId)
 		throws Exception {
 
-		return new StructuredContent();
+			return new StructuredContent();
 	}
 
 	@Override
@@ -80,7 +80,7 @@ public abstract class BaseStructuredContentResourceImpl
 			Long structuredContentId, Pagination pagination)
 		throws Exception {
 
-		return Page.of(Collections.emptyList());
+			return Page.of(Collections.emptyList());
 	}
 
 	@Override
@@ -88,7 +88,7 @@ public abstract class BaseStructuredContentResourceImpl
 			Long contentSpaceId, StructuredContent structuredContent)
 		throws Exception {
 
-		return new StructuredContent();
+			return new StructuredContent();
 	}
 
 	@Override
@@ -96,7 +96,7 @@ public abstract class BaseStructuredContentResourceImpl
 			Long contentSpaceId, StructuredContent structuredContent)
 		throws Exception {
 
-		return new StructuredContent();
+			return new StructuredContent();
 	}
 
 	@Override
@@ -104,7 +104,7 @@ public abstract class BaseStructuredContentResourceImpl
 			Long contentSpaceId, StructuredContent structuredContent)
 		throws Exception {
 
-		return new StructuredContent();
+			return new StructuredContent();
 	}
 
 	@Override
@@ -112,9 +112,9 @@ public abstract class BaseStructuredContentResourceImpl
 			Long structuredContentId, Long referenceId)
 		throws Exception {
 
-		Response.ResponseBuilder responseBuilder = Response.ok();
+			Response.ResponseBuilder responseBuilder = Response.ok();
 
-		return responseBuilder.build();
+			return responseBuilder.build();
 	}
 
 	@Override
@@ -122,9 +122,9 @@ public abstract class BaseStructuredContentResourceImpl
 			Long structuredContentId, Long referenceId)
 		throws Exception {
 
-		Response.ResponseBuilder responseBuilder = Response.ok();
+			Response.ResponseBuilder responseBuilder = Response.ok();
 
-		return responseBuilder.build();
+			return responseBuilder.build();
 	}
 
 	@Override
@@ -132,7 +132,7 @@ public abstract class BaseStructuredContentResourceImpl
 			Long structuredContentId, StructuredContent structuredContent)
 		throws Exception {
 
-		return new StructuredContent();
+			return new StructuredContent();
 	}
 
 	protected Response buildNoContentResponse() {

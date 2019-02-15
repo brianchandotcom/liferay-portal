@@ -78,14 +78,14 @@ public class Vocabulary {
 		this.availableLanguages = availableLanguages;
 	}
 
-	public void setAvailableLanguagesWithSupplier(
+	public void setAvailableLanguages(
 		UnsafeSupplier<String[], Throwable> availableLanguagesUnsafeSupplier) {
 
-		try {
-			availableLanguages = availableLanguagesUnsafeSupplier.get();
+			try {
+				availableLanguages = availableLanguagesUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -93,25 +93,25 @@ public class Vocabulary {
 		this.contentSpace = contentSpace;
 	}
 
-	public void setContentSpaceWithSuplierWithSupplier(
+	public void setContentSpace(
 		UnsafeSupplier<Long, Throwable> contentSpaceUnsafeSupplier) {
 
-		try {
-			contentSpace = contentSpaceUnsafeSupplier.get();
+			try {
+				contentSpace = contentSpaceUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
-	public void setCreatorWithSupplier(
+	public void setCreator(
 		UnsafeSupplier<UserAccount, Throwable> creatorUnsafeSupplier) {
 
-		try {
-			creator = creatorUnsafeSupplier.get();
+			try {
+				creator = creatorUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -123,14 +123,14 @@ public class Vocabulary {
 		this.dateCreated = dateCreated;
 	}
 
-	public void setDateCreatedWithSupplier(
+	public void setDateCreated(
 		UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
 
-		try {
-			dateCreated = dateCreatedUnsafeSupplier.get();
+			try {
+				dateCreated = dateCreatedUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -138,14 +138,14 @@ public class Vocabulary {
 		this.dateModified = dateModified;
 	}
 
-	public void setDateModifiedWithSupplier(
+	public void setDateModified(
 		UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
 
-		try {
-			dateModified = dateModifiedUnsafeSupplier.get();
+			try {
+				dateModified = dateModifiedUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -153,14 +153,14 @@ public class Vocabulary {
 		this.description = description;
 	}
 
-	public void setDescriptionWithSupplier(
+	public void setDescription(
 		UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier) {
 
-		try {
-			description = descriptionUnsafeSupplier.get();
+			try {
+				description = descriptionUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -168,13 +168,12 @@ public class Vocabulary {
 		this.id = id;
 	}
 
-	public void setIdWithSupplier(
-		UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
+	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+			try {
+				id = idUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -182,13 +181,12 @@ public class Vocabulary {
 		this.name = name;
 	}
 
-	public void setNameWithSupplier(
-		UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
-		try {
-			name = nameUnsafeSupplier.get();
+	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
+			try {
+				name = nameUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -196,15 +194,15 @@ public class Vocabulary {
 		this.vocabularyCategories = vocabularyCategories;
 	}
 
-	public void setVocabularyCategoriesWithSupplier(
+	public void setVocabularyCategories(
 		UnsafeSupplier<Category[], Throwable>
 			vocabularyCategoriesUnsafeSupplier) {
 
-		try {
-			vocabularyCategories = vocabularyCategoriesUnsafeSupplier.get();
+			try {
+				vocabularyCategories = vocabularyCategoriesUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -212,16 +210,16 @@ public class Vocabulary {
 		this.vocabularyCategoriesIds = vocabularyCategoriesIds;
 	}
 
-	public void setVocabularyCategoriesIdsWithSupplier(
+	public void setVocabularyCategoriesIds(
 		UnsafeSupplier<Long[], Throwable>
 			vocabularyCategoriesIdsUnsafeSupplier) {
 
-		try {
-			vocabularyCategoriesIds =
-				vocabularyCategoriesIdsUnsafeSupplier.get();
+			try {
+				vocabularyCategoriesIds =
+					vocabularyCategoriesIdsUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 

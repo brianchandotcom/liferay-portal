@@ -65,11 +65,11 @@ public class ImageObjectRepository {
 	public void setDateCreated(
 		UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
 
-		try {
-			dateCreated = dateCreatedUnsafeSupplier.get();
+			try {
+				dateCreated = dateCreatedUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -80,11 +80,11 @@ public class ImageObjectRepository {
 	public void setDateModified(
 		UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
 
-		try {
-			dateModified = dateModifiedUnsafeSupplier.get();
+			try {
+				dateModified = dateModifiedUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -93,11 +93,11 @@ public class ImageObjectRepository {
 	}
 
 	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
+			try {
+				id = idUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -108,11 +108,11 @@ public class ImageObjectRepository {
 	public void setImages(
 		UnsafeSupplier<ImageObject[], Throwable> imagesUnsafeSupplier) {
 
-		try {
-			images = imagesUnsafeSupplier.get();
+			try {
+				images = imagesUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -123,11 +123,11 @@ public class ImageObjectRepository {
 	public void setImagesIds(
 		UnsafeSupplier<Long[], Throwable> imagesIdsUnsafeSupplier) {
 
-		try {
-			imagesIds = imagesIdsUnsafeSupplier.get();
+			try {
+				imagesIds = imagesIdsUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -136,11 +136,11 @@ public class ImageObjectRepository {
 	}
 
 	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
-		try {
-			name = nameUnsafeSupplier.get();
+			try {
+				name = nameUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 

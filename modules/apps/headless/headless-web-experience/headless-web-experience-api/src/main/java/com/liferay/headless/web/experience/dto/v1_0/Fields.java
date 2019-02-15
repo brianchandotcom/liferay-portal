@@ -83,11 +83,11 @@ public class Fields {
 	public void setDataType(
 		UnsafeSupplier<String, Throwable> dataTypeUnsafeSupplier) {
 
-		try {
-			dataType = dataTypeUnsafeSupplier.get();
+			try {
+				dataType = dataTypeUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -98,11 +98,11 @@ public class Fields {
 	public void setInputControl(
 		UnsafeSupplier<String, Throwable> inputControlUnsafeSupplier) {
 
-		try {
-			inputControl = inputControlUnsafeSupplier.get();
+			try {
+				inputControl = inputControlUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -113,11 +113,11 @@ public class Fields {
 	public void setLabel(
 		UnsafeSupplier<String, Throwable> labelUnsafeSupplier) {
 
-		try {
-			label = labelUnsafeSupplier.get();
+			try {
+				label = labelUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -128,11 +128,11 @@ public class Fields {
 	public void setLocalizable(
 		UnsafeSupplier<Boolean, Throwable> localizableUnsafeSupplier) {
 
-		try {
-			localizable = localizableUnsafeSupplier.get();
+			try {
+				localizable = localizableUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -143,11 +143,11 @@ public class Fields {
 	public void setMultiple(
 		UnsafeSupplier<Boolean, Throwable> multipleUnsafeSupplier) {
 
-		try {
-			multiple = multipleUnsafeSupplier.get();
+			try {
+				multiple = multipleUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -156,11 +156,11 @@ public class Fields {
 	}
 
 	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
-		try {
-			name = nameUnsafeSupplier.get();
+			try {
+				name = nameUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -171,11 +171,11 @@ public class Fields {
 	public void setOptions(
 		UnsafeSupplier<Options[], Throwable> optionsUnsafeSupplier) {
 
-		try {
-			options = optionsUnsafeSupplier.get();
+			try {
+				options = optionsUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -186,11 +186,11 @@ public class Fields {
 	public void setPredefinedValue(
 		UnsafeSupplier<String, Throwable> predefinedValueUnsafeSupplier) {
 
-		try {
-			predefinedValue = predefinedValueUnsafeSupplier.get();
+			try {
+				predefinedValue = predefinedValueUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -201,11 +201,11 @@ public class Fields {
 	public void setRepeatable(
 		UnsafeSupplier<Boolean, Throwable> repeatableUnsafeSupplier) {
 
-		try {
-			repeatable = repeatableUnsafeSupplier.get();
+			try {
+				repeatable = repeatableUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -216,11 +216,11 @@ public class Fields {
 	public void setRequired(
 		UnsafeSupplier<Boolean, Throwable> requiredUnsafeSupplier) {
 
-		try {
-			required = requiredUnsafeSupplier.get();
+			try {
+				required = requiredUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -231,11 +231,11 @@ public class Fields {
 	public void setShowLabel(
 		UnsafeSupplier<Boolean, Throwable> showLabelUnsafeSupplier) {
 
-		try {
-			showLabel = showLabelUnsafeSupplier.get();
+			try {
+				showLabel = showLabelUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 

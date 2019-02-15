@@ -43,7 +43,7 @@ public abstract class BaseImageObjectResourceImpl
 	public Response deleteImageObject(Long imageObjectId) throws Exception {
 		Response.ResponseBuilder responseBuilder = Response.ok();
 
-		return responseBuilder.build();
+			return responseBuilder.build();
 	}
 
 	@Override
@@ -56,7 +56,7 @@ public abstract class BaseImageObjectResourceImpl
 			Long imageObjectRepositoryId, Pagination pagination)
 		throws Exception {
 
-		return Page.of(Collections.emptyList());
+			return Page.of(Collections.emptyList());
 	}
 
 	@Override
@@ -64,7 +64,7 @@ public abstract class BaseImageObjectResourceImpl
 			Long imageObjectRepositoryId, ImageObject imageObject)
 		throws Exception {
 
-		return new ImageObject();
+			return new ImageObject();
 	}
 
 	@Override
@@ -72,7 +72,7 @@ public abstract class BaseImageObjectResourceImpl
 			Long imageObjectRepositoryId, ImageObject imageObject)
 		throws Exception {
 
-		return new ImageObject();
+			return new ImageObject();
 	}
 
 	protected Response buildNoContentResponse() {

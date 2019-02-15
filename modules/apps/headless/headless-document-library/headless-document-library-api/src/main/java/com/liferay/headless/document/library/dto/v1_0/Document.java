@@ -97,11 +97,11 @@ public class Document {
 	public void setAdaptedMedia(
 		UnsafeSupplier<AdaptedMedia[], Throwable> adaptedMediaUnsafeSupplier) {
 
-		try {
-			adaptedMedia = adaptedMediaUnsafeSupplier.get();
+			try {
+				adaptedMedia = adaptedMediaUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -112,11 +112,11 @@ public class Document {
 	public void setCategory(
 		UnsafeSupplier<Long[], Throwable> categoryUnsafeSupplier) {
 
-		try {
-			category = categoryUnsafeSupplier.get();
+			try {
+				category = categoryUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -127,11 +127,11 @@ public class Document {
 	public void setContentUrl(
 		UnsafeSupplier<String, Throwable> contentUrlUnsafeSupplier) {
 
-		try {
-			contentUrl = contentUrlUnsafeSupplier.get();
+			try {
+				contentUrl = contentUrlUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -142,11 +142,11 @@ public class Document {
 	public void setCreator(
 		UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier) {
 
-		try {
-			creator = creatorUnsafeSupplier.get();
+			try {
+				creator = creatorUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -157,11 +157,11 @@ public class Document {
 	public void setDateCreated(
 		UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
 
-		try {
-			dateCreated = dateCreatedUnsafeSupplier.get();
+			try {
+				dateCreated = dateCreatedUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -172,11 +172,11 @@ public class Document {
 	public void setDateModified(
 		UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
 
-		try {
-			dateModified = dateModifiedUnsafeSupplier.get();
+			try {
+				dateModified = dateModifiedUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -187,11 +187,11 @@ public class Document {
 	public void setDescription(
 		UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier) {
 
-		try {
-			description = descriptionUnsafeSupplier.get();
+			try {
+				description = descriptionUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -202,11 +202,11 @@ public class Document {
 	public void setEncodingFormat(
 		UnsafeSupplier<String, Throwable> encodingFormatUnsafeSupplier) {
 
-		try {
-			encodingFormat = encodingFormatUnsafeSupplier.get();
+			try {
+				encodingFormat = encodingFormatUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -217,11 +217,11 @@ public class Document {
 	public void setFileExtension(
 		UnsafeSupplier<String, Throwable> fileExtensionUnsafeSupplier) {
 
-		try {
-			fileExtension = fileExtensionUnsafeSupplier.get();
+			try {
+				fileExtension = fileExtensionUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -232,11 +232,11 @@ public class Document {
 	public void setFolderId(
 		UnsafeSupplier<Long, Throwable> folderIdUnsafeSupplier) {
 
-		try {
-			folderId = folderIdUnsafeSupplier.get();
+			try {
+				folderId = folderIdUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -245,11 +245,11 @@ public class Document {
 	}
 
 	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
+			try {
+				id = idUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -260,11 +260,11 @@ public class Document {
 	public void setKeywords(
 		UnsafeSupplier<String[], Throwable> keywordsUnsafeSupplier) {
 
-		try {
-			keywords = keywordsUnsafeSupplier.get();
+			try {
+				keywords = keywordsUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -275,11 +275,11 @@ public class Document {
 	public void setSizeInBytes(
 		UnsafeSupplier<Number, Throwable> sizeInBytesUnsafeSupplier) {
 
-		try {
-			sizeInBytes = sizeInBytesUnsafeSupplier.get();
+			try {
+				sizeInBytes = sizeInBytesUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -290,11 +290,11 @@ public class Document {
 	public void setTitle(
 		UnsafeSupplier<String, Throwable> titleUnsafeSupplier) {
 
-		try {
-			title = titleUnsafeSupplier.get();
+			try {
+				title = titleUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 

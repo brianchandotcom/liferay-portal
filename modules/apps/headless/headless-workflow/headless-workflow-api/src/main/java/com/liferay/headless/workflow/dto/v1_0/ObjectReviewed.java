@@ -49,11 +49,11 @@ public class ObjectReviewed {
 	}
 
 	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
+			try {
+				id = idUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -64,11 +64,11 @@ public class ObjectReviewed {
 	public void setIdentifier(
 		UnsafeSupplier<String, Throwable> identifierUnsafeSupplier) {
 
-		try {
-			identifier = identifierUnsafeSupplier.get();
+			try {
+				identifier = identifierUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -79,11 +79,11 @@ public class ObjectReviewed {
 	public void setResourceType(
 		UnsafeSupplier<String, Throwable> resourceTypeUnsafeSupplier) {
 
-		try {
-			resourceType = resourceTypeUnsafeSupplier.get();
+			try {
+				resourceType = resourceTypeUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 

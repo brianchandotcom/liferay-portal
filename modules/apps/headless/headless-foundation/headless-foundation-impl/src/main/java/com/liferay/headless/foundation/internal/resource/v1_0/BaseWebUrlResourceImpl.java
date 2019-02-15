@@ -43,7 +43,7 @@ public abstract class BaseWebUrlResourceImpl implements WebUrlResource {
 			Object genericParentId, Pagination pagination)
 		throws Exception {
 
-		return Page.of(Collections.emptyList());
+			return Page.of(Collections.emptyList());
 	}
 
 	@Override

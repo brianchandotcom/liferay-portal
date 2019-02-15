@@ -97,11 +97,11 @@ public class Form {
 	public void setAvailableLanguages(
 		UnsafeSupplier<String[], Throwable> availableLanguagesUnsafeSupplier) {
 
-		try {
-			availableLanguages = availableLanguagesUnsafeSupplier.get();
+			try {
+				availableLanguages = availableLanguagesUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -112,11 +112,11 @@ public class Form {
 	public void setContentSpace(
 		UnsafeSupplier<Long, Throwable> contentSpaceUnsafeSupplier) {
 
-		try {
-			contentSpace = contentSpaceUnsafeSupplier.get();
+			try {
+				contentSpace = contentSpaceUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -127,11 +127,11 @@ public class Form {
 	public void setCreator(
 		UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier) {
 
-		try {
-			creator = creatorUnsafeSupplier.get();
+			try {
+				creator = creatorUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -142,11 +142,11 @@ public class Form {
 	public void setDateCreated(
 		UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
 
-		try {
-			dateCreated = dateCreatedUnsafeSupplier.get();
+			try {
+				dateCreated = dateCreatedUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -157,11 +157,11 @@ public class Form {
 	public void setDateModified(
 		UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
 
-		try {
-			dateModified = dateModifiedUnsafeSupplier.get();
+			try {
+				dateModified = dateModifiedUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -172,11 +172,11 @@ public class Form {
 	public void setDatePublished(
 		UnsafeSupplier<Date, Throwable> datePublishedUnsafeSupplier) {
 
-		try {
-			datePublished = datePublishedUnsafeSupplier.get();
+			try {
+				datePublished = datePublishedUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -187,11 +187,11 @@ public class Form {
 	public void setDefaultLanguage(
 		UnsafeSupplier<String, Throwable> defaultLanguageUnsafeSupplier) {
 
-		try {
-			defaultLanguage = defaultLanguageUnsafeSupplier.get();
+			try {
+				defaultLanguage = defaultLanguageUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -202,11 +202,11 @@ public class Form {
 	public void setDescription(
 		UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier) {
 
-		try {
-			description = descriptionUnsafeSupplier.get();
+			try {
+				description = descriptionUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -217,11 +217,11 @@ public class Form {
 	public void setFormRecords(
 		UnsafeSupplier<FormRecord[], Throwable> formRecordsUnsafeSupplier) {
 
-		try {
-			formRecords = formRecordsUnsafeSupplier.get();
+			try {
+				formRecords = formRecordsUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -232,11 +232,11 @@ public class Form {
 	public void setFormRecordsIds(
 		UnsafeSupplier<Long[], Throwable> formRecordsIdsUnsafeSupplier) {
 
-		try {
-			formRecordsIds = formRecordsIdsUnsafeSupplier.get();
+			try {
+				formRecordsIds = formRecordsIdsUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -245,11 +245,11 @@ public class Form {
 	}
 
 	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
+			try {
+				id = idUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -258,11 +258,11 @@ public class Form {
 	}
 
 	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
-		try {
-			name = nameUnsafeSupplier.get();
+			try {
+				name = nameUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -273,11 +273,11 @@ public class Form {
 	public void setStructure(
 		UnsafeSupplier<FormStructure, Throwable> structureUnsafeSupplier) {
 
-		try {
-			structure = structureUnsafeSupplier.get();
+			try {
+				structure = structureUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -288,11 +288,11 @@ public class Form {
 	public void setStructureId(
 		UnsafeSupplier<Long, Throwable> structureIdUnsafeSupplier) {
 
-		try {
-			structureId = structureIdUnsafeSupplier.get();
+			try {
+				structureId = structureIdUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 

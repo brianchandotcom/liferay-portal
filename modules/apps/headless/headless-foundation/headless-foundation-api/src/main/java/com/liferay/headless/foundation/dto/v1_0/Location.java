@@ -48,14 +48,14 @@ public class Location {
 		this.addressCountry = addressCountry;
 	}
 
-	public void setAddressCountryWithSupplier(
+	public void setAddressCountry(
 		UnsafeSupplier<String, Throwable> addressCountryUnsafeSupplier) {
 
-		try {
-			addressCountry = addressCountryUnsafeSupplier.get();
+			try {
+				addressCountry = addressCountryUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -63,14 +63,14 @@ public class Location {
 		this.addressRegion = addressRegion;
 	}
 
-	public void setAddressRegionWithSupplier(
+	public void setAddressRegion(
 		UnsafeSupplier<String, Throwable> addressRegionUnsafeSupplier) {
 
-		try {
-			addressRegion = addressRegionUnsafeSupplier.get();
+			try {
+				addressRegion = addressRegionUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -78,12 +78,12 @@ public class Location {
 		this.id = id;
 	}
 
-	public void setIdWithSupplier(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
+	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+			try {
+				id = idUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 

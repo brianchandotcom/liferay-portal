@@ -90,14 +90,14 @@ public class Category {
 		this.availableLanguages = availableLanguages;
 	}
 
-	public void setAvailableLanguagesWithSupplier(
+	public void setAvailableLanguages(
 		UnsafeSupplier<String[], Throwable> availableLanguagesUnsafeSupplier) {
 
-		try {
-			availableLanguages = availableLanguagesUnsafeSupplier.get();
+			try {
+				availableLanguages = availableLanguagesUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -105,14 +105,14 @@ public class Category {
 		this.category = category;
 	}
 
-	public void setCategoryWithSupplier(
+	public void setCategory(
 		UnsafeSupplier<Category, Throwable> categoryUnsafeSupplier) {
 
-		try {
-			category = categoryUnsafeSupplier.get();
+			try {
+				category = categoryUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -120,25 +120,25 @@ public class Category {
 		this.categoryId = categoryId;
 	}
 
-	public void setCategoryIdWithSupplier(
+	public void setCategoryId(
 		UnsafeSupplier<Long, Throwable> categoryIdUnsafeSupplier) {
 
-		try {
-			categoryId = categoryIdUnsafeSupplier.get();
+			try {
+				categoryId = categoryIdUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
-	public void setCreatorWithSupplier(
+	public void setCreator(
 		UnsafeSupplier<UserAccount, Throwable> creatorUnsafeSupplier) {
 
-		try {
-			creator = creatorUnsafeSupplier.get();
+			try {
+				creator = creatorUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -150,14 +150,14 @@ public class Category {
 		this.creatorId = creatorId;
 	}
 
-	public void setCreatorIdWithSupplier(
+	public void setCreatorId(
 		UnsafeSupplier<Long, Throwable> creatorIdUnsafeSupplier) {
 
-		try {
-			creatorId = creatorIdUnsafeSupplier.get();
+			try {
+				creatorId = creatorIdUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -165,14 +165,14 @@ public class Category {
 		this.dateCreated = dateCreated;
 	}
 
-	public void setDateCreatedWithSupplier(
+	public void setDateCreated(
 		UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
 
-		try {
-			dateCreated = dateCreatedUnsafeSupplier.get();
+			try {
+				dateCreated = dateCreatedUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -180,14 +180,14 @@ public class Category {
 		this.dateModified = dateModified;
 	}
 
-	public void setDateModifiedWithSupplier(
+	public void setDateModified(
 		UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
 
-		try {
-			dateModified = dateModifiedUnsafeSupplier.get();
+			try {
+				dateModified = dateModifiedUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -195,14 +195,14 @@ public class Category {
 		this.description = description;
 	}
 
-	public void setDescriptionWithSupplier(
+	public void setDescription(
 		UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier) {
 
-		try {
-			description = descriptionUnsafeSupplier.get();
+			try {
+				description = descriptionUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -210,12 +210,12 @@ public class Category {
 		this.id = id;
 	}
 
-	public void setIdWithSupplier(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
+	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+			try {
+				id = idUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -223,12 +223,12 @@ public class Category {
 		this.name = name;
 	}
 
-	public void setNameWithSupplier(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
-		try {
-			name = nameUnsafeSupplier.get();
+	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
+			try {
+				name = nameUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -236,25 +236,25 @@ public class Category {
 		this.subcategories = subcategories;
 	}
 
-	public void setSubcategoriesWithSupplier(
+	public void setSubcategories(
 		UnsafeSupplier<Category[], Throwable> subcategoriesUnsafeSupplier) {
 
-		try {
-			subcategories = subcategoriesUnsafeSupplier.get();
+			try {
+				subcategories = subcategoriesUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
-	public void setVocabularyWithSupplier(
+	public void setVocabulary(
 		UnsafeSupplier<Vocabulary, Throwable> vocabularyUnsafeSupplier) {
 
-		try {
-			vocabulary = vocabularyUnsafeSupplier.get();
+			try {
+				vocabulary = vocabularyUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -266,14 +266,14 @@ public class Category {
 		this.vocabularyId = vocabularyId;
 	}
 
-	public void setVocabularyIdWithSupplier(
+	public void setVocabularyId(
 		UnsafeSupplier<Long, Throwable> vocabularyIdUnsafeSupplier) {
 
-		try {
-			vocabularyId = vocabularyIdUnsafeSupplier.get();
+			try {
+				vocabularyId = vocabularyIdUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 

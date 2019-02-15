@@ -42,7 +42,7 @@ public abstract class BaseCategoryResourceImpl implements CategoryResource {
 	public Response deleteCategory(Long categoryId) throws Exception {
 		Response.ResponseBuilder responseBuilder = Response.ok();
 
-		return responseBuilder.build();
+			return responseBuilder.build();
 	}
 
 	@Override
@@ -55,7 +55,7 @@ public abstract class BaseCategoryResourceImpl implements CategoryResource {
 			Long categoryId, Pagination pagination)
 		throws Exception {
 
-		return Page.of(Collections.emptyList());
+			return Page.of(Collections.emptyList());
 	}
 
 	@Override
@@ -63,14 +63,14 @@ public abstract class BaseCategoryResourceImpl implements CategoryResource {
 			Long vocabularyId, Pagination pagination)
 		throws Exception {
 
-		return Page.of(Collections.emptyList());
+			return Page.of(Collections.emptyList());
 	}
 
 	@Override
 	public Category postCategoryCategory(Long categoryId, Category category)
 		throws Exception {
 
-		return new Category();
+			return new Category();
 	}
 
 	@Override
@@ -78,14 +78,14 @@ public abstract class BaseCategoryResourceImpl implements CategoryResource {
 			Long categoryId, Category category)
 		throws Exception {
 
-		return new Category();
+			return new Category();
 	}
 
 	@Override
 	public Category postVocabularyCategory(Long vocabularyId, Category category)
 		throws Exception {
 
-		return new Category();
+			return new Category();
 	}
 
 	@Override
@@ -93,14 +93,14 @@ public abstract class BaseCategoryResourceImpl implements CategoryResource {
 			Long vocabularyId, Category category)
 		throws Exception {
 
-		return new Category();
+			return new Category();
 	}
 
 	@Override
 	public Category putCategory(Long categoryId, Category category)
 		throws Exception {
 
-		return new Category();
+			return new Category();
 	}
 
 	protected Response buildNoContentResponse() {

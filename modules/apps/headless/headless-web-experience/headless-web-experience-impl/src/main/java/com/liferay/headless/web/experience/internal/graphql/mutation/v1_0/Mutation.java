@@ -39,69 +39,57 @@ public class Mutation {
 
 	@GraphQLInvokeDetached
 	public Response deleteContentDocument( @GraphQLName("content-document-id") Long contentDocumentId ) throws Exception {
+				Response.ResponseBuilder responseBuilder = Response.ok();
 
-		Response.ResponseBuilder responseBuilder = Response.ok();
-
-		return responseBuilder.build();
+				return responseBuilder.build();
 
 	}
 
 	@GraphQLInvokeDetached
 	public StructuredContent patchContentSpaceStructuredContents( @GraphQLName("content-space-id") Long contentSpaceId , @GraphQLName("StructuredContent") StructuredContent structuredContent ) throws Exception {
-
-		return _getStructuredContentResource().patchContentSpaceStructuredContents( contentSpaceId , structuredContent );
-
+return _getStructuredContentResource().patchContentSpaceStructuredContents( contentSpaceId , structuredContent );
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public StructuredContent postContentSpaceStructuredContent( @GraphQLName("content-space-id") Long contentSpaceId , @GraphQLName("StructuredContent") StructuredContent structuredContent ) throws Exception {
-
-		return _getStructuredContentResource().postContentSpaceStructuredContent( contentSpaceId , structuredContent );
-
+return _getStructuredContentResource().postContentSpaceStructuredContent( contentSpaceId , structuredContent );
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public StructuredContent postContentSpaceStructuredContentBatchCreate( @GraphQLName("content-space-id") Long contentSpaceId , @GraphQLName("StructuredContent") StructuredContent structuredContent ) throws Exception {
-
-		return _getStructuredContentResource().postContentSpaceStructuredContentBatchCreate( contentSpaceId , structuredContent );
-
+return _getStructuredContentResource().postContentSpaceStructuredContentBatchCreate( contentSpaceId , structuredContent );
 	}
 
 	@GraphQLInvokeDetached
 	public Response deleteStructuredContent( @GraphQLName("structured-content-id") Long structuredContentId ) throws Exception {
+				Response.ResponseBuilder responseBuilder = Response.ok();
 
-		Response.ResponseBuilder responseBuilder = Response.ok();
-
-		return responseBuilder.build();
+				return responseBuilder.build();
 
 	}
 
 	@GraphQLInvokeDetached
 	public StructuredContent putStructuredContent( @GraphQLName("structured-content-id") Long structuredContentId , @GraphQLName("StructuredContent") StructuredContent structuredContent ) throws Exception {
-
-		return _getStructuredContentResource().putStructuredContent( structuredContentId , structuredContent );
-
+return _getStructuredContentResource().putStructuredContent( structuredContentId , structuredContent );
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Response postStructuredContentCategories( @GraphQLName("structured-content-id") Long structuredContentId , @GraphQLName("Long") Long referenceId ) throws Exception {
+				Response.ResponseBuilder responseBuilder = Response.ok();
 
-		Response.ResponseBuilder responseBuilder = Response.ok();
-
-		return responseBuilder.build();
+				return responseBuilder.build();
 
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Response postStructuredContentCategoriesBatchCreate( @GraphQLName("structured-content-id") Long structuredContentId , @GraphQLName("Long") Long referenceId ) throws Exception {
+				Response.ResponseBuilder responseBuilder = Response.ok();
 
-		Response.ResponseBuilder responseBuilder = Response.ok();
-
-		return responseBuilder.build();
+				return responseBuilder.build();
 
 	}
 
@@ -110,7 +98,6 @@ public class Mutation {
 	}
 
 	private static final ServiceTracker<ContentDocumentResource, ContentDocumentResource> _contentDocumentResourceServiceTracker;
-
 	private static StructuredContentResource _getStructuredContentResource() {
 			return _structuredContentResourceServiceTracker.getService();
 	}
@@ -120,20 +107,18 @@ public class Mutation {
 	static {
 		Bundle bundle = FrameworkUtil.getBundle(Mutation.class);
 
-		ServiceTracker<ContentDocumentResource, ContentDocumentResource> contentDocumentResourceServiceTracker =
-			new ServiceTracker<ContentDocumentResource, ContentDocumentResource>(bundle.getBundleContext(), ContentDocumentResource.class, null);
+			ServiceTracker<ContentDocumentResource, ContentDocumentResource> contentDocumentResourceServiceTracker =
+				new ServiceTracker<>(bundle.getBundleContext(), ContentDocumentResource.class, null);
 
-		contentDocumentResourceServiceTracker.open();
+			contentDocumentResourceServiceTracker.open();
 
-		_contentDocumentResourceServiceTracker = contentDocumentResourceServiceTracker;
+			_contentDocumentResourceServiceTracker = contentDocumentResourceServiceTracker;
+			ServiceTracker<StructuredContentResource, StructuredContentResource> structuredContentResourceServiceTracker =
+				new ServiceTracker<>(bundle.getBundleContext(), StructuredContentResource.class, null);
 
-		ServiceTracker<StructuredContentResource, StructuredContentResource> structuredContentResourceServiceTracker =
-			new ServiceTracker<StructuredContentResource, StructuredContentResource>(bundle.getBundleContext(), StructuredContentResource.class, null);
+			structuredContentResourceServiceTracker.open();
 
-		structuredContentResourceServiceTracker.open();
-
-		_structuredContentResourceServiceTracker = structuredContentResourceServiceTracker;
-
+			_structuredContentResourceServiceTracker = structuredContentResourceServiceTracker;
 	}
 
 }

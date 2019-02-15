@@ -55,11 +55,11 @@ public class HoursAvailable {
 	public void setCloses(
 		UnsafeSupplier<String, Throwable> closesUnsafeSupplier) {
 
-		try {
-			closes = closesUnsafeSupplier.get();
+			try {
+				closes = closesUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -67,14 +67,14 @@ public class HoursAvailable {
 		this.dayOfWeek = dayOfWeek;
 	}
 
-	public void setDayOfWeekWithSupplier(
+	public void setDayOfWeek(
 		UnsafeSupplier<String, Throwable> dayOfWeekUnsafeSupplier) {
 
-		try {
-			dayOfWeek = dayOfWeekUnsafeSupplier.get();
+			try {
+				dayOfWeek = dayOfWeekUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -82,12 +82,12 @@ public class HoursAvailable {
 		this.id = id;
 	}
 
-	public void setIdWithSupplier(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
+	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+			try {
+				id = idUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -95,14 +95,14 @@ public class HoursAvailable {
 		this.opens = opens;
 	}
 
-	public void setOpensWithSupplier(
+	public void setOpens(
 		UnsafeSupplier<String, Throwable> opensUnsafeSupplier) {
 
-		try {
-			opens = opensUnsafeSupplier.get();
+			try {
+				opens = opensUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 

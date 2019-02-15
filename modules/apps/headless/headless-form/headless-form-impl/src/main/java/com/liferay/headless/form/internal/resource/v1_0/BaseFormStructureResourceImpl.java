@@ -44,14 +44,14 @@ public abstract class BaseFormStructureResourceImpl
 			Long contentSpaceId, Pagination pagination)
 		throws Exception {
 
-		return Page.of(Collections.emptyList());
+			return Page.of(Collections.emptyList());
 	}
 
 	@Override
 	public FormStructure getFormStructure(Long formStructureId)
 		throws Exception {
 
-		return new FormStructure();
+			return new FormStructure();
 	}
 
 	protected Response buildNoContentResponse() {

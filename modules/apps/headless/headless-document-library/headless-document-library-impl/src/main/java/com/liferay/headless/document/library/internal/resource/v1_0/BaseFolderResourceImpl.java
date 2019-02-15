@@ -42,14 +42,14 @@ public abstract class BaseFolderResourceImpl implements FolderResource {
 	public Response deleteFolder(Long folderId) throws Exception {
 		Response.ResponseBuilder responseBuilder = Response.ok();
 
-		return responseBuilder.build();
+			return responseBuilder.build();
 	}
 
 	@Override
 	public Folder getDocumentsRepository(Long documentsRepositoryId)
 		throws Exception {
 
-		return new Folder();
+			return new Folder();
 	}
 
 	@Override
@@ -57,7 +57,7 @@ public abstract class BaseFolderResourceImpl implements FolderResource {
 			Long documentsRepositoryId, Pagination pagination)
 		throws Exception {
 
-		return Page.of(Collections.emptyList());
+			return Page.of(Collections.emptyList());
 	}
 
 	@Override
@@ -70,7 +70,7 @@ public abstract class BaseFolderResourceImpl implements FolderResource {
 			Long folderId, Pagination pagination)
 		throws Exception {
 
-		return Page.of(Collections.emptyList());
+			return Page.of(Collections.emptyList());
 	}
 
 	@Override
@@ -78,7 +78,7 @@ public abstract class BaseFolderResourceImpl implements FolderResource {
 			Long documentsRepositoryId, Folder folder)
 		throws Exception {
 
-		return new Folder();
+			return new Folder();
 	}
 
 	@Override
@@ -86,21 +86,21 @@ public abstract class BaseFolderResourceImpl implements FolderResource {
 			Long documentsRepositoryId, Folder folder)
 		throws Exception {
 
-		return new Folder();
+			return new Folder();
 	}
 
 	@Override
 	public Folder postFolderFolder(Long folderId, Folder folder)
 		throws Exception {
 
-		return new Folder();
+			return new Folder();
 	}
 
 	@Override
 	public Folder postFolderFolderBatchCreate(Long folderId, Folder folder)
 		throws Exception {
 
-		return new Folder();
+			return new Folder();
 	}
 
 	@Override

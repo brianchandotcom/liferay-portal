@@ -43,7 +43,7 @@ public abstract class BaseFormRecordResourceImpl implements FormRecordResource {
 			Long formId, Pagination pagination)
 		throws Exception {
 
-		return Page.of(Collections.emptyList());
+			return Page.of(Collections.emptyList());
 	}
 
 	@Override
@@ -55,7 +55,7 @@ public abstract class BaseFormRecordResourceImpl implements FormRecordResource {
 	public FormRecord postFormFormRecord(Long formId, FormRecord formRecord)
 		throws Exception {
 
-		return new FormRecord();
+			return new FormRecord();
 	}
 
 	@Override
@@ -63,14 +63,14 @@ public abstract class BaseFormRecordResourceImpl implements FormRecordResource {
 			Long formId, FormRecord formRecord)
 		throws Exception {
 
-		return new FormRecord();
+			return new FormRecord();
 	}
 
 	@Override
 	public FormRecord putFormRecord(Long formRecordId, FormRecord formRecord)
 		throws Exception {
 
-		return new FormRecord();
+			return new FormRecord();
 	}
 
 	protected Response buildNoContentResponse() {

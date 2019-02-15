@@ -43,7 +43,7 @@ public abstract class BaseFormResourceImpl implements FormResource {
 			Long contentSpaceId, Pagination pagination)
 		throws Exception {
 
-		return Page.of(Collections.emptyList());
+			return Page.of(Collections.emptyList());
 	}
 
 	@Override
@@ -60,7 +60,7 @@ public abstract class BaseFormResourceImpl implements FormResource {
 	public Form postFormEvaluateContext(Long formId, Form form)
 		throws Exception {
 
-		return new Form();
+			return new Form();
 	}
 
 	@Override

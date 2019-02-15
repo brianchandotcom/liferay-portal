@@ -42,49 +42,38 @@ public class Mutation {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Form postFormEvaluateContext( @GraphQLName("form-id") Long formId , @GraphQLName("Form") Form form ) throws Exception {
-
-		return _getFormResource().postFormEvaluateContext( formId , form );
-
+return _getFormResource().postFormEvaluateContext( formId , form );
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Form postFormUploadFile( @GraphQLName("form-id") Long formId , @GraphQLName("Form") Form form ) throws Exception {
-
-		return _getFormResource().postFormUploadFile( formId , form );
-
+return _getFormResource().postFormUploadFile( formId , form );
 	}
 
 	@GraphQLInvokeDetached
 	public Response deleteFormDocument( @GraphQLName("form-document-id") Long formDocumentId ) throws Exception {
+				Response.ResponseBuilder responseBuilder = Response.ok();
 
-		Response.ResponseBuilder responseBuilder = Response.ok();
-
-		return responseBuilder.build();
+				return responseBuilder.build();
 
 	}
 
 	@GraphQLInvokeDetached
 	public FormRecord putFormRecord( @GraphQLName("form-record-id") Long formRecordId , @GraphQLName("FormRecord") FormRecord formRecord ) throws Exception {
-
-		return _getFormRecordResource().putFormRecord( formRecordId , formRecord );
-
+return _getFormRecordResource().putFormRecord( formRecordId , formRecord );
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public FormRecord postFormFormRecord( @GraphQLName("form-id") Long formId , @GraphQLName("FormRecord") FormRecord formRecord ) throws Exception {
-
-		return _getFormRecordResource().postFormFormRecord( formId , formRecord );
-
+return _getFormRecordResource().postFormFormRecord( formId , formRecord );
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public FormRecord postFormFormRecordBatchCreate( @GraphQLName("form-id") Long formId , @GraphQLName("FormRecord") FormRecord formRecord ) throws Exception {
-
-		return _getFormRecordResource().postFormFormRecordBatchCreate( formId , formRecord );
-
+return _getFormRecordResource().postFormFormRecordBatchCreate( formId , formRecord );
 	}
 
 	private static FormResource _getFormResource() {
@@ -92,13 +81,11 @@ public class Mutation {
 	}
 
 	private static final ServiceTracker<FormResource, FormResource> _formResourceServiceTracker;
-
 	private static FormDocumentResource _getFormDocumentResource() {
 			return _formDocumentResourceServiceTracker.getService();
 	}
 
 	private static final ServiceTracker<FormDocumentResource, FormDocumentResource> _formDocumentResourceServiceTracker;
-
 	private static FormRecordResource _getFormRecordResource() {
 			return _formRecordResourceServiceTracker.getService();
 	}
@@ -108,27 +95,24 @@ public class Mutation {
 	static {
 		Bundle bundle = FrameworkUtil.getBundle(Mutation.class);
 
-		ServiceTracker<FormResource, FormResource> formResourceServiceTracker =
-			new ServiceTracker<FormResource, FormResource>(bundle.getBundleContext(), FormResource.class, null);
+			ServiceTracker<FormResource, FormResource> formResourceServiceTracker =
+				new ServiceTracker<>(bundle.getBundleContext(), FormResource.class, null);
 
-		formResourceServiceTracker.open();
+			formResourceServiceTracker.open();
 
-		_formResourceServiceTracker = formResourceServiceTracker;
+			_formResourceServiceTracker = formResourceServiceTracker;
+			ServiceTracker<FormDocumentResource, FormDocumentResource> formDocumentResourceServiceTracker =
+				new ServiceTracker<>(bundle.getBundleContext(), FormDocumentResource.class, null);
 
-		ServiceTracker<FormDocumentResource, FormDocumentResource> formDocumentResourceServiceTracker =
-			new ServiceTracker<FormDocumentResource, FormDocumentResource>(bundle.getBundleContext(), FormDocumentResource.class, null);
+			formDocumentResourceServiceTracker.open();
 
-		formDocumentResourceServiceTracker.open();
+			_formDocumentResourceServiceTracker = formDocumentResourceServiceTracker;
+			ServiceTracker<FormRecordResource, FormRecordResource> formRecordResourceServiceTracker =
+				new ServiceTracker<>(bundle.getBundleContext(), FormRecordResource.class, null);
 
-		_formDocumentResourceServiceTracker = formDocumentResourceServiceTracker;
+			formRecordResourceServiceTracker.open();
 
-		ServiceTracker<FormRecordResource, FormRecordResource> formRecordResourceServiceTracker =
-			new ServiceTracker<FormRecordResource, FormRecordResource>(bundle.getBundleContext(), FormRecordResource.class, null);
-
-		formRecordResourceServiceTracker.open();
-
-		_formRecordResourceServiceTracker = formRecordResourceServiceTracker;
-
+			_formRecordResourceServiceTracker = formRecordResourceServiceTracker;
 	}
 
 }

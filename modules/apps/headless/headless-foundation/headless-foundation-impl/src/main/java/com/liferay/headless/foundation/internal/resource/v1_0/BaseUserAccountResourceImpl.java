@@ -43,7 +43,7 @@ public abstract class BaseUserAccountResourceImpl
 	public Response deleteUserAccount(Long userAccountId) throws Exception {
 		Response.ResponseBuilder responseBuilder = Response.ok();
 
-		return responseBuilder.build();
+			return responseBuilder.build();
 	}
 
 	@Override
@@ -56,7 +56,7 @@ public abstract class BaseUserAccountResourceImpl
 			Long organizationId, Pagination pagination)
 		throws Exception {
 
-		return Page.of(Collections.emptyList());
+			return Page.of(Collections.emptyList());
 	}
 
 	@Override
@@ -69,7 +69,7 @@ public abstract class BaseUserAccountResourceImpl
 			String fullnamequery, Pagination pagination)
 		throws Exception {
 
-		return Page.of(Collections.emptyList());
+			return Page.of(Collections.emptyList());
 	}
 
 	@Override
@@ -77,21 +77,21 @@ public abstract class BaseUserAccountResourceImpl
 			Long webSiteId, Pagination pagination)
 		throws Exception {
 
-		return Page.of(Collections.emptyList());
+			return Page.of(Collections.emptyList());
 	}
 
 	@Override
 	public UserAccount postUserAccount(UserAccount userAccount)
 		throws Exception {
 
-		return new UserAccount();
+			return new UserAccount();
 	}
 
 	@Override
 	public UserAccount postUserAccountBatchCreate(UserAccount userAccount)
 		throws Exception {
 
-		return new UserAccount();
+			return new UserAccount();
 	}
 
 	@Override
@@ -99,7 +99,7 @@ public abstract class BaseUserAccountResourceImpl
 			Long userAccountId, UserAccount userAccount)
 		throws Exception {
 
-		return new UserAccount();
+			return new UserAccount();
 	}
 
 	protected Response buildNoContentResponse() {

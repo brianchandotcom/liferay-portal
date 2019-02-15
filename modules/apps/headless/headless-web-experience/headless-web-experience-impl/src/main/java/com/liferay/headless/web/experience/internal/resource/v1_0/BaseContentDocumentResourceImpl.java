@@ -40,16 +40,16 @@ public abstract class BaseContentDocumentResourceImpl
 	public Response deleteContentDocument(Long contentDocumentId)
 		throws Exception {
 
-		Response.ResponseBuilder responseBuilder = Response.ok();
+			Response.ResponseBuilder responseBuilder = Response.ok();
 
-		return responseBuilder.build();
+			return responseBuilder.build();
 	}
 
 	@Override
 	public ContentDocument getContentDocument(Long contentDocumentId)
 		throws Exception {
 
-		return new ContentDocument();
+			return new ContentDocument();
 	}
 
 	protected Response buildNoContentResponse() {

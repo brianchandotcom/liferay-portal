@@ -44,7 +44,7 @@ public abstract class BaseWorkflowTaskResourceImpl
 			Long roleId, Pagination pagination)
 		throws Exception {
 
-		return Page.of(Collections.emptyList());
+			return Page.of(Collections.emptyList());
 	}
 
 	@Override
@@ -56,7 +56,7 @@ public abstract class BaseWorkflowTaskResourceImpl
 	public Page<WorkflowTask> getWorkflowTasksPage(Pagination pagination)
 		throws Exception {
 
-		return Page.of(Collections.emptyList());
+			return Page.of(Collections.emptyList());
 	}
 
 	@Override
@@ -64,7 +64,7 @@ public abstract class BaseWorkflowTaskResourceImpl
 			Long workflowTaskId, WorkflowTask workflowTask)
 		throws Exception {
 
-		return new WorkflowTask();
+			return new WorkflowTask();
 	}
 
 	@Override
@@ -72,7 +72,7 @@ public abstract class BaseWorkflowTaskResourceImpl
 			Long workflowTaskId, WorkflowTask workflowTask)
 		throws Exception {
 
-		return new WorkflowTask();
+			return new WorkflowTask();
 	}
 
 	@Override
@@ -80,7 +80,7 @@ public abstract class BaseWorkflowTaskResourceImpl
 			Long workflowTaskId, WorkflowTask workflowTask)
 		throws Exception {
 
-		return new WorkflowTask();
+			return new WorkflowTask();
 	}
 
 	@Override
@@ -88,7 +88,7 @@ public abstract class BaseWorkflowTaskResourceImpl
 			Long workflowTaskId, WorkflowTask workflowTask)
 		throws Exception {
 
-		return new WorkflowTask();
+			return new WorkflowTask();
 	}
 
 	protected Response buildNoContentResponse() {

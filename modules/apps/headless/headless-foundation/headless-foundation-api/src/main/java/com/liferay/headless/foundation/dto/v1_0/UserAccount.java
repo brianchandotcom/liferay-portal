@@ -122,14 +122,14 @@ public class UserAccount {
 		this.additionalName = additionalName;
 	}
 
-	public void setAdditionalNameWithSupplier(
+	public void setAdditionalName(
 		UnsafeSupplier<String, Throwable> additionalNameUnsafeSupplier) {
 
-		try {
-			additionalName = additionalNameUnsafeSupplier.get();
+			try {
+				additionalName = additionalNameUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -137,14 +137,14 @@ public class UserAccount {
 		this.alternateName = alternateName;
 	}
 
-	public void setAlternateNameWithSupplier(
+	public void setAlternateName(
 		UnsafeSupplier<String, Throwable> alternateNameUnsafeSupplier) {
 
-		try {
-			alternateName = alternateNameUnsafeSupplier.get();
+			try {
+				alternateName = alternateNameUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -152,14 +152,14 @@ public class UserAccount {
 		this.birthDate = birthDate;
 	}
 
-	public void setBirthDateWithSupplier(
+	public void setBirthDate(
 		UnsafeSupplier<Date, Throwable> birthDateUnsafeSupplier) {
 
-		try {
-			birthDate = birthDateUnsafeSupplier.get();
+			try {
+				birthDate = birthDateUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -167,15 +167,15 @@ public class UserAccount {
 		this.contactInformation = contactInformation;
 	}
 
-	public void setContactInformationWithSupplier(
+	public void setContactInformation(
 		UnsafeSupplier<ContactInformation, Throwable>
 			contactInformationUnsafeSupplier) {
 
-		try {
-			contactInformation = contactInformationUnsafeSupplier.get();
+			try {
+				contactInformation = contactInformationUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -183,14 +183,14 @@ public class UserAccount {
 		this.dashboardURL = dashboardURL;
 	}
 
-	public void setDashboardURLWithSupplier(
+	public void setDashboardURL(
 		UnsafeSupplier<String, Throwable> dashboardURLUnsafeSupplier) {
 
-		try {
-			dashboardURL = dashboardURLUnsafeSupplier.get();
+			try {
+				dashboardURL = dashboardURLUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -198,14 +198,14 @@ public class UserAccount {
 		this.email = email;
 	}
 
-	public void setEmailWithSupplier(
+	public void setEmail(
 		UnsafeSupplier<String, Throwable> emailUnsafeSupplier) {
 
-		try {
-			email = emailUnsafeSupplier.get();
+			try {
+				email = emailUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -213,14 +213,14 @@ public class UserAccount {
 		this.familyName = familyName;
 	}
 
-	public void setFamilyNameWithSupplier(
+	public void setFamilyName(
 		UnsafeSupplier<String, Throwable> familyNameUnsafeSupplier) {
 
-		try {
-			familyName = familyNameUnsafeSupplier.get();
+			try {
+				familyName = familyNameUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -228,14 +228,14 @@ public class UserAccount {
 		this.givenName = givenName;
 	}
 
-	public void setGivenNameWithSupplier(
+	public void setGivenName(
 		UnsafeSupplier<String, Throwable> givenNameUnsafeSupplier) {
 
-		try {
-			givenName = givenNameUnsafeSupplier.get();
+			try {
+				givenName = givenNameUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -243,14 +243,14 @@ public class UserAccount {
 		this.honorificPrefix = honorificPrefix;
 	}
 
-	public void setHonorificPrefixWithSupplier(
+	public void setHonorificPrefix(
 		UnsafeSupplier<String, Throwable> honorificPrefixUnsafeSupplier) {
 
-		try {
-			honorificPrefix = honorificPrefixUnsafeSupplier.get();
+			try {
+				honorificPrefix = honorificPrefixUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -258,14 +258,14 @@ public class UserAccount {
 		this.honorificSuffix = honorificSuffix;
 	}
 
-	public void setHonorificSuffixWithSupplier(
+	public void setHonorificSuffix(
 		UnsafeSupplier<String, Throwable> honorificSuffixUnsafeSupplier) {
 
-		try {
-			honorificSuffix = honorificSuffixUnsafeSupplier.get();
+			try {
+				honorificSuffix = honorificSuffixUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -273,12 +273,12 @@ public class UserAccount {
 		this.id = id;
 	}
 
-	public void setIdWithSupplier(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
+	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+			try {
+				id = idUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -286,14 +286,14 @@ public class UserAccount {
 		this.image = image;
 	}
 
-	public void setImageWithSupplier(
+	public void setImage(
 		UnsafeSupplier<String, Throwable> imageUnsafeSupplier) {
 
-		try {
-			image = imageUnsafeSupplier.get();
+			try {
+				image = imageUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -301,14 +301,14 @@ public class UserAccount {
 		this.jobTitle = jobTitle;
 	}
 
-	public void setJobTitleWithSupplier(
+	public void setJobTitle(
 		UnsafeSupplier<String, Throwable> jobTitleUnsafeSupplier) {
 
-		try {
-			jobTitle = jobTitleUnsafeSupplier.get();
+			try {
+				jobTitle = jobTitleUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -316,15 +316,15 @@ public class UserAccount {
 		this.myOrganizations = myOrganizations;
 	}
 
-	public void setMyOrganizationsWithSupplier(
+	public void setMyOrganizations(
 		UnsafeSupplier<Organization[], Throwable>
 			myOrganizationsUnsafeSupplier) {
 
-		try {
-			myOrganizations = myOrganizationsUnsafeSupplier.get();
+			try {
+				myOrganizations = myOrganizationsUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -332,14 +332,14 @@ public class UserAccount {
 		this.myOrganizationsIds = myOrganizationsIds;
 	}
 
-	public void setMyOrganizationsIdsWithSupplier(
+	public void setMyOrganizationsIds(
 		UnsafeSupplier<Long[], Throwable> myOrganizationsIdsUnsafeSupplier) {
 
-		try {
-			myOrganizationsIds = myOrganizationsIdsUnsafeSupplier.get();
+			try {
+				myOrganizationsIds = myOrganizationsIdsUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -347,13 +347,12 @@ public class UserAccount {
 		this.name = name;
 	}
 
-	public void setNameWithSupplier(
-		UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
-		try {
-			name = nameUnsafeSupplier.get();
+	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
+			try {
+				name = nameUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -361,14 +360,14 @@ public class UserAccount {
 		this.profileURL = profileURL;
 	}
 
-	public void setProfileURLWithSupplier(
+	public void setProfileURL(
 		UnsafeSupplier<String, Throwable> profileURLUnsafeSupplier) {
 
-		try {
-			profileURL = profileURLUnsafeSupplier.get();
+			try {
+				profileURL = profileURLUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -376,14 +375,14 @@ public class UserAccount {
 		this.roles = roles;
 	}
 
-	public void setRolesWithSupplier(
+	public void setRoles(
 		UnsafeSupplier<Role[], Throwable> rolesUnsafeSupplier) {
 
-		try {
-			roles = rolesUnsafeSupplier.get();
+			try {
+				roles = rolesUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -391,14 +390,14 @@ public class UserAccount {
 		this.rolesIds = rolesIds;
 	}
 
-	public void setRolesIdsWithSupplier(
+	public void setRolesIds(
 		UnsafeSupplier<Long[], Throwable> rolesIdsUnsafeSupplier) {
 
-		try {
-			rolesIds = rolesIdsUnsafeSupplier.get();
+			try {
+				rolesIds = rolesIdsUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -406,14 +405,14 @@ public class UserAccount {
 		this.tasksAssignedToMe = tasksAssignedToMe;
 	}
 
-	public void setTasksAssignedToMeWithSupplier(
+	public void setTasksAssignedToMe(
 		UnsafeSupplier<String[], Throwable> tasksAssignedToMeUnsafeSupplier) {
 
-		try {
-			tasksAssignedToMe = tasksAssignedToMeUnsafeSupplier.get();
+			try {
+				tasksAssignedToMe = tasksAssignedToMeUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -421,15 +420,16 @@ public class UserAccount {
 		this.tasksAssignedToMyRoles = tasksAssignedToMyRoles;
 	}
 
-	public void setTasksAssignedToMyRolesWithSupplier(
+	public void setTasksAssignedToMyRoles(
 		UnsafeSupplier<String[], Throwable>
 			tasksAssignedToMyRolesUnsafeSupplier) {
 
-		try {
-			tasksAssignedToMyRoles = tasksAssignedToMyRolesUnsafeSupplier.get();
+			try {
+				tasksAssignedToMyRoles =
+					tasksAssignedToMyRolesUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 

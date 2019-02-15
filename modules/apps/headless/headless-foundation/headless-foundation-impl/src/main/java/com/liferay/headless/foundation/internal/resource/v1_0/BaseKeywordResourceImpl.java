@@ -42,7 +42,7 @@ public abstract class BaseKeywordResourceImpl implements KeywordResource {
 	public Response deleteKeyword(Long keywordId) throws Exception {
 		Response.ResponseBuilder responseBuilder = Response.ok();
 
-		return responseBuilder.build();
+			return responseBuilder.build();
 	}
 
 	@Override
@@ -50,7 +50,7 @@ public abstract class BaseKeywordResourceImpl implements KeywordResource {
 			Long contentSpaceId, Pagination pagination)
 		throws Exception {
 
-		return Page.of(Collections.emptyList());
+			return Page.of(Collections.emptyList());
 	}
 
 	@Override
@@ -62,7 +62,7 @@ public abstract class BaseKeywordResourceImpl implements KeywordResource {
 	public Keyword postContentSpaceKeyword(Long contentSpaceId, Keyword keyword)
 		throws Exception {
 
-		return new Keyword();
+			return new Keyword();
 	}
 
 	@Override
@@ -70,14 +70,14 @@ public abstract class BaseKeywordResourceImpl implements KeywordResource {
 			Long contentSpaceId, Keyword keyword)
 		throws Exception {
 
-		return new Keyword();
+			return new Keyword();
 	}
 
 	@Override
 	public Keyword putKeyword(Long keywordId, Keyword keyword)
 		throws Exception {
 
-		return new Keyword();
+			return new Keyword();
 	}
 
 	protected Response buildNoContentResponse() {

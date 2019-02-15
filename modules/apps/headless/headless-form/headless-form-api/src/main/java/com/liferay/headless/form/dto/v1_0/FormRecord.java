@@ -77,11 +77,11 @@ public class FormRecord {
 	public void setCreator(
 		UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier) {
 
-		try {
-			creator = creatorUnsafeSupplier.get();
+			try {
+				creator = creatorUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -92,11 +92,11 @@ public class FormRecord {
 	public void setDateCreated(
 		UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
 
-		try {
-			dateCreated = dateCreatedUnsafeSupplier.get();
+			try {
+				dateCreated = dateCreatedUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -107,11 +107,11 @@ public class FormRecord {
 	public void setDateModified(
 		UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
 
-		try {
-			dateModified = dateModifiedUnsafeSupplier.get();
+			try {
+				dateModified = dateModifiedUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -122,11 +122,11 @@ public class FormRecord {
 	public void setDatePublished(
 		UnsafeSupplier<Date, Throwable> datePublishedUnsafeSupplier) {
 
-		try {
-			datePublished = datePublishedUnsafeSupplier.get();
+			try {
+				datePublished = datePublishedUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -137,11 +137,11 @@ public class FormRecord {
 	public void setDraft(
 		UnsafeSupplier<Boolean, Throwable> draftUnsafeSupplier) {
 
-		try {
-			draft = draftUnsafeSupplier.get();
+			try {
+				draft = draftUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -152,11 +152,11 @@ public class FormRecord {
 	public void setFieldValues(
 		UnsafeSupplier<FieldValues[], Throwable> fieldValuesUnsafeSupplier) {
 
-		try {
-			fieldValues = fieldValuesUnsafeSupplier.get();
+			try {
+				fieldValues = fieldValuesUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -165,11 +165,11 @@ public class FormRecord {
 	}
 
 	public void setForm(UnsafeSupplier<Form, Throwable> formUnsafeSupplier) {
-		try {
-			form = formUnsafeSupplier.get();
+			try {
+				form = formUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -180,11 +180,11 @@ public class FormRecord {
 	public void setFormId(
 		UnsafeSupplier<Long, Throwable> formIdUnsafeSupplier) {
 
-		try {
-			formId = formIdUnsafeSupplier.get();
+			try {
+				formId = formIdUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -193,11 +193,11 @@ public class FormRecord {
 	}
 
 	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
+			try {
+				id = idUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 

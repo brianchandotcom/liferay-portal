@@ -92,14 +92,14 @@ public class ContactInformation {
 		this.address = address;
 	}
 
-	public void setAddressWithSupplier(
+	public void setAddress(
 		UnsafeSupplier<PostalAddress[], Throwable> addressUnsafeSupplier) {
 
-		try {
-			address = addressUnsafeSupplier.get();
+			try {
+				address = addressUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -107,14 +107,14 @@ public class ContactInformation {
 		this.addressIds = addressIds;
 	}
 
-	public void setAddressIdsWithSupplier(
+	public void setAddressIds(
 		UnsafeSupplier<Long[], Throwable> addressIdsUnsafeSupplier) {
 
-		try {
-			addressIds = addressIdsUnsafeSupplier.get();
+			try {
+				addressIds = addressIdsUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -122,14 +122,14 @@ public class ContactInformation {
 		this.email = email;
 	}
 
-	public void setEmailWithSupplier(
+	public void setEmail(
 		UnsafeSupplier<Email[], Throwable> emailUnsafeSupplier) {
 
-		try {
-			email = emailUnsafeSupplier.get();
+			try {
+				email = emailUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -137,14 +137,14 @@ public class ContactInformation {
 		this.emailIds = emailIds;
 	}
 
-	public void setEmailIdsWithSupplier(
+	public void setEmailIds(
 		UnsafeSupplier<Long[], Throwable> emailIdsUnsafeSupplier) {
 
-		try {
-			emailIds = emailIdsUnsafeSupplier.get();
+			try {
+				emailIds = emailIdsUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -152,14 +152,14 @@ public class ContactInformation {
 		this.facebook = facebook;
 	}
 
-	public void setFacebookWithSupplier(
+	public void setFacebook(
 		UnsafeSupplier<String, Throwable> facebookUnsafeSupplier) {
 
-		try {
-			facebook = facebookUnsafeSupplier.get();
+			try {
+				facebook = facebookUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -167,12 +167,12 @@ public class ContactInformation {
 		this.id = id;
 	}
 
-	public void setIdWithSupplier(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
+	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+			try {
+				id = idUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -180,14 +180,14 @@ public class ContactInformation {
 		this.jabber = jabber;
 	}
 
-	public void setJabberWithSupplier(
+	public void setJabber(
 		UnsafeSupplier<String, Throwable> jabberUnsafeSupplier) {
 
-		try {
-			jabber = jabberUnsafeSupplier.get();
+			try {
+				jabber = jabberUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -195,14 +195,14 @@ public class ContactInformation {
 		this.skype = skype;
 	}
 
-	public void setSkypeWithSupplier(
+	public void setSkype(
 		UnsafeSupplier<String, Throwable> skypeUnsafeSupplier) {
 
-		try {
-			skype = skypeUnsafeSupplier.get();
+			try {
+				skype = skypeUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -210,12 +210,12 @@ public class ContactInformation {
 		this.sms = sms;
 	}
 
-	public void setSmsWithSupplier(UnsafeSupplier<String, Throwable> smsUnsafeSupplier) {
-		try {
-			sms = smsUnsafeSupplier.get();
+	public void setSms(UnsafeSupplier<String, Throwable> smsUnsafeSupplier) {
+			try {
+				sms = smsUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -223,14 +223,14 @@ public class ContactInformation {
 		this.telephone = telephone;
 	}
 
-	public void setTelephoneWithSupplier(
+	public void setTelephone(
 		UnsafeSupplier<Phone[], Throwable> telephoneUnsafeSupplier) {
 
-		try {
-			telephone = telephoneUnsafeSupplier.get();
+			try {
+				telephone = telephoneUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -238,14 +238,14 @@ public class ContactInformation {
 		this.telephoneIds = telephoneIds;
 	}
 
-	public void setTelephoneIdsWithSupplier(
+	public void setTelephoneIds(
 		UnsafeSupplier<Long[], Throwable> telephoneIdsUnsafeSupplier) {
 
-		try {
-			telephoneIds = telephoneIdsUnsafeSupplier.get();
+			try {
+				telephoneIds = telephoneIdsUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -253,25 +253,25 @@ public class ContactInformation {
 		this.twitter = twitter;
 	}
 
-	public void setTwitterWithSupplier(
+	public void setTwitter(
 		UnsafeSupplier<String, Throwable> twitterUnsafeSupplier) {
 
-		try {
-			twitter = twitterUnsafeSupplier.get();
+			try {
+				twitter = twitterUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
-	public void setWebUrlWithSupplier(
+	public void setWebUrl(
 		UnsafeSupplier<WebUrl[], Throwable> webUrlUnsafeSupplier) {
 
-		try {
-			webUrl = webUrlUnsafeSupplier.get();
+			try {
+				webUrl = webUrlUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -283,14 +283,14 @@ public class ContactInformation {
 		this.webUrlIds = webUrlIds;
 	}
 
-	public void setWebUrlIdsWithSupplier(
+	public void setWebUrlIds(
 		UnsafeSupplier<Long[], Throwable> webUrlIdsUnsafeSupplier) {
 
-		try {
-			webUrlIds = webUrlIdsUnsafeSupplier.get();
+			try {
+				webUrlIds = webUrlIdsUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 

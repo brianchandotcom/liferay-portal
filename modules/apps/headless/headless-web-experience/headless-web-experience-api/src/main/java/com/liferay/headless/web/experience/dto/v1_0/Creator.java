@@ -67,11 +67,11 @@ public class Creator {
 	public void setAdditionalName(
 		UnsafeSupplier<String, Throwable> additionalNameUnsafeSupplier) {
 
-		try {
-			additionalName = additionalNameUnsafeSupplier.get();
+			try {
+				additionalName = additionalNameUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -82,11 +82,11 @@ public class Creator {
 	public void setFamilyName(
 		UnsafeSupplier<String, Throwable> familyNameUnsafeSupplier) {
 
-		try {
-			familyName = familyNameUnsafeSupplier.get();
+			try {
+				familyName = familyNameUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -97,11 +97,11 @@ public class Creator {
 	public void setGivenName(
 		UnsafeSupplier<String, Throwable> givenNameUnsafeSupplier) {
 
-		try {
-			givenName = givenNameUnsafeSupplier.get();
+			try {
+				givenName = givenNameUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -110,11 +110,11 @@ public class Creator {
 	}
 
 	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
+			try {
+				id = idUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -125,11 +125,11 @@ public class Creator {
 	public void setImage(
 		UnsafeSupplier<String, Throwable> imageUnsafeSupplier) {
 
-		try {
-			image = imageUnsafeSupplier.get();
+			try {
+				image = imageUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -138,11 +138,11 @@ public class Creator {
 	}
 
 	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
-		try {
-			name = nameUnsafeSupplier.get();
+			try {
+				name = nameUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -153,11 +153,11 @@ public class Creator {
 	public void setProfileURL(
 		UnsafeSupplier<String, Throwable> profileURLUnsafeSupplier) {
 
-		try {
-			profileURL = profileURLUnsafeSupplier.get();
+			try {
+				profileURL = profileURLUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 

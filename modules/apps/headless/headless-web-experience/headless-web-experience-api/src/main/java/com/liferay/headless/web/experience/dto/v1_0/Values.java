@@ -67,11 +67,11 @@ public class Values {
 	public void setDataType(
 		UnsafeSupplier<String, Throwable> dataTypeUnsafeSupplier) {
 
-		try {
-			dataType = dataTypeUnsafeSupplier.get();
+			try {
+				dataType = dataTypeUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -83,12 +83,12 @@ public class Values {
 		UnsafeSupplier<String, Throwable>
 			filterAndSortIdentifierUnsafeSupplier) {
 
-		try {
-			filterAndSortIdentifier =
-				filterAndSortIdentifierUnsafeSupplier.get();
+			try {
+				filterAndSortIdentifier =
+					filterAndSortIdentifierUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -97,11 +97,11 @@ public class Values {
 	}
 
 	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
+			try {
+				id = idUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -112,11 +112,11 @@ public class Values {
 	public void setInputControl(
 		UnsafeSupplier<String, Throwable> inputControlUnsafeSupplier) {
 
-		try {
-			inputControl = inputControlUnsafeSupplier.get();
+			try {
+				inputControl = inputControlUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -127,11 +127,11 @@ public class Values {
 	public void setLabel(
 		UnsafeSupplier<String, Throwable> labelUnsafeSupplier) {
 
-		try {
-			label = labelUnsafeSupplier.get();
+			try {
+				label = labelUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -140,11 +140,11 @@ public class Values {
 	}
 
 	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
-		try {
-			name = nameUnsafeSupplier.get();
+			try {
+				name = nameUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -155,11 +155,11 @@ public class Values {
 	public void setValue(
 		UnsafeSupplier<Object, Throwable> valueUnsafeSupplier) {
 
-		try {
-			value = valueUnsafeSupplier.get();
+			try {
+				value = valueUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 

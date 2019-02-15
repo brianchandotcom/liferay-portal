@@ -48,15 +48,15 @@ public class Services {
 		this.hoursAvailable = hoursAvailable;
 	}
 
-	public void setHoursAvailableWithSupplier(
+	public void setHoursAvailable(
 		UnsafeSupplier<HoursAvailable[], Throwable>
 			hoursAvailableUnsafeSupplier) {
 
-		try {
-			hoursAvailable = hoursAvailableUnsafeSupplier.get();
+			try {
+				hoursAvailable = hoursAvailableUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -64,12 +64,12 @@ public class Services {
 		this.id = id;
 	}
 
-	public void setIdWithSupplier(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
+	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+			try {
+				id = idUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -77,14 +77,14 @@ public class Services {
 		this.serviceType = serviceType;
 	}
 
-	public void setServiceTypeWithSupplier(
+	public void setServiceType(
 		UnsafeSupplier<String, Throwable> serviceTypeUnsafeSupplier) {
 
-		try {
-			serviceType = serviceTypeUnsafeSupplier.get();
+			try {
+				serviceType = serviceTypeUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 

@@ -59,11 +59,11 @@ public class FieldValues {
 	public void setDocument(
 		UnsafeSupplier<FormDocument, Throwable> documentUnsafeSupplier) {
 
-		try {
-			document = documentUnsafeSupplier.get();
+			try {
+				document = documentUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -74,11 +74,11 @@ public class FieldValues {
 	public void setDocumentId(
 		UnsafeSupplier<Long, Throwable> documentIdUnsafeSupplier) {
 
-		try {
-			documentId = documentIdUnsafeSupplier.get();
+			try {
+				documentId = documentIdUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -87,11 +87,11 @@ public class FieldValues {
 	}
 
 	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
+			try {
+				id = idUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -100,11 +100,11 @@ public class FieldValues {
 	}
 
 	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
-		try {
-			name = nameUnsafeSupplier.get();
+			try {
+				name = nameUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -115,11 +115,11 @@ public class FieldValues {
 	public void setValue(
 		UnsafeSupplier<String, Throwable> valueUnsafeSupplier) {
 
-		try {
-			value = valueUnsafeSupplier.get();
+			try {
+				value = valueUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 

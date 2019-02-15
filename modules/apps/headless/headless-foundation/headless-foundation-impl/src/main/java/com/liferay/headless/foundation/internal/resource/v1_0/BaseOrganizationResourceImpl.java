@@ -44,7 +44,7 @@ public abstract class BaseOrganizationResourceImpl
 			Long myUserAccountId, Pagination pagination)
 		throws Exception {
 
-		return Page.of(Collections.emptyList());
+			return Page.of(Collections.emptyList());
 	}
 
 	@Override
@@ -57,14 +57,14 @@ public abstract class BaseOrganizationResourceImpl
 			Long organizationId, Pagination pagination)
 		throws Exception {
 
-		return Page.of(Collections.emptyList());
+			return Page.of(Collections.emptyList());
 	}
 
 	@Override
 	public Page<Organization> getOrganizationsPage(Pagination pagination)
 		throws Exception {
 
-		return Page.of(Collections.emptyList());
+			return Page.of(Collections.emptyList());
 	}
 
 	@Override
@@ -72,7 +72,7 @@ public abstract class BaseOrganizationResourceImpl
 			Long userAccountId, Pagination pagination)
 		throws Exception {
 
-		return Page.of(Collections.emptyList());
+			return Page.of(Collections.emptyList());
 	}
 
 	protected Response buildNoContentResponse() {

@@ -52,14 +52,14 @@ public class Phone {
 		this.extension = extension;
 	}
 
-	public void setExtensionWithSupplier(
+	public void setExtension(
 		UnsafeSupplier<String, Throwable> extensionUnsafeSupplier) {
 
-		try {
-			extension = extensionUnsafeSupplier.get();
+			try {
+				extension = extensionUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -67,12 +67,12 @@ public class Phone {
 		this.id = id;
 	}
 
-	public void setIdWithSupplier(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
+	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+			try {
+				id = idUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -80,14 +80,14 @@ public class Phone {
 		this.phoneNumber = phoneNumber;
 	}
 
-	public void setPhoneNumberWithSupplier(
+	public void setPhoneNumber(
 		UnsafeSupplier<String, Throwable> phoneNumberUnsafeSupplier) {
 
-		try {
-			phoneNumber = phoneNumberUnsafeSupplier.get();
+			try {
+				phoneNumber = phoneNumberUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -95,14 +95,14 @@ public class Phone {
 		this.phoneType = phoneType;
 	}
 
-	public void setPhoneTypeWithSupplier(
+	public void setPhoneType(
 		UnsafeSupplier<String, Throwable> phoneTypeUnsafeSupplier) {
 
-		try {
-			phoneType = phoneTypeUnsafeSupplier.get();
+			try {
+				phoneType = phoneTypeUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 

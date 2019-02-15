@@ -59,11 +59,11 @@ public class AggregateRating {
 	public void setBestRating(
 		UnsafeSupplier<Number, Throwable> bestRatingUnsafeSupplier) {
 
-		try {
-			bestRating = bestRatingUnsafeSupplier.get();
+			try {
+				bestRating = bestRatingUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -72,11 +72,11 @@ public class AggregateRating {
 	}
 
 	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
+			try {
+				id = idUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -87,11 +87,11 @@ public class AggregateRating {
 	public void setRatingCount(
 		UnsafeSupplier<Number, Throwable> ratingCountUnsafeSupplier) {
 
-		try {
-			ratingCount = ratingCountUnsafeSupplier.get();
+			try {
+				ratingCount = ratingCountUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -102,11 +102,11 @@ public class AggregateRating {
 	public void setRatingValue(
 		UnsafeSupplier<Number, Throwable> ratingValueUnsafeSupplier) {
 
-		try {
-			ratingValue = ratingValueUnsafeSupplier.get();
+			try {
+				ratingValue = ratingValueUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -117,11 +117,11 @@ public class AggregateRating {
 	public void setWorstRating(
 		UnsafeSupplier<Number, Throwable> worstRatingUnsafeSupplier) {
 
-		try {
-			worstRating = worstRatingUnsafeSupplier.get();
+			try {
+				worstRating = worstRatingUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 

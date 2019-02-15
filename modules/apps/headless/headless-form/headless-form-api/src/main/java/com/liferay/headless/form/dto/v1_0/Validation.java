@@ -51,11 +51,11 @@ public class Validation {
 	public void setErrorMessage(
 		UnsafeSupplier<String, Throwable> errorMessageUnsafeSupplier) {
 
-		try {
-			errorMessage = errorMessageUnsafeSupplier.get();
+			try {
+				errorMessage = errorMessageUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -66,11 +66,11 @@ public class Validation {
 	public void setExpression(
 		UnsafeSupplier<String, Throwable> expressionUnsafeSupplier) {
 
-		try {
-			expression = expressionUnsafeSupplier.get();
+			try {
+				expression = expressionUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -79,11 +79,11 @@ public class Validation {
 	}
 
 	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
+			try {
+				id = idUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 

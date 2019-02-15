@@ -37,33 +37,25 @@ public class Mutation {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public WorkflowTask postWorkflowTaskAssignToMe( @GraphQLName("workflow-task-id") Long workflowTaskId , @GraphQLName("WorkflowTask") WorkflowTask workflowTask ) throws Exception {
-
-		return _getWorkflowTaskResource().postWorkflowTaskAssignToMe( workflowTaskId , workflowTask );
-
+return _getWorkflowTaskResource().postWorkflowTaskAssignToMe( workflowTaskId , workflowTask );
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public WorkflowTask postWorkflowTaskAssignToUser( @GraphQLName("workflow-task-id") Long workflowTaskId , @GraphQLName("WorkflowTask") WorkflowTask workflowTask ) throws Exception {
-
-		return _getWorkflowTaskResource().postWorkflowTaskAssignToUser( workflowTaskId , workflowTask );
-
+return _getWorkflowTaskResource().postWorkflowTaskAssignToUser( workflowTaskId , workflowTask );
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public WorkflowTask postWorkflowTaskChangeTransition( @GraphQLName("workflow-task-id") Long workflowTaskId , @GraphQLName("WorkflowTask") WorkflowTask workflowTask ) throws Exception {
-
-		return _getWorkflowTaskResource().postWorkflowTaskChangeTransition( workflowTaskId , workflowTask );
-
+return _getWorkflowTaskResource().postWorkflowTaskChangeTransition( workflowTaskId , workflowTask );
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public WorkflowTask postWorkflowTaskUpdateDueDate( @GraphQLName("workflow-task-id") Long workflowTaskId , @GraphQLName("WorkflowTask") WorkflowTask workflowTask ) throws Exception {
-
-		return _getWorkflowTaskResource().postWorkflowTaskUpdateDueDate( workflowTaskId , workflowTask );
-
+return _getWorkflowTaskResource().postWorkflowTaskUpdateDueDate( workflowTaskId , workflowTask );
 	}
 
 	private static WorkflowTaskResource _getWorkflowTaskResource() {
@@ -75,13 +67,12 @@ public class Mutation {
 	static {
 		Bundle bundle = FrameworkUtil.getBundle(Mutation.class);
 
-		ServiceTracker<WorkflowTaskResource, WorkflowTaskResource> workflowTaskResourceServiceTracker =
-			new ServiceTracker<WorkflowTaskResource, WorkflowTaskResource>(bundle.getBundleContext(), WorkflowTaskResource.class, null);
+			ServiceTracker<WorkflowTaskResource, WorkflowTaskResource> workflowTaskResourceServiceTracker =
+				new ServiceTracker<>(bundle.getBundleContext(), WorkflowTaskResource.class, null);
 
-		workflowTaskResourceServiceTracker.open();
+			workflowTaskResourceServiceTracker.open();
 
-		_workflowTaskResourceServiceTracker = workflowTaskResourceServiceTracker;
-
+			_workflowTaskResourceServiceTracker = workflowTaskResourceServiceTracker;
 	}
 
 }

@@ -88,14 +88,14 @@ public class Organization {
 		this.comment = comment;
 	}
 
-	public void setCommentWithSupplier(
+	public void setComment(
 		UnsafeSupplier<String, Throwable> commentUnsafeSupplier) {
 
-		try {
-			comment = commentUnsafeSupplier.get();
+			try {
+				comment = commentUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -103,15 +103,15 @@ public class Organization {
 		this.contactInformation = contactInformation;
 	}
 
-	public void setContactInformationWithSupplier(
+	public void setContactInformation(
 		UnsafeSupplier<ContactInformation, Throwable>
 			contactInformationUnsafeSupplier) {
 
-		try {
-			contactInformation = contactInformationUnsafeSupplier.get();
+			try {
+				contactInformation = contactInformationUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -119,12 +119,12 @@ public class Organization {
 		this.id = id;
 	}
 
-	public void setIdWithSupplier(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
+	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+			try {
+				id = idUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -132,14 +132,14 @@ public class Organization {
 		this.location = location;
 	}
 
-	public void setLocationWithSupplier(
+	public void setLocation(
 		UnsafeSupplier<Location, Throwable> locationUnsafeSupplier) {
 
-		try {
-			location = locationUnsafeSupplier.get();
+			try {
+				location = locationUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -147,23 +147,23 @@ public class Organization {
 		this.logo = logo;
 	}
 
-	public void setLogoWithSupplier(UnsafeSupplier<String, Throwable> logoUnsafeSupplier) {
-		try {
-			logo = logoUnsafeSupplier.get();
+	public void setLogo(UnsafeSupplier<String, Throwable> logoUnsafeSupplier) {
+			try {
+				logo = logoUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
-	public void setMembersWithSupplier(
+	public void setMembers(
 		UnsafeSupplier<UserAccount[], Throwable> membersUnsafeSupplier) {
 
-		try {
-			members = membersUnsafeSupplier.get();
+			try {
+				members = membersUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -175,14 +175,14 @@ public class Organization {
 		this.membersIds = membersIds;
 	}
 
-	public void setMembersIdsWithSupplier(
+	public void setMembersIds(
 		UnsafeSupplier<Long[], Throwable> membersIdsUnsafeSupplier) {
 
-		try {
-			membersIds = membersIdsUnsafeSupplier.get();
+			try {
+				membersIds = membersIdsUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -190,12 +190,12 @@ public class Organization {
 		this.name = name;
 	}
 
-	public void setNameWithSupplier(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
-		try {
-			name = nameUnsafeSupplier.get();
+	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
+			try {
+				name = nameUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -203,15 +203,15 @@ public class Organization {
 		this.parentOrganization = parentOrganization;
 	}
 
-	public void setParentOrganizationWithSupplier(
+	public void setParentOrganization(
 		UnsafeSupplier<Organization, Throwable>
 			parentOrganizationUnsafeSupplier) {
 
-		try {
-			parentOrganization = parentOrganizationUnsafeSupplier.get();
+			try {
+				parentOrganization = parentOrganizationUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -219,14 +219,14 @@ public class Organization {
 		this.parentOrganizationId = parentOrganizationId;
 	}
 
-	public void setParentOrganizationIdWithSupplier(
+	public void setParentOrganizationId(
 		UnsafeSupplier<Long, Throwable> parentOrganizationIdUnsafeSupplier) {
 
-		try {
-			parentOrganizationId = parentOrganizationIdUnsafeSupplier.get();
+			try {
+				parentOrganizationId = parentOrganizationIdUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -234,14 +234,14 @@ public class Organization {
 		this.services = services;
 	}
 
-	public void setServicesWithSupplier(
+	public void setServices(
 		UnsafeSupplier<Services[], Throwable> servicesUnsafeSupplier) {
 
-		try {
-			services = servicesUnsafeSupplier.get();
+			try {
+				services = servicesUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -249,15 +249,15 @@ public class Organization {
 		this.subOrganization = subOrganization;
 	}
 
-	public void setSubOrganizationWithSupplier(
+	public void setSubOrganization(
 		UnsafeSupplier<Organization[], Throwable>
 			subOrganizationUnsafeSupplier) {
 
-		try {
-			subOrganization = subOrganizationUnsafeSupplier.get();
+			try {
+				subOrganization = subOrganizationUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -265,14 +265,14 @@ public class Organization {
 		this.subOrganizationIds = subOrganizationIds;
 	}
 
-	public void setSubOrganizationIdsWithSupplier(
+	public void setSubOrganizationIds(
 		UnsafeSupplier<Long[], Throwable> subOrganizationIdsUnsafeSupplier) {
 
-		try {
-			subOrganizationIds = subOrganizationIdsUnsafeSupplier.get();
+			try {
+				subOrganizationIds = subOrganizationIdsUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 

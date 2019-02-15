@@ -44,146 +44,114 @@ public class Mutation {
 
 	@GraphQLInvokeDetached
 	public Response deleteCategory( @GraphQLName("category-id") Long categoryId ) throws Exception {
+				Response.ResponseBuilder responseBuilder = Response.ok();
 
-		Response.ResponseBuilder responseBuilder = Response.ok();
-
-		return responseBuilder.build();
+				return responseBuilder.build();
 
 	}
 
 	@GraphQLInvokeDetached
 	public Category putCategory( @GraphQLName("category-id") Long categoryId , @GraphQLName("Category") Category category ) throws Exception {
-
-		return _getCategoryResource().putCategory( categoryId , category );
-
+return _getCategoryResource().putCategory( categoryId , category );
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Category postCategoryCategory( @GraphQLName("category-id") Long categoryId , @GraphQLName("Category") Category category ) throws Exception {
-
-		return _getCategoryResource().postCategoryCategory( categoryId , category );
-
+return _getCategoryResource().postCategoryCategory( categoryId , category );
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Category postCategoryCategoryBatchCreate( @GraphQLName("category-id") Long categoryId , @GraphQLName("Category") Category category ) throws Exception {
-
-		return _getCategoryResource().postCategoryCategoryBatchCreate( categoryId , category );
-
+return _getCategoryResource().postCategoryCategoryBatchCreate( categoryId , category );
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Category postVocabularyCategory( @GraphQLName("vocabulary-id") Long vocabularyId , @GraphQLName("Category") Category category ) throws Exception {
-
-		return _getCategoryResource().postVocabularyCategory( vocabularyId , category );
-
+return _getCategoryResource().postVocabularyCategory( vocabularyId , category );
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Category postVocabularyCategoryBatchCreate( @GraphQLName("vocabulary-id") Long vocabularyId , @GraphQLName("Category") Category category ) throws Exception {
-
-		return _getCategoryResource().postVocabularyCategoryBatchCreate( vocabularyId , category );
-
+return _getCategoryResource().postVocabularyCategoryBatchCreate( vocabularyId , category );
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Keyword postContentSpaceKeyword( @GraphQLName("content-space-id") Long contentSpaceId , @GraphQLName("Keyword") Keyword keyword ) throws Exception {
-
-		return _getKeywordResource().postContentSpaceKeyword( contentSpaceId , keyword );
-
+return _getKeywordResource().postContentSpaceKeyword( contentSpaceId , keyword );
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Keyword postContentSpaceKeywordBatchCreate( @GraphQLName("content-space-id") Long contentSpaceId , @GraphQLName("Keyword") Keyword keyword ) throws Exception {
-
-		return _getKeywordResource().postContentSpaceKeywordBatchCreate( contentSpaceId , keyword );
-
+return _getKeywordResource().postContentSpaceKeywordBatchCreate( contentSpaceId , keyword );
 	}
 
 	@GraphQLInvokeDetached
 	public Response deleteKeyword( @GraphQLName("keyword-id") Long keywordId ) throws Exception {
+				Response.ResponseBuilder responseBuilder = Response.ok();
 
-		Response.ResponseBuilder responseBuilder = Response.ok();
-
-		return responseBuilder.build();
+				return responseBuilder.build();
 
 	}
 
 	@GraphQLInvokeDetached
 	public Keyword putKeyword( @GraphQLName("keyword-id") Long keywordId , @GraphQLName("Keyword") Keyword keyword ) throws Exception {
-
-		return _getKeywordResource().putKeyword( keywordId , keyword );
-
+return _getKeywordResource().putKeyword( keywordId , keyword );
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public UserAccount postUserAccount( @GraphQLName("UserAccount") UserAccount userAccount ) throws Exception {
-
-		return _getUserAccountResource().postUserAccount( userAccount );
-
+return _getUserAccountResource().postUserAccount( userAccount );
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public UserAccount postUserAccountBatchCreate( @GraphQLName("UserAccount") UserAccount userAccount ) throws Exception {
-
-		return _getUserAccountResource().postUserAccountBatchCreate( userAccount );
-
+return _getUserAccountResource().postUserAccountBatchCreate( userAccount );
 	}
 
 	@GraphQLInvokeDetached
 	public Response deleteUserAccount( @GraphQLName("user-account-id") Long userAccountId ) throws Exception {
+				Response.ResponseBuilder responseBuilder = Response.ok();
 
-		Response.ResponseBuilder responseBuilder = Response.ok();
-
-		return responseBuilder.build();
+				return responseBuilder.build();
 
 	}
 
 	@GraphQLInvokeDetached
 	public UserAccount putUserAccount( @GraphQLName("user-account-id") Long userAccountId , @GraphQLName("UserAccount") UserAccount userAccount ) throws Exception {
-
-		return _getUserAccountResource().putUserAccount( userAccountId , userAccount );
-
+return _getUserAccountResource().putUserAccount( userAccountId , userAccount );
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Vocabulary postContentSpaceVocabulary( @GraphQLName("content-space-id") Long contentSpaceId , @GraphQLName("Vocabulary") Vocabulary vocabulary ) throws Exception {
-
-		return _getVocabularyResource().postContentSpaceVocabulary( contentSpaceId , vocabulary );
-
+return _getVocabularyResource().postContentSpaceVocabulary( contentSpaceId , vocabulary );
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Vocabulary postContentSpaceVocabularyBatchCreate( @GraphQLName("content-space-id") Long contentSpaceId , @GraphQLName("Vocabulary") Vocabulary vocabulary ) throws Exception {
-
-		return _getVocabularyResource().postContentSpaceVocabularyBatchCreate( contentSpaceId , vocabulary );
-
+return _getVocabularyResource().postContentSpaceVocabularyBatchCreate( contentSpaceId , vocabulary );
 	}
 
 	@GraphQLInvokeDetached
 	public Response deleteVocabulary( @GraphQLName("vocabulary-id") Long vocabularyId ) throws Exception {
+				Response.ResponseBuilder responseBuilder = Response.ok();
 
-		Response.ResponseBuilder responseBuilder = Response.ok();
-
-		return responseBuilder.build();
+				return responseBuilder.build();
 
 	}
 
 	@GraphQLInvokeDetached
 	public Vocabulary putVocabulary( @GraphQLName("vocabulary-id") Long vocabularyId , @GraphQLName("Vocabulary") Vocabulary vocabulary ) throws Exception {
-
-		return _getVocabularyResource().putVocabulary( vocabularyId , vocabulary );
-
+return _getVocabularyResource().putVocabulary( vocabularyId , vocabulary );
 	}
 
 	private static CategoryResource _getCategoryResource() {
@@ -191,19 +159,16 @@ public class Mutation {
 	}
 
 	private static final ServiceTracker<CategoryResource, CategoryResource> _categoryResourceServiceTracker;
-
 	private static KeywordResource _getKeywordResource() {
 			return _keywordResourceServiceTracker.getService();
 	}
 
 	private static final ServiceTracker<KeywordResource, KeywordResource> _keywordResourceServiceTracker;
-
 	private static UserAccountResource _getUserAccountResource() {
 			return _userAccountResourceServiceTracker.getService();
 	}
 
 	private static final ServiceTracker<UserAccountResource, UserAccountResource> _userAccountResourceServiceTracker;
-
 	private static VocabularyResource _getVocabularyResource() {
 			return _vocabularyResourceServiceTracker.getService();
 	}
@@ -213,34 +178,30 @@ public class Mutation {
 	static {
 		Bundle bundle = FrameworkUtil.getBundle(Mutation.class);
 
-		ServiceTracker<CategoryResource, CategoryResource> categoryResourceServiceTracker =
-			new ServiceTracker<CategoryResource, CategoryResource>(bundle.getBundleContext(), CategoryResource.class, null);
+			ServiceTracker<CategoryResource, CategoryResource> categoryResourceServiceTracker =
+				new ServiceTracker<>(bundle.getBundleContext(), CategoryResource.class, null);
 
-		categoryResourceServiceTracker.open();
+			categoryResourceServiceTracker.open();
 
-		_categoryResourceServiceTracker = categoryResourceServiceTracker;
+			_categoryResourceServiceTracker = categoryResourceServiceTracker;
+			ServiceTracker<KeywordResource, KeywordResource> keywordResourceServiceTracker =
+				new ServiceTracker<>(bundle.getBundleContext(), KeywordResource.class, null);
 
-		ServiceTracker<KeywordResource, KeywordResource> keywordResourceServiceTracker =
-			new ServiceTracker<KeywordResource, KeywordResource>(bundle.getBundleContext(), KeywordResource.class, null);
+			keywordResourceServiceTracker.open();
 
-		keywordResourceServiceTracker.open();
+			_keywordResourceServiceTracker = keywordResourceServiceTracker;
+			ServiceTracker<UserAccountResource, UserAccountResource> userAccountResourceServiceTracker =
+				new ServiceTracker<>(bundle.getBundleContext(), UserAccountResource.class, null);
 
-		_keywordResourceServiceTracker = keywordResourceServiceTracker;
+			userAccountResourceServiceTracker.open();
 
-		ServiceTracker<UserAccountResource, UserAccountResource> userAccountResourceServiceTracker =
-			new ServiceTracker<UserAccountResource, UserAccountResource>(bundle.getBundleContext(), UserAccountResource.class, null);
+			_userAccountResourceServiceTracker = userAccountResourceServiceTracker;
+			ServiceTracker<VocabularyResource, VocabularyResource> vocabularyResourceServiceTracker =
+				new ServiceTracker<>(bundle.getBundleContext(), VocabularyResource.class, null);
 
-		userAccountResourceServiceTracker.open();
+			vocabularyResourceServiceTracker.open();
 
-		_userAccountResourceServiceTracker = userAccountResourceServiceTracker;
-
-		ServiceTracker<VocabularyResource, VocabularyResource> vocabularyResourceServiceTracker =
-			new ServiceTracker<VocabularyResource, VocabularyResource>(bundle.getBundleContext(), VocabularyResource.class, null);
-
-		vocabularyResourceServiceTracker.open();
-
-		_vocabularyResourceServiceTracker = vocabularyResourceServiceTracker;
-
+			_vocabularyResourceServiceTracker = vocabularyResourceServiceTracker;
 	}
 
 }

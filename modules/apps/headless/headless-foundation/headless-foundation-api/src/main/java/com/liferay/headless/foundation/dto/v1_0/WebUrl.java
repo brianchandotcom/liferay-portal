@@ -48,12 +48,12 @@ public class WebUrl {
 		this.id = id;
 	}
 
-	public void setIdWithSupplier(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
+	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+			try {
+				id = idUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -61,12 +61,12 @@ public class WebUrl {
 		this.url = url;
 	}
 
-	public void setUrlWithSupplier(UnsafeSupplier<String, Throwable> urlUnsafeSupplier) {
-		try {
-			url = urlUnsafeSupplier.get();
+	public void setUrl(UnsafeSupplier<String, Throwable> urlUnsafeSupplier) {
+			try {
+				url = urlUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -74,14 +74,14 @@ public class WebUrl {
 		this.urlType = urlType;
 	}
 
-	public void setUrlTypeWithSupplier(
+	public void setUrlType(
 		UnsafeSupplier<String, Throwable> urlTypeUnsafeSupplier) {
 
-		try {
-			urlType = urlTypeUnsafeSupplier.get();
+			try {
+				urlType = urlTypeUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 

@@ -126,11 +126,11 @@ public class BlogPosting {
 		UnsafeSupplier<AggregateRating, Throwable>
 			aggregateRatingUnsafeSupplier) {
 
-		try {
-			aggregateRating = aggregateRatingUnsafeSupplier.get();
+			try {
+				aggregateRating = aggregateRatingUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -141,11 +141,11 @@ public class BlogPosting {
 	public void setAlternativeHeadline(
 		UnsafeSupplier<String, Throwable> alternativeHeadlineUnsafeSupplier) {
 
-		try {
-			alternativeHeadline = alternativeHeadlineUnsafeSupplier.get();
+			try {
+				alternativeHeadline = alternativeHeadlineUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -156,11 +156,11 @@ public class BlogPosting {
 	public void setArticleBody(
 		UnsafeSupplier<String, Throwable> articleBodyUnsafeSupplier) {
 
-		try {
-			articleBody = articleBodyUnsafeSupplier.get();
+			try {
+				articleBody = articleBodyUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -171,11 +171,11 @@ public class BlogPosting {
 	public void setCaption(
 		UnsafeSupplier<String, Throwable> captionUnsafeSupplier) {
 
-		try {
-			caption = captionUnsafeSupplier.get();
+			try {
+				caption = captionUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -186,11 +186,11 @@ public class BlogPosting {
 	public void setCategory(
 		UnsafeSupplier<Long[], Throwable> categoryUnsafeSupplier) {
 
-		try {
-			category = categoryUnsafeSupplier.get();
+			try {
+				category = categoryUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -201,11 +201,11 @@ public class BlogPosting {
 	public void setComment(
 		UnsafeSupplier<Comment[], Throwable> commentUnsafeSupplier) {
 
-		try {
-			comment = commentUnsafeSupplier.get();
+			try {
+				comment = commentUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -216,11 +216,11 @@ public class BlogPosting {
 	public void setContentSpace(
 		UnsafeSupplier<Long, Throwable> contentSpaceUnsafeSupplier) {
 
-		try {
-			contentSpace = contentSpaceUnsafeSupplier.get();
+			try {
+				contentSpace = contentSpaceUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -231,11 +231,11 @@ public class BlogPosting {
 	public void setCreator(
 		UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier) {
 
-		try {
-			creator = creatorUnsafeSupplier.get();
+			try {
+				creator = creatorUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -246,11 +246,11 @@ public class BlogPosting {
 	public void setDateCreated(
 		UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
 
-		try {
-			dateCreated = dateCreatedUnsafeSupplier.get();
+			try {
+				dateCreated = dateCreatedUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -261,11 +261,11 @@ public class BlogPosting {
 	public void setDateModified(
 		UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
 
-		try {
-			dateModified = dateModifiedUnsafeSupplier.get();
+			try {
+				dateModified = dateModifiedUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -276,11 +276,11 @@ public class BlogPosting {
 	public void setDatePublished(
 		UnsafeSupplier<Date, Throwable> datePublishedUnsafeSupplier) {
 
-		try {
-			datePublished = datePublishedUnsafeSupplier.get();
+			try {
+				datePublished = datePublishedUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -291,11 +291,11 @@ public class BlogPosting {
 	public void setDescription(
 		UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier) {
 
-		try {
-			description = descriptionUnsafeSupplier.get();
+			try {
+				description = descriptionUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -306,11 +306,11 @@ public class BlogPosting {
 	public void setEncodingFormat(
 		UnsafeSupplier<String, Throwable> encodingFormatUnsafeSupplier) {
 
-		try {
-			encodingFormat = encodingFormatUnsafeSupplier.get();
+			try {
+				encodingFormat = encodingFormatUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -321,11 +321,11 @@ public class BlogPosting {
 	public void setFriendlyUrlPath(
 		UnsafeSupplier<String, Throwable> friendlyUrlPathUnsafeSupplier) {
 
-		try {
-			friendlyUrlPath = friendlyUrlPathUnsafeSupplier.get();
+			try {
+				friendlyUrlPath = friendlyUrlPathUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -336,11 +336,11 @@ public class BlogPosting {
 	public void setHeadline(
 		UnsafeSupplier<String, Throwable> headlineUnsafeSupplier) {
 
-		try {
-			headline = headlineUnsafeSupplier.get();
+			try {
+				headline = headlineUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -349,11 +349,11 @@ public class BlogPosting {
 	}
 
 	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
+			try {
+				id = idUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -364,11 +364,11 @@ public class BlogPosting {
 	public void setImage(
 		UnsafeSupplier<ImageObject, Throwable> imageUnsafeSupplier) {
 
-		try {
-			image = imageUnsafeSupplier.get();
+			try {
+				image = imageUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -379,11 +379,11 @@ public class BlogPosting {
 	public void setImageId(
 		UnsafeSupplier<Long, Throwable> imageIdUnsafeSupplier) {
 
-		try {
-			imageId = imageIdUnsafeSupplier.get();
+			try {
+				imageId = imageIdUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -394,11 +394,11 @@ public class BlogPosting {
 	public void setKeywords(
 		UnsafeSupplier<String[], Throwable> keywordsUnsafeSupplier) {
 
-		try {
-			keywords = keywordsUnsafeSupplier.get();
+			try {
+				keywords = keywordsUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -410,11 +410,11 @@ public class BlogPosting {
 		UnsafeSupplier<ImageObjectRepository, Throwable>
 			repositoryUnsafeSupplier) {
 
-		try {
-			repository = repositoryUnsafeSupplier.get();
+			try {
+				repository = repositoryUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -425,11 +425,11 @@ public class BlogPosting {
 	public void setRepositoryId(
 		UnsafeSupplier<Long, Throwable> repositoryIdUnsafeSupplier) {
 
-		try {
-			repositoryId = repositoryIdUnsafeSupplier.get();
+			try {
+				repositoryId = repositoryIdUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 

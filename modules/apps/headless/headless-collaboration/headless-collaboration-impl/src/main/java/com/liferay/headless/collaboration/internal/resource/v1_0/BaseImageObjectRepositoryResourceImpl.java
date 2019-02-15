@@ -41,7 +41,7 @@ public abstract class BaseImageObjectRepositoryResourceImpl
 			Long imageObjectRepositoryId)
 		throws Exception {
 
-		return new ImageObjectRepository();
+			return new ImageObjectRepository();
 	}
 
 	protected Response buildNoContentResponse() {

@@ -49,11 +49,11 @@ public class RenderedContentsByTemplate {
 	}
 
 	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
+			try {
+				id = idUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -64,11 +64,11 @@ public class RenderedContentsByTemplate {
 	public void setRenderedContent(
 		UnsafeSupplier<String, Throwable> renderedContentUnsafeSupplier) {
 
-		try {
-			renderedContent = renderedContentUnsafeSupplier.get();
+			try {
+				renderedContent = renderedContentUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -79,11 +79,11 @@ public class RenderedContentsByTemplate {
 	public void setTemplate(
 		UnsafeSupplier<String, Throwable> templateUnsafeSupplier) {
 
-		try {
-			template = templateUnsafeSupplier.get();
+			try {
+				template = templateUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 

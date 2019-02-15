@@ -43,7 +43,7 @@ public abstract class BaseRoleResourceImpl implements RoleResource {
 			Long myUserAccountId, Pagination pagination)
 		throws Exception {
 
-		return Page.of(Collections.emptyList());
+			return Page.of(Collections.emptyList());
 	}
 
 	@Override
@@ -61,7 +61,7 @@ public abstract class BaseRoleResourceImpl implements RoleResource {
 			Long userAccountId, Pagination pagination)
 		throws Exception {
 
-		return Page.of(Collections.emptyList());
+			return Page.of(Collections.emptyList());
 	}
 
 	protected Response buildNoContentResponse() {

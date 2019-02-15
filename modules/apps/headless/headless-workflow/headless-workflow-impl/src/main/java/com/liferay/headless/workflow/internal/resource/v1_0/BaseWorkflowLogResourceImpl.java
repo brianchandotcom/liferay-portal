@@ -49,7 +49,7 @@ public abstract class BaseWorkflowLogResourceImpl
 			Long workflowTaskId, Pagination pagination)
 		throws Exception {
 
-		return Page.of(Collections.emptyList());
+			return Page.of(Collections.emptyList());
 	}
 
 	protected Response buildNoContentResponse() {

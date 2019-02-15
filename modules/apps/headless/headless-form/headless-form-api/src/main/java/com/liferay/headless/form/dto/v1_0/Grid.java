@@ -51,11 +51,11 @@ public class Grid {
 	public void setColumns(
 		UnsafeSupplier<Columns[], Throwable> columnsUnsafeSupplier) {
 
-		try {
-			columns = columnsUnsafeSupplier.get();
+			try {
+				columns = columnsUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -64,11 +64,11 @@ public class Grid {
 	}
 
 	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
+			try {
+				id = idUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -77,11 +77,11 @@ public class Grid {
 	}
 
 	public void setRows(UnsafeSupplier<Rows[], Throwable> rowsUnsafeSupplier) {
-		try {
-			rows = rowsUnsafeSupplier.get();
+			try {
+				rows = rowsUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 

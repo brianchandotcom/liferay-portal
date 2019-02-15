@@ -44,7 +44,7 @@ public abstract class BaseVocabularyResourceImpl implements VocabularyResource {
 	public Response deleteVocabulary(Long vocabularyId) throws Exception {
 		Response.ResponseBuilder responseBuilder = Response.ok();
 
-		return responseBuilder.build();
+			return responseBuilder.build();
 	}
 
 	@Override
@@ -53,7 +53,7 @@ public abstract class BaseVocabularyResourceImpl implements VocabularyResource {
 			Sort[] sorts)
 		throws Exception {
 
-		return Page.of(Collections.emptyList());
+			return Page.of(Collections.emptyList());
 	}
 
 	@Override
@@ -66,7 +66,7 @@ public abstract class BaseVocabularyResourceImpl implements VocabularyResource {
 			Long contentSpaceId, Vocabulary vocabulary)
 		throws Exception {
 
-		return new Vocabulary();
+			return new Vocabulary();
 	}
 
 	@Override
@@ -74,14 +74,14 @@ public abstract class BaseVocabularyResourceImpl implements VocabularyResource {
 			Long contentSpaceId, Vocabulary vocabulary)
 		throws Exception {
 
-		return new Vocabulary();
+			return new Vocabulary();
 	}
 
 	@Override
 	public Vocabulary putVocabulary(Long vocabularyId, Vocabulary vocabulary)
 		throws Exception {
 
-		return new Vocabulary();
+			return new Vocabulary();
 	}
 
 	protected Response buildNoContentResponse() {

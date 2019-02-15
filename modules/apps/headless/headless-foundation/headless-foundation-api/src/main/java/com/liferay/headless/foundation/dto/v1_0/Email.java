@@ -48,14 +48,14 @@ public class Email {
 		this.email = email;
 	}
 
-	public void setEmailWithSupplier(
+	public void setEmail(
 		UnsafeSupplier<String, Throwable> emailUnsafeSupplier) {
 
-		try {
-			email = emailUnsafeSupplier.get();
+			try {
+				email = emailUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -63,12 +63,12 @@ public class Email {
 		this.id = id;
 	}
 
-	public void setIdWithSupplier(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
+	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+			try {
+				id = idUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -76,12 +76,12 @@ public class Email {
 		this.type = type;
 	}
 
-	public void setTypeWithSupplier(UnsafeSupplier<String, Throwable> typeUnsafeSupplier) {
-		try {
-			type = typeUnsafeSupplier.get();
+	public void setType(UnsafeSupplier<String, Throwable> typeUnsafeSupplier) {
+			try {
+				type = typeUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 

@@ -63,11 +63,11 @@ public class AdaptedMedia {
 	public void setContentUrl(
 		UnsafeSupplier<String, Throwable> contentUrlUnsafeSupplier) {
 
-		try {
-			contentUrl = contentUrlUnsafeSupplier.get();
+			try {
+				contentUrl = contentUrlUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -78,11 +78,11 @@ public class AdaptedMedia {
 	public void setHeight(
 		UnsafeSupplier<Number, Throwable> heightUnsafeSupplier) {
 
-		try {
-			height = heightUnsafeSupplier.get();
+			try {
+				height = heightUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -91,11 +91,11 @@ public class AdaptedMedia {
 	}
 
 	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
+			try {
+				id = idUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -106,11 +106,11 @@ public class AdaptedMedia {
 	public void setResolutionName(
 		UnsafeSupplier<String, Throwable> resolutionNameUnsafeSupplier) {
 
-		try {
-			resolutionName = resolutionNameUnsafeSupplier.get();
+			try {
+				resolutionName = resolutionNameUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -121,11 +121,11 @@ public class AdaptedMedia {
 	public void setSizeInBytes(
 		UnsafeSupplier<Number, Throwable> sizeInBytesUnsafeSupplier) {
 
-		try {
-			sizeInBytes = sizeInBytesUnsafeSupplier.get();
+			try {
+				sizeInBytes = sizeInBytesUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -136,11 +136,11 @@ public class AdaptedMedia {
 	public void setWidth(
 		UnsafeSupplier<Number, Throwable> widthUnsafeSupplier) {
 
-		try {
-			width = widthUnsafeSupplier.get();
+			try {
+				width = widthUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 

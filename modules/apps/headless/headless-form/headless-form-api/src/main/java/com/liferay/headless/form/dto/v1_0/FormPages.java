@@ -55,11 +55,11 @@ public class FormPages {
 	public void setFields(
 		UnsafeSupplier<Fields[], Throwable> fieldsUnsafeSupplier) {
 
-		try {
-			fields = fieldsUnsafeSupplier.get();
+			try {
+				fields = fieldsUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -70,11 +70,11 @@ public class FormPages {
 	public void setHeadline(
 		UnsafeSupplier<String, Throwable> headlineUnsafeSupplier) {
 
-		try {
-			headline = headlineUnsafeSupplier.get();
+			try {
+				headline = headlineUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -83,11 +83,11 @@ public class FormPages {
 	}
 
 	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
+			try {
+				id = idUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -96,11 +96,11 @@ public class FormPages {
 	}
 
 	public void setText(UnsafeSupplier<String, Throwable> textUnsafeSupplier) {
-		try {
-			text = textUnsafeSupplier.get();
+			try {
+				text = textUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 

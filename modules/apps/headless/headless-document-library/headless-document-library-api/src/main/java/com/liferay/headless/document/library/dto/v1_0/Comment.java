@@ -55,11 +55,11 @@ public class Comment {
 	public void setComments(
 		UnsafeSupplier<Comment[], Throwable> commentsUnsafeSupplier) {
 
-		try {
-			comments = commentsUnsafeSupplier.get();
+			try {
+				comments = commentsUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -70,11 +70,11 @@ public class Comment {
 	public void setCreator(
 		UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier) {
 
-		try {
-			creator = creatorUnsafeSupplier.get();
+			try {
+				creator = creatorUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -83,11 +83,11 @@ public class Comment {
 	}
 
 	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
+			try {
+				id = idUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 
@@ -96,11 +96,11 @@ public class Comment {
 	}
 
 	public void setText(UnsafeSupplier<String, Throwable> textUnsafeSupplier) {
-		try {
-			text = textUnsafeSupplier.get();
+			try {
+				text = textUnsafeSupplier.get();
 	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 	}
 	}
 

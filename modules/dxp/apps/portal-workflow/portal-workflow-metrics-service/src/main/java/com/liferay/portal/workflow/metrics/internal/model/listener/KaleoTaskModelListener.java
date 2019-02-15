@@ -63,9 +63,9 @@ public class KaleoTaskModelListener extends BaseKaleoModelListener<KaleoTask> {
 
 		document.addKeyword("companyId", kaleoTask.getCompanyId());
 		document.addKeyword("name", kaleoTask.getName());
-		document.addKeyword("taskId", kaleoTask.getKaleoTaskId());
 		document.addKeyword(
 			"processId", kaleoTask.getKaleoDefinitionVersionId());
+		document.addKeyword("taskId", kaleoTask.getKaleoTaskId());
 		document.addUID(
 			"TaskWorkflowMetrics",
 			digest(

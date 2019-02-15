@@ -17,7 +17,7 @@ package com.liferay.headless.document.library.internal.resource.v1_0;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLFileEntryService;
 import com.liferay.headless.document.library.dto.v1_0.Comment;
-import com.liferay.headless.document.library.internal.dto.v1_0.CommentUtil;
+import com.liferay.headless.document.library.internal.dto.v1_0.CommentConverter;
 import com.liferay.headless.document.library.resource.v1_0.CommentResource;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.comment.DiscussionPermission;
@@ -67,7 +67,7 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 					dlFileEntry.getModelClassName(), fileEntryId,
 					WorkflowConstants.STATUS_APPROVED,
 					pagination.getStartPosition(), pagination.getEndPosition()),
-				CommentUtil::toComment),
+				_commentConverter::toComment),
 			pagination, count);
 	}
 
@@ -84,6 +84,9 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 		discussionPermission.checkViewPermission(
 			permissionChecker.getCompanyId(), groupId, className, classPK);
 	}
+
+	@Reference
+	private CommentConverter _commentConverter;
 
 	@Reference
 	private CommentManager _commentManager;

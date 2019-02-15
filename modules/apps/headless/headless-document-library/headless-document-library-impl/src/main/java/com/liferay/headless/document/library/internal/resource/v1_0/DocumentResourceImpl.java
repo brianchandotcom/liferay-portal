@@ -30,12 +30,12 @@ import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.headless.document.library.dto.v1_0.AdaptedMedia;
 import com.liferay.headless.document.library.dto.v1_0.Document;
-import com.liferay.headless.document.library.internal.dto.v1_0.CreatorUtil;
+import com.liferay.headless.document.library.internal.dto.v1_0.CreatorConverter;
 import com.liferay.headless.document.library.resource.v1_0.DocumentResource;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
-import com.liferay.portal.kernel.service.UserService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.List;
@@ -61,7 +61,7 @@ public class DocumentResourceImpl extends BaseDocumentResourceImpl {
 
 		return _toDocument(
 			fileEntry, fileEntry.getFileVersion(),
-			_userService.getUserById(fileEntry.getUserId()));
+			_userLocalService.getUserById(fileEntry.getUserId()));
 	}
 
 	private AdaptedMedia[] _getAdaptiveMedias(FileEntry fileEntry)
@@ -149,7 +149,7 @@ public class DocumentResourceImpl extends BaseDocumentResourceImpl {
 				setContentUrl(
 					_dlURLHelper.getPreviewURL(
 						fileEntry, fileVersion, null, ""));
-				setCreator(CreatorUtil.toCreator(user));
+				setCreator(_creatorConverter.toCreator(user));
 				setDateCreated(fileEntry.getCreateDate());
 				setDateModified(fileEntry.getModifiedDate());
 				setDescription(fileEntry.getDescription());
@@ -177,12 +177,15 @@ public class DocumentResourceImpl extends BaseDocumentResourceImpl {
 	private AssetTagLocalService _assetTagLocalService;
 
 	@Reference
+	private CreatorConverter _creatorConverter;
+
+	@Reference
 	private DLAppService _dlAppService;
 
 	@Reference
 	private DLURLHelper _dlURLHelper;
 
 	@Reference
-	private UserService _userService;
+	private UserLocalService _userLocalService;
 
 }

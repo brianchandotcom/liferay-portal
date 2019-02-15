@@ -18,6 +18,7 @@ import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetVocabularyService;
 import com.liferay.headless.foundation.dto.v1_0.Vocabulary;
+import com.liferay.headless.foundation.internal.dto.v1_0.CreatorConverter;
 import com.liferay.headless.foundation.internal.odata.entity.v1_0.VocabularyEntityModel;
 import com.liferay.headless.foundation.resource.v1_0.VocabularyResource;
 import com.liferay.portal.kernel.model.ClassName;
@@ -29,6 +30,7 @@ import com.liferay.portal.kernel.search.SearchResultPermissionFilterFactory;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.ClassNameService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.odata.entity.EntityModel;
@@ -101,12 +103,18 @@ public class VocabularyResourceImpl
 		return _vocabularyEntityModel;
 	}
 
-	private Vocabulary _toVocabulary(AssetVocabulary assetVocabulary) {
+	private Vocabulary _toVocabulary(AssetVocabulary assetVocabulary)
+		throws Exception {
+
 		return new Vocabulary() {
 			{
 				setAvailableLanguages(
 					assetVocabulary.getAvailableLanguageIds());
 				setContentSpace(assetVocabulary.getGroupId());
+				setCreator(
+					_creatorConverter.toCreator(
+						_userLocalService.getUser(
+							assetVocabulary.getUserId())));
 				setDateCreated(assetVocabulary.getCreateDate());
 				setDateModified(assetVocabulary.getModifiedDate());
 				setDescription(
@@ -134,10 +142,16 @@ public class VocabularyResourceImpl
 	private ClassNameService _classNameService;
 
 	@Reference
+	private CreatorConverter _creatorConverter;
+
+	@Reference
 	private IndexerRegistry _indexerRegistry;
 
 	@Reference
 	private SearchResultPermissionFilterFactory
 		_searchResultPermissionFilterFactory;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

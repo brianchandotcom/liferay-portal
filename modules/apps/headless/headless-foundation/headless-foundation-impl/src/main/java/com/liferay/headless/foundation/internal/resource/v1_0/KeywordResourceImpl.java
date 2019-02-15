@@ -19,10 +19,10 @@ import com.liferay.asset.kernel.exception.DuplicateTagException;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetTagService;
 import com.liferay.headless.foundation.dto.v1_0.Keyword;
-import com.liferay.headless.foundation.internal.dto.v1_0.UserAccountUtil;
+import com.liferay.headless.foundation.internal.dto.v1_0.CreatorConverter;
 import com.liferay.headless.foundation.resource.v1_0.KeywordResource;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.UserService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portlet.asset.util.comparator.AssetTagNameComparator;
@@ -118,8 +118,8 @@ public class KeywordResourceImpl extends BaseKeywordResourceImpl {
 			{
 				setContentSpace(assetTag.getGroupId());
 				setCreator(
-					UserAccountUtil.toUserAccount(
-						_userService.getUserById(assetTag.getUserId())));
+					_creatorConverter.toCreator(
+						_userLocalService.getUserById(assetTag.getUserId())));
 				setDateCreated(assetTag.getCreateDate());
 				setDateModified(assetTag.getModifiedDate());
 				setId(assetTag.getTagId());
@@ -133,6 +133,9 @@ public class KeywordResourceImpl extends BaseKeywordResourceImpl {
 	private AssetTagService _assetTagService;
 
 	@Reference
-	private UserService _userService;
+	private CreatorConverter _creatorConverter;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

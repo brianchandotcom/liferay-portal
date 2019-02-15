@@ -28,8 +28,8 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.headless.web.experience.dto.v1_0.StructuredContent;
 import com.liferay.headless.web.experience.internal.dto.v1_0.AggregateRatingUtil;
-import com.liferay.headless.web.experience.internal.dto.v1_0.ContentStructureUtil;
-import com.liferay.headless.web.experience.internal.dto.v1_0.CreatorUtil;
+import com.liferay.headless.web.experience.internal.dto.v1_0.ContentStructureConverter;
+import com.liferay.headless.web.experience.internal.dto.v1_0.CreatorConverter;
 import com.liferay.headless.web.experience.internal.odata.entity.v1_0.EntityFieldsProvider;
 import com.liferay.headless.web.experience.internal.odata.entity.v1_0.StructuredContentEntityModel;
 import com.liferay.headless.web.experience.resource.v1_0.StructuredContentResource;
@@ -54,7 +54,6 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
@@ -397,13 +396,11 @@ public class StructuredContentResourceImpl
 							journalArticle.getResourcePrimKey())));
 				setContentSpace(journalArticle.getGroupId());
 				setContentStructure(
-					ContentStructureUtil.toContentStructure(
+					_contentStructureConverter.toContentStructure(
 						journalArticle.getDDMStructure(),
-						acceptLanguage.getPreferredLocale(), _portal,
-						_userLocalService));
+						acceptLanguage.getPreferredLocale()));
 				setCreator(
-					CreatorUtil.toCreator(
-						_portal,
+					_creatorConverter.toCreator(
 						_userLocalService.getUserById(
 							journalArticle.getUserId())));
 				setDateCreated(journalArticle.getCreateDate());
@@ -420,6 +417,12 @@ public class StructuredContentResourceImpl
 			}
 		};
 	}
+
+	@Reference
+	private ContentStructureConverter _contentStructureConverter;
+
+	@Reference
+	private CreatorConverter _creatorConverter;
 
 	@Reference
 	private DDM _ddm;
@@ -444,9 +447,6 @@ public class StructuredContentResourceImpl
 
 	@Reference
 	private JournalHelper _journalHelper;
-
-	@Reference
-	private Portal _portal;
 
 	@Reference
 	private RatingsStatsLocalService _ratingsStatsLocalService;

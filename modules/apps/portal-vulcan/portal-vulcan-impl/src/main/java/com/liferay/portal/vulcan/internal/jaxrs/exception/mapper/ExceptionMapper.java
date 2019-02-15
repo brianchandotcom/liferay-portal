@@ -17,9 +17,6 @@ package com.liferay.portal.vulcan.internal.jaxrs.exception.mapper;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
-
 /**
  * @author Javier Gamarra
  */

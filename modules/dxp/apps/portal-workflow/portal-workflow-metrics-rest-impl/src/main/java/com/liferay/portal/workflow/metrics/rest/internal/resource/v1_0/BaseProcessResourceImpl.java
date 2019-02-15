@@ -29,6 +29,7 @@ import java.util.List;
 import javax.annotation.Generated;
 
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.Response;
 
 /**
  * @author Rafael Praxedes
@@ -37,21 +38,24 @@ import javax.ws.rs.core.Context;
 @Generated("")
 public abstract class BaseProcessResourceImpl implements ProcessResource {
 
-	public static final String ODATA_ENTITY_MODEL_NAME =
-		"com_liferay_portal_workflow_metrics_rest_dto_v1_0_ProcessEntityModel";
-
 	@Override
-	public Page<Process> getProcessPage(
+	public Page<Process> getProcessesPage(
 			Long companyId, String title, Pagination pagination)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
 	}
 
-	protected <T, R> List<R> transform(
-		List<T> list, UnsafeFunction<T, R, Exception> transformFunction) {
+	protected Response buildNoContentResponse() {
+		Response.ResponseBuilder responseBuilder = Response.noContent();
 
-		return TransformUtil.transform(list, transformFunction);
+		return responseBuilder.build();
+	}
+
+	protected <T, R> List<R> transform(
+		List<T> list, UnsafeFunction<T, R, Throwable> unsafeFunction) {
+
+		return TransformUtil.transform(list, unsafeFunction);
 	}
 
 	@Context

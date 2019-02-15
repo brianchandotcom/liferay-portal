@@ -14,6 +14,8 @@
 
 package com.liferay.portal.workflow.metrics.rest.dto.v1_0;
 
+import com.liferay.petra.function.UnsafeSupplier;
+
 import javax.annotation.Generated;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -50,20 +52,73 @@ public class Process {
 		_id = id;
 	}
 
+	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+		try {
+			_id = idUnsafeSupplier.get();
+	}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+	}
+	}
+
 	public void setInstanceCount(Integer instanceCount) {
 		_instanceCount = instanceCount;
+	}
+
+	public void setInstanceCount(
+		UnsafeSupplier<Integer, Throwable> instanceCountUnsafeSupplier) {
+
+		try {
+			_instanceCount = instanceCountUnsafeSupplier.get();
+	}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+	}
 	}
 
 	public void setOntimeInstanceCount(Integer ontimeInstanceCount) {
 		_ontimeInstanceCount = ontimeInstanceCount;
 	}
 
+	public void setOntimeInstanceCount(
+		UnsafeSupplier<Integer, Throwable> ontimeInstanceCountUnsafeSupplier) {
+
+		try {
+			_ontimeInstanceCount = ontimeInstanceCountUnsafeSupplier.get();
+	}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+	}
+	}
+
 	public void setOverdueInstanceCount(Integer overdueInstanceCount) {
 		_overdueInstanceCount = overdueInstanceCount;
 	}
 
+	public void setOverdueInstanceCount(
+		UnsafeSupplier<Integer, Throwable> overdueInstanceCountUnsafeSupplier) {
+
+		try {
+			_overdueInstanceCount = overdueInstanceCountUnsafeSupplier.get();
+	}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+	}
+	}
+
 	public void setTitle(String title) {
 		_title = title;
+	}
+
+	public void setTitle(
+		UnsafeSupplier<String, Throwable> titleUnsafeSupplier) {
+
+		try {
+			_title = titleUnsafeSupplier.get();
+	}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+	}
 	}
 
 	private Long _id;

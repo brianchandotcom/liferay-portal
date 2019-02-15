@@ -49,7 +49,7 @@ renderResponse.setTitle(userName);
 			<div class="nameplate">
 				<div class="nameplate-field">
 					<liferay-ui:user-portrait
-						cssClass="user-icon-xl"
+						cssClass="sticker-xl"
 						userId="<%= membershipRequest.getUserId() %>"
 					/>
 				</div>
@@ -93,7 +93,7 @@ renderResponse.setTitle(userName);
 				<c:if test="<%= membershipRequestReplierUser != null %>">
 					<div class="nameplate-field">
 						<liferay-ui:user-portrait
-							cssClass="user-icon-xl"
+							cssClass="sticker-xl"
 							user="<%= membershipRequestReplierUser %>"
 						/>
 					</div>

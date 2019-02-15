@@ -16,6 +16,8 @@ package com.liferay.portal.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
 
@@ -45,7 +47,12 @@ public abstract class LayoutSetBaseImpl extends LayoutSetModelImpl
 			LayoutSetLocalServiceUtil.addLayoutSet(this);
 		}
 		else {
-			LayoutSetLocalServiceUtil.updateLayoutSet(this);
+			try {
+				LayoutSetLocalServiceUtil.updateLayoutSet(this);
+			}
+			catch (PortalException pe) {
+				throw new SystemException(pe);
+			}
 		}
 	}
 }

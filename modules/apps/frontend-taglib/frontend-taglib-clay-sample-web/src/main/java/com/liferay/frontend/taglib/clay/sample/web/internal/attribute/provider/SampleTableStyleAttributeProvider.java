@@ -16,7 +16,6 @@ package com.liferay.frontend.taglib.clay.sample.web.internal.attribute.provider;
 
 import com.liferay.frontend.taglib.clay.attribute.provider.ClayComponentAttributeProvider;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -36,12 +35,12 @@ public class SampleTableStyleAttributeProvider
 	implements ClayComponentAttributeProvider {
 
 	@Override
-	public Map<String, Object> getAttributes() {
-		HashMap<String, Object> attributes = new HashMap<>();
+	public Map<String, Object> getAttributes(
+		Map<String, Object> context) {
 
-		attributes.put("tableClasses", "sample-table");
+		context.put("tableClasses", "sample-table");
 
-		return attributes;
+		return context;
 	}
 
 }

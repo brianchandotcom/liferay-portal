@@ -45,7 +45,7 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 			</div>
 
 			<div class="sheet-section">
-				<div class="text-muted"><liferay-ui:message key="automatically-anonymize-data-that-does-not-require-review" /></div>
+				<div class="text-muted"><liferay-ui:message key="auto-anonymize-data-that-does-not-require-review" /></div>
 			</div>
 
 			<div class="sheet-section">

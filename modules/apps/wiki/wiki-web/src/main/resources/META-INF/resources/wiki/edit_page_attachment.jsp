@@ -53,14 +53,6 @@ DLConfiguration dlConfiguration = ConfigurationProviderUtil.getSystemConfigurati
 	</aui:input>
 </div>
 
-<liferay-util:buffer
-	var="removeAttachmentIcon"
->
-	<liferay-ui:icon
-		iconCssClass="icon-remove"
-	/>
-</liferay-util:buffer>
-
 <liferay-portlet:actionURL name="/wiki/edit_page_attachment" var="deleteURL">
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE_TEMP %>" />
 	<portlet:param name="redirect" value="<%= wikiRequestHelper.getCurrentURL() %>" />

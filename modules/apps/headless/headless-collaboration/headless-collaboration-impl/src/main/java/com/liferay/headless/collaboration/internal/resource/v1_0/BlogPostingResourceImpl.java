@@ -22,7 +22,7 @@ import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.headless.collaboration.dto.v1_0.BlogPosting;
 import com.liferay.headless.collaboration.dto.v1_0.ImageObject;
-import com.liferay.headless.collaboration.internal.dto.v1_0.AggregateRatingUtil;
+import com.liferay.headless.collaboration.internal.dto.v1_0.AggregateRatingConverter;
 import com.liferay.headless.collaboration.internal.dto.v1_0.CreatorConverter;
 import com.liferay.headless.collaboration.resource.v1_0.BlogPostingResource;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -203,7 +203,7 @@ public class BlogPostingResourceImpl extends BaseBlogPostingResourceImpl {
 			{
 				setAlternativeHeadline(blogsEntry.getSubtitle());
 				setAggregateRating(
-					AggregateRatingUtil.toAggregateRating(
+					_aggregateRatingConverter.toAggregateRating(
 						_ratingsStatsLocalService.fetchStats(
 							BlogsEntry.class.getName(),
 							blogsEntry.getEntryId())));
@@ -225,6 +225,9 @@ public class BlogPostingResourceImpl extends BaseBlogPostingResourceImpl {
 			}
 		};
 	}
+
+	@Reference
+	private AggregateRatingConverter _aggregateRatingConverter;
 
 	@Reference
 	private BlogsEntryService _blogsEntryService;

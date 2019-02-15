@@ -194,6 +194,16 @@ AUI.add(
 						var instance = this;
 
 						instance.setValue({});
+
+						var errorMessage = instance.get('errorMessage');
+
+						var required = instance.get('required');
+
+						if (!errorMessage && required) {
+							instance.set('errorMessage', Liferay.Language.get('this-field-is-required'));
+						}
+
+						instance.showErrorMessage();
 					},
 
 					_handleSelectButtonClick: function(event) {
@@ -219,6 +229,7 @@ AUI.add(
 											instance._fireFocusEvent();
 										}
 										else {
+											instance.showErrorMessage();
 											instance._fireBlurEvent();
 										}
 									}

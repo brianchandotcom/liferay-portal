@@ -20,6 +20,7 @@ import com.liferay.asset.kernel.service.AssetVocabularyService;
 import com.liferay.headless.foundation.dto.v1_0.Vocabulary;
 import com.liferay.headless.foundation.internal.odata.entity.v1_0.VocabularyEntityModel;
 import com.liferay.headless.foundation.resource.v1_0.VocabularyResource;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
@@ -29,6 +30,7 @@ import com.liferay.portal.kernel.search.SearchResultPermissionFilterFactory;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.ClassNameService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.odata.entity.EntityModel;
@@ -37,10 +39,18 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
+import java.util.AbstractMap;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.ws.rs.core.MultivaluedMap;
+import javax.ws.rs.core.Response;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -55,6 +65,13 @@ import org.osgi.service.component.annotations.ServiceScope;
 )
 public class VocabularyResourceImpl
 	extends BaseVocabularyResourceImpl implements EntityModelResource {
+
+	@Override
+	public Response deleteVocabulary(Long vocabularyId) throws Exception {
+		_assetVocabularyService.deleteVocabulary(vocabularyId);
+
+		return buildNoContentResponse();
+	}
 
 	@Override
 	public Page<Vocabulary> getContentSpaceVocabulariesPage(
@@ -99,6 +116,94 @@ public class VocabularyResourceImpl
 	@Override
 	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
 		return _vocabularyEntityModel;
+	}
+
+	@Override
+	public Vocabulary getVocabulary(Long vocabularyId) throws Exception {
+		return _toVocabulary(_getAssetVocabulary(vocabularyId));
+	}
+
+	@Override
+	public Vocabulary postContentSpaceVocabulary(
+			Long contentSpaceId, Vocabulary vocabulary)
+		throws Exception {
+
+		return _toVocabulary(_addAssetVocabulary(contentSpaceId, vocabulary));
+	}
+
+	@Override
+	public Vocabulary putVocabulary(Long vocabularyId, Vocabulary vocabulary)
+		throws Exception {
+
+		AssetVocabulary assetVocabulary = _assetVocabularyService.getVocabulary(
+			vocabularyId);
+
+		return _toVocabulary(
+			_assetVocabularyService.updateVocabulary(
+				assetVocabulary.getVocabularyId(), null,
+				_merge(
+					assetVocabulary.getTitleMap(),
+					new AbstractMap.SimpleEntry<>(
+						acceptLanguage.getPreferredLocale(),
+						vocabulary.getName())),
+				_merge(
+					assetVocabulary.getDescriptionMap(),
+					new AbstractMap.SimpleEntry<>(
+						acceptLanguage.getPreferredLocale(),
+						vocabulary.getDescription())),
+				null, new ServiceContext()));
+	}
+
+	private AssetVocabulary _addAssetVocabulary(
+			long groupId, Vocabulary vocabulary)
+		throws PortalException {
+
+		Map<Locale, String> descriptionMap = Collections.singletonMap(
+			acceptLanguage.getPreferredLocale(), vocabulary.getDescription());
+
+		Map<Locale, String> nameMap = Collections.singletonMap(
+			acceptLanguage.getPreferredLocale(), vocabulary.getName());
+
+		return _assetVocabularyService.addVocabulary(
+			groupId, null, nameMap, descriptionMap, null, new ServiceContext());
+	}
+
+	private AssetVocabulary _getAssetVocabulary(long vocabularyId)
+		throws PortalException {
+
+		return _assetVocabularyService.getVocabulary(vocabularyId);
+	}
+
+	private Map<Locale, String> _merge(
+		Map<Locale, String> map, Map.Entry<Locale, String> mapEntry) {
+
+		if (map == null) {
+			return Stream.of(
+				mapEntry
+			).collect(
+				Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)
+			);
+		}
+
+		if (mapEntry == null) {
+			return map;
+		}
+
+		if (mapEntry.getValue() == null) {
+			map.remove(mapEntry.getValue());
+
+			return map;
+		}
+
+		Set<Map.Entry<Locale, String>> mapEntries = map.entrySet();
+
+		return Stream.concat(
+			mapEntries.stream(), Stream.of(mapEntry)
+		).collect(
+			Collectors.toMap(
+				Map.Entry::getKey, Map.Entry::getValue,
+				(value1, value2) -> value2)
+		);
 	}
 
 	private Vocabulary _toVocabulary(AssetVocabulary assetVocabulary) {

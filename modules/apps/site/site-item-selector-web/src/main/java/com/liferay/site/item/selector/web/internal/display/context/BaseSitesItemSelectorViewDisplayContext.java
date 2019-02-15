@@ -16,8 +16,6 @@ package com.liferay.site.item.selector.web.internal.display.context;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.portlet.PortalPreferences;
-import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
@@ -26,7 +24,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.item.selector.criterion.SiteItemSelectorCriterion;
-import com.liferay.site.item.selector.web.internal.constants.SitesItemSelectorWebKeys;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
@@ -54,26 +51,13 @@ public abstract class BaseSitesItemSelectorViewDisplayContext
 
 	@Override
 	public String getDisplayStyle() {
-		String displayStyle = ParamUtil.getString(request, "displayStyle");
-
-		PortalPreferences portalPreferences =
-			PortletPreferencesFactoryUtil.getPortalPreferences(request);
-
-		if (Validator.isNull(displayStyle)) {
-			displayStyle = portalPreferences.getValue(
-				SitesItemSelectorWebKeys.SITES_ITEM_SELECTOR, "display-style",
-				"icon");
-		}
-		else {
-			portalPreferences.setValue(
-				SitesItemSelectorWebKeys.SITES_ITEM_SELECTOR, "display-style",
-				displayStyle);
-
-			request.setAttribute(
-				WebKeys.SINGLE_PAGE_APPLICATION_CLEAR_CACHE, Boolean.TRUE);
+		if (Validator.isNotNull(_displayStyle)) {
+			return _displayStyle;
 		}
 
-		return displayStyle;
+		_displayStyle = ParamUtil.getString(request, "displayStyle", "icon");
+
+		return _displayStyle;
 	}
 
 	@Override
@@ -131,6 +115,7 @@ public abstract class BaseSitesItemSelectorViewDisplayContext
 	protected final PortletURL portletURL;
 	protected final HttpServletRequest request;
 
+	private String _displayStyle;
 	private final String _itemSelectedEventName;
 	private final SiteItemSelectorCriterion _siteItemSelectorCriterion;
 

@@ -15,14 +15,9 @@
 package com.liferay.site.browser.web.internal.portlet;
 
 import com.liferay.portal.kernel.model.Release;
-import com.liferay.portal.kernel.portlet.PortalPreferences;
-import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.site.browser.web.internal.constants.SiteBrowserPortletKeys;
 
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
 
 import org.osgi.service.component.annotations.Component;
@@ -54,21 +49,6 @@ import org.osgi.service.component.annotations.Reference;
 	service = Portlet.class
 )
 public class SiteBrowserPortlet extends MVCPortlet {
-
-	public void changeDisplayStyle(
-		ActionRequest actionRequest, ActionResponse actionResponse) {
-
-		hideDefaultSuccessMessage(actionRequest);
-
-		String displayStyle = ParamUtil.getString(
-			actionRequest, "displayStyle");
-
-		PortalPreferences portalPreferences =
-			PortletPreferencesFactoryUtil.getPortalPreferences(actionRequest);
-
-		portalPreferences.setValue(
-			SiteBrowserPortletKeys.SITE_BROWSER, "display-style", displayStyle);
-	}
 
 	@Reference(
 		target = "(&(release.bundle.symbolic.name=com.liferay.site.browser.web)(&(release.schema.version>=1.0.0)(!(release.schema.version>=1.1.0))))",

@@ -22,16 +22,12 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Team;
-import com.liferay.portal.kernel.portlet.PortalPreferences;
-import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.service.TeamLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.util.comparator.TeamNameComparator;
-import com.liferay.site.teams.web.internal.constants.SiteTeamsPortletKeys;
 import com.liferay.site.teams.web.internal.search.TeamDisplayTerms;
 import com.liferay.site.teams.web.internal.search.TeamSearch;
 
@@ -39,7 +35,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Objects;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -73,11 +68,7 @@ public class SelectTeamDisplayContext {
 			return _displayStyle;
 		}
 
-		PortalPreferences portalPreferences =
-			PortletPreferencesFactoryUtil.getPortalPreferences(_request);
-
-		_displayStyle = portalPreferences.getValue(
-			SiteTeamsPortletKeys.SITE_TEAMS, "display-style", "icon");
+		_displayStyle = ParamUtil.getString(_request, "displayStyle", "icon");
 
 		return _displayStyle;
 	}
@@ -241,13 +232,7 @@ public class SelectTeamDisplayContext {
 	}
 
 	public List<ViewTypeItem> getViewTypeItems() {
-		PortletURL portletURL = _renderResponse.createActionURL();
-
-		portletURL.setParameter(
-			ActionRequest.ACTION_NAME, "changeDisplayStyle");
-		portletURL.setParameter("redirect", PortalUtil.getCurrentURL(_request));
-
-		return new ViewTypeItemList(portletURL, getDisplayStyle()) {
+		return new ViewTypeItemList(getPortletURL(), getDisplayStyle()) {
 			{
 				addCardViewTypeItem();
 				addListViewTypeItem();

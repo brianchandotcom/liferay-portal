@@ -17,8 +17,6 @@ package com.liferay.site.memberships.web.internal.display.context;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.portlet.PortalPreferences;
-import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -28,7 +26,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.sitesadmin.search.UserSiteMembershipChecker;
 import com.liferay.portlet.usersadmin.search.UserSearch;
 import com.liferay.portlet.usersadmin.search.UserSearchTerms;
-import com.liferay.site.memberships.web.internal.constants.SiteMembershipsPortletKeys;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -58,12 +55,7 @@ public class SelectUsersDisplayContext {
 			return _displayStyle;
 		}
 
-		PortalPreferences portalPreferences =
-			PortletPreferencesFactoryUtil.getPortalPreferences(_request);
-
-		_displayStyle = portalPreferences.getValue(
-			SiteMembershipsPortletKeys.SITE_MEMBERSHIPS_ADMIN, "display-style",
-			"icon");
+		_displayStyle = ParamUtil.getString(_request, "displayStyle", "icon");
 
 		return _displayStyle;
 	}

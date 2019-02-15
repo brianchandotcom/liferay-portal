@@ -16,15 +16,16 @@ package com.liferay.oauth2.provider.scope.internal.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
-import com.liferay.oauth2.provider.scope.internal.constants.OAuth2ProviderScopeConstants;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
+
+import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
 
 /**
  * @author Tomas Polesovsky
  */
 @ExtendedObjectClassDefinition(
 	category = "oauth2",
-	factoryInstanceLabelAttribute = OAuth2ProviderScopeConstants.OSGI_JAXRS_NAME
+	factoryInstanceLabelAttribute = JaxrsWhiteboardConstants.JAX_RS_NAME
 )
 @Meta.OCD(
 	factory = true,
@@ -36,8 +37,8 @@ public interface ConfigurableScopeMapperConfiguration {
 
 	@Meta.AD(
 		deflt = "Default", description = "osgi-jaxrs-name-description",
-		id = OAuth2ProviderScopeConstants.OSGI_JAXRS_NAME,
-		name = "osgi-jaxrs-name", required = false
+		id = JaxrsWhiteboardConstants.JAX_RS_NAME, name = "osgi-jaxrs-name",
+		required = false
 	)
 	public String osgiJAXRSName();
 

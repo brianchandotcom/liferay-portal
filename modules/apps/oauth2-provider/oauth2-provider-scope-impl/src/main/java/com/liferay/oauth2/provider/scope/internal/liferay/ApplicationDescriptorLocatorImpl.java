@@ -14,7 +14,6 @@
 
 package com.liferay.oauth2.provider.scope.internal.liferay;
 
-import com.liferay.oauth2.provider.scope.internal.constants.OAuth2ProviderScopeConstants;
 import com.liferay.oauth2.provider.scope.liferay.ApplicationDescriptorLocator;
 import com.liferay.oauth2.provider.scope.spi.application.descriptor.ApplicationDescriptor;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
@@ -26,6 +25,7 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
 
 /**
  * @author Tomas Polesovsky
@@ -52,7 +52,7 @@ public class ApplicationDescriptorLocatorImpl
 	protected void activate(BundleContext bundleContext) {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
 			bundleContext, ApplicationDescriptor.class,
-			OAuth2ProviderScopeConstants.OSGI_JAXRS_NAME);
+			JaxrsWhiteboardConstants.JAX_RS_NAME);
 	}
 
 	@Deactivate

@@ -16,16 +16,17 @@ package com.liferay.oauth2.provider.scope.internal.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
-import com.liferay.oauth2.provider.scope.internal.constants.OAuth2ProviderScopeConstants;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
+
+import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
 
 /**
  * @author Tomas Polesovsky
  */
 @ExtendedObjectClassDefinition(
 	category = "oauth2",
-	factoryInstanceLabelAttribute = OAuth2ProviderScopeConstants.OSGI_JAXRS_NAME
+	factoryInstanceLabelAttribute = JaxrsWhiteboardConstants.JAX_RS_NAME
 )
 @Meta.OCD(
 	factory = true,
@@ -37,8 +38,8 @@ public interface BundlePrefixHandlerFactoryConfiguration {
 
 	@Meta.AD(
 		deflt = "Default", description = "osgi-jaxrs-name-description",
-		id = OAuth2ProviderScopeConstants.OSGI_JAXRS_NAME,
-		name = "osgi-jaxrs-name", required = false
+		id = JaxrsWhiteboardConstants.JAX_RS_NAME, name = "osgi-jaxrs-name",
+		required = false
 	)
 	public String osgiJAXRSName();
 
@@ -57,7 +58,7 @@ public interface BundlePrefixHandlerFactoryConfiguration {
 	public String[] excludedScopes();
 
 	@Meta.AD(
-		deflt = OAuth2ProviderScopeConstants.OSGI_JAXRS_NAME,
+		deflt = JaxrsWhiteboardConstants.JAX_RS_NAME,
 		description = "service-properties-description",
 		id = "service.properties", name = "service-properties", required = false
 	)

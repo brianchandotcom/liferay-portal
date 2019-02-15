@@ -14,7 +14,6 @@
 
 package com.liferay.oauth2.provider.scope.internal.liferay;
 
-import com.liferay.oauth2.provider.scope.internal.constants.OAuth2ProviderScopeConstants;
 import com.liferay.oauth2.provider.scope.liferay.LiferayOAuth2Scope;
 import com.liferay.oauth2.provider.scope.liferay.ScopeLocator;
 import com.liferay.oauth2.provider.scope.liferay.ScopedServiceTrackerMap;
@@ -48,6 +47,7 @@ import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicy;
 import org.osgi.service.component.annotations.ReferencePolicyOption;
+import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
@@ -186,7 +186,7 @@ public class ScopeLocatorImpl implements ScopeLocator {
 		setScopedPrefixHandlerFactories(
 			_scopedServiceTrackerMapFactory.create(
 				bundleContext, PrefixHandlerFactory.class,
-				OAuth2ProviderScopeConstants.OSGI_JAXRS_NAME,
+				JaxrsWhiteboardConstants.JAX_RS_NAME,
 				() -> {
 					PrefixHandlerFactory prefixHandlerFactory =
 						_defaultPrefixHandlerFactory;
@@ -201,11 +201,11 @@ public class ScopeLocatorImpl implements ScopeLocator {
 		setScopedScopeFinders(
 			_scopedServiceTrackerMapFactory.create(
 				bundleContext, ScopeFinder.class,
-				OAuth2ProviderScopeConstants.OSGI_JAXRS_NAME, () -> null));
+				JaxrsWhiteboardConstants.JAX_RS_NAME, () -> null));
 		setScopedScopeMapper(
 			_scopedServiceTrackerMapFactory.create(
 				bundleContext, ScopeMapper.class,
-				OAuth2ProviderScopeConstants.OSGI_JAXRS_NAME,
+				JaxrsWhiteboardConstants.JAX_RS_NAME,
 				() -> {
 					ScopeMapper scopeMapper = _defaultScopeMapper;
 
@@ -221,7 +221,7 @@ public class ScopeLocatorImpl implements ScopeLocator {
 		setScopeFinderByNameServiceTrackerMap(
 			ServiceTrackerMapFactory.openSingleValueMap(
 				bundleContext, ScopeFinder.class,
-				OAuth2ProviderScopeConstants.OSGI_JAXRS_NAME,
+				JaxrsWhiteboardConstants.JAX_RS_NAME,
 				new ScopeFinderServiceTupleServiceTrackerCustomizer(
 					bundleContext)));
 	}

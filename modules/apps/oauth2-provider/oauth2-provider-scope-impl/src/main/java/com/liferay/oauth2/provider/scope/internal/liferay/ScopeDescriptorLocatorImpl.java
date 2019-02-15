@@ -14,7 +14,6 @@
 
 package com.liferay.oauth2.provider.scope.internal.liferay;
 
-import com.liferay.oauth2.provider.scope.internal.constants.OAuth2ProviderScopeConstants;
 import com.liferay.oauth2.provider.scope.liferay.ScopeDescriptorLocator;
 import com.liferay.oauth2.provider.scope.spi.scope.descriptor.ScopeDescriptor;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
@@ -25,6 +24,7 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
 
 /**
  * @author Carlos Sierra Andrés
@@ -49,7 +49,7 @@ public class ScopeDescriptorLocatorImpl implements ScopeDescriptorLocator {
 		_scopeDescriptorsByApplicationName =
 			ServiceTrackerMapFactory.openSingleValueMap(
 				bundleContext, ScopeDescriptor.class,
-				OAuth2ProviderScopeConstants.OSGI_JAXRS_NAME);
+				JaxrsWhiteboardConstants.JAX_RS_NAME);
 		_scopeDescriptorsByCompany =
 			ServiceTrackerMapFactory.openSingleValueMap(
 				bundleContext, ScopeDescriptor.class, "company.id");

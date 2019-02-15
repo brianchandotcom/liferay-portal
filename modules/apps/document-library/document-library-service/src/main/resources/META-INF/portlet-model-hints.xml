@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 
 <model-hints>
-	<model name="com.liferay.document.library.model.FileVersionPreview">
-		<field name="fileVersionPreviewId" type="long" />
+	<model name="com.liferay.document.library.model.DLFileVersionPreview">
+		<field name="dlFileVersionPreviewId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="fileEntryId" type="long" />
 		<field name="fileVersionId" type="long" />

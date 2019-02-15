@@ -7,6 +7,6 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
 >
-	<bean class="com.liferay.document.library.service.impl.FileVersionPreviewLocalServiceImpl" id="com.liferay.document.library.service.FileVersionPreviewLocalService" />
-	<bean class="com.liferay.document.library.service.persistence.impl.FileVersionPreviewPersistenceImpl" id="com.liferay.document.library.service.persistence.FileVersionPreviewPersistence" />
+	<bean class="com.liferay.document.library.service.impl.DLFileVersionPreviewLocalServiceImpl" id="com.liferay.document.library.service.DLFileVersionPreviewLocalService" />
+	<bean class="com.liferay.document.library.service.persistence.impl.DLFileVersionPreviewPersistenceImpl" id="com.liferay.document.library.service.persistence.DLFileVersionPreviewPersistence" />
 </beans>

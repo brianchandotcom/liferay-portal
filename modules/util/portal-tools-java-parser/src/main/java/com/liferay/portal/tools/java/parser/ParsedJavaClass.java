@@ -17,6 +17,7 @@ package com.liferay.portal.tools.java.parser;
 import antlr.CommonHiddenStreamToken;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -28,18 +29,9 @@ public class ParsedJavaClass {
 	public void addJavaTerm(
 		String content, Position startPosition, Position endPosition) {
 
-		ParsedJavaTerm parsedJavaTerm = _parsedJavaTermsMap.get(startPosition);
-
-		if (parsedJavaTerm != null) {
-			parsedJavaTerm.setContent(content);
-			parsedJavaTerm.setEndPosition(endPosition);
-		}
-		else {
-			parsedJavaTerm = new ParsedJavaTerm(
-				content, startPosition, endPosition);
-		}
-
-		_parsedJavaTermsMap.put(startPosition, parsedJavaTerm);
+		_parsedJavaTermsMap.put(
+			startPosition,
+			new ParsedJavaTerm(content, startPosition, endPosition));
 	}
 
 	public void addPrecedingCommentToken(
@@ -49,13 +41,13 @@ public class ParsedJavaClass {
 
 		if (parsedJavaTerm != null) {
 			parsedJavaTerm.setPrecedingCommentToken(precedingCommentToken);
+
+			_parsedJavaTermsMap.put(startPosition, parsedJavaTerm);
 		}
 		else {
-			parsedJavaTerm = new ParsedJavaTerm(
-				precedingCommentToken, startPosition);
+			_precedingCommentTokensMap.put(
+				startPosition, precedingCommentToken);
 		}
-
-		_parsedJavaTermsMap.put(startPosition, parsedJavaTerm);
 	}
 
 	public Map<Position, ParsedJavaTerm> getParsedJavaTermsMap() {
@@ -64,5 +56,7 @@ public class ParsedJavaClass {
 
 	private final Map<Position, ParsedJavaTerm> _parsedJavaTermsMap =
 		new TreeMap<>(Collections.reverseOrder());
+	private final Map<Position, CommonHiddenStreamToken>
+		_precedingCommentTokensMap = new HashMap<>();
 
 }

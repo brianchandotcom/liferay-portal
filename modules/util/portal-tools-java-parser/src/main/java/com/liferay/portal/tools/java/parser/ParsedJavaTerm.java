@@ -22,18 +22,15 @@ import antlr.CommonHiddenStreamToken;
 public class ParsedJavaTerm {
 
 	public ParsedJavaTerm(
-		CommonHiddenStreamToken precedingCommentToken, Position startPosition) {
-
-		_precedingCommentToken = precedingCommentToken;
-		_startPosition = startPosition;
-	}
-
-	public ParsedJavaTerm(
 		String content, Position startPosition, Position endPosition) {
 
 		_content = content;
 		_startPosition = startPosition;
 		_endPosition = endPosition;
+	}
+
+	public boolean containsCommentToken() {
+		return _containsCommentToken;
 	}
 
 	public String getContent() {
@@ -52,12 +49,8 @@ public class ParsedJavaTerm {
 		return _startPosition;
 	}
 
-	public void setContent(String content) {
-		_content = content;
-	}
-
-	public void setEndPosition(Position endPosition) {
-		_endPosition = endPosition;
+	public void setContainsCommentToken(boolean containsCommentToken) {
+		_containsCommentToken = containsCommentToken;
 	}
 
 	public void setPrecedingCommentToken(
@@ -66,8 +59,9 @@ public class ParsedJavaTerm {
 		_precedingCommentToken = precedingCommentToken;
 	}
 
-	private String _content;
-	private Position _endPosition;
+	private boolean _containsCommentToken;
+	private final String _content;
+	private final Position _endPosition;
 	private CommonHiddenStreamToken _precedingCommentToken;
 	private final Position _startPosition;
 

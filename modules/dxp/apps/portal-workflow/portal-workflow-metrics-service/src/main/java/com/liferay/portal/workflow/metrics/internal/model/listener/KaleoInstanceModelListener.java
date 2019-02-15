@@ -103,7 +103,6 @@ public class KaleoInstanceModelListener
 		document.addKeyword("instanceId", kaleoInstance.getKaleoInstanceId());
 		document.addKeyword(
 			"processId", kaleoInstance.getKaleoDefinitionVersionId());
-
 		document.addUID(
 			"InstanceWorkflowMetrics",
 			digest(

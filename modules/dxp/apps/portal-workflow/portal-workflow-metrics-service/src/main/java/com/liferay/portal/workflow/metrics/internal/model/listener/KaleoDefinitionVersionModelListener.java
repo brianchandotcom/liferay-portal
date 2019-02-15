@@ -97,7 +97,6 @@ public class KaleoDefinitionVersionModelListener
 			"title", kaleoDefinitionVersion.getTitleMap());
 		document.addKeyword("version", kaleoDefinitionVersion.getVersion());
 		document.addKeyword("userId", kaleoDefinitionVersion.getUserId());
-
 		document.addUID(
 			"WorkflowMetricsProcess",
 			digest(

@@ -108,7 +108,6 @@ public class KaleoTaskInstanceTokenModelListener
 			"tokenId", kaleoTaskInstanceToken.getKaleoInstanceTokenId());
 		document.addKeyword(
 			"processId", kaleoTaskInstanceToken.getKaleoDefinitionVersionId());
-
 		document.addUID(
 			"WorkflowMetricsToken",
 			digest(

@@ -26,6 +26,7 @@ import com.liferay.saml.persistence.model.SamlSpIdpConnection;
 import com.liferay.saml.persistence.service.SamlSpIdpConnectionLocalService;
 import com.liferay.saml.runtime.configuration.SamlProviderConfiguration;
 import com.liferay.saml.runtime.configuration.SamlProviderConfigurationHelper;
+import com.liferay.saml.runtime.profile.SamlSpIdpConnectionsProfile;
 import com.liferay.saml.util.JspUtil;
 
 import java.util.List;
@@ -37,6 +38,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Stian Sigvartsen
@@ -126,6 +129,11 @@ public class SamlLoginAction extends BaseSamlStrutsAction {
 	protected boolean isEnabled(
 		SamlSpIdpConnection samlSpIdpConnection, HttpServletRequest request) {
 
+		if (_samlSpIdpConnectionsProfile != null) {
+			return _samlSpIdpConnectionsProfile.isEnabled(
+				samlSpIdpConnection, request);
+		}
+
 		return samlSpIdpConnection.isEnabled();
 	}
 
@@ -160,5 +168,11 @@ public class SamlLoginAction extends BaseSamlStrutsAction {
 
 	@Reference
 	private SamlSpIdpConnectionLocalService _samlSpIdpConnectionLocalService;
+
+	@Reference (
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	private SamlSpIdpConnectionsProfile _samlSpIdpConnectionsProfile;
 
 }

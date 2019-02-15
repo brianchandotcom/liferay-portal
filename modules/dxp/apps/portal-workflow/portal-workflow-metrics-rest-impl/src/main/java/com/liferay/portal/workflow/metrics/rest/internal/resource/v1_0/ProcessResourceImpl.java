@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.search.facet.collector.TermCollector;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -79,17 +80,25 @@ public class ProcessResourceImpl extends BaseProcessResourceImpl {
 		return new BooleanFilter() {
 			{
 				addRequiredTerm("active", true);
-				addRequiredTerm("companyId", company.getCompanyId());
+				addRequiredTerm("companyId", _getCompanyId());
 				addRequiredTerm("deleted", false);
 			}
 		};
 	}
 
+	private long _getCompanyId() {
+		if (company != null) {
+			return company.getCompanyId();
+		}
+
+		return CompanyThreadLocal.getCompanyId();
+	}
+
 	private int _getInstanceCount(String name) {
 		BooleanFilter booleanFilter = new BooleanFilter() {
 			{
-				addRequiredTerm("companyId", company.getCompanyId());
 				addRequiredTerm("complete", false);
+				addRequiredTerm("companyId", _getCompanyId());
 				addRequiredTerm("deleted", false);
 
 				TermsFilter termsFilter = new TermsFilter("processId");

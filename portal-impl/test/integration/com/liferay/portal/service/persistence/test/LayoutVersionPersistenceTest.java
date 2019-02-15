@@ -734,11 +734,11 @@ public class LayoutVersionPersistenceTest {
 			"privateLayout", true, "layoutId", true, "parentLayoutId", true,
 			"classNameId", true, "classPK", true, "name", true, "title", true,
 			"description", true, "keywords", true, "robots", true, "type", true,
-			"typeSettings", true, "hidden", true, "system", true, "friendlyURL",
-			true, "iconImageId", true, "themeId", true, "colorSchemeId", true,
-			"css", true, "priority", true, "layoutPrototypeUuid", true,
-			"layoutPrototypeLinkEnabled", true, "sourcePrototypeLayoutUuid",
-			true, "publishDate", true, "lastPublishDate", true);
+			"hidden", true, "system", true, "friendlyURL", true, "iconImageId",
+			true, "themeId", true, "colorSchemeId", true, "priority", true,
+			"layoutPrototypeUuid", true, "layoutPrototypeLinkEnabled", true,
+			"sourcePrototypeLayoutUuid", true, "publishDate", true,
+			"lastPublishDate", true);
 	}
 
 	@Test

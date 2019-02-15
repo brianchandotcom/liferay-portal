@@ -1,0 +1,10 @@
+{
+	"dependencies": {
+		"metal-tooltip": "^2.0.3"
+	},
+	"devDependencies": {
+		"liferay-npm-scripts": "1.2.0"
+	},
+	"name": "adaptive-media-web",
+	"version": "3.0.0"
+}

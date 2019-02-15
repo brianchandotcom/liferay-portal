@@ -22,6 +22,36 @@ import org.junit.Test;
 public class JSONSourceProcessorTest extends BaseSourceProcessorTestCase {
 
 	@Test
+	public void testCheckMissingScripts() throws Exception {
+		test(
+			"CheckMissingScripts1/package.testjson",
+			new String[] {
+				"For Using 'liferay-npm-scripts', 'csf' should be enforced",
+				"For Using 'liferay-npm-scripts', 'format' should be enforced"
+			});
+
+		test(
+			"CheckMissingScripts2/package.testjson",
+			new String[] {
+				"For Using 'liferay-npm-scripts', 'csf' should be enforced",
+				"For Using 'liferay-npm-scripts', 'format' should be enforced"
+			});
+
+		test(
+			"CheckMissingScripts3/package.testjson",
+			new String[] {
+				"For Using 'liferay-npm-scripts', 'csf' should be enforced",
+				"For Using 'liferay-npm-scripts', 'format' should be enforced"
+			});
+
+		test(
+			"CheckMissingScripts4/package.testjson",
+			new String[] {
+				"For Using 'liferay-npm-scripts', 'format' should be enforced"
+			});
+	}
+
+	@Test
 	public void testJSONDeprecatedPackagesCheck() throws Exception {
 		test(
 			"JSONDeprecatedPackages/package.testjson",

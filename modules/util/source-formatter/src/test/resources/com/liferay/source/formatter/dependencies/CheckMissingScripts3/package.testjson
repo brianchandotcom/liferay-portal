@@ -1,0 +1,15 @@
+{
+	"dependencies": {
+		"metal-tooltip": "^2.0.3"
+	},
+	"devDependencies": {
+		"liferay-npm-scripts": "1.2.0"
+	},
+	"name": "adaptive-media-web",
+	"scripts": {
+		"build": "liferay-npm-scripts build --soy --bundler",
+		"csf": "liferay-npm-scripts-incorrect lint",
+		"format": "liferay-npm-scripts-incorrect format"
+	},
+	"version": "3.0.0"
+}

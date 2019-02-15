@@ -14,29 +14,18 @@
 
 package com.liferay.taglib.ui;
 
-import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.language.LanguageConstants;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.IncludeTag;
-import com.liferay.taglib.util.LexiconUtil;
-import com.liferay.taglib.util.TagResourceBundleUtil;
-import com.liferay.users.admin.kernel.file.uploads.UserFileUploadsSettings;
-
-import java.util.ResourceBundle;
 import java.util.function.Supplier;
 
 import javax.servlet.http.HttpServletRequest;
@@ -143,36 +132,6 @@ public class UserPortraitTag extends IncludeTag {
 		return _user;
 	}
 
-	protected String getUserInitials(User user) {
-		if (user != null) {
-			return user.getInitials();
-		}
-
-		String userName = _userName;
-
-		if (Validator.isNull(userName)) {
-			ResourceBundle resourceBundle =
-				TagResourceBundleUtil.getResourceBundle(pageContext);
-
-			userName = LanguageUtil.get(resourceBundle, "user");
-		}
-
-		String[] userNames = StringUtil.split(userName, CharPool.SPACE);
-
-		StringBuilder sb = new StringBuilder(2);
-
-		for (int i = 0; (i < userNames.length) && (i < 2); i++) {
-			if (!userNames[i].isEmpty()) {
-				int codePoint = Character.toUpperCase(
-					userNames[i].codePointAt(0));
-
-				sb.append(Character.toChars(codePoint));
-			}
-		}
-
-		return sb.toString();
-	}
-
 	@Override
 	protected boolean isCleanUpSetAttributes() {
 		return false;
@@ -187,11 +146,6 @@ public class UserPortraitTag extends IncludeTag {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		UserPortraitTag.class);
-
-	private static volatile UserFileUploadsSettings _userFileUploadsSettings =
-		ServiceProxyFactory.newServiceTrackedInstance(
-			UserFileUploadsSettings.class, UserPortraitTag.class,
-			"_userFileUploadsSettings", false);
 
 	private String _cssClass = StringPool.BLANK;
 	private User _user;

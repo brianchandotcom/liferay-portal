@@ -278,6 +278,7 @@ AUI.add(
 						var instance = this;
 
 						if (!instance.hasFocus(document.activeElement)) {
+							instance.showErrorMessage();
 							instance._fireBlurEvent();
 						}
 					},

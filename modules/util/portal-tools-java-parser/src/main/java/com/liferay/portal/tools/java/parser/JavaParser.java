@@ -246,8 +246,9 @@ public class JavaParser {
 				break;
 			}
 
-			if ((parentDetailAST.getType() == TokenTypes.OBJBLOCK) ||
-				(parentDetailAST.getType() == TokenTypes.ELIST) ||
+			if ((parentDetailAST.getType() == TokenTypes.ELIST) ||
+				(parentDetailAST.getType() == TokenTypes.LITERAL_SWITCH) ||
+				(parentDetailAST.getType() == TokenTypes.OBJBLOCK) ||
 				(parentDetailAST.getType() == TokenTypes.SLIST)) {
 
 				indent += StringPool.TAB;

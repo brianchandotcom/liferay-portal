@@ -122,9 +122,8 @@ public class UpdateUserRolesMVCActionCommand extends BaseMVCActionCommand {
 				birthdayCal.get(Calendar.YEAR), contact.getSmsSn(),
 				contact.getFacebookSn(), contact.getJabberSn(),
 				contact.getSkypeSn(), contact.getTwitterSn(),
-				user.getJobTitle(), user.getGroupIds(),
-				user.getOrganizationIds(), roleIds, userGroupRoles,
-				user.getUserGroupIds(), serviceContext);
+				user.getJobTitle(), null, user.getOrganizationIds(), roleIds,
+				userGroupRoles, user.getUserGroupIds(), serviceContext);
 
 			User currentUser = _userService.getCurrentUser();
 

@@ -15,7 +15,7 @@
 package com.liferay.document.library.internal.repository.capabilities;
 
 import com.liferay.document.library.kernel.util.DLProcessorRegistryUtil;
-import com.liferay.document.library.service.FileVersionPreviewLocalService;
+import com.liferay.document.library.service.DLFileVersionPreviewLocalService;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.capabilities.ProcessorCapability;
@@ -38,10 +38,10 @@ public class LiferayProcessorCapability
 
 	public LiferayProcessorCapability(
 		ResourceGenerationStrategy resourceGenerationStrategy,
-		FileVersionPreviewLocalService fileVersionPreviewLocalService) {
+		DLFileVersionPreviewLocalService dlFileVersionPreviewLocalService) {
 
 		_resourceGenerationStrategy = resourceGenerationStrategy;
-		_fileVersionPreviewLocalService = fileVersionPreviewLocalService;
+		_dlFileVersionPreviewLocalService = dlFileVersionPreviewLocalService;
 	}
 
 	@Override
@@ -76,8 +76,8 @@ public class LiferayProcessorCapability
 		repositoryEventRegistry.registerRepositoryEventListener(
 			RepositoryEventType.Delete.class, FileEntry.class,
 			fileEntry -> {
-				_fileVersionPreviewLocalService.
-					deleteFileEntryFileVersionPreviews(
+				_dlFileVersionPreviewLocalService.
+					deleteDLFileEntryFileVersionPreviews(
 						fileEntry.getFileEntryId());
 
 				cleanUp(fileEntry);
@@ -108,8 +108,8 @@ public class LiferayProcessorCapability
 			});
 	}
 
-	private final FileVersionPreviewLocalService
-		_fileVersionPreviewLocalService;
+	private final DLFileVersionPreviewLocalService
+		_dlFileVersionPreviewLocalService;
 	private final ResourceGenerationStrategy _resourceGenerationStrategy;
 
 }

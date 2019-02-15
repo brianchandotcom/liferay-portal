@@ -14,7 +14,7 @@
 
 package com.liferay.document.library.preview.pdf.internal;
 
-import com.liferay.document.library.constants.FileVersionPreviewConstants;
+import com.liferay.document.library.constants.DLFileVersionPreviewConstants;
 import com.liferay.document.library.kernel.util.DLProcessorRegistryUtil;
 import com.liferay.document.library.kernel.util.PDFProcessorUtil;
 import com.liferay.document.library.preview.DLPreviewRenderer;
@@ -22,7 +22,7 @@ import com.liferay.document.library.preview.DLPreviewRendererProvider;
 import com.liferay.document.library.preview.exception.DLFileEntryPreviewGenerationException;
 import com.liferay.document.library.preview.exception.DLPreviewGenerationInProcessException;
 import com.liferay.document.library.preview.exception.DLPreviewSizeException;
-import com.liferay.document.library.service.FileVersionPreviewLocalService;
+import com.liferay.document.library.service.DLFileVersionPreviewLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -81,9 +81,9 @@ public class PDFDLPreviewRendererProvider implements DLPreviewRendererProvider {
 	protected void checkForPreviewGenerationExceptions(FileVersion fileVersion)
 		throws PortalException {
 
-		if (_fileVersionPreviewLocalService.hasFileVersionPreview(
+		if (_dlFileVersionPreviewLocalService.hasDLFileVersionPreview(
 				fileVersion.getFileEntryId(), fileVersion.getFileVersionId(),
-				FileVersionPreviewConstants.FAILURE)) {
+				DLFileVersionPreviewConstants.FAILURE)) {
 
 			throw new DLFileEntryPreviewGenerationException();
 		}
@@ -98,7 +98,7 @@ public class PDFDLPreviewRendererProvider implements DLPreviewRendererProvider {
 	}
 
 	@Reference
-	private FileVersionPreviewLocalService _fileVersionPreviewLocalService;
+	private DLFileVersionPreviewLocalService _dlFileVersionPreviewLocalService;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.document.library.preview.pdf)"

@@ -14,14 +14,14 @@
 
 package com.liferay.document.library.internal.util;
 
-import com.liferay.document.library.constants.FileVersionPreviewConstants;
+import com.liferay.document.library.constants.DLFileVersionPreviewConstants;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.util.DL;
 import com.liferay.document.library.kernel.util.ImageProcessorUtil;
 import com.liferay.document.library.kernel.util.PDFProcessorUtil;
 import com.liferay.document.library.kernel.util.VideoProcessorUtil;
-import com.liferay.document.library.service.FileVersionPreviewLocalService;
+import com.liferay.document.library.service.DLFileVersionPreviewLocalService;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -132,9 +132,9 @@ public class DLURLHelperImpl implements DLURLHelper {
 		FileEntry fileEntry, FileVersion fileVersion, ThemeDisplay themeDisplay,
 		String queryString, boolean appendVersion, boolean absoluteURL) {
 
-		if (_fileVersionPreviewLocalService.hasFileVersionPreview(
+		if (_dlFileVersionPreviewLocalService.hasDLFileVersionPreview(
 				fileEntry.getFileEntryId(), fileVersion.getFileVersionId(),
-				FileVersionPreviewConstants.FAILURE)) {
+				DLFileVersionPreviewConstants.FAILURE)) {
 
 			return StringPool.BLANK;
 		}
@@ -241,9 +241,9 @@ public class DLURLHelperImpl implements DLURLHelper {
 		FileEntry fileEntry, FileVersion fileVersion,
 		ThemeDisplay themeDisplay) {
 
-		if (_fileVersionPreviewLocalService.hasFileVersionPreview(
+		if (_dlFileVersionPreviewLocalService.hasDLFileVersionPreview(
 				fileEntry.getFileEntryId(), fileVersion.getFileVersionId(),
-				FileVersionPreviewConstants.FAILURE)) {
+				DLFileVersionPreviewConstants.FAILURE)) {
 
 			return StringPool.BLANK;
 		}
@@ -393,7 +393,7 @@ public class DLURLHelperImpl implements DLURLHelper {
 	private DLAppLocalService _dlAppLocalService;
 
 	@Reference
-	private FileVersionPreviewLocalService _fileVersionPreviewLocalService;
+	private DLFileVersionPreviewLocalService _dlFileVersionPreviewLocalService;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

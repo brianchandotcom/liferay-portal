@@ -14,7 +14,7 @@
 
 package com.liferay.document.library.preview.video.internal;
 
-import com.liferay.document.library.constants.FileVersionPreviewConstants;
+import com.liferay.document.library.constants.DLFileVersionPreviewConstants;
 import com.liferay.document.library.kernel.util.DLProcessorRegistryUtil;
 import com.liferay.document.library.kernel.util.VideoProcessorUtil;
 import com.liferay.document.library.preview.DLPreviewRenderer;
@@ -23,7 +23,7 @@ import com.liferay.document.library.preview.exception.DLFileEntryPreviewGenerati
 import com.liferay.document.library.preview.exception.DLPreviewGenerationInProcessException;
 import com.liferay.document.library.preview.exception.DLPreviewSizeException;
 import com.liferay.document.library.preview.video.internal.constants.DLPreviewVideoWebKeys;
-import com.liferay.document.library.service.FileVersionPreviewLocalService;
+import com.liferay.document.library.service.DLFileVersionPreviewLocalService;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileVersion;
@@ -49,10 +49,10 @@ public class VideoDLPreviewRendererProvider
 	implements DLPreviewRendererProvider {
 
 	public VideoDLPreviewRendererProvider(
-		FileVersionPreviewLocalService fileVersionPreviewLocalService,
+		DLFileVersionPreviewLocalService dlFileVersionPreviewLocalService,
 		DLURLHelper dlurlHelper, ServletContext servletContext) {
 
-		_fileVersionPreviewLocalService = fileVersionPreviewLocalService;
+		_dlFileVersionPreviewLocalService = dlFileVersionPreviewLocalService;
 		_dlurlHelper = dlurlHelper;
 		_servletContext = servletContext;
 	}
@@ -99,9 +99,9 @@ public class VideoDLPreviewRendererProvider
 	protected void checkForPreviewGenerationExceptions(FileVersion fileVersion)
 		throws PortalException {
 
-		if (_fileVersionPreviewLocalService.hasFileVersionPreview(
+		if (_dlFileVersionPreviewLocalService.hasDLFileVersionPreview(
 				fileVersion.getFileEntryId(), fileVersion.getFileVersionId(),
-				FileVersionPreviewConstants.FAILURE)) {
+				DLFileVersionPreviewConstants.FAILURE)) {
 
 			throw new DLFileEntryPreviewGenerationException();
 		}
@@ -177,9 +177,9 @@ public class VideoDLPreviewRendererProvider
 			"&videoThumbnail=1");
 	}
 
+	private final DLFileVersionPreviewLocalService
+		_dlFileVersionPreviewLocalService;
 	private final DLURLHelper _dlurlHelper;
-	private final FileVersionPreviewLocalService
-		_fileVersionPreviewLocalService;
 	private final ServletContext _servletContext;
 
 }

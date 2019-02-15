@@ -46,6 +46,40 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-90063. Images can be uploaded and deleted in the resources folder in a fragment collection."
+	@priority = "4"
+	test AddThenDeleteResource { 
+		task ("Navigate to the fragment collection") {
+			Navigator.gotoNavNested(navNested = "Collection Name");
+		}
+
+		task ("Navigate to the resources tab") {
+			Navigator.gotoNavItem(navItem = "Resources");
+		}
+
+		task ("Add a resource") {
+			FragmentsAdmin.addResource(resourceFile = "Document_1.png");
+		}
+
+		task ("View resource") {
+			LexiconCard.viewCardPresent(
+				card = "Document_1.png"
+			);
+		}
+
+		task ("Delete resource") {
+			LexiconCard.delete(
+				card = "Document_1.png"
+			);
+		}
+
+		task ("View no resource") {
+			LexiconCard.viewCardNotPresent(
+				card = "Document_1.png"
+			);
+		}
+	}
+
 	@description = "This is a test for LPS-90064 and is a supplementary frontend test to the integration tests in LPS-90307. Fragments can be copied."
 	@priority = "5"
 	test CopyFragment {

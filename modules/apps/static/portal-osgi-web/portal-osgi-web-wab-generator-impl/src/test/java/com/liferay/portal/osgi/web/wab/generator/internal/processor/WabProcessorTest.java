@@ -14,16 +14,25 @@
 
 package com.liferay.portal.osgi.web.wab.generator.internal.processor;
 
+import aQute.bnd.header.Attrs;
 import aQute.bnd.header.Parameters;
+import aQute.bnd.osgi.Constants;
 import aQute.bnd.osgi.Domain;
 import aQute.bnd.osgi.Jar;
+import aQute.bnd.osgi.Processor;
 import aQute.bnd.osgi.Resource;
+import aQute.bnd.version.Version;
+
+import aQute.lib.filter.Filter;
 
 import com.liferay.portal.kernel.deploy.auto.context.AutoDeploymentContext;
 import com.liferay.portal.kernel.security.xml.SecureXMLFactoryProviderUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.xml.Document;
+import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
 import com.liferay.portal.security.xml.SecureXMLFactoryProviderImpl;
@@ -43,9 +52,13 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
+import java.util.AbstractMap;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.stream.Stream;
 
 import org.junit.Assert;
@@ -205,6 +218,368 @@ public class WabProcessorTest {
 			Assert.assertTrue(
 				importedPackages.containsKey("com.liferay.portal.webserver"));
 		}
+	}
+
+	@Test
+	public void testFatCDIWabOptsOutOfOSGiCDIIntegration() throws Exception {
+		File file = getFile("jsf.cdi.applicant.portlet.war");
+
+		Assert.assertNotNull(file);
+
+		Map<String, String[]> parameters = new HashMap<>();
+
+		parameters.put(
+			"Web-ContextPath", new String[] {"/jsf-cdi-applicant-portlet"});
+
+		WabProcessor wabProcessor = new TestWabProcessor(
+			getClassLoader(), file, parameters);
+
+		File processedFile = wabProcessor.getProcessedFile();
+
+		Assert.assertNotNull(processedFile);
+
+		try (Jar jar = new Jar(processedFile)) {
+
+			// Check if the basic metadata is correct
+
+			Assert.assertEquals("jsf-cdi-applicant-portlet", jar.getBsn());
+			Assert.assertEquals("4.1.2", jar.getVersion());
+
+			// Does this WAR have a beans.xml file that would trigger
+			// OSGi CDI Integration analysis?
+
+			Resource beansXMLFile = jar.getResource("WEB-INF/beans.xml");
+
+			Assert.assertNotNull(beansXMLFile);
+
+			// Did the beans.xml file have a discovery mode of none?
+
+			Document document = SAXReaderUtil.read(
+				beansXMLFile.openInputStream());
+
+			Element documentEl = document.getRootElement();
+
+			Node beanDiscoveryMode = documentEl.selectSingleNode(
+				"/beans/@bean-discovery-mode");
+
+			String value = beanDiscoveryMode.getStringValue();
+
+			Assert.assertNotEquals("none", value);
+
+			// Now that we've established CDI discovery would kick
+			// in, check to see if the WAB opted-out of integration by
+			// having the `-cdiannotations` instruction set to the empty
+			// value in `liferay-plugin-package.properties`
+
+			Resource packageProperties = jar.getResource(
+				"WEB-INF/liferay-plugin-package.properties");
+
+			Properties properties = new Properties();
+
+			properties.load(packageProperties.openInputStream());
+
+			Assert.assertTrue(properties.containsKey(Constants.CDIANNOTATIONS));
+
+			value = properties.getProperty(Constants.CDIANNOTATIONS);
+
+			Assert.assertEquals("", value);
+
+			// Finally, make sure no requirement on the OSGI CDI
+			// Integration extender were added to the manifest.
+
+			Domain domain = Domain.domain(jar.getManifest());
+
+			Parameters requirements = domain.getRequireCapability();
+
+			Map<String, Object> arguments = new HashMap<>();
+
+			arguments.put("osgi.extender", "osgi.cdi");
+			arguments.put("version", new Version(1));
+
+			for (Attrs attrs : requirements.values()) {
+				String filterString = attrs.get("filter:");
+
+				if (filterString == null) {
+					continue;
+				}
+
+				Filter filter = new Filter(filterString);
+
+				Assert.assertFalse(filter.matchMap(arguments));
+			}
+		}
+	}
+
+	@Test
+	public void testSkinnyCDIWabGainsOSGiCDIIntegration() throws Exception {
+		File file = getFile("PortletV3AnnotatedDemo.war");
+
+		Assert.assertNotNull(file);
+
+		Map<String, String[]> parameters = new HashMap<>();
+
+		parameters.put(
+			"Web-ContextPath", new String[] {"/portlet-V3-annotated-demo"});
+
+		WabProcessor wabProcessor = new TestWabProcessor(
+			getClassLoader(), file, parameters);
+
+		File processedFile = wabProcessor.getProcessedFile();
+
+		Assert.assertNotNull(processedFile);
+
+		try (Jar jar = new Jar(processedFile)) {
+
+			// Check if the basic metadata is correct
+
+			Assert.assertEquals("portlet-V3-annotated-demo", jar.getBsn());
+			Assert.assertEquals("1.0.0", jar.getVersion());
+
+			// Does this WAR have a beans.xml file that would trigger
+			// OSGi CDI Integration analysis?
+
+			Resource beansXMLFile = jar.getResource("WEB-INF/beans.xml");
+
+			Assert.assertNotNull(beansXMLFile);
+
+			// Did the beans.xml file have a discovery mode of none?
+
+			Document document = SAXReaderUtil.read(
+				beansXMLFile.openInputStream());
+
+			Element documentEl = document.getRootElement();
+
+			Node beanDiscoveryMode = documentEl.selectSingleNode(
+				"/beans/@bean-discovery-mode");
+
+			String value = beanDiscoveryMode.getStringValue();
+
+			Assert.assertNotEquals("none", value);
+
+			// Now that we've established CDI discovery would kick
+			// in, check to see if the WAB opted-out of integration by
+			// having the `-cdiannotations` instruction set to the empty
+			// value in `liferay-plugin-package.properties`
+
+			Resource packageProperties = jar.getResource(
+				"WEB-INF/liferay-plugin-package.properties");
+
+			Properties properties = new Properties();
+
+			properties.load(packageProperties.openInputStream());
+
+			Assert.assertFalse(
+				properties.containsKey(Constants.CDIANNOTATIONS));
+
+			// Finally, make sure the requirement on the OSGI CDI
+			// Integration extender was added to the manifest.
+
+			Domain domain = Domain.domain(jar.getManifest());
+
+			Parameters requirements = domain.getRequireCapability();
+
+			Map<String, Object> arguments = new HashMap<>();
+
+			arguments.put("osgi.extender", "osgi.cdi");
+			arguments.put("version", new Version(1));
+
+			Map.Entry<String, Attrs> entry = findRequirement(
+				requirements, "osgi.extender", arguments);
+
+			Assert.assertNotNull(entry);
+
+			// Assert the expected number of beans were discovered.
+
+			Attrs attrs = entry.getValue();
+
+			List<String> beans = attrs.getTyped(Attrs.LIST_STRING, "beans");
+
+			Assert.assertEquals(beans.toString(), 23, beans.size());
+
+			// Make sure other CDI requirements were added.
+
+			// The bean portlet extension
+
+			arguments = new HashMap<>();
+
+			arguments.put(
+				"osgi.cdi.extension", "com.liferay.bean.portlet.cdi.extension");
+
+			entry = findRequirement(
+				requirements, "osgi.cdi.extension", arguments);
+
+			Assert.assertNotNull(entry);
+
+			// The http extension
+
+			arguments = new HashMap<>();
+
+			arguments.put("osgi.cdi.extension", "aries.cdi.http");
+
+			entry = findRequirement(
+				requirements, "osgi.cdi.extension", arguments);
+
+			Assert.assertNotNull(entry);
+
+			// The EL extension
+
+			arguments = new HashMap<>();
+
+			arguments.put("osgi.cdi.extension", "aries.cdi.el.jsp");
+
+			entry = findRequirement(
+				requirements, "osgi.cdi.extension", arguments);
+
+			Assert.assertNotNull(entry);
+		}
+	}
+
+	@Test
+	public void testThatEmbeddedLibsAreHandledProperly() throws Exception {
+		File file = getFile("tck-V3URLTests.wab.war");
+
+		Assert.assertNotNull(file);
+
+		Map<String, String[]> parameters = new HashMap<>();
+
+		parameters.put(
+			"Web-ContextPath", new String[] {"/portlet-V3-annotated-demo"});
+
+		WabProcessor wabProcessor = new TestWabProcessor(
+			getClassLoader(), file, parameters);
+
+		File processedFile = wabProcessor.getProcessedFile();
+
+		Assert.assertNotNull(processedFile);
+
+		try (Jar jar = new Jar(processedFile)) {
+
+			// Check if the basic metadata is correct
+
+			Assert.assertEquals("portlet-V3-annotated-demo", jar.getBsn());
+			Assert.assertEquals("1.0.0", jar.getVersion());
+
+			// Does this WAR have a beans.xml file that would trigger
+			// OSGi CDI Integration analysis?
+
+			Resource beansXMLFile = jar.getResource("WEB-INF/beans.xml");
+
+			Assert.assertNotNull(beansXMLFile);
+
+			// Did the beans.xml file have a discovery mode of none?
+
+			Document document = SAXReaderUtil.read(
+				beansXMLFile.openInputStream());
+
+			Element documentEl = document.getRootElement();
+
+			Node beanDiscoveryMode = documentEl.selectSingleNode(
+				"/beans/@bean-discovery-mode");
+
+			String value = beanDiscoveryMode.getStringValue();
+
+			Assert.assertNotEquals("none", value);
+
+			// Finally, make sure the requirement on the OSGI CDI
+			// Integration extender was added to the manifest.
+
+			Domain domain = Domain.domain(jar.getManifest());
+
+			Parameters requirements = domain.getRequireCapability();
+
+			Map<String, Object> arguments = new HashMap<>();
+
+			arguments.put("osgi.extender", "osgi.cdi");
+			arguments.put("version", new Version(1));
+
+			Map.Entry<String, Attrs> entry = findRequirement(
+				requirements, "osgi.extender", arguments);
+
+			Assert.assertNotNull(entry);
+
+			// Assert the expected number of beans were discovered.
+
+			Attrs attrs = entry.getValue();
+
+			List<String> beans = attrs.getTyped(Attrs.LIST_STRING, "beans");
+
+			Assert.assertEquals(beans.toString(), 5, beans.size());
+
+			List<String> expectedList = Arrays.asList(
+				"javax.portlet.tck.portlets.URLTests_ActionURL",
+				"javax.portlet.tck.portlets.URLTests_BaseURL",
+				"javax.portlet.tck.portlets.URLTests_RenderURL",
+				"javax.portlet.tck.portlets.URLTests_ResourceURL",
+				"javax.portlet.tck.util.ModuleTestCaseDetails");
+
+			Assert.assertEquals(expectedList.toString(), expectedList, beans);
+
+			// Make sure other CDI requirements were added.
+
+			// The bean portlet extension
+
+			arguments = new HashMap<>();
+
+			arguments.put(
+				"osgi.cdi.extension", "com.liferay.bean.portlet.cdi.extension");
+
+			entry = findRequirement(
+				requirements, "osgi.cdi.extension", arguments);
+
+			Assert.assertNotNull(entry);
+
+			// The http extension
+
+			arguments = new HashMap<>();
+
+			arguments.put("osgi.cdi.extension", "aries.cdi.http");
+
+			entry = findRequirement(
+				requirements, "osgi.cdi.extension", arguments);
+
+			Assert.assertNotNull(entry);
+
+			// The EL extension
+
+			arguments = new HashMap<>();
+
+			arguments.put("osgi.cdi.extension", "aries.cdi.el.jsp");
+
+			entry = findRequirement(
+				requirements, "osgi.cdi.extension", arguments);
+
+			Assert.assertNotNull(entry);
+		}
+	}
+
+	protected Map.Entry<String, Attrs> findRequirement(
+			Parameters requirements, String namespace,
+			Map<String, Object> arguments)
+		throws Exception {
+
+		for (Map.Entry<String, Attrs> entry : requirements.entrySet()) {
+			String key = Processor.removeDuplicateMarker(entry.getKey());
+
+			if (!namespace.equals(key)) {
+				continue;
+			}
+
+			Attrs attrs = entry.getValue();
+
+			String filterString = attrs.get("filter:");
+
+			if (filterString == null) {
+				continue;
+			}
+
+			Filter filter = new Filter(filterString);
+
+			if (filter.matchMap(arguments)) {
+				return new AbstractMap.SimpleEntry<>(key, attrs);
+			}
+		}
+
+		return null;
 	}
 
 	protected ClassLoader getClassLoader() {

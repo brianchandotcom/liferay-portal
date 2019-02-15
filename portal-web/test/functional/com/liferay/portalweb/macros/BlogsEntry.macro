@@ -426,7 +426,10 @@ definition {
 
 		Portlet.mouseOverPortletTitle(portletTitleName = "Blogs");
 
-		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Move to Recycle Bin");
+		LexiconList.clickEllipsisItem(
+			item = "Move to Recycle Bin",
+			listEntry = "${entryTitle}"
+		);
 
 		AssertElementPresent(locator1 = "Message#SUCCESS");
 

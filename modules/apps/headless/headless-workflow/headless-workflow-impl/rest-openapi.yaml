@@ -87,7 +87,7 @@ components:
           type: string
         resourceType:
           type: string
-      type: object    
+      type: object
 info:
   description: ""
   title: ""

@@ -409,9 +409,12 @@ public class JavaParser {
 	private static ParsedJavaClass _getParsedJavaClass(
 		DetailAST rootDetailAST, FileContents fileContents) {
 
-		ParsedJavaClass parsedJavaClass = new ParsedJavaClass();
+		ParsedJavaClass parsedJavaClass = _walk(
+			new ParsedJavaClass(), rootDetailAST, fileContents);
 
-		return _walk(parsedJavaClass, rootDetailAST, fileContents);
+		parsedJavaClass.processCommentTokens();
+
+		return parsedJavaClass;
 	}
 
 	private static String[] _getParts(String s, String delimeter) {
@@ -722,15 +725,6 @@ public class JavaParser {
 			return parsedJavaClass;
 		}
 
-		CommonHiddenStreamToken commonHiddenStreamToken =
-			detailAST.getHiddenBefore();
-
-		if (commonHiddenStreamToken != null) {
-			parsedJavaClass.addPrecedingCommentToken(
-				commonHiddenStreamToken,
-				DetailASTUtil.getStartPosition(detailAST));
-		}
-
 		DetailAST parentDetailAST = detailAST.getParent();
 
 		if (((detailAST.getType() == TokenTypes.ANNOTATION_DEF) ||
@@ -757,6 +751,15 @@ public class JavaParser {
 
 			parsedJavaClass = _parseDetailAST(
 				parsedJavaClass, detailAST, fileContents);
+		}
+
+		CommonHiddenStreamToken commonHiddenStreamToken =
+			detailAST.getHiddenBefore();
+
+		if (commonHiddenStreamToken != null) {
+			parsedJavaClass.addPrecedingCommentToken(
+				commonHiddenStreamToken,
+				DetailASTUtil.getStartPosition(detailAST));
 		}
 
 		parsedJavaClass = _walk(

@@ -54,6 +54,40 @@ public class ParsedJavaClass {
 		return _parsedJavaTermsMap;
 	}
 
+	public void processCommentTokens() {
+		for (Map.Entry<Position, CommonHiddenStreamToken> entry1 :
+				_precedingCommentTokensMap.entrySet()) {
+
+			Position startPosition = entry1.getKey();
+
+			for (Map.Entry<Position, ParsedJavaTerm> entry2 :
+					_parsedJavaTermsMap.entrySet()) {
+
+				ParsedJavaTerm parsedJavaTerm = entry2.getValue();
+
+				int value = startPosition.compareTo(
+					parsedJavaTerm.getStartPosition());
+
+				if (value < 0) {
+					continue;
+				}
+
+				if (value == 0) {
+					parsedJavaTerm.setPrecedingCommentToken(entry1.getValue());
+				}
+				else if (startPosition.compareTo(
+							parsedJavaTerm.getEndPosition()) < 0) {
+
+					parsedJavaTerm.setContainsCommentToken(true);
+				}
+
+				_parsedJavaTermsMap.put(entry2.getKey(), parsedJavaTerm);
+
+				break;
+			}
+		}
+	}
+
 	private final Map<Position, ParsedJavaTerm> _parsedJavaTermsMap =
 		new TreeMap<>(Collections.reverseOrder());
 	private final Map<Position, CommonHiddenStreamToken>

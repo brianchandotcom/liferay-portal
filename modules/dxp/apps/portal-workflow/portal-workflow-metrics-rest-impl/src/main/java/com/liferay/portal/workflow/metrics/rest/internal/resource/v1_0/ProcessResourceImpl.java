@@ -45,7 +45,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class ProcessResourceImpl extends BaseProcessResourceImpl {
 
 	@Override
-	public Page<Process> getProcessPage(
+	public Page<Process> getProcessesPage(
 			Long companyId, String title, Pagination pagination)
 		throws Exception {
 

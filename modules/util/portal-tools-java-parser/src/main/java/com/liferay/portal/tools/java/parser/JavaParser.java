@@ -541,15 +541,7 @@ public class JavaParser {
 		StringBundler sb = new StringBundler();
 
 		for (int i = startLineNumber; i <= endLineNumber; i++) {
-			String line = fileContents.getLine(i - 1);
-
-			String trimmedLine = StringUtil.trimLeading(line);
-
-			if (trimmedLine.startsWith("//") || line.contains("\t//")) {
-				return content;
-			}
-
-			sb.append(line);
+			sb.append(fileContents.getLine(i - 1));
 			sb.append("\n");
 		}
 
@@ -579,7 +571,11 @@ public class JavaParser {
 		for (Map.Entry<Position, ParsedJavaTerm> entry :
 				parsedJavaTermsMap.entrySet()) {
 
-			content = _parseContent(entry.getValue(), content, fileContents);
+			ParsedJavaTerm parsedJavaTerm = entry.getValue();
+
+			if (!parsedJavaTerm.containsCommentToken()) {
+				content = _parseContent(parsedJavaTerm, content, fileContents);
+			}
 		}
 
 		return content;

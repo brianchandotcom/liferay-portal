@@ -56,15 +56,31 @@ public class LayoutSetLocalServiceUtil {
 		return getService().addLayoutSet(groupId, privateLayout);
 	}
 
+	public static com.liferay.portal.kernel.model.LayoutSet checkout(
+		com.liferay.portal.kernel.model.LayoutSet publishedLayoutSet,
+		int version) throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().checkout(publishedLayoutSet, version);
+	}
+
 	/**
-	* Creates a new layout set with the primary key. Does not add the layout set to the database.
+	* Creates a new layout set. Does not add the layout set to the database.
 	*
-	* @param layoutSetId the primary key for the new layout set
 	* @return the new layout set
 	*/
-	public static com.liferay.portal.kernel.model.LayoutSet createLayoutSet(
-		long layoutSetId) {
-		return getService().createLayoutSet(layoutSetId);
+	public static com.liferay.portal.kernel.model.LayoutSet create() {
+		return getService().create();
+	}
+
+	public static com.liferay.portal.kernel.model.LayoutSet delete(
+		com.liferay.portal.kernel.model.LayoutSet publishedLayoutSet)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().delete(publishedLayoutSet);
+	}
+
+	public static com.liferay.portal.kernel.model.LayoutSet deleteDraft(
+		com.liferay.portal.kernel.model.LayoutSet draftLayoutSet)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deleteDraft(draftLayoutSet);
 	}
 
 	/**
@@ -104,6 +120,12 @@ public class LayoutSetLocalServiceUtil {
 		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deletePersistedModel(persistedModel);
+	}
+
+	public static com.liferay.portal.kernel.model.LayoutSetVersion deleteVersion(
+		com.liferay.portal.kernel.model.LayoutSetVersion layoutSetVersion)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deleteVersion(layoutSetVersion);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
@@ -184,6 +206,21 @@ public class LayoutSetLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
+	public static com.liferay.portal.kernel.model.LayoutSet fetchDraft(
+		com.liferay.portal.kernel.model.LayoutSet layoutSet) {
+		return getService().fetchDraft(layoutSet);
+	}
+
+	public static com.liferay.portal.kernel.model.LayoutSet fetchDraft(
+		long primaryKey) {
+		return getService().fetchDraft(primaryKey);
+	}
+
+	public static com.liferay.portal.kernel.model.LayoutSetVersion fetchLatestVersion(
+		com.liferay.portal.kernel.model.LayoutSet layoutSet) {
+		return getService().fetchLatestVersion(layoutSet);
+	}
+
 	public static com.liferay.portal.kernel.model.LayoutSet fetchLayoutSet(
 		long layoutSetId) {
 		return getService().fetchLayoutSet(layoutSetId);
@@ -205,8 +242,30 @@ public class LayoutSetLocalServiceUtil {
 		return getService().fetchLayoutSetByLogoId(privateLayout, logoId);
 	}
 
+	public static com.liferay.portal.kernel.model.LayoutSet fetchPublished(
+		com.liferay.portal.kernel.model.LayoutSet layoutSet) {
+		return getService().fetchPublished(layoutSet);
+	}
+
+	public static com.liferay.portal.kernel.model.LayoutSet fetchPublished(
+		long primaryKey) {
+		return getService().fetchPublished(primaryKey);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
+	}
+
+	public static com.liferay.portal.kernel.model.LayoutSet getDraft(
+		com.liferay.portal.kernel.model.LayoutSet layoutSet)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getDraft(layoutSet);
+	}
+
+	public static com.liferay.portal.kernel.model.LayoutSet getDraft(
+		long primaryKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getDraft(primaryKey);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
@@ -284,15 +343,50 @@ public class LayoutSetLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
+	public static com.liferay.portal.kernel.model.LayoutSetVersion getVersion(
+		com.liferay.portal.kernel.model.LayoutSet layoutSet, int version)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getVersion(layoutSet, version);
+	}
+
+	public static java.util.List<com.liferay.portal.kernel.model.LayoutSetVersion> getVersions(
+		com.liferay.portal.kernel.model.LayoutSet layoutSet) {
+		return getService().getVersions(layoutSet);
+	}
+
+	public static com.liferay.portal.kernel.model.LayoutSet publishDraft(
+		com.liferay.portal.kernel.model.LayoutSet draftLayoutSet)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().publishDraft(draftLayoutSet);
+	}
+
+	public static void registerListener(
+		com.liferay.portal.kernel.service.version.VersionServiceListener<com.liferay.portal.kernel.model.LayoutSet, com.liferay.portal.kernel.model.LayoutSetVersion> versionServiceListener) {
+		getService().registerListener(versionServiceListener);
+	}
+
+	public static void unregisterListener(
+		com.liferay.portal.kernel.service.version.VersionServiceListener<com.liferay.portal.kernel.model.LayoutSet, com.liferay.portal.kernel.model.LayoutSetVersion> versionServiceListener) {
+		getService().unregisterListener(versionServiceListener);
+	}
+
+	public static com.liferay.portal.kernel.model.LayoutSet updateDraft(
+		com.liferay.portal.kernel.model.LayoutSet draftLayoutSet)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().updateDraft(draftLayoutSet);
+	}
+
 	/**
 	* Updates the layout set in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param layoutSet the layout set
 	* @return the layout set that was updated
+	* @throws PortalException
 	*/
 	public static com.liferay.portal.kernel.model.LayoutSet updateLayoutSet(
-		com.liferay.portal.kernel.model.LayoutSet layoutSet) {
-		return getService().updateLayoutSet(layoutSet);
+		com.liferay.portal.kernel.model.LayoutSet draftLayoutSet)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().updateLayoutSet(draftLayoutSet);
 	}
 
 	/**

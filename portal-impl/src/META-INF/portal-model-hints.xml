@@ -811,6 +811,7 @@
 	</model>
 	<model name="com.liferay.portal.kernel.model.LayoutSet">
 		<field name="mvccVersion" type="long" />
+		<field name="headId" type="long" />
 		<field name="layoutSetId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
@@ -880,6 +881,28 @@
 			<hint-collection name="TEXTAREA" />
 		</field>
 		<field name="active" type="boolean" />
+	</model>
+	<model name="com.liferay.portal.kernel.model.LayoutSetVersion">
+		<field name="layoutSetVersionId" type="long" />
+		<field name="version" type="int" />
+		<field name="layoutSetId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="privateLayout" type="boolean" />
+		<field name="logoId" type="long" />
+		<field name="themeId" type="String" />
+		<field name="colorSchemeId" type="String" />
+		<field name="css" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+		<field name="pageCount" type="int" />
+		<field name="settings" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+		<field name="layoutSetPrototypeUuid" type="String" />
+		<field name="layoutSetPrototypeLinkEnabled" type="boolean" />
 	</model>
 	<model name="com.liferay.portal.kernel.model.ListType">
 		<field name="mvccVersion" type="long" />

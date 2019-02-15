@@ -1549,8 +1549,14 @@ public class JavaParserUtil {
 		JavaSwitchCaseStatement javaSwitchCaseStatement =
 			new JavaSwitchCaseStatement(false);
 
-		javaSwitchCaseStatement.setSwitchCaseJavaExpression(
-			_parseJavaExpression(firstChildDetailAST.getFirstChild()));
+		List<DetailAST> literalCaseDetailASTList =
+			DetailASTUtil.getAllChildTokens(
+				caseGroupDetailAST, false, TokenTypes.LITERAL_CASE);
+
+		for (DetailAST literalCaseDetailAST : literalCaseDetailASTList) {
+			javaSwitchCaseStatement.addSwitchCaseJavaExpression(
+				_parseJavaExpression(literalCaseDetailAST.getFirstChild()));
+		}
 
 		return javaSwitchCaseStatement;
 	}

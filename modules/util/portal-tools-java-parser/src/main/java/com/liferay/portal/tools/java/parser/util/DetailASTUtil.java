@@ -43,9 +43,13 @@ public class DetailASTUtil {
 		}
 
 		if (detailAST.getType() == TokenTypes.CASE_GROUP) {
-			DetailAST firstChildDetailAST = detailAST.getFirstChild();
+			DetailAST slistDetailAST = detailAST.findFirstToken(
+				TokenTypes.SLIST);
 
-			return firstChildDetailAST.findFirstToken(TokenTypes.COLON);
+			DetailAST previousSiblingDetailAST =
+				slistDetailAST.getPreviousSibling();
+
+			return previousSiblingDetailAST.findFirstToken(TokenTypes.COLON);
 		}
 
 		if (detailAST.getType() == TokenTypes.DO_WHILE) {

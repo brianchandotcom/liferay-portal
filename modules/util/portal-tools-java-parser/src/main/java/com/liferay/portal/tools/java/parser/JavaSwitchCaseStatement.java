@@ -15,6 +15,10 @@
 package com.liferay.portal.tools.java.parser;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Hugo Huijser
@@ -25,10 +29,10 @@ public class JavaSwitchCaseStatement extends BaseJavaTerm {
 		_isDefault = isDefault;
 	}
 
-	public void setSwitchCaseJavaExpression(
+	public void addSwitchCaseJavaExpression(
 		JavaExpression switchCaseJavaExpression) {
 
-		_switchCaseJavaExpression = switchCaseJavaExpression;
+		_switchCaseJavaExpressions.add(switchCaseJavaExpression);
 	}
 
 	@Override
@@ -39,11 +43,22 @@ public class JavaSwitchCaseStatement extends BaseJavaTerm {
 			return StringBundler.concat(indent, prefix, "default", suffix);
 		}
 
-		return _switchCaseJavaExpression.toString(
-			indent, prefix + "case ", suffix, maxLineLength);
+		StringBundler sb = new StringBundler();
+
+		for (JavaExpression switchCaseJavaExpression :
+				_switchCaseJavaExpressions) {
+
+			appendNewLine(
+				sb, switchCaseJavaExpression, indent, prefix + "case ", suffix,
+				maxLineLength);
+
+			prefix = StringPool.BLANK;
+		}
+
+		return sb.toString();
 	}
 
 	private final boolean _isDefault;
-	private JavaExpression _switchCaseJavaExpression;
+	private List<JavaExpression> _switchCaseJavaExpressions = new ArrayList<>();
 
 }

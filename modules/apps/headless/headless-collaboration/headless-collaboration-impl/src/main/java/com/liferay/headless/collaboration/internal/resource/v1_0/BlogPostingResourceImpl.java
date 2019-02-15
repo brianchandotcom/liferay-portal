@@ -16,11 +16,14 @@ package com.liferay.headless.collaboration.internal.resource.v1_0;
 
 import static com.liferay.portal.vulcan.util.LocalDateTimeUtil.toLocalDateTime;
 
+import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryService;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.headless.collaboration.dto.v1_0.BlogPosting;
+import com.liferay.headless.collaboration.dto.v1_0.Category;
 import com.liferay.headless.collaboration.dto.v1_0.Image;
 import com.liferay.headless.collaboration.internal.dto.v1_0.AggregateRatingUtil;
 import com.liferay.headless.collaboration.resource.v1_0.BlogPostingResource;
@@ -37,7 +40,10 @@ import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
 
 import java.time.LocalDateTime;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.core.Response;
@@ -135,6 +141,18 @@ public class BlogPostingResourceImpl extends BaseBlogPostingResourceImpl {
 		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAddGuestPermissions(true);
 
+		Category[] categories = blogPosting.getCategory();
+
+		if (ArrayUtil.isNotEmpty(categories)) {
+			Stream<Category> stream = Arrays.stream(categories);
+
+			long[] assetCategoryIds = stream.mapToLong(
+				Category::getCategoryId
+			).toArray();
+
+			serviceContext.setAssetCategoryIds(assetCategoryIds);
+		}
+
 		String[] keywords = blogPosting.getKeywords();
 
 		if (ArrayUtil.isNotEmpty(keywords)) {
@@ -144,6 +162,25 @@ public class BlogPostingResourceImpl extends BaseBlogPostingResourceImpl {
 		serviceContext.setScopeGroupId(groupId);
 
 		return serviceContext;
+	}
+
+	private Category[] _getBlogPostingCategories(BlogsEntry blogsEntry) {
+		List<AssetCategory> assetCategories =
+			_assetCategoryLocalService.getCategories(
+				BlogsEntry.class.getName(), blogsEntry.getEntryId());
+
+		Stream<AssetCategory> stream = assetCategories.stream();
+
+		return stream.map(
+			assetCategory -> new Category() {
+				{
+					setCategoryId(assetCategory.getCategoryId());
+					setCategoryName(assetCategory.getName());
+				}
+			}
+		).toArray(
+			Category[]::new
+		);
 	}
 
 	private Image _getBlogPostingImage(BlogsEntry blogsEntry) throws Exception {
@@ -193,6 +230,8 @@ public class BlogPostingResourceImpl extends BaseBlogPostingResourceImpl {
 	private BlogPosting _toBlogPosting(BlogsEntry blogsEntry) throws Exception {
 		Image image = _getBlogPostingImage(blogsEntry);
 
+		Category[] categories = _getBlogPostingCategories(blogsEntry);
+
 		return new BlogPosting() {
 			{
 				setAlternativeHeadline(blogsEntry.getSubtitle());
@@ -203,6 +242,7 @@ public class BlogPostingResourceImpl extends BaseBlogPostingResourceImpl {
 							blogsEntry.getEntryId())));
 				setArticleBody(blogsEntry.getContent());
 				setCaption(blogsEntry.getCoverImageCaption());
+				setCategory(categories);
 				setContentSpace(blogsEntry.getGroupId());
 				setDateCreated(blogsEntry.getCreateDate());
 				setDateModified(blogsEntry.getModifiedDate());
@@ -216,6 +256,9 @@ public class BlogPostingResourceImpl extends BaseBlogPostingResourceImpl {
 			}
 		};
 	}
+
+	@Reference
+	private AssetCategoryLocalService _assetCategoryLocalService;
 
 	@Reference
 	private BlogsEntryService _blogsEntryService;

@@ -50,7 +50,7 @@ public class BlogPosting {
 		return caption;
 	}
 
-	public Long[] getCategory() {
+	public Category[] getCategory() {
 		return category;
 	}
 
@@ -171,12 +171,12 @@ public class BlogPosting {
 	}
 	}
 
-	public void setCategory(Long[] category) {
+	public void setCategory(Category[] category) {
 		this.category = category;
 	}
 
 	public void setCategory(
-		UnsafeSupplier<Long[], Throwable> categoryUnsafeSupplier) {
+		UnsafeSupplier<Category[], Throwable> categoryUnsafeSupplier) {
 
 			try {
 				category = categoryUnsafeSupplier.get();
@@ -405,7 +405,7 @@ public class BlogPosting {
 	protected String caption;
 
 	@GraphQLField
-	protected Long[] category;
+	protected Category[] category;
 
 	@GraphQLField
 	protected Comment[] comment;

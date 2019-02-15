@@ -28,8 +28,13 @@ components:
           type: string
         category:
           items:
-            format: int64
-            type: integer
+            properties:
+              categoryId:
+                format: int64
+                type: integer
+              categoryName:
+                type: string
+            type: object
           type: array
         comment:
           items:

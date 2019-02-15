@@ -26,6 +26,9 @@ import com.liferay.portal.workflow.metrics.internal.search.index.WorkflowMetrics
 import java.io.Serializable;
 
 import java.time.OffsetDateTime;
+import java.time.ZoneId;
+
+import java.util.Date;
 
 import org.apache.commons.codec.digest.DigestUtils;
 
@@ -37,7 +40,9 @@ import org.osgi.service.component.annotations.Reference;
 public abstract class BaseKaleoModelListener<T extends BaseModel<T>>
 	extends BaseModelListener<T> {
 
-	protected void addDocument(Document document) {
+	protected void addDocument(Document document, Date date) {
+		_addDate(document, date);
+
 		IndexDocumentRequest indexDocumentRequest = new IndexDocumentRequest(
 			getIndexName(), document);
 
@@ -47,14 +52,9 @@ public abstract class BaseKaleoModelListener<T extends BaseModel<T>>
 	}
 
 	protected void deleteDocument(Document document) {
-		OffsetDateTime offsetDateTime = OffsetDateTime.now();
-
-		document.addKeyword(
-			Field.getSortableFieldName("date"), offsetDateTime.toString());
-
 		document.addKeyword("deleted", true);
 
-		updateDocument(document);
+		updateDocument(document, new Date());
 	}
 
 	protected String digest(Serializable... parts) {
@@ -76,7 +76,9 @@ public abstract class BaseKaleoModelListener<T extends BaseModel<T>>
 		WorkflowMetricsIndicesCreator workflowMetricsIndicesCreator) {
 	}
 
-	protected void updateDocument(Document document) {
+	protected void updateDocument(Document document, Date date) {
+		_addDate(document, date);
+
 		UpdateDocumentRequest updateDocumentRequest = new UpdateDocumentRequest(
 			getIndexName(), document.getUID(), document);
 
@@ -87,5 +89,13 @@ public abstract class BaseKaleoModelListener<T extends BaseModel<T>>
 
 	@Reference
 	protected SearchEngineAdapter searchEngineAdapter;
+
+	private void _addDate(Document document, Date date) {
+		OffsetDateTime offsetDateTime = OffsetDateTime.ofInstant(
+			date.toInstant(), ZoneId.systemDefault());
+
+		document.addKeyword(
+			Field.getSortableFieldName("date"), offsetDateTime.toString());
+	}
 
 }

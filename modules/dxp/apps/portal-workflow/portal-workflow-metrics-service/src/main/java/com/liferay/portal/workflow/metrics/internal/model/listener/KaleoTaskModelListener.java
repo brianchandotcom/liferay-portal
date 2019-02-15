@@ -18,14 +18,8 @@ import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
-import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.workflow.kaleo.model.KaleoTask;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalService;
-
-import java.time.OffsetDateTime;
-import java.time.ZoneId;
-
-import java.util.Date;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -43,15 +37,7 @@ public class KaleoTaskModelListener extends BaseKaleoModelListener<KaleoTask> {
 		try {
 			Document document = createDocument(kaleoTask);
 
-			Date date = kaleoTask.getCreateDate();
-
-			OffsetDateTime offsetDateTime = OffsetDateTime.ofInstant(
-				date.toInstant(), ZoneId.systemDefault());
-
-			document.addKeyword(
-				Field.getSortableFieldName("date"), offsetDateTime.toString());
-
-			addDocument(document);
+			addDocument(document, kaleoTask.getCreateDate());
 		}
 		catch (Exception e) {
 			throw new ModelListenerException(e);

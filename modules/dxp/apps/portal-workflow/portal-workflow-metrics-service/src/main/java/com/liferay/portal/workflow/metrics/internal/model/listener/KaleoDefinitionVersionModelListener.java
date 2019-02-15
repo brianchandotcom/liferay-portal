@@ -18,14 +18,8 @@ import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
-import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
-
-import java.time.OffsetDateTime;
-import java.time.ZoneId;
-
-import java.util.Date;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -43,15 +37,7 @@ public class KaleoDefinitionVersionModelListener
 		try {
 			Document document = createDocument(kaleoDefinitionVersion);
 
-			Date date = kaleoDefinitionVersion.getCreateDate();
-
-			OffsetDateTime offsetDateTime = OffsetDateTime.ofInstant(
-				date.toInstant(), ZoneId.systemDefault());
-
-			document.addKeyword(
-				Field.getSortableFieldName("date"), offsetDateTime.toString());
-
-			addDocument(document);
+			addDocument(document, kaleoDefinitionVersion.getCreateDate());
 		}
 		catch (Exception e) {
 			throw new ModelListenerException(e);
@@ -79,15 +65,7 @@ public class KaleoDefinitionVersionModelListener
 		try {
 			Document document = createDocument(kaleoDefinitionVersion);
 
-			Date date = kaleoDefinitionVersion.getModifiedDate();
-
-			OffsetDateTime offsetDateTime = OffsetDateTime.ofInstant(
-				date.toInstant(), ZoneId.systemDefault());
-
-			document.addKeyword(
-				Field.getSortableFieldName("date"), offsetDateTime.toString());
-
-			updateDocument(document);
+			updateDocument(document, kaleoDefinitionVersion.getModifiedDate());
 		}
 		catch (Exception e) {
 			throw new ModelListenerException(e);

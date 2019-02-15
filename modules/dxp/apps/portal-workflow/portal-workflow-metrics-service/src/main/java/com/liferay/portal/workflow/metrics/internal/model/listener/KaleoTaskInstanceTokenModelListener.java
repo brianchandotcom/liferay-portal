@@ -18,13 +18,10 @@ import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
-import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalService;
 
 import java.time.Duration;
-import java.time.OffsetDateTime;
-import java.time.ZoneId;
 
 import java.util.Date;
 
@@ -45,15 +42,7 @@ public class KaleoTaskInstanceTokenModelListener
 		try {
 			Document document = createDocument(kaleoTaskInstanceToken);
 
-			Date date = kaleoTaskInstanceToken.getCreateDate();
-
-			OffsetDateTime offsetDateTime = OffsetDateTime.ofInstant(
-				date.toInstant(), ZoneId.systemDefault());
-
-			document.addKeyword(
-				Field.getSortableFieldName("date"), offsetDateTime.toString());
-
-			addDocument(document);
+			addDocument(document, kaleoTaskInstanceToken.getCreateDate());
 		}
 		catch (Exception e) {
 			throw new ModelListenerException(e);
@@ -98,13 +87,7 @@ public class KaleoTaskInstanceTokenModelListener
 				document.addNumber("duration", duration.toMillis());
 			}
 
-			OffsetDateTime offsetDateTime = OffsetDateTime.ofInstant(
-				date.toInstant(), ZoneId.systemDefault());
-
-			document.addKeyword(
-				Field.getSortableFieldName("date"), offsetDateTime.toString());
-
-			updateDocument(document);
+			updateDocument(document, date);
 		}
 		catch (Exception e) {
 			throw new ModelListenerException(e);

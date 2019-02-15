@@ -18,11 +18,13 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.soy.VerticalCard;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.portlet.PortletURL;
+import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 /**
@@ -32,9 +34,10 @@ public class SelectGlobalTemplatesVerticalCard implements VerticalCard {
 
 	public SelectGlobalTemplatesVerticalCard(
 		LayoutPageTemplateEntry layoutPageTemplateEntry,
-		RenderResponse renderResponse) {
+		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		_layoutPageTemplateEntry = layoutPageTemplateEntry;
+		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 	}
 
@@ -55,6 +58,10 @@ public class SelectGlobalTemplatesVerticalCard implements VerticalCard {
 				"layoutPrototypeId",
 				String.valueOf(
 					_layoutPageTemplateEntry.getLayoutPrototypeId()));
+
+			long selPlid = ParamUtil.getLong(_renderRequest, "selPlid");
+
+			addLayoutURL.setParameter("selPlid", String.valueOf(selPlid));
 
 			addLayoutURL.setWindowState(LiferayWindowState.POP_UP);
 
@@ -87,6 +94,7 @@ public class SelectGlobalTemplatesVerticalCard implements VerticalCard {
 	}
 
 	private final LayoutPageTemplateEntry _layoutPageTemplateEntry;
+	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 
 }

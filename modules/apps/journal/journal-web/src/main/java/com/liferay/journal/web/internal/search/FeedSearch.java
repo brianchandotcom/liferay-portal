@@ -58,8 +58,10 @@ public class FeedSearch extends SearchContainer<JournalFeed> {
 			FeedDisplayTerms.GROUP_ID,
 			String.valueOf(displayTerms.getGroupId()));
 
-		String orderByCol = ParamUtil.getString(portletRequest, "orderByCol");
-		String orderByType = ParamUtil.getString(portletRequest, "orderByType");
+		String orderByCol = ParamUtil.getString(
+			portletRequest, "orderByCol", "name");
+		String orderByType = ParamUtil.getString(
+			portletRequest, "orderByType", "asc");
 
 		OrderByComparator<JournalFeed> orderByComparator =
 			getOrganizationOrderByComparator(orderByCol, orderByType);

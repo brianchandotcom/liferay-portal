@@ -663,6 +663,7 @@ create table LayoutRevision (
 
 create table LayoutSet (
 	mvccVersion LONG default 0 not null,
+	headId LONG,
 	layoutSetId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
@@ -676,7 +677,8 @@ create table LayoutSet (
 	pageCount INTEGER,
 	settings_ TEXT null,
 	layoutSetPrototypeUuid VARCHAR(75) null,
-	layoutSetPrototypeLinkEnabled BOOLEAN
+	layoutSetPrototypeLinkEnabled BOOLEAN,
+	head BOOLEAN
 );
 
 create table LayoutSetBranch (
@@ -714,6 +716,25 @@ create table LayoutSetPrototype (
 	description TEXT null,
 	settings_ STRING null,
 	active_ BOOLEAN
+);
+
+create table LayoutSetVersion (
+	layoutSetVersionId LONG not null primary key,
+	version INTEGER,
+	layoutSetId LONG,
+	groupId LONG,
+	companyId LONG,
+	createDate DATE null,
+	modifiedDate DATE null,
+	privateLayout BOOLEAN,
+	logoId LONG,
+	themeId VARCHAR(75) null,
+	colorSchemeId VARCHAR(75) null,
+	css TEXT null,
+	pageCount INTEGER,
+	settings_ TEXT null,
+	layoutSetPrototypeUuid VARCHAR(75) null,
+	layoutSetPrototypeLinkEnabled BOOLEAN
 );
 
 create table ListType (

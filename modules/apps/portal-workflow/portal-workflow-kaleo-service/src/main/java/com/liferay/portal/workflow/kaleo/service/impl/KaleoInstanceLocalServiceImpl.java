@@ -22,13 +22,24 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Junction;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.workflow.kaleo.exception.NoSuchInstanceException;
@@ -36,12 +47,17 @@ import com.liferay.portal.workflow.kaleo.model.KaleoInstance;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
 import com.liferay.portal.workflow.kaleo.runtime.util.WorkflowContextUtil;
 import com.liferay.portal.workflow.kaleo.service.base.KaleoInstanceLocalServiceBaseImpl;
+import com.liferay.portal.workflow.kaleo.service.persistence.KaleoInstanceQuery;
 
 import java.io.Serializable;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 
 /**
  * @author Brian Wing Shun Chan
@@ -292,11 +308,45 @@ public class KaleoInstanceLocalServiceImpl
 		OrderByComparator<KaleoInstance> orderByComparator,
 		ServiceContext serviceContext) {
 
-		DynamicQuery dynamicQuery = buildDynamicQuery(
-			userId, assetType, nodeName, kaleoDefinitionName, completed,
+		KaleoInstanceQuery kaleoInstanceQuery = new KaleoInstanceQuery(
 			serviceContext);
 
-		return dynamicQuery(dynamicQuery, start, end, orderByComparator);
+		kaleoInstanceQuery.setClassName(assetType);
+		kaleoInstanceQuery.setCompleted(completed);
+		kaleoInstanceQuery.setEnd(end);
+		kaleoInstanceQuery.setKaleoDefinitionName(kaleoDefinitionName);
+		kaleoInstanceQuery.setOrderByComparator(orderByComparator);
+		kaleoInstanceQuery.setStart(start);
+		kaleoInstanceQuery.setStatus(nodeName);
+
+		try {
+			Indexer<KaleoInstance> indexer = IndexerRegistryUtil.getIndexer(
+				KaleoInstance.class.getName());
+
+			SearchContext searchContext = buildSearchContext(
+				kaleoInstanceQuery, start, end, orderByComparator);
+
+			List<KaleoInstance> kaleoInstances = new ArrayList<>();
+
+			Hits hits = indexer.search(searchContext);
+
+			for (Document document : hits.getDocs()) {
+				long kaleoInstanceId = GetterUtil.getLong(
+					document.get(Field.ENTRY_CLASS_PK));
+
+				kaleoInstances.add(
+					kaleoInstancePersistence.findByPrimaryKey(kaleoInstanceId));
+			}
+
+			return kaleoInstances;
+		}
+		catch (PortalException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
+		}
+
+		return Collections.emptyList();
 	}
 
 	@Override
@@ -305,11 +355,30 @@ public class KaleoInstanceLocalServiceImpl
 		String kaleoDefinitionName, Boolean completed,
 		ServiceContext serviceContext) {
 
-		DynamicQuery dynamicQuery = buildDynamicQuery(
-			userId, assetType, nodeName, kaleoDefinitionName, completed,
+		KaleoInstanceQuery kaleoInstanceQuery = new KaleoInstanceQuery(
 			serviceContext);
 
-		return (int)dynamicQueryCount(dynamicQuery);
+		kaleoInstanceQuery.setClassName(assetType);
+		kaleoInstanceQuery.setCompleted(completed);
+		kaleoInstanceQuery.setKaleoDefinitionName(kaleoDefinitionName);
+		kaleoInstanceQuery.setStatus(nodeName);
+
+		try {
+			Indexer<KaleoInstance> indexer = IndexerRegistryUtil.getIndexer(
+				KaleoInstance.class.getName());
+
+			SearchContext searchContext = buildSearchContext(
+				kaleoInstanceQuery, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+			return (int)indexer.searchCount(searchContext);
+		}
+		catch (PortalException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
+		}
+
+		return 0;
 	}
 
 	@Override
@@ -502,6 +571,26 @@ public class KaleoInstanceLocalServiceImpl
 		return dynamicQuery;
 	}
 
+	protected SearchContext buildSearchContext(
+		KaleoInstanceQuery kaleoInstanceQuery, int start, int end,
+		OrderByComparator<KaleoInstance> orderByComparator) {
+
+		SearchContext searchContext = new SearchContext();
+
+		searchContext.setAttribute("kaleoInstanceQuery", kaleoInstanceQuery);
+		searchContext.setCompanyId(kaleoInstanceQuery.getCompanyId());
+		searchContext.setEnd(end);
+		searchContext.setStart(start);
+
+		if (orderByComparator != null) {
+			searchContext.setSorts(getSortsFromComparator(orderByComparator));
+		}
+
+		searchContext.setUserId(kaleoInstanceQuery.getUserId());
+
+		return searchContext;
+	}
+
 	protected Criterion getAssetClassNames(String[] assetClassNames) {
 		Disjunction disjunction = RestrictionsFactoryUtil.disjunction();
 
@@ -526,5 +615,29 @@ public class KaleoInstanceLocalServiceImpl
 
 		return disjunction;
 	}
+
+	protected Sort[] getSortsFromComparator(
+		OrderByComparator<KaleoInstance> orderByComparator) {
+
+		Stream<String> stream = Arrays.stream(
+			orderByComparator.getOrderByFields());
+
+		return stream.map(
+			field -> {
+				if (StringUtil.endsWith(field, "date")) {
+					return new Sort(
+						field, Sort.LONG_TYPE,
+						!orderByComparator.isAscending());
+				}
+
+				return new Sort(field, !orderByComparator.isAscending());
+			}
+		).toArray(
+			Sort[]::new
+		);
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		KaleoInstanceLocalServiceImpl.class);
 
 }

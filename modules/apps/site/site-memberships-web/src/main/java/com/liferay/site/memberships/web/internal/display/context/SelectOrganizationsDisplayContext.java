@@ -18,8 +18,6 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
-import com.liferay.portal.kernel.portlet.PortalPreferences;
-import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
@@ -35,7 +33,6 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.sitesadmin.search.OrganizationSiteMembershipChecker;
 import com.liferay.portlet.usersadmin.search.OrganizationSearch;
 import com.liferay.portlet.usersadmin.search.OrganizationSearchTerms;
-import com.liferay.site.memberships.web.internal.constants.SiteMembershipsPortletKeys;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -65,12 +62,7 @@ public class SelectOrganizationsDisplayContext {
 			return _displayStyle;
 		}
 
-		PortalPreferences portalPreferences =
-			PortletPreferencesFactoryUtil.getPortalPreferences(_request);
-
-		_displayStyle = portalPreferences.getValue(
-			SiteMembershipsPortletKeys.SITE_MEMBERSHIPS_ADMIN, "display-style",
-			"icon");
+		_displayStyle = ParamUtil.getString(_request, "displayStyle", "icon");
 
 		return _displayStyle;
 	}

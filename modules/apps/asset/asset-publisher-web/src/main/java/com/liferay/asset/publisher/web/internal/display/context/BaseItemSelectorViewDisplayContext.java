@@ -14,11 +14,8 @@
 
 package com.liferay.asset.publisher.web.internal.display.context;
 
-import com.liferay.asset.publisher.constants.AssetPublisherWebKeys;
 import com.liferay.asset.publisher.util.AssetPublisherHelper;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.portlet.PortalPreferences;
-import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -57,25 +54,13 @@ public abstract class BaseItemSelectorViewDisplayContext
 
 	@Override
 	public String getDisplayStyle() {
-		String displayStyle = ParamUtil.getString(request, "displayStyle");
-
-		PortalPreferences portalPreferences =
-			PortletPreferencesFactoryUtil.getPortalPreferences(request);
-
-		if (Validator.isNull(displayStyle)) {
-			displayStyle = portalPreferences.getValue(
-				AssetPublisherWebKeys.ITEM_SELECTOR, "display-style", "icon");
-		}
-		else {
-			portalPreferences.setValue(
-				AssetPublisherWebKeys.ITEM_SELECTOR, "display-style",
-				displayStyle);
-
-			request.setAttribute(
-				WebKeys.SINGLE_PAGE_APPLICATION_CLEAR_CACHE, Boolean.TRUE);
+		if (Validator.isNotNull(_displayStyle)) {
+			return _displayStyle;
 		}
 
-		return displayStyle;
+		_displayStyle = ParamUtil.getString(request, "displayStyle", "icon");
+
+		return _displayStyle;
 	}
 
 	public long getGroupId() {
@@ -163,6 +148,7 @@ public abstract class BaseItemSelectorViewDisplayContext
 	protected final HttpServletRequest request;
 
 	private final AssetPublisherHelper _assetPublisherHelper;
+	private String _displayStyle;
 	private Long _groupId;
 	private final String _itemSelectedEventName;
 	private final SiteItemSelectorCriterion _siteItemSelectorCriterion;

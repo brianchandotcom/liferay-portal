@@ -16,12 +16,12 @@ package com.liferay.arquillian.extension.junit.bridge;
 
 import com.liferay.arquillian.extension.junit.bridge.event.controller.ContainerEventController;
 import com.liferay.arquillian.extension.junit.bridge.protocol.jmx.JMXMethodExecutor;
-import com.liferay.arquillian.extension.junit.bridge.remote.executor.LocalTestExecutor;
 import com.liferay.arquillian.extension.junit.bridge.remote.observer.JUnitBridgeObserver;
 
 import java.net.URL;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -36,9 +36,7 @@ public class LiferayArquillianJUnitBridgeExtension {
 			);
 		}
 
-		return Arrays.asList(
-			JUnitBridgeObserver.class, LocalTestExecutor.class
-		);
+		return Collections.singletonList(JUnitBridgeObserver.class);
 	}
 
 	private static boolean _isClient() {

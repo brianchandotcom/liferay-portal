@@ -21,9 +21,14 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+import org.jboss.arquillian.core.api.InstanceProducer;
+import org.jboss.arquillian.core.api.annotation.ApplicationScoped;
+import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.arquillian.core.api.annotation.Observes;
 import org.jboss.arquillian.core.spi.EventContext;
 import org.jboss.arquillian.test.spi.TestClass;
+import org.jboss.arquillian.test.spi.TestMethodExecutor;
+import org.jboss.arquillian.test.spi.TestResult;
 import org.jboss.arquillian.test.spi.event.suite.SuiteEvent;
 import org.jboss.arquillian.test.spi.event.suite.Test;
 
@@ -57,6 +62,23 @@ public class JUnitBridgeObserver {
 
 			@Override
 			public void evaluate() {
+				TestResult result = TestResult.passed();
+
+				TestMethodExecutor testMethodExecutor =
+					test.getTestMethodExecutor();
+
+				try {
+					testMethodExecutor.invoke();
+				}
+				catch (Throwable t) {
+					result = TestResult.failed(t);
+				}
+				finally {
+					result.setEnd(System.currentTimeMillis());
+				}
+
+				_testResultInstanceProducer.set(result);
+
 				eventContext.proceed();
 			}
 
@@ -255,5 +277,9 @@ public class JUnitBridgeObserver {
 
 		return statement;
 	}
+
+	@ApplicationScoped
+	@Inject
+	private InstanceProducer<TestResult> _testResultInstanceProducer;
 
 }

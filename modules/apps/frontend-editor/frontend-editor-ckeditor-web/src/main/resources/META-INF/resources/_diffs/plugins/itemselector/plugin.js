@@ -408,7 +408,7 @@
 
 									if (instance._isEmptySelection(editor)) {
 										if (IE9) {
-											editor.contextMenu ? editor.insertHtml('<br />') : editor.insertHtml('<img src="' + imageSrc + '"><br />');
+											(typeof AlloyEditor == 'undefined') ? editor.insertHtml('<br />') : editor.insertHtml('<img src="' + imageSrc + '"><br />');
 										}
 										else {
 											editor.execCommand('enter');

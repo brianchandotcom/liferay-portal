@@ -132,7 +132,7 @@
 
 				if (instance._isEmptySelection(editor)) {
 					if (IE9) {
-						editor.contextMenu ? editor.insertHtml('<br />') : editor.insertHtml(el.getOuterHtml() + '<br />');
+						(typeof AlloyEditor == 'undefined') ? editor.insertHtml('<br />') : editor.insertHtml(el.getOuterHtml() + '<br />');
 					}
 					else {
 						editor.execCommand('enter');

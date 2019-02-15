@@ -70,7 +70,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "feeds"));
 			<c:choose>
 				<c:when test='<%= Objects.equals(journalFeedsDisplayContext.getDisplayStyle(), "descriptive") %>'>
 					<liferay-ui:search-container-column-icon
-						icon="rss-svg"
+						icon="rss"
 						toggleRowChecker="<%= true %>"
 					/>
 
@@ -106,7 +106,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "feeds"));
 						<liferay-frontend:icon-vertical-card
 							actionJsp="/feed_action.jsp"
 							actionJspServletContext="<%= application %>"
-							icon="rss-svg"
+							icon="rss"
 							resultRow="<%= row %>"
 							rowChecker="<%= searchContainer.getRowChecker() %>"
 							subtitle="<%= feed.getDescription() %>"

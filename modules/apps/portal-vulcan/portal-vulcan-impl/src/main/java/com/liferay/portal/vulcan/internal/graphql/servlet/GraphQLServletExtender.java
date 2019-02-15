@@ -17,7 +17,19 @@ package com.liferay.portal.vulcan.internal.graphql.servlet;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
 
-import graphql.annotations.processor.GraphQLAnnotations;
+import graphql.annotations.processor.ProcessingElementsContainer;
+import graphql.annotations.processor.graphQLProcessors.GraphQLInputProcessor;
+import graphql.annotations.processor.graphQLProcessors.GraphQLOutputProcessor;
+import graphql.annotations.processor.retrievers.GraphQLExtensionsHandler;
+import graphql.annotations.processor.retrievers.GraphQLFieldRetriever;
+import graphql.annotations.processor.retrievers.GraphQLInterfaceRetriever;
+import graphql.annotations.processor.retrievers.GraphQLObjectHandler;
+import graphql.annotations.processor.retrievers.GraphQLObjectInfoRetriever;
+import graphql.annotations.processor.retrievers.GraphQLTypeRetriever;
+import graphql.annotations.processor.searchAlgorithms.BreadthFirstSearch;
+import graphql.annotations.processor.searchAlgorithms.ParentalSearch;
+import graphql.annotations.processor.typeFunctions.DefaultTypeFunction;
+import graphql.annotations.processor.util.DataFetcherConstructor;
 
 import graphql.schema.GraphQLSchema;
 
@@ -44,6 +56,68 @@ public class GraphQLServletExtender {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
+		DataFetcherConstructor dataFetcherConstructor =
+			new DataFetcherConstructor();
+
+		GraphQLFieldRetriever graphQLFieldRetriever =
+			new GraphQLFieldRetriever();
+
+		graphQLFieldRetriever.setDataFetcherConstructor(dataFetcherConstructor);
+
+		GraphQLObjectInfoRetriever graphQLObjectInfoRetriever =
+			new GraphQLObjectInfoRetriever();
+
+		BreadthFirstSearch breadthFirstSearch = new BreadthFirstSearch(
+			graphQLObjectInfoRetriever);
+		ParentalSearch parentalSearch = new ParentalSearch(
+			graphQLObjectInfoRetriever);
+
+		GraphQLExtensionsHandler graphQLExtensionsHandler =
+			new GraphQLExtensionsHandler();
+
+		graphQLExtensionsHandler.setGraphQLObjectInfoRetriever(
+			graphQLObjectInfoRetriever);
+		graphQLExtensionsHandler.setFieldRetriever(graphQLFieldRetriever);
+		graphQLExtensionsHandler.setFieldSearchAlgorithm(parentalSearch);
+		graphQLExtensionsHandler.setMethodSearchAlgorithm(breadthFirstSearch);
+
+		GraphQLInterfaceRetriever graphQLInterfaceRetriever =
+			new GraphQLInterfaceRetriever();
+
+		GraphQLTypeRetriever graphQLTypeRetriever = new GraphQLTypeRetriever();
+
+		// Handle Circular reference between GraphQLInterfaceRetriever and
+		// GraphQLTypeRetriever
+
+		graphQLInterfaceRetriever.setGraphQLTypeRetriever(graphQLTypeRetriever);
+
+		graphQLTypeRetriever.setGraphQLInterfaceRetriever(
+			graphQLInterfaceRetriever);
+
+		graphQLTypeRetriever.setExtensionsHandler(graphQLExtensionsHandler);
+		graphQLTypeRetriever.setFieldSearchAlgorithm(parentalSearch);
+		graphQLTypeRetriever.setGraphQLFieldRetriever(graphQLFieldRetriever);
+		graphQLTypeRetriever.setGraphQLObjectInfoRetriever(
+			graphQLObjectInfoRetriever);
+		graphQLTypeRetriever.setMethodSearchAlgorithm(breadthFirstSearch);
+
+		_graphQLObjectHandler = new GraphQLObjectHandler();
+
+		_graphQLObjectHandler.setTypeRetriever(graphQLTypeRetriever);
+
+		GraphQLInputProcessor graphQLInputProcessor =
+			new GraphQLInputProcessor();
+
+		graphQLInputProcessor.setGraphQLTypeRetriever(graphQLTypeRetriever);
+
+		GraphQLOutputProcessor graphQLOutputProcessor =
+			new GraphQLOutputProcessor();
+
+		graphQLOutputProcessor.setGraphQLTypeRetriever(graphQLTypeRetriever);
+
+		_defaultTypeFunction = new DefaultTypeFunction(
+			graphQLInputProcessor, graphQLOutputProcessor);
+
 		_serviceTracker = new ServiceTracker<>(
 			bundleContext, ServletData.class,
 			new ServletDataServiceTrackerCustomizer(bundleContext));
@@ -56,9 +130,11 @@ public class GraphQLServletExtender {
 		_serviceTracker.close();
 	}
 
+	private DefaultTypeFunction _defaultTypeFunction;
+	private GraphQLObjectHandler _graphQLObjectHandler;
 	private ServiceTracker<?, ?> _serviceTracker;
 
-	private static class ServletDataServiceTrackerCustomizer
+	private class ServletDataServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer
 			<ServletData, ServiceRegistration<Servlet>> {
 
@@ -73,12 +149,18 @@ public class GraphQLServletExtender {
 			String path = servletData.getPath();
 			Object query = servletData.getQuery();
 
+			ProcessingElementsContainer processingElementsContainer =
+				new ProcessingElementsContainer(_defaultTypeFunction);
+
 			GraphQLSchema.Builder schemaBuilder = GraphQLSchema.newSchema();
 
 			schemaBuilder.mutation(
-				GraphQLAnnotations.object(mutation.getClass()));
+				_graphQLObjectHandler.getObject(
+					mutation.getClass(), processingElementsContainer));
 
-			schemaBuilder.query(GraphQLAnnotations.object(query.getClass()));
+			schemaBuilder.query(
+				_graphQLObjectHandler.getObject(
+					query.getClass(), processingElementsContainer));
 
 			SimpleGraphQLHttpServlet.Builder servletBuilder =
 				SimpleGraphQLHttpServlet.newBuilder(schemaBuilder.build());

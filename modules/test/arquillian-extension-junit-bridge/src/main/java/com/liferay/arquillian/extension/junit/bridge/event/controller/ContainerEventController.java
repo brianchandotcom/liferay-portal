@@ -23,7 +23,6 @@ import javax.management.MBeanServerConnection;
 import org.jboss.arquillian.container.spi.Container;
 import org.jboss.arquillian.container.spi.client.container.DeployableContainer;
 import org.jboss.arquillian.container.spi.client.container.DeploymentException;
-import org.jboss.arquillian.container.spi.client.container.LifecycleException;
 import org.jboss.arquillian.container.spi.client.deployment.Deployment;
 import org.jboss.arquillian.container.spi.client.deployment.DeploymentDescription;
 import org.jboss.arquillian.core.api.InstanceProducer;
@@ -32,7 +31,6 @@ import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.arquillian.core.api.annotation.Observes;
 import org.jboss.arquillian.test.spi.event.suite.AfterClass;
 import org.jboss.arquillian.test.spi.event.suite.BeforeClass;
-import org.jboss.arquillian.test.spi.event.suite.BeforeSuite;
 
 /**
  * @author Matthew Tambara
@@ -62,8 +60,13 @@ public class ContainerEventController {
 		}
 	}
 
-	public void execute(@Observes BeforeClass beforeClass)
-		throws DeploymentException {
+	public void execute(@Observes BeforeClass beforeClass) throws Exception {
+		_container = new ContainerImpl(
+			"default",
+			new LiferayRemoteDeployableContainer(
+				_mBeanServerConnectionInstanceProducer));
+
+		_container.start();
 
 		DeploymentDescription deploymentDescription =
 			BndDeploymentDescriptionUtil.create(beforeClass.getTestClass());
@@ -76,17 +79,6 @@ public class ContainerEventController {
 		deployableContainer.deploy(deploymentDescription.getTestableArchive());
 
 		_deployment.deployed();
-	}
-
-	public void execute(@Observes BeforeSuite beforeSuite)
-		throws LifecycleException {
-
-		_container = new ContainerImpl(
-			"default",
-			new LiferayRemoteDeployableContainer(
-				_mBeanServerConnectionInstanceProducer));
-
-		_container.start();
 	}
 
 	private Container _container;

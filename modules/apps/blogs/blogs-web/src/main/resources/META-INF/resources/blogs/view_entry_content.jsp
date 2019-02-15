@@ -57,7 +57,7 @@ BlogsEntry entry = (BlogsEntry)request.getAttribute("view_entry_content.jsp-entr
 				<div class="autofit-col visible-interaction">
 
 					<%
-					BlogsEntryActionDropdownItemsProvider blogsEntryActionDropdownItemsProvider = new BlogsEntryActionDropdownItemsProvider(entry, liferayPortletRequest, liferayPortletResponse, permissionChecker, resourceBundle, trashHelper);
+					BlogsEntryActionDropdownItemsProvider blogsEntryActionDropdownItemsProvider = new BlogsEntryActionDropdownItemsProvider(entry, renderRequest, renderResponse, permissionChecker, resourceBundle, trashHelper);
 					%>
 
 					<clay:dropdown-actions

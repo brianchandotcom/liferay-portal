@@ -35,12 +35,6 @@ paths:
           schema:
             type: integer
         - in: query
-          name: companyId
-          required: true
-          schema:
-            format: int64
-            type: integer
-        - in: query
           name: title
           schema:
             type: string

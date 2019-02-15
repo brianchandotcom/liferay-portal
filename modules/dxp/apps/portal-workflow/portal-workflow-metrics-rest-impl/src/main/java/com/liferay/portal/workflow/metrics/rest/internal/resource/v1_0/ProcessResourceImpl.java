@@ -59,13 +59,12 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class ProcessResourceImpl extends BaseProcessResourceImpl {
 
 	@Override
-	public Page<Process> getProcessesPage(
-			Long companyId, String title, Pagination pagination)
+	public Page<Process> getProcessesPage(String title, Pagination pagination)
 		throws Exception {
 
 		return Page.of(
-			_getProcesses(companyId, title, pagination), pagination,
-			_getProcessesCount(companyId, title));
+			_getProcesses(title, pagination), pagination,
+			_getProcessesCount(title));
 	}
 
 	private Facet _createFacet(String fieldName) {
@@ -76,26 +75,26 @@ public class ProcessResourceImpl extends BaseProcessResourceImpl {
 		return facet;
 	}
 
-	private BooleanFilter _createProcessBooleanFilter(long companyId) {
+	private BooleanFilter _createProcessBooleanFilter() {
 		return new BooleanFilter() {
 			{
 				addRequiredTerm("active", true);
-				addRequiredTerm("companyId", companyId);
+				addRequiredTerm("companyId", company.getCompanyId());
 				addRequiredTerm("deleted", false);
 			}
 		};
 	}
 
-	private int _getInstanceCount(long companyId, String name) {
+	private int _getInstanceCount(String name) {
 		BooleanFilter booleanFilter = new BooleanFilter() {
 			{
-				addRequiredTerm("companyId", companyId);
+				addRequiredTerm("companyId", company.getCompanyId());
 				addRequiredTerm("complete", false);
 				addRequiredTerm("deleted", false);
 
 				TermsFilter termsFilter = new TermsFilter("processId");
 
-				for (long processId : _getProcessIds(companyId, name)) {
+				for (long processId : _getProcessIds(name)) {
 					termsFilter.addValue(String.valueOf(processId));
 				}
 
@@ -121,7 +120,7 @@ public class ProcessResourceImpl extends BaseProcessResourceImpl {
 	}
 
 	private Collection<Process> _getProcesses(
-			long companyId, String title, Pagination pagination)
+			String title, Pagination pagination)
 		throws Exception {
 
 		List<Process> processes = new ArrayList<>();
@@ -146,7 +145,7 @@ public class ProcessResourceImpl extends BaseProcessResourceImpl {
 						addTerm("title", title);
 					}
 
-					setPreBooleanFilter(_createProcessBooleanFilter(companyId));
+					setPreBooleanFilter(_createProcessBooleanFilter());
 				}
 			});
 		searchSearchRequest.setSize(pagination.getItemsPerPage());
@@ -169,7 +168,7 @@ public class ProcessResourceImpl extends BaseProcessResourceImpl {
 
 			Document document = documents[0];
 
-			Process process = _toProcess(companyId, document);
+			Process process = _toProcess(document);
 
 			processes.add(process);
 		}
@@ -177,9 +176,7 @@ public class ProcessResourceImpl extends BaseProcessResourceImpl {
 		return processes;
 	}
 
-	private int _getProcessesCount(long companyId, String title)
-		throws Exception {
-
+	private int _getProcessesCount(String title) throws Exception {
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
 		Facet facet = _createFacet("name");
@@ -194,7 +191,7 @@ public class ProcessResourceImpl extends BaseProcessResourceImpl {
 						addTerm("title", title);
 					}
 
-					setPreBooleanFilter(_createProcessBooleanFilter(companyId));
+					setPreBooleanFilter(_createProcessBooleanFilter());
 				}
 			});
 
@@ -207,7 +204,7 @@ public class ProcessResourceImpl extends BaseProcessResourceImpl {
 		return termCollectors.size();
 	}
 
-	private long[] _getProcessIds(long companyId, String name) {
+	private long[] _getProcessIds(String name) {
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
 		Facet facet = _createFacet("processId");
@@ -216,7 +213,7 @@ public class ProcessResourceImpl extends BaseProcessResourceImpl {
 
 		searchSearchRequest.setIndexNames("workflow-metrics-processes");
 
-		BooleanFilter booleanFilter = _createProcessBooleanFilter(companyId);
+		BooleanFilter booleanFilter = _createProcessBooleanFilter();
 
 		booleanFilter.addRequiredTerm("name", name);
 
@@ -246,11 +243,10 @@ public class ProcessResourceImpl extends BaseProcessResourceImpl {
 		return processIds;
 	}
 
-	private Process _toProcess(long companyId, Document document) {
+	private Process _toProcess(Document document) {
 		Process process = new Process();
 
-		process.setInstanceCount(
-			_getInstanceCount(companyId, document.get("name")));
+		process.setInstanceCount(_getInstanceCount(document.get("name")));
 		process.setTitle(document.get("title"));
 
 		return process;

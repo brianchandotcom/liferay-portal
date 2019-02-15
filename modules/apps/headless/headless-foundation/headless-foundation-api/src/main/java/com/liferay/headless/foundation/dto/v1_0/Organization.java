@@ -88,7 +88,7 @@ public class Organization {
 		this.comment = comment;
 	}
 
-	public void setComment(
+	public void setCommentWithSupplier(
 		UnsafeSupplier<String, Throwable> commentUnsafeSupplier) {
 
 		try {
@@ -103,7 +103,7 @@ public class Organization {
 		this.contactInformation = contactInformation;
 	}
 
-	public void setContactInformation(
+	public void setContactInformationWithSupplier(
 		UnsafeSupplier<ContactInformation, Throwable>
 			contactInformationUnsafeSupplier) {
 
@@ -119,7 +119,7 @@ public class Organization {
 		this.id = id;
 	}
 
-	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+	public void setIdWithSupplier(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 		try {
 			id = idUnsafeSupplier.get();
 	}
@@ -132,7 +132,7 @@ public class Organization {
 		this.location = location;
 	}
 
-	public void setLocation(
+	public void setLocationWithSupplier(
 		UnsafeSupplier<Location, Throwable> locationUnsafeSupplier) {
 
 		try {
@@ -147,7 +147,7 @@ public class Organization {
 		this.logo = logo;
 	}
 
-	public void setLogo(UnsafeSupplier<String, Throwable> logoUnsafeSupplier) {
+	public void setLogoWithSupplier(UnsafeSupplier<String, Throwable> logoUnsafeSupplier) {
 		try {
 			logo = logoUnsafeSupplier.get();
 	}
@@ -156,7 +156,7 @@ public class Organization {
 	}
 	}
 
-	public void setMembers(
+	public void setMembersWithSupplier(
 		UnsafeSupplier<UserAccount[], Throwable> membersUnsafeSupplier) {
 
 		try {
@@ -175,7 +175,7 @@ public class Organization {
 		this.membersIds = membersIds;
 	}
 
-	public void setMembersIds(
+	public void setMembersIdsWithSupplier(
 		UnsafeSupplier<Long[], Throwable> membersIdsUnsafeSupplier) {
 
 		try {
@@ -190,7 +190,7 @@ public class Organization {
 		this.name = name;
 	}
 
-	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
+	public void setNameWithSupplier(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
 		try {
 			name = nameUnsafeSupplier.get();
 	}
@@ -203,7 +203,7 @@ public class Organization {
 		this.parentOrganization = parentOrganization;
 	}
 
-	public void setParentOrganization(
+	public void setParentOrganizationWithSupplier(
 		UnsafeSupplier<Organization, Throwable>
 			parentOrganizationUnsafeSupplier) {
 
@@ -219,7 +219,7 @@ public class Organization {
 		this.parentOrganizationId = parentOrganizationId;
 	}
 
-	public void setParentOrganizationId(
+	public void setParentOrganizationIdWithSupplier(
 		UnsafeSupplier<Long, Throwable> parentOrganizationIdUnsafeSupplier) {
 
 		try {
@@ -234,7 +234,7 @@ public class Organization {
 		this.services = services;
 	}
 
-	public void setServices(
+	public void setServicesWithSupplier(
 		UnsafeSupplier<Services[], Throwable> servicesUnsafeSupplier) {
 
 		try {
@@ -249,7 +249,7 @@ public class Organization {
 		this.subOrganization = subOrganization;
 	}
 
-	public void setSubOrganization(
+	public void setSubOrganizationWithSupplier(
 		UnsafeSupplier<Organization[], Throwable>
 			subOrganizationUnsafeSupplier) {
 
@@ -265,7 +265,7 @@ public class Organization {
 		this.subOrganizationIds = subOrganizationIds;
 	}
 
-	public void setSubOrganizationIds(
+	public void setSubOrganizationIdsWithSupplier(
 		UnsafeSupplier<Long[], Throwable> subOrganizationIdsUnsafeSupplier) {
 
 		try {

@@ -67,7 +67,7 @@ public class HoursAvailable {
 		this.dayOfWeek = dayOfWeek;
 	}
 
-	public void setDayOfWeek(
+	public void setDayOfWeekWithSupplier(
 		UnsafeSupplier<String, Throwable> dayOfWeekUnsafeSupplier) {
 
 		try {
@@ -82,7 +82,7 @@ public class HoursAvailable {
 		this.id = id;
 	}
 
-	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+	public void setIdWithSupplier(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 		try {
 			id = idUnsafeSupplier.get();
 	}
@@ -95,7 +95,7 @@ public class HoursAvailable {
 		this.opens = opens;
 	}
 
-	public void setOpens(
+	public void setOpensWithSupplier(
 		UnsafeSupplier<String, Throwable> opensUnsafeSupplier) {
 
 		try {

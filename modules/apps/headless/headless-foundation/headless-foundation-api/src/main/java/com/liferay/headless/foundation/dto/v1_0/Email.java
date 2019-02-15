@@ -48,7 +48,7 @@ public class Email {
 		this.email = email;
 	}
 
-	public void setEmail(
+	public void setEmailWithSupplier(
 		UnsafeSupplier<String, Throwable> emailUnsafeSupplier) {
 
 		try {
@@ -63,7 +63,7 @@ public class Email {
 		this.id = id;
 	}
 
-	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+	public void setIdWithSupplier(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 		try {
 			id = idUnsafeSupplier.get();
 	}
@@ -76,7 +76,7 @@ public class Email {
 		this.type = type;
 	}
 
-	public void setType(UnsafeSupplier<String, Throwable> typeUnsafeSupplier) {
+	public void setTypeWithSupplier(UnsafeSupplier<String, Throwable> typeUnsafeSupplier) {
 		try {
 			type = typeUnsafeSupplier.get();
 	}

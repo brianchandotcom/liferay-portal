@@ -72,7 +72,7 @@ public class PostalAddress {
 		this.addressCountry = addressCountry;
 	}
 
-	public void setAddressCountry(
+	public void setAddressCountryWithSupplier(
 		UnsafeSupplier<String, Throwable> addressCountryUnsafeSupplier) {
 
 		try {
@@ -87,7 +87,7 @@ public class PostalAddress {
 		this.addressLocality = addressLocality;
 	}
 
-	public void setAddressLocality(
+	public void setAddressLocalityWithSupplier(
 		UnsafeSupplier<String, Throwable> addressLocalityUnsafeSupplier) {
 
 		try {
@@ -102,7 +102,7 @@ public class PostalAddress {
 		this.addressRegion = addressRegion;
 	}
 
-	public void setAddressRegion(
+	public void setAddressRegionWithSupplier(
 		UnsafeSupplier<String, Throwable> addressRegionUnsafeSupplier) {
 
 		try {
@@ -117,7 +117,7 @@ public class PostalAddress {
 		this.addressType = addressType;
 	}
 
-	public void setAddressType(
+	public void setAddressTypeWithSupplier(
 		UnsafeSupplier<String, Throwable> addressTypeUnsafeSupplier) {
 
 		try {
@@ -132,7 +132,7 @@ public class PostalAddress {
 		this.id = id;
 	}
 
-	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+	public void setIdWithSupplier(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 		try {
 			id = idUnsafeSupplier.get();
 	}
@@ -145,7 +145,7 @@ public class PostalAddress {
 		this.postalCode = postalCode;
 	}
 
-	public void setPostalCode(
+	public void setPostalCodeWithSupplier(
 		UnsafeSupplier<String, Throwable> postalCodeUnsafeSupplier) {
 
 		try {
@@ -160,7 +160,7 @@ public class PostalAddress {
 		this.streetAddressLine1 = streetAddressLine1;
 	}
 
-	public void setStreetAddressLine1(
+	public void setStreetAddressLine1WithSupplier(
 		UnsafeSupplier<String, Throwable> streetAddressLine1UnsafeSupplier) {
 
 		try {
@@ -175,7 +175,7 @@ public class PostalAddress {
 		this.streetAddressLine2 = streetAddressLine2;
 	}
 
-	public void setStreetAddressLine2(
+	public void setStreetAddressLine2WithSupplier(
 		UnsafeSupplier<String, Throwable> streetAddressLine2UnsafeSupplier) {
 
 		try {
@@ -190,7 +190,7 @@ public class PostalAddress {
 		this.streetAddressLine3 = streetAddressLine3;
 	}
 
-	public void setStreetAddressLine3(
+	public void setStreetAddressLine3WithSupplier(
 		UnsafeSupplier<String, Throwable> streetAddressLine3UnsafeSupplier) {
 
 		try {

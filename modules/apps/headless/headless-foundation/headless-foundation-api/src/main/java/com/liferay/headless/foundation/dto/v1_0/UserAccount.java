@@ -122,7 +122,7 @@ public class UserAccount {
 		this.additionalName = additionalName;
 	}
 
-	public void setAdditionalName(
+	public void setAdditionalNameWithSupplier(
 		UnsafeSupplier<String, Throwable> additionalNameUnsafeSupplier) {
 
 		try {
@@ -137,7 +137,7 @@ public class UserAccount {
 		this.alternateName = alternateName;
 	}
 
-	public void setAlternateName(
+	public void setAlternateNameWithSupplier(
 		UnsafeSupplier<String, Throwable> alternateNameUnsafeSupplier) {
 
 		try {
@@ -152,7 +152,7 @@ public class UserAccount {
 		this.birthDate = birthDate;
 	}
 
-	public void setBirthDate(
+	public void setBirthDateWithSupplier(
 		UnsafeSupplier<Date, Throwable> birthDateUnsafeSupplier) {
 
 		try {
@@ -167,7 +167,7 @@ public class UserAccount {
 		this.contactInformation = contactInformation;
 	}
 
-	public void setContactInformation(
+	public void setContactInformationWithSupplier(
 		UnsafeSupplier<ContactInformation, Throwable>
 			contactInformationUnsafeSupplier) {
 
@@ -183,7 +183,7 @@ public class UserAccount {
 		this.dashboardURL = dashboardURL;
 	}
 
-	public void setDashboardURL(
+	public void setDashboardURLWithSupplier(
 		UnsafeSupplier<String, Throwable> dashboardURLUnsafeSupplier) {
 
 		try {
@@ -198,7 +198,7 @@ public class UserAccount {
 		this.email = email;
 	}
 
-	public void setEmail(
+	public void setEmailWithSupplier(
 		UnsafeSupplier<String, Throwable> emailUnsafeSupplier) {
 
 		try {
@@ -213,7 +213,7 @@ public class UserAccount {
 		this.familyName = familyName;
 	}
 
-	public void setFamilyName(
+	public void setFamilyNameWithSupplier(
 		UnsafeSupplier<String, Throwable> familyNameUnsafeSupplier) {
 
 		try {
@@ -228,7 +228,7 @@ public class UserAccount {
 		this.givenName = givenName;
 	}
 
-	public void setGivenName(
+	public void setGivenNameWithSupplier(
 		UnsafeSupplier<String, Throwable> givenNameUnsafeSupplier) {
 
 		try {
@@ -243,7 +243,7 @@ public class UserAccount {
 		this.honorificPrefix = honorificPrefix;
 	}
 
-	public void setHonorificPrefix(
+	public void setHonorificPrefixWithSupplier(
 		UnsafeSupplier<String, Throwable> honorificPrefixUnsafeSupplier) {
 
 		try {
@@ -258,7 +258,7 @@ public class UserAccount {
 		this.honorificSuffix = honorificSuffix;
 	}
 
-	public void setHonorificSuffix(
+	public void setHonorificSuffixWithSupplier(
 		UnsafeSupplier<String, Throwable> honorificSuffixUnsafeSupplier) {
 
 		try {
@@ -273,7 +273,7 @@ public class UserAccount {
 		this.id = id;
 	}
 
-	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+	public void setIdWithSupplier(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 		try {
 			id = idUnsafeSupplier.get();
 	}
@@ -286,7 +286,7 @@ public class UserAccount {
 		this.image = image;
 	}
 
-	public void setImage(
+	public void setImageWithSupplier(
 		UnsafeSupplier<String, Throwable> imageUnsafeSupplier) {
 
 		try {
@@ -301,7 +301,7 @@ public class UserAccount {
 		this.jobTitle = jobTitle;
 	}
 
-	public void setJobTitle(
+	public void setJobTitleWithSupplier(
 		UnsafeSupplier<String, Throwable> jobTitleUnsafeSupplier) {
 
 		try {
@@ -316,7 +316,7 @@ public class UserAccount {
 		this.myOrganizations = myOrganizations;
 	}
 
-	public void setMyOrganizations(
+	public void setMyOrganizationsWithSupplier(
 		UnsafeSupplier<Organization[], Throwable>
 			myOrganizationsUnsafeSupplier) {
 
@@ -332,7 +332,7 @@ public class UserAccount {
 		this.myOrganizationsIds = myOrganizationsIds;
 	}
 
-	public void setMyOrganizationsIds(
+	public void setMyOrganizationsIdsWithSupplier(
 		UnsafeSupplier<Long[], Throwable> myOrganizationsIdsUnsafeSupplier) {
 
 		try {
@@ -347,7 +347,8 @@ public class UserAccount {
 		this.name = name;
 	}
 
-	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
+	public void setNameWithSupplier(
+		UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
 		try {
 			name = nameUnsafeSupplier.get();
 	}
@@ -360,7 +361,7 @@ public class UserAccount {
 		this.profileURL = profileURL;
 	}
 
-	public void setProfileURL(
+	public void setProfileURLWithSupplier(
 		UnsafeSupplier<String, Throwable> profileURLUnsafeSupplier) {
 
 		try {
@@ -375,7 +376,7 @@ public class UserAccount {
 		this.roles = roles;
 	}
 
-	public void setRoles(
+	public void setRolesWithSupplier(
 		UnsafeSupplier<Role[], Throwable> rolesUnsafeSupplier) {
 
 		try {
@@ -390,7 +391,7 @@ public class UserAccount {
 		this.rolesIds = rolesIds;
 	}
 
-	public void setRolesIds(
+	public void setRolesIdsWithSupplier(
 		UnsafeSupplier<Long[], Throwable> rolesIdsUnsafeSupplier) {
 
 		try {
@@ -405,7 +406,7 @@ public class UserAccount {
 		this.tasksAssignedToMe = tasksAssignedToMe;
 	}
 
-	public void setTasksAssignedToMe(
+	public void setTasksAssignedToMeWithSupplier(
 		UnsafeSupplier<String[], Throwable> tasksAssignedToMeUnsafeSupplier) {
 
 		try {
@@ -420,7 +421,7 @@ public class UserAccount {
 		this.tasksAssignedToMyRoles = tasksAssignedToMyRoles;
 	}
 
-	public void setTasksAssignedToMyRoles(
+	public void setTasksAssignedToMyRolesWithSupplier(
 		UnsafeSupplier<String[], Throwable>
 			tasksAssignedToMyRolesUnsafeSupplier) {
 

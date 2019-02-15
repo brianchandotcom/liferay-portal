@@ -90,7 +90,7 @@ public class Category {
 		this.availableLanguages = availableLanguages;
 	}
 
-	public void setAvailableLanguages(
+	public void setAvailableLanguagesWithSupplier(
 		UnsafeSupplier<String[], Throwable> availableLanguagesUnsafeSupplier) {
 
 		try {
@@ -105,7 +105,7 @@ public class Category {
 		this.category = category;
 	}
 
-	public void setCategory(
+	public void setCategoryWithSupplier(
 		UnsafeSupplier<Category, Throwable> categoryUnsafeSupplier) {
 
 		try {
@@ -120,7 +120,7 @@ public class Category {
 		this.categoryId = categoryId;
 	}
 
-	public void setCategoryId(
+	public void setCategoryIdWithSupplier(
 		UnsafeSupplier<Long, Throwable> categoryIdUnsafeSupplier) {
 
 		try {
@@ -131,7 +131,7 @@ public class Category {
 	}
 	}
 
-	public void setCreator(
+	public void setCreatorWithSupplier(
 		UnsafeSupplier<UserAccount, Throwable> creatorUnsafeSupplier) {
 
 		try {
@@ -150,7 +150,7 @@ public class Category {
 		this.creatorId = creatorId;
 	}
 
-	public void setCreatorId(
+	public void setCreatorIdWithSupplier(
 		UnsafeSupplier<Long, Throwable> creatorIdUnsafeSupplier) {
 
 		try {
@@ -165,7 +165,7 @@ public class Category {
 		this.dateCreated = dateCreated;
 	}
 
-	public void setDateCreated(
+	public void setDateCreatedWithSupplier(
 		UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
 
 		try {
@@ -180,7 +180,7 @@ public class Category {
 		this.dateModified = dateModified;
 	}
 
-	public void setDateModified(
+	public void setDateModifiedWithSupplier(
 		UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
 
 		try {
@@ -195,7 +195,7 @@ public class Category {
 		this.description = description;
 	}
 
-	public void setDescription(
+	public void setDescriptionWithSupplier(
 		UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier) {
 
 		try {
@@ -210,7 +210,7 @@ public class Category {
 		this.id = id;
 	}
 
-	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+	public void setIdWithSupplier(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 		try {
 			id = idUnsafeSupplier.get();
 	}
@@ -223,7 +223,7 @@ public class Category {
 		this.name = name;
 	}
 
-	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
+	public void setNameWithSupplier(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
 		try {
 			name = nameUnsafeSupplier.get();
 	}
@@ -236,7 +236,7 @@ public class Category {
 		this.subcategories = subcategories;
 	}
 
-	public void setSubcategories(
+	public void setSubcategoriesWithSupplier(
 		UnsafeSupplier<Category[], Throwable> subcategoriesUnsafeSupplier) {
 
 		try {
@@ -247,7 +247,7 @@ public class Category {
 	}
 	}
 
-	public void setVocabulary(
+	public void setVocabularyWithSupplier(
 		UnsafeSupplier<Vocabulary, Throwable> vocabularyUnsafeSupplier) {
 
 		try {
@@ -266,7 +266,7 @@ public class Category {
 		this.vocabularyId = vocabularyId;
 	}
 
-	public void setVocabularyId(
+	public void setVocabularyIdWithSupplier(
 		UnsafeSupplier<Long, Throwable> vocabularyIdUnsafeSupplier) {
 
 		try {

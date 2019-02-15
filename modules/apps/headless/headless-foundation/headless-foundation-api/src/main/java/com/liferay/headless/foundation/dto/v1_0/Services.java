@@ -48,7 +48,7 @@ public class Services {
 		this.hoursAvailable = hoursAvailable;
 	}
 
-	public void setHoursAvailable(
+	public void setHoursAvailableWithSupplier(
 		UnsafeSupplier<HoursAvailable[], Throwable>
 			hoursAvailableUnsafeSupplier) {
 
@@ -64,7 +64,7 @@ public class Services {
 		this.id = id;
 	}
 
-	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+	public void setIdWithSupplier(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 		try {
 			id = idUnsafeSupplier.get();
 	}
@@ -77,7 +77,7 @@ public class Services {
 		this.serviceType = serviceType;
 	}
 
-	public void setServiceType(
+	public void setServiceTypeWithSupplier(
 		UnsafeSupplier<String, Throwable> serviceTypeUnsafeSupplier) {
 
 		try {

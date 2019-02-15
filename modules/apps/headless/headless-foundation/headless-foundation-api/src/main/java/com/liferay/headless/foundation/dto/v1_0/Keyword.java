@@ -66,7 +66,7 @@ public class Keyword {
 		this.contentSpace = contentSpace;
 	}
 
-	public void setContentSpace(
+	public void setContentSpaceWithSupplier(
 		UnsafeSupplier<Long, Throwable> contentSpaceUnsafeSupplier) {
 
 		try {
@@ -77,7 +77,7 @@ public class Keyword {
 	}
 	}
 
-	public void setCreator(
+	public void setCreatorWithSupplier(
 		UnsafeSupplier<UserAccount, Throwable> creatorUnsafeSupplier) {
 
 		try {
@@ -96,7 +96,7 @@ public class Keyword {
 		this.dateCreated = dateCreated;
 	}
 
-	public void setDateCreated(
+	public void setDateCreatedWithSupplier(
 		UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
 
 		try {
@@ -111,7 +111,7 @@ public class Keyword {
 		this.dateModified = dateModified;
 	}
 
-	public void setDateModified(
+	public void setDateModifiedWithSupplier(
 		UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
 
 		try {
@@ -139,7 +139,7 @@ public class Keyword {
 		this.keywordUsageCount = keywordUsageCount;
 	}
 
-	public void setKeywordUsageCount(
+	public void setKeywordUsageCountWithSupplier(
 		UnsafeSupplier<Number, Throwable> keywordUsageCountUnsafeSupplier) {
 
 		try {
@@ -154,7 +154,7 @@ public class Keyword {
 		this.name = name;
 	}
 
-	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
+	public void setNameWithSupplier(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
 		try {
 			name = nameUnsafeSupplier.get();
 	}

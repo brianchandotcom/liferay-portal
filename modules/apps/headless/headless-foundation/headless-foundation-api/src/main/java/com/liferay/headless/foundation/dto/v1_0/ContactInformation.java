@@ -92,7 +92,7 @@ public class ContactInformation {
 		this.address = address;
 	}
 
-	public void setAddress(
+	public void setAddressWithSupplier(
 		UnsafeSupplier<PostalAddress[], Throwable> addressUnsafeSupplier) {
 
 		try {
@@ -107,7 +107,7 @@ public class ContactInformation {
 		this.addressIds = addressIds;
 	}
 
-	public void setAddressIds(
+	public void setAddressIdsWithSupplier(
 		UnsafeSupplier<Long[], Throwable> addressIdsUnsafeSupplier) {
 
 		try {
@@ -122,7 +122,7 @@ public class ContactInformation {
 		this.email = email;
 	}
 
-	public void setEmail(
+	public void setEmailWithSupplier(
 		UnsafeSupplier<Email[], Throwable> emailUnsafeSupplier) {
 
 		try {
@@ -137,7 +137,7 @@ public class ContactInformation {
 		this.emailIds = emailIds;
 	}
 
-	public void setEmailIds(
+	public void setEmailIdsWithSupplier(
 		UnsafeSupplier<Long[], Throwable> emailIdsUnsafeSupplier) {
 
 		try {
@@ -152,7 +152,7 @@ public class ContactInformation {
 		this.facebook = facebook;
 	}
 
-	public void setFacebook(
+	public void setFacebookWithSupplier(
 		UnsafeSupplier<String, Throwable> facebookUnsafeSupplier) {
 
 		try {
@@ -167,7 +167,7 @@ public class ContactInformation {
 		this.id = id;
 	}
 
-	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+	public void setIdWithSupplier(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 		try {
 			id = idUnsafeSupplier.get();
 	}
@@ -180,7 +180,7 @@ public class ContactInformation {
 		this.jabber = jabber;
 	}
 
-	public void setJabber(
+	public void setJabberWithSupplier(
 		UnsafeSupplier<String, Throwable> jabberUnsafeSupplier) {
 
 		try {
@@ -195,7 +195,7 @@ public class ContactInformation {
 		this.skype = skype;
 	}
 
-	public void setSkype(
+	public void setSkypeWithSupplier(
 		UnsafeSupplier<String, Throwable> skypeUnsafeSupplier) {
 
 		try {
@@ -210,7 +210,7 @@ public class ContactInformation {
 		this.sms = sms;
 	}
 
-	public void setSms(UnsafeSupplier<String, Throwable> smsUnsafeSupplier) {
+	public void setSmsWithSupplier(UnsafeSupplier<String, Throwable> smsUnsafeSupplier) {
 		try {
 			sms = smsUnsafeSupplier.get();
 	}
@@ -223,7 +223,7 @@ public class ContactInformation {
 		this.telephone = telephone;
 	}
 
-	public void setTelephone(
+	public void setTelephoneWithSupplier(
 		UnsafeSupplier<Phone[], Throwable> telephoneUnsafeSupplier) {
 
 		try {
@@ -238,7 +238,7 @@ public class ContactInformation {
 		this.telephoneIds = telephoneIds;
 	}
 
-	public void setTelephoneIds(
+	public void setTelephoneIdsWithSupplier(
 		UnsafeSupplier<Long[], Throwable> telephoneIdsUnsafeSupplier) {
 
 		try {
@@ -253,7 +253,7 @@ public class ContactInformation {
 		this.twitter = twitter;
 	}
 
-	public void setTwitter(
+	public void setTwitterWithSupplier(
 		UnsafeSupplier<String, Throwable> twitterUnsafeSupplier) {
 
 		try {
@@ -264,7 +264,7 @@ public class ContactInformation {
 	}
 	}
 
-	public void setWebUrl(
+	public void setWebUrlWithSupplier(
 		UnsafeSupplier<WebUrl[], Throwable> webUrlUnsafeSupplier) {
 
 		try {
@@ -283,7 +283,7 @@ public class ContactInformation {
 		this.webUrlIds = webUrlIds;
 	}
 
-	public void setWebUrlIds(
+	public void setWebUrlIdsWithSupplier(
 		UnsafeSupplier<Long[], Throwable> webUrlIdsUnsafeSupplier) {
 
 		try {

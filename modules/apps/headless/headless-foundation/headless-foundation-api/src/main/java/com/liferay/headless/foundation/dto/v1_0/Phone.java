@@ -52,7 +52,7 @@ public class Phone {
 		this.extension = extension;
 	}
 
-	public void setExtension(
+	public void setExtensionWithSupplier(
 		UnsafeSupplier<String, Throwable> extensionUnsafeSupplier) {
 
 		try {
@@ -67,7 +67,7 @@ public class Phone {
 		this.id = id;
 	}
 
-	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+	public void setIdWithSupplier(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 		try {
 			id = idUnsafeSupplier.get();
 	}
@@ -80,7 +80,7 @@ public class Phone {
 		this.phoneNumber = phoneNumber;
 	}
 
-	public void setPhoneNumber(
+	public void setPhoneNumberWithSupplier(
 		UnsafeSupplier<String, Throwable> phoneNumberUnsafeSupplier) {
 
 		try {
@@ -95,7 +95,7 @@ public class Phone {
 		this.phoneType = phoneType;
 	}
 
-	public void setPhoneType(
+	public void setPhoneTypeWithSupplier(
 		UnsafeSupplier<String, Throwable> phoneTypeUnsafeSupplier) {
 
 		try {

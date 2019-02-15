@@ -48,7 +48,7 @@ public class Location {
 		this.addressCountry = addressCountry;
 	}
 
-	public void setAddressCountry(
+	public void setAddressCountryWithSupplier(
 		UnsafeSupplier<String, Throwable> addressCountryUnsafeSupplier) {
 
 		try {
@@ -63,7 +63,7 @@ public class Location {
 		this.addressRegion = addressRegion;
 	}
 
-	public void setAddressRegion(
+	public void setAddressRegionWithSupplier(
 		UnsafeSupplier<String, Throwable> addressRegionUnsafeSupplier) {
 
 		try {
@@ -78,7 +78,7 @@ public class Location {
 		this.id = id;
 	}
 
-	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+	public void setIdWithSupplier(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 		try {
 			id = idUnsafeSupplier.get();
 	}

@@ -78,7 +78,7 @@ public class Vocabulary {
 		this.availableLanguages = availableLanguages;
 	}
 
-	public void setAvailableLanguages(
+	public void setAvailableLanguagesWithSupplier(
 		UnsafeSupplier<String[], Throwable> availableLanguagesUnsafeSupplier) {
 
 		try {
@@ -93,7 +93,7 @@ public class Vocabulary {
 		this.contentSpace = contentSpace;
 	}
 
-	public void setContentSpace(
+	public void setContentSpaceWithSuplierWithSupplier(
 		UnsafeSupplier<Long, Throwable> contentSpaceUnsafeSupplier) {
 
 		try {
@@ -104,7 +104,7 @@ public class Vocabulary {
 	}
 	}
 
-	public void setCreator(
+	public void setCreatorWithSupplier(
 		UnsafeSupplier<UserAccount, Throwable> creatorUnsafeSupplier) {
 
 		try {
@@ -123,7 +123,7 @@ public class Vocabulary {
 		this.dateCreated = dateCreated;
 	}
 
-	public void setDateCreated(
+	public void setDateCreatedWithSupplier(
 		UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
 
 		try {
@@ -138,7 +138,7 @@ public class Vocabulary {
 		this.dateModified = dateModified;
 	}
 
-	public void setDateModified(
+	public void setDateModifiedWithSupplier(
 		UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
 
 		try {
@@ -153,7 +153,7 @@ public class Vocabulary {
 		this.description = description;
 	}
 
-	public void setDescription(
+	public void setDescriptionWithSupplier(
 		UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier) {
 
 		try {
@@ -168,7 +168,8 @@ public class Vocabulary {
 		this.id = id;
 	}
 
-	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+	public void setIdWithSupplier(
+		UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 		try {
 			id = idUnsafeSupplier.get();
 	}
@@ -181,7 +182,8 @@ public class Vocabulary {
 		this.name = name;
 	}
 
-	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
+	public void setNameWithSupplier(
+		UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
 		try {
 			name = nameUnsafeSupplier.get();
 	}
@@ -194,7 +196,7 @@ public class Vocabulary {
 		this.vocabularyCategories = vocabularyCategories;
 	}
 
-	public void setVocabularyCategories(
+	public void setVocabularyCategoriesWithSupplier(
 		UnsafeSupplier<Category[], Throwable>
 			vocabularyCategoriesUnsafeSupplier) {
 
@@ -210,7 +212,7 @@ public class Vocabulary {
 		this.vocabularyCategoriesIds = vocabularyCategoriesIds;
 	}
 
-	public void setVocabularyCategoriesIds(
+	public void setVocabularyCategoriesIdsWithSupplier(
 		UnsafeSupplier<Long[], Throwable>
 			vocabularyCategoriesIdsUnsafeSupplier) {
 

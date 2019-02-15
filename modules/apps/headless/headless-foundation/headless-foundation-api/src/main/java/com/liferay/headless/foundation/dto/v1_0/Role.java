@@ -70,7 +70,7 @@ public class Role {
 		this.availableLanguages = availableLanguages;
 	}
 
-	public void setAvailableLanguages(
+	public void setAvailableLanguagesWithSupplier(
 		UnsafeSupplier<String[], Throwable> availableLanguagesUnsafeSupplier) {
 
 		try {
@@ -81,7 +81,7 @@ public class Role {
 	}
 	}
 
-	public void setCreator(
+	public void setCreatorWithSupplier(
 		UnsafeSupplier<UserAccount, Throwable> creatorUnsafeSupplier) {
 
 		try {
@@ -100,7 +100,7 @@ public class Role {
 		this.dateCreated = dateCreated;
 	}
 
-	public void setDateCreated(
+	public void setDateCreatedWithSupplier(
 		UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
 
 		try {
@@ -115,7 +115,7 @@ public class Role {
 		this.dateModified = dateModified;
 	}
 
-	public void setDateModified(
+	public void setDateModifiedWithSupplier(
 		UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
 
 		try {
@@ -130,7 +130,7 @@ public class Role {
 		this.description = description;
 	}
 
-	public void setDescription(
+	public void setDescriptionWithSupplier(
 		UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier) {
 
 		try {
@@ -145,7 +145,7 @@ public class Role {
 		this.id = id;
 	}
 
-	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+	public void setIdWithSupplier(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 		try {
 			id = idUnsafeSupplier.get();
 	}
@@ -158,7 +158,7 @@ public class Role {
 		this.name = name;
 	}
 
-	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
+	public void setNameWithSupplier(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
 		try {
 			name = nameUnsafeSupplier.get();
 	}
@@ -171,7 +171,7 @@ public class Role {
 		this.roleType = roleType;
 	}
 
-	public void setRoleType(
+	public void setRoleTypeWithSupplier(
 		UnsafeSupplier<String, Throwable> roleTypeUnsafeSupplier) {
 
 		try {

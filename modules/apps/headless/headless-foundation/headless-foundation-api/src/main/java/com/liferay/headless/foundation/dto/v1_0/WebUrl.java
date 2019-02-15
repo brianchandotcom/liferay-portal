@@ -48,7 +48,7 @@ public class WebUrl {
 		this.id = id;
 	}
 
-	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+	public void setIdWithSupplier(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 		try {
 			id = idUnsafeSupplier.get();
 	}
@@ -61,7 +61,7 @@ public class WebUrl {
 		this.url = url;
 	}
 
-	public void setUrl(UnsafeSupplier<String, Throwable> urlUnsafeSupplier) {
+	public void setUrlWithSupplier(UnsafeSupplier<String, Throwable> urlUnsafeSupplier) {
 		try {
 			url = urlUnsafeSupplier.get();
 	}
@@ -74,7 +74,7 @@ public class WebUrl {
 		this.urlType = urlType;
 	}
 
-	public void setUrlType(
+	public void setUrlTypeWithSupplier(
 		UnsafeSupplier<String, Throwable> urlTypeUnsafeSupplier) {
 
 		try {

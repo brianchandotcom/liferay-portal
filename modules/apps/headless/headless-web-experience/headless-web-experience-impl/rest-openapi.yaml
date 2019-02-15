@@ -35,6 +35,32 @@ components:
         text:
           type: string
       type: object
+    ContentDocument:
+      description: https://www.schema.org/ContentDocument
+      properties:
+        contentUrl:
+          format: uri
+          type: string
+        creator:
+          $ref: "#/components/schemas/Creator"
+        dateCreated:
+          format: date-time
+          type: string
+        dateModified:
+          format: date-time
+          type: string
+        encodingFormat:
+          type: string
+        fileExtension:
+          type: string
+        id:
+          format: int64
+          type: integer
+        sizeInBytes:
+          type: number
+        title:
+          type: string
+      type: object
     ContentStructure:
       description: https://www.schema.org/ContentStructure
       properties:
@@ -201,43 +227,40 @@ components:
               name:
                 type: string
               value:
-                anyOf:
-                  - properties:
-                      data:
-                        type: string
-                  - properties:
-                      document:
-                        allOf:
-                          - $ref: "#/components/schemas/StructuredContentImage"
-                      documentId:
+                properties:
+                  data:
+                    type: string
+                  document:
+                    allOf:
+                      - $ref: "#/components/schemas/ContentDocument"
+                    readOnly: true
+                  documentId:
+                    format: int64
+                    type: integer
+                    writeOnly: true
+                  geo:
+                    description: https://www.schema.org/GeoCoordinates
+                    properties:
+                      id:
                         format: int64
                         type: integer
-                        writeOnly: true
-                  - properties:
-                      geo:
-                        description: https://www.schema.org/GeoCoordinates
-                        properties:
-                          id:
-                            format: int64
-                            type: integer
-                          latitude:
-                            type: number
-                          longitude:
-                            type: number
-                        type: object
-                  - properties:
-                      link:
-                        format: uri
-                        type: string
-                  - properties:
-                      structuredContent:
-                        allOf:
-                          - $ref: "#/components/schemas/StructuredContent"
-                        readOnly: true
-                      structuredContentId:
-                        format: int64
-                        type: integer
-                        writeOnly: true
+                      latitude:
+                        type: number
+                      longitude:
+                        type: number
+                    type: object
+                  link:
+                    format: uri
+                    type: string
+                  structuredContent:
+                    allOf:
+                      - $ref: "#/components/schemas/StructuredContent"
+                    readOnly: true
+                  structuredContentId:
+                    format: int64
+                    type: integer
+                    writeOnly: true
+                type: object
             type: object
           type: array
     StructuredContentImage:

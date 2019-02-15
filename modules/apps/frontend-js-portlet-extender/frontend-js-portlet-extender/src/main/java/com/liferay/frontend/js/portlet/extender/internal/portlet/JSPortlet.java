@@ -73,17 +73,16 @@ public class JSPortlet extends MVCPortlet implements ManagedService {
 			String javascript = StringUtil.replace(
 				_TPL_JAVA_SCRIPT,
 				new String[] {
-					"[$CONTEXT_PATH$]", "[$PORTLET_ELEMENT_ID$]",
-					"[$PORTLET_NAMESPACE$]", "[$PACKAGE_NAME$]",
-					"[$PACKAGE_VERSION$]", "[$PORTLET_PREFERENCES$]",
+					"[$CONTEXT_PATH$]", "[$PACKAGE_NAME$]",
+					"[$PACKAGE_VERSION$]", "[$PORTLET_ELEMENT_ID$]",
+					"[$PORTLET_NAMESPACE$]", "[$PORTLET_PREFERENCES$]",
 					"[$SETTINGS$]"
 				},
 				new String[] {
-					renderRequest.getContextPath(), portletElementId,
-					renderResponse.getNamespace(), _packageName,
-					_packageVersion,
-					_toJSON(renderRequest.getPreferences()),
-					_getSettings()
+					renderRequest.getContextPath(), _packageName,
+					_packageVersion, portletElementId,
+					renderResponse.getNamespace(),
+					_getPortletPreferences(renderRequest), _getSettings()
 				});
 
 			printWriter.print(javascript);
@@ -133,11 +132,9 @@ public class JSPortlet extends MVCPortlet implements ManagedService {
 		return StringPool.BLANK;
 	}
 
-	private String _getSettings() {
-		return _jsonFactory.looseSerialize(_settings.get());
-	}
+	private String _getPortletPreferences(RenderRequest renderRequest) {
+		PortletPreferences portletPreferences = renderRequest.getPreferences();
 
-	private String _toJSON(PortletPreferences portletPreferences) {
 		JSONObject portletPreferencesJSONObject =
 			_jsonFactory.createJSONObject();
 
@@ -159,6 +156,10 @@ public class JSPortlet extends MVCPortlet implements ManagedService {
 		}
 
 		return portletPreferencesJSONObject.toJSONString();
+	}
+
+	private String _getSettings() {
+		return _jsonFactory.looseSerialize(_settings.get());
 	}
 
 	private static final String _TPL_HTML;

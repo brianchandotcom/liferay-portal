@@ -59,7 +59,7 @@ if (microblogsEntries != null) {
 		<div class="microblogs-entry" id="<portlet:namespace />microblogsEntry<%= microblogsEntry.getMicroblogsEntryId() %>">
 			<span class="thumbnail">
 				<liferay-ui:user-portrait
-					cssClass='<%= comment ? "user-icon-xs" : "" %>'
+					cssClass='<%= comment ? "sticker-sm" : "" %>'
 					userId="<%= microblogsEntry.getUserId() %>"
 				/>
 			</span>

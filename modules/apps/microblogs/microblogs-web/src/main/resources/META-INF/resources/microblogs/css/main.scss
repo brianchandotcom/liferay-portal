@@ -111,16 +111,7 @@ $microblogs-border-color: #EAEAEA;
 	}
 
 	.thumbnail {
-		border-width: 0;
 		float: left;
-		height: 45px;
-		margin-right: 2px;
-		overflow: hidden;
-		width: 45px;
-
-		img {
-			max-width: 45px;
-		}
 	}
 
 	.comments-container {
@@ -210,15 +201,6 @@ $microblogs-border-color: #EAEAEA;
 
 		.entry-bubble {
 			margin-left: 40px;
-		}
-
-		.thumbnail {
-			height: 26px;
-			width: 26px;
-
-			img {
-				max-width: 26px;
-			}
 		}
 
 		.microblogs-entry, .microblogs-entry-form {

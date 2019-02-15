@@ -32,6 +32,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Map;
@@ -106,8 +107,8 @@ public class UpgradeJournalArticleLocalizedValues extends UpgradeProcess {
 
 		try (LoggingTimer loggingTimer = new LoggingTimer();
 			PreparedStatement ps1 = connection.prepareStatement(
-				"select id_, companyId, title, description from " +
-					"JournalArticle");
+				"select id_, companyId, title, description, " +
+					"defaultLanguageId from JournalArticle");
 			PreparedStatement ps2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection, sb.toString());
@@ -118,12 +119,33 @@ public class UpgradeJournalArticleLocalizedValues extends UpgradeProcess {
 				long companyId = rs.getLong(2);
 				String title = rs.getString(3);
 				String description = rs.getString(4);
+				String defaultLanguageId = rs.getString(5);
 
-				Map<Locale, String> titleMap =
-					LocalizationUtil.getLocalizationMap(title);
+				Map<Locale, String> titleMap = null;
 
-				Map<Locale, String> descriptionMap =
-					LocalizationUtil.getLocalizationMap(description);
+				if (!Validator.isXml(title)) {
+					titleMap = new HashMap<>();
+
+					titleMap.put(
+						LocaleUtil.fromLanguageId(defaultLanguageId), title);
+				}
+				else {
+					titleMap = LocalizationUtil.getLocalizationMap(title);
+				}
+
+				Map<Locale, String> descriptionMap = null;
+
+				if (!Validator.isXml(description)) {
+					descriptionMap = new HashMap<>();
+
+					descriptionMap.put(
+						LocaleUtil.fromLanguageId(defaultLanguageId),
+						description);
+				}
+				else {
+					descriptionMap = LocalizationUtil.getLocalizationMap(
+						description);
+				}
 
 				Set<Locale> localeSet = new HashSet<>();
 

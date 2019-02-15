@@ -37,7 +37,7 @@ if (Validator.isNotNull(replyTo) && !replyTo.startsWith(PortalUtil.getPortalURL(
 				<div class="app-icon aspect-ratio-bg-cover" style="background-image:url('<%= HtmlUtil.escapeAttribute(oAuth2AuthorizePortletDisplayContext.getThumbnailURL()) %>')"></div>
 
 				<liferay-ui:user-portrait
-					imageCssClass="user-icon-lg"
+					imageCssClass="sticker-lg"
 					user="<%= user %>"
 				/>
 

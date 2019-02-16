@@ -560,32 +560,6 @@ paths:
                 $ref: "#/components/schemas/FormRecord"
           description: ""
       tags: ["FormRecord"]
-  "/forms/{form-id}/form-records/batch-create":
-    post:
-      parameters:
-        - in: path
-          name: form-id
-          required: true
-          schema:
-            format: int64
-            type: integer
-        - in: header
-          name: Accept-Language
-          schema:
-            type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/FormRecord"
-      responses:
-        200:
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/FormRecord"
-          description: ""
-      tags: ["FormRecord"]
   "/forms/{form-id}/upload-file":
     post:
       parameters:

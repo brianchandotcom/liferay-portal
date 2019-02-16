@@ -519,32 +519,6 @@ paths:
                 $ref: "#/components/schemas/StructuredContent"
           description: ""
       tags: ["StructuredContent"]
-  "/content-spaces/{content-space-id}/structured-contents/batch-create":
-    post:
-      parameters:
-        - in: path
-          name: content-space-id
-          required: true
-          schema:
-            format: int64
-            type: integer
-        - in: header
-          name: Accept-Language
-          schema:
-            type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/StructuredContent"
-      responses:
-        200:
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/StructuredContent"
-          description: ""
-      tags: ["StructuredContent"]
   "/content-structures/{content-structure-id}":
     get:
       parameters:
@@ -650,30 +624,6 @@ paths:
                 type: array
           description: ""
       tags: ["StructuredContent"]
-    post:
-      parameters:
-        - in: path
-          name: structured-content-id
-          required: true
-          schema:
-            format: int64
-            type: integer
-      requestBody:
-        content:
-          application/json:
-            schema:
-              format: int64
-              type: integer
-      responses:
-        200:
-          content:
-            application/json:
-              schema:
-                format: int64
-                type: integer
-          description: ""
-      tags: ["StructuredContent"]
-  "/structured-contents/{structured-content-id}/categories/batch-create":
     post:
       parameters:
         - in: path

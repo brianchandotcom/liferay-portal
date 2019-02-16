@@ -249,30 +249,6 @@ paths:
                 type: integer
           description: ""
       tags: ["Document"]
-  "/documents/{document-id}/categories/batch-create":
-    post:
-      parameters:
-        - in: path
-          name: document-id
-          required: true
-          schema:
-            format: int64
-            type: integer
-      requestBody:
-        content:
-          application/json:
-            schema:
-              format: int64
-              type: integer
-      responses:
-        200:
-          content:
-            application/json:
-              schema:
-                format: int64
-                type: integer
-          description: ""
-      tags: ["Document"]
   "/documents/{document-id}/comments":
     get:
       parameters:
@@ -365,28 +341,6 @@ paths:
                 $ref: "#/components/schemas/Document"
           description: ""
       tags: ["Document"]
-  "/documents-repositories/{documents-repository-id}/documents/batch-create":
-    post:
-      parameters:
-        - in: path
-          name: documents-repository-id
-          required: true
-          schema:
-            format: int64
-            type: integer
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/Document"
-      responses:
-        200:
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Document"
-          description: ""
-      tags: ["Document"]
   "/documents-repositories/{documents-repository-id}/folders":
     get:
       parameters:
@@ -414,28 +368,6 @@ paths:
                 type: array
           description: ""
       tags: ["Folder"]
-    post:
-      parameters:
-        - in: path
-          name: documents-repository-id
-          required: true
-          schema:
-            format: int64
-            type: integer
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/Folder"
-      responses:
-        200:
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Folder"
-          description: ""
-      tags: ["Folder"]
-  "/documents-repositories/{documents-repository-id}/folders/batch-create":
     post:
       parameters:
         - in: path
@@ -563,34 +495,6 @@ paths:
                 $ref: "#/components/schemas/Document"
           description: ""
       tags: ["Document"]
-  "/folders/{folder-id}/documents/batch-create":
-    post:
-      parameters:
-        - in: path
-          name: folder-id
-          required: true
-          schema:
-            format: int64
-            type: integer
-      requestBody:
-        content:
-          multipart/form-data:
-            schema:
-              type: object
-              properties:
-                document:
-                  $ref: "#/components/schemas/Document"
-                file:
-                  type: string
-                  format: binary
-      responses:
-        200:
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Document"
-          description: ""
-      tags: ["Document"]
   "/folders/{folder-id}/folders":
     get:
       parameters:
@@ -618,28 +522,6 @@ paths:
                 type: array
           description: ""
       tags: ["Folder"]
-    post:
-      parameters:
-        - in: path
-          name: folder-id
-          required: true
-          schema:
-            format: int64
-            type: integer
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/Folder"
-      responses:
-        200:
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Folder"
-          description: ""
-      tags: ["Folder"]
-  "/folders/{folder-id}/folders/batch-create":
     post:
       parameters:
         - in: path

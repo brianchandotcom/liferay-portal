@@ -621,28 +621,6 @@ paths:
                 $ref: "#/components/schemas/Category"
           description: ""
       tags: ["Category"]
-  "/categories/{category-id}/categories/batch-create":
-    post:
-      parameters:
-        - in: path
-          name: category-id
-          required: true
-          schema:
-            format: int64
-            type: integer
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/Category"
-      responses:
-        200:
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Category"
-          description: ""
-      tags: ["Category"]
   "/content-spaces/{content-space-id}/keywords":
     get:
       parameters:
@@ -670,28 +648,6 @@ paths:
                 type: array
           description: ""
       tags: ["Keyword"]
-    post:
-      parameters:
-        - in: path
-          name: content-space-id
-          required: true
-          schema:
-            format: int64
-            type: integer
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/Keyword"
-      responses:
-        200:
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Keyword"
-          description: ""
-      tags: ["Keyword"]
-  "/content-spaces/{content-space-id}/keywords/batch-create":
     post:
       parameters:
         - in: path
@@ -748,28 +704,6 @@ paths:
                 type: array
           description: ""
       tags: ["Vocabulary"]
-    post:
-      parameters:
-        - in: path
-          name: content-space-id
-          required: true
-          schema:
-            format: int64
-            type: integer
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/Vocabulary"
-      responses:
-        200:
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Vocabulary"
-          description: ""
-      tags: ["Vocabulary"]
-  "/content-spaces/{content-space-id}/vocabularies/batch-create":
     post:
       parameters:
         - in: path
@@ -1170,22 +1104,6 @@ paths:
                 $ref: "#/components/schemas/UserAccount"
           description: ""
       tags: ["UserAccount"]
-  "/user-accounts/batch-create":
-    post:
-      parameters: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/UserAccount"
-      responses:
-        200:
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/UserAccount"
-          description: ""
-      tags: ["UserAccount"]
   "/user-accounts/{user-account-id}":
     delete:
       parameters:
@@ -1371,28 +1289,6 @@ paths:
                 type: array
           description: ""
       tags: ["Category"]
-    post:
-      parameters:
-        - in: path
-          name: vocabulary-id
-          required: true
-          schema:
-            format: int64
-            type: integer
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/Category"
-      responses:
-        200:
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Category"
-          description: ""
-      tags: ["Category"]
-  "/vocabularies/{vocabulary-id}/categories/batch-create":
     post:
       parameters:
         - in: path

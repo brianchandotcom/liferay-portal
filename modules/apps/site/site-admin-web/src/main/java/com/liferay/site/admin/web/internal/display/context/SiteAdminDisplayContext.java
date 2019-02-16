@@ -149,8 +149,11 @@ public class SiteAdminDisplayContext {
 		PortalPreferences portalPreferences =
 			PortletPreferencesFactoryUtil.getPortalPreferences(_request);
 
-		_displayStyle = portalPreferences.getValue(
+		String preferencesisplayStyle = portalPreferences.getValue(
 			SiteAdminPortletKeys.SITE_ADMIN, "display-style", "list");
+
+		_displayStyle = ParamUtil.getString(
+			_request, "displayStyle", preferencesisplayStyle);
 
 		return _displayStyle;
 	}

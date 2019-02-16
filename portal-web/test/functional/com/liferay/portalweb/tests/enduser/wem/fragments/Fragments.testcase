@@ -62,20 +62,20 @@ definition {
 		}
 
 		task ("View resource") {
-			LexiconCard.viewCardPresent(
-				card = "Document_1.png"
+			FragmentsAdmin.viewEntryPresent(
+				entry = "Document_1.png"
 			);
 		}
 
 		task ("Delete resource") {
-			LexiconCard.delete(
-				card = "Document_1.png"
+			FragmentsAdmin.deleteEntry(
+				entry = "Document_1.png"
 			);
 		}
 
 		task ("View no resource") {
-			LexiconCard.viewCardNotPresent(
-				card = "Document_1.png"
+			FragmentsAdmin.viewEntryNotPresent(
+				entry = "Document_1.png"
 			);
 		}
 	}

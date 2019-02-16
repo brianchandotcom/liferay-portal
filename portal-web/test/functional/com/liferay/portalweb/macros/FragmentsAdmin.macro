@@ -137,6 +137,12 @@ definition {
 		);
 	}
 
+	macro viewEntryNotPresent {
+		LexiconCard.viewCardNotPresent(
+			card = "${entry}"
+		);
+	}
+
 	macro viewEntryPresent {
 		LexiconCard.viewCardPresent(
 			card = "${entry}"

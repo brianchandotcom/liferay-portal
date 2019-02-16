@@ -181,7 +181,7 @@ paths:
           schema:
             type: integer
         - in: query
-          name: per_page
+          name: pageSize
           schema:
             type: integer
         - in: path
@@ -256,7 +256,7 @@ paths:
           schema:
             type: integer
         - in: query
-          name: per_page
+          name: pageSize
           schema:
             type: integer
         - in: path
@@ -300,7 +300,7 @@ paths:
           schema:
             type: integer
         - in: query
-          name: per_page
+          name: pageSize
           schema:
             type: integer
         - in: path
@@ -370,7 +370,7 @@ paths:
           schema:
             type: integer
         - in: query
-          name: per_page
+          name: pageSize
           schema:
             type: integer
         - in: path
@@ -492,7 +492,7 @@ paths:
           schema:
             type: integer
         - in: query
-          name: per_page
+          name: pageSize
           schema:
             type: integer
         - in: path
@@ -574,7 +574,7 @@ paths:
           schema:
             type: integer
         - in: query
-          name: per_page
+          name: pageSize
           schema:
             type: integer
         - in: path

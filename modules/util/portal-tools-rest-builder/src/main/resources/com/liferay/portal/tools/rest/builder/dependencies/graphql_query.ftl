@@ -80,7 +80,7 @@ public class Query {
 						</@compress>
 					</#assign>
 
-					${parametersContent?replace("perPage , page", "Pagination.of(perPage, page)")}
+					${parametersContent?replace("pageSize , page", "Pagination.of(pageSize, page)")}
 				);
 
 				return paginationPage.getItems();

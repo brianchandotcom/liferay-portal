@@ -92,7 +92,7 @@ public class JavaTool {
 					if (StringUtil.equals(parameterType, "Pagination")) {
 						javaParameters.add(
 							new JavaParameter(
-								javaParameter.getOperation(), "perPage",
+								javaParameter.getOperation(), "pageSize",
 								"int"));
 
 						javaParameters.add(
@@ -314,7 +314,7 @@ public class JavaTool {
 
 		if (Objects.equals(parameterType, "Pagination") &&
 			parameterNames.contains("page") &&
-			parameterNames.contains("per_page")) {
+			parameterNames.contains("pageSize")) {
 
 			return "@Context";
 		}
@@ -457,10 +457,10 @@ public class JavaTool {
 			}
 
 			if (StringUtil.equals(parameterName, "page") ||
-				StringUtil.equals(parameterName, "per_page")) {
+				StringUtil.equals(parameterName, "pageSize")) {
 
 				if (parameterNames.contains("page") &&
-					parameterNames.contains("per_page")) {
+					parameterNames.contains("pageSize")) {
 
 					continue;
 				}
@@ -477,7 +477,7 @@ public class JavaTool {
 		}
 
 		if (parameterNames.contains("page") &&
-			parameterNames.contains("per_page")) {
+			parameterNames.contains("pageSize")) {
 
 			JavaParameter javaParameter = new JavaParameter(
 				operation, "pagination", "Pagination");

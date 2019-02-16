@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -209,15 +208,17 @@ public class ReviewUADDataMVCRenderCommand implements MVCRenderCommand {
 					user.getCompanyId(), GroupConstants.ANY_PARENT_GROUP_ID,
 					true);
 
-				List<Long> groupIds = new ArrayList<>(groups.size());
+				int size = groups.size();
 
-				groups.forEach(group -> groupIds.add(group.getGroupId()));
+				long[] groupIds = new long[size];
 
-				if (ListUtil.isEmpty(groupIds)) {
-					groupIds.add(GroupConstants.DEFAULT_PARENT_GROUP_ID);
+				for (int i = 0; i < size; i++) {
+					Group group = groups.get(i);
+
+					groupIds[i] = group.getGroupId();
 				}
 
-				return ArrayUtil.toLongArray(groupIds);
+				return groupIds;
 			}
 		}
 		catch (PortalException pe) {

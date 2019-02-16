@@ -88,8 +88,8 @@ definition {
 		}
 
 		task ("Copy the section fragment") {
-			FragmentsAdmin.gotoFragmentEllipsisItem(
-				fragmentName = "Fragment Name",
+			FragmentsAdmin.gotoEntryEllipsisItem(
+				entry = "Fragment Name",
 				item = "Make a Copy"
 			);
 		}
@@ -99,14 +99,14 @@ definition {
 		}
 
 		task ("Assert the copied section fragment is present") {
-			FragmentsAdmin.viewFragmentPresent(
-				fragmentName = "Fragment Name (Copy)"
+			FragmentsAdmin.viewEntryPresent(
+				entry = "Fragment Name (Copy)"
 			);
 		}
 
 		task ("Assert the copied section fragment retained the HTML from the original section fragment by asserting the preview in the fragment editor") {
-			FragmentsAdmin.gotoFragment(
-				fragmentName = "Fragment Name (Copy)"
+			FragmentsAdmin.gotoEntry(
+				entry = "Fragment Name (Copy)"
 			);
 
 			SelectFrame(locator1 = "FragmentEditor#PREVIEW_IFRAME");
@@ -130,8 +130,8 @@ definition {
 		}
 
 		task ("Delete the section fragment") {
-			FragmentsAdmin.deleteFragment(
-				fragmentName = "Fragment Name"
+			FragmentsAdmin.deleteEntry(
+				entry = "Fragment Name"
 			);
 		}
 
@@ -174,8 +174,8 @@ definition {
 		}
 
 		task ("Rename the section fragment") {
-			FragmentsAdmin.gotoFragmentEllipsisItem(
-				fragmentName = "Fragment Name",
+			FragmentsAdmin.gotoEntryEllipsisItem(
+				entry = "Fragment Name",
 				item = "Rename"
 			);
 
@@ -230,8 +230,8 @@ definition {
 		}
 
 		task ("Assert the section fragment cannot be deleted because it is being used by the page template") {
-			FragmentsAdmin.deleteFragment(
-				fragmentName = "Fragment Name"
+			FragmentsAdmin.deleteEntry(
+				entry = "Fragment Name"
 			);
 
 			AssertTextEquals(
@@ -267,15 +267,15 @@ definition {
 		}
 
 		task ("Assert the second section fragment is in draft status") {
-			FragmentsAdmin.viewFragmentWorkflowStatus(
-				fragmentName = "Fragment Name 2",
+			FragmentsAdmin.viewEntryWorkflowStatus(
+				entry = "Fragment Name 2",
 				workflowStatus = "Draft"
 			);
 		}
 
 		task ("Edit the second section fragment") {
-			FragmentsAdmin.gotoFragment(
-				fragmentName = "Fragment Name 2"
+			FragmentsAdmin.gotoEntry(
+				entry = "Fragment Name 2"
 			);
 
 			var htmlSnippet = '''

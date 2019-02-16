@@ -133,8 +133,8 @@ definition {
 		}
 
 		task ("Edit the section fragment to have the Title fragment code") {
-			FragmentsAdmin.gotoFragment(
-				fragmentName = "Fragment Name"
+			FragmentsAdmin.gotoEntry(
+				entry = "Fragment Name"
 			);
 
 			var htmlSnippet = TestCase.getFileContent(fileName = "fragment_title.html");
@@ -169,8 +169,8 @@ definition {
 		}
 
 		task ("Navigate to the section fragment") {
-			FragmentsAdmin.gotoFragment(
-				fragmentName = "Fragment Name"
+			FragmentsAdmin.gotoEntry(
+				entry = "Fragment Name"
 			);
 		}
 

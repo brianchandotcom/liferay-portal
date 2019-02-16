@@ -149,8 +149,8 @@ definition {
 		}
 
 		task ("Assert the section fragment survived the import and the fragment preview displays the Button fragment") {
-			FragmentsAdmin.gotoFragment(
-				fragmentName = "Fragment Name"
+			FragmentsAdmin.gotoEntry(
+				entry = "Fragment Name"
 			);
 
 			SelectFrame(locator1 = "FragmentEditor#PREVIEW_IFRAME");

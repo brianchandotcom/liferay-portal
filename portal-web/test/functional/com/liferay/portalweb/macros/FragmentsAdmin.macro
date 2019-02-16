@@ -43,9 +43,9 @@ definition {
 		Button.clickSave();
 	}
 
-	macro deleteFragment {
+	macro deleteEntry {
 		LexiconCard.delete(
-			card = "${fragmentName}"
+			card = "${entry}"
 		);
 	}
 
@@ -76,15 +76,15 @@ definition {
 		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Export");
 	}
 
-	macro gotoFragment {
+	macro gotoEntry {
 		LexiconCard.clickCardTitle(
-			card = "${fragmentName}"
+			card = "${entry}"
 		);
 	}
 
-	macro gotoFragmentEllipsisItem {
+	macro gotoEntryEllipsisItem {
 		LexiconCard.clickEllipsisItem(
-			card = "${fragmentName}",
+			card = "${entry}",
 			item = "${item}"
 		);
 	}
@@ -137,15 +137,15 @@ definition {
 		);
 	}
 
-	macro viewFragmentPresent {
+	macro viewEntryPresent {
 		LexiconCard.viewCardPresent(
-			card = "${fragmentName}"
+			card = "${entry}"
 		);
 	}
 
-	macro viewFragmentWorkflowStatus {
+	macro viewEntryWorkflowStatus {
 		LexiconCard.viewCardLabel(
-			card = "${fragmentName}",
+			card = "${entry}",
 			cardLabel = "${workflowStatus}"
 		);
 	}

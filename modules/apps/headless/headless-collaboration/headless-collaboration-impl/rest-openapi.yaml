@@ -100,6 +100,12 @@ components:
           type: array
         creator:
           $ref: "#/components/schemas/Creator"
+        dateCreated:
+          format: date-time
+          type: string
+        dateModified:
+          format: date-time
+          type: string
         id:
           format: int64
           type: integer

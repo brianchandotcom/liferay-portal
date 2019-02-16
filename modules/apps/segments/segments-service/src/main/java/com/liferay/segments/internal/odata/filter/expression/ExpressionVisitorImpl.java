@@ -65,7 +65,12 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 	@Override
 	public Object visitLiteralExpression(LiteralExpression literalExpression) {
 		if (Objects.equals(
-				LiteralExpression.Type.DATE, literalExpression.getType())) {
+				LiteralExpression.Type.BOOLEAN, literalExpression.getType())) {
+
+			return Boolean.valueOf(literalExpression.getText());
+		}
+		else if (Objects.equals(
+					LiteralExpression.Type.DATE, literalExpression.getType())) {
 
 			return LocalDate.parse(literalExpression.getText());
 		}

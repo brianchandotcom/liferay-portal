@@ -201,10 +201,16 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 
 	const baseURL = '<%= reviewUADDataURL %>';
 
-	const applicationPanelBodyClickListener = dom.delegate(
+	const clickListeners = [];
+
+	const registerClickHandler = function(element, clickHandlerFn) {
+		clickListeners.push(
+			dom.delegate(element, 'click', 'input', clickHandlerFn)
+		);
+	};
+
+	registerClickHandler(
 		<portlet:namespace />applicationPanelBody,
-		'click',
-		'input',
 		function(event) {
 			const url = new Uri(baseURL);
 
@@ -214,10 +220,8 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 		}
 	);
 
-	const entitiesTypePanelBodyClickListener = dom.delegate(
+	registerClickHandler(
 		<portlet:namespace />entitiesTypePanelBody,
-		'click',
-		'input',
 		function(event) {
 			const url = new Uri(baseURL);
 
@@ -227,10 +231,8 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 		}
 	);
 
-	const scopePanelBodyClickListener = dom.delegate(
+	registerClickHandler(
 		<portlet:namespace />scopePanelBody,
-		'click',
-		'input',
 		function(event) {
 			const url = new Uri(baseURL);
 
@@ -242,8 +244,11 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 	);
 
 	function handleDestroyPortlet() {
-		applicationPanelBodyClickListener.removeListener();
-		entitiesTypePanelBodyClickListener.removeListener();
+		clickListeners.forEach(
+			function(clickListener) {
+				clickListener.removeListener();
+			}
+		);
 
 		Liferay.detach('destroyPortlet', handleDestroyPortlet);
 	}

@@ -67,8 +67,13 @@ components:
           type: array
         category:
           items:
-            format: int64
-            type: integer
+            properties:
+              categoryId:
+                format: int64
+                type: integer
+              categoryName:
+                type: string
+            type: object
           type: array
         contentUrl:
           format: binary

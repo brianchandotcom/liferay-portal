@@ -48,7 +48,7 @@ definition {
 
 	@description = "This is a test for LPS-90063. Images can be uploaded and deleted in the resources folder in a fragment collection."
 	@priority = "4"
-	test AddThenDeleteResource { 
+	test AddAndDeleteResource {
 		task ("Navigate to the fragment collection") {
 			Navigator.gotoNavNested(navNested = "Collection Name");
 		}

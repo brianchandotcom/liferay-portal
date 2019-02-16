@@ -31,6 +31,7 @@ import com.liferay.portal.odata.filter.expression.UnaryExpression;
 import com.liferay.segments.context.Context;
 
 import java.time.LocalDate;
+import java.time.ZonedDateTime;
 
 import java.util.List;
 import java.util.Map;
@@ -73,6 +74,12 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 					LiteralExpression.Type.DATE, literalExpression.getType())) {
 
 			return LocalDate.parse(literalExpression.getText());
+		}
+		else if (Objects.equals(
+					LiteralExpression.Type.DATE_TIME,
+					literalExpression.getType())) {
+
+			return ZonedDateTime.parse(literalExpression.getText());
 		}
 		else if (Objects.equals(
 					LiteralExpression.Type.DOUBLE,

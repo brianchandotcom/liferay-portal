@@ -218,7 +218,7 @@ public abstract class BaseModelUADDisplay<T extends BaseModel>
 
 		DynamicQuery dynamicQuery = getDynamicQuery(userId);
 
-		if (ArrayUtil.isNotEmpty(groupIds)) {
+		if (isSiteScoped() && ArrayUtil.isNotEmpty(groupIds)) {
 			dynamicQuery.add(
 				RestrictionsFactoryUtil.in(
 					"groupId", ArrayUtil.toLongArray(groupIds)));

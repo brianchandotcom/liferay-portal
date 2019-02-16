@@ -58,55 +58,6 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 			</div>
 
 			<div class="sheet-text">
-				<liferay-ui:message key="summary-page-step-two-description" />
-
-				<c:if test="<%= step == 2 %>">
-
-					<%
-					Group selectedUserGroup = selectedUser.getGroup();
-
-					int selectedUserPublicLayoutsPageCount = selectedUser.getPublicLayoutsPageCount();
-					int selectedUserPrivateLayoutsPageCount = selectedUser.getPrivateLayoutsPageCount();
-					%>
-
-					<c:if test="<%= selectedUserPublicLayoutsPageCount > 0 %>">
-						<liferay-ui:icon
-							label="<%= true %>"
-							message="open-profile-pages"
-							method="get"
-							target="_blank"
-							url="<%= selectedUserGroup.getDisplayURL(themeDisplay, false) %>"
-						/>
-					</c:if>
-
-					<c:if test="<%= selectedUserPrivateLayoutsPageCount > 0 %>">
-						<liferay-ui:icon
-							label="<%= true %>"
-							message="open-dashboard-pages"
-							method="get"
-							target="_blank"
-							url="<%= selectedUserGroup.getDisplayURL(themeDisplay, true) %>"
-						/>
-					</c:if>
-				</c:if>
-			</div>
-
-			<div class="sheet-text">
-				<portlet:actionURL name="/forget_personal_site" var="forgetPersonalSiteURL" />
-
-				<aui:button cssClass="btn-sm" disabled="<%= step != 2 %>" onClick='<%= renderResponse.getNamespace() + "confirmAction('viewUADSummaryFm', '" + forgetPersonalSiteURL.toString() + "', '" + UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-users-personal-site") + "')" %>' value="delete-personal-site" />
-
-				<c:if test="<%= step > 2 %>">
-					<liferay-ui:icon
-						cssClass="text-success"
-						iconCssClass="icon-ok-sign"
-						label="<%= true %>"
-						message="personal-site-successfully-deleted"
-					/>
-				</c:if>
-			</div>
-
-			<div class="sheet-text">
 				<liferay-ui:message key="summary-page-step-three-description" />
 			</div>
 

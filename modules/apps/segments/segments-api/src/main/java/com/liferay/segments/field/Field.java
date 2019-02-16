@@ -14,6 +14,8 @@
 
 package com.liferay.segments.field;
 
+import aQute.bnd.annotation.ProviderType;
+
 import java.io.Serializable;
 
 import java.util.Collections;
@@ -25,6 +27,7 @@ import java.util.List;
  * @author Eduardo García
  * @review
  */
+@ProviderType
 public final class Field implements Comparable<Field>, Serializable {
 
 	public Field() {

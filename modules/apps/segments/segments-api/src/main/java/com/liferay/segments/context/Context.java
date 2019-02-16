@@ -14,6 +14,8 @@
 
 package com.liferay.segments.context;
 
+import aQute.bnd.annotation.ProviderType;
+
 import java.io.Serializable;
 
 import java.util.HashMap;
@@ -25,6 +27,7 @@ import java.util.Map;
  * @author Eduardo García
  * @review
  */
+@ProviderType
 public class Context {
 
 	public static final String BROWSER = "browser";

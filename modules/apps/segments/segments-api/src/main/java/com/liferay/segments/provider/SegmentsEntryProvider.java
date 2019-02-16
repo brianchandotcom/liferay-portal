@@ -14,6 +14,8 @@
 
 package com.liferay.segments.provider;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.segments.context.Context;
 
@@ -24,6 +26,7 @@ import com.liferay.segments.context.Context;
  * @author Eduardo García
  * @review
  */
+@ProviderType
 public interface SegmentsEntryProvider {
 
 	/**

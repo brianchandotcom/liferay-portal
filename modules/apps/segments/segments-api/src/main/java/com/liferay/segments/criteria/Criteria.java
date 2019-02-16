@@ -14,6 +14,7 @@
 
 package com.liferay.segments.criteria;
 
+import aQute.bnd.annotation.ProviderType;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
@@ -32,6 +33,7 @@ import java.util.stream.Stream;
  * @author Eduardo García
  * @review
  */
+@ProviderType
 public final class Criteria implements Serializable {
 
 	public Criteria() {

@@ -596,57 +596,6 @@ paths:
                 $ref: "#/components/schemas/StructuredContent"
           description: ""
       tags: ["StructuredContent"]
-  "/structured-contents/{structured-content-id}/categories":
-    get:
-      parameters:
-        - in: query
-          name: page
-          schema:
-            type: integer
-        - in: query
-          name: pageSize
-          schema:
-            type: integer
-        - in: path
-          name: structured-content-id
-          required: true
-          schema:
-            format: int64
-            type: integer
-      responses:
-        200:
-          content:
-            application/json:
-              schema:
-                items:
-                  format: int64
-                  type: integer
-                type: array
-          description: ""
-      tags: ["StructuredContent"]
-    post:
-      parameters:
-        - in: path
-          name: structured-content-id
-          required: true
-          schema:
-            format: int64
-            type: integer
-      requestBody:
-        content:
-          application/json:
-            schema:
-              format: int64
-              type: integer
-      responses:
-        200:
-          content:
-            application/json:
-              schema:
-                format: int64
-                type: integer
-          description: ""
-      tags: ["StructuredContent"]
   "/structured-contents/{structured-content-id}/comments":
     get:
       parameters:

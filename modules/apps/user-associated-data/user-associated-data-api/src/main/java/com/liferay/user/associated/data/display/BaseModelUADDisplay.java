@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -93,28 +94,11 @@ public abstract class BaseModelUADDisplay<T extends BaseModel>
 
 	@Override
 	public boolean isSiteScoped() {
-		Class<?> clazz = getTypeClass();
-
-		String modelClassName = clazz.getName() + "Model";
-
-		Class<?>[] interfaces = clazz.getInterfaces();
-
-		for (Class curInterface : interfaces) {
-			if (modelClassName.equals(curInterface.getName())) {
-				clazz = curInterface;
-
-				break;
-			}
-		}
-
-		try {
-			clazz.getMethod("getGroupId");
-
+		if (GroupedModel.class.isAssignableFrom(getTypeClass())) {
 			return true;
 		}
-		catch (NoSuchMethodException nsme) {
-			return false;
-		}
+
+		return false;
 	}
 
 	@Override

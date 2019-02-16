@@ -87,17 +87,11 @@ public class ReviewUADDataMVCRenderCommand implements MVCRenderCommand {
 			String scope = ParamUtil.getString(
 				renderRequest, "scope", UADConstants.SCOPE_PERSONAL_SITE);
 
-			boolean siteScoped = false;
-
-			if (!scope.equals(UADConstants.SCOPE_INSTANCE)) {
-				siteScoped = true;
-			}
-
 			long[] groupIds = _getGroupIds(selectedUser, scope);
 
 			List<UADApplicationSummaryDisplay> uadApplicationSummaryDisplays =
 				_uadApplicationSummaryHelper.getUADApplicationSummaryDisplays(
-					selectedUser.getUserId(), siteScoped, groupIds);
+					selectedUser.getUserId(), groupIds);
 
 			UADApplicationSummaryDisplay uadApplicationSummaryDisplay =
 				uadApplicationSummaryDisplays.get(0);

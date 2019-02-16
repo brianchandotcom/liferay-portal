@@ -14,6 +14,7 @@
 
 package com.liferay.user.associated.data.web.internal.util;
 
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
@@ -108,7 +109,7 @@ public class UADApplicationSummaryHelper {
 	}
 
 	public List<UADApplicationSummaryDisplay> getUADApplicationSummaryDisplays(
-		long userId, boolean siteScope, long[] groupIds) {
+		long userId, long[] groupIds) {
 
 		List<UADApplicationSummaryDisplay> uadApplicationSummaryDisplays =
 			new ArrayList<>();
@@ -125,7 +126,8 @@ public class UADApplicationSummaryHelper {
 				_uadRegistry.getApplicationUADDisplayStream(applicationKey);
 
 			List<UADDisplay> applicationUADDisplays = uadDisplayStream.filter(
-				uadDisplay -> siteScope == uadDisplay.isSiteScoped()
+				uadDisplay ->
+					ArrayUtil.isNotEmpty(groupIds) == uadDisplay.isSiteScoped()
 			).collect(
 				Collectors.toList()
 			);

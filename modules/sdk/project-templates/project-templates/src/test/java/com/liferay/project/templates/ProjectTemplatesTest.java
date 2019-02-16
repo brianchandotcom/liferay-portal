@@ -780,10 +780,12 @@ public class ProjectTemplatesTest {
 
 			Domain domain = Domain.domain(jarFile);
 
-			Map.Entry<String, Attrs> bsn = domain.getBundleSymbolicName();
+			Map.Entry<String, Attrs> bundleSymbolicName =
+				domain.getBundleSymbolicName();
 
 			Assert.assertEquals(
-				bsn.toString(), "com.liferay.login.web", bsn.getKey());
+				bundleSymbolicName.toString(), "com.liferay.login.web",
+				bundleSymbolicName.getKey());
 		}
 	}
 

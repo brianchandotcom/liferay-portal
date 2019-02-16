@@ -15,6 +15,7 @@
 package com.liferay.segments.criteria;
 
 import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
@@ -42,7 +43,25 @@ public final class Criteria implements Serializable {
 	public void addCriterion(
 		String key, Type type, String filterString, Conjunction conjunction) {
 
-		_criteria.put(key, new Criterion(type, filterString, conjunction));
+		if (Validator.isNull(filterString)) {
+			return;
+		}
+
+		Criterion criterion = getCriterion(key);
+
+		if (criterion == null) {
+			_criteria.put(key, new Criterion(type, filterString, conjunction));
+
+			return;
+		}
+
+		criterion = new Criterion(
+			type,
+			_combineFilters(
+				criterion.getFilterString(), filterString, conjunction),
+			Conjunction.parse(criterion.getConjunction()));
+
+		_criteria.put(key, criterion);
 	}
 
 	public void addFilter(
@@ -60,19 +79,9 @@ public final class Criteria implements Serializable {
 			return;
 		}
 
-		StringBundler sb = new StringBundler(9);
-
-		sb.append(StringPool.OPEN_PARENTHESIS);
-		sb.append(typeValueFilterString);
-		sb.append(StringPool.CLOSE_PARENTHESIS);
-		sb.append(StringPool.SPACE);
-		sb.append(conjunction.getValue());
-		sb.append(StringPool.SPACE);
-		sb.append(StringPool.OPEN_PARENTHESIS);
-		sb.append(filterString);
-		sb.append(StringPool.CLOSE_PARENTHESIS);
-
-		_filterStrings.put(type.getValue(), sb.toString());
+		_filterStrings.put(
+			type.getValue(),
+			_combineFilters(typeValueFilterString, filterString, conjunction));
 	}
 
 	public Map<String, Criterion> getCriteria() {
@@ -197,6 +206,24 @@ public final class Criteria implements Serializable {
 
 		private final String _value;
 
+	}
+
+	private String _combineFilters(
+		String filter1, String filter2, Conjunction conjunction) {
+
+		StringBundler sb = new StringBundler(9);
+
+		sb.append(StringPool.OPEN_PARENTHESIS);
+		sb.append(filter1);
+		sb.append(StringPool.CLOSE_PARENTHESIS);
+		sb.append(StringPool.SPACE);
+		sb.append(conjunction.getValue());
+		sb.append(StringPool.SPACE);
+		sb.append(StringPool.OPEN_PARENTHESIS);
+		sb.append(filter2);
+		sb.append(StringPool.CLOSE_PARENTHESIS);
+
+		return sb.toString();
 	}
 
 	private Map<String, Criterion> _criteria = new HashMap();

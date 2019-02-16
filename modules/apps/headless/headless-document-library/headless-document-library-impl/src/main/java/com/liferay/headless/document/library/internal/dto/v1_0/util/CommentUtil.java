@@ -33,6 +33,8 @@ public class CommentUtil {
 		return new CommentImpl() {
 			{
 				setCreator(CreatorUtil.toCreator(comment.getUser()));
+				setDateCreated(comment.getCreateDate());
+				setDateModified(comment.getModifiedDate());
 				setId(comment.getCommentId());
 				setText(comment.getBody());
 			}

@@ -1,4 +1,60 @@
 definition {
+	macro changeDisplayStyle {
+		var browserType = PropsUtil.get("browser.type");
+
+		if ("${browserType}" == "chrome") {
+			MetalComponent.waitForManagementBar();
+		}
+
+		Click(
+			locator1 = "Icon#CURRENT_DISPLAY_STYLE"
+		);
+
+		MenuItem.click(
+			menuItem = "${displayStyle}"
+		);
+
+		ManagementBar.viewDisplayStyle(
+			displayStyle = "${displayStyle}"
+		);
+	}
+
+	macro clickAdd {
+		var browserType = PropsUtil.get("browser.type");
+
+		if ("${browserType}" == "chrome") {
+			MetalComponent.waitForManagementBar();
+		}
+
+		Click(
+			locator1 = "Button#PLUS"
+		);
+	}
+
+	macro clickAddMenuItem {
+		ManagementBar.clickAdd();
+
+		MenuItem.click(
+			menuItem = "${menuItem}"
+		);
+	}
+
+	macro clickInfo {
+		Click(
+			locator1 = "Icon#INFO"
+		);
+	}
+
+	macro clickSelectAllCheckbox {
+		Click(
+			locator1 = "Checkbox#LEXICON_SELECT_ALL_CONTAINER"
+		);
+
+		AssertChecked.assertCheckedNotVisible(
+			locator1 = "Checkbox#LEXICON_SELECT_ALL_INPUT"
+		);
+	}
+
 	macro setFilterAndOrder {
 		if (isSet(filterBy)) {
 			var menuItem = "${filterBy}";
@@ -9,7 +65,9 @@ definition {
 
 		Click(locator1 = "ManagementBar#FILTER_AND_ORDER");
 
-		MenuItem.click(menuItem = "${menuItem}");
+		MenuItem.click(
+			menuItem = "${menuItem}"
+		);
 	}
 
 	macro toggleViewOrder {
@@ -20,6 +78,15 @@ definition {
 		AssertElementPresent(
 			locator1 = "ManagementBar#ORDER_ICON_SPECIFIC",
 			key_order = "${order}"
+		);
+	}
+
+	macro viewDisplayStyle {
+		var displayStyleKey = StringUtil.lowerCaseFirstLetter("${displayStyle}");
+
+		AssertVisible(
+			locator1 = "Icon#CURRENT_DISPLAY_STYLE_ACTIVE",
+			key_displayStyle = "${displayStyleKey}"
 		);
 	}
 }

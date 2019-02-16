@@ -70,14 +70,6 @@ public class ViewUADSummaryMVCRenderCommand implements MVCRenderCommand {
 			return 1;
 		}
 
-		int selectedUserPageCount =
-			selectedUser.getPrivateLayoutsPageCount() +
-				selectedUser.getPublicLayoutsPageCount();
-
-		if (selectedUserPageCount > 0) {
-			return 2;
-		}
-
 		Stream<UADAnonymizer> uadAnonymizerStream =
 			_uadRegistry.getUADAnonymizerStream();
 
@@ -93,10 +85,10 @@ public class ViewUADSummaryMVCRenderCommand implements MVCRenderCommand {
 		).sum();
 
 		if (uadEntitiesCount > 0) {
-			return 3;
+			return 2;
 		}
 
-		return 4;
+		return 3;
 	}
 
 	@Reference

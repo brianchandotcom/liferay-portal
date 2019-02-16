@@ -1,5 +1,17 @@
 components:
   schemas:
+    AggregateRating:
+      description: https://www.schema.org/AggregateRating
+      properties:
+        bestRating:
+          type: number
+        ratingCount:
+          type: number
+        ratingValue:
+          type: number
+        worstRating:
+          type: number
+      type: object
     Comment:
       description: https://www.schema.org/Comment
       properties:
@@ -65,6 +77,8 @@ components:
                 type: number
             type: object
           type: array
+        aggregateRating:
+          $ref: "#/components/schemas/AggregateRating"
         category:
           items:
             properties:

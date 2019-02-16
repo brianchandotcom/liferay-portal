@@ -195,7 +195,7 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 				serviceDependency.setService(
 					Configuration.class,
 					StringBundler.concat(
-						"(&(configuration.bundle.symbolic.name=",
+						"(&(origin.bundle.symbolic.name=",
 						_bundle.getSymbolicName(), ")(name=", name, "))"));
 
 				_component.add(serviceDependency);

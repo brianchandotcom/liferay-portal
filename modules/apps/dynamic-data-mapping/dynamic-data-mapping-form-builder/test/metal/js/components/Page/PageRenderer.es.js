@@ -120,7 +120,7 @@ describe(
 				component.element.querySelector('button[aria-label=\'trash\']').click();
 
 				expect(spy).toHaveBeenCalled();
-				expect(spy).toHaveBeenCalledWith('deleteFieldClicked', expect.any(Object));
+				expect(spy).toHaveBeenCalledWith('deleteButtonClicked', expect.any(Object));
 			}
 		);
 

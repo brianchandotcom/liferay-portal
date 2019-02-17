@@ -161,13 +161,12 @@ class PageRenderer extends Component {
 	 * @private
 	 */
 
-	_handleModal(event) {
-		event.stopPropagation();
+	_handleDeleteButtonClicked(event) {
 		const index = FormSupport.getIndexes(
 			dom.closest(event.target, '.col-ddm')
 		);
 
-		this.emit('deleteFieldClicked', index);
+		this.emit('deleteButtonClicked', index);
 	}
 
 	/**

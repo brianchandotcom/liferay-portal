@@ -219,6 +219,7 @@ class Builder extends Component {
 				indexes
 			}
 		);
+
 		this._handleDeleteModal();
 	}
 

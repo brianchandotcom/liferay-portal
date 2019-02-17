@@ -104,7 +104,7 @@ public class UpgradeContentTargeting extends UpgradeProcess {
 			ps.setLong(1, userSegmentId);
 
 			try (ResultSet rs = ps.executeQuery()) {
-				if (rs.next()) {
+				while (rs.next()) {
 					String ruleKey = rs.getString("ruleKey");
 					String typeSettings = rs.getString("typeSettings");
 

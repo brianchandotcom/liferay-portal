@@ -26,11 +26,11 @@ exports[`Builder should render the default markup 1`] = `
                     <div class="ddm-field-container">
                       <div class="ddm-resize-handle-left"></div>
                       <div class="ddm-drag"></div>
-                      <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                            <use xlink:href="icons.svg#paste"></use>
-                          </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                            <use xlink:href="icons.svg#trash"></use>
-                          </svg></button></div>
+                      <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                              <use xlink:href="icons.svg#paste"></use>
+                            </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                              <use xlink:href="icons.svg#trash"></use>
+                            </svg></button></a></div>
                       <div class="ddm-resize-handle-right"></div>
                     </div>
                   </div>
@@ -48,11 +48,11 @@ exports[`Builder should render the default markup 1`] = `
                     <div class="ddm-field-container">
                       <div class="ddm-resize-handle-left"></div>
                       <div class="ddm-drag"></div>
-                      <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                            <use xlink:href="icons.svg#paste"></use>
-                          </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                            <use xlink:href="icons.svg#trash"></use>
-                          </svg></button></div>
+                      <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                              <use xlink:href="icons.svg#paste"></use>
+                            </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                              <use xlink:href="icons.svg#trash"></use>
+                            </svg></button></a></div>
                       <div class="ddm-resize-handle-right"></div>
                     </div>
                   </div>
@@ -60,11 +60,11 @@ exports[`Builder should render the default markup 1`] = `
                     <div class="ddm-field-container">
                       <div class="ddm-resize-handle-left"></div>
                       <div class="ddm-drag"></div>
-                      <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                            <use xlink:href="icons.svg#paste"></use>
-                          </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                            <use xlink:href="icons.svg#trash"></use>
-                          </svg></button></div>
+                      <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                              <use xlink:href="icons.svg#paste"></use>
+                            </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                              <use xlink:href="icons.svg#trash"></use>
+                            </svg></button></a></div>
                       <div class="ddm-resize-handle-right"></div>
                     </div>
                   </div>
@@ -82,11 +82,11 @@ exports[`Builder should render the default markup 1`] = `
                     <div class="ddm-field-container">
                       <div class="ddm-resize-handle-left"></div>
                       <div class="ddm-drag"></div>
-                      <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                            <use xlink:href="icons.svg#paste"></use>
-                          </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                            <use xlink:href="icons.svg#trash"></use>
-                          </svg></button></div>
+                      <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                              <use xlink:href="icons.svg#paste"></use>
+                            </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                              <use xlink:href="icons.svg#trash"></use>
+                            </svg></button></a></div>
                       <div class="ddm-resize-handle-right"></div>
                     </div>
                   </div>
@@ -101,11 +101,11 @@ exports[`Builder should render the default markup 1`] = `
                     <div class="ddm-field-container">
                       <div class="ddm-resize-handle-left"></div>
                       <div class="ddm-drag"></div>
-                      <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                            <use xlink:href="icons.svg#paste"></use>
-                          </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                            <use xlink:href="icons.svg#trash"></use>
-                          </svg></button></div>
+                      <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                              <use xlink:href="icons.svg#paste"></use>
+                            </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                              <use xlink:href="icons.svg#trash"></use>
+                            </svg></button></a></div>
                       <div class="ddm-resize-handle-right"></div>
                     </div>
                   </div>
@@ -251,11 +251,11 @@ exports[`Builder should show modal when fieldChangesCanceled event is trigered f
                     <div class="ddm-field-container">
                       <div class="ddm-resize-handle-left"></div>
                       <div class="ddm-drag"></div>
-                      <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                            <use xlink:href="icons.svg#paste"></use>
-                          </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                            <use xlink:href="icons.svg#trash"></use>
-                          </svg></button></div>
+                      <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                              <use xlink:href="icons.svg#paste"></use>
+                            </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                              <use xlink:href="icons.svg#trash"></use>
+                            </svg></button></a></div>
                       <div class="ddm-resize-handle-right"></div>
                     </div>
                   </div>
@@ -273,11 +273,11 @@ exports[`Builder should show modal when fieldChangesCanceled event is trigered f
                     <div class="ddm-field-container">
                       <div class="ddm-resize-handle-left"></div>
                       <div class="ddm-drag"></div>
-                      <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                            <use xlink:href="icons.svg#paste"></use>
-                          </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                            <use xlink:href="icons.svg#trash"></use>
-                          </svg></button></div>
+                      <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                              <use xlink:href="icons.svg#paste"></use>
+                            </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                              <use xlink:href="icons.svg#trash"></use>
+                            </svg></button></a></div>
                       <div class="ddm-resize-handle-right"></div>
                     </div>
                   </div>
@@ -285,11 +285,11 @@ exports[`Builder should show modal when fieldChangesCanceled event is trigered f
                     <div class="ddm-field-container">
                       <div class="ddm-resize-handle-left"></div>
                       <div class="ddm-drag"></div>
-                      <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                            <use xlink:href="icons.svg#paste"></use>
-                          </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                            <use xlink:href="icons.svg#trash"></use>
-                          </svg></button></div>
+                      <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                              <use xlink:href="icons.svg#paste"></use>
+                            </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                              <use xlink:href="icons.svg#trash"></use>
+                            </svg></button></a></div>
                       <div class="ddm-resize-handle-right"></div>
                     </div>
                   </div>
@@ -307,11 +307,11 @@ exports[`Builder should show modal when fieldChangesCanceled event is trigered f
                     <div class="ddm-field-container">
                       <div class="ddm-resize-handle-left"></div>
                       <div class="ddm-drag"></div>
-                      <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                            <use xlink:href="icons.svg#paste"></use>
-                          </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                            <use xlink:href="icons.svg#trash"></use>
-                          </svg></button></div>
+                      <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                              <use xlink:href="icons.svg#paste"></use>
+                            </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                              <use xlink:href="icons.svg#trash"></use>
+                            </svg></button></a></div>
                       <div class="ddm-resize-handle-right"></div>
                     </div>
                   </div>
@@ -326,11 +326,11 @@ exports[`Builder should show modal when fieldChangesCanceled event is trigered f
                     <div class="ddm-field-container">
                       <div class="ddm-resize-handle-left"></div>
                       <div class="ddm-drag"></div>
-                      <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                            <use xlink:href="icons.svg#paste"></use>
-                          </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                            <use xlink:href="icons.svg#trash"></use>
-                          </svg></button></div>
+                      <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                              <use xlink:href="icons.svg#paste"></use>
+                            </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                              <use xlink:href="icons.svg#trash"></use>
+                            </svg></button></a></div>
                       <div class="ddm-resize-handle-right"></div>
                     </div>
                   </div>
@@ -476,11 +476,11 @@ exports[`Builder should show modal when trash button gets clicked 1`] = `
                     <div class="ddm-field-container">
                       <div class="ddm-resize-handle-left"></div>
                       <div class="ddm-drag"></div>
-                      <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                            <use xlink:href="icons.svg#paste"></use>
-                          </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                            <use xlink:href="icons.svg#trash"></use>
-                          </svg></button></div>
+                      <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                              <use xlink:href="icons.svg#paste"></use>
+                            </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                              <use xlink:href="icons.svg#trash"></use>
+                            </svg></button></a></div>
                       <div class="ddm-resize-handle-right"></div>
                     </div>
                   </div>
@@ -498,11 +498,11 @@ exports[`Builder should show modal when trash button gets clicked 1`] = `
                     <div class="ddm-field-container">
                       <div class="ddm-resize-handle-left"></div>
                       <div class="ddm-drag"></div>
-                      <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                            <use xlink:href="icons.svg#paste"></use>
-                          </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                            <use xlink:href="icons.svg#trash"></use>
-                          </svg></button></div>
+                      <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                              <use xlink:href="icons.svg#paste"></use>
+                            </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                              <use xlink:href="icons.svg#trash"></use>
+                            </svg></button></a></div>
                       <div class="ddm-resize-handle-right"></div>
                     </div>
                   </div>
@@ -510,11 +510,11 @@ exports[`Builder should show modal when trash button gets clicked 1`] = `
                     <div class="ddm-field-container">
                       <div class="ddm-resize-handle-left"></div>
                       <div class="ddm-drag"></div>
-                      <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                            <use xlink:href="icons.svg#paste"></use>
-                          </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                            <use xlink:href="icons.svg#trash"></use>
-                          </svg></button></div>
+                      <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                              <use xlink:href="icons.svg#paste"></use>
+                            </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                              <use xlink:href="icons.svg#trash"></use>
+                            </svg></button></a></div>
                       <div class="ddm-resize-handle-right"></div>
                     </div>
                   </div>
@@ -532,11 +532,11 @@ exports[`Builder should show modal when trash button gets clicked 1`] = `
                     <div class="ddm-field-container">
                       <div class="ddm-resize-handle-left"></div>
                       <div class="ddm-drag"></div>
-                      <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                            <use xlink:href="icons.svg#paste"></use>
-                          </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                            <use xlink:href="icons.svg#trash"></use>
-                          </svg></button></div>
+                      <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                              <use xlink:href="icons.svg#paste"></use>
+                            </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                              <use xlink:href="icons.svg#trash"></use>
+                            </svg></button></a></div>
                       <div class="ddm-resize-handle-right"></div>
                     </div>
                   </div>
@@ -551,11 +551,11 @@ exports[`Builder should show modal when trash button gets clicked 1`] = `
                     <div class="ddm-field-container">
                       <div class="ddm-resize-handle-left"></div>
                       <div class="ddm-drag"></div>
-                      <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                            <use xlink:href="icons.svg#paste"></use>
-                          </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                            <use xlink:href="icons.svg#trash"></use>
-                          </svg></button></div>
+                      <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                              <use xlink:href="icons.svg#paste"></use>
+                            </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                              <use xlink:href="icons.svg#trash"></use>
+                            </svg></button></a></div>
                       <div class="ddm-resize-handle-right"></div>
                     </div>
                   </div>

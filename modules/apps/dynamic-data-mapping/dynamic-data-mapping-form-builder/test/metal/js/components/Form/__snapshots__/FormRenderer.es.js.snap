@@ -23,11 +23,11 @@ exports[`FormRenderer PagesSettings should add a new page on the layout render 1
               <div class="ddm-field-container">
                 <div class="ddm-resize-handle-left"></div>
                 <div class="ddm-drag"></div>
-                <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#paste"></use>
-                    </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#trash"></use>
-                    </svg></button></div>
+                <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#paste"></use>
+                      </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#trash"></use>
+                      </svg></button></a></div>
                 <div class="ddm-resize-handle-right"></div>
               </div>
             </div>
@@ -45,11 +45,11 @@ exports[`FormRenderer PagesSettings should add a new page on the layout render 1
               <div class="ddm-field-container">
                 <div class="ddm-resize-handle-left"></div>
                 <div class="ddm-drag"></div>
-                <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#paste"></use>
-                    </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#trash"></use>
-                    </svg></button></div>
+                <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#paste"></use>
+                      </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#trash"></use>
+                      </svg></button></a></div>
                 <div class="ddm-resize-handle-right"></div>
               </div>
             </div>
@@ -57,11 +57,11 @@ exports[`FormRenderer PagesSettings should add a new page on the layout render 1
               <div class="ddm-field-container">
                 <div class="ddm-resize-handle-left"></div>
                 <div class="ddm-drag"></div>
-                <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#paste"></use>
-                    </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#trash"></use>
-                    </svg></button></div>
+                <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#paste"></use>
+                      </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#trash"></use>
+                      </svg></button></a></div>
                 <div class="ddm-resize-handle-right"></div>
               </div>
             </div>
@@ -79,11 +79,11 @@ exports[`FormRenderer PagesSettings should add a new page on the layout render 1
               <div class="ddm-field-container">
                 <div class="ddm-resize-handle-left"></div>
                 <div class="ddm-drag"></div>
-                <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#paste"></use>
-                    </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#trash"></use>
-                    </svg></button></div>
+                <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#paste"></use>
+                      </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#trash"></use>
+                      </svg></button></a></div>
                 <div class="ddm-resize-handle-right"></div>
               </div>
             </div>
@@ -98,11 +98,11 @@ exports[`FormRenderer PagesSettings should add a new page on the layout render 1
               <div class="ddm-field-container">
                 <div class="ddm-resize-handle-left"></div>
                 <div class="ddm-drag"></div>
-                <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#paste"></use>
-                    </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#trash"></use>
-                    </svg></button></div>
+                <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#paste"></use>
+                      </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#trash"></use>
+                      </svg></button></a></div>
                 <div class="ddm-resize-handle-right"></div>
               </div>
             </div>
@@ -185,11 +185,11 @@ exports[`FormRenderer PagesSettings should delete the current page on layout ren
               <div class="ddm-field-container">
                 <div class="ddm-resize-handle-left"></div>
                 <div class="ddm-drag"></div>
-                <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#paste"></use>
-                    </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#trash"></use>
-                    </svg></button></div>
+                <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#paste"></use>
+                      </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#trash"></use>
+                      </svg></button></a></div>
                 <div class="ddm-resize-handle-right"></div>
               </div>
             </div>
@@ -207,11 +207,11 @@ exports[`FormRenderer PagesSettings should delete the current page on layout ren
               <div class="ddm-field-container">
                 <div class="ddm-resize-handle-left"></div>
                 <div class="ddm-drag"></div>
-                <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#paste"></use>
-                    </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#trash"></use>
-                    </svg></button></div>
+                <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#paste"></use>
+                      </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#trash"></use>
+                      </svg></button></a></div>
                 <div class="ddm-resize-handle-right"></div>
               </div>
             </div>
@@ -219,11 +219,11 @@ exports[`FormRenderer PagesSettings should delete the current page on layout ren
               <div class="ddm-field-container">
                 <div class="ddm-resize-handle-left"></div>
                 <div class="ddm-drag"></div>
-                <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#paste"></use>
-                    </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#trash"></use>
-                    </svg></button></div>
+                <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#paste"></use>
+                      </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#trash"></use>
+                      </svg></button></a></div>
                 <div class="ddm-resize-handle-right"></div>
               </div>
             </div>
@@ -241,11 +241,11 @@ exports[`FormRenderer PagesSettings should delete the current page on layout ren
               <div class="ddm-field-container">
                 <div class="ddm-resize-handle-left"></div>
                 <div class="ddm-drag"></div>
-                <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#paste"></use>
-                    </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#trash"></use>
-                    </svg></button></div>
+                <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#paste"></use>
+                      </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#trash"></use>
+                      </svg></button></a></div>
                 <div class="ddm-resize-handle-right"></div>
               </div>
             </div>
@@ -260,11 +260,11 @@ exports[`FormRenderer PagesSettings should delete the current page on layout ren
               <div class="ddm-field-container">
                 <div class="ddm-resize-handle-left"></div>
                 <div class="ddm-drag"></div>
-                <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#paste"></use>
-                    </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#trash"></use>
-                    </svg></button></div>
+                <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#paste"></use>
+                      </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#trash"></use>
+                      </svg></button></a></div>
                 <div class="ddm-resize-handle-right"></div>
               </div>
             </div>
@@ -313,11 +313,11 @@ exports[`FormRenderer PagesSettings should delete the success page 1`] = `
               <div class="ddm-field-container">
                 <div class="ddm-resize-handle-left"></div>
                 <div class="ddm-drag"></div>
-                <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#paste"></use>
-                    </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#trash"></use>
-                    </svg></button></div>
+                <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#paste"></use>
+                      </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#trash"></use>
+                      </svg></button></a></div>
                 <div class="ddm-resize-handle-right"></div>
               </div>
             </div>
@@ -335,11 +335,11 @@ exports[`FormRenderer PagesSettings should delete the success page 1`] = `
               <div class="ddm-field-container">
                 <div class="ddm-resize-handle-left"></div>
                 <div class="ddm-drag"></div>
-                <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#paste"></use>
-                    </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#trash"></use>
-                    </svg></button></div>
+                <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#paste"></use>
+                      </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#trash"></use>
+                      </svg></button></a></div>
                 <div class="ddm-resize-handle-right"></div>
               </div>
             </div>
@@ -347,11 +347,11 @@ exports[`FormRenderer PagesSettings should delete the success page 1`] = `
               <div class="ddm-field-container">
                 <div class="ddm-resize-handle-left"></div>
                 <div class="ddm-drag"></div>
-                <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#paste"></use>
-                    </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#trash"></use>
-                    </svg></button></div>
+                <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#paste"></use>
+                      </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#trash"></use>
+                      </svg></button></a></div>
                 <div class="ddm-resize-handle-right"></div>
               </div>
             </div>
@@ -369,11 +369,11 @@ exports[`FormRenderer PagesSettings should delete the success page 1`] = `
               <div class="ddm-field-container">
                 <div class="ddm-resize-handle-left"></div>
                 <div class="ddm-drag"></div>
-                <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#paste"></use>
-                    </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#trash"></use>
-                    </svg></button></div>
+                <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#paste"></use>
+                      </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#trash"></use>
+                      </svg></button></a></div>
                 <div class="ddm-resize-handle-right"></div>
               </div>
             </div>
@@ -388,11 +388,11 @@ exports[`FormRenderer PagesSettings should delete the success page 1`] = `
               <div class="ddm-field-container">
                 <div class="ddm-resize-handle-left"></div>
                 <div class="ddm-drag"></div>
-                <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#paste"></use>
-                    </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#trash"></use>
-                    </svg></button></div>
+                <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#paste"></use>
+                      </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#trash"></use>
+                      </svg></button></a></div>
                 <div class="ddm-resize-handle-right"></div>
               </div>
             </div>
@@ -439,11 +439,11 @@ exports[`FormRenderer PagesSettings should reset the current page on layout rend
               <div class="ddm-field-container">
                 <div class="ddm-resize-handle-left"></div>
                 <div class="ddm-drag"></div>
-                <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#paste"></use>
-                    </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#trash"></use>
-                    </svg></button></div>
+                <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#paste"></use>
+                      </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#trash"></use>
+                      </svg></button></a></div>
                 <div class="ddm-resize-handle-right"></div>
               </div>
             </div>
@@ -461,11 +461,11 @@ exports[`FormRenderer PagesSettings should reset the current page on layout rend
               <div class="ddm-field-container">
                 <div class="ddm-resize-handle-left"></div>
                 <div class="ddm-drag"></div>
-                <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#paste"></use>
-                    </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#trash"></use>
-                    </svg></button></div>
+                <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#paste"></use>
+                      </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#trash"></use>
+                      </svg></button></a></div>
                 <div class="ddm-resize-handle-right"></div>
               </div>
             </div>
@@ -473,11 +473,11 @@ exports[`FormRenderer PagesSettings should reset the current page on layout rend
               <div class="ddm-field-container">
                 <div class="ddm-resize-handle-left"></div>
                 <div class="ddm-drag"></div>
-                <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#paste"></use>
-                    </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#trash"></use>
-                    </svg></button></div>
+                <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#paste"></use>
+                      </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#trash"></use>
+                      </svg></button></a></div>
                 <div class="ddm-resize-handle-right"></div>
               </div>
             </div>
@@ -495,11 +495,11 @@ exports[`FormRenderer PagesSettings should reset the current page on layout rend
               <div class="ddm-field-container">
                 <div class="ddm-resize-handle-left"></div>
                 <div class="ddm-drag"></div>
-                <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#paste"></use>
-                    </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#trash"></use>
-                    </svg></button></div>
+                <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#paste"></use>
+                      </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#trash"></use>
+                      </svg></button></a></div>
                 <div class="ddm-resize-handle-right"></div>
               </div>
             </div>
@@ -514,11 +514,11 @@ exports[`FormRenderer PagesSettings should reset the current page on layout rend
               <div class="ddm-field-container">
                 <div class="ddm-resize-handle-left"></div>
                 <div class="ddm-drag"></div>
-                <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#paste"></use>
-                    </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#trash"></use>
-                    </svg></button></div>
+                <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#paste"></use>
+                      </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#trash"></use>
+                      </svg></button></a></div>
                 <div class="ddm-resize-handle-right"></div>
               </div>
             </div>
@@ -579,11 +579,11 @@ exports[`FormRenderer PagesSettings should show delete-field option, when the fo
               <div class="ddm-field-container">
                 <div class="ddm-resize-handle-left"></div>
                 <div class="ddm-drag"></div>
-                <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#paste"></use>
-                    </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#trash"></use>
-                    </svg></button></div>
+                <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#paste"></use>
+                      </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#trash"></use>
+                      </svg></button></a></div>
                 <div class="ddm-resize-handle-right"></div>
               </div>
             </div>
@@ -601,11 +601,11 @@ exports[`FormRenderer PagesSettings should show delete-field option, when the fo
               <div class="ddm-field-container">
                 <div class="ddm-resize-handle-left"></div>
                 <div class="ddm-drag"></div>
-                <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#paste"></use>
-                    </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#trash"></use>
-                    </svg></button></div>
+                <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#paste"></use>
+                      </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#trash"></use>
+                      </svg></button></a></div>
                 <div class="ddm-resize-handle-right"></div>
               </div>
             </div>
@@ -613,11 +613,11 @@ exports[`FormRenderer PagesSettings should show delete-field option, when the fo
               <div class="ddm-field-container">
                 <div class="ddm-resize-handle-left"></div>
                 <div class="ddm-drag"></div>
-                <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#paste"></use>
-                    </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#trash"></use>
-                    </svg></button></div>
+                <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#paste"></use>
+                      </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#trash"></use>
+                      </svg></button></a></div>
                 <div class="ddm-resize-handle-right"></div>
               </div>
             </div>
@@ -635,11 +635,11 @@ exports[`FormRenderer PagesSettings should show delete-field option, when the fo
               <div class="ddm-field-container">
                 <div class="ddm-resize-handle-left"></div>
                 <div class="ddm-drag"></div>
-                <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#paste"></use>
-                    </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#trash"></use>
-                    </svg></button></div>
+                <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#paste"></use>
+                      </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#trash"></use>
+                      </svg></button></a></div>
                 <div class="ddm-resize-handle-right"></div>
               </div>
             </div>
@@ -654,11 +654,11 @@ exports[`FormRenderer PagesSettings should show delete-field option, when the fo
               <div class="ddm-field-container">
                 <div class="ddm-resize-handle-left"></div>
                 <div class="ddm-drag"></div>
-                <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#paste"></use>
-                    </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#trash"></use>
-                    </svg></button></div>
+                <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#paste"></use>
+                      </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#trash"></use>
+                      </svg></button></a></div>
                 <div class="ddm-resize-handle-right"></div>
               </div>
             </div>
@@ -707,11 +707,11 @@ exports[`FormRenderer PagesSettings should show reset-field option, when the for
               <div class="ddm-field-container">
                 <div class="ddm-resize-handle-left"></div>
                 <div class="ddm-drag"></div>
-                <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#paste"></use>
-                    </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#trash"></use>
-                    </svg></button></div>
+                <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#paste"></use>
+                      </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#trash"></use>
+                      </svg></button></a></div>
                 <div class="ddm-resize-handle-right"></div>
               </div>
             </div>
@@ -729,11 +729,11 @@ exports[`FormRenderer PagesSettings should show reset-field option, when the for
               <div class="ddm-field-container">
                 <div class="ddm-resize-handle-left"></div>
                 <div class="ddm-drag"></div>
-                <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#paste"></use>
-                    </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#trash"></use>
-                    </svg></button></div>
+                <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#paste"></use>
+                      </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#trash"></use>
+                      </svg></button></a></div>
                 <div class="ddm-resize-handle-right"></div>
               </div>
             </div>
@@ -741,11 +741,11 @@ exports[`FormRenderer PagesSettings should show reset-field option, when the for
               <div class="ddm-field-container">
                 <div class="ddm-resize-handle-left"></div>
                 <div class="ddm-drag"></div>
-                <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#paste"></use>
-                    </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#trash"></use>
-                    </svg></button></div>
+                <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#paste"></use>
+                      </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#trash"></use>
+                      </svg></button></a></div>
                 <div class="ddm-resize-handle-right"></div>
               </div>
             </div>
@@ -763,11 +763,11 @@ exports[`FormRenderer PagesSettings should show reset-field option, when the for
               <div class="ddm-field-container">
                 <div class="ddm-resize-handle-left"></div>
                 <div class="ddm-drag"></div>
-                <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#paste"></use>
-                    </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#trash"></use>
-                    </svg></button></div>
+                <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#paste"></use>
+                      </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#trash"></use>
+                      </svg></button></a></div>
                 <div class="ddm-resize-handle-right"></div>
               </div>
             </div>
@@ -782,11 +782,11 @@ exports[`FormRenderer PagesSettings should show reset-field option, when the for
               <div class="ddm-field-container">
                 <div class="ddm-resize-handle-left"></div>
                 <div class="ddm-drag"></div>
-                <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#paste"></use>
-                    </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#trash"></use>
-                    </svg></button></div>
+                <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#paste"></use>
+                      </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#trash"></use>
+                      </svg></button></a></div>
                 <div class="ddm-resize-handle-right"></div>
               </div>
             </div>
@@ -847,11 +847,11 @@ exports[`FormRenderer should back the pagination mode to wizard mode when user c
               <div class="ddm-field-container">
                 <div class="ddm-resize-handle-left"></div>
                 <div class="ddm-drag"></div>
-                <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#paste"></use>
-                    </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#trash"></use>
-                    </svg></button></div>
+                <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#paste"></use>
+                      </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#trash"></use>
+                      </svg></button></a></div>
                 <div class="ddm-resize-handle-right"></div>
               </div>
             </div>
@@ -869,11 +869,11 @@ exports[`FormRenderer should back the pagination mode to wizard mode when user c
               <div class="ddm-field-container">
                 <div class="ddm-resize-handle-left"></div>
                 <div class="ddm-drag"></div>
-                <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#paste"></use>
-                    </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#trash"></use>
-                    </svg></button></div>
+                <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#paste"></use>
+                      </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#trash"></use>
+                      </svg></button></a></div>
                 <div class="ddm-resize-handle-right"></div>
               </div>
             </div>
@@ -881,11 +881,11 @@ exports[`FormRenderer should back the pagination mode to wizard mode when user c
               <div class="ddm-field-container">
                 <div class="ddm-resize-handle-left"></div>
                 <div class="ddm-drag"></div>
-                <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#paste"></use>
-                    </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#trash"></use>
-                    </svg></button></div>
+                <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#paste"></use>
+                      </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#trash"></use>
+                      </svg></button></a></div>
                 <div class="ddm-resize-handle-right"></div>
               </div>
             </div>
@@ -903,11 +903,11 @@ exports[`FormRenderer should back the pagination mode to wizard mode when user c
               <div class="ddm-field-container">
                 <div class="ddm-resize-handle-left"></div>
                 <div class="ddm-drag"></div>
-                <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#paste"></use>
-                    </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#trash"></use>
-                    </svg></button></div>
+                <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#paste"></use>
+                      </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#trash"></use>
+                      </svg></button></a></div>
                 <div class="ddm-resize-handle-right"></div>
               </div>
             </div>
@@ -922,11 +922,11 @@ exports[`FormRenderer should back the pagination mode to wizard mode when user c
               <div class="ddm-field-container">
                 <div class="ddm-resize-handle-left"></div>
                 <div class="ddm-drag"></div>
-                <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#paste"></use>
-                    </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#trash"></use>
-                    </svg></button></div>
+                <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#paste"></use>
+                      </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#trash"></use>
+                      </svg></button></a></div>
                 <div class="ddm-resize-handle-right"></div>
               </div>
             </div>
@@ -969,11 +969,11 @@ exports[`FormRenderer should change the active by clicking on the pagination whe
               <div class="ddm-field-container">
                 <div class="ddm-resize-handle-left"></div>
                 <div class="ddm-drag"></div>
-                <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#paste"></use>
-                    </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#trash"></use>
-                    </svg></button></div>
+                <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#paste"></use>
+                      </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#trash"></use>
+                      </svg></button></a></div>
                 <div class="ddm-resize-handle-right"></div>
               </div>
             </div>
@@ -991,11 +991,11 @@ exports[`FormRenderer should change the active by clicking on the pagination whe
               <div class="ddm-field-container">
                 <div class="ddm-resize-handle-left"></div>
                 <div class="ddm-drag"></div>
-                <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#paste"></use>
-                    </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#trash"></use>
-                    </svg></button></div>
+                <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#paste"></use>
+                      </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#trash"></use>
+                      </svg></button></a></div>
                 <div class="ddm-resize-handle-right"></div>
               </div>
             </div>
@@ -1003,11 +1003,11 @@ exports[`FormRenderer should change the active by clicking on the pagination whe
               <div class="ddm-field-container">
                 <div class="ddm-resize-handle-left"></div>
                 <div class="ddm-drag"></div>
-                <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#paste"></use>
-                    </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#trash"></use>
-                    </svg></button></div>
+                <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#paste"></use>
+                      </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#trash"></use>
+                      </svg></button></a></div>
                 <div class="ddm-resize-handle-right"></div>
               </div>
             </div>
@@ -1025,11 +1025,11 @@ exports[`FormRenderer should change the active by clicking on the pagination whe
               <div class="ddm-field-container">
                 <div class="ddm-resize-handle-left"></div>
                 <div class="ddm-drag"></div>
-                <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#paste"></use>
-                    </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#trash"></use>
-                    </svg></button></div>
+                <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#paste"></use>
+                      </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#trash"></use>
+                      </svg></button></a></div>
                 <div class="ddm-resize-handle-right"></div>
               </div>
             </div>
@@ -1044,11 +1044,11 @@ exports[`FormRenderer should change the active by clicking on the pagination whe
               <div class="ddm-field-container">
                 <div class="ddm-resize-handle-left"></div>
                 <div class="ddm-drag"></div>
-                <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#paste"></use>
-                    </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#trash"></use>
-                    </svg></button></div>
+                <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#paste"></use>
+                      </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#trash"></use>
+                      </svg></button></a></div>
                 <div class="ddm-resize-handle-right"></div>
               </div>
             </div>
@@ -1123,11 +1123,11 @@ exports[`FormRenderer should change the active page 1`] = `
               <div class="ddm-field-container">
                 <div class="ddm-resize-handle-left"></div>
                 <div class="ddm-drag"></div>
-                <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#paste"></use>
-                    </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#trash"></use>
-                    </svg></button></div>
+                <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#paste"></use>
+                      </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#trash"></use>
+                      </svg></button></a></div>
                 <div class="ddm-resize-handle-right"></div>
               </div>
             </div>
@@ -1145,11 +1145,11 @@ exports[`FormRenderer should change the active page 1`] = `
               <div class="ddm-field-container">
                 <div class="ddm-resize-handle-left"></div>
                 <div class="ddm-drag"></div>
-                <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#paste"></use>
-                    </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#trash"></use>
-                    </svg></button></div>
+                <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#paste"></use>
+                      </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#trash"></use>
+                      </svg></button></a></div>
                 <div class="ddm-resize-handle-right"></div>
               </div>
             </div>
@@ -1157,11 +1157,11 @@ exports[`FormRenderer should change the active page 1`] = `
               <div class="ddm-field-container">
                 <div class="ddm-resize-handle-left"></div>
                 <div class="ddm-drag"></div>
-                <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#paste"></use>
-                    </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#trash"></use>
-                    </svg></button></div>
+                <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#paste"></use>
+                      </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#trash"></use>
+                      </svg></button></a></div>
                 <div class="ddm-resize-handle-right"></div>
               </div>
             </div>
@@ -1179,11 +1179,11 @@ exports[`FormRenderer should change the active page 1`] = `
               <div class="ddm-field-container">
                 <div class="ddm-resize-handle-left"></div>
                 <div class="ddm-drag"></div>
-                <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#paste"></use>
-                    </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#trash"></use>
-                    </svg></button></div>
+                <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#paste"></use>
+                      </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#trash"></use>
+                      </svg></button></a></div>
                 <div class="ddm-resize-handle-right"></div>
               </div>
             </div>
@@ -1198,11 +1198,11 @@ exports[`FormRenderer should change the active page 1`] = `
               <div class="ddm-field-container">
                 <div class="ddm-resize-handle-left"></div>
                 <div class="ddm-drag"></div>
-                <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#paste"></use>
-                    </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#trash"></use>
-                    </svg></button></div>
+                <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#paste"></use>
+                      </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#trash"></use>
+                      </svg></button></a></div>
                 <div class="ddm-resize-handle-right"></div>
               </div>
             </div>
@@ -1299,11 +1299,11 @@ exports[`FormRenderer should change the form page description 1`] = `
               <div class="ddm-field-container">
                 <div class="ddm-resize-handle-left"></div>
                 <div class="ddm-drag"></div>
-                <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#paste"></use>
-                    </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#trash"></use>
-                    </svg></button></div>
+                <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#paste"></use>
+                      </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#trash"></use>
+                      </svg></button></a></div>
                 <div class="ddm-resize-handle-right"></div>
               </div>
             </div>
@@ -1321,11 +1321,11 @@ exports[`FormRenderer should change the form page description 1`] = `
               <div class="ddm-field-container">
                 <div class="ddm-resize-handle-left"></div>
                 <div class="ddm-drag"></div>
-                <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#paste"></use>
-                    </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#trash"></use>
-                    </svg></button></div>
+                <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#paste"></use>
+                      </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#trash"></use>
+                      </svg></button></a></div>
                 <div class="ddm-resize-handle-right"></div>
               </div>
             </div>
@@ -1333,11 +1333,11 @@ exports[`FormRenderer should change the form page description 1`] = `
               <div class="ddm-field-container">
                 <div class="ddm-resize-handle-left"></div>
                 <div class="ddm-drag"></div>
-                <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#paste"></use>
-                    </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#trash"></use>
-                    </svg></button></div>
+                <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#paste"></use>
+                      </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#trash"></use>
+                      </svg></button></a></div>
                 <div class="ddm-resize-handle-right"></div>
               </div>
             </div>
@@ -1355,11 +1355,11 @@ exports[`FormRenderer should change the form page description 1`] = `
               <div class="ddm-field-container">
                 <div class="ddm-resize-handle-left"></div>
                 <div class="ddm-drag"></div>
-                <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#paste"></use>
-                    </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#trash"></use>
-                    </svg></button></div>
+                <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#paste"></use>
+                      </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#trash"></use>
+                      </svg></button></a></div>
                 <div class="ddm-resize-handle-right"></div>
               </div>
             </div>
@@ -1374,11 +1374,11 @@ exports[`FormRenderer should change the form page description 1`] = `
               <div class="ddm-field-container">
                 <div class="ddm-resize-handle-left"></div>
                 <div class="ddm-drag"></div>
-                <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#paste"></use>
-                    </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#trash"></use>
-                    </svg></button></div>
+                <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#paste"></use>
+                      </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#trash"></use>
+                      </svg></button></a></div>
                 <div class="ddm-resize-handle-right"></div>
               </div>
             </div>
@@ -1425,11 +1425,11 @@ exports[`FormRenderer should change the form page title 1`] = `
               <div class="ddm-field-container">
                 <div class="ddm-resize-handle-left"></div>
                 <div class="ddm-drag"></div>
-                <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#paste"></use>
-                    </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#trash"></use>
-                    </svg></button></div>
+                <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#paste"></use>
+                      </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#trash"></use>
+                      </svg></button></a></div>
                 <div class="ddm-resize-handle-right"></div>
               </div>
             </div>
@@ -1447,11 +1447,11 @@ exports[`FormRenderer should change the form page title 1`] = `
               <div class="ddm-field-container">
                 <div class="ddm-resize-handle-left"></div>
                 <div class="ddm-drag"></div>
-                <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#paste"></use>
-                    </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#trash"></use>
-                    </svg></button></div>
+                <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#paste"></use>
+                      </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#trash"></use>
+                      </svg></button></a></div>
                 <div class="ddm-resize-handle-right"></div>
               </div>
             </div>
@@ -1459,11 +1459,11 @@ exports[`FormRenderer should change the form page title 1`] = `
               <div class="ddm-field-container">
                 <div class="ddm-resize-handle-left"></div>
                 <div class="ddm-drag"></div>
-                <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#paste"></use>
-                    </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#trash"></use>
-                    </svg></button></div>
+                <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#paste"></use>
+                      </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#trash"></use>
+                      </svg></button></a></div>
                 <div class="ddm-resize-handle-right"></div>
               </div>
             </div>
@@ -1481,11 +1481,11 @@ exports[`FormRenderer should change the form page title 1`] = `
               <div class="ddm-field-container">
                 <div class="ddm-resize-handle-left"></div>
                 <div class="ddm-drag"></div>
-                <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#paste"></use>
-                    </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#trash"></use>
-                    </svg></button></div>
+                <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#paste"></use>
+                      </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#trash"></use>
+                      </svg></button></a></div>
                 <div class="ddm-resize-handle-right"></div>
               </div>
             </div>
@@ -1500,11 +1500,11 @@ exports[`FormRenderer should change the form page title 1`] = `
               <div class="ddm-field-container">
                 <div class="ddm-resize-handle-left"></div>
                 <div class="ddm-drag"></div>
-                <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#paste"></use>
-                    </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#trash"></use>
-                    </svg></button></div>
+                <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#paste"></use>
+                      </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#trash"></use>
+                      </svg></button></a></div>
                 <div class="ddm-resize-handle-right"></div>
               </div>
             </div>
@@ -1565,11 +1565,11 @@ exports[`FormRenderer should change the pagination mode when switch pagination m
               <div class="ddm-field-container">
                 <div class="ddm-resize-handle-left"></div>
                 <div class="ddm-drag"></div>
-                <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#paste"></use>
-                    </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#trash"></use>
-                    </svg></button></div>
+                <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#paste"></use>
+                      </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#trash"></use>
+                      </svg></button></a></div>
                 <div class="ddm-resize-handle-right"></div>
               </div>
             </div>
@@ -1587,11 +1587,11 @@ exports[`FormRenderer should change the pagination mode when switch pagination m
               <div class="ddm-field-container">
                 <div class="ddm-resize-handle-left"></div>
                 <div class="ddm-drag"></div>
-                <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#paste"></use>
-                    </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#trash"></use>
-                    </svg></button></div>
+                <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#paste"></use>
+                      </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#trash"></use>
+                      </svg></button></a></div>
                 <div class="ddm-resize-handle-right"></div>
               </div>
             </div>
@@ -1599,11 +1599,11 @@ exports[`FormRenderer should change the pagination mode when switch pagination m
               <div class="ddm-field-container">
                 <div class="ddm-resize-handle-left"></div>
                 <div class="ddm-drag"></div>
-                <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#paste"></use>
-                    </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#trash"></use>
-                    </svg></button></div>
+                <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#paste"></use>
+                      </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#trash"></use>
+                      </svg></button></a></div>
                 <div class="ddm-resize-handle-right"></div>
               </div>
             </div>
@@ -1621,11 +1621,11 @@ exports[`FormRenderer should change the pagination mode when switch pagination m
               <div class="ddm-field-container">
                 <div class="ddm-resize-handle-left"></div>
                 <div class="ddm-drag"></div>
-                <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#paste"></use>
-                    </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#trash"></use>
-                    </svg></button></div>
+                <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#paste"></use>
+                      </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#trash"></use>
+                      </svg></button></a></div>
                 <div class="ddm-resize-handle-right"></div>
               </div>
             </div>
@@ -1640,11 +1640,11 @@ exports[`FormRenderer should change the pagination mode when switch pagination m
               <div class="ddm-field-container">
                 <div class="ddm-resize-handle-left"></div>
                 <div class="ddm-drag"></div>
-                <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#paste"></use>
-                    </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#trash"></use>
-                    </svg></button></div>
+                <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#paste"></use>
+                      </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#trash"></use>
+                      </svg></button></a></div>
                 <div class="ddm-resize-handle-right"></div>
               </div>
             </div>
@@ -1734,11 +1734,11 @@ exports[`FormRenderer should receive a delete button event and propage it 1`] = 
               <div class="ddm-field-container">
                 <div class="ddm-resize-handle-left"></div>
                 <div class="ddm-drag"></div>
-                <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#paste"></use>
-                    </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#trash"></use>
-                    </svg></button></div>
+                <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#paste"></use>
+                      </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#trash"></use>
+                      </svg></button></a></div>
                 <div class="ddm-resize-handle-right"></div>
               </div>
             </div>
@@ -1756,11 +1756,11 @@ exports[`FormRenderer should receive a delete button event and propage it 1`] = 
               <div class="ddm-field-container">
                 <div class="ddm-resize-handle-left"></div>
                 <div class="ddm-drag"></div>
-                <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#paste"></use>
-                    </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#trash"></use>
-                    </svg></button></div>
+                <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#paste"></use>
+                      </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#trash"></use>
+                      </svg></button></a></div>
                 <div class="ddm-resize-handle-right"></div>
               </div>
             </div>
@@ -1768,11 +1768,11 @@ exports[`FormRenderer should receive a delete button event and propage it 1`] = 
               <div class="ddm-field-container">
                 <div class="ddm-resize-handle-left"></div>
                 <div class="ddm-drag"></div>
-                <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#paste"></use>
-                    </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#trash"></use>
-                    </svg></button></div>
+                <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#paste"></use>
+                      </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#trash"></use>
+                      </svg></button></a></div>
                 <div class="ddm-resize-handle-right"></div>
               </div>
             </div>
@@ -1790,11 +1790,11 @@ exports[`FormRenderer should receive a delete button event and propage it 1`] = 
               <div class="ddm-field-container">
                 <div class="ddm-resize-handle-left"></div>
                 <div class="ddm-drag"></div>
-                <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#paste"></use>
-                    </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#trash"></use>
-                    </svg></button></div>
+                <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#paste"></use>
+                      </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#trash"></use>
+                      </svg></button></a></div>
                 <div class="ddm-resize-handle-right"></div>
               </div>
             </div>
@@ -1809,11 +1809,11 @@ exports[`FormRenderer should receive a delete button event and propage it 1`] = 
               <div class="ddm-field-container">
                 <div class="ddm-resize-handle-left"></div>
                 <div class="ddm-drag"></div>
-                <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#paste"></use>
-                    </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#trash"></use>
-                    </svg></button></div>
+                <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#paste"></use>
+                      </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#trash"></use>
+                      </svg></button></a></div>
                 <div class="ddm-resize-handle-right"></div>
               </div>
             </div>
@@ -1860,11 +1860,11 @@ exports[`FormRenderer should receive a duplicate button event and propage it 1`]
               <div class="ddm-field-container">
                 <div class="ddm-resize-handle-left"></div>
                 <div class="ddm-drag"></div>
-                <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#paste"></use>
-                    </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#trash"></use>
-                    </svg></button></div>
+                <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#paste"></use>
+                      </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#trash"></use>
+                      </svg></button></a></div>
                 <div class="ddm-resize-handle-right"></div>
               </div>
             </div>
@@ -1882,11 +1882,11 @@ exports[`FormRenderer should receive a duplicate button event and propage it 1`]
               <div class="ddm-field-container">
                 <div class="ddm-resize-handle-left"></div>
                 <div class="ddm-drag"></div>
-                <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#paste"></use>
-                    </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#trash"></use>
-                    </svg></button></div>
+                <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#paste"></use>
+                      </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#trash"></use>
+                      </svg></button></a></div>
                 <div class="ddm-resize-handle-right"></div>
               </div>
             </div>
@@ -1894,11 +1894,11 @@ exports[`FormRenderer should receive a duplicate button event and propage it 1`]
               <div class="ddm-field-container">
                 <div class="ddm-resize-handle-left"></div>
                 <div class="ddm-drag"></div>
-                <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#paste"></use>
-                    </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#trash"></use>
-                    </svg></button></div>
+                <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#paste"></use>
+                      </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#trash"></use>
+                      </svg></button></a></div>
                 <div class="ddm-resize-handle-right"></div>
               </div>
             </div>
@@ -1916,11 +1916,11 @@ exports[`FormRenderer should receive a duplicate button event and propage it 1`]
               <div class="ddm-field-container">
                 <div class="ddm-resize-handle-left"></div>
                 <div class="ddm-drag"></div>
-                <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#paste"></use>
-                    </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#trash"></use>
-                    </svg></button></div>
+                <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#paste"></use>
+                      </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#trash"></use>
+                      </svg></button></a></div>
                 <div class="ddm-resize-handle-right"></div>
               </div>
             </div>
@@ -1935,11 +1935,11 @@ exports[`FormRenderer should receive a duplicate button event and propage it 1`]
               <div class="ddm-field-container">
                 <div class="ddm-resize-handle-left"></div>
                 <div class="ddm-drag"></div>
-                <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#paste"></use>
-                    </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#trash"></use>
-                    </svg></button></div>
+                <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#paste"></use>
+                      </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#trash"></use>
+                      </svg></button></a></div>
                 <div class="ddm-resize-handle-right"></div>
               </div>
             </div>
@@ -1986,11 +1986,11 @@ exports[`FormRenderer should receive an update page event and propage it 1`] = `
               <div class="ddm-field-container">
                 <div class="ddm-resize-handle-left"></div>
                 <div class="ddm-drag"></div>
-                <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#paste"></use>
-                    </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#trash"></use>
-                    </svg></button></div>
+                <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#paste"></use>
+                      </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#trash"></use>
+                      </svg></button></a></div>
                 <div class="ddm-resize-handle-right"></div>
               </div>
             </div>
@@ -2008,11 +2008,11 @@ exports[`FormRenderer should receive an update page event and propage it 1`] = `
               <div class="ddm-field-container">
                 <div class="ddm-resize-handle-left"></div>
                 <div class="ddm-drag"></div>
-                <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#paste"></use>
-                    </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#trash"></use>
-                    </svg></button></div>
+                <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#paste"></use>
+                      </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#trash"></use>
+                      </svg></button></a></div>
                 <div class="ddm-resize-handle-right"></div>
               </div>
             </div>
@@ -2020,11 +2020,11 @@ exports[`FormRenderer should receive an update page event and propage it 1`] = `
               <div class="ddm-field-container">
                 <div class="ddm-resize-handle-left"></div>
                 <div class="ddm-drag"></div>
-                <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#paste"></use>
-                    </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#trash"></use>
-                    </svg></button></div>
+                <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#paste"></use>
+                      </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#trash"></use>
+                      </svg></button></a></div>
                 <div class="ddm-resize-handle-right"></div>
               </div>
             </div>
@@ -2042,11 +2042,11 @@ exports[`FormRenderer should receive an update page event and propage it 1`] = `
               <div class="ddm-field-container">
                 <div class="ddm-resize-handle-left"></div>
                 <div class="ddm-drag"></div>
-                <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#paste"></use>
-                    </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#trash"></use>
-                    </svg></button></div>
+                <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#paste"></use>
+                      </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#trash"></use>
+                      </svg></button></a></div>
                 <div class="ddm-resize-handle-right"></div>
               </div>
             </div>
@@ -2061,11 +2061,11 @@ exports[`FormRenderer should receive an update page event and propage it 1`] = `
               <div class="ddm-field-container">
                 <div class="ddm-resize-handle-left"></div>
                 <div class="ddm-drag"></div>
-                <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#paste"></use>
-                    </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#trash"></use>
-                    </svg></button></div>
+                <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#paste"></use>
+                      </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#trash"></use>
+                      </svg></button></a></div>
                 <div class="ddm-resize-handle-right"></div>
               </div>
             </div>
@@ -2112,11 +2112,11 @@ exports[`FormRenderer should render a layout in editable mode 1`] = `
               <div class="ddm-field-container">
                 <div class="ddm-resize-handle-left"></div>
                 <div class="ddm-drag"></div>
-                <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#paste"></use>
-                    </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#trash"></use>
-                    </svg></button></div>
+                <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#paste"></use>
+                      </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#trash"></use>
+                      </svg></button></a></div>
                 <div class="ddm-resize-handle-right"></div>
               </div>
             </div>
@@ -2134,11 +2134,11 @@ exports[`FormRenderer should render a layout in editable mode 1`] = `
               <div class="ddm-field-container">
                 <div class="ddm-resize-handle-left"></div>
                 <div class="ddm-drag"></div>
-                <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#paste"></use>
-                    </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#trash"></use>
-                    </svg></button></div>
+                <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#paste"></use>
+                      </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#trash"></use>
+                      </svg></button></a></div>
                 <div class="ddm-resize-handle-right"></div>
               </div>
             </div>
@@ -2146,11 +2146,11 @@ exports[`FormRenderer should render a layout in editable mode 1`] = `
               <div class="ddm-field-container">
                 <div class="ddm-resize-handle-left"></div>
                 <div class="ddm-drag"></div>
-                <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#paste"></use>
-                    </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#trash"></use>
-                    </svg></button></div>
+                <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#paste"></use>
+                      </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#trash"></use>
+                      </svg></button></a></div>
                 <div class="ddm-resize-handle-right"></div>
               </div>
             </div>
@@ -2168,11 +2168,11 @@ exports[`FormRenderer should render a layout in editable mode 1`] = `
               <div class="ddm-field-container">
                 <div class="ddm-resize-handle-left"></div>
                 <div class="ddm-drag"></div>
-                <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#paste"></use>
-                    </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#trash"></use>
-                    </svg></button></div>
+                <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#paste"></use>
+                      </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#trash"></use>
+                      </svg></button></a></div>
                 <div class="ddm-resize-handle-right"></div>
               </div>
             </div>
@@ -2187,11 +2187,11 @@ exports[`FormRenderer should render a layout in editable mode 1`] = `
               <div class="ddm-field-container">
                 <div class="ddm-resize-handle-left"></div>
                 <div class="ddm-drag"></div>
-                <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#paste"></use>
-                    </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#trash"></use>
-                    </svg></button></div>
+                <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#paste"></use>
+                      </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#trash"></use>
+                      </svg></button></a></div>
                 <div class="ddm-resize-handle-right"></div>
               </div>
             </div>
@@ -2318,11 +2318,11 @@ exports[`FormRenderer should render a layout with an empty field only in editabl
               <div class="ddm-field-container">
                 <div class="ddm-resize-handle-left"></div>
                 <div class="ddm-drag"></div>
-                <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#paste"></use>
-                    </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#trash"></use>
-                    </svg></button></div>
+                <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#paste"></use>
+                      </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#trash"></use>
+                      </svg></button></a></div>
                 <div class="ddm-resize-handle-right"></div>
               </div>
             </div>
@@ -2340,11 +2340,11 @@ exports[`FormRenderer should render a layout with an empty field only in editabl
               <div class="ddm-field-container">
                 <div class="ddm-resize-handle-left"></div>
                 <div class="ddm-drag"></div>
-                <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#paste"></use>
-                    </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#trash"></use>
-                    </svg></button></div>
+                <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#paste"></use>
+                      </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#trash"></use>
+                      </svg></button></a></div>
                 <div class="ddm-resize-handle-right"></div>
               </div>
             </div>
@@ -2352,11 +2352,11 @@ exports[`FormRenderer should render a layout with an empty field only in editabl
               <div class="ddm-field-container">
                 <div class="ddm-resize-handle-left"></div>
                 <div class="ddm-drag"></div>
-                <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#paste"></use>
-                    </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#trash"></use>
-                    </svg></button></div>
+                <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#paste"></use>
+                      </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#trash"></use>
+                      </svg></button></a></div>
                 <div class="ddm-resize-handle-right"></div>
               </div>
             </div>
@@ -2364,11 +2364,11 @@ exports[`FormRenderer should render a layout with an empty field only in editabl
               <div class="ddm-field-container">
                 <div class="ddm-resize-handle-left"></div>
                 <div class="ddm-drag"></div>
-                <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#paste"></use>
-                    </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#trash"></use>
-                    </svg></button></div>
+                <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#paste"></use>
+                      </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#trash"></use>
+                      </svg></button></a></div>
                 <div class="ddm-resize-handle-right"></div>
               </div>
             </div>
@@ -2383,11 +2383,11 @@ exports[`FormRenderer should render a layout with an empty field only in editabl
               <div class="ddm-field-container">
                 <div class="ddm-resize-handle-left"></div>
                 <div class="ddm-drag"></div>
-                <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#paste"></use>
-                    </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#trash"></use>
-                    </svg></button></div>
+                <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#paste"></use>
+                      </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#trash"></use>
+                      </svg></button></a></div>
                 <div class="ddm-resize-handle-right"></div>
               </div>
             </div>
@@ -2402,11 +2402,11 @@ exports[`FormRenderer should render a layout with an empty field only in editabl
               <div class="ddm-field-container">
                 <div class="ddm-resize-handle-left"></div>
                 <div class="ddm-drag"></div>
-                <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#paste"></use>
-                    </svg></button><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-                      <use xlink:href="icons.svg#trash"></use>
-                    </svg></button></div>
+                <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#paste"></use>
+                      </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#trash"></use>
+                      </svg></button></a></div>
                 <div class="ddm-resize-handle-right"></div>
               </div>
             </div>

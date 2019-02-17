@@ -147,6 +147,21 @@ public interface JournalArticleFinder {
 		long groupId, java.util.List<Long> folderIds, long classNameId,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.journal.model.JournalArticle> queryDefinition);
 
+	public java.util.List<com.liferay.journal.model.JournalArticle> filterFindByG_C_S_L(
+		long groupId, long classNameId, String ddmStructureKey,
+		java.util.Locale locale,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.journal.model.JournalArticle> queryDefinition);
+
+	public java.util.List<com.liferay.journal.model.JournalArticle> filterFindByG_C_S_L(
+		long groupId, long classNameId, String[] ddmStructureKeys,
+		java.util.Locale locale,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.journal.model.JournalArticle> queryDefinition);
+
+	public java.util.List<com.liferay.journal.model.JournalArticle> filterFindByG_F_C_L(
+		long groupId, java.util.List<Long> folderIds, long classNameId,
+		java.util.Locale locale,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.journal.model.JournalArticle> queryDefinition);
+
 	public java.util.List<com.liferay.journal.model.JournalArticle> filterFindByC_G_F_C_A_V_T_D_C_S_T_D_R(
 		long companyId, long groupId, java.util.List<Long> folderIds,
 		long classNameId, String articleId, Double version, String title,
@@ -224,6 +239,16 @@ public interface JournalArticleFinder {
 
 	public java.util.List<com.liferay.journal.model.JournalArticle> findByG_F_C(
 		long groupId, java.util.List<Long> folderIds, long classNameId,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.journal.model.JournalArticle> queryDefinition);
+
+	public java.util.List<com.liferay.journal.model.JournalArticle> findByG_C_S_L(
+		long groupId, long classNameId, String ddmStructureKey,
+		java.util.Locale locale,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.journal.model.JournalArticle> queryDefinition);
+
+	public java.util.List<com.liferay.journal.model.JournalArticle> findByG_C_S_L(
+		long groupId, long classNameId, String[] ddmStructureKeys,
+		java.util.Locale locale,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.journal.model.JournalArticle> queryDefinition);
 
 	public java.util.List<com.liferay.journal.model.JournalArticle> findByC_G_F_C_A_V_T_D_C_S_T_D_R(

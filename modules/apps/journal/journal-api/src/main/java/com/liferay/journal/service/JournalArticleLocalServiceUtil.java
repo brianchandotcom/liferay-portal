@@ -1732,6 +1732,15 @@ public class JournalArticleLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.journal.model.JournalArticle> getArticlesByStructureId(
+		long groupId, long classNameId, String ddmStructureKey,
+		java.util.Locale locale, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.journal.model.JournalArticle> obc) {
+		return getService()
+				   .getArticlesByStructureId(groupId, classNameId,
+			ddmStructureKey, locale, status, start, end, obc);
+	}
+
+	public static java.util.List<com.liferay.journal.model.JournalArticle> getArticlesByStructureId(
 		long groupId, String ddmStructureKey, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.journal.model.JournalArticle> obc) {
 		return getService()
@@ -1745,6 +1754,15 @@ public class JournalArticleLocalServiceUtil {
 		return getService()
 				   .getArticlesByStructureId(groupId, ddmStructureKey, start,
 			end, obc);
+	}
+
+	public static java.util.List<com.liferay.journal.model.JournalArticle> getArticlesByStructureId(
+		long groupId, String ddmStructureKey, java.util.Locale locale,
+		int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.journal.model.JournalArticle> obc) {
+		return getService()
+				   .getArticlesByStructureId(groupId, ddmStructureKey, locale,
+			status, start, end, obc);
 	}
 
 	/**
@@ -1950,6 +1968,13 @@ public class JournalArticleLocalServiceUtil {
 		String[] ddmStructureKeys) {
 		return getService()
 				   .getIndexableArticlesByDDMStructureKey(ddmStructureKeys);
+	}
+
+	public static java.util.List<com.liferay.journal.model.JournalArticle> getIndexableArticlesByDDMStructureKey(
+		String[] ddmStructureKeys, java.util.Locale locale) {
+		return getService()
+				   .getIndexableArticlesByDDMStructureKey(ddmStructureKeys,
+			locale);
 	}
 
 	/**

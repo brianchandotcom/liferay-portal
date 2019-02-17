@@ -751,6 +751,44 @@ public interface JournalArticleService extends BaseService {
 
 	/**
 	* Returns an ordered range of all the web content articles matching the
+	* group, class name ID, DDM structure key, and workflow status.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end -
+	* start</code> instances. <code>start</code> and <code>end</code> are not
+	* primary keys, they are indexes in the result set. Thus, <code>0</code>
+	* refers to the first result in the set. Setting both <code>start</code>
+	* and <code>end</code> to {@link
+	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	* result set.
+	* </p>
+	*
+	* @param groupId the primary key of the web content article's group
+	* @param classNameId the primary key of the DDMStructure class if the web
+	content article is related to a DDM structure, the primary key of
+	the class name associated with the article, or
+	JournalArticleConstants.CLASSNAME_ID_DEFAULT in the journal-api
+	module otherwise
+	* @param ddmStructureKey the primary key of the web content article's DDM
+	structure
+	* @param status the web content article's workflow status. For more
+	information see {@link WorkflowConstants} for constants starting
+	with the "STATUS_" prefix.
+	* @param start the lower bound of the range of web content articles to
+	return
+	* @param end the upper bound of the range of web content articles to
+	return (not inclusive)
+	* @param obc the comparator to order the web content articles
+	* @return the range of matching web content articles ordered by the
+	comparator
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<JournalArticle> getArticlesByStructureId(long groupId,
+		long classNameId, String ddmStructureKey, Locale locale, int status,
+		int start, int end, OrderByComparator<JournalArticle> obc);
+
+	/**
+	* Returns an ordered range of all the web content articles matching the
 	* group, default class name ID, and DDM structure key.
 	*
 	* <p>
@@ -810,6 +848,40 @@ public interface JournalArticleService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<JournalArticle> getArticlesByStructureId(long groupId,
 		String ddmStructureKey, int start, int end,
+		OrderByComparator<JournalArticle> obc);
+
+	/**
+	* Returns an ordered range of all the web content articles matching the
+	* group, default class name ID, and DDM structure key.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end -
+	* start</code> instances. <code>start</code> and <code>end</code> are not
+	* primary keys, they are indexes in the result set. Thus, <code>0</code>
+	* refers to the first result in the set. Setting both <code>start</code>
+	* and <code>end</code> to {@link
+	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	* result set.
+	* </p>
+	*
+	* @param groupId the primary key of the web content article's group
+	* @param ddmStructureKey the primary key of the web content article's DDM
+	structure
+	* @param locale web content articles locale
+	* @param status the web content article's workflow status. For more
+	information see {@link WorkflowConstants} for constants starting
+	with the "STATUS_" prefix.
+	* @param start the lower bound of the range of web content articles to
+	return
+	* @param end the upper bound of the range of web content articles to
+	return (not inclusive)
+	* @param obc the comparator to order the web content articles
+	* @return the range of matching web content articles ordered by the
+	comparator
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<JournalArticle> getArticlesByStructureId(long groupId,
+		String ddmStructureKey, Locale locale, int status, int start, int end,
 		OrderByComparator<JournalArticle> obc);
 
 	/**
@@ -950,6 +1022,35 @@ public interface JournalArticleService extends BaseService {
 	public List<JournalArticle> getGroupArticles(long groupId, long userId,
 		long rootFolderId, int status, boolean includeOwner, int start,
 		int end, OrderByComparator<JournalArticle> orderByComparator)
+		throws PortalException;
+
+	/**
+	* Returns an ordered range of all the web content articles matching the
+	* group, user, the root folder or any of its subfolders.
+	*
+	* @param groupId the primary key of the web content article's group
+	* @param userId the primary key of the user (optionally <code>0</code>)
+	* @param rootFolderId the primary key of the root folder to begin the
+	search
+	* @param status the web content article's workflow status. For more
+	information see {@link WorkflowConstants} for constants starting
+	with the "STATUS_" prefix.
+	* @param includeOwner whether to include the user's web content
+	* @param locale web content articles locale
+	* @param start the lower bound of the range of web content articles to
+	return
+	* @param end the upper bound of the range of web content articles to
+	return (not inclusive)
+	* @param orderByComparator the comparator to order the web content
+	articles
+	* @return the range of matching web content articles ordered by the
+	comparator
+	* @throws PortalException if a portal exception occurred
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<JournalArticle> getGroupArticles(long groupId, long userId,
+		long rootFolderId, int status, boolean includeOwner, Locale locale,
+		int start, int end, OrderByComparator<JournalArticle> orderByComparator)
 		throws PortalException;
 
 	/**

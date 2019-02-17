@@ -1504,12 +1504,22 @@ public interface JournalArticleLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<JournalArticle> getArticlesByStructureId(long groupId,
+		long classNameId, String ddmStructureKey, Locale locale, int status,
+		int start, int end, OrderByComparator<JournalArticle> obc);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<JournalArticle> getArticlesByStructureId(long groupId,
 		String ddmStructureKey, int status, int start, int end,
 		OrderByComparator<JournalArticle> obc);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<JournalArticle> getArticlesByStructureId(long groupId,
 		String ddmStructureKey, int start, int end,
+		OrderByComparator<JournalArticle> obc);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<JournalArticle> getArticlesByStructureId(long groupId,
+		String ddmStructureKey, Locale locale, int status, int start, int end,
 		OrderByComparator<JournalArticle> obc);
 
 	/**
@@ -1693,6 +1703,10 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<JournalArticle> getIndexableArticlesByDDMStructureKey(
 		String[] ddmStructureKeys);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<JournalArticle> getIndexableArticlesByDDMStructureKey(
+		String[] ddmStructureKeys, Locale locale);
 
 	/**
 	* Returns the indexable web content articles matching the resource primary

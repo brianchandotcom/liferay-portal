@@ -2800,8 +2800,21 @@ public class JournalArticleLocalServiceImpl
 		QueryDefinition<JournalArticle> queryDefinition = new QueryDefinition<>(
 			status, start, end, obc);
 
-		return journalArticleFinder.findByG_C_S(
-			groupId, classNameId, ddmStructureKey, queryDefinition);
+		return journalArticleFinder.findByG_C_S_L(
+			groupId, classNameId, ddmStructureKey,
+			LocaleUtil.getMostRelevantLocale(), queryDefinition);
+	}
+
+	@Override
+	public List<JournalArticle> getArticlesByStructureId(
+		long groupId, long classNameId, String ddmStructureKey, Locale locale,
+		int status, int start, int end, OrderByComparator<JournalArticle> obc) {
+
+		QueryDefinition<JournalArticle> queryDefinition = new QueryDefinition<>(
+			status, start, end, obc);
+
+		return journalArticleFinder.findByG_C_S_L(
+			groupId, classNameId, ddmStructureKey, locale, queryDefinition);
 	}
 
 	@Override
@@ -2812,9 +2825,10 @@ public class JournalArticleLocalServiceImpl
 		QueryDefinition<JournalArticle> queryDefinition = new QueryDefinition<>(
 			status, start, end, obc);
 
-		return journalArticleFinder.findByG_C_S(
+		return journalArticleFinder.findByG_C_S_L(
 			groupId, JournalArticleConstants.CLASSNAME_ID_DEFAULT,
-			ddmStructureKey, queryDefinition);
+			ddmStructureKey, LocaleUtil.getMostRelevantLocale(),
+			queryDefinition);
 	}
 
 	@Override
@@ -2825,6 +2839,19 @@ public class JournalArticleLocalServiceImpl
 		return getArticlesByStructureId(
 			groupId, ddmStructureKey, WorkflowConstants.STATUS_ANY, start, end,
 			obc);
+	}
+
+	@Override
+	public List<JournalArticle> getArticlesByStructureId(
+		long groupId, String ddmStructureKey, Locale locale, int status,
+		int start, int end, OrderByComparator<JournalArticle> obc) {
+
+		QueryDefinition<JournalArticle> queryDefinition = new QueryDefinition<>(
+			status, start, end, obc);
+
+		return journalArticleFinder.findByG_C_S_L(
+			groupId, JournalArticleConstants.CLASSNAME_ID_DEFAULT,
+			ddmStructureKey, locale, queryDefinition);
 	}
 
 	/**
@@ -3142,9 +3169,10 @@ public class JournalArticleLocalServiceImpl
 		List<JournalArticle> articles = new ArrayList<>();
 
 		articles.addAll(
-			journalArticleFinder.findByG_C_S(
+			journalArticleFinder.findByG_C_S_L(
 				0, JournalArticleConstants.CLASSNAME_ID_DEFAULT,
-				ddmStructureKeys, approvedQueryDefinition));
+				ddmStructureKeys, LocaleUtil.getMostRelevantLocale(),
+				approvedQueryDefinition));
 
 		QueryDefinition<JournalArticle> trashQueryDefinition =
 			new QueryDefinition<>(
@@ -3152,9 +3180,43 @@ public class JournalArticleLocalServiceImpl
 				QueryUtil.ALL_POS, new ArticleVersionComparator());
 
 		articles.addAll(
-			journalArticleFinder.findByG_C_S(
+			journalArticleFinder.findByG_C_S_L(
 				0, JournalArticleConstants.CLASSNAME_ID_DEFAULT,
-				ddmStructureKeys, trashQueryDefinition));
+				ddmStructureKeys, LocaleUtil.getMostRelevantLocale(),
+				trashQueryDefinition));
+
+		return articles;
+	}
+
+	@Override
+	public List<JournalArticle> getIndexableArticlesByDDMStructureKey(
+		String[] ddmStructureKeys, Locale locale) {
+
+		if (isReindexAllArticleVersions()) {
+			return getStructureArticles(ddmStructureKeys);
+		}
+
+		QueryDefinition<JournalArticle> approvedQueryDefinition =
+			new QueryDefinition<>(
+				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, new ArticleVersionComparator());
+
+		List<JournalArticle> articles = new ArrayList<>();
+
+		articles.addAll(
+			journalArticleFinder.findByG_C_S_L(
+				0, JournalArticleConstants.CLASSNAME_ID_DEFAULT,
+				ddmStructureKeys, locale, approvedQueryDefinition));
+
+		QueryDefinition<JournalArticle> trashQueryDefinition =
+			new QueryDefinition<>(
+				WorkflowConstants.STATUS_IN_TRASH, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, new ArticleVersionComparator());
+
+		articles.addAll(
+			journalArticleFinder.findByG_C_S_L(
+				0, JournalArticleConstants.CLASSNAME_ID_DEFAULT,
+				ddmStructureKeys, locale, trashQueryDefinition));
 
 		return articles;
 	}

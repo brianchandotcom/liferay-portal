@@ -106,8 +106,14 @@ public class JournalArticleFinderImpl
 	public static final String FIND_BY_G_C_S =
 		JournalArticleFinder.class.getName() + ".findByG_C_S";
 
+	public static final String FIND_BY_G_C_S_L =
+		JournalArticleFinder.class.getName() + ".findByG_C_S_L";
+
 	public static final String FIND_BY_G_U_F_C =
 		JournalArticleFinder.class.getName() + ".findByG_U_F_C";
+
+	public static final String FIND_BY_G_U_F_C_L =
+		JournalArticleFinder.class.getName() + ".findByG_U_F_C_L";
 
 	public static final String FIND_BY_C_G_F_C_A_V_T_D_C_S_T_D_R =
 		JournalArticleFinder.class.getName() +
@@ -471,6 +477,35 @@ public class JournalArticleFinderImpl
 	}
 
 	@Override
+	public List<JournalArticle> filterFindByG_C_S_L(
+		long groupId, long classNameId, String ddmStructureKey, Locale locale,
+		QueryDefinition<JournalArticle> queryDefinition) {
+
+		return doFindByG_C_S_L(
+			groupId, classNameId, new String[] {ddmStructureKey}, locale,
+			queryDefinition, true);
+	}
+
+	@Override
+	public List<JournalArticle> filterFindByG_C_S_L(
+		long groupId, long classNameId, String[] ddmStructureKeys,
+		Locale locale, QueryDefinition<JournalArticle> queryDefinition) {
+
+		return doFindByG_C_S_L(
+			groupId, classNameId, ddmStructureKeys, locale, queryDefinition,
+			true);
+	}
+
+	@Override
+	public List<JournalArticle> filterFindByG_F_C_L(
+		long groupId, List<Long> folderIds, long classNameId, Locale locale,
+		QueryDefinition<JournalArticle> queryDefinition) {
+
+		return doFindByG_F_C_L(
+			groupId, folderIds, classNameId, locale, queryDefinition, true);
+	}
+
+	@Override
 	public List<JournalArticle> filterFindByC_G_F_C_A_V_T_D_C_S_T_D_R(
 		long companyId, long groupId, List<Long> folderIds, long classNameId,
 		String articleId, Double version, String title, String description,
@@ -799,6 +834,26 @@ public class JournalArticleFinderImpl
 
 		return doFindByG_F_C(
 			groupId, folderIds, classNameId, queryDefinition, false);
+	}
+
+	@Override
+	public List<JournalArticle> findByG_C_S_L(
+		long groupId, long classNameId, String ddmStructureKey, Locale locale,
+		QueryDefinition<JournalArticle> queryDefinition) {
+
+		return doFindByG_C_S_L(
+			groupId, classNameId, new String[] {ddmStructureKey}, locale,
+			queryDefinition, false);
+	}
+
+	@Override
+	public List<JournalArticle> findByG_C_S_L(
+		long groupId, long classNameId, String[] ddmStructureKeys,
+		Locale locale, QueryDefinition<JournalArticle> queryDefinition) {
+
+		return doFindByG_C_S_L(
+			groupId, classNameId, ddmStructureKeys, locale, queryDefinition,
+			false);
 	}
 
 	@Override
@@ -1560,6 +1615,141 @@ public class JournalArticleFinderImpl
 
 			QueryPos qPos = QueryPos.getInstance(q);
 
+			qPos.add(groupId);
+			qPos.add(classNameId);
+
+			if (queryDefinition.getOwnerUserId() > 0) {
+				qPos.add(queryDefinition.getOwnerUserId());
+
+				if (queryDefinition.isIncludeOwner()) {
+					qPos.add(WorkflowConstants.STATUS_IN_TRASH);
+				}
+			}
+
+			for (long folderId : folderIds) {
+				qPos.add(folderId);
+			}
+
+			qPos.add(queryDefinition.getStatus());
+
+			return (List<JournalArticle>)QueryUtil.list(
+				q, getDialect(), queryDefinition.getStart(),
+				queryDefinition.getEnd());
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected List<JournalArticle> doFindByG_C_S_L(
+		long groupId, long classNameId, String[] ddmStructureKeys,
+		Locale locale, QueryDefinition<JournalArticle> queryDefinition,
+		boolean inlineSQLHelper) {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = _customSQL.get(
+				getClass(), FIND_BY_G_C_S_L, queryDefinition, "JournalArticle");
+
+			sql = replaceStatusJoin(sql, queryDefinition);
+
+			sql = _customSQL.replaceOrderBy(
+				sql, queryDefinition.getOrderByComparator());
+
+			if (groupId <= 0) {
+				sql = StringUtil.replace(
+					sql, "(JournalArticle.groupId = ?) AND", StringPool.BLANK);
+			}
+
+			sql = StringUtil.replace(
+				sql, "[$DDM_STRUCTURE_KEY$]",
+				getDDMStructureKeys(
+					ddmStructureKeys, JournalArticleImpl.TABLE_NAME));
+
+			if (inlineSQLHelper) {
+				sql = InlineSQLHelperUtil.replacePermissionCheck(
+					sql, JournalArticle.class.getName(),
+					"JournalArticle.resourcePrimKey", groupId);
+			}
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addEntity(
+				JournalArticleImpl.TABLE_NAME, JournalArticleImpl.class);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(LocaleUtil.toLanguageId(locale));
+
+			if (groupId > 0) {
+				qPos.add(groupId);
+			}
+
+			qPos.add(classNameId);
+			qPos.add(ddmStructureKeys);
+			qPos.add(queryDefinition.getStatus());
+
+			return (List<JournalArticle>)QueryUtil.list(
+				q, getDialect(), queryDefinition.getStart(),
+				queryDefinition.getEnd());
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected List<JournalArticle> doFindByG_F_C_L(
+		long groupId, List<Long> folderIds, long classNameId, Locale locale,
+		QueryDefinition<JournalArticle> queryDefinition,
+		boolean inlineSQLHelper) {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = _customSQL.get(
+				getClass(), FIND_BY_G_U_F_C_L, queryDefinition,
+				"JournalArticle");
+
+			sql = replaceStatusJoin(sql, queryDefinition);
+
+			sql = _customSQL.replaceOrderBy(
+				sql, queryDefinition.getOrderByComparator());
+
+			if (folderIds.isEmpty()) {
+				sql = StringUtil.replace(
+					sql, "([$FOLDER_ID$]) AND", StringPool.BLANK);
+			}
+			else {
+				sql = StringUtil.replace(
+					sql, "[$FOLDER_ID$]",
+					getFolderIds(folderIds, JournalArticleImpl.TABLE_NAME));
+			}
+
+			if (inlineSQLHelper) {
+				sql = InlineSQLHelperUtil.replacePermissionCheck(
+					sql, JournalArticle.class.getName(),
+					"JournalArticle.resourcePrimKey", groupId);
+			}
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addEntity(
+				JournalArticleImpl.TABLE_NAME, JournalArticleImpl.class);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(LocaleUtil.toLanguageId(locale));
 			qPos.add(groupId);
 			qPos.add(classNameId);
 

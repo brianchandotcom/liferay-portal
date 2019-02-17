@@ -37,21 +37,18 @@ import javax.servlet.jsp.JspWriter;
  */
 public class UserPortraitTag extends IncludeTag {
 
-	public static String getUserPortraitHTML(String cssClass,
-		Supplier<String> userPortraitURLSupplier) {
+	public static String getUserPortraitHTML(
+		String cssClass, Supplier<String> userPortraitURLSupplier) {
 
-		StringBundler sb = new StringBundler(10);
+		StringBundler sb = new StringBundler(7);
 
-		sb.append("<span class=\"sticker sticker-circle sticker-light");
-		sb.append(" ");
+		sb.append("<span class=\"sticker sticker-circle sticker-light ");
 		sb.append(cssClass);
 		sb.append("\">");
 		sb.append("<span class=\"sticker-overlay\">");
 		sb.append("<img alt=\"\" class=\"sticker-img\" src=\"");
 		sb.append(HtmlUtil.escape(userPortraitURLSupplier.get()));
-		sb.append("\">");
-		sb.append("</span>");
-		sb.append("</span>");
+		sb.append("\"></span></span>");
 
 		return sb.toString();
 	}
@@ -62,8 +59,8 @@ public class UserPortraitTag extends IncludeTag {
 
 		User user = getUser();
 
-		String userPortraitHTML = getUserPortraitHTML(_cssClass,
-			() -> getPortraitURL(user));
+		String userPortraitHTML = getUserPortraitHTML(
+			_cssClass, () -> getPortraitURL(user));
 
 		jspWriter.write(userPortraitHTML);
 

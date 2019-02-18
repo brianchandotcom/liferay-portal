@@ -858,9 +858,25 @@ public class JournalContentDisplayContext {
 			return _showArticle;
 		}
 
-		if (!hasViewPermission() || isExpired() || article.isScheduled() ||
-			article.isPending()) {
+		if (!hasViewPermission()) {
+			_showArticle = false;
 
+			return _showArticle;
+		}
+
+		if (isExpired()) {
+			_showArticle = false;
+
+			return _showArticle;
+		}
+
+		if (article.isScheduled() && !isPreview()) {
+			_showArticle = false;
+
+			return _showArticle;
+		}
+
+		if (article.isPending() && !isPreview()) {
 			_showArticle = false;
 
 			return _showArticle;

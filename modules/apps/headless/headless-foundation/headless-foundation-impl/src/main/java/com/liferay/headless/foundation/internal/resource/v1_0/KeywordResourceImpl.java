@@ -23,7 +23,7 @@ import com.liferay.headless.foundation.internal.dto.v1_0.KeywordImpl;
 import com.liferay.headless.foundation.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.foundation.resource.v1_0.KeywordResource;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.UserService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -121,7 +121,7 @@ public class KeywordResourceImpl extends BaseKeywordResourceImpl {
 				setCreator(
 					CreatorUtil.toCreator(
 						_portal,
-						_userService.getUserById(assetTag.getUserId())));
+						_userLocalService.getUserById(assetTag.getUserId())));
 				setDateCreated(assetTag.getCreateDate());
 				setDateModified(assetTag.getModifiedDate());
 				setId(assetTag.getTagId());
@@ -138,6 +138,6 @@ public class KeywordResourceImpl extends BaseKeywordResourceImpl {
 	private Portal _portal;
 
 	@Reference
-	private UserService _userService;
+	private UserLocalService _userLocalService;
 
 }

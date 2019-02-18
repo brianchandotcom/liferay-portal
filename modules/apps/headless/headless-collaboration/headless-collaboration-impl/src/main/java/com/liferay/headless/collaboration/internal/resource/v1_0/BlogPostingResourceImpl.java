@@ -29,13 +29,16 @@ import com.liferay.headless.collaboration.internal.dto.v1_0.BlogPostingImpl;
 import com.liferay.headless.collaboration.internal.dto.v1_0.CategoryImpl;
 import com.liferay.headless.collaboration.internal.dto.v1_0.ImageImpl;
 import com.liferay.headless.collaboration.internal.dto.v1_0.util.AggregateRatingUtil;
+import com.liferay.headless.collaboration.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.collaboration.resource.v1_0.BlogPostingResource;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -241,6 +244,10 @@ public class BlogPostingResourceImpl extends BaseBlogPostingResourceImpl {
 				setArticleBody(blogsEntry.getContent());
 				setCaption(blogsEntry.getCoverImageCaption());
 				setCategory(_getCategories(blogsEntry));
+				setCreator(
+					CreatorUtil.toCreator(
+						_portal,
+						_userLocalService.getUser(blogsEntry.getUserId())));
 				setContentSpace(blogsEntry.getGroupId());
 				setDateCreated(blogsEntry.getCreateDate());
 				setDateModified(blogsEntry.getModifiedDate());
@@ -268,6 +275,12 @@ public class BlogPostingResourceImpl extends BaseBlogPostingResourceImpl {
 	private DLURLHelper _dlurlHelper;
 
 	@Reference
+	private Portal _portal;
+
+	@Reference
 	private RatingsStatsLocalService _ratingsStatsLocalService;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

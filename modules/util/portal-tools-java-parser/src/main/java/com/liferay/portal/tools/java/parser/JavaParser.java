@@ -160,6 +160,45 @@ public class JavaParser {
 		return parsedJavaClass;
 	}
 
+	private static String _fixCommentIndent(
+		String content, CommonHiddenStreamToken commentToken,
+		String actualIndent, String expectedIndent) {
+
+		content = _fixIndent(
+			content, commentToken.getLine(), actualIndent, expectedIndent);
+
+		if (commentToken.getType() == TokenTypes.SINGLE_LINE_COMMENT) {
+			return content;
+		}
+
+		int end =
+			commentToken.getLine() +
+				StringUtil.count(commentToken.getText(), "\n");
+
+		for (int i = commentToken.getLine() + 1; i <= end; i++) {
+			String line = _getLine(content, i);
+
+			if (line.startsWith(actualIndent)) {
+				content = _fixIndent(content, i, actualIndent, expectedIndent);
+			}
+		}
+
+		return content;
+	}
+
+	private static String _fixContent(
+		String content, String javaTermContent, Position startPosition,
+		Position endPosition) {
+
+		int x = _getLineStartPos(content, startPosition.getLineNumber());
+		int y =
+			_getLineStartPos(content, endPosition.getLineNumber()) +
+				endPosition.getLinePosition();
+
+		return StringUtil.replaceFirst(
+			content, content.substring(x, y), javaTermContent, x - 1);
+	}
+
 	private static String _fixIndent(
 		String content, int lineNumber, String actualIndent,
 		String expectedIndent) {
@@ -168,6 +207,19 @@ public class JavaParser {
 
 		return StringUtil.replaceFirst(
 			content, actualIndent, expectedIndent, x);
+	}
+
+	private static String _getContent(
+		FileContents fileContents, int start, int end) {
+
+		StringBundler sb = new StringBundler();
+
+		for (int i = start; i <= end; i++) {
+			sb.append(fileContents.getLine(i - 1));
+			sb.append("\n");
+		}
+
+		return sb.toString();
 	}
 
 	private static List<Position> _getCurlyBracePositionList(
@@ -292,8 +344,11 @@ public class JavaParser {
 					String expectedIndent = _getExpectedIndent(
 						parentDetailAST, fileContents);
 
-					String actualIndent = _getIndent(
-						fileContents.getLine(parentDetailAST.getLineNo() - 1));
+					String actualIndent = StringUtil.removeChar(
+						_getIndent(
+							fileContents.getLine(
+								parentDetailAST.getLineNo() - 1)),
+						CharPool.SPACE);
 
 					if (actualIndent.startsWith(expectedIndent)) {
 						indent += StringUtil.replaceFirst(
@@ -344,11 +399,13 @@ public class JavaParser {
 		StringBundler sb = new StringBundler(s.length());
 
 		for (int i = 0; i < s.length(); i++) {
-			if (s.charAt(i) != CharPool.TAB) {
+			char c = s.charAt(i);
+
+			if (!Character.isWhitespace(c)) {
 				break;
 			}
 
-			sb.append(CharPool.TAB);
+			sb.append(c);
 		}
 
 		return sb.toString();
@@ -448,19 +505,16 @@ public class JavaParser {
 		return parts.toArray(new String[parts.size()]);
 	}
 
-	private static boolean _isAtLineEnd(Position position, String line) {
-		if (line.length() == position.getLinePosition()) {
+	private static boolean _isAtLineEnd(String line, int x) {
+		if (line.length() == x) {
 			return true;
 		}
 
 		return false;
 	}
 
-	private static boolean _isAtLineStart(Position position, String line) {
-		String s = StringUtil.trim(
-			line.substring(0, position.getLinePosition()));
-
-		if (Validator.isNull(s)) {
+	private static boolean _isAtLineStart(String line, int x) {
+		if (Validator.isNull(StringUtil.trim(line.substring(0, x)))) {
 			return true;
 		}
 
@@ -508,7 +562,8 @@ public class JavaParser {
 		int startLineNumber = startPosition.getLineNumber();
 
 		if (!_isAtLineStart(
-				startPosition, fileContents.getLine(startLineNumber - 1))) {
+				fileContents.getLine(startLineNumber - 1),
+				startPosition.getLinePosition())) {
 
 			int lineStartPos = _getLineStartPos(
 				content, startPosition.getLineNumber());
@@ -523,12 +578,20 @@ public class JavaParser {
 
 		String endLine = fileContents.getLine(endLineNumber - 1);
 
-		if (!_isAtLineEnd(endPosition, endLine)) {
+		int endLinePosition = endPosition.getLinePosition();
+
+		if (!_isAtLineEnd(endLine, endLinePosition)) {
 			String remainder = StringUtil.trim(
-				endLine.substring(endPosition.getLinePosition()));
+				endLine.substring(endLinePosition));
 
 			if (Validator.isNull(remainder)) {
 				return _trimLine(content, endLine, endLineNumber);
+			}
+
+			if (remainder.startsWith("//") || remainder.startsWith("/*")) {
+				return _fixContent(
+					content, parsedJavaTerm.getContent(), startPosition,
+					endPosition);
 			}
 
 			return content;
@@ -537,9 +600,9 @@ public class JavaParser {
 		String actualIndent = _getIndent(
 			_getLine(content, startPosition.getLineNumber()));
 
-		String javaTermContent = parsedJavaTerm.getContent();
+		String expectedJavaTermContent = parsedJavaTerm.getContent();
 
-		String expectedIndent = _getIndent(javaTermContent);
+		String expectedIndent = _getIndent(expectedJavaTermContent);
 
 		if (!actualIndent.equals(expectedIndent)) {
 			return _fixIndent(
@@ -547,24 +610,56 @@ public class JavaParser {
 				expectedIndent);
 		}
 
-		StringBundler sb = new StringBundler();
+		String actualJavaTermContent = _getContent(
+			fileContents, startLineNumber, endLineNumber);
 
-		for (int i = startLineNumber; i <= endLineNumber; i++) {
-			sb.append(fileContents.getLine(i - 1));
-			sb.append("\n");
+		if (!actualJavaTermContent.contains(expectedJavaTermContent) &&
+			!actualJavaTermContent.contains("\n\n")) {
+
+			return _fixContent(
+				content, parsedJavaTerm.getContent(), startPosition,
+				endPosition);
 		}
 
-		String astDetailContent = sb.toString();
+		CommonHiddenStreamToken precedingCommentToken =
+			parsedJavaTerm.getPrecedingCommentToken();
 
-		if (!astDetailContent.contains(javaTermContent) &&
-			!astDetailContent.contains("\n\n")) {
+		if (precedingCommentToken == null) {
+			return content;
+		}
 
-			int startPos = _getLineStartPos(content, startLineNumber);
-			int endPos = _getLineStartPos(content, endLineNumber + 1) - 1;
+		String expectedCommentIndent = expectedIndent;
 
-			return StringUtil.replaceFirst(
-				content, content.substring(startPos, endPos), javaTermContent,
-				startPos - 1);
+		String trimmedJavaTermContent = StringUtil.trim(
+			expectedJavaTermContent);
+
+		if (trimmedJavaTermContent.startsWith("}") ||
+			trimmedJavaTermContent.startsWith(")")) {
+
+			expectedCommentIndent += "\t";
+		}
+
+		while (true) {
+			if (precedingCommentToken == null) {
+				break;
+			}
+
+			String line = _getLine(content, precedingCommentToken.getLine());
+
+			if (!_isAtLineStart(line, precedingCommentToken.getColumn() - 1)) {
+				break;
+			}
+
+			String actualCommentIndent = _getIndent(
+				_getLine(content, precedingCommentToken.getLine()));
+
+			if (!actualCommentIndent.equals(expectedCommentIndent)) {
+				return _fixCommentIndent(
+					content, precedingCommentToken, actualCommentIndent,
+					expectedCommentIndent);
+			}
+
+			precedingCommentToken = precedingCommentToken.getHiddenBefore();
 		}
 
 		return content;

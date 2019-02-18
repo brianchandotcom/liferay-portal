@@ -810,21 +810,31 @@ public class JournalContentDisplayContext {
 	}
 
 	public boolean isPreview() {
+		if (_preview != null) {
+			return _preview;
+		}
+
 		long previewArticleId = ParamUtil.getLong(
 			_portletRequest, "previewArticleId");
 
 		if (previewArticleId <= 0) {
-			return false;
+			_preview = false;
+
+			return _preview;
 		}
 
 		JournalArticle article = JournalArticleLocalServiceUtil.fetchArticle(
 			previewArticleId);
 
 		if (article == null) {
-			return false;
+			_preview = false;
+
+			return _preview;
 		}
 
-		return true;
+		_preview = true;
+
+		return _preview;
 	}
 
 	public boolean isShowArticle() throws PortalException {
@@ -1070,6 +1080,7 @@ public class JournalContentDisplayContext {
 	private final PortletRequest _portletRequest;
 	private String _portletResource;
 	private final PortletResponse _portletResponse;
+	private Boolean _preview;
 	private Boolean _showArticle;
 	private Boolean _showEditArticleIcon;
 	private Boolean _showEditTemplateIcon;

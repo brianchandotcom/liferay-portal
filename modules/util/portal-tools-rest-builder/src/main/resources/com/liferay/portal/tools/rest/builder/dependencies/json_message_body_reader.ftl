@@ -7,7 +7,10 @@ package ${configYAML.apiPackagePath}.internal.jaxrs.message.body.${versionDirNam
 	</#list>
 </#compress>
 
+import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.module.SimpleAbstractTypeResolver;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
 import java.io.IOException;
@@ -65,17 +68,26 @@ public class JSONMessageBodyReader implements MessageBodyReader<Object> {
 			InputStream inputStream)
 		throws IOException, WebApplicationException {
 
-		<#list allSchemas?keys as schemaName>
-			if (clazz.equals(${schemaName}.class)) {
-				return _objectMapper.readValue(inputStream, ${schemaName}Impl.class);
-			}
-		</#list>
-
-		return null;
+		return _objectMapper.readValue(inputStream, clazz);
 	}
 
 	private static final ObjectMapper _objectMapper = new ObjectMapper() {
 		{
+			SimpleModule module =
+				new SimpleModule("${configYAML.application.name}",
+					Version.unknownVersion());
+
+			SimpleAbstractTypeResolver resolver =
+				new SimpleAbstractTypeResolver();
+
+			<#list allSchemas?keys as schemaName>
+			resolver.addMapping(${schemaName}.class, ${schemaName}Impl.class);
+			</#list>
+
+			module.setAbstractTypes(resolver);
+
+			registerModule(module);
+
 			setDateFormat(new ISO8601DateFormat());
 		}
 	};

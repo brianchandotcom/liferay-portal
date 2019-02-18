@@ -143,7 +143,8 @@ renderResponse.setTitle((sapEntry == null) ? LanguageUtil.get(request, "new-serv
 		'click',
 		'#<portlet:namespace />advancedMode, #<portlet:namespace />friendlyMode',
 		function(event) {
-			alternatingElements.forEach(
+			Array.prototype.forEach.call(
+				alternatingElements,
 				function(element) {
 					dom.toggleClasses(element, 'hide');
 				}

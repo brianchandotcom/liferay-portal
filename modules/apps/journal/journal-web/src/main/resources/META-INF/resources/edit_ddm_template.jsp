@@ -40,7 +40,6 @@ renderResponse.setTitle(journalEditDDMTemplateDisplayContext.getTitle());
 <liferay-frontend:edit-form
 	action="<%= (ddmTemplate == null) ? addDDMTemplateURL : updateDDMTemplateURL %>"
 	enctype="multipart/form-data"
-	fluid="<%= true %>"
 	method="post"
 	name="fm"
 	onSubmit='<%= "event.preventDefault();" %>'

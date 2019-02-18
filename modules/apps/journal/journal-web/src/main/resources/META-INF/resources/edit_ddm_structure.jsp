@@ -41,7 +41,6 @@ renderResponse.setTitle((ddmStructure != null) ? LanguageUtil.format(request, "e
 
 <liferay-frontend:edit-form
 	action="<%= (ddmStructure == null) ? addDDMStructureURL : updateDDMStructureURL %>"
-	fluid="<%= true %>"
 	method="post"
 	name="fm"
 	onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveDDMStructure();" %>'

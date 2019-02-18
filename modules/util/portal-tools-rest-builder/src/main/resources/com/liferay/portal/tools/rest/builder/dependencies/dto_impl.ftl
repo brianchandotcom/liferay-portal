@@ -6,6 +6,7 @@ package ${configYAML.apiPackagePath}.internal.dto.${versionDirName};
 	</#list>
 </#compress>
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import com.liferay.petra.function.UnsafeSupplier;
@@ -37,6 +38,7 @@ public class ${schemaName}Impl implements ${schemaName} {
 			this.${javaParameter.parameterName} = ${javaParameter.parameterName};
 		}
 
+		@JsonIgnore
 		public void set${javaParameter.parameterName?cap_first}(UnsafeSupplier<${javaParameter.parameterType}, Throwable> ${javaParameter.parameterName}UnsafeSupplier) {
 			try {
 				${javaParameter.parameterName} = ${javaParameter.parameterName}UnsafeSupplier.get();

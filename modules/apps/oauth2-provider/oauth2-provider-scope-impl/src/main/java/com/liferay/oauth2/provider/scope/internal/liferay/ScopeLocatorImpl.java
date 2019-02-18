@@ -145,7 +145,17 @@ public class ScopeLocatorImpl implements ScopeLocator {
 
 			mappedScopesScopes.forEach(
 				(mappedScope, unmappedScopes) -> {
-					if (!scopeMatcher.match(mappedScope)) {
+					boolean matched = matchCache.compute(
+						mappedScope,
+						(k, v) -> {
+							if ((v == null) || !v) {
+								return scopeMatcher.match(k);
+							}
+
+							return v;
+						});
+
+					if (!matched) {
 						return;
 					}
 

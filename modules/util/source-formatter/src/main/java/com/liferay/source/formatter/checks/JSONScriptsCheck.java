@@ -52,7 +52,7 @@ public class JSONScriptsCheck extends BaseFileCheck {
 				"devDependencies");
 
 			for (Map.Entry<String, String> entry :
-					_missingScriptsMap.entrySet()) {
+					_requiredScriptsMap.entrySet()) {
 
 				String packageName = entry.getKey();
 
@@ -60,12 +60,12 @@ public class JSONScriptsCheck extends BaseFileCheck {
 					continue;
 				}
 
-				for (String missingScript :
+				for (String requiredScript :
 						StringUtil.split(entry.getValue())) {
 
 					if (jsonObject.isNull("scripts")) {
 						addMessage(
-							fileName, _getMessage(packageName, missingScript));
+							fileName, _getMessage(packageName, requiredScript));
 
 						continue;
 					}
@@ -73,19 +73,19 @@ public class JSONScriptsCheck extends BaseFileCheck {
 					JSONObject scriptsJSONObject = jsonObject.getJSONObject(
 						"scripts");
 
-					if (scriptsJSONObject.isNull(missingScript)) {
+					if (scriptsJSONObject.isNull(requiredScript)) {
 						addMessage(
-							fileName, _getMessage(packageName, missingScript));
+							fileName, _getMessage(packageName, requiredScript));
 
 						continue;
 					}
 
 					String scriptValue = scriptsJSONObject.getString(
-						missingScript);
+						requiredScript);
 
 					if (!scriptValue.startsWith(packageName + CharPool.SPACE)) {
 						addMessage(
-							fileName, _getMessage(packageName, missingScript));
+							fileName, _getMessage(packageName, requiredScript));
 					}
 				}
 			}
@@ -95,13 +95,13 @@ public class JSONScriptsCheck extends BaseFileCheck {
 		}
 	}
 
-	private String _getMessage(String packageName, String missingScript) {
+	private String _getMessage(String packageName, String requiredScript) {
 		return StringBundler.concat(
-			"When using '" + packageName + "', a script for '", missingScript,
+			"When using '" + packageName + "', a script for '", requiredScript,
 			"' is required");
 	}
 
-	private static final Map<String, String> _missingScriptsMap =
+	private static final Map<String, String> _requiredScriptsMap =
 		new HashMap<String, String>() {
 			{
 				put("liferay-npm-scripts", "csf,format");

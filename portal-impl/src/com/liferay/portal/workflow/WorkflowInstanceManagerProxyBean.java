@@ -116,9 +116,28 @@ public class WorkflowInstanceManagerProxyBean
 	}
 
 	@Override
+	public List<WorkflowInstance> search(
+		long companyId, Long userId, String assetDescription, 
+		String assetTitle,String assetType, String nodeName,
+		String kaleoDefinitionName, Boolean completed, int start, int end,
+		OrderByComparator<WorkflowInstance> orderByComparator) {
+
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public int searchCount(
 		long companyId, Long userId, String assetType, String nodeName,
 		String kaleoDefinitionName, Boolean completed) {
+
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public int searchCount(
+		long companyId, Long userId, String assetDescription, String assetTitle,
+		String assetType, String nodeName, String kaleoDefinitionName,
+		Boolean completed) {
 
 		throw new UnsupportedOperationException();
 	}

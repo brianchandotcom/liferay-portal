@@ -82,8 +82,21 @@ public interface WorkflowInstanceManager {
 			OrderByComparator<WorkflowInstance> orderByComparator)
 		throws WorkflowException;
 
+	public List<WorkflowInstance> search(
+			long companyId, Long userId, String assetDescription,
+			String assetTitle, String assetType, String nodeName,
+			String kaleoDefinitionName, Boolean completed, int start, int end,
+			OrderByComparator<WorkflowInstance> orderByComparator)
+		throws WorkflowException;
+
 	public int searchCount(
 			long companyId, Long userId, String assetType, String nodeName,
+			String kaleoDefinitionName, Boolean completed)
+		throws WorkflowException;
+
+	public int searchCount(
+			long companyId, Long userId, String assetDescription,
+			String assetTitle, String assetType, String nodeName,
 			String kaleoDefinitionName, Boolean completed)
 		throws WorkflowException;
 

@@ -53,18 +53,18 @@ public class MyWorkflowInstanceViewDisplayContext
 
 		return WorkflowInstanceManagerUtil.search(
 			workflowInstanceRequestHelper.getCompanyId(),
-			workflowInstanceRequestHelper.getUserId(),
-			getAssetType(getKeywords()), getKeywords(), getKeywords(),
-			getCompleted(), start, end, orderByComparator);
+			workflowInstanceRequestHelper.getUserId(), getKeywords(),
+			getKeywords(), getAssetType(getKeywords()), getKeywords(),
+			getKeywords(), getCompleted(), start, end, orderByComparator);
 	}
 
 	@Override
 	protected int getSearchContainerTotal() throws PortalException {
 		return WorkflowInstanceManagerUtil.searchCount(
 			workflowInstanceRequestHelper.getCompanyId(),
-			workflowInstanceRequestHelper.getUserId(),
-			getAssetType(getKeywords()), getKeywords(), getKeywords(),
-			getCompleted());
+			workflowInstanceRequestHelper.getUserId(), getKeywords(),
+			getKeywords(), getAssetType(getKeywords()), getKeywords(),
+			getKeywords(), getCompleted());
 	}
 
 	@Override

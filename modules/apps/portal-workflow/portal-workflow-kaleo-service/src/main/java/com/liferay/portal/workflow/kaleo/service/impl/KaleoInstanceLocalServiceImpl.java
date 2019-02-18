@@ -308,9 +308,24 @@ public class KaleoInstanceLocalServiceImpl
 		OrderByComparator<KaleoInstance> orderByComparator,
 		ServiceContext serviceContext) {
 
+		return search(
+			userId, null, null, assetType, nodeName, kaleoDefinitionName,
+			completed, start, end, orderByComparator, serviceContext);
+	}
+
+	@Override
+	public List<KaleoInstance> search(
+		Long userId, String assetDescription, String assetTitle,
+		String assetType, String nodeName, String kaleoDefinitionName,
+		Boolean completed, int start, int end,
+		OrderByComparator<KaleoInstance> orderByComparator,
+		ServiceContext serviceContext) {
+
 		KaleoInstanceQuery kaleoInstanceQuery = new KaleoInstanceQuery(
 			serviceContext);
 
+		kaleoInstanceQuery.setAssetDescription(assetDescription);
+		kaleoInstanceQuery.setAssetTitle(assetTitle);
 		kaleoInstanceQuery.setClassName(assetType);
 		kaleoInstanceQuery.setCompleted(completed);
 		kaleoInstanceQuery.setEnd(end);
@@ -355,9 +370,22 @@ public class KaleoInstanceLocalServiceImpl
 		String kaleoDefinitionName, Boolean completed,
 		ServiceContext serviceContext) {
 
+		return searchCount(
+			userId, null, null, assetType, nodeName, kaleoDefinitionName,
+			completed, serviceContext);
+	}
+
+	@Override
+	public int searchCount(
+		Long userId, String assetDescription, String assetTitle,
+		String assetType, String nodeName, String kaleoDefinitionName,
+		Boolean completed, ServiceContext serviceContext) {
+
 		KaleoInstanceQuery kaleoInstanceQuery = new KaleoInstanceQuery(
 			serviceContext);
 
+		kaleoInstanceQuery.setAssetDescription(assetDescription);
+		kaleoInstanceQuery.setAssetTitle(assetTitle);
 		kaleoInstanceQuery.setClassName(assetType);
 		kaleoInstanceQuery.setCompleted(completed);
 		kaleoInstanceQuery.setKaleoDefinitionName(kaleoDefinitionName);

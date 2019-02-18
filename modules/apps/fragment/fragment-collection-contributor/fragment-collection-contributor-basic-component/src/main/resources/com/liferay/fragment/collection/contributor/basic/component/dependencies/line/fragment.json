@@ -1,0 +1,9 @@
+{
+	"cssPath": "index.css",
+	"fragmentEntryKey": "line",
+	"htmlPath": "index.html",
+	"jsPath": "index.js",
+	"name": "Line",
+	"thumbnail": "line.png",
+	"type": "component"
+}

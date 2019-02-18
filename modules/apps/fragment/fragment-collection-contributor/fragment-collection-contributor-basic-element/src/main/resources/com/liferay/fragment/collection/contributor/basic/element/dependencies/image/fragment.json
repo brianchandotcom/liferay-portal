@@ -1,9 +1,0 @@
-{
-	"cssPath": "index.css",
-	"fragmentEntryKey": "image",
-	"htmlPath": "index.html",
-	"jsPath": "index.js",
-	"name": "Image",
-	"thumbnail": "image.png",
-	"type": "element"
-}

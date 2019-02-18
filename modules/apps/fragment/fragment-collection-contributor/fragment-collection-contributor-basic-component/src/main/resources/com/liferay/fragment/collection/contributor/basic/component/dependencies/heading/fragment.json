@@ -1,0 +1,9 @@
+{
+	"cssPath": "index.css",
+	"fragmentEntryKey": "heading",
+	"htmlPath": "index.html",
+	"jsPath": "index.js",
+	"name": "Heading",
+	"thumbnail": "heading.png",
+	"type": "component"
+}

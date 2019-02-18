@@ -42,7 +42,6 @@
 					<c:when test='<%= displayStyle.endsWith("image") %>'>
 						<liferay-ui:user-portrait
 							userId="<%= entry.getUserId() %>"
-							userName="<%= entry.getUserName() %>"
 						/>
 
 						<div class="entry-info text-muted ">

@@ -64,8 +64,8 @@ public class JSONScriptsCheck extends BaseFileCheck {
 						StringUtil.split(entry.getValue())) {
 
 					String message = StringBundler.concat(
-						"For Using '" + packageName + "', '", missingScript,
-						"' should be enforced");
+						"When using '" + packageName + "', a script for '",
+						missingScript, "' is required");
 
 					if (jsonObject.isNull("scripts")) {
 						addMessage(fileName, message);

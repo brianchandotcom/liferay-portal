@@ -26,28 +26,35 @@ public class JSONSourceProcessorTest extends BaseSourceProcessorTestCase {
 		test(
 			"CheckMissingScripts1/package.testjson",
 			new String[] {
-				"For Using 'liferay-npm-scripts', 'csf' should be enforced",
-				"For Using 'liferay-npm-scripts', 'format' should be enforced"
+				"When using 'liferay-npm-scripts', a script for 'csf' is " +
+					"required",
+				"When using 'liferay-npm-scripts', a script for 'format' is " +
+					"required"
 			});
 
 		test(
 			"CheckMissingScripts2/package.testjson",
 			new String[] {
-				"For Using 'liferay-npm-scripts', 'csf' should be enforced",
-				"For Using 'liferay-npm-scripts', 'format' should be enforced"
+				"When using 'liferay-npm-scripts', a script for 'csf' is " +
+					"required",
+				"When using 'liferay-npm-scripts', a script for 'format' is " +
+					"required"
 			});
 
 		test(
 			"CheckMissingScripts3/package.testjson",
 			new String[] {
-				"For Using 'liferay-npm-scripts', 'csf' should be enforced",
-				"For Using 'liferay-npm-scripts', 'format' should be enforced"
+				"When using 'liferay-npm-scripts', a script for 'csf' is " +
+					"required",
+				"When using 'liferay-npm-scripts', a script for 'format' is " +
+					"required"
 			});
 
 		test(
 			"CheckMissingScripts4/package.testjson",
 			new String[] {
-				"For Using 'liferay-npm-scripts', 'format' should be enforced"
+				"When using 'liferay-npm-scripts', a script for 'format' is " +
+					"required"
 			});
 	}
 

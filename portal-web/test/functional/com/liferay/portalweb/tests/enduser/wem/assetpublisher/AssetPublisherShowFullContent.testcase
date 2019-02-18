@@ -162,7 +162,7 @@ definition {
 			dmDocumentTitle = "DM Document Title"
 		);
 
-		Navigator.openURL();
+		Navigator.openSiteURL(siteName = "Test Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content",
@@ -180,7 +180,7 @@ definition {
 
 		DDLDataDefinition.save();
 
-		Navigator.openURL();
+		Navigator.openSiteURL(siteName = "Test Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content",
@@ -745,7 +745,7 @@ definition {
 		Portlet.addPG(portletName = "Asset Publisher");
 
 		for (var tagName : list "first tag,second tag,third tag") {
-			Navigator.openURL();
+			Navigator.openSiteURL(siteName = "Test Site Name");
 
 			ProductMenu.gotoPortlet(
 				category = "Categorization",
@@ -756,7 +756,7 @@ definition {
 			Tag.addCP(tagName = "${tagName}");
 		}
 
-		Navigator.openURL();
+		Navigator.openSiteURL(siteName = "Test Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content",
@@ -772,7 +772,7 @@ definition {
 			webContentTitle = "Web Content Title"
 		);
 
-		Navigator.openURL();
+		Navigator.openSiteURL(siteName = "Test Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content",

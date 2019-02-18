@@ -401,9 +401,15 @@ paths:
             type: integer
       requestBody:
         content:
-          application/json:
+          multipart/form-data:
             schema:
-              $ref: "#/components/schemas/BlogPostingImage"
+              type: object
+              properties:
+                document:
+                  $ref: "#/components/schemas/BlogPostingImage"
+                file:
+                  type: string
+                  format: binary
       responses:
         200:
           content:

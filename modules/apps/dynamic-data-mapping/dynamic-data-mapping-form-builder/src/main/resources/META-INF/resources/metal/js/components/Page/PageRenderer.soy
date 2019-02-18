@@ -15,7 +15,7 @@
 	{@param? editable: bool}
 	{@param? empty: bool}
 	{@param? page: ?}
-	{@param? pageId: number}
+	{@param? pageIndex: number}
 	{@param? strings: [
 		dismiss: string,
 		delete: string,
@@ -39,7 +39,7 @@
 		{param editable: $editable /}
 		{param empty: $empty /}
 		{param page: $page /}
-		{param pageId: $pageId /}
+		{param pageIndex: $pageIndex /}
 		{param spritemap: $spritemap /}
 		{param strings: $strings /}
 		{param titlePlaceholder: $titlePlaceholder /}
@@ -61,7 +61,7 @@
 	{@param? editable: bool}
 	{@param? empty: bool}
 	{@param? page: ?}
-	{@param? pageId: number}
+	{@param? pageIndex: number}
 	{@param? strings: [
 		dismiss: string,
 		delete: string,
@@ -72,7 +72,7 @@
 	{@param? titlePlaceholder: string}
 
 	<div class="ddm-page-container-layout">
-		{if $activePage == $pageId}
+		{if $activePage == $pageIndex}
 			<div class="ddm-form-page pl-4 pr-4">
 				{call .form}
 					{param _handlePageDescriptionChanged: $_handlePageDescriptionChanged /}
@@ -81,7 +81,7 @@
 					{param descriptionPlaceholder: $descriptionPlaceholder /}
 					{param editable: $editable /}
 					{param page: $page /}
-					{param pageId: $pageId /}
+					{param pageIndex: $pageIndex /}
 					{param titlePlaceholder: $titlePlaceholder /}
 				{/call}
 
@@ -96,7 +96,7 @@
 						{param editable: $editable /}
 						{param empty: $empty /}
 						{param page: $page /}
-						{param pageId: $pageId /}
+						{param pageIndex: $pageIndex /}
 						{param spritemap: $spritemap /}
 					{/delcall}
 				</div>
@@ -112,11 +112,11 @@
 	{@param? contentRenderer: string}
 	{@param? editable: bool}
 	{@param? page: ?}
-	{@param? pageId: number}
+	{@param? pageIndex: number}
 
 	{let $classes kind="text"}
 		fade tab-pane
-		{if $activePage == $pageId}
+		{if $activePage == $pageIndex}
 			{sp}active show
 		{/if}
 	{/let}
@@ -127,7 +127,7 @@
 			{param contentRenderer: $contentRenderer /}
 			{param editable: $editable /}
 			{param page: $page /}
-			{param pageId: $pageId /}
+			{param pageIndex: $pageIndex /}
 			{param spritemap: $spritemap /}
 		{/delcall}
 	</div>
@@ -138,13 +138,13 @@
 	{@param? _handlePageTitleChanged: any}
 	{@param? descriptionPlaceholder: string}
 	{@param? page: ?}
-	{@param? pageId: number}
+	{@param? pageIndex: number}
 	{@param? titlePlaceholder: string}
 
 	{let $pageTitleAttributes kind="attributes"}
 		class="form-builder-page-header-title form-control p-0"
 		data-onkeyup="{$_handlePageTitleChanged}"
-		data-page-id="{$pageId}"
+		data-page-index="{$pageIndex}"
 		maxlength="120"
 		placeholder="{$titlePlaceholder}"
 		value="{$page.title}"
@@ -153,7 +153,7 @@
 	{let $pageDescriptionAttributes kind="attributes"}
 		class="form-builder-page-header-description form-control p-0"
 		data-onkeyup="{$_handlePageDescriptionChanged}"
-		data-page-id="{$pageId}"
+		data-page-index="{$pageIndex}"
 		maxlength="120"
 		placeholder="{$descriptionPlaceholder}"
 		value="{$page.description}"
@@ -173,7 +173,7 @@
 	{@param? contentRenderer: string}
 	{@param? editable: bool}
 	{@param? page: ?}
-	{@param? pageId: number}
+	{@param? pageIndex: number}
 
 	{for $row in $page.rows}
 		{delcall PageRenderer.row variant="'grid'"}
@@ -184,7 +184,7 @@
 			{param _handleSelectFieldFocused: $_handleSelectFieldFocused /}
 			{param contentRenderer: $contentRenderer /}
 			{param editable: $editable /}
-			{param pageId: $pageId /}
+			{param pageIndex: $pageIndex /}
 			{param row: $row /}
 			{param rowIndex: index($row) /}
 			{param spritemap: $spritemap /}
@@ -203,14 +203,14 @@
 	{@param? editable: bool}
 	{@param? empty: bool}
 	{@param? page: ?}
-	{@param? pageId: number}
+	{@param? pageIndex: number}
 
 	<div class="layout-page">
 		{if $empty}
 			{let $attributes kind="attributes"}
 				class="col col-empty col-md-12 last-col lfr-initial-col mt-5 mb-4"
 				data-ddm-field-column="0"
-				data-ddm-field-page="{$pageId}"
+				data-ddm-field-page="{$pageIndex}"
 				data-ddm-field-row="0"
 			{/let}
 
@@ -224,7 +224,7 @@
 				{if isFirst($row) and $editable}
 					{call .fieldEmpty}
 						{param isRow: true /}
-						{param pageIndex: $pageId /}
+						{param pageIndex: $pageIndex /}
 						{param rowIndex: 0 /}
 						{param size: 12 /}
 					{/call}
@@ -238,7 +238,7 @@
 					{param _handleSelectFieldFocused: $_handleSelectFieldFocused /}
 					{param contentRenderer: $contentRenderer /}
 					{param editable: $editable /}
-					{param pageId: $pageId /}
+					{param pageIndex: $pageIndex /}
 					{param row: $row /}
 					{param rowIndex: index($row) /}
 					{param spritemap: $spritemap /}
@@ -247,7 +247,7 @@
 				{if $editable}
 					{call .fieldEmpty}
 						{param isRow: true /}
-						{param pageIndex: $pageId /}
+						{param pageIndex: $pageIndex /}
 						{param rowIndex: index($row) + 1 /}
 						{param size: 12 /}
 					{/call}
@@ -266,7 +266,7 @@
 	{@param? _handleSelectFieldFocused: any}
 	{@param? contentRenderer: string}
 	{@param? editable: bool}
-	{@param? pageId: number}
+	{@param? pageIndex: number}
 	{@param? row: ?}
 	{@param? rowIndex: number}
 
@@ -281,7 +281,7 @@
 				{param column: $column /}
 				{param columnIndex: index($column) /}
 				{param editable: $editable /}
-				{param pageId: $pageId /}
+				{param pageIndex: $pageIndex /}
 				{param rowIndex: $rowIndex /}
 				{param spritemap: $spritemap /}
 			{/delcall}
@@ -295,7 +295,7 @@
 	{@param? column: ?}
 	{@param? columnIndex: number}
 	{@param? editable: bool}
-	{@param? pageId: number}
+	{@param? pageIndex: number}
 	{@param? rowIndex: number}
 
 	{if length($column.fields) != 0}
@@ -312,7 +312,7 @@
 					{param events: [
 						'fieldEdited': $_handleFieldEdited
 					] /}
-					{param ref: $field.type + $field.fieldName + $field.name + $field.label + $rowIndex + $columnIndex + $pageId /}
+					{param ref: $field.type + $field.fieldName + $field.name + $field.label + $rowIndex + $columnIndex + $pageIndex /}
 					{param spritemap: $spritemap /}
 				{/delcall}
 			{/for}
@@ -330,7 +330,7 @@
 	{@param? column: ?}
 	{@param? columnIndex: number}
 	{@param? editable: bool}
-	{@param? pageId: number}
+	{@param? pageIndex: number}
 	{@param? rowIndex: number}
 
 	{if length($column.fields) != 0}
@@ -341,8 +341,8 @@
 				data-ddm-field-row="{$rowIndex}"
 			{/if}
 
-			{if $pageId != 'undefined'}
-				data-ddm-field-page="{$pageId}"
+			{if $pageIndex != 'undefined'}
+				data-ddm-field-page="{$pageIndex}"
 			{/if}
 
 			{if $columnIndex != 'undefined'}
@@ -360,7 +360,7 @@
 						{param events: [
 							'fieldEdited': $_handleFieldEdited
 						] /}
-						{param ref: $field.type + $field.fieldName + $field.name + $field.label + $rowIndex + $columnIndex + $pageId /}
+						{param ref: $field.type + $field.fieldName + $field.name + $field.label + $rowIndex + $columnIndex + $pageIndex /}
 						{param spritemap: $spritemap /}
 					{/delcall}
 				{/for}
@@ -395,7 +395,7 @@
 	{elseif $editable}
 		{call .fieldEmpty}
 			{param columnIndex: $columnIndex /}
-			{param pageIndex: $pageId /}
+			{param pageIndex: $pageIndex /}
 			{param rowIndex: $rowIndex /}
 			{param size: $column.size /}
 		{/call}

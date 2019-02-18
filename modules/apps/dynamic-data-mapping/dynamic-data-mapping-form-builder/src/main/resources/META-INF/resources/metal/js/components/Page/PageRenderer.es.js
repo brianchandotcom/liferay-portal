@@ -70,7 +70,7 @@ class PageRenderer extends Component {
 		 * @type {?number}
 		 */
 
-		pageId: Config.number().value(0),
+		pageIndex: Config.number().value(0),
 
 		/**
 		 * @default undefined
@@ -115,7 +115,7 @@ class PageRenderer extends Component {
 	}
 
 	/**
-	 * @param {number} pageId
+	 * @param {number} pageIndex
 	 * @private
 	 */
 
@@ -123,7 +123,7 @@ class PageRenderer extends Component {
 		return sub(
 			Liferay.Language.get('untitled-page-x-of-x'),
 			[
-				this.pageId + 1,
+				this.pageIndex + 1,
 				this.total
 			]
 		);
@@ -185,7 +185,7 @@ class PageRenderer extends Component {
 	_handlePageDescriptionChanged(event) {
 		const {page} = this;
 		const {delegateTarget: {dataset, value}} = event;
-		const pageId = parseInt(dataset.pageId, 10);
+		const pageIndex = parseInt(dataset.pageIndex, 10);
 
 		this.emit(
 			'updatePage',
@@ -198,7 +198,7 @@ class PageRenderer extends Component {
 						[themeDisplay.getLanguageId()]: value
 					}
 				},
-				pageId
+				pageIndex
 			}
 		);
 	}
@@ -211,7 +211,7 @@ class PageRenderer extends Component {
 	_handlePageTitleChanged(event) {
 		const {page} = this;
 		const {delegateTarget: {dataset, value}} = event;
-		const pageId = parseInt(dataset.pageId, 10);
+		const pageIndex = parseInt(dataset.pageIndex, 10);
 
 		this.emit(
 			'updatePage',
@@ -224,7 +224,7 @@ class PageRenderer extends Component {
 					},
 					title: value
 				},
-				pageId
+				pageIndex
 			}
 		);
 	}

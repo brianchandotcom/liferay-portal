@@ -121,7 +121,7 @@
 						'updatePage': $_handleUpdatePage
 					] /}
 					{param page: $page /}
-					{param pageId: index($page) /}
+					{param pageIndex: index($page) /}
 					{param ref: 'pageRenderer' /}
 					{param spritemap: $spritemap /}
 					{param total: $total /}
@@ -233,20 +233,20 @@
 	<ol class="dmm-wizard multi-step-indicator-label-top multi-step-nav multi-step-nav-collapse-sm">
 		{for $page in $pages}
 			{let $title: $page.title ? $page.title : $defaultPageTitle /}
-			{let $pageId: index($page) /}
-			{let $step: $pageId + 1 /}
+			{let $pageIndex: index($page) /}
+			{let $step: $pageIndex + 1 /}
 			{let $classes kind="text"}
 				multi-step-item
 				{if $step != length($pages) or $successPageSettings.enabled}
 					{sp}multi-step-item-expand
 				{/if}
 
-				{if $pageId == $activePage}
+				{if $pageIndex == $activePage}
 					{sp}active
 				{/if}
 			{/let}
 
-			<li class="{$classes}" data-onclick="{$_handleChangePage}" data-page-id="{$pageId}">
+			<li class="{$classes}" data-onclick="{$_handleChangePage}" data-page-index="{$pageIndex}">
 				<div class="multi-step-divider"></div>
 				<div class="multi-step-indicator">
 					<div class="multi-step-indicator-label">{$title}</div>
@@ -265,7 +265,7 @@
 				{/if}
 			{/let}
 
-			<li class="{$classes}" data-onclick="{$_handleChangePage}" data-page-id="-1">
+			<li class="{$classes}" data-onclick="{$_handleChangePage}" data-page-index="-1">
 				<div class="multi-step-divider"></div>
 				<div class="multi-step-indicator">
 					<div class="multi-step-indicator-label">{$successPageLabel}</div>
@@ -303,17 +303,17 @@
 		</li>
 
 		{for $page in $pages}
-			{let $pageId: index($page) /}
-			{let $step: $pageId + 1 /}
+			{let $pageIndex: index($page) /}
+			{let $step: $pageIndex + 1 /}
 			{let $classes kind="text"}
 				page-item
 
-				{if $pageId == $activePage}
+				{if $pageIndex == $activePage}
 					{sp}active
 				{/if}
 			{/let}
 
-			<li class="{$classes}" data-onclick="{$_handleChangePage}" data-page-id="{$pageId}">
+			<li class="{$classes}" data-onclick="{$_handleChangePage}" data-page-index="{$pageIndex}">
 				<a class="page-link" href="javascript:;">{$step}</a>
 			</li>
 		{/for}
@@ -327,7 +327,7 @@
 				{/if}
 			{/let}
 
-			<li class="{$classes}" data-onclick="{$_handleChangePage}" data-page-id="-1">
+			<li class="{$classes}" data-onclick="{$_handleChangePage}" data-page-index="-1">
 				<a class="page-link" href="javascript:;">{$successPageLabel}</a>
 			</li>
 		{/if}
@@ -374,7 +374,7 @@
 					'updatePage': $_handleUpdatePage
 				] /}
 				{param page: $page /}
-				{param pageId: index($page) /}
+				{param pageIndex: index($page) /}
 				{param spritemap: $spritemap /}
 				{param total: $total /}
 			{/call}

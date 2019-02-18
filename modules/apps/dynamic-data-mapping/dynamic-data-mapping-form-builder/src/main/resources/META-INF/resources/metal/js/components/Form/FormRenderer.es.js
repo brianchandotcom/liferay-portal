@@ -340,9 +340,9 @@ class FormRenderer extends Component {
 	}
 
 	_handleChangePage({delegateTarget: {dataset}}) {
-		const {pageId} = dataset;
+		const {pageIndex} = dataset;
 
-		this.activePage = parseInt(pageId, 10);
+		this.activePage = parseInt(pageIndex, 10);
 		this.emit('activePageUpdated', this.activePage);
 	}
 
@@ -462,12 +462,12 @@ class FormRenderer extends Component {
 	 * @private
 	 */
 
-	_handleUpdatePage({page, pageId}) {
+	_handleUpdatePage({page, pageIndex}) {
 		this.emit(
 			'pagesUpdated',
 			this.pages.map(
 				(currentPage, index) => {
-					if (index === pageId) {
+					if (index === pageIndex) {
 						currentPage = {
 							...currentPage,
 							...page

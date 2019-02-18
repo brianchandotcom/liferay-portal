@@ -86,6 +86,5 @@ Role role = userGroupsDisplayContext.getRole();
 
 <liferay-frontend:component
 	componentId="<%= userGroupsManagementToolbarDisplayContext.getDefaultEventHandler() %>"
-	context="<%= userGroupsManagementToolbarDisplayContext.getComponentContext() %>"
 	module="js/UserGroupsManagementToolbarDefaultEventHandler.es"
 />

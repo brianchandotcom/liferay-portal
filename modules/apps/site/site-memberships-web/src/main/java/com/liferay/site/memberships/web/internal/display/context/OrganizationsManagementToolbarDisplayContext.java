@@ -15,6 +15,7 @@
 package com.liferay.site.memberships.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.petra.string.StringPool;
@@ -27,9 +28,7 @@ import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.portlet.PortletURL;
 
@@ -80,25 +79,39 @@ public class OrganizationsManagementToolbarDisplayContext
 		return clearResultsURL.toString();
 	}
 
-	public Map<String, Object> getComponentContext() throws Exception {
-		Map<String, Object> componentContext = new HashMap<>();
-
-		PortletURL selectOrganizationsURL =
-			liferayPortletResponse.createRenderURL();
-
-		selectOrganizationsURL.setParameter(
-			"mvcPath", "/select_organizations.jsp");
-		selectOrganizationsURL.setWindowState(LiferayWindowState.POP_UP);
-
-		componentContext.put(
-			"selectOrganizationsURL", selectOrganizationsURL.toString());
-
-		return componentContext;
-	}
-
 	@Override
 	public String getComponentId() {
 		return "organizationsManagementToolbar";
+	}
+
+	@Override
+	public CreationMenu getCreationMenu() {
+		try {
+			PortletURL selectOrganizationsURL =
+				liferayPortletResponse.createRenderURL();
+
+			selectOrganizationsURL.setParameter(
+				"mvcPath", "/select_organizations.jsp");
+			selectOrganizationsURL.setWindowState(LiferayWindowState.POP_UP);
+
+			return new CreationMenu() {
+				{
+					addDropdownItem(
+						dropdownItem -> {
+							dropdownItem.putData(
+								"action", "selectOrganizations");
+							dropdownItem.putData(
+								"selectOrganizationsURL",
+								selectOrganizationsURL.toString());
+							dropdownItem.setLabel(
+								LanguageUtil.get(request, "add"));
+						});
+				}
+			};
+		}
+		catch (Exception e) {
+			return null;
+		}
 	}
 
 	@Override

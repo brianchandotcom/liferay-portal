@@ -1,47 +1,11 @@
 import dom from 'metal-dom';
 import DefaultEventHandler from 'frontend-js-web/liferay/DefaultEventHandler.es';
-import {Config} from 'metal-state';
 
 class UsersManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 	deleteSelectedUsers() {
 		if (confirm(Liferay.Language.get('are-you-sure-you-want-to-delete-this'))) {
 			submitForm(this.one('#fm'));
 		}
-	}
-
-	handleCreationButtonClicked() {
-		AUI().use(
-			'liferay-item-selector-dialog',
-			A => {
-				const itemSelectorDialog = new A.LiferayItemSelectorDialog(
-					{
-						eventName: this.ns('selectUsers'),
-						on: {
-							selectedItemChange: function(event) {
-								const selectedItem = event.newVal;
-
-								if (selectedItem) {
-									let addGroupUsersFm = this.one('#addGroupUsersFm');
-
-									selectedItem.forEach(
-										item => {
-											dom.append(addGroupUsersFm, item);
-										}
-									);
-
-									submitForm(addGroupUsersFm);
-								}
-							}.bind(this)
-						},
-						'strings.add': Liferay.Language.get('done'),
-						title: Liferay.Language.get('assign-users-to-this-site'),
-						url: this.selectUsersURL
-					}
-				);
-
-				itemSelectorDialog.open();
-			}
-		);
 	}
 
 	removeUserSiteRole(itemData) {
@@ -102,10 +66,41 @@ class UsersManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 			}
 		);
 	}
-}
 
-UsersManagementToolbarDefaultEventHandler.STATE = {
-	selectUsersURL: Config.string()
-};
+	selectUsers(itemData) {
+		AUI().use(
+			'liferay-item-selector-dialog',
+			A => {
+				const itemSelectorDialog = new A.LiferayItemSelectorDialog(
+					{
+						eventName: this.ns('selectUsers'),
+						on: {
+							selectedItemChange: function(event) {
+								const selectedItem = event.newVal;
+
+								if (selectedItem) {
+									let addGroupUsersFm = this.one('#addGroupUsersFm');
+
+									selectedItem.forEach(
+										item => {
+											dom.append(addGroupUsersFm, item);
+										}
+									);
+
+									submitForm(addGroupUsersFm);
+								}
+							}.bind(this)
+						},
+						'strings.add': Liferay.Language.get('done'),
+						title: Liferay.Language.get('assign-users-to-this-site'),
+						url: itemData.selectUsersURL
+					}
+				);
+
+				itemSelectorDialog.open();
+			}
+		);
+	}
+}
 
 export default UsersManagementToolbarDefaultEventHandler;

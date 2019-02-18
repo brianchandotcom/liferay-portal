@@ -104,7 +104,6 @@ Role role = usersDisplayContext.getRole();
 
 <liferay-frontend:component
 	componentId="<%= usersManagementToolbarDisplayContext.getDefaultEventHandler() %>"
-	context="<%= usersManagementToolbarDisplayContext.getComponentContext() %>"
 	module="js/UsersManagementToolbarDefaultEventHandler.es"
 />
 

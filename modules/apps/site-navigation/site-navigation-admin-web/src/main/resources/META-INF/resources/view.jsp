@@ -171,6 +171,5 @@ SiteNavigationAdminManagementToolbarDisplayContext siteNavigationAdminManagement
 
 <liferay-frontend:component
 	componentId="<%= siteNavigationAdminManagementToolbarDisplayContext.getDefaultEventHandler() %>"
-	context="<%= siteNavigationAdminManagementToolbarDisplayContext.getComponentContext() %>"
 	module="js/ManagementToolbarDefaultEventHandler.es"
 />

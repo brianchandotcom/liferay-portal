@@ -76,6 +76,5 @@ DisplayPageManagementToolbarDisplayContext displayPageManagementToolbarDisplayCo
 
 <liferay-frontend:component
 	componentId="<%= displayPageManagementToolbarDisplayContext.getDefaultEventHandler() %>"
-	context="<%= displayPageManagementToolbarDisplayContext.getComponentContext() %>"
 	module="js/DisplayPageManagementToolbarDefaultEventHandler.es"
 />

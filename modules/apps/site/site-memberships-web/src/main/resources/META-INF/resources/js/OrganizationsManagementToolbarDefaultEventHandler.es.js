@@ -1,6 +1,5 @@
 import dom from 'metal-dom';
 import DefaultEventHandler from 'frontend-js-web/liferay/DefaultEventHandler.es';
-import {Config} from 'metal-state';
 
 class OrganizationsManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 	deleteSelectedOrganizations() {
@@ -9,7 +8,7 @@ class OrganizationsManagementToolbarDefaultEventHandler extends DefaultEventHand
 		}
 	}
 
-	handleCreationButtonClicked() {
+	selectOrganizations(itemData) {
 		AUI().use(
 			'liferay-item-selector-dialog',
 			A => {
@@ -35,7 +34,7 @@ class OrganizationsManagementToolbarDefaultEventHandler extends DefaultEventHand
 						},
 						'strings.add': Liferay.Language.get('done'),
 						title: Liferay.Language.get('assign-organizations-to-this-site'),
-						url: this.selectOrganizationsURL
+						url: itemData.selectOrganizationsURL
 					}
 				);
 
@@ -44,9 +43,5 @@ class OrganizationsManagementToolbarDefaultEventHandler extends DefaultEventHand
 		);
 	}
 }
-
-OrganizationsManagementToolbarDefaultEventHandler.STATE = {
-	selectOrganizationsURL: Config.string()
-};
 
 export default OrganizationsManagementToolbarDefaultEventHandler;

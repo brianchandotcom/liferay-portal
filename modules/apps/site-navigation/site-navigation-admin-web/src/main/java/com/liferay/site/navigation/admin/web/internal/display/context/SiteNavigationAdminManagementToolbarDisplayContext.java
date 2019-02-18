@@ -15,6 +15,7 @@
 package com.liferay.site.navigation.admin.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.petra.string.StringPool;
@@ -26,9 +27,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.navigation.admin.web.internal.security.permission.resource.SiteNavigationPermission;
 import com.liferay.site.navigation.constants.SiteNavigationActionKeys;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
@@ -80,11 +79,15 @@ public class SiteNavigationAdminManagementToolbarDisplayContext
 		return clearResultsURL.toString();
 	}
 
-	public Map<String, Object> getComponentContext() {
+	@Override
+	public String getComponentId() {
+		return "siteNavigationMenuWebManagementToolbar";
+	}
+
+	@Override
+	public CreationMenu getCreationMenu() {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
-
-		Map<String, Object> componentContext = new HashMap<>();
 
 		PortletURL addSiteNavigationMenuURL =
 			liferayPortletResponse.createActionURL();
@@ -92,21 +95,23 @@ public class SiteNavigationAdminManagementToolbarDisplayContext
 		addSiteNavigationMenuURL.setParameter(
 			ActionRequest.ACTION_NAME,
 			"/navigation_menu/add_site_navigation_menu");
-
 		addSiteNavigationMenuURL.setParameter(
 			"mvcPath", "/edit_site_navigation_menu.jsp");
 		addSiteNavigationMenuURL.setParameter(
 			"redirect", themeDisplay.getURLCurrent());
 
-		componentContext.put(
-			"addSiteNavigationMenuURL", addSiteNavigationMenuURL.toString());
-
-		return componentContext;
-	}
-
-	@Override
-	public String getComponentId() {
-		return "siteNavigationMenuWebManagementToolbar";
+		return new CreationMenu() {
+			{
+				addDropdownItem(
+					dropdownItem -> {
+						dropdownItem.putData("action", "addSiteNavigationMenu");
+						dropdownItem.putData(
+							"addSiteNavigationMenuURL",
+							addSiteNavigationMenuURL.toString());
+						dropdownItem.setLabel(LanguageUtil.get(request, "add"));
+					});
+			}
+		};
 	}
 
 	@Override

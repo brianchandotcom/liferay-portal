@@ -1,47 +1,11 @@
 import dom from 'metal-dom';
 import DefaultEventHandler from 'frontend-js-web/liferay/DefaultEventHandler.es';
-import {Config} from 'metal-state';
 
 class UserGroupsManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 	deleteSelectedUserGroups() {
 		if (confirm(Liferay.Language.get('are-you-sure-you-want-to-delete-this'))) {
 			submitForm(this.one('#fm'));
 		}
-	}
-
-	handleCreationButtonClicked() {
-		AUI().use(
-			'liferay-item-selector-dialog',
-			A => {
-				const itemSelectorDialog = new A.LiferayItemSelectorDialog(
-					{
-						eventName: this.ns('selectUserGroups'),
-						on: {
-							selectedItemChange: function(event) {
-								const selectedItem = event.newVal;
-
-								if (selectedItem) {
-									let addGroupUserGroupsFm = this.one('#addGroupUserGroupsFm');
-
-									selectedItem.forEach(
-										item => {
-											dom.append(addGroupUserGroupsFm, item);
-										}
-									);
-
-									submitForm(addGroupUserGroupsFm);
-								}
-							}.bind(this)
-						},
-						'strings.add': Liferay.Language.get('done'),
-						title: Liferay.Language.get('assign-user-groups-to-this-site'),
-						url: this.selectUserGroupsURL
-					}
-				);
-
-				itemSelectorDialog.open();
-			}
-		);
 	}
 
 	removeUserGroupSiteRole(itemData) {
@@ -102,10 +66,41 @@ class UserGroupsManagementToolbarDefaultEventHandler extends DefaultEventHandler
 			}
 		);
 	}
-}
 
-UserGroupsManagementToolbarDefaultEventHandler.STATE = {
-	selectUserGroupsURL: Config.string()
-};
+	selectUserGroups(itemData) {
+		AUI().use(
+			'liferay-item-selector-dialog',
+			A => {
+				const itemSelectorDialog = new A.LiferayItemSelectorDialog(
+					{
+						eventName: this.ns('selectUserGroups'),
+						on: {
+							selectedItemChange: function(event) {
+								const selectedItem = event.newVal;
+
+								if (selectedItem) {
+									let addGroupUserGroupsFm = this.one('#addGroupUserGroupsFm');
+
+									selectedItem.forEach(
+										item => {
+											dom.append(addGroupUserGroupsFm, item);
+										}
+									);
+
+									submitForm(addGroupUserGroupsFm);
+								}
+							}.bind(this)
+						},
+						'strings.add': Liferay.Language.get('done'),
+						title: Liferay.Language.get('assign-user-groups-to-this-site'),
+						url: itemData.selectUserGroupsURL
+					}
+				);
+
+				itemSelectorDialog.open();
+			}
+		);
+	}
+}
 
 export default UserGroupsManagementToolbarDefaultEventHandler;

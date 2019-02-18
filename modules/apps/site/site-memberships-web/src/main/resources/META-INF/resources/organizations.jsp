@@ -91,7 +91,6 @@ OrganizationsManagementToolbarDisplayContext organizationsManagementToolbarDispl
 
 <liferay-frontend:component
 	componentId="<%= organizationsManagementToolbarDisplayContext.getDefaultEventHandler() %>"
-	context="<%= organizationsManagementToolbarDisplayContext.getComponentContext() %>"
 	module="js/OrganizationsManagementToolbarDefaultEventHandler.es"
 />
 

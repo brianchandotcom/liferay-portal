@@ -15,6 +15,7 @@
 package com.liferay.site.memberships.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
@@ -31,9 +32,7 @@ import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 import javax.portlet.ActionRequest;
@@ -170,24 +169,38 @@ public class UserGroupsManagementToolbarDisplayContext
 		return clearResultsURL.toString();
 	}
 
-	public Map<String, Object> getComponentContext() throws Exception {
-		Map<String, Object> componentContext = new HashMap<>();
-
-		PortletURL selectUserGroupsURL =
-			liferayPortletResponse.createRenderURL();
-
-		selectUserGroupsURL.setParameter("mvcPath", "/select_user_groups.jsp");
-		selectUserGroupsURL.setWindowState(LiferayWindowState.POP_UP);
-
-		componentContext.put(
-			"selectUserGroupsURL", selectUserGroupsURL.toString());
-
-		return componentContext;
-	}
-
 	@Override
 	public String getComponentId() {
 		return "userGroupsManagementToolbar";
+	}
+
+	@Override
+	public CreationMenu getCreationMenu() {
+		try {
+			PortletURL selectUserGroupsURL =
+				liferayPortletResponse.createRenderURL();
+
+			selectUserGroupsURL.setParameter(
+				"mvcPath", "/select_user_groups.jsp");
+			selectUserGroupsURL.setWindowState(LiferayWindowState.POP_UP);
+
+			return new CreationMenu() {
+				{
+					addDropdownItem(
+						dropdownItem -> {
+							dropdownItem.putData("action", "selectUserGroups");
+							dropdownItem.putData(
+								"selectUserGroupsURL",
+								selectUserGroupsURL.toString());
+							dropdownItem.setLabel(
+								LanguageUtil.get(request, "add"));
+						});
+				}
+			};
+		}
+		catch (Exception e) {
+			return null;
+		}
 	}
 
 	@Override

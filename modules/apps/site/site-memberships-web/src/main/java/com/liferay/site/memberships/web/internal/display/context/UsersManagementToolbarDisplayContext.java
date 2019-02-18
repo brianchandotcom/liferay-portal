@@ -15,6 +15,7 @@
 package com.liferay.site.memberships.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
@@ -181,6 +182,33 @@ public class UsersManagementToolbarDisplayContext
 	@Override
 	public String getComponentId() {
 		return "usersManagementToolbar";
+	}
+
+	@Override
+	public CreationMenu getCreationMenu() {
+		try {
+			PortletURL selectUsersURL =
+				liferayPortletResponse.createRenderURL();
+
+			selectUsersURL.setParameter("mvcPath", "/select_users.jsp");
+			selectUsersURL.setWindowState(LiferayWindowState.POP_UP);
+
+			return new CreationMenu() {
+				{
+					addDropdownItem(
+						dropdownItem -> {
+							dropdownItem.putData("action", "selectUsers");
+							dropdownItem.putData(
+								"selectUsersURL", selectUsersURL.toString());
+							dropdownItem.setLabel(
+								LanguageUtil.get(request, "add"));
+						});
+				}
+			};
+		}
+		catch (Exception e) {
+			return null;
+		}
 	}
 
 	@Override

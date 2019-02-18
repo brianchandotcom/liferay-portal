@@ -15,6 +15,7 @@
 package com.liferay.layout.admin.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.layout.admin.web.internal.security.permission.resource.LayoutPageTemplatePermission;
@@ -27,9 +28,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
@@ -82,9 +81,13 @@ public class DisplayPageManagementToolbarDisplayContext
 		return clearResultsURL.toString();
 	}
 
-	public Map<String, Object> getComponentContext() {
-		Map<String, Object> componentContext = new HashMap<>();
+	@Override
+	public String getComponentId() {
+		return "displayPagesManagementToolbar";
+	}
 
+	@Override
+	public CreationMenu getCreationMenu() {
 		PortletURL addDisplayPageURL = liferayPortletResponse.createActionURL();
 
 		addDisplayPageURL.setParameter(
@@ -97,14 +100,17 @@ public class DisplayPageManagementToolbarDisplayContext
 			String.valueOf(
 				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE));
 
-		componentContext.put("addDisplayPageURL", addDisplayPageURL.toString());
-
-		return componentContext;
-	}
-
-	@Override
-	public String getComponentId() {
-		return "displayPagesManagementToolbar";
+		return new CreationMenu() {
+			{
+				addDropdownItem(
+					dropdownItem -> {
+						dropdownItem.putData("action", "addDisplayPage");
+						dropdownItem.putData(
+							"addDisplayPageURL", addDisplayPageURL.toString());
+						dropdownItem.setLabel(LanguageUtil.get(request, "add"));
+					});
+			}
+		};
 	}
 
 	@Override

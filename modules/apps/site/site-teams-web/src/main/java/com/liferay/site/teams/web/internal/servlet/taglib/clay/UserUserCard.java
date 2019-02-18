@@ -15,10 +15,16 @@
 package com.liferay.site.teams.web.internal.servlet.taglib.clay;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.BaseUserCard;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.site.teams.web.internal.constants.SiteTeamsWebKeys;
+import com.liferay.site.teams.web.internal.servlet.taglib.util.UserActionDropdownItemsProvider;
+
+import java.util.List;
 
 import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 /**
  * @author Eudaldo Alonso
@@ -26,9 +32,30 @@ import javax.portlet.RenderRequest;
 public class UserUserCard extends BaseUserCard {
 
 	public UserUserCard(
-		User user, RenderRequest renderRequest, RowChecker rowChecker) {
+		User user, long teamId, RenderRequest renderRequest,
+		RenderResponse renderResponse, RowChecker rowChecker) {
 
 		super(user, renderRequest, rowChecker);
+
+		_teamId = teamId;
+		_renderResponse = renderResponse;
 	}
+
+	@Override
+	public List<DropdownItem> getActionDropdownItems() {
+		UserActionDropdownItemsProvider userActionDropdownItemsProvider =
+			new UserActionDropdownItemsProvider(
+				user, _teamId, renderRequest, _renderResponse);
+
+		return userActionDropdownItemsProvider.getActionDropdownItems();
+	}
+
+	@Override
+	public String getDefaultEventHandler() {
+		return SiteTeamsWebKeys.USER_DROPDOWN_DEFAULT_EVENT_HANDLER;
+	}
+
+	private final RenderResponse _renderResponse;
+	private final long _teamId;
 
 }

@@ -59,7 +59,7 @@ EditSiteTeamAssignmentsUsersManagementToolbarDisplayContext editSiteTeamAssignme
 
 					<liferay-ui:search-container-column-text>
 						<clay:user-card
-							userCard="<%= new UserUserCard(user2, renderRequest, searchContainer.getRowChecker()) %>"
+							userCard="<%= new UserUserCard(user2, editSiteTeamAssignmentsUsersDisplayContext.getTeamId(), renderRequest, renderResponse, searchContainer.getRowChecker()) %>"
 						/>
 					</liferay-ui:search-container-column-text>
 				</c:when>
@@ -80,9 +80,17 @@ EditSiteTeamAssignmentsUsersManagementToolbarDisplayContext editSiteTeamAssignme
 						</h6>
 					</liferay-ui:search-container-column-text>
 
-					<liferay-ui:search-container-column-jsp
-						path="/edit_team_assignments_users_action.jsp"
-					/>
+					<liferay-ui:search-container-column-text>
+
+						<%
+						UserActionDropdownItemsProvider userActionDropdownItemsProvider = new UserActionDropdownItemsProvider(user2, editSiteTeamAssignmentsUsersDisplayContext.getTeamId(), renderRequest, renderResponse);
+						%>
+
+						<clay:dropdown-actions
+							defaultEventHandler="<%= SiteTeamsWebKeys.USER_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
+							dropdownItems="<%= userActionDropdownItemsProvider.getActionDropdownItems() %>"
+						/>
+					</liferay-ui:search-container-column-text>
 				</c:when>
 				<c:otherwise>
 					<liferay-ui:search-container-column-text
@@ -97,9 +105,17 @@ EditSiteTeamAssignmentsUsersManagementToolbarDisplayContext editSiteTeamAssignme
 						property="screenName"
 					/>
 
-					<liferay-ui:search-container-column-jsp
-						path="/edit_team_assignments_users_action.jsp"
-					/>
+					<liferay-ui:search-container-column-text>
+
+						<%
+						UserActionDropdownItemsProvider userActionDropdownItemsProvider = new UserActionDropdownItemsProvider(user2, editSiteTeamAssignmentsUsersDisplayContext.getTeamId(), renderRequest, renderResponse);
+						%>
+
+						<clay:dropdown-actions
+							defaultEventHandler="<%= SiteTeamsWebKeys.USER_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
+							dropdownItems="<%= userActionDropdownItemsProvider.getActionDropdownItems() %>"
+						/>
+					</liferay-ui:search-container-column-text>
 				</c:otherwise>
 			</c:choose>
 		</liferay-ui:search-container-row>
@@ -122,4 +138,9 @@ EditSiteTeamAssignmentsUsersManagementToolbarDisplayContext editSiteTeamAssignme
 <liferay-frontend:component
 	componentId="<%= editSiteTeamAssignmentsUsersManagementToolbarDisplayContext.getDefaultEventHandler() %>"
 	module="js/EditTeamAssignmentsUsersManagementToolbarDefaultEventHandler.es"
+/>
+
+<liferay-frontend:component
+	componentId="<%= SiteTeamsWebKeys.USER_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
+	module="js/UserDropdownDefaultEventHandler.es"
 />

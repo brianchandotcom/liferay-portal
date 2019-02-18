@@ -21,18 +21,7 @@ SelectTeamDisplayContext selectTeamDisplayContext = new SelectTeamDisplayContext
 %>
 
 <clay:management-toolbar
-	clearResultsURL="<%= selectTeamDisplayContext.getClearResultsURL() %>"
-	componentId="selectTeamWebManagementToolbar"
-	disabled="<%= selectTeamDisplayContext.isDisabledManagementBar() %>"
-	filterDropdownItems="<%= selectTeamDisplayContext.getFilterDropdownItems() %>"
-	itemsTotal="<%= selectTeamDisplayContext.getTotalItems() %>"
-	searchActionURL="<%= selectTeamDisplayContext.getSearchActionURL() %>"
-	searchFormName="searchFm"
-	selectable="<%= false %>"
-	showSearch="<%= selectTeamDisplayContext.isShowSearch() %>"
-	sortingOrder="<%= selectTeamDisplayContext.getOrderByType() %>"
-	sortingURL="<%= selectTeamDisplayContext.getSortingURL() %>"
-	viewTypeItems="<%= selectTeamDisplayContext.getViewTypeItems() %>"
+	displayContext="<%= new SelectTeamManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, selectTeamDisplayContext) %>"
 />
 
 <aui:form cssClass="container-fluid-1280" name="selectTeamFm">

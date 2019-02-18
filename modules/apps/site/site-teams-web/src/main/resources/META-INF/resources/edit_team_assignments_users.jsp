@@ -26,20 +26,7 @@ EditSiteTeamAssignmentsUsersDisplayContext editSiteTeamAssignmentsUsersDisplayCo
 />
 
 <clay:management-toolbar
-	actionDropdownItems="<%= editSiteTeamAssignmentsUsersDisplayContext.getActionDropdownItems() %>"
-	clearResultsURL="<%= editSiteTeamAssignmentsUsersDisplayContext.getClearResultsURL() %>"
-	componentId="editTeamAssignemntsUsersWebManagementToolbar"
-	disabled="<%= editSiteTeamAssignmentsUsersDisplayContext.isDisabledManagementBar() %>"
-	filterDropdownItems="<%= editSiteTeamAssignmentsUsersDisplayContext.getFilterDropdownItems() %>"
-	itemsTotal="<%= editSiteTeamAssignmentsUsersDisplayContext.getTotalItems() %>"
-	searchActionURL="<%= editSiteTeamAssignmentsUsersDisplayContext.getSearchActionURL() %>"
-	searchContainerId="users"
-	searchFormName="searchFm"
-	showCreationMenu="<%= true %>"
-	showSearch="<%= editSiteTeamAssignmentsUsersDisplayContext.isShowSearch() %>"
-	sortingOrder="<%= editSiteTeamAssignmentsUsersDisplayContext.getOrderByType() %>"
-	sortingURL="<%= editSiteTeamAssignmentsUsersDisplayContext.getSortingURL() %>"
-	viewTypeItems="<%= editSiteTeamAssignmentsUsersDisplayContext.getViewTypeItems() %>"
+	displayContext="<%= new EditSiteTeamAssignmentsUsersManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, editSiteTeamAssignmentsUsersDisplayContext) %>"
 />
 
 <portlet:actionURL name="deleteTeamUsers" var="deleteTeamUsersURL" />

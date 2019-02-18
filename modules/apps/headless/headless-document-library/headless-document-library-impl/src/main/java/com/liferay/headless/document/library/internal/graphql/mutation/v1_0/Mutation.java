@@ -39,8 +39,8 @@ public class Mutation {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Document postFolder( @GraphQLName("folder-id") Long folderId , @GraphQLName("MultipartBody") MultipartBody multipartBody ) throws Exception {
-return _getDocumentResource().postFolder( folderId , multipartBody );
+	public Document postContentSpaceDocument( @GraphQLName("content-space-id") Long contentSpaceId , @GraphQLName("MultipartBody") MultipartBody multipartBody ) throws Exception {
+return _getDocumentResource().postContentSpaceDocument( contentSpaceId , multipartBody );
 	}
 
 	@GraphQLInvokeDetached
@@ -56,8 +56,8 @@ return _getDocumentResource().postFolderDocument( folderId , multipartBody );
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Folder postDocumentsRepository( @GraphQLName("documents-repository-id") Long documentsRepositoryId , @GraphQLName("Folder") Folder folder ) throws Exception {
-return _getFolderResource().postDocumentsRepository( documentsRepositoryId , folder );
+	public Folder postContentSpaceFolder( @GraphQLName("content-space-id") Long contentSpaceId , @GraphQLName("Folder") Folder folder ) throws Exception {
+return _getFolderResource().postContentSpaceFolder( contentSpaceId , folder );
 	}
 
 	@GraphQLInvokeDetached

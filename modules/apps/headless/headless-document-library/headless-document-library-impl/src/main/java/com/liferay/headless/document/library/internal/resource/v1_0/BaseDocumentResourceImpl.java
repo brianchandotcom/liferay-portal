@@ -49,21 +49,21 @@ import javax.ws.rs.core.Context;
 public abstract class BaseDocumentResourceImpl implements DocumentResource {
 
 	@GET
-	@Path("/documents")
+	@Path("/content-spaces/{content-space-id}/documents")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	@Override
-	public Page<Document> getFolderDocumentsPage( @PathParam("folder-id") Long folderId , @Context Pagination pagination ) throws Exception {
+	public Page<Document> getContentSpaceDocumentsPage( @PathParam("content-space-id") Long contentSpaceId , @Context Pagination pagination ) throws Exception {
 			return Page.of(Collections.emptyList());
 
 	}
 	@Consumes("multipart/form-data")
 	@POST
-	@Path("/documents")
+	@Path("/content-spaces/{content-space-id}/documents")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	@Override
-	public Document postFolder( @PathParam("folder-id") Long folderId , MultipartBody multipartBody ) throws Exception {
+	public Document postContentSpaceDocument( @PathParam("content-space-id") Long contentSpaceId , MultipartBody multipartBody ) throws Exception {
 			return new DocumentImpl();
 
 	}

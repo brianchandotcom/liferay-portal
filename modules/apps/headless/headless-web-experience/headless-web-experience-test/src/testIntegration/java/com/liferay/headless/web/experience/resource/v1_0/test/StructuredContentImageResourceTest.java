@@ -24,5 +24,6 @@ import org.junit.runner.RunWith;
  */
 @Ignore
 @RunWith(Arquillian.class)
-public class StructuredContentImageResourceTest extends BaseStructuredContentImageResourceTestCase {
+public class StructuredContentImageResourceTest
+	extends BaseStructuredContentImageResourceTestCase {
 }

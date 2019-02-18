@@ -177,5 +177,25 @@ public class FolderImpl implements Folder {
 	@GraphQLField
 	@JsonProperty
 	protected String name;
+	public Long getRepositoryId() {
+			return repositoryId;
+	}
+
+	public void setRepositoryId(Long repositoryId) {
+			this.repositoryId = repositoryId;
+	}
+
+	public void setRepositoryId(UnsafeSupplier<Long, Throwable> repositoryIdUnsafeSupplier) {
+			try {
+				repositoryId = repositoryIdUnsafeSupplier.get();
+	}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+	}
+	}
+
+	@GraphQLField
+	@JsonProperty
+	protected Long repositoryId;
 
 }

@@ -65,11 +65,11 @@ public abstract class BaseDocumentResourceTestCase {
 	}
 
 	@Test
-	public void testGetFolderDocumentsPage() throws Exception {
+	public void testGetContentSpaceDocumentsPage() throws Exception {
 			Assert.assertTrue(true);
 	}
 	@Test
-	public void testPostFolder() throws Exception {
+	public void testPostContentSpaceDocument() throws Exception {
 			Assert.assertTrue(true);
 	}
 	@Test
@@ -89,23 +89,23 @@ public abstract class BaseDocumentResourceTestCase {
 			Assert.assertTrue(true);
 	}
 
-	protected Response invokeGetFolderDocumentsPage( Long folderId , Pagination pagination ) throws Exception {
+	protected Response invokeGetContentSpaceDocumentsPage( Long contentSpaceId , Pagination pagination ) throws Exception {
 		RequestSpecification requestSpecification = _createRequestSpecification();
 
 			return requestSpecification.when(
 			).get(
-				_resourceURL + "/documents",
-				folderId 
+				_resourceURL + "/content-spaces/{content-space-id}/documents",
+				contentSpaceId 
 			);
 
 	}
-	protected Response invokePostFolder( Long folderId , MultipartBody multipartBody ) throws Exception {
+	protected Response invokePostContentSpaceDocument( Long contentSpaceId , MultipartBody multipartBody ) throws Exception {
 		RequestSpecification requestSpecification = _createRequestSpecification();
 
 			return requestSpecification.when(
 			).post(
-				_resourceURL + "/documents",
-				folderId , multipartBody
+				_resourceURL + "/content-spaces/{content-space-id}/documents",
+				contentSpaceId , multipartBody
 			);
 
 	}

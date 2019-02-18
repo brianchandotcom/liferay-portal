@@ -62,5 +62,10 @@ public interface Folder {
 	public void setName(String name);
 
 	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier);
+	public Long getRepositoryId();
+
+	public void setRepositoryId(Long repositoryId);
+
+	public void setRepositoryId(UnsafeSupplier<Long, Throwable> repositoryIdUnsafeSupplier);
 
 }

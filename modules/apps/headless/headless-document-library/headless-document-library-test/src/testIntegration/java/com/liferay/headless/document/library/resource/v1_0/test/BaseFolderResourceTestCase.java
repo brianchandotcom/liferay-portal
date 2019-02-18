@@ -64,11 +64,11 @@ public abstract class BaseFolderResourceTestCase {
 	}
 
 	@Test
-	public void testGetDocumentsRepositoryFoldersPage() throws Exception {
+	public void testGetContentSpaceFoldersPage() throws Exception {
 			Assert.assertTrue(true);
 	}
 	@Test
-	public void testPostDocumentsRepository() throws Exception {
+	public void testPostContentSpaceFolder() throws Exception {
 			Assert.assertTrue(true);
 	}
 	@Test
@@ -92,25 +92,25 @@ public abstract class BaseFolderResourceTestCase {
 			Assert.assertTrue(true);
 	}
 
-	protected Response invokeGetDocumentsRepositoryFoldersPage( Long documentsRepositoryId , Pagination pagination ) throws Exception {
+	protected Response invokeGetContentSpaceFoldersPage( Long contentSpaceId , Pagination pagination ) throws Exception {
 		RequestSpecification requestSpecification = _createRequestSpecification();
 
 			return requestSpecification.when(
 			).get(
-				_resourceURL + "/folders",
-				documentsRepositoryId 
+				_resourceURL + "/content-spaces/{content-space-id}/folders",
+				contentSpaceId 
 			);
 
 	}
-	protected Response invokePostDocumentsRepository( Long documentsRepositoryId , Folder folder ) throws Exception {
+	protected Response invokePostContentSpaceFolder( Long contentSpaceId , Folder folder ) throws Exception {
 		RequestSpecification requestSpecification = _createRequestSpecification();
 
 			return requestSpecification.body(
 				folder
 			).when(
 			).post(
-				_resourceURL + "/folders",
-				documentsRepositoryId 
+				_resourceURL + "/content-spaces/{content-space-id}/folders",
+				contentSpaceId 
 			);
 
 	}
@@ -179,6 +179,7 @@ folder.setHasDocuments(RandomTestUtil.randomBoolean());
 folder.setHasFolders(RandomTestUtil.randomBoolean());
 folder.setId(RandomTestUtil.randomLong());
 folder.setName(RandomTestUtil.randomString());
+folder.setRepositoryId(RandomTestUtil.randomLong());
 		return folder;
 	}
 

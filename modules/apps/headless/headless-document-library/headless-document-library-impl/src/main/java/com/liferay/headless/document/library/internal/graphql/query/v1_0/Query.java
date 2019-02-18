@@ -74,10 +74,10 @@ return _getCommentResource().getComment( commentId );
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<Document> getFolderDocumentsPage( @GraphQLName("folder-id") Long folderId , @GraphQLName("pageSize") int pageSize , @GraphQLName("page") int page ) throws Exception {
-				Page paginationPage = _getDocumentResource().getFolderDocumentsPage(
+	public Collection<Document> getContentSpaceDocumentsPage( @GraphQLName("content-space-id") Long contentSpaceId , @GraphQLName("pageSize") int pageSize , @GraphQLName("page") int page ) throws Exception {
+				Page paginationPage = _getDocumentResource().getContentSpaceDocumentsPage(
 
-					folderId , Pagination.of(pageSize, page)
+					contentSpaceId , Pagination.of(pageSize, page)
 				);
 
 				return paginationPage.getItems();
@@ -104,10 +104,10 @@ return _getDocumentResource().getDocument( documentId );
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<Folder> getDocumentsRepositoryFoldersPage( @GraphQLName("documents-repository-id") Long documentsRepositoryId , @GraphQLName("pageSize") int pageSize , @GraphQLName("page") int page ) throws Exception {
-				Page paginationPage = _getFolderResource().getDocumentsRepositoryFoldersPage(
+	public Collection<Folder> getContentSpaceFoldersPage( @GraphQLName("content-space-id") Long contentSpaceId , @GraphQLName("pageSize") int pageSize , @GraphQLName("page") int page ) throws Exception {
+				Page paginationPage = _getFolderResource().getContentSpaceFoldersPage(
 
-					documentsRepositoryId , Pagination.of(pageSize, page)
+					contentSpaceId , Pagination.of(pageSize, page)
 				);
 
 				return paginationPage.getItems();

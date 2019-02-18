@@ -49,21 +49,21 @@ import javax.ws.rs.core.Context;
 public abstract class BaseFolderResourceImpl implements FolderResource {
 
 	@GET
-	@Path("/folders")
+	@Path("/content-spaces/{content-space-id}/folders")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	@Override
-	public Page<Folder> getDocumentsRepositoryFoldersPage( @PathParam("documents-repository-id") Long documentsRepositoryId , @Context Pagination pagination ) throws Exception {
+	public Page<Folder> getContentSpaceFoldersPage( @PathParam("content-space-id") Long contentSpaceId , @Context Pagination pagination ) throws Exception {
 			return Page.of(Collections.emptyList());
 
 	}
 	@Consumes("application/json")
 	@POST
-	@Path("/folders")
+	@Path("/content-spaces/{content-space-id}/folders")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	@Override
-	public Folder postDocumentsRepository( @PathParam("documents-repository-id") Long documentsRepositoryId , Folder folder ) throws Exception {
+	public Folder postContentSpaceFolder( @PathParam("content-space-id") Long contentSpaceId , Folder folder ) throws Exception {
 			return new FolderImpl();
 
 	}

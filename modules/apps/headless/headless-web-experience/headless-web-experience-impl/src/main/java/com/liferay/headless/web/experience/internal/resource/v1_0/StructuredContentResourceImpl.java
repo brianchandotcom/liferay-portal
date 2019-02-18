@@ -29,7 +29,6 @@ import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.headless.web.experience.dto.v1_0.StructuredContent;
 import com.liferay.headless.web.experience.internal.dto.v1_0.StructuredContentImpl;
 import com.liferay.headless.web.experience.internal.dto.v1_0.util.AggregateRatingUtil;
-import com.liferay.headless.web.experience.internal.dto.v1_0.util.ContentStructureUtil;
 import com.liferay.headless.web.experience.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.web.experience.internal.odata.entity.v1_0.EntityFieldsProvider;
 import com.liferay.headless.web.experience.internal.odata.entity.v1_0.StructuredContentEntityModel;
@@ -350,6 +349,8 @@ public class StructuredContentResourceImpl
 			JournalArticle journalArticle)
 		throws Exception {
 
+		DDMStructure ddmStructure = journalArticle.getDDMStructure();
+
 		return new StructuredContentImpl() {
 			{
 				setAvailableLanguages(
@@ -361,11 +362,7 @@ public class StructuredContentResourceImpl
 							JournalArticle.class.getName(),
 							journalArticle.getResourcePrimKey())));
 				setContentSpace(journalArticle.getGroupId());
-				setContentStructure(
-					ContentStructureUtil.toContentStructure(
-						journalArticle.getDDMStructure(),
-						acceptLanguage.getPreferredLocale(), _portal,
-						_userLocalService));
+				setContentStructureId(ddmStructure.getStructureId());
 				setCreator(
 					CreatorUtil.toCreator(
 						_portal,

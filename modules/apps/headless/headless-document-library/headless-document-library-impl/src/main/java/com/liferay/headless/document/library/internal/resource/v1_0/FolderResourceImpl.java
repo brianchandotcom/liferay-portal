@@ -44,12 +44,12 @@ public class FolderResourceImpl extends BaseFolderResourceImpl {
 	}
 
 	@Override
-	public Page<Folder> getDocumentsRepositoryFoldersPage(
-			Long documentsRepositoryId, Pagination pagination)
+	public Page<Folder> getContentSpaceFoldersPage(
+			Long contentSpaceId, Pagination pagination)
 		throws Exception {
 
 		return _getFolderPage(
-			documentsRepositoryId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			contentSpaceId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			pagination);
 	}
 
@@ -66,16 +66,14 @@ public class FolderResourceImpl extends BaseFolderResourceImpl {
 		Folder parentFolder = _toFolder(_dlAppService.getFolder(folderId));
 
 		return _getFolderPage(
-			parentFolder.getDocumentsRepositoryId(), parentFolder.getId(),
-			pagination);
+			parentFolder.getRepositoryId(), parentFolder.getId(), pagination);
 	}
 
 	@Override
-	public Folder postDocumentsRepositoryFolder(
-			Long documentsRepositoryId, Folder folder)
+	public Folder postContentSpaceFolder(Long contentSpaceId, Folder folder)
 		throws Exception {
 
-		return _addFolder(documentsRepositoryId, 0L, folder);
+		return _addFolder(contentSpaceId, 0L, folder);
 	}
 
 	@Override
@@ -85,8 +83,7 @@ public class FolderResourceImpl extends BaseFolderResourceImpl {
 		Folder parentFolder = _toFolder(_dlAppService.getFolder(folderId));
 
 		return _addFolder(
-			parentFolder.getDocumentsRepositoryId(), parentFolder.getId(),
-			folder);
+			parentFolder.getRepositoryId(), parentFolder.getId(), folder);
 	}
 
 	@Override
@@ -132,7 +129,7 @@ public class FolderResourceImpl extends BaseFolderResourceImpl {
 				setDateCreated(folder.getCreateDate());
 				setDateModified(folder.getModifiedDate());
 				setDescription(folder.getDescription());
-				setDocumentsRepositoryId(folder.getGroupId());
+				setRepositoryId(folder.getGroupId());
 				setId(folder.getFolderId());
 				setName(folder.getName());
 			}

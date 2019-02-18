@@ -19,7 +19,9 @@ import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryService;
 import com.liferay.asset.kernel.service.AssetVocabularyService;
 import com.liferay.headless.foundation.dto.v1_0.Category;
+import com.liferay.headless.foundation.dto.v1_0.ParentCategory;
 import com.liferay.headless.foundation.internal.dto.v1_0.CategoryImpl;
+import com.liferay.headless.foundation.internal.dto.v1_0.ParentCategoryImpl;
 import com.liferay.headless.foundation.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.foundation.resource.v1_0.CategoryResource;
 import com.liferay.portal.kernel.model.Group;
@@ -32,7 +34,6 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.Collections;
-import java.util.List;
 import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
@@ -126,23 +127,14 @@ public class CategoryResourceImpl extends BaseCategoryResourceImpl {
 				vocabularyId, null, new ServiceContext()));
 	}
 
-	private Category[] _toCategories(AssetCategory assetCategory)
-		throws Exception {
-
-		List<Category> categories = transform(
-			assetCategory.getAncestors(), this::_toCategory);
-
-		return categories.toArray(new Category[categories.size()]);
-	}
-
 	private Category _toCategory(AssetCategory assetCategory) throws Exception {
 		return new CategoryImpl() {
 			{
 				setAvailableLanguages(assetCategory.getAvailableLanguageIds());
 
 				if (assetCategory.getParentCategory() != null) {
-					setCategory(_toCategory(assetCategory.getParentCategory()));
-					setCategoryId(assetCategory.getParentCategoryId());
+					setParentCategory(
+						_toParentCategory(assetCategory.getParentCategory()));
 				}
 
 				setCreator(
@@ -159,8 +151,18 @@ public class CategoryResourceImpl extends BaseCategoryResourceImpl {
 				setName(
 					assetCategory.getTitle(
 						acceptLanguage.getPreferredLocale()));
-				setSubcategories(_toCategories(assetCategory));
-				setVocabularyId(assetCategory.getVocabularyId());
+				setParentVocabularyId(assetCategory.getVocabularyId());
+			}
+		};
+	}
+
+	private ParentCategory _toParentCategory(AssetCategory parentCategory) {
+		return new ParentCategoryImpl() {
+			{
+				setId(parentCategory.getCategoryId());
+				setName(
+					parentCategory.getTitle(
+						acceptLanguage.getPreferredLocale()));
 			}
 		};
 	}

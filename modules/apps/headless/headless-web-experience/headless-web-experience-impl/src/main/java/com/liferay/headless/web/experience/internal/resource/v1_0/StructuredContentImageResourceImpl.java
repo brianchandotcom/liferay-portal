@@ -24,7 +24,8 @@ import org.osgi.service.component.annotations.ServiceScope;
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/structured-content-image.properties",
-	scope = ServiceScope.PROTOTYPE, service = StructuredContentImageResource.class
+	scope = ServiceScope.PROTOTYPE,
+	service = StructuredContentImageResource.class
 )
 public class StructuredContentImageResourceImpl
 	extends BaseStructuredContentImageResourceImpl {

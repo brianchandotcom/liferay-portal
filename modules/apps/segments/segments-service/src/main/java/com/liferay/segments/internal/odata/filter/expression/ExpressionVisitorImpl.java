@@ -182,8 +182,16 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 	private Predicate<Context> _getEQPredicate(
 		EntityField entityField, Object fieldValue) {
 
-		Predicate<Context> predicate = p -> fieldValue.equals(
-			p.get(entityField.getName()));
+		Predicate<Context> predicate = null;
+
+		if (Objects.equals(entityField.getType(), EntityField.Type.STRING)) {
+			predicate = p -> fieldValue.equals(
+				_normalizeStringLiteral(
+					String.valueOf(p.get(entityField.getName()))));
+		}
+		else {
+			predicate = p -> fieldValue.equals(p.get(entityField.getName()));
+		}
 
 		return predicate;
 	}

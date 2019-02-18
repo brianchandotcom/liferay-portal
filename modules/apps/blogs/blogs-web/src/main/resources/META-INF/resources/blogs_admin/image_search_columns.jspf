@@ -52,9 +52,16 @@ String thumbnailSrc = DLURLHelperUtil.getThumbnailSrc(fileEntry, themeDisplay);
 			</h4>
 		</liferay-ui:search-container-column-text>
 
-		<liferay-ui:search-container-column-jsp
-			path="/blogs_admin/image_action.jsp"
-		/>
+		<liferay-ui:search-container-column-text>
+
+			<%
+			BlogsEntryImageActionDropdownItemsProvider blogsEntryImageActionDropdownItemsProvider = new BlogsEntryImageActionDropdownItemsProvider(fileEntry, renderRequest, renderResponse, permissionChecker, resourceBundle);
+			%>
+
+			<clay:dropdown-actions
+				dropdownItems="<%= blogsEntryImageActionDropdownItemsProvider.getActionDropdownItems() %>"
+			/>
+		</liferay-ui:search-container-column-text>
 	</c:when>
 	<c:when test='<%= displayStyle.equals("icon") %>'>
 
@@ -120,8 +127,15 @@ String thumbnailSrc = DLURLHelperUtil.getThumbnailSrc(fileEntry, themeDisplay);
 			<liferay-ui:message arguments="<%= new String[] {LanguageUtil.getTimeDescription(locale, System.currentTimeMillis() - fileEntry.getModifiedDate().getTime(), true), HtmlUtil.escape(fileEntry.getUserName())} %>" key="x-ago-by-x" translateArguments="<%= false %>" />
 		</liferay-ui:search-container-column-text>
 
-		<liferay-ui:search-container-column-jsp
-			path="/blogs_admin/image_action.jsp"
-		/>
+		<liferay-ui:search-container-column-text>
+
+			<%
+			BlogsEntryImageActionDropdownItemsProvider blogsEntryImageActionDropdownItemsProvider = new BlogsEntryImageActionDropdownItemsProvider(fileEntry, renderRequest, renderResponse, permissionChecker, resourceBundle);
+			%>
+
+			<clay:dropdown-actions
+				dropdownItems="<%= blogsEntryImageActionDropdownItemsProvider.getActionDropdownItems() %>"
+			/>
+		</liferay-ui:search-container-column-text>
 	</c:otherwise>
 </c:choose>

@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
@@ -41,57 +40,48 @@ public class JSONScriptsCheck extends BaseFileCheck {
 	}
 
 	private void _checkMissingScripts(String fileName, String content) {
-		try {
-			JSONObject jsonObject = new JSONObject(content);
+		JSONObject jsonObject = new JSONObject(content);
 
-			if (jsonObject.isNull("devDependencies")) {
-				return;
+		if (jsonObject.isNull("devDependencies")) {
+			return;
+		}
+
+		JSONObject devDependenciesJSONObject = jsonObject.getJSONObject(
+			"devDependencies");
+
+		for (Map.Entry<String, String> entry : _requiredScriptsMap.entrySet()) {
+			String packageName = entry.getKey();
+
+			if (devDependenciesJSONObject.isNull(packageName)) {
+				continue;
 			}
 
-			JSONObject devDependenciesJSONObject = jsonObject.getJSONObject(
-				"devDependencies");
+			for (String requiredScript : StringUtil.split(entry.getValue())) {
+				if (jsonObject.isNull("scripts")) {
+					addMessage(
+						fileName, _getMessage(packageName, requiredScript));
 
-			for (Map.Entry<String, String> entry :
-					_requiredScriptsMap.entrySet()) {
-
-				String packageName = entry.getKey();
-
-				if (devDependenciesJSONObject.isNull(packageName)) {
 					continue;
 				}
 
-				for (String requiredScript :
-						StringUtil.split(entry.getValue())) {
+				JSONObject scriptsJSONObject = jsonObject.getJSONObject(
+					"scripts");
 
-					if (jsonObject.isNull("scripts")) {
-						addMessage(
-							fileName, _getMessage(packageName, requiredScript));
+				if (scriptsJSONObject.isNull(requiredScript)) {
+					addMessage(
+						fileName, _getMessage(packageName, requiredScript));
 
-						continue;
-					}
+					continue;
+				}
 
-					JSONObject scriptsJSONObject = jsonObject.getJSONObject(
-						"scripts");
+				String scriptValue = scriptsJSONObject.getString(
+					requiredScript);
 
-					if (scriptsJSONObject.isNull(requiredScript)) {
-						addMessage(
-							fileName, _getMessage(packageName, requiredScript));
-
-						continue;
-					}
-
-					String scriptValue = scriptsJSONObject.getString(
-						requiredScript);
-
-					if (!scriptValue.startsWith(packageName + CharPool.SPACE)) {
-						addMessage(
-							fileName, _getMessage(packageName, requiredScript));
-					}
+				if (!scriptValue.startsWith(packageName + CharPool.SPACE)) {
+					addMessage(
+						fileName, _getMessage(packageName, requiredScript));
 				}
 			}
-		}
-		catch (JSONException jsone) {
-			addMessage(fileName, jsone.getMessage());
 		}
 	}
 

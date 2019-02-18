@@ -20,6 +20,8 @@ import static org.hamcrest.CoreMatchers.hasItems;
 import static org.mockito.Matchers.anyLong;
 import static org.mockito.Matchers.anyString;
 
+import com.liferay.oauth2.provider.scope.internal.configuration.ScopeLocatorConfiguration;
+import com.liferay.oauth2.provider.scope.internal.liferay.ScopeLocatorImpl.ScopeLocatorConfigurationProvider;
 import com.liferay.oauth2.provider.scope.internal.spi.scope.matcher.StrictScopeMatcherFactory;
 import com.liferay.oauth2.provider.scope.liferay.LiferayOAuth2Scope;
 import com.liferay.oauth2.provider.scope.liferay.ScopedServiceTrackerMap;
@@ -413,6 +415,13 @@ public class ScopeLocatorImplTest extends PowerMockito {
 					});
 			}
 
+			if (!_scopeLocatorConfigurationProvidersInitialized) {
+				withScopeLocatorConfigurationProviders(
+					() -> new TestScopeLocatorConfiguration(),
+					registrator -> {
+					});
+			}
+
 			return _scopeLocatorImpl;
 		}
 
@@ -476,6 +485,30 @@ public class ScopeLocatorImplTest extends PowerMockito {
 				});
 
 			_scopeFindersInitialized = true;
+
+			return this;
+		}
+
+		public Builder withScopeLocatorConfigurationProviders(
+				ScopeLocatorConfigurationProvider
+					defaultScopeLocatorConfigurationProvider,
+				CompanyAndKeyConfigurator<ScopeLocatorConfigurationProvider>
+					configurator)
+			throws IllegalAccessException {
+
+			ScopedServiceTrackerMap<ScopeLocatorConfigurationProvider>
+				scopedScopeLocatorConfigurationProviders =
+					_prepareScopeServiceTrackerMapMock(
+						defaultScopeLocatorConfigurationProvider, configurator);
+
+			_set(
+				_scopeLocatorImpl, "_defaultScopeLocatorConfigurationProvider",
+				defaultScopeLocatorConfigurationProvider);
+
+			_scopeLocatorImpl.setScopedScopeLocatorConfigurationProviders(
+				scopedScopeLocatorConfigurationProviders);
+
+			_scopeLocatorConfigurationProvidersInitialized = true;
 
 			return this;
 		}
@@ -558,6 +591,7 @@ public class ScopeLocatorImplTest extends PowerMockito {
 
 		private boolean _prefixHandlerFactoriesInitialized;
 		private boolean _scopeFindersInitialized;
+		private boolean _scopeLocatorConfigurationProvidersInitialized;
 		private final ScopeLocatorImpl _scopeLocatorImpl =
 			new ScopeLocatorImpl();
 		private boolean _scopeMappersInitialized;
@@ -586,6 +620,21 @@ public class ScopeLocatorImplTest extends PowerMockito {
 	private interface KeyRegistrator<T> {
 
 		public void register(String key, T service);
+
+	}
+
+	private class TestScopeLocatorConfiguration
+		implements ScopeLocatorConfiguration {
+
+		@Override
+		public boolean includeScopesImpliedBeforeScopeMapping() {
+			return true;
+		}
+
+		@Override
+		public String osgiJAXRSName() {
+			return "Default";
+		}
 
 	}
 

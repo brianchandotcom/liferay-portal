@@ -58,15 +58,8 @@ EditSiteTeamAssignmentsUsersManagementToolbarDisplayContext editSiteTeamAssignme
 					%>
 
 					<liferay-ui:search-container-column-text>
-						<liferay-frontend:user-vertical-card
-							actionJsp="/edit_team_assignments_users_action.jsp"
-							actionJspServletContext="<%= application %>"
-							cssClass="entry-display-style"
-							resultRow="<%= row %>"
-							rowChecker="<%= searchContainer.getRowChecker() %>"
-							subtitle="<%= user2.getScreenName() %>"
-							title="<%= user2.getFullName() %>"
-							userId="<%= user2.getUserId() %>"
+						<clay:user-card
+							userCard="<%= new UserUserCard(user2, renderRequest, searchContainer.getRowChecker()) %>"
 						/>
 					</liferay-ui:search-container-column-text>
 				</c:when>

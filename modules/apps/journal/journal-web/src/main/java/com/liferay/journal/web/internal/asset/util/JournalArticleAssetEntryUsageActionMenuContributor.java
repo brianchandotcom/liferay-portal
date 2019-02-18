@@ -165,7 +165,8 @@ public class JournalArticleAssetEntryUsageActionMenuContributor
 			request, portletId, plid, PortletRequest.RENDER_PHASE);
 
 		if (!article.isApproved()) {
-			portletURL.setParameter("previewArticleId", article.getArticleId());
+			portletURL.setParameter(
+				"previewArticleId", String.valueOf(article.getId()));
 		}
 
 		return portletURL.toString() + "#portlet_" + portletId;

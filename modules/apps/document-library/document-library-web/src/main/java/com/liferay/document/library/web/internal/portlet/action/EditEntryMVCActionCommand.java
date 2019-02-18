@@ -16,6 +16,8 @@ package com.liferay.document.library.web.internal.portlet.action;
 
 import com.liferay.asset.kernel.exception.AssetCategoryException;
 import com.liferay.asset.kernel.exception.AssetTagException;
+import com.liferay.bulk.selection.BulkSelection;
+import com.liferay.bulk.selection.BulkSelectionFactory;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.exception.DuplicateFileEntryException;
 import com.liferay.document.library.kernel.exception.DuplicateFolderNameException;
@@ -27,7 +29,9 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.service.DLTrashService;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lock.DuplicateLockException;
 import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -53,6 +57,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -201,22 +206,15 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 			}
 		}
 
-		long[] deleteFileEntryIds = ParamUtil.getLongValues(
-			actionRequest, "rowIdsFileEntry");
+		BulkSelection<FileEntry> fileEntryBulkSelection =
+			_fileEntryBulkSelectionFactory.create(
+				actionRequest.getParameterMap());
 
-		for (long deleteFileEntryId : deleteFileEntryIds) {
-			if (moveToTrash) {
-				FileEntry fileEntry = _dlTrashService.moveFileEntryToTrash(
-					deleteFileEntryId);
+		Stream<FileEntry> fileEntryStream = fileEntryBulkSelection.stream();
 
-				if (fileEntry.getModel() instanceof TrashedModel) {
-					trashedModels.add((TrashedModel)fileEntry.getModel());
-				}
-			}
-			else {
-				_dlAppService.deleteFileEntry(deleteFileEntryId);
-			}
-		}
+		fileEntryStream.forEach(
+			fileEntry -> _deleteFileEntry(
+				fileEntry, moveToTrash, trashedModels));
 
 		if (moveToTrash && !trashedModels.isEmpty()) {
 			Map<String, Object> data = new HashMap<>();
@@ -370,8 +368,35 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 		_trashEntryService = trashEntryService;
 	}
 
+	private void _deleteFileEntry(
+		FileEntry fileEntry, boolean moveToTrash,
+		List<TrashedModel> trashedModels) {
+
+		try {
+			if (moveToTrash) {
+				_dlTrashService.moveFileEntryToTrash(
+					fileEntry.getFileEntryId());
+
+				if (fileEntry.getModel() instanceof TrashedModel) {
+					trashedModels.add((TrashedModel)fileEntry.getModel());
+				}
+			}
+			else {
+				_dlAppService.deleteFileEntry(fileEntry.getFileEntryId());
+			}
+		}
+		catch (PortalException pe) {
+			ReflectionUtil.throwException(pe);
+		}
+	}
+
 	private DLAppService _dlAppService;
 	private DLTrashService _dlTrashService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.document.library.kernel.model.DLFileEntry)"
+	)
+	private BulkSelectionFactory<FileEntry> _fileEntryBulkSelectionFactory;
 
 	@Reference
 	private Portal _portal;

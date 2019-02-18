@@ -36,11 +36,10 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
+import java.util.LinkedList;
 import java.util.Map;
+import java.util.Queue;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -109,9 +108,11 @@ public class ScopeLocatorImpl implements ScopeLocator {
 			companyId, applicationName);
 		ScopeMatcherFactory scopeMatcherFactory = getScopeMatcherFactory(
 			companyId);
-		List<String> matchedScopesUnmapped = new ArrayList<>(scopes.size());
+		Queue<String> matchedScopesUnmapped = new LinkedList<>();
 
 		Map<String, Set<String>> mappedScopesScopes = new HashMap<>();
+
+		Set<String> processedUnmappedScopes = new HashSet<>(scopes.size());
 
 		for (String scope : scopes) {
 			for (String mappedScope : scopeMapper.map(scope)) {
@@ -121,7 +122,7 @@ public class ScopeLocatorImpl implements ScopeLocator {
 						input, scopeMatcherFactory, prefixHandler,
 						scopesAlias));
 
-				if (matched) {
+				if (matched && processedUnmappedScopes.add(scope)) {
 					matchedScopesUnmapped.add(scope);
 				}
 
@@ -139,9 +140,16 @@ public class ScopeLocatorImpl implements ScopeLocator {
 			}
 		}
 
-		for (int i = 0; i < matchedScopesUnmapped.size();) {
+		String matchedScopeUnmapped;
+		Set<LiferayOAuth2Scope> liferayOAuth2Scopes = new HashSet<>();
+
+		while ((matchedScopeUnmapped = matchedScopesUnmapped.poll()) != null) {
+			liferayOAuth2Scopes.add(
+				new LiferayOAuth2ScopeImpl(
+					applicationName, bundle, matchedScopeUnmapped));
+
 			ScopeMatcher scopeMatcher = scopeMatcherFactory.create(
-				matchedScopesUnmapped.get(i));
+				matchedScopeUnmapped);
 
 			mappedScopesScopes.forEach(
 				(mappedScope, unmappedScopes) -> {
@@ -160,23 +168,14 @@ public class ScopeLocatorImpl implements ScopeLocator {
 					}
 
 					for (String unmappedScope : unmappedScopes) {
-						if (!matchedScopesUnmapped.contains(unmappedScope)) {
+						if (processedUnmappedScopes.add(unmappedScope)) {
 							matchedScopesUnmapped.add(unmappedScope);
 						}
 					}
 				});
-
-			i++;
 		}
 
-		Stream<String> stream = matchedScopesUnmapped.stream();
-
-		return stream.map(
-			scope ->
-				new LiferayOAuth2ScopeImpl(applicationName, bundle, scope)
-		).collect(
-			Collectors.toSet()
-		);
+		return liferayOAuth2Scopes;
 	}
 
 	@Override

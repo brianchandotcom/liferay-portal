@@ -32,11 +32,11 @@ import java.util.Date;
 public class DocumentImpl implements Document {
 
 	public AdaptedMedia[] getAdaptedMedia() {
-			return adaptedMedia;
+		return adaptedMedia;
 	}
 
 	public void setAdaptedMedia(AdaptedMedia[] adaptedMedia) {
-			this.adaptedMedia = adaptedMedia;
+		this.adaptedMedia = adaptedMedia;
 	}
 
 	public void setAdaptedMediaWithSupplier(UnsafeSupplier<AdaptedMedia[], Throwable> adaptedMediaUnsafeSupplier) {
@@ -44,11 +44,11 @@ public class DocumentImpl implements Document {
 
 	protected AdaptedMedia[] adaptedMedia;
 	public Long[] getCategory() {
-			return category;
+		return category;
 	}
 
 	public void setCategory(Long[] category) {
-			this.category = category;
+		this.category = category;
 	}
 
 	public void setCategoryWithSupplier(UnsafeSupplier<Long[], Throwable> categoryUnsafeSupplier) {
@@ -56,11 +56,11 @@ public class DocumentImpl implements Document {
 
 	protected Long[] category;
 	public String getContentUrl() {
-			return contentUrl;
+		return contentUrl;
 	}
 
 	public void setContentUrl(String contentUrl) {
-			this.contentUrl = contentUrl;
+		this.contentUrl = contentUrl;
 	}
 
 	public void setContentUrlWithSupplier(UnsafeSupplier<String, Throwable> contentUrlUnsafeSupplier) {
@@ -68,11 +68,11 @@ public class DocumentImpl implements Document {
 
 	protected String contentUrl;
 	public Creator getCreator() {
-			return creator;
+		return creator;
 	}
 
 	public void setCreator(Creator creator) {
-			this.creator = creator;
+		this.creator = creator;
 	}
 
 	public void setCreatorWithSupplier(UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier) {
@@ -80,11 +80,11 @@ public class DocumentImpl implements Document {
 
 	protected Creator creator;
 	public Date getDateCreated() {
-			return dateCreated;
+		return dateCreated;
 	}
 
 	public void setDateCreated(Date dateCreated) {
-			this.dateCreated = dateCreated;
+		this.dateCreated = dateCreated;
 	}
 
 	public void setDateCreatedWithSupplier(UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
@@ -92,11 +92,11 @@ public class DocumentImpl implements Document {
 
 	protected Date dateCreated;
 	public Date getDateModified() {
-			return dateModified;
+		return dateModified;
 	}
 
 	public void setDateModified(Date dateModified) {
-			this.dateModified = dateModified;
+		this.dateModified = dateModified;
 	}
 
 	public void setDateModifiedWithSupplier(UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
@@ -104,11 +104,11 @@ public class DocumentImpl implements Document {
 
 	protected Date dateModified;
 	public String getDescription() {
-			return description;
+		return description;
 	}
 
 	public void setDescription(String description) {
-			this.description = description;
+		this.description = description;
 	}
 
 	public void setDescriptionWithSupplier(UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier) {
@@ -116,11 +116,11 @@ public class DocumentImpl implements Document {
 
 	protected String description;
 	public String getEncodingFormat() {
-			return encodingFormat;
+		return encodingFormat;
 	}
 
 	public void setEncodingFormat(String encodingFormat) {
-			this.encodingFormat = encodingFormat;
+		this.encodingFormat = encodingFormat;
 	}
 
 	public void setEncodingFormatWithSupplier(UnsafeSupplier<String, Throwable> encodingFormatUnsafeSupplier) {
@@ -128,11 +128,11 @@ public class DocumentImpl implements Document {
 
 	protected String encodingFormat;
 	public String getFileExtension() {
-			return fileExtension;
+		return fileExtension;
 	}
 
 	public void setFileExtension(String fileExtension) {
-			this.fileExtension = fileExtension;
+		this.fileExtension = fileExtension;
 	}
 
 	public void setFileExtensionWithSupplier(UnsafeSupplier<String, Throwable> fileExtensionUnsafeSupplier) {
@@ -140,11 +140,11 @@ public class DocumentImpl implements Document {
 
 	protected String fileExtension;
 	public Long getFolderId() {
-			return folderId;
+		return folderId;
 	}
 
 	public void setFolderId(Long folderId) {
-			this.folderId = folderId;
+		this.folderId = folderId;
 	}
 
 	public void setFolderIdWithSupplier(UnsafeSupplier<Long, Throwable> folderIdUnsafeSupplier) {
@@ -152,11 +152,11 @@ public class DocumentImpl implements Document {
 
 	protected Long folderId;
 	public Long getId() {
-			return id;
+		return id;
 	}
 
 	public void setId(Long id) {
-			this.id = id;
+		this.id = id;
 	}
 
 	public void setIdWithSupplier(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
@@ -164,11 +164,11 @@ public class DocumentImpl implements Document {
 
 	protected Long id;
 	public String[] getKeywords() {
-			return keywords;
+		return keywords;
 	}
 
 	public void setKeywords(String[] keywords) {
-			this.keywords = keywords;
+		this.keywords = keywords;
 	}
 
 	public void setKeywordsWithSupplier(UnsafeSupplier<String[], Throwable> keywordsUnsafeSupplier) {
@@ -176,11 +176,11 @@ public class DocumentImpl implements Document {
 
 	protected String[] keywords;
 	public Number getSizeInBytes() {
-			return sizeInBytes;
+		return sizeInBytes;
 	}
 
 	public void setSizeInBytes(Number sizeInBytes) {
-			this.sizeInBytes = sizeInBytes;
+		this.sizeInBytes = sizeInBytes;
 	}
 
 	public void setSizeInBytesWithSupplier(UnsafeSupplier<Number, Throwable> sizeInBytesUnsafeSupplier) {
@@ -188,11 +188,11 @@ public class DocumentImpl implements Document {
 
 	protected Number sizeInBytes;
 	public String getTitle() {
-			return title;
+		return title;
 	}
 
 	public void setTitle(String title) {
-			this.title = title;
+		this.title = title;
 	}
 
 	public void setTitleWithSupplier(UnsafeSupplier<String, Throwable> titleUnsafeSupplier) {

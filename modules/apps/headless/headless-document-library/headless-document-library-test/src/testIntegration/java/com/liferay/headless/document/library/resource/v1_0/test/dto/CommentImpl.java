@@ -30,11 +30,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class CommentImpl implements Comment {
 
 	public Comment[] getComments() {
-			return comments;
+		return comments;
 	}
 
 	public void setComments(Comment[] comments) {
-			this.comments = comments;
+		this.comments = comments;
 	}
 
 	public void setCommentsWithSupplier(UnsafeSupplier<Comment[], Throwable> commentsUnsafeSupplier) {
@@ -42,11 +42,11 @@ public class CommentImpl implements Comment {
 
 	protected Comment[] comments;
 	public Creator getCreator() {
-			return creator;
+		return creator;
 	}
 
 	public void setCreator(Creator creator) {
-			this.creator = creator;
+		this.creator = creator;
 	}
 
 	public void setCreatorWithSupplier(UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier) {
@@ -54,11 +54,11 @@ public class CommentImpl implements Comment {
 
 	protected Creator creator;
 	public Long getId() {
-			return id;
+		return id;
 	}
 
 	public void setId(Long id) {
-			this.id = id;
+		this.id = id;
 	}
 
 	public void setIdWithSupplier(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
@@ -66,11 +66,11 @@ public class CommentImpl implements Comment {
 
 	protected Long id;
 	public String getText() {
-			return text;
+		return text;
 	}
 
 	public void setText(String text) {
-			this.text = text;
+		this.text = text;
 	}
 
 	public void setTextWithSupplier(UnsafeSupplier<String, Throwable> textUnsafeSupplier) {

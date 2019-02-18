@@ -20,8 +20,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.document.library.dto.v1_0.Folder;
-
 import com.liferay.headless.document.library.resource.v1_0.test.dto.FolderImpl;
+
 import io.restassured.response.Response;
 
 import org.junit.Test;

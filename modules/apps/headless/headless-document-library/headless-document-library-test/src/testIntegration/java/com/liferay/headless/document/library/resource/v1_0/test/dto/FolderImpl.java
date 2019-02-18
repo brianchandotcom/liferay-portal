@@ -31,11 +31,11 @@ import java.util.Date;
 public class FolderImpl implements Folder {
 
 	public Date getDateCreated() {
-			return dateCreated;
+		return dateCreated;
 	}
 
 	public void setDateCreated(Date dateCreated) {
-			this.dateCreated = dateCreated;
+		this.dateCreated = dateCreated;
 	}
 
 	public void setDateCreatedWithSupplier(UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
@@ -43,11 +43,11 @@ public class FolderImpl implements Folder {
 
 	protected Date dateCreated;
 	public Date getDateModified() {
-			return dateModified;
+		return dateModified;
 	}
 
 	public void setDateModified(Date dateModified) {
-			this.dateModified = dateModified;
+		this.dateModified = dateModified;
 	}
 
 	public void setDateModifiedWithSupplier(UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
@@ -55,11 +55,11 @@ public class FolderImpl implements Folder {
 
 	protected Date dateModified;
 	public String getDescription() {
-			return description;
+		return description;
 	}
 
 	public void setDescription(String description) {
-			this.description = description;
+		this.description = description;
 	}
 
 	public void setDescriptionWithSupplier(UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier) {
@@ -67,11 +67,11 @@ public class FolderImpl implements Folder {
 
 	protected String description;
 	public Document[] getDocuments() {
-			return documents;
+		return documents;
 	}
 
 	public void setDocuments(Document[] documents) {
-			this.documents = documents;
+		this.documents = documents;
 	}
 
 	public void setDocumentsWithSupplier(UnsafeSupplier<Document[], Throwable> documentsUnsafeSupplier) {
@@ -79,11 +79,11 @@ public class FolderImpl implements Folder {
 
 	protected Document[] documents;
 	public Long[] getDocumentsIds() {
-			return documentsIds;
+		return documentsIds;
 	}
 
 	public void setDocumentsIds(Long[] documentsIds) {
-			this.documentsIds = documentsIds;
+		this.documentsIds = documentsIds;
 	}
 
 	public void setDocumentsIdsWithSupplier(UnsafeSupplier<Long[], Throwable> documentsIdsUnsafeSupplier) {
@@ -91,11 +91,11 @@ public class FolderImpl implements Folder {
 
 	protected Long[] documentsIds;
 	public Folder getDocumentsRepository() {
-			return documentsRepository;
+		return documentsRepository;
 	}
 
 	public void setDocumentsRepository(Folder documentsRepository) {
-			this.documentsRepository = documentsRepository;
+		this.documentsRepository = documentsRepository;
 	}
 
 	public void setDocumentsRepositoryWithSupplier(UnsafeSupplier<Folder, Throwable> documentsRepositoryUnsafeSupplier) {
@@ -103,11 +103,11 @@ public class FolderImpl implements Folder {
 
 	protected Folder documentsRepository;
 	public Long getDocumentsRepositoryId() {
-			return documentsRepositoryId;
+		return documentsRepositoryId;
 	}
 
 	public void setDocumentsRepositoryId(Long documentsRepositoryId) {
-			this.documentsRepositoryId = documentsRepositoryId;
+		this.documentsRepositoryId = documentsRepositoryId;
 	}
 
 	public void setDocumentsRepositoryIdWithSupplier(UnsafeSupplier<Long, Throwable> documentsRepositoryIdUnsafeSupplier) {
@@ -115,11 +115,11 @@ public class FolderImpl implements Folder {
 
 	protected Long documentsRepositoryId;
 	public Long getId() {
-			return id;
+		return id;
 	}
 
 	public void setId(Long id) {
-			this.id = id;
+		this.id = id;
 	}
 
 	public void setIdWithSupplier(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
@@ -127,11 +127,11 @@ public class FolderImpl implements Folder {
 
 	protected Long id;
 	public String getName() {
-			return name;
+		return name;
 	}
 
 	public void setName(String name) {
-			this.name = name;
+		this.name = name;
 	}
 
 	public void setNameWithSupplier(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
@@ -139,11 +139,11 @@ public class FolderImpl implements Folder {
 
 	protected String name;
 	public Folder[] getSubFolders() {
-			return subFolders;
+		return subFolders;
 	}
 
 	public void setSubFolders(Folder[] subFolders) {
-			this.subFolders = subFolders;
+		this.subFolders = subFolders;
 	}
 
 	public void setSubFoldersWithSupplier(UnsafeSupplier<Folder[], Throwable> subFoldersUnsafeSupplier) {

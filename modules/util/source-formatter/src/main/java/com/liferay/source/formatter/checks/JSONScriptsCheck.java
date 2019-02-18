@@ -63,12 +63,9 @@ public class JSONScriptsCheck extends BaseFileCheck {
 				for (String missingScript :
 						StringUtil.split(entry.getValue())) {
 
-					String message = StringBundler.concat(
-						"When using '" + packageName + "', a script for '",
-						missingScript, "' is required");
-
 					if (jsonObject.isNull("scripts")) {
-						addMessage(fileName, message);
+						addMessage(
+							fileName, _getMessage(packageName, missingScript));
 
 						continue;
 					}
@@ -77,7 +74,8 @@ public class JSONScriptsCheck extends BaseFileCheck {
 						"scripts");
 
 					if (scriptsJSONObject.isNull(missingScript)) {
-						addMessage(fileName, message);
+						addMessage(
+							fileName, _getMessage(packageName, missingScript));
 
 						continue;
 					}
@@ -86,7 +84,8 @@ public class JSONScriptsCheck extends BaseFileCheck {
 						missingScript);
 
 					if (!scriptValue.startsWith(packageName + CharPool.SPACE)) {
-						addMessage(fileName, message);
+						addMessage(
+							fileName, _getMessage(packageName, missingScript));
 					}
 				}
 			}
@@ -94,6 +93,12 @@ public class JSONScriptsCheck extends BaseFileCheck {
 		catch (JSONException jsone) {
 			addMessage(fileName, jsone.getMessage());
 		}
+	}
+
+	private String _getMessage(String packageName, String missingScript) {
+		return StringBundler.concat(
+			"When using '" + packageName + "', a script for '", missingScript,
+			"' is required");
 	}
 
 	private static final Map<String, String> _missingScriptsMap =

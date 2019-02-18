@@ -70,7 +70,6 @@ page import="com.liferay.blogs.web.internal.display.context.BlogImagesDisplayCon
 page import="com.liferay.blogs.web.internal.display.context.BlogImagesManagementToolbarDisplayContext" %><%@
 page import="com.liferay.blogs.web.internal.display.context.BlogsPortletInstanceSettingsHelper" %><%@
 page import="com.liferay.blogs.web.internal.security.permission.resource.BlogsEntryPermission" %><%@
-page import="com.liferay.blogs.web.internal.security.permission.resource.BlogsPermission" %><%@
 page import="com.liferay.blogs.web.internal.servlet.taglib.clay.BlogsEntryImageVerticalCard" %><%@
 page import="com.liferay.blogs.web.internal.servlet.taglib.clay.BlogsEntryVerticalCard" %><%@
 page import="com.liferay.blogs.web.internal.servlet.taglib.util.BlogsEntryActionDropdownItemsProvider" %><%@
@@ -105,7 +104,6 @@ page import="com.liferay.portal.kernel.portlet.PortletProviderUtil" %><%@
 page import="com.liferay.portal.kernel.portlet.PortletURLUtil" %><%@
 page import="com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory" %><%@
 page import="com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil" %><%@
-page import="com.liferay.portal.kernel.repository.model.FileEntry" %><%@
 page import="com.liferay.portal.kernel.security.permission.ActionKeys" %><%@
 page import="com.liferay.portal.kernel.security.permission.ResourceActionsUtil" %><%@
 page import="com.liferay.portal.kernel.service.GroupLocalServiceUtil" %><%@
@@ -145,8 +143,7 @@ page import="com.liferay.ratings.kernel.model.RatingsEntry" %><%@
 page import="com.liferay.ratings.kernel.model.RatingsStats" %><%@
 page import="com.liferay.ratings.kernel.service.RatingsEntryLocalServiceUtil" %><%@
 page import="com.liferay.ratings.kernel.service.RatingsStatsLocalServiceUtil" %><%@
-page import="com.liferay.rss.util.RSSUtil" %><%@
-page import="com.liferay.taglib.search.ResultRow" %>
+page import="com.liferay.rss.util.RSSUtil" %>
 
 <%@ page import="java.text.Format" %>
 

@@ -14,7 +14,6 @@
 
 package com.liferay.headless.document.library.resource.v1_0.test.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.liferay.headless.document.library.dto.v1_0.AdaptedMedia;
 import com.liferay.headless.document.library.dto.v1_0.Creator;
 import com.liferay.headless.document.library.dto.v1_0.Document;
@@ -43,7 +42,6 @@ public class DocumentImpl implements Document {
 	public void setAdaptedMediaWithSupplier(UnsafeSupplier<AdaptedMedia[], Throwable> adaptedMediaUnsafeSupplier) {
 	}
 
-	@JsonProperty
 	protected AdaptedMedia[] adaptedMedia;
 	public Long[] getCategory() {
 			return category;
@@ -56,7 +54,6 @@ public class DocumentImpl implements Document {
 	public void setCategoryWithSupplier(UnsafeSupplier<Long[], Throwable> categoryUnsafeSupplier) {
 	}
 
-	@JsonProperty
 	protected Long[] category;
 	public String getContentUrl() {
 			return contentUrl;
@@ -69,7 +66,6 @@ public class DocumentImpl implements Document {
 	public void setContentUrlWithSupplier(UnsafeSupplier<String, Throwable> contentUrlUnsafeSupplier) {
 	}
 
-	@JsonProperty
 	protected String contentUrl;
 	public Creator getCreator() {
 			return creator;
@@ -82,7 +78,6 @@ public class DocumentImpl implements Document {
 	public void setCreatorWithSupplier(UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier) {
 	}
 
-	@JsonProperty
 	protected Creator creator;
 	public Date getDateCreated() {
 			return dateCreated;
@@ -95,7 +90,6 @@ public class DocumentImpl implements Document {
 	public void setDateCreatedWithSupplier(UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
 	}
 
-	@JsonProperty
 	protected Date dateCreated;
 	public Date getDateModified() {
 			return dateModified;
@@ -108,7 +102,6 @@ public class DocumentImpl implements Document {
 	public void setDateModifiedWithSupplier(UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
 	}
 
-	@JsonProperty
 	protected Date dateModified;
 	public String getDescription() {
 			return description;
@@ -121,7 +114,6 @@ public class DocumentImpl implements Document {
 	public void setDescriptionWithSupplier(UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier) {
 	}
 
-	@JsonProperty
 	protected String description;
 	public String getEncodingFormat() {
 			return encodingFormat;
@@ -134,7 +126,6 @@ public class DocumentImpl implements Document {
 	public void setEncodingFormatWithSupplier(UnsafeSupplier<String, Throwable> encodingFormatUnsafeSupplier) {
 	}
 
-	@JsonProperty
 	protected String encodingFormat;
 	public String getFileExtension() {
 			return fileExtension;
@@ -147,7 +138,6 @@ public class DocumentImpl implements Document {
 	public void setFileExtensionWithSupplier(UnsafeSupplier<String, Throwable> fileExtensionUnsafeSupplier) {
 	}
 
-	@JsonProperty
 	protected String fileExtension;
 	public Long getFolderId() {
 			return folderId;
@@ -160,7 +150,6 @@ public class DocumentImpl implements Document {
 	public void setFolderIdWithSupplier(UnsafeSupplier<Long, Throwable> folderIdUnsafeSupplier) {
 	}
 
-	@JsonProperty
 	protected Long folderId;
 	public Long getId() {
 			return id;
@@ -173,7 +162,6 @@ public class DocumentImpl implements Document {
 	public void setIdWithSupplier(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 	}
 
-	@JsonProperty
 	protected Long id;
 	public String[] getKeywords() {
 			return keywords;
@@ -186,7 +174,6 @@ public class DocumentImpl implements Document {
 	public void setKeywordsWithSupplier(UnsafeSupplier<String[], Throwable> keywordsUnsafeSupplier) {
 	}
 
-	@JsonProperty
 	protected String[] keywords;
 	public Number getSizeInBytes() {
 			return sizeInBytes;
@@ -199,7 +186,6 @@ public class DocumentImpl implements Document {
 	public void setSizeInBytesWithSupplier(UnsafeSupplier<Number, Throwable> sizeInBytesUnsafeSupplier) {
 	}
 
-	@JsonProperty
 	protected Number sizeInBytes;
 	public String getTitle() {
 			return title;
@@ -212,7 +198,6 @@ public class DocumentImpl implements Document {
 	public void setTitleWithSupplier(UnsafeSupplier<String, Throwable> titleUnsafeSupplier) {
 	}
 
-	@JsonProperty
 	protected String title;
 
 }

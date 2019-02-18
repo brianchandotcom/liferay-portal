@@ -14,7 +14,6 @@
 
 package com.liferay.headless.document.library.resource.v1_0.test.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.liferay.headless.document.library.dto.v1_0.Comment;
 import com.liferay.headless.document.library.dto.v1_0.Creator;
 import com.liferay.petra.function.UnsafeSupplier;
@@ -41,7 +40,6 @@ public class CommentImpl implements Comment {
 	public void setCommentsWithSupplier(UnsafeSupplier<Comment[], Throwable> commentsUnsafeSupplier) {
 	}
 
-	@JsonProperty
 	protected Comment[] comments;
 	public Creator getCreator() {
 			return creator;
@@ -54,7 +52,6 @@ public class CommentImpl implements Comment {
 	public void setCreatorWithSupplier(UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier) {
 	}
 
-	@JsonProperty
 	protected Creator creator;
 	public Long getId() {
 			return id;
@@ -67,7 +64,6 @@ public class CommentImpl implements Comment {
 	public void setIdWithSupplier(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 	}
 
-	@JsonProperty
 	protected Long id;
 	public String getText() {
 			return text;
@@ -80,7 +76,6 @@ public class CommentImpl implements Comment {
 	public void setTextWithSupplier(UnsafeSupplier<String, Throwable> textUnsafeSupplier) {
 	}
 
-	@JsonProperty
 	protected String text;
 
 }

@@ -14,7 +14,6 @@
 
 package com.liferay.headless.document.library.resource.v1_0.test.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.liferay.headless.document.library.dto.v1_0.Document;
 import com.liferay.headless.document.library.dto.v1_0.Folder;
 import com.liferay.petra.function.UnsafeSupplier;
@@ -42,7 +41,6 @@ public class FolderImpl implements Folder {
 	public void setDateCreatedWithSupplier(UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
 	}
 
-	@JsonProperty
 	protected Date dateCreated;
 	public Date getDateModified() {
 			return dateModified;
@@ -55,7 +53,6 @@ public class FolderImpl implements Folder {
 	public void setDateModifiedWithSupplier(UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
 	}
 
-	@JsonProperty
 	protected Date dateModified;
 	public String getDescription() {
 			return description;
@@ -68,7 +65,6 @@ public class FolderImpl implements Folder {
 	public void setDescriptionWithSupplier(UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier) {
 	}
 
-	@JsonProperty
 	protected String description;
 	public Document[] getDocuments() {
 			return documents;
@@ -81,7 +77,6 @@ public class FolderImpl implements Folder {
 	public void setDocumentsWithSupplier(UnsafeSupplier<Document[], Throwable> documentsUnsafeSupplier) {
 	}
 
-	@JsonProperty
 	protected Document[] documents;
 	public Long[] getDocumentsIds() {
 			return documentsIds;
@@ -94,7 +89,6 @@ public class FolderImpl implements Folder {
 	public void setDocumentsIdsWithSupplier(UnsafeSupplier<Long[], Throwable> documentsIdsUnsafeSupplier) {
 	}
 
-	@JsonProperty
 	protected Long[] documentsIds;
 	public Folder getDocumentsRepository() {
 			return documentsRepository;
@@ -107,7 +101,6 @@ public class FolderImpl implements Folder {
 	public void setDocumentsRepositoryWithSupplier(UnsafeSupplier<Folder, Throwable> documentsRepositoryUnsafeSupplier) {
 	}
 
-	@JsonProperty
 	protected Folder documentsRepository;
 	public Long getDocumentsRepositoryId() {
 			return documentsRepositoryId;
@@ -120,7 +113,6 @@ public class FolderImpl implements Folder {
 	public void setDocumentsRepositoryIdWithSupplier(UnsafeSupplier<Long, Throwable> documentsRepositoryIdUnsafeSupplier) {
 	}
 
-	@JsonProperty
 	protected Long documentsRepositoryId;
 	public Long getId() {
 			return id;
@@ -133,7 +125,6 @@ public class FolderImpl implements Folder {
 	public void setIdWithSupplier(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 	}
 
-	@JsonProperty
 	protected Long id;
 	public String getName() {
 			return name;
@@ -146,13 +137,11 @@ public class FolderImpl implements Folder {
 	public void setNameWithSupplier(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
 	}
 
-	@JsonProperty
 	protected String name;
 	public Folder[] getSubFolders() {
 			return subFolders;
 	}
 
-	@JsonProperty
 	public void setSubFolders(Folder[] subFolders) {
 			this.subFolders = subFolders;
 	}
@@ -160,7 +149,6 @@ public class FolderImpl implements Folder {
 	public void setSubFoldersWithSupplier(UnsafeSupplier<Folder[], Throwable> subFoldersUnsafeSupplier) {
 	}
 
-	@JsonProperty
 	protected Folder[] subFolders;
 
 }

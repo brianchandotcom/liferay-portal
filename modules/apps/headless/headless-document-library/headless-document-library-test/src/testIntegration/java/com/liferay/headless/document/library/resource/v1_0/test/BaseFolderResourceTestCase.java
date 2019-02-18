@@ -236,11 +236,8 @@ public abstract class BaseFolderResourceTestCase {
 	protected Folder randomFolder() {
 		Folder folder = new FolderImpl();
 
-		folder.setDateCreated(RandomTestUtil.nextDate());
-		folder.setDateModified(RandomTestUtil.nextDate());
 		folder.setDescription(RandomTestUtil.randomString());
 		folder.setDocumentsRepositoryId(testGroup.getGroupId());
-		folder.setId(RandomTestUtil.randomLong());
 		folder.setName(RandomTestUtil.randomString());
 
 		return folder;

@@ -14,6 +14,7 @@
 
 package com.liferay.headless.collaboration.internal.dto.v1_0;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import com.liferay.headless.collaboration.dto.v1_0.AggregateRating;
@@ -43,6 +44,7 @@ public class AggregateRatingImpl implements AggregateRating {
 			this.bestRating = bestRating;
 	}
 
+	@JsonIgnore
 	public void setBestRating(UnsafeSupplier<Number, Throwable> bestRatingUnsafeSupplier) {
 			try {
 				bestRating = bestRatingUnsafeSupplier.get();
@@ -63,6 +65,7 @@ public class AggregateRatingImpl implements AggregateRating {
 			this.ratingCount = ratingCount;
 	}
 
+	@JsonIgnore
 	public void setRatingCount(UnsafeSupplier<Number, Throwable> ratingCountUnsafeSupplier) {
 			try {
 				ratingCount = ratingCountUnsafeSupplier.get();
@@ -83,6 +86,7 @@ public class AggregateRatingImpl implements AggregateRating {
 			this.ratingValue = ratingValue;
 	}
 
+	@JsonIgnore
 	public void setRatingValue(UnsafeSupplier<Number, Throwable> ratingValueUnsafeSupplier) {
 			try {
 				ratingValue = ratingValueUnsafeSupplier.get();
@@ -103,6 +107,7 @@ public class AggregateRatingImpl implements AggregateRating {
 			this.worstRating = worstRating;
 	}
 
+	@JsonIgnore
 	public void setWorstRating(UnsafeSupplier<Number, Throwable> worstRatingUnsafeSupplier) {
 			try {
 				worstRating = worstRatingUnsafeSupplier.get();

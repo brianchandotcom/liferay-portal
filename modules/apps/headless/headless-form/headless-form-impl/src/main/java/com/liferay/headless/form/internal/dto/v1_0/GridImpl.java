@@ -14,6 +14,7 @@
 
 package com.liferay.headless.form.internal.dto.v1_0;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import com.liferay.headless.form.dto.v1_0.Columns;
@@ -45,6 +46,7 @@ public class GridImpl implements Grid {
 			this.columns = columns;
 	}
 
+	@JsonIgnore
 	public void setColumns(UnsafeSupplier<Columns[], Throwable> columnsUnsafeSupplier) {
 			try {
 				columns = columnsUnsafeSupplier.get();
@@ -65,6 +67,7 @@ public class GridImpl implements Grid {
 			this.id = id;
 	}
 
+	@JsonIgnore
 	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 			try {
 				id = idUnsafeSupplier.get();
@@ -85,6 +88,7 @@ public class GridImpl implements Grid {
 			this.rows = rows;
 	}
 
+	@JsonIgnore
 	public void setRows(UnsafeSupplier<Rows[], Throwable> rowsUnsafeSupplier) {
 			try {
 				rows = rowsUnsafeSupplier.get();

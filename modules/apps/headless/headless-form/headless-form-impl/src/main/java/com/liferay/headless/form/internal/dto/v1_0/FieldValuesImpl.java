@@ -14,6 +14,7 @@
 
 package com.liferay.headless.form.internal.dto.v1_0;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import com.liferay.headless.form.dto.v1_0.FieldValues;
@@ -44,6 +45,7 @@ public class FieldValuesImpl implements FieldValues {
 			this.document = document;
 	}
 
+	@JsonIgnore
 	public void setDocument(UnsafeSupplier<FormDocument, Throwable> documentUnsafeSupplier) {
 			try {
 				document = documentUnsafeSupplier.get();
@@ -64,6 +66,7 @@ public class FieldValuesImpl implements FieldValues {
 			this.documentId = documentId;
 	}
 
+	@JsonIgnore
 	public void setDocumentId(UnsafeSupplier<Long, Throwable> documentIdUnsafeSupplier) {
 			try {
 				documentId = documentIdUnsafeSupplier.get();
@@ -84,6 +87,7 @@ public class FieldValuesImpl implements FieldValues {
 			this.id = id;
 	}
 
+	@JsonIgnore
 	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 			try {
 				id = idUnsafeSupplier.get();
@@ -104,6 +108,7 @@ public class FieldValuesImpl implements FieldValues {
 			this.name = name;
 	}
 
+	@JsonIgnore
 	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
 			try {
 				name = nameUnsafeSupplier.get();
@@ -124,6 +129,7 @@ public class FieldValuesImpl implements FieldValues {
 			this.value = value;
 	}
 
+	@JsonIgnore
 	public void setValue(UnsafeSupplier<String, Throwable> valueUnsafeSupplier) {
 			try {
 				value = valueUnsafeSupplier.get();

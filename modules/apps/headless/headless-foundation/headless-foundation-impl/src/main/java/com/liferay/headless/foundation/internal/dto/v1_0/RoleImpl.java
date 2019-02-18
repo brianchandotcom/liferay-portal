@@ -14,6 +14,7 @@
 
 package com.liferay.headless.foundation.internal.dto.v1_0;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import com.liferay.headless.foundation.dto.v1_0.Creator;
@@ -46,6 +47,7 @@ public class RoleImpl implements Role {
 			this.availableLanguages = availableLanguages;
 	}
 
+	@JsonIgnore
 	public void setAvailableLanguages(UnsafeSupplier<String[], Throwable> availableLanguagesUnsafeSupplier) {
 			try {
 				availableLanguages = availableLanguagesUnsafeSupplier.get();
@@ -66,6 +68,7 @@ public class RoleImpl implements Role {
 			this.creator = creator;
 	}
 
+	@JsonIgnore
 	public void setCreator(UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier) {
 			try {
 				creator = creatorUnsafeSupplier.get();
@@ -86,6 +89,7 @@ public class RoleImpl implements Role {
 			this.dateCreated = dateCreated;
 	}
 
+	@JsonIgnore
 	public void setDateCreated(UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
 			try {
 				dateCreated = dateCreatedUnsafeSupplier.get();
@@ -106,6 +110,7 @@ public class RoleImpl implements Role {
 			this.dateModified = dateModified;
 	}
 
+	@JsonIgnore
 	public void setDateModified(UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
 			try {
 				dateModified = dateModifiedUnsafeSupplier.get();
@@ -126,6 +131,7 @@ public class RoleImpl implements Role {
 			this.description = description;
 	}
 
+	@JsonIgnore
 	public void setDescription(UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier) {
 			try {
 				description = descriptionUnsafeSupplier.get();
@@ -146,6 +152,7 @@ public class RoleImpl implements Role {
 			this.id = id;
 	}
 
+	@JsonIgnore
 	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 			try {
 				id = idUnsafeSupplier.get();
@@ -166,6 +173,7 @@ public class RoleImpl implements Role {
 			this.name = name;
 	}
 
+	@JsonIgnore
 	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
 			try {
 				name = nameUnsafeSupplier.get();
@@ -186,6 +194,7 @@ public class RoleImpl implements Role {
 			this.roleType = roleType;
 	}
 
+	@JsonIgnore
 	public void setRoleType(UnsafeSupplier<String, Throwable> roleTypeUnsafeSupplier) {
 			try {
 				roleType = roleTypeUnsafeSupplier.get();

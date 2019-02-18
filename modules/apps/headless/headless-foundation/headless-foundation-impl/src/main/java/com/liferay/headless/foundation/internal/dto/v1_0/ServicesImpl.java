@@ -14,6 +14,7 @@
 
 package com.liferay.headless.foundation.internal.dto.v1_0;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import com.liferay.headless.foundation.dto.v1_0.HoursAvailable;
@@ -44,6 +45,7 @@ public class ServicesImpl implements Services {
 			this.hoursAvailable = hoursAvailable;
 	}
 
+	@JsonIgnore
 	public void setHoursAvailable(UnsafeSupplier<HoursAvailable[], Throwable> hoursAvailableUnsafeSupplier) {
 			try {
 				hoursAvailable = hoursAvailableUnsafeSupplier.get();
@@ -64,6 +66,7 @@ public class ServicesImpl implements Services {
 			this.id = id;
 	}
 
+	@JsonIgnore
 	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 			try {
 				id = idUnsafeSupplier.get();
@@ -84,6 +87,7 @@ public class ServicesImpl implements Services {
 			this.serviceType = serviceType;
 	}
 
+	@JsonIgnore
 	public void setServiceType(UnsafeSupplier<String, Throwable> serviceTypeUnsafeSupplier) {
 			try {
 				serviceType = serviceTypeUnsafeSupplier.get();

@@ -14,6 +14,7 @@
 
 package com.liferay.headless.document.library.internal.dto.v1_0;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import com.liferay.headless.document.library.dto.v1_0.AdaptedMedia;
@@ -47,6 +48,7 @@ public class DocumentImpl implements Document {
 			this.adaptedMedia = adaptedMedia;
 	}
 
+	@JsonIgnore
 	public void setAdaptedMedia(UnsafeSupplier<AdaptedMedia[], Throwable> adaptedMediaUnsafeSupplier) {
 			try {
 				adaptedMedia = adaptedMediaUnsafeSupplier.get();
@@ -67,6 +69,7 @@ public class DocumentImpl implements Document {
 			this.category = category;
 	}
 
+	@JsonIgnore
 	public void setCategory(UnsafeSupplier<Long[], Throwable> categoryUnsafeSupplier) {
 			try {
 				category = categoryUnsafeSupplier.get();
@@ -87,6 +90,7 @@ public class DocumentImpl implements Document {
 			this.contentUrl = contentUrl;
 	}
 
+	@JsonIgnore
 	public void setContentUrl(UnsafeSupplier<String, Throwable> contentUrlUnsafeSupplier) {
 			try {
 				contentUrl = contentUrlUnsafeSupplier.get();
@@ -107,6 +111,7 @@ public class DocumentImpl implements Document {
 			this.creator = creator;
 	}
 
+	@JsonIgnore
 	public void setCreator(UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier) {
 			try {
 				creator = creatorUnsafeSupplier.get();
@@ -127,6 +132,7 @@ public class DocumentImpl implements Document {
 			this.dateCreated = dateCreated;
 	}
 
+	@JsonIgnore
 	public void setDateCreated(UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
 			try {
 				dateCreated = dateCreatedUnsafeSupplier.get();
@@ -147,6 +153,7 @@ public class DocumentImpl implements Document {
 			this.dateModified = dateModified;
 	}
 
+	@JsonIgnore
 	public void setDateModified(UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
 			try {
 				dateModified = dateModifiedUnsafeSupplier.get();
@@ -167,6 +174,7 @@ public class DocumentImpl implements Document {
 			this.description = description;
 	}
 
+	@JsonIgnore
 	public void setDescription(UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier) {
 			try {
 				description = descriptionUnsafeSupplier.get();
@@ -187,6 +195,7 @@ public class DocumentImpl implements Document {
 			this.encodingFormat = encodingFormat;
 	}
 
+	@JsonIgnore
 	public void setEncodingFormat(UnsafeSupplier<String, Throwable> encodingFormatUnsafeSupplier) {
 			try {
 				encodingFormat = encodingFormatUnsafeSupplier.get();
@@ -207,6 +216,7 @@ public class DocumentImpl implements Document {
 			this.fileExtension = fileExtension;
 	}
 
+	@JsonIgnore
 	public void setFileExtension(UnsafeSupplier<String, Throwable> fileExtensionUnsafeSupplier) {
 			try {
 				fileExtension = fileExtensionUnsafeSupplier.get();
@@ -227,6 +237,7 @@ public class DocumentImpl implements Document {
 			this.folderId = folderId;
 	}
 
+	@JsonIgnore
 	public void setFolderId(UnsafeSupplier<Long, Throwable> folderIdUnsafeSupplier) {
 			try {
 				folderId = folderIdUnsafeSupplier.get();
@@ -247,6 +258,7 @@ public class DocumentImpl implements Document {
 			this.id = id;
 	}
 
+	@JsonIgnore
 	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 			try {
 				id = idUnsafeSupplier.get();
@@ -267,6 +279,7 @@ public class DocumentImpl implements Document {
 			this.keywords = keywords;
 	}
 
+	@JsonIgnore
 	public void setKeywords(UnsafeSupplier<String[], Throwable> keywordsUnsafeSupplier) {
 			try {
 				keywords = keywordsUnsafeSupplier.get();
@@ -287,6 +300,7 @@ public class DocumentImpl implements Document {
 			this.sizeInBytes = sizeInBytes;
 	}
 
+	@JsonIgnore
 	public void setSizeInBytes(UnsafeSupplier<Number, Throwable> sizeInBytesUnsafeSupplier) {
 			try {
 				sizeInBytes = sizeInBytesUnsafeSupplier.get();
@@ -307,6 +321,7 @@ public class DocumentImpl implements Document {
 			this.title = title;
 	}
 
+	@JsonIgnore
 	public void setTitle(UnsafeSupplier<String, Throwable> titleUnsafeSupplier) {
 			try {
 				title = titleUnsafeSupplier.get();

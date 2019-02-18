@@ -14,6 +14,7 @@
 
 package com.liferay.headless.collaboration.internal.dto.v1_0;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import com.liferay.headless.collaboration.dto.v1_0.AggregateRating;
@@ -51,6 +52,7 @@ public class BlogPostingImpl implements BlogPosting {
 			this.aggregateRating = aggregateRating;
 	}
 
+	@JsonIgnore
 	public void setAggregateRating(UnsafeSupplier<AggregateRating, Throwable> aggregateRatingUnsafeSupplier) {
 			try {
 				aggregateRating = aggregateRatingUnsafeSupplier.get();
@@ -71,6 +73,7 @@ public class BlogPostingImpl implements BlogPosting {
 			this.alternativeHeadline = alternativeHeadline;
 	}
 
+	@JsonIgnore
 	public void setAlternativeHeadline(UnsafeSupplier<String, Throwable> alternativeHeadlineUnsafeSupplier) {
 			try {
 				alternativeHeadline = alternativeHeadlineUnsafeSupplier.get();
@@ -91,6 +94,7 @@ public class BlogPostingImpl implements BlogPosting {
 			this.articleBody = articleBody;
 	}
 
+	@JsonIgnore
 	public void setArticleBody(UnsafeSupplier<String, Throwable> articleBodyUnsafeSupplier) {
 			try {
 				articleBody = articleBodyUnsafeSupplier.get();
@@ -111,6 +115,7 @@ public class BlogPostingImpl implements BlogPosting {
 			this.caption = caption;
 	}
 
+	@JsonIgnore
 	public void setCaption(UnsafeSupplier<String, Throwable> captionUnsafeSupplier) {
 			try {
 				caption = captionUnsafeSupplier.get();
@@ -131,6 +136,7 @@ public class BlogPostingImpl implements BlogPosting {
 			this.category = category;
 	}
 
+	@JsonIgnore
 	public void setCategory(UnsafeSupplier<Category[], Throwable> categoryUnsafeSupplier) {
 			try {
 				category = categoryUnsafeSupplier.get();
@@ -151,6 +157,7 @@ public class BlogPostingImpl implements BlogPosting {
 			this.comment = comment;
 	}
 
+	@JsonIgnore
 	public void setComment(UnsafeSupplier<Comment[], Throwable> commentUnsafeSupplier) {
 			try {
 				comment = commentUnsafeSupplier.get();
@@ -171,6 +178,7 @@ public class BlogPostingImpl implements BlogPosting {
 			this.contentSpace = contentSpace;
 	}
 
+	@JsonIgnore
 	public void setContentSpace(UnsafeSupplier<Long, Throwable> contentSpaceUnsafeSupplier) {
 			try {
 				contentSpace = contentSpaceUnsafeSupplier.get();
@@ -191,6 +199,7 @@ public class BlogPostingImpl implements BlogPosting {
 			this.creator = creator;
 	}
 
+	@JsonIgnore
 	public void setCreator(UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier) {
 			try {
 				creator = creatorUnsafeSupplier.get();
@@ -211,6 +220,7 @@ public class BlogPostingImpl implements BlogPosting {
 			this.dateCreated = dateCreated;
 	}
 
+	@JsonIgnore
 	public void setDateCreated(UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
 			try {
 				dateCreated = dateCreatedUnsafeSupplier.get();
@@ -231,6 +241,7 @@ public class BlogPostingImpl implements BlogPosting {
 			this.dateModified = dateModified;
 	}
 
+	@JsonIgnore
 	public void setDateModified(UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
 			try {
 				dateModified = dateModifiedUnsafeSupplier.get();
@@ -251,6 +262,7 @@ public class BlogPostingImpl implements BlogPosting {
 			this.datePublished = datePublished;
 	}
 
+	@JsonIgnore
 	public void setDatePublished(UnsafeSupplier<Date, Throwable> datePublishedUnsafeSupplier) {
 			try {
 				datePublished = datePublishedUnsafeSupplier.get();
@@ -271,6 +283,7 @@ public class BlogPostingImpl implements BlogPosting {
 			this.description = description;
 	}
 
+	@JsonIgnore
 	public void setDescription(UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier) {
 			try {
 				description = descriptionUnsafeSupplier.get();
@@ -291,6 +304,7 @@ public class BlogPostingImpl implements BlogPosting {
 			this.encodingFormat = encodingFormat;
 	}
 
+	@JsonIgnore
 	public void setEncodingFormat(UnsafeSupplier<String, Throwable> encodingFormatUnsafeSupplier) {
 			try {
 				encodingFormat = encodingFormatUnsafeSupplier.get();
@@ -311,6 +325,7 @@ public class BlogPostingImpl implements BlogPosting {
 			this.friendlyUrlPath = friendlyUrlPath;
 	}
 
+	@JsonIgnore
 	public void setFriendlyUrlPath(UnsafeSupplier<String, Throwable> friendlyUrlPathUnsafeSupplier) {
 			try {
 				friendlyUrlPath = friendlyUrlPathUnsafeSupplier.get();
@@ -331,6 +346,7 @@ public class BlogPostingImpl implements BlogPosting {
 			this.headline = headline;
 	}
 
+	@JsonIgnore
 	public void setHeadline(UnsafeSupplier<String, Throwable> headlineUnsafeSupplier) {
 			try {
 				headline = headlineUnsafeSupplier.get();
@@ -351,6 +367,7 @@ public class BlogPostingImpl implements BlogPosting {
 			this.id = id;
 	}
 
+	@JsonIgnore
 	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 			try {
 				id = idUnsafeSupplier.get();
@@ -371,6 +388,7 @@ public class BlogPostingImpl implements BlogPosting {
 			this.image = image;
 	}
 
+	@JsonIgnore
 	public void setImage(UnsafeSupplier<Image, Throwable> imageUnsafeSupplier) {
 			try {
 				image = imageUnsafeSupplier.get();
@@ -391,6 +409,7 @@ public class BlogPostingImpl implements BlogPosting {
 			this.imageId = imageId;
 	}
 
+	@JsonIgnore
 	public void setImageId(UnsafeSupplier<Long, Throwable> imageIdUnsafeSupplier) {
 			try {
 				imageId = imageIdUnsafeSupplier.get();
@@ -411,6 +430,7 @@ public class BlogPostingImpl implements BlogPosting {
 			this.keywords = keywords;
 	}
 
+	@JsonIgnore
 	public void setKeywords(UnsafeSupplier<String[], Throwable> keywordsUnsafeSupplier) {
 			try {
 				keywords = keywordsUnsafeSupplier.get();
@@ -431,6 +451,7 @@ public class BlogPostingImpl implements BlogPosting {
 			this.repository = repository;
 	}
 
+	@JsonIgnore
 	public void setRepository(UnsafeSupplier<ImageObjectRepository, Throwable> repositoryUnsafeSupplier) {
 			try {
 				repository = repositoryUnsafeSupplier.get();
@@ -451,6 +472,7 @@ public class BlogPostingImpl implements BlogPosting {
 			this.repositoryId = repositoryId;
 	}
 
+	@JsonIgnore
 	public void setRepositoryId(UnsafeSupplier<Long, Throwable> repositoryIdUnsafeSupplier) {
 			try {
 				repositoryId = repositoryIdUnsafeSupplier.get();

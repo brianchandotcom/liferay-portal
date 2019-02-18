@@ -14,6 +14,7 @@
 
 package com.liferay.headless.document.library.internal.dto.v1_0;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import com.liferay.headless.document.library.dto.v1_0.Document;
@@ -46,6 +47,7 @@ public class FolderImpl implements Folder {
 			this.dateCreated = dateCreated;
 	}
 
+	@JsonIgnore
 	public void setDateCreated(UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
 			try {
 				dateCreated = dateCreatedUnsafeSupplier.get();
@@ -66,6 +68,7 @@ public class FolderImpl implements Folder {
 			this.dateModified = dateModified;
 	}
 
+	@JsonIgnore
 	public void setDateModified(UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
 			try {
 				dateModified = dateModifiedUnsafeSupplier.get();
@@ -86,6 +89,7 @@ public class FolderImpl implements Folder {
 			this.description = description;
 	}
 
+	@JsonIgnore
 	public void setDescription(UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier) {
 			try {
 				description = descriptionUnsafeSupplier.get();
@@ -106,6 +110,7 @@ public class FolderImpl implements Folder {
 			this.documents = documents;
 	}
 
+	@JsonIgnore
 	public void setDocuments(UnsafeSupplier<Document[], Throwable> documentsUnsafeSupplier) {
 			try {
 				documents = documentsUnsafeSupplier.get();
@@ -126,6 +131,7 @@ public class FolderImpl implements Folder {
 			this.documentsIds = documentsIds;
 	}
 
+	@JsonIgnore
 	public void setDocumentsIds(UnsafeSupplier<Long[], Throwable> documentsIdsUnsafeSupplier) {
 			try {
 				documentsIds = documentsIdsUnsafeSupplier.get();
@@ -146,6 +152,7 @@ public class FolderImpl implements Folder {
 			this.documentsRepository = documentsRepository;
 	}
 
+	@JsonIgnore
 	public void setDocumentsRepository(UnsafeSupplier<Folder, Throwable> documentsRepositoryUnsafeSupplier) {
 			try {
 				documentsRepository = documentsRepositoryUnsafeSupplier.get();
@@ -166,6 +173,7 @@ public class FolderImpl implements Folder {
 			this.documentsRepositoryId = documentsRepositoryId;
 	}
 
+	@JsonIgnore
 	public void setDocumentsRepositoryId(UnsafeSupplier<Long, Throwable> documentsRepositoryIdUnsafeSupplier) {
 			try {
 				documentsRepositoryId = documentsRepositoryIdUnsafeSupplier.get();
@@ -186,6 +194,7 @@ public class FolderImpl implements Folder {
 			this.id = id;
 	}
 
+	@JsonIgnore
 	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 			try {
 				id = idUnsafeSupplier.get();
@@ -206,6 +215,7 @@ public class FolderImpl implements Folder {
 			this.name = name;
 	}
 
+	@JsonIgnore
 	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
 			try {
 				name = nameUnsafeSupplier.get();
@@ -226,6 +236,7 @@ public class FolderImpl implements Folder {
 			this.subFolders = subFolders;
 	}
 
+	@JsonIgnore
 	public void setSubFolders(UnsafeSupplier<Folder[], Throwable> subFoldersUnsafeSupplier) {
 			try {
 				subFolders = subFoldersUnsafeSupplier.get();

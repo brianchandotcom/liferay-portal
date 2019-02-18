@@ -14,6 +14,7 @@
 
 package com.liferay.headless.form.internal.dto.v1_0;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import com.liferay.headless.form.dto.v1_0.Creator;
@@ -48,6 +49,7 @@ public class FormRecordImpl implements FormRecord {
 			this.creator = creator;
 	}
 
+	@JsonIgnore
 	public void setCreator(UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier) {
 			try {
 				creator = creatorUnsafeSupplier.get();
@@ -68,6 +70,7 @@ public class FormRecordImpl implements FormRecord {
 			this.dateCreated = dateCreated;
 	}
 
+	@JsonIgnore
 	public void setDateCreated(UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
 			try {
 				dateCreated = dateCreatedUnsafeSupplier.get();
@@ -88,6 +91,7 @@ public class FormRecordImpl implements FormRecord {
 			this.dateModified = dateModified;
 	}
 
+	@JsonIgnore
 	public void setDateModified(UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
 			try {
 				dateModified = dateModifiedUnsafeSupplier.get();
@@ -108,6 +112,7 @@ public class FormRecordImpl implements FormRecord {
 			this.datePublished = datePublished;
 	}
 
+	@JsonIgnore
 	public void setDatePublished(UnsafeSupplier<Date, Throwable> datePublishedUnsafeSupplier) {
 			try {
 				datePublished = datePublishedUnsafeSupplier.get();
@@ -128,6 +133,7 @@ public class FormRecordImpl implements FormRecord {
 			this.draft = draft;
 	}
 
+	@JsonIgnore
 	public void setDraft(UnsafeSupplier<Boolean, Throwable> draftUnsafeSupplier) {
 			try {
 				draft = draftUnsafeSupplier.get();
@@ -148,6 +154,7 @@ public class FormRecordImpl implements FormRecord {
 			this.fieldValues = fieldValues;
 	}
 
+	@JsonIgnore
 	public void setFieldValues(UnsafeSupplier<FieldValues[], Throwable> fieldValuesUnsafeSupplier) {
 			try {
 				fieldValues = fieldValuesUnsafeSupplier.get();
@@ -168,6 +175,7 @@ public class FormRecordImpl implements FormRecord {
 			this.form = form;
 	}
 
+	@JsonIgnore
 	public void setForm(UnsafeSupplier<Form, Throwable> formUnsafeSupplier) {
 			try {
 				form = formUnsafeSupplier.get();
@@ -188,6 +196,7 @@ public class FormRecordImpl implements FormRecord {
 			this.formId = formId;
 	}
 
+	@JsonIgnore
 	public void setFormId(UnsafeSupplier<Long, Throwable> formIdUnsafeSupplier) {
 			try {
 				formId = formIdUnsafeSupplier.get();
@@ -208,6 +217,7 @@ public class FormRecordImpl implements FormRecord {
 			this.id = id;
 	}
 
+	@JsonIgnore
 	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 			try {
 				id = idUnsafeSupplier.get();

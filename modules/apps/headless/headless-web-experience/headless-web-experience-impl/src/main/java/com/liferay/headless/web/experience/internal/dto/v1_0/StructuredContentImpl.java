@@ -14,6 +14,7 @@
 
 package com.liferay.headless.web.experience.internal.dto.v1_0;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import com.liferay.headless.web.experience.dto.v1_0.AggregateRating;
@@ -51,6 +52,7 @@ public class StructuredContentImpl implements StructuredContent {
 			this.aggregateRating = aggregateRating;
 	}
 
+	@JsonIgnore
 	public void setAggregateRating(UnsafeSupplier<AggregateRating, Throwable> aggregateRatingUnsafeSupplier) {
 			try {
 				aggregateRating = aggregateRatingUnsafeSupplier.get();
@@ -71,6 +73,7 @@ public class StructuredContentImpl implements StructuredContent {
 			this.availableLanguages = availableLanguages;
 	}
 
+	@JsonIgnore
 	public void setAvailableLanguages(UnsafeSupplier<String[], Throwable> availableLanguagesUnsafeSupplier) {
 			try {
 				availableLanguages = availableLanguagesUnsafeSupplier.get();
@@ -91,6 +94,7 @@ public class StructuredContentImpl implements StructuredContent {
 			this.category = category;
 	}
 
+	@JsonIgnore
 	public void setCategory(UnsafeSupplier<Long[], Throwable> categoryUnsafeSupplier) {
 			try {
 				category = categoryUnsafeSupplier.get();
@@ -111,6 +115,7 @@ public class StructuredContentImpl implements StructuredContent {
 			this.comment = comment;
 	}
 
+	@JsonIgnore
 	public void setComment(UnsafeSupplier<Comment[], Throwable> commentUnsafeSupplier) {
 			try {
 				comment = commentUnsafeSupplier.get();
@@ -131,6 +136,7 @@ public class StructuredContentImpl implements StructuredContent {
 			this.contentSpace = contentSpace;
 	}
 
+	@JsonIgnore
 	public void setContentSpace(UnsafeSupplier<Long, Throwable> contentSpaceUnsafeSupplier) {
 			try {
 				contentSpace = contentSpaceUnsafeSupplier.get();
@@ -151,6 +157,7 @@ public class StructuredContentImpl implements StructuredContent {
 			this.contentStructure = contentStructure;
 	}
 
+	@JsonIgnore
 	public void setContentStructure(UnsafeSupplier<ContentStructure, Throwable> contentStructureUnsafeSupplier) {
 			try {
 				contentStructure = contentStructureUnsafeSupplier.get();
@@ -171,6 +178,7 @@ public class StructuredContentImpl implements StructuredContent {
 			this.contentStructureId = contentStructureId;
 	}
 
+	@JsonIgnore
 	public void setContentStructureId(UnsafeSupplier<Long, Throwable> contentStructureIdUnsafeSupplier) {
 			try {
 				contentStructureId = contentStructureIdUnsafeSupplier.get();
@@ -191,6 +199,7 @@ public class StructuredContentImpl implements StructuredContent {
 			this.creator = creator;
 	}
 
+	@JsonIgnore
 	public void setCreator(UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier) {
 			try {
 				creator = creatorUnsafeSupplier.get();
@@ -211,6 +220,7 @@ public class StructuredContentImpl implements StructuredContent {
 			this.dateCreated = dateCreated;
 	}
 
+	@JsonIgnore
 	public void setDateCreated(UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
 			try {
 				dateCreated = dateCreatedUnsafeSupplier.get();
@@ -231,6 +241,7 @@ public class StructuredContentImpl implements StructuredContent {
 			this.dateModified = dateModified;
 	}
 
+	@JsonIgnore
 	public void setDateModified(UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
 			try {
 				dateModified = dateModifiedUnsafeSupplier.get();
@@ -251,6 +262,7 @@ public class StructuredContentImpl implements StructuredContent {
 			this.datePublished = datePublished;
 	}
 
+	@JsonIgnore
 	public void setDatePublished(UnsafeSupplier<Date, Throwable> datePublishedUnsafeSupplier) {
 			try {
 				datePublished = datePublishedUnsafeSupplier.get();
@@ -271,6 +283,7 @@ public class StructuredContentImpl implements StructuredContent {
 			this.description = description;
 	}
 
+	@JsonIgnore
 	public void setDescription(UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier) {
 			try {
 				description = descriptionUnsafeSupplier.get();
@@ -291,6 +304,7 @@ public class StructuredContentImpl implements StructuredContent {
 			this.id = id;
 	}
 
+	@JsonIgnore
 	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 			try {
 				id = idUnsafeSupplier.get();
@@ -311,6 +325,7 @@ public class StructuredContentImpl implements StructuredContent {
 			this.keywords = keywords;
 	}
 
+	@JsonIgnore
 	public void setKeywords(UnsafeSupplier<String[], Throwable> keywordsUnsafeSupplier) {
 			try {
 				keywords = keywordsUnsafeSupplier.get();
@@ -331,6 +346,7 @@ public class StructuredContentImpl implements StructuredContent {
 			this.lastReviewed = lastReviewed;
 	}
 
+	@JsonIgnore
 	public void setLastReviewed(UnsafeSupplier<Date, Throwable> lastReviewedUnsafeSupplier) {
 			try {
 				lastReviewed = lastReviewedUnsafeSupplier.get();
@@ -351,6 +367,7 @@ public class StructuredContentImpl implements StructuredContent {
 			this.renderedContentsByTemplate = renderedContentsByTemplate;
 	}
 
+	@JsonIgnore
 	public void setRenderedContentsByTemplate(UnsafeSupplier<RenderedContentsByTemplate[], Throwable> renderedContentsByTemplateUnsafeSupplier) {
 			try {
 				renderedContentsByTemplate = renderedContentsByTemplateUnsafeSupplier.get();
@@ -371,6 +388,7 @@ public class StructuredContentImpl implements StructuredContent {
 			this.title = title;
 	}
 
+	@JsonIgnore
 	public void setTitle(UnsafeSupplier<String, Throwable> titleUnsafeSupplier) {
 			try {
 				title = titleUnsafeSupplier.get();
@@ -391,6 +409,7 @@ public class StructuredContentImpl implements StructuredContent {
 			this.values = values;
 	}
 
+	@JsonIgnore
 	public void setValues(UnsafeSupplier<Values[], Throwable> valuesUnsafeSupplier) {
 			try {
 				values = valuesUnsafeSupplier.get();

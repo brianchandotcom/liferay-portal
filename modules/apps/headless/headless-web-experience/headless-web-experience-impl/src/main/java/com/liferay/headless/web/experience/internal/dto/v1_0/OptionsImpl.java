@@ -14,6 +14,7 @@
 
 package com.liferay.headless.web.experience.internal.dto.v1_0;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import com.liferay.headless.web.experience.dto.v1_0.Options;
@@ -43,6 +44,7 @@ public class OptionsImpl implements Options {
 			this.label = label;
 	}
 
+	@JsonIgnore
 	public void setLabel(UnsafeSupplier<String, Throwable> labelUnsafeSupplier) {
 			try {
 				label = labelUnsafeSupplier.get();
@@ -63,6 +65,7 @@ public class OptionsImpl implements Options {
 			this.value = value;
 	}
 
+	@JsonIgnore
 	public void setValue(UnsafeSupplier<String, Throwable> valueUnsafeSupplier) {
 			try {
 				value = valueUnsafeSupplier.get();

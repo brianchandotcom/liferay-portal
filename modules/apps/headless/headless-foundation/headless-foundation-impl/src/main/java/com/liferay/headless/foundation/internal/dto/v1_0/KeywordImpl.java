@@ -14,6 +14,7 @@
 
 package com.liferay.headless.foundation.internal.dto.v1_0;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import com.liferay.headless.foundation.dto.v1_0.Creator;
@@ -46,6 +47,7 @@ public class KeywordImpl implements Keyword {
 			this.contentSpace = contentSpace;
 	}
 
+	@JsonIgnore
 	public void setContentSpace(UnsafeSupplier<Long, Throwable> contentSpaceUnsafeSupplier) {
 			try {
 				contentSpace = contentSpaceUnsafeSupplier.get();
@@ -66,6 +68,7 @@ public class KeywordImpl implements Keyword {
 			this.creator = creator;
 	}
 
+	@JsonIgnore
 	public void setCreator(UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier) {
 			try {
 				creator = creatorUnsafeSupplier.get();
@@ -86,6 +89,7 @@ public class KeywordImpl implements Keyword {
 			this.dateCreated = dateCreated;
 	}
 
+	@JsonIgnore
 	public void setDateCreated(UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
 			try {
 				dateCreated = dateCreatedUnsafeSupplier.get();
@@ -106,6 +110,7 @@ public class KeywordImpl implements Keyword {
 			this.dateModified = dateModified;
 	}
 
+	@JsonIgnore
 	public void setDateModified(UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
 			try {
 				dateModified = dateModifiedUnsafeSupplier.get();
@@ -126,6 +131,7 @@ public class KeywordImpl implements Keyword {
 			this.id = id;
 	}
 
+	@JsonIgnore
 	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 			try {
 				id = idUnsafeSupplier.get();
@@ -146,6 +152,7 @@ public class KeywordImpl implements Keyword {
 			this.keywordUsageCount = keywordUsageCount;
 	}
 
+	@JsonIgnore
 	public void setKeywordUsageCount(UnsafeSupplier<Number, Throwable> keywordUsageCountUnsafeSupplier) {
 			try {
 				keywordUsageCount = keywordUsageCountUnsafeSupplier.get();
@@ -166,6 +173,7 @@ public class KeywordImpl implements Keyword {
 			this.name = name;
 	}
 
+	@JsonIgnore
 	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
 			try {
 				name = nameUnsafeSupplier.get();

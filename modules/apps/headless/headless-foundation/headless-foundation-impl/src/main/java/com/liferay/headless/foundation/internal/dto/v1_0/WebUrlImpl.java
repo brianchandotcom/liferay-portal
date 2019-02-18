@@ -14,6 +14,7 @@
 
 package com.liferay.headless.foundation.internal.dto.v1_0;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import com.liferay.headless.foundation.dto.v1_0.WebUrl;
@@ -43,6 +44,7 @@ public class WebUrlImpl implements WebUrl {
 			this.id = id;
 	}
 
+	@JsonIgnore
 	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 			try {
 				id = idUnsafeSupplier.get();
@@ -63,6 +65,7 @@ public class WebUrlImpl implements WebUrl {
 			this.url = url;
 	}
 
+	@JsonIgnore
 	public void setUrl(UnsafeSupplier<String, Throwable> urlUnsafeSupplier) {
 			try {
 				url = urlUnsafeSupplier.get();
@@ -83,6 +86,7 @@ public class WebUrlImpl implements WebUrl {
 			this.urlType = urlType;
 	}
 
+	@JsonIgnore
 	public void setUrlType(UnsafeSupplier<String, Throwable> urlTypeUnsafeSupplier) {
 			try {
 				urlType = urlTypeUnsafeSupplier.get();

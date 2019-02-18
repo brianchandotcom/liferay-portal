@@ -14,6 +14,7 @@
 
 package com.liferay.headless.collaboration.internal.dto.v1_0;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import com.liferay.headless.collaboration.dto.v1_0.Image;
@@ -43,6 +44,7 @@ public class ImageImpl implements Image {
 			this.contentUrl = contentUrl;
 	}
 
+	@JsonIgnore
 	public void setContentUrl(UnsafeSupplier<String, Throwable> contentUrlUnsafeSupplier) {
 			try {
 				contentUrl = contentUrlUnsafeSupplier.get();
@@ -63,6 +65,7 @@ public class ImageImpl implements Image {
 			this.imageId = imageId;
 	}
 
+	@JsonIgnore
 	public void setImageId(UnsafeSupplier<Long, Throwable> imageIdUnsafeSupplier) {
 			try {
 				imageId = imageIdUnsafeSupplier.get();
@@ -83,6 +86,7 @@ public class ImageImpl implements Image {
 			this.name = name;
 	}
 
+	@JsonIgnore
 	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
 			try {
 				name = nameUnsafeSupplier.get();

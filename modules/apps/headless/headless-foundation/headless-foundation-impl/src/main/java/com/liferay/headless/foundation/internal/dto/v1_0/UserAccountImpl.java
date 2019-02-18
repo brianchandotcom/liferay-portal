@@ -14,6 +14,7 @@
 
 package com.liferay.headless.foundation.internal.dto.v1_0;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import com.liferay.headless.foundation.dto.v1_0.ContactInformation;
@@ -48,6 +49,7 @@ public class UserAccountImpl implements UserAccount {
 			this.additionalName = additionalName;
 	}
 
+	@JsonIgnore
 	public void setAdditionalName(UnsafeSupplier<String, Throwable> additionalNameUnsafeSupplier) {
 			try {
 				additionalName = additionalNameUnsafeSupplier.get();
@@ -68,6 +70,7 @@ public class UserAccountImpl implements UserAccount {
 			this.alternateName = alternateName;
 	}
 
+	@JsonIgnore
 	public void setAlternateName(UnsafeSupplier<String, Throwable> alternateNameUnsafeSupplier) {
 			try {
 				alternateName = alternateNameUnsafeSupplier.get();
@@ -88,6 +91,7 @@ public class UserAccountImpl implements UserAccount {
 			this.birthDate = birthDate;
 	}
 
+	@JsonIgnore
 	public void setBirthDate(UnsafeSupplier<Date, Throwable> birthDateUnsafeSupplier) {
 			try {
 				birthDate = birthDateUnsafeSupplier.get();
@@ -108,6 +112,7 @@ public class UserAccountImpl implements UserAccount {
 			this.contactInformation = contactInformation;
 	}
 
+	@JsonIgnore
 	public void setContactInformation(UnsafeSupplier<ContactInformation, Throwable> contactInformationUnsafeSupplier) {
 			try {
 				contactInformation = contactInformationUnsafeSupplier.get();
@@ -128,6 +133,7 @@ public class UserAccountImpl implements UserAccount {
 			this.dashboardURL = dashboardURL;
 	}
 
+	@JsonIgnore
 	public void setDashboardURL(UnsafeSupplier<String, Throwable> dashboardURLUnsafeSupplier) {
 			try {
 				dashboardURL = dashboardURLUnsafeSupplier.get();
@@ -148,6 +154,7 @@ public class UserAccountImpl implements UserAccount {
 			this.email = email;
 	}
 
+	@JsonIgnore
 	public void setEmail(UnsafeSupplier<String, Throwable> emailUnsafeSupplier) {
 			try {
 				email = emailUnsafeSupplier.get();
@@ -168,6 +175,7 @@ public class UserAccountImpl implements UserAccount {
 			this.familyName = familyName;
 	}
 
+	@JsonIgnore
 	public void setFamilyName(UnsafeSupplier<String, Throwable> familyNameUnsafeSupplier) {
 			try {
 				familyName = familyNameUnsafeSupplier.get();
@@ -188,6 +196,7 @@ public class UserAccountImpl implements UserAccount {
 			this.givenName = givenName;
 	}
 
+	@JsonIgnore
 	public void setGivenName(UnsafeSupplier<String, Throwable> givenNameUnsafeSupplier) {
 			try {
 				givenName = givenNameUnsafeSupplier.get();
@@ -208,6 +217,7 @@ public class UserAccountImpl implements UserAccount {
 			this.honorificPrefix = honorificPrefix;
 	}
 
+	@JsonIgnore
 	public void setHonorificPrefix(UnsafeSupplier<String, Throwable> honorificPrefixUnsafeSupplier) {
 			try {
 				honorificPrefix = honorificPrefixUnsafeSupplier.get();
@@ -228,6 +238,7 @@ public class UserAccountImpl implements UserAccount {
 			this.honorificSuffix = honorificSuffix;
 	}
 
+	@JsonIgnore
 	public void setHonorificSuffix(UnsafeSupplier<String, Throwable> honorificSuffixUnsafeSupplier) {
 			try {
 				honorificSuffix = honorificSuffixUnsafeSupplier.get();
@@ -248,6 +259,7 @@ public class UserAccountImpl implements UserAccount {
 			this.id = id;
 	}
 
+	@JsonIgnore
 	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 			try {
 				id = idUnsafeSupplier.get();
@@ -268,6 +280,7 @@ public class UserAccountImpl implements UserAccount {
 			this.image = image;
 	}
 
+	@JsonIgnore
 	public void setImage(UnsafeSupplier<String, Throwable> imageUnsafeSupplier) {
 			try {
 				image = imageUnsafeSupplier.get();
@@ -288,6 +301,7 @@ public class UserAccountImpl implements UserAccount {
 			this.jobTitle = jobTitle;
 	}
 
+	@JsonIgnore
 	public void setJobTitle(UnsafeSupplier<String, Throwable> jobTitleUnsafeSupplier) {
 			try {
 				jobTitle = jobTitleUnsafeSupplier.get();
@@ -308,6 +322,7 @@ public class UserAccountImpl implements UserAccount {
 			this.myOrganizations = myOrganizations;
 	}
 
+	@JsonIgnore
 	public void setMyOrganizations(UnsafeSupplier<Organization[], Throwable> myOrganizationsUnsafeSupplier) {
 			try {
 				myOrganizations = myOrganizationsUnsafeSupplier.get();
@@ -328,6 +343,7 @@ public class UserAccountImpl implements UserAccount {
 			this.myOrganizationsIds = myOrganizationsIds;
 	}
 
+	@JsonIgnore
 	public void setMyOrganizationsIds(UnsafeSupplier<Long[], Throwable> myOrganizationsIdsUnsafeSupplier) {
 			try {
 				myOrganizationsIds = myOrganizationsIdsUnsafeSupplier.get();
@@ -348,6 +364,7 @@ public class UserAccountImpl implements UserAccount {
 			this.name = name;
 	}
 
+	@JsonIgnore
 	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
 			try {
 				name = nameUnsafeSupplier.get();
@@ -368,6 +385,7 @@ public class UserAccountImpl implements UserAccount {
 			this.profileURL = profileURL;
 	}
 
+	@JsonIgnore
 	public void setProfileURL(UnsafeSupplier<String, Throwable> profileURLUnsafeSupplier) {
 			try {
 				profileURL = profileURLUnsafeSupplier.get();
@@ -388,6 +406,7 @@ public class UserAccountImpl implements UserAccount {
 			this.roles = roles;
 	}
 
+	@JsonIgnore
 	public void setRoles(UnsafeSupplier<Role[], Throwable> rolesUnsafeSupplier) {
 			try {
 				roles = rolesUnsafeSupplier.get();
@@ -408,6 +427,7 @@ public class UserAccountImpl implements UserAccount {
 			this.rolesIds = rolesIds;
 	}
 
+	@JsonIgnore
 	public void setRolesIds(UnsafeSupplier<Long[], Throwable> rolesIdsUnsafeSupplier) {
 			try {
 				rolesIds = rolesIdsUnsafeSupplier.get();
@@ -428,6 +448,7 @@ public class UserAccountImpl implements UserAccount {
 			this.tasksAssignedToMe = tasksAssignedToMe;
 	}
 
+	@JsonIgnore
 	public void setTasksAssignedToMe(UnsafeSupplier<String[], Throwable> tasksAssignedToMeUnsafeSupplier) {
 			try {
 				tasksAssignedToMe = tasksAssignedToMeUnsafeSupplier.get();
@@ -448,6 +469,7 @@ public class UserAccountImpl implements UserAccount {
 			this.tasksAssignedToMyRoles = tasksAssignedToMyRoles;
 	}
 
+	@JsonIgnore
 	public void setTasksAssignedToMyRoles(UnsafeSupplier<String[], Throwable> tasksAssignedToMyRolesUnsafeSupplier) {
 			try {
 				tasksAssignedToMyRoles = tasksAssignedToMyRolesUnsafeSupplier.get();

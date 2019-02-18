@@ -14,7 +14,10 @@
 
 package com.liferay.headless.web.experience.internal.jaxrs.message.body.v1_0;
 
+import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.module.SimpleAbstractTypeResolver;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
 import com.liferay.headless.web.experience.dto.v1_0.AggregateRating;
@@ -118,42 +121,33 @@ public class JSONMessageBodyReader implements MessageBodyReader<Object> {
 			InputStream inputStream)
 		throws IOException, WebApplicationException {
 
-			if (clazz.equals(AggregateRating.class)) {
-				return _objectMapper.readValue(inputStream, AggregateRatingImpl.class);
-	}
-			if (clazz.equals(Comment.class)) {
-				return _objectMapper.readValue(inputStream, CommentImpl.class);
-	}
-			if (clazz.equals(ContentDocument.class)) {
-				return _objectMapper.readValue(inputStream, ContentDocumentImpl.class);
-	}
-			if (clazz.equals(ContentStructure.class)) {
-				return _objectMapper.readValue(inputStream, ContentStructureImpl.class);
-	}
-			if (clazz.equals(Creator.class)) {
-				return _objectMapper.readValue(inputStream, CreatorImpl.class);
-	}
-			if (clazz.equals(Fields.class)) {
-				return _objectMapper.readValue(inputStream, FieldsImpl.class);
-	}
-			if (clazz.equals(Options.class)) {
-				return _objectMapper.readValue(inputStream, OptionsImpl.class);
-	}
-			if (clazz.equals(RenderedContentsByTemplate.class)) {
-				return _objectMapper.readValue(inputStream, RenderedContentsByTemplateImpl.class);
-	}
-			if (clazz.equals(StructuredContent.class)) {
-				return _objectMapper.readValue(inputStream, StructuredContentImpl.class);
-	}
-			if (clazz.equals(Values.class)) {
-				return _objectMapper.readValue(inputStream, ValuesImpl.class);
-	}
-
-		return null;
+		return _objectMapper.readValue(inputStream, clazz);
 	}
 
 	private static final ObjectMapper _objectMapper = new ObjectMapper() {
 		{
+			SimpleModule module =
+				new SimpleModule("Liferay.Headless.Web.Experience",
+					Version.unknownVersion());
+
+			SimpleAbstractTypeResolver resolver =
+				new SimpleAbstractTypeResolver();
+
+			resolver.addMapping(AggregateRating.class, AggregateRatingImpl.class);
+			resolver.addMapping(Comment.class, CommentImpl.class);
+			resolver.addMapping(ContentDocument.class, ContentDocumentImpl.class);
+			resolver.addMapping(ContentStructure.class, ContentStructureImpl.class);
+			resolver.addMapping(Creator.class, CreatorImpl.class);
+			resolver.addMapping(Fields.class, FieldsImpl.class);
+			resolver.addMapping(Options.class, OptionsImpl.class);
+			resolver.addMapping(RenderedContentsByTemplate.class, RenderedContentsByTemplateImpl.class);
+			resolver.addMapping(StructuredContent.class, StructuredContentImpl.class);
+			resolver.addMapping(Values.class, ValuesImpl.class);
+
+			module.setAbstractTypes(resolver);
+
+			registerModule(module);
+
 			setDateFormat(new ISO8601DateFormat());
 	}
 	};

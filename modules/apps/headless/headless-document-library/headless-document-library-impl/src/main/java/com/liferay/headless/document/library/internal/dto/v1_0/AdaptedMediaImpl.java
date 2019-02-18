@@ -14,6 +14,7 @@
 
 package com.liferay.headless.document.library.internal.dto.v1_0;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import com.liferay.headless.document.library.dto.v1_0.AdaptedMedia;
@@ -43,6 +44,7 @@ public class AdaptedMediaImpl implements AdaptedMedia {
 			this.contentUrl = contentUrl;
 	}
 
+	@JsonIgnore
 	public void setContentUrl(UnsafeSupplier<String, Throwable> contentUrlUnsafeSupplier) {
 			try {
 				contentUrl = contentUrlUnsafeSupplier.get();
@@ -63,6 +65,7 @@ public class AdaptedMediaImpl implements AdaptedMedia {
 			this.height = height;
 	}
 
+	@JsonIgnore
 	public void setHeight(UnsafeSupplier<Number, Throwable> heightUnsafeSupplier) {
 			try {
 				height = heightUnsafeSupplier.get();
@@ -83,6 +86,7 @@ public class AdaptedMediaImpl implements AdaptedMedia {
 			this.id = id;
 	}
 
+	@JsonIgnore
 	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 			try {
 				id = idUnsafeSupplier.get();
@@ -103,6 +107,7 @@ public class AdaptedMediaImpl implements AdaptedMedia {
 			this.resolutionName = resolutionName;
 	}
 
+	@JsonIgnore
 	public void setResolutionName(UnsafeSupplier<String, Throwable> resolutionNameUnsafeSupplier) {
 			try {
 				resolutionName = resolutionNameUnsafeSupplier.get();
@@ -123,6 +128,7 @@ public class AdaptedMediaImpl implements AdaptedMedia {
 			this.sizeInBytes = sizeInBytes;
 	}
 
+	@JsonIgnore
 	public void setSizeInBytes(UnsafeSupplier<Number, Throwable> sizeInBytesUnsafeSupplier) {
 			try {
 				sizeInBytes = sizeInBytesUnsafeSupplier.get();
@@ -143,6 +149,7 @@ public class AdaptedMediaImpl implements AdaptedMedia {
 			this.width = width;
 	}
 
+	@JsonIgnore
 	public void setWidth(UnsafeSupplier<Number, Throwable> widthUnsafeSupplier) {
 			try {
 				width = widthUnsafeSupplier.get();

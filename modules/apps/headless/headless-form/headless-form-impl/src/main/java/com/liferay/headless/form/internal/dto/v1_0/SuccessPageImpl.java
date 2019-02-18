@@ -14,6 +14,7 @@
 
 package com.liferay.headless.form.internal.dto.v1_0;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import com.liferay.headless.form.dto.v1_0.SuccessPage;
@@ -43,6 +44,7 @@ public class SuccessPageImpl implements SuccessPage {
 			this.description = description;
 	}
 
+	@JsonIgnore
 	public void setDescription(UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier) {
 			try {
 				description = descriptionUnsafeSupplier.get();
@@ -63,6 +65,7 @@ public class SuccessPageImpl implements SuccessPage {
 			this.headline = headline;
 	}
 
+	@JsonIgnore
 	public void setHeadline(UnsafeSupplier<String, Throwable> headlineUnsafeSupplier) {
 			try {
 				headline = headlineUnsafeSupplier.get();
@@ -83,6 +86,7 @@ public class SuccessPageImpl implements SuccessPage {
 			this.id = id;
 	}
 
+	@JsonIgnore
 	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 			try {
 				id = idUnsafeSupplier.get();

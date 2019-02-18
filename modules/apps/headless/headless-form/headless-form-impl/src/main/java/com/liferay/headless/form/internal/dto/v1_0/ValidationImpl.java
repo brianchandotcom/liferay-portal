@@ -14,6 +14,7 @@
 
 package com.liferay.headless.form.internal.dto.v1_0;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import com.liferay.headless.form.dto.v1_0.Validation;
@@ -43,6 +44,7 @@ public class ValidationImpl implements Validation {
 			this.errorMessage = errorMessage;
 	}
 
+	@JsonIgnore
 	public void setErrorMessage(UnsafeSupplier<String, Throwable> errorMessageUnsafeSupplier) {
 			try {
 				errorMessage = errorMessageUnsafeSupplier.get();
@@ -63,6 +65,7 @@ public class ValidationImpl implements Validation {
 			this.expression = expression;
 	}
 
+	@JsonIgnore
 	public void setExpression(UnsafeSupplier<String, Throwable> expressionUnsafeSupplier) {
 			try {
 				expression = expressionUnsafeSupplier.get();
@@ -83,6 +86,7 @@ public class ValidationImpl implements Validation {
 			this.id = id;
 	}
 
+	@JsonIgnore
 	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 			try {
 				id = idUnsafeSupplier.get();

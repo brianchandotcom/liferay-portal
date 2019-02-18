@@ -14,6 +14,7 @@
 
 package com.liferay.headless.workflow.internal.dto.v1_0;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import com.liferay.headless.workflow.dto.v1_0.ObjectReviewed;
@@ -47,6 +48,7 @@ public class WorkflowTaskImpl implements WorkflowTask {
 			this.completed = completed;
 	}
 
+	@JsonIgnore
 	public void setCompleted(UnsafeSupplier<Boolean, Throwable> completedUnsafeSupplier) {
 			try {
 				completed = completedUnsafeSupplier.get();
@@ -67,6 +69,7 @@ public class WorkflowTaskImpl implements WorkflowTask {
 			this.dateCompleted = dateCompleted;
 	}
 
+	@JsonIgnore
 	public void setDateCompleted(UnsafeSupplier<Date, Throwable> dateCompletedUnsafeSupplier) {
 			try {
 				dateCompleted = dateCompletedUnsafeSupplier.get();
@@ -87,6 +90,7 @@ public class WorkflowTaskImpl implements WorkflowTask {
 			this.dateCreated = dateCreated;
 	}
 
+	@JsonIgnore
 	public void setDateCreated(UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
 			try {
 				dateCreated = dateCreatedUnsafeSupplier.get();
@@ -107,6 +111,7 @@ public class WorkflowTaskImpl implements WorkflowTask {
 			this.definitionName = definitionName;
 	}
 
+	@JsonIgnore
 	public void setDefinitionName(UnsafeSupplier<String, Throwable> definitionNameUnsafeSupplier) {
 			try {
 				definitionName = definitionNameUnsafeSupplier.get();
@@ -127,6 +132,7 @@ public class WorkflowTaskImpl implements WorkflowTask {
 			this.description = description;
 	}
 
+	@JsonIgnore
 	public void setDescription(UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier) {
 			try {
 				description = descriptionUnsafeSupplier.get();
@@ -147,6 +153,7 @@ public class WorkflowTaskImpl implements WorkflowTask {
 			this.dueDate = dueDate;
 	}
 
+	@JsonIgnore
 	public void setDueDate(UnsafeSupplier<Date, Throwable> dueDateUnsafeSupplier) {
 			try {
 				dueDate = dueDateUnsafeSupplier.get();
@@ -167,6 +174,7 @@ public class WorkflowTaskImpl implements WorkflowTask {
 			this.id = id;
 	}
 
+	@JsonIgnore
 	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 			try {
 				id = idUnsafeSupplier.get();
@@ -187,6 +195,7 @@ public class WorkflowTaskImpl implements WorkflowTask {
 			this.logs = logs;
 	}
 
+	@JsonIgnore
 	public void setLogs(UnsafeSupplier<WorkflowLog[], Throwable> logsUnsafeSupplier) {
 			try {
 				logs = logsUnsafeSupplier.get();
@@ -207,6 +216,7 @@ public class WorkflowTaskImpl implements WorkflowTask {
 			this.logsIds = logsIds;
 	}
 
+	@JsonIgnore
 	public void setLogsIds(UnsafeSupplier<Long[], Throwable> logsIdsUnsafeSupplier) {
 			try {
 				logsIds = logsIdsUnsafeSupplier.get();
@@ -227,6 +237,7 @@ public class WorkflowTaskImpl implements WorkflowTask {
 			this.name = name;
 	}
 
+	@JsonIgnore
 	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
 			try {
 				name = nameUnsafeSupplier.get();
@@ -247,6 +258,7 @@ public class WorkflowTaskImpl implements WorkflowTask {
 			this.objectReviewed = objectReviewed;
 	}
 
+	@JsonIgnore
 	public void setObjectReviewed(UnsafeSupplier<ObjectReviewed, Throwable> objectReviewedUnsafeSupplier) {
 			try {
 				objectReviewed = objectReviewedUnsafeSupplier.get();
@@ -267,6 +279,7 @@ public class WorkflowTaskImpl implements WorkflowTask {
 			this.transitions = transitions;
 	}
 
+	@JsonIgnore
 	public void setTransitions(UnsafeSupplier<String[], Throwable> transitionsUnsafeSupplier) {
 			try {
 				transitions = transitionsUnsafeSupplier.get();

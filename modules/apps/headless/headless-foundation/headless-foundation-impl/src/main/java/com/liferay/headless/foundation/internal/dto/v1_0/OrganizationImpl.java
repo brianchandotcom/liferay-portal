@@ -14,6 +14,7 @@
 
 package com.liferay.headless.foundation.internal.dto.v1_0;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import com.liferay.headless.foundation.dto.v1_0.ContactInformation;
@@ -47,6 +48,7 @@ public class OrganizationImpl implements Organization {
 			this.comment = comment;
 	}
 
+	@JsonIgnore
 	public void setComment(UnsafeSupplier<String, Throwable> commentUnsafeSupplier) {
 			try {
 				comment = commentUnsafeSupplier.get();
@@ -67,6 +69,7 @@ public class OrganizationImpl implements Organization {
 			this.contactInformation = contactInformation;
 	}
 
+	@JsonIgnore
 	public void setContactInformation(UnsafeSupplier<ContactInformation, Throwable> contactInformationUnsafeSupplier) {
 			try {
 				contactInformation = contactInformationUnsafeSupplier.get();
@@ -87,6 +90,7 @@ public class OrganizationImpl implements Organization {
 			this.id = id;
 	}
 
+	@JsonIgnore
 	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 			try {
 				id = idUnsafeSupplier.get();
@@ -107,6 +111,7 @@ public class OrganizationImpl implements Organization {
 			this.location = location;
 	}
 
+	@JsonIgnore
 	public void setLocation(UnsafeSupplier<Location, Throwable> locationUnsafeSupplier) {
 			try {
 				location = locationUnsafeSupplier.get();
@@ -127,6 +132,7 @@ public class OrganizationImpl implements Organization {
 			this.logo = logo;
 	}
 
+	@JsonIgnore
 	public void setLogo(UnsafeSupplier<String, Throwable> logoUnsafeSupplier) {
 			try {
 				logo = logoUnsafeSupplier.get();
@@ -147,6 +153,7 @@ public class OrganizationImpl implements Organization {
 			this.members = members;
 	}
 
+	@JsonIgnore
 	public void setMembers(UnsafeSupplier<UserAccount[], Throwable> membersUnsafeSupplier) {
 			try {
 				members = membersUnsafeSupplier.get();
@@ -167,6 +174,7 @@ public class OrganizationImpl implements Organization {
 			this.membersIds = membersIds;
 	}
 
+	@JsonIgnore
 	public void setMembersIds(UnsafeSupplier<Long[], Throwable> membersIdsUnsafeSupplier) {
 			try {
 				membersIds = membersIdsUnsafeSupplier.get();
@@ -187,6 +195,7 @@ public class OrganizationImpl implements Organization {
 			this.name = name;
 	}
 
+	@JsonIgnore
 	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
 			try {
 				name = nameUnsafeSupplier.get();
@@ -207,6 +216,7 @@ public class OrganizationImpl implements Organization {
 			this.parentOrganization = parentOrganization;
 	}
 
+	@JsonIgnore
 	public void setParentOrganization(UnsafeSupplier<Organization, Throwable> parentOrganizationUnsafeSupplier) {
 			try {
 				parentOrganization = parentOrganizationUnsafeSupplier.get();
@@ -227,6 +237,7 @@ public class OrganizationImpl implements Organization {
 			this.parentOrganizationId = parentOrganizationId;
 	}
 
+	@JsonIgnore
 	public void setParentOrganizationId(UnsafeSupplier<Long, Throwable> parentOrganizationIdUnsafeSupplier) {
 			try {
 				parentOrganizationId = parentOrganizationIdUnsafeSupplier.get();
@@ -247,6 +258,7 @@ public class OrganizationImpl implements Organization {
 			this.services = services;
 	}
 
+	@JsonIgnore
 	public void setServices(UnsafeSupplier<Services[], Throwable> servicesUnsafeSupplier) {
 			try {
 				services = servicesUnsafeSupplier.get();
@@ -267,6 +279,7 @@ public class OrganizationImpl implements Organization {
 			this.subOrganization = subOrganization;
 	}
 
+	@JsonIgnore
 	public void setSubOrganization(UnsafeSupplier<Organization[], Throwable> subOrganizationUnsafeSupplier) {
 			try {
 				subOrganization = subOrganizationUnsafeSupplier.get();
@@ -287,6 +300,7 @@ public class OrganizationImpl implements Organization {
 			this.subOrganizationIds = subOrganizationIds;
 	}
 
+	@JsonIgnore
 	public void setSubOrganizationIds(UnsafeSupplier<Long[], Throwable> subOrganizationIdsUnsafeSupplier) {
 			try {
 				subOrganizationIds = subOrganizationIdsUnsafeSupplier.get();

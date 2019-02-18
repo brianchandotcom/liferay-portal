@@ -14,6 +14,7 @@
 
 package com.liferay.headless.web.experience.internal.dto.v1_0;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import com.liferay.headless.web.experience.dto.v1_0.RenderedContentsByTemplate;
@@ -43,6 +44,7 @@ public class RenderedContentsByTemplateImpl implements RenderedContentsByTemplat
 			this.id = id;
 	}
 
+	@JsonIgnore
 	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 			try {
 				id = idUnsafeSupplier.get();
@@ -63,6 +65,7 @@ public class RenderedContentsByTemplateImpl implements RenderedContentsByTemplat
 			this.renderedContent = renderedContent;
 	}
 
+	@JsonIgnore
 	public void setRenderedContent(UnsafeSupplier<String, Throwable> renderedContentUnsafeSupplier) {
 			try {
 				renderedContent = renderedContentUnsafeSupplier.get();
@@ -83,6 +86,7 @@ public class RenderedContentsByTemplateImpl implements RenderedContentsByTemplat
 			this.template = template;
 	}
 
+	@JsonIgnore
 	public void setTemplate(UnsafeSupplier<String, Throwable> templateUnsafeSupplier) {
 			try {
 				template = templateUnsafeSupplier.get();

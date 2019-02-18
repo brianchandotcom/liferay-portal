@@ -14,6 +14,7 @@
 
 package com.liferay.headless.web.experience.internal.dto.v1_0;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import com.liferay.headless.web.experience.dto.v1_0.Values;
@@ -43,6 +44,7 @@ public class ValuesImpl implements Values {
 			this.dataType = dataType;
 	}
 
+	@JsonIgnore
 	public void setDataType(UnsafeSupplier<String, Throwable> dataTypeUnsafeSupplier) {
 			try {
 				dataType = dataTypeUnsafeSupplier.get();
@@ -63,6 +65,7 @@ public class ValuesImpl implements Values {
 			this.filterAndSortIdentifier = filterAndSortIdentifier;
 	}
 
+	@JsonIgnore
 	public void setFilterAndSortIdentifier(UnsafeSupplier<String, Throwable> filterAndSortIdentifierUnsafeSupplier) {
 			try {
 				filterAndSortIdentifier = filterAndSortIdentifierUnsafeSupplier.get();
@@ -83,6 +86,7 @@ public class ValuesImpl implements Values {
 			this.id = id;
 	}
 
+	@JsonIgnore
 	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 			try {
 				id = idUnsafeSupplier.get();
@@ -103,6 +107,7 @@ public class ValuesImpl implements Values {
 			this.inputControl = inputControl;
 	}
 
+	@JsonIgnore
 	public void setInputControl(UnsafeSupplier<String, Throwable> inputControlUnsafeSupplier) {
 			try {
 				inputControl = inputControlUnsafeSupplier.get();
@@ -123,6 +128,7 @@ public class ValuesImpl implements Values {
 			this.label = label;
 	}
 
+	@JsonIgnore
 	public void setLabel(UnsafeSupplier<String, Throwable> labelUnsafeSupplier) {
 			try {
 				label = labelUnsafeSupplier.get();
@@ -143,6 +149,7 @@ public class ValuesImpl implements Values {
 			this.name = name;
 	}
 
+	@JsonIgnore
 	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
 			try {
 				name = nameUnsafeSupplier.get();
@@ -163,6 +170,7 @@ public class ValuesImpl implements Values {
 			this.value = value;
 	}
 
+	@JsonIgnore
 	public void setValue(UnsafeSupplier<Object, Throwable> valueUnsafeSupplier) {
 			try {
 				value = valueUnsafeSupplier.get();

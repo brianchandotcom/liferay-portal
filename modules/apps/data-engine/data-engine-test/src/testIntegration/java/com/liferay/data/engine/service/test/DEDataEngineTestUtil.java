@@ -484,6 +484,28 @@ public class DEDataEngineTestUtil {
 	}
 
 	public static DEDataRecord insertDEDataRecord(
+			User user, Group group, DEDataRecord deDataRecord,
+			DEDataRecordCollectionService deDataRecordCollectionService)
+		throws Exception {
+
+		DEDataRecordCollectionSaveRecordRequest
+			deDataRecordCollectionSaveRecordRequest =
+				DEDataRecordCollectionRequestBuilder.saveRecordBuilder(
+					deDataRecord
+				).inGroup(
+					group.getGroupId()
+				).onBehalfOf(
+					user.getUserId()
+				).build();
+
+		deDataRecord = saveDataRecord(
+			user, group, deDataRecordCollectionService,
+			deDataRecordCollectionSaveRecordRequest);
+
+		return deDataRecord;
+	}
+
+	public static DEDataRecord insertDEDataRecord(
 			User user, Group group,
 			DEDataRecordCollection deDataRecordCollection,
 			DEDataRecordCollectionService deDataRecordCollectionService)

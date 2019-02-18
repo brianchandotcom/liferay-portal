@@ -60,23 +60,3 @@ PortletURL portletURL = (PortletURL)request.getAttribute("mobile_device_rules_he
 </liferay-ui:search-container>
 
 <%@ include file="/layout/mobile_device_rules_toolbar.jspf" %>
-
-<c:if test="<%= themeDisplay.isStateExclusive() %>">
-	<aui:script sandbox="<%= true %>">
-		$('#<portlet:namespace />uniqueRuleGroupInstancesContainer').on(
-			'click',
-			'.mobile-device-rule a',
-			function(event) {
-				event.preventDefault();
-
-				var href = $(event.target).attr('href');
-
-				<portlet:namespace />mobileDeviceOpenWindow(
-					{
-						uri: href
-					}
-				);
-			}
-		);
-	</aui:script>
-</c:if>

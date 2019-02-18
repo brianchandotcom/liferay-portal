@@ -210,8 +210,6 @@ components:
             properties:
               dataType:
                 type: string
-              filterAndSortIdentifier:
-                type: string
               id:
                 format: int64
                 type: integer

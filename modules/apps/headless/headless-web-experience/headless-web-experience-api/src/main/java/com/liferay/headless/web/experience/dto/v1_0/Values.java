@@ -30,11 +30,6 @@ public interface Values {
 	public void setDataType(String dataType);
 
 	public void setDataType(UnsafeSupplier<String, Throwable> dataTypeUnsafeSupplier);
-	public String getFilterAndSortIdentifier();
-
-	public void setFilterAndSortIdentifier(String filterAndSortIdentifier);
-
-	public void setFilterAndSortIdentifier(UnsafeSupplier<String, Throwable> filterAndSortIdentifierUnsafeSupplier);
 	public Long getId();
 
 	public void setId(Long id);

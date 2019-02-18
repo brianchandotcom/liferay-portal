@@ -56,26 +56,6 @@ public class ValuesImpl implements Values {
 	@GraphQLField
 	@JsonProperty
 	protected String dataType;
-	public String getFilterAndSortIdentifier() {
-			return filterAndSortIdentifier;
-	}
-
-	public void setFilterAndSortIdentifier(String filterAndSortIdentifier) {
-			this.filterAndSortIdentifier = filterAndSortIdentifier;
-	}
-
-	public void setFilterAndSortIdentifier(UnsafeSupplier<String, Throwable> filterAndSortIdentifierUnsafeSupplier) {
-			try {
-				filterAndSortIdentifier = filterAndSortIdentifierUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected String filterAndSortIdentifier;
 	public Long getId() {
 			return id;
 	}

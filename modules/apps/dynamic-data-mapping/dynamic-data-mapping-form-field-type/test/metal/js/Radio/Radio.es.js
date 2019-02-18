@@ -63,6 +63,16 @@ describe(
 								name: 'name',
 								showLabel: true,
 								value: 'item'
+							},
+							{
+								checked: false,
+								disabled: false,
+								id: 'id',
+								inline: false,
+								label: 'label2',
+								name: 'name',
+								showLabel: true,
+								value: 'item'
 							}
 						]
 					}

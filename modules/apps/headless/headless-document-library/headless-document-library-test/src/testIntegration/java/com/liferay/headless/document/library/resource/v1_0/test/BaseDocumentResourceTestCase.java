@@ -18,7 +18,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.liferay.headless.document.library.dto.v1_0.Document;
-import com.liferay.headless.document.library.internal.dto.v1_0.DocumentImpl;
+import com.liferay.headless.document.library.resource.v1_0.test.dto.DocumentImpl;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;

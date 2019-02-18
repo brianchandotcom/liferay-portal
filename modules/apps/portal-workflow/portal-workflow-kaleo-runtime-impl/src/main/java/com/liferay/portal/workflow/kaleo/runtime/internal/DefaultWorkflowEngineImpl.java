@@ -429,11 +429,25 @@ public class DefaultWorkflowEngineImpl
 			ServiceContext serviceContext)
 		throws WorkflowException {
 
+		return search(
+			userId, null, null, assetType, nodeName, kaleoDefinitionName,
+			completed, start, end, orderByComparator, serviceContext);
+	}
+
+	@Override
+	public List<WorkflowInstance> search(
+			Long userId, String assetDescription, String assetTitle,
+			String assetType, String nodeName, String kaleoDefinitionName,
+			Boolean completed, int start, int end,
+			OrderByComparator<WorkflowInstance> orderByComparator,
+			ServiceContext serviceContext)
+		throws WorkflowException {
+
 		try {
 			List<KaleoInstance> kaleoInstances =
 				kaleoInstanceLocalService.search(
-					userId, assetType, nodeName, kaleoDefinitionName, completed,
-					start, end,
+					userId, assetDescription, assetTitle, assetType, nodeName,
+					kaleoDefinitionName, completed, start, end,
 					KaleoInstanceOrderByComparator.getOrderByComparator(
 						orderByComparator, _kaleoWorkflowModelConverter,
 						serviceContext),
@@ -453,10 +467,22 @@ public class DefaultWorkflowEngineImpl
 			ServiceContext serviceContext)
 		throws WorkflowException {
 
+		return searchCount(
+			userId, null, null, assetType, nodeName, kaleoDefinitionName,
+			completed, serviceContext);
+	}
+
+	@Override
+	public int searchCount(
+			Long userId, String assetDescription, String assetTitle,
+			String assetType, String nodeName, String kaleoDefinitionName,
+			Boolean completed, ServiceContext serviceContext)
+		throws WorkflowException {
+
 		try {
 			return kaleoInstanceLocalService.searchCount(
-				userId, assetType, nodeName, kaleoDefinitionName, completed,
-				serviceContext);
+				userId, assetDescription, assetTitle, assetType, nodeName,
+				kaleoDefinitionName, completed, serviceContext);
 		}
 		catch (Exception e) {
 			throw new WorkflowException(e);

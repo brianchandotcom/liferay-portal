@@ -130,6 +130,19 @@ public class WorkflowInstanceManagerUtil {
 			completed, start, end, orderByComparator);
 	}
 
+	public static List<WorkflowInstance> search(
+			long companyId, Long userId, String assetDescription,
+			String assetTitle, String assetType, String nodeName,
+			String kaleoDefinitionName, Boolean completed, int start, int end,
+			OrderByComparator<WorkflowInstance> orderByComparator)
+		throws WorkflowException {
+
+		return getWorkflowInstanceManager().search(
+			companyId, userId, assetDescription, assetTitle, assetType,
+			nodeName, kaleoDefinitionName, completed, start, end,
+			orderByComparator);
+	}
+
 	public static int searchCount(
 			long companyId, Long userId, String assetType, String nodeName,
 			String kaleoDefinitionName, Boolean completed)
@@ -138,6 +151,17 @@ public class WorkflowInstanceManagerUtil {
 		return getWorkflowInstanceManager().searchCount(
 			companyId, userId, assetType, nodeName, kaleoDefinitionName,
 			completed);
+	}
+
+	public static int searchCount(
+			long companyId, Long userId, String assetDescription,
+			String assetTitle, String assetType, String nodeName,
+			String kaleoDefinitionName, Boolean completed)
+		throws WorkflowException {
+
+		return getWorkflowInstanceManager().searchCount(
+			companyId, userId, assetDescription, assetTitle, assetType,
+			nodeName, kaleoDefinitionName, completed);
 	}
 
 	public static WorkflowInstance signalWorkflowInstance(

@@ -1,15 +1,6 @@
-import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
-import {Config} from 'metal-state';
+import DefaultEventHandler from 'frontend-js-web/liferay/DefaultEventHandler.es';
 
-class ArticleHistoryManagementToolbarDefaultEventHandler extends PortletBase {
-	callAction(event) {
-		const itemData = event.data.item.data;
-
-		if (itemData && itemData.action && this[itemData.action]) {
-			this[itemData.action](itemData);
-		}
-	}
-
+class ArticleHistoryManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 	deleteArticles(itemData) {
 		if (confirm(Liferay.Language.get('are-you-sure-you-want-to-delete-the-selected-version'))) {
 			submitForm(this.one('#fm'), itemData.deleteArticlesURL);
@@ -21,14 +12,6 @@ class ArticleHistoryManagementToolbarDefaultEventHandler extends PortletBase {
 			submitForm(this.one('#fm'), itemData.expireArticlesURL);
 		}
 	}
-
-	handleActionItemClicked(event) {
-		this.callAction(event);
-	}
 }
-
-ArticleHistoryManagementToolbarDefaultEventHandler.STATE = {
-	namespace: Config.string()
-};
 
 export default ArticleHistoryManagementToolbarDefaultEventHandler;

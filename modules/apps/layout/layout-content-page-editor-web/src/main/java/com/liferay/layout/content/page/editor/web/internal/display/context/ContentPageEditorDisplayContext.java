@@ -155,7 +155,7 @@ public class ContentPageEditorDisplayContext {
 		soyContext.put(
 			"elements",
 			_getSoyContextFragmentCollections(
-				FragmentEntryTypeConstants.TYPE_ELEMENT));
+				FragmentEntryTypeConstants.TYPE_COMPONENT));
 		soyContext.put(
 			"fragmentEntryLinks", _getSoyContextFragmentEntryLinks());
 		soyContext.put("imageSelectorURL", _getItemSelectorURL());

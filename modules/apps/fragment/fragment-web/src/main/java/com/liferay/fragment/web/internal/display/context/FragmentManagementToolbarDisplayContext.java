@@ -210,8 +210,8 @@ public class FragmentManagementToolbarDisplayContext
 
 				addPrimaryDropdownItem(
 					_getAddFragmentEntryDropdownItem(
-						FragmentEntryTypeConstants.TYPE_ELEMENT,
-						FragmentEntryTypeConstants.TYPE_ELEMENT_LABEL));
+						FragmentEntryTypeConstants.TYPE_COMPONENT,
+						FragmentEntryTypeConstants.TYPE_COMPONENT_LABEL));
 			}
 		};
 	}

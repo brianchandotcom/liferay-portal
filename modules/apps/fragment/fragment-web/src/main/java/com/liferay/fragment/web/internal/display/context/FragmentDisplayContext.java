@@ -285,7 +285,7 @@ public class FragmentDisplayContext {
 			int type = FragmentEntryTypeConstants.TYPE_SECTION;
 
 			if (isNavigationElements()) {
-				type = FragmentEntryTypeConstants.TYPE_ELEMENT;
+				type = FragmentEntryTypeConstants.TYPE_COMPONENT;
 			}
 
 			fragmentEntries = FragmentEntryServiceUtil.getFragmentEntriesByType(

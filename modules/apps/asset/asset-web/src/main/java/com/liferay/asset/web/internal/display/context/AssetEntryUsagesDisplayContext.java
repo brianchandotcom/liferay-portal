@@ -203,7 +203,7 @@ public class AssetEntryUsagesDisplayContext {
 				fragmentEntryLink.getFragmentEntryId());
 
 		if (fragmentEntry.getType() ==
-				FragmentEntryTypeConstants.TYPE_ELEMENT) {
+				FragmentEntryTypeConstants.TYPE_COMPONENT) {
 
 			return LanguageUtil.format(
 				request, "x-element", fragmentEntry.getName());

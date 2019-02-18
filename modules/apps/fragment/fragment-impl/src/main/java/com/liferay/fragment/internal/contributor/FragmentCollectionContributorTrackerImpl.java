@@ -89,7 +89,7 @@ public class FragmentCollectionContributorTrackerImpl
 	}
 
 	private static final int[] _SUPPORTED_FRAGMENT_ENTRY_TYPES = {
-		FragmentEntryTypeConstants.TYPE_ELEMENT,
+		FragmentEntryTypeConstants.TYPE_COMPONENT,
 		FragmentEntryTypeConstants.TYPE_SECTION
 	};
 

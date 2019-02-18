@@ -125,7 +125,7 @@ public class FragmentEntryVerticalCard
 	@Override
 	public String getStickerCssClass() {
 		if (_fragmentEntry.getType() ==
-				FragmentEntryTypeConstants.TYPE_ELEMENT) {
+				FragmentEntryTypeConstants.TYPE_COMPONENT) {
 
 			return "file-icon-color-4";
 		}
@@ -136,7 +136,7 @@ public class FragmentEntryVerticalCard
 	@Override
 	public String getStickerIcon() {
 		if (_fragmentEntry.getType() ==
-				FragmentEntryTypeConstants.TYPE_ELEMENT) {
+				FragmentEntryTypeConstants.TYPE_COMPONENT) {
 
 			return "cards2";
 		}

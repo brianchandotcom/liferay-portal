@@ -52,6 +52,8 @@ public class Context {
 
 	public static final String URL = "url";
 
+	public static final String USER_AGENT = "userAgent";
+
 	public Serializable get(String key) {
 		return _map.get(key);
 	}

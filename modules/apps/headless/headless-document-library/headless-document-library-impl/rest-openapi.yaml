@@ -156,10 +156,6 @@ components:
           type: integer
         name:
           type: string
-        subFolders:
-          items:
-            $ref: "#/components/schemas/Folder"
-          type: array
       type: object
 info:
   description: ""

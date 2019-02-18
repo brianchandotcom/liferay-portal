@@ -143,6 +143,9 @@ components:
           type: integer
         name:
           type: string
+        repositoryId:
+          format: int64
+          type: integer
       type: object
 info:
   description: ""
@@ -194,9 +197,15 @@ paths:
                 type: array
           description: ""
       tags: ["Comment"]
-  "/documents":
+  "/content-spaces/{content-space-id}/documents":
     get:
       parameters:
+        - in: path
+          name: content-space-id
+          required: true
+          schema:
+            format: int64
+            type: integer
         - in: query
           name: page
           schema:
@@ -204,12 +213,6 @@ paths:
         - in: query
           name: pageSize
           schema:
-            type: integer
-        - in: path
-          name: folder-id
-          required: true
-          schema:
-            format: int64
             type: integer
       responses:
         200:
@@ -224,7 +227,7 @@ paths:
     post:
       parameters:
         - in: path
-          name: folder-id
+          name: content-space-id
           required: true
           schema:
             format: int64
@@ -248,6 +251,54 @@ paths:
                 $ref: "#/components/schemas/Document"
           description: ""
       tags: ["Document"]
+  "/content-spaces/{content-space-id}/folders":
+    get:
+      parameters:
+        - in: path
+          name: content-space-id
+          required: true
+          schema:
+            format: int64
+            type: integer
+        - in: query
+          name: page
+          schema:
+            type: integer
+        - in: query
+          name: pageSize
+          schema:
+            type: integer
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: "#/components/schemas/Folder"
+                type: array
+          description: ""
+      tags: ["Folder"]
+    post:
+      parameters:
+        - in: path
+          name: content-space-id
+          required: true
+          schema:
+            format: int64
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Folder"
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Folder"
+          description: ""
+      tags: ["Folder"]
   "/documents/{document-id}":
     delete:
       parameters:
@@ -306,54 +357,6 @@ paths:
                 type: array
           description: ""
       tags: ["Comment"]
-  "/folders":
-    get:
-      parameters:
-        - in: query
-          name: page
-          schema:
-            type: integer
-        - in: query
-          name: pageSize
-          schema:
-            type: integer
-        - in: path
-          name: documents-repository-id
-          required: true
-          schema:
-            format: int64
-            type: integer
-      responses:
-        200:
-          content:
-            application/json:
-              schema:
-                items:
-                  $ref: "#/components/schemas/Folder"
-                type: array
-          description: ""
-      tags: ["Folder"]
-    post:
-      parameters:
-        - in: path
-          name: documents-repository-id
-          required: true
-          schema:
-            format: int64
-            type: integer
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/Folder"
-      responses:
-        200:
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Folder"
-          description: ""
-      tags: ["Folder"]
   "/folders/{folder-id}":
     delete:
       parameters:

@@ -322,6 +322,14 @@ public class JavaParser {
 				}
 			}
 
+			if (((parentDetailAST.getType() == TokenTypes.LITERAL_FOR) ||
+				 (parentDetailAST.getType() == TokenTypes.LITERAL_IF) ||
+				 (parentDetailAST.getType() == TokenTypes.LITERAL_WHILE)) &&
+				(parentDetailAST.findFirstToken(TokenTypes.SLIST) == null)) {
+
+				indent += "\t";
+			}
+
 			parentDetailAST = parentDetailAST.getParent();
 		}
 

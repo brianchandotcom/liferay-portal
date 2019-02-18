@@ -18,6 +18,7 @@ import com.liferay.document.library.internal.upgrade.v1_0_0.UpgradeDocumentLibra
 import com.liferay.document.library.internal.upgrade.v1_0_1.UpgradeDLConfiguration;
 import com.liferay.document.library.internal.upgrade.v1_0_1.UpgradeDLFileEntryConfiguration;
 import com.liferay.document.library.internal.upgrade.v1_0_2.UpgradeDLFileShortcut;
+import com.liferay.document.library.internal.upgrade.v1_1_0.UpgradeSchema;
 import com.liferay.document.library.kernel.store.Store;
 import com.liferay.portal.configuration.upgrade.PrefsPropsToConfigurationUpgradeHelper;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
@@ -45,6 +46,8 @@ public class DLServiceUpgrade implements UpgradeStepRegistrator {
 			new UpgradeDLConfiguration(_prefsPropsToConfigurationUpgradeHelper),
 			new UpgradeDLFileEntryConfiguration(
 				_prefsPropsToConfigurationUpgradeHelper));
+
+		registry.register("1.0.2", "1.1.0", new UpgradeSchema());
 	}
 
 	@Reference

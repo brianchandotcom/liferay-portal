@@ -86,8 +86,11 @@ public class UserPortraitTag extends IncludeTag {
 		_user = UserLocalServiceUtil.fetchUser(userId);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), with no direct replacement
+	 */
+	@Deprecated
 	public void setUserName(String userName) {
-		_userName = userName;
 	}
 
 	@Override
@@ -96,7 +99,6 @@ public class UserPortraitTag extends IncludeTag {
 
 		_cssClass = StringPool.BLANK;
 		_user = null;
-		_userName = StringPool.BLANK;
 	}
 
 	@Override
@@ -147,6 +149,5 @@ public class UserPortraitTag extends IncludeTag {
 
 	private String _cssClass = StringPool.BLANK;
 	private User _user;
-	private String _userName = StringPool.BLANK;
 
 }

@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -97,7 +98,7 @@ public class UpgradeJournalArticleLocalizedValues extends UpgradeProcess {
 
 		try (LoggingTimer loggingTimer = new LoggingTimer();
 			PreparedStatement ps1 = connection.prepareStatement(
-				"select id_, content from JournalArticle" + whereClause);
+				"select id_, title, content from JournalArticle" + whereClause);
 			PreparedStatement ps2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
@@ -108,9 +109,18 @@ public class UpgradeJournalArticleLocalizedValues extends UpgradeProcess {
 			Locale defaultLocale = LocaleUtil.getSiteDefault();
 
 			while (rs.next()) {
-				String defaultLanguageId =
-					LocalizationUtil.getDefaultLanguageId(
-						rs.getString(2), defaultLocale);
+				String title = rs.getString(2);
+
+				String defaultLanguageId = null;
+
+				if (Validator.isXml(title)) {
+					defaultLanguageId = LocalizationUtil.getDefaultLanguageId(
+						title, defaultLocale);
+				}
+				else {
+					defaultLanguageId = LocalizationUtil.getDefaultLanguageId(
+						rs.getString(3), defaultLocale);
+				}
 
 				ps2.setString(1, defaultLanguageId);
 

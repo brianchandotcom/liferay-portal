@@ -37,6 +37,13 @@ public class BlogPostingImageResourceImpl
 	extends BaseBlogPostingImageResourceImpl {
 
 	@Override
+	public boolean deleteImageObject(Long imageObjectId) throws Exception {
+		_dlAppService.deleteFileEntry(imageObjectId);
+
+		return true;
+	}
+
+	@Override
 	public BlogPostingImage getImageObject(Long imageObjectId)
 		throws Exception {
 

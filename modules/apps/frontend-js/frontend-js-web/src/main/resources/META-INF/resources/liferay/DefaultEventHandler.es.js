@@ -13,6 +13,14 @@ class DefaultEventHandler extends PortletBase {
 		this.callAction(event);
 	}
 
+	handleCreationButtonClicked(event) {
+		const itemData = event.data.data;
+
+		if (itemData && itemData.action && this[itemData.action]) {
+			this[itemData.action](itemData);
+		}
+	}
+
 	handleCreationMenuItemClicked(event) {
 		this.callAction(event);
 	}

@@ -48,21 +48,21 @@ import javax.ws.rs.core.Context;
 public abstract class BaseBlogPostingImageResourceImpl implements BlogPostingImageResource {
 
 	@GET
-	@Path("/image-object-repositories/{image-object-repository-id}/blog-posting-images")
+	@Path("/content-spaces/{content-space-id}/blog-posting-images")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	@Override
-	public Page<BlogPostingImage> getImageObjectRepositoryBlogPostingImagesPage( @PathParam("image-object-repository-id") Long imageObjectRepositoryId , @Context Pagination pagination ) throws Exception {
+	public Page<BlogPostingImage> getContentSpaceBlogPostingImagesPage( @PathParam("content-space-id") Long contentSpaceId , @Context Pagination pagination ) throws Exception {
 			return Page.of(Collections.emptyList());
 
 	}
 	@Consumes("application/json")
 	@POST
-	@Path("/image-object-repositories/{image-object-repository-id}/blog-posting-images")
+	@Path("/content-spaces/{content-space-id}/blog-posting-images")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	@Override
-	public BlogPostingImage postImageObjectRepositoryBlogPostingImage( @PathParam("image-object-repository-id") Long imageObjectRepositoryId , BlogPostingImage blogPostingImage ) throws Exception {
+	public BlogPostingImage postContentSpaceBlogPostingImage( @PathParam("content-space-id") Long contentSpaceId , BlogPostingImage blogPostingImage ) throws Exception {
 			return new BlogPostingImageImpl();
 
 	}

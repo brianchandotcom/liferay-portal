@@ -64,10 +64,38 @@ public abstract class BaseCommentResourceTestCase {
 	}
 
 	@Test
+	public void testGetComment() throws Exception {
+			Assert.assertTrue(true);
+	}
+	@Test
+	public void testGetCommentCommentsPage() throws Exception {
+			Assert.assertTrue(true);
+	}
+	@Test
 	public void testGetDocumentCommentsPage() throws Exception {
 			Assert.assertTrue(true);
 	}
 
+	protected Response invokeGetComment( Long commentId ) throws Exception {
+		RequestSpecification requestSpecification = _createRequestSpecification();
+
+			return requestSpecification.when(
+			).get(
+				_resourceURL + "/comments/{comment-id}",
+				commentId
+			);
+
+	}
+	protected Response invokeGetCommentCommentsPage( Long commentId , Pagination pagination ) throws Exception {
+		RequestSpecification requestSpecification = _createRequestSpecification();
+
+			return requestSpecification.when(
+			).get(
+				_resourceURL + "/comments/{comment-id}/comments",
+				commentId 
+			);
+
+	}
 	protected Response invokeGetDocumentCommentsPage( Long documentId , Pagination pagination ) throws Exception {
 		RequestSpecification requestSpecification = _createRequestSpecification();
 
@@ -82,6 +110,9 @@ public abstract class BaseCommentResourceTestCase {
 	protected Comment randomComment() {
 		Comment comment = new CommentImpl();
 
+comment.setDateCreated(RandomTestUtil.nextDate());
+comment.setDateModified(RandomTestUtil.nextDate());
+comment.setHasComments(RandomTestUtil.randomBoolean());
 comment.setId(RandomTestUtil.randomLong());
 comment.setText(RandomTestUtil.randomString());
 		return comment;

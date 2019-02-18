@@ -42,26 +42,16 @@ public interface Folder {
 	public void setDescription(String description);
 
 	public void setDescription(UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier);
-	public Document[] getDocuments();
+	public Boolean getHasDocuments();
 
-	public void setDocuments(Document[] documents);
+	public void setHasDocuments(Boolean hasDocuments);
 
-	public void setDocuments(UnsafeSupplier<Document[], Throwable> documentsUnsafeSupplier);
-	public Long[] getDocumentsIds();
+	public void setHasDocuments(UnsafeSupplier<Boolean, Throwable> hasDocumentsUnsafeSupplier);
+	public Boolean getHasFolders();
 
-	public void setDocumentsIds(Long[] documentsIds);
+	public void setHasFolders(Boolean hasFolders);
 
-	public void setDocumentsIds(UnsafeSupplier<Long[], Throwable> documentsIdsUnsafeSupplier);
-	public Folder getDocumentsRepository();
-
-	public void setDocumentsRepository(Folder documentsRepository);
-
-	public void setDocumentsRepository(UnsafeSupplier<Folder, Throwable> documentsRepositoryUnsafeSupplier);
-	public Long getDocumentsRepositoryId();
-
-	public void setDocumentsRepositoryId(Long documentsRepositoryId);
-
-	public void setDocumentsRepositoryId(UnsafeSupplier<Long, Throwable> documentsRepositoryIdUnsafeSupplier);
+	public void setHasFolders(UnsafeSupplier<Boolean, Throwable> hasFoldersUnsafeSupplier);
 	public Long getId();
 
 	public void setId(Long id);
@@ -72,10 +62,5 @@ public interface Folder {
 	public void setName(String name);
 
 	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier);
-	public Folder[] getSubFolders();
-
-	public void setSubFolders(Folder[] subFolders);
-
-	public void setSubFolders(UnsafeSupplier<Folder[], Throwable> subFoldersUnsafeSupplier);
 
 }

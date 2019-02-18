@@ -23,6 +23,8 @@ import com.liferay.petra.function.UnsafeSupplier;
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLName;
 
+import java.util.Date;
+
 import javax.annotation.Generated;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -76,6 +78,66 @@ public class CommentImpl implements Comment {
 	@GraphQLField
 	@JsonProperty
 	protected Creator creator;
+	public Date getDateCreated() {
+			return dateCreated;
+	}
+
+	public void setDateCreated(Date dateCreated) {
+			this.dateCreated = dateCreated;
+	}
+
+	public void setDateCreated(UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
+			try {
+				dateCreated = dateCreatedUnsafeSupplier.get();
+	}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+	}
+	}
+
+	@GraphQLField
+	@JsonProperty
+	protected Date dateCreated;
+	public Date getDateModified() {
+			return dateModified;
+	}
+
+	public void setDateModified(Date dateModified) {
+			this.dateModified = dateModified;
+	}
+
+	public void setDateModified(UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
+			try {
+				dateModified = dateModifiedUnsafeSupplier.get();
+	}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+	}
+	}
+
+	@GraphQLField
+	@JsonProperty
+	protected Date dateModified;
+	public Boolean getHasComments() {
+			return hasComments;
+	}
+
+	public void setHasComments(Boolean hasComments) {
+			this.hasComments = hasComments;
+	}
+
+	public void setHasComments(UnsafeSupplier<Boolean, Throwable> hasCommentsUnsafeSupplier) {
+			try {
+				hasComments = hasCommentsUnsafeSupplier.get();
+	}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+	}
+	}
+
+	@GraphQLField
+	@JsonProperty
+	protected Boolean hasComments;
 	public Long getId() {
 			return id;
 	}

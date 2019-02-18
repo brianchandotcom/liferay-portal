@@ -23,7 +23,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public interface Category {
+public interface Categories {
 
 	public Long getCategoryId();
 

@@ -58,32 +58,14 @@ return _getCategoryResource().postCategoryCategory( categoryId , category );
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Category postCategoryCategoryBatchCreate( @GraphQLName("category-id") Long categoryId , @GraphQLName("Category") Category category ) throws Exception {
-return _getCategoryResource().postCategoryCategoryBatchCreate( categoryId , category );
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
 	public Category postVocabularyCategory( @GraphQLName("vocabulary-id") Long vocabularyId , @GraphQLName("Category") Category category ) throws Exception {
 return _getCategoryResource().postVocabularyCategory( vocabularyId , category );
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Category postVocabularyCategoryBatchCreate( @GraphQLName("vocabulary-id") Long vocabularyId , @GraphQLName("Category") Category category ) throws Exception {
-return _getCategoryResource().postVocabularyCategoryBatchCreate( vocabularyId , category );
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
 	public Keyword postContentSpaceKeyword( @GraphQLName("content-space-id") Long contentSpaceId , @GraphQLName("Keyword") Keyword keyword ) throws Exception {
 return _getKeywordResource().postContentSpaceKeyword( contentSpaceId , keyword );
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
-	public Keyword postContentSpaceKeywordBatchCreate( @GraphQLName("content-space-id") Long contentSpaceId , @GraphQLName("Keyword") Keyword keyword ) throws Exception {
-return _getKeywordResource().postContentSpaceKeywordBatchCreate( contentSpaceId , keyword );
 	}
 
 	@GraphQLInvokeDetached
@@ -102,12 +84,6 @@ return _getKeywordResource().putKeyword( keywordId , keyword );
 return _getUserAccountResource().postUserAccount( userAccount );
 	}
 
-	@GraphQLField
-	@GraphQLInvokeDetached
-	public UserAccount postUserAccountBatchCreate( @GraphQLName("UserAccount") UserAccount userAccount ) throws Exception {
-return _getUserAccountResource().postUserAccountBatchCreate( userAccount );
-	}
-
 	@GraphQLInvokeDetached
 	public boolean deleteUserAccount( @GraphQLName("user-account-id") Long userAccountId ) throws Exception {
 return _getUserAccountResource().deleteUserAccount( userAccountId );
@@ -122,12 +98,6 @@ return _getUserAccountResource().putUserAccount( userAccountId , userAccount );
 	@GraphQLInvokeDetached
 	public Vocabulary postContentSpaceVocabulary( @GraphQLName("content-space-id") Long contentSpaceId , @GraphQLName("Vocabulary") Vocabulary vocabulary ) throws Exception {
 return _getVocabularyResource().postContentSpaceVocabulary( contentSpaceId , vocabulary );
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
-	public Vocabulary postContentSpaceVocabularyBatchCreate( @GraphQLName("content-space-id") Long contentSpaceId , @GraphQLName("Vocabulary") Vocabulary vocabulary ) throws Exception {
-return _getVocabularyResource().postContentSpaceVocabularyBatchCreate( contentSpaceId , vocabulary );
 	}
 
 	@GraphQLInvokeDetached

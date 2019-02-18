@@ -48,6 +48,25 @@ import javax.ws.rs.core.Context;
 @Path("/v1.0")
 public abstract class BaseDocumentResourceImpl implements DocumentResource {
 
+	@GET
+	@Path("/documents")
+	@Produces("application/json")
+	@RequiresScope("everything.read")
+	@Override
+	public Page<Document> getFolderDocumentsPage( @PathParam("folder-id") Long folderId , @Context Pagination pagination ) throws Exception {
+			return Page.of(Collections.emptyList());
+
+	}
+	@Consumes("multipart/form-data")
+	@POST
+	@Path("/documents")
+	@Produces("application/json")
+	@RequiresScope("everything.read")
+	@Override
+	public Document postFolder( @PathParam("folder-id") Long folderId , MultipartBody multipartBody ) throws Exception {
+			return new DocumentImpl();
+
+	}
 	@DELETE
 	@Path("/documents/{document-id}")
 	@Produces("application/json")
@@ -67,64 +86,6 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 
 	}
 	@GET
-	@Path("/documents/{document-id}/categories")
-	@Produces("application/json")
-	@RequiresScope("everything.read")
-	@Override
-	public Page<Long> getDocumentCategoriesPage( @PathParam("document-id") Long documentId , @Context Pagination pagination ) throws Exception {
-			return Page.of(Collections.emptyList());
-
-	}
-	@Consumes("application/json")
-	@POST
-	@Path("/documents/{document-id}/categories")
-	@Produces("application/json")
-	@RequiresScope("everything.read")
-	@Override
-	public boolean postDocumentCategories( @PathParam("document-id") Long documentId , Long referenceId ) throws Exception {
-			return false;
-
-	}
-	@Consumes("application/json")
-	@POST
-	@Path("/documents/{document-id}/categories/batch-create")
-	@Produces("application/json")
-	@RequiresScope("everything.write")
-	@Override
-	public boolean postDocumentCategoriesBatchCreate( @PathParam("document-id") Long documentId , Long referenceId ) throws Exception {
-			return false;
-
-	}
-	@GET
-	@Path("/documents-repositories/{documents-repository-id}/documents")
-	@Produces("application/json")
-	@RequiresScope("everything.read")
-	@Override
-	public Page<Document> getDocumentsRepositoryDocumentsPage( @PathParam("documents-repository-id") Long documentsRepositoryId , @Context Pagination pagination ) throws Exception {
-			return Page.of(Collections.emptyList());
-
-	}
-	@Consumes("application/json")
-	@POST
-	@Path("/documents-repositories/{documents-repository-id}/documents")
-	@Produces("application/json")
-	@RequiresScope("everything.read")
-	@Override
-	public Document postDocumentsRepositoryDocument( @PathParam("documents-repository-id") Long documentsRepositoryId , Document document ) throws Exception {
-			return new DocumentImpl();
-
-	}
-	@Consumes("application/json")
-	@POST
-	@Path("/documents-repositories/{documents-repository-id}/documents/batch-create")
-	@Produces("application/json")
-	@RequiresScope("everything.write")
-	@Override
-	public Document postDocumentsRepositoryDocumentBatchCreate( @PathParam("documents-repository-id") Long documentsRepositoryId , Document document ) throws Exception {
-			return new DocumentImpl();
-
-	}
-	@GET
 	@Path("/folders/{folder-id}/documents")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
@@ -140,16 +101,6 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 	@RequiresScope("everything.read")
 	@Override
 	public Document postFolderDocument( @PathParam("folder-id") Long folderId , MultipartBody multipartBody ) throws Exception {
-			return new DocumentImpl();
-
-	}
-	@Consumes("multipart/form-data")
-	@POST
-	@Path("/folders/{folder-id}/documents/batch-create")
-	@Produces("application/json")
-	@RequiresScope("everything.write")
-	@Override
-	public Document postFolderDocumentBatchCreate( @PathParam("folder-id") Long folderId , MultipartBody multipartBody ) throws Exception {
 			return new DocumentImpl();
 
 	}

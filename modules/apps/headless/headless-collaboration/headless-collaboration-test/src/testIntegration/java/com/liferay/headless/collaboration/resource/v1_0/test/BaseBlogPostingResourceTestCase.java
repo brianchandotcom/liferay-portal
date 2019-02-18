@@ -155,7 +155,6 @@ blogPosting.setFriendlyUrlPath(RandomTestUtil.randomString());
 blogPosting.setHeadline(RandomTestUtil.randomString());
 blogPosting.setId(RandomTestUtil.randomLong());
 blogPosting.setImageId(RandomTestUtil.randomLong());
-blogPosting.setRepositoryId(RandomTestUtil.randomLong());
 		return blogPosting;
 	}
 

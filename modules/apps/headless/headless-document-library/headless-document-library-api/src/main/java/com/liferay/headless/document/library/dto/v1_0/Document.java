@@ -27,16 +27,21 @@ import javax.annotation.Generated;
 @Generated("")
 public interface Document {
 
-	public AdaptedMedia[] getAdaptedMedia();
+	public AdaptedImages[] getAdaptedImages();
 
-	public void setAdaptedMedia(AdaptedMedia[] adaptedMedia);
+	public void setAdaptedImages(AdaptedImages[] adaptedImages);
 
-	public void setAdaptedMedia(UnsafeSupplier<AdaptedMedia[], Throwable> adaptedMediaUnsafeSupplier);
-	public Long[] getCategory();
+	public void setAdaptedImages(UnsafeSupplier<AdaptedImages[], Throwable> adaptedImagesUnsafeSupplier);
+	public AggregateRating getAggregateRating();
 
-	public void setCategory(Long[] category);
+	public void setAggregateRating(AggregateRating aggregateRating);
 
-	public void setCategory(UnsafeSupplier<Long[], Throwable> categoryUnsafeSupplier);
+	public void setAggregateRating(UnsafeSupplier<AggregateRating, Throwable> aggregateRatingUnsafeSupplier);
+	public Categories[] getCategories();
+
+	public void setCategories(Categories[] categories);
+
+	public void setCategories(UnsafeSupplier<Categories[], Throwable> categoriesUnsafeSupplier);
 	public String getContentUrl();
 
 	public void setContentUrl(String contentUrl);

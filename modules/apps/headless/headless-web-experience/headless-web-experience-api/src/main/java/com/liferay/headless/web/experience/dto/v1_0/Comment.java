@@ -16,6 +16,8 @@ package com.liferay.headless.web.experience.dto.v1_0;
 
 import com.liferay.petra.function.UnsafeSupplier;
 
+import java.util.Date;
+
 import javax.annotation.Generated;
 
 /**
@@ -35,6 +37,21 @@ public interface Comment {
 	public void setCreator(Creator creator);
 
 	public void setCreator(UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier);
+	public Date getDateCreated();
+
+	public void setDateCreated(Date dateCreated);
+
+	public void setDateCreated(UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier);
+	public Date getDateModified();
+
+	public void setDateModified(Date dateModified);
+
+	public void setDateModified(UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier);
+	public Boolean getHasComments();
+
+	public void setHasComments(Boolean hasComments);
+
+	public void setHasComments(UnsafeSupplier<Boolean, Throwable> hasCommentsUnsafeSupplier);
 	public Long getId();
 
 	public void setId(Long id);

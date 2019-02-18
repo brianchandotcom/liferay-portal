@@ -69,16 +69,6 @@ public abstract class BaseVocabularyResourceImpl implements VocabularyResource {
 			return new VocabularyImpl();
 
 	}
-	@Consumes("application/json")
-	@POST
-	@Path("/content-spaces/{content-space-id}/vocabularies/batch-create")
-	@Produces("application/json")
-	@RequiresScope("everything.write")
-	@Override
-	public Vocabulary postContentSpaceVocabularyBatchCreate( @PathParam("content-space-id") Long contentSpaceId , Vocabulary vocabulary ) throws Exception {
-			return new VocabularyImpl();
-
-	}
 	@DELETE
 	@Path("/vocabularies/{vocabulary-id}")
 	@Produces("application/json")

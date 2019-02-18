@@ -35,8 +35,6 @@ public interface KeywordResource {
 
 	public Keyword postContentSpaceKeyword( Long contentSpaceId , Keyword keyword ) throws Exception;
 
-	public Keyword postContentSpaceKeywordBatchCreate( Long contentSpaceId , Keyword keyword ) throws Exception;
-
 	public boolean deleteKeyword( Long keywordId ) throws Exception;
 
 	public Keyword getKeyword( Long keywordId ) throws Exception;

@@ -12,11 +12,9 @@
  * details.
  */
 
-package com.liferay.headless.web.experience.dto.v1_0;
+package com.liferay.headless.document.library.dto.v1_0;
 
 import com.liferay.petra.function.UnsafeSupplier;
-
-import java.util.Date;
 
 import javax.annotation.Generated;
 
@@ -25,52 +23,37 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public interface ContentDocument {
+public interface AdaptedImages {
 
 	public String getContentUrl();
 
 	public void setContentUrl(String contentUrl);
 
 	public void setContentUrl(UnsafeSupplier<String, Throwable> contentUrlUnsafeSupplier);
-	public Creator getCreator();
+	public Number getHeight();
 
-	public void setCreator(Creator creator);
+	public void setHeight(Number height);
 
-	public void setCreator(UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier);
-	public Date getDateCreated();
-
-	public void setDateCreated(Date dateCreated);
-
-	public void setDateCreated(UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier);
-	public Date getDateModified();
-
-	public void setDateModified(Date dateModified);
-
-	public void setDateModified(UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier);
-	public String getEncodingFormat();
-
-	public void setEncodingFormat(String encodingFormat);
-
-	public void setEncodingFormat(UnsafeSupplier<String, Throwable> encodingFormatUnsafeSupplier);
-	public String getFileExtension();
-
-	public void setFileExtension(String fileExtension);
-
-	public void setFileExtension(UnsafeSupplier<String, Throwable> fileExtensionUnsafeSupplier);
+	public void setHeight(UnsafeSupplier<Number, Throwable> heightUnsafeSupplier);
 	public Long getId();
 
 	public void setId(Long id);
 
 	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier);
+	public String getResolutionName();
+
+	public void setResolutionName(String resolutionName);
+
+	public void setResolutionName(UnsafeSupplier<String, Throwable> resolutionNameUnsafeSupplier);
 	public Number getSizeInBytes();
 
 	public void setSizeInBytes(Number sizeInBytes);
 
 	public void setSizeInBytes(UnsafeSupplier<Number, Throwable> sizeInBytesUnsafeSupplier);
-	public String getTitle();
+	public Number getWidth();
 
-	public void setTitle(String title);
+	public void setWidth(Number width);
 
-	public void setTitle(UnsafeSupplier<String, Throwable> titleUnsafeSupplier);
+	public void setWidth(UnsafeSupplier<Number, Throwable> widthUnsafeSupplier);
 
 }

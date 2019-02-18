@@ -39,6 +39,4 @@ public interface FormRecordResource {
 
 	public FormRecord postFormFormRecord( Long formId , FormRecord formRecord ) throws Exception;
 
-	public FormRecord postFormFormRecordBatchCreate( Long formId , FormRecord formRecord ) throws Exception;
-
 }

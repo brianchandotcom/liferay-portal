@@ -31,13 +31,9 @@ import javax.annotation.Generated;
 @Generated("")
 public interface FolderResource {
 
-	public Folder getDocumentsRepository( Long documentsRepositoryId ) throws Exception;
-
 	public Page<Folder> getDocumentsRepositoryFoldersPage( Long documentsRepositoryId , Pagination pagination ) throws Exception;
 
-	public Folder postDocumentsRepositoryFolder( Long documentsRepositoryId , Folder folder ) throws Exception;
-
-	public Folder postDocumentsRepositoryFolderBatchCreate( Long documentsRepositoryId , Folder folder ) throws Exception;
+	public Folder postDocumentsRepository( Long documentsRepositoryId , Folder folder ) throws Exception;
 
 	public boolean deleteFolder( Long folderId ) throws Exception;
 
@@ -48,7 +44,5 @@ public interface FolderResource {
 	public Page<Folder> getFolderFoldersPage( Long folderId , Pagination pagination ) throws Exception;
 
 	public Folder postFolderFolder( Long folderId , Folder folder ) throws Exception;
-
-	public Folder postFolderFolderBatchCreate( Long folderId , Folder folder ) throws Exception;
 
 }

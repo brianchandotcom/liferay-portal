@@ -66,10 +66,10 @@ return _getCategoryResource().getCategory( categoryId );
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<Category> getCategoryCategoriesPage( @GraphQLName("category-id") Long categoryId , @GraphQLName("per_page") int perPage , @GraphQLName("page") int page ) throws Exception {
+	public Collection<Category> getCategoryCategoriesPage( @GraphQLName("category-id") Long categoryId , @GraphQLName("pageSize") int pageSize , @GraphQLName("page") int page ) throws Exception {
 				Page paginationPage = _getCategoryResource().getCategoryCategoriesPage(
 
-					categoryId , Pagination.of(perPage, page)
+					categoryId , Pagination.of(pageSize, page)
 				);
 
 				return paginationPage.getItems();
@@ -78,10 +78,10 @@ return _getCategoryResource().getCategory( categoryId );
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<Category> getVocabularyCategoriesPage( @GraphQLName("vocabulary-id") Long vocabularyId , @GraphQLName("per_page") int perPage , @GraphQLName("page") int page ) throws Exception {
+	public Collection<Category> getVocabularyCategoriesPage( @GraphQLName("vocabulary-id") Long vocabularyId , @GraphQLName("pageSize") int pageSize , @GraphQLName("page") int page ) throws Exception {
 				Page paginationPage = _getCategoryResource().getVocabularyCategoriesPage(
 
-					vocabularyId , Pagination.of(perPage, page)
+					vocabularyId , Pagination.of(pageSize, page)
 				);
 
 				return paginationPage.getItems();
@@ -90,10 +90,10 @@ return _getCategoryResource().getCategory( categoryId );
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<Email> getGenericParentEmailsPage( @GraphQLName("generic-parent-id") Object genericParentId , @GraphQLName("per_page") int perPage , @GraphQLName("page") int page ) throws Exception {
+	public Collection<Email> getGenericParentEmailsPage( @GraphQLName("generic-parent-id") Object genericParentId , @GraphQLName("pageSize") int pageSize , @GraphQLName("page") int page ) throws Exception {
 				Page paginationPage = _getEmailResource().getGenericParentEmailsPage(
 
-					genericParentId , Pagination.of(perPage, page)
+					genericParentId , Pagination.of(pageSize, page)
 				);
 
 				return paginationPage.getItems();
@@ -108,10 +108,10 @@ return _getEmailResource().getEmail( emailId );
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<Keyword> getContentSpaceKeywordsPage( @GraphQLName("content-space-id") Long contentSpaceId , @GraphQLName("per_page") int perPage , @GraphQLName("page") int page ) throws Exception {
+	public Collection<Keyword> getContentSpaceKeywordsPage( @GraphQLName("content-space-id") Long contentSpaceId , @GraphQLName("pageSize") int pageSize , @GraphQLName("page") int page ) throws Exception {
 				Page paginationPage = _getKeywordResource().getContentSpaceKeywordsPage(
 
-					contentSpaceId , Pagination.of(perPage, page)
+					contentSpaceId , Pagination.of(pageSize, page)
 				);
 
 				return paginationPage.getItems();
@@ -126,10 +126,10 @@ return _getKeywordResource().getKeyword( keywordId );
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<Organization> getMyUserAccountOrganizationsPage( @GraphQLName("my-user-account-id") Long myUserAccountId , @GraphQLName("per_page") int perPage , @GraphQLName("page") int page ) throws Exception {
+	public Collection<Organization> getMyUserAccountOrganizationsPage( @GraphQLName("my-user-account-id") Long myUserAccountId , @GraphQLName("pageSize") int pageSize , @GraphQLName("page") int page ) throws Exception {
 				Page paginationPage = _getOrganizationResource().getMyUserAccountOrganizationsPage(
 
-					myUserAccountId , Pagination.of(perPage, page)
+					myUserAccountId , Pagination.of(pageSize, page)
 				);
 
 				return paginationPage.getItems();
@@ -138,10 +138,10 @@ return _getKeywordResource().getKeyword( keywordId );
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<Organization> getOrganizationsPage( @GraphQLName("per_page") int perPage , @GraphQLName("page") int page ) throws Exception {
+	public Collection<Organization> getOrganizationsPage( @GraphQLName("pageSize") int pageSize , @GraphQLName("page") int page ) throws Exception {
 				Page paginationPage = _getOrganizationResource().getOrganizationsPage(
 
-					Pagination.of(perPage, page)
+					Pagination.of(pageSize, page)
 				);
 
 				return paginationPage.getItems();
@@ -156,10 +156,10 @@ return _getOrganizationResource().getOrganization( organizationId );
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<Organization> getOrganizationOrganizationsPage( @GraphQLName("organization-id") Long organizationId , @GraphQLName("per_page") int perPage , @GraphQLName("page") int page ) throws Exception {
+	public Collection<Organization> getOrganizationOrganizationsPage( @GraphQLName("organization-id") Long organizationId , @GraphQLName("pageSize") int pageSize , @GraphQLName("page") int page ) throws Exception {
 				Page paginationPage = _getOrganizationResource().getOrganizationOrganizationsPage(
 
-					organizationId , Pagination.of(perPage, page)
+					organizationId , Pagination.of(pageSize, page)
 				);
 
 				return paginationPage.getItems();
@@ -168,10 +168,10 @@ return _getOrganizationResource().getOrganization( organizationId );
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<Organization> getUserAccountOrganizationsPage( @GraphQLName("user-account-id") Long userAccountId , @GraphQLName("per_page") int perPage , @GraphQLName("page") int page ) throws Exception {
+	public Collection<Organization> getUserAccountOrganizationsPage( @GraphQLName("user-account-id") Long userAccountId , @GraphQLName("pageSize") int pageSize , @GraphQLName("page") int page ) throws Exception {
 				Page paginationPage = _getOrganizationResource().getUserAccountOrganizationsPage(
 
-					userAccountId , Pagination.of(perPage, page)
+					userAccountId , Pagination.of(pageSize, page)
 				);
 
 				return paginationPage.getItems();
@@ -180,10 +180,10 @@ return _getOrganizationResource().getOrganization( organizationId );
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<Phone> getGenericParentPhonesPage( @GraphQLName("generic-parent-id") Object genericParentId , @GraphQLName("per_page") int perPage , @GraphQLName("page") int page ) throws Exception {
+	public Collection<Phone> getGenericParentPhonesPage( @GraphQLName("generic-parent-id") Object genericParentId , @GraphQLName("pageSize") int pageSize , @GraphQLName("page") int page ) throws Exception {
 				Page paginationPage = _getPhoneResource().getGenericParentPhonesPage(
 
-					genericParentId , Pagination.of(perPage, page)
+					genericParentId , Pagination.of(pageSize, page)
 				);
 
 				return paginationPage.getItems();
@@ -198,10 +198,10 @@ return _getPhoneResource().getPhone( phoneId );
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<PostalAddress> getGenericParentPostalAddressesPage( @GraphQLName("generic-parent-id") Object genericParentId , @GraphQLName("per_page") int perPage , @GraphQLName("page") int page ) throws Exception {
+	public Collection<PostalAddress> getGenericParentPostalAddressesPage( @GraphQLName("generic-parent-id") Object genericParentId , @GraphQLName("pageSize") int pageSize , @GraphQLName("page") int page ) throws Exception {
 				Page paginationPage = _getPostalAddressResource().getGenericParentPostalAddressesPage(
 
-					genericParentId , Pagination.of(perPage, page)
+					genericParentId , Pagination.of(pageSize, page)
 				);
 
 				return paginationPage.getItems();
@@ -216,10 +216,10 @@ return _getPostalAddressResource().getAddress( addressId );
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<Role> getMyUserAccountRolesPage( @GraphQLName("my-user-account-id") Long myUserAccountId , @GraphQLName("per_page") int perPage , @GraphQLName("page") int page ) throws Exception {
+	public Collection<Role> getMyUserAccountRolesPage( @GraphQLName("my-user-account-id") Long myUserAccountId , @GraphQLName("pageSize") int pageSize , @GraphQLName("page") int page ) throws Exception {
 				Page paginationPage = _getRoleResource().getMyUserAccountRolesPage(
 
-					myUserAccountId , Pagination.of(perPage, page)
+					myUserAccountId , Pagination.of(pageSize, page)
 				);
 
 				return paginationPage.getItems();
@@ -228,10 +228,10 @@ return _getPostalAddressResource().getAddress( addressId );
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<Role> getRolesPage( @GraphQLName("per_page") int perPage , @GraphQLName("page") int page ) throws Exception {
+	public Collection<Role> getRolesPage( @GraphQLName("pageSize") int pageSize , @GraphQLName("page") int page ) throws Exception {
 				Page paginationPage = _getRoleResource().getRolesPage(
 
-					Pagination.of(perPage, page)
+					Pagination.of(pageSize, page)
 				);
 
 				return paginationPage.getItems();
@@ -246,10 +246,10 @@ return _getRoleResource().getRole( roleId );
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<Role> getUserAccountRolesPage( @GraphQLName("user-account-id") Long userAccountId , @GraphQLName("per_page") int perPage , @GraphQLName("page") int page ) throws Exception {
+	public Collection<Role> getUserAccountRolesPage( @GraphQLName("user-account-id") Long userAccountId , @GraphQLName("pageSize") int pageSize , @GraphQLName("page") int page ) throws Exception {
 				Page paginationPage = _getRoleResource().getUserAccountRolesPage(
 
-					userAccountId , Pagination.of(perPage, page)
+					userAccountId , Pagination.of(pageSize, page)
 				);
 
 				return paginationPage.getItems();
@@ -264,10 +264,10 @@ return _getUserAccountResource().getMyUserAccount( myUserAccountId );
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<UserAccount> getOrganizationUserAccountsPage( @GraphQLName("organization-id") Long organizationId , @GraphQLName("per_page") int perPage , @GraphQLName("page") int page ) throws Exception {
+	public Collection<UserAccount> getOrganizationUserAccountsPage( @GraphQLName("organization-id") Long organizationId , @GraphQLName("pageSize") int pageSize , @GraphQLName("page") int page ) throws Exception {
 				Page paginationPage = _getUserAccountResource().getOrganizationUserAccountsPage(
 
-					organizationId , Pagination.of(perPage, page)
+					organizationId , Pagination.of(pageSize, page)
 				);
 
 				return paginationPage.getItems();
@@ -276,10 +276,10 @@ return _getUserAccountResource().getMyUserAccount( myUserAccountId );
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<UserAccount> getUserAccountsPage( @GraphQLName("fullnamequery") String fullnamequery , @GraphQLName("per_page") int perPage , @GraphQLName("page") int page ) throws Exception {
+	public Collection<UserAccount> getUserAccountsPage( @GraphQLName("fullnamequery") String fullnamequery , @GraphQLName("pageSize") int pageSize , @GraphQLName("page") int page ) throws Exception {
 				Page paginationPage = _getUserAccountResource().getUserAccountsPage(
 
-					fullnamequery , Pagination.of(perPage, page)
+					fullnamequery , Pagination.of(pageSize, page)
 				);
 
 				return paginationPage.getItems();
@@ -294,10 +294,10 @@ return _getUserAccountResource().getUserAccount( userAccountId );
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<UserAccount> getWebSiteUserAccountsPage( @GraphQLName("web-site-id") Long webSiteId , @GraphQLName("per_page") int perPage , @GraphQLName("page") int page ) throws Exception {
+	public Collection<UserAccount> getWebSiteUserAccountsPage( @GraphQLName("web-site-id") Long webSiteId , @GraphQLName("pageSize") int pageSize , @GraphQLName("page") int page ) throws Exception {
 				Page paginationPage = _getUserAccountResource().getWebSiteUserAccountsPage(
 
-					webSiteId , Pagination.of(perPage, page)
+					webSiteId , Pagination.of(pageSize, page)
 				);
 
 				return paginationPage.getItems();
@@ -306,10 +306,10 @@ return _getUserAccountResource().getUserAccount( userAccountId );
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<Vocabulary> getContentSpaceVocabulariesPage( @GraphQLName("content-space-id") Long contentSpaceId , @GraphQLName("filter") Filter filter , @GraphQLName("per_page") int perPage , @GraphQLName("page") int page , @GraphQLName("Sort[]") Sort[] sorts ) throws Exception {
+	public Collection<Vocabulary> getContentSpaceVocabulariesPage( @GraphQLName("content-space-id") Long contentSpaceId , @GraphQLName("filter") Filter filter , @GraphQLName("pageSize") int pageSize , @GraphQLName("page") int page , @GraphQLName("Sort[]") Sort[] sorts ) throws Exception {
 				Page paginationPage = _getVocabularyResource().getContentSpaceVocabulariesPage(
 
-					contentSpaceId , filter , Pagination.of(perPage, page) , sorts
+					contentSpaceId , filter , Pagination.of(pageSize, page) , sorts
 				);
 
 				return paginationPage.getItems();
@@ -324,10 +324,10 @@ return _getVocabularyResource().getVocabulary( vocabularyId );
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<WebUrl> getGenericParentWebUrlsPage( @GraphQLName("generic-parent-id") Object genericParentId , @GraphQLName("per_page") int perPage , @GraphQLName("page") int page ) throws Exception {
+	public Collection<WebUrl> getGenericParentWebUrlsPage( @GraphQLName("generic-parent-id") Object genericParentId , @GraphQLName("pageSize") int pageSize , @GraphQLName("page") int page ) throws Exception {
 				Page paginationPage = _getWebUrlResource().getGenericParentWebUrlsPage(
 
-					genericParentId , Pagination.of(perPage, page)
+					genericParentId , Pagination.of(pageSize, page)
 				);
 
 				return paginationPage.getItems();

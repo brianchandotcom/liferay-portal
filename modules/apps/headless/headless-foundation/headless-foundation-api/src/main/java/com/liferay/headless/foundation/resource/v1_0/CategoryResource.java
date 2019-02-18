@@ -41,12 +41,8 @@ public interface CategoryResource {
 
 	public Category postCategoryCategory( Long categoryId , Category category ) throws Exception;
 
-	public Category postCategoryCategoryBatchCreate( Long categoryId , Category category ) throws Exception;
-
 	public Page<Category> getVocabularyCategoriesPage( Long vocabularyId , Pagination pagination ) throws Exception;
 
 	public Category postVocabularyCategory( Long vocabularyId , Category category ) throws Exception;
-
-	public Category postVocabularyCategoryBatchCreate( Long vocabularyId , Category category ) throws Exception;
 
 }

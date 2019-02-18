@@ -48,10 +48,10 @@ return _getWorkflowLogResource().getWorkflowLog( workflowLogId );
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<WorkflowLog> getWorkflowTaskWorkflowLogsPage( @GraphQLName("workflow-task-id") Long workflowTaskId , @GraphQLName("per_page") int perPage , @GraphQLName("page") int page ) throws Exception {
+	public Collection<WorkflowLog> getWorkflowTaskWorkflowLogsPage( @GraphQLName("workflow-task-id") Long workflowTaskId , @GraphQLName("pageSize") int pageSize , @GraphQLName("page") int page ) throws Exception {
 				Page paginationPage = _getWorkflowLogResource().getWorkflowTaskWorkflowLogsPage(
 
-					workflowTaskId , Pagination.of(perPage, page)
+					workflowTaskId , Pagination.of(pageSize, page)
 				);
 
 				return paginationPage.getItems();
@@ -60,10 +60,10 @@ return _getWorkflowLogResource().getWorkflowLog( workflowLogId );
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<WorkflowTask> getRoleWorkflowTasksPage( @GraphQLName("role-id") Long roleId , @GraphQLName("per_page") int perPage , @GraphQLName("page") int page ) throws Exception {
+	public Collection<WorkflowTask> getRoleWorkflowTasksPage( @GraphQLName("role-id") Long roleId , @GraphQLName("pageSize") int pageSize , @GraphQLName("page") int page ) throws Exception {
 				Page paginationPage = _getWorkflowTaskResource().getRoleWorkflowTasksPage(
 
-					roleId , Pagination.of(perPage, page)
+					roleId , Pagination.of(pageSize, page)
 				);
 
 				return paginationPage.getItems();
@@ -72,10 +72,10 @@ return _getWorkflowLogResource().getWorkflowLog( workflowLogId );
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<WorkflowTask> getWorkflowTasksPage( @GraphQLName("per_page") int perPage , @GraphQLName("page") int page ) throws Exception {
+	public Collection<WorkflowTask> getWorkflowTasksPage( @GraphQLName("pageSize") int pageSize , @GraphQLName("page") int page ) throws Exception {
 				Page paginationPage = _getWorkflowTaskResource().getWorkflowTasksPage(
 
-					Pagination.of(perPage, page)
+					Pagination.of(pageSize, page)
 				);
 
 				return paginationPage.getItems();

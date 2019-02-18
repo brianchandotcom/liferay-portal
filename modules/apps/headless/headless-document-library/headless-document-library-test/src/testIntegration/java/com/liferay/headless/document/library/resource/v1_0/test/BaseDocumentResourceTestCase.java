@@ -65,35 +65,19 @@ public abstract class BaseDocumentResourceTestCase {
 	}
 
 	@Test
+	public void testGetFolderDocumentsPage() throws Exception {
+			Assert.assertTrue(true);
+	}
+	@Test
+	public void testPostFolder() throws Exception {
+			Assert.assertTrue(true);
+	}
+	@Test
 	public void testDeleteDocument() throws Exception {
 			Assert.assertTrue(true);
 	}
 	@Test
 	public void testGetDocument() throws Exception {
-			Assert.assertTrue(true);
-	}
-	@Test
-	public void testGetDocumentCategoriesPage() throws Exception {
-			Assert.assertTrue(true);
-	}
-	@Test
-	public void testPostDocumentCategories() throws Exception {
-			Assert.assertTrue(true);
-	}
-	@Test
-	public void testPostDocumentCategoriesBatchCreate() throws Exception {
-			Assert.assertTrue(true);
-	}
-	@Test
-	public void testGetDocumentsRepositoryDocumentsPage() throws Exception {
-			Assert.assertTrue(true);
-	}
-	@Test
-	public void testPostDocumentsRepositoryDocument() throws Exception {
-			Assert.assertTrue(true);
-	}
-	@Test
-	public void testPostDocumentsRepositoryDocumentBatchCreate() throws Exception {
 			Assert.assertTrue(true);
 	}
 	@Test
@@ -104,11 +88,27 @@ public abstract class BaseDocumentResourceTestCase {
 	public void testPostFolderDocument() throws Exception {
 			Assert.assertTrue(true);
 	}
-	@Test
-	public void testPostFolderDocumentBatchCreate() throws Exception {
-			Assert.assertTrue(true);
-	}
 
+	protected Response invokeGetFolderDocumentsPage( Long folderId , Pagination pagination ) throws Exception {
+		RequestSpecification requestSpecification = _createRequestSpecification();
+
+			return requestSpecification.when(
+			).get(
+				_resourceURL + "/documents",
+				folderId 
+			);
+
+	}
+	protected Response invokePostFolder( Long folderId , MultipartBody multipartBody ) throws Exception {
+		RequestSpecification requestSpecification = _createRequestSpecification();
+
+			return requestSpecification.when(
+			).post(
+				_resourceURL + "/documents",
+				folderId , multipartBody
+			);
+
+	}
 	protected Response invokeDeleteDocument( Long documentId ) throws Exception {
 		RequestSpecification requestSpecification = _createRequestSpecification();
 
@@ -129,70 +129,6 @@ public abstract class BaseDocumentResourceTestCase {
 			);
 
 	}
-	protected Response invokeGetDocumentCategoriesPage( Long documentId , Pagination pagination ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
-
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/documents/{document-id}/categories",
-				documentId 
-			);
-
-	}
-	protected Response invokePostDocumentCategories( Long documentId , Long referenceId ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
-
-			return requestSpecification.when(
-			).post(
-				_resourceURL + "/documents/{document-id}/categories",
-				documentId , referenceId
-			);
-
-	}
-	protected Response invokePostDocumentCategoriesBatchCreate( Long documentId , Long referenceId ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
-
-			return requestSpecification.when(
-			).post(
-				_resourceURL + "/documents/{document-id}/categories/batch-create",
-				documentId , referenceId
-			);
-
-	}
-	protected Response invokeGetDocumentsRepositoryDocumentsPage( Long documentsRepositoryId , Pagination pagination ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
-
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/documents-repositories/{documents-repository-id}/documents",
-				documentsRepositoryId 
-			);
-
-	}
-	protected Response invokePostDocumentsRepositoryDocument( Long documentsRepositoryId , Document document ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
-
-			return requestSpecification.body(
-				document
-			).when(
-			).post(
-				_resourceURL + "/documents-repositories/{documents-repository-id}/documents",
-				documentsRepositoryId 
-			);
-
-	}
-	protected Response invokePostDocumentsRepositoryDocumentBatchCreate( Long documentsRepositoryId , Document document ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
-
-			return requestSpecification.body(
-				document
-			).when(
-			).post(
-				_resourceURL + "/documents-repositories/{documents-repository-id}/documents/batch-create",
-				documentsRepositoryId 
-			);
-
-	}
 	protected Response invokeGetFolderDocumentsPage( Long folderId , Pagination pagination ) throws Exception {
 		RequestSpecification requestSpecification = _createRequestSpecification();
 
@@ -209,16 +145,6 @@ public abstract class BaseDocumentResourceTestCase {
 			return requestSpecification.when(
 			).post(
 				_resourceURL + "/folders/{folder-id}/documents",
-				folderId , multipartBody
-			);
-
-	}
-	protected Response invokePostFolderDocumentBatchCreate( Long folderId , MultipartBody multipartBody ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
-
-			return requestSpecification.when(
-			).post(
-				_resourceURL + "/folders/{folder-id}/documents/batch-create",
 				folderId , multipartBody
 			);
 

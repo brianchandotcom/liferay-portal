@@ -67,16 +67,6 @@ public abstract class BaseKeywordResourceImpl implements KeywordResource {
 			return new KeywordImpl();
 
 	}
-	@Consumes("application/json")
-	@POST
-	@Path("/content-spaces/{content-space-id}/keywords/batch-create")
-	@Produces("application/json")
-	@RequiresScope("everything.write")
-	@Override
-	public Keyword postContentSpaceKeywordBatchCreate( @PathParam("content-space-id") Long contentSpaceId , Keyword keyword ) throws Exception {
-			return new KeywordImpl();
-
-	}
 	@DELETE
 	@Path("/keywords/{keyword-id}")
 	@Produces("application/json")

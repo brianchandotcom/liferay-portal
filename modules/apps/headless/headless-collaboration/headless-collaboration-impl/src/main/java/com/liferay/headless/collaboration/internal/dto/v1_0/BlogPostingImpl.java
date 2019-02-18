@@ -18,11 +18,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import com.liferay.headless.collaboration.dto.v1_0.AggregateRating;
 import com.liferay.headless.collaboration.dto.v1_0.BlogPosting;
-import com.liferay.headless.collaboration.dto.v1_0.Category;
+import com.liferay.headless.collaboration.dto.v1_0.Categories;
 import com.liferay.headless.collaboration.dto.v1_0.Comment;
 import com.liferay.headless.collaboration.dto.v1_0.Creator;
 import com.liferay.headless.collaboration.dto.v1_0.Image;
-import com.liferay.headless.collaboration.dto.v1_0.ImageObjectRepository;
 import com.liferay.petra.function.UnsafeSupplier;
 
 import graphql.annotations.annotationTypes.GraphQLField;
@@ -123,17 +122,17 @@ public class BlogPostingImpl implements BlogPosting {
 	@GraphQLField
 	@JsonProperty
 	protected String caption;
-	public Category[] getCategory() {
-			return category;
+	public Categories[] getCategories() {
+			return categories;
 	}
 
-	public void setCategory(Category[] category) {
-			this.category = category;
+	public void setCategories(Categories[] categories) {
+			this.categories = categories;
 	}
 
-	public void setCategory(UnsafeSupplier<Category[], Throwable> categoryUnsafeSupplier) {
+	public void setCategories(UnsafeSupplier<Categories[], Throwable> categoriesUnsafeSupplier) {
 			try {
-				category = categoryUnsafeSupplier.get();
+				categories = categoriesUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -142,7 +141,7 @@ public class BlogPostingImpl implements BlogPosting {
 
 	@GraphQLField
 	@JsonProperty
-	protected Category[] category;
+	protected Categories[] categories;
 	public Comment[] getComment() {
 			return comment;
 	}
@@ -423,45 +422,5 @@ public class BlogPostingImpl implements BlogPosting {
 	@GraphQLField
 	@JsonProperty
 	protected String[] keywords;
-	public ImageObjectRepository getRepository() {
-			return repository;
-	}
-
-	public void setRepository(ImageObjectRepository repository) {
-			this.repository = repository;
-	}
-
-	public void setRepository(UnsafeSupplier<ImageObjectRepository, Throwable> repositoryUnsafeSupplier) {
-			try {
-				repository = repositoryUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected ImageObjectRepository repository;
-	public Long getRepositoryId() {
-			return repositoryId;
-	}
-
-	public void setRepositoryId(Long repositoryId) {
-			this.repositoryId = repositoryId;
-	}
-
-	public void setRepositoryId(UnsafeSupplier<Long, Throwable> repositoryIdUnsafeSupplier) {
-			try {
-				repositoryId = repositoryIdUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Long repositoryId;
 
 }

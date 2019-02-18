@@ -44,10 +44,40 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<Comment> getDocumentCommentsPage( @GraphQLName("document-id") Long documentId , @GraphQLName("per_page") int perPage , @GraphQLName("page") int page ) throws Exception {
+	public Comment getComment( @GraphQLName("comment-id") Long commentId ) throws Exception {
+return _getCommentResource().getComment( commentId );
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Collection<Comment> getCommentCommentsPage( @GraphQLName("comment-id") Long commentId , @GraphQLName("pageSize") int pageSize , @GraphQLName("page") int page ) throws Exception {
+				Page paginationPage = _getCommentResource().getCommentCommentsPage(
+
+					commentId , Pagination.of(pageSize, page)
+				);
+
+				return paginationPage.getItems();
+
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Collection<Comment> getDocumentCommentsPage( @GraphQLName("document-id") Long documentId , @GraphQLName("pageSize") int pageSize , @GraphQLName("page") int page ) throws Exception {
 				Page paginationPage = _getCommentResource().getDocumentCommentsPage(
 
-					documentId , Pagination.of(perPage, page)
+					documentId , Pagination.of(pageSize, page)
+				);
+
+				return paginationPage.getItems();
+
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Collection<Document> getFolderDocumentsPage( @GraphQLName("folder-id") Long folderId , @GraphQLName("pageSize") int pageSize , @GraphQLName("page") int page ) throws Exception {
+				Page paginationPage = _getDocumentResource().getFolderDocumentsPage(
+
+					folderId , Pagination.of(pageSize, page)
 				);
 
 				return paginationPage.getItems();
@@ -62,34 +92,10 @@ return _getDocumentResource().getDocument( documentId );
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<Long> getDocumentCategoriesPage( @GraphQLName("document-id") Long documentId , @GraphQLName("per_page") int perPage , @GraphQLName("page") int page ) throws Exception {
-				Page paginationPage = _getDocumentResource().getDocumentCategoriesPage(
-
-					documentId , Pagination.of(perPage, page)
-				);
-
-				return paginationPage.getItems();
-
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
-	public Collection<Document> getDocumentsRepositoryDocumentsPage( @GraphQLName("documents-repository-id") Long documentsRepositoryId , @GraphQLName("per_page") int perPage , @GraphQLName("page") int page ) throws Exception {
-				Page paginationPage = _getDocumentResource().getDocumentsRepositoryDocumentsPage(
-
-					documentsRepositoryId , Pagination.of(perPage, page)
-				);
-
-				return paginationPage.getItems();
-
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
-	public Collection<Document> getFolderDocumentsPage( @GraphQLName("folder-id") Long folderId , @GraphQLName("per_page") int perPage , @GraphQLName("page") int page ) throws Exception {
+	public Collection<Document> getFolderDocumentsPage( @GraphQLName("folder-id") Long folderId , @GraphQLName("pageSize") int pageSize , @GraphQLName("page") int page ) throws Exception {
 				Page paginationPage = _getDocumentResource().getFolderDocumentsPage(
 
-					folderId , Pagination.of(perPage, page)
+					folderId , Pagination.of(pageSize, page)
 				);
 
 				return paginationPage.getItems();
@@ -98,16 +104,10 @@ return _getDocumentResource().getDocument( documentId );
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Folder getDocumentsRepository( @GraphQLName("documents-repository-id") Long documentsRepositoryId ) throws Exception {
-return _getFolderResource().getDocumentsRepository( documentsRepositoryId );
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
-	public Collection<Folder> getDocumentsRepositoryFoldersPage( @GraphQLName("documents-repository-id") Long documentsRepositoryId , @GraphQLName("per_page") int perPage , @GraphQLName("page") int page ) throws Exception {
+	public Collection<Folder> getDocumentsRepositoryFoldersPage( @GraphQLName("documents-repository-id") Long documentsRepositoryId , @GraphQLName("pageSize") int pageSize , @GraphQLName("page") int page ) throws Exception {
 				Page paginationPage = _getFolderResource().getDocumentsRepositoryFoldersPage(
 
-					documentsRepositoryId , Pagination.of(perPage, page)
+					documentsRepositoryId , Pagination.of(pageSize, page)
 				);
 
 				return paginationPage.getItems();
@@ -122,10 +122,10 @@ return _getFolderResource().getFolder( folderId );
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<Folder> getFolderFoldersPage( @GraphQLName("folder-id") Long folderId , @GraphQLName("per_page") int perPage , @GraphQLName("page") int page ) throws Exception {
+	public Collection<Folder> getFolderFoldersPage( @GraphQLName("folder-id") Long folderId , @GraphQLName("pageSize") int pageSize , @GraphQLName("page") int page ) throws Exception {
 				Page paginationPage = _getFolderResource().getFolderFoldersPage(
 
-					folderId , Pagination.of(perPage, page)
+					folderId , Pagination.of(pageSize, page)
 				);
 
 				return paginationPage.getItems();

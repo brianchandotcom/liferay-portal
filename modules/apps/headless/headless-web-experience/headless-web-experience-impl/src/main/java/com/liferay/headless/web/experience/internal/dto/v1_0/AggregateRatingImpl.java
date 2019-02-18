@@ -55,26 +55,6 @@ public class AggregateRatingImpl implements AggregateRating {
 	@GraphQLField
 	@JsonProperty
 	protected Number bestRating;
-	public Long getId() {
-			return id;
-	}
-
-	public void setId(Long id) {
-			this.id = id;
-	}
-
-	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
-			try {
-				id = idUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Long id;
 	public Number getRatingCount() {
 			return ratingCount;
 	}

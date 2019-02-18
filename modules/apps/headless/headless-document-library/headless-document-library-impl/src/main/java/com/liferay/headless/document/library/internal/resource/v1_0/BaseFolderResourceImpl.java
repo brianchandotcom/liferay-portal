@@ -49,16 +49,7 @@ import javax.ws.rs.core.Context;
 public abstract class BaseFolderResourceImpl implements FolderResource {
 
 	@GET
-	@Path("/documents-repositories/{documents-repository-id}")
-	@Produces("application/json")
-	@RequiresScope("everything.read")
-	@Override
-	public Folder getDocumentsRepository( @PathParam("documents-repository-id") Long documentsRepositoryId ) throws Exception {
-			return new FolderImpl();
-
-	}
-	@GET
-	@Path("/documents-repositories/{documents-repository-id}/folders")
+	@Path("/folders")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	@Override
@@ -68,21 +59,11 @@ public abstract class BaseFolderResourceImpl implements FolderResource {
 	}
 	@Consumes("application/json")
 	@POST
-	@Path("/documents-repositories/{documents-repository-id}/folders")
+	@Path("/folders")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	@Override
-	public Folder postDocumentsRepositoryFolder( @PathParam("documents-repository-id") Long documentsRepositoryId , Folder folder ) throws Exception {
-			return new FolderImpl();
-
-	}
-	@Consumes("application/json")
-	@POST
-	@Path("/documents-repositories/{documents-repository-id}/folders/batch-create")
-	@Produces("application/json")
-	@RequiresScope("everything.write")
-	@Override
-	public Folder postDocumentsRepositoryFolderBatchCreate( @PathParam("documents-repository-id") Long documentsRepositoryId , Folder folder ) throws Exception {
+	public Folder postDocumentsRepository( @PathParam("documents-repository-id") Long documentsRepositoryId , Folder folder ) throws Exception {
 			return new FolderImpl();
 
 	}
@@ -130,16 +111,6 @@ public abstract class BaseFolderResourceImpl implements FolderResource {
 	@RequiresScope("everything.read")
 	@Override
 	public Folder postFolderFolder( @PathParam("folder-id") Long folderId , Folder folder ) throws Exception {
-			return new FolderImpl();
-
-	}
-	@Consumes("application/json")
-	@POST
-	@Path("/folders/{folder-id}/folders/batch-create")
-	@Produces("application/json")
-	@RequiresScope("everything.write")
-	@Override
-	public Folder postFolderFolderBatchCreate( @PathParam("folder-id") Long folderId , Folder folder ) throws Exception {
 			return new FolderImpl();
 
 	}

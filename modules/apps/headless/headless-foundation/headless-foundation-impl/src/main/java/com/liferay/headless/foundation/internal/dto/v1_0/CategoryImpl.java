@@ -18,7 +18,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import com.liferay.headless.foundation.dto.v1_0.Category;
 import com.liferay.headless.foundation.dto.v1_0.Creator;
-import com.liferay.headless.foundation.dto.v1_0.Vocabulary;
+import com.liferay.headless.foundation.dto.v1_0.ParentCategory;
+import com.liferay.headless.foundation.dto.v1_0.ParentVocabulary;
 import com.liferay.petra.function.UnsafeSupplier;
 
 import graphql.annotations.annotationTypes.GraphQLField;
@@ -59,17 +60,17 @@ public class CategoryImpl implements Category {
 	@GraphQLField
 	@JsonProperty
 	protected String[] availableLanguages;
-	public Category getCategory() {
-			return category;
+	public ParentCategory getParentCategory() {
+			return parentCategory;
 	}
 
-	public void setCategory(Category category) {
-			this.category = category;
+	public void setParentCategory(ParentCategory parentCategory) {
+			this.parentCategory = parentCategory;
 	}
 
-	public void setCategory(UnsafeSupplier<Category, Throwable> categoryUnsafeSupplier) {
+	public void setParentCategory(UnsafeSupplier<ParentCategory, Throwable> parentCategoryUnsafeSupplier) {
 			try {
-				category = categoryUnsafeSupplier.get();
+				parentCategory = parentCategoryUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -78,27 +79,7 @@ public class CategoryImpl implements Category {
 
 	@GraphQLField
 	@JsonProperty
-	protected Category category;
-	public Long getCategoryId() {
-			return categoryId;
-	}
-
-	public void setCategoryId(Long categoryId) {
-			this.categoryId = categoryId;
-	}
-
-	public void setCategoryId(UnsafeSupplier<Long, Throwable> categoryIdUnsafeSupplier) {
-			try {
-				categoryId = categoryIdUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Long categoryId;
+	protected ParentCategory parentCategory;
 	public Creator getCreator() {
 			return creator;
 	}
@@ -199,6 +180,26 @@ public class CategoryImpl implements Category {
 	@GraphQLField
 	@JsonProperty
 	protected String description;
+	public Boolean getHasCategories() {
+			return hasCategories;
+	}
+
+	public void setHasCategories(Boolean hasCategories) {
+			this.hasCategories = hasCategories;
+	}
+
+	public void setHasCategories(UnsafeSupplier<Boolean, Throwable> hasCategoriesUnsafeSupplier) {
+			try {
+				hasCategories = hasCategoriesUnsafeSupplier.get();
+	}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+	}
+	}
+
+	@GraphQLField
+	@JsonProperty
+	protected Boolean hasCategories;
 	public Long getId() {
 			return id;
 	}
@@ -239,17 +240,17 @@ public class CategoryImpl implements Category {
 	@GraphQLField
 	@JsonProperty
 	protected String name;
-	public Category[] getSubcategories() {
-			return subcategories;
+	public ParentVocabulary getParentVocabulary() {
+			return parentVocabulary;
 	}
 
-	public void setSubcategories(Category[] subcategories) {
-			this.subcategories = subcategories;
+	public void setParentVocabulary(ParentVocabulary parentVocabulary) {
+			this.parentVocabulary = parentVocabulary;
 	}
 
-	public void setSubcategories(UnsafeSupplier<Category[], Throwable> subcategoriesUnsafeSupplier) {
+	public void setParentVocabulary(UnsafeSupplier<ParentVocabulary, Throwable> parentVocabularyUnsafeSupplier) {
 			try {
-				subcategories = subcategoriesUnsafeSupplier.get();
+				parentVocabulary = parentVocabularyUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -258,18 +259,18 @@ public class CategoryImpl implements Category {
 
 	@GraphQLField
 	@JsonProperty
-	protected Category[] subcategories;
-	public Vocabulary getVocabulary() {
-			return vocabulary;
+	protected ParentVocabulary parentVocabulary;
+	public Long getParentVocabularyId() {
+			return parentVocabularyId;
 	}
 
-	public void setVocabulary(Vocabulary vocabulary) {
-			this.vocabulary = vocabulary;
+	public void setParentVocabularyId(Long parentVocabularyId) {
+			this.parentVocabularyId = parentVocabularyId;
 	}
 
-	public void setVocabulary(UnsafeSupplier<Vocabulary, Throwable> vocabularyUnsafeSupplier) {
+	public void setParentVocabularyId(UnsafeSupplier<Long, Throwable> parentVocabularyIdUnsafeSupplier) {
 			try {
-				vocabulary = vocabularyUnsafeSupplier.get();
+				parentVocabularyId = parentVocabularyIdUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -278,26 +279,6 @@ public class CategoryImpl implements Category {
 
 	@GraphQLField
 	@JsonProperty
-	protected Vocabulary vocabulary;
-	public Long getVocabularyId() {
-			return vocabularyId;
-	}
-
-	public void setVocabularyId(Long vocabularyId) {
-			this.vocabularyId = vocabularyId;
-	}
-
-	public void setVocabularyId(UnsafeSupplier<Long, Throwable> vocabularyIdUnsafeSupplier) {
-			try {
-				vocabularyId = vocabularyIdUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Long vocabularyId;
+	protected Long parentVocabularyId;
 
 }

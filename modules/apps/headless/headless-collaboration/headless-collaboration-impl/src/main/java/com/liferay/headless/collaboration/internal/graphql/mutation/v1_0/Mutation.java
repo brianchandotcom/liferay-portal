@@ -54,8 +54,8 @@ return _getBlogPostingResource().postContentSpaceBlogPosting( contentSpaceId , b
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public BlogPostingImage postImageObjectRepositoryBlogPostingImage( @GraphQLName("image-object-repository-id") Long imageObjectRepositoryId , @GraphQLName("BlogPostingImage") BlogPostingImage blogPostingImage ) throws Exception {
-return _getBlogPostingImageResource().postImageObjectRepositoryBlogPostingImage( imageObjectRepositoryId , blogPostingImage );
+	public BlogPostingImage postContentSpaceBlogPostingImage( @GraphQLName("content-space-id") Long contentSpaceId , @GraphQLName("BlogPostingImage") BlogPostingImage blogPostingImage ) throws Exception {
+return _getBlogPostingImageResource().postContentSpaceBlogPostingImage( contentSpaceId , blogPostingImage );
 	}
 
 	@GraphQLInvokeDetached

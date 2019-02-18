@@ -85,16 +85,6 @@ public abstract class BaseFormRecordResourceImpl implements FormRecordResource {
 			return new FormRecordImpl();
 
 	}
-	@Consumes("application/json")
-	@POST
-	@Path("/forms/{form-id}/form-records/batch-create")
-	@Produces("application/json")
-	@RequiresScope("everything.write")
-	@Override
-	public FormRecord postFormFormRecordBatchCreate( @PathParam("form-id") Long formId , FormRecord formRecord ) throws Exception {
-			return new FormRecordImpl();
-
-	}
 
 	protected <T, R> List<R> transform(List<T> list, UnsafeFunction<T, R, Throwable> unsafeFunction) {
 		return TransformUtil.transform(list, unsafeFunction);

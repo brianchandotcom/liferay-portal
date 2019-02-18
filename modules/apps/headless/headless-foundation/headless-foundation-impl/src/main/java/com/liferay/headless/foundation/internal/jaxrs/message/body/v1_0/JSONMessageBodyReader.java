@@ -25,6 +25,8 @@ import com.liferay.headless.foundation.dto.v1_0.HoursAvailable;
 import com.liferay.headless.foundation.dto.v1_0.Keyword;
 import com.liferay.headless.foundation.dto.v1_0.Location;
 import com.liferay.headless.foundation.dto.v1_0.Organization;
+import com.liferay.headless.foundation.dto.v1_0.ParentCategory;
+import com.liferay.headless.foundation.dto.v1_0.ParentVocabulary;
 import com.liferay.headless.foundation.dto.v1_0.Phone;
 import com.liferay.headless.foundation.dto.v1_0.PostalAddress;
 import com.liferay.headless.foundation.dto.v1_0.Role;
@@ -40,6 +42,8 @@ import com.liferay.headless.foundation.internal.dto.v1_0.HoursAvailableImpl;
 import com.liferay.headless.foundation.internal.dto.v1_0.KeywordImpl;
 import com.liferay.headless.foundation.internal.dto.v1_0.LocationImpl;
 import com.liferay.headless.foundation.internal.dto.v1_0.OrganizationImpl;
+import com.liferay.headless.foundation.internal.dto.v1_0.ParentCategoryImpl;
+import com.liferay.headless.foundation.internal.dto.v1_0.ParentVocabularyImpl;
 import com.liferay.headless.foundation.internal.dto.v1_0.PhoneImpl;
 import com.liferay.headless.foundation.internal.dto.v1_0.PostalAddressImpl;
 import com.liferay.headless.foundation.internal.dto.v1_0.RoleImpl;
@@ -111,6 +115,12 @@ public class JSONMessageBodyReader implements MessageBodyReader<Object> {
 			if (clazz.equals(Organization.class)) {
 				return true;
 	}
+			if (clazz.equals(ParentCategory.class)) {
+				return true;
+	}
+			if (clazz.equals(ParentVocabulary.class)) {
+				return true;
+	}
 			if (clazz.equals(Phone.class)) {
 				return true;
 	}
@@ -166,6 +176,12 @@ public class JSONMessageBodyReader implements MessageBodyReader<Object> {
 	}
 			if (clazz.equals(Organization.class)) {
 				return _objectMapper.readValue(inputStream, OrganizationImpl.class);
+	}
+			if (clazz.equals(ParentCategory.class)) {
+				return _objectMapper.readValue(inputStream, ParentCategoryImpl.class);
+	}
+			if (clazz.equals(ParentVocabulary.class)) {
+				return _objectMapper.readValue(inputStream, ParentVocabularyImpl.class);
 	}
 			if (clazz.equals(Phone.class)) {
 				return _objectMapper.readValue(inputStream, PhoneImpl.class);

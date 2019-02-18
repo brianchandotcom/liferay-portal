@@ -32,16 +32,11 @@ public interface Category {
 	public void setAvailableLanguages(String[] availableLanguages);
 
 	public void setAvailableLanguages(UnsafeSupplier<String[], Throwable> availableLanguagesUnsafeSupplier);
-	public Category getCategory();
+	public ParentCategory getParentCategory();
 
-	public void setCategory(Category category);
+	public void setParentCategory(ParentCategory parentCategory);
 
-	public void setCategory(UnsafeSupplier<Category, Throwable> categoryUnsafeSupplier);
-	public Long getCategoryId();
-
-	public void setCategoryId(Long categoryId);
-
-	public void setCategoryId(UnsafeSupplier<Long, Throwable> categoryIdUnsafeSupplier);
+	public void setParentCategory(UnsafeSupplier<ParentCategory, Throwable> parentCategoryUnsafeSupplier);
 	public Creator getCreator();
 
 	public void setCreator(Creator creator);
@@ -67,6 +62,11 @@ public interface Category {
 	public void setDescription(String description);
 
 	public void setDescription(UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier);
+	public Boolean getHasCategories();
+
+	public void setHasCategories(Boolean hasCategories);
+
+	public void setHasCategories(UnsafeSupplier<Boolean, Throwable> hasCategoriesUnsafeSupplier);
 	public Long getId();
 
 	public void setId(Long id);
@@ -77,20 +77,15 @@ public interface Category {
 	public void setName(String name);
 
 	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier);
-	public Category[] getSubcategories();
+	public ParentVocabulary getParentVocabulary();
 
-	public void setSubcategories(Category[] subcategories);
+	public void setParentVocabulary(ParentVocabulary parentVocabulary);
 
-	public void setSubcategories(UnsafeSupplier<Category[], Throwable> subcategoriesUnsafeSupplier);
-	public Vocabulary getVocabulary();
+	public void setParentVocabulary(UnsafeSupplier<ParentVocabulary, Throwable> parentVocabularyUnsafeSupplier);
+	public Long getParentVocabularyId();
 
-	public void setVocabulary(Vocabulary vocabulary);
+	public void setParentVocabularyId(Long parentVocabularyId);
 
-	public void setVocabulary(UnsafeSupplier<Vocabulary, Throwable> vocabularyUnsafeSupplier);
-	public Long getVocabularyId();
-
-	public void setVocabularyId(Long vocabularyId);
-
-	public void setVocabularyId(UnsafeSupplier<Long, Throwable> vocabularyIdUnsafeSupplier);
+	public void setParentVocabularyId(UnsafeSupplier<Long, Throwable> parentVocabularyIdUnsafeSupplier);
 
 }

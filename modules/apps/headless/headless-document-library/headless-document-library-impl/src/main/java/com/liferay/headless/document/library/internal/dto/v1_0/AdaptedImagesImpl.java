@@ -12,18 +12,15 @@
  * details.
  */
 
-package com.liferay.headless.collaboration.internal.dto.v1_0;
+package com.liferay.headless.document.library.internal.dto.v1_0;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import com.liferay.headless.collaboration.dto.v1_0.BlogPostingImage;
-import com.liferay.headless.collaboration.dto.v1_0.ImageObjectRepository;
+import com.liferay.headless.document.library.dto.v1_0.AdaptedImages;
 import com.liferay.petra.function.UnsafeSupplier;
 
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLName;
-
-import java.util.Date;
 
 import javax.annotation.Generated;
 
@@ -34,21 +31,21 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("ImageObjectRepository")
-@XmlRootElement(name = "ImageObjectRepository")
-public class ImageObjectRepositoryImpl implements ImageObjectRepository {
+@GraphQLName("AdaptedImages")
+@XmlRootElement(name = "AdaptedImages")
+public class AdaptedImagesImpl implements AdaptedImages {
 
-	public Date getDateCreated() {
-			return dateCreated;
+	public String getContentUrl() {
+			return contentUrl;
 	}
 
-	public void setDateCreated(Date dateCreated) {
-			this.dateCreated = dateCreated;
+	public void setContentUrl(String contentUrl) {
+			this.contentUrl = contentUrl;
 	}
 
-	public void setDateCreated(UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
+	public void setContentUrl(UnsafeSupplier<String, Throwable> contentUrlUnsafeSupplier) {
 			try {
-				dateCreated = dateCreatedUnsafeSupplier.get();
+				contentUrl = contentUrlUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -57,18 +54,18 @@ public class ImageObjectRepositoryImpl implements ImageObjectRepository {
 
 	@GraphQLField
 	@JsonProperty
-	protected Date dateCreated;
-	public Date getDateModified() {
-			return dateModified;
+	protected String contentUrl;
+	public Number getHeight() {
+			return height;
 	}
 
-	public void setDateModified(Date dateModified) {
-			this.dateModified = dateModified;
+	public void setHeight(Number height) {
+			this.height = height;
 	}
 
-	public void setDateModified(UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
+	public void setHeight(UnsafeSupplier<Number, Throwable> heightUnsafeSupplier) {
 			try {
-				dateModified = dateModifiedUnsafeSupplier.get();
+				height = heightUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -77,7 +74,7 @@ public class ImageObjectRepositoryImpl implements ImageObjectRepository {
 
 	@GraphQLField
 	@JsonProperty
-	protected Date dateModified;
+	protected Number height;
 	public Long getId() {
 			return id;
 	}
@@ -98,17 +95,17 @@ public class ImageObjectRepositoryImpl implements ImageObjectRepository {
 	@GraphQLField
 	@JsonProperty
 	protected Long id;
-	public BlogPostingImage[] getImages() {
-			return images;
+	public String getResolutionName() {
+			return resolutionName;
 	}
 
-	public void setImages(BlogPostingImage[] images) {
-			this.images = images;
+	public void setResolutionName(String resolutionName) {
+			this.resolutionName = resolutionName;
 	}
 
-	public void setImages(UnsafeSupplier<BlogPostingImage[], Throwable> imagesUnsafeSupplier) {
+	public void setResolutionName(UnsafeSupplier<String, Throwable> resolutionNameUnsafeSupplier) {
 			try {
-				images = imagesUnsafeSupplier.get();
+				resolutionName = resolutionNameUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -117,18 +114,18 @@ public class ImageObjectRepositoryImpl implements ImageObjectRepository {
 
 	@GraphQLField
 	@JsonProperty
-	protected BlogPostingImage[] images;
-	public Long[] getImagesIds() {
-			return imagesIds;
+	protected String resolutionName;
+	public Number getSizeInBytes() {
+			return sizeInBytes;
 	}
 
-	public void setImagesIds(Long[] imagesIds) {
-			this.imagesIds = imagesIds;
+	public void setSizeInBytes(Number sizeInBytes) {
+			this.sizeInBytes = sizeInBytes;
 	}
 
-	public void setImagesIds(UnsafeSupplier<Long[], Throwable> imagesIdsUnsafeSupplier) {
+	public void setSizeInBytes(UnsafeSupplier<Number, Throwable> sizeInBytesUnsafeSupplier) {
 			try {
-				imagesIds = imagesIdsUnsafeSupplier.get();
+				sizeInBytes = sizeInBytesUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -137,18 +134,18 @@ public class ImageObjectRepositoryImpl implements ImageObjectRepository {
 
 	@GraphQLField
 	@JsonProperty
-	protected Long[] imagesIds;
-	public String getName() {
-			return name;
+	protected Number sizeInBytes;
+	public Number getWidth() {
+			return width;
 	}
 
-	public void setName(String name) {
-			this.name = name;
+	public void setWidth(Number width) {
+			this.width = width;
 	}
 
-	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
+	public void setWidth(UnsafeSupplier<Number, Throwable> widthUnsafeSupplier) {
 			try {
-				name = nameUnsafeSupplier.get();
+				width = widthUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -157,6 +154,6 @@ public class ImageObjectRepositoryImpl implements ImageObjectRepository {
 
 	@GraphQLField
 	@JsonProperty
-	protected String name;
+	protected Number width;
 
 }

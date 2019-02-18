@@ -30,11 +30,6 @@ public interface AggregateRating {
 	public void setBestRating(Number bestRating);
 
 	public void setBestRating(UnsafeSupplier<Number, Throwable> bestRatingUnsafeSupplier);
-	public Long getId();
-
-	public void setId(Long id);
-
-	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier);
 	public Number getRatingCount();
 
 	public void setRatingCount(Number ratingCount);

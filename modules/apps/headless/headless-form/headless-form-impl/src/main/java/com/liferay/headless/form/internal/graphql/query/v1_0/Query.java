@@ -46,10 +46,10 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<Form> getContentSpaceFormsPage( @GraphQLName("content-space-id") Long contentSpaceId , @GraphQLName("per_page") int perPage , @GraphQLName("page") int page ) throws Exception {
+	public Collection<Form> getContentSpaceFormsPage( @GraphQLName("content-space-id") Long contentSpaceId , @GraphQLName("pageSize") int pageSize , @GraphQLName("page") int page ) throws Exception {
 				Page paginationPage = _getFormResource().getContentSpaceFormsPage(
 
-					contentSpaceId , Pagination.of(perPage, page)
+					contentSpaceId , Pagination.of(pageSize, page)
 				);
 
 				return paginationPage.getItems();
@@ -82,10 +82,10 @@ return _getFormRecordResource().getFormRecord( formRecordId );
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<FormRecord> getFormFormRecordsPage( @GraphQLName("form-id") Long formId , @GraphQLName("per_page") int perPage , @GraphQLName("page") int page ) throws Exception {
+	public Collection<FormRecord> getFormFormRecordsPage( @GraphQLName("form-id") Long formId , @GraphQLName("pageSize") int pageSize , @GraphQLName("page") int page ) throws Exception {
 				Page paginationPage = _getFormRecordResource().getFormFormRecordsPage(
 
-					formId , Pagination.of(perPage, page)
+					formId , Pagination.of(pageSize, page)
 				);
 
 				return paginationPage.getItems();
@@ -94,10 +94,10 @@ return _getFormRecordResource().getFormRecord( formRecordId );
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<FormStructure> getContentSpaceFormStructuresPage( @GraphQLName("content-space-id") Long contentSpaceId , @GraphQLName("per_page") int perPage , @GraphQLName("page") int page ) throws Exception {
+	public Collection<FormStructure> getContentSpaceFormStructuresPage( @GraphQLName("content-space-id") Long contentSpaceId , @GraphQLName("pageSize") int pageSize , @GraphQLName("page") int page ) throws Exception {
 				Page paginationPage = _getFormStructureResource().getContentSpaceFormStructuresPage(
 
-					contentSpaceId , Pagination.of(perPage, page)
+					contentSpaceId , Pagination.of(pageSize, page)
 				);
 
 				return paginationPage.getItems();

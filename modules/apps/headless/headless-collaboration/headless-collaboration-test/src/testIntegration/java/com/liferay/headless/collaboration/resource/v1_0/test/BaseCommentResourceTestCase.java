@@ -110,6 +110,9 @@ public abstract class BaseCommentResourceTestCase {
 	protected Comment randomComment() {
 		Comment comment = new CommentImpl();
 
+comment.setDateCreated(RandomTestUtil.nextDate());
+comment.setDateModified(RandomTestUtil.nextDate());
+comment.setHasComments(RandomTestUtil.randomBoolean());
 comment.setId(RandomTestUtil.randomLong());
 comment.setText(RandomTestUtil.randomString());
 		return comment;

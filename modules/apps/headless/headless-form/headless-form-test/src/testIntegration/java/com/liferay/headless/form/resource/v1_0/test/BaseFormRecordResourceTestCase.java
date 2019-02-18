@@ -79,10 +79,6 @@ public abstract class BaseFormRecordResourceTestCase {
 	public void testPostFormFormRecord() throws Exception {
 			Assert.assertTrue(true);
 	}
-	@Test
-	public void testPostFormFormRecordBatchCreate() throws Exception {
-			Assert.assertTrue(true);
-	}
 
 	protected Response invokeGetFormRecord( Long formRecordId ) throws Exception {
 		RequestSpecification requestSpecification = _createRequestSpecification();
@@ -124,18 +120,6 @@ public abstract class BaseFormRecordResourceTestCase {
 			).when(
 			).post(
 				_resourceURL + "/forms/{form-id}/form-records",
-				formId 
-			);
-
-	}
-	protected Response invokePostFormFormRecordBatchCreate( Long formId , FormRecord formRecord ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
-
-			return requestSpecification.body(
-				formRecord
-			).when(
-			).post(
-				_resourceURL + "/forms/{form-id}/form-records/batch-create",
 				formId 
 			);
 

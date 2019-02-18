@@ -14,15 +14,17 @@
 
 package com.liferay.headless.web.experience.internal.resource.v1_0;
 
-import com.liferay.headless.web.experience.dto.v1_0.ContentDocument;
-import com.liferay.headless.web.experience.internal.dto.v1_0.ContentDocumentImpl;
-import com.liferay.headless.web.experience.resource.v1_0.ContentDocumentResource;
+import com.liferay.headless.web.experience.dto.v1_0.StructuredContentImage;
+import com.liferay.headless.web.experience.internal.dto.v1_0.StructuredContentImageImpl;
+import com.liferay.headless.web.experience.resource.v1_0.StructuredContentImageResource;
 import com.liferay.oauth2.provider.scope.RequiresScope;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.annotation.Generated;
@@ -40,24 +42,33 @@ import javax.ws.rs.core.Context;
  */
 @Generated("")
 @Path("/v1.0")
-public abstract class BaseContentDocumentResourceImpl implements ContentDocumentResource {
+public abstract class BaseStructuredContentImageResourceImpl implements StructuredContentImageResource {
 
-	@DELETE
-	@Path("/content-documents/{content-document-id}")
+	@GET
+	@Path("/structured-contents/{structured-content-id}/structured-content-images")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	@Override
-	public boolean deleteContentDocument( @PathParam("content-document-id") Long contentDocumentId ) throws Exception {
+	public Page<StructuredContentImage> getStructuredContentStructuredContentImagesPage( @PathParam("structured-content-id") Long structuredContentId ) throws Exception {
+			return Page.of(Collections.emptyList());
+
+	}
+	@DELETE
+	@Path("/structured-contents/{structured-content-id}/structured-content-images/{content-document-id}")
+	@Produces("application/json")
+	@RequiresScope("everything.read")
+	@Override
+	public boolean deleteStructuredContentContentDocument( @PathParam("structured-content-id") Long structuredContentId , @PathParam("content-document-id") Long contentDocumentId ) throws Exception {
 			return false;
 
 	}
 	@GET
-	@Path("/content-documents/{content-document-id}")
+	@Path("/structured-contents/{structured-content-id}/structured-content-images/{content-document-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	@Override
-	public ContentDocument getContentDocument( @PathParam("content-document-id") Long contentDocumentId ) throws Exception {
-			return new ContentDocumentImpl();
+	public StructuredContentImage getStructuredContentContentDocument( @PathParam("structured-content-id") Long structuredContentId , @PathParam("content-document-id") Long contentDocumentId ) throws Exception {
+			return new StructuredContentImageImpl();
 
 	}
 

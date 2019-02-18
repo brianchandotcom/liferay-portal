@@ -72,10 +72,6 @@ public abstract class BaseKeywordResourceTestCase {
 			Assert.assertTrue(true);
 	}
 	@Test
-	public void testPostContentSpaceKeywordBatchCreate() throws Exception {
-			Assert.assertTrue(true);
-	}
-	@Test
 	public void testDeleteKeyword() throws Exception {
 			Assert.assertTrue(true);
 	}
@@ -106,18 +102,6 @@ public abstract class BaseKeywordResourceTestCase {
 			).when(
 			).post(
 				_resourceURL + "/content-spaces/{content-space-id}/keywords",
-				contentSpaceId 
-			);
-
-	}
-	protected Response invokePostContentSpaceKeywordBatchCreate( Long contentSpaceId , Keyword keyword ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
-
-			return requestSpecification.body(
-				keyword
-			).when(
-			).post(
-				_resourceURL + "/content-spaces/{content-space-id}/keywords/batch-create",
 				contentSpaceId 
 			);
 

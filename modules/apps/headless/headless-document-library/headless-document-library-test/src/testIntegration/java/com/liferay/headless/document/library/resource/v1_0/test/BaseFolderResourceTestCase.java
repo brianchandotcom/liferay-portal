@@ -64,19 +64,11 @@ public abstract class BaseFolderResourceTestCase {
 	}
 
 	@Test
-	public void testGetDocumentsRepository() throws Exception {
-			Assert.assertTrue(true);
-	}
-	@Test
 	public void testGetDocumentsRepositoryFoldersPage() throws Exception {
 			Assert.assertTrue(true);
 	}
 	@Test
-	public void testPostDocumentsRepositoryFolder() throws Exception {
-			Assert.assertTrue(true);
-	}
-	@Test
-	public void testPostDocumentsRepositoryFolderBatchCreate() throws Exception {
+	public void testPostDocumentsRepository() throws Exception {
 			Assert.assertTrue(true);
 	}
 	@Test
@@ -99,51 +91,25 @@ public abstract class BaseFolderResourceTestCase {
 	public void testPostFolderFolder() throws Exception {
 			Assert.assertTrue(true);
 	}
-	@Test
-	public void testPostFolderFolderBatchCreate() throws Exception {
-			Assert.assertTrue(true);
-	}
 
-	protected Response invokeGetDocumentsRepository( Long documentsRepositoryId ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
-
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/documents-repositories/{documents-repository-id}",
-				documentsRepositoryId
-			);
-
-	}
 	protected Response invokeGetDocumentsRepositoryFoldersPage( Long documentsRepositoryId , Pagination pagination ) throws Exception {
 		RequestSpecification requestSpecification = _createRequestSpecification();
 
 			return requestSpecification.when(
 			).get(
-				_resourceURL + "/documents-repositories/{documents-repository-id}/folders",
+				_resourceURL + "/folders",
 				documentsRepositoryId 
 			);
 
 	}
-	protected Response invokePostDocumentsRepositoryFolder( Long documentsRepositoryId , Folder folder ) throws Exception {
+	protected Response invokePostDocumentsRepository( Long documentsRepositoryId , Folder folder ) throws Exception {
 		RequestSpecification requestSpecification = _createRequestSpecification();
 
 			return requestSpecification.body(
 				folder
 			).when(
 			).post(
-				_resourceURL + "/documents-repositories/{documents-repository-id}/folders",
-				documentsRepositoryId 
-			);
-
-	}
-	protected Response invokePostDocumentsRepositoryFolderBatchCreate( Long documentsRepositoryId , Folder folder ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
-
-			return requestSpecification.body(
-				folder
-			).when(
-			).post(
-				_resourceURL + "/documents-repositories/{documents-repository-id}/folders/batch-create",
+				_resourceURL + "/folders",
 				documentsRepositoryId 
 			);
 
@@ -202,18 +168,6 @@ public abstract class BaseFolderResourceTestCase {
 			);
 
 	}
-	protected Response invokePostFolderFolderBatchCreate( Long folderId , Folder folder ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
-
-			return requestSpecification.body(
-				folder
-			).when(
-			).post(
-				_resourceURL + "/folders/{folder-id}/folders/batch-create",
-				folderId 
-			);
-
-	}
 
 	protected Folder randomFolder() {
 		Folder folder = new FolderImpl();
@@ -221,7 +175,8 @@ public abstract class BaseFolderResourceTestCase {
 folder.setDateCreated(RandomTestUtil.nextDate());
 folder.setDateModified(RandomTestUtil.nextDate());
 folder.setDescription(RandomTestUtil.randomString());
-folder.setDocumentsRepositoryId(RandomTestUtil.randomLong());
+folder.setHasDocuments(RandomTestUtil.randomBoolean());
+folder.setHasFolders(RandomTestUtil.randomBoolean());
 folder.setId(RandomTestUtil.randomLong());
 folder.setName(RandomTestUtil.randomString());
 		return folder;

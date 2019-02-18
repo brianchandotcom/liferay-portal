@@ -17,8 +17,8 @@ package com.liferay.headless.web.experience.internal.dto.v1_0;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import com.liferay.headless.web.experience.dto.v1_0.AggregateRating;
+import com.liferay.headless.web.experience.dto.v1_0.Categories;
 import com.liferay.headless.web.experience.dto.v1_0.Comment;
-import com.liferay.headless.web.experience.dto.v1_0.ContentStructure;
 import com.liferay.headless.web.experience.dto.v1_0.Creator;
 import com.liferay.headless.web.experience.dto.v1_0.RenderedContentsByTemplate;
 import com.liferay.headless.web.experience.dto.v1_0.StructuredContent;
@@ -83,17 +83,17 @@ public class StructuredContentImpl implements StructuredContent {
 	@GraphQLField
 	@JsonProperty
 	protected String[] availableLanguages;
-	public Long[] getCategory() {
-			return category;
+	public Categories[] getCategories() {
+			return categories;
 	}
 
-	public void setCategory(Long[] category) {
-			this.category = category;
+	public void setCategories(Categories[] categories) {
+			this.categories = categories;
 	}
 
-	public void setCategory(UnsafeSupplier<Long[], Throwable> categoryUnsafeSupplier) {
+	public void setCategories(UnsafeSupplier<Categories[], Throwable> categoriesUnsafeSupplier) {
 			try {
-				category = categoryUnsafeSupplier.get();
+				categories = categoriesUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -102,7 +102,7 @@ public class StructuredContentImpl implements StructuredContent {
 
 	@GraphQLField
 	@JsonProperty
-	protected Long[] category;
+	protected Categories[] categories;
 	public Comment[] getComment() {
 			return comment;
 	}
@@ -143,26 +143,6 @@ public class StructuredContentImpl implements StructuredContent {
 	@GraphQLField
 	@JsonProperty
 	protected Long contentSpace;
-	public ContentStructure getContentStructure() {
-			return contentStructure;
-	}
-
-	public void setContentStructure(ContentStructure contentStructure) {
-			this.contentStructure = contentStructure;
-	}
-
-	public void setContentStructure(UnsafeSupplier<ContentStructure, Throwable> contentStructureUnsafeSupplier) {
-			try {
-				contentStructure = contentStructureUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected ContentStructure contentStructure;
 	public Long getContentStructureId() {
 			return contentStructureId;
 	}

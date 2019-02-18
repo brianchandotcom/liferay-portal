@@ -80,10 +80,6 @@ public abstract class BaseUserAccountResourceTestCase {
 			Assert.assertTrue(true);
 	}
 	@Test
-	public void testPostUserAccountBatchCreate() throws Exception {
-			Assert.assertTrue(true);
-	}
-	@Test
 	public void testDeleteUserAccount() throws Exception {
 			Assert.assertTrue(true);
 	}
@@ -136,16 +132,6 @@ public abstract class BaseUserAccountResourceTestCase {
 			return requestSpecification.when(
 			).post(
 				_resourceURL + "/user-accounts",
-				userAccount
-			);
-
-	}
-	protected Response invokePostUserAccountBatchCreate( UserAccount userAccount ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
-
-			return requestSpecification.when(
-			).post(
-				_resourceURL + "/user-accounts/batch-create",
 				userAccount
 			);
 

@@ -32,26 +32,16 @@ import javax.annotation.Generated;
 @Generated("")
 public interface DocumentResource {
 
+	public Page<Document> getFolderDocumentsPage( Long folderId , Pagination pagination ) throws Exception;
+
+	public Document postFolder( Long folderId , MultipartBody multipartBody ) throws Exception;
+
 	public boolean deleteDocument( Long documentId ) throws Exception;
 
 	public Document getDocument( Long documentId ) throws Exception;
 
-	public Page<Long> getDocumentCategoriesPage( Long documentId , Pagination pagination ) throws Exception;
-
-	public boolean postDocumentCategories( Long documentId , Long referenceId ) throws Exception;
-
-	public boolean postDocumentCategoriesBatchCreate( Long documentId , Long referenceId ) throws Exception;
-
-	public Page<Document> getDocumentsRepositoryDocumentsPage( Long documentsRepositoryId , Pagination pagination ) throws Exception;
-
-	public Document postDocumentsRepositoryDocument( Long documentsRepositoryId , Document document ) throws Exception;
-
-	public Document postDocumentsRepositoryDocumentBatchCreate( Long documentsRepositoryId , Document document ) throws Exception;
-
 	public Page<Document> getFolderDocumentsPage( Long folderId , Pagination pagination ) throws Exception;
 
 	public Document postFolderDocument( Long folderId , MultipartBody multipartBody ) throws Exception;
-
-	public Document postFolderDocumentBatchCreate( Long folderId , MultipartBody multipartBody ) throws Exception;
 
 }

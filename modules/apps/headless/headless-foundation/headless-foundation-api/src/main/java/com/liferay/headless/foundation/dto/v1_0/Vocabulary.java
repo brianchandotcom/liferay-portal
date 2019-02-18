@@ -57,6 +57,11 @@ public interface Vocabulary {
 	public void setDescription(String description);
 
 	public void setDescription(UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier);
+	public Boolean getHasCategories();
+
+	public void setHasCategories(Boolean hasCategories);
+
+	public void setHasCategories(UnsafeSupplier<Boolean, Throwable> hasCategoriesUnsafeSupplier);
 	public Long getId();
 
 	public void setId(Long id);
@@ -67,15 +72,5 @@ public interface Vocabulary {
 	public void setName(String name);
 
 	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier);
-	public Category[] getVocabularyCategories();
-
-	public void setVocabularyCategories(Category[] vocabularyCategories);
-
-	public void setVocabularyCategories(UnsafeSupplier<Category[], Throwable> vocabularyCategoriesUnsafeSupplier);
-	public Long[] getVocabularyCategoriesIds();
-
-	public void setVocabularyCategoriesIds(Long[] vocabularyCategoriesIds);
-
-	public void setVocabularyCategoriesIds(UnsafeSupplier<Long[], Throwable> vocabularyCategoriesIdsUnsafeSupplier);
 
 }

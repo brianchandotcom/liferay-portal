@@ -12,23 +12,20 @@
  * details.
  */
 
-package com.liferay.headless.web.experience.resource.v1_0;
+package com.liferay.headless.web.experience.internal.resource.v1_0;
 
-import com.liferay.headless.web.experience.dto.v1_0.AggregateRating;
+import com.liferay.headless.web.experience.resource.v1_0.StructuredContentImageResource;
 
-import javax.annotation.Generated;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ServiceScope;
 
 /**
- * To access this resource, run:
- *
- *     curl -u your@email.com:yourpassword -D - http://localhost:8080/o/headless-web-experience/v1.0
- *
  * @author Javier Gamarra
- * @generated
  */
-@Generated("")
-public interface AggregateRatingResource {
-
-	public AggregateRating getAggregateRating( Long aggregateRatingId ) throws Exception;
-
+@Component(
+	properties = "OSGI-INF/liferay/rest/v1_0/structured-content-image.properties",
+	scope = ServiceScope.PROTOTYPE, service = StructuredContentImageResource.class
+)
+public class StructuredContentImageResourceImpl
+	extends BaseStructuredContentImageResourceImpl {
 }

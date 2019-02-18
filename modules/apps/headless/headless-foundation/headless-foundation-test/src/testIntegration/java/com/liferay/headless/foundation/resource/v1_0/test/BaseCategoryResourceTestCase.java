@@ -84,19 +84,11 @@ public abstract class BaseCategoryResourceTestCase {
 			Assert.assertTrue(true);
 	}
 	@Test
-	public void testPostCategoryCategoryBatchCreate() throws Exception {
-			Assert.assertTrue(true);
-	}
-	@Test
 	public void testGetVocabularyCategoriesPage() throws Exception {
 			Assert.assertTrue(true);
 	}
 	@Test
 	public void testPostVocabularyCategory() throws Exception {
-			Assert.assertTrue(true);
-	}
-	@Test
-	public void testPostVocabularyCategoryBatchCreate() throws Exception {
 			Assert.assertTrue(true);
 	}
 
@@ -154,18 +146,6 @@ public abstract class BaseCategoryResourceTestCase {
 			);
 
 	}
-	protected Response invokePostCategoryCategoryBatchCreate( Long categoryId , Category category ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
-
-			return requestSpecification.body(
-				category
-			).when(
-			).post(
-				_resourceURL + "/categories/{category-id}/categories/batch-create",
-				categoryId 
-			);
-
-	}
 	protected Response invokeGetVocabularyCategoriesPage( Long vocabularyId , Pagination pagination ) throws Exception {
 		RequestSpecification requestSpecification = _createRequestSpecification();
 
@@ -188,30 +168,18 @@ public abstract class BaseCategoryResourceTestCase {
 			);
 
 	}
-	protected Response invokePostVocabularyCategoryBatchCreate( Long vocabularyId , Category category ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
-
-			return requestSpecification.body(
-				category
-			).when(
-			).post(
-				_resourceURL + "/vocabularies/{vocabulary-id}/categories/batch-create",
-				vocabularyId 
-			);
-
-	}
 
 	protected Category randomCategory() {
 		Category category = new CategoryImpl();
 
-category.setCategoryId(RandomTestUtil.randomLong());
 category.setCreatorId(RandomTestUtil.randomLong());
 category.setDateCreated(RandomTestUtil.nextDate());
 category.setDateModified(RandomTestUtil.nextDate());
 category.setDescription(RandomTestUtil.randomString());
+category.setHasCategories(RandomTestUtil.randomBoolean());
 category.setId(RandomTestUtil.randomLong());
 category.setName(RandomTestUtil.randomString());
-category.setVocabularyId(RandomTestUtil.randomLong());
+category.setParentVocabularyId(RandomTestUtil.randomLong());
 		return category;
 	}
 

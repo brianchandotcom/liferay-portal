@@ -37,22 +37,14 @@ public interface StructuredContentResource {
 
 	public Page<StructuredContent> getContentSpaceStructuredContentsPage( Long contentSpaceId , Filter filter , Pagination pagination , Sort[] sorts ) throws Exception;
 
-	public StructuredContent patchContentSpaceStructuredContents( Long contentSpaceId , StructuredContent structuredContent ) throws Exception;
-
 	public StructuredContent postContentSpaceStructuredContent( Long contentSpaceId , StructuredContent structuredContent ) throws Exception;
-
-	public StructuredContent postContentSpaceStructuredContentBatchCreate( Long contentSpaceId , StructuredContent structuredContent ) throws Exception;
 
 	public boolean deleteStructuredContent( Long structuredContentId ) throws Exception;
 
 	public StructuredContent getStructuredContent( Long structuredContentId ) throws Exception;
 
+	public StructuredContent patchStructuredContent( Long structuredContentId , StructuredContent structuredContent ) throws Exception;
+
 	public StructuredContent putStructuredContent( Long structuredContentId , StructuredContent structuredContent ) throws Exception;
-
-	public Page<Long> getStructuredContentCategoriesPage( Long structuredContentId , Pagination pagination ) throws Exception;
-
-	public boolean postStructuredContentCategories( Long structuredContentId , Long referenceId ) throws Exception;
-
-	public boolean postStructuredContentCategoriesBatchCreate( Long structuredContentId , Long referenceId ) throws Exception;
 
 }

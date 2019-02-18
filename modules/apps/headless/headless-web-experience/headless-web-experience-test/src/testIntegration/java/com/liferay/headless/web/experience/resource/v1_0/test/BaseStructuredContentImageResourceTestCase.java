@@ -17,8 +17,8 @@ package com.liferay.headless.web.experience.resource.v1_0.test;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import com.liferay.headless.web.experience.dto.v1_0.AggregateRating;
-import com.liferay.headless.web.experience.internal.dto.v1_0.AggregateRatingImpl;
+import com.liferay.headless.web.experience.dto.v1_0.StructuredContentImage;
+import com.liferay.headless.web.experience.internal.dto.v1_0.StructuredContentImageImpl;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -43,7 +43,7 @@ import org.junit.Test;
  * @generated
  */
 @Generated("")
-public abstract class BaseAggregateRatingResourceTestCase {
+public abstract class BaseStructuredContentImageResourceTestCase {
 
 	@BeforeClass
 	public static void setUpClass() {
@@ -63,26 +63,60 @@ public abstract class BaseAggregateRatingResourceTestCase {
 	}
 
 	@Test
-	public void testGetAggregateRating() throws Exception {
+	public void testGetStructuredContentStructuredContentImagesPage() throws Exception {
+			Assert.assertTrue(true);
+	}
+	@Test
+	public void testDeleteStructuredContentContentDocument() throws Exception {
+			Assert.assertTrue(true);
+	}
+	@Test
+	public void testGetStructuredContentContentDocument() throws Exception {
 			Assert.assertTrue(true);
 	}
 
-	protected Response invokeGetAggregateRating( Long aggregateRatingId ) throws Exception {
+	protected Response invokeGetStructuredContentStructuredContentImagesPage( Long structuredContentId ) throws Exception {
 		RequestSpecification requestSpecification = _createRequestSpecification();
 
 			return requestSpecification.when(
 			).get(
-				_resourceURL + "/aggregate-ratings/{aggregate-rating-id}",
-				aggregateRatingId
+				_resourceURL + "/structured-contents/{structured-content-id}/structured-content-images",
+				structuredContentId
+			);
+
+	}
+	protected Response invokeDeleteStructuredContentContentDocument( Long structuredContentId , Long contentDocumentId ) throws Exception {
+		RequestSpecification requestSpecification = _createRequestSpecification();
+
+			return requestSpecification.when(
+			).delete(
+				_resourceURL + "/structured-contents/{structured-content-id}/structured-content-images/{content-document-id}",
+				structuredContentId , contentDocumentId
+			);
+
+	}
+	protected Response invokeGetStructuredContentContentDocument( Long structuredContentId , Long contentDocumentId ) throws Exception {
+		RequestSpecification requestSpecification = _createRequestSpecification();
+
+			return requestSpecification.when(
+			).get(
+				_resourceURL + "/structured-contents/{structured-content-id}/structured-content-images/{content-document-id}",
+				structuredContentId , contentDocumentId
 			);
 
 	}
 
-	protected AggregateRating randomAggregateRating() {
-		AggregateRating aggregateRating = new AggregateRatingImpl();
+	protected StructuredContentImage randomStructuredContentImage() {
+		StructuredContentImage structuredContentImage = new StructuredContentImageImpl();
 
-aggregateRating.setId(RandomTestUtil.randomLong());
-		return aggregateRating;
+structuredContentImage.setContentUrl(RandomTestUtil.randomString());
+structuredContentImage.setDateCreated(RandomTestUtil.nextDate());
+structuredContentImage.setDateModified(RandomTestUtil.nextDate());
+structuredContentImage.setEncodingFormat(RandomTestUtil.randomString());
+structuredContentImage.setFileExtension(RandomTestUtil.randomString());
+structuredContentImage.setId(RandomTestUtil.randomLong());
+structuredContentImage.setTitle(RandomTestUtil.randomString());
+		return structuredContentImage;
 	}
 
 	protected Group testGroup;

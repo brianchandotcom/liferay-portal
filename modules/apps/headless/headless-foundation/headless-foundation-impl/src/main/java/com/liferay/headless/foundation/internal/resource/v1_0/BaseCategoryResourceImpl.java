@@ -95,16 +95,6 @@ public abstract class BaseCategoryResourceImpl implements CategoryResource {
 			return new CategoryImpl();
 
 	}
-	@Consumes("application/json")
-	@POST
-	@Path("/categories/{category-id}/categories/batch-create")
-	@Produces("application/json")
-	@RequiresScope("everything.write")
-	@Override
-	public Category postCategoryCategoryBatchCreate( @PathParam("category-id") Long categoryId , Category category ) throws Exception {
-			return new CategoryImpl();
-
-	}
 	@GET
 	@Path("/vocabularies/{vocabulary-id}/categories")
 	@Produces("application/json")
@@ -121,16 +111,6 @@ public abstract class BaseCategoryResourceImpl implements CategoryResource {
 	@RequiresScope("everything.read")
 	@Override
 	public Category postVocabularyCategory( @PathParam("vocabulary-id") Long vocabularyId , Category category ) throws Exception {
-			return new CategoryImpl();
-
-	}
-	@Consumes("application/json")
-	@POST
-	@Path("/vocabularies/{vocabulary-id}/categories/batch-create")
-	@Produces("application/json")
-	@RequiresScope("everything.write")
-	@Override
-	public Category postVocabularyCategoryBatchCreate( @PathParam("vocabulary-id") Long vocabularyId , Category category ) throws Exception {
 			return new CategoryImpl();
 
 	}

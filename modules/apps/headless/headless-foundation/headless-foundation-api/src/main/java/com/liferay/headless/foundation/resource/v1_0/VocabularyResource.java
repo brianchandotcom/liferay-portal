@@ -37,8 +37,6 @@ public interface VocabularyResource {
 
 	public Vocabulary postContentSpaceVocabulary( Long contentSpaceId , Vocabulary vocabulary ) throws Exception;
 
-	public Vocabulary postContentSpaceVocabularyBatchCreate( Long contentSpaceId , Vocabulary vocabulary ) throws Exception;
-
 	public boolean deleteVocabulary( Long vocabularyId ) throws Exception;
 
 	public Vocabulary getVocabulary( Long vocabularyId ) throws Exception;

@@ -65,12 +65,6 @@ return _getFormRecordResource().putFormRecord( formRecordId , formRecord );
 return _getFormRecordResource().postFormFormRecord( formId , formRecord );
 	}
 
-	@GraphQLField
-	@GraphQLInvokeDetached
-	public FormRecord postFormFormRecordBatchCreate( @GraphQLName("form-id") Long formId , @GraphQLName("FormRecord") FormRecord formRecord ) throws Exception {
-return _getFormRecordResource().postFormFormRecordBatchCreate( formId , formRecord );
-	}
-
 	private static FormResource _getFormResource() {
 			return _formResourceServiceTracker.getService();
 	}

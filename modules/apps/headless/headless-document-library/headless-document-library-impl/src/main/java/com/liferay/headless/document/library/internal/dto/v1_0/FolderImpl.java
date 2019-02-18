@@ -16,7 +16,6 @@ package com.liferay.headless.document.library.internal.dto.v1_0;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import com.liferay.headless.document.library.dto.v1_0.Document;
 import com.liferay.headless.document.library.dto.v1_0.Folder;
 import com.liferay.petra.function.UnsafeSupplier;
 
@@ -98,17 +97,17 @@ public class FolderImpl implements Folder {
 	@GraphQLField
 	@JsonProperty
 	protected String description;
-	public Document[] getDocuments() {
-			return documents;
+	public Boolean getHasDocuments() {
+			return hasDocuments;
 	}
 
-	public void setDocuments(Document[] documents) {
-			this.documents = documents;
+	public void setHasDocuments(Boolean hasDocuments) {
+			this.hasDocuments = hasDocuments;
 	}
 
-	public void setDocuments(UnsafeSupplier<Document[], Throwable> documentsUnsafeSupplier) {
+	public void setHasDocuments(UnsafeSupplier<Boolean, Throwable> hasDocumentsUnsafeSupplier) {
 			try {
-				documents = documentsUnsafeSupplier.get();
+				hasDocuments = hasDocumentsUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -117,18 +116,18 @@ public class FolderImpl implements Folder {
 
 	@GraphQLField
 	@JsonProperty
-	protected Document[] documents;
-	public Long[] getDocumentsIds() {
-			return documentsIds;
+	protected Boolean hasDocuments;
+	public Boolean getHasFolders() {
+			return hasFolders;
 	}
 
-	public void setDocumentsIds(Long[] documentsIds) {
-			this.documentsIds = documentsIds;
+	public void setHasFolders(Boolean hasFolders) {
+			this.hasFolders = hasFolders;
 	}
 
-	public void setDocumentsIds(UnsafeSupplier<Long[], Throwable> documentsIdsUnsafeSupplier) {
+	public void setHasFolders(UnsafeSupplier<Boolean, Throwable> hasFoldersUnsafeSupplier) {
 			try {
-				documentsIds = documentsIdsUnsafeSupplier.get();
+				hasFolders = hasFoldersUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -137,47 +136,7 @@ public class FolderImpl implements Folder {
 
 	@GraphQLField
 	@JsonProperty
-	protected Long[] documentsIds;
-	public Folder getDocumentsRepository() {
-			return documentsRepository;
-	}
-
-	public void setDocumentsRepository(Folder documentsRepository) {
-			this.documentsRepository = documentsRepository;
-	}
-
-	public void setDocumentsRepository(UnsafeSupplier<Folder, Throwable> documentsRepositoryUnsafeSupplier) {
-			try {
-				documentsRepository = documentsRepositoryUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Folder documentsRepository;
-	public Long getDocumentsRepositoryId() {
-			return documentsRepositoryId;
-	}
-
-	public void setDocumentsRepositoryId(Long documentsRepositoryId) {
-			this.documentsRepositoryId = documentsRepositoryId;
-	}
-
-	public void setDocumentsRepositoryId(UnsafeSupplier<Long, Throwable> documentsRepositoryIdUnsafeSupplier) {
-			try {
-				documentsRepositoryId = documentsRepositoryIdUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Long documentsRepositoryId;
+	protected Boolean hasFolders;
 	public Long getId() {
 			return id;
 	}
@@ -218,25 +177,5 @@ public class FolderImpl implements Folder {
 	@GraphQLField
 	@JsonProperty
 	protected String name;
-	public Folder[] getSubFolders() {
-			return subFolders;
-	}
-
-	public void setSubFolders(Folder[] subFolders) {
-			this.subFolders = subFolders;
-	}
-
-	public void setSubFolders(UnsafeSupplier<Folder[], Throwable> subFoldersUnsafeSupplier) {
-			try {
-				subFolders = subFoldersUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Folder[] subFolders;
 
 }

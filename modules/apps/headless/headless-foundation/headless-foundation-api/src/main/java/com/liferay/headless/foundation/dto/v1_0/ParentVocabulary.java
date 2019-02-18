@@ -12,11 +12,9 @@
  * details.
  */
 
-package com.liferay.headless.collaboration.dto.v1_0;
+package com.liferay.headless.foundation.dto.v1_0;
 
 import com.liferay.petra.function.UnsafeSupplier;
-
-import java.util.Date;
 
 import javax.annotation.Generated;
 
@@ -25,33 +23,13 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public interface ImageObjectRepository {
+public interface ParentVocabulary {
 
-	public Date getDateCreated();
-
-	public void setDateCreated(Date dateCreated);
-
-	public void setDateCreated(UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier);
-	public Date getDateModified();
-
-	public void setDateModified(Date dateModified);
-
-	public void setDateModified(UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier);
 	public Long getId();
 
 	public void setId(Long id);
 
 	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier);
-	public BlogPostingImage[] getImages();
-
-	public void setImages(BlogPostingImage[] images);
-
-	public void setImages(UnsafeSupplier<BlogPostingImage[], Throwable> imagesUnsafeSupplier);
-	public Long[] getImagesIds();
-
-	public void setImagesIds(Long[] imagesIds);
-
-	public void setImagesIds(UnsafeSupplier<Long[], Throwable> imagesIdsUnsafeSupplier);
 	public String getName();
 
 	public void setName(String name);

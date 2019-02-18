@@ -39,8 +39,6 @@ public interface UserAccountResource {
 
 	public UserAccount postUserAccount( UserAccount userAccount ) throws Exception;
 
-	public UserAccount postUserAccountBatchCreate( UserAccount userAccount ) throws Exception;
-
 	public boolean deleteUserAccount( Long userAccountId ) throws Exception;
 
 	public UserAccount getUserAccount( Long userAccountId ) throws Exception;

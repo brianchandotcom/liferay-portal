@@ -12,25 +12,19 @@
  * details.
  */
 
-package com.liferay.headless.web.experience.resource.v1_0;
+package com.liferay.headless.workflow.internal.resource.v1_0;
 
-import com.liferay.headless.web.experience.dto.v1_0.ContentDocument;
+import com.liferay.headless.workflow.resource.v1_0.ObjectReviewedResource;
 
-import javax.annotation.Generated;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ServiceScope;
 
 /**
- * To access this resource, run:
- *
- *     curl -u your@email.com:yourpassword -D - http://localhost:8080/o/headless-web-experience/v1.0
- *
  * @author Javier Gamarra
- * @generated
  */
-@Generated("")
-public interface ContentDocumentResource {
-
-	public boolean deleteContentDocument( Long contentDocumentId ) throws Exception;
-
-	public ContentDocument getContentDocument( Long contentDocumentId ) throws Exception;
-
+@Component(
+	properties = "OSGI-INF/liferay/rest/v1_0/object-reviewed.properties",
+	scope = ServiceScope.PROTOTYPE, service = ObjectReviewedResource.class
+)
+public class ObjectReviewedResourceImpl extends BaseObjectReviewedResourceImpl {
 }

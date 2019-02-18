@@ -74,10 +74,6 @@ public abstract class BaseVocabularyResourceTestCase {
 			Assert.assertTrue(true);
 	}
 	@Test
-	public void testPostContentSpaceVocabularyBatchCreate() throws Exception {
-			Assert.assertTrue(true);
-	}
-	@Test
 	public void testDeleteVocabulary() throws Exception {
 			Assert.assertTrue(true);
 	}
@@ -108,18 +104,6 @@ public abstract class BaseVocabularyResourceTestCase {
 			).when(
 			).post(
 				_resourceURL + "/content-spaces/{content-space-id}/vocabularies",
-				contentSpaceId 
-			);
-
-	}
-	protected Response invokePostContentSpaceVocabularyBatchCreate( Long contentSpaceId , Vocabulary vocabulary ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
-
-			return requestSpecification.body(
-				vocabulary
-			).when(
-			).post(
-				_resourceURL + "/content-spaces/{content-space-id}/vocabularies/batch-create",
 				contentSpaceId 
 			);
 
@@ -164,6 +148,7 @@ vocabulary.setContentSpace(RandomTestUtil.randomLong());
 vocabulary.setDateCreated(RandomTestUtil.nextDate());
 vocabulary.setDateModified(RandomTestUtil.nextDate());
 vocabulary.setDescription(RandomTestUtil.randomString());
+vocabulary.setHasCategories(RandomTestUtil.randomBoolean());
 vocabulary.setId(RandomTestUtil.randomLong());
 vocabulary.setName(RandomTestUtil.randomString());
 		return vocabulary;

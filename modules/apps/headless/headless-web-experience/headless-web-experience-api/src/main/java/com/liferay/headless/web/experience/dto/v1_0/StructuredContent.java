@@ -37,11 +37,11 @@ public interface StructuredContent {
 	public void setAvailableLanguages(String[] availableLanguages);
 
 	public void setAvailableLanguages(UnsafeSupplier<String[], Throwable> availableLanguagesUnsafeSupplier);
-	public Long[] getCategory();
+	public Categories[] getCategories();
 
-	public void setCategory(Long[] category);
+	public void setCategories(Categories[] categories);
 
-	public void setCategory(UnsafeSupplier<Long[], Throwable> categoryUnsafeSupplier);
+	public void setCategories(UnsafeSupplier<Categories[], Throwable> categoriesUnsafeSupplier);
 	public Comment[] getComment();
 
 	public void setComment(Comment[] comment);
@@ -52,11 +52,6 @@ public interface StructuredContent {
 	public void setContentSpace(Long contentSpace);
 
 	public void setContentSpace(UnsafeSupplier<Long, Throwable> contentSpaceUnsafeSupplier);
-	public ContentStructure getContentStructure();
-
-	public void setContentStructure(ContentStructure contentStructure);
-
-	public void setContentStructure(UnsafeSupplier<ContentStructure, Throwable> contentStructureUnsafeSupplier);
 	public Long getContentStructureId();
 
 	public void setContentStructureId(Long contentStructureId);

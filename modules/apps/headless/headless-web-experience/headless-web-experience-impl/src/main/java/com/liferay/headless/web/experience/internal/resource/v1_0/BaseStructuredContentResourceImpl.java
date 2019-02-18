@@ -52,7 +52,7 @@ import javax.ws.rs.core.Context;
 public abstract class BaseStructuredContentResourceImpl implements StructuredContentResource {
 
 	@GET
-	@Path("/content-spaces/{content-space-id}/content-structures/{content-structure-id}/structured-contents")
+	@Path("/content-structures/{content-structure-id}/structured-contents")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	@Override
@@ -70,32 +70,12 @@ public abstract class BaseStructuredContentResourceImpl implements StructuredCon
 
 	}
 	@Consumes("application/json")
-	@PATCH
-	@Path("/content-spaces/{content-space-id}/structured-contents")
-	@Produces("application/json")
-	@RequiresScope("everything.read")
-	@Override
-	public StructuredContent patchContentSpaceStructuredContents( @PathParam("content-space-id") Long contentSpaceId , StructuredContent structuredContent ) throws Exception {
-			return new StructuredContentImpl();
-
-	}
-	@Consumes("application/json")
 	@POST
 	@Path("/content-spaces/{content-space-id}/structured-contents")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	@Override
 	public StructuredContent postContentSpaceStructuredContent( @PathParam("content-space-id") Long contentSpaceId , StructuredContent structuredContent ) throws Exception {
-			return new StructuredContentImpl();
-
-	}
-	@Consumes("application/json")
-	@POST
-	@Path("/content-spaces/{content-space-id}/structured-contents/batch-create")
-	@Produces("application/json")
-	@RequiresScope("everything.write")
-	@Override
-	public StructuredContent postContentSpaceStructuredContentBatchCreate( @PathParam("content-space-id") Long contentSpaceId , StructuredContent structuredContent ) throws Exception {
 			return new StructuredContentImpl();
 
 	}
@@ -118,6 +98,16 @@ public abstract class BaseStructuredContentResourceImpl implements StructuredCon
 
 	}
 	@Consumes("application/json")
+	@PATCH
+	@Path("/structured-contents/{structured-content-id}")
+	@Produces("application/json")
+	@RequiresScope("everything.read")
+	@Override
+	public StructuredContent patchStructuredContent( @PathParam("structured-content-id") Long structuredContentId , StructuredContent structuredContent ) throws Exception {
+			return new StructuredContentImpl();
+
+	}
+	@Consumes("application/json")
 	@PUT
 	@Path("/structured-contents/{structured-content-id}")
 	@Produces("application/json")
@@ -125,35 +115,6 @@ public abstract class BaseStructuredContentResourceImpl implements StructuredCon
 	@Override
 	public StructuredContent putStructuredContent( @PathParam("structured-content-id") Long structuredContentId , StructuredContent structuredContent ) throws Exception {
 			return new StructuredContentImpl();
-
-	}
-	@GET
-	@Path("/structured-contents/{structured-content-id}/categories")
-	@Produces("application/json")
-	@RequiresScope("everything.read")
-	@Override
-	public Page<Long> getStructuredContentCategoriesPage( @PathParam("structured-content-id") Long structuredContentId , @Context Pagination pagination ) throws Exception {
-			return Page.of(Collections.emptyList());
-
-	}
-	@Consumes("application/json")
-	@POST
-	@Path("/structured-contents/{structured-content-id}/categories")
-	@Produces("application/json")
-	@RequiresScope("everything.read")
-	@Override
-	public boolean postStructuredContentCategories( @PathParam("structured-content-id") Long structuredContentId , Long referenceId ) throws Exception {
-			return false;
-
-	}
-	@Consumes("application/json")
-	@POST
-	@Path("/structured-contents/{structured-content-id}/categories/batch-create")
-	@Produces("application/json")
-	@RequiresScope("everything.write")
-	@Override
-	public boolean postStructuredContentCategoriesBatchCreate( @PathParam("structured-content-id") Long structuredContentId , Long referenceId ) throws Exception {
-			return false;
 
 	}
 

@@ -47,11 +47,11 @@ public interface BlogPosting {
 	public void setCaption(String caption);
 
 	public void setCaption(UnsafeSupplier<String, Throwable> captionUnsafeSupplier);
-	public Category[] getCategory();
+	public Categories[] getCategories();
 
-	public void setCategory(Category[] category);
+	public void setCategories(Categories[] categories);
 
-	public void setCategory(UnsafeSupplier<Category[], Throwable> categoryUnsafeSupplier);
+	public void setCategories(UnsafeSupplier<Categories[], Throwable> categoriesUnsafeSupplier);
 	public Comment[] getComment();
 
 	public void setComment(Comment[] comment);
@@ -122,15 +122,5 @@ public interface BlogPosting {
 	public void setKeywords(String[] keywords);
 
 	public void setKeywords(UnsafeSupplier<String[], Throwable> keywordsUnsafeSupplier);
-	public ImageObjectRepository getRepository();
-
-	public void setRepository(ImageObjectRepository repository);
-
-	public void setRepository(UnsafeSupplier<ImageObjectRepository, Throwable> repositoryUnsafeSupplier);
-	public Long getRepositoryId();
-
-	public void setRepositoryId(Long repositoryId);
-
-	public void setRepositoryId(UnsafeSupplier<Long, Throwable> repositoryIdUnsafeSupplier);
 
 }

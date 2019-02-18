@@ -86,16 +86,6 @@ public abstract class BaseUserAccountResourceImpl implements UserAccountResource
 			return new UserAccountImpl();
 
 	}
-	@Consumes("application/json")
-	@POST
-	@Path("/user-accounts/batch-create")
-	@Produces("application/json")
-	@RequiresScope("everything.write")
-	@Override
-	public UserAccount postUserAccountBatchCreate( UserAccount userAccount ) throws Exception {
-			return new UserAccountImpl();
-
-	}
 	@DELETE
 	@Path("/user-accounts/{user-account-id}")
 	@Produces("application/json")

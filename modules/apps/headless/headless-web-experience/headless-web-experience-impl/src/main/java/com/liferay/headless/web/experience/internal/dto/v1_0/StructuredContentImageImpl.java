@@ -16,8 +16,8 @@ package com.liferay.headless.web.experience.internal.dto.v1_0;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import com.liferay.headless.web.experience.dto.v1_0.ContentDocument;
 import com.liferay.headless.web.experience.dto.v1_0.Creator;
+import com.liferay.headless.web.experience.dto.v1_0.StructuredContentImage;
 import com.liferay.petra.function.UnsafeSupplier;
 
 import graphql.annotations.annotationTypes.GraphQLField;
@@ -34,9 +34,9 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("ContentDocument")
-@XmlRootElement(name = "ContentDocument")
-public class ContentDocumentImpl implements ContentDocument {
+@GraphQLName("StructuredContentImage")
+@XmlRootElement(name = "StructuredContentImage")
+public class StructuredContentImageImpl implements StructuredContentImage {
 
 	public String getContentUrl() {
 			return contentUrl;

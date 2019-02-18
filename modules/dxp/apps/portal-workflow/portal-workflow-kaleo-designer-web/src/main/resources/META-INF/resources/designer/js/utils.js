@@ -109,7 +109,11 @@ AUI.add(
 								data[name] = [];
 							}
 
-							if ((type === 'checkbox' || type === 'radio') && !checked) {
+							if (type === 'checkbox') {
+								value = checked;
+							}
+
+							if (type === 'radio' && !checked) {
 								value = null;
 							}
 

@@ -14,9 +14,16 @@
 
 package com.liferay.headless.collaboration.internal.resource.v1_0;
 
+import com.liferay.document.library.kernel.service.DLAppService;
+import com.liferay.document.library.util.DLURLHelper;
+import com.liferay.headless.collaboration.dto.v1_0.BlogPostingImage;
+import com.liferay.headless.collaboration.internal.dto.v1_0.BlogPostingImageImpl;
 import com.liferay.headless.collaboration.resource.v1_0.BlogPostingImageResource;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileVersion;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
 
 /**
@@ -28,4 +35,36 @@ import org.osgi.service.component.annotations.ServiceScope;
 )
 public class BlogPostingImageResourceImpl
 	extends BaseBlogPostingImageResourceImpl {
+
+	@Override
+	public BlogPostingImage getImageObject(Long imageObjectId)
+		throws Exception {
+
+		FileEntry fileEntry = _dlAppService.getFileEntry(imageObjectId);
+
+		return _toBlogPostingImage(fileEntry, fileEntry.getFileVersion());
+	}
+
+	private BlogPostingImage _toBlogPostingImage(
+		FileEntry fileEntry, FileVersion fileVersion) {
+
+		return new BlogPostingImageImpl() {
+			{
+				contentUrl = _dlURLHelper.getPreviewURL(
+					fileEntry, fileVersion, null, "");
+				encodingFormat = fileEntry.getMimeType();
+				fileExtension = fileEntry.getExtension();
+				id = fileEntry.getFileEntryId();
+				sizeInBytes = fileEntry.getSize();
+				title = fileEntry.getTitle();
+			}
+		};
+	}
+
+	@Reference
+	private DLAppService _dlAppService;
+
+	@Reference
+	private DLURLHelper _dlURLHelper;
+
 }

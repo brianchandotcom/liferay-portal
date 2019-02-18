@@ -543,14 +543,14 @@ public class ContextODataMatcherTest {
 		Assert.assertTrue(
 			_contextODataMatcher.matches(
 				StringBundler.concat(
-					"(", Context.LANGUAGE_ID, " eq 'en_US') or (", Context.BROWSER,
-					" eq 'firefox')"),
+					"(", Context.LANGUAGE_ID, " eq 'en_US') or (",
+					Context.BROWSER, " eq 'firefox')"),
 				context));
 		Assert.assertTrue(
 			_contextODataMatcher.matches(
 				StringBundler.concat(
-					"(", Context.LANGUAGE_ID, " eq 'fr_FR') or (", Context.BROWSER,
-					" eq 'chrome')"),
+					"(", Context.LANGUAGE_ID, " eq 'fr_FR') or (",
+					Context.BROWSER, " eq 'chrome')"),
 				context));
 		Assert.assertFalse(
 			_contextODataMatcher.matches(

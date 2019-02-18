@@ -63,7 +63,8 @@ page import="com.liferay.site.teams.web.internal.display.context.SelectUserGroup
 page import="com.liferay.site.teams.web.internal.display.context.SelectUsersDisplayContext" %><%@
 page import="com.liferay.site.teams.web.internal.display.context.SelectUsersManagementToolbarDisplayContext" %><%@
 page import="com.liferay.site.teams.web.internal.display.context.SiteTeamsDisplayContext" %><%@
-page import="com.liferay.site.teams.web.internal.display.context.SiteTeamsManagementToolbarDisplayContext" %>
+page import="com.liferay.site.teams.web.internal.display.context.SiteTeamsManagementToolbarDisplayContext" %><%@
+page import="com.liferay.site.teams.web.internal.servlet.taglib.clay.SelectUserUserCard" %>
 
 <%@ page import="java.util.HashMap" %><%@
 page import="java.util.LinkedHashMap" %><%@

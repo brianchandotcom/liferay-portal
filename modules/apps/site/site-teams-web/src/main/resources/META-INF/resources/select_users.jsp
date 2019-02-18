@@ -45,13 +45,8 @@ SelectUsersDisplayContext selectUsersDisplayContext = new SelectUsersDisplayCont
 					%>
 
 					<liferay-ui:search-container-column-text>
-						<liferay-frontend:user-vertical-card
-							cssClass="entry-display-style"
-							resultRow="<%= row %>"
-							rowChecker="<%= searchContainer.getRowChecker() %>"
-							subtitle="<%= user2.getScreenName() %>"
-							title="<%= user2.getFullName() %>"
-							userId="<%= user2.getUserId() %>"
+						<clay:user-card
+							userCard="<%= new SelectUserUserCard(user2, renderRequest, searchContainer.getRowChecker()) %>"
 						/>
 					</liferay-ui:search-container-column-text>
 				</c:when>

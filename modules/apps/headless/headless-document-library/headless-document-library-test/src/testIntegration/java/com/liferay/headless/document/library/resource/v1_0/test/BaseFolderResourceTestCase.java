@@ -14,11 +14,14 @@
 
 package com.liferay.headless.document.library.resource.v1_0.test;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
+import static com.fasterxml.jackson.annotation.JsonInclude.Include;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.liferay.headless.document.library.dto.v1_0.Folder;
-import com.liferay.headless.document.library.internal.dto.v1_0.FolderImpl;
+import com.liferay.headless.document.library.resource.v1_0.test.dto.FolderImpl;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -30,6 +33,7 @@ import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 
 import java.net.URL;
+import java.util.Date;
 
 import javax.annotation.Generated;
 
@@ -38,6 +42,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import uk.co.datumedge.hamcrest.json.SameJSONAs;
 
 /**
  * @author Javier Gamarra
@@ -92,13 +98,27 @@ public abstract class BaseFolderResourceTestCase {
 			Assert.assertTrue(true);
 	}
 
+	protected static SameJSONAs<? super String> sameJSONAs(Folder folder)
+		throws JsonProcessingException {
+
+		return SameJSONAs.sameJSONAs(
+			toJSON(folder)
+		).allowingExtraUnexpectedFields();
+	}
+
+	protected static String toJSON(Folder folder)
+		throws JsonProcessingException {
+
+		return _outputObjectMapper.writeValueAsString(folder);
+	}
+
 	protected Response invokeGetContentSpaceFoldersPage( Long contentSpaceId , Pagination pagination ) throws Exception {
 		RequestSpecification requestSpecification = _createRequestSpecification();
 
 			return requestSpecification.when(
 			).get(
 				_resourceURL + "/content-spaces/{content-space-id}/folders",
-				contentSpaceId 
+				contentSpaceId
 			);
 
 	}
@@ -106,11 +126,11 @@ public abstract class BaseFolderResourceTestCase {
 		RequestSpecification requestSpecification = _createRequestSpecification();
 
 			return requestSpecification.body(
-				folder
+				_inputObjectMapper.writeValueAsString(folder)
 			).when(
 			).post(
 				_resourceURL + "/content-spaces/{content-space-id}/folders",
-				contentSpaceId 
+				contentSpaceId
 			);
 
 	}
@@ -138,7 +158,7 @@ public abstract class BaseFolderResourceTestCase {
 		RequestSpecification requestSpecification = _createRequestSpecification();
 
 			return requestSpecification.body(
-				folder
+				_inputObjectMapper.writeValueAsString(folder)
 			).when(
 			).put(
 				_resourceURL + "/folders/{folder-id}",
@@ -172,18 +192,32 @@ public abstract class BaseFolderResourceTestCase {
 	protected Folder randomFolder() {
 		return new FolderImpl() {
 			{
-dateCreated = RandomTestUtil.nextDate();
-dateModified = RandomTestUtil.nextDate();
-description = RandomTestUtil.randomString();
-hasDocuments = RandomTestUtil.randomBoolean();
-hasFolders = RandomTestUtil.randomBoolean();
-id = RandomTestUtil.randomLong();
-name = RandomTestUtil.randomString();
-repositoryId = RandomTestUtil.randomLong();			}
+				dateCreated = RandomTestUtil.nextDate();
+				dateModified = RandomTestUtil.nextDate();
+				description = RandomTestUtil.randomString();
+				hasDocuments = RandomTestUtil.randomBoolean();
+				hasFolders = RandomTestUtil.randomBoolean();
+				id = RandomTestUtil.randomLong();
+				name = RandomTestUtil.randomString();
+				repositoryId = RandomTestUtil.randomLong();
+			}
 		};
 	}
 
 	protected Group testGroup;
+
+	private abstract class IgnoreFieldsMixin {
+
+		@JsonIgnore
+		public abstract Date getDateCreated();
+
+		@JsonIgnore
+		public abstract Date getDateModified();
+
+		@JsonIgnore
+		public abstract Long getId();
+
+	}
 
 	private RequestSpecification _createRequestSpecification() {
 		return RestAssured.given(
@@ -198,12 +232,17 @@ repositoryId = RandomTestUtil.randomLong();			}
 		);
 	}
 
-	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {
+	private static ObjectMapper _inputObjectMapper = new ObjectMapper() {
 		{
-			setSerializationInclusion(JsonInclude.Include.NON_NULL);
-	}
+			setSerializationInclusion(Include.NON_NULL);
+		}
 	};
-	private final static ObjectMapper _outputObjectMapper = new ObjectMapper();
+
+	private static ObjectMapper _outputObjectMapper = new ObjectMapper() {
+		{
+			addMixIn(FolderImpl.class, IgnoreFieldsMixin.class);
+		}
+	};
 
 	private URL _resourceURL;
 

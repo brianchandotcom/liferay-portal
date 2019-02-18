@@ -15,6 +15,7 @@
 package com.liferay.headless.collaboration.resource.v1_0;
 
 import com.liferay.headless.collaboration.dto.v1_0.BlogPostingImage;
+import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -33,7 +34,7 @@ public interface BlogPostingImageResource {
 
 	public Page<BlogPostingImage> getImageObjectRepositoryBlogPostingImagesPage( Long imageObjectRepositoryId , Pagination pagination ) throws Exception;
 
-	public BlogPostingImage postImageObjectRepositoryBlogPostingImage( Long imageObjectRepositoryId , BlogPostingImage blogPostingImage ) throws Exception;
+	public BlogPostingImage postImageObjectRepositoryBlogPostingImage( Long imageObjectRepositoryId , MultipartBody multipartBody ) throws Exception;
 
 	public boolean deleteImageObject( Long imageObjectId ) throws Exception;
 

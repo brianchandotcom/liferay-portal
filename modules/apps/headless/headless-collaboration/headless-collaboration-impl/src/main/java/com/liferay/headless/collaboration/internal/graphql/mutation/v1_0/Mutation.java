@@ -18,6 +18,7 @@ import com.liferay.headless.collaboration.dto.v1_0.BlogPosting;
 import com.liferay.headless.collaboration.dto.v1_0.BlogPostingImage;
 import com.liferay.headless.collaboration.resource.v1_0.BlogPostingImageResource;
 import com.liferay.headless.collaboration.resource.v1_0.BlogPostingResource;
+import com.liferay.portal.vulcan.multipart.MultipartBody;
 
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLInvokeDetached;
@@ -54,8 +55,8 @@ return _getBlogPostingResource().postContentSpaceBlogPosting( contentSpaceId , b
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public BlogPostingImage postImageObjectRepositoryBlogPostingImage( @GraphQLName("image-object-repository-id") Long imageObjectRepositoryId , @GraphQLName("BlogPostingImage") BlogPostingImage blogPostingImage ) throws Exception {
-return _getBlogPostingImageResource().postImageObjectRepositoryBlogPostingImage( imageObjectRepositoryId , blogPostingImage );
+	public BlogPostingImage postImageObjectRepositoryBlogPostingImage( @GraphQLName("image-object-repository-id") Long imageObjectRepositoryId , @GraphQLName("MultipartBody") MultipartBody multipartBody ) throws Exception {
+return _getBlogPostingImageResource().postImageObjectRepositoryBlogPostingImage( imageObjectRepositoryId , multipartBody );
 	}
 
 	@GraphQLInvokeDetached

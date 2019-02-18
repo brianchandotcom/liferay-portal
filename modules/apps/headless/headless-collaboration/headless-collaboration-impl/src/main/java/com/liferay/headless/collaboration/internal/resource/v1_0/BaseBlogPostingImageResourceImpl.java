@@ -21,6 +21,7 @@ import com.liferay.oauth2.provider.scope.RequiresScope;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.TransformUtil;
@@ -56,13 +57,13 @@ public abstract class BaseBlogPostingImageResourceImpl implements BlogPostingIma
 			return Page.of(Collections.emptyList());
 
 	}
-	@Consumes("application/json")
+	@Consumes("multipart/form-data")
 	@POST
 	@Path("/image-object-repositories/{image-object-repository-id}/blog-posting-images")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	@Override
-	public BlogPostingImage postImageObjectRepositoryBlogPostingImage( @PathParam("image-object-repository-id") Long imageObjectRepositoryId , BlogPostingImage blogPostingImage ) throws Exception {
+	public BlogPostingImage postImageObjectRepositoryBlogPostingImage( @PathParam("image-object-repository-id") Long imageObjectRepositoryId , MultipartBody multipartBody ) throws Exception {
 			return new BlogPostingImageImpl();
 
 	}

@@ -22,6 +22,7 @@ import com.liferay.headless.collaboration.internal.dto.v1_0.BlogPostingImageImpl
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
 import io.restassured.RestAssured;
@@ -90,15 +91,13 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 			);
 
 	}
-	protected Response invokePostImageObjectRepositoryBlogPostingImage( Long imageObjectRepositoryId , BlogPostingImage blogPostingImage ) throws Exception {
+	protected Response invokePostImageObjectRepositoryBlogPostingImage( Long imageObjectRepositoryId , MultipartBody multipartBody ) throws Exception {
 		RequestSpecification requestSpecification = _createRequestSpecification();
 
-			return requestSpecification.body(
-				blogPostingImage
-			).when(
+			return requestSpecification.when(
 			).post(
 				_resourceURL + "/image-object-repositories/{image-object-repository-id}/blog-posting-images",
-				imageObjectRepositoryId 
+				imageObjectRepositoryId , multipartBody
 			);
 
 	}

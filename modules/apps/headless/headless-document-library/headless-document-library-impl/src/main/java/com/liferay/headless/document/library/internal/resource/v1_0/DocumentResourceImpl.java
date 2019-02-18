@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.Portal;
 
 import java.util.List;
 import java.util.Optional;
@@ -151,7 +152,7 @@ public class DocumentResourceImpl extends BaseDocumentResourceImpl {
 				setContentUrl(
 					_dlURLHelper.getPreviewURL(
 						fileEntry, fileVersion, null, ""));
-				setCreator(CreatorUtil.toCreator(user));
+				setCreator(CreatorUtil.toCreator(_portal, user));
 				setDateCreated(fileEntry.getCreateDate());
 				setDateModified(fileEntry.getModifiedDate());
 				setDescription(fileEntry.getDescription());
@@ -183,6 +184,9 @@ public class DocumentResourceImpl extends BaseDocumentResourceImpl {
 
 	@Reference
 	private DLURLHelper _dlURLHelper;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private UserService _userService;

@@ -19,6 +19,7 @@ import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetVocabularyService;
 import com.liferay.headless.foundation.dto.v1_0.Vocabulary;
 import com.liferay.headless.foundation.internal.dto.v1_0.VocabularyImpl;
+import com.liferay.headless.foundation.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.foundation.internal.odata.entity.v1_0.VocabularyEntityModel;
 import com.liferay.headless.foundation.resource.v1_0.VocabularyResource;
 import com.liferay.portal.kernel.model.ClassName;
@@ -31,8 +32,10 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.ClassNameService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -158,12 +161,17 @@ public class VocabularyResourceImpl
 				null, new ServiceContext()));
 	}
 
-	private Vocabulary _toVocabulary(AssetVocabulary assetVocabulary) {
+	private Vocabulary _toVocabulary(AssetVocabulary assetVocabulary)
+		throws Exception {
+
 		return new VocabularyImpl() {
 			{
 				setAvailableLanguages(
 					assetVocabulary.getAvailableLanguageIds());
 				setContentSpace(assetVocabulary.getGroupId());
+				setCreator(CreatorUtil.toCreator(
+					_portal,
+					_userLocalService.getUser(assetVocabulary.getUserId())));
 				setDateCreated(assetVocabulary.getCreateDate());
 				setDateModified(assetVocabulary.getModifiedDate());
 				setDescription(
@@ -194,7 +202,13 @@ public class VocabularyResourceImpl
 	private IndexerRegistry _indexerRegistry;
 
 	@Reference
+	private Portal _portal;
+
+	@Reference
 	private SearchResultPermissionFilterFactory
 		_searchResultPermissionFilterFactory;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

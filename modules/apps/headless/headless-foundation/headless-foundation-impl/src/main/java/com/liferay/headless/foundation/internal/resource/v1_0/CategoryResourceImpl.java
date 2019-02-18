@@ -25,7 +25,7 @@ import com.liferay.headless.foundation.resource.v1_0.CategoryResource;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.UserService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -148,7 +148,8 @@ public class CategoryResourceImpl extends BaseCategoryResourceImpl {
 				setCreator(
 					CreatorUtil.toCreator(
 						_portal,
-						_userService.getUserById(assetCategory.getUserId())));
+						_userLocalService.getUserById(
+							assetCategory.getUserId())));
 				setCreatorId(assetCategory.getUserId());
 				setDateCreated(assetCategory.getCreateDate());
 				setDateModified(assetCategory.getModifiedDate());
@@ -178,6 +179,6 @@ public class CategoryResourceImpl extends BaseCategoryResourceImpl {
 	private Portal _portal;
 
 	@Reference
-	private UserService _userService;
+	private UserLocalService _userLocalService;
 
 }

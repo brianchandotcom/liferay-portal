@@ -13,6 +13,7 @@ class Sharing extends PortletBase {
 		this._classPK = config.classPK;
 		this._refererPortletNamespace = config.refererPortletNamespace;
 		this._sharingDialogId = config.sharingDialogId;
+		this._userEmailAddresses = [];
 	}
 
 	/**
@@ -26,22 +27,6 @@ class Sharing extends PortletBase {
 		if (sharingDialog && sharingDialog.hide) {
 			sharingDialog.hide();
 		}
-	}
-
-	/**
-	 * Returns af tokens that should be emails.
-	 * Does not validate emails to see if they are well formed.
-	 * @param {string} emailAddress a single paramater which is one or
-	 * more emails separated by comma, semicolon, or whitespace (space, tab, or newline).
-	 * @return {Array<String>} List of lowercase string that should be emails.
-	 * @private
-	 * @review
-	 */
-	_getEmailAdress(emailAddress = '') {
-		return emailAddress
-			.toLowerCase()
-			.split(/[\s,;]+/)
-			.filter(email => !!email);
 	}
 
 	/**
@@ -68,7 +53,7 @@ class Sharing extends PortletBase {
 	_handleSubmit(event) {
 		event.preventDefault();
 
-		if (!this.submitting && this._validateEmail(this.userEmailAddress)) {
+		if (!this.submitting && this._validateEmails()) {
 			this.submitting = true;
 
 			this.fetch(
@@ -78,7 +63,7 @@ class Sharing extends PortletBase {
 					classPK: this._classPK,
 					shareable: this.shareable,
 					sharingEntryPermissionDisplayActionId: this.sharingEntryPermissionDisplayActionId,
-					userEmailAddress: this._getEmailAdress(this.userEmailAddress)
+					userEmailAddress: this._userEmailAddresses.map(({label}) => label).join(',')
 				}
 			)
 				.then(
@@ -116,17 +101,6 @@ class Sharing extends PortletBase {
 	}
 
 	/**
-	 * Event handler executed on userEmailAddress blur
-	 * @param {!Event} event
-	 * @private
-	 */
-	_handleValidateEmail(event) {
-		const value = event.delegateTarget.value;
-
-		this._validateEmail(value);
-	}
-
-	/**
 	 * Show notification in the opener and closes dialog
 	 * after is rendered
 	 * @param {string} message message for notification
@@ -153,17 +127,13 @@ class Sharing extends PortletBase {
 	}
 
 	/**
-	 * Validates if is email isn't emtpy
-	 * @param {string} emails value
+	 * Validates if there are email addresses and all are valid
 	 * @return {Boolean} value isn't emtpy
 	 * @private
 	 * @review
 	 */
-	_validateEmail(value) {
-		const empty = value && value.trim ?
-			!value.trim() :
-			!value
-		;
+	_validateEmails() {
+		const empty = this._userEmailAddresses.length === 0;
 
 		this.emailErrorMessage = empty ?
 			Liferay.Language.get('this-field-is-required') :
@@ -175,8 +145,8 @@ class Sharing extends PortletBase {
 		if (!empty) {
 			const emailRegex = /.+@.+\..+/i;
 
-			valid = this._getEmailAdress(value).every(
-				email => emailRegex.test(email)
+			valid = this._userEmailAddresses.every(
+				({label}) => emailRegex.test(label)
 			);
 
 			this.emailErrorMessage = valid ?

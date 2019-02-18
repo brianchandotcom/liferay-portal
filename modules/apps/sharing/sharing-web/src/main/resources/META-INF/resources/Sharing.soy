@@ -10,10 +10,11 @@
 	{@param sharingEntryPermissionDisplayActionId: string}
 	{@param sharingEntryPermissionDisplays: list<?>}
 	{@param spritemap: string}
+	{@param? _userEmailAddresses: list<?>}
 	{@param? _closeDialog: any}
 	{@param? _handleInputChange: any}
 	{@param? _handleSubmit: any}
-	{@param? _handleValidateEmail: any}
+	{@param? _validateEmails: any}
 	{@param? emailErrorMessage: string}
 	{@param? submitting: bool}
 
@@ -25,35 +26,24 @@
 		>
 			<div class="sharing-modal-form-content">
 				<div class="form-group {$emailErrorMessage ? ' has-error' : '' }">
-					<label for="userEmailAddress">{msg desc=""}invite-to-collaborate{/msg}</label>
-
-					<input
-						class="form-control"
-						data-onblur="{$_handleValidateEmail}"
-						data-onchange="{$_handleInputChange}"
-						id="userEmailAddress"
-						name="userEmailAddress"
-						placeholder="{msg desc=""}enter-an-email-address{/msg}"
-						type="text"
-					/>
-
-					{if $emailErrorMessage}
-						<div class="form-feedback-item">{$emailErrorMessage}</div>
-					{/if}
-					<div class="form-text">{msg desc=""}use-commas-to-include-multiple-collaborators{/msg}</div>
-				</div>
-
-				<div class="form-group">
 					{call ClayMultiSelect.render}
 						{param dataSource: [] /}
 						{param elementClasses: 'clay-multi-select' /}
+						{param events: [
+							'itemAdded': $_validateEmails,
+							'itemRemoved': $_validateEmails,
+							'itemSelected': $_validateEmails
+						] /}
 						{param helpText kind="text"} {msg desc=""}enter-an-email-address{/msg} {/param}
 						{param label kind="text"} {msg desc=""}invite-to-collaborate{/msg} {/param}
 						{param ref: 'multiSelect' /}
-						{param selectedItems: [] /}
+						{param selectedItems: $_userEmailAddresses /}
 						{param showSelectButton: false /}
 						{param spritemap: $spritemap /}
 					{/call}
+					{if $emailErrorMessage}
+						<div class="form-feedback-item">{$emailErrorMessage}</div>
+					{/if}
 				</div>
 
 				<div class="form-group">

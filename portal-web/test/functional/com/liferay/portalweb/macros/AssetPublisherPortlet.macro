@@ -876,7 +876,7 @@ definition {
 			portletOption = "Configuration"
 		);
 
-		var assetListName = "${assetListName}";
+		var key_title = "${assetListName}";
 
 		SelectFrame(locator1 = "IFrame#DIALOG");
 
@@ -894,7 +894,7 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#DIALOG");
 
-		Click(locator1 = "APConfiguration#ASSET_LIST_CHOOSE_BUTTON");
+		Click(locator1 = "AssetLists#ASSET_LIST_ENTRY_TITLE");
 
 		SelectFrameTop();
 

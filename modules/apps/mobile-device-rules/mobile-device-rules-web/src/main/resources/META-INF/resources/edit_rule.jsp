@@ -116,36 +116,41 @@ renderResponse.setTitle(title);
 	</aui:button-row>
 </aui:form>
 
+<portlet:resourceURL id="/mobile_device_rules/edit_rule" var="editorURL" />
+
 <aui:script sandbox="<%= true %>">
-	var typeNode = $('#<portlet:namespace />type');
-	var typeSettings = $('#<portlet:namespace />typeSettings');
+	var typeNode = document.querySelector('#<portlet:namespace />type');
+	var typeSettingsContainer = document.querySelector('#<portlet:namespace />typeSettings');
 
-	var loadTypeFields = function() {
-		<portlet:resourceURL id="/mobile_device_rules/edit_rule" var="editorURL" />
-
-		$.ajax(
-			'<%= editorURL.toString() %>',
-			{
-				data: {
-					<portlet:namespace />ruleId: <%= ruleId %>,
-					<portlet:namespace />type: typeNode.val()
-				},
-				success: function(responseData) {
-					typeSettings.html(responseData);
+	if (typeNode && typeSettingsContainer) {
+		var loadTypeFields = function() {
+			fetch(
+				'<%= editorURL %>' + '&<portlet:namespace />type=' + typeNode.value + '&<portlet:namespace />type=' + <%= ruleId %>,
+				{
+					credentials: 'include'
 				}
-			}
-		);
-	};
-
-	<c:choose>
-		<c:when test="<%= ruleHandlerTypes.size() == 1 %>">
-			loadTypeFields();
-		</c:when>
-		<c:otherwise>
-			typeNode.on(
-				'change',
-				loadTypeFields
+			)
+			.then(
+				function(response) {
+					return response.text();
+				}
+			)
+			.then(
+				function(response) {
+					typeSettingsContainer.innerHTML = response;
+				}
 			);
-		</c:otherwise>
-	</c:choose>
+		};
+
+		<c:choose>
+			<c:when test="<%= ruleHandlerTypes.size() == 1 %>">
+				loadTypeFields();
+			</c:when>
+			<c:otherwise>
+				if (typeNode) {
+					typeNode.addEventListener('change', loadTypeFields);
+				}
+			</c:otherwise>
+		</c:choose>
+	}
 </aui:script>

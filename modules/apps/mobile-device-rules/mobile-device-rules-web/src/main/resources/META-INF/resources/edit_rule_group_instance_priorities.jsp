@@ -76,20 +76,26 @@ List<MDRRuleGroupInstance> ruleGroupInstances = MDRRuleGroupInstanceServiceUtil.
 
 <aui:script>
 	function <portlet:namespace />saveRuleGroupInstancesPriorities(event) {
-		var $ = AUI.$;
-
 		event.preventDefault();
 
-		var ruleGroupInstances = $('#<portlet:namespace />ruleGroupInstancesPriorities [data-rule-group-instance-id]').map(
-			function(index, item) {
-				return {
-					priority: index,
-					ruleGroupInstanceId: $(item).data('rule-group-instance-id')
-				};
-			}
-		).get();
+		var ruleGroupsInstancesJSONElement = document.querySelector('#<portlet:namespace />ruleGroupsInstancesJSON');
 
-		$('#<portlet:namespace />ruleGroupsInstancesJSON').val(JSON.stringify(ruleGroupInstances));
+		if (ruleGroupsInstancesJSONElement) {
+			var ruleGroupInstanceNodes = document.querySelectorAll('#<portlet:namespace />ruleGroupInstancesPriorities [data-rule-group-instance-id]');
+
+			var ruleGroupInstanceNodesArray = Array.prototype.slice.call(ruleGroupInstanceNodes);
+
+			var ruleGroupInstances = ruleGroupInstanceNodesArray.map(
+				function(item, index) {
+					return {
+						priority: index,
+						ruleGroupInstanceId: item.dataset.ruleGroupInstanceId
+					};
+				}
+			);
+
+			ruleGroupsInstancesJSONElement.value = JSON.stringify(ruleGroupInstances);
+		}
 
 		submitForm(document.<portlet:namespace />fm);
 	}

@@ -466,9 +466,12 @@ class FormRenderer extends Component {
 		this.emit(
 			'pagesUpdated',
 			this.pages.map(
-				currentPage => {
-					if (currentPage.pageId === pageId) {
-						currentPage = page;
+				(currentPage, index) => {
+					if (index === pageId) {
+						currentPage = {
+							...currentPage,
+							...page
+						};
 					}
 
 					return currentPage;

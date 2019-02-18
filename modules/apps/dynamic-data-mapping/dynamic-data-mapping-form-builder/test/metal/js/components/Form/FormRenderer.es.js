@@ -278,7 +278,7 @@ describe(
 
 				jest.runAllTimers();
 
-				const pageWizard = component.element.querySelector('.multi-step-item[data-page-id="1"]');
+				const pageWizard = component.element.querySelector('.multi-step-item[data-page-index="1"]');
 
 				dom.triggerEvent(pageWizard, 'click', {});
 
@@ -395,7 +395,7 @@ describe(
 
 				jest.runAllTimers();
 
-				const pageWizard = component.element.querySelector('.multi-step-item[data-page-id="1"]');
+				const pageWizard = component.element.querySelector('.multi-step-item[data-page-index="1"]');
 
 				dom.triggerEvent(pageWizard, 'click', {});
 
@@ -423,7 +423,7 @@ describe(
 
 				jest.useFakeTimers();
 
-				const paginatorItem = component.element.querySelector('.ddm-pagination .page-item[data-page-id="1"]');
+				const paginatorItem = component.element.querySelector('.ddm-pagination .page-item[data-page-index="1"]');
 
 				dom.triggerEvent(paginatorItem, 'click', {});
 

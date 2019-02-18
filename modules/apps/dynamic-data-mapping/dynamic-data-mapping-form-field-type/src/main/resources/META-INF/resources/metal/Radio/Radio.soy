@@ -12,6 +12,7 @@
 	{@param? inline: bool}
 	{@param? label: string}
 	{@param name: string}
+	{@param? predefinedValue: string}
 	{@param? repeatable: bool}
 	{@param? required: bool}
 	{@param? showLabel: bool}
@@ -25,6 +26,7 @@
 				{param inline: $inline /}
 				{param name: $name /}
 				{param options: $options /}
+				{param predefinedValue: $predefinedValue /}
 				{param value: $value /}
 			{/call}
 		{/param}
@@ -47,14 +49,16 @@
 		name: string,
 		value: string
 	]>}
+	{@param? predefinedValue: string}
 	{@param? disabled: bool}
 	{@param? value: string}
 
 	{if $options}
 		<div class="ddm-radio">
+			{let $radioValue: $predefinedValue ? $predefinedValue : $value /}
 			{for $radio in $options}
 				{call ClayRadio.render data="$radio"}
-					{param checked: $value == $radio.value ? true : false  /}
+					{param checked: $radioValue == $radio.value ? true : false  /}
 					{param disabled: $disabled /}
 					{param inline: $inline /}
 					{param name: $name /}

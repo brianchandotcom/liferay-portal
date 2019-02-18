@@ -120,7 +120,7 @@ class Radio extends Component {
 		 * @type {?string}
 		 */
 
-		predefinedValue: Config.string().value('Option 1'),
+		predefinedValue: Config.oneOfType([Config.array(), Config.string()]),
 
 		/**
 		 * @default undefined
@@ -184,6 +184,26 @@ class Radio extends Component {
 			'input',
 			this._handleValueChanged.bind(this)
 		);
+	}
+
+	_getArrayValue(value) {
+		let newValue = value;
+
+		if (!Array.isArray(value)) {
+			newValue = [value];
+		}
+
+		return newValue;
+	}
+
+	prepareStateForRender(state) {
+		const {predefinedValue} = state;
+		const predefinedValueArray = this._getArrayValue(predefinedValue);
+
+		return {
+			...state,
+			predefinedValue: predefinedValueArray[0] || ''
+		};
 	}
 
 	_handleValueChanged(event) {

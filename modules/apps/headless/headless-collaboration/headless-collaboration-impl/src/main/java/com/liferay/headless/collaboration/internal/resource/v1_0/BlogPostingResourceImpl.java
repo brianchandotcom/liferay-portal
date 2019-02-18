@@ -23,10 +23,10 @@ import com.liferay.blogs.service.BlogsEntryService;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.headless.collaboration.dto.v1_0.BlogPosting;
-import com.liferay.headless.collaboration.dto.v1_0.Category;
+import com.liferay.headless.collaboration.dto.v1_0.Categories;
 import com.liferay.headless.collaboration.dto.v1_0.Image;
 import com.liferay.headless.collaboration.internal.dto.v1_0.BlogPostingImpl;
-import com.liferay.headless.collaboration.internal.dto.v1_0.CategoryImpl;
+import com.liferay.headless.collaboration.internal.dto.v1_0.CategoriesImpl;
 import com.liferay.headless.collaboration.internal.dto.v1_0.ImageImpl;
 import com.liferay.headless.collaboration.internal.dto.v1_0.util.AggregateRatingUtil;
 import com.liferay.headless.collaboration.resource.v1_0.BlogPostingResource;
@@ -143,13 +143,13 @@ public class BlogPostingResourceImpl extends BaseBlogPostingResourceImpl {
 		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAddGuestPermissions(true);
 
-		Category[] categories = blogPosting.getCategory();
+		Categories[] categories = blogPosting.getCategories();
 
 		if (ArrayUtil.isNotEmpty(categories)) {
-			Stream<Category> stream = Arrays.stream(categories);
+			Stream<Categories> stream = Arrays.stream(categories);
 
 			long[] assetCategoryIds = stream.mapToLong(
-				Category::getCategoryId
+				Categories::getCategoryId
 			).toArray();
 
 			serviceContext.setAssetCategoryIds(assetCategoryIds);
@@ -166,7 +166,7 @@ public class BlogPostingResourceImpl extends BaseBlogPostingResourceImpl {
 		return serviceContext;
 	}
 
-	private Category[] _getCategories(BlogsEntry blogsEntry) {
+	private Categories[] _getCategories(BlogsEntry blogsEntry) {
 		List<AssetCategory> assetCategories =
 			_assetCategoryLocalService.getCategories(
 				BlogsEntry.class.getName(), blogsEntry.getEntryId());
@@ -174,14 +174,14 @@ public class BlogPostingResourceImpl extends BaseBlogPostingResourceImpl {
 		Stream<AssetCategory> stream = assetCategories.stream();
 
 		return stream.map(
-			assetCategory -> new CategoryImpl() {
+			assetCategory -> new CategoriesImpl() {
 				{
 					setCategoryId(assetCategory.getCategoryId());
 					setCategoryName(assetCategory.getName());
 				}
 			}
 		).toArray(
-			Category[]::new
+			Categories[]::new
 		);
 	}
 
@@ -240,7 +240,7 @@ public class BlogPostingResourceImpl extends BaseBlogPostingResourceImpl {
 							blogsEntry.getEntryId())));
 				setArticleBody(blogsEntry.getContent());
 				setCaption(blogsEntry.getCoverImageCaption());
-				setCategory(_getCategories(blogsEntry));
+				setCategories(_getCategories(blogsEntry));
 				setContentSpace(blogsEntry.getGroupId());
 				setDateCreated(blogsEntry.getCreateDate());
 				setDateModified(blogsEntry.getModifiedDate());

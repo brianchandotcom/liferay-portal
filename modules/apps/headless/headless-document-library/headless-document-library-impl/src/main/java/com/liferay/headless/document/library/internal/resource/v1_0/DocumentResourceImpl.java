@@ -28,9 +28,11 @@ import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.util.DLURLHelper;
-import com.liferay.headless.document.library.dto.v1_0.AdaptedMedia;
+import com.liferay.headless.document.library.dto.v1_0.AdaptedImages;
+import com.liferay.headless.document.library.dto.v1_0.Categories;
 import com.liferay.headless.document.library.dto.v1_0.Document;
-import com.liferay.headless.document.library.internal.dto.v1_0.AdaptedMediaImpl;
+import com.liferay.headless.document.library.internal.dto.v1_0.AdaptedImagesImpl;
+import com.liferay.headless.document.library.internal.dto.v1_0.CategoriesImpl;
 import com.liferay.headless.document.library.internal.dto.v1_0.DocumentImpl;
 import com.liferay.headless.document.library.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.document.library.resource.v1_0.DocumentResource;
@@ -66,13 +68,13 @@ public class DocumentResourceImpl extends BaseDocumentResourceImpl {
 			_userService.getUserById(fileEntry.getUserId()));
 	}
 
-	private AdaptedMedia[] _getAdaptiveMedias(FileEntry fileEntry)
+	private AdaptedImages[] _getAdaptiveMedias(FileEntry fileEntry)
 		throws Exception {
 
 		if (!_amImageMimeTypeProvider.isMimeTypeSupported(
 				fileEntry.getMimeType())) {
 
-			return new AdaptedMedia[0];
+			return new AdaptedImages[0];
 		}
 
 		Stream<AdaptiveMedia<AMImageProcessor>> stream =
@@ -84,19 +86,10 @@ public class DocumentResourceImpl extends BaseDocumentResourceImpl {
 				).done());
 
 		return stream.map(
-			this::_toAdaptedMedia
+			this::_toAdaptedImages
 		).toArray(
-			AdaptedMedia[]::new
+			AdaptedImages[]::new
 		);
-	}
-
-	private Long[] _getAssetCategoryIds(FileEntry fileEntry) {
-		List<AssetCategory> assetCategories =
-			_assetCategoryLocalService.getCategories(
-				DLFileEntry.class.getName(), fileEntry.getFileEntryId());
-
-		return ListUtil.toArray(
-			assetCategories, AssetCategory.CATEGORY_ID_ACCESSOR);
 	}
 
 	private String[] _getAssetTagNames(FileEntry fileEntry) {
@@ -104,6 +97,25 @@ public class DocumentResourceImpl extends BaseDocumentResourceImpl {
 			DLFileEntry.class.getName(), fileEntry.getFileEntryId());
 
 		return ListUtil.toArray(assetTags, AssetTag.NAME_ACCESSOR);
+	}
+
+	private Categories[] _getCategories(FileEntry fileEntry) {
+		List<AssetCategory> assetCategories =
+			_assetCategoryLocalService.getCategories(
+				DLFileEntry.class.getName(), fileEntry.getFileEntryId());
+
+		Stream<AssetCategory> stream = assetCategories.stream();
+
+		return stream.map(
+			assetCategory -> new CategoriesImpl() {
+				{
+					setCategoryId(assetCategory.getCategoryId());
+					setCategoryName(assetCategory.getName());
+				}
+			}
+		).toArray(
+			Categories[]::new
+		);
 	}
 
 	private <T, S> T _getValue(
@@ -114,10 +126,10 @@ public class DocumentResourceImpl extends BaseDocumentResourceImpl {
 		return optional.orElse(null);
 	}
 
-	private AdaptedMedia _toAdaptedMedia(
+	private AdaptedImages _toAdaptedImages(
 		AdaptiveMedia<AMImageProcessor> adaptiveMedia) {
 
-		return new AdaptedMediaImpl() {
+		return new AdaptedImagesImpl() {
 			{
 				setContentUrl(String.valueOf(adaptiveMedia.getURI()));
 				setHeight(
@@ -146,8 +158,8 @@ public class DocumentResourceImpl extends BaseDocumentResourceImpl {
 
 		return new DocumentImpl() {
 			{
-				setAdaptedMedia(_getAdaptiveMedias(fileEntry));
-				setCategory(_getAssetCategoryIds(fileEntry));
+				setAdaptedImages(_getAdaptiveMedias(fileEntry));
+				setCategories(_getCategories(fileEntry));
 				setContentUrl(
 					_dlURLHelper.getPreviewURL(
 						fileEntry, fileVersion, null, ""));

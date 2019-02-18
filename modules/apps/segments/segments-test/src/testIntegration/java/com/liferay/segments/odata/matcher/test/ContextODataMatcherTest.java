@@ -434,17 +434,37 @@ public class ContextODataMatcherTest {
 	public void testMatchesStringEquals() throws Exception {
 		Context context = new Context() {
 			{
-				put(Context.LANGUAGE_ID, "en");
+				put(Context.URL, "http://www.liferay.com");
 			}
 		};
 
 		Assert.assertTrue(
 			_contextODataMatcher.matches(
-				StringBundler.concat("(", Context.LANGUAGE_ID, " eq 'en')"),
+				StringBundler.concat(
+					"(", Context.URL, " eq 'http://www.liferay.com')"),
 				context));
 		Assert.assertFalse(
 			_contextODataMatcher.matches(
-				StringBundler.concat("(", Context.LANGUAGE_ID, " eq 'fr')"),
+				StringBundler.concat(
+					"(", Context.URL, " eq 'http://localhost')"),
+				context));
+	}
+
+	@Test
+	public void testMatchesStringEqualsWithUppercase() throws Exception {
+		Context context = new Context() {
+			{
+				put(Context.LANGUAGE_ID, "de_DE");
+			}
+		};
+
+		Assert.assertTrue(
+			_contextODataMatcher.matches(
+				StringBundler.concat("(", Context.LANGUAGE_ID, " eq 'de_DE')"),
+				context));
+		Assert.assertFalse(
+			_contextODataMatcher.matches(
+				StringBundler.concat("(", Context.LANGUAGE_ID, " eq 'fr_FR')"),
 				context));
 	}
 
@@ -472,17 +492,19 @@ public class ContextODataMatcherTest {
 	public void testMatchesStringNotEquals() throws Exception {
 		Context context = new Context() {
 			{
-				put(Context.LANGUAGE_ID, "en");
+				put(Context.LANGUAGE_ID, "en_US");
 			}
 		};
 
 		Assert.assertFalse(
 			_contextODataMatcher.matches(
-				StringBundler.concat("not (", Context.LANGUAGE_ID, " eq 'en')"),
+				StringBundler.concat(
+					"not (", Context.LANGUAGE_ID, " eq 'en_US')"),
 				context));
 		Assert.assertTrue(
 			_contextODataMatcher.matches(
-				StringBundler.concat("not (", Context.LANGUAGE_ID, " eq 'fr')"),
+				StringBundler.concat(
+					"not (", Context.LANGUAGE_ID, " eq 'fr_FR')"),
 				context));
 	}
 
@@ -490,7 +512,7 @@ public class ContextODataMatcherTest {
 	public void testMatchesWithAnd() throws Exception {
 		Context context = new Context() {
 			{
-				put(Context.LANGUAGE_ID, "en");
+				put(Context.LANGUAGE_ID, "en_US");
 				put(Context.BROWSER, "chrome");
 			}
 		};
@@ -498,13 +520,13 @@ public class ContextODataMatcherTest {
 		Assert.assertTrue(
 			_contextODataMatcher.matches(
 				StringBundler.concat(
-					"(", Context.LANGUAGE_ID, " eq 'en') and (",
+					"(", Context.LANGUAGE_ID, " eq 'en_US') and (",
 					Context.BROWSER, " eq 'chrome')"),
 				context));
 		Assert.assertFalse(
 			_contextODataMatcher.matches(
 				StringBundler.concat(
-					"(", Context.LANGUAGE_ID, " eq 'en') and (",
+					"(", Context.LANGUAGE_ID, " eq 'en_US') and (",
 					Context.BROWSER, " eq 'firefox')"),
 				context));
 	}
@@ -513,7 +535,7 @@ public class ContextODataMatcherTest {
 	public void testMatchesWithOr() throws Exception {
 		Context context = new Context() {
 			{
-				put(Context.LANGUAGE_ID, "en");
+				put(Context.LANGUAGE_ID, "en_US");
 				put(Context.BROWSER, "chrome");
 			}
 		};
@@ -521,19 +543,19 @@ public class ContextODataMatcherTest {
 		Assert.assertTrue(
 			_contextODataMatcher.matches(
 				StringBundler.concat(
-					"(", Context.LANGUAGE_ID, " eq 'en') or (", Context.BROWSER,
-					" eq 'firefox')"),
+					"(", Context.LANGUAGE_ID, " eq 'en_US') or (",
+					Context.BROWSER, " eq 'firefox')"),
 				context));
 		Assert.assertTrue(
 			_contextODataMatcher.matches(
 				StringBundler.concat(
-					"(", Context.LANGUAGE_ID, " eq 'fr') or (", Context.BROWSER,
-					" eq 'chrome')"),
+					"(", Context.LANGUAGE_ID, " eq 'fr_FR') or (",
+					Context.BROWSER, " eq 'chrome')"),
 				context));
 		Assert.assertFalse(
 			_contextODataMatcher.matches(
 				StringBundler.concat(
-					"(", Context.LANGUAGE_ID, " eq 'fr') and (",
+					"(", Context.LANGUAGE_ID, " eq 'fr_FR') and (",
 					Context.BROWSER, " eq 'firefox')"),
 				context));
 	}

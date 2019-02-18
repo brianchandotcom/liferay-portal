@@ -34,7 +34,7 @@ SelectLayoutPageTemplateEntryDisplayContext selectLayoutPageTemplateEntryDisplay
 			%>
 
 				<div class="col-md-4">
-					<div class="card card-type-asset">
+					<div class="add-layout-action-option card card-type-asset image-card" <%= AUIUtil.buildData(selectBasicPagesVerticalCard.getDataLink()) %>>
 						<div class="aspect-ratio">
 							<div class="aspect-ratio-item-center-middle aspect-ratio-item-fluid layout-type-img">
 								<img src="<%= selectBasicPagesVerticalCard.getImageSrc() %>" />
@@ -44,21 +44,13 @@ SelectLayoutPageTemplateEntryDisplayContext selectLayoutPageTemplateEntryDisplay
 						<div class="card-body">
 							<div class="card-row">
 								<div class="autofit-col autofit-col-expand">
-									<section class="autofit-section">
-										<h3 class="card-title">
-											<span class="text-truncate-inline">
-												<aui:a cssClass="add-layout-action-option" data="<%= selectBasicPagesVerticalCard.getDataLink() %>" href="javascript:;">
-													<%= selectBasicPagesVerticalCard.getTitle() %>
-												</aui:a>
-											</span>
-										</h3>
+									<div class="card-title text-truncate">
+										<%= selectBasicPagesVerticalCard.getTitle() %>
+									</div>
 
-										<p class="card-subtitle">
-											<span class="text-truncate-inline">
-												<%= selectBasicPagesVerticalCard.getSubtitle() %>
-											</span>
-										</p>
-									</section>
+									<div class="card-subtitle text-truncate-inline">
+										<%= selectBasicPagesVerticalCard.getSubtitle() %>
+									</div>
 								</div>
 							</div>
 						</div>

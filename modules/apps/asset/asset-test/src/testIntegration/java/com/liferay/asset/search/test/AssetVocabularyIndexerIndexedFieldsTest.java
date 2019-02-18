@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.test.util.FieldValuesAssert;
 import com.liferay.portal.search.test.util.IndexedFieldsFixture;
@@ -41,7 +42,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
 
 import org.junit.After;
 import org.junit.Before;
@@ -213,17 +213,19 @@ public class AssetVocabularyIndexerIndexedFieldsTest {
 	private void _populateTitles(String title, Map<String, String> map) {
 		map.put(Field.TITLE, title);
 
-		Set<Locale> locales = LanguageUtil.getAvailableLocales();
+		for (Locale locale : LanguageUtil.getAvailableLocales()) {
+			StringBundler sb = new StringBundler(5);
 
-		for (Locale locale : locales) {
-			String mapKey =
-				"title_" + locale.getLanguage() + "_" + locale.getCountry();
+			sb.append("title_");
+			sb.append(locale.getLanguage());
+			sb.append("_");
+			sb.append(locale.getCountry());
 
-			String mapKeySortable = mapKey + "_sortable";
+			map.put(sb.toString(), title);
 
-			map.put(mapKey, title);
+			sb.append("_sortable");
 
-			map.put(mapKeySortable, title);
+			map.put(sb.toString(), title);
 		}
 	}
 

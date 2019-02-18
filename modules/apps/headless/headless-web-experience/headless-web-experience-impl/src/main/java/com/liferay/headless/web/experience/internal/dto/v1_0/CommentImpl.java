@@ -14,6 +14,7 @@
 
 package com.liferay.headless.web.experience.internal.dto.v1_0;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import com.liferay.headless.web.experience.dto.v1_0.Comment;
@@ -44,6 +45,7 @@ public class CommentImpl implements Comment {
 			this.comments = comments;
 	}
 
+	@JsonIgnore
 	public void setComments(UnsafeSupplier<Comment[], Throwable> commentsUnsafeSupplier) {
 			try {
 				comments = commentsUnsafeSupplier.get();
@@ -64,6 +66,7 @@ public class CommentImpl implements Comment {
 			this.creator = creator;
 	}
 
+	@JsonIgnore
 	public void setCreator(UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier) {
 			try {
 				creator = creatorUnsafeSupplier.get();
@@ -84,6 +87,7 @@ public class CommentImpl implements Comment {
 			this.id = id;
 	}
 
+	@JsonIgnore
 	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 			try {
 				id = idUnsafeSupplier.get();
@@ -104,6 +108,7 @@ public class CommentImpl implements Comment {
 			this.text = text;
 	}
 
+	@JsonIgnore
 	public void setText(UnsafeSupplier<String, Throwable> textUnsafeSupplier) {
 			try {
 				text = textUnsafeSupplier.get();

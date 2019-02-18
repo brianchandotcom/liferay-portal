@@ -14,6 +14,7 @@
 
 package com.liferay.headless.foundation.internal.dto.v1_0;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import com.liferay.headless.foundation.dto.v1_0.ContactInformation;
@@ -47,6 +48,7 @@ public class ContactInformationImpl implements ContactInformation {
 			this.address = address;
 	}
 
+	@JsonIgnore
 	public void setAddress(UnsafeSupplier<PostalAddress[], Throwable> addressUnsafeSupplier) {
 			try {
 				address = addressUnsafeSupplier.get();
@@ -67,6 +69,7 @@ public class ContactInformationImpl implements ContactInformation {
 			this.addressIds = addressIds;
 	}
 
+	@JsonIgnore
 	public void setAddressIds(UnsafeSupplier<Long[], Throwable> addressIdsUnsafeSupplier) {
 			try {
 				addressIds = addressIdsUnsafeSupplier.get();
@@ -87,6 +90,7 @@ public class ContactInformationImpl implements ContactInformation {
 			this.email = email;
 	}
 
+	@JsonIgnore
 	public void setEmail(UnsafeSupplier<Email[], Throwable> emailUnsafeSupplier) {
 			try {
 				email = emailUnsafeSupplier.get();
@@ -107,6 +111,7 @@ public class ContactInformationImpl implements ContactInformation {
 			this.emailIds = emailIds;
 	}
 
+	@JsonIgnore
 	public void setEmailIds(UnsafeSupplier<Long[], Throwable> emailIdsUnsafeSupplier) {
 			try {
 				emailIds = emailIdsUnsafeSupplier.get();
@@ -127,6 +132,7 @@ public class ContactInformationImpl implements ContactInformation {
 			this.facebook = facebook;
 	}
 
+	@JsonIgnore
 	public void setFacebook(UnsafeSupplier<String, Throwable> facebookUnsafeSupplier) {
 			try {
 				facebook = facebookUnsafeSupplier.get();
@@ -147,6 +153,7 @@ public class ContactInformationImpl implements ContactInformation {
 			this.id = id;
 	}
 
+	@JsonIgnore
 	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 			try {
 				id = idUnsafeSupplier.get();
@@ -167,6 +174,7 @@ public class ContactInformationImpl implements ContactInformation {
 			this.jabber = jabber;
 	}
 
+	@JsonIgnore
 	public void setJabber(UnsafeSupplier<String, Throwable> jabberUnsafeSupplier) {
 			try {
 				jabber = jabberUnsafeSupplier.get();
@@ -187,6 +195,7 @@ public class ContactInformationImpl implements ContactInformation {
 			this.skype = skype;
 	}
 
+	@JsonIgnore
 	public void setSkype(UnsafeSupplier<String, Throwable> skypeUnsafeSupplier) {
 			try {
 				skype = skypeUnsafeSupplier.get();
@@ -207,6 +216,7 @@ public class ContactInformationImpl implements ContactInformation {
 			this.sms = sms;
 	}
 
+	@JsonIgnore
 	public void setSms(UnsafeSupplier<String, Throwable> smsUnsafeSupplier) {
 			try {
 				sms = smsUnsafeSupplier.get();
@@ -227,6 +237,7 @@ public class ContactInformationImpl implements ContactInformation {
 			this.telephone = telephone;
 	}
 
+	@JsonIgnore
 	public void setTelephone(UnsafeSupplier<Phone[], Throwable> telephoneUnsafeSupplier) {
 			try {
 				telephone = telephoneUnsafeSupplier.get();
@@ -247,6 +258,7 @@ public class ContactInformationImpl implements ContactInformation {
 			this.telephoneIds = telephoneIds;
 	}
 
+	@JsonIgnore
 	public void setTelephoneIds(UnsafeSupplier<Long[], Throwable> telephoneIdsUnsafeSupplier) {
 			try {
 				telephoneIds = telephoneIdsUnsafeSupplier.get();
@@ -267,6 +279,7 @@ public class ContactInformationImpl implements ContactInformation {
 			this.twitter = twitter;
 	}
 
+	@JsonIgnore
 	public void setTwitter(UnsafeSupplier<String, Throwable> twitterUnsafeSupplier) {
 			try {
 				twitter = twitterUnsafeSupplier.get();
@@ -287,6 +300,7 @@ public class ContactInformationImpl implements ContactInformation {
 			this.webUrl = webUrl;
 	}
 
+	@JsonIgnore
 	public void setWebUrl(UnsafeSupplier<WebUrl[], Throwable> webUrlUnsafeSupplier) {
 			try {
 				webUrl = webUrlUnsafeSupplier.get();
@@ -307,6 +321,7 @@ public class ContactInformationImpl implements ContactInformation {
 			this.webUrlIds = webUrlIds;
 	}
 
+	@JsonIgnore
 	public void setWebUrlIds(UnsafeSupplier<Long[], Throwable> webUrlIdsUnsafeSupplier) {
 			try {
 				webUrlIds = webUrlIdsUnsafeSupplier.get();

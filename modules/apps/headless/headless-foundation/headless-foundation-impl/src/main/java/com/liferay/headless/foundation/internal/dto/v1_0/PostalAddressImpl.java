@@ -14,6 +14,7 @@
 
 package com.liferay.headless.foundation.internal.dto.v1_0;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import com.liferay.headless.foundation.dto.v1_0.PostalAddress;
@@ -43,6 +44,7 @@ public class PostalAddressImpl implements PostalAddress {
 			this.addressCountry = addressCountry;
 	}
 
+	@JsonIgnore
 	public void setAddressCountry(UnsafeSupplier<String, Throwable> addressCountryUnsafeSupplier) {
 			try {
 				addressCountry = addressCountryUnsafeSupplier.get();
@@ -63,6 +65,7 @@ public class PostalAddressImpl implements PostalAddress {
 			this.addressLocality = addressLocality;
 	}
 
+	@JsonIgnore
 	public void setAddressLocality(UnsafeSupplier<String, Throwable> addressLocalityUnsafeSupplier) {
 			try {
 				addressLocality = addressLocalityUnsafeSupplier.get();
@@ -83,6 +86,7 @@ public class PostalAddressImpl implements PostalAddress {
 			this.addressRegion = addressRegion;
 	}
 
+	@JsonIgnore
 	public void setAddressRegion(UnsafeSupplier<String, Throwable> addressRegionUnsafeSupplier) {
 			try {
 				addressRegion = addressRegionUnsafeSupplier.get();
@@ -103,6 +107,7 @@ public class PostalAddressImpl implements PostalAddress {
 			this.addressType = addressType;
 	}
 
+	@JsonIgnore
 	public void setAddressType(UnsafeSupplier<String, Throwable> addressTypeUnsafeSupplier) {
 			try {
 				addressType = addressTypeUnsafeSupplier.get();
@@ -123,6 +128,7 @@ public class PostalAddressImpl implements PostalAddress {
 			this.id = id;
 	}
 
+	@JsonIgnore
 	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 			try {
 				id = idUnsafeSupplier.get();
@@ -143,6 +149,7 @@ public class PostalAddressImpl implements PostalAddress {
 			this.postalCode = postalCode;
 	}
 
+	@JsonIgnore
 	public void setPostalCode(UnsafeSupplier<String, Throwable> postalCodeUnsafeSupplier) {
 			try {
 				postalCode = postalCodeUnsafeSupplier.get();
@@ -163,6 +170,7 @@ public class PostalAddressImpl implements PostalAddress {
 			this.streetAddressLine1 = streetAddressLine1;
 	}
 
+	@JsonIgnore
 	public void setStreetAddressLine1(UnsafeSupplier<String, Throwable> streetAddressLine1UnsafeSupplier) {
 			try {
 				streetAddressLine1 = streetAddressLine1UnsafeSupplier.get();
@@ -183,6 +191,7 @@ public class PostalAddressImpl implements PostalAddress {
 			this.streetAddressLine2 = streetAddressLine2;
 	}
 
+	@JsonIgnore
 	public void setStreetAddressLine2(UnsafeSupplier<String, Throwable> streetAddressLine2UnsafeSupplier) {
 			try {
 				streetAddressLine2 = streetAddressLine2UnsafeSupplier.get();
@@ -203,6 +212,7 @@ public class PostalAddressImpl implements PostalAddress {
 			this.streetAddressLine3 = streetAddressLine3;
 	}
 
+	@JsonIgnore
 	public void setStreetAddressLine3(UnsafeSupplier<String, Throwable> streetAddressLine3UnsafeSupplier) {
 			try {
 				streetAddressLine3 = streetAddressLine3UnsafeSupplier.get();

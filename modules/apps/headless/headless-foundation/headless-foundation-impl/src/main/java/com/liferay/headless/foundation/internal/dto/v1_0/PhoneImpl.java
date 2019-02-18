@@ -14,6 +14,7 @@
 
 package com.liferay.headless.foundation.internal.dto.v1_0;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import com.liferay.headless.foundation.dto.v1_0.Phone;
@@ -43,6 +44,7 @@ public class PhoneImpl implements Phone {
 			this.extension = extension;
 	}
 
+	@JsonIgnore
 	public void setExtension(UnsafeSupplier<String, Throwable> extensionUnsafeSupplier) {
 			try {
 				extension = extensionUnsafeSupplier.get();
@@ -63,6 +65,7 @@ public class PhoneImpl implements Phone {
 			this.id = id;
 	}
 
+	@JsonIgnore
 	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 			try {
 				id = idUnsafeSupplier.get();
@@ -83,6 +86,7 @@ public class PhoneImpl implements Phone {
 			this.phoneNumber = phoneNumber;
 	}
 
+	@JsonIgnore
 	public void setPhoneNumber(UnsafeSupplier<String, Throwable> phoneNumberUnsafeSupplier) {
 			try {
 				phoneNumber = phoneNumberUnsafeSupplier.get();
@@ -103,6 +107,7 @@ public class PhoneImpl implements Phone {
 			this.phoneType = phoneType;
 	}
 
+	@JsonIgnore
 	public void setPhoneType(UnsafeSupplier<String, Throwable> phoneTypeUnsafeSupplier) {
 			try {
 				phoneType = phoneTypeUnsafeSupplier.get();

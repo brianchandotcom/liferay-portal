@@ -14,7 +14,10 @@
 
 package com.liferay.headless.workflow.internal.jaxrs.message.body.v1_0;
 
+import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.module.SimpleAbstractTypeResolver;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
 import com.liferay.headless.workflow.dto.v1_0.ObjectReviewed;
@@ -83,21 +86,29 @@ public class JSONMessageBodyReader implements MessageBodyReader<Object> {
 			InputStream inputStream)
 		throws IOException, WebApplicationException {
 
-			if (clazz.equals(ObjectReviewed.class)) {
-				return _objectMapper.readValue(inputStream, ObjectReviewedImpl.class);
-	}
-			if (clazz.equals(WorkflowLog.class)) {
-				return _objectMapper.readValue(inputStream, WorkflowLogImpl.class);
-	}
-			if (clazz.equals(WorkflowTask.class)) {
-				return _objectMapper.readValue(inputStream, WorkflowTaskImpl.class);
-	}
-
-		return null;
+		return _objectMapper.readValue(inputStream, clazz);
 	}
 
 	private static final ObjectMapper _objectMapper = new ObjectMapper() {
 		{
+			SimpleModule simpleModule =
+				new SimpleModule("Liferay.Headless.Workflow",
+					Version.unknownVersion());
+
+			SimpleAbstractTypeResolver simpleAbstractTypeResolver =
+				new SimpleAbstractTypeResolver();
+
+			simpleAbstractTypeResolver.addMapping(
+				ObjectReviewed.class, ObjectReviewedImpl.class);
+			simpleAbstractTypeResolver.addMapping(
+				WorkflowLog.class, WorkflowLogImpl.class);
+			simpleAbstractTypeResolver.addMapping(
+				WorkflowTask.class, WorkflowTaskImpl.class);
+
+			simpleModule.setAbstractTypes(simpleAbstractTypeResolver);
+
+			registerModule(simpleModule);
+
 			setDateFormat(new ISO8601DateFormat());
 	}
 	};

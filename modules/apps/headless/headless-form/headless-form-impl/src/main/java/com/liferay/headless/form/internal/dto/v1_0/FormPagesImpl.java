@@ -14,6 +14,7 @@
 
 package com.liferay.headless.form.internal.dto.v1_0;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import com.liferay.headless.form.dto.v1_0.Fields;
@@ -44,6 +45,7 @@ public class FormPagesImpl implements FormPages {
 			this.fields = fields;
 	}
 
+	@JsonIgnore
 	public void setFields(UnsafeSupplier<Fields[], Throwable> fieldsUnsafeSupplier) {
 			try {
 				fields = fieldsUnsafeSupplier.get();
@@ -64,6 +66,7 @@ public class FormPagesImpl implements FormPages {
 			this.headline = headline;
 	}
 
+	@JsonIgnore
 	public void setHeadline(UnsafeSupplier<String, Throwable> headlineUnsafeSupplier) {
 			try {
 				headline = headlineUnsafeSupplier.get();
@@ -84,6 +87,7 @@ public class FormPagesImpl implements FormPages {
 			this.id = id;
 	}
 
+	@JsonIgnore
 	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 			try {
 				id = idUnsafeSupplier.get();
@@ -104,6 +108,7 @@ public class FormPagesImpl implements FormPages {
 			this.text = text;
 	}
 
+	@JsonIgnore
 	public void setText(UnsafeSupplier<String, Throwable> textUnsafeSupplier) {
 			try {
 				text = textUnsafeSupplier.get();

@@ -14,7 +14,10 @@
 
 package com.liferay.headless.form.internal.jaxrs.message.body.v1_0;
 
+import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.module.SimpleAbstractTypeResolver;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
 import com.liferay.headless.form.dto.v1_0.Columns;
@@ -138,54 +141,51 @@ public class JSONMessageBodyReader implements MessageBodyReader<Object> {
 			InputStream inputStream)
 		throws IOException, WebApplicationException {
 
-			if (clazz.equals(Columns.class)) {
-				return _objectMapper.readValue(inputStream, ColumnsImpl.class);
-	}
-			if (clazz.equals(Creator.class)) {
-				return _objectMapper.readValue(inputStream, CreatorImpl.class);
-	}
-			if (clazz.equals(FieldValues.class)) {
-				return _objectMapper.readValue(inputStream, FieldValuesImpl.class);
-	}
-			if (clazz.equals(Fields.class)) {
-				return _objectMapper.readValue(inputStream, FieldsImpl.class);
-	}
-			if (clazz.equals(Form.class)) {
-				return _objectMapper.readValue(inputStream, FormImpl.class);
-	}
-			if (clazz.equals(FormDocument.class)) {
-				return _objectMapper.readValue(inputStream, FormDocumentImpl.class);
-	}
-			if (clazz.equals(FormPages.class)) {
-				return _objectMapper.readValue(inputStream, FormPagesImpl.class);
-	}
-			if (clazz.equals(FormRecord.class)) {
-				return _objectMapper.readValue(inputStream, FormRecordImpl.class);
-	}
-			if (clazz.equals(FormStructure.class)) {
-				return _objectMapper.readValue(inputStream, FormStructureImpl.class);
-	}
-			if (clazz.equals(Grid.class)) {
-				return _objectMapper.readValue(inputStream, GridImpl.class);
-	}
-			if (clazz.equals(Options.class)) {
-				return _objectMapper.readValue(inputStream, OptionsImpl.class);
-	}
-			if (clazz.equals(Rows.class)) {
-				return _objectMapper.readValue(inputStream, RowsImpl.class);
-	}
-			if (clazz.equals(SuccessPage.class)) {
-				return _objectMapper.readValue(inputStream, SuccessPageImpl.class);
-	}
-			if (clazz.equals(Validation.class)) {
-				return _objectMapper.readValue(inputStream, ValidationImpl.class);
-	}
-
-		return null;
+		return _objectMapper.readValue(inputStream, clazz);
 	}
 
 	private static final ObjectMapper _objectMapper = new ObjectMapper() {
 		{
+			SimpleModule simpleModule =
+				new SimpleModule("Liferay.Headless.Form",
+					Version.unknownVersion());
+
+			SimpleAbstractTypeResolver simpleAbstractTypeResolver =
+				new SimpleAbstractTypeResolver();
+
+			simpleAbstractTypeResolver.addMapping(
+				Columns.class, ColumnsImpl.class);
+			simpleAbstractTypeResolver.addMapping(
+				Creator.class, CreatorImpl.class);
+			simpleAbstractTypeResolver.addMapping(
+				FieldValues.class, FieldValuesImpl.class);
+			simpleAbstractTypeResolver.addMapping(
+				Fields.class, FieldsImpl.class);
+			simpleAbstractTypeResolver.addMapping(
+				Form.class, FormImpl.class);
+			simpleAbstractTypeResolver.addMapping(
+				FormDocument.class, FormDocumentImpl.class);
+			simpleAbstractTypeResolver.addMapping(
+				FormPages.class, FormPagesImpl.class);
+			simpleAbstractTypeResolver.addMapping(
+				FormRecord.class, FormRecordImpl.class);
+			simpleAbstractTypeResolver.addMapping(
+				FormStructure.class, FormStructureImpl.class);
+			simpleAbstractTypeResolver.addMapping(
+				Grid.class, GridImpl.class);
+			simpleAbstractTypeResolver.addMapping(
+				Options.class, OptionsImpl.class);
+			simpleAbstractTypeResolver.addMapping(
+				Rows.class, RowsImpl.class);
+			simpleAbstractTypeResolver.addMapping(
+				SuccessPage.class, SuccessPageImpl.class);
+			simpleAbstractTypeResolver.addMapping(
+				Validation.class, ValidationImpl.class);
+
+			simpleModule.setAbstractTypes(simpleAbstractTypeResolver);
+
+			registerModule(simpleModule);
+
 			setDateFormat(new ISO8601DateFormat());
 	}
 	};

@@ -14,6 +14,7 @@
 
 package com.liferay.headless.foundation.internal.dto.v1_0;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import com.liferay.headless.foundation.dto.v1_0.Location;
@@ -43,6 +44,7 @@ public class LocationImpl implements Location {
 			this.addressCountry = addressCountry;
 	}
 
+	@JsonIgnore
 	public void setAddressCountry(UnsafeSupplier<String, Throwable> addressCountryUnsafeSupplier) {
 			try {
 				addressCountry = addressCountryUnsafeSupplier.get();
@@ -63,6 +65,7 @@ public class LocationImpl implements Location {
 			this.addressRegion = addressRegion;
 	}
 
+	@JsonIgnore
 	public void setAddressRegion(UnsafeSupplier<String, Throwable> addressRegionUnsafeSupplier) {
 			try {
 				addressRegion = addressRegionUnsafeSupplier.get();
@@ -83,6 +86,7 @@ public class LocationImpl implements Location {
 			this.id = id;
 	}
 
+	@JsonIgnore
 	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 			try {
 				id = idUnsafeSupplier.get();

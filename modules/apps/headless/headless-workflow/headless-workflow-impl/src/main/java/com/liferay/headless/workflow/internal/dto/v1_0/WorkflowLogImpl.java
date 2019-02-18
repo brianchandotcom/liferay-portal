@@ -14,6 +14,7 @@
 
 package com.liferay.headless.workflow.internal.dto.v1_0;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import com.liferay.headless.workflow.dto.v1_0.WorkflowLog;
@@ -46,6 +47,7 @@ public class WorkflowLogImpl implements WorkflowLog {
 			this.auditPerson = auditPerson;
 	}
 
+	@JsonIgnore
 	public void setAuditPerson(UnsafeSupplier<String, Throwable> auditPersonUnsafeSupplier) {
 			try {
 				auditPerson = auditPersonUnsafeSupplier.get();
@@ -66,6 +68,7 @@ public class WorkflowLogImpl implements WorkflowLog {
 			this.commentLog = commentLog;
 	}
 
+	@JsonIgnore
 	public void setCommentLog(UnsafeSupplier<String, Throwable> commentLogUnsafeSupplier) {
 			try {
 				commentLog = commentLogUnsafeSupplier.get();
@@ -86,6 +89,7 @@ public class WorkflowLogImpl implements WorkflowLog {
 			this.dateCreated = dateCreated;
 	}
 
+	@JsonIgnore
 	public void setDateCreated(UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
 			try {
 				dateCreated = dateCreatedUnsafeSupplier.get();
@@ -106,6 +110,7 @@ public class WorkflowLogImpl implements WorkflowLog {
 			this.id = id;
 	}
 
+	@JsonIgnore
 	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 			try {
 				id = idUnsafeSupplier.get();
@@ -126,6 +131,7 @@ public class WorkflowLogImpl implements WorkflowLog {
 			this.person = person;
 	}
 
+	@JsonIgnore
 	public void setPerson(UnsafeSupplier<String, Throwable> personUnsafeSupplier) {
 			try {
 				person = personUnsafeSupplier.get();
@@ -146,6 +152,7 @@ public class WorkflowLogImpl implements WorkflowLog {
 			this.previousPerson = previousPerson;
 	}
 
+	@JsonIgnore
 	public void setPreviousPerson(UnsafeSupplier<String, Throwable> previousPersonUnsafeSupplier) {
 			try {
 				previousPerson = previousPersonUnsafeSupplier.get();
@@ -166,6 +173,7 @@ public class WorkflowLogImpl implements WorkflowLog {
 			this.previousState = previousState;
 	}
 
+	@JsonIgnore
 	public void setPreviousState(UnsafeSupplier<String, Throwable> previousStateUnsafeSupplier) {
 			try {
 				previousState = previousStateUnsafeSupplier.get();
@@ -186,6 +194,7 @@ public class WorkflowLogImpl implements WorkflowLog {
 			this.state = state;
 	}
 
+	@JsonIgnore
 	public void setState(UnsafeSupplier<String, Throwable> stateUnsafeSupplier) {
 			try {
 				state = stateUnsafeSupplier.get();
@@ -206,6 +215,7 @@ public class WorkflowLogImpl implements WorkflowLog {
 			this.task = task;
 	}
 
+	@JsonIgnore
 	public void setTask(UnsafeSupplier<WorkflowTask, Throwable> taskUnsafeSupplier) {
 			try {
 				task = taskUnsafeSupplier.get();
@@ -226,6 +236,7 @@ public class WorkflowLogImpl implements WorkflowLog {
 			this.taskId = taskId;
 	}
 
+	@JsonIgnore
 	public void setTaskId(UnsafeSupplier<Long, Throwable> taskIdUnsafeSupplier) {
 			try {
 				taskId = taskIdUnsafeSupplier.get();
@@ -246,6 +257,7 @@ public class WorkflowLogImpl implements WorkflowLog {
 			this.type = type;
 	}
 
+	@JsonIgnore
 	public void setType(UnsafeSupplier<String, Throwable> typeUnsafeSupplier) {
 			try {
 				type = typeUnsafeSupplier.get();

@@ -14,6 +14,7 @@
 
 package com.liferay.headless.form.internal.dto.v1_0;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import com.liferay.headless.form.dto.v1_0.FormDocument;
@@ -43,6 +44,7 @@ public class FormDocumentImpl implements FormDocument {
 			this.contentUrl = contentUrl;
 	}
 
+	@JsonIgnore
 	public void setContentUrl(UnsafeSupplier<String, Throwable> contentUrlUnsafeSupplier) {
 			try {
 				contentUrl = contentUrlUnsafeSupplier.get();
@@ -63,6 +65,7 @@ public class FormDocumentImpl implements FormDocument {
 			this.encodingFormat = encodingFormat;
 	}
 
+	@JsonIgnore
 	public void setEncodingFormat(UnsafeSupplier<String, Throwable> encodingFormatUnsafeSupplier) {
 			try {
 				encodingFormat = encodingFormatUnsafeSupplier.get();
@@ -83,6 +86,7 @@ public class FormDocumentImpl implements FormDocument {
 			this.fileExtension = fileExtension;
 	}
 
+	@JsonIgnore
 	public void setFileExtension(UnsafeSupplier<String, Throwable> fileExtensionUnsafeSupplier) {
 			try {
 				fileExtension = fileExtensionUnsafeSupplier.get();
@@ -103,6 +107,7 @@ public class FormDocumentImpl implements FormDocument {
 			this.id = id;
 	}
 
+	@JsonIgnore
 	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 			try {
 				id = idUnsafeSupplier.get();
@@ -123,6 +128,7 @@ public class FormDocumentImpl implements FormDocument {
 			this.sizeInBytes = sizeInBytes;
 	}
 
+	@JsonIgnore
 	public void setSizeInBytes(UnsafeSupplier<Number, Throwable> sizeInBytesUnsafeSupplier) {
 			try {
 				sizeInBytes = sizeInBytesUnsafeSupplier.get();
@@ -143,6 +149,7 @@ public class FormDocumentImpl implements FormDocument {
 			this.title = title;
 	}
 
+	@JsonIgnore
 	public void setTitle(UnsafeSupplier<String, Throwable> titleUnsafeSupplier) {
 			try {
 				title = titleUnsafeSupplier.get();

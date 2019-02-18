@@ -14,7 +14,10 @@
 
 package com.liferay.headless.collaboration.internal.jaxrs.message.body.v1_0;
 
+import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.module.SimpleAbstractTypeResolver;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
 import com.liferay.headless.collaboration.dto.v1_0.AggregateRating;
@@ -108,36 +111,39 @@ public class JSONMessageBodyReader implements MessageBodyReader<Object> {
 			InputStream inputStream)
 		throws IOException, WebApplicationException {
 
-			if (clazz.equals(AggregateRating.class)) {
-				return _objectMapper.readValue(inputStream, AggregateRatingImpl.class);
-	}
-			if (clazz.equals(BlogPosting.class)) {
-				return _objectMapper.readValue(inputStream, BlogPostingImpl.class);
-	}
-			if (clazz.equals(BlogPostingImage.class)) {
-				return _objectMapper.readValue(inputStream, BlogPostingImageImpl.class);
-	}
-			if (clazz.equals(Category.class)) {
-				return _objectMapper.readValue(inputStream, CategoryImpl.class);
-	}
-			if (clazz.equals(Comment.class)) {
-				return _objectMapper.readValue(inputStream, CommentImpl.class);
-	}
-			if (clazz.equals(Creator.class)) {
-				return _objectMapper.readValue(inputStream, CreatorImpl.class);
-	}
-			if (clazz.equals(Image.class)) {
-				return _objectMapper.readValue(inputStream, ImageImpl.class);
-	}
-			if (clazz.equals(ImageObjectRepository.class)) {
-				return _objectMapper.readValue(inputStream, ImageObjectRepositoryImpl.class);
-	}
-
-		return null;
+		return _objectMapper.readValue(inputStream, clazz);
 	}
 
 	private static final ObjectMapper _objectMapper = new ObjectMapper() {
 		{
+			SimpleModule simpleModule =
+				new SimpleModule("Liferay.Headless.Collaboration",
+					Version.unknownVersion());
+
+			SimpleAbstractTypeResolver simpleAbstractTypeResolver =
+				new SimpleAbstractTypeResolver();
+
+			simpleAbstractTypeResolver.addMapping(
+				AggregateRating.class, AggregateRatingImpl.class);
+			simpleAbstractTypeResolver.addMapping(
+				BlogPosting.class, BlogPostingImpl.class);
+			simpleAbstractTypeResolver.addMapping(
+				BlogPostingImage.class, BlogPostingImageImpl.class);
+			simpleAbstractTypeResolver.addMapping(
+				Category.class, CategoryImpl.class);
+			simpleAbstractTypeResolver.addMapping(
+				Comment.class, CommentImpl.class);
+			simpleAbstractTypeResolver.addMapping(
+				Creator.class, CreatorImpl.class);
+			simpleAbstractTypeResolver.addMapping(
+				Image.class, ImageImpl.class);
+			simpleAbstractTypeResolver.addMapping(
+				ImageObjectRepository.class, ImageObjectRepositoryImpl.class);
+
+			simpleModule.setAbstractTypes(simpleAbstractTypeResolver);
+
+			registerModule(simpleModule);
+
 			setDateFormat(new ISO8601DateFormat());
 	}
 	};

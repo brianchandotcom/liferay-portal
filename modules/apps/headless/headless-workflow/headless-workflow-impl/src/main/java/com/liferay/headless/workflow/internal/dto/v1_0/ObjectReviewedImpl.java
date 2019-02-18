@@ -14,6 +14,7 @@
 
 package com.liferay.headless.workflow.internal.dto.v1_0;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import com.liferay.headless.workflow.dto.v1_0.ObjectReviewed;
@@ -43,6 +44,7 @@ public class ObjectReviewedImpl implements ObjectReviewed {
 			this.id = id;
 	}
 
+	@JsonIgnore
 	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 			try {
 				id = idUnsafeSupplier.get();
@@ -63,6 +65,7 @@ public class ObjectReviewedImpl implements ObjectReviewed {
 			this.identifier = identifier;
 	}
 
+	@JsonIgnore
 	public void setIdentifier(UnsafeSupplier<String, Throwable> identifierUnsafeSupplier) {
 			try {
 				identifier = identifierUnsafeSupplier.get();
@@ -83,6 +86,7 @@ public class ObjectReviewedImpl implements ObjectReviewed {
 			this.resourceType = resourceType;
 	}
 
+	@JsonIgnore
 	public void setResourceType(UnsafeSupplier<String, Throwable> resourceTypeUnsafeSupplier) {
 			try {
 				resourceType = resourceTypeUnsafeSupplier.get();

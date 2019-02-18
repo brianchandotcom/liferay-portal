@@ -14,6 +14,7 @@
 
 package com.liferay.headless.form.internal.dto.v1_0;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import com.liferay.headless.form.dto.v1_0.Fields;
@@ -46,6 +47,7 @@ public class FieldsImpl implements Fields {
 			this.autocomplete = autocomplete;
 	}
 
+	@JsonIgnore
 	public void setAutocomplete(UnsafeSupplier<Boolean, Throwable> autocompleteUnsafeSupplier) {
 			try {
 				autocomplete = autocompleteUnsafeSupplier.get();
@@ -66,6 +68,7 @@ public class FieldsImpl implements Fields {
 			this.dataSourceType = dataSourceType;
 	}
 
+	@JsonIgnore
 	public void setDataSourceType(UnsafeSupplier<String, Throwable> dataSourceTypeUnsafeSupplier) {
 			try {
 				dataSourceType = dataSourceTypeUnsafeSupplier.get();
@@ -86,6 +89,7 @@ public class FieldsImpl implements Fields {
 			this.dataType = dataType;
 	}
 
+	@JsonIgnore
 	public void setDataType(UnsafeSupplier<String, Throwable> dataTypeUnsafeSupplier) {
 			try {
 				dataType = dataTypeUnsafeSupplier.get();
@@ -106,6 +110,7 @@ public class FieldsImpl implements Fields {
 			this.displayStyle = displayStyle;
 	}
 
+	@JsonIgnore
 	public void setDisplayStyle(UnsafeSupplier<String, Throwable> displayStyleUnsafeSupplier) {
 			try {
 				displayStyle = displayStyleUnsafeSupplier.get();
@@ -126,6 +131,7 @@ public class FieldsImpl implements Fields {
 			this.grid = grid;
 	}
 
+	@JsonIgnore
 	public void setGrid(UnsafeSupplier<Grid, Throwable> gridUnsafeSupplier) {
 			try {
 				grid = gridUnsafeSupplier.get();
@@ -146,6 +152,7 @@ public class FieldsImpl implements Fields {
 			this.hasFormRules = hasFormRules;
 	}
 
+	@JsonIgnore
 	public void setHasFormRules(UnsafeSupplier<Boolean, Throwable> hasFormRulesUnsafeSupplier) {
 			try {
 				hasFormRules = hasFormRulesUnsafeSupplier.get();
@@ -166,6 +173,7 @@ public class FieldsImpl implements Fields {
 			this.id = id;
 	}
 
+	@JsonIgnore
 	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 			try {
 				id = idUnsafeSupplier.get();
@@ -186,6 +194,7 @@ public class FieldsImpl implements Fields {
 			this.immutable = immutable;
 	}
 
+	@JsonIgnore
 	public void setImmutable(UnsafeSupplier<Boolean, Throwable> immutableUnsafeSupplier) {
 			try {
 				immutable = immutableUnsafeSupplier.get();
@@ -206,6 +215,7 @@ public class FieldsImpl implements Fields {
 			this.inline = inline;
 	}
 
+	@JsonIgnore
 	public void setInline(UnsafeSupplier<Boolean, Throwable> inlineUnsafeSupplier) {
 			try {
 				inline = inlineUnsafeSupplier.get();
@@ -226,6 +236,7 @@ public class FieldsImpl implements Fields {
 			this.inputControl = inputControl;
 	}
 
+	@JsonIgnore
 	public void setInputControl(UnsafeSupplier<String, Throwable> inputControlUnsafeSupplier) {
 			try {
 				inputControl = inputControlUnsafeSupplier.get();
@@ -246,6 +257,7 @@ public class FieldsImpl implements Fields {
 			this.label = label;
 	}
 
+	@JsonIgnore
 	public void setLabel(UnsafeSupplier<String, Throwable> labelUnsafeSupplier) {
 			try {
 				label = labelUnsafeSupplier.get();
@@ -266,6 +278,7 @@ public class FieldsImpl implements Fields {
 			this.localizable = localizable;
 	}
 
+	@JsonIgnore
 	public void setLocalizable(UnsafeSupplier<Boolean, Throwable> localizableUnsafeSupplier) {
 			try {
 				localizable = localizableUnsafeSupplier.get();
@@ -286,6 +299,7 @@ public class FieldsImpl implements Fields {
 			this.multiple = multiple;
 	}
 
+	@JsonIgnore
 	public void setMultiple(UnsafeSupplier<Boolean, Throwable> multipleUnsafeSupplier) {
 			try {
 				multiple = multipleUnsafeSupplier.get();
@@ -306,6 +320,7 @@ public class FieldsImpl implements Fields {
 			this.name = name;
 	}
 
+	@JsonIgnore
 	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
 			try {
 				name = nameUnsafeSupplier.get();
@@ -326,6 +341,7 @@ public class FieldsImpl implements Fields {
 			this.options = options;
 	}
 
+	@JsonIgnore
 	public void setOptions(UnsafeSupplier<Options, Throwable> optionsUnsafeSupplier) {
 			try {
 				options = optionsUnsafeSupplier.get();
@@ -346,6 +362,7 @@ public class FieldsImpl implements Fields {
 			this.placeholder = placeholder;
 	}
 
+	@JsonIgnore
 	public void setPlaceholder(UnsafeSupplier<String, Throwable> placeholderUnsafeSupplier) {
 			try {
 				placeholder = placeholderUnsafeSupplier.get();
@@ -366,6 +383,7 @@ public class FieldsImpl implements Fields {
 			this.predefinedValue = predefinedValue;
 	}
 
+	@JsonIgnore
 	public void setPredefinedValue(UnsafeSupplier<String, Throwable> predefinedValueUnsafeSupplier) {
 			try {
 				predefinedValue = predefinedValueUnsafeSupplier.get();
@@ -386,6 +404,7 @@ public class FieldsImpl implements Fields {
 			this.readOnly = readOnly;
 	}
 
+	@JsonIgnore
 	public void setReadOnly(UnsafeSupplier<Boolean, Throwable> readOnlyUnsafeSupplier) {
 			try {
 				readOnly = readOnlyUnsafeSupplier.get();
@@ -406,6 +425,7 @@ public class FieldsImpl implements Fields {
 			this.repeatable = repeatable;
 	}
 
+	@JsonIgnore
 	public void setRepeatable(UnsafeSupplier<Boolean, Throwable> repeatableUnsafeSupplier) {
 			try {
 				repeatable = repeatableUnsafeSupplier.get();
@@ -426,6 +446,7 @@ public class FieldsImpl implements Fields {
 			this.required = required;
 	}
 
+	@JsonIgnore
 	public void setRequired(UnsafeSupplier<Boolean, Throwable> requiredUnsafeSupplier) {
 			try {
 				required = requiredUnsafeSupplier.get();
@@ -446,6 +467,7 @@ public class FieldsImpl implements Fields {
 			this.showAsSwitcher = showAsSwitcher;
 	}
 
+	@JsonIgnore
 	public void setShowAsSwitcher(UnsafeSupplier<Boolean, Throwable> showAsSwitcherUnsafeSupplier) {
 			try {
 				showAsSwitcher = showAsSwitcherUnsafeSupplier.get();
@@ -466,6 +488,7 @@ public class FieldsImpl implements Fields {
 			this.showLabel = showLabel;
 	}
 
+	@JsonIgnore
 	public void setShowLabel(UnsafeSupplier<Boolean, Throwable> showLabelUnsafeSupplier) {
 			try {
 				showLabel = showLabelUnsafeSupplier.get();
@@ -486,6 +509,7 @@ public class FieldsImpl implements Fields {
 			this.style = style;
 	}
 
+	@JsonIgnore
 	public void setStyle(UnsafeSupplier<String, Throwable> styleUnsafeSupplier) {
 			try {
 				style = styleUnsafeSupplier.get();
@@ -506,6 +530,7 @@ public class FieldsImpl implements Fields {
 			this.text = text;
 	}
 
+	@JsonIgnore
 	public void setText(UnsafeSupplier<String, Throwable> textUnsafeSupplier) {
 			try {
 				text = textUnsafeSupplier.get();
@@ -526,6 +551,7 @@ public class FieldsImpl implements Fields {
 			this.tooltip = tooltip;
 	}
 
+	@JsonIgnore
 	public void setTooltip(UnsafeSupplier<String, Throwable> tooltipUnsafeSupplier) {
 			try {
 				tooltip = tooltipUnsafeSupplier.get();
@@ -546,6 +572,7 @@ public class FieldsImpl implements Fields {
 			this.validation = validation;
 	}
 
+	@JsonIgnore
 	public void setValidation(UnsafeSupplier<Validation, Throwable> validationUnsafeSupplier) {
 			try {
 				validation = validationUnsafeSupplier.get();

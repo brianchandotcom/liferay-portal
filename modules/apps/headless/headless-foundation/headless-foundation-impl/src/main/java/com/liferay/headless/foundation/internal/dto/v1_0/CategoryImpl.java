@@ -14,6 +14,7 @@
 
 package com.liferay.headless.foundation.internal.dto.v1_0;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import com.liferay.headless.foundation.dto.v1_0.Category;
@@ -47,6 +48,7 @@ public class CategoryImpl implements Category {
 			this.availableLanguages = availableLanguages;
 	}
 
+	@JsonIgnore
 	public void setAvailableLanguages(UnsafeSupplier<String[], Throwable> availableLanguagesUnsafeSupplier) {
 			try {
 				availableLanguages = availableLanguagesUnsafeSupplier.get();
@@ -67,6 +69,7 @@ public class CategoryImpl implements Category {
 			this.category = category;
 	}
 
+	@JsonIgnore
 	public void setCategory(UnsafeSupplier<Category, Throwable> categoryUnsafeSupplier) {
 			try {
 				category = categoryUnsafeSupplier.get();
@@ -87,6 +90,7 @@ public class CategoryImpl implements Category {
 			this.categoryId = categoryId;
 	}
 
+	@JsonIgnore
 	public void setCategoryId(UnsafeSupplier<Long, Throwable> categoryIdUnsafeSupplier) {
 			try {
 				categoryId = categoryIdUnsafeSupplier.get();
@@ -107,6 +111,7 @@ public class CategoryImpl implements Category {
 			this.creator = creator;
 	}
 
+	@JsonIgnore
 	public void setCreator(UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier) {
 			try {
 				creator = creatorUnsafeSupplier.get();
@@ -127,6 +132,7 @@ public class CategoryImpl implements Category {
 			this.creatorId = creatorId;
 	}
 
+	@JsonIgnore
 	public void setCreatorId(UnsafeSupplier<Long, Throwable> creatorIdUnsafeSupplier) {
 			try {
 				creatorId = creatorIdUnsafeSupplier.get();
@@ -147,6 +153,7 @@ public class CategoryImpl implements Category {
 			this.dateCreated = dateCreated;
 	}
 
+	@JsonIgnore
 	public void setDateCreated(UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
 			try {
 				dateCreated = dateCreatedUnsafeSupplier.get();
@@ -167,6 +174,7 @@ public class CategoryImpl implements Category {
 			this.dateModified = dateModified;
 	}
 
+	@JsonIgnore
 	public void setDateModified(UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
 			try {
 				dateModified = dateModifiedUnsafeSupplier.get();
@@ -187,6 +195,7 @@ public class CategoryImpl implements Category {
 			this.description = description;
 	}
 
+	@JsonIgnore
 	public void setDescription(UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier) {
 			try {
 				description = descriptionUnsafeSupplier.get();
@@ -207,6 +216,7 @@ public class CategoryImpl implements Category {
 			this.id = id;
 	}
 
+	@JsonIgnore
 	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 			try {
 				id = idUnsafeSupplier.get();
@@ -227,6 +237,7 @@ public class CategoryImpl implements Category {
 			this.name = name;
 	}
 
+	@JsonIgnore
 	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
 			try {
 				name = nameUnsafeSupplier.get();
@@ -247,6 +258,7 @@ public class CategoryImpl implements Category {
 			this.subcategories = subcategories;
 	}
 
+	@JsonIgnore
 	public void setSubcategories(UnsafeSupplier<Category[], Throwable> subcategoriesUnsafeSupplier) {
 			try {
 				subcategories = subcategoriesUnsafeSupplier.get();
@@ -267,6 +279,7 @@ public class CategoryImpl implements Category {
 			this.vocabulary = vocabulary;
 	}
 
+	@JsonIgnore
 	public void setVocabulary(UnsafeSupplier<Vocabulary, Throwable> vocabularyUnsafeSupplier) {
 			try {
 				vocabulary = vocabularyUnsafeSupplier.get();
@@ -287,6 +300,7 @@ public class CategoryImpl implements Category {
 			this.vocabularyId = vocabularyId;
 	}
 
+	@JsonIgnore
 	public void setVocabularyId(UnsafeSupplier<Long, Throwable> vocabularyIdUnsafeSupplier) {
 			try {
 				vocabularyId = vocabularyIdUnsafeSupplier.get();

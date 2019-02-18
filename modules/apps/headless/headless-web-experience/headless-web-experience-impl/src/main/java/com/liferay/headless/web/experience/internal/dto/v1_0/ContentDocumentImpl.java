@@ -14,6 +14,7 @@
 
 package com.liferay.headless.web.experience.internal.dto.v1_0;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import com.liferay.headless.web.experience.dto.v1_0.ContentDocument;
@@ -46,6 +47,7 @@ public class ContentDocumentImpl implements ContentDocument {
 			this.contentUrl = contentUrl;
 	}
 
+	@JsonIgnore
 	public void setContentUrl(UnsafeSupplier<String, Throwable> contentUrlUnsafeSupplier) {
 			try {
 				contentUrl = contentUrlUnsafeSupplier.get();
@@ -66,6 +68,7 @@ public class ContentDocumentImpl implements ContentDocument {
 			this.creator = creator;
 	}
 
+	@JsonIgnore
 	public void setCreator(UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier) {
 			try {
 				creator = creatorUnsafeSupplier.get();
@@ -86,6 +89,7 @@ public class ContentDocumentImpl implements ContentDocument {
 			this.dateCreated = dateCreated;
 	}
 
+	@JsonIgnore
 	public void setDateCreated(UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
 			try {
 				dateCreated = dateCreatedUnsafeSupplier.get();
@@ -106,6 +110,7 @@ public class ContentDocumentImpl implements ContentDocument {
 			this.dateModified = dateModified;
 	}
 
+	@JsonIgnore
 	public void setDateModified(UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
 			try {
 				dateModified = dateModifiedUnsafeSupplier.get();
@@ -126,6 +131,7 @@ public class ContentDocumentImpl implements ContentDocument {
 			this.encodingFormat = encodingFormat;
 	}
 
+	@JsonIgnore
 	public void setEncodingFormat(UnsafeSupplier<String, Throwable> encodingFormatUnsafeSupplier) {
 			try {
 				encodingFormat = encodingFormatUnsafeSupplier.get();
@@ -146,6 +152,7 @@ public class ContentDocumentImpl implements ContentDocument {
 			this.fileExtension = fileExtension;
 	}
 
+	@JsonIgnore
 	public void setFileExtension(UnsafeSupplier<String, Throwable> fileExtensionUnsafeSupplier) {
 			try {
 				fileExtension = fileExtensionUnsafeSupplier.get();
@@ -166,6 +173,7 @@ public class ContentDocumentImpl implements ContentDocument {
 			this.id = id;
 	}
 
+	@JsonIgnore
 	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 			try {
 				id = idUnsafeSupplier.get();
@@ -186,6 +194,7 @@ public class ContentDocumentImpl implements ContentDocument {
 			this.sizeInBytes = sizeInBytes;
 	}
 
+	@JsonIgnore
 	public void setSizeInBytes(UnsafeSupplier<Number, Throwable> sizeInBytesUnsafeSupplier) {
 			try {
 				sizeInBytes = sizeInBytesUnsafeSupplier.get();
@@ -206,6 +215,7 @@ public class ContentDocumentImpl implements ContentDocument {
 			this.title = title;
 	}
 
+	@JsonIgnore
 	public void setTitle(UnsafeSupplier<String, Throwable> titleUnsafeSupplier) {
 			try {
 				title = titleUnsafeSupplier.get();

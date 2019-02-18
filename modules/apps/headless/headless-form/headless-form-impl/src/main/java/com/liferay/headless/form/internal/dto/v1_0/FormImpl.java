@@ -14,6 +14,7 @@
 
 package com.liferay.headless.form.internal.dto.v1_0;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import com.liferay.headless.form.dto.v1_0.Creator;
@@ -48,6 +49,7 @@ public class FormImpl implements Form {
 			this.availableLanguages = availableLanguages;
 	}
 
+	@JsonIgnore
 	public void setAvailableLanguages(UnsafeSupplier<String[], Throwable> availableLanguagesUnsafeSupplier) {
 			try {
 				availableLanguages = availableLanguagesUnsafeSupplier.get();
@@ -68,6 +70,7 @@ public class FormImpl implements Form {
 			this.contentSpace = contentSpace;
 	}
 
+	@JsonIgnore
 	public void setContentSpace(UnsafeSupplier<Long, Throwable> contentSpaceUnsafeSupplier) {
 			try {
 				contentSpace = contentSpaceUnsafeSupplier.get();
@@ -88,6 +91,7 @@ public class FormImpl implements Form {
 			this.creator = creator;
 	}
 
+	@JsonIgnore
 	public void setCreator(UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier) {
 			try {
 				creator = creatorUnsafeSupplier.get();
@@ -108,6 +112,7 @@ public class FormImpl implements Form {
 			this.dateCreated = dateCreated;
 	}
 
+	@JsonIgnore
 	public void setDateCreated(UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
 			try {
 				dateCreated = dateCreatedUnsafeSupplier.get();
@@ -128,6 +133,7 @@ public class FormImpl implements Form {
 			this.dateModified = dateModified;
 	}
 
+	@JsonIgnore
 	public void setDateModified(UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
 			try {
 				dateModified = dateModifiedUnsafeSupplier.get();
@@ -148,6 +154,7 @@ public class FormImpl implements Form {
 			this.datePublished = datePublished;
 	}
 
+	@JsonIgnore
 	public void setDatePublished(UnsafeSupplier<Date, Throwable> datePublishedUnsafeSupplier) {
 			try {
 				datePublished = datePublishedUnsafeSupplier.get();
@@ -168,6 +175,7 @@ public class FormImpl implements Form {
 			this.defaultLanguage = defaultLanguage;
 	}
 
+	@JsonIgnore
 	public void setDefaultLanguage(UnsafeSupplier<String, Throwable> defaultLanguageUnsafeSupplier) {
 			try {
 				defaultLanguage = defaultLanguageUnsafeSupplier.get();
@@ -188,6 +196,7 @@ public class FormImpl implements Form {
 			this.description = description;
 	}
 
+	@JsonIgnore
 	public void setDescription(UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier) {
 			try {
 				description = descriptionUnsafeSupplier.get();
@@ -208,6 +217,7 @@ public class FormImpl implements Form {
 			this.formRecords = formRecords;
 	}
 
+	@JsonIgnore
 	public void setFormRecords(UnsafeSupplier<FormRecord[], Throwable> formRecordsUnsafeSupplier) {
 			try {
 				formRecords = formRecordsUnsafeSupplier.get();
@@ -228,6 +238,7 @@ public class FormImpl implements Form {
 			this.formRecordsIds = formRecordsIds;
 	}
 
+	@JsonIgnore
 	public void setFormRecordsIds(UnsafeSupplier<Long[], Throwable> formRecordsIdsUnsafeSupplier) {
 			try {
 				formRecordsIds = formRecordsIdsUnsafeSupplier.get();
@@ -248,6 +259,7 @@ public class FormImpl implements Form {
 			this.id = id;
 	}
 
+	@JsonIgnore
 	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 			try {
 				id = idUnsafeSupplier.get();
@@ -268,6 +280,7 @@ public class FormImpl implements Form {
 			this.name = name;
 	}
 
+	@JsonIgnore
 	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
 			try {
 				name = nameUnsafeSupplier.get();
@@ -288,6 +301,7 @@ public class FormImpl implements Form {
 			this.structure = structure;
 	}
 
+	@JsonIgnore
 	public void setStructure(UnsafeSupplier<FormStructure, Throwable> structureUnsafeSupplier) {
 			try {
 				structure = structureUnsafeSupplier.get();
@@ -308,6 +322,7 @@ public class FormImpl implements Form {
 			this.structureId = structureId;
 	}
 
+	@JsonIgnore
 	public void setStructureId(UnsafeSupplier<Long, Throwable> structureIdUnsafeSupplier) {
 			try {
 				structureId = structureIdUnsafeSupplier.get();

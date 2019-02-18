@@ -14,7 +14,10 @@
 
 package com.liferay.headless.document.library.internal.jaxrs.message.body.v1_0;
 
+import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.module.SimpleAbstractTypeResolver;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
 import com.liferay.headless.document.library.dto.v1_0.AdaptedMedia;
@@ -93,27 +96,33 @@ public class JSONMessageBodyReader implements MessageBodyReader<Object> {
 			InputStream inputStream)
 		throws IOException, WebApplicationException {
 
-			if (clazz.equals(AdaptedMedia.class)) {
-				return _objectMapper.readValue(inputStream, AdaptedMediaImpl.class);
-	}
-			if (clazz.equals(Comment.class)) {
-				return _objectMapper.readValue(inputStream, CommentImpl.class);
-	}
-			if (clazz.equals(Creator.class)) {
-				return _objectMapper.readValue(inputStream, CreatorImpl.class);
-	}
-			if (clazz.equals(Document.class)) {
-				return _objectMapper.readValue(inputStream, DocumentImpl.class);
-	}
-			if (clazz.equals(Folder.class)) {
-				return _objectMapper.readValue(inputStream, FolderImpl.class);
-	}
-
-		return null;
+		return _objectMapper.readValue(inputStream, clazz);
 	}
 
 	private static final ObjectMapper _objectMapper = new ObjectMapper() {
 		{
+			SimpleModule simpleModule =
+				new SimpleModule("Liferay.Headless.Document.Library",
+					Version.unknownVersion());
+
+			SimpleAbstractTypeResolver simpleAbstractTypeResolver =
+				new SimpleAbstractTypeResolver();
+
+			simpleAbstractTypeResolver.addMapping(
+				AdaptedMedia.class, AdaptedMediaImpl.class);
+			simpleAbstractTypeResolver.addMapping(
+				Comment.class, CommentImpl.class);
+			simpleAbstractTypeResolver.addMapping(
+				Creator.class, CreatorImpl.class);
+			simpleAbstractTypeResolver.addMapping(
+				Document.class, DocumentImpl.class);
+			simpleAbstractTypeResolver.addMapping(
+				Folder.class, FolderImpl.class);
+
+			simpleModule.setAbstractTypes(simpleAbstractTypeResolver);
+
+			registerModule(simpleModule);
+
 			setDateFormat(new ISO8601DateFormat());
 	}
 	};

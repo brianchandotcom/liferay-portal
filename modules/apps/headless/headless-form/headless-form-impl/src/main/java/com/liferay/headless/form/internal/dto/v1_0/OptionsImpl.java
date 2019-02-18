@@ -14,6 +14,7 @@
 
 package com.liferay.headless.form.internal.dto.v1_0;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import com.liferay.headless.form.dto.v1_0.Options;
@@ -43,6 +44,7 @@ public class OptionsImpl implements Options {
 			this.id = id;
 	}
 
+	@JsonIgnore
 	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 			try {
 				id = idUnsafeSupplier.get();
@@ -63,6 +65,7 @@ public class OptionsImpl implements Options {
 			this.label = label;
 	}
 
+	@JsonIgnore
 	public void setLabel(UnsafeSupplier<String, Throwable> labelUnsafeSupplier) {
 			try {
 				label = labelUnsafeSupplier.get();
@@ -83,6 +86,7 @@ public class OptionsImpl implements Options {
 			this.value = value;
 	}
 
+	@JsonIgnore
 	public void setValue(UnsafeSupplier<String, Throwable> valueUnsafeSupplier) {
 			try {
 				value = valueUnsafeSupplier.get();

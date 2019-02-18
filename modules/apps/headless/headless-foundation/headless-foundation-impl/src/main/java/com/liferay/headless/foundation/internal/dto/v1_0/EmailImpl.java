@@ -14,6 +14,7 @@
 
 package com.liferay.headless.foundation.internal.dto.v1_0;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import com.liferay.headless.foundation.dto.v1_0.Email;
@@ -43,6 +44,7 @@ public class EmailImpl implements Email {
 			this.email = email;
 	}
 
+	@JsonIgnore
 	public void setEmail(UnsafeSupplier<String, Throwable> emailUnsafeSupplier) {
 			try {
 				email = emailUnsafeSupplier.get();
@@ -63,6 +65,7 @@ public class EmailImpl implements Email {
 			this.id = id;
 	}
 
+	@JsonIgnore
 	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 			try {
 				id = idUnsafeSupplier.get();
@@ -83,6 +86,7 @@ public class EmailImpl implements Email {
 			this.type = type;
 	}
 
+	@JsonIgnore
 	public void setType(UnsafeSupplier<String, Throwable> typeUnsafeSupplier) {
 			try {
 				type = typeUnsafeSupplier.get();

@@ -14,7 +14,10 @@
 
 package com.liferay.headless.foundation.internal.jaxrs.message.body.v1_0;
 
+import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.module.SimpleAbstractTypeResolver;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
 import com.liferay.headless.foundation.dto.v1_0.Category;
@@ -143,57 +146,53 @@ public class JSONMessageBodyReader implements MessageBodyReader<Object> {
 			InputStream inputStream)
 		throws IOException, WebApplicationException {
 
-			if (clazz.equals(Category.class)) {
-				return _objectMapper.readValue(inputStream, CategoryImpl.class);
-	}
-			if (clazz.equals(ContactInformation.class)) {
-				return _objectMapper.readValue(inputStream, ContactInformationImpl.class);
-	}
-			if (clazz.equals(Creator.class)) {
-				return _objectMapper.readValue(inputStream, CreatorImpl.class);
-	}
-			if (clazz.equals(Email.class)) {
-				return _objectMapper.readValue(inputStream, EmailImpl.class);
-	}
-			if (clazz.equals(HoursAvailable.class)) {
-				return _objectMapper.readValue(inputStream, HoursAvailableImpl.class);
-	}
-			if (clazz.equals(Keyword.class)) {
-				return _objectMapper.readValue(inputStream, KeywordImpl.class);
-	}
-			if (clazz.equals(Location.class)) {
-				return _objectMapper.readValue(inputStream, LocationImpl.class);
-	}
-			if (clazz.equals(Organization.class)) {
-				return _objectMapper.readValue(inputStream, OrganizationImpl.class);
-	}
-			if (clazz.equals(Phone.class)) {
-				return _objectMapper.readValue(inputStream, PhoneImpl.class);
-	}
-			if (clazz.equals(PostalAddress.class)) {
-				return _objectMapper.readValue(inputStream, PostalAddressImpl.class);
-	}
-			if (clazz.equals(Role.class)) {
-				return _objectMapper.readValue(inputStream, RoleImpl.class);
-	}
-			if (clazz.equals(Services.class)) {
-				return _objectMapper.readValue(inputStream, ServicesImpl.class);
-	}
-			if (clazz.equals(UserAccount.class)) {
-				return _objectMapper.readValue(inputStream, UserAccountImpl.class);
-	}
-			if (clazz.equals(Vocabulary.class)) {
-				return _objectMapper.readValue(inputStream, VocabularyImpl.class);
-	}
-			if (clazz.equals(WebUrl.class)) {
-				return _objectMapper.readValue(inputStream, WebUrlImpl.class);
-	}
-
-		return null;
+		return _objectMapper.readValue(inputStream, clazz);
 	}
 
 	private static final ObjectMapper _objectMapper = new ObjectMapper() {
 		{
+			SimpleModule simpleModule =
+				new SimpleModule("Liferay.Headless.Foundation",
+					Version.unknownVersion());
+
+			SimpleAbstractTypeResolver simpleAbstractTypeResolver =
+				new SimpleAbstractTypeResolver();
+
+			simpleAbstractTypeResolver.addMapping(
+				Category.class, CategoryImpl.class);
+			simpleAbstractTypeResolver.addMapping(
+				ContactInformation.class, ContactInformationImpl.class);
+			simpleAbstractTypeResolver.addMapping(
+				Creator.class, CreatorImpl.class);
+			simpleAbstractTypeResolver.addMapping(
+				Email.class, EmailImpl.class);
+			simpleAbstractTypeResolver.addMapping(
+				HoursAvailable.class, HoursAvailableImpl.class);
+			simpleAbstractTypeResolver.addMapping(
+				Keyword.class, KeywordImpl.class);
+			simpleAbstractTypeResolver.addMapping(
+				Location.class, LocationImpl.class);
+			simpleAbstractTypeResolver.addMapping(
+				Organization.class, OrganizationImpl.class);
+			simpleAbstractTypeResolver.addMapping(
+				Phone.class, PhoneImpl.class);
+			simpleAbstractTypeResolver.addMapping(
+				PostalAddress.class, PostalAddressImpl.class);
+			simpleAbstractTypeResolver.addMapping(
+				Role.class, RoleImpl.class);
+			simpleAbstractTypeResolver.addMapping(
+				Services.class, ServicesImpl.class);
+			simpleAbstractTypeResolver.addMapping(
+				UserAccount.class, UserAccountImpl.class);
+			simpleAbstractTypeResolver.addMapping(
+				Vocabulary.class, VocabularyImpl.class);
+			simpleAbstractTypeResolver.addMapping(
+				WebUrl.class, WebUrlImpl.class);
+
+			simpleModule.setAbstractTypes(simpleAbstractTypeResolver);
+
+			registerModule(simpleModule);
+
 			setDateFormat(new ISO8601DateFormat());
 	}
 	};

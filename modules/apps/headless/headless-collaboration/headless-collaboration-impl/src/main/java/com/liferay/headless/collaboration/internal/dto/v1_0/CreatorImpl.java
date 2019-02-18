@@ -14,6 +14,7 @@
 
 package com.liferay.headless.collaboration.internal.dto.v1_0;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import com.liferay.headless.collaboration.dto.v1_0.Creator;
@@ -43,6 +44,7 @@ public class CreatorImpl implements Creator {
 			this.additionalName = additionalName;
 	}
 
+	@JsonIgnore
 	public void setAdditionalName(UnsafeSupplier<String, Throwable> additionalNameUnsafeSupplier) {
 			try {
 				additionalName = additionalNameUnsafeSupplier.get();
@@ -63,6 +65,7 @@ public class CreatorImpl implements Creator {
 			this.familyName = familyName;
 	}
 
+	@JsonIgnore
 	public void setFamilyName(UnsafeSupplier<String, Throwable> familyNameUnsafeSupplier) {
 			try {
 				familyName = familyNameUnsafeSupplier.get();
@@ -83,6 +86,7 @@ public class CreatorImpl implements Creator {
 			this.givenName = givenName;
 	}
 
+	@JsonIgnore
 	public void setGivenName(UnsafeSupplier<String, Throwable> givenNameUnsafeSupplier) {
 			try {
 				givenName = givenNameUnsafeSupplier.get();
@@ -103,6 +107,7 @@ public class CreatorImpl implements Creator {
 			this.id = id;
 	}
 
+	@JsonIgnore
 	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 			try {
 				id = idUnsafeSupplier.get();
@@ -123,6 +128,7 @@ public class CreatorImpl implements Creator {
 			this.image = image;
 	}
 
+	@JsonIgnore
 	public void setImage(UnsafeSupplier<String, Throwable> imageUnsafeSupplier) {
 			try {
 				image = imageUnsafeSupplier.get();
@@ -143,6 +149,7 @@ public class CreatorImpl implements Creator {
 			this.name = name;
 	}
 
+	@JsonIgnore
 	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
 			try {
 				name = nameUnsafeSupplier.get();
@@ -163,6 +170,7 @@ public class CreatorImpl implements Creator {
 			this.profileURL = profileURL;
 	}
 
+	@JsonIgnore
 	public void setProfileURL(UnsafeSupplier<String, Throwable> profileURLUnsafeSupplier) {
 			try {
 				profileURL = profileURLUnsafeSupplier.get();

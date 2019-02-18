@@ -14,6 +14,7 @@
 
 package com.liferay.headless.collaboration.internal.dto.v1_0;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import com.liferay.headless.collaboration.dto.v1_0.BlogPostingImage;
@@ -46,6 +47,7 @@ public class ImageObjectRepositoryImpl implements ImageObjectRepository {
 			this.dateCreated = dateCreated;
 	}
 
+	@JsonIgnore
 	public void setDateCreated(UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
 			try {
 				dateCreated = dateCreatedUnsafeSupplier.get();
@@ -66,6 +68,7 @@ public class ImageObjectRepositoryImpl implements ImageObjectRepository {
 			this.dateModified = dateModified;
 	}
 
+	@JsonIgnore
 	public void setDateModified(UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
 			try {
 				dateModified = dateModifiedUnsafeSupplier.get();
@@ -86,6 +89,7 @@ public class ImageObjectRepositoryImpl implements ImageObjectRepository {
 			this.id = id;
 	}
 
+	@JsonIgnore
 	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 			try {
 				id = idUnsafeSupplier.get();
@@ -106,6 +110,7 @@ public class ImageObjectRepositoryImpl implements ImageObjectRepository {
 			this.images = images;
 	}
 
+	@JsonIgnore
 	public void setImages(UnsafeSupplier<BlogPostingImage[], Throwable> imagesUnsafeSupplier) {
 			try {
 				images = imagesUnsafeSupplier.get();
@@ -126,6 +131,7 @@ public class ImageObjectRepositoryImpl implements ImageObjectRepository {
 			this.imagesIds = imagesIds;
 	}
 
+	@JsonIgnore
 	public void setImagesIds(UnsafeSupplier<Long[], Throwable> imagesIdsUnsafeSupplier) {
 			try {
 				imagesIds = imagesIdsUnsafeSupplier.get();
@@ -146,6 +152,7 @@ public class ImageObjectRepositoryImpl implements ImageObjectRepository {
 			this.name = name;
 	}
 
+	@JsonIgnore
 	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
 			try {
 				name = nameUnsafeSupplier.get();

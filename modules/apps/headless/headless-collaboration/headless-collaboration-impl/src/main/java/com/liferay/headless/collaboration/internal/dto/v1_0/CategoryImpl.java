@@ -14,6 +14,7 @@
 
 package com.liferay.headless.collaboration.internal.dto.v1_0;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import com.liferay.headless.collaboration.dto.v1_0.Category;
@@ -43,6 +44,7 @@ public class CategoryImpl implements Category {
 			this.categoryId = categoryId;
 	}
 
+	@JsonIgnore
 	public void setCategoryId(UnsafeSupplier<Long, Throwable> categoryIdUnsafeSupplier) {
 			try {
 				categoryId = categoryIdUnsafeSupplier.get();
@@ -63,6 +65,7 @@ public class CategoryImpl implements Category {
 			this.categoryName = categoryName;
 	}
 
+	@JsonIgnore
 	public void setCategoryName(UnsafeSupplier<String, Throwable> categoryNameUnsafeSupplier) {
 			try {
 				categoryName = categoryNameUnsafeSupplier.get();

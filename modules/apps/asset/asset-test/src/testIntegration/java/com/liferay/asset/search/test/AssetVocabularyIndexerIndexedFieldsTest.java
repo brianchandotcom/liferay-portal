@@ -16,6 +16,7 @@ package com.liferay.asset.search.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Document;
@@ -40,6 +41,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 import org.junit.After;
 import org.junit.Before;
@@ -175,7 +177,6 @@ public class AssetVocabularyIndexerIndexedFieldsTest {
 			StringUtil.lowerCase(assetVocabulary.getUserName()));
 		map.put(
 			"name_sortable", StringUtil.lowerCase(assetVocabulary.getName()));
-		map.put("title_ja_JP", assetVocabulary.getName());
 		map.put(
 			"title_sortable", StringUtil.lowerCase(assetVocabulary.getName()));
 
@@ -185,6 +186,7 @@ public class AssetVocabularyIndexerIndexedFieldsTest {
 
 		_populateDates(assetVocabulary, map);
 		_populateRoles(assetVocabulary, map);
+		_populateTitles(assetVocabulary.getTitle(), map);
 
 		return map;
 	}
@@ -206,6 +208,23 @@ public class AssetVocabularyIndexerIndexedFieldsTest {
 			assetVocabulary.getCompanyId(), AssetVocabulary.class.getName(),
 			assetVocabulary.getVocabularyId(), assetVocabulary.getGroupId(),
 			null, map);
+	}
+
+	private void _populateTitles(String title, Map<String, String> map) {
+		map.put(Field.TITLE, title);
+
+		Set<Locale> locales = LanguageUtil.getAvailableLocales();
+
+		for (Locale locale : locales) {
+			String mapKey =
+				"title_" + locale.getLanguage() + "_" + locale.getCountry();
+
+			String mapKeySortable = mapKey + "_sortable";
+
+			map.put(mapKey, title);
+
+			map.put(mapKeySortable, title);
+		}
 	}
 
 	@DeleteAfterTestRun

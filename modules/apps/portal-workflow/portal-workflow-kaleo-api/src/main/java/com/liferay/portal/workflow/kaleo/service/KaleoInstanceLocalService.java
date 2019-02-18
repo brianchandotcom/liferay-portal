@@ -279,7 +279,20 @@ public interface KaleoInstanceLocalService extends BaseLocalService,
 		ServiceContext serviceContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<KaleoInstance> search(Long userId, String assetDescription,
+		String assetTitle, String assetType, String nodeName,
+		String kaleoDefinitionName, Boolean completed, int start, int end,
+		OrderByComparator<KaleoInstance> orderByComparator,
+		ServiceContext serviceContext);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int searchCount(Long userId, String assetType, String nodeName,
+		String kaleoDefinitionName, Boolean completed,
+		ServiceContext serviceContext);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int searchCount(Long userId, String assetDescription,
+		String assetTitle, String assetType, String nodeName,
 		String kaleoDefinitionName, Boolean completed,
 		ServiceContext serviceContext);
 

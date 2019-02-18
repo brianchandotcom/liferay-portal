@@ -147,6 +147,27 @@ public interface CTEngineManager {
 	public List<CTEntry> getCTEntries(long ctCollectionId);
 
 	/**
+	 * Returns all the change entries associated with the given change
+	 * collection.
+	 *
+	 * @param  ctCollectionId the primary key of the change collection
+	 * @param  queryDefinition the object contains settings regarding
+	 *         pagination, order and filter
+	 * @return the list of change entries
+	 */
+	public List<CTEntry> getCTEntries(
+		long ctCollectionId, QueryDefinition<CTEntry> queryDefinition);
+
+	/**
+	 * Returns the number of all the change entries associated with the given
+	 * change collection.
+	 *
+	 * @param  ctCollectionId the primary key of the change collection
+	 * @return the list of change entries
+	 */
+	public int getCTEntriesCount(long ctCollectionId);
+
+	/**
 	 * Returns the special change tracking collection which is called production
 	 * and contains all the changes published before.
 	 *

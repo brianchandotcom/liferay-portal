@@ -53,6 +53,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -333,6 +334,26 @@ public class CTEngineManagerImpl implements CTEngineManager {
 	@Override
 	public List<CTEntry> getCTEntries(long ctCollectionId) {
 		return _ctEntryLocalService.getCTCollectionCTEntries(ctCollectionId);
+	}
+
+	@Override
+	public List<CTEntry> getCTEntries(
+		long ctCollectionId, QueryDefinition<CTEntry> queryDefinition) {
+
+		if (queryDefinition == null) {
+			return _ctEntryLocalService.getCTCollectionCTEntries(
+				ctCollectionId);
+		}
+
+		return _ctEntryLocalService.getCTCollectionCTEntries(
+			ctCollectionId, queryDefinition.getStart(),
+			queryDefinition.getEnd(), queryDefinition.getOrderByComparator());
+	}
+
+	@Override
+	public int getCTEntriesCount(long ctCollectionId) {
+		return _ctEntryLocalService.getCTCollectionCTEntriesCount(
+			ctCollectionId);
 	}
 
 	public Optional<CTCollection> getProductionCTCollectionOptional(

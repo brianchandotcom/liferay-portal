@@ -100,7 +100,7 @@ public class SiteTeamsDisplayContext {
 			return _displayStyle;
 		}
 
-		_displayStyle = ParamUtil.getString(_request, "displayStyle", "icon");
+		_displayStyle = ParamUtil.getString(_request, "displayStyle", "list");
 
 		return _displayStyle;
 	}
@@ -233,14 +233,6 @@ public class SiteTeamsDisplayContext {
 		}
 
 		return true;
-	}
-
-	public boolean isIconView() {
-		if (Objects.equals(getDisplayStyle(), "icon")) {
-			return true;
-		}
-
-		return false;
 	}
 
 	public boolean isListView() {

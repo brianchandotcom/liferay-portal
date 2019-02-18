@@ -87,26 +87,6 @@ SiteTeamsDisplayContext siteTeamsDisplayContext = new SiteTeamsDisplayContext(re
 						path="/team_action.jsp"
 					/>
 				</c:when>
-				<c:when test="<%= siteTeamsDisplayContext.isIconView() %>">
-
-					<%
-					row.setCssClass("entry-card lfr-asset-item");
-					%>
-
-					<liferay-ui:search-container-column-text>
-						<liferay-frontend:icon-vertical-card
-							actionJsp="/team_action.jsp"
-							actionJspServletContext="<%= application %>"
-							cssClass="entry-display-style"
-							icon="users"
-							resultRow="<%= row %>"
-							rowChecker="<%= searchContainer.getRowChecker() %>"
-							subtitle="<%= team.getDescription() %>"
-							title="<%= team.getName() %>"
-							url="<%= (rowURL != null) ? rowURL.toString() : null %>"
-						/>
-					</liferay-ui:search-container-column-text>
-				</c:when>
 				<c:when test="<%= siteTeamsDisplayContext.isListView() %>">
 					<liferay-ui:search-container-column-text
 						cssClass="table-cell-expand-small table-cell-minw-200 table-title"

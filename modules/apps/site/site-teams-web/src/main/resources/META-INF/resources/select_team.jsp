@@ -90,23 +90,6 @@ SelectTeamDisplayContext selectTeamDisplayContext = new SelectTeamDisplayContext
 						</h6>
 					</liferay-ui:search-container-column-text>
 				</c:when>
-				<c:when test='<%= Objects.equals(selectTeamDisplayContext.getDisplayStyle(), "icon") %>'>
-
-					<%
-					row.setCssClass("entry-card lfr-asset-item");
-					%>
-
-					<liferay-ui:search-container-column-text>
-						<liferay-frontend:icon-vertical-card
-							cssClass='<%= disabled ? StringPool.BLANK : "selector-button" %>'
-							data="<%= data %>"
-							icon="users"
-							resultRow="<%= row %>"
-							subtitle="<%= curTeam.getDescription() %>"
-							title="<%= curTeam.getName() %>"
-						/>
-					</liferay-ui:search-container-column-text>
-				</c:when>
 				<c:when test='<%= Objects.equals(selectTeamDisplayContext.getDisplayStyle(), "list") %>'>
 					<liferay-ui:search-container-column-text
 						cssClass="table-cell-content"

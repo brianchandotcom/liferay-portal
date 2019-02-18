@@ -38,7 +38,7 @@ public class CommentImpl implements Comment {
 			this.comments = comments;
 	}
 
-	public void setComments(UnsafeSupplier<Comment[], Throwable> commentsUnsafeSupplier) {
+	public void setCommentsWithSupplier(UnsafeSupplier<Comment[], Throwable> commentsUnsafeSupplier) {
 	}
 
 	@JsonProperty
@@ -51,7 +51,7 @@ public class CommentImpl implements Comment {
 			this.creator = creator;
 	}
 
-	public void setCreator(UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier) {
+	public void setCreatorWithSupplier(UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier) {
 	}
 
 	@JsonProperty
@@ -64,7 +64,7 @@ public class CommentImpl implements Comment {
 			this.id = id;
 	}
 
-	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+	public void setIdWithSupplier(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 	}
 
 	@JsonProperty
@@ -77,7 +77,7 @@ public class CommentImpl implements Comment {
 			this.text = text;
 	}
 
-	public void setText(UnsafeSupplier<String, Throwable> textUnsafeSupplier) {
+	public void setTextWithSupplier(UnsafeSupplier<String, Throwable> textUnsafeSupplier) {
 	}
 
 	@JsonProperty

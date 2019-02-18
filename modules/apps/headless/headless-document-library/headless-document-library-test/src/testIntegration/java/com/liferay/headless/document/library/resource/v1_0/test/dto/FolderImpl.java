@@ -39,7 +39,7 @@ public class FolderImpl implements Folder {
 			this.dateCreated = dateCreated;
 	}
 
-	public void setDateCreated(UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
+	public void setDateCreatedWithSupplier(UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
 	}
 
 	@JsonProperty
@@ -52,7 +52,7 @@ public class FolderImpl implements Folder {
 			this.dateModified = dateModified;
 	}
 
-	public void setDateModified(UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
+	public void setDateModifiedWithSupplier(UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
 	}
 
 	@JsonProperty
@@ -65,7 +65,7 @@ public class FolderImpl implements Folder {
 			this.description = description;
 	}
 
-	public void setDescription(UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier) {
+	public void setDescriptionWithSupplier(UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier) {
 	}
 
 	@JsonProperty
@@ -78,7 +78,7 @@ public class FolderImpl implements Folder {
 			this.documents = documents;
 	}
 
-	public void setDocuments(UnsafeSupplier<Document[], Throwable> documentsUnsafeSupplier) {
+	public void setDocumentsWithSupplier(UnsafeSupplier<Document[], Throwable> documentsUnsafeSupplier) {
 	}
 
 	@JsonProperty
@@ -91,7 +91,7 @@ public class FolderImpl implements Folder {
 			this.documentsIds = documentsIds;
 	}
 
-	public void setDocumentsIds(UnsafeSupplier<Long[], Throwable> documentsIdsUnsafeSupplier) {
+	public void setDocumentsIdsWithSupplier(UnsafeSupplier<Long[], Throwable> documentsIdsUnsafeSupplier) {
 	}
 
 	@JsonProperty
@@ -104,7 +104,7 @@ public class FolderImpl implements Folder {
 			this.documentsRepository = documentsRepository;
 	}
 
-	public void setDocumentsRepository(UnsafeSupplier<Folder, Throwable> documentsRepositoryUnsafeSupplier) {
+	public void setDocumentsRepositoryWithSupplier(UnsafeSupplier<Folder, Throwable> documentsRepositoryUnsafeSupplier) {
 	}
 
 	@JsonProperty
@@ -117,7 +117,7 @@ public class FolderImpl implements Folder {
 			this.documentsRepositoryId = documentsRepositoryId;
 	}
 
-	public void setDocumentsRepositoryId(UnsafeSupplier<Long, Throwable> documentsRepositoryIdUnsafeSupplier) {
+	public void setDocumentsRepositoryIdWithSupplier(UnsafeSupplier<Long, Throwable> documentsRepositoryIdUnsafeSupplier) {
 	}
 
 	@JsonProperty
@@ -130,7 +130,7 @@ public class FolderImpl implements Folder {
 			this.id = id;
 	}
 
-	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+	public void setIdWithSupplier(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 	}
 
 	@JsonProperty
@@ -143,7 +143,7 @@ public class FolderImpl implements Folder {
 			this.name = name;
 	}
 
-	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
+	public void setNameWithSupplier(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
 	}
 
 	@JsonProperty
@@ -157,7 +157,7 @@ public class FolderImpl implements Folder {
 			this.subFolders = subFolders;
 	}
 
-	public void setSubFolders(UnsafeSupplier<Folder[], Throwable> subFoldersUnsafeSupplier) {
+	public void setSubFoldersWithSupplier(UnsafeSupplier<Folder[], Throwable> subFoldersUnsafeSupplier) {
 	}
 
 	@JsonProperty

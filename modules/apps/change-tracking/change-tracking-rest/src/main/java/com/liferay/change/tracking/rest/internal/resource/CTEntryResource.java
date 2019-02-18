@@ -18,17 +18,21 @@ import com.liferay.change.tracking.CTEngineManager;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.rest.internal.model.entry.CTEntryModel;
+import com.liferay.portal.kernel.dao.orm.QueryDefinition;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
 import org.osgi.service.component.annotations.Component;
@@ -50,12 +54,10 @@ public class CTEntryResource {
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<CTEntryModel> getCollectionCTEntryModels(
+	public Page<CTEntryModel> getCollectionCTEntryModels(
 		@PathParam("collectionId") long ctCollectionId,
-		@QueryParam("collision") boolean collision,
-		@QueryParam("compareTo") long compareToCTCollectionId) {
-
-		List<CTEntry> ctEntries = null;
+		@QueryParam("collision") String collisionFilter,
+		@Context Pagination pagination) {
 
 		Optional<CTCollection> ctCollectionOptional =
 			_ctEngineManager.getCTCollectionOptional(ctCollectionId);
@@ -65,31 +67,41 @@ public class CTEntryResource {
 				"Unable to get change tacking collection " + ctCollectionId);
 		}
 
-		if (collision) {
-			Optional<CTCollection> compareToCTCollectionOptional =
-				_ctEngineManager.getCTCollectionOptional(
-					compareToCTCollectionId);
+		List<CTEntry> ctEntries;
+		int totalCount;
 
-			if (!compareToCTCollectionOptional.isPresent()) {
-				throw new IllegalArgumentException(
-					"Unable to get change tacking collection " +
-						compareToCTCollectionId);
-			}
+		if (GetterUtil.getBoolean(collisionFilter)) {
+			ctEntries = _ctEngineManager.getCollidingCTEntries(ctCollectionId);
 
-			ctEntries = _ctEngineManager.getCollidingCTEntries(
-				ctCollectionId, compareToCTCollectionId);
+			totalCount = ctEntries.size();
 		}
 		else {
-			ctEntries = _ctEngineManager.getCTEntries(ctCollectionId);
+			QueryDefinition<CTEntry> queryDefinition = new QueryDefinition<>();
+
+			if (pagination != null) {
+				queryDefinition.setStart(pagination.getStartPosition());
+				queryDefinition.setEnd(pagination.getEndPosition());
+			}
+
+			ctEntries = _ctEngineManager.getCTEntries(
+				ctCollectionId, queryDefinition);
+
+			totalCount = _ctEngineManager.getCTEntriesCount(ctCollectionId);
 		}
 
-		Stream<CTEntry> ctEntryStream = ctEntries.stream();
+		return _getPage(ctEntries, totalCount, pagination);
+	}
 
-		return ctEntryStream.map(
-			CTEntryModel::forCTEntry
-		).collect(
-			Collectors.toList()
-		);
+	private Page<CTEntryModel> _getPage(
+		List<CTEntry> ctEntries, int totalCount, Pagination pagination) {
+
+		if (pagination == null) {
+			pagination = Pagination.of(totalCount, 1);
+		}
+
+		return Page.of(
+			TransformUtil.transform(ctEntries, CTEntryModel::forCTEntry),
+			pagination, totalCount);
 	}
 
 	@Reference

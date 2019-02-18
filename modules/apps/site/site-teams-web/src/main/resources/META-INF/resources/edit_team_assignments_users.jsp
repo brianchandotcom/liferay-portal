@@ -18,6 +18,8 @@
 
 <%
 EditSiteTeamAssignmentsUsersDisplayContext editSiteTeamAssignmentsUsersDisplayContext = new EditSiteTeamAssignmentsUsersDisplayContext(renderRequest, renderResponse, request);
+
+EditSiteTeamAssignmentsUsersManagementToolbarDisplayContext editSiteTeamAssignmentsUsersManagementToolbarDisplayContext = new EditSiteTeamAssignmentsUsersManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, editSiteTeamAssignmentsUsersDisplayContext);
 %>
 
 <clay:navigation-bar
@@ -26,7 +28,7 @@ EditSiteTeamAssignmentsUsersDisplayContext editSiteTeamAssignmentsUsersDisplayCo
 />
 
 <clay:management-toolbar
-	displayContext="<%= new EditSiteTeamAssignmentsUsersManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, editSiteTeamAssignmentsUsersDisplayContext) %>"
+	displayContext="<%= editSiteTeamAssignmentsUsersManagementToolbarDisplayContext %>"
 />
 
 <portlet:actionURL name="deleteTeamUsers" var="deleteTeamUsersURL" />
@@ -124,62 +126,7 @@ EditSiteTeamAssignmentsUsersDisplayContext editSiteTeamAssignmentsUsersDisplayCo
 	<aui:input name="teamId" type="hidden" value="<%= String.valueOf(editSiteTeamAssignmentsUsersDisplayContext.getTeamId()) %>" />
 </aui:form>
 
-<aui:script use="liferay-item-selector-dialog">
-	<portlet:renderURL var="selectUserURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-		<portlet:param name="mvcPath" value="/select_users.jsp" />
-		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="teamId" value="<%= String.valueOf(editSiteTeamAssignmentsUsersDisplayContext.getTeamId()) %>" />
-	</portlet:renderURL>
-
-	function handleAddClick(event) {
-		var itemSelectorDialog = new A.LiferayItemSelectorDialog(
-			{
-				eventName: '<portlet:namespace />selectUser',
-				on: {
-					selectedItemChange: function(event) {
-						var selectedItem = event.newVal;
-
-						if (selectedItem) {
-							var addTeamUsersFm = $(document.<portlet:namespace />addTeamUsersFm);
-
-							addTeamUsersFm.append(selectedItem);
-
-							submitForm(addTeamUsersFm);
-						}
-					}
-				},
-				title: '<liferay-ui:message arguments="<%= editSiteTeamAssignmentsUsersDisplayContext.getTeamName() %>" key="add-new-user-to-x" />',
-				url: '<%= selectUserURL %>'
-			}
-		);
-
-		itemSelectorDialog.open();
-	}
-
-	var deleteUsers = function() {
-		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
-			submitForm(document.<portlet:namespace />fm);
-		}
-	}
-
-	var ACTIONS = {
-		'deleteUsers': deleteUsers
-	};
-
-	Liferay.componentReady('editTeamAssignemntsUsersWebManagementToolbar').then(
-		function(managementToolbar) {
-			managementToolbar.on('creationButtonClicked', handleAddClick);
-
-			managementToolbar.on(
-				'actionItemClicked',
-				function(event) {
-					var itemData = event.data.item.data;
-
-					if (itemData && itemData.action && ACTIONS[itemData.action]) {
-						ACTIONS[itemData.action]();
-					}
-				}
-			);
-		}
-	);
-</aui:script>
+<liferay-frontend:component
+	componentId="<%= editSiteTeamAssignmentsUsersManagementToolbarDisplayContext.getDefaultEventHandler() %>"
+	module="js/EditTeamAssignmentsUsersManagementToolbarDefaultEventHandler.es"
+/>

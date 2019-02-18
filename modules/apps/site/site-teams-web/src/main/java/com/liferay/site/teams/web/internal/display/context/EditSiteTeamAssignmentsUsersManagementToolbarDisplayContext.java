@@ -15,12 +15,16 @@
 package com.liferay.site.teams.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
 
@@ -45,6 +49,9 @@ public class EditSiteTeamAssignmentsUsersManagementToolbarDisplayContext
 			liferayPortletRequest, liferayPortletResponse, request,
 			editSiteTeamAssignmentsUsersDisplayContext.
 				getUserSearchContainer());
+
+		_editSiteTeamAssignmentsUsersDisplayContext =
+			editSiteTeamAssignmentsUsersDisplayContext;
 	}
 
 	@Override
@@ -78,6 +85,51 @@ public class EditSiteTeamAssignmentsUsersManagementToolbarDisplayContext
 	}
 
 	@Override
+	public CreationMenu getCreationMenu() {
+		try {
+			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+			PortletURL selectUserURL = liferayPortletResponse.createRenderURL();
+
+			selectUserURL.setParameter("mvcPath", "/select_users.jsp");
+			selectUserURL.setParameter(
+				"redirect", themeDisplay.getURLCurrent());
+			selectUserURL.setParameter(
+				"teamId",
+				String.valueOf(
+					_editSiteTeamAssignmentsUsersDisplayContext.getTeamId()));
+			selectUserURL.setWindowState(LiferayWindowState.POP_UP);
+
+			String title = LanguageUtil.format(
+				request, "add-new-user-to-x",
+				_editSiteTeamAssignmentsUsersDisplayContext.getTeamName());
+
+			return new CreationMenu() {
+				{
+					addDropdownItem(
+						dropdownItem -> {
+							dropdownItem.putData("action", "selectUser");
+							dropdownItem.putData(
+								"selectUserURL", selectUserURL.toString());
+							dropdownItem.putData("title", title);
+							dropdownItem.setLabel(
+								LanguageUtil.get(request, "add"));
+						});
+				}
+			};
+		}
+		catch (Exception e) {
+			return null;
+		}
+	}
+
+	@Override
+	public String getDefaultEventHandler() {
+		return "editTeamAssignmentsUsersManagementToolbarDefaultEventHandler";
+	}
+
+	@Override
 	public String getSearchActionURL() {
 		PortletURL searchActionURL = getPortletURL();
 
@@ -108,5 +160,8 @@ public class EditSiteTeamAssignmentsUsersManagementToolbarDisplayContext
 	protected String[] getOrderByKeys() {
 		return new String[] {"first-name", "screen-name"};
 	}
+
+	private final EditSiteTeamAssignmentsUsersDisplayContext
+		_editSiteTeamAssignmentsUsersDisplayContext;
 
 }

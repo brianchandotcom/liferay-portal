@@ -15,12 +15,16 @@
 package com.liferay.site.teams.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
 
@@ -45,6 +49,9 @@ public class EditSiteTeamAssignmentsUserGroupsManagementToolbarDisplayContext
 			liferayPortletRequest, liferayPortletResponse, request,
 			editSiteTeamAssignmentsUserGroupsDisplayContext.
 				getUserGroupSearchContainer());
+
+		_editSiteTeamAssignmentsUserGroupsDisplayContext =
+			editSiteTeamAssignmentsUserGroupsDisplayContext;
 	}
 
 	@Override
@@ -78,6 +85,56 @@ public class EditSiteTeamAssignmentsUserGroupsManagementToolbarDisplayContext
 	}
 
 	@Override
+	public CreationMenu getCreationMenu() {
+		try {
+			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+			PortletURL selectUserGroupURL =
+				liferayPortletResponse.createRenderURL();
+
+			selectUserGroupURL.setParameter(
+				"mvcPath", "/select_user_groups.jsp");
+			selectUserGroupURL.setParameter(
+				"redirect", themeDisplay.getURLCurrent());
+			selectUserGroupURL.setParameter(
+				"teamId",
+				String.valueOf(
+					_editSiteTeamAssignmentsUserGroupsDisplayContext.
+						getTeamId()));
+			selectUserGroupURL.setWindowState(LiferayWindowState.POP_UP);
+
+			String title = LanguageUtil.format(
+				request, "add-new-user-group-to-x",
+				_editSiteTeamAssignmentsUserGroupsDisplayContext.getTeamName());
+
+			return new CreationMenu() {
+				{
+					addDropdownItem(
+						dropdownItem -> {
+							dropdownItem.putData("action", "selectUserGroup");
+							dropdownItem.putData(
+								"selectUserGroupURL",
+								selectUserGroupURL.toString());
+							dropdownItem.putData("title", title);
+							dropdownItem.setLabel(
+								LanguageUtil.get(request, "add"));
+						});
+				}
+			};
+		}
+		catch (Exception e) {
+			return null;
+		}
+	}
+
+	@Override
+	public String getDefaultEventHandler() {
+		return
+			"editTeamAssignmentsUserGroupsManagementToolbarDefaultEventHandler";
+	}
+
+	@Override
 	public String getSearchActionURL() {
 		PortletURL searchActionURL = getPortletURL();
 
@@ -108,5 +165,8 @@ public class EditSiteTeamAssignmentsUserGroupsManagementToolbarDisplayContext
 	protected String[] getOrderByKeys() {
 		return new String[] {"name", "description"};
 	}
+
+	private final EditSiteTeamAssignmentsUserGroupsDisplayContext
+		_editSiteTeamAssignmentsUserGroupsDisplayContext;
 
 }

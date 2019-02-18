@@ -18,10 +18,12 @@
 
 <%
 SiteTeamsDisplayContext siteTeamsDisplayContext = new SiteTeamsDisplayContext(renderRequest, renderResponse, request);
+
+SiteTeamsManagementToolbarDisplayContext siteTeamsManagementToolbarDisplayContext = new SiteTeamsManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, siteTeamsDisplayContext);
 %>
 
 <clay:management-toolbar
-	displayContext="<%= new SiteTeamsManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, siteTeamsDisplayContext) %>"
+	displayContext="<%= siteTeamsManagementToolbarDisplayContext %>"
 />
 
 <portlet:actionURL name="deleteTeams" var="deleteTeamsURL">
@@ -103,29 +105,7 @@ SiteTeamsDisplayContext siteTeamsDisplayContext = new SiteTeamsDisplayContext(re
 	</liferay-ui:search-container>
 </aui:form>
 
-<aui:script sandbox="<%= true %>">
-	var deleteSelectedTeams = function() {
-		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
-			submitForm($(document.<portlet:namespace />fm));
-		}
-	}
-
-	var ACTIONS = {
-		'deleteSelectedTeams': deleteSelectedTeams
-	};
-
-	Liferay.componentReady('teamsManagementToolbar').then(
-		function(managementToolbar) {
-			managementToolbar.on(
-				'actionItemClicked',
-				function(event) {
-					var itemData = event.data.item.data;
-
-					if (itemData && itemData.action && ACTIONS[itemData.action]) {
-						ACTIONS[itemData.action]();
-					}
-				}
-			);
-		}
-	);
-</aui:script>
+<liferay-frontend:component
+	componentId="<%= siteTeamsManagementToolbarDisplayContext.getDefaultEventHandler() %>"
+	module="js/SiteTeamsManagementToolbarDefaultEventHandler.es"
+/>

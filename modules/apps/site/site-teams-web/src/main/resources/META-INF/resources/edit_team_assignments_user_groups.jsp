@@ -18,6 +18,8 @@
 
 <%
 EditSiteTeamAssignmentsUserGroupsDisplayContext editSiteTeamAssignmentsUserGroupsDisplayContext = new EditSiteTeamAssignmentsUserGroupsDisplayContext(renderRequest, renderResponse, request);
+
+EditSiteTeamAssignmentsUserGroupsManagementToolbarDisplayContext editSiteTeamAssignmentsUserGroupsManagementToolbarDisplayContext = new EditSiteTeamAssignmentsUserGroupsManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, editSiteTeamAssignmentsUserGroupsDisplayContext);
 %>
 
 <clay:navigation-bar
@@ -26,7 +28,7 @@ EditSiteTeamAssignmentsUserGroupsDisplayContext editSiteTeamAssignmentsUserGroup
 />
 
 <clay:management-toolbar
-	displayContext="<%= new EditSiteTeamAssignmentsUserGroupsManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, editSiteTeamAssignmentsUserGroupsDisplayContext) %>"
+	displayContext="<%= editSiteTeamAssignmentsUserGroupsManagementToolbarDisplayContext %>"
 />
 
 <portlet:actionURL name="deleteTeamUserGroups" var="deleteTeamUserGroupsURL" />
@@ -123,62 +125,7 @@ EditSiteTeamAssignmentsUserGroupsDisplayContext editSiteTeamAssignmentsUserGroup
 	<aui:input name="teamId" type="hidden" value="<%= String.valueOf(editSiteTeamAssignmentsUserGroupsDisplayContext.getTeamId()) %>" />
 </aui:form>
 
-<aui:script use="liferay-item-selector-dialog">
-	<portlet:renderURL var="selectUserGroupURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-		<portlet:param name="mvcPath" value="/select_user_groups.jsp" />
-		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="teamId" value="<%= String.valueOf(editSiteTeamAssignmentsUserGroupsDisplayContext.getTeamId()) %>" />
-	</portlet:renderURL>
-
-	function handleAddClick(event) {
-		var itemSelectorDialog = new A.LiferayItemSelectorDialog(
-			{
-				eventName: '<portlet:namespace />selectUserGroup',
-				on: {
-					selectedItemChange: function(event) {
-						var selectedItem = event.newVal;
-
-						if (selectedItem) {
-							var addTeamUserGroupsFm = $(document.<portlet:namespace />addTeamUserGroupsFm);
-
-							addTeamUserGroupsFm.append(selectedItem);
-
-							submitForm(addTeamUserGroupsFm);
-						}
-					}
-				},
-				title: '<liferay-ui:message arguments="<%= editSiteTeamAssignmentsUserGroupsDisplayContext.getTeamName() %>" key="add-new-user-group-to-x" />',
-				url: '<%= selectUserGroupURL %>'
-			}
-		);
-
-		itemSelectorDialog.open();
-	}
-
-	var deleteUserGroups = function() {
-		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
-			submitForm($(document.<portlet:namespace />fm));
-		}
-	}
-
-	var ACTIONS = {
-		'deleteUserGroups': deleteUserGroups
-	};
-
-	Liferay.componentReady('editTeamAssignemntsUserGroupsWebManagementToolbar').then(
-		function(managementToolbar) {
-			managementToolbar.on('creationButtonClicked', handleAddClick);
-
-			managementToolbar.on(
-				'actionItemClicked',
-				function(event) {
-					var itemData = event.data.item.data;
-
-					if (itemData && itemData.action && ACTIONS[itemData.action]) {
-						ACTIONS[itemData.action]();
-					}
-				}
-			);
-		}
-	);
-</aui:script>
+<liferay-frontend:component
+	componentId="<%= editSiteTeamAssignmentsUserGroupsManagementToolbarDisplayContext.getDefaultEventHandler() %>"
+	module="js/EditTeamAssignmentsUserGroupsManagementToolbarDefaultEventHandler.es"
+/>

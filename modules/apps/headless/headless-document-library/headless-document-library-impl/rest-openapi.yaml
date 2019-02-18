@@ -59,7 +59,7 @@ components:
     Document:
       description: https://www.schema.org/Document
       properties:
-        adaptedMedia:
+        adaptedImages:
           description: https://www.schema.org/ImageObject
           items:
             properties:
@@ -81,7 +81,7 @@ components:
           type: array
         aggregateRating:
           $ref: "#/components/schemas/AggregateRating"
-        category:
+        categories:
           items:
             properties:
               categoryId:

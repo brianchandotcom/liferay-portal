@@ -125,7 +125,7 @@ components:
           items:
             type: string
           type: array
-        category:
+        categories:
           items:
             properties:
               categoryId:

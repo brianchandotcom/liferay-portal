@@ -23,7 +23,7 @@ components:
           type: string
         caption:
           type: string
-        category:
+        categories:
           items:
             properties:
               categoryId:

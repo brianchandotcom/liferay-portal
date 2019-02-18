@@ -163,7 +163,7 @@
 </tr>
 <tr>
 	<td>ASSET_ABSTRACT_BOOKMARK_LIFERAY_LOGO</td>
-	<td>//*[contains(@class,'logo')][*[name()='svg'][*[name()='use']]]</td>
+	<td>//a[contains(@class,'logo-icon-container')]</td>
 	<td></td>
 </tr>
 <tr>

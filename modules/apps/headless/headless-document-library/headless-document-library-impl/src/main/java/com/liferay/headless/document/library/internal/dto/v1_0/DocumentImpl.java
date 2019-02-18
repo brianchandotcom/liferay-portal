@@ -47,7 +47,7 @@ public class DocumentImpl implements Document {
 			this.adaptedMedia = adaptedMedia;
 	}
 
-	public void setAdaptedMedia(UnsafeSupplier<AdaptedMedia[], Throwable> adaptedMediaUnsafeSupplier) {
+	public void setAdaptedMediaWithSupplier(UnsafeSupplier<AdaptedMedia[], Throwable> adaptedMediaUnsafeSupplier) {
 			try {
 				adaptedMedia = adaptedMediaUnsafeSupplier.get();
 	}
@@ -67,7 +67,7 @@ public class DocumentImpl implements Document {
 			this.category = category;
 	}
 
-	public void setCategory(UnsafeSupplier<Long[], Throwable> categoryUnsafeSupplier) {
+	public void setCategoryWithSupplier(UnsafeSupplier<Long[], Throwable> categoryUnsafeSupplier) {
 			try {
 				category = categoryUnsafeSupplier.get();
 	}
@@ -87,7 +87,7 @@ public class DocumentImpl implements Document {
 			this.contentUrl = contentUrl;
 	}
 
-	public void setContentUrl(UnsafeSupplier<String, Throwable> contentUrlUnsafeSupplier) {
+	public void setContentUrlWithSupplier(UnsafeSupplier<String, Throwable> contentUrlUnsafeSupplier) {
 			try {
 				contentUrl = contentUrlUnsafeSupplier.get();
 	}
@@ -107,7 +107,7 @@ public class DocumentImpl implements Document {
 			this.creator = creator;
 	}
 
-	public void setCreator(UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier) {
+	public void setCreatorWithSupplier(UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier) {
 			try {
 				creator = creatorUnsafeSupplier.get();
 	}
@@ -127,7 +127,7 @@ public class DocumentImpl implements Document {
 			this.dateCreated = dateCreated;
 	}
 
-	public void setDateCreated(UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
+	public void setDateCreatedWithSupplier(UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
 			try {
 				dateCreated = dateCreatedUnsafeSupplier.get();
 	}
@@ -147,7 +147,7 @@ public class DocumentImpl implements Document {
 			this.dateModified = dateModified;
 	}
 
-	public void setDateModified(UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
+	public void setDateModifiedWithSupplier(UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
 			try {
 				dateModified = dateModifiedUnsafeSupplier.get();
 	}
@@ -167,7 +167,7 @@ public class DocumentImpl implements Document {
 			this.description = description;
 	}
 
-	public void setDescription(UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier) {
+	public void setDescriptionWithSupplier(UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier) {
 			try {
 				description = descriptionUnsafeSupplier.get();
 	}
@@ -187,7 +187,7 @@ public class DocumentImpl implements Document {
 			this.encodingFormat = encodingFormat;
 	}
 
-	public void setEncodingFormat(UnsafeSupplier<String, Throwable> encodingFormatUnsafeSupplier) {
+	public void setEncodingFormatWithSupplier(UnsafeSupplier<String, Throwable> encodingFormatUnsafeSupplier) {
 			try {
 				encodingFormat = encodingFormatUnsafeSupplier.get();
 	}
@@ -207,7 +207,7 @@ public class DocumentImpl implements Document {
 			this.fileExtension = fileExtension;
 	}
 
-	public void setFileExtension(UnsafeSupplier<String, Throwable> fileExtensionUnsafeSupplier) {
+	public void setFileExtensionWithSupplier(UnsafeSupplier<String, Throwable> fileExtensionUnsafeSupplier) {
 			try {
 				fileExtension = fileExtensionUnsafeSupplier.get();
 	}
@@ -227,7 +227,7 @@ public class DocumentImpl implements Document {
 			this.folderId = folderId;
 	}
 
-	public void setFolderId(UnsafeSupplier<Long, Throwable> folderIdUnsafeSupplier) {
+	public void setFolderIdWithSupplier(UnsafeSupplier<Long, Throwable> folderIdUnsafeSupplier) {
 			try {
 				folderId = folderIdUnsafeSupplier.get();
 	}
@@ -247,7 +247,7 @@ public class DocumentImpl implements Document {
 			this.id = id;
 	}
 
-	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+	public void setIdWithSupplier(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 			try {
 				id = idUnsafeSupplier.get();
 	}
@@ -267,7 +267,7 @@ public class DocumentImpl implements Document {
 			this.keywords = keywords;
 	}
 
-	public void setKeywords(UnsafeSupplier<String[], Throwable> keywordsUnsafeSupplier) {
+	public void setKeywordsWithSupplier(UnsafeSupplier<String[], Throwable> keywordsUnsafeSupplier) {
 			try {
 				keywords = keywordsUnsafeSupplier.get();
 	}
@@ -287,7 +287,7 @@ public class DocumentImpl implements Document {
 			this.sizeInBytes = sizeInBytes;
 	}
 
-	public void setSizeInBytes(UnsafeSupplier<Number, Throwable> sizeInBytesUnsafeSupplier) {
+	public void setSizeInBytesWithSupplier(UnsafeSupplier<Number, Throwable> sizeInBytesUnsafeSupplier) {
 			try {
 				sizeInBytes = sizeInBytesUnsafeSupplier.get();
 	}
@@ -307,7 +307,7 @@ public class DocumentImpl implements Document {
 			this.title = title;
 	}
 
-	public void setTitle(UnsafeSupplier<String, Throwable> titleUnsafeSupplier) {
+	public void setTitleWithSupplier(UnsafeSupplier<String, Throwable> titleUnsafeSupplier) {
 			try {
 				title = titleUnsafeSupplier.get();
 	}

@@ -29,36 +29,36 @@ public interface Creator {
 
 	public void setAdditionalName(String additionalName);
 
-	public void setAdditionalName(UnsafeSupplier<String, Throwable> additionalNameUnsafeSupplier);
+	public void setAdditionalNameWithSupplier(UnsafeSupplier<String, Throwable> additionalNameUnsafeSupplier);
 	public String getFamilyName();
 
 	public void setFamilyName(String familyName);
 
-	public void setFamilyName(UnsafeSupplier<String, Throwable> familyNameUnsafeSupplier);
+	public void setFamilyNameWithSupplier(UnsafeSupplier<String, Throwable> familyNameUnsafeSupplier);
 	public String getGivenName();
 
 	public void setGivenName(String givenName);
 
-	public void setGivenName(UnsafeSupplier<String, Throwable> givenNameUnsafeSupplier);
+	public void setGivenNameWithSupplier(UnsafeSupplier<String, Throwable> givenNameUnsafeSupplier);
 	public Long getId();
 
 	public void setId(Long id);
 
-	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier);
+	public void setIdWithSupplier(UnsafeSupplier<Long, Throwable> idUnsafeSupplier);
 	public String getImage();
 
 	public void setImage(String image);
 
-	public void setImage(UnsafeSupplier<String, Throwable> imageUnsafeSupplier);
+	public void setImageWithSupplier(UnsafeSupplier<String, Throwable> imageUnsafeSupplier);
 	public String getName();
 
 	public void setName(String name);
 
-	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier);
+	public void setNameWithSupplier(UnsafeSupplier<String, Throwable> nameUnsafeSupplier);
 	public String getProfileURL();
 
 	public void setProfileURL(String profileURL);
 
-	public void setProfileURL(UnsafeSupplier<String, Throwable> profileURLUnsafeSupplier);
+	public void setProfileURLWithSupplier(UnsafeSupplier<String, Throwable> profileURLUnsafeSupplier);
 
 }

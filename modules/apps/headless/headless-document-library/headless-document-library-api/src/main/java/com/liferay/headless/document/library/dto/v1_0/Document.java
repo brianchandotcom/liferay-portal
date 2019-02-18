@@ -31,71 +31,71 @@ public interface Document {
 
 	public void setAdaptedMedia(AdaptedMedia[] adaptedMedia);
 
-	public void setAdaptedMedia(UnsafeSupplier<AdaptedMedia[], Throwable> adaptedMediaUnsafeSupplier);
+	public void setAdaptedMediaWithSupplier(UnsafeSupplier<AdaptedMedia[], Throwable> adaptedMediaUnsafeSupplier);
 	public Long[] getCategory();
 
 	public void setCategory(Long[] category);
 
-	public void setCategory(UnsafeSupplier<Long[], Throwable> categoryUnsafeSupplier);
+	public void setCategoryWithSupplier(UnsafeSupplier<Long[], Throwable> categoryUnsafeSupplier);
 	public String getContentUrl();
 
 	public void setContentUrl(String contentUrl);
 
-	public void setContentUrl(UnsafeSupplier<String, Throwable> contentUrlUnsafeSupplier);
+	public void setContentUrlWithSupplier(UnsafeSupplier<String, Throwable> contentUrlUnsafeSupplier);
 	public Creator getCreator();
 
 	public void setCreator(Creator creator);
 
-	public void setCreator(UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier);
+	public void setCreatorWithSupplier(UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier);
 	public Date getDateCreated();
 
 	public void setDateCreated(Date dateCreated);
 
-	public void setDateCreated(UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier);
+	public void setDateCreatedWithSupplier(UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier);
 	public Date getDateModified();
 
 	public void setDateModified(Date dateModified);
 
-	public void setDateModified(UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier);
+	public void setDateModifiedWithSupplier(UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier);
 	public String getDescription();
 
 	public void setDescription(String description);
 
-	public void setDescription(UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier);
+	public void setDescriptionWithSupplier(UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier);
 	public String getEncodingFormat();
 
 	public void setEncodingFormat(String encodingFormat);
 
-	public void setEncodingFormat(UnsafeSupplier<String, Throwable> encodingFormatUnsafeSupplier);
+	public void setEncodingFormatWithSupplier(UnsafeSupplier<String, Throwable> encodingFormatUnsafeSupplier);
 	public String getFileExtension();
 
 	public void setFileExtension(String fileExtension);
 
-	public void setFileExtension(UnsafeSupplier<String, Throwable> fileExtensionUnsafeSupplier);
+	public void setFileExtensionWithSupplier(UnsafeSupplier<String, Throwable> fileExtensionUnsafeSupplier);
 	public Long getFolderId();
 
 	public void setFolderId(Long folderId);
 
-	public void setFolderId(UnsafeSupplier<Long, Throwable> folderIdUnsafeSupplier);
+	public void setFolderIdWithSupplier(UnsafeSupplier<Long, Throwable> folderIdUnsafeSupplier);
 	public Long getId();
 
 	public void setId(Long id);
 
-	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier);
+	public void setIdWithSupplier(UnsafeSupplier<Long, Throwable> idUnsafeSupplier);
 	public String[] getKeywords();
 
 	public void setKeywords(String[] keywords);
 
-	public void setKeywords(UnsafeSupplier<String[], Throwable> keywordsUnsafeSupplier);
+	public void setKeywordsWithSupplier(UnsafeSupplier<String[], Throwable> keywordsUnsafeSupplier);
 	public Number getSizeInBytes();
 
 	public void setSizeInBytes(Number sizeInBytes);
 
-	public void setSizeInBytes(UnsafeSupplier<Number, Throwable> sizeInBytesUnsafeSupplier);
+	public void setSizeInBytesWithSupplier(UnsafeSupplier<Number, Throwable> sizeInBytesUnsafeSupplier);
 	public String getTitle();
 
 	public void setTitle(String title);
 
-	public void setTitle(UnsafeSupplier<String, Throwable> titleUnsafeSupplier);
+	public void setTitleWithSupplier(UnsafeSupplier<String, Throwable> titleUnsafeSupplier);
 
 }

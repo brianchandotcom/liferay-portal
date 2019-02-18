@@ -29,31 +29,31 @@ public interface AdaptedMedia {
 
 	public void setContentUrl(String contentUrl);
 
-	public void setContentUrl(UnsafeSupplier<String, Throwable> contentUrlUnsafeSupplier);
+	public void setContentUrlWithSupplier(UnsafeSupplier<String, Throwable> contentUrlUnsafeSupplier);
 	public Number getHeight();
 
 	public void setHeight(Number height);
 
-	public void setHeight(UnsafeSupplier<Number, Throwable> heightUnsafeSupplier);
+	public void setHeightWithSupplier(UnsafeSupplier<Number, Throwable> heightUnsafeSupplier);
 	public Long getId();
 
 	public void setId(Long id);
 
-	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier);
+	public void setIdWithSupplier(UnsafeSupplier<Long, Throwable> idUnsafeSupplier);
 	public String getResolutionName();
 
 	public void setResolutionName(String resolutionName);
 
-	public void setResolutionName(UnsafeSupplier<String, Throwable> resolutionNameUnsafeSupplier);
+	public void setResolutionNameWithSupplier(UnsafeSupplier<String, Throwable> resolutionNameUnsafeSupplier);
 	public Number getSizeInBytes();
 
 	public void setSizeInBytes(Number sizeInBytes);
 
-	public void setSizeInBytes(UnsafeSupplier<Number, Throwable> sizeInBytesUnsafeSupplier);
+	public void setSizeInBytesWithSupplier(UnsafeSupplier<Number, Throwable> sizeInBytesUnsafeSupplier);
 	public Number getWidth();
 
 	public void setWidth(Number width);
 
-	public void setWidth(UnsafeSupplier<Number, Throwable> widthUnsafeSupplier);
+	public void setWidthWithSupplier(UnsafeSupplier<Number, Throwable> widthUnsafeSupplier);
 
 }

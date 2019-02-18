@@ -43,7 +43,7 @@ public class AdaptedMediaImpl implements AdaptedMedia {
 			this.contentUrl = contentUrl;
 	}
 
-	public void setContentUrl(UnsafeSupplier<String, Throwable> contentUrlUnsafeSupplier) {
+	public void setContentUrlWithSupplier(UnsafeSupplier<String, Throwable> contentUrlUnsafeSupplier) {
 			try {
 				contentUrl = contentUrlUnsafeSupplier.get();
 	}
@@ -63,7 +63,7 @@ public class AdaptedMediaImpl implements AdaptedMedia {
 			this.height = height;
 	}
 
-	public void setHeight(UnsafeSupplier<Number, Throwable> heightUnsafeSupplier) {
+	public void setHeightWithSupplier(UnsafeSupplier<Number, Throwable> heightUnsafeSupplier) {
 			try {
 				height = heightUnsafeSupplier.get();
 	}
@@ -83,7 +83,7 @@ public class AdaptedMediaImpl implements AdaptedMedia {
 			this.id = id;
 	}
 
-	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+	public void setIdWithSupplier(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 			try {
 				id = idUnsafeSupplier.get();
 	}
@@ -103,7 +103,7 @@ public class AdaptedMediaImpl implements AdaptedMedia {
 			this.resolutionName = resolutionName;
 	}
 
-	public void setResolutionName(UnsafeSupplier<String, Throwable> resolutionNameUnsafeSupplier) {
+	public void setResolutionNameWithSupplier(UnsafeSupplier<String, Throwable> resolutionNameUnsafeSupplier) {
 			try {
 				resolutionName = resolutionNameUnsafeSupplier.get();
 	}
@@ -123,7 +123,7 @@ public class AdaptedMediaImpl implements AdaptedMedia {
 			this.sizeInBytes = sizeInBytes;
 	}
 
-	public void setSizeInBytes(UnsafeSupplier<Number, Throwable> sizeInBytesUnsafeSupplier) {
+	public void setSizeInBytesWithSupplier(UnsafeSupplier<Number, Throwable> sizeInBytesUnsafeSupplier) {
 			try {
 				sizeInBytes = sizeInBytesUnsafeSupplier.get();
 	}
@@ -143,7 +143,7 @@ public class AdaptedMediaImpl implements AdaptedMedia {
 			this.width = width;
 	}
 
-	public void setWidth(UnsafeSupplier<Number, Throwable> widthUnsafeSupplier) {
+	public void setWidthWithSupplier(UnsafeSupplier<Number, Throwable> widthUnsafeSupplier) {
 			try {
 				width = widthUnsafeSupplier.get();
 	}

@@ -46,7 +46,7 @@ public class FolderImpl implements Folder {
 			this.dateCreated = dateCreated;
 	}
 
-	public void setDateCreated(UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
+	public void setDateCreatedWithSupplier(UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
 			try {
 				dateCreated = dateCreatedUnsafeSupplier.get();
 	}
@@ -66,7 +66,7 @@ public class FolderImpl implements Folder {
 			this.dateModified = dateModified;
 	}
 
-	public void setDateModified(UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
+	public void setDateModifiedWithSupplier(UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
 			try {
 				dateModified = dateModifiedUnsafeSupplier.get();
 	}
@@ -86,7 +86,7 @@ public class FolderImpl implements Folder {
 			this.description = description;
 	}
 
-	public void setDescription(UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier) {
+	public void setDescriptionWithSupplier(UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier) {
 			try {
 				description = descriptionUnsafeSupplier.get();
 	}
@@ -106,7 +106,7 @@ public class FolderImpl implements Folder {
 			this.documents = documents;
 	}
 
-	public void setDocuments(UnsafeSupplier<Document[], Throwable> documentsUnsafeSupplier) {
+	public void setDocumentsWithSupplier(UnsafeSupplier<Document[], Throwable> documentsUnsafeSupplier) {
 			try {
 				documents = documentsUnsafeSupplier.get();
 	}
@@ -126,7 +126,7 @@ public class FolderImpl implements Folder {
 			this.documentsIds = documentsIds;
 	}
 
-	public void setDocumentsIds(UnsafeSupplier<Long[], Throwable> documentsIdsUnsafeSupplier) {
+	public void setDocumentsIdsWithSupplier(UnsafeSupplier<Long[], Throwable> documentsIdsUnsafeSupplier) {
 			try {
 				documentsIds = documentsIdsUnsafeSupplier.get();
 	}
@@ -146,7 +146,7 @@ public class FolderImpl implements Folder {
 			this.documentsRepository = documentsRepository;
 	}
 
-	public void setDocumentsRepository(UnsafeSupplier<Folder, Throwable> documentsRepositoryUnsafeSupplier) {
+	public void setDocumentsRepositoryWithSupplier(UnsafeSupplier<Folder, Throwable> documentsRepositoryUnsafeSupplier) {
 			try {
 				documentsRepository = documentsRepositoryUnsafeSupplier.get();
 	}
@@ -166,7 +166,7 @@ public class FolderImpl implements Folder {
 			this.documentsRepositoryId = documentsRepositoryId;
 	}
 
-	public void setDocumentsRepositoryId(UnsafeSupplier<Long, Throwable> documentsRepositoryIdUnsafeSupplier) {
+	public void setDocumentsRepositoryIdWithSupplier(UnsafeSupplier<Long, Throwable> documentsRepositoryIdUnsafeSupplier) {
 			try {
 				documentsRepositoryId = documentsRepositoryIdUnsafeSupplier.get();
 	}
@@ -186,7 +186,7 @@ public class FolderImpl implements Folder {
 			this.id = id;
 	}
 
-	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+	public void setIdWithSupplier(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 			try {
 				id = idUnsafeSupplier.get();
 	}
@@ -206,7 +206,7 @@ public class FolderImpl implements Folder {
 			this.name = name;
 	}
 
-	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
+	public void setNameWithSupplier(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
 			try {
 				name = nameUnsafeSupplier.get();
 	}
@@ -226,7 +226,7 @@ public class FolderImpl implements Folder {
 			this.subFolders = subFolders;
 	}
 
-	public void setSubFolders(UnsafeSupplier<Folder[], Throwable> subFoldersUnsafeSupplier) {
+	public void setSubFoldersWithSupplier(UnsafeSupplier<Folder[], Throwable> subFoldersUnsafeSupplier) {
 			try {
 				subFolders = subFoldersUnsafeSupplier.get();
 	}

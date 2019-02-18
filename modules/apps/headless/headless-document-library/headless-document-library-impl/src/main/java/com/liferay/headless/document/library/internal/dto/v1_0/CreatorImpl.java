@@ -43,7 +43,7 @@ public class CreatorImpl implements Creator {
 			this.additionalName = additionalName;
 	}
 
-	public void setAdditionalName(UnsafeSupplier<String, Throwable> additionalNameUnsafeSupplier) {
+	public void setAdditionalNameWithSupplier(UnsafeSupplier<String, Throwable> additionalNameUnsafeSupplier) {
 			try {
 				additionalName = additionalNameUnsafeSupplier.get();
 	}
@@ -63,7 +63,7 @@ public class CreatorImpl implements Creator {
 			this.familyName = familyName;
 	}
 
-	public void setFamilyName(UnsafeSupplier<String, Throwable> familyNameUnsafeSupplier) {
+	public void setFamilyNameWithSupplier(UnsafeSupplier<String, Throwable> familyNameUnsafeSupplier) {
 			try {
 				familyName = familyNameUnsafeSupplier.get();
 	}
@@ -83,7 +83,7 @@ public class CreatorImpl implements Creator {
 			this.givenName = givenName;
 	}
 
-	public void setGivenName(UnsafeSupplier<String, Throwable> givenNameUnsafeSupplier) {
+	public void setGivenNameWithSupplier(UnsafeSupplier<String, Throwable> givenNameUnsafeSupplier) {
 			try {
 				givenName = givenNameUnsafeSupplier.get();
 	}
@@ -103,7 +103,7 @@ public class CreatorImpl implements Creator {
 			this.id = id;
 	}
 
-	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+	public void setIdWithSupplier(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 			try {
 				id = idUnsafeSupplier.get();
 	}
@@ -123,7 +123,7 @@ public class CreatorImpl implements Creator {
 			this.image = image;
 	}
 
-	public void setImage(UnsafeSupplier<String, Throwable> imageUnsafeSupplier) {
+	public void setImageWithSupplier(UnsafeSupplier<String, Throwable> imageUnsafeSupplier) {
 			try {
 				image = imageUnsafeSupplier.get();
 	}
@@ -143,7 +143,7 @@ public class CreatorImpl implements Creator {
 			this.name = name;
 	}
 
-	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
+	public void setNameWithSupplier(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
 			try {
 				name = nameUnsafeSupplier.get();
 	}
@@ -163,7 +163,7 @@ public class CreatorImpl implements Creator {
 			this.profileURL = profileURL;
 	}
 
-	public void setProfileURL(UnsafeSupplier<String, Throwable> profileURLUnsafeSupplier) {
+	public void setProfileURLWithSupplier(UnsafeSupplier<String, Throwable> profileURLUnsafeSupplier) {
 			try {
 				profileURL = profileURLUnsafeSupplier.get();
 	}

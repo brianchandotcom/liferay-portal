@@ -31,51 +31,51 @@ public interface Folder {
 
 	public void setDateCreated(Date dateCreated);
 
-	public void setDateCreated(UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier);
+	public void setDateCreatedWithSupplier(UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier);
 	public Date getDateModified();
 
 	public void setDateModified(Date dateModified);
 
-	public void setDateModified(UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier);
+	public void setDateModifiedWithSupplier(UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier);
 	public String getDescription();
 
 	public void setDescription(String description);
 
-	public void setDescription(UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier);
+	public void setDescriptionWithSupplier(UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier);
 	public Document[] getDocuments();
 
 	public void setDocuments(Document[] documents);
 
-	public void setDocuments(UnsafeSupplier<Document[], Throwable> documentsUnsafeSupplier);
+	public void setDocumentsWithSupplier(UnsafeSupplier<Document[], Throwable> documentsUnsafeSupplier);
 	public Long[] getDocumentsIds();
 
 	public void setDocumentsIds(Long[] documentsIds);
 
-	public void setDocumentsIds(UnsafeSupplier<Long[], Throwable> documentsIdsUnsafeSupplier);
+	public void setDocumentsIdsWithSupplier(UnsafeSupplier<Long[], Throwable> documentsIdsUnsafeSupplier);
 	public Folder getDocumentsRepository();
 
 	public void setDocumentsRepository(Folder documentsRepository);
 
-	public void setDocumentsRepository(UnsafeSupplier<Folder, Throwable> documentsRepositoryUnsafeSupplier);
+	public void setDocumentsRepositoryWithSupplier(UnsafeSupplier<Folder, Throwable> documentsRepositoryUnsafeSupplier);
 	public Long getDocumentsRepositoryId();
 
 	public void setDocumentsRepositoryId(Long documentsRepositoryId);
 
-	public void setDocumentsRepositoryId(UnsafeSupplier<Long, Throwable> documentsRepositoryIdUnsafeSupplier);
+	public void setDocumentsRepositoryIdWithSupplier(UnsafeSupplier<Long, Throwable> documentsRepositoryIdUnsafeSupplier);
 	public Long getId();
 
 	public void setId(Long id);
 
-	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier);
+	public void setIdWithSupplier(UnsafeSupplier<Long, Throwable> idUnsafeSupplier);
 	public String getName();
 
 	public void setName(String name);
 
-	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier);
+	public void setNameWithSupplier(UnsafeSupplier<String, Throwable> nameUnsafeSupplier);
 	public Folder[] getSubFolders();
 
 	public void setSubFolders(Folder[] subFolders);
 
-	public void setSubFolders(UnsafeSupplier<Folder[], Throwable> subFoldersUnsafeSupplier);
+	public void setSubFoldersWithSupplier(UnsafeSupplier<Folder[], Throwable> subFoldersUnsafeSupplier);
 
 }

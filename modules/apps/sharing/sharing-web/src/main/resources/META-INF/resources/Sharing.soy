@@ -9,6 +9,7 @@
 	{@param shareActionURL: string}
 	{@param sharingEntryPermissionDisplayActionId: string}
 	{@param sharingEntryPermissionDisplays: list<?>}
+	{@param spritemap: string}
 	{@param? _closeDialog: any}
 	{@param? _handleInputChange: any}
 	{@param? _handleSubmit: any}
@@ -40,6 +41,18 @@
 						<div class="form-feedback-item">{$emailErrorMessage}</div>
 					{/if}
 					<div class="form-text">{msg desc=""}use-commas-to-include-multiple-collaborators{/msg}</div>
+				</div>
+
+				<div class="form-group">
+					{call ClayMultiSelect.render}
+						{param dataSource: [] /}
+						{param elementClasses: 'clay-multi-select' /}
+						{param helpText: '' /}
+						{param label kind="text"} {msg desc=""}invite-to-collaborate{/msg} {/param}
+						{param ref: 'multiSelect' /}
+						{param selectedItems: [] /}
+						{param spritemap: $spritemap /}
+					{/call}
 				</div>
 
 				<div class="form-group">

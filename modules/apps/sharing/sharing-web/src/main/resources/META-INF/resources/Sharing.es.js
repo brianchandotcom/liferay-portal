@@ -1,3 +1,4 @@
+import 'clay-multi-select';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
 import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
@@ -199,6 +200,7 @@ Sharing.STATE = {
 	shareable: Config.bool().value(true),
 	shareActionURL: Config.string().required(),
 	sharingEntryPermissionDisplayActionId: Config.string().required(),
+	spritemap: Config.string().required(),
 	submitting: Config.bool().value(false)
 };
 

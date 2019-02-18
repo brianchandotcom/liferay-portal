@@ -95,7 +95,7 @@
 </tr>
 <tr>
 	<td>CONTENT_VIDEO</td>
-	<td>//div[contains(@class,'embed')]/div[contains(@src,'${key_service}')]</td>
+	<td>//div[contains(@class,'embed')]//iframe[contains(@src,'${key_service}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -130,7 +130,7 @@
 </tr>
 <tr>
 	<td>VIDEO_EMBED_HELP_MESSAGE</td>
-	<td>//div[@class='embed-help-message']//span]</td>
+	<td>//div[@class='embed-help-message']//span</td>
 	<td></td>
 </tr>
 </tbody>

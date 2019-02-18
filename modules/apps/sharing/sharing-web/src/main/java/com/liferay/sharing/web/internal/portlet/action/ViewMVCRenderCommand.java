@@ -90,6 +90,10 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 			"sharingEntryPermissionDisplayActionId",
 			SharingEntryPermissionDisplayAction.VIEW.getActionId());
 
+		template.put(
+			"spritemap",
+			themeDisplay.getPathThemeImages() + "/lexicon/icons.svg");
+
 		return "Sharing";
 	}
 

@@ -238,8 +238,7 @@ public class DDMStructureLayoutPersistenceTest {
 		return OrderByComparatorFactoryUtil.create("DDMStructureLayout",
 			"uuid", true, "structureLayoutId", true, "groupId", true,
 			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "structureVersionId", true,
-			"description", true, "name", true);
+			true, "modifiedDate", true, "structureVersionId", true);
 	}
 
 	@Test

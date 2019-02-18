@@ -19,7 +19,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.MembershipRequest;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.site.memberships.web.internal.servlet.taglib.util.ViewMembershipRequetsPendingActionDropdownItemsProvider;
 
@@ -63,11 +62,6 @@ public class ViewMembershipRequestsPendingUserCard extends BaseUserCard {
 		}
 
 		return null;
-	}
-
-	@Override
-	public String getName() {
-		return HtmlUtil.escape(user.getFullName());
 	}
 
 	@Override

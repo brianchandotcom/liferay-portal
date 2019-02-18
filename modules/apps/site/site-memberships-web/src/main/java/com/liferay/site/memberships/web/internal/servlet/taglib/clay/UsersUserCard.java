@@ -18,7 +18,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.soy.BaseUserCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.site.memberships.web.internal.constants.SiteMembershipWebKeys;
 import com.liferay.site.memberships.web.internal.servlet.taglib.util.UserActionDropdownItemsProvider;
 
@@ -64,16 +63,6 @@ public class UsersUserCard extends BaseUserCard {
 	@Override
 	public String getDefaultEventHandler() {
 		return SiteMembershipWebKeys.USER_DROPDOWN_DEFAULT_EVENT_HANDLER;
-	}
-
-	@Override
-	public String getName() {
-		return HtmlUtil.escape(user.getFullName());
-	}
-
-	@Override
-	public String getSubtitle() {
-		return user.getScreenName();
 	}
 
 	private final RenderResponse _renderResponse;

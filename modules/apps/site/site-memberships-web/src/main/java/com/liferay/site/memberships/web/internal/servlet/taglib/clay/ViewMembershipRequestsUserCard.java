@@ -65,11 +65,6 @@ public class ViewMembershipRequestsUserCard extends BaseUserCard {
 	}
 
 	@Override
-	public String getName() {
-		return HtmlUtil.escape(user.getFullName());
-	}
-
-	@Override
 	public String getSubtitle() {
 		String replier = _getReplier();
 

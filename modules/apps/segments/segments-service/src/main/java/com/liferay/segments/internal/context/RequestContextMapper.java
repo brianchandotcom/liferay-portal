@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.mobile.device.Device;
 import com.liferay.portal.kernel.mobile.device.Dimensions;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.servlet.BrowserSniffer;
+import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -96,6 +97,11 @@ public class RequestContextMapper {
 		context.put(Context.LOCAL_DATE, LocalDate.from(ZonedDateTime.now()));
 		context.put(Context.SIGNED_IN, themeDisplay.isSignedIn());
 		context.put(Context.URL, _portal.getCurrentCompleteURL(request));
+
+		String userAgent = GetterUtil.getString(
+			request.getHeader(HttpHeaders.USER_AGENT));
+
+		context.put(Context.USER_AGENT, userAgent);
 
 		return context;
 	}

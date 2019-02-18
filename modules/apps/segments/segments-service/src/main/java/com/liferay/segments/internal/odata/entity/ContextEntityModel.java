@@ -63,7 +63,9 @@ public class ContextEntityModel implements EntityModel {
 				Context.DEVICE_MODEL, locale -> Context.DEVICE_MODEL),
 			new StringEntityField(
 				Context.LANGUAGE_ID, locale -> Context.LANGUAGE_ID),
-			new StringEntityField(Context.URL, locale -> Context.URL)
+			new StringEntityField(Context.URL, locale -> Context.URL),
+			new StringEntityField(
+				Context.USER_AGENT, locale -> Context.USER_AGENT)
 		).collect(
 			Collectors.toMap(EntityField::getName, Function.identity())
 		);

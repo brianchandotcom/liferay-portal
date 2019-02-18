@@ -16,19 +16,32 @@ package com.liferay.headless.web.experience.internal.resource.v1_0;
 
 import static com.liferay.portal.vulcan.util.LocalDateTimeUtil.toLocalDateTime;
 
+import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.document.library.kernel.service.DLAppService;
+import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerSerializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerSerializeResponse;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerTracker;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.headless.web.experience.dto.v1_0.StructuredContent;
+import com.liferay.headless.web.experience.dto.v1_0.Value;
+import com.liferay.headless.web.experience.dto.v1_0.Values;
+import com.liferay.headless.web.experience.internal.dto.v1_0.ContentDocumentImpl;
+import com.liferay.headless.web.experience.internal.dto.v1_0.GeoImpl;
 import com.liferay.headless.web.experience.internal.dto.v1_0.StructuredContentImpl;
+import com.liferay.headless.web.experience.internal.dto.v1_0.ValueImpl;
+import com.liferay.headless.web.experience.internal.dto.v1_0.ValuesImpl;
 import com.liferay.headless.web.experience.internal.dto.v1_0.util.AggregateRatingUtil;
+import com.liferay.headless.web.experience.internal.dto.v1_0.util.ContentStructureUtil;
 import com.liferay.headless.web.experience.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.web.experience.internal.odata.entity.v1_0.EntityFieldsProvider;
 import com.liferay.headless.web.experience.internal.odata.entity.v1_0.StructuredContentEntityModel;
@@ -39,6 +52,10 @@ import com.liferay.journal.service.JournalArticleService;
 import com.liferay.journal.util.JournalConverter;
 import com.liferay.journal.util.JournalHelper;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
@@ -48,6 +65,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -71,6 +89,12 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
+import java.util.Spliterator;
+import java.util.Spliterators;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 import javax.ws.rs.core.MultivaluedMap;
 
@@ -372,6 +396,167 @@ public class StructuredContentResourceImpl
 				lastReviewed = journalArticle.getReviewDate();
 				title = journalArticle.getTitle(
 					acceptLanguage.getPreferredLocale());
+
+				setValues(
+					() -> {
+						Fields ddmFields = _journalConverter.getDDMFields(
+							ddmStructure, journalArticle.getContent());
+
+						Stream<com.liferay.dynamic.data.mapping.storage.Field>
+							stream = StreamSupport.stream(
+								Spliterators.spliteratorUnknownSize(
+									ddmFields.iterator(), Spliterator.ORDERED),
+								false);
+
+						return stream.map(
+							ddmField -> {
+								try {
+									return _toValues(ddmField);
+								}
+								catch (Exception e) {
+									throw new RuntimeException(e);
+								}
+							}
+						).collect(
+							Collectors.toList()
+						).toArray(
+							new Values[0]
+						);
+					});
+			}
+		};
+	}
+
+	private Value _toValue(
+			Locale locale,
+			com.liferay.dynamic.data.mapping.storage.Field ddmField)
+		throws Exception {
+
+		DDMStructure ddmStructure = ddmField.getDDMStructure();
+
+		DDMFormField ddmFormField = ddmStructure.getDDMFormField(
+			ddmField.getName());
+
+		if (Objects.equals(
+				DDMFormFieldType.DOCUMENT_LIBRARY, ddmFormField.getType())) {
+
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+				String.valueOf(ddmField.getValue(locale)));
+
+			long classPK = jsonObject.getLong("classPK");
+
+			FileEntry fileEntry = _dlAppService.getFileEntry(classPK);
+
+			return new ValueImpl() {
+				{
+					setDocument(
+						new ContentDocumentImpl() {
+							{
+								setCreator(
+									CreatorUtil.toCreator(
+										_portal,
+										_userLocalService.getUser(
+											fileEntry.getUserId())));
+								setContentUrl(
+									_dlurlHelper.getPreviewURL(
+										fileEntry, fileEntry.getFileVersion(),
+										null, "", false, false));
+								setDateCreated(fileEntry.getCreateDate());
+								setDateModified(fileEntry.getModifiedDate());
+								setEncodingFormat(fileEntry.getMimeType());
+								setFileExtension(fileEntry.getExtension());
+								setId(fileEntry.getFileEntryId());
+								setTitle(fileEntry.getTitle());
+								setSizeInBytes(fileEntry.getSize());
+							}
+						});
+				}
+			};
+		}
+
+		if (Objects.equals(
+				DDMFormFieldType.GEOLOCATION, ddmFormField.getType())) {
+
+			DDMForm ddmForm = ddmFormField.getDDMForm();
+
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+				String.valueOf(ddmField.getValue(ddmForm.getDefaultLocale())));
+
+			return new ValueImpl() {
+				{
+					setGeo(
+						new GeoImpl() {
+							{
+								setLatitude(jsonObject.getDouble("latitude"));
+								setLongitude(jsonObject.getDouble("longitude"));
+							}
+						});
+				}
+			};
+		}
+
+		if (Objects.equals(
+				DDMFormFieldType.JOURNAL_ARTICLE, ddmFormField.getType())) {
+
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+				String.valueOf(ddmField.getValue(locale)));
+
+			long classPK = jsonObject.getLong("classPK");
+
+			JournalArticle journalArticle =
+				_journalArticleService.getLatestArticle(classPK);
+
+			return new ValueImpl() {
+				{
+					setStructuredContent(_toStructuredContent(journalArticle));
+				}
+			};
+		}
+
+		if (Objects.equals(
+				DDMFormFieldType.LINK_TO_PAGE, ddmFormField.getType())) {
+
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+				String.valueOf(ddmField.getValue(locale)));
+
+			long groupId = jsonObject.getLong("groupId");
+			boolean privateLayout = jsonObject.getBoolean("privateLayout");
+			long layoutId = jsonObject.getLong("layoutId");
+
+			Layout layoutByUuidAndGroupId = _layoutLocalService.getLayout(
+				groupId, privateLayout, layoutId);
+
+			return new ValueImpl() {
+				{
+					setLink(layoutByUuidAndGroupId.getFriendlyURL());
+				}
+			};
+		}
+
+		return new ValueImpl() {
+			{
+				setData(String.valueOf(ddmField.getValue(locale)));
+			}
+		};
+	}
+
+	private Values _toValues(
+			com.liferay.dynamic.data.mapping.storage.Field ddmField)
+		throws Exception {
+
+		DDMStructure ddmStructure = ddmField.getDDMStructure();
+
+		DDMFormField ddmFormField = ddmStructure.getDDMFormField(
+			ddmField.getName());
+
+		return new ValuesImpl() {
+			{
+				setDataType(ContentStructureUtil.toDataType(ddmFormField));
+				setInputControl(
+					ContentStructureUtil.toInputControl(ddmFormField));
+				setName(ddmField.getName());
+				setValue(
+					_toValue(acceptLanguage.getPreferredLocale(), ddmField));
 			}
 		};
 	}
@@ -384,6 +569,15 @@ public class StructuredContentResourceImpl
 
 	@Reference
 	private DDMStructureService _ddmStructureService;
+
+	@Reference
+	private DLAppLocalService _dlAppLocalService;
+
+	@Reference
+	private DLAppService _dlAppService;
+
+	@Reference
+	private DLURLHelper _dlurlHelper;
 
 	@Reference
 	private EntityFieldsProvider _entityFieldsProvider;
@@ -399,6 +593,9 @@ public class StructuredContentResourceImpl
 
 	@Reference
 	private JournalHelper _journalHelper;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
 
 	@Reference
 	private Portal _portal;

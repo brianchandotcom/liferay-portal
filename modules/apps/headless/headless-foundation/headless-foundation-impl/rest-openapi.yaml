@@ -7,14 +7,14 @@ components:
           items:
             type: string
           type: array
-        category:
-          allOf:
-            - $ref: "#/components/schemas/Category"
-          readOnly: true
-        categoryId:
-          format: int64
-          type: integer
-          writeOnly: true
+        parentCategory:
+          properties:
+            id:
+              format: int64
+              type: integer
+            name:
+              type: string
+          type: object
         creator:
           allOf:
             - $ref: "#/components/schemas/Creator"
@@ -31,20 +31,23 @@ components:
           type: string
         description:
           type: string
+        hasCategories:
+          type: boolean
         id:
           format: int64
           type: integer
         name:
           type: string
-        subcategories:
-          items:
-            $ref: "#/components/schemas/Category"
-          type: array
-        vocabulary:
-          allOf:
-            - $ref: "#/components/schemas/Vocabulary"
+        parentVocabulary:
+          properties:
+            id:
+              format: int64
+              type: integer
+            name:
+              type: string
           readOnly: true
-        vocabularyId:
+          type: object
+        parentVocabularyId:
           format: int64
           type: integer
           writeOnly: true
@@ -444,22 +447,13 @@ components:
           type: string
         description:
           type: string
+        hasCategories:
+          type: boolean
         id:
           format: int64
           type: integer
         name:
           type: string
-        vocabularyCategories:
-          items:
-            $ref: "#/components/schemas/Category"
-          readOnly: true
-          type: array
-        vocabularyCategoriesIds:
-          items:
-            format: int64
-            type: integer
-          type: array
-          writeOnly: true
       type: object
     WebUrl:
       description: https://www.schema.org/WebUrl

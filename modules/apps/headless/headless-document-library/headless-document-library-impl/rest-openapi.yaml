@@ -27,6 +27,8 @@ components:
         dateModified:
           format: date-time
           type: string
+        hasComments:
+          type: boolean
         id:
           format: int64
           type: integer
@@ -132,25 +134,10 @@ components:
           type: string
         description:
           type: string
-        documents:
-          items:
-            $ref: "#/components/schemas/Document"
-          readOnly: true
-          type: array
-        documentsIds:
-          items:
-            format: int64
-            type: integer
-          type: array
-          writeOnly: true
-        documentsRepository:
-          allOf:
-            - $ref: "#/components/schemas/Folder"
-          readOnly: true
-        documentsRepositoryId:
-          format: int64
-          type: integer
-          writeOnly: true
+        hasDocuments:
+          type: boolean
+        hasFolders:
+          type: boolean
         id:
           format: int64
           type: integer
@@ -163,6 +150,104 @@ info:
   version: v1.0
 openapi: 3.0.1
 paths:
+  "/comments/{comment-id}":
+    get:
+      parameters:
+        - in: path
+          name: comment-id
+          required: true
+          schema:
+            format: int64
+            type: integer
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Comment"
+          description: ""
+      tags: ["Comment"]
+  "/comments/{comment-id}/comments":
+    get:
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+        - in: query
+          name: pageSize
+          schema:
+            type: integer
+        - in: path
+          name: comment-id
+          required: true
+          schema:
+            format: int64
+            type: integer
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: "#/components/schemas/Comment"
+                type: array
+          description: ""
+      tags: ["Comment"]
+  "/documents":
+    get:
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+        - in: query
+          name: pageSize
+          schema:
+            type: integer
+        - in: path
+          name: folder-id
+          required: true
+          schema:
+            format: int64
+            type: integer
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: "#/components/schemas/Document"
+                type: array
+          description: ""
+      tags: ["Document"]
+    post:
+      parameters:
+        - in: path
+          name: folder-id
+          required: true
+          schema:
+            format: int64
+            type: integer
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                document:
+                  $ref: "#/components/schemas/Document"
+                file:
+                  type: string
+                  format: binary
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Document"
+          description: ""
+      tags: ["Document"]
   "/documents/{document-id}":
     delete:
       parameters:
@@ -221,72 +306,7 @@ paths:
                 type: array
           description: ""
       tags: ["Comment"]
-  "/documents-repositories/{documents-repository-id}":
-    get:
-      parameters:
-        - in: path
-          name: documents-repository-id
-          required: true
-          schema:
-            format: int64
-            type: integer
-      responses:
-        200:
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Folder"
-          description: ""
-      tags: ["Folder"]
-  "/documents-repositories/{documents-repository-id}/documents":
-    get:
-      parameters:
-        - in: query
-          name: page
-          schema:
-            type: integer
-        - in: query
-          name: pageSize
-          schema:
-            type: integer
-        - in: path
-          name: documents-repository-id
-          required: true
-          schema:
-            format: int64
-            type: integer
-      responses:
-        200:
-          content:
-            application/json:
-              schema:
-                items:
-                  $ref: "#/components/schemas/Document"
-                type: array
-          description: ""
-      tags: ["Document"]
-    post:
-      parameters:
-        - in: path
-          name: documents-repository-id
-          required: true
-          schema:
-            format: int64
-            type: integer
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/Document"
-      responses:
-        200:
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Document"
-          description: ""
-      tags: ["Document"]
-  "/documents-repositories/{documents-repository-id}/folders":
+  "/folders":
     get:
       parameters:
         - in: query

@@ -27,36 +27,12 @@ components:
         dateModified:
           format: date-time
           type: string
+        hasComments:
+          type: boolean
         id:
           format: int64
           type: integer
         text:
-          type: string
-      type: object
-    ContentDocument:
-      description: https://www.schema.org/ContentDocument
-      properties:
-        contentUrl:
-          format: uri
-          type: string
-        creator:
-          $ref: "#/components/schemas/Creator"
-        dateCreated:
-          format: date-time
-          type: string
-        dateModified:
-          format: date-time
-          type: string
-        encodingFormat:
-          type: string
-        fileExtension:
-          type: string
-        id:
-          format: int64
-          type: integer
-        sizeInBytes:
-          type: number
-        title:
           type: string
       type: object
     ContentStructure:
@@ -166,14 +142,9 @@ components:
         contentSpace:
           format: int64
           type: integer
-        contentStructure:
-          allOf:
-            - $ref: "#/components/schemas/ContentStructure"
-          readOnly: true
         contentStructureId:
           format: int64
           type: integer
-          writeOnly: true
         creator:
           $ref: "#/components/schemas/Creator"
         dateCreated:
@@ -237,7 +208,7 @@ components:
                   - properties:
                       document:
                         allOf:
-                          - $ref: "#/components/schemas/ContentDocument"
+                          - $ref: "#/components/schemas/StructuredContentImage"
                       documentId:
                         format: int64
                         type: integer
@@ -269,6 +240,32 @@ components:
                         writeOnly: true
             type: object
           type: array
+    StructuredContentImage:
+      description: https://www.schema.org/StructuredContentImage
+      properties:
+        contentUrl:
+          format: uri
+          type: string
+        creator:
+          $ref: "#/components/schemas/Creator"
+        dateCreated:
+          format: date-time
+          type: string
+        dateModified:
+          format: date-time
+          type: string
+        encodingFormat:
+          type: string
+        fileExtension:
+          type: string
+        id:
+          format: int64
+          type: integer
+        sizeInBytes:
+          type: number
+        title:
+          type: string
+      type: object
 info:
   description: ""
   title: ""
@@ -319,37 +316,6 @@ paths:
                 type: array
           description: ""
       tags: ["Comment"]
-  "/content-documents/{content-document-id}":
-    delete:
-      parameters:
-        - in: path
-          name: content-document-id
-          required: true
-          schema:
-            format: int64
-            type: integer
-      responses:
-        204:
-          content:
-            application/json: {}
-          description: ""
-      tags: ["ContentDocument"]
-    get:
-      parameters:
-        - in: path
-          name: content-document-id
-          required: true
-          schema:
-            format: int64
-            type: integer
-      responses:
-        200:
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ContentDocument"
-          description: ""
-      tags: ["ContentDocument"]
   "/content-spaces/{content-space-id}/content-structures":
     get:
       parameters:
@@ -385,7 +351,7 @@ paths:
                 type: array
           description: ""
       tags: ["ContentStructure"]
-  "/content-spaces/{content-space-id}/content-structures/{content-structure-id}/structured-contents":
+  "/content-structures/{content-structure-id}/structured-contents":
     get:
       parameters:
         - in: query
@@ -469,31 +435,6 @@ paths:
                 type: array
           description: ""
       tags: ["StructuredContent"]
-    patch:
-      parameters:
-        - in: path
-          name: content-space-id
-          required: true
-          schema:
-            format: int64
-            type: integer
-        - in: header
-          name: Accept-Language
-          schema:
-            type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/StructuredContent"
-      responses:
-        200:
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/StructuredContent"
-          description: ""
-      tags: ["StructuredContent"]
     post:
       parameters:
         - in: path
@@ -571,6 +512,31 @@ paths:
                 $ref: "#/components/schemas/StructuredContent"
           description: ""
       tags: ["StructuredContent"]
+    patch:
+      parameters:
+        - in: path
+          name: structured-content-id
+          required: true
+          schema:
+            format: int64
+            type: integer
+        - in: header
+          name: Accept-Language
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StructuredContent"
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StructuredContent"
+          description: ""
+      tags: ["StructuredContent"]
     put:
       parameters:
         - in: path
@@ -623,3 +589,65 @@ paths:
                 type: array
           description: ""
       tags: ["Comment"]
+  "/structured-contents/{structured-content-id}/structured-content-images":
+    get:
+      parameters:
+        - in: path
+          name: structured-content-id
+          required: true
+          schema:
+            format: int64
+            type: integer
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: "#/components/schemas/StructuredContentImage"
+                type: array
+          description: ""
+      tags: ["StructuredContentImage"]
+  "/structured-contents/{structured-content-id}/structured-content-images/{content-document-id}":
+    delete:
+      parameters:
+        - in: path
+          name: structured-content-id
+          required: true
+          schema:
+            format: int64
+            type: integer
+        - in: path
+          name: content-document-id
+          required: true
+          schema:
+            format: int64
+            type: integer
+      responses:
+        204:
+          content:
+            application/json: {}
+          description: ""
+      tags: ["StructuredContentImage"]
+    get:
+      parameters:
+        - in: path
+          name: structured-content-id
+          required: true
+          schema:
+            format: int64
+            type: integer
+        - in: path
+          name: content-document-id
+          required: true
+          schema:
+            format: int64
+            type: integer
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StructuredContentImage"
+          description: ""
+      tags: ["StructuredContentImage"]

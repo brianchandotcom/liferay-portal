@@ -69,23 +69,25 @@ public abstract class BaseVerticalCard
 
 	@Override
 	public String getStickerImageSrc() {
-		if (!(baseModel instanceof AuditedModel)) {
+		try {
+			if (!(baseModel instanceof AuditedModel)) {
+				return StringPool.BLANK;
+			}
+
+			AuditedModel auditedModel = (AuditedModel)baseModel;
+
+			User user = UserLocalServiceUtil.fetchUser(
+				auditedModel.getUserId());
+
+			if (user == null) {
+				return StringPool.BLANK;
+			}
+
+			return user.getPortraitURL(themeDisplay);
+		}
+		catch (Exception e) {
 			return StringPool.BLANK;
 		}
-
-		AuditedModel auditedModel = (AuditedModel)baseModel;
-
-		User user = UserLocalServiceUtil.fetchUser(auditedModel.getUserId());
-
-		if (user.getPortraitId() > 0) {
-			try {
-				return user.getPortraitURL(themeDisplay);
-			}
-			catch (Exception e) {
-			}
-		}
-
-		return StringPool.BLANK;
 	}
 
 	@Override

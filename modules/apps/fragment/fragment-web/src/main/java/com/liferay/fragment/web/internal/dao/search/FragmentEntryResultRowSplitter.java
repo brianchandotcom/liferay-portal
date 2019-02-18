@@ -35,7 +35,7 @@ public class FragmentEntryResultRowSplitter implements ResultRowSplitter {
 
 		List<ResultRow> fragmentEntrySectionsResultRows = new ArrayList<>();
 
-		List<ResultRow> fragmentEntryElementsResultRows = new ArrayList<>();
+		List<ResultRow> fragmentEntryComponentsResultRows = new ArrayList<>();
 
 		for (ResultRow resultRow : resultRows) {
 			FragmentEntry fragmentEntry = (FragmentEntry)resultRow.getObject();
@@ -43,7 +43,7 @@ public class FragmentEntryResultRowSplitter implements ResultRowSplitter {
 			if (fragmentEntry.getType() ==
 					FragmentEntryTypeConstants.TYPE_COMPONENT) {
 
-				fragmentEntryElementsResultRows.add(resultRow);
+				fragmentEntryComponentsResultRows.add(resultRow);
 			}
 			else {
 				fragmentEntrySectionsResultRows.add(resultRow);
@@ -56,10 +56,10 @@ public class FragmentEntryResultRowSplitter implements ResultRowSplitter {
 					"sections", fragmentEntrySectionsResultRows));
 		}
 
-		if (!fragmentEntryElementsResultRows.isEmpty()) {
+		if (!fragmentEntryComponentsResultRows.isEmpty()) {
 			resultRowSplitterEntries.add(
 				new ResultRowSplitterEntry(
-					"elements", fragmentEntryElementsResultRows));
+					"components", fragmentEntryComponentsResultRows));
 		}
 
 		return resultRowSplitterEntries;

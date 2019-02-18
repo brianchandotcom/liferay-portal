@@ -10,7 +10,7 @@ exports[`FormRenderer PagesSettings should add a new page on the layout render 1
     </div>
   </div>
   <div class="ddm-page-container-layout">
-    <div class="ddm-form-page pl-4 pr-4"><textarea class="form-builder-page-header-title form-control p-0" data-page-id="0" maxlength="120" value="Untitled name" placeholder="untitled-page-x-of-x"></textarea><textarea class="form-builder-page-header-description form-control p-0" data-page-id="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
+    <div class="ddm-form-page pl-4 pr-4"><textarea class="form-builder-page-header-title form-control p-0" data-page-index="0" maxlength="120" value="Untitled name" placeholder="untitled-page-x-of-x"></textarea><textarea class="form-builder-page-header-description form-control p-0" data-page-index="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
       <div class="form-builder-layout">
         <div class="layout-page">
           <div class="row">
@@ -152,13 +152,13 @@ exports[`FormRenderer PagesSettings should delete the current page on layout ren
 <div class="position-relative">
   <div class="ddm-form-pagination position-relative wizard-mode">
     <ol class="dmm-wizard multi-step-indicator-label-top multi-step-nav multi-step-nav-collapse-sm">
-      <li class="multi-step-item multi-step-item-expand active" data-page-id="0">
+      <li class="multi-step-item multi-step-item-expand active" data-page-index="0">
         <div class="multi-step-divider"></div>
         <div class="multi-step-indicator">
           <div class="multi-step-indicator-label">Untitled name</div><a class="multi-step-icon" data-multi-step-icon="1" href="javascript:;"></a>
         </div>
       </li>
-      <li class="multi-step-item" data-page-id="1">
+      <li class="multi-step-item" data-page-index="1">
         <div class="multi-step-divider"></div>
         <div class="multi-step-indicator">
           <div class="multi-step-indicator-label">Untitled name</div><a class="multi-step-icon" data-multi-step-icon="2" href="javascript:;"></a>
@@ -172,7 +172,7 @@ exports[`FormRenderer PagesSettings should delete the current page on layout ren
     </div>
   </div>
   <div class="ddm-page-container-layout">
-    <div class="ddm-form-page pl-4 pr-4"><textarea class="form-builder-page-header-title form-control p-0" data-page-id="0" maxlength="120" value="Untitled name"></textarea><textarea class="form-builder-page-header-description form-control p-0" data-page-id="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
+    <div class="ddm-form-page pl-4 pr-4"><textarea class="form-builder-page-header-title form-control p-0" data-page-index="0" maxlength="120" value="Untitled name"></textarea><textarea class="form-builder-page-header-description form-control p-0" data-page-index="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
       <div class="form-builder-layout">
         <div class="layout-page">
           <div class="row">
@@ -300,7 +300,7 @@ exports[`FormRenderer PagesSettings should delete the success page 1`] = `
     </div>
   </div>
   <div class="ddm-page-container-layout">
-    <div class="ddm-form-page pl-4 pr-4"><textarea class="form-builder-page-header-title form-control p-0" data-page-id="0" maxlength="120" value="Untitled name" placeholder="untitled-page-x-of-x"></textarea><textarea class="form-builder-page-header-description form-control p-0" data-page-id="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
+    <div class="ddm-form-page pl-4 pr-4"><textarea class="form-builder-page-header-title form-control p-0" data-page-index="0" maxlength="120" value="Untitled name" placeholder="untitled-page-x-of-x"></textarea><textarea class="form-builder-page-header-description form-control p-0" data-page-index="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
       <div class="form-builder-layout">
         <div class="layout-page">
           <div class="row">
@@ -426,7 +426,7 @@ exports[`FormRenderer PagesSettings should reset the current page on layout rend
     </div>
   </div>
   <div class="ddm-page-container-layout">
-    <div class="ddm-form-page pl-4 pr-4"><textarea class="form-builder-page-header-title form-control p-0" data-page-id="0" maxlength="120" value="Untitled name" placeholder="untitled-page-x-of-x"></textarea><textarea class="form-builder-page-header-description form-control p-0" data-page-id="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
+    <div class="ddm-form-page pl-4 pr-4"><textarea class="form-builder-page-header-title form-control p-0" data-page-index="0" maxlength="120" value="Untitled name" placeholder="untitled-page-x-of-x"></textarea><textarea class="form-builder-page-header-description form-control p-0" data-page-index="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
       <div class="form-builder-layout">
         <div class="layout-page">
           <div class="row">
@@ -546,13 +546,13 @@ exports[`FormRenderer PagesSettings should show delete-field option, when the fo
 <div class="position-relative">
   <div class="ddm-form-pagination position-relative wizard-mode">
     <ol class="dmm-wizard multi-step-indicator-label-top multi-step-nav multi-step-nav-collapse-sm">
-      <li class="multi-step-item multi-step-item-expand active" data-page-id="0">
+      <li class="multi-step-item multi-step-item-expand active" data-page-index="0">
         <div class="multi-step-divider"></div>
         <div class="multi-step-indicator">
           <div class="multi-step-indicator-label">Untitled name</div><a class="multi-step-icon" data-multi-step-icon="1" href="javascript:;"></a>
         </div>
       </li>
-      <li class="multi-step-item" data-page-id="1">
+      <li class="multi-step-item" data-page-index="1">
         <div class="multi-step-divider"></div>
         <div class="multi-step-indicator">
           <div class="multi-step-indicator-label">Untitled name</div><a class="multi-step-icon" data-multi-step-icon="2" href="javascript:;"></a>
@@ -566,7 +566,7 @@ exports[`FormRenderer PagesSettings should show delete-field option, when the fo
     </div>
   </div>
   <div class="ddm-page-container-layout">
-    <div class="ddm-form-page pl-4 pr-4"><textarea class="form-builder-page-header-title form-control p-0" data-page-id="0" maxlength="120" value="Untitled name"></textarea><textarea class="form-builder-page-header-description form-control p-0" data-page-id="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
+    <div class="ddm-form-page pl-4 pr-4"><textarea class="form-builder-page-header-title form-control p-0" data-page-index="0" maxlength="120" value="Untitled name"></textarea><textarea class="form-builder-page-header-description form-control p-0" data-page-index="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
       <div class="form-builder-layout">
         <div class="layout-page">
           <div class="row">
@@ -694,7 +694,7 @@ exports[`FormRenderer PagesSettings should show reset-field option, when the for
     </div>
   </div>
   <div class="ddm-page-container-layout">
-    <div class="ddm-form-page pl-4 pr-4"><textarea class="form-builder-page-header-title form-control p-0" data-page-id="0" maxlength="120" value="Untitled name" placeholder="untitled-page-x-of-x"></textarea><textarea class="form-builder-page-header-description form-control p-0" data-page-id="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
+    <div class="ddm-form-page pl-4 pr-4"><textarea class="form-builder-page-header-title form-control p-0" data-page-index="0" maxlength="120" value="Untitled name" placeholder="untitled-page-x-of-x"></textarea><textarea class="form-builder-page-header-description form-control p-0" data-page-index="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
       <div class="form-builder-layout">
         <div class="layout-page">
           <div class="row">
@@ -814,13 +814,13 @@ exports[`FormRenderer should back the pagination mode to wizard mode when user c
 <div class="position-relative">
   <div class="ddm-form-pagination position-relative wizard-mode">
     <ol class="dmm-wizard multi-step-indicator-label-top multi-step-nav multi-step-nav-collapse-sm">
-      <li class="multi-step-item multi-step-item-expand active" data-page-id="0">
+      <li class="multi-step-item multi-step-item-expand active" data-page-index="0">
         <div class="multi-step-divider"></div>
         <div class="multi-step-indicator">
           <div class="multi-step-indicator-label">Untitled name</div><a class="multi-step-icon" data-multi-step-icon="1" href="javascript:;"></a>
         </div>
       </li>
-      <li class="multi-step-item" data-page-id="1">
+      <li class="multi-step-item" data-page-index="1">
         <div class="multi-step-divider"></div>
         <div class="multi-step-indicator">
           <div class="multi-step-indicator-label">Untitled name</div><a class="multi-step-icon" data-multi-step-icon="2" href="javascript:;"></a>
@@ -834,7 +834,7 @@ exports[`FormRenderer should back the pagination mode to wizard mode when user c
     </div>
   </div>
   <div class="ddm-page-container-layout">
-    <div class="ddm-form-page pl-4 pr-4"><textarea class="form-builder-page-header-title form-control p-0" data-page-id="0" maxlength="120" value="Untitled name"></textarea><textarea class="form-builder-page-header-description form-control p-0" data-page-id="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
+    <div class="ddm-form-page pl-4 pr-4"><textarea class="form-builder-page-header-title form-control p-0" data-page-index="0" maxlength="120" value="Untitled name"></textarea><textarea class="form-builder-page-header-description form-control p-0" data-page-index="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
       <div class="form-builder-layout">
         <div class="layout-page">
           <div class="row">
@@ -956,7 +956,7 @@ exports[`FormRenderer should change the active by clicking on the pagination whe
 <div class="position-relative">
   <div class="ddm-page-container-layout"></div>
   <div class="ddm-page-container-layout">
-    <div class="ddm-form-page pl-4 pr-4"><textarea class="form-builder-page-header-title form-control p-0" data-page-id="1" maxlength="120" value="Untitled name" placeholder="untitled-page-x-of-x"></textarea><textarea class="form-builder-page-header-description form-control p-0" data-page-id="1" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
+    <div class="ddm-form-page pl-4 pr-4"><textarea class="form-builder-page-header-title form-control p-0" data-page-index="1" maxlength="120" value="Untitled name" placeholder="untitled-page-x-of-x"></textarea><textarea class="form-builder-page-header-description form-control p-0" data-page-index="1" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
       <div class="form-builder-layout">
         <div class="layout-page">
           <div class="row">
@@ -1065,8 +1065,8 @@ exports[`FormRenderer should change the active by clicking on the pagination whe
   <div class="ddm-form-pagination position-relative pagination-mode">
     <ul class="ddm-pagination justify-content-center pagination">
       <li class="page-item"><a class="page-link" href="javascript:;" role="button">«<span class="sr-only">Previous</span></a></li>
-      <li class="page-item" data-page-id="0"><a class="page-link" href="javascript:;">1</a></li>
-      <li class="page-item active" data-page-id="1"><a class="page-link" href="javascript:;">2</a></li>
+      <li class="page-item" data-page-index="0"><a class="page-link" href="javascript:;">1</a></li>
+      <li class="page-item active" data-page-index="1"><a class="page-link" href="javascript:;">2</a></li>
       <li class="page-item visibility-hidden"><a class="page-link" href="javascript:;" role="button">»<span class="sr-only">Next</span></a></li>
     </ul>
     <div class="ddm-page-settings" role="group">
@@ -1090,13 +1090,13 @@ exports[`FormRenderer should change the active page 1`] = `
 <div class="position-relative">
   <div class="ddm-form-pagination position-relative wizard-mode">
     <ol class="dmm-wizard multi-step-indicator-label-top multi-step-nav multi-step-nav-collapse-sm">
-      <li class="multi-step-item multi-step-item-expand active" data-page-id="0">
+      <li class="multi-step-item multi-step-item-expand active" data-page-index="0">
         <div class="multi-step-divider"></div>
         <div class="multi-step-indicator">
           <div class="multi-step-indicator-label">Untitled name</div><a class="multi-step-icon" data-multi-step-icon="1" href="javascript:;"></a>
         </div>
       </li>
-      <li class="multi-step-item" data-page-id="1">
+      <li class="multi-step-item" data-page-index="1">
         <div class="multi-step-divider"></div>
         <div class="multi-step-indicator">
           <div class="multi-step-indicator-label">Untitled name</div><a class="multi-step-icon" data-multi-step-icon="2" href="javascript:;"></a>
@@ -1110,7 +1110,7 @@ exports[`FormRenderer should change the active page 1`] = `
     </div>
   </div>
   <div class="ddm-page-container-layout">
-    <div class="ddm-form-page pl-4 pr-4"><textarea class="form-builder-page-header-title form-control p-0" data-page-id="0" maxlength="120" value="Untitled name"></textarea><textarea class="form-builder-page-header-description form-control p-0" data-page-id="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
+    <div class="ddm-form-page pl-4 pr-4"><textarea class="form-builder-page-header-title form-control p-0" data-page-index="0" maxlength="120" value="Untitled name"></textarea><textarea class="form-builder-page-header-description form-control p-0" data-page-index="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
       <div class="form-builder-layout">
         <div class="layout-page">
           <div class="row">
@@ -1232,13 +1232,13 @@ exports[`FormRenderer should change the active page for a empty page 1`] = `
 <div class="position-relative">
   <div class="ddm-form-pagination position-relative wizard-mode">
     <ol class="dmm-wizard multi-step-indicator-label-top multi-step-nav multi-step-nav-collapse-sm">
-      <li class="multi-step-item multi-step-item-expand active" data-page-id="0">
+      <li class="multi-step-item multi-step-item-expand active" data-page-index="0">
         <div class="multi-step-divider"></div>
         <div class="multi-step-indicator">
           <div class="multi-step-indicator-label">Untitled name</div><a class="multi-step-icon" data-multi-step-icon="1" href="javascript:;"></a>
         </div>
       </li>
-      <li class="multi-step-item" data-page-id="1">
+      <li class="multi-step-item" data-page-index="1">
         <div class="multi-step-divider"></div>
         <div class="multi-step-indicator">
           <div class="multi-step-indicator-label">Untitled name</div><a class="multi-step-icon" data-multi-step-icon="2" href="javascript:;"></a>
@@ -1252,7 +1252,7 @@ exports[`FormRenderer should change the active page for a empty page 1`] = `
     </div>
   </div>
   <div class="ddm-page-container-layout">
-    <div class="ddm-form-page pl-4 pr-4"><textarea class="form-builder-page-header-title form-control p-0" data-page-id="0" maxlength="120" value="Untitled name"></textarea><textarea class="form-builder-page-header-description form-control p-0" data-page-id="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
+    <div class="ddm-form-page pl-4 pr-4"><textarea class="form-builder-page-header-title form-control p-0" data-page-index="0" maxlength="120" value="Untitled name"></textarea><textarea class="form-builder-page-header-description form-control p-0" data-page-index="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
       <div class="form-builder-layout">
         <div class="layout-page">
           <div class="row">
@@ -1286,7 +1286,7 @@ exports[`FormRenderer should change the form page description 1`] = `
     </div>
   </div>
   <div class="ddm-page-container-layout">
-    <div class="ddm-form-page pl-4 pr-4"><textarea class="form-builder-page-header-title form-control p-0" data-page-id="0" maxlength="120" value="Untitled name" placeholder="untitled-page-x-of-x"></textarea><textarea class="form-builder-page-header-description form-control p-0" data-page-id="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
+    <div class="ddm-form-page pl-4 pr-4"><textarea class="form-builder-page-header-title form-control p-0" data-page-index="0" maxlength="120" value="Untitled name" placeholder="untitled-page-x-of-x"></textarea><textarea class="form-builder-page-header-description form-control p-0" data-page-index="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
       <div class="form-builder-layout">
         <div class="layout-page">
           <div class="row">
@@ -1412,7 +1412,7 @@ exports[`FormRenderer should change the form page title 1`] = `
     </div>
   </div>
   <div class="ddm-page-container-layout">
-    <div class="ddm-form-page pl-4 pr-4"><textarea class="form-builder-page-header-title form-control p-0" data-page-id="0" maxlength="120" value="Untitled name" placeholder="untitled-page-x-of-x"></textarea><textarea class="form-builder-page-header-description form-control p-0" data-page-id="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
+    <div class="ddm-form-page pl-4 pr-4"><textarea class="form-builder-page-header-title form-control p-0" data-page-index="0" maxlength="120" value="Untitled name" placeholder="untitled-page-x-of-x"></textarea><textarea class="form-builder-page-header-description form-control p-0" data-page-index="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
       <div class="form-builder-layout">
         <div class="layout-page">
           <div class="row">
@@ -1532,13 +1532,13 @@ exports[`FormRenderer should change the pagination mode when switch pagination m
 <div class="position-relative">
   <div class="ddm-form-pagination position-relative wizard-mode">
     <ol class="dmm-wizard multi-step-indicator-label-top multi-step-nav multi-step-nav-collapse-sm">
-      <li class="multi-step-item multi-step-item-expand active" data-page-id="0">
+      <li class="multi-step-item multi-step-item-expand active" data-page-index="0">
         <div class="multi-step-divider"></div>
         <div class="multi-step-indicator">
           <div class="multi-step-indicator-label">Untitled name</div><a class="multi-step-icon" data-multi-step-icon="1" href="javascript:;"></a>
         </div>
       </li>
-      <li class="multi-step-item" data-page-id="1">
+      <li class="multi-step-item" data-page-index="1">
         <div class="multi-step-divider"></div>
         <div class="multi-step-indicator">
           <div class="multi-step-indicator-label">Untitled name</div><a class="multi-step-icon" data-multi-step-icon="2" href="javascript:;"></a>
@@ -1552,7 +1552,7 @@ exports[`FormRenderer should change the pagination mode when switch pagination m
     </div>
   </div>
   <div class="ddm-page-container-layout">
-    <div class="ddm-form-page pl-4 pr-4"><textarea class="form-builder-page-header-title form-control p-0" data-page-id="0" maxlength="120" value="Untitled name"></textarea><textarea class="form-builder-page-header-description form-control p-0" data-page-id="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
+    <div class="ddm-form-page pl-4 pr-4"><textarea class="form-builder-page-header-title form-control p-0" data-page-index="0" maxlength="120" value="Untitled name"></textarea><textarea class="form-builder-page-header-description form-control p-0" data-page-index="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
       <div class="form-builder-layout">
         <div class="layout-page">
           <div class="row">
@@ -1680,7 +1680,7 @@ exports[`FormRenderer should not render the layout with the field empty in non-e
     </div>
   </div>
   <div class="ddm-page-container-layout">
-    <div class="ddm-form-page pl-4 pr-4"><textarea class="form-builder-page-header-title form-control p-0" data-page-id="0" maxlength="120" value="Untitled name"></textarea><textarea class="form-builder-page-header-description form-control p-0" data-page-id="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
+    <div class="ddm-form-page pl-4 pr-4"><textarea class="form-builder-page-header-title form-control p-0" data-page-index="0" maxlength="120" value="Untitled name"></textarea><textarea class="form-builder-page-header-description form-control p-0" data-page-index="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
       <div class="form-builder-layout">
         <div class="layout-page">
           <div class="row">
@@ -1721,7 +1721,7 @@ exports[`FormRenderer should receive a delete button event and propage it 1`] = 
     </div>
   </div>
   <div class="ddm-page-container-layout">
-    <div class="ddm-form-page pl-4 pr-4"><textarea class="form-builder-page-header-title form-control p-0" data-page-id="0" maxlength="120" value="Untitled name" placeholder="untitled-page-x-of-x"></textarea><textarea class="form-builder-page-header-description form-control p-0" data-page-id="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
+    <div class="ddm-form-page pl-4 pr-4"><textarea class="form-builder-page-header-title form-control p-0" data-page-index="0" maxlength="120" value="Untitled name" placeholder="untitled-page-x-of-x"></textarea><textarea class="form-builder-page-header-description form-control p-0" data-page-index="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
       <div class="form-builder-layout">
         <div class="layout-page">
           <div class="row">
@@ -1847,7 +1847,7 @@ exports[`FormRenderer should receive a duplicate button event and propage it 1`]
     </div>
   </div>
   <div class="ddm-page-container-layout">
-    <div class="ddm-form-page pl-4 pr-4"><textarea class="form-builder-page-header-title form-control p-0" data-page-id="0" maxlength="120" value="Untitled name" placeholder="untitled-page-x-of-x"></textarea><textarea class="form-builder-page-header-description form-control p-0" data-page-id="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
+    <div class="ddm-form-page pl-4 pr-4"><textarea class="form-builder-page-header-title form-control p-0" data-page-index="0" maxlength="120" value="Untitled name" placeholder="untitled-page-x-of-x"></textarea><textarea class="form-builder-page-header-description form-control p-0" data-page-index="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
       <div class="form-builder-layout">
         <div class="layout-page">
           <div class="row">
@@ -1973,7 +1973,7 @@ exports[`FormRenderer should receive an update page event and propage it 1`] = `
     </div>
   </div>
   <div class="ddm-page-container-layout">
-    <div class="ddm-form-page pl-4 pr-4"><textarea class="form-builder-page-header-title form-control p-0" data-page-id="0" maxlength="120" value="Untitled name" placeholder="untitled-page-x-of-x"></textarea><textarea class="form-builder-page-header-description form-control p-0" data-page-id="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
+    <div class="ddm-form-page pl-4 pr-4"><textarea class="form-builder-page-header-title form-control p-0" data-page-index="0" maxlength="120" value="Untitled name" placeholder="untitled-page-x-of-x"></textarea><textarea class="form-builder-page-header-description form-control p-0" data-page-index="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
       <div class="form-builder-layout">
         <div class="layout-page">
           <div class="row">
@@ -2099,7 +2099,7 @@ exports[`FormRenderer should render a layout in editable mode 1`] = `
     </div>
   </div>
   <div class="ddm-page-container-layout">
-    <div class="ddm-form-page pl-4 pr-4"><textarea class="form-builder-page-header-title form-control p-0" data-page-id="0" maxlength="120" value="Untitled name"></textarea><textarea class="form-builder-page-header-description form-control p-0" data-page-id="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
+    <div class="ddm-form-page pl-4 pr-4"><textarea class="form-builder-page-header-title form-control p-0" data-page-index="0" maxlength="120" value="Untitled name"></textarea><textarea class="form-builder-page-header-description form-control p-0" data-page-index="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
       <div class="form-builder-layout">
         <div class="layout-page">
           <div class="row">
@@ -2225,7 +2225,7 @@ exports[`FormRenderer should render a layout in pagination mode 1`] = `
     </div>
   </div>
   <div class="ddm-page-container-layout">
-    <div class="ddm-form-page pl-4 pr-4"><textarea class="form-builder-page-header-title form-control p-0" data-page-id="0" maxlength="120" value="Untitled name"></textarea><textarea class="form-builder-page-header-description form-control p-0" data-page-id="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
+    <div class="ddm-form-page pl-4 pr-4"><textarea class="form-builder-page-header-title form-control p-0" data-page-index="0" maxlength="120" value="Untitled name"></textarea><textarea class="form-builder-page-header-description form-control p-0" data-page-index="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
       <div class="form-builder-layout">
         <div class="layout-page">
           <div class="row">
@@ -2265,7 +2265,7 @@ exports[`FormRenderer should render a layout in wizard mode 1`] = `
     </div>
   </div>
   <div class="ddm-page-container-layout">
-    <div class="ddm-form-page pl-4 pr-4"><textarea class="form-builder-page-header-title form-control p-0" data-page-id="0" maxlength="120" value="Untitled name"></textarea><textarea class="form-builder-page-header-description form-control p-0" data-page-id="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
+    <div class="ddm-form-page pl-4 pr-4"><textarea class="form-builder-page-header-title form-control p-0" data-page-index="0" maxlength="120" value="Untitled name"></textarea><textarea class="form-builder-page-header-description form-control p-0" data-page-index="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
       <div class="form-builder-layout">
         <div class="layout-page">
           <div class="row">
@@ -2305,7 +2305,7 @@ exports[`FormRenderer should render a layout with an empty field only in editabl
     </div>
   </div>
   <div class="ddm-page-container-layout">
-    <div class="ddm-form-page pl-4 pr-4"><textarea class="form-builder-page-header-title form-control p-0" data-page-id="0" maxlength="120" value="Untitled name"></textarea><textarea class="form-builder-page-header-description form-control p-0" data-page-id="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
+    <div class="ddm-form-page pl-4 pr-4"><textarea class="form-builder-page-header-title form-control p-0" data-page-index="0" maxlength="120" value="Untitled name"></textarea><textarea class="form-builder-page-header-description form-control p-0" data-page-index="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
       <div class="form-builder-layout">
         <div class="layout-page">
           <div class="row">
@@ -2460,7 +2460,7 @@ exports[`FormRenderer should render default markup 1`] = `
     </div>
   </div>
   <div class="ddm-page-container-layout">
-    <div class="ddm-form-page pl-4 pr-4"><textarea class="form-builder-page-header-title form-control p-0" data-page-id="0" maxlength="120" value="Untitled name"></textarea><textarea class="form-builder-page-header-description form-control p-0" data-page-id="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
+    <div class="ddm-form-page pl-4 pr-4"><textarea class="form-builder-page-header-title form-control p-0" data-page-index="0" maxlength="120" value="Untitled name"></textarea><textarea class="form-builder-page-header-description form-control p-0" data-page-index="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
       <div class="form-builder-layout">
         <div class="layout-page">
           <div class="row">

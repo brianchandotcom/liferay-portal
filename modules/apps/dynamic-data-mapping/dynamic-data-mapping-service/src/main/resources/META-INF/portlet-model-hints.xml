@@ -178,6 +178,12 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="structureVersionId" type="long" />
+		<field localized="true" name="name" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+		<field localized="true" name="description" type="String">
+			<hint-collection name="CLOB" />
+		</field>
 		<field name="definition" type="String">
 			<hint-collection name="CLOB" />
 		</field>

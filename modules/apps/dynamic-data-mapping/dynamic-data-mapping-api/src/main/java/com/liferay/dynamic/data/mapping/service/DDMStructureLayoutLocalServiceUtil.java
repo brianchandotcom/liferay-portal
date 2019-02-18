@@ -62,6 +62,17 @@ public class DDMStructureLayoutLocalServiceUtil {
 			ddmFormLayout, serviceContext);
 	}
 
+	public static com.liferay.dynamic.data.mapping.model.DDMStructureLayout addStructureLayout(
+		long userId, long groupId, long structureVersionId,
+		java.util.Map<java.util.Locale, String> name,
+		java.util.Map<java.util.Locale, String> description, String definition,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addStructureLayout(userId, groupId, structureVersionId,
+			name, description, definition, serviceContext);
+	}
+
 	/**
 	* Creates a new ddm structure layout with the primary key. Does not add the ddm structure layout to the database.
 	*
@@ -360,6 +371,17 @@ public class DDMStructureLayoutLocalServiceUtil {
 		return getService()
 				   .updateStructureLayout(structureLayoutId, ddmFormLayout,
 			serviceContext);
+	}
+
+	public static com.liferay.dynamic.data.mapping.model.DDMStructureLayout updateStructureLayout(
+		long structureLayoutId, long structureVersionId,
+		java.util.Map<java.util.Locale, String> name,
+		java.util.Map<java.util.Locale, String> description, String definition,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateStructureLayout(structureLayoutId,
+			structureVersionId, name, description, definition, serviceContext);
 	}
 
 	public static DDMStructureLayoutLocalService getService() {

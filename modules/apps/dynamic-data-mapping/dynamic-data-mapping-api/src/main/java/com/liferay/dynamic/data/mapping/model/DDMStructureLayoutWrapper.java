@@ -54,6 +54,8 @@ public class DDMStructureLayoutWrapper extends BaseModelWrapper<DDMStructureLayo
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("structureVersionId", getStructureVersionId());
+		attributes.put("name", getName());
+		attributes.put("description", getDescription());
 		attributes.put("definition", getDefinition());
 
 		return attributes;
@@ -115,11 +117,28 @@ public class DDMStructureLayoutWrapper extends BaseModelWrapper<DDMStructureLayo
 			setStructureVersionId(structureVersionId);
 		}
 
+		String name = (String)attributes.get("name");
+
+		if (name != null) {
+			setName(name);
+		}
+
+		String description = (String)attributes.get("description");
+
+		if (description != null) {
+			setDescription(description);
+		}
+
 		String definition = (String)attributes.get("definition");
 
 		if (definition != null) {
 			setDefinition(definition);
 		}
+	}
+
+	@Override
+	public String[] getAvailableLanguageIds() {
+		return model.getAvailableLanguageIds();
 	}
 
 	/**
@@ -147,6 +166,11 @@ public class DDMStructureLayoutWrapper extends BaseModelWrapper<DDMStructureLayo
 		return model.getDDMFormLayout();
 	}
 
+	@Override
+	public String getDefaultLanguageId() {
+		return model.getDefaultLanguageId();
+	}
+
 	/**
 	* Returns the definition of this ddm structure layout.
 	*
@@ -155,6 +179,82 @@ public class DDMStructureLayoutWrapper extends BaseModelWrapper<DDMStructureLayo
 	@Override
 	public String getDefinition() {
 		return model.getDefinition();
+	}
+
+	/**
+	* Returns the description of this ddm structure layout.
+	*
+	* @return the description of this ddm structure layout
+	*/
+	@Override
+	public String getDescription() {
+		return model.getDescription();
+	}
+
+	/**
+	* Returns the localized description of this ddm structure layout in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param locale the locale of the language
+	* @return the localized description of this ddm structure layout
+	*/
+	@Override
+	public String getDescription(java.util.Locale locale) {
+		return model.getDescription(locale);
+	}
+
+	/**
+	* Returns the localized description of this ddm structure layout in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param locale the local of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized description of this ddm structure layout. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	*/
+	@Override
+	public String getDescription(java.util.Locale locale, boolean useDefault) {
+		return model.getDescription(locale, useDefault);
+	}
+
+	/**
+	* Returns the localized description of this ddm structure layout in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @return the localized description of this ddm structure layout
+	*/
+	@Override
+	public String getDescription(String languageId) {
+		return model.getDescription(languageId);
+	}
+
+	/**
+	* Returns the localized description of this ddm structure layout in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized description of this ddm structure layout
+	*/
+	@Override
+	public String getDescription(String languageId, boolean useDefault) {
+		return model.getDescription(languageId, useDefault);
+	}
+
+	@Override
+	public String getDescriptionCurrentLanguageId() {
+		return model.getDescriptionCurrentLanguageId();
+	}
+
+	@Override
+	public String getDescriptionCurrentValue() {
+		return model.getDescriptionCurrentValue();
+	}
+
+	/**
+	* Returns a map of the locales and localized descriptions of this ddm structure layout.
+	*
+	* @return the locales and localized descriptions of this ddm structure layout
+	*/
+	@Override
+	public Map<java.util.Locale, String> getDescriptionMap() {
+		return model.getDescriptionMap();
 	}
 
 	/**
@@ -175,6 +275,82 @@ public class DDMStructureLayoutWrapper extends BaseModelWrapper<DDMStructureLayo
 	@Override
 	public Date getModifiedDate() {
 		return model.getModifiedDate();
+	}
+
+	/**
+	* Returns the name of this ddm structure layout.
+	*
+	* @return the name of this ddm structure layout
+	*/
+	@Override
+	public String getName() {
+		return model.getName();
+	}
+
+	/**
+	* Returns the localized name of this ddm structure layout in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param locale the locale of the language
+	* @return the localized name of this ddm structure layout
+	*/
+	@Override
+	public String getName(java.util.Locale locale) {
+		return model.getName(locale);
+	}
+
+	/**
+	* Returns the localized name of this ddm structure layout in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param locale the local of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized name of this ddm structure layout. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	*/
+	@Override
+	public String getName(java.util.Locale locale, boolean useDefault) {
+		return model.getName(locale, useDefault);
+	}
+
+	/**
+	* Returns the localized name of this ddm structure layout in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @return the localized name of this ddm structure layout
+	*/
+	@Override
+	public String getName(String languageId) {
+		return model.getName(languageId);
+	}
+
+	/**
+	* Returns the localized name of this ddm structure layout in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized name of this ddm structure layout
+	*/
+	@Override
+	public String getName(String languageId, boolean useDefault) {
+		return model.getName(languageId, useDefault);
+	}
+
+	@Override
+	public String getNameCurrentLanguageId() {
+		return model.getNameCurrentLanguageId();
+	}
+
+	@Override
+	public String getNameCurrentValue() {
+		return model.getNameCurrentValue();
+	}
+
+	/**
+	* Returns a map of the locales and localized names of this ddm structure layout.
+	*
+	* @return the locales and localized names of this ddm structure layout
+	*/
+	@Override
+	public Map<java.util.Locale, String> getNameMap() {
+		return model.getNameMap();
 	}
 
 	/**
@@ -252,6 +428,19 @@ public class DDMStructureLayoutWrapper extends BaseModelWrapper<DDMStructureLayo
 		model.persist();
 	}
 
+	@Override
+	public void prepareLocalizedFieldsForImport()
+		throws com.liferay.portal.kernel.exception.LocaleException {
+		model.prepareLocalizedFieldsForImport();
+	}
+
+	@Override
+	public void prepareLocalizedFieldsForImport(
+		java.util.Locale defaultImportLocale)
+		throws com.liferay.portal.kernel.exception.LocaleException {
+		model.prepareLocalizedFieldsForImport(defaultImportLocale);
+	}
+
 	/**
 	* Sets the company ID of this ddm structure layout.
 	*
@@ -283,6 +472,68 @@ public class DDMStructureLayoutWrapper extends BaseModelWrapper<DDMStructureLayo
 	}
 
 	/**
+	* Sets the description of this ddm structure layout.
+	*
+	* @param description the description of this ddm structure layout
+	*/
+	@Override
+	public void setDescription(String description) {
+		model.setDescription(description);
+	}
+
+	/**
+	* Sets the localized description of this ddm structure layout in the language.
+	*
+	* @param description the localized description of this ddm structure layout
+	* @param locale the locale of the language
+	*/
+	@Override
+	public void setDescription(String description, java.util.Locale locale) {
+		model.setDescription(description, locale);
+	}
+
+	/**
+	* Sets the localized description of this ddm structure layout in the language, and sets the default locale.
+	*
+	* @param description the localized description of this ddm structure layout
+	* @param locale the locale of the language
+	* @param defaultLocale the default locale
+	*/
+	@Override
+	public void setDescription(String description, java.util.Locale locale,
+		java.util.Locale defaultLocale) {
+		model.setDescription(description, locale, defaultLocale);
+	}
+
+	@Override
+	public void setDescriptionCurrentLanguageId(String languageId) {
+		model.setDescriptionCurrentLanguageId(languageId);
+	}
+
+	/**
+	* Sets the localized descriptions of this ddm structure layout from the map of locales and localized descriptions.
+	*
+	* @param descriptionMap the locales and localized descriptions of this ddm structure layout
+	*/
+	@Override
+	public void setDescriptionMap(Map<java.util.Locale, String> descriptionMap) {
+		model.setDescriptionMap(descriptionMap);
+	}
+
+	/**
+	* Sets the localized descriptions of this ddm structure layout from the map of locales and localized descriptions, and sets the default locale.
+	*
+	* @param descriptionMap the locales and localized descriptions of this ddm structure layout
+	* @param defaultLocale the default locale
+	*/
+	@Override
+	public void setDescriptionMap(
+		Map<java.util.Locale, String> descriptionMap,
+		java.util.Locale defaultLocale) {
+		model.setDescriptionMap(descriptionMap, defaultLocale);
+	}
+
+	/**
 	* Sets the group ID of this ddm structure layout.
 	*
 	* @param groupId the group ID of this ddm structure layout
@@ -300,6 +551,67 @@ public class DDMStructureLayoutWrapper extends BaseModelWrapper<DDMStructureLayo
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		model.setModifiedDate(modifiedDate);
+	}
+
+	/**
+	* Sets the name of this ddm structure layout.
+	*
+	* @param name the name of this ddm structure layout
+	*/
+	@Override
+	public void setName(String name) {
+		model.setName(name);
+	}
+
+	/**
+	* Sets the localized name of this ddm structure layout in the language.
+	*
+	* @param name the localized name of this ddm structure layout
+	* @param locale the locale of the language
+	*/
+	@Override
+	public void setName(String name, java.util.Locale locale) {
+		model.setName(name, locale);
+	}
+
+	/**
+	* Sets the localized name of this ddm structure layout in the language, and sets the default locale.
+	*
+	* @param name the localized name of this ddm structure layout
+	* @param locale the locale of the language
+	* @param defaultLocale the default locale
+	*/
+	@Override
+	public void setName(String name, java.util.Locale locale,
+		java.util.Locale defaultLocale) {
+		model.setName(name, locale, defaultLocale);
+	}
+
+	@Override
+	public void setNameCurrentLanguageId(String languageId) {
+		model.setNameCurrentLanguageId(languageId);
+	}
+
+	/**
+	* Sets the localized names of this ddm structure layout from the map of locales and localized names.
+	*
+	* @param nameMap the locales and localized names of this ddm structure layout
+	*/
+	@Override
+	public void setNameMap(Map<java.util.Locale, String> nameMap) {
+		model.setNameMap(nameMap);
+	}
+
+	/**
+	* Sets the localized names of this ddm structure layout from the map of locales and localized names, and sets the default locale.
+	*
+	* @param nameMap the locales and localized names of this ddm structure layout
+	* @param defaultLocale the default locale
+	*/
+	@Override
+	public void setNameMap(Map<java.util.Locale, String> nameMap,
+		java.util.Locale defaultLocale) {
+		model.setNameMap(nameMap, defaultLocale);
 	}
 
 	/**

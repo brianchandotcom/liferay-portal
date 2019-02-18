@@ -44,6 +44,8 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * Provides the local service interface for DDMStructureLayout. Methods of this
@@ -78,6 +80,12 @@ public interface DDMStructureLayoutLocalService extends BaseLocalService,
 
 	public DDMStructureLayout addStructureLayout(long userId, long groupId,
 		long structureVersionId, DDMFormLayout ddmFormLayout,
+		ServiceContext serviceContext) throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public DDMStructureLayout addStructureLayout(long userId, long groupId,
+		long structureVersionId, Map<Locale, String> name,
+		Map<Locale, String> description, String definition,
 		ServiceContext serviceContext) throws PortalException;
 
 	/**
@@ -320,4 +328,10 @@ public interface DDMStructureLayoutLocalService extends BaseLocalService,
 	public DDMStructureLayout updateStructureLayout(long structureLayoutId,
 		DDMFormLayout ddmFormLayout, ServiceContext serviceContext)
 		throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public DDMStructureLayout updateStructureLayout(long structureLayoutId,
+		long structureVersionId, Map<Locale, String> name,
+		Map<Locale, String> description, String definition,
+		ServiceContext serviceContext) throws PortalException;
 }

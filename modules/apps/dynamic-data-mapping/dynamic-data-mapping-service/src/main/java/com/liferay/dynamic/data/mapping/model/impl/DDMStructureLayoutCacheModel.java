@@ -65,7 +65,7 @@ public class DDMStructureLayoutCacheModel implements CacheModel<DDMStructureLayo
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -85,6 +85,10 @@ public class DDMStructureLayoutCacheModel implements CacheModel<DDMStructureLayo
 		sb.append(modifiedDate);
 		sb.append(", structureVersionId=");
 		sb.append(structureVersionId);
+		sb.append(", name=");
+		sb.append(name);
+		sb.append(", description=");
+		sb.append(description);
 		sb.append(", definition=");
 		sb.append(definition);
 		sb.append("}");
@@ -131,6 +135,20 @@ public class DDMStructureLayoutCacheModel implements CacheModel<DDMStructureLayo
 
 		ddmStructureLayoutImpl.setStructureVersionId(structureVersionId);
 
+		if (name == null) {
+			ddmStructureLayoutImpl.setName("");
+		}
+		else {
+			ddmStructureLayoutImpl.setName(name);
+		}
+
+		if (description == null) {
+			ddmStructureLayoutImpl.setDescription("");
+		}
+		else {
+			ddmStructureLayoutImpl.setDescription(description);
+		}
+
 		if (definition == null) {
 			ddmStructureLayoutImpl.setDefinition("");
 		}
@@ -162,6 +180,8 @@ public class DDMStructureLayoutCacheModel implements CacheModel<DDMStructureLayo
 		modifiedDate = objectInput.readLong();
 
 		structureVersionId = objectInput.readLong();
+		name = objectInput.readUTF();
+		description = objectInput.readUTF();
 		definition = objectInput.readUTF();
 
 		_ddmFormLayout = (com.liferay.dynamic.data.mapping.model.DDMFormLayout)objectInput.readObject();
@@ -197,6 +217,20 @@ public class DDMStructureLayoutCacheModel implements CacheModel<DDMStructureLayo
 
 		objectOutput.writeLong(structureVersionId);
 
+		if (name == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(name);
+		}
+
+		if (description == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(description);
+		}
+
 		if (definition == null) {
 			objectOutput.writeUTF("");
 		}
@@ -216,6 +250,8 @@ public class DDMStructureLayoutCacheModel implements CacheModel<DDMStructureLayo
 	public long createDate;
 	public long modifiedDate;
 	public long structureVersionId;
+	public String name;
+	public String description;
 	public String definition;
 	public com.liferay.dynamic.data.mapping.model.DDMFormLayout _ddmFormLayout;
 }

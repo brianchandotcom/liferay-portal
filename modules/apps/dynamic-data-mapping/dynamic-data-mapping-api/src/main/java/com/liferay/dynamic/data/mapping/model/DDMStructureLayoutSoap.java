@@ -42,6 +42,8 @@ public class DDMStructureLayoutSoap implements Serializable {
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setStructureVersionId(model.getStructureVersionId());
+		soapModel.setName(model.getName());
+		soapModel.setDescription(model.getDescription());
 		soapModel.setDefinition(model.getDefinition());
 
 		return soapModel;
@@ -170,6 +172,22 @@ public class DDMStructureLayoutSoap implements Serializable {
 		_structureVersionId = structureVersionId;
 	}
 
+	public String getName() {
+		return _name;
+	}
+
+	public void setName(String name) {
+		_name = name;
+	}
+
+	public String getDescription() {
+		return _description;
+	}
+
+	public void setDescription(String description) {
+		_description = description;
+	}
+
 	public String getDefinition() {
 		return _definition;
 	}
@@ -187,5 +205,7 @@ public class DDMStructureLayoutSoap implements Serializable {
 	private Date _createDate;
 	private Date _modifiedDate;
 	private long _structureVersionId;
+	private String _name;
+	private String _description;
 	private String _definition;
 }

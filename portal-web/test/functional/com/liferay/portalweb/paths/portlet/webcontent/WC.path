@@ -41,7 +41,7 @@
 <!--ENTRY_CARDS-->
 <tr>
 	<td>ENTRY_CARDS_THUMBNAIL</td>
-	<td>//li[contains(@data-title,'${key_webContentTitle}')]//div[contains(@class,'vertical-card-container')]</td>
+	<td>//li[contains(@data-title,'${key_webContentTitle}')]//div[contains(@class,'card')]//a[contains(.,'${key_webContentTitle}')]</td>
 	<td></td>
 </tr>
 <tr>

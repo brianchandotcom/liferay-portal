@@ -339,12 +339,33 @@ public class KaleoInstanceLocalServiceUtil {
 			completed, start, end, orderByComparator, serviceContext);
 	}
 
+	public static java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoInstance> search(
+		Long userId, String assetDescription, String assetTitle,
+		String assetType, String nodeName, String kaleoDefinitionName,
+		Boolean completed, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.workflow.kaleo.model.KaleoInstance> orderByComparator,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
+		return getService()
+				   .search(userId, assetDescription, assetTitle, assetType,
+			nodeName, kaleoDefinitionName, completed, start, end,
+			orderByComparator, serviceContext);
+	}
+
 	public static int searchCount(Long userId, String assetType,
 		String nodeName, String kaleoDefinitionName, Boolean completed,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
 		return getService()
 				   .searchCount(userId, assetType, nodeName,
 			kaleoDefinitionName, completed, serviceContext);
+	}
+
+	public static int searchCount(Long userId, String assetDescription,
+		String assetTitle, String assetType, String nodeName,
+		String kaleoDefinitionName, Boolean completed,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
+		return getService()
+				   .searchCount(userId, assetDescription, assetTitle,
+			assetType, nodeName, kaleoDefinitionName, completed, serviceContext);
 	}
 
 	/**

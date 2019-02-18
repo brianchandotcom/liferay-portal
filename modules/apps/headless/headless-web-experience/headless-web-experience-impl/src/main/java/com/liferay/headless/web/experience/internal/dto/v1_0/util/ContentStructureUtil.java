@@ -81,6 +81,40 @@ public class ContentStructureUtil {
 		};
 	}
 
+	public static String toDataType(DDMFormField ddmFormField) {
+		String type = ddmFormField.getType();
+
+		if (DDMFormFieldType.DOCUMENT_LIBRARY.equals(type)) {
+			return "document";
+		}
+		else if (DDMFormFieldType.JOURNAL_ARTICLE.equals(type)) {
+			return "structuredContent";
+		}
+		else if (DDMFormFieldType.LINK_TO_PAGE.equals(type)) {
+			return "url";
+		}
+		else if (DDMFormFieldType.RADIO.equals(type)) {
+			return "string";
+		}
+
+		return ddmFormField.getDataType();
+	}
+
+	public static String toInputControl(DDMFormField ddmFormField) {
+		String type = ddmFormField.getType();
+
+		if (DDMFormFieldType.CHECKBOX.equals(type) ||
+			DDMFormFieldType.RADIO.equals(type) ||
+			DDMFormFieldType.SELECT.equals(type) ||
+			DDMFormFieldType.TEXT.equals(type) ||
+			DDMFormFieldType.TEXT_AREA.equals(type)) {
+
+			return type;
+		}
+
+		return null;
+	}
+
 	private static Fields _toFields(DDMFormField ddmFormField, Locale locale) {
 		return new FieldsImpl() {
 			{
@@ -94,42 +128,12 @@ public class ContentStructureUtil {
 				required = ddmFormField.isRequired();
 				showLabel = ddmFormField.isShowLabel();
 
-				setDataType(
-					() -> {
-						String type = ddmFormField.getType();
-
-						if (DDMFormFieldType.DOCUMENT_LIBRARY.equals(type)) {
-							return "document";
-						}
-						else if (DDMFormFieldType.JOURNAL_ARTICLE.equals(
-									type)) {
-
-							return "structuredContent";
-						}
-						else if (DDMFormFieldType.LINK_TO_PAGE.equals(type)) {
-							return "url";
-						}
-						else if (DDMFormFieldType.RADIO.equals(type)) {
-							return "string";
-						}
-
-						return ddmFormField.getDataType();
-					});
-				setInputControl(
-					() -> {
-						String type = ddmFormField.getType();
-
-						if (DDMFormFieldType.CHECKBOX.equals(type) ||
-							DDMFormFieldType.RADIO.equals(type) ||
-							DDMFormFieldType.SELECT.equals(type) ||
-							DDMFormFieldType.TEXT.equals(type) ||
-							DDMFormFieldType.TEXT_AREA.equals(type)) {
-
-							return type;
-						}
-
-						return null;
-					});
+				setDataType(toDataType(ddmFormField));
+				setInputControl(toInputControl(ddmFormField));
+				setLabel(_toString(ddmFormField.getLabel(), locale));
+				setLocalizable(ddmFormField.isLocalizable());
+				setMultiple(ddmFormField.isMultiple());
+				setName(ddmFormField.getName());
 				setOptions(
 					() -> {
 						return Optional.ofNullable(

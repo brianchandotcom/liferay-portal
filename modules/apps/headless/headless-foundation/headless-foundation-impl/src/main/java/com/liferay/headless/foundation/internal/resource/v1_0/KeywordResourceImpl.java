@@ -21,15 +21,31 @@ import com.liferay.asset.kernel.service.AssetTagService;
 import com.liferay.headless.foundation.dto.v1_0.Keyword;
 import com.liferay.headless.foundation.internal.dto.v1_0.KeywordImpl;
 import com.liferay.headless.foundation.internal.dto.v1_0.util.CreatorUtil;
+import com.liferay.headless.foundation.internal.odata.entity.v1_0.KeywordEntityModel;
 import com.liferay.headless.foundation.resource.v1_0.KeywordResource;
+import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.IndexerRegistry;
+import com.liferay.portal.kernel.search.SearchResultPermissionFilterFactory;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.service.ClassNameService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-import com.liferay.portlet.asset.util.comparator.AssetTagNameComparator;
+import com.liferay.portal.vulcan.resource.EntityModelResource;
+import com.liferay.portal.vulcan.util.SearchUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.ws.rs.ClientErrorException;
+import javax.ws.rs.core.MultivaluedMap;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -42,7 +58,8 @@ import org.osgi.service.component.annotations.ServiceScope;
 	properties = "OSGI-INF/liferay/rest/v1_0/keyword.properties",
 	scope = ServiceScope.PROTOTYPE, service = KeywordResource.class
 )
-public class KeywordResourceImpl extends BaseKeywordResourceImpl {
+public class KeywordResourceImpl
+	extends BaseKeywordResourceImpl implements EntityModelResource {
 
 	@Override
 	public boolean deleteKeyword(Long keywordId) throws Exception {
@@ -53,15 +70,39 @@ public class KeywordResourceImpl extends BaseKeywordResourceImpl {
 
 	@Override
 	public Page<Keyword> getContentSpaceKeywordsPage(
-		Long contentSpaceId, Pagination pagination) {
+			Long contentSpaceId, Filter filter, Pagination pagination,
+			Sort[] sorts)
+		throws Exception {
+
+		List<AssetTag> assetTags = new ArrayList<>();
+
+		Hits hits = SearchUtil.getHits(
+			filter, _indexerRegistry.nullSafeGetIndexer(AssetTag.class),
+			pagination,
+			booleanQuery -> {
+			},
+			queryConfig ->
+				queryConfig.setSelectedFieldNames(Field.ASSET_TAG_IDS),
+			searchContext -> {
+				searchContext.setCompanyId(company.getCompanyId());
+				searchContext.setGroupIds(new long[] {contentSpaceId});
+			},
+			_searchResultPermissionFilterFactory, sorts);
+
+		for (Document document : hits.getDocs()) {
+			assetTags.add(
+				_assetTagService.getTag(
+					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK))));
+		}
 
 		return Page.of(
-			transform(
-				_assetTagService.getGroupTags(
-					contentSpaceId, pagination.getStartPosition(),
-					pagination.getEndPosition(), new AssetTagNameComparator()),
-				this::_toKeyword),
-			pagination, _assetTagService.getGroupTagsCount(contentSpaceId));
+			transform(assetTags, this::_toKeyword), pagination,
+			assetTags.size());
+	}
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
+		return _keywordEntityModel;
 	}
 
 	@Override
@@ -130,11 +171,24 @@ public class KeywordResourceImpl extends BaseKeywordResourceImpl {
 		};
 	}
 
+	private static final KeywordEntityModel _keywordEntityModel =
+		new KeywordEntityModel();
+
 	@Reference
 	private AssetTagService _assetTagService;
 
 	@Reference
+	private ClassNameService _classNameService;
+
+	@Reference
+	private IndexerRegistry _indexerRegistry;
+
+	@Reference
 	private Portal _portal;
+
+	@Reference
+	private SearchResultPermissionFilterFactory
+		_searchResultPermissionFilterFactory;
 
 	@Reference
 	private UserLocalService _userLocalService;

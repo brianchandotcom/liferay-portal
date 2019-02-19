@@ -23,42 +23,23 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 
-import java.io.Serializable;
-
-import java.util.Collections;
-import java.util.Locale;
 import java.util.Map;
-import java.util.ResourceBundle;
-import java.util.Set;
-import java.util.stream.Stream;
 
 /**
  * @author Adolfo Pérez
  */
-public class SingleFolderBulkSelection implements BulkSelection<Folder> {
+public class SingleFolderBulkSelection
+	extends BaseSingleEntryBulkSelection<Folder> {
 
 	public SingleFolderBulkSelection(
 		long folderId, Map<String, String[]> parameterMap,
 		ResourceBundleLoader resourceBundleLoader, Language language,
 		DLAppService dlAppService) {
 
+		super(folderId, parameterMap, resourceBundleLoader, language);
+
 		_folderId = folderId;
-		_parameterMap = parameterMap;
-		_resourceBundleLoader = resourceBundleLoader;
-		_language = language;
 		_dlAppService = dlAppService;
-	}
-
-	@Override
-	public String describe(Locale locale) throws PortalException {
-		ResourceBundle resourceBundle =
-			_resourceBundleLoader.loadResourceBundle(locale);
-
-		Folder folder = _dlAppService.getFolder(_folderId);
-
-		return _language.format(
-			resourceBundle, "these-changes-will-be-applied-to-x",
-			folder.getName());
 	}
 
 	@Override
@@ -69,37 +50,23 @@ public class SingleFolderBulkSelection implements BulkSelection<Folder> {
 	}
 
 	@Override
-	public Map<String, String[]> getParameterMap() {
-		return _parameterMap;
-	}
-
-	@Override
-	public boolean isMultiple() {
-		return false;
-	}
-
-	@Override
-	public Serializable serialize() {
-		return String.valueOf(_folderId);
-	}
-
-	@Override
-	public Stream<Folder> stream() throws PortalException {
-		Set<Folder> set = Collections.singleton(
-			_dlAppService.getFolder(_folderId));
-
-		return set.stream();
-	}
-
-	@Override
 	public BulkSelection<AssetEntry> toAssetEntryBulkSelection() {
 		throw new UnsupportedOperationException("Folder is not an asset");
 	}
 
+	@Override
+	protected Folder getEntry() throws PortalException {
+		return _dlAppService.getFolder(_folderId);
+	}
+
+	@Override
+	protected String getEntryName() throws PortalException {
+		Folder folder = getEntry();
+
+		return folder.getName();
+	}
+
 	private final DLAppService _dlAppService;
 	private final long _folderId;
-	private final Language _language;
-	private final Map<String, String[]> _parameterMap;
-	private final ResourceBundleLoader _resourceBundleLoader;
 
 }

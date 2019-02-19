@@ -20,8 +20,6 @@ import com.liferay.bulk.selection.BulkSelectionFactory;
 import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.petra.reflect.ReflectionUtil;
-import com.liferay.petra.string.StringPool;
-import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
@@ -29,42 +27,22 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 
-import java.io.Serializable;
-
-import java.util.Arrays;
-import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
-import java.util.ResourceBundle;
-import java.util.stream.LongStream;
-import java.util.stream.Stream;
 
 /**
  * @author Adolfo Pérez
  */
 public class MultipleFileShortcutBulkSelection
-	implements BulkSelection<FileShortcut> {
+	extends BaseMultipleEntryBulkSelection<FileShortcut> {
 
 	public MultipleFileShortcutBulkSelection(
 		long[] fileShortcutIds, Map<String, String[]> parameterMap,
 		ResourceBundleLoader resourceBundleLoader, Language language,
 		DLAppService dlAppService) {
 
-		_fileShortcutIds = fileShortcutIds;
-		_parameterMap = parameterMap;
-		_resourceBundleLoader = resourceBundleLoader;
-		_language = language;
+		super(fileShortcutIds, parameterMap, resourceBundleLoader, language);
+
 		_dlAppService = dlAppService;
-	}
-
-	@Override
-	public String describe(Locale locale) {
-		ResourceBundle resourceBundle =
-			_resourceBundleLoader.loadResourceBundle(locale);
-
-		return _language.format(
-			resourceBundle, "these-changes-will-be-applied-to-x-items",
-			_fileShortcutIds.length);
 	}
 
 	@Override
@@ -75,37 +53,12 @@ public class MultipleFileShortcutBulkSelection
 	}
 
 	@Override
-	public Map<String, String[]> getParameterMap() {
-		return _parameterMap;
-	}
-
-	@Override
-	public boolean isMultiple() {
-		return true;
-	}
-
-	@Override
-	public Serializable serialize() {
-		return StringUtil.merge(_fileShortcutIds, StringPool.COMMA);
-	}
-
-	@Override
-	public Stream<FileShortcut> stream() {
-		LongStream longStream = Arrays.stream(_fileShortcutIds);
-
-		return longStream.mapToObj(
-			this::_fetchFileShortcut
-		).filter(
-			Objects::nonNull
-		);
-	}
-
-	@Override
 	public BulkSelection<AssetEntry> toAssetEntryBulkSelection() {
 		throw new UnsupportedOperationException("FileShortcut is not an asset");
 	}
 
-	private FileShortcut _fetchFileShortcut(long fileShortcutId) {
+	@Override
+	protected FileShortcut fetchEntry(long fileShortcutId) {
 		try {
 			return _dlAppService.getFileShortcut(fileShortcutId);
 		}
@@ -125,9 +78,5 @@ public class MultipleFileShortcutBulkSelection
 		MultipleFileShortcutBulkSelection.class);
 
 	private final DLAppService _dlAppService;
-	private final long[] _fileShortcutIds;
-	private final Language _language;
-	private final Map<String, String[]> _parameterMap;
-	private final ResourceBundleLoader _resourceBundleLoader;
 
 }

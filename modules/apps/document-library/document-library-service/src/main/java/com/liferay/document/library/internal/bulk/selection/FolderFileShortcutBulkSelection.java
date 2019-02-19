@@ -29,11 +29,7 @@ import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
-import java.io.Serializable;
-
-import java.util.Locale;
 import java.util.Map;
-import java.util.ResourceBundle;
 import java.util.Spliterator;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
@@ -43,36 +39,19 @@ import java.util.stream.StreamSupport;
  * @author Adolfo Pérez
  */
 public class FolderFileShortcutBulkSelection
-	implements BulkSelection<FileShortcut> {
+	extends BaseContainerEntryBulkSelection<FileShortcut> {
 
 	public FolderFileShortcutBulkSelection(
 		long repositoryId, long folderId, Map<String, String[]> parameterMap,
 		ResourceBundleLoader resourceBundleLoader, Language language,
 		RepositoryProvider repositoryProvider, DLAppService dlAppService) {
 
+		super(folderId, parameterMap, resourceBundleLoader, language);
+
 		_repositoryId = repositoryId;
 		_folderId = folderId;
-		_parameterMap = parameterMap;
-		_resourceBundleLoader = resourceBundleLoader;
-		_language = language;
 		_repositoryProvider = repositoryProvider;
 		_dlAppService = dlAppService;
-	}
-
-	@Override
-	public String describe(Locale locale) throws PortalException {
-		ResourceBundle resourceBundle =
-			_resourceBundleLoader.loadResourceBundle(locale);
-
-		int fileEntriesAndFileShortcutsCount =
-			_dlAppService.getFileEntriesAndFileShortcutsCount(
-				_repositoryId, _folderId, WorkflowConstants.STATUS_APPROVED);
-		int fileEntriesCount = _dlAppService.getFileEntriesCount(
-			_repositoryId, _folderId);
-
-		return _language.format(
-			resourceBundle, "these-changes-will-be-applied-to-x-items",
-			fileEntriesAndFileShortcutsCount - fileEntriesCount);
 	}
 
 	@Override
@@ -80,21 +59,6 @@ public class FolderFileShortcutBulkSelection
 		getBulkSelectionFactoryClass() {
 
 		return FileShortcutBulkSelectionFactory.class;
-	}
-
-	@Override
-	public Map<String, String[]> getParameterMap() {
-		return _parameterMap;
-	}
-
-	@Override
-	public boolean isMultiple() {
-		return true;
-	}
-
-	@Override
-	public Serializable serialize() {
-		return "all:" + _folderId;
 	}
 
 	@Override
@@ -181,12 +145,20 @@ public class FolderFileShortcutBulkSelection
 		throw new UnsupportedOperationException("FileShortcut is not an asset");
 	}
 
+	@Override
+	protected int getEntriesCount() throws PortalException {
+		int fileEntriesAndFileShortcutsCount =
+			_dlAppService.getFileEntriesAndFileShortcutsCount(
+				_repositoryId, _folderId, WorkflowConstants.STATUS_APPROVED);
+		int fileEntriesCount = _dlAppService.getFileEntriesCount(
+			_repositoryId, _folderId);
+
+		return fileEntriesAndFileShortcutsCount - fileEntriesCount;
+	}
+
 	private final DLAppService _dlAppService;
 	private final long _folderId;
-	private final Language _language;
-	private final Map<String, String[]> _parameterMap;
 	private final long _repositoryId;
 	private final RepositoryProvider _repositoryProvider;
-	private final ResourceBundleLoader _resourceBundleLoader;
 
 }

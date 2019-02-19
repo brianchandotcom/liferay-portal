@@ -28,11 +28,7 @@ import com.liferay.portal.kernel.repository.model.BaseRepositoryModelOperation;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 
-import java.io.Serializable;
-
-import java.util.Locale;
 import java.util.Map;
-import java.util.ResourceBundle;
 import java.util.Spliterator;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
@@ -41,30 +37,20 @@ import java.util.stream.StreamSupport;
 /**
  * @author Adolfo Pérez
  */
-public class FolderFolderBulkSelection implements BulkSelection<Folder> {
+public class FolderFolderBulkSelection
+	extends BaseContainerEntryBulkSelection<Folder> {
 
 	public FolderFolderBulkSelection(
 		long repositoryId, long folderId, Map<String, String[]> parameterMap,
 		ResourceBundleLoader resourceBundleLoader, Language language,
 		RepositoryProvider repositoryProvider, DLAppService dlAppService) {
 
+		super(folderId, parameterMap, resourceBundleLoader, language);
+
 		_repositoryId = repositoryId;
 		_folderId = folderId;
-		_parameterMap = parameterMap;
-		_resourceBundleLoader = resourceBundleLoader;
-		_language = language;
 		_repositoryProvider = repositoryProvider;
 		_dlAppService = dlAppService;
-	}
-
-	@Override
-	public String describe(Locale locale) throws PortalException {
-		ResourceBundle resourceBundle =
-			_resourceBundleLoader.loadResourceBundle(locale);
-
-		return _language.format(
-			resourceBundle, "these-changes-will-be-applied-to-x-items",
-			_dlAppService.getFoldersCount(_repositoryId, _folderId));
 	}
 
 	@Override
@@ -72,21 +58,6 @@ public class FolderFolderBulkSelection implements BulkSelection<Folder> {
 		getBulkSelectionFactoryClass() {
 
 		return FolderBulkSelectionFactory.class;
-	}
-
-	@Override
-	public Map<String, String[]> getParameterMap() {
-		return _parameterMap;
-	}
-
-	@Override
-	public boolean isMultiple() {
-		return true;
-	}
-
-	@Override
-	public Serializable serialize() {
-		return "all:" + _folderId;
 	}
 
 	@Override
@@ -169,12 +140,14 @@ public class FolderFolderBulkSelection implements BulkSelection<Folder> {
 		throw new UnsupportedOperationException("Folder is not an asset");
 	}
 
+	@Override
+	protected int getEntriesCount() throws PortalException {
+		return _dlAppService.getFoldersCount(_repositoryId, _folderId);
+	}
+
 	private final DLAppService _dlAppService;
 	private final long _folderId;
-	private final Language _language;
-	private final Map<String, String[]> _parameterMap;
 	private final long _repositoryId;
 	private final RepositoryProvider _repositoryProvider;
-	private final ResourceBundleLoader _resourceBundleLoader;
 
 }

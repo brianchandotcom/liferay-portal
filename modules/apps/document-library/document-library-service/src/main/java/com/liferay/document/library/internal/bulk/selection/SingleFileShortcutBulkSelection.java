@@ -23,44 +23,23 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 
-import java.io.Serializable;
-
-import java.util.Collections;
-import java.util.Locale;
 import java.util.Map;
-import java.util.ResourceBundle;
-import java.util.Set;
-import java.util.stream.Stream;
 
 /**
  * @author Adolfo Pérez
  */
 public class SingleFileShortcutBulkSelection
-	implements BulkSelection<FileShortcut> {
+	extends BaseSingleEntryBulkSelection<FileShortcut> {
 
 	public SingleFileShortcutBulkSelection(
 		long fileShortcutId, Map<String, String[]> parameterMap,
 		ResourceBundleLoader resourceBundleLoader, Language language,
 		DLAppService dlAppService) {
 
+		super(fileShortcutId, parameterMap, resourceBundleLoader, language);
+
 		_fileShortcutId = fileShortcutId;
-		_parameterMap = parameterMap;
-		_resourceBundleLoader = resourceBundleLoader;
-		_language = language;
 		_dlAppService = dlAppService;
-	}
-
-	@Override
-	public String describe(Locale locale) throws PortalException {
-		ResourceBundle resourceBundle =
-			_resourceBundleLoader.loadResourceBundle(locale);
-
-		FileShortcut fileShortcut = _dlAppService.getFileShortcut(
-			_fileShortcutId);
-
-		return _language.format(
-			resourceBundle, "these-changes-will-be-applied-to-x",
-			fileShortcut.getToTitle());
 	}
 
 	@Override
@@ -71,37 +50,23 @@ public class SingleFileShortcutBulkSelection
 	}
 
 	@Override
-	public Map<String, String[]> getParameterMap() {
-		return _parameterMap;
-	}
-
-	@Override
-	public boolean isMultiple() {
-		return false;
-	}
-
-	@Override
-	public Serializable serialize() {
-		return String.valueOf(_fileShortcutId);
-	}
-
-	@Override
-	public Stream<FileShortcut> stream() throws PortalException {
-		Set<FileShortcut> set = Collections.singleton(
-			_dlAppService.getFileShortcut(_fileShortcutId));
-
-		return set.stream();
-	}
-
-	@Override
 	public BulkSelection<AssetEntry> toAssetEntryBulkSelection() {
 		throw new UnsupportedOperationException("FileShortcut is not an asset");
 	}
 
+	@Override
+	protected FileShortcut getEntry() throws PortalException {
+		return _dlAppService.getFileShortcut(_fileShortcutId);
+	}
+
+	@Override
+	protected String getEntryName() throws PortalException {
+		FileShortcut fileShortcut = getEntry();
+
+		return fileShortcut.getToTitle();
+	}
+
 	private final DLAppService _dlAppService;
 	private final long _fileShortcutId;
-	private final Language _language;
-	private final Map<String, String[]> _parameterMap;
-	private final ResourceBundleLoader _resourceBundleLoader;
 
 }

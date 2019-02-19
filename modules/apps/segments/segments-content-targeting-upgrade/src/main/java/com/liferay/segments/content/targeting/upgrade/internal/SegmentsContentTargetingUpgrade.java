@@ -14,10 +14,10 @@
 
 package com.liferay.segments.content.targeting.upgrade.internal;
 
-import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.segments.content.targeting.upgrade.internal.v1_0_0.UpgradeContentTargeting;
 import com.liferay.segments.content.targeting.upgrade.internal.v1_0_0.util.RuleConverterRegistry;
+import com.liferay.segments.service.SegmentsEntryLocalService;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -38,13 +38,13 @@ public class SegmentsContentTargetingUpgrade implements UpgradeStepRegistrator {
 		registry.register(
 			"0.0.0", "1.0.0",
 			new UpgradeContentTargeting(
-				_counterLocalService, _ruleConverterRegistry));
+				_ruleConverterRegistry, _segmentsEntryLocalService));
 	}
 
 	@Reference
-	private CounterLocalService _counterLocalService;
+	private RuleConverterRegistry _ruleConverterRegistry;
 
 	@Reference
-	private RuleConverterRegistry _ruleConverterRegistry;
+	private SegmentsEntryLocalService _segmentsEntryLocalService;
 
 }

@@ -14,21 +14,25 @@
 
 package com.liferay.segments.content.targeting.upgrade.internal.v1_0_0;
 
-import com.liferay.counter.kernel.service.CounterLocalService;
-import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
+import com.liferay.segments.constants.SegmentsConstants;
 import com.liferay.segments.content.targeting.upgrade.internal.v1_0_0.util.RuleConverter;
 import com.liferay.segments.content.targeting.upgrade.internal.v1_0_0.util.RuleConverterRegistry;
 import com.liferay.segments.criteria.Criteria;
 import com.liferay.segments.criteria.CriteriaSerializer;
+import com.liferay.segments.service.SegmentsEntryLocalService;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * @author Eduardo García
@@ -36,11 +40,11 @@ import java.sql.ResultSet;
 public class UpgradeContentTargeting extends UpgradeProcess {
 
 	public UpgradeContentTargeting(
-		CounterLocalService counterLocalService,
-		RuleConverterRegistry ruleConverterRegistry) {
+		RuleConverterRegistry ruleConverterRegistry,
+		SegmentsEntryLocalService segmentsEntryLocalService) {
 
-		_counterLocalService = counterLocalService;
 		_ruleConverterRegistry = ruleConverterRegistry;
+		_segmentsEntryLocalService = segmentsEntryLocalService;
 	}
 
 	@Override
@@ -122,20 +126,12 @@ public class UpgradeContentTargeting extends UpgradeProcess {
 	}
 
 	protected void upgradeContentTargetingUserSegments() throws Exception {
-		StringBundler sb = new StringBundler(4);
-
-		sb.append("insert into SegmentsEntry (segmentsEntryId, groupId, ");
-		sb.append("companyId, userId, userName, createDate, modifiedDate, ");
-		sb.append("name, description, active_, criteria, key_, type_) values ");
-		sb.append("(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-
 		try (LoggingTimer loggingTimer = new LoggingTimer();
 			PreparedStatement ps1 = connection.prepareStatement(
 				"select * from CT_UserSegment");
-			PreparedStatement ps2 =
-				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
-					connection, sb.toString());
 			ResultSet rs = ps1.executeQuery()) {
+
+			ServiceContext serviceContext = new ServiceContext();
 
 			while (rs.next()) {
 				long userSegmentId = rs.getLong("userSegmentId");
@@ -146,24 +142,20 @@ public class UpgradeContentTargeting extends UpgradeProcess {
 							userSegmentId);
 				}
 
-				ps2.setLong(1, _counterLocalService.increment());
-				ps2.setLong(2, rs.getLong("groupId"));
-				ps2.setLong(3, rs.getLong("companyId"));
-				ps2.setLong(4, rs.getLong("userId"));
-				ps2.setString(5, rs.getString("userName"));
-				ps2.setTimestamp(6, rs.getTimestamp("createDate"));
-				ps2.setTimestamp(7, rs.getTimestamp("modifiedDate"));
-				ps2.setString(8, rs.getString("name"));
-				ps2.setString(9, rs.getString("description"));
-				ps2.setBoolean(10, true);
-				ps2.setString(11, getCriteria(userSegmentId));
-				ps2.setString(12, "CT." + userSegmentId);
-				ps2.setString(13, User.class.getName());
+				Map<Locale, String> nameMap =
+					LocalizationUtil.getLocalizationMap(rs.getString("name"));
+				Map<Locale, String> descriptionMap =
+					LocalizationUtil.getLocalizationMap(
+						rs.getString("description"));
 
-				ps2.addBatch();
+				serviceContext.setScopeGroupId(rs.getLong("groupId"));
+				serviceContext.setUserId(rs.getLong("userId"));
+
+				_segmentsEntryLocalService.addSegmentsEntry(
+					nameMap, descriptionMap, true, getCriteria(userSegmentId),
+					"CT." + userSegmentId, SegmentsConstants.SOURCE_DEFAULT,
+					User.class.getName(), serviceContext);
 			}
-
-			ps2.executeBatch();
 		}
 	}
 
@@ -179,7 +171,7 @@ public class UpgradeContentTargeting extends UpgradeProcess {
 	private static final Log _log = LogFactoryUtil.getLog(
 		UpgradeContentTargeting.class);
 
-	private final CounterLocalService _counterLocalService;
 	private final RuleConverterRegistry _ruleConverterRegistry;
+	private final SegmentsEntryLocalService _segmentsEntryLocalService;
 
 }

@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.headless.collaboration.internal.jaxrs.exception.mapper;
+package com.liferay.headless.document.library.internal.jaxrs.exception.mapper;
 
-import com.liferay.friendly.url.exception.DuplicateFriendlyURLEntryException;
+import com.liferay.document.library.kernel.exception.FileExtensionException;
 
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -23,7 +23,7 @@ import javax.ws.rs.ext.ExceptionMapper;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * Converts any {@code DuplicateFriendlyURLEntryException} to a {@code 422}
+ * Converts any {@code FileExtensionException} to a {@code 422}
  * error.
  *
  * @author Alejandro Hernández
@@ -32,22 +32,22 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	property = {
 		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.extension.select=(osgi.jaxrs.name=Liferay.Headless.Collaboration)",
-		"osgi.jaxrs.name=Liferay.Vulcan.DuplicateFriendlyURLEntryExceptionMapper"
+		"osgi.jaxrs.extension.select=(osgi.jaxrs.name=Liferay.Headless.Document.Library)",
+		"osgi.jaxrs.name=Liferay.Vulcan.FileExtensionExceptionMapper"
 	},
 	service = ExceptionMapper.class
 )
-public class DuplicateFriendlyURLEntryExceptionMapper
-	implements ExceptionMapper<DuplicateFriendlyURLEntryException> {
+public class FileExtensionExceptionMapper
+	implements ExceptionMapper<FileExtensionException> {
 
 	@Override
-	public Response toResponse(DuplicateFriendlyURLEntryException dfurlee) {
+	public Response toResponse(FileExtensionException fee) {
 		return Response.status(
 			422
 		).type(
 			MediaType.TEXT_PLAIN
 		).entity(
-			"Duplicate friendly URL"
+			fee.getMessage()
 		).build();
 	}
 

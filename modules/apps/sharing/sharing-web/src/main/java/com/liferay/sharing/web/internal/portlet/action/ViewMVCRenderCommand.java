@@ -30,6 +30,7 @@ import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.portlet.ResourceURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -89,6 +90,16 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 		template.put(
 			"sharingEntryPermissionDisplayActionId",
 			SharingEntryPermissionDisplayAction.VIEW.getActionId());
+
+		ResourceURL sharingUserAutocompleteURL =
+			renderResponse.createResourceURL();
+
+		sharingUserAutocompleteURL.setResourceID("/sharing/users");
+
+		template.put(
+			"sharingUserAutocompleteURL",
+			sharingUserAutocompleteURL.toString());
+
 		template.put(
 			"spritemap",
 			themeDisplay.getPathThemeImages() + "/lexicon/icons.svg");

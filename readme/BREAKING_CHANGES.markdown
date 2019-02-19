@@ -206,8 +206,8 @@ the same results.
 
 Interface `TermsOfUseContentProvider` in package `com.liferay.portal.kernel.util`
 was moved to package `com.liferay.portal.kernel.term.of.use`.
-`TermsOfUseContentProviderRegistryUtil` in `com.liferay.portal.kernel.util` was
-moved to package `com.liferay.portal.internal.terms.of.use` and renamed to
+`TermsOfUseContentProviderRegistryUtil` in package `com.liferay.portal.kernel.util`
+was moved to package `com.liferay.portal.internal.terms.of.use` and renamed to
 `TermsOfUseContentProviderUtil`.
 The logic of getting `TermsOfUseContentProvider` was changed. Instead of always
 returning the first service registered, which is random and depends on the order
@@ -357,11 +357,12 @@ chance of package version lock down.
 
 #### What changed?
 
-Interface `com.liferay.portal.kernel.util.PredicateFilter` was replaced with
-`java.util.function.Predicate`. As a result of that, all implementations of the
-interface: `AggregatePredicateFilter`, `PrefixPredicateFilter` in package
-`com.liferay.portal.kernel.util`, `JavaScriptPortletResourcePredicateFilter` in
-package `com.liferay.portal.kernel.portlet` and `DDMFormFieldValuePredicateFilter`
+Interface `com.liferay.portal.kernel.util.PredicateFilter` was removed and
+replaced with `java.util.function.Predicate`. As a result of that, all
+implementations of the interface: `AggregatePredicateFilter`,
+`PrefixPredicateFilter` in package `com.liferay.portal.kernel.util`,
+`JavaScriptPortletResourcePredicateFilter` in package
+`com.liferay.portal.kernel.portlet` and `DDMFormFieldValuePredicateFilter`
 in package `com.liferay.dynamic.data.mapping.form.values.query.internal.model`
 were removed. `com.liferay.portal.kernel.util.ArrayUtil_IW` was regenerated.
 
@@ -413,7 +414,7 @@ This affects anyone used `com.liferay.portal.osgi.util.test.OSGiServiceUtil` and
 7.1. If there is still any usage of the class, replace it with its direct
 replacement `com.liferay.osgi.util.service.OSGiServiceUtil`. Replace usages of
 `UnsafeConsumer`, `UnsafeFunction` and `UnsafeRunnable` with corresponding interface
-in package `com.liferay.petra.function`
+in package `com.liferay.petra.function`.
 
 #### Why was this change made?
 

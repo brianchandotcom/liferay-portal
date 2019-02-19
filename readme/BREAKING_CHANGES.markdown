@@ -240,6 +240,34 @@ chance of package version lock down.
 
 ---------------------------------------
 
+### Remove HibernateConfigurationConverter and Converter
+- **Date:** 2019-Jan-07
+- **JIRA Ticket:** [LPS-88870](https://issues.liferay.com/browse/LPS-88870)
+
+#### What changed?
+
+Interface `com.liferay.portal.kernel.util.Converter` and its implementation
+`com.liferay.portal.spring.hibernate.HibernateConfigurationConverter` were
+removed.
+
+#### Who is affected?
+
+This removes the support of generating customized `portlet-hbm.xml` implemented
+by `HibernateConfigurationConverter`.
+Please refer to [LPS-5363](https://issues.liferay.com/browse/LPS-5363).
+
+#### How should I update my code?
+
+Remove usages of `HibernateConfigurationConverter`. Make sure the generated
+`portlet-hbm.xml` is accurate.
+
+#### Why was this change made?
+
+It's one of several steps to clean up kernel provider interfaces to reduce the
+chance of package version lock down.
+
+---------------------------------------
+
 ### Switch to use JDK Function and Supplier
 - **Date:** 2019-Jan-08
 - **JIRA Ticket:** [LPS-88911](https://issues.liferay.com/browse/LPS-88911)
@@ -268,6 +296,33 @@ chance of package version lock down.
 
 ---------------------------------------
 
+### Deprecate com.liferay.portal.service.InvokableService
+- **Date:** 2019-Jan-08
+- **JIRA Ticket:** [LPS-88912](https://issues.liferay.com/browse/LPS-88912)
+
+#### What changed?
+
+Interface `InvokableService` and `InvokableLocalService` in package
+`com.liferay.portal.kernel.service` were removed.
+
+#### Who is affected?
+
+This affects anyone who used `InvokableService` and `InvokableLocalService` in
+package `com.liferay.portal.kernel.service`.
+
+#### How should I update my code?
+
+Remove usages of `InvokableService` and `InvokableLocalService`. Make sure to
+use the latest version of `ServiceBuilder` to generate implementations for
+services in case there is any compile error after the removal.
+
+#### Why was this change made?
+
+It's one of several steps to clean up kernel provider interfaces to reduce the
+chance of package version lock down.
+
+---------------------------------------
+
 ### Drop support of ServiceLoaderCondition
 - **Date:** 2019-Jan-08
 - **JIRA Ticket:** [LPS-88913](https://issues.liferay.com/browse/LPS-88913)
@@ -288,37 +343,6 @@ This affects anyone used `ServiceLoaderCondition` and
 Remove usages of `ServiceLoaderCondition`. Update usages of `load` methods in
 `com.liferay.portal.kernel.util.ServiceLoader` according to the updated method
 signatures.
-
-#### Why was this change made?
-
-It's one of several steps to clean up kernel provider interfaces to reduce the
-chance of package version lock down.
-
----------------------------------------
-
-### Remove unsafe functional interfaces in package com.liferay.portal.kernel.util
-- **Date:** 2019-Jan-15
-- **JIRA Ticket:** [LPS-89223](https://issues.liferay.com/browse/LPS-89223)
-
-#### What changed?
-
-`com.liferay.portal.osgi.util.test.OSGiServiceUtil` was removed.
-`UnsafeConsumer`, `UnsafeFunction` and `UnsafeRunnable` in package
-`com.liferay.portal.kernel.util` were removed.
-
-#### Who is affected?
-
-This affects anyone used `com.liferay.portal.osgi.util.test.OSGiServiceUtil` and
-`UnsafeConsumer`, `UnsafeFunction`, `UnsafeRunnable` in package
-`com.liferay.portal.kernel.util`
-
-#### How should I update my code?
-
-`com.liferay.portal.osgi.util.test.OSGiServiceUtil` has been deprecated since
-7.1. If there is still any usage of the class, replace it with its direct
-replacement `com.liferay.osgi.util.service.OSGiServiceUtil`. Replace usages of
-`UnsafeConsumer`, `UnsafeFunction` and `UnsafeRunnable` with corresponding interface
-in package `com.liferay.petra.function`
 
 #### Why was this change made?
 
@@ -367,53 +391,29 @@ chance of package version lock down.
 
 ---------------------------------------
 
-### Deprecate com.liferay.portal.service.InvokableService
-- **Date:** 2019-Jan-08
-- **JIRA Ticket:** [LPS-88912](https://issues.liferay.com/browse/LPS-88912)
+### Remove unsafe functional interfaces in package com.liferay.portal.kernel.util
+- **Date:** 2019-Jan-15
+- **JIRA Ticket:** [LPS-89223](https://issues.liferay.com/browse/LPS-89223)
 
 #### What changed?
 
-Interface `InvokableService` and `InvokableLocalService` in package
-`com.liferay.portal.kernel.service` were removed.
+`com.liferay.portal.osgi.util.test.OSGiServiceUtil` was removed.
+`UnsafeConsumer`, `UnsafeFunction` and `UnsafeRunnable` in package
+`com.liferay.portal.kernel.util` were removed.
 
 #### Who is affected?
 
-This affects anyone who used `InvokableService` and `InvokableLocalService` in
-package `com.liferay.portal.kernel.service`.
+This affects anyone used `com.liferay.portal.osgi.util.test.OSGiServiceUtil` and
+`UnsafeConsumer`, `UnsafeFunction`, `UnsafeRunnable` in package
+`com.liferay.portal.kernel.util`
 
 #### How should I update my code?
 
-Remove usages of `InvokableService` and `InvokableLocalService`. Make sure to
-use the latest version of `ServiceBuilder` to generate implementations for
-services in case there is any compile error after the removal.
-
-#### Why was this change made?
-
-It's one of several steps to clean up kernel provider interfaces to reduce the
-chance of package version lock down.
-
----------------------------------------
-
-### Remove HibernateConfigurationConverter and Converter
-- **Date:** 2019-Jan-07
-- **JIRA Ticket:** [LPS-88870](https://issues.liferay.com/browse/LPS-88870)
-
-#### What changed?
-
-Interface `com.liferay.portal.kernel.util.Converter` and its implementation
-`com.liferay.portal.spring.hibernate.HibernateConfigurationConverter` were
-removed.
-
-#### Who is affected?
-
-This removes the support of generating customized `portlet-hbm.xml` implemented
-by `HibernateConfigurationConverter`.
-Please refer to [LPS-5363](https://issues.liferay.com/browse/LPS-5363).
-
-#### How should I update my code?
-
-Remove usages of `HibernateConfigurationConverter`. Make sure the generated
-`portlet-hbm.xml` is accurate.
+`com.liferay.portal.osgi.util.test.OSGiServiceUtil` has been deprecated since
+7.1. If there is still any usage of the class, replace it with its direct
+replacement `com.liferay.osgi.util.service.OSGiServiceUtil`. Replace usages of
+`UnsafeConsumer`, `UnsafeFunction` and `UnsafeRunnable` with corresponding interface
+in package `com.liferay.petra.function`
 
 #### Why was this change made?
 

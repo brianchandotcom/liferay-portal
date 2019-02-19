@@ -47,6 +47,17 @@ import org.osgi.service.component.annotations.Reference;
 public class SaveFormInstanceMVCActionCommand
 	extends BaseTransactionalMVCActionCommand {
 
+	protected DDMFormInstance doService(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		DDMFormInstance formInstance =
+			saveFormInstanceMVCCommandHelper.saveFormInstance(
+				actionRequest, actionResponse, true);
+
+		return formInstance;
+	}
+
 	@Override
 	protected void doTransactionalCommand(
 			ActionRequest actionRequest, ActionResponse actionResponse)
@@ -66,9 +77,8 @@ public class SaveFormInstanceMVCActionCommand
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
 
 		try {
-			DDMFormInstance formInstance =
-				saveFormInstanceMVCCommandHelper.saveFormInstance(
-					actionRequest, actionResponse, true);
+			DDMFormInstance formInstance = doService(
+				actionRequest, actionResponse);
 
 			portletURL.setParameter(
 				"formInstanceId",

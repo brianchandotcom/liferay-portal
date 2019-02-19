@@ -136,7 +136,12 @@
 
 	<li>
 		<a data-onclick="{$_handleDropdownItemClick}" data-dropdown-item-index="{$index}" id="item" class="dropdown-item" href="javascript:;">
-			<strong>{$data.data.fullName}</strong> ({$data.data.emailAddress})
+			{call ClaySticker.render}
+				{param size: 'lg' /}
+				{param imageSrc: $data.data.portraitURL /}
+				{param shape: 'circle' /}
+			{/call}
+			<strong>{$data.data.fullName}</strong> {$data.data.emailAddress}
 		</a>
 	</li>
 {/deltemplate}

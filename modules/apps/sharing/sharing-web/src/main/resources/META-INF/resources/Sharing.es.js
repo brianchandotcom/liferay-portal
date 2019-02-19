@@ -1,4 +1,5 @@
 import 'clay-multi-select';
+import 'clay-sticker';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
 import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
@@ -31,11 +32,12 @@ class Sharing extends PortletBase {
 			res => res.json()
 		).then(
 			users => users.map(
-				({emailAddress, fullName}) => (
+				({emailAddress, fullName, portraitURL}) => (
 					{
 						emailAddress,
 						fullName,
 						label: `${fullName} (${emailAddress})`,
+						portraitURL,
 						value: emailAddress
 					}
 				)

@@ -15,6 +15,7 @@
 package com.liferay.sharing.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.dao.orm.WildcardMode;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -77,7 +78,9 @@ public class SharingUserAutocompleteMVCResourceCommand
 			resourceRequest, resourceResponse, usersJSONArray);
 	}
 
-	protected JSONArray getUsersJSONArray(HttpServletRequest request) {
+	protected JSONArray getUsersJSONArray(HttpServletRequest request)
+		throws PortalException {
+
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
@@ -94,6 +97,7 @@ public class SharingUserAutocompleteMVCResourceCommand
 
 			jsonObject.put("emailAddress", user.getEmailAddress());
 			jsonObject.put("fullName", user.getFullName());
+			jsonObject.put("portraitURL", user.getPortraitURL(themeDisplay));
 
 			jsonArray.put(jsonObject);
 		}

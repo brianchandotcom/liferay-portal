@@ -940,18 +940,6 @@ definition {
 	test UndeployWebContentDisplayModuleViaGogoShell {
 		property test.name.skip.portal.instance = "WebContentDisplay#UndeployWebContentDisplayModuleViaGogoShell";
 
-		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Web Content Display Page"
-		);
-
-		Navigator.gotoSitePage(
-			pageName = "Web Content Display Page",
-			siteName = "Test Site Name"
-		);
-
-		Portlet.addPG(portletName = "Web Content Display");
-
 		GogoShell.openGogoShellAdmin();
 
 		var moduleID = GogoShell.getModuleID(moduleName = "com.liferay.journal.content.web");

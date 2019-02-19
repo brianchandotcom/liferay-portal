@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.polls.internal.searchinternal.search.spi.model.index.contributor;
+package com.liferay.polls.internal.search.internal.search.spi.model.index.contributor;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.polls.internal.searchinternal.search.spi.model.index.contributor;
+package com.liferay.polls.internal.search.internal.search.spi.model.index.contributor;
 
 import com.liferay.polls.model.PollsQuestion;
 import com.liferay.polls.service.PollsQuestionLocalService;

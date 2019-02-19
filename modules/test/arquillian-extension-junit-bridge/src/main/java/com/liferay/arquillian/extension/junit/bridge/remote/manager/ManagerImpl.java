@@ -29,11 +29,9 @@ import java.util.Stack;
 
 import org.jboss.arquillian.core.api.event.ManagerStarted;
 import org.jboss.arquillian.core.api.event.ManagerStopping;
-import org.jboss.arquillian.core.impl.EventImpl;
 import org.jboss.arquillian.core.impl.ExtensionImpl;
 import org.jboss.arquillian.core.impl.context.ApplicationContextImpl;
 import org.jboss.arquillian.core.spi.EventContext;
-import org.jboss.arquillian.core.spi.EventPoint;
 import org.jboss.arquillian.core.spi.Extension;
 import org.jboss.arquillian.core.spi.InjectionPoint;
 import org.jboss.arquillian.core.spi.InvocationException;
@@ -207,18 +205,6 @@ public class ManagerImpl implements Manager {
 	}
 
 	private void _inject(Extension extension) {
-		_injectInstances(extension);
-
-		_injectEvents(extension);
-	}
-
-	private void _injectEvents(Extension extension) {
-		for (EventPoint eventPoint : extension.getEventPoints()) {
-			eventPoint.set(EventImpl.of(_getType(eventPoint.getType()), this));
-		}
-	}
-
-	private void _injectInstances(Extension extension) {
 		for (InjectionPoint injectionPoint : extension.getInjectionPoints()) {
 			injectionPoint.set(
 				InstanceImpl.of(

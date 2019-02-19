@@ -14,7 +14,8 @@
 
 package com.liferay.portal.vulcan.internal.resource;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -25,19 +26,15 @@ import com.liferay.portal.vulcan.resource.EntityModelResource;
 
 import java.lang.reflect.Method;
 
-import java.util.Objects;
-
 import javax.ws.rs.core.MultivaluedMap;
 
 import org.apache.cxf.jaxrs.impl.MetadataMap;
 import org.apache.cxf.message.Message;
 
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * @author Cristina González
@@ -47,56 +44,19 @@ public class EntityModelResourceRegistrar {
 
 	@Activate
 	public void activate(BundleContext bundleContext) {
-		_bundleContext = bundleContext;
-
-		_serviceTracker = ServiceTrackerFactory.create(
-			bundleContext, "(osgi.jaxrs.resource=true)");
-
-		_serviceTracker.open();
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, EntityModelResource.class,
+			"(&(osgi.jaxrs.resource=true)(component.name=*))",
+			(serviceReference, emitter) -> emitter.emit(
+				(String)serviceReference.getProperty("component.name")));
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_serviceTracker.close();
+		_serviceTrackerMap.close();
 	}
 
 	public EntityModel getEntityModel(Message message) throws Exception {
-		EntityModelResource entityModelResource = _getEntityModelResource(
-			message);
-
-		MultivaluedMap multivaluedMap =
-			(MetadataMap)message.getContextualProperty(
-				"jaxrs.template.parameters");
-
-		return entityModelResource.getEntityModel(multivaluedMap);
-	}
-
-	private EntityModelResource _getEntityModelResource(Class<?> clazz) {
-		ServiceReference<Object>[] serviceReferences =
-			_serviceTracker.getServiceReferences();
-
-		for (ServiceReference<Object> serviceReference : serviceReferences) {
-			if (Objects.equals(
-					serviceReference.getProperty("component.name"),
-					clazz.getCanonicalName())) {
-
-				return (EntityModelResource)_bundleContext.getService(
-					serviceReference);
-			}
-		}
-
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				StringBundler.concat(
-					"Class ", clazz.getName(),
-					" not registered as an OSGi component ",
-					EntityModelResource.class.getName()));
-		}
-
-		return null;
-	}
-
-	private EntityModelResource _getEntityModelResource(Message message) {
 		Method method = ContextProviderUtil.getMethod(message);
 
 		Class<?> clazz = method.getDeclaringClass();
@@ -112,13 +72,23 @@ public class EntityModelResourceRegistrar {
 			return null;
 		}
 
-		return _getEntityModelResource(clazz);
+		EntityModelResource entityModelResource = _serviceTrackerMap.getService(
+			clazz.getCanonicalName());
+
+		if (entityModelResource == null) {
+			return null;
+		}
+
+		MultivaluedMap multivaluedMap =
+			(MetadataMap)message.getContextualProperty(
+				"jaxrs.template.parameters");
+
+		return entityModelResource.getEntityModel(multivaluedMap);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		EntityModelResourceRegistrar.class);
 
-	private BundleContext _bundleContext;
-	private ServiceTracker<Object, Object> _serviceTracker;
+	private ServiceTrackerMap<String, EntityModelResource> _serviceTrackerMap;
 
 }

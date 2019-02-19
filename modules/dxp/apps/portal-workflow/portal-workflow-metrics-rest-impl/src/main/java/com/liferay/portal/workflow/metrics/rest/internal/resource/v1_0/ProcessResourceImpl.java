@@ -250,12 +250,12 @@ public class ProcessResourceImpl extends BaseProcessResourceImpl {
 	}
 
 	private Process _toProcess(Document document) {
-		Process process = new ProcessImpl();
-
-		process.setInstanceCount(_getInstanceCount(document.get("name")));
-		process.setTitle(document.get("title"));
-
-		return process;
+		return new ProcessImpl() {
+			{
+				instanceCount = _getInstanceCount(document.get("name"));
+				title = document.get("title");
+			}
+		};
 	}
 
 	@Reference

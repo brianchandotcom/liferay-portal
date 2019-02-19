@@ -115,6 +115,13 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
+import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
+
 <#list entity.entityColumns as entityColumn>
 	<#if entityColumn.isCollection() && entityColumn.isMappingManyToMany()>
 		<#assign referenceEntity = serviceBuilder.getEntity(entityColumn.entityName) />
@@ -128,13 +135,6 @@ import java.util.Set;
 		</#if>
 	</#if>
 </#list>
-
-import javax.sql.DataSource;
-
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * The persistence implementation for the ${entity.humanName} service.

@@ -19,9 +19,6 @@ import com.google.template.soy.SoyFileSet;
 
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.cache.PortalCache;
-import com.liferay.portal.kernel.cache.PortalCacheListener;
-import com.liferay.portal.kernel.cache.PortalCacheListenerScope;
-import com.liferay.portal.kernel.cache.PortalCacheManager;
 import com.liferay.portal.kernel.cache.SingleVMPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.template.TemplateResource;
@@ -29,7 +26,6 @@ import com.liferay.portal.kernel.template.URLTemplateResource;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Reader;
-import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -132,73 +128,35 @@ public class SoyTestHelper {
 	protected PortalCache mockPortalCache() {
 		Map<HashSet<TemplateResource>, SoyTofuCacheBag> cache = new HashMap<>();
 
-		return new PortalCache() {
+		return (PortalCache)ProxyUtil.newProxyInstance(
+			PortalCache.class.getClassLoader(),
+			new Class<?>[] {PortalCache.class},
+			(proxy, method, args) -> {
+				String methodName = method.getName();
 
-			@Override
-			public Object get(Serializable key) {
-				return cache.get(key);
-			}
+				if (methodName.equals("get") && (args != null) &&
+					(args.length == 1)) {
 
-			@Override
-			public List getKeys() {
-				return new ArrayList<>(cache.keySet());
-			}
+					return cache.get(args[0]);
+				}
+				else if (methodName.equals("getKeys") && (args == null)) {
+					return new ArrayList<>(cache.keySet());
+				}
+				else if (methodName.equals("put") && (args != null) &&
+						 (args.length >= 2)) {
 
-			@Override
-			public String getName() {
+					cache.put(
+						(HashSet<TemplateResource>)args[0],
+						(SoyTofuCacheBag)args[1]);
+				}
+				else if (methodName.equals("remove") && (args != null) &&
+						 (args.length == 1)) {
+
+					cache.remove(args[0]);
+				}
+
 				return null;
-			}
-
-			@Override
-			public PortalCacheManager getPortalCacheManager() {
-				return null;
-			}
-
-			@Override
-			public String getPortalCacheName() {
-				return null;
-			}
-
-			@Override
-			public void put(Serializable key, Object value) {
-				cache.put(
-					(HashSet<TemplateResource>)key, (SoyTofuCacheBag)value);
-			}
-
-			@Override
-			public void put(Serializable key, Object value, int timeToLive) {
-			}
-
-			@Override
-			public void registerPortalCacheListener(
-				PortalCacheListener portalCacheListener) {
-			}
-
-			@Override
-			public void registerPortalCacheListener(
-				PortalCacheListener portalCacheListener,
-				PortalCacheListenerScope portalCacheListenerScope) {
-			}
-
-			@Override
-			public void remove(Serializable key) {
-				cache.remove(key);
-			}
-
-			@Override
-			public void removeAll() {
-			}
-
-			@Override
-			public void unregisterPortalCacheListener(
-				PortalCacheListener portalCacheListener) {
-			}
-
-			@Override
-			public void unregisterPortalCacheListeners() {
-			}
-
-		};
+			});
 	}
 
 	protected void setUpSoyManager() throws Exception {

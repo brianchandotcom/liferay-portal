@@ -18,6 +18,7 @@ import com.liferay.frontend.js.loader.modules.extender.npm.JSBundle;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSBundleTracker;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMRegistry;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
+import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolverUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -46,8 +47,13 @@ public class NPMResolverJSBundleTracker implements JSBundleTracker {
 	public void addedJSBundle(
 		JSBundle jsBundle, Bundle bundle, NPMRegistry npmRegistry) {
 
-		String npmResolvedPackageName = _getNpmResolvedPackageName(
-			bundle, npmRegistry);
+		NPMResolver npmResolver = new NPMResolverImpl(
+			bundle, _jsonFactory, npmRegistry);
+
+		NPMResolverUtil.set(bundle, npmResolver);
+
+		String npmResolvedPackageName = _getNPMResolvedPackageName(
+			bundle, npmResolver);
 
 		if (npmResolvedPackageName == null) {
 			return;
@@ -75,6 +81,8 @@ public class NPMResolverJSBundleTracker implements JSBundleTracker {
 	public void removedJSBundle(
 		JSBundle jsBundle, Bundle bundle, NPMRegistry npmRegistry) {
 
+		NPMResolverUtil.set(bundle, null);
+
 		NPMResolvedPackageNameRegistrar npmResolvedPackageNameRegistrar =
 			_npmResolvedPackageNameRegistrarMap.remove(bundle);
 
@@ -88,13 +96,10 @@ public class NPMResolverJSBundleTracker implements JSBundleTracker {
 		_bundleContext = bundleContext;
 	}
 
-	private String _getNpmResolvedPackageName(
-		Bundle bundle, NPMRegistry npmRegistry) {
+	private String _getNPMResolvedPackageName(
+		Bundle bundle, NPMResolver npmResolver) {
 
 		try {
-			NPMResolver npmResolver = new NPMResolverImpl(
-				bundle, _jsonFactory, npmRegistry);
-
 			URL url = bundle.getResource("META-INF/resources/package.json");
 
 			String json = StringUtil.read(url.openStream());

@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -165,7 +166,8 @@ public class VocabularyResourceImpl
 
 		return new VocabularyImpl() {
 			{
-				availableLanguages = assetVocabulary.getAvailableLanguageIds();
+				availableLanguages = LocaleUtil.toW3cLanguageIds(
+					assetVocabulary.getAvailableLanguageIds());
 				contentSpace = assetVocabulary.getGroupId();
 				creator = CreatorUtil.toCreator(
 					_portal,

@@ -130,7 +130,8 @@ public class CategoryResourceImpl extends BaseCategoryResourceImpl {
 	private Category _toCategory(AssetCategory assetCategory) throws Exception {
 		return new CategoryImpl() {
 			{
-				availableLanguages = assetCategory.getAvailableLanguageIds();
+				availableLanguages = LocaleUtil.toW3cLanguageIds(
+					assetCategory.getAvailableLanguageIds());
 				creator = CreatorUtil.toCreator(
 					_portal,
 					_userLocalService.getUserById(assetCategory.getUserId()));

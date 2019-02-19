@@ -20,6 +20,8 @@ import com.liferay.headless.document.library.dto.v1_0.Folder;
 import com.liferay.headless.document.library.resource.v1_0.CommentResource;
 import com.liferay.headless.document.library.resource.v1_0.DocumentResource;
 import com.liferay.headless.document.library.resource.v1_0.FolderResource;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -84,14 +86,14 @@ CommentResource commentResource = _getCommentResource(); commentResource.setCont
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<Document> getContentSpaceDocumentsPage( @GraphQLName("content-space-id") Long contentSpaceId , @GraphQLName("pageSize") int pageSize , @GraphQLName("page") int page ) throws Exception {
+	public Collection<Document> getContentSpaceDocumentsPage( @GraphQLName("content-space-id") Long contentSpaceId , @GraphQLName("filter") Filter filter , @GraphQLName("pageSize") int pageSize , @GraphQLName("page") int page , @GraphQLName("Sort[]") Sort[] sorts ) throws Exception {
 				DocumentResource documentResource = _getDocumentResource();
 
 				documentResource.setContextCompany(CompanyLocalServiceUtil.getCompany(CompanyThreadLocal.getCompanyId()));
 
 				Page paginationPage = documentResource.getContentSpaceDocumentsPage(
 
-					contentSpaceId , Pagination.of(pageSize, page)
+					contentSpaceId , filter , Pagination.of(pageSize, page) , sorts
 				);
 
 				return paginationPage.getItems();
@@ -106,14 +108,14 @@ DocumentResource documentResource = _getDocumentResource(); documentResource.set
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<Document> getFolderDocumentsPage( @GraphQLName("folder-id") Long folderId , @GraphQLName("pageSize") int pageSize , @GraphQLName("page") int page ) throws Exception {
+	public Collection<Document> getFolderDocumentsPage( @GraphQLName("folder-id") Long folderId , @GraphQLName("filter") Filter filter , @GraphQLName("pageSize") int pageSize , @GraphQLName("page") int page , @GraphQLName("Sort[]") Sort[] sorts ) throws Exception {
 				DocumentResource documentResource = _getDocumentResource();
 
 				documentResource.setContextCompany(CompanyLocalServiceUtil.getCompany(CompanyThreadLocal.getCompanyId()));
 
 				Page paginationPage = documentResource.getFolderDocumentsPage(
 
-					folderId , Pagination.of(pageSize, page)
+					folderId , filter , Pagination.of(pageSize, page) , sorts
 				);
 
 				return paginationPage.getItems();

@@ -20,6 +20,8 @@ import com.liferay.headless.document.library.resource.v1_0.DocumentResource;
 import com.liferay.oauth2.provider.scope.RequiresScope;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -53,7 +55,7 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	@Override
-	public Page<Document> getContentSpaceDocumentsPage( @PathParam("content-space-id") Long contentSpaceId , @Context Pagination pagination ) throws Exception {
+	public Page<Document> getContentSpaceDocumentsPage( @PathParam("content-space-id") Long contentSpaceId , @Context Filter filter , @Context Pagination pagination , @Context Sort[] sorts ) throws Exception {
 			return Page.of(Collections.emptyList());
 
 	}
@@ -90,7 +92,7 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	@Override
-	public Page<Document> getFolderDocumentsPage( @PathParam("folder-id") Long folderId , @Context Pagination pagination ) throws Exception {
+	public Page<Document> getFolderDocumentsPage( @PathParam("folder-id") Long folderId , @Context Filter filter , @Context Pagination pagination , @Context Sort[] sorts ) throws Exception {
 			return Page.of(Collections.emptyList());
 
 	}

@@ -16,6 +16,8 @@ package com.liferay.headless.document.library.resource.v1_0;
 
 import com.liferay.headless.document.library.dto.v1_0.Document;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -33,7 +35,7 @@ import javax.annotation.Generated;
 @Generated("")
 public interface DocumentResource {
 
-	public Page<Document> getContentSpaceDocumentsPage( Long contentSpaceId , Pagination pagination ) throws Exception;
+	public Page<Document> getContentSpaceDocumentsPage( Long contentSpaceId , Filter filter , Pagination pagination , Sort[] sorts ) throws Exception;
 
 	public Document postContentSpaceDocument( Long contentSpaceId , MultipartBody multipartBody ) throws Exception;
 
@@ -41,7 +43,7 @@ public interface DocumentResource {
 
 	public Document getDocument( Long documentId ) throws Exception;
 
-	public Page<Document> getFolderDocumentsPage( Long folderId , Pagination pagination ) throws Exception;
+	public Page<Document> getFolderDocumentsPage( Long folderId , Filter filter , Pagination pagination , Sort[] sorts ) throws Exception;
 
 	public Document postFolderDocument( Long folderId , MultipartBody multipartBody ) throws Exception;
 

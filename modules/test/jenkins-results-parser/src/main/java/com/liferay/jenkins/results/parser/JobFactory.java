@@ -59,8 +59,6 @@ public class JobFactory {
 		Job job = _newJob(
 			jobName, testSuiteName, portalBranchName, repositoryName);
 
-		job.readJobProperties();
-
 		return job;
 	}
 

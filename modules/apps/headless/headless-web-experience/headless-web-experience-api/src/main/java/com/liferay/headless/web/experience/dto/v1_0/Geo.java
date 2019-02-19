@@ -23,37 +23,22 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public interface Values {
+public interface Geo {
 
-	public String getDataType();
-
-	public void setDataType(String dataType);
-
-	public void setDataType(UnsafeSupplier<String, Throwable> dataTypeUnsafeSupplier);
 	public Long getId();
 
 	public void setId(Long id);
 
 	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier);
-	public String getInputControl();
+	public Number getLatitude();
 
-	public void setInputControl(String inputControl);
+	public void setLatitude(Number latitude);
 
-	public void setInputControl(UnsafeSupplier<String, Throwable> inputControlUnsafeSupplier);
-	public String getLabel();
+	public void setLatitude(UnsafeSupplier<Number, Throwable> latitudeUnsafeSupplier);
+	public Number getLongitude();
 
-	public void setLabel(String label);
+	public void setLongitude(Number longitude);
 
-	public void setLabel(UnsafeSupplier<String, Throwable> labelUnsafeSupplier);
-	public String getName();
-
-	public void setName(String name);
-
-	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier);
-	public Value getValue();
-
-	public void setValue(Value value);
-
-	public void setValue(UnsafeSupplier<Value, Throwable> valueUnsafeSupplier);
+	public void setLongitude(UnsafeSupplier<Number, Throwable> longitudeUnsafeSupplier);
 
 }

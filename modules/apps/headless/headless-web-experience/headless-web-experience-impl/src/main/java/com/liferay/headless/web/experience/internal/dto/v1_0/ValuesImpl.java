@@ -17,6 +17,7 @@ package com.liferay.headless.web.experience.internal.dto.v1_0;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import com.liferay.headless.web.experience.dto.v1_0.Value;
 import com.liferay.headless.web.experience.dto.v1_0.Values;
 import com.liferay.petra.function.UnsafeSupplier;
 
@@ -57,27 +58,6 @@ public class ValuesImpl implements Values {
 	@GraphQLField
 	@JsonProperty
 	protected String dataType;
-	public String getFilterAndSortIdentifier() {
-			return filterAndSortIdentifier;
-	}
-
-	public void setFilterAndSortIdentifier(String filterAndSortIdentifier) {
-			this.filterAndSortIdentifier = filterAndSortIdentifier;
-	}
-
-	@JsonIgnore
-	public void setFilterAndSortIdentifier(UnsafeSupplier<String, Throwable> filterAndSortIdentifierUnsafeSupplier) {
-			try {
-				filterAndSortIdentifier = filterAndSortIdentifierUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected String filterAndSortIdentifier;
 	public Long getId() {
 			return id;
 	}
@@ -162,16 +142,16 @@ public class ValuesImpl implements Values {
 	@GraphQLField
 	@JsonProperty
 	protected String name;
-	public Object getValue() {
+	public Value getValue() {
 			return value;
 	}
 
-	public void setValue(Object value) {
+	public void setValue(Value value) {
 			this.value = value;
 	}
 
 	@JsonIgnore
-	public void setValue(UnsafeSupplier<Object, Throwable> valueUnsafeSupplier) {
+	public void setValue(UnsafeSupplier<Value, Throwable> valueUnsafeSupplier) {
 			try {
 				value = valueUnsafeSupplier.get();
 	}
@@ -182,6 +162,6 @@ public class ValuesImpl implements Values {
 
 	@GraphQLField
 	@JsonProperty
-	protected Object value;
+	protected Value value;
 
 }

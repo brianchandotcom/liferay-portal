@@ -201,7 +201,10 @@ definition {
 			value1 = "Please allow me to join the Restricted Site."
 		);
 
-		Click(locator1 = "SiteMembershipsViewMembershipRequests#REPLY");
+		LexiconTable.clickEllipsisItem(
+			item = "Reply",
+			tableEntry = "${userFirstName} ${userLastName}"
+		);
 
 		Select(
 			locator1 = "SiteMembershipsViewMembershipRequests#STATUS",

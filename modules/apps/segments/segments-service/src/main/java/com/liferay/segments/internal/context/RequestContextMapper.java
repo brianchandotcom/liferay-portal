@@ -95,7 +95,7 @@ public class RequestContextMapper {
 
 		context.put(Context.LOCAL_DATE, LocalDate.from(ZonedDateTime.now()));
 		context.put(Context.SIGNED_IN, themeDisplay.isSignedIn());
-		context.put(Context.URL, GetterUtil.getString(request.getRequestURL()));
+		context.put(Context.URL, _portal.getCurrentCompleteURL(request));
 
 		return context;
 	}

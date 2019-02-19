@@ -111,6 +111,7 @@
 		%>
 
 		<liferay-ui:search-container-column-text
+			cssClass="table-column-text-end"
 			name="views"
 			orderable="<%= false %>"
 			value="<%= String.valueOf(assetEntry.getViewCount()) %>"

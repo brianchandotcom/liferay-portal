@@ -1,4 +1,4 @@
-window.portletRouter = new portalPortletBridgeSoyImplRouterSoyPortletRouter.default(
+window.portletRouter = new SoyPortletRouter.default(
 	{
 		context: $CONTEXT,
 		element: '#$ELEMENT_ID',

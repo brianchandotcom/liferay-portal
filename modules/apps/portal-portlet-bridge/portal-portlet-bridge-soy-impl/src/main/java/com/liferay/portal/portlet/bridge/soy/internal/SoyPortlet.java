@@ -628,7 +628,7 @@ public class SoyPortlet extends MVCPortlet {
 		requiredModules.add(
 			NPMResolverUtil.resolveModuleName(
 				SoyPortlet.class,
-				"portal-portlet-bridge-soy-impl/router/SoyPortletRouter"));
+				"portal-portlet-bridge-soy-impl/router/SoyPortletRouter as SoyPortletRouter"));
 
 		String path = getPath(portletRequest, portletResponse);
 

@@ -292,7 +292,7 @@ definition {
 	}
 
 	macro assignOrganizationAsMemberCP {
-		var key_cardText = "${orgName}";
+		var key_card = "${orgName}";
 
 		Navigator.gotoNavItem(navItem = "Organizations");
 
@@ -300,9 +300,11 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#DIALOG");
 
-		AssertTextEquals(locator1 = "Card#SPECIFIC_LARGE_TEXT", value1 = "${orgName}");
+		AssertTextEquals(locator1 = "LexiconCard#CARD_TITLE", value1 = "${orgName}");
 
-		Check(locator1 = "Card#SPECIFIC_CHECKBOX");
+		LexiconCard.checkCardCheckbox(
+			card = "${orgName}"
+		);
 
 		SelectFrameTop();
 
@@ -1263,12 +1265,12 @@ definition {
 	}
 
 	macro viewMemberOrganizationCP {
-		var key_cardText = "${orgName}";
+		var key_card = "${orgName}";
 
 		Navigator.gotoNavItem(navItem = "Organizations");
 
 		AssertTextEquals.assertPartialText(
-			locator1 = "Card#SPECIFIC_LARGE_TEXT",
+			locator1 = "LexiconCard#CARD_TITLE",
 			value1 = "${orgName}"
 		);
 

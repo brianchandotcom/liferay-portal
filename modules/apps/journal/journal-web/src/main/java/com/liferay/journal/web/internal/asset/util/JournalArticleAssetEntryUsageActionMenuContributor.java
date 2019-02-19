@@ -99,6 +99,7 @@ public class JournalArticleAssetEntryUsageActionMenuContributor
 								assetEntryUsage.getPortletId(), request));
 						dropdownItem.setLabel(
 							LanguageUtil.get(resourceBundle, "view-in-page"));
+						dropdownItem.setTarget("_blank");
 					});
 
 				boolean hasUpdatePermission = false;
@@ -122,6 +123,7 @@ public class JournalArticleAssetEntryUsageActionMenuContributor
 							dropdownItem.setLabel(
 								LanguageUtil.get(
 									resourceBundle, "preview-draft-in-page"));
+							dropdownItem.setTarget("_blank");
 						});
 				}
 
@@ -135,6 +137,7 @@ public class JournalArticleAssetEntryUsageActionMenuContributor
 							dropdownItem.setLabel(
 								LanguageUtil.get(
 									resourceBundle, "preview-pending-in-page"));
+							dropdownItem.setTarget("_blank");
 						});
 				}
 
@@ -149,6 +152,7 @@ public class JournalArticleAssetEntryUsageActionMenuContributor
 								LanguageUtil.get(
 									resourceBundle,
 									"preview-scheduled-in-page"));
+							dropdownItem.setTarget("_blank");
 						});
 				}
 			}

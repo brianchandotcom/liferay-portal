@@ -39,7 +39,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author Hugo Huijser
@@ -692,20 +691,19 @@ public class JavaParser {
 		String content, ParsedJavaClass parsedJavaClass,
 		FileContents fileContents) {
 
-		Map<Position, ParsedJavaTerm> parsedJavaTermsMap =
-			parsedJavaClass.getParsedJavaTermsMap();
+		ParsedJavaTerm parsedJavaTerm = parsedJavaClass.getLastParsedJavaTerm();
 
-		for (Map.Entry<Position, ParsedJavaTerm> entry :
-				parsedJavaTermsMap.entrySet()) {
-
-			ParsedJavaTerm parsedJavaTerm = entry.getValue();
+		while (true) {
+			if (parsedJavaTerm == null) {
+				return StringUtil.replace(content, "\n\n\n", "\n\n");
+			}
 
 			if (!parsedJavaTerm.containsCommentToken()) {
 				content = _parseContent(parsedJavaTerm, content, fileContents);
 			}
-		}
 
-		return StringUtil.replace(content, "\n\n\n", "\n\n");
+			parsedJavaTerm = parsedJavaTerm.getPreviousParsedJavaTerm();
+		}
 	}
 
 	private static ParsedJavaClass _parseDetailAST(

@@ -16,10 +16,8 @@ package com.liferay.portal.tools.java.parser;
 
 import antlr.CommonHiddenStreamToken;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.TreeMap;
 
 /**
  * @author Hugo Huijser
@@ -27,66 +25,113 @@ import java.util.TreeMap;
 public class ParsedJavaClass {
 
 	public void addParsedJavaTerm(ParsedJavaTerm parsedJavaTerm) {
-		_parsedJavaTermsMap.put(
-			parsedJavaTerm.getStartPosition(), parsedJavaTerm);
+		if (_firstParsedJavaTerm == null) {
+			_firstParsedJavaTerm = parsedJavaTerm;
+			_lastParsedJavaTerm = parsedJavaTerm;
+
+			return;
+		}
+
+		if (parsedJavaTerm.compareTo(_lastParsedJavaTerm) > 0) {
+			_lastParsedJavaTerm.setNextParsedJavaTerm(parsedJavaTerm);
+
+			parsedJavaTerm.setPreviousParsedJavaTerm(_lastParsedJavaTerm);
+
+			_lastParsedJavaTerm = parsedJavaTerm;
+
+			return;
+		}
+
+		ParsedJavaTerm previousParsedJavaTerm =
+			_lastParsedJavaTerm.getPreviousParsedJavaTerm();
+
+		while (true) {
+			if (previousParsedJavaTerm == null) {
+				_firstParsedJavaTerm.setPreviousParsedJavaTerm(parsedJavaTerm);
+
+				parsedJavaTerm.setNextParsedJavaTerm(_firstParsedJavaTerm);
+
+				_firstParsedJavaTerm = parsedJavaTerm;
+
+				return;
+			}
+
+			if (parsedJavaTerm.compareTo(previousParsedJavaTerm) > 0) {
+				parsedJavaTerm.setPreviousParsedJavaTerm(
+					previousParsedJavaTerm);
+
+				ParsedJavaTerm nextParsedJavaTerm =
+					previousParsedJavaTerm.getNextParsedJavaTerm();
+
+				parsedJavaTerm.setNextParsedJavaTerm(nextParsedJavaTerm);
+
+				previousParsedJavaTerm.setNextParsedJavaTerm(parsedJavaTerm);
+
+				nextParsedJavaTerm.setPreviousParsedJavaTerm(parsedJavaTerm);
+
+				return;
+			}
+
+			previousParsedJavaTerm =
+				previousParsedJavaTerm.getPreviousParsedJavaTerm();
+		}
 	}
 
 	public void addPrecedingCommentToken(
 		CommonHiddenStreamToken precedingCommentToken, Position startPosition) {
 
-		ParsedJavaTerm parsedJavaTerm = _parsedJavaTermsMap.get(startPosition);
+		ParsedJavaTerm parsedJavaTerm = _lastParsedJavaTerm;
 
-		if (parsedJavaTerm != null) {
-			parsedJavaTerm.setPrecedingCommentToken(precedingCommentToken);
+		while (true) {
+			if (parsedJavaTerm == null) {
+				_precedingCommentTokensMap.put(
+					startPosition, precedingCommentToken);
 
-			_parsedJavaTermsMap.put(startPosition, parsedJavaTerm);
-		}
-		else {
-			_precedingCommentTokensMap.put(
-				startPosition, precedingCommentToken);
+				return;
+			}
+
+			if (startPosition.equals(parsedJavaTerm.getStartPosition())) {
+				parsedJavaTerm.setPrecedingCommentToken(precedingCommentToken);
+
+				return;
+			}
+
+			parsedJavaTerm = parsedJavaTerm.getPreviousParsedJavaTerm();
 		}
 	}
 
-	public Map<Position, ParsedJavaTerm> getParsedJavaTermsMap() {
-		return _parsedJavaTermsMap;
+	public ParsedJavaTerm getLastParsedJavaTerm() {
+		return _lastParsedJavaTerm;
 	}
 
 	public void processCommentTokens() {
-		for (Map.Entry<Position, CommonHiddenStreamToken> entry1 :
+		for (Map.Entry<Position, CommonHiddenStreamToken> entry :
 				_precedingCommentTokensMap.entrySet()) {
 
-			Position startPosition = entry1.getKey();
+			Position startPosition = entry.getKey();
 
-			for (Map.Entry<Position, ParsedJavaTerm> entry2 :
-					_parsedJavaTermsMap.entrySet()) {
+			ParsedJavaTerm parsedJavaTerm = _lastParsedJavaTerm;
 
-				ParsedJavaTerm parsedJavaTerm = entry2.getValue();
-
-				int value = startPosition.compareTo(
-					parsedJavaTerm.getStartPosition());
-
-				if (value < 0) {
-					continue;
+			while (true) {
+				if (parsedJavaTerm == null) {
+					break;
 				}
 
-				if (value == 0) {
-					parsedJavaTerm.setPrecedingCommentToken(entry1.getValue());
-				}
-				else if (startPosition.compareTo(
-							parsedJavaTerm.getEndPosition()) < 0) {
+				if (startPosition.compareTo(parsedJavaTerm.getStartPosition()) >
+						0) {
 
 					parsedJavaTerm.setContainsCommentToken(true);
+
+					break;
 				}
 
-				_parsedJavaTermsMap.put(entry2.getKey(), parsedJavaTerm);
-
-				break;
+				parsedJavaTerm = parsedJavaTerm.getPreviousParsedJavaTerm();
 			}
 		}
 	}
 
-	private final Map<Position, ParsedJavaTerm> _parsedJavaTermsMap =
-		new TreeMap<>(Collections.reverseOrder());
+	private ParsedJavaTerm _firstParsedJavaTerm;
+	private ParsedJavaTerm _lastParsedJavaTerm;
 	private final Map<Position, CommonHiddenStreamToken>
 		_precedingCommentTokensMap = new HashMap<>();
 

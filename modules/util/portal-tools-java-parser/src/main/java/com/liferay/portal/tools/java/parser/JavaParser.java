@@ -109,52 +109,54 @@ public class JavaParser {
 		String content = javaTerm.toString(
 			expectedIndent, StringPool.BLANK, _maxLineLength);
 
-		if (content.contains(BaseJavaTerm.CODE_BLOCK)) {
-			String[] parts = _getParts(
-				content, "\n" + BaseJavaTerm.CODE_BLOCK + "\n");
+		if (!content.contains(BaseJavaTerm.CODE_BLOCK)) {
+			Position endPosition = null;
 
-			List<Position> curlyBracePositionList = _getCurlyBracePositionList(
-				new ArrayList<>(), detailAST);
-
-			Collections.sort(curlyBracePositionList);
-
-			for (int i = 0; i < parts.length; i++) {
-				String part = parts[i];
-
-				Position partStartPosition = null;
-
-				if (i == 0) {
-					partStartPosition = startPosition;
-				}
-				else {
-					partStartPosition = curlyBracePositionList.get((i * 2) - 1);
-				}
-
-				Position partEndPosition = null;
-
-				if (i == (parts.length - 1)) {
-					partEndPosition = DetailASTUtil.getEndPosition(
-						detailAST, fileContents);
-				}
-				else {
-					partEndPosition = curlyBracePositionList.get(i * 2);
-				}
-
-				parsedJavaClass.addJavaTerm(
-					part, partStartPosition, partEndPosition);
-			}
-		}
-		else if (detailAST.getType() == TokenTypes.ENUM_CONSTANT_DEF) {
-			parsedJavaClass.addJavaTerm(
-				content, startPosition,
-				DetailASTUtil.getEndPosition(
+			if (detailAST.getType() == TokenTypes.ENUM_CONSTANT_DEF) {
+				endPosition = DetailASTUtil.getEndPosition(
 					_getLastEnumConstantDefinitionDetailAST(detailAST),
-					fileContents));
+					fileContents);
+			}
+			else {
+				endPosition = DetailASTUtil.getEndPosition(
+					detailAST, fileContents);
+			}
+
+			parsedJavaClass.addJavaTerm(content, startPosition, endPosition);
+
+			return parsedJavaClass;
 		}
-		else {
+
+		String[] parts = _getParts(
+			content, "\n" + BaseJavaTerm.CODE_BLOCK + "\n");
+
+		List<Position> curlyBracePositionList = _getCurlyBracePositionList(
+			new ArrayList<>(), detailAST);
+
+		Collections.sort(curlyBracePositionList);
+
+		for (int i = 0; i < parts.length; i++) {
+			Position partStartPosition = null;
+
+			if (i == 0) {
+				partStartPosition = startPosition;
+			}
+			else {
+				partStartPosition = curlyBracePositionList.get((i * 2) - 1);
+			}
+
+			Position partEndPosition = null;
+
+			if (i == (parts.length - 1)) {
+				partEndPosition = DetailASTUtil.getEndPosition(
+					detailAST, fileContents);
+			}
+			else {
+				partEndPosition = curlyBracePositionList.get(i * 2);
+			}
+
 			parsedJavaClass.addJavaTerm(
-				content, startPosition,
-				DetailASTUtil.getEndPosition(detailAST, fileContents));
+				parts[i], partStartPosition, partEndPosition);
 		}
 
 		return parsedJavaClass;

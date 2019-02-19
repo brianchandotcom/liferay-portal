@@ -636,6 +636,17 @@ AUI.add(
 								field.addLocaleToLocalizationMap(displayLocale);
 								field.set('displayLocale', displayLocale);
 
+								if (instance.originalField) {
+									field.originalField = instance.originalField;
+								}
+								else {
+									field.originalField = instance;
+								}
+
+								var form = field.getForm();
+
+								form.newRepeatableInstances.push(field);
+
 								field.renderUI();
 
 								instance._addFieldValidation(field, instance);
@@ -3112,6 +3123,7 @@ AUI.add(
 						var instance = this;
 
 						instance.eventHandlers = [];
+						instance.newRepeatableInstances = [];
 						instance.repeatableInstances = {};
 
 						instance.bindUI();
@@ -3192,6 +3204,46 @@ AUI.add(
 								}
 							}
 						);
+					},
+
+					finalizeRepeatableFieldLocalizations: function() {
+						var instance = this;
+
+						var defaultLocale = instance.getDefaultLocale();
+
+						for (x in instance.newRepeatableInstances) {
+							var field = instance.newRepeatableInstances[x];
+
+							if (!field.get('localizable')) {
+								continue;
+							}
+
+							var currentLocale = field.get('displayLocale');
+							var originalField = field.originalField;
+
+							var newFieldLocalizations = field.get('localizationMap');
+							var totalLocalizations = originalField.get('localizationMap');
+
+							for (var localization in totalLocalizations) {
+								if (localization == currentLocale) {
+									continue;
+								}
+
+								if (!newFieldLocalizations[localization]) {
+									if (newFieldLocalizations[defaultLocale]) {
+										newFieldLocalizations[localization] = newFieldLocalizations[defaultLocale];
+									}
+									else if (defaultLocale == field.get('displayLocale') && field.getValue()) {
+										newFieldLocalizations[localization] = field.getValue();
+									}
+									else {
+										newFieldLocalizations[localization] = '';
+									}
+								}
+							}
+
+							field.set('localizationMap', newFieldLocalizations);
+						}
 					},
 
 					moveField: function(parentField, oldIndex, newIndex) {
@@ -3421,6 +3473,8 @@ AUI.add(
 
 					_onSubmitForm: function(event) {
 						var instance = this;
+
+						instance.finalizeRepeatableFieldLocalizations();
 
 						instance.updateDDMFormInputValue();
 					},

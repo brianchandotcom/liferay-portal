@@ -129,6 +129,19 @@ public final class DEDataRecordCollectionSaveModelPermissionsRequest {
 
 	/**
 	 * Returns true or false to inform if one of the permissions to grant is
+	 * the one that allows the user to export records from
+	 * {@link DEDataRecordCollection} related to the Data Record Collection ID
+	 * set in the request
+	 *
+	 * @return exportDataRecord
+	 * @review
+	 */
+	public boolean isExportDataRecord() {
+		return _exportDataRecord;
+	}
+
+	/**
+	 * Returns true or false to inform if one of the permissions to grant is
 	 * the one that allows the user to update the
 	 * {@link DEDataRecordCollection} related to the Data Record Collection ID
 	 * set in the request
@@ -273,6 +286,21 @@ public final class DEDataRecordCollectionSaveModelPermissionsRequest {
 
 		/**
 		 * If this method is set on the permission request, it will set the
+		 * permission to allow the user to export {@link DEDataRecord}s from a
+		 * {@link DEDataRecordCollection} included in the request
+		 *
+		 * @return {@link DEDataRecordCollectionSavePermissionsRequest}
+		 * @review
+		 */
+		public Builder allowExportDataRecord() {
+			_deDataRecordCollectionSaveModelPermissionsRequest.
+				_exportDataRecord = true;
+
+			return this;
+		}
+
+		/**
+		 * If this method is set on the permission request, it will set the
 		 * permission to allow the user to update {@link DEDataRecordCollection}
 		 * included in the request.
 		 *
@@ -351,6 +379,7 @@ public final class DEDataRecordCollectionSaveModelPermissionsRequest {
 	private long _deDataRecordCollectionId;
 	private boolean _delete;
 	private boolean _deleteDataRecord;
+	private boolean _exportDataRecord;
 	private long _groupId;
 	private List<String> _roleNames;
 	private long _scopedGroupId;

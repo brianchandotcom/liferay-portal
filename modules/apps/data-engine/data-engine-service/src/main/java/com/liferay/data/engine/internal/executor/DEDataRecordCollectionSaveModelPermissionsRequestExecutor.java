@@ -66,6 +66,12 @@ public class DEDataRecordCollectionSaveModelPermissionsRequestExecutor {
 			actionIds.add(DEActionKeys.DELETE_DATA_RECORD);
 		}
 
+		if (deDataRecordCollectionSaveModelPermissionsRequest.
+				isExportDataRecord()) {
+
+			actionIds.add(DEActionKeys.EXPORT_DATA_RECORDS);
+		}
+
 		if (deDataRecordCollectionSaveModelPermissionsRequest.isUpdate()) {
 			actionIds.add(ActionKeys.UPDATE);
 		}

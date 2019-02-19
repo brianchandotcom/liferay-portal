@@ -59,6 +59,7 @@
 				<action-key>ADD_DATA_RECORD</action-key>
 				<action-key>DELETE</action-key>
 				<action-key>DELETE_DATA_RECORD</action-key>
+				<action-key>EXPORT_DATA_RECORDS</action-key>
 				<action-key>PERMISSIONS</action-key>
 				<action-key>UPDATE</action-key>
 				<action-key>UPDATE_DATA_RECORD</action-key>
@@ -77,6 +78,7 @@
 				<action-key>ADD_DATA_RECORD</action-key>
 				<action-key>DELETE</action-key>
 				<action-key>DELETE_DATA_RECORD</action-key>
+				<action-key>EXPORT_DATA_RECORDS</action-key>
 				<action-key>PERMISSIONS</action-key>
 				<action-key>UPDATE</action-key>
 				<action-key>UPDATE_DATA_RECORD</action-key>

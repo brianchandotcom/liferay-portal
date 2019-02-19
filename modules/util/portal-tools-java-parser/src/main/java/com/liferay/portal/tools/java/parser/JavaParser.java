@@ -705,7 +705,7 @@ public class JavaParser {
 			}
 		}
 
-		return content;
+		return StringUtil.replace(content, "\n\n\n", "\n\n");
 	}
 
 	private static ParsedJavaClass _parseDetailAST(

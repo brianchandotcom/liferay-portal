@@ -108,10 +108,10 @@ return _getEmailResource().getEmail( emailId );
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<Keyword> getContentSpaceKeywordsPage( @GraphQLName("content-space-id") Long contentSpaceId , @GraphQLName("pageSize") int pageSize , @GraphQLName("page") int page ) throws Exception {
+	public Collection<Keyword> getContentSpaceKeywordsPage( @GraphQLName("content-space-id") Long contentSpaceId , @GraphQLName("filter") Filter filter , @GraphQLName("pageSize") int pageSize , @GraphQLName("page") int page , @GraphQLName("Sort[]") Sort[] sorts ) throws Exception {
 				Page paginationPage = _getKeywordResource().getContentSpaceKeywordsPage(
 
-					contentSpaceId , Pagination.of(pageSize, page)
+					contentSpaceId , filter , Pagination.of(pageSize, page) , sorts
 				);
 
 				return paginationPage.getItems();

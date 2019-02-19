@@ -15,6 +15,8 @@
 package com.liferay.headless.foundation.resource.v1_0;
 
 import com.liferay.headless.foundation.dto.v1_0.Keyword;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -31,7 +33,7 @@ import javax.annotation.Generated;
 @Generated("")
 public interface KeywordResource {
 
-	public Page<Keyword> getContentSpaceKeywordsPage( Long contentSpaceId , Pagination pagination ) throws Exception;
+	public Page<Keyword> getContentSpaceKeywordsPage( Long contentSpaceId , Filter filter , Pagination pagination , Sort[] sorts ) throws Exception;
 
 	public Keyword postContentSpaceKeyword( Long contentSpaceId , Keyword keyword ) throws Exception;
 

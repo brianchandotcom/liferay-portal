@@ -174,23 +174,16 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 
 		// Delete file shortcuts before file entries. See LPS-21348.
 
-		long[] deleteFileShortcutIds = ParamUtil.getLongValues(
-			actionRequest, "rowIdsDLFileShortcut");
+		BulkSelection<FileShortcut> fileShortcutBulkSelection =
+			_fileShortcutBulkSelectionFactory.create(
+				actionRequest.getParameterMap());
 
-		for (long deleteFileShortcutId : deleteFileShortcutIds) {
-			if (moveToTrash) {
-				FileShortcut fileShortcut =
-					_dlTrashService.moveFileShortcutToTrash(
-						deleteFileShortcutId);
+		Stream<FileShortcut> fileShortcutStream =
+			fileShortcutBulkSelection.stream();
 
-				if (fileShortcut.getModel() instanceof TrashedModel) {
-					trashedModels.add((TrashedModel)fileShortcut.getModel());
-				}
-			}
-			else {
-				_dlAppService.deleteFileShortcut(deleteFileShortcutId);
-			}
-		}
+		fileShortcutStream.forEach(
+			fileShortcut -> _deleteFileShortcut(
+				fileShortcut, moveToTrash, trashedModels));
 
 		BulkSelection<FileEntry> fileEntryBulkSelection =
 			_fileEntryBulkSelectionFactory.create(
@@ -376,6 +369,29 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
+	private void _deleteFileShortcut(
+		FileShortcut fileShortcut, boolean moveToTrash,
+		List<TrashedModel> trashedModels) {
+
+		try {
+			if (moveToTrash) {
+				fileShortcut = _dlTrashService.moveFileShortcutToTrash(
+					fileShortcut.getFileShortcutId());
+
+				if (fileShortcut.getModel() instanceof TrashedModel) {
+					trashedModels.add((TrashedModel)fileShortcut.getModel());
+				}
+			}
+			else {
+				_dlAppService.deleteFileShortcut(
+					fileShortcut.getFileShortcutId());
+			}
+		}
+		catch (PortalException pe) {
+			ReflectionUtil.throwException(pe);
+		}
+	}
+
 	private void _deleteFolder(
 		Folder folder, boolean moveToTrash, List<TrashedModel> trashedModels) {
 
@@ -408,6 +424,12 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 		target = "(model.class.name=com.liferay.document.library.kernel.model.DLFileEntry)"
 	)
 	private BulkSelectionFactory<FileEntry> _fileEntryBulkSelectionFactory;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.document.library.kernel.model.DLFileShortcut)"
+	)
+	private BulkSelectionFactory<FileShortcut>
+		_fileShortcutBulkSelectionFactory;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.document.library.kernel.model.DLFolder)"

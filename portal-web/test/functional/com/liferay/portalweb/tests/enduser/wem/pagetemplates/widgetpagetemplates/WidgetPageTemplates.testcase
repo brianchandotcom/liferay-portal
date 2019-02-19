@@ -170,7 +170,7 @@ definition {
 			portlet = "Pages"
 		);
 
-		LexiconEntry.gotoAddMenuItem(menuItem = "Public Page");
+		LexiconEntry.gotoAdd();
 
 		Navigator.gotoNavNested(navNested = "Global Templates");
 
@@ -202,7 +202,7 @@ definition {
 			portlet = "Pages"
 		);
 
-		LexiconEntry.gotoAddMenuItem(menuItem = "Public Page");
+		LexiconEntry.gotoAdd();
 
 		Navigator.gotoNavNested(navNested = "Global Templates");
 

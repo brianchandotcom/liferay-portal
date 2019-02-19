@@ -1,4 +1,11 @@
 Bundle-Name: Liferay Product Navigation Control Menu Web
 Bundle-SymbolicName: com.liferay.product.navigation.control.menu.web
 Bundle-Version: 4.0.0
+Provide-Capability:\
+	soy;\
+		type="product-navigation-control-menu-web";\
+		version:Version="${Bundle-Version}"
+Require-Capability:\
+	osgi.extender;\
+		filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/soy))"
 Web-ContextPath: /product-navigation-control-menu-web

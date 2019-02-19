@@ -31,7 +31,7 @@ public class IndividualJSONObjectMapper {
 
 	public Results<Individual> mapToResults(String json) throws IOException {
 		return AsahFaroBackendJSONObjectMapper.mapToResults(
-			json, Rels.INDIVIDUALS, Individual.class);
+			json, Rels.INDIVIDUAL_SEGMENT_INDIVIDUALS, Individual.class);
 	}
 
 }

@@ -20,8 +20,8 @@ package com.liferay.segments.internal.asah.client.model;
  */
 public interface Rels {
 
-	public static final String INDIVIDUAL_SEGMENTS = "individual-segments";
+	public static final String INDIVIDUAL_SEGMENT_INDIVIDUALS = "individuals";
 
-	public static final String INDIVIDUALS = "individuals";
+	public static final String INDIVIDUAL_SEGMENTS = "individual-segments";
 
 }

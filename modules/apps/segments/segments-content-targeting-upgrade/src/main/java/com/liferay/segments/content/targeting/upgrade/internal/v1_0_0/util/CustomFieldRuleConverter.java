@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.segments.internal.upgrade.v0_0_1.util;
+package com.liferay.segments.content.targeting.upgrade.internal.v1_0_0.util;
 
 import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.expando.kernel.model.ExpandoTable;
@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.segments.criteria.Criteria;
 import com.liferay.segments.criteria.contributor.SegmentsCriteriaContributor;
-import com.liferay.segments.internal.criteria.contributor.UserSegmentsCriteriaContributor;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -101,9 +100,7 @@ public class CustomFieldRuleConverter implements RuleConverter {
 	@Reference
 	private ExpandoTableLocalService _expandoTableLocalService;
 
-	@Reference(
-		target = "(segments.criteria.contributor.key=" + UserSegmentsCriteriaContributor.KEY + ")"
-	)
+	@Reference(target = "(segments.criteria.contributor.key=user)")
 	private SegmentsCriteriaContributor _userSegmentsCriteriaContributor;
 
 }

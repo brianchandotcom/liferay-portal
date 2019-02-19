@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.segments.internal.upgrade.v0_0_1;
+package com.liferay.segments.content.targeting.upgrade.internal.v1_0_0;
 
 import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.petra.string.StringBundler;
@@ -22,10 +22,10 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
+import com.liferay.segments.content.targeting.upgrade.internal.v1_0_0.util.RuleConverter;
+import com.liferay.segments.content.targeting.upgrade.internal.v1_0_0.util.RuleConverterRegistry;
 import com.liferay.segments.criteria.Criteria;
 import com.liferay.segments.criteria.CriteriaSerializer;
-import com.liferay.segments.internal.upgrade.v0_0_1.util.RuleConverter;
-import com.liferay.segments.internal.upgrade.v0_0_1.util.RuleConverterRegistry;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

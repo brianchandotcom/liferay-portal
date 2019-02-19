@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.segments.internal.upgrade.v0_0_1.util;
+package com.liferay.segments.content.targeting.upgrade.internal.v1_0_0.util;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.util.TimeZoneUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.segments.criteria.Criteria;
 import com.liferay.segments.criteria.contributor.SegmentsCriteriaContributor;
-import com.liferay.segments.internal.criteria.contributor.ContextSegmentsCriteriaContributor;
 
 import java.text.DateFormat;
 
@@ -130,9 +129,7 @@ public class LastLoginDateRuleConverter implements RuleConverter {
 	private static final Log _log = LogFactoryUtil.getLog(
 		LastLoginDateRuleConverter.class);
 
-	@Reference(
-		target = "(segments.criteria.contributor.key=" + ContextSegmentsCriteriaContributor.KEY + ")"
-	)
+	@Reference(target = "(segments.criteria.contributor.key=context)")
 	private SegmentsCriteriaContributor _contextSegmentsCriteriaContributor;
 
 }

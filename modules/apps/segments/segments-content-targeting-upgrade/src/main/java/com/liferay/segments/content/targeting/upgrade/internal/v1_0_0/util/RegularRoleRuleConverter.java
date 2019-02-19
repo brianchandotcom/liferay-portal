@@ -12,11 +12,10 @@
  * details.
  */
 
-package com.liferay.segments.internal.upgrade.v0_0_1.util;
+package com.liferay.segments.content.targeting.upgrade.internal.v1_0_0.util;
 
 import com.liferay.segments.criteria.Criteria;
 import com.liferay.segments.criteria.contributor.SegmentsCriteriaContributor;
-import com.liferay.segments.internal.criteria.contributor.ContextSegmentsCriteriaContributor;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -25,23 +24,21 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eduardo García
  */
 @Component(
-	immediate = true, property = "rule.converter.key=UserLoggedRule",
+	immediate = true, property = "rule.converter.key=RegularRoleRule",
 	service = RuleConverter.class
 )
-public class UserLoggedRuleConverter implements RuleConverter {
+public class RegularRoleRuleConverter implements RuleConverter {
 
 	@Override
 	public void convert(
 		long companyId, Criteria criteria, String typeSettings) {
 
-		_contextSegmentsCriteriaContributor.contribute(
-			criteria, "(signedIn eq " + Boolean.TRUE + ")",
+		_userSegmentsCriteriaContributor.contribute(
+			criteria, "(roleIds eq '" + typeSettings + "')",
 			Criteria.Conjunction.AND);
 	}
 
-	@Reference(
-		target = "(segments.criteria.contributor.key=" + ContextSegmentsCriteriaContributor.KEY + ")"
-	)
-	private SegmentsCriteriaContributor _contextSegmentsCriteriaContributor;
+	@Reference(target = "(segments.criteria.contributor.key=user)")
+	private SegmentsCriteriaContributor _userSegmentsCriteriaContributor;
 
 }

@@ -12,11 +12,10 @@
  * details.
  */
 
-package com.liferay.segments.internal.upgrade.v0_0_1.util;
+package com.liferay.segments.content.targeting.upgrade.internal.v1_0_0.util;
 
 import com.liferay.segments.criteria.Criteria;
 import com.liferay.segments.criteria.contributor.SegmentsCriteriaContributor;
-import com.liferay.segments.internal.criteria.contributor.UserSegmentsCriteriaContributor;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -25,23 +24,21 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eduardo García
  */
 @Component(
-	immediate = true, property = "rule.converter.key=RegularRoleRule",
+	immediate = true, property = "rule.converter.key=UserGroupMemberRule",
 	service = RuleConverter.class
 )
-public class RegularRoleRuleConverter implements RuleConverter {
+public class UserGroupMemberRuleConverter implements RuleConverter {
 
 	@Override
 	public void convert(
 		long companyId, Criteria criteria, String typeSettings) {
 
 		_userSegmentsCriteriaContributor.contribute(
-			criteria, "(roleIds eq '" + typeSettings + "')",
+			criteria, "(userGroupIds eq '" + typeSettings + "')",
 			Criteria.Conjunction.AND);
 	}
 
-	@Reference(
-		target = "(segments.criteria.contributor.key=" + UserSegmentsCriteriaContributor.KEY + ")"
-	)
+	@Reference(target = "(segments.criteria.contributor.key=user)")
 	private SegmentsCriteriaContributor _userSegmentsCriteriaContributor;
 
 }

@@ -28,9 +28,6 @@ import java.io.InputStream;
 
 import java.lang.reflect.Method;
 
-import java.net.URI;
-import java.net.URL;
-
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -133,18 +130,22 @@ public class LPKGDeployerTest {
 		Method method = clazz.getDeclaredMethod(
 			"generateInnerBundleLocation", Bundle.class, String.class);
 
+		Method lpkgLocationmethod = clazz.getDeclaredMethod(
+			"getLPKGLocation", File.class);
+
 		serviceTracker.close();
 
 		Map<Bundle, List<Bundle>> deployedLPKGBundles =
 			lpkgDeployer.getDeployedLPKGBundles();
 
 		for (File lpkgFile : lpkgFiles) {
-			Bundle lpkgBundle = bundleContext.getBundle(
-				lpkgFile.getCanonicalPath());
+			String lpkgLocation = (String)lpkgLocationmethod.invoke(
+				null, lpkgFile);
+
+			Bundle lpkgBundle = bundleContext.getBundle(lpkgLocation);
 
 			Assert.assertNotNull(
-				"No matching LPKG bundle for " + lpkgFile.getCanonicalPath(),
-				lpkgBundle);
+				"No matching LPKG bundle for " + lpkgLocation, lpkgBundle);
 
 			List<Bundle> expectedAppBundles = new ArrayList<>(
 				deployedLPKGBundles.get(lpkgBundle));
@@ -175,17 +176,10 @@ public class LPKGDeployerTest {
 							lpkgDeployerDirString + StringPool.SLASH +
 								lpkgFile.getName());
 
-						URI uri = file.toURI();
-
-						URL url = uri.toURL();
-
-						String path = url.getPath();
-
-						path = URLCodec.decodeURL(path);
-
 						String location =
-							name + "?lpkgPath=" + path +
-								"&protocol=lpkg&static=true";
+							name + "?lpkgPath=" +
+								lpkgLocationmethod.invoke(null, file) +
+									"&protocol=lpkg&static=true";
 
 						Bundle bundle = bundleContext.getBundle(location);
 

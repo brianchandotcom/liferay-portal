@@ -40,6 +40,7 @@ export const FRAGMENTS_EDITOR_ITEM_BORDERS = {
  */
 export const FRAGMENTS_EDITOR_ITEM_TYPES = {
 	column: 'fragments-editor-column',
+	editable: 'fragments-editor-editable-field',
 	fragment: 'fragments-editor-fragment',
 	fragmentList: 'fragments-editor-fragment-list',
 	section: 'fragments-editor-section'

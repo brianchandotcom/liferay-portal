@@ -39,8 +39,8 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Cristina González
  */
-@Component(service = EntityModelResourceRegistrar.class)
-public class EntityModelResourceRegistrar {
+@Component(service = EntityModelResourceRegistry.class)
+public class EntityModelResourceRegistry {
 
 	@Activate
 	public void activate(BundleContext bundleContext) {
@@ -87,7 +87,7 @@ public class EntityModelResourceRegistrar {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		EntityModelResourceRegistrar.class);
+		EntityModelResourceRegistry.class);
 
 	private ServiceTrackerMap<String, EntityModelResource> _serviceTrackerMap;
 

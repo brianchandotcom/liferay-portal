@@ -28,7 +28,7 @@ import com.liferay.portal.odata.filter.InvalidFilterException;
 import com.liferay.portal.odata.filter.expression.ExpressionVisitException;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.internal.accept.language.AcceptLanguageImpl;
-import com.liferay.portal.vulcan.internal.resource.EntityModelResourceRegistrar;
+import com.liferay.portal.vulcan.internal.resource.EntityModelResourceRegistry;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -46,11 +46,11 @@ import org.apache.cxf.message.Message;
 public class FilterContextProvider implements ContextProvider<Filter> {
 
 	public FilterContextProvider(
-		EntityModelResourceRegistrar entityModelResourceRegistrar,
+		EntityModelResourceRegistry entityModelResourceRegistry,
 		ExpressionConvert<Filter> expressionConvert,
 		FilterParserProvider filterParserProvider, Portal portal) {
 
-		_entityModelResourceRegistrar = entityModelResourceRegistrar;
+		_entityModelResourceRegistry = entityModelResourceRegistry;
 		_expressionConvert = expressionConvert;
 		_filterParserProvider = filterParserProvider;
 		_portal = portal;
@@ -86,7 +86,7 @@ public class FilterContextProvider implements ContextProvider<Filter> {
 			return null;
 		}
 
-		EntityModel entityModel = _entityModelResourceRegistrar.getEntityModel(
+		EntityModel entityModel = _entityModelResourceRegistry.getEntityModel(
 			message);
 
 		if (entityModel == null) {
@@ -132,7 +132,7 @@ public class FilterContextProvider implements ContextProvider<Filter> {
 	private static final Log _log = LogFactoryUtil.getLog(
 		FilterContextProvider.class);
 
-	private final EntityModelResourceRegistrar _entityModelResourceRegistrar;
+	private final EntityModelResourceRegistry _entityModelResourceRegistry;
 	private final ExpressionConvert<Filter> _expressionConvert;
 	private final FilterParserProvider _filterParserProvider;
 	private final Portal _portal;

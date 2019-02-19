@@ -27,7 +27,7 @@ import com.liferay.portal.odata.sort.SortParser;
 import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.internal.accept.language.AcceptLanguageImpl;
-import com.liferay.portal.vulcan.internal.resource.EntityModelResourceRegistrar;
+import com.liferay.portal.vulcan.internal.resource.EntityModelResourceRegistry;
 
 import java.util.List;
 
@@ -46,10 +46,10 @@ import org.apache.cxf.message.Message;
 public class SortContextProvider implements ContextProvider<Sort[]> {
 
 	public SortContextProvider(
-		EntityModelResourceRegistrar entityModelResourceRegistrar,
-		Portal portal, SortParserProvider sortParserProvider) {
+		EntityModelResourceRegistry entityModelResourceRegistry, Portal portal,
+		SortParserProvider sortParserProvider) {
 
-		_entityModelResourceRegistrar = entityModelResourceRegistrar;
+		_entityModelResourceRegistry = entityModelResourceRegistry;
 		_portal = portal;
 		_sortParserProvider = sortParserProvider;
 	}
@@ -81,7 +81,7 @@ public class SortContextProvider implements ContextProvider<Sort[]> {
 			return null;
 		}
 
-		EntityModel entityModel = _entityModelResourceRegistrar.getEntityModel(
+		EntityModel entityModel = _entityModelResourceRegistry.getEntityModel(
 			message);
 
 		if (entityModel == null) {
@@ -132,7 +132,7 @@ public class SortContextProvider implements ContextProvider<Sort[]> {
 	private static final Log _log = LogFactoryUtil.getLog(
 		SortContextProvider.class);
 
-	private final EntityModelResourceRegistrar _entityModelResourceRegistrar;
+	private final EntityModelResourceRegistry _entityModelResourceRegistry;
 	private final Portal _portal;
 	private final SortParserProvider _sortParserProvider;
 

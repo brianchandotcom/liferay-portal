@@ -10,7 +10,7 @@
 		<priority value="ERROR" />
 	</category>
 
-	<category name="com.liferay.portal.vulcan.internal.resource.EntityModelResourceRegistrar">
+	<category name="com.liferay.portal.vulcan.internal.resource.EntityModelResourceRegistry">
 		<priority value="ERROR" />
 	</category>
 </log4j:configuration>

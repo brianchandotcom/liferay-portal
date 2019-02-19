@@ -222,6 +222,8 @@ definition {
 
 		Navigator.gotoNavItem(navItem = "Approved");
 
+		LexiconEntry.changeDisplayStyle(displayStyle = "table");
+
 		AssertTextEquals(
 			locator1 = "SiteMembershipsViewMembershipRequests#USER_NAME",
 			value1 = "${userFirstName} ${userLastName}"

@@ -14,18 +14,10 @@
 
 package com.liferay.portal.vulcan.multipart;
 
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.exc.InvalidFormatException;
-import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.vulcan.util.JSONUtil;
 
-import java.io.IOException;
-
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.InternalServerErrorException;
@@ -45,60 +37,24 @@ public class MultipartBody {
 		return _binaryFiles.get(key);
 	}
 
-	public <T> T getJSONObjectValue(String key, Class<T> tClass) {
-		try {
-			String stringValue = getStringValue(key);
+	public <T> T getJSONObjectValue(String key, Class<T> tClass)
+		throws BadRequestException, InternalServerErrorException {
 
-			if (stringValue == null) {
-				throw new BadRequestException(
-					"Missing JSON field with key {" + key + "}");
-			}
+		String stringValue = getStringValue(key);
 
-			return _objectMapper.readValue(stringValue, tClass);
-		}
-		catch (JsonParseException jpe) {
+		if (stringValue == null) {
 			throw new BadRequestException(
-				"Field {" + key + "} is not a JSON", jpe);
+				"Missing JSON field with key {" + key + "}");
 		}
-		catch (InvalidFormatException ife) {
-			List<JsonMappingException.Reference> references = ife.getPath();
 
-			Stream<JsonMappingException.Reference> stream = references.stream();
-
-			String path = stream.map(
-				JsonMappingException.Reference::getFieldName
-			).collect(
-				Collectors.joining(".")
-			);
-
-			Class<?> targetType = ife.getTargetType();
-
-			String message =
-				"Unable to match field {" + path + "} with value {" +
-					ife.getValue() + "} to " + targetType.getSimpleName() +
-						" inside JSON field with key {" + key + "}";
-
-			throw new BadRequestException(message, ife);
+		try {
+			return JSONUtil.readValueFrom(stringValue, tClass);
 		}
-		catch (JsonMappingException jme) {
-			List<JsonMappingException.Reference> references = jme.getPath();
+		catch (BadRequestException bre) {
+			String message = StringBundler.concat(
+				"Error in field with key {", key, "}: ", bre.getMessage());
 
-			Stream<JsonMappingException.Reference> stream = references.stream();
-
-			String path = stream.map(
-				JsonMappingException.Reference::getFieldName
-			).collect(
-				Collectors.joining(".")
-			);
-
-			String message =
-				"An error occurs mapping " + path +
-					" field inside JSON field with key { " + key + "}";
-
-			throw new BadRequestException(message, jme);
-		}
-		catch (IOException ioe) {
-			throw new InternalServerErrorException(ioe);
+			throw new BadRequestException(message, bre);
 		}
 	}
 
@@ -112,12 +68,6 @@ public class MultipartBody {
 		_binaryFiles = binaryFiles;
 		_values = values;
 	}
-
-	private static final ObjectMapper _objectMapper = new ObjectMapper() {
-		{
-			setDateFormat(new ISO8601DateFormat());
-		}
-	};
 
 	private final Map<String, BinaryFile> _binaryFiles;
 	private final Map<String, String> _values;

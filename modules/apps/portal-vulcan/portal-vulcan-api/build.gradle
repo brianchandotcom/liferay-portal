@@ -10,6 +10,7 @@ dependencies {
 	compileOnly group: "javax.ws.rs", name: "javax.ws.rs-api", version: "2.1"
 	compileOnly project(":apps:portal-odata:portal-odata-api")
 	compileOnly project(":core:petra:petra-function")
+	compileOnly project(":core:petra:petra-string")
 
 	testCompile group: "org.hamcrest", name: "hamcrest-all", version: "1.3"
 }

@@ -110,48 +110,57 @@ if (portletTitleBasedNavigation) {
 </div>
 
 <aui:script>
-	AUI.$('#<portlet:namespace />selectKBObjectButton').on(
-		'click',
-		function(event) {
-			Liferay.Util.selectEntity(
-				{
-					dialog: {
-						constrain: true,
-						destroyOnHide: true,
-						modal: true,
-						width: 680
+	var selectKBObjectButton = document.querySelector('#<portlet:namespace />selectKBObjectButton');
+
+	if (selectKBObjectButton) {
+		selectKBObjectButton.addEventListener(
+			'click',
+			function(event) {
+				Liferay.Util.selectEntity(
+					{
+						dialog: {
+							constrain: true,
+							destroyOnHide: true,
+							modal: true,
+							width: 680
+						},
+						id: '<portlet:namespace />selectKBObject',
+						title: '<liferay-ui:message key="select-parent" />',
+
+						<liferay-portlet:renderURL var="selectKBObjectURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+							<portlet:param name="mvcPath" value='<%= templatePath + "select_parent.jsp" %>' />
+							<portlet:param name="resourceClassNameId" value="<%= String.valueOf(resourceClassNameId) %>" />
+							<portlet:param name="resourcePrimKey" value="<%= String.valueOf(resourcePrimKey) %>" />
+							<portlet:param name="parentResourceClassNameId" value="<%= String.valueOf(parentResourceClassNameId) %>" />
+							<portlet:param name="parentResourcePrimKey" value="<%= String.valueOf(parentResourcePrimKey) %>" />
+							<portlet:param name="originalParentResourcePrimKey" value="<%= String.valueOf(parentResourcePrimKey) %>" />
+							<portlet:param name="priority" value="<%= String.valueOf(priority) %>" />
+							<portlet:param name="status" value="<%= String.valueOf(status) %>" />
+							<portlet:param name="targetStatus" value="<%= String.valueOf(targetStatus) %>" />
+						</liferay-portlet:renderURL>
+
+						uri: '<%= HtmlUtil.escapeJS(selectKBObjectURL) %>'
 					},
-					id: '<portlet:namespace />selectKBObject',
-					title: '<liferay-ui:message key="select-parent" />',
+					function(event) {
+						Liferay.Util.setFormValues(
+							document.<portlet:namespace />fm,
+							{
+								parentPriority: event.priority,
+								parentResourceClassNameId: event.resourceclassnameid
+							}
+						);
 
-					<liferay-portlet:renderURL var="selectKBObjectURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-						<portlet:param name="mvcPath" value='<%= templatePath + "select_parent.jsp" %>' />
-						<portlet:param name="resourceClassNameId" value="<%= String.valueOf(resourceClassNameId) %>" />
-						<portlet:param name="resourcePrimKey" value="<%= String.valueOf(resourcePrimKey) %>" />
-						<portlet:param name="parentResourceClassNameId" value="<%= String.valueOf(parentResourceClassNameId) %>" />
-						<portlet:param name="parentResourcePrimKey" value="<%= String.valueOf(parentResourcePrimKey) %>" />
-						<portlet:param name="originalParentResourcePrimKey" value="<%= String.valueOf(parentResourcePrimKey) %>" />
-						<portlet:param name="priority" value="<%= String.valueOf(priority) %>" />
-						<portlet:param name="status" value="<%= String.valueOf(status) %>" />
-						<portlet:param name="targetStatus" value="<%= String.valueOf(targetStatus) %>" />
-					</liferay-portlet:renderURL>
+						var folderData = {
+							idString: 'parentResourcePrimKey',
+							idValue: event.resourceprimkey,
+							nameString: 'parentTitle',
+							nameValue: event.title
+						};
 
-					uri: '<%= HtmlUtil.escapeJS(selectKBObjectURL) %>'
-				},
-				function(event) {
-					document.<portlet:namespace />fm.<portlet:namespace />parentPriority.value = event.priority;
-					document.<portlet:namespace />fm.<portlet:namespace />parentResourceClassNameId.value = event.resourceclassnameid;
-
-					var folderData = {
-						idString: 'parentResourcePrimKey',
-						idValue: event.resourceprimkey,
-						nameString: 'parentTitle',
-						nameValue: event.title
-					};
-
-					Liferay.Util.selectFolder(folderData, '<portlet:namespace />');
-				}
-			);
-		}
-	);
+						Liferay.Util.selectFolder(folderData, '<portlet:namespace />');
+					}
+				);
+			}
+		);
+	}
 </aui:script>

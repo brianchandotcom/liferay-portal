@@ -183,29 +183,33 @@ if (portletTitleBasedNavigation) {
 </aui:fieldset>
 
 <aui:script>
-	$('#<portlet:namespace />compare').on(
-		'click',
-		function(event) {
-			var rowIds = $('input[name=<portlet:namespace />rowIds]:checked');
+	var compareVersionsButton = document.querySelector('#<portlet:namespace />compare');
 
-			if (rowIds.length === 2) {
-				<portlet:renderURL var="compareVersionURL">
-					<portlet:param name="mvcPath" value='<%= templatePath + "compare_versions.jsp" %>' />
-					<portlet:param name="<%= Constants.CMD %>" value="compareVersions" />
-					<portlet:param name="backURL" value="<%= currentURL %>" />
-					<portlet:param name="redirect" value="<%= redirect %>" />
-					<portlet:param name="resourcePrimKey" value="<%= String.valueOf(kbArticle.getResourcePrimKey()) %>" />
-				</portlet:renderURL>
+	if (compareVersionsButton) {
+		compareVersionsButton.addEventListener(
+			'click',
+			function(event) {
+				var rowIds = document.querySelectorAll('input[name="<portlet:namespace />rowIds"]:checked');
 
-				var uri = '<%= HtmlUtil.escapeJS(compareVersionURL) %>';
+				if (rowIds.length === 2) {
+					<portlet:renderURL var="compareVersionURL">
+						<portlet:param name="mvcPath" value='<%= templatePath + "compare_versions.jsp" %>' />
+						<portlet:param name="<%= Constants.CMD %>" value="compareVersions" />
+						<portlet:param name="backURL" value="<%= currentURL %>" />
+						<portlet:param name="redirect" value="<%= redirect %>" />
+						<portlet:param name="resourcePrimKey" value="<%= String.valueOf(kbArticle.getResourcePrimKey()) %>" />
+					</portlet:renderURL>
 
-				uri = Liferay.Util.addParams('<portlet:namespace />sourceVersion=' + rowIds.eq(1).val(), uri);
-				uri = Liferay.Util.addParams('<portlet:namespace />targetVersion=' + rowIds.eq(0).val(), uri);
+					var uri = '<%= HtmlUtil.escapeJS(compareVersionURL) %>';
 
-				location.href = uri;
+					uri = Liferay.Util.addParams('<portlet:namespace />sourceVersion=' + rowIds[1].value, uri);
+					uri = Liferay.Util.addParams('<portlet:namespace />targetVersion=' + rowIds[0].value, uri);
+
+					location.href = uri;
+				}
 			}
-		}
-	);
+		);
+	}
 
 	Liferay.provide(
 		window,

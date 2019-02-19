@@ -1073,6 +1073,10 @@ public interface PropsKeys {
 	public static final String DL_FILE_ENTRY_THUMBNAIL_VIDEO_FRAME_PERCENTAGE =
 		"dl.file.entry.thumbnail.video.frame.percentage";
 
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final String
 		DL_FILE_ENTRY_TYPE_IG_IMAGE_AUTO_CREATE_ON_UPGRADE =
 			"dl.file.entry.type.ig.image.auto.create.on.upgrade";

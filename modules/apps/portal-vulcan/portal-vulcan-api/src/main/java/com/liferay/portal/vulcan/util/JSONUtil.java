@@ -21,6 +21,7 @@ import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
 
 import java.io.ByteArrayInputStream;
@@ -43,18 +44,20 @@ import javax.ws.rs.InternalServerErrorException;
 public class JSONUtil {
 
 	/**
-	 * Deserialize JSON content from given JSON input stream.
+	 * Maps Jackson exceptions thrown when obtaining the value from the provided
+	 * supplier.
 	 *
 	 * @throws BadRequestException if a format-relating error occurs (invalid
 	 *         JSON, invalid field format...)
 	 * @throws InternalServerErrorException if a low-level I/O problem occurs
 	 * @review
 	 */
-	public static <T> T readValueFrom(InputStream inputStream, Class<T> clazz)
+	public static <T> T mapJacksonExceptions(
+			UnsafeSupplier<T, IOException> supplier)
 		throws BadRequestException, InternalServerErrorException {
 
 		try {
-			return _objectMapper.readValue(inputStream, clazz);
+			return supplier.get();
 		}
 		catch (JsonParseException jpe) {
 			throw new BadRequestException("Input is not a valid JSON", jpe);
@@ -85,6 +88,21 @@ public class JSONUtil {
 		catch (IOException ioe) {
 			throw new InternalServerErrorException(ioe);
 		}
+	}
+
+	/**
+	 * Deserialize JSON content from given JSON input stream.
+	 *
+	 * @throws BadRequestException if a format-relating error occurs (invalid
+	 *         JSON, invalid field format...)
+	 * @throws InternalServerErrorException if a low-level I/O problem occurs
+	 * @review
+	 */
+	public static <T> T readValueFrom(InputStream inputStream, Class<T> clazz)
+		throws BadRequestException, InternalServerErrorException {
+
+		return mapJacksonExceptions(
+			() -> _objectMapper.readValue(inputStream, clazz));
 	}
 
 	/**

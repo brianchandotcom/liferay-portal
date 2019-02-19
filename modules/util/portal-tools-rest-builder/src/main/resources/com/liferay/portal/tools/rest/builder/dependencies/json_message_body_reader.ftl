@@ -13,6 +13,8 @@ import com.fasterxml.jackson.databind.module.SimpleAbstractTypeResolver;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
+import com.liferay.portal.vulcan.util.JSONUtil;
+
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -68,7 +70,8 @@ public class JSONMessageBodyReader implements MessageBodyReader<Object> {
 			InputStream inputStream)
 		throws IOException, WebApplicationException {
 
-		return _objectMapper.readValue(inputStream, clazz);
+		return JSONUtil.mapJacksonExceptions(
+			() -> _objectMapper.readValue(inputStream, clazz));
 	}
 
 	private static final ObjectMapper _objectMapper = new ObjectMapper() {

@@ -112,22 +112,22 @@ public class JSONMessageBodyReader implements MessageBodyReader<Object> {
 	private static final ObjectMapper _objectMapper = new ObjectMapper() {
 		{
 			registerModule(
-				new SimpleModule("Liferay.Headless.Collaboration", Version.unknownVersion()) {
-					{
-						setAbstractTypes(
-							new SimpleAbstractTypeResolver() {
-								{
-										addMapping(AggregateRating.class, AggregateRatingImpl.class);
-										addMapping(BlogPosting.class, BlogPostingImpl.class);
-										addMapping(BlogPostingImage.class, BlogPostingImageImpl.class);
-										addMapping(Categories.class, CategoriesImpl.class);
-										addMapping(Comment.class, CommentImpl.class);
-										addMapping(Creator.class, CreatorImpl.class);
-										addMapping(Image.class, ImageImpl.class);
-	}
-							});
-	}
-				});
+			new SimpleModule("Liferay.Headless.Collaboration", Version.unknownVersion()) {
+				{
+					setAbstractTypes(
+						new SimpleAbstractTypeResolver() {
+							{
+								addMapping(AggregateRating.class, AggregateRatingImpl.class);
+								addMapping(BlogPosting.class, BlogPostingImpl.class);
+								addMapping(BlogPostingImage.class, BlogPostingImageImpl.class);
+								addMapping(Categories.class, CategoriesImpl.class);
+								addMapping(Comment.class, CommentImpl.class);
+								addMapping(Creator.class, CreatorImpl.class);
+								addMapping(Image.class, ImageImpl.class);
+							}
+						});
+				}
+			});
 
 			setDateFormat(new ISO8601DateFormat());
 	}

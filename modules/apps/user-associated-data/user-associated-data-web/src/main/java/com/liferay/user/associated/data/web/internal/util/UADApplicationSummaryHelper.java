@@ -92,14 +92,14 @@ public class UADApplicationSummaryHelper {
 	}
 
 	public UADApplicationSummaryDisplay getUADApplicationSummaryDisplay(
-		String applicationKey, long userId,
-		List<UADDisplay> applicationUADDisplays, long[] groupIds) {
+		String applicationKey, List<UADDisplay> uadDisplayStream, long userId,
+		long[] groupIds) {
 
 		UADApplicationSummaryDisplay uadApplicationSummaryDisplay =
 			new UADApplicationSummaryDisplay();
 
 		int count = getReviewableUADEntitiesCount(
-			applicationUADDisplays.stream(), userId, groupIds);
+			uadDisplayStream.stream(), userId, groupIds);
 
 		uadApplicationSummaryDisplay.setCount(count);
 
@@ -135,7 +135,7 @@ public class UADApplicationSummaryHelper {
 			if (!ListUtil.isEmpty(applicationUADDisplays)) {
 				uadApplicationSummaryDisplays.add(
 					getUADApplicationSummaryDisplay(
-						applicationKey, userId, applicationUADDisplays,
+						applicationKey, applicationUADDisplays, userId,
 						groupIds));
 			}
 		}

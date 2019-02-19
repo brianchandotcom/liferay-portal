@@ -27,17 +27,19 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
 
+import org.jboss.arquillian.core.api.annotation.ApplicationScoped;
 import org.jboss.arquillian.core.api.event.ManagerStarted;
 import org.jboss.arquillian.core.api.event.ManagerStopping;
 import org.jboss.arquillian.core.impl.ExtensionImpl;
-import org.jboss.arquillian.core.impl.context.ApplicationContextImpl;
 import org.jboss.arquillian.core.spi.EventContext;
 import org.jboss.arquillian.core.spi.Extension;
+import org.jboss.arquillian.core.spi.HashObjectStore;
 import org.jboss.arquillian.core.spi.InjectionPoint;
 import org.jboss.arquillian.core.spi.InvocationException;
 import org.jboss.arquillian.core.spi.Manager;
 import org.jboss.arquillian.core.spi.NonManagedObserver;
 import org.jboss.arquillian.core.spi.ObserverMethod;
+import org.jboss.arquillian.core.spi.context.AbstractContext;
 import org.jboss.arquillian.core.spi.context.ApplicationContext;
 import org.jboss.arquillian.core.spi.context.ObjectStore;
 
@@ -275,5 +277,32 @@ public class ManagerImpl implements Manager {
 	private final ApplicationContext _applicationContext;
 	private ThreadLocal<Stack<Object>> _eventStack;
 	private final List<Extension> _extensions = new ArrayList<>();
+
+	private class ApplicationContextImpl
+		extends AbstractContext<String> implements ApplicationContext {
+
+		@Override
+		public void activate() {
+			super.activate(_APP_CONTEXT_ID);
+		}
+
+		@Override
+		public void destroy() {
+			super.destroy(_APP_CONTEXT_ID);
+		}
+
+		@Override
+		public Class<? extends Annotation> getScope() {
+			return ApplicationScoped.class;
+		}
+
+		@Override
+		protected ObjectStore createNewObjectStore() {
+			return new HashObjectStore();
+		}
+
+		private static final String _APP_CONTEXT_ID = "app";
+
+	}
 
 }

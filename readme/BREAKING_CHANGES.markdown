@@ -285,7 +285,9 @@ This affects anyone who used `Function` and `Supplier` in package
 
 #### How should I update my code?
 
-Use `java.util.function.Function` and `java.util.function.Supplier` directly.
+Replace usages of `com.liferay.portal.kernel.util.Function` with
+`java.util.function.Function`. Replace usages of
+`com.liferay.portal.kernel.util.Supplier` with `java.util.function.Supplier`.
 
 #### Why was this change made?
 

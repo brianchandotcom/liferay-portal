@@ -24,6 +24,7 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -122,16 +123,22 @@ public class LayoutPageTemplateManagementToolbarDisplayContext
 								request, "standard-page-template"));
 					});
 
-				addPrimaryDropdownItem(
-					dropdownItem -> {
-						dropdownItem.putData(
-							"action", "addLayoutPageTemplateEntry");
-						dropdownItem.putData(
-							"addPageTemplateURL", _getAddLayoutPrototypeURL());
-						dropdownItem.setHref("#");
-						dropdownItem.setLabel(
-							LanguageUtil.get(request, "widget-page-template"));
-					});
+				Group scopeGroup = _themeDisplay.getScopeGroup();
+
+				if (scopeGroup.isSite()) {
+					addPrimaryDropdownItem(
+						dropdownItem -> {
+							dropdownItem.putData(
+								"action", "addLayoutPageTemplateEntry");
+							dropdownItem.putData(
+								"addPageTemplateURL",
+								_getAddLayoutPrototypeURL());
+							dropdownItem.setHref("#");
+							dropdownItem.setLabel(
+								LanguageUtil.get(
+									request, "widget-page-template"));
+						});
+				}
 			}
 		};
 	}

@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 /**
  * @author Hugo Huijser
  */
-public class ParsedJavaTerm {
+public class ParsedJavaTerm implements Comparable<ParsedJavaTerm> {
 
 	public ParsedJavaTerm(
 		String content, Position startPosition, Position endPosition) {
@@ -29,6 +29,11 @@ public class ParsedJavaTerm {
 		_content = content;
 		_startPosition = startPosition;
 		_endPosition = endPosition;
+	}
+
+	@Override
+	public int compareTo(ParsedJavaTerm parsedJavaTerm) {
+		return _startPosition.compareTo(parsedJavaTerm.getStartPosition());
 	}
 
 	public boolean containsCommentToken() {

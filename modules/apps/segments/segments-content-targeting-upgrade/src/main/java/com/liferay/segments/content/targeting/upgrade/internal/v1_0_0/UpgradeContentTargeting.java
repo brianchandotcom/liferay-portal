@@ -110,12 +110,22 @@ public class UpgradeContentTargeting extends UpgradeProcess {
 			try (ResultSet rs = ps.executeQuery()) {
 				while (rs.next()) {
 					String ruleKey = rs.getString("ruleKey");
-					String typeSettings = rs.getString("typeSettings");
 
 					RuleConverter ruleConverter =
 						_ruleConverterRegistry.getRuleConverter(ruleKey);
 
+					if (ruleConverter == null) {
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								"Unable to perform automated update of rule " +
+									ruleKey);
+						}
+
+						continue;
+					}
+
 					long companyId = rs.getLong("companyId");
+					String typeSettings = rs.getString("typeSettings");
 
 					ruleConverter.convert(companyId, criteria, typeSettings);
 				}

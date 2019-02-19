@@ -102,6 +102,10 @@ AUI.add(
 								Liferay.on('RuleBuilderLoaded', A.bind('_onRuleBuilderLoaded', instance))
 							);
 						}
+
+						if (instance.get('published')) {
+							instance._handlePublishAction();
+						}
 					},
 
 					renderUI: function() {
@@ -742,8 +746,6 @@ AUI.add(
 						publishMessage = publishMessage.replace(/\{0\}/gim, span);
 
 						instance._showAlert(publishMessage, 'success');
-
-						instance.one('#publish').html(Liferay.Language.get('unpublish-form'));
 					},
 
 					_handleUnpublishAction: function() {
@@ -876,57 +878,18 @@ AUI.add(
 					_onPublishButtonClick: function() {
 						var instance = this;
 
-						instance._autosave(
-							false,
-							function() {
-								var publishedValue = instance.get('published');
+						event.preventDefault();
 
-								var newPublishedValue = !publishedValue;
+						var saveButton = instance.one('#publish');
 
-								var payload = instance.ns(
-									{
-										formInstanceId: instance.byId('formInstanceId').val(),
-										published: newPublishedValue
-									}
-								);
+						saveButton.html(Liferay.Language.get('publishing'));
 
-								A.io.request(
-									Liferay.DDM.FormSettings.publishFormInstanceURL,
-									{
-										after: {
-											success: function(event, id, xhr) {
-												instance.set('published', newPublishedValue);
+						var editForm = instance.get('editForm');
 
-												instance.syncInputValues();
+						editForm.formNode.setAttribute('action', Liferay.DDM.FormSettings.publishFormInstanceURL)
 
-												var responseData = this.get('responseData');
+						instance.submitForm();
 
-												if (newPublishedValue) {
-													instance._handlePublishAction();
-												}
-												else {
-													instance._handleUnpublishAction();
-												}
-
-												instance._updateAutosaveBar(false, responseData.modifiedDate);
-											}
-										},
-										data: payload,
-										dataType: 'JSON',
-										method: 'POST',
-										on: {
-											failure: function(event, id, xhr) {
-												var sessionStatus = Liferay.Session.get('sessionState');
-
-												if (sessionStatus === 'expired' || xhr.status === 401) {
-													window.location.reload();
-												}
-											}
-										}
-									}
-								);
-							}
-						);
 					},
 
 					_onPublishIconClick: function() {

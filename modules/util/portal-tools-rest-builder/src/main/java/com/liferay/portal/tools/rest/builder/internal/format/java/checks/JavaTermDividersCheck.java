@@ -44,51 +44,6 @@ public class JavaTermDividersCheck {
 		}
 	}
 
-	private static String _format(String content, String fileName)
-		throws Exception {
-
-		JavaClass javaClass = JavaClassParser.parseJavaClass(fileName, content);
-
-		String javaClassContent = javaClass.getContent();
-
-		String javaClassHeader = content.substring(
-			0, content.indexOf(javaClassContent));
-
-		List<JavaTerm> childJavaTerms = javaClass.getChildJavaTerms();
-
-		if (childJavaTerms.isEmpty()) {
-			Matcher matcher = _missingEmptyLinePattern.matcher(
-				javaClassContent);
-
-			if (matcher.find()) {
-				return matcher.replaceAll("$1\n$2");
-			}
-
-			return javaClassHeader + javaClassContent;
-		}
-
-		JavaTerm previousChildJavaTerm = null;
-
-		for (JavaTerm childJavaTerm : childJavaTerms) {
-			if (previousChildJavaTerm != null) {
-				javaClassContent = _fixJavaTermDivider(
-					javaClassContent, previousChildJavaTerm, childJavaTerm);
-			}
-
-			previousChildJavaTerm = childJavaTerm;
-		}
-
-		String lastJavaTermContent = previousChildJavaTerm.getContent();
-
-		if (!javaClassContent.contains(lastJavaTermContent + "\n")) {
-			javaClassContent = StringUtil.replace(
-				javaClassContent, lastJavaTermContent,
-				lastJavaTermContent + "\n");
-		}
-
-		return javaClassHeader + javaClassContent;
-	}
-
 	private static String _fixJavaTermDivider(
 		String classContent, JavaTerm previousJavaTerm, JavaTerm javaTerm) {
 
@@ -176,6 +131,51 @@ public class JavaTermDividersCheck {
 
 		return StringUtil.replace(
 			classContent, "\n\n" + javaTermContent, "\n" + javaTermContent);
+	}
+
+	private static String _format(String content, String fileName)
+		throws Exception {
+
+		JavaClass javaClass = JavaClassParser.parseJavaClass(fileName, content);
+
+		String javaClassContent = javaClass.getContent();
+
+		String javaClassHeader = content.substring(
+			0, content.indexOf(javaClassContent));
+
+		List<JavaTerm> childJavaTerms = javaClass.getChildJavaTerms();
+
+		if (childJavaTerms.isEmpty()) {
+			Matcher matcher = _missingEmptyLinePattern.matcher(
+				javaClassContent);
+
+			if (matcher.find()) {
+				return matcher.replaceAll("$1\n$2");
+			}
+
+			return javaClassHeader + javaClassContent;
+		}
+
+		JavaTerm previousChildJavaTerm = null;
+
+		for (JavaTerm childJavaTerm : childJavaTerms) {
+			if (previousChildJavaTerm != null) {
+				javaClassContent = _fixJavaTermDivider(
+					javaClassContent, previousChildJavaTerm, childJavaTerm);
+			}
+
+			previousChildJavaTerm = childJavaTerm;
+		}
+
+		String lastJavaTermContent = previousChildJavaTerm.getContent();
+
+		if (!javaClassContent.contains(lastJavaTermContent + "\n")) {
+			javaClassContent = StringUtil.replace(
+				javaClassContent, lastJavaTermContent,
+				lastJavaTermContent + "\n");
+		}
+
+		return javaClassHeader + javaClassContent;
 	}
 
 	private static final Pattern _missingEmptyLinePattern = Pattern.compile(

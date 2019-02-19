@@ -51,26 +51,28 @@ public class JavaSignatureStylingCheck {
 		}
 	}
 
-	private static String _format(String content, String fileName)
-		throws Exception {
+	private static String _fixLeadingTabs(
+		String content, String line, int expectedTabCount) {
 
-		JavaClass javaClass = JavaClassParser.parseJavaClass(fileName, content);
+		int leadingTabCount = JavaUtil.getLeadingTabCount(line);
 
-		String javaClassContent = javaClass.getContent();
+		String newLine = line;
 
-		String javaClassHeader = content.substring(
-			0, content.indexOf(javaClassContent));
+		while (leadingTabCount != expectedTabCount) {
+			if (leadingTabCount > expectedTabCount) {
+				newLine = StringUtil.replaceFirst(
+					newLine, CharPool.TAB, StringPool.BLANK);
 
-		for (JavaTerm javaTerm : javaClass.getChildJavaTerms()) {
-			if (javaTerm instanceof JavaConstructor ||
-				javaTerm instanceof JavaMethod) {
+				leadingTabCount--;
+			}
+			else {
+				newLine = StringPool.TAB + newLine;
 
-				javaClassContent = StringUtil.replace(
-					javaClassContent, javaTerm.getContent(), _format(javaTerm));
+				leadingTabCount++;
 			}
 		}
 
-		return javaClassHeader + javaClassContent;
+		return StringUtil.replace(content, line, newLine);
 	}
 
 	private static String _format(JavaTerm javaTerm) {
@@ -107,28 +109,26 @@ public class JavaSignatureStylingCheck {
 			nextLine);
 	}
 
-	private static String _fixLeadingTabs(
-		String content, String line, int expectedTabCount) {
+	private static String _format(String content, String fileName)
+		throws Exception {
 
-		int leadingTabCount = JavaUtil.getLeadingTabCount(line);
+		JavaClass javaClass = JavaClassParser.parseJavaClass(fileName, content);
 
-		String newLine = line;
+		String javaClassContent = javaClass.getContent();
 
-		while (leadingTabCount != expectedTabCount) {
-			if (leadingTabCount > expectedTabCount) {
-				newLine = StringUtil.replaceFirst(
-					newLine, CharPool.TAB, StringPool.BLANK);
+		String javaClassHeader = content.substring(
+			0, content.indexOf(javaClassContent));
 
-				leadingTabCount--;
-			}
-			else {
-				newLine = StringPool.TAB + newLine;
+		for (JavaTerm javaTerm : javaClass.getChildJavaTerms()) {
+			if (javaTerm instanceof JavaConstructor ||
+				javaTerm instanceof JavaMethod) {
 
-				leadingTabCount++;
+				javaClassContent = StringUtil.replace(
+					javaClassContent, javaTerm.getContent(), _format(javaTerm));
 			}
 		}
 
-		return StringUtil.replace(content, line, newLine);
+		return javaClassHeader + javaClassContent;
 	}
 
 	private static String _formatMultiLinesSignature(

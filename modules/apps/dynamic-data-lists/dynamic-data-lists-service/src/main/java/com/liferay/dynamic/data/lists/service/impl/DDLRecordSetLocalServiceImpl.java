@@ -399,6 +399,10 @@ public class DDLRecordSetLocalServiceImpl
 		return ddlRecordSetPersistence.findByGroupId(groupId);
 	}
 
+	public List<DDLRecordSet> getRecordSets(long groupId, int start, int end) {
+		return ddlRecordSetPersistence.filterFindByGroupId(groupId, start, end);
+	}
+
 	/**
 	 * Returns the number of all the record sets belonging the group.
 	 *

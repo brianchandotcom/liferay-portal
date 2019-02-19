@@ -39,9 +39,14 @@ import com.liferay.headless.document.library.resource.v1_0.DocumentResource;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserService;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.vulcan.multipart.BinaryFile;
+import com.liferay.portal.vulcan.multipart.MultipartBody;
 
 import java.util.List;
 import java.util.Optional;
@@ -70,6 +75,37 @@ public class DocumentResourceImpl extends BaseDocumentResourceImpl {
 	@Override
 	public Document getDocument(Long documentId) throws Exception {
 		FileEntry fileEntry = _dlAppService.getFileEntry(documentId);
+
+		return _toDocument(
+			fileEntry, fileEntry.getFileVersion(),
+			_userService.getUserById(fileEntry.getUserId()));
+	}
+
+	@Override
+	public Document postFolderDocument(
+			Long folderId, MultipartBody multipartBody)
+		throws Exception {
+
+		Folder folder = _dlAppService.getFolder(folderId);
+
+		Document document = multipartBody.getJSONObjectValue(
+			"Document", DocumentImpl.class);
+
+		BinaryFile binaryFile = multipartBody.getBinaryFile("file");
+
+		String binaryFileName = binaryFile.getFileName();
+
+		String title = Optional.ofNullable(
+			document.getTitle()
+		).orElse(
+			binaryFileName
+		);
+
+		FileEntry fileEntry = _dlAppService.addFileEntry(
+			folder.getRepositoryId(), folderId, binaryFileName,
+			binaryFile.getContentType(), title, document.getDescription(), null,
+			binaryFile.getInputStream(), binaryFile.getSize(),
+			_getServiceContext(folder.getGroupId(), document));
 
 		return _toDocument(
 			fileEntry, fileEntry.getFileVersion(),
@@ -124,6 +160,29 @@ public class DocumentResourceImpl extends BaseDocumentResourceImpl {
 		).toArray(
 			Categories[]::new
 		);
+	}
+
+	private ServiceContext _getServiceContext(long groupId, Document document) {
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
+
+		Long[] categoryIds = document.getCategoryIds();
+
+		if (ArrayUtil.isNotEmpty(categoryIds)) {
+			serviceContext.setAssetCategoryIds(ArrayUtil.toArray(categoryIds));
+		}
+
+		String[] keywords = document.getKeywords();
+
+		if (ArrayUtil.isNotEmpty(keywords)) {
+			serviceContext.setAssetTagNames(keywords);
+		}
+
+		serviceContext.setScopeGroupId(groupId);
+
+		return serviceContext;
 	}
 
 	private <T, S> T _getValue(

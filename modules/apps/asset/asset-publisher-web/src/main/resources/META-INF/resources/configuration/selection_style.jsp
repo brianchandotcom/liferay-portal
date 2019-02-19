@@ -26,12 +26,15 @@
 	<aui:input checked="<%= assetPublisherDisplayContext.isSelectionStyleAssetListProvider() %>" id="selectionStyleAssetListProvider" label="asset-list-provider" name="preferences--selectionStyle--" onChange='<%= renderResponse.getNamespace() + "chooseSelectionStyle();" %>' type="radio" value="asset-list-provider" />
 </aui:fieldset>
 
-<aui:script>
+<script>
 	function <portlet:namespace />chooseSelectionStyle() {
-		var form = AUI.$(document.<portlet:namespace />fm);
-
-		form.fm('<%= Constants.CMD %>').val('selection-style');
-
-		submitForm(form);
+		Liferay.Util.postForm(
+			document.<portlet:namespace />fm,
+			{
+				data: {
+					cmd: 'selection-style'
+				}
+			}
+		);
 	}
-</aui:script>
+</script>

@@ -14,7 +14,6 @@
 
 package com.liferay.sharing.web.internal.portlet.action;
 
-import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -110,13 +109,9 @@ public class SharingUserAutocompleteMVCResourceCommand
 
 		String query = ParamUtil.getString(request, "query");
 
-		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
-
-		params.put("wildcardMode", WildcardMode.TRAILING);
-
 		return _userLocalService.search(
 			themeDisplay.getCompanyId(), query,
-			WorkflowConstants.STATUS_APPROVED, params, 0, 20,
+			WorkflowConstants.STATUS_APPROVED, new LinkedHashMap<>(), 0, 20,
 			new UserScreenNameComparator());
 	}
 

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.tools.rest.builder.internal.util;
 
+import com.liferay.portal.tools.rest.builder.internal.format.util.FormatUtil;
+
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;

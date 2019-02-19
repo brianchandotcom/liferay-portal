@@ -12,9 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.tools.rest.builder.internal.util;
+package com.liferay.portal.tools.rest.builder.internal.format.util;
 
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.tools.rest.builder.internal.util.FileUtil;
 
 import java.io.File;
 

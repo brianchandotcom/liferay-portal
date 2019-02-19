@@ -58,7 +58,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = MVCActionCommand.class
 )
-public class PublishFormInstanceMVCResourceCommand
+public class PublishFormInstanceMVCActionCommand
 	extends SaveFormInstanceMVCActionCommand {
 
 	@Override
@@ -141,11 +141,10 @@ public class PublishFormInstanceMVCResourceCommand
 	}
 
 	protected void updateFormInstancePermission(
-			ActionRequest resourceRequest, long formInstanceId,
-			boolean published)
+			ActionRequest actionRequest, long formInstanceId, boolean published)
 		throws PortalException {
 
-		long companyId = _portal.getCompanyId(resourceRequest);
+		long companyId = _portal.getCompanyId(actionRequest);
 
 		Role role = _roleLocalService.getRole(companyId, RoleConstants.GUEST);
 

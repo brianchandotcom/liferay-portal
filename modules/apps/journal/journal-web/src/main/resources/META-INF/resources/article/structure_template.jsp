@@ -93,128 +93,144 @@ DDMTemplate ddmTemplate = journalEditArticleDisplayContext.getDDMTemplate();
 	}
 	%>
 
-	$('#<portlet:namespace />selectDDMStructure').on(
-		'click',
-		function(event) {
-			Liferay.Util.selectEntity(
-				{
-					dialog: {
-						constrain: true,
-						modal: true
-					},
-					eventName: '<portlet:namespace />selectDDMStructure',
-					id: '<portlet:namespace />selectDDMStructure',
-					title: '<%= UnicodeLanguageUtil.get(request, "structures") %>',
-					uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/select_ddm_structure.jsp" /><portlet:param name="searchRestriction" value="<%= String.valueOf(searchRestriction) %>" /><portlet:param name="searchRestrictionClassNameId" value="<%= String.valueOf(ClassNameLocalServiceUtil.getClassNameId(JournalFolder.class)) %>" /><portlet:param name="searchRestrictionClassPK" value="<%= String.valueOf(folderId) %>" /></portlet:renderURL>'
-				},
-				function(event) {
-					var ddmStructureId = '<%= ddmStructure.getPrimaryKey() %>';
+	var selectDDMStructureButton = document.querySelector('#<portlet:namespace />selectDDMStructure');
 
-					if (document.<portlet:namespace />fm1.<portlet:namespace />ddmStructureId.value != '') {
-						ddmStructureId = document.<portlet:namespace />fm1.<portlet:namespace />ddmStructureId.value;
-					}
-
-					if (ddmStructureId != event.ddmstructureid) {
-						if (confirm('<%= UnicodeLanguageUtil.get(request, "editing-the-current-structure-deletes-all-unsaved-content") %>')) {
-							document.<portlet:namespace />fm1.<portlet:namespace />changeDDMStructure.value = 'true';
-							document.<portlet:namespace />fm1.<portlet:namespace />ddmStructureId.value = event.ddmstructureid;
-							document.<portlet:namespace />fm1.<portlet:namespace />ddmStructureKey.value = event.ddmstructurekey;
-							document.<portlet:namespace />fm1.<portlet:namespace />ddmTemplateKey.value = '';
-
-							submitForm(document.<portlet:namespace />fm1, null, false, false);
-						}
-					}
-				}
-			);
-		}
-	);
-
-	$('#<portlet:namespace />editDDMStructure').on(
-		'click',
-		function(event) {
-			if (confirm('<%= UnicodeLanguageUtil.get(request, "editing-the-current-structure-deletes-all-unsaved-content") %>')) {
-				Liferay.Util.openWindow(
+	if (selectDDMStructureButton) {
+		selectDDMStructureButton.addEventListener(
+			'click',
+			function(event) {
+				Liferay.Util.selectEntity(
 					{
 						dialog: {
-							destroyOnHide: true
+							constrain: true,
+							modal: true
 						},
-						dialogIframe: {
-							bodyCssClass: 'dialog-with-footer'
-						},
-						id: '<portlet:namespace />editDDMStructure',
-						title: '<%= HtmlUtil.escape(ddmStructure.getName(locale)) %>',
+						eventName: '<portlet:namespace />selectDDMStructure',
+						id: '<portlet:namespace />selectDDMStructure',
+						title: '<%= UnicodeLanguageUtil.get(request, "structures") %>',
+						uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/select_ddm_structure.jsp" /><portlet:param name="searchRestriction" value="<%= String.valueOf(searchRestriction) %>" /><portlet:param name="searchRestrictionClassNameId" value="<%= String.valueOf(ClassNameLocalServiceUtil.getClassNameId(JournalFolder.class)) %>" /><portlet:param name="searchRestrictionClassPK" value="<%= String.valueOf(folderId) %>" /></portlet:renderURL>'
+					},
+					function(event) {
+						var ddmStructureId = '<%= ddmStructure.getPrimaryKey() %>';
 
-						<portlet:renderURL var="editDDMStructureURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-							<portlet:param name="mvcPath" value="/edit_ddm_structure.jsp" />
-							<portlet:param name="closeRedirect" value="<%= currentURL %>" />
-							<portlet:param name="ddmStructureId" value="<%= String.valueOf(ddmStructure.getStructureId()) %>" />
-						</portlet:renderURL>
+						if (document.<portlet:namespace />fm1.<portlet:namespace />ddmStructureId.value != '') {
+							ddmStructureId = document.<portlet:namespace />fm1.<portlet:namespace />ddmStructureId.value;
+						}
 
-						uri: '<%= editDDMStructureURL %>'
+						if (ddmStructureId != event.ddmstructureid) {
+							if (confirm('<%= UnicodeLanguageUtil.get(request, "editing-the-current-structure-deletes-all-unsaved-content") %>')) {
+								document.<portlet:namespace />fm1.<portlet:namespace />changeDDMStructure.value = 'true';
+								document.<portlet:namespace />fm1.<portlet:namespace />ddmStructureId.value = event.ddmstructureid;
+								document.<portlet:namespace />fm1.<portlet:namespace />ddmStructureKey.value = event.ddmstructurekey;
+								document.<portlet:namespace />fm1.<portlet:namespace />ddmTemplateKey.value = '';
+
+								submitForm(document.<portlet:namespace />fm1, null, false, false);
+							}
+						}
 					}
 				);
 			}
-		}
-	);
+		);
+	}
 
-	$('#<portlet:namespace />selectDDMTemplate').on(
-		'click',
-		function(event) {
-			Liferay.Util.selectEntity(
-				{
-					dialog: {
-						constrain: true,
-						modal: true
-					},
-					eventName: '<portlet:namespace />selectDDMTemplate',
-					id: '<portlet:namespace />selectDDMTemplate',
-					title: '<%= UnicodeLanguageUtil.get(request, "templates") %>',
-					uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/select_ddm_template.jsp" /><portlet:param name="ddmStructureId" value="<%= String.valueOf(ddmStructure.getStructureId()) %>" /></portlet:renderURL>'
-				},
-				function(event) {
-					var ddmTemplateId = '<%= (ddmTemplate != null) ? ddmTemplate.getTemplateId() : 0 %>';
+	var editDDMStructureLink = document.querySelector('#<portlet:namespace />editDDMStructure');
 
-					if (document.<portlet:namespace />fm1.<portlet:namespace />ddmTemplateId.value != '') {
-						ddmTemplateId = document.<portlet:namespace />fm1.<portlet:namespace />ddmTemplateId.value;
-					}
+	if (editDDMStructureLink) {
+		editDDMStructureLink.addEventListener(
+			'click',
+			function(event) {
+				if (confirm('<%= UnicodeLanguageUtil.get(request, "editing-the-current-structure-deletes-all-unsaved-content") %>')) {
+					Liferay.Util.openWindow(
+						{
+							dialog: {
+								destroyOnHide: true
+							},
+							dialogIframe: {
+								bodyCssClass: 'dialog-with-footer'
+							},
+							id: '<portlet:namespace />editDDMStructure',
+							title: '<%= HtmlUtil.escape(ddmStructure.getName(locale)) %>',
 
-					if (ddmTemplateId != event.ddmtemplateid) {
-						if (confirm('<%= UnicodeLanguageUtil.get(request, "editing-the-current-template-deletes-all-unsaved-content") %>')) {
-							document.<portlet:namespace />fm1.<portlet:namespace />ddmTemplateId.value = event.ddmtemplateid;
+							<portlet:renderURL var="editDDMStructureURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+								<portlet:param name="mvcPath" value="/edit_ddm_structure.jsp" />
+								<portlet:param name="closeRedirect" value="<%= currentURL %>" />
+								<portlet:param name="ddmStructureId" value="<%= String.valueOf(ddmStructure.getStructureId()) %>" />
+							</portlet:renderURL>
 
-							submitForm(document.<portlet:namespace />fm1, null, false, false);
+							uri: '<%= editDDMStructureURL %>'
 						}
-					}
+					);
 				}
-			);
-		}
-	);
+			}
+		);
+	}
 
-	$('#<portlet:namespace />editDDMTemplate').on(
-		'click',
-		function(event) {
-			if (confirm('<%= UnicodeLanguageUtil.get(request, "editing-the-current-template-deletes-all-unsaved-content") %>')) {
-				Liferay.Util.openWindow(
+	var selectDDMTemplateButton = document.querySelector('#<portlet:namespace />selectDDMTemplate');
+
+	if (selectDDMTemplateButton) {
+		selectDDMTemplateButton.addEventListener(
+			'click',
+			function(event) {
+				Liferay.Util.selectEntity(
 					{
 						dialog: {
-							destroyOnHide: true
+							constrain: true,
+							modal: true
 						},
-						dialogIframe: {
-							bodyCssClass: 'dialog-with-footer'
-						},
-						id: '<portlet:namespace />editDDMTemplate',
-						title: '<%= (ddmTemplate != null) ? HtmlUtil.escape(ddmTemplate.getName(locale)) : StringPool.BLANK %>',
+						eventName: '<portlet:namespace />selectDDMTemplate',
+						id: '<portlet:namespace />selectDDMTemplate',
+						title: '<%= UnicodeLanguageUtil.get(request, "templates") %>',
+						uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/select_ddm_template.jsp" /><portlet:param name="ddmStructureId" value="<%= String.valueOf(ddmStructure.getStructureId()) %>" /></portlet:renderURL>'
+					},
+					function(event) {
+						var ddmTemplateId = '<%= (ddmTemplate != null) ? ddmTemplate.getTemplateId() : 0 %>';
 
-						<portlet:renderURL var="editDDMTemplateURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-							<portlet:param name="mvcPath" value="/edit_ddm_template.jsp" />
-							<portlet:param name="closeRedirect" value="<%= currentURL %>" />
-							<portlet:param name="ddmTemplateId" value="<%= (ddmTemplate != null) ? String.valueOf(ddmTemplate.getTemplateId()) : StringPool.BLANK %>" />
-						</portlet:renderURL>
+						if (document.<portlet:namespace />fm1.<portlet:namespace />ddmTemplateId.value != '') {
+							ddmTemplateId = document.<portlet:namespace />fm1.<portlet:namespace />ddmTemplateId.value;
+						}
 
-						uri: '<%= editDDMTemplateURL %>'
+						if (ddmTemplateId != event.ddmtemplateid) {
+							if (confirm('<%= UnicodeLanguageUtil.get(request, "editing-the-current-template-deletes-all-unsaved-content") %>')) {
+								document.<portlet:namespace />fm1.<portlet:namespace />ddmTemplateId.value = event.ddmtemplateid;
+
+								submitForm(document.<portlet:namespace />fm1, null, false, false);
+							}
+						}
 					}
 				);
 			}
-		}
-	);
+		);
+	}
+
+	var editDDMTemplateLink = document.querySelector('#<portlet:namespace />editDDMTemplate');
+
+	if (editDDMTemplateLink) {
+		editDDMTemplateLink.addEventListener(
+			'click',
+			function(event) {
+				if (confirm('<%= UnicodeLanguageUtil.get(request, "editing-the-current-template-deletes-all-unsaved-content") %>')) {
+					Liferay.Util.openWindow(
+						{
+							dialog: {
+								destroyOnHide: true
+							},
+							dialogIframe: {
+								bodyCssClass: 'dialog-with-footer'
+							},
+							id: '<portlet:namespace />editDDMTemplate',
+							title: '<%= (ddmTemplate != null) ? HtmlUtil.escape(ddmTemplate.getName(locale)) : StringPool.BLANK %>',
+
+							<portlet:renderURL var="editDDMTemplateURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+								<portlet:param name="mvcPath" value="/edit_ddm_template.jsp" />
+								<portlet:param name="closeRedirect" value="<%= currentURL %>" />
+								<portlet:param name="ddmTemplateId" value="<%= (ddmTemplate != null) ? String.valueOf(ddmTemplate.getTemplateId()) : StringPool.BLANK %>" />
+							</portlet:renderURL>
+
+							uri: '<%= editDDMTemplateURL %>'
+						}
+					);
+				}
+			}
+		);
+	}
 </aui:script>

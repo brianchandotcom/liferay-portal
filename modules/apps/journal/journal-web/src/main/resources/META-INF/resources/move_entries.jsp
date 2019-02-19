@@ -168,41 +168,45 @@ JournalMoveEntriesDisplayContext journalMovesEntriesDisplayContext = new Journal
 </liferay-frontend:edit-form>
 
 <aui:script use="liferay-item-selector-dialog">
-	AUI.$('#<portlet:namespace />selectFolderButton').on(
-		'click',
-		function(event) {
-			var itemSelectorDialog = new A.LiferayItemSelectorDialog(
-				{
-					eventName: '<portlet:namespace />selectFolder',
-					on: {
-						selectedItemChange: function(event) {
-							var selectedItem = event.newVal;
+	var selectFolderButton = document.querySelector('#<portlet:namespace />selectFolderButton');
 
-							if (selectedItem) {
-								var folderData = {
-									idString: 'newFolderId',
-									idValue: selectedItem.folderId,
-									nameString: 'folderName',
-									nameValue: selectedItem.folderName
-								};
+	if (selectFolderButton) {
+		selectFolderButton.addEventListener(
+			'click',
+			function(event) {
+				var itemSelectorDialog = new A.LiferayItemSelectorDialog(
+					{
+						eventName: '<portlet:namespace />selectFolder',
+						on: {
+							selectedItemChange: function(event) {
+								var selectedItem = event.newVal;
 
-								Liferay.Util.selectFolder(folderData, '<portlet:namespace />');
+								if (selectedItem) {
+									var folderData = {
+										idString: 'newFolderId',
+										idValue: selectedItem.folderId,
+										nameString: 'folderName',
+										nameValue: selectedItem.folderName
+									};
+
+									Liferay.Util.selectFolder(folderData, '<portlet:namespace />');
+								}
 							}
-						}
-					},
-					'strings.add': '<liferay-ui:message key="done" />',
-					title: '<liferay-ui:message arguments="folder" key="select-x" />',
+						},
+						'strings.add': '<liferay-ui:message key="done" />',
+						title: '<liferay-ui:message arguments="folder" key="select-x" />',
 
-					<portlet:renderURL var="selectFolderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-						<portlet:param name="mvcPath" value="/select_folder.jsp" />
-						<portlet:param name="folderId" value="<%= String.valueOf(journalMovesEntriesDisplayContext.getNewFolderId()) %>" />
-					</portlet:renderURL>
+						<portlet:renderURL var="selectFolderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+							<portlet:param name="mvcPath" value="/select_folder.jsp" />
+							<portlet:param name="folderId" value="<%= String.valueOf(journalMovesEntriesDisplayContext.getNewFolderId()) %>" />
+						</portlet:renderURL>
 
-					url: '<%= selectFolderURL %>'
-				}
-			);
+						url: '<%= selectFolderURL %>'
+					}
+				);
 
-			itemSelectorDialog.open();
-		}
-	);
+				itemSelectorDialog.open();
+			}
+		);
+	}
 </aui:script>

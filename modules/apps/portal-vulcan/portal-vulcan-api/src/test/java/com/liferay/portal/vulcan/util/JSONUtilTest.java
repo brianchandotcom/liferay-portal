@@ -67,6 +67,20 @@ public class JSONUtilTest {
 	}
 
 	@Test
+	public void testReadValueFromReturnsCorrectValues() {
+		try {
+			String json =
+				"{\"string\": \"Hello\", \"number\": 42, \"miau\": \"miau\"}";
+
+			JSONUtil.readValueFrom(json, JSONTestClass.class);
+		}
+		catch (Exception e) {
+			assertThat(e, is(instanceOf(BadRequestException.class)));
+			assertThat(e.getMessage(), is("Unrecognized field {miau}"));
+		}
+	}
+
+	@Test
 	public void testReadValueFromThrowsBadRequestIfMissingField() {
 		try {
 			JSONUtil.readValueFrom(

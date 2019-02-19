@@ -214,7 +214,6 @@ definition {
 		);
 	}
 
-	@ignore = "true"
 	@priority = "4"
 	test SearchByUserFacet {
 		ProductMenu.gotoPortlet(

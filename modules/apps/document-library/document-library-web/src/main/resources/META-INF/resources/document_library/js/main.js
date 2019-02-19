@@ -266,6 +266,8 @@ AUI.add(
 						var form = instance.get('form').node;
 						var namespace = instance.NS;
 
+						var bulkSelection = instance._searchContainer.select && instance._searchContainer.select.get('bulkSelection');
+
 						if (!editCategories) {
 							var pathModule = instance.get('pathModule');
 
@@ -281,7 +283,7 @@ AUI.add(
 											folderId: instance.getFolderId(),
 											portletNamespace: namespace,
 											repositoryId: parseFloat(form.get(namespace + 'repositoryId').val()),
-											selectAll: instance._isSelectAllChecked,
+											selectAll: bulkSelection,
 											selectCategoriesUrl: instance.get('selectCategoriesURL'),
 											spritemap: themeDisplay.getPathThemeImages() + '/lexicon/icons.svg',
 											urlCategories: urlCategories,
@@ -294,7 +296,7 @@ AUI.add(
 						}
 						else {
 							editCategories.fileEntries = instance._selectedFileEntries;
-							editCategories.selectAll = instance._isSelectAllChecked;
+							editCategories.selectAll = bulkSelection;
 							editCategories.folderId = instance.getFolderId();
 							editCategories.open();
 						}

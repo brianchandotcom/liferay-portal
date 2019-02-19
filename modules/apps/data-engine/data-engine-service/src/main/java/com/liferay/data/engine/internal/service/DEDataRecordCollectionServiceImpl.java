@@ -506,10 +506,12 @@ public class DEDataRecordCollectionServiceImpl
 	protected DEDataDefinitionRuleFunctionApplyRequest
 		createDEDataDefinitionRuleFunctionApplyRequest(
 			DEDataDefinitionField deDataDefinitionField,
-			DEDataDefinitionRule deDataDefinitionRule, DEDataRecord deDataRecord) {
+			DEDataDefinitionRule deDataDefinitionRule,
+			DEDataRecord deDataRecord) {
 
-		DEDataDefinitionRuleFunctionApplyRequest deDataDefinitionRuleFunctionApplyRequest =
-			new DEDataDefinitionRuleFunctionApplyRequest();
+		DEDataDefinitionRuleFunctionApplyRequest
+			deDataDefinitionRuleFunctionApplyRequest =
+				new DEDataDefinitionRuleFunctionApplyRequest();
 
 		deDataDefinitionRuleFunctionApplyRequest.setDEDataDefinitionField(
 			deDataDefinitionField);
@@ -524,9 +526,10 @@ public class DEDataRecordCollectionServiceImpl
 		return deDataDefinitionRuleFunctionApplyRequest;
 	}
 
-	protected void doValidation(Map<String, DEDataDefinitionField> deDataDefinitionFields,
-			DEDataDefinitionRule deDataDefinitionRule, DEDataRecord deDataRecord,
-			Map<String, Set<String>> validationErrors) {
+	protected void doValidation(
+		Map<String, DEDataDefinitionField> deDataDefinitionFields,
+		DEDataDefinitionRule deDataDefinitionRule, DEDataRecord deDataRecord,
+		Map<String, Set<String>> validationErrors) {
 
 		DEDataDefinitionRuleFunction deDataDefinitionRuleFunction =
 			deDataDefinitionRuleFunctionTracker.getDEDataDefinitionRuleFunction(
@@ -536,22 +539,31 @@ public class DEDataRecordCollectionServiceImpl
 			return;
 		}
 
-		for (String fieldName : deDataDefinitionRule.getDEDataDefinitionFieldNames()) {
-			DEDataDefinitionField deDataDefinitionField = deDataDefinitionFields.get(fieldName);
+		for (String deDataDefinitionFieldName :
+				deDataDefinitionRule.getDEDataDefinitionFieldNames()) {
 
-			DEDataDefinitionRuleFunctionApplyRequest deDataDefinitionRuleFunctionApplyRequest =
-				createDEDataDefinitionRuleFunctionApplyRequest(
-					deDataDefinitionField, deDataDefinitionRule, deDataRecord);
+			DEDataDefinitionField deDataDefinitionField =
+				deDataDefinitionFields.get(deDataDefinitionFieldName);
 
-			DEDataDefinitionRuleFunctionApplyResponse deDataDefinitionRuleFunctionApplyResponse =
-				deDataDefinitionRuleFunction.apply(deDataDefinitionRuleFunctionApplyRequest);
+			DEDataDefinitionRuleFunctionApplyRequest
+				deDataDefinitionRuleFunctionApplyRequest =
+					createDEDataDefinitionRuleFunctionApplyRequest(
+						deDataDefinitionField, deDataDefinitionRule,
+						deDataRecord);
+
+			DEDataDefinitionRuleFunctionApplyResponse
+				deDataDefinitionRuleFunctionApplyResponse =
+					deDataDefinitionRuleFunction.apply(
+						deDataDefinitionRuleFunctionApplyRequest);
 
 			if (!deDataDefinitionRuleFunctionApplyResponse.isValid()) {
-				Set<String> errorCodes = validationErrors.getOrDefault(fieldName, new HashSet<>());
+				Set<String> errorCodes = validationErrors.getOrDefault(
+					deDataDefinitionFieldName, new HashSet<>());
 
-				errorCodes.add(deDataDefinitionRuleFunctionApplyResponse.getErrorCode());
+				errorCodes.add(
+					deDataDefinitionRuleFunctionApplyResponse.getErrorCode());
 
-				validationErrors.put(fieldName, errorCodes);
+				validationErrors.put(deDataDefinitionFieldName, errorCodes);
 			}
 		}
 	}
@@ -723,7 +735,9 @@ public class DEDataRecordCollectionServiceImpl
 		return _deDataRecordCollectionSaveRequestExecutor;
 	}
 
-	protected boolean isValidationRule(DEDataDefinitionRule deDataDefinitionRule) {
+	protected boolean isValidationRule(
+		DEDataDefinitionRule deDataDefinitionRule) {
+
 		String ruleType = deDataDefinitionRule.getRuleType();
 
 		return ruleType.equals(
@@ -742,29 +756,33 @@ public class DEDataRecordCollectionServiceImpl
 	}
 
 	protected void validate(
-			DEDataRecordCollectionSaveRecordRequest deDataRecordCollectionSaveRecordRequest)
+			DEDataRecordCollectionSaveRecordRequest
+				deDataRecordCollectionSaveRecordRequest)
 		throws DEDataRecordCollectionException {
 
 		validateDEDataDefinitionFields(deDataRecordCollectionSaveRecordRequest);
-		validateDEDataDefinitionFieldValues(deDataRecordCollectionSaveRecordRequest);
+		validateDEDataDefinitionFieldValues(
+			deDataRecordCollectionSaveRecordRequest);
 	}
 
 	protected void validateDEDataDefinitionFields(
-			DEDataRecordCollectionSaveRecordRequest deDataRecordCollectionSaveRecordRequest)
+			DEDataRecordCollectionSaveRecordRequest
+				deDataRecordCollectionSaveRecordRequest)
 		throws DEDataRecordCollectionException {
 
-		DEDataRecord deDataRecord = deDataRecordCollectionSaveRecordRequest.getDEDataRecord();
+		DEDataRecord deDataRecord =
+			deDataRecordCollectionSaveRecordRequest.getDEDataRecord();
 
 		DEDataDefinition deDataDefinition = deDataRecord.getDEDataDefinition();
 
 		Set<String> deDataDefinitionFields = getDEDataDefinitionFields(
 			deDataDefinition);
 
-		Map<String, Object> fieldValues = deDataRecord.getValues();
+		Map<String, Object> values = deDataRecord.getValues();
 
-		Set<String> fieldNames = fieldValues.keySet();
+		Set<String> keySet = values.keySet();
 
-		Stream<String> stream = fieldNames.stream();
+		Stream<String> stream = keySet.stream();
 
 		List<String> orphanFieldNames = stream.filter(
 			fieldName -> !deDataDefinitionFields.contains(fieldName)
@@ -779,22 +797,26 @@ public class DEDataRecordCollectionServiceImpl
 	}
 
 	protected void validateDEDataDefinitionFieldValues(
-			DEDataRecordCollectionSaveRecordRequest deDataRecordCollectionSaveRecordRequest)
+			DEDataRecordCollectionSaveRecordRequest
+				deDataRecordCollectionSaveRecordRequest)
 		throws DEDataRecordCollectionException {
 
-		DEDataRecord deDataRecord = deDataRecordCollectionSaveRecordRequest.getDEDataRecord();
+		DEDataRecord deDataRecord =
+			deDataRecordCollectionSaveRecordRequest.getDEDataRecord();
 
 		DEDataDefinition deDataDefinition = deDataRecord.getDEDataDefinition();
 
-		List<DEDataDefinitionRule> deDataDefinitionRules = deDataDefinition.getDEDataDefinitionRules();
+		List<DEDataDefinitionRule> deDataDefinitionRules =
+			deDataDefinition.getDEDataDefinitionRules();
 
 		Stream<DEDataDefinitionRule> stream = deDataDefinitionRules.stream();
 
-		List<DEDataDefinitionRule> deDataDefinitionValidationRules = stream.filter(
-			this::isValidationRule
-		).collect(
-			Collectors.toList()
-		);
+		List<DEDataDefinitionRule> deDataDefinitionValidationRules =
+			stream.filter(
+				this::isValidationRule
+			).collect(
+				Collectors.toList()
+			);
 
 		if (deDataDefinitionValidationRules.isEmpty()) {
 			return;
@@ -809,11 +831,13 @@ public class DEDataRecordCollectionServiceImpl
 				deDataDefinitionValidationRules) {
 
 			doValidation(
-				deDataDefinitionFields, deDataDefinitionRule, deDataRecord, validationErrors);
+				deDataDefinitionFields, deDataDefinitionRule, deDataRecord,
+				validationErrors);
 		}
 
 		if (!validationErrors.isEmpty()) {
-			throw new DEDataRecordCollectionException.InvalidDataRecord(validationErrors);
+			throw new DEDataRecordCollectionException.InvalidDataRecord(
+				validationErrors);
 		}
 	}
 
@@ -831,7 +855,8 @@ public class DEDataRecordCollectionServiceImpl
 		deDataDefinitionDeserializerTracker;
 
 	@Reference
-	protected DEDataDefinitionRuleFunctionTracker deDataDefinitionRuleFunctionTracker;
+	protected DEDataDefinitionRuleFunctionTracker
+		deDataDefinitionRuleFunctionTracker;
 
 	@Reference
 	protected DEDataStorageTracker deDataStorageTracker;

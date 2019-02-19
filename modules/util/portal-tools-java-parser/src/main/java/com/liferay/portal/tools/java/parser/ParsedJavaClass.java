@@ -26,12 +26,9 @@ import java.util.TreeMap;
  */
 public class ParsedJavaClass {
 
-	public void addJavaTerm(
-		String content, Position startPosition, Position endPosition) {
-
+	public void addParsedJavaTerm(ParsedJavaTerm parsedJavaTerm) {
 		_parsedJavaTermsMap.put(
-			startPosition,
-			new ParsedJavaTerm(content, startPosition, endPosition));
+			parsedJavaTerm.getStartPosition(), parsedJavaTerm);
 	}
 
 	public void addPrecedingCommentToken(

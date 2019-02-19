@@ -52,7 +52,7 @@ definition {
 
 		task ("View the display page") {
 			DisplayPagesAdmin.viewDisplayPagePresent(
-				displayPageName = "DisplayPage Name"
+				displayPageName = "Display Page Name"
 			);
 		}
 	}

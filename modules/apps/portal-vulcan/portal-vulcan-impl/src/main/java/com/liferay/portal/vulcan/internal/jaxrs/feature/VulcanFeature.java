@@ -27,9 +27,13 @@ import com.liferay.portal.vulcan.internal.jaxrs.context.provider.FilterContextPr
 import com.liferay.portal.vulcan.internal.jaxrs.context.provider.PaginationContextProvider;
 import com.liferay.portal.vulcan.internal.jaxrs.context.provider.SortContextProvider;
 import com.liferay.portal.vulcan.internal.jaxrs.exception.mapper.ExceptionMapper;
+import com.liferay.portal.vulcan.internal.jaxrs.exception.mapper.InvalidFormatExceptionMapper;
+import com.liferay.portal.vulcan.internal.jaxrs.exception.mapper.JsonMappingExceptionMapper;
+import com.liferay.portal.vulcan.internal.jaxrs.exception.mapper.JsonParseExceptionMapper;
 import com.liferay.portal.vulcan.internal.jaxrs.exception.mapper.NoSuchModelExceptionMapper;
 import com.liferay.portal.vulcan.internal.jaxrs.exception.mapper.PortalExceptionMapper;
 import com.liferay.portal.vulcan.internal.jaxrs.exception.mapper.PrincipalExceptionMapper;
+import com.liferay.portal.vulcan.internal.jaxrs.exception.mapper.UnrecognizedPropertyExceptionMapper;
 import com.liferay.portal.vulcan.internal.jaxrs.message.body.MultipartBodyMessageBodyReader;
 import com.liferay.portal.vulcan.internal.resource.EntityModelResourceRegistrar;
 
@@ -64,11 +68,15 @@ public class VulcanFeature implements Feature {
 	public boolean configure(FeatureContext featureContext) {
 		featureContext.register(ExceptionMapper.class);
 		featureContext.register(JacksonJsonProvider.class);
+		featureContext.register(JsonMappingExceptionMapper.class);
+		featureContext.register(JsonParseExceptionMapper.class);
+		featureContext.register(InvalidFormatExceptionMapper.class);
 		featureContext.register(MultipartBodyMessageBodyReader.class);
 		featureContext.register(NoSuchModelExceptionMapper.class);
 		featureContext.register(PaginationContextProvider.class);
 		featureContext.register(PortalExceptionMapper.class);
 		featureContext.register(PrincipalExceptionMapper.class);
+		featureContext.register(UnrecognizedPropertyExceptionMapper.class);
 
 		featureContext.register(new AcceptLanguageContextProvider(_portal));
 		featureContext.register(new CompanyContextProvider(_portal));

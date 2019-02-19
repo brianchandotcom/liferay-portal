@@ -57,4 +57,14 @@ definition {
 
 		Upgrade.resetTestUserPassword();
 	}
+
+	@description = "This is a use case for LPS-73277."
+	@priority = "5"
+	test ResetTestUserPasswordAfterUpgrade7110 {
+		property data.archive.type = "data-archive-portal";
+		property portal.version = "7.1.10";
+		property setup.wizard.enabled = "true";
+
+		Upgrade.resetTestUserPassword();
+	}
 }

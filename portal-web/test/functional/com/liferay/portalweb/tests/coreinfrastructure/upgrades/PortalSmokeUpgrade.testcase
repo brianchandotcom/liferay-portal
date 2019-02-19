@@ -74,4 +74,16 @@ definition {
 
 		Upgrade.searchForAssetsAfterUpgrade();
 	}
+
+	@priority = "5"
+	test ViewPortalSmokeArchive7110 {
+		property data.archive.type = "data-archive-portal";
+		property portal.upgrades = "true";
+		property portal.version = "7.1.10";
+		property test.assert.warning.exceptions = "true";
+
+		Upgrade.viewUpgrade();
+
+		Upgrade.searchForAssetsAfterUpgrade();
+	}
 }

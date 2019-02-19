@@ -64,4 +64,12 @@ definition {
 
 		Upgrade.ViewDroolsAppManager();
 	}
+
+	@priority = "5"
+	test ViewDroolsInAppManagerAfterUpgrade7110 {
+		property data.archive.type = "data-archive-portal";
+		property portal.version = "7.1.10";
+
+		Upgrade.ViewDroolsAppManager();
+	}
 }

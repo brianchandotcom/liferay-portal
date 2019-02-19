@@ -66,6 +66,14 @@ definition {
 	}
 
 	@priority = "5"
+	test SubmitAndApproveWorkflowAfterUpgrade7110 {
+		property data.archive.type = "data-archive-portal";
+		property portal.version = "7.1.10";
+
+		Upgrade.submitNewWorkflow();
+	}
+
+	@priority = "5"
 	test ViewWorkflowArchive621015 {
 		property data.archive.type = "data-archive-workflow";
 		property portal.version = "6.2.10.15";

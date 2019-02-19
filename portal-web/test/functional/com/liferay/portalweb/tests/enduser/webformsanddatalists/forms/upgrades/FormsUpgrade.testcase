@@ -57,6 +57,14 @@ definition {
 	}
 
 	@priority = "5"
+	test AddFormAfterUpgrade7110 {
+		property data.archive.type = "data-archive-portal";
+		property portal.version = "7.1.10";
+
+		Upgrade.addForm();
+	}
+
+	@priority = "5"
 	test AddFormAfterUpgrade704 {
 		property data.archive.type = "data-archive-portal";
 		property database.types = "mariadb,mysql,postgresql";

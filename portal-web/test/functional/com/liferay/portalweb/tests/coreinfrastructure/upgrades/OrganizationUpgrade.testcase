@@ -67,6 +67,14 @@ definition {
 	}
 
 	@priority = "5"
+	test AddOrganizationAfterUpgrade7110 {
+		property data.archive.type = "data-archive-portal";
+		property portal.version = "7.1.10";
+
+		Upgrade.addOrganization();
+	}
+
+	@priority = "5"
 	test AddUserandSuborganizationAfterUpgrade621015 {
 		property data.archive.type = "data-archive-admin-org-with-user";
 		property database.types = "db2,mysql,oracle,sybase";

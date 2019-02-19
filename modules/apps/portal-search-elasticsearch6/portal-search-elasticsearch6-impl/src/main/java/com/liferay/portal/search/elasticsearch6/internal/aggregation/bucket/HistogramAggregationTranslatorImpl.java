@@ -46,9 +46,8 @@ public class HistogramAggregationTranslatorImpl
 
 		HistogramAggregationBuilder histogramAggregationBuilder =
 			_baseFieldAggregationTranslator.translate(
-				baseMetricsAggregation ->
-					AggregationBuilders.histogram(
-						baseMetricsAggregation.getName()),
+				baseMetricsAggregation -> AggregationBuilders.histogram(
+					baseMetricsAggregation.getName()),
 				histogramAggregation, aggregationTranslator,
 				pipelineAggregationTranslator);
 

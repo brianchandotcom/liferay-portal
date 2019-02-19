@@ -49,9 +49,8 @@ public abstract class BaseHistogramAggregationTestCase
 		assertSearch(
 			indexingTestHelper -> {
 				indexingTestHelper.defineRequest(
-					searchRequestBuilder ->
-						searchRequestBuilder.addAggregation(
-							histogramAggregation));
+					searchRequestBuilder -> searchRequestBuilder.addAggregation(
+						histogramAggregation));
 
 				indexingTestHelper.search();
 

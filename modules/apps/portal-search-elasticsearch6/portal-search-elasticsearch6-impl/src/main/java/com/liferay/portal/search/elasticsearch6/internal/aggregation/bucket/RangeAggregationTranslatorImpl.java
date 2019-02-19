@@ -47,8 +47,8 @@ public class RangeAggregationTranslatorImpl
 
 		RangeAggregationBuilder rangeAggregationBuilder =
 			_baseFieldAggregationTranslator.translate(
-				baseMetricsAggregation ->
-					AggregationBuilders.range(baseMetricsAggregation.getName()),
+				baseMetricsAggregation -> AggregationBuilders.range(
+					baseMetricsAggregation.getName()),
 				rangeAggregation, aggregationTranslator,
 				pipelineAggregationTranslator);
 

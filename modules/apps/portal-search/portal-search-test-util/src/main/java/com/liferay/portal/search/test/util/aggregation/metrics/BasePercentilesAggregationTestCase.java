@@ -53,9 +53,8 @@ public abstract class BasePercentilesAggregationTestCase
 		assertSearch(
 			indexingTestHelper -> {
 				indexingTestHelper.defineRequest(
-					searchRequestBuilder ->
-						searchRequestBuilder.addAggregation(
-							percentilesAggregation));
+					searchRequestBuilder -> searchRequestBuilder.addAggregation(
+						percentilesAggregation));
 
 				indexingTestHelper.search();
 

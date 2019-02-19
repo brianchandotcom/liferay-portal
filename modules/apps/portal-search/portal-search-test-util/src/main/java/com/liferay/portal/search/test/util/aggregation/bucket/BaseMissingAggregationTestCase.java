@@ -71,9 +71,8 @@ public abstract class BaseMissingAggregationTestCase
 		assertSearch(
 			indexingTestHelper -> {
 				indexingTestHelper.defineRequest(
-					searchRequestBuilder ->
-						searchRequestBuilder.addAggregation(
-							missingAggregation));
+					searchRequestBuilder -> searchRequestBuilder.addAggregation(
+						missingAggregation));
 
 				indexingTestHelper.search();
 

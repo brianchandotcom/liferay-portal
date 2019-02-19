@@ -515,7 +515,7 @@ public class DEDataRecordCollectionServiceTest {
 								getDEDataRecordCollectionId(),
 							new String[] {RoleConstants.ORGANIZATION_USER}
 						).allowDeleteDataRecord(
-					).build();
+						).build();
 
 			_deDataRecordCollectionService.execute(
 				deDataRecordCollectionSaveModelPermissionsRequest2);
@@ -823,7 +823,7 @@ public class DEDataRecordCollectionServiceTest {
 								getDEDataRecordCollectionId(),
 							new String[] {RoleConstants.ORGANIZATION_USER}
 						).allowViewDataRecord(
-					).build();
+						).build();
 
 			_deDataRecordCollectionService.execute(
 				deDataRecordCollectionSaveModelPermissionsRequest2);
@@ -848,7 +848,7 @@ public class DEDataRecordCollectionServiceTest {
 	public void testDefinePermissionToAllowViewDataRecordCollection()
 		throws Exception {
 
-			Role role1 = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+		Role role1 = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 
 		User user1 = UserTestUtil.addGroupUser(_group, role1.getName());
 
@@ -878,9 +878,9 @@ public class DEDataRecordCollectionServiceTest {
 		}
 
 		DEDataRecordCollection deDataRecordCollectionExpected =
-		DEDataEngineTestUtil.insertDEDataRecordCollection(
-			_adminUser, _group, _deDataDefinitionService,
-			_deDataRecordCollectionService);
+			DEDataEngineTestUtil.insertDEDataRecordCollection(
+				_adminUser, _group, _deDataDefinitionService,
+				_deDataRecordCollectionService);
 
 		User user2 = UserTestUtil.addGroupUser(
 			_group, RoleConstants.ORGANIZATION_USER);
@@ -1105,8 +1105,7 @@ public class DEDataRecordCollectionServiceTest {
 	}
 
 	@Test(
-		expected =
-			DEDataRecordCollectionException.NoSuchDataRecordCollection.class
+		expected = DEDataRecordCollectionException.NoSuchDataRecordCollection.class
 	)
 	public void testDeleteDataRecordCollectionWithNoIDParameter()
 		throws Exception {
@@ -1123,8 +1122,8 @@ public class DEDataRecordCollectionServiceTest {
 		try {
 			DEDataRecordCollectionDeleteRequest
 				deDataRecordCollectionDeleteRequest =
-					DEDataRecordCollectionRequestBuilder.deleteBuilder(
-					).build();
+					DEDataRecordCollectionRequestBuilder.
+						deleteBuilder().build();
 
 			_deDataRecordCollectionService.execute(
 				deDataRecordCollectionDeleteRequest);
@@ -1175,8 +1174,7 @@ public class DEDataRecordCollectionServiceTest {
 	}
 
 	@Test(
-		expected =
-			DEDataRecordCollectionException.NoSuchDataRecordCollection.class
+		expected = DEDataRecordCollectionException.NoSuchDataRecordCollection.class
 	)
 	public void testDeleteNoSuchDataRecordCollection() throws Exception {
 		DEDataEngineTestUtil.deleteDEDataRecordCollection(
@@ -1184,8 +1182,7 @@ public class DEDataRecordCollectionServiceTest {
 	}
 
 	@Test(
-		expected =
-			DEDataRecordCollectionException.NoSuchDataRecordCollection.class
+		expected = DEDataRecordCollectionException.NoSuchDataRecordCollection.class
 	)
 	public void testDeleteNoSuchDataRecordCollection2() throws Exception {
 		DEDataEngineTestUtil.deleteDEDataRecordCollection(
@@ -1798,7 +1795,7 @@ public class DEDataRecordCollectionServiceTest {
 							deDataRecord.getDEDataRecordCollectionId(),
 							new String[] {RoleConstants.GUEST}
 						).allowDeleteDataRecord(
-					).build();
+						).build();
 
 			_deDataRecordCollectionService.execute(
 				deDataRecordCollectionSaveModelPermissionsRequest);
@@ -1835,7 +1832,7 @@ public class DEDataRecordCollectionServiceTest {
 							deDataRecord.getDEDataRecordCollectionId(),
 							new String[] {RoleConstants.SITE_MEMBER}
 						).allowDeleteDataRecord(
-					).build();
+						).build();
 
 			_deDataRecordCollectionService.execute(
 				deDataRecordCollectionSaveModelPermissionsRequest);
@@ -2109,7 +2106,7 @@ public class DEDataRecordCollectionServiceTest {
 							expectedDEDataRecord.getDEDataRecordCollectionId(),
 							new String[] {RoleConstants.GUEST}
 						).allowViewDataRecord(
-					).build();
+						).build();
 
 			_deDataRecordCollectionService.execute(
 				deDataRecordCollectionSaveModelPermissionsRequest);
@@ -2155,7 +2152,7 @@ public class DEDataRecordCollectionServiceTest {
 							expectedDEDataRecord.getDEDataRecordCollectionId(),
 							new String[] {RoleConstants.SITE_MEMBER}
 						).allowViewDataRecord(
-					).build();
+						).build();
 
 			_deDataRecordCollectionService.execute(
 				deDataRecordCollectionSaveModelPermissionsRequest);
@@ -2940,7 +2937,7 @@ public class DEDataRecordCollectionServiceTest {
 								getDEDataRecordCollectionId(),
 							new String[] {role.getName()}
 						).allowDeleteDataRecord(
-					).build();
+						).build();
 
 			_deDataRecordCollectionService.execute(
 				deDataRecordCollectionSaveModelPermissionsRequest2);
@@ -3185,7 +3182,7 @@ public class DEDataRecordCollectionServiceTest {
 								getDEDataRecordCollectionId(),
 							new String[] {RoleConstants.GUEST}
 						).allowViewDataRecord(
-					).build();
+						).build();
 
 			_deDataRecordCollectionService.execute(
 				deDataRecordCollectionSaveModelPermissionsRequest2);
@@ -3248,7 +3245,7 @@ public class DEDataRecordCollectionServiceTest {
 								getDEDataRecordCollectionId(),
 							new String[] {role.getName()}
 						).allowViewDataRecord(
-					).build();
+						).build();
 
 			_deDataRecordCollectionService.execute(
 				deDataRecordCollectionSaveModelPermissionsRequest2);

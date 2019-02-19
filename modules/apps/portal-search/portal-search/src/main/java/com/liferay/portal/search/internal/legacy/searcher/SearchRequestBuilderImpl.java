@@ -110,8 +110,9 @@ public class SearchRequestBuilderImpl implements SearchRequestBuilder {
 
 		@Override
 		public Map<String, Aggregation> getAggregationsMap() {
-			Map<String, Aggregation> map = (Map<String, Aggregation>)
-				_searchContext.getAttribute(_AGGREGATIONS_MAP);
+			Map<String, Aggregation> map =
+				(Map<String, Aggregation>)_searchContext.getAttribute(
+					_AGGREGATIONS_MAP);
 
 			if (map == null) {
 				return Collections.emptyMap();
@@ -123,8 +124,8 @@ public class SearchRequestBuilderImpl implements SearchRequestBuilder {
 		@Override
 		public Map<String, PipelineAggregation> getPipelineAggregationsMap() {
 			Map<String, PipelineAggregation> map =
-				(Map<String, PipelineAggregation>)
-					_searchContext.getAttribute(_PIPELINE_AGGREGATIONS_MAP);
+				(Map<String, PipelineAggregation>)_searchContext.getAttribute(
+					_PIPELINE_AGGREGATIONS_MAP);
 
 			if (map == null) {
 				return Collections.emptyMap();
@@ -170,8 +171,8 @@ public class SearchRequestBuilderImpl implements SearchRequestBuilder {
 	protected Map<String, Aggregation> getAggregationsMap() {
 		synchronized (_searchContext) {
 			LinkedHashMap<String, Aggregation> linkedHashMap =
-				(LinkedHashMap<String, Aggregation>)
-					_searchContext.getAttribute(_AGGREGATIONS_MAP);
+				(LinkedHashMap<String, Aggregation>)_searchContext.getAttribute(
+					_AGGREGATIONS_MAP);
 
 			if (linkedHashMap != null) {
 				return linkedHashMap;

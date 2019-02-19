@@ -62,40 +62,29 @@ public class Query {
 				</@compress>
 			</#compress>
 
+			<#assign parametersContent>
+				<@compress single_line=true>
+					<#list javaSignature.javaParameters as javaParameter>
+						${javaParameter.parameterName}
+
+						<#if javaParameter_has_next>
+							,
+						</#if>
+					</#list>
+				</@compress>
+			</#assign>
+
 			<#if stringUtil.equals(javaSignature.returnType, "Response")>
 				Response.ResponseBuilder responseBuilder = Response.ok();
 
 				return responseBuilder.build();
 			<#elseif javaSignature.returnType?contains("Collection<")>
 				Page paginationPage = _get${schemaName}Resource().${javaSignature.methodName}(
-					<#assign parametersContent>
-						<@compress single_line=true>
-							<#list javaSignature.javaParameters as javaParameter>
-								${javaParameter.parameterName}
-
-								<#if javaParameter_has_next>
-									,
-								</#if>
-							</#list>
-						</@compress>
-					</#assign>
-
-					${parametersContent?replace("pageSize , page", "Pagination.of(pageSize, page)")}
-				);
+					${parametersContent?replace("pageSize , page", "Pagination.of(pageSize, page)")});
 
 				return paginationPage.getItems();
 			<#else>
-				<@compress single_line=true>
-					return _get${schemaName}Resource().${javaSignature.methodName}(
-						<#list javaSignature.javaParameters as javaParameter>
-							${javaParameter.parameterName}
-
-							<#if javaParameter_has_next>
-								,
-							</#if>
-						</#list>
-					);
-				</@compress>
+				return _get${schemaName}Resource().${javaSignature.methodName}(${parametersContent});
 			</#if>
 
 			}
@@ -108,19 +97,25 @@ public class Query {
 			return _${schemaName?uncap_first}ResourceServiceTracker.getService();
 		}
 
-		private static final ServiceTracker<${schemaName}Resource, ${schemaName}Resource> _${schemaName?uncap_first}ResourceServiceTracker;
+		private static final ServiceTracker<${schemaName}Resource, ${schemaName}Resource>
+			_${schemaName?uncap_first}ResourceServiceTracker;
 	</#list>
 
 	static {
 		Bundle bundle = FrameworkUtil.getBundle(Query.class);
 
 		<#list javaSignatures?keys as schemaName>
-			ServiceTracker<${schemaName}Resource, ${schemaName}Resource> ${schemaName?uncap_first}ResourceServiceTracker =
-				new ServiceTracker<>(bundle.getBundleContext(), ${schemaName}Resource.class, null);
+			ServiceTracker<${schemaName}Resource, ${schemaName}Resource>
+				${schemaName?uncap_first}ResourceServiceTracker =
+					new ServiceTracker<>(
+						bundle.getBundleContext(),
+						${schemaName}Resource.class, null);
 
 			${schemaName?uncap_first}ResourceServiceTracker.open();
 
-			_${schemaName?uncap_first}ResourceServiceTracker = ${schemaName?uncap_first}ResourceServiceTracker;
+			_${schemaName?uncap_first}ResourceServiceTracker =
+				${schemaName?uncap_first}ResourceServiceTracker;
+
 		</#list>
 	}
 

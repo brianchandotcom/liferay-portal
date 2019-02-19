@@ -47,7 +47,8 @@ import javax.ws.rs.core.Context;
  */
 @Generated("")
 @Path("/${openAPIYAML.info.version}")
-public abstract class Base${schemaName}ResourceImpl implements ${schemaName}Resource {
+public abstract class Base${schemaName}ResourceImpl
+	implements ${schemaName}Resource {
 
 	<#list javaTool.getJavaSignatures(openAPIYAML, schemaName) as javaSignature>
 		<#compress>

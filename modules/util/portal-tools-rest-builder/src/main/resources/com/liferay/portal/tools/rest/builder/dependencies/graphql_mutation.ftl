@@ -86,19 +86,25 @@ public class Mutation {
 			return _${schemaName?uncap_first}ResourceServiceTracker.getService();
 		}
 
-		private static final ServiceTracker<${schemaName}Resource, ${schemaName}Resource> _${schemaName?uncap_first}ResourceServiceTracker;
+		private static final ServiceTracker<${schemaName}Resource, ${schemaName}Resource>
+			_${schemaName?uncap_first}ResourceServiceTracker;
 	</#list>
 
 	static {
 		Bundle bundle = FrameworkUtil.getBundle(Mutation.class);
 
 		<#list javaSignatures?keys as schemaName>
-			ServiceTracker<${schemaName}Resource, ${schemaName}Resource> ${schemaName?uncap_first}ResourceServiceTracker =
-				new ServiceTracker<>(bundle.getBundleContext(), ${schemaName}Resource.class, null);
+			ServiceTracker<${schemaName}Resource, ${schemaName}Resource>
+				${schemaName?uncap_first}ResourceServiceTracker =
+					new ServiceTracker<>(
+						bundle.getBundleContext(),
+						${schemaName}Resource.class, null);
 
 			${schemaName?uncap_first}ResourceServiceTracker.open();
 
-			_${schemaName?uncap_first}ResourceServiceTracker = ${schemaName?uncap_first}ResourceServiceTracker;
+			_${schemaName?uncap_first}ResourceServiceTracker =
+				${schemaName?uncap_first}ResourceServiceTracker;
+
 		</#list>
 	}
 

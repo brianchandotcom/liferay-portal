@@ -62,6 +62,10 @@ public class DEDataRecordCollectionRequestBuilder {
 			deDataRecordId);
 	}
 
+	public static DEDataRecordCollectionListRequest.Builder listBuilder() {
+		return new DEDataRecordCollectionListRequest.Builder();
+	}
+
 	public static DEDataRecordCollectionSaveRequest.Builder saveBuilder(
 		DEDataRecordCollection deDataRecordCollection) {
 

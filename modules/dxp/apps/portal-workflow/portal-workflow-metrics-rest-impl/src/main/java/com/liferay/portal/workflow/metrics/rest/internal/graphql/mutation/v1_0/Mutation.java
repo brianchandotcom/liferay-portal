@@ -16,9 +16,6 @@ package com.liferay.portal.workflow.metrics.rest.internal.graphql.mutation.v1_0;
 
 import javax.annotation.Generated;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-
 /**
  * @author Rafael Praxedes
  * @generated
@@ -27,7 +24,6 @@ import org.osgi.framework.FrameworkUtil;
 public class Mutation {
 
 	static {
-		Bundle bundle = FrameworkUtil.getBundle(Mutation.class);
 
 	}
 

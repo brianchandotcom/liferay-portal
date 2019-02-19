@@ -14,6 +14,7 @@
 
 package com.liferay.portal.workflow.metrics.rest.internal.graphql.query.v1_0;
 
+import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Process;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.ProcessResource;
@@ -39,9 +40,13 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<Process> getProcessesPage( @GraphQLName("title") String title , @GraphQLName("per_page") int perPage , @GraphQLName("page") int page ) throws Exception {
+	public Collection<Process> getProcessesPage( @GraphQLName("title") String title , @GraphQLName("pageSize") int pageSize , @GraphQLName("page") int page ) throws Exception {
+				Page paginationPage = _getProcessResource().getProcessesPage(
 
-		return _getProcessResource().getProcessesPage( title , Pagination.of(perPage, page) ).getItems();
+					title , Pagination.of(pageSize, page)
+				);
+
+				return paginationPage.getItems();
 
 	}
 
@@ -54,13 +59,12 @@ public class Query {
 	static {
 		Bundle bundle = FrameworkUtil.getBundle(Query.class);
 
-		ServiceTracker<ProcessResource, ProcessResource> processResourceServiceTracker =
-			new ServiceTracker<ProcessResource, ProcessResource>(bundle.getBundleContext(), ProcessResource.class, null);
+			ServiceTracker<ProcessResource, ProcessResource> processResourceServiceTracker =
+				new ServiceTracker<>(bundle.getBundleContext(), ProcessResource.class, null);
 
-		processResourceServiceTracker.open();
+			processResourceServiceTracker.open();
 
-		_processResourceServiceTracker = processResourceServiceTracker;
-
+			_processResourceServiceTracker = processResourceServiceTracker;
 	}
 
 }

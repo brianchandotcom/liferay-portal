@@ -14,18 +14,11 @@
 
 package com.liferay.portal.workflow.metrics.rest.resource.v1_0;
 
-import com.liferay.oauth2.provider.scope.RequiresScope;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Process;
 
 import javax.annotation.Generated;
-
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.Context;
 
 /**
  * To access this resource, run:
@@ -36,13 +29,8 @@ import javax.ws.rs.core.Context;
  * @generated
  */
 @Generated("")
-@Path("/v1.0")
 public interface ProcessResource {
 
-	@GET
-	@Path("/process")
-	@Produces("application/json")
-	@RequiresScope("everything.read")
-	public Page<Process> getProcessesPage( @QueryParam("title") String title , @Context Pagination pagination ) throws Exception;
+	public Page<Process> getProcessesPage( String title , Pagination pagination ) throws Exception;
 
 }

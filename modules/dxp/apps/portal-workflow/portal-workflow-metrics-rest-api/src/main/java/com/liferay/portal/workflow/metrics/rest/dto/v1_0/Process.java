@@ -16,128 +16,39 @@ package com.liferay.portal.workflow.metrics.rest.dto.v1_0;
 
 import com.liferay.petra.function.UnsafeSupplier;
 
-import graphql.annotations.annotationTypes.GraphQLField;
-import graphql.annotations.annotationTypes.GraphQLName;
-
 import javax.annotation.Generated;
-
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * @author Rafael Praxedes
  * @generated
  */
 @Generated("")
-@GraphQLName("Process")
-@XmlRootElement(name = "Process")
-public class Process {
+public interface Process {
 
-	public Long getId() {
-		return id;
-	}
+	public Long getId();
 
-	public Integer getInstanceCount() {
-		return instanceCount;
-	}
+	public void setId(Long id);
 
-	public Integer getOntimeInstanceCount() {
-		return ontimeInstanceCount;
-	}
+	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier);
+	public Integer getInstanceCount();
 
-	public Integer getOverdueInstanceCount() {
-		return overdueInstanceCount;
-	}
+	public void setInstanceCount(Integer instanceCount);
 
-	public String getTitle() {
-		return title;
-	}
+	public void setInstanceCount(UnsafeSupplier<Integer, Throwable> instanceCountUnsafeSupplier);
+	public Integer getOntimeInstanceCount();
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+	public void setOntimeInstanceCount(Integer ontimeInstanceCount);
 
-	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
-	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
-	}
-	}
+	public void setOntimeInstanceCount(UnsafeSupplier<Integer, Throwable> ontimeInstanceCountUnsafeSupplier);
+	public Integer getOverdueInstanceCount();
 
-	public void setInstanceCount(Integer instanceCount) {
-		this.instanceCount = instanceCount;
-	}
+	public void setOverdueInstanceCount(Integer overdueInstanceCount);
 
-	public void setInstanceCount(
-		UnsafeSupplier<Integer, Throwable> instanceCountUnsafeSupplier) {
+	public void setOverdueInstanceCount(UnsafeSupplier<Integer, Throwable> overdueInstanceCountUnsafeSupplier);
+	public String getTitle();
 
-		try {
-			instanceCount = instanceCountUnsafeSupplier.get();
-	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
-	}
-	}
+	public void setTitle(String title);
 
-	public void setOntimeInstanceCount(Integer ontimeInstanceCount) {
-		this.ontimeInstanceCount = ontimeInstanceCount;
-	}
-
-	public void setOntimeInstanceCount(
-		UnsafeSupplier<Integer, Throwable> ontimeInstanceCountUnsafeSupplier) {
-
-		try {
-			ontimeInstanceCount = ontimeInstanceCountUnsafeSupplier.get();
-	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
-	}
-	}
-
-	public void setOverdueInstanceCount(Integer overdueInstanceCount) {
-		this.overdueInstanceCount = overdueInstanceCount;
-	}
-
-	public void setOverdueInstanceCount(
-		UnsafeSupplier<Integer, Throwable> overdueInstanceCountUnsafeSupplier) {
-
-		try {
-			overdueInstanceCount = overdueInstanceCountUnsafeSupplier.get();
-	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
-	}
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-	public void setTitle(
-		UnsafeSupplier<String, Throwable> titleUnsafeSupplier) {
-
-		try {
-			title = titleUnsafeSupplier.get();
-	}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
-	}
-	}
-
-	@GraphQLField
-	protected Long id;
-
-	@GraphQLField
-	protected Integer instanceCount;
-
-	@GraphQLField
-	protected Integer ontimeInstanceCount;
-
-	@GraphQLField
-	protected Integer overdueInstanceCount;
-
-	@GraphQLField
-	protected String title;
+	public void setTitle(UnsafeSupplier<String, Throwable> titleUnsafeSupplier);
 
 }

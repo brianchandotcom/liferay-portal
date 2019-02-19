@@ -71,6 +71,7 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.util.Portal;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -85,11 +86,7 @@ public class DEDataDefinitionServiceImpl
 	public DEDataDefinitionCountResponse execute(
 		DEDataDefinitionCountRequest deDataDefinitionCountRequest) {
 
-		DEDataDefinitionCountRequestExecutor
-			deDataDefinitionCountRequestExecutor =
-				getDEDataDefinitionCountRequestExecutor();
-
-		return deDataDefinitionCountRequestExecutor.execute(
+		return _deDataDefinitionCountRequestExecutor.execute(
 			deDataDefinitionCountRequest);
 	}
 
@@ -99,17 +96,13 @@ public class DEDataDefinitionServiceImpl
 				deDataDefinitionDeleteModelPermissionsRequest)
 		throws DEDataDefinitionException {
 
-		DEDataDefinitionDeleteModelPermissionsRequestExecutor
-			deDataDefinitionDeleteModelPermissionsRequestExecutor =
-				getDEDataDefinitionDeleteModelPermissionsRequestExecutor();
-
 		try {
 			checkPermission(
 				deDataDefinitionDeleteModelPermissionsRequest.
 					getScopedGroupId(),
 				ActionKeys.DEFINE_PERMISSIONS, getPermissionChecker());
 
-			return deDataDefinitionDeleteModelPermissionsRequestExecutor.
+			return _deDataDefinitionDeleteModelPermissionsRequestExecutor.
 				execute(deDataDefinitionDeleteModelPermissionsRequest);
 		}
 		catch (PrincipalException.MustHavePermission mhp) {
@@ -135,11 +128,7 @@ public class DEDataDefinitionServiceImpl
 				deDataDefinitionDeletePermissionsRequest.getScopedGroupId(),
 				ActionKeys.DEFINE_PERMISSIONS, getPermissionChecker());
 
-			DEDataDefinitionDeletePermissionsRequestExecutor
-				deDataDefinitionDeletePermissionsRequestExecutor =
-					getDEDataDefinitionDeletePermissionsRequestExecutor();
-
-			return deDataDefinitionDeletePermissionsRequestExecutor.execute(
+			return _deDataDefinitionDeletePermissionsRequestExecutor.execute(
 				deDataDefinitionDeletePermissionsRequest);
 		}
 		catch (PrincipalException.MustHavePermission mhp) {
@@ -166,11 +155,7 @@ public class DEDataDefinitionServiceImpl
 			_modelResourcePermission.check(
 				getPermissionChecker(), deDataDefinitionId, ActionKeys.DELETE);
 
-			DEDataDefinitionDeleteRequestExecutor
-				deDataDefinitionDeleteRequestExecutor =
-					getDEDataDefinitionDeleteRequestExecutor();
-
-			return deDataDefinitionDeleteRequestExecutor.execute(
+			return _deDataDefinitionDeleteRequestExecutor.execute(
 				deDataDefinitionDeleteRequest);
 		}
 		catch (PrincipalException.MustHavePermission mhp) {
@@ -203,11 +188,7 @@ public class DEDataDefinitionServiceImpl
 			_modelResourcePermission.check(
 				getPermissionChecker(), deDataDefinitionId, ActionKeys.VIEW);
 
-			DEDataDefinitionGetRequestExecutor
-				deDataDefinitionGetRequestExecutor =
-					getDEDataDefinitionGetRequestExecutor();
-
-			return deDataDefinitionGetRequestExecutor.execute(
+			return _deDataDefinitionGetRequestExecutor.execute(
 				deDataDefinitionGetRequest);
 		}
 		catch (PrincipalException.MustHavePermission mhp) {
@@ -228,12 +209,8 @@ public class DEDataDefinitionServiceImpl
 			DEDataDefinitionListRequest deDataDefinitionListRequest)
 		throws DEDataDefinitionException {
 
-		DEDataDefinitionListRequestExecutor
-			deDataDefinitionListRequestExecutor =
-				getDEDataDefinitionListRequestExecutor();
-
 		try {
-			return deDataDefinitionListRequestExecutor.execute(
+			return _deDataDefinitionListRequestExecutor.execute(
 				deDataDefinitionListRequest);
 		}
 		catch (DEDataDefinitionException dedde) {
@@ -254,11 +231,7 @@ public class DEDataDefinitionServiceImpl
 				deDataDefinitionSaveModelPermissionsRequest.getScopedGroupId(),
 				ActionKeys.DEFINE_PERMISSIONS, getPermissionChecker());
 
-			DEDataDefinitionSaveModelPermissionsRequestExecutor
-				deDataDefinitionSaveModelPermissionsRequestExecutor =
-					getDEDataDefinitionSaveModelPermissionsRequestExecutor();
-
-			return deDataDefinitionSaveModelPermissionsRequestExecutor.execute(
+			return _deDataDefinitionSaveModelPermissionsRequestExecutor.execute(
 				deDataDefinitionSaveModelPermissionsRequest);
 		}
 		catch (PrincipalException.MustHavePermission mhp) {
@@ -284,11 +257,7 @@ public class DEDataDefinitionServiceImpl
 				deDataDefinitionSavePermissionsRequest.getScopedGroupId(),
 				ActionKeys.DEFINE_PERMISSIONS, getPermissionChecker());
 
-			DEDataDefinitionSavePermissionsRequestExecutor
-				deDataDefinitionSavePermissionsRequestExecutor =
-					getDEDataDefinitionSavePermissionsRequestExecutor();
-
-			return deDataDefinitionSavePermissionsRequestExecutor.execute(
+			return _deDataDefinitionSavePermissionsRequestExecutor.execute(
 				deDataDefinitionSavePermissionsRequest);
 		}
 		catch (PrincipalException.MustHavePermission mhp) {
@@ -329,11 +298,7 @@ public class DEDataDefinitionServiceImpl
 					ActionKeys.UPDATE);
 			}
 
-			DEDataDefinitionSaveRequestExecutor
-				deDataDefinitionSaveRequestExecutor =
-					getDEDataDefinitionSaveRequestExecutor();
-
-			return deDataDefinitionSaveRequestExecutor.execute(
+			return _deDataDefinitionSaveRequestExecutor.execute(
 				deDataDefinitionSaveRequest);
 		}
 		catch (DEDataDefinitionException dedde) {
@@ -355,11 +320,7 @@ public class DEDataDefinitionServiceImpl
 	public DEDataDefinitionSearchCountResponse execute(
 		DEDataDefinitionSearchCountRequest deDataDefinitionSearchCountRequest) {
 
-		DEDataDefinitionSearchCountExecutor
-			deDataDefinitionSearchCountExecutor =
-				getDEDataDefinitionSearchCountExecutor();
-
-		return deDataDefinitionSearchCountExecutor.execute(
+		return _deDataDefinitionSearchCountExecutor.execute(
 			deDataDefinitionSearchCountRequest);
 	}
 
@@ -367,11 +328,8 @@ public class DEDataDefinitionServiceImpl
 			DEDataDefinitionSearchRequest deDataDefinitionSearchRequest)
 		throws DEDataDefinitionException {
 
-		DEDataDefinitionSearchExecutor deDataDefinitionSearchExecutor =
-			getDEDataDefinitionSearchExecutor();
-
 		try {
-			return deDataDefinitionSearchExecutor.execute(
+			return _deDataDefinitionSearchExecutor.execute(
 				deDataDefinitionSearchRequest);
 		}
 		catch (Exception e) {
@@ -379,148 +337,56 @@ public class DEDataDefinitionServiceImpl
 		}
 	}
 
-	public DEDataDefinitionCountRequestExecutor
-		getDEDataDefinitionCountRequestExecutor() {
+	@Activate
+	protected void activate() {
+		_deDataEngineRequestExecutor = new DEDataEngineRequestExecutor(
+			deDataDefinitionDeserializerTracker, deDataStorageTracker);
 
-		if (_deDataDefinitionCountRequestExecutor == null) {
-			_deDataDefinitionCountRequestExecutor =
-				new DEDataDefinitionCountRequestExecutor(
-					ddmStructureService, portal);
-		}
+		_deDataDefinitionCountRequestExecutor =
+			new DEDataDefinitionCountRequestExecutor(
+				ddmStructureService, portal);
 
-		return _deDataDefinitionCountRequestExecutor;
-	}
+		_deDataDefinitionSearchCountExecutor =
+			new DEDataDefinitionSearchCountExecutor(
+				ddmStructureService, _deDataEngineRequestExecutor, portal);
 
-	public DEDataDefinitionSearchCountExecutor
-		getDEDataDefinitionSearchCountExecutor() {
+		_deDataDefinitionSearchExecutor = new DEDataDefinitionSearchExecutor(
+			ddmStructureService, _deDataEngineRequestExecutor, portal);
 
-		if (_deDataDefinitionSearchCountExecutor == null) {
-			_deDataDefinitionSearchCountExecutor =
-				new DEDataDefinitionSearchCountExecutor(
-					ddmStructureService, _deDataEngineRequestExecutor, portal);
-		}
+		_deDataDefinitionDeleteModelPermissionsRequestExecutor =
+			new DEDataDefinitionDeleteModelPermissionsRequestExecutor(
+				resourcePermissionLocalService, roleLocalService);
 
-		return _deDataDefinitionSearchCountExecutor;
-	}
+		_deDataDefinitionDeletePermissionsRequestExecutor =
+			new DEDataDefinitionDeletePermissionsRequestExecutor(
+				resourcePermissionLocalService, roleLocalService);
 
-	public DEDataDefinitionSearchExecutor getDEDataDefinitionSearchExecutor() {
-		if (_deDataDefinitionSearchExecutor == null) {
-			_deDataDefinitionSearchExecutor =
-				new DEDataDefinitionSearchExecutor(
-					ddmStructureService, getDEDataEngineRequestExecutor(),
-					portal);
-		}
+		_deDataDefinitionDeleteRequestExecutor =
+			new DEDataDefinitionDeleteRequestExecutor(
+				ddlRecordSetLocalService, ddmStructureLocalService,
+				ddmStructureVersionLocalService);
 
-		return _deDataDefinitionSearchExecutor;
-	}
+		_deDataDefinitionGetRequestExecutor =
+			new DEDataDefinitionGetRequestExecutor(
+				ddmStructureLocalService, _deDataEngineRequestExecutor);
 
-	public DEDataEngineRequestExecutor getDEDataEngineRequestExecutor() {
-		if (_deDataEngineRequestExecutor == null) {
-			_deDataEngineRequestExecutor = new DEDataEngineRequestExecutor(
-				deDataDefinitionDeserializerTracker, deDataStorageTracker);
-		}
+		_deDataDefinitionListRequestExecutor =
+			new DEDataDefinitionListRequestExecutor(
+				ddmStructureService, _deDataEngineRequestExecutor, portal);
 
-		return _deDataEngineRequestExecutor;
-	}
+		_deDataDefinitionSaveModelPermissionsRequestExecutor =
+			new DEDataDefinitionSaveModelPermissionsRequestExecutor(
+				resourcePermissionLocalService);
 
-	protected DEDataDefinitionDeleteModelPermissionsRequestExecutor
-		getDEDataDefinitionDeleteModelPermissionsRequestExecutor() {
+		_deDataDefinitionSavePermissionsRequestExecutor =
+			new DEDataDefinitionSavePermissionsRequestExecutor(
+				resourcePermissionLocalService, roleLocalService);
 
-		if (_deDataDefinitionDeleteModelPermissionsRequestExecutor == null) {
-			_deDataDefinitionDeleteModelPermissionsRequestExecutor =
-				new DEDataDefinitionDeleteModelPermissionsRequestExecutor(
-					resourcePermissionLocalService, roleLocalService);
-		}
-
-		return _deDataDefinitionDeleteModelPermissionsRequestExecutor;
-	}
-
-	protected DEDataDefinitionDeletePermissionsRequestExecutor
-		getDEDataDefinitionDeletePermissionsRequestExecutor() {
-
-		if (_deDataDefinitionDeletePermissionsRequestExecutor == null) {
-			_deDataDefinitionDeletePermissionsRequestExecutor =
-				new DEDataDefinitionDeletePermissionsRequestExecutor(
-					resourcePermissionLocalService, roleLocalService);
-		}
-
-		return _deDataDefinitionDeletePermissionsRequestExecutor;
-	}
-
-	protected DEDataDefinitionDeleteRequestExecutor
-		getDEDataDefinitionDeleteRequestExecutor() {
-
-		if (_deDataDefinitionDeleteRequestExecutor == null) {
-			_deDataDefinitionDeleteRequestExecutor =
-				new DEDataDefinitionDeleteRequestExecutor(
-					ddlRecordSetLocalService, ddmStructureLocalService,
-					ddmStructureVersionLocalService);
-		}
-
-		return _deDataDefinitionDeleteRequestExecutor;
-	}
-
-	protected DEDataDefinitionGetRequestExecutor
-		getDEDataDefinitionGetRequestExecutor() {
-
-		if (_deDataDefinitionGetRequestExecutor == null) {
-			_deDataDefinitionGetRequestExecutor =
-				new DEDataDefinitionGetRequestExecutor(
-					ddmStructureLocalService, getDEDataEngineRequestExecutor());
-		}
-
-		return _deDataDefinitionGetRequestExecutor;
-	}
-
-	protected DEDataDefinitionListRequestExecutor
-		getDEDataDefinitionListRequestExecutor() {
-
-		if (_deDataDefinitionListRequestExecutor == null) {
-			_deDataDefinitionListRequestExecutor =
-				new DEDataDefinitionListRequestExecutor(
-					ddmStructureService, getDEDataEngineRequestExecutor(),
-					portal);
-		}
-
-		return _deDataDefinitionListRequestExecutor;
-	}
-
-	protected DEDataDefinitionSaveModelPermissionsRequestExecutor
-		getDEDataDefinitionSaveModelPermissionsRequestExecutor() {
-
-		if (_deDataDefinitionSaveModelPermissionsRequestExecutor == null) {
-			_deDataDefinitionSaveModelPermissionsRequestExecutor =
-				new DEDataDefinitionSaveModelPermissionsRequestExecutor(
-					resourcePermissionLocalService);
-		}
-
-		return _deDataDefinitionSaveModelPermissionsRequestExecutor;
-	}
-
-	protected DEDataDefinitionSavePermissionsRequestExecutor
-		getDEDataDefinitionSavePermissionsRequestExecutor() {
-
-		if (_deDataDefinitionSavePermissionsRequestExecutor == null) {
-			_deDataDefinitionSavePermissionsRequestExecutor =
-				new DEDataDefinitionSavePermissionsRequestExecutor(
-					resourcePermissionLocalService, roleLocalService);
-		}
-
-		return _deDataDefinitionSavePermissionsRequestExecutor;
-	}
-
-	protected DEDataDefinitionSaveRequestExecutor
-		getDEDataDefinitionSaveRequestExecutor() {
-
-		if (_deDataDefinitionSaveRequestExecutor == null) {
-			_deDataDefinitionSaveRequestExecutor =
-				new DEDataDefinitionSaveRequestExecutor(
-					getDEDataEngineRequestExecutor(), ddmStructureLocalService,
-					deDataDefinitionFieldsSerializerTracker, portal,
-					resourceLocalService);
-		}
-
-		return _deDataDefinitionSaveRequestExecutor;
+		_deDataDefinitionSaveRequestExecutor =
+			new DEDataDefinitionSaveRequestExecutor(
+				_deDataEngineRequestExecutor, ddmStructureLocalService,
+				deDataDefinitionFieldsSerializerTracker, portal,
+				resourceLocalService);
 	}
 
 	@Override

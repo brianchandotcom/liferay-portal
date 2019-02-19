@@ -1008,7 +1008,9 @@ definition {
 			AssertElementPresent(locator1 = "Message#EMPTY_INFO");
 		}
 		else {
-			LexiconEntry.viewEntryName(rowEntry = StringUtil.unquote("${searchValue}"));
+			LexiconCard.viewCardTitle(
+				card = StringUtil.unquote("${searchValue}")
+			);
 		}
 	}
 

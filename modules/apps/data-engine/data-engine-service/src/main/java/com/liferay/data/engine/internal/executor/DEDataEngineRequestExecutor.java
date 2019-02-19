@@ -113,6 +113,34 @@ public class DEDataEngineRequestExecutor {
 		return deDataDefinition;
 	}
 
+	public DEDataRecord map(
+			DEDataRecordCollection deDataRecordCollection, DDLRecord ddlRecord)
+		throws PortalException {
+
+		DEDataRecord deDataRecord = new DEDataRecord();
+
+		deDataRecord.setDEDataRecordCollection(deDataRecordCollection);
+		deDataRecord.setDEDataRecordId(ddlRecord.getRecordId());
+
+		DEDataDefinition deDataDefinition =
+			deDataRecordCollection.getDEDataDefinition();
+
+		DEDataStorage deDataStorage = _deDataStorageTracker.getDEDataStorage(
+			deDataDefinition.getStorageType());
+
+		DEDataStorageGetRequest deDataStorageGetRequest =
+			DEDataStorageRequestBuilder.getBuilder(
+				ddlRecord.getDDMStorageId(), deDataDefinition
+			).build();
+
+		DEDataStorageGetResponse deDataStorageGetResponse = deDataStorage.get(
+			deDataStorageGetRequest);
+
+		deDataRecord.setValues(deDataStorageGetResponse.getValues());
+
+		return deDataRecord;
+	}
+
 	protected DEDataDefinition deserialize(String content)
 		throws DEDataDefinitionDeserializerException {
 

@@ -82,6 +82,34 @@ public class DocumentResourceImpl extends BaseDocumentResourceImpl {
 	}
 
 	@Override
+	public Document postContentSpaceDocument(
+			Long contentSpaceId, MultipartBody multipartBody)
+		throws Exception {
+
+		Document document = multipartBody.getJSONObjectValue(
+			"Document", DocumentImpl.class);
+
+		BinaryFile binaryFile = multipartBody.getBinaryFile("file");
+
+		String binaryFileName = binaryFile.getFileName();
+
+		String title = Optional.ofNullable(
+			document.getTitle()
+		).orElse(
+			binaryFileName
+		);
+
+		FileEntry fileEntry = _dlAppService.addFileEntry(
+			contentSpaceId, 0L, binaryFileName, binaryFile.getContentType(),
+			title, document.getDescription(), null, binaryFile.getInputStream(),
+			binaryFile.getSize(), _getServiceContext(contentSpaceId, document));
+
+		return _toDocument(
+			fileEntry, fileEntry.getFileVersion(),
+			_userService.getUserById(fileEntry.getUserId()));
+	}
+
+	@Override
 	public Document postFolderDocument(
 			Long folderId, MultipartBody multipartBody)
 		throws Exception {

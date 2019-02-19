@@ -23,15 +23,12 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Pei-Jung Lan
  */
-@Component(
-	immediate = true,
-	service = {DLUADHierarchyDeclaration.class, UADHierarchyDeclaration.class}
-)
+@Component(immediate = true, service = UADHierarchyDeclaration.class)
 public class DLUADHierarchyDeclaration implements UADHierarchyDeclaration {
 
 	@Override
 	public UADDisplay<?>[] getContainerUADDisplays() {
-		return new UADDisplay[] {_dlFolderUADDisplay};
+		return new UADDisplay<?>[] {_dlFolderUADDisplay};
 	}
 
 	@Override
@@ -41,7 +38,7 @@ public class DLUADHierarchyDeclaration implements UADHierarchyDeclaration {
 
 	@Override
 	public UADDisplay<?>[] getNoncontainerUADDisplays() {
-		return new UADDisplay[] {_dlFileEntryUADDisplay};
+		return new UADDisplay<?>[] {_dlFileEntryUADDisplay};
 	}
 
 	@Reference

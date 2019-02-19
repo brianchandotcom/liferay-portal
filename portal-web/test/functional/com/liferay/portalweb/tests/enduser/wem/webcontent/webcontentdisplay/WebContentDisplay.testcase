@@ -970,6 +970,8 @@ definition {
 
 		Portlet.viewUndeployMessage();
 
+		Click(locator1 = "Portlet#PORTLET_CONTENT");
+
 		Portlet.deletePG(
 			portletName = "com_liferay_journal_content_web_portlet_JournalContentPortlet"
 		);

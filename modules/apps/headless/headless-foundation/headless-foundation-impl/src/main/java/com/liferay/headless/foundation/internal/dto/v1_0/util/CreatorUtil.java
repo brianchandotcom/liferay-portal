@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.util.Portal;
  */
 public class CreatorUtil {
 
-	public static Creator toCreator(Portal portal, User user) throws Exception {
+	public static Creator toCreator(Portal portal, User user) {
 		if (user == null) {
 			return null;
 		}

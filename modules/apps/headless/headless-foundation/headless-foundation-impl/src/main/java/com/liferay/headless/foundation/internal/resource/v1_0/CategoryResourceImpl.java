@@ -40,7 +40,7 @@ import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.service.ClassNameService;
 import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.UserService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -222,7 +222,7 @@ public class CategoryResourceImpl
 				availableLanguages = assetCategory.getAvailableLanguageIds();
 				creator = CreatorUtil.toCreator(
 					_portal,
-					_userService.getUserById(assetCategory.getUserId()));
+					_userLocalService.getUserById(assetCategory.getUserId()));
 				creatorId = assetCategory.getUserId();
 				dateCreated = assetCategory.getCreateDate();
 				dateModified = assetCategory.getModifiedDate();
@@ -278,6 +278,6 @@ public class CategoryResourceImpl
 		_searchResultPermissionFilterFactory;
 
 	@Reference
-	private UserService _userService;
+	private UserLocalService _userLocalService;
 
 }

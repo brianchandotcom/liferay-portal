@@ -26,6 +26,7 @@ import com.liferay.headless.workflow.dto.v1_0.WorkflowTask;
 import com.liferay.headless.workflow.internal.dto.v1_0.ObjectReviewedImpl;
 import com.liferay.headless.workflow.internal.dto.v1_0.WorkflowLogImpl;
 import com.liferay.headless.workflow.internal.dto.v1_0.WorkflowTaskImpl;
+import com.liferay.portal.vulcan.util.JSONUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -86,7 +87,8 @@ public class JSONMessageBodyReader implements MessageBodyReader<Object> {
 			InputStream inputStream)
 		throws IOException, WebApplicationException {
 
-		return _objectMapper.readValue(inputStream, clazz);
+		return JSONUtil.mapJacksonExceptions(
+			() -> _objectMapper.readValue(inputStream, clazz));
 	}
 
 	private static final ObjectMapper _objectMapper = new ObjectMapper() {

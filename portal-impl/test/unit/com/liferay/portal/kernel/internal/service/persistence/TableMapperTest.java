@@ -1495,7 +1495,7 @@ public class TableMapperTest {
 	}
 
 	@Test
-	public void testTableMapperFactory() {
+	public void testTableMapperFactory1() {
 
 		// Initial empty
 

@@ -18,6 +18,7 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLFileEntryService;
 import com.liferay.headless.document.library.dto.v1_0.Comment;
 import com.liferay.headless.document.library.internal.dto.v1_0.util.CommentUtil;
+import com.liferay.headless.document.library.internal.odata.entity.v1_0.CommentEntityModel;
 import com.liferay.headless.document.library.resource.v1_0.CommentResource;
 import com.liferay.message.boards.exception.DiscussionMaxCommentsException;
 import com.liferay.message.boards.exception.MessageSubjectException;
@@ -30,16 +31,37 @@ import com.liferay.portal.kernel.comment.DuplicateCommentException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.message.boards.model.MBMessage;
+import com.liferay.portal.kernel.comment.Discussion;
+import com.liferay.portal.kernel.comment.DiscussionComment;
+import com.liferay.portal.kernel.search.BooleanClauseOccur;
+import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.IndexerRegistry;
+import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.SearchResultPermissionFilterFactory;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.search.filter.TermFilter;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.resource.EntityModelResource;
+import com.liferay.portal.vulcan.util.SearchUtil;
 
-import java.util.Collections;
 import java.util.function.Function;
 
 import javax.ws.rs.ClientErrorException;
 import javax.ws.rs.NotFoundException;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.ws.rs.core.MultivaluedMap;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -52,7 +74,16 @@ import org.osgi.service.component.annotations.ServiceScope;
 	properties = "OSGI-INF/liferay/rest/v1_0/comment.properties",
 	scope = ServiceScope.PROTOTYPE, service = CommentResource.class
 )
-public class CommentResourceImpl extends BaseCommentResourceImpl {
+public class CommentResourceImpl
+	extends BaseCommentResourceImpl implements EntityModelResource {
+
+	@Override
+	public Page<Comment> getCommentCommentsPage(
+			Long commentId, Filter filter, Pagination pagination, Sort[] sorts)
+		throws Exception {
+
+		return _getComments(commentId, filter, pagination, sorts);
+	}
 
 	@Override
 	public boolean deleteComment(Long commentId) throws Exception {
@@ -76,50 +107,22 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 	}
 
 	@Override
-	public Page<Comment> getCommentCommentsPage(
-			Long commentId, Pagination pagination)
-		throws Exception {
-
-		_checkViewPermission(_commentManager.fetchComment(commentId));
-
-		return Page.of(
-			transform(
-				_commentManager.getChildComments(
-					commentId, WorkflowConstants.STATUS_APPROVED,
-					pagination.getStartPosition(), pagination.getEndPosition()),
-				comment -> CommentUtil.toComment(comment, _portal)),
-			pagination,
-			_commentManager.getChildCommentsCount(
-				commentId, WorkflowConstants.STATUS_APPROVED));
-	}
-
-	@Override
 	public Page<Comment> getDocumentCommentsPage(
-			Long fileEntryId, Pagination pagination)
+			Long fileEntryId, Filter filter, Pagination pagination,
+			Sort[] sorts)
 		throws Exception {
 
 		DLFileEntry dlFileEntry = _dlFileEntryService.getFileEntry(fileEntryId);
 
-		int count = _commentManager.getRootCommentsCount(
-			dlFileEntry.getModelClassName(), fileEntryId,
-			WorkflowConstants.STATUS_APPROVED);
+		Discussion discussion = _commentManager.getDiscussion(
+			dlFileEntry.getUserId(), dlFileEntry.getGroupId(),
+			DLFileEntry.class.getName(), fileEntryId, null);
 
-		if (count == 0) {
-			return Page.of(Collections.emptyList());
-		}
+		DiscussionComment rootDiscussionComment =
+			discussion.getRootDiscussionComment();
 
-		_checkViewPermission(
-			dlFileEntry.getGroupId(), dlFileEntry.getModelClassName(),
-			fileEntryId);
-
-		return Page.of(
-			transform(
-				_commentManager.getRootComments(
-					dlFileEntry.getModelClassName(), fileEntryId,
-					WorkflowConstants.STATUS_APPROVED,
-					pagination.getStartPosition(), pagination.getEndPosition()),
-				comment -> CommentUtil.toComment(comment, _portal)),
-			pagination, count);
+		return _getComments(
+			rootDiscussionComment.getCommentId(), filter, pagination, sorts);
 	}
 
 	@Override
@@ -262,6 +265,57 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 		}
 	}
 
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
+		return _entityModel;
+	}
+
+	private Page<Comment> _getComments(
+			Long parentCommentId, Filter filter, Pagination pagination,
+			Sort[] sorts)
+		throws SearchException {
+
+		List<com.liferay.portal.kernel.comment.Comment> comments =
+			new ArrayList<>();
+
+		Hits hits = SearchUtil.getHits(
+			filter, _indexerRegistry.nullSafeGetIndexer(MBMessage.class),
+			pagination,
+			booleanQuery -> {
+				BooleanFilter booleanFilter =
+					booleanQuery.getPreBooleanFilter();
+
+				booleanFilter.add(
+					new TermFilter(
+						"parentMessageId", String.valueOf(parentCommentId)),
+					BooleanClauseOccur.MUST);
+			},
+			queryConfig -> {
+				queryConfig.setSelectedFieldNames(Field.CLASS_PK);
+			},
+			searchContext -> {
+				searchContext.setAttribute("discussion", Boolean.TRUE);
+				searchContext.setCompanyId(contextCompany.getCompanyId());
+				searchContext.setAttribute(
+					"searchPermissionContext", StringPool.BLANK);
+			},
+			_searchResultPermissionFilterFactory, sorts);
+
+		for (Document document : hits.getDocs()) {
+			com.liferay.portal.kernel.comment.Comment comment =
+				_commentManager.fetchComment(
+					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)));
+
+			comments.add(comment);
+		}
+
+		return Page.of(
+			transform(
+				comments, comment -> CommentUtil.toComment(comment, _portal)),
+			pagination, comments.size());
+	}
+
+	private static final EntityModel _entityModel = new CommentEntityModel();
+
 	@Reference
 	private CommentManager _commentManager;
 
@@ -269,6 +323,13 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 	private DLFileEntryService _dlFileEntryService;
 
 	@Reference
+	private IndexerRegistry _indexerRegistry;
+
+	@Reference
 	private Portal _portal;
+
+	@Reference
+	private SearchResultPermissionFilterFactory
+		_searchResultPermissionFilterFactory;
 
 }

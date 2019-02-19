@@ -25,6 +25,7 @@ import com.liferay.dynamic.data.mapping.expression.internal.functions.SquareFunc
 import com.liferay.dynamic.data.mapping.expression.internal.functions.ZeroFunction;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -93,6 +94,16 @@ public class DDMExpressionImplTest extends PowerMockito {
 
 		Assert.assertEquals(
 			new BigDecimal(7.5).setScale(2), ddmExpression.evaluate());
+	}
+
+	@Test
+	public void testDivision3() throws Exception {
+		DDMExpressionImpl<BigDecimal> ddmExpression = createDDMExpression(
+			"10 / 9");
+
+		Assert.assertEquals(
+			new BigDecimal(1.11).setScale(2, RoundingMode.FLOOR),
+			ddmExpression.evaluate());
 	}
 
 	@Test(expected = IllegalArgumentException.class)

@@ -61,6 +61,13 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class DocumentResourceImpl extends BaseDocumentResourceImpl {
 
 	@Override
+	public boolean deleteDocument(Long documentId) throws Exception {
+		_dlAppService.deleteFileEntry(documentId);
+
+		return true;
+	}
+
+	@Override
 	public Document getDocument(Long documentId) throws Exception {
 		FileEntry fileEntry = _dlAppService.getFileEntry(documentId);
 

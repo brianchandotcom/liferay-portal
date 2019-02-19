@@ -38,7 +38,7 @@ public abstract class WorkflowMetricsSLACalendarBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. All methods that expect a workflow metrics sla calendar model instance should use the {@link WorkflowMetricsSLACalendar} interface instead.
+	 * Never modify or reference this class directly. All methods that expect a workflow metrics sla calendar model instance should use the <code>WorkflowMetricsSLACalendar</code> interface instead.
 	 */
 	@Override
 	public void persist() {

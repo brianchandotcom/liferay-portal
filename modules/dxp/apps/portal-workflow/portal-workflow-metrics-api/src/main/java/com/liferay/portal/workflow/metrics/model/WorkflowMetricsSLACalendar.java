@@ -25,8 +25,6 @@ import com.liferay.portal.kernel.util.Accessor;
  *
  * @author Brian Wing Shun Chan
  * @see WorkflowMetricsSLACalendarModel
- * @see com.liferay.portal.workflow.metrics.model.impl.WorkflowMetricsSLACalendarImpl
- * @see com.liferay.portal.workflow.metrics.model.impl.WorkflowMetricsSLACalendarModelImpl
  * @generated
  */
 @ImplementationClassName("com.liferay.portal.workflow.metrics.model.impl.WorkflowMetricsSLACalendarImpl")
@@ -36,7 +34,7 @@ public interface WorkflowMetricsSLACalendar
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this interface directly. Add methods to {@link com.liferay.portal.workflow.metrics.model.impl.WorkflowMetricsSLACalendarImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.workflow.metrics.model.impl.WorkflowMetricsSLACalendarImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public static final Accessor<WorkflowMetricsSLACalendar, Long> WORKFLOW_METRICS_SLA_CALENDAR_ID_ACCESSOR =
 		new Accessor<WorkflowMetricsSLACalendar, Long>() {

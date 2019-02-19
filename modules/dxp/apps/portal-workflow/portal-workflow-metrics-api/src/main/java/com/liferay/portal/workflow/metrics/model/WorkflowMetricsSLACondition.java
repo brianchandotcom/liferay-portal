@@ -25,8 +25,6 @@ import com.liferay.portal.kernel.util.Accessor;
  *
  * @author Brian Wing Shun Chan
  * @see WorkflowMetricsSLAConditionModel
- * @see com.liferay.portal.workflow.metrics.model.impl.WorkflowMetricsSLAConditionImpl
- * @see com.liferay.portal.workflow.metrics.model.impl.WorkflowMetricsSLAConditionModelImpl
  * @generated
  */
 @ImplementationClassName("com.liferay.portal.workflow.metrics.model.impl.WorkflowMetricsSLAConditionImpl")
@@ -36,7 +34,7 @@ public interface WorkflowMetricsSLACondition
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this interface directly. Add methods to {@link com.liferay.portal.workflow.metrics.model.impl.WorkflowMetricsSLAConditionImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.workflow.metrics.model.impl.WorkflowMetricsSLAConditionImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public static final Accessor<WorkflowMetricsSLACondition, Long> WORKFLOW_METRICS_SLA_CONDITION_ID_ACCESSOR =
 		new Accessor<WorkflowMetricsSLACondition, Long>() {

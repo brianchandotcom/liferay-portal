@@ -25,8 +25,6 @@ import com.liferay.portal.kernel.util.Accessor;
  *
  * @author Brian Wing Shun Chan
  * @see WorkflowMetricsSLADefinitionModel
- * @see com.liferay.portal.workflow.metrics.model.impl.WorkflowMetricsSLADefinitionImpl
- * @see com.liferay.portal.workflow.metrics.model.impl.WorkflowMetricsSLADefinitionModelImpl
  * @generated
  */
 @ImplementationClassName("com.liferay.portal.workflow.metrics.model.impl.WorkflowMetricsSLADefinitionImpl")
@@ -36,7 +34,7 @@ public interface WorkflowMetricsSLADefinition
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this interface directly. Add methods to {@link com.liferay.portal.workflow.metrics.model.impl.WorkflowMetricsSLADefinitionImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.workflow.metrics.model.impl.WorkflowMetricsSLADefinitionImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public static final Accessor<WorkflowMetricsSLADefinition, Long> WORKFLOW_METRICS_SLA_DEFINITION_ID_ACCESSOR =
 		new Accessor<WorkflowMetricsSLADefinition, Long>() {

@@ -38,7 +38,7 @@ public abstract class WorkflowMetricsSLAConditionBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. All methods that expect a workflow metrics sla condition model instance should use the {@link WorkflowMetricsSLACondition} interface instead.
+	 * Never modify or reference this class directly. All methods that expect a workflow metrics sla condition model instance should use the <code>WorkflowMetricsSLACondition</code> interface instead.
 	 */
 	@Override
 	public void persist() {

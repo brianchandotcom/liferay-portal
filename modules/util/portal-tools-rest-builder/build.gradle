@@ -14,12 +14,15 @@ buildPluginDescriptor {
 dependencies {
 	compile group: "org.freemarker", name: "freemarker", transitive: false, version: "2.3.28"
 
+	compileInclude group: "com.liferay", name: "com.liferay.petra.lang", version: "2.0.0"
+	compileInclude group: "com.liferay", name: "com.liferay.petra.string", version: "2.0.0"
 	compileInclude group: "org.yaml", name: "snakeyaml", version: "1.23"
 	compileInclude project(":apps:portal-vulcan:portal-vulcan-api")
 
-	compileOnly group: "com.liferay", name: "com.liferay.petra.lang", version: "2.0.0"
+	compileOnly group: "com.liferay", name: "com.liferay.source.formatter", version: "1.0.787"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	compileOnly group: "dom4j", name: "dom4j", transitive: false, version: "1.6.1"
 	compileOnly group: "org.apache.ant", name: "ant", transitive: false, version: "1.9.4"
 	compileOnly group: "org.apache.maven", name: "maven-plugin-api", transitive: false, version: "3.0.4"
 }

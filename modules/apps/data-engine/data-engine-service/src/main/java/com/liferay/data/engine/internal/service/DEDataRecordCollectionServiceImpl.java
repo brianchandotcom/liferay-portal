@@ -34,6 +34,7 @@ import com.liferay.data.engine.internal.executor.DEDataRecordCollectionSearchExe
 import com.liferay.data.engine.internal.io.DEDataDefinitionDeserializerTracker;
 import com.liferay.data.engine.internal.rule.DEDataDefinitionRuleFunctionTracker;
 import com.liferay.data.engine.internal.security.permission.DEDataEnginePermissionSupport;
+import com.liferay.data.engine.internal.storage.DEDataRecordExporterTracker;
 import com.liferay.data.engine.internal.storage.DEDataStorageTracker;
 import com.liferay.data.engine.internal.util.DEDataEngineUtil;
 import com.liferay.data.engine.model.DEDataDefinition;
@@ -52,6 +53,8 @@ import com.liferay.data.engine.service.DEDataRecordCollectionDeleteRecordRequest
 import com.liferay.data.engine.service.DEDataRecordCollectionDeleteRecordResponse;
 import com.liferay.data.engine.service.DEDataRecordCollectionDeleteRequest;
 import com.liferay.data.engine.service.DEDataRecordCollectionDeleteResponse;
+import com.liferay.data.engine.service.DEDataRecordCollectionExportRecordsRequest;
+import com.liferay.data.engine.service.DEDataRecordCollectionExportRecordsResponse;
 import com.liferay.data.engine.service.DEDataRecordCollectionGetRecordRequest;
 import com.liferay.data.engine.service.DEDataRecordCollectionGetRecordResponse;
 import com.liferay.data.engine.service.DEDataRecordCollectionGetRequest;
@@ -72,6 +75,9 @@ import com.liferay.data.engine.service.DEDataRecordCollectionSaveResponse;
 import com.liferay.data.engine.service.DEDataRecordCollectionSearchRequest;
 import com.liferay.data.engine.service.DEDataRecordCollectionSearchResponse;
 import com.liferay.data.engine.service.DEDataRecordCollectionService;
+import com.liferay.data.engine.storage.DEDataRecordExporter;
+import com.liferay.data.engine.storage.DEDataRecordExporterApplyRequest;
+import com.liferay.data.engine.storage.DEDataRecordExporterApplyResponse;
 import com.liferay.dynamic.data.lists.exception.NoSuchRecordException;
 import com.liferay.dynamic.data.lists.exception.NoSuchRecordSetException;
 import com.liferay.dynamic.data.lists.service.DDLRecordLocalService;
@@ -240,6 +246,65 @@ public class DEDataRecordCollectionServiceImpl
 					deDataRecordCollectionDeleteRequest.
 						getDEDataRecordCollectionId(),
 					nsrse);
+		}
+		catch (Exception e) {
+			throw new DEDataRecordCollectionException(e);
+		}
+	}
+
+	@Override
+	public DEDataRecordCollectionExportRecordsResponse execute(
+			DEDataRecordCollectionExportRecordsRequest
+				deDataRecordCollectionExportRecordsRequest)
+		throws DEDataRecordCollectionException {
+
+		long deDataRecordCollectionId =
+			deDataRecordCollectionExportRecordsRequest.
+				getDEDataRecordCollectionId();
+
+		try {
+			_modelResourcePermission.check(
+				getPermissionChecker(), deDataRecordCollectionId,
+				DEActionKeys.EXPORT_DATA_RECORDS);
+
+			DEDataRecordCollectionListRecordRequest
+				deDataRecordCollectionListRecordRequest =
+					DEDataRecordCollectionRequestBuilder.listRecordBuilder(
+						deDataRecordCollectionId
+					).build();
+
+			DEDataRecordCollectionListRecordResponse
+				deDataRecordCollectionListRecordResponse =
+					_deDataRecordCollectionListRecordRequestExecutor.execute(
+						deDataRecordCollectionListRecordRequest);
+
+			String format =
+				deDataRecordCollectionExportRecordsRequest.getFormat();
+
+			DEDataRecordExporter deDataRecordExporter =
+				deDataRecordExporterTracker.getDEDataRecordExporter(format);
+
+			DEDataRecordExporterApplyRequest deDataRecordExporterApplyRequest =
+				DEDataRecordExporterApplyRequest.Builder.newBuilder(
+					deDataRecordCollectionListRecordResponse.getDEDataRecords()
+				).exportTo(
+					format
+				).build();
+
+			DEDataRecordExporterApplyResponse
+				deDataRecordExporterApplyResponse = deDataRecordExporter.apply(
+					deDataRecordExporterApplyRequest);
+
+			return DEDataRecordCollectionExportRecordsResponse.Builder.of(
+				deDataRecordExporterApplyResponse.getContent());
+		}
+		catch (PrincipalException.MustHavePermission mhp) {
+			throw new DEDataRecordCollectionException.MustHavePermission(
+				mhp.actionId, mhp);
+		}
+		catch (NoSuchRecordSetException nsrse) {
+			throw new DEDataRecordCollectionException.
+				NoSuchDataRecordCollection(deDataRecordCollectionId, nsrse);
 		}
 		catch (Exception e) {
 			throw new DEDataRecordCollectionException(e);
@@ -798,6 +863,9 @@ public class DEDataRecordCollectionServiceImpl
 	@Reference
 	protected DEDataDefinitionRuleFunctionTracker
 		deDataDefinitionRuleFunctionTracker;
+
+	@Reference
+	protected DEDataRecordExporterTracker deDataRecordExporterTracker;
 
 	@Reference
 	protected DEDataStorageTracker deDataStorageTracker;

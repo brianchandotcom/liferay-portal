@@ -51,6 +51,13 @@ public class DEDataRecordCollectionRequestBuilder {
 			deDataRecordId);
 	}
 
+	public static DEDataRecordCollectionExportRecordsRequest.Builder
+		exportRecordsBuilder(long deDataRecordCollectionId, String format) {
+
+		return new DEDataRecordCollectionExportRecordsRequest.Builder(
+			deDataRecordCollectionId, format);
+	}
+
 	public static DEDataRecordCollectionGetRequest.Builder getBuilder() {
 		return new DEDataRecordCollectionGetRequest.Builder();
 	}

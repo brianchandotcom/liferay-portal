@@ -79,8 +79,7 @@ public class DEDataRecordJSONExporter implements DEDataRecordExporter {
 			return jsonFactory.createJSONObject(
 				deDataRecordValuesSerializerApplyResponse.getContent());
 		}
-		catch (JSONException jsone)
-		{
+		catch (JSONException jsone) {
 			return jsonFactory.createJSONObject();
 		}
 	}

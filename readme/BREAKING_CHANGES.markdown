@@ -281,13 +281,11 @@ removed. Their usages were replaced with `java.util.function.Function` and
 #### Who is affected?
 
 This affects anyone who used `Function` and `Supplier` in package
-`com.liferay.portal.kernel.util`. Any web page using FreeMarker with
-`com.liferay.portal.kernel.util.GetterUtil_IW` is also affected.
+`com.liferay.portal.kernel.util`.
 
 #### How should I update my code?
 
 Use `java.util.function.Function` and `java.util.function.Supplier` directly.
-Update FreeMarker template uses `com.liferay.portal.kernel.util.GetterUtil_IW`.
 
 #### Why was this change made?
 
@@ -370,20 +368,14 @@ were removed. `com.liferay.portal.kernel.util.ArrayUtil_IW` was regenerated.
 
 This affects anyone who used `PredicateFilter`, `AggregatePredicateFilter`,
 `PrefixPredicateFilter`, `JavaScriptPortletResourcePredicateFilter` and
-`DDMFormFieldValuePredicateFilter`. It also affects any class includes usages of
-`ListUtil`, `MapUtil` and `ArrayUtil` in `com.liferay.portal.kernel.util` and
-`com.liferay.portal.servlet.ComboServletStaticURLGenerator` since the
-implementations above were used in these classes. Any web page using FreeMarker
-with `ArrayUtil_IW` is also affected.
+`DDMFormFieldValuePredicateFilter`.
 
 #### How should I update my code?
 
 Replace usages of `com.liferay.portal.kernel.util.PredicateFilter` with
 `java.util.function.Predicate`. Remove usages of `AggregatePredicateFilter`,
 `PrefixPredicateFilter`, `JavaScriptPortletResourcePredicateFilter` and
-`DDMFormFieldValuePredicateFilter`. Check usages of `ListUtil`, `MapUtil`,
-`ArrayUtil` and `ComboServletStaticURLGenerator` to make sure they are using the
-right method signatures. Update FreeMarker template using `ArrayUtil_IW`.
+`DDMFormFieldValuePredicateFilter`.
 
 #### Why was this change made?
 

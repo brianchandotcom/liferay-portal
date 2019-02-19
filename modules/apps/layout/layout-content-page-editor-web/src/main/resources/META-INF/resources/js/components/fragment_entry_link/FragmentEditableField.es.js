@@ -8,6 +8,7 @@ import './FragmentEditableFieldTooltip.es';
 import FragmentProcessors from '../fragment_processors/FragmentProcessors.es';
 import {FRAGMENTS_EDITOR_ITEM_TYPES} from '../../utils/constants';
 import {getActiveEditableElement} from '../fragment_processors/EditableTextFragmentProcessor.es';
+import {getConnectedComponent} from '../../store/ConnectedComponent.es';
 import {setIn} from '../../utils/FragmentsEditorUpdateUtils.es';
 import {Store} from '../../store/store.es';
 import templates from './FragmentEditableField.soy';
@@ -695,7 +696,15 @@ FragmentEditableField.STATE = {
 		.value(false)
 };
 
-Soy.register(FragmentEditableField, templates);
+const ConnectedFragmentEditableField = getConnectedComponent(
+	FragmentEditableField,
+	[
+		'activeItemId',
+		'activeItemType'
+	]
+);
 
-export {FragmentEditableField};
-export default FragmentEditableField;
+Soy.register(ConnectedFragmentEditableField, templates);
+
+export {ConnectedFragmentEditableField, FragmentEditableField};
+export default ConnectedFragmentEditableField;

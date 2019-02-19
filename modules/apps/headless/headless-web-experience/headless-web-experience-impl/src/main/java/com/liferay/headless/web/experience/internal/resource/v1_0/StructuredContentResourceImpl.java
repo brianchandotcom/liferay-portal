@@ -124,7 +124,8 @@ import org.osgi.service.component.annotations.ServiceScope;
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/structured-content.properties",
-	scope = ServiceScope.PROTOTYPE, service = StructuredContentResource.class
+	scope = ServiceScope.PROTOTYPE,
+	service = {EntityModelResource.class, StructuredContentResource.class}
 )
 public class StructuredContentResourceImpl
 	extends BaseStructuredContentResourceImpl implements EntityModelResource {

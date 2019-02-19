@@ -32,6 +32,8 @@ public class PortalFixpackReleaseJob extends BasePortalReleaseJob {
 				jenkinsGitWorkingDirectory.getWorkingDirectory(),
 				"commands/dependencies" +
 					"/test-portal-fixpack-release.properties"));
+
+		readJobProperties();
 	}
 
 }

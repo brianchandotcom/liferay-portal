@@ -104,6 +104,8 @@ public class PluginsGitRepositoryJob
 		jobPropertiesFiles.add(
 			new File(portalGitRepositoryDir, "test.properties"));
 
+		readJobProperties();
+
 		portalGitWorkingDirectory =
 			(PortalGitWorkingDirectory)
 				GitWorkingDirectoryFactory.newGitWorkingDirectory(

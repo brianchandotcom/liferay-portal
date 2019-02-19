@@ -34,6 +34,8 @@ public class PortalReleaseJob extends BasePortalReleaseJob {
 			new File(
 				jenkinsGitWorkingDirectory.getWorkingDirectory(),
 				"commands/dependencies/test-portal-release.properties"));
+
+		readJobProperties();
 	}
 
 	@Override

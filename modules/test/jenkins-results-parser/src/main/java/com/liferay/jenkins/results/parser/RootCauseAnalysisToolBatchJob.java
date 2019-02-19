@@ -43,6 +43,8 @@ public class RootCauseAnalysisToolBatchJob extends RootCauseAnalysisToolJob {
 			new File(
 				portalGitWorkingDirectory.getWorkingDirectory(),
 				"test.properties"));
+
+		readJobProperties();
 	}
 
 }

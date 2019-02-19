@@ -34,6 +34,8 @@ public class PortalUpstreamJob
 			new File(
 				jenkinsGitWorkingDirectory.getWorkingDirectory(),
 				"commands/dependencies/test-upstream-batch.properties"));
+
+		readJobProperties();
 	}
 
 	@Override

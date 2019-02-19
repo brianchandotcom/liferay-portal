@@ -83,6 +83,8 @@ public abstract class PortalGitRepositoryJob
 			new File(gitRepositoryDir, "tools/sdk/build.properties"));
 		jobPropertiesFiles.add(new File(gitRepositoryDir, "build.properties"));
 		jobPropertiesFiles.add(new File(gitRepositoryDir, "test.properties"));
+
+		readJobProperties();
 	}
 
 	protected GitWorkingDirectory getNewGitWorkingDirectory() {

@@ -31,6 +31,8 @@ public class PortalHotfixReleaseJob extends BasePortalReleaseJob {
 			new File(
 				jenkinsGitWorkingDirectory.getWorkingDirectory(),
 				"commands/dependencies/test-portal-hotfix-release.properties"));
+
+		readJobProperties();
 	}
 
 }

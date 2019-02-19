@@ -25,11 +25,10 @@ import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceTokenWrapper;
 import com.liferay.portal.workflow.kaleo.service.KaleoTaskAssignmentInstanceLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoTaskAssignmentInstanceLocalServiceWrapper;
 
+import java.util.List;
+
 import org.junit.Assert;
 import org.junit.Test;
-
-import org.mockito.Mockito;
-import org.mockito.verification.VerificationMode;
 
 /**
  * @author Marcellus Tavares
@@ -149,9 +148,32 @@ public class LazyWorkflowTaskAssigneeListTest {
 				User.class.getName(), 2)
 		};
 
+		boolean[] executed = {false, false};
+
 		KaleoTaskInstanceToken kaleoTaskInstanceToken =
-			KaleoRuntimeTestUtil.mockKaleoTaskInstanceToken(
-				kaleoTaskAssignmentInstances);
+			new KaleoTaskInstanceTokenWrapper(
+				KaleoRuntimeTestUtil.mockKaleoTaskInstanceToken(
+					kaleoTaskAssignmentInstances)) {
+
+				@Override
+				public KaleoTaskAssignmentInstance
+					getFirstKaleoTaskAssignmentInstance() {
+
+					executed[0] = true;
+
+					return super.getFirstKaleoTaskAssignmentInstance();
+				}
+
+				@Override
+				public List<KaleoTaskAssignmentInstance>
+					getKaleoTaskAssignmentInstances() {
+
+					executed[1] = true;
+
+					return super.getKaleoTaskAssignmentInstances();
+				}
+
+			};
 
 		LazyWorkflowTaskAssigneeList lazyWorkflowTaskAssigneeList =
 			new LazyWorkflowTaskAssigneeList(kaleoTaskInstanceToken, null);
@@ -159,11 +181,15 @@ public class LazyWorkflowTaskAssigneeListTest {
 		WorkflowTaskAssignee workflowTaskAssignee =
 			lazyWorkflowTaskAssigneeList.get(1);
 
-		verifyGetKaleoTaskAssignmentInstancesCall(
-			kaleoTaskInstanceToken, Mockito.atLeastOnce());
+		Assert.assertTrue(
+			"Method getKaleoTaskAssignmentInstances should be invoked on " +
+				"kaleoTaskInstanceToken",
+			executed[1]);
 
-		verifyGetFirstKaleoTaskAssignmentInstanceCall(
-			kaleoTaskInstanceToken, Mockito.never());
+		Assert.assertFalse(
+			"Method getFirstKaleoTaskAssignmentInstance should not be " +
+				"invoked on kaleoTaskInstanceToken",
+			executed[0]);
 
 		KaleoRuntimeTestUtil.assertWorkflowTaskAssignee(
 			User.class.getName(), 2, workflowTaskAssignee);
@@ -179,9 +205,32 @@ public class LazyWorkflowTaskAssigneeListTest {
 			KaleoRuntimeTestUtil.mockKaleoTaskAssignmentInstance(
 				expectedAssigneeClassName, expectedAssigneeClassPK);
 
+		boolean[] executed = {false, false};
+
 		KaleoTaskInstanceToken kaleoTaskInstanceToken =
-			KaleoRuntimeTestUtil.mockKaleoTaskInstanceToken(
-				kaleoTaskAssignmentInstance);
+			new KaleoTaskInstanceTokenWrapper(
+				KaleoRuntimeTestUtil.mockKaleoTaskInstanceToken(
+					kaleoTaskAssignmentInstance)) {
+
+				@Override
+				public KaleoTaskAssignmentInstance
+					getFirstKaleoTaskAssignmentInstance() {
+
+					executed[0] = true;
+
+					return super.getFirstKaleoTaskAssignmentInstance();
+				}
+
+				@Override
+				public List<KaleoTaskAssignmentInstance>
+					getKaleoTaskAssignmentInstances() {
+
+					executed[1] = true;
+
+					return super.getKaleoTaskAssignmentInstances();
+				}
+
+			};
 
 		LazyWorkflowTaskAssigneeList lazyWorkflowTaskAssigneeList =
 			new LazyWorkflowTaskAssigneeList(kaleoTaskInstanceToken, null);
@@ -189,11 +238,15 @@ public class LazyWorkflowTaskAssigneeListTest {
 		WorkflowTaskAssignee workflowTaskAssignee =
 			lazyWorkflowTaskAssigneeList.get(0);
 
-		verifyGetKaleoTaskAssignmentInstancesCall(
-			kaleoTaskInstanceToken, Mockito.never());
+		Assert.assertFalse(
+			"Method getKaleoTaskAssignmentInstances should not be invoked on " +
+				"kaleoTaskInstanceToken",
+			executed[1]);
 
-		verifyGetFirstKaleoTaskAssignmentInstanceCall(
-			kaleoTaskInstanceToken, Mockito.atLeastOnce());
+		Assert.assertTrue(
+			"Method getFirstKaleoTaskAssignmentInstance should be invoked on " +
+				"kaleoTaskInstanceToken",
+			executed[0]);
 
 		KaleoRuntimeTestUtil.assertWorkflowTaskAssignee(
 			expectedAssigneeClassName, expectedAssigneeClassPK,
@@ -209,24 +262,6 @@ public class LazyWorkflowTaskAssigneeListTest {
 			new LazyWorkflowTaskAssigneeList(kaleoTaskInstanceToken, null);
 
 		lazyWorkflowTaskAssigneeList.get(0);
-	}
-
-	protected void verifyGetFirstKaleoTaskAssignmentInstanceCall(
-		KaleoTaskInstanceToken kaleoTaskInstanceToken,
-		VerificationMode verificationMode) {
-
-		Mockito.verify(
-			kaleoTaskInstanceToken, verificationMode
-		).getFirstKaleoTaskAssignmentInstance();
-	}
-
-	protected void verifyGetKaleoTaskAssignmentInstancesCall(
-		KaleoTaskInstanceToken kaleoTaskInstanceToken,
-		VerificationMode verificationMode) {
-
-		Mockito.verify(
-			kaleoTaskInstanceToken, verificationMode
-		).getKaleoTaskAssignmentInstances();
 	}
 
 }

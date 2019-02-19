@@ -18,6 +18,7 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
+import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
 import com.liferay.petra.string.StringBundler;
@@ -69,12 +70,17 @@ public class JSONUtil {
 
 			throw new BadRequestException(message, ife);
 		}
+		catch (UnrecognizedPropertyException upe) {
+			String path = _getPath(upe);
+
+			throw new BadRequestException(
+				"Unrecognized field {" + path + "}", upe);
+		}
 		catch (JsonMappingException jme) {
 			String path = _getPath(jme);
 
-			String message = "An error occurred mapping {" + path + "} field";
-
-			throw new BadRequestException(message, jme);
+			throw new BadRequestException(
+				"An error occurred mapping {" + path + "} field", jme);
 		}
 		catch (IOException ioe) {
 			throw new InternalServerErrorException(ioe);

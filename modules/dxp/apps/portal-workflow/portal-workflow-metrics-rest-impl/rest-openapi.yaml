@@ -30,7 +30,7 @@ paths:
           schema:
             type: integer
         - in: query
-          name: per_page
+          name: pageSize
           required: true
           schema:
             type: integer

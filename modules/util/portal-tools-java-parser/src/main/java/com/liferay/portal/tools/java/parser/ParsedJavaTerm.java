@@ -48,8 +48,16 @@ public class ParsedJavaTerm implements Comparable<ParsedJavaTerm> {
 		return _endPosition;
 	}
 
+	public ParsedJavaTerm getNextParsedJavaTerm() {
+		return _nextParsedJavaTerm;
+	}
+
 	public CommonHiddenStreamToken getPrecedingCommentToken() {
 		return _precedingCommentToken;
+	}
+
+	public ParsedJavaTerm getPreviousParsedJavaTerm() {
+		return _previousParsedJavaTerm;
 	}
 
 	public Position getStartPosition() {
@@ -90,10 +98,20 @@ public class ParsedJavaTerm implements Comparable<ParsedJavaTerm> {
 		_containsCommentToken = containsCommentToken;
 	}
 
+	public void setNextParsedJavaTerm(ParsedJavaTerm nextParsedJavaTerm) {
+		_nextParsedJavaTerm = nextParsedJavaTerm;
+	}
+
 	public void setPrecedingCommentToken(
 		CommonHiddenStreamToken precedingCommentToken) {
 
 		_precedingCommentToken = precedingCommentToken;
+	}
+
+	public void setPreviousParsedJavaTerm(
+		ParsedJavaTerm previousParsedJavaTerm) {
+
+		_previousParsedJavaTerm = previousParsedJavaTerm;
 	}
 
 	public void setRequireFollowingEmptyLine(
@@ -123,7 +141,9 @@ public class ParsedJavaTerm implements Comparable<ParsedJavaTerm> {
 	private boolean _containsCommentToken;
 	private final String _content;
 	private final Position _endPosition;
+	private ParsedJavaTerm _nextParsedJavaTerm;
 	private CommonHiddenStreamToken _precedingCommentToken;
+	private ParsedJavaTerm _previousParsedJavaTerm;
 	private boolean _requireFollowingEmptyLine;
 	private boolean _requireNoFollowingEmptyLine;
 	private boolean _requireNoPrecedingEmptyLine;

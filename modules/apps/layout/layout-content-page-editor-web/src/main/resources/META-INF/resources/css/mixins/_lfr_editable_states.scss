@@ -2,7 +2,8 @@
 
 @mixin lfr-editable-focus() {
 	background-color: fade_out($fragmentEditableFieldGridAccentColor, 0.9);
-	box-shadow: 0 0 0 1px $fragmentEditableFieldGridAccentColor;
+	box-shadow: 0 0 0 2px $fragmentEditableFieldActiveBorderColor;
+	outline: 0;
 }
 
 @mixin translating-lfr-editable-focus() {

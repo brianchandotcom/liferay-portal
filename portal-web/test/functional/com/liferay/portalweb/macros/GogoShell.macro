@@ -11,8 +11,9 @@ definition {
 		AssertElementPresent(locator1 = "GogoShell#OUTPUT_FIELD");
 
 		var moduleStatusOutput = selenium.getText("GogoShell#OUTPUT_FIELD");
-		var partialModuleStatusOutput = StringUtil.stripBetween("${moduleStatusOutput}", "START", "Name   ");
-		var moduleID = StringUtil.extractFirst("${partialModuleStatusOutput}", "|");
+		var partialModuleStatusOutput = StringUtil.stripBetween("${moduleStatusOutput}", "START", "Name");
+		var originalmoduleID = StringUtil.extractFirst("${partialModuleStatusOutput}", "|");
+		var moduleID = StringUtil.trim("${originalmoduleID}");
 
 		return "${moduleID}";
 	}

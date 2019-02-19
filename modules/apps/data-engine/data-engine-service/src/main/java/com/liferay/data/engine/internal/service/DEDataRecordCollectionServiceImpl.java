@@ -24,6 +24,7 @@ import com.liferay.data.engine.internal.executor.DEDataRecordCollectionDeleteRec
 import com.liferay.data.engine.internal.executor.DEDataRecordCollectionDeleteRequestExecutor;
 import com.liferay.data.engine.internal.executor.DEDataRecordCollectionGetRecordRequestExecutor;
 import com.liferay.data.engine.internal.executor.DEDataRecordCollectionGetRequestExecutor;
+import com.liferay.data.engine.internal.executor.DEDataRecordCollectionListRequestExecutor;
 import com.liferay.data.engine.internal.executor.DEDataRecordCollectionSaveModelPermissionsRequestExecutor;
 import com.liferay.data.engine.internal.executor.DEDataRecordCollectionSavePermissionsRequestExecutor;
 import com.liferay.data.engine.internal.executor.DEDataRecordCollectionSaveRecordRequestExecutor;
@@ -53,6 +54,8 @@ import com.liferay.data.engine.service.DEDataRecordCollectionGetRecordRequest;
 import com.liferay.data.engine.service.DEDataRecordCollectionGetRecordResponse;
 import com.liferay.data.engine.service.DEDataRecordCollectionGetRequest;
 import com.liferay.data.engine.service.DEDataRecordCollectionGetResponse;
+import com.liferay.data.engine.service.DEDataRecordCollectionListRequest;
+import com.liferay.data.engine.service.DEDataRecordCollectionListResponse;
 import com.liferay.data.engine.service.DEDataRecordCollectionRequestBuilder;
 import com.liferay.data.engine.service.DEDataRecordCollectionSaveModelPermissionsRequest;
 import com.liferay.data.engine.service.DEDataRecordCollectionSaveModelPermissionsResponse;
@@ -330,6 +333,27 @@ public class DEDataRecordCollectionServiceImpl
 					deDataRecordCollectionGetRequest.
 						getDEDataRecordCollectionId(),
 					nsrse);
+		}
+		catch (Exception e) {
+			throw new DEDataRecordCollectionException(e);
+		}
+	}
+
+	@Override
+	public DEDataRecordCollectionListResponse execute(
+			DEDataRecordCollectionListRequest deDataRecordCollectionListRequest)
+		throws DEDataRecordCollectionException {
+
+		DEDataRecordCollectionListRequestExecutor
+			deDataRecordCollectionListRequestExecutor =
+				getDEDataRecordCollectionListRequestExecutor();
+
+		try {
+			return deDataRecordCollectionListRequestExecutor.execute(
+				deDataRecordCollectionListRequest);
+		}
+		catch (DEDataRecordCollectionException dedrce) {
+			throw dedrce;
 		}
 		catch (Exception e) {
 			throw new DEDataRecordCollectionException(e);
@@ -683,6 +707,18 @@ public class DEDataRecordCollectionServiceImpl
 		return _deDataRecordCollectionGetRequestExecutor;
 	}
 
+	protected DEDataRecordCollectionListRequestExecutor
+		getDEDataRecordCollectionListRequestExecutor() {
+
+		if (_deDataRecordCollectionListRequestExecutor == null) {
+			_deDataRecordCollectionListRequestExecutor =
+				new DEDataRecordCollectionListRequestExecutor(
+					ddlRecordSetLocalService, getDEDataEngineRequestExecutor());
+		}
+
+		return _deDataRecordCollectionListRequestExecutor;
+	}
+
 	protected DEDataRecordCollectionSaveModelPermissionsRequestExecutor
 		getDEDataRecordCollectionSaveModelPermissionsRequestExecutor() {
 
@@ -889,6 +925,8 @@ public class DEDataRecordCollectionServiceImpl
 		_deDataRecordCollectionGetRecordRequestExecutor;
 	private DEDataRecordCollectionGetRequestExecutor
 		_deDataRecordCollectionGetRequestExecutor;
+	private DEDataRecordCollectionListRequestExecutor
+		_deDataRecordCollectionListRequestExecutor;
 	private DEDataRecordCollectionSaveModelPermissionsRequestExecutor
 		_deDataRecordCollectionSaveModelPermissionsRequestExecutor;
 	private DEDataRecordCollectionSavePermissionsRequestExecutor

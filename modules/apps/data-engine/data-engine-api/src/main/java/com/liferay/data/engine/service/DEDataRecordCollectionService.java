@@ -97,14 +97,28 @@ public interface DEDataRecordCollectionService {
 	 * Retrieves a {@link DEDataRecordCollection } from the database corresponding to the
 	 * ID passed as a parameter on the request.
 	 *
-	 * @param deDataRecordCollectionDeleteRequest request to retrieve
+	 * @param deDataRecordCollectionGetRequest request to retrieve
 	 * a {@link DEDataRecordCollection }
-	 * @return {@link DEDataRecordCollectionDeleteResponse } Response
-	 * of the delete request
+	 * @return {@link DEDataRecordCollectionGetResponse } Response
+	 * of the get request
 	 * @review
 	 */
 	public DEDataRecordCollectionGetResponse execute(
 			DEDataRecordCollectionGetRequest deDataRecordCollectionGetRequest)
+		throws DEDataRecordCollectionException;
+
+	/**
+	 * List {@link DEDataRecordCollection} from the database corresponding to the
+	 * group ID passed as a parameter on the request.
+	 *
+	 * @param deDataRecordCollectionListRequest request to list
+	 * {@link DEDataRecordCollection}
+	 * @return {@link DEDataRecordCollectionListResponse } Response
+	 * of the list request
+	 * @review
+	 */
+	public DEDataRecordCollectionListResponse execute(
+			DEDataRecordCollectionListRequest deDataRecordCollectionListRequest)
 		throws DEDataRecordCollectionException;
 
 	/**

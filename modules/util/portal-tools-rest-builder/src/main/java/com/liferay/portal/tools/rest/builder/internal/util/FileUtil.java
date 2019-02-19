@@ -133,13 +133,11 @@ public class FileUtil {
 			Files.createFile(file.toPath());
 		}
 
-		String oldContent = read(file);
+		String s = FormatUtil.format(content, file.getName());
 
-		String newContent = FormatUtil.fixWhitespace(file, content);
+		if (!s.equals(read(file))) {
+			Files.write(file.toPath(), s.getBytes(StandardCharsets.UTF_8));
 
-		Files.write(file.toPath(), newContent.getBytes(StandardCharsets.UTF_8));
-
-		if (!oldContent.equals(FormatUtil.format(file))) {
 			System.out.println("Writing " + file.getCanonicalPath());
 		}
 	}

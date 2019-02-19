@@ -15,9 +15,12 @@
 package com.liferay.portal.tools.rest.builder.internal.format.util;
 
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.tools.rest.builder.internal.util.FileUtil;
-
-import java.io.File;
+import com.liferay.portal.tools.rest.builder.internal.format.java.checks.JavaImportsCheck;
+import com.liferay.portal.tools.rest.builder.internal.format.java.checks.JavaLeadingTabsCheck;
+import com.liferay.portal.tools.rest.builder.internal.format.java.checks.JavaLongLinesCheck;
+import com.liferay.portal.tools.rest.builder.internal.format.java.checks.JavaSignatureStylingCheck;
+import com.liferay.portal.tools.rest.builder.internal.format.java.checks.JavaTermDividersCheck;
+import com.liferay.portal.tools.rest.builder.internal.format.java.checks.JavaTermOrderCheck;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -27,57 +30,36 @@ import java.util.regex.Pattern;
  */
 public class FormatUtil {
 
-	public static String fixWhitespace(File file, String content) {
+	public static String format(String content, String fileName)
+		throws Exception {
+
 		Matcher matcher = _multiNewLinePattern.matcher(content);
 
 		String newContent = matcher.replaceAll("\n");
 
 		newContent = newContent.trim();
 
-		if (!StringUtil.endsWith(file.getName(), ".java")) {
+		if (!StringUtil.endsWith(fileName, ".java")) {
 			return newContent;
 		}
 
-		int index = newContent.indexOf("\npublic ");
+		newContent = StringUtil.replace(
+			newContent, new String[] {"\t ", "( ", " ,", " )"},
+			new String[] {"", "(", ",", ")"});
 
-		if (index == -1) {
-			return newContent;
-		}
+		newContent = JavaImportsCheck.format(newContent, fileName);
+		newContent = JavaLeadingTabsCheck.format(newContent, fileName);
+		newContent = JavaLongLinesCheck.format(newContent, fileName);
+		newContent = JavaSignatureStylingCheck.format(newContent, fileName);
+		newContent = JavaTermDividersCheck.format(newContent, fileName);
+		newContent = JavaTermOrderCheck.format(newContent, fileName);
 
-		String oldSub = newContent.substring(0, index);
+		newContent = StringUtil.replace(
+			newContent, new String[] {"\n\n\t}\n"}, new String[] {"\n\t}\n"});
 
-		matcher = _componentPropertyPattern.matcher(oldSub);
-
-		String newSub = matcher.replaceAll("\t\t$0");
-
-		newContent = newContent.replace(oldSub, newSub);
-
-		index = newContent.indexOf("\npublic ");
-
-		oldSub = newContent.substring(
-			newContent.indexOf("\n", index + 2), newContent.lastIndexOf("}"));
-
-		matcher = _methodHeaderPattern.matcher(oldSub);
-
-		newSub = matcher.replaceAll("\t$1");
-
-		matcher = _methodClosingBracePattern.matcher(newSub);
-
-		newSub = matcher.replaceAll("\t}");
-
-		return newContent.replace(oldSub, newSub);
+		return newContent;
 	}
 
-	public static String format(File file) throws Exception {
-		return FileUtil.read(file);
-	}
-
-	private static final Pattern _componentPropertyPattern = Pattern.compile(
-		"^\".+\",$", Pattern.MULTILINE);
-	private static final Pattern _methodClosingBracePattern = Pattern.compile(
-		"^\t*}$", Pattern.MULTILINE);
-	private static final Pattern _methodHeaderPattern = Pattern.compile(
-		"^\t*(@|private|protected|public)", Pattern.MULTILINE);
 	private static final Pattern _multiNewLinePattern = Pattern.compile(
 		"^\n+", Pattern.MULTILINE);
 

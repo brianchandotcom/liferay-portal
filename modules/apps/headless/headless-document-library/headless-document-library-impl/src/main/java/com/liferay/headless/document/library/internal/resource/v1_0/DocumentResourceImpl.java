@@ -40,6 +40,7 @@ import com.liferay.headless.document.library.resource.v1_0.DocumentResource;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Field;
@@ -51,11 +52,15 @@ import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.service.ClassNameService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.vulcan.multipart.BinaryFile;
+import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -143,6 +148,54 @@ public class DocumentResourceImpl
 			filter, pagination, sorts);
 	}
 
+	@Override
+	public Document postContentSpaceDocument(
+			Long contentSpaceId, MultipartBody multipartBody)
+		throws Exception {
+
+		return _addDocument(multipartBody, contentSpaceId, 0L, contentSpaceId);
+	}
+
+	@Override
+	public Document postFolderDocument(
+			Long folderId, MultipartBody multipartBody)
+		throws Exception {
+
+		Folder folder = _dlAppService.getFolder(folderId);
+
+		return _addDocument(
+			multipartBody, folder.getRepositoryId(), folderId,
+			folder.getGroupId());
+	}
+
+	private Document _addDocument(
+			MultipartBody multipartBody, Long repositoryId, long folderId,
+			Long groupId)
+		throws Exception {
+
+		Document document = multipartBody.getJSONObjectValue(
+			"Document", DocumentImpl.class);
+
+		BinaryFile binaryFile = multipartBody.getBinaryFile("file");
+
+		String binaryFileName = binaryFile.getFileName();
+
+		String title = Optional.ofNullable(
+			document.getTitle()
+		).orElse(
+			binaryFileName
+		);
+
+		FileEntry fileEntry = _dlAppService.addFileEntry(
+			repositoryId, folderId, binaryFileName, binaryFile.getContentType(),
+			title, document.getDescription(), null, binaryFile.getInputStream(),
+			binaryFile.getSize(), _getServiceContext(groupId, document));
+
+		return _toDocument(
+			fileEntry, fileEntry.getFileVersion(),
+			_userService.getUserById(fileEntry.getUserId()));
+	}
+
 	private AdaptedImages[] _getAdaptiveMedias(FileEntry fileEntry)
 		throws Exception {
 
@@ -225,6 +278,29 @@ public class DocumentResourceImpl
 		return Page.of(
 			transform(fileEntries, this::_toDocument), pagination,
 			fileEntries.size());
+	}
+
+	private ServiceContext _getServiceContext(long groupId, Document document) {
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
+
+		Long[] categoryIds = document.getCategoryIds();
+
+		if (ArrayUtil.isNotEmpty(categoryIds)) {
+			serviceContext.setAssetCategoryIds(ArrayUtil.toArray(categoryIds));
+		}
+
+		String[] keywords = document.getKeywords();
+
+		if (ArrayUtil.isNotEmpty(keywords)) {
+			serviceContext.setAssetTagNames(keywords);
+		}
+
+		serviceContext.setScopeGroupId(groupId);
+
+		return serviceContext;
 	}
 
 	private <T, S> T _getValue(
@@ -320,5 +396,8 @@ public class DocumentResourceImpl
 
 	@Reference
 	private UserLocalService _userLocalService;
+
+	@Reference
+	private UserLocalService _userService;
 
 }

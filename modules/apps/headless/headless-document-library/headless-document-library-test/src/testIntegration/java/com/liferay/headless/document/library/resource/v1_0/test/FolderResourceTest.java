@@ -40,8 +40,7 @@ public class FolderResourceTest extends BaseFolderResourceTestCase {
 		assertResponseCode(
 			202, invokeDeleteFolderResponse(randomFolder.getId()));
 
-		assertResponseCode(
-			404, invokeGetFolderResponse(randomFolder.getId()));
+		assertResponseCode(404, invokeGetFolderResponse(randomFolder.getId()));
 	}
 
 	@Test

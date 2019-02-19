@@ -42,6 +42,11 @@ public interface Document {
 	public void setCategories(Categories[] categories);
 
 	public void setCategories(UnsafeSupplier<Categories[], Throwable> categoriesUnsafeSupplier);
+	public Long[] getCategoryIds();
+
+	public void setCategoryIds(Long[] categoryIds);
+
+	public void setCategoryIds(UnsafeSupplier<Long[], Throwable> categoryIdsUnsafeSupplier);
 	public String getContentUrl();
 
 	public void setContentUrl(String contentUrl);

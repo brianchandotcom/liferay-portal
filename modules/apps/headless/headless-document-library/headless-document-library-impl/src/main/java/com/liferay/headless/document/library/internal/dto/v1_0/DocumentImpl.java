@@ -105,6 +105,27 @@ public class DocumentImpl implements Document {
 	@GraphQLField
 	@JsonProperty
 	protected Categories[] categories;
+	public Long[] getCategoryIds() {
+			return categoryIds;
+	}
+
+	public void setCategoryIds(Long[] categoryIds) {
+			this.categoryIds = categoryIds;
+	}
+
+	@JsonIgnore
+	public void setCategoryIds(UnsafeSupplier<Long[], Throwable> categoryIdsUnsafeSupplier) {
+			try {
+				categoryIds = categoryIdsUnsafeSupplier.get();
+	}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+	}
+	}
+
+	@GraphQLField
+	@JsonProperty
+	protected Long[] categoryIds;
 	public String getContentUrl() {
 			return contentUrl;
 	}

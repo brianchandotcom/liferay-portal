@@ -8,6 +8,7 @@ class PublishButton extends Component {
 		namespace: Config.string().required(),
 		published: Config.bool().value(false),
 		resolvePublishURL: Config.func().required(),
+		showPublishAlert: Config.bool().value(false),
 		spritemap: Config.string().required(),
 		submitForm: Config.func().required(),
 		url: Config.string()
@@ -40,7 +41,16 @@ class PublishButton extends Component {
 	}
 
 	render() {
-		const {published, spritemap} = this.props;
+		const {published, resolvePublishURL, showPublishAlert, spritemap} = this.props;
+
+		if (showPublishAlert) {
+			if (published) {
+				this._showPublishAlert(resolvePublishURL());
+			}
+			else {
+				this._showUnpublishAlert();
+			}
+		}
 
 		return (
 			<ClayButton

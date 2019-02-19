@@ -58,7 +58,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = MVCActionCommand.class
 )
-public class PublishFormInstanceMVCResourceCommand
+public class PublishFormInstanceMVCActionCommand
 	extends SaveFormInstanceMVCActionCommand {
 
 	@Override

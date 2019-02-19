@@ -303,9 +303,9 @@ public class CommentResourceImpl
 				comments, comment -> CommentUtil.toComment(comment, _portal)),
 			pagination, comments.size());
 	}
-	
-	private static final EntityModel _entityModel = new CommentEntityModel();
 
+	private static final EntityModel _entityModel = new CommentEntityModel();
+	
 	@Reference
 	private BlogsEntryService _blogsEntryService;
 

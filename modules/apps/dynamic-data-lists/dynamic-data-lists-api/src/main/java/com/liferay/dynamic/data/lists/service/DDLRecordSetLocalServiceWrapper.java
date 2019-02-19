@@ -539,6 +539,12 @@ public class DDLRecordSetLocalServiceWrapper implements DDLRecordSetLocalService
 		return _ddlRecordSetLocalService.getRecordSets(groupId);
 	}
 
+	@Override
+	public java.util.List<com.liferay.dynamic.data.lists.model.DDLRecordSet> getRecordSets(
+		long groupId, int start, int end) {
+		return _ddlRecordSetLocalService.getRecordSets(groupId, start, end);
+	}
+
 	/**
 	* Returns the number of all the record sets belonging the group.
 	*

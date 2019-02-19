@@ -450,6 +450,9 @@ public interface DDLRecordSetLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DDLRecordSet> getRecordSets(long groupId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<DDLRecordSet> getRecordSets(long groupId, int start, int end);
+
 	/**
 	* Returns the number of all the record sets belonging the group.
 	*

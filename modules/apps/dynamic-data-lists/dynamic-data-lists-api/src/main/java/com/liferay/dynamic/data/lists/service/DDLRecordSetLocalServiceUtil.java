@@ -506,6 +506,11 @@ public class DDLRecordSetLocalServiceUtil {
 		return getService().getRecordSets(groupId);
 	}
 
+	public static java.util.List<com.liferay.dynamic.data.lists.model.DDLRecordSet> getRecordSets(
+		long groupId, int start, int end) {
+		return getService().getRecordSets(groupId, start, end);
+	}
+
 	/**
 	* Returns the number of all the record sets belonging the group.
 	*

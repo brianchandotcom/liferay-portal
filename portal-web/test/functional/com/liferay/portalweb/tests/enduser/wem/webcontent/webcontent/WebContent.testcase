@@ -267,9 +267,9 @@ definition {
 
 		NavItem.gotoTemplates();
 
-		WebContentNavigator.gotoEntryMenuItem(
-			entry = "Basic Web Content",
-			menuItem = "Edit"
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "Basic Web Content"
 		);
 
 		PortletEntry.inputName(name = "Basic Web Content Edit");

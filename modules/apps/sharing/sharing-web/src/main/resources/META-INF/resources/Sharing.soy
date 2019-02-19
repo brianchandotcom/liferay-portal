@@ -27,6 +27,7 @@
 			<div class="sharing-modal-form-content">
 				<div class="form-group {$emailErrorMessage ? ' has-error' : '' }">
 					{call ClayMultiSelect.render}
+						{param contentRenderer: 'sharingUser' /}
 						{param dataSource: [] /}
 						{param elementClasses: 'clay-multi-select' /}
 						{param events: [
@@ -127,3 +128,15 @@
 		</form>
 	</div>
 {/template}
+
+{deltemplate ClayAutocomplete.Item variant="'sharingUser'"}
+	{@param data: ?}
+	{@param index: int}
+	{@param? _handleDropdownItemClick: any}
+
+	<li>
+		<a data-onclick="{$_handleDropdownItemClick}" data-dropdown-item-index="{$index}" id="item" class="dropdown-item" href="javascript:;">
+			<strong>{$data.data.fullName}</strong> ({$data.data.emailAddress})
+		</a>
+	</li>
+{/deltemplate}

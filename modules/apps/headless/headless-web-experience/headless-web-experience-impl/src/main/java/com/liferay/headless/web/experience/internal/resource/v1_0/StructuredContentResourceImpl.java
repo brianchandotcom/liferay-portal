@@ -34,7 +34,6 @@ import com.liferay.headless.web.experience.internal.odata.entity.v1_0.EntityFiel
 import com.liferay.headless.web.experience.internal.odata.entity.v1_0.StructuredContentEntityModel;
 import com.liferay.headless.web.experience.resource.v1_0.StructuredContentResource;
 import com.liferay.journal.model.JournalArticle;
-import com.liferay.journal.model.JournalArticleConstants;
 import com.liferay.journal.service.JournalArticleService;
 import com.liferay.journal.util.JournalConverter;
 import com.liferay.journal.util.JournalHelper;
@@ -128,9 +127,6 @@ public class StructuredContentResourceImpl
 					Field.ARTICLE_ID, Field.SCOPE_GROUP_ID);
 			},
 			searchContext -> {
-				searchContext.setAttribute(
-					Field.CLASS_NAME_ID,
-					JournalArticleConstants.CLASSNAME_ID_DEFAULT);
 				searchContext.setAttribute(
 					Field.STATUS, WorkflowConstants.STATUS_APPROVED);
 				searchContext.setAttribute("head", Boolean.TRUE);

@@ -21,7 +21,6 @@ import com.liferay.headless.foundation.internal.dto.v1_0.VocabularyImpl;
 import com.liferay.headless.foundation.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.foundation.internal.odata.entity.v1_0.VocabularyEntityModel;
 import com.liferay.headless.foundation.resource.v1_0.VocabularyResource;
-import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
@@ -29,7 +28,6 @@ import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.SearchResultPermissionFilterFactory;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
-import com.liferay.portal.kernel.service.ClassNameService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -78,9 +76,6 @@ public class VocabularyResourceImpl
 
 		List<AssetVocabulary> assetVocabularies = new ArrayList<>();
 
-		ClassName className = _classNameService.fetchClassName(
-			AssetVocabulary.class.getName());
-
 		Hits hits = SearchUtil.getHits(
 			filter, _indexerRegistry.nullSafeGetIndexer(AssetVocabulary.class),
 			pagination,
@@ -90,9 +85,6 @@ public class VocabularyResourceImpl
 				queryConfig.setSelectedFieldNames(Field.ASSET_VOCABULARY_ID);
 			},
 			searchContext -> {
-				searchContext.setAttribute(
-					Field.CLASS_NAME_ID, className.getClassNameId());
-				searchContext.setAttribute("head", Boolean.TRUE);
 				searchContext.setCompanyId(company.getCompanyId());
 				searchContext.setGroupIds(new long[] {contentSpaceId});
 			},
@@ -188,9 +180,6 @@ public class VocabularyResourceImpl
 
 	@Reference
 	private AssetVocabularyService _assetVocabularyService;
-
-	@Reference
-	private ClassNameService _classNameService;
 
 	@Reference
 	private IndexerRegistry _indexerRegistry;

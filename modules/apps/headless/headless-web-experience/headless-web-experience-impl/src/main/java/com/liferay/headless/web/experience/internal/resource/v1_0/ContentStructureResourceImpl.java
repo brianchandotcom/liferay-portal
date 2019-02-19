@@ -20,8 +20,6 @@ import com.liferay.headless.web.experience.dto.v1_0.ContentStructure;
 import com.liferay.headless.web.experience.internal.dto.v1_0.util.ContentStructureUtil;
 import com.liferay.headless.web.experience.internal.odata.entity.v1_0.ContentStructureEntityModel;
 import com.liferay.headless.web.experience.resource.v1_0.ContentStructureResource;
-import com.liferay.journal.model.JournalArticle;
-import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
@@ -29,7 +27,6 @@ import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.SearchResultPermissionFilterFactory;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
-import com.liferay.portal.kernel.service.ClassNameService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -66,9 +63,6 @@ public class ContentStructureResourceImpl
 
 		List<DDMStructure> ddmStructures = new ArrayList<>();
 
-		ClassName className = _classNameService.fetchClassName(
-			JournalArticle.class.getName());
-
 		Hits hits = SearchUtil.getHits(
 			filter, _indexerRegistry.nullSafeGetIndexer(DDMStructure.class),
 			pagination,
@@ -78,9 +72,6 @@ public class ContentStructureResourceImpl
 				queryConfig.setSelectedFieldNames(Field.ENTRY_CLASS_PK);
 			},
 			searchContext -> {
-				searchContext.setAttribute(
-					Field.CLASS_NAME_ID, className.getClassNameId());
-				searchContext.setAttribute("head", Boolean.TRUE);
 				searchContext.setCompanyId(company.getCompanyId());
 				searchContext.setGroupIds(new long[] {contentSpaceId});
 			},
@@ -121,9 +112,6 @@ public class ContentStructureResourceImpl
 
 	private static final ContentStructureEntityModel
 		_contentStructureEntityModel = new ContentStructureEntityModel();
-
-	@Reference
-	private ClassNameService _classNameService;
 
 	@Reference
 	private DDMStructureService _ddmStructureService;

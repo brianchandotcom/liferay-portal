@@ -17,7 +17,7 @@
 		{param contentRenderer kind="html"}
 			{call .content}
 				{param columns: $columns/}
-				{param readOnly: $readOnly /}
+				{param disabled: $readOnly /}
 				{param id: $id /}
 				{param placeholder: $placeholder /}
 				{param rows: $rows/}
@@ -37,6 +37,7 @@
 {template .content}
 	{@param columns: list<[label: string, value: ?]>}
 	{@param rows: list<[label: string, value: ?]>}
+	{@param? disabled: bool}
 		<div class="liferay-ddm-form-field-grid table-responsive">
 			<table class="table table-autofit table-list table-striped">
 				<thead>
@@ -53,14 +54,18 @@
 						<tr name="{$row.value}">
 							<td>{$row.label}</td>
 							{foreach $column in $columns}
+								{let $inputAttributes kind="attributes"}
+									class="form-builder-grid-field"
+									data-row-index="{index($column)}"
+									{if $disabled}
+										disabled
+									{/if}
+									name="{$row.value}"
+									type="radio"
+									value="{$column.value}"
+								{/let}
 								<td>
-									<input
-										class="form-builder-grid-field"
-										data-row-index="{index($column)}"
-										name="{$row.value}"
-										type="radio"
-										value="{$column.value}"
-									/>
+									<input {$inputAttributes} />
 								</td>
 							{/foreach}
 						</tr>

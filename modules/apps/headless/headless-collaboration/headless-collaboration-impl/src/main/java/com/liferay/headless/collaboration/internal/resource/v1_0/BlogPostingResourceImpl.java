@@ -46,7 +46,6 @@ import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
 
 import java.time.LocalDateTime;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -146,16 +145,10 @@ public class BlogPostingResourceImpl extends BaseBlogPostingResourceImpl {
 		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAddGuestPermissions(true);
 
-		Categories[] categories = blogPosting.getCategories();
+		Long[] categoryIds = blogPosting.getCategoryIds();
 
-		if (ArrayUtil.isNotEmpty(categories)) {
-			Stream<Categories> stream = Arrays.stream(categories);
-
-			long[] assetCategoryIds = stream.mapToLong(
-				Categories::getCategoryId
-			).toArray();
-
-			serviceContext.setAssetCategoryIds(assetCategoryIds);
+		if (ArrayUtil.isNotEmpty(categoryIds)) {
+			serviceContext.setAssetCategoryIds(ArrayUtil.toArray(categoryIds));
 		}
 
 		String[] keywords = blogPosting.getKeywords();
@@ -202,7 +195,7 @@ public class BlogPostingResourceImpl extends BaseBlogPostingResourceImpl {
 
 		return new ImageImpl() {
 			{
-				contentUrl = _dlurlHelper.getPreviewURL(
+				contentUrl = _dlURLHelper.getPreviewURL(
 					fileEntry, fileVersion, null, "", false, false);
 				imageId = coverImageFileEntryId;
 				name = blogsEntry.getCoverImageCaption();
@@ -267,7 +260,7 @@ public class BlogPostingResourceImpl extends BaseBlogPostingResourceImpl {
 	private DLAppService _dlAppService;
 
 	@Reference
-	private DLURLHelper _dlurlHelper;
+	private DLURLHelper _dlURLHelper;
 
 	@Reference
 	private Portal _portal;

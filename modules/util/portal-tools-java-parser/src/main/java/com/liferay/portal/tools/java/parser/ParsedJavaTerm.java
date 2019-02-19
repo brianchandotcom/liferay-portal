@@ -16,6 +16,8 @@ package com.liferay.portal.tools.java.parser;
 
 import antlr.CommonHiddenStreamToken;
 
+import com.liferay.portal.kernel.util.StringUtil;
+
 /**
  * @author Hugo Huijser
  */
@@ -62,7 +64,21 @@ public class ParsedJavaTerm {
 	}
 
 	public boolean requirePrecedingEmptyLine() {
-		return _requirePrecedingEmptyLine;
+		if (!_requirePrecedingEmptyLine) {
+			return _requirePrecedingEmptyLine;
+		}
+
+		if (_precedingCommentToken == null) {
+			return true;
+		}
+
+		if (StringUtil.startsWith(
+				StringUtil.trim(_precedingCommentToken.getText()), "*")) {
+
+			return false;
+		}
+
+		return true;
 	}
 
 	public void setContainsCommentToken(boolean containsCommentToken) {

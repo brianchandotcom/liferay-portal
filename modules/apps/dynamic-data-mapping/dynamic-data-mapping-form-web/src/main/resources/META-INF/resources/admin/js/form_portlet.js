@@ -60,6 +60,10 @@ AUI.add(
 						value: []
 					},
 
+					showPublishAlert: {
+						value: false
+					},
+
 					translationManager: {
 					},
 
@@ -103,8 +107,13 @@ AUI.add(
 							);
 						}
 
-						if (instance.get('published')) {
-							instance._handlePublishAction();
+						if (instance.get('showPublishAlert')) {
+							if (instance.get('published')) {
+								instance._showPublishAlert();
+							}
+							else {
+								instance._showUnpublishAlert()
+							}
 						}
 					},
 
@@ -734,7 +743,7 @@ AUI.add(
 						return window[instance.ns('nameEditor')];
 					},
 
-					_handlePublishAction: function() {
+					_showPublishAlert: function() {
 						var instance = this;
 
 						var publishMessage = Liferay.Language.get('the-form-was-published-successfully-access-it-with-this-url-x');
@@ -748,12 +757,10 @@ AUI.add(
 						instance._showAlert(publishMessage, 'success');
 					},
 
-					_handleUnpublishAction: function() {
+					_showUnpublishAlert: function() {
 						var instance = this;
 
 						instance._showAlert(Liferay.Language.get('the-form-was-unpublished-successfully'), 'success');
-
-						instance.one('#publish').html(Liferay.Language.get('publish-form'));
 					},
 
 					_hideFormBuilder: function() {

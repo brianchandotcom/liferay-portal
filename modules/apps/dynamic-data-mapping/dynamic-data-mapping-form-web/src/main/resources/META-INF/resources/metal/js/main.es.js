@@ -179,6 +179,16 @@ class Form extends Component {
 		saved: Config.bool(),
 
 		/**
+		 * Wether a published alert needs to be shown or not
+		 * @default false
+		 * @instance
+		 * @memberof Form
+		 * @type {!boolean}
+		 */
+
+		showPublishAlert: Config.bool().value(false),
+
+		/**
 		 * The path to the SVG spritemap file containing the icons.
 		 * @default undefined
 		 * @instance
@@ -349,6 +359,7 @@ class Form extends Component {
 		);
 	}
 
+	@autobind
 	_createFormURL() {
 		let formURL;
 
@@ -364,6 +375,7 @@ class Form extends Component {
 		return formURL + this._getFormInstanceId();
 	}
 
+	@autobind
 	_getFormInstanceId() {
 		const {namespace} = this.props;
 
@@ -492,6 +504,7 @@ class Form extends Component {
 			formInstanceId,
 			namespace,
 			published,
+			showPublishAlert,
 			spritemap
 		} = this.props;
 
@@ -542,8 +555,10 @@ class Form extends Component {
 							formInstanceId={formInstanceId}
 							namespace={namespace}
 							published={published}
-							resolvePublishURL={this._resolvePublishURL}
+							resolvePublishURL={this._createFormURL}
+							showPublishAlert={showPublishAlert}
 							spritemap={spritemap}
+							submitForm={this.submitForm}
 							url={Liferay.DDM.FormSettings.publishFormInstanceURL}
 						/>
 						<button class="btn ddm-button btn-default" data-onclick="_handleSaveButtonClicked" ref="saveButton">
@@ -590,6 +605,7 @@ class Form extends Component {
 		);
 	}
 
+	@autobind
 	submitForm() {
 		const {namespace} = this.props;
 

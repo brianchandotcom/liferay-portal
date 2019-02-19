@@ -323,8 +323,8 @@ public final class DEDataRecordCollectionSaveModelPermissionsRequest {
 		 * @review
 		 */
 		public Builder allowViewDataRecord() {
-			_deDataRecordCollectionSaveModelPermissionsRequest.
-				_viewDataRecord = true;
+			_deDataRecordCollectionSaveModelPermissionsRequest._viewDataRecord =
+				true;
 
 			return this;
 		}

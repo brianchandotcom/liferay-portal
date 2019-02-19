@@ -90,7 +90,7 @@ public class OAuth2ProviderShortcutPortalInstanceLifecycleListener
 
 		Stream<String[]> stream = Arrays.stream(_SAP_ENTRY_OBJECT_ARRAYS);
 
-		List<String> featuresList = stream.map(
+		List<String> scopeAliasesList = stream.map(
 			sapEntryObjectArray -> StringUtil.replaceFirst(
 				sapEntryObjectArray[0], "OAUTH2_", StringPool.BLANK)
 		).collect(
@@ -112,7 +112,7 @@ public class OAuth2ProviderShortcutPortalInstanceLifecycleListener
 				"https://analytics.liferay.com", 0, _APPLICATION_NAME, null,
 				Collections.singletonList(
 					"https://analytics.liferay.com/oauth/receive"),
-				featuresList, new ServiceContext());
+				scopeAliasesList, new ServiceContext());
 
 		Class<?> clazz = getClass();
 

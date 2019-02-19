@@ -176,6 +176,8 @@ public class UpgradeJournalArticleLocalizedValues extends UpgradeProcess {
 						if (localizedDescription != safeLocalizedDescription) {
 							_log(articleId, "description");
 						}
+
+						localizedDescription = safeLocalizedDescription;
 					}
 
 					ps2.setLong(1, _increment());

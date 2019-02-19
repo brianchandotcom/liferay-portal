@@ -124,8 +124,13 @@ public class JavaParser {
 					detailAST, fileContents);
 			}
 
-			parsedJavaClass.addParsedJavaTerm(
-				new ParsedJavaTerm(content, startPosition, endPosition));
+			ParsedJavaTerm parsedJavaTerm = new ParsedJavaTerm(
+				content, startPosition, endPosition);
+
+			parsedJavaTerm = _processSurroundingLineBreaks(
+				parsedJavaTerm, javaTerm);
+
+			parsedJavaClass.addParsedJavaTerm(parsedJavaTerm);
 
 			return parsedJavaClass;
 		}
@@ -603,6 +608,22 @@ public class JavaParser {
 			return content;
 		}
 
+		if (parsedJavaTerm.requireFollowingEmptyLine() &&
+			Validator.isNotNull(
+				StringUtil.trim(fileContents.getLine(endLineNumber)))) {
+
+			return StringUtil.insert(
+				content, "\n", _getLineStartPos(content, endLineNumber + 1));
+		}
+
+		if (parsedJavaTerm.requirePrecedingEmptyLine() &&
+			Validator.isNotNull(
+				StringUtil.trim(fileContents.getLine(startLineNumber - 2)))) {
+
+			return StringUtil.insert(
+				content, "\n", _getLineStartPos(content, startLineNumber));
+		}
+
 		String actualIndent = _getIndent(
 			_getLine(content, startPosition.getLineNumber()));
 
@@ -812,6 +833,21 @@ public class JavaParser {
 		}
 
 		return parsedJavaClass;
+	}
+
+	private static ParsedJavaTerm _processSurroundingLineBreaks(
+		ParsedJavaTerm parsedJavaTerm, JavaTerm javaTerm) {
+
+		if (javaTerm instanceof JavaMethodDefinition) {
+			String javaTermContent = parsedJavaTerm.getContent();
+
+			if (javaTermContent.endsWith(";")) {
+				parsedJavaTerm.setRequireFollowingEmptyLine(true);
+				parsedJavaTerm.setRequirePrecedingEmptyLine(true);
+			}
+		}
+
+		return parsedJavaTerm;
 	}
 
 	private static String _trimLine(

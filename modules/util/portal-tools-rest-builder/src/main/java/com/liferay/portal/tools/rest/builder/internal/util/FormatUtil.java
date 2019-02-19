@@ -15,12 +15,9 @@
 package com.liferay.portal.tools.rest.builder.internal.util;
 
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.source.formatter.SourceFormatter;
-import com.liferay.source.formatter.SourceFormatterArgs;
 
 import java.io.File;
 
-import java.util.Collections;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -71,30 +68,6 @@ public class FormatUtil {
 	}
 
 	public static String format(File file) throws Exception {
-		SourceFormatterArgs sourceFormatterArgs = new SourceFormatterArgs();
-
-		sourceFormatterArgs.setFileNames(
-			Collections.singletonList(file.getCanonicalPath()));
-		sourceFormatterArgs.setIncludeGeneratedFiles(true);
-		sourceFormatterArgs.setPrintErrors(false);
-		sourceFormatterArgs.setSkipCheckNames(
-			Collections.singletonList("JavaOSGiReferenceCheck"));
-
-		SourceFormatter sourceFormatter = new SourceFormatter(
-			sourceFormatterArgs);
-
-		if (StringUtil.endsWith(file.getName(), "Mutation.java") ||
-			StringUtil.endsWith(file.getName(), "Query.java") ||
-			StringUtil.endsWith(file.getName(), "Resource.java")) {
-
-			sourceFormatterArgs.setCheckName("JavaImportsCheck");
-		}
-		else {
-			sourceFormatterArgs.setCheckName("JavaImportsCheck");
-		}
-
-		sourceFormatter.format();
-
 		return FileUtil.read(file);
 	}
 

@@ -679,7 +679,7 @@ public class ServiceBuilder {
 
 				if (!_osgiModule) {
 					throw new IllegalArgumentException(
-						"Cannot use dependency-injector=\"ds\" with a war");
+						"Cannot use dependency-injector=\"ds\" with a WAR");
 				}
 			}
 

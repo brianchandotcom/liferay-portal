@@ -91,6 +91,12 @@ public class JavaLongLinesCheck {
 					continue;
 				}
 
+				Matcher matcher = _annotationPattern3.matcher(trimmedLine);
+
+				if (matcher.matches()) {
+					continue;
+				}
+
 				if (trimmedLine.matches("@\\S+")) {
 					continue;
 				}
@@ -491,5 +497,7 @@ public class JavaLongLinesCheck {
 		"\n\t*@(.+)\\(\n");
 	private static final Pattern _annotationPattern2 = Pattern.compile(
 		"^(@\\w+\\().*\\)");
+	private static final Pattern _annotationPattern3 = Pattern.compile(
+		"^@\\S+ \\S+ \\S+[,\\)]$");
 
 }

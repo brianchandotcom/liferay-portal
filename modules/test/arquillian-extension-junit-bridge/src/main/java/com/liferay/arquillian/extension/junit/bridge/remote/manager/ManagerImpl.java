@@ -27,13 +27,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
 
-import org.jboss.arquillian.core.api.Injector;
-import org.jboss.arquillian.core.api.annotation.ApplicationScoped;
 import org.jboss.arquillian.core.api.event.ManagerStarted;
 import org.jboss.arquillian.core.api.event.ManagerStopping;
 import org.jboss.arquillian.core.impl.EventImpl;
 import org.jboss.arquillian.core.impl.ExtensionImpl;
-import org.jboss.arquillian.core.impl.InjectorImpl;
 import org.jboss.arquillian.core.impl.context.ApplicationContextImpl;
 import org.jboss.arquillian.core.spi.EventContext;
 import org.jboss.arquillian.core.spi.EventPoint;
@@ -59,14 +56,6 @@ public class ManagerImpl implements Manager {
 				LiferayArquillianJUnitBridgeExtension.getObservers()));
 
 		_applicationContext.activate();
-
-		try {
-			bind(
-				ApplicationScoped.class, Injector.class, InjectorImpl.of(this));
-		}
-		finally {
-			_applicationContext.deactivate();
-		}
 	}
 
 	@Override

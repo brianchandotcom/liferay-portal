@@ -45,9 +45,8 @@ public class BaseHierarchicalAggregationResult
 		List<AggregationResult> aggregationResults) {
 
 		aggregationResults.forEach(
-			aggregationResult ->
-				_childrenAggregationResultsMap.put(
-					aggregationResult.getName(), aggregationResult));
+			aggregationResult -> _childrenAggregationResultsMap.put(
+				aggregationResult.getName(), aggregationResult));
 	}
 
 	@Override

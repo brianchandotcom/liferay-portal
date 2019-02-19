@@ -40,9 +40,8 @@ public abstract class BaseExtendedStatsAggregationTestCase
 		assertSearch(
 			indexingTestHelper -> {
 				indexingTestHelper.defineRequest(
-					searchRequestBuilder ->
-						searchRequestBuilder.addAggregation(
-							extendedStatsAggregation));
+					searchRequestBuilder -> searchRequestBuilder.addAggregation(
+						extendedStatsAggregation));
 
 				indexingTestHelper.search();
 

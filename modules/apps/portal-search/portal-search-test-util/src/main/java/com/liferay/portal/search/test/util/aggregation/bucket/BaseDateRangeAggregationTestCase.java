@@ -55,9 +55,8 @@ public abstract class BaseDateRangeAggregationTestCase
 		assertSearch(
 			indexingTestHelper -> {
 				indexingTestHelper.defineRequest(
-					searchRequestBuilder ->
-						searchRequestBuilder.addAggregation(
-							dateRangeAggregation));
+					searchRequestBuilder -> searchRequestBuilder.addAggregation(
+						dateRangeAggregation));
 
 				indexingTestHelper.search();
 
@@ -90,9 +89,8 @@ public abstract class BaseDateRangeAggregationTestCase
 		assertSearch(
 			indexingTestHelper -> {
 				indexingTestHelper.defineRequest(
-					searchRequestBuilder ->
-						searchRequestBuilder.addAggregation(
-							dateRangeAggregation));
+					searchRequestBuilder -> searchRequestBuilder.addAggregation(
+						dateRangeAggregation));
 
 				indexingTestHelper.search();
 

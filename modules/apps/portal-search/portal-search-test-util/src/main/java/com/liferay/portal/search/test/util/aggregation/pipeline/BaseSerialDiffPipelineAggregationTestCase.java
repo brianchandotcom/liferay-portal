@@ -66,9 +66,8 @@ public abstract class BaseSerialDiffPipelineAggregationTestCase
 		assertSearch(
 			indexingTestHelper -> {
 				indexingTestHelper.defineRequest(
-					searchRequestBuilder ->
-						searchRequestBuilder.addAggregation(
-							histogramAggregation));
+					searchRequestBuilder -> searchRequestBuilder.addAggregation(
+						histogramAggregation));
 
 				indexingTestHelper.search();
 

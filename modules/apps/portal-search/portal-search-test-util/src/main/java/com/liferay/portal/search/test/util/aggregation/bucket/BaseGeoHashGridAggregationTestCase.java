@@ -62,9 +62,8 @@ public abstract class BaseGeoHashGridAggregationTestCase
 		assertSearch(
 			indexingTestHelper -> {
 				indexingTestHelper.defineRequest(
-					searchRequestBuilder ->
-						searchRequestBuilder.addAggregation(
-							geoHashGridAggregation));
+					searchRequestBuilder -> searchRequestBuilder.addAggregation(
+						geoHashGridAggregation));
 
 				indexingTestHelper.search();
 

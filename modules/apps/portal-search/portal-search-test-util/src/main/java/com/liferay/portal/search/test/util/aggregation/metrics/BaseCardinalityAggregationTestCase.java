@@ -46,9 +46,8 @@ public abstract class BaseCardinalityAggregationTestCase
 		assertSearch(
 			indexingTestHelper -> {
 				indexingTestHelper.defineRequest(
-					searchRequestBuilder ->
-						searchRequestBuilder.addAggregation(
-							cardinalityAggregation));
+					searchRequestBuilder -> searchRequestBuilder.addAggregation(
+						cardinalityAggregation));
 
 				indexingTestHelper.search();
 

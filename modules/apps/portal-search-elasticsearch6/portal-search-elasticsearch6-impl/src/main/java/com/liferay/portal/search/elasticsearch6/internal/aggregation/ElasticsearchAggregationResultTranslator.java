@@ -312,9 +312,8 @@ public class ElasticsearchAggregationResultTranslator
 			_aggregationResults.percentileRanks(percentileRanks.getName());
 
 		percentileRanks.forEach(
-			percentileRank ->
-				percentileRanksAggregationResult.addPercentile(
-					percentileRank.getValue(), percentileRank.getPercent()));
+			percentileRank -> percentileRanksAggregationResult.addPercentile(
+				percentileRank.getValue(), percentileRank.getPercent()));
 
 		return percentileRanksAggregationResult;
 	}

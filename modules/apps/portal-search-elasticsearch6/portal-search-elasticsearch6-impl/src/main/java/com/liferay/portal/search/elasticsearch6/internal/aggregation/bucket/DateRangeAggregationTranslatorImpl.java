@@ -43,9 +43,8 @@ public class DateRangeAggregationTranslatorImpl
 
 		DateRangeAggregationBuilder dateRangeAggregationBuilder =
 			_baseFieldAggregationTranslator.translate(
-				baseMetricsAggregation ->
-					AggregationBuilders.dateRange(
-						baseMetricsAggregation.getName()),
+				baseMetricsAggregation -> AggregationBuilders.dateRange(
+					baseMetricsAggregation.getName()),
 				dateRangeAggregation, aggregationTranslator,
 				pipelineAggregationTranslator);
 

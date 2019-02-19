@@ -43,9 +43,8 @@ public abstract class BaseValueCountAggregationTestCase
 		assertSearch(
 			indexingTestHelper -> {
 				indexingTestHelper.defineRequest(
-					searchRequestBuilder ->
-						searchRequestBuilder.addAggregation(
-							valueCountAggregation));
+					searchRequestBuilder -> searchRequestBuilder.addAggregation(
+						valueCountAggregation));
 
 				indexingTestHelper.search();
 

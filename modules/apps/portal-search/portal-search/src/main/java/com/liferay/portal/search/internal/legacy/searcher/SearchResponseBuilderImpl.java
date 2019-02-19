@@ -82,8 +82,8 @@ public class SearchResponseBuilderImpl implements SearchResponseBuilder {
 		@Override
 		public AggregationResult getAggregationResult(String name) {
 			Map<String, AggregationResult> map =
-				(Map<String, AggregationResult>)
-					_searchContext.getAttribute(_AGGREGATION_RESULTS_MAP);
+				(Map<String, AggregationResult>)_searchContext.getAttribute(
+					_AGGREGATION_RESULTS_MAP);
 
 			if (map != null) {
 				return map.get(name);
@@ -95,8 +95,8 @@ public class SearchResponseBuilderImpl implements SearchResponseBuilder {
 		@Override
 		public Map<String, AggregationResult> getAggregationResultsMap() {
 			Map<String, AggregationResult> map =
-				(Map<String, AggregationResult>)
-					_searchContext.getAttribute(_AGGREGATION_RESULTS_MAP);
+				(Map<String, AggregationResult>)_searchContext.getAttribute(
+					_AGGREGATION_RESULTS_MAP);
 
 			if (map != null) {
 				return map;

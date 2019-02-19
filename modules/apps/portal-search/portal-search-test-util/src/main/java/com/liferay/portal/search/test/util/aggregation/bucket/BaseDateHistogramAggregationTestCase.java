@@ -56,9 +56,8 @@ public abstract class BaseDateHistogramAggregationTestCase
 		assertSearch(
 			indexingTestHelper -> {
 				indexingTestHelper.defineRequest(
-					searchRequestBuilder ->
-						searchRequestBuilder.addAggregation(
-							dateHistogramAggregation));
+					searchRequestBuilder -> searchRequestBuilder.addAggregation(
+						dateHistogramAggregation));
 
 				indexingTestHelper.search();
 
@@ -99,9 +98,8 @@ public abstract class BaseDateHistogramAggregationTestCase
 		assertSearch(
 			indexingTestHelper -> {
 				indexingTestHelper.defineRequest(
-					searchRequestBuilder ->
-						searchRequestBuilder.addAggregation(
-							dateHistogramAggregation));
+					searchRequestBuilder -> searchRequestBuilder.addAggregation(
+						dateHistogramAggregation));
 
 				indexingTestHelper.search();
 
@@ -139,9 +137,8 @@ public abstract class BaseDateHistogramAggregationTestCase
 		assertSearch(
 			indexingTestHelper -> {
 				indexingTestHelper.defineRequest(
-					searchRequestBuilder ->
-						searchRequestBuilder.addAggregation(
-							dateHistogramAggregation));
+					searchRequestBuilder -> searchRequestBuilder.addAggregation(
+						dateHistogramAggregation));
 
 				indexingTestHelper.search();
 
@@ -176,9 +173,8 @@ public abstract class BaseDateHistogramAggregationTestCase
 		assertSearch(
 			indexingTestHelper -> {
 				indexingTestHelper.defineRequest(
-					searchRequestBuilder ->
-						searchRequestBuilder.addAggregation(
-							dateHistogramAggregation));
+					searchRequestBuilder -> searchRequestBuilder.addAggregation(
+						dateHistogramAggregation));
 
 				indexingTestHelper.search();
 
@@ -214,9 +210,8 @@ public abstract class BaseDateHistogramAggregationTestCase
 		assertSearch(
 			indexingTestHelper -> {
 				indexingTestHelper.defineRequest(
-					searchRequestBuilder ->
-						searchRequestBuilder.addAggregation(
-							dateHistogramAggregation));
+					searchRequestBuilder -> searchRequestBuilder.addAggregation(
+						dateHistogramAggregation));
 
 				indexingTestHelper.search();
 
@@ -250,9 +245,8 @@ public abstract class BaseDateHistogramAggregationTestCase
 		assertSearch(
 			indexingTestHelper -> {
 				indexingTestHelper.defineRequest(
-					searchRequestBuilder ->
-						searchRequestBuilder.addAggregation(
-							dateHistogramAggregation));
+					searchRequestBuilder -> searchRequestBuilder.addAggregation(
+						dateHistogramAggregation));
 
 				indexingTestHelper.search();
 
@@ -287,9 +281,8 @@ public abstract class BaseDateHistogramAggregationTestCase
 		assertSearch(
 			indexingTestHelper -> {
 				indexingTestHelper.defineRequest(
-					searchRequestBuilder ->
-						searchRequestBuilder.addAggregation(
-							dateHistogramAggregation));
+					searchRequestBuilder -> searchRequestBuilder.addAggregation(
+						dateHistogramAggregation));
 
 				indexingTestHelper.search();
 
@@ -327,9 +320,8 @@ public abstract class BaseDateHistogramAggregationTestCase
 		assertSearch(
 			indexingTestHelper -> {
 				indexingTestHelper.defineRequest(
-					searchRequestBuilder ->
-						searchRequestBuilder.addAggregation(
-							dateHistogramAggregation));
+					searchRequestBuilder -> searchRequestBuilder.addAggregation(
+						dateHistogramAggregation));
 
 				indexingTestHelper.search();
 

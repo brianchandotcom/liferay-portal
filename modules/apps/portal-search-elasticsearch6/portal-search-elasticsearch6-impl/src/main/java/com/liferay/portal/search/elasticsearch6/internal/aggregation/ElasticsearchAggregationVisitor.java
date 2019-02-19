@@ -106,10 +106,9 @@ public class ElasticsearchAggregationVisitor
 	@Override
 	public AggregationBuilder visit(ChildrenAggregation childrenAggregation) {
 		return _baseFieldAggregationTranslator.translate(
-			baseMetricsAggregation ->
-				new ChildrenAggregationBuilder(
-					baseMetricsAggregation.getName(),
-					childrenAggregation.getChildType()),
+			baseMetricsAggregation -> new ChildrenAggregationBuilder(
+				baseMetricsAggregation.getName(),
+				childrenAggregation.getChildType()),
 			childrenAggregation, this, _pipelineAggregationTranslator);
 	}
 
@@ -165,9 +164,8 @@ public class ElasticsearchAggregationVisitor
 
 		ExtendedStatsAggregationBuilder extendedStatsAggregationBuilder =
 			_baseFieldAggregationTranslator.translate(
-				baseMetricsAggregation ->
-					AggregationBuilders.extendedStats(
-						baseMetricsAggregation.getName()),
+				baseMetricsAggregation -> AggregationBuilders.extendedStats(
+					baseMetricsAggregation.getName()),
 				extendedStatsAggregation, this, _pipelineAggregationTranslator);
 
 		if (extendedStatsAggregation.getSigma() != null) {
@@ -184,9 +182,8 @@ public class ElasticsearchAggregationVisitor
 
 		GeoGridAggregationBuilder geoGridAggregationBuilder =
 			_baseFieldAggregationTranslator.translate(
-				baseMetricsAggregation ->
-					AggregationBuilders.geohashGrid(
-						geoHashGridAggregation.getName()),
+				baseMetricsAggregation -> AggregationBuilders.geohashGrid(
+					geoHashGridAggregation.getName()),
 				geoHashGridAggregation, this, _pipelineAggregationTranslator);
 
 		if (geoHashGridAggregation.getPrecision() != null) {
@@ -222,24 +219,24 @@ public class ElasticsearchAggregationVisitor
 	@Override
 	public AggregationBuilder visit(MaxAggregation maxAggregation) {
 		return _baseFieldAggregationTranslator.translate(
-			baseMetricsAggregation ->
-				AggregationBuilders.max(baseMetricsAggregation.getName()),
+			baseMetricsAggregation -> AggregationBuilders.max(
+				baseMetricsAggregation.getName()),
 			maxAggregation, this, _pipelineAggregationTranslator);
 	}
 
 	@Override
 	public AggregationBuilder visit(MinAggregation minAggregation) {
 		return _baseFieldAggregationTranslator.translate(
-			baseMetricsAggregation ->
-				AggregationBuilders.min(baseMetricsAggregation.getName()),
+			baseMetricsAggregation -> AggregationBuilders.min(
+				baseMetricsAggregation.getName()),
 			minAggregation, this, _pipelineAggregationTranslator);
 	}
 
 	@Override
 	public AggregationBuilder visit(MissingAggregation missingAggregation) {
 		return _baseFieldAggregationTranslator.translate(
-			baseMetricsAggregation ->
-				AggregationBuilders.missing(baseMetricsAggregation.getName()),
+			baseMetricsAggregation -> AggregationBuilders.missing(
+				baseMetricsAggregation.getName()),
 			missingAggregation, this, _pipelineAggregationTranslator);
 	}
 
@@ -257,10 +254,9 @@ public class ElasticsearchAggregationVisitor
 
 		PercentileRanksAggregationBuilder percentileRanksAggregationBuilder =
 			_baseFieldAggregationTranslator.translate(
-				baseMetricsAggregation ->
-					AggregationBuilders.percentileRanks(
-						baseMetricsAggregation.getName(),
-						percentileRanksAggregation.getValues()),
+				baseMetricsAggregation -> AggregationBuilders.percentileRanks(
+					baseMetricsAggregation.getName(),
+					percentileRanksAggregation.getValues()),
 				percentileRanksAggregation, this,
 				_pipelineAggregationTranslator);
 
@@ -297,9 +293,8 @@ public class ElasticsearchAggregationVisitor
 
 		PercentilesAggregationBuilder percentilesAggregationBuilder =
 			_baseFieldAggregationTranslator.translate(
-				baseMetricsAggregation ->
-					AggregationBuilders.percentiles(
-						baseMetricsAggregation.getName()),
+				baseMetricsAggregation -> AggregationBuilders.percentiles(
+					baseMetricsAggregation.getName()),
 				percentilesAggregation, this, _pipelineAggregationTranslator);
 
 		if (percentilesAggregation.getCompression() != null) {
@@ -374,16 +369,16 @@ public class ElasticsearchAggregationVisitor
 	@Override
 	public AggregationBuilder visit(StatsAggregation statsAggregation) {
 		return _baseFieldAggregationTranslator.translate(
-			baseMetricsAggregation ->
-				AggregationBuilders.stats(baseMetricsAggregation.getName()),
+			baseMetricsAggregation -> AggregationBuilders.stats(
+				baseMetricsAggregation.getName()),
 			statsAggregation, this, _pipelineAggregationTranslator);
 	}
 
 	@Override
 	public AggregationBuilder visit(SumAggregation sumAggregation) {
 		return _baseFieldAggregationTranslator.translate(
-			baseMetricsAggregation ->
-				AggregationBuilders.sum(baseMetricsAggregation.getName()),
+			baseMetricsAggregation -> AggregationBuilders.sum(
+				baseMetricsAggregation.getName()),
 			sumAggregation, this, _pipelineAggregationTranslator);
 	}
 
@@ -399,8 +394,8 @@ public class ElasticsearchAggregationVisitor
 		ValueCountAggregation valueCountAggregation) {
 
 		return _baseFieldAggregationTranslator.translate(
-			baseMetricsAggregation ->
-				AggregationBuilders.count(baseMetricsAggregation.getName()),
+			baseMetricsAggregation -> AggregationBuilders.count(
+				baseMetricsAggregation.getName()),
 			valueCountAggregation, this, _pipelineAggregationTranslator);
 	}
 

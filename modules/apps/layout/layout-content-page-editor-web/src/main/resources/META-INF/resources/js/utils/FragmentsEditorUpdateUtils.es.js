@@ -35,6 +35,9 @@ function focusItem(itemId, itemType) {
 		else if (itemType === FRAGMENTS_EDITOR_ITEM_TYPES.fragment) {
 			attr = 'data-fragment-entry-link-id';
 		}
+		else if (itemType === FRAGMENTS_EDITOR_ITEM_TYPES.editable) {
+			attr = 'id';
+		}
 
 		const item = document.querySelector(`[${attr}='${itemId}']`);
 

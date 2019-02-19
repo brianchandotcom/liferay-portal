@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -47,6 +48,9 @@ public class LayoutModelPreFilterContributor
 			searchContext.getAttribute(Field.TYPE),
 			new String[] {LayoutConstants.LAYOUT_TYPE_CONTENT});
 
+		boolean privateLayout = GetterUtil.getBoolean(
+			searchContext.getAttribute("privateLayout"));
+
 		if (ArrayUtil.isNotEmpty(types)) {
 			TermsFilter typeTermsFilter = new TermsFilter(Field.TYPE);
 
@@ -54,6 +58,11 @@ public class LayoutModelPreFilterContributor
 
 			booleanFilter.add(typeTermsFilter, BooleanClauseOccur.MUST);
 		}
+
+		TermFilter privateLayoutTermFilter = new TermFilter(
+			"privateLayout", String.valueOf(privateLayout));
+
+		booleanFilter.add(privateLayoutTermFilter, BooleanClauseOccur.MUST);
 	}
 
 }

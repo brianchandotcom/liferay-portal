@@ -23,20 +23,17 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Samuel Trong Tran
  */
-@Component(
-	immediate = true,
-	service = {MBUADHierarchyDeclaration.class, UADHierarchyDeclaration.class}
-)
+@Component(immediate = true, service = UADHierarchyDeclaration.class)
 public class MBUADHierarchyDeclaration implements UADHierarchyDeclaration {
 
 	@Override
 	public UADDisplay<?>[] getContainerUADDisplays() {
-		return new UADDisplay[] {_mbCategoryUADDisplay, _mbThreadUADDisplay};
+		return new UADDisplay<?>[] {_mbCategoryUADDisplay, _mbThreadUADDisplay};
 	}
 
 	@Override
 	public UADDisplay<?>[] getNoncontainerUADDisplays() {
-		return new UADDisplay[] {_mbMessageUADDisplay};
+		return new UADDisplay<?>[] {_mbMessageUADDisplay};
 	}
 
 	@Reference

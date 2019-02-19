@@ -35,11 +35,55 @@ public class JobFactory {
 				portalBuildData.getPortalUpstreamBranchName();
 		}
 
-		return newJob(
-			buildData.getJobName(), null, portalUpstreamBranchName, null);
+		return newJob(buildData.getJobName(), null, portalUpstreamBranchName);
+	}
+
+	public static Job newJob(String jobName) {
+		return newJob(jobName, null, null, null);
+	}
+
+	public static Job newJob(String jobName, String testSuiteName) {
+		return newJob(jobName, testSuiteName, null, null);
 	}
 
 	public static Job newJob(
+		String jobName, String testSuiteName, String portalBranchName) {
+
+		return newJob(jobName, testSuiteName, portalBranchName, null);
+	}
+
+	public static Job newJob(
+		String jobName, String testSuiteName, String portalBranchName,
+		String repositoryName) {
+
+		Job job = _newJob(
+			jobName, testSuiteName, portalBranchName, repositoryName);
+
+		job.readJobProperties();
+
+		return job;
+	}
+
+	private static boolean _isCentralMergePullRequest(
+		GitWorkingDirectory gitWorkingDirectory) {
+
+		List<File> currentBranchModifiedFiles =
+			gitWorkingDirectory.getModifiedFilesList();
+
+		if (currentBranchModifiedFiles.size() == 1) {
+			File modifiedFile = currentBranchModifiedFiles.get(0);
+
+			String modifiedFileName = modifiedFile.getName();
+
+			if (modifiedFileName.equals("ci-merge")) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private static Job _newJob(
 		String jobName, String testSuiteName, String portalBranchName,
 		String repositoryName) {
 
@@ -156,30 +200,7 @@ public class JobFactory {
 
 		_jobs.put(jobName, new DefaultPortalJob(jobName));
 
-		job = _jobs.get(jobName);
-
-		job.readJobProperties();
-
-		return job;
-	}
-
-	private static boolean _isCentralMergePullRequest(
-		GitWorkingDirectory gitWorkingDirectory) {
-
-		List<File> currentBranchModifiedFiles =
-			gitWorkingDirectory.getModifiedFilesList();
-
-		if (currentBranchModifiedFiles.size() == 1) {
-			File modifiedFile = currentBranchModifiedFiles.get(0);
-
-			String modifiedFileName = modifiedFile.getName();
-
-			if (modifiedFileName.equals("ci-merge")) {
-				return true;
-			}
-		}
-
-		return false;
+		return _jobs.get(jobName);
 	}
 
 	private static final Map<String, Job> _jobs = new HashMap<>();

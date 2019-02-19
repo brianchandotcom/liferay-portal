@@ -48,10 +48,11 @@ public class CustomFieldRuleConverter implements RuleConverter {
 		long companyId, Criteria criteria, String typeSettings) {
 
 		try {
-			JSONObject jsonObj = JSONFactoryUtil.createJSONObject(typeSettings);
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+				typeSettings);
 
-			String attributeName = jsonObj.getString("attributeName");
-			String value = jsonObj.getString("value");
+			String attributeName = jsonObject.getString("attributeName");
+			String value = jsonObject.getString("value");
 
 			if (Validator.isNull(attributeName) || Validator.isNull(value)) {
 				return;

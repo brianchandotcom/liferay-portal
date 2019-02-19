@@ -172,8 +172,9 @@ public class JavaParser {
 	}
 
 	private static String _fixCommentIndent(
-		String content, CommonHiddenStreamToken commentToken,
-		String actualIndent, String expectedIndent) {
+		String content, FileContents fileContents,
+		CommonHiddenStreamToken commentToken, String actualIndent,
+		String expectedIndent) {
 
 		content = _fixIndent(
 			content, commentToken.getLine(), actualIndent, expectedIndent);
@@ -187,7 +188,7 @@ public class JavaParser {
 				StringUtil.count(commentToken.getText(), "\n");
 
 		for (int i = commentToken.getLine() + 1; i <= end; i++) {
-			String line = _getLine(content, i);
+			String line = fileContents.getLine(i - 1);
 
 			if (line.startsWith(actualIndent)) {
 				content = _fixIndent(content, i, actualIndent, expectedIndent);
@@ -625,7 +626,7 @@ public class JavaParser {
 		}
 
 		String actualIndent = _getIndent(
-			_getLine(content, startPosition.getLineNumber()));
+			fileContents.getLine(startPosition.getLineNumber() - 1));
 
 		String expectedJavaTermContent = parsedJavaTerm.getContent();
 
@@ -671,19 +672,19 @@ public class JavaParser {
 				break;
 			}
 
-			String line = _getLine(content, precedingCommentToken.getLine());
+			String line = fileContents.getLine(
+				precedingCommentToken.getLine() - 1);
 
 			if (!_isAtLineStart(line, precedingCommentToken.getColumn() - 1)) {
 				break;
 			}
 
-			String actualCommentIndent = _getIndent(
-				_getLine(content, precedingCommentToken.getLine()));
+			String actualCommentIndent = _getIndent(line);
 
 			if (!actualCommentIndent.equals(expectedCommentIndent)) {
 				return _fixCommentIndent(
-					content, precedingCommentToken, actualCommentIndent,
-					expectedCommentIndent);
+					content, fileContents, precedingCommentToken,
+					actualCommentIndent, expectedCommentIndent);
 			}
 
 			precedingCommentToken = precedingCommentToken.getHiddenBefore();

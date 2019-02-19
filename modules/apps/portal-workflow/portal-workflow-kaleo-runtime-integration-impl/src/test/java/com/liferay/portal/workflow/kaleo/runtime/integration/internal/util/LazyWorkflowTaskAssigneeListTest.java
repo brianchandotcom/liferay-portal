@@ -151,29 +151,7 @@ public class LazyWorkflowTaskAssigneeListTest {
 		boolean[] executed = {false, false};
 
 		KaleoTaskInstanceToken kaleoTaskInstanceToken =
-			new KaleoTaskInstanceTokenWrapper(
-				KaleoRuntimeTestUtil.mockKaleoTaskInstanceToken(
-					kaleoTaskAssignmentInstances)) {
-
-				@Override
-				public KaleoTaskAssignmentInstance
-					getFirstKaleoTaskAssignmentInstance() {
-
-					executed[0] = true;
-
-					return super.getFirstKaleoTaskAssignmentInstance();
-				}
-
-				@Override
-				public List<KaleoTaskAssignmentInstance>
-					getKaleoTaskAssignmentInstances() {
-
-					executed[1] = true;
-
-					return super.getKaleoTaskAssignmentInstances();
-				}
-
-			};
+			_getkaleoTaskInstanceToken(executed, kaleoTaskAssignmentInstances);
 
 		LazyWorkflowTaskAssigneeList lazyWorkflowTaskAssigneeList =
 			new LazyWorkflowTaskAssigneeList(kaleoTaskInstanceToken, null);
@@ -208,29 +186,7 @@ public class LazyWorkflowTaskAssigneeListTest {
 		boolean[] executed = {false, false};
 
 		KaleoTaskInstanceToken kaleoTaskInstanceToken =
-			new KaleoTaskInstanceTokenWrapper(
-				KaleoRuntimeTestUtil.mockKaleoTaskInstanceToken(
-					kaleoTaskAssignmentInstance)) {
-
-				@Override
-				public KaleoTaskAssignmentInstance
-					getFirstKaleoTaskAssignmentInstance() {
-
-					executed[0] = true;
-
-					return super.getFirstKaleoTaskAssignmentInstance();
-				}
-
-				@Override
-				public List<KaleoTaskAssignmentInstance>
-					getKaleoTaskAssignmentInstances() {
-
-					executed[1] = true;
-
-					return super.getKaleoTaskAssignmentInstances();
-				}
-
-			};
+			_getkaleoTaskInstanceToken(executed, kaleoTaskAssignmentInstance);
 
 		LazyWorkflowTaskAssigneeList lazyWorkflowTaskAssigneeList =
 			new LazyWorkflowTaskAssigneeList(kaleoTaskInstanceToken, null);
@@ -262,6 +218,35 @@ public class LazyWorkflowTaskAssigneeListTest {
 			new LazyWorkflowTaskAssigneeList(kaleoTaskInstanceToken, null);
 
 		lazyWorkflowTaskAssigneeList.get(0);
+	}
+
+	private KaleoTaskInstanceToken _getkaleoTaskInstanceToken(
+		boolean[] executed,
+		KaleoTaskAssignmentInstance... kaleoTaskAssignmentInstances) {
+
+		return new KaleoTaskInstanceTokenWrapper(
+			KaleoRuntimeTestUtil.mockKaleoTaskInstanceToken(
+				kaleoTaskAssignmentInstances)) {
+
+			@Override
+			public KaleoTaskAssignmentInstance
+				getFirstKaleoTaskAssignmentInstance() {
+
+				executed[0] = true;
+
+				return super.getFirstKaleoTaskAssignmentInstance();
+			}
+
+			@Override
+			public List<KaleoTaskAssignmentInstance>
+				getKaleoTaskAssignmentInstances() {
+
+				executed[1] = true;
+
+				return super.getKaleoTaskAssignmentInstances();
+			}
+
+		};
 	}
 
 }

@@ -1423,12 +1423,12 @@ public class TopLevelBuild extends BaseBuild {
 			Map<String, String> metricLabels = slaveUsageEntry.getKey();
 			Integer slaveUsage = slaveUsageEntry.getValue();
 
-			String buidMetricMessage =
+			String buildMetricMessage =
 				StatsDMetricsUtil.generateGaugeDeltaMetric(
 					"build_slave_usage_gauge", slaveUsage, metricLabels);
 
-			if (buidMetricMessage != null) {
-				sb.append(buidMetricMessage);
+			if (buildMetricMessage != null) {
+				sb.append(buildMetricMessage);
 				sb.append("\n");
 			}
 		}

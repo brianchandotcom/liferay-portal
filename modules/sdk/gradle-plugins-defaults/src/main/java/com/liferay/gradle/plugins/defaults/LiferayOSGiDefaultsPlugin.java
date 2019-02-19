@@ -2566,9 +2566,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 		String portalRootDirValue = System.getProperty("portal.root.dir");
 
-		if ((portalRootDir == null) &&
-			Validator.isNotNull(portalRootDirValue)) {
-
+		if (Validator.isNotNull(portalRootDirValue)) {
 			portalRootDir = new File(portalRootDirValue);
 		}
 

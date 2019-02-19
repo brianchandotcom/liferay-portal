@@ -55,7 +55,7 @@ String thumbnailSrc = DLURLHelperUtil.getThumbnailSrc(fileEntry, themeDisplay);
 		<liferay-ui:search-container-column-text>
 
 			<%
-			BlogsEntryImageActionDropdownItemsProvider blogsEntryImageActionDropdownItemsProvider = new BlogsEntryImageActionDropdownItemsProvider(fileEntry, renderRequest, renderResponse, permissionChecker, resourceBundle);
+			BlogsEntryImageActionDropdownItemsProvider blogsEntryImageActionDropdownItemsProvider = new BlogsEntryImageActionDropdownItemsProvider(fileEntry, renderRequest, renderResponse);
 			%>
 
 			<clay:dropdown-actions
@@ -71,7 +71,7 @@ String thumbnailSrc = DLURLHelperUtil.getThumbnailSrc(fileEntry, themeDisplay);
 
 		<liferay-ui:search-container-column-text>
 			<clay:vertical-card
-				verticalCard="<%= new BlogsEntryImageVerticalCard(fileEntry, renderRequest, renderResponse, searchContainer.getRowChecker(), permissionChecker, resourceBundle) %>"
+				verticalCard="<%= new BlogsEntryImageVerticalCard(fileEntry, renderRequest, renderResponse, searchContainer.getRowChecker()) %>"
 			/>
 		</liferay-ui:search-container-column-text>
 	</c:when>
@@ -99,7 +99,7 @@ String thumbnailSrc = DLURLHelperUtil.getThumbnailSrc(fileEntry, themeDisplay);
 		<liferay-ui:search-container-column-text>
 
 			<%
-			BlogsEntryImageActionDropdownItemsProvider blogsEntryImageActionDropdownItemsProvider = new BlogsEntryImageActionDropdownItemsProvider(fileEntry, renderRequest, renderResponse, permissionChecker, resourceBundle);
+			BlogsEntryImageActionDropdownItemsProvider blogsEntryImageActionDropdownItemsProvider = new BlogsEntryImageActionDropdownItemsProvider(fileEntry, renderRequest, renderResponse);
 			%>
 
 			<clay:dropdown-actions

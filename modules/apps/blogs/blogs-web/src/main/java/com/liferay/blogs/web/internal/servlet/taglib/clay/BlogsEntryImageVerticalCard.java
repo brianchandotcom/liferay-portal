@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.capabilities.WorkflowCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -38,7 +37,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import java.util.ResourceBundle;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -52,15 +50,12 @@ public class BlogsEntryImageVerticalCard implements VerticalCard {
 
 	public BlogsEntryImageVerticalCard(
 		FileEntry fileEntry, RenderRequest renderRequest,
-		RenderResponse renderResponse, RowChecker rowChecker,
-		PermissionChecker permissionChecker, ResourceBundle resourceBundle) {
+		RenderResponse renderResponse, RowChecker rowChecker) {
 
 		_fileEntry = fileEntry;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 		_rowChecker = rowChecker;
-		_permissionChecker = permissionChecker;
-		_resourceBundle = resourceBundle;
 
 		_request = PortalUtil.getHttpServletRequest(_renderRequest);
 
@@ -73,8 +68,7 @@ public class BlogsEntryImageVerticalCard implements VerticalCard {
 		BlogsEntryImageActionDropdownItemsProvider
 			blogsEntryImageActionDropdownItemsProvider =
 				new BlogsEntryImageActionDropdownItemsProvider(
-					_fileEntry, _renderRequest, _renderResponse,
-					_permissionChecker, _resourceBundle);
+					_fileEntry, _renderRequest, _renderResponse);
 
 		return
 			blogsEntryImageActionDropdownItemsProvider.getActionDropdownItems();
@@ -97,19 +91,11 @@ public class BlogsEntryImageVerticalCard implements VerticalCard {
 
 	@Override
 	public String getInputName() {
-		if (_rowChecker == null) {
-			return null;
-		}
-
 		return _rowChecker.getRowIds();
 	}
 
 	@Override
 	public String getInputValue() {
-		if (_rowChecker == null) {
-			return null;
-		}
-
 		return String.valueOf(_fileEntry.getPrimaryKeyObj());
 	}
 
@@ -175,7 +161,7 @@ public class BlogsEntryImageVerticalCard implements VerticalCard {
 			System.currentTimeMillis() - modifiedDate.getTime(), true);
 
 		return LanguageUtil.format(
-			_resourceBundle, "x-ago-by-x",
+			_request, "x-ago-by-x",
 			new Object[] {
 				modifiedDateDescription,
 				HtmlUtil.escape(_fileEntry.getUserName())
@@ -189,37 +175,18 @@ public class BlogsEntryImageVerticalCard implements VerticalCard {
 
 	@Override
 	public boolean isDisabled() {
-		if (_rowChecker == null) {
-			return false;
-		}
-
 		return _rowChecker.isDisabled(_fileEntry);
 	}
 
 	@Override
-	public boolean isSelectable() {
-		if (_rowChecker == null) {
-			return false;
-		}
-
-		return true;
-	}
-
-	@Override
 	public boolean isSelected() {
-		if (_rowChecker == null) {
-			return false;
-		}
-
 		return _rowChecker.isChecked(_fileEntry);
 	}
 
 	private final FileEntry _fileEntry;
-	private final PermissionChecker _permissionChecker;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private final HttpServletRequest _request;
-	private final ResourceBundle _resourceBundle;
 	private final RowChecker _rowChecker;
 	private final ThemeDisplay _themeDisplay;
 

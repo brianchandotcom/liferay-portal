@@ -20,14 +20,12 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
-import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
@@ -43,13 +41,10 @@ public class BlogsEntryImageActionDropdownItemsProvider {
 
 	public BlogsEntryImageActionDropdownItemsProvider(
 		FileEntry fileEntry, RenderRequest renderRequest,
-		RenderResponse renderResponse, PermissionChecker permissionChecker,
-		ResourceBundle resourceBundle) {
+		RenderResponse renderResponse) {
 
 		_fileEntry = fileEntry;
 		_renderResponse = renderResponse;
-		_permissionChecker = permissionChecker;
-		_resourceBundle = resourceBundle;
 
 		_request = PortalUtil.getHttpServletRequest(renderRequest);
 
@@ -60,8 +55,8 @@ public class BlogsEntryImageActionDropdownItemsProvider {
 	public List<DropdownItem> getActionDropdownItems() {
 		if ((_fileEntry.getUserId() != _themeDisplay.getUserId()) &&
 			!BlogsPermission.contains(
-				_permissionChecker, _themeDisplay.getScopeGroupId(),
-				ActionKeys.UPDATE)) {
+				_themeDisplay.getPermissionChecker(),
+				_themeDisplay.getScopeGroupId(), ActionKeys.UPDATE)) {
 
 			return null;
 		}
@@ -80,17 +75,15 @@ public class BlogsEntryImageActionDropdownItemsProvider {
 							portletURL.toString(), "fileEntryId",
 							_fileEntry.getFileEntryId());
 						dropdownItem.setLabel(
-							LanguageUtil.get(_resourceBundle, "delete"));
+							LanguageUtil.get(_request, "delete"));
 					});
 			}
 		};
 	}
 
 	private final FileEntry _fileEntry;
-	private final PermissionChecker _permissionChecker;
 	private final RenderResponse _renderResponse;
 	private final HttpServletRequest _request;
-	private final ResourceBundle _resourceBundle;
 	private final ThemeDisplay _themeDisplay;
 
 }

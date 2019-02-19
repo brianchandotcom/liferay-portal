@@ -326,6 +326,7 @@ It's one of several steps to clean up kernel provider interfaces to reduce the
 chance of package version lock down.
 
 ---------------------------------------
+
 ### Switch to use JDK Predicate
 - **Date:** 2019-Jan-14
 - **JIRA Ticket:** [LPS-89139](https://issues.liferay.com/browse/LPS-89139)
@@ -364,7 +365,9 @@ right method signatures. Update FreeMarker template using `ArrayUtil_IW`.
 It's one of several steps to clean up kernel provider interfaces to reduce the
 chance of package version lock down.
 
----------------------------------------### Deprecate com.liferay.portal.service.InvokableService
+---------------------------------------
+
+### Deprecate com.liferay.portal.service.InvokableService
 - **Date:** 2019-Jan-08
 - **JIRA Ticket:** [LPS-88912](https://issues.liferay.com/browse/LPS-88912)
 
@@ -389,7 +392,9 @@ services in case there is any compile error after the removal.
 It's one of several steps to clean up kernel provider interfaces to reduce the
 chance of package version lock down.
 
----------------------------------------### Remove HibernateConfigurationConverter and Converter
+---------------------------------------
+
+### Remove HibernateConfigurationConverter and Converter
 - **Date:** 2019-Jan-07
 - **JIRA Ticket:** [LPS-88870](https://issues.liferay.com/browse/LPS-88870)
 
@@ -415,7 +420,9 @@ Remove usages of `HibernateConfigurationConverter`. Make sure the generated
 It's one of several steps to clean up kernel provider interfaces to reduce the
 chance of package version lock down.
 
----------------------------------------### Deprecated NTLM in Portal Distribution
+---------------------------------------
+
+### Deprecated NTLM in Portal Distribution
 - **Date:** 2019-Jan-21
 - **JIRA Ticket:** LPS-88300(https://issues.liferay.com/browse/LPS-88300)
 

@@ -17,7 +17,6 @@ package com.liferay.portal.vulcan.internal.jaxrs.message.body;
 import com.liferay.portal.vulcan.multipart.BinaryFile;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 
-import java.io.IOException;
 import java.io.InputStream;
 
 import java.lang.annotation.Annotation;
@@ -61,16 +60,9 @@ public class MultipartBodyMessageBodyReader
 
 	@Override
 	public MultipartBody readFrom(
-			Class<MultipartBody> clazz, Type genericType,
-			Annotation[] annotations, MediaType mediaType,
-			MultivaluedMap<String, String> multivaluedMap,
-			InputStream inputStream)
-		throws IOException {
-
-		if (!ServletFileUpload.isMultipartContent(_httpServletRequest)) {
-			throw new BadRequestException(
-				"Request body is not a valid multipart form");
-		}
+		Class<MultipartBody> clazz, Type genericType, Annotation[] annotations,
+		MediaType mediaType, MultivaluedMap<String, String> multivaluedMap,
+		InputStream inputStream) {
 
 		try {
 			Map<String, BinaryFile> binaryFiles = new HashMap<>();

@@ -90,7 +90,9 @@ public class Mutation {
 	</#list>
 
 	static {
-		Bundle bundle = FrameworkUtil.getBundle(Mutation.class);
+		<#if javaSignatures?size != 0>
+			Bundle bundle = FrameworkUtil.getBundle(Mutation.class);
+		</#if>
 
 		<#list javaSignatures?keys as schemaName>
 			ServiceTracker<${schemaName}Resource, ${schemaName}Resource> ${schemaName?uncap_first}ResourceServiceTracker =

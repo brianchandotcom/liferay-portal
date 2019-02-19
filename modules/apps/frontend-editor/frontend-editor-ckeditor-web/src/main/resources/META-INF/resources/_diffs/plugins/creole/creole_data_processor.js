@@ -102,7 +102,7 @@
 				data = div.innerHTML;
 			}
 
-			return data || enterModeEmptyValue[instance._editor.enterMode];
+			return (data || enterModeEmptyValue[instance._editor.enterMode]);
 		},
 
 		_appendNewLines: function(total) {

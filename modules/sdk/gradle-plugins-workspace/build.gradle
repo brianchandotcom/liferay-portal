@@ -54,7 +54,7 @@ dependencies {
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins", version: "3.13.106"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.poshi.runner", version: "2.2.8"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.target.platform", version: "1.1.10"
-	compile group: "com.liferay", name: "com.liferay.gradle.plugins.theme.builder", version: "2.0.5"
+	compile group: "com.liferay", name: "com.liferay.gradle.plugins.theme.builder", version: "2.0.6"
 	compile group: "com.liferay", name: "com.liferay.portal.tools.bundle.support", version: "3.4.2"
 	compile group: "de.undercouch", name: "gradle-download-task", version: "3.2.0"
 

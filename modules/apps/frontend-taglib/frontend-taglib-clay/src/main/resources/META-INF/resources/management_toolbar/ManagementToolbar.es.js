@@ -175,7 +175,7 @@ class ManagementToolbar extends ClayComponent {
 		}
 
 		if (this.supportsBulkActions) {
-			this.showSelectAllButton = currentPageSelected && !this._searchContainer.select.get('bulkSelection');
+			this.showSelectAllButton = currentPageSelected && this.totalItems > this.selectedItems && !this._searchContainer.select.get('bulkSelection');
 		}
 
 		if (this.actionItems) {

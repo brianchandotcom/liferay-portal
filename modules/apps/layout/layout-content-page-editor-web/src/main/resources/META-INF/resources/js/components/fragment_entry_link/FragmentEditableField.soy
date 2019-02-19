@@ -9,6 +9,7 @@
 	{@param type: string}
 	{@param? _editing: bool}
 	{@param? _handleEditableClick: any}
+	{@param? _handleEditableHoverStart: any}
 	{@param? _handleEditableMouseEnter: any}
 	{@param? _handleEditableMouseLeave: any}
 	{@param? _handleOutsideTooltipClick: any}
@@ -26,6 +27,7 @@
 		data-onclick="{$_handleEditableClick}"
 		data-onmouseenter="{$_handleEditableMouseEnter}"
 		data-onmouseleave="{$_handleEditableMouseLeave}"
+		data-onmouseover="{$_handleEditableHoverStart}"
 		id="{$editableId}"
 		ref="editable"
 		tabindex="0"

@@ -1,0 +1,25 @@
+task jarPatched(type: Zip)
+
+dependencies {
+	compileOnly group: "org.ow2.asm", name: "asm-commons", transitive: false, version: "7.0"
+}
+
+jar {
+	deleteAllActions()
+
+	dependsOn jarPatched
+}
+
+jarPatched {
+	archiveName = jar.archiveName
+	destinationDir = jar.destinationDir
+	duplicatesStrategy = "exclude"
+
+	exclude "module-info.class"
+
+	from sourceSets.main.output
+
+	from {
+		zipTree(configurations.compileOnly.singleFile)
+	}
+}

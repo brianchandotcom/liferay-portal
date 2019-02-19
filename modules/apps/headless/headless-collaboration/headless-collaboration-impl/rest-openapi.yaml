@@ -32,7 +32,14 @@ components:
               categoryName:
                 type: string
             type: object
+          readOnly: true
           type: array
+        categoryIds:
+          items:
+            format: int64
+            type: integer
+          type: array
+          writeOnly: true
         comment:
           items:
             $ref: "#/components/schemas/Comment"

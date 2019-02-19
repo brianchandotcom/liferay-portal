@@ -33,6 +33,8 @@ import com.liferay.data.engine.service.DEDataRecordCollectionDeletePermissionsRe
 import com.liferay.data.engine.service.DEDataRecordCollectionDeleteRecordRequest;
 import com.liferay.data.engine.service.DEDataRecordCollectionDeleteRecordResponse;
 import com.liferay.data.engine.service.DEDataRecordCollectionDeleteRequest;
+import com.liferay.data.engine.service.DEDataRecordCollectionExportRecordsRequest;
+import com.liferay.data.engine.service.DEDataRecordCollectionExportRecordsResponse;
 import com.liferay.data.engine.service.DEDataRecordCollectionGetRecordRequest;
 import com.liferay.data.engine.service.DEDataRecordCollectionGetRecordResponse;
 import com.liferay.data.engine.service.DEDataRecordCollectionGetRequest;
@@ -243,6 +245,40 @@ public class DEDataEngineTestUtil {
 
 			deDataRecordCollectionService.execute(
 				deDataRecordCollectionDeletePermissionsRequest);
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
+	}
+
+	public static String exportDataRecord(
+			DEDataRecordCollection deDataRecordCollection, long groupId,
+			User user,
+			DEDataRecordCollectionService deDataRecordCollectionService)
+		throws Exception {
+
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(user));
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(groupId, user.getUserId());
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+		try {
+			DEDataRecordCollectionExportRecordsRequest
+				deDataRecordCollectionExportRecordsRequest =
+					DEDataRecordCollectionRequestBuilder.exportRecordsBuilder(
+						deDataRecordCollection.getDEDataRecordCollectionId(),
+						"json"
+					).build();
+
+			DEDataRecordCollectionExportRecordsResponse
+				deDataRecordCollectionExportRecordsResponse =
+					deDataRecordCollectionService.execute(
+						deDataRecordCollectionExportRecordsRequest);
+
+			return deDataRecordCollectionExportRecordsResponse.getContent();
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();

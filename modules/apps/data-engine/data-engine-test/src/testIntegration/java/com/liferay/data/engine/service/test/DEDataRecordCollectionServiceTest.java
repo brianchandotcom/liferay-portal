@@ -19,9 +19,13 @@ import com.liferay.data.engine.constants.DEActionKeys;
 import com.liferay.data.engine.constants.DEDataDefinitionRuleConstants;
 import com.liferay.data.engine.exception.DEDataRecordCollectionException;
 import com.liferay.data.engine.model.DEDataDefinition;
+import com.liferay.data.engine.model.DEDataDefinitionField;
 import com.liferay.data.engine.model.DEDataDefinitionRule;
 import com.liferay.data.engine.model.DEDataRecord;
 import com.liferay.data.engine.model.DEDataRecordCollection;
+import com.liferay.data.engine.service.DEDataDefinitionRequestBuilder;
+import com.liferay.data.engine.service.DEDataDefinitionSaveRequest;
+import com.liferay.data.engine.service.DEDataDefinitionSaveResponse;
 import com.liferay.data.engine.service.DEDataDefinitionService;
 import com.liferay.data.engine.service.DEDataRecordCollectionDeleteRequest;
 import com.liferay.data.engine.service.DEDataRecordCollectionGetRecordRequest;
@@ -62,10 +66,15 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.test.util.IdempotentRetryAssert;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.io.IOException;
+import java.io.InputStream;
+
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -78,6 +87,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import org.skyscreamer.jsonassert.JSONAssert;
+
 /**
  * @author Leonardo Barros
  */
@@ -88,6 +99,14 @@ public class DEDataRecordCollectionServiceTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
+
+	public String read(String fileName) throws IOException {
+		Class<?> clazz = getClass();
+
+		InputStream inputStream = clazz.getResourceAsStream(fileName);
+
+		return StringUtil.read(inputStream);
+	}
 
 	@Before
 	public void setUp() throws Exception {
@@ -621,6 +640,79 @@ public class DEDataRecordCollectionServiceTest {
 			user2, _group.getGroupId(),
 			deDataRecordCollection.getDEDataRecordCollectionId(),
 			_deDataRecordCollectionService);
+	}
+
+	@Test
+	public void testDefinePermissionToAllowExportDataRecord() throws Exception {
+		Role role1 = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		User user1 = UserTestUtil.addGroupUser(_group, role1.getName());
+
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(_adminUser));
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), _adminUser.getUserId());
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+		try {
+			DEDataRecordCollectionSavePermissionsRequest
+				deDataRecordCollectionSavePermissionsRequest =
+					DEDataRecordCollectionRequestBuilder.savePermissionsBuilder(
+						TestPropsValues.getCompanyId(), _group.getGroupId(),
+						new String[] {role1.getName()}
+					).allowDefinePermissions(
+					).build();
+
+			_deDataRecordCollectionService.execute(
+				deDataRecordCollectionSavePermissionsRequest);
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
+
+		DEDataRecordCollection deDataRecordCollection = saveRecordsToExport();
+
+		User user2 = UserTestUtil.addGroupUser(
+			_group, RoleConstants.ORGANIZATION_USER);
+
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(user1));
+
+		ServiceContext serviceContext2 =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), user1.getUserId());
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext2);
+
+		try {
+			DEDataRecordCollectionSaveModelPermissionsRequest
+				deDataRecordCollectionSaveModelPermissionsRequest2 =
+					DEDataRecordCollectionRequestBuilder.
+						saveModelPermissionsBuilder(
+							TestPropsValues.getCompanyId(), _group.getGroupId(),
+							user1.getUserId(), _group.getGroupId(),
+							deDataRecordCollection.
+								getDEDataRecordCollectionId(),
+							new String[] {RoleConstants.ORGANIZATION_USER}
+						).allowExportDataRecord(
+						).build();
+
+			_deDataRecordCollectionService.execute(
+				deDataRecordCollectionSaveModelPermissionsRequest2);
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
+
+		String content = DEDataEngineTestUtil.exportDataRecord(
+			deDataRecordCollection, _group.getGroupId(), user2,
+			_deDataRecordCollectionService);
+
+		JSONAssert.assertEquals(
+			read("data-record-collection-export-records.json"), content, false);
 	}
 
 	@Test
@@ -1201,6 +1293,29 @@ public class DEDataRecordCollectionServiceTest {
 	public void testDeleteNoSuchDataRecordCollection2() throws Exception {
 		DEDataEngineTestUtil.deleteDEDataRecordCollection(
 			_adminUser, _group.getGroupId(), Long.MAX_VALUE,
+			_deDataRecordCollectionService);
+	}
+
+	@Test
+	public void testExportDataRecords() throws Exception {
+		DEDataRecordCollection deDataRecordCollection = saveRecordsToExport();
+
+		String content = DEDataEngineTestUtil.exportDataRecord(
+			deDataRecordCollection, _group.getGroupId(), _adminUser,
+			_deDataRecordCollectionService);
+
+		JSONAssert.assertEquals(
+			read("data-record-collection-export-records.json"), content, false);
+	}
+
+	@Test(expected = DEDataRecordCollectionException.MustHavePermission.class)
+	public void testExportDataRecordsWithNoPermission() throws Exception {
+		DEDataRecordCollection deDataRecordCollection = saveRecordsToExport();
+
+		User user = UserTestUtil.addGroupUser(_group, RoleConstants.GUEST);
+
+		DEDataEngineTestUtil.exportDataRecord(
+			deDataRecordCollection, _group.getGroupId(), user,
 			_deDataRecordCollectionService);
 	}
 
@@ -1860,6 +1975,83 @@ public class DEDataRecordCollectionServiceTest {
 			_deDataRecordCollectionService);
 
 		Assert.assertEquals(deDataRecord.getDEDataRecordId(), deDataRecordId);
+	}
+
+	@Test
+	public void testGrantExportDataRecordPermission() throws Exception {
+		DEDataRecordCollection deDataRecordCollection = saveRecordsToExport();
+
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(_adminUser));
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), _adminUser.getUserId());
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+		try {
+			DEDataRecordCollectionSaveModelPermissionsRequest
+				deDataRecordCollectionSaveModelPermissionsRequest =
+					DEDataRecordCollectionRequestBuilder.
+						saveModelPermissionsBuilder(
+							TestPropsValues.getCompanyId(), _group.getGroupId(),
+							_adminUser.getUserId(), _group.getGroupId(),
+							deDataRecordCollection.
+								getDEDataRecordCollectionId(),
+							new String[] {RoleConstants.SITE_MEMBER}
+						).allowExportDataRecord(
+						).build();
+
+			_deDataRecordCollectionService.execute(
+				deDataRecordCollectionSaveModelPermissionsRequest);
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
+
+		String content = DEDataEngineTestUtil.exportDataRecord(
+			deDataRecordCollection, _group.getGroupId(), _siteMember,
+			_deDataRecordCollectionService);
+
+		JSONAssert.assertEquals(
+			read("data-record-collection-export-records.json"), content, false);
+	}
+
+	@Test(expected = DEDataRecordCollectionException.PrincipalException.class)
+	public void testGrantExportDataRecordPermissionToGuestUser()
+		throws Exception {
+
+		DEDataRecordCollection deDataRecordCollection = saveRecordsToExport();
+
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(_adminUser));
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), _adminUser.getUserId());
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+		try {
+			DEDataRecordCollectionSaveModelPermissionsRequest
+				deDataRecordCollectionSaveModelPermissionsRequest =
+					DEDataRecordCollectionRequestBuilder.
+						saveModelPermissionsBuilder(
+							TestPropsValues.getCompanyId(), _group.getGroupId(),
+							_adminUser.getUserId(), _group.getGroupId(),
+							deDataRecordCollection.
+								getDEDataRecordCollectionId(),
+							new String[] {RoleConstants.GUEST}
+						).allowExportDataRecord(
+						).build();
+
+			_deDataRecordCollectionService.execute(
+				deDataRecordCollectionSaveModelPermissionsRequest);
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
 	}
 
 	@Test(expected = DEDataRecordCollectionException.PrincipalException.class)
@@ -3719,6 +3911,54 @@ public class DEDataRecordCollectionServiceTest {
 	}
 
 	@Test(expected = DEDataRecordCollectionException.MustHavePermission.class)
+	public void testRevokeExportDataRecordPermission() throws Exception {
+		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		User user = UserTestUtil.addGroupUser(_group, role.getName());
+
+		DEDataRecordCollection deDataRecordCollection = saveRecordsToExport();
+
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(_adminUser));
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), _adminUser.getUserId());
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+		try {
+			DEDataRecordCollectionSaveModelPermissionsRequest
+				deDataRecordCollectionSaveModelPermissionsRequest2 =
+					DEDataRecordCollectionRequestBuilder.
+						saveModelPermissionsBuilder(
+							TestPropsValues.getCompanyId(), _group.getGroupId(),
+							_adminUser.getUserId(), _group.getGroupId(),
+							deDataRecordCollection.
+								getDEDataRecordCollectionId(),
+							new String[] {role.getName()}
+						).allowExportDataRecord(
+						).build();
+
+			_deDataRecordCollectionService.execute(
+				deDataRecordCollectionSaveModelPermissionsRequest2);
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
+
+		DEDataEngineTestUtil.deleteDEDataRecordCollectionModelPermissions(
+			TestPropsValues.getCompanyId(), _adminUser, _group.getGroupId(),
+			deDataRecordCollection.getDEDataRecordCollectionId(),
+			new String[] {DEActionKeys.EXPORT_DATA_RECORDS},
+			new String[] {role.getName()}, _deDataRecordCollectionService);
+
+		DEDataEngineTestUtil.exportDataRecord(
+			deDataRecordCollection, _group.getGroupId(), user,
+			_deDataRecordCollectionService);
+	}
+
+	@Test(expected = DEDataRecordCollectionException.MustHavePermission.class)
 	public void testRevokeModelPermissionsWithNoPermission() throws Exception {
 		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 
@@ -4513,6 +4753,107 @@ public class DEDataRecordCollectionServiceTest {
 					deDataRecordCollectionListRecordRequest);
 
 		return deDataRecordCollectionListRecordResponse.getDEDataRecords();
+	}
+
+	protected DEDataRecordCollection saveRecordsToExport() throws Exception {
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(_adminUser));
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), _adminUser.getUserId());
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+		try {
+			DEDataDefinition deDataDefinition = new DEDataDefinition();
+
+			Map<String, String> field1Labels = new HashMap() {
+				{
+					put("en_US", "Field 1");
+				}
+			};
+
+			DEDataDefinitionField deDataDefinitionField1 =
+				new DEDataDefinitionField("field1", "text");
+
+			deDataDefinitionField1.addLabels(field1Labels);
+
+			Map<String, String> field2Labels = new HashMap() {
+				{
+					put("en_US", "Field 2");
+				}
+			};
+
+			DEDataDefinitionField deDataDefinitionField2 =
+				new DEDataDefinitionField("field2", "numeric");
+
+			deDataDefinitionField2.addLabels(field2Labels);
+
+			deDataDefinition.addName(LocaleUtil.US, "Data Definition Test");
+			deDataDefinition.setDEDataDefinitionFields(
+				Arrays.asList(deDataDefinitionField1, deDataDefinitionField2));
+			deDataDefinition.setStorageType("json");
+
+			DEDataDefinitionSaveRequest deDataDefinitionSaveRequest =
+				DEDataDefinitionRequestBuilder.saveBuilder(
+					deDataDefinition
+				).inGroup(
+					_group.getGroupId()
+				).onBehalfOf(
+					_adminUser.getUserId()
+				).build();
+
+			DEDataDefinitionSaveResponse deDataDefinitionSaveResponse =
+				_deDataDefinitionService.execute(deDataDefinitionSaveRequest);
+
+			deDataDefinition =
+				deDataDefinitionSaveResponse.getDEDataDefinition();
+
+			DEDataRecordCollection deDataRecordCollection =
+				DEDataEngineTestUtil.insertDEDataRecordCollection(
+					_adminUser, _group, deDataDefinition,
+					_deDataRecordCollectionService);
+
+			DEDataRecord deDataRecord1 = new DEDataRecord();
+
+			Map<String, Object> values1 = new HashMap() {
+				{
+					put("field1", "Text 1");
+					put("field2", 1);
+				}
+			};
+
+			deDataRecord1.setValues(values1);
+
+			deDataRecord1.setDEDataRecordCollection(deDataRecordCollection);
+
+			DEDataEngineTestUtil.insertDEDataRecord(
+				_adminUser, _group, deDataRecord1,
+				_deDataRecordCollectionService);
+
+			DEDataRecord deDataRecord2 = new DEDataRecord();
+
+			Map<String, Object> values2 = new HashMap() {
+				{
+					put("field1", "Text 2");
+					put("field2", 2);
+				}
+			};
+
+			deDataRecord2.setValues(values2);
+
+			deDataRecord2.setDEDataRecordCollection(deDataRecordCollection);
+
+			DEDataEngineTestUtil.insertDEDataRecord(
+				_adminUser, _group, deDataRecord2,
+				_deDataRecordCollectionService);
+
+			return deDataRecordCollection;
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
 	}
 
 	protected List<DEDataRecordCollection> searchDEDataRecordCollection(

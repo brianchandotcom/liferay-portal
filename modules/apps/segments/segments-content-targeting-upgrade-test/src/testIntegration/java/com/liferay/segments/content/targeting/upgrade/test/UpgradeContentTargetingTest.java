@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.segments.upgrade.v_0_0_1.test;
+package com.liferay.segments.content.targeting.upgrade.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.counter.kernel.service.CounterLocalService;
@@ -652,7 +652,8 @@ public class UpgradeContentTargetingTest {
 		Registry registry = RegistryUtil.getRegistry();
 
 		UpgradeStepRegistrator upgradeStepRegistror = registry.getService(
-			"com.liferay.segments.internal.upgrade.SegmentsServiceUpgrade");
+			"com.liferay.segments.content.targeting.upgrade.internal." +
+				"SegmentsContentTargetingUpgrade");
 
 		upgradeStepRegistror.register(
 			new UpgradeStepRegistrator.Registry() {
@@ -740,7 +741,8 @@ public class UpgradeContentTargetingTest {
 	}
 
 	private static final String _CLASS_NAME =
-		"com.liferay.segments.internal.upgrade.v0_0_1.UpgradeContentTargeting";
+		"com.liferay.segments.content.targeting.upgrade.internal.v1_0_0." +
+			"UpgradeContentTargeting";
 
 	private static DB _db;
 

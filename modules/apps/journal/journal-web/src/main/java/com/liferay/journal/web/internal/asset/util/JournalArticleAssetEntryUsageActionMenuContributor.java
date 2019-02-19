@@ -91,16 +91,20 @@ public class JournalArticleAssetEntryUsageActionMenuContributor
 					_resourceBundleLoader.loadResourceBundle(
 						themeDisplay.getLocale());
 
-				add(
-					dropdownItem -> {
-						dropdownItem.setHref(
-							_getURL(
-								approvedArticle, assetEntryUsage.getClassPK(),
-								assetEntryUsage.getPortletId(), request));
-						dropdownItem.setLabel(
-							LanguageUtil.get(resourceBundle, "view-in-page"));
-						dropdownItem.setTarget("_blank");
-					});
+				if (approvedArticle != null) {
+					add(
+						dropdownItem -> {
+							dropdownItem.setHref(
+								_getURL(
+									approvedArticle,
+									assetEntryUsage.getClassPK(),
+									assetEntryUsage.getPortletId(), request));
+							dropdownItem.setLabel(
+								LanguageUtil.get(
+									resourceBundle, "view-in-page"));
+							dropdownItem.setTarget("_blank");
+						});
+				}
 
 				boolean hasUpdatePermission = false;
 

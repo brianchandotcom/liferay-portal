@@ -186,7 +186,6 @@
 		<!-- Temporary suppressions. Chema, please fix -->
 
 		<suppress checks="JSONDeprecatedPackagesCheck" files="modules/apps/dynamic-data-mapping/dynamic-data-mapping-form-renderer/package\.json" />
-		<suppress checks="JSONDeprecatedPackagesCheck" files="modules/apps/portal-search/portal-search-web/package\.json" />
 		<suppress checks="JSONDeprecatedPackagesCheck" files="modules/sdk/project-templates/project-templates-form-field/src/main/resources/archetype-resources/package\.json" />
 		<suppress checks="JSONDeprecatedPackagesCheck" files="modules/sdk/project-templates/project-templates-soy-portlet/src/main/resources/archetype-resources/package\.json" />
 		<suppress checks="JSONScriptsCheck" files="modules/apps/hello-soy/hello-soy-web/package\.json" />

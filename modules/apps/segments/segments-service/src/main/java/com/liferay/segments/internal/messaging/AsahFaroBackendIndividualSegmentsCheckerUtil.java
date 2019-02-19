@@ -202,8 +202,6 @@ public class AsahFaroBackendIndividualSegmentsCheckerUtil {
 				"Unable to retrieve individuals for individual segment " +
 					segmentsEntry.getKey(),
 				re);
-
-			return;
 		}
 	}
 

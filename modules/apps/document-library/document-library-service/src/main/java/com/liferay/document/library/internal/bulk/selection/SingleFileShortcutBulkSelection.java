@@ -15,6 +15,7 @@
 package com.liferay.document.library.internal.bulk.selection;
 
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.bulk.selection.BaseSingleEntryBulkSelection;
 import com.liferay.bulk.selection.BulkSelection;
 import com.liferay.bulk.selection.BulkSelectionFactory;
 import com.liferay.document.library.kernel.service.DLAppService;

@@ -12,9 +12,8 @@
  * details.
  */
 
-package com.liferay.document.library.internal.bulk.selection;
+package com.liferay.bulk.selection;
 
-import com.liferay.bulk.selection.BulkSelection;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.language.Language;

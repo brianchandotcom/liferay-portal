@@ -75,31 +75,38 @@ PortletURL configurationRenderURL = (PortletURL)request.getAttribute("configurat
 	</c:if>
 </c:if>
 
-<aui:script sandbox="<%= true %>">
-	var selectDisplayStyle = $('#<portlet:namespace />displayStyle');
+<aui:script require="metal-dom/src/dom as dom">
+	var displayStyleSelect = document.getElementById('<portlet:namespace />displayStyle');
 
 	function showHiddenFields() {
-		var hiddenFields = $('.hidden-field');
+		var displayStyle = displayStyleSelect.value;
 
-		hiddenFields.parentsUntil('.general-display-settings', '.checkbox, .form-group').addClass('hide');
+		var hiddenFields = document.querySelectorAll('.hidden-field');
 
-		var displayStyle = selectDisplayStyle.val();
+		Array.prototype.forEach.call(
+			hiddenFields,
+			function(field) {
+				var fieldContainer = dom.closest(field, '.form-group');
 
-		if (displayStyle == 'full-content') {
-			showParent('.show-asset-title');
-			showParent('.show-context-link');
-			showParent('.show-extra-info');
-		}
-		else if (displayStyle == 'abstracts') {
-			showParent('.abstract-length');
-		}
-	}
+				if (fieldContainer) {
+					var fieldClassList = field.classList;
+					var fieldContainerClassList = fieldContainer.classList;
 
-	function showParent(child, parent) {
-		$(child).parentsUntil('.general-display-settings', '.form-group').removeClass('hide');
+					if (displayStyle === 'full-content' && (fieldClassList.contains('show-asset-title') || fieldClassList.contains('show-context-link') || fieldClassList.contains('show-extra-info'))) {
+						fieldContainerClassList.remove('hide');
+					}
+					else if (displayStyle === 'abstracts' && fieldClassList.contains('abstract-length')) {
+						fieldContainerClassList.remove('hide');
+					}
+					else {
+						fieldContainerClassList.add('hide');
+					}
+				}
+			}
+		);
 	}
 
 	showHiddenFields();
 
-	selectDisplayStyle.on('change', showHiddenFields);
+	displayStyleSelect.addEventListener('change', showHiddenFields);
 </aui:script>

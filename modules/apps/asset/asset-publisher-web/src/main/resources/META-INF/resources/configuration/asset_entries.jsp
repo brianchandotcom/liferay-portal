@@ -209,76 +209,101 @@ for (long groupId : groupIds) {
 }
 %>
 
-<aui:script>
+<script>
 	function <portlet:namespace />moveSelectionDown(assetEntryOrder) {
-		var form = AUI.$(document.<portlet:namespace />fm);
-
-		form.fm('<%= Constants.CMD %>').val('move-selection-down');
-		form.fm('redirect').val('<%= HtmlUtil.escapeJS(currentURL) %>');
-		form.fm('assetEntryOrder').val(assetEntryOrder);
-
-		submitForm(form);
+		Liferay.Util.postForm(
+			document.<portlet:namespace />fm,
+			{
+				data: {
+					assetEntryOrder: assetEntryOrder,
+					cmd: 'move-selection-down',
+					redirect: '<%= HtmlUtil.escapeJS(currentURL) %>'
+				}
+			}
+		);
 	}
 
 	function <portlet:namespace />moveSelectionUp(assetEntryOrder) {
-		var form = AUI.$(document.<portlet:namespace />fm);
-
-		form.fm('<%= Constants.CMD %>').val('move-selection-up');
-		form.fm('redirect').val('<%= HtmlUtil.escapeJS(currentURL) %>');
-		form.fm('assetEntryOrder').val(assetEntryOrder);
-
-		submitForm(form);
-	}
-</aui:script>
-
-<aui:script use="liferay-item-selector-dialog">
-	function selectAssets(assetEntryList) {
-		var assetClassName;
-		var assetEntryIds = [];
-
-		assetEntryList.forEach(
-			function(assetEntry) {
-				assetEntryIds.push(assetEntry.entityid);
-
-				assetClassName = assetEntry.assetclassname;
+		Liferay.Util.postForm(
+			document.<portlet:namespace />fm,
+			{
+				data: {
+					assetEntryOrder: assetEntryOrder,
+					cmd: 'move-selection-up',
+					redirect: '<%= HtmlUtil.escapeJS(currentURL) %>'
+				}
 			}
 		);
-
-		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = 'add-selection';
-		document.<portlet:namespace />fm.<portlet:namespace />redirect.value = '<%= HtmlUtil.escapeJS(currentURL) %>';
-		document.<portlet:namespace />fm.<portlet:namespace />assetEntryIds.value = assetEntryIds.join(',');
-		document.<portlet:namespace />fm.<portlet:namespace />assetEntryType.value = assetClassName;
-
-		submitForm(document.<portlet:namespace />fm);
 	}
+</script>
 
-	$('body').on(
-		'click',
-		'.asset-selector a',
-		function(event) {
-			event.preventDefault();
+<aui:script require="metal-dom/src/dom as dom">
+	AUI().use(
+		'liferay-item-selector-dialog',
+		function(A) {
+			function selectAssets(assetEntryList) {
+				var assetClassName = '';
+				var assetEntryIds = [];
 
-			var currentTarget = $(event.currentTarget);
+				assetEntryList.forEach(
+					function(assetEntry) {
+						assetEntryIds.push(assetEntry.entityid);
 
-			var itemSelectorDialog = new A.LiferayItemSelectorDialog(
-				{
-					eventName: '<%= eventName %>',
-					id: '<%= eventName %>' + currentTarget.attr('id'),
-					on: {
-						selectedItemChange: function(event) {
-							var selectedItems = event.newVal;
+						assetClassName = assetEntry.assetclassname;
+					}
+				);
 
-							if (selectedItems) {
-								selectAssets(selectedItems);
-							}
+				Liferay.Util.postForm(
+					document.<portlet:namespace />fm,
+					{
+						data: {
+							assetEntryIds: assetEntryIds.join(','),
+							assetEntryType: assetClassName,
+							cmd: 'add-selection',
+							redirect: '<%= HtmlUtil.escapeJS(currentURL) %>'
 						}
-					},
-					title: currentTarget.data('title'),
-					url: currentTarget.data('href')
+					}
+				);
+			}
+
+			var delegateHandler = dom.delegate(
+				document.body,
+				'click',
+				'.asset-selector a',
+				function(event) {
+					event.preventDefault();
+
+					var delegateTarget = event.delegateTarget;
+
+					var itemSelectorDialog = new A.LiferayItemSelectorDialog(
+						{
+							eventName: '<%= eventName %>',
+							id: '<%= eventName %>' + delegateTarget.id,
+							on: {
+								selectedItemChange: function(event) {
+									var selectedItems = event.newVal;
+
+									if (selectedItems) {
+										selectAssets(selectedItems);
+									}
+								}
+							},
+							title: delegateTarget.dataset.title,
+							url: delegateTarget.dataset.href
+						}
+					);
+
+					itemSelectorDialog.open();
 				}
 			);
 
-			itemSelectorDialog.open();
+			function handleDestroyPortlet () {
+				delegateHandler.removeListener();
+
+				Liferay.detach('destroyPortlet', handleDestroyPortlet);
+			}
+
+			Liferay.on('destroyPortlet', handleDestroyPortlet);
 		}
 	);
 </aui:script>

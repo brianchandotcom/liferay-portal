@@ -17,6 +17,25 @@ class Sharing extends PortletBase {
 	}
 
 	/**
+	 * @inheritDoc
+	 */
+	attached(...args) {
+		super.attached(...args);
+
+		this.refs.multiSelect.dataSource = query => this.fetch(
+			this.sharingUserAutocompleteURL,
+			{
+				query
+			}
+		).then(
+			res => res.json()
+		).then(
+			users => users.map(({fullName, emailAddress}) => ({label: `${fullName} (${emailAddress})`,
+value: emailAddress}))
+		);
+	}
+
+	/**
 	 * Close the SharingDialog
 	 * @private
 	 * @review
@@ -63,7 +82,7 @@ class Sharing extends PortletBase {
 					classPK: this._classPK,
 					shareable: this.shareable,
 					sharingEntryPermissionDisplayActionId: this.sharingEntryPermissionDisplayActionId,
-					userEmailAddress: this._userEmailAddresses.map(({label}) => label).join(',')
+					userEmailAddress: this._userEmailAddresses.map(({value}) => value).join(',')
 				}
 			)
 				.then(
@@ -146,7 +165,7 @@ class Sharing extends PortletBase {
 			const emailRegex = /.+@.+\..+/i;
 
 			valid = this._userEmailAddresses.every(
-				({label}) => emailRegex.test(label)
+				({value}) => emailRegex.test(value)
 			);
 
 			this.emailErrorMessage = valid ?
@@ -170,6 +189,7 @@ Sharing.STATE = {
 	shareable: Config.bool().value(true),
 	shareActionURL: Config.string().required(),
 	sharingEntryPermissionDisplayActionId: Config.string().required(),
+	sharingUserAutocompleteURL: Config.string().required(),
 	spritemap: Config.string().required(),
 	submitting: Config.bool().value(false)
 };

@@ -54,6 +54,7 @@ import com.liferay.headless.foundation.internal.dto.v1_0.ServicesImpl;
 import com.liferay.headless.foundation.internal.dto.v1_0.UserAccountImpl;
 import com.liferay.headless.foundation.internal.dto.v1_0.VocabularyImpl;
 import com.liferay.headless.foundation.internal.dto.v1_0.WebUrlImpl;
+import com.liferay.portal.vulcan.util.JSONUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -156,7 +157,8 @@ public class JSONMessageBodyReader implements MessageBodyReader<Object> {
 			InputStream inputStream)
 		throws IOException, WebApplicationException {
 
-		return _objectMapper.readValue(inputStream, clazz);
+		return JSONUtil.mapJacksonExceptions(
+			() -> _objectMapper.readValue(inputStream, clazz));
 	}
 
 	private static final ObjectMapper _objectMapper = new ObjectMapper() {

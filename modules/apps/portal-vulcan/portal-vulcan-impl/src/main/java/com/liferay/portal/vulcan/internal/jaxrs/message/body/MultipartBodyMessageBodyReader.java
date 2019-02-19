@@ -14,10 +14,11 @@
 
 package com.liferay.portal.vulcan.internal.jaxrs.message.body;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import com.liferay.portal.vulcan.multipart.BinaryFile;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 
-import java.io.IOException;
 import java.io.InputStream;
 
 import java.lang.annotation.Annotation;
@@ -34,8 +35,10 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
+import javax.ws.rs.ext.ContextResolver;
 import javax.ws.rs.ext.MessageBodyReader;
 import javax.ws.rs.ext.Provider;
+import javax.ws.rs.ext.Providers;
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
@@ -61,16 +64,13 @@ public class MultipartBodyMessageBodyReader
 
 	@Override
 	public MultipartBody readFrom(
-			Class<MultipartBody> clazz, Type genericType,
-			Annotation[] annotations, MediaType mediaType,
-			MultivaluedMap<String, String> multivaluedMap,
-			InputStream inputStream)
-		throws IOException {
+		Class<MultipartBody> clazz, Type genericType, Annotation[] annotations,
+		MediaType mediaType, MultivaluedMap<String, String> multivaluedMap,
+		InputStream inputStream) {
 
-		if (!ServletFileUpload.isMultipartContent(_httpServletRequest)) {
-			throw new BadRequestException(
-				"Request body is not a valid multipart form");
-		}
+		ContextResolver<ObjectMapper> contextResolver =
+			_providers.getContextResolver(
+				ObjectMapper.class, MediaType.MULTIPART_FORM_DATA_TYPE);
 
 		try {
 			Map<String, BinaryFile> binaryFiles = new HashMap<>();
@@ -98,7 +98,8 @@ public class MultipartBodyMessageBodyReader
 				}
 			}
 
-			return MultipartBody.of(binaryFiles, values);
+			return MultipartBody.of(
+				binaryFiles, values, contextResolver::getContext);
 		}
 		catch (Exception e) {
 			throw new BadRequestException(
@@ -107,6 +108,12 @@ public class MultipartBodyMessageBodyReader
 	}
 
 	@Context
+	private Providers _providers;
+
+	@Context
 	private HttpServletRequest _httpServletRequest;
+
+	@Context
+	private ObjectMapper _objectMapper;
 
 }

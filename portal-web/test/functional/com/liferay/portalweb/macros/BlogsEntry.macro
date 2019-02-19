@@ -53,12 +53,14 @@ definition {
 
 			Click(locator1 = "AlloyEditor#TEXT_FORMATTING_LINK_INPUT_CONFIRM");
 
-			Click(
+			SelectFrame(
 				locator1 = "BlogsEntry#CONTENT_VIDEO",
 				key_service = "${videoService}"
 			);
 
-			AssertTextEquals(locator1 = "BlogsEntry#VIDEO_EMBED_HELP_MESSAGE", value1 = "Video playback is disabled during edit mode.");
+			SelectFrameTop();
+
+			AssertTextEquals(locator1 = "BlogsEntry#VIDEO_EMBED_HELP_MESSAGE", value1 = "Video playback is disabled during edit mode");
 		}
 	}
 

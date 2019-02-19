@@ -52,6 +52,11 @@ public interface BlogPosting {
 	public void setCategories(Categories[] categories);
 
 	public void setCategories(UnsafeSupplier<Categories[], Throwable> categoriesUnsafeSupplier);
+	public Long[] getCategoryIds();
+
+	public void setCategoryIds(Long[] categoryIds);
+
+	public void setCategoryIds(UnsafeSupplier<Long[], Throwable> categoryIdsUnsafeSupplier);
 	public Comment[] getComment();
 
 	public void setComment(Comment[] comment);

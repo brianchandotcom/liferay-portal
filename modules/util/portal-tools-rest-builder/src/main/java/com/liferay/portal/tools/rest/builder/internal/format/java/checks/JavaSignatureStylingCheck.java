@@ -12,13 +12,19 @@
  * details.
  */
 
-package com.liferay.source.formatter.checks;
+package com.liferay.portal.tools.rest.builder.internal.format.java.checks;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.tools.ToolsUtil;
+import com.liferay.portal.tools.rest.builder.internal.format.java.util.JavaUtil;
 import com.liferay.source.formatter.checks.util.SourceUtil;
+import com.liferay.source.formatter.parser.JavaClass;
+import com.liferay.source.formatter.parser.JavaClassParser;
+import com.liferay.source.formatter.parser.JavaConstructor;
+import com.liferay.source.formatter.parser.JavaMethod;
 import com.liferay.source.formatter.parser.JavaTerm;
 
 import java.util.regex.Matcher;
@@ -27,13 +33,47 @@ import java.util.regex.Pattern;
 /**
  * @author Hugo Huijser
  */
-public class JavaSignatureStylingCheck extends BaseJavaTermCheck {
+public class JavaSignatureStylingCheck {
 
-	@Override
-	protected String doProcess(
-		String fileName, String absolutePath, JavaTerm javaTerm,
-		String fileContent) {
+	public static String format(String content, String fileName)
+		throws Exception {
 
+		String oldContent = content;
+
+		while (true) {
+			String newContent = _format(oldContent, fileName);
+
+			if (oldContent.equals(newContent)) {
+				return newContent;
+			}
+
+			oldContent = newContent;
+		}
+	}
+
+	private static String _format(String content, String fileName)
+		throws Exception {
+
+		JavaClass javaClass = JavaClassParser.parseJavaClass(fileName, content);
+
+		String javaClassContent = javaClass.getContent();
+
+		String javaClassHeader = content.substring(
+			0, content.indexOf(javaClassContent));
+
+		for (JavaTerm javaTerm : javaClass.getChildJavaTerms()) {
+			if (javaTerm instanceof JavaConstructor ||
+				javaTerm instanceof JavaMethod) {
+
+				javaClassContent = StringUtil.replace(
+					javaClassContent, javaTerm.getContent(), _format(javaTerm));
+			}
+		}
+
+		return javaClassHeader + javaClassContent;
+	}
+
+	private static String _format(JavaTerm javaTerm) {
 		String javaTermContent = javaTerm.getContent();
 
 		String indent = SourceUtil.getIndent(javaTermContent);
@@ -67,15 +107,10 @@ public class JavaSignatureStylingCheck extends BaseJavaTermCheck {
 			nextLine);
 	}
 
-	@Override
-	protected String[] getCheckableJavaTermNames() {
-		return new String[] {JAVA_CONSTRUCTOR, JAVA_METHOD};
-	}
-
-	private String _fixLeadingTabs(
+	private static String _fixLeadingTabs(
 		String content, String line, int expectedTabCount) {
 
-		int leadingTabCount = getLeadingTabCount(line);
+		int leadingTabCount = JavaUtil.getLeadingTabCount(line);
 
 		String newLine = line;
 
@@ -96,7 +131,7 @@ public class JavaSignatureStylingCheck extends BaseJavaTermCheck {
 		return StringUtil.replace(content, line, newLine);
 	}
 
-	private String _formatMultiLinesSignature(
+	private static String _formatMultiLinesSignature(
 		String javaTermContent, String signature, String[] signatureLines,
 		String indent, String newLineChars, String nextLine) {
 
@@ -127,8 +162,9 @@ public class JavaSignatureStylingCheck extends BaseJavaTermCheck {
 
 			if (expectedTabCount == -1) {
 				if (line.endsWith(StringPool.OPEN_PARENTHESIS)) {
-					expectedTabCount =
-						Math.max(getLeadingTabCount(line), indent.length()) + 1;
+					int count = JavaUtil.getLeadingTabCount(line);
+
+					expectedTabCount = Math.max(count, indent.length()) + 1;
 
 					if ((throwsPos != -1) &&
 						(expectedTabCount == (indent.length() + 1))) {
@@ -150,12 +186,12 @@ public class JavaSignatureStylingCheck extends BaseJavaTermCheck {
 					for (int j = i - 1; j >= 0; j--) {
 						String curLine = signatureLines[j];
 
-						level += getLevel(curLine, "<", ">");
+						level += ToolsUtil.getLevel(curLine, "<", ">");
 
 						if (level > 0) {
 							newSignature = _fixLeadingTabs(
 								newSignature, line,
-								getLeadingTabCount(curLine));
+								JavaUtil.getLeadingTabCount(curLine));
 
 							continue outerLoop;
 						}
@@ -167,7 +203,7 @@ public class JavaSignatureStylingCheck extends BaseJavaTermCheck {
 				else {
 					newSignature = _fixLeadingTabs(
 						newSignature, line,
-						getLeadingTabCount(previousLine) + 1);
+						JavaUtil.getLeadingTabCount(previousLine) + 1);
 				}
 			}
 		}
@@ -187,7 +223,7 @@ public class JavaSignatureStylingCheck extends BaseJavaTermCheck {
 		return StringUtil.replace(javaTermContent, signature, newSignature);
 	}
 
-	private String _formatSingleLineSignature(
+	private static String _formatSingleLineSignature(
 		String javaTermContent, String signature, String newLineChars,
 		String nextLine) {
 

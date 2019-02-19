@@ -12,24 +12,36 @@
  * details.
  */
 
-package com.liferay.source.formatter.checks;
+package com.liferay.portal.tools.rest.builder.internal.format.java.checks;
 
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ImportsFormatter;
 import com.liferay.portal.tools.JavaImportsFormatter;
 import com.liferay.source.formatter.checks.util.JavaSourceUtil;
 
-import java.io.IOException;
-
 /**
  * @author Hugo Huijser
  */
-public class JavaImportsCheck extends BaseFileCheck {
+public class JavaImportsCheck {
 
-	@Override
-	protected String doProcess(
-			String fileName, String absolutePath, String content)
-		throws IOException {
+	public static String format(String content, String fileName)
+		throws Exception {
+
+		String oldContent = content;
+
+		while (true) {
+			String newContent = _format(oldContent, fileName);
+
+			if (oldContent.equals(newContent)) {
+				return newContent;
+			}
+
+			oldContent = newContent;
+		}
+	}
+
+	private static String _format(String content, String fileName)
+		throws Exception {
 
 		ImportsFormatter importsFormatter = new JavaImportsFormatter();
 

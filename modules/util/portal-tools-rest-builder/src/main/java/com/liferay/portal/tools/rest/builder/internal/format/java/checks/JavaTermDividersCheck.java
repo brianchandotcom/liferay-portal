@@ -12,10 +12,11 @@
  * details.
  */
 
-package com.liferay.source.formatter.checks;
+package com.liferay.portal.tools.rest.builder.internal.format.java.checks;
 
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.parser.JavaClass;
+import com.liferay.source.formatter.parser.JavaClassParser;
 import com.liferay.source.formatter.parser.JavaTerm;
 
 import java.util.List;
@@ -25,35 +26,53 @@ import java.util.regex.Pattern;
 /**
  * @author Hugo Huijser
  */
-public class JavaTermDividersCheck extends BaseJavaTermCheck {
+public class JavaTermDividersCheck {
 
-	@Override
-	protected String doProcess(
-		String fileName, String absolutePath, JavaTerm javaTerm,
-		String fileContent) {
+	public static String format(String content, String fileName)
+		throws Exception {
 
-		JavaClass javaClass = (JavaClass)javaTerm;
+		String oldContent = content;
 
-		String classContent = javaClass.getContent();
+		while (true) {
+			String newContent = _format(oldContent, fileName);
+
+			if (oldContent.equals(newContent)) {
+				return newContent;
+			}
+
+			oldContent = newContent;
+		}
+	}
+
+	private static String _format(String content, String fileName)
+		throws Exception {
+
+		JavaClass javaClass = JavaClassParser.parseJavaClass(fileName, content);
+
+		String javaClassContent = javaClass.getContent();
+
+		String javaClassHeader = content.substring(
+			0, content.indexOf(javaClassContent));
 
 		List<JavaTerm> childJavaTerms = javaClass.getChildJavaTerms();
 
 		if (childJavaTerms.isEmpty()) {
-			Matcher matcher = _missingEmptyLinePattern.matcher(classContent);
+			Matcher matcher = _missingEmptyLinePattern.matcher(
+				javaClassContent);
 
 			if (matcher.find()) {
 				return matcher.replaceAll("$1\n$2");
 			}
 
-			return classContent;
+			return javaClassHeader + javaClassContent;
 		}
 
 		JavaTerm previousChildJavaTerm = null;
 
 		for (JavaTerm childJavaTerm : childJavaTerms) {
 			if (previousChildJavaTerm != null) {
-				classContent = _fixJavaTermDivider(
-					classContent, previousChildJavaTerm, childJavaTerm);
+				javaClassContent = _fixJavaTermDivider(
+					javaClassContent, previousChildJavaTerm, childJavaTerm);
 			}
 
 			previousChildJavaTerm = childJavaTerm;
@@ -61,20 +80,16 @@ public class JavaTermDividersCheck extends BaseJavaTermCheck {
 
 		String lastJavaTermContent = previousChildJavaTerm.getContent();
 
-		if (!classContent.contains(lastJavaTermContent + "\n")) {
-			classContent = StringUtil.replace(
-				classContent, lastJavaTermContent, lastJavaTermContent + "\n");
+		if (!javaClassContent.contains(lastJavaTermContent + "\n")) {
+			javaClassContent = StringUtil.replace(
+				javaClassContent, lastJavaTermContent,
+				lastJavaTermContent + "\n");
 		}
 
-		return classContent;
+		return javaClassHeader + javaClassContent;
 	}
 
-	@Override
-	protected String[] getCheckableJavaTermNames() {
-		return new String[] {JAVA_CLASS};
-	}
-
-	private String _fixJavaTermDivider(
+	private static String _fixJavaTermDivider(
 		String classContent, JavaTerm previousJavaTerm, JavaTerm javaTerm) {
 
 		String javaTermContent = javaTerm.getContent();
@@ -142,7 +157,7 @@ public class JavaTermDividersCheck extends BaseJavaTermCheck {
 		return _fixJavaTermDivider(classContent, javaTermContent, false);
 	}
 
-	private String _fixJavaTermDivider(
+	private static String _fixJavaTermDivider(
 		String classContent, String javaTermContent,
 		boolean requiresEmptyLine) {
 

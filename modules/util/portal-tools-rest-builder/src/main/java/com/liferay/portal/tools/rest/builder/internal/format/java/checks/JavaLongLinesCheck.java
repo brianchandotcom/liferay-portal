@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.source.formatter.checks;
+package com.liferay.portal.tools.rest.builder.internal.format.java.checks;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
@@ -22,10 +22,9 @@ import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
+import com.liferay.portal.tools.rest.builder.internal.format.java.util.JavaUtil;
 import com.liferay.source.formatter.checks.util.JavaSourceUtil;
 import com.liferay.source.formatter.checks.util.SourceUtil;
-
-import java.io.IOException;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -33,17 +32,25 @@ import java.util.regex.Pattern;
 /**
  * @author Hugo Huijser
  */
-public class JavaLongLinesCheck extends BaseFileCheck {
+public class JavaLongLinesCheck {
 
-	@Override
-	protected String doProcess(
-			String fileName, String absolutePath, String content)
-		throws IOException {
+	public static String format(String content, String fileName)
+		throws Exception {
 
-		if (fileName.endsWith("Table.java")) {
-			return content;
+		String oldContent = content;
+
+		while (true) {
+			String newContent = _format(oldContent);
+
+			if (oldContent.equals(newContent)) {
+				return newContent;
+			}
+
+			oldContent = newContent;
 		}
+	}
 
+	private static String _format(String content) throws Exception {
 		try (UnsyncBufferedReader unsyncBufferedReader =
 				new UnsyncBufferedReader(new UnsyncStringReader(content))) {
 
@@ -61,9 +68,9 @@ public class JavaLongLinesCheck extends BaseFileCheck {
 					continue;
 				}
 
-				int lineLength = getLineLength(line);
+				int lineLength = JavaUtil.getLineLength(line);
 
-				if (lineLength <= getMaxLineLength()) {
+				if (lineLength <= JavaUtil.MAX_LINE_LENGTH) {
 					continue;
 				}
 
@@ -80,10 +87,7 @@ public class JavaLongLinesCheck extends BaseFileCheck {
 
 				String trimmedLine = StringUtil.trimLeading(line);
 
-				if (isExcludedPath(
-						_LINE_LENGTH_EXCLUDES, absolutePath, lineNumber) ||
-					_isAnnotationParameter(content, trimmedLine)) {
-
+				if (_isAnnotationParameter(content, trimmedLine)) {
 					continue;
 				}
 
@@ -99,17 +103,15 @@ public class JavaLongLinesCheck extends BaseFileCheck {
 
 					return truncateLongLinesContent;
 				}
-
-				addMessage(fileName, "> " + getMaxLineLength(), lineNumber);
 			}
 		}
 
 		return content;
 	}
 
-	private int _getIfClauseLineBreakPos(String line) {
-		int x = line.lastIndexOf(" || ", getMaxLineLength() - 3);
-		int y = line.lastIndexOf(" && ", getMaxLineLength() - 3);
+	private static int _getIfClauseLineBreakPos(String line) {
+		int x = line.lastIndexOf(" || ", JavaUtil.MAX_LINE_LENGTH - 3);
+		int y = line.lastIndexOf(" && ", JavaUtil.MAX_LINE_LENGTH - 3);
 
 		int z = Math.max(x, y);
 
@@ -141,7 +143,7 @@ public class JavaLongLinesCheck extends BaseFileCheck {
 			return x + 1;
 		}
 
-		for (x = getMaxLineLength() + 1;;) {
+		for (x = JavaUtil.MAX_LINE_LENGTH + 1;;) {
 			x = line.lastIndexOf(StringPool.COMMA_AND_SPACE, x - 1);
 
 			if (x == -1) {
@@ -154,7 +156,7 @@ public class JavaLongLinesCheck extends BaseFileCheck {
 
 			String linePart = line.substring(0, x);
 
-			if (getLevel(linePart) == 0) {
+			if (ToolsUtil.getLevel(linePart) == 0) {
 				return x + 1;
 			}
 		}
@@ -190,7 +192,7 @@ public class JavaLongLinesCheck extends BaseFileCheck {
 		return -1;
 	}
 
-	private String _getTruncateLongLinesContent(
+	private static String _getTruncateLongLinesContent(
 		String content, String line, String trimmedLine, int lineNumber) {
 
 		String indent = SourceUtil.getIndent(line);
@@ -228,7 +230,7 @@ public class JavaLongLinesCheck extends BaseFileCheck {
 							"\n", firstLine, "\n", secondLine, "\n"));
 				}
 				else if (Validator.isNotNull(
-							getLine(content, lineNumber + 1))) {
+							SourceUtil.getLine(content, lineNumber + 1))) {
 
 					return StringUtil.replace(
 						content, "\n" + line + "\n",
@@ -346,7 +348,9 @@ public class JavaLongLinesCheck extends BaseFileCheck {
 					String secondLine =
 						indent + StringPool.TAB + line.substring(x + 1);
 
-					if (getLineLength(secondLine) <= getMaxLineLength()) {
+					if (JavaUtil.getLineLength(secondLine) <=
+							JavaUtil.MAX_LINE_LENGTH) {
+
 						return StringUtil.replace(
 							content, "\n" + line + "\n",
 							StringBundler.concat(
@@ -374,7 +378,7 @@ public class JavaLongLinesCheck extends BaseFileCheck {
 
 		Matcher matcher = _annotationPattern2.matcher(trimmedLine);
 
-		if (matcher.find() && (getLevel(line) == 0)) {
+		if (matcher.find() && (ToolsUtil.getLevel(line) == 0)) {
 			StringBundler sb = new StringBundler();
 
 			sb.append(indent);
@@ -401,7 +405,8 @@ public class JavaLongLinesCheck extends BaseFileCheck {
 				}
 
 				if (ToolsUtil.isInsideQuotes(trimmedLine, x) ||
-					(getLevel(trimmedLine.substring(0, x), "{", "}") != 0)) {
+					(ToolsUtil.getLevel(
+						trimmedLine.substring(0, x), "{", "}") != 0)) {
 
 					continue;
 				}
@@ -439,7 +444,7 @@ public class JavaLongLinesCheck extends BaseFileCheck {
 			StringBundler.concat("\n", firstLine, "\n", secondLine, "\n"));
 	}
 
-	private boolean _isAnnotationParameter(String content, String line) {
+	private static boolean _isAnnotationParameter(String content, String line) {
 		int x = -1;
 
 		while (true) {
@@ -469,7 +474,7 @@ public class JavaLongLinesCheck extends BaseFileCheck {
 				String annotationParameters = content.substring(
 					matcher.end() - 2, x + 1);
 
-				if (getLevel(annotationParameters) == 0) {
+				if (ToolsUtil.getLevel(annotationParameters) == 0) {
 					if (annotationParameters.contains(line)) {
 						return true;
 					}
@@ -481,8 +486,6 @@ public class JavaLongLinesCheck extends BaseFileCheck {
 
 		return false;
 	}
-
-	private static final String _LINE_LENGTH_EXCLUDES = "line.length.excludes";
 
 	private static final Pattern _annotationPattern1 = Pattern.compile(
 		"\n\t*@(.+)\\(\n");

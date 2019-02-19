@@ -12,74 +12,63 @@
  * details.
  */
 
-package com.liferay.source.formatter.checks;
+package com.liferay.portal.tools.rest.builder.internal.format.java.checks;
 
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.parser.JavaClass;
+import com.liferay.source.formatter.parser.JavaClassParser;
 import com.liferay.source.formatter.parser.JavaTerm;
 import com.liferay.source.formatter.parser.comparator.JavaTermComparator;
-
-import java.io.IOException;
 
 import java.util.List;
 import java.util.Objects;
 
-import org.dom4j.Document;
-import org.dom4j.DocumentException;
-
 /**
  * @author Hugo Huijser
  */
-public class JavaTermOrderCheck extends BaseJavaTermCheck {
+public class JavaTermOrderCheck {
 
-	@Override
-	protected String doProcess(
-			String fileName, String absolutePath, JavaTerm javaTerm,
-			String fileContent)
-		throws DocumentException, IOException {
+	public static String format(String content, String fileName)
+		throws Exception {
 
-		String javaTermContent = javaTerm.getContent();
+		String oldContent = content;
 
-		if (javaTermContent.contains("@Meta.OCD")) {
-			return javaTermContent;
-		}
+		while (true) {
+			String newContent = _format(oldContent, fileName);
 
-		String className = javaTerm.getName();
-
-		String customSQLContent = null;
-
-		if (absolutePath.contains("/persistence/") &&
-			className.endsWith("FinderImpl")) {
-
-			Document customSQLDocument = getCustomSQLDocument(
-				fileName, absolutePath, getPortalCustomSQLDocument());
-
-			if ((customSQLDocument != null) && customSQLDocument.hasContent()) {
-				customSQLContent = customSQLDocument.asXML();
+			if (oldContent.equals(newContent)) {
+				return newContent;
 			}
+
+			oldContent = newContent;
+		}
+	}
+
+	private static String _format(String content, String fileName)
+		throws Exception {
+
+		JavaClass javaClass = JavaClassParser.parseJavaClass(fileName, content);
+
+		String javaClassContent = javaClass.getContent();
+
+		String javaClassHeader = content.substring(
+			0, content.indexOf(javaClassContent));
+
+		if (javaClassContent.contains("@Meta.OCD")) {
+			return javaClassHeader + javaClassContent;
 		}
 
-		return _sortJavaTerms(
-			fileName, absolutePath, (JavaClass)javaTerm, customSQLContent);
+		return javaClassHeader + _sortJavaTerms(javaClass);
 	}
 
-	@Override
-	protected String[] getCheckableJavaTermNames() {
-		return new String[] {JAVA_CLASS};
-	}
-
-	private String _sortJavaTerms(
-		String fileName, String absolutePath, JavaClass javaClass,
-		String customSQLContent) {
-
+	private static String _sortJavaTerms(JavaClass javaClass) {
 		List<JavaTerm> childJavaTerms = javaClass.getChildJavaTerms();
 
 		if (childJavaTerms.size() < 2) {
 			return javaClass.getContent();
 		}
 
-		JavaTermComparator javaTermComparator = new JavaTermComparator(
-			customSQLContent);
+		JavaTermComparator javaTermComparator = new JavaTermComparator(null);
 
 		JavaTerm previousJavaTerm = null;
 
@@ -101,17 +90,7 @@ public class JavaTermOrderCheck extends BaseJavaTermCheck {
 			int compare = javaTermComparator.compare(
 				previousJavaTerm, javaTerm);
 
-			if (compare == 0) {
-				addMessage(fileName, "Duplicate " + javaTerm.getName());
-			}
-			else if (!isExcludedPath(
-						JAVATERM_SORT_EXCLUDES, absolutePath,
-						previousJavaTerm.getName()) &&
-					 !isExcludedPath(
-						 JAVATERM_SORT_EXCLUDES, absolutePath,
-						 javaTerm.getName()) &&
-					 (compare > 0)) {
-
+			if (compare > 0) {
 				String classContent = javaClass.getContent();
 
 				String newClassContent = StringUtil.replaceFirst(

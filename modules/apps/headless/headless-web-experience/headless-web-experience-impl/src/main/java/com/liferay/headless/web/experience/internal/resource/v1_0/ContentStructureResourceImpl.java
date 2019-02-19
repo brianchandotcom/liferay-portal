@@ -20,6 +20,7 @@ import com.liferay.headless.web.experience.dto.v1_0.ContentStructure;
 import com.liferay.headless.web.experience.internal.dto.v1_0.util.ContentStructureUtil;
 import com.liferay.headless.web.experience.internal.odata.entity.v1_0.ContentStructureEntityModel;
 import com.liferay.headless.web.experience.resource.v1_0.ContentStructureResource;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
@@ -72,6 +73,8 @@ public class ContentStructureResourceImpl
 				queryConfig.setSelectedFieldNames(Field.ENTRY_CLASS_PK);
 			},
 			searchContext -> {
+				searchContext.setAttribute(
+					"searchPermissionContext", StringPool.BLANK);
 				searchContext.setCompanyId(company.getCompanyId());
 				searchContext.setGroupIds(new long[] {contentSpaceId});
 			},

@@ -445,23 +445,6 @@ public class JavaParser {
 		return lastEnumConstantDefinitionDetailAST;
 	}
 
-	private static String _getLine(String content, int lineNumber) {
-		int nextLineStartPos = _getLineStartPos(content, lineNumber);
-
-		if (nextLineStartPos == -1) {
-			return null;
-		}
-
-		int nextLineEndPos = content.indexOf(
-			CharPool.NEW_LINE, nextLineStartPos);
-
-		if (nextLineEndPos == -1) {
-			return content.substring(nextLineStartPos);
-		}
-
-		return content.substring(nextLineStartPos, nextLineEndPos);
-	}
-
 	private static int _getLineStartPos(String content, int lineNumber) {
 		if (lineNumber <= 0) {
 			return -1;

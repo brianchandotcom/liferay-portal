@@ -49,6 +49,22 @@ public class ParsedJavaTerm {
 		return _startPosition;
 	}
 
+	public boolean requireFollowingEmptyLine() {
+		return _requireFollowingEmptyLine;
+	}
+
+	public boolean requireNoFollowingEmptyLine() {
+		return _requireNoFollowingEmptyLine;
+	}
+
+	public boolean requireNoPrecedingEmptyLine() {
+		return _requireNoPrecedingEmptyLine;
+	}
+
+	public boolean requirePrecedingEmptyLine() {
+		return _requirePrecedingEmptyLine;
+	}
+
 	public void setContainsCommentToken(boolean containsCommentToken) {
 		_containsCommentToken = containsCommentToken;
 	}
@@ -59,10 +75,38 @@ public class ParsedJavaTerm {
 		_precedingCommentToken = precedingCommentToken;
 	}
 
+	public void setRequireFollowingEmptyLine(
+		boolean requireFollowingEmptyLine) {
+
+		_requireFollowingEmptyLine = requireFollowingEmptyLine;
+	}
+
+	public void setRequireNoFollowingEmptyLine(
+		boolean requireNoFollowingEmptyLine) {
+
+		_requireNoFollowingEmptyLine = requireNoFollowingEmptyLine;
+	}
+
+	public void setRequireNoPrecedingEmptyLine(
+		boolean requireNoPrecedingEmptyLine) {
+
+		_requireNoPrecedingEmptyLine = requireNoPrecedingEmptyLine;
+	}
+
+	public void setRequirePrecedingEmptyLine(
+		boolean requirePrecedingEmptyLine) {
+
+		_requirePrecedingEmptyLine = requirePrecedingEmptyLine;
+	}
+
 	private boolean _containsCommentToken;
 	private final String _content;
 	private final Position _endPosition;
 	private CommonHiddenStreamToken _precedingCommentToken;
+	private boolean _requireFollowingEmptyLine;
+	private boolean _requireNoFollowingEmptyLine;
+	private boolean _requireNoPrecedingEmptyLine;
+	private boolean _requirePrecedingEmptyLine;
 	private final Position _startPosition;
 
 }
